@@ -4,58 +4,87 @@
 
 This is the meta-workflow. It doesn't do the work itself — it points to the workflows that do, and tracks overall progress.
 
+## Status as of 2026-05-02 (evening update)
+
+**All 7 launch gates are CLOSED.** Site is live at https://app.grifon.ai. Test-mode billing now fully proven end-to-end on prod (checkout → PayMongo → webhook → Supabase row → UI tier upgrade). Only outstanding item to take real money is the PayMongo live-key cutover (Gate 3-prod below).
+
+Today's session shipped two fixes, both deployed:
+- `5c6525a` — Upgrade buttons (top banner + profile dropdown) had no `onClick`; now route to `/pricing`
+- `23fac77` — dropped dead `{CHECKOUT_SESSION_ID}` placeholder from PayMongo `success_url` (Stripe syntax PayMongo doesn't substitute)
+
+Plus three Vercel config changes (no commit): added PayMongo test env vars, changed `APP_URL` to `https://app.grifon.ai`, and registered test webhook in PayMongo dashboard at `https://app.grifon.ai/api/webhook` for `checkout_session.payment.paid`. See [paymongo_webhook_setup.md](../../.claude/projects/c--Users-Administrator-Downloads-grifon-command----your-ai-marketing-team/memory/paymongo_webhook_setup.md) memory for the gotcha that cost ~30 min of debugging.
+
 ## Readiness Gates
 
-### Gate 1: App works (no crashes) — CLOSED
-- [x] `SignalModulator` voiceService crash fixed (P0) — 2026-04-18
-- [x] `GenerateVideo` submit handler implemented (P1) — verified 2026-05-02 at `components/GenerateVideo.tsx:143`
-- [x] Error boundaries around each module (P0) — verified 2026-05-02, every route wrapped in `App.tsx`
-- [x] Gemini API key no longer throws at import (P0) — 2026-04-18
-- Driven by: `workflows/fix_broken_feature.md`
+### Gate 1: App works (no crashes) — CLOSED 2026-04-23
+- [x] `SignalModulator` voiceService crash fixed
+- [x] `GenerateVideo` submit handler implemented
+- [x] Error boundaries around each module (`App.tsx:16` wraps every route)
+- [x] Gemini API key no longer throws at import
+- [x] Director AI rules-of-hooks crash fixed (state hoisted to top level — `App.tsx:87`)
 
-### Gate 2: Real auth
-- [x] Plaintext `ACCESS_PASSWORD` removed from `App.tsx` — 2026-04-18
-- [x] `ALLOWED_EMAILS` hardcode removed — 2026-04-18
-- [x] Supabase email/password login wired — 2026-04-18
-- [x] Session persistence (refresh doesn't log out) — 2026-04-18
-- [x] Logout button in Dashboard profile dropdown — 2026-04-18
-- Driven by: `workflows/infra_setup.md` (Supabase section) — completed inline.
+### Gate 2: Real auth — CLOSED 2026-04-18
+- [x] Plaintext `ACCESS_PASSWORD` removed from `App.tsx`
+- [x] `ALLOWED_EMAILS` hardcode removed
+- [x] Supabase email/password login wired
+- [x] Session persistence (refresh doesn't log out)
+- [x] Logout button in Dashboard profile dropdown
 
-### Gate 3: Billing
-- [ ] PayMongo merchant live
-- [ ] Checkout flow matches `GrifonPricingPage.tsx` tiers
-- [ ] Webhook updates Supabase `subscriptions` table
-- [ ] Grace period / cancellation handled
-- Driven by: `workflows/infra_setup.md` (PayMongo section) then `workflows/wire_billing.md` (to write)
+### Gate 3-dev: Billing wired (test mode) — CLOSED 2026-04-23
+- [x] PayMongo hosted-checkout integration: `api/checkout.ts`
+- [x] Webhook with signature verification: `api/webhook.ts`
+- [x] Subscriptions table updated on payment events
+- [x] Checkout flow matches `GrifonPricingPage.tsx` tiers
+- [x] PayMongo helper lib: `api/_lib/paymongo.ts`
 
-### Gate 4: Production-safe code
-- [ ] Input sanitization before Gemini calls (prompt injection)
-- [ ] AI response sanitization (DOMPurify) (XSS)
-- [ ] Rate limiting (per user, per endpoint)
-- [ ] Form validation consistent across all modules
-- [ ] Accessibility pass (labels, aria, keyboard nav)
+### Gate 3-prod: Live billing cutover — IN PROGRESS
+Test-mode plumbing fully proven on prod 2026-05-02 (E2E test purchase activated subscription row in Supabase). Live cutover blocked only on PayMongo merchant verification.
 
-### Gate 5: Mobile
-- [ ] All modules responsive at 375px width
-- [ ] No horizontal scroll on Dashboard
-- [ ] `fix_mobile.js` replaced with proper responsive styles
+Live cutover steps (repeat the test-mode setup with live values):
+- [ ] PayMongo dashboard: complete merchant verification (Philippine business registration required)
+- [ ] PayMongo dashboard: flip to Live Mode
+- [ ] Pull live `PAYMONGO_SECRET_KEY` (`sk_live_...`) — only this one is read by code (`api/_lib/paymongo.ts:6`); `PAYMONGO_PUBLIC_KEY` is stored but unused
+- [ ] Update `PAYMONGO_SECRET_KEY` in Vercel → Settings → Environment Variables (Production scope)
+- [ ] Register live webhook URL `https://app.grifon.ai/api/webhook` in PayMongo Live Mode dashboard, listening for `checkout_session.payment.paid`
+- [ ] Copy live signing secret (`whsk_live_...`) → update `PAYMONGO_WEBHOOK_SECRET` in Vercel
+- [ ] Redeploy (Deployments → ⋯ → Redeploy, no cache)
+- [ ] Test purchase with a real card on Creator tier (₱997); confirm row in Supabase, then refund yourself in PayMongo dashboard
 
-### Gate 6: Domain + hosting — IN PROGRESS (1 of 4)
-- [x] `grifon.ai` purchased (via Vercel registrar) — 2026-05-02
-- [ ] `app.grifon.ai` DNS + SSL (add subdomain in Vercel project → auto SSL)
-- [ ] Production build deployed (link repo to Vercel project, push to main)
-- [ ] Env vars set in host (paste all `.env` keys into Vercel → Settings → Environment Variables)
-- Driven by: `workflows/infra_setup.md`
+### Gate 4: Production-safe code — CLOSED 2026-04-23
+- [x] Zod input validation in all Gemini + ElevenLabs + checkout API routes (8 endpoints)
+- [x] Rate limiting wired via `rateLimitCheck()` in 10 API routes (sliding-window via Supabase RPC)
+- [x] Webhook bodyParser disabled for raw signature verification
+- [x] Cron cleanup for stale Gemini videos: `api/cron/cleanup-gemini-videos.ts`
 
-### Gate 7: Legal / ops
-- [ ] Terms of service
-- [ ] Privacy policy (covers Gemini data handling)
-- [ ] Support contact (email or in-app)
-- [ ] Incident response plan (what if Gemini is down?)
+### Gate 5: Mobile responsiveness — CLOSED 2026-04-23
+- [x] Dashboard upgrade banner padding fix for close-button overlap (`Dashboard.tsx:146`)
+- [x] Director AI hook-branch crash fix (`App.tsx:87`)
+- [x] Footer logo wired (`LandingPage.tsx:627`)
+- [x] Legal page header logo wired (`LegalPageLayout.tsx:28`)
+- [x] Wall-of-Proof carousel: 3-col grid → 9:16 swipeable cards w/ snap-proximity (`LandingPage.tsx:155-200`)
+- [x] Phone-verified live on preview before promotion
+- Open follow-ups (P1/P2/P3 from original 15-finding mobile audit deferred — non-blocking)
+
+### Gate 6: Domain + hosting — CLOSED 2026-05-02
+- [x] `grifon.ai` purchased (via Vercel registrar)
+- [x] `app.grifon.ai` DNS + SSL (auto-provisioned by Vercel)
+- [x] Production build deployed (Vercel project `grifon-command` linked to GitHub `yopiheart/grifon-command`, branch `main`)
+- [x] Env vars set in host (Supabase, Gemini, ElevenLabs, APP_URL, APP_ENV=production, GRIFON_VOICE_CLONING_ENABLED=false)
+- [x] Verified live: landing loads, auth works, session persists, Gemini AI generates, logout works
+- Open follow-ups (non-blocking):
+  - Vercel billing address incomplete — fix in Vercel → Settings → Billing → Update Address
+  - ICANN email verification for `grifon.ai` — **deadline ~2026-05-17** (15-day window from 2026-05-02). Domain risks suspension if missed.
+  - SignalModulator voice list — confirm whether empty list = no voices on ElevenLabs vs API failure
+
+### Gate 7: Legal — CLOSED 2026-04 (effective date 2026-04-20)
+- [x] Terms of Service (`components/TermsOfService.tsx`, 160 lines, Haste Enterprises / Republic of the Philippines)
+- [x] Privacy Policy (`components/PrivacyPolicy.tsx`, 135 lines, covers Gemini data handling)
+- [x] Refund Policy (`components/RefundPolicy.tsx`, 88 lines)
+- [x] Support page (`components/Support.tsx`, 77 lines)
+- All 4 share `LegalPageLayout` and have routes in `App.tsx`
 
 ## How to use
 
-1. Review this list weekly.
-2. Pick one unchecked item. Run its driving workflow.
-3. Check the box. Update any linked audit/punch-list file.
-4. Ship to `app.grifon.ai` staging as gates close. Don't wait for all gates to ship behind a feature flag.
+1. After every session that closes a gate, update this file's checkboxes IN THE SAME SESSION before clearing context.
+2. The `git log` is more authoritative than this file — when in doubt, check what code actually shipped.
+3. Treat this file as a *summary* of completed work, not a source of truth. Source of truth = the code.

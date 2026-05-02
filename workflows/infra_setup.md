@@ -20,13 +20,15 @@ Track status in this section. Update as items complete.
 - [ ] Row Level Security policies
 - [ ] Replaces hardcoded `ALLOWED_EMAILS` + password in `App.tsx`
 
-### 2. PayMongo (Billing, PH market) — NOT STARTED
-- [ ] Merchant account verified
-- [ ] API keys pulled (test + live)
-- [ ] `PAYMONGO_PUBLIC_KEY`, `PAYMONGO_SECRET_KEY`, `PAYMONGO_WEBHOOK_SECRET` in `.env`
-- [ ] Webhook endpoint registered: `https://app.grifon.ai/api/paymongo/webhook`
-- [ ] Products/prices match `GrifonPricingPage.tsx`
-- [ ] Checkout tested end-to-end (test card)
+### 2. PayMongo (Billing, PH market) — TEST MODE LIVE 2026-05-02
+- [x] Test API keys in `.env` (`PAYMONGO_PUBLIC_KEY`, `PAYMONGO_SECRET_KEY`, `PAYMONGO_WEBHOOK_SECRET`)
+- [x] Same three keys added to Vercel (Production scope)
+- [x] Test webhook registered in PayMongo Test Mode dashboard at `https://app.grifon.ai/api/webhook` listening for `checkout_session.payment.paid`
+- [x] Webhook signing secret pasted into Vercel `PAYMONGO_WEBHOOK_SECRET` (matches PayMongo's value)
+- [x] Products/prices match `GrifonPricingPage.tsx` (catalog defined in `api/_lib/paymongo.ts:23-45`)
+- [x] Checkout tested end-to-end with `4343 4343 4343 4345` — subscription row activated in Supabase, UI tier reflected
+- [ ] Merchant account verified (required to flip to Live Mode — see Gate 3-prod in `launch_readiness.md`)
+- [ ] Live mode setup (repeat all the above with `sk_live_...` and `whsk_live_...`)
 
 ### 3. Google Cloud Console (OAuth) — NOT STARTED
 - [ ] Project created
@@ -46,11 +48,13 @@ Track status in this section. Update as items complete.
 - [x] `grifon.ai` purchased
 - [x] Nameservers configured (handled by Vercel since they sold the domain)
 
-### 6. Subdomain: app.grifon.ai — NOT CONFIGURED
-- [ ] Vercel project created and linked to this repo
-- [ ] Add `app.grifon.ai` in Vercel → Project → Settings → Domains (DNS + SSL auto)
-- [ ] Production env vars pasted into Vercel (Supabase, PayMongo public, Gemini, ElevenLabs, Supabase service role)
-- [ ] First production deploy succeeds and reachable
+### 6. Subdomain: app.grifon.ai — LIVE 2026-05-02
+- [x] Vercel project `grifon-command` created (team `neilmaglayabusiness22-2085s-projects`, Hobby plan)
+- [x] Linked to GitHub repo `yopiheart/grifon-command`, branch `main` (every push auto-deploys)
+- [x] `app.grifon.ai` attached, SSL valid
+- [x] Production env vars pasted (Supabase URL/anon/service-role, Gemini, ElevenLabs, APP_URL, APP_ENV=production, GRIFON_VOICE_CLONING_ENABLED=false)
+- [x] First production deploy reachable at https://app.grifon.ai
+- Outstanding: Vercel billing address incomplete (Settings → Billing → Update Address) — non-blocking but Vercel will eventually nag
 
 ## Tools
 
@@ -71,3 +75,4 @@ No scripts yet. Each item is a manual console action. As we automate:
 - Never paste secrets into the chat. Place them in `.env` and tell the agent "done." The agent verifies by running the relevant `tools/verify_*.py`.
 - PayMongo requires a Philippine business registration — have that ready before starting merchant verification.
 - Vercel is the easiest host for a Vite React app; free tier will cover early usage.
+- **PayMongo webhooks must be registered manually in their dashboard** — not implicit from env vars, and Test Mode and Live Mode are completely separate. Each generates its own signing secret. If `subscriptions` rows aren't appearing after a successful payment, check Vercel function logs for `/api/webhook` first: no entries → unregistered, 400 → secret mismatch, 500 → DB error. Cost ~30 min on 2026-05-02 first deploy.
