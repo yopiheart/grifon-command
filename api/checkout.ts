@@ -53,7 +53,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       billing_cycle,
       user_id: user.id,
       user_email: user.email ?? '',
-      success_url: `${appUrl}/billing/success?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${appUrl}/billing/success`,
       cancel_url: `${appUrl}/billing/cancel`,
     });
     return res.status(200).json({ checkout_url: session.checkout_url, id: session.id });
