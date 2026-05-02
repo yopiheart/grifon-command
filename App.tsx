@@ -409,7 +409,7 @@ const App: React.FC = () => {
   let moduleElement: React.ReactNode;
 
   if (!activeModule) {
-    moduleElement = <Dashboard onSelectModule={setActiveModule} activeModule={activeModule} userEmail={userEmail} onLogout={handleLogout} />;
+    moduleElement = <Dashboard onSelectModule={setActiveModule} activeModule={activeModule} userEmail={userEmail} onLogout={handleLogout} onUpgrade={() => setCurrentRoute('pricing')} />;
   } else if (activeModule === 'generate_video') {
     moduleElement = (
       <PlanGate

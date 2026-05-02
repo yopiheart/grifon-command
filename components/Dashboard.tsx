@@ -28,6 +28,7 @@ interface DashboardProps {
   activeModule?: string | null;
   userEmail?: string | null;
   onLogout?: () => void;
+  onUpgrade?: () => void;
 }
 
 const CORE_MODULES = [
@@ -47,7 +48,7 @@ const MORE_MODULES = [
   { id: 'signal_modulator', name: 'Signal Modulator', icon: Mic, desc: 'Voice cloning, TTS, and audio enhancement.' }
 ];
 
-const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, userEmail, onLogout }) => {
+const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, userEmail, onLogout, onUpgrade }) => {
   // ADMIN MODE: To see in-progress modules, open browser console and run:
   // localStorage.setItem('grifon_admin', 'true')
   // Then refresh the page.
@@ -147,7 +148,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
             <Zap className="w-4 h-4 text-[#FFCC00] flex-shrink-0" />
             <p className="text-xs lg:text-sm text-zinc-300 text-center">
               {bannerMessage}
-              <button className="ml-2 text-[#FFCC00] font-semibold hover:underline inline-flex items-center gap-1">
+              <button onClick={onUpgrade} className="ml-2 text-[#FFCC00] font-semibold hover:underline inline-flex items-center gap-1">
                 Upgrade Now
                 <ArrowRight className="w-3 h-3" />
               </button>
@@ -508,7 +509,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
             
             {/* Plan + Credits Section */}
             <div className="p-3 border-b border-white/5 space-y-2">
-              <button className="w-full bg-[#FFCC00]/10 hover:bg-[#FFCC00]/15 border border-[#FFCC00]/20 rounded-lg px-3 py-2 flex items-center justify-between transition-all group">
+              <button onClick={onUpgrade} className="w-full bg-[#FFCC00]/10 hover:bg-[#FFCC00]/15 border border-[#FFCC00]/20 rounded-lg px-3 py-2 flex items-center justify-between transition-all group">
                 <span className="text-xs font-semibold text-[#FFCC00]">Upgrade Plan</span>
                 <ArrowRight className="w-3.5 h-3.5 text-[#FFCC00] group-hover:translate-x-0.5 transition-transform" />
               </button>
