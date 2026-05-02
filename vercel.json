@@ -1,0 +1,22 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "api/gemini/text.ts": { "maxDuration": 30 },
+    "api/gemini/image.ts": { "maxDuration": 60 },
+    "api/gemini/video.ts": { "maxDuration": 30 },
+    "api/gemini/video/poll.ts": { "maxDuration": 60 },
+    "api/cron/cleanup-gemini-videos.ts": { "maxDuration": 60 },
+    "api/elevenlabs/text-to-speech.ts": { "maxDuration": 60 },
+    "api/elevenlabs/speech-to-speech.ts": { "maxDuration": 60 },
+    "api/elevenlabs/voices.ts": { "maxDuration": 30 },
+    "api/elevenlabs/voices/clone.ts": { "maxDuration": 60 },
+    "api/elevenlabs/voices/[id].ts": { "maxDuration": 30 }
+  },
+  "crons": [
+    { "path": "/api/cron/cleanup-gemini-videos", "schedule": "0 3 * * *" }
+  ],
+  "rewrites": [
+    { "source": "/billing/success", "destination": "/index.html" },
+    { "source": "/billing/cancel", "destination": "/index.html" }
+  ]
+}

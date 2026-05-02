@@ -1,0 +1,549 @@
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
+import {
+  Film, Search, Target, Type, Image as ImageIcon,
+  Settings, Sparkles, ArrowRight, ChevronRight,
+  Video, User, Clapperboard, Wand2, Calendar, Scissors, Mic,
+  LogOut, HelpCircle, Crown, Zap, X
+} from 'lucide-react';
+import { useSubscription } from '../hooks/useSubscription';
+
+const GrifonLogo = ({ className = "h-8 w-auto" }) => (
+  <img src="/logo.png" alt="GRIFON Logo" className={`object-contain ${className}`} />
+);
+
+const MenuItem = ({ icon, label, hasSubmenu, danger, onClick }: any) => (
+  <button 
+    onClick={onClick}
+    className={`w-full px-4 py-2.5 flex items-center gap-3 hover:bg-white/5 transition-colors
+    ${danger ? 'text-red-400' : 'text-zinc-300'}`}
+  >
+    <span className="w-4 h-4 flex-shrink-0">{icon}</span>
+    <span className="text-sm flex-1 text-left">{label}</span>
+    {hasSubmenu && <ChevronRight className="w-3.5 h-3.5 text-zinc-600" />}
+  </button>
+);
+
+interface DashboardProps {
+  onSelectModule: (module: string) => void;
+  activeModule?: string | null;
+  userEmail?: string | null;
+  onLogout?: () => void;
+}
+
+const CORE_MODULES = [
+  { id: 'market_research', name: 'RESEARCH', icon: Search, desc: 'Deep market & competitor reports' },
+  { id: 'offer_optimizer', name: 'OFFER', icon: Target, desc: 'Irresistible offers with pricing psychology' },
+  { id: 'caption_headline', name: 'CAPTIONS', icon: Type, desc: 'Scroll-stopping copy for every platform' },
+  { id: 'image_editor', name: 'IMAGES', icon: ImageIcon, desc: 'AI-generated ad images in seconds' }
+];
+
+const MORE_MODULES = [
+  { id: 'cinematic_studio', name: 'Cinematic Studio', icon: Video, desc: 'High-fidelity video synthesis with custom camera paths and lighting control.' },
+  { id: 'influencer_forge', name: 'Influencer Forge', icon: User, desc: 'Generate consistent digital personas for social campaigns and brand storytelling.' },
+  { id: 'generate_video', name: 'Video Synthesis', icon: Clapperboard, desc: 'Render final video assets from storyboards and prompts.' },
+  { id: 'image_ads', name: 'Ad Creative Gen', icon: Wand2, desc: 'Generate high-converting image ads and variations.' },
+  { id: 'organic_calendar', name: 'Social Planner', icon: Calendar, desc: 'Schedule and automate your organic content calendar.' },
+  { id: 'edit_video', name: 'Video Editor', icon: Scissors, desc: 'Timeline-based editing, trimming, and assembly.' },
+  { id: 'signal_modulator', name: 'Signal Modulator', icon: Mic, desc: 'Voice cloning, TTS, and audio enhancement.' }
+];
+
+const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, userEmail, onLogout }) => {
+  // ADMIN MODE: To see in-progress modules, open browser console and run:
+  // localStorage.setItem('grifon_admin', 'true')
+  // Then refresh the page.
+  // To turn off: localStorage.removeItem('grifon_admin')
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    const adminFlag = localStorage.getItem('grifon_admin');
+    setIsAdmin(adminFlag === 'true');
+  }, []);
+
+  const placeholders = [
+    'Type your product to start.',
+    'e.g., "skincare, ₱500 cleanser"',
+    'e.g., "barbershop, Cavite"',
+    'e.g., "online course, ₱997"'
+  ];
+  const [placeholderIndex, setPlaceholderIndex] = useState(0);
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const [showUpgradeBanner, setShowUpgradeBanner] = useState(false);
+  const [bannerMessage, setBannerMessage] = useState('');
+  const bannerRef = useRef<HTMLDivElement>(null);
+  const [bannerHeight, setBannerHeight] = useState(0);
+
+  useLayoutEffect(() => {
+    if (!showUpgradeBanner || !bannerRef.current) {
+      setBannerHeight(0);
+      return;
+    }
+    const el = bannerRef.current;
+    const observer = new ResizeObserver(([entry]) => {
+      setBannerHeight(entry.contentRect.height);
+    });
+    observer.observe(el);
+    setBannerHeight(el.getBoundingClientRect().height);
+    return () => observer.disconnect();
+  }, [showUpgradeBanner, bannerMessage]);
+
+  const { plan_id: userPlan } = useSubscription();
+  const displayEmail = userEmail || '';
+  const userName = displayEmail
+    ? displayEmail.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+    : 'Operator';
+  const userAvatarUrl = '';
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPlaceholderIndex((prev) => (prev + 1) % placeholders.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setProfileMenuOpen(false);
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, []);
+
+  useEffect(() => {
+    const isDismissed = localStorage.getItem('grifon_banner_dismissed') === 'true';
+    if (isDismissed) return;
+    
+    // Tier-based messaging
+    if (userPlan === 'free') {
+      setBannerMessage("You're on Free. Unlock AI Video Ads with Pro.");
+      setShowUpgradeBanner(true);
+    } else if (userPlan === 'creator') {
+      setBannerMessage("Upgrade to Pro. Get 15 AI Video Ads/month.");
+      setShowUpgradeBanner(true);
+    } else {
+      setShowUpgradeBanner(false);
+    }
+  }, [userPlan]);
+
+  const dismissBanner = () => {
+    localStorage.setItem('grifon_banner_dismissed', 'true');
+    setShowUpgradeBanner(false);
+  };
+
+  return (
+    <div className="min-h-screen bg-zinc-950 text-white font-sans selection:bg-[#FFCC00] selection:text-black relative">
+      {/* UPGRADE 1: Dot Grid Background Pattern */}
+      <div 
+        className="fixed inset-0 pointer-events-none opacity-[0.03] z-0"
+        style={{
+          backgroundImage: 'radial-gradient(#FFCC00 1px, transparent 1px)',
+          backgroundSize: '32px 32px',
+        }}
+      />
+
+      {/* Upgrade Banner */}
+      {showUpgradeBanner && (
+        <div ref={bannerRef} className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[#FFCC00]/10 via-[#FFCC00]/15 to-[#FFCC00]/10 border-b border-[#FFCC00]/20 backdrop-blur-xl">
+          <div className="max-w-7xl mx-auto pl-4 pr-10 py-2.5 flex items-center justify-center gap-3 relative">
+            <Zap className="w-4 h-4 text-[#FFCC00] flex-shrink-0" />
+            <p className="text-xs lg:text-sm text-zinc-300 text-center">
+              {bannerMessage}
+              <button className="ml-2 text-[#FFCC00] font-semibold hover:underline inline-flex items-center gap-1">
+                Upgrade Now
+                <ArrowRight className="w-3 h-3" />
+              </button>
+            </p>
+            
+            {/* Dismiss button */}
+            <button 
+              onClick={dismissBanner}
+              className="absolute right-4 text-zinc-500 hover:text-white transition-colors"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Fixed Top Bar */}
+      <div
+        className="fixed left-0 right-0 z-40 bg-zinc-950/80 backdrop-blur-xl border-b border-white/5 transition-all"
+        style={{ top: bannerHeight }}
+      >
+        <div className="px-4 lg:pl-24 lg:pr-8 py-3 flex items-center justify-between">
+          {/* Mobile logo on left */}
+          <div className="lg:hidden">
+            <GrifonLogo className="w-8 h-8" />
+          </div>
+          
+          {/* Badges pushed to far right */}
+          <div className="flex items-center gap-3 ml-auto">
+            {/* Mobile Profile Avatar */}
+            <button 
+              onClick={() => setProfileMenuOpen(!profileMenuOpen)}
+              className="lg:hidden w-8 h-8 rounded-full bg-zinc-800 border border-white/10 overflow-hidden flex items-center justify-center flex-shrink-0"
+            >
+              {userAvatarUrl ? (
+                <img src={userAvatarUrl} alt="Profile" className="w-full h-full object-cover" />
+              ) : (
+                <User className="w-4 h-4 text-zinc-400" />
+              )}
+            </button>
+
+            {/* AI Agents Online Badge */}
+            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-zinc-900 border border-white/10 rounded-full">
+              <div className="relative flex items-center justify-center">
+                <div className="w-2 h-2 rounded-full bg-green-500" />
+                <div className="absolute w-2 h-2 rounded-full bg-green-500 animate-ping opacity-75" />
+              </div>
+              <span className="text-[10px] font-mono font-semibold text-zinc-400 uppercase tracking-widest">
+                AI Agents Online
+              </span>
+            </div>
+
+            {/* Upgraded Credits Badge */}
+            <div className="flex items-center gap-3 bg-zinc-900/80 backdrop-blur-xl border border-white/10 rounded-full px-4 py-2">
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-[#FFCC00]" />
+                <div className="flex items-baseline gap-1.5">
+                  <span className="text-sm lg:text-base font-mono font-bold text-white tabular-nums">
+                    4,500
+                  </span>
+                  <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">
+                    Credits
+                  </span>
+                </div>
+              </div>
+              
+              {/* Vertical divider */}
+              <div className="w-px h-4 bg-white/10" />
+              
+              {/* Usage indicator dot */}
+              <div className="flex items-center gap-1.5">
+                <div className="w-1.5 h-1.5 rounded-full bg-[#FFCC00]" />
+                <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">
+                  Pro
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Bottom Nav */}
+      <nav className="fixed bottom-0 left-0 right-0 z-50 bg-zinc-950/95 backdrop-blur-xl border-t border-white/10 px-2 py-2 flex items-center justify-around lg:hidden">
+        {[
+          { id: 'creative_director', label: 'Director', icon: Film },
+          { id: 'market_research', label: 'Research', icon: Search },
+          { id: 'offer_optimizer', label: 'Offer', icon: Target },
+          { id: 'caption_headline', label: 'Copy', icon: Type },
+          { id: 'image_editor', label: 'Images', icon: ImageIcon }
+        ].map((item) => (
+          <div 
+            key={item.id}
+            onClick={() => onSelectModule(item.id)}
+            className="flex flex-col items-center gap-1 py-1 px-3 rounded-xl cursor-pointer group"
+          >
+            <div className={`w-1 h-1 rounded-full mx-auto mb-0.5 ${activeModule === item.id ? 'bg-[#FFCC00]' : 'bg-transparent'}`} />
+            <item.icon className={`w-5 h-5 ${activeModule === item.id ? 'text-[#FFCC00]' : 'text-zinc-600 group-hover:text-zinc-400'}`} />
+            <span className={`text-[10px] font-medium ${activeModule === item.id ? 'text-[#FFCC00]' : 'text-zinc-600 group-hover:text-zinc-400'}`}>{item.label}</span>
+          </div>
+        ))}
+      </nav>
+
+      {/* Desktop Left Sidebar */}
+      <aside className="hidden lg:flex fixed left-0 top-0 bottom-0 z-50 w-20 bg-zinc-950/95 backdrop-blur-xl border-r border-white/10 flex-col items-center py-6 gap-3">
+        <GrifonLogo className="w-10 h-10 mb-8" />
+        
+        {[
+          { id: 'creative_director', label: 'Director', icon: Film },
+          { id: 'market_research', label: 'Research', icon: Search },
+          { id: 'offer_optimizer', label: 'Offer', icon: Target },
+          { id: 'caption_headline', label: 'Copy', icon: Type },
+          { id: 'image_editor', label: 'Images', icon: ImageIcon }
+        ].map((item) => {
+          const isActive = activeModule === item.id;
+          return (
+            <div 
+              key={item.id}
+              onClick={() => onSelectModule(item.id)}
+              className={`relative flex flex-col items-center gap-1.5 py-3 px-2 rounded-xl cursor-pointer w-16 transition-all group ${isActive ? 'bg-zinc-900/80' : 'hover:bg-zinc-900/80'}`}
+            >
+              {/* Active indicator bar */}
+              {isActive && (
+                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-6 bg-[#FFCC00] rounded-r-full" />
+              )}
+              
+              <item.icon className={`w-5 h-5 ${isActive ? 'text-[#FFCC00]' : 'text-zinc-400 group-hover:text-white'}`} />
+              <span className={`text-[9px] font-medium tracking-wide ${isActive ? 'text-[#FFCC00]' : 'text-zinc-400 group-hover:text-white'}`}>{item.label}</span>
+            </div>
+          );
+        })}
+
+        <div className="mt-auto mb-4 relative">
+          <button 
+            onClick={() => setProfileMenuOpen(!profileMenuOpen)}
+            className="w-12 h-12 mx-auto rounded-full bg-zinc-800 border-2 border-white/10 hover:border-[#FFCC00]/50 transition-all overflow-hidden cursor-pointer flex items-center justify-center"
+          >
+            {userAvatarUrl ? (
+              <img src={userAvatarUrl} alt="Profile" className="w-full h-full object-cover" />
+            ) : (
+              <User className="w-5 h-5 text-zinc-400" />
+            )}
+          </button>
+        </div>
+      </aside>
+
+      {/* Main Content Wrapper */}
+      <main className={`pb-20 lg:pb-0 lg:pl-20 transition-all ${showUpgradeBanner ? 'pt-24 lg:pt-28' : 'pt-16 lg:pt-20'}`}>
+        <div className="max-w-4xl lg:max-w-6xl mx-auto px-4 lg:px-8 flex flex-col justify-center min-h-screen lg:min-h-screen">
+          
+          {/* Smart Input Bar */}
+          <div className="mb-8 lg:mb-10 relative z-10">
+            {/* Ambient Gold Spotlight Behind Hero */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden -z-10">
+              <div 
+                className="w-[800px] h-[800px] lg:w-[1200px] lg:h-[1200px] rounded-full"
+                style={{
+                  background: 'radial-gradient(circle at center, rgba(255,204,0,0.06) 0%, rgba(255,204,0,0.03) 30%, rgba(255,204,0,0.01) 60%, transparent 80%)',
+                  filter: 'blur(60px)',
+                  mixBlendMode: 'screen',
+                  animation: 'float-glow 12s ease-in-out infinite',
+                }}
+              />
+            </div>
+
+            <p className="text-[10px] lg:text-xs font-mono text-zinc-500 uppercase tracking-widest mb-4 lg:mb-6 text-center lg:text-center">
+              // READY TO BUILD
+            </p>
+            <div className="block text-center mb-8 lg:mb-12">
+              <h1 className="font-outfit text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-white uppercase tracking-tight">GRIFON COMMAND</h1>
+              <p className="text-sm lg:text-lg xl:text-xl font-medium text-zinc-400 mt-4 lg:mt-6">Your entire Marketing Team. In one tab.</p>
+            </div>
+            <div className="bg-zinc-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-3 lg:p-5 flex items-center gap-3 max-w-2xl lg:max-w-3xl mx-auto w-full">
+              <Sparkles className="w-5 h-5 text-[#FFCC00] flex-shrink-0" />
+              <input 
+                type="text" 
+                placeholder={placeholders[placeholderIndex]} 
+                className="bg-transparent text-white text-[11px] sm:text-xs lg:text-base flex-1 min-w-0 outline-none placeholder:text-zinc-600 transition-all duration-500"
+              />
+              <button className="w-9 h-9 lg:w-12 lg:h-12 bg-[#FFCC00] rounded-xl flex items-center justify-center flex-shrink-0 hover:scale-105 active:scale-95 transition-all">
+                <ArrowRight className="w-5 h-5 text-black" />
+              </button>
+            </div>
+          </div>
+
+          {/* Recommended Flow Path */}
+          <div className="mb-6 lg:mb-10 max-w-2xl lg:max-w-3xl mx-auto w-full mt-8 lg:mt-16">
+            <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mb-3 text-center lg:text-left">
+              // RECOMMENDED FLOW
+            </p>
+            <div className="flex items-center justify-center flex-wrap gap-y-3 lg:gap-y-0 lg:flex-nowrap pb-2 px-1 lg:px-0">
+              {[
+                { num: 1, label: 'Research', id: 'market_research' },
+                { num: 2, label: 'Offer', id: 'offer_optimizer' },
+                { num: 3, label: 'Director', id: 'creative_director' },
+                { num: 4, label: 'Copy', id: 'caption_headline' },
+                { num: 5, label: 'Images', id: 'image_editor' }
+              ].map((step, idx, arr) => (
+                <React.Fragment key={step.id}>
+                  <div 
+                    onClick={() => onSelectModule(step.id)}
+                    className="flex items-center gap-1.5 lg:gap-2 flex-shrink-0 cursor-pointer active:scale-95 transition-transform"
+                  >
+                    <div className="w-5 h-5 lg:w-6 lg:h-6 rounded-full bg-[#FFCC00]/10 border border-[#FFCC00]/30 flex items-center justify-center text-[9px] lg:text-[10px] font-mono font-bold text-[#FFCC00]">
+                      {step.num}
+                    </div>
+                    <span className="text-[10px] lg:text-xs font-medium text-zinc-400 whitespace-nowrap">{step.label}</span>
+                  </div>
+                  {idx < arr.length - 1 && (
+                    <div className={`w-3 lg:w-6 h-px bg-zinc-700 flex-shrink-0 mx-1 lg:mx-2 ${idx === 3 ? 'hidden lg:flex' : 'flex'}`} />
+                  )}
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+
+          {/* Module Grid */}
+          <div className="max-w-3xl mx-auto w-full mb-12">
+            {/* Mobile Grid */}
+            <div className="grid grid-cols-2 gap-3 lg:hidden">
+              {/* Director AI (Mobile) */}
+              <div 
+                onClick={() => onSelectModule('creative_director')}
+                className="col-span-2 bg-zinc-900/80 backdrop-blur-xl border border-[#FFCC00]/30 rounded-2xl p-5 relative overflow-hidden group cursor-pointer flex items-center gap-4 hover:scale-[1.02] hover:border-[#FFCC00]/50 hover:shadow-[0_8px_40px_rgba(255,204,0,0.15)] active:scale-[0.98] transition-all duration-300"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-[#FFCC00]/5 to-transparent pointer-events-none" />
+                <div className="w-12 h-12 bg-[#FFCC00]/10 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 ease-out">
+                  <Film className="w-6 h-6 text-[#FFCC00]" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-base font-bold text-white uppercase tracking-tight">DIRECTOR</h3>
+                  <p className="text-xs text-zinc-400 mt-0.5">8-step video ad workflow</p>
+                </div>
+                <ChevronRight className="w-5 h-5 text-zinc-600 group-hover:text-[#FFCC00] transition-colors relative z-10" />
+              </div>
+
+              {/* Standard Modules (Mobile) */}
+              {CORE_MODULES.map((mod) => (
+                <div 
+                  key={mod.id}
+                  onClick={() => onSelectModule(mod.id)}
+                  className="bg-zinc-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-4 relative overflow-hidden group cursor-pointer aspect-square flex flex-col justify-between hover:scale-[1.02] hover:border-white/20 hover:shadow-[0_8px_30px_rgba(255,204,0,0.08)] active:scale-[0.98] transition-all duration-300"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                  <div className="w-10 h-10 bg-[#FFCC00]/10 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 ease-out">
+                    <mod.icon className="w-5 h-5 text-[#FFCC00]" />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-bold text-white uppercase tracking-tight leading-tight">{mod.name}</h3>
+                    <p className="text-[11px] text-zinc-500 mt-1 leading-snug">{mod.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Desktop Row */}
+            <div className="hidden lg:flex items-start justify-center gap-4">
+              {/* Director AI (Desktop) */}
+              <div 
+                onClick={() => onSelectModule('creative_director')}
+                className="flex-1 bg-zinc-900/80 backdrop-blur-xl border border-[#FFCC00]/30 rounded-2xl p-6 relative overflow-hidden group cursor-pointer text-center hover:scale-[1.02] hover:border-[#FFCC00]/50 hover:shadow-[0_8px_40px_rgba(255,204,0,0.15)] active:scale-[0.98] transition-all duration-300"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-[#FFCC00]/5 to-transparent pointer-events-none" />
+                <div className="w-14 h-14 lg:w-16 lg:h-16 bg-[#FFCC00]/10 rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 ease-out">
+                  <Film className="w-7 h-7 lg:w-8 lg:h-8 text-[#FFCC00]" />
+                </div>
+                <h3 className="text-sm lg:text-sm xl:text-base font-bold text-white uppercase tracking-tight">DIRECTOR</h3>
+                <p className="text-[11px] lg:text-xs text-zinc-500 mt-1">8-step video ad workflow</p>
+              </div>
+
+              {/* Standard Modules (Desktop) */}
+              {CORE_MODULES.map((mod) => (
+                <div 
+                  key={mod.id}
+                  onClick={() => onSelectModule(mod.id)}
+                  className="flex-1 bg-zinc-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6 relative overflow-hidden group cursor-pointer text-center min-w-0 hover:scale-[1.02] hover:border-white/20 hover:shadow-[0_8px_30px_rgba(255,204,0,0.08)] active:scale-[0.98] transition-all duration-300"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                  <div className="w-14 h-14 lg:w-16 lg:h-16 bg-zinc-800/80 rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 ease-out">
+                    <mod.icon className="w-7 h-7 lg:w-8 lg:h-8 text-[#FFCC00]" />
+                  </div>
+                  <h3 className="text-sm lg:text-sm xl:text-base font-bold text-white uppercase tracking-tight">{mod.name}</h3>
+                  <p className="text-[11px] lg:text-xs text-zinc-500 mt-1">{mod.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* More Modules Section */}
+          {isAdmin && (
+            <div className="max-w-3xl mx-auto w-full">
+              <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mb-4">
+                // MORE MODULES
+              </p>
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
+                {MORE_MODULES.map((mod) => (
+                  <div 
+                    key={mod.id}
+                    onClick={() => onSelectModule(mod.id)}
+                    className="bg-zinc-900/50 backdrop-blur-xl border border-white/5 rounded-2xl p-4 relative overflow-hidden group hover:bg-zinc-900/80 hover:border-white/10 active:scale-[0.98] transition-all cursor-pointer flex flex-col"
+                  >
+                    <div className="w-8 h-8 bg-zinc-800 rounded-lg flex items-center justify-center mb-3">
+                      <mod.icon className="w-4 h-4 text-zinc-400 group-hover:text-[#FFCC00] transition-colors" />
+                    </div>
+                    <h3 className="text-xs font-bold text-white uppercase tracking-tight mb-1">{mod.name}</h3>
+                    <p className="text-[10px] text-zinc-500 leading-snug line-clamp-2">{mod.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {!isAdmin && (
+            <section className="mt-8 lg:mt-10 max-w-3xl mx-auto w-full px-4">
+              <div className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mb-3">
+                // COMING SOON
+              </div>
+              <div className="bg-zinc-900/50 backdrop-blur-xl border border-white/5 rounded-2xl p-5 text-center">
+                <p className="text-sm text-zinc-500">
+                  New modules drop monthly. Stay tuned.
+                </p>
+              </div>
+            </section>
+          )}
+
+        </div>
+      </main>
+
+      {/* Global Profile Menu */}
+      {profileMenuOpen && (
+        <>
+          {/* Backdrop to close on outside click */}
+          <div 
+            className="fixed inset-0 z-[60] bg-black/40 lg:bg-transparent backdrop-blur-sm lg:backdrop-blur-none" 
+            onClick={() => setProfileMenuOpen(false)}
+          />
+          
+          {/* Menu popover */}
+          <div className="fixed z-[70] w-[calc(100vw-32px)] max-w-sm lg:w-72 bg-zinc-900/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl shadow-black/50 overflow-hidden top-[88px] right-4 lg:top-auto lg:bottom-6 lg:left-24 lg:right-auto origin-top-right lg:origin-bottom-left">
+            
+            {/* User info header */}
+            <div className="p-4 border-b border-white/5 flex items-center gap-3">
+              <div className="w-12 h-12 rounded-full bg-zinc-800 border border-white/10 overflow-hidden flex items-center justify-center flex-shrink-0">
+                {userAvatarUrl ? (
+                  <img src={userAvatarUrl} className="w-full h-full object-cover" />
+                ) : (
+                  <User className="w-5 h-5 text-zinc-400" />
+                )}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="text-sm font-semibold text-white truncate">
+                  {userName}
+                </div>
+                <div className="text-xs text-zinc-500 truncate">
+                  {displayEmail}
+                </div>
+              </div>
+            </div>
+            
+            {/* Plan + Credits Section */}
+            <div className="p-3 border-b border-white/5 space-y-2">
+              <button className="w-full bg-[#FFCC00]/10 hover:bg-[#FFCC00]/15 border border-[#FFCC00]/20 rounded-lg px-3 py-2 flex items-center justify-between transition-all group">
+                <span className="text-xs font-semibold text-[#FFCC00]">Upgrade Plan</span>
+                <ArrowRight className="w-3.5 h-3.5 text-[#FFCC00] group-hover:translate-x-0.5 transition-transform" />
+              </button>
+              
+              <div className="bg-zinc-800/50 rounded-lg px-3 py-2 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="w-3.5 h-3.5 text-[#FFCC00]" />
+                  <span className="text-xs text-zinc-400">Credits</span>
+                </div>
+                <span className="text-xs font-mono font-bold text-white">4,500</span>
+              </div>
+            </div>
+            
+            {/* Plan Edition Label */}
+            <div className="px-4 py-2.5 border-b border-white/5">
+              <div className="flex items-center gap-2">
+                <Crown className="w-3.5 h-3.5 text-[#FFCC00]" />
+                <span className="text-xs font-semibold text-white">
+                  {userPlan === 'free' ? 'Free Edition' : userPlan === 'creator' ? 'Creator Edition' : 'Pro Edition'}
+                </span>
+              </div>
+            </div>
+            
+            {/* Menu Items */}
+            <div className="py-1">
+              <MenuItem icon={<Settings className="w-4 h-4" />} label="Settings" />
+              <MenuItem icon={<HelpCircle className="w-4 h-4" />} label="Help" hasSubmenu />
+              <MenuItem icon={<LogOut className="w-4 h-4" />} label="Sign out" danger onClick={onLogout} />
+            </div>
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
+
+export default Dashboard;
+
