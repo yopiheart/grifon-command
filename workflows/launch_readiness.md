@@ -10,13 +10,17 @@ ICANN domain verification confirmed (Gate 6 follow-up closed). ElevenLabs upgrad
 - `api/elevenlabs/voices/clone.ts` — fixed data-URL parser to accept MediaRecorder's `audio/webm;codecs=opus` output; split error mapper to distinguish "API key missing scope" from "plan tier insufficient"; added user-readable `message` to all 400/415/429 paths so the UI surfaces real reasons.
 - `vite.config.ts` — taught `vercelApiDevPlugin` to resolve `[param].ts` dynamic routes and inject the segment value into `req.query`. Without this, the DELETE handler at `api/elevenlabs/voices/[id].ts` was unreachable in dev (worked in prod via Vercel's filesystem router).
 
-Outstanding before opening IVC to real users:
-- Flip `GRIFON_VOICE_CLONING_ENABLED=true` in **Vercel** (Production scope) and redeploy. This is the operational gate that flips the feature live.
-- Apply `supabase/user_voices.sql` to **prod** Supabase if not already (verified working locally; the same Supabase project is shared so likely already applied).
+**IVC unlock — CLOSED 2026-05-04.** Voice cloning is live for Creator+ users on `app.grifon.ai`. End-to-end smoke test on prod passed: cloned voice created, used in TTS, deletable. Voice Changer (uploaded + recorded) and Voice DNA library voices also confirmed working post-deploy. The Supabase `user_voices` table is live in prod (proven by behavior).
 
-Shipped same session:
+Operational changes flipped in Vercel (Production scope) and redeployed:
+- `GRIFON_VOICE_CLONING_ENABLED=true`
+- `ELEVEN_LABS_API_KEY` rotated to a key with `Voices=Write + TTS + Models` scopes (the prior key was missing `Voices=Write`, which would have 401'd cloning even with the flag on).
+
+Shipped same session (commits `fa1fec1`, `9837d0b`, `66df4ca`):
 - Plan-tier gate at `components/SignalModulator/index.tsx:24-25` — Voice Cloning tab now renders only when `useSubscription` reports Creator+ (`planAtLeast(plan_id, 'creator')`); free-tier users no longer see the tab.
 - `MAX_VOICES_PER_USER` bumped 1 → 2 at `api/_lib/voiceConfig.ts:4` to give Creator/Pro users headroom without exhausting the 10-slot Starter pool.
+
+Open follow-up (non-blocking): voice picker curation — default the TTS picker to Filipino voices with a "Show all" toggle, since Grifon serves a Filipino market. Stock voices can't be deleted on the ElevenLabs side, so curation must happen in the UI; deletion alone can't achieve a Filipino-only experience.
 
 Note: the `localStorage.grifon_admin` key is **still in use** by `Dashboard.tsx:440,463` as an admin-only preview switch for the MORE MODULES section (7 in-progress modules). Do not advise users to remove it — see `agent_lessons.md` 2026-05-04 entry for the regression that taught this.
 
