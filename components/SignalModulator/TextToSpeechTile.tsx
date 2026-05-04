@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Sparkles, Activity, ChevronDown, Download } from 'lucide-react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { Sparkles, Activity, ChevronDown, Download, RefreshCw } from 'lucide-react';
 import { GlassPanel } from '../ui/GlassPanel';
 import { GoldButton } from '../ui/GoldButton';
 import Loader from '../ui/Loader';
@@ -8,20 +8,27 @@ import type { StabilityMode, VoiceLibrary } from '../../types';
 import VoicePicker from './VoicePicker';
 import { RECOMMENDED_VOICE_IDS } from './pinoyReady';
 import { STABILITY_LABELS, TTS_TAGS, downloadAudio } from './utils';
+import type { SessionHistoryApi } from './useSessionHistory';
 
 const MAX_CHARS = 10000;
 
 interface TextToSpeechTileProps {
   library: VoiceLibrary;
   globalScript?: string[];
+  history: SessionHistoryApi;
 }
 
-const TextToSpeechTile: React.FC<TextToSpeechTileProps> = ({ library, globalScript = [] }) => {
+const resolveVoiceName = (library: VoiceLibrary, voiceId: string): string =>
+  [...library.myVoices, ...library.libraryVoices, ...library.stockVoices].find(v => v.voice_id === voiceId)?.name
+  ?? 'audio';
+
+const TextToSpeechTile: React.FC<TextToSpeechTileProps> = ({ library, globalScript = [], history }) => {
   const [voiceId, setVoiceId] = useState<string>('');
   const [text, setText] = useState('');
   const [stabilityMode, setStabilityMode] = useState<StabilityMode>('natural');
   const [isLoading, setIsLoading] = useState(false);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
+  const [currentTakeId, setCurrentTakeId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -34,7 +41,18 @@ const TextToSpeechTile: React.FC<TextToSpeechTileProps> = ({ library, globalScri
     }
   }, [library, voiceId]);
 
-  useEffect(() => () => { if (audioUrl) URL.revokeObjectURL(audioUrl); }, [audioUrl]);
+  // Hydrate form when a take is restored from the history drawer.
+  useEffect(() => {
+    const t = history.pendingRestore;
+    if (!t || t.kind !== 'tts') return;
+    setVoiceId(t.voiceId);
+    setText(t.text ?? '');
+    setStabilityMode(t.stabilityMode);
+    setAudioUrl(null);
+    setCurrentTakeId(null);
+    setError(null);
+    history.consumeRestore();
+  }, [history]);
 
   const insertTag = (tag: string) => {
     const ta = textareaRef.current;
@@ -71,6 +89,15 @@ const TextToSpeechTile: React.FC<TextToSpeechTileProps> = ({ library, globalScri
     try {
       const url = await synthesizeSpeech({ voiceId, text, stabilityMode });
       setAudioUrl(url);
+      const takeId = history.addTake({
+        kind: 'tts',
+        voiceId,
+        voiceName: resolveVoiceName(library, voiceId),
+        text,
+        stabilityMode,
+        audioUrl: url,
+      });
+      setCurrentTakeId(takeId);
     } catch (err: any) {
       setError(err?.message ?? 'TTS_SYNTHESIS_FAILED');
     } finally {
@@ -78,10 +105,34 @@ const TextToSpeechTile: React.FC<TextToSpeechTileProps> = ({ library, globalScri
     }
   };
 
+  const currentTake = useMemo(
+    () => history.takes.find(t => t.id === currentTakeId) ?? null,
+    [history.takes, currentTakeId]
+  );
+  const regensLeft = currentTake?.regensRemaining ?? 0;
+
+  const onRegenerate = async () => {
+    if (!currentTake || regensLeft <= 0) return;
+    setIsLoading(true);
+    setError(null);
+    try {
+      const url = await synthesizeSpeech({
+        voiceId: currentTake.voiceId,
+        text: currentTake.text ?? '',
+        stabilityMode: currentTake.stabilityMode,
+      });
+      setAudioUrl(url);
+      history.replaceTakeAudio(currentTake.id, url);
+    } catch (err: any) {
+      setError(err?.message ?? 'TTS_REGENERATE_FAILED');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const onDownload = () => {
     if (!audioUrl) return;
-    const voiceName = [...library.myVoices, ...library.libraryVoices, ...library.stockVoices].find(v => v.voice_id === voiceId)?.name ?? 'audio';
-    downloadAudio(audioUrl, 'tts', voiceName);
+    downloadAudio(audioUrl, 'tts', resolveVoiceName(library, voiceId));
   };
 
   const charCount = text.length;
@@ -156,20 +207,41 @@ const TextToSpeechTile: React.FC<TextToSpeechTileProps> = ({ library, globalScri
           </div>
 
           {audioUrl && !isLoading && (
-            <div className="mt-8 p-6 bg-zinc-950 border border-white/10 rounded-xl flex flex-col md:flex-row items-center gap-6">
-              <div className="flex-1 w-full">
-                <div className="flex justify-between text-[10px] text-zinc-400 font-mono uppercase mb-4">
-                  <span>// SYNTH_OUTPUT</span>
-                  <Activity className="w-4 h-4 text-[#FFCC00] animate-pulse" />
+            <div className="mt-8 p-6 bg-zinc-950 border border-white/10 rounded-xl flex flex-col gap-4">
+              <div className="flex flex-col md:flex-row items-center gap-6">
+                <div className="flex-1 w-full">
+                  <div className="flex justify-between text-[10px] text-zinc-400 font-mono uppercase mb-4">
+                    <span>// SYNTH_OUTPUT</span>
+                    <Activity className="w-4 h-4 text-[#FFCC00] animate-pulse" />
+                  </div>
+                  <audio src={audioUrl} controls controlsList="nodownload" className="w-full filter invert opacity-80 h-10" />
+                  <p className="text-[9px] font-mono text-zinc-600 uppercase tracking-widest mt-3">
+                    // LOGGED_TO_SESSION — DEPLOY_AUDIO_TO_KEEP_AFTER_REFRESH
+                  </p>
                 </div>
-                <audio src={audioUrl} controls controlsList="nodownload" className="w-full filter invert opacity-80 h-10" />
-                <p className="text-[9px] font-mono text-zinc-600 uppercase tracking-widest mt-3">
-                  // DOWNLOAD_TO_SAVE — OUTPUTS_NOT_STORED
-                </p>
+                <div className="flex flex-col gap-2 shrink-0 w-full md:w-auto">
+                  <GoldButton onClick={onDownload} className="px-6 py-3 text-xs flex items-center justify-center gap-2">
+                    <Download className="w-4 h-4" /> DEPLOY AUDIO
+                  </GoldButton>
+                  {currentTake && (
+                    <button
+                      type="button"
+                      onClick={onRegenerate}
+                      disabled={regensLeft <= 0 || isLoading}
+                      className="px-6 py-2.5 rounded-xl bg-zinc-950 border border-white/10 text-[10px] font-bold uppercase tracking-widest text-zinc-300 hover:border-[#FFCC00]/40 hover:text-[#FFCC00] transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                      title={regensLeft > 0
+                        ? `Regenerate this take with the same voice + text · ${regensLeft} left`
+                        : 'No regenerates left for this take. Edit text or change voice and synthesize again.'}
+                    >
+                      <RefreshCw className="w-3.5 h-3.5" />
+                      REGENERATE
+                      <span className={`text-[9px] font-mono ${regensLeft > 0 ? 'text-[#FFCC00]' : 'text-zinc-600'}`}>
+                        · {regensLeft}_LEFT
+                      </span>
+                    </button>
+                  )}
+                </div>
               </div>
-              <GoldButton onClick={onDownload} className="px-8 py-3 text-xs shrink-0 flex items-center gap-2">
-                <Download className="w-4 h-4" /> DEPLOY AUDIO
-              </GoldButton>
             </div>
           )}
         </GlassPanel>

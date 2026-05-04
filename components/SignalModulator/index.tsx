@@ -1,12 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { ChevronLeft, Mic, MessageSquare, Wand2 } from 'lucide-react';
+import { ChevronLeft, Mic, MessageSquare, Wand2, History } from 'lucide-react';
 import { fetchVoices } from '../../services/voiceService';
-import type { VoiceLibrary } from '../../types';
+import type { VoiceLibrary, HistoryTake } from '../../types';
 import { useSubscription } from '../../hooks/useSubscription';
 import { planAtLeast } from '../../utils/planGate';
 import TextToSpeechTile from './TextToSpeechTile';
 import VoiceChangerTile from './VoiceChangerTile';
 import VoiceCloningTile from './VoiceCloningTile';
+import SessionHistory from './SessionHistory';
+import { useSessionHistory } from './useSessionHistory';
 
 type Tile = 'tts' | 'vc' | 'clone';
 
@@ -21,8 +23,10 @@ const SignalModulator: React.FC<SignalModulatorProps> = ({ onBack, globalScript 
   const [activeTile, setActiveTile] = useState<Tile>('tts');
   const [library, setLibrary] = useState<VoiceLibrary>(EMPTY_LIBRARY);
   const [librarLoading, setLibraryLoading] = useState(true);
+  const [historyOpen, setHistoryOpen] = useState(false);
   const { plan_id, loading: subLoading } = useSubscription();
   const canClone = !subLoading && planAtLeast(plan_id, 'creator');
+  const history = useSessionHistory();
 
   const refreshLibrary = useCallback(async () => {
     setLibraryLoading(true);
@@ -35,6 +39,15 @@ const SignalModulator: React.FC<SignalModulatorProps> = ({ onBack, globalScript 
   }, []);
 
   useEffect(() => { refreshLibrary(); }, [refreshLibrary]);
+
+  // When the user clicks RESTORE on a take, switch to the matching tile so
+  // the restore payload lands in the right form. The tile itself consumes
+  // pendingRestore via useEffect.
+  const handleRestore = useCallback((take: HistoryTake) => {
+    setActiveTile(take.kind === 'tts' ? 'tts' : 'vc');
+    history.restoreTake(take);
+    setHistoryOpen(false);
+  }, [history]);
 
   const tabBtn = (id: Tile, label: string, Icon: typeof Mic) => (
     <button
@@ -58,8 +71,24 @@ const SignalModulator: React.FC<SignalModulatorProps> = ({ onBack, globalScript 
             <span className="hidden md:inline">COMMAND CENTER</span>
             <span className="md:hidden">BACK</span>
           </button>
-          <div className="hidden md:flex items-center gap-4 text-[10px] text-zinc-500 font-mono tracking-widest uppercase">
-            // FREQUENCY LOCKED
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setHistoryOpen(true)}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-900 border border-white/10 hover:border-[#FFCC00]/40 hover:text-[#FFCC00] text-[10px] font-mono text-zinc-400 uppercase tracking-widest transition-colors"
+              title="View this session's takes"
+            >
+              <History className="w-3.5 h-3.5" />
+              <span>// LOG</span>
+              {history.takes.length > 0 && (
+                <span className="bg-[#FFCC00] text-black px-1.5 rounded text-[9px] font-bold">
+                  {history.takes.length}
+                </span>
+              )}
+            </button>
+            <div className="hidden md:flex items-center gap-4 text-[10px] text-zinc-500 font-mono tracking-widest uppercase">
+              // FREQUENCY LOCKED
+            </div>
           </div>
         </div>
         <div>
@@ -77,8 +106,19 @@ const SignalModulator: React.FC<SignalModulatorProps> = ({ onBack, globalScript 
         </div>
       </div>
 
-      {activeTile === 'tts' && <TextToSpeechTile library={library} globalScript={globalScript} />}
-      {activeTile === 'vc' && <VoiceChangerTile library={library} />}
+      {activeTile === 'tts' && (
+        <TextToSpeechTile
+          library={library}
+          globalScript={globalScript}
+          history={history}
+        />
+      )}
+      {activeTile === 'vc' && (
+        <VoiceChangerTile
+          library={library}
+          history={history}
+        />
+      )}
       {activeTile === 'clone' && canClone && (
         <VoiceCloningTile library={library} onLibraryRefresh={refreshLibrary} />
       )}
@@ -88,6 +128,14 @@ const SignalModulator: React.FC<SignalModulatorProps> = ({ onBack, globalScript 
           // LOADING_VOICE_LIBRARY
         </p>
       )}
+
+      <SessionHistory
+        open={historyOpen}
+        takes={history.takes}
+        onClose={() => setHistoryOpen(false)}
+        onRestore={handleRestore}
+        onRemove={history.removeTake}
+      />
     </div>
   );
 };

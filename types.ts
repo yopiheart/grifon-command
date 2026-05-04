@@ -311,6 +311,20 @@ export interface VoiceLibrary {
   quotaMax: number;
 }
 
+export interface HistoryTake {
+  id: string;
+  kind: 'tts' | 'voice-changer';
+  voiceId: string;
+  voiceName: string;
+  text?: string;
+  sourceFile?: string;
+  sourceLabel?: string;
+  stabilityMode: StabilityMode;
+  audioUrl: string;
+  createdAt: number;
+  regensRemaining: number;
+}
+
 export interface TtsRequest {
   voiceId: string;
   text: string;
