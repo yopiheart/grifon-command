@@ -4,6 +4,7 @@ import {
   CloneVoiceRequest,
   CloneVoiceResponse,
   VoiceLibrary,
+  BudgetStatus,
 } from '../types';
 import { getSupabase } from './supabaseClient';
 
@@ -86,6 +87,19 @@ export const cloneVoice = async (req: CloneVoiceRequest): Promise<CloneVoiceResp
     throw err;
   }
   return { voice_id: data.voice_id, voice_name: data.voice_name };
+};
+
+export const fetchBudget = async (): Promise<BudgetStatus | null> => {
+  try {
+    const token = await getAccessToken();
+    const response = await fetch('/api/elevenlabs/budget', {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!response.ok) return null;
+    return (await response.json()) as BudgetStatus;
+  } catch {
+    return null;
+  }
 };
 
 export const deleteVoice = async (voiceId: string): Promise<void> => {

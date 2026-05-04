@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { ChevronLeft, Mic, MessageSquare, Wand2, History } from 'lucide-react';
-import { fetchVoices } from '../../services/voiceService';
-import type { VoiceLibrary, HistoryTake } from '../../types';
+import { fetchVoices, fetchBudget } from '../../services/voiceService';
+import type { VoiceLibrary, HistoryTake, BudgetStatus } from '../../types';
 import { useSubscription } from '../../hooks/useSubscription';
 import { planAtLeast } from '../../utils/planGate';
 import TextToSpeechTile from './TextToSpeechTile';
@@ -24,6 +24,7 @@ const SignalModulator: React.FC<SignalModulatorProps> = ({ onBack, globalScript 
   const [library, setLibrary] = useState<VoiceLibrary>(EMPTY_LIBRARY);
   const [librarLoading, setLibraryLoading] = useState(true);
   const [historyOpen, setHistoryOpen] = useState(false);
+  const [budget, setBudget] = useState<BudgetStatus | null>(null);
   const { plan_id, loading: subLoading } = useSubscription();
   const canClone = !subLoading && planAtLeast(plan_id, 'creator');
   const history = useSessionHistory();
@@ -38,7 +39,19 @@ const SignalModulator: React.FC<SignalModulatorProps> = ({ onBack, globalScript 
     }
   }, []);
 
+  const refreshBudget = useCallback(async () => {
+    setBudget(await fetchBudget());
+  }, []);
+
   useEffect(() => { refreshLibrary(); }, [refreshLibrary]);
+  useEffect(() => { refreshBudget(); }, [refreshBudget]);
+
+  const activeBucket = useMemo(() => {
+    if (!budget) return null;
+    if (activeTile === 'tts') return budget.tts;
+    if (activeTile === 'vc') return budget.sts;
+    return budget.clone;
+  }, [budget, activeTile]);
 
   // When the user clicks RESTORE on a take, switch to the matching tile so
   // the restore payload lands in the right form. The tile itself consumes
@@ -72,6 +85,20 @@ const SignalModulator: React.FC<SignalModulatorProps> = ({ onBack, globalScript 
             <span className="md:hidden">BACK</span>
           </button>
           <div className="flex items-center gap-3">
+            {activeBucket && activeBucket.limit > 0 && (
+              <div
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-900 border text-[10px] font-mono uppercase tracking-widest transition-colors ${
+                  activeBucket.remaining === 0
+                    ? 'border-red-500/40 text-red-400'
+                    : activeBucket.remaining <= Math.max(1, Math.floor(activeBucket.limit * 0.2))
+                      ? 'border-[#FFCC00]/40 text-[#FFCC00]'
+                      : 'border-white/10 text-zinc-400'
+                }`}
+                title={budget ? `${activeBucket.used} of ${activeBucket.limit} used in the last 24h on your ${budget.plan.toUpperCase()} plan` : ''}
+              >
+                <span>// {activeBucket.remaining}_LEFT_TODAY</span>
+              </div>
+            )}
             <button
               type="button"
               onClick={() => setHistoryOpen(true)}
@@ -111,16 +138,22 @@ const SignalModulator: React.FC<SignalModulatorProps> = ({ onBack, globalScript 
           library={library}
           globalScript={globalScript}
           history={history}
+          onUsageReported={refreshBudget}
         />
       )}
       {activeTile === 'vc' && (
         <VoiceChangerTile
           library={library}
           history={history}
+          onUsageReported={refreshBudget}
         />
       )}
       {activeTile === 'clone' && canClone && (
-        <VoiceCloningTile library={library} onLibraryRefresh={refreshLibrary} />
+        <VoiceCloningTile
+          library={library}
+          onLibraryRefresh={refreshLibrary}
+          onUsageReported={refreshBudget}
+        />
       )}
 
       {librarLoading && (

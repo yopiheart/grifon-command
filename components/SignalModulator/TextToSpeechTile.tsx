@@ -16,13 +16,14 @@ interface TextToSpeechTileProps {
   library: VoiceLibrary;
   globalScript?: string[];
   history: SessionHistoryApi;
+  onUsageReported?: () => void;
 }
 
 const resolveVoiceName = (library: VoiceLibrary, voiceId: string): string =>
   [...library.myVoices, ...library.libraryVoices, ...library.stockVoices].find(v => v.voice_id === voiceId)?.name
   ?? 'audio';
 
-const TextToSpeechTile: React.FC<TextToSpeechTileProps> = ({ library, globalScript = [], history }) => {
+const TextToSpeechTile: React.FC<TextToSpeechTileProps> = ({ library, globalScript = [], history, onUsageReported }) => {
   const [voiceId, setVoiceId] = useState<string>('');
   const [text, setText] = useState('');
   const [stabilityMode, setStabilityMode] = useState<StabilityMode>('natural');
@@ -98,8 +99,10 @@ const TextToSpeechTile: React.FC<TextToSpeechTileProps> = ({ library, globalScri
         audioUrl: url,
       });
       setCurrentTakeId(takeId);
+      onUsageReported?.();
     } catch (err: any) {
       setError(err?.message ?? 'TTS_SYNTHESIS_FAILED');
+      onUsageReported?.();
     } finally {
       setIsLoading(false);
     }
@@ -123,8 +126,10 @@ const TextToSpeechTile: React.FC<TextToSpeechTileProps> = ({ library, globalScri
       });
       setAudioUrl(url);
       history.replaceTakeAudio(currentTake.id, url);
+      onUsageReported?.();
     } catch (err: any) {
       setError(err?.message ?? 'TTS_REGENERATE_FAILED');
+      onUsageReported?.();
     } finally {
       setIsLoading(false);
     }
@@ -214,7 +219,7 @@ const TextToSpeechTile: React.FC<TextToSpeechTileProps> = ({ library, globalScri
                     <span>// SYNTH_OUTPUT</span>
                     <Activity className="w-4 h-4 text-[#FFCC00] animate-pulse" />
                   </div>
-                  <audio src={audioUrl} controls controlsList="nodownload" className="w-full filter invert opacity-80 h-10" />
+                  <audio src={audioUrl} controls controlsList="nodownload noplaybackrate" className="w-full filter invert opacity-80 h-10" />
                   <p className="text-[9px] font-mono text-zinc-600 uppercase tracking-widest mt-3">
                     // LOGGED_TO_SESSION — DEPLOY_AUDIO_TO_KEEP_AFTER_REFRESH
                   </p>

@@ -2,6 +2,8 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { z } from 'zod';
 import { getUserFromAccessToken } from '../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../_lib/rateLimit.js';
+import { getUserPlan } from '../_lib/userPlan.js';
+import { STS_DAILY, DAILY_WINDOW_SECONDS, stsDailyKey } from '../_lib/quota.js';
 
 const Body = z.object({
   voiceId: z.string().min(1),
@@ -110,6 +112,24 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       error: 'rate_limited',
       scope: 'elevenlabs-sts',
       retry_after_seconds: STS_WINDOW_SECONDS,
+    });
+  }
+
+  const plan = await getUserPlan(user.id);
+  const dailyLimit = STS_DAILY[plan];
+  const withinDaily = await rateLimitCheck(
+    stsDailyKey(user.id),
+    dailyLimit,
+    DAILY_WINDOW_SECONDS
+  );
+  if (!withinDaily) {
+    res.setHeader('Retry-After', String(DAILY_WINDOW_SECONDS));
+    return res.status(429).json({
+      error: 'daily_quota_reached',
+      scope: 'elevenlabs-sts-daily',
+      message: `You've used all ${dailyLimit} voice changes in your daily ${plan.toUpperCase()} budget. Upgrade for more, or wait for the rolling 24h window to reset.`,
+      plan,
+      daily_limit: dailyLimit,
     });
   }
 

@@ -17,9 +17,10 @@ type SourceTab = 'upload' | 'record';
 interface VoiceCloningTileProps {
   library: VoiceLibrary;
   onLibraryRefresh: () => void;
+  onUsageReported?: () => void;
 }
 
-const VoiceCloningTile: React.FC<VoiceCloningTileProps> = ({ library, onLibraryRefresh }) => {
+const VoiceCloningTile: React.FC<VoiceCloningTileProps> = ({ library, onLibraryRefresh, onUsageReported }) => {
   const [tab, setTab] = useState<SourceTab>('upload');
   const [voiceName, setVoiceName] = useState('');
   const [description, setDescription] = useState('');
@@ -87,8 +88,10 @@ const VoiceCloningTile: React.FC<VoiceCloningTileProps> = ({ library, onLibraryR
       setSuccess(`Voice "${result.voice_name}" created — available now in TTS and Voice Changer.`);
       reset();
       onLibraryRefresh();
+      onUsageReported?.();
     } catch (err: any) {
       setError(err?.message ?? 'CLONE_FAILED');
+      onUsageReported?.();
     } finally {
       setIsLoading(false);
     }
@@ -211,9 +214,9 @@ const VoiceCloningTile: React.FC<VoiceCloningTileProps> = ({ library, onLibraryR
               />
             </div>
 
-            <div className="bg-zinc-950 border border-white/10 rounded-xl p-4 text-[10px] text-zinc-500 leading-relaxed">
-              <p className="font-mono uppercase tracking-widest text-zinc-400 mb-2">// SAMPLE_GUIDELINES</p>
-              <ul className="space-y-1 list-disc list-inside">
+            <div className="bg-zinc-950 border border-white/10 rounded-xl p-4 text-[11px] text-zinc-300 leading-relaxed">
+              <p className="text-[10px] font-mono uppercase tracking-widest text-zinc-400 mb-2">// SAMPLE_GUIDELINES</p>
+              <ul className="space-y-1.5 list-disc list-inside">
                 <li>Single speaker only</li>
                 <li>Quiet room, no music or background noise</li>
                 <li>30 seconds to 3 minutes</li>
@@ -227,10 +230,10 @@ const VoiceCloningTile: React.FC<VoiceCloningTileProps> = ({ library, onLibraryR
                 checked={consent}
                 onChange={(e) => setConsent(e.target.checked)}
                 disabled={quotaFull}
-                className="mt-0.5 w-4 h-4 accent-[#FFCC00]"
+                className="mt-1 w-4 h-4 accent-[#FFCC00]"
               />
-              <span className="text-[10px] text-zinc-300 leading-relaxed">
-                <span className="flex items-center gap-1.5 font-mono uppercase tracking-widest text-zinc-400 mb-1">
+              <span className="text-xs text-zinc-100 leading-relaxed">
+                <span className="flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest text-[#FFCC00] mb-1.5">
                   <ShieldCheck className="w-3.5 h-3.5" /> CONSENT_REQUIRED
                 </span>
                 I confirm I am the speaker in this audio, OR I have explicit written permission from the speaker to clone their voice for use in this product.

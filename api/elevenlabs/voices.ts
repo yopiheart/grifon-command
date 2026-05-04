@@ -1,7 +1,8 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { getSupabaseAdmin, getUserFromAccessToken } from '../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../_lib/rateLimit.js';
-import { MAX_VOICES_PER_USER } from '../_lib/voiceConfig.js';
+import { getVoiceSlotMax } from '../_lib/voiceConfig.js';
+import { getUserPlan } from '../_lib/userPlan.js';
 import { FILIPINO_LIBRARY } from '../_lib/filipinoLibrary.js';
 
 const VOICES_LIMIT = 30;
@@ -54,7 +55,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const admin = getSupabaseAdmin();
-    const [upstream, dbResult] = await Promise.all([
+    const [upstream, dbResult, plan] = await Promise.all([
       fetch('https://api.elevenlabs.io/v1/voices', {
         headers: { 'xi-api-key': getApiKey() },
       }),
@@ -62,6 +63,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         .from('user_voices')
         .select('elevenlabs_voice_id, voice_name, description, created_at')
         .eq('user_id', user.id),
+      getUserPlan(user.id),
     ]);
 
     if (!upstream.ok) {
@@ -132,7 +134,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       myVoices,
       libraryVoices,
       quotaUsed: myIdSet.size,
-      quotaMax: MAX_VOICES_PER_USER,
+      quotaMax: getVoiceSlotMax(plan),
     });
   } catch (err: any) {
     const msg = err?.message ?? 'unknown';

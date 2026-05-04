@@ -2,7 +2,9 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { z } from 'zod';
 import { getSupabaseAdmin, getUserFromAccessToken } from '../../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../../_lib/rateLimit.js';
-import { MAX_VOICES_PER_USER, isCloningEnabled } from '../../_lib/voiceConfig.js';
+import { getVoiceSlotMax, isCloningEnabled } from '../../_lib/voiceConfig.js';
+import { getUserPlan } from '../../_lib/userPlan.js';
+import { CLONE_DAILY, DAILY_WINDOW_SECONDS, cloneDailyKey } from '../../_lib/quota.js';
 
 const Body = z.object({
   voiceName: z.string().trim().min(3).max(50),
@@ -148,6 +150,31 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     });
   }
 
+  const plan = await getUserPlan(user.id);
+  const dailyLimit = CLONE_DAILY[plan];
+  if (dailyLimit <= 0) {
+    return res.status(403).json({
+      error: 'plan_does_not_allow_cloning',
+      message: 'Voice cloning requires a Creator plan or higher. Upgrade to start cloning voices.',
+      plan,
+    });
+  }
+  const withinDaily = await rateLimitCheck(
+    cloneDailyKey(user.id),
+    dailyLimit,
+    DAILY_WINDOW_SECONDS
+  );
+  if (!withinDaily) {
+    res.setHeader('Retry-After', String(DAILY_WINDOW_SECONDS));
+    return res.status(429).json({
+      error: 'daily_quota_reached',
+      scope: 'elevenlabs-clone-daily',
+      message: `You've used all ${dailyLimit} voice clones in your daily ${plan.toUpperCase()} budget. Wait for the rolling 24h window to reset, or upgrade for a larger budget.`,
+      plan,
+      daily_limit: dailyLimit,
+    });
+  }
+
   const admin = getSupabaseAdmin();
 
   const { count: usedCount, error: countError } = await admin
@@ -158,12 +185,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     console.error('[api/elevenlabs/voices/clone] quota query error:', countError.message);
     return res.status(500).json({ error: 'quota_check_failed' });
   }
-  if ((usedCount ?? 0) >= MAX_VOICES_PER_USER) {
+  const slotMax = getVoiceSlotMax(plan);
+  if ((usedCount ?? 0) >= slotMax) {
     return res.status(409).json({
       error: 'voice_quota_reached',
-      message: `You can have at most ${MAX_VOICES_PER_USER} cloned voice${MAX_VOICES_PER_USER > 1 ? 's' : ''}. Delete an existing voice to create a new one.`,
+      message: `Your ${plan.toUpperCase()} plan allows up to ${slotMax} stored cloned voice${slotMax === 1 ? '' : 's'}. Delete an existing voice to create a new one, or upgrade for more slots.`,
       quotaUsed: usedCount ?? 0,
-      quotaMax: MAX_VOICES_PER_USER,
+      quotaMax: slotMax,
     });
   }
 

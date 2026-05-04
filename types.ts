@@ -311,6 +311,22 @@ export interface VoiceLibrary {
   quotaMax: number;
 }
 
+export type BudgetPlan = 'free' | 'creator' | 'pro' | 'business';
+
+export interface BudgetBucket {
+  used: number;
+  limit: number;
+  remaining: number;
+  resetSeconds: number;
+}
+
+export interface BudgetStatus {
+  plan: BudgetPlan;
+  tts: BudgetBucket;
+  sts: BudgetBucket;
+  clone: BudgetBucket;
+}
+
 export interface HistoryTake {
   id: string;
   kind: 'tts' | 'voice-changer';

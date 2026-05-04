@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { X, Play, Pause, Undo2, MessageSquare, Mic, Trash2 } from 'lucide-react';
+import { X, Play, Pause, Undo2, MessageSquare, Mic, Trash2, Download } from 'lucide-react';
 import type { HistoryTake } from '../../types';
-import { formatRelativeTime, HISTORY_CAP } from './utils';
+import { formatRelativeTime, HISTORY_CAP, downloadAudio } from './utils';
 
 interface SessionHistoryProps {
   open: boolean;
@@ -122,6 +122,14 @@ const SessionHistory: React.FC<SessionHistoryProps> = ({ open, takes, onClose, o
                       {summary(take)}
                     </p>
                     <div className="flex items-center gap-1.5">
+                      <button
+                        type="button"
+                        onClick={() => downloadAudio(take.audioUrl, take.kind === 'tts' ? 'tts' : 'vc', take.voiceName)}
+                        className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-zinc-950 border border-white/10 hover:border-[#FFCC00]/40 hover:text-[#FFCC00] text-[9px] font-mono text-zinc-400 uppercase tracking-widest transition-colors"
+                        title="Download this take"
+                      >
+                        <Download className="w-3 h-3" /> SAVE
+                      </button>
                       <button
                         type="button"
                         onClick={() => onRestore(take)}

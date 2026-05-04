@@ -19,13 +19,14 @@ type SourceTab = 'upload' | 'record';
 interface VoiceChangerTileProps {
   library: VoiceLibrary;
   history: SessionHistoryApi;
+  onUsageReported?: () => void;
 }
 
 const resolveVoiceName = (library: VoiceLibrary, voiceId: string): string =>
   [...library.myVoices, ...library.libraryVoices, ...library.stockVoices].find(v => v.voice_id === voiceId)?.name
   ?? 'audio';
 
-const VoiceChangerTile: React.FC<VoiceChangerTileProps> = ({ library, history }) => {
+const VoiceChangerTile: React.FC<VoiceChangerTileProps> = ({ library, history, onUsageReported }) => {
   const [voiceId, setVoiceId] = useState<string>('');
   const [stabilityMode, setStabilityMode] = useState<StabilityMode>('natural');
   const [tab, setTab] = useState<SourceTab>('upload');
@@ -102,8 +103,10 @@ const VoiceChangerTile: React.FC<VoiceChangerTileProps> = ({ library, history })
         audioUrl: url,
       });
       setCurrentTakeId(takeId);
+      onUsageReported?.();
     } catch (err: any) {
       setError(err?.message ?? 'STS_CONVERSION_FAILED');
+      onUsageReported?.();
     } finally {
       setIsLoading(false);
     }
@@ -127,8 +130,10 @@ const VoiceChangerTile: React.FC<VoiceChangerTileProps> = ({ library, history })
       });
       setAudioUrl(url);
       history.replaceTakeAudio(currentTake.id, url);
+      onUsageReported?.();
     } catch (err: any) {
       setError(err?.message ?? 'STS_REGENERATE_FAILED');
+      onUsageReported?.();
     } finally {
       setIsLoading(false);
     }
@@ -225,7 +230,7 @@ const VoiceChangerTile: React.FC<VoiceChangerTileProps> = ({ library, history })
                     <span>// CONVERSION_OUTPUT</span>
                     <Activity className="w-4 h-4 text-[#FFCC00] animate-pulse" />
                   </div>
-                  <audio src={audioUrl} controls controlsList="nodownload" className="w-full filter invert opacity-80 h-10" />
+                  <audio src={audioUrl} controls controlsList="nodownload noplaybackrate" className="w-full filter invert opacity-80 h-10" />
                   <p className="text-[9px] font-mono text-zinc-600 uppercase tracking-widest mt-3">
                     // LOGGED_TO_SESSION — DEPLOY_AUDIO_TO_KEEP_AFTER_REFRESH
                   </p>
