@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { ChevronDown, Play, Pause, User, Sparkles, X } from 'lucide-react';
+import { ChevronDown, Play, Pause, User, Sparkles, X, ChevronsDown, ChevronsUp } from 'lucide-react';
 import type { VoiceLibrary, StockVoice, UserVoice } from '../../types';
-import { PINOY_READY_VOICE_IDS } from './pinoyReady';
+import { RECOMMENDED_VOICE_IDS } from './pinoyReady';
 
 interface VoicePickerProps {
   library: VoiceLibrary;
@@ -51,6 +51,7 @@ export const VoicePicker: React.FC<VoicePickerProps> = ({ library, value, onChan
   const [open, setOpen] = useState(false);
   const [previewing, setPreviewing] = useState<string | null>(null);
   const [filters, setFilters] = useState<FilterState>(EMPTY_FILTERS);
+  const [showAllStock, setShowAllStock] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -95,14 +96,18 @@ export const VoicePicker: React.FC<VoicePickerProps> = ({ library, value, onChan
 
   const stockGroups = useMemo(() => groupStockByLanguage(filteredStock), [filteredStock]);
 
-  const pinoyReady = useMemo(() => {
-    if (PINOY_READY_VOICE_IDS.length === 0) return [];
-    const idSet = new Set(PINOY_READY_VOICE_IDS);
+  const recommended = useMemo(() => {
+    if (RECOMMENDED_VOICE_IDS.length === 0) return [];
     const byId = new Map(library.stockVoices.map(v => [v.voice_id, v]));
-    return PINOY_READY_VOICE_IDS.map(id => byId.get(id)).filter((v): v is StockVoice => Boolean(v && idSet.has(v.voice_id)));
+    return RECOMMENDED_VOICE_IDS.map(id => byId.get(id)).filter((v): v is StockVoice => Boolean(v));
   }, [library.stockVoices]);
 
   const hasActiveFilter = Boolean(filters.language || filters.gender || filters.age || filters.accent);
+
+  // When the curated list is populated, hide the by-language stock catalog by default.
+  // Filters force-show the full catalog (otherwise the filter UI is meaningless).
+  const stockGroupsVisible = hasActiveFilter || showAllStock || recommended.length === 0;
+  const totalStockCount = library.stockVoices.length;
 
   useEffect(() => {
     if (!open) return;
@@ -137,7 +142,7 @@ export const VoicePicker: React.FC<VoicePickerProps> = ({ library, value, onChan
   };
 
   const renderRow = (
-    voice: { voice_id: string; name: string; preview_url?: string },
+    voice: { voice_id: string; name: string; preview_url?: string; description?: string },
     kind: 'mine' | 'stock'
   ) => {
     const isSelected = voice.voice_id === value;
@@ -151,7 +156,7 @@ export const VoicePicker: React.FC<VoicePickerProps> = ({ library, value, onChan
           type="button"
           onClick={(e) => { e.stopPropagation(); togglePreview(voice.voice_id, voice.preview_url); }}
           disabled={!voice.preview_url}
-          className="w-7 h-7 rounded-full bg-zinc-900 border border-white/10 flex items-center justify-center hover:border-[#FFCC00]/40 disabled:opacity-30 disabled:cursor-not-allowed"
+          className="w-7 h-7 rounded-full bg-zinc-900 border border-white/10 flex items-center justify-center hover:border-[#FFCC00]/40 disabled:opacity-30 disabled:cursor-not-allowed shrink-0"
           aria-label={isPlaying ? 'Pause preview' : 'Play preview'}
         >
           {isPlaying ? <Pause className="w-3 h-3 text-[#FFCC00]" /> : <Play className="w-3 h-3 text-zinc-300" />}
@@ -159,11 +164,16 @@ export const VoicePicker: React.FC<VoicePickerProps> = ({ library, value, onChan
         <button
           type="button"
           onClick={() => { onChange(voice.voice_id); setOpen(false); }}
-          className="flex-1 text-left text-sm text-zinc-200 truncate"
+          className="flex-1 text-left min-w-0"
         >
-          {voice.name}
-          {kind === 'mine' && (
-            <span className="ml-2 text-[9px] font-mono text-[#FFCC00] uppercase tracking-widest">// MINE</span>
+          <div className="text-sm text-zinc-200 truncate">
+            {voice.name}
+            {kind === 'mine' && (
+              <span className="ml-2 text-[9px] font-mono text-[#FFCC00] uppercase tracking-widest">// MINE</span>
+            )}
+          </div>
+          {voice.description && (
+            <div className="text-[10px] text-zinc-500 truncate">{voice.description}</div>
           )}
         </button>
       </div>
@@ -255,13 +265,13 @@ export const VoicePicker: React.FC<VoicePickerProps> = ({ library, value, onChan
               </div>
             )}
 
-            {pinoyReady.length > 0 && !hasActiveFilter && (
+            {recommended.length > 0 && !hasActiveFilter && (
               <div>
                 <div className="text-[10px] font-mono text-[#FFCC00] uppercase tracking-widest px-3 py-1.5">
-                  // PINOY-READY
+                  // RECOMMENDED_FOR_ADS
                 </div>
                 <div className="space-y-1">
-                  {pinoyReady.map(v => renderRow(v, 'stock'))}
+                  {recommended.map(v => renderRow(v, 'stock'))}
                 </div>
               </div>
             )}
@@ -277,7 +287,7 @@ export const VoicePicker: React.FC<VoicePickerProps> = ({ library, value, onChan
               </div>
             )}
 
-            {stockGroups.map(group => (
+            {stockGroupsVisible && stockGroups.map(group => (
               <div key={group.language}>
                 <div className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest px-3 py-1.5">
                   // STOCK · {group.language.toUpperCase()}
@@ -288,7 +298,25 @@ export const VoicePicker: React.FC<VoicePickerProps> = ({ library, value, onChan
               </div>
             ))}
 
-            {stockGroups.length === 0 && library.myVoices.length === 0 && library.libraryVoices.length === 0 && pinoyReady.length === 0 && (
+            {recommended.length > 0 && !hasActiveFilter && totalStockCount > recommended.length && (
+              <button
+                type="button"
+                onClick={() => setShowAllStock(s => !s)}
+                className="w-full flex items-center justify-center gap-2 mt-1 px-3 py-2 rounded-lg border border-white/10 hover:border-[#FFCC00]/40 hover:bg-white/5 text-[10px] font-mono text-zinc-400 hover:text-[#FFCC00] uppercase tracking-widest transition-colors"
+              >
+                {showAllStock ? (
+                  <>
+                    <ChevronsUp className="w-3 h-3" /> SHOW_RECOMMENDED_ONLY
+                  </>
+                ) : (
+                  <>
+                    <ChevronsDown className="w-3 h-3" /> SHOW_ALL_{totalStockCount}_STOCK_VOICES
+                  </>
+                )}
+              </button>
+            )}
+
+            {stockGroups.length === 0 && library.myVoices.length === 0 && library.libraryVoices.length === 0 && recommended.length === 0 && (
               <div className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest px-3 py-4 text-center">
                 {hasActiveFilter ? '// NO_MATCHES — TRY_CLEARING_FILTERS' : '// NO_VOICES_AVAILABLE'}
               </div>

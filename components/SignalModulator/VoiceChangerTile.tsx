@@ -7,6 +7,7 @@ import AudioRecorder from '../ui/AudioRecorder';
 import { convertSpeech } from '../../services/voiceService';
 import type { StabilityMode, VoiceLibrary } from '../../types';
 import VoicePicker from './VoicePicker';
+import { RECOMMENDED_VOICE_IDS } from './pinoyReady';
 import { STABILITY_LABELS, downloadAudio } from './utils';
 
 const MAX_FILE_BYTES = 50 * 1024 * 1024;
@@ -31,7 +32,9 @@ const VoiceChangerTile: React.FC<VoiceChangerTileProps> = ({ library }) => {
 
   useEffect(() => {
     if (!voiceId && library.stockVoices.length > 0) {
-      setVoiceId(library.stockVoices[0].voice_id);
+      const stockIds = new Set(library.stockVoices.map(v => v.voice_id));
+      const firstRecommended = RECOMMENDED_VOICE_IDS.find(id => stockIds.has(id));
+      setVoiceId(firstRecommended ?? library.stockVoices[0].voice_id);
     }
   }, [library, voiceId]);
 

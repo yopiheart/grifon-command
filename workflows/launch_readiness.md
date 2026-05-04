@@ -20,7 +20,11 @@ Shipped same session (commits `fa1fec1`, `9837d0b`, `66df4ca`):
 - Plan-tier gate at `components/SignalModulator/index.tsx:24-25` — Voice Cloning tab now renders only when `useSubscription` reports Creator+ (`planAtLeast(plan_id, 'creator')`); free-tier users no longer see the tab.
 - `MAX_VOICES_PER_USER` bumped 1 → 2 at `api/_lib/voiceConfig.ts:4` to give Creator/Pro users headroom without exhausting the 10-slot Starter pool.
 
-Open follow-up (non-blocking): voice picker curation — default the TTS picker to Filipino voices with a "Show all" toggle, since Grifon serves a Filipino market. Stock voices can't be deleted on the ElevenLabs side, so curation must happen in the UI; deletion alone can't achieve a Filipino-only experience.
+Voice picker curation — CLOSED 2026-05-04 (same session). Two-part ship:
+
+1. **Recommended-for-Ads curation** (`components/SignalModulator/pinoyReady.ts` populated with 8 American stock voices: Sarah/Liam/Laura/Will/Jessica/Brian/Bella/Bill). ElevenLabs stock catalog has zero `language: "fil"` voices, so "Filipino default" can't be a metadata filter; curation is by hand. Picker now defaults to `// RECOMMENDED_FOR_ADS` section + a `// SHOW_ALL_21_STOCK_VOICES` toggle that expands the by-language groups. Default voice for new TTS / Voice Changer sessions prefers cloned → recommended → first stock.
+
+2. **FILIPINO_LIBRARY allowlist + workspace-leak fix** (`api/_lib/filipinoLibrary.ts`). Replaced the fail-open `category !== 'premade' && !myIdSet.has()` filter with an explicit allowlist of 5 admin-curated voices: Pinay Spokesperson, Pinoy Reviewer, Pinay Vlogger, Pinoy TikToker, Pinoy Kid Voice. Display names override the admin's internal ElevenLabs labels (e.g., "SEAMAN TIKTOK" → "Pinoy TikToker") so users see persona-driven labels and admin internals stay private. Voice descriptions sourced from Gemini 3.1 Pro audio analysis (AI Studio, run by user). Hidden post-deploy: James, Ellen, Zam Grifon voice, NEIL MAGLAYA NEW VOICE — all correctly suppressed. See `agent_lessons.md` 2026-05-04 entry for why allowlist must be the default for any shared-account multi-tenant resource.
 
 Note: the `localStorage.grifon_admin` key is **still in use** by `Dashboard.tsx:440,463` as an admin-only preview switch for the MORE MODULES section (7 in-progress modules). Do not advise users to remove it — see `agent_lessons.md` 2026-05-04 entry for the regression that taught this.
 

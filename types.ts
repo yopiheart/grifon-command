@@ -296,10 +296,17 @@ export interface UserVoice {
   created_at: string;
 }
 
+export interface LibraryVoice {
+  voice_id: string;
+  name: string;
+  preview_url?: string;
+  description?: string;
+}
+
 export interface VoiceLibrary {
   stockVoices: StockVoice[];
   myVoices: UserVoice[];
-  libraryVoices: StockVoice[];
+  libraryVoices: LibraryVoice[];
   quotaUsed: number;
   quotaMax: number;
 }

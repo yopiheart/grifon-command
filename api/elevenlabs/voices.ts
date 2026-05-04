@@ -2,6 +2,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { getSupabaseAdmin, getUserFromAccessToken } from '../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../_lib/rateLimit.js';
 import { MAX_VOICES_PER_USER } from '../_lib/voiceConfig.js';
+import { FILIPINO_LIBRARY } from '../_lib/filipinoLibrary.js';
 
 const VOICES_LIMIT = 30;
 const VOICES_WINDOW_SECONDS = 60;
@@ -108,15 +109,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         };
       });
 
-    const libraryVoices = all
-      .filter(v => v.category !== 'premade' && !myIdSet.has(v.voice_id))
-      .map(v => ({
-        voice_id: v.voice_id,
-        name: v.name,
-        category: v.category,
-        preview_url: v.preview_url,
-        labels: v.labels,
-      }));
+    // Allowlist gate: only voices explicitly curated in FILIPINO_LIBRARY are
+    // surfaced to users. This is the security boundary that prevents admin's
+    // personal clones, other users' clones, and saved English voices from
+    // leaking into the picker. Order follows FILIPINO_LIBRARY (display order),
+    // not the upstream ElevenLabs response order.
+    const libraryVoices = FILIPINO_LIBRARY
+      .map(entry => {
+        const upstream = elById.get(entry.voice_id);
+        if (!upstream) return null;
+        return {
+          voice_id: entry.voice_id,
+          name: entry.displayName,
+          preview_url: upstream.preview_url,
+          description: entry.description,
+        };
+      })
+      .filter(<T,>(v: T | null): v is T => v !== null);
 
     return res.status(200).json({
       stockVoices,

@@ -6,6 +6,7 @@ import Loader from '../ui/Loader';
 import { synthesizeSpeech } from '../../services/voiceService';
 import type { StabilityMode, VoiceLibrary } from '../../types';
 import VoicePicker from './VoicePicker';
+import { RECOMMENDED_VOICE_IDS } from './pinoyReady';
 import { STABILITY_LABELS, TTS_TAGS, downloadAudio } from './utils';
 
 const MAX_CHARS = 10000;
@@ -27,7 +28,9 @@ const TextToSpeechTile: React.FC<TextToSpeechTileProps> = ({ library, globalScri
   useEffect(() => {
     if (!voiceId && library.stockVoices.length > 0) {
       const myFirst = library.myVoices[0];
-      setVoiceId(myFirst ? myFirst.voice_id : library.stockVoices[0].voice_id);
+      const stockIds = new Set(library.stockVoices.map(v => v.voice_id));
+      const firstRecommended = RECOMMENDED_VOICE_IDS.find(id => stockIds.has(id));
+      setVoiceId(myFirst?.voice_id ?? firstRecommended ?? library.stockVoices[0].voice_id);
     }
   }, [library, voiceId]);
 
