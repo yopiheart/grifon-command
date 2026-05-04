@@ -20,15 +20,36 @@ Shipped same session (commits `fa1fec1`, `9837d0b`, `66df4ca`):
 - Plan-tier gate at `components/SignalModulator/index.tsx:24-25` — Voice Cloning tab now renders only when `useSubscription` reports Creator+ (`planAtLeast(plan_id, 'creator')`); free-tier users no longer see the tab.
 - `MAX_VOICES_PER_USER` bumped 1 → 2 at `api/_lib/voiceConfig.ts:4` to give Creator/Pro users headroom without exhausting the 10-slot Starter pool.
 
-Voice picker curation — CLOSED 2026-05-04 (same session). Two-part ship:
+Signal Modulator polish — CLOSED 2026-05-04 (extended session). Three-part ship:
 
-1. **Recommended-for-Ads curation** (`components/SignalModulator/pinoyReady.ts` populated with 8 American stock voices: Sarah/Liam/Laura/Will/Jessica/Brian/Bella/Bill). ElevenLabs stock catalog has zero `language: "fil"` voices, so "Filipino default" can't be a metadata filter; curation is by hand. Picker now defaults to `// RECOMMENDED_FOR_ADS` section + a `// SHOW_ALL_21_STOCK_VOICES` toggle that expands the by-language groups. Default voice for new TTS / Voice Changer sessions prefers cloned → recommended → first stock.
+**Part 3 — Session history + regenerate** (commit `e42e563`):
+- New `// LOG` button at top-right of Signal Modulator header opens a slide-in drawer.
+- In-memory session log capped at 20 takes, mixing TTS + Voice Changer in one chronological list.
+- Each take: voice name, snippet/source, relative time, ▷ play, ⟲ restore, 🗑 remove.
+- **Restore** rehydrates voice + text + stability + (for VC) sourceFile + sourceLabel into the form and auto-switches tab if needed. Implemented via `pendingRestore` state in `useSessionHistory` consumed by per-tile useEffect.
+- **Regenerate** button inline next to DEPLOY AUDIO when an output is showing. Capped at 3 per take with visible `// 3_LEFT` counter. Re-fires API with the take's *stored* params (so editing the form mid-take doesn't change what regen produces). At 0, disables with hint copy.
+- Copy updated: `// OUTPUTS_NOT_STORED` → `// LOGGED_TO_SESSION — DEPLOY_AUDIO_TO_KEEP_AFTER_REFRESH`.
+- Cleared on browser refresh (no backend, no storage cost). Files: `useSessionHistory.ts` (hook), `SessionHistory.tsx` (drawer), updates in `index.tsx` + both tiles + `utils.ts` + `types.ts`.
+- **Cost-protection caveat**: 3-regen cap is a band-aid. There is currently *no per-user daily/monthly TTS quota* — entire app shares ElevenLabs Starter's 30,000 credits/month. Per-tier daily quotas are a separate ship needed before any real userbase scales (see follow-ups below).
+
+**Part 2 — Native download dedup** (commit `94762a3`):
+- `<audio controls>` 3-dot menu was exposing a second download path that bypassed the `downloadAudio()` branded-filename helper. Added `controlsList="nodownload"` on both tiles' audio elements. Single clear save action via DEPLOY AUDIO.
+
+**Part 1 — Voice picker curation + leak fix** (commit `b6b0c68`):
+
+1. **Recommended-for-Ads curation**  (`components/SignalModulator/pinoyReady.ts` populated with 8 American stock voices: Sarah/Liam/Laura/Will/Jessica/Brian/Bella/Bill). ElevenLabs stock catalog has zero `language: "fil"` voices, so "Filipino default" can't be a metadata filter; curation is by hand. Picker now defaults to `// RECOMMENDED_FOR_ADS` section + a `// SHOW_ALL_21_STOCK_VOICES` toggle that expands the by-language groups. Default voice for new TTS / Voice Changer sessions prefers cloned → recommended → first stock.
 
 2. **FILIPINO_LIBRARY allowlist + workspace-leak fix** (`api/_lib/filipinoLibrary.ts`). Replaced the fail-open `category !== 'premade' && !myIdSet.has()` filter with an explicit allowlist of 5 admin-curated voices: Pinay Spokesperson, Pinoy Reviewer, Pinay Vlogger, Pinoy TikToker, Pinoy Kid Voice. Display names override the admin's internal ElevenLabs labels (e.g., "SEAMAN TIKTOK" → "Pinoy TikToker") so users see persona-driven labels and admin internals stay private. Voice descriptions sourced from Gemini 3.1 Pro audio analysis (AI Studio, run by user). Hidden post-deploy: James, Ellen, Zam Grifon voice, NEIL MAGLAYA NEW VOICE — all correctly suppressed. See `agent_lessons.md` 2026-05-04 entry for why allowlist must be the default for any shared-account multi-tenant resource.
 
 Note: the `localStorage.grifon_admin` key is **still in use** by `Dashboard.tsx:440,463` as an admin-only preview switch for the MORE MODULES section (7 in-progress modules). Do not advise users to remove it — see `agent_lessons.md` 2026-05-04 entry for the regression that taught this.
 
 Dev-quality follow-up shipped same session: `vite.config.ts:97` env loader guard dropped so `.env` edits are picked up on every config reload (see `agent_lessons.md` 2026-05-04 entry).
+
+### Open follow-ups after Signal Modulator polish (non-blocking, prioritized)
+
+1. **Per-user daily/monthly TTS quota** — the real cost protection that the 3-regen cap only band-aids. Entire app currently shares ElevenLabs Starter's 30,000 credits/month with no per-user enforcement. Suggested approach: extend `rateLimitCheck()` (which already supports custom keys/windows) to apply a per-tier daily character budget keyed by `tts:daily:${user.id}`, with limits sourced from the user's plan via `useSubscription`. Free: ~5,000 chars/day, Creator: ~25,000, Pro: ~100,000 (calibrate against actual ElevenLabs spend). Ship before any real userbase scales — at current rates 5 active users on Starter saturate the pool in days.
+2. **Form state lost on Signal Modulator tab switch** — switching TTS↔VC unmounts the inactive tile, so typed scripts evaporate. Restore-from-history is the workaround. Fix would lift form state to parent or always-mount both tiles. Low priority; flag if real users complain.
+3. **Vite HTML-proxy cache flake** — local builds (`npm run build`) intermittently fail on first invocation with `[vite:html-inline-proxy] Could not load index.html?html-proxy&inline-css&index=0.css`. Always succeeds on retry. Suspect Windows + Vite 5 + index.html inline `<style>` interaction. Vercel CI builds clean (different env, no leftover `.vite` cache). Worth investigating if it ever bites a deploy; benign for now.
 
 ## Status as of 2026-05-02 (evening update)
 
