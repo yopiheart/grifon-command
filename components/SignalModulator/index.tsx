@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { ChevronLeft, Mic, MessageSquare, Wand2 } from 'lucide-react';
 import { fetchVoices } from '../../services/voiceService';
 import type { VoiceLibrary } from '../../types';
+import { useSubscription } from '../../hooks/useSubscription';
+import { planAtLeast } from '../../utils/planGate';
 import TextToSpeechTile from './TextToSpeechTile';
 import VoiceChangerTile from './VoiceChangerTile';
 import VoiceCloningTile from './VoiceCloningTile';
@@ -18,12 +20,9 @@ const EMPTY_LIBRARY: VoiceLibrary = { stockVoices: [], myVoices: [], libraryVoic
 const SignalModulator: React.FC<SignalModulatorProps> = ({ onBack, globalScript = [] }) => {
   const [activeTile, setActiveTile] = useState<Tile>('tts');
   const [library, setLibrary] = useState<VoiceLibrary>(EMPTY_LIBRARY);
-  const [isAdmin, setIsAdmin] = useState(false);
   const [librarLoading, setLibraryLoading] = useState(true);
-
-  useEffect(() => {
-    setIsAdmin(typeof window !== 'undefined' && window.localStorage.getItem('grifon_admin') === 'true');
-  }, []);
+  const { plan_id, loading: subLoading } = useSubscription();
+  const canClone = !subLoading && planAtLeast(plan_id, 'creator');
 
   const refreshLibrary = useCallback(async () => {
     setLibraryLoading(true);
@@ -74,13 +73,13 @@ const SignalModulator: React.FC<SignalModulatorProps> = ({ onBack, globalScript 
         <div className="bg-zinc-900 border border-white/10 p-1 rounded-xl flex gap-1 flex-wrap">
           {tabBtn('tts', 'TEXT-TO-SPEECH', MessageSquare)}
           {tabBtn('vc', 'VOICE CHANGER', Mic)}
-          {isAdmin && tabBtn('clone', 'VOICE CLONING', Wand2)}
+          {canClone && tabBtn('clone', 'VOICE CLONING', Wand2)}
         </div>
       </div>
 
       {activeTile === 'tts' && <TextToSpeechTile library={library} globalScript={globalScript} />}
       {activeTile === 'vc' && <VoiceChangerTile library={library} />}
-      {activeTile === 'clone' && isAdmin && (
+      {activeTile === 'clone' && canClone && (
         <VoiceCloningTile library={library} onLibraryRefresh={refreshLibrary} />
       )}
 

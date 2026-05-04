@@ -11,10 +11,12 @@ ICANN domain verification confirmed (Gate 6 follow-up closed). ElevenLabs upgrad
 - `vite.config.ts` — taught `vercelApiDevPlugin` to resolve `[param].ts` dynamic routes and inject the segment value into `req.query`. Without this, the DELETE handler at `api/elevenlabs/voices/[id].ts` was unreachable in dev (worked in prod via Vercel's filesystem router).
 
 Outstanding before opening IVC to real users:
-- Flip `GRIFON_VOICE_CLONING_ENABLED=true` in **Vercel** (currently only the local `.env` is on).
-- Replace the localStorage `grifon_admin` gate at `components/SignalModulator/index.tsx:21-25,77` with a plan-tier gate (Creator/Pro only via `useSubscription`) before exposing the tab to non-admin users.
-- Decide `MAX_VOICES_PER_USER` policy. Current `1` is paranoid for a 10-slot Starter pool; bump per `api/_lib/voiceConfig.ts:4` if Creator/Pro upgrades happen.
+- Flip `GRIFON_VOICE_CLONING_ENABLED=true` in **Vercel** (Production scope) and redeploy. This is the operational gate that flips the feature live.
 - Apply `supabase/user_voices.sql` to **prod** Supabase if not already (verified working locally; the same Supabase project is shared so likely already applied).
+
+Shipped same session:
+- Plan-tier gate at `components/SignalModulator/index.tsx:24-25` — Voice Cloning tab now renders only when `useSubscription` reports Creator+ (`planAtLeast(plan_id, 'creator')`); free-tier users no longer see the tab. The localStorage `grifon_admin` gate is gone.
+- `MAX_VOICES_PER_USER` bumped 1 → 2 at `api/_lib/voiceConfig.ts:4` to give Creator/Pro users headroom without exhausting the 10-slot Starter pool.
 
 Dev-quality follow-up shipped same session: `vite.config.ts:97` env loader guard dropped so `.env` edits are picked up on every config reload (see `agent_lessons.md` 2026-05-04 entry).
 

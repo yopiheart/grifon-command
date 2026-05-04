@@ -161,7 +161,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if ((usedCount ?? 0) >= MAX_VOICES_PER_USER) {
     return res.status(409).json({
       error: 'voice_quota_reached',
-      message: `You can have at most ${MAX_VOICES_PER_USER} cloned voice${MAX_VOICES_PER_USER === 1 ? '' : 's'}. Delete your existing voice to create a new one.`,
+      message: `You can have at most ${MAX_VOICES_PER_USER} cloned voice${MAX_VOICES_PER_USER > 1 ? 's' : ''}. Delete an existing voice to create a new one.`,
       quotaUsed: usedCount ?? 0,
       quotaMax: MAX_VOICES_PER_USER,
     });
