@@ -162,7 +162,7 @@ const TextToSpeechTile: React.FC<TextToSpeechTileProps> = ({ library, globalScri
                   <span>// SYNTH_OUTPUT</span>
                   <Activity className="w-4 h-4 text-[#FFCC00] animate-pulse" />
                 </div>
-                <audio src={audioUrl} controls className="w-full filter invert opacity-80 h-10" />
+                <audio src={audioUrl} controls controlsList="nodownload" className="w-full filter invert opacity-80 h-10" />
                 <p className="text-[9px] font-mono text-zinc-600 uppercase tracking-widest mt-3">
                   // DOWNLOAD_TO_SAVE — OUTPUTS_NOT_STORED
                 </p>
