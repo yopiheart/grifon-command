@@ -12,9 +12,22 @@ function vercelApiDevPlugin(): Plugin {
 
         const [pathOnly] = req.url.split('?')
         const rel = pathOnly.replace(/^\/+/, '')
-        const candidate = path.resolve(server.config.root, rel + '.ts')
+        let candidate = path.resolve(server.config.root, rel + '.ts')
+        let dynamicParam: { name: string; value: string } | null = null
 
-        if (!fs.existsSync(candidate)) return next()
+        if (!fs.existsSync(candidate)) {
+          // Vercel-style dynamic routing: try [param].ts in the parent dir.
+          const segs = rel.split('/').filter(Boolean)
+          if (segs.length === 0) return next()
+          const lastSeg = segs[segs.length - 1]
+          const parentDir = path.resolve(server.config.root, segs.slice(0, -1).join('/'))
+          if (!fs.existsSync(parentDir)) return next()
+          const dynFile = fs.readdirSync(parentDir).find(f => /^\[[^\]]+\]\.ts$/.test(f))
+          if (!dynFile) return next()
+          const paramName = dynFile.slice(1, -4)
+          candidate = path.join(parentDir, dynFile)
+          dynamicParam = { name: paramName, value: decodeURIComponent(lastSeg) }
+        }
 
         let mod: any
         try {
@@ -47,6 +60,7 @@ function vercelApiDevPlugin(): Plugin {
         const url = new URL(req.url, 'http://localhost')
         const query: Record<string, string> = {}
         url.searchParams.forEach((v, k) => { query[k] = v })
+        if (dynamicParam) query[dynamicParam.name] = dynamicParam.value
         ;(req as any).query = query
 
         const vRes = res as any
@@ -80,7 +94,7 @@ function vercelApiDevPlugin(): Plugin {
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   for (const [k, v] of Object.entries(env)) {
-    if (process.env[k] === undefined) process.env[k] = v
+    process.env[k] = v
   }
   return {
     plugins: [react(), vercelApiDevPlugin()],

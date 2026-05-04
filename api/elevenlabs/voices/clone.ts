@@ -36,13 +36,20 @@ const getApiKey = (): string => {
   return key;
 };
 
+// Tolerates optional media-type parameters between MIME and `;base64,`,
+// e.g. `data:audio/webm;codecs=opus;base64,...` produced by MediaRecorder.
 const parseDataUrl = (dataUrl: string): { mime: string; bytes: ArrayBuffer } | null => {
-  const match = /^data:([^;]+);base64,(.+)$/.exec(dataUrl);
-  if (!match) return null;
-  const buf = Buffer.from(match[2], 'base64');
+  if (!dataUrl.startsWith('data:')) return null;
+  const idx = dataUrl.indexOf(';base64,');
+  if (idx < 0) return null;
+  const meta = dataUrl.slice(5, idx);
+  const payload = dataUrl.slice(idx + ';base64,'.length);
+  const mime = meta.split(';')[0].trim().toLowerCase();
+  if (!mime) return null;
+  const buf = Buffer.from(payload, 'base64');
   const ab = new ArrayBuffer(buf.byteLength);
   new Uint8Array(ab).set(buf);
-  return { mime: match[1], bytes: ab };
+  return { mime, bytes: ab };
 };
 
 const extensionForMime = (mime: string): string => {
@@ -54,8 +61,17 @@ const extensionForMime = (mime: string): string => {
 
 const mapElevenLabsError = (status: number, body: string): { code: string; message: string } => {
   const lower = body.toLowerCase();
-  if (status === 401 || status === 403 || lower.includes('permission')) {
-    return { code: 'permission_denied', message: 'Voice cloning is not available on the current plan tier.' };
+  if (lower.includes('missing_permissions') || lower.includes('missing permission')) {
+    return {
+      code: 'api_key_scope_missing',
+      message: 'The ElevenLabs API key is missing the create_instant_voice_clone permission. Regenerate the key with that scope enabled in your ElevenLabs dashboard.',
+    };
+  }
+  if (status === 401 || status === 403) {
+    return {
+      code: 'permission_denied',
+      message: 'ElevenLabs rejected the request. Either the API key is invalid or your plan does not include voice cloning.',
+    };
   }
   if (lower.includes('voice_limit') || lower.includes('voice limit')) {
     return { code: 'voice_limit_reached', message: 'All voice slots are currently in use. Please contact support.' };
@@ -94,17 +110,26 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const parsed = Body.safeParse(req.body ?? {});
   if (!parsed.success) {
-    return res.status(400).json({ error: 'invalid_body', issues: parsed.error.issues });
+    return res.status(400).json({
+      error: 'invalid_body',
+      message: 'Some fields are missing or invalid. Check voice name, consent, and audio sample.',
+      issues: parsed.error.issues,
+    });
   }
 
   const decoded = parseDataUrl(parsed.data.audio);
   if (!decoded) {
-    return res.status(400).json({ error: 'invalid_audio_data', detail: 'audio must be a data:<mime>;base64,<...> URL' });
+    return res.status(400).json({
+      error: 'invalid_audio_data',
+      message: 'Audio sample could not be read. Try re-recording or uploading a fresh file.',
+      detail: 'audio must be a data:<mime>;base64,<...> URL',
+    });
   }
   if (!ALLOWED_MIME.has(decoded.mime)) {
     return res.status(415).json({
       error: 'unsupported_media_type',
-      detail: `MIME '${decoded.mime}' not allowed. Use MP3, WAV, M4A, or WebM.`,
+      message: `Audio format '${decoded.mime}' is not supported. Use MP3, WAV, M4A, or WebM.`,
+      detail: `MIME '${decoded.mime}' not allowed.`,
     });
   }
 
@@ -117,6 +142,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     res.setHeader('Retry-After', String(CLONE_WINDOW_SECONDS));
     return res.status(429).json({
       error: 'rate_limited',
+      message: `You've made too many clone attempts in the last hour. Please wait up to ${Math.round(CLONE_WINDOW_SECONDS / 60)} minutes and try again.`,
       scope: 'elevenlabs-clone',
       retry_after_seconds: CLONE_WINDOW_SECONDS,
     });

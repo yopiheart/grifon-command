@@ -4,6 +4,20 @@
 
 This is the meta-workflow. It doesn't do the work itself — it points to the workflows that do, and tracks overall progress.
 
+## Status as of 2026-05-04 (evening update)
+
+ICANN domain verification confirmed (Gate 6 follow-up closed). ElevenLabs upgraded to **Starter plan** (10 voice slots, IVC enabled). Voice cloning smoke-tested end-to-end in local dev: clone → cloned voice usable in TTS → delete frees the slot. Today's session shipped:
+- `api/elevenlabs/voices/clone.ts` — fixed data-URL parser to accept MediaRecorder's `audio/webm;codecs=opus` output; split error mapper to distinguish "API key missing scope" from "plan tier insufficient"; added user-readable `message` to all 400/415/429 paths so the UI surfaces real reasons.
+- `vite.config.ts` — taught `vercelApiDevPlugin` to resolve `[param].ts` dynamic routes and inject the segment value into `req.query`. Without this, the DELETE handler at `api/elevenlabs/voices/[id].ts` was unreachable in dev (worked in prod via Vercel's filesystem router).
+
+Outstanding before opening IVC to real users:
+- Flip `GRIFON_VOICE_CLONING_ENABLED=true` in **Vercel** (currently only the local `.env` is on).
+- Replace the localStorage `grifon_admin` gate at `components/SignalModulator/index.tsx:21-25,77` with a plan-tier gate (Creator/Pro only via `useSubscription`) before exposing the tab to non-admin users.
+- Decide `MAX_VOICES_PER_USER` policy. Current `1` is paranoid for a 10-slot Starter pool; bump per `api/_lib/voiceConfig.ts:4` if Creator/Pro upgrades happen.
+- Apply `supabase/user_voices.sql` to **prod** Supabase if not already (verified working locally; the same Supabase project is shared so likely already applied).
+
+Dev-quality follow-up shipped same session: `vite.config.ts:97` env loader guard dropped so `.env` edits are picked up on every config reload (see `agent_lessons.md` 2026-05-04 entry).
+
 ## Status as of 2026-05-02 (evening update)
 
 **All 7 launch gates are CLOSED.** Site is live at https://app.grifon.ai. Test-mode billing now fully proven end-to-end on prod (checkout → PayMongo → webhook → Supabase row → UI tier upgrade). Only outstanding item to take real money is the PayMongo live-key cutover (Gate 3-prod below).
@@ -73,7 +87,7 @@ Live cutover steps (repeat the test-mode setup with live values):
 - [x] Verified live: landing loads, auth works, session persists, Gemini AI generates, logout works
 - Open follow-ups (non-blocking):
   - Vercel billing address incomplete — fix in Vercel → Settings → Billing → Update Address
-  - ICANN email verification for `grifon.ai` — **deadline ~2026-05-17** (15-day window from 2026-05-02). Domain risks suspension if missed.
+  - ~~ICANN email verification for `grifon.ai`~~ — DONE 2026-05-04 (verified before deadline)
   - SignalModulator voice list — confirm whether empty list = no voices on ElevenLabs vs API failure
 
 ### Gate 7: Legal — CLOSED 2026-04 (effective date 2026-04-20)
