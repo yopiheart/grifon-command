@@ -70,7 +70,7 @@ export const fetchVoices = async (): Promise<VoiceLibrary> => {
 
 export const cloneVoice = async (req: CloneVoiceRequest): Promise<CloneVoiceResponse> => {
   const token = await getAccessToken();
-  const response = await fetch('/api/elevenlabs/voices/clone', {
+  const response = await fetch('/api/elevenlabs/voices', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -104,7 +104,7 @@ export const fetchBudget = async (): Promise<BudgetStatus | null> => {
 
 export const deleteVoice = async (voiceId: string): Promise<void> => {
   const token = await getAccessToken();
-  const response = await fetch(`/api/elevenlabs/voices/${encodeURIComponent(voiceId)}`, {
+  const response = await fetch(`/api/elevenlabs/voices?id=${encodeURIComponent(voiceId)}`, {
     method: 'DELETE',
     headers: { Authorization: `Bearer ${token}` },
   });

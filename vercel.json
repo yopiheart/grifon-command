@@ -8,9 +8,7 @@
     "api/cron/cleanup-gemini-videos.ts": { "maxDuration": 60 },
     "api/elevenlabs/text-to-speech.ts": { "maxDuration": 60 },
     "api/elevenlabs/speech-to-speech.ts": { "maxDuration": 60 },
-    "api/elevenlabs/voices.ts": { "maxDuration": 30 },
-    "api/elevenlabs/voices/clone.ts": { "maxDuration": 60 },
-    "api/elevenlabs/voices/[id].ts": { "maxDuration": 30 }
+    "api/elevenlabs/voices.ts": { "maxDuration": 60 }
   },
   "crons": [
     { "path": "/api/cron/cleanup-gemini-videos", "schedule": "0 3 * * *" }
