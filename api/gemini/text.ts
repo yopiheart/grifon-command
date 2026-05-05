@@ -79,6 +79,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       res.setHeader('Retry-After', '30');
       return res.status(429).json({ error: 'gemini_quota', detail: msg });
     }
+
+    // Surface upstream model overload as 503 so the client's retryWithBackoff
+    // (which already retries 429/503) picks it up instead of treating it as a
+    // hard failure. Pattern matches Gemini's `{code: 503, status: "UNAVAILABLE"}`.
+    const isUnavailable =
+      msg.includes('UNAVAILABLE') ||
+      errStr.includes('UNAVAILABLE') ||
+      errStr.includes('"code":503') ||
+      err?.status === 503 ||
+      err?.error?.code === 503 ||
+      err?.error?.status === 'UNAVAILABLE';
+
+    if (isUnavailable) {
+      res.setHeader('Retry-After', '5');
+      return res.status(503).json({ error: 'gemini_unavailable', detail: msg });
+    }
+
     console.error('[api/gemini/text] error:', msg);
     return res.status(502).json({ error: 'gemini_error', detail: msg });
   }

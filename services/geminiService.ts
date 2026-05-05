@@ -19,14 +19,32 @@ const proxyCall = async <T = GenerateContentResponse>(endpoint: string, params: 
   const token = sessionData.session?.access_token;
   if (!token) throw new Error('NOT_AUTHENTICATED');
 
-  const res = await fetch(endpoint, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(params),
-  });
+  // Abort 5s before Vercel's hard 60s ceiling so the client surfaces a clear
+  // PROXY_TIMEOUT instead of an opaque 504 from the platform.
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 55000);
+
+  let res: Response;
+  try {
+    res = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(params),
+      signal: controller.signal,
+    });
+  } catch (err: any) {
+    if (err?.name === 'AbortError') {
+      const timeoutErr: any = new Error('PROXY_TIMEOUT: request exceeded 55s ceiling');
+      timeoutErr.status = 504;
+      throw timeoutErr;
+    }
+    throw err;
+  } finally {
+    clearTimeout(timeoutId);
+  }
 
   if (!res.ok) {
     const body = await res.json().catch(() => ({} as any));
@@ -221,14 +239,6 @@ const AVATAR_CAMERA_ANGLES = [
     "HIGH_ANGLE_SELFIE: Camera positioned above eye-level looking down. Relatable, casual handheld vlog vibe with consistent micro-jitter for organic movement.",
     "LOW_ANGLE_AUTHORITY: Camera positioned below the chin looking up. Empowering, 'Expert' framing with a very slow cinematic push-in (dolly-in).",
     "DYNAMIC_SHOULDER: Right side profile. Includes subtle parallactic shift against background."
-];
-
-const WARDROBE_LOGIC = [
-    "Casual: Everyday comfortable wear. Brand primary colors subtly incorporated into the outfit fabric.",
-    "Neutral: Minimalist outfit in cream or beige tones. Simple silver accessories, clean modern look.",
-    "Textured: Soft knitted fabrics or airy pastel linens. Aesthetic home-office or cafe background vibe.",
-    "Professional: Smart-casual authority. A sharp structured blazer or premium turtleneck.",
-    "High-Contrast: Modern streetwear or high-fashion outfit. Bold colors and high-energy vibe."
 ];
 
 const LIGHTING_TOKENS = {
@@ -675,10 +685,24 @@ export const generateAdScript = async (
   **CORE CONSTRAINTS (MANDATORY):**
   - **NO PRICE:** Under no circumstances mention price or offer pricing. Maintain a curiosity gap.
   - **FEATURE FILTER:** Pick ONLY the top 1-2 most viral/compelling features from the provided list: "${businessInfo.features}". Omit everything else.
-  - **LOGIC LOCK:** Use Brand Name: "${brandName}" and Product Name: "${businessInfo.product}" EXACTLY.
+  - **LOGIC LOCK:** Use Brand Name "${brandName}" EXACTLY. Product mentions can be shortened naturally — say "this kape", "ito", "${brandName}", or descriptive shorthand. Do NOT recite the full SKU/product name verbatim ("${businessInfo.product}"); that reads like a product page, not an ad.
   - **READING LEVEL:** 4th-5th Grade. Simple, punchy, visceral storytelling.
-  - **LANGUAGE:** ${language}. If Taglish, it must sound daylight a natural vlog, not a manual.
-  
+
+  **LANGUAGE LOCK (${language}):**
+  - If TAGLISH: every hook, body line, and CTA MUST be in Taglish. Sound like a real Filipino vlog, not a manual.
+    English is allowed ONLY for:
+      (a) Brand names — proper nouns like "${brandName}" stay English.
+      (b) Prices and numbers — "₱650", "P22 vs P180", "30 days".
+      (c) Universal CTAs — "Tap here", "Click below", "Link sa bio".
+    English is FORBIDDEN for product-spec terms. Translate to natural Taglish or OMIT:
+      "single-origin medium roast" → "specialty kape" or drop it (visuals carry it)
+      "cafe-quality goodness"      → "parang barista ang lasa" or drop it
+      "delivered to your doorstep" → "padala sa bahay"
+      "premium packaging"          → "mukhang sosyal" or drop it
+    If you cannot find natural Taglish for a technical term, OMIT IT. Visuals carry technical specs; copy carries emotion.
+  - If ENGLISH: stay 4th-5th grade English. No Taglish slips. No "po", "naman", "talaga", "lasa".
+  - NEVER mix registers inside one line. A Taglish line stays Taglish; an English line stays English.
+
   **TIMING & SLIDE EFFECT:**
   - **HOOK:** Strictly 3 seconds max (approx. 5-8 words).
   - **BODY LINES:** Strictly 3-5 seconds max per line.
@@ -1257,9 +1281,44 @@ export const generateStoryboard = async (
       Task: Create a detailed frame-by-frame storyboard JSON.
 
       **VISUAL PURITY RULE:**
-      "The \`sceneDescription\` and \`imagePrompt\` MUST describe the physical scene only. 
-      - **FORBIDDEN:** Do not include instructions daylight 'Show text overlay', 'Text on screen says...', or 'Phone screen showing 50%'. 
+      "The \`sceneDescription\` and \`imagePrompt\` MUST describe the physical scene only.
+      - **FORBIDDEN:** Do not include instructions daylight 'Show text overlay', 'Text on screen says...', or 'Phone screen showing 50%'.
       - Text belongs in the Audio/Script, NEVER in the image generation prompt."
+
+      **STILL_FRAME_RULE:**
+      The fields \`imagePrompt\`, \`startFramePrompt\`, and \`endFramePrompt\` are rendered as STILL IMAGES. They MUST be static compositions, NOT motion-verb prose.
+
+      FORBIDDEN motion verbs (the still cannot render motion):
+      - "pulling away", "moving toward", "flowing", "shaking", "rotating", "spinning", "running", "pouring"
+      - Any verb that describes WHAT IS HAPPENING during a moment of motion.
+
+      REQUIRED — describe the static end-state, the frozen instant:
+      - WRONG: "A hand pulling away from the sink, coffee splattering."
+      - RIGHT: "A hand visible mid-frame above the sink, palm facing away, frozen in air, coffee droplets caught suspended around it, freeze-frame composition."
+
+      Motion lives in \`transitionEffect\` (e.g., "Explosion Reveal", "Character Morph") — that field describes the MOTION between two stills. The frame prompts describe two STILL moments. Frames = stills. Transitions = motion.
+
+      **APPEARANCE_LOCK_RULE (when scene's referenceImage='avatar'):**
+      The \`imagePrompt\`, \`startFramePrompt\`, and \`endFramePrompt\` MUST NOT describe the avatar's physical appearance. Identity is preserved by an upstream LOCK; redescribing it creates conflicts and corrupts the render.
+
+      FORBIDDEN in avatar-scene prompts:
+      - Wardrobe/clothing ("wearing a linen shirt", "in a denim jacket")
+      - Hair ("with dark brown hair", "her ponytail")
+      - Body type ("petite", "athletic build")
+      - Face/skin descriptors ("with bright eyes", "her warm smile", "her face glowing")
+      - Ethnicity/age descriptors ("Southeast Asian woman", "young Filipina")
+
+      REQUIRED in avatar-scene prompts (describe ONLY these):
+      - Action ("looking down", "gesturing", "sipping", "tapping the phone screen")
+      - Expression ("brow furrowed", "eyes wide in surprise", "lips parted in confusion")
+      - Gaze direction ("looking at the camera", "looking down at the mug")
+      - Hand position + held props ("holding an empty mug", "hands on the counter")
+      - Body pose ("standing", "sitting at the dining table", "leaning against the counter")
+      - Spot within residence ("at the kitchen counter", "by the front door")
+      - Lighting/mood for that spot ("warm afternoon light", "soft window light")
+
+      WRONG: "A friendly Southeast Asian woman with dark brown hair, wearing a casual linen shirt, sitting at a modern Filipino home dining table, acting surprised while looking at a smartphone, warm sunlight hitting her face."
+      CORRECT: "Sitting at the dining table, eyes wide in surprise, looking at a smartphone, warm afternoon sunlight from the window."
 
       **PACING RULE:**
       "You MAY have up to **2 consecutive** 'Avatar Talking' scenes.
@@ -1303,9 +1362,9 @@ export const generateStoryboard = async (
         "scriptLine": "...",
         "sceneDescription": "...",
         "referenceImage": "none",
-        "startFramePrompt": "Description of the first frame (The Trigger)",
-        "endFramePrompt": "Description of the last frame (The Result)",
-        "transitionEffect": "Name of the VFX"
+        "startFramePrompt": "Static composition of the FIRST FROZEN FRAME — describe the world-state at moment 1 as a still photograph. No motion verbs (see STILL_FRAME_RULE).",
+        "endFramePrompt": "Static composition of the FINAL FROZEN FRAME — describe the world-state at moment 2 as a still photograph. No motion verbs (see STILL_FRAME_RULE).",
+        "transitionEffect": "Name of the VFX that animates between the two stills (the only field where motion lives)."
       }
 
       - IF SCENE 2 onwards:
@@ -1381,10 +1440,21 @@ export const generateSceneImage = async (
     if (referenceImageMode === 'avatar') {
         consistencyRules = `
         **IDENTITY_LOCK + ENVIRONMENT_SYNC:**
-        1. **IDENTITY:** Use Reference Image 1 for the face and wardrobe exactly. Subject must never change clothes.
-        2. **BACKGROUND:** Preserve the exact background environment and furniture from Reference Image 1. 
-        3. **VARIATION:** Only change the camera angle or subject pose. The setting must be identical to the Persona DNA.
-        4. **ETHNICITY:** Strictly **${ethnicity}**.
+        1. **LOCKED (preserve from Reference Image 1, never change across scenes):** face, skin tone, bone structure, hair (color, style, length), wardrobe (color, cut, fabric), body type.
+        2. **VARIES (driven by the Scene Prompt, AUTHORITATIVE over IDENTITY_LOCK):** facial expression, gaze direction, body pose, hand position, and held props (mug, phone, etc.). IDENTITY_LOCK does NOT override scene-driven expressions, gestures, or actions. If the Scene Prompt says "looking down with brow furrowed, holding an empty mug," render exactly that — do not inherit the reference's smile or grip.
+        3. **CAMERA:** angle, distance, and framing follow the CAMERA_MANDATORY block below.
+        4. **ENVIRONMENT (FLEXIBLE):** Same residence/setting as Reference Image 1 (e.g., the same home interior). The avatar may be in different spots within that residence (kitchen counter → dining table → living room couch) per the Scene Prompt, but never in an unrelated location (no offices, no cafes, no streets).
+        5. **ETHNICITY:** Strictly **${ethnicity}**.
+        `;
+    } else if (referenceImageMode === 'product' && references.productUrl) {
+        consistencyRules = `
+        **PRODUCT_IDENTITY_LOCK:**
+        1. **IDENTITY:** Reproduce the product from Reference Image 1 EXACTLY — same packaging shape, same colors, same label position, same proportions, same materials/finish (matte vs glossy). Do NOT redesign, restyle, or substitute the product with a similar-looking product.
+        2. **NO_LOGO_HALLUCINATION:** Do NOT add brand logos, brand names, text, label graphics, badges, or stickers that are not visibly present in Reference Image 1. If the reference shows a plain bag, render a plain bag. Inventing brand marks is FORBIDDEN.
+        3. **ANATOMICAL_LOCK:** If the prompt requires hands or fingers, render exactly TWO hands with FIVE fingers each. No extra limbs, no extra fingers, no partial hands, no third hand entering frame. "A pair of hands" means exactly two hands.
+        4. **NO HUMAN FACES:** Do NOT render faces, full bodies, or recognizable people. Hands are allowed only when the prompt explicitly requires them (per rule 3).
+        5. **LUMEN_SYNC:** Use the lighting temperature and color profile from Reference Image 1. Match the warmth/coolness of its highlights.
+        6. **SUBJECT:** Focus on the product described in the prompt; the product from Reference Image 1 is the hero.
         `;
     } else {
         consistencyRules = `
@@ -1403,11 +1473,9 @@ export const generateSceneImage = async (
     - Change the distance of the camera (Close-up vs Wide) as instructed.
     `;
 
-    // 2. RE-INSERT THE WARDROBE LOGIC
-    const wardrobeIdx = variationIndex % WARDROBE_LOGIC.length;
-    const wardrobeInstruction = referenceImageMode === 'avatar' 
-      ? `\n**WARDROBE PROTOCOL:** ${WARDROBE_LOGIC[wardrobeIdx]}` 
-      : "";
+    // 2. WARDROBE: locked from Reference Image 1 by IDENTITY_LOCK rule 1.
+    // WARDROBE_LOGIC variation removed — was conflicting with identity preservation across scenes.
+    const wardrobeInstruction = "";
 
     // 3. KEEP YOUR NEW PRODUCT CONTEXT
     const productContext = (productName || productDescription)

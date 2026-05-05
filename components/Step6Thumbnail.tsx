@@ -90,12 +90,12 @@ const Step6Thumbnail: React.FC<Step6ThumbnailProps> = ({ script, avatar, busines
         {thumbnailUrl && !loading && (
           <>
             <div
-              className={`overflow-hidden border-2 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.3)] rounded-xl cursor-pointer transition-transform hover:scale-105 ${aspectRatio === '9:16' ? 'w-48 h-80' : 'w-80 h-48'}`}
+              className={`overflow-hidden border-2 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.3)] rounded-xl cursor-pointer transition-transform hover:scale-105 bg-zinc-950 ${aspectRatio === '9:16' ? 'w-48 h-80' : 'w-80 h-48'}`}
               onClick={() => setIsModalOpen(true)}
               role="button"
               aria-label="View thumbnail in fullscreen"
             >
-              <img src={thumbnailUrl} alt="Thumbnail Preview" className="w-full h-full object-cover" />
+              <img src={thumbnailUrl} alt="Thumbnail Preview" className="w-full h-full object-contain" />
             </div>
             
             <button onClick={handleGenerate} className="rounded-full px-8 py-2 flex items-center gap-3 border border-[#FFCC00]/40 hover:border-[#FFCC00] text-[#FFCC00] transition-colors bg-transparent">

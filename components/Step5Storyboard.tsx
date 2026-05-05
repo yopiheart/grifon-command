@@ -36,7 +36,8 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
   const [modalImageFilename, setModalImageFilename] = useState<string>('');
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [currentUploadIndex, setCurrentUploadIndex] = useState<{index: number, frame: 'start' | 'end'} | null>(null);
-  
+  const [critiqueExpanded, setCritiqueExpanded] = useState(false);
+
   const hasFetchedRef = useRef(false);
   const isCinematic = businessInfo.scriptType === 'Cinematic';
 
@@ -98,15 +99,21 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
     ? businessInfo.brandColors.split(',').map(c => c.trim()).filter(c => c) 
     : [];
 
-  const getReferenceData = (scene: Scene) => {
+  const getReferenceData = (scene: Scene, _sceneIndex: number) => {
     const refs: { avatarUrl?: string; productUrl?: string } = {};
 
     if (scene.referenceImage === 'avatar' && avatar) {
         refs.avatarUrl = avatar.url;
     }
-    
-    if (businessInfo.productImageUrls && businessInfo.productImageUrls.length > 0) {
-        refs.productUrl = businessInfo.productImageUrls[Math.floor(Math.random() * businessInfo.productImageUrls.length)];
+
+    if (
+      scene.referenceImage === 'product' &&
+      businessInfo.productImageUrls &&
+      businessInfo.productImageUrls.length > 0
+    ) {
+        // Always anchor product identity to photo[0]. Photos 1+ are stored but
+        // unused for scene generation until a v2 per-photo tagging UX exists.
+        refs.productUrl = businessInfo.productImageUrls[0];
     }
 
     return refs;
@@ -126,46 +133,57 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
     setLoadingImages(false);
   };
 
-  const handleGenerateSingleScene = async (index: number) => {
+  const handleGenerateSingleScene = async (index: number, force: boolean = false) => {
     if (!aspectRatio) return;
     setGeneratingImageIndex(index);
     const updatedStoryboard = [...storyboardData];
     const scene = updatedStoryboard[index];
-    
+
     if (!scene) return;
 
+    if (force) {
+      scene.imageUrl = undefined;
+      scene.endFrameImageUrl = undefined;
+    }
+
     try {
-        const references = getReferenceData(scene); 
+        const references = getReferenceData(scene, index);
         const ethnicity = avatar?.ethnicity || "Global/Neutral";
         const scriptType = businessInfo.scriptType || 'MrBeast';
         const productDesc = businessInfo.productImageDescription || businessInfo.product || "the product";
 
         if (scene.startFramePrompt || scene.imagePrompt) {
             const prompt = scene.startFramePrompt || scene.imagePrompt;
-            if (!scene.imageUrl && prompt) {
+            if ((!scene.imageUrl || force) && prompt) {
                 scene.imageUrl = await generateSceneImage(
-                    prompt, 
-                    aspectRatio, 
-                    '1K', 
-                    references, 
-                    ethnicity, 
-                    getBrandColors(), 
-                    scriptType, 
-                    productDesc 
+                    prompt,
+                    aspectRatio,
+                    '1K',
+                    references,
+                    ethnicity,
+                    getBrandColors(),
+                    scriptType,
+                    productDesc,
+                    undefined,
+                    index,
+                    scene.referenceImage
                 );
             }
         }
 
-        if (scene.endFramePrompt && !scene.endFrameImageUrl) {
+        if (scene.endFramePrompt && (!scene.endFrameImageUrl || force)) {
             scene.endFrameImageUrl = await generateSceneImage(
-                scene.endFramePrompt, 
-                aspectRatio, 
-                '1K', 
-                references, 
-                ethnicity, 
-                getBrandColors(), 
-                scriptType, 
-                productDesc 
+                scene.endFramePrompt,
+                aspectRatio,
+                '1K',
+                references,
+                ethnicity,
+                getBrandColors(),
+                scriptType,
+                productDesc,
+                undefined,
+                index + 100,
+                scene.referenceImage
             );
         }
 
@@ -371,20 +389,30 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
 
       {/* AI STRATEGY ADVICE BUBBLE */}
       {!loadingStoryboard && strategicAudit && (
-        <div className="mb-8 p-8 bg-zinc-900 border border-white/10 backdrop-blur-md relative overflow-hidden group rounded-2xl">
-            <div className="absolute top-0 left-0 bg-[#FFCC00] text-black text-[10px] font-black px-4 py-1.5 font-mono tracking-widest uppercase z-10 shadow-lg">
-                [ DIRECTOR_CRITIQUE ]
-            </div>
-            <p className="text-sm font-mono text-zinc-300 leading-relaxed mt-6 italic relative z-10">
-                "{strategicAudit}"
-            </p>
+        <div className="mb-8 bg-zinc-900 border border-white/10 backdrop-blur-md rounded-2xl overflow-hidden">
+            <button
+                onClick={() => setCritiqueExpanded(prev => !prev)}
+                className="w-full flex items-center justify-between gap-4 px-5 py-3 text-left hover:bg-white/5 transition-colors"
+            >
+                <span className="bg-[#FFCC00] text-black text-[10px] font-black px-3 py-1 font-mono tracking-widest uppercase shadow-lg rounded">
+                    [ DIRECTOR_CRITIQUE ]
+                </span>
+                <span className="text-[10px] text-zinc-400 font-mono tracking-widest uppercase">
+                    {critiqueExpanded ? '▴ HIDE' : '▾ READ_MORE'}
+                </span>
+            </button>
+            {critiqueExpanded && (
+                <p className="text-sm font-mono text-zinc-300 leading-relaxed px-6 pb-6 pt-2 italic">
+                    "{strategicAudit}"
+                </p>
+            )}
         </div>
       )}
 
       <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4 border-b border-white/10 pb-8">
          <div className="flex flex-wrap gap-4">
              <GoldButton onClick={handleGenerateAllScenes} disabled={loadingImages || loadingStoryboard} className="rounded-full px-8 flex items-center gap-3">
-                {loadingImages ? <Loader message="" size="sm"/> : <RefreshCw className="w-5 h-5"/>} 
+                <RefreshCw className={`w-5 h-5 ${loadingImages ? 'animate-spin' : ''}`} />
                 SYNTHESIZE ALL VISUALS
              </GoldButton>
              
@@ -402,12 +430,43 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
          </div> 
       </div>
 
-      {loadingStoryboard && <Loader message="DECRYPTING SCRIPT & MAPPING SCENES..." />}
+      {loadingStoryboard && (
+        <div className="space-y-6">
+          <div className="flex items-center gap-3">
+            <span className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase">// MAPPING_SCENES</span>
+            <div className="relative h-[2px] flex-1 bg-white/5 overflow-hidden rounded-full">
+              <div className="absolute inset-y-0 left-0 w-1/3 bg-[#FFCC00] shadow-[0_0_8px_#FFCC00] animate-[storyboard-progress_2s_ease-in-out_infinite]" />
+            </div>
+            <span className="text-[10px] text-[#FFCC00] font-mono tracking-widest uppercase animate-pulse">SYNTHESIZING</span>
+          </div>
+          <div className="space-y-6">
+            {[0, 1, 2, 3, 4, 5].map(i => (
+              <div key={i} className="grid grid-cols-1 md:grid-cols-4 gap-6 p-6 bg-zinc-950/50 backdrop-blur-md rounded-xl border border-white/10 relative overflow-hidden">
+                <div className="absolute inset-0 -translate-x-full animate-[storyboard-shimmer_2s_ease-in-out_infinite] bg-gradient-to-r from-transparent via-white/5 to-transparent pointer-events-none" />
+                <div className="md:col-span-3 space-y-4">
+                  <div className="flex items-center gap-3">
+                    <span className="bg-[#FFCC00]/5 text-[#FFCC00]/40 text-[10px] font-black px-3 py-1 rounded-full border border-[#FFCC00]/10 font-mono tracking-tighter">SCENE_0{i + 1}</span>
+                    <span className="h-[1px] flex-1 bg-white/5" />
+                  </div>
+                  <div className="h-5 bg-white/5 rounded w-3/4" />
+                  <div className="p-3 bg-zinc-900/50 border border-white/5 rounded-xl space-y-2">
+                    <div className="h-3 bg-white/5 rounded w-full" />
+                    <div className="h-3 bg-white/5 rounded w-5/6" />
+                  </div>
+                </div>
+                <div className="flex justify-center md:justify-end items-center">
+                  <div className="w-28 h-48 bg-zinc-900/50 border border-white/5 rounded-xl" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
       {error && <p className="text-red-500 text-center mb-4 p-4 backdrop-blur-md rounded-xl font-mono text-sm border border-red-900/20 bg-red-900/10">{error}</p>}
       {modalImageUrl && <ImageModal imageUrl={modalImageUrl} onClose={() => setModalImageUrl(null)} filename={modalImageFilename} />}
       
       {!loadingStoryboard && storyboardData.length > 0 && (
-        <div className="space-y-6 max-h-[60vh] overflow-y-auto pr-4 custom-scrollbar">
+        <div className="space-y-6">
             {storyboardData.map((scene, index) => (
                 <div key={index} className="grid grid-cols-1 md:grid-cols-4 gap-6 p-6 bg-zinc-950/50 backdrop-blur-md rounded-xl border border-white/10 hover:border-[#FFCC00]/40 transition-all group relative overflow-hidden">
                     <div className="absolute -right-20 -top-20 w-40 h-40 bg-[#FFCC00]/5 blur-[80px] rounded-full group-hover:bg-[#FFCC00]/10 transition-colors" />
@@ -416,13 +475,31 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
                         <div className="flex items-center gap-3">
                             <span className="bg-[#FFCC00]/10 text-[#FFCC00] text-[10px] font-black px-3 py-1 rounded-full border border-[#FFCC00]/20 font-mono tracking-tighter">SCENE_0{index + 1}</span>
                             <span className="h-[1px] flex-1 bg-white/5"></span>
+                            {(scene.imageUrl || scene.endFrameImageUrl) && !scene.manualUploadUrl && !scene.manualEndFrameUrl && (
+                                <button
+                                    onClick={() => handleGenerateSingleScene(index, true)}
+                                    disabled={generatingImageIndex !== null || loadingImages}
+                                    className="text-[9px] font-mono tracking-widest text-zinc-400 hover:text-[#FFCC00] disabled:opacity-30 disabled:cursor-not-allowed transition-colors flex items-center gap-1.5 px-2 py-1 border border-white/10 hover:border-[#FFCC00]/40 rounded-full"
+                                    title="Regenerate this scene only"
+                                >
+                                    <RefreshCw className={`w-3 h-3 ${generatingImageIndex === index ? 'animate-spin' : ''}`} /> {generatingImageIndex === index ? 'REGENERATING...' : 'REGEN'}
+                                </button>
+                            )}
                         </div>
                         <p className="text-lg font-bold text-white leading-tight">"{scene.scriptLine}"</p>
-                        <div className="p-3 bg-zinc-900 border border-white/10 rounded-xl">
+                        <div className="p-3 bg-zinc-900 border border-white/10 rounded-xl space-y-2">
                             <p className="text-[11px] text-zinc-400 font-mono leading-relaxed italic">
-                                <span className="text-[#FFCC00] not-italic font-bold tracking-widest mr-2">[DIRECTOR_LOGIC]</span> 
+                                <span className="text-[#FFCC00] not-italic font-bold tracking-widest mr-2">[NARRATIVE]</span>
                                 {scene.sceneDescription}
                             </p>
+                            {(scene.imagePrompt || scene.startFramePrompt) && (
+                                <p className="text-[11px] text-zinc-500 font-mono leading-relaxed italic border-t border-white/5 pt-2">
+                                    <span className="text-zinc-300 not-italic font-bold tracking-widest mr-2">[VISUAL_PROMPT]</span>
+                                    {scene.startFramePrompt
+                                        ? `${scene.startFramePrompt}${scene.endFramePrompt ? `  →  ${scene.endFramePrompt}` : ''}`
+                                        : scene.imagePrompt}
+                                </p>
+                            )}
                         </div>
                     </div>
 

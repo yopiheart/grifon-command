@@ -1,7 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { toast } from 'sonner';
-import { VideoGenConfig, VideoModelType } from '../types';
+import { VideoGenConfig, VideoModelType, VideoPrompt } from '../types';
 import { VIDEO_MODEL_SPECS, VIDEO_MODEL_ROUTING, generateVideo, GeneratedVideoResult } from '../services/geminiService';
 import { compressImageForUpload } from '../utils/imageCompression';
 import { Trash2, UploadCloud, Sparkles, Video, ChevronLeft, Download } from 'lucide-react';
@@ -13,6 +13,7 @@ const GrifonLogo = ({ className = "h-8 w-auto" }: { className?: string }) => (
 
 interface GenerateVideoProps {
   onBack: () => void;
+  seedPrompts?: VideoPrompt[];
 }
 
 const EXECUTION_LOGS = [
@@ -49,16 +50,17 @@ const EnergyMeter = ({ level }: { level: number }) => (
   </div>
 );
 
-const GenerateVideo: React.FC<GenerateVideoProps> = ({ onBack }) => {
+const GenerateVideo: React.FC<GenerateVideoProps> = ({ onBack, seedPrompts }) => {
   const [config, setConfig] = useState<VideoGenConfig>({
     model: 'Kling_O1',
     duration: 5,
     resolution: '720p',
     aspectRatio: '9:16',
     audioEnabled: false,
-    prompt: '',
+    prompt: seedPrompts?.[0]?.prompt ?? '',
     elements: []
   });
+  const [activeSeedIdx, setActiveSeedIdx] = useState(0);
 
   const [isLoading, setIsLoading] = useState(false);
   const [logIndex, setLogIndex] = useState(0);
@@ -371,6 +373,32 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({ onBack }) => {
             )}
 
             <div className="flex-1 flex flex-col gap-6">
+               {seedPrompts && seedPrompts.length > 0 && (
+                 <div className="p-3 bg-[#FFCC00]/5 border border-[#FFCC00]/20 rounded-xl">
+                   <div className="text-[10px] text-[#FFCC00] font-mono tracking-widest uppercase mb-2">
+                     // {seedPrompts.length} SCENES_IMPORTED_FROM_DIRECTOR_AI
+                   </div>
+                   <div className="flex gap-2 flex-wrap">
+                     {seedPrompts.map((p, i) => (
+                       <button
+                         key={i}
+                         onClick={() => {
+                           setActiveSeedIdx(i);
+                           setConfig(prev => ({ ...prev, prompt: p.prompt }));
+                         }}
+                         className={`px-3 py-1 text-[10px] font-mono tracking-tighter rounded-full border transition-colors ${
+                           activeSeedIdx === i
+                             ? 'bg-[#FFCC00] text-black border-[#FFCC00]'
+                             : 'bg-zinc-950 text-zinc-400 border-white/10 hover:border-[#FFCC00]/40'
+                         }`}
+                         title={p.prompt}
+                       >
+                         SCENE_{String(i + 1).padStart(2, '0')}
+                       </button>
+                     ))}
+                   </div>
+                 </div>
+               )}
                <div className="space-y-2">
                   <label className="text-[10px] font-black text-brand-primary uppercase tracking-widest">KINETIC_DIRECTIVE</label>
                   <textarea
