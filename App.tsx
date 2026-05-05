@@ -41,6 +41,22 @@ import { popIntendedPlan, startCheckout } from './services/billingService';
 
 const TOTAL_STEPS = 8;
 
+if (typeof window !== 'undefined') {
+  const params = new URLSearchParams(window.location.search);
+  const adminParam = params.get('admin');
+  if (adminParam === 'on' || adminParam === 'off') {
+    if (adminParam === 'on') {
+      localStorage.setItem('grifon_admin', 'true');
+    } else {
+      localStorage.removeItem('grifon_admin');
+    }
+    params.delete('admin');
+    const query = params.toString();
+    const cleanUrl = window.location.pathname + (query ? `?${query}` : '') + window.location.hash;
+    window.history.replaceState({}, '', cleanUrl);
+  }
+}
+
 const GrifonLogo = ({ className = "h-24 w-auto" }) => (
   <img src="/logo.png" alt="GRIFON Logo" className={`object-contain ${className}`} />
 );
