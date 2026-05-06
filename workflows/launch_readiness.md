@@ -234,11 +234,13 @@ Open `localhost:5174/` (NOT `/app` directly — Windows case-insensitive routing
 
 1. ~~Wizard state persistence~~ — **DONE 2026-05-06 evening.**
 2. ~~Smoke test (8 tests + bonus Step 8 reload)~~ — **PASSED 2026-05-06 evening.** Persistence is shippable.
-3. **Pre-beta polish bundle (~half day, NEXT SHIP):**
-   - **3a.** JWT auto-refresh + 401 error boundary. Pairs with persistence: state is saved, 401 catch + re-auth makes auth interruption invisible.
+3. **Pre-beta polish bundle (~full day, NEXT SHIP):**
+   - **3a.** JWT auto-refresh + 401 error boundary. Pairs with persistence: state is saved, 401 catch + re-auth makes auth interruption invisible. ~half day.
    - **3b.** Sonner toast restyle. Current white background on `// SESSION_RESUMED` toast breaks the design system. Align to zinc-950 + gold accent + mono caps to match the `// PREVIOUS_SESSION_DETECTED` pill. ~5-line theme override on the `<Toaster>` config.
    - **3c.** Suppress Pro Tip "Run Market Research First" nudge while resume pill is up. 1-line: add `&& !showResumePill` to the nudge condition at [App.tsx:563](../App.tsx#L563).
    - **3d.** Gate TEMU option in scriptType picker as disabled with `// COMING_IN_V1.1` label. Prevents the broken MrBeast-cosplaying-as-TEMU formula from reaching beta users.
+   - **3e.** Wire `clientDetails.offer` (tripwire from Offer Optimizer), `businessInfo.separator` (Main Differentiator), `businessInfo.audience` into the script generation prompt per the locked **Script-input wiring matrix** below. Surgical per-formula slotting — offer slots into Scene 7 CTA only (offer STRUCTURE not bare price), separator into Scene 5/6 PROOF beats, audience as system-instruction register tuning (never as content). CLAUDE.md-tuned, requires grill-me to lock prompt edits before surgical-edit. ~half day. **Highest-ROI prompt change available pre-beta — wires the dormant Offer Optimizer → Director AI bridge that was architected but never built.**
+   - **3f.** Drop `businessInfo.logoImageUrl` from wizard (truly unused everywhere). Decide on `clientDetails.services` (Neil's call: vestigial like an early-iteration leftover, or upstream-fed by some module I haven't seen?). 5-min UI cleanup once decided.
 4. **Beta launch** — MrBeast + TESTIMONIAL formulas only. 5–10 hand-picked Filipino SMB owners. Frame TEMU as "v1.1 first access" reciprocity hook for the beta cohort.
 5. **TEMU formula re-spec ship (v1.1, ~1.5–2 days)** — see locked design brief below this section. Grill-me protocol before touching `services/geminiService.ts`. Drop to beta cohort with reciprocity framing.
 6. Failed-scene GENERATE button ([Step5Storyboard.tsx:478](../components/Step5Storyboard.tsx#L478)). ~5-line UX fix. Pre- or post-beta.
@@ -259,7 +261,59 @@ M  workflows/launch_readiness.md             (this update)
 
 #### Next session starting point
 
-Smoke tests + bonus Step 8 reload all green this evening; persistence is shippable. Next ship is the **pre-beta polish bundle** (punch list item #3): JWT auto-refresh + 401 boundary, sonner toast restyle, nudge-suppress fix, TEMU-option gate. ~half day. After that bundle ships, beta launches with MrBeast + TESTIMONIAL only. TEMU re-spec is v1.1 — locked design brief below; grill-me before any `services/geminiService.ts` edit.
+Smoke tests + bonus Step 8 reload all green this evening; persistence is shippable. Next ship is the **pre-beta polish bundle** (punch list item #3): JWT auto-refresh + 401 boundary, sonner toast restyle, nudge-suppress fix, TEMU-option gate, **and the offer/separator/audience wiring per the Script-input slotting matrix below**. ~full day. After that bundle ships, beta launches with MrBeast + TESTIMONIAL only. TEMU re-spec is v1.1 — locked design brief below; grill-me before any `services/geminiService.ts` edit on either the slotting matrix OR TEMU.
+
+### Script-input wiring matrix — locked design brief (2026-05-06 evening)
+
+**Status: design brief locked via grifon-cmo + Neil approval. Ships pre-beta as polish bundle item #3e. ~half day grilled prompt work.**
+
+#### Trigger
+
+Discovery that 3 wizard inputs are collected but the script generation prompt either ignores them or explicitly tells the model to ignore them:
+- `clientDetails.offer` — the tripwire from Offer Optimizer (Bryan crafts tripwire/core/high-ticket → pastes tripwire into Step 2). The architectural bridge Neil designed; never wired into geminiService.
+- `businessInfo.separator` — "Main Differentiator" ([Step2BusinessInfo.tsx:156-165](../components/Step2BusinessInfo.tsx#L156-L165)). Required field in Step 2; geminiService has zero references.
+- `businessInfo.audience` — script prompt at [services/geminiService.ts:564](../services/geminiService.ts#L564) explicitly says: `"Do not ask the user for target audience details. You deduce the most profitable avatar based on the product provided."` But the wizard makes Bryan fill it in anyway.
+
+Hand-picked beta of 5–10 Filipino SMB owners means highest-stakes first-impression scripts. Shipping beta with the offer→script bridge cut means every Bryan in the cohort sees a strategically weaker output than the product can produce. Sabri Suby reality check: "build a great offer, copy is just the megaphone" — and the megaphone wire to the offer is currently cut.
+
+#### Slotting matrix (locked, approved by Neil 2026-05-06 evening)
+
+One slot per input per formula. Anywhere else dilutes or destroys the formula's persuasion stack.
+
+| Input | MrBeast | TESTIMONIAL | TEMU (v1.1 re-spec) |
+|---|---|---|---|
+| **`clientDetails.offer`** (tripwire) | **Scene 7 CTA ONLY.** Inject offer STRUCTURE (scarcity + value adds + urgency), never the bare price. Example: "first 50 lang, kasama ang free shipping + recipe ebook." Hook stays curiosity-gap-pure. | **Scene 7 WARM CTA ONLY.** Same structural injection, gentler tone — recommendation framing not direct sell. "Try niyo na, sulit kahit first time bumili — first 50 may free shipping pa." | **Scene 6 (Proof/Scarcity) + Scene 7 (CTA) overlays.** Carry offer's scarcity/urgency words: `"FIRST 50 LANG"` / `"FREE SHIPPING"` / `"TAP YELLOW BASKET ↓"`. **Never the bare price** — price belongs on the Shopee/Lazada listing, not the ad. |
+| **`businessInfo.separator`** (Main Differentiator) | **Scene 5 PROOF beat.** "Hindi tulad ng iba — kami `${separator}`." This is the "why believe?" slot. Never in hook (kills curiosity), never in CTA (offer owns that). | **Scene 6 SPECIFIC PROOF beat.** "Marami akong na-try na ibang [category], pero ito lang ang gumana sa akin kasi `${separator}`." Comparative moment is where differentiator earns its keep. | **Scene 5 VARIETY/STACK overlay.** Compress to 1-3 words: `"100% PLANT-BASED"` / `"BUKIDNON GROWN"` / `"NON-TOXIC"`. Differentiator becomes a visual badge, not a sentence. |
+| **`businessInfo.audience`** | **System instruction REGISTER tuning ONLY** — never script body content. Inject as: `"Match vocabulary, idiom, and Taglish register to: ${audience}"`. Affects HOW the model talks, not WHAT it says. | **Same as MrBeast** + Scene 1 IDENTITY persona alignment ("Ako si Mark, OFW dad" matches OFW audience; "Ako si Tin, single mom" matches Filipino-mom audience). Audience NEVER named literally; speaker's persona implicitly matches. | **Visual register tuning** for Scene 4 In-Use beat: wardrobe, setting, lighting tone match audience context (Filipino moms → soft morning kitchen; OFWs → balikbayan-box framing). NEVER overlay text. |
+
+#### Hard constraints honored
+
+- **Never mention price in video scripts.** Wire offer STRUCTURE (scarcity, urgency, value adds), not bare price. Standard direct-response: ad opens curiosity → landing page closes price.
+- **Audience as register, never as content.** Naming audience back to them ("for Filipino moms 25–40 who shop on TikTok Shop, here's the coffee...") reads like a database merge field — Bryan-killer.
+- **Hook curiosity-gap (MrBeast) stays untouched.** All inputs slot at proof/CTA beats; Scenes 1–2 remain mechanism-pure.
+
+#### Implementation handoff (grill-me + surgical-edit)
+
+**1. services/geminiService.ts** (CLAUDE.md tuning gate — grill-me before any prompt edit)
+- Remove "Do not ask the user for target audience details" instruction at [line 564](../services/geminiService.ts#L564). Replace with register-tuning instruction using `businessInfo.audience`.
+- For each formula branch (MrBeast at [~line 766](../services/geminiService.ts#L766), Testimonial at [~line 752](../services/geminiService.ts#L752), Temu at [~line 723](../services/geminiService.ts#L723)): identify the Scene N prompt construction site and inject the per-input slot per the matrix. Surgical insertion at the right scene-prompt template, not a global "use everywhere" rule.
+- Fallback handling: empty `offer` → Scene 7 CTA falls back to existing generic CTA. Empty `separator` → Scene 5/6 PROOF beat falls back to existing generic-proof phrasing.
+
+**2. types.ts** — no change. All three fields already exist on `ClientDetails` / `BusinessInfo`.
+
+**3. components/Step3AdScript.tsx** — no structural change. Form submission already passes both objects through to `generateAdScript`. The wiring change is purely on the prompt-construction side in geminiService.
+
+#### Open question — Neil's call before grill-me
+
+`clientDetails.services` — vestigial early-iteration field, or upstream-fed by some module I haven't seen? If standalone, drop in 3f. If upstream-fed (like `offer` is from Offer Optimizer), wire it like offer per a similar matrix.
+
+#### Pre-grill-me checklist
+
+Before grill-me runs tomorrow, lock the unresolved decisions:
+- [x] Slotting matrix approved (2026-05-06 evening)
+- [ ] `clientDetails.services` decision (drop / wire / keep parked)
+- [ ] Fallback rules for empty `offer` and empty `separator` (degrade gracefully ✓ already specified, but confirm)
+- [ ] Audience register-tuning instruction phrasing — once line 564 is removed, exact replacement text
 
 ### TEMU formula re-spec — locked design brief (2026-05-06 evening)
 
@@ -354,7 +408,7 @@ Target sub-segment of Bryan: e-com sellers on Shopee/Lazada/TikTok Shop. Single 
 | `// 3RD_REGENERATION_DETECTED` soft warning toast | Optional UX nudge; existing per-tier daily quotas (commit `5855fb3`) handle abuse |
 | Strategic Audit prompt rewrite — current is generic and self-praising | Quality concern, not a beta blocker |
 | 40-second ad length — tighten storyboard prompt to 5-6 scenes (~25-30s ads) | Beta will tell us if length is the bottleneck |
-| Step 1/2 wizard input simplification — **verified via grep on services/geminiService.ts (2026-05-06).** 4 fields are collected but NEVER read anywhere downstream: `clientDetails.offer`, `clientDetails.services`, `businessInfo.separator`, `businessInfo.logoImageUrl`. 1 contradiction: `businessInfo.audience` is collected, but the script prompt at [services/geminiService.ts:564](../services/geminiService.ts#L564) explicitly says `"Do not ask the user for target audience details. You deduce the most profitable avatar based on the product provided."` — audience IS used in avatar generation ([line 896](../services/geminiService.ts#L896)), so leave the field but resolve the contradiction. Confirmed-active script-input fields: `brandName`, `product`, `goal`, `benefit`, `painPoint`, `features`, `scriptType` (+ `problem` for TESTIMONIAL formula only) | v1.2 ship: drop the 4 dead fields, resolve the audience contradiction (either wire audience into the script prompt or move its collection to Step 4 where avatar gen actually consumes it). Conversion lift at the Step 1/2 dropoff is measurable; script-quality risk is zero since the 4 dropped fields aren't doing anything today |
+| Wizard input audit follow-up — superseded for `offer`/`separator`/`audience` by pre-beta polish bundle item #3e (Script-input wiring matrix). Remaining v1.2 work after polish-bundle ships: instrument Step 1/2 fill-rates per field across beta cohort, audit any other fields surfacing as collected-but-ignored, and confirm `clientDetails.services` resolution (drop vs wire pending Neil's call). | Beta data > assumptions. Once 3e ships, the once-suspected-dead fields will be wired correctly per the matrix; remaining cleanup is data-driven rather than guess-driven |
 
 ### Documented behavioral lessons from this session
 
