@@ -31,6 +31,15 @@ Server-side (no prefix, read by `api/*` handlers in dev and on Vercel):
 - `GRIFON_VOICE_CLONING_ENABLED` — `'true'` opens the voice-cloning POST/DELETE branches in [api/elevenlabs/voices.ts](api/elevenlabs/voices.ts). Anything else returns 503 on POST. Stays off until ElevenLabs is on Starter+.
 - `SUPABASE_SERVICE_ROLE_KEY` — used by [api/_lib/supabaseAdmin.ts](api/_lib/supabaseAdmin.ts) for token verification and rate-limit RPCs.
 
+## Working Environment
+
+Sessions run on rented cafe PCs with a defreezer that wipes `C:\Users\Administrator\` (including `~/.claude/` and `~/.claude.json`) on reboot. **Only the GitHub repo persists across sessions.** Practical implications:
+
+- "Save this for later" almost always means commit + push, not write to `~/.claude/` or any local path. Commit early and often — uncommitted work dies with the reboot.
+- Project-level [.claude/settings.json](.claude/settings.json) and [.claude/skills/](.claude/skills/) survive in the repo; user-global `~/.claude/` config does not.
+- For external state that genuinely must live outside the repo (MCP server registrations in `~/.claude.json`, auth tokens, etc.), commit a restore script under [scripts/](scripts/) — see [scripts/restore-notebooklm.ps1](scripts/restore-notebooklm.ps1) as the established idempotent pattern.
+- The auto-memory system at `~/.claude/projects/.../memory/` is itself ephemeral on this machine. Treat it as within-session memory only; durable cross-session knowledge belongs in this file or [agent_lessons.md](agent_lessons.md).
+
 ## Shared Vocabulary & Skills
 
 Before any planning conversation, large refactor, or new module spec, load:
