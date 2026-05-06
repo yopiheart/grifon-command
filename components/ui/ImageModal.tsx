@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, MouseEvent as ReactMouseEvent } from 'react';
+import { createPortal } from 'react-dom';
 import { ZoomOut, X } from 'lucide-react';
 import Button from './Button';
 
@@ -82,7 +83,7 @@ const ImageModal: React.FC<ImageModalProps> = ({ imageUrl, onClose, filename }) 
       : 'cursor-grab'
     : 'cursor-zoom-in';
 
-  return (
+  return createPortal(
     <div
       className="fixed inset-0 bg-zinc-950 bg-opacity-80 flex items-center justify-center z-50 p-4"
       onClick={onClose}
@@ -137,7 +138,8 @@ const ImageModal: React.FC<ImageModalProps> = ({ imageUrl, onClose, filename }) 
           </Button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 

@@ -1,6 +1,6 @@
 
-import React, { useState, useEffect } from 'react';
-import { ChevronLeft, Lightbulb } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { ChevronLeft, Lightbulb, RotateCw } from 'lucide-react';
 import { ClientDetails, BusinessInfo, Script, Scene, VideoPrompt, Avatar, CinematicNarrativeScene } from './types';
 import StepIndicator from './components/StepIndicator';
 import Step1ClientDetails from './components/Step1ClientDetails';
@@ -38,6 +38,7 @@ import Support from './components/Support';
 import { toast } from 'sonner';
 import { getSupabase } from './services/supabaseClient';
 import { popIntendedPlan, startCheckout } from './services/billingService';
+import { getSession, setSession, clearSession, type WizardSessionV1 } from './services/wizardSessionStore';
 
 const TOTAL_STEPS = 8;
 
@@ -130,6 +131,12 @@ const App: React.FC = () => {
   const [cinematicFrameMap, setCinematicFrameMap] = useState<Record<string, string>>({});
   const [cinematicResult, setCinematicResult] = useState<Scene[] | null>(null);
 
+  const [userId, setUserId] = useState<string | null>(null);
+  const [isLoadingSession, setIsLoadingSession] = useState(true);
+  const [pendingSession, setPendingSession] = useState<WizardSessionV1 | null>(null);
+  const [hasRestored, setHasRestored] = useState(false);
+  const saveErrorToastedRef = useRef(false);
+
   const bootLines = [
     "> INITIALIZING GRIFON_DNA...",
     "> LOADING MARKET_INTEL_VAULT...",
@@ -169,7 +176,10 @@ const App: React.FC = () => {
     supabase.auth.getSession().then(({ data }) => {
       if (data.session?.user) {
         setUserEmail(data.session.user.email ?? null);
+        setUserId(data.session.user.id);
         setIsAuthenticated(true);
+      } else {
+        setIsLoadingSession(false);
       }
       setIsCheckingSession(false);
     });
@@ -177,9 +187,11 @@ const App: React.FC = () => {
     const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session?.user) {
         setUserEmail(session.user.email ?? null);
+        setUserId(session.user.id);
         setIsAuthenticated(true);
       } else {
         setUserEmail(null);
+        setUserId(null);
         setIsAuthenticated(false);
       }
     });
@@ -195,6 +207,66 @@ const App: React.FC = () => {
       toast.error('Could not resume checkout', { description: err?.message ?? 'Please try again.' });
     });
   }, [isAuthenticated]);
+
+  useEffect(() => {
+    if (!userId) return;
+    let cancelled = false;
+    setIsLoadingSession(true);
+    getSession(userId).then((session) => {
+      if (cancelled) return;
+      setPendingSession(session);
+      setIsLoadingSession(false);
+    });
+    return () => { cancelled = true; };
+  }, [userId]);
+
+  useEffect(() => {
+    if (hasRestored || isLoadingSession) return;
+    if (pendingSession === null) {
+      setHasRestored(true);
+      return;
+    }
+    const wizardPristine = currentStep === 1 && !clientDetails.brandName && !businessInfo.product && script === null;
+    if (!wizardPristine) {
+      if (userId) clearSession(userId);
+      setPendingSession(null);
+      setHasRestored(true);
+    }
+  }, [hasRestored, isLoadingSession, pendingSession, userId, currentStep, clientDetails.brandName, businessInfo.product, script]);
+
+  useEffect(() => {
+    if (!userId || !isAuthenticated || !hasRestored) return;
+    const wizardPristine = currentStep === 1 && !clientDetails.brandName && !businessInfo.product && script === null;
+    if (wizardPristine) return;
+
+    const timer = setTimeout(() => {
+      setSession(userId, {
+        version: 1,
+        savedAt: Date.now(),
+        currentStep,
+        clientDetails,
+        businessInfo,
+        script,
+        language,
+        finalScript,
+        avatar,
+        storyboard,
+        videoPrompts,
+        aspectRatio,
+        thumbnailUrl,
+      }).catch((err) => {
+        console.warn('[wizard-session] save failed', err);
+        if (!saveErrorToastedRef.current) {
+          saveErrorToastedRef.current = true;
+          toast.error('// SESSION_AUTOSAVE_FAILED', {
+            description: 'Storage may be full or blocked. Your work is in memory but not persisted.',
+          });
+        }
+      });
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [userId, isAuthenticated, hasRestored, currentStep, clientDetails, businessInfo, script, language, finalScript, avatar, storyboard, videoPrompts, aspectRatio, thumbnailUrl]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -221,6 +293,7 @@ const App: React.FC = () => {
 
   const handleLogout = async () => {
     try {
+      if (userId) await clearSession(userId);
       const supabase = getSupabase();
       await supabase.auth.signOut();
     } finally {
@@ -229,6 +302,34 @@ const App: React.FC = () => {
       setAuthEmail('');
       setAuthPassword('');
     }
+  };
+
+  const resumeSession = () => {
+    if (!pendingSession) return;
+    const stepLabel = String(pendingSession.currentStep).padStart(2, '0');
+    setCurrentStep(pendingSession.currentStep);
+    setClientDetails(pendingSession.clientDetails);
+    setBusinessInfo(pendingSession.businessInfo);
+    setScript(pendingSession.script);
+    setLanguage(pendingSession.language);
+    setFinalScript(pendingSession.finalScript);
+    setAvatar(pendingSession.avatar);
+    setStoryboard(pendingSession.storyboard);
+    setVideoPrompts(pendingSession.videoPrompts);
+    setAspectRatio(pendingSession.aspectRatio);
+    setThumbnailUrl(pendingSession.thumbnailUrl);
+    setPendingSession(null);
+    setHasRestored(true);
+    toast.success(`// SESSION_RESUMED — STEP_${stepLabel}_OF_08`, {
+      description: 'Your earlier work has been restored.',
+      duration: 6000,
+    });
+  };
+
+  const declineSession = () => {
+    if (userId) clearSession(userId);
+    setPendingSession(null);
+    setHasRestored(true);
   };
 
   const restart = () => {
@@ -460,6 +561,8 @@ const App: React.FC = () => {
   } else if (activeModule === 'creative_director') {
     const hasRunResearch = !!localStorage.getItem('marketMindReport');
     const showNudge = !hasRunResearch && !directorNudgeDismissed;
+    const wizardPristine = currentStep === 1 && !clientDetails.brandName && !businessInfo.product && script === null;
+    const showResumePill = !isLoadingSession && pendingSession !== null && !hasRestored && wizardPristine;
 
     moduleElement = (
         <div className="min-h-screen bg-zinc-950 font-sans flex flex-col items-center p-4 sm:p-6 md:p-8 text-white">
@@ -509,6 +612,42 @@ const App: React.FC = () => {
             )}
 
             <main className="bg-zinc-900/80 backdrop-blur-xl p-6 sm:p-10 border border-white/10 rounded-2xl shadow-2xl relative overflow-hidden">
+            {isLoadingSession ? (
+              <div className="flex items-center justify-center h-64">
+                <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest animate-pulse">// LOADING_SESSION...</p>
+              </div>
+            ) : (
+            <>
+            {showResumePill && pendingSession && (
+              <div className="bg-zinc-900 border border-[#FFCC00]/30 rounded-xl p-4 mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div className="flex items-start gap-3">
+                  <div className="mt-1">
+                    <RotateCw className="w-5 h-5 text-[#FFCC00]" />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-bold text-white mb-1">// PREVIOUS_SESSION_DETECTED</h3>
+                    <p className="text-xs text-zinc-400">
+                      STEP_{String(pendingSession.currentStep).padStart(2, '0')}_OF_08
+                      {pendingSession.clientDetails.brandName && ` — ${pendingSession.clientDetails.brandName.toUpperCase()}`}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 w-full md:w-auto shrink-0">
+                  <button
+                    onClick={declineSession}
+                    className="text-zinc-500 hover:text-white text-xs font-medium transition-colors"
+                  >
+                    START_FRESH
+                  </button>
+                  <GoldButton
+                    onClick={resumeSession}
+                    className="text-xs py-2 px-4"
+                  >
+                    RESUME
+                  </GoldButton>
+                </div>
+              </div>
+            )}
             {currentStep <= TOTAL_STEPS && <StepIndicator currentStep={currentStep} totalSteps={TOTAL_STEPS} onStepClick={(s) => s < currentStep && setCurrentStep(s)} />}
             <div className="mt-8">
                 {currentStep === 1 && <Step1ClientDetails data={clientDetails} setData={setClientDetails} onNext={() => setCurrentStep(2)} />}
@@ -520,6 +659,8 @@ const App: React.FC = () => {
                 {currentStep === 7 && <Step6VideoPrompts storyboard={storyboard} videoPrompts={videoPrompts} setVideoPrompts={setVideoPrompts} onNext={() => setCurrentStep(8)} onBack={() => setCurrentStep(6)} businessInfo={businessInfo} />}
                 {currentStep === 8 && <Step7FinalOutput allData={{ clientDetails, businessInfo, finalScript, avatar, storyboard, videoPrompts, thumbnailUrl, aspectRatio }} onRestart={restart} onBack={() => setCurrentStep(7)} onGenerateVideo={() => setActiveModule('generate_video')} />}
             </div>
+            </>
+            )}
             </main>
         </div>
         </div>
