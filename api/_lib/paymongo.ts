@@ -151,3 +151,149 @@ export const verifyWebhookSignature = (
     return false;
   }
 };
+
+// ----- Payment Intents API (custom on-domain checkout) ---------------------
+//
+// Cards are tokenized CLIENT-SIDE via PayMongo.js using PAYMONGO_PUBLIC_KEY
+// — the server never sees raw PAN, which keeps us in PCI SAQ A scope.
+// The client posts the resulting payment_method_id to /api/billing/confirm,
+// which then calls attachPaymentMethod() below.
+//
+// E-wallets (GCash / Maya / GrabPay) carry no sensitive data, so the
+// PaymentMethod can be safely created server-side via
+// createEwalletPaymentMethod() and attached in the same request handler.
+
+export type PaymentMethodType = 'card' | 'gcash' | 'paymaya' | 'grab_pay';
+export type EwalletType = 'gcash' | 'paymaya' | 'grab_pay';
+
+export type PaymentIntentNextAction = {
+  type: string;
+  redirect?: { url: string; return_url: string };
+} | null;
+
+export type PaymentIntentResponse = {
+  id: string;
+  client_key: string;
+  status: string;
+  amount: number;
+  next_action: PaymentIntentNextAction;
+  last_payment_error: { code?: string; message?: string } | null;
+};
+
+const mapPaymentIntent = (raw: any): PaymentIntentResponse => {
+  const attrs = raw?.attributes ?? {};
+  return {
+    id: raw?.id,
+    client_key: attrs.client_key,
+    status: attrs.status,
+    amount: attrs.amount,
+    next_action: attrs.next_action ?? null,
+    last_payment_error: attrs.last_payment_error ?? null,
+  };
+};
+
+const paymongoFetch = async (path: string, init: RequestInit): Promise<any> => {
+  const res = await fetch(`${BASE_URL}${path}`, {
+    ...init,
+    headers: {
+      Authorization: authHeader(),
+      'Content-Type': 'application/json',
+      ...(init.headers ?? {}),
+    },
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`PayMongo ${res.status}: ${text}`);
+  }
+  return res.json();
+};
+
+export type CreatePaymentIntentParams = {
+  amountCentavos: number;
+  description: string;
+  metadata: Record<string, string>;
+  payment_method_allowed: PaymentMethodType[];
+};
+
+export const createPaymentIntent = async (
+  params: CreatePaymentIntentParams
+): Promise<PaymentIntentResponse> => {
+  const json = await paymongoFetch('/payment_intents', {
+    method: 'POST',
+    body: JSON.stringify({
+      data: {
+        attributes: {
+          amount: params.amountCentavos,
+          currency: 'PHP',
+          payment_method_allowed: params.payment_method_allowed,
+          payment_method_options: { card: { request_three_d_secure: 'any' } },
+          description: params.description,
+          metadata: params.metadata,
+        },
+      },
+    }),
+  });
+  return mapPaymentIntent(json.data);
+};
+
+export type CreateEwalletPaymentMethodParams = {
+  type: EwalletType;
+  billing: { name: string; email: string };
+};
+
+export type PaymentMethodResponse = { id: string; type: PaymentMethodType };
+
+export const createEwalletPaymentMethod = async (
+  params: CreateEwalletPaymentMethodParams
+): Promise<PaymentMethodResponse> => {
+  const json = await paymongoFetch('/payment_methods', {
+    method: 'POST',
+    body: JSON.stringify({
+      data: {
+        attributes: {
+          type: params.type,
+          billing: params.billing,
+        },
+      },
+    }),
+  });
+  const raw = json.data;
+  return { id: raw.id, type: raw.attributes.type };
+};
+
+export type AttachPaymentMethodParams = {
+  intent_id: string;
+  payment_method_id: string;
+  client_key: string;
+  return_url: string;
+};
+
+export const attachPaymentMethod = async (
+  params: AttachPaymentMethodParams
+): Promise<PaymentIntentResponse> => {
+  const json = await paymongoFetch(
+    `/payment_intents/${params.intent_id}/attach`,
+    {
+      method: 'POST',
+      body: JSON.stringify({
+        data: {
+          attributes: {
+            payment_method: params.payment_method_id,
+            client_key: params.client_key,
+            return_url: params.return_url,
+          },
+        },
+      }),
+    }
+  );
+  return mapPaymentIntent(json.data);
+};
+
+export const retrievePaymentIntent = async (
+  intent_id: string
+): Promise<PaymentIntentResponse> => {
+  const json = await paymongoFetch(`/payment_intents/${intent_id}`, {
+    method: 'GET',
+  });
+  return mapPaymentIntent(json.data);
+};
