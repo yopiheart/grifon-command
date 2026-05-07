@@ -30,6 +30,7 @@ import SignalModulator from './components/SignalModulator';
 import InfluencerForge from './components/InfluencerForge';
 import LandingPage from './components/LandingPage';
 import GrifonPricingPage from './components/GrifonPricingPage';
+import CheckoutPage from './components/CheckoutPage';
 import BillingSuccess from './components/BillingSuccess';
 import TermsOfService from './components/TermsOfService';
 import PrivacyPolicy from './components/PrivacyPolicy';
@@ -62,13 +63,14 @@ const GrifonLogo = ({ className = "h-24 w-auto" }) => (
   <img src="/logo.png" alt="GRIFON Logo" className={`object-contain ${className}`} />
 );
 
-type Route = 'landing' | 'pricing' | 'app' | 'billing_success' | 'terms' | 'privacy' | 'refund' | 'support';
+type Route = 'landing' | 'pricing' | 'checkout' | 'app' | 'billing_success' | 'terms' | 'privacy' | 'refund' | 'support';
 
 const detectInitialRoute = (): Route => {
   if (typeof window === 'undefined') return 'landing';
   const path = window.location.pathname;
   if (path.startsWith('/billing/success')) return 'billing_success';
   if (path.startsWith('/billing/cancel')) return 'pricing';
+  if (path.startsWith('/checkout')) return 'checkout';
   if (path.startsWith('/pricing')) return 'pricing';
   if (path.startsWith('/terms')) return 'terms';
   if (path.startsWith('/privacy')) return 'privacy';
@@ -81,6 +83,7 @@ const detectInitialRoute = (): Route => {
 const ROUTE_PATHS: Record<Route, string> = {
   landing: '/',
   pricing: '/pricing',
+  checkout: '/checkout',
   app: '/app',
   billing_success: '/billing/success',
   terms: '/terms',
@@ -394,6 +397,19 @@ const App: React.FC = () => {
           onNavigateHome={() => setCurrentRoute('landing')}
           onNavigateLegal={goToLegal}
         />
+      </ErrorBoundary>
+    );
+  }
+
+  if (currentRoute === 'checkout') {
+    return (
+      <ErrorBoundary
+        name="route:checkout"
+        resetKey={currentRoute}
+        onReset={() => setCurrentRoute('pricing')}
+        resetLabel="BACK TO PRICING"
+      >
+        <CheckoutPage email={userEmail} onBack={() => setCurrentRoute('pricing')} />
       </ErrorBoundary>
     );
   }
