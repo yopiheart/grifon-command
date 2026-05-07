@@ -239,7 +239,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
             scale: [1, 1.1, 0.9, 1] 
           }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[-10%] left-[-10%] w-[500px] md:w-[800px] aspect-square bg-purple-600/30 rounded-full blur-[100px] md:blur-[150px] opacity-60"
+          className="absolute top-[-10%] left-[-10%] w-[500px] md:w-[800px] aspect-square bg-[#FFCC00]/8 rounded-full blur-[100px] md:blur-[150px] opacity-60"
         />
         <motion.div 
           animate={{ 
@@ -284,9 +284,9 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
           <div className={loaded ? "fade-up" : ""} style={{ animationDelay: "0.1s" }}>
           </div>
 
-          <h1 className={loaded ? "fade-up font-oswald uppercase" : "font-oswald uppercase"} style={{ 
+          <h1 className={loaded ? "fade-up uppercase bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500" : "uppercase bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500"} style={{
             animationDelay: "0.2s",
-            fontSize: "clamp(28px, 5vw, 52px)", 
+            fontSize: "clamp(28px, 5vw, 52px)",
             fontWeight: 900,
             lineHeight: 1.05,
             letterSpacing: "-0.03em",
@@ -371,12 +371,14 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
           </div>
           {billing === "annual" && (
             <span className="font-mono" style={{
-              background: "rgba(34,197,94,0.15)",
-              color: "#4ade80",
+              background: "rgba(255,204,0,0.1)",
+              color: "#FFCC00",
+              border: "1px solid rgba(255,204,0,0.25)",
               fontSize: 11,
               fontWeight: 700,
               padding: "4px 10px",
-              borderRadius: 6,
+              borderRadius: 999,
+              letterSpacing: "0.1em",
             }}>
               2 MONTHS FREE
             </span>
@@ -462,9 +464,9 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
                   }}>
                     {isFree ? "" : "₱"}
                   </span>
-                  <span className="font-oswald" style={{ 
-                    fontSize: "clamp(32px, 4vw, 42px)", 
-                    fontWeight: 900, 
+                  <span style={{
+                    fontSize: "clamp(32px, 4vw, 42px)",
+                    fontWeight: 900,
                     color: isPro ? "#FFCC00" : "#fff",
                     letterSpacing: "-0.02em",
                   }}>
@@ -479,7 +481,8 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
 
                 {plan.savings && (
                   <span style={{
-                    fontSize: 11, color: "#4ade80", fontWeight: 600,
+                    fontSize: 11, color: "#FFCC00", fontWeight: 600,
+                    opacity: 0.75,
                     marginBottom: 8, display: "block",
                   }}>
                     {plan.savings}
@@ -635,11 +638,13 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
               // PRO PLAN VALUE BREAKDOWN
             </p>
 
-            <h2 className="font-oswald" style={{
+            <h2 className="bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500" style={{
               fontSize: "clamp(22px, 3.5vw, 32px)",
               fontWeight: 900,
               marginBottom: 32,
               lineHeight: 1.1,
+              textTransform: "uppercase",
+              letterSpacing: "-0.02em",
             }}>
               Here's What You're Actually Getting<br/>
               <span style={{ color: "#FFCC00" }}>Every Single Month.</span>
@@ -669,10 +674,11 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
               <p style={{ fontSize: 13, color: "#71717a", marginBottom: 4 }}>
                 Total value if you hired freelancers:
               </p>
-              <p className="font-oswald" style={{
+              <p style={{
                 fontSize: 36, fontWeight: 900,
                 color: "#52525b",
                 textDecoration: "line-through",
+                letterSpacing: "-0.02em",
                 marginBottom: 8,
               }}>
                 {totalValue}/mo
@@ -680,23 +686,24 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
               <p style={{ fontSize: 13, color: "#a1a1aa", marginBottom: 4 }}>
                 Your price with Grifon Pro:
               </p>
-              <p className="font-oswald" style={{
+              <p style={{
                 fontSize: 48, fontWeight: 900,
                 color: "#FFCC00",
                 lineHeight: 1,
+                letterSpacing: "-0.02em",
               }}>
                 ₱2,497<span style={{ fontSize: 16, color: "#71717a" }}>/mo</span>
               </p>
               <p style={{
-                fontSize: 14, color: "#4ade80", fontWeight: 700,
+                fontSize: 14, color: "#a1a1aa", fontWeight: 700,
                 marginTop: 8, marginBottom: 24,
               }}>
-                That's 99% less than doing it the old way.
+                That's <span style={{ color: "#FFCC00", fontWeight: 900 }}>99%</span> less than doing it the old way.
               </p>
               <button
                 className="gold-btn"
                 style={{
-                  padding: "16px 48px", borderRadius: 14,
+                  padding: "16px 48px", borderRadius: 999,
                   fontSize: 15,
                   opacity: isCheckingOut === 'pro' ? 0.7 : 1,
                   cursor: isCheckingOut ? "wait" : "pointer",
@@ -716,11 +723,13 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
           margin: "0 auto 80px",
           padding: "0 20px",
         }}>
-          <h2 className="font-oswald" style={{
+          <h2 className="bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500" style={{
             textAlign: "center",
             fontSize: "clamp(22px, 3.5vw, 32px)",
             fontWeight: 900,
             marginBottom: 32,
+            textTransform: "uppercase",
+            letterSpacing: "-0.02em",
           }}>
             The Old Way vs. <span style={{ color: "#FFCC00" }}>The Grifon Way</span>
           </h2>
@@ -730,12 +739,12 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
           }}>
             {/* Old Way */}
             <div style={{
-              background: "rgba(127,29,29,0.1)",
-              border: "1px solid rgba(239,68,68,0.2)",
+              background: "rgba(24,24,27,0.5)",
+              border: "1px solid rgba(255,255,255,0.08)",
               borderRadius: 16, padding: "clamp(16px, 3vw, 32px)",
             }}>
               <p className="font-mono" style={{
-                fontSize: 10, color: "#ef4444",
+                fontSize: 10, color: "#71717a",
                 textTransform: "uppercase", letterSpacing: "0.15em",
                 marginBottom: 16,
               }}>
@@ -798,7 +807,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
             <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#FFCC00] text-center mb-2">
               // WHAT EARLY USERS ARE SAYING
             </p>
-            <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tight text-center mb-8 text-white">
+            <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tight text-center mb-8 bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
               TRUSTED BY FILIPINO BUSINESS OWNERS
             </h2>
             
@@ -807,7 +816,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
               {testimonials.map((testimonial, idx) => (
                 <div 
                   key={idx} 
-                  className="bg-zinc-900/50 backdrop-blur-xl border border-white/10 rounded-3xl p-8 flex flex-col h-full"
+                  className="bg-zinc-900/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 flex flex-col h-full"
                 >
                   <div className="px-2 flex-1 flex flex-col">
                     <div className="flex gap-1 mb-4">
@@ -833,10 +842,10 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
         <section className="max-w-[600px] mx-auto mb-20 px-5 text-center">
           <AnimatedBorder containerClassName="h-full w-full" className="p-10 md:p-12 text-center bg-zinc-900/80 backdrop-blur-xl relative overflow-hidden">
             <ShieldCheck className="w-12 h-12 text-[#FFCC00] mx-auto mb-4" />
-            <h3 className="font-outfit text-2xl md:text-3xl font-bold uppercase tracking-tight mb-4 text-white">
+            <h3 className="text-2xl md:text-3xl font-bold uppercase tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
               7-Day Money-Back Guarantee
             </h3>
-            <p className="text-zinc-400 text-sm md:text-base leading-relaxed max-w-[440px] mx-auto font-dm-sans">
+            <p className="text-zinc-400 text-sm md:text-base leading-relaxed max-w-[440px] mx-auto">
               Subscribe to any paid plan. If Grifon doesn't save you at least 10 hours in 
               your first week, we'll refund you 100%. No questions asked. No hoops. 
               No "talk to a manager." Just a refund.
@@ -849,10 +858,12 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
           maxWidth: 650, margin: "0 auto 80px",
           padding: "0 20px",
         }}>
-          <h2 className="font-oswald" style={{
+          <h2 className="bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500" style={{
             textAlign: "center",
             fontSize: 24, fontWeight: 800,
             marginBottom: 32,
+            textTransform: "uppercase",
+            letterSpacing: "-0.02em",
           }}>
             Questions? We've got answers.
           </h2>
@@ -910,11 +921,13 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
           maxWidth: 600,
           margin: "0 auto",
         }}>
-          <h2 className="font-oswald" style={{
+          <h2 className="bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500" style={{
             fontSize: "clamp(24px, 4vw, 36px)",
             fontWeight: 900,
             marginBottom: 16,
             lineHeight: 1.1,
+            textTransform: "uppercase",
+            letterSpacing: "-0.02em",
           }}>
             Your competitors are creating<br/>
             10 ads while you make <span style={{ color: "#FFCC00" }}>one.</span>
@@ -929,7 +942,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
           <button
             className="gold-btn"
             style={{
-              padding: "18px 48px", borderRadius: 14,
+              padding: "18px 48px", borderRadius: 999,
               fontSize: 15, marginBottom: 16,
             }}
             onClick={onEnterApp}
