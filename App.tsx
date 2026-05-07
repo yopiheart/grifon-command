@@ -31,6 +31,7 @@ import InfluencerForge from './components/InfluencerForge';
 import LandingPage from './components/LandingPage';
 import GrifonPricingPage from './components/GrifonPricingPage';
 import CheckoutPage from './components/CheckoutPage';
+import Billing3dsReturn from './components/Billing3dsReturn';
 import BillingSuccess from './components/BillingSuccess';
 import TermsOfService from './components/TermsOfService';
 import PrivacyPolicy from './components/PrivacyPolicy';
@@ -63,11 +64,12 @@ const GrifonLogo = ({ className = "h-24 w-auto" }) => (
   <img src="/logo.png" alt="GRIFON Logo" className={`object-contain ${className}`} />
 );
 
-type Route = 'landing' | 'pricing' | 'checkout' | 'app' | 'billing_success' | 'terms' | 'privacy' | 'refund' | 'support';
+type Route = 'landing' | 'pricing' | 'checkout' | 'billing_3ds_return' | 'app' | 'billing_success' | 'terms' | 'privacy' | 'refund' | 'support';
 
 const detectInitialRoute = (): Route => {
   if (typeof window === 'undefined') return 'landing';
   const path = window.location.pathname;
+  if (path.startsWith('/billing/3ds-return')) return 'billing_3ds_return';
   if (path.startsWith('/billing/success')) return 'billing_success';
   if (path.startsWith('/billing/cancel')) return 'pricing';
   if (path.startsWith('/checkout')) return 'checkout';
@@ -84,6 +86,7 @@ const ROUTE_PATHS: Record<Route, string> = {
   landing: '/',
   pricing: '/pricing',
   checkout: '/checkout',
+  billing_3ds_return: '/billing/3ds-return',
   app: '/app',
   billing_success: '/billing/success',
   terms: '/terms',
@@ -410,6 +413,22 @@ const App: React.FC = () => {
         resetLabel="BACK TO PRICING"
       >
         <CheckoutPage email={userEmail} onBack={() => setCurrentRoute('pricing')} />
+      </ErrorBoundary>
+    );
+  }
+
+  if (currentRoute === 'billing_3ds_return') {
+    return (
+      <ErrorBoundary
+        name="route:billing_3ds_return"
+        resetKey={currentRoute}
+        onReset={() => setCurrentRoute('checkout')}
+        resetLabel="BACK TO CHECKOUT"
+      >
+        <Billing3dsReturn
+          onContinue={() => setCurrentRoute('app')}
+          onRetry={() => setCurrentRoute('checkout')}
+        />
       </ErrorBoundary>
     );
   }

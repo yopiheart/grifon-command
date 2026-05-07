@@ -1,115 +1,162 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Loader2 } from 'lucide-react';
 import { GlassPanel } from './ui/GlassPanel';
 import { OrderSummary } from './checkout/OrderSummary';
 import { PaymentMethodTabs, type PaymentMethod } from './checkout/PaymentMethodTabs';
 import { CardForm, type CardFormData } from './checkout/CardForm';
 import { EwalletButtons, type EwalletMethod } from './checkout/EwalletButtons';
-
-// Mirrors api/_lib/paymongo.ts PLAN_CATALOG. Server is the source of truth at intent-creation
-// time; this is a fallback so the page can render before /api/billing/intent returns.
-const PLAN_CATALOG = {
-  creator: {
-    name: 'Grifon Creator',
-    description: '15 video workflows, 5 reports, 100 captions, 50 images.',
-    monthly: 99_700,
-    annual: 997_200,
-  },
-  pro: {
-    name: 'Grifon Pro',
-    description: '40 workflows, 15 reports, 300 captions, 150 images, 15 AI video ads.',
-    monthly: 249_700,
-    annual: 2_497_200,
-  },
-  business: {
-    name: 'Grifon Business',
-    description: '100 workflows, 40 reports, 500 captions, 300 images, 40 AI video ads.',
-    monthly: 499_700,
-    annual: 4_996_800,
-  },
-} as const;
-
-type PlanId = keyof typeof PLAN_CATALOG;
-type Cycle = 'monthly' | 'annual';
+import {
+  fetchIntent,
+  formatPHP,
+  processCardPayment,
+  type IntentResponse,
+  type PlanId,
+  type BillingCycle,
+} from '../services/checkoutService';
 
 interface CheckoutPageProps {
   email: string | null;
   onBack: () => void;
 }
 
-const formatPHP = (centavos: number): string => {
-  const pesos = centavos / 100;
-  return `₱${pesos.toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-};
-
-// Inverse-VAT split: PLAN_CATALOG amounts are treated as VAT-inclusive going forward.
-const splitVatInclusive = (totalCentavos: number) => {
-  const subtotal = Math.round(totalCentavos / 1.12);
-  const vat = totalCentavos - subtotal;
-  return { subtotal, vat, total: totalCentavos };
-};
-
-const parseQuery = (): { planId: PlanId; cycle: Cycle } => {
+const parseQuery = (): { planId: PlanId; cycle: BillingCycle } => {
   const params = new URLSearchParams(window.location.search);
   const rawPlan = params.get('plan');
   const rawCycle = params.get('cycle');
-  const planId: PlanId = rawPlan === 'creator' || rawPlan === 'business' ? rawPlan : 'pro';
-  const cycle: Cycle = rawCycle === 'annual' ? 'annual' : 'monthly';
+  const planId: PlanId =
+    rawPlan === 'creator' || rawPlan === 'business' ? rawPlan : 'pro';
+  const cycle: BillingCycle = rawCycle === 'annual' ? 'annual' : 'monthly';
   return { planId, cycle };
 };
 
 const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack }) => {
   const { planId, cycle } = useMemo(parseQuery, []);
-  const plan = PLAN_CATALOG[planId];
-  const total = cycle === 'annual' ? plan.annual : plan.monthly;
-  const { subtotal, vat } = splitVatInclusive(total);
-  const monthlyEquivalent = cycle === 'annual' ? Math.round(plan.annual / 12) : undefined;
-  const monthlyComparisonSavings =
-    cycle === 'annual' ? Math.max(0, plan.monthly * 12 - plan.annual) : undefined;
-
+  const [intent, setIntent] = useState<IntentResponse | null>(null);
+  const [intentError, setIntentError] = useState<string | null>(null);
   const [activeMethod, setActiveMethod] = useState<PaymentMethod>('card');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const totalLabel = `Pay ${formatPHP(total)}`;
-  const cycleNoun = cycle === 'monthly' ? '30 days' : '1 year';
-  const authorizationText = `By clicking Pay, you authorize Grifon Command to charge ${formatPHP(
-    total
-  )} to your selected payment method. This is a one-time payment for ${cycleNoun} of ${plan.name} access. We'll email you before renewal — your subscription does not auto-renew.`;
+  useEffect(() => {
+    let cancelled = false;
+    setIntentError(null);
+    fetchIntent(planId, cycle)
+      .then((res) => {
+        if (!cancelled) setIntent(res);
+      })
+      .catch((err: Error) => {
+        if (cancelled) return;
+        if (err.message === 'NOT_AUTHENTICATED') {
+          setIntentError('You need to sign in before checking out.');
+        } else {
+          setIntentError(err.message ?? 'Could not start your checkout. Please try again.');
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [planId, cycle]);
 
-  const handleCardSubmit = (_data: CardFormData) => {
+  const handleCardSubmit = async (data: CardFormData) => {
+    if (!intent) return;
+    if (!email) {
+      setSubmitError('You need to sign in before checking out.');
+      return;
+    }
     setIsSubmitting(true);
-    setError(null);
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setError(
-        'Card processing is not yet wired — this is a visual preview. The next slice of the checkout redesign will activate live payment.'
+    setSubmitError(null);
+    try {
+      const result = await processCardPayment(intent, {
+        card_number: data.cardNumber,
+        exp_month: parseInt(data.expMonth, 10),
+        exp_year: parseInt(data.expYear, 10),
+        cvc: data.cvc,
+        cardholder_name: data.cardholderName,
+        email,
+      });
+
+      if (result.next_action?.redirect?.url) {
+        window.location.href = result.next_action.redirect.url;
+        return;
+      }
+
+      if (result.status === 'succeeded') {
+        window.location.href = '/billing/success';
+        return;
+      }
+
+      setSubmitError(
+        result.last_payment_error?.message ??
+          'Payment could not be completed. Try again or pick a different method — no charge has been made.'
       );
-    }, 600);
+    } catch (err: any) {
+      setSubmitError(
+        err?.message ??
+          'Payment could not be completed. Try again or pick a different method — no charge has been made.'
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleEwalletContinue = () => {
     setIsSubmitting(true);
-    setError(null);
+    setSubmitError(null);
     setTimeout(() => {
       setIsSubmitting(false);
-      setError(
+      setSubmitError(
         'E-wallet processing is not yet wired — this is a visual preview. The final slice of the redesign will activate GCash/Maya/GrabPay redirects.'
       );
     }, 600);
   };
 
+  if (intentError) {
+    return (
+      <div className="min-h-screen bg-zinc-950 text-white flex items-center justify-center p-6">
+        <GlassPanel className="max-w-md w-full text-center">
+          <h1 className="text-xl font-semibold text-white mb-3">Checkout couldn't start</h1>
+          <p className="text-zinc-400 text-sm mb-6">{intentError}</p>
+          <button
+            onClick={onBack}
+            className="w-full bg-[#FFCC00] text-black font-bold uppercase tracking-widest py-3 rounded-xl hover:shadow-[0_0_20px_rgba(255,204,0,0.4)] transition-all"
+          >
+            Back to plans
+          </button>
+        </GlassPanel>
+      </div>
+    );
+  }
+
+  if (!intent) {
+    return (
+      <div className="min-h-screen bg-zinc-950 text-white flex items-center justify-center p-6">
+        <div className="flex items-center gap-3 text-zinc-400">
+          <Loader2 className="w-5 h-5 text-[#FFCC00] animate-spin" />
+          <span className="text-sm">Preparing your checkout…</span>
+        </div>
+      </div>
+    );
+  }
+
+  const { breakdown } = intent;
+  const totalLabel = `Pay ${formatPHP(breakdown.total_centavos)}`;
+  const cycleNoun = cycle === 'monthly' ? '30 days' : '1 year';
+  const authorizationText = `By clicking Pay, you authorize Grifon Command to charge ${formatPHP(
+    breakdown.total_centavos
+  )} to your selected payment method. This is a one-time payment for ${cycleNoun} of ${intent.plan.name} access. We'll email you before renewal — your subscription does not auto-renew.`;
+
   return (
     <div className="min-h-screen bg-zinc-950 text-white py-8 lg:py-16 px-4 lg:px-8">
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
         <OrderSummary
-          planName={plan.name}
+          planName={intent.plan.name}
           cycle={cycle}
-          description={plan.description}
-          totalCentavos={total}
-          subtotalCentavos={subtotal}
-          vatCentavos={vat}
-          monthlyEquivalentCentavos={monthlyEquivalent}
-          monthlyComparisonSavingsCentavos={monthlyComparisonSavings}
+          description={intent.plan.description}
+          totalCentavos={breakdown.total_centavos}
+          subtotalCentavos={breakdown.subtotal_centavos}
+          vatCentavos={breakdown.vat_centavos}
+          monthlyEquivalentCentavos={breakdown.monthly_equivalent_centavos ?? undefined}
+          monthlyComparisonSavingsCentavos={breakdown.annual_savings_centavos ?? undefined}
           onBack={onBack}
         />
 
@@ -129,9 +176,9 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack }) => {
             <PaymentMethodTabs active={activeMethod} onChange={setActiveMethod} />
           </div>
 
-          {error && (
+          {submitError && (
             <div className="mb-4 px-4 py-3 rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-200 text-xs leading-relaxed">
-              {error}
+              {submitError}
             </div>
           )}
 

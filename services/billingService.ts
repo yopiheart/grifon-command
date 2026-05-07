@@ -40,21 +40,10 @@ export const startCheckout = async (
     throw new Error('NOT_AUTHENTICATED');
   }
 
-  const res = await fetch('/api/checkout', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({ plan_id, billing_cycle }),
-  });
-
-  if (!res.ok) {
-    const text = await res.text().catch(() => '');
-    throw new Error(`Checkout failed (${res.status}): ${text}`);
-  }
-
-  const body = (await res.json()) as { checkout_url?: string };
-  if (!body.checkout_url) throw new Error('Missing checkout_url in response');
-  window.location.href = body.checkout_url;
+  // On-domain checkout: navigate to /checkout where the PaymentIntent is
+  // created and the user enters card / e-wallet details. Replaces the prior
+  // redirect to checkout.paymongo.com (still served by /api/checkout as a
+  // fallback during the PayMongo Payment Intents rollout).
+  const params = new URLSearchParams({ plan: plan_id, cycle: billing_cycle });
+  window.location.href = `/checkout?${params.toString()}`;
 };
