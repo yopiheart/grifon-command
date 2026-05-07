@@ -1,27 +1,33 @@
 ---
 name: verify-changes
-description: Run the verification loop after editing code in this repo. Define success criteria first, then loop until all checks pass. Use after any edit to api/, services/, components/, or App.tsx, and before reporting a task as complete.
+description: Validate code changes in two phases — a 3-line contract (success / failure / verification) BEFORE editing, then build + test + smoke loop AFTER. Use before any non-trivial edit to api/, services/, components/, or App.tsx, and before reporting a task complete.
 ---
 
-Before declaring any task complete, run the loop below. Do not stop after step 1 — a clean type-check is necessary, not sufficient.
+Two phases. **Phase 1 (the contract) is non-negotiable for any non-trivial edit** — without it, Phase 2 has no fixed standard to check against and you'll drift toward "it builds, ship it" instead of "it does what was asked."
 
-## 1. Define success
-Write down in plain English what "working" looks like for this specific change. One or two sentences. If you can't write it, you don't understand the task yet — go back and grill the user.
+## Phase 1 — Write the contract (BEFORE you edit)
 
-## 2. Run the verifier
-- `npm run build` (tsc + vite production build)
-- `npm run test` if tests exist that cover the touched area
+Before touching code, state these three lines in plain English:
 
-If either fails, fix the root cause and re-run. Do not bypass with `// @ts-ignore` or skipped tests unless the user explicitly approves it.
+1. **Success looks like:** the observable behavior that proves the change works
+2. **Failure looks like:** the regression or edge case that would mean the change broke something else
+3. **Verification:** the specific command, test, or click sequence that confirms #1 and rules out #2
 
-## 3. Smoke-check the affected flow
-- `npm run dev`
-- Click through the specific user flow your change touches
-- For API changes: hit the endpoint via the dashboard module that uses it (don't just trust unit tests for transport/auth)
+If you can't write all three, you don't understand the task yet — go back and grill the user (see `grill-me` skill). Write the contract as part of your response so the user can correct it *before* any code lands. The contract is the spec Phase 2 runs against.
 
-## 4. Loop until verified
-If any step fails, fix and restart from step 2. Only declare done when all three pass.
+Tests-from-goals corollary: when the verification mechanism is a new test, write the test against what the feature *should* do, not against the implementation you're about to write. Tests written after implementation just confirm decisions — they don't catch bugs.
+
+## Phase 2 — Run the verification loop (AFTER you edit)
+
+1. **`npm run build`** (tsc + vite production build). Fix root causes — do not bypass with `// @ts-ignore` unless the user explicitly approves it.
+2. **`npm run test`** if tests cover the touched area. Same rule: fix root causes, do not skip tests.
+3. **Smoke-check the affected flow** via `npm run dev`. Click through the specific user flow your change touches. For API changes, hit the endpoint via the dashboard module that uses it — don't just trust unit tests for transport/auth.
+4. **Loop until verified.** If any step fails, fix and restart from step 1. Only declare done when all three pass **and** the Phase 1 contract is satisfied.
+
+A clean type-check is necessary, not sufficient.
 
 ## What this skill does NOT cover
-- Stochastic Gemini outputs (creative scripts, storyboards, images) — these are not strictly verifiable; manual eyeballing is still required for those
-- Visual design fidelity — that's DESIGN.md's job
+
+- Stochastic Gemini outputs (creative scripts, storyboards, images) — manual eyeballing still required
+- Visual design fidelity — that's `DESIGN.md`'s job
+- Pre-edit scope discipline (don't widen the blast radius) — that's `surgical-edit`'s job
