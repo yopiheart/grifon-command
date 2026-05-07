@@ -26,7 +26,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
             scale: [1, 1.1, 0.9, 1] 
           }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[-10%] left-[-10%] w-[500px] md:w-[800px] aspect-square bg-purple-600/30 rounded-full blur-[100px] md:blur-[150px] opacity-60"
+          className="absolute top-[-10%] left-[-10%] w-[500px] md:w-[800px] aspect-square bg-[#FFCC00]/8 rounded-full blur-[100px] md:blur-[150px] opacity-60"
         />
         <motion.div 
           animate={{ 
@@ -72,7 +72,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-center max-w-4xl mx-auto font-outfit text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold uppercase tracking-tighter leading-[0.9] text-white"
+            className="text-center max-w-4xl mx-auto font-outfit text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold uppercase tracking-tighter leading-[0.9] bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500"
           >
             CREATE YOUR ENTIRE AD CAMPAIGN IN <span className="text-[#FFCC00]">30 MINUTES.</span> NOT 3 DAYS.
           </motion.h1>
@@ -147,7 +147,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
       {/* SECTION 2: THE "WALL OF PROOF" (AI Ads That Win) */}
       <section className="py-12 md:py-24 border-y border-white/5 bg-transparent relative z-10 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 text-center mb-12">
-          <h2 className="text-3xl md:text-5xl font-outfit font-bold uppercase tracking-tight">
+          <h2 className="text-3xl md:text-5xl font-outfit font-bold uppercase tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
             THESE ADS WERE MADE BY AI. THEY OUTPERFORMED AGENCIES.
           </h2>
         </div>
@@ -172,7 +172,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
               return (
               <div
                 key={idx}
-                className="snap-center flex-shrink-0 w-[78vw] sm:w-[45vw] md:w-[31%] max-w-[340px] bg-zinc-900/50 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden group flex flex-col"
+                className="snap-center flex-shrink-0 w-[78vw] sm:w-[45vw] md:w-[31%] max-w-[340px] bg-zinc-900/80 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden group flex flex-col"
               >
                 {/* Top section - Ad preview (9:16 to match vertical video ads) */}
                 <div className="bg-gradient-to-br from-zinc-800 to-zinc-900 aspect-[9/16] flex items-center justify-center relative">
@@ -224,7 +224,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
             <div className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-4">
               HOW IT WORKS
             </div>
-            <h2 className="font-outfit text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-tight text-white leading-tight max-w-4xl mx-auto">
+            <h2 className="font-outfit text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-tight leading-tight max-w-4xl mx-auto bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
               4 STEPS. <span className="text-[#FFCC00]">30 MINUTES.</span> ONE COMPLETE AD CAMPAIGN.
             </h2>
           </motion.div>
@@ -243,7 +243,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: idx * 0.1 }}
-                className="bg-zinc-900/50 backdrop-blur-xl border border-white/10 rounded-3xl p-8 hover:bg-zinc-800/50 transition-all duration-300 group flex flex-col h-full"
+                className="bg-zinc-900/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 hover:bg-zinc-800/80 transition-all duration-300 group flex flex-col h-full"
               >
                 <div className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mb-3">
                   STEP {step.num}
@@ -263,7 +263,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
           <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#FFCC00] text-center mb-2">
             // WHAT EARLY USERS ARE SAYING
           </p>
-          <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tight text-center mb-8 text-white">
+          <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tight text-center mb-8 bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
             TRUSTED BY FILIPINO BUSINESS OWNERS
           </h2>
           
@@ -276,7 +276,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
             ].map((testimonial, idx) => (
               <div 
                 key={idx} 
-                className="bg-zinc-900/50 backdrop-blur-xl border border-white/10 rounded-3xl p-8 flex flex-col h-full"
+                className="bg-zinc-900/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 flex flex-col h-full"
               >
                 <div className="px-2 flex-1 flex flex-col">
                   <div className="flex gap-1 mb-4">
@@ -311,7 +311,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
             <div className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest text-center mb-4">
               WHAT'S INSIDE
             </div>
-            <h2 className="font-outfit text-3xl md:text-4xl font-bold text-center text-white mb-4 uppercase tracking-tight">
+            <h2 className="font-outfit text-3xl md:text-4xl font-bold text-center mb-4 uppercase tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
               Everything You Need. Nothing You Don't.
             </h2>
             <p className="text-zinc-400 text-center max-w-2xl mx-auto mb-12 text-base font-dm-sans">
@@ -381,7 +381,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
             <div className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest text-center mb-2">
               PROOF
             </div>
-            <h2 className="font-outfit text-2xl md:text-3xl font-bold text-center text-white mb-10 md:mb-16 uppercase tracking-tight">
+            <h2 className="font-outfit text-2xl md:text-3xl font-bold text-center mb-10 md:mb-16 uppercase tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
               The Numbers Don't Lie.
             </h2>
           </motion.div>
@@ -415,7 +415,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
 
       {/* SECTION 6: THE UI SHOWCASE */}
       <section className="py-16 md:py-32 px-4 sm:px-6 lg:px-8 bg-transparent relative overflow-hidden z-10">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-900/20 via-zinc-950 to-zinc-950 pointer-events-none"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-zinc-900/40 via-zinc-950 to-zinc-950 pointer-events-none"></div>
         
         <div className="max-w-7xl mx-auto text-center relative z-10">
           <motion.div
@@ -424,7 +424,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
             viewport={{ once: true }}
             className="mb-16"
           >
-            <h2 className="text-4xl md:text-6xl font-outfit font-bold uppercase tracking-tight mb-4">
+            <h2 className="text-4xl md:text-6xl font-outfit font-bold uppercase tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
               SEE IT IN ACTION.
             </h2>
             <p className="text-zinc-400 max-w-2xl mx-auto">
@@ -438,7 +438,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
               whileInView={{ opacity: 1, rotateY: 15, x: -100, z: -50 }}
               viewport={{ once: true }}
               transition={{ duration: 1 }}
-              className="absolute top-10 left-0 md:left-10 w-[60%] md:w-[70%] aspect-video rounded-xl overflow-hidden border border-white/10 shadow-2xl shadow-purple-500/20 bg-zinc-900/80 backdrop-blur-md flex flex-col"
+              className="absolute top-10 left-0 md:left-10 w-[60%] md:w-[70%] aspect-video rounded-xl overflow-hidden border border-white/10 shadow-2xl shadow-[#FFCC00]/15 bg-zinc-900/80 backdrop-blur-md flex flex-col"
             >
               {/* Fake URL Bar */}
               <div className="h-8 bg-zinc-950/50 border-b border-white/5 flex items-center px-3 gap-2 shrink-0">
@@ -449,7 +449,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
               </div>
               {/* Blank Dark Canvas */}
               <div className="flex-1 bg-zinc-950/80 relative">
-                <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/5 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-tr from-[#FFCC00]/5 to-transparent"></div>
               </div>
             </motion.div>
 
@@ -458,7 +458,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
               whileInView={{ opacity: 1, rotateY: -15, x: 100, z: -50 }}
               viewport={{ once: true }}
               transition={{ duration: 1, delay: 0.2 }}
-              className="absolute top-20 right-0 md:right-10 w-[60%] md:w-[70%] aspect-video rounded-xl overflow-hidden border border-white/10 shadow-2xl shadow-yellow-500/20 bg-zinc-900/80 backdrop-blur-md flex flex-col"
+              className="absolute top-20 right-0 md:right-10 w-[60%] md:w-[70%] aspect-video rounded-xl overflow-hidden border border-white/10 shadow-2xl shadow-[#FFCC00]/20 bg-zinc-900/80 backdrop-blur-md flex flex-col"
             >
               {/* Fake URL Bar */}
               <div className="h-8 bg-zinc-950/50 border-b border-white/5 flex items-center px-3 gap-2 shrink-0">
@@ -469,7 +469,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
               </div>
               {/* Blank Dark Canvas */}
               <div className="flex-1 bg-zinc-950/80 relative">
-                <div className="absolute inset-0 bg-gradient-to-tl from-yellow-500/5 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-tl from-[#FFCC00]/5 to-transparent"></div>
               </div>
             </motion.div>
 
@@ -478,7 +478,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
               whileInView={{ opacity: 1, y: 0, z: 50 }}
               viewport={{ once: true }}
               transition={{ duration: 1, delay: 0.4 }}
-              className="absolute top-32 left-1/2 -translate-x-1/2 w-[70%] md:w-[80%] aspect-video rounded-xl overflow-hidden border border-[#FFCC00]/30 shadow-[0_30px_60px_rgba(0,0,0,0.8)] shadow-yellow-500/10 z-10 bg-zinc-900/80 backdrop-blur-md flex flex-col"
+              className="absolute top-32 left-1/2 -translate-x-1/2 w-[70%] md:w-[80%] aspect-video rounded-xl overflow-hidden border border-[#FFCC00]/30 shadow-2xl shadow-[#FFCC00]/25 z-10 bg-zinc-900/80 backdrop-blur-md flex flex-col"
             >
               {/* Fake URL Bar */}
               <div className="h-8 bg-zinc-950/50 border-b border-white/5 flex items-center px-3 gap-2 shrink-0">
@@ -514,7 +514,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
             <GlassPanel className="p-8 md:p-16 text-center bg-gradient-to-b from-zinc-900/80 to-zinc-950 border border-[#FFCC00]/20 relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#FFCC00] to-transparent"></div>
               
-              <h2 className="text-4xl md:text-6xl font-outfit font-bold uppercase tracking-tight mb-8">
+              <h2 className="text-4xl md:text-6xl font-outfit font-bold uppercase tracking-tight mb-8 bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
                 READY TO CREATE ADS THAT ACTUALLY CONVERT?
               </h2>
               

@@ -107,18 +107,22 @@ Elevation is expressed through **frosted glass**, not drop shadows:
 
 - Panels: `backdrop-blur-xl` + `border border-white/10` over `surface-elevated` at 80% opacity.
 - Primary action hover: gold glow `shadow-[0_0_20px_rgba(255,204,0,0.4)]` + slight `scale-105`.
-- Avoid conventional drop shadows — they break the cinematic feel.
+- Avoid conventional drop shadows on UI chrome — they break the cinematic feel.
+- **Demo-mockup chrome exception:** simulated browser windows or app frames *inside* marketing sections (e.g. "see it in action" composites) MAY use shadows for layering. Shadow color is either Grifon Gold tinted glow (`shadow-[#FFCC00]/15` to `shadow-[#FFCC00]/25`) or pure black falloff (`shadow-[0_30px_60px_rgba(0,0,0,0.8)]`). Never another hue. Real UI panels still use glass + blur.
 
 ## Shapes
 
 - Panels/cards: `rounded.xl` (rounded-2xl) or `rounded-3xl`.
-- Buttons/inputs rectangles: `rounded.md` (rounded-xl).
-- Pill buttons where appropriate: `rounded.full`.
+- Buttons rounding rule:
+  - **Marketing surfaces** (landing, pricing, sales pages, ad creatives): `rounded.full` for primary / secondary / ghost — pills sell premium action.
+  - **In-app surfaces** (wizard, dashboard, modules, settings): `rounded.md` (rounded-xl) — rectangles read transactional, which is correct for forms.
+- Inputs/selects: always `rounded.md` regardless of surface — pill inputs create awkward tangents with adjacent fields.
 
 ## Components
 
 - **glassPanel:** `bg-zinc-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6` (or `p-8`). Wraps ALL forms, tool settings, data displays.
-- **goldButton:** `bg-[#FFCC00] text-black font-black uppercase tracking-widest px-8 py-4 rounded-xl hover:shadow-[0_0_20px_rgba(255,204,0,0.4)] hover:scale-105 transition-all`.
+- **goldButton:** `bg-[#FFCC00] text-black font-black uppercase tracking-widest px-8 py-4 rounded-xl hover:shadow-[0_0_20px_rgba(255,204,0,0.4)] hover:scale-105 transition-all`. (In-app primary CTA. Use `rounded-full` instead of `rounded-xl` on marketing surfaces — see Shapes.)
+- **goldButtonGhost:** `bg-transparent border border-[#FFCC00] text-[#FFCC00] font-black uppercase tracking-widest px-5 py-2 rounded-full hover:bg-[#FFCC00]/10 hover:shadow-[0_0_15px_rgba(255,204,0,0.3)] hover:scale-105 transition-all`. Persistent secondary CTA — use in sticky navs or footer when a primary `goldButton` exists elsewhere on the same surface, so the nav doesn't compete with the hero CTA.
 - **ghostButton:** `bg-zinc-950 border border-white/10 text-zinc-400 hover:text-white hover:border-[#FFCC00] transition-all rounded-xl`.
 - **input / select:** `w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00]`.
 - **uploadDropzone:** `bg-zinc-950/50 border-2 border-dashed border-white/10 rounded-xl hover:border-[#FFCC00] hover:bg-zinc-800/80 transition-all cursor-pointer flex flex-col items-center justify-center p-6`. Native `<input type="file">` MUST be hidden.
