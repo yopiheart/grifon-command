@@ -98,5 +98,10 @@ export default defineConfig(({ mode }) => {
   }
   return {
     plugins: [react(), vercelApiDevPlugin()],
+    build: {
+      // Vite 8 defaults to lightningcss, which warns on every @tailwind directive
+      // it doesn't recognize. esbuild minifies fine and stays quiet.
+      cssMinify: 'esbuild',
+    },
   }
 })
