@@ -166,6 +166,36 @@ export const processCardPayment = async (
   return confirmIntent(intent.intent_id, intent.client_key, payment_method_id);
 };
 
+export type EwalletType = 'gcash' | 'paymaya' | 'grab_pay';
+
+/**
+ * Start an e-wallet payment: server creates the PaymentMethod (no sensitive
+ * data leaves the wallet) and attaches it to the PaymentIntent. The response
+ * carries next_action.redirect.url which the caller should follow to send
+ * the user into GCash/Maya/GrabPay; PayMongo redirects back to the
+ * return_url after the user pays in the wallet.
+ */
+export const processEwalletPayment = async (
+  intent: IntentResponse,
+  type: EwalletType
+): Promise<ConfirmResponse> => {
+  const token = await getAuthToken();
+  const res = await fetch('/api/billing/ewallet', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      intent_id: intent.intent_id,
+      client_key: intent.client_key,
+      type,
+    }),
+  });
+  if (!res.ok) await proxyError(res, 'EWALLET_FAILED');
+  return res.json();
+};
+
 export const fetchStatus = async (intent_id: string): Promise<StatusResponse> => {
   const token = await getAuthToken();
   const res = await fetch(

@@ -9,6 +9,7 @@ import {
   fetchIntent,
   formatPHP,
   processCardPayment,
+  processEwalletPayment,
   type IntentResponse,
   type PlanId,
   type BillingCycle,
@@ -99,15 +100,33 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack }) => {
     }
   };
 
-  const handleEwalletContinue = () => {
+  const handleEwalletContinue = async () => {
+    if (!intent) return;
+    if (activeMethod === 'card') return;
     setIsSubmitting(true);
     setSubmitError(null);
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      const result = await processEwalletPayment(intent, activeMethod);
+      if (result.next_action?.redirect?.url) {
+        window.location.href = result.next_action.redirect.url;
+        return;
+      }
+      if (result.status === 'succeeded') {
+        window.location.href = '/billing/success';
+        return;
+      }
       setSubmitError(
-        'E-wallet processing is not yet wired — this is a visual preview. The final slice of the redesign will activate GCash/Maya/GrabPay redirects.'
+        result.last_payment_error?.message ??
+          'E-wallet payment could not start. Try again or pick a different method — no charge has been made.'
       );
-    }, 600);
+    } catch (err: any) {
+      setSubmitError(
+        err?.message ??
+          'E-wallet payment could not start. Try again or pick a different method — no charge has been made.'
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (intentError) {
