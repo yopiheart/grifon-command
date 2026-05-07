@@ -305,7 +305,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
             margin: "0 auto 32px",
             lineHeight: 1.6,
           }}>
-            Grifon AI creates your entire ad campaign — scripts, videos, images, 
+            Grifon creates your entire ad campaign — scripts, videos, images,
             captions, market research — in 30 minutes. Not 3 days.
           </p>
 
@@ -950,7 +950,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
             Start Free — No Credit Card Needed
           </button>
           <p style={{ fontSize: 12, color: "#52525b" }}>
-            Join Filipino business owners switching to Grifon AI
+            Join Filipino business owners switching to Grifon
           </p>
         </section>
 

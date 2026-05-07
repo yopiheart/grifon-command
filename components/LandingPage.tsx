@@ -277,7 +277,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
           {/* Steps Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { num: '01', title: 'Tell Us Your Product', desc: 'Describe what you sell. Grifon\'s AI analyzes your market, competitors, and ideal customer in seconds.', icon: MessageSquare },
+              { num: '01', title: 'Tell Us Your Product', desc: 'Describe what you sell. Grifon analyzes your market, competitors, and ideal customer in seconds.', icon: MessageSquare },
               { num: '02', title: 'Pick Your Style', desc: 'Choose your ad format — video, image, carousel. Select tone, audience, and platform.', icon: Palette },
               { num: '03', title: 'Generate Everything', desc: 'Scripts, captions, images, headlines, offers — all generated in one workflow.', icon: Sparkles },
               { num: '04', title: 'Launch And Win', desc: 'Download your assets. Post them. Start converting. The whole process takes 30 minutes.', icon: Rocket }
