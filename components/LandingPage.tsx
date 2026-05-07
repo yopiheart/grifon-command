@@ -110,30 +110,75 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
             className="w-full max-w-6xl mx-auto mt-12 md:mt-16 relative overflow-hidden rounded-t-2xl sm:rounded-t-[40px] border-t border-l border-r border-white/10 shadow-2xl sm:shadow-[0_-20px_80px_rgba(255,204,0,0.15)]"
           >
             <div className="w-full aspect-video bg-zinc-900 flex items-center justify-center relative">
-              {/* CSS Mini-Dashboard */}
+              {/* CSS Mini-Dashboard — Director AI mid-workflow preview */}
               <div className="absolute inset-0 bg-zinc-950 flex overflow-hidden">
-                {/* Left Sidebar */}
-                <div className="w-1/4 bg-zinc-900 border-r border-white/5 p-4 flex flex-col gap-3">
-                  <div className="w-full h-4 bg-white/10 rounded"></div>
-                  <div className="w-3/4 h-4 bg-white/5 rounded"></div>
-                  <div className="w-5/6 h-4 bg-white/5 rounded"></div>
-                  <div className="w-full h-4 bg-white/5 rounded mt-4"></div>
-                  <div className="w-2/3 h-4 bg-white/5 rounded"></div>
+                {/* Left Sidebar — module nav */}
+                <div className="w-1/4 bg-zinc-900 border-r border-white/5 p-3 sm:p-4 flex flex-col gap-1.5 text-[8px] sm:text-[10px] font-mono uppercase tracking-widest">
+                  <div className="text-[7px] sm:text-[9px] text-zinc-600 mb-1 hidden sm:block">// MODULES</div>
+                  {[
+                    { icon: Film,       label: 'Director AI',      active: true },
+                    { icon: Search,     label: 'Market Research',  active: false },
+                    { icon: Target,     label: 'Offer Optimizer',  active: false },
+                    { icon: Type,       label: 'Caption & Headline', active: false },
+                    { icon: ImageIcon,  label: 'Image Studio',     active: false },
+                  ].map((m, i) => {
+                    const Icon = m.icon;
+                    return (
+                      <div
+                        key={i}
+                        className={`flex items-center gap-2 px-2 py-1.5 rounded ${m.active ? 'bg-[#FFCC00]/10 text-[#FFCC00] border-l-2 border-[#FFCC00]' : 'text-zinc-500'}`}
+                      >
+                        <Icon className="w-3 h-3 shrink-0" />
+                        <span className="truncate">{m.label}</span>
+                      </div>
+                    );
+                  })}
                 </div>
-                
-                {/* Main Canvas */}
-                <div className="flex-1 relative flex items-center justify-center bg-zinc-950/50">
-                  {/* Glowing Yellow Play Button */}
-                  <div className="w-16 h-16 bg-[#FFCC00] rounded-full flex items-center justify-center text-black shadow-[0_0_30px_rgba(255,204,0,0.5)] cursor-pointer hover:scale-110 transition-transform duration-300">
-                    <Play className="w-6 h-6 ml-1" fill="currentColor" />
-                  </div>
-                  
-                  {/* Fake UI Elements */}
-                  <div className="absolute bottom-4 left-4 right-4 h-12 bg-zinc-900/80 border border-white/10 rounded-lg flex items-center px-4 gap-4">
-                    <div className="w-8 h-8 rounded-full bg-white/10"></div>
-                    <div className="flex-1 h-2 bg-white/10 rounded-full relative">
-                      <div className="absolute top-0 left-0 h-full w-1/3 bg-[#FFCC00] rounded-full"></div>
+
+                {/* Main Canvas — Director AI Step 03 / Storyboard */}
+                <div className="flex-1 relative bg-zinc-950/50 p-3 sm:p-6 flex flex-col">
+                  {/* Step indicator */}
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="text-[8px] sm:text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+                      // DIRECTOR AI
                     </div>
+                    <div className="text-[8px] sm:text-[10px] font-mono uppercase tracking-widest text-[#FFCC00] bg-[#FFCC00]/10 border border-[#FFCC00]/25 rounded-full px-2 py-1 sm:px-3">
+                      Step 03 / 08 — Storyboard
+                    </div>
+                  </div>
+
+                  {/* Storyboard frame strip */}
+                  <div className="flex-1 grid grid-cols-4 gap-1.5 sm:gap-3 min-h-0">
+                    {[1, 2, 3, 4].map((n) => {
+                      const active = n === 3;
+                      return (
+                        <div
+                          key={n}
+                          className={`relative rounded sm:rounded-md border ${active ? 'border-[#FFCC00]/50 bg-zinc-800' : 'border-white/5 bg-zinc-900'} flex items-center justify-center overflow-hidden`}
+                        >
+                          <div className="absolute top-1 left-1 text-[7px] sm:text-[9px] font-mono text-zinc-500 tracking-widest">
+                            0{n}
+                          </div>
+                          {active && (
+                            <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-[#FFCC00] flex items-center justify-center shadow-[0_0_15px_rgba(255,204,0,0.5)]">
+                              <Play className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-black ml-0.5" fill="currentColor" />
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* Generation status bar */}
+                  <div className="mt-3 sm:mt-4 h-8 sm:h-10 bg-zinc-900/80 border border-white/10 rounded-md sm:rounded-lg flex items-center px-2 sm:px-4 gap-2 sm:gap-3">
+                    <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#FFCC00] shadow-[0_0_8px_rgba(255,204,0,0.6)] animate-pulse"></div>
+                    <div className="text-[7px] sm:text-[10px] font-mono uppercase tracking-widest text-zinc-400 hidden sm:block shrink-0">
+                      Generating storyboard
+                    </div>
+                    <div className="flex-1 h-1 sm:h-1.5 bg-white/10 rounded-full relative overflow-hidden">
+                      <div className="absolute top-0 left-0 h-full w-[37%] bg-gradient-to-r from-[#FFCC00] to-[#FFCC00]/60 rounded-full shadow-[0_0_10px_rgba(255,204,0,0.4)]"></div>
+                    </div>
+                    <div className="text-[7px] sm:text-[10px] font-mono text-[#FFCC00] tracking-widest shrink-0">37%</div>
                   </div>
                 </div>
               </div>
@@ -438,7 +483,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
               whileInView={{ opacity: 1, rotateY: 15, x: -100, z: -50 }}
               viewport={{ once: true }}
               transition={{ duration: 1 }}
-              className="absolute top-10 left-0 md:left-10 w-[60%] md:w-[70%] aspect-video rounded-xl overflow-hidden border border-white/10 shadow-2xl shadow-[#FFCC00]/15 bg-zinc-900/80 backdrop-blur-md flex flex-col"
+              className="absolute top-10 left-0 md:left-4 w-[55%] md:w-[58%] aspect-video rounded-xl overflow-hidden border border-white/10 shadow-2xl shadow-[#FFCC00]/15 bg-zinc-900/80 backdrop-blur-md flex flex-col"
             >
               {/* Fake URL Bar */}
               <div className="h-8 bg-zinc-950/50 border-b border-white/5 flex items-center px-3 gap-2 shrink-0">
@@ -458,7 +503,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
               whileInView={{ opacity: 1, rotateY: -15, x: 100, z: -50 }}
               viewport={{ once: true }}
               transition={{ duration: 1, delay: 0.2 }}
-              className="absolute top-20 right-0 md:right-10 w-[60%] md:w-[70%] aspect-video rounded-xl overflow-hidden border border-white/10 shadow-2xl shadow-[#FFCC00]/20 bg-zinc-900/80 backdrop-blur-md flex flex-col"
+              className="absolute top-20 right-0 md:right-4 w-[55%] md:w-[58%] aspect-video rounded-xl overflow-hidden border border-white/10 shadow-2xl shadow-[#FFCC00]/20 bg-zinc-900/80 backdrop-blur-md flex flex-col"
             >
               {/* Fake URL Bar */}
               <div className="h-8 bg-zinc-950/50 border-b border-white/5 flex items-center px-3 gap-2 shrink-0">
@@ -473,12 +518,12 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
               </div>
             </motion.div>
 
-            <motion.div 
-              initial={{ opacity: 0, y: 100, z: 0 }}
-              whileInView={{ opacity: 1, y: 0, z: 50 }}
+            <motion.div
+              initial={{ opacity: 0, y: 100, x: '-50%', z: 0 }}
+              whileInView={{ opacity: 1, y: 0, x: '-50%', z: 50 }}
               viewport={{ once: true }}
               transition={{ duration: 1, delay: 0.4 }}
-              className="absolute top-32 left-1/2 -translate-x-1/2 w-[70%] md:w-[80%] aspect-video rounded-xl overflow-hidden border border-[#FFCC00]/30 shadow-2xl shadow-[#FFCC00]/25 z-10 bg-zinc-900/80 backdrop-blur-md flex flex-col"
+              className="absolute top-32 left-1/2 w-[68%] md:w-[68%] aspect-video rounded-xl overflow-hidden border border-[#FFCC00]/30 shadow-2xl shadow-[#FFCC00]/25 z-10 bg-zinc-900/80 backdrop-blur-md flex flex-col"
             >
               {/* Fake URL Bar */}
               <div className="h-8 bg-zinc-950/50 border-b border-white/5 flex items-center px-3 gap-2 shrink-0">
