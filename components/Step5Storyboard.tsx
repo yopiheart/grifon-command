@@ -284,7 +284,7 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
     return (
       <GlassPanel>
         <div className="mb-8 border-b border-white/10 pb-6">
-          <h2 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-zinc-100 to-zinc-500 uppercase tracking-tight">
+          <h2 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight">
             Visual Chain Relay
           </h2>
           <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mt-2">
@@ -361,7 +361,7 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
   return (
     <GlassPanel>
       <div className="mb-8 border-b border-white/10 pb-6">
-        <h2 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-zinc-100 to-zinc-500 uppercase tracking-tight">
+        <h2 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight">
           Storyboard Synthesis
         </h2>
         <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mt-2">

@@ -72,7 +72,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-center max-w-4xl mx-auto font-outfit text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold uppercase tracking-tighter leading-[0.9] bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500"
+            className="text-center max-w-4xl mx-auto text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold uppercase tracking-tighter leading-[0.9] bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500"
           >
             CREATE YOUR ENTIRE AD CAMPAIGN IN <span className="text-[#FFCC00]">30 MINUTES.</span> NOT 3 DAYS.
           </motion.h1>
@@ -83,7 +83,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-center max-w-2xl mx-auto mt-6 text-zinc-400 text-base md:text-lg font-dm-sans"
+            className="text-center max-w-2xl mx-auto mt-6 text-zinc-400 text-base md:text-lg"
           >
             You're spending 6 hours making one ad that doesn't convert. Your competitor just dropped 10. Grifon fixes that.
           </motion.p>
@@ -192,7 +192,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
       {/* SECTION 2: THE "WALL OF PROOF" (AI Ads That Win) */}
       <section className="py-12 md:py-24 border-y border-white/5 bg-transparent relative z-10 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 text-center mb-12">
-          <h2 className="text-3xl md:text-5xl font-outfit font-bold uppercase tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
+          <h2 className="text-3xl md:text-5xl font-bold uppercase tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
             THESE ADS WERE MADE BY AI. THEY OUTPERFORMED AGENCIES.
           </h2>
         </div>
@@ -269,7 +269,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
             <div className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-4">
               HOW IT WORKS
             </div>
-            <h2 className="font-outfit text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-tight leading-tight max-w-4xl mx-auto bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-tight leading-tight max-w-4xl mx-auto bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
               4 STEPS. <span className="text-[#FFCC00]">30 MINUTES.</span> ONE COMPLETE AD CAMPAIGN.
             </h2>
           </motion.div>
@@ -356,10 +356,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
             <div className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest text-center mb-4">
               WHAT'S INSIDE
             </div>
-            <h2 className="font-outfit text-3xl md:text-4xl font-bold text-center mb-4 uppercase tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 uppercase tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
               Everything You Need. Nothing You Don't.
             </h2>
-            <p className="text-zinc-400 text-center max-w-2xl mx-auto mb-12 text-base font-dm-sans">
+            <p className="text-zinc-400 text-center max-w-2xl mx-auto mb-12 text-base">
               Five battle-tested AI modules. Each one replaces a freelancer, an agency, or 6 hours of your time.
             </p>
           </motion.div>
@@ -426,7 +426,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
             <div className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest text-center mb-2">
               PROOF
             </div>
-            <h2 className="font-outfit text-2xl md:text-3xl font-bold text-center mb-10 md:mb-16 uppercase tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
+            <h2 className="text-2xl md:text-3xl font-bold text-center mb-10 md:mb-16 uppercase tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
               The Numbers Don't Lie.
             </h2>
           </motion.div>
@@ -446,7 +446,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
                 transition={{ duration: 0.6, delay: idx * 0.1 }}
                 className="flex flex-col items-center"
               >
-                <div className="font-outfit text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold text-[#FFCC00] tracking-tighter leading-none">
+                <div className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold text-[#FFCC00] tracking-tighter leading-none">
                   {item.metric}
                 </div>
                 <div className="text-xs md:text-sm text-zinc-400 mt-2 md:mt-4">
@@ -469,7 +469,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
             viewport={{ once: true }}
             className="mb-16"
           >
-            <h2 className="text-4xl md:text-6xl font-outfit font-bold uppercase tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
+            <h2 className="text-4xl md:text-6xl font-bold uppercase tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
               SEE IT IN ACTION.
             </h2>
             <p className="text-zinc-400 max-w-2xl mx-auto">
@@ -559,7 +559,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
             <GlassPanel className="p-8 md:p-16 text-center bg-gradient-to-b from-zinc-900/80 to-zinc-950 border border-[#FFCC00]/20 relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#FFCC00] to-transparent"></div>
               
-              <h2 className="text-4xl md:text-6xl font-outfit font-bold uppercase tracking-tight mb-8 bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
+              <h2 className="text-4xl md:text-6xl font-bold uppercase tracking-tight mb-8 bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
                 READY TO CREATE ADS THAT ACTUALLY CONVERT?
               </h2>
               
@@ -616,10 +616,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
           >
             <AnimatedBorder containerClassName="h-full w-full" className="p-8 md:p-12 text-center bg-zinc-900/80 backdrop-blur-xl relative overflow-hidden">
               <ShieldCheck className="w-12 h-12 text-[#FFCC00] mb-4 mx-auto" />
-              <h2 className="text-3xl md:text-5xl font-outfit font-bold uppercase tracking-tight mb-4 text-[#FFCC00]">
+              <h2 className="text-3xl md:text-5xl font-bold uppercase tracking-tight mb-4 text-[#FFCC00]">
                 7-DAY MONEY-BACK GUARANTEE
               </h2>
-              <p className="text-zinc-300 md:text-lg max-w-2xl mx-auto font-dm-sans">
+              <p className="text-zinc-300 md:text-lg max-w-2xl mx-auto">
                 Subscribe to any paid plan. If Grifon doesn't save you at least 10 hours in your first week, we'll refund you 100%. No questions. No hoops.
               </p>
             </AnimatedBorder>
@@ -632,7 +632,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
             viewport={{ once: true }}
             className="space-y-4"
           >
-            <h3 className="text-2xl font-outfit font-bold uppercase tracking-tight mb-8 text-center">FREQUENTLY ASKED QUESTIONS</h3>
+            <h3 className="text-2xl font-bold uppercase tracking-tight mb-8 text-center">FREQUENTLY ASKED QUESTIONS</h3>
             {[
               { q: "DO I NEED ANY TECHNICAL SKILLS?", a: "No. If you can type what you sell, Grifon does the rest. No design skills. No copywriting experience. No video editing." },
               { q: "HOW IS THIS DIFFERENT FROM CANVA OR CHATGPT?", a: "Canva gives you templates. ChatGPT gives you generic text. Neither gives you market research, ad strategy, or a complete campaign. Grifon does all of it in one app." },

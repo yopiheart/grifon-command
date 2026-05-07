@@ -10,7 +10,7 @@ All UI lives here. Wizard and module state lives in [`../App.tsx`](../App.tsx) a
 - **Primary button:** [`<GoldButton>`](ui/GoldButton.tsx). Ghost button: `bg-zinc-950 border border-white/10` with gold hover.
 - **Inputs:** `bg-zinc-950 border border-white/10 rounded-xl focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00]`
 - **Icons:** only `lucide-react` SVG icons, exported through [`icons.tsx`](icons.tsx) — never raw text strings
-- **Headers:** `bg-gradient-to-r from-zinc-100 to-zinc-500`
+- **Headers:** `bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500` (vertical fade — multi-line page titles read like a movie title card)
 - **Sub-labels:** `text-[10px] text-zinc-500 font-mono uppercase tracking-widest`
 
 ## Reusable Primitives ([`ui/`](ui/))

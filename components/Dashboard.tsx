@@ -318,7 +318,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
               // READY TO BUILD
             </p>
             <div className="block text-center mb-8 lg:mb-12">
-              <h1 className="font-outfit text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-white uppercase tracking-tight">GRIFON COMMAND</h1>
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold uppercase tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">GRIFON COMMAND</h1>
               <p className="text-sm lg:text-lg xl:text-xl font-medium text-zinc-400 mt-4 lg:mt-6">Your entire Marketing Team. In one tab.</p>
             </div>
             <div className="bg-zinc-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-3 lg:p-5 flex items-center gap-3 max-w-2xl lg:max-w-3xl mx-auto w-full">

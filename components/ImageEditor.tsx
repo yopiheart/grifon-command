@@ -173,7 +173,7 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ onBack, ethnicity = 'Global' 
           </div>
         </div>
         <div>
-          <h1 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-zinc-100 to-zinc-500 uppercase tracking-tight break-words whitespace-normal leading-tight">
+          <h1 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight break-words whitespace-normal leading-tight">
             STUDIO CORE
           </h1>
           <span className="hidden lg:block text-[9px] text-zinc-600 tracking-widest font-mono uppercase whitespace-nowrap mt-2">// SESSION_ENCRYPTED // CORE_READY</span>

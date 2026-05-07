@@ -64,7 +64,7 @@ const Step6Thumbnail: React.FC<Step6ThumbnailProps> = ({ script, avatar, busines
   return (
     <GlassPanel>
       <div className="mb-8 border-b border-white/10 pb-6">
-        <h2 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-zinc-100 to-zinc-500 uppercase tracking-tight">
+        <h2 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight">
           Step 6: Generate Viral Thumbnail
         </h2>
         <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mt-2">

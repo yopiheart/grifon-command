@@ -119,7 +119,7 @@ const SignalModulator: React.FC<SignalModulatorProps> = ({ onBack, globalScript 
           </div>
         </div>
         <div>
-          <h1 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-zinc-100 to-zinc-500 uppercase tracking-tight break-words whitespace-normal leading-tight">
+          <h1 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight break-words whitespace-normal leading-tight">
             SIGNAL MODULATOR <span className="text-[#FFCC00]">// AUDIO CORE</span>
           </h1>
         </div>

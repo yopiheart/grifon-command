@@ -91,7 +91,7 @@ A minimal palette: a single gold accent against neutral ink gradients on deep OL
 
 ## Typography
 
-- **headline-display / headline-lg:** Inter / Geist / SF Pro — clean geometric sans. Page titles frequently use a gradient fill (`bg-gradient-to-r from-zinc-100 to-zinc-500`) for the cinematic effect.
+- **headline-display / headline-lg:** Inter / Geist / SF Pro — clean geometric sans. Page titles frequently use a gradient fill (`bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500`) for the cinematic effect. Vertical (`to-b`) over horizontal (`to-r`) — multi-line headlines fade top-to-bottom like a movie title card; horizontal washes look like a banner gradient and break the cinematic register.
 - **body-lg / body-md:** Same sans family.
 - **label-caps:** JetBrains Mono, uppercase, wide tracking. Reserved for sub-labels and technical data to reinforce the "control panel" feel.
 
