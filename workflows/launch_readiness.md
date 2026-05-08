@@ -4,6 +4,115 @@
 
 This is the meta-workflow. It doesn't do the work itself — it points to the workflows that do, and tracks overall progress.
 
+## Status as of 2026-05-08 evening (3e wiring + Step 2 consolidation + regression harness — pre-beta polish bundle DONE)
+
+**Working tree clean. 7 commits pushed to `checkout-redesign-preview` this evening (on top of morning's 7). Branch in sync with origin.** Largest single-session prompt-engineering shift since Director AI's beta-readiness fix sprint. Pre-beta polish bundle from the 2026-05-06 session is now FULLY shipped (3a JWT remains the only deferred item from that bundle). On top of that, the **biggest strategic win:** every required wizard field now actually fires in the script generation prompt, validated across 4 widely-different product categories.
+
+### Pushed this evening session (7 commits)
+
+```
+c7fc94a  test(regression): add 3 stress-test product categories — Service/Skincare/Gym
+2c6b16d  feat(step2): consolidate goal+problem into benefit+painPoint with deeper labels (3g)
+55cf40c  test(regression): add Gemini-direct script-generation regression harness
+651a993  fix(mrbeast): tighten Identity beat + harden Hook anti-demographic anchor
+5357780  fix(testimonial): restore Hook generation — Intro verbosity starved beat 0
+a2df8c6  feat(beta-polish): wire offer/separator/audience + drop services (3e/3f)
+1321e2b  feat(beta-polish): nudge suppress + TEMU gate + Sonner restyle (3b/3c/3d)
+```
+
+### What shipped / decided this evening
+
+| What | Where it lives | Purpose |
+| --- | --- | --- |
+| **3b/3c/3d quick wins** | [App.tsx](../App.tsx) (nudge suppression), [Step2BusinessInfo.tsx](../components/Step2BusinessInfo.tsx) (TEMU gate `// COMING_IN_V1.1`), [index.tsx](../index.tsx) (Sonner `theme="dark"` + `unstyled` + classNames per variant) | Resume pill + Pro Tip nudge no longer collide. TEMU disabled with corner label until v1.1 re-spec ships. Toaster matches `// PREVIOUS_SESSION_DETECTED` pill aesthetic instead of sonner default white. |
+| **3e wiring — the dormant bridge BUILT** | [services/geminiService.ts](../services/geminiService.ts) `generateAdScript`, [components/Step3AdScript.tsx](../components/Step3AdScript.tsx), [App.tsx](../App.tsx) | `clientDetails.offer`, `businessInfo.separator`, `businessInfo.audience` were all REQUIRED wizard fields that geminiService **completely ignored** before today. Wired per the 2026-05-06 slotting matrix: offer → CTA beat (scarcity + value-adds, never bare price); separator → Result+Proof / Proof beats ("Hindi tulad ng iba — kami X" pattern); audience → COMMON_RULES AUDIENCE REGISTER bullet (vocab + idiom + mental imagery + Visual Payoff in audience's WORLD). |
+| **3f services field DROPPED** | [types.ts](../types.ts), [App.tsx](../App.tsx) state/reset, [Step1ClientDetails.tsx](../components/Step1ClientDetails.tsx) | Step 1 went from 3 fields to 2 (brandName + offer only). `clientDetails.services` was a required textarea that no service consumed. **Spec correction logged:** `logoImageUrl` was supposed to drop in 3f too, but it's actively used by [CinematicSpecStudio.tsx:51,411](../components/CinematicSpecStudio.tsx#L51) (`SLOT 5: BRAND_MARK`). Skipped, filed as separate audit. |
+| **CMO-upgraded TESTIMONIAL Intro + Hook anchor** | `geminiService.ts` TESTIMONIAL block | Intro went from `"Human introduction."` (3 words, name-tag output) to persona+wound+open-loop with 3 audience-pattern examples in appendix. Speakers now produce e.g. `"Ako si Elena. Tatlong taon na sa Saudi ang asawa ko."` instead of subject-less fragments. |
+| **CMO-upgraded MrBeast Identity beat** | `geminiService.ts` MrBeast block | Identity went from `"Relatable audience statement."` (3 words, vague output) to direct-address with `ka`/`mo`/`tayo` + audience-world reference + 3 examples in appendix. Speakers now produce e.g. `"Pag-uwi galing office, diretso higa na lang sa sobrang pagod"` instead of `"Sa gising na maaga, malayo sa mga bata"` (subject-less stage direction). |
+| **Hook anti-demographic-label anchor (both formulas)** | `geminiService.ts` Hook beats | Banned: `"para sa mga OFW"`, `"sa mga moms"`, `"for OFWs"`. Hooks must derive curiosity from situation/visual, not audience tag. |
+| **Step 2 consolidation** | [types.ts](../types.ts), [App.tsx](../App.tsx), [Step2BusinessInfo.tsx](../components/Step2BusinessInfo.tsx), `geminiService.ts`, [IntelligenceUplink.tsx](../components/IntelligenceUplink.tsx) | Dropped `goal` + `problem` from `BusinessInfo` (each fired in only ONE formula — half-orphans). Renamed `benefit` → **`Dream Result`** (placeholder: Taglish-native "Wakes up energized, naka-2 hours back every morning, mas chill ang pasok sa work"). Renamed `painPoint` → **`3 AM Worry`** (placeholder: "3 AM, hindi makatulog kasi tuition deadline na bukas — wala pang pera"). Required fields went from 8 to 6. TESTIMONIAL Before Story now agitates `painPoint` instead of `problem`; Transformation now lands at `benefit` instead of `goal`. CMO-locked via grill-me 3-question protocol. |
+| **Regression harness — kills the manual UI loop** | [tests/regression/script-gen.regression.test.ts](../tests/regression/script-gen.regression.test.ts) | Vitest test, gated by `RUN_REGRESSION=1` env var (default `npm test` skips). Mocks Supabase auth + stubs global fetch to route `/api/gemini/text` straight to `@google/genai` SDK using `GEMINI_API_KEY` from `.env`. Same prompt construction code path as production. Replaces the 5-min-per-iteration "open localhost, sign in, fill 8 fields, screenshot script" loop with a 5-second CLI run that prints full JSON. **Run command:** `$env:RUN_REGRESSION='1'; npx vitest run tests/regression/script-gen.regression.test.ts --reporter=verbose` |
+| **Stress-test expansion (4 product categories)** | Same regression file | 8 tests across Bukidnon coffee + MalinisPH cleaning + Glaze PH skincare + BulkPH Coach gym. Probes whether the prompt's hardcoded archetype examples (OFW family / Filipino mom / Corporate) generalize. **They do.** Model produced 4 distinct speaker personas across 4 categories with no archetype copy-paste leakage. |
+
+### Strategic decisions made this evening
+
+1. **Phrasing locked via grill-me + CMO verification.** Three open questions from the 2026-05-06 session resolved:
+   - Q1: `clientDetails.services` → DROP (overlapped with `businessInfo.product`, no slot in matrix, slotting matrix already covered service businesses through existing fields). Hypothesis that "Market Research auto-fills services" was tested in code — no scaffolding exists, phantom feature.
+   - Q2: empty-field fallback rules → silent generic fallback in geminiService (form gate already prevents empty in normal flow; fallback is belt-and-suspenders for persistence-restore edge case).
+   - Q3 (audience register-tuning): SPEC CORRECTION — line 564 referenced in 2026-05-06 spec is actually in `generateMarketResearch` (MarketMind module), not `generateAdScript`. **Don't touch line 564.** Real fix lives in `COMMON_RULES` block.
+
+2. **CMO pushback on the slotting matrix accepted.** Original matrix said audience is "register only, never content." CMO read: too academic. Audience should also shape MENTAL PICTURES — the world the script lives in. Result beat / Visual payoff lands in the audience's WORLD (OFW reunion at NAIA, mom's school dropoff, corporate Friday 6PM logout) — not generic "happy moment." Updated AUDIENCE REGISTER bullet includes this.
+
+3. **CMO pushback on Intro examples accepted.** Original Intro examples were name-tags ("Ako si Mark, OFW dad, 5 years sa Saudi"). CMO upgraded to name + life context + **the wound's first hint** + open loop ("...pero may isang bagay na halos natalo ako"). Tested live: model copies the upgraded pattern (Bukidnon TESTIMONIAL Intro: `"Ako si Elena. Tatlong taon na sa Saudi ang asawa ko."` — open-ended, pulls into beat 2).
+
+4. **Step 2 consolidation labels CMO-locked.** "Dream Result" and "3 AM Worry" beat alternatives like "Main Benefit/Outcome" and "Bleeding Neck Pain." Reasoning: labels load-bear more than placeholders — Bryan reads the label once and writes accordingly. "Dream Result" pulls toward Sabri Suby Magic Genie wish without naming the framework. "3 AM Worry" cues visceral 3 AM moments without academic jargon.
+
+### Live regression evidence (8 tests across 4 product categories)
+
+Full output committed in `c7fc94a` test artifact. Highlights:
+
+- **Bukidnon Brew + OFW-wife audience:** TESTIMONIAL Intro `"Ako si Elena. Tatlong taon na sa Saudi ang asawa ko."` ✓; MrBeast Identity `"Tuwing umaga, kahit malayo siya, kape ang nagpaparamdam."` ✓
+- **MalinisPH + BGC professional audience:** TESTIMONIAL Intro `"Ako si Miggy, laging 12 hours sa Makati office."` ✓; MrBeast Identity `"Pag-uwi galing office, diretso higa na lang sa sobrang pagod."` ✓
+- **Glaze PH + skincare-frustrated millennial audience:** TESTIMONIAL Intro `"Ako si Kaye, naubos sweldo ko sa mahal na facial sessions."` ✓; MrBeast Identity `"Pagod na pagod na kaka-skincare pero acne mo nandyan pa."` ✓
+- **BulkPH Coach + Pinoy gym-bro audience:** TESTIMONIAL Intro `"Ako si JC. Tatlong taon nang nagbubuhat, pero walang pagbabago sa katawan."` ✓; MrBeast Identity `"Naka-three years ka na sa gym pero stuck ka pa rin."` ✓
+
+**Generalization confirmed.** No category copied OFW/mom/corporate prompt examples literally. The 3 AM Worry framing carried into Before Story content for skincare AND gym, not just OFW-coffee.
+
+### One soft spot identified for v1.1 (NOT a beta blocker)
+
+**TESTIMONIAL CTA softens offer scarcity.** Across 4/4 TESTIMONIAL stress tests, the CTA dropped or softened the offer's scarcity language:
+
+| Brand | Offer input | TESTIMONIAL CTA output | Dropped |
+| --- | --- | --- | --- |
+| Bukidnon Brew | First 50 + free shipping + recipe ebook | `"first 50 may free shipping pa"` | recipe ebook |
+| MalinisPH | First 20 + 50% off + free deep clean | `"subukan niyo rin ito"` | **everything** |
+| Glaze PH | First 100 + free derm consult + assessment | `"first 50 orders may free skin consultation pa"` | "100"→"50", assessment |
+| BulkPH Coach | First 30 + 25% off + free meal plan | `"limited slots lang ang natitira"` | "30", "25%", meal plan |
+
+Root cause: TESTIMONIAL CTA prompt anchor says `"WARM recommendation tone (not direct-sell)"`. Warmth wins over scarcity. **MrBeast carries offers cleanly** in all 4 cases. v1.1 fix: tighten TESTIMONIAL CTA with explicit "REQUIRED: at least one scarcity word + one value-add MUST appear verbatim" anchor. ~5-line surgical edit. Not a beta blocker — TESTIMONIAL CTAs land naturally, just less hard-sell.
+
+### Open follow-ups (post-tonight)
+
+**Pre-beta blockers (none — bundle is shippable):**
+- ✅ All polish-bundle items 3b/3c/3d/3e/3f shipped + tested.
+- ✅ Step 2 consolidation (3g, new this evening) shipped + tested.
+- ✅ Regression harness exists for all future prompt-tuning iterations.
+
+**Carry-forwards (deferred to next session):**
+- **3a — JWT auto-refresh + 401 error boundary** (~half day, code-heavy, independent of prompts). The only item from the 2026-05-06 polish bundle still open. Auth interruption mid-call still surfaces `PROXY_ERROR_401` to the user; persistence preserves state but they manually re-auth + click `[ RESUME ]`. Touches `services/supabaseClient.ts` + auth flow + `App.tsx` ErrorBoundary. CLAUDE.md NOT-tuned territory.
+- **TESTIMONIAL CTA offer-integration tightening** (v1.1, ~5-line surgical edit). Add scarcity-word + value-add VERBATIM anchor.
+- **`logoImageUrl` audit** — is the Cinematic Studio `SLOT 5: BRAND_MARK` actually delivering value? Different scope from 3f. Audit separately before deciding to drop.
+
+**P1 from prior session, still open:**
+- **Module name audit completion** — Generate Video, Image Ads Gen `MORE_MODULES` descriptions still engine-y ("Render final video assets..."). UI nav labels updated; module-detail copy may not be.
+- **In-progress modules to fully ship** — Signal Modulator + Edit Video need admin-gate removal + production-ready release before they can move out of Beta.
+
+**P2 from prior session:**
+- **Landing + Pricing 7-step claim** — Gated on Signal Modulator + Edit Video shipping for non-admin users.
+- **Wizard ↔ Dashboard journey unification** — Long-term Jobs-aligned restructure. Defer until real beta data.
+
+**P3 cleanup:**
+- Other non-billing SPA rewrites in `vercel.json` (`/pricing`, `/terms`, `/privacy`, `/refund`, `/support`, `/app`).
+
+### Next session starting point
+
+If beta cohort is being prepped: **3a JWT auto-refresh** is the only remaining polish-bundle item that affects beta UX directly. Half a day. Touches Supabase token refresh + 401 interceptor + re-auth fallback at App.tsx ErrorBoundary. No prompt risk. Independent of everything else.
+
+If beta is shipping immediately: nothing blocks. The bundle from this evening is the cleanest pre-beta state Director AI has been in. Run **`$env:RUN_REGRESSION='1'; npx vitest run tests/regression/script-gen.regression.test.ts --reporter=verbose`** if you want one final smoke check before pushing to cohort — 45 seconds, 8 product/formula combinations.
+
+If TESTIMONIAL CTA softening becomes a real concern post-beta data: **5-line v1.1 fix** on the CTA prompt anchor. Use the regression harness to verify before/after.
+
+### Cafe-PC reboot reminders
+
+- **All 7 commits pushed to origin** — durable across reboot.
+- Branch is **`checkout-redesign-preview`**, not main.
+- If `node_modules/` missing on next session: `npm install`.
+- Run `.\scripts\restore-git-identity.ps1` if `git commit` fails with "Author identity unknown".
+- Run `.\scripts\restore-playwright-mcp.ps1` if you want Playwright MCP for browser-level testing (requires VS Code restart after registration — kills active Claude Code conversation).
+- The regression harness needs `GEMINI_API_KEY` in `.env` (server-side, no `VITE_` prefix). Already configured.
+
+---
+
 ## Status as of 2026-05-08 (Checkout redesign ship + Jobs lens + canonical 7-step flow)
 
 **Working tree clean. 7 commits pushed to `checkout-redesign-preview`. Branch in sync with origin.** This session was a large strategic + tactical batch on top of the prior session's checkout-redesign visual MVP. Two unrelated workstreams ran in parallel: (1) get the checkout preview deploy unbroken and shipping outcome-first copy; (2) bake the Steve Jobs work-backwards filter into the durable doc layer + propagate the canonical 7-step flow throughout the dashboard.
