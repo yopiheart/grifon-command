@@ -75,7 +75,7 @@ export const fetchIntent = async (
   billing_cycle: BillingCycle
 ): Promise<IntentResponse> => {
   const token = await getAuthToken();
-  const res = await fetch('/api/billing/intent', {
+  const res = await fetch('/api/billing?action=intent', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -139,7 +139,7 @@ const confirmIntent = async (
   payment_method_id: string
 ): Promise<ConfirmResponse> => {
   const token = await getAuthToken();
-  const res = await fetch('/api/billing/confirm', {
+  const res = await fetch('/api/billing?action=confirm', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -180,7 +180,7 @@ export const processEwalletPayment = async (
   type: EwalletType
 ): Promise<ConfirmResponse> => {
   const token = await getAuthToken();
-  const res = await fetch('/api/billing/ewallet', {
+  const res = await fetch('/api/billing?action=ewallet', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -199,7 +199,7 @@ export const processEwalletPayment = async (
 export const fetchStatus = async (intent_id: string): Promise<StatusResponse> => {
   const token = await getAuthToken();
   const res = await fetch(
-    `/api/billing/status?intent_id=${encodeURIComponent(intent_id)}`,
+    `/api/billing?action=status&intent_id=${encodeURIComponent(intent_id)}`,
     {
       headers: { Authorization: `Bearer ${token}` },
     }

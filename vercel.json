@@ -15,6 +15,7 @@
   ],
   "rewrites": [
     { "source": "/billing/success", "destination": "/index.html" },
-    { "source": "/billing/cancel", "destination": "/index.html" }
+    { "source": "/billing/cancel", "destination": "/index.html" },
+    { "source": "/billing/3ds-return", "destination": "/index.html" }
   ]
 }

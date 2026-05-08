@@ -31,7 +31,7 @@ The old "checkout" was a redirect from grifoncommand.com to PayMongo's generic h
 
 ## File map
 
-### New files (12)
+### New files (9)
 
 | Path | Role |
 |---|---|
@@ -41,11 +41,8 @@ The old "checkout" was a redirect from grifoncommand.com to PayMongo's generic h
 | [components/checkout/PaymentMethodTabs.tsx](../components/checkout/PaymentMethodTabs.tsx) | 4-tab picker: Card / GCash / Maya / GrabPay. Active tab uses Grifon Gold border. |
 | [components/checkout/CardForm.tsx](../components/checkout/CardForm.tsx) | Card number + exp + CVC + name. Auto-formatted inputs, follows DESIGN.md focus styles. |
 | [components/checkout/EwalletButtons.tsx](../components/checkout/EwalletButtons.tsx) | "Continue with GCash/Maya/GrabPay" button + redirect copy. |
-| [services/checkoutService.ts](../services/checkoutService.ts) | Client orchestrator. `fetchIntent`, `processCardPayment` (tokenize → confirm), `processEwalletPayment`, `fetchStatus`, `formatPHP`. |
-| [api/billing/intent.ts](../api/billing/intent.ts) | POST: create PaymentIntent + return VAT breakdown. |
-| [api/billing/confirm.ts](../api/billing/confirm.ts) | POST: attach card PaymentMethod, return 3DS next_action. |
-| [api/billing/ewallet.ts](../api/billing/ewallet.ts) | POST: create+attach e-wallet PaymentMethod, return wallet redirect URL. |
-| [api/billing/status.ts](../api/billing/status.ts) | GET: poll PaymentIntent state for the return UI. |
+| [services/checkoutService.ts](../services/checkoutService.ts) | Client orchestrator. `fetchIntent`, `processCardPayment` (tokenize → confirm), `processEwalletPayment`, `fetchStatus`, `formatPHP`. Calls `/api/billing?action=<intent\|confirm\|ewallet\|status>`. |
+| [api/billing.ts](../api/billing.ts) | Single consolidated handler — switches on `?action=` to serve intent / confirm / ewallet / status. Folded together to stay under Vercel Hobby's 12-function cap. |
 | [api/_lib/billing-math.ts](../api/_lib/billing-math.ts) | `splitVatInclusive`, `monthlyEquivalent`, `annualSavingsVsMonthly`. Pure functions. |
 
 ### Modified files (4)
@@ -56,14 +53,20 @@ The old "checkout" was a redirect from grifoncommand.com to PayMongo's generic h
 | [services/billingService.ts](../services/billingService.ts) | `startCheckout` now navigates to `/checkout?plan=<id>&cycle=<cycle>` instead of redirecting to checkout.paymongo.com. |
 | [api/_lib/paymongo.ts](../api/_lib/paymongo.ts) | APPENDED `createPaymentIntent`, `createEwalletPaymentMethod`, `attachPaymentMethod`, `retrievePaymentIntent`. Existing tuned signatures (`createCheckoutSession`, `verifyWebhookSignature`) untouched per [api/CLAUDE.md](../api/CLAUDE.md). |
 | [api/webhook.ts](../api/webhook.ts) | Added `payment_intent.succeeded` branch alongside the existing `checkout_session.payment.paid` branch. Same upsert shape, same `subscriptions` table. |
+| [vercel.json](../vercel.json) | Added rewrite for `/billing/3ds-return` so the polling page resolves on a fresh page load (mobile users, post-3DS deep link). |
 
 ---
 
 ## Verification done
 
-- ✅ `npm run build` — tsc + Vite production build, both clean on every slice
+- ✅ `npm run build` — tsc + Vite production build, both clean
 - ✅ `npm run test` — 20/20 tests pass (paymongo.test.ts unaffected; tuned signatures preserved)
+- ✅ Vercel function count — 12 (at the Hobby cap, deployable)
 - ⏳ Live PayMongo smoke — NOT YET DONE. Pending below.
+
+### 2026-05-08 — Vercel preview deploy fix
+
+The first preview-deploy attempt failed: 4 new endpoints in `api/billing/` pushed total serverless functions to 15, over Vercel Hobby's 12-cap. Fixed by consolidating `intent.ts` + `confirm.ts` + `ewallet.ts` + `status.ts` into a single `api/billing.ts` that switches on a `?action=` query param. Per-action rate-limit buckets, body schemas, and PayMongo behavior are unchanged. Also added the previously-missing `/billing/3ds-return` rewrite in `vercel.json` (would have 404'd on mobile post-3DS deep links).
 
 ---
 
