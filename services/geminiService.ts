@@ -757,19 +757,19 @@ export const generateAdScript = async (
       ${COMMON_RULES}
 
       **TESTIMONIAL STRUCTURE:**
-      0. **Hook (3s/5-8 words):** Shock or extreme curiosity. (Provide 2 variations).
-      1. **Intro:** Human introduction. The speaker's persona (name + life context + the wound's first hint) MUST implicitly match the audience: "${businessInfo.audience}". The intro establishes identity AND opens the bleeding-neck loop into the next beat — never just a name tag.
-         Pattern examples (adapt to the audience, do not copy literally):
-         - OFW audience → "Ako si Mark. 5 years na akong nasa Saudi para mabuhay yung pamilya — pero may isang bagay na halos natalo ako."
-         - Filipino mom audience → "Ako si Tin, single mom ng dalawang bata. Akala ko kaya ko na lahat — until one Sunday morning..."
-         - Corporate audience → "Ako si JP. Nine-to-nine sa Makati, pinagkakitaan ko sarili ko — pero may isang gabi na napaisip ako: 'para saan pa lahat ng ito?'"
-         NEVER name the audience demographically — the persona's wound carries the recognition.
+      0. **Hook (3s/5-8 words):** Shock or extreme curiosity. PROVIDE 2 VARIATIONS — both 5-8 words, both curiosity-driven pattern interrupts. REQUIRED: hook1 and hook2 arrays in the JSON output MUST be populated; do not skip this beat.
+      1. **Intro:** Human introduction. Speaker's persona (name + life context + the wound's first hint) MUST implicitly match the audience: "${businessInfo.audience}". Establish identity AND open the bleeding-neck loop into beat 2 — never a name tag. NEVER name the audience demographically; the persona's wound carries the recognition. (See INTRO PATTERN EXAMPLES below.)
       2. **Before Story:** Agitate the 'Main Problem': "${businessInfo.problem}".
       3. **Discovery:** Introduce the hero: "${brandName}'s ${businessInfo.product}".
       4. **Transformation:** The shift from Pain Point ("${businessInfo.painPoint}") to Result ("${businessInfo.goal}").
       5. **Proof:** Highlight the 1-2 selected features. Stack comparative differentiation: "Marami akong na-try na ibang [category], pero ito lang ang gumana sa akin kasi ${businessInfo.separator}." This is where the differentiator earns its keep. If separator is empty, fall back to: "Highlight the 1-2 selected features."
       6. **Objection Killer:** Solve the common doubt.
       7. **CTA:** Strong "Click below" direction with WARM recommendation tone (not direct-sell). Inject offer STRUCTURE (scarcity + value adds + urgency) from "${offer}", NEVER the bare price. Example pattern: "Try niyo na — first 50 may free shipping pa." If offer is empty, fall back to: "Strong 'Click below' direction."
+
+      **INTRO PATTERN EXAMPLES** (for beat 1 — adapt content to audience, do not copy literally):
+      - OFW audience → "Ako si Mark. 5 years na akong nasa Saudi para mabuhay yung pamilya — pero may isang bagay na halos natalo ako."
+      - Filipino mom audience → "Ako si Tin, single mom ng dalawang bata. Akala ko kaya ko na lahat — until one Sunday morning..."
+      - Corporate audience → "Ako si JP. Nine-to-nine sa Makati, pinagkakitaan ko sarili ko — pero may isang gabi na napaisip ako: 'para saan pa lahat ng ito?'"
 
       ${DIRECTOR_CRITIQUE_INSTRUCTION}
       Format: Return valid JSON: { "hook1": [...], "hook2": [...], "body": [...], "strategicAudit": "..." }
