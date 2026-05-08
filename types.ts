@@ -1,7 +1,6 @@
 export interface ClientDetails {
   brandName: string;
   offer: string;
-  services: string;
 }
 
 export interface VisualTheme {

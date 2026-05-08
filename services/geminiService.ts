@@ -672,9 +672,10 @@ const classifyTemuProduct = async (product: string, description: string): Promis
 };
 
 export const generateAdScript = async (
-    businessInfo: BusinessInfo, 
-    brandName: string, 
-    language: 'English' | 'Taglish'
+    businessInfo: BusinessInfo,
+    brandName: string,
+    language: 'English' | 'Taglish',
+    offer: string = ''
 ): Promise<Script> => {
     await delay(1000); 
   
@@ -687,6 +688,15 @@ export const generateAdScript = async (
   - **FEATURE FILTER:** Pick ONLY the top 1-2 most viral/compelling features from the provided list: "${businessInfo.features}". Omit everything else.
   - **LOGIC LOCK:** Use Brand Name "${brandName}" EXACTLY. Product mentions can be shortened naturally — say "this kape", "ito", "${brandName}", or descriptive shorthand. Do NOT recite the full SKU/product name verbatim ("${businessInfo.product}"); that reads like a product page, not an ad.
   - **READING LEVEL:** 4th-5th Grade. Simple, punchy, visceral storytelling.
+  - **AUDIENCE REGISTER:** Tune vocabulary, idiom, and mental pictures to match this person: "${businessInfo.audience}".
+    - HOW you talk = word choice, slang weight, cultural references, the WORLD they live in. Speak from inside that world.
+    - WHAT you say stays the same — script structure, hooks, and beats don't change.
+    - NEVER name the audience by label. "Para sa mga OFW dads na nasa abroad..." reads as marketing copy. "Sa loob ng 5 years na pagiging malayo sa pamilya..." reads as the speaker.
+    - Use the audience's WORLD as your vocabulary:
+      • OFW audience → "balikbayan box", "video call", "uwi", "pasalubong", "pamilya sa atin"
+      • Filipino mom audience → "yaya", "school baon", "halaga ng bigas", "kape after the kids leave"
+      • Corporate audience → "deadline", "boss", "sweldo", "weekend lang nakakapahinga"
+    - Visual payoff / Result beats land in the audience's WORLD too. OFW reunion at NAIA, not generic "happy moment". Mom's school dropoff on time, not generic "calm morning". Corporate Friday 6PM logout, not generic "free time". Cialdini Liking — Bryan needs to SEE himself in the result.
 
   **LANGUAGE LOCK (${language}):**
   - If TAGLISH: every hook, body line, and CTA MUST be in Taglish. Sound like a real Filipino vlog, not a manual.
@@ -748,13 +758,18 @@ export const generateAdScript = async (
 
       **TESTIMONIAL STRUCTURE:**
       0. **Hook (3s/5-8 words):** Shock or extreme curiosity. (Provide 2 variations).
-      1. **Intro:** Human introduction.
+      1. **Intro:** Human introduction. The speaker's persona (name + life context + the wound's first hint) MUST implicitly match the audience: "${businessInfo.audience}". The intro establishes identity AND opens the bleeding-neck loop into the next beat — never just a name tag.
+         Pattern examples (adapt to the audience, do not copy literally):
+         - OFW audience → "Ako si Mark. 5 years na akong nasa Saudi para mabuhay yung pamilya — pero may isang bagay na halos natalo ako."
+         - Filipino mom audience → "Ako si Tin, single mom ng dalawang bata. Akala ko kaya ko na lahat — until one Sunday morning..."
+         - Corporate audience → "Ako si JP. Nine-to-nine sa Makati, pinagkakitaan ko sarili ko — pero may isang gabi na napaisip ako: 'para saan pa lahat ng ito?'"
+         NEVER name the audience demographically — the persona's wound carries the recognition.
       2. **Before Story:** Agitate the 'Main Problem': "${businessInfo.problem}".
       3. **Discovery:** Introduce the hero: "${brandName}'s ${businessInfo.product}".
       4. **Transformation:** The shift from Pain Point ("${businessInfo.painPoint}") to Result ("${businessInfo.goal}").
-      5. **Proof:** Highlight the 1-2 selected features.
+      5. **Proof:** Highlight the 1-2 selected features. Stack comparative differentiation: "Marami akong na-try na ibang [category], pero ito lang ang gumana sa akin kasi ${businessInfo.separator}." This is where the differentiator earns its keep. If separator is empty, fall back to: "Highlight the 1-2 selected features."
       6. **Objection Killer:** Solve the common doubt.
-      7. **CTA:** Strong "Click below" direction.
+      7. **CTA:** Strong "Click below" direction with WARM recommendation tone (not direct-sell). Inject offer STRUCTURE (scarcity + value adds + urgency) from "${offer}", NEVER the bare price. Example pattern: "Try niyo na — first 50 may free shipping pa." If offer is empty, fall back to: "Strong 'Click below' direction."
 
       ${DIRECTOR_CRITIQUE_INSTRUCTION}
       Format: Return valid JSON: { "hook1": [...], "hook2": [...], "body": [...], "strategicAudit": "..." }
@@ -769,12 +784,12 @@ export const generateAdScript = async (
         ${COMMON_RULES}
 
         **MRBEAST STRUCTURE:**
-        1. **Hook (3s/5-8 words):** Curiosity-driven pattern interrupt. (Provide 2 variations).
+        1. **Hook (3s/5-8 words):** Curiosity-driven pattern interrupt. (Provide 2 variations). Hook stays curiosity-gap-pure — no offer, no differentiator, no audience label.
         2. **Identity:** Relatable audience statement.
         3. **Struggles:** Deep dive into "${businessInfo.painPoint}".
         4. **Discovery:** Introducing "${brandName}'s ${businessInfo.product}".
-        5. **Result:** Visual payoff based on "${businessInfo.benefit}".
-        6. **CTA:** High-energy "Click below."
+        5. **Result + Proof:** Visual payoff based on "${businessInfo.benefit}". Stack proof: "Hindi tulad ng iba — kami ${businessInfo.separator}." This is the "why believe?" slot. NEVER in the hook (kills curiosity); NEVER in the CTA (offer owns that). If separator is empty, fall back to: "Visual payoff based on benefit."
+        6. **CTA:** High-energy "Click below." Inject offer STRUCTURE (scarcity + value adds + urgency) from "${offer}", NEVER the bare price. Example pattern: "Tap link sa bio — first 50 lang may free shipping + recipe ebook." If offer is empty, fall back to: "High-energy 'Click below.'"
 
         ${DIRECTOR_CRITIQUE_INSTRUCTION}
         Format: Return ONLY valid JSON: { "hook1": [...], "hook2": [...], "body": [...], "strategicAudit": "..." }

@@ -17,9 +17,10 @@ interface Step3Props {
   onNext: () => void;
   onBack: () => void;
   brandName: string;
+  offer: string;
 }
 
-const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, script, setScript, setFinalScript, language: propLanguage, setLanguage: setAppLanguage, onNext, onBack, brandName }) => {
+const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, script, setScript, setFinalScript, language: propLanguage, setLanguage: setAppLanguage, onNext, onBack, brandName, offer }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [generatedScript, setGeneratedScript] = useState<Script | null>(script);
@@ -93,7 +94,7 @@ const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, script, setScript, 
     try {
       setLoading(true);
       setError(null);
-      const newScript = await generateAdScript(businessInfo, brandName, localLanguage);
+      const newScript = await generateAdScript(businessInfo, brandName, localLanguage, offer);
       setGeneratedScript(newScript);
       setStrategicAudit(newScript.strategicAudit || '');
       setScript(newScript);

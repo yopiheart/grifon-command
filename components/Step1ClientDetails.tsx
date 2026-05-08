@@ -22,7 +22,7 @@ const Step1ClientDetails: React.FC<Step1Props> = ({ data, setData, onNext }) => 
     onNext();
   };
   
-  const isFormValid = formData.brandName && formData.offer && formData.services;
+  const isFormValid = formData.brandName && formData.offer;
 
   return (
     <GlassPanel>
@@ -61,21 +61,6 @@ const Step1ClientDetails: React.FC<Step1Props> = ({ data, setData, onNext }) => 
             onChange={handleChange}
             placeholder="e.g., 50% off first cleaning for new customers"
             className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-all text-sm"
-          />
-        </div>
-
-        <div className="space-y-2">
-          <label htmlFor="services" className="block text-[10px] text-zinc-400 font-mono uppercase tracking-widest">
-            // List of Products / Services
-          </label>
-          <textarea
-            id="services"
-            name="services"
-            value={formData.services}
-            onChange={handleChange}
-            placeholder="e.g., Deep cleaning, regular maintenance, window washing"
-            rows={4}
-            className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-all resize-none text-sm"
           />
         </div>
       </div>
