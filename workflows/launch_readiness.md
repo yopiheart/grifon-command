@@ -4,6 +4,73 @@
 
 This is the meta-workflow. It doesn't do the work itself — it points to the workflows that do, and tracks overall progress.
 
+## Status as of 2026-05-08 late-evening (3a JWT auto-refresh shipped — 2026-05-06 polish bundle FULLY CLOSED)
+
+**Working tree clean. 1 commit pushed on top of evening's 7. Branch is 9 ahead of `main`, in sync with origin.** Final deferred item from the 2026-05-06 polish bundle is now in. Beta-cohort UX no longer breaks when a Supabase JWT expires mid-call.
+
+### Pushed this late-evening session (1 commit)
+
+```
+3a358cd  feat(auth): silent JWT refresh + 401 retry in proxyCall (3a)
+```
+
+### What shipped
+
+| What | Where it lives | Purpose |
+| --- | --- | --- |
+| **3a — silent JWT refresh + 401 retry** | [services/geminiService.ts](../services/geminiService.ts) `proxyCall`, `refreshAccessToken`, `proxyFetch` | On 401 from `/api/gemini/*`, `proxyCall` calls `sb.auth.refreshSession()` once and replays the original request with the new bearer — user sees zero error, wizard flow uninterrupted. Concurrent expired calls dedupe through a module-level in-flight promise so N parallel 401s trigger ONE refresh round-trip, not N. On genuine refresh failure (refresh token expired / network down), `sb.auth.signOut()` flips `onAuthStateChange` at [App.tsx:191](../App.tsx#L191) so the user is routed back to auth — wizard persistence row in Supabase is **untouched** (no `clearSession` call), so [RESUME] still works after re-auth. Pure transport-layer change; prompts/schemas/model IDs in tuned `geminiService.ts` untouched. |
+| **Unit coverage on the new transport** | [tests/unit/geminiService.proxy.test.ts](../tests/unit/geminiService.proxy.test.ts) | 3 cases: (1) 401 + valid refresh → retry once with new bearer, return 200 silently, refresh called exactly once, fetch called twice with different `Authorization` headers; (2) 401 + failed refresh → `signOut()` called + `NOT_AUTHENTICATED` rejection; (3) 200 happy path → no refresh attempted (regression guard). Mocks `supabaseClient` at the same boundary the existing schema tests use. |
+
+### Surgical-edit principle held
+
+- **`App.tsx`, `ErrorBoundary.tsx`, `supabaseClient.ts` not touched.** The existing `onAuthStateChange` listener already flips `isAuthenticated=false` on `SIGNED_OUT`, which routes to the auth screen via the existing render logic at App.tsx:472. No new ErrorBoundary fallback was needed.
+- **Prompts, schemas, model IDs untouched** in `geminiService.ts` (CLAUDE.md tuned-file rule respected). Only `proxyCall` + 2 new helpers + the in-flight promise lock.
+- **No `clearSession` on refresh-fail.** Distinct from the explicit user-clicked Sign Out at App.tsx:300 (which clears the persistence row). Refresh-fail leaves the row intact so the user can re-auth and resume.
+
+### Verification
+
+- `npm run build` — green (tsc + vite, 1.51s)
+- `npm test` — 23 passed / 8 skipped (was 20+8 pre-edit; +3 new proxy tests)
+- Regression — `$env:RUN_REGRESSION='1'; npx vitest run tests/regression/script-gen.regression.test.ts --reporter=verbose` — 8/8 passed live against Gemini (45s, all 4 product categories × 2 formulas, no prompt drift from transport refactor)
+- Manual browser smoke (clearing localStorage to force a 401): **deferred to user** — CLI agent on cafe PC can't drive a browser. Unit tests cover the same code path; live token-clearing is the user's check.
+
+### Open follow-ups (post-tonight)
+
+**Pre-beta blockers: NONE.** 2026-05-06 polish bundle (3a/3b/3c/3d/3e/3f) + Step 2 consolidation (3g) all shipped + tested. Branch is shippable to beta cohort.
+
+**Carry-forwards (deferred to next session):**
+- **TESTIMONIAL CTA offer-integration tightening** (v1.1, ~5-line surgical edit). Add scarcity-word + value-add VERBATIM anchor. Use regression harness to verify before/after.
+- **`logoImageUrl` audit** — is the Cinematic Studio `SLOT 5: BRAND_MARK` actually delivering value? Audit separately before deciding to drop.
+
+**P1 from prior session, still open:**
+- **Module name audit completion** — Generate Video, Image Ads Gen `MORE_MODULES` descriptions still engine-y. UI nav labels updated; module-detail copy may not be.
+- **In-progress modules to fully ship** — Signal Modulator + Edit Video need admin-gate removal + production-ready release before they can move out of Beta.
+
+**P2 from prior session:**
+- **Landing + Pricing 7-step claim** — Gated on Signal Modulator + Edit Video shipping for non-admin users.
+- **Wizard ↔ Dashboard journey unification** — Long-term Jobs-aligned restructure. Defer until real beta data.
+
+**P3 cleanup:**
+- Other non-billing SPA rewrites in `vercel.json` (`/pricing`, `/terms`, `/privacy`, `/refund`, `/support`, `/app`).
+
+### Next session starting point
+
+If beta cohort is being prepped: nothing blocks. Run the regression harness as a final smoke before pushing to cohort. The branch can merge to `main` and ship.
+
+If post-beta data flags TESTIMONIAL CTA softening: 5-line v1.1 fix on the CTA prompt anchor; use the regression harness to verify before/after.
+
+If the next session targets the deeper UX restructure: Wizard ↔ Dashboard unification is the largest open Jobs-aligned bet, but it should wait for real beta usage data before committing to a direction.
+
+### Cafe-PC reboot reminders
+
+- **All 8 commits ahead of `main` are pushed to origin** — durable across reboot.
+- Branch is **`checkout-redesign-preview`**, not main.
+- If `node_modules/` missing on next session: `npm install`.
+- Run `.\scripts\restore-git-identity.ps1` if `git commit` fails with "Author identity unknown".
+- The regression harness needs `GEMINI_API_KEY` in `.env` (server-side, no `VITE_` prefix). Already configured.
+
+---
+
 ## Status as of 2026-05-08 evening (3e wiring + Step 2 consolidation + regression harness — pre-beta polish bundle DONE)
 
 **Working tree clean. 7 commits pushed to `checkout-redesign-preview` this evening (on top of morning's 7). Branch in sync with origin.** Largest single-session prompt-engineering shift since Director AI's beta-readiness fix sprint. Pre-beta polish bundle from the 2026-05-06 session is now FULLY shipped (3a JWT remains the only deferred item from that bundle). On top of that, the **biggest strategic win:** every required wizard field now actually fires in the script generation prompt, validated across 4 widely-different product categories.
