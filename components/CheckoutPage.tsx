@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Loader2, Lock, ShieldCheck } from 'lucide-react';
+import { Loader2, ShieldCheck } from 'lucide-react';
 import { GlassPanel } from './ui/GlassPanel';
 import { OrderSummary } from './checkout/OrderSummary';
 import { PaymentMethodTabs, type PaymentMethod } from './checkout/PaymentMethodTabs';
@@ -197,13 +197,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack }) => {
             <PaymentMethodTabs active={activeMethod} onChange={setActiveMethod} />
           </div>
 
-          <div className="mb-6 space-y-2.5 px-4 py-3.5 rounded-xl border border-white/10 bg-zinc-950/60">
-            <div className="flex items-start gap-2.5 text-xs text-zinc-300 leading-relaxed">
-              <Lock className="w-3.5 h-3.5 text-[#FFCC00] mt-0.5 shrink-0" />
-              <span>
-                <strong className="text-white">No auto-renew.</strong> You're in control — we'll email you before access ends.
-              </span>
-            </div>
+          <div className="mb-6 px-4 py-3.5 rounded-xl border border-white/10 bg-zinc-950/60">
             <div className="flex items-start gap-2.5 text-xs text-zinc-300 leading-relaxed">
               <ShieldCheck className="w-3.5 h-3.5 text-[#FFCC00] mt-0.5 shrink-0" />
               <span>

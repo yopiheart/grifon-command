@@ -68,6 +68,18 @@ The old "checkout" was a redirect from grifoncommand.com to PayMongo's generic h
 
 The first preview-deploy attempt failed: 4 new endpoints in `api/billing/` pushed total serverless functions to 15, over Vercel Hobby's 12-cap. Fixed by consolidating `intent.ts` + `confirm.ts` + `ewallet.ts` + `status.ts` into a single `api/billing.ts` that switches on a `?action=` query param. Per-action rate-limit buckets, body schemas, and PayMongo behavior are unchanged. Also added the previously-missing `/billing/3ds-return` rewrite in `vercel.json` (would have 404'd on mobile post-3DS deep links).
 
+### 2026-05-08 — `/checkout` SPA rewrite
+
+Direct-visiting `/checkout` returned Vercel's edge 404. Slice 1 added the route to `App.tsx`'s manual route detection but never added the matching rewrite in `vercel.json`. Fixed: added `{ "source": "/checkout", "destination": "/index.html" }`. Other non-billing routes (`/pricing`, `/terms`, `/privacy`, `/refund`, `/support`, `/app`) have the same architectural gap — they work today only because users navigate via in-app links. Catch-all rewrite is the cleaner fix; deferred as separate cleanup.
+
+### 2026-05-08 — Outcome-first copy rewrite (Jobs lens + CMO trust stack)
+
+Replaced the Pro-tier feature list ("40 workflows, 15 reports, 300 captions, 150 images, 15 AI video ads") with an outcome paragraph at the buy moment: *"Replaces your marketing agency. End-to-end: research, offer, scripts, AI video ads, captions, and images — for an entire month. Walang ₱30K agency, walang freelancer."* Hybrid English body + Taglish closer. Added "Just ₱83/day — less than your morning coffee" daily reframe under the price (monthly only). Surfaced "7-day money-back guarantee" as a trust badge above the payment form. PLAN_CATALOG.description in `api/_lib/` preserved for receipts/legal; UI overrides at the call site. No service layer touched.
+
+### 2026-05-08 — Auto-renew direction reversal (founder call)
+
+Initial CMO recommendation was no-auto-renew as a Filipino-SMB trust moat. Founder overruled in favor of Claude/OpenAI/Gemini parity: monthly auto-charge. Critical realization: **auto-renew is a backend feature, not a copy change.** The current Payment Intents flow charges once. Shipping "auto-renews monthly" copy without the cron + saved-card-on-file backend would be a broken promise. Decision: revert tonight's "No auto-renew" trust badge to neutral state (kept the 7-day guarantee badge alone), defer real auto-renew to its own workstream. Full plan: [auto_renew.md](auto_renew.md). E-wallet constraint flagged — GCash/Maya/GrabPay don't natively auto-recur, hybrid renewal model recommended.
+
 ---
 
 ## Pre-merge checklist (do these before `git merge` to main)
