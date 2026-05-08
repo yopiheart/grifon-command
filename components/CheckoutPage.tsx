@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Lock, ShieldCheck } from 'lucide-react';
 import { GlassPanel } from './ui/GlassPanel';
 import { OrderSummary } from './checkout/OrderSummary';
 import { PaymentMethodTabs, type PaymentMethod } from './checkout/PaymentMethodTabs';
@@ -160,6 +160,8 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack }) => {
   const { breakdown } = intent;
   const totalLabel = `Pay ${formatPHP(breakdown.total_centavos)}`;
   const cycleNoun = cycle === 'monthly' ? '30 days' : '1 year';
+  const outcomeCycle = cycle === 'monthly' ? 'an entire month' : 'an entire year';
+  const outcomeDescription = `Replaces your marketing agency. End-to-end: research, offer, scripts, AI video ads, captions, and images — for ${outcomeCycle}. Walang ₱30K agency, walang freelancer.`;
   const authorizationText = `By clicking Pay, you authorize Grifon Command to charge ${formatPHP(
     breakdown.total_centavos
   )} to your selected payment method. This is a one-time payment for ${cycleNoun} of ${intent.plan.name} access. We'll email you before renewal — your subscription does not auto-renew.`;
@@ -170,7 +172,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack }) => {
         <OrderSummary
           planName={intent.plan.name}
           cycle={cycle}
-          description={intent.plan.description}
+          description={outcomeDescription}
           totalCentavos={breakdown.total_centavos}
           subtotalCentavos={breakdown.subtotal_centavos}
           vatCentavos={breakdown.vat_centavos}
@@ -193,6 +195,21 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack }) => {
           </p>
           <div className="mb-6">
             <PaymentMethodTabs active={activeMethod} onChange={setActiveMethod} />
+          </div>
+
+          <div className="mb-6 space-y-2.5 px-4 py-3.5 rounded-xl border border-white/10 bg-zinc-950/60">
+            <div className="flex items-start gap-2.5 text-xs text-zinc-300 leading-relaxed">
+              <Lock className="w-3.5 h-3.5 text-[#FFCC00] mt-0.5 shrink-0" />
+              <span>
+                <strong className="text-white">No auto-renew.</strong> You're in control — we'll email you before access ends.
+              </span>
+            </div>
+            <div className="flex items-start gap-2.5 text-xs text-zinc-300 leading-relaxed">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#FFCC00] mt-0.5 shrink-0" />
+              <span>
+                <strong className="text-white">7-day money-back guarantee.</strong> Hindi nag-work? Full refund, walang tanong.
+              </span>
+            </div>
           </div>
 
           {submitError && (

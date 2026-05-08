@@ -54,6 +54,11 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
         <p className="text-zinc-400 text-sm mt-2">
           per {cycle === 'monthly' ? 'month' : 'year'}
         </p>
+        {cycle === 'monthly' && (
+          <p className="text-zinc-500 text-xs mt-1">
+            Just <span className="text-[#FFCC00]">₱{Math.floor(totalCentavos / 100 / 30)}/day</span> — less than your morning coffee.
+          </p>
+        )}
         {cycle === 'annual' && monthlyEquivalentCentavos !== undefined && (
           <p className="text-zinc-500 text-xs mt-1">
             {formatPHP(monthlyEquivalentCentavos)} / month, billed annually
