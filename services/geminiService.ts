@@ -13,20 +13,36 @@ const proxyGenerateImage = async (params: any): Promise<GenerateContentResponse>
   return proxyCall('/api/gemini/image', params);
 };
 
-const proxyCall = async <T = GenerateContentResponse>(endpoint: string, params: any): Promise<T> => {
-  const sb = getSupabase();
-  const { data: sessionData } = await sb.auth.getSession();
-  const token = sessionData.session?.access_token;
-  if (!token) throw new Error('NOT_AUTHENTICATED');
+// Shared in-flight refresh promise: when many proxy calls hit a 401 at once,
+// dedupe to a single refreshSession round-trip instead of N concurrent ones.
+let inFlightRefresh: Promise<string | null> | null = null;
 
+const refreshAccessToken = async (): Promise<string | null> => {
+  if (inFlightRefresh) return inFlightRefresh;
+  const sb = getSupabase();
+  inFlightRefresh = (async () => {
+    try {
+      const { data, error } = await sb.auth.refreshSession();
+      if (error || !data.session?.access_token) return null;
+      return data.session.access_token;
+    } catch {
+      return null;
+    } finally {
+      // Clear AFTER the awaiting callers see this promise resolve, so the next
+      // 401 (post-refresh-window) starts a fresh refresh.
+      setTimeout(() => { inFlightRefresh = null; }, 0);
+    }
+  })();
+  return inFlightRefresh;
+};
+
+const proxyFetch = async (endpoint: string, params: any, token: string): Promise<Response> => {
   // Abort 5s before Vercel's hard 60s ceiling so the client surfaces a clear
   // PROXY_TIMEOUT instead of an opaque 504 from the platform.
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 55000);
-
-  let res: Response;
   try {
-    res = await fetch(endpoint, {
+    return await fetch(endpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -44,6 +60,28 @@ const proxyCall = async <T = GenerateContentResponse>(endpoint: string, params: 
     throw err;
   } finally {
     clearTimeout(timeoutId);
+  }
+};
+
+const proxyCall = async <T = GenerateContentResponse>(endpoint: string, params: any): Promise<T> => {
+  const sb = getSupabase();
+  const { data: sessionData } = await sb.auth.getSession();
+  let token = sessionData.session?.access_token;
+  if (!token) throw new Error('NOT_AUTHENTICATED');
+
+  let res = await proxyFetch(endpoint, params, token);
+
+  // One-shot silent JWT refresh + retry on 401. If the refresh itself fails
+  // (refresh token expired, network down), sign out so onAuthStateChange routes
+  // the user back to the auth screen — wizard persistence row stays intact.
+  if (res.status === 401) {
+    const newToken = await refreshAccessToken();
+    if (!newToken) {
+      try { await sb.auth.signOut(); } catch { /* best-effort */ }
+      throw new Error('NOT_AUTHENTICATED');
+    }
+    token = newToken;
+    res = await proxyFetch(endpoint, params, token);
   }
 
   if (!res.ok) {
