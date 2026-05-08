@@ -279,16 +279,19 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                 <p className="text-[10px] text-zinc-500 font-mono">Intro, Pain Story, Transformation, Proof.</p>
             </div>
             
-             <div 
-                onClick={() => handleScriptTypeSelect('Temu')}
-                className={`p-6 rounded-xl border cursor-pointer transition-all hover:translate-y-[-2px] ${formData.scriptType === 'Temu' ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
+             <div
+                aria-disabled="true"
+                title="Coming in v1.1 — beta launches with MrBeast + Testimonial only."
+                className="p-6 rounded-xl border bg-zinc-950 border-white/10 cursor-not-allowed opacity-60 transition-all relative"
             >
+                <div className="absolute top-2 right-2 text-[8px] font-mono text-[#FFCC00]/60 uppercase tracking-tighter select-none">
+                  // COMING_IN_V1.1
+                </div>
                 <div className="flex justify-between items-center mb-2">
                     <div className="flex items-center gap-2">
-                        <ShoppingBag className="w-4 h-4 text-[#FFCC00]"/>
-                        <h4 className="font-bold text-white uppercase font-mono text-xs">Temu / Haul</h4>
+                        <ShoppingBag className="w-4 h-4 text-zinc-500"/>
+                        <h4 className="font-bold text-zinc-400 uppercase font-mono text-xs">Temu / Haul</h4>
                     </div>
-                    {formData.scriptType === 'Temu' && <Check className="w-4 h-4 text-[#FFCC00]" />}
                 </div>
                 <p className="text-[10px] text-zinc-500 font-mono">High-energy Unboxing. Gadgets, Toys, Decor.</p>
             </div>

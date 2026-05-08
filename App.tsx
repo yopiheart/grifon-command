@@ -595,9 +595,9 @@ const App: React.FC = () => {
     moduleElement = <ImageAdsGen businessInfo={businessInfo} avatar={avatar} clientDetails={clientDetails} onBack={() => setActiveModule(null)} />;
   } else if (activeModule === 'creative_director') {
     const hasRunResearch = !!localStorage.getItem('marketMindReport');
-    const showNudge = !hasRunResearch && !directorNudgeDismissed;
     const wizardPristine = currentStep === 1 && !clientDetails.brandName && !businessInfo.product && script === null;
     const showResumePill = !isLoadingSession && pendingSession !== null && !hasRestored && wizardPristine;
+    const showNudge = !hasRunResearch && !directorNudgeDismissed && !showResumePill;
 
     moduleElement = (
         <div className="min-h-screen bg-zinc-950 font-sans flex flex-col items-center p-4 sm:p-6 md:p-8 text-white">
