@@ -131,18 +131,18 @@ const { generateAdScript } = await import('../../services/geminiService');
 
 // --- 5. Test fixtures (Bukidnon Brew + OFW-wife buyer audience) ----------
 
+// Post Step 2 consolidation (2026-05-08): goal + problem fields dropped
+// from BusinessInfo. benefit (Dream Result) and painPoint (3 AM Worry)
+// now carry the deeper-layer outcome / pain content for both formulas.
 const baseBusinessInfo = {
   product:
     '250g single-origin Bukidnon highland coffee beans, medium roast, resealable valve bag',
   audience:
     'OFW wives in Pinas sending pasalubong-style care packages to husbands abroad',
-  goal: 'Wakes up at 5 AM Saudi time with kape that tastes like Pinas, less homesick mornings',
   benefit:
-    'Feels closer to pamilya every morning, more focus at work, sweldo stretches further than Saudi cafe runs',
-  problem:
-    'Saudi instant coffee is bland and reminds them they are far from home',
+    'Wakes up energized in Saudi, feels closer to pamilya every morning, sweldo stretches further than Saudi cafe runs',
   painPoint:
-    '5 years away from family — every Saudi morning is another reminder of what they are missing',
+    '3 AM, hindi makatulog kasi 5 years na siya sa abroad — naiisip na lang kung kayang-kaya pa magtagal',
   separator: 'Direct sa farmer sa Bukidnon, hindi blend ng kung anu-ano',
   features:
     'Single-origin · medium roast · resealable valve bag · 250g · ships internationally',

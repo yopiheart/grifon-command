@@ -14,9 +14,7 @@ export interface VisualTheme {
 export interface BusinessInfo {
   product: string;
   audience: string;
-  goal: string;
   benefit: string;
-  problem: string;
   painPoint: string;
   separator: string;
   features: string;

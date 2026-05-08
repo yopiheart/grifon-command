@@ -91,7 +91,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
     onNext();
   };
   
-  const requiredFields: (keyof BusinessInfo)[] = ['product', 'audience', 'goal', 'benefit', 'problem', 'painPoint', 'separator', 'features'];
+  const requiredFields: (keyof BusinessInfo)[] = ['product', 'audience', 'benefit', 'painPoint', 'separator', 'features'];
   const hasImages = formData.productImageUrls && formData.productImageUrls.length > 0;
   
   const isFormValid = !!aspectRatio && requiredFields.every(field => {
@@ -132,10 +132,8 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
         {[
           { id: 'product', label: 'Service/Product', placeholder: 'e.g., Eco-friendly home cleaning service' },
           { id: 'audience', label: 'Target Audience', placeholder: 'e.g., Busy young professionals' },
-          { id: 'goal', label: 'What it helps them Achieve/Eliminate', placeholder: 'e.g., Achieve a spotless home without lifting a finger' },
-          { id: 'benefit', label: 'Main Benefit', placeholder: 'e.g., More free time for hobbies and family' },
-          { id: 'problem', label: 'Main Problem it Solves', placeholder: 'e.g., Lack of time and energy to clean' },
-          { id: 'painPoint', label: 'Main Pain Point of Audience', placeholder: 'e.g., Feeling stressed and overwhelmed by mess' }
+          { id: 'benefit', label: 'Dream Result', placeholder: 'e.g., Wakes up energized, naka-2 hours back every morning, mas chill ang pasok sa work' },
+          { id: 'painPoint', label: '3 AM Worry', placeholder: 'e.g., 3 AM, hindi makatulog kasi tuition deadline na bukas — wala pang pera' }
         ].map(field => (
           <div key={field.id} className="space-y-2">
             <label htmlFor={field.id} className="block text-[10px] text-zinc-400 font-mono uppercase tracking-widest">

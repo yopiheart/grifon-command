@@ -113,9 +113,7 @@ const App: React.FC = () => {
   const [businessInfo, setBusinessInfo] = useState<BusinessInfo>({
     product: '',
     audience: '',
-    goal: '',
     benefit: '',
-    problem: '',
     painPoint: '',
     separator: '',
     features: '',
@@ -341,7 +339,7 @@ const App: React.FC = () => {
   const restart = () => {
     setCurrentStep(1);
     setClientDetails({ brandName: '', offer: '' });
-    setBusinessInfo({ product: '', audience: '', goal: '', benefit: '', problem: '', painPoint: '', separator: '', features: '', productImageUrls: [], productImageDescription: undefined, logoImageUrl: undefined, brandColors: '', scriptType: 'MrBeast' });
+    setBusinessInfo({ product: '', audience: '', benefit: '', painPoint: '', separator: '', features: '', productImageUrls: [], productImageDescription: undefined, logoImageUrl: undefined, brandColors: '', scriptType: 'MrBeast' });
     setScript(null);
     setLanguage(null);
     setFinalScript([]);
