@@ -784,12 +784,17 @@ export const generateAdScript = async (
         ${COMMON_RULES}
 
         **MRBEAST STRUCTURE:**
-        1. **Hook (3s/5-8 words):** Curiosity-driven pattern interrupt. (Provide 2 variations). Hook stays curiosity-gap-pure — no offer, no differentiator, no audience label.
-        2. **Identity:** Relatable audience statement.
+        1. **Hook (3s/5-8 words):** Curiosity-driven pattern interrupt. PROVIDE 2 VARIATIONS — both 5-8 words. REQUIRED: hook1 and hook2 arrays in the JSON output MUST be populated; do not skip. Hook stays curiosity-gap-pure — no offer, no differentiator. NEVER use demographic labels in the hook ("for OFWs", "sa mga moms", "para sa OFW", "for Filipino dads" — all banned). Curiosity comes from the situation/visual, not the audience tag.
+        2. **Identity:** Relatable audience statement (5-10 words). Direct address to the audience using "ka", "mo", "tayo", or "kayo" — name a scene from their life they immediately recognize. Reference their world (work, home, daily struggle, environment). NEVER name them by demographic label ("para sa mga OFW", "sa mga moms" — banned). Audience: "${businessInfo.audience}". (See IDENTITY PATTERN EXAMPLES below.)
         3. **Struggles:** Deep dive into "${businessInfo.painPoint}".
         4. **Discovery:** Introducing "${brandName}'s ${businessInfo.product}".
         5. **Result + Proof:** Visual payoff based on "${businessInfo.benefit}". Stack proof: "Hindi tulad ng iba — kami ${businessInfo.separator}." This is the "why believe?" slot. NEVER in the hook (kills curiosity); NEVER in the CTA (offer owns that). If separator is empty, fall back to: "Visual payoff based on benefit."
         6. **CTA:** High-energy "Click below." Inject offer STRUCTURE (scarcity + value adds + urgency) from "${offer}", NEVER the bare price. Example pattern: "Tap link sa bio — first 50 lang may free shipping + recipe ebook." If offer is empty, fall back to: "High-energy 'Click below.'"
+
+        **IDENTITY PATTERN EXAMPLES** (for beat 2 — adapt to audience, do not copy literally):
+        - OFW family audience → "Tuwing umagang malayo sa pamilya, kape ang nag-aalala sa'yo."
+        - Filipino mom audience → "Bago pumasok ang mga bata, isang kape lang ang oras mo."
+        - Corporate audience → "Bago mag-9AM call, bago mag-deadline, kailangan mo ng panlaban."
 
         ${DIRECTOR_CRITIQUE_INSTRUCTION}
         Format: Return ONLY valid JSON: { "hook1": [...], "hook2": [...], "body": [...], "strategicAudit": "..." }
