@@ -4,6 +4,83 @@
 
 This is the meta-workflow. It doesn't do the work itself — it points to the workflows that do, and tracks overall progress.
 
+## Status as of 2026-05-08 (Checkout redesign ship + Jobs lens + canonical 7-step flow)
+
+**Working tree clean. 7 commits pushed to `checkout-redesign-preview`. Branch in sync with origin.** This session was a large strategic + tactical batch on top of the prior session's checkout-redesign visual MVP. Two unrelated workstreams ran in parallel: (1) get the checkout preview deploy unbroken and shipping outcome-first copy; (2) bake the Steve Jobs work-backwards filter into the durable doc layer + propagate the canonical 7-step flow throughout the dashboard.
+
+### Pushed this session (7 commits, working tree clean)
+
+```
+57eaebb  feat(dashboard): align left sidebar + mobile bottom nav with 7-step flow
+4259820  feat(dashboard): expand RECOMMENDED FLOW to canonical 7 steps
+364981c  docs(skills+language): Jobs work-backwards filter + canonical 7-step flow
+28dd56a  copy(checkout): revert no-auto-renew badge + scope auto-renew workstream
+5af2e01  copy(checkout): outcome-first rewrite — Jobs lens + CMO trust stack
+6698740  fix(checkout): add /checkout SPA rewrite (404 on direct visit)
+2235d2f  fix(checkout): consolidate billing endpoints to clear Vercel 12-fn cap
+```
+
+### What shipped / decided this session
+
+| What | Where it lives | Purpose |
+| --- | --- | --- |
+| Vercel deploy fix (15 → 12 functions) | [api/billing.ts](../api/billing.ts) (NEW, consolidated 4 endpoints into 1 with `?action=` switch); deleted `api/billing/{intent,confirm,ewallet,status}.ts`; updated [services/checkoutService.ts](../services/checkoutService.ts) | Hobby-cap deploy was failing. Now fits the 12-function ceiling. |
+| `/checkout` SPA rewrite | [vercel.json](../vercel.json) | Direct-visiting `/checkout` no longer 404s on cold load (mobile, email links, PayMongo redirects). Other non-billing routes still have the same gap — flagged. |
+| Outcome-first /checkout copy | [components/CheckoutPage.tsx](../components/CheckoutPage.tsx), [components/checkout/OrderSummary.tsx](../components/checkout/OrderSummary.tsx) | Replaced "40 workflows, 15 reports..." feature list with "Replaces your marketing agency. End-to-end: research, offer, scripts, AI video ads, captions, and images — for an entire month. Walang ₱30K agency, walang freelancer." Added "Just ₱83/day" daily reframe + "7-day money-back guarantee" trust badge. |
+| Auto-renew workstream scoped | [workflows/auto_renew.md](auto_renew.md) (NEW, 270 lines) | Founder pivoted from no-auto-renew → YES auto-renew like Claude/OpenAI. Backend doesn't yet support it. Full plan: PayMongo card-on-file integration, Supabase migration, renewal cron, cancel UX, 8 email templates, hybrid model (cards auto-renew, e-wallets manual), pre-merge checklist, 5 open questions. |
+| Steve Jobs filter baked into both skills | [.claude/skills/grifon-cmo/SKILL.md](../.claude/skills/grifon-cmo/SKILL.md), [.claude/skills/grifon-creative-director/SKILL.md](../.claude/skills/grifon-creative-director/SKILL.md) | 4 surgical adds each: named as 4th pillar in intro, "outcome before feature" copy/design rule, "no engine names on user-facing surfaces" hard constraint, Cohesive Vision Filter operating rule. Auto-applies in future sessions without re-explaining. |
+| Canonical 7-step flow | [UBIQUITOUS_LANGUAGE.md](../UBIQUITOUS_LANGUAGE.md) | New top section: Research → Offer → Director → Video → Voice (Signal Modulator) → Edit → Caption. Bryan-outcome of full chain. Signal Modulator entry rewritten — "consistent character voice per scene" is the actual customer outcome, name flagged as engine-internal. |
+| Subscription-copy lesson logged | [agent_lessons.md](../agent_lessons.md) | Don't ship subscription/recurring/trial copy without backend support. Generalizes to "cancel anytime", refund-window, pause-subscription claims. Future-me reads at session start. |
+| Dashboard 7-step flow path | [components/Dashboard.tsx](../components/Dashboard.tsx) (RECOMMENDED FLOW block) | Was 5 steps (Research → Offer → Director → Copy → Images), now 7 with Beta badges on Voice + Edit. Image Editor removed from canonical chain (still on Dashboard tiles). Beta steps display-only for non-admin, clickable for admin. |
+| Dashboard sidebar + mobile bottom nav | [components/Dashboard.tsx](../components/Dashboard.tsx) (`NAV_ITEMS` const) | Single source of truth for both surfaces. Same 7-step order, same Beta-gating. Mobile nav tightened (`px-1.5`, `text-[9px]`) so 7 items fit ~375px width. |
+| Checkout redesign session log | [workflows/checkout_redesign.md](checkout_redesign.md) | Three new dated entries logging the three checkout-redesign fixes from today + the auto-renew direction reversal. |
+
+### Strategic decisions made
+
+1. **Auto-renew direction (founder call):** Reverse from no-auto-renew → YES auto-renew. Implementation deferred to dedicated workstream (auto_renew.md). Tonight's "No auto-renew" trust badge reverted; only the 7-day guarantee badge remains until backend catches up.
+2. **Cohesive Vision Filter is now permanent:** Both CMO and CD skills auto-apply the work-backwards filter. Engine names ("Signal Modulator", "Video Synthesis") rejected on user-facing surfaces.
+3. **Module renames (UI labels only, internal keys unchanged):**
+   - `signal_modulator` UI label: "Signal Modulator" → **"Voice"**
+   - `generate_video` UI label: "Video Synthesis" → **"Video"**
+   - `edit_video` UI label: "Video Editor" → **"Edit"**
+   - `caption_headline` UI label: "Copy" → **"Caption"**
+4. **Image Editor dropped from canonical chain:** Still accessible as a CORE_MODULES tile, no longer in primary nav. Director AI handles thumbnails/scenes internally.
+5. **Landing + Pricing 7-step claim deferred:** Per CMO HARD CONSTRAINT (working modules only on landing/pricing), can't pitch the full 7-step flow until Signal Modulator + Edit Video are fully shipped. Dashboard surfaces only for now.
+
+### Tomorrow morning's first move
+
+**Decide which of two priority queues to start with:**
+
+- **Queue A: Pre-beta polish bundle (3a–3f)** — from the prior 2026-05-06 session, ~half day remaining. Items 3c (suppress nudge), 3d (TEMU option gate), 3b (sonner toast restyle), 3a (JWT auto-refresh), 3e (offer/separator/audience wiring), 3f (drop logoImageUrl + services decision). Beta launch was the goal of that workstream.
+- **Queue B: Auto-renew engineering** — fresh workstream, 2-3 sessions. PayMongo card-on-file → cron → cancel UX → emails. Doesn't block beta launch; LTV optimization for post-launch.
+
+**My recommendation: finish Queue A first.** Three reasons:
+1. Already in motion (3 sessions of momentum), don't lose the context.
+2. Queue A unblocks **beta launch** which has compounding value. Queue B is post-launch optimization.
+3. Queue B also requires the 5 open questions in [auto_renew.md](auto_renew.md) to be answered — defer until you have headspace.
+
+### Pre-clear actions to take BEFORE `/clear`
+
+- ✅ Working tree clean, all 7 commits pushed
+- ✅ Session summary committed to launch_readiness.md (this section)
+- ⚠️ One open item: smoke-test `/checkout?plan=pro&cycle=monthly` on the live Vercel preview to confirm new outcome copy + 7-day badge render correctly. Browser test before clearing the session loses no work but gives confidence.
+- ⚠️ Three open strategic questions from the prior session (still unresolved): `clientDetails.services` (drop or wire?); empty-field fallback rules for blank offer/separator; exact replacement phrasing for audience register-tuning at [services/geminiService.ts:564](../services/geminiService.ts). These block 3e wiring tomorrow — **run grill-me first thing in the next session.**
+
+### Two things to remember when you boot up tomorrow
+
+1. **Cafe-PC reboot wipes everything except git.** Run `npm install` if `node_modules/` is missing, run `.\scripts\restore-git-identity.ps1` if `git commit` fails with "Author identity unknown", run `.\scripts\restore-notebooklm.ps1` if you need NotebookLM MCP back.
+2. **Branch is `checkout-redesign-preview`, not `main`.** Production main untouched — grifoncommand.com still serves the old PayMongo hosted page. Switch back: `git checkout checkout-redesign-preview` after `git fetch`.
+
+### Open follow-ups not yet addressed
+
+- **Module name audit (P1):** Generate Video, Image Ads Gen still need their `MORE_MODULES` descriptions updated to outcome-first language (currently still says "Render final video assets from storyboards and prompts" — engine-y). UI nav labels are already updated; module-detail pages may still have old copy.
+- **In-progress modules to fully ship (P1):** Signal Modulator + Edit Video need admin-gate removal + production-ready release before they can move out of Beta.
+- **Landing + Pricing 7-step claim (P2):** Gated on the in-progress modules shipping. Update copy + visual to claim "7 steps, end-to-end, in one tool" once all 7 are real for non-admin users.
+- **Wizard ↔ Dashboard journey unification (P2):** Long-term Jobs-aligned restructure. Defer until real user nav data is available post-launch.
+- **Other non-billing SPA rewrites (P3 cleanup):** `/pricing`, `/terms`, `/privacy`, `/refund`, `/support`, `/app` lack rewrites in vercel.json — they only work via in-app navigation today. Adding a catch-all rewrite or explicit entries is a 5-min cleanup task.
+
+---
+
 ## Status as of 2026-05-05 (Director AI beta-readiness fix sprint)
 
 **Working tree: dirty, build green, NOT committed.** Single bundled commit pending the Bukidnon Brew regression run. Eight files modified across this + the prior session — all share one theme (beta-readiness for 5–10 hand-picked Filipino owners).
