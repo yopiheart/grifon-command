@@ -129,12 +129,67 @@ vi.stubGlobal('fetch', fetchMock);
 
 const { generateAdScript } = await import('../../services/geminiService');
 
-// --- 5. Test fixtures (Bukidnon Brew + OFW-wife buyer audience) ----------
+// --- 5. Shared assertion helper -----------------------------------------
+//
+// Every regression test runs the same shape check + audit-print pipeline.
+// Centralizing keeps 8+ tests below readable.
 
+interface BusinessInfoFixture {
+  product: string;
+  audience: string;
+  benefit: string;
+  painPoint: string;
+  separator: string;
+  features: string;
+  productImageUrls: any[];
+  brandColors: string;
+}
+
+async function runScript(
+  fixture: BusinessInfoFixture,
+  scriptType: 'MrBeast' | 'Testimonial',
+  brand: string,
+  offer: string,
+  label: string
+) {
+  const result = await generateAdScript(
+    { ...fixture, scriptType } as any,
+    brand,
+    'Taglish',
+    offer
+  );
+
+  console.log(`\n=== ${label} ===`);
+  console.log(JSON.stringify(result, null, 2));
+  console.log(`=== /${label} ===\n`);
+
+  expect(result.hook1).toBeDefined();
+  expect(result.hook2).toBeDefined();
+  expect(Array.isArray(result.hook1)).toBe(true);
+  expect(Array.isArray(result.hook2)).toBe(true);
+  expect((result.hook1 as string[]).length).toBeGreaterThan(0);
+  expect((result.hook2 as string[]).length).toBeGreaterThan(0);
+  expect(Array.isArray(result.body)).toBe(true);
+  expect((result.body as string[]).length).toBeGreaterThanOrEqual(5);
+  expect(typeof result.strategicAudit).toBe('string');
+
+  return result;
+}
+
+// --- 6. Test fixtures ----------------------------------------------------
+//
 // Post Step 2 consolidation (2026-05-08): goal + problem fields dropped
 // from BusinessInfo. benefit (Dream Result) and painPoint (3 AM Worry)
 // now carry the deeper-layer outcome / pain content for both formulas.
-const baseBusinessInfo = {
+//
+// Stress-test fixtures (Service / Skincare / Gym) are intentionally
+// NOT OFW-coffee-shaped — they probe whether the prompt's hardcoded
+// example archetypes (OFW family / Filipino mom / Corporate) generalize
+// to other Filipino-SMB product categories or whether the model copies
+// the closest archetype literally.
+
+// Bukidnon Brew — original baseline (OFW-wife buyer audience)
+const bukidnonFixture: BusinessInfoFixture = {
   product:
     '250g single-origin Bukidnon highland coffee beans, medium roast, resealable valve bag',
   audience:
@@ -150,62 +205,175 @@ const baseBusinessInfo = {
   brandColors: '',
 };
 
-const TEST_BRAND = 'Bukidnon Brew';
-const TEST_OFFER = 'First 50 customers, free shipping + recipe ebook';
+// Stress test 1 — Service business (cleaning, BGC professionals)
+const cleaningFixture: BusinessInfoFixture = {
+  product: 'Eco-friendly home cleaning service in Metro Manila',
+  audience: "Working professionals 28-40 in Makati/BGC who haven't cleaned in 3 weeks",
+  benefit:
+    'May 4 hours back every weekend, Saturday morning hindi na vacuum-vacuum, may oras for hobbies and family',
+  painPoint:
+    '3 AM Sunday, hindi makatulog kasi tinatakbo na sa isip ang dapat i-deep clean bago dumating ang bisita on Tuesday',
+  separator: 'Plant-based cleaning products, certified safe sa mga bata at pets',
+  features:
+    'Same-day booking · 2-hour to 5-hour sessions · 100% satisfaction guarantee · Background-checked cleaners',
+  productImageUrls: [],
+  brandColors: '',
+};
 
-// --- 6. Tests ------------------------------------------------------------
+// Stress test 2 — Skincare (adult acne, Filipino millennial women)
+const skincareFixture: BusinessInfoFixture = {
+  product: 'Niacinamide + Tea Tree serum for adult acne, 30ml dropper',
+  audience:
+    'Filipino millennial women 25-35 dealing with adult acne na hindi nawawala kahit P5K worth of products',
+  benefit:
+    'Walang acne sa morning meeting, kayang mag-sukat ng makeup nang hindi kasama ang acne, mas confident sa Zoom calls',
+  painPoint:
+    '3 AM, naka-mirror pa rin pagkatapos ng kape niya, hinahanap kung saan kaya nagkakapimples na naman bukas',
+  separator:
+    'Inumin lang at may visible results sa 14 days, hindi P10K facial sessions',
+  features:
+    'Niacinamide 5% · Tea Tree · Hyaluronic acid · Fragrance-free · 30ml lasts 60 days',
+  productImageUrls: [],
+  brandColors: '',
+};
 
-describe.skipIf(!process.env.RUN_REGRESSION)('Script Generation Regression', () => {
+// Stress test 3 — Gym/fitness (online powerbuilding coaching)
+const gymFixture: BusinessInfoFixture = {
+  product:
+    '12-week online powerbuilding coaching program for Filipino gym goers',
+  audience:
+    'Pinoy gym bros 25-30 stuck at the same weight for 2 years, naka-3-month plateau na',
+  benefit:
+    'Naka-add ng 10 kgs sa bench in 12 weeks, sa wakas kayang mag-deadlift double bodyweight, may abs na visible kahit Christmas season',
+  painPoint:
+    '3 AM gym dreams habang nasa Friday night drink, naka-3 years na nagym pero halos same lang ang itsura sa salamin',
+  separator:
+    'Customized program kada 2 weeks, hindi cookie-cutter PDF, may video form check',
+  features:
+    '12-week program · Custom macros · Form check videos · Weekly check-ins · Free supplement guide',
+  productImageUrls: [],
+  brandColors: '',
+};
+
+// --- 7. Tests ------------------------------------------------------------
+
+const SHOULD_RUN = !!process.env.RUN_REGRESSION;
+
+describe.skipIf(!SHOULD_RUN)('Baseline — Bukidnon Brew + OFW-wife audience', () => {
   it(
-    'MrBeast — Bukidnon Brew + OFW-wife audience',
+    'MrBeast',
     async () => {
-      const result = await generateAdScript(
-        { ...baseBusinessInfo, scriptType: 'MrBeast' } as any,
-        TEST_BRAND,
-        'Taglish',
-        TEST_OFFER
+      await runScript(
+        bukidnonFixture,
+        'MrBeast',
+        'Bukidnon Brew',
+        'First 50 customers, free shipping + recipe ebook',
+        'BUKIDNON BREW — MrBeast'
       );
-
-      console.log('\n=================== MrBeast ===================');
-      console.log(JSON.stringify(result, null, 2));
-      console.log('=================== /MrBeast ==================\n');
-
-      expect(result.hook1).toBeDefined();
-      expect(result.hook2).toBeDefined();
-      expect(Array.isArray(result.hook1)).toBe(true);
-      expect(Array.isArray(result.hook2)).toBe(true);
-      expect((result.hook1 as string[]).length).toBeGreaterThan(0);
-      expect((result.hook2 as string[]).length).toBeGreaterThan(0);
-      expect(Array.isArray(result.body)).toBe(true);
-      expect((result.body as string[]).length).toBeGreaterThanOrEqual(5);
-      expect(typeof result.strategicAudit).toBe('string');
     },
     90_000
   );
 
   it(
-    'TESTIMONIAL — Bukidnon Brew + OFW-wife audience',
+    'TESTIMONIAL',
     async () => {
-      const result = await generateAdScript(
-        { ...baseBusinessInfo, scriptType: 'Testimonial' } as any,
-        TEST_BRAND,
-        'Taglish',
-        TEST_OFFER
+      await runScript(
+        bukidnonFixture,
+        'Testimonial',
+        'Bukidnon Brew',
+        'First 50 customers, free shipping + recipe ebook',
+        'BUKIDNON BREW — TESTIMONIAL'
       );
+    },
+    90_000
+  );
+});
 
-      console.log('\n================== TESTIMONIAL ==================');
-      console.log(JSON.stringify(result, null, 2));
-      console.log('================== /TESTIMONIAL =================\n');
+describe.skipIf(!SHOULD_RUN)('Stress Test — Service Business (Cleaning, BGC)', () => {
+  it(
+    'MrBeast',
+    async () => {
+      await runScript(
+        cleaningFixture,
+        'MrBeast',
+        'MalinisPH',
+        'First 20 customers get 50% off first cleaning + free deep clean upgrade',
+        'MALINISPH — MrBeast'
+      );
+    },
+    90_000
+  );
 
-      expect(result.hook1).toBeDefined();
-      expect(result.hook2).toBeDefined();
-      expect(Array.isArray(result.hook1)).toBe(true);
-      expect(Array.isArray(result.hook2)).toBe(true);
-      expect((result.hook1 as string[]).length).toBeGreaterThan(0);
-      expect((result.hook2 as string[]).length).toBeGreaterThan(0);
-      expect(Array.isArray(result.body)).toBe(true);
-      expect((result.body as string[]).length).toBeGreaterThanOrEqual(5);
-      expect(typeof result.strategicAudit).toBe('string');
+  it(
+    'TESTIMONIAL',
+    async () => {
+      await runScript(
+        cleaningFixture,
+        'Testimonial',
+        'MalinisPH',
+        'First 20 customers get 50% off first cleaning + free deep clean upgrade',
+        'MALINISPH — TESTIMONIAL'
+      );
+    },
+    90_000
+  );
+});
+
+describe.skipIf(!SHOULD_RUN)('Stress Test — Skincare (Adult Acne)', () => {
+  it(
+    'MrBeast',
+    async () => {
+      await runScript(
+        skincareFixture,
+        'MrBeast',
+        'Glaze PH',
+        'First 100 buyers get free dermatologist consultation + skincare assessment',
+        'GLAZE PH — MrBeast'
+      );
+    },
+    90_000
+  );
+
+  it(
+    'TESTIMONIAL',
+    async () => {
+      await runScript(
+        skincareFixture,
+        'Testimonial',
+        'Glaze PH',
+        'First 100 buyers get free dermatologist consultation + skincare assessment',
+        'GLAZE PH — TESTIMONIAL'
+      );
+    },
+    90_000
+  );
+});
+
+describe.skipIf(!SHOULD_RUN)('Stress Test — Gym/Fitness (Online Coaching)', () => {
+  it(
+    'MrBeast',
+    async () => {
+      await runScript(
+        gymFixture,
+        'MrBeast',
+        'BulkPH Coach',
+        'First 30 sign-ups get 25% off + free 1-week meal plan',
+        'BULKPH COACH — MrBeast'
+      );
+    },
+    90_000
+  );
+
+  it(
+    'TESTIMONIAL',
+    async () => {
+      await runScript(
+        gymFixture,
+        'Testimonial',
+        'BulkPH Coach',
+        'First 30 sign-ups get 25% off + free 1-week meal plan',
+        'BULKPH COACH — TESTIMONIAL'
+      );
     },
     90_000
   );
