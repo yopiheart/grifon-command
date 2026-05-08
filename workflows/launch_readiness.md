@@ -4,6 +4,71 @@
 
 This is the meta-workflow. It doesn't do the work itself — it points to the workflows that do, and tracks overall progress.
 
+## Status as of 2026-05-08 late-late-evening (full Director AI wizard E2E smoke — both formulas — v1.x bundle expanded)
+
+**Working tree clean. No new commits.** Pure verification session. Drove the full 8-step wizard end-to-end via Playwright MCP for both `MrBeast` and `TESTIMONIAL` formulas using a real account, real Supabase session, real Gemini API calls. **Pipeline works end-to-end on both formulas.** State propagation confirmed (Step 3 manual edits survive Step 5 paraphrase, persist through Step 8 final script). 9 v1.x carry-forwards identified — all surgical, none blocks beta.
+
+### What ran tonight (post-3a-ship)
+
+- **Full MrBeast wizard E2E** — 8 steps, real Bukidnon Brew product, OFW-wife audience, hero image upload, ~$0.80 in image gen. CMO-graded the script (A−), CD-graded the avatar (A) + storyboard (A) + thumbnail (A).
+- **Full TESTIMONIAL wizard E2E** — also 8 steps, same inputs. Generated **8 scenes** (vs. MrBeast's 6 — TESTIMONIAL produces longer body, more beats). CMO-graded both attempts at Step 3.
+- **Stochastic variance evidence:** Two TESTIMONIAL Step 3 runs with identical inputs produced different outputs. Run 1 had full offer in CTA (`"free shipping at ebook"`) but missed name self-intro. Run 2 had `"Ako si Nena"` (Intro spec ✓) but dropped the recipe ebook from CTA. The prompt is **not enforcing all rules consistently** — needs hardening.
+- **Memory updated** — `feedback_mrbeast_thumbnail_evolution.md` saved per Neil's correction: drop the "3-5 word headline overlay" rule from CD skill. 2024+ MrBeast pattern is no overlay or 1-3 word context tag only; ad headline UI carries words anyway.
+
+### v1.x prompt + UX bundle (9 items, ~120 lines surgical edit total)
+
+All in `services/geminiService.ts` (TUNED file — needs explicit user approval per services/CLAUDE.md, which Neil has now given for this list). Same surgical territory as the offer-softening fix already on the v1.x roadmap. Could ship as one bundled commit with regression harness + new UI tests verifying.
+
+| # | Issue | Fix location | Severity |
+|---|---|---|---|
+| 1 | TESTIMONIAL CTA softening (carries scarcity, drops value-adds) | `geminiService.ts` TESTIMONIAL CTA beat anchor | v1.x P1 |
+| 2 | MrBeast CTA also softening | `geminiService.ts` MrBeast CTA beat anchor | v1.x P1 |
+| 3 | "Link sa bio" → ad-native CTAs (banned phrase + required pattern) | `geminiService.ts` MrBeast + TESTIMONIAL CTA blocks | v1.x P1 |
+| 4 | Speaking-scene `FACING_CAMERA_REQUIRED` rule (Scenes 02/06 in MrBeast were eyes-closed/looking-away despite delivering script lines — breaks lip sync if voiced) | `geminiService.ts` `generateStoryboard` visual prompt anchor | v1.x P1 |
+| 5 | Identity Lock hair/wardrobe extension (SCENE_03 hair came down vs. Step 4 tied-up) — extend to hair OR pass Step 4 avatar as visual reference into every scene gen | `geminiService.ts` Identity Lock spec | v1.x P1 |
+| 6 | Per-scene progress UX in Step 5 (synthesis was 9 min sequential with only generic placeholder — abandonment risk for Bryan; add `3/6 SYNTHESIZED` chip + ETA + cancel) | `components/Step5Storyboard.tsx` | v1.x P1 |
+| 7 | TESTIMONIAL Intro name-tag enforcement (the upgrade landed but only fired in 1 of 2 stochastic runs — needs hard `REQUIRED:` anchor) | `geminiService.ts` TESTIMONIAL Intro beat anchor | v1.x P1 |
+| 8 | **Formula-swap doesn't invalidate downstream cache** — Step 2 → swap formula → Step 5 still shows old scene cards | `App.tsx` wizard state — when `scriptType` changes, dump downstream | UX bug, v1.x |
+| 9 | **Page refresh wipes wizard state without resume-pill recovery** — `// PREVIOUS_SESSION_DETECTED` should fire after refresh but didn't tonight. Could be P0 if real users lose work; needs investigation in `services/wizardSessionStore.ts` | wizardSessionStore + App.tsx | **Possibly P0** — investigate before beta |
+
+**Optional follow-up:**
+- Step 2 PROCEED gating UX — default aspect ratio to 9:16 OR show visual cue when none selected
+- `logoImageUrl` wiring into product-only B-roll scenes (SCENE_04 type — no avatar, no hand-occlusion). Audit whether it's actually missing first; the BRAND_MARK slot exists in CinematicSpecStudio but may not propagate to storyboard gen
+
+**Dropped (per memory + Neil's correction tonight):**
+- ~~"Step 6 client-side text overlay layer"~~ — outdated MrBeast playbook. Modern MrBeast skips overlays for ads; platform's headline UI carries words.
+
+### What worked exceptionally well (do NOT touch in v1.x)
+
+1. **Step 3 → Step 5 → Step 8 propagation.** Manual CTA edits in Step 3 survive Step 5 paraphrase and show up in Step 8 final script verbatim or near-verbatim. State persistence works.
+2. **Hero image AI analysis flows downstream.** Step 2's auto-generated description ("rustic, minimalist packaging, soft natural lighting, calm and inviting") visibly fed into Step 5 scenes — every scene leaned into that warm earthy palette.
+3. **Hero image visual style propagates to thumbnail.** TESTIMONIAL thumbnail showed the kraft bag with the same cursive `Coffee` wordmark from the uploaded hero. AI is honoring the visual reference correctly without hallucinating brand text.
+4. **Identity Lock holds across most scenes.** Step 4 → Step 5 (most scenes) → Step 6 thumbnail = same person. Only known break: SCENE_03 hair detail in MrBeast run.
+5. **Audience register richness across both formulas.** "Habang tulog pa ang mga bata" / "habang nasa abroad si mister" / "naghihintay ng chat" / "parang yakap ni mister" — the prompt's audience-register injection is doing real work.
+6. **MrBeast formula structure preserved through 6 scenes; TESTIMONIAL through 8 scenes.** Beat-to-scene mapping reads cleanly in both formulas.
+7. **3a JWT refresh** continues to work silently — no auth interruptions tonight despite ~30+ Gemini calls and a JWT-expiry-edge-case scenario triggered by long sequential image gen waits.
+
+### Verification artifacts (ephemeral)
+
+`.playwright-mcp/wizard-smoke/` — ~30 screenshots + 1 walkthrough.md. Per Neil tonight: **wipe before reboot, do not commit.** Real-time review was the verification — durable artifacts not needed beyond session.
+
+### Decisions made tonight (non-obvious)
+
+1. **MrBeast thumbnail playbook is stale.** Saved to memory as `feedback_mrbeast_thumbnail_evolution.md`. CD skill should NOT mark down thumbnails for missing 3-5 word overlay text. 2024+ MrBeast = pure visual or 1-3 word context tag only.
+2. **TESTIMONIAL is the better formula for OFW-wife archetype.** Both CMO grades returned A−, but TESTIMONIAL's first-person voice + CTA cleanliness (when prompt cooperates) + denser audience-world mental pictures fit the proof-driven OFW-wife buyer better than MrBeast's narrator-distance.
+3. **Stochastic variance is real and significant.** Same prompt + same inputs produces materially different scripts on different runs. v1.x prompt fixes need to make rule enforcement CONSISTENT, not just hope for one good roll. Hard `REQUIRED:` anchors with verbatim examples beat soft "should include" phrasing.
+
+### Cafe-PC reboot reminders (unchanged from earlier today)
+
+- All commits ahead of `main` are pushed to origin — durable across reboot.
+- Branch is **`checkout-redesign-preview`**, not main.
+- If `node_modules/` missing on next session: `npm install`.
+- Run `.\scripts\restore-git-identity.ps1` if `git commit` fails with "Author identity unknown".
+- Run `.\scripts\restore-playwright-mcp.ps1` if Playwright MCP needed for browser-level testing again. **Important:** registering it requires VS Code restart which kills the active Claude Code conversation, so do it at session start.
+- The regression harness needs `GEMINI_API_KEY` in `.env` (server-side, no `VITE_` prefix). Already configured.
+
+---
+
 ## Status as of 2026-05-08 late-evening (3a JWT auto-refresh shipped — 2026-05-06 polish bundle FULLY CLOSED)
 
 **Working tree clean. 1 commit pushed on top of evening's 7. Branch is 9 ahead of `main`, in sync with origin.** Final deferred item from the 2026-05-06 polish bundle is now in. Beta-cohort UX no longer breaks when a Supabase JWT expires mid-call.
