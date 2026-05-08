@@ -38,6 +38,20 @@ const CORE_MODULES = [
   { id: 'image_editor', name: 'IMAGES', icon: ImageIcon, desc: 'AI-generated ad images in seconds' }
 ];
 
+// Canonical 7-step flow for left sidebar + mobile bottom nav.
+// Matches the RECOMMENDED FLOW path on the dashboard hero so users
+// see the same journey reinforced everywhere they look.
+// Beta items are admin-only-clickable; display-only for non-admin.
+const NAV_ITEMS: { id: string; label: string; icon: any; badge?: 'Beta' }[] = [
+  { id: 'market_research',   label: 'Research', icon: Search },
+  { id: 'offer_optimizer',   label: 'Offer',    icon: Target },
+  { id: 'creative_director', label: 'Director', icon: Film },
+  { id: 'generate_video',    label: 'Video',    icon: Clapperboard },
+  { id: 'signal_modulator',  label: 'Voice',    icon: Mic,         badge: 'Beta' },
+  { id: 'edit_video',        label: 'Edit',     icon: Scissors,    badge: 'Beta' },
+  { id: 'caption_headline',  label: 'Caption',  icon: Type }
+];
+
 const MORE_MODULES = [
   { id: 'cinematic_studio', name: 'Cinematic Studio', icon: Video, desc: 'High-fidelity video synthesis with custom camera paths and lighting control.' },
   { id: 'influencer_forge', name: 'Influencer Forge', icon: User, desc: 'Generate consistent digital personas for social campaigns and brand storytelling.' },
@@ -231,50 +245,49 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
         </div>
       </div>
 
-      {/* Mobile Bottom Nav */}
-      <nav className="fixed bottom-0 left-0 right-0 z-50 bg-zinc-950/95 backdrop-blur-xl border-t border-white/10 px-2 py-2 flex items-center justify-around lg:hidden">
-        {[
-          { id: 'creative_director', label: 'Director', icon: Film },
-          { id: 'market_research', label: 'Research', icon: Search },
-          { id: 'offer_optimizer', label: 'Offer', icon: Target },
-          { id: 'caption_headline', label: 'Copy', icon: Type },
-          { id: 'image_editor', label: 'Images', icon: ImageIcon }
-        ].map((item) => (
-          <div 
-            key={item.id}
-            onClick={() => onSelectModule(item.id)}
-            className="flex flex-col items-center gap-1 py-1 px-3 rounded-xl cursor-pointer group"
-          >
-            <div className={`w-1 h-1 rounded-full mx-auto mb-0.5 ${activeModule === item.id ? 'bg-[#FFCC00]' : 'bg-transparent'}`} />
-            <item.icon className={`w-5 h-5 ${activeModule === item.id ? 'text-[#FFCC00]' : 'text-zinc-600 group-hover:text-zinc-400'}`} />
-            <span className={`text-[10px] font-medium ${activeModule === item.id ? 'text-[#FFCC00]' : 'text-zinc-600 group-hover:text-zinc-400'}`}>{item.label}</span>
-          </div>
-        ))}
-      </nav>
-
-      {/* Desktop Left Sidebar */}
-      <aside className="hidden lg:flex fixed left-0 top-0 bottom-0 z-50 w-20 bg-zinc-950/95 backdrop-blur-xl border-r border-white/10 flex-col items-center py-6 gap-3">
-        <GrifonLogo className="w-10 h-10 mb-8" />
-        
-        {[
-          { id: 'creative_director', label: 'Director', icon: Film },
-          { id: 'market_research', label: 'Research', icon: Search },
-          { id: 'offer_optimizer', label: 'Offer', icon: Target },
-          { id: 'caption_headline', label: 'Copy', icon: Type },
-          { id: 'image_editor', label: 'Images', icon: ImageIcon }
-        ].map((item) => {
+      {/* Mobile Bottom Nav — 7-step canonical flow with Beta gating */}
+      <nav className="fixed bottom-0 left-0 right-0 z-50 bg-zinc-950/95 backdrop-blur-xl border-t border-white/10 px-1 py-2 flex items-center justify-around lg:hidden">
+        {NAV_ITEMS.map((item) => {
+          const isBeta = item.badge === 'Beta';
+          const isClickable = !isBeta || isAdmin;
           const isActive = activeModule === item.id;
           return (
-            <div 
+            <div
               key={item.id}
-              onClick={() => onSelectModule(item.id)}
-              className={`relative flex flex-col items-center gap-1.5 py-3 px-2 rounded-xl cursor-pointer w-16 transition-all group ${isActive ? 'bg-zinc-900/80' : 'hover:bg-zinc-900/80'}`}
+              onClick={isClickable ? () => onSelectModule(item.id) : undefined}
+              className={`flex flex-col items-center gap-1 py-1 px-1.5 rounded-xl group ${
+                isClickable ? 'cursor-pointer' : 'cursor-default opacity-50'
+              }`}
+            >
+              <div className={`w-1 h-1 rounded-full mx-auto mb-0.5 ${isActive ? 'bg-[#FFCC00]' : 'bg-transparent'}`} />
+              <item.icon className={`w-5 h-5 ${isActive ? 'text-[#FFCC00]' : 'text-zinc-600 group-hover:text-zinc-400'}`} />
+              <span className={`text-[9px] font-medium ${isActive ? 'text-[#FFCC00]' : 'text-zinc-600 group-hover:text-zinc-400'}`}>{item.label}</span>
+            </div>
+          );
+        })}
+      </nav>
+
+      {/* Desktop Left Sidebar — 7-step canonical flow with Beta gating */}
+      <aside className="hidden lg:flex fixed left-0 top-0 bottom-0 z-50 w-20 bg-zinc-950/95 backdrop-blur-xl border-r border-white/10 flex-col items-center py-6 gap-2">
+        <GrifonLogo className="w-10 h-10 mb-6" />
+
+        {NAV_ITEMS.map((item) => {
+          const isBeta = item.badge === 'Beta';
+          const isClickable = !isBeta || isAdmin;
+          const isActive = activeModule === item.id;
+          return (
+            <div
+              key={item.id}
+              onClick={isClickable ? () => onSelectModule(item.id) : undefined}
+              className={`relative flex flex-col items-center gap-1.5 py-2.5 px-2 rounded-xl w-16 transition-all group ${
+                isClickable ? 'cursor-pointer' : 'cursor-default opacity-50'
+              } ${isActive ? 'bg-zinc-900/80' : isClickable ? 'hover:bg-zinc-900/80' : ''}`}
             >
               {/* Active indicator bar */}
               {isActive && (
                 <div className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-6 bg-[#FFCC00] rounded-r-full" />
               )}
-              
+
               <item.icon className={`w-5 h-5 ${isActive ? 'text-[#FFCC00]' : 'text-zinc-400 group-hover:text-white'}`} />
               <span className={`text-[9px] font-medium tracking-wide ${isActive ? 'text-[#FFCC00]' : 'text-zinc-400 group-hover:text-white'}`}>{item.label}</span>
             </div>
