@@ -2,6 +2,24 @@
 
 The canonical vocabulary for Grifon Command. Extracted from `types.ts`, the eleven dashboard modules, and the wizard pipeline. When code, prompts, UI copy, or planning conversations refer to these concepts, use the **bold** term and avoid the listed aliases.
 
+## The canonical end-to-end ad creation flow (7 steps)
+
+The complete Grifon journey from "I have a product" to "I have a ready-to-post ad with caption." Crosses both the wizard and several Dashboard modules; users move through these in order to produce one finished ad campaign.
+
+| # | Step | Module(s) | What the customer GETS |
+| --- | --- | --- | --- |
+| 1 | **Find the dream customer** | Market Research | A research report identifying who buys, why they buy, and what makes them say yes. |
+| 2 | **Build the offer** | Offer Optimizer | A value-stacked offer (tripwire + core + high-ticket) that makes saying no feel stupid. |
+| 3 | **Direct the ad** | Director AI (the 8-step wizard) | Character, script, storyboard, thumbnail, and per-scene video prompts. |
+| 4 | **Generate the video** | Generate Video | The actual rendered video clips for each storyboard scene. |
+| 5 | **Lock the character voice** | Signal Modulator | A consistent voiceover per scene so the on-camera character sounds like one person across the entire ad. |
+| 6 | **Edit the final ad** | Edit Video | All scene clips merged, trimmed, and pacing-adjusted into one ready-to-post ad. |
+| 7 | **Write the post copy** | Caption Headline | Caption + headline written like a copywriting expert who knows the dream customer and the offer. |
+
+Bryan-outcome of the full chain: *"I started with a product idea. I ended with an ad I can post today."* No agency, no freelancers, no handoffs.
+
+The sections below are the technical-vocabulary deep dives — wizard internals (Step 3), per-module data shapes, Influencer Forge mechanics, etc. The 7-step flow above is the canonical user-facing journey; everything below is supporting detail.
+
 ## Wizard pipeline (the 8-step ad creation flow)
 
 | Term | Definition | Aliases to avoid |
@@ -33,7 +51,7 @@ The canonical vocabulary for Grifon Command. Extracted from `types.ts`, the elev
 | **Image Ads Gen** | The module that produces multiple ad image variants from an **Uplink**. | Static ad tool |
 | **Cinematic Spec Studio** | The module that generates a four-image cinematic relay (Metaphor / Anchor / Action / Hero) from an **Uplink** and a **Cinematic Spec Config**. | Cinematic tool |
 | **Generate Video** | The module that runs the final video model with a **Video Gen Config**. | Video gen |
-| **Signal Modulator** | The module that synthesizes voiceover via ElevenLabs in either **Broadcast** or **Conversion** **Audio Mode**. | Voiceover tool, audio gen |
+| **Signal Modulator** | The module that synthesizes a consistent character voice per scene (ElevenLabs-powered) so the on-camera persona sounds like one person across the entire ad — in either **Broadcast** or **Conversion** **Audio Mode**. The module name is engine-internal; user-facing labels should describe the outcome (e.g., "Voice Studio" / "Character Voice Lock"). | Voiceover tool, audio gen |
 | **Influencer Forge** | The module that creates and runs an **Influencer** persona through an **Odyssey** of daily content. Distinct from the wizard's **Avatar** flow. | Persona tool, creator gen |
 
 ## Influencer Forge & Odyssey
