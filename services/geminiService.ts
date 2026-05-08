@@ -270,13 +270,17 @@ export const generateVideo = async (
   return { url: result.url, downloadUrl: result.downloadUrl, mimeType: result.mimeType };
 };
 
+// CAMERA ANGLE SET — rebalanced 2026-05-08-late-late-evening for storyboard-variety + face-to-camera safety.
+// Composition: 3 frontal-ish (positions 1, 2, 4), 3 side-ish but face-toward-camera (positions 3, 5, 6).
+// Rotated linearly via `variationIndex % AVATAR_CAMERA_ANGLES.length` so consecutive scenes vary.
+// All side-angle entries explicitly specify "face turned toward camera" so lip-sync survives downstream voicing.
 const AVATAR_CAMERA_ANGLES = [
-    "INTIMATE_CLOSE_UP: Framing neck up. Focus: Eyes. Mandatory: Slight lens breathing and micro-handheld jitter.",
-    "SIDE_PROFILE_TALK: 45-degree left angle. Off-center. Mandatory: Imperceptible slow-creep dolly-in.",
-    "WIDE_BUST_SHOT: Waist up. Natural handheld sway. Background depth-of-field matches 85mm lens.",
-    "HIGH_ANGLE_SELFIE: Camera positioned above eye-level looking down. Relatable, casual handheld vlog vibe with consistent micro-jitter for organic movement.",
-    "LOW_ANGLE_AUTHORITY: Camera positioned below the chin looking up. Empowering, 'Expert' framing with a very slow cinematic push-in (dolly-in).",
-    "DYNAMIC_SHOULDER: Right side profile. Includes subtle parallactic shift against background."
+    "INTIMATE_CLOSE_UP: Framing neck up. Face fully toward camera. Focus: Eyes. Mandatory: Slight lens breathing and micro-handheld jitter.",
+    "MEDIUM_FRONTAL: Chest-up, eye-level frontal angle. Face squarely toward camera. Subtle handheld sway. 50mm lens feel. Casual conversational vibe.",
+    "SIDE_PROFILE_TALK: Body at 45-degree left angle BUT face/head turned toward camera so both eyes and mouth remain visible. Off-center composition. Mandatory: Imperceptible slow-creep dolly-in.",
+    "WIDE_BUST_SHOT: Waist up, near-frontal angle. Face toward camera. Natural handheld sway. Background depth-of-field matches 85mm lens.",
+    "HIGH_ANGLE_SELFIE: Camera above eye-level looking down at face. Relatable, casual handheld vlog vibe with consistent micro-jitter. Subject looks UP at camera (face fully toward camera).",
+    "DYNAMIC_SHOULDER: Right side body profile with face turned back toward camera (3/4 view of face). Includes subtle parallactic shift against background. Both eyes visible."
 ];
 
 const LIGHTING_TOKENS = {
@@ -796,13 +800,19 @@ export const generateAdScript = async (
 
       **TESTIMONIAL STRUCTURE:**
       0. **Hook (3s/5-8 words):** Shock or extreme curiosity. PROVIDE 2 VARIATIONS — both 5-8 words, both curiosity-driven pattern interrupts. REQUIRED: hook1 and hook2 arrays in the JSON output MUST be populated; do not skip this beat.
-      1. **Intro:** Human introduction. Speaker's persona (name + life context + the wound's first hint) MUST implicitly match the audience: "${businessInfo.audience}". Establish identity AND open the bleeding-neck loop into beat 2 — never a name tag. NEVER name the audience demographically; the persona's wound carries the recognition. (See INTRO PATTERN EXAMPLES below.)
+      1. **Intro:** REQUIRED: Beat 1 MUST open with "Ako si [Filipino first name]," (e.g., "Ako si Elena," / "Ako si Mark," / "Ako si Tin,") — followed by life context that implicitly identifies the audience "${businessInfo.audience}" and the wound's first hint as an open loop into beat 2. The introduction is a STORY-OPENER, not a label. NEVER write "Ako si [Name], OFW dad, 5 years sa Saudi" — that's a name tag and is BANNED. NEVER name the audience demographically; the persona's wound carries the recognition. If the model would skip the name, generate a culturally-fitting Filipino first name (e.g., Maria, Cristina, Jenny, Mark, JP, Miggy, Tin, Elena, Nena, Kaye) and use it. (See INTRO PATTERN EXAMPLES below.)
       2. **Before Story:** Agitate the 'Main Problem': "${businessInfo.painPoint}".
-      3. **Discovery:** Introduce the hero: "${brandName}'s ${businessInfo.product}".
+      3. **Discovery:** Speaker introduces the hero "${brandName}'s ${businessInfo.product}" with a COMPLETE verb construction. NEVER drop the verb — verbless fragments break the line. PATTERN: "Hanggang sa [verb-phrase] [hero-product]" or "Pero simula nung [verb + na/ko/tong] [hero-product]". Examples: "Hanggang sa natikman ko itong ${brandName}." / "Pero simula nung na-try ko tong ${brandName}." / "Buti na lang, sinubukan ko ang ${brandName}." BANNED: "Pero simula nung ${brandName}" alone (verbless fragment).
       4. **Transformation:** The shift from Pain Point ("${businessInfo.painPoint}") to Result ("${businessInfo.benefit}").
       5. **Proof:** Highlight the 1-2 selected features. Stack comparative differentiation: "Marami akong na-try na ibang [category], pero ito lang ang gumana sa akin kasi ${businessInfo.separator}." This is where the differentiator earns its keep. If separator is empty, fall back to: "Highlight the 1-2 selected features."
       6. **Objection Killer:** Solve the common doubt.
-      7. **CTA:** Strong "Click below" direction with WARM recommendation tone (not direct-sell). Inject offer STRUCTURE (scarcity + value adds + urgency) from "${offer}", NEVER the bare price. Example pattern: "Try niyo na — first 50 may free shipping pa." If offer is empty, fall back to: "Strong 'Click below' direction."
+      7. **CTA:** Ad-native call-to-action with WARM recommendation tone (not direct-sell). Inject offer STRUCTURE (scarcity + value adds + urgency) from "${offer}", NEVER the bare price.
+
+         BANNED CTA PHRASES (organic-IG patterns, not for paid ads):
+         - "link sa bio" / "link in bio"  → use "click below" / "i-click below" / "tap below"
+         - "DM us" / "DM kayo" alone     → use "message us" / "send message"
+
+         REQUIRED IN OUTPUT: at least ONE scarcity word (e.g., "first 50", "limited", "today only") AND ALL value-adds named in "${offer}" must appear verbatim or near-verbatim. Do NOT drop value-adds. Example pattern (warm tone): "Click below — first 50 may free shipping at libreng recipe ebook." If offer is empty, fall back to: "Click below para subukan."
 
       **INTRO PATTERN EXAMPLES** (for beat 1 — adapt content to audience, do not copy literally):
       - OFW audience → "Ako si Mark. 5 years na akong nasa Saudi para mabuhay yung pamilya — pero may isang bagay na halos natalo ako."
@@ -827,7 +837,13 @@ export const generateAdScript = async (
         3. **Struggles:** Deep dive into "${businessInfo.painPoint}".
         4. **Discovery:** Introducing "${brandName}'s ${businessInfo.product}".
         5. **Result + Proof:** Visual payoff based on "${businessInfo.benefit}". Stack proof: "Hindi tulad ng iba — kami ${businessInfo.separator}." This is the "why believe?" slot. NEVER in the hook (kills curiosity); NEVER in the CTA (offer owns that). If separator is empty, fall back to: "Visual payoff based on benefit."
-        6. **CTA:** High-energy "Click below." Inject offer STRUCTURE (scarcity + value adds + urgency) from "${offer}", NEVER the bare price. Example pattern: "Tap link sa bio — first 50 lang may free shipping + recipe ebook." If offer is empty, fall back to: "High-energy 'Click below.'"
+        6. **CTA:** High-energy ad-native call-to-action. Inject offer STRUCTURE (scarcity + value adds + urgency) from "${offer}", NEVER the bare price.
+
+           BANNED CTA PHRASES (organic-IG patterns, not for paid ads):
+           - "link sa bio" / "link in bio"  → use "click below" / "i-click below" / "tap below"
+           - "DM us" / "DM kayo" alone     → use "message us" / "send message"
+
+           REQUIRED IN OUTPUT: at least ONE scarcity word (e.g., "first 50", "limited slots", "today only") AND ALL value-adds named in "${offer}" must appear verbatim or near-verbatim. Do NOT drop value-adds — softening = failure. Example pattern: "I-click below — first 50 lang may free shipping at libreng recipe ebook." If offer is empty, fall back to: "I-click below ngayon."
 
         **IDENTITY PATTERN EXAMPLES** (for beat 2 — adapt to audience, do not copy literally):
         - OFW family audience → "Tuwing umagang malayo sa pamilya, kape ang nag-aalala sa'yo."
@@ -1412,6 +1428,9 @@ export const generateStoryboard = async (
       - All scene descriptions MUST imply a high-quality, relatable location for a **${ethnicity}** audience.
       - Avoid poverty/gritty vibes. Focus on aspirational settings consistent with the target market.
 
+      **BAG_ORIENTATION_RULE (REQUIRED for any scene where the product bag/package appears, whether held by avatar or shown as B-roll):**
+      The FRONT of the bag (the side bearing the product label, branding, or wordmark) MUST face the camera. The avatar's hand MAY occlude part of the bag's front (naturalistic and acceptable). The BACK of the bag facing camera, or the bag held with branding turned away from camera, is BANNED — the brand mark must remain visible enough to be recognized in a 3-second scrub. For product-only B-roll (no avatar in frame), the bag must be centered with the front fully visible. Whenever the imagePrompt or startFramePrompt/endFramePrompt mentions the bag/package/product, append "front of bag/label facing camera" to the description.
+
       **OUTPUT SCHEMA (CRITICAL):**
       Return a valid JSON Object with keys "scenes" (Array) and "strategicAudit" (String).
       
@@ -1498,8 +1517,9 @@ export const generateSceneImage = async (
     if (referenceImageMode === 'avatar') {
         consistencyRules = `
         **IDENTITY_LOCK + ENVIRONMENT_SYNC:**
-        1. **LOCKED (preserve from Reference Image 1, never change across scenes):** face, skin tone, bone structure, hair (color, style, length), wardrobe (color, cut, fabric), body type.
+        1. **LOCKED (preserve from Reference Image 1, NEVER change across scenes — non-negotiable):** face, skin tone, bone structure, **hair styling** (color AND style — if Reference Image 1 shows hair tied up in a bun or ponytail, render it tied up in EVERY scene; do NOT let it down. If Reference Image 1 shows hair down/loose, do NOT tie it up in any scene. Hair styling drift between scenes is BANNED), wardrobe (color, cut, fabric — same blouse/top across scenes), body type. Scene-driven action MAY change pose/expression, but MUST NOT change hair styling, wardrobe, or body type.
         2. **VARIES (driven by the Scene Prompt, AUTHORITATIVE over IDENTITY_LOCK):** facial expression, gaze direction, body pose, hand position, and held props (mug, phone, etc.). IDENTITY_LOCK does NOT override scene-driven expressions, gestures, or actions. If the Scene Prompt says "looking down with brow furrowed, holding an empty mug," render exactly that — do not inherit the reference's smile or grip.
+        2b. **FACE_TO_CAMERA (REQUIRED whenever the scene carries a script line the avatar speaks aloud):** Camera angle CAN vary (frontal, 3/4, side body, over-shoulder) for cinematic variety per CAMERA_MANDATORY. BUT the avatar's face/head MUST be oriented toward camera enough that BOTH eyes and the mouth are clearly visible — required for downstream lip sync. Side body angle with face turned toward camera = ALLOWED. Eyes-closed, looking-down-at-mug, looking-at-own-pointing-finger, full-side-profile-with-face-away = BANNED for talking scenes. For non-speaking B-roll (avatar performs an action without voice-over), free creative direction.
         3. **CAMERA:** angle, distance, and framing follow the CAMERA_MANDATORY block below.
         4. **ENVIRONMENT (FLEXIBLE):** Same residence/setting as Reference Image 1 (e.g., the same home interior). The avatar may be in different spots within that residence (kitchen counter → dining table → living room couch) per the Scene Prompt, but never in an unrelated location (no offices, no cafes, no streets).
         5. **ETHNICITY:** Strictly **${ethnicity}**.

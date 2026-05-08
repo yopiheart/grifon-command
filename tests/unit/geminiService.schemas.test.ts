@@ -110,6 +110,60 @@ describe('generateAdScript schema', () => {
     expect(promptDump).toContain('Slide');
     expect(promptDump).toContain('LOGIC LOCK');
   }, 10_000);
+
+  it('MrBeast CTA invariants: bans link-sa-bio + requires verbatim value-ads (v1.x bundle)', async () => {
+    fetchMock.mockResolvedValueOnce(okGemini({
+      hook1: ['x'], hook2: ['x'], body: ['x'],
+    }));
+    await generateAdScript(businessInfo, 'TestBrand', 'Taglish');
+
+    const promptDump = JSON.stringify(captureLastFetchBody());
+    // Banned phrase is named in the prompt (so the model knows NOT to produce it).
+    expect(promptDump).toContain('link sa bio');
+    expect(promptDump).toContain('BANNED CTA PHRASES');
+    // Require-verbatim language present.
+    expect(promptDump).toMatch(/value-add/i);
+    expect(promptDump).toContain('verbatim');
+  }, 10_000);
+});
+
+describe('TESTIMONIAL invariants (v1.x bundle)', () => {
+  const businessInfo = {
+    product: 'Test Coffee',
+    features: 'Premium beans',
+    productImageDescription: 'Coffee bag',
+    scriptType: 'Testimonial',
+    audience: 'Filipino mom',
+    painPoint: 'Bad mornings',
+    benefit: 'Calm mornings',
+    separator: 'Single-origin',
+  } as any;
+
+  it('Intro hard-requires "Ako si [name]" opener and bans name-tag pattern', async () => {
+    fetchMock.mockResolvedValueOnce(okGemini({
+      hook1: ['x'], hook2: ['x'], body: ['x'],
+    }));
+    await generateAdScript(businessInfo, 'TestBrand', 'Taglish');
+
+    const promptDump = JSON.stringify(captureLastFetchBody());
+    expect(promptDump).toContain('Ako si');
+    expect(promptDump).toContain('REQUIRED');
+    // Forbidden pattern called out so the model avoids it.
+    expect(promptDump).toMatch(/name tag/i);
+  }, 10_000);
+
+  it('Discovery beat enforces verb-completion (no verbless fragments)', async () => {
+    fetchMock.mockResolvedValueOnce(okGemini({
+      hook1: ['x'], hook2: ['x'], body: ['x'],
+    }));
+    await generateAdScript(businessInfo, 'TestBrand', 'Taglish');
+
+    const promptDump = JSON.stringify(captureLastFetchBody());
+    // Verb-completion patterns are named.
+    expect(promptDump).toContain('natikman ko');
+    expect(promptDump).toContain('na-try ko');
+    expect(promptDump).toMatch(/verbless/i);
+  }, 10_000);
 });
 
 // ----------------------------------------------------------------------------
@@ -159,6 +213,16 @@ describe('generateStoryboard schema', () => {
     expect(promptDump).toContain('APPEARANCE_LOCK_RULE');
     expect(promptDump).toContain('VISUAL PURITY');
     expect(promptDump).toContain('PACING RULE');
+  });
+
+  it('storyboard includes BAG_ORIENTATION_RULE (front-of-bag must face camera) — v1.x bundle', async () => {
+    fetchMock.mockResolvedValueOnce(okGemini({ scenes: [], strategicAudit: 'x' }));
+    await generateStoryboard(['Line'], 'Avatar', businessInfo, 'Filipino', 'English');
+
+    const promptDump = JSON.stringify(captureLastFetchBody());
+    expect(promptDump).toContain('BAG_ORIENTATION_RULE');
+    expect(promptDump).toContain('FRONT of the bag');
+    expect(promptDump).toMatch(/banned/i);
   });
 });
 

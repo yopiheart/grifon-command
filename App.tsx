@@ -141,6 +141,21 @@ const App: React.FC = () => {
   const [hasRestored, setHasRestored] = useState(false);
   const saveErrorToastedRef = useRef(false);
 
+  // When the user swaps script formula on Step 2, dump downstream caches that depend on the script.
+  // Without this, going Step 2 → swap formula → Step 5 still shows the old MrBeast scenes (stale cache).
+  // Preserves: clientDetails, businessInfo, aspectRatio, avatar (formula-agnostic).
+  const prevScriptTypeRef = useRef<BusinessInfo['scriptType']>(businessInfo.scriptType);
+  useEffect(() => {
+    if (prevScriptTypeRef.current && prevScriptTypeRef.current !== businessInfo.scriptType) {
+      setScript(null);
+      setFinalScript([]);
+      setStoryboard([]);
+      setVideoPrompts([]);
+      setThumbnailUrl(null);
+    }
+    prevScriptTypeRef.current = businessInfo.scriptType;
+  }, [businessInfo.scriptType]);
+
   const bootLines = [
     "> INITIALIZING GRIFON_DNA...",
     "> LOADING MARKET_INTEL_VAULT...",

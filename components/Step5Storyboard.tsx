@@ -427,7 +427,19 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
                     <Copy className="w-5 h-5"/> ASSET_BUNDLE (.ZIP)
                  </button>
              )}
-         </div> 
+         </div>
+         {loadingImages && storyboardData.length > 0 && (() => {
+             const synthesized = storyboardData.filter(s => s.imageUrl || s.manualUploadUrl).length;
+             const total = storyboardData.length;
+             return (
+                 <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-zinc-900/80 backdrop-blur-xl border border-[#FFCC00]/30 shadow-[0_0_12px_rgba(255,204,0,0.2)]">
+                     <span className="text-[10px] font-mono uppercase tracking-widest text-[#FFCC00]">[ {synthesized}/{total} SYNTHESIZED ]</span>
+                     <div className="relative h-[2px] w-24 bg-white/5 overflow-hidden rounded-full">
+                         <div className="absolute inset-y-0 left-0 bg-[#FFCC00] shadow-[0_0_8px_#FFCC00] transition-[width] duration-300" style={{ width: `${(synthesized / total) * 100}%` }} />
+                     </div>
+                 </div>
+             );
+         })()}
       </div>
 
       {loadingStoryboard && (
