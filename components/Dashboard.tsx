@@ -334,7 +334,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
             </div>
           </div>
 
-          {/* Recommended Flow Path */}
+          {/* Recommended Flow Path — canonical 7-step ad creation journey (UBIQUITOUS_LANGUAGE.md) */}
           <div className="mb-6 lg:mb-10 max-w-2xl lg:max-w-3xl mx-auto w-full mt-8 lg:mt-16">
             <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mb-3 text-center lg:text-left">
               // RECOMMENDED FLOW
@@ -344,24 +344,37 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                 { num: 1, label: 'Research', id: 'market_research' },
                 { num: 2, label: 'Offer', id: 'offer_optimizer' },
                 { num: 3, label: 'Director', id: 'creative_director' },
-                { num: 4, label: 'Copy', id: 'caption_headline' },
-                { num: 5, label: 'Images', id: 'image_editor' }
-              ].map((step, idx, arr) => (
-                <React.Fragment key={step.id}>
-                  <div 
-                    onClick={() => onSelectModule(step.id)}
-                    className="flex items-center gap-1.5 lg:gap-2 flex-shrink-0 cursor-pointer active:scale-95 transition-transform"
-                  >
-                    <div className="w-5 h-5 lg:w-6 lg:h-6 rounded-full bg-[#FFCC00]/10 border border-[#FFCC00]/30 flex items-center justify-center text-[9px] lg:text-[10px] font-mono font-bold text-[#FFCC00]">
-                      {step.num}
+                { num: 4, label: 'Video', id: 'generate_video' },
+                { num: 5, label: 'Voice', id: 'signal_modulator', badge: 'Beta' },
+                { num: 6, label: 'Edit', id: 'edit_video', badge: 'Beta' },
+                { num: 7, label: 'Caption', id: 'caption_headline' }
+              ].map((step, idx, arr) => {
+                const isBeta = step.badge === 'Beta';
+                const isClickable = !isBeta || isAdmin;
+                return (
+                  <React.Fragment key={step.id}>
+                    <div
+                      onClick={isClickable ? () => onSelectModule(step.id) : undefined}
+                      className={`flex items-center gap-1.5 flex-shrink-0 transition-transform ${
+                        isClickable ? 'cursor-pointer active:scale-95' : 'cursor-default opacity-60'
+                      }`}
+                    >
+                      <div className="w-5 h-5 lg:w-6 lg:h-6 rounded-full bg-[#FFCC00]/10 border border-[#FFCC00]/30 flex items-center justify-center text-[9px] lg:text-[10px] font-mono font-bold text-[#FFCC00]">
+                        {step.num}
+                      </div>
+                      <span className="text-[10px] lg:text-xs font-medium text-zinc-400 whitespace-nowrap">{step.label}</span>
+                      {step.badge && (
+                        <span className="px-1 py-0.5 text-[8px] font-mono uppercase tracking-wider rounded bg-[#FFCC00]/10 text-[#FFCC00]/70 border border-[#FFCC00]/20">
+                          {step.badge}
+                        </span>
+                      )}
                     </div>
-                    <span className="text-[10px] lg:text-xs font-medium text-zinc-400 whitespace-nowrap">{step.label}</span>
-                  </div>
-                  {idx < arr.length - 1 && (
-                    <div className={`w-3 lg:w-6 h-px bg-zinc-700 flex-shrink-0 mx-1 lg:mx-2 ${idx === 3 ? 'hidden lg:flex' : 'flex'}`} />
-                  )}
-                </React.Fragment>
-              ))}
+                    {idx < arr.length - 1 && (
+                      <div className={`w-3 lg:w-4 h-px bg-zinc-700 flex-shrink-0 mx-1 ${idx === 3 ? 'hidden lg:flex' : 'flex'}`} />
+                    )}
+                  </React.Fragment>
+                );
+              })}
             </div>
           </div>
 
