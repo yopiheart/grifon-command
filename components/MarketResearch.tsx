@@ -272,8 +272,8 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
                         ) : (
                             <div className="flex flex-col items-center justify-center h-full text-zinc-500">
                                 <p className="font-mono text-center mb-2 text-[10px] uppercase tracking-widest">// SYSTEM_STANDBY</p>
-                                <p className="text-sm text-center max-w-xs">
-                                    Initiate analysis to generate Avatar Profile, Pain Points, and Marketing Hooks.
+                                <p className="text-sm text-center max-w-sm">
+                                    Initiate analysis to generate your Avatar Profile, Bleeding Neck, Big Idea, 5 A/B-ready Headlines, 5 Typed Video Hooks, Competitor Matrix, and 3 ready-to-film FB Ad Concepts.
                                 </p>
                             </div>
                         )}
