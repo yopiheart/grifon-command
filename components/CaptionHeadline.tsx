@@ -71,11 +71,19 @@ const CaptionHeadline: React.FC<CaptionHeadlineProps> = ({ onBack }) => {
 
   const injectMarketMind = () => {
       const savedReport = localStorage.getItem('marketMindReport');
-      if (savedReport) {
-          setFormData(prev => ({ ...prev, marketResearchText: savedReport }));
-      } else {
+      if (!savedReport) {
           setError("NO_REPORT_FOUND: Run MarketMind module first.");
           setTimeout(() => setError(null), 3000);
+          return;
+      }
+      // New flow: report is structured JSON — pull the human-readable narrative.
+      // Legacy flow: report is a raw markdown string — pass through as-is.
+      try {
+          const parsed = JSON.parse(savedReport);
+          const text = (parsed && typeof parsed === 'object' && parsed.narrativeReport) ? parsed.narrativeReport : savedReport;
+          setFormData(prev => ({ ...prev, marketResearchText: text }));
+      } catch {
+          setFormData(prev => ({ ...prev, marketResearchText: savedReport }));
       }
   };
 

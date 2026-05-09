@@ -96,6 +96,73 @@ export interface MarketResearchInput {
   uploadedImages: string[]; // Array of Base64 strings
 }
 
+export interface MarketResearchHook {
+  type: 'Pattern Interrupt' | 'Direct Pain' | 'Result Reveal' | 'Question' | 'Before-After';
+  visual: string;
+  spokenLine: string;
+}
+
+export interface MarketResearchCompetitor {
+  competitor: string;
+  weakness: string;
+  exploitationAngle: string;
+}
+
+export interface MarketResearchAdAngle {
+  format: 'UGC' | 'Testimonial' | 'Founder POV' | 'Demo' | 'Reaction';
+  angle: string;
+  openingLine: string;
+  whyItWorks: string;
+}
+
+export interface MarketResearchGraveyardEntry {
+  tried: string;
+  whyFailed: string;
+}
+
+/**
+ * Structured output from MarketMind (generateMarketResearch).
+ * Every field is consumed programmatically by Director AI, Influencer Forge,
+ * and Caption & Headline. The narrativeReport field carries a markdown render
+ * of all sections combined — that's what the user reads in the UI.
+ */
+export interface MarketResearchReport {
+  // CORE
+  subject: string;
+  winningAvatar: string;
+  // 1. DEEP DIVE AVATAR
+  demographics: string;
+  dayInTheLife: string;
+  // 2. BLEEDING NECK
+  bleedingNeck: string;
+  deepFear: string;
+  threeAmThought: string;
+  // 3. GRAVEYARD
+  graveyard: MarketResearchGraveyardEntry[];
+  objectionToUs: string;
+  // 4. HEAVEN ISLAND
+  magicGenie: string;
+  emotionalPayoff: string;
+  statusUpgrade: string;
+  // 5. BIG IDEA (Sabri Suby Big Domino)
+  bigIdea: string;
+  // 6. HEADLINES (5, ordered: pain | dream | curiosity | social-proof | contrarian)
+  headlines: string[];
+  // 7. VIDEO HOOKS (5, one of each type)
+  videoHooks: MarketResearchHook[];
+  // 8. VILLAIN
+  villain: string;
+  // 9. COMPETITOR MATRIX (3)
+  competitorMatrix: MarketResearchCompetitor[];
+  // 10. FB AD LIBRARY ANGLES (3, ready-to-brief Director AI)
+  fbAdLibraryAngles: MarketResearchAdAngle[];
+  // EVIDENCE & EDGE
+  rawEvidence: string[];
+  contrarianTruth: string;
+  // RENDERED NARRATIVE (human-readable markdown of all sections)
+  narrativeReport: string;
+}
+
 export interface OfferOptimizerInput {
   productName: string;
   currentPrice: string;

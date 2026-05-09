@@ -140,6 +140,8 @@ const App: React.FC = () => {
   const [pendingSession, setPendingSession] = useState<WizardSessionV1 | null>(null);
   const [hasRestored, setHasRestored] = useState(false);
   const saveErrorToastedRef = useRef(false);
+  const marketMindPrefillRef = useRef(false);
+  const [marketMindLoadedAvatar, setMarketMindLoadedAvatar] = useState<string | null>(null);
 
   // When the user swaps script formula on Step 2, dump downstream caches that depend on the script.
   // Without this, going Step 2 → swap formula → Step 5 still shows the old MrBeast scenes (stale cache).
@@ -286,6 +288,38 @@ const App: React.FC = () => {
 
     return () => clearTimeout(timer);
   }, [userId, isAuthenticated, hasRestored, currentStep, clientDetails, businessInfo, script, language, finalScript, avatar, storyboard, videoPrompts, aspectRatio, thumbnailUrl]);
+
+  // Auto-prefill Director AI wizard from MarketMind report on entry.
+  // Fires once per session when entering creative_director with a pristine wizard.
+  useEffect(() => {
+    if (activeModule !== 'creative_director') return;
+    if (marketMindPrefillRef.current) return;
+    const wizardPristine = currentStep === 1 && !clientDetails.brandName && !businessInfo.product && script === null;
+    if (!wizardPristine) return;
+    const savedReport = localStorage.getItem('marketMindReport');
+    if (!savedReport) return;
+    try {
+      const r = JSON.parse(savedReport);
+      if (!r || typeof r !== 'object' || !r.subject) return;
+      setBusinessInfo(prev => ({
+        ...prev,
+        product: prev.product || r.subject || '',
+        audience: prev.audience || `${r.winningAvatar || ''} — ${r.demographics || ''}`.trim().replace(/^—\s*/, ''),
+        painPoint: prev.painPoint || r.bleedingNeck || '',
+        benefit: prev.benefit || r.magicGenie || '',
+        separator: prev.separator || r.contrarianTruth || r.villain || '',
+        features: prev.features || r.bigIdea || '',
+      }));
+      setClientDetails(prev => ({
+        ...prev,
+        offer: prev.offer || r.bigIdea || '',
+      }));
+      setMarketMindLoadedAvatar(r.winningAvatar || null);
+      marketMindPrefillRef.current = true;
+    } catch {
+      // Legacy string blob — no auto-prefill, user can still manually fill.
+    }
+  }, [activeModule, currentStep, clientDetails.brandName, businessInfo.product, script]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -593,7 +627,7 @@ const App: React.FC = () => {
   } else if (activeModule === 'cinematic_studio') {
     moduleElement = <CinematicSpecStudio onBack={() => setActiveModule(null)} onNavigate={setActiveModule} businessInfo={businessInfo} narrative={cinematicNarrative} setNarrative={setCinematicNarrative} frameMap={cinematicFrameMap} setFrameMap={setCinematicFrameMap} result={cinematicResult} setResult={setCinematicResult} />;
   } else if (activeModule === 'market_research') {
-    moduleElement = <MarketResearch onBack={() => setActiveModule(null)} />;
+    moduleElement = <MarketResearch onBack={() => setActiveModule(null)} onNavigate={setActiveModule} />;
   } else if (activeModule === 'offer_optimizer') {
     moduleElement = <OfferOptimizer onBack={() => setActiveModule(null)} />;
   } else if (activeModule === 'edit_video') {
@@ -611,6 +645,7 @@ const App: React.FC = () => {
     const wizardPristine = currentStep === 1 && !clientDetails.brandName && !businessInfo.product && script === null;
     const showResumePill = !isLoadingSession && pendingSession !== null && !hasRestored && wizardPristine;
     const showNudge = !hasRunResearch && !directorNudgeDismissed && !showResumePill;
+    const showLoadedConfirmation = hasRunResearch && marketMindLoadedAvatar && !showResumePill;
 
     moduleElement = (
         <div className="min-h-screen bg-zinc-950 font-sans flex flex-col items-center p-4 sm:p-6 md:p-8 text-white">
@@ -655,6 +690,18 @@ const App: React.FC = () => {
                   >
                     Run Research
                   </GoldButton>
+                </div>
+              </div>
+            )}
+
+            {showLoadedConfirmation && (
+              <div className="bg-zinc-900 border border-[#FFCC00]/30 rounded-xl p-4 mb-6 flex items-start gap-3">
+                <Lightbulb className="w-5 h-5 text-[#FFCC00] mt-0.5 shrink-0" />
+                <div>
+                  <h3 className="text-sm font-bold text-white mb-1">// MARKETMIND_LOADED</h3>
+                  <p className="text-xs text-zinc-400">
+                    Director AI is targeting <span className="text-[#FFCC00] font-mono">{marketMindLoadedAvatar}</span>. Wizard fields pre-filled from your MarketMind report — edit any to override.
+                  </p>
                 </div>
               </div>
             )}

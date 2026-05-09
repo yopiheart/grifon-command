@@ -19,6 +19,7 @@ The following are **LOCKED** — do not modify without explicit user approval:
 - Model IDs declared at lines 87–91 (`textModel`, `fastTextModel`, `researchTextModel`, `avatarModel`, `sceneImageModel`)
 - Embedded safety rules: Identity Lock, STILL_FRAME_RULE, NO_LOGO_HALLUCINATION
 - The `strategicAudit` self-grading fields (flagged for future fresh-agent replacement; do not remove unilaterally)
+- **MarketMind output schema** — `MarketResearchReport` in [`../types.ts`](../types.ts) and the matching OUTPUT TEMPLATE in `generateMarketResearch`. Downstream modules (Director AI auto-prefill in [`../App.tsx`](../App.tsx), `injectMarketMind` in [`../components/InfluencerForge.tsx`](../components/InfluencerForge.tsx), [`../components/CaptionHeadline.tsx`](../components/CaptionHeadline.tsx)) read structured fields directly. Renaming or removing fields breaks these consumers.
 
 **Fair game:** transport mechanics, error wrapping, exported type signatures, structural refactors of helpers like `proxyCall` and `cleanJson`.
 

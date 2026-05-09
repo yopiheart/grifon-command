@@ -198,19 +198,43 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
 
   const injectMarketMind = () => {
     const savedReport = localStorage.getItem('marketMindReport');
-    if (savedReport) {
-      setIsExtracting(true);
-      parseMarketResearchFile(savedReport).then(data => {
-        setStrategicInput(prev => ({ ...prev, ...data }));
-        setIsExtracting(false);
-        setSuccessMsg("MARKET_INTELLIGENCE_INJECTED");
-      }).catch(() => {
-        setError("MARKETMIND_SYNC_FAILED");
-        setIsExtracting(false);
-      });
-    } else {
+    if (!savedReport) {
       setError("NO_REPORT_FOUND: Run MarketMind module first.");
+      return;
     }
+
+    // New flow: report is structured JSON — map fields directly, no Gemini re-parse.
+    try {
+      const parsed = JSON.parse(savedReport);
+      if (parsed && typeof parsed === 'object' && parsed.subject) {
+        setStrategicInput(prev => ({
+          ...prev,
+          subject: parsed.subject || prev.subject,
+          offer: parsed.bigIdea || prev.offer,
+          dreamCustomer: `${parsed.winningAvatar || ''} — ${parsed.demographics || ''}. ${parsed.dayInTheLife || ''}`.trim(),
+          bleedingNeck: parsed.bleedingNeck || prev.bleedingNeck,
+          deepFear: parsed.deepFear || prev.deepFear,
+          magicGenie: parsed.magicGenie || prev.magicGenie,
+          rawEvidence: Array.isArray(parsed.rawEvidence) ? parsed.rawEvidence.join('\n') : (parsed.rawEvidence || prev.rawEvidence),
+          contrarianTruth: parsed.contrarianTruth || prev.contrarianTruth,
+        }));
+        setSuccessMsg("MARKET_INTELLIGENCE_INJECTED");
+        return;
+      }
+    } catch {
+      // Falls through to legacy path
+    }
+
+    // Legacy path: pre-upgrade reports stored as raw markdown string. Re-parse via Gemini.
+    setIsExtracting(true);
+    parseMarketResearchFile(savedReport).then(data => {
+      setStrategicInput(prev => ({ ...prev, ...data }));
+      setIsExtracting(false);
+      setSuccessMsg("MARKET_INTELLIGENCE_INJECTED");
+    }).catch(() => {
+      setError("MARKETMIND_SYNC_FAILED");
+      setIsExtracting(false);
+    });
   };
 
   const injectOfferStack = () => {

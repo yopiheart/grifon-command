@@ -1,19 +1,20 @@
 
 import React, { useState } from 'react';
-import { MarketResearchInput } from '../types';
+import { MarketResearchInput, MarketResearchReport } from '../types';
 import { generateMarketResearch } from '../services/geminiService';
 import { compressImageForUpload } from '../utils/imageCompression';
 import { GlassPanel } from './ui/GlassPanel';
 import { GoldButton } from './ui/GoldButton';
 import Loader from './ui/Loader';
-import { Copy, ChevronLeft, UploadCloud, X } from 'lucide-react';
+import { Download, ChevronLeft, UploadCloud, X, ArrowRight } from 'lucide-react';
 import saveAs from 'file-saver';
 
 interface MarketResearchProps {
   onBack: () => void;
+  onNavigate?: (module: string) => void;
 }
 
-const MarketResearch: React.FC<MarketResearchProps> = ({ onBack }) => {
+const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) => {
   const [formData, setFormData] = useState<MarketResearchInput>({
     productName: '',
     productDescription: '',
@@ -24,7 +25,7 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack }) => {
   });
   
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [result, setResult] = useState<string | null>(null);
+  const [result, setResult] = useState<MarketResearchReport | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -67,7 +68,7 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack }) => {
     try {
         const report = await generateMarketResearch(formData);
         setResult(report);
-        localStorage.setItem('marketMindReport', report);
+        localStorage.setItem('marketMindReport', JSON.stringify(report));
     } catch (err) {
         console.error(err);
         setError("Market Analysis Failed. Please check your connection and try again.");
@@ -78,8 +79,13 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack }) => {
 
   const handleDownload = () => {
     if (!result) return;
-    const blob = new Blob([result], { type: "text/plain;charset=utf-8" });
+    const blob = new Blob([result.narrativeReport], { type: "text/plain;charset=utf-8" });
     saveAs(blob, `MarketMind_Report_${formData.productName.replace(/\s+/g, '_')}.txt`);
+  };
+
+  const handleSendToDirector = () => {
+    if (!result || !onNavigate) return;
+    onNavigate('creative_director');
   };
 
   return (
@@ -228,15 +234,32 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack }) => {
                             // ANALYSIS_REPORT
                         </h2>
                         {result && (
-                            <button 
-                                onClick={handleDownload} 
+                            <button
+                                onClick={handleDownload}
                                 className="flex items-center gap-2 text-[10px] text-zinc-400 font-mono uppercase tracking-widest hover:text-[#FFCC00] transition-colors"
                             >
-                                <Copy className="w-3 h-3" /> DOWNLOAD .TXT
+                                <Download className="w-3 h-3" /> DOWNLOAD .TXT
                             </button>
                         )}
                     </div>
-                    
+
+                    {result && (
+                        <div className="flex flex-wrap gap-2 mb-3">
+                            <span className="text-[10px] font-mono uppercase tracking-widest text-[#FFCC00] border border-[#FFCC00]/30 bg-[#FFCC00]/5 rounded px-2 py-1">
+                                {result.headlines?.length ?? 0} HEADLINES
+                            </span>
+                            <span className="text-[10px] font-mono uppercase tracking-widest text-[#FFCC00] border border-[#FFCC00]/30 bg-[#FFCC00]/5 rounded px-2 py-1">
+                                {result.videoHooks?.length ?? 0} HOOKS
+                            </span>
+                            <span className="text-[10px] font-mono uppercase tracking-widest text-[#FFCC00] border border-[#FFCC00]/30 bg-[#FFCC00]/5 rounded px-2 py-1">
+                                {result.fbAdLibraryAngles?.length ?? 0} AD CONCEPTS
+                            </span>
+                            <span className="text-[10px] font-mono uppercase tracking-widest text-[#FFCC00] border border-[#FFCC00]/30 bg-[#FFCC00]/5 rounded px-2 py-1">
+                                {result.competitorMatrix?.length ?? 0} COMPETITORS MAPPED
+                            </span>
+                        </div>
+                    )}
+
                     <div className="flex-grow bg-zinc-950 border border-white/10 rounded-xl p-6 overflow-y-auto custom-scrollbar relative">
                         {isAnalyzing ? (
                             <div className="absolute inset-0 flex items-center justify-center bg-zinc-950/80 backdrop-blur-sm z-10 rounded-xl">
@@ -244,7 +267,7 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack }) => {
                             </div>
                         ) : result ? (
                             <pre className="text-sm font-mono text-zinc-300 whitespace-pre-wrap leading-relaxed">
-                                {result}
+                                {result.narrativeReport}
                             </pre>
                         ) : (
                             <div className="flex flex-col items-center justify-center h-full text-zinc-500">
@@ -255,6 +278,15 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack }) => {
                             </div>
                         )}
                     </div>
+
+                    {result && onNavigate && (
+                        <GoldButton
+                            onClick={handleSendToDirector}
+                            className="w-full py-3 mt-4 rounded-xl tracking-widest text-xs flex items-center justify-center gap-2"
+                        >
+                            SEND TO DIRECTOR AI <ArrowRight className="w-4 h-4" />
+                        </GoldButton>
+                    )}
                 </div>
             </div>
         </GlassPanel>
