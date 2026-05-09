@@ -518,7 +518,7 @@ ${input.instructions || "None"}
  */
 export const generateOfferOptimization = async (input: OfferOptimizerInput): Promise<OfferOptimizerResult> => {
   await delay(1000);
-  return retryWithBackoff(() => proxyCall<OfferOptimizerResult>('/api/gemini/flow', { flow: 'offer-optimizer', input }));
+  return retryWithBackoff(() => proxyCall<OfferOptimizerResult>('/api/gemini/text', { flow: 'offer-optimizer', input }));
 };
 
 /**
@@ -529,7 +529,7 @@ export const generateOfferOptimization = async (input: OfferOptimizerInput): Pro
  */
 export const generateMarketResearch = async (input: MarketResearchInput): Promise<MarketResearchReport> => {
   await delay(1000);
-  return retryWithBackoff(() => proxyCall<MarketResearchReport>('/api/gemini/flow', { flow: 'marketmind', input }));
+  return retryWithBackoff(() => proxyCall<MarketResearchReport>('/api/gemini/text', { flow: 'marketmind', input }));
 };
 
 /**
@@ -547,7 +547,7 @@ export const generateAdScript = async (
     chosenAngleBrief: string = ''
 ): Promise<Script> => {
   await delay(1000);
-  return retryWithBackoff(() => proxyCall<Script>('/api/gemini/flow', {
+  return retryWithBackoff(() => proxyCall<Script>('/api/gemini/text', {
     flow: 'adscript',
     input: { businessInfo, brandName, language, offer, chosenAngleBrief },
   }));
@@ -849,7 +849,7 @@ export const generateInfluencerScript = async (
   dayNumber: number = 1,
   seriesContext: string = ""
 ): Promise<InfluencerScriptResponse> => {
-  return retryWithBackoff(() => proxyCall<InfluencerScriptResponse>('/api/gemini/flow', {
+  return retryWithBackoff(() => proxyCall<InfluencerScriptResponse>('/api/gemini/text', {
     flow: 'influencer-script',
     input: { config, input, dayNumber, seriesContext },
   }));
@@ -915,7 +915,7 @@ export const generateStoryboard = async (
     ethnicity: string,
     language: 'English' | 'Taglish'
 ): Promise<StoryboardResponse> => {
-  return retryWithBackoff(() => proxyCall<StoryboardResponse>('/api/gemini/flow', {
+  return retryWithBackoff(() => proxyCall<StoryboardResponse>('/api/gemini/text', {
     flow: 'storyboard',
     input: { script, avatarDescription, businessInfo, ethnicity, language },
   }));

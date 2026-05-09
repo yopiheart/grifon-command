@@ -1,14 +1,48 @@
+// Gemini text proxy — dual-mode endpoint.
+//
+// Two body shapes are accepted:
+//
+//   1. **Flow mode** (server-side prompt registry, IP-protected):
+//      `{ flow: '<id>', input: {...} }` — the prompt is looked up in
+//      api/_lib/prompts.ts (server-only) so it never appears in the
+//      client bundle or network request body.
+//
+//   2. **Legacy passthrough mode** (smaller flows, prompt still
+//      client-built):
+//      `{ model, contents, config? }` — forwarded verbatim to Gemini.
+//
+// The two modes are merged into one file because Vercel Hobby caps each
+// deployment at 12 serverless functions; splitting flow.ts as its own
+// endpoint pushed the count to 13. Migrating the crown-jewel prompts
+// off the client doesn't require a separate endpoint — it just requires
+// the prompts to live server-side, which they now do.
+
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { z } from 'zod';
 import { GoogleGenAI } from '@google/genai';
 import { getUserFromAccessToken } from '../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../_lib/rateLimit.js';
-
-const Body = z.object({
-  model: z.string().min(1),
-  contents: z.unknown(),
-  config: z.unknown().optional(),
-});
+import {
+  SAFETY_SETTINGS,
+  cleanJson,
+  MODEL_TEXT,
+  MODEL_FAST,
+  MARKETMIND_SYSTEM_INSTRUCTION,
+  buildMarketMindParts,
+  TEMU_CLASSIFIER_PROMPT,
+  buildAdScriptPrompt,
+  parseAdScriptResponse,
+  type AdScriptInput,
+  buildOfferOptimizerPrompt,
+  parseOfferOptimizerResponse,
+  buildInfluencerScriptPrompt,
+  parseInfluencerScriptResponse,
+  type InfluencerScriptFlowInput,
+  buildStoryboardPrompt,
+  parseStoryboardResponse,
+  type StoryboardFlowInput,
+} from '../_lib/prompts.js';
+import type { MarketResearchInput, OfferOptimizerInput } from '../../types.js';
 
 const TEXT_LIMIT = 30;
 const TEXT_WINDOW_SECONDS = 60;
@@ -21,6 +55,128 @@ const getAi = (): GoogleGenAI => {
   _ai = new GoogleGenAI({ apiKey: key });
   return _ai;
 };
+
+// ---------------------------------------------------------------------------
+// FLOW_REGISTRY (server-side prompt mode)
+// ---------------------------------------------------------------------------
+
+type TemuSubType = 'ASMR' | 'Reaction' | 'Utility';
+
+const classifyTemuProductServerSide = async (
+  product: string,
+  description: string,
+  ai: GoogleGenAI
+): Promise<TemuSubType> => {
+  const response = await ai.models.generateContent({
+    model: MODEL_FAST,
+    contents: TEMU_CLASSIFIER_PROMPT(product, description),
+  } as any);
+  const text = response.text?.trim().toUpperCase() || 'REACTION';
+  if (text.includes('ASMR')) return 'ASMR';
+  if (text.includes('UTILITY')) return 'Utility';
+  return 'Reaction';
+};
+
+type FlowHandler = (input: any, ai: GoogleGenAI) => Promise<unknown>;
+
+const FLOW_REGISTRY: Record<string, FlowHandler> = {
+  marketmind: async (input: MarketResearchInput, ai) => {
+    const parts = buildMarketMindParts(input);
+    // TEMPORARY (per Neil 2026-05-09): downgraded from MODEL_RESEARCH (3.1 Pro)
+    // to Flash Lite to control API cost during early ramp. REVERT when budget
+    // allows by changing `MODEL_TEXT` back to `MODEL_RESEARCH`.
+    const response = await ai.models.generateContent({
+      model: MODEL_TEXT,
+      contents: { parts },
+      config: {
+        systemInstruction: MARKETMIND_SYSTEM_INSTRUCTION,
+        tools: [{ googleSearch: {} }],
+        safetySettings: SAFETY_SETTINGS,
+      },
+    } as any);
+    const rawText = response.text || '{}';
+    return JSON.parse(cleanJson(rawText));
+  },
+
+  adscript: async (input: AdScriptInput, ai) => {
+    let temuSubType: TemuSubType | undefined;
+    if (input.businessInfo.scriptType === 'Temu') {
+      temuSubType = await classifyTemuProductServerSide(
+        input.businessInfo.product,
+        input.businessInfo.features,
+        ai
+      );
+    }
+    const prompt = buildAdScriptPrompt(input, temuSubType);
+    const response = await ai.models.generateContent({
+      model: MODEL_TEXT,
+      contents: prompt,
+      config: {
+        responseMimeType: 'application/json',
+        safetySettings: SAFETY_SETTINGS,
+        thinkingConfig: { thinkingBudget: 4000 },
+      },
+    } as any);
+    const rawText = response.text || '{}';
+    return parseAdScriptResponse(rawText);
+  },
+
+  'offer-optimizer': async (input: OfferOptimizerInput, ai) => {
+    const prompt = buildOfferOptimizerPrompt(input);
+    const response = await ai.models.generateContent({
+      model: MODEL_TEXT,
+      contents: { parts: [{ text: prompt }] },
+      config: {
+        responseMimeType: 'application/json',
+        safetySettings: SAFETY_SETTINGS,
+      },
+    } as any);
+    const rawText = response.text || '{}';
+    return parseOfferOptimizerResponse(rawText);
+  },
+
+  'influencer-script': async (input: InfluencerScriptFlowInput, ai) => {
+    const prompt = buildInfluencerScriptPrompt(input);
+    const response = await ai.models.generateContent({
+      model: MODEL_TEXT,
+      contents: prompt,
+      config: {
+        responseMimeType: 'application/json',
+        safetySettings: SAFETY_SETTINGS,
+        thinkingConfig: { thinkingBudget: 4000 },
+      },
+    } as any);
+    return parseInfluencerScriptResponse(response.text || '{}');
+  },
+
+  storyboard: async (input: StoryboardFlowInput, ai) => {
+    const prompt = buildStoryboardPrompt(input);
+    const response = await ai.models.generateContent({
+      model: MODEL_FAST,
+      contents: prompt,
+      config: {
+        responseMimeType: 'application/json',
+        safetySettings: SAFETY_SETTINGS,
+      },
+    } as any);
+    return parseStoryboardResponse(response.text || '{}');
+  },
+};
+
+// ---------------------------------------------------------------------------
+// Body schemas — discriminated by presence of `flow` field
+// ---------------------------------------------------------------------------
+
+const FlowBody = z.object({
+  flow: z.enum(['marketmind', 'adscript', 'offer-optimizer', 'influencer-script', 'storyboard']),
+  input: z.unknown(),
+});
+
+const LegacyBody = z.object({
+  model: z.string().min(1),
+  contents: z.unknown(),
+  config: z.unknown().optional(),
+});
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
@@ -35,11 +191,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const user = await getUserFromAccessToken(token);
   if (!user) return res.status(401).json({ error: 'invalid_token' });
 
-  const parsed = Body.safeParse(req.body ?? {});
-  if (!parsed.success) {
-    return res.status(400).json({ error: 'invalid_body', issues: parsed.error.issues });
-  }
+  const rawBody: any = req.body ?? {};
+  const isFlowMode = typeof rawBody === 'object' && rawBody !== null && typeof rawBody.flow === 'string';
 
+  // Rate limit (single budget across both modes — same API quota).
   const allowed = await rateLimitCheck(
     `gemini:text:${user.id}`,
     TEXT_LIMIT,
@@ -49,15 +204,34 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     res.setHeader('Retry-After', String(TEXT_WINDOW_SECONDS));
     return res.status(429).json({
       error: 'rate_limited',
-      scope: 'text',
+      scope: isFlowMode ? `flow:${rawBody.flow}` : 'text',
       retry_after_seconds: TEXT_WINDOW_SECONDS,
     });
   }
 
   try {
     const ai = getAi();
-    const response = await ai.models.generateContent(parsed.data as any);
 
+    if (isFlowMode) {
+      // Flow mode — server-side prompt registry.
+      const parsed = FlowBody.safeParse(rawBody);
+      if (!parsed.success) {
+        return res.status(400).json({ error: 'invalid_body', issues: parsed.error.issues });
+      }
+      const handlerFn = FLOW_REGISTRY[parsed.data.flow];
+      if (!handlerFn) {
+        return res.status(400).json({ error: 'unknown_flow', flow: parsed.data.flow });
+      }
+      const result = await handlerFn(parsed.data.input, ai);
+      return res.status(200).json(result);
+    }
+
+    // Legacy passthrough mode — client-built prompt.
+    const parsed = LegacyBody.safeParse(rawBody);
+    if (!parsed.success) {
+      return res.status(400).json({ error: 'invalid_body', issues: parsed.error.issues });
+    }
+    const response = await ai.models.generateContent(parsed.data as any);
     return res.status(200).json({
       text: response.text ?? '',
       candidates: response.candidates ?? [],
@@ -80,9 +254,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(429).json({ error: 'gemini_quota', detail: msg });
     }
 
-    // Surface upstream model overload as 503 so the client's retryWithBackoff
-    // (which already retries 429/503) picks it up instead of treating it as a
-    // hard failure. Pattern matches Gemini's `{code: 503, status: "UNAVAILABLE"}`.
     const isUnavailable =
       msg.includes('UNAVAILABLE') ||
       errStr.includes('UNAVAILABLE') ||

@@ -2,7 +2,6 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "functions": {
     "api/gemini/text.ts": { "maxDuration": 60 },
-    "api/gemini/flow.ts": { "maxDuration": 60 },
     "api/gemini/image.ts": { "maxDuration": 60 },
     "api/gemini/video.ts": { "maxDuration": 30 },
     "api/gemini/video/poll.ts": { "maxDuration": 60 },
