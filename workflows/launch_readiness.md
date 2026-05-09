@@ -4,9 +4,9 @@
 
 This is the meta-workflow. It doesn't do the work itself — it points to the workflows that do, and tracks overall progress.
 
-## Status as of 2026-05-09 (v1.x bundle E2E sign-off — 3/4 image-rules PASS, 1 narrative-override gap surfaced)
+## Status as of 2026-05-09 (v1.x bundle E2E sign-off — all 4 image rules PASS, but new P0 logo-carry-through gap blocks beta)
 
-**Working tree clean. No new commits this session.** Pure verification + analysis session. Ran ITEM A (resume-pill in real Chrome) + ITEM B (Playwright wizard E2E with hero photo upload, eyeball against the 4 v1.x scene-image rules). Three of four image-rule criteria pass clean. One residual gap (FACE_TO_CAMERA narrative override) surfaced — needs grill-me on `services/geminiService.ts` storyboard-narrative-generation layer before beta. Two unrelated synthesis-reliability findings logged.
+**One commit pushed (`43fa52c` — initial sign-off doc). Phase 4a in-flight: this section corrects two findings after Neil's review of bundle artifacts.** Ran ITEM A (resume-pill in real Chrome) + ITEM B (Playwright wizard E2E with hero photo upload). All 4 v1.x scene-image rules now PASS clean (initial eval had SCENE_06 wrong — pulled back). **Real beta blocker is a separately-surfaced finding: focal-point bag scenes drop the uploaded hero photo's brand label**, regenerating the bag from scratch with no logo. SCENE_04 B-roll proves the model CAN carry hero through (preserved gibberish text), so this is a structural prompt-pipeline gap, not a model limitation. Plus the SCENE_02/SCENE_05 timeouts, now scoped as a fix not just a finding.
 
 ### What ran today
 
@@ -20,10 +20,31 @@ This is the meta-workflow. It doesn't do the work itself — it points to the wo
 |---|---|---|---|
 | 1 | AVATAR_CAMERA_ANGLES (≥ frontal-ish bias) | **PASS** | SCENE_03 frontal, SCENE_06 3/4 frontal. No side-profile drift. (Sample limited — SCENE_02 was the third avatar scene + timed out.) |
 | 2 | IDENTITY_LOCK (hair + wardrobe match Step 4) | **PASS clean** | SCENE_03 + SCENE_06 both show shoulder-length wavy brown hair worn DOWN, beige collared sweater. The hair-down-vs-tied-up drift Neil flagged on the prior run is fixed. |
-| 3 | FACE_TO_CAMERA (eyes + mouth visible on scriptLine scenes) | **PARTIAL FAIL — 1 of 2** | SCENE_03 ✅ (eyes open, smiling). SCENE_06 ❌ — **eyes closed** despite scriptLine `"Hindi ko na kailangan lumabas..."`. **Why:** narrative-generator output `[VISUAL_PROMPT]: "...eyes closed in appreciation, scenting the aroma..."`. The c45c018 FACE_TO_CAMERA rule is enforced at the *scene image-gen* layer, but the upstream *storyboard-narrative-generation* layer is not constrained to forbid "eyes closed / looking away / head turned" descriptors for scriptLine scenes. **Fix at the narrative-generation prompt, not the scene-image prompt.** |
+| 3 | FACE_TO_CAMERA (eyes + mouth visible on scriptLine scenes) | **PASS** *(corrected)* | SCENE_03 ✅ eyes open + smiling. SCENE_06 ✅ — narrative-driven sensory beat (`"warm golden hour glow, scenting the aroma, eyes closed in appreciation"`) is intentional storytelling, not a rule violation. The FACE_TO_CAMERA rule should yield to narrative when the scene is *about* the closed-eyes moment. Initial eval was too literal-rule-bound; corrected per Neil's review. |
 | 4 | BAG_ORIENTATION_RULE (front of bag faces camera) | **PASS clean** | SCENE_01_END, SCENE_03, SCENE_04, SCENE_07 all show bag front-facing. Brand-new rule from c45c018 is firing correctly across all 4 product-bearing scenes. |
 
-### Synthesis-reliability findings (separate from rule compliance)
+### P0 finding (separately surfaced) — Logo carry-through dropped on focal-point bag scenes
+
+The 4 v1.x scene-image rules all pass — but a different, structural gap emerged that **does** block beta. Pattern across the 5 successful scenes:
+
+| Scene | Bag visible? | Hero logo preserved? |
+|---|---|---|
+| SCENE_01_END | focal point on coaster | ❌ blank kraft, no label |
+| SCENE_03 | held by avatar Kaye | ❌ fake `"250g + bean illustration"` generated |
+| **SCENE_04** | **incidental B-roll behind mug** | ✅ **hero `"Coffee"` wordmark visibly preserved** (even with gibberish text) |
+| SCENE_07 | centered hero shot | ❌ blank white label panel |
+
+**Pattern:** focal-point bag scenes regenerate the bag from scratch (no logo). B-roll preserves hero through context-attachment. **SCENE_04 is the control** — proves the model CAN carry hero text when the bag isn't the prompt's focal point.
+
+**Hypothesis (from Phase 4 code map):** the storyboard schema at [services/geminiService.ts:1544-1545](../services/geminiService.ts#L1544-L1545) outputs `"referenceImage": "avatar" | "product"` (singular). Avatar+product scenes can only carry ONE reference. SCENE_03 (avatar holding bag) tags as `"avatar"` → `getReferenceData()` at [components/Step5Storyboard.tsx:102-120](../components/Step5Storyboard.tsx#L102-L120) only passes the avatar URL → the bag has no hero anchor → model regenerates it. `generateSceneImage` at [services/geminiService.ts:1609-1617](../services/geminiService.ts#L1609-L1617) ALREADY accepts both refs as `inlineData`; the bottleneck is the schema and the data plumbing, not the image-gen call itself.
+
+**Implication for beta:** beta cohort is Filipino SMB owners uploading their REAL product with their REAL brand logo. Scenes generated WITHOUT their brand on focal-point shots break the entire value prop. **This is a real blocker.**
+
+**Fix path (Phase 4d in the plan):** expand schema enum to include `"both"`, update `getReferenceData()` to plumb both URLs when needed, rephrase `NO_LOGO_HALLUCINATION` away from "do not render any logo" toward "preserve uploaded label exactly." Tuned-file edit, requires `grill-me`.
+
+**Validation gate first (Phase 4b):** re-test with a real-label hero photo before any prompt edit. SCENE_04 evidence is strong but circumstantial; the re-test confirms the schema-extend fix is the right shape (vs. a narrower text-only fix if real labels survive).
+
+### Synthesis-reliability findings (now in scope as fixes, Phase 4c)
 
 1. **2 of 7 scenes hit 55s `PROXY_TIMEOUT`** — SCENE_02 (Kaye rubbing temples at desk) and SCENE_05 (hands pressing zip-seal close-up). **Both are hand-detail-heavy.** Other avatar scenes with relaxed hand poses (SCENE_03 holding bag, SCENE_06 cupping mug) succeeded. Sample is small but the pattern is suggestive — model spends extra latency on detailed hand poses, especially when paired with the uploaded reference photo.
 
@@ -35,15 +56,17 @@ This is the meta-workflow. It doesn't do the work itself — it points to the wo
 
 ### Decisions to make before merge to `main`
 
-The bundle is **mostly beta-ready** but the FACE_TO_CAMERA narrative-override hole is real. Three paths:
+The 4 v1.x rules pass clean, but the logo-carry-through P0 + the SCENE_02/SCENE_05 timeouts are real beta blockers. Plan-mode-approved sequencing (see `~/.claude/plans/continuing-from-2026-05-08-wizard-splendid-volcano.md` Phase 4):
 
-| Option | Description | Cost |
+| Phase | What | Cost |
 |---|---|---|
-| **A. Merge now, fix in v1.1** | Accept FACE_TO_CAMERA gap for beta cohort (5-10 hand-picked users, short feedback loop). | 0 — `git checkout main && git merge checkout-redesign-preview && git push` |
-| **B. Hot-fix the narrative prompt, then merge** | Re-grill on `services/geminiService.ts` storyboard-narrative-generation prompt. Forbid "eyes closed / looking away / head turned" descriptors for scriptLine scenes. Re-run regression. | ~1-2 hours including grill-me |
-| **C. Block beta until B + timeout investigation lands** | Also bump the 55s ceiling for storyboard image gen, or pre-empt by softening hand-pose prompts. Higher confidence beta. | ~½ day |
+| **4a (in-flight)** | Doc correction commit (this section) | ~10 min, no code |
+| **4b** | Validate logo hypothesis via real-label hero re-test (Neil drops a real product photo, regenerate SCENE_03 + SCENE_07 + SCENE_01_END) | ~15 min |
+| **4c** | UX/timeout fixes — `retryWithBackoff` broaden to include PROXY_TIMEOUT + per-scene GENERATE button on failed scenes (no grill-me; transport + UI only) | ~30 min |
+| **4d** | Logo carry-through fix — schema extend `referenceImage` to `"both"`, plumb both refs, rephrase `NO_LOGO_HALLUCINATION` (TUNED file, needs grill-me) | ~1 hour |
+| **4e** | Surface merge-to-main decision to Neil | 0 — Neil's explicit go-ahead required |
 
-**Neil's call** — shared-state action.
+**Bundle is NOT beta-ready until 4d ships.** Merge gate is Neil's call after Phase 4 lands.
 
 ### Files saved for review
 
@@ -57,7 +80,7 @@ The bundle is **mostly beta-ready** but the FACE_TO_CAMERA narrative-override ho
     ├── scene_1_end.png     — kraft bag on coaster + beans
     ├── scene_3_start.png   — Kaye holding bag, smiling, frontal
     ├── scene_4_start.png   — French press pour + bag in BG (gibberish leak)
-    ├── scene_6_start.png   — Kaye smelling mug, EYES CLOSED (rule violation)
+    ├── scene_6_start.png   — Kaye smelling mug, eyes closed (intentional sensory beat)
     └── scene_7_start.png   — hero bag shot
 ```
 
