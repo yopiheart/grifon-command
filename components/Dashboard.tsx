@@ -9,6 +9,7 @@ import {
 import { useSubscription } from '../hooks/useSubscription';
 import { Aurora } from './ui/Aurora';
 import { QuotaMeter } from './ui/QuotaMeter';
+import { CommandPalette, type CommandItem } from './ui/CommandPalette';
 
 const GrifonLogo = ({ className = "h-8 w-auto" }) => (
   <img src="/logo.png" alt="GRIFON Logo" className={`object-contain ${className}`} />
@@ -72,6 +73,8 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
   ];
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const [paletteOpen, setPaletteOpen] = useState(false);
+  const [paletteQuery, setPaletteQuery] = useState('');
   const [showUpgradeBanner, setShowUpgradeBanner] = useState(false);
   const [bannerMessage, setBannerMessage] = useState('');
   const bannerRef = useRef<HTMLDivElement>(null);
@@ -106,12 +109,24 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
   }, []);
 
   useEffect(() => {
-    const handleEsc = (e: KeyboardEvent) => {
+    const handleKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setProfileMenuOpen(false);
+      // Cmd+K (mac) / Ctrl+K (win) toggles the command palette
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setPaletteQuery('');
+        setPaletteOpen(prev => !prev);
+      }
     };
-    window.addEventListener('keydown', handleEsc);
-    return () => window.removeEventListener('keydown', handleEsc);
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
   }, []);
+
+  const paletteItems: CommandItem[] = [
+    { id: 'creative_director', name: 'DIRECTOR', desc: '8-step video ad workflow', icon: Film, group: 'Core', onSelect: () => onSelectModule('creative_director') },
+    ...CORE_MODULES.map(m => ({ id: m.id, name: m.name, desc: m.desc, icon: m.icon, group: 'Core', onSelect: () => onSelectModule(m.id) })),
+    ...MORE_MODULES.map(m => ({ id: m.id, name: m.name, desc: m.desc, icon: m.icon, group: 'More', onSelect: () => onSelectModule(m.id) })),
+  ];
 
   useEffect(() => {
     const isDismissed = localStorage.getItem('grifon_banner_dismissed') === 'true';
@@ -322,9 +337,18 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
               <input
                 type="text"
                 placeholder={placeholders[placeholderIndex]}
-                className="bg-transparent text-white text-[11px] sm:text-xs lg:text-base flex-1 min-w-0 outline-none placeholder:text-zinc-600 transition-all duration-500"
+                onFocus={() => { setPaletteQuery(''); setPaletteOpen(true); }}
+                onClick={() => { setPaletteQuery(''); setPaletteOpen(true); }}
+                className="bg-transparent text-white text-[11px] sm:text-xs lg:text-base flex-1 min-w-0 outline-none placeholder:text-zinc-600 transition-all duration-500 cursor-pointer"
+                readOnly
               />
-              <button className="w-9 h-9 lg:w-12 lg:h-12 bg-[#FFCC00] rounded-xl flex items-center justify-center flex-shrink-0 hover:scale-105 active:scale-95 transition-all">
+              <kbd className="hidden md:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-mono text-zinc-500 bg-zinc-800/80 border border-white/5 rounded mr-1">
+                <span className="text-[11px]">⌘</span>K
+              </kbd>
+              <button
+                onClick={() => { setPaletteQuery(''); setPaletteOpen(true); }}
+                className="w-9 h-9 lg:w-12 lg:h-12 bg-[#FFCC00] rounded-xl flex items-center justify-center flex-shrink-0 hover:scale-105 active:scale-95 transition-all"
+              >
                 <ArrowRight className="w-5 h-5 text-black" />
               </button>
             </motion.div>
@@ -484,6 +508,13 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
 
         </div>
       </main>
+
+      <CommandPalette
+        open={paletteOpen}
+        onClose={() => setPaletteOpen(false)}
+        items={paletteItems}
+        initialQuery={paletteQuery}
+      />
 
       {/* Global Profile Menu */}
       {profileMenuOpen && (
