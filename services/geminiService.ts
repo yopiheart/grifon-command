@@ -1,6 +1,14 @@
 import type { GenerateContentResponse } from "@google/genai";
 import { BusinessInfo, Script, Scene, StoryboardResponse, VideoPrompt, MarketResearchInput, OfferOptimizerInput, VideoEditInput, OptimizedPromptResponse, CaptionHeadlineInput, DayContent, AdVariant, UplinkData, CinematicSpecConfig, VisualTheme, CinematicNarrativeScene, VideoModelType, InfluencerConfig, InfluencerStrategicInput, InfluencerScriptResponse } from '../types';
 import { getSupabase } from './supabaseClient';
+import { startJob, endJob, type JobKind } from './activeJobsService';
+
+export interface ProxyCallOpts {
+  jobLabel?: string;
+  jobKind?: JobKind;
+  jobId?: string;
+  jobDetail?: string;
+}
 
 // Server proxy for text-class Gemini calls. Replaces direct getAi() at the
 // transport layer only — prompts, schemas, and model IDs are unchanged.
@@ -13,53 +21,71 @@ const proxyGenerateImage = async (params: any): Promise<GenerateContentResponse>
   return proxyCall('/api/gemini/image', params);
 };
 
-const proxyCall = async <T = GenerateContentResponse>(endpoint: string, params: any): Promise<T> => {
+const proxyCall = async <T = GenerateContentResponse>(endpoint: string, params: any, opts?: ProxyCallOpts): Promise<T> => {
   const sb = getSupabase();
   const { data: sessionData } = await sb.auth.getSession();
   const token = sessionData.session?.access_token;
   if (!token) throw new Error('NOT_AUTHENTICATED');
+
+  // Optional: surface this call as an active job on the dashboard.
+  // Callers opt in by passing opts.jobLabel; fast text calls leave it off
+  // so the panel only fires for genuinely long operations.
+  let trackedJobId: string | null = null;
+  if (opts?.jobLabel) {
+    trackedJobId = opts.jobId ?? `proxy:${endpoint}:${Math.random().toString(36).slice(2, 8)}`;
+    startJob({
+      id: trackedJobId,
+      label: opts.jobLabel,
+      kind: opts.jobKind ?? 'generic',
+      detail: opts.jobDetail,
+    });
+  }
 
   // Abort 5s before Vercel's hard 60s ceiling so the client surfaces a clear
   // PROXY_TIMEOUT instead of an opaque 504 from the platform.
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 55000);
 
-  let res: Response;
   try {
-    res = await fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(params),
-      signal: controller.signal,
-    });
-  } catch (err: any) {
-    if (err?.name === 'AbortError') {
-      const timeoutErr: any = new Error('PROXY_TIMEOUT: request exceeded 55s ceiling');
-      timeoutErr.status = 504;
-      throw timeoutErr;
+    let res: Response;
+    try {
+      res = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(params),
+        signal: controller.signal,
+      });
+    } catch (err: any) {
+      if (err?.name === 'AbortError') {
+        const timeoutErr: any = new Error('PROXY_TIMEOUT: request exceeded 55s ceiling');
+        timeoutErr.status = 504;
+        throw timeoutErr;
+      }
+      throw err;
+    } finally {
+      clearTimeout(timeoutId);
     }
-    throw err;
-  } finally {
-    clearTimeout(timeoutId);
-  }
 
-  if (!res.ok) {
-    const body = await res.json().catch(() => ({} as any));
-    if (res.status === 429) {
-      const err: any = new Error(body?.detail ? `429: ${body.detail}` : 'RESOURCE_EXHAUSTED');
-      err.status = 429;
-      err.retry_after_seconds = body?.retry_after_seconds ?? 30;
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({} as any));
+      if (res.status === 429) {
+        const err: any = new Error(body?.detail ? `429: ${body.detail}` : 'RESOURCE_EXHAUSTED');
+        err.status = 429;
+        err.retry_after_seconds = body?.retry_after_seconds ?? 30;
+        throw err;
+      }
+      const err: any = new Error(`PROXY_ERROR_${res.status}: ${body?.error ?? 'unknown'}${body?.detail ? ` — ${body.detail}` : ''}`);
+      err.status = res.status;
+      err.body = body;
       throw err;
     }
-    const err: any = new Error(`PROXY_ERROR_${res.status}: ${body?.error ?? 'unknown'}${body?.detail ? ` — ${body.detail}` : ''}`);
-    err.status = res.status;
-    err.body = body;
-    throw err;
+    return (await res.json()) as T;
+  } finally {
+    if (trackedJobId) endJob(trackedJobId);
   }
-  return (await res.json()) as T;
 };
 
 type VideoPollResponse =
@@ -68,7 +94,11 @@ type VideoPollResponse =
   | { done: true; error: { message?: string; code?: string } };
 
 const proxyGenerateVideo = (params: any): Promise<{ operation: any }> =>
-  proxyCall<{ operation: any }>('/api/gemini/video', params);
+  proxyCall<{ operation: any }>('/api/gemini/video', params, {
+    jobLabel: 'Submitting video render',
+    jobKind: 'video',
+    jobDetail: 'Reaching the render farm…',
+  });
 
 const proxyPollVideoOperation = async (operation: any): Promise<VideoPollResponse> => {
   try {

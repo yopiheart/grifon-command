@@ -12,6 +12,8 @@ import { QuotaMeter } from './ui/QuotaMeter';
 import { CommandPalette, type CommandItem } from './ui/CommandPalette';
 import { RecentWorkCard } from './ui/RecentWorkCard';
 import { loadRecentWork, recordRecentWork, type RecentItem } from '../services/recentWorkService';
+import { ActiveJobsPanel } from './ui/ActiveJobsPanel';
+import { useActiveJobs } from '../hooks/useActiveJobs';
 
 const GrifonLogo = ({ className = "h-8 w-auto" }) => (
   <img src="/logo.png" alt="GRIFON Logo" className={`object-contain ${className}`} />
@@ -80,6 +82,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
   const [showUpgradeBanner, setShowUpgradeBanner] = useState(false);
   const [bannerMessage, setBannerMessage] = useState('');
   const [recent, setRecent] = useState<RecentItem[]>([]);
+  const activeJobs = useActiveJobs();
 
   useEffect(() => {
     setRecent(loadRecentWork());
@@ -413,6 +416,13 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
               ))}
             </div>
           </div>
+
+          {/* Active Jobs */}
+          {activeJobs.length > 0 && (
+            <div className="mb-6 max-w-2xl lg:max-w-3xl mx-auto w-full">
+              <ActiveJobsPanel jobs={activeJobs} delay={0.3} />
+            </div>
+          )}
 
           {/* Recent Work */}
           {recent.length > 0 && (
