@@ -372,28 +372,45 @@ const SAFETY_SETTINGS = [
     { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
 ];
 
-const retryWithBackoff = async <T>(fn: () => Promise<T>, retries = 5, delayMs = 4000): Promise<T> => {
+const retryWithBackoff = async <T>(
+  fn: () => Promise<T>,
+  retries = 5,
+  delayMs = 4000,
+  timeoutRetriesLeft = 2,
+): Promise<T> => {
   try {
     return await fn();
   } catch (error: any) {
     const errorString = JSON.stringify(error);
     const msg = error?.message || '';
-    
-    const isQuota = 
-        msg.includes('429') || 
-        msg.includes('RESOURCE_EXHAUSTED') || 
+
+    const isQuota =
+        msg.includes('429') ||
+        msg.includes('RESOURCE_EXHAUSTED') ||
         msg.includes('Quota exceeded') ||
-        errorString.includes('429') || 
+        errorString.includes('429') ||
         errorString.includes('RESOURCE_EXHAUSTED') ||
         error?.status === 429 ||
         error?.status === 503 ||
         error?.error?.code === 429 ||
         error?.error?.status === 'RESOURCE_EXHAUSTED';
 
+    const isTimeout =
+        error?.status === 504 ||
+        msg.includes('PROXY_TIMEOUT');
+
     if (retries > 0 && isQuota) {
       console.warn(`Quota hit (429). Retrying in ${delayMs}ms... (${retries} retries left)`);
       await new Promise(resolve => setTimeout(resolve, delayMs));
-      return retryWithBackoff(fn, retries - 1, delayMs * 2);
+      return retryWithBackoff(fn, retries - 1, delayMs * 2, timeoutRetriesLeft);
+    }
+    // Timeout retries get a separate budget (default 2) — each retry costs another
+    // 55s of wall-clock under the worst case, so unbounded timeout retries would
+    // stack to many minutes per scene. Quota budget stays untouched.
+    if (timeoutRetriesLeft > 0 && isTimeout) {
+      console.warn(`Proxy timeout (504). Retrying in ${delayMs}ms... (${timeoutRetriesLeft} timeout retries left)`);
+      await new Promise(resolve => setTimeout(resolve, delayMs));
+      return retryWithBackoff(fn, retries, delayMs, timeoutRetriesLeft - 1);
     }
     throw error;
   }

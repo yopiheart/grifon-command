@@ -487,16 +487,21 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
                         <div className="flex items-center gap-3">
                             <span className="bg-[#FFCC00]/10 text-[#FFCC00] text-[10px] font-black px-3 py-1 rounded-full border border-[#FFCC00]/20 font-mono tracking-tighter">SCENE_0{index + 1}</span>
                             <span className="h-[1px] flex-1 bg-white/5"></span>
-                            {(scene.imageUrl || scene.endFrameImageUrl) && !scene.manualUploadUrl && !scene.manualEndFrameUrl && (
-                                <button
-                                    onClick={() => handleGenerateSingleScene(index, true)}
-                                    disabled={generatingImageIndex !== null || loadingImages}
-                                    className="text-[9px] font-mono tracking-widest text-zinc-400 hover:text-[#FFCC00] disabled:opacity-30 disabled:cursor-not-allowed transition-colors flex items-center gap-1.5 px-2 py-1 border border-white/10 hover:border-[#FFCC00]/40 rounded-full"
-                                    title="Regenerate this scene only"
-                                >
-                                    <RefreshCw className={`w-3 h-3 ${generatingImageIndex === index ? 'animate-spin' : ''}`} /> {generatingImageIndex === index ? 'REGENERATING...' : 'REGEN'}
-                                </button>
-                            )}
+                            {!scene.manualUploadUrl && !scene.manualEndFrameUrl && (() => {
+                                const hasImage = !!(scene.imageUrl || scene.endFrameImageUrl);
+                                const idle = hasImage ? 'REGEN' : 'GENERATE';
+                                const busy = hasImage ? 'REGENERATING...' : 'GENERATING...';
+                                return (
+                                    <button
+                                        onClick={() => handleGenerateSingleScene(index, true)}
+                                        disabled={generatingImageIndex !== null || loadingImages}
+                                        className="text-[9px] font-mono tracking-widest text-zinc-400 hover:text-[#FFCC00] disabled:opacity-30 disabled:cursor-not-allowed transition-colors flex items-center gap-1.5 px-2 py-1 border border-white/10 hover:border-[#FFCC00]/40 rounded-full"
+                                        title={hasImage ? 'Regenerate this scene only' : 'Generate this failed scene'}
+                                    >
+                                        <RefreshCw className={`w-3 h-3 ${generatingImageIndex === index ? 'animate-spin' : ''}`} /> {generatingImageIndex === index ? busy : idle}
+                                    </button>
+                                );
+                            })()}
                         </div>
                         <p className="text-lg font-bold text-white leading-tight">"{scene.scriptLine}"</p>
                         <div className="p-3 bg-zinc-900 border border-white/10 rounded-xl space-y-2">
