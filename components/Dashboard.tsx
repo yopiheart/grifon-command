@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect, useMemo } from 'react';
 import { motion } from 'motion/react';
 import {
   Film, Search, Target, Type, Image as ImageIcon,
@@ -10,6 +10,8 @@ import { useSubscription } from '../hooks/useSubscription';
 import { Aurora } from './ui/Aurora';
 import { QuotaMeter } from './ui/QuotaMeter';
 import { CommandPalette, type CommandItem } from './ui/CommandPalette';
+import { RecentWorkCard } from './ui/RecentWorkCard';
+import { loadRecentWork, recordRecentWork, type RecentItem } from '../services/recentWorkService';
 
 const GrifonLogo = ({ className = "h-8 w-auto" }) => (
   <img src="/logo.png" alt="GRIFON Logo" className={`object-contain ${className}`} />
@@ -77,6 +79,33 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
   const [paletteQuery, setPaletteQuery] = useState('');
   const [showUpgradeBanner, setShowUpgradeBanner] = useState(false);
   const [bannerMessage, setBannerMessage] = useState('');
+  const [recent, setRecent] = useState<RecentItem[]>([]);
+
+  useEffect(() => {
+    setRecent(loadRecentWork());
+  }, []);
+
+  const ALL_MODULE_LOOKUP = useMemo(() => {
+    const map: Record<string, { name: string }> = {
+      creative_director: { name: 'Director' },
+    };
+    [...CORE_MODULES, ...MORE_MODULES].forEach(m => { map[m.id] = { name: m.name }; });
+    return map;
+  }, []);
+
+  const handleSelectModule = (moduleId: string) => {
+    const meta = ALL_MODULE_LOOKUP[moduleId];
+    if (meta) {
+      const next = recordRecentWork({
+        id: `visit:${moduleId}`,
+        moduleId,
+        title: meta.name,
+        kind: 'visit',
+      });
+      setRecent(next);
+    }
+    onSelectModule(moduleId);
+  };
   const bannerRef = useRef<HTMLDivElement>(null);
   const [bannerHeight, setBannerHeight] = useState(0);
 
@@ -123,9 +152,9 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
   }, []);
 
   const paletteItems: CommandItem[] = [
-    { id: 'creative_director', name: 'DIRECTOR', desc: '8-step video ad workflow', icon: Film, group: 'Core', onSelect: () => onSelectModule('creative_director') },
-    ...CORE_MODULES.map(m => ({ id: m.id, name: m.name, desc: m.desc, icon: m.icon, group: 'Core', onSelect: () => onSelectModule(m.id) })),
-    ...MORE_MODULES.map(m => ({ id: m.id, name: m.name, desc: m.desc, icon: m.icon, group: 'More', onSelect: () => onSelectModule(m.id) })),
+    { id: 'creative_director', name: 'DIRECTOR', desc: '8-step video ad workflow', icon: Film, group: 'Core', onSelect: () => handleSelectModule('creative_director') },
+    ...CORE_MODULES.map(m => ({ id: m.id, name: m.name, desc: m.desc, icon: m.icon, group: 'Core', onSelect: () => handleSelectModule(m.id) })),
+    ...MORE_MODULES.map(m => ({ id: m.id, name: m.name, desc: m.desc, icon: m.icon, group: 'More', onSelect: () => handleSelectModule(m.id) })),
   ];
 
   useEffect(() => {
@@ -238,7 +267,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
         ].map((item) => (
           <div 
             key={item.id}
-            onClick={() => onSelectModule(item.id)}
+            onClick={() => handleSelectModule(item.id)}
             className="flex flex-col items-center gap-1 py-1 px-3 rounded-xl cursor-pointer group"
           >
             <div className={`w-1 h-1 rounded-full mx-auto mb-0.5 ${activeModule === item.id ? 'bg-[#FFCC00]' : 'bg-transparent'}`} />
@@ -263,7 +292,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
           return (
             <div 
               key={item.id}
-              onClick={() => onSelectModule(item.id)}
+              onClick={() => handleSelectModule(item.id)}
               className={`relative flex flex-col items-center gap-1.5 py-3 px-2 rounded-xl cursor-pointer w-16 transition-all group ${isActive ? 'bg-zinc-900/80' : 'hover:bg-zinc-900/80'}`}
             >
               {/* Active indicator bar */}
@@ -369,7 +398,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
               ].map((step, idx, arr) => (
                 <React.Fragment key={step.id}>
                   <div 
-                    onClick={() => onSelectModule(step.id)}
+                    onClick={() => handleSelectModule(step.id)}
                     className="flex items-center gap-1.5 lg:gap-2 flex-shrink-0 cursor-pointer active:scale-95 transition-transform"
                   >
                     <div className="w-5 h-5 lg:w-6 lg:h-6 rounded-full bg-[#FFCC00]/10 border border-[#FFCC00]/30 flex items-center justify-center text-[9px] lg:text-[10px] font-mono font-bold text-[#FFCC00]">
@@ -385,6 +414,17 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
             </div>
           </div>
 
+          {/* Recent Work */}
+          {recent.length > 0 && (
+            <div className="mb-8 lg:mb-10 max-w-2xl lg:max-w-3xl mx-auto w-full">
+              <RecentWorkCard
+                items={recent}
+                onResume={(item) => handleSelectModule(item.moduleId)}
+                delay={0.35}
+              />
+            </div>
+          )}
+
           {/* Module Grid */}
           <div className="max-w-3xl mx-auto w-full mb-12">
             {/* Mobile Grid */}
@@ -394,7 +434,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                 initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.25 }}
-                onClick={() => onSelectModule('creative_director')}
+                onClick={() => handleSelectModule('creative_director')}
                 className="col-span-2 bg-zinc-900/80 backdrop-blur-xl border border-[#FFCC00]/30 rounded-2xl p-5 relative overflow-hidden group cursor-pointer flex items-center gap-4 hover:scale-[1.02] hover:border-[#FFCC00]/50 hover:shadow-[0_8px_40px_rgba(255,204,0,0.15)] active:scale-[0.98] transition-all duration-300"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-[#FFCC00]/5 to-transparent pointer-events-none" />
@@ -415,7 +455,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.3 + i * 0.06 }}
-                  onClick={() => onSelectModule(mod.id)}
+                  onClick={() => handleSelectModule(mod.id)}
                   className="bg-zinc-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-4 relative overflow-hidden group cursor-pointer aspect-square flex flex-col justify-between hover:scale-[1.02] hover:border-[#FFCC00]/30 hover:shadow-[0_8px_30px_rgba(255,204,0,0.12)] active:scale-[0.98] transition-all duration-300"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
@@ -437,7 +477,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                 initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.25 }}
-                onClick={() => onSelectModule('creative_director')}
+                onClick={() => handleSelectModule('creative_director')}
                 className="flex-1 bg-zinc-900/80 backdrop-blur-xl border border-[#FFCC00]/30 rounded-2xl p-6 relative overflow-hidden group cursor-pointer text-center hover:scale-[1.02] hover:border-[#FFCC00]/50 hover:shadow-[0_8px_40px_rgba(255,204,0,0.15)] active:scale-[0.98] transition-all duration-300"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-[#FFCC00]/5 to-transparent pointer-events-none" />
@@ -455,7 +495,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.3 + i * 0.06 }}
-                  onClick={() => onSelectModule(mod.id)}
+                  onClick={() => handleSelectModule(mod.id)}
                   className="flex-1 bg-zinc-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6 relative overflow-hidden group cursor-pointer text-center min-w-0 hover:scale-[1.02] hover:border-[#FFCC00]/30 hover:shadow-[0_8px_30px_rgba(255,204,0,0.12)] active:scale-[0.98] transition-all duration-300"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
@@ -479,7 +519,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                 {MORE_MODULES.map((mod) => (
                   <div 
                     key={mod.id}
-                    onClick={() => onSelectModule(mod.id)}
+                    onClick={() => handleSelectModule(mod.id)}
                     className="bg-zinc-900/50 backdrop-blur-xl border border-white/5 rounded-2xl p-4 relative overflow-hidden group hover:bg-zinc-900/80 hover:border-white/10 active:scale-[0.98] transition-all cursor-pointer flex flex-col"
                   >
                     <div className="w-8 h-8 bg-zinc-800 rounded-lg flex items-center justify-center mb-3">
