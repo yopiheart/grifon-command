@@ -52,7 +52,7 @@ export interface Scene {
   endFrameImageUrl?: string;
   manualUploadUrl?: string;
   manualEndFrameUrl?: string;
-  referenceImage?: 'avatar' | 'product' | 'none';
+  referenceImage?: 'avatar' | 'product' | 'both' | 'none';
   /* chainRole tracks the position in the cinematic relay chain */
   chainRole?: 'Metaphor_A' | 'Anchor_B' | 'Action_C' | 'Hero_D';
   /* Custom B-roll injection */

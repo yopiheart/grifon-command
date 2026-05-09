@@ -768,6 +768,29 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
       **BAG_ORIENTATION_RULE (REQUIRED for any scene where the product bag/package appears, whether held by avatar or shown as B-roll):**
       The FRONT of the bag (the side bearing the product label, branding, or wordmark) MUST face the camera. The avatar's hand MAY occlude part of the bag's front (naturalistic and acceptable). The BACK of the bag facing camera, or the bag held with branding turned away from camera, is BANNED — the brand mark must remain visible enough to be recognized in a 3-second scrub. For product-only B-roll (no avatar in frame), the bag must be centered with the front fully visible. Whenever the imagePrompt or startFramePrompt/endFramePrompt mentions the bag/package/product, append "front of bag/label facing camera" to the description.
 
+      **REFERENCE_IMAGE_CLASSIFICATION_RULE (CRITICAL — wrong tag = wrong reference plumbed → wrong image):**
+
+      For each scene (SCENE 2 onwards), classify based on what is in frame:
+
+      - "avatar" — the character is in frame, NO product visible.
+        Example: avatar speaking to camera at desk. Avatar standing in kitchen.
+
+      - "product" — ONLY the actual product is in frame, NO character.
+        Example: product bag on counter. Product flat-lay with scoop.
+
+      - "both" — BOTH the character AND the actual product together in frame.
+        Example: avatar holding the product bag. Avatar pouring from the bag.
+
+      - "none" — generic visuals UNRELATED to the actual product (neither avatar nor actual product).
+        Example: hook B-roll metaphors (coffee ring on table, dumped instant coffee).
+        Generic stale beans (NOT the actual product) on a surface. Abstract metaphors.
+        Environment-only shots without the actual product or avatar.
+
+      CRITICAL ANTI-PATTERN: Even when a B-roll scene depicts something CATEGORICALLY similar to the product
+      (e.g., generic dark beans when the product is coffee, a generic mug when the product is a coffee bag),
+      tag as "none". The reference photo would mislead the model into copying it verbatim. Only tag "product"
+      or "both" when the ACTUAL hero product is the subject.
+
       **OUTPUT SCHEMA (CRITICAL):**
       Return a valid JSON Object with keys "scenes" (Array) and "strategicAudit" (String).
 
@@ -785,7 +808,7 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
       {
         "scriptLine": "...",
         "sceneDescription": "...",
-        "referenceImage": "avatar" | "product",
+        "referenceImage": "avatar" | "product" | "both" | "none",
         "imagePrompt": "Description of the single image"
       }
 

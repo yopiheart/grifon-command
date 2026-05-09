@@ -102,12 +102,12 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
   const getReferenceData = (scene: Scene, _sceneIndex: number) => {
     const refs: { avatarUrl?: string; productUrl?: string } = {};
 
-    if (scene.referenceImage === 'avatar' && avatar) {
+    if ((scene.referenceImage === 'avatar' || scene.referenceImage === 'both') && avatar) {
         refs.avatarUrl = avatar.url;
     }
 
     if (
-      scene.referenceImage === 'product' &&
+      (scene.referenceImage === 'product' || scene.referenceImage === 'both') &&
       businessInfo.productImageUrls &&
       businessInfo.productImageUrls.length > 0
     ) {

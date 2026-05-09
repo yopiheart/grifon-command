@@ -952,7 +952,7 @@ export const generateSceneImage = async (
     productDescription?: string,
     productName?: string,
     variationIndex: number = 0,
-    referenceImageMode: 'avatar' | 'product' | 'none' = 'none'
+    referenceImageMode: 'avatar' | 'product' | 'both' | 'none' = 'none'
 ): Promise<string> => {
     
     await delay(2500);
@@ -988,11 +988,32 @@ export const generateSceneImage = async (
         consistencyRules = `
         **PRODUCT_IDENTITY_LOCK:**
         1. **IDENTITY:** Reproduce the product from Reference Image 1 EXACTLY — same packaging shape, same colors, same label position, same proportions, same materials/finish (matte vs glossy). Do NOT redesign, restyle, or substitute the product with a similar-looking product.
-        2. **NO_LOGO_HALLUCINATION:** Do NOT add brand logos, brand names, text, label graphics, badges, or stickers that are not visibly present in Reference Image 1. If the reference shows a plain bag, render a plain bag. Inventing brand marks is FORBIDDEN.
+        2. **NO_LOGO_HALLUCINATION:** PRESERVE the uploaded product label EXACTLY — every wordmark, illustration, color block, and panel that appears in Reference Image 1 must match in this scene. Do not invent NEW labels, do not blank or simplify the existing label, do not substitute a generic kraft or plain surface. Naturalistic composition (partial hand occlusion, angled view, partial visibility from camera framing) is acceptable as long as the VISIBLE portions of the label match the reference photo content.
         3. **ANATOMICAL_LOCK:** If the prompt requires hands or fingers, render exactly TWO hands with FIVE fingers each. No extra limbs, no extra fingers, no partial hands, no third hand entering frame. "A pair of hands" means exactly two hands.
         4. **NO HUMAN FACES:** Do NOT render faces, full bodies, or recognizable people. Hands are allowed only when the prompt explicitly requires them (per rule 3).
         5. **LUMEN_SYNC:** Use the lighting temperature and color profile from Reference Image 1. Match the warmth/coolness of its highlights.
         6. **SUBJECT:** Focus on the product described in the prompt; the product from Reference Image 1 is the hero.
+        `;
+    } else if (referenceImageMode === 'both' && references.avatarUrl && references.productUrl) {
+        consistencyRules = `
+        **DUAL_REFERENCE_LOCK (avatar + product):**
+
+        **FROM AVATAR (Reference Image 1 — character/identity):**
+        1. **LOCKED (preserve from Reference Image 1):** face, skin tone, bone structure, hair styling (color AND style — never change between scenes), wardrobe (color, cut, fabric), body type.
+        2. **VARIES (driven by Scene Prompt):** facial expression, gaze direction, body pose, hand position.
+        2b. **FACE_TO_CAMERA (REQUIRED when the avatar speaks the script line):** both eyes + mouth visible. Side body OK; face-away BANNED for talking scenes.
+        3. **CAMERA:** angle, distance, framing per CAMERA_MANDATORY block.
+        4. **ENVIRONMENT:** same residence/setting as Reference Image 1 (avatar's home).
+        5. **ETHNICITY:** Strictly **${ethnicity}**.
+
+        **FROM PRODUCT (Reference Image 2 — product/label):**
+        6. **PRODUCT IDENTITY:** Reproduce the product from Reference Image 2 EXACTLY — same packaging shape, same colors, same label position, same proportions, same materials/finish. Do NOT redesign or substitute the product.
+        7. **NO_LOGO_HALLUCINATION:** PRESERVE the uploaded product label EXACTLY — every wordmark, illustration, color block, and panel that appears in Reference Image 2 must match in this scene. Do not invent NEW labels, do not blank or simplify the existing label, do not substitute a generic kraft or plain surface. Naturalistic composition (partial hand occlusion, angled view, partial visibility from camera framing) is acceptable as long as the VISIBLE portions of the label match the reference photo content.
+        8. **ANATOMICAL_LOCK:** If the prompt requires hands holding the product, render exactly TWO hands with FIVE fingers each. No extra limbs, no extra fingers, no partial hands.
+
+        **LIGHTING (DUAL_LUMEN_SYNC):**
+        - Scene lighting prioritizes the avatar's environment (Reference Image 1) — the scene IS in the avatar's home, so use that warm/natural light profile for the overall image.
+        - Product label colors are preserved as PRINTED on Reference Image 2 — do not relight the label with studio lighting; let it sit naturally in the avatar's environmental light.
         `;
     } else {
         consistencyRules = `
