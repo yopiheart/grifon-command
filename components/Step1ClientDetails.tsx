@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ClientDetails } from '../types';
 import { GlassPanel } from './ui/GlassPanel';
 import { GoldButton } from './ui/GoldButton';
@@ -11,6 +11,12 @@ interface Step1Props {
 
 const Step1ClientDetails: React.FC<Step1Props> = ({ data, setData, onNext }) => {
   const [formData, setFormData] = useState(data);
+
+  // Without this, useState(data) freezes the prop at mount and silently
+  // ignores subsequent parent updates (e.g. wizard auto-prefill).
+  useEffect(() => {
+    setFormData(data);
+  }, [data]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
