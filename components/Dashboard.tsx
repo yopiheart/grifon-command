@@ -14,6 +14,7 @@ import { RecentWorkCard } from './ui/RecentWorkCard';
 import { loadRecentWork, recordRecentWork, type RecentItem } from '../services/recentWorkService';
 import { ActiveJobsPanel } from './ui/ActiveJobsPanel';
 import { useActiveJobs } from '../hooks/useActiveJobs';
+import { OnboardingNudge } from './ui/OnboardingNudge';
 
 const GrifonLogo = ({ className = "h-8 w-auto" }) => (
   <img src="/logo.png" alt="GRIFON Logo" className={`object-contain ${className}`} />
@@ -82,11 +83,22 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
   const [showUpgradeBanner, setShowUpgradeBanner] = useState(false);
   const [bannerMessage, setBannerMessage] = useState('');
   const [recent, setRecent] = useState<RecentItem[]>([]);
+  const [onboardingDismissed, setOnboardingDismissed] = useState(true);
   const activeJobs = useActiveJobs();
 
   useEffect(() => {
-    setRecent(loadRecentWork());
+    const initialRecent = loadRecentWork();
+    setRecent(initialRecent);
+    const flag = localStorage.getItem('grifon_onboarded') === 'true';
+    setOnboardingDismissed(flag || initialRecent.length > 0);
   }, []);
+
+  const dismissOnboarding = () => {
+    localStorage.setItem('grifon_onboarded', 'true');
+    setOnboardingDismissed(true);
+  };
+
+  const showOnboarding = !onboardingDismissed && recent.length === 0;
 
   const ALL_MODULE_LOOKUP = useMemo(() => {
     const map: Record<string, { name: string }> = {
@@ -106,6 +118,10 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
         kind: 'visit',
       });
       setRecent(next);
+    }
+    if (!onboardingDismissed) {
+      localStorage.setItem('grifon_onboarded', 'true');
+      setOnboardingDismissed(true);
     }
     onSelectModule(moduleId);
   };
@@ -385,6 +401,17 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
               </button>
             </motion.div>
           </div>
+
+          {/* Onboarding Nudge — first-timers only */}
+          {showOnboarding && (
+            <div className="mb-6 lg:mb-8 max-w-2xl lg:max-w-3xl mx-auto w-full">
+              <OnboardingNudge
+                onStart={() => handleSelectModule('creative_director')}
+                onDismiss={dismissOnboarding}
+                delay={0.25}
+              />
+            </div>
+          )}
 
           {/* Recommended Flow Path */}
           <div className="mb-6 lg:mb-10 max-w-2xl lg:max-w-3xl mx-auto w-full mt-8 lg:mt-16">
