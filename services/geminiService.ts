@@ -631,30 +631,13 @@ export const generateMarketResearch = async (input: MarketResearchInput): Promis
   return retryWithBackoff(() => proxyCall<MarketResearchReport>('/api/gemini/flow', { flow: 'marketmind', input }));
 };
 
-const classifyTemuProduct = async (product: string, description: string): Promise<'ASMR' | 'Reaction' | 'Utility'> => {
-   const prompt = `
-    Analyze this product for a Temu/Viral Haul video strategy.
-    Product: "${product}"
-    Description: "${description}"
-
-    Classify into ONE of these 3 types based on this technical report:
-    1. **ASMR:** Clocks, organizers, keyboards, satisfying textures, gadgets with clicks/snaps. Focus: "Clean Core".
-    2. **Reaction:** Pets, cute items, weird gifts, shocking value, toys. Focus: "Kawaii Chaos".
-    3. **Utility:** Problem solvers, duo filler gadgets, cleaning tools, car accessories. Focus: "Real Home".
-
-    Output ONLY one word: ASMR, Reaction, or Utility.
-    `;
-    const response: GenerateContentResponse = await retryWithBackoff(() => proxyGenerateContent({
-        model: fastTextModel,
-        contents: prompt
-    }));
-
-    const text = response.text?.trim().toUpperCase() || 'REACTION';
-    if (text.includes('ASMR')) return 'ASMR';
-    if (text.includes('UTILITY')) return 'Utility';
-    return 'Reaction';
-};
-
+/**
+ * Director AI script generator — server-side prompt. The full prompt assembly
+ * (COMMON_RULES, DIRECTOR_CRITIQUE_INSTRUCTION, USER_CHOSEN_ANGLE_BLOCK, all 3
+ * script-type variants, Temu sub-type classifier) lives in api/_lib/prompts.ts
+ * + api/gemini/flow.ts. Client never sees the prompt — sends only
+ * `{flow: 'adscript', input}` and receives the parsed Script.
+ */
 export const generateAdScript = async (
     businessInfo: BusinessInfo,
     brandName: string,
@@ -662,176 +645,11 @@ export const generateAdScript = async (
     offer: string = '',
     chosenAngleBrief: string = ''
 ): Promise<Script> => {
-    await delay(1000); 
-  
-  const isTestimonial = businessInfo.scriptType === 'Testimonial';
-  const isTemu = businessInfo.scriptType === 'Temu';
-
-  const COMMON_RULES = `
-  **CORE CONSTRAINTS (MANDATORY):**
-  - **NO PRICE:** Under no circumstances mention price or offer pricing. Maintain a curiosity gap.
-  - **FEATURE FILTER:** Pick ONLY the top 1-2 most viral/compelling features from the provided list: "${businessInfo.features}". Omit everything else.
-  - **LOGIC LOCK:** Use Brand Name "${brandName}" EXACTLY. Product mentions can be shortened naturally — say "this kape", "ito", "${brandName}", or descriptive shorthand. Do NOT recite the full SKU/product name verbatim ("${businessInfo.product}"); that reads like a product page, not an ad.
-  - **READING LEVEL:** 4th-5th Grade. Simple, punchy, visceral storytelling.
-  - **AUDIENCE REGISTER:** Tune vocabulary, idiom, and mental pictures to match this person: "${businessInfo.audience}".
-    - HOW you talk = word choice, slang weight, cultural references, the WORLD they live in. Speak from inside that world.
-    - WHAT you say stays the same — script structure, hooks, and beats don't change.
-    - NEVER name the audience by label. "Para sa mga OFW dads na nasa abroad..." reads as marketing copy. "Sa loob ng 5 years na pagiging malayo sa pamilya..." reads as the speaker.
-    - Use the audience's WORLD as your vocabulary:
-      • OFW audience → "balikbayan box", "video call", "uwi", "pasalubong", "pamilya sa atin"
-      • Filipino mom audience → "yaya", "school baon", "halaga ng bigas", "kape after the kids leave"
-      • Corporate audience → "deadline", "boss", "sweldo", "weekend lang nakakapahinga"
-    - Visual payoff / Result beats land in the audience's WORLD too. OFW reunion at NAIA, not generic "happy moment". Mom's school dropoff on time, not generic "calm morning". Corporate Friday 6PM logout, not generic "free time". Cialdini Liking — Bryan needs to SEE himself in the result.
-
-  **LANGUAGE LOCK (${language}):**
-  - If TAGLISH: every hook, body line, and CTA MUST be in Taglish. Sound like a real Filipino vlog, not a manual.
-    English is allowed ONLY for:
-      (a) Brand names — proper nouns like "${brandName}" stay English.
-      (b) Prices and numbers — "₱650", "P22 vs P180", "30 days".
-      (c) Universal CTAs — "Tap here", "Click below", "Link sa bio".
-    English is FORBIDDEN for product-spec terms. Translate to natural Taglish or OMIT:
-      "single-origin medium roast" → "specialty kape" or drop it (visuals carry it)
-      "cafe-quality goodness"      → "parang barista ang lasa" or drop it
-      "delivered to your doorstep" → "padala sa bahay"
-      "premium packaging"          → "mukhang sosyal" or drop it
-    If you cannot find natural Taglish for a technical term, OMIT IT. Visuals carry technical specs; copy carries emotion.
-  - If ENGLISH: stay 4th-5th grade English. No Taglish slips. No "po", "naman", "talaga", "lasa".
-  - NEVER mix registers inside one line. A Taglish line stays Taglish; an English line stays English.
-
-  **TIMING & SLIDE EFFECT:**
-  - **HOOK:** Strictly 3 seconds max (approx. 5-8 words).
-  - **BODY LINES:** Strictly 3-5 seconds max per line.
-  - **WORD COUNT:** Strictly 7-12 words per line (The Sabri Suby "Slide").
-  `;
-
-  const DIRECTOR_CRITIQUE_INSTRUCTION = `
-  **DIRECTOR_CRITIQUE_PROTOCOL:**
-  Include a field "strategicAudit" in your JSON response.
-  Act as a World-Class Creative Director.
-  1. Explain why those specific 1-2 features were chosen for virality.
-  2. Explain how the 7-12 word pacing creates the "Slide" effect for retention.
-  `;
-
-  const USER_CHOSEN_ANGLE_BLOCK = chosenAngleBrief ? `
-  **USER_CHOSEN_ANGLE (from MarketMind report — Bryan picked this direction):**
-  Build the entire script (hooks, body, CTA) to reinforce this single angle. Do NOT introduce competing angles. Do NOT ignore this brief.
-  ${chosenAngleBrief}
-  ` : '';
-
-  let prompt = '';
-
-  if (isTemu) {
-    const subType = await classifyTemuProduct(businessInfo.product, businessInfo.features);
-    prompt = `
-      Role: Viral TikTok Scriptwriter & Direct Response Expert.
-      Strategy: Temu / Viral Haul (${subType} Style).
-      Product: "${businessInfo.product}"
-      Brand: "${brandName}"
-      
-      ${COMMON_RULES}
-
-      **TEMU SUB-TYPE RULES (${subType}):**
-      ${subType === 'ASMR' ? '- Focus: "Unbox with me...". Satisfying audio cues.' : ''}
-      ${subType === 'Reaction' ? '- Focus: "I can\'t believe I got this...". Shock value.' : ''}
-      ${subType === 'Utility' ? '- Focus: POV Problem Solving. "TikTok made me buy it".' : ''}
-
-      ${DIRECTOR_CRITIQUE_INSTRUCTION}
-      ${USER_CHOSEN_ANGLE_BLOCK}
-      Format: Return valid JSON: { "hook1": [...], "hook2": [...], "body": [...], "strategicAudit": "..." }
-    `;
-  } else if (isTestimonial) {
-    prompt = `
-      Role: Senior Direct Response Copywriter.
-      Strategy: High-Converting Testimonial.
-      Product: "${businessInfo.product}"
-      Brand: "${brandName}"
-      
-      ${COMMON_RULES}
-
-      **TESTIMONIAL STRUCTURE:**
-      0. **Hook (3s/5-8 words):** Shock or extreme curiosity. PROVIDE 2 VARIATIONS — both 5-8 words, both curiosity-driven pattern interrupts. REQUIRED: hook1 and hook2 arrays in the JSON output MUST be populated; do not skip this beat.
-      1. **Intro:** REQUIRED: Beat 1 MUST open with "Ako si [Filipino first name]," (e.g., "Ako si Elena," / "Ako si Mark," / "Ako si Tin,") — followed by life context that implicitly identifies the audience "${businessInfo.audience}" and the wound's first hint as an open loop into beat 2. The introduction is a STORY-OPENER, not a label. NEVER write "Ako si [Name], OFW dad, 5 years sa Saudi" — that's a name tag and is BANNED. NEVER name the audience demographically; the persona's wound carries the recognition. If the model would skip the name, generate a culturally-fitting Filipino first name (e.g., Maria, Cristina, Jenny, Mark, JP, Miggy, Tin, Elena, Nena, Kaye) and use it. (See INTRO PATTERN EXAMPLES below.)
-      2. **Before Story:** Agitate the 'Main Problem': "${businessInfo.painPoint}".
-      3. **Discovery:** Speaker introduces the hero "${brandName}'s ${businessInfo.product}" with a COMPLETE verb construction. NEVER drop the verb — verbless fragments break the line. PATTERN: "Hanggang sa [verb-phrase] [hero-product]" or "Pero simula nung [verb + na/ko/tong] [hero-product]". Examples: "Hanggang sa natikman ko itong ${brandName}." / "Pero simula nung na-try ko tong ${brandName}." / "Buti na lang, sinubukan ko ang ${brandName}." BANNED: "Pero simula nung ${brandName}" alone (verbless fragment).
-      4. **Transformation:** The shift from Pain Point ("${businessInfo.painPoint}") to Result ("${businessInfo.benefit}").
-      5. **Proof:** Highlight the 1-2 selected features. Stack comparative differentiation: "Marami akong na-try na ibang [category], pero ito lang ang gumana sa akin kasi ${businessInfo.separator}." This is where the differentiator earns its keep. If separator is empty, fall back to: "Highlight the 1-2 selected features."
-      6. **Objection Killer:** Solve the common doubt.
-      7. **CTA:** Ad-native call-to-action with WARM recommendation tone (not direct-sell). Inject offer STRUCTURE (scarcity + value adds + urgency) from "${offer}", NEVER the bare price.
-
-         BANNED CTA PHRASES (organic-IG patterns, not for paid ads):
-         - "link sa bio" / "link in bio"  → use "click below" / "i-click below" / "tap below"
-         - "DM us" / "DM kayo" alone     → use "message us" / "send message"
-
-         REQUIRED IN OUTPUT: at least ONE scarcity word (e.g., "first 50", "limited", "today only") AND ALL value-adds named in "${offer}" must appear verbatim or near-verbatim. Do NOT drop value-adds. Example pattern (warm tone): "Click below — first 50 may free shipping at libreng recipe ebook." If offer is empty, fall back to: "Click below para subukan."
-
-      **INTRO PATTERN EXAMPLES** (for beat 1 — adapt content to audience, do not copy literally):
-      - OFW audience → "Ako si Mark. 5 years na akong nasa Saudi para mabuhay yung pamilya — pero may isang bagay na halos natalo ako."
-      - Filipino mom audience → "Ako si Tin, single mom ng dalawang bata. Akala ko kaya ko na lahat — until one Sunday morning..."
-      - Corporate audience → "Ako si JP. Nine-to-nine sa Makati, pinagkakitaan ko sarili ko — pero may isang gabi na napaisip ako: 'para saan pa lahat ng ito?'"
-
-      ${DIRECTOR_CRITIQUE_INSTRUCTION}
-      ${USER_CHOSEN_ANGLE_BLOCK}
-      Format: Return valid JSON: { "hook1": [...], "hook2": [...], "body": [...], "strategicAudit": "..." }
-    `;
-  } else {
-    prompt = `
-        Role: Senior Direct Response Copywriter. 
-        Strategy: MrBeast Viral Flow.
-        Product: "${businessInfo.product}"
-        Brand: "${brandName}"
-        
-        ${COMMON_RULES}
-
-        **MRBEAST STRUCTURE:**
-        1. **Hook (3s/5-8 words):** Curiosity-driven pattern interrupt. PROVIDE 2 VARIATIONS — both 5-8 words. REQUIRED: hook1 and hook2 arrays in the JSON output MUST be populated; do not skip. Hook stays curiosity-gap-pure — no offer, no differentiator. NEVER use demographic labels in the hook ("for OFWs", "sa mga moms", "para sa OFW", "for Filipino dads" — all banned). Curiosity comes from the situation/visual, not the audience tag.
-        2. **Identity:** Relatable audience statement (5-10 words). Direct address to the audience using "ka", "mo", "tayo", or "kayo" — name a scene from their life they immediately recognize. Reference their world (work, home, daily struggle, environment). NEVER name them by demographic label ("para sa mga OFW", "sa mga moms" — banned). Audience: "${businessInfo.audience}". (See IDENTITY PATTERN EXAMPLES below.)
-        3. **Struggles:** Deep dive into "${businessInfo.painPoint}".
-        4. **Discovery:** Introducing "${brandName}'s ${businessInfo.product}".
-        5. **Result + Proof:** Visual payoff based on "${businessInfo.benefit}". Stack proof: "Hindi tulad ng iba — kami ${businessInfo.separator}." This is the "why believe?" slot. NEVER in the hook (kills curiosity); NEVER in the CTA (offer owns that). If separator is empty, fall back to: "Visual payoff based on benefit."
-        6. **CTA:** High-energy ad-native call-to-action. Inject offer STRUCTURE (scarcity + value adds + urgency) from "${offer}", NEVER the bare price.
-
-           BANNED CTA PHRASES (organic-IG patterns, not for paid ads):
-           - "link sa bio" / "link in bio"  → use "click below" / "i-click below" / "tap below"
-           - "DM us" / "DM kayo" alone     → use "message us" / "send message"
-
-           REQUIRED IN OUTPUT: at least ONE scarcity word (e.g., "first 50", "limited slots", "today only") AND ALL value-adds named in "${offer}" must appear verbatim or near-verbatim. Do NOT drop value-adds — softening = failure. Example pattern: "I-click below — first 50 lang may free shipping at libreng recipe ebook." If offer is empty, fall back to: "I-click below ngayon."
-
-        **IDENTITY PATTERN EXAMPLES** (for beat 2 — adapt to audience, do not copy literally):
-        - OFW family audience → "Tuwing umagang malayo sa pamilya, kape ang nag-aalala sa'yo."
-        - Filipino mom audience → "Bago pumasok ang mga bata, isang kape lang ang oras mo."
-        - Corporate audience → "Bago mag-9AM call, bago mag-deadline, kailangan mo ng panlaban."
-
-        ${DIRECTOR_CRITIQUE_INSTRUCTION}
-        ${USER_CHOSEN_ANGLE_BLOCK}
-        Format: Return ONLY valid JSON: { "hook1": [...], "hook2": [...], "body": [...], "strategicAudit": "..." }
-    `;
-  }
-
-  const response: GenerateContentResponse = await retryWithBackoff(() => proxyGenerateContent({
-    model: textModel, 
-    contents: prompt,
-    config: {
-      responseMimeType: "application/json",
-      safetySettings: SAFETY_SETTINGS,
-      thinkingConfig: { thinkingBudget: 4000 }
-    }
+  await delay(1000);
+  return retryWithBackoff(() => proxyCall<Script>('/api/gemini/flow', {
+    flow: 'adscript',
+    input: { businessInfo, brandName, language, offer, chosenAngleBrief },
   }));
-
-  const rawText = response.text || "{}";
-  const cleanedText = cleanJson(rawText);
-  
-  try {
-      const json = JSON.parse(cleanedText);
-      return {
-          hook1: Array.isArray(json.hook1) ? json.hook1 : [],
-          hook2: Array.isArray(json.hook2) ? json.hook2 : [],
-          body: Array.isArray(json.body) ? json.body : [],
-          strategicAudit: json.strategicAudit || ""
-      };
-  } catch (e) {
-      console.error("Failed to parse script JSON", e);
-      throw new Error("Failed to generate a valid script structure. Please try again.");
-  }
 };
 
 export const describeImage = async (base64Data: string, mimeType: string): Promise<string> => {

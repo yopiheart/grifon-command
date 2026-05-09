@@ -14,10 +14,32 @@ import {
   SAFETY_SETTINGS,
   cleanJson,
   MODEL_TEXT,
+  MODEL_FAST,
   MARKETMIND_SYSTEM_INSTRUCTION,
   buildMarketMindParts,
+  TEMU_CLASSIFIER_PROMPT,
+  buildAdScriptPrompt,
+  parseAdScriptResponse,
+  type AdScriptInput,
 } from '../_lib/prompts.js';
 import type { MarketResearchInput } from '../../types';
+
+type TemuSubType = 'ASMR' | 'Reaction' | 'Utility';
+
+const classifyTemuProductServerSide = async (
+  product: string,
+  description: string,
+  ai: GoogleGenAI
+): Promise<TemuSubType> => {
+  const response = await ai.models.generateContent({
+    model: MODEL_FAST,
+    contents: TEMU_CLASSIFIER_PROMPT(product, description),
+  } as any);
+  const text = response.text?.trim().toUpperCase() || 'REACTION';
+  if (text.includes('ASMR')) return 'ASMR';
+  if (text.includes('UTILITY')) return 'Utility';
+  return 'Reaction';
+};
 
 const FLOW_LIMIT = 30;
 const FLOW_WINDOW_SECONDS = 60;
@@ -64,10 +86,37 @@ const FLOW_REGISTRY: Record<string, FlowHandler> = {
     const rawText = response.text || '{}';
     return JSON.parse(cleanJson(rawText));
   },
+
+  adscript: async (input: AdScriptInput, ai) => {
+    // Temu sub-type is a server-side internal call — keeps Temu logic atomic
+    // and avoids round-tripping through the client just to classify.
+    let temuSubType: TemuSubType | undefined;
+    if (input.businessInfo.scriptType === 'Temu') {
+      temuSubType = await classifyTemuProductServerSide(
+        input.businessInfo.product,
+        input.businessInfo.features,
+        ai
+      );
+    }
+
+    const prompt = buildAdScriptPrompt(input, temuSubType);
+    const response = await ai.models.generateContent({
+      model: MODEL_TEXT,
+      contents: prompt,
+      config: {
+        responseMimeType: 'application/json',
+        safetySettings: SAFETY_SETTINGS,
+        thinkingConfig: { thinkingBudget: 4000 },
+      },
+    } as any);
+
+    const rawText = response.text || '{}';
+    return parseAdScriptResponse(rawText);
+  },
 };
 
 const Body = z.object({
-  flow: z.enum(['marketmind']),
+  flow: z.enum(['marketmind', 'adscript']),
   input: z.unknown(),
 });
 
