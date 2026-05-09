@@ -10,7 +10,7 @@
 //   - Builders (buildXxxPrompt) are pure: input → string. No side effects, no I/O.
 //   - Keep server-only. Do NOT import this from any file under services/, components/, or App.tsx.
 
-import type { MarketResearchInput, BusinessInfo, Script, OfferOptimizerInput, OfferOptimizerResult } from '../../types';
+import type { MarketResearchInput, BusinessInfo, Script, OfferOptimizerInput, OfferOptimizerResult, InfluencerConfig, InfluencerStrategicInput, InfluencerScriptResponse } from '../../types';
 
 // ---------------------------------------------------------------------------
 // Shared
@@ -524,4 +524,92 @@ REQUIRED: Every string is final production copy. Every ₱ amount is real. Every
 
 export const parseOfferOptimizerResponse = (rawText: string): OfferOptimizerResult => {
   return JSON.parse(cleanJson(rawText)) as OfferOptimizerResult;
+};
+
+// ---------------------------------------------------------------------------
+// Influencer Forge (generateInfluencerScript) — CCC framework
+// ---------------------------------------------------------------------------
+
+const INFLUENCER_CONTENT_STRATEGY = {
+  'MEDIA_GAME': {
+    type: 'Story',
+    focus: 'Climax Start / Emotional High-Stakes',
+    rule: "Start at the most painful or exciting moment. No 'Once upon a time'.",
+  },
+  'COMMODITY_VIBE': {
+    type: 'Demonstration',
+    focus: 'Result First / Visual Speed',
+    rule: 'Show the perfect outcome in Scene 1. Skip the setup.',
+  },
+  'PRODUCT_EDUCATION': {
+    type: 'Tutorial',
+    focus: 'The Gap Strategy',
+    rule: 'State the Pain vs. the Dream. Bridge it in 3 fast steps.',
+  },
+  'B2B_AUTHORITY': {
+    type: 'Educational',
+    focus: 'Negative Hook / Pattern Interrupt',
+    rule: "Start by challenging a common belief. Use: 'Your [Topic] is failing because...'",
+  },
+} as const;
+
+export interface InfluencerScriptFlowInput {
+  config: InfluencerConfig;
+  input: InfluencerStrategicInput;
+  dayNumber: number;
+  seriesContext: string;
+}
+
+export const buildInfluencerScriptPrompt = (payload: InfluencerScriptFlowInput): string => {
+  const { config, input, dayNumber, seriesContext } = payload;
+  const game = config.monetizationGame || 'B2B_AUTHORITY';
+  const strategy = INFLUENCER_CONTENT_STRATEGY[game] || INFLUENCER_CONTENT_STRATEGY['B2B_AUTHORITY'];
+
+  return `
+### ROLE: MASTER VIRAL SCRIPTWRITER (CCC FRAMEWORK)
+Your goal is to create a script that is 20% shorter than average to maximize completion rates.
+
+### THE STRATEGY: ${strategy.type}
+- FOCUS: ${strategy.focus}
+- CORE RULE: ${strategy.rule}
+- DAY NUMBER: ${dayNumber}
+- SERIES CONTEXT: ${seriesContext}
+
+### STRATEGIC BLUEPRINT (THE INTEL):
+- SUBJECT: ${input.subject}
+- OFFER: ${input.offer}
+- DREAM_AVATAR: ${input.dreamCustomer}
+- BLEEDING_NECK: ${input.bleedingNeck} (Use for the Pain)
+- MAGIC_GENIE: ${input.magicGenie} (Use for the Dream)
+- RAW_EVIDENCE: ${input.rawEvidence} (The Proof)
+- CONTRARIAN_TRUTH: ${input.contrarianTruth} (The Hook)
+
+### WRITING STRICTURES (NON-NEGOTIABLE):
+1. HOOK (Line 1): Negative/Pattern Interrupt. Strictly 3s / 5-8 words. No "Hi guys".
+2. BRIDGE (Line 2): Risk Reversal. Answer "Why should I trust you?" or "What happens if I stop watching?".
+3. THE SLIDE (Lines 3-8): CCC Progression (Connection, Content, Call-to-Action). 7-12 words per line.
+4. LANGUAGE: ${(config as any).language === 'TAGLISH' ? 'Conversational Taglish (Kanto-Style / Street Smart).' : (config as any).language === 'FILIPINO' ? 'Natural Filipino / Tagalog (Kanto-Style / Street Smart).' : 'Direct Response English (4th Grade Level).'}
+5. IMPACT WORDS: Use (Stupid, Killing, Cheat-code, Secret, Warning, Truth).
+6. NO JARGON: Clear beats clever.
+
+### SCRIPT STRUCTURE (8 LINES):
+1. HOOK: Negative/Pattern Interrupt (Challenge a belief or show a shocking result).
+2. BRIDGE: Risk Reversal / The Hook's Payoff.
+3. CONNECTION: Relate to the ${input.dreamCustomer}'s struggle.
+4. CONTENT_1: First step of the 'Secret Sauce'.
+5. CONTENT_2: Second step / Inject ${input.rawEvidence}.
+6. CONTENT_3: The outcome / ${input.magicGenie}.
+7. CALL_TO_ACTION: Immediate action. "Do this one thing right now."
+8. THE EXIT: Soft CTA linking to ${input.offer}.
+
+### DIRECTOR_CRITIQUE_PROTOCOL:
+Explain why this script flow creates the "Slide" effect for ${input.dreamCustomer}.
+Provide a "daySummary" (max 20 words) for the mission log.
+
+Return valid JSON: { "hook": "...", "body": ["line1", "line2", ...], "strategicAudit": "...", "daySummary": "..." }
+  `;
+};
+
+export const parseInfluencerScriptResponse = (rawText: string): InfluencerScriptResponse => {
+  return JSON.parse(cleanJson(rawText || '{}')) as InfluencerScriptResponse;
 };

@@ -23,6 +23,9 @@ import {
   type AdScriptInput,
   buildOfferOptimizerPrompt,
   parseOfferOptimizerResponse,
+  buildInfluencerScriptPrompt,
+  parseInfluencerScriptResponse,
+  type InfluencerScriptFlowInput,
 } from '../_lib/prompts.js';
 import type { MarketResearchInput, OfferOptimizerInput } from '../../types';
 
@@ -131,10 +134,24 @@ const FLOW_REGISTRY: Record<string, FlowHandler> = {
     const rawText = response.text || '{}';
     return parseOfferOptimizerResponse(rawText);
   },
+
+  'influencer-script': async (input: InfluencerScriptFlowInput, ai) => {
+    const prompt = buildInfluencerScriptPrompt(input);
+    const response = await ai.models.generateContent({
+      model: MODEL_TEXT,
+      contents: prompt,
+      config: {
+        responseMimeType: 'application/json',
+        safetySettings: SAFETY_SETTINGS,
+        thinkingConfig: { thinkingBudget: 4000 },
+      },
+    } as any);
+    return parseInfluencerScriptResponse(response.text || '{}');
+  },
 };
 
 const Body = z.object({
-  flow: z.enum(['marketmind', 'adscript', 'offer-optimizer']),
+  flow: z.enum(['marketmind', 'adscript', 'offer-optimizer', 'influencer-script']),
   input: z.unknown(),
 });
 
