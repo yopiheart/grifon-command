@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { useSubscription } from '../hooks/useSubscription';
 import { Aurora } from './ui/Aurora';
+import { QuotaMeter } from './ui/QuotaMeter';
 
 const GrifonLogo = ({ className = "h-8 w-auto" }) => (
   <img src="/logo.png" alt="GRIFON Logo" className={`object-contain ${className}`} />
@@ -205,31 +206,8 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
               </span>
             </div>
 
-            {/* Upgraded Credits Badge */}
-            <div className="flex items-center gap-3 bg-zinc-900/80 backdrop-blur-xl border border-white/10 rounded-full px-4 py-2">
-              <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-[#FFCC00]" />
-                <div className="flex items-baseline gap-1.5">
-                  <span className="text-sm lg:text-base font-mono font-bold text-white tabular-nums">
-                    4,500
-                  </span>
-                  <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">
-                    Credits
-                  </span>
-                </div>
-              </div>
-              
-              {/* Vertical divider */}
-              <div className="w-px h-4 bg-white/10" />
-              
-              {/* Usage indicator dot */}
-              <div className="flex items-center gap-1.5">
-                <div className="w-1.5 h-1.5 rounded-full bg-[#FFCC00]" />
-                <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">
-                  Pro
-                </span>
-              </div>
-            </div>
+            <QuotaMeter plan={userPlan} />
+
           </div>
         </div>
       </div>
@@ -548,9 +526,11 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
               <div className="bg-zinc-800/50 rounded-lg px-3 py-2 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Sparkles className="w-3.5 h-3.5 text-[#FFCC00]" />
-                  <span className="text-xs text-zinc-400">Credits</span>
+                  <span className="text-xs text-zinc-400">Daily AI</span>
                 </div>
-                <span className="text-xs font-mono font-bold text-white">4,500</span>
+                <span className="text-xs font-mono font-bold text-white">
+                  {userPlan === 'pro' || userPlan === 'business' ? 'Unlimited' : userPlan === 'creator' ? '0 / 20' : '0 / 3'}
+                </span>
               </div>
             </div>
             
