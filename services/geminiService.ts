@@ -271,16 +271,14 @@ export const generateVideo = async (
 };
 
 // CAMERA ANGLE SET — rebalanced 2026-05-08-late-late-evening for storyboard-variety + face-to-camera safety.
-// Composition: 3 frontal-ish (positions 1, 2, 4), 3 side-ish but face-toward-camera (positions 3, 5, 6).
-// Rotated linearly via `variationIndex % AVATAR_CAMERA_ANGLES.length` so consecutive scenes vary.
-// All side-angle entries explicitly specify "face turned toward camera" so lip-sync survives downstream voicing.
+// 4 framings the model reliably renders. Rotated via `variationIndex % AVATAR_CAMERA_ANGLES.length`
+// so consecutive scenes get different framings. SIDE_PROFILE_TALK and DYNAMIC_SHOULDER were dropped
+// because the model silently collapsed them to a frontal portrait when IDENTITY_LOCK was firing.
 const AVATAR_CAMERA_ANGLES = [
     "INTIMATE_CLOSE_UP: Framing neck up. Face fully toward camera. Focus: Eyes. Mandatory: Slight lens breathing and micro-handheld jitter.",
     "MEDIUM_FRONTAL: Chest-up, eye-level frontal angle. Face squarely toward camera. Subtle handheld sway. 50mm lens feel. Casual conversational vibe.",
-    "SIDE_PROFILE_TALK: Body at 45-degree left angle BUT face/head turned toward camera so both eyes and mouth remain visible. Off-center composition. Mandatory: Imperceptible slow-creep dolly-in.",
     "WIDE_BUST_SHOT: Waist up, near-frontal angle. Face toward camera. Natural handheld sway. Background depth-of-field matches 85mm lens.",
-    "HIGH_ANGLE_SELFIE: Camera above eye-level looking down at face. Relatable, casual handheld vlog vibe with consistent micro-jitter. Subject looks UP at camera (face fully toward camera).",
-    "DYNAMIC_SHOULDER: Right side body profile with face turned back toward camera (3/4 view of face). Includes subtle parallactic shift against background. Both eyes visible."
+    "HIGH_ANGLE_SELFIE: Camera above eye-level looking down at face. Relatable, casual handheld vlog vibe with consistent micro-jitter. Subject looks UP at camera (face fully toward camera)."
 ];
 
 const LIGHTING_TOKENS = {
@@ -893,7 +891,7 @@ Task: Generate an 8-scene visual storyboard.
   1. ${AVATAR_CAMERA_ANGLES[0]}
   2. ${AVATAR_CAMERA_ANGLES[1]}
   3. ${AVATAR_CAMERA_ANGLES[2]}
-  4. ${AVATAR_CAMERA_ANGLES[4]}
+  4. ${AVATAR_CAMERA_ANGLES[3]}
   
 **CONFIG:**
 - Monetization Game: ${config.monetizationGame}
@@ -1027,9 +1025,10 @@ export const generateSceneImage = async (
     // 1. RE-INSERT THE CAMERA LOGIC
     const randomAngle = AVATAR_CAMERA_ANGLES[variationIndex % AVATAR_CAMERA_ANGLES.length];
     const cameraMandatory = `
-    **CAMERA_MANDATORY:** You MUST strictly follow this framing: ${randomAngle}. 
-    - Do NOT default to a standard medium shot. 
-    - Change the distance of the camera (Close-up vs Wide) as instructed.
+    **CAMERA_MANDATORY (overrides IDENTITY_LOCK's default-frontal preference):**
+    You MUST render this exact framing: ${randomAngle}.
+    - The DISTANCE (close-up vs medium vs wide) and ELEVATION (eye-level vs above-eye selfie) are MANDATORY — do NOT collapse to a standard chest-up frontal medium shot.
+    - If the Scene Prompt describes an action (gesturing, pointing, holding, looking down at a phone), execute that action AT this framing — do NOT shift the camera to a default flattering portrait angle to accommodate the action.
     `;
 
     // 2. WARDROBE: locked from Reference Image 1 by IDENTITY_LOCK rule 1.
