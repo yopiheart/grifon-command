@@ -902,183 +902,23 @@ Return JSON: { "scenes": [{ "scriptLine": "...", "sceneDescription": "Detailed v
   return JSON.parse(cleanJson(response.text || "{}"));
 };
 
+/**
+ * Wizard storyboard generator — server-side prompt. Cinematic relay,
+ * STILL_FRAME_RULE, APPEARANCE_LOCK_RULE, BAG_ORIENTATION_RULE, Temu/MrBeast
+ * strategy branches, and DIRECTOR_CRITIQUE all live in api/_lib/prompts.ts.
+ * Client never sees the prompt.
+ */
 export const generateStoryboard = async (
-    script: string[], 
-    avatarDescription: string, 
+    script: string[],
+    avatarDescription: string,
     businessInfo: BusinessInfo,
     ethnicity: string,
     language: 'English' | 'Taglish'
 ): Promise<StoryboardResponse> => {
-    const fullScript = script.join('\n');
-    const productDesc = businessInfo.productImageDescription || 'N/A';
-    const isTemu = businessInfo.scriptType === 'Temu';
-    
-    let strategyInstructions = "";
-
-    const DIRECTOR_CRITIQUE_INSTRUCTION = `
-    **DIRECTOR_CRITIQUE_PROTOCOL:**
-    Include a field "strategicAudit" in your JSON response. 
-    Act as a World-Class Creative Director. honestly critique the user's business inputs based on Sabri Suby's $100M Copy rules. 
-    Explain WHY this specific storyboard sequence and visual framing is strategically superior for conversion. 
-    Explain why specific B-Roll choices were made over talking heads.
-    `;
-
-    if (isTemu) {
-        strategyInstructions = `
-        **STRATEGY: TEMU / VIRAL HAUL (RAPID CUTS)**
-        **CRITICAL RULE:** DO NOT describe a "sequence" or "montage" in a single scene. You MUST break every action into a separate scene.
-        
-        **REQUIRED SCENE BREAKDOWN (Aim for 6-9 Scenes):**
-        1. **SCENE 1 (THE HOOK):** Visual Trigger / Pattern Interrupt (Start/End Frames).
-        2. **SCENE 2 (UNBOXING):** Close up of hands tearing package or opening box. (1.5s)
-        3. **SCENE 3 (REVEAL):** Pulling the item out. (1.5s)
-        4. **SCENE 4 (ASSEMBLY/ACTION):** Clicking parts together or applying product. (1.5s)
-        5. **SCENE 5 (USAGE):** The product in action. (2s)
-        6. **SCENE 6 (PAYOFF):** The final satisfying result. (2s)
-        7. **SCENE 7 (VIBE CHECK/REACTION):** Aesthetic shot or Avatar reaction.
-        8. **SCENE 8 (CTA):** "Link in bio" / "Yellow Basket" overlay.
-
-        **VISUAL STYLE:**
-        - ${ethnicity} Context.
-        - High-key lighting, fast motion, handheld feel.
-        - Focus on HANDS and OBJECTS for scenes 2-6.
-        `;
-    } else {
-        strategyInstructions = `
-        **STRATEGY: NARRATIVE RETENTION RHYTHOR**
-        1. **SCENE 1 (THE HOOK):** Visual Metaphor/Pattern Interrupt (Start/End Frames).
-        2. **SCENE 2 (THE CONNECTION):** **MUST be "Avatar Talking"** (Bridge the hook).
-        3. **MIDDLE SCENES:** Alternate between **Product B-Roll** and **Avatar Talking**.
-        4. **FINAL SCENE (CTA):** Product Shot or Avatar pointing.
-        `;
-    }
-
-    const prompt = `
-      You are an Expert Viral Video Strategist.
-      Task: Create a detailed frame-by-frame storyboard JSON.
-
-      **VISUAL PURITY RULE:**
-      "The \`sceneDescription\` and \`imagePrompt\` MUST describe the physical scene only.
-      - **FORBIDDEN:** Do not include instructions daylight 'Show text overlay', 'Text on screen says...', or 'Phone screen showing 50%'.
-      - Text belongs in the Audio/Script, NEVER in the image generation prompt."
-
-      **STILL_FRAME_RULE:**
-      The fields \`imagePrompt\`, \`startFramePrompt\`, and \`endFramePrompt\` are rendered as STILL IMAGES. They MUST be static compositions, NOT motion-verb prose.
-
-      FORBIDDEN motion verbs (the still cannot render motion):
-      - "pulling away", "moving toward", "flowing", "shaking", "rotating", "spinning", "running", "pouring"
-      - Any verb that describes WHAT IS HAPPENING during a moment of motion.
-
-      REQUIRED — describe the static end-state, the frozen instant:
-      - WRONG: "A hand pulling away from the sink, coffee splattering."
-      - RIGHT: "A hand visible mid-frame above the sink, palm facing away, frozen in air, coffee droplets caught suspended around it, freeze-frame composition."
-
-      Motion lives in \`transitionEffect\` (e.g., "Explosion Reveal", "Character Morph") — that field describes the MOTION between two stills. The frame prompts describe two STILL moments. Frames = stills. Transitions = motion.
-
-      **APPEARANCE_LOCK_RULE (when scene's referenceImage='avatar'):**
-      The \`imagePrompt\`, \`startFramePrompt\`, and \`endFramePrompt\` MUST NOT describe the avatar's physical appearance. Identity is preserved by an upstream LOCK; redescribing it creates conflicts and corrupts the render.
-
-      FORBIDDEN in avatar-scene prompts:
-      - Wardrobe/clothing ("wearing a linen shirt", "in a denim jacket")
-      - Hair ("with dark brown hair", "her ponytail")
-      - Body type ("petite", "athletic build")
-      - Face/skin descriptors ("with bright eyes", "her warm smile", "her face glowing")
-      - Ethnicity/age descriptors ("Southeast Asian woman", "young Filipina")
-
-      REQUIRED in avatar-scene prompts (describe ONLY these):
-      - Action ("looking down", "gesturing", "sipping", "tapping the phone screen")
-      - Expression ("brow furrowed", "eyes wide in surprise", "lips parted in confusion")
-      - Gaze direction ("looking at the camera", "looking down at the mug")
-      - Hand position + held props ("holding an empty mug", "hands on the counter")
-      - Body pose ("standing", "sitting at the dining table", "leaning against the counter")
-      - Spot within residence ("at the kitchen counter", "by the front door")
-      - Lighting/mood for that spot ("warm afternoon light", "soft window light")
-
-      WRONG: "A friendly Southeast Asian woman with dark brown hair, wearing a casual linen shirt, sitting at a modern Filipino home dining table, acting surprised while looking at a smartphone, warm sunlight hitting her face."
-      CORRECT: "Sitting at the dining table, eyes wide in surprise, looking at a smartphone, warm afternoon sunlight from the window."
-
-      **PACING RULE:**
-      "You MAY have up to **2 consecutive** 'Avatar Talking' scenes.
-      You **MUST NOT** have 3 consecutive 'Avatar Talking' scenes.
-      If you have 2 Avatars in a row, the 3rd scene **MUST** be a 'Product B-Roll', 'Reaction', or 'Visual Metaphor'."
-
-      **CONTEXT:**
-      - **Type:** ${businessInfo.scriptType} Style
-      - **Target Audience:** ${ethnicity} market.
-      - **Language:** ${language}
-      - **Character:** ${avatarDescription}
-      - **Product:** ${businessInfo.product} (${productDesc})
-
-      ${strategyInstructions}
-      ${DIRECTOR_CRITIQUE_INSTRUCTION}
-
-      **CINEMATIC VARIETY:** When creating Talking Avatar scenes, explicitly describe a different physical action for each (e.g., 'walking while talking', 'sitting at a desk', 'holding a phone', 'gesturing with both hands'). This ensures the background and pose change even if the face stays consistent.
-
-      **HOOK LOGIC (SCENE 1):**
-      - Prioritize Visual Metaphors: focusing on objects, hands, environment, or abstract triggers instead of a full person visual. 
-      - The goal is to maximize curiosity and pattern-interrupt. Show a full person ONLY if the script explicitly requires it.
-
-      **VIRAL VFX MENU (FOR SCENE 1 ONLY):**
-      Select the BEST VFX style for the hook:
-      1. **Explosion Reveal**
-      2. **Character Morph**
-      3. **Teleport / Snap Cut**
-      4. **Object Materialization**
-      5. **Invisible Effect**
-      6. **Chaos Burst**
-
-      **VISUAL AUTHENTICITY RULE:**
-      - All scene descriptions MUST imply a high-quality, relatable location for a **${ethnicity}** audience.
-      - Avoid poverty/gritty vibes. Focus on aspirational settings consistent with the target market.
-
-      **BAG_ORIENTATION_RULE (REQUIRED for any scene where the product bag/package appears, whether held by avatar or shown as B-roll):**
-      The FRONT of the bag (the side bearing the product label, branding, or wordmark) MUST face the camera. The avatar's hand MAY occlude part of the bag's front (naturalistic and acceptable). The BACK of the bag facing camera, or the bag held with branding turned away from camera, is BANNED — the brand mark must remain visible enough to be recognized in a 3-second scrub. For product-only B-roll (no avatar in frame), the bag must be centered with the front fully visible. Whenever the imagePrompt or startFramePrompt/endFramePrompt mentions the bag/package/product, append "front of bag/label facing camera" to the description.
-
-      **OUTPUT SCHEMA (CRITICAL):**
-      Return a valid JSON Object with keys "scenes" (Array) and "strategicAudit" (String).
-      
-      - IF SCENE 1 (HOOK):
-      {
-        "scriptLine": "...",
-        "sceneDescription": "...",
-        "referenceImage": "none",
-        "startFramePrompt": "Static composition of the FIRST FROZEN FRAME — describe the world-state at moment 1 as a still photograph. No motion verbs (see STILL_FRAME_RULE).",
-        "endFramePrompt": "Static composition of the FINAL FROZEN FRAME — describe the world-state at moment 2 as a still photograph. No motion verbs (see STILL_FRAME_RULE).",
-        "transitionEffect": "Name of the VFX that animates between the two stills (the only field where motion lives)."
-      }
-
-      - IF SCENE 2 onwards:
-      {
-        "scriptLine": "...",
-        "sceneDescription": "...",
-        "referenceImage": "avatar" | "product",
-        "imagePrompt": "Description of the single image"
-      }
-      
-      **Script:**
-      ${fullScript}
-    `;
-    const response: GenerateContentResponse = await retryWithBackoff(() => proxyGenerateContent({
-      model: fastTextModel,
-      contents: prompt,
-      config: {
-        // Use standard JSON response for storyboard generation
-        responseMimeType: "application/json",
-        safetySettings: SAFETY_SETTINGS
-      },
-    }));
-    
-    const jsonText = cleanJson(response.text || "{}");
-    try {
-        const result = JSON.parse(jsonText);
-        return {
-            scenes: Array.isArray(result.scenes) ? result.scenes : [],
-            strategicAudit: result.strategicAudit || ""
-        };
-    } catch (e) {
-        console.error("JSON Parse Error in Storyboard:", e, "Raw Text:", response.text);
-        throw new Error("Failed to generate a valid script structure. Please try again.");
-    }
+  return retryWithBackoff(() => proxyCall<StoryboardResponse>('/api/gemini/flow', {
+    flow: 'storyboard',
+    input: { script, avatarDescription, businessInfo, ethnicity, language },
+  }));
 };
 
 /**

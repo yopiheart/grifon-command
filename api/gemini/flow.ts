@@ -26,6 +26,9 @@ import {
   buildInfluencerScriptPrompt,
   parseInfluencerScriptResponse,
   type InfluencerScriptFlowInput,
+  buildStoryboardPrompt,
+  parseStoryboardResponse,
+  type StoryboardFlowInput,
 } from '../_lib/prompts.js';
 import type { MarketResearchInput, OfferOptimizerInput } from '../../types';
 
@@ -148,10 +151,23 @@ const FLOW_REGISTRY: Record<string, FlowHandler> = {
     } as any);
     return parseInfluencerScriptResponse(response.text || '{}');
   },
+
+  storyboard: async (input: StoryboardFlowInput, ai) => {
+    const prompt = buildStoryboardPrompt(input);
+    const response = await ai.models.generateContent({
+      model: MODEL_FAST,
+      contents: prompt,
+      config: {
+        responseMimeType: 'application/json',
+        safetySettings: SAFETY_SETTINGS,
+      },
+    } as any);
+    return parseStoryboardResponse(response.text || '{}');
+  },
 };
 
 const Body = z.object({
-  flow: z.enum(['marketmind', 'adscript', 'offer-optimizer', 'influencer-script']),
+  flow: z.enum(['marketmind', 'adscript', 'offer-optimizer', 'influencer-script', 'storyboard']),
   input: z.unknown(),
 });
 
