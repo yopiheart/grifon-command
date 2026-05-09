@@ -1,11 +1,12 @@
 
-import React, { useState } from 'react';
-import { OfferOptimizerInput, OfferOptimizerResult, OfferTier } from '../types';
+import React, { useState, useMemo } from 'react';
+import { OfferOptimizerInput, OfferOptimizerResult, OfferTier, MarketResearchReport } from '../types';
 import { generateOfferOptimization } from '../services/geminiService';
+import { generateOfferPdf } from '../utils/offerPdfGenerator';
 import { GlassPanel } from './ui/GlassPanel';
 import { GoldButton } from './ui/GoldButton';
 import Loader from './ui/Loader';
-import { Copy, ChevronLeft, ChevronDown, UploadCloud, AlarmClock, ShieldCheck, ArrowRight, Download, Brain } from 'lucide-react';
+import { Copy, ChevronLeft, ChevronDown, UploadCloud, AlarmClock, ShieldCheck, ArrowRight, Download, Brain, FileSearch } from 'lucide-react';
 import saveAs from 'file-saver';
 
 interface OfferOptimizerProps {
@@ -49,46 +50,6 @@ const formatTierAsText = (label: string, tier: OfferTier): string => {
     `  Effort Removed → ${tier.hormoziLogic.effort}`,
     ``,
     `Probability: ${tier.probability}`,
-  ].join('\n');
-};
-
-const formatResultAsText = (result: OfferOptimizerResult): string => {
-  const assets = result.conversionAssets;
-  return [
-    `IRRESISTIBLE OFFER BLUEPRINT`,
-    `=============================`,
-    ``,
-    `ANALYSIS`,
-    `--------`,
-    result.analysis,
-    ``,
-    formatTierAsText(TIER_LABELS.tripwire, result.tripwire),
-    ``,
-    formatTierAsText(TIER_LABELS.coreOffer, result.coreOffer),
-    ``,
-    formatTierAsText(TIER_LABELS.highTicket, result.highTicket),
-    ``,
-    `=== CONVERSION ASSETS ===`,
-    ``,
-    `Brand Name:        ${assets.brandName}`,
-    `Products/Services: ${assets.productServiceList.join(', ')}`,
-    `Target:            ${assets.target}`,
-    `Achieves/Eliminates: ${assets.achieveOrEliminate}`,
-    `Main Benefit:      ${assets.mainBenefit}`,
-    `Main Problem:      ${assets.mainProblem}`,
-    `Main Pain Point:   ${assets.mainPainPoint}`,
-    `Differentiator:    ${assets.mainDifferentiator}`,
-    `Features:          ${assets.mainFeatures.join(', ')}`,
-    `Brand Palette:     ${assets.brandPalette.join(', ')}`,
-    ``,
-    `=== DIRECTOR PAYLOAD (sent to Director AI wizard) ===`,
-    ``,
-    `Offer:    ${result.directorPayload.offer}`,
-    `Product:  ${result.directorPayload.productName}`,
-    `Audience: ${result.directorPayload.targetAudience}`,
-    `Benefit:  ${result.directorPayload.mainBenefit}`,
-    `Pain:     ${result.directorPayload.painPoint}`,
-    `USP:      ${result.directorPayload.usp}`,
   ].join('\n');
 };
 
@@ -188,10 +149,30 @@ const OfferOptimizer: React.FC<OfferOptimizerProps> = ({ onBack, onNavigate }) =
     language: 'English',
   });
 
-  const [inputType, setInputType] = useState<'upload' | 'paste'>('upload');
+  const [inputType, setInputType] = useState<'upload' | 'paste' | 'marketmind'>('upload');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [result, setResult] = useState<OfferOptimizerResult | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [marketMindImported, setMarketMindImported] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  const marketMindReport = useMemo<MarketResearchReport | null>(() => {
+    if (inputType !== 'marketmind') return null;
+    try {
+      const raw = localStorage.getItem('marketMindReport');
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      if (!parsed || typeof parsed !== 'object' || !parsed.subject) return null;
+      return parsed as MarketResearchReport;
+    } catch {
+      return null;
+    }
+  }, [inputType]);
+
+  const switchInputType = (next: 'upload' | 'paste' | 'marketmind') => {
+    setInputType(next);
+    setMarketMindImported(false);
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -232,15 +213,41 @@ const OfferOptimizer: React.FC<OfferOptimizerProps> = ({ onBack, onNavigate }) =
     }
   };
 
-  const handleDownload = () => {
-    if (!result) return;
-    const blob = new Blob([formatResultAsText(result)], { type: "text/plain;charset=utf-8" });
-    saveAs(blob, `Irresistible_Offer_Blueprint.txt`);
+  const handleDownload = async () => {
+    if (!result || isDownloading) return;
+    setIsDownloading(true);
+    try {
+      const blob = await generateOfferPdf(result, formData.productName);
+      const safeName = (formData.productName || 'Offer').trim().replace(/\s+/g, '_').replace(/[^A-Za-z0-9_-]/g, '');
+      saveAs(blob, `Irresistible_Offer_Blueprint_${safeName || 'Offer'}.pdf`);
+    } catch (err) {
+      console.error('PDF generation failed', err);
+      setError('Could not generate PDF. Please try again.');
+    } finally {
+      setIsDownloading(false);
+    }
   };
 
   const handleSendToDirector = () => {
     if (!result || !onNavigate) return;
     onNavigate('creative_director');
+  };
+
+  const handleImportMarketMind = () => {
+    if (!marketMindReport) return;
+    const audienceLine = `${marketMindReport.winningAvatar || ''} — ${marketMindReport.demographics || ''}`.trim().replace(/^—\s*/, '');
+    setFormData(prev => ({
+      ...prev,
+      marketResearchText: marketMindReport.narrativeReport || prev.marketResearchText,
+      productName: prev.productName || marketMindReport.subject || '',
+      targetAudience: prev.targetAudience || audienceLine,
+    }));
+    setMarketMindImported(true);
+  };
+
+  const handleGoToMarketResearch = () => {
+    if (!onNavigate) return;
+    onNavigate('market_research');
   };
 
   return (
@@ -271,36 +278,44 @@ const OfferOptimizer: React.FC<OfferOptimizerProps> = ({ onBack, onNavigate }) =
               </h2>
 
               {/* Context Source Tabs */}
-              <div className="flex gap-4 mb-4">
+              <div className="flex flex-wrap gap-4 mb-4">
                 <button
                   className={`pb-2 text-[10px] font-mono tracking-widest uppercase transition-colors ${inputType === 'upload' ? 'text-[#FFCC00] border-b-2 border-[#FFCC00]' : 'text-zinc-500 hover:text-zinc-300'}`}
-                  onClick={() => setInputType('upload')}
+                  onClick={() => switchInputType('upload')}
                 >
-                  Upload Research File
+                  Upload File
                 </button>
                 <button
                   className={`pb-2 text-[10px] font-mono tracking-widest uppercase transition-colors ${inputType === 'paste' ? 'text-[#FFCC00] border-b-2 border-[#FFCC00]' : 'text-zinc-500 hover:text-zinc-300'}`}
-                  onClick={() => setInputType('paste')}
+                  onClick={() => switchInputType('paste')}
                 >
                   Paste Text
                 </button>
+                <button
+                  className={`pb-2 text-[10px] font-mono tracking-widest uppercase transition-colors ${inputType === 'marketmind' ? 'text-[#FFCC00] border-b-2 border-[#FFCC00]' : 'text-zinc-500 hover:text-zinc-300'}`}
+                  onClick={() => switchInputType('marketmind')}
+                >
+                  Use MarketMind Run
+                </button>
               </div>
 
-              {inputType === 'upload' ? (
+              {inputType === 'upload' && (
                 <div className="space-y-2">
                   <label htmlFor="file-upload" className="bg-zinc-950/50 border-2 border-dashed border-white/10 hover:border-[#FFCC00] hover:bg-zinc-800/80 text-zinc-400 p-4 rounded-xl flex items-center justify-center cursor-pointer transition-all w-full gap-2">
-                    <UploadCloud className="w-5 h-5" /> UPLOAD .TXT FILE
+                    <UploadCloud className="w-5 h-5" /> UPLOAD .TXT / .MD FILE
                   </label>
                   <input
                     id="file-upload"
                     type="file"
-                    accept=".txt"
+                    accept=".txt,.md,text/markdown,text/plain"
                     onChange={handleFileUpload}
                     className="hidden"
                   />
                   {formData.marketResearchText && <p className="text-[#FFCC00] text-xs mt-2 font-mono text-center">File loaded successfully.</p>}
                 </div>
-              ) : (
+              )}
+
+              {inputType === 'paste' && (
                 <div className="space-y-2">
                   <label htmlFor="marketResearchText" className="block text-[10px] text-zinc-400 font-mono uppercase tracking-widest">
                     // PASTE_MARKET_RESEARCH
@@ -314,6 +329,65 @@ const OfferOptimizer: React.FC<OfferOptimizerProps> = ({ onBack, onNavigate }) =
                     rows={6}
                     className="w-full bg-zinc-950 border border-white/10 rounded-xl p-4 text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] min-h-[100px] text-sm"
                   />
+                </div>
+              )}
+
+              {inputType === 'marketmind' && (
+                <div className="space-y-2">
+                  {marketMindReport ? (
+                    <div className="bg-zinc-950 border border-white/10 rounded-xl p-4 space-y-3">
+                      <div className="flex items-center gap-2 border-b border-white/10 pb-2">
+                        <FileSearch className="w-4 h-4 text-[#FFCC00]" />
+                        <p className="text-[10px] text-[#FFCC00] font-mono uppercase tracking-widest">// MARKETMIND_REPORT_FOUND</p>
+                      </div>
+                      <div className="space-y-2 text-xs font-mono">
+                        <div>
+                          <p className="text-[10px] text-zinc-500 uppercase tracking-widest">// AVATAR</p>
+                          <p className="text-zinc-200 mt-0.5">{marketMindReport.winningAvatar || '—'}</p>
+                        </div>
+                        <div>
+                          <p className="text-[10px] text-zinc-500 uppercase tracking-widest">// SUBJECT</p>
+                          <p className="text-zinc-200 mt-0.5">{marketMindReport.subject || '—'}</p>
+                        </div>
+                        <div>
+                          <p className="text-[10px] text-zinc-500 uppercase tracking-widest">// BIG_IDEA</p>
+                          <p className="text-zinc-300 mt-0.5 leading-relaxed">
+                            {marketMindReport.bigIdea && marketMindReport.bigIdea.length > 140
+                              ? `${marketMindReport.bigIdea.slice(0, 140)}…`
+                              : marketMindReport.bigIdea || '—'}
+                          </p>
+                        </div>
+                      </div>
+                      {marketMindImported ? (
+                        <div className="flex items-center justify-center gap-2 text-[10px] font-mono uppercase tracking-widest text-[#FFCC00] border border-[#FFCC00]/30 bg-[#FFCC00]/5 rounded-xl px-4 py-3">
+                          <ShieldCheck className="w-3 h-3" />
+                          // MARKETMIND_LOADED — Research, product name & audience prefilled.
+                        </div>
+                      ) : (
+                        <GoldButton
+                          onClick={handleImportMarketMind}
+                          className="w-full py-3 rounded-xl tracking-widest text-xs flex items-center justify-center gap-2"
+                        >
+                          IMPORT TO OPTIMIZER <ArrowRight className="w-4 h-4" />
+                        </GoldButton>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="bg-zinc-950 border border-white/10 rounded-xl p-6 space-y-3 text-center">
+                      <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest">// NO_MARKETMIND_REPORT_FOUND</p>
+                      <p className="text-sm text-zinc-300">
+                        Run Market Research first to import the report into your offer build.
+                      </p>
+                      {onNavigate && (
+                        <button
+                          onClick={handleGoToMarketResearch}
+                          className="inline-flex items-center gap-2 bg-zinc-950 border border-white/10 hover:border-[#FFCC00] hover:text-[#FFCC00] text-zinc-300 text-[10px] font-mono uppercase tracking-widest px-4 py-2 rounded-xl transition-colors"
+                        >
+                          GO TO MARKET RESEARCH <ArrowRight className="w-3 h-3" />
+                        </button>
+                      )}
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -400,9 +474,10 @@ const OfferOptimizer: React.FC<OfferOptimizerProps> = ({ onBack, onNavigate }) =
                 {result && (
                   <button
                     onClick={handleDownload}
-                    className="flex items-center gap-2 text-[10px] text-zinc-400 font-mono uppercase tracking-widest hover:text-[#FFCC00] transition-colors"
+                    disabled={isDownloading}
+                    className="flex items-center gap-2 text-[10px] text-zinc-400 font-mono uppercase tracking-widest hover:text-[#FFCC00] disabled:opacity-50 disabled:cursor-wait transition-colors"
                   >
-                    <Download className="w-3 h-3" /> DOWNLOAD .TXT
+                    <Download className="w-3 h-3" /> {isDownloading ? 'BUILDING PDF…' : 'DOWNLOAD .PDF'}
                   </button>
                 )}
               </div>

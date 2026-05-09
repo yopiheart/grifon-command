@@ -17,6 +17,7 @@
     "@google/genai": "^1.46.0",
     "@supabase/supabase-js": "^2.103.3",
     "file-saver": "^2.0.5",
+    "jspdf": "^4.2.1",
     "jszip": "^3.10.1",
     "lucide-react": "^1.7.0",
     "motion": "^12.38.0",

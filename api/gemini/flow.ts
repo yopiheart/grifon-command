@@ -21,8 +21,10 @@ import {
   buildAdScriptPrompt,
   parseAdScriptResponse,
   type AdScriptInput,
+  buildOfferOptimizerPrompt,
+  parseOfferOptimizerResponse,
 } from '../_lib/prompts.js';
-import type { MarketResearchInput } from '../../types';
+import type { MarketResearchInput, OfferOptimizerInput } from '../../types';
 
 type TemuSubType = 'ASMR' | 'Reaction' | 'Utility';
 
@@ -113,10 +115,26 @@ const FLOW_REGISTRY: Record<string, FlowHandler> = {
     const rawText = response.text || '{}';
     return parseAdScriptResponse(rawText);
   },
+
+  'offer-optimizer': async (input: OfferOptimizerInput, ai) => {
+    const prompt = buildOfferOptimizerPrompt(input);
+    // Note: textModel (flash-lite) per Neil's cost/speed eval. Revert to
+    // researchTextModel by changing MODEL_TEXT → MODEL_RESEARCH after eval.
+    const response = await ai.models.generateContent({
+      model: MODEL_TEXT,
+      contents: { parts: [{ text: prompt }] },
+      config: {
+        responseMimeType: 'application/json',
+        safetySettings: SAFETY_SETTINGS,
+      },
+    } as any);
+    const rawText = response.text || '{}';
+    return parseOfferOptimizerResponse(rawText);
+  },
 };
 
 const Body = z.object({
-  flow: z.enum(['marketmind', 'adscript']),
+  flow: z.enum(['marketmind', 'adscript', 'offer-optimizer']),
   input: z.unknown(),
 });
 

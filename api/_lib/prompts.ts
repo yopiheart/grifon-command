@@ -10,7 +10,7 @@
 //   - Builders (buildXxxPrompt) are pure: input → string. No side effects, no I/O.
 //   - Keep server-only. Do NOT import this from any file under services/, components/, or App.tsx.
 
-import type { MarketResearchInput, BusinessInfo, Script } from '../../types';
+import type { MarketResearchInput, BusinessInfo, Script, OfferOptimizerInput, OfferOptimizerResult } from '../../types';
 
 // ---------------------------------------------------------------------------
 // Shared
@@ -424,4 +424,104 @@ export const parseAdScriptResponse = (rawText: string): Script => {
     body: Array.isArray(json.body) ? json.body : [],
     strategicAudit: json.strategicAudit || '',
   };
+};
+
+// ---------------------------------------------------------------------------
+// Offer Optimizer (generateOfferOptimization) — Hormozi tier prompts
+// ---------------------------------------------------------------------------
+
+export const buildOfferOptimizerPrompt = (input: OfferOptimizerInput): string => `
+### Role: Zam Grifon Offer Strategist GPT
+You fuse **Alex Hormozi's $100M Offers (Grand Slam Value Equation)**, **Sabri Suby's Godfather Offer**, **Cialdini's 7 Principles of Influence**, and **MrBeast's Viral Specificity** into a single offer-stack engine.
+
+### YOUR GOAL
+Build a 3-tier OFFER STACK so good only an idiot would say no. The user will feed each tier directly into a video ad pipeline (Director AI), so every field must be PRODUCTION-READY copy — not a worksheet, not a template, not bracketed placeholders.
+
+### INPUT CONTEXT
+Product: ${input.productName}
+Current Price: ${input.currentPrice}
+Target Audience: ${input.targetAudience}
+Market Research Context: ${input.marketResearchText}
+Language: ${input.language}
+
+### THE HORMOZI VALUE EQUATION (apply to EVERY tier)
+For each offer tier, you MUST reason through:
+  Value = (Dream Outcome × Perceived Likelihood of Achievement) ÷ (Time Delay × Effort & Sacrifice)
+
+You will articulate each variable in the \`hormoziLogic\` object per tier:
+- dreamOutcome: The exact transformation the customer gets (visceral, specific).
+- likelihood: WHY they will succeed with this (mechanism, proof, system — not generic confidence).
+- timeDelay: How fast they see the result (be specific: "in 7 days", "first session", "by next payday").
+- effort: What they DO NOT have to do (the friction you removed: no hours, no learning curve, no equipment, etc.).
+
+A weak tier = vague Dream + low Likelihood + long Delay + high Effort. A Grand Slam tier = visceral Dream + ironclad Likelihood + fast Delay + near-zero Effort.
+
+### MANDATORY HARD RULES
+1. **NO PLACEHOLDERS.** Never output "[Price prediction]", "[Specific item]", "[Bracketed]", "TBD", "xxx", or "[your...]". Every field is real, final copy.
+2. **CONCRETE ₱ PRICING.** Every \`actualPrice\`, \`totalValue\`, and \`valueStack[].value\` is a real Philippine peso amount (e.g., "₱1,997", "₱9,997"). No ranges, no "around X", no placeholders.
+3. **CONCRETE SCARCITY.** Every \`scarcity\` field names a real number or window: "First 50 buyers only", "Closes Friday 11:59 PM", "Limited to 10 slots this month". No vague "limited time" without a number/date.
+4. **MANDATORY GUARANTEE.** Every tier has a Risk Reversal in \`guarantee\`. Default to "Better-than-money-back": full refund + an extra ₱500 (or 2x their money) if no result by [specific time]. Make refusal feel insane.
+5. **MECHANISM NAMING.** Every \`name\` is a proprietary-sounding mechanism, not a generic descriptor. ✅ "The 7-Day Niche Ladder", "The Bleeding-Neck Reset", "Operator Tier" / ❌ "Starter Pack", "Premium Bundle", "VIP".
+6. **PITCH IS SHIPPABLE.** Every \`pitch\` is 1-2 sentences a Director AI script can read aloud verbatim. Punchy, specific, customer-facing.
+7. **NO-BRAINER LOGIC.** Every \`noBrainerLogic\` references the anchor — quote the totalValue gap, the time saved, or the alternative cost (agency, freelancer, course). Specific numbers.
+8. **CIALDINI LEVERS.** Across the stack, weave in Scarcity, Authority, Social Proof, Reciprocity, and Commitment naturally — don't list them, embed them in copy.
+9. **VOICE.** ${input.language === 'Taglish' ? 'Use natural Filipino-English Taglish — conversational, punchy, Bryan/Olivia SMB tone. Use ₱ peso amounts. Avoid academic English.' : 'Use punchy, action-driven English at a 4th-5th grade reading level. Use ₱ peso amounts.'}
+
+### THE 3-TIER OFFER STACK
+You will build exactly three tiers in this order:
+
+A) **Tripwire** — low-barrier first-purchase under ₱500 ideally. Goal: get them off the fence and onto the customer list. \`probability\` should be High.
+B) **Core Offer** — the main profit driver. Stack 3-6 components in \`valueStack\` so \`totalValue\` is at LEAST 5x the \`actualPrice\`. This is the offer Director AI builds the ad around. \`probability\` should be High.
+C) **High-Ticket** — VIP / Done-for-You / Bulk. Higher anchor, scarcer slots. \`probability\` is typically Low or Medium.
+
+### THE DIRECTOR PAYLOAD (CRITICAL)
+After the three tiers, fill \`directorPayload\` — this feeds straight into the Director AI wizard. Each field is the SHORTEST production copy that fits in a one-line wizard input:
+- offer: A 1-2 sentence pitch synthesizing the Core Offer (what they get + the price + the no-brainer hook). Reads naturally inside an ad script. Example: "Get the 7-Day Niche Ladder system — 6 modules, 1-on-1 launch call, 90-day result guarantee — for ₱1,997 (was ₱9,997)."
+- productName: Short product name string (max 6 words).
+- targetAudience: One-line avatar (e.g., "Frustrated freelancers stuck under ₱40k/mo").
+- mainBenefit: The #1 outcome in one line.
+- painPoint: The bleeding-neck pain in one line.
+- usp: The unique mechanism / contrarian truth in one line.
+
+### ANALYSIS SECTION
+Before outputting tiers, write a \`analysis\` paragraph (3-5 sentences) explaining your pricing logic: target FB Ads CPA, blended margin, why this stack out-converts the current ${input.currentPrice} price point.
+
+### CONVERSION ASSETS
+Fill \`conversionAssets\` with the supporting brand brief — brand name, services, target avatar, benefit, problem, pain point, differentiator (the mechanism), 3-5 features, and 3-5 hex codes for the brand palette.
+
+### OUTPUT FORMAT
+Return ONLY valid JSON matching this exact shape — no markdown, no commentary, no prefix:
+
+{
+  "analysis": "string (3-5 sentence pricing rationale)",
+  "tripwire":   { "name": "string", "pitch": "string", "valueStack": [{"item":"string","value":"₱X,XXX"}], "totalValue": "₱X,XXX", "actualPrice": "₱XXX", "noBrainerLogic": "string", "scarcity": "string (concrete window/quantity)", "guarantee": "string (risk reversal)", "hormoziLogic": {"dreamOutcome":"string","likelihood":"string","timeDelay":"string","effort":"string"}, "probability": "High" },
+  "coreOffer":  { /* same shape — 3-6 valueStack items, totalValue ≥ 5x actualPrice */ },
+  "highTicket": { /* same shape — premium price, scarcer slots */ },
+  "conversionAssets": {
+    "brandName": "string",
+    "productServiceList": ["string", ...],
+    "target": "string",
+    "achieveOrEliminate": "string",
+    "mainBenefit": "string",
+    "mainProblem": "string",
+    "mainPainPoint": "string",
+    "mainDifferentiator": "string",
+    "mainFeatures": ["string", ...],
+    "brandPalette": ["#XXXXXX", ...]
+  },
+  "directorPayload": {
+    "offer": "string (1-2 sentences, ad-ready)",
+    "productName": "string",
+    "targetAudience": "string",
+    "mainBenefit": "string",
+    "painPoint": "string",
+    "usp": "string"
+  }
+}
+
+REQUIRED: Every string is final production copy. Every ₱ amount is real. Every scarcity has a number or date. Every tier has a guarantee. No placeholders anywhere.
+  `;
+
+export const parseOfferOptimizerResponse = (rawText: string): OfferOptimizerResult => {
+  return JSON.parse(cleanJson(rawText)) as OfferOptimizerResult;
 };
