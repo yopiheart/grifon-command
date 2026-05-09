@@ -10,7 +10,22 @@
 //   - Builders (buildXxxPrompt) are pure: input → string. No side effects, no I/O.
 //   - Keep server-only. Do NOT import this from any file under services/, components/, or App.tsx.
 
-import type { MarketResearchInput, BusinessInfo, Script, OfferOptimizerInput, OfferOptimizerResult, InfluencerConfig, InfluencerStrategicInput, InfluencerScriptResponse, Scene, StoryboardResponse } from '../../types';
+// types.ts is a pure type-export file at the project root. We rely on
+// `import type` so the import line is erased at compile time — nothing
+// flows into the runtime bundle. The `.js` extension is required by
+// Node ESM resolution (project sets "type": "module").
+import type {
+  MarketResearchInput,
+  BusinessInfo,
+  Script,
+  OfferOptimizerInput,
+  OfferOptimizerResult,
+  InfluencerConfig,
+  InfluencerStrategicInput,
+  InfluencerScriptResponse,
+  Scene,
+  StoryboardResponse,
+} from '../../types.js';
 
 // ---------------------------------------------------------------------------
 // Shared

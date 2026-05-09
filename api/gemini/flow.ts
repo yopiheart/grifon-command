@@ -30,7 +30,7 @@ import {
   parseStoryboardResponse,
   type StoryboardFlowInput,
 } from '../_lib/prompts.js';
-import type { MarketResearchInput, OfferOptimizerInput } from '../../types';
+import type { MarketResearchInput, OfferOptimizerInput } from '../../types.js';
 
 type TemuSubType = 'ASMR' | 'Reaction' | 'Utility';
 
