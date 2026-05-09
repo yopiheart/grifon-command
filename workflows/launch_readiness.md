@@ -4,6 +4,75 @@
 
 This is the meta-workflow. It doesn't do the work itself — it points to the workflows that do, and tracks overall progress.
 
+## Status as of 2026-05-09 (v1.x bundle E2E sign-off — 3/4 image-rules PASS, 1 narrative-override gap surfaced)
+
+**Working tree clean. No new commits this session.** Pure verification + analysis session. Ran ITEM A (resume-pill in real Chrome) + ITEM B (Playwright wizard E2E with hero photo upload, eyeball against the 4 v1.x scene-image rules). Three of four image-rule criteria pass clean. One residual gap (FACE_TO_CAMERA narrative override) surfaced — needs grill-me on `services/geminiService.ts` storyboard-narrative-generation layer before beta. Two unrelated synthesis-reliability findings logged.
+
+### What ran today
+
+- **ITEM A — resume-pill in real Chrome.** Hard-refresh mid-Step-3, sign back in, click DIRECTOR card → `// PREVIOUS_SESSION_DETECTED` pill renders correctly with `[ RESUME ]` button + IndexedDB row visible for user UUID. **Closes the v1.x P0 spike from 2026-05-08 late-late-evening's item #9** — Playwright-MCP context had separate IDB origin semantics from real Chrome; not a real bug.
+- **ITEM B — full Director wizard E2E via Playwright MCP** (TESTIMONIAL + Bukidnon Brew + 9:16 + Filipino female avatar Kaye + uploaded hero photo). Synthesis batch produced 5 of 7 storyboard scenes; SCENE_02 and SCENE_05 hit 55s `PROXY_TIMEOUT`. Bundle artifacts saved to `.tmp/run-2026-05-09/` (avatar, scene PNGs, full-page screenshot, REVIEW_SUMMARY.md).
+- **Bonus signal:** all 4 v1.x script-side fixes from c45c018 visible in this live run, beyond regression-harness verification — script body opens `"Ako si Kaye."`, CTA uses `"Click below"` (not "link sa bio"), full offer carries (`"limited batch at libreng shipping sa order"`), Discovery uses verb-completion (`"Hanggang sa natuklasan ko..."`).
+
+### v1.x scene-image rules — rule-by-rule verdict
+
+| # | Rule | Verdict | Evidence |
+|---|---|---|---|
+| 1 | AVATAR_CAMERA_ANGLES (≥ frontal-ish bias) | **PASS** | SCENE_03 frontal, SCENE_06 3/4 frontal. No side-profile drift. (Sample limited — SCENE_02 was the third avatar scene + timed out.) |
+| 2 | IDENTITY_LOCK (hair + wardrobe match Step 4) | **PASS clean** | SCENE_03 + SCENE_06 both show shoulder-length wavy brown hair worn DOWN, beige collared sweater. The hair-down-vs-tied-up drift Neil flagged on the prior run is fixed. |
+| 3 | FACE_TO_CAMERA (eyes + mouth visible on scriptLine scenes) | **PARTIAL FAIL — 1 of 2** | SCENE_03 ✅ (eyes open, smiling). SCENE_06 ❌ — **eyes closed** despite scriptLine `"Hindi ko na kailangan lumabas..."`. **Why:** narrative-generator output `[VISUAL_PROMPT]: "...eyes closed in appreciation, scenting the aroma..."`. The c45c018 FACE_TO_CAMERA rule is enforced at the *scene image-gen* layer, but the upstream *storyboard-narrative-generation* layer is not constrained to forbid "eyes closed / looking away / head turned" descriptors for scriptLine scenes. **Fix at the narrative-generation prompt, not the scene-image prompt.** |
+| 4 | BAG_ORIENTATION_RULE (front of bag faces camera) | **PASS clean** | SCENE_01_END, SCENE_03, SCENE_04, SCENE_07 all show bag front-facing. Brand-new rule from c45c018 is firing correctly across all 4 product-bearing scenes. |
+
+### Synthesis-reliability findings (separate from rule compliance)
+
+1. **2 of 7 scenes hit 55s `PROXY_TIMEOUT`** — SCENE_02 (Kaye rubbing temples at desk) and SCENE_05 (hands pressing zip-seal close-up). **Both are hand-detail-heavy.** Other avatar scenes with relaxed hand poses (SCENE_03 holding bag, SCENE_06 cupping mug) succeeded. Sample is small but the pattern is suggestive — model spends extra latency on detailed hand poses, especially when paired with the uploaded reference photo.
+
+2. **No per-scene REGEN button on failed scenes.** Confirms the open punch-list item (Step5Storyboard.tsx — REGEN only renders when `imageUrl` exists; failed scenes only show UPLOAD). Beta users will hit this and have no in-flow recovery.
+
+3. **Label inconsistency across product-bearing scenes.** SCENE_01_END = blank kraft, no label. SCENE_03 = white label panel with bean illustration + "250g" text. SCENE_04 = leaked gibberish text from hero photo (`"Coffee" + "TWEN LADET FOUM"`-style nonsense). SCENE_07 = blank white label panel. Three different label treatments across one ad. Beta cohort will read it as "the product changes mid-ad."
+
+4. **NO_LOGO_HALLUCINATION partial leak** when hero reference photo contains AI-gibberish text. Most scenes correctly suppress brand text; SCENE_04 inherited the seed photo's nonsense.
+
+### Decisions to make before merge to `main`
+
+The bundle is **mostly beta-ready** but the FACE_TO_CAMERA narrative-override hole is real. Three paths:
+
+| Option | Description | Cost |
+|---|---|---|
+| **A. Merge now, fix in v1.1** | Accept FACE_TO_CAMERA gap for beta cohort (5-10 hand-picked users, short feedback loop). | 0 — `git checkout main && git merge checkout-redesign-preview && git push` |
+| **B. Hot-fix the narrative prompt, then merge** | Re-grill on `services/geminiService.ts` storyboard-narrative-generation prompt. Forbid "eyes closed / looking away / head turned" descriptors for scriptLine scenes. Re-run regression. | ~1-2 hours including grill-me |
+| **C. Block beta until B + timeout investigation lands** | Also bump the 55s ceiling for storyboard image gen, or pre-empt by softening hand-pose prompts. Higher confidence beta. | ~½ day |
+
+**Neil's call** — shared-state action.
+
+### Files saved for review
+
+```
+.tmp/run-2026-05-09/
+├── REVIEW_SUMMARY.md       — full rule-by-rule report + bundle decision tree
+├── avatar.png              — Step 4 reference (Filipino female, hair down, beige sweater)
+├── step5-progress.png      — full-page Step 5 screenshot showing all 7 scene cells
+└── bundle/                 — extracted Creative_Director_Assets.zip
+    ├── scene_1_start.png   — instant packet → trash bin
+    ├── scene_1_end.png     — kraft bag on coaster + beans
+    ├── scene_3_start.png   — Kaye holding bag, smiling, frontal
+    ├── scene_4_start.png   — French press pour + bag in BG (gibberish leak)
+    ├── scene_6_start.png   — Kaye smelling mug, EYES CLOSED (rule violation)
+    └── scene_7_start.png   — hero bag shot
+```
+
+### Cafe-PC reboot reminders (unchanged)
+
+- All commits on `checkout-redesign-preview` are pushed to origin — durable across reboot.
+- `.tmp/` files do NOT survive across reboots. If you want the screenshot bundle persisted, commit it now (gitignored by default).
+- Branch is **`checkout-redesign-preview`**, not main. HEAD is `c45c018` (v1.x bundle). 25 ahead of main, 4 behind in unrelated docs.
+- If `node_modules/` missing on next session: `npm install`.
+- Run `.\scripts\restore-git-identity.ps1` if `git commit` fails with "Author identity unknown".
+- Run `.\scripts\restore-playwright-mcp.ps1` if Playwright MCP needed (requires VS Code restart — kills active Claude Code conversation; do at session start).
+- `.env` `GEMINI_API_KEY` confirmed present and valid (`AIza...BZqA`, 39 chars).
+
+---
+
 ## Status as of 2026-05-08 late-late-evening (full Director AI wizard E2E smoke — both formulas — v1.x bundle expanded)
 
 **Working tree clean. No new commits.** Pure verification session. Drove the full 8-step wizard end-to-end via Playwright MCP for both `MrBeast` and `TESTIMONIAL` formulas using a real account, real Supabase session, real Gemini API calls. **Pipeline works end-to-end on both formulas.** State propagation confirmed (Step 3 manual edits survive Step 5 paraphrase, persist through Step 8 final script). 9 v1.x carry-forwards identified — all surgical, none blocks beta.
