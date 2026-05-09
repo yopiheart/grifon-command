@@ -1,0 +1,139 @@
+# Handoff — 2026-05-10 Karit Coffee Session
+
+**Created at session end so the next-session agent has durable context after the cafe-PC reboot wipes `~/.claude/`.**
+
+---
+
+## Where we are
+
+- **Branch:** `checkout-redesign-preview`
+- **HEAD:** `e777430` (pushed; matches `origin/checkout-redesign-preview`)
+- **Status vs `main`:** 43 commits ahead, 55 files changed, +6480/-1805
+- **Director AI + Market Research + Offer Optimizer:** all 3 modules verified working end-to-end on a clean catalog hero (the Karit Coffee bag at `.tmp/NEW HERO IMAGE.jpg`, now wiped per cafe-PC convention)
+- **Next module to test:** Generate Video (Neil's explicit instruction)
+
+---
+
+## What shipped this session
+
+| Phase | Commit | Closes | Summary |
+|---|---|---|---|
+| 6a | `5acea2f` | FINDING-3 | `retryWithBackoff` retries on `PROXY_TIMEOUT` (504) with separate 2-retry budget; REGEN button always renders on failed scenes (label flips between `GENERATE` / `REGEN`) |
+| 6b | `8fdc1f9` | FINDING-1 | `Step1ClientDetails` now syncs `data` prop into local `formData` via `useEffect(() => setFormData(data), [data])` — the `useState(data)` was capturing the prop only on first mount, silently swallowing the auto-prefill update |
+| 6c | `6c26161` | FINDING-2 + FINDING-4 | Storyboard schema's `referenceImage` enum extended from `"avatar" \| "product"` to `"avatar" \| "product" \| "both" \| "none"`. New `REFERENCE_IMAGE_CLASSIFICATION_RULE` in `api/_lib/prompts.ts` teaches the narrative-generator to use `"both"` for avatar+product scenes and `"none"` for product-adjacent generic B-roll. New `DUAL_REFERENCE_LOCK` branch in `generateSceneImage` composes avatar + product identity rules. `NO_LOGO_HALLUCINATION` rephrased from negation to preservation with explicit composition-flexibility escape clause. |
+| 6d (doc) | `0ea26bb` | — | `launch_readiness.md` updated for 6a/6b/6c |
+| 8b | `ab2cf23` | FINDING-5 | Trimmed `AVATAR_CAMERA_ANGLES` from 6 → 4 (kept INTIMATE_CLOSE_UP, MEDIUM_FRONTAL, WIDE_BUST_SHOT, HIGH_ANGLE_SELFIE — model collapsed SIDE_PROFILE_TALK and DYNAMIC_SHOULDER to frontal portrait when IDENTITY_LOCK fired). Strengthened `CAMERA_MANDATORY` to make DISTANCE + ELEVATION non-negotiable and tell the model that scene-prompt actions execute AT the framing, not instead of it. |
+| 8c (doc) | `e777430` | — | `launch_readiness.md` updated for FINDING-5 + Karit live verification log |
+
+### Verified live (Karit Coffee E2E run, 2026-05-10 ~02:30 PHT)
+
+- 9 scenes synthesized cleanly, no `PROXY_TIMEOUT`, no manual REGEN needed.
+- Step 1 offer field auto-populated from MarketMind big idea after `SEND TO DIRECTOR`.
+- Narrative-generator emitted ALL FOUR new tag values across the storyboard:
+  - `"none"` for SCENE_01 (mug + coffee ring) and SCENE_03 (pile of over-roasted beans)
+  - `"avatar"` for SCENE_02 / SCENE_04 / SCENE_07 / SCENE_09 (Elena alone)
+  - `"both"` for SCENE_05 (Elena holding the bag) — DUAL_REFERENCE_LOCK fired
+  - `"product"` for SCENE_06 / SCENE_08 (bag-only B-roll)
+- The CRITICAL ANTI-PATTERN held: SCENE_03's "pile of dark, over-roasted coffee beans on a rustic wooden table" was correctly tagged `"none"` instead of the misleading `"product"` (the same shape that misfired in Phase 5).
+- SCENE_05 image preserved the Karit Coffee label exactly (SPECIALTY LAVOR / Coffee / orange band / Karit / lotus glyph).
+- Neil's eyeball: *"they all work!!! I love the result now. Product images across all scenes are consistent! Perfectly copy the hero image we used... Also the failure generation is gone as well."*
+- Phase 8b camera-angle fix is code-side ship verified by build + tests; live re-verification deferred to next wizard run.
+
+---
+
+## Best next thing to do
+
+**Test the Generate Video module.** Neil's exact instruction: *"we are now good with DIRECTOR AI, MARKET RESEARCH AND OFFER OPTIMIZER. Next VIdeo generation to test the prompts and have the story/images move so we can verify if prompts are good."*
+
+This is the natural next step — the storyboard + scene images + video prompts are all confirmed working. Generate Video takes those prompts + scene images and animates them. Testing it is the final piece before the full ad pipeline is end-to-end verified.
+
+### Investigation steps for next session (read-only first)
+
+1. Find the Generate Video module entry: `components/GenerateVideo.tsx` (likely). Read it + the corresponding service call (`generateVideo` or similar in `services/geminiService.ts`) + the proxy endpoints at `api/gemini/video.ts` and `api/gemini/video/poll.ts`.
+2. Map the input contract: does it take the storyboard `videoPrompts`? Avatar URL? Scene images? Audio?
+3. Verify what's already wired vs stubbed. The module may have a `PlaceholderTool` stub or be partially implemented.
+4. Then plan the Phase 10 test accordingly. May need a fresh wizard run if storyboard data doesn't survive (`.tmp/` + IDB state may be wiped).
+
+---
+
+## Pending items (carryover punch list)
+
+### P0 — likely next session
+
+- Test Generate Video module end-to-end (with the Karit Coffee storyboard if it survives, otherwise a fresh wizard run)
+- Side benefit: verify FINDING-5 camera-angle fix lands as expected during the fresh wizard run
+
+### P1 — Neil-decision
+
+- **Beta-merge gate:** `git checkout main && git merge checkout-redesign-preview && git push`. 43 commits / 55 files / +6480/-1805. Shared-state action — not auto-executed. Can ship now or after Generate Video module test.
+
+### P2 — post-beta (not blocking)
+
+- **Test suite repair:** 10 of 27 unit tests fail because they assert prompt text in client fetch bodies, but post-crown-jewel-migration prompts live server-side. Repair test harness to introspect the server-side prompt registry.
+- **Step 2 UX guidance:** add upload-dropzone hint *"Best results: clean product shot on neutral background, label fully visible, no people in frame."* Reduces beta-cohort confusion if they upload lifestyle heros.
+- **SCENE 1 hook schema extension:** latent — if a user's script hook explicitly shows the actual product, the current `"none"` hardcode could re-introduce the SCENE_07-style fake-label bug. Surface if seen.
+- **`Step2BusinessInfo` same `useState(data)` anti-pattern:** currently safe by mount-timing (Step 2 mounts AFTER auto-prefill ran). Single-line fix when needed.
+- launch_readiness P2 items: module name copy audit, Signal Modulator + Edit Video admin-gate removal.
+
+---
+
+## Cafe-PC reboot reality
+
+- All commits on `checkout-redesign-preview` pushed to origin — durable across reboot.
+- Branch is `checkout-redesign-preview`, NOT `main`. `main` is 43 commits behind.
+- `node_modules/` may be missing → `npm install`.
+- `.env` `GEMINI_API_KEY` confirmed present this session.
+- If `git commit` fails with "Author identity unknown" → `.\scripts\restore-git-identity.ps1`.
+- If Playwright MCP needs restore → `.\scripts\restore-playwright-mcp.ps1` (requires VS Code restart, kills active conversation; only run if needed).
+- Dev server may need restart → `npm run dev`.
+- `.tmp/` files don't survive reboot. The Karit hero at `.tmp/NEW HERO IMAGE.jpg` is gone post-reboot. Neil may need to re-drop one if next session needs a clean catalog hero.
+- `~/.claude/` (and the plan file inside it) dies on reboot. This handoff doc + `workflows/launch_readiness.md` are the durable session context.
+
+---
+
+## Key Grifon insight from this session (worth remembering)
+
+**Lifestyle product hero photos confound the model.** When the uploaded hero is a "person holding the product" composition (the prior Flying Barista Blend hero), the model:
+- Tends to copy the WHOLE composition (verbatim hero replication on `'product'` scenes)
+- Has trouble extracting "just the bag" for `'both'` scenes (avatar+product)
+
+A **clean catalog-style hero** (single product, neutral background, no people, front-facing label) gives dramatically better results. Phase 6c handles both cases via the schema/classification + DUAL_REFERENCE_LOCK, but the clean hero amplifies the win. This is worth surfacing in Step 2 UX guidance for the beta cohort (P2 item above).
+
+---
+
+## Opening prompt for the next session
+
+Paste this into the next conversation:
+
+```
+Continuing from 2026-05-10 Karit Coffee session.
+
+Branch: checkout-redesign-preview HEAD e777430.
+Read FIRST: workflows/handoff_2026-05-10-karit.md (full session context).
+Workflow context: workflows/launch_readiness.md (now reflects Phase 6+8b shipped).
+
+Top-line summary:
+- Director AI + MarketMind + Offer Optimizer are all VERIFIED working end-to-end on the Karit Coffee clean catalog hero.
+- Phase 6a/6b/6c/8b shipped — 5 findings closed.
+- Bundle is 43 commits ahead of main (beta-merge is Neil's pending decision).
+
+Next priority: TEST THE GENERATE VIDEO MODULE.
+Neil's instruction: "we are now good with DIRECTOR AI, MARKET RESEARCH AND OFFER OPTIMIZER. Next VIdeo generation to test the prompts and have the story/images move so we can verify if prompts are good."
+
+Investigation steps (read-only first):
+1. Read components/GenerateVideo.tsx (or whatever the module file is), the matching service call in services/geminiService.ts, and the proxy at api/gemini/video.ts + api/gemini/video/poll.ts.
+2. Map the input contract — what does Generate Video take as input (videoPrompts? scene images? avatar?)?
+3. Check if the module is fully wired or stubbed (PlaceholderTool).
+4. Then plan the test accordingly — may need a fresh wizard run if storyboard state doesn't survive (.tmp/ + IDB are wiped).
+
+Cafe-PC reboot reminders:
+- All commits on checkout-redesign-preview pushed to origin — durable.
+- node_modules/ may need reinstall, dev server needs restart.
+- If Playwright MCP needs restore, .\scripts\restore-playwright-mcp.ps1 requires VS Code restart (kills the conversation).
+- .env GEMINI_API_KEY confirmed present.
+- .tmp/ wiped — Neil may need to re-drop a clean catalog hero if a fresh wizard run is needed.
+
+P1 carryover: beta-merge gate. Bundle at e777430 is 43 commits ahead of main. Neil hasn't decided whether to merge before or after the Generate Video test. Surface as a one-line offer when natural — do NOT auto-execute.
+
+P2 carryover (surface only if relevant): test suite repair, Step 2 UX guidance, SCENE 1 hook schema latent, Step2BusinessInfo same useState anti-pattern.
+```
