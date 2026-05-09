@@ -21,6 +21,45 @@ The following are **LOCKED** — do not modify without explicit user approval:
 - The `strategicAudit` self-grading fields (flagged for future fresh-agent replacement; do not remove unilaterally)
 - **MarketMind output schema** — `MarketResearchReport` in [`../types.ts`](../types.ts) and the matching OUTPUT TEMPLATE in `generateMarketResearch`. Downstream modules (Director AI auto-prefill in [`../App.tsx`](../App.tsx), `injectMarketMind` in [`../components/InfluencerForge.tsx`](../components/InfluencerForge.tsx), [`../components/CaptionHeadline.tsx`](../components/CaptionHeadline.tsx)) read structured fields directly. Renaming or removing fields breaks these consumers.
 
+## Crown-Jewel Prompt Migration (2026-05-09)
+
+The **5 highest-IP prompts** were moved server-side to prevent extraction from
+the public JS bundle. Their system instructions, OUTPUT TEMPLATEs, and
+schema-shaping rules now live in [`../api/_lib/prompts.ts`](../api/_lib/prompts.ts)
+(server-only, never bundled into client). They execute via the
+[`../api/gemini/flow.ts`](../api/gemini/flow.ts) endpoint with shape
+`{flow: <id>, input: <flow-specific>}`.
+
+Migrated flows:
+
+| Flow ID | Client function | Server prompt |
+|---|---|---|
+| `marketmind` | [`generateMarketResearch`](geminiService.ts) | `MARKETMIND_SYSTEM_INSTRUCTION` |
+| `adscript` | [`generateAdScript`](geminiService.ts) | `buildAdScriptPrompt` (Temu/Testimonial/MrBeast variants + classifier) |
+| `offer-optimizer` | [`generateOfferOptimization`](geminiService.ts) | `buildOfferOptimizerPrompt` (Hormozi tiers) |
+| `influencer-script` | [`generateInfluencerScript`](geminiService.ts) | `buildInfluencerScriptPrompt` (CCC framework) |
+| `storyboard` | [`generateStoryboard`](geminiService.ts) | `buildStoryboardPrompt` (Cinematic relay + STILL_FRAME_RULE + APPEARANCE_LOCK_RULE) |
+
+**Implication for editing:** for these 5 flows, prompt edits go to
+`api/_lib/prompts.ts`, NOT this file. The client wrappers here are now thin
+4-10 line dispatchers. Smaller flows (avatar, thumbnail, classifier helpers,
+parseMarketResearchFile, etc.) still build their prompts client-side and use
+[`../api/gemini/text.ts`](../api/gemini/text.ts) — those will migrate in a
+follow-up session.
+
+**Verification command** to confirm crown-jewel content stays out of the
+client bundle after a build:
+
+```bash
+grep -cE "MarketMind by Zam|DIRECTOR_CRITIQUE_PROTOCOL|COMMON_RULES|MRBEAST STRUCTURE|TESTIMONIAL STRUCTURE|TEMU SUB-TYPE|Godfather Offer|Grand Slam|Tripwire|CCC FRAMEWORK|STILL_FRAME_RULE|APPEARANCE_LOCK_RULE|BAG_ORIENTATION_RULE|VIRAL VFX MENU" dist/assets/index-*.js
+# expected: 0
+```
+
+**Temporary cost downgrade (2026-05-09):** the `marketmind` flow runs on
+`MODEL_TEXT` (gemini-3.1-flash-lite-preview) instead of `MODEL_RESEARCH`
+(gemini-3.1-pro-preview) for cost control during early ramp. Revert path
+documented in `api/gemini/flow.ts` marketmind handler.
+
 **Fair game:** transport mechanics, error wrapping, exported type signatures, structural refactors of helpers like `proxyCall` and `cleanJson`.
 
 ## Patterns
