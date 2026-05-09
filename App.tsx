@@ -142,6 +142,8 @@ const App: React.FC = () => {
   const saveErrorToastedRef = useRef(false);
   const marketMindPrefillRef = useRef(false);
   const [marketMindLoadedAvatar, setMarketMindLoadedAvatar] = useState<string | null>(null);
+  const offerOptimizerPrefillRef = useRef(false);
+  const [directorAngleBrief, setDirectorAngleBrief] = useState<string | null>(null);
 
   // When the user swaps script formula on Step 2, dump downstream caches that depend on the script.
   // Without this, going Step 2 → swap formula → Step 5 still shows the old MrBeast scenes (stale cache).
@@ -321,6 +323,37 @@ const App: React.FC = () => {
     }
   }, [activeModule, currentStep, clientDetails.brandName, businessInfo.product, script]);
 
+  // Auto-prefill Director AI wizard from Offer Optimizer result on entry.
+  // Mirrors the MarketMind prefill pattern: pristine wizard + ref-guarded single-fire per session.
+  useEffect(() => {
+    if (activeModule !== 'creative_director') return;
+    if (offerOptimizerPrefillRef.current) return;
+    const wizardPristine = currentStep === 1 && !clientDetails.brandName && !businessInfo.product && script === null;
+    if (!wizardPristine) return;
+    const savedOffer = localStorage.getItem('offerOptimizerResult');
+    if (!savedOffer) return;
+    try {
+      const r = JSON.parse(savedOffer);
+      const payload = r?.directorPayload;
+      if (!payload || typeof payload !== 'object' || !payload.offer) return;
+      setBusinessInfo(prev => ({
+        ...prev,
+        product: prev.product || payload.productName || '',
+        audience: prev.audience || payload.targetAudience || '',
+        benefit: prev.benefit || payload.mainBenefit || '',
+        painPoint: prev.painPoint || payload.painPoint || '',
+        separator: prev.separator || payload.usp || '',
+      }));
+      setClientDetails(prev => ({
+        ...prev,
+        offer: prev.offer || payload.offer || '',
+      }));
+      offerOptimizerPrefillRef.current = true;
+    } catch {
+      // Malformed JSON — skip prefill, user can still manually fill.
+    }
+  }, [activeModule, currentStep, clientDetails.brandName, businessInfo.product, script]);
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setAuthError('');
@@ -390,6 +423,7 @@ const App: React.FC = () => {
     setClientDetails({ brandName: '', offer: '' });
     setBusinessInfo({ product: '', audience: '', benefit: '', painPoint: '', separator: '', features: '', productImageUrls: [], productImageDescription: undefined, logoImageUrl: undefined, brandColors: '', scriptType: 'MrBeast' });
     setScript(null);
+    setDirectorAngleBrief(null);
     setLanguage(null);
     setFinalScript([]);
     setAvatar(null);
@@ -629,7 +663,7 @@ const App: React.FC = () => {
   } else if (activeModule === 'market_research') {
     moduleElement = <MarketResearch onBack={() => setActiveModule(null)} onNavigate={setActiveModule} />;
   } else if (activeModule === 'offer_optimizer') {
-    moduleElement = <OfferOptimizer onBack={() => setActiveModule(null)} />;
+    moduleElement = <OfferOptimizer onBack={() => setActiveModule(null)} onNavigate={setActiveModule} />;
   } else if (activeModule === 'edit_video') {
     moduleElement = <EditVideo onBack={() => setActiveModule(null)} />;
   } else if (activeModule === 'image_editor') {
@@ -747,7 +781,7 @@ const App: React.FC = () => {
             <div className="mt-8">
                 {currentStep === 1 && <Step1ClientDetails data={clientDetails} setData={setClientDetails} onNext={() => setCurrentStep(2)} />}
                 {currentStep === 2 && <Step2BusinessInfo data={businessInfo} setData={setBusinessInfo} onNext={() => setCurrentStep(3)} onBack={() => setCurrentStep(1)} aspectRatio={aspectRatio} setAspectRatio={setAspectRatio} />}
-                {currentStep === 3 && <Step3AdScript businessInfo={businessInfo} script={script} setScript={setScript} setFinalScript={setFinalScript} language={language} setLanguage={setLanguage} onNext={() => setCurrentStep(4)} onBack={() => setCurrentStep(2)} brandName={clientDetails.brandName} offer={clientDetails.offer} />}
+                {currentStep === 3 && <Step3AdScript businessInfo={businessInfo} script={script} setScript={setScript} setFinalScript={setFinalScript} language={language} setLanguage={setLanguage} onNext={() => setCurrentStep(4)} onBack={() => setCurrentStep(2)} brandName={clientDetails.brandName} offer={clientDetails.offer} directorAngleBrief={directorAngleBrief} setDirectorAngleBrief={setDirectorAngleBrief} />}
                 {currentStep === 4 && <Step4Avatar businessInfo={businessInfo} avatar={avatar} setAvatar={setAvatar} onNext={() => setCurrentStep(5)} onBack={() => setCurrentStep(3)} aspectRatio={aspectRatio} />}
                 {currentStep === 5 && <Step5Storyboard script={finalScript} avatar={avatar} businessInfo={businessInfo} storyboard={storyboard} setStoryboard={setStoryboard} onNext={() => setCurrentStep(6)} onBack={() => setCurrentStep(4)} aspectRatio={aspectRatio} language={language} />}
                 {currentStep === 6 && <Step6Thumbnail script={finalScript} avatar={avatar} businessInfo={businessInfo} aspectRatio={aspectRatio} thumbnailUrl={thumbnailUrl} setThumbnailUrl={setThumbnailUrl} onNext={() => setCurrentStep(7)} onBack={() => setCurrentStep(5)} />}

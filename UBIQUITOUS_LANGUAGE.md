@@ -98,6 +98,9 @@ The sections below are the technical-vocabulary deep dives — wizard internals 
 | **Uplink** | The bundled brief (`UplinkData`) fed into **Image Ads Gen** and **Cinematic Spec Studio**: brand identity, pricing, demographic, benefit, problem, USP, palette, and asset slots. | Brief (when ambiguous), input bundle |
 | **Ad Variant** | One of the three ad image templates produced by **Image Ads Gen**: `Press Clip`, `Benefit Anatomy`, or `Split-Screen`. | Ad creative, ad format |
 | **Day Content** | One day's entry in the **Organic Calendar** output (title, image prompt, caption, vibe, placement). | Daily post |
+| **Offer Stack** | The three-tier output of **Offer Optimizer**: one **Tripwire**, one **Core Offer**, one **High-Ticket** — each an **Offer Tier**. | Offer ladder, value stack (when ambiguous) |
+| **Offer Tier** | One rung of an **Offer Stack** (`OfferTier`): mechanism name, pitch, value stack with anchor pricing, scarcity window, guarantee, and Hormozi-equation rationale. | Offer level, package |
+| **Director Payload** | The projection of an **Offer Stack** into **Director AI** wizard fields (`directorPayload` on `OfferOptimizerResult`): a one-line `offer` plus the **Business Info** fields (product, audience, benefit, pain point, USP). Powers the Send-to-Director auto-prefill. | Wizard prefill, handoff bundle |
 
 ## Relationships
 

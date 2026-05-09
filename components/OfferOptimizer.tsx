@@ -1,18 +1,185 @@
 
 import React, { useState } from 'react';
-import { OfferOptimizerInput } from '../types';
+import { OfferOptimizerInput, OfferOptimizerResult, OfferTier } from '../types';
 import { generateOfferOptimization } from '../services/geminiService';
 import { GlassPanel } from './ui/GlassPanel';
 import { GoldButton } from './ui/GoldButton';
 import Loader from './ui/Loader';
-import { Copy, ChevronLeft, ChevronDown, UploadCloud } from 'lucide-react';
+import { Copy, ChevronLeft, ChevronDown, UploadCloud, AlarmClock, ShieldCheck, ArrowRight, Download, Brain } from 'lucide-react';
 import saveAs from 'file-saver';
 
 interface OfferOptimizerProps {
   onBack: () => void;
+  onNavigate?: (module: string) => void;
 }
 
-const OfferOptimizer: React.FC<OfferOptimizerProps> = ({ onBack }) => {
+const TIER_LABELS: Record<'tripwire' | 'coreOffer' | 'highTicket', string> = {
+  tripwire: 'TRIPWIRE',
+  coreOffer: 'CORE OFFER',
+  highTicket: 'HIGH-TICKET',
+};
+
+const TIER_SUBTITLES: Record<'tripwire' | 'coreOffer' | 'highTicket', string> = {
+  tripwire: '// LOW-BARRIER ENTRY',
+  coreOffer: '// MAIN PROFIT DRIVER',
+  highTicket: '// VIP UPSELL',
+};
+
+const formatTierAsText = (label: string, tier: OfferTier): string => {
+  const stackLines = tier.valueStack.map(v => `   • ${v.item} — ${v.value}`).join('\n');
+  return [
+    `=== ${label}: ${tier.name} ===`,
+    ``,
+    tier.pitch,
+    ``,
+    `VALUE STACK:`,
+    stackLines,
+    ``,
+    `Total Value: ${tier.totalValue}`,
+    `Your Price: ${tier.actualPrice}`,
+    ``,
+    `No-Brainer Logic: ${tier.noBrainerLogic}`,
+    `Scarcity: ${tier.scarcity}`,
+    `Guarantee: ${tier.guarantee}`,
+    ``,
+    `Hormozi Logic:`,
+    `  Dream Outcome  → ${tier.hormoziLogic.dreamOutcome}`,
+    `  Likelihood     → ${tier.hormoziLogic.likelihood}`,
+    `  Time Delay     → ${tier.hormoziLogic.timeDelay}`,
+    `  Effort Removed → ${tier.hormoziLogic.effort}`,
+    ``,
+    `Probability: ${tier.probability}`,
+  ].join('\n');
+};
+
+const formatResultAsText = (result: OfferOptimizerResult): string => {
+  const assets = result.conversionAssets;
+  return [
+    `IRRESISTIBLE OFFER BLUEPRINT`,
+    `=============================`,
+    ``,
+    `ANALYSIS`,
+    `--------`,
+    result.analysis,
+    ``,
+    formatTierAsText(TIER_LABELS.tripwire, result.tripwire),
+    ``,
+    formatTierAsText(TIER_LABELS.coreOffer, result.coreOffer),
+    ``,
+    formatTierAsText(TIER_LABELS.highTicket, result.highTicket),
+    ``,
+    `=== CONVERSION ASSETS ===`,
+    ``,
+    `Brand Name:        ${assets.brandName}`,
+    `Products/Services: ${assets.productServiceList.join(', ')}`,
+    `Target:            ${assets.target}`,
+    `Achieves/Eliminates: ${assets.achieveOrEliminate}`,
+    `Main Benefit:      ${assets.mainBenefit}`,
+    `Main Problem:      ${assets.mainProblem}`,
+    `Main Pain Point:   ${assets.mainPainPoint}`,
+    `Differentiator:    ${assets.mainDifferentiator}`,
+    `Features:          ${assets.mainFeatures.join(', ')}`,
+    `Brand Palette:     ${assets.brandPalette.join(', ')}`,
+    ``,
+    `=== DIRECTOR PAYLOAD (sent to Director AI wizard) ===`,
+    ``,
+    `Offer:    ${result.directorPayload.offer}`,
+    `Product:  ${result.directorPayload.productName}`,
+    `Audience: ${result.directorPayload.targetAudience}`,
+    `Benefit:  ${result.directorPayload.mainBenefit}`,
+    `Pain:     ${result.directorPayload.painPoint}`,
+    `USP:      ${result.directorPayload.usp}`,
+  ].join('\n');
+};
+
+const TierCard: React.FC<{ label: string; subtitle: string; tier: OfferTier }> = ({ label, subtitle, tier }) => {
+  const [showHormozi, setShowHormozi] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(formatTierAsText(label, tier));
+  };
+
+  return (
+    <div className="bg-zinc-950 border border-white/10 rounded-xl p-5 flex flex-col gap-4">
+      <div className="flex items-start justify-between gap-3 border-b border-white/10 pb-3">
+        <div>
+          <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest">{subtitle}</p>
+          <p className="text-[10px] text-[#FFCC00] font-mono uppercase tracking-widest mt-1">{label}</p>
+          <h3 className="text-xl md:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight leading-tight mt-1 break-words">
+            {tier.name}
+          </h3>
+        </div>
+        <button
+          onClick={handleCopy}
+          className="shrink-0 flex items-center gap-2 text-[10px] text-zinc-400 font-mono uppercase tracking-widest hover:text-[#FFCC00] transition-colors"
+          title="Copy this tier"
+        >
+          <Copy className="w-3 h-3" /> COPY
+        </button>
+      </div>
+
+      <p className="text-sm text-zinc-300 leading-relaxed">{tier.pitch}</p>
+
+      <div className="space-y-2">
+        <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest">// VALUE_STACK</p>
+        <ul className="space-y-1">
+          {tier.valueStack.map((v, idx) => (
+            <li key={idx} className="flex items-center justify-between gap-3 text-xs font-mono border-b border-white/5 pb-1 last:border-b-0">
+              <span className="text-zinc-300">{v.item}</span>
+              <span className="text-zinc-400 shrink-0">{v.value}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="flex items-baseline justify-between gap-3 border-t border-white/10 pt-3">
+        <div>
+          <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest">Total Value</p>
+          <p className="text-sm font-mono text-zinc-500 line-through">{tier.totalValue}</p>
+        </div>
+        <div className="text-right">
+          <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest">Your Price</p>
+          <p className="text-2xl font-black text-[#FFCC00] tracking-tight">{tier.actualPrice}</p>
+        </div>
+      </div>
+
+      <p className="text-xs text-zinc-300 italic border-l-2 border-[#FFCC00]/40 pl-3">
+        {tier.noBrainerLogic}
+      </p>
+
+      <div className="flex flex-wrap gap-2">
+        <span className="inline-flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest text-[#FFCC00] border border-[#FFCC00]/30 bg-[#FFCC00]/5 rounded px-2 py-1">
+          <AlarmClock className="w-3 h-3" /> {tier.scarcity}
+        </span>
+        <span className="inline-flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest text-[#FFCC00] border border-[#FFCC00]/30 bg-[#FFCC00]/5 rounded px-2 py-1">
+          <ShieldCheck className="w-3 h-3" /> {tier.guarantee}
+        </span>
+        <span className="inline-flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest text-zinc-400 border border-white/10 bg-zinc-900/50 rounded px-2 py-1">
+          PROBABILITY: {tier.probability}
+        </span>
+      </div>
+
+      <button
+        onClick={() => setShowHormozi(prev => !prev)}
+        className="flex items-center gap-2 text-[10px] text-zinc-400 font-mono uppercase tracking-widest hover:text-[#FFCC00] transition-colors w-fit"
+      >
+        <Brain className="w-3 h-3" /> {showHormozi ? 'HIDE' : 'SHOW'} HORMOZI LOGIC
+        <ChevronDown className={`w-3 h-3 transition-transform ${showHormozi ? 'rotate-180' : ''}`} />
+      </button>
+
+      {showHormozi && (
+        <div className="bg-zinc-900/50 border border-white/10 rounded-lg p-3 space-y-2 text-xs font-mono">
+          <p><span className="text-[#FFCC00]">Dream:</span> <span className="text-zinc-300">{tier.hormoziLogic.dreamOutcome}</span></p>
+          <p><span className="text-[#FFCC00]">Likelihood:</span> <span className="text-zinc-300">{tier.hormoziLogic.likelihood}</span></p>
+          <p><span className="text-[#FFCC00]">Time:</span> <span className="text-zinc-300">{tier.hormoziLogic.timeDelay}</span></p>
+          <p><span className="text-[#FFCC00]">Effort Removed:</span> <span className="text-zinc-300">{tier.hormoziLogic.effort}</span></p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const OfferOptimizer: React.FC<OfferOptimizerProps> = ({ onBack, onNavigate }) => {
   const [formData, setFormData] = useState<OfferOptimizerInput>({
     productName: '',
     currentPrice: '',
@@ -20,10 +187,10 @@ const OfferOptimizer: React.FC<OfferOptimizerProps> = ({ onBack }) => {
     marketResearchText: '',
     language: 'English',
   });
-  
+
   const [inputType, setInputType] = useState<'upload' | 'paste'>('upload');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [result, setResult] = useState<string | null>(null);
+  const [result, setResult] = useState<OfferOptimizerResult | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -37,37 +204,43 @@ const OfferOptimizer: React.FC<OfferOptimizerProps> = ({ onBack }) => {
 
     const reader = new FileReader();
     reader.onload = (event) => {
-        const text = event.target?.result as string;
-        setFormData(prev => ({ ...prev, marketResearchText: text }));
+      const text = event.target?.result as string;
+      setFormData(prev => ({ ...prev, marketResearchText: text }));
     };
     reader.readAsText(file);
   };
 
   const handleAnalyze = async () => {
     if (!formData.productName || !formData.currentPrice || !formData.marketResearchText) {
-        setError("Please provide Product Name, Price, and Market Research context.");
-        return;
+      setError("Please provide Product Name, Price, and Market Research context.");
+      return;
     }
-    
+
     setIsAnalyzing(true);
     setError(null);
     setResult(null);
-    
+
     try {
-        const report = await generateOfferOptimization(formData);
-        setResult(report);
+      const report = await generateOfferOptimization(formData);
+      setResult(report);
+      localStorage.setItem('offerOptimizerResult', JSON.stringify(report));
     } catch (err) {
-        console.error(err);
-        setError("Offer Optimization Failed. Please check your connection and try again.");
+      console.error(err);
+      setError("Offer Optimization Failed. Please check your connection and try again.");
     } finally {
-        setIsAnalyzing(false);
+      setIsAnalyzing(false);
     }
   };
 
   const handleDownload = () => {
     if (!result) return;
-    const blob = new Blob([result], { type: "text/plain;charset=utf-8" });
+    const blob = new Blob([formatResultAsText(result)], { type: "text/plain;charset=utf-8" });
     saveAs(blob, `Irresistible_Offer_Blueprint.txt`);
+  };
+
+  const handleSendToDirector = () => {
+    if (!result || !onNavigate) return;
+    onNavigate('creative_director');
   };
 
   return (
@@ -81,179 +254,229 @@ const OfferOptimizer: React.FC<OfferOptimizerProps> = ({ onBack }) => {
           </div>
           <div>
             <h1 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight break-words whitespace-normal leading-tight">
-                Offer Optimizer
+              Offer Optimizer
             </h1>
             <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mt-2">
-                // MAKE YOUR CUSTOMER FEEL STUPID SAYING NO
+              // MAKE YOUR CUSTOMER FEEL STUPID SAYING NO
             </p>
           </div>
         </header>
 
         <GlassPanel className="relative overflow-hidden">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                {/* LEFT: INPUTS */}
-                <div className="space-y-6">
-                    <h2 className="text-[10px] text-zinc-400 font-mono uppercase tracking-widest border-b border-white/10 pb-2">
-                        // OFFER_CONTEXT
-                    </h2>
-                    
-                    {/* Context Source Tabs */}
-                    <div className="flex gap-4 mb-4">
-                        <button 
-                            className={`pb-2 text-[10px] font-mono tracking-widest uppercase transition-colors ${inputType === 'upload' ? 'text-[#FFCC00] border-b-2 border-[#FFCC00]' : 'text-zinc-500 hover:text-zinc-300'}`}
-                            onClick={() => setInputType('upload')}
-                        >
-                            Upload Research File
-                        </button>
-                        <button 
-                            className={`pb-2 text-[10px] font-mono tracking-widest uppercase transition-colors ${inputType === 'paste' ? 'text-[#FFCC00] border-b-2 border-[#FFCC00]' : 'text-zinc-500 hover:text-zinc-300'}`}
-                            onClick={() => setInputType('paste')}
-                        >
-                            Paste Text
-                        </button>
-                    </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+            {/* LEFT: INPUTS */}
+            <div className="space-y-6">
+              <h2 className="text-[10px] text-zinc-400 font-mono uppercase tracking-widest border-b border-white/10 pb-2">
+                // OFFER_CONTEXT
+              </h2>
 
-                    {inputType === 'upload' ? (
-                        <div className="space-y-2">
-                            <label htmlFor="file-upload" className="bg-zinc-950/50 border-2 border-dashed border-white/10 hover:border-[#FFCC00] hover:bg-zinc-800/80 text-zinc-400 p-4 rounded-xl flex items-center justify-center cursor-pointer transition-all w-full gap-2"> 
-                                <UploadCloud className="w-5 h-5" /> UPLOAD .TXT FILE 
-                            </label>
-                            <input 
-                                id="file-upload"
-                                type="file" 
-                                accept=".txt" 
-                                onChange={handleFileUpload} 
-                                className="hidden"
-                            />
-                            {formData.marketResearchText && <p className="text-[#FFCC00] text-xs mt-2 font-mono text-center">File loaded successfully.</p>}
-                        </div>
-                    ) : (
-                        <div className="space-y-2">
-                            <label htmlFor="marketResearchText" className="block text-[10px] text-zinc-400 font-mono uppercase tracking-widest">
-                                // PASTE_MARKET_RESEARCH
-                            </label>
-                            <textarea 
-                                id="marketResearchText"
-                                name="marketResearchText"
-                                value={formData.marketResearchText}
-                                onChange={handleChange}
-                                placeholder="Paste the MarketMind report or key customer insights here..."
-                                rows={6}
-                                className="w-full bg-zinc-950 border border-white/10 rounded-xl p-4 text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] min-h-[100px] text-sm"
-                            />
-                        </div>
-                    )}
+              {/* Context Source Tabs */}
+              <div className="flex gap-4 mb-4">
+                <button
+                  className={`pb-2 text-[10px] font-mono tracking-widest uppercase transition-colors ${inputType === 'upload' ? 'text-[#FFCC00] border-b-2 border-[#FFCC00]' : 'text-zinc-500 hover:text-zinc-300'}`}
+                  onClick={() => setInputType('upload')}
+                >
+                  Upload Research File
+                </button>
+                <button
+                  className={`pb-2 text-[10px] font-mono tracking-widest uppercase transition-colors ${inputType === 'paste' ? 'text-[#FFCC00] border-b-2 border-[#FFCC00]' : 'text-zinc-500 hover:text-zinc-300'}`}
+                  onClick={() => setInputType('paste')}
+                >
+                  Paste Text
+                </button>
+              </div>
 
-                    <div className="space-y-2">
-                        <label htmlFor="productName" className="block text-[10px] text-zinc-400 font-mono uppercase tracking-widest">
-                            // CURRENT_PRODUCT_SERVICE_NAME
-                        </label>
-                        <input 
-                            id="productName"
-                            name="productName"
-                            value={formData.productName}
-                            onChange={handleChange}
-                            placeholder="e.g., Ultimate Growth Kit"
-                            className="w-full bg-zinc-950 border border-white/10 rounded-xl p-4 text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] text-sm"
-                        />
-                    </div>
-                    
-                    <div className="grid grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                            <label htmlFor="currentPrice" className="block text-[10px] text-zinc-400 font-mono uppercase tracking-widest">
-                                // CURRENT_OFFER_PRICE
-                            </label>
-                            <input 
-                                id="currentPrice"
-                                name="currentPrice"
-                                value={formData.currentPrice}
-                                onChange={handleChange}
-                                placeholder="e.g., ₱1,500"
-                                className="w-full bg-zinc-950 border border-white/10 rounded-xl p-4 text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] text-sm"
-                            />
-                        </div>
-                         <div className="space-y-2">
-                            <label className="block text-[10px] text-zinc-400 font-mono uppercase tracking-widest">
-                                // LANGUAGE
-                            </label>
-                            <div className="relative">
-                                <select
-                                    name="language"
-                                    value={formData.language}
-                                    onChange={handleChange}
-                                    className="w-full bg-zinc-950 border border-white/10 rounded-xl p-4 text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] font-mono text-sm appearance-none truncate pr-10 md:text-base"
-                                >
-                                    <option value="English">English</option>
-                                    <option value="Taglish">Taglish</option>
-                                </select>
-                                <ChevronDown className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none" />
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div className="space-y-2">
-                        <label htmlFor="targetAudience" className="block text-[10px] text-zinc-400 font-mono uppercase tracking-widest">
-                            // TARGET_AUDIENCE_BRIEF
-                        </label>
-                        <input 
-                            id="targetAudience"
-                            name="targetAudience"
-                            value={formData.targetAudience}
-                            onChange={handleChange}
-                            placeholder="e.g., Frustrated freelancers looking for stable income"
-                            className="w-full bg-zinc-950 border border-white/10 rounded-xl p-4 text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] text-sm"
-                        />
-                    </div>
+              {inputType === 'upload' ? (
+                <div className="space-y-2">
+                  <label htmlFor="file-upload" className="bg-zinc-950/50 border-2 border-dashed border-white/10 hover:border-[#FFCC00] hover:bg-zinc-800/80 text-zinc-400 p-4 rounded-xl flex items-center justify-center cursor-pointer transition-all w-full gap-2">
+                    <UploadCloud className="w-5 h-5" /> UPLOAD .TXT FILE
+                  </label>
+                  <input
+                    id="file-upload"
+                    type="file"
+                    accept=".txt"
+                    onChange={handleFileUpload}
+                    className="hidden"
+                  />
+                  {formData.marketResearchText && <p className="text-[#FFCC00] text-xs mt-2 font-mono text-center">File loaded successfully.</p>}
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  <label htmlFor="marketResearchText" className="block text-[10px] text-zinc-400 font-mono uppercase tracking-widest">
+                    // PASTE_MARKET_RESEARCH
+                  </label>
+                  <textarea
+                    id="marketResearchText"
+                    name="marketResearchText"
+                    value={formData.marketResearchText}
+                    onChange={handleChange}
+                    placeholder="Paste the MarketMind report or key customer insights here..."
+                    rows={6}
+                    className="w-full bg-zinc-950 border border-white/10 rounded-xl p-4 text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] min-h-[100px] text-sm"
+                  />
+                </div>
+              )}
 
-                    <GoldButton 
-                        onClick={handleAnalyze} 
-                        disabled={isAnalyzing}
-                        className="w-full py-4 mt-4 rounded-xl tracking-widest whitespace-nowrap"
+              <div className="space-y-2">
+                <label htmlFor="productName" className="block text-[10px] text-zinc-400 font-mono uppercase tracking-widest">
+                  // CURRENT_PRODUCT_SERVICE_NAME
+                </label>
+                <input
+                  id="productName"
+                  name="productName"
+                  value={formData.productName}
+                  onChange={handleChange}
+                  placeholder="e.g., Ultimate Growth Kit"
+                  className="w-full bg-zinc-950 border border-white/10 rounded-xl p-4 text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] text-sm"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label htmlFor="currentPrice" className="block text-[10px] text-zinc-400 font-mono uppercase tracking-widest">
+                    // CURRENT_OFFER_PRICE
+                  </label>
+                  <input
+                    id="currentPrice"
+                    name="currentPrice"
+                    value={formData.currentPrice}
+                    onChange={handleChange}
+                    placeholder="e.g., ₱1,500"
+                    className="w-full bg-zinc-950 border border-white/10 rounded-xl p-4 text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] text-sm"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="block text-[10px] text-zinc-400 font-mono uppercase tracking-widest">
+                    // LANGUAGE
+                  </label>
+                  <div className="relative">
+                    <select
+                      name="language"
+                      value={formData.language}
+                      onChange={handleChange}
+                      className="w-full bg-zinc-950 border border-white/10 rounded-xl p-4 text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] font-mono text-sm appearance-none truncate pr-10 md:text-base"
                     >
-                        {isAnalyzing ? "OPTIMIZING OFFER..." : "GENERATE IRRESISTIBLE OFFERS"}
-                    </GoldButton>
-                    
-                    {error && (
-                        <p className="text-red-500 font-mono text-sm text-center border border-red-900/50 bg-red-900/20 p-4 rounded-xl mt-4">{error}</p>
-                    )}
+                      <option value="English">English</option>
+                      <option value="Taglish">Taglish</option>
+                    </select>
+                    <ChevronDown className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none" />
+                  </div>
                 </div>
+              </div>
 
-                {/* RIGHT: RESULTS */}
-                <div className="flex flex-col h-full min-h-[500px] border-l border-white/10 pl-0 lg:pl-10">
-                    <div className="flex justify-between items-center mb-4 border-b border-white/10 pb-2">
-                        <h2 className="text-[10px] text-zinc-400 font-mono uppercase tracking-widest">
-                            // OFFER_BLUEPRINT
-                        </h2>
-                        {result && (
-                            <button 
-                                onClick={handleDownload} 
-                                className="flex items-center gap-2 text-[10px] text-zinc-400 font-mono uppercase tracking-widest hover:text-[#FFCC00] transition-colors"
-                            >
-                                <Copy className="w-3 h-3" /> DOWNLOAD .TXT
-                            </button>
-                        )}
-                    </div>
-                    
-                    <div className="flex-grow bg-zinc-950 border border-white/10 rounded-xl p-6 overflow-y-auto custom-scrollbar relative">
-                        {isAnalyzing ? (
-                            <div className="absolute inset-0 flex items-center justify-center bg-zinc-950/80 backdrop-blur-sm z-10 rounded-xl">
-                                <Loader message="APPLYING VIRAL PSYCHOLOGY..." />
-                            </div>
-                        ) : result ? (
-                            <pre className="text-sm font-mono text-zinc-300 whitespace-pre-wrap leading-relaxed">
-                                {result}
-                            </pre>
-                        ) : (
-                            <div className="flex flex-col items-center justify-center h-full text-zinc-500">
-                                <p className="font-mono text-center mb-2 text-[10px] uppercase tracking-widest">// SYSTEM_STANDBY</p>
-                                <p className="text-sm text-center max-w-xs">
-                                    Input your product details and market research to generate high-converting offer stacks.
-                                </p>
-                            </div>
-                        )}
-                    </div>
-                </div>
+              <div className="space-y-2">
+                <label htmlFor="targetAudience" className="block text-[10px] text-zinc-400 font-mono uppercase tracking-widest">
+                  // TARGET_AUDIENCE_BRIEF
+                </label>
+                <input
+                  id="targetAudience"
+                  name="targetAudience"
+                  value={formData.targetAudience}
+                  onChange={handleChange}
+                  placeholder="e.g., Frustrated freelancers looking for stable income"
+                  className="w-full bg-zinc-950 border border-white/10 rounded-xl p-4 text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] text-sm"
+                />
+              </div>
+
+              <GoldButton
+                onClick={handleAnalyze}
+                disabled={isAnalyzing}
+                className="w-full py-4 mt-4 rounded-xl tracking-widest whitespace-nowrap"
+              >
+                {isAnalyzing ? "OPTIMIZING OFFER..." : "GENERATE IRRESISTIBLE OFFERS"}
+              </GoldButton>
+
+              {error && (
+                <p className="text-red-500 font-mono text-sm text-center border border-red-900/50 bg-red-900/20 p-4 rounded-xl mt-4">{error}</p>
+              )}
             </div>
+
+            {/* RIGHT: RESULTS */}
+            <div className="flex flex-col h-full min-h-[500px] border-l border-white/10 pl-0 lg:pl-10">
+              <div className="flex justify-between items-center mb-4 border-b border-white/10 pb-2">
+                <h2 className="text-[10px] text-zinc-400 font-mono uppercase tracking-widest">
+                  // OFFER_BLUEPRINT
+                </h2>
+                {result && (
+                  <button
+                    onClick={handleDownload}
+                    className="flex items-center gap-2 text-[10px] text-zinc-400 font-mono uppercase tracking-widest hover:text-[#FFCC00] transition-colors"
+                  >
+                    <Download className="w-3 h-3" /> DOWNLOAD .TXT
+                  </button>
+                )}
+              </div>
+
+              <div className="flex-grow bg-zinc-950 border border-white/10 rounded-xl p-4 md:p-6 overflow-y-auto custom-scrollbar relative">
+                {isAnalyzing ? (
+                  <div className="absolute inset-0 flex items-center justify-center bg-zinc-950/80 backdrop-blur-sm z-10 rounded-xl">
+                    <Loader message="APPLYING VIRAL PSYCHOLOGY..." />
+                  </div>
+                ) : result ? (
+                  <div className="space-y-5">
+                    {/* Analysis */}
+                    <div className="bg-zinc-900/50 border border-white/10 rounded-lg p-4">
+                      <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">// PRICING_ANALYSIS</p>
+                      <p className="text-sm text-zinc-300 leading-relaxed">{result.analysis}</p>
+                    </div>
+
+                    {/* 3 Tier Cards */}
+                    <TierCard label={TIER_LABELS.tripwire} subtitle={TIER_SUBTITLES.tripwire} tier={result.tripwire} />
+                    <TierCard label={TIER_LABELS.coreOffer} subtitle={TIER_SUBTITLES.coreOffer} tier={result.coreOffer} />
+                    <TierCard label={TIER_LABELS.highTicket} subtitle={TIER_SUBTITLES.highTicket} tier={result.highTicket} />
+
+                    {/* Conversion Assets */}
+                    <div className="bg-zinc-900/50 border border-white/10 rounded-lg p-4 space-y-2">
+                      <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">// CONVERSION_ASSETS</p>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2 text-xs font-mono">
+                        <p><span className="text-zinc-500">Brand:</span> <span className="text-zinc-300">{result.conversionAssets.brandName}</span></p>
+                        <p><span className="text-zinc-500">Target:</span> <span className="text-zinc-300">{result.conversionAssets.target}</span></p>
+                        <p><span className="text-zinc-500">Benefit:</span> <span className="text-zinc-300">{result.conversionAssets.mainBenefit}</span></p>
+                        <p><span className="text-zinc-500">Problem:</span> <span className="text-zinc-300">{result.conversionAssets.mainProblem}</span></p>
+                        <p><span className="text-zinc-500">Pain:</span> <span className="text-zinc-300">{result.conversionAssets.mainPainPoint}</span></p>
+                        <p><span className="text-zinc-500">Mechanism:</span> <span className="text-zinc-300">{result.conversionAssets.mainDifferentiator}</span></p>
+                      </div>
+                      {result.conversionAssets.mainFeatures?.length > 0 && (
+                        <div className="text-xs font-mono pt-2 border-t border-white/5">
+                          <p className="text-zinc-500 mb-1">Features:</p>
+                          <ul className="text-zinc-300 list-disc list-inside space-y-0.5">
+                            {result.conversionAssets.mainFeatures.map((f, idx) => <li key={idx}>{f}</li>)}
+                          </ul>
+                        </div>
+                      )}
+                      {result.conversionAssets.brandPalette?.length > 0 && (
+                        <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-white/5">
+                          <span className="text-zinc-500 text-xs font-mono">Palette:</span>
+                          {result.conversionAssets.brandPalette.map((hex, idx) => (
+                            <span key={idx} className="inline-flex items-center gap-1.5 text-[10px] font-mono text-zinc-300">
+                              <span className="w-3 h-3 rounded-sm border border-white/20" style={{ backgroundColor: hex }} />
+                              {hex}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center justify-center h-full text-zinc-500">
+                    <p className="font-mono text-center mb-2 text-[10px] uppercase tracking-widest">// SYSTEM_STANDBY</p>
+                    <p className="text-sm text-center max-w-xs">
+                      Input your product details and market research to generate high-converting offer stacks.
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {result && onNavigate && (
+                <GoldButton
+                  onClick={handleSendToDirector}
+                  className="w-full py-3 mt-4 rounded-xl tracking-widest text-xs flex items-center justify-center gap-2"
+                >
+                  SEND TO DIRECTOR AI <ArrowRight className="w-4 h-4" />
+                </GoldButton>
+              )}
+            </div>
+          </div>
         </GlassPanel>
       </div>
     </div>

@@ -171,6 +171,71 @@ export interface OfferOptimizerInput {
   language: 'English' | 'Taglish';
 }
 
+export interface OfferTierValueStackItem {
+  item: string;
+  value: string; // "₱X,XXX"
+}
+
+export interface OfferTierHormoziLogic {
+  dreamOutcome: string;    // What they get
+  likelihood: string;      // Why this delivers
+  timeDelay: string;       // Speed to result
+  effort: string;          // What they DON'T have to do
+}
+
+export interface OfferTier {
+  name: string;                                // Mechanism name (e.g., "The 7-Day Niche Ladder")
+  pitch: string;                               // 1-2 sentence production-ready pitch
+  valueStack: OfferTierValueStackItem[];
+  totalValue: string;                          // "₱X,XXX" — anchor
+  actualPrice: string;                         // "₱X,XXX" — real number, no [placeholders]
+  noBrainerLogic: string;                      // Why this is a steal
+  scarcity: string;                            // Concrete window/quantity, no [placeholders]
+  guarantee: string;                           // Risk reversal copy
+  hormoziLogic: OfferTierHormoziLogic;
+  probability: 'High' | 'Medium' | 'Low';
+}
+
+export interface OfferConversionAssets {
+  brandName: string;
+  productServiceList: string[];
+  target: string;
+  achieveOrEliminate: string;
+  mainBenefit: string;
+  mainProblem: string;
+  mainPainPoint: string;
+  mainDifferentiator: string;
+  mainFeatures: string[];
+  brandPalette: string[];                      // hex codes
+}
+
+/**
+ * Bridge handoff: the projection of an Offer Stack into Director AI wizard fields.
+ * Read by App.tsx auto-prefill (clientDetails.offer + BusinessInfo) when the wizard is pristine.
+ */
+export interface DirectorPayload {
+  offer: string;                               // 1-2 sentence pitch → clientDetails.offer
+  productName: string;                         // → BusinessInfo.product
+  targetAudience: string;                      // → BusinessInfo.audience
+  mainBenefit: string;                         // → BusinessInfo.benefit
+  painPoint: string;                           // → BusinessInfo.painPoint
+  usp: string;                                 // → BusinessInfo.separator
+}
+
+/**
+ * Structured output from Offer Optimizer (generateOfferOptimization).
+ * Each OfferTier carries its Hormozi rationale + concrete pricing/scarcity/guarantee.
+ * directorPayload feeds the Director AI auto-prefill when the user clicks Send to Director.
+ */
+export interface OfferOptimizerResult {
+  analysis: string;                            // Pricing/CPA rationale paragraph
+  tripwire: OfferTier;
+  coreOffer: OfferTier;
+  highTicket: OfferTier;
+  conversionAssets: OfferConversionAssets;
+  directorPayload: DirectorPayload;
+}
+
 export interface VideoEditInput {
   scriptText: string; // From file upload or text area
   sceneImages: string[]; // Array of base64 strings (Screenshots/Keyframes)

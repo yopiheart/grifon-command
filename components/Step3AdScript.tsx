@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { BusinessInfo, Script, VisualTheme } from '../types';
 import { generateAdScript, generateCinematicThemes } from '../services/geminiService';
 import { GlassPanel } from './ui/GlassPanel';
@@ -18,9 +18,18 @@ interface Step3Props {
   onBack: () => void;
   brandName: string;
   offer: string;
+  directorAngleBrief: string | null;
+  setDirectorAngleBrief: (brief: string | null) => void;
 }
 
-const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, script, setScript, setFinalScript, language: propLanguage, setLanguage: setAppLanguage, onNext, onBack, brandName, offer }) => {
+type AngleOption =
+  | { kind: 'headline'; lever: string; text: string; brief: string }
+  | { kind: 'hook'; style: string; visual: string; spokenLine: string; brief: string }
+  | { kind: 'ad'; format: string; angle: string; openingLine: string; whyItWorks: string; brief: string };
+
+const HEADLINE_LEVERS = ['PAIN', 'DREAM', 'CURIOSITY', 'SOCIAL_PROOF', 'CONTRARIAN'] as const;
+
+const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, script, setScript, setFinalScript, language: propLanguage, setLanguage: setAppLanguage, onNext, onBack, brandName, offer, directorAngleBrief, setDirectorAngleBrief }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [generatedScript, setGeneratedScript] = useState<Script | null>(script);
@@ -33,6 +42,59 @@ const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, script, setScript, 
   const [selectedThemeId, setSelectedThemeId] = useState<string | null>(businessInfo.selectedTheme?.id || null);
 
   const isCinematic = businessInfo.scriptType === 'Cinematic';
+
+  // Parse MarketMind report from localStorage for the "Pick Your Angle" picker.
+  // Pattern matches InfluencerForge.tsx:212-216 — try/catch JSON.parse + shape check on .subject.
+  const angleOptions = useMemo<{ headlines: AngleOption[]; hooks: AngleOption[]; ads: AngleOption[] } | null>(() => {
+    try {
+      const saved = localStorage.getItem('marketMindReport');
+      if (!saved) return null;
+      const r = JSON.parse(saved);
+      if (!r || typeof r !== 'object' || !r.subject) return null;
+
+      const headlines: AngleOption[] = Array.isArray(r.headlines)
+        ? r.headlines.slice(0, 5).map((text: string, i: number) => {
+            const lever = HEADLINE_LEVERS[i] || 'CUSTOM';
+            return {
+              kind: 'headline',
+              lever,
+              text,
+              brief: `ANGLE TYPE: HEADLINE\nEMOTIONAL LEVER: ${lever}\nHEADLINE TO REINFORCE: "${text}"`,
+            };
+          })
+        : [];
+
+      const hooks: AngleOption[] = Array.isArray(r.videoHooks)
+        ? r.videoHooks.slice(0, 5).map((h: { type?: string; visual?: string; spokenLine?: string }) => ({
+            kind: 'hook',
+            style: h.type || 'Custom',
+            visual: h.visual || '',
+            spokenLine: h.spokenLine || '',
+            brief: `ANGLE TYPE: VIDEO_HOOK\nHOOK STYLE: ${h.type || 'Custom'}\nOPENING VISUAL: ${h.visual || ''}\nOPENING SPOKEN LINE: "${h.spokenLine || ''}"`,
+          }))
+        : [];
+
+      const ads: AngleOption[] = Array.isArray(r.fbAdLibraryAngles)
+        ? r.fbAdLibraryAngles.slice(0, 3).map((a: { format?: string; angle?: string; openingLine?: string; whyItWorks?: string }) => ({
+            kind: 'ad',
+            format: a.format || 'Custom',
+            angle: a.angle || '',
+            openingLine: a.openingLine || '',
+            whyItWorks: a.whyItWorks || '',
+            brief: `ANGLE TYPE: AD_CONCEPT\nFORMAT: ${a.format || 'Custom'}\nSTRATEGIC ANGLE: ${a.angle || ''}\nOPENING LINE: "${a.openingLine || ''}"\nPERSUASION MECHANISM: ${a.whyItWorks || ''}`,
+          }))
+        : [];
+
+      if (headlines.length === 0 && hooks.length === 0 && ads.length === 0) return null;
+      return { headlines, hooks, ads };
+    } catch {
+      return null;
+    }
+  }, []);
+
+  const handlePickAngle = (brief: string) => {
+    setDirectorAngleBrief(directorAngleBrief === brief ? null : brief);
+  };
 
   useEffect(() => {
       if (propLanguage) {
@@ -94,7 +156,7 @@ const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, script, setScript, 
     try {
       setLoading(true);
       setError(null);
-      const newScript = await generateAdScript(businessInfo, brandName, localLanguage, offer);
+      const newScript = await generateAdScript(businessInfo, brandName, localLanguage, offer, directorAngleBrief || '');
       setGeneratedScript(newScript);
       setStrategicAudit(newScript.strategicAudit || '');
       setScript(newScript);
@@ -279,7 +341,89 @@ const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, script, setScript, 
 
       {loading && <Loader message="PROCESSING LANGUAGE DATA..." />}
       {error && <p className="text-red-500 text-center mb-4 font-mono">{error}</p>}
-      
+
+      {angleOptions && (
+        <div className="mb-8 bg-zinc-950/50 backdrop-blur-xl border border-white/10 rounded-2xl p-6 space-y-5">
+          <div className="flex items-center justify-between border-b border-white/10 pb-3">
+            <h3 className="text-[10px] text-[#FFCC00] font-mono uppercase tracking-widest">// PICK_YOUR_ANGLE</h3>
+            {directorAngleBrief && (
+              <button onClick={() => setDirectorAngleBrief(null)} className="text-[10px] text-zinc-500 hover:text-white font-mono uppercase tracking-widest transition-colors">
+                CLEAR SELECTION
+              </button>
+            )}
+          </div>
+          <p className="text-xs text-zinc-400 leading-relaxed">
+            Pick ONE angle from your MarketMind report. Director AI will build the entire script around it. Skip to use the audience/pain prefill only.
+          </p>
+
+          {angleOptions.headlines.length > 0 && (
+            <div>
+              <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">// HEADLINES</p>
+              <div className="flex flex-wrap gap-2">
+                {angleOptions.headlines.map((opt, i) => {
+                  if (opt.kind !== 'headline') return null;
+                  const isSelected = directorAngleBrief === opt.brief;
+                  return (
+                    <button
+                      key={`h-${i}`}
+                      onClick={() => handlePickAngle(opt.brief)}
+                      className={`text-left text-xs rounded-xl px-3 py-2 transition-all border ${isSelected ? 'bg-[#FFCC00]/10 border-[#FFCC00] text-[#FFCC00]' : 'bg-zinc-950 border-white/10 text-zinc-400 hover:border-white/30 hover:text-white'}`}
+                    >
+                      <span className="block text-[9px] font-mono uppercase tracking-widest opacity-70 mb-1">{opt.lever}</span>
+                      <span className="block">{opt.text}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {angleOptions.hooks.length > 0 && (
+            <div>
+              <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">// VIDEO_HOOKS</p>
+              <div className="flex flex-wrap gap-2">
+                {angleOptions.hooks.map((opt, i) => {
+                  if (opt.kind !== 'hook') return null;
+                  const isSelected = directorAngleBrief === opt.brief;
+                  return (
+                    <button
+                      key={`v-${i}`}
+                      onClick={() => handlePickAngle(opt.brief)}
+                      className={`text-left text-xs rounded-xl px-3 py-2 max-w-md transition-all border ${isSelected ? 'bg-[#FFCC00]/10 border-[#FFCC00] text-[#FFCC00]' : 'bg-zinc-950 border-white/10 text-zinc-400 hover:border-white/30 hover:text-white'}`}
+                    >
+                      <span className="block text-[9px] font-mono uppercase tracking-widest opacity-70 mb-1">{opt.style}</span>
+                      <span className="block italic">"{opt.spokenLine}"</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {angleOptions.ads.length > 0 && (
+            <div>
+              <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">// AD_CONCEPTS</p>
+              <div className="flex flex-wrap gap-2">
+                {angleOptions.ads.map((opt, i) => {
+                  if (opt.kind !== 'ad') return null;
+                  const isSelected = directorAngleBrief === opt.brief;
+                  return (
+                    <button
+                      key={`a-${i}`}
+                      onClick={() => handlePickAngle(opt.brief)}
+                      className={`text-left text-xs rounded-xl px-3 py-2 max-w-md transition-all border ${isSelected ? 'bg-[#FFCC00]/10 border-[#FFCC00] text-[#FFCC00]' : 'bg-zinc-950 border-white/10 text-zinc-400 hover:border-white/30 hover:text-white'}`}
+                    >
+                      <span className="block text-[9px] font-mono uppercase tracking-widest opacity-70 mb-1">{opt.format} · {opt.angle}</span>
+                      <span className="block italic">"{opt.openingLine}"</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
       <div className="mb-8 flex flex-col items-center justify-center space-y-6">
          <div className="flex items-center gap-4 bg-zinc-950/50 backdrop-blur-xl p-4 border border-white/10 rounded-2xl">
              <span className="text-[#FFCC00] font-bold font-mono text-xs uppercase">Target Language:</span>
