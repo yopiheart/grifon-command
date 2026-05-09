@@ -149,6 +149,7 @@ Deliverables go to cloud services (Google Sheets, Slides, etc.) where the user c
 - `workflows/app_audit.md` — prioritized punch list of what's broken/stubbed/risky
 - `workflows/fix_broken_feature.md` — SOP for fixing one item from the audit
 - `workflows/infra_setup.md` — Supabase, PayMongo, Google OAuth, domain, hosting checklist
+- `workflows/post_beta_roadmap.md` — **next file to open when `launch_readiness.md` hits 100%.** Endorsed-but-deferred ideas with resume triggers (currently: nightly regression `/loop`, Odyssey-as-Cron / Autopilot tier).
 
 ## The Self-Improvement Loop
 
