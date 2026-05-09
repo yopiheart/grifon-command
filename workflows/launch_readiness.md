@@ -4,6 +4,52 @@
 
 This is the meta-workflow. It doesn't do the work itself — it points to the workflows that do, and tracks overall progress.
 
+## Status as of 2026-05-10 (Phase 6 fixes shipped — beta-merge gate is Neil's call)
+
+Phase 5 full 3-module E2E (MarketMind → Offer Optimizer → Director AI) ran 2026-05-10 against the Flying Barista Blend hero. Surfaced 4 findings; Phase 6 closes 4 of 4 in code (acceptance criteria pending Neil's next live Playwright wizard).
+
+### Shipped this round
+
+| Phase | Commit | Closes | What changed |
+|---|---|---|---|
+| 6a | `5acea2f` | FINDING-3 | `retryWithBackoff` now retries on `PROXY_TIMEOUT` (504) with separate 2-retry budget; REGEN button always renders on failed scenes (label flips between `GENERATE` and `REGEN`). |
+| 6b | `8fdc1f9` | FINDING-1 | `Step1ClientDetails` now syncs prop changes via `useEffect(() => setFormData(data), [data])` — the `useState(data)` was capturing the prop only at mount, silently swallowing the auto-prefill update from `App.tsx`. |
+| 6c | `6c26161` | FINDING-2 + FINDING-4 | Storyboard schema's `referenceImage` enum widened from `"avatar" \| "product"` to add `"both"` and `"none"`. New `REFERENCE_IMAGE_CLASSIFICATION_RULE` in `api/_lib/prompts.ts` teaches the narrative-generator to use `"both"` for avatar+product scenes (e.g., SCENE_07-shaped) and `"none"` for product-adjacent generic B-roll (e.g., SCENE_06-shaped). New `DUAL_REFERENCE_LOCK` branch in `generateSceneImage` composes avatar identity + product identity rules. `NO_LOGO_HALLUCINATION` rephrased from negation ("don't invent labels") to preservation ("PRESERVE the uploaded label EXACTLY") with explicit composition-flexibility escape clause. |
+
+### Acceptance criteria — pending Neil's verification
+
+Code-side fix is complete and `tsc + vite build` green. Test baseline holds at 17 pass / 10 fail / 8 skip (the 10 failures are pre-existing crown-jewel migration issues unaffected by this work — see P2 below). **Pre-merge eyeball verification is Neil's call** — the Playwright MCP teardown story on cafe-PC reboots makes a same-session live re-test impractical for this agent.
+
+When Neil runs the next full Playwright wizard E2E with the Flying Barista Blend hero (`.tmp/bukidnon-brew-hero-real.jpg` if the .tmp/ survives, otherwise re-drop):
+- **SCENE_07 (avatar+bag):** Hero label preserved — "FLYING BARISTA BLEND" wordmark + winged barista + Espresso MOBIL + Italian flag emblem. Avatar identity-lock still holds.
+- **SCENE_06 (intentional B-roll):** Generic stale coffee beans on a textured dark surface — NO replica of the hero photo, NO Caucasian woman, NO Espresso Mobil. Narrative-generator emits `"none"`.
+- **SCENE_04, SCENE_09 (bag-only):** Hero label still preserves (regression guard).
+- **SCENE_02, SCENE_03, SCENE_05, SCENE_08 (avatar-only):** Avatar identity locks; no product bleed-in.
+- **THUMBNAIL:** Continues to preserve hero label (regression guard, separate code path).
+- **Step 1 offer field:** Auto-fills from MarketMind's bigIdea or Offer Optimizer's directorPayload after `SEND TO DIRECTOR`.
+- **storyboard.json:** Narrative-generator emits `"both"` for SCENE_07-shaped scenes and `"none"` for SCENE_06-shaped scenes.
+
+### Merge gate — Neil's decision
+
+Bundle on `checkout-redesign-preview` HEAD `6c26161` is **code-side beta-ready**. Phase 6d is "surface merge to Neil" — NOT auto-execute. When ready:
+
+```bash
+git checkout main
+git merge checkout-redesign-preview
+git push
+```
+
+Shared-state action; explicit go-ahead required. If Neil prefers verify-first, run the next live Playwright wizard against the Flying Barista Blend hero before merging.
+
+### P2 follow-ups (NOT blocking beta)
+
+- **Test suite repair:** 10 of 27 unit tests fail because they assert prompt text in client fetch bodies, but post-crown-jewel-migration the client only sends `{flow, input}` and the prompt text lives in `api/_lib/prompts.ts`. Repair the test harness to introspect the server-side prompt registry instead. Mud-on-mud risk if more prompt tests are added before this is fixed.
+- **`Step2BusinessInfo` same `useState(data)` anti-pattern:** currently safe by mount-timing (Step 2 mounts AFTER auto-prefill ran). Single-line fix when needed; not currently broken.
+- **SCENE 1 hook schema extension:** SCENE 1's `referenceImage` is hardcoded to `"none"`. Latent: if a user's script hook explicitly shows the actual product, the SCENE_07-style fake-label bug returns. Surface if/when seen in a real run.
+- **Generate Video module:** intentionally deferred from Phase 5 ("test these 3 modules first"). Not blocked, just gated.
+
+---
+
 ## Status as of 2026-05-09 (v1.x bundle E2E sign-off — all 4 image rules PASS, but new P0 logo-carry-through gap blocks beta)
 
 **One commit pushed (`43fa52c` — initial sign-off doc). Phase 4a in-flight: this section corrects two findings after Neil's review of bundle artifacts.** Ran ITEM A (resume-pill in real Chrome) + ITEM B (Playwright wizard E2E with hero photo upload). All 4 v1.x scene-image rules now PASS clean (initial eval had SCENE_06 wrong — pulled back). **Real beta blocker is a separately-surfaced finding: focal-point bag scenes drop the uploaded hero photo's brand label**, regenerating the bag from scratch with no logo. SCENE_04 B-roll proves the model CAN carry hero through (preserved gibberish text), so this is a structural prompt-pipeline gap, not a model limitation. Plus the SCENE_02/SCENE_05 timeouts, now scoped as a fix not just a finding.
