@@ -4,6 +4,7 @@ import { Play, Rocket, ChevronDown, ShieldCheck, MessageSquare, Palette, Sparkle
 import { GoldButton } from './ui/GoldButton';
 import { GlassPanel } from './ui/GlassPanel';
 import { AnimatedBorder } from './ui/AnimatedBorder';
+import { Aurora } from './ui/Aurora';
 
 type LegalRoute = 'terms' | 'privacy' | 'refund' | 'support';
 
@@ -17,27 +18,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
   return (
     <div className="min-h-screen bg-zinc-950 text-white font-sans overflow-x-hidden selection:bg-[#FFCC00] selection:text-black">
       
-      {/* GLOBAL AURORA BACKGROUND (Framer Motion Fix) */}
-      <div className="fixed inset-0 w-full h-full overflow-hidden pointer-events-none z-0">
-        <motion.div 
-          animate={{ 
-            x:[0, 50, -30, 0], 
-            y: [0, -50, 30, 0],
-            scale: [1, 1.1, 0.9, 1] 
-          }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[-10%] left-[-10%] w-[500px] md:w-[800px] aspect-square bg-[#FFCC00]/8 rounded-full blur-[100px] md:blur-[150px] opacity-60"
-        />
-        <motion.div 
-          animate={{ 
-            x: [0, -40, 20, 0], 
-            y:[0, 40, -20, 0],
-            scale:[1, 0.9, 1.1, 1] 
-          }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[20%] right-[-10%] w-[400px] md:w-[600px] aspect-square bg-[#FFCC00]/15 rounded-full blur-[100px] md:blur-[150px] opacity-60"
-        />
-      </div>
+      <Aurora intensity="marketing" />
 
       {/* BILLIONAIRE STICKY HEADER */}
       <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-zinc-950/80 border-b border-white/10">
