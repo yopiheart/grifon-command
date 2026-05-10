@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect, useMemo } from 'react';
+import { motion } from 'motion/react';
 import {
   Film, Search, Target, Type, Image as ImageIcon,
   Settings, Sparkles, ArrowRight, ChevronRight,
@@ -6,6 +7,16 @@ import {
   LogOut, HelpCircle, Crown, Zap, X
 } from 'lucide-react';
 import { useSubscription } from '../hooks/useSubscription';
+import { Aurora } from './ui/Aurora';
+import { QuotaMeter } from './ui/QuotaMeter';
+import { CommandPalette, type CommandItem } from './ui/CommandPalette';
+import { RecentWorkCard } from './ui/RecentWorkCard';
+import { loadRecentWork, recordRecentWork, type RecentItem } from '../services/recentWorkService';
+import { ActiveJobsPanel } from './ui/ActiveJobsPanel';
+import { useActiveJobs } from '../hooks/useActiveJobs';
+import { OnboardingNudge } from './ui/OnboardingNudge';
+import { ResumeDraftCard } from './ui/ResumeDraftCard';
+import { getSession, clearSession, type WizardSessionV1 } from '../services/wizardSessionStore';
 
 const GrifonLogo = ({ className = "h-8 w-auto" }) => (
   <img src="/logo.png" alt="GRIFON Logo" className={`object-contain ${className}`} />
@@ -27,9 +38,12 @@ interface DashboardProps {
   onSelectModule: (module: string) => void;
   activeModule?: string | null;
   userEmail?: string | null;
+  userId?: string | null;
   onLogout?: () => void;
   onUpgrade?: () => void;
 }
+
+const WIZARD_TOTAL_STEPS = 8;
 
 const CORE_MODULES = [
   { id: 'market_research', name: 'RESEARCH', icon: Search, desc: 'Deep market & competitor reports' },
@@ -62,7 +76,7 @@ const MORE_MODULES = [
   { id: 'signal_modulator', name: 'Signal Modulator', icon: Mic, desc: 'Voice cloning, TTS, and audio enhancement.' }
 ];
 
-const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, userEmail, onLogout, onUpgrade }) => {
+const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, userEmail, userId, onLogout, onUpgrade }) => {
   // ADMIN MODE: To see in-progress modules, two ways:
   //   Desktop (DevTools): localStorage.setItem('grifon_admin', 'true')  → refresh
   //   Mobile or no-DevTools: visit ?admin=on (e.g. app.grifon.ai/?admin=on)
@@ -83,8 +97,79 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
   ];
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const [paletteOpen, setPaletteOpen] = useState(false);
+  const [paletteQuery, setPaletteQuery] = useState('');
   const [showUpgradeBanner, setShowUpgradeBanner] = useState(false);
   const [bannerMessage, setBannerMessage] = useState('');
+  const [recent, setRecent] = useState<RecentItem[]>([]);
+  const [onboardingDismissed, setOnboardingDismissed] = useState(true);
+  const [draftSession, setDraftSession] = useState<WizardSessionV1 | null>(null);
+  const activeJobs = useActiveJobs();
+
+  useEffect(() => {
+    const initialRecent = loadRecentWork();
+    setRecent(initialRecent);
+    const flag = localStorage.getItem('grifon_onboarded') === 'true';
+    setOnboardingDismissed(flag || initialRecent.length > 0);
+  }, []);
+
+  useEffect(() => {
+    if (!userId) {
+      setDraftSession(null);
+      return;
+    }
+    let cancelled = false;
+    getSession(userId).then(s => {
+      if (cancelled) return;
+      // Only show resume CTA for an in-progress wizard (not finished, not blank).
+      if (s && s.currentStep > 1 && s.currentStep < WIZARD_TOTAL_STEPS) {
+        setDraftSession(s);
+      } else {
+        setDraftSession(null);
+      }
+    });
+    return () => { cancelled = true; };
+  }, [userId, activeModule]);
+
+  const discardDraft = async () => {
+    if (userId) {
+      try { await clearSession(userId); } catch { /* best-effort */ }
+    }
+    setDraftSession(null);
+  };
+
+  const dismissOnboarding = () => {
+    localStorage.setItem('grifon_onboarded', 'true');
+    setOnboardingDismissed(true);
+  };
+
+  const showOnboarding = !onboardingDismissed && recent.length === 0;
+
+  const ALL_MODULE_LOOKUP = useMemo(() => {
+    const map: Record<string, { name: string }> = {
+      creative_director: { name: 'Director' },
+    };
+    [...CORE_MODULES, ...MORE_MODULES].forEach(m => { map[m.id] = { name: m.name }; });
+    return map;
+  }, []);
+
+  const handleSelectModule = (moduleId: string) => {
+    const meta = ALL_MODULE_LOOKUP[moduleId];
+    if (meta) {
+      const next = recordRecentWork({
+        id: `visit:${moduleId}`,
+        moduleId,
+        title: meta.name,
+        kind: 'visit',
+      });
+      setRecent(next);
+    }
+    if (!onboardingDismissed) {
+      localStorage.setItem('grifon_onboarded', 'true');
+      setOnboardingDismissed(true);
+    }
+    onSelectModule(moduleId);
+  };
   const bannerRef = useRef<HTMLDivElement>(null);
   const [bannerHeight, setBannerHeight] = useState(0);
 
@@ -117,12 +202,24 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
   }, []);
 
   useEffect(() => {
-    const handleEsc = (e: KeyboardEvent) => {
+    const handleKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setProfileMenuOpen(false);
+      // Cmd+K (mac) / Ctrl+K (win) toggles the command palette
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setPaletteQuery('');
+        setPaletteOpen(prev => !prev);
+      }
     };
-    window.addEventListener('keydown', handleEsc);
-    return () => window.removeEventListener('keydown', handleEsc);
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
   }, []);
+
+  const paletteItems: CommandItem[] = [
+    { id: 'creative_director', name: 'DIRECTOR', desc: '8-step video ad workflow', icon: Film, group: 'Core', onSelect: () => handleSelectModule('creative_director') },
+    ...CORE_MODULES.map(m => ({ id: m.id, name: m.name, desc: m.desc, icon: m.icon, group: 'Core', onSelect: () => handleSelectModule(m.id) })),
+    ...MORE_MODULES.map(m => ({ id: m.id, name: m.name, desc: m.desc, icon: m.icon, group: 'More', onSelect: () => handleSelectModule(m.id) })),
+  ];
 
   useEffect(() => {
     const isDismissed = localStorage.getItem('grifon_banner_dismissed') === 'true';
@@ -147,8 +244,9 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white font-sans selection:bg-[#FFCC00] selection:text-black relative">
-      {/* UPGRADE 1: Dot Grid Background Pattern */}
-      <div 
+      {/* Cinematic ambient layer — shared with landing/pricing for brand continuity */}
+      <Aurora intensity="dashboard" />
+      <div
         className="fixed inset-0 pointer-events-none opacity-[0.03] z-0"
         style={{
           backgroundImage: 'radial-gradient(#FFCC00 1px, transparent 1px)',
@@ -216,31 +314,8 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
               </span>
             </div>
 
-            {/* Upgraded Credits Badge */}
-            <div className="flex items-center gap-3 bg-zinc-900/80 backdrop-blur-xl border border-white/10 rounded-full px-4 py-2">
-              <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-[#FFCC00]" />
-                <div className="flex items-baseline gap-1.5">
-                  <span className="text-sm lg:text-base font-mono font-bold text-white tabular-nums">
-                    4,500
-                  </span>
-                  <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">
-                    Credits
-                  </span>
-                </div>
-              </div>
-              
-              {/* Vertical divider */}
-              <div className="w-px h-4 bg-white/10" />
-              
-              {/* Usage indicator dot */}
-              <div className="flex items-center gap-1.5">
-                <div className="w-1.5 h-1.5 rounded-full bg-[#FFCC00]" />
-                <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">
-                  Pro
-                </span>
-              </div>
-            </div>
+            <QuotaMeter plan={userPlan} />
+
           </div>
         </div>
       </div>
@@ -254,7 +329,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
           return (
             <div
               key={item.id}
-              onClick={isClickable ? () => onSelectModule(item.id) : undefined}
+              onClick={isClickable ? () => handleSelectModule(item.id) : undefined}
               className={`flex flex-col items-center gap-1 py-1 px-1.5 rounded-xl group ${
                 isClickable ? 'cursor-pointer' : 'cursor-default opacity-50'
               }`}
@@ -278,7 +353,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
           return (
             <div
               key={item.id}
-              onClick={isClickable ? () => onSelectModule(item.id) : undefined}
+              onClick={isClickable ? () => handleSelectModule(item.id) : undefined}
               className={`relative flex flex-col items-center gap-1.5 py-2.5 px-2 rounded-xl w-16 transition-all group ${
                 isClickable ? 'cursor-pointer' : 'cursor-default opacity-50'
               } ${isActive ? 'bg-zinc-900/80' : isClickable ? 'hover:bg-zinc-900/80' : ''}`}
@@ -327,25 +402,75 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
               />
             </div>
 
-            <p className="text-[10px] lg:text-xs font-mono text-zinc-500 uppercase tracking-widest mb-4 lg:mb-6 text-center lg:text-center">
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="text-[10px] lg:text-xs font-mono text-zinc-500 uppercase tracking-widest mb-4 lg:mb-6 text-center lg:text-center"
+            >
               // READY TO BUILD
-            </p>
-            <div className="block text-center mb-8 lg:mb-12">
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.05 }}
+              className="block text-center mb-8 lg:mb-12"
+            >
               <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold uppercase tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">GRIFON COMMAND</h1>
               <p className="text-sm lg:text-lg xl:text-xl font-medium text-zinc-400 mt-4 lg:mt-6">Your entire Marketing Team. In one tab.</p>
-            </div>
-            <div className="bg-zinc-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-3 lg:p-5 flex items-center gap-3 max-w-2xl lg:max-w-3xl mx-auto w-full">
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              className="bg-zinc-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-3 lg:p-5 flex items-center gap-3 max-w-2xl lg:max-w-3xl mx-auto w-full"
+            >
               <Sparkles className="w-5 h-5 text-[#FFCC00] flex-shrink-0" />
-              <input 
-                type="text" 
-                placeholder={placeholders[placeholderIndex]} 
-                className="bg-transparent text-white text-[11px] sm:text-xs lg:text-base flex-1 min-w-0 outline-none placeholder:text-zinc-600 transition-all duration-500"
+              <input
+                type="text"
+                placeholder={placeholders[placeholderIndex]}
+                onFocus={() => { setPaletteQuery(''); setPaletteOpen(true); }}
+                onClick={() => { setPaletteQuery(''); setPaletteOpen(true); }}
+                className="bg-transparent text-white text-[11px] sm:text-xs lg:text-base flex-1 min-w-0 outline-none placeholder:text-zinc-600 transition-all duration-500 cursor-pointer"
+                readOnly
               />
-              <button className="w-9 h-9 lg:w-12 lg:h-12 bg-[#FFCC00] rounded-xl flex items-center justify-center flex-shrink-0 hover:scale-105 active:scale-95 transition-all">
+              <kbd className="hidden md:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-mono text-zinc-500 bg-zinc-800/80 border border-white/5 rounded mr-1">
+                <span className="text-[11px]">⌘</span>K
+              </kbd>
+              <button
+                onClick={() => { setPaletteQuery(''); setPaletteOpen(true); }}
+                className="w-9 h-9 lg:w-12 lg:h-12 bg-[#FFCC00] rounded-xl flex items-center justify-center flex-shrink-0 hover:scale-105 active:scale-95 transition-all"
+              >
                 <ArrowRight className="w-5 h-5 text-black" />
               </button>
-            </div>
+            </motion.div>
           </div>
+
+          {/* Resume in-progress wizard draft — highest priority surface */}
+          {draftSession && (
+            <div className="mb-6 lg:mb-8 max-w-2xl lg:max-w-3xl mx-auto w-full">
+              <ResumeDraftCard
+                currentStep={draftSession.currentStep}
+                totalSteps={WIZARD_TOTAL_STEPS}
+                savedAt={draftSession.savedAt}
+                brandName={draftSession.clientDetails?.brandName}
+                onResume={() => handleSelectModule('creative_director')}
+                onDiscard={discardDraft}
+                delay={0.2}
+              />
+            </div>
+          )}
+
+          {/* Onboarding Nudge — first-timers only */}
+          {showOnboarding && !draftSession && (
+            <div className="mb-6 lg:mb-8 max-w-2xl lg:max-w-3xl mx-auto w-full">
+              <OnboardingNudge
+                onStart={() => handleSelectModule('creative_director')}
+                onDismiss={dismissOnboarding}
+                delay={0.25}
+              />
+            </div>
+          )}
 
           {/* Recommended Flow Path — canonical 7-step ad creation journey (UBIQUITOUS_LANGUAGE.md) */}
           <div className="mb-6 lg:mb-10 max-w-2xl lg:max-w-3xl mx-auto w-full mt-8 lg:mt-16">
@@ -367,7 +492,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                 return (
                   <React.Fragment key={step.id}>
                     <div
-                      onClick={isClickable ? () => onSelectModule(step.id) : undefined}
+                      onClick={isClickable ? () => handleSelectModule(step.id) : undefined}
                       className={`flex items-center gap-1.5 flex-shrink-0 transition-transform ${
                         isClickable ? 'cursor-pointer active:scale-95' : 'cursor-default opacity-60'
                       }`}
@@ -391,13 +516,34 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
             </div>
           </div>
 
+          {/* Active Jobs */}
+          {activeJobs.length > 0 && (
+            <div className="mb-6 max-w-2xl lg:max-w-3xl mx-auto w-full">
+              <ActiveJobsPanel jobs={activeJobs} delay={0.3} />
+            </div>
+          )}
+
+          {/* Recent Work */}
+          {recent.length > 0 && (
+            <div className="mb-8 lg:mb-10 max-w-2xl lg:max-w-3xl mx-auto w-full">
+              <RecentWorkCard
+                items={recent}
+                onResume={(item) => handleSelectModule(item.moduleId)}
+                delay={0.35}
+              />
+            </div>
+          )}
+
           {/* Module Grid */}
           <div className="max-w-3xl mx-auto w-full mb-12">
             {/* Mobile Grid */}
             <div className="grid grid-cols-2 gap-3 lg:hidden">
               {/* Director AI (Mobile) */}
-              <div 
-                onClick={() => onSelectModule('creative_director')}
+              <motion.div
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.25 }}
+                onClick={() => handleSelectModule('creative_director')}
                 className="col-span-2 bg-zinc-900/80 backdrop-blur-xl border border-[#FFCC00]/30 rounded-2xl p-5 relative overflow-hidden group cursor-pointer flex items-center gap-4 hover:scale-[1.02] hover:border-[#FFCC00]/50 hover:shadow-[0_8px_40px_rgba(255,204,0,0.15)] active:scale-[0.98] transition-all duration-300"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-[#FFCC00]/5 to-transparent pointer-events-none" />
@@ -409,14 +555,17 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                   <p className="text-xs text-zinc-400 mt-0.5">8-step video ad workflow</p>
                 </div>
                 <ChevronRight className="w-5 h-5 text-zinc-600 group-hover:text-[#FFCC00] transition-colors relative z-10" />
-              </div>
+              </motion.div>
 
               {/* Standard Modules (Mobile) */}
-              {CORE_MODULES.map((mod) => (
-                <div 
+              {CORE_MODULES.map((mod, i) => (
+                <motion.div
                   key={mod.id}
-                  onClick={() => onSelectModule(mod.id)}
-                  className="bg-zinc-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-4 relative overflow-hidden group cursor-pointer aspect-square flex flex-col justify-between hover:scale-[1.02] hover:border-white/20 hover:shadow-[0_8px_30px_rgba(255,204,0,0.08)] active:scale-[0.98] transition-all duration-300"
+                  initial={{ opacity: 0, y: 14 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 + i * 0.06 }}
+                  onClick={() => handleSelectModule(mod.id)}
+                  className="bg-zinc-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-4 relative overflow-hidden group cursor-pointer aspect-square flex flex-col justify-between hover:scale-[1.02] hover:border-[#FFCC00]/30 hover:shadow-[0_8px_30px_rgba(255,204,0,0.12)] active:scale-[0.98] transition-all duration-300"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                   <div className="w-10 h-10 bg-[#FFCC00]/10 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 ease-out">
@@ -426,15 +575,18 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                     <h3 className="text-sm font-bold text-white uppercase tracking-tight leading-tight">{mod.name}</h3>
                     <p className="text-[11px] text-zinc-500 mt-1 leading-snug">{mod.desc}</p>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
 
             {/* Desktop Row */}
             <div className="hidden lg:flex items-start justify-center gap-4">
               {/* Director AI (Desktop) */}
-              <div 
-                onClick={() => onSelectModule('creative_director')}
+              <motion.div
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.25 }}
+                onClick={() => handleSelectModule('creative_director')}
                 className="flex-1 bg-zinc-900/80 backdrop-blur-xl border border-[#FFCC00]/30 rounded-2xl p-6 relative overflow-hidden group cursor-pointer text-center hover:scale-[1.02] hover:border-[#FFCC00]/50 hover:shadow-[0_8px_40px_rgba(255,204,0,0.15)] active:scale-[0.98] transition-all duration-300"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-[#FFCC00]/5 to-transparent pointer-events-none" />
@@ -443,14 +595,17 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                 </div>
                 <h3 className="text-sm lg:text-sm xl:text-base font-bold text-white uppercase tracking-tight">DIRECTOR</h3>
                 <p className="text-[11px] lg:text-xs text-zinc-500 mt-1">8-step video ad workflow</p>
-              </div>
+              </motion.div>
 
               {/* Standard Modules (Desktop) */}
-              {CORE_MODULES.map((mod) => (
-                <div 
+              {CORE_MODULES.map((mod, i) => (
+                <motion.div
                   key={mod.id}
-                  onClick={() => onSelectModule(mod.id)}
-                  className="flex-1 bg-zinc-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6 relative overflow-hidden group cursor-pointer text-center min-w-0 hover:scale-[1.02] hover:border-white/20 hover:shadow-[0_8px_30px_rgba(255,204,0,0.08)] active:scale-[0.98] transition-all duration-300"
+                  initial={{ opacity: 0, y: 14 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 + i * 0.06 }}
+                  onClick={() => handleSelectModule(mod.id)}
+                  className="flex-1 bg-zinc-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6 relative overflow-hidden group cursor-pointer text-center min-w-0 hover:scale-[1.02] hover:border-[#FFCC00]/30 hover:shadow-[0_8px_30px_rgba(255,204,0,0.12)] active:scale-[0.98] transition-all duration-300"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                   <div className="w-14 h-14 lg:w-16 lg:h-16 bg-zinc-800/80 rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 ease-out">
@@ -458,7 +613,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                   </div>
                   <h3 className="text-sm lg:text-sm xl:text-base font-bold text-white uppercase tracking-tight">{mod.name}</h3>
                   <p className="text-[11px] lg:text-xs text-zinc-500 mt-1">{mod.desc}</p>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -473,7 +628,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                 {MORE_MODULES.map((mod) => (
                   <div 
                     key={mod.id}
-                    onClick={() => onSelectModule(mod.id)}
+                    onClick={() => handleSelectModule(mod.id)}
                     className="bg-zinc-900/50 backdrop-blur-xl border border-white/5 rounded-2xl p-4 relative overflow-hidden group hover:bg-zinc-900/80 hover:border-white/10 active:scale-[0.98] transition-all cursor-pointer flex flex-col"
                   >
                     <div className="w-8 h-8 bg-zinc-800 rounded-lg flex items-center justify-center mb-3">
@@ -502,6 +657,13 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
 
         </div>
       </main>
+
+      <CommandPalette
+        open={paletteOpen}
+        onClose={() => setPaletteOpen(false)}
+        items={paletteItems}
+        initialQuery={paletteQuery}
+      />
 
       {/* Global Profile Menu */}
       {profileMenuOpen && (
@@ -544,9 +706,11 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
               <div className="bg-zinc-800/50 rounded-lg px-3 py-2 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Sparkles className="w-3.5 h-3.5 text-[#FFCC00]" />
-                  <span className="text-xs text-zinc-400">Credits</span>
+                  <span className="text-xs text-zinc-400">Daily AI</span>
                 </div>
-                <span className="text-xs font-mono font-bold text-white">4,500</span>
+                <span className="text-xs font-mono font-bold text-white">
+                  {userPlan === 'pro' || userPlan === 'business' ? 'Unlimited' : userPlan === 'creator' ? '0 / 20' : '0 / 3'}
+                </span>
               </div>
             </div>
             

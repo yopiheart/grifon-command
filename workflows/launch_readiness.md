@@ -2,7 +2,7 @@
 
 **Objective:** Track what's required before GRIFON COMMAND can take real paying users at `app.grifon.ai`.
 
-This is the meta-workflow. It doesn't do the work itself — it points to the workflows that do, and tracks overall progress.
+This is the meta-workflow. It doesn't do the work itself — it points to the workflows that do, and tracks overall progress. **Source of truth = the code + `git log`.** This file summarizes; it does not replace.
 
 ## Status as of 2026-05-10 (Phase 6 fixes shipped — beta-merge gate is Neil's call)
 
@@ -471,513 +471,63 @@ If TESTIMONIAL CTA softening becomes a real concern post-beta data: **5-line v1.
 
 ## Status as of 2026-05-05 (Director AI beta-readiness fix sprint)
 
-**Working tree: dirty, build green, NOT committed.** Single bundled commit pending the Bukidnon Brew regression run. Eight files modified across this + the prior session — all share one theme (beta-readiness for 5–10 hand-picked Filipino owners).
+Site is live at `app.grifon.ai`. All 7 launch gates closed. Test-mode billing fully proven end-to-end on prod (checkout → PayMongo → webhook → Supabase row → UI tier upgrade). Voice cloning live for Creator+ (`fa1fec1`/`9837d0b`/`66df4ca`/`5855fb3`). Director AI storyboard rules + IDENTITY_LOCK wiring fix proven on Bukidnon Brew + TESTIMONIAL regression runs (2026-05-05 / 2026-05-06). Wizard state persistence shipped + smoke-tested (2026-05-06 evening, smoke pass next morning).
 
-### What shipped this session
+**The next ship is the pre-beta polish bundle.** After that ships and gets bundled-committed, beta launches with **MrBeast + TESTIMONIAL only** to 5–10 hand-picked Filipino SMB owners. TEMU is gated as `// COMING_IN_V1.1` for the cohort.
 
-**Step 8 (Final Output) — full redesign** ([components/Step7FinalOutput.tsx](components/Step7FinalOutput.tsx)):
-- Tabbed asset viewer (`// SCRIPT // AVATAR // THUMBNAIL // STORYBOARD // VIDEO_PROMPTS`) — one panel visible at a time, replaces the prior 5-card vertical scroll. Disabled tabs auto-detect missing assets.
-- `EXPORT_BUNDLE (.ZIP)` builds `BrandName_Bundle.zip` with `script.txt`, `storyboard.json`, `video_prompts.txt`, `avatar.png`, `thumbnail.png`, `scenes/scene_*.png`. Filename uses sanitized `clientDetails.brandName`.
-- `◀ BACK` returns to Step 7 with state intact.
-- `GENERATE VIDEO NOW ▶` deeplinks to GenerateVideo with all wizard prompts pre-loaded. `restart()` is *not* called on this path so wizard state is preserved.
-- Click-to-zoom on Avatar/Thumbnail tabs via existing `ImageModal`. Switched from `object-cover` (cropping bug) to `object-contain` with `aspect-[9/16]` / `aspect-video` containers.
-- `// Clear Session & Restart` visibility-bumped from `text-zinc-600` → `text-zinc-500` + `RotateCcw` icon + `border border-white/5 rounded-full` pill. Discoverable on scan, still secondary to gold CTAs.
+Live cutover for real money is blocked only on PayMongo merchant verification (Gate 3-prod below).
 
-**Wizard ↔ GenerateVideo handoff** ([App.tsx:421, 505](App.tsx); [components/GenerateVideo.tsx:14-17, 53-63, ~377](components/GenerateVideo.tsx)):
-- `seedPrompts?: VideoPrompt[]` prop on GenerateVideo. When present, `config.prompt` initializes from `seedPrompts[0]` and a scene-picker chip row renders above the KINETIC_DIRECTIVE textarea (`SCENE_01 ... SCENE_NN`). Click a chip → swaps prompt content and highlights gold. Hygiene: when GenerateVideo is launched from the Dashboard (no wizard), `seedPrompts` is undefined and the chip row doesn't render.
-- App.tsx mirrors the existing `<SignalModulator globalScript={finalScript}>` precedent at [App.tsx:425](App.tsx#L425).
+## Next concrete action — pre-beta polish bundle (~full day)
 
-**Bucket A — code-only fixes** (no CLAUDE.md tuning gate):
-- **A1 — REGEN button race condition fixed** ([components/Step5Storyboard.tsx:135-188, 459](components/Step5Storyboard.tsx)). `handleGenerateSingleScene(index, force=true)` bypasses the skip gate. REGEN button now shows `REGENERATING...` with spinning icon while running. Prior bug: race between `setStoryboardData` and the closure-captured stale state caused the skip gate to fire and silently no-op.
-
-**Bucket B — prompt tuning** (CLAUDE.md gated, approved via grill-me protocol):
-- **B1 — `WARDROBE_PROTOCOL` injection stripped** ([services/geminiService.ts:~1442](services/geminiService.ts)) and the unused `WARDROBE_LOGIC` constant deleted (~7 lines removed at line 244). Wardrobe is now solely owned by IDENTITY_LOCK rule 1.
-- **B2 — `IDENTITY_LOCK + ENVIRONMENT_SYNC` rewritten** ([services/geminiService.ts:~1413-1421](services/geminiService.ts)). Five numbered rules: **LOCKED** (face/skin/hair/wardrobe/body) vs **VARIES** (expression/gaze/pose/hands/props), with **FLEXIBLE** environment scope (same residence, different spots — kitchen → dining table → counter, never to unrelated locations).
-- **B3 — `APPEARANCE_LOCK_RULE` added** to `generateStoryboard` system instruction ([services/geminiService.ts:~1295-1322](services/geminiService.ts)). Forbids appearance redescription in avatar scene prompts (no clothing, hair, body, face, ethnicity descriptors). Lists what's required (action, expression, gaze, hands, props, pose, spot, lighting). Includes wrong/correct example pair.
-- **B4 — `STILL_FRAME_RULE` added** ([services/geminiService.ts:~1295-1308](services/geminiService.ts)). Names the contract: frames = stills, transitions carry motion. Forbids motion verbs in `imagePrompt` / `startFramePrompt` / `endFramePrompt`. Tightened Scene 1 schema field descriptions.
-
-**IDENTITY_LOCK wiring fix** (the hidden bug surfaced by the camera-angle question):
-- Discovered while auditing camera angles: `Step5Storyboard.tsx` was never passing `variationIndex` or `referenceImageMode` to `generateSceneImage`. Result: every avatar scene rendered at `AVATAR_CAMERA_ANGLES[0]` = INTIMATE_CLOSE_UP, AND `referenceImageMode` defaulted to `'none'` so **IDENTITY_LOCK and PRODUCT_IDENTITY_LOCK never fired in the wizard's main path**. The model was getting STRICT_NEGATIVE rules ("NO HUMANS, NO faces, NO hands") which it ignored due to the reference image arriving in the same call.
-- Fix at [components/Step5Storyboard.tsx:158-188](components/Step5Storyboard.tsx#L158-L188): start frame passes `index` for variationIndex and `scene.referenceImage` for referenceImageMode. End frame uses `index + 100` so Scene 1's two frames land on different camera angles for visual punch.
-- **Implication:** B1+B2 from above were dead code at ship time; this wiring fix makes them actually execute. The next regression run is the *first time* IDENTITY_LOCK has ever fired in the wizard.
-
-### Files in working tree (uncommitted)
-
-```
-M  api/gemini/image.ts                 (prior session — Tier 1.5)
-M  api/gemini/text.ts                  (prior session — Tier 1.5)
-M  vercel.json                         (prior session — Tier 1.1)
-M  index.css                           (prior session — UX.3 keyframes)
-M  services/geminiService.ts           (this + prior — Tier 1.2, 2.A, 2.B, B1-B4)
-M  components/Step5Storyboard.tsx      (this + prior — Tier 1.3, 1.4, UX.1/3/4, 3.1, 3.2, A1, wiring fix)
-M  components/Step7FinalOutput.tsx     (this — Step 8 redesign + A2 + A3)
-M  components/GenerateVideo.tsx        (this — seedPrompts + scene chips)
-M  App.tsx                             (this — wizard ↔ GenerateVideo wiring)
-?? .claude/skills/grifon-cmo/          (prior session — untracked CMO persona skill)
-```
-
-Build state: green (`tsc && vite build` → 2237 modules, ~5.9s). Cache wipe (`Remove-Item node_modules/.vite, dist`) is the reliable remediation when the documented html-inline-proxy first-build flake triggers (Open follow-up #3 in the 2026-05-04 section).
-
-### Next action — Bukidnon Brew regression run
-
-The single most valuable next action is **running the regression**, not building anything new. Reasons: (1) eight uncommitted files all depend on the storyboard rules and IDENTITY_LOCK actually producing better output; (2) the wiring fix means this is the first time IDENTITY_LOCK has ever fired — zero data on whether the rewritten content is actually correct; (3) one bundled commit per the prior session's pattern.
-
-**Test brand** (reconstruction from prior session's screenshots since exact field text wasn't captured):
-- Brand: `Bukidnon Brew` · Script: MrBeast formula · Language: Taglish · Aspect: 9:16
-- Product: 250g single-origin Bukidnon highland coffee beans, medium roast, resealable valve bag
-- Same 3 stock product photos as prior regression for clean apples-to-apples (if Neil still has them; otherwise pure regression baseline shifts)
-
-**Pass criteria:**
-- [ ] Scene 1 hook end-frame: static composition (frozen hand, suspended droplets), NOT another splash
-- [ ] Avatar scenes: same wardrobe across all (gray pullover from reference, not blue chambray drift)
-- [ ] Avatar scenes: same hair across all
-- [ ] Scene 3-equivalent: avatar follows prompt (looking down, holding empty mug, brow furrowed) — does NOT inherit reference's smile
-- [ ] Avatar scenes: same residence context, but spot varies (kitchen → dining → counter as prompts drive)
-- [ ] Camera angles vary across scenes (no more all-close-up)
-- [ ] REGEN button works (clears + re-renders the scene; shows `REGENERATING...` with spinning icon)
-- [ ] Step 8 thumbnail tab: no crop, click-to-zoom modal works
-- [ ] Step 8 EXPORT_BUNDLE: `Bukidnon_Brew_Bundle.zip` with all assets
-- [ ] Step 8 GENERATE_VIDEO_NOW: deeplink works, scene chips load, click swaps prompt
-- [ ] // CLEAR_SESSION_&_RESTART pill is visible and works
-
-**If all pass:** commit everything as one bundled "beta-readiness" commit, then beta-source 5–10 real Filipino owners (operational, not engineering — out of plan scope).
-**If any fail:** the failure mode tells us which rule needs tightening; fix → retest → commit.
-
-### Regression run — partial pass (evening 2026-05-05)
-
-Live regression with Bukidnon Brew (Taglish, 9:16, MrBeast formula). **Stopped at Step 6** to wrap session; resume tomorrow at Step 7 → 8.
-
-Observed pass criteria:
-- ✓ #1 — Scene 1 hook end-frame static (mug → bowl-of-beans, both stills, B4 STILL_FRAME_RULE held)
-- ✓ #2/#3/#5 — Scene 2 avatar consistency: mustard sweater + hair + residence context all match reference; spot varies (breakfast nook ≠ reference's main room). **First proof B1+B2+B3+wiring fix all fire correctly.**
-- ✓ #4 — Scene 2 expression follows prompt (mild frustration at phone), does NOT inherit reference's smile.
-- ✓ #6 — Camera angles vary across scenes (Scene 7 head-on close-up vs Scene 2 medium shot — `index` / `index + 100` variationIndex pass at Step5Storyboard.tsx:158-188 working).
-- ✓ #7 — REGEN button works on Scene 7 (initial roll: avatar looking down, no product → after regen: eye contact + holding product). A1 confirmed.
-
-New observations (not failures, but worth logging):
-- **Scene 4 product shot may be passing through the reference image** rather than re-rendering. The hero shot Neil uploaded already had rustic wood + warm light + bokeh, which matched the storyboard prompt verbatim — so we can't tell whether `PRODUCT_IDENTITY_LOCK` is doing surgical extract-and-replace or just echoing the reference. **Follow-up test post-beta:** run the same brand with a plain white-background product photo and check if Scene 4 still produces the wooden-board composition. If not, real bug.
-- **Scene 7 prompt ambiguity:** "pointing down towards the screen with a friendly inviting smile" can read as "looking down at where you're pointing" *or* "eye contact + finger pointing at frame bottom." First interpretation produced a miss; REGEN got the right roll. Tighter phrasing (`eye contact with camera, finger pointing toward bottom edge of frame`) would reduce REGEN-needed rate. Bucket B tuning, deferred — REGEN is the user-facing fix.
-
-Pending criteria (resume tomorrow):
-- ☐ #8 — Step 8 thumbnail tab: no crop, click-to-zoom modal works
-- ☐ #9 — Step 8 EXPORT_BUNDLE: produces `Bukidnon_Brew_Bundle.zip` with all assets
-- ☐ #10 — Step 8 GENERATE_VIDEO_NOW: deeplink works, scene chips load, click swaps prompt
-- ☐ #11 — // CLEAR_SESSION_&_RESTART pill is visible and works
-
-New code shipped this evening (folds into the same bundled commit):
-- **ImageModal zoom/pan** ([components/ui/ImageModal.tsx](components/ui/ImageModal.tsx)) — click-to-zoom (cursor `zoom-in` → `grab`/`grabbing`), drag-to-pan when zoomed, ZoomOut button (top-left) when zoomed, hint copy `// CLICK_IMAGE_TO_ZOOM_IN` / `// DRAG_TO_PAN · CLICK_TO_ZOOM_OUT`. Hand-rolled with `transform: scale() translate()`, no new dep. Single component → applies to Step 4/5/6/7/8.
-- **Step 6 thumbnail tile no-crop fix** ([components/Step6Thumbnail.tsx:92-99](components/Step6Thumbnail.tsx#L92-L99)) — `object-cover` → `object-contain` + `bg-zinc-950` letterbox. Tile now shows the same image the modal shows (no aspect surprise on click). Same fix Neil already applied to Step 8 in this morning's redesign; Step 6 was missed in that pass.
-
-Build state: green (`tsc && vite build` → 2237 modules, ~5.8s after one cache wipe for the documented html-inline-proxy flake). Dev server still running on :5173 as background task `bjup4hu4o`.
-
-**Tomorrow's starting point:** test video generation end-to-end with the wizard's video prompts. Neil's words: *"build the video generation so I can test the video prompts to action."* Implies GenerateVideo module needs Veo wiring proven (or the multi-scene queue from the parked list is what unlocks the test). Open `components/GenerateVideo.tsx` + `services/geminiService.ts` video-related calls first thing to scope what "build" means. Don't commit the working tree yet — regression isn't complete; wait until #8–#11 pass.
-
-### Regression run — TEMU + TESTIMONIAL extension (2026-05-06)
-
-**Status: Run 1 (TESTIMONIAL) partial — completed through Step 6 thumbnail, auth expired before Step 7. Run 2 (TEMU) not started. Custom touch-test not started.** Pivot: enough signal captured to stop and address the surfaced bugs first; resume TEMU run after fixes.
-
-**Pre-flight verified clean:** Steps 7/8 code paths verified end-to-end against the 208ba1a build (script render path, thumbnail no-crop, EXPORT_BUNDLE, GENERATE_VIDEO_NOW deeplink wiring, CLEAR_SESSION pill). All 5 pending criteria from 2026-05-05 confirmed at the code level. Build green: 2237 modules, 5.59s.
-
-#### Code shipped (uncommitted, single edit)
-
-- **ImageModal portal fix** ([components/ui/ImageModal.tsx](components/ui/ImageModal.tsx)) — wrapped return JSX in `createPortal(..., document.body)` plus `import { createPortal } from 'react-dom'`. Root cause: the wizard main panel at [App.tsx:511](App.tsx#L511) has `backdrop-blur-xl`, which per CSS spec creates a new containing block for fixed-positioned descendants. Modal's `fixed inset-0` was being scoped to that 9-scene-tall panel instead of the viewport, opening off-screen when the user clicked images on Scene 7+ of a long storyboard. Portal escapes the containing-block trap. **Confirmed working in browser by user.**
-
-#### TESTIMONIAL Run 1 — observations
-
-**What worked (validated, no regression vs MrBeast):**
-- ✓ Avatar appearance consistency across Scenes 2 + 8 — face, wardrobe, hair, spot all locked. IDENTITY_LOCK + APPEARANCE_LOCK_RULE + ENVIRONMENT_SYNC firing correctly. The wiring fix from 2026-05-05 holds for TESTIMONIAL.
-- ✓ Spot variation — kitchen / dining / counter inside one residence (ENVIRONMENT_SYNC working).
-- ✓ Body copy quality — solid Taglish testimonial structure, named pain, transformation arc.
-- ✓ Director Critique — coherent strategic reasoning ties to features + pacing.
-
-**What's broken (system-level bugs surfaced — affect every formula, not just TESTIMONIAL):**
-
-1. **P0 — `AVATAR_CAMERA_ANGLES` applied unconditionally to b-roll scenes.** Scene 7 (coffee close-up b-roll) generated a hallucinated woman's face — non-Filipino, not in prompt — because the talking-head "intimate close-up" angle was injected into a non-avatar scene at variationIndex 0/6. Scene 2 + Scene 8 also locked into side-profile/non-camera angles when the script intent (intro "Hi, ako si Mark" / CTA "nodding confidently") clearly called for camera-facing. The parked item from 2026-05-05 ("Separate BROLL_CAMERA_ANGLES menu") is no longer parkable — beta has surfaced the symptom. Fix paths: (a) intent-aware angle selection (intro/CTA scenes always face camera), (b) split the angle pool by scene type (avatar-talking vs avatar-action vs product-broll), (c) script-level flag that overrides rotation. **CLAUDE.md-tuned area, needs re-grill before changing.**
-
-2. **P0 — Logo/text rendering on Gemini Flash Image.** Step 6 thumbnail rendered a kraft coffee bag with garbled letters: "Coffee TWEN LADET FOUM BET KEVU LIKE" / "TIPID LANG" — hallucinated text mimicking logo shapes. Same root cause as 2026-05-05 Scene 9 logo strip. Model-level limitation; Gemini Flash Image's diffusion pipeline cannot reliably preserve typography. **Three real fix paths:** (a) post-process logo overlay — composite user's actual uploaded logo onto generated images, perfect text + zero per-image cost increase, ~2-3 days build; (b) hybrid model — gpt-image-1 for thumbnails + branded shots only (~$0.19/image vs Gemini's $0.04), ship as Pro+ tier perk; (c) UI affordance for manual logo overlay by user post-generation. **CMO call already locked: defer to Pro+ tier upgrade post-beta. Beta documents this as a known limitation; users use logo-free hero shots in the wizard for now.**
-
-3. **P0 — Hand hallucination on multi-prop shots.** Scene 4 (product shot) added a woman's hand not in prompt. Step 6 thumbnail showed three hands holding mug + 2 coffee bags. PRODUCT_IDENTITY_LOCK at [services/geminiService.ts:1451-1458](services/geminiService.ts#L1451-L1458) explicitly enforces "anatomical accuracy (2 hands, 5 fingers each)" — model violates its own rule on multi-prop compositions. **Tuned area; needs re-grill or accept as Gemini Flash Image limitation.**
-
-4. **P1 — Start/end frame product continuity.** Scene 1 hook end-frame: white ceramic mug → black mug. Prompt explicitly said "same mug" but start and end frames are independent generation calls (`variationIndex` vs `variationIndex + 100`), so they share no continuity reference. Same drift class as character drift, applied to props.
-
-5. **TRANSIENT — PROXY_TIMEOUT on Scenes 3 + 6.** Gemini infra blip; the 55s ceiling at [services/geminiService.ts:25](services/geminiService.ts#L25) fired correctly (5s safety margin under Vercel's 60s hard cap). REGEN unblocks. Not a code bug.
-
-**TESTIMONIAL prompt issues (script tuning, lower priority):**
-- Hooks intermittently dump into `body` array instead of `hook1`/`hook2` — REGENERATE worked on second roll, suggests Testimonial structure's `0.` numbering for Hook (vs MrBeast's `1.`) confuses the parser. Probabilistic flake.
-- LANGUAGE_LOCK violation: "barista level kape" — direct violation of the `[geminiService.ts:697-702](services/geminiService.ts#L697-L702)` rule that maps "cafe-quality goodness → parang barista ang lasa." Model wrote exactly the thing the rule forbids.
-- Tagalog grammar drift: "matabang kape" missing linker "na" → should be "matabang **na** kape."
-- Forced English-Tagalog hybrid: "ro-roast" → not natural Tagalog; should be "i-roast" or "na-roast."
-- Voice mismatch: "nila" (third-person plural) in first-person testimonial line.
-
-#### UX bugs surfaced
-
-- **P0 — No wizard state persistence.** Auth expired mid-Step 7, forced re-auth wiped wizard state (in-memory React state in App.tsx, never persisted). User lost ~12 Gemini calls of generation. Quotas already consumed; state loss = paid credits worthless. **Fix:** localStorage (or IndexedDB if image data URLs blow past 5MB limit) autosave for `clientDetails`, `businessInfo`, `script`, `finalScript`, `avatar`, `storyboard`, `thumbnailUrl`, `videoPrompts`, `aspectRatio`, `language`. Debounced 500ms write on state change. On App.tsx mount, detect saved session and prompt user with "Resume previous session?" pill (don't auto-restore — give user explicit choice). On `restart()` clear the key. **~half day. Beta-blocker. Phase 2 = Supabase-backed cloud history as a Pro+ tier paid upgrade.**
-
-- **P0 — Failed-scene retry gap.** REGEN button at [Step5Storyboard.tsx:478](components/Step5Storyboard.tsx#L478) only renders when `(scene.imageUrl || scene.endFrameImageUrl)` exists. When a scene fails to generate (PROXY_TIMEOUT, etc.), there's no per-scene retry button — user must hit GENERATE_ALL (which works as workaround: skips scenes with `imageUrl`, retries failures). Fix: drop the `imageUrl` requirement from the conditional, change button label to `GENERATE` when no image, `REGEN` when image exists. ~5-line edit.
-
-- **P0 — Long-session JWT expiry handling.** Hit twice in one session. Supabase JWT defaults to 1-hour TTL; refresh token also expires. `getSession()` returns the expired token, server rejects with 401, user gets PROXY_ERROR_401. **Fix paths:** (a) bump Supabase JWT TTL in dashboard (no code, but security trade-off), (b) proactive `sb.auth.refreshSession()` poll every ~50 minutes, (c) global error boundary catching `PROXY_ERROR_401` → show re-auth modal → preserve wizard state → retry call. **Recommended: (c) + state persistence above. Together they make any auth interruption invisible.**
-
-- **P1 — Step 6 thumbnail tile aspect mismatch.** Tile container aspect doesn't match the user's `aspectRatio` selection, so 9:16 thumbnails get vertical letterbox (zinc-950 black bars left/right) inside a wider container. Yesterday's `object-cover → object-contain` fix at [Step6Thumbnail.tsx:92-99](components/Step6Thumbnail.tsx#L92-L99) prevented cropping but exposed the aspect mismatch. **Fix:** match Step 8's pattern at [Step7FinalOutput.tsx:46](components/Step7FinalOutput.tsx#L46) — pick `aspect-[9/16]` for 9:16, `aspect-video` for 16:9. ~5-line edit.
-
-#### Tomorrow's punch list (in priority order)
-
-1. **Wizard state persistence** ([App.tsx](App.tsx), localStorage/IndexedDB autosave). Beta-blocker. ~half day. Unblocks every subsequent regression run by making credit-spend durable.
-2. **JWT auto-refresh + 401 error boundary.** Pairs with #1. ~half day. Together: tab close / sleep / network drop / auth expiry → zero state loss.
-3. **Failed-scene GENERATE button** ([Step5Storyboard.tsx:478](components/Step5Storyboard.tsx#L478)). ~5-line UX fix.
-4. **Step 6 tile aspect mismatch** ([Step6Thumbnail.tsx](components/Step6Thumbnail.tsx)). ~5-line UX fix.
-5. **AVATAR_CAMERA_ANGLES split / intent-awareness** ([services/geminiService.ts](services/geminiService.ts)). CLAUDE.md-tuned, needs re-grill. ~1 day. Single biggest quality lift — fixes Scene 7 face hallucination class, Scene 2/8 wrong-angle-for-intent class.
-6. **TESTIMONIAL prompt LANGUAGE_LOCK + grammar tuning.** CLAUDE.md-tuned, needs re-grill. ~1 hour. Address "barista level," "ro-roast," "nila," "matabang kape."
-7. **Resume TEMU run + Custom touch-test** on the post-fix build. Document results.
-
-After all 7: working tree gets committed as one bundled commit. Then the parked video-generation work resumes (yesterday's pointer).
-
-#### Logo/text rendering — locked decision
-
-CMO call locked, do not relitigate without new data: **stay on Gemini Flash Image for beta. Defer gpt-image-1 to Pro+ tier as a paid upgrade.** Document the text-rendering limitation publicly; tell beta users to use logo-free product hero shots. The hybrid model architecture (gpt-image-1 for thumbnails/branded shots only) becomes a Free→Pro conversion driver, not a beta blocker.
-
-#### Working tree state at session end
-
-- `M  components/ui/ImageModal.tsx` — portal fix (uncommitted, do not push)
-- 208ba1a remains source of truth on main; nothing pushed.
-- Dev server still running on :5173 (background task `bmhqa3rph`); will die when terminal closes.
-
-### Wizard state persistence shipped (2026-05-06 evening)
-
-**Status: built + tsc/build green + dev server up on :5174. Smoke testing deferred to next session.** Punch list item #1 from earlier in this date entry is now done; **item #2 (JWT auto-refresh + 401 error boundary) is the next thing**.
-
-#### What shipped (uncommitted)
-
-- **New file:** [services/wizardSessionStore.ts](../services/wizardSessionStore.ts) — thin IndexedDB wrapper, ~80 LOC, no new deps. Three exports: `getSession(userId)`, `setSession(userId, blob)`, `clearSession(userId)`. Single object store `sessions` in DB `grifon_wizard`, keyed by Supabase `user.id`. Session blob shape is the exported `WizardSessionV1` interface; schema-versioned (`version: 1`); version mismatch on read returns null (silent overwrite path for future migrations).
-
-- **Edited:** [App.tsx](../App.tsx) — additions only, no removals:
-  - `userId` state captured from both `getSession()` and `onAuthStateChange()`.
-  - **Load useEffect** — fires when `userId` lands; reads IndexedDB → `pendingSession` state.
-  - **Auto-restore-decision useEffect** — once load finishes, marks `hasRestored=true` if no saved session OR if user already started fresh wizard work (in which case the saved record is cleared).
-  - **Debounced save useEffect** (500ms) — writes `WizardSessionV1` blob on any wizard state change. Suppresses writes while wizard is pristine. Wraps in try/catch; once-per-session sonner error toast on quota/transaction failure.
-  - `handleLogout` — explicit logout calls `clearSession(userId)` before `signOut`. Auth-expiry path doesn't hit `handleLogout`, so saved state survives JWT timeout (the original bug from the morning's TESTIMONIAL run).
-  - `resumeSession` / `declineSession` handlers.
-  - **Resume pill** above StepIndicator inside wizard `<main>`. Shows `// PREVIOUS_SESSION_DETECTED — STEP_NN_OF_08 — BRAND_NAME`. `[ START_FRESH ]` ghost + `[ RESUME ]` GoldButton.
-  - **Spinner gate** `// LOADING_SESSION...` while initial IndexedDB read resolves.
-  - On resume: sonner banner `// SESSION_RESUMED — STEP_NN_OF_08`, 6s duration.
-
-#### Locked design decisions (via grill-me)
-
-| # | Decision | Locked |
-|---|---|---|
-| 1 | Scope | Wizard-only (10 fields + currentStep). Cinematic Studio state excluded — separate Dashboard module, different failure economics. |
-| 2 | Library | Thin custom wrapper, no dep. Native IndexedDB API. |
-| 3 | Per-user key | Supabase `user.id` (UUID, stable across email change, lower PII surface). |
-| 4 | Restore behavior | Jump to saved currentStep + sonner banner. StepIndicator's existing back-nav handles "review my earlier inputs." |
-| 5 | Save trigger | Single debounced useEffect (500ms) + `hasRestored` state guard. |
-| 6a | Pristine check | `currentStep === 1 && !brandName && !product && script === null`. |
-| 6b | Pill placement | Inline above StepIndicator (not toast, not modal). |
-| 7a | Logout | Explicit logout clears IndexedDB; auth-expiry preserves it. |
-| 7b | Write failures | try/catch + console.warn always + sonner once-per-session. |
-| 7c | Schema | `version: 1` field; mismatch = silent overwrite. |
-| 7d | Initial load | Spinner gate inside wizard `<main>`. |
-
-#### Known caveats / what this does NOT solve
-
-- **JWT auto-refresh + 401 error boundary not yet shipped.** Without it, an expired JWT still throws PROXY_ERROR_401 mid-call; persistence preserves state but the user still sees an error and has to manually re-auth, then click `[ RESUME ]`. Pairs with this; the recommended next ship.
-- **Cinematic Studio state not persisted.** Out of scope per design lock #1. Add later under same DB with a `version: 2` upgrade path if it bites.
-- **Smoke test pending.** Build green (2238 modules, 6.66s after cache wipe — html-inline-proxy flake hit; documented `Remove-Item node_modules/.vite, dist` remediation worked). Browser test of load → pristine-detect → resume → save → logout-clear → re-auth flow is the next manual verification.
-
-#### Smoke test plan (run before next ship)
-
-Open `localhost:5174/` (NOT `/app` directly — Windows case-insensitive routing serves App.tsx as JS). Sign in.
-
-1. **Pristine + no saved record** — Click Director AI. Spinner flashes. No pill. No console errors.
-2. **Autosave fires** — Type brand name on Step 1. Wait 1s. DevTools → Application → IndexedDB → `grifon_wizard` → `sessions`. Row exists keyed by user.id with `clientDetails.brandName` matching.
-3. **Resume pill on hard reload** — F5. Click Director AI. Spinner → resume pill: `// PREVIOUS_SESSION_DETECTED — STEP_01_OF_08 — BRAND`. Step 1 inputs still pristine (no auto-restore).
-4. **RESUME hydrates state** — Click `[ RESUME ]`. Brand name appears. Sonner: `// SESSION_RESUMED — STEP_01_OF_08`. Pill gone.
-5. **START_FRESH clears record** — F5. Pill appears. Click `[ START_FRESH ]`. Pill gone. IndexedDB row deleted.
-6. **Multi-step jump** — Fill Step 1, Next to 2, fill product, Next to 3. F5. Pill says `STEP_03_OF_08`. Resume → lands on Step 3 (not Step 1). StepIndicator back-nav shows Step 1+2 data intact.
-7. **Explicit logout clears** — Logout via dropdown. Sign back in. Click Director AI. No pill. IndexedDB row gone.
-8. **Image-bearing payload survives reload** — Generate avatar (Step 4) + at least one storyboard scene (Step 5). F5. Resume. Avatar + scene image render without re-generation. No quota toast.
-
-#### Updated punch list (post this ship)
-
-1. ~~Wizard state persistence~~ — **DONE 2026-05-06 evening.**
-2. ~~Smoke test (8 tests + bonus Step 8 reload)~~ — **PASSED 2026-05-06 evening.** Persistence is shippable.
-3. **Pre-beta polish bundle (~full day, NEXT SHIP):**
-   - **3a.** JWT auto-refresh + 401 error boundary. Pairs with persistence: state is saved, 401 catch + re-auth makes auth interruption invisible. ~half day.
-   - **3b.** Sonner toast restyle. Current white background on `// SESSION_RESUMED` toast breaks the design system. Align to zinc-950 + gold accent + mono caps to match the `// PREVIOUS_SESSION_DETECTED` pill. ~5-line theme override on the `<Toaster>` config.
-   - **3c.** Suppress Pro Tip "Run Market Research First" nudge while resume pill is up. 1-line: add `&& !showResumePill` to the nudge condition at [App.tsx:563](../App.tsx#L563).
-   - **3d.** Gate TEMU option in scriptType picker as disabled with `// COMING_IN_V1.1` label. Prevents the broken MrBeast-cosplaying-as-TEMU formula from reaching beta users.
-   - **3e.** Wire `clientDetails.offer` (tripwire from Offer Optimizer), `businessInfo.separator` (Main Differentiator), `businessInfo.audience` into the script generation prompt per the locked **Script-input wiring matrix** below. Surgical per-formula slotting — offer slots into Scene 7 CTA only (offer STRUCTURE not bare price), separator into Scene 5/6 PROOF beats, audience as system-instruction register tuning (never as content). CLAUDE.md-tuned, requires grill-me to lock prompt edits before surgical-edit. ~half day. **Highest-ROI prompt change available pre-beta — wires the dormant Offer Optimizer → Director AI bridge that was architected but never built.**
-   - **3f.** Drop `businessInfo.logoImageUrl` from wizard (truly unused everywhere). Decide on `clientDetails.services` (Neil's call: vestigial like an early-iteration leftover, or upstream-fed by some module I haven't seen?). 5-min UI cleanup once decided.
-4. **Beta launch** — MrBeast + TESTIMONIAL formulas only. 5–10 hand-picked Filipino SMB owners. Frame TEMU as "v1.1 first access" reciprocity hook for the beta cohort.
-5. **TEMU formula re-spec ship (v1.1, ~1.5–2 days)** — see locked design brief below this section. Grill-me protocol before touching `services/geminiService.ts`. Drop to beta cohort with reciprocity framing.
-6. Failed-scene GENERATE button ([Step5Storyboard.tsx:478](../components/Step5Storyboard.tsx#L478)). ~5-line UX fix. Pre- or post-beta.
-7. Step 6 tile aspect mismatch ([Step6Thumbnail.tsx](../components/Step6Thumbnail.tsx)). ~5-line UX fix. Pre- or post-beta.
-8. AVATAR_CAMERA_ANGLES split / intent-awareness ([services/geminiService.ts](../services/geminiService.ts)). CLAUDE.md-tuned, needs re-grill. ~1 day. Post-beta.
-9. TESTIMONIAL prompt LANGUAGE_LOCK + grammar tuning. CLAUDE.md-tuned, needs re-grill. ~1 hour.
-
-#### Working tree state at end of session
-
-```
-M  App.tsx                                  (this evening — persistence)
-M  components/ui/ImageModal.tsx              (morning — portal fix)
-M  workflows/launch_readiness.md             (this update)
-?? services/wizardSessionStore.ts            (this evening — new)
-```
-
-01cb33e remains HEAD on main; nothing pushed. Dev server still running on :5174 (background task `bz1c92pzg`); will die when terminal closes.
-
-#### Next session starting point
-
-Smoke tests + bonus Step 8 reload all green this evening; persistence is shippable. Next ship is the **pre-beta polish bundle** (punch list item #3): JWT auto-refresh + 401 boundary, sonner toast restyle, nudge-suppress fix, TEMU-option gate, **and the offer/separator/audience wiring per the Script-input slotting matrix below**. ~full day. After that bundle ships, beta launches with MrBeast + TESTIMONIAL only. TEMU re-spec is v1.1 — locked design brief below; grill-me before any `services/geminiService.ts` edit on either the slotting matrix OR TEMU.
-
-### Script-input wiring matrix — locked design brief (2026-05-06 evening)
-
-**Status: design brief locked via grifon-cmo + Neil approval. Ships pre-beta as polish bundle item #3e. ~half day grilled prompt work.**
-
-#### Trigger
-
-Discovery that 3 wizard inputs are collected but the script generation prompt either ignores them or explicitly tells the model to ignore them:
-- `clientDetails.offer` — the tripwire from Offer Optimizer (Bryan crafts tripwire/core/high-ticket → pastes tripwire into Step 2). The architectural bridge Neil designed; never wired into geminiService.
-- `businessInfo.separator` — "Main Differentiator" ([Step2BusinessInfo.tsx:156-165](../components/Step2BusinessInfo.tsx#L156-L165)). Required field in Step 2; geminiService has zero references.
-- `businessInfo.audience` — script prompt at [services/geminiService.ts:564](../services/geminiService.ts#L564) explicitly says: `"Do not ask the user for target audience details. You deduce the most profitable avatar based on the product provided."` But the wizard makes Bryan fill it in anyway.
-
-Hand-picked beta of 5–10 Filipino SMB owners means highest-stakes first-impression scripts. Shipping beta with the offer→script bridge cut means every Bryan in the cohort sees a strategically weaker output than the product can produce. Sabri Suby reality check: "build a great offer, copy is just the megaphone" — and the megaphone wire to the offer is currently cut.
-
-#### Slotting matrix (locked, approved by Neil 2026-05-06 evening)
-
-One slot per input per formula. Anywhere else dilutes or destroys the formula's persuasion stack.
-
-| Input | MrBeast | TESTIMONIAL | TEMU (v1.1 re-spec) |
+| # | Item | Files | Status |
 |---|---|---|---|
-| **`clientDetails.offer`** (tripwire) | **Scene 7 CTA ONLY.** Inject offer STRUCTURE (scarcity + value adds + urgency), never the bare price. Example: "first 50 lang, kasama ang free shipping + recipe ebook." Hook stays curiosity-gap-pure. | **Scene 7 WARM CTA ONLY.** Same structural injection, gentler tone — recommendation framing not direct sell. "Try niyo na, sulit kahit first time bumili — first 50 may free shipping pa." | **Scene 6 (Proof/Scarcity) + Scene 7 (CTA) overlays.** Carry offer's scarcity/urgency words: `"FIRST 50 LANG"` / `"FREE SHIPPING"` / `"TAP YELLOW BASKET ↓"`. **Never the bare price** — price belongs on the Shopee/Lazada listing, not the ad. |
-| **`businessInfo.separator`** (Main Differentiator) | **Scene 5 PROOF beat.** "Hindi tulad ng iba — kami `${separator}`." This is the "why believe?" slot. Never in hook (kills curiosity), never in CTA (offer owns that). | **Scene 6 SPECIFIC PROOF beat.** "Marami akong na-try na ibang [category], pero ito lang ang gumana sa akin kasi `${separator}`." Comparative moment is where differentiator earns its keep. | **Scene 5 VARIETY/STACK overlay.** Compress to 1-3 words: `"100% PLANT-BASED"` / `"BUKIDNON GROWN"` / `"NON-TOXIC"`. Differentiator becomes a visual badge, not a sentence. |
-| **`businessInfo.audience`** | **System instruction REGISTER tuning ONLY** — never script body content. Inject as: `"Match vocabulary, idiom, and Taglish register to: ${audience}"`. Affects HOW the model talks, not WHAT it says. | **Same as MrBeast** + Scene 1 IDENTITY persona alignment ("Ako si Mark, OFW dad" matches OFW audience; "Ako si Tin, single mom" matches Filipino-mom audience). Audience NEVER named literally; speaker's persona implicitly matches. | **Visual register tuning** for Scene 4 In-Use beat: wardrobe, setting, lighting tone match audience context (Filipino moms → soft morning kitchen; OFWs → balikbayan-box framing). NEVER overlay text. |
+| 3a | JWT auto-refresh + 401 error boundary | App.tsx, services/supabaseClient.ts | Pairs with persistence: state is saved, 401 catch + re-auth makes auth interruption invisible. |
+| 3b | Sonner toast restyle (zinc-950 + gold + mono caps) | App.tsx Toaster config | ~5-line theme override. Current white background breaks design system. |
+| 3c | Suppress "Run Market Research First" nudge while resume pill is up | App.tsx:563 | 1-line: `&& !showResumePill`. |
+| 3d | Gate TEMU option in scriptType picker as `// COMING_IN_V1.1` | components/Step2BusinessInfo.tsx | Prevents broken MrBeast-cosplaying-as-TEMU formula reaching beta. |
+| 3e | Wire `clientDetails.offer` + `businessInfo.separator` + `businessInfo.audience` into script generation per the Slotting Matrix | services/geminiService.ts | **CLAUDE.md-tuned, requires grill-me.** ~half day. **Highest-ROI prompt change available pre-beta.** Full brief: [script_input_wiring_brief.md](script_input_wiring_brief.md). |
+| 3f | Drop unused `businessInfo.logoImageUrl`. Decide on `clientDetails.services` (drop / wire / park) | components/Step2BusinessInfo.tsx | 5-min UI cleanup once Neil decides on services. |
 
-#### Hard constraints honored
+After all 6 ship: bundled commit, then beta launch.
 
-- **Never mention price in video scripts.** Wire offer STRUCTURE (scarcity, urgency, value adds), not bare price. Standard direct-response: ad opens curiosity → landing page closes price.
-- **Audience as register, never as content.** Naming audience back to them ("for Filipino moms 25–40 who shop on TikTok Shop, here's the coffee...") reads like a database merge field — Bryan-killer.
-- **Hook curiosity-gap (MrBeast) stays untouched.** All inputs slot at proof/CTA beats; Scenes 1–2 remain mechanism-pure.
+## Open punch list (post-polish, prioritized)
 
-#### Implementation handoff (grill-me + surgical-edit)
+1. **Beta launch** — MrBeast + TESTIMONIAL only. 5–10 hand-picked Filipino SMB owners. Frame TEMU as "v1.1 first access" reciprocity hook for the beta cohort.
+2. **TEMU formula re-spec ship (v1.1, ~1.5–2 days)** — full design brief: [temu_respec_brief.md](temu_respec_brief.md). Grill-me protocol before touching `services/geminiService.ts`. Drop to beta cohort with reciprocity framing.
+3. **Failed-scene GENERATE button** ([Step5Storyboard.tsx:478](../components/Step5Storyboard.tsx#L478)). ~5-line UX fix. REGEN button only renders when `imageUrl` exists; failed scenes have no per-scene retry. Pre- or post-beta.
+4. **Step 6 tile aspect mismatch** ([Step6Thumbnail.tsx](../components/Step6Thumbnail.tsx)). ~5-line UX fix. Match Step 8's `aspect-[9/16]` / `aspect-video` pattern. Pre- or post-beta.
+5. **AVATAR_CAMERA_ANGLES split / intent-awareness** ([services/geminiService.ts](../services/geminiService.ts)). CLAUDE.md-tuned, needs re-grill. ~1 day. Single biggest quality lift — fixes Scene 7 face hallucination class, Scene 2/8 wrong-angle-for-intent class. Post-beta.
+6. **TESTIMONIAL prompt LANGUAGE_LOCK + grammar tuning.** CLAUDE.md-tuned, needs re-grill. ~1 hour. Address "barista level," "ro-roast," "nila," "matabang kape."
 
-**1. services/geminiService.ts** (CLAUDE.md tuning gate — grill-me before any prompt edit)
-- Remove "Do not ask the user for target audience details" instruction at [line 564](../services/geminiService.ts#L564). Replace with register-tuning instruction using `businessInfo.audience`.
-- For each formula branch (MrBeast at [~line 766](../services/geminiService.ts#L766), Testimonial at [~line 752](../services/geminiService.ts#L752), Temu at [~line 723](../services/geminiService.ts#L723)): identify the Scene N prompt construction site and inject the per-input slot per the matrix. Surgical insertion at the right scene-prompt template, not a global "use everywhere" rule.
-- Fallback handling: empty `offer` → Scene 7 CTA falls back to existing generic CTA. Empty `separator` → Scene 5/6 PROOF beat falls back to existing generic-proof phrasing.
-
-**2. types.ts** — no change. All three fields already exist on `ClientDetails` / `BusinessInfo`.
-
-**3. components/Step3AdScript.tsx** — no structural change. Form submission already passes both objects through to `generateAdScript`. The wiring change is purely on the prompt-construction side in geminiService.
-
-#### Open question — Neil's call before grill-me
-
-`clientDetails.services` — vestigial early-iteration field, or upstream-fed by some module I haven't seen? If standalone, drop in 3f. If upstream-fed (like `offer` is from Offer Optimizer), wire it like offer per a similar matrix.
-
-#### Pre-grill-me checklist
-
-Before grill-me runs tomorrow, lock the unresolved decisions:
-- [x] Slotting matrix approved (2026-05-06 evening)
-- [ ] `clientDetails.services` decision (drop / wire / keep parked)
-- [ ] Fallback rules for empty `offer` and empty `separator` (degrade gracefully ✓ already specified, but confirm)
-- [ ] Audience register-tuning instruction phrasing — once line 564 is removed, exact replacement text
-
-### TEMU formula re-spec — locked design brief (2026-05-06 evening)
-
-**Status: design brief locked via grifon-cmo + Neil pushback. Implementation deferred to v1.1; beta launches WITHOUT TEMU exposed.** Re-spec triggered by TEMU regression run findings: current formula generates MrBeast-style talking-head scaffolding (avatar + full Taglish VO + avatar in thumbnail) for what should be product-only fast-cut B-roll. Wrong category, wrong persuasion stack.
-
-#### What TEMU actually is
-
-Scroll-Stop Product Drop Mode. 8–12 seconds. 7 cuts. Zero avatar. Zero VO. Pure product B-roll with text overlays composited by user in CapCut on top of trending audio. Persuasion stack: **Pattern Interrupt → Curiosity Gap → Scarcity → Frictionless CTA.** Different from MrBeast (Authority + Liking) and TESTIMONIAL (Social Proof) — different formula, different scaffolding.
-
-Target sub-segment of Bryan: e-com sellers on Shopee/Lazada/TikTok Shop. Single SKU. P99–P999 impulse-buy price points. Visual categories (food, gadgets, beauty, home goods). NOT for service businesses, high-ticket, or trust-required categories.
-
-#### Locked design decisions
-
-| # | Decision | Rationale |
-|---|---|---|
-| 1 | Skip Step 4 (Avatar) entirely when `scriptType === 'TEMU'` | No avatar in formula; saves Gemini call + removes hallucination surface |
-| 2 | No VO output. Per-scene text-overlay copy delivered as DATA, never baked into images | Bryan rides trending audio; CapCut overlays animate; baked text would compound Gemini Flash Image's typography limitation across 7 scenes per ad |
-| 3 | `RAW_OUTPUT_RULE` on all TEMU image gen — never embed text/captions/prices/labels/logos in the image | Edit-friendly: price changes = 1 CapCut text edit, zero Gemini re-gen, zero product drift |
-| 4 | 7-scene structure mandate (Hook / Texture / Scale / In-Use / Variety / Proof / CTA), 1–2s per cut | TEMU pacing standard; ~10s total |
-| 5 | Hands allowed on Scene 4 (in-use beat) only. No face, no full body, anywhere else | Product is the protagonist, not the user |
-| 6 | Thumbnail = product hero only, raw. Overlay copy as separate data string | Same `RAW_OUTPUT_RULE`; Bryan composites in Canva/CapCut before posting |
-| 7 | Kling 3.0 owns motion across all 7 scenes. Kling 2.6 only on Scene 1 keyframes (start + end frames) | Per Neil's architectural read; product motion vocabulary not human verbs |
-| 8 | UI label in scriptType picker: `PRODUCT_DROP // SCROLL-STOP` with subtitle `For e-com SKUs. No talking head. Pure product cuts. ~10 seconds.` | Bryan needs to know what he's choosing before burning credits |
-| 9 | Beta launches WITHOUT TEMU exposed. Disable option in Step 2 picker. Frame as "v1.1 first access" reciprocity hook | Prevents the "garbage AI output" objection landing on Day 1 of beta |
-
-#### 7-scene structure (mandate in system instruction, no flexibility)
-
-| Scene | Role | Duration | Visual | Camera vocab |
-|---|---|---|---|---|
-| 1 | HOOK | 1.5–2s | Extreme close-up macro. Pattern interrupt — bag opening, beans pouring, steam rising, label reveal | macro, push-in, snap-zoom |
-| 2 | TEXTURE | 1–1.5s | Tight detail (grain, packaging texture, valve close-up) | macro, slow rotation |
-| 3 | SCALE/CONTEXT | 1–1.5s | Product in real environment (counter, scale, beside cup) | static wide, tilt-down |
-| 4 | IN-USE | 1.5–2s | Product being used (pouring, scooping, brewing) — hands allowed, no face | over-shoulder, top-down |
-| 5 | VARIETY/STACK | 1–1.5s | Multiple bags, color/flavor options, quantity reveal | parallax, dolly across |
-| 6 | PROOF/SCARCITY | 1–1.5s | Hero glamour, dramatic light, product centered | slow rotation, rim-light reveal |
-| 7 | CTA | 1–2s | Product + yellow basket arrow + clear CTA | static center, bounce-in arrow |
-
-#### Per-scene overlay copy spec (returned as data, not baked)
-
-- 1–5 words max. 4th–5th grade Taglish. No full sentences.
-- Scene 1 = curiosity-gap hook (`"GRABE THIS COFFEE"` / `"WAIT FOR IT"` / `"BUKIDNON DROP"`)
-- Scenes 2–5 = single-word claims (`"PREMIUM"` / `"FRESH"` / `"BUKIDNON GROWN"` / `"RESEALABLE"`)
-- Scene 6 = scarcity or proof (`"P349 ONLY"` — Bryan supplies the price; AI never invents)
-- Scene 7 = clear action (`"TAP YELLOW BASKET ↓"`)
-- Thumbnail overlay = 3–5 words, separate string, follows existing thumbnail rules (gold #FFCC00 + white)
-
-#### Implementation handoff (grill-me + surgical-edit checklist)
-
-**1. types.ts**
-- Add `sceneOverlays: string[]` (one per scene) and `thumbnailOverlay: string` to script type. Either new `ProductDropScript` interface or optional fields on existing `Script` type. Keep `finalScript[]` as legacy/MrBeast/TESTIMONIAL field.
-
-**2. App.tsx**
-- When `businessInfo.scriptType === 'TEMU'`: Step 3 `onNext` jumps directly to Step 5. StepIndicator hides Step 4 or labels it `// SKIPPED`.
-- `avatar` state stays null for the entire TEMU flow.
-
-**3. services/geminiService.ts** (CLAUDE.md tuning gate — explicit approval required per change)
-- `generateScript` — TEMU branch outputs `sceneOverlays[]` not VO lines. New system instruction: 7-scene structure, per-scene role (Hook / Texture / Scale / In-Use / Variety / Proof / CTA), text-overlay rules per spec above.
-- `generateStoryboard` — TEMU branch with `NO_HUMAN_RULE` (no faces, no full bodies; hands only on Scene 4), `PRODUCT_FOCUS_RULE` (product centered or hero in every scene), `MOTION_VOCABULARY_RULE` (zoom, rotation, parallax, macro reveal — no human verbs), `RAW_OUTPUT_RULE` (never embed text/captions/prices/labels/logos in the image). Drop avatar locks (`IDENTITY_LOCK`, `APPEARANCE_LOCK_RULE`, `ENVIRONMENT_SYNC`).
-- `generateThumbnail` — TEMU branch: product-hero prompt path, no avatar, `RAW_OUTPUT_RULE`. Generate `thumbnailOverlay: string` separately.
-- `generateVideoPrompts` — TEMU branch: Kling 3.0 motion vocabulary across all scenes. Scene 1 retains Kling 2.6 keyframe pattern.
-
-**4. components/Step5Storyboard.tsx**
-- When TEMU, don't pass `avatar` to `generateSceneImage`. `referenceImageMode` defaults to product-only.
-- Hide avatar-related UI affordances.
-
-**5. components/Step2BusinessInfo.tsx (or wherever scriptType picker lives)**
-- Update label to `PRODUCT_DROP // SCROLL-STOP`. Subtitle: `For e-com SKUs. No talking head. Pure product cuts. ~10 seconds.` Tooltip: `Best for single products P99–P999. Skip if you sell services or high-ticket.`
-- For beta launch (item #3d above): gate as disabled with `// COMING_IN_V1.1` label until re-spec ships.
-
-**6. components/Step6Thumbnail.tsx**
-- When TEMU, render product-only preview. Hide avatar-blend toggle if it exists.
-
-**7. components/Step7FinalOutput.tsx (Step 8 in UI)**
-- Under each scene tile + thumbnail, render overlay copy as zinc-300 mono with `[ COPY ]` button (matches DEPLOY_AUDIO copy-button pattern from Signal Modulator).
-- Add `overlays.txt` to `EXPORT_BUNDLE.zip` with all per-scene overlays + thumbnail overlay + usage notes (paste into CapCut, gold-on-dark / white-on-light, animate-in per cut).
-
-#### Sequencing (post-persistence-ship)
-
-1. **This week — pre-beta polish bundle (~half day):** punch list item #3 above (JWT + toast + nudge + TEMU gate).
-2. **Beta launches with MrBeast + TESTIMONIAL only.** 5–10 hand-picked Filipino owners. Frame TEMU as v1.1 first-access for beta cohort.
-3. **Week 1 of beta — TEMU re-spec ship.** ~1.5–2 days grilled engineering against this brief. Drop to beta users with reciprocity framing.
-4. **Week 2 of beta — measure.** Which formula gets more wizard completions? Which produces ads beta users actually run? Answers whether TEMU should be the default for the e-com sub-segment of Bryan.
-
-### Parked / deferred (non-blocking)
+## Parked / deferred (non-blocking)
 
 | Item | Reason |
 |---|---|
 | `ImageAdsGen.tsx` + `OrganicCalendar.tsx` wiring fix — same `referenceImageMode` bug, different modules | Outside current test path; Tier 4 cleanup post-beta |
-| Separate `BROLL_CAMERA_ANGLES` menu — current `AVATAR_CAMERA_ANGLES` are talking-head framings ("focus on eyes") applied unconditionally including to product B-roll | Defer until beta tells us if B-roll framing is a problem |
 | ChatGPT/Higgsfield-style persistent asset library — Supabase tables, RLS, CRUD, gallery UI | Greenfield multi-day initiative; export-bundle covers beta |
 | Multi-scene queueing in GenerateVideo — auto-render all 8 scenes in sequence | Manual scene-chip swap is the v1 UX; beta will tell us if tedious |
 | `// 3RD_REGENERATION_DETECTED` soft warning toast | Optional UX nudge; existing per-tier daily quotas (commit `5855fb3`) handle abuse |
 | Strategic Audit prompt rewrite — current is generic and self-praising | Quality concern, not a beta blocker |
 | 40-second ad length — tighten storyboard prompt to 5-6 scenes (~25-30s ads) | Beta will tell us if length is the bottleneck |
-| Wizard input audit follow-up — superseded for `offer`/`separator`/`audience` by pre-beta polish bundle item #3e (Script-input wiring matrix). Remaining v1.2 work after polish-bundle ships: instrument Step 1/2 fill-rates per field across beta cohort, audit any other fields surfacing as collected-but-ignored, and confirm `clientDetails.services` resolution (drop vs wire pending Neil's call). | Beta data > assumptions. Once 3e ships, the once-suspected-dead fields will be wired correctly per the matrix; remaining cleanup is data-driven rather than guess-driven |
-
-### Documented behavioral lessons from this session
-
-Worth folding into `agent_lessons.md` if it bites again, but not blocking:
-- **Wiring bugs masquerade as content bugs.** The Bucket B IDENTITY_LOCK rewrite was content-correct but never executed because `Step5Storyboard.tsx` wasn't passing `referenceImageMode`. Diagnosis path: when prompt edits don't produce expected output, grep call sites for the gated parameter before iterating on prompt text. The `generateSceneImage` signature has 11 positional args; only `InfluencerForge.tsx` was passing them all.
-- **Vite html-inline-proxy first-build flake remediation:** wipe `node_modules/.vite` + `dist`, then retry. The "second invocation passes" recipe from the 2026-05-04 entry is unreliable; the cache wipe is deterministic.
-
-## Status as of 2026-05-04 (evening update)
-
-ICANN domain verification confirmed (Gate 6 follow-up closed). ElevenLabs upgraded to **Starter plan** (10 voice slots, IVC enabled). Voice cloning smoke-tested end-to-end in local dev: clone → cloned voice usable in TTS → delete frees the slot. Today's session shipped:
-- `api/elevenlabs/voices/clone.ts` — fixed data-URL parser to accept MediaRecorder's `audio/webm;codecs=opus` output; split error mapper to distinguish "API key missing scope" from "plan tier insufficient"; added user-readable `message` to all 400/415/429 paths so the UI surfaces real reasons.
-- `vite.config.ts` — taught `vercelApiDevPlugin` to resolve `[param].ts` dynamic routes and inject the segment value into `req.query`. Without this, the DELETE handler at `api/elevenlabs/voices/[id].ts` was unreachable in dev (worked in prod via Vercel's filesystem router).
-
-**IVC unlock — CLOSED 2026-05-04.** Voice cloning is live for Creator+ users on `app.grifon.ai`. End-to-end smoke test on prod passed: cloned voice created, used in TTS, deletable. Voice Changer (uploaded + recorded) and Voice DNA library voices also confirmed working post-deploy. The Supabase `user_voices` table is live in prod (proven by behavior).
-
-Operational changes flipped in Vercel (Production scope) and redeployed:
-- `GRIFON_VOICE_CLONING_ENABLED=true`
-- `ELEVEN_LABS_API_KEY` rotated to a key with `Voices=Write + TTS + Models` scopes (the prior key was missing `Voices=Write`, which would have 401'd cloning even with the flag on).
-
-Shipped same session (commits `fa1fec1`, `9837d0b`, `66df4ca`):
-- Plan-tier gate at `components/SignalModulator/index.tsx:24-25` — Voice Cloning tab now renders only when `useSubscription` reports Creator+ (`planAtLeast(plan_id, 'creator')`); free-tier users no longer see the tab.
-- `MAX_VOICES_PER_USER` bumped 1 → 2 at `api/_lib/voiceConfig.ts:4` to give Creator/Pro users headroom without exhausting the 10-slot Starter pool.
-
-Signal Modulator polish — CLOSED 2026-05-04 (extended session). Three-part ship:
-
-**Part 3 — Session history + regenerate** (commit `e42e563`):
-- New `// LOG` button at top-right of Signal Modulator header opens a slide-in drawer.
-- In-memory session log capped at 20 takes, mixing TTS + Voice Changer in one chronological list.
-- Each take: voice name, snippet/source, relative time, ▷ play, ⟲ restore, 🗑 remove.
-- **Restore** rehydrates voice + text + stability + (for VC) sourceFile + sourceLabel into the form and auto-switches tab if needed. Implemented via `pendingRestore` state in `useSessionHistory` consumed by per-tile useEffect.
-- **Regenerate** button inline next to DEPLOY AUDIO when an output is showing. Capped at 3 per take with visible `// 3_LEFT` counter. Re-fires API with the take's *stored* params (so editing the form mid-take doesn't change what regen produces). At 0, disables with hint copy.
-- Copy updated: `// OUTPUTS_NOT_STORED` → `// LOGGED_TO_SESSION — DEPLOY_AUDIO_TO_KEEP_AFTER_REFRESH`.
-- Cleared on browser refresh (no backend, no storage cost). Files: `useSessionHistory.ts` (hook), `SessionHistory.tsx` (drawer), updates in `index.tsx` + both tiles + `utils.ts` + `types.ts`.
-- **Cost-protection caveat**: 3-regen cap is a band-aid. There is currently *no per-user daily/monthly TTS quota* — entire app shares ElevenLabs Starter's 30,000 credits/month. Per-tier daily quotas are a separate ship needed before any real userbase scales (see follow-ups below).
-
-**Part 2 — Native download dedup** (commit `94762a3`):
-- `<audio controls>` 3-dot menu was exposing a second download path that bypassed the `downloadAudio()` branded-filename helper. Added `controlsList="nodownload"` on both tiles' audio elements. Single clear save action via DEPLOY AUDIO.
-
-**Part 1 — Voice picker curation + leak fix** (commit `b6b0c68`):
-
-1. **Recommended-for-Ads curation**  (`components/SignalModulator/pinoyReady.ts` populated with 8 American stock voices: Sarah/Liam/Laura/Will/Jessica/Brian/Bella/Bill). ElevenLabs stock catalog has zero `language: "fil"` voices, so "Filipino default" can't be a metadata filter; curation is by hand. Picker now defaults to `// RECOMMENDED_FOR_ADS` section + a `// SHOW_ALL_21_STOCK_VOICES` toggle that expands the by-language groups. Default voice for new TTS / Voice Changer sessions prefers cloned → recommended → first stock.
-
-2. **FILIPINO_LIBRARY allowlist + workspace-leak fix** (`api/_lib/filipinoLibrary.ts`). Replaced the fail-open `category !== 'premade' && !myIdSet.has()` filter with an explicit allowlist of 5 admin-curated voices: Pinay Spokesperson, Pinoy Reviewer, Pinay Vlogger, Pinoy TikToker, Pinoy Kid Voice. Display names override the admin's internal ElevenLabs labels (e.g., "SEAMAN TIKTOK" → "Pinoy TikToker") so users see persona-driven labels and admin internals stay private. Voice descriptions sourced from Gemini 3.1 Pro audio analysis (AI Studio, run by user). Hidden post-deploy: James, Ellen, Zam Grifon voice, NEIL MAGLAYA NEW VOICE — all correctly suppressed. See `agent_lessons.md` 2026-05-04 entry for why allowlist must be the default for any shared-account multi-tenant resource.
-
-Note: the `localStorage.grifon_admin` key is **still in use** by `Dashboard.tsx:440,463` as an admin-only preview switch for the MORE MODULES section (7 in-progress modules). Do not advise users to remove it — see `agent_lessons.md` 2026-05-04 entry for the regression that taught this.
-
-Dev-quality follow-up shipped same session: `vite.config.ts:97` env loader guard dropped so `.env` edits are picked up on every config reload (see `agent_lessons.md` 2026-05-04 entry).
-
-**Part 4 — Per-user daily quotas + voice cloning UX polish** (commit `5855fb3`, shipped same evening):
-
-1. **Cost firewall — per-user daily TTS/STS/clone quotas, plan-tier-aware.** Closes Open Follow-up #1 from earlier in this same session. Approach: kept request-count caps (not character-cost) to avoid an SQL migration; the existing `rate_limit_check` RPC handles variable limits per call, so per-tier limits drop in by passing the tier-resolved number. New: `api/_lib/userPlan.ts` (server-side plan lookup from `subscriptions` table, defaults to free for missing/cancelled), `api/_lib/quota.ts` (per-tier `TTS_DAILY` / `STS_DAILY` / `CLONE_DAILY` maps + `peekQuota()` read-only helper for the budget endpoint), `api/elevenlabs/budget.ts` (GET endpoint returning per-bucket `{used, limit, remaining, resetSeconds}`). Daily checks added to `text-to-speech.ts`, `speech-to-speech.ts`, and `voices/clone.ts` after the existing per-minute throttles. UI: `// X_LEFT_TODAY` indicator in Signal Modulator header reflecting the active tile's bucket, color-shifts gold/red as it depletes, refreshed via `onUsageReported` callback fired by tiles after every synth/regen/clone. Limits per day: free 3/2/0, creator 20/15/2, pro 60/40/5, business 150/100/10 (TTS/STS/clone). Edit `api/_lib/quota.ts` to retune.
-
-2. **Tier-aware voice slots.** `MAX_VOICES_PER_USER` (fixed 2) replaced with `VOICE_SLOTS` map: free 0, creator 1, pro 3, business 5. Cap is intentionally conservative because ElevenLabs Starter has 10 total slots workspace-wide and ~5 are already held by the admin-curated Filipino library. One Business user filling 5 slots and one admin clone consumes the remaining capacity. Upgrading the ElevenLabs tier (Creator/Pro plan on the ElevenLabs side, not Grifon) raises the global ceiling. Slot meter in cloning tile UI now reflects the real plan cap.
-
-3. **Voice cloning UX polish.** Consent paragraph bumped from 10px zinc-300 → 12px zinc-100 (legal text needs to be legible); `// CONSENT_REQUIRED` label switched to gold for legal-importance signal; sample-guidelines bullets bumped from 10px zinc-500 → 11px zinc-300.
-
-4. **Audio player hardening.** Native `<audio>` playback-speed control was a UX trap — changing speed in the player only affected playback, not the downloaded file (downloaded file was always 1x). Added `noplaybackrate` to `controlsList` on both TTS and Voice Changer audio elements (alongside the existing `nodownload`). If real users want pacing control, the right primitive is the inline `[slow]` / `[fast]` ElevenLabs delivery tags already wired in `TTS_TAGS`.
-
-5. **SAVE button per take in `// LOG` drawer.** Each session-history entry now has a download action using the same `downloadAudio()` branded-filename helper as the main DEPLOY AUDIO. Lets users save older takes without restoring them first.
-
-### Open follow-ups (non-blocking, prioritized)
-
-1. ~~**Per-user daily/monthly TTS quota**~~ — **CLOSED 2026-05-04 in commit `5855fb3`.** Shipped Option A (request-count caps per tier, not character-cost) — see Part 4 above. Open question for follow-up if telemetry shows users gaming the cap with max-length scripts: upgrade to character-cost daily budgets (would require a new SQL function `rate_limit_consume_cost` and ~half-day of work).
-2. **Form state lost on Signal Modulator tab switch** — switching TTS↔VC unmounts the inactive tile, so typed scripts evaporate. Restore-from-history is the workaround. Fix would lift form state to parent or always-mount both tiles. Low priority; flag if real users complain.
-3. **Vite HTML-proxy cache flake** — local builds (`npm run build`) intermittently fail on first invocation with `[vite:html-inline-proxy] Could not load index.html?html-proxy&inline-css&index=0.css`. Always succeeds on retry. Suspect Windows + Vite 5 + index.html inline `<style>` interaction. Vercel CI builds clean (different env, no leftover `.vite` cache). Worth investigating if it ever bites a deploy; benign for now.
-4. **Vite dev: Windows case-insensitive routing serves `App.tsx` for `/app`.** Discovered 2026-05-04. On Windows, navigating directly to `localhost:PORT/app` makes Vite serve the transformed `App.tsx` JS module instead of `index.html` (case-insensitive filesystem matches `/app` to `App.tsx` before SPA fallback kicks in). Workaround: navigate to `/` first, let the in-app router take you to `/app`. Vercel prod is unaffected (proper SPA fallback). Latent dev-only bug; only affects Windows devs hitting `/app` directly.
-
-## Status as of 2026-05-02 (evening update)
-
-**All 7 launch gates are CLOSED.** Site is live at https://app.grifon.ai. Test-mode billing now fully proven end-to-end on prod (checkout → PayMongo → webhook → Supabase row → UI tier upgrade). Only outstanding item to take real money is the PayMongo live-key cutover (Gate 3-prod below).
-
-Today's session shipped two fixes, both deployed:
-- `5c6525a` — Upgrade buttons (top banner + profile dropdown) had no `onClick`; now route to `/pricing`
-- `23fac77` — dropped dead `{CHECKOUT_SESSION_ID}` placeholder from PayMongo `success_url` (Stripe syntax PayMongo doesn't substitute)
-
-Plus three Vercel config changes (no commit): added PayMongo test env vars, changed `APP_URL` to `https://app.grifon.ai`, and registered test webhook in PayMongo dashboard at `https://app.grifon.ai/api/webhook` for `checkout_session.payment.paid`. See [paymongo_webhook_setup.md](../../.claude/projects/c--Users-Administrator-Downloads-grifon-command----your-ai-marketing-team/memory/paymongo_webhook_setup.md) memory for the gotcha that cost ~30 min of debugging.
+| Wizard input audit follow-up | Superseded for `offer`/`separator`/`audience` by polish-bundle item #3e. Remaining v1.2: instrument Step 1/2 fill-rates per field across beta cohort once #3e ships. Beta data > assumptions. |
 
 ## Readiness Gates
 
-### Gate 1: App works (no crashes) — CLOSED 2026-04-23
-- [x] `SignalModulator` voiceService crash fixed
-- [x] `GenerateVideo` submit handler implemented
-- [x] Error boundaries around each module (`App.tsx:16` wraps every route)
-- [x] Gemini API key no longer throws at import
-- [x] Director AI rules-of-hooks crash fixed (state hoisted to top level — `App.tsx:87`)
+| Gate | Status |
+|---|---|
+| **1: App works (no crashes)** | CLOSED 2026-04-23 — voiceService crash fixed, error boundaries, Director AI rules-of-hooks fix, Gemini key no longer throws at import |
+| **2: Real auth** | CLOSED 2026-04-18 — Supabase email/password, session persistence, plaintext password + ALLOWED_EMAILS hardcode removed |
+| **3-dev: Billing wired (test mode)** | CLOSED 2026-04-23 — PayMongo hosted-checkout, webhook signature verification, subscriptions table updates, `api/_lib/paymongo.ts` |
+| **3-prod: Live billing cutover** | **IN PROGRESS** — blocked only on PayMongo merchant verification. See live cutover steps below. |
+| **4: Production-safe code** | CLOSED 2026-04-23 — Zod validation in 8 endpoints, rate limiting in 10 routes, webhook bodyParser disabled for raw signature, cron cleanup for stale Gemini videos |
+| **5: Mobile responsiveness** | CLOSED 2026-04-23 — phone-verified live; P1/P2/P3 from 15-finding audit deferred non-blocking |
+| **6: Domain + hosting** | CLOSED 2026-05-02 — `grifon.ai` via Vercel registrar, `app.grifon.ai` SSL, env vars set, ICANN verified 2026-05-04 |
+| **7: Legal** | CLOSED 2026-04 — Terms / Privacy / Refund / Support pages, effective 2026-04-20 |
 
-### Gate 2: Real auth — CLOSED 2026-04-18
-- [x] Plaintext `ACCESS_PASSWORD` removed from `App.tsx`
-- [x] `ALLOWED_EMAILS` hardcode removed
-- [x] Supabase email/password login wired
-- [x] Session persistence (refresh doesn't log out)
-- [x] Logout button in Dashboard profile dropdown
+### Gate 3-prod live cutover steps
 
-### Gate 3-dev: Billing wired (test mode) — CLOSED 2026-04-23
-- [x] PayMongo hosted-checkout integration: `api/checkout.ts`
-- [x] Webhook with signature verification: `api/webhook.ts`
-- [x] Subscriptions table updated on payment events
-- [x] Checkout flow matches `GrifonPricingPage.tsx` tiers
-- [x] PayMongo helper lib: `api/_lib/paymongo.ts`
+Test-mode plumbing fully proven on prod 2026-05-02 (E2E test purchase activated subscription row in Supabase). Live cutover blocks only on PayMongo merchant verification.
 
-### Gate 3-prod: Live billing cutover — IN PROGRESS
-Test-mode plumbing fully proven on prod 2026-05-02 (E2E test purchase activated subscription row in Supabase). Live cutover blocked only on PayMongo merchant verification.
-
-Live cutover steps (repeat the test-mode setup with live values):
 - [ ] PayMongo dashboard: complete merchant verification (Philippine business registration required)
 - [ ] PayMongo dashboard: flip to Live Mode
 - [ ] Pull live `PAYMONGO_SECRET_KEY` (`sk_live_...`) — only this one is read by code (`api/_lib/paymongo.ts:6`); `PAYMONGO_PUBLIC_KEY` is stored but unused
@@ -987,41 +537,22 @@ Live cutover steps (repeat the test-mode setup with live values):
 - [ ] Redeploy (Deployments → ⋯ → Redeploy, no cache)
 - [ ] Test purchase with a real card on Creator tier (₱997); confirm row in Supabase, then refund yourself in PayMongo dashboard
 
-### Gate 4: Production-safe code — CLOSED 2026-04-23
-- [x] Zod input validation in all Gemini + ElevenLabs + checkout API routes (8 endpoints)
-- [x] Rate limiting wired via `rateLimitCheck()` in 10 API routes (sliding-window via Supabase RPC)
-- [x] Webhook bodyParser disabled for raw signature verification
-- [x] Cron cleanup for stale Gemini videos: `api/cron/cleanup-gemini-videos.ts`
+## Locked design briefs (in-flight)
 
-### Gate 5: Mobile responsiveness — CLOSED 2026-04-23
-- [x] Dashboard upgrade banner padding fix for close-button overlap (`Dashboard.tsx:146`)
-- [x] Director AI hook-branch crash fix (`App.tsx:87`)
-- [x] Footer logo wired (`LandingPage.tsx:627`)
-- [x] Legal page header logo wired (`LegalPageLayout.tsx:28`)
-- [x] Wall-of-Proof carousel: 3-col grid → 9:16 swipeable cards w/ snap-proximity (`LandingPage.tsx:155-200`)
-- [x] Phone-verified live on preview before promotion
-- Open follow-ups (P1/P2/P3 from original 15-finding mobile audit deferred — non-blocking)
+- [script_input_wiring_brief.md](script_input_wiring_brief.md) — polish bundle item #3e. Slotting matrix for offer / separator / audience across MrBeast / TESTIMONIAL / TEMU formulas.
+- [temu_respec_brief.md](temu_respec_brief.md) — v1.1 ship. 7-scene product-drop scaffolding, no avatar, no VO, RAW_OUTPUT_RULE, overlays as data.
 
-### Gate 6: Domain + hosting — CLOSED 2026-05-02
-- [x] `grifon.ai` purchased (via Vercel registrar)
-- [x] `app.grifon.ai` DNS + SSL (auto-provisioned by Vercel)
-- [x] Production build deployed (Vercel project `grifon-command` linked to GitHub `yopiheart/grifon-command`, branch `main`)
-- [x] Env vars set in host (Supabase, Gemini, ElevenLabs, APP_URL, APP_ENV=production, GRIFON_VOICE_CLONING_ENABLED=false)
-- [x] Verified live: landing loads, auth works, session persists, Gemini AI generates, logout works
-- Open follow-ups (non-blocking):
-  - Vercel billing address incomplete — fix in Vercel → Settings → Billing → Update Address
-  - ~~ICANN email verification for `grifon.ai`~~ — DONE 2026-05-04 (verified before deadline)
-  - SignalModulator voice list — confirm whether empty list = no voices on ElevenLabs vs API failure
+## Session archive
 
-### Gate 7: Legal — CLOSED 2026-04 (effective date 2026-04-20)
-- [x] Terms of Service (`components/TermsOfService.tsx`, 160 lines, Haste Enterprises / Republic of the Philippines)
-- [x] Privacy Policy (`components/PrivacyPolicy.tsx`, 135 lines, covers Gemini data handling)
-- [x] Refund Policy (`components/RefundPolicy.tsx`, 88 lines)
-- [x] Support page (`components/Support.tsx`, 77 lines)
-- All 4 share `LegalPageLayout` and have routes in `App.tsx`
+Full historical session prose lives in [archive/](archive/). The main file stays thin so post-`/clear` resume is fast.
+
+- [archive/2026-05-04-voice-cloning-ivc.md](archive/2026-05-04-voice-cloning-ivc.md) — voice cloning live, IVC unlock, Signal Modulator polish (Parts 1-4), per-user daily quotas
+- [archive/2026-05-05-director-ai-sprint.md](archive/2026-05-05-director-ai-sprint.md) — Step 8 redesign, wizard↔GenerateVideo handoff, Bucket A/B prompt tuning, IDENTITY_LOCK wiring fix, Bukidnon Brew regression partial pass
+- [archive/2026-05-06-temu-regression-and-persistence.md](archive/2026-05-06-temu-regression-and-persistence.md) — TESTIMONIAL Run 1 observations, P0 bugs surfaced (camera angles / logo text / hand hallucination / state persistence / JWT expiry), wizard state persistence ship + smoke test plan
 
 ## How to use
 
-1. After every session that closes a gate, update this file's checkboxes IN THE SAME SESSION before clearing context.
-2. The `git log` is more authoritative than this file — when in doubt, check what code actually shipped.
-3. Treat this file as a *summary* of completed work, not a source of truth. Source of truth = the code.
+1. After every session that closes a gate or ships a punch-list item, update this file's tables IN THE SAME SESSION before clearing context.
+2. **The `git log` is more authoritative than this file** — when in doubt, check what code actually shipped.
+3. Treat this file as a *summary* of state, not a source of truth. Source of truth = the code.
+4. **Don't re-bloat this file with session prose.** Per-session detail goes into `archive/YYYY-MM-DD-<topic>.md`. Keep this file scannable in one screen.
