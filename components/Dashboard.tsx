@@ -15,6 +15,8 @@ import { loadRecentWork, recordRecentWork, type RecentItem } from '../services/r
 import { ActiveJobsPanel } from './ui/ActiveJobsPanel';
 import { useActiveJobs } from '../hooks/useActiveJobs';
 import { OnboardingNudge } from './ui/OnboardingNudge';
+import { ResumeDraftCard } from './ui/ResumeDraftCard';
+import { getSession, clearSession, type WizardSessionV1 } from '../services/wizardSessionStore';
 
 const GrifonLogo = ({ className = "h-8 w-auto" }) => (
   <img src="/logo.png" alt="GRIFON Logo" className={`object-contain ${className}`} />
@@ -36,9 +38,12 @@ interface DashboardProps {
   onSelectModule: (module: string) => void;
   activeModule?: string | null;
   userEmail?: string | null;
+  userId?: string | null;
   onLogout?: () => void;
   onUpgrade?: () => void;
 }
+
+const WIZARD_TOTAL_STEPS = 8;
 
 const CORE_MODULES = [
   { id: 'market_research', name: 'RESEARCH', icon: Search, desc: 'Deep market & competitor reports' },
@@ -57,7 +62,7 @@ const MORE_MODULES = [
   { id: 'signal_modulator', name: 'Signal Modulator', icon: Mic, desc: 'Voice cloning, TTS, and audio enhancement.' }
 ];
 
-const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, userEmail, onLogout, onUpgrade }) => {
+const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, userEmail, userId, onLogout, onUpgrade }) => {
   // ADMIN MODE: To see in-progress modules, two ways:
   //   Desktop (DevTools): localStorage.setItem('grifon_admin', 'true')  → refresh
   //   Mobile or no-DevTools: visit ?admin=on (e.g. app.grifon.ai/?admin=on)
@@ -84,6 +89,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
   const [bannerMessage, setBannerMessage] = useState('');
   const [recent, setRecent] = useState<RecentItem[]>([]);
   const [onboardingDismissed, setOnboardingDismissed] = useState(true);
+  const [draftSession, setDraftSession] = useState<WizardSessionV1 | null>(null);
   const activeJobs = useActiveJobs();
 
   useEffect(() => {
@@ -92,6 +98,31 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
     const flag = localStorage.getItem('grifon_onboarded') === 'true';
     setOnboardingDismissed(flag || initialRecent.length > 0);
   }, []);
+
+  useEffect(() => {
+    if (!userId) {
+      setDraftSession(null);
+      return;
+    }
+    let cancelled = false;
+    getSession(userId).then(s => {
+      if (cancelled) return;
+      // Only show resume CTA for an in-progress wizard (not finished, not blank).
+      if (s && s.currentStep > 1 && s.currentStep < WIZARD_TOTAL_STEPS) {
+        setDraftSession(s);
+      } else {
+        setDraftSession(null);
+      }
+    });
+    return () => { cancelled = true; };
+  }, [userId, activeModule]);
+
+  const discardDraft = async () => {
+    if (userId) {
+      try { await clearSession(userId); } catch { /* best-effort */ }
+    }
+    setDraftSession(null);
+  };
 
   const dismissOnboarding = () => {
     localStorage.setItem('grifon_onboarded', 'true');
@@ -402,8 +433,23 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
             </motion.div>
           </div>
 
+          {/* Resume in-progress wizard draft — highest priority surface */}
+          {draftSession && (
+            <div className="mb-6 lg:mb-8 max-w-2xl lg:max-w-3xl mx-auto w-full">
+              <ResumeDraftCard
+                currentStep={draftSession.currentStep}
+                totalSteps={WIZARD_TOTAL_STEPS}
+                savedAt={draftSession.savedAt}
+                brandName={draftSession.clientDetails?.brandName}
+                onResume={() => handleSelectModule('creative_director')}
+                onDiscard={discardDraft}
+                delay={0.2}
+              />
+            </div>
+          )}
+
           {/* Onboarding Nudge — first-timers only */}
-          {showOnboarding && (
+          {showOnboarding && !draftSession && (
             <div className="mb-6 lg:mb-8 max-w-2xl lg:max-w-3xl mx-auto w-full">
               <OnboardingNudge
                 onStart={() => handleSelectModule('creative_director')}
