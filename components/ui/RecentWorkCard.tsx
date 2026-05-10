@@ -46,51 +46,52 @@ interface RecentWorkCardProps {
 }
 
 export const RecentWorkCard: React.FC<RecentWorkCardProps> = ({ items, onResume, delay = 0 }) => {
-  const top = items.slice(0, 4);
+  const TOP_N = 3;
+  const top = items.slice(0, TOP_N);
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay }}
-      className="bg-zinc-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-5 lg:p-6"
+      className="bg-zinc-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-4 lg:p-5"
     >
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
           <Clock className="w-3.5 h-3.5 text-[#FFCC00]" />
           <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">
-            // RECENT WORK
+            // RECENTLY OPENED
           </span>
         </div>
-        {items.length > 4 && (
+        {items.length > TOP_N && (
           <span className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest">
-            +{items.length - 4} more
+            +{items.length - TOP_N} more
           </span>
         )}
       </div>
 
       {top.length === 0 ? (
-        <div className="py-6 text-center">
-          <p className="text-sm text-zinc-500">No recent work yet.</p>
-          <p className="text-xs text-zinc-600 mt-1">Open a module above para magsimula.</p>
+        <div className="py-4 text-center">
+          <p className="text-xs text-zinc-500">Open a module above para magsimula.</p>
         </div>
       ) : (
-        <div className="space-y-2">
+        <div className="space-y-1.5">
           {top.map(item => {
             const Icon = MODULE_ICON[item.moduleId] ?? Clock;
+            const isVisit = item.kind === 'visit';
             return (
               <button
                 key={item.id}
                 onClick={() => onResume(item)}
-                className="w-full flex items-center gap-3 p-3 rounded-xl bg-zinc-950/60 border border-white/5 hover:border-[#FFCC00]/30 hover:bg-zinc-950 transition-all group text-left"
+                className="w-full flex items-center gap-3 px-3 py-2 rounded-xl bg-zinc-950/60 border border-white/5 hover:border-[#FFCC00]/30 hover:bg-zinc-950 transition-all group text-left"
               >
-                <div className="w-8 h-8 rounded-lg bg-[#FFCC00]/10 flex items-center justify-center flex-shrink-0">
-                  <Icon className="w-4 h-4 text-[#FFCC00]" />
+                <div className="w-7 h-7 rounded-lg bg-[#FFCC00]/10 flex items-center justify-center flex-shrink-0">
+                  <Icon className="w-3.5 h-3.5 text-[#FFCC00]" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="text-sm font-semibold text-white truncate">{item.title}</div>
+                  <div className="text-sm font-semibold text-white truncate leading-tight">{item.title}</div>
                   <div className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mt-0.5">
-                    {KIND_LABEL[item.kind]} · {formatRelative(item.ts)}
+                    {isVisit ? formatRelative(item.ts) : `${KIND_LABEL[item.kind]} · ${formatRelative(item.ts)}`}
                   </div>
                 </div>
                 <ArrowRight className="w-4 h-4 text-zinc-700 group-hover:text-[#FFCC00] group-hover:translate-x-0.5 transition-all flex-shrink-0" />
