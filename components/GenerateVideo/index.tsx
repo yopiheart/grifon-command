@@ -29,6 +29,7 @@ import {
   GeneratedVideoResult,
   getValidDurations,
   listVideoLibrary,
+  deleteVideoLibraryItem,
   suggestDurationForScript,
   resumeVideoOperation,
 } from '../../services/geminiService';
@@ -73,7 +74,9 @@ const ACTIVE_MODELS: VideoModelType[] = ['Veo_3.1_Fast', 'Veo_3.1_Quality', 'Veo
 const LOCKED_MODELS: VideoModelType[] = ['Kling_3_0', 'Seedance_2_0_Fast', 'Seedance_2_0_Quality'];
 
 const initialConfig = (defaultAspectRatio?: '9:16' | '16:9' | null): VideoGenConfig => ({
-  model: 'Veo_3.1_Fast',
+  // Phase 4h.1 — default to Lite for beta cost-control. Cheapest tier;
+  // 720p supports full 4/6/8s grid. Users opt up via the model picker.
+  model: 'Veo_3.1_Lite',
   duration: 8,
   resolution: '720p', // 720p gives pacing flexibility (4/6/8s) on all Veo variants. User can opt up.
   aspectRatio: defaultAspectRatio ?? '9:16',
@@ -163,6 +166,26 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
         .catch(() => {});
     } else {
       setConfig((prev) => ({ ...prev, startFrame: undefined }));
+    }
+
+    // Phase 4h.4 — for SCENE 1 (HOOK), auto-anchor SCENE 2's image as the
+    // END frame so Veo morphs the hook into the content beat (Kling-style
+    // frame-bridge). Other scenes leave endFrame undefined — Veo generates
+    // natural endings. Multi-shot morph for scenes 2-N is Phase 6+ scope.
+    if (activeIdx === 0) {
+      const nextSceneImage = storyboard[1]?.imageUrl ?? storyboard[1]?.manualUploadUrl;
+      if (nextSceneImage) {
+        urlToDataUrl(nextSceneImage)
+          .then((dataUrl) => compressImageForUpload(dataUrl))
+          .then((compressed) =>
+            setConfig((prev) => ({ ...prev, endFrame: compressed.dataUrl }))
+          )
+          .catch(() => {});
+      } else {
+        setConfig((prev) => ({ ...prev, endFrame: undefined }));
+      }
+    } else {
+      setConfig((prev) => ({ ...prev, endFrame: undefined }));
     }
   }, [activeIdx, hasSeedPrompts, seedPrompts, storyboard]);
 
@@ -436,9 +459,9 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
         if (action === 'replace') {
           try {
             const toDelete = sceneRenders[0]; // library is desc-sorted by createdAt
-            await getSupabase()
-              .storage.from('gemini-videos')
-              .remove([toDelete.path, `${toDelete.path}.meta.json`]);
+            // Phase 4h.2 — server-side delete (was silently failing client-side
+            // due to RLS on bucket DELETE). Helper throws on failure.
+            await deleteVideoLibraryItem(toDelete.path);
             toast('PREVIOUS RENDER REPLACED');
             void refreshLibrary();
           } catch (err: any) {
@@ -1196,18 +1219,17 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
     toast('PROMPT LOADED');
   };
 
-  // Phase 4g.4 — Delete a single library entry (mp4 + sidecar). RLS on
-  // the gemini-videos bucket enforces user ownership via the `${user.id}/`
-  // path prefix, so a malicious caller can't delete someone else's file.
+  // Phase 4g.4 + 4h.2 — Delete a single library entry (mp4 + sidecar) via
+  // server endpoint. Server uses supabaseAdmin (service role) and verifies
+  // user ownership via path prefix, bypassing the RLS gap on the bucket
+  // that was silently failing client-side `storage.remove()` calls.
   // If the tile being deleted is currently selected in the preview canvas,
   // clear the preview so we don't show a dead signed URL.
   const handleTileDelete = async (e: React.MouseEvent, item: VideoLibraryItem) => {
     e.stopPropagation();
     if (!confirm(`Delete this render? This can't be undone.`)) return;
     try {
-      await getSupabase()
-        .storage.from('gemini-videos')
-        .remove([item.path, `${item.path}.meta.json`]);
+      await deleteVideoLibraryItem(item.path);
       if (previewItem?.url === item.url) {
         setPreviewItem(null);
         setCanvasView('edit');

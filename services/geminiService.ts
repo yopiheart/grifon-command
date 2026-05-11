@@ -536,6 +536,16 @@ export const listVideoLibrary = async (): Promise<VideoLibraryItem[]> => {
   return res.items ?? [];
 };
 
+/**
+ * Phase 4h.2 — Delete one library entry (mp4 + sidecar) via server endpoint.
+ * Replaces direct client-side Supabase Storage `remove()` calls that silently
+ * failed on RLS denial. The server endpoint uses the service role and verifies
+ * user ownership via the path prefix before deleting.
+ */
+export const deleteVideoLibraryItem = async (path: string): Promise<void> => {
+  await proxyCall<{ deleted: true }>('/api/gemini/video/delete', { path });
+};
+
 // CAMERA ANGLE SET — rebalanced 2026-05-08-late-late-evening for storyboard-variety + face-to-camera safety.
 // 4 framings the model reliably renders. Rotated via `variationIndex % AVATAR_CAMERA_ANGLES.length`
 // so consecutive scenes get different framings. SIDE_PROFILE_TALK and DYNAMIC_SHOULDER were dropped

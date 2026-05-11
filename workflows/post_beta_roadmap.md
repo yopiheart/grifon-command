@@ -135,6 +135,44 @@ Two cheap mitigations + one bigger one:
 
 ---
 
+### 6. CTA Parity Audit — MrBeast vs Testimonial Real-Output A/B
+
+**What:** Side-by-side comparison of generated CTA copy from the **MrBeast** and **Testimonial** scriptTypes against an identical product/audience/offer brief. Goal: confirm or rule out a real structural gap in MrBeast CTAs that makes them feel weaker than Testimonial CTAs.
+
+**Why it matters:** Neil flagged during 2026-05-11 ChillCool/MrBeast smoke test that MrBeast CTAs "felt weaker" than Testimonial CTAs. Phase 4h grep-investigation on [`api/_lib/prompts.ts`](../api/_lib/prompts.ts) found the two structures are **structurally identical** at the CTA beat:
+
+| Aspect | TESTIMONIAL (line 369+) | MRBEAST (line 403+) |
+|---|---|---|
+| Required scarcity word | ✅ same | ✅ same |
+| Value-adds verbatim from offer | ✅ same | ✅ same |
+| Banned phrases (`link sa bio`, `DM us`) | ✅ same | ✅ same |
+| Example pattern | `"Click below — first 50 may free shipping..."` | `"I-click below — first 50 lang may free shipping..."` |
+| **Tone framing** | `"WARM recommendation tone (not direct-sell)"` | `"High-energy ad-native call-to-action"` |
+
+The *only* difference is tone framing. The "weaker CTA" perception is most likely tone-execution by the LLM — the warm-recommendation tone pairs naturally with the Testimonial story arc (Before → After → Proof → CTA), making the CTA feel earned. MrBeast's "high-energy" tone, in Filipino, may land flatter without the right body-paragraph buildup.
+
+**Why parked:** This is a TUNED-FILE prompt edit territory in [`api/_lib/prompts.ts`](../api/_lib/prompts.ts) and needs:
+1. Actual side-by-side generated CTAs (same product, both scriptTypes) to confirm the gap is structural vs perceptual
+2. Explicit Neil approval per the surgical-edit rule on `_lib/` prompts
+3. A clear "what's the better tone directive" hypothesis (e.g., "command-tone, urgency-stacking, dare-the-viewer phrasing" vs current "high-energy")
+
+Phase 4 beta-merge should not wait on this. Defer to next session.
+
+**When to resume:** Next session after beta-merge. Neil pastes a real MrBeast Step-3 CTA + a Testimonial Step-3 CTA generated for the same Step 2 inputs (same product/audience/offer). Compare side-by-side. If structurally different in execution, propose a targeted tone-directive edit. If perceptually different only, leave both structures stable and document the choice.
+
+**Where to start:**
+1. Have Neil rerun the wizard twice on the same Step 2 input — once with MrBeast, once with Testimonial. Paste both Step 3 CTA outputs.
+2. Compare: scarcity word, value-adds, urgency cue, command verbs, sentence length, exclamation use.
+3. Identify the actual gap. Likely candidates: MrBeast lacks "DARE/COMMAND" phrasing (e.g., "Stop scrolling and tap below NOW") that drives high-energy CTAs in actual MrBeast YouTube videos.
+4. Draft a tone-directive update for MRBEAST CTA beat #6 — keep all banned phrases + required mechanics intact.
+5. Neil-approve, edit `api/_lib/prompts.ts`, smoke test on next ChillCool-class wizard run.
+
+**Scope estimate:** ~30 min for the A/B comparison, then ~10-20 min for the prompt edit + smoke test. Total under an hour if the gap is clear.
+
+**Source:** Neil during 2026-05-11 MrBeast smoke test after Phase 4g shipped — *"can you check if testimonial have the same call to action for mrbeast in terms of formula? Because the call to action in mrbeast script is not that strong like testimonial."*
+
+---
+
 ## How to add new items
 
 When Neil endorses an idea but says "not now":

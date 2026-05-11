@@ -25,33 +25,35 @@ const statusLabel = (s: SceneStatus): string => {
 };
 
 const StatusBadge: React.FC<{ status: SceneStatus; elapsed?: number }> = ({ status, elapsed }) => {
-  // top-2 right-2 (was 1.5/1.5) — avoids clipping by the active-chip
-  // ring-1 + rounded corner. z-10 ensures stacking above the thumbnail.
-  const baseClasses = 'absolute top-2 right-2 z-10 text-[8px] font-black uppercase tracking-wider rounded-full px-2 py-0.5 flex items-center gap-1 whitespace-nowrap';
+  // Phase 4h.3 — bold 2px borders + opaque-ish bg + white text on done/failed
+  // for legibility against the thumbnail. Gold variants keep gold text (the
+  // brand accent reads cleanly on the dark thumb tint). Bumped to text-[9px].
+  // top-2 right-2 + z-10 (Phase 4g.3) avoids clipping by active-chip ring.
+  const baseClasses = 'absolute top-2 right-2 z-10 text-[9px] font-black uppercase tracking-wider rounded-full px-2 py-0.5 flex items-center gap-1 whitespace-nowrap';
   switch (status) {
     case 'ready':
       return null;
     case 'queued':
       return (
-        <div className={`${baseClasses} bg-zinc-950/80 border border-[#FFCC00]/40 text-[#FFCC00]`}>
+        <div className={`${baseClasses} bg-zinc-950/80 border-2 border-[#FFCC00]/60 text-[#FFCC00]`}>
           <Clock className="w-2.5 h-2.5" /> QUEUED
         </div>
       );
     case 'rendering':
       return (
-        <div className={`${baseClasses} bg-zinc-950/80 border border-[#FFCC00] text-[#FFCC00] animate-pulse`}>
+        <div className={`${baseClasses} bg-zinc-950/80 border-2 border-[#FFCC00] text-[#FFCC00] animate-pulse`}>
           <RotateCw className="w-2.5 h-2.5 animate-spin" /> {elapsed ? `${elapsed}s` : 'RENDER'}
         </div>
       );
     case 'done':
       return (
-        <div className={`${baseClasses} bg-green-500/20 border border-green-500/40 text-green-400`}>
+        <div className={`${baseClasses} bg-green-500/40 border-2 border-green-500 text-white shadow-[0_0_8px_rgba(34,197,94,0.4)]`}>
           <CheckCircle2 className="w-2.5 h-2.5" /> DONE
         </div>
       );
     case 'failed':
       return (
-        <div className={`${baseClasses} bg-red-500/20 border border-red-500/40 text-red-400`}>
+        <div className={`${baseClasses} bg-red-500/40 border-2 border-red-500 text-white`}>
           <AlertTriangle className="w-2.5 h-2.5" /> FAIL
         </div>
       );
