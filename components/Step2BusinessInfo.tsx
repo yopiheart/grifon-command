@@ -130,10 +130,10 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {[
-          { id: 'product', label: 'Service/Product', placeholder: 'e.g., Compact 100ml face mist (include size for physical products)' },
-          { id: 'audience', label: 'Target Audience', placeholder: 'e.g., Busy young professionals' },
-          { id: 'benefit', label: 'Dream Result', placeholder: 'e.g., Wakes up energized, naka-2 hours back every morning, mas chill ang pasok sa work' },
-          { id: 'painPoint', label: '3 AM Worry', placeholder: 'e.g., 3 AM, hindi makatulog kasi tuition deadline na bukas — wala pang pera' }
+          { id: 'product', label: 'Service/Product', placeholder: 'e.g., Eco-friendly home cleaning service', helper: 'Physical product? Include size + color + shape + label so the AI matches your actual product.' },
+          { id: 'audience', label: 'Target Audience', placeholder: 'e.g., Busy young professionals', helper: '' },
+          { id: 'benefit', label: 'Dream Result', placeholder: 'e.g., Wakes up energized, naka-2 hours back every morning, mas chill ang pasok sa work', helper: '' },
+          { id: 'painPoint', label: '3 AM Worry', placeholder: 'e.g., 3 AM, hindi makatulog kasi tuition deadline na bukas — wala pang pera', helper: '' }
         ].map(field => (
           <div key={field.id} className="space-y-2">
             <label htmlFor={field.id} className="block text-[10px] text-zinc-400 font-mono uppercase tracking-widest">
@@ -147,6 +147,11 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
               placeholder={field.placeholder}
               className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-all text-sm"
             />
+            {field.helper && (
+              <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase">
+                // {field.helper}
+              </p>
+            )}
           </div>
         ))}
         

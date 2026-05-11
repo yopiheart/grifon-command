@@ -88,7 +88,7 @@ Half-baked ideas don't go here — they go in conversation and either die or get
 
 ### 4. Generative Video — Product Scale Anchoring (Veo limitation)
 
-> **Status (2026-05-12):** ✅ Mitigations 1 & 2 shipped in [components/Step2BusinessInfo.tsx](../components/Step2BusinessInfo.tsx) — product field placeholder now reads `"Compact 100ml face mist (include size for physical products)"` and the upload zone has a gold-accent "Pro tip: Hand-for-scale or product-in-context shot helps Veo render product size accurately." Note: the original roadmap listed Step 1 for the upload hint, but the actual product-image upload zone lives in Step 2. Bigger fix (start-frame scale anchoring, Phase 5+) remains parked.
+> **Status (2026-05-12):** ✅ Mitigations 1 & 2 shipped in [components/Step2BusinessInfo.tsx](../components/Step2BusinessInfo.tsx) — product field now renders a persistent helper line below the input (`"// Physical product? Include size + color + shape + label so the AI matches your actual product."`) using a reusable `helper` field on the form-config array, and the upload zone has a gold-accent `"Pro tip: Hand-for-scale or product-in-context shot helps Veo render product size accurately."` line. Helper-below-input pattern chosen over placeholder-edit because placeholders disappear when the user types — instructional hints need persistence. Note: the original roadmap listed Step 1 for the upload hint, but the actual product-image upload zone lives in Step 2. Bigger fix (start-frame scale anchoring, Phase 5+) remains parked.
 
 **What:** Mitigations for the known generative-video issue where Veo (and peer models) renders product props at unrealistic scale — usually too large for the actual SKU.
 
