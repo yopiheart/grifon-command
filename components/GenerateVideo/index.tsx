@@ -168,22 +168,21 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
       setConfig((prev) => ({ ...prev, startFrame: undefined }));
     }
 
-    // Phase 4h.4 — for SCENE 1 (HOOK), auto-anchor SCENE 2's image as the
-    // END frame so Veo morphs the hook into the content beat (Kling-style
-    // frame-bridge). Other scenes leave endFrame undefined — Veo generates
-    // natural endings. Multi-shot morph for scenes 2-N is Phase 6+ scope.
-    if (activeIdx === 0) {
-      const nextSceneImage = storyboard[1]?.imageUrl ?? storyboard[1]?.manualUploadUrl;
-      if (nextSceneImage) {
-        urlToDataUrl(nextSceneImage)
-          .then((dataUrl) => compressImageForUpload(dataUrl))
-          .then((compressed) =>
-            setConfig((prev) => ({ ...prev, endFrame: compressed.dataUrl }))
-          )
-          .catch(() => {});
-      } else {
-        setConfig((prev) => ({ ...prev, endFrame: undefined }));
-      }
+    // Phase 4h.4 (corrected 4h.4b) — auto-anchor the scene's OWN end-frame
+    // image (Scene.endFrameImageUrl from the storyboard step, or the user's
+    // manualEndFrameUrl override). This is the SAME-scene end frame, NOT the
+    // next scene's start frame. Used primarily for SCENE 1 (HOOK) where the
+    // storyboard generated two glasses-of-water shots — start and end of the
+    // hook beat. Any scene with an endFrameImageUrl will auto-load; otherwise
+    // endFrame stays undefined and Veo generates a natural ending.
+    const sceneEndImage = storyboard[activeIdx]?.endFrameImageUrl ?? storyboard[activeIdx]?.manualEndFrameUrl;
+    if (sceneEndImage) {
+      urlToDataUrl(sceneEndImage)
+        .then((dataUrl) => compressImageForUpload(dataUrl))
+        .then((compressed) =>
+          setConfig((prev) => ({ ...prev, endFrame: compressed.dataUrl }))
+        )
+        .catch(() => {});
     } else {
       setConfig((prev) => ({ ...prev, endFrame: undefined }));
     }
