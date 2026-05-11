@@ -148,6 +148,7 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
               setResult(previousReport);
               setShowRecallCard(false);
             }}
+            onSendToDirector={onNavigate ? () => onNavigate('creative_director') : undefined}
             onDismiss={() => setShowRecallCard(false)}
           />
         )}

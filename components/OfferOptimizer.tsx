@@ -309,6 +309,7 @@ const OfferOptimizer: React.FC<OfferOptimizerProps> = ({ onBack, onNavigate }) =
               setResult(previousResult);
               setShowRecallCard(false);
             }}
+            onSendToDirector={onNavigate ? () => onNavigate('creative_director') : undefined}
             onDismiss={() => setShowRecallCard(false)}
           />
         )}

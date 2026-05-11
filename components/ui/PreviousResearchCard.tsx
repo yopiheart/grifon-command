@@ -1,11 +1,14 @@
 import React from 'react';
-import { Sparkles, X } from 'lucide-react';
+import { Sparkles, X, ArrowRight } from 'lucide-react';
 import { GoldButton } from './GoldButton';
 
 interface PreviousResearchCardProps {
   subject: string;
   savedAtMs: number;
+  /** Secondary action — loads the saved report into the module's results view for review. */
   onLoad: () => void;
+  /** Primary action — when provided, renders a gold "→ DIRECTOR AI" button alongside VIEW REPORT for 1-click express navigation. */
+  onSendToDirector?: () => void;
   onDismiss?: () => void;
   label?: string;
 }
@@ -29,6 +32,7 @@ export const PreviousResearchCard: React.FC<PreviousResearchCardProps> = ({
   subject,
   savedAtMs,
   onLoad,
+  onSendToDirector,
   onDismiss,
   label = 'LAST RESEARCH',
 }) => {
@@ -45,18 +49,31 @@ export const PreviousResearchCard: React.FC<PreviousResearchCardProps> = ({
       )}
       <div className="flex items-center gap-3 flex-wrap pr-6">
         <Sparkles className="w-5 h-5 text-[#FFCC00] shrink-0" />
-        <div className="flex-1 min-w-0">
+        <div className="flex-1 min-w-[200px]">
           <p className="text-[10px] text-[#FFCC00] font-mono uppercase tracking-widest">
             // {label}
           </p>
           <p className="text-sm text-white font-bold truncate mt-0.5">{subject}</p>
           <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-tighter mt-0.5">
-            Saved {formatRelativeTime(savedAtMs)} — skip re-typing, load it back
+            Saved {formatRelativeTime(savedAtMs)} — skip re-typing, reuse it
           </p>
         </div>
-        <GoldButton onClick={onLoad} className="shrink-0 px-5 py-2 text-xs">
-          LOAD
-        </GoldButton>
+        <div className="flex gap-2 shrink-0 flex-wrap">
+          <button
+            onClick={onLoad}
+            className="px-4 py-2 text-xs font-mono uppercase tracking-widest bg-zinc-950 border border-white/10 text-zinc-300 rounded-xl hover:border-[#FFCC00] hover:text-[#FFCC00] transition-colors"
+          >
+            {onSendToDirector ? 'VIEW REPORT' : 'LOAD'}
+          </button>
+          {onSendToDirector && (
+            <GoldButton
+              onClick={onSendToDirector}
+              className="px-4 py-2 text-xs tracking-widest flex items-center gap-1.5"
+            >
+              DIRECTOR AI <ArrowRight className="w-3 h-3" />
+            </GoldButton>
+          )}
+        </div>
       </div>
     </div>
   );
