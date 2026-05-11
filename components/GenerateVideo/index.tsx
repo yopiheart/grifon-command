@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { toast } from 'sonner';
 import {
   ChevronLeft,
@@ -27,7 +28,9 @@ import {
   GeneratedVideoResult,
   getValidDurations,
   listVideoLibrary,
+  suggestDurationForScript,
 } from '../../services/geminiService';
+import { getSupabase } from '../../services/supabaseClient';
 import { compressImageForUpload } from '../../utils/imageCompression';
 import { GoldButton } from '../ui/GoldButton';
 import { GlassPanel } from '../ui/GlassPanel';
@@ -114,6 +117,20 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
   const [libraryLoading, setLibraryLoading] = useState(true);
   const [tick, setTick] = useState(0); // re-renders to refresh relative timestamps every minute
 
+  // Phase 4a — cost guardrail confirm dialog. Resolves the promise stored on the
+  // state so the GENERATE handler can await the user's choice before proceeding.
+  const [confirmDialog, setConfirmDialog] = useState<{
+    sceneIdx: number;
+    count: number;
+    resolve: (action: 'replace' | 'variant' | 'cancel') => void;
+  } | null>(null);
+
+  // Phase 4b — sticky-by-scene flags for the smart-duration heuristic. Once the
+  // user manually clicks a duration chip on a scene, we stop auto-overriding it
+  // until they switch to a different scene (or change model/resolution, which
+  // resets via the dependency array of the smart-default effect).
+  const [manualDurationByScene, setManualDurationByScene] = useState<Record<number, boolean>>({});
+
   const queueAbortRef = useRef<AbortController | null>(null);
   const singleAbortRef = useRef<AbortController | null>(null);
   const elapsedTickRef = useRef<number | null>(null);
@@ -144,6 +161,42 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
       setConfig((prev) => ({ ...prev, startFrame: undefined }));
     }
   }, [activeIdx, hasSeedPrompts, seedPrompts, storyboard]);
+
+  // Phase 4b — Smart-default duration. Auto-snaps the duration chip to the
+  // shortest valid value that fits the active scene's script line, so users
+  // don't accidentally render 8s clips for 4-6s of dialog (creating dead air
+  // that the downstream AI editor has to trim). Manual chip clicks override
+  // for that scene; switching scenes or model/resolution re-suggests.
+  const suggestedDuration = useMemo(() => {
+    if (!hasSeedPrompts) return null;
+    const scriptLine = storyboard?.[activeIdx]?.scriptLine;
+    if (!scriptLine) return null;
+    return suggestDurationForScript(scriptLine, config.model, config.resolution);
+  }, [hasSeedPrompts, storyboard, activeIdx, config.model, config.resolution]);
+
+  useEffect(() => {
+    if (suggestedDuration === null) return;
+    if (manualDurationByScene[activeIdx]) return;
+    if (suggestedDuration === config.duration) return;
+    setConfig((prev) => ({ ...prev, duration: suggestedDuration }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [suggestedDuration, activeIdx]);
+
+  // Phase 4a — Set of scene indices that already have at least one persisted
+  // library render. Drives the "already rendered" gold checkmark on scene chips
+  // and the guardrail pre-flight check inside handleGenerateSingle.
+  const renderedSceneIdxs = useMemo(() => {
+    const s = new Set<number>();
+    for (const item of library) {
+      if (typeof item.sceneIdx === 'number') s.add(item.sceneIdx);
+    }
+    return s;
+  }, [library]);
+
+  const handleDialogAction = (action: 'replace' | 'variant' | 'cancel') => {
+    confirmDialog?.resolve(action);
+    setConfirmDialog(null);
+  };
 
   useEffect(() => {
     const onClickAway = (e: MouseEvent) => {
@@ -275,6 +328,46 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
     if (isCurrentModelLocked) {
       toast.error('MODEL LOCKED', { description: 'Pick an active Veo 3.1 engine.' });
       return;
+    }
+
+    // Phase 4a — diagnostic: one log per user click. Correlates with
+    // [grifon:gv:proxy] (client) and [grifon:gv:submit] (server) via requestId
+    // injected in proxyGenerateVideo. If the double-render bug recurs, the log
+    // pattern reveals which hypothesis (UI double-fire vs config-state race vs
+    // server fan-out) is real.
+    console.log('[grifon:gv:click]', {
+      t: Date.now(),
+      mode,
+      activeIdx,
+      model: config.model,
+      resolution: config.resolution,
+      duration: config.duration,
+    });
+
+    // Phase 4a — cost guardrail. If this scene already has at least one
+    // persisted library render, confirm with the user before spending credits
+    // on another. Blocks the *silent* double-spend even if the underlying race
+    // (still un-root-caused) fires.
+    if (mode === 'pipeline') {
+      const sceneRenders = library.filter((i) => i.sceneIdx === activeIdx);
+      if (sceneRenders.length > 0) {
+        const action = await new Promise<'replace' | 'variant' | 'cancel'>((resolve) => {
+          setConfirmDialog({ sceneIdx: activeIdx, count: sceneRenders.length, resolve });
+        });
+        if (action === 'cancel') return;
+        if (action === 'replace') {
+          try {
+            const toDelete = sceneRenders[0]; // library is desc-sorted by createdAt
+            await getSupabase()
+              .storage.from('gemini-videos')
+              .remove([toDelete.path, `${toDelete.path}.meta.json`]);
+            toast('PREVIOUS RENDER REPLACED');
+            void refreshLibrary();
+          } catch (err: any) {
+            console.warn('[grifon:gv:replace-delete] non-fatal:', err?.message ?? err);
+          }
+        }
+      }
     }
 
     setError(null);
@@ -625,33 +718,62 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
           </div>
           <div>
             <div className={labelCaps}>Duration</div>
-            <div className="flex flex-wrap gap-1.5 mt-2">
+            <div className="flex flex-wrap gap-1.5 mt-2 items-center">
               {specs.durations.map((d) => {
                 const allowedDurations = getValidDurations(config.model, config.resolution);
                 const isAllowed = allowedDurations.includes(d);
+                const isActive = config.duration === d;
+                const isAuto =
+                  isActive &&
+                  suggestedDuration === d &&
+                  !manualDurationByScene[activeIdx];
                 return (
                   <button
                     key={d}
-                    onClick={() => isAllowed && setConfig((p) => ({ ...p, duration: d }))}
+                    onClick={() => {
+                      if (!isAllowed) return;
+                      setConfig((p) => ({ ...p, duration: d }));
+                      if (mode === 'pipeline') {
+                        setManualDurationByScene((m) => ({ ...m, [activeIdx]: true }));
+                      }
+                    }}
                     disabled={!isAllowed}
                     title={
                       isAllowed
                         ? undefined
                         : `Locked by ${config.resolution}. Switch to 720p (or another engine) to unlock ${d}s.`
                     }
-                    className={`px-3 py-1.5 rounded-lg text-[10px] font-black border transition-all ${
+                    className={`px-3 py-1.5 rounded-lg text-[10px] font-black border transition-all flex items-center gap-1.5 ${
                       !isAllowed
                         ? 'border-white/5 text-zinc-700 cursor-not-allowed'
-                        : config.duration === d
+                        : isActive
                         ? 'border-[#FFCC00] text-[#FFCC00] bg-[#FFCC00]/10'
                         : 'border-white/10 text-zinc-500 hover:text-white'
                     }`}
                   >
                     {d}s
+                    {isAuto && (
+                      <span className="text-[8px] text-[#FFCC00]/70 font-mono">AUTO</span>
+                    )}
                   </button>
                 );
               })}
             </div>
+            {suggestedDuration !== null && hasSeedPrompts && (() => {
+              const scriptLine = storyboard?.[activeIdx]?.scriptLine ?? '';
+              const words = scriptLine.trim().split(/\s+/).filter(Boolean).length;
+              if (!words) return null;
+              const overridden = !!manualDurationByScene[activeIdx];
+              return (
+                <div className="mt-2 text-[9px] text-zinc-500 font-mono leading-snug">
+                  {overridden ? (
+                    <>// Manual override · Smart pick was {suggestedDuration}s for {words}-word script</>
+                  ) : (
+                    <>// Smart-picked for ~{words}-word script · click to override</>
+                  )}
+                </div>
+              );
+            })()}
           </div>
           <div>
             <div className={labelCaps}>Resolution</div>
@@ -994,21 +1116,30 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
     toast('PROMPT LOADED');
   };
 
-  const renderRailTile = (item: VideoLibraryItem) => {
+  const renderRailTile = (item: VideoLibraryItem, variants?: VideoLibraryItem[]) => {
     const tileId = `library:${item.path}`;
     const isSelected = previewItem?.id === tileId;
     const sceneLabel =
       item.sceneIdx !== undefined ? `SCENE ${String(item.sceneIdx + 1).padStart(2, '0')}` : 'ONE-SHOT';
+    const variantCount = variants?.length ?? 1;
     return (
       <div
         key={item.path}
         onClick={() => handleRailTileClick(item)}
-        className={`rounded-xl border bg-zinc-950 overflow-hidden cursor-pointer transition-all ${
+        className={`relative rounded-xl border bg-zinc-950 overflow-hidden cursor-pointer transition-all ${
           isSelected
             ? 'border-[#FFCC00] ring-1 ring-[#FFCC00]/50 shadow-[0_0_15px_rgba(255,204,0,0.3)]'
             : 'border-white/10 hover:border-white/30'
         }`}
       >
+        {variantCount > 1 && (
+          <div
+            className="absolute top-1.5 right-1.5 z-10 text-[8px] font-black bg-[#FFCC00]/20 text-[#FFCC00] px-1.5 py-0.5 rounded-full backdrop-blur-sm border border-[#FFCC00]/40"
+            title={`${variantCount} renders of this scene/prompt`}
+          >
+            {variantCount}×
+          </div>
+        )}
         <video
           src={item.url}
           loop
@@ -1069,6 +1200,23 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
     );
   };
 
+  // Phase 4c — dedupe library tiles by (sceneIdx, prompt). Multiple renders of
+  // the same prompt collapse into one tile with a variant-count pill. Library
+  // is already sorted desc by createdAt server-side, so group[0] is the newest.
+  const deduplicatedLibrary = useMemo(() => {
+    const groups = new Map<string, VideoLibraryItem[]>();
+    for (const item of library) {
+      const key = `${item.sceneIdx ?? 'one-shot'}::${(item.prompt ?? '').trim()}`;
+      const existing = groups.get(key);
+      if (existing) existing.push(item);
+      else groups.set(key, [item]);
+    }
+    return Array.from(groups.values()).map((group) => ({
+      primary: group[0],
+      variants: group,
+    }));
+  }, [library]);
+
   /* ─── RENDERED RAIL ─── */
   const RenderedRail = (
     <GlassPanel className="w-full lg:w-72 shrink-0 flex flex-col gap-4 p-5 max-h-[640px] lg:max-h-none">
@@ -1081,7 +1229,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
               <span className="text-zinc-500">/{seedPrompts.length}</span>
             </>
           ) : (
-            <span>{library.length}</span>
+            <span>{deduplicatedLibrary.length}</span>
           )}
         </div>
       </div>
@@ -1106,7 +1254,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
               </div>
             ))}
           </div>
-        ) : library.length === 0 ? (
+        ) : deduplicatedLibrary.length === 0 ? (
           <div className="text-center py-10 text-zinc-600 text-[10px] font-mono uppercase tracking-widest leading-relaxed">
             <VideoIcon className="w-8 h-8 mx-auto mb-3 opacity-50" />
             Your renders show up here.
@@ -1118,7 +1266,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
             </span>
           </div>
         ) : (
-          library.map(renderRailTile)
+          deduplicatedLibrary.map((group) => renderRailTile(group.primary, group.variants))
         )}
       </div>
     </GlassPanel>
@@ -1139,6 +1287,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
           status={sceneStatus}
           elapsed={elapsed}
           onSelect={setActiveIdx}
+          renderedSceneIdxs={renderedSceneIdxs}
         />
       </div>
       <GoldButton
@@ -1155,22 +1304,76 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
   );
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-white font-mono flex flex-col p-4 sm:p-6 md:p-8">
-      {Header}
+    <>
+      <div className="min-h-screen bg-zinc-950 text-white font-mono flex flex-col p-4 sm:p-6 md:p-8">
+        {Header}
 
-      {mode === 'pipeline' && hasSeedPrompts ? (
-        <div className="flex flex-col lg:flex-row gap-5 flex-1">
-          {PipelinePanel}
-          {CanvasPanel}
-          {RenderedRail}
-        </div>
-      ) : (
-        <div className="flex flex-col lg:flex-row gap-5 flex-1">
-          {CanvasPanel}
-          {RenderedRail}
-        </div>
-      )}
-    </div>
+        {mode === 'pipeline' && hasSeedPrompts ? (
+          <div className="flex flex-col lg:flex-row gap-5 flex-1">
+            {PipelinePanel}
+            {CanvasPanel}
+            {RenderedRail}
+          </div>
+        ) : (
+          <div className="flex flex-col lg:flex-row gap-5 flex-1">
+            {CanvasPanel}
+            {RenderedRail}
+          </div>
+        )}
+      </div>
+
+      {/* Phase 4a — cost guardrail confirm dialog */}
+      {confirmDialog &&
+        createPortal(
+          <div
+            className="fixed inset-0 bg-zinc-950/80 flex items-center justify-center z-50 p-4"
+            onClick={() => handleDialogAction('cancel')}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Cost guardrail confirmation"
+          >
+            <GlassPanel
+              className="w-full max-w-md p-6 flex flex-col gap-5"
+              onClick={(e: React.MouseEvent) => e.stopPropagation()}
+            >
+              <div className="space-y-2">
+                <div className={labelCaps}>// COST GUARDRAIL</div>
+                <h2 className="text-lg font-black bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-wide">
+                  SCENE {String(confirmDialog.sceneIdx + 1).padStart(2, '0')} already has{' '}
+                  {confirmDialog.count} render{confirmDialog.count > 1 ? 's' : ''}
+                </h2>
+                <p className="text-[11px] text-zinc-400 font-mono leading-relaxed">
+                  Generating again will spend another credit. Choose how to proceed.
+                </p>
+              </div>
+              <div className="flex flex-col gap-2">
+                <GoldButton
+                  onClick={() => handleDialogAction('replace')}
+                  className="w-full"
+                >
+                  <span className="flex items-center justify-center gap-2 text-[11px] uppercase tracking-widest">
+                    <RotateCw className="w-3.5 h-3.5" />
+                    Replace previous
+                  </span>
+                </GoldButton>
+                <button
+                  onClick={() => handleDialogAction('variant')}
+                  className={`${ghostBtn} w-full py-2.5 text-[11px] font-black uppercase tracking-widest`}
+                >
+                  Add variant
+                </button>
+                <button
+                  onClick={() => handleDialogAction('cancel')}
+                  className="w-full py-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500 hover:text-white transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+            </GlassPanel>
+          </div>,
+          document.body
+        )}
+    </>
   );
 };
 

@@ -14,6 +14,9 @@ const Body = z.object({
       mimeType: z.string().min(1),
     })
     .optional(),
+  // Phase 4a diagnostic: client-generated UUID correlates :click: → :proxy: → :submit:
+  // logs so we can confirm whether a single user click produces multiple Veo calls.
+  requestId: z.string().optional(),
 });
 
 const VIDEO_LIMIT = 5;
@@ -62,7 +65,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const ai = getAi();
-    const operation = await ai.models.generateVideos(parsed.data as any);
+    // Strip requestId before forwarding to Veo (diagnostic-only, not part of Veo's API surface).
+    const { requestId, ...veoParams } = parsed.data;
+    const cfg: any = (veoParams as any).config ?? {};
+    console.log('[grifon:gv:submit]', {
+      t: Date.now(),
+      userId: user.id,
+      model: veoParams.model,
+      resolution: cfg.resolution,
+      duration: cfg.durationSeconds,
+      requestId,
+    });
+    const operation = await ai.models.generateVideos(veoParams as any);
     return res.status(200).json({ operation });
   } catch (err: any) {
     const msg = err?.message ?? 'unknown';

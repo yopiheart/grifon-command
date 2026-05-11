@@ -129,12 +129,27 @@ type VideoPollResponse =
   | { done: true; url: string; downloadUrl: string; mimeType: string }
   | { done: true; error: { message?: string; code?: string } };
 
-const proxyGenerateVideo = (params: any): Promise<{ operation: any }> =>
-  proxyCall<{ operation: any }>('/api/gemini/video', params, {
+const proxyGenerateVideo = (params: any): Promise<{ operation: any }> => {
+  // Phase 4a diagnostic: stamp a client requestId so server-side :submit: logs
+  // can be correlated with this :proxy: line. If one user click produces two
+  // :proxy: lines, we see two distinct requestIds and can root-cause the race.
+  const requestId =
+    globalThis.crypto?.randomUUID?.() ??
+    `req-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+  const enriched = { ...params, requestId };
+  console.log('[grifon:gv:proxy]', {
+    t: Date.now(),
+    model: params?.model,
+    resolution: params?.config?.resolution,
+    duration: params?.config?.durationSeconds,
+    requestId,
+  });
+  return proxyCall<{ operation: any }>('/api/gemini/video', enriched, {
     jobLabel: 'Submitting video render',
     jobKind: 'video',
     jobDetail: 'Reaching the render farm…',
   });
+};
 
 interface VideoRenderMetadata {
   prompt?: string;
@@ -312,6 +327,29 @@ export interface GeneratedVideoResult {
 export const getValidDurations = (model: VideoModelType, resolution: string): number[] => {
   const spec = VIDEO_MODEL_SPECS[model];
   return spec?.durationsByResolution?.[resolution] ?? spec?.durations ?? [4, 6, 8];
+};
+
+/**
+ * Suggests the shortest valid duration that fits a scene's script line.
+ * Heuristic: ~2.5 wps for Taglish direct-response + 0.8s opening/closing
+ * beat, then snap UP to the nearest valid duration. Snapping up (not nearest)
+ * prevents truncation; pacing-flexibility users can still click DOWN manually.
+ *
+ * Pre-empts dead-air at render time so the downstream AI editor has nothing
+ * to trim when stitching scenes into a fast-paced ad cut.
+ */
+export const suggestDurationForScript = (
+  scriptLine: string,
+  model: VideoModelType,
+  resolution: string
+): number => {
+  const valid = getValidDurations(model, resolution);
+  if (valid.length === 0) return 8;
+  const words = scriptLine.trim().split(/\s+/).filter(Boolean).length;
+  if (words === 0) return valid[0];
+  const target = words / 2.5 + 0.8;
+  const sorted = [...valid].sort((a, b) => a - b);
+  return sorted.find((d) => d >= target) ?? sorted[sorted.length - 1];
 };
 
 interface GenerateVideoOpts {

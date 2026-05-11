@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle2, RotateCw, AlertTriangle, Clock } from 'lucide-react';
+import { CheckCircle2, RotateCw, AlertTriangle, Clock, Check } from 'lucide-react';
 import type { SceneStatus } from './RenderAllRunner';
 import type { VideoPrompt, Scene } from '../../types';
 
@@ -10,6 +10,8 @@ export interface SceneQueueProps {
   status: SceneStatus[];
   elapsed: Record<number, number>;
   onSelect: (idx: number) => void;
+  /** Scene indices that already have at least one persisted library render. */
+  renderedSceneIdxs?: Set<number>;
 }
 
 const statusLabel = (s: SceneStatus): string => {
@@ -61,6 +63,7 @@ export const SceneQueue: React.FC<SceneQueueProps> = ({
   status,
   elapsed,
   onSelect,
+  renderedSceneIdxs,
 }) => (
   <div className="flex lg:flex-col gap-2 lg:gap-3 overflow-x-auto lg:overflow-y-auto lg:overflow-x-visible pb-2 lg:pb-0 -mx-1 px-1 lg:mx-0 lg:px-0 custom-scrollbar">
     {seedPrompts.map((p, i) => {
@@ -99,8 +102,11 @@ export const SceneQueue: React.FC<SceneQueueProps> = ({
             <StatusBadge status={sceneStatus} elapsed={elapsed[i]} />
           </div>
           <div className="p-2 sm:p-3 space-y-0.5">
-            <div className="text-[9px] font-black text-[#FFCC00] uppercase tracking-widest">
+            <div className="text-[9px] font-black text-[#FFCC00] uppercase tracking-widest flex items-center gap-1">
               SCENE {String(i + 1).padStart(2, '0')}
+              {renderedSceneIdxs?.has(i) && (
+                <Check className="w-2.5 h-2.5" aria-label="Already in library" />
+              )}
             </div>
             <div className="text-[9px] text-zinc-400 line-clamp-2 font-mono leading-snug">
               {p.scriptLine || p.prompt.slice(0, 60)}
