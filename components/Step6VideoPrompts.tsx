@@ -5,7 +5,7 @@ import { generateVideoPrompts } from '../services/geminiService';
 import { GoldButton } from './ui/GoldButton';
 import { GlassPanel } from './ui/GlassPanel';
 import Loader from './ui/Loader';
-import { Camera, User, Copy, Sparkles } from 'lucide-react'; 
+import { Camera, User, Copy, Sparkles, RefreshCw } from 'lucide-react';
 
 interface Step6Props {
   storyboard: Scene[]; 
@@ -45,6 +45,21 @@ const Step6VideoPrompts: React.FC<Step6Props> = ({ storyboard, videoPrompts, set
     };
     fetchPrompts();
   }, [storyboard, setVideoPrompts, videoPrompts, businessInfo]);
+
+  const handleRegenerate = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await generateVideoPrompts(storyboard, businessInfo);
+      setPrompts(data);
+      setVideoPrompts(data);
+    } catch (err) {
+      setError('Failed to regenerate video prompts. Please try again.');
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleDownload = () => {
     if (prompts.length === 0) return;
@@ -104,7 +119,15 @@ const Step6VideoPrompts: React.FC<Step6Props> = ({ storyboard, videoPrompts, set
 
       {!loading && prompts.length > 0 && (
         <>
-            <div className="flex justify-end mb-4">
+            <div className="flex justify-end mb-4 gap-2">
+                <button
+                  onClick={handleRegenerate}
+                  disabled={loading}
+                  className="py-2 px-4 text-xs font-bold uppercase tracking-widest text-zinc-400 border border-white/10 rounded-full hover:bg-white/5 hover:text-[#FFCC00] hover:border-[#FFCC00] transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  title="Re-run the prompt generator (e.g. after a template change)"
+                >
+                    <RefreshCw className="w-4 h-4" /> REGENERATE
+                </button>
                 <button onClick={handleDownload} className="py-2 px-4 text-xs font-bold uppercase tracking-widest text-zinc-400 border border-white/10 rounded-full hover:bg-white/5 hover:text-white transition-colors flex items-center gap-2">
                     <Copy className="w-4 h-4" /> DOWNLOAD .TXT
                 </button>
