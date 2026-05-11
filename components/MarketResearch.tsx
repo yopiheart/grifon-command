@@ -329,12 +329,20 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
                     </div>
 
                     {result && onNavigate && (
-                        <GoldButton
-                            onClick={handleSendToDirector}
-                            className="w-full py-3 mt-4 rounded-xl tracking-widest text-xs flex items-center justify-center gap-2"
-                        >
-                            SEND TO DIRECTOR AI <ArrowRight className="w-4 h-4" />
-                        </GoldButton>
+                        <>
+                            <GoldButton
+                                onClick={handleSendToDirector}
+                                className="w-full py-3 mt-4 rounded-xl tracking-widest text-xs flex items-center justify-center gap-2"
+                            >
+                                SEND TO DIRECTOR AI <ArrowRight className="w-4 h-4" />
+                            </GoldButton>
+                            <button
+                                onClick={() => onNavigate('offer_optimizer')}
+                                className="w-full mt-3 text-[10px] font-mono uppercase tracking-widest text-zinc-500 hover:text-[#FFCC00] transition-colors flex items-center justify-center gap-1.5 py-1"
+                            >
+                                Or build stronger offer first <ArrowRight className="w-3 h-3" />
+                            </button>
+                        </>
                     )}
                 </div>
             </div>
