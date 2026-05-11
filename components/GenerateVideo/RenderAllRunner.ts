@@ -19,6 +19,9 @@ export interface RunQueueOpts {
   config: Omit<VideoGenConfig, 'prompt' | 'startFrame' | 'elements'>;
   signal: AbortSignal;
   onEvent: (evt: QueueEvent) => void;
+  /** Phase 4d — when present, each in-flight render persists to IndexedDB
+   * so it can be resumed if the client disconnects mid-poll. */
+  userId?: string;
 }
 
 const RATE_LIMIT_WINDOW_SEC = 3600;
@@ -52,7 +55,11 @@ export async function runQueue(jobs: RenderJob[], opts: RunQueueOpts): Promise<v
           prompt: job.prompt,
           startFrame: job.startFrame,
         } as VideoGenConfig,
-        { signal: opts.signal, metadata: { sceneIdx: job.sceneIdx } }
+        {
+          signal: opts.signal,
+          metadata: { sceneIdx: job.sceneIdx },
+          userId: opts.userId,
+        }
       );
       opts.onEvent({ type: 'status', sceneIdx: job.sceneIdx, status: 'done', result });
     } catch (e: any) {

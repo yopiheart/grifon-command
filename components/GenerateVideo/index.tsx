@@ -29,8 +29,10 @@ import {
   getValidDurations,
   listVideoLibrary,
   suggestDurationForScript,
+  resumeVideoOperation,
 } from '../../services/geminiService';
 import { getSupabase } from '../../services/supabaseClient';
+import { listActiveJobs, clearActiveJob } from '../../services/activeJobStore';
 import { compressImageForUpload } from '../../utils/imageCompression';
 import { GoldButton } from '../ui/GoldButton';
 import { GlassPanel } from '../ui/GlassPanel';
@@ -116,6 +118,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
   const [library, setLibrary] = useState<VideoLibraryItem[]>([]);
   const [libraryLoading, setLibraryLoading] = useState(true);
   const [tick, setTick] = useState(0); // re-renders to refresh relative timestamps every minute
+  const [userId, setUserId] = useState<string | null>(null); // Phase 4d — needed for IndexedDB resume keying
 
   // Phase 4a — cost guardrail confirm dialog. Resolves the promise stored on the
   // state so the GENERATE handler can await the user's choice before proceeding.
@@ -241,6 +244,70 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
     const id = window.setInterval(() => setTick((t) => t + 1), 60_000);
     return () => window.clearInterval(id);
   }, []);
+
+  // Phase 4d — fetch the auth user once on mount so we can (a) key the
+  // IndexedDB resume store and (b) thread userId into new render calls.
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const { data } = await getSupabase().auth.getUser();
+        if (!cancelled) setUserId(data.user?.id ?? null);
+      } catch (err) {
+        console.warn('[GenerateVideo] auth.getUser failed:', (err as any)?.message ?? err);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // Phase 4d — on mount (once userId is known), scan IndexedDB for any
+  // in-flight renders that were live when the tab/browser/PC last died and
+  // resume polling them. The server-side poll endpoint completes the
+  // download + upload to Supabase Storage as soon as we ask, so this single
+  // resume turns a disconnect-burnt credit back into a usable render.
+  useEffect(() => {
+    if (!userId) return;
+    let cancelled = false;
+    (async () => {
+      const jobs = await listActiveJobs(userId);
+      if (cancelled || jobs.length === 0) return;
+      toast(
+        `RESUMING ${jobs.length} IN-FLIGHT RENDER${jobs.length > 1 ? 'S' : ''}…`,
+        { description: 'Reconnecting to renders that were live when you disconnected.' }
+      );
+      for (const job of jobs) {
+        if (cancelled) return;
+        const sceneLabel =
+          job.sceneIdx !== undefined ? `SCENE ${String(job.sceneIdx + 1).padStart(2, '0')}` : 'ONE-SHOT';
+        try {
+          await resumeVideoOperation({
+            operation: job.operation,
+            prompt: job.prompt,
+            sceneIdx: job.sceneIdx,
+            model: job.model,
+            aspectRatio: job.aspectRatio,
+            duration: job.duration,
+          });
+          await clearActiveJob(job.jobId);
+          toast.success(`${sceneLabel} RESUMED`, {
+            description: 'Render rejoined the library.',
+          });
+          await refreshLibrary();
+        } catch (err: any) {
+          await clearActiveJob(job.jobId);
+          const msg = err?.message ?? 'Unknown';
+          toast.error(`${sceneLabel} RESUME FAILED`, {
+            description: `${msg.slice(0, 120)} — re-generate to retry.`,
+          });
+        }
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [userId]);
 
   const renderedCount = useMemo(
     () => sceneStatus.filter((s) => s === 'done').length,
@@ -388,6 +455,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
       const result = await generateVideo(config, {
         signal: ctrl.signal,
         metadata: mode === 'pipeline' ? { sceneIdx: activeIdx } : undefined,
+        userId: userId ?? undefined,
       });
       if (mode === 'pipeline') {
         setSceneResults((prev) => ({ ...prev, [activeIdx]: result }));
@@ -547,6 +615,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
         },
         signal: ctrl.signal,
         onEvent,
+        userId: userId ?? undefined,
       });
     } catch (e: any) {
       const msg = e?.message ?? 'Queue error';

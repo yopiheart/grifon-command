@@ -2,6 +2,7 @@ import type { GenerateContentResponse } from "@google/genai";
 import { BusinessInfo, Script, Scene, StoryboardResponse, VideoPrompt, MarketResearchInput, MarketResearchReport, OfferOptimizerInput, OfferOptimizerResult, VideoEditInput, OptimizedPromptResponse, CaptionHeadlineInput, DayContent, AdVariant, UplinkData, CinematicSpecConfig, VisualTheme, CinematicNarrativeScene, VideoModelType, InfluencerConfig, InfluencerStrategicInput, InfluencerScriptResponse } from '../types';
 import { getSupabase } from './supabaseClient';
 import { startJob, endJob, type JobKind } from './activeJobsService';
+import { saveActiveJob, clearActiveJob } from './activeJobStore';
 
 export interface ProxyCallOpts {
   jobLabel?: string;
@@ -357,12 +358,40 @@ interface GenerateVideoOpts {
   onStatus?: (status: string) => void;
   /** Extra context persisted alongside the rendered video for the library view. */
   metadata?: { sceneIdx?: number };
+  /** Supabase user ID. When present, generateVideo persists the in-flight
+   * operation to IndexedDB so the client can resume polling after a tab
+   * close / browser restart / PC reboot. Phase 4d resilience. */
+  userId?: string;
 }
 
 const parseDataUrl = (dataUrl: string): { imageBytes: string; mimeType: string } => {
   const match = /^data:([^;]+);base64,(.*)$/.exec(dataUrl);
   if (!match) throw new Error('Invalid image data URL');
   return { mimeType: match[1], imageBytes: match[2] };
+};
+
+/**
+ * Poll a Veo operation to completion. Extracted from generateVideo so the
+ * Phase 4d resume path can reuse it without re-submitting the job. Return
+ * type is narrowed to the `done: true` variants so callers can branch on
+ * success vs error without re-narrowing.
+ */
+type DoneVideoPollResponse = Extract<VideoPollResponse, { done: true }>;
+
+const pollUntilDone = async (
+  initialOperation: any,
+  metadata: VideoRenderMetadata,
+  opts: GenerateVideoOpts = {}
+): Promise<DoneVideoPollResponse> => {
+  let operation = initialOperation;
+  while (true) {
+    if (opts.signal?.aborted) throw new Error('ABORTED');
+    opts.onStatus?.('RENDERING');
+    await delay(10000);
+    const result = await proxyPollVideoOperation(operation, metadata);
+    if (result.done) return result;
+    operation = result.operation;
+  }
 };
 
 export const generateVideo = async (
@@ -404,7 +433,7 @@ export const generateVideo = async (
   }
 
   opts.onStatus?.('SUBMITTING_JOB');
-  let { operation } = await proxyGenerateVideo(params);
+  const { operation: initialOperation } = await proxyGenerateVideo(params);
 
   const renderMetadata: VideoRenderMetadata = {
     prompt: config.prompt.trim(),
@@ -414,22 +443,78 @@ export const generateVideo = async (
     duration: config.duration,
   };
 
+  // Phase 4d: persist this in-flight job to IndexedDB so that if the tab
+  // closes / browser restarts / PC reboots before the poll loop completes,
+  // GenerateVideo can resume polling on next mount. Only persist when we know
+  // the userId (the active job index is keyed by user).
+  const jobId =
+    globalThis.crypto?.randomUUID?.() ??
+    `job-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+  let persisted = false;
+  if (opts.userId) {
+    await saveActiveJob({
+      jobId,
+      userId: opts.userId,
+      operation: initialOperation,
+      prompt: config.prompt.trim(),
+      sceneIdx: opts.metadata?.sceneIdx,
+      model: config.model,
+      aspectRatio: config.aspectRatio,
+      duration: config.duration,
+      resolution: config.resolution,
+      submittedAt: Date.now(),
+    });
+    persisted = true;
+  }
+
   let result: VideoPollResponse;
-  while (true) {
-    if (opts.signal?.aborted) throw new Error('ABORTED');
-    opts.onStatus?.('RENDERING');
-    await delay(10000);
-    result = await proxyPollVideoOperation(operation, renderMetadata);
-    if (result.done) break;
-    operation = result.operation;
+  try {
+    result = await pollUntilDone(initialOperation, renderMetadata, opts);
+  } catch (err) {
+    // On abort, leave the IndexedDB entry — user may come back. On other
+    // failures, clear it so we don't pointlessly retry a known-bad job.
+    if (persisted && (err as any)?.message !== 'ABORTED') {
+      await clearActiveJob(jobId);
+    }
+    throw err;
   }
 
   if ('error' in result) {
+    if (persisted) await clearActiveJob(jobId);
     if (result.error.code) throw new Error(result.error.code);
     throw new Error(`VEO_ERROR: ${result.error.message ?? 'Unknown Veo error'}`);
   }
 
+  if (persisted) await clearActiveJob(jobId);
+
   opts.onStatus?.('DOWNLOADING');
+  return { url: result.url, downloadUrl: result.downloadUrl, mimeType: result.mimeType };
+};
+
+/**
+ * Phase 4d — resume polling for a job that was in flight when the client
+ * disconnected. Called by GenerateVideo on mount for each entry in the
+ * activeJobStore. Returns the final result so the caller can refresh the
+ * library + toast success. The IndexedDB entry is cleared on both success
+ * and terminal failure (caller is responsible for clearing the entry —
+ * exposed for symmetry with manual retry flows).
+ */
+export const resumeVideoOperation = async (
+  job: { operation: any; prompt: string; sceneIdx?: number; model: VideoModelType; aspectRatio: string; duration: number },
+  opts: GenerateVideoOpts = {}
+): Promise<GeneratedVideoResult> => {
+  const metadata: VideoRenderMetadata = {
+    prompt: job.prompt,
+    sceneIdx: job.sceneIdx,
+    model: job.model,
+    aspectRatio: job.aspectRatio,
+    duration: job.duration,
+  };
+  const result = await pollUntilDone(job.operation, metadata, opts);
+  if ('error' in result) {
+    if (result.error.code) throw new Error(result.error.code);
+    throw new Error(`VEO_ERROR: ${result.error.message ?? 'Unknown Veo error'}`);
+  }
   return { url: result.url, downloadUrl: result.downloadUrl, mimeType: result.mimeType };
 };
 
