@@ -185,16 +185,22 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [suggestedDuration, activeIdx]);
 
-  // Phase 4a — Set of scene indices that already have at least one persisted
-  // library render. Drives the "already rendered" gold checkmark on scene chips
-  // and the guardrail pre-flight check inside handleGenerateSingle.
+  // Phase 4a — Set of scene indices whose current wizard prompt also matches
+  // an existing library entry. Matching on (sceneIdx, prompt) — NOT sceneIdx
+  // alone — prevents false positives when a new wizard run reuses an index
+  // that a prior storyboard already rendered with a different prompt.
+  // (Same key shape as the Phase 4c dedupe useMemo for consistency.)
   const renderedSceneIdxs = useMemo(() => {
     const s = new Set<number>();
     for (const item of library) {
-      if (typeof item.sceneIdx === 'number') s.add(item.sceneIdx);
+      if (typeof item.sceneIdx !== 'number') continue;
+      const sceneSeedPrompt = seedPrompts[item.sceneIdx]?.prompt?.trim();
+      if (sceneSeedPrompt && (item.prompt ?? '').trim() === sceneSeedPrompt) {
+        s.add(item.sceneIdx);
+      }
     }
     return s;
-  }, [library]);
+  }, [library, seedPrompts]);
 
   const handleDialogAction = (action: 'replace' | 'variant' | 'cancel') => {
     confirmDialog?.resolve(action);
@@ -411,12 +417,16 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
       duration: config.duration,
     });
 
-    // Phase 4a — cost guardrail. If this scene already has at least one
-    // persisted library render, confirm with the user before spending credits
-    // on another. Blocks the *silent* double-spend even if the underlying race
-    // (still un-root-caused) fires.
+    // Phase 4a — cost guardrail. If THIS scene's prompt already has at least
+    // one persisted library render, confirm with the user before spending
+    // credits on another. Match on (sceneIdx, prompt) so a fresh wizard run
+    // doesn't falsely fire the guardrail against a prior storyboard's
+    // unrelated render at the same scene index.
     if (mode === 'pipeline') {
-      const sceneRenders = library.filter((i) => i.sceneIdx === activeIdx);
+      const promptTrim = config.prompt.trim();
+      const sceneRenders = library.filter(
+        (i) => i.sceneIdx === activeIdx && (i.prompt ?? '').trim() === promptTrim
+      );
       if (sceneRenders.length > 0) {
         const action = await new Promise<'replace' | 'variant' | 'cancel'>((resolve) => {
           setConfirmDialog({ sceneIdx: activeIdx, count: sceneRenders.length, resolve });
