@@ -130,7 +130,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {[
-          { id: 'product', label: 'Service/Product', placeholder: 'e.g., Eco-friendly home cleaning service' },
+          { id: 'product', label: 'Service/Product', placeholder: 'e.g., Compact 100ml face mist (include size for physical products)' },
           { id: 'audience', label: 'Target Audience', placeholder: 'e.g., Busy young professionals' },
           { id: 'benefit', label: 'Dream Result', placeholder: 'e.g., Wakes up energized, naka-2 hours back every morning, mas chill ang pasok sa work' },
           { id: 'painPoint', label: '3 AM Worry', placeholder: 'e.g., 3 AM, hindi makatulog kasi tuition deadline na bukas — wala pang pera' }
@@ -227,12 +227,15 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                         <p className="text-[10px] text-zinc-500 font-mono tracking-tighter uppercase">
                           Note: Skipping uploads will disable high-fidelity visual consistency in the Storyboard and Image Editor modules.
                         </p>
-                        <input 
-                            type="file" 
-                            accept="image/*" 
-                            multiple 
-                            className="hidden" 
-                            onChange={(e) => handleFileUpload(e, 'product')} 
+                        <p className="text-[10px] text-[#FFCC00]/80 font-mono tracking-tighter uppercase">
+                          Pro tip: Hand-for-scale or product-in-context shot helps Veo render product size accurately.
+                        </p>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            multiple
+                            className="hidden"
+                            onChange={(e) => handleFileUpload(e, 'product')}
                         />
                     </div>
                  )}
