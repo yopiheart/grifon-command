@@ -6,7 +6,7 @@ import { compressImageForUpload } from '../utils/imageCompression';
 import { GlassPanel } from './ui/GlassPanel';
 import { GoldButton } from './ui/GoldButton';
 import Loader from './ui/Loader';
-import { Check, ShoppingBag, UploadCloud, X } from 'lucide-react';
+import { Check, Package, ShoppingBag, Sparkles, Store, UploadCloud, X } from 'lucide-react';
 
 interface Step2Props {
   data: BusinessInfo;
@@ -222,6 +222,33 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                 </div>
             )}
 
+            {/* Upload examples — icon placeholders for now; swap to curated photos by setting imageUrl on each entry */}
+            <div className="space-y-2">
+              <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase">
+                // Good upload examples ↓
+              </p>
+              <div className="grid grid-cols-3 gap-3">
+                {[
+                  { Icon: Package, caption: 'Product in hand', imageUrl: '' },
+                  { Icon: Store, caption: 'Storefront + logo', imageUrl: '' },
+                  { Icon: Sparkles, caption: 'Service in action', imageUrl: '' },
+                ].map((ex, idx) => (
+                  <div key={idx} className="flex flex-col items-center">
+                    <div className="aspect-square w-full bg-zinc-900 border border-white/10 rounded-xl flex items-center justify-center overflow-hidden">
+                      {ex.imageUrl ? (
+                        <img src={ex.imageUrl} alt={ex.caption} className="w-full h-full object-cover" />
+                      ) : (
+                        <ex.Icon className="w-8 h-8 text-[#FFCC00]/60" />
+                      )}
+                    </div>
+                    <p className="text-[8px] text-zinc-500 font-mono uppercase tracking-tighter mt-1.5 text-center">
+                      {ex.caption}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             <label className="block p-6 border-2 border-dashed border-white/10 bg-zinc-950/50 rounded-xl text-center hover:border-[#FFCC00] hover:bg-zinc-800/80 transition-all cursor-pointer">
                  {isAnalyzing ? (
                     <Loader message="ANALYZING ASSETS..." size="sm" />
@@ -233,7 +260,10 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                           Note: Skipping uploads will disable high-fidelity visual consistency in the Storyboard and Image Editor modules.
                         </p>
                         <p className="text-[10px] text-[#FFCC00]/80 font-mono tracking-tighter uppercase">
-                          Pro tip: Show your product being held — helps the AI match the real size (otherwise it tends to render bigger than reality).
+                          Selling products? Include one photo with the product held in a hand — keeps the AI from rendering it too big.
+                        </p>
+                        <p className="text-[10px] text-[#FFCC00]/80 font-mono tracking-tighter uppercase">
+                          Service business (salon, gym, restaurant)? Storefront with logo + interior + work-in-action shots.
                         </p>
                         <input
                             type="file"
