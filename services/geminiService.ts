@@ -348,7 +348,12 @@ export const suggestDurationForScript = (
   if (valid.length === 0) return 8;
   const words = scriptLine.trim().split(/\s+/).filter(Boolean).length;
   if (words === 0) return valid[0];
-  const target = words / 2.5 + 0.8;
+  // Calibrated against MrBeast SCENE 02 smoke test 2026-05-11: 9-word
+  // Taglish script actually rendered at ~4s end-to-end (Veo natural pace
+  // for Taglish is ~2.5 wps; the +0.8s buffer over-predicted to 6s).
+  // Tightening buffer to 0.3s — just enough for one breath/syllable
+  // landing. Truncation risk acceptable; manual override is one click.
+  const target = words / 2.5 + 0.3;
   const sorted = [...valid].sort((a, b) => a - b);
   return sorted.find((d) => d >= target) ?? sorted[sorted.length - 1];
 };
@@ -1488,7 +1493,7 @@ export const generateVideoPrompts = async (storyboard: Scene[], businessInfo: Bu
          - **Start with Direct Dialogue:** Lead with the script line in quotes.
          - **IDENTITY RULE:** If character mentions product, they say "${productName}".
          - **Performance & Micro-expressions:** Describe facial tension, eye movement, and mouth shapes — all already in motion at frame 0.
-         - **Cinematic Grammar:** Use specific lenses (35mm, 85mm). MANDATORY: apply subtle handheld micro-movements only — NO slow dolly-in creep, NO parallactic shift, NO rack-focus pull for 4–6s clips (these eat the first 1–2s of frame time). Keep constant pixel movement via realistic lens breathing on a locked-off frame. NO STATIC SHOTS.
+         - **Cinematic Grammar:** Use specific lenses (35mm, 85mm) and camera physics — pick ONE per scene that fits the beat: dolly-in (intimacy/escalation), parallactic shift (reveal/payoff), rack focus (emphasis), or aggressive handheld (urgency). CAMERA MOVE BEGINS WITH THE FIRST SYLLABLE — never before — so the movement happens DURING dialogue, not as pre-speech setup. Keep movement subtle on 4s clips, more pronounced on 6–8s clips. Apply realistic lens breathing on focus pulls. NO STATIC SHOTS.
          - **Audio Landscape:** Define the sync-sound environment (SFX: distant room tone, Ambient: low electrical hum).
          - **First & Last Frame Logic:** Starting frame = avatar mid-syllable forming the opening word, mouth shape unambiguous. Last frame = next syllable or natural breath, NOT a post-speech resolve-state with a closed mouth and neutral expression.
          - **OUTPUT FORMAT:** A single, cohesive cinematic paragraph starting with the dialogue in quotes. Seamlessly blend performance details, camera physics, lighting atmosphere, and frame logic into a natural narrative flow. DO NOT use bracketed headers or labels daylight [Subject Performance] or [Camera Motion/Lens].

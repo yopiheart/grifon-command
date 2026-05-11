@@ -25,7 +25,9 @@ const statusLabel = (s: SceneStatus): string => {
 };
 
 const StatusBadge: React.FC<{ status: SceneStatus; elapsed?: number }> = ({ status, elapsed }) => {
-  const baseClasses = 'absolute top-1.5 right-1.5 text-[8px] font-black uppercase tracking-widest rounded-full px-2 py-0.5 flex items-center gap-1';
+  // top-2 right-2 (was 1.5/1.5) — avoids clipping by the active-chip
+  // ring-1 + rounded corner. z-10 ensures stacking above the thumbnail.
+  const baseClasses = 'absolute top-2 right-2 z-10 text-[8px] font-black uppercase tracking-wider rounded-full px-2 py-0.5 flex items-center gap-1 whitespace-nowrap';
   switch (status) {
     case 'ready':
       return null;

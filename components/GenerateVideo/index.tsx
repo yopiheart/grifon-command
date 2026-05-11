@@ -8,6 +8,7 @@ import {
   Download,
   RotateCw,
   Sparkles,
+  Trash2,
   UploadCloud,
   Video as VideoIcon,
   X,
@@ -1195,6 +1196,30 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
     toast('PROMPT LOADED');
   };
 
+  // Phase 4g.4 — Delete a single library entry (mp4 + sidecar). RLS on
+  // the gemini-videos bucket enforces user ownership via the `${user.id}/`
+  // path prefix, so a malicious caller can't delete someone else's file.
+  // If the tile being deleted is currently selected in the preview canvas,
+  // clear the preview so we don't show a dead signed URL.
+  const handleTileDelete = async (e: React.MouseEvent, item: VideoLibraryItem) => {
+    e.stopPropagation();
+    if (!confirm(`Delete this render? This can't be undone.`)) return;
+    try {
+      await getSupabase()
+        .storage.from('gemini-videos')
+        .remove([item.path, `${item.path}.meta.json`]);
+      if (previewItem?.url === item.url) {
+        setPreviewItem(null);
+        setCanvasView('edit');
+      }
+      toast.success('RENDER DELETED');
+      void refreshLibrary();
+    } catch (err: any) {
+      console.warn('[grifon:gv:delete] failed:', err?.message ?? err);
+      toast.error('DELETE FAILED', { description: err?.message?.slice(0, 120) ?? 'Unknown error' });
+    }
+  };
+
   const renderRailTile = (item: VideoLibraryItem, variants?: VideoLibraryItem[]) => {
     const tileId = `library:${item.path}`;
     const isSelected = previewItem?.id === tileId;
@@ -1272,6 +1297,13 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
               title="Use this prompt"
             >
               <Pencil className="w-3 h-3" />
+            </button>
+            <button
+              onClick={(e) => handleTileDelete(e, item)}
+              className="flex-1 bg-zinc-950 border border-white/10 text-zinc-400 hover:text-red-400 hover:border-red-500/50 transition-all rounded-xl flex items-center justify-center gap-1 text-[9px] font-mono uppercase tracking-widest py-1.5"
+              title="Delete this render"
+            >
+              <Trash2 className="w-3 h-3" />
             </button>
           </div>
         </div>
