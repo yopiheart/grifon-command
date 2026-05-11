@@ -140,7 +140,7 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
                         <label htmlFor="productDescription" className="block text-[10px] text-zinc-400 font-mono uppercase tracking-widest">
                             // DESCRIPTION
                         </label>
-                        <textarea 
+                        <textarea
                             id="productDescription"
                             name="productDescription"
                             value={formData.productDescription}
@@ -149,6 +149,9 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
                             rows={4}
                             className="w-full bg-zinc-950 border border-white/10 rounded-xl p-4 text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] min-h-[100px] text-sm"
                         />
+                        <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase">
+                          // Physical product? Include size + color + shape + label so the AI matches your actual product.
+                        </p>
                     </div>
 
                     <div className="space-y-2">

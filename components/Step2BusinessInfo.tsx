@@ -233,7 +233,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                           Note: Skipping uploads will disable high-fidelity visual consistency in the Storyboard and Image Editor modules.
                         </p>
                         <p className="text-[10px] text-[#FFCC00]/80 font-mono tracking-tighter uppercase">
-                          Pro tip: Hand-for-scale or product-in-context shot helps Veo render product size accurately.
+                          Pro tip: Show your product being held — helps the AI match the real size (otherwise it tends to render bigger than reality).
                         </p>
                         <input
                             type="file"
