@@ -95,7 +95,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ open, onClose, i
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -8, scale: 0.98 }}
             transition={{ duration: 0.18, ease: 'easeOut' }}
-            className="fixed left-1/2 top-[15%] -translate-x-1/2 z-[101] w-[calc(100vw-32px)] max-w-xl bg-zinc-900/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl shadow-black/50 overflow-hidden"
+            className="fixed left-4 right-4 top-[15%] z-[101] mx-auto max-w-xl bg-zinc-900/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl shadow-black/50 overflow-hidden"
           >
             <div className="flex items-center gap-3 px-4 py-3 border-b border-white/5">
               <Search className="w-4 h-4 text-[#FFCC00] flex-shrink-0" />
