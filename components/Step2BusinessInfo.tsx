@@ -218,19 +218,33 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
             </label>
 
             {hasImages && (
-                <div className="grid grid-cols-5 gap-2 mb-2">
-                    {formData.productImageUrls!.map((url, idx) => (
-                        <div key={idx} className="relative group aspect-square border border-white/10 bg-zinc-950 rounded-xl overflow-hidden">
-                            <img src={url} alt={`Upload ${idx}`} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
-                            <button 
-                                onClick={() => removeImage(idx)}
-                                className="absolute top-1 right-1 bg-red-600/90 text-white w-5 h-5 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                            >
-                                <X className="w-3 h-3" />
-                            </button>
-                        </div>
-                    ))}
-                </div>
+                <>
+                    <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mb-1">
+                        // Photo 1 (HERO) anchors all scene visuals — remove + re-upload to reorder
+                    </p>
+                    <div className="grid grid-cols-5 gap-2 mb-2">
+                        {formData.productImageUrls!.map((url, idx) => (
+                            <div key={idx} className={`relative group aspect-square border bg-zinc-950 rounded-xl overflow-hidden ${idx === 0 ? 'border-[#FFCC00] shadow-[0_0_8px_rgba(255,204,0,0.25)]' : 'border-white/10'}`}>
+                                <img src={url} alt={`Upload ${idx + 1}`} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
+                                {idx === 0 ? (
+                                    <div className="absolute top-1 left-1 bg-[#FFCC00] text-black text-[8px] font-bold px-1.5 py-0.5 rounded-full font-mono tracking-tighter uppercase flex items-center gap-0.5">
+                                        <Sparkles className="w-2.5 h-2.5" /> Hero
+                                    </div>
+                                ) : (
+                                    <div className="absolute top-1 left-1 bg-zinc-700 text-zinc-300 text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center font-mono">
+                                        {idx + 1}
+                                    </div>
+                                )}
+                                <button
+                                    onClick={() => removeImage(idx)}
+                                    className="absolute top-1 right-1 bg-red-600/90 text-white w-5 h-5 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                                >
+                                    <X className="w-3 h-3" />
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                </>
             )}
 
             {/* Upload examples — icon placeholders for now; swap to curated photos by setting imageUrl on each entry */}
@@ -271,10 +285,10 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                           Note: Skipping uploads will disable high-fidelity visual consistency in the Storyboard and Image Editor modules.
                         </p>
                         <p className="text-[10px] text-[#FFCC00]/80 font-mono tracking-tighter uppercase">
-                          Selling products? Include one photo with the product held in a hand — keeps the AI from rendering it too big.
+                          Selling products? Upload product-in-hand FIRST — anchors size + appearance for every scene.
                         </p>
                         <p className="text-[10px] text-[#FFCC00]/80 font-mono tracking-tighter uppercase">
-                          Service business (salon, gym, restaurant)? Storefront with logo + interior + work-in-action shots.
+                          Service business (salon, gym, restaurant)? Upload hero photo FIRST, then storefront / interior / service-in-action.
                         </p>
                         <input
                             type="file"
