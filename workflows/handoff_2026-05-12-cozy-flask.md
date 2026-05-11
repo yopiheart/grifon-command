@@ -102,7 +102,22 @@ Sessions 2–4 of Phase 5 are gated on Decision Gate confirming Veo audio incons
 
 ## Mobile Verification — Vercel deployment status
 
-**Vercel project is NOT linked yet on this machine.** `scripts/vercel-project.json` does not exist. First-time setup is required tomorrow before mobile verification.
+**⚠️ KNOWN BLOCKER — Vercel Hobby plan 12-function cap.** The project HAS been linked since this evening (Neil set it up after handoff was written), but production deployments are failing with:
+
+> `Build Failed: No more than 12 Serverless Functions can be added to a Deployment on the Hobby plan. Create a team (Pro plan) to deploy more.`
+
+**Root cause:** Grifon has 14 routes in `api/` (excluding `_lib/` library files). Hobby plan caps at 12. The two paths to fix:
+
+| Option | Effort | Cost |
+|---|---|---|
+| **A. Upgrade to Vercel Pro** | 2 min in dashboard | $20/mo — recommended for beta |
+| **B. Consolidate routes** | ~30-60 min code work | Free — merge `api/gemini/video/{delete,library,poll}.ts` into one `manage.ts` with action routing, update callers in `services/geminiService.ts` |
+
+**Recommendation:** Upgrade to Pro. Phase 5 voice consolidation will likely ADD routes (`api/voice/consolidate.ts`, `api/_lib/audioExtract.ts` if it becomes its own function), pushing the gap wider. Route consolidation makes more sense as a Phase 6+ cost-optimization once beta engagement is proven.
+
+**NOT a Decision Gate blocker.** Localhost dev server (`npm run dev` on :5176) works fine for tomorrow's RENDER ALL 8 wizard test. Mobile verification can be deferred until Pro upgrade is done OR consolidation is shipped.
+
+**Vercel project linkage status (post-Vercel UI fix):**
 
 ### First-time Vercel setup (run once tomorrow)
 
