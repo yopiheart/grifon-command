@@ -651,7 +651,12 @@ const App: React.FC = () => {
         onBack={() => setActiveModule(null)}
         onUpgrade={() => { setActiveModule(null); setCurrentRoute('pricing'); }}
       >
-        <GenerateVideo onBack={() => setActiveModule(null)} seedPrompts={videoPrompts} />
+        <GenerateVideo
+          onBack={() => setActiveModule(null)}
+          seedPrompts={videoPrompts}
+          storyboard={storyboard}
+          defaultAspectRatio={aspectRatio ?? '9:16'}
+        />
       </PlanGate>
     );
   } else if (activeModule === 'signal_modulator') {

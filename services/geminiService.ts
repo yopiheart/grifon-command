@@ -165,70 +165,93 @@ export const VIDEO_MODEL_SPECS: Record<VideoModelType, {
   supportsAudio: boolean;
   maxElements: number;
   requiresStartFrame: boolean;
+  /** True when the engine is surfaced in the UI but disabled (no backend integration yet). */
+  locked: boolean;
+  /** Short capability tagline shown in the model picker. */
+  tagline: string;
+  /** Display label for the model picker (engine name as users see it). */
+  displayName: string;
 }> = {
-  'Kling_O1': {
-    durations: [5, 10],
-    resolutions: ['720p', '1080p'],
-    aspectRatios: ['9:16', '16:9', '1:1'],
-    supportsAudio: false,
-    maxElements: 7,
-    requiresStartFrame: true,
-  },
-  'Kling_2.5_Turbo': {
-    durations: [5, 10],
-    resolutions: ['720p', '1080p'],
-    aspectRatios: ['9:16', '16:9', '1:1'],
-    supportsAudio: false,
-    maxElements: 5,
-    requiresStartFrame: true,
-  },
-  'Kling_2.6': {
-    durations: [5, 10, 15],
-    resolutions: ['720p', '1080p', '2k'],
-    aspectRatios: ['9:16', '16:9', '1:1', '4:5'],
-    supportsAudio: true,
-    maxElements: 5,
-    requiresStartFrame: false,
-  },
   'Veo_3.1_Fast': {
     durations: [4, 6, 8],
     resolutions: ['720p', '1080p', '4k'],
     aspectRatios: ['9:16', '16:9'],
-    supportsAudio: true,
+    supportsAudio: false, // Vertex-only; Gemini API strips generateAudio. UI hides the toggle.
     maxElements: 3,
     requiresStartFrame: false,
+    locked: false,
+    displayName: 'Veo 3.1 Fast',
+    tagline: 'Fast ads — quickest turnaround',
   },
   'Veo_3.1_Quality': {
     durations: [4, 6, 8],
     resolutions: ['720p', '1080p', '4k'],
     aspectRatios: ['9:16', '16:9'],
-    supportsAudio: true,
+    supportsAudio: false,
     maxElements: 3,
     requiresStartFrame: false,
+    locked: false,
+    displayName: 'Veo 3.1 Quality',
+    tagline: 'Hollywood-grade ads — slower, sharper',
   },
   'Veo_3.1_Lite': {
     durations: [4, 6, 8],
     resolutions: ['720p', '1080p'],
     aspectRatios: ['9:16', '16:9'],
-    supportsAudio: true,
-    maxElements: 0, // Lite does not support referenceImages per Google docs
+    supportsAudio: false,
+    maxElements: 0,
     requiresStartFrame: false,
-  }
+    locked: false,
+    displayName: 'Veo 3.1 Lite',
+    tagline: 'Budget ads — lowest cost',
+  },
+  'Kling_3_0': {
+    durations: [5, 10],
+    resolutions: ['720p', '1080p'],
+    aspectRatios: ['9:16', '16:9', '1:1'],
+    supportsAudio: false,
+    maxElements: 0,
+    requiresStartFrame: false,
+    locked: true,
+    displayName: 'Kling 3.0',
+    tagline: 'Cinematic B-roll — BETA, coming after integration',
+  },
+  'Seedance_2_0_Fast': {
+    durations: [5, 10],
+    resolutions: ['720p', '1080p'],
+    aspectRatios: ['9:16', '16:9', '1:1'],
+    supportsAudio: false,
+    maxElements: 0,
+    requiresStartFrame: false,
+    locked: true,
+    displayName: 'Seedance 2.0 Fast',
+    tagline: 'Trend-driven motion — BETA, coming after integration',
+  },
+  'Seedance_2_0_Quality': {
+    durations: [5, 10],
+    resolutions: ['720p', '1080p'],
+    aspectRatios: ['9:16', '16:9', '1:1'],
+    supportsAudio: false,
+    maxElements: 0,
+    requiresStartFrame: false,
+    locked: true,
+    displayName: 'Seedance 2.0 Quality',
+    tagline: 'Trend-driven motion, sharper — BETA, coming after integration',
+  },
 };
 
-// Maps the UI-facing engine names to actual backend model IDs.
-// Kling variants are routed through Veo 3.1 (user chose Veo provider for Gate 1 P1).
 const VEO_FAST = 'veo-3.1-fast-generate-preview';
 const VEO_QUALITY = 'veo-3.1-generate-preview';
 const VEO_LITE = 'veo-3.1-lite-generate-preview';
 
-export const VIDEO_MODEL_ROUTING: Record<VideoModelType, { modelId: string; viaFallback: boolean }> = {
-  'Veo_3.1_Fast':     { modelId: VEO_FAST,    viaFallback: false },
-  'Veo_3.1_Quality':  { modelId: VEO_QUALITY, viaFallback: false },
-  'Veo_3.1_Lite':     { modelId: VEO_LITE,    viaFallback: false },
-  'Kling_O1':         { modelId: VEO_QUALITY, viaFallback: true },
-  'Kling_2.5_Turbo':  { modelId: VEO_FAST,    viaFallback: true },
-  'Kling_2.6':        { modelId: VEO_QUALITY, viaFallback: true },
+// Locked engines have null modelId — generateVideo() throws MODEL_LOCKED before touching the proxy.
+export const VIDEO_MODEL_ROUTING: Record<VideoModelType, { modelId: string | null; viaFallback: boolean }> = {
+  'Veo_3.1_Fast':         { modelId: VEO_FAST,    viaFallback: false },
+  'Veo_3.1_Quality':      { modelId: VEO_QUALITY, viaFallback: false },
+  'Veo_3.1_Lite':         { modelId: VEO_LITE,    viaFallback: false },
+  'Kling_3_0':            { modelId: null,        viaFallback: false },
+  'Seedance_2_0_Fast':    { modelId: null,        viaFallback: false },
+  'Seedance_2_0_Quality': { modelId: null,        viaFallback: false },
 };
 
 export interface GeneratedVideoResult {
@@ -254,6 +277,7 @@ export const generateVideo = async (
 ): Promise<GeneratedVideoResult> => {
   const routing = VIDEO_MODEL_ROUTING[config.model];
   if (!routing) throw new Error(`UNSUPPORTED_MODEL: ${config.model}`);
+  if (!routing.modelId) throw new Error(`MODEL_LOCKED: ${config.model} is not yet integrated`);
   if (!config.prompt?.trim()) throw new Error('EMPTY_PROMPT');
 
   const params: any = {

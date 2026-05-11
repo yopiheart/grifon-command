@@ -392,7 +392,13 @@ export interface CinematicStudioResponse {
   soundscape: string;
 }
 
-export type VideoModelType = 'Kling_O1' | 'Kling_2.5_Turbo' | 'Kling_2.6' | 'Veo_3.1_Fast' | 'Veo_3.1_Quality' | 'Veo_3.1_Lite';
+export type VideoModelType =
+  | 'Veo_3.1_Fast'
+  | 'Veo_3.1_Quality'
+  | 'Veo_3.1_Lite'
+  | 'Kling_3_0'
+  | 'Seedance_2_0_Fast'
+  | 'Seedance_2_0_Quality';
 
 export interface VideoGenConfig {
   model: VideoModelType;
