@@ -1,10 +1,11 @@
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { OfferOptimizerInput, OfferOptimizerResult, OfferTier, MarketResearchReport } from '../types';
 import { generateOfferOptimization } from '../services/geminiService';
 import { generateOfferPdf } from '../utils/offerPdfGenerator';
 import { GlassPanel } from './ui/GlassPanel';
 import { GoldButton } from './ui/GoldButton';
+import { PreviousResearchCard } from './ui/PreviousResearchCard';
 import Loader from './ui/Loader';
 import { Copy, ChevronLeft, ChevronDown, UploadCloud, AlarmClock, ShieldCheck, ArrowRight, Download, Brain, FileSearch } from 'lucide-react';
 import saveAs from 'file-saver';
@@ -156,6 +157,28 @@ const OfferOptimizer: React.FC<OfferOptimizerProps> = ({ onBack, onNavigate }) =
   const [marketMindImported, setMarketMindImported] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
 
+  // Previous-result recall (Roadmap #3): surface last saved offer so users can skip re-typing
+  const [previousResult, setPreviousResult] = useState<OfferOptimizerResult | null>(null);
+  const [previousSavedAt, setPreviousSavedAt] = useState<number | null>(null);
+  const [previousSubject, setPreviousSubject] = useState<string>('');
+  const [showRecallCard, setShowRecallCard] = useState(true);
+
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem('offerOptimizerResult');
+      const savedAtRaw = localStorage.getItem('offerOptimizerResultSavedAt');
+      const subjectRaw = localStorage.getItem('offerOptimizerResultSubject');
+      if (stored) {
+        const parsed = JSON.parse(stored) as OfferOptimizerResult;
+        setPreviousResult(parsed);
+        setPreviousSavedAt(savedAtRaw ? parseInt(savedAtRaw, 10) : Date.now());
+        setPreviousSubject(subjectRaw || parsed.coreOffer?.name || 'Previous Offer');
+      }
+    } catch (err) {
+      console.warn('[OfferOptimizer] Failed to read previous result from localStorage:', err);
+    }
+  }, []);
+
   const marketMindReport = useMemo<MarketResearchReport | null>(() => {
     if (inputType !== 'marketmind') return null;
     try {
@@ -204,7 +227,15 @@ const OfferOptimizer: React.FC<OfferOptimizerProps> = ({ onBack, onNavigate }) =
     try {
       const report = await generateOfferOptimization(formData);
       setResult(report);
+      const savedAtMs = Date.now();
+      const subjectForCard = formData.productName || report.coreOffer?.name || 'Untitled Offer';
       localStorage.setItem('offerOptimizerResult', JSON.stringify(report));
+      localStorage.setItem('offerOptimizerResultSavedAt', savedAtMs.toString());
+      localStorage.setItem('offerOptimizerResultSubject', subjectForCard);
+      setPreviousResult(report);
+      setPreviousSavedAt(savedAtMs);
+      setPreviousSubject(subjectForCard);
+      setShowRecallCard(false);
     } catch (err) {
       console.error(err);
       setError("Offer Optimization Failed. Please check your connection and try again.");
@@ -268,6 +299,19 @@ const OfferOptimizer: React.FC<OfferOptimizerProps> = ({ onBack, onNavigate }) =
             </p>
           </div>
         </header>
+
+        {previousResult && showRecallCard && previousSavedAt && !result && (
+          <PreviousResearchCard
+            subject={previousSubject || previousResult.coreOffer?.name || 'Previous Offer'}
+            savedAtMs={previousSavedAt}
+            label="LAST OFFER"
+            onLoad={() => {
+              setResult(previousResult);
+              setShowRecallCard(false);
+            }}
+            onDismiss={() => setShowRecallCard(false)}
+          />
+        )}
 
         <GlassPanel className="relative overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">

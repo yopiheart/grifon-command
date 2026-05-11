@@ -62,6 +62,8 @@ Half-baked ideas don't go here — they go in conversation and either die or get
 
 ### 3. MarketMind / Offer Optimizer "Reuse Previous Research" UX
 
+> **Status (2026-05-12):** ✅ Tier 1 shipped — [`components/ui/PreviousResearchCard.tsx`](../components/ui/PreviousResearchCard.tsx) (gold-accent banner with subject + relative timestamp + LOAD button + dismiss X) renders above the form in both [components/MarketResearch.tsx](../components/MarketResearch.tsx) and [components/OfferOptimizer.tsx](../components/OfferOptimizer.tsx) entry views. Click "LOAD" → restores results view directly (skips form). Reads `localStorage.marketMindReport` / `localStorage.offerOptimizerResult` plus new `savedAt` and `subject` sidecar keys. Card dismissable; form stays visible below. Insertion point 3 (Step 2 "auto-fill from last research" button) remains parked — separate feature, inputs aren't persisted today. Multi-history, PDF/JSON re-upload, and cross-device persistence all parked for Phase 6+ / Phase 5.2+ Supabase work.
+
 **What:** Add a "Use last research" card / quick-fill button so users don't have to dig for their downloaded `.pdf` or re-type business info when iterating on a campaign. Three insertion points:
 
 1. **MarketResearch entry view** — "Last research: [brand X · N min/days ago] · [Use this] · [Run new]" card. Loads the persisted MarketMind report from `localStorage` (already cached — Step 3 reads it at [components/Step3AdScript.tsx:50](../components/Step3AdScript.tsx#L50)) back into the active state.

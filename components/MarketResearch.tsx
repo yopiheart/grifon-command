@@ -1,11 +1,12 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MarketResearchInput, MarketResearchReport } from '../types';
 import { generateMarketResearch } from '../services/geminiService';
 import { compressImageForUpload } from '../utils/imageCompression';
 import { generateMarketResearchPdf } from '../utils/marketResearchPdfGenerator';
 import { GlassPanel } from './ui/GlassPanel';
 import { GoldButton } from './ui/GoldButton';
+import { PreviousResearchCard } from './ui/PreviousResearchCard';
 import Loader from './ui/Loader';
 import { toast } from 'sonner';
 import { Download, ChevronLeft, UploadCloud, X, ArrowRight } from 'lucide-react';
@@ -29,6 +30,25 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [result, setResult] = useState<MarketResearchReport | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  // Previous-research recall (Roadmap #3): surface last saved MarketMind so users can skip re-typing
+  const [previousReport, setPreviousReport] = useState<MarketResearchReport | null>(null);
+  const [previousSavedAt, setPreviousSavedAt] = useState<number | null>(null);
+  const [showRecallCard, setShowRecallCard] = useState(true);
+
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem('marketMindReport');
+      const savedAtRaw = localStorage.getItem('marketMindReportSavedAt');
+      if (stored) {
+        const parsed = JSON.parse(stored) as MarketResearchReport;
+        setPreviousReport(parsed);
+        setPreviousSavedAt(savedAtRaw ? parseInt(savedAtRaw, 10) : Date.now());
+      }
+    } catch (err) {
+      console.warn('[MarketResearch] Failed to read previous report from localStorage:', err);
+    }
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
@@ -70,7 +90,12 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
     try {
         const report = await generateMarketResearch(formData);
         setResult(report);
+        const savedAtMs = Date.now();
         localStorage.setItem('marketMindReport', JSON.stringify(report));
+        localStorage.setItem('marketMindReportSavedAt', savedAtMs.toString());
+        setPreviousReport(report);
+        setPreviousSavedAt(savedAtMs);
+        setShowRecallCard(false);
     } catch (err) {
         console.error(err);
         setError("Market Analysis Failed. Please check your connection and try again.");
@@ -113,6 +138,19 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
             </p>
           </div>
         </header>
+
+        {previousReport && showRecallCard && previousSavedAt && !result && (
+          <PreviousResearchCard
+            subject={previousReport.subject || 'Previous Market Research'}
+            savedAtMs={previousSavedAt}
+            label="LAST MARKET RESEARCH"
+            onLoad={() => {
+              setResult(previousReport);
+              setShowRecallCard(false);
+            }}
+            onDismiss={() => setShowRecallCard(false)}
+          />
+        )}
 
         <GlassPanel className="relative overflow-hidden">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
