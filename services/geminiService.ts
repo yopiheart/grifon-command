@@ -1484,12 +1484,13 @@ export const generateVideoPrompts = async (storyboard: Scene[], businessInfo: Bu
 
       **OPTION B: IF TYPE IS "talking" (Use for Avatar Scenes 2+):**
          - **MODEL:** Veo 3.1
-         - **Start with Direct Dialogue:** Lead with the script line in quotes. 
+         - **FRAME 0 RULE (CRITICAL):** The avatar is ALREADY mid-syllable when the clip opens — mouth in motion, first word of the dialogue actively forming, eyes already engaged with the lens. NO establishing pose, NO pre-speech beat, NO "settling in," NO "initially resting." The first frame IS the action. The clip ends on the next breath, not on a resolve-state pause.
+         - **Start with Direct Dialogue:** Lead with the script line in quotes.
          - **IDENTITY RULE:** If character mentions product, they say "${productName}".
-         - **Performance & Micro-expressions:** Describe facial tension, eye movement, and mouth shapes.
-         - **Cinematic Grammar:** Use specific lenses (35mm, 85mm) and camera physics (dolly-in, parallactic shift, rack focus). MANDATORY: Apply realistic lens breathing to the focus pulls and ensure constant pixel movement (e.g., subtle handheld micro-movements or imperceptible slow-creep zoom). NO STATIC SHOTS.
+         - **Performance & Micro-expressions:** Describe facial tension, eye movement, and mouth shapes — all already in motion at frame 0.
+         - **Cinematic Grammar:** Use specific lenses (35mm, 85mm). MANDATORY: apply subtle handheld micro-movements only — NO slow dolly-in creep, NO parallactic shift, NO rack-focus pull for 4–6s clips (these eat the first 1–2s of frame time). Keep constant pixel movement via realistic lens breathing on a locked-off frame. NO STATIC SHOTS.
          - **Audio Landscape:** Define the sync-sound environment (SFX: distant room tone, Ambient: low electrical hum).
-         - **First & Last Frame Logic:** Explicitly state the starting composition and the resolve state.
+         - **First & Last Frame Logic:** Starting frame = avatar mid-syllable forming the opening word, mouth shape unambiguous. Last frame = next syllable or natural breath, NOT a post-speech resolve-state with a closed mouth and neutral expression.
          - **OUTPUT FORMAT:** A single, cohesive cinematic paragraph starting with the dialogue in quotes. Seamlessly blend performance details, camera physics, lighting atmosphere, and frame logic into a natural narrative flow. DO NOT use bracketed headers or labels daylight [Subject Performance] or [Camera Motion/Lens].
 
       **OPTION C: IF TYPE IS "cinematic" (Use for Cinematic Spec Studio Relay):**
