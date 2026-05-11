@@ -63,13 +63,24 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
         const currentImages = formData.productImageUrls || [];
         const updatedImages = [...currentImages, ...newImages].slice(0, 5);
 
-        if (!formData.productImageDescription && compressed.length > 0) {
-            const first = compressed[0];
-            const description = await describeBusinessAsset(first.base64, first.mimeType);
-            setFormData(prev => ({ ...prev, productImageUrls: updatedImages, productImageDescription: description }));
-        } else {
-             setFormData(prev => ({ ...prev, productImageUrls: updatedImages }));
-        }
+        // Describe every new upload in parallel + append to existing description with [Photo N] labels
+        // so the storyboard / video-prompt pipeline (which reads productImageDescription) becomes
+        // multi-photo-aware instead of only seeing photo[0].
+        const newDescriptions = await Promise.all(
+            compressed.map(c => describeBusinessAsset(c.base64, c.mimeType))
+        );
+        const startIdx = currentImages.length;
+        const newBlock = newDescriptions
+            .map((d, i) => `[Photo ${startIdx + i + 1}] ${d}`)
+            .join('\n\n');
+        const combinedDescription = formData.productImageDescription
+            ? `${formData.productImageDescription}\n\n${newBlock}`
+            : newBlock;
+        setFormData(prev => ({
+            ...prev,
+            productImageUrls: updatedImages,
+            productImageDescription: combinedDescription,
+        }));
 
     } catch (err) {
         console.error(err);
