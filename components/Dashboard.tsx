@@ -48,18 +48,19 @@ const WIZARD_TOTAL_STEPS = 8;
 const CORE_MODULES = [
   { id: 'market_research', name: 'RESEARCH', icon: Search, desc: 'Deep market & competitor reports' },
   { id: 'offer_optimizer', name: 'OFFER', icon: Target, desc: 'Irresistible offers with pricing psychology' },
-  { id: 'caption_headline', name: 'CAPTIONS', icon: Type, desc: 'Scroll-stopping copy for every platform' },
-  { id: 'image_editor', name: 'IMAGES', icon: ImageIcon, desc: 'AI-generated ad images in seconds' }
+  { id: 'caption_headline', name: 'CAPTIONS', icon: Type, desc: 'Scroll-stopping copy for every platform' }
 ];
 
-// Canonical 7-step flow for left sidebar + mobile bottom nav.
-// Matches the RECOMMENDED FLOW path on the dashboard hero so users
-// see the same journey reinforced everywhere they look.
+// Action-oriented nav for the left sidebar + mobile bottom nav.
+// Director leads — it's the flagship workflow and the most-clicked surface.
+// The educational journey (Research → Offer → Director → …) lives on the
+// dashboard's RECOMMENDED FLOW path, which intentionally diverges so users
+// see both "fastest path to the tool" (nav) and "best practice order" (path).
 // Beta items are admin-only-clickable; display-only for non-admin.
 const NAV_ITEMS: { id: string; label: string; icon: any; badge?: 'Beta' }[] = [
+  { id: 'creative_director', label: 'Director', icon: Film },
   { id: 'market_research',   label: 'Research', icon: Search },
   { id: 'offer_optimizer',   label: 'Offer',    icon: Target },
-  { id: 'creative_director', label: 'Director', icon: Film },
   { id: 'generate_video',    label: 'Video',    icon: Clapperboard },
   { id: 'signal_modulator',  label: 'Voice',    icon: Mic,         badge: 'Beta' },
   { id: 'edit_video',        label: 'Edit',     icon: Scissors,    badge: 'Beta' },
@@ -71,6 +72,7 @@ const MORE_MODULES = [
   { id: 'influencer_forge', name: 'Influencer Forge', icon: User, desc: 'Generate consistent digital personas for social campaigns and brand storytelling.' },
   { id: 'generate_video', name: 'Video Synthesis', icon: Clapperboard, desc: 'Render final video assets from storyboards and prompts.' },
   { id: 'image_ads', name: 'Ad Creative Gen', icon: Wand2, desc: 'Generate high-converting image ads and variations.' },
+  { id: 'image_editor', name: 'Image Editor', icon: ImageIcon, desc: 'AI-generated ad images — in active improvement.' },
   { id: 'organic_calendar', name: 'Social Planner', icon: Calendar, desc: 'Schedule and automate your organic content calendar.' },
   { id: 'edit_video', name: 'Video Editor', icon: Scissors, desc: 'Timeline-based editing, trimming, and assembly.' },
   { id: 'signal_modulator', name: 'Signal Modulator', icon: Mic, desc: 'Voice cloning, TTS, and audio enhancement.' }
@@ -738,4 +740,3 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
 };
 
 export default Dashboard;
-
