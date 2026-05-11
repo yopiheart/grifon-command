@@ -169,10 +169,17 @@ const sceneImageModel = 'gemini-3.1-flash-image-preview';
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
+// Veo 3.1 resolution↔duration constraints are PER-MODEL and PER-RESOLUTION on the
+// Gemini API surface. Lite hard-locks 1080p to 8s (confirmed via real API error).
+// Fast/Quality are permissive at 1080p (verified empirically — graceful fallback if
+// not). 4k is conservative (8s only) until we verify. Vertex AI migration (Phase 5+)
+// unlocks shorter durations at 1080p across all variants AND native audio + 4k.
 export const VIDEO_MODEL_SPECS: Record<VideoModelType, {
   durations: number[];
   resolutions: string[];
   aspectRatios: string[];
+  /** Per-resolution duration whitelist. UI greys out invalid combos. */
+  durationsByResolution: Record<string, number[]>;
   supportsAudio: boolean;
   maxElements: number;
   requiresStartFrame: boolean;
@@ -187,6 +194,11 @@ export const VIDEO_MODEL_SPECS: Record<VideoModelType, {
     durations: [4, 6, 8],
     resolutions: ['720p', '1080p', '4k'],
     aspectRatios: ['9:16', '16:9'],
+    durationsByResolution: {
+      '720p': [4, 6, 8],
+      '1080p': [4, 6, 8],
+      '4k': [8],
+    },
     supportsAudio: false, // Vertex-only; Gemini API strips generateAudio. UI hides the toggle.
     maxElements: 3,
     requiresStartFrame: false,
@@ -198,6 +210,11 @@ export const VIDEO_MODEL_SPECS: Record<VideoModelType, {
     durations: [4, 6, 8],
     resolutions: ['720p', '1080p', '4k'],
     aspectRatios: ['9:16', '16:9'],
+    durationsByResolution: {
+      '720p': [4, 6, 8],
+      '1080p': [4, 6, 8],
+      '4k': [8],
+    },
     supportsAudio: false,
     maxElements: 3,
     requiresStartFrame: false,
@@ -209,6 +226,10 @@ export const VIDEO_MODEL_SPECS: Record<VideoModelType, {
     durations: [4, 6, 8],
     resolutions: ['720p', '1080p'],
     aspectRatios: ['9:16', '16:9'],
+    durationsByResolution: {
+      '720p': [4, 6, 8],
+      '1080p': [8], // HARD CONSTRAINT — Veo 3.1 Lite forces 8s at 1080p (Gemini API).
+    },
     supportsAudio: false,
     maxElements: 0,
     requiresStartFrame: false,
@@ -220,6 +241,10 @@ export const VIDEO_MODEL_SPECS: Record<VideoModelType, {
     durations: [5, 10],
     resolutions: ['720p', '1080p'],
     aspectRatios: ['9:16', '16:9', '1:1'],
+    durationsByResolution: {
+      '720p': [5, 10],
+      '1080p': [5, 10],
+    },
     supportsAudio: false,
     maxElements: 0,
     requiresStartFrame: false,
@@ -231,6 +256,10 @@ export const VIDEO_MODEL_SPECS: Record<VideoModelType, {
     durations: [5, 10],
     resolutions: ['720p', '1080p'],
     aspectRatios: ['9:16', '16:9', '1:1'],
+    durationsByResolution: {
+      '720p': [5, 10],
+      '1080p': [5, 10],
+    },
     supportsAudio: false,
     maxElements: 0,
     requiresStartFrame: false,
@@ -242,6 +271,10 @@ export const VIDEO_MODEL_SPECS: Record<VideoModelType, {
     durations: [5, 10],
     resolutions: ['720p', '1080p'],
     aspectRatios: ['9:16', '16:9', '1:1'],
+    durationsByResolution: {
+      '720p': [5, 10],
+      '1080p': [5, 10],
+    },
     supportsAudio: false,
     maxElements: 0,
     requiresStartFrame: false,
@@ -271,6 +304,16 @@ export interface GeneratedVideoResult {
   mimeType: string;
 }
 
+/**
+ * Returns the valid duration set for a given (model, resolution) combo on the
+ * Gemini API surface. Falls back to the model's full `durations` array if the
+ * resolution isn't mapped — graceful when new resolutions are added.
+ */
+export const getValidDurations = (model: VideoModelType, resolution: string): number[] => {
+  const spec = VIDEO_MODEL_SPECS[model];
+  return spec?.durationsByResolution?.[resolution] ?? spec?.durations ?? [4, 6, 8];
+};
+
 interface GenerateVideoOpts {
   signal?: AbortSignal;
   onStatus?: (status: string) => void;
@@ -292,6 +335,15 @@ export const generateVideo = async (
   if (!routing) throw new Error(`UNSUPPORTED_MODEL: ${config.model}`);
   if (!routing.modelId) throw new Error(`MODEL_LOCKED: ${config.model} is not yet integrated`);
   if (!config.prompt?.trim()) throw new Error('EMPTY_PROMPT');
+
+  // Pre-flight: warn early if the (model, resolution, duration) combo violates a known constraint.
+  // Doesn't block the submit (Veo may have changed) — just throws a clear error message.
+  const validDurations = getValidDurations(config.model, config.resolution);
+  if (!validDurations.includes(config.duration)) {
+    throw new Error(
+      `INVALID_COMBO: ${VIDEO_MODEL_SPECS[config.model].displayName} at ${config.resolution} only supports ${validDurations.join('/')}s. Got ${config.duration}s.`
+    );
+  }
 
   const params: any = {
     model: routing.modelId,
@@ -1299,21 +1351,13 @@ export const generateVideoPrompts = async (storyboard: Scene[], businessInfo: Bu
       **GENERATION RULES BY TYPE:**
 
       **OPTION A: IF TYPE IS "b-roll" (Use for SCENE 1 & Visuals):**
-         - **MODEL LOGIC:**
-           - **IF SCENE 1 (HOOK):** Use **[Model: Kling O1]**. Describe the *morphing/transition* from the Start Frame to the End Frame. **NO AUDIO PROMPT.**
-           - **IF REGULAR B-ROLL:** Use **[Model: Kling v2.6]**. Focus on action. **AUDIO REQUIRED** (SFX + Background Music, NO SPEECH).
          - **IDENTITY RULE:** Refer to the product only as "${productName}".
-         - **CAMERA DYNAMICS** (Pick ONE randomly):
+         - **CAMERA PHYSICS** (Weave ONE randomly into the prose):
            - "Zoom -5, Tilt Up" | "Zoom +7" | "Horizontal +4, Roll -2" | "Zoom -5, Vertical +3"
-         - **NEGATIVE PROMPT:** "low quality, blurry, distorted, deformation, morphing, melting, glitching, ugly, extra limbs, text, watermark, writing, letters, subtitles."
-         - **OUTPUT FORMAT (Strict):**
-           \`\`\`text
-           [Model: Kling O1/v2.6]
-           VISUAL: <Punchy action description of ${productName}>
-           CAMERA: <Camera Dynamic>
-           AUDIO: <SFX + Music description or "None">
-           NEGATIVE: <Negative Prompt>
-           \`\`\`
+         - **SCENE 1 (HOOK) DIRECTIVE:** Describe a morphing/transition from the Start Frame to the End Frame. Skip audio direction.
+         - **REGULAR B-ROLL DIRECTIVE:** Focus on the product's action. Include short audio direction (SFX + background music register, NO SPEECH) at the end.
+         - **NEGATIVE PHRASE:** Append at the end as a comma-separated tail — "Avoid low quality, blurry, distorted, deformation, morphing, melting, glitching, extra limbs, text, watermark, writing, letters, subtitles."
+         - **OUTPUT FORMAT:** A single cohesive cinematic paragraph. NO bracketed labels, NO [Model:] tag, NO VISUAL:/CAMERA:/AUDIO:/NEGATIVE: headers — those are stale routing markers from a manual copy-paste workflow. Open with the visual action, weave in the camera physics, end with the audio direction and the negative phrase as natural prose.
 
       **OPTION B: IF TYPE IS "talking" (Use for Avatar Scenes 2+):**
          - **MODEL:** Veo 3.1

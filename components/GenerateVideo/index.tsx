@@ -25,6 +25,7 @@ import {
   VIDEO_MODEL_SPECS,
   generateVideo,
   GeneratedVideoResult,
+  getValidDurations,
   listVideoLibrary,
 } from '../../services/geminiService';
 import { compressImageForUpload } from '../../utils/imageCompression';
@@ -68,7 +69,7 @@ const LOCKED_MODELS: VideoModelType[] = ['Kling_3_0', 'Seedance_2_0_Fast', 'Seed
 const initialConfig = (defaultAspectRatio?: '9:16' | '16:9' | null): VideoGenConfig => ({
   model: 'Veo_3.1_Fast',
   duration: 8,
-  resolution: '1080p',
+  resolution: '720p', // 720p gives pacing flexibility (4/6/8s) on all Veo variants. User can opt up.
   aspectRatio: defaultAspectRatio ?? '9:16',
   audioEnabled: false,
   prompt: '',
@@ -131,8 +132,13 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
     setConfig((prev) => ({ ...prev, prompt: seed.prompt }));
     const sceneImage = storyboard[activeIdx]?.imageUrl ?? storyboard[activeIdx]?.manualUploadUrl;
     if (sceneImage) {
+      // Storyboard images can be 1-2 MB raw. Compress to keep submit body under the
+      // 55s Vercel ceiling (compressImageForUpload caps at 1280px / JPEG q=0.85).
       urlToDataUrl(sceneImage)
-        .then((dataUrl) => setConfig((prev) => ({ ...prev, startFrame: dataUrl })))
+        .then((dataUrl) => compressImageForUpload(dataUrl))
+        .then((compressed) =>
+          setConfig((prev) => ({ ...prev, startFrame: compressed.dataUrl }))
+        )
         .catch(() => {});
     } else {
       setConfig((prev) => ({ ...prev, startFrame: undefined }));
@@ -228,17 +234,24 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
       });
       return;
     }
-    setConfig((prev) => ({
-      ...prev,
-      model: m,
-      duration: newSpecs.durations.includes(prev.duration) ? prev.duration : newSpecs.durations[0],
-      resolution: newSpecs.resolutions.includes(prev.resolution)
+    setConfig((prev) => {
+      const nextResolution = newSpecs.resolutions.includes(prev.resolution)
         ? prev.resolution
-        : newSpecs.resolutions[0],
-      aspectRatio: newSpecs.aspectRatios.includes(prev.aspectRatio)
-        ? prev.aspectRatio
-        : newSpecs.aspectRatios[0],
-    }));
+        : newSpecs.resolutions[0];
+      const allowed = getValidDurations(m, nextResolution);
+      const nextDuration = allowed.includes(prev.duration)
+        ? prev.duration
+        : allowed[allowed.length - 1] ?? newSpecs.durations[0];
+      return {
+        ...prev,
+        model: m,
+        duration: nextDuration,
+        resolution: nextResolution,
+        aspectRatio: newSpecs.aspectRatios.includes(prev.aspectRatio)
+          ? prev.aspectRatio
+          : newSpecs.aspectRatios[0],
+      };
+    });
     setModelPickerOpen(false);
   };
 
@@ -266,6 +279,9 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
 
     setError(null);
     setBusy(true);
+    // Flip to PREVIEW immediately so the inline placeholder (start frame + spinner)
+    // fires while Veo is rendering — instead of only the tiny scene-tile spinner.
+    setCanvasView('preview');
 
     if (mode === 'pipeline') {
       setStatus(activeIdx, 'rendering');
@@ -334,6 +350,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
 
     setError(null);
     setBusy(true);
+    setCanvasView('preview'); // big-preview spinner fires for the active scene as the queue runs
     toast('PREPARING SCENE PIPELINE...', { description: 'Loading storyboard images.' });
 
     let jobs: RenderJob[];
@@ -345,7 +362,9 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
           let startFrame: string | undefined;
           if (sceneImage) {
             try {
-              startFrame = await urlToDataUrl(sceneImage);
+              const raw = await urlToDataUrl(sceneImage);
+              const compressed = await compressImageForUpload(raw);
+              startFrame = compressed.dataUrl;
             } catch {
               // proceed without start frame for this job
             }
@@ -462,46 +481,48 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
 
   /* ─── HEADER ─── */
   const Header = (
-    <header className="flex items-center justify-between gap-3 mb-6 w-full border-b border-white/10 pb-4">
-      <button
-        onClick={onBack}
-        className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-zinc-500 hover:text-white uppercase tracking-widest transition-colors"
-      >
-        <ChevronLeft className="w-4 h-4" />
-        <span className="hidden md:inline">COMMAND CENTER</span>
-        <span className="md:hidden">BACK</span>
-      </button>
-      <div className="flex-1 min-w-0">
-        <h1 className="text-2xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight leading-tight">
+    <header className="flex flex-col items-start gap-4 mb-8 w-full border-b border-white/10 pb-6 relative">
+      <div className="flex items-center justify-between w-full gap-3">
+        <button
+          onClick={onBack}
+          className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-zinc-500 hover:text-white uppercase tracking-widest transition-colors"
+        >
+          <ChevronLeft className="w-4 h-4" />
+          <span className="hidden md:inline">COMMAND CENTER</span>
+          <span className="md:hidden">BACK</span>
+        </button>
+        {hasSeedPrompts && (
+          <div className="flex items-center gap-1.5 p-1 rounded-xl border border-white/10 bg-zinc-950">
+            <button
+              onClick={() => setMode('pipeline')}
+              className={`px-3 py-1.5 text-[9px] font-black uppercase tracking-widest rounded-lg transition-all ${
+                mode === 'pipeline' ? 'bg-[#FFCC00] text-black' : 'text-zinc-500 hover:text-white'
+              }`}
+            >
+              Pipeline
+            </button>
+            <button
+              onClick={() => setMode('one-shot')}
+              className={`px-3 py-1.5 text-[9px] font-black uppercase tracking-widest rounded-lg transition-all ${
+                mode === 'one-shot' ? 'bg-[#FFCC00] text-black' : 'text-zinc-500 hover:text-white'
+              }`}
+            >
+              One-Shot
+            </button>
+          </div>
+        )}
+      </div>
+      <div>
+        <h1 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight break-words whitespace-normal leading-tight">
           Generate Video
         </h1>
-        <p className={`${labelCaps} mt-1`}>
+        <p className={`${labelCaps} mt-2`}>
           //{' '}
           {mode === 'pipeline'
             ? `SCENE PIPELINE · ${renderedCount}/${seedPrompts.length} RENDERED`
             : 'ONE-SHOT CLIP'}
         </p>
       </div>
-      {hasSeedPrompts && (
-        <div className="flex items-center gap-1.5 p-1 rounded-xl border border-white/10 bg-zinc-950">
-          <button
-            onClick={() => setMode('pipeline')}
-            className={`px-3 py-1.5 text-[9px] font-black uppercase tracking-widest rounded-lg transition-all ${
-              mode === 'pipeline' ? 'bg-[#FFCC00] text-black' : 'text-zinc-500 hover:text-white'
-            }`}
-          >
-            Pipeline
-          </button>
-          <button
-            onClick={() => setMode('one-shot')}
-            className={`px-3 py-1.5 text-[9px] font-black uppercase tracking-widest rounded-lg transition-all ${
-              mode === 'one-shot' ? 'bg-[#FFCC00] text-black' : 'text-zinc-500 hover:text-white'
-            }`}
-          >
-            One-Shot
-          </button>
-        </div>
-      )}
     </header>
   );
 
@@ -605,19 +626,31 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
           <div>
             <div className={labelCaps}>Duration</div>
             <div className="flex flex-wrap gap-1.5 mt-2">
-              {specs.durations.map((d) => (
-                <button
-                  key={d}
-                  onClick={() => setConfig((p) => ({ ...p, duration: d }))}
-                  className={`px-3 py-1.5 rounded-lg text-[10px] font-black border transition-all ${
-                    config.duration === d
-                      ? 'border-[#FFCC00] text-[#FFCC00] bg-[#FFCC00]/10'
-                      : 'border-white/10 text-zinc-500 hover:text-white'
-                  }`}
-                >
-                  {d}s
-                </button>
-              ))}
+              {specs.durations.map((d) => {
+                const allowedDurations = getValidDurations(config.model, config.resolution);
+                const isAllowed = allowedDurations.includes(d);
+                return (
+                  <button
+                    key={d}
+                    onClick={() => isAllowed && setConfig((p) => ({ ...p, duration: d }))}
+                    disabled={!isAllowed}
+                    title={
+                      isAllowed
+                        ? undefined
+                        : `Locked by ${config.resolution}. Switch to 720p (or another engine) to unlock ${d}s.`
+                    }
+                    className={`px-3 py-1.5 rounded-lg text-[10px] font-black border transition-all ${
+                      !isAllowed
+                        ? 'border-white/5 text-zinc-700 cursor-not-allowed'
+                        : config.duration === d
+                        ? 'border-[#FFCC00] text-[#FFCC00] bg-[#FFCC00]/10'
+                        : 'border-white/10 text-zinc-500 hover:text-white'
+                    }`}
+                  >
+                    {d}s
+                  </button>
+                );
+              })}
             </div>
           </div>
           <div>
@@ -626,7 +659,21 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
               {specs.resolutions.map((res) => (
                 <button
                   key={res}
-                  onClick={() => setConfig((p) => ({ ...p, resolution: res }))}
+                  onClick={() => {
+                    const allowed = getValidDurations(config.model, res);
+                    setConfig((p) => {
+                      const next = { ...p, resolution: res };
+                      if (!allowed.includes(p.duration)) {
+                        const clamped = allowed[allowed.length - 1] ?? p.duration;
+                        toast(`${VIDEO_MODEL_SPECS[p.model].displayName} locks ${res} to ${clamped}s`, {
+                          description: 'Duration auto-set. Switch to 720p for more pacing options.',
+                          duration: 5000,
+                        });
+                        next.duration = clamped;
+                      }
+                      return next;
+                    });
+                  }}
                   className={`px-3 py-1.5 rounded-lg text-[10px] font-black border transition-all ${
                     config.resolution === res
                       ? 'border-[#FFCC00] text-[#FFCC00] bg-[#FFCC00]/10'

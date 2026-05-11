@@ -3,9 +3,11 @@ import React, { useState } from 'react';
 import { MarketResearchInput, MarketResearchReport } from '../types';
 import { generateMarketResearch } from '../services/geminiService';
 import { compressImageForUpload } from '../utils/imageCompression';
+import { generateMarketResearchPdf } from '../utils/marketResearchPdfGenerator';
 import { GlassPanel } from './ui/GlassPanel';
 import { GoldButton } from './ui/GoldButton';
 import Loader from './ui/Loader';
+import { toast } from 'sonner';
 import { Download, ChevronLeft, UploadCloud, X, ArrowRight } from 'lucide-react';
 import saveAs from 'file-saver';
 
@@ -77,10 +79,15 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
     }
   };
 
-  const handleDownload = () => {
+  const handleDownload = async () => {
     if (!result) return;
-    const blob = new Blob([result.narrativeReport], { type: "text/plain;charset=utf-8" });
-    saveAs(blob, `MarketMind_Report_${formData.productName.replace(/\s+/g, '_')}.txt`);
+    try {
+      const blob = await generateMarketResearchPdf(result, formData.productName);
+      saveAs(blob, `MarketMind_Report_${formData.productName.replace(/\s+/g, '_') || 'Untitled'}.pdf`);
+    } catch (err: any) {
+      console.error('[MarketResearch] PDF export failed:', err);
+      toast.error('PDF EXPORT FAILED', { description: err?.message ?? 'Try again or copy the on-screen report.' });
+    }
   };
 
   const handleSendToDirector = () => {
