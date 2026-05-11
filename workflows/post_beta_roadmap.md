@@ -60,6 +60,81 @@ Half-baked ideas don't go here — they go in conversation and either die or get
 
 ---
 
+### 3. MarketMind / Offer Optimizer "Reuse Previous Research" UX
+
+**What:** Add a "Use last research" card / quick-fill button so users don't have to dig for their downloaded `.pdf` or re-type business info when iterating on a campaign. Three insertion points:
+
+1. **MarketResearch entry view** — "Last research: [brand X · N min/days ago] · [Use this] · [Run new]" card. Loads the persisted MarketMind report from `localStorage` (already cached — Step 3 reads it at [components/Step3AdScript.tsx:50](../components/Step3AdScript.tsx#L50)) back into the active state.
+2. **OfferOptimizer entry view** — same pattern, needs verification that OfferOptimizer also persists to `localStorage` (probably yes, same shape; check before building).
+3. **Step 2 BusinessInfo** — "Auto-fill from last research" button that pulls product/audience/pain from the most recent MarketMind. Pre-populates Step 2 fields so the user only has to confirm + override.
+
+**Why it matters:** Filipino-owner beta users iterate on campaigns. Each new wizard run today forces them to re-enter business info or search their downloads folder for last week's MarketMind PDF. That's friction on the path to paid usage. Data is already in localStorage — this is purely surface, no infra.
+
+**Why parked:** Pure polish. Phase 4 cost-control + beta-merge come first. Doesn't block any P0 use case.
+
+**When to resume:** Immediately post-beta-merge, or when ≥2 beta users complain about retyping. Whichever comes first.
+
+**Where to start:**
+1. `grep -r 'localStorage' components/MarketResearch.tsx components/OfferOptimizer.tsx` — confirm both modules already persist + the key names.
+2. New shared component `components/ui/LastResearchCard.tsx` consuming a typed loader (returns the saved report + `savedAt` timestamp).
+3. Insert the card at the top of MarketResearch and OfferOptimizer entry views.
+4. Add the "Auto-fill from last research" button to Step 2 — wires the same loader into `setFormData`.
+
+**Scope estimate:** ~1–2h. Pure UI + localStorage reads.
+
+**Source:** Neil during 2026-05-11 MrBeast smoke test — *"if the user wanted to use the same research/offer, is there any way that the user can use the previous generated marketmind or offer?"*
+
+---
+
+### 4. Generative Video — Product Scale Anchoring (Veo limitation)
+
+**What:** Mitigations for the known generative-video issue where Veo (and peer models) renders product props at unrealistic scale — usually too large for the actual SKU.
+
+Two cheap mitigations + one bigger one:
+
+1. **Step 2 product-description hint** — placeholder/copy update to nudge users toward `"Include actual size — e.g., compact 100ml palm-sized spray bottle"` so the size gets carried into the imagePrompt downstream.
+2. **Step 1 hero-image upload-zone hint** — `"For best results, include a hand-for-scale or product-with-context shot"`. When the hero image shows the product in a human hand, Veo can use the reference to match scale in derived scenes.
+3. **Bigger fix (Phase 5+):** when the user uploads a context-shot hero, anchor it as a scale reference to start-frames at storyboard time. Requires changes to the storyboard prompt builder in `api/_lib/prompts.ts`.
+
+**Why it matters:** Buyer-side trust. A 100ml face mist rendered to look like 250ml on Facebook → customer receives the actual size → feels ad-deceived → refund + bad review. Edge case at low volume, accumulates as a real liability at beta+.
+
+**Why parked:** Mitigations 1 & 2 are 10–20 min of copy work; intentionally bundled with the next post-beta UX polish PR to keep Phase 4 surgical. Bigger fix is Phase 5+ tied to Vertex's better control surface.
+
+**When to resume:** When the post-beta UX polish PR is being scoped (likely the same one that delivers item #3 above), OR when a beta user reports a customer complaint about size mismatch.
+
+**Where to start:**
+1. [components/Step2BusinessInfo.tsx](../components/Step2BusinessInfo.tsx) — update the product description input placeholder/help text.
+2. [components/Step1ClientDetails.tsx](../components/Step1ClientDetails.tsx) (or wherever the hero-image upload zone lives) — add the scale-reference hint copy.
+3. Smoke test on next render — does the scale visibly improve when "100ml palm-sized" is in the brief? If yes, ship. If no, escalate to the Phase 5+ start-frame anchoring change.
+
+**Scope estimate:** ~20 min for mitigations 1+2. ~4-6h for Phase 5+ start-frame anchoring.
+
+**Source:** Neil during 2026-05-11 MrBeast smoke test — Scenes 5 & 7 showed the 100ml Monat bottle rendered ~2x its real-world size. *"its unrealistic to the part of the buyer where they saw an ad that looks a big product but when they receive it, its a small only."*
+
+---
+
+### 5. Generative Video — Avatar Emotion vs Identity Tradeoff Dial
+
+**What:** Investigate whether the talking/b-roll template's IDENTITY_LOCK system instruction (in [services/geminiService.ts](../services/geminiService.ts) ~lines 1377-1390) is over-weighting identity preservation at the cost of per-scene emotional expression. Currently the avatar reliably stays *the same person* across scenes but the prompt's emotional cues ("looking tired with brow slightly furrowed") render as muted compared to what a human director would deliver.
+
+**Why it matters:** Emotional range is what separates a passable AI ad from a converting one. If every scene's facial expression reads identical, the ad feels uncanny / lifeless even with technically correct identity preservation.
+
+**Why parked:** This is a TUNED-FILE EDIT to the talking template (`services/geminiService.ts:1377-1390` region) per the surgical-edit hard rules — requires explicit per-edit approval from Neil. AND it's a tradeoff dial, not a clear-cut fix: too much weight on emotion → identity drift returns (different faces per scene → trust collapse). Needs a more controlled experiment to dial in, ideally on Vertex (Phase 5) where the control surface is finer than Gemini API Veo.
+
+**When to resume:** When Phase 5 (Vertex migration) lands. Vertex's finer control gives us a real lever to dial emotion up without identity drift.
+
+**Where to start:**
+1. Define a test set: 3 prompts with explicit emotional cues (tired, joyful, suspicious) × identical hero avatar.
+2. Render once on current Gemini API surface (baseline).
+3. Render same set on Vertex with an adjusted system instruction that explicitly weights emotional cues.
+4. Compare identity-lock + emotional fidelity side-by-side. Land the change only if both stay strong.
+
+**Scope estimate:** ~1 day (test set + comparison + tuned-prompt edit + smoke test). Cannot ship before Phase 5 Vertex.
+
+**Source:** Neil during 2026-05-11 MrBeast smoke test — Scene 2 with "looking tired" prompt rendered avatar at normal alertness. *"We forgot the scenario/story that should ignore this or follow the changes to the physical appearance if the prompt says."*
+
+---
+
 ## How to add new items
 
 When Neil endorses an idea but says "not now":
