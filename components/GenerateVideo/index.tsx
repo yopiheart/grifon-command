@@ -10,13 +10,22 @@ import {
   UploadCloud,
   Video as VideoIcon,
   X,
-  Play,
+  Pencil,
+  Eye,
+  Loader2,
 } from 'lucide-react';
-import type { VideoGenConfig, VideoModelType, VideoPrompt, Scene } from '../../types';
+import type {
+  VideoGenConfig,
+  VideoModelType,
+  VideoPrompt,
+  Scene,
+  VideoLibraryItem,
+} from '../../types';
 import {
   VIDEO_MODEL_SPECS,
   generateVideo,
   GeneratedVideoResult,
+  listVideoLibrary,
 } from '../../services/geminiService';
 import { compressImageForUpload } from '../../utils/imageCompression';
 import { GoldButton } from '../ui/GoldButton';
@@ -29,8 +38,22 @@ import {
   type RenderJob,
   type QueueEvent,
 } from './RenderAllRunner';
+import { formatRelativeTime } from './utils';
 
 type Mode = 'pipeline' | 'one-shot';
+type CanvasView = 'edit' | 'preview';
+
+interface PreviewItem {
+  id: string;
+  url: string;
+  downloadUrl: string;
+  mimeType: string;
+  prompt: string;
+  sceneIdx?: number;
+  model?: VideoModelType;
+  createdAt?: string;
+  source: 'session' | 'library';
+}
 
 interface GenerateVideoProps {
   onBack: () => void;
@@ -83,7 +106,12 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [resumeAt, setResumeAt] = useState<number | null>(null);
-  const [oneShotResult, setOneShotResult] = useState<GeneratedVideoResult | null>(null);
+
+  const [canvasView, setCanvasView] = useState<CanvasView>('edit');
+  const [previewItem, setPreviewItem] = useState<PreviewItem | null>(null);
+  const [library, setLibrary] = useState<VideoLibraryItem[]>([]);
+  const [libraryLoading, setLibraryLoading] = useState(true);
+  const [tick, setTick] = useState(0); // re-renders to refresh relative timestamps every minute
 
   const queueAbortRef = useRef<AbortController | null>(null);
   const singleAbortRef = useRef<AbortController | null>(null);
@@ -136,6 +164,25 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
     return () => window.clearInterval(id);
   }, [resumeAt]);
 
+  // Fetch library on mount + refresh after every successful render
+  const refreshLibrary = async () => {
+    try {
+      const items = await listVideoLibrary();
+      setLibrary(items);
+    } catch (e: any) {
+      console.warn('[GenerateVideo] library fetch failed:', e?.message);
+    } finally {
+      setLibraryLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    refreshLibrary();
+    // refresh relative timestamps every minute
+    const id = window.setInterval(() => setTick((t) => t + 1), 60_000);
+    return () => window.clearInterval(id);
+  }, []);
+
   const renderedCount = useMemo(
     () => sceneStatus.filter((s) => s === 'done').length,
     [sceneStatus]
@@ -146,21 +193,8 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
     [sceneStatus]
   );
 
-  const galleryItems = useMemo(() => {
-    const items: { idx: number; result: GeneratedVideoResult; scriptLine: string }[] = [];
-    for (let i = 0; i < seedPrompts.length; i++) {
-      const r = sceneResults[i];
-      if (r) items.push({ idx: i, result: r, scriptLine: seedPrompts[i].scriptLine });
-    }
-    if (oneShotResult) {
-      items.push({
-        idx: -1,
-        result: oneShotResult,
-        scriptLine: config.prompt.slice(0, 60),
-      });
-    }
-    return items.reverse();
-  }, [seedPrompts, sceneResults, oneShotResult, config.prompt]);
+  // referenced inside JSX to ensure re-render on tick (relative timestamps refresh)
+  void tick;
 
   const setStatus = (idx: number, status: SceneStatus) => {
     setSceneStatus((prev) => {
@@ -242,13 +276,38 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
     singleAbortRef.current = ctrl;
 
     try {
-      const result = await generateVideo(config, { signal: ctrl.signal });
+      const result = await generateVideo(config, {
+        signal: ctrl.signal,
+        metadata: mode === 'pipeline' ? { sceneIdx: activeIdx } : undefined,
+      });
       if (mode === 'pipeline') {
         setSceneResults((prev) => ({ ...prev, [activeIdx]: result }));
         setStatus(activeIdx, 'done');
+        setPreviewItem({
+          id: `session:scene-${activeIdx}`,
+          url: result.url,
+          downloadUrl: result.downloadUrl,
+          mimeType: result.mimeType,
+          prompt: config.prompt.trim(),
+          sceneIdx: activeIdx,
+          model: config.model,
+          createdAt: new Date().toISOString(),
+          source: 'session',
+        });
       } else {
-        setOneShotResult(result);
+        setPreviewItem({
+          id: `session:one-shot:${Date.now()}`,
+          url: result.url,
+          downloadUrl: result.downloadUrl,
+          mimeType: result.mimeType,
+          prompt: config.prompt.trim(),
+          model: config.model,
+          createdAt: new Date().toISOString(),
+          source: 'session',
+        });
       }
+      setCanvasView('preview');
+      void refreshLibrary();
       toast.success('RENDER COMPLETE');
     } catch (e: any) {
       const msg = e?.message ?? 'Unknown error';
@@ -331,6 +390,20 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
         if (evt.status === 'done' && evt.result) {
           setSceneResults((prev) => ({ ...prev, [evt.sceneIdx]: evt.result! }));
           stopElapsedTick();
+          // Promote the latest finished scene into the big preview
+          setPreviewItem({
+            id: `session:scene-${evt.sceneIdx}`,
+            url: evt.result.url,
+            downloadUrl: evt.result.downloadUrl,
+            mimeType: evt.result.mimeType,
+            prompt: seedPrompts[evt.sceneIdx]?.prompt ?? '',
+            sceneIdx: evt.sceneIdx,
+            model: config.model,
+            createdAt: new Date().toISOString(),
+            source: 'session',
+          });
+          setCanvasView('preview');
+          void refreshLibrary();
         }
         if (evt.status === 'failed') {
           stopElapsedTick();
@@ -608,9 +681,9 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
     </div>
   );
 
-  /* ─── CANVAS PANEL ─── */
-  const CanvasPanel = (
-    <GlassPanel className="flex-1 flex flex-col gap-5 p-5 sm:p-6 lg:p-7 min-h-[480px]">
+  /* ─── EDIT VIEW (inside CanvasPanel) ─── */
+  const EditView = (
+    <div className="flex flex-col gap-5 animate-in fade-in duration-200">
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="sm:flex-1">{ModelPill}</div>
         <div className="sm:w-56">{SettingsChip}</div>
@@ -702,8 +775,252 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
           </p>
         )}
       </div>
+    </div>
+  );
+
+  /* ─── PREVIEW VIEW (inside CanvasPanel) ─── */
+  const handleUsePromptFromPreview = () => {
+    if (!previewItem) return;
+    setConfig((p) => ({ ...p, prompt: previewItem.prompt }));
+    setCanvasView('edit');
+    toast('PROMPT LOADED');
+  };
+
+  const handleRerender = () => {
+    if (!previewItem) return;
+    setConfig((p) => ({ ...p, prompt: previewItem.prompt }));
+    setCanvasView('edit');
+    // brief delay so user sees the prompt loaded before kicking off
+    window.setTimeout(() => handleGenerateSingle(), 100);
+  };
+
+  const isShowingLoadingPlaceholder = busy && canvasView === 'preview';
+  const activeElapsed = mode === 'pipeline' ? elapsed[activeIdx] ?? 0 : 0;
+
+  const PreviewView = (
+    <div className="flex flex-col gap-4 animate-in fade-in duration-200">
+      {isShowingLoadingPlaceholder ? (
+        <div className="relative w-full max-h-[60vh] aspect-video rounded-xl border border-[#FFCC00]/40 bg-zinc-950 overflow-hidden">
+          {config.startFrame ? (
+            <img
+              src={config.startFrame}
+              alt="Rendering from this anchor frame"
+              className="w-full h-full object-cover opacity-50"
+            />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center text-zinc-700">
+              <VideoIcon className="w-16 h-16" />
+            </div>
+          )}
+          <div className="absolute inset-0 bg-zinc-950/60 backdrop-blur-[2px] flex flex-col items-center justify-center gap-3">
+            <Loader2 className="w-12 h-12 text-[#FFCC00] animate-spin" />
+            <div className="text-[10px] text-[#FFCC00] font-black uppercase tracking-widest font-mono">
+              RENDERING {activeElapsed > 0 ? `· ${activeElapsed}s` : ''}
+            </div>
+            <div className="text-[9px] text-zinc-500 font-mono">
+              {mode === 'pipeline'
+                ? `SCENE ${String(activeIdx + 1).padStart(2, '0')} · ${specs.displayName}`
+                : specs.displayName}
+            </div>
+          </div>
+        </div>
+      ) : previewItem ? (
+        <>
+          <video
+            key={previewItem.url}
+            src={previewItem.url}
+            controls
+            autoPlay
+            loop
+            className="w-full max-h-[60vh] rounded-xl border border-[#FFCC00]/40 shadow-[0_0_30px_rgba(255,204,0,0.15)] bg-black"
+          />
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest">
+              {previewItem.sceneIdx !== undefined && (
+                <span className="text-[#FFCC00] font-black">
+                  SCENE {String(previewItem.sceneIdx + 1).padStart(2, '0')}
+                </span>
+              )}
+              {previewItem.model && (
+                <span className="text-zinc-500">
+                  · {VIDEO_MODEL_SPECS[previewItem.model]?.displayName ?? previewItem.model}
+                </span>
+              )}
+              {previewItem.createdAt && (
+                <span className="text-zinc-600">
+                  · {formatRelativeTime(previewItem.createdAt)}
+                </span>
+              )}
+            </div>
+            {previewItem.prompt && (
+              <p className="text-[11px] text-zinc-400 font-mono leading-relaxed line-clamp-3">
+                "{previewItem.prompt}"
+              </p>
+            )}
+          </div>
+          <div className="flex flex-wrap gap-2 pt-1">
+            <a
+              href={previewItem.downloadUrl}
+              download={`grifon-${previewItem.sceneIdx !== undefined ? `scene-${String(previewItem.sceneIdx + 1).padStart(2, '0')}` : 'clip'}.mp4`}
+              className={`${ghostBtn} flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest px-3 py-2`}
+            >
+              <Download className="w-3 h-3" /> Download
+            </a>
+            <button
+              onClick={handleUsePromptFromPreview}
+              className={`${ghostBtn} flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest px-3 py-2`}
+            >
+              <Pencil className="w-3 h-3" /> Use Prompt
+            </button>
+            <button
+              onClick={handleRerender}
+              disabled={busy}
+              className={`${ghostBtn} flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest px-3 py-2 disabled:opacity-40 disabled:cursor-not-allowed`}
+            >
+              <RotateCw className="w-3 h-3" /> Re-render
+            </button>
+          </div>
+        </>
+      ) : (
+        <div className="w-full aspect-video rounded-xl border border-white/10 bg-zinc-950 flex flex-col items-center justify-center gap-2 text-zinc-600">
+          <VideoIcon className="w-12 h-12 opacity-50" />
+          <div className="text-[10px] font-mono uppercase tracking-widest">
+            Generate a clip to preview it here.
+          </div>
+        </div>
+      )}
+    </div>
+  );
+
+  /* ─── CANVAS PANEL ─── */
+  const canPreview = !!previewItem || isShowingLoadingPlaceholder;
+  const CanvasPanel = (
+    <GlassPanel className="flex-1 flex flex-col gap-5 p-5 sm:p-6 lg:p-7 min-h-[480px]">
+      <div className="flex items-center gap-1 p-1 rounded-xl border border-white/10 bg-zinc-950 self-start">
+        <button
+          onClick={() => setCanvasView('edit')}
+          className={`flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-lg transition-all ${
+            canvasView === 'edit' ? 'bg-[#FFCC00] text-black' : 'text-zinc-500 hover:text-white'
+          }`}
+        >
+          <Pencil className="w-3 h-3" /> Edit
+        </button>
+        <button
+          onClick={() => canPreview && setCanvasView('preview')}
+          disabled={!canPreview}
+          className={`flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-lg transition-all ${
+            canvasView === 'preview'
+              ? 'bg-[#FFCC00] text-black'
+              : canPreview
+              ? 'text-zinc-500 hover:text-white'
+              : 'text-zinc-700 cursor-not-allowed'
+          }`}
+        >
+          <Eye className="w-3 h-3" /> Preview
+        </button>
+      </div>
+
+      {canvasView === 'edit' ? EditView : PreviewView}
     </GlassPanel>
   );
+
+  /* ─── RAIL TILE ─── */
+  const handleRailTileClick = (item: VideoLibraryItem) => {
+    setPreviewItem({
+      id: `library:${item.path}`,
+      url: item.url,
+      downloadUrl: item.downloadUrl,
+      mimeType: item.mimeType,
+      prompt: item.prompt,
+      sceneIdx: item.sceneIdx,
+      model: item.model,
+      createdAt: item.createdAt,
+      source: 'library',
+    });
+    setCanvasView('preview');
+  };
+
+  const handleTileUsePrompt = (e: React.MouseEvent, item: VideoLibraryItem) => {
+    e.stopPropagation();
+    setConfig((p) => ({ ...p, prompt: item.prompt }));
+    setCanvasView('edit');
+    toast('PROMPT LOADED');
+  };
+
+  const renderRailTile = (item: VideoLibraryItem) => {
+    const tileId = `library:${item.path}`;
+    const isSelected = previewItem?.id === tileId;
+    const sceneLabel =
+      item.sceneIdx !== undefined ? `SCENE ${String(item.sceneIdx + 1).padStart(2, '0')}` : 'ONE-SHOT';
+    return (
+      <div
+        key={item.path}
+        onClick={() => handleRailTileClick(item)}
+        className={`rounded-xl border bg-zinc-950 overflow-hidden cursor-pointer transition-all ${
+          isSelected
+            ? 'border-[#FFCC00] ring-1 ring-[#FFCC00]/50 shadow-[0_0_15px_rgba(255,204,0,0.3)]'
+            : 'border-white/10 hover:border-white/30'
+        }`}
+      >
+        <video
+          src={item.url}
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          onMouseEnter={(e) => {
+            const v = e.currentTarget;
+            v.play().catch(() => {});
+          }}
+          onMouseLeave={(e) => {
+            const v = e.currentTarget;
+            v.pause();
+            v.currentTime = 0;
+          }}
+          className="w-full aspect-video object-cover bg-black"
+        />
+        <div className="p-3 space-y-1.5">
+          <div className="flex items-center justify-between gap-2">
+            <div
+              className={`text-[9px] font-black uppercase tracking-widest ${
+                item.sceneIdx !== undefined ? 'text-[#FFCC00]' : 'text-zinc-400'
+              }`}
+            >
+              {sceneLabel}
+            </div>
+            <div className="text-[8px] text-zinc-600 font-mono">
+              {formatRelativeTime(item.createdAt)}
+            </div>
+          </div>
+          <div className="text-[9px] text-zinc-400 line-clamp-2 font-mono leading-snug min-h-[2.4em]">
+            {item.prompt || '—'}
+          </div>
+          <div className="flex gap-1.5 pt-1">
+            <a
+              href={item.downloadUrl}
+              download={`grifon-${
+                item.sceneIdx !== undefined
+                  ? `scene-${String(item.sceneIdx + 1).padStart(2, '0')}`
+                  : 'clip'
+              }.mp4`}
+              onClick={(e) => e.stopPropagation()}
+              className={`flex-1 ${ghostBtn} flex items-center justify-center gap-1 text-[9px] font-mono uppercase tracking-widest py-1.5`}
+              title="Download"
+            >
+              <Download className="w-3 h-3" />
+            </a>
+            <button
+              onClick={(e) => handleTileUsePrompt(e, item)}
+              className={`flex-1 ${ghostBtn} flex items-center justify-center gap-1 text-[9px] font-mono uppercase tracking-widest py-1.5`}
+              title="Use this prompt"
+            >
+              <Pencil className="w-3 h-3" />
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   /* ─── RENDERED RAIL ─── */
   const RenderedRail = (
@@ -711,8 +1028,14 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
       <div className="flex items-center justify-between">
         <div className={labelCaps}>// RENDERED</div>
         <div className="text-[10px] font-black text-[#FFCC00] font-mono">
-          {renderedCount}
-          <span className="text-zinc-500">/{seedPrompts.length || (oneShotResult ? 1 : 0)}</span>
+          {hasSeedPrompts ? (
+            <>
+              {renderedCount}
+              <span className="text-zinc-500">/{seedPrompts.length}</span>
+            </>
+          ) : (
+            <span>{library.length}</span>
+          )}
         </div>
       </div>
 
@@ -724,43 +1047,31 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
       )}
 
       <div className="flex-1 overflow-y-auto custom-scrollbar space-y-3 pr-1 -mr-1">
-        {galleryItems.length === 0 ? (
+        {libraryLoading ? (
+          <div className="space-y-3 animate-pulse">
+            {[0, 1, 2].map((i) => (
+              <div key={i} className="rounded-xl border border-white/10 bg-zinc-950 overflow-hidden">
+                <div className="aspect-video bg-white/5" />
+                <div className="p-3 space-y-2">
+                  <div className="h-2 bg-white/10 rounded w-1/2" />
+                  <div className="h-2 bg-white/10 rounded w-full" />
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : library.length === 0 ? (
           <div className="text-center py-10 text-zinc-600 text-[10px] font-mono uppercase tracking-widest leading-relaxed">
             <VideoIcon className="w-8 h-8 mx-auto mb-3 opacity-50" />
-            Renders show up here.
+            Your renders show up here.
             <br />
-            {hasSeedPrompts ? 'Click RENDER ALL to start.' : 'Generate a clip to begin.'}
+            They stay for 24 hours.
+            <br />
+            <span className="text-zinc-700 normal-case tracking-normal">
+              {hasSeedPrompts ? 'Click RENDER ALL to start.' : 'Generate a clip to begin.'}
+            </span>
           </div>
         ) : (
-          galleryItems.map((item) => (
-            <div
-              key={`${item.idx}-${item.result.url}`}
-              className="rounded-xl border border-white/10 bg-zinc-950 overflow-hidden"
-            >
-              <video
-                src={item.result.url}
-                controls
-                loop
-                muted
-                className="w-full aspect-video object-cover bg-black"
-              />
-              <div className="p-3 space-y-2">
-                <div className="text-[9px] font-black text-[#FFCC00] uppercase tracking-widest">
-                  {item.idx >= 0 ? `SCENE ${String(item.idx + 1).padStart(2, '0')}` : 'ONE-SHOT'}
-                </div>
-                <div className="text-[9px] text-zinc-400 line-clamp-2 font-mono leading-snug">
-                  {item.scriptLine}
-                </div>
-                <a
-                  href={item.result.downloadUrl}
-                  download={`grifon-${item.idx >= 0 ? `scene-${String(item.idx + 1).padStart(2, '0')}` : 'clip'}.mp4`}
-                  className={`${ghostBtn} flex items-center justify-center gap-1.5 text-[9px] font-mono uppercase tracking-widest py-2`}
-                >
-                  <Download className="w-3 h-3" /> Download
-                </a>
-              </div>
-            </div>
-          ))
+          library.map(renderRailTile)
         )}
       </div>
     </GlassPanel>
@@ -796,40 +1107,6 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
     </GlassPanel>
   );
 
-  /* ─── ONE-SHOT RESULT MODAL (inline) ─── */
-  const OneShotPreview = oneShotResult && mode === 'one-shot' && (
-    <div className="mt-4">
-      <GlassPanel className="p-4">
-        <div className="flex items-center gap-2 mb-3">
-          <Play className="w-4 h-4 text-[#FFCC00]" />
-          <div className={labelCaps}>// LATEST CLIP</div>
-        </div>
-        <video
-          src={oneShotResult.url}
-          controls
-          autoPlay
-          loop
-          className="w-full max-h-[55vh] rounded-xl border border-[#FFCC00]/30"
-        />
-        <div className="mt-3 flex gap-2">
-          <a
-            href={oneShotResult.downloadUrl}
-            download={`grifon-clip-${Date.now()}.mp4`}
-            className={`${ghostBtn} flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest px-3 py-2`}
-          >
-            <Download className="w-3 h-3" /> Download
-          </a>
-          <button
-            onClick={() => setOneShotResult(null)}
-            className={`${ghostBtn} flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest px-3 py-2`}
-          >
-            <RotateCw className="w-3 h-3" /> New Clip
-          </button>
-        </div>
-      </GlassPanel>
-    </div>
-  );
-
   return (
     <div className="min-h-screen bg-zinc-950 text-white font-mono flex flex-col p-4 sm:p-6 md:p-8">
       {Header}
@@ -842,10 +1119,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
         </div>
       ) : (
         <div className="flex flex-col lg:flex-row gap-5 flex-1">
-          <div className="flex-1 flex flex-col gap-5">
-            {CanvasPanel}
-            {OneShotPreview}
-          </div>
+          {CanvasPanel}
           {RenderedRail}
         </div>
       )}

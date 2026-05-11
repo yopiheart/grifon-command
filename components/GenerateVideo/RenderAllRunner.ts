@@ -52,7 +52,7 @@ export async function runQueue(jobs: RenderJob[], opts: RunQueueOpts): Promise<v
           prompt: job.prompt,
           startFrame: job.startFrame,
         } as VideoGenConfig,
-        { signal: opts.signal }
+        { signal: opts.signal, metadata: { sceneIdx: job.sceneIdx } }
       );
       opts.onEvent({ type: 'status', sceneIdx: job.sceneIdx, status: 'done', result });
     } catch (e: any) {

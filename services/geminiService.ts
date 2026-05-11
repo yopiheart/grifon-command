@@ -136,9 +136,20 @@ const proxyGenerateVideo = (params: any): Promise<{ operation: any }> =>
     jobDetail: 'Reaching the render farm…',
   });
 
-const proxyPollVideoOperation = async (operation: any): Promise<VideoPollResponse> => {
+interface VideoRenderMetadata {
+  prompt?: string;
+  sceneIdx?: number;
+  model?: VideoModelType;
+  aspectRatio?: string;
+  duration?: number;
+}
+
+const proxyPollVideoOperation = async (
+  operation: any,
+  metadata?: VideoRenderMetadata
+): Promise<VideoPollResponse> => {
   try {
-    return await proxyCall<VideoPollResponse>('/api/gemini/video/poll', { operation });
+    return await proxyCall<VideoPollResponse>('/api/gemini/video/poll', { operation, metadata });
   } catch (err: any) {
     if (err?.status === 502) {
       const code = err.body?.error;
@@ -263,6 +274,8 @@ export interface GeneratedVideoResult {
 interface GenerateVideoOpts {
   signal?: AbortSignal;
   onStatus?: (status: string) => void;
+  /** Extra context persisted alongside the rendered video for the library view. */
+  metadata?: { sceneIdx?: number };
 }
 
 const parseDataUrl = (dataUrl: string): { imageBytes: string; mimeType: string } => {
@@ -303,12 +316,20 @@ export const generateVideo = async (
   opts.onStatus?.('SUBMITTING_JOB');
   let { operation } = await proxyGenerateVideo(params);
 
+  const renderMetadata: VideoRenderMetadata = {
+    prompt: config.prompt.trim(),
+    sceneIdx: opts.metadata?.sceneIdx,
+    model: config.model,
+    aspectRatio: config.aspectRatio,
+    duration: config.duration,
+  };
+
   let result: VideoPollResponse;
   while (true) {
     if (opts.signal?.aborted) throw new Error('ABORTED');
     opts.onStatus?.('RENDERING');
     await delay(10000);
-    result = await proxyPollVideoOperation(operation);
+    result = await proxyPollVideoOperation(operation, renderMetadata);
     if (result.done) break;
     operation = result.operation;
   }
@@ -320,6 +341,19 @@ export const generateVideo = async (
 
   opts.onStatus?.('DOWNLOADING');
   return { url: result.url, downloadUrl: result.downloadUrl, mimeType: result.mimeType };
+};
+
+import type { VideoLibraryItem } from '../types';
+
+/**
+ * Lists the authenticated user's persisted video renders (Phase 2 library).
+ * Each item carries its prompt + render context (sceneIdx, model, aspect, duration)
+ * via the JSON sidecar written by api/gemini/video/poll.ts on successful upload.
+ * Signed URLs in the response are valid for 24h (same as the poll endpoint TTL).
+ */
+export const listVideoLibrary = async (): Promise<VideoLibraryItem[]> => {
+  const res = await proxyCall<{ items: VideoLibraryItem[] }>('/api/gemini/video/library', {});
+  return res.items ?? [];
 };
 
 // CAMERA ANGLE SET — rebalanced 2026-05-08-late-late-evening for storyboard-variety + face-to-camera safety.

@@ -6,6 +6,15 @@ import { rateLimitCheck } from '../../_lib/rateLimit.js';
 
 const Body = z.object({
   operation: z.unknown(),
+  metadata: z
+    .object({
+      prompt: z.string().min(1).optional(),
+      sceneIdx: z.number().int().nonnegative().optional(),
+      model: z.string().optional(),
+      aspectRatio: z.string().optional(),
+      duration: z.number().int().positive().optional(),
+    })
+    .optional(),
 });
 
 const POLL_LIMIT = 60;
@@ -148,6 +157,31 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (upload.error) {
     console.error('[api/gemini/video/poll] supabase upload failed:', upload.error.message);
     return res.status(502).json({ error: 'storage_upload_failed', status: 0, detail: upload.error.message });
+  }
+
+  // Best-effort: write a JSON sidecar with the prompt + render context so the
+  // library endpoint can hydrate past renders with their prompts. Sidecar
+  // failure is non-fatal — the video is already uploaded.
+  if (parsed.data.metadata) {
+    const sidecarPath = `${path}.meta.json`;
+    const sidecar = {
+      ...parsed.data.metadata,
+      videoPath: path,
+      mimeType,
+      createdAt: new Date().toISOString(),
+    };
+    const sidecarBuffer = Buffer.from(JSON.stringify(sidecar), 'utf-8');
+    const sidecarUpload = await admin.storage.from(BUCKET).upload(sidecarPath, sidecarBuffer, {
+      contentType: 'application/json',
+      cacheControl: '3600',
+      upsert: false,
+    });
+    if (sidecarUpload.error) {
+      console.warn(
+        '[api/gemini/video/poll] sidecar upload failed (non-fatal):',
+        sidecarUpload.error.message
+      );
+    }
   }
 
   const playSign = await admin.storage.from(BUCKET).createSignedUrl(path, SIGNED_URL_TTL_SECONDS);

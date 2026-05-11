@@ -412,6 +412,20 @@ export interface VideoGenConfig {
   elements: string[]; // Array of base64 strings
 }
 
+export interface VideoLibraryItem {
+  path: string;
+  url: string;
+  downloadUrl: string;
+  mimeType: string;
+  prompt: string;
+  sceneIdx?: number;
+  model?: VideoModelType;
+  aspectRatio?: string;
+  duration?: number;
+  createdAt: string;
+  sizeBytes?: number;
+}
+
 // --- SIGNAL_MODULATOR TYPES ---
 export type StabilityMode = 'creative' | 'natural' | 'robust';
 
