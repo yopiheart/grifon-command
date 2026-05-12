@@ -7,6 +7,11 @@ export interface RenderJob {
   sceneIdx: number;
   prompt: string;
   startFrame?: string;
+  /** Per-scene duration override. When present, runQueue passes this to
+   * generateVideo instead of the queue-level opts.config.duration. Lets
+   * RENDER ALL honor each scene's smart-duration math (words/2.5 + 0.3s)
+   * instead of locking every clip to a single global value. */
+  duration?: number;
 }
 
 export type QueueEvent =
@@ -54,6 +59,7 @@ export async function runQueue(jobs: RenderJob[], opts: RunQueueOpts): Promise<v
           ...opts.config,
           prompt: job.prompt,
           startFrame: job.startFrame,
+          duration: job.duration ?? opts.config.duration,
         } as VideoGenConfig,
         {
           signal: opts.signal,

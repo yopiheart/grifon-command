@@ -135,7 +135,9 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
   // Phase 4b — sticky-by-scene flags for the smart-duration heuristic. Once the
   // user manually clicks a duration chip on a scene, we stop auto-overriding it
   // until they switch to a different scene (or change model/resolution, which
-  // resets via the dependency array of the smart-default effect).
+  // resets via the dependency array of the smart-default effect). Only relevant
+  // in manual mode (no scriptLine); pipeline mode auto-computes per-scene at
+  // render time so this flag never fires there.
   const [manualDurationByScene, setManualDurationByScene] = useState<Record<number, boolean>>({});
 
   const queueAbortRef = useRef<AbortController | null>(null);
@@ -563,8 +565,17 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
               // proceed without start frame for this job
             }
           }
+          // Phase 6 — auto-compute per-scene duration from scriptLine.
+          // RENDER ALL previously inherited the single config.duration value
+          // (whatever scene was last viewed), forcing every clip to one length.
+          // For Director AI scenes the AI already knows the optimal duration
+          // via suggestDurationForScript; bypass the chip entirely.
+          const scriptLine = storyboard[i]?.scriptLine;
+          const sceneDuration = scriptLine
+            ? suggestDurationForScript(scriptLine, config.model, config.resolution)
+            : config.duration;
           setStatus(i, 'queued');
-          return { sceneIdx: i, prompt: p.prompt, startFrame };
+          return { sceneIdx: i, prompt: p.prompt, startFrame, duration: sceneDuration };
         })
       );
       jobs = prepared.filter((j): j is RenderJob => j !== null);
@@ -820,6 +831,16 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
           </div>
           <div>
             <div className={labelCaps}>Duration</div>
+            {/* Phase 6 — in pipeline mode the AI auto-computes per-scene
+                duration at RENDER ALL time from each scene's scriptLine.
+                Hiding the chips removes the manual-click-per-scene UX trap
+                where users believed they were configuring each scene
+                independently but config.duration only stored one value. */}
+            {storyboard?.[activeIdx]?.scriptLine ? (
+              <div className="mt-2 text-[10px] text-zinc-500 font-mono leading-snug">
+                // AI AUTO-DURATION · {suggestedDuration ?? config.duration}s for this scene · per-scene at render
+              </div>
+            ) : (
             <div className="flex flex-wrap gap-1.5 mt-2 items-center">
               {specs.durations.map((d) => {
                 const allowedDurations = getValidDurations(config.model, config.resolution);
@@ -861,7 +882,12 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
                 );
               })}
             </div>
-            {suggestedDuration !== null && hasSeedPrompts && (() => {
+            )}
+            {/* Phase 6 — old "Smart-picked · click to override" hint suppressed
+                when scriptLine is present (pipeline mode now uses the inline
+                "// AI AUTO-DURATION" line above and there's no chip to click).
+                Hint still shows for manual-mode runs without a scriptLine. */}
+            {suggestedDuration !== null && hasSeedPrompts && !storyboard?.[activeIdx]?.scriptLine && (() => {
               const scriptLine = storyboard?.[activeIdx]?.scriptLine ?? '';
               const words = scriptLine.trim().split(/\s+/).filter(Boolean).length;
               if (!words) return null;
