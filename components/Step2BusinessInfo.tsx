@@ -141,7 +141,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {[
-          { id: 'product', label: 'Service/Product', placeholder: 'e.g., Eco-friendly home cleaning service', helper: 'Physical product? Include size + color + shape + label so the AI matches your actual product.' },
+          { id: 'product', label: 'Service/Product', placeholder: 'e.g., Eco-friendly home cleaning service', helper: '' },
           { id: 'audience', label: 'Target Audience', placeholder: 'e.g., Busy young professionals', helper: '' },
           { id: 'benefit', label: 'Dream Result', placeholder: 'e.g., Wakes up energized, naka-2 hours back every morning, mas chill ang pasok sa work', helper: '' },
           { id: 'painPoint', label: '3 AM Worry', placeholder: 'e.g., 3 AM, hindi makatulog kasi tuition deadline na bukas — wala pang pera', helper: '' }

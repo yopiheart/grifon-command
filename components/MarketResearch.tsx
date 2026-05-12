@@ -19,6 +19,7 @@ interface MarketResearchProps {
 
 const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) => {
   const [formData, setFormData] = useState<MarketResearchInput>({
+    brandName: '',
     productName: '',
     productDescription: '',
     priceOffer: '',
@@ -93,6 +94,8 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
         const savedAtMs = Date.now();
         localStorage.setItem('marketMindReport', JSON.stringify(report));
         localStorage.setItem('marketMindReportSavedAt', savedAtMs.toString());
+        const { uploadedImages: _imgs, ...userInputs } = formData;
+        localStorage.setItem('marketMindUserInputs', JSON.stringify(userInputs));
         setPreviousReport(report);
         setPreviousSavedAt(savedAtMs);
         setShowRecallCard(false);
@@ -162,10 +165,24 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
                     </h2>
                     
                     <div className="space-y-2">
+                        <label htmlFor="brandName" className="block text-[10px] text-zinc-400 font-mono uppercase tracking-widest">
+                            // BRAND_NAME
+                        </label>
+                        <input
+                            id="brandName"
+                            name="brandName"
+                            value={formData.brandName || ''}
+                            onChange={handleChange}
+                            placeholder="e.g., Lola Inday's"
+                            className="w-full bg-zinc-950 border border-white/10 rounded-xl p-4 text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] text-sm"
+                        />
+                    </div>
+
+                    <div className="space-y-2">
                         <label htmlFor="productName" className="block text-[10px] text-zinc-400 font-mono uppercase tracking-widest">
                             // PRODUCT_SERVICE_NAME
                         </label>
-                        <input 
+                        <input
                             id="productName"
                             name="productName"
                             value={formData.productName}
@@ -188,9 +205,6 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
                             rows={4}
                             className="w-full bg-zinc-950 border border-white/10 rounded-xl p-4 text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] min-h-[100px] text-sm"
                         />
-                        <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase">
-                          // Physical product? Include size + color + shape + label so the AI matches your actual product.
-                        </p>
                     </div>
 
                     <div className="space-y-2">

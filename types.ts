@@ -88,6 +88,7 @@ export interface AllData {
 }
 
 export interface MarketResearchInput {
+  brandName?: string;
   productName: string;
   productDescription: string;
   priceOffer: string;

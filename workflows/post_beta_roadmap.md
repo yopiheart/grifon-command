@@ -181,6 +181,29 @@ Phase 4 beta-merge should not wait on this. Defer to next session.
 
 ---
 
+### 7. OfferOptimizer as Post-Render Rescue Tool (not pre-render prefill)
+
+**What:** Reposition OfferOptimizer from "primary autofill source for the wizard's offer field" to "rescue tool surfaced when ads underperform." Triggered by a post-launch performance signal (low CTR / low conversions after N days), not by a pre-render CTA on MarketResearch.
+
+**Why it matters:** Grifon's target user is the Filipino SMB owner who already has a working product + a working offer (₱280 marmalade, 50% spa promo, ₱150 laundry per kilo). They are not in the market for offer redesign — they need ads + targeting strategy. Treating OfferOptimizer as a default upstream tool wastes that user's time AND mislabels the wizard's "Current Offer / Pricing" field with an AI thesis they didn't want. OfferOptimizer's real value lands when the user's existing offer ISN'T converting — that's when a Hormozi-tier Grand Slam Offer redesign earns its keep.
+
+**Why parked:** Three reasons. (1) Requires performance-tracking infrastructure that doesn't exist yet — need CTR, conversion, ROAS surface per campaign before "underperform" can be defined. (2) Today's flow (MarketResearch → "build stronger offer first" CTA → OfferOptimizer) is opt-in and not actively harmful as long as MarketMind's offer autofill is stripped (shipped 2026-05-13). (3) The autofill-priority bug between MarketMind and OfferOptimizer (handoff fact #4: both use same `wizardPristine` guard so MarketMind silently blocks OfferOptimizer when both reports exist) is real but not user-facing until performance tracking exists.
+
+**When to resume:** When EITHER (a) ≥2 beta users complain that their ads aren't converting and ask "how do I make the offer stronger?" — that's the signal that the rescue surface has demand; OR (b) post-render performance tracking (CTR, conversions, ROAS) ships as a separate roadmap item.
+
+**Where to start:**
+1. Performance-tracking surface must exist first — likely a Dashboard module showing per-campaign metrics. Out of scope of this item; treat as a prerequisite.
+2. Define "underperform" thresholds: e.g., CTR < 1% after 100 impressions, OR no conversions after N days. Make these admin-tunable, not hardcoded.
+3. Build a "Your ads aren't converting — let's upgrade your offer →" CTA inside the campaign performance view that deeplinks into OfferOptimizer pre-populated with the campaign's businessInfo.
+4. Refactor `App.tsx` autofill priorities: when OfferOptimizer runs AFTER MarketMind for the same campaign, its `payload.offer` should OVERRIDE the user's typed `priceOffer` (signaling intentional offer replacement). Today's `prev.offer || ...` order silently locks the user's typed offer in place even after they explicitly opt into OfferOptimizer.
+5. Update the "build stronger offer first" CTA on MarketResearch — consider downgrading it or removing it entirely once the rescue surface exists, since most users won't need it on the first pass.
+
+**Scope estimate:** OfferOptimizer-as-rescue UX itself is ~4-6 hours. But the performance-tracking surface that triggers it is a separate ~3-5 day item. Don't start this without that prerequisite.
+
+**Source:** Neil during 2026-05-13 Decision Gate session — *"Ung offer for sure di nila un aalisin kasi currently nag wowork na un sa kanila ng matagal. If hindi sila makabenta, that the only time I think na mas maganda i-optimize ung offer nila para tumaas ung conversion nila dahil it has value stack and free."* This reframed OfferOptimizer's role from default-prefill to conditional-rescue, leading to the same-session decision to drop MarketMind's `bigIdea → offer` mapping and carry the user's MarketResearch `priceOffer` forward instead.
+
+---
+
 ## How to add new items
 
 When Neil endorses an idea but says "not now":

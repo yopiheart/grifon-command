@@ -312,9 +312,20 @@ const App: React.FC = () => {
         separator: prev.separator || r.contrarianTruth || r.villain || '',
         features: prev.features || r.bigIdea || '',
       }));
+      // Read user-typed inputs (brandName + priceOffer) saved alongside the AI report.
+      // The Big Idea (r.bigIdea) is a marketing thesis, not the user's actual offer —
+      // Filipino SMB users come with their own working offer/promo, so we carry that forward instead.
+      let userInputs: { brandName?: string; priceOffer?: string } = {};
+      try {
+        const raw = localStorage.getItem('marketMindUserInputs');
+        if (raw) userInputs = JSON.parse(raw);
+      } catch {
+        // Legacy report saved before sidecar existed — autofill leaves these fields empty.
+      }
       setClientDetails(prev => ({
         ...prev,
-        offer: prev.offer || r.bigIdea || '',
+        brandName: prev.brandName || userInputs.brandName || '',
+        offer: prev.offer || userInputs.priceOffer || '',
       }));
       setMarketMindLoadedAvatar(r.winningAvatar || null);
       marketMindPrefillRef.current = true;
