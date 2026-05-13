@@ -110,35 +110,111 @@ After Phase 4 ships, do RENDER ALL on a fresh wizard run (facemist OR Tita Marie
 - `~/.claude/plans/...` files DIE on reboot — this handoff doc is the durable record
 - Vercel: first-time setup still pending; mobile testing still blocked on Hobby 12-function cap
 
+## Evening Continuation (2026-05-13 evening) — Decision Gate Run + Q2/Q4 Fixes
+
+**+5 commits shipped this evening (HEAD now at `592c2d1`, pushed):**
+
+| Commit | Summary |
+|---|---|
+| `5e0af92` | Phase 4 — translate b-roll camera physics from Kling to Veo natural language (closes 4th architectural bug parked from morning session) |
+| `edefc14` | `.mcp.json` — Playwright MCP at project scope (Neil's commit; auto-loads on Claude Code startup, no restore script needed) |
+| `1a7d88a` | Step 7 — persistent hint when Veo 3.1 Lite + 1080p locks all clips to 8s |
+| `1317c5e` | Q4 — propagate endFrame through RENDER ALL queue (Scene 1 morph fix) |
+| `592c2d1` | Q2 — strengthen CTA price-leak guard with explicit examples (TUNED) |
+
+### Decision Gate run — Glossier face-mist (MrBeast style)
+
+Walked MarketResearch → wizard → RENDER ALL on a Glossier-branded Filipino face-mist ad. **4 of 7 scenes rendered before Veo's hourly cap hit.** UI surfaced "RATE LIMITED · 3 queued · 55m to resume" (queue auto-resumes when cooldown lifts).
+
+**Verified working (this evening's grade ✅):**
+- Phase 2 (MarketResearch autofill) — `BRAND_NAME` + `priceOffer` carried through to Step 1
+- Phase 4 (b-roll camera) — generated video prompts contain natural-language directives, zero Kling tokens
+- Phase 6 (per-scene duration UI) — chips hidden, "// AI AUTO-DURATION · Xs" hints shown
+- Step 7 hint — toggling Veo 3.1 Lite + 1080p shows the new gold hint
+
+**Not yet graded (only 4 of 7 scenes available):**
+- Q1 voice consistency across all scenes — need 5–7 to land
+- Q4 behavior-cue emotion workaround — Neil didn't get to test posture/gesture cues this run
+
+### Findings from the run (4)
+
+| # | Finding | Resolution | Status |
+|---|---|---|---|
+| 1 | Did removing `bigIdea` from autofill weaken script generation? | **No.** `bigIdea` still autofills `features` ([App.tsx:313](../App.tsx#L313)) which feeds the script prompt. Only the *misuse* as `clientDetails.offer` was removed. No code change needed. | Answered ✅ |
+| 2 | CTA leaked specific prices: *"I-click below, 50 slots for P299, P499, P999, free shipping!"* | TUNED edit at [api/_lib/prompts.ts](../api/_lib/prompts.ts) lines 377 (Testimonial) + 409 (MrBeast). Reframed CTA as curiosity-driver; added explicit "BANNED IN THE CTA — STRICT" subsection with ✅/❌ examples. Temu inherits MrBeast structure, covered. | Shipped `592c2d1` |
+| 3 | 502 + 429 errors on `/api/gemini/video` | 429 is Veo's hourly cap (queue handles it). 502 is upstream timeout. Documented in [agent_lessons.md](../agent_lessons.md) so future agents don't treat it as a bug. | Documented |
+| 4 | Scene 1 end-frame image didn't appear in rendered video | `RenderJob` lacked `endFrame?` field; `handleRenderAll` prep loop ignored `storyboard[i].endFrameImageUrl`. Fixed structural plumbing mirroring Phase 6's `duration` routing. | Shipped `1317c5e` |
+
+### Verification still pending (next render — Veo credits required)
+
+Once Veo cooldown lifts (~55m from RENDER ALL pause):
+
+1. **Q4 verification:** regenerate Scene 1 alone (~$1-2 Veo) — watch for the start → end frame morph
+2. **Q2 verification (very cheap, ~$0.05):** generate a fresh wizard script with the same MarketResearch input — confirm zero peso amounts in the CTA. If still leaking after the directive strengthening, escalate to a client-side regex sanitizer.
+3. **Q1 + Q4 grading:** let queued scenes 5–7 finish auto-resume, then evaluate voice consistency + behavior-cue emotion across all 7 scenes
+
+### Pending priorities (refresh)
+
+**P0 — verify Q2 + Q4 fixes** on the next render (cheap; the queue will auto-resume scenes 5-7, regenerate Scene 1 to test Q4, and one fresh script generation tests Q2).
+
+**P0 — Q1 + Q4 grading** drives the next big workstream choice:
+- If Q1 voice drifts → Phase 5 voice consolidation Session 1 (~3 hrs, foundation-only and safe regardless)
+- If Q4 emotion workaround works → document the technique for users
+- If Q4 doesn't work → Phase 5+ Vertex AI emotion dial is the only path (post_beta_roadmap.md item #5)
+
+**P1 — Phase 3 Step 3 Script UX two-phase view** (~1-2 hrs, [components/Step3AdScript.tsx](../components/Step3AdScript.tsx)) — UI improvement only, doesn't gate anything else.
+
+**P2 — still parked:** Phase 5 voice consolidation Sessions 2-4 (gated on Q1), Phase 5.2 multimodal storyboard bytes (Q3 fail from morning), OfferOptimizer-as-rescue (needs perf-tracking surface), Vercel route consolidation (Hobby 12-fn cap).
+
 ## Opening prompt for the next session
 
 Paste this into the next conversation's first message:
 
 ```
-Continuing from 2026-05-13 hero-lock session.
+Continuing from 2026-05-13 evening session (Decision Gate + Q2/Q4 fixes).
 
-Branch: main HEAD 6a01516 (pushed, working tree clean).
-Read FIRST: workflows/handoff_2026-05-13-hero-lock.md (full session record).
+Branch: main HEAD 592c2d1 (pushed, working tree clean).
+Read FIRST: workflows/handoff_2026-05-13-hero-lock.md — specifically the
+"Evening Continuation" section near the bottom.
 
 Top-line:
-- Decision Gate test ran on facemist 95ml + Tita Marie marmalade. Found 4 architectural bugs.
-- 3 shipped today: HERO image override priority (services/geminiService.ts VISUAL_GROUND_TRUTH_PRIORITY rule), autofill cleanup (MarketResearch BRAND_NAME field + userInputs sidecar replaces bigIdea→offer), auto per-scene duration in RENDER ALL (storyboard scriptLine drives per-job duration; chips hidden in pipeline mode).
-- 1 parked as Phase 4: Veo b-roll camera prompt still uses Kling-native "Zoom -5, Tilt Up" syntax (services/geminiService.ts:1496) — needs translation to Veo-friendly natural language. ~30 min TUNED edit, requires Neil approval.
+- Decision Gate run on Glossier (MrBeast, 4 of 7 scenes rendered before
+  Veo hourly cap hit) verified Phases 2, 4, 6, and the Step 7 hint as
+  working.
+- 4 new findings surfaced:
+  - Q1 (bigIdea) — answered, no code change needed.
+  - Q2 (CTA price leak: "P299, P499, P999" leaked into CTA) — TUNED
+    fix at api/_lib/prompts.ts:377 + 409 shipped as 592c2d1. Strengthened
+    "NEVER the bare price" with explicit ✅/❌ examples + a "BANNED IN
+    THE CTA — STRICT" subsection.
+  - Q3 (Veo 429 after Scene 4) — operational, documented in
+    agent_lessons.md so future agents don't treat 429 during RENDER ALL
+    as a code bug.
+  - Q4 (Scene 1 end-frame didn't appear in rendered video) — structural
+    fix shipped as 1317c5e. RenderJob now carries endFrame; handleRenderAll
+    propagates storyboard[i].endFrameImageUrl through the queue. Mirrors
+    Phase 6 duration routing.
 
-Phase 1 (HERO) verified ✅ on facemist test. Phase 2 (autofill) + Phase 6 (per-scene duration) shipped but not user-verified yet — no Veo credits needed to test, just walk the MarketResearch → SEND TO DIRECTOR AI → Step 1 flow + check Step 7 chips are hidden.
+P0 NEXT: verify Q2 + Q4 on next render (cheap — ~$0.05 for Q2 script
+test, ~$1-2 for Scene 1 regenerate to test Q4). Let the queue auto-resume
+scenes 5-7 once cooldown lifts, then grade Q1 voice consistency + Q4
+behavior-cue emotion across all 7 scenes.
 
-Strategic insight locked in: Grifon's target is Filipino SMB owners with working offers — OfferOptimizer is a RESCUE tool (parked item #7 in post_beta_roadmap.md), not a default autofill source.
+P0 NEXT (alternative if Q1 drifts after grading): Phase 5 voice
+consolidation Session 1 (~3 hrs, foundation-only per
+workflows/phase5_voice_consolidation.md).
 
-P0 NEXT (recommended): Phase 4 b-roll camera fix → then Decision Gate re-run to grade Q1 voice consistency + Q4 behavior-cue emotion with clean output.
-
-P1: Phase 3 Step 3 Script UX two-phase view (~1-2 hrs UI refactor in components/Step3AdScript.tsx).
+P1: Phase 3 Step 3 Script UX two-phase view (~1-2 hrs UI refactor in
+components/Step3AdScript.tsx).
 
 Cafe-PC reboot:
 - npm install if needed
 - npm run dev (likely :5173)
-- .env GEMINI_API_KEY confirmed present today
+- .env GEMINI_API_KEY confirmed present in today's session
 - If git identity fails: powershell -ExecutionPolicy Bypass -File scripts/restore-git-identity.ps1
 - Vercel still blocked on Hobby 12-function cap; mobile testing deferred
+- Playwright MCP now auto-loads via project-scope .mcp.json (no manual
+  restore needed)
 
 DO NOT auto-execute RENDER ALL or Vercel deploy. Both need user-driven action.
 ```
