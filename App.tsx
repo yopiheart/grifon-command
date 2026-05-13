@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, Lightbulb, RotateCw } from 'lucide-react';
-import { ClientDetails, BusinessInfo, Script, Scene, VideoPrompt, Avatar, CinematicNarrativeScene } from './types';
+import { ClientDetails, BusinessInfo, Script, Scene, VideoPrompt, Avatar, CinematicNarrativeScene, SceneBatchEntry } from './types';
 import StepIndicator from './components/StepIndicator';
 import Step1ClientDetails from './components/Step1ClientDetails';
 import Step2BusinessInfo from './components/Step2BusinessInfo';
@@ -133,6 +133,11 @@ const App: React.FC = () => {
   const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
   const [cinematicNarrative, setCinematicNarrative] = useState<CinematicNarrativeScene[] | null>(null);
   const [cinematicFrameMap, setCinematicFrameMap] = useState<Record<string, string>>({});
+  // Phase 5 v2 — Scene Pipeline batch voice generation. Populated by Generate
+  // Video's "// SEND TO SIGNAL MODULATOR ↗" button after RENDER ALL completes;
+  // consumed by Signal Modulator's Scene Pipeline tile (auto-selects when
+  // sceneBatch.length > 0).
+  const [sceneBatch, setSceneBatch] = useState<SceneBatchEntry[]>([]);
   const [cinematicResult, setCinematicResult] = useState<Scene[] | null>(null);
 
   const [userId, setUserId] = useState<string | null>(null);
@@ -667,11 +672,24 @@ const App: React.FC = () => {
           seedPrompts={videoPrompts}
           storyboard={storyboard}
           defaultAspectRatio={aspectRatio ?? '9:16'}
+          onSendToSignalModulator={(batch) => {
+            setSceneBatch(batch);
+            setActiveModule('signal_modulator');
+          }}
         />
       </PlanGate>
     );
   } else if (activeModule === 'signal_modulator') {
-    moduleElement = <SignalModulator onBack={() => setActiveModule(null)} globalScript={finalScript} />;
+    moduleElement = (
+      <SignalModulator
+        onBack={() => {
+          setSceneBatch([]);
+          setActiveModule(null);
+        }}
+        globalScript={finalScript}
+        sceneBatch={sceneBatch}
+      />
+    );
   } else if (activeModule === 'influencer_forge') {
     moduleElement = <InfluencerForge onBack={() => setActiveModule(null)} ethnicity={avatar?.ethnicity} />;
   } else if (activeModule === 'cinematic_studio') {

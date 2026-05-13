@@ -76,6 +76,19 @@ export interface VideoPrompt {
   prompt: string;
 }
 
+/**
+ * One scene's payload when routing from Generate Video → Signal Modulator
+ * for batch voice generation. Carries the scriptLine to TTS plus the rendered
+ * MP4 URL so the Signal Modulator's Scene Pipeline tile can bundle MP3 + MP4
+ * into a single ZIP for external merge (CapCut, etc.).
+ */
+export interface SceneBatchEntry {
+  sceneIdx: number;
+  scriptLine: string;
+  renderedUrl?: string;
+  type: 'talking' | 'b-roll' | 'cinematic';
+}
+
 export interface AllData {
     clientDetails: ClientDetails;
     businessInfo: BusinessInfo;

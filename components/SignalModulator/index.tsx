@@ -1,26 +1,35 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { ChevronLeft, Mic, MessageSquare, Wand2, History } from 'lucide-react';
+import { ChevronLeft, Mic, MessageSquare, Wand2, History, Layers } from 'lucide-react';
 import { fetchVoices, fetchBudget } from '../../services/voiceService';
-import type { VoiceLibrary, HistoryTake, BudgetStatus } from '../../types';
+import type { VoiceLibrary, HistoryTake, BudgetStatus, SceneBatchEntry } from '../../types';
 import { useSubscription } from '../../hooks/useSubscription';
 import { planAtLeast } from '../../utils/planGate';
 import TextToSpeechTile from './TextToSpeechTile';
 import VoiceChangerTile from './VoiceChangerTile';
 import VoiceCloningTile from './VoiceCloningTile';
+import ScenePipelineTile from './ScenePipelineTile';
 import SessionHistory from './SessionHistory';
 import { useSessionHistory } from './useSessionHistory';
 
-type Tile = 'tts' | 'vc' | 'clone';
+type Tile = 'tts' | 'vc' | 'clone' | 'scene-pipeline';
 
 interface SignalModulatorProps {
   onBack: () => void;
   globalScript?: string[];
+  sceneBatch?: SceneBatchEntry[];
 }
 
 const EMPTY_LIBRARY: VoiceLibrary = { stockVoices: [], myVoices: [], libraryVoices: [], quotaUsed: 0, quotaMax: 1 };
 
-const SignalModulator: React.FC<SignalModulatorProps> = ({ onBack, globalScript = [] }) => {
-  const [activeTile, setActiveTile] = useState<Tile>('tts');
+const SignalModulator: React.FC<SignalModulatorProps> = ({ onBack, globalScript = [], sceneBatch = [] }) => {
+  // When the user routes here via "// SEND TO SIGNAL MODULATOR ↗" from Generate
+  // Video, sceneBatch arrives populated — auto-select the Scene Pipeline tab so
+  // they don't have to hunt for it.
+  const [activeTile, setActiveTile] = useState<Tile>(sceneBatch.length > 0 ? 'scene-pipeline' : 'tts');
+
+  useEffect(() => {
+    if (sceneBatch.length > 0) setActiveTile('scene-pipeline');
+  }, [sceneBatch.length]);
   const [library, setLibrary] = useState<VoiceLibrary>(EMPTY_LIBRARY);
   const [librarLoading, setLibraryLoading] = useState(true);
   const [historyOpen, setHistoryOpen] = useState(false);
@@ -48,7 +57,7 @@ const SignalModulator: React.FC<SignalModulatorProps> = ({ onBack, globalScript 
 
   const activeBucket = useMemo(() => {
     if (!budget) return null;
-    if (activeTile === 'tts') return budget.tts;
+    if (activeTile === 'tts' || activeTile === 'scene-pipeline') return budget.tts;
     if (activeTile === 'vc') return budget.sts;
     return budget.clone;
   }, [budget, activeTile]);
@@ -127,12 +136,21 @@ const SignalModulator: React.FC<SignalModulatorProps> = ({ onBack, globalScript 
 
       <div className="flex justify-center mb-8">
         <div className="bg-zinc-900 border border-white/10 p-1 rounded-xl flex gap-1 flex-wrap">
+          {sceneBatch.length > 0 && tabBtn('scene-pipeline', 'SCENE PIPELINE', Layers)}
           {tabBtn('tts', 'TEXT-TO-SPEECH', MessageSquare)}
           {tabBtn('vc', 'VOICE CHANGER', Mic)}
           {canClone && tabBtn('clone', 'VOICE CLONING', Wand2)}
         </div>
       </div>
 
+      {activeTile === 'scene-pipeline' && (
+        <ScenePipelineTile
+          library={library}
+          sceneBatch={sceneBatch}
+          history={history}
+          onUsageReported={refreshBudget}
+        />
+      )}
       {activeTile === 'tts' && (
         <TextToSpeechTile
           library={library}

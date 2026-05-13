@@ -22,6 +22,7 @@ import type {
   VideoPrompt,
   Scene,
   VideoLibraryItem,
+  SceneBatchEntry,
 } from '../../types';
 import {
   VIDEO_MODEL_SPECS,
@@ -68,6 +69,10 @@ interface GenerateVideoProps {
   seedPrompts?: VideoPrompt[];
   storyboard?: Scene[];
   defaultAspectRatio?: '9:16' | '16:9' | null;
+  /** Phase 5 v2 — when present and all scenes have rendered, the // RENDERED
+   * rail shows a "SEND TO SIGNAL MODULATOR ↗" button that hands off the
+   * scriptLines (+ rendered MP4 URLs) for batch voice generation. */
+  onSendToSignalModulator?: (batch: SceneBatchEntry[]) => void;
 }
 
 const ACTIVE_MODELS: VideoModelType[] = ['Veo_3.1_Fast', 'Veo_3.1_Quality', 'Veo_3.1_Lite'];
@@ -96,6 +101,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
   seedPrompts = [],
   storyboard = [],
   defaultAspectRatio,
+  onSendToSignalModulator,
 }) => {
   const hasSeedPrompts = seedPrompts.length > 0;
   const [mode, setMode] = useState<Mode>(hasSeedPrompts ? 'pipeline' : 'one-shot');
@@ -1419,6 +1425,28 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
           {formatEta(Math.max(0, Math.ceil((resumeAt - Date.now()) / 1000)))} to resume
         </div>
       )}
+
+      {hasSeedPrompts &&
+        onSendToSignalModulator &&
+        renderedCount === seedPrompts.length &&
+        renderedCount > 0 && (
+          <button
+            type="button"
+            onClick={() => {
+              const batch: SceneBatchEntry[] = seedPrompts.map((p, i) => ({
+                sceneIdx: i,
+                scriptLine: storyboard[i]?.scriptLine ?? '',
+                renderedUrl: sceneResults[i]?.url,
+                type: p.type,
+              }));
+              onSendToSignalModulator(batch);
+            }}
+            className="w-full text-[10px] font-mono font-bold tracking-widest uppercase rounded-xl border border-[#FFCC00]/40 bg-[#FFCC00]/10 text-[#FFCC00] px-3 py-2.5 hover:bg-[#FFCC00]/20 hover:border-[#FFCC00] transition-all"
+            title="Pass scriptLines + rendered MP4 URLs to Signal Modulator for batch voice generation"
+          >
+            // SEND TO SIGNAL MODULATOR ↗
+          </button>
+        )}
 
       <div className="flex-1 overflow-y-auto custom-scrollbar space-y-3 pr-1 -mr-1">
         {libraryLoading ? (
