@@ -934,6 +934,11 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
                 </button>
               ))}
             </div>
+            {config.model === 'Veo_3.1_Lite' && config.resolution === '1080p' && (
+              <div className="mt-2 text-[10px] text-[#FFCC00]/70 font-mono uppercase tracking-widest">
+                // Veo 3.1 Lite @ 1080p · all clips locked to 8s
+              </div>
+            )}
           </div>
         </div>
       )}
