@@ -565,6 +565,22 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
               // proceed without start frame for this job
             }
           }
+          // Q4 — per-scene end-frame propagation. Single-scene UI (see the
+          // useEffect around line ~180) loads endFrameImageUrl into
+          // config.endFrame, but RENDER ALL's queue prep previously dropped
+          // it on the floor — every scene rendered without its end frame,
+          // collapsing the b-roll Scene 1 morph from start → end frame.
+          const sceneEndImage = storyboard[i]?.endFrameImageUrl ?? storyboard[i]?.manualEndFrameUrl;
+          let endFrame: string | undefined;
+          if (sceneEndImage) {
+            try {
+              const raw = await urlToDataUrl(sceneEndImage);
+              const compressed = await compressImageForUpload(raw);
+              endFrame = compressed.dataUrl;
+            } catch {
+              // proceed without end frame for this job
+            }
+          }
           // Phase 6 — auto-compute per-scene duration from scriptLine.
           // RENDER ALL previously inherited the single config.duration value
           // (whatever scene was last viewed), forcing every clip to one length.
@@ -575,7 +591,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
             ? suggestDurationForScript(scriptLine, config.model, config.resolution)
             : config.duration;
           setStatus(i, 'queued');
-          return { sceneIdx: i, prompt: p.prompt, startFrame, duration: sceneDuration };
+          return { sceneIdx: i, prompt: p.prompt, startFrame, endFrame, duration: sceneDuration };
         })
       );
       jobs = prepared.filter((j): j is RenderJob => j !== null);

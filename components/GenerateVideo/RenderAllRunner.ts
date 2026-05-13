@@ -7,6 +7,11 @@ export interface RenderJob {
   sceneIdx: number;
   prompt: string;
   startFrame?: string;
+  /** Per-scene end-frame override. Mirrors startFrame routing — without this,
+   * RENDER ALL dropped each scene's endFrameImageUrl on the floor, so the
+   * b-roll Scene 1 morph from start → end collapsed in queued renders even
+   * though single-scene UI honored it. */
+  endFrame?: string;
   /** Per-scene duration override. When present, runQueue passes this to
    * generateVideo instead of the queue-level opts.config.duration. Lets
    * RENDER ALL honor each scene's smart-duration math (words/2.5 + 0.3s)
@@ -21,7 +26,7 @@ export type QueueEvent =
   | { type: 'complete' };
 
 export interface RunQueueOpts {
-  config: Omit<VideoGenConfig, 'prompt' | 'startFrame' | 'elements'>;
+  config: Omit<VideoGenConfig, 'prompt' | 'startFrame' | 'endFrame' | 'elements'>;
   signal: AbortSignal;
   onEvent: (evt: QueueEvent) => void;
   /** Phase 4d — when present, each in-flight render persists to IndexedDB
@@ -59,6 +64,7 @@ export async function runQueue(jobs: RenderJob[], opts: RunQueueOpts): Promise<v
           ...opts.config,
           prompt: job.prompt,
           startFrame: job.startFrame,
+          endFrame: job.endFrame,
           duration: job.duration ?? opts.config.duration,
         } as VideoGenConfig,
         {
