@@ -112,7 +112,7 @@ After Phase 4 ships, do RENDER ALL on a fresh wizard run (facemist OR Tita Marie
 
 ## Evening Continuation (2026-05-13 evening) — Decision Gate Run + Q2/Q4 Fixes
 
-**+5 commits shipped this evening (HEAD now at `592c2d1`, pushed):**
+**+7 commits shipped this evening (HEAD now at `d6458cb`, pushed):**
 
 | Commit | Summary |
 |---|---|
@@ -121,6 +121,8 @@ After Phase 4 ships, do RENDER ALL on a fresh wizard run (facemist OR Tita Marie
 | `1a7d88a` | Step 7 — persistent hint when Veo 3.1 Lite + 1080p locks all clips to 8s |
 | `1317c5e` | Q4 — propagate endFrame through RENDER ALL queue (Scene 1 morph fix) |
 | `592c2d1` | Q2 — strengthen CTA price-leak guard with explicit examples (TUNED) |
+| `0db5424` | Mandatory camera motion in talking + b-roll prompts (TUNED follow-up to Phase 4 after Neil re-watched the videos and they still felt static) |
+| `d6458cb` | **NEW FEATURE — Phase 5 v2 Scene Pipeline.** "SEND TO SIGNAL MODULATOR ↗" button in Generate Video's // RENDERED rail → new SCENE PIPELINE tab in Signal Modulator → batch TTS one voice across all scenes → DOWNLOAD ALL (.ZIP). Collapses ~28 manual per-ad actions to ~4. |
 
 ### Decision Gate run — Glossier face-mist (MrBeast style)
 
@@ -145,13 +147,14 @@ Walked MarketResearch → wizard → RENDER ALL on a Glossier-branded Filipino f
 | 3 | 502 + 429 errors on `/api/gemini/video` | 429 is Veo's hourly cap (queue handles it). 502 is upstream timeout. Documented in [agent_lessons.md](../agent_lessons.md) so future agents don't treat it as a bug. | Documented |
 | 4 | Scene 1 end-frame image didn't appear in rendered video | `RenderJob` lacked `endFrame?` field; `handleRenderAll` prep loop ignored `storyboard[i].endFrameImageUrl`. Fixed structural plumbing mirroring Phase 6's `duration` routing. | Shipped `1317c5e` |
 
-### Verification still pending (next render — Veo credits required)
+### Verification gates still open (~$2.20 to close all)
 
-Once Veo cooldown lifts (~55m from RENDER ALL pause):
-
-1. **Q4 verification:** regenerate Scene 1 alone (~$1-2 Veo) — watch for the start → end frame morph
-2. **Q2 verification (very cheap, ~$0.05):** generate a fresh wizard script with the same MarketResearch input — confirm zero peso amounts in the CTA. If still leaking after the directive strengthening, escalate to a client-side regex sanitizer.
-3. **Q1 + Q4 grading:** let queued scenes 5–7 finish auto-resume, then evaluate voice consistency + behavior-cue emotion across all 7 scenes
+1. **Camera-motion mandatory framing (`0db5424`)** — regenerate one Glossier talking scene (~$1-2 Veo). Pass = visible camera move (dolly-in, push-in, parallactic shift, etc.). Fail = Veo 3.1 Lite is the engagement bottleneck; consider upgrading default to Fast or accelerating Phase 5+ Vertex migration.
+2. **Q4 endFrame (`1317c5e`)** — single-scene regenerate Scene 1 b-roll (~$1-2 Veo). Pass = visible start→end frame morph.
+3. **Q2 CTA price-leak (`592c2d1`, ~$0.05 Gemini)** — generate a fresh wizard script with the same priced MarketResearch input. Pass = CTA contains scarcity + free-shipping but ZERO peso amounts.
+4. **Phase 5 v2 Scene Pipeline UX (`d6458cb`, $0)** — Glossier storyboard is still loaded (7/7 RENDERED). In Generate Video, click new "// SEND TO SIGNAL MODULATOR ↗" at top of // RENDERED rail. Signal Modulator should open with new SCENE PIPELINE tab pre-selected, all 7 scenes listed with scriptLines.
+5. **Phase 5 v2 full pass (~$0.15 ElevenLabs)** — pick voice (defaults to first Filipino library entry) → GENERATE ALL VOICES → after all done, DOWNLOAD ALL (.ZIP) → unzip should contain `scene_NN_<type>.mp3` × 7 + `README.txt` with CapCut merge instructions.
+6. **Q1 + Q4 emotion grading (free if queue already finished)** — listen to all 7 Glossier scenes (silent in this stack, so Q1 reframe: when running Phase 5 v2 with one Filipino voice, is the result coherent?). Try posture/gesture cues in custom prompts for Q4 behavior-cue emotion test.
 
 ### Pending priorities (refresh)
 
@@ -171,50 +174,77 @@ Once Veo cooldown lifts (~55m from RENDER ALL pause):
 Paste this into the next conversation's first message:
 
 ```
-Continuing from 2026-05-13 evening session (Decision Gate + Q2/Q4 fixes).
+Continuing from 2026-05-13 late-evening session (8 commits — Decision Gate
+findings, mandatory motion, Phase 5 v2 Scene Pipeline shipped).
 
-Branch: main HEAD 592c2d1 (pushed, working tree clean).
+Branch: main HEAD d6458cb (pushed, working tree clean).
 Read FIRST: workflows/handoff_2026-05-13-hero-lock.md — specifically the
-"Evening Continuation" section near the bottom.
+"Evening Continuation" section near the bottom (most current).
 
-Top-line:
-- Decision Gate run on Glossier (MrBeast, 4 of 7 scenes rendered before
-  Veo hourly cap hit) verified Phases 2, 4, 6, and the Step 7 hint as
-  working.
-- 4 new findings surfaced:
-  - Q1 (bigIdea) — answered, no code change needed.
-  - Q2 (CTA price leak: "P299, P499, P999" leaked into CTA) — TUNED
-    fix at api/_lib/prompts.ts:377 + 409 shipped as 592c2d1. Strengthened
-    "NEVER the bare price" with explicit ✅/❌ examples + a "BANNED IN
-    THE CTA — STRICT" subsection.
-  - Q3 (Veo 429 after Scene 4) — operational, documented in
-    agent_lessons.md so future agents don't treat 429 during RENDER ALL
-    as a code bug.
-  - Q4 (Scene 1 end-frame didn't appear in rendered video) — structural
-    fix shipped as 1317c5e. RenderJob now carries endFrame; handleRenderAll
-    propagates storyboard[i].endFrameImageUrl through the queue. Mirrors
-    Phase 6 duration routing.
+Top-line — 8 commits shipped yesterday, all on main:
+- 5e0af92  Phase 4 b-roll camera Kling→Veo natural language
+- edefc14  Playwright MCP at project scope (Neil's own commit)
+- 1a7d88a  Step 7 hint when Veo 3.1 Lite + 1080p locks to 8s
+- 1317c5e  Q4 endFrame propagation in RENDER ALL queue (Scene 1 morph fix)
+- 592c2d1  Q2 CTA price-leak strengthening (TUNED)
+- 6d43d5c  docs: Decision Gate findings + Veo 429 lesson
+- 0db5424  Mandatory camera motion (TUNED, talking + b-roll follow-up)
+- d6458cb  Phase 5 v2 Scene Pipeline batch voice generation (NEW FEATURE)
 
-P0 NEXT: verify Q2 + Q4 on next render (cheap — ~$0.05 for Q2 script
-test, ~$1-2 for Scene 1 regenerate to test Q4). Let the queue auto-resume
-scenes 5-7 once cooldown lifts, then grade Q1 voice consistency + Q4
-behavior-cue emotion across all 7 scenes.
+Verification gates still open (do these BEFORE new work, ~$2.20 total):
+1. Camera-motion fix (0db5424) — single-scene regenerate one Glossier
+   talking scene (~$1-2 Veo). Pass = visible camera move. Fail = Veo
+   3.1 Lite is the bottleneck; consider Fast default or Vertex migration.
+2. Q4 endFrame fix (1317c5e) — single-scene regenerate Scene 1 b-roll
+   (~$1-2 Veo). Pass = visible start→end frame morph.
+3. Q2 CTA fix (592c2d1) — generate fresh wizard script with same priced
+   MarketResearch input (~$0.05 Gemini). Pass = CTA has scarcity +
+   free-shipping but ZERO peso amounts.
+4. Phase 5 v2 Scene Pipeline (d6458cb) — Glossier storyboard is still
+   loaded (7/7 RENDERED). In Generate Video, click new "// SEND TO
+   SIGNAL MODULATOR ↗" at top of // RENDERED rail. Signal Modulator
+   should open with new SCENE PIPELINE tab pre-selected, all 7 scenes
+   listed. FREE up to this point. GENERATE ALL costs ~$0.15 ElevenLabs.
+5. Step 7 hint (1a7d88a) — toggle Veo 3.1 Lite + 1080p → see gold
+   "all clips locked to 8s" hint. FREE.
 
-P0 NEXT (alternative if Q1 drifts after grading): Phase 5 voice
-consolidation Session 1 (~3 hrs, foundation-only per
-workflows/phase5_voice_consolidation.md).
+Strategic context (CRITICAL — don't relitigate):
+- Veo via Gemini API STRIPS audio — all rendered MP4s are silent. Voice
+  comes from ElevenLabs via Signal Modulator. Phase 5 v2 makes that
+  workflow not-painful (was 28 manual actions per ad; now ~4).
+- Q1 voice consistency in this stack = which voice the user picks (one
+  voice = consistent by definition). NOT a Veo audio drift problem.
+  Vertex AI assumption in workflows/phase5_voice_consolidation.md (v1
+  plan) is superseded by v2.
 
-P1: Phase 3 Step 3 Script UX two-phase view (~1-2 hrs UI refactor in
-components/Step3AdScript.tsx).
+P0 NEXT: close verification gates 1-4 above. Most ad-engagement signal
+comes from gate 1 (camera motion). Most workflow-friction signal comes
+from gate 4 (Phase 5 v2 UX walk).
 
-Cafe-PC reboot:
+P1 (deferred, cheap quick wins):
+- "DOWNLOAD ALL RENDERED (.ZIP)" button in GenerateVideo // RENDERED
+  rail (~30-45 min, mirror Step5Storyboard's handleDownloadAllImages
+  pattern)
+- bigIdea → MAIN FEATURES label/content mismatch (Q1 from this session;
+  same flavor as the offer→bigIdea bug fixed in f9a5cff)
+- Phase 3 Step 3 Script UX two-phase view (~1-2 hrs)
+
+P2 still parked:
+- Phase 5.2 multimodal storyboard bytes (Photos 2&3 — Q3 from morning)
+- OfferOptimizer-as-rescue UX (needs perf-tracking surface)
+- Vercel route consolidation (Hobby 12-fn cap)
+- Avatar emotion vs identity dial (Phase 5+ Vertex AI)
+- brandVoiceStorage (revisit if beta users complain)
+- Auto-merge MP3+MP4 server-side (FFmpeg, Phase 5.2+)
+
+Cafe-PC reboot reminders:
 - npm install if needed
 - npm run dev (likely :5173)
-- .env GEMINI_API_KEY confirmed present in today's session
+- .env GEMINI_API_KEY confirmed present in yesterday's session
 - If git identity fails: powershell -ExecutionPolicy Bypass -File scripts/restore-git-identity.ps1
-- Vercel still blocked on Hobby 12-function cap; mobile testing deferred
-- Playwright MCP now auto-loads via project-scope .mcp.json (no manual
-  restore needed)
+- Playwright MCP auto-loads via project-scope .mcp.json (no restore needed)
 
 DO NOT auto-execute RENDER ALL or Vercel deploy. Both need user-driven action.
+DO NOT default-upgrade Veo model from Lite to Fast without explicit Neil
+approval (separate cost decision; default stays Lite for beta cost-control).
 ```
