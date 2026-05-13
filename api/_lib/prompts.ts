@@ -374,13 +374,22 @@ export const buildAdScriptPrompt = (
       4. **Transformation:** The shift from Pain Point ("${businessInfo.painPoint}") to Result ("${businessInfo.benefit}").
       5. **Proof:** Highlight the 1-2 selected features. Stack comparative differentiation: "Marami akong na-try na ibang [category], pero ito lang ang gumana sa akin kasi ${businessInfo.separator}." This is where the differentiator earns its keep. If separator is empty, fall back to: "Highlight the 1-2 selected features."
       6. **Objection Killer:** Solve the common doubt.
-      7. **CTA:** Ad-native call-to-action with WARM recommendation tone (not direct-sell). Inject offer STRUCTURE (scarcity + value adds + urgency) from "${offer}", NEVER the bare price.
+      7. **CTA:** Ad-native call-to-action with WARM recommendation tone (not direct-sell). Drive CURIOSITY to the landing page / Messenger — specific prices and peso amounts belong THERE, not in the ad.
 
          BANNED CTA PHRASES (organic-IG patterns, not for paid ads):
          - "link sa bio" / "link in bio"  → use "click below" / "i-click below" / "tap below"
          - "DM us" / "DM kayo" alone     → use "message us" / "send message"
 
-         REQUIRED IN OUTPUT: at least ONE scarcity word (e.g., "first 50", "limited", "today only") AND ALL value-adds named in "${offer}" must appear verbatim or near-verbatim. Do NOT drop value-adds. Example pattern (warm tone): "Click below — first 50 may free shipping at libreng recipe ebook." If offer is empty, fall back to: "Click below para subukan."
+         BANNED IN THE CTA (price-leak guard — STRICT):
+         - Any peso amount (₱X, PX, P X, e.g., "₱999", "P299")
+         - Any pricing tier list (e.g., "P299, P499, P999")
+         - Any "X for Y" or "buy 1 take 1" with prices
+         Even if "${offer}" contains explicit prices, STRIP them. The CTA's job is to make them tap — the LP/Messenger reveals the price.
+
+         REQUIRED IN OUTPUT: at least ONE scarcity word (e.g., "first 50", "limited", "today only") AND ALL non-price value-adds named in "${offer}" — bonuses, free shipping, guarantees, ebooks — appear verbatim or near-verbatim. Drop the peso amounts but keep the bonus items by name.
+         - ✅ "Click below — first 50 may free shipping at libreng recipe ebook."
+         - ❌ "Click below, first 50 for P999 may free shipping!"
+         If offer is empty, fall back to: "Click below para subukan."
 
       **INTRO PATTERN EXAMPLES** (for beat 1 — adapt content to audience, do not copy literally):
       - OFW audience → "Ako si Mark. 5 years na akong nasa Saudi para mabuhay yung pamilya — pero may isang bagay na halos natalo ako."
@@ -406,13 +415,22 @@ export const buildAdScriptPrompt = (
         3. **Struggles:** Deep dive into "${businessInfo.painPoint}".
         4. **Discovery:** Introducing "${brandName}'s ${businessInfo.product}".
         5. **Result + Proof:** Visual payoff based on "${businessInfo.benefit}". Stack proof: "Hindi tulad ng iba — kami ${businessInfo.separator}." This is the "why believe?" slot. NEVER in the hook (kills curiosity); NEVER in the CTA (offer owns that). If separator is empty, fall back to: "Visual payoff based on benefit."
-        6. **CTA:** High-energy ad-native call-to-action. Inject offer STRUCTURE (scarcity + value adds + urgency) from "${offer}", NEVER the bare price.
+        6. **CTA:** High-energy ad-native call-to-action. Drive CURIOSITY to the landing page / Messenger — specific prices and peso amounts belong THERE, not in the ad.
 
            BANNED CTA PHRASES (organic-IG patterns, not for paid ads):
            - "link sa bio" / "link in bio"  → use "click below" / "i-click below" / "tap below"
            - "DM us" / "DM kayo" alone     → use "message us" / "send message"
 
-           REQUIRED IN OUTPUT: at least ONE scarcity word (e.g., "first 50", "limited slots", "today only") AND ALL value-adds named in "${offer}" must appear verbatim or near-verbatim. Do NOT drop value-adds — softening = failure. Example pattern: "I-click below — first 50 lang may free shipping at libreng recipe ebook." If offer is empty, fall back to: "I-click below ngayon."
+           BANNED IN THE CTA (price-leak guard — STRICT):
+           - Any peso amount (₱X, PX, P X, e.g., "₱999", "P299")
+           - Any pricing tier list (e.g., "P299, P499, P999")
+           - Any "X for Y" or "buy 1 take 1" with prices
+           Even if "${offer}" contains explicit prices, STRIP them. The CTA's job is to make them tap — the LP/Messenger reveals the price.
+
+           REQUIRED IN OUTPUT: at least ONE scarcity word (e.g., "first 50", "limited slots", "today only") AND ALL non-price value-adds named in "${offer}" — bonuses, free shipping, guarantees, ebooks — appear verbatim or near-verbatim. Drop the peso amounts but keep the bonus items by name.
+           - ✅ "I-click below — first 50 lang may free shipping at libreng recipe ebook."
+           - ❌ "I-click below, 50 slots for P299, P499, P999, free shipping!"
+           If offer is empty, fall back to: "I-click below ngayon."
 
         **IDENTITY PATTERN EXAMPLES** (for beat 2 — adapt to audience, do not copy literally):
         - OFW family audience → "Tuwing umagang malayo sa pamilya, kape ang nag-aalala sa'yo."
