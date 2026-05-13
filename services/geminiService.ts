@@ -1492,8 +1492,9 @@ export const generateVideoPrompts = async (storyboard: Scene[], businessInfo: Bu
 
       **OPTION A: IF TYPE IS "b-roll" (Use for SCENE 1 & Visuals):**
          - **IDENTITY RULE:** Refer to the product only as "${productName}".
-         - **CAMERA PHYSICS** (Weave ONE randomly into the prose):
+         - **CAMERA PHYSICS (MANDATORY — open the prose with this, never static):**
            - "slow dolly-out with upward tilt revealing scale" | "aggressive macro push-in" | "smooth lateral tracking pan with subtle counter-roll" | "slow dolly-out with gentle crane lift"
+         - **MOTION CONTINUITY:** The chosen camera move runs through the FULL clip duration. Camera position at frame 0 and final frame MUST be visibly different — STATIC SHOTS ARE FORBIDDEN.
          - **SCENE 1 (HOOK) DIRECTIVE:** Describe a morphing/transition from the Start Frame to the End Frame. Skip audio direction.
          - **REGULAR B-ROLL DIRECTIVE:** Focus on the product's action. Include short audio direction (SFX + background music register, NO SPEECH) at the end.
          - **NEGATIVE PHRASE:** Append at the end as a comma-separated tail — "Avoid low quality, blurry, distorted, deformation, morphing, melting, glitching, extra limbs, text, watermark, writing, letters, subtitles."
@@ -1505,7 +1506,7 @@ export const generateVideoPrompts = async (storyboard: Scene[], businessInfo: Bu
          - **Start with Direct Dialogue:** Lead with the script line in quotes.
          - **IDENTITY RULE:** If character mentions product, they say "${productName}".
          - **Performance & Micro-expressions:** Describe facial tension, eye movement, and mouth shapes — all already in motion at frame 0.
-         - **Cinematic Grammar:** Use specific lenses (35mm, 85mm) and camera physics — pick ONE per scene that fits the beat: dolly-in (intimacy/escalation), parallactic shift (reveal/payoff), rack focus (emphasis), or aggressive handheld (urgency). CAMERA MOVE BEGINS WITH THE FIRST SYLLABLE — never before — so the movement happens DURING dialogue, not as pre-speech setup. Keep movement subtle on 4s clips, more pronounced on 6–8s clips. Apply realistic lens breathing on focus pulls. NO STATIC SHOTS.
+         - **Cinematic Grammar (CAMERA MOTION IS MANDATORY — never static):** Open the prose with the camera physics directive. Use specific lenses (35mm, 85mm) and pick ONE camera move per scene: dolly-in (intimacy/escalation), parallactic shift (reveal/payoff), rack focus (emphasis), or aggressive handheld (urgency). The camera position at frame 0 and the final frame MUST be visibly different — the viewer should feel motion at any moment. CAMERA MOVE BEGINS WITH THE FIRST SYLLABLE — never before — so movement happens DURING dialogue. On 4s clips: modest but visible (not subtle). On 6–8s clips: pronounced. Apply realistic lens breathing on focus pulls. STATIC SHOTS ARE FORBIDDEN.
          - **Audio Landscape:** Define the sync-sound environment (SFX: distant room tone, Ambient: low electrical hum).
          - **First & Last Frame Logic:** Starting frame = avatar mid-syllable forming the opening word, mouth shape unambiguous. Last frame = next syllable or natural breath, NOT a post-speech resolve-state with a closed mouth and neutral expression.
          - **OUTPUT FORMAT:** A single, cohesive cinematic paragraph starting with the dialogue in quotes. Seamlessly blend performance details, camera physics, lighting atmosphere, and frame logic into a natural narrative flow. DO NOT use bracketed headers or labels daylight [Subject Performance] or [Camera Motion/Lens].
