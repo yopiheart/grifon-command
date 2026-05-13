@@ -1493,7 +1493,7 @@ export const generateVideoPrompts = async (storyboard: Scene[], businessInfo: Bu
       **OPTION A: IF TYPE IS "b-roll" (Use for SCENE 1 & Visuals):**
          - **IDENTITY RULE:** Refer to the product only as "${productName}".
          - **CAMERA PHYSICS** (Weave ONE randomly into the prose):
-           - "Zoom -5, Tilt Up" | "Zoom +7" | "Horizontal +4, Roll -2" | "Zoom -5, Vertical +3"
+           - "slow dolly-out with upward tilt revealing scale" | "aggressive macro push-in" | "smooth lateral tracking pan with subtle counter-roll" | "slow dolly-out with gentle crane lift"
          - **SCENE 1 (HOOK) DIRECTIVE:** Describe a morphing/transition from the Start Frame to the End Frame. Skip audio direction.
          - **REGULAR B-ROLL DIRECTIVE:** Focus on the product's action. Include short audio direction (SFX + background music register, NO SPEECH) at the end.
          - **NEGATIVE PHRASE:** Append at the end as a comma-separated tail — "Avoid low quality, blurry, distorted, deformation, morphing, melting, glitching, extra limbs, text, watermark, writing, letters, subtitles."
