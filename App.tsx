@@ -145,9 +145,8 @@ const App: React.FC = () => {
   const [pendingSession, setPendingSession] = useState<WizardSessionV1 | null>(null);
   const [hasRestored, setHasRestored] = useState(false);
   const saveErrorToastedRef = useRef(false);
-  const marketMindPrefillRef = useRef(false);
   const [marketMindLoadedAvatar, setMarketMindLoadedAvatar] = useState<string | null>(null);
-  const offerOptimizerPrefillRef = useRef(false);
+  const [prefillSource, setPrefillSource] = useState<'marketResearch' | 'offerOptimizer' | null>(null);
   const [directorAngleBrief, setDirectorAngleBrief] = useState<string | null>(null);
 
   // When the user swaps script formula on Step 2, dump downstream caches that depend on the script.
@@ -296,13 +295,23 @@ const App: React.FC = () => {
     return () => clearTimeout(timer);
   }, [userId, isAuthenticated, hasRestored, currentStep, clientDetails, businessInfo, script, language, finalScript, avatar, storyboard, videoPrompts, aspectRatio, thumbnailUrl]);
 
-  // Auto-prefill Director AI wizard from MarketMind report on entry.
-  // Fires once per session when entering creative_director with a pristine wizard.
+  // Auto-prefill Director AI wizard from MarketMind / Offer Optimizer.
+  // Intent-based: fires only when the user clicked SEND TO DIRECTOR AI in those modules
+  // (which writes `grifon_pendingAutofill` to localStorage). Survives stale wizard state —
+  // we don't gate on "pristine wizard" anymore, because the click itself is the intent.
   useEffect(() => {
     if (activeModule !== 'creative_director') return;
-    if (marketMindPrefillRef.current) return;
-    const wizardPristine = currentStep === 1 && !clientDetails.brandName && !businessInfo.product && script === null;
-    if (!wizardPristine) return;
+    if (!hasRestored) return;
+    if (pendingSession) return;
+    const flag = localStorage.getItem('grifon_pendingAutofill');
+    if (flag !== 'marketResearch') return;
+    const tsRaw = localStorage.getItem('grifon_pendingAutofillTs');
+    const tsAgeMs = tsRaw ? Date.now() - Number(tsRaw) : Infinity;
+    if (tsAgeMs > 10 * 60 * 1000) {
+      localStorage.removeItem('grifon_pendingAutofill');
+      localStorage.removeItem('grifon_pendingAutofillTs');
+      return;
+    }
     const savedReport = localStorage.getItem('marketMindReport');
     if (!savedReport) return;
     try {
@@ -317,9 +326,9 @@ const App: React.FC = () => {
         separator: prev.separator || r.contrarianTruth || r.villain || '',
         features: prev.features || r.bigIdea || '',
       }));
-      // Read user-typed inputs (brandName + priceOffer) saved alongside the AI report.
       // The Big Idea (r.bigIdea) is a marketing thesis, not the user's actual offer —
-      // Filipino SMB users come with their own working offer/promo, so we carry that forward instead.
+      // Filipino SMB users come with their own working offer/promo, so we carry the
+      // user-typed brandName/priceOffer forward via the sidecar instead.
       let userInputs: { brandName?: string; priceOffer?: string } = {};
       try {
         const raw = localStorage.getItem('marketMindUserInputs');
@@ -333,19 +342,28 @@ const App: React.FC = () => {
         offer: prev.offer || userInputs.priceOffer || '',
       }));
       setMarketMindLoadedAvatar(r.winningAvatar || null);
-      marketMindPrefillRef.current = true;
+      setPrefillSource('marketResearch');
+      setCurrentStep(1);
+      localStorage.removeItem('grifon_pendingAutofill');
+      localStorage.removeItem('grifon_pendingAutofillTs');
     } catch {
       // Legacy string blob — no auto-prefill, user can still manually fill.
     }
-  }, [activeModule, currentStep, clientDetails.brandName, businessInfo.product, script]);
+  }, [activeModule, hasRestored, pendingSession]);
 
-  // Auto-prefill Director AI wizard from Offer Optimizer result on entry.
-  // Mirrors the MarketMind prefill pattern: pristine wizard + ref-guarded single-fire per session.
   useEffect(() => {
     if (activeModule !== 'creative_director') return;
-    if (offerOptimizerPrefillRef.current) return;
-    const wizardPristine = currentStep === 1 && !clientDetails.brandName && !businessInfo.product && script === null;
-    if (!wizardPristine) return;
+    if (!hasRestored) return;
+    if (pendingSession) return;
+    const flag = localStorage.getItem('grifon_pendingAutofill');
+    if (flag !== 'offerOptimizer') return;
+    const tsRaw = localStorage.getItem('grifon_pendingAutofillTs');
+    const tsAgeMs = tsRaw ? Date.now() - Number(tsRaw) : Infinity;
+    if (tsAgeMs > 10 * 60 * 1000) {
+      localStorage.removeItem('grifon_pendingAutofill');
+      localStorage.removeItem('grifon_pendingAutofillTs');
+      return;
+    }
     const savedOffer = localStorage.getItem('offerOptimizerResult');
     if (!savedOffer) return;
     try {
@@ -362,13 +380,17 @@ const App: React.FC = () => {
       }));
       setClientDetails(prev => ({
         ...prev,
+        brandName: prev.brandName || r?.conversionAssets?.brandName || '',
         offer: prev.offer || payload.offer || '',
       }));
-      offerOptimizerPrefillRef.current = true;
+      setPrefillSource('offerOptimizer');
+      setCurrentStep(1);
+      localStorage.removeItem('grifon_pendingAutofill');
+      localStorage.removeItem('grifon_pendingAutofillTs');
     } catch {
       // Malformed JSON — skip prefill, user can still manually fill.
     }
-  }, [activeModule, currentStep, clientDetails.brandName, businessInfo.product, script]);
+  }, [activeModule, hasRestored, pendingSession]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -450,6 +472,8 @@ const App: React.FC = () => {
     setCinematicNarrative(null);
     setCinematicFrameMap({});
     setCinematicResult(null);
+    setPrefillSource(null);
+    setMarketMindLoadedAvatar(null);
   };
 
   const goToLegal = (route: Route) => {
@@ -813,7 +837,13 @@ const App: React.FC = () => {
             )}
             {currentStep <= TOTAL_STEPS && <StepIndicator currentStep={currentStep} totalSteps={TOTAL_STEPS} onStepClick={(s) => s < currentStep && setCurrentStep(s)} />}
             <div className="mt-8">
-                {currentStep === 1 && <Step1ClientDetails data={clientDetails} setData={setClientDetails} onNext={() => setCurrentStep(2)} />}
+                {currentStep === 1 && <Step1ClientDetails
+                  data={clientDetails}
+                  setData={setClientDetails}
+                  onNext={() => setCurrentStep(2)}
+                  prefilled={prefillSource !== null && !!clientDetails.brandName && !!clientDetails.offer}
+                  prefilledFrom={prefillSource}
+                />}
                 {currentStep === 2 && <Step2BusinessInfo data={businessInfo} setData={setBusinessInfo} onNext={() => setCurrentStep(3)} onBack={() => setCurrentStep(1)} aspectRatio={aspectRatio} setAspectRatio={setAspectRatio} />}
                 {currentStep === 3 && <Step3AdScript businessInfo={businessInfo} script={script} setScript={setScript} setFinalScript={setFinalScript} language={language} setLanguage={setLanguage} onNext={() => setCurrentStep(4)} onBack={() => setCurrentStep(2)} brandName={clientDetails.brandName} offer={clientDetails.offer} directorAngleBrief={directorAngleBrief} setDirectorAngleBrief={setDirectorAngleBrief} />}
                 {currentStep === 4 && <Step4Avatar businessInfo={businessInfo} avatar={avatar} setAvatar={setAvatar} onNext={() => setCurrentStep(5)} onBack={() => setCurrentStep(3)} aspectRatio={aspectRatio} />}

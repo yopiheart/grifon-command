@@ -120,6 +120,8 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
 
   const handleSendToDirector = () => {
     if (!result || !onNavigate) return;
+    localStorage.setItem('grifon_pendingAutofill', 'marketResearch');
+    localStorage.setItem('grifon_pendingAutofillTs', Date.now().toString());
     onNavigate('creative_director');
   };
 
@@ -151,7 +153,11 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
               setResult(previousReport);
               setShowRecallCard(false);
             }}
-            onSendToDirector={onNavigate ? () => onNavigate('creative_director') : undefined}
+            onSendToDirector={onNavigate ? () => {
+              localStorage.setItem('grifon_pendingAutofill', 'marketResearch');
+              localStorage.setItem('grifon_pendingAutofillTs', Date.now().toString());
+              onNavigate('creative_director');
+            } : undefined}
             onDismiss={() => setShowRecallCard(false)}
           />
         )}

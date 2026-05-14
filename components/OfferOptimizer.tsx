@@ -261,6 +261,8 @@ const OfferOptimizer: React.FC<OfferOptimizerProps> = ({ onBack, onNavigate }) =
 
   const handleSendToDirector = () => {
     if (!result || !onNavigate) return;
+    localStorage.setItem('grifon_pendingAutofill', 'offerOptimizer');
+    localStorage.setItem('grifon_pendingAutofillTs', Date.now().toString());
     onNavigate('creative_director');
   };
 
@@ -309,7 +311,11 @@ const OfferOptimizer: React.FC<OfferOptimizerProps> = ({ onBack, onNavigate }) =
               setResult(previousResult);
               setShowRecallCard(false);
             }}
-            onSendToDirector={onNavigate ? () => onNavigate('creative_director') : undefined}
+            onSendToDirector={onNavigate ? () => {
+              localStorage.setItem('grifon_pendingAutofill', 'offerOptimizer');
+              localStorage.setItem('grifon_pendingAutofillTs', Date.now().toString());
+              onNavigate('creative_director');
+            } : undefined}
             onDismiss={() => setShowRecallCard(false)}
           />
         )}

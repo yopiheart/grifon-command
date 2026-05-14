@@ -7,10 +7,13 @@ interface Step1Props {
   data: ClientDetails;
   setData: (data: ClientDetails) => void;
   onNext: () => void;
+  prefilled?: boolean;
+  prefilledFrom?: 'marketResearch' | 'offerOptimizer' | null;
 }
 
-const Step1ClientDetails: React.FC<Step1Props> = ({ data, setData, onNext }) => {
+const Step1ClientDetails: React.FC<Step1Props> = ({ data, setData, onNext, prefilled, prefilledFrom }) => {
   const [formData, setFormData] = useState(data);
+  const [forceEdit, setForceEdit] = useState(false);
 
   // Without this, useState(data) freezes the prop at mount and silently
   // ignores subsequent parent updates (e.g. wizard auto-prefill).
@@ -22,13 +25,60 @@ const Step1ClientDetails: React.FC<Step1Props> = ({ data, setData, onNext }) => 
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
-  
+
   const handleNext = () => {
     setData(formData);
     onNext();
   };
-  
+
   const isFormValid = formData.brandName && formData.offer;
+
+  if (prefilled && !forceEdit && formData.brandName && formData.offer) {
+    const sourceLabel = prefilledFrom === 'offerOptimizer' ? 'OFFER OPTIMIZER' : 'MARKET RESEARCH';
+    return (
+      <GlassPanel>
+        <div className="mb-8 border-b border-white/10 pb-6">
+          <h2 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight">
+            Step 1: Confirm Brand
+          </h2>
+          <p className="text-[10px] text-[#FFCC00] font-mono tracking-widest uppercase mt-2">
+            // AUTO-PREFILLED FROM {sourceLabel}
+          </p>
+        </div>
+
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <label className="block text-[10px] text-zinc-500 font-mono uppercase tracking-widest">
+              // Brand Name / Page Name
+            </label>
+            <div className="bg-zinc-950 border border-white/10 rounded-xl p-4 text-white text-sm">
+              {formData.brandName}
+            </div>
+          </div>
+          <div className="space-y-2">
+            <label className="block text-[10px] text-zinc-500 font-mono uppercase tracking-widest">
+              // Current Offer / Pricing
+            </label>
+            <div className="bg-zinc-950 border border-white/10 rounded-xl p-4 text-white text-sm">
+              {formData.offer}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-10 flex justify-between items-center pt-6 border-t border-white/10">
+          <button
+            onClick={() => setForceEdit(true)}
+            className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 hover:text-[#FFCC00] transition-colors"
+          >
+            // EDIT FIELDS INSTEAD
+          </button>
+          <GoldButton onClick={handleNext} className="px-8 py-3">
+            CONFIRM & PROCEED &gt;
+          </GoldButton>
+        </div>
+      </GlassPanel>
+    );
+  }
 
   return (
     <GlassPanel>
