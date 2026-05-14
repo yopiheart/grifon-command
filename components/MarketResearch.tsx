@@ -330,6 +330,18 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
                     )}
 
                     <div className="flex-grow bg-zinc-950 border border-white/10 rounded-xl p-6 overflow-y-auto custom-scrollbar relative">
+                        {result && onNavigate && (
+                            <div className="sticky top-0 -mx-6 -mt-6 mb-4 px-6 py-3 bg-zinc-950/95 backdrop-blur-md border-b border-white/10 z-20">
+                                <div className="flex items-center justify-between gap-3 flex-wrap">
+                                    <span className="text-[10px] font-mono uppercase tracking-widest text-[#FFCC00] border border-[#FFCC00]/30 bg-[#FFCC00]/5 rounded px-2 py-1">
+                                        {result.headlines?.length ?? 0} HEADLINES · {result.videoHooks?.length ?? 0} HOOKS · {result.fbAdLibraryAngles?.length ?? 0} CONCEPTS
+                                    </span>
+                                    <GoldButton onClick={handleSendToDirector} className="text-[10px] py-2 px-3 whitespace-nowrap flex items-center gap-1.5">
+                                        SEND TO DIRECTOR AI <ArrowRight className="w-3 h-3" />
+                                    </GoldButton>
+                                </div>
+                            </div>
+                        )}
                         {isAnalyzing ? (
                             <div className="absolute inset-0 flex items-center justify-center bg-zinc-950/80 backdrop-blur-sm z-10 rounded-xl">
                                 <Loader message="SIMULATING CUSTOMER RESEARCH..." />
