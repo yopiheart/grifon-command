@@ -5,7 +5,7 @@ import { generateAdScript, generateCinematicThemes } from '../services/geminiSer
 import { GlassPanel } from './ui/GlassPanel';
 import { GoldButton } from './ui/GoldButton';
 import Loader from './ui/Loader';
-import { Check, RefreshCw, Copy } from 'lucide-react';
+import { Check, RefreshCw, Copy, ChevronLeft } from 'lucide-react';
 
 interface Step3Props {
   businessInfo: BusinessInfo;
@@ -36,6 +36,7 @@ const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, script, setScript, 
   const [strategicAudit, setStrategicAudit] = useState<string>(script?.strategicAudit || '');
   const [selectedHook, setSelectedHook] = useState<1 | 2 | null>(null);
   const [localLanguage, setLocalLanguage] = useState<'English' | 'Taglish' | null>(propLanguage);
+  const [step3Mode, setStep3Mode] = useState<'pick' | 'review'>(script ? 'review' : 'pick');
   
   // Cinematic Specific State
   const [themes, setThemes] = useState<VisualTheme[]>([]);
@@ -106,6 +107,7 @@ const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, script, setScript, 
       if (script) {
           setGeneratedScript(script);
           setStrategicAudit(script.strategicAudit || '');
+          setStep3Mode('review');
       }
   }, [script]);
 
@@ -145,7 +147,8 @@ const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, script, setScript, 
         setStrategicAudit(customScript.strategicAudit || '');
         setScript(customScript);
         setSelectedHook(1);
-        if (!localLanguage) setLocalLanguage('English'); 
+        setStep3Mode('review');
+        if (!localLanguage) setLocalLanguage('English');
     }
   }, [businessInfo, generatedScript, setScript, localLanguage]);
 
@@ -161,7 +164,8 @@ const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, script, setScript, 
       setStrategicAudit(newScript.strategicAudit || '');
       setScript(newScript);
       setAppLanguage(localLanguage);
-      setSelectedHook(null); 
+      setSelectedHook(null);
+      setStep3Mode('review');
     } catch (err) {
       setError('Failed to generate ad script. Please try again.');
       console.error(err);
@@ -342,7 +346,7 @@ const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, script, setScript, 
       {loading && <Loader message="PROCESSING LANGUAGE DATA..." />}
       {error && <p className="text-red-500 text-center mb-4 font-mono">{error}</p>}
 
-      {angleOptions && (
+      {step3Mode === 'pick' && angleOptions && (
         <div className="mb-8 bg-zinc-950/50 backdrop-blur-xl border border-white/10 rounded-2xl p-6 space-y-5">
           <div className="flex items-center justify-between border-b border-white/10 pb-3">
             <h3 className="text-[10px] text-[#FFCC00] font-mono uppercase tracking-widest">// PICK_YOUR_ANGLE</h3>
@@ -424,34 +428,49 @@ const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, script, setScript, 
         </div>
       )}
 
-      <div className="mb-8 flex flex-col items-center justify-center space-y-6">
-         <div className="flex items-center gap-4 bg-zinc-950/50 backdrop-blur-xl p-4 border border-white/10 rounded-2xl">
-             <span className="text-[#FFCC00] font-bold font-mono text-xs uppercase">Target Language:</span>
-             <div className="flex gap-2">
-                 <button 
-                    onClick={() => setLocalLanguage('English')} 
-                    className={`py-2 px-6 rounded-xl text-xs font-bold uppercase tracking-widest transition-all ${localLanguage === 'English' ? 'bg-[#FFCC00] text-black' : 'bg-zinc-900 text-zinc-400 border border-white/10 hover:border-white/20 hover:text-white'}`}
-                 >
-                    ENGLISH
-                 </button>
-                 <button 
-                    onClick={() => setLocalLanguage('Taglish')} 
-                    className={`py-2 px-6 rounded-xl text-xs font-bold uppercase tracking-widest transition-all ${localLanguage === 'Taglish' ? 'bg-[#FFCC00] text-black' : 'bg-zinc-900 text-zinc-400 border border-white/10 hover:border-white/20 hover:text-white'}`}
-                 >
-                    TAGLISH
-                 </button>
-             </div>
-         </div>
-         
-         {!loading && !generatedScript && (
-            <GoldButton onClick={handleGenerateScript} disabled={!localLanguage} className="w-full md:w-auto px-8 py-3">
-                INITIALIZE SCRIPT GENERATION
-            </GoldButton>
-         )}
-      </div>
+      {step3Mode === 'pick' && (
+        <div className="mb-8 flex flex-col items-center justify-center space-y-6">
+           <div className="flex items-center gap-4 bg-zinc-950/50 backdrop-blur-xl p-4 border border-white/10 rounded-2xl">
+               <span className="text-[#FFCC00] font-bold font-mono text-xs uppercase">Target Language:</span>
+               <div className="flex gap-2">
+                   <button
+                      onClick={() => setLocalLanguage('English')}
+                      className={`py-2 px-6 rounded-xl text-xs font-bold uppercase tracking-widest transition-all ${localLanguage === 'English' ? 'bg-[#FFCC00] text-black' : 'bg-zinc-900 text-zinc-400 border border-white/10 hover:border-white/20 hover:text-white'}`}
+                   >
+                      ENGLISH
+                   </button>
+                   <button
+                      onClick={() => setLocalLanguage('Taglish')}
+                      className={`py-2 px-6 rounded-xl text-xs font-bold uppercase tracking-widest transition-all ${localLanguage === 'Taglish' ? 'bg-[#FFCC00] text-black' : 'bg-zinc-900 text-zinc-400 border border-white/10 hover:border-white/20 hover:text-white'}`}
+                   >
+                      TAGLISH
+                   </button>
+               </div>
+           </div>
 
-      {generatedScript && !loading && (
+           {!loading && !generatedScript && (
+              <GoldButton onClick={handleGenerateScript} disabled={!localLanguage} className="w-full md:w-auto px-8 py-3">
+                  INITIALIZE SCRIPT GENERATION
+              </GoldButton>
+           )}
+        </div>
+      )}
+
+      {step3Mode === 'review' && generatedScript && !loading && (
         <div className="space-y-6 animate-fade-in">
+          {angleOptions && (
+            <button
+              onClick={() => {
+                setStep3Mode('pick');
+                setGeneratedScript(null);
+                setScript(null);
+                setSelectedHook(null);
+              }}
+              className="text-[10px] font-mono uppercase tracking-widest text-zinc-400 hover:text-[#FFCC00] transition-colors flex items-center gap-1.5"
+            >
+              <ChevronLeft className="w-3 h-3" /> TRY DIFFERENT ANGLE
+            </button>
+          )}
           {/* AI STRATEGY ADVICE BUBBLE */}
           {strategicAudit && (
             <div className="p-8 bg-zinc-900 border border-white/10 backdrop-blur-md relative overflow-hidden group rounded-2xl">
@@ -510,15 +529,17 @@ const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, script, setScript, 
       )}
       
       <div className="mt-10 flex justify-between items-center pt-6 border-t border-white/10">
-        <button 
-          onClick={onBack} 
+        <button
+          onClick={onBack}
           className="text-[10px] font-bold tracking-widest text-zinc-400 border border-white/10 px-6 py-3 rounded-full hover:bg-white/5 hover:text-white transition-all uppercase"
         >
           &lt; BACK
         </button>
-        <GoldButton onClick={handleNext} disabled={!selectedHook || loading} className="px-8 py-3">
-          CONFIRM & PROCEED &gt;
-        </GoldButton>
+        {step3Mode === 'review' && (
+          <GoldButton onClick={handleNext} disabled={!selectedHook || loading} className="px-8 py-3">
+            CONFIRM & PROCEED &gt;
+          </GoldButton>
+        )}
       </div>
     </GlassPanel>
   );
