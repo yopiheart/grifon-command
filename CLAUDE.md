@@ -80,6 +80,18 @@ Project-specific rules:
 - **`/clear` kills an active goal.** Mid-goal context hygiene is a hard reset, not a refresh — wrap up or capture status (`◎ /goal active`) before clearing.
 - **Single-session only on cafe PCs.** `--resume` carries the condition but resets timer + token baseline, and the defreezer wipes the session anyway. Plan to finish in one sitting; commit incrementally.
 
+#### Plan → Goal pipeline
+
+After every approved plan (`ExitPlanMode` accepted) that involves code changes to `api/`, `services/`, `components/`, or `App.tsx`, your FIRST action in execution mode must be:
+
+1. Re-read the plan file at the path the system reported.
+2. Draft a `/goal` invocation using the condition template above. Cite the existing build-gate Stop hook's pass message and any relevant verifier skill (`verify-changes`, `gemini-eval`, `brand-check`) explicitly in the condition.
+3. **Skip clause.** If the plan is trivial (single-line fix, docs-only edit, single-var rename, infra-config touch with no code change, or research-only with no artifact), say *"no `/goal` needed — executing directly"* and proceed without a goal.
+4. Otherwise, output the draft `/goal` in a fenced code block and ask Neil to **approve / edit / skip**.
+5. Do NOT begin code edits until Neil responds.
+
+This gives Neil a two-gate workflow: approve the plan, then approve the goal that executes it. Both gates are user-controlled — the agent never fires `/goal` on its own.
+
 ## Architecture
 
 **Routing** — `App.tsx` manages all routes as a single `Route` type (`landing | pricing | app | billing_success | terms | privacy | refund | support`). There is no React Router; path detection is manual via `window.location.pathname` in `detectInitialRoute()`.
