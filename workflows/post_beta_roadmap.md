@@ -16,6 +16,8 @@ Half-baked ideas don't go here — they go in conversation and either die or get
 
 ### 1. Nightly Regression `/loop` — dev velocity
 
+> **Primitive mapping (2026-05-15):** This is the textbook [`/loop`](https://code.claude.com/docs/en/scheduled-tasks#run-a-prompt-repeatedly-with-%2Floop) use case (time-driven). The per-run verification step inside the loop is a [`/goal`](https://code.claude.com/docs/en/goal) — e.g., `/goal "all 11 modules produce baseline-matching outputs against .golden/, OR stop after 20 turns"`. When you unpark this, see the "Goal-driven execution" section in `CLAUDE.md` for the condition template and TUNED-file guardrails.
+
 **What:** A Claude Code `/loop` (or an always-on VPS cron equivalent) that runs golden-path inputs through each of the 11 modules every night, captures outputs, diffs against last-known-good, and posts failures to a single channel (GitHub Issue, Discord webhook, or email).
 
 **Why it matters:** Solo dev + 11 modules + tuned prompts that regress silently when Gemini ships model updates = a guaranteed Friday-night fire. The `/loop` converts that fragility from "I find out when a beta user complains" to "I see a diff in the morning."
@@ -38,6 +40,8 @@ Half-baked ideas don't go here — they go in conversation and either die or get
 ---
 
 ### 2. Odyssey-as-Cron — the actual Autopilot tier feature
+
+> **Primitive mapping (2026-05-15):** Trigger is `pg_cron` (or Vercel Cron); the per-Day verification inside `api/odyssey/tick.ts` is conceptually a [`/goal`](https://code.claude.com/docs/en/goal) condition — "Day N is published, verified by Supabase row marked posted, with no scene exceeding budget cap." `/goal` itself is a session-scoped Claude Code primitive and won't run inside the cron handler; the framework here is design vocabulary for how the handler should express its success/failure contract. When you unpark this, see the "Goal-driven execution" section in `CLAUDE.md`.
 
 **What:** Turn Influencer Forge from on-demand-per-day into a true autopilot. User configures one Odyssey, sets `startDate` + `cadence` (daily / 3× weekly / weekly), then walks away. Content drops on schedule for 30 days without them logging in.
 

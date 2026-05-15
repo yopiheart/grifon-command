@@ -26,6 +26,24 @@ Tests-from-goals corollary: when the verification mechanism is a new test, write
 
 A clean type-check is necessary, not sufficient.
 
+## Goal-compatible contract (when paired with `/goal`)
+
+When the work spans many turns and you're driving it with [`/goal`](https://code.claude.com/docs/en/goal), the Phase 1 contract IS the goal condition — written so the blind evaluator can judge it from the transcript alone.
+
+Translate the three lines into a single condition: **end state + stated check + constraint + turn cap**.
+
+Example — refactoring a wizard step:
+
+> *"`Step3AdScript.tsx` no longer imports from `legacy/` AND `npm run build` exits 0 AND `npm test` exits 0 AND the project Stop-hook reports the build-gate clean, with no edits to `services/geminiService.ts` or `api/_lib/prompts.ts`, OR stop after 20 turns."*
+
+Why this shape works:
+- **End state** is a grep-able fact Claude can demonstrate (`grep -r 'legacy/' Step3AdScript.tsx` returns empty).
+- **Stated check** names the exit codes the evaluator can see in the transcript.
+- **Constraint** locks the TUNED files so the evaluator cannot greenlight prompt drift.
+- **Turn cap** bounds token spend per the CLAUDE.md "Goal-driven execution" convention.
+
+If you can't compress all three Phase 1 lines into a single transcript-verifiable condition, the task is too large or too vague for `/goal` — break it into smaller goals or drive it by hand.
+
 ## What this skill does NOT cover
 
 - Stochastic Gemini outputs (creative scripts, storyboards, images) — manual eyeballing still required

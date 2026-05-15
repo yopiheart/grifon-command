@@ -63,6 +63,23 @@ LLM reasoning degrades sharply past ~100k tokens of context. Treat the conversat
 - **Sub-agent calls are expensive in tokens** — a single `Explore` agent can consume tens of thousands of tokens before reporting back. Use them once per session for big-picture exploration; afterwards work from the report, not from re-exploring.
 - **Vertical slices over horizontal layers.** When adding a new module or feature, build types + service call + UI + state in one slice through one feature. Don't do "all types first, then all services" — it produces no working feedback until the very end.
 
+### Goal-driven execution (`/goal`)
+
+When a task has a single measurable end state and would otherwise need 5+ manual back-and-forth turns (audit punch-list items, multi-module refactors, regression chasing), set a [`/goal`](https://code.claude.com/docs/en/goal) instead of driving each turn by hand. Requires Claude Code v2.1.139+.
+
+Condition template — **end state + stated check + constraints + turn cap**:
+
+> *"<end state>, verified by <check that lands in the transcript>, with <constraint>, OR stop after 20 turns."*
+
+Project-specific rules:
+
+- **Evaluator is blind to tools.** It only reads the transcript (defaults to Haiku; configurable via `/model-config`). Conditions must reference output Claude can paste — test results, `git status`, a `gemini-eval` rubric verdict — not "the wizard feels better."
+- **`/goal` is itself a Stop hook.** It layers on top of the existing build-gate Stop hook in `.claude/settings.json`. Any goal that touches `api/`, `services/`, `components/`, or `App.tsx` MUST cite the build-gate's pass message in its condition, or the goal can finish while the build-gate is still complaining.
+- **TUNED-file guardrail.** No condition may target prompt/schema content inside `services/geminiService.ts` or `api/_lib/prompts.ts`. Escalate to Neil first — the evaluator must not autonomously greenlight tuned-prompt diffs (see `agent_lessons.md` 2026-05-09).
+- **Drive with `/goal`, check with existing skills.** Reference `verify-changes` for build/test/smoke, `gemini-eval` for stochastic Gemini output, `brand-check` for UI fidelity. Example clause: *"…AND `gemini-eval` returns no Critical findings…"*.
+- **`/clear` kills an active goal.** Mid-goal context hygiene is a hard reset, not a refresh — wrap up or capture status (`◎ /goal active`) before clearing.
+- **Single-session only on cafe PCs.** `--resume` carries the condition but resets timer + token baseline, and the defreezer wipes the session anyway. Plan to finish in one sitting; commit incrementally.
+
 ## Architecture
 
 **Routing** — `App.tsx` manages all routes as a single `Route` type (`landing | pricing | app | billing_success | terms | privacy | refund | support`). There is no React Router; path detection is manual via `window.location.pathname` in `detectInitialRoute()`.
