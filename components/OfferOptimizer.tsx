@@ -7,7 +7,7 @@ import { GlassPanel } from './ui/GlassPanel';
 import { GoldButton } from './ui/GoldButton';
 import { PreviousResearchCard } from './ui/PreviousResearchCard';
 import Loader from './ui/Loader';
-import { Copy, ChevronLeft, ChevronDown, UploadCloud, AlarmClock, ShieldCheck, ArrowRight, Download, Brain, FileSearch } from 'lucide-react';
+import { Copy, ChevronLeft, ChevronDown, ChevronUp, UploadCloud, AlarmClock, ShieldCheck, ArrowRight, Download, Brain, FileSearch } from 'lucide-react';
 import saveAs from 'file-saver';
 
 interface OfferOptimizerProps {
@@ -156,6 +156,7 @@ const OfferOptimizer: React.FC<OfferOptimizerProps> = ({ onBack, onNavigate }) =
   const [error, setError] = useState<string | null>(null);
   const [marketMindImported, setMarketMindImported] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
+  const [showFullReport, setShowFullReport] = useState(false);
 
   // Previous-result recall (Roadmap #3): surface last saved offer so users can skip re-typing
   const [previousResult, setPreviousResult] = useState<OfferOptimizerResult | null>(null);
@@ -533,64 +534,98 @@ const OfferOptimizer: React.FC<OfferOptimizerProps> = ({ onBack, onNavigate }) =
                 )}
               </div>
 
-              <div className="flex-grow bg-zinc-950 border border-white/10 rounded-xl p-4 md:p-6 overflow-y-auto custom-scrollbar relative">
-                {result && onNavigate && (
-                  <div className="sticky top-0 -mx-4 md:-mx-6 -mt-4 md:-mt-6 mb-4 px-4 md:px-6 py-3 bg-zinc-950/95 backdrop-blur-md border-b border-white/10 z-20">
-                    <div className="flex items-center justify-between gap-3 flex-wrap">
-                      <span className="text-[10px] font-mono uppercase tracking-widest text-[#FFCC00] border border-[#FFCC00]/30 bg-[#FFCC00]/5 rounded px-2 py-1">
-                        3 TIERS · CORE: {result.coreOffer?.actualPrice ?? '—'}
-                      </span>
-                      <GoldButton onClick={handleSendToDirector} className="text-[10px] py-2 px-3 whitespace-nowrap flex items-center gap-1.5">
-                        SEND TO DIRECTOR AI <ArrowRight className="w-3 h-3" />
-                      </GoldButton>
-                    </div>
-                  </div>
-                )}
+              <div className="flex-grow bg-zinc-950 border border-white/10 rounded-xl p-4 md:p-6 relative">
                 {isAnalyzing ? (
                   <div className="absolute inset-0 flex items-center justify-center bg-zinc-950/80 backdrop-blur-sm z-10 rounded-xl">
                     <Loader message="APPLYING VIRAL PSYCHOLOGY..." />
                   </div>
                 ) : result ? (
                   <div className="space-y-5">
-                    {/* Analysis */}
-                    <div className="bg-zinc-900/50 border border-white/10 rounded-lg p-4">
-                      <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">// PRICING_ANALYSIS</p>
-                      <p className="text-sm text-zinc-300 leading-relaxed">{result.analysis}</p>
-                    </div>
-
-                    {/* 3 Tier Cards */}
-                    <TierCard label={TIER_LABELS.tripwire} subtitle={TIER_SUBTITLES.tripwire} tier={result.tripwire} />
-                    <TierCard label={TIER_LABELS.coreOffer} subtitle={TIER_SUBTITLES.coreOffer} tier={result.coreOffer} />
-                    <TierCard label={TIER_LABELS.highTicket} subtitle={TIER_SUBTITLES.highTicket} tier={result.highTicket} />
-
-                    {/* Conversion Assets */}
-                    <div className="bg-zinc-900/50 border border-white/10 rounded-lg p-4 space-y-2">
-                      <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">// CONVERSION_ASSETS</p>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2 text-xs font-mono">
-                        <p><span className="text-zinc-500">Brand:</span> <span className="text-zinc-300">{result.conversionAssets.brandName}</span></p>
-                        <p><span className="text-zinc-500">Target:</span> <span className="text-zinc-300">{result.conversionAssets.target}</span></p>
-                        <p><span className="text-zinc-500">Benefit:</span> <span className="text-zinc-300">{result.conversionAssets.mainBenefit}</span></p>
-                        <p><span className="text-zinc-500">Problem:</span> <span className="text-zinc-300">{result.conversionAssets.mainProblem}</span></p>
-                        <p><span className="text-zinc-500">Pain:</span> <span className="text-zinc-300">{result.conversionAssets.mainPainPoint}</span></p>
-                        <p><span className="text-zinc-500">Mechanism:</span> <span className="text-zinc-300">{result.conversionAssets.mainDifferentiator}</span></p>
-                      </div>
-                      {result.conversionAssets.mainFeatures?.length > 0 && (
-                        <div className="text-xs font-mono pt-2 border-t border-white/5">
-                          <p className="text-zinc-500 mb-1">Features:</p>
-                          <ul className="text-zinc-300 list-disc list-inside space-y-0.5">
-                            {result.conversionAssets.mainFeatures.map((f, idx) => <li key={idx}>{f}</li>)}
-                          </ul>
+                    {onNavigate && (
+                      <div className="bg-[#FFCC00]/5 border border-[#FFCC00]/30 rounded-xl p-5 md:p-6 space-y-5">
+                        <div>
+                          <p className="text-[10px] font-mono uppercase tracking-widest text-[#FFCC00] mb-1.5">// OFFER BRIEF</p>
+                          <p className="text-lg md:text-xl text-zinc-100 font-bold leading-tight">{result.coreOffer.name}</p>
                         </div>
-                      )}
-                      {result.conversionAssets.brandPalette?.length > 0 && (
-                        <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-white/5">
-                          <span className="text-zinc-500 text-xs font-mono">Palette:</span>
-                          {result.conversionAssets.brandPalette.map((hex, idx) => (
-                            <span key={idx} className="inline-flex items-center gap-1.5 text-[10px] font-mono text-zinc-300">
-                              <span className="w-3 h-3 rounded-sm border border-white/20" style={{ backgroundColor: hex }} />
-                              {hex}
-                            </span>
-                          ))}
+
+                        <div>
+                          <p className="text-[10px] font-mono uppercase tracking-widest text-zinc-400 mb-1.5">// CORE OFFER PITCH</p>
+                          <blockquote className="text-base italic text-zinc-100 border-l-[3px] border-[#FFCC00]/40 pl-4 leading-relaxed">
+                            {result.coreOffer.pitch}
+                          </blockquote>
+                        </div>
+
+                        <div className="flex flex-wrap gap-2 pt-4 border-t border-[#FFCC00]/10">
+                          <span className="text-[10px] font-mono uppercase tracking-widest text-[#FFCC00] border border-[#FFCC00]/30 bg-[#FFCC00]/5 rounded px-2 py-1">
+                            TRIPWIRE {result.tripwire?.actualPrice ?? '—'}
+                          </span>
+                          <span className="text-[10px] font-mono uppercase tracking-widest text-[#FFCC00] border border-[#FFCC00]/30 bg-[#FFCC00]/5 rounded px-2 py-1">
+                            CORE {result.coreOffer?.actualPrice ?? '—'}
+                          </span>
+                          <span className="text-[10px] font-mono uppercase tracking-widest text-[#FFCC00] border border-[#FFCC00]/30 bg-[#FFCC00]/5 rounded px-2 py-1">
+                            HIGH-TICKET {result.highTicket?.actualPrice ?? '—'}
+                          </span>
+                        </div>
+
+                        <GoldButton
+                          onClick={handleSendToDirector}
+                          className="w-full py-4 rounded-xl tracking-widest text-xs flex items-center justify-center gap-2"
+                        >
+                          SEND TO DIRECTOR AI <ArrowRight className="w-4 h-4" />
+                        </GoldButton>
+                      </div>
+                    )}
+
+                    <div className="border-t border-white/10 pt-4">
+                      <button
+                        onClick={() => setShowFullReport(v => !v)}
+                        className="w-full flex items-center justify-between text-[10px] font-mono uppercase tracking-widest text-zinc-500 hover:text-[#FFCC00] hover:bg-white/5 transition-all py-2 px-3 -mx-3 rounded-md"
+                      >
+                        <span>{showFullReport ? 'COLLAPSE FULL ANALYSIS' : 'VIEW FULL ANALYSIS'}</span>
+                        {showFullReport ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+                      </button>
+
+                      {showFullReport && (
+                        <div className="space-y-5 mt-4">
+                          <div className="bg-zinc-900/50 border border-white/10 rounded-lg p-4">
+                            <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">// PRICING_ANALYSIS</p>
+                            <p className="text-sm text-zinc-300 leading-relaxed">{result.analysis}</p>
+                          </div>
+
+                          <TierCard label={TIER_LABELS.tripwire} subtitle={TIER_SUBTITLES.tripwire} tier={result.tripwire} />
+                          <TierCard label={TIER_LABELS.coreOffer} subtitle={TIER_SUBTITLES.coreOffer} tier={result.coreOffer} />
+                          <TierCard label={TIER_LABELS.highTicket} subtitle={TIER_SUBTITLES.highTicket} tier={result.highTicket} />
+
+                          <div className="bg-zinc-900/50 border border-white/10 rounded-lg p-4 space-y-2">
+                            <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">// CONVERSION_ASSETS</p>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2 text-xs font-mono">
+                              <p><span className="text-zinc-500">Brand:</span> <span className="text-zinc-300">{result.conversionAssets.brandName}</span></p>
+                              <p><span className="text-zinc-500">Target:</span> <span className="text-zinc-300">{result.conversionAssets.target}</span></p>
+                              <p><span className="text-zinc-500">Benefit:</span> <span className="text-zinc-300">{result.conversionAssets.mainBenefit}</span></p>
+                              <p><span className="text-zinc-500">Problem:</span> <span className="text-zinc-300">{result.conversionAssets.mainProblem}</span></p>
+                              <p><span className="text-zinc-500">Pain:</span> <span className="text-zinc-300">{result.conversionAssets.mainPainPoint}</span></p>
+                              <p><span className="text-zinc-500">Mechanism:</span> <span className="text-zinc-300">{result.conversionAssets.mainDifferentiator}</span></p>
+                            </div>
+                            {result.conversionAssets.mainFeatures?.length > 0 && (
+                              <div className="text-xs font-mono pt-2 border-t border-white/5">
+                                <p className="text-zinc-500 mb-1">Features:</p>
+                                <ul className="text-zinc-300 list-disc list-inside space-y-0.5">
+                                  {result.conversionAssets.mainFeatures.map((f, idx) => <li key={idx}>{f}</li>)}
+                                </ul>
+                              </div>
+                            )}
+                            {result.conversionAssets.brandPalette?.length > 0 && (
+                              <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-white/5">
+                                <span className="text-zinc-500 text-xs font-mono">Palette:</span>
+                                {result.conversionAssets.brandPalette.map((hex, idx) => (
+                                  <span key={idx} className="inline-flex items-center gap-1.5 text-[10px] font-mono text-zinc-300">
+                                    <span className="w-3 h-3 rounded-sm border border-white/20" style={{ backgroundColor: hex }} />
+                                    {hex}
+                                  </span>
+                                ))}
+                              </div>
+                            )}
+                          </div>
                         </div>
                       )}
                     </div>
@@ -604,15 +639,6 @@ const OfferOptimizer: React.FC<OfferOptimizerProps> = ({ onBack, onNavigate }) =
                   </div>
                 )}
               </div>
-
-              {result && onNavigate && (
-                <GoldButton
-                  onClick={handleSendToDirector}
-                  className="w-full py-3 mt-4 rounded-xl tracking-widest text-xs flex items-center justify-center gap-2"
-                >
-                  SEND TO DIRECTOR AI <ArrowRight className="w-4 h-4" />
-                </GoldButton>
-              )}
             </div>
           </div>
         </GlassPanel>

@@ -9,7 +9,7 @@ import { GoldButton } from './ui/GoldButton';
 import { PreviousResearchCard } from './ui/PreviousResearchCard';
 import Loader from './ui/Loader';
 import { toast } from 'sonner';
-import { Download, ChevronLeft, UploadCloud, X, ArrowRight } from 'lucide-react';
+import { Download, ChevronLeft, ChevronDown, ChevronUp, UploadCloud, X, ArrowRight } from 'lucide-react';
 import saveAs from 'file-saver';
 
 interface MarketResearchProps {
@@ -31,6 +31,7 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [result, setResult] = useState<MarketResearchReport | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [showFullReport, setShowFullReport] = useState(false);
 
   // Previous-research recall (Roadmap #3): surface last saved MarketMind so users can skip re-typing
   const [previousReport, setPreviousReport] = useState<MarketResearchReport | null>(null);
@@ -312,44 +313,79 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
                         )}
                     </div>
 
-                    {result && (
-                        <div className="flex flex-wrap gap-2 mb-3">
-                            <span className="text-[10px] font-mono uppercase tracking-widest text-[#FFCC00] border border-[#FFCC00]/30 bg-[#FFCC00]/5 rounded px-2 py-1">
-                                {result.headlines?.length ?? 0} HEADLINES
-                            </span>
-                            <span className="text-[10px] font-mono uppercase tracking-widest text-[#FFCC00] border border-[#FFCC00]/30 bg-[#FFCC00]/5 rounded px-2 py-1">
-                                {result.videoHooks?.length ?? 0} HOOKS
-                            </span>
-                            <span className="text-[10px] font-mono uppercase tracking-widest text-[#FFCC00] border border-[#FFCC00]/30 bg-[#FFCC00]/5 rounded px-2 py-1">
-                                {result.fbAdLibraryAngles?.length ?? 0} AD CONCEPTS
-                            </span>
-                            <span className="text-[10px] font-mono uppercase tracking-widest text-[#FFCC00] border border-[#FFCC00]/30 bg-[#FFCC00]/5 rounded px-2 py-1">
-                                {result.competitorMatrix?.length ?? 0} COMPETITORS MAPPED
-                            </span>
-                        </div>
-                    )}
-
-                    <div className="flex-grow bg-zinc-950 border border-white/10 rounded-xl p-6 overflow-y-auto custom-scrollbar relative">
-                        {result && onNavigate && (
-                            <div className="sticky top-0 -mx-6 -mt-6 mb-4 px-6 py-3 bg-zinc-950/95 backdrop-blur-md border-b border-white/10 z-20">
-                                <div className="flex items-center justify-between gap-3 flex-wrap">
-                                    <span className="text-[10px] font-mono uppercase tracking-widest text-[#FFCC00] border border-[#FFCC00]/30 bg-[#FFCC00]/5 rounded px-2 py-1">
-                                        {result.headlines?.length ?? 0} HEADLINES · {result.videoHooks?.length ?? 0} HOOKS · {result.fbAdLibraryAngles?.length ?? 0} CONCEPTS
-                                    </span>
-                                    <GoldButton onClick={handleSendToDirector} className="text-[10px] py-2 px-3 whitespace-nowrap flex items-center gap-1.5">
-                                        SEND TO DIRECTOR AI <ArrowRight className="w-3 h-3" />
-                                    </GoldButton>
-                                </div>
-                            </div>
-                        )}
+                    <div className="flex-grow bg-zinc-950 border border-white/10 rounded-xl p-6 relative">
                         {isAnalyzing ? (
                             <div className="absolute inset-0 flex items-center justify-center bg-zinc-950/80 backdrop-blur-sm z-10 rounded-xl">
                                 <Loader message="SIMULATING CUSTOMER RESEARCH..." />
                             </div>
                         ) : result ? (
-                            <pre className="text-sm font-mono text-zinc-300 whitespace-pre-wrap leading-relaxed">
-                                {result.narrativeReport}
-                            </pre>
+                            <div className="space-y-5">
+                                {onNavigate && (
+                                    <div className="bg-[#FFCC00]/5 border border-[#FFCC00]/30 rounded-xl p-5 md:p-6 space-y-5">
+                                        <div>
+                                            <p className="text-[10px] font-mono uppercase tracking-widest text-[#FFCC00] mb-1.5">// MARKETMIND BRIEF</p>
+                                            <p className="text-lg md:text-xl text-zinc-100 font-bold leading-tight">{result.subject}</p>
+                                        </div>
+
+                                        <div>
+                                            <p className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 mb-1.5">// WINNING AVATAR</p>
+                                            <p className="text-sm text-zinc-200 leading-relaxed">{result.winningAvatar}</p>
+                                        </div>
+
+                                        <div>
+                                            <p className="text-[10px] font-mono uppercase tracking-widest text-zinc-400 mb-1.5">// THE BIG IDEA</p>
+                                            <blockquote className="text-base italic text-zinc-100 border-l-[3px] border-[#FFCC00]/40 pl-4 leading-relaxed">
+                                                {result.bigIdea}
+                                            </blockquote>
+                                        </div>
+
+                                        <div className="flex flex-wrap gap-2 pt-4 border-t border-[#FFCC00]/10">
+                                            <span className="text-[10px] font-mono uppercase tracking-widest text-[#FFCC00] border border-[#FFCC00]/30 bg-[#FFCC00]/5 rounded px-2 py-1">
+                                                {result.headlines?.length ?? 0} HEADLINES
+                                            </span>
+                                            <span className="text-[10px] font-mono uppercase tracking-widest text-[#FFCC00] border border-[#FFCC00]/30 bg-[#FFCC00]/5 rounded px-2 py-1">
+                                                {result.videoHooks?.length ?? 0} HOOKS
+                                            </span>
+                                            <span className="text-[10px] font-mono uppercase tracking-widest text-[#FFCC00] border border-[#FFCC00]/30 bg-[#FFCC00]/5 rounded px-2 py-1">
+                                                {result.fbAdLibraryAngles?.length ?? 0} CONCEPTS
+                                            </span>
+                                            <span className="text-[10px] font-mono uppercase tracking-widest text-[#FFCC00] border border-[#FFCC00]/30 bg-[#FFCC00]/5 rounded px-2 py-1">
+                                                {result.competitorMatrix?.length ?? 0} COMPETITORS
+                                            </span>
+                                        </div>
+
+                                        <div className="space-y-2">
+                                            <GoldButton
+                                                onClick={handleSendToDirector}
+                                                className="w-full py-4 rounded-xl tracking-widest text-xs flex items-center justify-center gap-2"
+                                            >
+                                                SEND TO DIRECTOR AI <ArrowRight className="w-4 h-4" />
+                                            </GoldButton>
+                                            <button
+                                                onClick={() => onNavigate('offer_optimizer')}
+                                                className="w-full text-[10px] font-mono uppercase tracking-widest text-zinc-500 hover:text-[#FFCC00] transition-colors flex items-center justify-center gap-1.5 py-1"
+                                            >
+                                                Or build stronger offer first <ArrowRight className="w-3 h-3" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
+
+                                <div className="border-t border-white/10 pt-4">
+                                    <button
+                                        onClick={() => setShowFullReport(v => !v)}
+                                        className="w-full flex items-center justify-between text-[10px] font-mono uppercase tracking-widest text-zinc-500 hover:text-[#FFCC00] hover:bg-white/5 transition-all py-2 px-3 -mx-3 rounded-md"
+                                    >
+                                        <span>{showFullReport ? 'COLLAPSE FULL REPORT' : 'VIEW FULL REPORT'}</span>
+                                        {showFullReport ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+                                    </button>
+                                    {showFullReport && (
+                                        <pre className="text-sm font-mono text-zinc-300 whitespace-pre-wrap leading-relaxed mt-4">
+                                            {result.narrativeReport}
+                                        </pre>
+                                    )}
+                                </div>
+                            </div>
                         ) : (
                             <div className="flex flex-col items-center justify-center h-full text-zinc-500">
                                 <p className="font-mono text-center mb-2 text-[10px] uppercase tracking-widest">// SYSTEM_STANDBY</p>
@@ -359,23 +395,6 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
                             </div>
                         )}
                     </div>
-
-                    {result && onNavigate && (
-                        <>
-                            <GoldButton
-                                onClick={handleSendToDirector}
-                                className="w-full py-3 mt-4 rounded-xl tracking-widest text-xs flex items-center justify-center gap-2"
-                            >
-                                SEND TO DIRECTOR AI <ArrowRight className="w-4 h-4" />
-                            </GoldButton>
-                            <button
-                                onClick={() => onNavigate('offer_optimizer')}
-                                className="w-full mt-3 text-[10px] font-mono uppercase tracking-widest text-zinc-500 hover:text-[#FFCC00] transition-colors flex items-center justify-center gap-1.5 py-1"
-                            >
-                                Or build stronger offer first <ArrowRight className="w-3 h-3" />
-                            </button>
-                        </>
-                    )}
                 </div>
             </div>
         </GlassPanel>
