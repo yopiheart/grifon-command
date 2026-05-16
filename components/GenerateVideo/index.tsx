@@ -1419,35 +1419,6 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
         </div>
       </div>
 
-      {resumeAt && (
-        <div className="text-[10px] text-[#FFCC00] font-mono bg-[#FFCC00]/5 border border-[#FFCC00]/30 rounded-xl px-3 py-2 leading-relaxed">
-          // RATE LIMITED · {queuedCount} queued ·{' '}
-          {formatEta(Math.max(0, Math.ceil((resumeAt - Date.now()) / 1000)))} to resume
-        </div>
-      )}
-
-      {hasSeedPrompts &&
-        onSendToSignalModulator &&
-        renderedCount === seedPrompts.length &&
-        renderedCount > 0 && (
-          <button
-            type="button"
-            onClick={() => {
-              const batch: SceneBatchEntry[] = seedPrompts.map((p, i) => ({
-                sceneIdx: i,
-                scriptLine: storyboard[i]?.scriptLine ?? '',
-                renderedUrl: sceneResults[i]?.url,
-                type: p.type,
-              }));
-              onSendToSignalModulator(batch);
-            }}
-            className="w-full text-[10px] font-mono font-bold tracking-widest uppercase rounded-xl border border-[#FFCC00]/40 bg-[#FFCC00]/10 text-[#FFCC00] px-3 py-2.5 hover:bg-[#FFCC00]/20 hover:border-[#FFCC00] transition-all"
-            title="Pass scriptLines + rendered MP4 URLs to Signal Modulator for batch voice generation"
-          >
-            // SEND TO SIGNAL MODULATOR ↗
-          </button>
-        )}
-
       <div className="flex-1 overflow-y-auto custom-scrollbar space-y-3 pr-1 -mr-1">
         {libraryLoading ? (
           <div className="space-y-3 animate-pulse">
@@ -1497,23 +1468,77 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
           renderedSceneIdxs={renderedSceneIdxs}
         />
       </div>
-      <GoldButton
-        onClick={handleRenderAll}
-        disabled={busy || seedPrompts.length === 0 || isCurrentModelLocked}
-        className="w-full"
-      >
-        <span className="flex items-center justify-center gap-2">
-          <Sparkles className="w-3.5 h-3.5" />
-          Render All {seedPrompts.length}
-        </span>
-      </GoldButton>
     </GlassPanel>
+  );
+
+  const handleSendToSignalFromBar = () => {
+    if (!onSendToSignalModulator) return;
+    const batch: SceneBatchEntry[] = seedPrompts.map((p, i) => ({
+      sceneIdx: i,
+      scriptLine: storyboard[i]?.scriptLine ?? '',
+      renderedUrl: sceneResults[i]?.url,
+      type: p.type,
+    }));
+    onSendToSignalModulator(batch);
+  };
+
+  /* ─── STICKY PIPELINE COMMAND BAR ─── */
+  const PipelineCommandBar = (
+    <div className="sticky top-0 z-30 -mx-4 sm:-mx-6 md:-mx-8 px-4 sm:px-6 md:px-8 py-3 mb-5 bg-zinc-950/95 backdrop-blur-xl border-b border-white/10">
+      <div className="flex items-center gap-2 flex-wrap">
+        <span className="text-[10px] font-mono uppercase tracking-widest text-[#FFCC00] border border-[#FFCC00]/30 bg-[#FFCC00]/5 rounded px-2 py-1 whitespace-nowrap">
+          // PIPELINE · {renderedCount}/{seedPrompts.length} RENDERED
+        </span>
+
+        <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 border border-white/10 bg-zinc-950 rounded px-2 py-1 whitespace-nowrap hidden sm:inline-flex items-center">
+          {specs?.displayName ?? config.model} · {config.aspectRatio} · {config.resolution} · {config.duration}s
+        </span>
+
+        {resumeAt && (
+          <span className="text-[10px] font-mono uppercase tracking-widest text-amber-400 border border-amber-500/30 bg-amber-500/5 rounded px-2 py-1 whitespace-nowrap">
+            // RATE LIMITED · {queuedCount} queued · {formatEta(Math.max(0, Math.ceil((resumeAt - Date.now()) / 1000)))} to resume
+          </span>
+        )}
+
+        <div className="flex-1" />
+
+        {onSendToSignalModulator && renderedCount === seedPrompts.length && renderedCount > 0 ? (
+          <button
+            type="button"
+            onClick={handleSendToSignalFromBar}
+            className="text-[10px] font-mono font-bold tracking-widest uppercase rounded-xl border border-[#FFCC00]/40 bg-[#FFCC00]/10 text-[#FFCC00] px-4 py-2.5 hover:bg-[#FFCC00]/20 hover:border-[#FFCC00] transition-all whitespace-nowrap"
+            title="Pass scriptLines + rendered MP4 URLs to Signal Modulator for batch voice generation"
+          >
+            // SEND TO SIGNAL MODULATOR ↗
+          </button>
+        ) : busy ? (
+          <button
+            type="button"
+            onClick={handleCancelAll}
+            className="text-[10px] font-bold tracking-widest uppercase rounded-xl bg-zinc-950 border border-red-500/40 text-red-400 hover:bg-red-500/10 transition-all whitespace-nowrap px-4 py-2.5"
+          >
+            Cancel Pipeline
+          </button>
+        ) : (
+          <GoldButton
+            onClick={handleRenderAll}
+            disabled={seedPrompts.length === 0 || isCurrentModelLocked}
+            className="py-2.5 px-4 text-[10px] tracking-widest flex items-center gap-1.5 whitespace-nowrap"
+          >
+            <Sparkles className="w-3.5 h-3.5" />
+            Render All {seedPrompts.length}
+          </GoldButton>
+        )}
+      </div>
+    </div>
   );
 
   return (
     <>
       <div className="min-h-screen bg-zinc-950 text-white font-mono flex flex-col p-4 sm:p-6 md:p-8">
         {Header}
+
+        {mode === 'pipeline' && hasSeedPrompts && PipelineCommandBar}
 
         {mode === 'pipeline' && hasSeedPrompts ? (
           <div className="flex flex-col lg:flex-row gap-5 flex-1">
