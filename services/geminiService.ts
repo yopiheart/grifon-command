@@ -438,7 +438,22 @@ export const generateVideo = async (
   }
 
   opts.onStatus?.('SUBMITTING_JOB');
-  const { operation: initialOperation } = await proxyGenerateVideo(params);
+  let proxyResult;
+  try {
+    proxyResult = await proxyGenerateVideo(params);
+  } catch (err: any) {
+    // Veo 3.1 Lite rejects startFrame+endFrame morph mode with 400 INVALID_ARGUMENT.
+    // Fall back to single-frame render so the scene still produces a usable clip.
+    if (err?.status === 400 && params.config?.lastFrame) {
+      console.warn('[grifon:gv:morph-fallback] Veo rejected startFrame+endFrame, retrying without endFrame');
+      delete params.config.lastFrame;
+      proxyResult = await proxyGenerateVideo(params);
+      console.warn('[grifon:gv:morph-fallback] Fallback render succeeded');
+    } else {
+      throw err;
+    }
+  }
+  const { operation: initialOperation } = proxyResult;
 
   const renderMetadata: VideoRenderMetadata = {
     prompt: config.prompt.trim(),
