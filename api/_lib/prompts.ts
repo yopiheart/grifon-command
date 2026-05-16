@@ -739,7 +739,7 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
 
       REQUIRED in avatar-scene prompts (describe ONLY these):
       - Action ("looking down", "gesturing", "sipping", "tapping the phone screen")
-      - Expression ("brow furrowed", "eyes wide in surprise", "lips parted in confusion")
+      - Expression — MOUTH CLOSED on talking scenes ("brow furrowed", "eyes wide in surprise", "jaw set with quiet focus"). Voiceover is added in post; do NOT use "lips parted", "mid-syllable", "speaking", or any mouth-open descriptor on Avatar Talking scenes.
       - Gaze direction ("looking at the camera", "looking down at the mug")
       - Hand position + held props ("holding an empty mug", "hands on the counter")
       - Body pose ("standing", "sitting at the dining table", "leaning against the counter")
@@ -764,7 +764,7 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
       ${strategyInstructions}
       ${DIRECTOR_CRITIQUE_INSTRUCTION}
 
-      **CINEMATIC VARIETY:** When creating Talking Avatar scenes, explicitly describe a different physical action for each (e.g., 'walking while talking', 'sitting at a desk', 'holding a phone', 'gesturing with both hands'). This ensures the background and pose change even if the face stays consistent.
+      **CINEMATIC VARIETY:** When creating Talking Avatar scenes, explicitly describe a different physical action for each (e.g., 'walking through the kitchen', 'sitting at a desk', 'holding a phone', 'gesturing with both hands'). This ensures the background and pose change even if the face stays consistent. MANDATORY for every Talking Avatar scene: the avatar's mouth is CLOSED throughout (lips relaxed or pressed, jaw still); engagement is conveyed through eyes, brow, head tilt, and gesture — NOT through speech motion. Voiceover is overlaid in post; any speech-shape creates a lip-sync mismatch.
 
       **HOOK LOGIC (SCENE 1):**
       - Prioritize Visual Metaphors: focusing on objects, hands, environment, or abstract triggers instead of a full person visual.
