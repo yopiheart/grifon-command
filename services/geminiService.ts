@@ -537,15 +537,22 @@ export const generateVideo = async (
   let initialOperation: any;
 
   if (routing.apiSurface === 'kling-omni-video') {
-    // Kling Omni (kling-video-o1) — used for the hook scene. End-frame morph
-    // would need a second image_list entry with type: 'end_frame'; deferred
-    // to a follow-up session. Single first_frame is enough for the hook drama.
+    // Kling Omni (kling-video-o1) — used for the hook scene. Morph requires
+    // BOTH first_frame and end_frame entries in image_list; sending only
+    // first_frame degrades to camera-motion on a single image (zoom, not
+    // morph). Session D Hotfix wires endFrame through when present.
     if (!config.startFrame) {
       throw new Error(`KLING_REQUIRES_START_FRAME: ${VIDEO_MODEL_SPECS[config.model].displayName} needs a start frame (storyboard image)`);
     }
+    const imageList: Array<{ image_url: string; type?: 'first_frame' | 'end_frame' }> = [
+      { image_url: stripDataUrlPrefix(config.startFrame), type: 'first_frame' },
+    ];
+    if (config.endFrame) {
+      imageList.push({ image_url: stripDataUrlPrefix(config.endFrame), type: 'end_frame' });
+    }
     const omniResult = await proxyGenerateKlingOmniVideo({
       model_name: routing.modelId,
-      image_list: [{ image_url: stripDataUrlPrefix(config.startFrame) }],
+      image_list: imageList,
       prompt: config.prompt.trim(),
       duration: String(config.duration),
       mode: 'std',
