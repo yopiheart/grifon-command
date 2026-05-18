@@ -40,4 +40,14 @@ export function getKlingAccessToken(): string {
   return _cached.jwt;
 }
 
+/**
+ * Clears the module-scope JWT cache. Called by the proxy when Kling returns
+ * 401 "Authorization is expired" (code 1004) so the next getKlingAccessToken()
+ * call signs fresh. Defensive — covers clock-skew, sliding-TTL surprises, and
+ * any future Kling-side TTL changes that diverge from our `expiresAt` math.
+ */
+export function invalidateKlingAccessToken(): void {
+  _cached = null;
+}
+
 export const KLING_API_BASE = 'https://api.klingai.com';

@@ -2,7 +2,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { z } from 'zod';
 import { getUserFromAccessToken } from '../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../_lib/rateLimit.js';
-import { getKlingAccessToken, KLING_API_BASE } from '../_lib/klingAuth.js';
+import { getKlingAccessToken, invalidateKlingAccessToken, KLING_API_BASE } from '../_lib/klingAuth.js';
 
 const Body = z.object({
   model_name: z.string().min(1),
@@ -76,21 +76,38 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(502).json({ error: 'kling_error', detail: err?.message ?? 'auth_failed' });
   }
 
-  let upstreamStatus = 0;
-  let upstreamText = '';
-  let upstreamJson: any = null;
-  try {
+  const submitToKling = async (token: string) => {
     const upstream = await fetch(`${KLING_API_BASE}/v1/videos/image2video`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${jwt}`,
+        'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(klingBody),
     });
-    upstreamStatus = upstream.status;
-    upstreamText = await upstream.text();
-    try { upstreamJson = JSON.parse(upstreamText); } catch { /* leave null */ }
+    const text = await upstream.text();
+    let json: any = null;
+    try { json = JSON.parse(text); } catch { /* leave null */ }
+    return { status: upstream.status, text, json };
+  };
+
+  let upstreamStatus = 0;
+  let upstreamText = '';
+  let upstreamJson: any = null;
+  try {
+    let r = await submitToKling(jwt);
+    // One-shot 401 refresh — Kling sliding TTL / clock-skew can make a cached
+    // JWT appear expired even when our `expiresAt` math says it's still good.
+    // Invalidate, re-sign fresh, and retry once before giving up.
+    if (r.status === 401) {
+      console.warn('[api/kling/video] upstream 401 — refreshing JWT and retrying once');
+      invalidateKlingAccessToken();
+      jwt = getKlingAccessToken();
+      r = await submitToKling(jwt);
+    }
+    upstreamStatus = r.status;
+    upstreamText = r.text;
+    upstreamJson = r.json;
   } catch (err: any) {
     console.error('[api/kling/video] fetch error:', err?.message);
     return res.status(502).json({ error: 'kling_error', detail: err?.message ?? 'fetch_failed' });

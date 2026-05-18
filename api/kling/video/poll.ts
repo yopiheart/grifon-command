@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { randomUUID } from 'node:crypto';
 import { getUserFromAccessToken, getSupabaseAdmin } from '../../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../../_lib/rateLimit.js';
-import { getKlingAccessToken, KLING_API_BASE } from '../../_lib/klingAuth.js';
+import { getKlingAccessToken, invalidateKlingAccessToken, KLING_API_BASE } from '../../_lib/klingAuth.js';
 
 const Body = z.object({
   operation: z.object({
@@ -72,29 +72,45 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(502).json({ error: 'kling_error', detail: err?.message ?? 'auth_failed' });
   }
 
+  const pollKling = async (token: string) => {
+    const upstream = await fetch(`${KLING_API_BASE}/v1/videos/image2video/${encodeURIComponent(taskId)}`, {
+      headers: { 'Authorization': `Bearer ${token}` },
+    });
+    const text = await upstream.text();
+    let json: any = null;
+    try { json = JSON.parse(text); } catch { /* leave null */ }
+    return { status: upstream.status, ok: upstream.ok, text, json };
+  };
+
   let upstreamStatus = 0;
   let upstreamJson: any = null;
   try {
-    const upstream = await fetch(`${KLING_API_BASE}/v1/videos/image2video/${encodeURIComponent(taskId)}`, {
-      headers: { 'Authorization': `Bearer ${jwt}` },
-    });
-    upstreamStatus = upstream.status;
-    const text = await upstream.text();
-    try { upstreamJson = JSON.parse(text); } catch { /* leave null */ }
-    if (!upstream.ok) {
+    let r = await pollKling(jwt);
+    // One-shot 401 refresh — see api/kling/video.ts for rationale. A stale JWT
+    // mid-poll would surface to the user as an in-flight render failure for
+    // no good reason; recover before that happens.
+    if (r.status === 401) {
+      console.warn('[api/kling/video/poll] upstream 401 — refreshing JWT and retrying once');
+      invalidateKlingAccessToken();
+      jwt = getKlingAccessToken();
+      r = await pollKling(jwt);
+    }
+    upstreamStatus = r.status;
+    upstreamJson = r.json;
+    if (!r.ok) {
       // Pass through 4xx (e.g. 404 task_not_found); wrap 5xx as 502.
       if (upstreamStatus === 401) {
-        console.error('[api/kling/video/poll] upstream 401 — JWT rejected:', text.slice(0, 500));
+        console.error('[api/kling/video/poll] upstream 401 after refresh — JWT still rejected:', r.text.slice(0, 500));
         return res.status(502).json({ error: 'kling_auth_failed', detail: 'Kling rejected the proxy JWT.' });
       }
       if (upstreamStatus >= 400 && upstreamStatus < 500) {
         return res.status(upstreamStatus).json({
           error: 'kling_invalid_argument',
-          detail: upstreamJson?.message ?? text.slice(0, 500),
+          detail: upstreamJson?.message ?? r.text.slice(0, 500),
           kling_code: upstreamJson?.code,
         });
       }
-      console.error('[api/kling/video/poll] upstream 5xx:', upstreamStatus, text.slice(0, 500));
+      console.error('[api/kling/video/poll] upstream 5xx:', upstreamStatus, r.text.slice(0, 500));
       return res.status(502).json({ error: 'kling_error', detail: `upstream_${upstreamStatus}` });
     }
   } catch (err: any) {
