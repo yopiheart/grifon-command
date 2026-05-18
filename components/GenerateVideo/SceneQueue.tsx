@@ -2,7 +2,7 @@ import React from 'react';
 import { CheckCircle2, RotateCw, AlertTriangle, Clock, Check } from 'lucide-react';
 import type { SceneStatus } from './RenderAllRunner';
 import type { VideoPrompt, Scene, VideoModelType } from '../../types';
-import { VIDEO_MODEL_ROUTING } from '../../services/geminiService';
+import { VIDEO_MODEL_ROUTING, VIDEO_MODEL_SPECS } from '../../services/geminiService';
 
 export interface SceneQueueProps {
   seedPrompts: VideoPrompt[];
@@ -67,12 +67,13 @@ const StatusBadge: React.FC<{ status: SceneStatus; elapsed?: number }> = ({ stat
 
 const EngineChip: React.FC<{ model?: VideoModelType }> = ({ model }) => {
   if (!model) return null;
-  const provider = VIDEO_MODEL_ROUTING[model]?.provider;
-  if (provider === 'kling') {
+  const apiSurface = VIDEO_MODEL_ROUTING[model]?.apiSurface;
+  const displayName = VIDEO_MODEL_SPECS[model]?.displayName ?? model;
+  if (apiSurface === 'kling-image2video' || apiSurface === 'kling-omni-video') {
     return (
       <span
         className="text-[7px] font-black font-mono uppercase tracking-widest rounded px-1 py-px border border-[#FFCC00]/50 bg-[#FFCC00]/10 text-[#FFCC00]"
-        title="Routed to Kling 3.0"
+        title={`Routed to ${displayName}`}
       >
         KLING
       </span>
@@ -81,7 +82,7 @@ const EngineChip: React.FC<{ model?: VideoModelType }> = ({ model }) => {
   return (
     <span
       className="text-[7px] font-black font-mono uppercase tracking-widest rounded px-1 py-px border border-white/15 bg-zinc-950 text-zinc-400"
-      title="Routed to Veo"
+      title={`Routed to ${displayName}`}
     >
       VEO
     </span>

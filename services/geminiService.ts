@@ -197,6 +197,45 @@ const proxyGenerateKlingVideo = (
   );
 };
 
+// Kling Omni (kling-video-o1) lives on a different upstream surface than V3
+// image2video. Different endpoint (/v1/videos/omni-video), different body
+// shape (image_list array of tagged frames, not flat image + image_tail
+// strings). Auth + JWT + rate-limit pool are shared with V3.
+interface KlingOmniSubmitBody {
+  model_name: string;
+  image_list: Array<{ image_url: string; type?: 'first_frame' | 'end_frame' }>;
+  prompt: string;
+  negative_prompt?: string;
+  duration: string;
+  mode: 'std' | 'pro' | '4k';
+  aspect_ratio?: string;
+  cfg_scale?: number;
+  sound: 'on' | 'off';
+}
+
+const proxyGenerateKlingOmniVideo = (
+  body: KlingOmniSubmitBody
+): Promise<{ operation: KlingOperation }> => {
+  const requestId =
+    globalThis.crypto?.randomUUID?.() ??
+    `req-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+  console.log('[grifon:gv:kling-omni:proxy]', {
+    t: Date.now(),
+    model: body.model_name,
+    duration: body.duration,
+    mode: body.mode,
+    sound: body.sound,
+    aspect: body.aspect_ratio,
+    frames: body.image_list.length,
+    requestId,
+  });
+  return proxyCall<{ operation: KlingOperation }>(
+    '/api/kling/omni-video',
+    { ...body, requestId },
+    { jobLabel: 'Submitting Kling Omni render', jobKind: 'video', jobDetail: 'Reaching klingai.com (Omni)…' }
+  );
+};
+
 interface VideoRenderMetadata {
   prompt?: string;
   sceneIdx?: number;
@@ -209,10 +248,15 @@ const proxyPollVideoOperation = async (
   operation: any,
   metadata?: VideoRenderMetadata
 ): Promise<VideoPollResponse> => {
-  // Dispatch on provider derived from metadata.model. Falls back to /gemini
+  // Dispatch on apiSurface derived from metadata.model. Falls back to /gemini
   // for back-compat with persisted jobs that pre-date metadata.model.
-  const provider = metadata?.model ? VIDEO_MODEL_ROUTING[metadata.model]?.provider : 'gemini';
-  const endpoint = provider === 'kling' ? '/api/kling/video/poll' : '/api/gemini/video/poll';
+  const apiSurface = metadata?.model ? VIDEO_MODEL_ROUTING[metadata.model]?.apiSurface : 'gemini';
+  const endpoint =
+    apiSurface === 'kling-omni-video'
+      ? '/api/kling/omni-video/poll'
+      : apiSurface === 'kling-image2video'
+        ? '/api/kling/video/poll'
+        : '/api/gemini/video/poll';
   try {
     return await proxyCall<VideoPollResponse>(endpoint, { operation, metadata });
   } catch (err: any) {
@@ -318,6 +362,21 @@ export const VIDEO_MODEL_SPECS: Record<VideoModelType, {
     displayName: 'Kling 3.0',
     tagline: 'Cinematic B-roll — morph mode',
   },
+  'Kling_O1': {
+    durations: [5, 10],
+    resolutions: ['720p', '1080p'],
+    aspectRatios: ['9:16', '16:9', '1:1'],
+    durationsByResolution: {
+      '720p': [5, 10],
+      '1080p': [5, 10],
+    },
+    supportsAudio: false,
+    maxElements: 0,
+    requiresStartFrame: true,
+    locked: false,
+    displayName: 'Kling O1 (Omni)',
+    tagline: 'Hook drama — Omni morph',
+  },
   'Seedance_2_0_Fast': {
     durations: [5, 10],
     resolutions: ['720p', '1080p'],
@@ -354,16 +413,21 @@ const VEO_FAST = 'veo-3.1-fast-generate-preview';
 const VEO_QUALITY = 'veo-3.1-generate-preview';
 const VEO_LITE = 'veo-3.1-lite-generate-preview';
 const KLING_V3 = 'kling-v3';
+const KLING_O1 = 'kling-video-o1';
 
 // Locked engines have null modelId — generateVideo() throws MODEL_LOCKED before touching the proxy.
-// `provider` discriminates which backend proxy to dispatch to in Session B.
-export const VIDEO_MODEL_ROUTING: Record<VideoModelType, { modelId: string | null; viaFallback: boolean; provider: 'gemini' | 'kling' }> = {
-  'Veo_3.1_Fast':         { modelId: VEO_FAST,    viaFallback: false, provider: 'gemini' },
-  'Veo_3.1_Quality':      { modelId: VEO_QUALITY, viaFallback: false, provider: 'gemini' },
-  'Veo_3.1_Lite':         { modelId: VEO_LITE,    viaFallback: false, provider: 'gemini' },
-  'Kling_3_0':            { modelId: KLING_V3,    viaFallback: false, provider: 'kling'  },
-  'Seedance_2_0_Fast':    { modelId: null,        viaFallback: false, provider: 'gemini' },
-  'Seedance_2_0_Quality': { modelId: null,        viaFallback: false, provider: 'gemini' },
+// `apiSurface` discriminates which backend proxy to dispatch to. Replaced the
+// coarser `provider: 'gemini' | 'kling'` field in Session D so the dispatcher
+// can split within Kling (V3 image2video vs O1 omni-video) without per-call
+// string matching on model name.
+export const VIDEO_MODEL_ROUTING: Record<VideoModelType, { modelId: string | null; viaFallback: boolean; apiSurface: 'gemini' | 'kling-image2video' | 'kling-omni-video' }> = {
+  'Veo_3.1_Fast':         { modelId: VEO_FAST,    viaFallback: false, apiSurface: 'gemini'            },
+  'Veo_3.1_Quality':      { modelId: VEO_QUALITY, viaFallback: false, apiSurface: 'gemini'            },
+  'Veo_3.1_Lite':         { modelId: VEO_LITE,    viaFallback: false, apiSurface: 'gemini'            },
+  'Kling_3_0':            { modelId: KLING_V3,    viaFallback: false, apiSurface: 'kling-image2video' },
+  'Kling_O1':             { modelId: KLING_O1,    viaFallback: false, apiSurface: 'kling-omni-video'  },
+  'Seedance_2_0_Fast':    { modelId: null,        viaFallback: false, apiSurface: 'gemini'            },
+  'Seedance_2_0_Quality': { modelId: null,        viaFallback: false, apiSurface: 'gemini'            },
 };
 
 export interface GeneratedVideoResult {
@@ -472,11 +536,29 @@ export const generateVideo = async (
   opts.onStatus?.('SUBMITTING_JOB');
   let initialOperation: any;
 
-  if (routing.provider === 'kling') {
-    // Kling V3 requires a start frame. UI gating should prevent this from
-    // happening, but throw clearly if a Kling render is dispatched without one.
+  if (routing.apiSurface === 'kling-omni-video') {
+    // Kling Omni (kling-video-o1) — used for the hook scene. End-frame morph
+    // would need a second image_list entry with type: 'end_frame'; deferred
+    // to a follow-up session. Single first_frame is enough for the hook drama.
     if (!config.startFrame) {
-      throw new Error('KLING_REQUIRES_START_FRAME: Kling 3.0 needs a start frame (storyboard image)');
+      throw new Error(`KLING_REQUIRES_START_FRAME: ${VIDEO_MODEL_SPECS[config.model].displayName} needs a start frame (storyboard image)`);
+    }
+    const omniResult = await proxyGenerateKlingOmniVideo({
+      model_name: routing.modelId,
+      image_list: [{ image_url: stripDataUrlPrefix(config.startFrame) }],
+      prompt: config.prompt.trim(),
+      duration: String(config.duration),
+      mode: 'std',
+      aspect_ratio: config.aspectRatio,
+      sound: 'off', // SignalModulator owns voiceover; Omni audio would be discarded.
+    });
+    initialOperation = omniResult.operation;
+  } else if (routing.apiSurface === 'kling-image2video') {
+    // Kling V3 image2video requires a start frame. UI gating should prevent
+    // this from happening, but throw clearly if a Kling render is dispatched
+    // without one.
+    if (!config.startFrame) {
+      throw new Error(`KLING_REQUIRES_START_FRAME: ${VIDEO_MODEL_SPECS[config.model].displayName} needs a start frame (storyboard image)`);
     }
     const klingResult = await proxyGenerateKlingVideo({
       model_name: routing.modelId,
