@@ -411,7 +411,6 @@ export type VideoModelType =
   | 'Veo_3.1_Quality'
   | 'Veo_3.1_Lite'
   | 'Kling_3_0'
-  | 'Kling_O1'
   | 'Seedance_2_0_Fast'
   | 'Seedance_2_0_Quality';
 
