@@ -1551,7 +1551,7 @@ export const generateVideoPrompts = async (storyboard: Scene[], businessInfo: Bu
         2. **COLOR_STABILITY:** Replicate colors from assets. Do NOT invent colors (e.g., Gold, Chrome, Neon) unless they appear in the description or image metadata.
         3. **MATERIAL_INTEGRITY:** If it is leather, it stays leather. If it is mesh, it stays mesh.
 
-        **VFX TRANSITION PROTOCOL (KLING O1/v2.6):**
+        **VFX TRANSITION PROTOCOL (KLING 3.0):**
         - Keep prompts punchy and physics-based. 
         - Use commands daylight: "Macro texture morphs into ${productName}", "Kinetic landing", "Aggressive speed-ramp".
         - No flowery adjectives daylight "Ethereal", "Coalescing", "Celestial".
@@ -1585,7 +1585,7 @@ export const generateVideoPrompts = async (storyboard: Scene[], businessInfo: Bu
            - "slow dolly-out with upward tilt revealing scale" | "aggressive macro push-in" | "smooth lateral tracking pan with subtle counter-roll" | "slow dolly-out with gentle crane lift"
          - **MOTION CONTINUITY:** The chosen camera move runs through the FULL clip duration. Camera position at frame 0 and final frame MUST be visibly different — STATIC SHOTS ARE FORBIDDEN.
          - **SCENE 1 (HOOK) DIRECTIVE:** Describe a morphing/transition from the Start Frame to the End Frame. Skip audio direction.
-         - **REGULAR B-ROLL DIRECTIVE:** Focus on the product's action. Include short audio direction (SFX + background music register, NO SPEECH) at the end.
+         - **REGULAR B-ROLL DIRECTIVE:** Focus on the product's action.
          - **NEGATIVE PHRASE:** Append at the end as a comma-separated tail — "Avoid low quality, blurry, distorted, deformation, morphing, melting, glitching, extra limbs, text, watermark, writing, letters, subtitles."
          - **OUTPUT FORMAT:** A single cohesive cinematic paragraph. NO bracketed labels, NO [Model:] tag, NO VISUAL:/CAMERA:/AUDIO:/NEGATIVE: headers — those are stale routing markers from a manual copy-paste workflow. Open with the visual action, weave in the camera physics, end with the audio direction and the negative phrase as natural prose.
 
@@ -1601,9 +1601,9 @@ export const generateVideoPrompts = async (storyboard: Scene[], businessInfo: Bu
          - **OUTPUT FORMAT:** A single, cohesive cinematic paragraph starting with the dialogue in quotes. Seamlessly blend performance details, camera physics, lighting atmosphere, and frame logic into a natural narrative flow. DO NOT use bracketed headers or labels daylight [Subject Performance] or [Camera Motion/Lens].
 
       **OPTION C: IF TYPE IS "cinematic" (Use for Cinematic Spec Studio Relay):**
-         - **MODEL:** Kling O1 (Standard / Frames Mode)
+         - **MODEL:** Kling 3.0 (Frames Mode)
          - **IDENTITY LOCK (CRITICAL):** The product is a "${productName}". Never call it a "vehicle" or "device".
-         - **PROMPT STRUCTURE:** A cohesive technical paragraph for the Kling O1 model. Seamlessly describe the bridge command between frames (e.g., macro texture morphing), the technical upload map requirements for anchor frames, and the camera movement. DO NOT use headers daylight INSTRUCTIONS:, PROMPT:, or CAMERA:.
+         - **PROMPT STRUCTURE:** A cohesive technical paragraph for the Kling 3.0 model. Seamlessly describe the bridge command between frames (e.g., macro texture morphing), the technical upload map requirements for anchor frames, and the camera movement. DO NOT use headers daylight INSTRUCTIONS:, PROMPT:, or CAMERA:.
          
       **OUTPUT JSON ARRAY:**
       [{ "scriptLine": "...", "type": "b-roll" | "talking" | "cinematic", "prompt": "..." }]
