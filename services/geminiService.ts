@@ -264,9 +264,9 @@ export const VIDEO_MODEL_SPECS: Record<VideoModelType, {
     supportsAudio: false,
     maxElements: 0,
     requiresStartFrame: false,
-    locked: true,
+    locked: false,
     displayName: 'Kling 3.0',
-    tagline: 'Cinematic B-roll — BETA, coming after integration',
+    tagline: 'Cinematic B-roll — morph mode',
   },
   'Seedance_2_0_Fast': {
     durations: [5, 10],
@@ -303,15 +303,17 @@ export const VIDEO_MODEL_SPECS: Record<VideoModelType, {
 const VEO_FAST = 'veo-3.1-fast-generate-preview';
 const VEO_QUALITY = 'veo-3.1-generate-preview';
 const VEO_LITE = 'veo-3.1-lite-generate-preview';
+const KLING_V3 = 'kling-v3';
 
 // Locked engines have null modelId — generateVideo() throws MODEL_LOCKED before touching the proxy.
-export const VIDEO_MODEL_ROUTING: Record<VideoModelType, { modelId: string | null; viaFallback: boolean }> = {
-  'Veo_3.1_Fast':         { modelId: VEO_FAST,    viaFallback: false },
-  'Veo_3.1_Quality':      { modelId: VEO_QUALITY, viaFallback: false },
-  'Veo_3.1_Lite':         { modelId: VEO_LITE,    viaFallback: false },
-  'Kling_3_0':            { modelId: null,        viaFallback: false },
-  'Seedance_2_0_Fast':    { modelId: null,        viaFallback: false },
-  'Seedance_2_0_Quality': { modelId: null,        viaFallback: false },
+// `provider` discriminates which backend proxy to dispatch to in Session B.
+export const VIDEO_MODEL_ROUTING: Record<VideoModelType, { modelId: string | null; viaFallback: boolean; provider: 'gemini' | 'kling' }> = {
+  'Veo_3.1_Fast':         { modelId: VEO_FAST,    viaFallback: false, provider: 'gemini' },
+  'Veo_3.1_Quality':      { modelId: VEO_QUALITY, viaFallback: false, provider: 'gemini' },
+  'Veo_3.1_Lite':         { modelId: VEO_LITE,    viaFallback: false, provider: 'gemini' },
+  'Kling_3_0':            { modelId: KLING_V3,    viaFallback: false, provider: 'kling'  },
+  'Seedance_2_0_Fast':    { modelId: null,        viaFallback: false, provider: 'gemini' },
+  'Seedance_2_0_Quality': { modelId: null,        viaFallback: false, provider: 'gemini' },
 };
 
 export interface GeneratedVideoResult {
