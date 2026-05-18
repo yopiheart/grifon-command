@@ -76,7 +76,7 @@ interface GenerateVideoProps {
   onSendToSignalModulator?: (batch: SceneBatchEntry[]) => void;
 }
 
-const ACTIVE_MODELS: VideoModelType[] = ['Veo_3.1_Fast', 'Veo_3.1_Quality', 'Veo_3.1_Lite', 'Kling_3_0'];
+const ACTIVE_MODELS: VideoModelType[] = ['Veo_3.1_Fast', 'Veo_3.1_Quality', 'Veo_3.1_Lite', 'Kling_3_0', 'Kling_O1'];
 const LOCKED_MODELS: VideoModelType[] = ['Seedance_2_0_Fast', 'Seedance_2_0_Quality'];
 
 const initialConfig = (defaultAspectRatio?: '9:16' | '16:9' | null): VideoGenConfig => ({
@@ -588,11 +588,10 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
               // proceed without end frame for this job
             }
           }
-          // Session B — auto-route this scene's engine from its type.
-          // talking → Veo (avatars), b-roll/cinematic → Kling (morph). The
-          // user's global picker becomes the fallback if the type isn't one
-          // of the known three.
-          const sceneModel = autoRouteModelForType(p.type, config.model);
+          // Auto-route this scene's engine from its type. Session C: hook
+          // (scene 0, b-roll) routes to Kling O1 for drama; regular b-roll
+          // routes to Kling 3.0; talking → Veo; cinematic → Kling 3.0.
+          const sceneModel = autoRouteModelForType(p.type, config.model, i);
           // Phase 6 — auto-compute per-scene duration from scriptLine.
           // RENDER ALL previously inherited the single config.duration value
           // (whatever scene was last viewed), forcing every clip to one length.
@@ -1474,7 +1473,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
           elapsed={elapsed}
           onSelect={setActiveIdx}
           renderedSceneIdxs={renderedSceneIdxs}
-          perSceneModels={seedPrompts.map((p) => autoRouteModelForType(p.type, config.model))}
+          perSceneModels={seedPrompts.map((p, i) => autoRouteModelForType(p.type, config.model, i))}
         />
       </div>
     </GlassPanel>
