@@ -1,4 +1,4 @@
-import type { VideoGenConfig } from '../../types';
+import type { VideoGenConfig, VideoModelType, VideoPrompt } from '../../types';
 import { generateVideo, GeneratedVideoResult } from '../../services/geminiService';
 
 export type SceneStatus = 'ready' | 'queued' | 'rendering' | 'done' | 'failed';
@@ -17,7 +17,31 @@ export interface RenderJob {
    * RENDER ALL honor each scene's smart-duration math (words/2.5 + 0.3s)
    * instead of locking every clip to a single global value. */
   duration?: number;
+  /** Per-scene model override. Session B auto-routes b-roll/cinematic scenes
+   * to Kling_3_0 and talking scenes to Veo_3.1_Lite via autoRouteModelForType.
+   * Falls back to opts.config.model when absent (single-model batch path). */
+  model?: VideoModelType;
 }
+
+/**
+ * Session B auto-routing: pick the right engine for a scene's type.
+ * - talking  → Veo (handles speaking avatars best, native audio path on Vertex)
+ * - b-roll   → Kling (cleaner motion-from-still, native image_tail morph)
+ * - cinematic → Kling (best transitions / VFX morphs)
+ *
+ * Per-scene override (Session C) still wins; this is the default for new jobs.
+ * The `fallback` parameter preserves the user's global model picker as the
+ * answer when the scene's type isn't one of the known three.
+ */
+export const autoRouteModelForType = (
+  type: VideoPrompt['type'],
+  fallback: VideoModelType
+): VideoModelType => {
+  if (type === 'talking') return 'Veo_3.1_Lite';
+  if (type === 'b-roll') return 'Kling_3_0';
+  if (type === 'cinematic') return 'Kling_3_0';
+  return fallback;
+};
 
 export type QueueEvent =
   | { type: 'status'; sceneIdx: number; status: SceneStatus; result?: GeneratedVideoResult; error?: string }
@@ -62,6 +86,7 @@ export async function runQueue(jobs: RenderJob[], opts: RunQueueOpts): Promise<v
       const result = await generateVideo(
         {
           ...opts.config,
+          model: job.model ?? opts.config.model,
           prompt: job.prompt,
           startFrame: job.startFrame,
           endFrame: job.endFrame,

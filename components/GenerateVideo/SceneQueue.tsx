@@ -1,7 +1,8 @@
 import React from 'react';
 import { CheckCircle2, RotateCw, AlertTriangle, Clock, Check } from 'lucide-react';
 import type { SceneStatus } from './RenderAllRunner';
-import type { VideoPrompt, Scene } from '../../types';
+import type { VideoPrompt, Scene, VideoModelType } from '../../types';
+import { VIDEO_MODEL_ROUTING } from '../../services/geminiService';
 
 export interface SceneQueueProps {
   seedPrompts: VideoPrompt[];
@@ -12,6 +13,10 @@ export interface SceneQueueProps {
   onSelect: (idx: number) => void;
   /** Scene indices that already have at least one persisted library render. */
   renderedSceneIdxs?: Set<number>;
+  /** Session B — per-scene engine surfaced as a VEO/KLING chip. Computed by the
+   * parent via autoRouteModelForType so the rail shows where each scene WOULD
+   * render if the user clicks RENDER ALL right now. */
+  perSceneModels?: VideoModelType[];
 }
 
 const statusLabel = (s: SceneStatus): string => {
@@ -60,6 +65,29 @@ const StatusBadge: React.FC<{ status: SceneStatus; elapsed?: number }> = ({ stat
   }
 };
 
+const EngineChip: React.FC<{ model?: VideoModelType }> = ({ model }) => {
+  if (!model) return null;
+  const provider = VIDEO_MODEL_ROUTING[model]?.provider;
+  if (provider === 'kling') {
+    return (
+      <span
+        className="text-[7px] font-black font-mono uppercase tracking-widest rounded px-1 py-px border border-[#FFCC00]/50 bg-[#FFCC00]/10 text-[#FFCC00]"
+        title="Routed to Kling 3.0"
+      >
+        KLING
+      </span>
+    );
+  }
+  return (
+    <span
+      className="text-[7px] font-black font-mono uppercase tracking-widest rounded px-1 py-px border border-white/15 bg-zinc-950 text-zinc-400"
+      title="Routed to Veo"
+    >
+      VEO
+    </span>
+  );
+};
+
 export const SceneQueue: React.FC<SceneQueueProps> = ({
   seedPrompts,
   storyboard,
@@ -68,6 +96,7 @@ export const SceneQueue: React.FC<SceneQueueProps> = ({
   elapsed,
   onSelect,
   renderedSceneIdxs,
+  perSceneModels,
 }) => (
   <div className="flex lg:flex-col gap-2 lg:gap-3 overflow-x-auto lg:overflow-y-auto lg:overflow-x-visible pb-2 lg:pb-0 -mx-1 px-1 lg:mx-0 lg:px-0 custom-scrollbar">
     {seedPrompts.map((p, i) => {
@@ -111,6 +140,7 @@ export const SceneQueue: React.FC<SceneQueueProps> = ({
               {renderedSceneIdxs?.has(i) && (
                 <Check className="w-2.5 h-2.5" aria-label="Already in library" />
               )}
+              <EngineChip model={perSceneModels?.[i]} />
             </div>
             <div className="text-[9px] text-zinc-400 line-clamp-2 font-mono leading-snug">
               {p.scriptLine || p.prompt.slice(0, 60)}

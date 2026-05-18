@@ -152,6 +152,51 @@ const proxyGenerateVideo = (params: any): Promise<{ operation: any }> => {
   });
 };
 
+// Phase 2a smoke (2026-05-18) confirmed: Kling V3 accepts RAW base64 (no
+// `data:image/jpeg;base64,` prefix) for `image` / `image_tail`. Sending the
+// full data URL fails with code 1201 "File is not in a valid base64 format".
+const stripDataUrlPrefix = (s: string): string => s.replace(/^data:[^;]+;base64,/, '');
+
+interface KlingSubmitBody {
+  model_name: string;
+  image: string;
+  image_tail?: string;
+  prompt: string;
+  duration: string;          // STRING per Kling API (verified Phase 1 smoke)
+  mode: 'std' | 'pro';
+  aspect_ratio: string;
+  cfg_scale?: number;
+}
+
+interface KlingOperation {
+  task_id: string;
+  task_status: string;
+  model_name?: string;
+  created_at?: number;
+}
+
+const proxyGenerateKlingVideo = (
+  body: KlingSubmitBody
+): Promise<{ operation: KlingOperation }> => {
+  const requestId =
+    globalThis.crypto?.randomUUID?.() ??
+    `req-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+  console.log('[grifon:gv:kling:proxy]', {
+    t: Date.now(),
+    model: body.model_name,
+    duration: body.duration,
+    mode: body.mode,
+    aspect: body.aspect_ratio,
+    hasTail: !!body.image_tail,
+    requestId,
+  });
+  return proxyCall<{ operation: KlingOperation }>(
+    '/api/kling/video',
+    { ...body, requestId },
+    { jobLabel: 'Submitting Kling render', jobKind: 'video', jobDetail: 'Reaching klingai.com…' }
+  );
+};
+
 interface VideoRenderMetadata {
   prompt?: string;
   sceneIdx?: number;
@@ -164,13 +209,18 @@ const proxyPollVideoOperation = async (
   operation: any,
   metadata?: VideoRenderMetadata
 ): Promise<VideoPollResponse> => {
+  // Dispatch on provider derived from metadata.model. Falls back to /gemini
+  // for back-compat with persisted jobs that pre-date metadata.model.
+  const provider = metadata?.model ? VIDEO_MODEL_ROUTING[metadata.model]?.provider : 'gemini';
+  const endpoint = provider === 'kling' ? '/api/kling/video/poll' : '/api/gemini/video/poll';
   try {
-    return await proxyCall<VideoPollResponse>('/api/gemini/video/poll', { operation, metadata });
+    return await proxyCall<VideoPollResponse>(endpoint, { operation, metadata });
   } catch (err: any) {
     if (err?.status === 502) {
       const code = err.body?.error;
       const status = err.body?.status;
       if (code === 'veo_download_failed') throw new Error(`VEO_DOWNLOAD_FAILED: ${status}`);
+      if (code === 'kling_download_failed') throw new Error(`KLING_DOWNLOAD_FAILED: ${status}`);
       if (code === 'storage_upload_failed') throw new Error(`STORAGE_UPLOAD_FAILED: ${status}`);
     }
     throw err;
@@ -419,44 +469,65 @@ export const generateVideo = async (
     );
   }
 
-  const params: any = {
-    model: routing.modelId,
-    prompt: config.prompt.trim(),
-    config: {
-      numberOfVideos: 1,
-      aspectRatio: config.aspectRatio,
-      resolution: config.resolution,
-      durationSeconds: config.duration,
-      // generateAudio omitted: @google/genai SDK rejects the field on the Gemini API backend
-      // (even when false) — it's Vertex AI only. Re-add when migrating to Vertex.
-    },
-  };
-
-  if (config.startFrame) {
-    params.image = parseDataUrl(config.startFrame);
-  }
-  if (config.endFrame) {
-    params.config.lastFrame = parseDataUrl(config.endFrame);
-  }
-
   opts.onStatus?.('SUBMITTING_JOB');
-  let proxyResult;
-  try {
-    proxyResult = await proxyGenerateVideo(params);
-  } catch (err: any) {
-    // Veo 3.1 Lite rejects startFrame+endFrame morph mode with 400 INVALID_ARGUMENT.
-    // Fall back to single-frame render so the scene still produces a usable clip.
-    const isMorphRejection = params.config?.lastFrame && (err?.status === 400 || /"code":\s*400|INVALID_ARGUMENT/.test(err?.message ?? ''));
-    if (isMorphRejection) {
-      console.warn('[grifon:gv:morph-fallback] Veo rejected startFrame+endFrame, retrying without endFrame');
-      delete params.config.lastFrame;
-      proxyResult = await proxyGenerateVideo(params);
-      console.warn('[grifon:gv:morph-fallback] Fallback render succeeded');
-    } else {
-      throw err;
+  let initialOperation: any;
+
+  if (routing.provider === 'kling') {
+    // Kling V3 requires a start frame. UI gating should prevent this from
+    // happening, but throw clearly if a Kling render is dispatched without one.
+    if (!config.startFrame) {
+      throw new Error('KLING_REQUIRES_START_FRAME: Kling 3.0 needs a start frame (storyboard image)');
     }
+    const klingResult = await proxyGenerateKlingVideo({
+      model_name: routing.modelId,
+      image: stripDataUrlPrefix(config.startFrame),
+      ...(config.endFrame ? { image_tail: stripDataUrlPrefix(config.endFrame) } : {}),
+      prompt: config.prompt.trim(),
+      duration: String(config.duration),
+      mode: 'std', // Session B default; per-scene mode picker is Session C.
+      aspect_ratio: config.aspectRatio,
+      cfg_scale: 0.5,
+    });
+    initialOperation = klingResult.operation;
+  } else {
+    const params: any = {
+      model: routing.modelId,
+      prompt: config.prompt.trim(),
+      config: {
+        numberOfVideos: 1,
+        aspectRatio: config.aspectRatio,
+        resolution: config.resolution,
+        durationSeconds: config.duration,
+        // generateAudio omitted: @google/genai SDK rejects the field on the Gemini API backend
+        // (even when false) — it's Vertex AI only. Re-add when migrating to Vertex.
+      },
+    };
+
+    if (config.startFrame) {
+      params.image = parseDataUrl(config.startFrame);
+    }
+    if (config.endFrame) {
+      params.config.lastFrame = parseDataUrl(config.endFrame);
+    }
+
+    let proxyResult;
+    try {
+      proxyResult = await proxyGenerateVideo(params);
+    } catch (err: any) {
+      // Veo 3.1 Lite rejects startFrame+endFrame morph mode with 400 INVALID_ARGUMENT.
+      // Fall back to single-frame render so the scene still produces a usable clip.
+      const isMorphRejection = params.config?.lastFrame && (err?.status === 400 || /"code":\s*400|INVALID_ARGUMENT/.test(err?.message ?? ''));
+      if (isMorphRejection) {
+        console.warn('[grifon:gv:morph-fallback] Veo rejected startFrame+endFrame, retrying without endFrame');
+        delete params.config.lastFrame;
+        proxyResult = await proxyGenerateVideo(params);
+        console.warn('[grifon:gv:morph-fallback] Fallback render succeeded');
+      } else {
+        throw err;
+      }
+    }
+    initialOperation = proxyResult.operation;
   }
-  const { operation: initialOperation } = proxyResult;
 
   const renderMetadata: VideoRenderMetadata = {
     prompt: config.prompt.trim(),

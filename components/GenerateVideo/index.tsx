@@ -43,6 +43,7 @@ import { SceneQueue } from './SceneQueue';
 import {
   runQueue,
   urlToDataUrl,
+  autoRouteModelForType,
   type SceneStatus,
   type RenderJob,
   type QueueEvent,
@@ -75,8 +76,8 @@ interface GenerateVideoProps {
   onSendToSignalModulator?: (batch: SceneBatchEntry[]) => void;
 }
 
-const ACTIVE_MODELS: VideoModelType[] = ['Veo_3.1_Fast', 'Veo_3.1_Quality', 'Veo_3.1_Lite'];
-const LOCKED_MODELS: VideoModelType[] = ['Kling_3_0', 'Seedance_2_0_Fast', 'Seedance_2_0_Quality'];
+const ACTIVE_MODELS: VideoModelType[] = ['Veo_3.1_Fast', 'Veo_3.1_Quality', 'Veo_3.1_Lite', 'Kling_3_0'];
+const LOCKED_MODELS: VideoModelType[] = ['Seedance_2_0_Fast', 'Seedance_2_0_Quality'];
 
 const initialConfig = (defaultAspectRatio?: '9:16' | '16:9' | null): VideoGenConfig => ({
   // Phase 4h.1 — default to Lite for beta cost-control. Cheapest tier;
@@ -587,17 +588,24 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
               // proceed without end frame for this job
             }
           }
+          // Session B — auto-route this scene's engine from its type.
+          // talking → Veo (avatars), b-roll/cinematic → Kling (morph). The
+          // user's global picker becomes the fallback if the type isn't one
+          // of the known three.
+          const sceneModel = autoRouteModelForType(p.type, config.model);
           // Phase 6 — auto-compute per-scene duration from scriptLine.
           // RENDER ALL previously inherited the single config.duration value
           // (whatever scene was last viewed), forcing every clip to one length.
           // For Director AI scenes the AI already knows the optimal duration
           // via suggestDurationForScript; bypass the chip entirely.
+          // Pass the AUTO-ROUTED model so Kling's [5,10] duration set is
+          // consulted (not Veo's [4,6,8]) when a scene is routed to Kling.
           const scriptLine = storyboard[i]?.scriptLine;
           const sceneDuration = scriptLine
-            ? suggestDurationForScript(scriptLine, config.model, config.resolution)
+            ? suggestDurationForScript(scriptLine, sceneModel, config.resolution)
             : config.duration;
           setStatus(i, 'queued');
-          return { sceneIdx: i, prompt: p.prompt, startFrame, endFrame, duration: sceneDuration };
+          return { sceneIdx: i, prompt: p.prompt, startFrame, endFrame, duration: sceneDuration, model: sceneModel };
         })
       );
       jobs = prepared.filter((j): j is RenderJob => j !== null);
@@ -1466,6 +1474,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
           elapsed={elapsed}
           onSelect={setActiveIdx}
           renderedSceneIdxs={renderedSceneIdxs}
+          perSceneModels={seedPrompts.map((p) => autoRouteModelForType(p.type, config.model))}
         />
       </div>
     </GlassPanel>
