@@ -137,8 +137,15 @@ Each commit is independently revertible. Each TUNED edit gets per-edit Neil appr
 
 **Total Kling spend cap:** $1.50 of $9.00 balance. Sessions A-E aggregate ~$2.50 of $10.
 
-## Session log (filled in as the session runs)
+## Session log
 
-> Status entries appended below as phases complete. Each entry: timestamp + phase + outcome + concrete next action.
+- **Step 0 — A2 confirmed.** Two cinematic renders ($0.50) at `mode=std`, `5s`, `9:16`. Hotfix `2d943b6` verified working — both clips morphed end-to-end. NEW (hand-crafted anchor-bridge prompt) substantively beat OLD on the t=2.5s anchor-bridging criterion (cup emerging from beans on NEW; cup fully formed + beans dissolving on OLD). Frame artifacts: `omni-cinematic-{old,new}-{00,25,49}s.png`. MP4 tokens: `55d8f6a4-…` (OLD), `c425103f-…` (NEW). Decision: proceed to audit.
+- **Phase 2 prereq — finding.** The storyboard generator at [api/_lib/prompts.ts:773-823](../api/_lib/prompts.ts) already picks one of 6 VIRAL VFX MENU effects per Scene 1 and stores it in `scene.transitionEffect` (defined in [types.ts:50](../types.ts)). But `generateVideoPrompts` was dropping that field from the Flash input. The audit became plumbing + minimal hook-scoped rule split, not a from-scratch redesign.
+- **Gate 1 — text-diff harness.** Disposable script at `.tmp/gate1-textdiff.mjs` called Gemini Flash directly with 3 meta-prompt variants × 3 TransitionEffect values = 9 calls (~$0.001). First pass surfaced a "static composition" regression in EDIT_2B (Flash interpreted "camera motion is optional" as "default static"). Fixed by replacing the optional clause with `CAMERA MOTION (required, subtle, serves the morph)` + STATIC SHOTS FORBIDDEN. Re-run cleaned all 3 cases.
+- **Commit 2a — `31d65f4`** (pure code, no TUNED): plumbed `scene.transitionEffect` through `generateVideoPrompts` storyboardText at [services/geminiService.ts:1617-1621](../services/geminiService.ts). Behavior unchanged for Scene 2+ (no transitionEffect field). Pushed.
+- **Commit 2b — `4a82d99`** (TUNED prompt, per-edit Neil-approved via "Okay B! Go"): split Option A into Option A-Hook (Scene 1 hook) + Option A-Regular (Scene 2+ b-roll, unchanged behavior preserving Neil's two-year-tuned formula) at [services/geminiService.ts:1671-1694](../services/geminiService.ts). Pushed.
+- **Pre-existing test failures (10)** unrelated — `tests/unit/geminiService.schemas.test.ts` expects prompt content in fetch body, but post-2026-05-09 crown-jewel migration moved those prompts server-side. Will require Session F+ test-rewrite. Confirmed unrelated via `git stash` test before pushing 2a.
+- **Spend so far:** $0.50 of $1.50 budget (Step 0 only; Gate 1 was ~$0.001 in Gemini text). Remaining: $1.00 for Gate 2.
+- **Gate 2 — A/B live render queued.** Two prompts (the actual Flash outputs from Gate 1's OLD and EDIT_2B-fixed cases for Character Morph) being rendered against the same beans/latte frame pair from Step 0. Validates implementation matches principle.
 
-- _Pending Phase 1 (Step 0) start._
+## Awaiting Neil's Gate 2 render URLs.
