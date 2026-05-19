@@ -1670,12 +1670,20 @@ export const generateVideoPrompts = async (storyboard: Scene[], businessInfo: Bu
 
       **GENERATION RULES BY TYPE:**
 
-      **OPTION A: IF TYPE IS "b-roll" (Use for SCENE 1 & Visuals):**
+      **OPTION A-HOOK: IF TYPE IS "b-roll" AND THIS IS SCENE 1 (THE HOOK):**
+         - **IDENTITY RULE:** Refer to the product only as "${productName}".
+         - **OPEN WITH THE ANCHOR TRANSFORMATION (MANDATORY):** Identify one element shared between Start Frame and End Frame (shape, silhouette, motion vector, or color mass). Open the prose with that element's transformation in physics-first language. The transformation is the verb. Example: "Macro texture of [start] morphs into [end]." NOT "Slow dolly-out reveals [start]."
+         - **USE THE STORYBOARD'S TRANSITION EFFECT:** When TransitionEffect is provided, the prompt MUST describe a transformation consistent with it. For Character Morph: in-flight texture/material transformation across the anchor element. For Object Materialization: anchor element resolves from amorphous into target subject. For Teleport / Snap Cut: instant replacement at near-identical framing. For Explosion Reveal / Chaos Burst: kinetic dispersion of start subject revealing end subject. Translate the TransitionEffect label into anchor-bridge prose; do not invent a different transition.
+         - **PUNCHY PHYSICS-BASED LANGUAGE:** "Macro texture morphs into [target]", "Kinetic compression of [A] into [B]", "Aggressive speed-ramp outward as [X] swirls into [Y]". Avoid flowery adjectives ("Ethereal", "Coalescing", "Celestial").
+         - **NEGATIVE PHRASE (HOOK-SCOPED):** Append as comma-separated tail — "Avoid low quality, blurry, distorted, glitching, extra limbs, text, watermark, writing, letters, subtitles." (morphing/melting/deformation are intentionally OMITTED because Scene 1 IS the morph.)
+         - **CAMERA MOTION (required, subtle, serves the morph):** A camera move runs through the FULL clip duration — pick one: "slow dolly-out following the transformation", "gentle push-in toward the anchor", "subtle crane lift across the morph". STATIC SHOTS ARE FORBIDDEN.
+         - **OUTPUT FORMAT:** Single cohesive cinematic paragraph. Open with anchor transformation, weave in the camera motion, end with the negative phrase. NO bracketed labels.
+
+      **OPTION A-REGULAR: IF TYPE IS "b-roll" AND THIS IS NOT SCENE 1 (Scene 2+ visuals):**
          - **IDENTITY RULE:** Refer to the product only as "${productName}".
          - **CAMERA PHYSICS (MANDATORY — open the prose with this, never static):**
            - "slow dolly-out with upward tilt revealing scale" | "aggressive macro push-in" | "smooth lateral tracking pan with subtle counter-roll" | "slow dolly-out with gentle crane lift"
          - **MOTION CONTINUITY:** The chosen camera move runs through the FULL clip duration. Camera position at frame 0 and final frame MUST be visibly different — STATIC SHOTS ARE FORBIDDEN.
-         - **SCENE 1 (HOOK) DIRECTIVE:** Describe a morphing/transition from the Start Frame to the End Frame. Skip audio direction.
          - **REGULAR B-ROLL DIRECTIVE:** Focus on the product's action.
          - **NEGATIVE PHRASE:** Append at the end as a comma-separated tail — "Avoid low quality, blurry, distorted, deformation, morphing, melting, glitching, extra limbs, text, watermark, writing, letters, subtitles."
          - **OUTPUT FORMAT:** A single cohesive cinematic paragraph. NO bracketed labels, NO [Model:] tag, NO VISUAL:/CAMERA:/AUDIO:/NEGATIVE: headers — those are stale routing markers from a manual copy-paste workflow. Open with the visual action, weave in the camera physics, end with the audio direction and the negative phrase as natural prose.
