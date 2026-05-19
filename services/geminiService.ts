@@ -1614,9 +1614,11 @@ export const generateVideoPrompts = async (storyboard: Scene[], businessInfo: Bu
     const productName = businessInfo.product;
     const productDesc = businessInfo.productImageDescription || businessInfo.product || 'N/A';
     
-    const storyboardText = storyboard.map((s, i) => 
-        `Scene ${i + 1} [${!!s.startFramePrompt ? "TYPE: HOOK/VISUAL-EFFECT" : "TYPE: STANDARD"}]:\nScript: "${s.scriptLine}"\nDescription: ${s.sceneDescription}\nFocus: ${s.referenceImage}\nPrompt: ${s.imagePrompt || s.startFramePrompt}`
-    ).join('\n\n');
+    const storyboardText = storyboard.map((s, i) => {
+        const typeTag = !!s.startFramePrompt ? "TYPE: HOOK/VISUAL-EFFECT" : "TYPE: STANDARD";
+        const transitionLine = s.transitionEffect ? `\nTransitionEffect: ${s.transitionEffect}` : '';
+        return `Scene ${i + 1} [${typeTag}]:\nScript: "${s.scriptLine}"\nDescription: ${s.sceneDescription}\nFocus: ${s.referenceImage}\nPrompt: ${s.imagePrompt || s.startFramePrompt}${transitionLine}`;
+    }).join('\n\n');
 
     let additionalInstructions = "";
     if (scriptType === 'Temu') {
