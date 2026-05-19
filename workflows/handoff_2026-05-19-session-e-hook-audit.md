@@ -146,6 +146,17 @@ Each commit is independently revertible. Each TUNED edit gets per-edit Neil appr
 - **Commit 2b — `4a82d99`** (TUNED prompt, per-edit Neil-approved via "Okay B! Go"): split Option A into Option A-Hook (Scene 1 hook) + Option A-Regular (Scene 2+ b-roll, unchanged behavior preserving Neil's two-year-tuned formula) at [services/geminiService.ts:1671-1694](../services/geminiService.ts). Pushed.
 - **Pre-existing test failures (10)** unrelated — `tests/unit/geminiService.schemas.test.ts` expects prompt content in fetch body, but post-2026-05-09 crown-jewel migration moved those prompts server-side. Will require Session F+ test-rewrite. Confirmed unrelated via `git stash` test before pushing 2a.
 - **Spend so far:** $0.50 of $1.50 budget (Step 0 only; Gate 1 was ~$0.001 in Gemini text). Remaining: $1.00 for Gate 2.
-- **Gate 2 — A/B live render queued.** Two prompts (the actual Flash outputs from Gate 1's OLD and EDIT_2B-fixed cases for Character Morph) being rendered against the same beans/latte frame pair from Step 0. Validates implementation matches principle.
+- **Gate 2 — PASS (2026-05-19).** Two cinematic renders ($0.50) executed against the same beans/latte frame pair from Step 0, using the actual Gate 1 Flash outputs (NOT hand-crafted prompts). Frames extracted at t=0/2.5/4.9 via Playwright. Ranking at t=2.5s (anchor-bridging inspection):
+  - **🥇 Step 0 NEW** (hand-crafted reference): cup born from bean field, latte art still forming, beans dominate lower 2/3 — most viral-feeling
+  - **🥈 Render B (post-audit Flash output, shipped behavior):** cup dominant + visible latte "drip" connecting cup to bean field, anchor preserved across both. Real transition energy. ← **what every user gets automatically**
+  - **🥉 Render A (pre-audit Flash output):** cup fully formed, beans peripheral, end-state arrived early. Same failure pattern as Step 0 OLD. Not viral.
+  MP4 tokens: `4274f742-…` (Render A), `6584c53b-…` (Render B). Frame artifacts: `omni-cinematic-gate2-{A,B}-{00,25,49}s.png`. **Gate 3 does NOT fire.** Commits 2a + 2b stay.
+- **Total Kling spend (Session E):** $1.00 of $1.50 cap (Step 0 $0.50 + Gate 2 $0.50). $0.50 banked for future iteration.
+- **Closeout commit:** [agent_lessons.md](../agent_lessons.md) entry added — *"Audit upstream before designing new downstream logic"* — capturing the lesson that the storyboard generator was already classifying transitions and the audit's load-bearing change was plumbing the existing signal, not designing a new classifier.
 
-## Awaiting Neil's Gate 2 render URLs.
+## Session E status: ✅ SHIPPED.
+
+- **What users get now:** Hook scenes route to Kling Omni (Session D) AND Flash receives the storyboard's TransitionEffect choice as input AND the hook-scoped Option A-Hook block translates that choice into anchor-bridge prose with hook-scoped negative tail. Render B is the new default behavior.
+- **What users don't get yet (out of scope, follow-on goal needed):** explicit MATCH-CUT, REVEAL, SWAP expansion clauses in Option A-Hook (Commits 4/5/6). Current Option A-Hook handles them via the "translate TransitionEffect label into anchor-bridge prose" instruction — Gate 1 showed this works for Object Materialization and Chaos Burst at least, but hasn't been live-rendered for non-Morph effects.
+- **Tech debt flagged:** 10 pre-existing test failures in `tests/unit/geminiService.schemas.test.ts` (crown-jewel migration left tests expecting prompts in fetch body that are now server-side). Session F+.
+- **Open question for future:** Render B is good but doesn't fully match Step 0 NEW's hand-crafted quality. Future iteration could tighten the Option A-Hook block further to push Flash closer to the hand-crafted standard. Diminishing returns vs. current shipped behavior — defer unless customer feedback demands.
