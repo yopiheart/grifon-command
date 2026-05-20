@@ -26,6 +26,8 @@ Tests-from-goals corollary: when the verification mechanism is a new test, write
 
 A clean type-check is necessary, not sufficient.
 
+**Separate critic for the subjective step.** Steps 1–2 are objective — exit codes, already gated by the build-gate Stop hook and `/goal`, so there is no self-grading risk there. Step 3 (smoke) and the "is the Phase 1 contract actually satisfied" call in step 4 are *judgment*, and judging your own change is the self-grading trap. For non-trivial work, hand the Phase 1 contract plus the change to a fresh `general-purpose` sub-agent and let it run the smoke flow and return the pass/fail verdict against the contract — the builder fixes, the critic re-verifies. See the "Run as a separate critic" section in `brand-check` for the spawn pattern (fresh context, blind to the builder's rationale, report-only).
+
 ## Goal-compatible contract (when paired with `/goal`)
 
 When the work spans many turns and you're driving it with [`/goal`](https://code.claude.com/docs/en/goal), the Phase 1 contract IS the goal condition — written so the blind evaluator can judge it from the transcript alone.

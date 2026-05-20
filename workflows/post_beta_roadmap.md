@@ -18,6 +18,8 @@ Half-baked ideas don't go here — they go in conversation and either die or get
 
 > **Primitive mapping (2026-05-15):** This is the textbook [`/loop`](https://code.claude.com/docs/en/scheduled-tasks#run-a-prompt-repeatedly-with-%2Floop) use case (time-driven). The per-run verification step inside the loop is a [`/goal`](https://code.claude.com/docs/en/goal) — e.g., `/goal "all 11 modules produce baseline-matching outputs against .golden/, OR stop after 20 turns"`. When you unpark this, see the "Goal-driven execution" section in `CLAUDE.md` for the condition template and TUNED-file guardrails.
 
+> **Generator-Evaluator architecture (2026-05-20 brief):** Per the NotebookLM brief *Build Agents That Run for Hours* (Prabaker & Wilson, Anthropic) — when this loop is built, the per-module check must be a *separate harsh evaluator sub-agent*, not the runner grading its own output (a builder cannot reliably self-critique). Store the `.golden/` baseline as **JSON**: it is machine-diffed, not human-read, and the brief notes models overwrite Markdown more readily than JSON — so JSON fits *here*, even though the handoff docs deliberately stay Markdown. Flow: runner generates → fresh `general-purpose` evaluator sub-agent diffs the output against `.golden/*.json` → returns pass/fail → failures post to the output channel. The evaluator pattern is the same one now in `.claude/skills/{brand-check,gemini-eval}/SKILL.md` ("Run as a separate critic").
+
 **What:** A Claude Code `/loop` (or an always-on VPS cron equivalent) that runs golden-path inputs through each of the 11 modules every night, captures outputs, diffs against last-known-good, and posts failures to a single channel (GitHub Issue, Discord webhook, or email).
 
 **Why it matters:** Solo dev + 11 modules + tuned prompts that regress silently when Gemini ships model updates = a guaranteed Friday-night fire. The `/loop` converts that fragility from "I find out when a beta user complains" to "I see a diff in the morning."
@@ -205,6 +207,28 @@ Phase 4 beta-merge should not wait on this. Defer to next session.
 **Scope estimate:** OfferOptimizer-as-rescue UX itself is ~4-6 hours. But the performance-tracking surface that triggers it is a separate ~3-5 day item. Don't start this without that prerequisite.
 
 **Source:** Neil during 2026-05-13 Decision Gate session — *"Ung offer for sure di nila un aalisin kasi currently nag wowork na un sa kanila ng matagal. If hindi sila makabenta, that the only time I think na mas maganda i-optimize ung offer nila para tumaas ung conversion nila dahil it has value stack and free."* This reframed OfferOptimizer's role from default-prefill to conditional-rescue, leading to the same-session decision to drop MarketMind's `bigIdea → offer` mapping and carry the user's MarketResearch `priceOffer` forward instead.
+
+---
+
+### 8. Evaluator Taste-Calibration — Neil-curated reference set
+
+**What:** A curated `references/eval-calibration/` set of approved-good vs. rejected-slop Grifon outputs (scripts, storyboards, scene images, thumbnails), committed to the repo. `gemini-eval` and `brand-check` load it as few-shot calibration so their critic grades output *quality* against Neil's taste — on top of the existing rule-compliance checklist.
+
+**Why it matters:** Today the evaluator skills check *rule compliance* — does the storyboard violate `STILL_FRAME_RULE`, does the component use `bg-black`. They do not grade *quality*: "is this ad actually good, would it convert, or is it competent slop." For a product whose entire output is subjective creative, "passes every rule and is still mediocre" is a real failure mode the harness currently cannot catch. The brief's contention is that taste *is* gradable once it is written down as a strong, specific, example-anchored rubric.
+
+**Why parked:** Three reasons. (1) The good/slop examples must be Neil-curated — taste is Neil's to define, not Claude's (`agent_lessons.md` 2026-05-09: outside frameworks must not rewrite Neil's strategic judgment; the same applies to the quality bar). (2) The "good" examples are best drawn from a corpus of real shipped beta outputs that does not exist yet. (3) Beta + `launch_readiness.md` P0s come first — calibration is leverage for *more* releases, not the first 5–10 owners.
+
+**When to resume:** Post-beta, when there is a corpus of shipped outputs Neil has personally eyeballed and sorted — OR earlier if a beta user's complaint is "it followed the brief but the ad is just bad," which is the signal that rule-checking alone is not enough.
+
+**Where to start:**
+1. Neil curates 3–5 good + 3–5 slop examples per artifact type (script / storyboard / scene image / thumbnail). Karit Coffee, Bukidnon Brew, and TEMU+TESTIMONIAL regression artifacts are the obvious candidates.
+2. Store under `references/eval-calibration/` — committed, so it survives the cafe-PC defreezer.
+3. Add a short section to `.claude/skills/gemini-eval/SKILL.md` and `brand-check/SKILL.md` telling the separate critic (already spec'd — see each skill's "Run as a separate critic" section) to load the reference set and grade output quality against it.
+4. Keep quality a *separate verdict line* (e.g. `QUALITY: below-bar / at-bar / above-bar`) — do not fold it into the compliance `PASS/FAIL`. Compliance and taste are different axes.
+
+**Scope estimate:** ~half a day for the skill edits + folder scaffold. The curation itself is Neil's ongoing effort, not a fixed-size task.
+
+**Source:** 2026-05-20 NotebookLM brief — *Build Agents That Run for Hours Without Losing the Plot* (Ash Prabaker & Andrew Wilson, Anthropic). Strategy "Weight the Rubric / few-shot examples" + contrarian idea "subjective taste is quantifiable." Neil endorsed parking it during the 2026-05-20 plan-mode review and declined to detail it now, to keep the quality rubric Neil-owned. The same brief produced the separate-critic skill edits shipped that session and the Generator-Evaluator annotation on item #1 above.
 
 ---
 

@@ -41,6 +41,18 @@ The user will paste/describe one or more of: SCRIPT JSON, STORYBOARD JSON, SCENE
 
 Use the format at the bottom of this file.
 
+## Run as a separate critic (regression batches, post-tuning verification)
+
+For a regression run (Bukidnon Brew, TEMU+TESTIMONIAL, future brands) or the first batch after a tuned-prompt edit lands — do **not** run this eval inline in the context that generated or tuned the output. That context carries assumptions about the work; a fresh critic does not. Tuning a standalone critic to be harsh is tractable; tuning a builder to be self-critical is not. Spawn a separate sub-agent as the evaluator:
+
+- **Spawn it** via the Agent tool with `subagent_type: general-purpose` (a fresh context). Not `Explore` — that is a search agent, not a reviewer.
+- **Hand it** the output to eval (script/storyboard JSON, scene images, thumbnail, video prompts), the relevant component path(s), and an instruction to grep the current rule text out of `services/geminiService.ts` itself. Do **not** hand it your read of the rules — Step 1 says rules drift; the critic reads them fresh.
+- **A fresh agent runs Step 0 (the wiring check) better** — it has no prior assumption that the call site is wired correctly, so it actually traces the args instead of trusting them.
+- **Frame it adversarially:** *"You are an adversarial output critic. Assume rules are violated until proven held. Walk every checklist item for the artifact type. Classify each finding."* Paste the relevant checklist section(s) into the sub-agent prompt.
+- **The critic is report-only.** It returns the verdict (`GEMINI_PASS` / `GEMINI_PASS_WITH_NITS` / `GEMINI_FAIL` + counts). It never edits, and it never greenlights a prompt diff in `services/geminiService.ts` — a CRITICAL in tuned territory still routes to `grill-me` → Neil per "After the eval" below.
+
+**Escape hatch:** a single one-off output the user pastes with a quick "is this right?" — inline eyeball is fine; skip the sub-agent. The separate critic is for regression batches and post-tuning verification, where self-grading bias compounds across many scenes.
+
 ---
 
 ## Checklist by output type

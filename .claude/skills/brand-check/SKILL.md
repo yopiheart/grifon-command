@@ -12,6 +12,19 @@ The check loop is where Boris Churnney's 2-3x quality multiplier lives. `verify-
 3. Walk the checklist below. Quote the offending line + file:line for every flag.
 4. End with a single verdict: `BRAND_PASS`, `BRAND_PASS_WITH_NITS`, or `BRAND_FAIL` plus the count of each severity.
 
+## Run as a separate critic (non-trivial work)
+
+For a real PR/diff, a multi-component change, or any check that gates "is this UI task done" — do **not** run the checklist inline in the context that produced the work. A builder grading its own diff rationalizes its own class choices; that is the self-grading trap. Tuning a standalone critic to be harsh is tractable; tuning a builder to be self-critical is not. Spawn a fresh sub-agent as the critic instead:
+
+- **Spawn it** via the Agent tool with `subagent_type: general-purpose` (a fresh context). Not `Explore` — that is a search agent, not a reviewer.
+- **Hand it** only the diff / named component(s) and the path to `DESIGN.md`. Do **not** hand it your rationale for the choices — the critic judges blind, against the file.
+- **Frame it adversarially:** *"You are an adversarial brand critic. Assume this diff has brand violations until proven clean. Walk every checklist item. Quote file:line for every flag."* Paste the checklist below into the sub-agent prompt.
+- **The critic is report-only.** It returns the verdict + flagged lines and never edits. The builder fixes, then re-spawns the critic.
+
+**Escape hatch:** a trivial one-line diff (single class swap, copy tweak) — inline review is fine; skip the sub-agent. The separate critic is for work big enough that self-grading bias matters.
+
+*Optional — live verification:* the critic may drive Playwright (MCP available) against `npm run dev` to screenshot the real rendered component instead of reading the diff cold. If it does, treat each screenshot as a discrete observation — design the prompt to survive seeing the UI only in those snapshots.
+
 ## Checklist (flag any mismatch)
 
 **Canvas & color**
