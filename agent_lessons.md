@@ -95,3 +95,27 @@ On V3 image2video, all three coexisted fine because V3's `image + image_tail` bo
 **Context:** Building the on-domain `/checkout` page. Founder initially settled on no-auto-renew positioning, then pivoted mid-session to "I want monthly auto-charge like Claude/OpenAI." I almost reached for an `Edit` to flip the trust-badge copy to "Auto-renews monthly · Cancel anytime."
 **What went wrong (caught before shipping):** The current backend creates a one-time PayMongo Payment Intent. There is no card-on-file storage, no billing cron, no recurring charge handler. Flipping copy to promise auto-renewal would have meant: customer pays, expects to be charged again in 30 days, isn't charged, either keeps free access or loses access without warning. Either outcome is a worse trust break than the original "no auto-renew" positioning. Caught it before writing the Edit, but only because I paused to think about technical scope before keystrokes.
 **Lesson:** When the founder makes a strategic call about subscription/billing/recurring/trial behavior, the next question is **always** "does the backend support this?" — *before* drafting copy that asserts the new behavior. Subscription-model copy is a load-bearing claim, not just marketing language. If backend support is missing, surface it as a separate engineering workstream (see [workflows/auto_renew.md](workflows/auto_renew.md)) and ship neutral copy that doesn't promise either direction in the meantime. Same rule applies to: trial-period claims, refund-window claims, "cancel anytime" claims, "pause subscription" claims — every one of these is a backend feature gate masquerading as a copy choice.
+
+### 2026-05-22 — A frame-sampling grid tuned for a slow transition silently misses a fast one
+
+**Context:** Session F validated 5 hook transition effects on Kling Omni by extracting video
+frames at t=0/2.5/4.9s — the grid Session E used for Character Morph. That grid worked for
+Morph because the morph was slow enough that t=2.5 landed mid-transformation. Session F reused
+it unchanged.
+
+**What went wrong (caught mid-session, before grading):** at t=0/2.5/4.9 all four rendered
+effects looked nearly identical — bean cluster, finished latte, finished latte. The grid made
+the effects look indistinguishable. They are not: the Omni transition for these effects
+completes in ~1.2–3s, so t=2.5 already shows the resolved end state and t=4.9 is just the
+settled tail. The grid sampled start, end, and end-again — it never sampled the transition
+itself. Grading off it would have produced four false "looks the same" verdicts. Re-extracting
+with a dense 0–2.5s grid (0/0.4/0.8/1.2/1.7/2.5) surfaced the real per-effect differences.
+
+**Lesson:** A frame-sampling grid is only valid relative to the speed of the thing it samples.
+Before grading any animation/transition/render, first locate WHERE the motion happens, then
+sample that window densely — never inherit a grid from a prior test whose subject moved at a
+different speed. Concrete rule for this repo's video QA: one quick coarse pass to find the
+transition window, then a dense pass inside it; the interesting frames of a 5s hook are almost
+never evenly spaced. Generalizes to any inherited measurement methodology — sampling rate,
+poll interval, timeout, token budget — re-validate it against the new subject before trusting
+its output.

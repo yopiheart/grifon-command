@@ -18,6 +18,9 @@ token.json
 # WAT intermediates
 .tmp/
 
+# Playwright MCP output (snapshots, console logs)
+.playwright-mcp/
+
 # Python
 __pycache__/
 *.py[cod]

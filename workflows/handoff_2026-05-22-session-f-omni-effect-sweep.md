@@ -126,8 +126,86 @@ this; it does not edit the menu.
 
 ---
 
+## Results
+
+### Gate 2 verdicts (live Omni renders, beans→latte substrate, std/5s/9:16)
+
+| Effect | Verdict | Evidence |
+|---|---|---|
+| **Object Materialization** | ✅ PASS | Legible build — cup rim forms ~t1.2s, beans→foam mid-build ~t1.7s, clean latte ~t2.5s |
+| **Explosion Reveal** | ✅ PASS | Genuine kinetic dispersion — bean mass breaks + flies outward ~t1.2s, cup emerges clean |
+| **Chaos Burst** | 🔶 WEAK | Rendered as a plain gradual materialization — zero chaotic/burst energy |
+| **Teleport / Snap Cut** | ❌ FAIL | Omni interpolated a gradual morph — no instant cut. Two-frame interpolation cannot "snap." |
+| **Invisible Effect** | ❌ FAIL (Gate 1) | No clause, no two-frame interpretation — Flash degraded it to morph prose. Not rendered. |
+
+Gate-2 frame strips committed under [assets/session-f/](assets/session-f/) (`gate2-*.jpeg`).
+
+### Two cross-cutting findings
+
+1. **Omni's two-frame surface delivers exactly one motion: a gradual anchor-bridged
+   transformation.** 3 of 5 effects (Snap Cut, Chaos Burst, Invisible) collapse toward "morph"
+   because that is the engine's nature — only Explosion Reveal added a genuinely distinct
+   visual. **The validated-on-Omni effect set is: Character Morph, Object Materialization,
+   Explosion Reveal.** The other three are menu entries the engine cannot honor literally.
+2. **Dead first ~1 second across ALL renders.** t=0/0.4/0.8 are static; the transition is
+   back-loaded into t≈1.2–3s. For a hook (first second decides everything) this is a real
+   weakness — cross-effect and structural, NOT per-effect. **Flagged for Session G** (needs its
+   own investigation — Omni pacing vs. prompt-fixable; do not assume a quick clause fixes it).
+
+### Remediation shipped
+
+`84d542d` (TUNED, per-edit Neil-approved 2026-05-22) — one consolidated down-convert clause in
+the Option A-Hook `USE THE STORYBOARD'S TRANSITION EFFECT` bullet: Snap Cut + Invisible Effect →
+clean anchor morph; Chaos Burst → Explosion-Reveal dispersion. Removes the Snap Cut prompt
+contradiction ("instant snap" vs "slow dolly"). Gate 1 (verbatim-template harness) + Gate 2
+(live re-render of Snap Cut + Chaos Burst, $0.50) confirmed no regression. Magnitude: a
+prompt-coherence fix + intentional degradation — not a dramatic visual change (Omni morphs
+regardless). Option A-Regular untouched.
+
+**Crown-jewel finding (flagged, NOT fixed):** the VIRAL VFX MENU at
+[api/_lib/prompts.ts:773-780](../api/_lib/prompts.ts) offers Snap Cut, Invisible Effect, and
+Chaos Burst as hook options Kling Omni cannot deliver, with no product-category guardrail. A
+future crown-jewel session should prune those three from the Omni-hook menu (or gate them) and
+add the high-energy→impulse-category gate from the effect↔product-fit map above.
+
+## Session F status: ✅ SHIPPED.
+
+- **What users get now:** hook scenes route to Kling Omni; the storyboard's `transitionEffect`
+  reaches Flash; Option A-Hook translates all 6 VIRAL VFX MENU effects into Omni-deliverable
+  morph-family prose. No effect produces a broken render — the 3 non-deliverable effects
+  degrade intentionally to clean morph-family transitions.
+- **Spend:** $1.50 of the $2.00 cap (4 initial renders $1.00 + 2 down-convert re-renders
+  $0.50). Kling balance ~$6.50 remaining. Gemini text/image (Gate 1 + substrate) ~cents.
+- **Out of scope, carried to Session G:** the dead-first-second hook weakness; cross-product
+  validation (coffee only — n=1); the crown-jewel VIRAL VFX MENU prune; the 10 pre-existing
+  `tests/unit/geminiService.schemas.test.ts` failures; RENDER ALL mixed-scene flow.
+
+## P0 next — Session G
+
+Highest-leverage candidates (Neil picks):
+1. **Dead-first-second investigation.** Every Omni hook is static for its most important
+   second. Research whether prompt language ("transformation begins on frame 1") or an Omni
+   parameter can pull the transition earlier. Cheap to probe via the Gate 1/2 harness pattern.
+2. **Crown-jewel VIRAL VFX MENU prune.** Drop/gate Snap Cut + Invisible Effect + Chaos Burst as
+   Omni-hook options; add the high-energy→impulse-category guardrail. Touches `api/_lib/
+   prompts.ts` — needs explicit per-flow approval (crown-jewel hard rule).
+3. **Cross-product validation.** Re-run the effect sweep on non-coffee substrates (skincare,
+   B2B, fashion) — Session F is n=1.
+
 ## Session log
 
 - **2026-05-22 — substrate.** Beans/latte pair generated + committed `825205d`. Pushed.
-- **2026-05-22 — rubrics locked** (this section) via `grifon-cmo` grounding pass.
-- _(Gate 1, render sweep, grading, verdicts appended below as execution proceeds.)_
+- **2026-05-22 — rubrics locked** via `grifon-cmo` grounding pass; committed `51654ff`.
+- **2026-05-22 — Gate 1.** Verbatim-template harness (`.tmp/sf-gate1-textdiff.mjs`, anti-drift
+  guard passed) generated video prompts for all 5 effects. All coherent + b-roll-typed. Found:
+  Chaos Burst prose ≈ Explosion Reveal (shared clause); Invisible Effect degraded to morph
+  prose (no clause). Neil-confirmed render set: 4 effects, skip Invisible Effect.
+- **2026-05-22 — render sweep.** 4 effects rendered on Kling Omni direct (`kling-video-o1`,
+  std/5s/9:16) — $1.00. All succeeded.
+- **2026-05-22 — Gate 2 grading.** Dense 0–2.5s frame grid (the 0/2.5/4.9 grid missed the
+  fast transitions). Verdicts: Object Materialization PASS, Explosion Reveal PASS, Chaos Burst
+  WEAK, Snap Cut FAIL. Neil-confirmed.
+- **2026-05-22 — down-convert clause.** `84d542d` TUNED edit, per-edit Neil-approved. Gate 1
+  re-validated coherent prose; Gate 2 re-rendered Snap Cut + Chaos Burst ($0.50) — no
+  regression, prompt contradiction resolved.
+- **2026-05-22 — Session F closed.** SHIPPED.
