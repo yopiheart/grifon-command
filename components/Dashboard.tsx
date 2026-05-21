@@ -303,7 +303,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
             </button>
 
             {/* AI Agents Online Badge */}
-            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-zinc-900 border border-white/10 rounded-full">
+            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-zinc-900 rounded-full">
               <div className="relative flex items-center justify-center">
                 <div className="w-2 h-2 rounded-full bg-green-500" />
                 <div className="absolute w-2 h-2 rounded-full bg-green-500 animate-ping opacity-75" />
