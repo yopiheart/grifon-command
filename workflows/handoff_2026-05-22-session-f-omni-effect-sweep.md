@@ -182,15 +182,22 @@ add the high-energy→impulse-category gate from the effect↔product-fit map ab
 
 ## P0 next — Session G
 
-Highest-leverage candidates (Neil picks):
-1. **Dead-first-second investigation.** Every Omni hook is static for its most important
-   second. Research whether prompt language ("transformation begins on frame 1") or an Omni
-   parameter can pull the transition earlier. Cheap to probe via the Gate 1/2 harness pattern.
-2. **Crown-jewel VIRAL VFX MENU prune.** Drop/gate Snap Cut + Invisible Effect + Chaos Burst as
-   Omni-hook options; add the high-energy→impulse-category guardrail. Touches `api/_lib/
-   prompts.ts` — needs explicit per-flow approval (crown-jewel hard rule).
-3. **Cross-product validation.** Re-run the effect sweep on non-coffee substrates (skincare,
-   B2B, fashion) — Session F is n=1.
+**Neil selected (2026-05-22): #1 — the dead-first-second fix.** Start it fresh (`/clear`);
+use `grill-me` (an investigation that may yield a TUNED Option A-Hook edit — multi-decision).
+
+1. **Dead-first-second fix (SELECTED).** Every Omni hook is static for its most important
+   second — the transition is back-loaded to t≈1.2–3s. Research whether prompt language
+   ("transformation begins on frame 1", a speed-ramp directive) or an Omni parameter can pull
+   the transition earlier. Cheap to probe via the Session F Gate 1/2 harness pattern
+   (`.tmp/sf-gate1-textdiff.mjs` rebuilds quickly; substrate is committed under
+   [assets/session-f/](assets/session-f/)). Outcome is either a TUNED Option A-Hook tweak
+   (per-edit Neil approval) or a documented Omni pacing limit. Grill checkpoint: "if we ship
+   this, does the hook actually move in its first second?"
+2. **Crown-jewel VIRAL VFX MENU prune (deferred).** Drop/gate Snap Cut + Invisible Effect +
+   Chaos Burst as Omni-hook options; add the high-energy→impulse-category guardrail. Touches
+   `api/_lib/prompts.ts` — needs explicit per-flow approval (crown-jewel hard rule).
+3. **Cross-product validation (deferred).** Re-run the effect sweep on non-coffee substrates
+   (skincare, B2B, fashion) — Session F is n=1.
 
 ## Session log
 
