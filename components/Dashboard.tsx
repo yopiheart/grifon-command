@@ -383,7 +383,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
       </aside>
 
       {/* Main Content Wrapper */}
-      <main className={`pb-20 lg:pb-0 lg:pl-20 transition-all ${showUpgradeBanner ? 'pt-24 lg:pt-28' : 'pt-16 lg:pt-20'}`}>
+      <main className={`pb-20 lg:pb-0 lg:pl-20 transition-all ${showUpgradeBanner ? 'pt-32 lg:pt-28' : 'pt-16 lg:pt-20'}`}>
         <div className="max-w-4xl lg:max-w-6xl mx-auto px-4 lg:px-8 flex flex-col justify-center min-h-screen lg:min-h-screen">
           
           {/* Command Hero */}
