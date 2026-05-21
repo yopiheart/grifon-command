@@ -387,7 +387,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
         <div className="max-w-4xl lg:max-w-6xl mx-auto px-4 lg:px-8 flex flex-col justify-center min-h-screen lg:min-h-screen">
           
           {/* Command Hero */}
-          <div className="mb-12 lg:mb-16 relative z-10">
+          <div className="mb-10 lg:mb-12 relative z-10">
             {/* Ambient Gold Spotlight Behind Hero */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden -z-10">
               <div
@@ -482,7 +482,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
           )}
 
           {/* Recommended Flow Path — canonical 7-step ad creation journey (UBIQUITOUS_LANGUAGE.md) */}
-          <div className="mb-6 lg:mb-10 max-w-2xl lg:max-w-3xl mx-auto w-full mt-8 lg:mt-16">
+          <div className="mb-6 lg:mb-10 max-w-2xl lg:max-w-3xl mx-auto w-full">
             <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mb-3 text-center lg:text-left">
               // RECOMMENDED FLOW
             </p>
