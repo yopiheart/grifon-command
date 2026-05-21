@@ -128,6 +128,13 @@ Elevation is expressed through **frosted glass**, not drop shadows:
 - **uploadDropzone:** `bg-zinc-950/50 border-2 border-dashed border-white/10 rounded-xl hover:border-[#FFCC00] hover:bg-zinc-800/80 transition-all cursor-pointer flex flex-col items-center justify-center p-6`. Native `<input type="file">` MUST be hidden.
 - **Icons:** ONLY `lucide-react` SVGs. Never raw text strings like `movie_filter`.
 
+## Dashboard pilot (Gemini-inspired)
+
+The dashboard (`components/Dashboard.tsx` and its exclusive cards — `CommandPalette`, `RecentWorkCard`, `ResumeDraftCard`, `OnboardingNudge`, `ActiveJobsPanel`) runs a scoped pilot that intentionally deviates from two rules above. The rest of the app still follows them — do not propagate these without sign-off.
+
+- **Borderless tonal surfaces.** Dashboard cards drop `border border-white/10` and separate by tonal fill alone (`bg-zinc-900/70`, `bg-white/[0.03]`). Elevation is still glass + blur — no drop shadows. The hero card (Director) signals priority with a gold-tinted fill (`bg-[#FFCC00]/[0.06]`) instead of a gold border.
+- **Calm typography.** The dashboard hero is a regular-weight, sentence-case greeting and module card titles are sentence case — rendered as non-heading elements so they bypass the global `h1`–`h6` uppercase rule. The uppercase gradient headline and the mono `//` sub-labels still apply everywhere else.
+
 ## Do's and Don'ts
 
 **Do:**

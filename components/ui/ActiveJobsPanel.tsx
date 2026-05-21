@@ -24,7 +24,7 @@ export const ActiveJobsPanel: React.FC<ActiveJobsPanelProps> = ({ jobs, delay = 
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay }}
-      className="bg-zinc-900/80 backdrop-blur-xl border border-[#FFCC00]/20 rounded-2xl p-5 lg:p-6 relative overflow-hidden"
+      className="bg-zinc-900/70 backdrop-blur-xl rounded-2xl p-5 lg:p-6 relative overflow-hidden"
     >
       <motion.div
         animate={{ opacity: [0.4, 0.8, 0.4] }}
@@ -52,7 +52,7 @@ export const ActiveJobsPanel: React.FC<ActiveJobsPanelProps> = ({ jobs, delay = 
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.25 }}
-                className="flex items-center gap-3 p-3 rounded-xl bg-zinc-950/60 border border-white/5"
+                className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03]"
               >
                 <div className="w-8 h-8 rounded-lg bg-[#FFCC00]/10 flex items-center justify-center flex-shrink-0">
                   <Icon className="w-4 h-4 text-[#FFCC00]" />

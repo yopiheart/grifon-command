@@ -14,7 +14,7 @@ export const OnboardingNudge: React.FC<OnboardingNudgeProps> = ({ onStart, onDis
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay }}
-      className="bg-gradient-to-r from-[#FFCC00]/10 via-[#FFCC00]/15 to-[#FFCC00]/10 border border-[#FFCC00]/30 rounded-2xl p-4 lg:p-5 relative overflow-hidden"
+      className="bg-gradient-to-r from-[#FFCC00]/10 via-[#FFCC00]/15 to-[#FFCC00]/10 rounded-2xl p-4 lg:p-5 relative overflow-hidden"
     >
       <motion.div
         animate={{ opacity: [0.3, 0.6, 0.3] }}

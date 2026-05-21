@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Search, ArrowRight, X } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 
 export interface CommandItem {
   id: string;
@@ -45,14 +45,27 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ open, onClose, i
     }
   }, [open, initialQuery]);
 
+  const isSearching = query.trim().length > 0;
+
   const results = useMemo(() => {
-    if (!query.trim()) return items;
+    if (!isSearching) return items;
     return items
       .map(item => ({ item, s: score(query.trim(), item) }))
       .filter(x => x.s >= 0)
       .sort((a, b) => b.s - a.s)
       .map(x => x.item);
-  }, [query, items]);
+  }, [query, items, isSearching]);
+
+  // Indexed view so the quick-pick tiles and the list share one keyboard-nav index space.
+  const indexed = useMemo(() => results.map((item, i) => ({ item, i })), [results]);
+  const tiles = useMemo(
+    () => (isSearching ? [] : indexed.filter(x => x.item.group === 'Core')),
+    [indexed, isSearching],
+  );
+  const rows = useMemo(
+    () => (isSearching ? indexed : indexed.filter(x => x.item.group !== 'Core')),
+    [indexed, isSearching],
+  );
 
   useEffect(() => {
     if (!open) return;
@@ -95,19 +108,20 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ open, onClose, i
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -8, scale: 0.98 }}
             transition={{ duration: 0.18, ease: 'easeOut' }}
-            className="fixed left-4 right-4 top-[15%] z-[101] mx-auto max-w-xl bg-zinc-900/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl shadow-black/50 overflow-hidden"
+            className="fixed left-4 right-4 top-[12%] z-[101] mx-auto max-w-xl bg-zinc-900/95 backdrop-blur-2xl rounded-3xl shadow-2xl shadow-black/50 overflow-hidden"
           >
-            <div className="flex items-center gap-3 px-4 py-3 border-b border-white/5">
+            {/* Search */}
+            <div className="flex items-center gap-3 px-5 py-4">
               <Search className="w-4 h-4 text-[#FFCC00] flex-shrink-0" />
               <input
                 ref={inputRef}
                 type="text"
                 value={query}
                 onChange={e => { setQuery(e.target.value); setActiveIdx(0); }}
-                placeholder="Search modules, recent work…"
+                placeholder="Search for any tool…"
                 className="bg-transparent text-white text-sm flex-1 min-w-0 outline-none placeholder:text-zinc-600"
               />
-              <kbd className="hidden sm:inline-flex items-center px-1.5 py-0.5 text-[10px] font-mono text-zinc-500 bg-zinc-800/80 border border-white/5 rounded">
+              <kbd className="hidden sm:inline-flex items-center px-1.5 py-0.5 text-[10px] font-mono text-zinc-500 bg-zinc-800/80 rounded">
                 ESC
               </kbd>
               <button onClick={onClose} className="sm:hidden text-zinc-500 hover:text-white">
@@ -115,45 +129,71 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ open, onClose, i
               </button>
             </div>
 
-            <div className="max-h-[60vh] overflow-y-auto py-2">
+            <div className="max-h-[62vh] overflow-y-auto px-3 pb-3">
               {results.length === 0 && (
-                <div className="px-4 py-8 text-center text-xs font-mono text-zinc-500 uppercase tracking-widest">
+                <div className="px-4 py-10 text-center text-xs font-mono text-zinc-500 uppercase tracking-widest">
                   // No matches
                 </div>
               )}
-              {results.map((item, i) => {
-                const Icon = item.icon;
-                const isActive = i === activeIdx;
-                return (
-                  <button
-                    key={item.id}
-                    onMouseEnter={() => setActiveIdx(i)}
-                    onClick={() => { item.onSelect(); onClose(); }}
-                    className={`w-full px-4 py-2.5 flex items-center gap-3 text-left transition-colors ${isActive ? 'bg-[#FFCC00]/10' : 'hover:bg-white/5'}`}
-                  >
-                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${isActive ? 'bg-[#FFCC00]/15' : 'bg-zinc-800'}`}>
-                      <Icon className={`w-4 h-4 ${isActive ? 'text-[#FFCC00]' : 'text-zinc-400'}`} />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm font-semibold text-white uppercase tracking-tight truncate">{item.name}</span>
-                        {item.group && (
-                          <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest">
-                            {item.group}
-                          </span>
-                        )}
-                      </div>
-                      {item.desc && (
-                        <div className="text-xs text-zinc-500 truncate">{item.desc}</div>
-                      )}
-                    </div>
-                    <ArrowRight className={`w-4 h-4 flex-shrink-0 ${isActive ? 'text-[#FFCC00]' : 'text-zinc-700'}`} />
-                  </button>
-                );
-              })}
+
+              {/* Quick-pick tiles (Core modules) — hidden while searching */}
+              {tiles.length > 0 && (
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 px-1 pt-1 pb-3">
+                  {tiles.map(({ item, i }) => {
+                    const Icon = item.icon;
+                    const isActive = i === activeIdx;
+                    const isDirector = item.id === 'creative_director';
+                    return (
+                      <button
+                        key={item.id}
+                        onMouseEnter={() => setActiveIdx(i)}
+                        onClick={() => { item.onSelect(); onClose(); }}
+                        className={`flex flex-col items-center justify-center gap-2 px-3 py-4 rounded-2xl transition-colors ${
+                          isActive
+                            ? 'bg-[#FFCC00]/15'
+                            : isDirector
+                              ? 'bg-[#FFCC00]/[0.08] hover:bg-[#FFCC00]/[0.12]'
+                              : 'bg-white/[0.04] hover:bg-white/[0.08]'
+                        }`}
+                      >
+                        <Icon className={`w-5 h-5 ${isActive || isDirector ? 'text-[#FFCC00]' : 'text-zinc-300'}`} />
+                        <span className="text-xs font-medium text-white truncate max-w-full">{item.name}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+
+              {/* Module list */}
+              {rows.length > 0 && (
+                <div className="space-y-0.5">
+                  {rows.map(({ item, i }) => {
+                    const Icon = item.icon;
+                    const isActive = i === activeIdx;
+                    return (
+                      <button
+                        key={item.id}
+                        onMouseEnter={() => setActiveIdx(i)}
+                        onClick={() => { item.onSelect(); onClose(); }}
+                        className={`w-full px-3 py-2.5 flex items-center gap-3 text-left rounded-xl transition-colors ${
+                          isActive ? 'bg-white/[0.06]' : 'hover:bg-white/[0.04]'
+                        }`}
+                      >
+                        <Icon className={`w-5 h-5 flex-shrink-0 ${isActive ? 'text-[#FFCC00]' : 'text-zinc-400'}`} />
+                        <div className="flex-1 min-w-0">
+                          <div className="text-sm font-medium text-white truncate">{item.name}</div>
+                          {item.desc && (
+                            <div className="text-xs text-zinc-500 truncate">{item.desc}</div>
+                          )}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
             </div>
 
-            <div className="hidden sm:flex items-center justify-between px-4 py-2 border-t border-white/5 text-[10px] font-mono text-zinc-500 uppercase tracking-widest">
+            <div className="hidden sm:flex items-center justify-between px-5 py-2.5 text-[10px] font-mono text-zinc-500 uppercase tracking-widest">
               <span>↑ ↓ navigate · ⏎ select · esc close</span>
               <span>{results.length} {results.length === 1 ? 'result' : 'results'}</span>
             </div>

@@ -46,9 +46,20 @@ interface DashboardProps {
 const WIZARD_TOTAL_STEPS = 8;
 
 const CORE_MODULES = [
-  { id: 'market_research', name: 'RESEARCH', icon: Search, desc: 'Deep market & competitor reports' },
-  { id: 'offer_optimizer', name: 'OFFER', icon: Target, desc: 'Irresistible offers with pricing psychology' },
-  { id: 'caption_headline', name: 'CAPTIONS', icon: Type, desc: 'Scroll-stopping copy for every platform' }
+  { id: 'market_research', name: 'Research', icon: Search, desc: 'Know your market, outsmart competitors' },
+  { id: 'offer_optimizer', name: 'Offer', icon: Target, desc: "Build an offer they can't refuse" },
+  { id: 'caption_headline', name: 'Captions', icon: Type, desc: 'Copy that stops the scroll' }
+];
+
+// Director's subtitle is shared across the card blocks and the command palette.
+const DIRECTOR_DESC = 'Your finished video ad, start to finish';
+
+// Outcome-named quick-start chips under the command input — deep-link into modules.
+const STARTER_CHIPS = [
+  { id: 'creative_director', label: 'Make a video ad', icon: Film },
+  { id: 'market_research', label: 'Research my market', icon: Search },
+  { id: 'offer_optimizer', label: 'Build an offer', icon: Target },
+  { id: 'caption_headline', label: 'Write captions', icon: Type },
 ];
 
 // Action-oriented nav for the left sidebar + mobile bottom nav.
@@ -91,13 +102,6 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
     setIsAdmin(adminFlag === 'true');
   }, []);
 
-  const placeholders = [
-    'Type your product to start.',
-    'e.g., "skincare, ₱500 cleanser"',
-    'e.g., "barbershop, Cavite"',
-    'e.g., "online course, ₱997"'
-  ];
-  const [placeholderIndex, setPlaceholderIndex] = useState(0);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const [paletteOpen, setPaletteOpen] = useState(false);
   const [paletteQuery, setPaletteQuery] = useState('');
@@ -197,13 +201,6 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
   const userAvatarUrl = '';
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setPlaceholderIndex((prev) => (prev + 1) % placeholders.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setProfileMenuOpen(false);
       // Cmd+K (mac) / Ctrl+K (win) toggles the command palette
@@ -218,7 +215,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
   }, []);
 
   const paletteItems: CommandItem[] = [
-    { id: 'creative_director', name: 'DIRECTOR', desc: '8-step video ad workflow', icon: Film, group: 'Core', onSelect: () => handleSelectModule('creative_director') },
+    { id: 'creative_director', name: 'Director', desc: DIRECTOR_DESC, icon: Film, group: 'Core', onSelect: () => handleSelectModule('creative_director') },
     ...CORE_MODULES.map(m => ({ id: m.id, name: m.name, desc: m.desc, icon: m.icon, group: 'Core', onSelect: () => handleSelectModule(m.id) })),
     ...MORE_MODULES.map(m => ({ id: m.id, name: m.name, desc: m.desc, icon: m.icon, group: 'More', onSelect: () => handleSelectModule(m.id) })),
   ];
@@ -389,11 +386,11 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
       <main className={`pb-20 lg:pb-0 lg:pl-20 transition-all ${showUpgradeBanner ? 'pt-24 lg:pt-28' : 'pt-16 lg:pt-20'}`}>
         <div className="max-w-4xl lg:max-w-6xl mx-auto px-4 lg:px-8 flex flex-col justify-center min-h-screen lg:min-h-screen">
           
-          {/* Smart Input Bar */}
-          <div className="mb-8 lg:mb-10 relative z-10">
+          {/* Command Hero */}
+          <div className="mb-12 lg:mb-16 relative z-10">
             {/* Ambient Gold Spotlight Behind Hero */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden -z-10">
-              <div 
+              <div
                 className="w-[800px] h-[800px] lg:w-[1200px] lg:h-[1200px] rounded-full"
                 style={{
                   background: 'radial-gradient(circle at center, rgba(255,204,0,0.06) 0%, rgba(255,204,0,0.03) 30%, rgba(255,204,0,0.01) 60%, transparent 80%)',
@@ -404,47 +401,57 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
               />
             </div>
 
+            {/* Calm sentence-case greeting — non-heading element so it escapes the global h1..h6 uppercase rule */}
             <motion.p
-              initial={{ opacity: 0, y: 12 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="text-[10px] lg:text-xs font-mono text-zinc-500 uppercase tracking-widest mb-4 lg:mb-6 text-center lg:text-center"
+              transition={{ duration: 0.6 }}
+              className="text-center text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight text-zinc-200 mb-8 lg:mb-12"
             >
-              // READY TO BUILD
+              What are we creating today?
             </motion.p>
+
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.05 }}
-              className="block text-center mb-8 lg:mb-12"
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="max-w-2xl lg:max-w-3xl mx-auto w-full"
             >
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold uppercase tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">GRIFON COMMAND</h1>
-              <p className="text-sm lg:text-lg xl:text-xl font-medium text-zinc-400 mt-4 lg:mt-6">Your entire Marketing Team. In one tab.</p>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.15 }}
-              className="bg-zinc-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-3 lg:p-5 flex items-center gap-3 max-w-2xl lg:max-w-3xl mx-auto w-full"
-            >
-              <Sparkles className="w-5 h-5 text-[#FFCC00] flex-shrink-0" />
-              <input
-                type="text"
-                placeholder={placeholders[placeholderIndex]}
-                onFocus={() => { setPaletteQuery(''); setPaletteOpen(true); }}
-                onClick={() => { setPaletteQuery(''); setPaletteOpen(true); }}
-                className="bg-transparent text-white text-[11px] sm:text-xs lg:text-base flex-1 min-w-0 outline-none placeholder:text-zinc-600 transition-all duration-500 cursor-pointer"
-                readOnly
-              />
-              <kbd className="hidden md:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-mono text-zinc-500 bg-zinc-800/80 border border-white/5 rounded mr-1">
-                <span className="text-[11px]">⌘</span>K
-              </kbd>
-              <button
-                onClick={() => { setPaletteQuery(''); setPaletteOpen(true); }}
-                className="w-9 h-9 lg:w-12 lg:h-12 bg-[#FFCC00] rounded-xl flex items-center justify-center flex-shrink-0 hover:scale-105 active:scale-95 transition-all"
-              >
-                <ArrowRight className="w-5 h-5 text-black" />
-              </button>
+              {/* Command input — borderless tonal, opens the Cmd+K palette */}
+              <div className="bg-zinc-900/70 backdrop-blur-xl rounded-2xl ring-1 ring-white/[0.06] p-4 lg:p-6 flex items-center gap-3">
+                <Sparkles className="w-5 h-5 text-[#FFCC00] flex-shrink-0" />
+                <input
+                  type="text"
+                  placeholder="Jump to any tool"
+                  onFocus={() => { setPaletteQuery(''); setPaletteOpen(true); }}
+                  onClick={() => { setPaletteQuery(''); setPaletteOpen(true); }}
+                  className="bg-transparent text-white text-sm lg:text-base flex-1 min-w-0 outline-none placeholder:text-zinc-600 cursor-pointer"
+                  readOnly
+                />
+                <kbd className="hidden md:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-mono text-zinc-500 bg-zinc-800/80 rounded mr-1">
+                  <span className="text-[11px]">⌘</span>K
+                </kbd>
+                <button
+                  onClick={() => { setPaletteQuery(''); setPaletteOpen(true); }}
+                  className="w-9 h-9 lg:w-12 lg:h-12 bg-[#FFCC00] rounded-xl flex items-center justify-center flex-shrink-0 hover:scale-105 active:scale-95 transition-all"
+                >
+                  <ArrowRight className="w-5 h-5 text-black" />
+                </button>
+              </div>
+
+              {/* Outcome-named starter chips — deep-link into modules */}
+              <div className="flex flex-wrap items-center justify-center gap-2 mt-4">
+                {STARTER_CHIPS.map((chip) => (
+                  <button
+                    key={chip.id}
+                    onClick={() => handleSelectModule(chip.id)}
+                    className="flex items-center gap-1.5 bg-white/[0.04] rounded-full px-3.5 py-2 text-xs font-medium text-zinc-400 hover:text-white hover:bg-white/[0.08] transition-all"
+                  >
+                    <chip.icon className="w-3.5 h-3.5" />
+                    {chip.label}
+                  </button>
+                ))}
+              </div>
             </motion.div>
           </div>
 
@@ -546,15 +553,15 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.25 }}
                 onClick={() => handleSelectModule('creative_director')}
-                className="col-span-2 bg-zinc-900/80 backdrop-blur-xl border border-[#FFCC00]/30 rounded-2xl p-5 relative overflow-hidden group cursor-pointer flex items-center gap-4 hover:scale-[1.02] hover:border-[#FFCC00]/50 hover:shadow-[0_8px_40px_rgba(255,204,0,0.15)] active:scale-[0.98] transition-all duration-300"
+                className="col-span-2 bg-[#FFCC00]/[0.06] backdrop-blur-xl rounded-2xl p-5 relative overflow-hidden group cursor-pointer flex items-center gap-4 hover:scale-[1.01] hover:bg-[#FFCC00]/[0.10] hover:shadow-[0_8px_40px_rgba(255,204,0,0.15)] active:scale-[0.98] transition-all duration-500 ease-out"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-[#FFCC00]/5 to-transparent pointer-events-none" />
-                <div className="w-12 h-12 bg-[#FFCC00]/10 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 ease-out">
+                <div className="w-12 h-12 bg-[#FFCC00]/10 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform duration-500 ease-out">
                   <Film className="w-6 h-6 text-[#FFCC00]" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-base font-bold text-white uppercase tracking-tight">DIRECTOR</h3>
-                  <p className="text-xs text-zinc-400 mt-0.5">8-step video ad workflow</p>
+                  <p className="text-base font-bold text-white tracking-tight">Director</p>
+                  <p className="text-xs text-zinc-400 mt-0.5">{DIRECTOR_DESC}</p>
                 </div>
                 <ChevronRight className="w-5 h-5 text-zinc-600 group-hover:text-[#FFCC00] transition-colors relative z-10" />
               </motion.div>
@@ -567,14 +574,14 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.3 + i * 0.06 }}
                   onClick={() => handleSelectModule(mod.id)}
-                  className="bg-zinc-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-4 relative overflow-hidden group cursor-pointer aspect-square flex flex-col justify-between hover:scale-[1.02] hover:border-[#FFCC00]/30 hover:shadow-[0_8px_30px_rgba(255,204,0,0.12)] active:scale-[0.98] transition-all duration-300"
+                  className="bg-zinc-900/70 backdrop-blur-xl rounded-2xl p-4 relative overflow-hidden group cursor-pointer aspect-square flex flex-col justify-between hover:scale-[1.01] hover:bg-zinc-900 hover:shadow-[0_8px_30px_rgba(255,204,0,0.12)] active:scale-[0.98] transition-all duration-500 ease-out"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-                  <div className="w-10 h-10 bg-[#FFCC00]/10 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 ease-out">
+                  <div className="w-10 h-10 bg-[#FFCC00]/10 rounded-xl flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-500 ease-out">
                     <mod.icon className="w-5 h-5 text-[#FFCC00]" />
                   </div>
                   <div>
-                    <h3 className="text-sm font-bold text-white uppercase tracking-tight leading-tight">{mod.name}</h3>
+                    <p className="text-sm font-bold text-white tracking-tight leading-tight">{mod.name}</p>
                     <p className="text-[11px] text-zinc-500 mt-1 leading-snug">{mod.desc}</p>
                   </div>
                 </motion.div>
@@ -589,14 +596,14 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.25 }}
                 onClick={() => handleSelectModule('creative_director')}
-                className="flex-1 bg-zinc-900/80 backdrop-blur-xl border border-[#FFCC00]/30 rounded-2xl p-6 relative overflow-hidden group cursor-pointer text-center hover:scale-[1.02] hover:border-[#FFCC00]/50 hover:shadow-[0_8px_40px_rgba(255,204,0,0.15)] active:scale-[0.98] transition-all duration-300"
+                className="flex-1 bg-[#FFCC00]/[0.06] backdrop-blur-xl rounded-2xl p-6 relative overflow-hidden group cursor-pointer text-center hover:scale-[1.01] hover:bg-[#FFCC00]/[0.10] hover:shadow-[0_8px_40px_rgba(255,204,0,0.15)] active:scale-[0.98] transition-all duration-500 ease-out"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-[#FFCC00]/5 to-transparent pointer-events-none" />
-                <div className="w-14 h-14 lg:w-16 lg:h-16 bg-[#FFCC00]/10 rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 ease-out">
+                <div className="w-14 h-14 lg:w-16 lg:h-16 bg-[#FFCC00]/10 rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:scale-105 transition-transform duration-500 ease-out">
                   <Film className="w-7 h-7 lg:w-8 lg:h-8 text-[#FFCC00]" />
                 </div>
-                <h3 className="text-sm lg:text-sm xl:text-base font-bold text-white uppercase tracking-tight">DIRECTOR</h3>
-                <p className="text-[11px] lg:text-xs text-zinc-500 mt-1">8-step video ad workflow</p>
+                <p className="text-sm lg:text-sm xl:text-base font-bold text-white tracking-tight">Director</p>
+                <p className="text-[11px] lg:text-xs text-zinc-500 mt-1">{DIRECTOR_DESC}</p>
               </motion.div>
 
               {/* Standard Modules (Desktop) */}
@@ -607,13 +614,13 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.3 + i * 0.06 }}
                   onClick={() => handleSelectModule(mod.id)}
-                  className="flex-1 bg-zinc-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6 relative overflow-hidden group cursor-pointer text-center min-w-0 hover:scale-[1.02] hover:border-[#FFCC00]/30 hover:shadow-[0_8px_30px_rgba(255,204,0,0.12)] active:scale-[0.98] transition-all duration-300"
+                  className="flex-1 bg-zinc-900/70 backdrop-blur-xl rounded-2xl p-6 relative overflow-hidden group cursor-pointer text-center min-w-0 hover:scale-[1.01] hover:bg-zinc-900 hover:shadow-[0_8px_30px_rgba(255,204,0,0.12)] active:scale-[0.98] transition-all duration-500 ease-out"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-                  <div className="w-14 h-14 lg:w-16 lg:h-16 bg-zinc-800/80 rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 ease-out">
+                  <div className="w-14 h-14 lg:w-16 lg:h-16 bg-zinc-800/80 rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:scale-105 transition-transform duration-500 ease-out">
                     <mod.icon className="w-7 h-7 lg:w-8 lg:h-8 text-[#FFCC00]" />
                   </div>
-                  <h3 className="text-sm lg:text-sm xl:text-base font-bold text-white uppercase tracking-tight">{mod.name}</h3>
+                  <p className="text-sm lg:text-sm xl:text-base font-bold text-white tracking-tight">{mod.name}</p>
                   <p className="text-[11px] lg:text-xs text-zinc-500 mt-1">{mod.desc}</p>
                 </motion.div>
               ))}
@@ -628,15 +635,15 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
               </p>
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
                 {MORE_MODULES.map((mod) => (
-                  <div 
+                  <div
                     key={mod.id}
                     onClick={() => handleSelectModule(mod.id)}
-                    className="bg-zinc-900/50 backdrop-blur-xl border border-white/5 rounded-2xl p-4 relative overflow-hidden group hover:bg-zinc-900/80 hover:border-white/10 active:scale-[0.98] transition-all cursor-pointer flex flex-col"
+                    className="bg-zinc-900/50 backdrop-blur-xl rounded-2xl p-4 relative overflow-hidden group hover:bg-zinc-900/80 active:scale-[0.98] transition-all duration-500 ease-out cursor-pointer flex flex-col"
                   >
                     <div className="w-8 h-8 bg-zinc-800 rounded-lg flex items-center justify-center mb-3">
                       <mod.icon className="w-4 h-4 text-zinc-400 group-hover:text-[#FFCC00] transition-colors" />
                     </div>
-                    <h3 className="text-xs font-bold text-white uppercase tracking-tight mb-1">{mod.name}</h3>
+                    <p className="text-xs font-bold text-white tracking-tight mb-1">{mod.name}</p>
                     <p className="text-[10px] text-zinc-500 leading-snug line-clamp-2">{mod.desc}</p>
                   </div>
                 ))}
@@ -649,7 +656,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
               <div className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mb-3">
                 // COMING SOON
               </div>
-              <div className="bg-zinc-900/50 backdrop-blur-xl border border-white/5 rounded-2xl p-5 text-center">
+              <div className="bg-zinc-900/50 backdrop-blur-xl rounded-2xl p-5 text-center">
                 <p className="text-sm text-zinc-500">
                   New modules drop monthly. Stay tuned.
                 </p>
