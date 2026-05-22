@@ -225,7 +225,11 @@ const ScenePipelineTile: React.FC<ScenePipelineTileProps> = ({
 
   return (
     <div className="flex flex-col gap-6">
-      <GlassPanel className="p-6 flex flex-col gap-5">
+      {/* relative z-50: GlassPanel's backdrop-blur creates a stacking context, so the
+          VoicePicker dropdown (absolute z-30) was trapped inside this panel and the
+          later-in-DOM scene-list panel painted over it. Lifting this whole panel above
+          the scene list lets the dropdown overlay the scene rows. */}
+      <GlassPanel className="p-6 flex flex-col gap-5 relative z-50">
         <div className="flex items-center justify-between border-b border-white/10 pb-4">
           <div className="flex items-center gap-2">
             <Layers className="w-4 h-4 text-[#FFCC00]" />
