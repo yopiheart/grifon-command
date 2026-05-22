@@ -232,6 +232,63 @@ Phase 4 beta-merge should not wait on this. Defer to next session.
 
 ---
 
+### 9. Omni Hook — Trim the Dead First Second (post-render head-trim)
+
+**What:** Kling Omni hook renders hold the `first_frame` static for the first
+~1–2 seconds, then back-load the entire morph into a late burst. Session G
+(2026-05-22) proved empirically that this is a structural Omni limit — neither
+prompt language (a maximally front-loaded prompt, n=2) nor a shorter `duration`
+(3s, which made the dead head *worse* — ~2s / 67% of the clip) moves the morph
+earlier. The structural fix: render the hook clip ~1s longer than the target
+length, then trim the dead head frames in post so the delivered clip opens on
+already-moving morph.
+
+**Why it matters:** The hook's first second is what stops the scroll. Shipping a
+hook that is visually frozen for its most important second is a real conversion
+weakness — flagged across all Session F effects, confirmed structural in Session
+G. Trimming is the only remaining lever once prompt + duration are ruled out.
+
+**Why parked:** It is a render/storage-pipeline change — a different layer than
+Session G's prompt / `Option A-Hook` scope. It needs (a) a head-trim mechanism —
+either an ffmpeg server-side re-encode (ffmpeg is not in the cafe-PC environment,
+nor currently in the Vercel function runtime) or a player-side `currentTime`
+start offset (trivial, but the *exported/downloaded* MP4 keeps the dead head);
+and (b) a longer render-duration request. Beta + `launch_readiness.md` P0s come
+first; the hook still works today, it is just slow to open.
+
+**When to resume:** When EITHER (a) a beta user flags the hook feels slow/static
+on open, OR (b) post-beta video-polish work is scoped (likely the same PR as item
+#4's Phase 5+ start-frame work).
+
+**Where to start:**
+1. Measure the dead-head length across several Omni renders — Session G saw ~1.2s
+   on 5s clips and ~2s on 3s clips, so the trim amount is **not constant**; it
+   scales with duration. Decide a fixed render length + measured trim, or a
+   dynamic trim.
+2. Trim mechanism: ffmpeg re-encode (genuine trim, exported file is clean — needs
+   ffmpeg available server-side) vs. player-side offset (free, but only fixes
+   playback, not the downloaded file). The genuine fix is the re-encode.
+3. Bump the hook render duration: `suggestDurationForScript` + the
+   `VIDEO_MODEL_SPECS['Kling_O1']` durations table in `services/geminiService.ts`
+   — render at target + ~1s.
+4. Wire the trim into the Omni poll handler `api/kling/omni-video/poll.ts` (it
+   already downloads the MP4 then uploads to Supabase Storage — the trim slots in
+   between), OR into the Edit Video module if the editor is the natural trim point.
+5. Smoke-test on the committed Session F beans→latte substrate
+   (`workflows/assets/session-f/`) — confirm the trimmed clip opens on morph.
+
+**Scope estimate:** ~1–2 days for v1. The unknown is ffmpeg availability in the
+Vercel runtime; if unavailable, the trim mechanism needs rethinking (a player
+offset is the fallback but only a partial fix).
+
+**Source:** Session G, 2026-05-22 —
+`workflows/handoff_2026-05-22-session-g-dead-first-second.md`. Both no-code levers
+(prompt FRAME-0 language, shorter duration) empirically FAILed; trim is the
+remaining structural fix. Neil endorsed scoping it during the Session G grill
+(locked decision #3: "document the limit + scope a trim follow-up").
+
+---
+
 ## How to add new items
 
 When Neil endorses an idea but says "not now":

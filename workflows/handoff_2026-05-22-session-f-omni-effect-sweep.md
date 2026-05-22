@@ -1,6 +1,8 @@
 # Handoff — 2026-05-22 — Session F (Omni Hook-Effect Sweep — Scope β Validation)
 
-> **Status:** ACTIVE. Predecessor:
+> **Status:** SHIPPED — superseded by Session G
+> ([handoff_2026-05-22-session-g-dead-first-second.md](handoff_2026-05-22-session-g-dead-first-second.md)).
+> Predecessor:
 > [handoff_2026-05-19-session-e-shipped-session-f-pending.md](handoff_2026-05-19-session-e-shipped-session-f-pending.md).
 > Mirrors the approved plan at
 > `C:\Users\Administrator\.claude\plans\read-in-order-workflows-handoff-2026-05-unified-emerson.md`
