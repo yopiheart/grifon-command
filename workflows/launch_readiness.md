@@ -4,6 +4,46 @@
 
 This is the meta-workflow. It doesn't do the work itself — it points to the workflows that do, and tracks overall progress. **Source of truth = the code + `git log`.** This file summarizes; it does not replace.
 
+## Status as of 2026-05-22 (Omni hook arc C–G logged · RENDER ALL → Signal Modulator hand-off verified)
+
+This file skipped 12 days — the Omni hook arc (Sessions C–G) shipped + closed without landing here. Two things bring it current: (1) the Omni arc summary, (2) a verification verdict on the RENDER ALL → Signal Modulator hand-off.
+
+**Branch reality:** the `checkout-redesign-preview` bundle the 2026-05-10 section gates on **has since merged to `main`** (merge `a32add0`). All work below — checkout redesign, Phase 4(a–h), the Gemini-calm dashboard redesign, and the full Omni arc — is on **`main`**; HEAD is `81f34b3`. The "branch is checkout-redesign-preview" reboot notes in older sections are frozen history — `main` is the live branch now.
+
+### The Omni hook arc — Sessions C–G (wizard hook scene → Kling Omni)
+
+Five sessions routing the wizard's Scene-1 **Hook** to Kling Omni O1 for morph-driven drama. Full prose lives in the per-session handoff docs; the net:
+
+| Session | Outcome | Handoff |
+|---|---|---|
+| C | Routed hook → Kling O1 on a *guessed* model name; reverted after a doc-check found Omni needs its own proxy + body shape. | [session-c](handoff_2026-05-18-session-c-reverted-omni-discovery.md) |
+| D | Omni proxy + `Kling_O1` routing built (`api/kling/omni-video.ts`); `end_frame` morph hotfixed (`2d943b6`) after a frame-check caught camera-motion-only. | [session-d](handoff_2026-05-19-session-d-shipped-track-b-pending.md) |
+| E | `generateVideoPrompts` Option A split into A-Hook + A-Regular; existing `scene.transitionEffect` signal plumbed through instead of a new classifier (TUNED, `4a82d99`/`31d65f4`). | [session-e](handoff_2026-05-19-session-e-shipped-session-f-pending.md) |
+| F | Effect sweep — 5 hook transition effects graded on Omni; non-morph-family effects down-converted in A-Hook (TUNED, `84d542d`). | [session-f](handoff_2026-05-22-session-f-omni-effect-sweep.md) |
+| G | Dead-first-second investigation — Omni holds `first_frame` static ~1–2s. Proven a **structural Omni limit**: both no-code levers (front-loaded prompt, shorter duration) FAILed empirically. No code shipped. | [session-g](handoff_2026-05-22-session-g-dead-first-second.md) |
+
+**Open from the arc:** the dead-first-second fix (post-render head-trim) is parked as [`post_beta_roadmap.md` #9](post_beta_roadmap.md). Session F leftovers still open: VIRAL VFX MENU prune, cross-product validation (effect sweep is coffee-substrate only, n=1), the 10 `tests/unit/geminiService.schemas.test.ts` failures.
+
+### RENDER ALL → Signal Modulator hand-off — VERIFIED 2026-05-22
+
+Question: does finishing **RENDER ALL** in Generate Video hand off to the per-scene **Signal Modulator** (voice) step? **Verdict: yes — fully wired and correct. Not broken.**
+
+| Stage | Where |
+|---|---|
+| RENDER ALL completes | `runQueue` emits `{type:'complete'}`; each scene `'done'` → `sceneResults[idx]`. |
+| Hand-off CTA | `// SEND TO SIGNAL MODULATOR ↗` shows when `renderedCount === seedPrompts.length` — [GenerateVideo/index.tsx:1518](../components/GenerateVideo/index.tsx#L1518). |
+| Batch + switch | `SceneBatchEntry[]` (sceneIdx, scriptLine, renderedUrl, type) → [App.tsx:699](../App.tsx#L699) `setSceneBatch` + `setActiveModule('signal_modulator')`. |
+| Auto-tab | Signal Modulator auto-selects the Scene Pipeline tab when `sceneBatch.length > 0` — [SignalModulator/index.tsx:28](../components/SignalModulator/index.tsx#L28). |
+| Per-scene voice | `ScenePipelineTile` loops `synthesizeSpeech` per scene; empty-batch fallback `// NO_SCENES_RECEIVED`. |
+
+**Live spot-check (Playwright, dev):** Signal Modulator opened standalone — voice library + budget chip loaded; one TTS synth succeeded (budget 60→59, take logged). The ElevenLabs path `ScenePipelineTile` depends on (`voices` / `budget` / `synthesizeSpeech`) is healthy. A full live RENDER ALL E2E was deliberately *not* run — the code trace was conclusive and a full render would burn ~$3–5 + Veo credits for marginal added confidence (Neil's call).
+
+**Two known behaviors (not bugs):**
+- The hand-off CTA needs a *fully clean* RENDER ALL (`renderedCount === seedPrompts.length`). Any scene ending `'failed'` (a genuine 502, not an auto-resuming 429) hides the CTA until the user re-renders it — a partial RENDER ALL has no hand-off path.
+- `ScenePipelineTile` marks any scene with a blank `scriptLine` (e.g. a b-roll scene with no VO line) as `'failed' / EMPTY_SCRIPT_LINE`.
+
+**Dev-env note:** `[useSubscription] realtime CHANNEL_ERROR` logs under `npm run dev` (Supabase realtime websocket) — does not affect plan-tier resolution or budget loading; cosmetic in dev.
+
 ## Status as of 2026-05-10 (Phase 6 fixes shipped — beta-merge gate is Neil's call)
 
 Phase 5 full 3-module E2E (MarketMind → Offer Optimizer → Director AI) ran 2026-05-10 against the Flying Barista Blend hero. Surfaced 4 findings; Phase 6 closes 4 of 4 in code (acceptance criteria pending Neil's next live Playwright wizard).
