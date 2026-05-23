@@ -61,7 +61,7 @@ export const cleanJson = (text: string): string => {
 // Model IDs — kept in sync with services/geminiService.ts. Server-side use.
 export const MODEL_TEXT = 'gemini-3.1-flash-lite-preview';
 export const MODEL_FAST = 'gemini-3.1-flash-lite-preview';
-export const MODEL_RESEARCH = 'gemini-3.1-pro-preview';
+export const MODEL_RESEARCH = 'gemini-3.5-flash';
 
 // ---------------------------------------------------------------------------
 // MarketMind (generateMarketResearch)

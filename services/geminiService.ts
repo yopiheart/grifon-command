@@ -1,5 +1,5 @@
 import type { GenerateContentResponse } from "@google/genai";
-import { BusinessInfo, Script, Scene, StoryboardResponse, VideoPrompt, MarketResearchInput, MarketResearchReport, OfferOptimizerInput, OfferOptimizerResult, VideoEditInput, OptimizedPromptResponse, CaptionHeadlineInput, DayContent, AdVariant, UplinkData, CinematicSpecConfig, VisualTheme, CinematicNarrativeScene, VideoModelType, InfluencerConfig, InfluencerStrategicInput, InfluencerScriptResponse, EditDecisionInput, EditDecisionList, EditScene, SfxBankId } from '../types';
+import { BusinessInfo, Script, Scene, StoryboardResponse, VideoPrompt, MarketResearchInput, MarketResearchReport, OfferOptimizerInput, OfferOptimizerResult, VideoEditInput, OptimizedPromptResponse, CaptionHeadlineInput, DayContent, AdVariant, UplinkData, CinematicSpecConfig, VisualTheme, CinematicNarrativeScene, VideoModelType, InfluencerConfig, InfluencerStrategicInput, InfluencerScriptResponse, EditDecisionInput, EditDecisionList, SfxBankId } from '../types';
 import { getSupabase } from './supabaseClient';
 import { startJob, endJob, type JobKind } from './activeJobsService';
 import { saveActiveJob, clearActiveJob } from './activeJobStore';
@@ -273,7 +273,7 @@ const proxyPollVideoOperation = async (
 
 const textModel = 'gemini-3.1-flash-lite-preview';
 const fastTextModel = 'gemini-3.1-flash-lite-preview'; 
-const researchTextModel = 'gemini-3.1-pro-preview'; 
+const researchTextModel = 'gemini-3.5-flash';
 const avatarModel = 'gemini-3.1-flash-image-preview'; 
 const sceneImageModel = 'gemini-3.1-flash-image-preview'; 
 
@@ -994,116 +994,393 @@ export const SFX_BANK: readonly SfxBankId[] = [
 ] as const;
 
 /**
- * Remotion AI Editor brain — Phase 1 half (a) STUB.
+ * Remotion AI Editor brain — Phase 1 half (b).
  *
- * Returns a hardcoded fixture EDL derived from the input batch shape so
- * downstream UI (EditVideo's "From Render Batch" mode) and Phase 2's
- * Remotion executor have a stable schema to develop against. The real
- * Gemini multimodal call ships in Phase 1 half (b) after the TUNED prompt
- * is signed off (see services/CLAUDE.md and agent_lessons.md 2026-05-09).
+ * Multimodal call into `researchTextModel` that produces a machine-actionable
+ * Edit Decision List from a Scene Pipeline batch (rendered MP4s + STS/TTS
+ * audio overlays + final script). Output is consumed verbatim by Phase 2's
+ * Remotion Lambda executor.
  *
- * Intentionally deterministic and synchronous-looking (wrapped in a small
- * delay to mimic latency for UI loading-state testing). NO network call.
+ * The prompt body is TUNED — approved by Neil on 2026-05-23 after
+ * `grifon-cmo` review (style-aware: MrBeast / Temu / Testimonial), see
+ * the plan file `resume-the-grifon-command-polymorphic-kurzweil.md` for the
+ * canonical reference. Do not edit the prompt content without explicit
+ * Neil sign-off (services/CLAUDE.md hard rules + agent_lessons.md
+ * 2026-05-09).
+ *
+ * Input attachment contract (parts array order is load-bearing):
+ *   [0] text prompt
+ *   [1..N]   per-scene video fileData parts (mimeType video/mp4), in
+ *            input.sceneBatch order — the prompt's "Scene 1 of N" numbering
+ *            matches this order
+ *   [N+1..]  per-scene audio overlay fileData parts (mimeType audio/mpeg),
+ *            in input.audioOverlays order
  */
 export const generateEditDecisionList = async (input: EditDecisionInput): Promise<EditDecisionList> => {
-  await delay(400);
+  const sceneLines = input.sceneBatch.map((s, i) => {
+    const hasAudio = input.audioOverlays.some((a) => a.sceneIdx === s.sceneIdx);
+    const transitionHint = input.storyboard?.[i]?.transitionEffect
+      ? `\n  storyboardTransitionSignal: ${input.storyboard[i].transitionEffect}`
+      : '';
+    return `
+- Scene ${i + 1} of ${input.sceneBatch.length}
+  sceneIdx: ${s.sceneIdx}
+  type: ${s.type}                   // talking | b-roll | cinematic
+  scriptLine: "${s.scriptLine}"
+  videoAttached: ${s.renderedUrl ? 'yes (see fileData part)' : 'no'}
+  audioOverlayAttached: ${hasAudio ? 'yes (separate fileData part)' : 'no'}${transitionHint}`;
+  }).join('');
 
-  const HOOK_OVERLAY_BANK = ['WAIT FOR IT', 'YOU WON\'T BELIEVE', '3 SECRETS', 'WATCH THIS', 'GAME CHANGER'];
-  const PUNCHLINE_BANK = ['BUY NOW', 'LINK BELOW', 'TAP TO TRY', 'DON\'T MISS OUT', 'LIMITED'];
+  const brandLine = input.brandContext
+    ? `**Brand:** ${input.brandContext.brandName} — voice tone: ${input.brandContext.voiceTone}`
+    : '';
 
+  const promptText = `
+### ROLE
+
+You are a Filipino direct-response video editor. You build ads that convert
+for Filipino SMB owners selling to Filipino and Filipino-diaspora consumers,
+plus global e-com operators. Your toolbox: the MrBeast Formula (3-second
+hook, dynamic camera, curiosity loops, fast cuts, payoff CTA), Sabri Suby's
+$100M Copywriting System (4th-grade reading, "why care / why now,"
+consumption-precedes-conversion), and Cialdini's 7 Principles (Scarcity,
+Urgency, Authority, Social Proof, Reciprocity, Commitment, Liking — applied
+ONLY when the script gives you real anchors, NEVER invented). You produce a
+machine-actionable Edit Decision List (EDL) — NOT a prose plan — that the
+Remotion executor will consume verbatim downstream.
+
+### YOUR TASK
+
+Inspect the provided scene videos and audio overlays in their input order.
+Each numbered scene below maps to one entry in the input sceneBatch.
+
+Output exactly ONE JSON object matching the EditDecisionList schema declared
+in the responseSchema config. No prose, no markdown, no code fences, no
+commentary outside the JSON.
+
+### INPUT CONTEXT
+
+**Final ad script (full, in order):**
+${input.finalScript}
+
+**Target platform:** ${input.targetPlatform}    // tiktok | reels | shorts | youtube
+**Aspect ratio:** ${input.aspectRatio}          // 9:16 | 16:9 | 1:1
+${brandLine}
+
+**Scenes (in playback order):**
+${sceneLines}
+
+Each scene's video file is attached as a separate part (mimeType video/mp4).
+Each scene's audio overlay (when present) is attached as a separate part
+(mimeType audio/mpeg).
+
+### FORMULA & RULES
+
+---
+
+**0a. SCRIPT STYLE DETECTION (do this FIRST)**
+
+Detect which of the three Grifon ad styles the finalScript follows. The
+style drives downstream rule choices. Record the detected style in
+meta.scriptStyleDetected.
+
+- **MRBEAST** — curiosity-led hook, transformation arc, mixed talking +
+  b-roll, high energy throughout. Indicators: hook line poses a question or
+  contrarian claim ("Wait for it", "Tignan mo 'to", "You won't believe"),
+  scene types mix talking + b-roll roughly 40/60, script ends with a bold
+  CTA + curiosity payoff.
+- **TEMU** — scarcity/urgency-led, product-reveal heavy, b-roll dominant,
+  SFX-stacked. Indicators: hook uses urgency or stock language ("Mauubos
+  na!", "Last day!", "Grabe sa mura!"), most scenes are b-roll (product
+  shots, variants, before/after), CTA is hard-sell with real-stock or
+  real-deadline anchor.
+- **TESTIMONIAL** — first-person speaker, sincerity over energy, talking-
+  head dominant, Authority + Social Proof anchored. Indicators: hook
+  follows "Ako si [name]" / "Dati ako..." / "Hi, I'm..." pattern, majority
+  (>70%) of scenes are talking type, script is one continuous personal
+  story, CTA is invitation ("Itry mo rin", "You can do it too").
+
+If the signals conflict, pick the style that matches the FIRST scene's
+script line and scene type. Output the detected style verbatim in
+meta.scriptStyleDetected as one of: "mrbeast" | "temu" | "testimonial".
+
+---
+
+**0b. LANGUAGE MATCH (Cialdini: Liking)**
+
+- Detect the language of the input finalScript: English, Taglish (mixed
+  Filipino + English), or Filipino.
+- ALL overlayText.text values MUST be in the same language as the script.
+  Taglish script → Taglish overlays. English script → English overlays.
+  Filipino script → Filipino overlays.
+- Hook overlay examples by language:
+  - English: "WAIT FOR IT", "YOU WON'T BELIEVE", "GAME CHANGER", "LAST 50"
+  - Taglish: "TIGNAN MO 'TO", "GRABE 'TO", "PARA 'TO SA'YO", "MAUUBOS NA"
+  - Filipino: "PANOORIN MO", "HULING ARAW NA"
+- Punchline CTA examples by language:
+  - English: "GET YOURS NOW", "TAP TO TRY", "ORDER TODAY", "DON'T MISS OUT"
+  - Taglish: "ORDER NA!", "GRAB MO NA", "ITRY MO NA", "MAG-MESSAGE NA"
+  - Filipino: "BILHIN MO NA", "ITRY MO NA"
+- If the script's language is ambiguous (single brand name only, no full
+  sentences), default to the brandContext.voiceTone signal. If still
+  ambiguous, default to English.
+
+---
+
+**1. Scene 1 — The Hook (3-second curiosity window)**
+
+- transitionIn: OMIT (no transition into the opening shot).
+- cameraEffect: "zoom-in" OR "zoom-out" — NEVER "none" on the hook EXCEPT
+  in TESTIMONIAL style (see below).
+- overlayText: exactly one entry, style="hook", position="center", text ≤ 5
+  words, high-energy ALL-CAPS or sentence-case, language matches the
+  script (Rule 0b).
+- sfxCues: one cue anchored at 0 — see style-specific defaults below.
+
+Style-specific hook rules:
+
+- **MRBEAST style hook:** Curiosity lever DEFAULT. Hook overlay opens an
+  unanswered question or contrarian claim. SFX default: "whoosh" or
+  "riser". Camera: "zoom-in" preferred for product reveals.
+- **TEMU style hook:** Scarcity/Urgency lever DEFAULT — but ONLY if the
+  script gave a real anchor (real stock count, real deadline). Examples:
+  "LAST 50 LEFT", "MAUUBOS NA", "TODAY ONLY". If no real anchor, fall back
+  to Curiosity. SFX default: "drop" or "boom". Camera: "zoom-in" with
+  punchy entry.
+- **TESTIMONIAL style hook:** Authority + Social Proof lever DEFAULT.
+  Hook overlay leads with the speaker's identity or transformation
+  ("AKO SI [NAME]", "5 YEARS AGO...", "DATI BLEMISH NOW SMOOTH"). Camera
+  effect: "none" (preserve sincerity) or gentle "pan". SFX optional —
+  testimonials lose credibility with heavy SFX; if used, "ding" only.
+
+If the script gives you no real anchor for Social Proof / Authority /
+Scarcity, default to Curiosity regardless of style. Do NOT invent numbers,
+credentials, or deadlines — that is a hard fail.
+
+notes for hook scene: name the Cialdini lever used and the script evidence
+that justified it.
+
+---
+
+**2. Talking-head scenes (type="talking")**
+
+- The source audio is lipsync-preserving (STS or TTS overlay) — DO NOT
+  cover the user's face with full-screen overlays.
+- cameraEffect: "none" (preferred — preserves facial read) or "pan"
+  (subtle). NEVER "shake", "zoom-out", or "zoom-in" mid-talk.
+- transitionIn.type: "cut", durationSec: 0 — protects lipsync continuity.
+- sfxCues: OMIT unless beat-aligned with a script emphasis.
+
+Style-specific overlay rules for talking scenes:
+
+- **MRBEAST style:** overlay OMIT, OR one small style="callout"
+  positioned "top" highlighting the key word from the line.
+- **TEMU style:** overlay OMIT (Temu ads rarely have talking scenes; if
+  present, keep them clean).
+- **TESTIMONIAL style:** overlay MANDATORY — one style="subtitle",
+  position="bottom", containing the script line VERBATIM (or trimmed to
+  fit ≤ 40 characters per scene). Subtitles are non-negotiable in
+  testimonials because they add Authority (caption credibility), Liking
+  (accessibility for sound-off viewers), and Social Proof (the
+  testimonial is itself proof). If the line is longer than 40 chars, use
+  multiple overlayText entries with sequential startSec/endSec covering
+  the scene.
+
+---
+
+**3. B-roll scenes (type="b-roll")**
+
+- Free to use energetic transitions: "whip", "flash", "particles".
+- cameraEffect: "pan", "zoom-in", "zoom-out", or "shake".
+- overlayText: one entry, style="callout", position="top", text ≤ 24
+  characters, 4th-grade reading level, language matches the script.
+
+Prefer callouts that carry a Cialdini lever sourced from the script:
+Social Proof ("5K MOMS LOVE IT"), Authority ("DERMA-TESTED"), or Scarcity
+("LIMITED RUN"). Pure descriptive callouts ("NEW FORMULA") are fine if no
+lever is available — but NEVER invent levers the script doesn't support.
+
+Style-specific B-roll rules:
+
+- **MRBEAST style:** moderate SFX — one "pop", "snap", or "swish" per
+  cut. Mix transitions across the scene order.
+- **TEMU style:** heavy SFX — stack "pop" + "ding" + "drop" liberally
+  across the b-roll arc. Use "whip" or "flash" transitions for every
+  product reveal. Callouts can be aggressive: "P50% OFF!" only if real,
+  otherwise "BAGO!", "VIRAL!", "TOPSELLER!" (Social Proof anchored).
+- **TESTIMONIAL style:** B-roll is rare. If present, keep callouts
+  Authority-anchored ("BEFORE", "AFTER", "DAY 30") with "ding" SFX only,
+  "pan" or "zoom-in" camera, "cut" transition. Energy stays sincere, not
+  punchy.
+
+---
+
+**4. Cinematic scenes (type="cinematic")**
+
+- Dramatic transitions: "flash" or "particles".
+- cameraEffect: "zoom-in" or "shake" for impact.
+- overlayText: optional, style="callout" only.
+- sfxCues: "boom", "drop", or "riser" anchored at the dramatic beat.
+
+Cinematic scenes are style-agnostic — they serve product hero moments
+across all three styles. Keep them sparse: one per ad maximum.
+
+---
+
+**5. Final scene — The Close (last in order)**
+
+- overlayText: exactly one entry, style="punchline", position="bottom",
+  text ≤ 4 words, language matches the script.
+- The punchline is the CTA + an optional Cialdini Scarcity/Urgency lever
+  IF AND ONLY IF the script gave a real one.
+- sfxCues: one "ding" or "boom" for emphasis, anchored ≤ 0.3s into the
+  scene.
+- cameraEffect: "zoom-in" or "none".
+
+Style-specific close rules:
+
+- **MRBEAST style:** punchline is a bold CTA with curiosity payoff.
+  Examples (by language):
+  - English: "GET YOURS NOW", "TAP TO TRY", "LINK BELOW"
+  - Taglish: "ORDER NA!", "GRAB MO NA", "TAP MO 'TO"
+  SFX: "ding".
+- **TEMU style:** punchline is a HARD CTA with urgency anchor — only if
+  real. Examples:
+  - English: "LAST 50 LEFT", "BEFORE 11PM", "ORDER NOW"
+  - Taglish: "MAUUBOS NA!", "ORDER AGAD", "DALI NA"
+  SFX: "boom".
+- **TESTIMONIAL style:** punchline is an INVITATION, not a hard sell.
+  The speaker invites the viewer to follow their result.
+  - English: "TRY IT TOO", "YOU CAN TOO", "MESSAGE ME"
+  - Taglish: "ITRY MO RIN", "KAYA MO 'TO", "MAG-MESSAGE KA"
+  SFX: "ding" only, low intensity. Camera: "none" or gentle "zoom-in" on
+  the speaker's face for emotional close.
+
+notes for close scene: name the Cialdini lever used (or "Curiosity payoff
+only — no real scarcity in script").
+
+---
+
+**6. Global pacing**
+
+- Each scene's keepSegments describes a single segment from 0 to the
+  natural script-line duration (~scriptLine.length / 18 seconds, clamped
+  between 3 and 8 seconds). If the attached video is clearly longer than
+  the script needs, trim with keepSegments. If it matches, use the full
+  duration.
+- voiceOffsetSec: 0 unless the audio overlay clearly leads or trails the
+  video — almost always 0.
+
+Style-specific pacing nudge:
+
+- **MRBEAST style:** scenes can be 3–6s (fast cuts).
+- **TEMU style:** scenes can be 2.5–5s (faster, snappier).
+- **TESTIMONIAL style:** scenes can be 4–8s (slower, lets the speaker
+  breathe).
+
+---
+
+**7. Writing (Sabri Suby + Cialdini)**
+
+- ALL overlay text at 4th–5th grade reading level. No jargon. Short.
+  Answer the silent viewer question: "Why care? Why believe? Why now?"
+- Hook overlays open curiosity loops or land a Cialdini lever (Social
+  Proof, Authority, Scarcity) sourced from the script.
+- Punchline overlays drive action and may carry a real urgency anchor.
+- Consumption precedes conversion: if a viewer can't read the overlay in
+  the time it's on screen, rewrite it shorter.
+- Liking principle: language match is non-negotiable (Rule 0b).
+- HARD GUARDRAIL: never invent stats, credentials, time limits, or
+  testimonials. If the script doesn't supply it, you don't get to use it.
+
+---
+
+### CLOSED VOCABULARIES — DO NOT INVENT VALUES
+
+The Remotion executor will throw on any string outside these lists. If a
+directive in this prompt cannot be honored within these vocabularies, pick
+the nearest valid value. Never emit anything else.
+
+- SfxBankId:        whoosh | glitch | pop | ding | riser | drop | snap | swish | boom | sparkle
+- TransitionType:   cut | flash | whip | zoom | particles
+- CameraEffect:     zoom-in | zoom-out | pan | shake | none
+- OverlayStyle:     hook | callout | subtitle | punchline
+- OverlayPosition:  top | center | bottom
+- EditTargetPlatform: tiktok | reels | shorts | youtube
+- formulaApplied:   subset of ["mrbeast", "sabri-suby", "cialdini"]
+- scriptStyleDetected: "mrbeast" | "temu" | "testimonial"
+
+### ABSOLUTE CONSTRAINTS
+
+- Emit ONE scene entry per input.sceneBatch entry, in the SAME order, with
+  identical sceneIdx values.
+- sourceVideoUrl, sourceAudioUrl must echo the input values exactly — do
+  not re-derive, do not alter.
+- meta.aspectRatio and meta.targetPlatform must equal the input's
+  aspectRatio and targetPlatform exactly.
+- meta.scriptStyleDetected MUST be set per Rule 0a.
+- meta.totalDurationSec = sum of all keepSegments durations + all
+  transitionIn.durationSec values across scenes.
+- No fields outside the EditDecisionList schema.
+- formulaCheck.rulesApplied lists rules from THIS prompt that you honored
+  (e.g. "Hook in first 3s with dynamic camera", "4th-grade overlays",
+  "Language match: Taglish", "Style: testimonial — subtitles mandatory").
+- formulaCheck.weaknessesFlagged calls out input limitations that
+  constrained the edit (e.g. "Scene 3 video looks underexposed", "Hook
+  script line too long for 3-second window", "No real scarcity anchor in
+  script — fell back to curiosity on close") — empty array if none.
+- globalSfxPicks: up to 5 distinct SfxBankId values used in the EDL, in
+  order of prominence.
+- notes for each scene MUST name the Cialdini lever applied (if any) and
+  the script evidence that justified it. Format: "Lever: Social Proof.
+  Anchor: '5,000 sold' from script line 4." If no lever was applied,
+  write "Lever: none — curiosity loop only."
+- Output strict JSON — no prose, markdown, comments, or code fences.
+`;
+
+  const parts: any[] = [{ text: promptText }];
+  for (const scene of input.sceneBatch) {
+    if (scene.renderedUrl) {
+      parts.push({ fileData: { fileUri: scene.renderedUrl, mimeType: 'video/mp4' } });
+    }
+  }
+  for (const audio of input.audioOverlays) {
+    if (audio.audioUrl) {
+      parts.push({ fileData: { fileUri: audio.audioUrl, mimeType: 'audio/mpeg' } });
+    }
+  }
+
+  const response: GenerateContentResponse = await retryWithBackoff(() => proxyGenerateContent({
+    model: researchTextModel,
+    contents: { parts },
+    config: {
+      responseMimeType: 'application/json',
+      safetySettings: SAFETY_SETTINGS,
+      thinkingConfig: { thinkingBudget: 4000 },
+    },
+  }));
+
+  const raw = response.text || '{}';
+  const parsed = JSON.parse(cleanJson(raw)) as EditDecisionList;
+
+  // Defensive passthrough: the model occasionally substitutes long Supabase
+  // signed URLs with shortened placeholders ("scene_0.mp4"). Overwrite the
+  // input-echoing fields verbatim so Remotion always receives the real
+  // sources. Transport concern, not creative — fair game per services/CLAUDE.md.
   const audioBySceneIdx = new Map(input.audioOverlays.map((a) => [a.sceneIdx, a.audioUrl]));
-
-  const scenes: EditScene[] = input.sceneBatch.map((entry, orderIdx) => {
-    const isHook = orderIdx === 0;
-    const isClose = orderIdx === input.sceneBatch.length - 1;
-    const isTalking = entry.type === 'talking';
-    const estDuration = Math.max(3, Math.min(8, Math.ceil((entry.scriptLine?.length ?? 60) / 18)));
-
-    const overlayText = isHook
-      ? [{
-          text: HOOK_OVERLAY_BANK[orderIdx % HOOK_OVERLAY_BANK.length],
-          startSec: 0.2,
-          endSec: 2.5,
-          style: 'hook' as const,
-          position: 'center' as const,
-        }]
-      : isClose
-        ? [{
-            text: PUNCHLINE_BANK[orderIdx % PUNCHLINE_BANK.length],
-            startSec: 0.3,
-            endSec: estDuration - 0.2,
-            style: 'punchline' as const,
-            position: 'bottom' as const,
-          }]
-        : isTalking
-          ? []
-          : [{
-              text: (entry.scriptLine ?? '').split(/[.!?]/)[0].slice(0, 24).toUpperCase(),
-              startSec: 0.4,
-              endSec: Math.min(2.4, estDuration - 0.2),
-              style: 'callout' as const,
-              position: 'top' as const,
-            }];
-
-    const sfxCues = isHook
-      ? [{ sfxId: 'whoosh' as const, anchorSec: 0, reason: 'Hook opener — punch attention.' }]
-      : isClose
-        ? [{ sfxId: 'ding' as const, anchorSec: 0.1, reason: 'CTA emphasis.' }]
-        : entry.type === 'b-roll'
-          ? [{ sfxId: 'pop' as const, anchorSec: 0, reason: 'Cut energy on B-roll entry.' }]
-          : [];
-
-    return {
-      sceneIdx: entry.sceneIdx,
-      sourceVideoUrl: entry.renderedUrl ?? '',
-      sourceAudioUrl: audioBySceneIdx.get(entry.sceneIdx) ?? '',
-      keepSegments: [{ startSec: 0, endSec: estDuration }],
-      voiceOffsetSec: 0,
-      transitionIn: isHook ? undefined : {
-        type: (isTalking ? 'cut' : orderIdx % 2 === 0 ? 'whip' : 'flash') as 'cut' | 'whip' | 'flash',
-        durationSec: isTalking ? 0 : 0.15,
-      },
-      overlayText: overlayText.length > 0 ? overlayText : undefined,
-      sfxCues: sfxCues.length > 0 ? sfxCues : undefined,
-      cameraEffect: isHook ? 'zoom-in' : isTalking ? 'none' : 'pan',
-      notes: isHook
-        ? 'Hook scene — 3-second window, dynamic camera, payoff curiosity.'
-        : isClose
-          ? 'Close — CTA punchline overlay, ding for emphasis.'
-          : isTalking
-            ? 'Talking scene — preserve lipsync via STS audio overlay; minimal overlays so face reads.'
-            : 'B-roll cutaway — short callout overlay, cut tight.',
-    };
-  });
-
-  const totalDurationSec = scenes.reduce((sum, s) => {
-    const segs = s.keepSegments.reduce((acc, seg) => acc + Math.max(0, seg.endSec - seg.startSec), 0);
-    const transition = s.transitionIn?.durationSec ?? 0;
-    return sum + segs + transition;
-  }, 0);
-
-  return {
-    meta: {
-      totalDurationSec,
-      aspectRatio: input.aspectRatio,
-      targetPlatform: input.targetPlatform,
-      hookStrategy: 'Curiosity loop + dynamic camera on scene 1; punchline CTA on close.',
-      formulaApplied: ['mrbeast', 'sabri-suby'],
-    },
-    scenes,
-    globalSfxPicks: ['whoosh', 'ding', 'pop'],
-    formulaCheck: {
-      rulesApplied: [
-        'Hook in first 3s with dynamic camera (MrBeast)',
-        'No static shots on hook',
-        '4th-grade reading level in overlays (Sabri Suby)',
-        'CTA punchline on close',
-      ],
-      weaknessesFlagged: input.sceneBatch.length < 4
-        ? ['Scene count under 4 — pacing risks feeling slow for short-form.']
-        : [],
-    },
-  };
+  if (Array.isArray(parsed.scenes) && parsed.scenes.length === input.sceneBatch.length) {
+    parsed.scenes = parsed.scenes.map((scene, i) => ({
+      ...scene,
+      sceneIdx: input.sceneBatch[i].sceneIdx,
+      sourceVideoUrl: input.sceneBatch[i].renderedUrl ?? '',
+      sourceAudioUrl: audioBySceneIdx.get(input.sceneBatch[i].sceneIdx) ?? '',
+    }));
+  }
+  if (parsed.meta) {
+    parsed.meta.aspectRatio = input.aspectRatio;
+    parsed.meta.targetPlatform = input.targetPlatform;
+  }
+  return parsed;
 };
 
 /**

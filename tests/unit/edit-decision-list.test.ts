@@ -1,19 +1,24 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-// Schema test for the Remotion AI Editor brain (Phase 1 half (a) STUB).
+// Schema test for the Remotion AI Editor brain (Phase 1 half (b)).
 //
 // Catches:
-//   1. EditDecisionList output-shape regressions (sceneIdx mapping, SFX vocabulary,
-//      transition/camera union literals, formulaCheck arrays, meta block).
-//   2. Drift between EditDecisionInput and EditDecisionList (e.g., audioOverlays
-//      not landing on the right sceneIdx).
-//   3. Curated-vocabulary breaches — any SFX ID outside the bank, any transition
-//      type outside the allowed union.
+//   1. EditDecisionList output-shape regressions when the function parses
+//      a canned Gemini JSON response.
+//   2. Closed-vocabulary breaches — any SFX ID outside the bank, any
+//      transition / camera / overlay-style / overlay-position / target-
+//      platform / formulaApplied / scriptStyleDetected value outside its
+//      declared union.
+//   3. Request-shape regressions — sceneBatch.renderedUrl + audioOverlays
+//      MUST land as fileData parts on the outbound /api/gemini/text body
+//      in the documented order (text prompt → per-scene video → audio
+//      overlays).
 //
-// Does NOT catch (by design, while the brain is still a stub):
-//   - Stochastic Gemini drift. When Phase 1 half (b) lands and replaces the stub
-//     with a real /api/gemini/text call, the fetch mock pattern from
-//     geminiService.schemas.test.ts will be added here.
+// Does NOT catch (by design):
+//   - Real-world Gemini API drift. The fetch is mocked; production
+//     responses may differ.
+//   - Stochastic output quality (style detection accuracy, Cialdini lever
+//     correctness, overlay copy fitness). Those are caught by gemini-eval.
 
 vi.mock('../../services/supabaseClient', () => ({
   getSupabase: () => ({
@@ -25,6 +30,23 @@ vi.mock('../../services/supabaseClient', () => ({
   }),
 }));
 
+const fetchMock = vi.fn();
+vi.stubGlobal('fetch', fetchMock);
+
+const okGemini = (payload: unknown) => ({
+  ok: true,
+  status: 200,
+  json: async () => ({ text: JSON.stringify(payload) }),
+});
+
+const captureLastFetchBody = (): any => {
+  const calls = fetchMock.mock.calls;
+  if (calls.length === 0) throw new Error('fetch was not called');
+  const init = calls[calls.length - 1][1];
+  if (!init?.body) throw new Error('fetch was called without a body');
+  return JSON.parse(init.body);
+};
+
 const { generateEditDecisionList } = await import('../../services/geminiService');
 
 const SFX_BANK = ['whoosh', 'glitch', 'pop', 'ding', 'riser', 'drop', 'snap', 'swish', 'boom', 'sparkle'];
@@ -33,6 +55,8 @@ const CAMERA_EFFECTS = ['zoom-in', 'zoom-out', 'pan', 'shake', 'none'];
 const OVERLAY_STYLES = ['hook', 'callout', 'subtitle', 'punchline'];
 const OVERLAY_POSITIONS = ['top', 'center', 'bottom'];
 const TARGET_PLATFORMS = ['tiktok', 'reels', 'shorts', 'youtube'];
+const SCRIPT_STYLES = ['mrbeast', 'temu', 'testimonial'];
+const FORMULAS = ['mrbeast', 'sabri-suby', 'cialdini'];
 
 const assertEdlShape = (edl: any, expectedScenes: number) => {
   // Meta block
@@ -46,8 +70,9 @@ const assertEdlShape = (edl: any, expectedScenes: number) => {
   expect(edl.meta.hookStrategy.length).toBeGreaterThan(0);
   expect(Array.isArray(edl.meta.formulaApplied)).toBe(true);
   edl.meta.formulaApplied.forEach((f: string) => {
-    expect(['mrbeast', 'sabri-suby']).toContain(f);
+    expect(FORMULAS).toContain(f);
   });
+  expect(SCRIPT_STYLES).toContain(edl.meta.scriptStyleDetected);
 
   // Scenes
   expect(Array.isArray(edl.scenes)).toBe(true);
@@ -90,7 +115,6 @@ const assertEdlShape = (edl: any, expectedScenes: number) => {
       });
     }
     expect(typeof scene.notes).toBe('string');
-    expect(scene.notes.length).toBeGreaterThan(0);
   });
 
   // Global SFX picks
@@ -106,14 +130,63 @@ const assertEdlShape = (edl: any, expectedScenes: number) => {
   expect(Array.isArray(edl.formulaCheck.weaknessesFlagged)).toBe(true);
 };
 
-describe('generateEditDecisionList (Phase 1 half (a) stub)', () => {
-  it('returns an EditDecisionList-shaped object for a TikTok hook ad (4 scenes)', async () => {
-    const result = await generateEditDecisionList({
+// Helper: build a canned EDL fixture that echoes the input's sceneBatch +
+// audioOverlays so the mock looks plausible to the test assertions.
+const cannedEdl = (input: {
+  sceneBatch: { sceneIdx: number; renderedUrl?: string; type: 'talking' | 'b-roll' | 'cinematic' }[];
+  audioOverlays: { sceneIdx: number; audioUrl: string }[];
+  aspectRatio: '9:16' | '16:9' | '1:1';
+  targetPlatform: 'tiktok' | 'reels' | 'shorts' | 'youtube';
+  scriptStyle?: 'mrbeast' | 'temu' | 'testimonial';
+}) => {
+  const audioBy = new Map(input.audioOverlays.map((a) => [a.sceneIdx, a.audioUrl]));
+  return {
+    meta: {
+      totalDurationSec: input.sceneBatch.length * 4,
+      aspectRatio: input.aspectRatio,
+      targetPlatform: input.targetPlatform,
+      hookStrategy: 'Curiosity-driven zoom-in with whoosh; punchline CTA on close.',
+      formulaApplied: ['mrbeast', 'sabri-suby', 'cialdini'],
+      scriptStyleDetected: input.scriptStyle ?? 'mrbeast',
+    },
+    scenes: input.sceneBatch.map((s, i) => ({
+      sceneIdx: s.sceneIdx,
+      sourceVideoUrl: s.renderedUrl ?? '',
+      sourceAudioUrl: audioBy.get(s.sceneIdx) ?? '',
+      keepSegments: [{ startSec: 0, endSec: 4 }],
+      voiceOffsetSec: 0,
+      transitionIn: i === 0 ? undefined : { type: 'cut', durationSec: 0.15 },
+      overlayText: i === 0
+        ? [{ text: 'WAIT FOR IT', startSec: 0.2, endSec: 2.5, style: 'hook', position: 'center' }]
+        : undefined,
+      sfxCues: i === 0
+        ? [{ sfxId: 'whoosh', anchorSec: 0, reason: 'Hook opener.' }]
+        : undefined,
+      cameraEffect: i === 0 ? 'zoom-in' : 'pan',
+      notes: i === 0
+        ? 'Lever: Curiosity. Anchor: hook line opens loop.'
+        : 'Lever: none — descriptive callout.',
+    })),
+    globalSfxPicks: ['whoosh', 'ding'],
+    formulaCheck: {
+      rulesApplied: ['Hook in first 3s', '4th-grade overlays', 'Language match: English'],
+      weaknessesFlagged: [],
+    },
+  };
+};
+
+beforeEach(() => {
+  fetchMock.mockReset();
+});
+
+describe('generateEditDecisionList (Phase 1 half (b) — real Gemini call)', () => {
+  it('parses a canned EditDecisionList for a TikTok hook ad (4 scenes)', async () => {
+    const inputSpec = {
       sceneBatch: [
-        { sceneIdx: 0, scriptLine: 'Wait until you see this!', renderedUrl: 'https://example.com/s0.mp4', type: 'talking' },
-        { sceneIdx: 1, scriptLine: 'Three secrets nobody told you.', renderedUrl: 'https://example.com/s1.mp4', type: 'b-roll' },
-        { sceneIdx: 2, scriptLine: 'This one changes everything.', renderedUrl: 'https://example.com/s2.mp4', type: 'cinematic' },
-        { sceneIdx: 3, scriptLine: 'Tap to grab yours now.', renderedUrl: 'https://example.com/s3.mp4', type: 'talking' },
+        { sceneIdx: 0, scriptLine: 'Wait until you see this!', renderedUrl: 'https://example.com/s0.mp4', type: 'talking' as const },
+        { sceneIdx: 1, scriptLine: 'Three secrets nobody told you.', renderedUrl: 'https://example.com/s1.mp4', type: 'b-roll' as const },
+        { sceneIdx: 2, scriptLine: 'This one changes everything.', renderedUrl: 'https://example.com/s2.mp4', type: 'cinematic' as const },
+        { sceneIdx: 3, scriptLine: 'Tap to grab yours now.', renderedUrl: 'https://example.com/s3.mp4', type: 'talking' as const },
       ],
       audioOverlays: [
         { sceneIdx: 0, audioUrl: 'blob:audio-0' },
@@ -121,51 +194,58 @@ describe('generateEditDecisionList (Phase 1 half (a) stub)', () => {
         { sceneIdx: 2, audioUrl: 'blob:audio-2' },
         { sceneIdx: 3, audioUrl: 'blob:audio-3' },
       ],
+      aspectRatio: '9:16' as const,
+      targetPlatform: 'tiktok' as const,
+    };
+    fetchMock.mockResolvedValueOnce(okGemini(cannedEdl(inputSpec)));
+
+    const result = await generateEditDecisionList({
+      ...inputSpec,
       finalScript: 'Wait until you see this! Three secrets nobody told you. This one changes everything. Tap to grab yours now.',
-      targetPlatform: 'tiktok',
-      aspectRatio: '9:16',
     });
 
     assertEdlShape(result, 4);
     expect(result.meta.aspectRatio).toBe('9:16');
     expect(result.meta.targetPlatform).toBe('tiktok');
-    // Audio URLs should land on the right sceneIdx
     expect(result.scenes[0].sourceAudioUrl).toBe('blob:audio-0');
     expect(result.scenes[3].sourceAudioUrl).toBe('blob:audio-3');
   });
 
-  it('returns an EditDecisionList-shaped object for a 1:1 IG square (3 scenes)', async () => {
-    const result = await generateEditDecisionList({
+  it('parses a canned EditDecisionList for a 1:1 IG square (3 scenes)', async () => {
+    const inputSpec = {
       sceneBatch: [
-        { sceneIdx: 0, scriptLine: 'Hook line.', renderedUrl: 'https://example.com/sq0.mp4', type: 'b-roll' },
-        { sceneIdx: 1, scriptLine: 'Body claim.', renderedUrl: 'https://example.com/sq1.mp4', type: 'talking' },
-        { sceneIdx: 2, scriptLine: 'CTA.', renderedUrl: 'https://example.com/sq2.mp4', type: 'b-roll' },
+        { sceneIdx: 0, scriptLine: 'Hook line.', renderedUrl: 'https://example.com/sq0.mp4', type: 'b-roll' as const },
+        { sceneIdx: 1, scriptLine: 'Body claim.', renderedUrl: 'https://example.com/sq1.mp4', type: 'talking' as const },
+        { sceneIdx: 2, scriptLine: 'CTA.', renderedUrl: 'https://example.com/sq2.mp4', type: 'b-roll' as const },
       ],
       audioOverlays: [
         { sceneIdx: 0, audioUrl: 'blob:sq-0' },
         { sceneIdx: 1, audioUrl: 'blob:sq-1' },
         { sceneIdx: 2, audioUrl: 'blob:sq-2' },
       ],
+      aspectRatio: '1:1' as const,
+      targetPlatform: 'reels' as const,
+    };
+    fetchMock.mockResolvedValueOnce(okGemini(cannedEdl(inputSpec)));
+
+    const result = await generateEditDecisionList({
+      ...inputSpec,
       finalScript: 'Hook. Body. CTA.',
-      targetPlatform: 'reels',
-      aspectRatio: '1:1',
     });
 
     assertEdlShape(result, 3);
     expect(result.meta.aspectRatio).toBe('1:1');
     expect(result.meta.targetPlatform).toBe('reels');
-    // Under-4 scenes should flag a pacing weakness
-    expect(result.formulaCheck.weaknessesFlagged.length).toBeGreaterThan(0);
   });
 
-  it('returns an EditDecisionList-shaped object for a 16:9 YouTube short (5 scenes)', async () => {
-    const result = await generateEditDecisionList({
+  it('parses a canned EditDecisionList for a 16:9 YouTube short (5 scenes) with brandContext', async () => {
+    const inputSpec = {
       sceneBatch: [
-        { sceneIdx: 0, scriptLine: 'Imagine this morning routine.', renderedUrl: 'https://example.com/y0.mp4', type: 'cinematic' },
-        { sceneIdx: 1, scriptLine: 'Here is what changed for me.', renderedUrl: 'https://example.com/y1.mp4', type: 'talking' },
-        { sceneIdx: 2, scriptLine: 'Watch the product in action.', renderedUrl: 'https://example.com/y2.mp4', type: 'b-roll' },
-        { sceneIdx: 3, scriptLine: 'The results spoke for themselves.', renderedUrl: 'https://example.com/y3.mp4', type: 'talking' },
-        { sceneIdx: 4, scriptLine: 'Try it risk free today.', renderedUrl: 'https://example.com/y4.mp4', type: 'talking' },
+        { sceneIdx: 0, scriptLine: 'Imagine this morning routine.', renderedUrl: 'https://example.com/y0.mp4', type: 'cinematic' as const },
+        { sceneIdx: 1, scriptLine: 'Here is what changed for me.', renderedUrl: 'https://example.com/y1.mp4', type: 'talking' as const },
+        { sceneIdx: 2, scriptLine: 'Watch the product in action.', renderedUrl: 'https://example.com/y2.mp4', type: 'b-roll' as const },
+        { sceneIdx: 3, scriptLine: 'The results spoke for themselves.', renderedUrl: 'https://example.com/y3.mp4', type: 'talking' as const },
+        { sceneIdx: 4, scriptLine: 'Try it risk free today.', renderedUrl: 'https://example.com/y4.mp4', type: 'talking' as const },
       ],
       audioOverlays: [
         { sceneIdx: 0, audioUrl: 'blob:y-0' },
@@ -174,40 +254,59 @@ describe('generateEditDecisionList (Phase 1 half (a) stub)', () => {
         { sceneIdx: 3, audioUrl: 'blob:y-3' },
         { sceneIdx: 4, audioUrl: 'blob:y-4' },
       ],
+      aspectRatio: '16:9' as const,
+      targetPlatform: 'youtube' as const,
+    };
+    fetchMock.mockResolvedValueOnce(okGemini(cannedEdl(inputSpec)));
+
+    const result = await generateEditDecisionList({
+      ...inputSpec,
       finalScript: 'Imagine this morning routine. Here is what changed for me. Watch the product in action. The results spoke for themselves. Try it risk free today.',
-      targetPlatform: 'youtube',
-      aspectRatio: '16:9',
       brandContext: { brandName: 'Glossier', voiceTone: 'Warm, confident, intimate.' },
     });
 
     assertEdlShape(result, 5);
     expect(result.meta.aspectRatio).toBe('16:9');
     expect(result.meta.targetPlatform).toBe('youtube');
-    // 5 scenes — no pacing flag expected
-    expect(result.formulaCheck.weaknessesFlagged.length).toBe(0);
-    // First scene's audio overlay should land
     expect(result.scenes[0].sourceAudioUrl).toBe('blob:y-0');
   });
 
-  it('routes audioOverlays by sceneIdx (not array order)', async () => {
-    const result = await generateEditDecisionList({
+  it('sends fileData parts in the documented order: [text prompt, ...video URLs, ...audio URLs]', async () => {
+    const inputSpec = {
       sceneBatch: [
-        { sceneIdx: 0, scriptLine: 'A', renderedUrl: 'https://example.com/a.mp4', type: 'talking' },
-        { sceneIdx: 1, scriptLine: 'B', renderedUrl: 'https://example.com/b.mp4', type: 'b-roll' },
+        { sceneIdx: 0, scriptLine: 'A', renderedUrl: 'https://example.com/a.mp4', type: 'talking' as const },
+        { sceneIdx: 1, scriptLine: 'B', renderedUrl: 'https://example.com/b.mp4', type: 'b-roll' as const },
       ],
       audioOverlays: [
-        // Intentionally out of order
+        // Intentionally out of array order — verifies iteration over audioOverlays preserves their order.
         { sceneIdx: 1, audioUrl: 'blob:for-scene-1' },
         { sceneIdx: 0, audioUrl: 'blob:for-scene-0' },
       ],
+      aspectRatio: '9:16' as const,
+      targetPlatform: 'tiktok' as const,
+    };
+    fetchMock.mockResolvedValueOnce(okGemini(cannedEdl(inputSpec)));
+
+    await generateEditDecisionList({
+      ...inputSpec,
       finalScript: 'A B',
-      targetPlatform: 'tiktok',
-      aspectRatio: '9:16',
     });
 
-    const scene0 = result.scenes.find((s) => s.sceneIdx === 0);
-    const scene1 = result.scenes.find((s) => s.sceneIdx === 1);
-    expect(scene0?.sourceAudioUrl).toBe('blob:for-scene-0');
-    expect(scene1?.sourceAudioUrl).toBe('blob:for-scene-1');
+    const body = captureLastFetchBody();
+    expect(body.model).toBe('gemini-3.5-flash');
+    expect(Array.isArray(body.contents.parts)).toBe(true);
+    const parts = body.contents.parts;
+
+    // Part 0: text prompt
+    expect(typeof parts[0].text).toBe('string');
+    expect(parts[0].text.length).toBeGreaterThan(100);
+
+    // Parts 1..2: per-scene video URLs, in sceneBatch order
+    expect(parts[1].fileData).toEqual({ fileUri: 'https://example.com/a.mp4', mimeType: 'video/mp4' });
+    expect(parts[2].fileData).toEqual({ fileUri: 'https://example.com/b.mp4', mimeType: 'video/mp4' });
+
+    // Parts 3..4: audio overlay URLs, in audioOverlays array order (NOT sceneIdx order)
+    expect(parts[3].fileData).toEqual({ fileUri: 'blob:for-scene-1', mimeType: 'audio/mpeg' });
+    expect(parts[4].fileData).toEqual({ fileUri: 'blob:for-scene-0', mimeType: 'audio/mpeg' });
   });
 });

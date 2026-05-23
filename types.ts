@@ -333,7 +333,8 @@ export interface EditDecisionList {
     aspectRatio: '9:16' | '16:9' | '1:1';
     targetPlatform: EditTargetPlatform;
     hookStrategy: string;
-    formulaApplied: ('mrbeast' | 'sabri-suby')[];
+    formulaApplied: ('mrbeast' | 'sabri-suby' | 'cialdini')[];
+    scriptStyleDetected: 'mrbeast' | 'temu' | 'testimonial';
   };
   scenes: EditScene[];
   globalSfxPicks: SfxBankId[];
