@@ -17,11 +17,12 @@ interface SignalModulatorProps {
   onBack: () => void;
   globalScript?: string[];
   sceneBatch?: SceneBatchEntry[];
+  onSendToAiEditor?: (audioOverlays: { sceneIdx: number; audioUrl: string }[]) => void;
 }
 
 const EMPTY_LIBRARY: VoiceLibrary = { stockVoices: [], myVoices: [], libraryVoices: [], quotaUsed: 0, quotaMax: 1 };
 
-const SignalModulator: React.FC<SignalModulatorProps> = ({ onBack, globalScript = [], sceneBatch = [] }) => {
+const SignalModulator: React.FC<SignalModulatorProps> = ({ onBack, globalScript = [], sceneBatch = [], onSendToAiEditor }) => {
   // When the user routes here via "// SEND TO SIGNAL MODULATOR ↗" from Generate
   // Video, sceneBatch arrives populated — auto-select the Scene Pipeline tab so
   // they don't have to hunt for it.
@@ -149,6 +150,7 @@ const SignalModulator: React.FC<SignalModulatorProps> = ({ onBack, globalScript 
           sceneBatch={sceneBatch}
           history={history}
           onUsageReported={refreshBudget}
+          onSendToAiEditor={onSendToAiEditor}
         />
       )}
       {activeTile === 'tts' && (

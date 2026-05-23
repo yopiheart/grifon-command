@@ -138,6 +138,16 @@ const App: React.FC = () => {
   // consumed by Signal Modulator's Scene Pipeline tile (auto-selects when
   // sceneBatch.length > 0).
   const [sceneBatch, setSceneBatch] = useState<SceneBatchEntry[]>([]);
+  // Phase 1 half (a) — Remotion AI Editor handoff. Populated by Signal
+  // Modulator's "Send to AI Editor →" button after the Scene Pipeline batch
+  // completes; consumed by EditVideo's "From Render Batch" mode to call the
+  // (currently stubbed) generateEditDecisionList brain.
+  const [editorBatch, setEditorBatch] = useState<{
+    sceneBatch: SceneBatchEntry[];
+    audioOverlays: { sceneIdx: number; audioUrl: string }[];
+    aspectRatio: '9:16' | '16:9' | '1:1';
+    finalScript: string;
+  } | null>(null);
   const [cinematicResult, setCinematicResult] = useState<Scene[] | null>(null);
 
   const [userId, setUserId] = useState<string | null>(null);
@@ -712,6 +722,15 @@ const App: React.FC = () => {
         }}
         globalScript={finalScript}
         sceneBatch={sceneBatch}
+        onSendToAiEditor={(audioOverlays) => {
+          setEditorBatch({
+            sceneBatch,
+            audioOverlays,
+            aspectRatio: aspectRatio ?? '9:16',
+            finalScript: finalScript.join(' '),
+          });
+          setActiveModule('edit_video');
+        }}
       />
     );
   } else if (activeModule === 'influencer_forge') {
@@ -723,7 +742,15 @@ const App: React.FC = () => {
   } else if (activeModule === 'offer_optimizer') {
     moduleElement = <OfferOptimizer onBack={() => setActiveModule(null)} onNavigate={setActiveModule} />;
   } else if (activeModule === 'edit_video') {
-    moduleElement = <EditVideo onBack={() => setActiveModule(null)} />;
+    moduleElement = (
+      <EditVideo
+        onBack={() => {
+          setEditorBatch(null);
+          setActiveModule(null);
+        }}
+        editorBatch={editorBatch}
+      />
+    );
   } else if (activeModule === 'image_editor') {
     moduleElement = <ImageEditor onBack={() => setActiveModule(null)} ethnicity={avatar?.ethnicity} />;
   } else if (activeModule === 'caption_headline') {

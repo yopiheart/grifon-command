@@ -1,5 +1,5 @@
 import type { GenerateContentResponse } from "@google/genai";
-import { BusinessInfo, Script, Scene, StoryboardResponse, VideoPrompt, MarketResearchInput, MarketResearchReport, OfferOptimizerInput, OfferOptimizerResult, VideoEditInput, OptimizedPromptResponse, CaptionHeadlineInput, DayContent, AdVariant, UplinkData, CinematicSpecConfig, VisualTheme, CinematicNarrativeScene, VideoModelType, InfluencerConfig, InfluencerStrategicInput, InfluencerScriptResponse } from '../types';
+import { BusinessInfo, Script, Scene, StoryboardResponse, VideoPrompt, MarketResearchInput, MarketResearchReport, OfferOptimizerInput, OfferOptimizerResult, VideoEditInput, OptimizedPromptResponse, CaptionHeadlineInput, DayContent, AdVariant, UplinkData, CinematicSpecConfig, VisualTheme, CinematicNarrativeScene, VideoModelType, InfluencerConfig, InfluencerStrategicInput, InfluencerScriptResponse, EditDecisionInput, EditDecisionList, EditScene, SfxBankId } from '../types';
 import { getSupabase } from './supabaseClient';
 import { startJob, endJob, type JobKind } from './activeJobsService';
 import { saveActiveJob, clearActiveJob } from './activeJobStore';
@@ -978,6 +978,132 @@ ${input.instructions || "None"}
     }));
 
     return response.text || "Video Edit Plan Generation Failed. Please try again.";
+};
+
+/**
+ * Curated SFX bank for the Remotion AI Editor — Phase 1.
+ *
+ * Paper-only in Phase 1: the EDL references these IDs, but the actual SFX
+ * audio files don't ship until Phase 2 when Remotion needs them. Keeping the
+ * vocabulary closed prevents the AI brain from inventing IDs the editor
+ * can't fulfil downstream.
+ */
+export const SFX_BANK: readonly SfxBankId[] = [
+  'whoosh', 'glitch', 'pop', 'ding', 'riser',
+  'drop', 'snap', 'swish', 'boom', 'sparkle',
+] as const;
+
+/**
+ * Remotion AI Editor brain — Phase 1 half (a) STUB.
+ *
+ * Returns a hardcoded fixture EDL derived from the input batch shape so
+ * downstream UI (EditVideo's "From Render Batch" mode) and Phase 2's
+ * Remotion executor have a stable schema to develop against. The real
+ * Gemini multimodal call ships in Phase 1 half (b) after the TUNED prompt
+ * is signed off (see services/CLAUDE.md and agent_lessons.md 2026-05-09).
+ *
+ * Intentionally deterministic and synchronous-looking (wrapped in a small
+ * delay to mimic latency for UI loading-state testing). NO network call.
+ */
+export const generateEditDecisionList = async (input: EditDecisionInput): Promise<EditDecisionList> => {
+  await delay(400);
+
+  const HOOK_OVERLAY_BANK = ['WAIT FOR IT', 'YOU WON\'T BELIEVE', '3 SECRETS', 'WATCH THIS', 'GAME CHANGER'];
+  const PUNCHLINE_BANK = ['BUY NOW', 'LINK BELOW', 'TAP TO TRY', 'DON\'T MISS OUT', 'LIMITED'];
+
+  const audioBySceneIdx = new Map(input.audioOverlays.map((a) => [a.sceneIdx, a.audioUrl]));
+
+  const scenes: EditScene[] = input.sceneBatch.map((entry, orderIdx) => {
+    const isHook = orderIdx === 0;
+    const isClose = orderIdx === input.sceneBatch.length - 1;
+    const isTalking = entry.type === 'talking';
+    const estDuration = Math.max(3, Math.min(8, Math.ceil((entry.scriptLine?.length ?? 60) / 18)));
+
+    const overlayText = isHook
+      ? [{
+          text: HOOK_OVERLAY_BANK[orderIdx % HOOK_OVERLAY_BANK.length],
+          startSec: 0.2,
+          endSec: 2.5,
+          style: 'hook' as const,
+          position: 'center' as const,
+        }]
+      : isClose
+        ? [{
+            text: PUNCHLINE_BANK[orderIdx % PUNCHLINE_BANK.length],
+            startSec: 0.3,
+            endSec: estDuration - 0.2,
+            style: 'punchline' as const,
+            position: 'bottom' as const,
+          }]
+        : isTalking
+          ? []
+          : [{
+              text: (entry.scriptLine ?? '').split(/[.!?]/)[0].slice(0, 24).toUpperCase(),
+              startSec: 0.4,
+              endSec: Math.min(2.4, estDuration - 0.2),
+              style: 'callout' as const,
+              position: 'top' as const,
+            }];
+
+    const sfxCues = isHook
+      ? [{ sfxId: 'whoosh' as const, anchorSec: 0, reason: 'Hook opener — punch attention.' }]
+      : isClose
+        ? [{ sfxId: 'ding' as const, anchorSec: 0.1, reason: 'CTA emphasis.' }]
+        : entry.type === 'b-roll'
+          ? [{ sfxId: 'pop' as const, anchorSec: 0, reason: 'Cut energy on B-roll entry.' }]
+          : [];
+
+    return {
+      sceneIdx: entry.sceneIdx,
+      sourceVideoUrl: entry.renderedUrl ?? '',
+      sourceAudioUrl: audioBySceneIdx.get(entry.sceneIdx) ?? '',
+      keepSegments: [{ startSec: 0, endSec: estDuration }],
+      voiceOffsetSec: 0,
+      transitionIn: isHook ? undefined : {
+        type: (isTalking ? 'cut' : orderIdx % 2 === 0 ? 'whip' : 'flash') as 'cut' | 'whip' | 'flash',
+        durationSec: isTalking ? 0 : 0.15,
+      },
+      overlayText: overlayText.length > 0 ? overlayText : undefined,
+      sfxCues: sfxCues.length > 0 ? sfxCues : undefined,
+      cameraEffect: isHook ? 'zoom-in' : isTalking ? 'none' : 'pan',
+      notes: isHook
+        ? 'Hook scene — 3-second window, dynamic camera, payoff curiosity.'
+        : isClose
+          ? 'Close — CTA punchline overlay, ding for emphasis.'
+          : isTalking
+            ? 'Talking scene — preserve lipsync via STS audio overlay; minimal overlays so face reads.'
+            : 'B-roll cutaway — short callout overlay, cut tight.',
+    };
+  });
+
+  const totalDurationSec = scenes.reduce((sum, s) => {
+    const segs = s.keepSegments.reduce((acc, seg) => acc + Math.max(0, seg.endSec - seg.startSec), 0);
+    const transition = s.transitionIn?.durationSec ?? 0;
+    return sum + segs + transition;
+  }, 0);
+
+  return {
+    meta: {
+      totalDurationSec,
+      aspectRatio: input.aspectRatio,
+      targetPlatform: input.targetPlatform,
+      hookStrategy: 'Curiosity loop + dynamic camera on scene 1; punchline CTA on close.',
+      formulaApplied: ['mrbeast', 'sabri-suby'],
+    },
+    scenes,
+    globalSfxPicks: ['whoosh', 'ding', 'pop'],
+    formulaCheck: {
+      rulesApplied: [
+        'Hook in first 3s with dynamic camera (MrBeast)',
+        'No static shots on hook',
+        '4th-grade reading level in overlays (Sabri Suby)',
+        'CTA punchline on close',
+      ],
+      weaknessesFlagged: input.sceneBatch.length < 4
+        ? ['Scene count under 4 — pacing risks feeling slow for short-form.']
+        : [],
+    },
+  };
 };
 
 /**

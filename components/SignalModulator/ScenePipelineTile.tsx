@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Download, Layers, Loader2, Check, AlertTriangle, RefreshCw } from 'lucide-react';
+import { Download, Layers, Loader2, Check, AlertTriangle, RefreshCw, Scissors } from 'lucide-react';
 import JSZip from 'jszip';
 import { GlassPanel } from '../ui/GlassPanel';
 import { GoldButton } from '../ui/GoldButton';
@@ -15,6 +15,7 @@ interface ScenePipelineTileProps {
   sceneBatch: SceneBatchEntry[];
   history: SessionHistoryApi;
   onUsageReported?: () => void;
+  onSendToAiEditor?: (audioOverlays: { sceneIdx: number; audioUrl: string }[]) => void;
 }
 
 type SceneStatus = 'queued' | 'rendering' | 'done' | 'failed';
@@ -30,6 +31,7 @@ const ScenePipelineTile: React.FC<ScenePipelineTileProps> = ({
   sceneBatch,
   history,
   onUsageReported,
+  onSendToAiEditor,
 }) => {
   const [voiceId, setVoiceId] = useState<string>('');
   // Default to 'robust' for batch voice generation — keeps tone consistent
@@ -331,6 +333,24 @@ const ScenePipelineTile: React.FC<ScenePipelineTileProps> = ({
           <GoldButton onClick={handleDownloadAll} className="px-8 py-3 text-xs flex items-center gap-2">
             <Download className="w-4 h-4" /> DOWNLOAD ALL (.ZIP)
           </GoldButton>
+        )}
+
+        {allDone && onSendToAiEditor && (
+          <button
+            type="button"
+            onClick={() => {
+              const audioOverlays = sceneBatch
+                .map((scene) => ({
+                  sceneIdx: scene.sceneIdx,
+                  audioUrl: sceneStates[scene.sceneIdx]?.audioUrl ?? '',
+                }))
+                .filter((a) => a.audioUrl);
+              onSendToAiEditor(audioOverlays);
+            }}
+            className="px-8 py-3 text-xs flex items-center gap-2 rounded-xl bg-zinc-950 border border-white/10 hover:border-[#FFCC00] hover:text-[#FFCC00] text-zinc-300 font-bold uppercase tracking-widest transition-colors"
+          >
+            <Scissors className="w-4 h-4" /> SEND TO AI EDITOR ↗
+          </button>
         )}
       </div>
 

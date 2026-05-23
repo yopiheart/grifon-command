@@ -1,19 +1,286 @@
 
-import React, { useState } from 'react';
-import { VideoEditInput } from '../types';
-import { generateVideoEditPlan } from '../services/geminiService';
+import React, { useEffect, useState } from 'react';
+import { VideoEditInput, EditDecisionList, SceneBatchEntry, EditTargetPlatform } from '../types';
+import { generateVideoEditPlan, generateEditDecisionList } from '../services/geminiService';
 import { compressImageForUpload } from '../utils/imageCompression';
 import { GlassPanel } from './ui/GlassPanel';
 import { GoldButton } from './ui/GoldButton';
 import Loader from './ui/Loader';
-import { Copy, ChevronLeft, UploadCloud, Image as ImageIcon, Trash2 } from 'lucide-react';
+import { Copy, ChevronLeft, UploadCloud, Image as ImageIcon, Trash2, Download, Scissors, Sparkles } from 'lucide-react';
 import saveAs from 'file-saver';
+
+export interface EditorBatchPayload {
+  sceneBatch: SceneBatchEntry[];
+  audioOverlays: { sceneIdx: number; audioUrl: string }[];
+  aspectRatio: '9:16' | '16:9' | '1:1';
+  finalScript: string;
+}
 
 interface EditVideoProps {
   onBack: () => void;
+  editorBatch?: EditorBatchPayload | null;
 }
 
-const EditVideo: React.FC<EditVideoProps> = ({ onBack }) => {
+const aspectRatioToPlatform = (ar: '9:16' | '16:9' | '1:1'): EditTargetPlatform => {
+  if (ar === '16:9') return 'youtube';
+  if (ar === '1:1') return 'reels';
+  return 'tiktok';
+};
+
+const formatSec = (s: number): string => {
+  const m = Math.floor(s / 60);
+  const r = (s - m * 60).toFixed(1);
+  return `${m}:${r.padStart(4, '0')}`;
+};
+
+const BatchEditMode: React.FC<{
+  editorBatch: EditorBatchPayload;
+  onBack: () => void;
+}> = ({ editorBatch, onBack }) => {
+  const [edl, setEdl] = useState<EditDecisionList | null>(null);
+  const [isPlanning, setIsPlanning] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    setIsPlanning(true);
+    setError(null);
+    generateEditDecisionList({
+      sceneBatch: editorBatch.sceneBatch,
+      audioOverlays: editorBatch.audioOverlays,
+      finalScript: editorBatch.finalScript,
+      targetPlatform: aspectRatioToPlatform(editorBatch.aspectRatio),
+      aspectRatio: editorBatch.aspectRatio,
+    })
+      .then((result) => {
+        if (!cancelled) setEdl(result);
+      })
+      .catch((err) => {
+        if (!cancelled) setError(err?.message ?? 'EDL_GENERATION_FAILED');
+      })
+      .finally(() => {
+        if (!cancelled) setIsPlanning(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [editorBatch]);
+
+  const handleDownloadJson = () => {
+    if (!edl) return;
+    const blob = new Blob([JSON.stringify(edl, null, 2)], { type: 'application/json;charset=utf-8' });
+    saveAs(blob, `edit-decision-list-${Date.now()}.json`);
+  };
+
+  return (
+    <div className="min-h-screen bg-zinc-950 text-white font-sans flex flex-col items-center p-4 sm:p-6 md:p-8">
+      <div className="w-full max-w-6xl mx-auto">
+        <header className="flex flex-col items-start gap-4 mb-8 w-full border-b border-white/10 pb-6 relative">
+          <div className="flex items-center justify-between w-full">
+            <button onClick={onBack} className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-zinc-500 hover:text-white uppercase tracking-widest transition-colors">
+              <ChevronLeft className="w-4 h-4" /> <span className="hidden md:inline">COMMAND CENTER</span><span className="md:hidden">BACK</span>
+            </button>
+            <span className="text-[10px] font-mono text-[#FFCC00] uppercase tracking-widest">
+              // FROM_RENDER_BATCH · {editorBatch.sceneBatch.length}_SCENES
+            </span>
+          </div>
+          <div>
+            <h1 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight break-words whitespace-normal leading-tight">
+              Viral Video Editor <span className="text-[#FFCC00]">// AI EDL</span>
+            </h1>
+            <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mt-2">
+              // STRUCTURED EDIT DECISION LIST — STUB BRAIN (PHASE 1A)
+            </p>
+          </div>
+        </header>
+
+        {isPlanning && (
+          <GlassPanel className="p-12 flex items-center justify-center">
+            <Loader message="DRAFTING EDIT DECISION LIST..." />
+          </GlassPanel>
+        )}
+
+        {error && !isPlanning && (
+          <GlassPanel className="p-6 border-red-900/50 bg-red-900/10">
+            <p className="text-red-400 font-mono text-sm">// EDL_ERROR: {error}</p>
+          </GlassPanel>
+        )}
+
+        {edl && !isPlanning && (
+          <div className="flex flex-col gap-6">
+            <GlassPanel className="p-6">
+              <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-4 mb-4">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-[#FFCC00]" />
+                  <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest">
+                    // META
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleDownloadJson}
+                  className="flex items-center gap-2 px-4 py-2 rounded-xl bg-zinc-950 border border-white/10 hover:border-[#FFCC00] hover:text-[#FFCC00] text-zinc-300 text-[10px] font-bold uppercase tracking-widest transition-colors"
+                >
+                  <Download className="w-3.5 h-3.5" /> EXPORT EDL JSON
+                </button>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                <div>
+                  <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest">DURATION</p>
+                  <p className="text-white font-mono">{formatSec(edl.meta.totalDurationSec)}</p>
+                </div>
+                <div>
+                  <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest">ASPECT</p>
+                  <p className="text-white font-mono">{edl.meta.aspectRatio}</p>
+                </div>
+                <div>
+                  <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest">PLATFORM</p>
+                  <p className="text-white font-mono uppercase">{edl.meta.targetPlatform}</p>
+                </div>
+                <div>
+                  <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest">FORMULA</p>
+                  <p className="text-white font-mono uppercase">{edl.meta.formulaApplied.join(' + ')}</p>
+                </div>
+              </div>
+              <div className="mt-4 pt-4 border-t border-white/5">
+                <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-1">HOOK STRATEGY</p>
+                <p className="text-zinc-300 text-sm">{edl.meta.hookStrategy}</p>
+              </div>
+            </GlassPanel>
+
+            <GlassPanel className="p-6">
+              <h2 className="text-[10px] text-zinc-400 font-mono uppercase tracking-widest border-b border-white/10 pb-2 mb-4">
+                // TIMELINE · {edl.scenes.length}_SCENES
+              </h2>
+              <div className="flex flex-col gap-3">
+                {edl.scenes.map((scene) => (
+                  <div
+                    key={scene.sceneIdx}
+                    className="flex flex-col gap-2 p-4 rounded-xl bg-zinc-950 border border-white/5"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3 flex-wrap">
+                        <span className="text-[10px] font-mono text-[#FFCC00] uppercase tracking-widest">
+                          SCENE_{String(scene.sceneIdx + 1).padStart(2, '0')}
+                        </span>
+                        {scene.transitionIn && (
+                          <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest">
+                            // IN: {scene.transitionIn.type.toUpperCase()} ({scene.transitionIn.durationSec}s)
+                          </span>
+                        )}
+                        {scene.cameraEffect && scene.cameraEffect !== 'none' && (
+                          <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest">
+                            // CAM: {scene.cameraEffect.toUpperCase()}
+                          </span>
+                        )}
+                      </div>
+                      <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest">
+                        {scene.keepSegments
+                          .map((s) => `${formatSec(s.startSec)}–${formatSec(s.endSec)}`)
+                          .join(', ')}
+                      </span>
+                    </div>
+                    {scene.overlayText && scene.overlayText.length > 0 && (
+                      <div className="flex flex-col gap-1">
+                        {scene.overlayText.map((ov, i) => (
+                          <div key={i} className="flex items-center gap-2 text-xs">
+                            <span className="px-2 py-0.5 rounded bg-[#FFCC00]/10 text-[#FFCC00] text-[9px] font-mono uppercase tracking-widest">
+                              {ov.style} · {ov.position}
+                            </span>
+                            <span className="font-mono text-white">"{ov.text}"</span>
+                            <span className="text-[9px] font-mono text-zinc-500">
+                              [{formatSec(ov.startSec)}–{formatSec(ov.endSec)}]
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    {scene.sfxCues && scene.sfxCues.length > 0 && (
+                      <div className="flex items-center gap-2 flex-wrap">
+                        {scene.sfxCues.map((cue, i) => (
+                          <span
+                            key={i}
+                            className="px-2 py-1 rounded-full bg-zinc-900 border border-white/10 text-[9px] font-mono text-zinc-300 uppercase tracking-widest"
+                            title={cue.reason}
+                          >
+                            🔊 {cue.sfxId} @ {formatSec(cue.anchorSec)}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                    <p className="text-[10px] text-zinc-500 font-mono italic mt-1">// {scene.notes}</p>
+                  </div>
+                ))}
+              </div>
+            </GlassPanel>
+
+            <GlassPanel className="p-6">
+              <h2 className="text-[10px] text-zinc-400 font-mono uppercase tracking-widest border-b border-white/10 pb-2 mb-4">
+                // FORMULA_CHECK
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">RULES APPLIED</p>
+                  <ul className="space-y-1">
+                    {edl.formulaCheck.rulesApplied.map((r, i) => (
+                      <li key={i} className="text-zinc-300 text-sm">✓ {r}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">WEAKNESSES FLAGGED</p>
+                  {edl.formulaCheck.weaknessesFlagged.length === 0 ? (
+                    <p className="text-zinc-500 text-sm italic">// None — formula intact.</p>
+                  ) : (
+                    <ul className="space-y-1">
+                      {edl.formulaCheck.weaknessesFlagged.map((w, i) => (
+                        <li key={i} className="text-[#FFCC00] text-sm">⚠ {w}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </div>
+              <div className="mt-4 pt-4 border-t border-white/5">
+                <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">GLOBAL SFX PICKS</p>
+                <div className="flex gap-2 flex-wrap">
+                  {edl.globalSfxPicks.map((sfx) => (
+                    <span
+                      key={sfx}
+                      className="px-3 py-1 rounded-full bg-zinc-900 border border-white/10 text-[10px] font-mono text-zinc-300 uppercase tracking-widest"
+                    >
+                      {sfx}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </GlassPanel>
+
+            <GlassPanel className="p-6 bg-zinc-900/30">
+              <div className="flex items-center gap-2 mb-2">
+                <Scissors className="w-3.5 h-3.5 text-zinc-500" />
+                <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest">
+                  // PHASE_1A · STUB BRAIN
+                </p>
+              </div>
+              <p className="text-zinc-400 text-sm">
+                This EDL was generated by the stub brain — a deterministic fixture seeded
+                from your render batch. Phase 1 half (b) replaces the stub with the real
+                Gemini multimodal call once the TUNED prompt is signed off. Phase 2 wires
+                Remotion Lambda to render this JSON into a final MP4.
+              </p>
+            </GlassPanel>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+const EditVideo: React.FC<EditVideoProps> = ({ onBack, editorBatch }) => {
+  if (editorBatch && editorBatch.sceneBatch.length > 0) {
+    return <BatchEditMode editorBatch={editorBatch} onBack={onBack} />;
+  }
+
   const [formData, setFormData] = useState<VideoEditInput>({
     scriptText: '',
     sceneImages: [],

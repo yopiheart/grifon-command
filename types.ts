@@ -256,6 +256,93 @@ export interface VideoEditInput {
   instructions?: string; // Optional user notes
 }
 
+/**
+ * Remotion AI Editor — Phase 1 half (a) types.
+ *
+ * Drives the upgraded "From Render Batch" mode of [EditVideo]: takes the
+ * rendered scene MP4s from [SceneBatchEntry] plus the matching Signal
+ * Modulator audio outputs and returns a machine-actionable Edit Decision
+ * List that Phase 2's Remotion executor will consume verbatim.
+ *
+ * The brain function `generateEditDecisionList` is currently a STUB that
+ * returns a hardcoded fixture EDL. Phase 1 half (b) replaces the stub with
+ * a real Gemini call once the TUNED prompt is signed off.
+ */
+export type SfxBankId =
+  | 'whoosh'
+  | 'glitch'
+  | 'pop'
+  | 'ding'
+  | 'riser'
+  | 'drop'
+  | 'snap'
+  | 'swish'
+  | 'boom'
+  | 'sparkle';
+
+export type TransitionType = 'cut' | 'flash' | 'whip' | 'zoom' | 'particles';
+
+export type CameraEffect = 'zoom-in' | 'zoom-out' | 'pan' | 'shake' | 'none';
+
+export type OverlayStyle = 'hook' | 'callout' | 'subtitle' | 'punchline';
+
+export type OverlayPosition = 'top' | 'center' | 'bottom';
+
+export type EditTargetPlatform = 'tiktok' | 'reels' | 'shorts' | 'youtube';
+
+export interface OverlayText {
+  text: string;
+  startSec: number;
+  endSec: number;
+  style: OverlayStyle;
+  position: OverlayPosition;
+}
+
+export interface SfxCue {
+  sfxId: SfxBankId;
+  anchorSec: number;
+  reason: string;
+}
+
+export interface EditScene {
+  sceneIdx: number;                 // Matches SceneBatchEntry.sceneIdx
+  sourceVideoUrl: string;           // From SceneBatchEntry.renderedUrl
+  sourceAudioUrl: string;           // From audioOverlays
+  keepSegments: { startSec: number; endSec: number }[]; // What to KEEP from source
+  voiceOffsetSec: number;           // Where new voice starts in output timeline
+  transitionIn?: { type: TransitionType; durationSec: number };
+  overlayText?: OverlayText[];
+  sfxCues?: SfxCue[];
+  cameraEffect?: CameraEffect;
+  notes: string;
+}
+
+export interface EditDecisionInput {
+  sceneBatch: SceneBatchEntry[];
+  audioOverlays: { sceneIdx: number; audioUrl: string }[];
+  finalScript: string;
+  storyboard?: Scene[];
+  targetPlatform: EditTargetPlatform;
+  aspectRatio: '9:16' | '16:9' | '1:1';
+  brandContext?: { brandName: string; voiceTone: string };
+}
+
+export interface EditDecisionList {
+  meta: {
+    totalDurationSec: number;
+    aspectRatio: '9:16' | '16:9' | '1:1';
+    targetPlatform: EditTargetPlatform;
+    hookStrategy: string;
+    formulaApplied: ('mrbeast' | 'sabri-suby')[];
+  };
+  scenes: EditScene[];
+  globalSfxPicks: SfxBankId[];
+  formulaCheck: {
+    rulesApplied: string[];
+    weaknessesFlagged: string[];
+  };
+}
+
 export interface ImageEditorInput {
   userDescription: string;
   uploadedImages: string[]; // Base64 strings
