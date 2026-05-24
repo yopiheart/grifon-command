@@ -149,39 +149,70 @@ fallback? Picking up these checks would have shipped the Bug 3 fix and continued
 30 min earlier today. Also: never trigger writes inside the workspace's vite-watched path while
 the dev server is running — use $env:TEMP for downloads/extraction.
 
-### 2026-05-24 — Director AI smoke tests REQUIRE a hero product image upload at Step 2
+### 2026-05-24 — Director AI smoke test pre-flight discipline (3 rules)
 
-**Context:** Session K Phase 1b EDL validation. I drove the wizard via Playwright through a
-PeakBoost Coffee fixture, filled Step 2 business info completely, but skipped the optional
-"Business Visuals (Upload 3-5 Photos)" upload because the field is marked optional. The wizard
-proceeded; Step 5 storyboard showed a yellow "VISUAL ASSETS MISSING" banner — *"The AI will
-generate generic placeholders for the product. For brand-accurate results, please upload your
-product photos in Step 2."* I read past it twice (once on Step 2 itself with the warning
-*"Selling products? Upload product-in-hand FIRST — anchors size + appearance for every scene"*,
-once on Step 5) and kept clicking forward. Neil caught it and was rightly furious.
+**Context:** Session K drove a wizard smoke twice — first with no hero image
+(generic placeholders), second with a brand-mismatched stock photo. Both produced
+storyboards that didn't represent real beta-user output. Neil corrected with
+explicit rules. Earlier same session also skipped MarketMind ("Skip for now")
+which deterministically suppressed the script-angle picker at Step 3 (gated on
+localStorage.marketMindReport shape — see components/Step3AdScript.tsx:49-94),
+producing a script that didn't carry the angle-selection signal real users get.
 
-**What went wrong:** A storyboard built on generic-placeholder visuals isn't a real test of the
-pipeline. Brand fidelity, anchor-bridge morphs, product-in-hand framings, color-palette
-consistency — all the visual quality surface that downstream Veo/Kling renders depend on — all
-get poisoned at the source by missing the hero product. Even if the EDL JSON exported and the
-5 assertions passed, the underlying render quality would have been meaningless for evaluating
-real beta-user behavior. I also spent ~$0.03 on a stale Custom-script storyboard before
-course-correcting to MrBeast (which still had no hero image), compounding the waste.
+**Lesson — before driving the wizard end-to-end as a smoke test, you MUST:**
 
-**Lesson:** When conducting any Director AI / wizard smoke test for a product brand, **stop at
-Step 2 and require a hero product image upload before proceeding.** This is non-negotiable
-even when the field is marked "optional" in the UI — the optional flag is for end users
-choosing brand fidelity vs speed, not for QA tests of the pipeline. Concrete rule for future
-Director AI smokes:
-1. Before clicking CONFIRM & PROCEED on Step 2, verify the Business Visuals upload tile shows
-   at least 1 file loaded.
-2. If no file is provided and the smoke is automated/Playwright-driven, PAUSE and ask the user
-   for either an image path or a manual upload via the browser window. Do not silently skip.
-3. For service businesses (no product photo): require hero/storefront photo with the same
-   gate — the Step 2 UI itself says "Service business? Upload hero photo FIRST."
-4. The "VISUAL ASSETS MISSING" yellow banner on Step 5 is a hard stop, not a warning to
-   acknowledge and move past.
+**Rule 1. Always run MarketMind (Market Research module) FIRST, before entering
+Director AI.** Inputs: Brand name, product name, description, price. Then click
+"Send to Director AI" from the MarketMind result. Skipping MarketMind means:
+(a) the script-angle picker is deterministically suppressed at Step 3 (gated on
+localStorage.marketMindReport — see components/Step3AdScript.tsx:49-94), losing
+the Pattern Interrupt / Curiosity Gap angle selection that real users get;
+(b) Director AI doesn't get the market context that powers its critique +
+hook quality.
 
-This rule was given verbatim by Neil on 2026-05-24: *"When you conduct a testing for director ai
-make sure to upload hero product so that storyboard images would be perfect! Put that in your
-mind please! for future reference"*
+**Rule 2. After Send-to-Director-AI, VERIFY that Step 1 + Step 2 fields are
+auto-prefilled from the MarketMind result.** Specifically check: brand name,
+product, target audience, dream result, 3 AM worry, differentiator, features.
+If any field is empty or contains "[object Object]" / similar stringified-object
+leakage (see Session J Bug 5 in handoff_2026-05-24-session-j-...), STOP and
+fix the prefill bug before proceeding — that's a real bug, not a quirk to type
+around.
+
+**Rule 3. Hero product image MUST be a handheld shot — a hand holding the
+product.** Not a studio shot, not a flat-lay, not a packshot on a gray background.
+The handheld framing gives the storyboard a deterministic size reference; without
+it, Veo/Kling render the product at wildly inconsistent sizes across scenes
+(some scenes show it palm-sized, others billboard-sized). The Step 2 UI literally
+says "Selling products? Upload product-in-hand FIRST — anchors size + appearance
+for every scene." Take the UI text seriously.
+
+**Concrete pre-flight checklist for any future Director AI smoke:**
+1. MarketMind run? Brand + product + description + price entered? Report
+   surfaced + has headlines/hooks/ads arrays?
+2. Send-to-Director clicked → Step 1 brand/offer prefilled correctly?
+3. Step 2 — service/product, audience, dream, worry, differentiator, features
+   all prefilled? No "[object Object]" leakage?
+4. Hero image uploaded? **Handheld product-in-hand framing** (not packshot,
+   not flat-lay)?
+5. AI Analysis on the hero confirms it's the right product + brand?
+6. Script-angle picker appears at Step 3? (Confirms MarketMind context flowed
+   through.)
+7. The "VISUAL ASSETS MISSING" yellow banner on Step 5 is a hard stop, not a
+   warning to acknowledge and move past.
+
+If any answer is no, PAUSE and ask the user — do not proceed.
+
+For service businesses with no product photo: require hero/storefront photo
+with the same gate — the Step 2 UI itself says "Service business? Upload hero
+photo FIRST."
+
+Rules given verbatim by Neil on 2026-05-24:
+- "When you conduct a testing for director ai make sure to upload hero product
+  so that storyboard images would be perfect"
+- "Always conduct market research - using Brand name, product name, description
+  and price. Then send to director ai"
+- "Make sure to verify if all the needed details in step 1 & 2 should be
+  prefilled by market research result."
+- "Make sure to upload a hero product which is handheld or a hand holding the
+  product to make sure that the product size that will be reference in the
+  storyboard would be accurate and consistent in size."
