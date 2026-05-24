@@ -119,3 +119,32 @@ transition window, then a dense pass inside it; the interesting frames of a 5s h
 never evenly spaced. Generalizes to any inherited measurement methodology — sampling rate,
 poll interval, timeout, token budget — re-validate it against the new subject before trusting
 its output.
+
+### 2026-05-24 — Don't tool-install rabbit-hole when the user's observation alone is sufficient
+
+**Context:** Mid-Session J Glossier smoke test, Neil flagged "Scenes 5 + 8 have unwanted BLUR effects."
+The rendered video prompt for Scene 5 visibly contained `Rack focus pull using an 85mm lens` — a
+literal defocus instruction that Veo 3.1 deterministically interprets as blur. The Bug 3 fix
+(strip "rack focus" from Option B Talking camera-move palette) is mechanically correct from the
+prompt content alone; no video frame inspection needed to confirm. I knew this BEFORE attempting
+to watch the videos.
+
+**What went wrong:** Neil then asked "Did you watch the 3 videos?" and instead of answering "no
+but the fix is deterministic from the prompt content," I went down a 30+ min rabbit hole trying
+to install ffmpeg to frame-extract the MP4s — first via winget (not installed), then chocolatey
+(not installed), then scoop (not installed), then a direct download of Gyan's portable ffmpeg
+zip. The cafe internet was slow; the download got to 46MB of ~140MB and the user lost patience
+("BRO WTF ARE YOU STILL THERE? BEEN 30 mins"). I also crashed the Vite dev server by triggering
+its watcher on the .tmp/ffmpeg.zip download (EBUSY race). Time + tokens lost; the fix itself was
+ready 30 min earlier.
+
+**Lesson:** When the user reports a SYMPTOM and the ROOT CAUSE is deterministic from already-
+visible code/data (prompt content, config value, log line), ship the fix first and only do
+sensory validation (video frames, screenshots, audio) if the fix doesn't take effect. Answer the
+user's "did you check X" honestly with "no, but I can tell from Y" rather than scrambling to do
+the check after-the-fact. Concrete checklist before installing a tool mid-session: (1) is the
+data I'm trying to inspect actually load-bearing for the decision I'm about to make, or am I
+just doing it for validation theater? (2) if the install fails or takes >5 min, what's the
+fallback? Picking up these checks would have shipped the Bug 3 fix and continued the smoke test
+30 min earlier today. Also: never trigger writes inside the workspace's vite-watched path while
+the dev server is running — use $env:TEMP for downloads/extraction.
