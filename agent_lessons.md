@@ -148,3 +148,40 @@ just doing it for validation theater? (2) if the install fails or takes >5 min, 
 fallback? Picking up these checks would have shipped the Bug 3 fix and continued the smoke test
 30 min earlier today. Also: never trigger writes inside the workspace's vite-watched path while
 the dev server is running — use $env:TEMP for downloads/extraction.
+
+### 2026-05-24 — Director AI smoke tests REQUIRE a hero product image upload at Step 2
+
+**Context:** Session K Phase 1b EDL validation. I drove the wizard via Playwright through a
+PeakBoost Coffee fixture, filled Step 2 business info completely, but skipped the optional
+"Business Visuals (Upload 3-5 Photos)" upload because the field is marked optional. The wizard
+proceeded; Step 5 storyboard showed a yellow "VISUAL ASSETS MISSING" banner — *"The AI will
+generate generic placeholders for the product. For brand-accurate results, please upload your
+product photos in Step 2."* I read past it twice (once on Step 2 itself with the warning
+*"Selling products? Upload product-in-hand FIRST — anchors size + appearance for every scene"*,
+once on Step 5) and kept clicking forward. Neil caught it and was rightly furious.
+
+**What went wrong:** A storyboard built on generic-placeholder visuals isn't a real test of the
+pipeline. Brand fidelity, anchor-bridge morphs, product-in-hand framings, color-palette
+consistency — all the visual quality surface that downstream Veo/Kling renders depend on — all
+get poisoned at the source by missing the hero product. Even if the EDL JSON exported and the
+5 assertions passed, the underlying render quality would have been meaningless for evaluating
+real beta-user behavior. I also spent ~$0.03 on a stale Custom-script storyboard before
+course-correcting to MrBeast (which still had no hero image), compounding the waste.
+
+**Lesson:** When conducting any Director AI / wizard smoke test for a product brand, **stop at
+Step 2 and require a hero product image upload before proceeding.** This is non-negotiable
+even when the field is marked "optional" in the UI — the optional flag is for end users
+choosing brand fidelity vs speed, not for QA tests of the pipeline. Concrete rule for future
+Director AI smokes:
+1. Before clicking CONFIRM & PROCEED on Step 2, verify the Business Visuals upload tile shows
+   at least 1 file loaded.
+2. If no file is provided and the smoke is automated/Playwright-driven, PAUSE and ask the user
+   for either an image path or a manual upload via the browser window. Do not silently skip.
+3. For service businesses (no product photo): require hero/storefront photo with the same
+   gate — the Step 2 UI itself says "Service business? Upload hero photo FIRST."
+4. The "VISUAL ASSETS MISSING" yellow banner on Step 5 is a hard stop, not a warning to
+   acknowledge and move past.
+
+This rule was given verbatim by Neil on 2026-05-24: *"When you conduct a testing for director ai
+make sure to upload hero product so that storyboard images would be perfect! Put that in your
+mind please! for future reference"*
