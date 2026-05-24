@@ -1121,7 +1121,12 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
 
   const handleRerender = () => {
     if (!previewItem) return;
-    setConfig((p) => ({ ...p, prompt: previewItem.prompt }));
+    const sceneIdx = previewItem.sceneIdx;
+    const scenePrompt = sceneIdx !== undefined ? seedPrompts[sceneIdx] : undefined;
+    const sceneModel = scenePrompt
+      ? autoRouteModelForType(scenePrompt.type, config.model, sceneIdx)
+      : config.model;
+    setConfig((p) => ({ ...p, prompt: previewItem.prompt, model: sceneModel }));
     setCanvasView('edit');
     // brief delay so user sees the prompt loaded before kicking off
     window.setTimeout(() => handleGenerateSingle(), 100);
