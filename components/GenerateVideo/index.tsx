@@ -283,6 +283,45 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
     return () => window.clearInterval(id);
   }, []);
 
+  // Rehydrate sceneResults from the persisted Supabase library after Resume.
+  // sceneResults is transient React state; navigating away clears it, which
+  // gates off the SEND TO SIGNAL MODULATOR button even though the MP4s exist.
+  // Match by sceneIdx (deterministic, tagged by the render pipeline) with a
+  // prompt-text fallback for legacy entries that pre-date sceneIdx tagging.
+  useEffect(() => {
+    if (library.length === 0 || seedPrompts.length === 0) return;
+    if (Object.keys(sceneResults).length >= seedPrompts.length) return;
+
+    const restored: Record<number, GeneratedVideoResult> = {};
+    seedPrompts.forEach((seed, i) => {
+      const byIdx = library
+        .filter((l) => l.sceneIdx === i)
+        .sort((a, b) => (b.createdAt ?? '').localeCompare(a.createdAt ?? ''));
+      const byPrompt = byIdx.length === 0
+        ? library
+            .filter((l) => l.prompt === seed.prompt)
+            .sort((a, b) => (b.createdAt ?? '').localeCompare(a.createdAt ?? ''))
+        : [];
+      const match = byIdx[0] ?? byPrompt[0];
+      if (match) {
+        restored[i] = {
+          url: match.url,
+          downloadUrl: match.downloadUrl,
+          mimeType: match.mimeType,
+        };
+      }
+    });
+
+    const recoveredCount = Object.keys(restored).length;
+    if (recoveredCount >= Math.ceil(seedPrompts.length * 0.7)) {
+      setSceneResults((prev) => ({ ...restored, ...prev }));
+      setSceneStatus((prev) =>
+        prev.map((s, i) => (restored[i] && s === 'ready' ? 'done' : s))
+      );
+      toast.success(`// SCENES_REHYDRATED — ${recoveredCount}/${seedPrompts.length} RECOVERED`);
+    }
+  }, [library, seedPrompts]);
+
   // Phase 4d — fetch the auth user once on mount so we can (a) key the
   // IndexedDB resume store and (b) thread userId into new render calls.
   useEffect(() => {
