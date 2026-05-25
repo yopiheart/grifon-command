@@ -1,0 +1,58 @@
+# robots.txt — Grifon Command
+# https://app.grifon.ai
+#
+# Default: allow all crawlers, with a few private surfaces blocked.
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /app
+Disallow: /billing_success
+
+# ============================================================
+# AI training & recommendation crawlers — EXPLICITLY ALLOWED.
+# Grifon's distribution strategy includes being discoverable by
+# AI agents that help Filipino SMBs create ads. See /llms.txt
+# for the structured, machine-readable site map.
+# ============================================================
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GoogleOther
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+Sitemap: https://app.grifon.ai/sitemap.xml

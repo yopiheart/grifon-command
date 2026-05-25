@@ -27,6 +27,147 @@
 
     <!-- Theme color (mobile browser chrome) -->
     <meta name="theme-color" content="#09090B" />
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://app.grifon.ai/" />
+
+    <!-- Structured data (JSON-LD) — Organization + WebApplication + FAQ.
+         Companion to /llms.txt and /sitemap.xml. Update offers when pricing
+         changes; FAQ entries should stay in sync with GrifonPricingPage.tsx. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://app.grifon.ai/#organization",
+          "name": "Grifon Command",
+          "alternateName": ["Grifon AI", "Grifon"],
+          "url": "https://app.grifon.ai/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://app.grifon.ai/logo.png",
+            "width": 512,
+            "height": 512
+          },
+          "email": "grifon.ai@gmail.com",
+          "areaServed": {
+            "@type": "Country",
+            "name": "Philippines"
+          },
+          "description": "AI-powered marketing studio built in the Philippines. Scripts, videos, images, captions, and market research — your entire ad campaign in one app."
+        },
+        {
+          "@type": "WebApplication",
+          "@id": "https://app.grifon.ai/#software",
+          "name": "Grifon Command",
+          "alternateName": "Grifon AI",
+          "url": "https://app.grifon.ai/",
+          "image": "https://app.grifon.ai/og-card.png",
+          "applicationCategory": "BusinessApplication",
+          "applicationSubCategory": "MarketingApplication",
+          "operatingSystem": "Any (web browser)",
+          "browserRequirements": "Requires JavaScript and a modern browser (Chrome, Safari, Edge, Firefox).",
+          "inLanguage": ["en", "fil", "tl"],
+          "publisher": { "@id": "https://app.grifon.ai/#organization" },
+          "description": "End-to-end AI ad creation platform for Filipino small and medium businesses. 11 modules covering market research, offer design, script writing, AI avatar generation, storyboarding, video generation, voice synthesis, video editing, image ads, organic content calendar, and influencer personas.",
+          "offers": {
+            "@type": "AggregateOffer",
+            "priceCurrency": "PHP",
+            "lowPrice": "0",
+            "highPrice": "4997",
+            "offerCount": 4,
+            "offers": [
+              {
+                "@type": "Offer",
+                "name": "Free",
+                "price": "0",
+                "priceCurrency": "PHP",
+                "description": "Forever-free tier. 3 ad workflows, 1 research report, 10 captions, and 5 watermarked images per month. No credit card required.",
+                "url": "https://app.grifon.ai/pricing"
+              },
+              {
+                "@type": "Offer",
+                "name": "Creator",
+                "price": "997",
+                "priceCurrency": "PHP",
+                "description": "Monthly subscription. Scripts, research, images, captions. Excludes AI video generation.",
+                "url": "https://app.grifon.ai/pricing"
+              },
+              {
+                "@type": "Offer",
+                "name": "Pro",
+                "price": "2497",
+                "priceCurrency": "PHP",
+                "description": "Monthly subscription. Includes 15 AI video ads per month plus everything in Creator, monthly strategy calls, and community access.",
+                "url": "https://app.grifon.ai/pricing"
+              },
+              {
+                "@type": "Offer",
+                "name": "Business",
+                "price": "4997",
+                "priceCurrency": "PHP",
+                "description": "Monthly subscription. Includes 40 AI video ads per month plus everything in Pro. Built for agencies and high-volume creators.",
+                "url": "https://app.grifon.ai/pricing"
+              }
+            ]
+          },
+          "featureList": [
+            "Market Research — audience and competitor reports",
+            "Offer Optimizer — tripwire + core + high-ticket Offer Stack",
+            "Director AI — 8-step ad creation wizard",
+            "Generate Video — AI video synthesis per scene",
+            "Signal Modulator — consistent character voice (ElevenLabs)",
+            "Edit Video — AI-generated edit plans",
+            "Caption Headline — ad copy generator",
+            "Image Ads Gen — three static ad variants per brief",
+            "Cinematic Spec Studio — four-image cinematic relay",
+            "Organic Calendar — multi-day organic content plans",
+            "Influencer Forge — persistent AI influencer personas"
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://app.grifon.ai/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How does the Free plan work?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Sign up and start creating immediately. No credit card needed. You get 3 ad workflows, 1 research report, 10 captions, and 5 watermarked images every month — forever. When you want more, upgrade to Creator or Pro."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Why can't I get video ads on Creator?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "AI video generation is expensive to run. To keep Creator affordable at ₱997/month, video is exclusive to Pro and Business. You get everything else — scripts, research, images, captions — on Creator."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is there a money-back guarantee?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Subscribe to any paid plan. If Grifon doesn't save you at least 10 hours in your first week, we'll refund you 100%. No questions. No hoops."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What languages does Grifon support?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Grifon is built Taglish-native — Filipino, English, and the natural code-switching mix Filipino SMB audiences actually use in their feeds."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
