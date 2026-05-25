@@ -216,3 +216,138 @@ Rules given verbatim by Neil on 2026-05-24:
 - "Make sure to upload a hero product which is handheld or a hand holding the
   product to make sure that the product size that will be reference in the
   storyboard would be accurate and consistent in size."
+
+### 2026-05-26 — Director AI pre-flight: hero-FIRST, derive brand FROM the label
+
+**Context:** Session M's first attempt: agent picked a brand name out of the air
+("Sariwa Skin Co. / Niyog Glow Serum"), ran MarketMind, then went looking for a
+matching Unsplash photo — and ended up uploading an unbranded clear dropper
+bottle. Storyboard scenes 4-7 referenced "the Niyog Glow Serum bottle" but
+the visible bottle had no label, so Veo had nothing to anchor the product
+identity to across scenes. Neil corrected the ordering before any video
+rendered.
+
+**Lesson — REFINES the 2026-05-24 pre-flight (does NOT replace it).** The
+ordering inside the pre-flight is load-bearing. The correct sequence is:
+
+1. **FIND the handheld hero photo FIRST** — must be handheld (Rule 3 from
+   2026-05-24) AND must have a **readable brand label** on the product.
+2. **DERIVE the brand name FROM the visible label.** Whatever the bottle/box
+   actually says — that is the brand. Don't invent a name and try to retrofit
+   a matching photo.
+3. **Run MarketMind with that label-matched brand name.**
+4. **Send to Director AI, verify Step 1+2 prefill** (Rule 2 from 2026-05-24,
+   unchanged).
+
+**Why ordering matters:** Gemini Vision reads the label off the upload during
+Step 2's auto-analysis. If MarketMind-brand and label-brand match, the storyboard
+generator gets a coherent product identity. If they don't (Sariwa/unbranded
+case), Veo/Kling render the product as a generic bottle in scenes 4-7 — the
+identity baked into the script (brand name in dialogue) never visually anchors.
+
+**Concrete amendment to the pre-flight checklist (Director AI smoke):**
+0. (NEW, before old item 1.) Hero photo selected? Handheld AND has a readable
+   brand label visible?
+1. (was old 1.) MarketMind run with the brand name **that matches the label
+   on the hero photo**?
+
+If you cannot find a CC0 photo with a readable label for the brand you want
+to test, ABANDON the brand. Pick a different brand whose photo you have, or
+use the literal brand on the label you found (Curology, The Ordinary, etc.).
+The cheapest brand for an internal smoke is whatever brand's label appears
+on the best handheld photo you can source.
+
+Rule given verbatim by Neil on 2026-05-26:
+- "Look first for a hero image with brand name, then thats the time you will
+  decide what brand name you will use for market research so that market
+  research result would take that brand name."
+
+### 2026-05-26 — Watch every rendered video BEFORE Signal Modulator
+
+**Context:** Session M rendered 7 scenes (~$2.10) and would have proceeded
+directly to Signal Modulator (TTS) → AI Editor (EDL) had Neil not interrupted
+mid-flow to add a watch-each-video gate. Visual review surfaced 7 distinct
+quality issues spanning Veo and Kling outputs: text hallucinations on the
+Kling Omni hook, duration miscompute on talking scenes (4 overshoots with
+dead air, 1 undershoot truncating "suffocate"), kinematic inversion on the
+b-roll (product slides instead of camera tracking), and Taglish TTS slop
+(Westernized "Bah-go", "Ee-click" parsed as "Is click"). Gemini 3.5's parallel
+audit corroborated everything and added a 4-layer architectural fix blueprint
+(phonetic middleware, audio padding, segment isolation, image-to-video keyframe).
+
+**Lesson — NEW pre-flight rule, append after the 2026-05-24 Rule 3.** After
+the 7-scene render completes and BEFORE clicking SEND TO SIGNAL MODULATOR,
+the user MUST watch every rendered video and verify each is production-ready.
+The agent should NEVER propagate to Signal Modulator on the user's behalf
+without explicit per-scene approval. Specifically:
+
+- Capture each scene's Supabase signed video URL from the GenerateVideo
+  library rail (the right-side stack of MP4 thumbnails, newest-at-top maps
+  to last-rendered scene)
+- Present URLs + durations to the user as a table
+- Wait for explicit "all 7 look good — proceed" before clicking SEND TO
+  SIGNAL MODULATOR
+
+**Why this matters:** Veo + Kling are stochastic. A pipeline that auto-propagates
+to downstream modules ships visual/TTS slop to the EDL stage where the
+problems become much more expensive to debug (audio + video + transitions
+all interleaved). Catching quality issues at the per-scene render stage is
+the cheapest unit of feedback. The cost of `$2.10 of renders + 10 minutes
+of human review` is much lower than `$2.10 of renders + ~$0.10 of TTS +
+~$0.02 of EDL + 30+ minutes of debugging which-layer-is-broken`.
+
+**Concrete amendment to the pre-flight checklist:**
+8. (NEW.) After RENDER ALL completes (all scenes show DONE), did the user
+   watch each rendered video end-to-end and explicitly approve each one?
+9. (NEW.) Captured all 7 sourceVideoUrls + durations for the handoff doc
+   (so future sessions can A/B against post-TUNED-fix renders)?
+
+Rule given verbatim by Neil on 2026-05-26:
+- "After generating all the videos, make sure to watch it 1 by 1 to verify
+  how the videos generated so we can also see if the video effects are gone
+  which I requested from my last session. So I guess copy the supabase url
+  link of video address link of each video using playwright to verify it
+  before sendng to signal modulator"
+
+### 2026-05-26 — Cross-session library binding via sceneIdx-only matching (Bug 12)
+
+**Context:** Session M's smoke landed in GenerateVideo with 7 new Curology
+seedPrompts. The rehydration useEffect at
+[components/GenerateVideo/index.tsx:295-327](components/GenerateVideo/index.tsx#L295-L327)
+matched library entries by `l.sceneIdx === i` alone. The user's Supabase
+account already held 50+ MP4s from prior brand wizards (Battlecreek,
+PeakBoost, Glossier...) at every `sceneIdx` value 0-6. Result: all 7 fresh
+Curology scenes auto-bound to stale MP4s from a different brand — the
+PIPELINE label correctly read "7/7 RENDERED" before a single Veo call had
+fired, the RENDER ALL button was hidden, and SEND TO SIGNAL MODULATOR was
+exposed. Clicking SEND would have spliced Curology audio with Battlecreek
+visuals.
+
+**Fix:** Tightened the filter to require BOTH sceneIdx AND prompt-text
+match (`l.sceneIdx === i && l.prompt === seed.prompt`). The prompt-text
+fallback below already required exact match, so the change is internally
+consistent. Patch is 1 line at
+[components/GenerateVideo/index.tsx:302](components/GenerateVideo/index.tsx#L302).
+
+**Lesson — generalizable beyond GenerateVideo.** Any state matcher that
+fans out a shared, multi-tenant resource (Supabase user library, ElevenLabs
+shared workspace, Vercel Blob, anywhere accounts span multiple brands or
+projects) MUST require an identity field in the match criteria, not just a
+denormalized fan-out key (scene index, batch index, position). The
+denormalized key alone collides across tenants/brands/sessions and binds
+new state to stale neighbours.
+
+**Concrete rule for this repo:** Before adding any `library.filter(...)`
+expression to a useEffect that hydrates transient React state, ask:
+*"If this user has 50+ library entries spanning prior wizards, would this
+filter falsely match an entry from a different wizard at the same index?"*
+If yes, add an identity guard (prompt text, batchId, wizardSessionId, or
+fingerprint of the seed itself). Captured in
+[workflows/handoff_2026-05-26-session-m-bug-catalog-halt.md](workflows/handoff_2026-05-26-session-m-bug-catalog-halt.md)
+as the headline Session M finding.
+
+**Pattern generalization for future work:** Same caution will apply to (a)
+ElevenLabs voice picker rehydration (the 2026-05-04 fail-closed rule is the
+sibling lesson); (b) any cross-wizard caching in MarketMind / Director AI;
+(c) any "resume latest draft" UI that auto-binds to the most recent record
+without confirming it's the SAME draft the user was working on.

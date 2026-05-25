@@ -290,8 +290,11 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
   // Rehydrate sceneResults from the persisted Supabase library after Resume.
   // sceneResults is transient React state; navigating away clears it, which
   // gates off the SEND TO SIGNAL MODULATOR button even though the MP4s exist.
-  // Match by sceneIdx (deterministic, tagged by the render pipeline) with a
-  // prompt-text fallback for legacy entries that pre-date sceneIdx tagging.
+  // Match by (sceneIdx AND prompt text) — sceneIdx alone collided across
+  // wizard sessions when the library accumulated entries from prior brands,
+  // silently binding new scenes to stale MP4s from a different campaign.
+  // Prompt-text fallback preserves recovery for legacy entries that pre-date
+  // sceneIdx tagging.
   useEffect(() => {
     if (library.length === 0 || seedPrompts.length === 0) return;
     if (Object.keys(sceneResults).length >= seedPrompts.length) return;
@@ -299,7 +302,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
     const restored: Record<number, GeneratedVideoResult> = {};
     seedPrompts.forEach((seed, i) => {
       const byIdx = library
-        .filter((l) => l.sceneIdx === i)
+        .filter((l) => l.sceneIdx === i && l.prompt === seed.prompt)
         .sort((a, b) => (b.createdAt ?? '').localeCompare(a.createdAt ?? ''));
       const byPrompt = byIdx.length === 0
         ? library
