@@ -327,14 +327,20 @@ const App: React.FC = () => {
     try {
       const r = JSON.parse(savedReport);
       if (!r || typeof r !== 'object' || !r.subject) return;
+      // Defensive coercion: Gemini occasionally returns scalar fields as objects
+      // despite the TUNED schema saying string. Skip object-shaped values rather
+      // than letting them stringify to "[object Object]" in the prefilled UI.
+      const safeStr = (v: unknown): string => (typeof v === 'string' ? v : '');
+      const avatar = safeStr(r.winningAvatar);
+      const demo = safeStr(r.demographics);
       setBusinessInfo(prev => ({
         ...prev,
-        product: prev.product || r.subject || '',
-        audience: prev.audience || `${r.winningAvatar || ''} — ${r.demographics || ''}`.trim().replace(/^—\s*/, ''),
-        painPoint: prev.painPoint || r.bleedingNeck || '',
-        benefit: prev.benefit || r.magicGenie || '',
-        separator: prev.separator || r.contrarianTruth || r.villain || '',
-        features: prev.features || r.bigIdea || '',
+        product: prev.product || safeStr(r.subject),
+        audience: prev.audience || `${avatar} — ${demo}`.trim().replace(/^—\s*/, ''),
+        painPoint: prev.painPoint || safeStr(r.bleedingNeck),
+        benefit: prev.benefit || safeStr(r.magicGenie),
+        separator: prev.separator || safeStr(r.contrarianTruth) || safeStr(r.villain),
+        features: prev.features || safeStr(r.bigIdea),
       }));
       // The Big Idea (r.bigIdea) is a marketing thesis, not the user's actual offer —
       // Filipino SMB users come with their own working offer/promo, so we carry the

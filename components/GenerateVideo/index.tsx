@@ -162,7 +162,11 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
     if (!hasSeedPrompts) return;
     const seed = seedPrompts[activeIdx];
     if (!seed) return;
-    setConfig((prev) => ({ ...prev, prompt: seed.prompt }));
+    setConfig((prev) => ({
+      ...prev,
+      prompt: seed.prompt,
+      model: autoRouteModelForType(seed.type, prev.model, activeIdx),
+    }));
     const sceneImage = storyboard[activeIdx]?.imageUrl ?? storyboard[activeIdx]?.manualUploadUrl;
     if (sceneImage) {
       // Storyboard images can be 1-2 MB raw. Compress to keep submit body under the

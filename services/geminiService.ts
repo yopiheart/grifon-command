@@ -1344,10 +1344,15 @@ the nearest valid value. Never emit anything else.
       parts.push({ fileData: { fileUri: scene.renderedUrl, mimeType: 'video/mp4' } });
     }
   }
+  // ElevenLabs TTS returns blob: URLs (browser memory only); Gemini's File API
+  // rejects those. Fetch the blob, base64-encode, push as inlineData. Transport
+  // concern, not creative — fair game per services/CLAUDE.md.
   for (const audio of input.audioOverlays) {
-    if (audio.audioUrl) {
-      parts.push({ fileData: { fileUri: audio.audioUrl, mimeType: 'audio/mpeg' } });
-    }
+    if (!audio.audioUrl) continue;
+    const blob = await fetch(audio.audioUrl).then((r) => r.blob());
+    const buf = await blob.arrayBuffer();
+    const b64 = btoa(String.fromCharCode(...new Uint8Array(buf)));
+    parts.push({ inlineData: { mimeType: 'audio/mpeg', data: b64 } });
   }
 
   const response: GenerateContentResponse = await retryWithBackoff(() => proxyGenerateContent({
