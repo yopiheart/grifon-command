@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, Lightbulb, RotateCw } from 'lucide-react';
+import { ChevronLeft, Lightbulb, RotateCw, LogIn } from 'lucide-react';
 import { ClientDetails, BusinessInfo, Script, Scene, VideoPrompt, Avatar, CinematicNarrativeScene, SceneBatchEntry } from './types';
 import StepIndicator from './components/StepIndicator';
 import Step1ClientDetails from './components/Step1ClientDetails';
@@ -38,7 +38,7 @@ import PrivacyPolicy from './components/PrivacyPolicy';
 import RefundPolicy from './components/RefundPolicy';
 import Support from './components/Support';
 import { toast } from 'sonner';
-import { getSupabase } from './services/supabaseClient';
+import { getSupabase, signInWithGoogle } from './services/supabaseClient';
 import { popIntendedPlan, startCheckout } from './services/billingService';
 import { getSession, setSession, clearSession, type WizardSessionV1 } from './services/wizardSessionStore';
 
@@ -431,6 +431,17 @@ const App: React.FC = () => {
     }
   };
 
+  const handleGoogleSignIn = async () => {
+    setAuthError('');
+    setIsSigningIn(true);
+    try {
+      await signInWithGoogle();
+    } catch (err: any) {
+      setAuthError(err?.message || 'Google sign-in failed.');
+      setIsSigningIn(false);
+    }
+  };
+
   const handleLogout = async () => {
     try {
       if (userId) await clearSession(userId);
@@ -646,6 +657,20 @@ const App: React.FC = () => {
             </div>
 
             <GlassPanel className="w-full max-w-md p-8">
+                <GoldButton
+                  type="button"
+                  onClick={handleGoogleSignIn}
+                  className="w-full justify-center py-4 mb-6"
+                  disabled={isSigningIn}
+                >
+                    <LogIn className="w-4 h-4 mr-2" />
+                    {isSigningIn ? 'CONNECTING...' : 'CONTINUE WITH GOOGLE'}
+                </GoldButton>
+                <div className="flex items-center gap-3 mb-6">
+                    <div className="flex-1 border-t border-white/10"></div>
+                    <span className="text-[10px] font-mono text-zinc-500 tracking-widest uppercase">OR CONTINUE WITH EMAIL</span>
+                    <div className="flex-1 border-t border-white/10"></div>
+                </div>
                 <form onSubmit={handleLogin} className="space-y-6">
                     <div>
                         <label className="block text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-2">AUTHORIZED EMAIL</label>

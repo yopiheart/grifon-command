@@ -19,9 +19,20 @@ export const getSupabase = (): SupabaseClient => {
     auth: {
       persistSession: true,
       autoRefreshToken: true,
-      detectSessionInUrl: false,
+      detectSessionInUrl: true,
     },
   });
 
   return _client;
+};
+
+export const signInWithGoogle = async (): Promise<void> => {
+  const supabase = getSupabase();
+  const redirectTo =
+    typeof window !== 'undefined' ? window.location.origin : undefined;
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: redirectTo ? { redirectTo } : undefined,
+  });
+  if (error) throw error;
 };
