@@ -351,3 +351,71 @@ ElevenLabs voice picker rehydration (the 2026-05-04 fail-closed rule is the
 sibling lesson); (b) any cross-wizard caching in MarketMind / Director AI;
 (c) any "resume latest draft" UI that auto-binds to the most recent record
 without confirming it's the SAME draft the user was working on.
+
+### 2026-05-26 — Multimodal video QA via Gemini Gem complements Claude's blind spot
+
+**Context:** Claude Code's environment cannot ingest video natively — Playwright MCP
+can navigate to a video URL and screenshot it, but cannot watch the audio or
+analyze motion. Session M's halt + the 2026-05-26 Gemini 3.5 audit had been
+produced manually by Neil pasting MP4s into Gemini 3.5 Flash. Session N
+operationalized this as a reusable Gemini Gem: the "Grifon Director AI Video
+Auditor" — Knowledge anchored on `Gemini 3.5 flash video audit.md`, output
+schema with 4 sections (per-scene findings / severity verdict / failure pattern
+classification / recommended action type).
+
+**What went wrong (Pass 1, caught and fixed in-session):** First Instructions
+draft asked the Gem to propose "where the architectural layer integrates" in
+Section 4. The Gem confabulated specific filenames — referenced
+`suggestDurationForScript` as the Layer 2 padding site (wrong — that's a
+duration estimator, not a prompt builder) and hallucinated
+`api/_lib/phoneticPreprocessor.ts` for Layer 1 (actual ship:
+`services/phoneticNormalizer.ts`). The Gem can't read code; it pattern-matched
+plausible-looking paths from the audit MD in Knowledge. The recommendations
+ALSO didn't know Layer 1 and Layer 2 had just shipped in `e392e66` — Knowledge
+is a snapshot, not current state.
+
+**Lesson — Two related rules.**
+
+Rule 1: **Gem is observation layer; Claude is integration layer.** Don't
+expect either to do both. Gem produces *what failed* with timestamps,
+quoted-text evidence, and 4-layer category labels. Claude maps *what failed*
+to *where to fix* using the current code state. Bake this into the Gem
+Instructions: explicit ban on filenames, function names, file paths,
+integration points in Section 4. Add a "Knowledge currency caveat" so the
+Gem doesn't re-propose already-shipped layers.
+
+Rule 2: **For CRITICAL gate decisions, run the Gem 2-3 times and take the
+union of findings.** Single-pass multimodal analysis on the same clip is
+stochastic. Pass 1 may catch audio cadence; Pass 2 may catch grip permanence;
+Pass 3 may catch label drift. Pass 1 on Curology Scene 4 surfaced Westernized
+accent + grip; Pass 2 on the same clip surfaced brand-label drift but dropped
+both audio + grip findings. Ensemble for recall when the verdict halts a
+downstream module ($0.07 TTS + $0.02 EDL avoided by catching CRITICAL
+upstream).
+
+**Concrete workflow** (replaces and improves the 2026-05-26 manual
+watch-each-video pre-flight rule):
+
+1. Render scene via Director AI Generate Video module.
+2. Copy the video prompt + signed Supabase MP4 URL.
+3. Upload MP4 + paste prompt to the Gem; specify engine (Veo Lite / Kling
+   Omni / Kling 3.0) + target duration.
+4. Read Gem Section 1-4 output. For CRITICAL verdict, re-run 2 more times
+   for ensemble recall; halt if ≥2/3 passes flag CRITICAL.
+5. Paste findings to Claude. Claude proposes any required TUNED edits using
+   current code state — not Gem's confabulated file paths.
+6. Line-by-line sign-off via AskUserQuestion per [services/CLAUDE.md](services/CLAUDE.md).
+
+**Calibration anchor:** `Gemini 3.5 flash video audit.md` (repo root) is
+the canonical style example. Already uploaded to the Gem's Knowledge.
+Treat its architectural recommendations as STYLE, not state — most layers
+may have shipped since the audit was written. Refresh Knowledge after every
+TUNED-shipping session if drift becomes noticeable.
+
+**Brand-label rule** (Pass 2 success): the Gem must quote the exact rendered
+text and flag any discrepancy from the prompt-named brand without auto-
+correcting. Pass 2 caught "Currology" with a double-r on the same Curology
+clip Pass 1 missed — a real text-hallucination finding.
+
+Captured in [workflows/handoff_2026-05-26-session-n-tuned-edits-shipped.md](workflows/handoff_2026-05-26-session-n-tuned-edits-shipped.md)
+under "NEW: Grifon Director AI Video Auditor Gem".
