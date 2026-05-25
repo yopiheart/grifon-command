@@ -3,6 +3,7 @@ import { BusinessInfo, Script, Scene, StoryboardResponse, VideoPrompt, MarketRes
 import { getSupabase } from './supabaseClient';
 import { startJob, endJob, type JobKind } from './activeJobsService';
 import { saveActiveJob, clearActiveJob } from './activeJobStore';
+import { normalizeTaglish } from './phoneticNormalizer';
 
 export interface ProxyCallOpts {
   jobLabel?: string;
@@ -464,12 +465,15 @@ export const suggestDurationForScript = (
   if (valid.length === 0) return 8;
   const words = scriptLine.trim().split(/\s+/).filter(Boolean).length;
   if (words === 0) return valid[0];
-  // Calibrated against MrBeast SCENE 02 smoke test 2026-05-11: 9-word
-  // Taglish script actually rendered at ~4s end-to-end (Veo natural pace
-  // for Taglish is ~2.5 wps; the +0.8s buffer over-predicted to 6s).
-  // Tightening buffer to 0.3s — just enough for one breath/syllable
-  // landing. Truncation risk acceptable; manual override is one click.
-  const target = words / 2.5 + 0.3;
+  // Calibrated 2026-05-26 (Session N) against Curology 7-scene smoke:
+  // 2026-05-11 had tightened the buffer to 0.3s based on a 9-word
+  // English-cadence MrBeast script. Session M revealed that tightening
+  // truncates real Taglish skincare scripts ("suffocate" in Scene 4 cut
+  // mid-syllable at 4s) because Taglish syllable density is heavier than
+  // English direct-response. Reverted to 0.8s — trades ~1-2s overshoot
+  // per scene for ZERO truncations. Dead air is downstream-trimmable by
+  // the AI Editor; truncation is not.
+  const target = words / 2.5 + 0.8;
   const sorted = [...valid].sort((a, b) => a - b);
   return sorted.find((d) => d >= target) ?? sorted[sorted.length - 1];
 };
@@ -2025,7 +2029,7 @@ export const generateVideoPrompts = async (storyboard: Scene[], businessInfo: Bu
     const storyboardText = storyboard.map((s, i) => {
         const typeTag = !!s.startFramePrompt ? "TYPE: HOOK/VISUAL-EFFECT" : "TYPE: STANDARD";
         const transitionLine = s.transitionEffect ? `\nTransitionEffect: ${s.transitionEffect}` : '';
-        return `Scene ${i + 1} [${typeTag}]:\nScript: "${s.scriptLine}"\nDescription: ${s.sceneDescription}\nFocus: ${s.referenceImage}\nPrompt: ${s.imagePrompt || s.startFramePrompt}${transitionLine}`;
+        return `Scene ${i + 1} [${typeTag}]:\nScript: "${normalizeTaglish(s.scriptLine)}"\nDescription: ${s.sceneDescription}\nFocus: ${s.referenceImage}\nPrompt: ${s.imagePrompt || s.startFramePrompt}${transitionLine}`;
     }).join('\n\n');
 
     let additionalInstructions = "";
@@ -2084,13 +2088,13 @@ export const generateVideoPrompts = async (storyboard: Scene[], businessInfo: Bu
          - **USE THE STORYBOARD'S TRANSITION EFFECT:** When TransitionEffect is provided, the prompt MUST describe a transformation consistent with it. Kling Omni interpolates a gradual anchor-bridged transformation between Start Frame and End Frame — that is the only motion it delivers — so translate every effect into that form. For Character Morph: in-flight texture/material transformation across the anchor element. For Object Materialization: anchor element resolves from amorphous into the target subject. For Explosion Reveal: kinetic dispersion of the start subject flying outward, revealing the end subject clean. For Teleport / Snap Cut and Invisible Effect: render a fast, clean anchor morph — Omni cannot produce an instant cut or a hidden masked cut, so do NOT write "instant", "snap", "hard cut", "teleport", "seamless", or "hidden cut" language. For Chaos Burst: render an Explosion-Reveal-style kinetic dispersion — do NOT write "chaotic" or "mayhem" language Omni cannot resolve into a clean end frame. Translate the TransitionEffect label into anchor-bridge prose; do not invent a different transition.
          - **PUNCHY PHYSICS-BASED LANGUAGE:** "Macro texture morphs into [target]", "Kinetic compression of [A] into [B]", "Aggressive speed-ramp outward as [X] swirls into [Y]". Avoid flowery adjectives ("Ethereal", "Coalescing", "Celestial").
          - **NEGATIVE PHRASE (HOOK-SCOPED):** Append as comma-separated tail — "Avoid low quality, blurry, distorted, glitching, extra limbs, text, watermark, writing, letters, subtitles." (morphing/melting/deformation are intentionally OMITTED because Scene 1 IS the morph.)
-         - **CAMERA MOTION (required, subtle, serves the morph):** A camera move runs through the FULL clip duration — pick one: "slow dolly-out following the transformation", "gentle push-in toward the anchor", "subtle crane lift across the morph". STATIC SHOTS ARE FORBIDDEN.
+         - **CAMERA MOTION (required, subtle, serves the morph):** A camera move runs through the FULL clip duration — pick one: "slow dolly-out following the transformation", "gentle push-in toward the anchor". STATIC SHOTS ARE FORBIDDEN.
          - **OUTPUT FORMAT:** Single cohesive cinematic paragraph. Open with anchor transformation, weave in the camera motion, end with the negative phrase. NO bracketed labels.
 
       **OPTION A-REGULAR: IF TYPE IS "b-roll" AND THIS IS NOT SCENE 1 (Scene 2+ visuals):**
          - **IDENTITY RULE:** Refer to the product only as "${productName}".
          - **CAMERA PHYSICS (MANDATORY — open the prose with this, never static):**
-           - "slow dolly-out with upward tilt revealing scale" | "aggressive macro push-in" | "smooth lateral tracking pan with subtle counter-roll" | "slow dolly-out with gentle crane lift"
+           - "slow dolly-out with upward tilt revealing scale" | "aggressive macro push-in" | "smooth lateral tracking pan with subtle counter-roll"
          - **MOTION CONTINUITY:** The chosen camera move runs through the FULL clip duration. Camera position at frame 0 and final frame MUST be visibly different — STATIC SHOTS ARE FORBIDDEN.
          - **REGULAR B-ROLL DIRECTIVE:** Focus on the product's action.
          - **NEGATIVE PHRASE:** Append at the end as a comma-separated tail — "Avoid low quality, blurry, distorted, deformation, morphing, melting, glitching, extra limbs, text, watermark, writing, letters, subtitles."
@@ -2105,6 +2109,7 @@ export const generateVideoPrompts = async (storyboard: Scene[], businessInfo: Bu
          - **Cinematic Grammar (CAMERA MOTION IS MANDATORY — never static):** Open the prose with the camera physics directive. Use specific lenses (35mm, 85mm) and pick ONE camera move per scene: dolly-in (intimacy/escalation), parallactic shift (reveal/payoff), or aggressive handheld (urgency). The camera position at frame 0 and the final frame MUST be visibly different — the viewer should feel motion at any moment. CAMERA MOVE BEGINS WITH THE FIRST SYLLABLE — never before — so movement happens DURING dialogue. On 4s clips: modest but visible (not subtle). On 6–8s clips: pronounced. STATIC SHOTS ARE FORBIDDEN.
          - **Audio Landscape:** Define the sync-sound environment (SFX: distant room tone, Ambient: low electrical hum).
          - **First & Last Frame Logic:** Starting frame = avatar mid-syllable forming the opening word, mouth shape unambiguous. Last frame = next syllable or natural breath, NOT a post-speech resolve-state with a closed mouth and neutral expression.
+         - **AUDIO TAIL PADDING (REQUIRED on all talking scenes):** When emitting the dialogue inside the output prose, append a safety tail to the user-script line: ", [silent pause], looking back toward the lens with a natural, comfortable smile." This protects against final-syllable truncation by giving the video model a silent action to clip if the duration shortens by 0.3-0.5s — better to truncate a silent smile than a spoken Taglish word like "suffocate" or "mukha".
          - **OUTPUT FORMAT:** A single, cohesive cinematic paragraph starting with the dialogue in quotes. Seamlessly blend performance details, camera physics, lighting atmosphere, and frame logic into a natural narrative flow. DO NOT use bracketed headers or labels daylight [Subject Performance] or [Camera Motion/Lens].
 
       **OPTION C: IF TYPE IS "cinematic" (Use for Cinematic Spec Studio Relay):**

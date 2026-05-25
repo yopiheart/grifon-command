@@ -714,6 +714,14 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
       - **FORBIDDEN:** Do not include instructions daylight 'Show text overlay', 'Text on screen says...', or 'Phone screen showing 50%'.
       - Text belongs in the Audio/Script, NEVER in the image generation prompt."
 
+      **PACING RULE:**
+      "You MAY have up to **2 consecutive** 'Avatar Talking' scenes.
+      **YOU MUST NOT HAVE 3 CONSECUTIVE 'AVATAR TALKING' SCENES.**
+      If you have 2 Avatars in a row, the 3rd scene **MUST** be a 'Product B-Roll', 'Reaction', or 'Visual Metaphor'.
+
+      WRONG: Scene 2 = Avatar Talking / Scene 3 = Avatar Talking / Scene 4 = Avatar Talking — this is 3 consecutive and BANNED. The 4th-scene b-roll does not retroactively legalize three talkers in a row.
+      RIGHT: Scene 2 = Avatar Talking / Scene 3 = Avatar Talking / Scene 4 = Product B-Roll / Scene 5 = Avatar Talking."
+
       **STILL_FRAME_RULE:**
       The fields \`imagePrompt\`, \`startFramePrompt\`, and \`endFramePrompt\` are rendered as STILL IMAGES. They MUST be static compositions, NOT motion-verb prose.
 
@@ -749,11 +757,6 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
       WRONG: "A friendly Southeast Asian woman with dark brown hair, wearing a casual linen shirt, sitting at a modern Filipino home dining table, acting surprised while looking at a smartphone, warm sunlight hitting her face."
       CORRECT: "Sitting at the dining table, eyes wide in surprise, looking at a smartphone, warm afternoon sunlight from the window."
 
-      **PACING RULE:**
-      "You MAY have up to **2 consecutive** 'Avatar Talking' scenes.
-      You **MUST NOT** have 3 consecutive 'Avatar Talking' scenes.
-      If you have 2 Avatars in a row, the 3rd scene **MUST** be a 'Product B-Roll', 'Reaction', or 'Visual Metaphor'."
-
       **CONTEXT:**
       - **Type:** ${businessInfo.scriptType} Style
       - **Target Audience:** ${ethnicity} market.
@@ -785,6 +788,13 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
 
       **BAG_ORIENTATION_RULE (REQUIRED for any scene where the product bag/package appears, whether held by avatar or shown as B-roll):**
       The FRONT of the bag (the side bearing the product label, branding, or wordmark) MUST face the camera. The avatar's hand MAY occlude part of the bag's front (naturalistic and acceptable). The BACK of the bag facing camera, or the bag held with branding turned away from camera, is BANNED — the brand mark must remain visible enough to be recognized in a 3-second scrub. For product-only B-roll (no avatar in frame), the bag must be centered with the front fully visible. Whenever the imagePrompt or startFramePrompt/endFramePrompt mentions the bag/package/product, append "front of bag/label facing camera" to the description.
+
+      **FACE_APPLICATION_RULE (REQUIRED for any scene depicting application of skincare, moisturizer, serum, cream, sunscreen, mask, cleanser, or topical face-care):**
+      The product MUST be shown being applied to the avatar's FACE (cheek, forehead, jawline, or under-eye) on-camera in the PRIMARY application beat. Hand/forearm-surface application is BANNED as the primary application beat for face-care SKUs — it reads as a swatch test, not a usage demo, and tanks Filipino-market credibility.
+
+      EXCEPTION: A brief texture-preview cutaway (product on back of hand to show consistency/color) is permitted ONLY as a supporting B-roll shot, never as the main application scene.
+
+      EXEMPT product categories: hand creams, sanitizers, cuticle oils, and products explicitly tested on hands.
 
       **REFERENCE_IMAGE_CLASSIFICATION_RULE (CRITICAL — wrong tag = wrong reference plumbed → wrong image):**
 
