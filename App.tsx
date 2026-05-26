@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, Lightbulb, RotateCw, LogIn } from 'lucide-react';
+import { ChevronLeft, Lightbulb, RotateCw, LogIn, Mail } from 'lucide-react';
 import { ClientDetails, BusinessInfo, Script, Scene, VideoPrompt, Avatar, CinematicNarrativeScene, SceneBatchEntry } from './types';
 import StepIndicator from './components/StepIndicator';
 import Step1ClientDetails from './components/Step1ClientDetails';
@@ -13,6 +13,7 @@ import Step6VideoPrompts from './components/Step6VideoPrompts';
 import Step7FinalOutput from './components/Step7FinalOutput';
 import { GlassPanel } from './components/ui/GlassPanel';
 import { GoldButton } from './components/ui/GoldButton';
+import Input from './components/ui/Input';
 import { ErrorBoundary } from './components/ui/ErrorBoundary';
 import Dashboard from './components/Dashboard';
 import PlaceholderTool from './components/ui/PlaceholderTool';
@@ -38,7 +39,13 @@ import PrivacyPolicy from './components/PrivacyPolicy';
 import RefundPolicy from './components/RefundPolicy';
 import Support from './components/Support';
 import { toast } from 'sonner';
-import { getSupabase, signInWithGoogle } from './services/supabaseClient';
+import {
+  getSupabase,
+  signInWithGoogle,
+  signUpWithPassword,
+  requestPasswordReset,
+  resendSignupConfirmation,
+} from './services/supabaseClient';
 import { popIntendedPlan, startCheckout } from './services/billingService';
 import { getSession, setSession, clearSession, type WizardSessionV1 } from './services/wizardSessionStore';
 
@@ -102,7 +109,11 @@ const App: React.FC = () => {
   const [bootLine, setBootLine] = useState(0);
   const [authEmail, setAuthEmail] = useState('');
   const [authPassword, setAuthPassword] = useState('');
+  const [authConfirm, setAuthConfirm] = useState('');
   const [authError, setAuthError] = useState('');
+  const [authMode, setAuthMode] = useState<'sign_in' | 'sign_up' | 'forgot' | 'check_email'>('sign_in');
+  const [authNotice, setAuthNotice] = useState('');
+  const [pendingSignUpEmail, setPendingSignUpEmail] = useState('');
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [isCheckingSession, setIsCheckingSession] = useState(true);
   const [isSigningIn, setIsSigningIn] = useState(false);
@@ -442,6 +453,82 @@ const App: React.FC = () => {
     }
   };
 
+  const goToAuthMode = (mode: 'sign_in' | 'sign_up' | 'forgot' | 'check_email') => {
+    setAuthMode(mode);
+    setAuthError('');
+    setAuthNotice('');
+    if (mode !== 'check_email') {
+      setAuthPassword('');
+      setAuthConfirm('');
+    }
+  };
+
+  const handleSignUp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setAuthError('');
+    setAuthNotice('');
+    const email = authEmail.trim();
+    if (authPassword.length < 8) {
+      setAuthError('ACCESS_KEY must be at least 8 characters.');
+      return;
+    }
+    if (authPassword !== authConfirm) {
+      setAuthError('ACCESS_KEY confirmation does not match.');
+      return;
+    }
+    setIsSigningIn(true);
+    try {
+      const { hasSession } = await signUpWithPassword(email, authPassword);
+      if (hasSession) {
+        setIsBooting(true);
+      } else {
+        setPendingSignUpEmail(email);
+        setAuthMode('check_email');
+        setAuthPassword('');
+        setAuthConfirm('');
+      }
+    } catch (err: any) {
+      setAuthError(err?.message || 'Sign-up failed.');
+    } finally {
+      setIsSigningIn(false);
+    }
+  };
+
+  const handleForgotPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setAuthError('');
+    setAuthNotice('');
+    const email = authEmail.trim();
+    if (!email) {
+      setAuthError('Enter an EMAIL_IDENTIFIER to recover.');
+      return;
+    }
+    setIsSigningIn(true);
+    try {
+      await requestPasswordReset(email);
+      setAuthNotice('Recovery transmission dispatched. Check inbox.');
+    } catch (err: any) {
+      setAuthError(err?.message || 'Recovery dispatch failed.');
+    } finally {
+      setIsSigningIn(false);
+    }
+  };
+
+  const handleResendConfirmation = async () => {
+    if (!pendingSignUpEmail) return;
+    setAuthError('');
+    setAuthNotice('');
+    setIsSigningIn(true);
+    try {
+      await resendSignupConfirmation(pendingSignUpEmail);
+      setAuthNotice('Confirmation transmission re-sent.');
+    } catch (err: any) {
+      setAuthError(err?.message || 'Resend failed.');
+    } finally {
+      setIsSigningIn(false);
+    }
+  };
+
   const handleLogout = async () => {
     try {
       if (userId) await clearSession(userId);
@@ -452,6 +539,11 @@ const App: React.FC = () => {
       restart();
       setAuthEmail('');
       setAuthPassword('');
+      setAuthConfirm('');
+      setAuthError('');
+      setAuthNotice('');
+      setAuthMode('sign_in');
+      setPendingSignUpEmail('');
     }
   };
 
@@ -646,71 +738,236 @@ const App: React.FC = () => {
           </GlassPanel>
         ) : (
           <div className="z-10 w-full flex flex-col items-center">
-            <div className="mb-8 text-center flex flex-col items-center">
-              <div className="mb-6">
-                <GrifonLogo className="h-32 w-auto text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]" />
+            <div className="mb-6 md:mb-8 text-center flex flex-col items-center">
+              <div className="mb-3 md:mb-6">
+                <GrifonLogo className="h-20 md:h-32 w-auto text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]" />
               </div>
-              <h1 className="text-6xl font-[900] italic text-white uppercase tracking-tighter mb-2">
+              <h1 className="text-4xl md:text-6xl font-[900] italic text-white uppercase tracking-tighter mb-2">
                 GRIFON
               </h1>
               <h2 className="text-[10px] font-mono text-[#FFCC00] tracking-[0.4em] uppercase">// NEURAL_ENGINE_ACTIVE</h2>
             </div>
 
-            <GlassPanel className="w-full max-w-md p-8">
-                <GoldButton
-                  type="button"
-                  onClick={handleGoogleSignIn}
-                  className="w-full justify-center py-4 mb-6"
-                  disabled={isSigningIn}
-                >
-                    <LogIn className="w-4 h-4 mr-2" />
-                    {isSigningIn ? 'CONNECTING...' : 'CONTINUE WITH GOOGLE'}
-                </GoldButton>
-                <div className="flex items-center gap-3 mb-6">
-                    <div className="flex-1 border-t border-white/10"></div>
-                    <span className="text-[10px] font-mono text-zinc-500 tracking-widest uppercase">OR CONTINUE WITH EMAIL</span>
-                    <div className="flex-1 border-t border-white/10"></div>
-                </div>
-                <form onSubmit={handleLogin} className="space-y-6">
-                    <div>
-                        <label className="block text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-2">AUTHORIZED EMAIL</label>
-                        <input 
-                            id="auth-email"
-                            type="email" 
-                            placeholder="ENTER EMAIL IDENTIFIER" 
-                            value={authEmail}
-                            onChange={(e) => setAuthEmail(e.target.value)}
-                            required
-                            className="w-full bg-zinc-950 border border-white/10 focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] rounded-xl px-4 py-3 text-sm font-medium text-white transition-all outline-none"
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-2">ACCESS KEY</label>
-                        <input 
-                            id="auth-password"
-                            type="password" 
-                            placeholder="ENTER PASSWORD" 
-                            value={authPassword}
-                            onChange={(e) => setAuthPassword(e.target.value)}
-                            required
-                            className="w-full bg-zinc-950 border border-white/10 focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] rounded-xl px-4 py-3 text-sm font-medium text-white transition-all outline-none"
-                        />
-                    </div>
-                    
-                    {authError && (
-                        <p className="text-red-500 text-sm font-mono text-center border border-red-900/50 bg-red-900/20 p-2 rounded-xl">{authError}</p>
-                    )}
+            <GlassPanel className="w-full max-w-md p-6 md:p-8">
+                {(authMode === 'sign_in' || authMode === 'sign_up') && (
+                  <div className="grid grid-cols-2 mb-6 -mt-1">
+                    <button
+                      type="button"
+                      onClick={() => goToAuthMode('sign_in')}
+                      className={`pb-3 text-[10px] font-mono uppercase tracking-widest transition-all border-b-2 ${
+                        authMode === 'sign_in'
+                          ? 'text-white border-[#FFCC00]'
+                          : 'text-zinc-500 border-white/10 hover:text-white'
+                      }`}
+                    >
+                      // AUTHENTICATE
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => goToAuthMode('sign_up')}
+                      className={`pb-3 text-[10px] font-mono uppercase tracking-widest transition-all border-b-2 ${
+                        authMode === 'sign_up'
+                          ? 'text-white border-[#FFCC00]'
+                          : 'text-zinc-500 border-white/10 hover:text-white'
+                      }`}
+                    >
+                      // INITIATE
+                    </button>
+                  </div>
+                )}
 
+                {(authMode === 'sign_in' || authMode === 'sign_up') && (
+                  <>
                     <GoldButton
-                      type="submit"
-                      className="w-full justify-center py-4"
+                      type="button"
+                      onClick={handleGoogleSignIn}
+                      className="w-full justify-center py-4 mb-6"
                       disabled={isSigningIn}
                     >
-                        {isSigningIn ? 'AUTHENTICATING...' : 'AUTHENTICATE'}
+                      <LogIn className="w-4 h-4 mr-2" />
+                      {isSigningIn ? 'CONNECTING...' : 'CONTINUE WITH GOOGLE'}
                     </GoldButton>
-                </form>
-                <div className="mt-6 border-t border-white/10 pt-4 text-center">
-                    <p className="text-[10px] font-mono text-zinc-500 tracking-widest uppercase">RESTRICTED AREA // AUTHORIZED PERSONNEL ONLY</p>
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="flex-1 border-t border-white/10"></div>
+                      <span className="text-[10px] font-mono text-zinc-500 tracking-widest uppercase">OR CONTINUE WITH EMAIL</span>
+                      <div className="flex-1 border-t border-white/10"></div>
+                    </div>
+                  </>
+                )}
+
+                {authMode === 'sign_in' && (
+                  <form onSubmit={handleLogin} className="space-y-6">
+                    <Input
+                      id="auth-email"
+                      type="email"
+                      label="EMAIL_IDENTIFIER"
+                      placeholder="ENTER YOUR EMAIL"
+                      value={authEmail}
+                      onChange={(e) => setAuthEmail(e.target.value)}
+                      required
+                    />
+                    <div>
+                      <Input
+                        id="auth-password"
+                        type="password"
+                        label="ACCESS_KEY"
+                        placeholder="ENTER PASSWORD"
+                        value={authPassword}
+                        onChange={(e) => setAuthPassword(e.target.value)}
+                        required
+                      />
+                      <div className="mt-2 flex justify-end">
+                        <button
+                          type="button"
+                          onClick={() => goToAuthMode('forgot')}
+                          className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest hover:text-[#FFCC00] transition-colors"
+                        >
+                          // REQUEST_NEW_KEY
+                        </button>
+                      </div>
+                    </div>
+                    {authError && (
+                      <p className="text-red-500 text-sm font-mono text-center border border-red-900/50 bg-red-900/20 p-2 rounded-xl">{authError}</p>
+                    )}
+                    <GoldButton type="submit" className="w-full justify-center py-4" disabled={isSigningIn}>
+                      {isSigningIn ? 'AUTHENTICATING...' : 'AUTHENTICATE'}
+                    </GoldButton>
+                  </form>
+                )}
+
+                {authMode === 'sign_up' && (
+                  <form onSubmit={handleSignUp} className="space-y-5">
+                    <p className="text-[10px] font-mono text-[#FFCC00] tracking-[0.4em] uppercase text-center -mt-1 mb-1">// REQUEST_CLEARANCE</p>
+                    <Input
+                      id="signup-email"
+                      type="email"
+                      label="EMAIL_IDENTIFIER"
+                      placeholder="ENTER YOUR EMAIL"
+                      value={authEmail}
+                      onChange={(e) => setAuthEmail(e.target.value)}
+                      required
+                    />
+                    <Input
+                      id="signup-password"
+                      type="password"
+                      label="ACCESS_KEY (MIN 8 CHARS)"
+                      placeholder="CREATE PASSWORD"
+                      value={authPassword}
+                      onChange={(e) => setAuthPassword(e.target.value)}
+                      required
+                      minLength={8}
+                    />
+                    <Input
+                      id="signup-confirm"
+                      type="password"
+                      label="CONFIRM_KEY"
+                      placeholder="REPEAT PASSWORD"
+                      value={authConfirm}
+                      onChange={(e) => setAuthConfirm(e.target.value)}
+                      required
+                      minLength={8}
+                    />
+                    {authError && (
+                      <p className="text-red-500 text-sm font-mono text-center border border-red-900/50 bg-red-900/20 p-2 rounded-xl">{authError}</p>
+                    )}
+                    <GoldButton type="submit" className="w-full justify-center py-4" disabled={isSigningIn}>
+                      {isSigningIn ? 'INITIATING...' : 'INITIATE ACCESS'}
+                    </GoldButton>
+                  </form>
+                )}
+
+                {authMode === 'forgot' && (
+                  <>
+                    <div className="text-center mb-6">
+                      <p className="text-[10px] font-mono text-[#FFCC00] tracking-[0.4em] uppercase mb-3">// KEY_RECOVERY</p>
+                      <p className="text-sm text-zinc-400 font-mono leading-relaxed">
+                        Transmit a recovery link to your registered EMAIL_IDENTIFIER.
+                      </p>
+                    </div>
+                    <form onSubmit={handleForgotPassword} className="space-y-6">
+                      <Input
+                        id="forgot-email"
+                        type="email"
+                        label="EMAIL_IDENTIFIER"
+                        placeholder="ENTER YOUR EMAIL"
+                        value={authEmail}
+                        onChange={(e) => setAuthEmail(e.target.value)}
+                        required
+                      />
+                      {authError && (
+                        <p className="text-red-500 text-sm font-mono text-center border border-red-900/50 bg-red-900/20 p-2 rounded-xl">{authError}</p>
+                      )}
+                      {authNotice && (
+                        <p className="text-[#FFCC00] text-sm font-mono text-center border border-yellow-900/40 bg-yellow-900/10 p-2 rounded-xl">{authNotice}</p>
+                      )}
+                      <GoldButton type="submit" className="w-full justify-center py-4" disabled={isSigningIn}>
+                        {isSigningIn ? 'TRANSMITTING...' : 'TRANSMIT RECOVERY LINK'}
+                      </GoldButton>
+                    </form>
+                    <div className="mt-6 text-center">
+                      <button
+                        type="button"
+                        onClick={() => goToAuthMode('sign_in')}
+                        className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest hover:text-[#FFCC00] transition-colors"
+                      >
+                        // BACK_TO_TERMINAL
+                      </button>
+                    </div>
+                  </>
+                )}
+
+                {authMode === 'check_email' && (
+                  <div className="text-center space-y-5 py-2">
+                    <div className="flex flex-col items-center gap-3">
+                      <div className="w-14 h-14 rounded-full border border-[#FFCC00]/40 bg-[#FFCC00]/10 flex items-center justify-center shadow-[0_0_20px_rgba(255,204,0,0.25)]">
+                        <Mail className="w-6 h-6 text-[#FFCC00]" />
+                      </div>
+                      <p className="text-[10px] font-mono text-[#FFCC00] tracking-[0.4em] uppercase">// TRANSMISSION_SENT</p>
+                    </div>
+                    <p className="text-sm text-zinc-300 font-mono leading-relaxed">
+                      A confirmation transmission has been dispatched to
+                      <span className="block text-white mt-1 break-all">{pendingSignUpEmail}</span>
+                    </p>
+                    <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest">
+                      Click the link inside to activate your neural link.
+                    </p>
+                    {authError && (
+                      <p className="text-red-500 text-sm font-mono border border-red-900/50 bg-red-900/20 p-2 rounded-xl">{authError}</p>
+                    )}
+                    {authNotice && (
+                      <p className="text-[#FFCC00] text-sm font-mono border border-yellow-900/40 bg-yellow-900/10 p-2 rounded-xl">{authNotice}</p>
+                    )}
+                    <div className="flex flex-col gap-3 pt-2">
+                      <button
+                        type="button"
+                        onClick={handleResendConfirmation}
+                        className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest hover:text-[#FFCC00] transition-colors disabled:opacity-50"
+                        disabled={isSigningIn}
+                      >
+                        {isSigningIn ? '// RETRANSMITTING...' : '// RETRANSMIT_LINK'}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => goToAuthMode('sign_in')}
+                        className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest hover:text-[#FFCC00] transition-colors"
+                      >
+                        // BACK_TO_TERMINAL
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                <div className="mt-8 pt-4 border-t border-white/10 flex flex-col items-center gap-3">
+                  <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[10px] font-mono text-zinc-500 uppercase tracking-widest">
+                    <button type="button" onClick={() => goToLegal('terms')} className="hover:text-[#FFCC00] transition-colors">TERMS</button>
+                    <span className="text-zinc-700">·</span>
+                    <button type="button" onClick={() => goToLegal('privacy')} className="hover:text-[#FFCC00] transition-colors">PRIVACY</button>
+                    <span className="text-zinc-700">·</span>
+                    <button type="button" onClick={() => goToLegal('refund')} className="hover:text-[#FFCC00] transition-colors">REFUND</button>
+                    <span className="text-zinc-700">·</span>
+                    <button type="button" onClick={() => goToLegal('support')} className="hover:text-[#FFCC00] transition-colors">SUPPORT</button>
+                  </div>
+                  <p className="text-[10px] font-mono text-zinc-600 tracking-[0.4em] uppercase">// SESSION_ENCRYPTED</p>
                 </div>
             </GlassPanel>
           </div>

@@ -36,3 +36,42 @@ export const signInWithGoogle = async (): Promise<void> => {
   });
   if (error) throw error;
 };
+
+export const signUpWithPassword = async (
+  email: string,
+  password: string
+): Promise<{ hasSession: boolean }> => {
+  const supabase = getSupabase();
+  const emailRedirectTo =
+    typeof window !== 'undefined' ? window.location.origin : undefined;
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: emailRedirectTo ? { emailRedirectTo } : undefined,
+  });
+  if (error) throw error;
+  return { hasSession: !!data.session };
+};
+
+export const requestPasswordReset = async (email: string): Promise<void> => {
+  const supabase = getSupabase();
+  const redirectTo =
+    typeof window !== 'undefined' ? window.location.origin : undefined;
+  const { error } = await supabase.auth.resetPasswordForEmail(
+    email,
+    redirectTo ? { redirectTo } : undefined
+  );
+  if (error) throw error;
+};
+
+export const resendSignupConfirmation = async (email: string): Promise<void> => {
+  const supabase = getSupabase();
+  const emailRedirectTo =
+    typeof window !== 'undefined' ? window.location.origin : undefined;
+  const { error } = await supabase.auth.resend({
+    type: 'signup',
+    email,
+    options: emailRedirectTo ? { emailRedirectTo } : undefined,
+  });
+  if (error) throw error;
+};
