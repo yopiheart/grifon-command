@@ -272,8 +272,8 @@ const proxyPollVideoOperation = async (
   }
 };
 
-const textModel = 'gemini-3.1-flash-lite-preview';
-const fastTextModel = 'gemini-3.1-flash-lite-preview'; 
+const textModel = 'gemini-3.1-flash-lite';
+const fastTextModel = 'gemini-3.1-flash-lite';
 const researchTextModel = 'gemini-3.5-flash';
 const avatarModel = 'gemini-3.1-flash-image-preview'; 
 const sceneImageModel = 'gemini-3.1-flash-image-preview'; 

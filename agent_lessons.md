@@ -481,3 +481,51 @@ it didn't look plausible to anyone actually looking at it. Build-clean +
 screenshot-glance ≠ visually correct. The fix is to inspect at element
 zoom, not page zoom, for any pixel-sensitive component (icons, marks,
 spacing, alignment).
+
+### 2026-05-26 — Verify wiring with grep before declaring a cross-module feature shipped
+**Context:** Session Q smoke surfaced that Session N's Layer 1 phonetic
+normalizer (`services/phoneticNormalizer.ts` — respellings for Veo TTS:
+`lang`→`lahng`, `I-click`→`Ee-click`, `mukha`→`moo-khah`) did not deliver
+the promised Veo TTS pronunciations in vivo. Neil's video-by-video review:
+Scene 4 said "Lightweight lahong" (vowel inserted into the `hng` cluster),
+Scene 5 "suffocated lahang", Scene 7 "Eh eh click below" (hyphen treated
+as syllable separator, doubled the leading vowel).
+**What went wrong:** `normalizeTaglish()` was wired into `services/geminiService.ts`
+at exactly ONE call site — line `:2032`, inside the `generateVideoPrompts`
+*planning prompt* sent to Gemini. From there, the normalized scriptLine
+gets echoed by Gemini into its returned video-prompt JSON, which IS what
+goes to Veo/Kling. So Layer 1's transport reaches Veo — but the chosen
+respellings (`lahng`, `Ee-click`) aren't Veo-TTS-compatible: Veo's TTS
+re-parses hyphens as syllable breaks and inserts vowels into uncommon
+consonant clusters. The wider problem: nobody verified end-to-end Veo
+audio output before declaring Session N's Layer 1 "shipped" — `grep -c
+normalizeTaglish` would have shown the function reaches one prompt
+boundary, and a 5-minute Veo render test on a single Taglish-heavy line
+would have surfaced the TTS interpretation failure 4 weeks earlier.
+**Lesson:** Two compounding rules going forward.
+
+- **Grep wiring before declaring a feature shipped.** Any new utility
+  that crosses module boundaries (here: `phoneticNormalizer.ts` → AI
+  prompt builder → video model's TTS engine) needs `grep -rn` across
+  the whole repo for every call site, not just the originating module.
+  If the function is referenced at exactly one location, ask: is that
+  location the *output* boundary (where the value reaches the external
+  system) or the *intermediate* boundary (where the value is still
+  inside our pipeline)? Layer 1's `:2032` is intermediate — the actual
+  output boundary is the Veo/Kling proxy call in `api/gemini/video.ts`
+  or sibling. Sherlock the data flow end-to-end, not the function
+  definition.
+- **Test the side effect, not the data transformation.** Verifying
+  that `normalizeTaglish('lang')` returns `'lahng'` is necessary but
+  insufficient. The feature's actual contract is "the Veo TTS audio
+  pronounces `lang` correctly" — and the only way to verify THAT is
+  a real Veo render on a Taglish-heavy line, before declaring the
+  feature done. For Session R Bug 17 fix iteration, this means
+  a fast test harness: pick one short Taglish line, render via Veo,
+  listen, iterate respellings, render again. Don't ship respellings
+  without a real Veo audio sample as evidence.
+
+**Pairs with the 2026-05-26 alignment-audit rule** (above) — both are
+"verify what you think you shipped actually exists where you think it
+exists, at the rendering layer the user will see, not the
+intermediate-state layer the code touches."
