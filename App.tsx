@@ -713,9 +713,43 @@ const App: React.FC = () => {
     return (
       <ErrorBoundary name="route:auth" resetLabel="RETRY">
       <div className="min-h-screen bg-zinc-950 font-sans flex flex-col items-center justify-center p-4 relative overflow-hidden">
-        {/* Background neural grid effect */}
-        <div className="absolute inset-0 opacity-10 pointer-events-none">
-           <div className="w-full h-full" style={{ backgroundImage: 'radial-gradient(#FFCC00 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
+        {/* Cinematic backdrop — CSS-only HUD gradient (no image weight). */}
+        <div className="absolute inset-0 pointer-events-none z-0">
+          {/* Primary gold glow — top-right, stationary */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                'radial-gradient(ellipse 55% 45% at 82% 18%, rgba(255,204,0,0.20), transparent 65%)',
+            }}
+          />
+          {/* Secondary gold glow — bottom-left, gentle 6s breathe */}
+          <div
+            className="absolute inset-0 animate-pulse"
+            style={{
+              background:
+                'radial-gradient(ellipse 48% 38% at 12% 88%, rgba(255,204,0,0.13), transparent 65%)',
+              animationDuration: '6s',
+            }}
+          />
+          {/* Dim neural dot-grid — quieter than before, still on-brand */}
+          <div
+            className="absolute inset-0 opacity-[0.07]"
+            style={{
+              backgroundImage: 'radial-gradient(#FFCC00 1px, transparent 1px)',
+              backgroundSize: '32px 32px',
+            }}
+          />
+          {/* Horizontal scan lines — terminal/HUD signature */}
+          <div
+            className="absolute inset-0 opacity-[0.045]"
+            style={{
+              background:
+                'repeating-linear-gradient(0deg, transparent 0, transparent 2px, rgba(255,255,255,1) 2px, rgba(255,255,255,1) 3px)',
+            }}
+          />
+          {/* Vertical edge vignette — frames the panel without cropping */}
+          <div className="absolute inset-0 bg-gradient-to-b from-zinc-950/60 via-transparent to-zinc-950/80" />
         </div>
 
         {isBooting ? (
@@ -737,18 +771,30 @@ const App: React.FC = () => {
              </div>
           </GlassPanel>
         ) : (
-          <div className="z-10 w-full flex flex-col items-center">
-            <div className="mb-6 md:mb-8 text-center flex flex-col items-center">
-              <div className="mb-3 md:mb-6">
-                <GrifonLogo className="h-20 md:h-32 w-auto text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]" />
+          <div className="relative z-10 w-full flex flex-col items-center">
+            <div className="mb-4 md:mb-6 text-center flex flex-col items-center">
+              <div className="mb-2 md:mb-4">
+                <GrifonLogo className="h-16 md:h-20 w-auto text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]" />
               </div>
-              <h1 className="text-4xl md:text-6xl font-[900] italic text-white uppercase tracking-tighter mb-2">
+              <h1 className="text-3xl md:text-5xl font-[900] italic text-white uppercase tracking-tighter mb-2">
                 GRIFON
               </h1>
-              <h2 className="text-[10px] font-mono text-[#FFCC00] tracking-[0.4em] uppercase">// NEURAL_ENGINE_ACTIVE</h2>
+              <h2 className="text-[10px] font-mono text-[#FFCC00] tracking-[0.4em] uppercase flex items-center justify-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#FFCC00] animate-pulse shadow-[0_0_6px_rgba(255,204,0,0.8)]" aria-hidden="true" />
+                // NEURAL_ENGINE_ACTIVE
+              </h2>
             </div>
 
-            <GlassPanel className="w-full max-w-md p-6 md:p-8">
+            <GlassPanel className="relative w-full max-w-md p-6 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                {/* Terminal-frame hairlines — gold HUD corners */}
+                <span aria-hidden="true" className="pointer-events-none absolute top-0 left-0 w-3 h-px bg-[#FFCC00]/60" />
+                <span aria-hidden="true" className="pointer-events-none absolute top-0 left-0 w-px h-3 bg-[#FFCC00]/60" />
+                <span aria-hidden="true" className="pointer-events-none absolute top-0 right-0 w-3 h-px bg-[#FFCC00]/60" />
+                <span aria-hidden="true" className="pointer-events-none absolute top-0 right-0 w-px h-3 bg-[#FFCC00]/60" />
+                <span aria-hidden="true" className="pointer-events-none absolute bottom-0 left-0 w-3 h-px bg-[#FFCC00]/60" />
+                <span aria-hidden="true" className="pointer-events-none absolute bottom-0 left-0 w-px h-3 bg-[#FFCC00]/60" />
+                <span aria-hidden="true" className="pointer-events-none absolute bottom-0 right-0 w-3 h-px bg-[#FFCC00]/60" />
+                <span aria-hidden="true" className="pointer-events-none absolute bottom-0 right-0 w-px h-3 bg-[#FFCC00]/60" />
                 {(authMode === 'sign_in' || authMode === 'sign_up') && (
                   <div className="grid grid-cols-2 mb-6 -mt-1">
                     <button
