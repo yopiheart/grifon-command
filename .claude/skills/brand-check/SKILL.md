@@ -52,6 +52,21 @@ For a real PR/diff, a multi-component change, or any check that gates "is this U
 
 **Icons**
 - Any text-string / icon-font / emoji icon — must be `lucide-react` SVG.
+- Hand-transcribed inline SVG (typed path data) without rendering and zooming to 200% to verify shape integrity. Brand marks (Google G, Apple, GitHub, Microsoft, etc.) must be copied from the brand's canonical reference, never re-typed from memory.
+
+**Alignment & icon-text rhythm** *(added 2026-05-26 — see `agent_lessons.md` for the Google G incident)*
+- Icon next to **bold/uppercase text** uses `w-5 h-5` (20px) + `gap-3` or `mr-3` (12px). Smaller pairings read as cramped — Cursor/Stripe/Claude all use this rhythm.
+- Icon next to **normal-weight text** uses `w-4 h-4` (16px) + `gap-2` or `mr-2` (8px).
+- Inside any `flex items-center` button or row containing an icon + text: verify the icon has `shrink-0` so it doesn't squash when the button width drops on mobile.
+- Vertical centering verified at element zoom — open the rendered button in dev tools, inspect that `align-items: center` is actually centering icon top with text x-height, not icon top with text top.
+- **Federated OAuth buttons get NEUTRAL surfaces, NOT brand accent colors.** A multicolor brand mark (Google's 4-color G, Apple's logo, GitHub's octocat) needs contrast that saturated colors don't provide — `#FFC107` Yellow goes invisible on `#FFCC00` Gold. Use `bg-zinc-950 border border-white/15` (ghost) or white-surface (Stripe pattern). Reserve the brand accent color for primary CTAs.
+- Spacing-around-button rule: when stacking OAuth + email form, the divider ("OR CONTINUE WITH EMAIL") needs `mb-6` above and below so neither button crowds it.
+
+**Visual fidelity audit (do before declaring any UI task complete)**
+- Open `npm run dev`, navigate to the changed surface, **screenshot at BOTH 1280x900 AND 375x667** (iPhone SE class — still ~30% of Filipino mobile install base per [agent_lessons.md](../../../agent_lessons.md) 2026-05-24 Director-AI pre-flight rules).
+- For each text+icon pair, zoom screenshots to 100-200% and check: (a) icon path renders fully, no crops/squashes; (b) icon vertically aligned with text baseline; (c) spacing reads premium (not cramped); (d) icon doesn't shift when button wraps at mobile width.
+- For brand-mark icons specifically: zoom to 200% AND verify the official colors actually render distinctly against the button surface. If the brand color and button color collide (Google Yellow on Grifon Gold), the surface is wrong — fix the button, don't ship the muddy mark.
+- Build-clean + page-scale screenshot does NOT count as visual verification. Many alignment failures are invisible at page scale and obvious at element zoom.
 
 **Smell tests**
 - Inline class blob that re-implements an existing primitive instead of importing GlassPanel/GoldButton — call this out as "use the primitive" even if classes are technically correct.

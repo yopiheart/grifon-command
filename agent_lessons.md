@@ -419,3 +419,65 @@ clip Pass 1 missed — a real text-hallucination finding.
 
 Captured in [workflows/handoff_2026-05-26-session-n-tuned-edits-shipped.md](workflows/handoff_2026-05-26-session-n-tuned-edits-shipped.md)
 under "NEW: Grifon Director AI Video Auditor Gem".
+
+### 2026-05-26 — Hand-transcribed inline SVGs and icon-text rhythm must be eyeballed, not build-verified
+
+**Context:** Session P shipped a "Continue with Google" button on the auth
+screen with an inline 4-color Google G SVG. I hand-transcribed the path data
+from memory rather than copying the canonical mark. Build was clean. I took
+a 1280x900 screenshot and moved on to brand-check + commit prep.
+
+**What went wrong:** Neil opened the same screenshot and immediately flagged
+the G as "looks like a slop designer." Three distinct failures, none caught
+by build or my own desktop-scale screenshot inspection:
+
+1. **Corrupted path data.** The Yellow path closing segment was written as
+   `l3.66-2.84z` (single corrupted segment) instead of the official
+   `l2.85-2.22.81-.62z` (two-segment arc closure). Rendered a cropped/
+   squashed G with a missing arc. Eye-glanceable at desktop screenshot
+   scale; obvious to Neil the moment he looked carefully.
+2. **Wrong icon-text proportions.** Used `w-4 h-4 mr-2` (16px icon, 8px gap)
+   against bold uppercase "CONTINUE WITH GOOGLE" text. Cursor / Stripe /
+   Claude / Higgsfield all use ~20px icon with ~12px gap for that text
+   weight. The cramped spacing read as amateur.
+3. **Multicolor mark on a saturated brand color.** Placed the official
+   4-color Google G on the `#FFCC00` GoldButton surface. The Yellow path
+   (#FFC107) was nearly invisible against the gold; Red (#FF3D00)
+   flattened to coral. Reference apps all use neutral (white or dark)
+   surfaces for federated OAuth buttons specifically because the
+   multicolor brand mark needs contrast it loses on saturated colors.
+
+**Lesson:** Three rules going forward.
+
+- **Don't hand-transcribe brand-mark SVGs.** Copy the canonical paths from
+  the brand's official reference page (Google G: 48x48 viewBox, the standard
+  4-color SDK distribution). If you must type by hand, render in the dev
+  server, zoom to 200%, and verify shape integrity before committing.
+- **Icon-text proportional weight is a real rule.** Bold/uppercase text
+  pairs with `w-5 h-5` (20px) and `gap-3` / `mr-3` (12px). Normal-weight
+  text pairs with `w-4 h-4` (16px) and `gap-2` / `mr-2` (8px). Cramping
+  reads as careless regardless of how correct the rest of the layout is.
+- **Federated OAuth buttons get NEUTRAL surfaces, not brand colors.**
+  Cursor / Claude / Stripe / Higgsfield all use white or dark backgrounds
+  for "Continue with Google/Apple/GitHub" buttons. This is not a design
+  preference — multicolor brand marks (Google's 4-color G, Apple's logo,
+  GitHub's octocat) need neutral contrast to render with their official
+  trust signal intact. Reserve the brand accent color for primary CTAs
+  (Sign In, Sign Up, Subscribe). OAuth buttons go on `bg-zinc-950 border
+  border-white/15` (ghost) or white-surface (Stripe pattern).
+
+**Procedural fix:** Append an "Alignment & icon-text rhythm" checklist to
+the `brand-check` skill (`.claude/skills/brand-check/SKILL.md`) so any UI
+diff with buttons, icons, or `flex items-center` containers gets
+adversarially eyeballed before being declared done. Captured in
+[workflows/handoff_2026-05-26-session-p-...](workflows/) (forthcoming) and
+in the ephemeral memory layer at
+`~/.claude/projects/.../memory/feedback_verify_design_alignment.md`.
+
+The deeper failure mode: I declared "Phase 3 ready for sign-off" after a
+desktop-scale screenshot, without zooming to inspect individual elements.
+The mark looked plausible at the reading distance of a full-page screenshot;
+it didn't look plausible to anyone actually looking at it. Build-clean +
+screenshot-glance ≠ visually correct. The fix is to inspect at element
+zoom, not page zoom, for any pixel-sensitive component (icons, marks,
+spacing, alignment).
