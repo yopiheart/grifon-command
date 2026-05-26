@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, Lightbulb, RotateCw, LogIn, Mail } from 'lucide-react';
+import { ChevronLeft, Lightbulb, RotateCw, Mail } from 'lucide-react';
 import { ClientDetails, BusinessInfo, Script, Scene, VideoPrompt, Avatar, CinematicNarrativeScene, SceneBatchEntry } from './types';
 import StepIndicator from './components/StepIndicator';
 import Step1ClientDetails from './components/Step1ClientDetails';
@@ -469,11 +469,11 @@ const App: React.FC = () => {
     setAuthNotice('');
     const email = authEmail.trim();
     if (authPassword.length < 8) {
-      setAuthError('ACCESS_KEY must be at least 8 characters.');
+      setAuthError('Password must be at least 8 characters.');
       return;
     }
     if (authPassword !== authConfirm) {
-      setAuthError('ACCESS_KEY confirmation does not match.');
+      setAuthError('Passwords do not match.');
       return;
     }
     setIsSigningIn(true);
@@ -500,15 +500,15 @@ const App: React.FC = () => {
     setAuthNotice('');
     const email = authEmail.trim();
     if (!email) {
-      setAuthError('Enter an EMAIL_IDENTIFIER to recover.');
+      setAuthError('Enter an email to recover your account.');
       return;
     }
     setIsSigningIn(true);
     try {
       await requestPasswordReset(email);
-      setAuthNotice('Recovery transmission dispatched. Check inbox.');
+      setAuthNotice('Reset link sent. Check your inbox.');
     } catch (err: any) {
-      setAuthError(err?.message || 'Recovery dispatch failed.');
+      setAuthError(err?.message || 'Could not send reset link.');
     } finally {
       setIsSigningIn(false);
     }
@@ -521,7 +521,7 @@ const App: React.FC = () => {
     setIsSigningIn(true);
     try {
       await resendSignupConfirmation(pendingSignUpEmail);
-      setAuthNotice('Confirmation transmission re-sent.');
+      setAuthNotice('Confirmation link re-sent.');
     } catch (err: any) {
       setAuthError(err?.message || 'Resend failed.');
     } finally {
@@ -806,7 +806,7 @@ const App: React.FC = () => {
                           : 'text-zinc-500 border-white/10 hover:text-white'
                       }`}
                     >
-                      // AUTHENTICATE
+                      // SIGN_IN
                     </button>
                     <button
                       type="button"
@@ -817,22 +817,27 @@ const App: React.FC = () => {
                           : 'text-zinc-500 border-white/10 hover:text-white'
                       }`}
                     >
-                      // INITIATE
+                      // SIGN_UP
                     </button>
                   </div>
                 )}
 
                 {(authMode === 'sign_in' || authMode === 'sign_up') && (
                   <>
-                    <GoldButton
+                    <button
                       type="button"
                       onClick={handleGoogleSignIn}
-                      className="w-full justify-center py-4 mb-6"
                       disabled={isSigningIn}
+                      className="w-full flex items-center justify-center gap-3 py-4 px-6 bg-zinc-950 border border-white/15 hover:border-[#FFCC00]/50 hover:bg-zinc-900 text-white font-medium text-sm rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed mb-6"
                     >
-                      <LogIn className="w-4 h-4 mr-2" />
-                      {isSigningIn ? 'CONNECTING...' : 'CONTINUE WITH GOOGLE'}
-                    </GoldButton>
+                      <svg className="w-5 h-5 shrink-0" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8c-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4C12.955 4 4 12.955 4 24s8.955 20 20 20s20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/>
+                        <path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4C16.318 4 9.656 8.337 6.306 14.691z"/>
+                        <path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/>
+                        <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002l6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/>
+                      </svg>
+                      {isSigningIn ? 'Connecting...' : 'Continue with Google'}
+                    </button>
                     <div className="flex items-center gap-3 mb-6">
                       <div className="flex-1 border-t border-white/10"></div>
                       <span className="text-[10px] font-mono text-zinc-500 tracking-widest uppercase">OR CONTINUE WITH EMAIL</span>
@@ -846,8 +851,8 @@ const App: React.FC = () => {
                     <Input
                       id="auth-email"
                       type="email"
-                      label="EMAIL_IDENTIFIER"
-                      placeholder="ENTER YOUR EMAIL"
+                      label="EMAIL"
+                      placeholder="your@email.com"
                       value={authEmail}
                       onChange={(e) => setAuthEmail(e.target.value)}
                       required
@@ -856,8 +861,8 @@ const App: React.FC = () => {
                       <Input
                         id="auth-password"
                         type="password"
-                        label="ACCESS_KEY"
-                        placeholder="ENTER PASSWORD"
+                        label="PASSWORD"
+                        placeholder="Your password"
                         value={authPassword}
                         onChange={(e) => setAuthPassword(e.target.value)}
                         required
@@ -868,7 +873,7 @@ const App: React.FC = () => {
                           onClick={() => goToAuthMode('forgot')}
                           className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest hover:text-[#FFCC00] transition-colors"
                         >
-                          // REQUEST_NEW_KEY
+                          // FORGOT_PASSWORD?
                         </button>
                       </div>
                     </div>
@@ -876,7 +881,7 @@ const App: React.FC = () => {
                       <p className="text-red-500 text-sm font-mono text-center border border-red-900/50 bg-red-900/20 p-2 rounded-xl">{authError}</p>
                     )}
                     <GoldButton type="submit" className="w-full justify-center py-4" disabled={isSigningIn}>
-                      {isSigningIn ? 'AUTHENTICATING...' : 'AUTHENTICATE'}
+                      {isSigningIn ? 'SIGNING IN...' : 'SIGN IN'}
                     </GoldButton>
                   </form>
                 )}
@@ -887,8 +892,8 @@ const App: React.FC = () => {
                     <Input
                       id="signup-email"
                       type="email"
-                      label="EMAIL_IDENTIFIER"
-                      placeholder="ENTER YOUR EMAIL"
+                      label="EMAIL"
+                      placeholder="your@email.com"
                       value={authEmail}
                       onChange={(e) => setAuthEmail(e.target.value)}
                       required
@@ -896,8 +901,8 @@ const App: React.FC = () => {
                     <Input
                       id="signup-password"
                       type="password"
-                      label="ACCESS_KEY (MIN 8 CHARS)"
-                      placeholder="CREATE PASSWORD"
+                      label="PASSWORD (MIN 8 CHARS)"
+                      placeholder="Create a password"
                       value={authPassword}
                       onChange={(e) => setAuthPassword(e.target.value)}
                       required
@@ -906,8 +911,8 @@ const App: React.FC = () => {
                     <Input
                       id="signup-confirm"
                       type="password"
-                      label="CONFIRM_KEY"
-                      placeholder="REPEAT PASSWORD"
+                      label="CONFIRM_PASSWORD"
+                      placeholder="Repeat password"
                       value={authConfirm}
                       onChange={(e) => setAuthConfirm(e.target.value)}
                       required
@@ -917,7 +922,7 @@ const App: React.FC = () => {
                       <p className="text-red-500 text-sm font-mono text-center border border-red-900/50 bg-red-900/20 p-2 rounded-xl">{authError}</p>
                     )}
                     <GoldButton type="submit" className="w-full justify-center py-4" disabled={isSigningIn}>
-                      {isSigningIn ? 'INITIATING...' : 'INITIATE ACCESS'}
+                      {isSigningIn ? 'SIGNING UP...' : 'SIGN UP'}
                     </GoldButton>
                   </form>
                 )}
@@ -927,15 +932,15 @@ const App: React.FC = () => {
                     <div className="text-center mb-6">
                       <p className="text-[10px] font-mono text-[#FFCC00] tracking-[0.4em] uppercase mb-3">// KEY_RECOVERY</p>
                       <p className="text-sm text-zinc-400 font-mono leading-relaxed">
-                        Transmit a recovery link to your registered EMAIL_IDENTIFIER.
+                        Send a password reset link to your registered email.
                       </p>
                     </div>
                     <form onSubmit={handleForgotPassword} className="space-y-6">
                       <Input
                         id="forgot-email"
                         type="email"
-                        label="EMAIL_IDENTIFIER"
-                        placeholder="ENTER YOUR EMAIL"
+                        label="EMAIL"
+                        placeholder="your@email.com"
                         value={authEmail}
                         onChange={(e) => setAuthEmail(e.target.value)}
                         required
@@ -947,7 +952,7 @@ const App: React.FC = () => {
                         <p className="text-[#FFCC00] text-sm font-mono text-center border border-yellow-900/40 bg-yellow-900/10 p-2 rounded-xl">{authNotice}</p>
                       )}
                       <GoldButton type="submit" className="w-full justify-center py-4" disabled={isSigningIn}>
-                        {isSigningIn ? 'TRANSMITTING...' : 'TRANSMIT RECOVERY LINK'}
+                        {isSigningIn ? 'SENDING...' : 'SEND RESET LINK'}
                       </GoldButton>
                     </form>
                     <div className="mt-6 text-center">
@@ -971,11 +976,11 @@ const App: React.FC = () => {
                       <p className="text-[10px] font-mono text-[#FFCC00] tracking-[0.4em] uppercase">// TRANSMISSION_SENT</p>
                     </div>
                     <p className="text-sm text-zinc-300 font-mono leading-relaxed">
-                      A confirmation transmission has been dispatched to
+                      A confirmation link has been sent to
                       <span className="block text-white mt-1 break-all">{pendingSignUpEmail}</span>
                     </p>
                     <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest">
-                      Click the link inside to activate your neural link.
+                      Click the link inside to activate your account.
                     </p>
                     {authError && (
                       <p className="text-red-500 text-sm font-mono border border-red-900/50 bg-red-900/20 p-2 rounded-xl">{authError}</p>
@@ -990,7 +995,7 @@ const App: React.FC = () => {
                         className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest hover:text-[#FFCC00] transition-colors disabled:opacity-50"
                         disabled={isSigningIn}
                       >
-                        {isSigningIn ? '// RETRANSMITTING...' : '// RETRANSMIT_LINK'}
+                        {isSigningIn ? '// RESENDING...' : '// RESEND_LINK'}
                       </button>
                       <button
                         type="button"
