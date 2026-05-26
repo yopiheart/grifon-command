@@ -2075,9 +2075,9 @@ export const generateVideoPrompts = async (storyboard: Scene[], businessInfo: Bu
       1. **IF scriptType is "Cinematic":** ALWAYS use type "cinematic".
       2. **OTHERWISE:**
          - SCENE 1 (THE HOOK) IS ALWAYS "b-roll".
-         - SCENE 2+: Classify based on whether the avatar's MOUTH is forming dialogue ON CAMERA in the description.
-            - **"talking"** ONLY IF the description explicitly indicates the avatar is speaking to the lens (e.g., "looking at camera, lips parted forming words", "delivering line to camera", "mid-syllable to the lens").
-            - **"b-roll"** for all other avatar-visible scenes including: applying product, touching face, thoughtful expression, looking off-camera, hands-near-mouth, mirror reflection without direct lens contact. Voice-over carries the script; the avatar's mouth need not be in sync.
+         - SCENE 2+: Decide by lens engagement + script delivery context.
+            - **"talking"** when BOTH: (a) description shows the avatar ORIENTED TO THE LENS ("looking at camera", "smiling at camera", "facing the camera", "looking into the lens", "to camera") AND (b) the script line is a direct verbal delivery — a CTA ("click below", "tap below", "visit", "message us", "DM us"), a testimonial line ("I tried...", "Ako si...", "Iba ang..."), or a direct first-person claim the avatar naturally speaks to camera.
+            - **"b-roll"** when either signal is missing, OR when the description shows: thoughtful expression / touching cheek / hands near mouth / mirror reflection without lens contact / looking off-camera / pure product shot without avatar. Voice-over carries the script; the avatar's mouth need not be in sync.
 
       ${additionalInstructions}
 
