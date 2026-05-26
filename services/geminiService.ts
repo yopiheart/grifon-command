@@ -1424,12 +1424,13 @@ export const generateAdScript = async (
     brandName: string,
     language: 'English' | 'Taglish',
     offer: string = '',
-    chosenAngleBrief: string = ''
+    chosenAngleBrief: string = '',
+    contrarianTruth: string = ''
 ): Promise<Script> => {
   await delay(1000);
   return retryWithBackoff(() => proxyCall<Script>('/api/gemini/text', {
     flow: 'adscript',
-    input: { businessInfo, brandName, language, offer, chosenAngleBrief },
+    input: { businessInfo, brandName, language, offer, chosenAngleBrief, contrarianTruth },
   }));
 };
 

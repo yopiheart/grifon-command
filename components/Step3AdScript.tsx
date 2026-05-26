@@ -46,7 +46,7 @@ const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, script, setScript, 
 
   // Parse MarketMind report from localStorage for the "Pick Your Angle" picker.
   // Pattern matches InfluencerForge.tsx:212-216 — try/catch JSON.parse + shape check on .subject.
-  const angleOptions = useMemo<{ headlines: AngleOption[]; hooks: AngleOption[]; ads: AngleOption[] } | null>(() => {
+  const angleOptions = useMemo<{ headlines: AngleOption[]; hooks: AngleOption[]; ads: AngleOption[]; contrarianTruth: string } | null>(() => {
     try {
       const saved = localStorage.getItem('marketMindReport');
       if (!saved) return null;
@@ -87,7 +87,7 @@ const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, script, setScript, 
         : [];
 
       if (headlines.length === 0 && hooks.length === 0 && ads.length === 0) return null;
-      return { headlines, hooks, ads };
+      return { headlines, hooks, ads, contrarianTruth: typeof r.contrarianTruth === 'string' ? r.contrarianTruth : '' };
     } catch {
       return null;
     }
@@ -159,7 +159,7 @@ const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, script, setScript, 
     try {
       setLoading(true);
       setError(null);
-      const newScript = await generateAdScript(businessInfo, brandName, localLanguage, offer, directorAngleBrief || '');
+      const newScript = await generateAdScript(businessInfo, brandName, localLanguage, offer, directorAngleBrief || '', angleOptions?.contrarianTruth || '');
       setGeneratedScript(newScript);
       setStrategicAudit(newScript.strategicAudit || '');
       setScript(newScript);

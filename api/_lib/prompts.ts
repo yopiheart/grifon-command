@@ -318,12 +318,52 @@ export const ADSCRIPT_USER_CHOSEN_ANGLE_BLOCK = (chosenAngleBrief: string): stri
   ${chosenAngleBrief}
   ` : '';
 
+export const ADSCRIPT_HOOK_SEED_PROTOCOL = (contrarianTruth?: string): string => contrarianTruth ? `
+  **HOOK SEED PROTOCOL (REQUIRED for Testimonial + MrBeast strategies — skip for Temu):**
+
+  A MarketMind contrarian truth is available for this campaign:
+  "${contrarianTruth}"
+
+  This is the load-bearing belief-flip that makes the ad work on cold traffic. The hook1[] array MUST include at least ONE variant built on this contrarian truth as the FIRST option (position 0). Result-reveal, social-proof, and curiosity-gap variants fill hook2[] or later positions in hook1[] but NEVER displace the contrarian truth from position 0.
+
+  PATTERN (Sabri Suby Halo-Effect Headline mechanism):
+    "[Negation of customer's belief]. [Revealed mechanism]."
+    OR (5-8 word compression for paid-social attention budget):
+    "Stop [doing X]. [New belief in 4-6 words]."
+
+  EXAMPLES across product categories:
+
+    contrarianTruth = "Your skin isn't oily — it's thirsty, and you've been starving it with harsh oil-control products."
+    → hook1[0]: "Your skin isn't oily. It's thirsty. Starving."
+    OR: "Stop blotting. Your skin isn't oily — it's thirsty."
+
+    contrarianTruth = "OFW kids don't miss the money. They miss the daily presence of their parents."
+    → hook1[0]: "Hindi nila kulang ang pera. Kulang ang nanay."
+    OR: "OFW kids don't miss the money. They miss you."
+
+    contrarianTruth = "You're not lazy. Your kitchen is making you cook for 2 hours when it should take 20 minutes."
+    → hook1[0]: "Hindi ka tamad. Ang luma na ng kusina mo."
+    OR: "Stop blaming yourself. Blame your kitchen."
+
+  RULES:
+  - Use the EXACT mechanism word from contrarianTruth (e.g., "thirsty", "daily presence", "kusina") — do not paraphrase the load-bearing noun. The mechanism word IS the reframe.
+  - 5-8 words for paid social. Up to 12 words for retargeting. Never longer.
+  - Match script language (Taglish or English) to the rest of the ad — Taglish ads get Taglish contrarian, English ads get English. Do not mix registers inside one variant.
+
+  WHY THIS IS NON-NEGOTIABLE:
+
+  Contrarian-truth hooks beat result-reveal hooks 3:1 on cold-traffic CTR (Sabri Suby Halo-Effect mechanism — overturning a held belief creates forced attention). For ₱2-5 cold-traffic PH CPC, this is the single highest-leverage line in the entire ad. Result-reveal hooks ("Finally, I got X") are CLOSING lines — they work on warm/retargeting traffic where the viewer already knows the brand. Putting a closing line at position 0 wastes the cold-traffic media spend.
+
+  The user can still pick a softer hook from hook2[] if their ad set is warm traffic — but the killer hook MUST always be on the menu.
+  ` : '';
+
 export interface AdScriptInput {
   businessInfo: BusinessInfo;
   brandName: string;
   language: 'English' | 'Taglish';
   offer: string;
   chosenAngleBrief: string;
+  contrarianTruth?: string;
 }
 
 export const buildAdScriptPrompt = (
@@ -337,6 +377,7 @@ export const buildAdScriptPrompt = (
   const COMMON_RULES = ADSCRIPT_COMMON_RULES(businessInfo, brandName, language);
   const DIRECTOR_CRITIQUE_INSTRUCTION = ADSCRIPT_DIRECTOR_CRITIQUE_INSTRUCTION;
   const USER_CHOSEN_ANGLE_BLOCK = ADSCRIPT_USER_CHOSEN_ANGLE_BLOCK(chosenAngleBrief);
+  const HOOK_SEED_PROTOCOL = ADSCRIPT_HOOK_SEED_PROTOCOL(input.contrarianTruth);
 
   if (isTemu) {
     const subType = temuSubType ?? 'Reaction';
@@ -399,6 +440,7 @@ export const buildAdScriptPrompt = (
 
       ${DIRECTOR_CRITIQUE_INSTRUCTION}
       ${USER_CHOSEN_ANGLE_BLOCK}
+      ${HOOK_SEED_PROTOCOL}
       Format: Return valid JSON: { "hook1": [...], "hook2": [...], "body": [...], "strategicAudit": "..." }
     `;
   } else {
@@ -441,6 +483,7 @@ export const buildAdScriptPrompt = (
 
         ${DIRECTOR_CRITIQUE_INSTRUCTION}
         ${USER_CHOSEN_ANGLE_BLOCK}
+        ${HOOK_SEED_PROTOCOL}
         Format: Return ONLY valid JSON: { "hook1": [...], "hook2": [...], "body": [...], "strategicAudit": "..." }
     `;
   }
