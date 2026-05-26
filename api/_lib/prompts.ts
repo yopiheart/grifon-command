@@ -377,8 +377,9 @@ export const buildAdScriptPrompt = (
       7. **CTA:** Ad-native call-to-action with WARM recommendation tone (not direct-sell). Drive CURIOSITY to the landing page / Messenger — specific prices and peso amounts belong THERE, not in the ad.
 
          BANNED CTA PHRASES (organic-IG patterns, not for paid ads):
-         - "link sa bio" / "link in bio"  → use "click below" / "i-click below" / "tap below"
+         - "link sa bio" / "link in bio"  → use "click below" / "tap below" / "click here"
          - "DM us" / "DM kayo" alone     → use "message us" / "send message"
+         - "i-click" / "I-click" (any 'i-' verb-prefix form like "i-share", "i-DM") → use plain English verb "Click" / "Tap" / "Visit". Veo TTS mis-pronounces hyphenated 'i-' prefix as a doubled syllable ("Eh eh click").
 
          BANNED IN THE CTA (price-leak guard — STRICT):
          - Any peso amount (₱X, PX, P X, e.g., "₱999", "P299")
@@ -418,8 +419,9 @@ export const buildAdScriptPrompt = (
         6. **CTA:** High-energy ad-native call-to-action. Drive CURIOSITY to the landing page / Messenger — specific prices and peso amounts belong THERE, not in the ad.
 
            BANNED CTA PHRASES (organic-IG patterns, not for paid ads):
-           - "link sa bio" / "link in bio"  → use "click below" / "i-click below" / "tap below"
+           - "link sa bio" / "link in bio"  → use "click below" / "tap below" / "click here"
            - "DM us" / "DM kayo" alone     → use "message us" / "send message"
+           - "i-click" / "I-click" (any 'i-' verb-prefix form like "i-share", "i-DM") → use plain English verb "Click" / "Tap" / "Visit". Veo TTS mis-pronounces hyphenated 'i-' prefix as a doubled syllable ("Eh eh click").
 
            BANNED IN THE CTA (price-leak guard — STRICT):
            - Any peso amount (₱X, PX, P X, e.g., "₱999", "P299")
