@@ -529,3 +529,76 @@ would have surfaced the TTS interpretation failure 4 weeks earlier.
 "verify what you think you shipped actually exists where you think it
 exists, at the rendering layer the user will see, not the
 intermediate-state layer the code touches."
+
+### 2026-05-26 — Classifier rules must match the vocabulary the upstream generator actually produces
+
+**Context:** Session R Bug 19 tightened the SCENE 2+ talking/b-roll
+classifier in `generateVideoPrompts` at services/geminiService.ts:2079
+to require explicit "lips parted forming words", "mid-syllable",
+"delivering line to camera" language in the storyboard description
+before tagging a scene as "talking". Verification smoke (Curology
+re-run) revealed ALL 6 scenes classified as b-roll — including the
+CTA scene 6 ("Tap below ngayon" + "looking directly into the camera
+lens" + "warm friendly smile") and the testimonial scene 4 ("Iba
+ang Curology dahil para lang sa akin 'to" + "smiling gently at the
+camera" + applying cream).
+
+**What went wrong:** Gemini's storyboard generator
+(`buildStoryboardPrompt` at api/_lib/prompts.ts) never produces the
+literal "speaking" / "lips parted" / "mid-syllable" language. It
+describes EXPRESSIONS and GESTURES — "smiling at camera", "warm
+friendly smile", "looking directly into the lens". The strict Bug 19
+rule had no vocabulary overlap with the actual upstream output, so it
+defaulted everything to b-roll. This broke Director AI's intended
+B-T-B-T-B-B-T rhythm: CTAs and testimonials lost Veo lip-sync,
+becoming silent b-roll with disembodied VO.
+
+Bug 19b (commit `19ce00d`) restored the intent by adopting a
+**dual-signal rule** that matches the actual storyboard vocabulary:
+"talking" requires BOTH (a) lens-engagement cues ("looking at
+camera", "smiling at camera", "to camera") AND (b) verbal-delivery
+context — CTA ("click below", "tap below"), testimonial
+("I tried...", "Ako si..."), or direct first-person claim. Defaults
+to b-roll when either signal is missing OR when the description
+shows action (applying product, mirror reflection, looking
+off-camera).
+
+**Lesson — two parts.**
+
+Rule 1: **Before writing a downstream classifier rule, sample the
+upstream generator's actual output and confirm the rule's anchor
+phrases will trigger.** Strict "lips parted" language is the
+literal-most-correct cue, but if Gemini's storyboard never produces
+those words, the rule misfires every time. Cheapest pre-flight
+check: generate 3 storyboards, grep them for the proposed anchor
+phrases, confirm hit rate >0% before shipping the classifier. If
+hit rate is ~0, either loosen the rule to match the actual
+vocabulary OR have the upstream emit a typed signal directly
+(see Rule 2 / future improvement).
+
+Rule 2: **"Avatar visible in frame" ≠ "talking scene."** Per Neil's
+design intent: avatars can appear in many scenes visually, but only
+some of those are talking (lip-sync). The decision is
+script-and-scene-contextual — CTAs and testimonials delivered to
+the lens are talking; touching-cheek / applying-cream-in-mirror /
+sitting-thinking are b-roll even when the avatar's face is on
+screen. The PACING_RULE at api/_lib/prompts.ts:719 controls
+RHYTHM (max 2 consecutive talking for engagement); the classifier
+at services/geminiService.ts:2079 controls ENGINE ROUTING (Veo for
+talking, Kling for b-roll). They are COMPLEMENTARY layers, not
+duplicative — pacing limits the count, classifier picks the engine
+per scene.
+
+**Pairs with 2026-05-19 "Audit upstream before designing new
+downstream logic"** — same root pattern: a downstream stage
+re-inventing logic that's tightly coupled to upstream behavior.
+Same fix discipline: read the upstream's schema + sample its actual
+output before specifying downstream rules.
+
+**Future improvement (not in scope for this session):** Have
+`buildStoryboardPrompt` emit a `type: "avatar-talking" |
+"product-broll" | "metaphor-broll" | "cinematic"` field per scene
+directly. Then `generateVideoPrompts` reads the field instead of
+inferring from description text — single source of truth, no
+classifier-vocabulary-drift risk. Storyboard schema is TUNED so
+this is a future session's plan, not a quick patch.
