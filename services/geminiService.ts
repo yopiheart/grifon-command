@@ -3,7 +3,6 @@ import { BusinessInfo, Script, Scene, StoryboardResponse, VideoPrompt, MarketRes
 import { getSupabase } from './supabaseClient';
 import { startJob, endJob, type JobKind } from './activeJobsService';
 import { saveActiveJob, clearActiveJob } from './activeJobStore';
-import { normalizeTaglish } from './phoneticNormalizer';
 
 export interface ProxyCallOpts {
   jobLabel?: string;
@@ -2029,7 +2028,7 @@ export const generateVideoPrompts = async (storyboard: Scene[], businessInfo: Bu
     const storyboardText = storyboard.map((s, i) => {
         const typeTag = !!s.startFramePrompt ? "TYPE: HOOK/VISUAL-EFFECT" : "TYPE: STANDARD";
         const transitionLine = s.transitionEffect ? `\nTransitionEffect: ${s.transitionEffect}` : '';
-        return `Scene ${i + 1} [${typeTag}]:\nScript: "${normalizeTaglish(s.scriptLine)}"\nDescription: ${s.sceneDescription}\nFocus: ${s.referenceImage}\nPrompt: ${s.imagePrompt || s.startFramePrompt}${transitionLine}`;
+        return `Scene ${i + 1} [${typeTag}]:\nScript: "${s.scriptLine.replace(/[–—]/g, ', ')}"\nDescription: ${s.sceneDescription}\nFocus: ${s.referenceImage}\nPrompt: ${s.imagePrompt || s.startFramePrompt}${transitionLine}`;
     }).join('\n\n');
 
     let additionalInstructions = "";
