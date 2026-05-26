@@ -72,6 +72,20 @@ For a real PR/diff, a multi-component change, or any check that gates "is this U
 - Inline class blob that re-implements an existing primitive instead of importing GlassPanel/GoldButton — call this out as "use the primitive" even if classes are technically correct.
 - New legacy-style accent (pink/cyan border) introduced on a touched component — DESIGN.md mandates purging these on any component you touch.
 
+## 5-Dimension scoring rubric (after the checklist)
+
+After the violation walk, score the work on five axes 0–10. This converts brand-check from a flag list into a scorecard PRs can be graded against. Adapted from the Huashu design framework — same shape, mapped to Grifon's brand register.
+
+- **Philosophy Coherence (0–10):** Does the surface read as the cinematic dark-luxury Grifon register, or does it drift into corporate/SaaS/light-mode/generic territory? Wrong family ID = low score even if every individual token passes.
+- **Visual Hierarchy (0–10):** Are focal points unambiguous? Single gold CTA per fold? Headline → sub → body → meta ladder respected? Sub-labels in mono-caps actually subordinate to body?
+- **Execution Craft (0–10):** Tracking on display sizes, icon ↔ text rhythm (w-4/w-5 + gap-2/gap-3, see "Alignment & icon-text rhythm"), shrink-0 on flex icons, alignment at element zoom — the small stuff Cursor/Stripe/Claude get right.
+- **Functionality (0–10):** Does the surface read at 375x667 mobile as well as desktop? Tap targets ≥44px? Focus states visible? Form errors recoverable? Native input styling fully replaced?
+- **Innovation / Brand Distinctiveness (0–10):** Does it feel like *Grifon* and not generic Tailwind/shadcn? Real product imagery via [brand-spec.md](../../../brand-spec.md) over CSS-mocked fake UI? Glass + blur + gold doing its job, not a tossed-on theme?
+
+Total = sum/50. Treat **≥40/50 with zero CRITICAL flags as the ship bar** for marketing surfaces (landing, pricing). For in-app surfaces, ≥35/50 with no CRITICAL flags is acceptable.
+
+**Quick Wins clause.** After scoring, list up to three 5-minute fixes that would meaningfully raise the score. These are the asks the builder can act on immediately — not aspirational rewrites.
+
 ## Output format
 
 ```
@@ -81,10 +95,21 @@ brand-check: <component or diff name>
     - components/Foo.tsx:88 — text-blue-400 on CTA, must be #FFCC00
   NIT (n): rounding, primitive inlining
     - components/Foo.tsx:51 — inline glass classes; replace with <GlassPanel>
-  VERDICT: BRAND_FAIL — 2 critical, 1 nit
+  SCORE:
+    Philosophy Coherence:        7/10  — drifts toward generic SaaS in bento section
+    Visual Hierarchy:            8/10
+    Execution Craft:             6/10  — icons not shrink-0 in mobile CTA row
+    Functionality:               9/10
+    Innovation / Distinctiveness: 5/10  — UI showcase still CSS-mocked, not real screenshots
+    TOTAL:                       35/50
+  QUICK WINS (max 3, 5 min each):
+    1. Add shrink-0 to the lucide icon in components/Foo.tsx:88
+    2. Swap CSS mock at LandingPage.tsx:478 for real screenshot from brand-spec.md
+    3. Tighten headline tracking with tracking-tight on the display class
+  VERDICT: BRAND_FAIL — 2 critical, 1 nit, score 35/50 (below 40 ship bar)
 ```
 
-CRITICAL = breaks the brand register (black canvas, non-gold accent, missing primitive). NIT = correct in spirit but should use the primitive or token. PASS = no mismatches.
+CRITICAL = breaks the brand register (black canvas, non-gold accent, missing primitive). NIT = correct in spirit but should use the primitive or token. SCORE = quantitative grading per the 5-dim rubric. PASS = no mismatches AND total ≥40/50.
 
 ## Out of scope
 

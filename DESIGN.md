@@ -15,10 +15,12 @@ typography:
     fontFamily: Inter, Geist, SF Pro
     fontSize: 3rem
     fontWeight: 700
+    letterSpacing: -0.025em
   headline-lg:
     fontFamily: Inter, Geist, SF Pro
     fontSize: 2rem
     fontWeight: 700
+    letterSpacing: -0.02em
   body-lg:
     fontFamily: Inter, Geist, SF Pro
     fontSize: 1.125rem
@@ -30,11 +32,11 @@ typography:
   label-md:
     fontFamily: Inter, Geist, SF Pro
     fontSize: 0.875rem
-    fontWeight: 500
+    fontWeight: 600
   label-caps:
     fontFamily: JetBrains Mono
     fontSize: 0.625rem
-    fontWeight: 500
+    fontWeight: 600
     letterSpacing: 0.15em
 rounded:
   none: 0
@@ -79,6 +81,8 @@ Cinematic, high-end, premium SaaS. Dark mode only. **Unreal Engine meets Hollywo
 
 Every surface should feel like a floating panel in a sci-fi interface: deep OLED black canvas, frosted glass with heavy backdrop blur, gold as the single electrifying accent. The goal is that a user opening the app feels they've entered a premium production environment, not a corporate dashboard.
 
+This file is the **system tokens** spec. Real brand assets (product screenshots, logo files, capture log) live in [brand-spec.md](brand-spec.md) — the frozen asset manifest. DESIGN.md = what to build with. brand-spec.md = what to build *from*.
+
 ## Colors
 
 A minimal palette: a single gold accent against neutral ink gradients on deep OLED black.
@@ -92,6 +96,8 @@ A minimal palette: a single gold accent against neutral ink gradients on deep OL
 ## Typography
 
 - **headline-display / headline-lg:** Inter / Geist / SF Pro — clean geometric sans. Page titles frequently use a gradient fill (`bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500`) for the cinematic effect. Vertical (`to-b`) over horizontal (`to-r`) — multi-line headlines fade top-to-bottom like a movie title card; horizontal washes look like a banner gradient and break the cinematic register.
+- **Display tracking is tight, not default.** Headlines use negative letter-spacing (`tracking-tight` ≈ -0.025em on display, -0.02em on h-lg). Inter's default tracking reads loose at display sizes; tightening pulls headlines into the "premium tech" register without abandoning the cinematic dark identity. Body sizes (`body-lg` / `body-md`) keep default tracking — only display sizes get tightened.
+- **Weight ladder is 400 / 600 / 700 — no 500.** Weight 500 reads in-between and undermines hierarchy; if a label needs more presence than body (400), go to 600. Bold is 700. (Aligned with Apple's typographic discipline.)
 - **body-lg / body-md:** Same sans family.
 - **label-caps:** JetBrains Mono, uppercase, wide tracking. Reserved for sub-labels and technical data to reinforce the "control panel" feel.
 
