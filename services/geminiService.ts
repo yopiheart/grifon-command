@@ -1524,7 +1524,7 @@ export const generateAvatarImage = async (
     **SMART CASTING DIRECTOR LOGIC:**
     - **Age Anchor:** Use the provided age range of ${ageRange} as the primary anchor for bone structure and skin elasticity. DO NOT allow skin conditions ( daylight Melasma, Acne, or Pigmentation) to force the subject into looking older than the requested range.
     - **Professional Retouch Layer:** Maintain firm skin, clear eye-whites, and a vibrant presence appropriate for ${ageRange}.
-    - **Commercial Reality:** If a skin condition is implied by the product context, render the condition accurately but keep the subject's overall appearance 'Aspirational' and 'Commercial-Ready'.
+    - **Brand Promise Made Visual (CRITICAL):** The avatar models the IDEAL post-purchase customer — what the brand promises to deliver, NOT the customer's current pain. For skincare: render clear, healthy, even-toned skin. For weight-loss: render the goal physique. For hair-care: render healthy hair. The script's wound language carries the pain; the avatar carries the promise. Ignore aversive-state descriptors in the target-audience context (e.g., "oily", "acne-prone", "pimply", "uneven", "dull", "overweight", "thinning") — those describe the customer's CURRENT problem, not the rendered subject.
     - **Lighting Protocol:** Always use 'Commercial Beauty Lighting' (diffused, soft, high-key) to ensure the subject look relatable and premium for a marketing agency client.
 
     **Visuals:**
