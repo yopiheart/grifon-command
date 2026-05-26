@@ -45,6 +45,7 @@ import {
   signUpWithPassword,
   requestPasswordReset,
   resendSignupConfirmation,
+  updatePassword,
 } from './services/supabaseClient';
 import { popIntendedPlan, startCheckout } from './services/billingService';
 import { getSession, setSession, clearSession, type WizardSessionV1 } from './services/wizardSessionStore';
@@ -111,7 +112,7 @@ const App: React.FC = () => {
   const [authPassword, setAuthPassword] = useState('');
   const [authConfirm, setAuthConfirm] = useState('');
   const [authError, setAuthError] = useState('');
-  const [authMode, setAuthMode] = useState<'sign_in' | 'sign_up' | 'forgot' | 'check_email'>('sign_in');
+  const [authMode, setAuthMode] = useState<'sign_in' | 'sign_up' | 'forgot' | 'check_email' | 'reset_password'>('sign_in');
   const [authNotice, setAuthNotice] = useState('');
   const [pendingSignUpEmail, setPendingSignUpEmail] = useState('');
   const [userEmail, setUserEmail] = useState<string | null>(null);
@@ -232,7 +233,20 @@ const App: React.FC = () => {
       setIsCheckingSession(false);
     });
 
-    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'PASSWORD_RECOVERY' && session?.user) {
+        // Recovery session is valid but we don't want to land them on the
+        // dashboard — push them to the reset_password form and keep
+        // isAuthenticated false until they actually set a new password.
+        setAuthMode('reset_password');
+        setAuthEmail(session.user.email ?? '');
+        setAuthError('');
+        setAuthNotice('');
+        if (typeof window !== 'undefined' && window.location.hash) {
+          window.history.replaceState({}, '', window.location.pathname + window.location.search);
+        }
+        return;
+      }
       if (session?.user) {
         setUserEmail(session.user.email ?? null);
         setUserId(session.user.id);
@@ -509,6 +523,28 @@ const App: React.FC = () => {
       setAuthNotice('Reset link sent. Check your inbox.');
     } catch (err: any) {
       setAuthError(err?.message || 'Could not send reset link.');
+    } finally {
+      setIsSigningIn(false);
+    }
+  };
+
+  const handleResetPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setAuthError('');
+    setAuthNotice('');
+    if (!authPassword || authPassword.length < 8) {
+      setAuthError('Password must be at least 8 characters.');
+      return;
+    }
+    setIsSigningIn(true);
+    try {
+      await updatePassword(authPassword);
+      await getSupabase().auth.signOut();
+      setAuthPassword('');
+      setAuthMode('sign_in');
+      setAuthNotice('Password updated. Sign in with your new password.');
+    } catch (err: any) {
+      setAuthError(err?.message || 'Failed to update password. Try again.');
     } finally {
       setIsSigningIn(false);
     }
@@ -880,6 +916,9 @@ const App: React.FC = () => {
                     {authError && (
                       <p className="text-red-500 text-sm font-mono text-center border border-red-900/50 bg-red-900/20 p-2 rounded-xl">{authError}</p>
                     )}
+                    {authNotice && (
+                      <p className="text-[#FFCC00] text-sm font-mono text-center border border-yellow-900/40 bg-yellow-900/10 p-2 rounded-xl">{authNotice}</p>
+                    )}
                     <GoldButton type="submit" className="w-full justify-center py-4" disabled={isSigningIn}>
                       {isSigningIn ? 'SIGNING IN...' : 'SIGN IN'}
                     </GoldButton>
@@ -964,6 +1003,35 @@ const App: React.FC = () => {
                         // BACK_TO_TERMINAL
                       </button>
                     </div>
+                  </>
+                )}
+
+                {authMode === 'reset_password' && (
+                  <>
+                    <div className="text-center mb-6">
+                      <p className="text-[10px] font-mono text-[#FFCC00] tracking-[0.4em] uppercase mb-3">// SET_NEW_PASSWORD</p>
+                      <p className="text-sm text-zinc-400 font-mono leading-relaxed">
+                        Choose a new password to finish recovery.
+                      </p>
+                    </div>
+                    <form onSubmit={handleResetPassword} className="space-y-6">
+                      <Input
+                        id="reset-password"
+                        type="password"
+                        label="NEW PASSWORD"
+                        placeholder="At least 8 characters"
+                        value={authPassword}
+                        onChange={(e) => setAuthPassword(e.target.value)}
+                        required
+                        minLength={8}
+                      />
+                      {authError && (
+                        <p className="text-red-500 text-sm font-mono text-center border border-red-900/50 bg-red-900/20 p-2 rounded-xl">{authError}</p>
+                      )}
+                      <GoldButton type="submit" className="w-full justify-center py-4" disabled={isSigningIn}>
+                        {isSigningIn ? 'UPDATING...' : 'UPDATE PASSWORD'}
+                      </GoldButton>
+                    </form>
                   </>
                 )}
 
