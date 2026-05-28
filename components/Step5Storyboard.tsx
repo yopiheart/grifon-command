@@ -451,23 +451,21 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
             </div>
             <span className="text-[10px] text-[#FFCC00] font-mono tracking-widest uppercase animate-pulse">SYNTHESIZING</span>
           </div>
-          <div className="space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
             {[0, 1, 2, 3, 4, 5].map(i => (
-              <div key={i} className="grid grid-cols-1 md:grid-cols-4 gap-6 p-6 bg-zinc-950/50 backdrop-blur-md rounded-xl border border-white/10 relative overflow-hidden">
+              <div key={i} className="flex flex-col gap-4 p-5 bg-zinc-950/50 backdrop-blur-md rounded-xl border border-white/10 relative overflow-hidden">
                 <div className="absolute inset-0 -translate-x-full animate-[storyboard-shimmer_2s_ease-in-out_infinite] bg-gradient-to-r from-transparent via-white/5 to-transparent pointer-events-none" />
-                <div className="md:col-span-3 space-y-4">
-                  <div className="flex items-center gap-3">
-                    <span className="bg-[#FFCC00]/5 text-[#FFCC00]/40 text-[10px] font-black px-3 py-1 rounded-full border border-[#FFCC00]/10 font-mono tracking-tighter">SCENE_0{i + 1}</span>
-                    <span className="h-[1px] flex-1 bg-white/5" />
-                  </div>
-                  <div className="h-5 bg-white/5 rounded w-3/4" />
-                  <div className="p-3 bg-zinc-900/50 border border-white/5 rounded-xl space-y-2">
-                    <div className="h-3 bg-white/5 rounded w-full" />
-                    <div className="h-3 bg-white/5 rounded w-5/6" />
-                  </div>
+                <div className="flex items-center gap-3">
+                  <span className="bg-[#FFCC00]/5 text-[#FFCC00]/40 text-[10px] font-black px-3 py-1 rounded-full border border-[#FFCC00]/10 font-mono tracking-tighter">SCENE_0{i + 1}</span>
+                  <span className="h-[1px] flex-1 bg-white/5" />
                 </div>
-                <div className="flex justify-center md:justify-end items-center">
+                <div className="flex justify-center items-center">
                   <div className="w-28 h-48 bg-zinc-900/50 border border-white/5 rounded-xl" />
+                </div>
+                <div className="h-5 bg-white/5 rounded w-3/4" />
+                <div className="p-3 bg-zinc-900/50 border border-white/5 rounded-xl space-y-2">
+                  <div className="h-3 bg-white/5 rounded w-full" />
+                  <div className="h-3 bg-white/5 rounded w-5/6" />
                 </div>
               </div>
             ))}
@@ -478,77 +476,76 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
       {modalImageUrl && <ImageModal imageUrl={modalImageUrl} onClose={() => setModalImageUrl(null)} filename={modalImageFilename} />}
       
       {!loadingStoryboard && storyboardData.length > 0 && (
-        <div className="space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 max-h-[58vh] overflow-y-auto pr-1 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             {storyboardData.map((scene, index) => (
-                <div key={index} className="grid grid-cols-1 md:grid-cols-4 gap-6 p-6 bg-zinc-950/50 backdrop-blur-md rounded-xl border border-white/10 hover:border-[#FFCC00]/40 transition-all group relative overflow-hidden">
+                <div key={index} className="flex flex-col gap-4 p-5 bg-zinc-950/50 backdrop-blur-md rounded-xl border border-white/10 hover:border-[#FFCC00]/40 transition-all group relative overflow-hidden">
                     <div className="absolute -right-20 -top-20 w-40 h-40 bg-[#FFCC00]/5 blur-[80px] rounded-full group-hover:bg-[#FFCC00]/10 transition-colors" />
 
-                    <div className="md:col-span-3 space-y-4">
-                        <div className="flex items-center gap-3">
-                            <span className="bg-[#FFCC00]/10 text-[#FFCC00] text-[10px] font-black px-3 py-1 rounded-full border border-[#FFCC00]/20 font-mono tracking-tighter">SCENE_0{index + 1}</span>
-                            <span className="h-[1px] flex-1 bg-white/5"></span>
-                            {!scene.manualUploadUrl && !scene.manualEndFrameUrl && (() => {
-                                const hasImage = !!(scene.imageUrl || scene.endFrameImageUrl);
-                                const idle = hasImage ? 'REGEN' : 'GENERATE';
-                                const busy = hasImage ? 'REGENERATING...' : 'GENERATING...';
-                                return (
-                                    <button
-                                        onClick={() => handleGenerateSingleScene(index, true)}
-                                        disabled={generatingImageIndex !== null || loadingImages}
-                                        className="text-[9px] font-mono tracking-widest text-zinc-400 hover:text-[#FFCC00] disabled:opacity-30 disabled:cursor-not-allowed transition-colors flex items-center gap-1.5 px-2 py-1 border border-white/10 hover:border-[#FFCC00]/40 rounded-full"
-                                        title={hasImage ? 'Regenerate this scene only' : 'Generate this failed scene'}
-                                    >
-                                        <RefreshCw className={`w-3 h-3 ${generatingImageIndex === index ? 'animate-spin' : ''}`} /> {generatingImageIndex === index ? busy : idle}
-                                    </button>
-                                );
-                            })()}
-                        </div>
-                        <p className="text-lg font-bold text-white leading-tight">"{scene.scriptLine}"</p>
-                        <div className="p-3 bg-zinc-900 border border-white/10 rounded-xl space-y-2">
-                            <p className="text-[11px] text-zinc-400 font-mono leading-relaxed italic">
-                                <span className="text-[#FFCC00] not-italic font-bold tracking-widest mr-2">[NARRATIVE]</span>
-                                {scene.sceneDescription}
-                            </p>
-                            {(scene.imagePrompt || scene.startFramePrompt) && (
-                                <p className="text-[11px] text-zinc-500 font-mono leading-relaxed italic border-t border-white/5 pt-2">
-                                    <span className="text-zinc-300 not-italic font-bold tracking-widest mr-2">[VISUAL_PROMPT]</span>
-                                    {scene.startFramePrompt
-                                        ? `${scene.startFramePrompt}${scene.endFramePrompt ? `  →  ${scene.endFramePrompt}` : ''}`
-                                        : scene.imagePrompt}
-                                </p>
-                            )}
-                        </div>
+                    <div className="flex items-center gap-3">
+                        <span className="bg-[#FFCC00]/10 text-[#FFCC00] text-[10px] font-black px-3 py-1 rounded-full border border-[#FFCC00]/20 font-mono tracking-tighter">SCENE_0{index + 1}</span>
+                        <span className="h-[1px] flex-1 bg-white/5"></span>
+                        {!scene.manualUploadUrl && !scene.manualEndFrameUrl && (() => {
+                            const hasImage = !!(scene.imageUrl || scene.endFrameImageUrl);
+                            const idle = hasImage ? 'REGEN' : 'GENERATE';
+                            const busy = hasImage ? 'REGENERATING...' : 'GENERATING...';
+                            return (
+                                <button
+                                    onClick={() => handleGenerateSingleScene(index, true)}
+                                    disabled={generatingImageIndex !== null || loadingImages}
+                                    className="text-[9px] font-mono tracking-widest text-zinc-400 hover:text-[#FFCC00] disabled:opacity-30 disabled:cursor-not-allowed transition-colors flex items-center gap-1.5 px-2 py-1 border border-white/10 hover:border-[#FFCC00]/40 rounded-full"
+                                    title={hasImage ? 'Regenerate this scene only' : 'Generate this failed scene'}
+                                >
+                                    <RefreshCw className={`w-3 h-3 ${generatingImageIndex === index ? 'animate-spin' : ''}`} /> {generatingImageIndex === index ? busy : idle}
+                                </button>
+                            );
+                        })()}
                     </div>
 
-                    <div className="flex justify-center md:justify-end gap-3 items-center">
+                    <div className="flex justify-center gap-3 items-center">
                         {scene.startFramePrompt ? (
                             <>
-                                <SceneImageDisplay 
-                                    src={scene.manualUploadUrl || scene.imageUrl} 
+                                <SceneImageDisplay
+                                    src={scene.manualUploadUrl || scene.imageUrl}
                                     isManual={!!scene.manualUploadUrl}
-                                    isLoading={generatingImageIndex === index && !scene.imageUrl && !scene.manualUploadUrl} 
-                                    label="START_FRAME" 
-                                    onClick={() => { setModalImageUrl(scene.manualUploadUrl || scene.imageUrl!); setModalImageFilename(`Scene_${index+1}_Start.png`); }} 
+                                    isLoading={generatingImageIndex === index && !scene.imageUrl && !scene.manualUploadUrl}
+                                    label="START_FRAME"
+                                    onClick={() => { setModalImageUrl(scene.manualUploadUrl || scene.imageUrl!); setModalImageFilename(`Scene_${index+1}_Start.png`); }}
                                     onUpload={() => handleManualUploadClick(index, 'start')}
                                 />
-                                <SceneImageDisplay 
-                                    src={scene.manualEndFrameUrl || scene.endFrameImageUrl} 
+                                <SceneImageDisplay
+                                    src={scene.manualEndFrameUrl || scene.endFrameImageUrl}
                                     isManual={!!scene.manualEndFrameUrl}
-                                    isLoading={generatingImageIndex === index && !scene.endFrameImageUrl && !scene.manualEndFrameUrl} 
-                                    label="END_FRAME" 
-                                    onClick={() => { setModalImageUrl(scene.manualEndFrameUrl || scene.endFrameImageUrl!); setModalImageFilename(`Scene_${index+1}_End.png`); }} 
+                                    isLoading={generatingImageIndex === index && !scene.endFrameImageUrl && !scene.manualEndFrameUrl}
+                                    label="END_FRAME"
+                                    onClick={() => { setModalImageUrl(scene.manualEndFrameUrl || scene.endFrameImageUrl!); setModalImageFilename(`Scene_${index+1}_End.png`); }}
                                     onUpload={() => handleManualUploadClick(index, 'end')}
                                 />
                             </>
                         ) : (
-                            <SceneImageDisplay 
-                                src={scene.manualUploadUrl || scene.imageUrl} 
+                            <SceneImageDisplay
+                                src={scene.manualUploadUrl || scene.imageUrl}
                                 isManual={!!scene.manualUploadUrl}
-                                isLoading={generatingImageIndex === index && !scene.imageUrl && !scene.manualUploadUrl} 
-                                label="STATIC_SHOT" 
-                                onClick={() => { setModalImageUrl(scene.manualUploadUrl || scene.imageUrl!); setModalImageFilename(`Scene_${index+1}.png`); }} 
+                                isLoading={generatingImageIndex === index && !scene.imageUrl && !scene.manualUploadUrl}
+                                label="STATIC_SHOT"
+                                onClick={() => { setModalImageUrl(scene.manualUploadUrl || scene.imageUrl!); setModalImageFilename(`Scene_${index+1}.png`); }}
                                 onUpload={() => handleManualUploadClick(index, 'start')}
                             />
+                        )}
+                    </div>
+
+                    <p className="text-base font-bold text-white leading-tight">"{scene.scriptLine}"</p>
+                    <div className="p-3 bg-zinc-900 border border-white/10 rounded-xl space-y-2">
+                        <p className="text-[11px] text-zinc-400 font-mono leading-relaxed italic">
+                            <span className="text-[#FFCC00] not-italic font-bold tracking-widest mr-2">[NARRATIVE]</span>
+                            {scene.sceneDescription}
+                        </p>
+                        {(scene.imagePrompt || scene.startFramePrompt) && (
+                            <p className="text-[11px] text-zinc-500 font-mono leading-relaxed italic border-t border-white/5 pt-2">
+                                <span className="text-zinc-300 not-italic font-bold tracking-widest mr-2">[VISUAL_PROMPT]</span>
+                                {scene.startFramePrompt
+                                    ? `${scene.startFramePrompt}${scene.endFramePrompt ? `  →  ${scene.endFramePrompt}` : ''}`
+                                    : scene.imagePrompt}
+                            </p>
                         )}
                     </div>
                 </div>
@@ -556,7 +553,7 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
         </div>
       )}
 
-      <div className="mt-12 flex justify-between gap-6">
+      <div className="mt-6 pt-6 border-t border-white/10 flex justify-between items-center gap-6">
         <button onClick={onBack} className="text-zinc-400 hover:text-white transition-colors font-mono text-sm tracking-widest uppercase">&lt; BACK</button>
         <GoldButton onClick={onNext} disabled={loadingImages || loadingStoryboard || !(storyboardData.some(s => s.imageUrl || s.manualUploadUrl))} className="rounded-full px-12">
             CONFIRM & DEPLOY &gt;
