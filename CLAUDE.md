@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 # App Overview
 
-**GRIFON COMMAND** is a multi-module AI marketing platform built with React + Vite + TypeScript + Tailwind CSS. It guides users through creating video ad scripts, storyboards, avatars, and visual concepts. All generative features run through `services/geminiService.ts` (Google Gemini API).
+**GRIFON COMMAND** is a multi-module AI marketing platform built with React + Vite + TypeScript + Tailwind CSS. It guides users through creating video ad scripts, storyboards, avatars, and visual concepts. Generative features span three AI providers, all proxied through `api/*` handlers: **Gemini** (text/image/video) via `services/geminiService.ts` + `api/gemini/*`, **Kling** (alternate video provider) via `api/kling/*`, and **ElevenLabs** (voice) via `services/voiceService.ts` + `api/elevenlabs/*`.
 
 ## Dev Commands
 
@@ -15,7 +15,18 @@ npm install          # install dependencies
 npm run dev          # start Vite dev server (also serves api/* via middleware bridge)
 npm run build        # tsc type-check + Vite production build
 npm run preview      # preview production build locally
+npm run test         # vitest, one-shot (CI mode)
+npm run test:watch   # vitest, watch mode
+npm run design:lint  # lint DESIGN.md tokens (also: design:tailwind, design:spec)
 ```
+
+Tests use **vitest** (no Jest/Playwright). The live Gemini regression test
+([tests/regression/script-gen.regression.test.ts](tests/regression/script-gen.regression.test.ts))
+is skipped by default to avoid burning quota — opt in with `RUN_REGRESSION=1`
+(PowerShell: `$env:RUN_REGRESSION='1'; npx vitest run tests/regression/...`). Test
+patterns and the mandatory `.js`-extension import rule for ESM live in
+[tests/CLAUDE.md](tests/CLAUDE.md). The `design:*` scripts are the `@google/design.md`
+token tooling that backs [DESIGN.md](DESIGN.md).
 
 `npm run dev` serves `api/*.ts` handlers locally through a Vite middleware (`vercelApiDevPlugin` in [vite.config.ts](vite.config.ts)) so the Gemini proxy works in dev exactly as it does on Vercel. The plugin reads all `.env` keys (no prefix filter) into `process.env` so server handlers see the unprefixed secrets below.
 
@@ -100,13 +111,17 @@ This gives Neil a two-gate workflow: approve the plan, then approve the goal tha
 
 **Multi-step wizard** — The `/app` route renders an 8-step ad creation wizard (Steps 1–7 + storyboard). All wizard state lives in `App.tsx` and is passed as props. Step components are in `components/Step*.tsx`.
 
-**Dashboard modules** — After the wizard, users access standalone tools from a `Dashboard` component. Each tool is its own component in `components/`. Module routing is a string `activeModule` state in `App.tsx`. Modules include: `MarketResearch`, `OfferOptimizer`, `EditVideo`, `ImageEditor`, `CaptionHeadline`, `OrganicCalendar`, `ImageAdsGen`, `CinematicSpecStudio`, `GenerateVideo`, `SignalModulator`, `InfluencerForge`.
+**Dashboard modules** — After the wizard, users access standalone tools from a `Dashboard` component. Each tool is its own component in `components/`. Module routing is a string `activeModule` state in `App.tsx`. Modules include: `MarketResearch`, `OfferOptimizer`, `EditVideo`, `ImageEditor`, `CaptionHeadline`, `OrganicCalendar`, `ImageAdsGen`, `CinematicSpecStudio`, `GenerateVideo`, `SignalModulator`, `InfluencerForge`, `IntelligenceUplink`.
 
 **Services** — All services are lazily initialized singletons:
 - `geminiService.ts` — all Gemini calls. **Prompts, system instructions, response schemas, and model IDs are tuned — do not edit their content without explicit approval.** Transport, types, error wrapping, and structural refactors are fair game. Models are defined at the top (`textModel`, `researchTextModel`, `avatarModel`, etc.).
 - `supabaseClient.ts` — Supabase singleton via `getSupabase()`
 - `billingService.ts` — PayMongo checkout flow
 - `voiceService.ts` — ElevenLabs voice synthesis
+
+  Also: `activeJobsService.ts` / `activeJobStore.ts` (async render-job tracking → `ui/ActiveJobsPanel.tsx`), `wizardSessionStore.ts` (wizard draft persistence/resume → `ui/ResumeDraftCard.tsx`), `recentWorkService.ts` (→ `ui/RecentWorkCard.tsx`), `checkoutService.ts` (checkout state), `phoneticNormalizer.ts` (voice text normalization).
+
+**Async video pattern** — Video renders are long-running, so they are fire-then-poll: a generate call returns a job, then the client polls `api/gemini/video/poll.ts` / `api/kling/video/poll.ts` until done. A Vercel cron, `api/cron/cleanup-gemini-videos.ts`, reaps expired Gemini video artifacts.
 
 **Types** — All shared TypeScript types are in `types.ts`. The main pipeline data type is `AllData`.
 
