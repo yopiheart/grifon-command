@@ -85,3 +85,39 @@ ElevenLabs voice-clone swap, test-suite repair.
 Decide merge order for the two branches to main, then pick from the backlog:
 **#1 (hook end-frame ref)** and **#2 (CTA accent)** are the two highest-value
 pre-launch render-quality fixes. #3 (editor trim) is verification, not a build.
+
+---
+
+## Copy-paste opening prompt for the next session
+
+```
+Continuing GRIFON COMMAND launch-prep. Last session = 2026-05-29 (Ninja Blast smoke + 2 fixes).
+
+READ FIRST, in this order:
+1. workflows/handoff_2026-05-29-ninja-smoke-hookfix-uigrid.md  ← full context + backlog
+2. CLAUDE.md (Plan→Goal pipeline, TUNED rules, cafe-PC defreezer)
+3. agent_lessons.md (Director AI pre-flight: hero-FIRST 2026-05-24 + 2026-05-26)
+4. services/CLAUDE.md + api/CLAUDE.md (TUNED-file rules)
+
+STATE: Two fixes are pushed but NOT merged to main — both single-concern, independently mergeable:
+- fix/hook-length-cap   (api/_lib/prompts.ts — TUNED: hook 5-8 word cap, prompt + parser guard)
+- fix/wizard-deep-scroll-grid  (Step5/Step6 components — capped 2-col grid, layout-only)
+
+FIRST: tell me your recommended merge order for those two branches to main, then wait for my go.
+
+THEN, the pre-launch render-quality backlog (prioritized in the handoff):
+- #1 Scene-1 hook end-frame: pass hero as reference so the hook product matches the
+     hero like other b-roll scenes (SCENE_01.referenceImage is effectively "none").
+- #2 CTA American-accent: in Taglish mode the CTA (and every line) must keep Tagalog
+     anchor words so Veo holds the Filipino accent. TUNED prompt — needs per-line
+     approval + grill-me before editing.
+I want #1 and #2 as today's targets. #3 (editor trims trailing dead air) is verification,
+not a build — confirm the AI Editor/EDL cuts trailing silence, don't prompt-hack it.
+
+RULES: TUNED edits (prompts.ts / geminiService.ts) need my per-line approval — never
+autonomously. Hero-FIRST before any wizard smoke. I sign in myself in Playwright (no test
+account). Commit early (defreezer). Don't drift into post-launch items (CMO 2-5, ElevenLabs
+swap, "simwano" slur).
+
+Today's goal: launch by June. Pick up from the handoff's backlog, not from scratch.
+```
