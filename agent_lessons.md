@@ -602,3 +602,29 @@ directly. Then `generateVideoPrompts` reads the field instead of
 inferring from description text — single source of truth, no
 classifier-vocabulary-drift risk. Storyboard schema is TUNED so
 this is a future session's plan, not a quick patch.
+
+### 2026-05-29 — Retire the audit Gem; drive raw Gemini 3.5 Flash via Playwright instead
+**Context:** The 2026-05-26 rule established a pre-configured "Grifon Director AI
+Video Auditor" Gem as Claude's ears (Claude can't ingest video/audio). Neil
+moved to remove that Gem — its phonetics-anchored Knowledge went stale after we
+reverted phonetic respelling (the "lahong" disaster, Session Q/R), and the Gem
+had already confabulated non-existent file paths because its Knowledge is a
+frozen snapshot.
+**Lesson:** A pre-configured Gem with embedded Knowledge ROTS — its single
+documented failure was stale Knowledge driving confabulated paths + re-proposing
+already-shipped layers. The fix is NOT a better Gem; it's to drive **raw Gemini
+3.5 Flash through the Playwright browser** (Neil signs into his Gemini account in
+the Chromium when we reach the audit step) with a **Claude-authored prompt pasted
+fresh each render** — so current context is injected every time and there is no
+Knowledge to drift. The combo: **Playwright = eyes, Gemini 3.5 Flash = ears
+(emits text Claude reads), Opus = brain**. Gemini stays the observation layer
+(what failed + timestamps + quoted on-screen text, BANNED from naming filenames/
+functions/paths); Claude stays the integration layer (maps to fixes against live
+code). Keep the 2026-05-26 ensemble discipline (2–3 passes, union for CRITICAL
+gates) AND add a hard tiebreak: **a model auditing another model's audio can also
+hallucinate — for any launch-blocking gate, if the passes disagree, Neil's ear is
+ground truth, not Gemini's.** Bake "audit every render before it propagates" into
+the testing flow. Canonical protocol + copy-paste audit prompt + structured
+output schema live in [workflows/video_audit_protocol.md](workflows/video_audit_protocol.md)
+(repo, not the defreezer-wiped ~/.claude memory). This SUPERSEDES the 2026-05-26
+"Grifon Director AI Video Auditor Gem" workflow.
