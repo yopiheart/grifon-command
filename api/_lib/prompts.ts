@@ -288,7 +288,7 @@ export const ADSCRIPT_COMMON_RULES = (businessInfo: BusinessInfo, brandName: str
     English is allowed ONLY for:
       (a) Brand names — proper nouns like "${brandName}" stay English.
       (b) Prices and numbers — "₱650", "P22 vs P180", "30 days".
-      (c) Universal CTAs — "Tap here", "Click below", "Link sa bio".
+      (c) A borrowed CTA verb ("Click", "Tap", "Visit") — but ONLY embedded inside a Tagalog frame (see TAGLISH ACCENT LOCK below). An all-English CTA like "Click below" is BANNED in Taglish mode.
     English is FORBIDDEN for product-spec terms. Translate to natural Taglish or OMIT:
       "single-origin medium roast" → "specialty kape" or drop it (visuals carry it)
       "cafe-quality goodness"      → "parang barista ang lasa" or drop it
@@ -297,6 +297,7 @@ export const ADSCRIPT_COMMON_RULES = (businessInfo: BusinessInfo, brandName: str
     If you cannot find natural Taglish for a technical term, OMIT IT. Visuals carry technical specs; copy carries emotion.
   - If ENGLISH: stay 4th-5th grade English. No Taglish slips. No "po", "naman", "talaga", "lasa".
   - NEVER mix registers inside one line. A Taglish line stays Taglish; an English line stays English.
+  - **TAGLISH ACCENT LOCK (Taglish mode only):** Veo reads the spoken accent from each line's DOMINANT language — an English-leaning line renders an American accent. Every line MUST be TAGALOG-DOMINANT (~70/30 Tagalog-to-English by word count). The CTA is the highest-risk line and MUST additionally OPEN and CLOSE on a Tagalog word (open "Tara,"/"Ngayon na,"; close "ngayon"/"subukan mo na"). English is limited to carve-outs that stay verbatim and buried mid-line: brand name, numbers/scarcity ("first 50"), and offer value-add nouns ("free shipping", "recipe ebook"). The frame — verbs (except a borrowed "click"/"tap"), connectors, pronouns — is Tagalog.
 
   **TIMING & SLIDE EFFECT:**
   - **HOOK:** Strictly 3 seconds max. 5-8 words TOTAL on ONE line — never split into multiple sentences or stacked clauses. The 7-12 word/line rule below is for BODY lines ONLY and does NOT apply to the hook.
@@ -416,7 +417,7 @@ export const buildAdScriptPrompt = (
       4. **Transformation:** The shift from Pain Point ("${businessInfo.painPoint}") to Result ("${businessInfo.benefit}").
       5. **Proof:** Highlight the 1-2 selected features. Stack comparative differentiation: "Marami akong na-try na ibang [category], pero ito lang ang gumana sa akin kasi ${businessInfo.separator}." This is where the differentiator earns its keep. If separator is empty, fall back to: "Highlight the 1-2 selected features."
       6. **Objection Killer:** Solve the common doubt.
-      7. **CTA:** Ad-native call-to-action with WARM recommendation tone (not direct-sell). Drive CURIOSITY to the landing page / Messenger — specific prices and peso amounts belong THERE, not in the ad.
+      7. **CTA:** Ad-native call-to-action with WARM recommendation tone (not direct-sell). Drive CURIOSITY to the landing page / Messenger — specific prices and peso amounts belong THERE, not in the ad. In Taglish mode the CTA MUST obey the TAGLISH ACCENT LOCK (Tagalog-dominant, opens + closes on a Tagalog word).
 
          BANNED CTA PHRASES (organic-IG patterns, not for paid ads):
          - "link sa bio" / "link in bio"  → use "click below" / "tap below" / "click here"
@@ -430,9 +431,9 @@ export const buildAdScriptPrompt = (
          Even if "${offer}" contains explicit prices, STRIP them. The CTA's job is to make them tap — the LP/Messenger reveals the price.
 
          REQUIRED IN OUTPUT: at least ONE scarcity word (e.g., "first 50", "limited", "today only") AND ALL non-price value-adds named in "${offer}" — bonuses, free shipping, guarantees, ebooks — appear verbatim or near-verbatim. Drop the peso amounts but keep the bonus items by name.
-         - ✅ "Click below — first 50 may free shipping at libreng recipe ebook."
-         - ❌ "Click below, first 50 for P999 may free shipping!"
-         If offer is empty, fall back to: "Click below para subukan."
+         - ✅ "Tara, click mo na sa baba — first 50 lang may libreng shipping at recipe ebook, subukan mo na." (Tagalog-dominant; opens "Tara", closes "subukan mo na")
+         - ❌ "Click below, first 50 for P999 may free shipping!" (English-dominant AND leaks price — banned)
+         If offer is empty, fall back to: "Tara, click mo na sa baba para subukan."
 
       **INTRO PATTERN EXAMPLES** (for beat 1 — adapt content to audience, do not copy literally):
       - OFW audience → "Ako si Mark. 5 years na akong nasa Saudi para mabuhay yung pamilya — pero may isang bagay na halos natalo ako."
@@ -459,7 +460,7 @@ export const buildAdScriptPrompt = (
         3. **Struggles:** Deep dive into "${businessInfo.painPoint}".
         4. **Discovery:** Introducing "${brandName}'s ${businessInfo.product}".
         5. **Result + Proof:** Visual payoff based on "${businessInfo.benefit}". Stack proof: "Hindi tulad ng iba — kami ${businessInfo.separator}." This is the "why believe?" slot. NEVER in the hook (kills curiosity); NEVER in the CTA (offer owns that). If separator is empty, fall back to: "Visual payoff based on benefit."
-        6. **CTA:** High-energy ad-native call-to-action. Drive CURIOSITY to the landing page / Messenger — specific prices and peso amounts belong THERE, not in the ad.
+        6. **CTA:** High-energy ad-native call-to-action. Drive CURIOSITY to the landing page / Messenger — specific prices and peso amounts belong THERE, not in the ad. In Taglish mode the CTA MUST obey the TAGLISH ACCENT LOCK (Tagalog-dominant, opens + closes on a Tagalog word).
 
            BANNED CTA PHRASES (organic-IG patterns, not for paid ads):
            - "link sa bio" / "link in bio"  → use "click below" / "tap below" / "click here"
@@ -473,9 +474,9 @@ export const buildAdScriptPrompt = (
            Even if "${offer}" contains explicit prices, STRIP them. The CTA's job is to make them tap — the LP/Messenger reveals the price.
 
            REQUIRED IN OUTPUT: at least ONE scarcity word (e.g., "first 50", "limited slots", "today only") AND ALL non-price value-adds named in "${offer}" — bonuses, free shipping, guarantees, ebooks — appear verbatim or near-verbatim. Drop the peso amounts but keep the bonus items by name.
-           - ✅ "I-click below — first 50 lang may free shipping at libreng recipe ebook."
-           - ❌ "I-click below, 50 slots for P299, P499, P999, free shipping!"
-           If offer is empty, fall back to: "I-click below ngayon."
+           - ✅ "Tara, click mo na sa baba — first 50 lang may libreng shipping at recipe ebook, ngayon na!" (Tagalog-dominant; opens "Tara", closes "ngayon na"; no banned 'i-' prefix)
+           - ❌ "Click below, 50 slots for P299, P499, P999, free shipping!" (English-dominant AND leaks price — banned)
+           If offer is empty, fall back to: "Tara, click mo na sa baba ngayon."
 
         **IDENTITY PATTERN EXAMPLES** (for beat 2 — adapt to audience, do not copy literally):
         - OFW family audience → "Tuwing umagang malayo sa pamilya, kape ang nag-aalala sa'yo."
