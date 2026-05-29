@@ -13,6 +13,11 @@
             "type": "command",
             "shell": "bash",
             "command": "grep -qE '\"file_path\"[[:space:]]*:[[:space:]]*\"[^\"]*(/(api|services|components)/|\\\\\\\\(api|services|components)\\\\\\\\|/App\\.tsx|\\\\\\\\App\\.tsx)' && { mkdir -p .tmp && touch .tmp/.edits-this-turn; } || true"
+          },
+          {
+            "type": "command",
+            "shell": "bash",
+            "command": "if command -v node >/dev/null 2>&1; then node scripts/scan-secrets.mjs --hook; fi"
           }
         ]
       }

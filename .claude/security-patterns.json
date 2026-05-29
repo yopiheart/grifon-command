@@ -1,0 +1,45 @@
+{
+  "$comment": "Secret/leak rules for scripts/scan-secrets.mjs. Scoped tight to minimize false positives. Only source code (.ts/.tsx/.js/.jsx/.mjs/.cjs) and .env* files are scanned; .md docs and the scanner's own files are skipped. See CLAUDE.md → Security review (pre-beta gate).",
+  "scanExtensions": [".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs"],
+  "scanEnvFiles": true,
+  "walkSkipDirs": ["node_modules", ".git", "dist", "build", ".vercel", "coverage"],
+  "rules": [
+    {
+      "id": "vite-server-secret",
+      "severity": "critical",
+      "description": "Server-only secret given a VITE_ prefix — Vite bundles VITE_* into the browser. Server secrets must stay unprefixed.",
+      "pattern": "VITE_[A-Z0-9_]*(SERVICE_ROLE|SECRET|API_KEY|PRIVATE_KEY|PRIVATE)"
+    },
+    {
+      "id": "service-role-outside-api",
+      "severity": "critical",
+      "description": "SUPABASE_SERVICE_ROLE_KEY referenced outside api/ — the service-role key must never reach client-bundled code.",
+      "pattern": "SUPABASE_SERVICE_ROLE_KEY",
+      "pathExcludes": ["api/", "scripts/"]
+    },
+    {
+      "id": "jwt-literal",
+      "severity": "critical",
+      "description": "Hardcoded JWT / Supabase key literal in source — keys belong in .env, read via env vars.",
+      "pattern": "eyJ[A-Za-z0-9_-]{15,}\\.eyJ[A-Za-z0-9_-]{15,}"
+    },
+    {
+      "id": "sk-literal",
+      "severity": "critical",
+      "description": "Hardcoded sk- style API key literal (OpenAI/Anthropic-style).",
+      "pattern": "\\bsk-[A-Za-z0-9]{20,}"
+    },
+    {
+      "id": "paymongo-secret",
+      "severity": "critical",
+      "description": "Hardcoded PayMongo secret key (sk_live_/sk_test_). Only the public key (pk_) is client-safe.",
+      "pattern": "\\bsk_(live|test)_[A-Za-z0-9]{10,}"
+    },
+    {
+      "id": "console-log-secret",
+      "severity": "warn",
+      "description": "console logging a token/secret/key/password variable — risks leaking secrets to client devtools or server logs.",
+      "pattern": "console\\.(log|error|warn|info|debug)\\([^)]*\\b(token|secret|apiKey|api_key|password|serviceRole)\\b"
+    }
+  ]
+}

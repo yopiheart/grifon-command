@@ -64,6 +64,15 @@ Before any planning conversation, large refactor, or new module spec, load:
 
 If a planning conversation introduces a new domain concept not in `UBIQUITOUS_LANGUAGE.md`, propose adding it before writing code.
 
+### Security review
+
+Two layers, since Grifon ships Supabase auth + PayMongo billing + a `SUPABASE_SERVICE_ROLE_KEY`:
+
+- **Edit-time (automatic).** A `PostToolUse` hook runs [scripts/scan-secrets.mjs](scripts/scan-secrets.mjs) on every Write/Edit, matching the regex rules in [.claude/security-patterns.json](.claude/security-patterns.json). It blocks (feeds back to Claude) on a critical hit — chiefly a server secret given a `VITE_` prefix or the service-role key referenced outside `api/`. Run it standalone too: `node scripts/scan-secrets.mjs components App.tsx services`.
+- **Pre-beta (manual gate).** Run the built-in `/security-review` slash command on the branch before cutting beta, for the semantic pass the regex layer can't do (auth/RLS gaps, injection, broken access control). A commit-time hook was deliberately *not* added — commit hooks are fragile on the defreezer PC; a documented manual gate is more reliable here.
+
+The product's `SAFETY_SETTINGS = BLOCK_NONE` (Gemini) is a **deliberate** no-friction stance for direct-response copy — not a gap. Do not "harden" it without Neil's say-so.
+
 ## Context Hygiene
 
 LLM reasoning degrades sharply past ~100k tokens of context. Treat the conversation window as a budget.
@@ -102,6 +111,17 @@ After every approved plan (`ExitPlanMode` accepted) that involves code changes t
 5. Do NOT begin code edits until Neil responds.
 
 This gives Neil a two-gate workflow: approve the plan, then approve the goal that executes it. Both gates are user-controlled — the agent never fires `/goal` on its own.
+
+### Parallel Background Agents
+
+Parallel subagents / Dynamic Workflows are useful here for **read/explore and mechanical refactors** — audit-punch-list triage, regression fan-out across the modules, multi-file search. They are *not* a license for unattended autonomy. The fence, stated once:
+
+- **Read anything.** Background/parallel agents may read the whole repo.
+- **Write only outside the tuned files.** No agent may write to `services/geminiService.ts` or `api/_lib/prompts.ts`. This is the same boundary as the `surgical-edit` and `/goal` TUNED-file guardrails — extended to background agents.
+- **Never auto-merge.** Any diff touching tuned prompt/schema/model-ID content escalates to Neil for review; the agent never merges its own branch (see `agent_lessons.md` 2026-05-09).
+- **Verify the load-bearing output, not an intermediate.** A fan-out that confirms "step succeeded" while the actual artifact regressed is a false pass (see `agent_lessons.md` 2026-05-19).
+- **Don't chase enterprise-scale autonomy.** "Hundreds of subagents auto-merging across 100k LOC" is a monorepo use case — not a pre-beta solo SaaS on a defreezer PC. On this machine, background subagents exit silently on internal limits and scheduled wakeups don't survive a topic change, so a long autonomous run reports success while the pipeline is dead. Keep a human at the merge gate.
+- **`worktree.bgIsolation`** (Claude Code v2.1.143+) is the right tool *only* when concurrent agents write files in parallel and would collide; leave it off otherwise.
 
 ## Architecture
 
