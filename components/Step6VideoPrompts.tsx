@@ -104,7 +104,7 @@ const Step6VideoPrompts: React.FC<Step6Props> = ({ storyboard, videoPrompts, set
   };
 
   return (
-    <GlassPanel className="max-w-4xl mx-auto">
+    <GlassPanel className="max-w-6xl mx-auto">
       <div className="mb-8 border-b border-white/10 pb-6">
         <h2 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight">
           Step 7: Create Video Prompts
@@ -133,7 +133,7 @@ const Step6VideoPrompts: React.FC<Step6Props> = ({ storyboard, videoPrompts, set
                 </button>
             </div>
 
-            <div className="space-y-4 max-h-[50vh] overflow-y-auto pr-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 max-h-[55vh] overflow-y-auto pr-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             {prompts.map((p, index) => {
                 const displayLine = storyboard[index]?.scriptLine || p.scriptLine;
                 
