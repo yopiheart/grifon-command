@@ -152,10 +152,18 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
         const scriptType = businessInfo.scriptType || 'MrBeast';
         const productDesc = businessInfo.productImageDescription || businessInfo.product || "the product";
 
-        // Hook morph (start+end frame): the START frame is the "before" metaphor and
-        // must stay product-free; the hero reference belongs on the END frame (reveal).
-        const isHookMorph = !!scene.startFramePrompt && !!scene.endFramePrompt;
+        // Hook morph (Scene 1 only): the START frame is the "before" metaphor and must stay
+        // product-free; the hero reference belongs on the END frame (reveal). Gated on index===0
+        // so a body scene that ever carries both frames is never silently given hook treatment.
+        const isHookMorph = index === 0 && !!scene.startFramePrompt && !!scene.endFramePrompt;
         const startFrameRefs = isHookMorph ? { ...references, productUrl: undefined } : references;
+        // Keep the start-frame MODE consistent with the stripped refs. With productUrl removed,
+        // a raw 'product'/'both' tag would fail generateSceneImage's guard and fall through to
+        // STRICT_NEGATIVE ("no humans") while the avatar image is still attached — a contradiction.
+        // Derive the mode from what's actually present: avatar → 'avatar' (IDENTITY_LOCK), else 'none'.
+        const startFrameMode: 'avatar' | 'product' | 'both' | 'none' | undefined = isHookMorph
+            ? (startFrameRefs.avatarUrl ? 'avatar' : 'none')
+            : scene.referenceImage;
 
         // When the hook's END frame reveals the product, anchor it to the hero photo even
         // though the model reliably tags scenes[0].referenceImage "none" (3/3 in testing) —
@@ -169,8 +177,11 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
             .toLowerCase()
             .split(/[^a-z0-9]+/)
             .filter(w => w.length >= 3 && !PRODUCT_STOPWORDS.has(w));
+        // Word-boundary match (not substring) so a short product token doesn't match INSIDE an
+        // unrelated word — e.g. "Green Tea" → "tea" must not fire on "s·tea·m", "Argan Oil" → "oil"
+        // not on "b·oil·ing". productWords are alphanumeric-only, so \b is safe with no escaping.
         const endFrameRevealsProduct = isHookMorph && !!heroProductUrl && !!scene.endFramePrompt
-            && productWords.some(w => scene.endFramePrompt!.toLowerCase().includes(w));
+            && productWords.some(w => new RegExp(`\\b${w}\\b`).test(scene.endFramePrompt!.toLowerCase()));
         const endFrameRefs = endFrameRevealsProduct
             ? { ...references, productUrl: heroProductUrl }
             : references;
@@ -192,7 +203,7 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
                     productDesc,
                     undefined,
                     index,
-                    scene.referenceImage
+                    startFrameMode
                 );
             }
         }
