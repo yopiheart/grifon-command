@@ -4,6 +4,12 @@
 
 This is the meta-workflow. It doesn't do the work itself — it points to the workflows that do, and tracks overall progress. **Source of truth = the code + `git log`.** This file summarizes; it does not replace.
 
+> ⏭ **NEXT-SESSION PING (left 2026-05-29, for Neil):** A merge decision is parked on branch `fix/hook-refs-hardening` (3 commits ahead of `main`). Neil asked to be reminded.
+> - `9c67f04` — dev tooling (secret scanner + parallel-agent fence). Safe, verified, can go to main anytime.
+> - `350181f` — storyboard hook-wiring fix (`components/Step5Storyboard.tsx`).
+> - `21893e6` — **TUNED** CTA/BANNED prompt change (`api/_lib/prompts.ts`); needs build-green + `gemini-eval` clean **before** main.
+> **Decision:** (A) verify the two product fixes → merge whole branch; or (B) cherry-pick just `9c67f04` to main, leave the rest on-branch. Lean B unless the storyboard + CTA fixes are confirmed tested. Not urgent — scanner is a nice-to-have, work is already pushed/safe. *Delete this block once decided.*
+
 ## Status as of 2026-05-22 (Omni hook arc C–G logged · RENDER ALL → Signal Modulator hand-off verified)
 
 This file skipped 12 days — the Omni hook arc (Sessions C–G) shipped + closed without landing here. Two things bring it current: (1) the Omni arc summary, (2) a verification verdict on the RENDER ALL → Signal Modulator hand-off.
