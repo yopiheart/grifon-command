@@ -299,9 +299,9 @@ export const ADSCRIPT_COMMON_RULES = (businessInfo: BusinessInfo, brandName: str
   - NEVER mix registers inside one line. A Taglish line stays Taglish; an English line stays English.
 
   **TIMING & SLIDE EFFECT:**
-  - **HOOK:** Strictly 3 seconds max (approx. 5-8 words).
+  - **HOOK:** Strictly 3 seconds max. 5-8 words TOTAL on ONE line — never split into multiple sentences or stacked clauses. The 7-12 word/line rule below is for BODY lines ONLY and does NOT apply to the hook.
   - **BODY LINES:** Strictly 3-5 seconds max per line.
-  - **WORD COUNT:** Strictly 7-12 words per line (The Sabri Suby "Slide").
+  - **WORD COUNT (BODY LINES ONLY):** Strictly 7-12 words per body line (The Sabri Suby "Slide"). The hook is exempt — it stays 5-8 words.
   `;
 
 export const ADSCRIPT_DIRECTOR_CRITIQUE_INSTRUCTION = `
@@ -347,7 +347,8 @@ export const ADSCRIPT_HOOK_SEED_PROTOCOL = (contrarianTruth?: string): string =>
 
   RULES:
   - Use the EXACT mechanism word from contrarianTruth (e.g., "thirsty", "daily presence", "kusina") — do not paraphrase the load-bearing noun. The mechanism word IS the reframe.
-  - 5-8 words for paid social. Up to 12 words for retargeting. Never longer.
+  - 5-8 words for paid social. Up to 12 words for retargeting. Never longer. This is the TOTAL for the whole hook line, not per sentence.
+  - ONE belief-flip only. Do NOT stack two "Hindi X. Y." pairs and do NOT append a second brand-name flip (e.g. "...Kulang ka lang sa [Brand]") — stacking doubles the length and dilutes the reframe.
   - Match script language (Taglish or English) to the rest of the ad — Taglish ads get Taglish contrarian, English ads get English. Do not mix registers inside one variant.
 
   WHY THIS IS NON-NEGOTIABLE:
@@ -489,6 +490,30 @@ export const buildAdScriptPrompt = (
   }
 };
 
+// Hook ceiling guard. The adscript model reliably overshoots the 5-8 word hook
+// spec by stacking extra beats (observed 18/14/21 words across rolls); prompt
+// instructions alone don't hold it. Enforce deterministically: keep at most the
+// first 2 sentences AND <=12 words (the "never longer" ceiling in the HOOK SEED
+// PROTOCOL). Always keeps >=1 sentence so the contrarian flip survives.
+const MAX_HOOK_SENTENCES = 2;
+const MAX_HOOK_WORDS = 12;
+
+const capHookLine = (hook: unknown): string => {
+  if (typeof hook !== 'string') return hook as string;
+  const trimmed = hook.trim();
+  const sentences = trimmed.match(/[^.!?]+[.!?]*/g)?.map(s => s.trim()).filter(Boolean) ?? [trimmed];
+  const kept: string[] = [];
+  let words = 0;
+  for (const s of sentences) {
+    const w = s.split(/\s+/).filter(Boolean).length;
+    if (kept.length >= MAX_HOOK_SENTENCES) break;
+    if (kept.length >= 1 && words + w > MAX_HOOK_WORDS) break;
+    kept.push(s);
+    words += w;
+  }
+  return kept.length ? kept.join(' ') : trimmed;
+};
+
 /**
  * Parse the JSON returned by the adscript prompt into the canonical Script shape.
  * Mirrors the client-side parser that previously lived in generateAdScript.
@@ -497,8 +522,8 @@ export const parseAdScriptResponse = (rawText: string): Script => {
   const cleanedText = cleanJson(rawText);
   const json = JSON.parse(cleanedText);
   return {
-    hook1: Array.isArray(json.hook1) ? json.hook1 : [],
-    hook2: Array.isArray(json.hook2) ? json.hook2 : [],
+    hook1: Array.isArray(json.hook1) ? json.hook1.map(capHookLine) : [],
+    hook2: Array.isArray(json.hook2) ? json.hook2.map(capHookLine) : [],
     body: Array.isArray(json.body) ? json.body : [],
     strategicAudit: json.strategicAudit || '',
   };
