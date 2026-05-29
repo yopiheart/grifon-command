@@ -157,6 +157,27 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
         const isHookMorph = !!scene.startFramePrompt && !!scene.endFramePrompt;
         const startFrameRefs = isHookMorph ? { ...references, productUrl: undefined } : references;
 
+        // When the hook's END frame reveals the product, anchor it to the hero photo even
+        // though the model reliably tags scenes[0].referenceImage "none" (3/3 in testing) —
+        // otherwise the end frame gets no reference and img-gen invents a look-alike that
+        // drifts from the uploaded hero. GUARD: only force the hero when the end-frame prompt
+        // actually names the product, so a PURELY abstract-metaphor hook (reveal isn't the
+        // product) stays product-free. getReferenceData uses productImageUrls[0].
+        const heroProductUrl = businessInfo.productImageUrls?.[0];
+        const PRODUCT_STOPWORDS = new Set(['the', 'and', 'for', 'with', 'your', 'this', 'that', 'from', 'sleek', 'clean', 'portable']);
+        const productWords = (businessInfo.product || '')
+            .toLowerCase()
+            .split(/[^a-z0-9]+/)
+            .filter(w => w.length >= 3 && !PRODUCT_STOPWORDS.has(w));
+        const endFrameRevealsProduct = isHookMorph && !!heroProductUrl && !!scene.endFramePrompt
+            && productWords.some(w => scene.endFramePrompt!.toLowerCase().includes(w));
+        const endFrameRefs = endFrameRevealsProduct
+            ? { ...references, productUrl: heroProductUrl }
+            : references;
+        const endFrameMode: 'avatar' | 'product' | 'both' | 'none' | undefined = endFrameRevealsProduct
+            ? (references.avatarUrl ? 'both' : 'product')
+            : scene.referenceImage;
+
         if (scene.startFramePrompt || scene.imagePrompt) {
             const prompt = scene.startFramePrompt || scene.imagePrompt;
             if ((!scene.imageUrl || force) && prompt) {
@@ -181,14 +202,14 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
                 scene.endFramePrompt,
                 aspectRatio,
                 '1K',
-                references,
+                endFrameRefs,
                 ethnicity,
                 getBrandColors(),
                 scriptType,
                 productDesc,
                 undefined,
                 index + 100,
-                scene.referenceImage
+                endFrameMode
             );
         }
 
