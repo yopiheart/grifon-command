@@ -628,3 +628,50 @@ the testing flow. Canonical protocol + copy-paste audit prompt + structured
 output schema live in [workflows/video_audit_protocol.md](workflows/video_audit_protocol.md)
 (repo, not the defreezer-wiped ~/.claude memory). This SUPERSEDES the 2026-05-26
 "Grifon Director AI Video Auditor Gem" workflow.
+
+### 2026-05-29 — A fix that depends on the model obeying a NEW classification rule must be verified in-vivo; prefer a deterministic code fallback
+**Context:** Backlog #1 (hook end-frame ≠ hero) was addressed by `fix/hook-endframe-ref`,
+whose load-bearing half was a TUNED prompt rule telling `buildStoryboardPrompt` to classify
+the Scene-1 hook end frame's `referenceImage` as `product`/`both` when it reveals the
+product (instead of the old hardcoded `none`). The branch was pushed and gated on in-vivo
+verification.
+**What went wrong:** In vivo, the model tagged the hook `referenceImage: "none"` **3/3**
+across re-maps even though every end frame explicitly revealed the real product ("Blast
+Portable Blender, logo facing camera"). The model has a hard prior that Scene 1 = `none`
+and the added rule didn't move it. Because `getReferenceData` only passes the hero photo
+when `referenceImage` is `product`/`both`, the end frame got **no** hero reference and
+img-gen invented a look-alike ("Blast" ≠ Ninja hero) + hallucinated a face from the morph
+prompt language. The prompt-only fix was effectively inert.
+**Lesson — two parts.** (1) When a fix's success depends on the model **following a new
+classification/labeling instruction**, do NOT trust the instruction — sample the model's
+actual output (here, re-run 2–3× and read the field) before merging. A rule the model
+ignores is a no-op that looks shipped. (2) When the downstream effect is deterministic and
+the model's compliance is unreliable, **anchor it in code, not in the prompt.** The real fix
+was a guarded Step5 code fallback: force the hero `productUrl` + product mode onto a
+hook-morph END frame when the end-frame prompt names the product (guard keeps purely
+abstract hooks product-free), independent of the model's `referenceImage` tag. Pair it with
+a TUNED tightening (STILL_FRAME_RULE forbids transition/reveal verbs in frame prompts; hook
+end frame = RESOLVED still) so the reveal frame is a calm product shot — which also starved
+the face hallucination. Shipped + validated in vivo, commit `b6b9791`.
+
+### 2026-05-29 — Don't accept "your change broke X" without checking the change even touches X's code path
+**Context:** During the same gate run, Neil reported two storyboard regressions he
+attributed to "the changes": Scene 2 rendered blank, and Scene 7's avatar rendered as a
+"black woman" (wrong ethnicity) — "not experiencing this last time, after the changes."
+**What went wrong (nothing — the attribution was wrong):** `git diff` showed fix #1 touched
+only the hook's START frame (`startFrameRefs`), so for any non-morph scene `isHookMorph` is
+false and scenes 2–8 run a **byte-for-byte identical code path** to before. The actual
+causes: Scene 2 = a transient **upstream 502** from `/api/gemini/image` (console-confirmed;
+regenerated fine on retry — same class as agent_lessons 2026-05-13), and Scene 7 = a
+**stochastic** classifier framing (that sample described a product-only "backpack being
+opened" with no avatar, so no avatar reference anchored → model invented a stranger; on the
+clean run the scene was framed *with* the avatar and rendered the correct Filipino male).
+**Lesson:** When a user attributes a regression to a recent change, first verify the change
+**touches the failing path at all** (`git diff` the branch; trace whether the symptom's code
+ran differently). Then classify the symptom: **upstream** (inspect the console/network — a
+502/timeout is the provider, not your code; retry), **stochastic** (regenerate — image/video
+models vary run-to-run; a clean second sample disproves a code regression), or **real code
+regression** (the changed path demonstrably produces the bad output). Reporting "the changes
+didn't cause this, here's the actual cause" honestly — with evidence — is more useful than
+defensively fixing a phantom. The recurring image-API 502s this session were load, not us;
+saying so (and just regenerating) was the correct response.

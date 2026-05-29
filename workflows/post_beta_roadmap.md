@@ -289,6 +289,57 @@ remaining structural fix. Neil endorsed scoping it during the Session G grill
 
 ---
 
+### 10. AI Editor — Final-Render Executor + Trailing-Silence Trim (the unbuilt Remotion Lambda)
+
+**What:** Build the Phase-2 executor that renders the AI Editor's EDL (cut-list JSON)
+into a single trimmed final MP4, including **audio-based trailing-silence trim** — cut
+each scene at speech-end so the dead air (and the post-speech blur the video model
+back-loads) is removed from the delivered video. This is distinct from item #9 (that
+trims the Omni **hook's dead HEAD**; this trims **every talking scene's dead TAIL**).
+
+**Why it matters:** Veo renders fixed ~6s clips but the VO ends earlier. In the
+2026-05-29 in-vivo CTA render (Ninja Blast, Taglish), the avatar speaks **0–4s** then
+**4–6s is silent + has stray blur effects** — Neil's exact observation. Every talking
+scene overshoots the same way (handoff 2026-05-29 backlog #3). The deliverable today
+**keeps** that dead tail, which reads as amateur and pads runtime.
+
+**Why parked:** It is a **render/storage-pipeline build**, not a prompt fix — the single
+biggest launch-readiness gap surfaced by the gate work. Verified 2026-05-29 (PM handoff):
+the EDL's `keepSegments` is a **script-text heuristic** (`scriptLine.length/18`, clamped
+3–8s — `services/geminiService.ts:1269-1273`), **not** audio speech-end detection; and the
+Remotion Lambda that would assemble + trim the EDL into a final MP4 is **not wired**
+(`components/EditVideo.tsx:266-269` is a "stub brain"; the only output today is a
+downloadable EDL JSON, `EditVideo.tsx:70-71`). So nothing assembles a final video, so
+nothing trims silence. **Do NOT prompt-hack clip lengths to mask it** (handoff #3).
+
+**When to resume:** When EITHER (a) a beta user flags trailing dead air / padded clips,
+OR (b) the AI Editor is promoted from EDL-export to actual final-render (this IS that
+work). Likely the same PR as item #9 (both are post-render video-pipeline trims) — share
+the ffmpeg/Remotion mechanism.
+
+**Where to start:**
+1. Decide the trim signal: **audio speech-end detection** (accurate — detect last
+   non-silent audio frame per scene) over the current script-text heuristic. The
+   heuristic can stay as a fallback when audio analysis is unavailable.
+2. Executor: Remotion Lambda (or ffmpeg server-side — **not in the cafe-PC env nor
+   currently the Vercel function runtime**, same blocker as item #9) that takes the EDL
+   JSON + the scene MP4s/audio and renders one trimmed, concatenated final MP4.
+3. Wire it into the AI Editor flow in `components/EditVideo.tsx` (replace the
+   EDL-JSON-only output with a "render final video" action) — or the async poll pattern
+   if the render is long-running.
+4. Smoke-test on a known-overshoot clip (the 2026-05-29 Ninja CTA: talks 0–4s, dead
+   4–6s) — confirm the delivered MP4 ends ~4s with no blur tail.
+
+**Scope estimate:** Multi-day — this is a new render pipeline, not a tweak. ffmpeg/Remotion
+runtime availability is the key unknown (shared with item #9).
+
+**Source:** 2026-05-29 gate session — Neil's in-vivo CTA render observation ("talks 0–4,
+4–6 is dead air + blur, my editor will cut it, correct?") + the 2026-05-29 PM handoff #3
+verification that the trimmer/executor is unbuilt. Neil endorsed scoping (not building) it
+during the gate session.
+
+---
+
 ## How to add new items
 
 When Neil endorses an idea but says "not now":
