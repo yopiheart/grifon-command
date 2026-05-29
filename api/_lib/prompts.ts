@@ -889,6 +889,11 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
       tag as "none". The reference photo would mislead the model into copying it verbatim. Only tag "product"
       or "both" when the ACTUAL hero product is the subject.
 
+      **SCENE 1 (HOOK) END-FRAME REFERENCE (classify the REVEAL frame only):**
+      Scene 1's "referenceImage" tag applies to the END frame (the reveal payoff) ONLY — the START frame is always the metaphor/"before" still and never carries a product reference.
+      - "product" (or "both" if the avatar is also in the reveal) — the hook's END frame reveals the ACTUAL hero product (the real labeled package materializes, the morph resolves into the real product, the explosion/teleport reveals the real product).
+      - "none" — the hook is a pure abstract metaphor (coffee-ring, dumped beans, environment-only) OR the end frame shows only a categorical look-alike, not the actual hero product. The CRITICAL ANTI-PATTERN above applies in full: a generic look-alike stays "none".
+
       **OUTPUT SCHEMA (CRITICAL):**
       Return a valid JSON Object with keys "scenes" (Array) and "strategicAudit" (String).
 
@@ -896,7 +901,7 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
       {
         "scriptLine": "...",
         "sceneDescription": "...",
-        "referenceImage": "none",
+        "referenceImage": "product" | "both" | "none",   // classify the END/REVEAL frame ONLY — see SCENE 1 (HOOK) END-FRAME REFERENCE rule above
         "startFramePrompt": "Static composition of the FIRST FROZEN FRAME — describe the world-state at moment 1 as a still photograph. No motion verbs (see STILL_FRAME_RULE).",
         "endFramePrompt": "Static composition of the FINAL FROZEN FRAME — describe the world-state at moment 2 as a still photograph. No motion verbs (see STILL_FRAME_RULE).",
         "transitionEffect": "Name of the VFX that animates between the two stills (the only field where motion lives)."

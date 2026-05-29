@@ -152,6 +152,11 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
         const scriptType = businessInfo.scriptType || 'MrBeast';
         const productDesc = businessInfo.productImageDescription || businessInfo.product || "the product";
 
+        // Hook morph (start+end frame): the START frame is the "before" metaphor and
+        // must stay product-free; the hero reference belongs on the END frame (reveal).
+        const isHookMorph = !!scene.startFramePrompt && !!scene.endFramePrompt;
+        const startFrameRefs = isHookMorph ? { ...references, productUrl: undefined } : references;
+
         if (scene.startFramePrompt || scene.imagePrompt) {
             const prompt = scene.startFramePrompt || scene.imagePrompt;
             if ((!scene.imageUrl || force) && prompt) {
@@ -159,7 +164,7 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
                     prompt,
                     aspectRatio,
                     '1K',
-                    references,
+                    startFrameRefs,
                     ethnicity,
                     getBrandColors(),
                     scriptType,
