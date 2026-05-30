@@ -23,7 +23,7 @@ import { GoogleGenAI } from '@google/genai';
 import { getUserFromAccessToken } from '../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../_lib/rateLimit.js';
 import { getUserPlan } from '../_lib/userPlan.js';
-import { consumeMonthly } from '../_lib/quota.js';
+import { consumeMonthly, type MeterUnit } from '../_lib/quota.js';
 import {
   SAFETY_SETTINGS,
   cleanJson,
@@ -211,18 +211,31 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     });
   }
 
-  // Monthly plan allowance (reports = MarketMind). Distinct from the per-minute
-  // rate-limit above: this counts toward the user's tier cap and, when hit,
-  // raises the in-app upgrade wall via the 402 quota_exceeded contract that
-  // proxyCall recognizes. Consumes a slot before forwarding (same atomic
-  // pre-forward model as rate_limit_check).
-  if (isFlowMode && rawBody.flow === 'marketmind') {
+  // Monthly plan allowance. Distinct from the per-minute rate-limit above: this
+  // counts toward the user's tier cap and, when hit, raises the in-app upgrade
+  // wall via the 402 quota_exceeded contract that proxyCall recognizes. Consumes
+  // a slot before forwarding (same atomic pre-forward model as rate_limit_check).
+  //   - marketmind flow -> reports
+  //   - adscript flow    -> workflows (one ad-script generation = one workflow,
+  //     regenerations included, per Neil 2026-05-31)
+  //   - legacy meterUnit:'captions' -> captions (the caption call opts in via a
+  //     body hint so the shared legacy text endpoint meters ONLY captions, not
+  //     avatar/thumbnail/classifier/parse helpers). zod strips the hint from the
+  //     legacy body before it reaches Gemini.
+  let meterUnit: MeterUnit | null = null;
+  if (isFlowMode) {
+    if (rawBody.flow === 'marketmind') meterUnit = 'reports';
+    else if (rawBody.flow === 'adscript') meterUnit = 'workflows';
+  } else if (rawBody.meterUnit === 'captions') {
+    meterUnit = 'captions';
+  }
+  if (meterUnit) {
     const plan = await getUserPlan(user.id);
-    const quota = await consumeMonthly('reports', user.id, plan);
+    const quota = await consumeMonthly(meterUnit, user.id, plan);
     if (!quota.allowed) {
       return res.status(402).json({
         error: 'quota_exceeded',
-        scope: 'reports',
+        scope: meterUnit,
         used: quota.used,
         limit: quota.limit,
         remaining: 0,
