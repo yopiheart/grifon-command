@@ -12,6 +12,9 @@ import {
   formatPHP,
   processCardPayment,
   processEwalletPayment,
+  loadCheckoutDraft,
+  saveCheckoutDraft,
+  clearCheckoutDraft,
   type IntentResponse,
   type PlanId,
   type BillingCycle,
@@ -21,6 +24,8 @@ import { ORDER_BUMP } from '../config/checkout';
 interface CheckoutPageProps {
   email: string | null;
   onBack: () => void;
+  /** Open the Terms / Privacy page in-app, preserving checkout state for the return trip. */
+  onViewLegal?: (route: 'terms' | 'privacy') => void;
 }
 
 const parseQuery = (): { planId: PlanId; cycle: BillingCycle } => {
@@ -33,18 +38,25 @@ const parseQuery = (): { planId: PlanId; cycle: BillingCycle } => {
   return { planId, cycle };
 };
 
-const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack }) => {
+const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack, onViewLegal }) => {
   const { planId, cycle: initialCycle } = useMemo(parseQuery, []);
+  // Restore any draft so a trip to Terms / Privacy (or a refresh) doesn't wipe entries.
+  const draft = useMemo(loadCheckoutDraft, []);
   // Cycle is lifted into state so the in-checkout monthly↔annual toggle can re-fetch the intent.
-  const [cycle, setCycle] = useState<BillingCycle>(initialCycle);
+  const [cycle, setCycle] = useState<BillingCycle>(draft?.cycle ?? initialCycle);
   const [intent, setIntent] = useState<IntentResponse | null>(null);
   const [intentError, setIntentError] = useState<string | null>(null);
   const [activeMethod, setActiveMethod] = useState<PaymentMethod>('card');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const [phone, setPhone] = useState('');
-  const [agreedToTerms, setAgreedToTerms] = useState(false);
-  const [selectedAddOns, setSelectedAddOns] = useState<string[]>([]);
+  const [phone, setPhone] = useState(draft?.phone ?? '');
+  const [agreedToTerms, setAgreedToTerms] = useState(draft?.agreedToTerms ?? false);
+  const [selectedAddOns, setSelectedAddOns] = useState<string[]>(draft?.selectedAddOns ?? []);
+
+  // Persist non-sensitive selections so "Back to checkout" restores them. Card data is never stored.
+  useEffect(() => {
+    saveCheckoutDraft({ phone, agreedToTerms, selectedAddOns, cycle });
+  }, [phone, agreedToTerms, selectedAddOns, cycle]);
 
   const toggleAddOn = () =>
     setSelectedAddOns((prev) =>
@@ -99,6 +111,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack }) => {
       }
 
       if (result.status === 'succeeded') {
+        clearCheckoutDraft();
         window.location.href = '/billing/success';
         return;
       }
@@ -129,6 +142,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack }) => {
         return;
       }
       if (result.status === 'succeeded') {
+        clearCheckoutDraft();
         window.location.href = '/billing/success';
         return;
       }
@@ -182,6 +196,25 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack }) => {
   const authorizationText = `By clicking Pay, you authorize Grifon Command to charge ${formatPHP(
     breakdown.total_centavos
   )} to your selected payment method. This is a one-time payment for ${cycleNoun} of ${intent.plan.name} access. We'll email you before renewal — your subscription does not auto-renew.`;
+
+  // Rendered directly above the Pay button (in both card + e-wallet modes) so the tick stays in view.
+  // Legal links open in-app (onViewLegal) so the buyer returns to a fully-restored checkout.
+  const termsCheckbox = (
+    <label className="flex items-start gap-2.5 cursor-pointer select-none">
+      <input
+        type="checkbox"
+        checked={agreedToTerms}
+        onChange={(e) => setAgreedToTerms(e.target.checked)}
+        className="mt-0.5 h-4 w-4 shrink-0 rounded border-white/20 bg-zinc-950 accent-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00]"
+      />
+      <span className="text-xs text-zinc-400 leading-relaxed">
+        I agree to the{' '}
+        <button type="button" onClick={() => onViewLegal?.('terms')} className="text-[#FFCC00] hover:underline align-baseline">Terms of Service</button>{' '}
+        and have read the{' '}
+        <button type="button" onClick={() => onViewLegal?.('privacy')} className="text-[#FFCC00] hover:underline align-baseline">Privacy Policy</button>.
+      </span>
+    </label>
+  );
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white py-8 lg:py-16 px-4 lg:px-8">
@@ -252,21 +285,6 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack }) => {
             </div>
           )}
 
-          <label className="mb-4 flex items-start gap-2.5 cursor-pointer select-none">
-            <input
-              type="checkbox"
-              checked={agreedToTerms}
-              onChange={(e) => setAgreedToTerms(e.target.checked)}
-              className="mt-0.5 h-4 w-4 shrink-0 rounded border-white/20 bg-zinc-950 accent-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00]"
-            />
-            <span className="text-xs text-zinc-400 leading-relaxed">
-              I agree to the{' '}
-              <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-[#FFCC00] hover:underline">Terms of Service</a>{' '}
-              and have read the{' '}
-              <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-[#FFCC00] hover:underline">Privacy Policy</a>.
-            </span>
-          </label>
-
           {activeMethod === 'card' ? (
             <CardForm
               onSubmit={handleCardSubmit}
@@ -274,6 +292,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack }) => {
               totalLabel={totalLabel}
               authorizationText={authorizationText}
               submitDisabled={!canSubmit}
+              termsSlot={termsCheckbox}
             />
           ) : (
             <EwalletButtons
@@ -282,6 +301,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack }) => {
               isSubmitting={isSubmitting}
               authorizationText={authorizationText}
               submitDisabled={!canSubmit}
+              termsSlot={termsCheckbox}
             />
           )}
         </GlassPanel>
@@ -289,13 +309,13 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack }) => {
 
       <p className="text-center text-zinc-600 text-xs mt-8">
         Powered by PayMongo &middot;{' '}
-        <a href="/terms" className="hover:text-zinc-400 transition-colors">
+        <button type="button" onClick={() => onViewLegal?.('terms')} className="hover:text-zinc-400 transition-colors">
           Terms
-        </a>{' '}
+        </button>{' '}
         &middot;{' '}
-        <a href="/privacy" className="hover:text-zinc-400 transition-colors">
+        <button type="button" onClick={() => onViewLegal?.('privacy')} className="hover:text-zinc-400 transition-colors">
           Privacy
-        </a>
+        </button>
       </p>
 
       <RecentActivityToast />

@@ -1,10 +1,10 @@
 import React from 'react';
 import LegalPageLayout from './ui/LegalPageLayout';
 
-type Props = { onBack: () => void };
+type Props = { onBack: () => void; backLabel?: string };
 
-const TermsOfService: React.FC<Props> = ({ onBack }) => (
-  <LegalPageLayout title="Terms of Service" effectiveDate="April 20, 2026" onBack={onBack}>
+const TermsOfService: React.FC<Props> = ({ onBack, backLabel }) => (
+  <LegalPageLayout title="Terms of Service" effectiveDate="April 20, 2026" onBack={onBack} backLabel={backLabel}>
     <p>
       These Terms of Service ("Terms") govern your access to and use of Grifon.AI
       ("Grifon", "we", "us", "our"), an AI-powered marketing studio operated by

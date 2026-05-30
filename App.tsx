@@ -105,6 +105,9 @@ const ROUTE_PATHS: Record<Route, string> = {
 
 const App: React.FC = () => {
   const [currentRoute, setCurrentRoute] = useState<Route>(detectInitialRoute);
+  // When a legal page is opened from checkout, remember the checkout URL so the
+  // "Back to checkout" button can restore it (the checkout draft restores the form).
+  const [legalReturnHref, setLegalReturnHref] = useState<string | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isBooting, setIsBooting] = useState(false);
   const [bootLine, setBootLine] = useState(0);
@@ -638,6 +641,28 @@ const App: React.FC = () => {
     setCurrentRoute(route);
   };
 
+  // Open a legal page from checkout, remembering the exact checkout URL (incl. ?plan=&cycle=)
+  // so we can return the buyer to it with their entries intact.
+  const handleViewLegal = (route: 'terms' | 'privacy') => {
+    if (typeof window !== 'undefined') {
+      setLegalReturnHref(window.location.pathname + window.location.search);
+    }
+    goToLegal(route);
+  };
+
+  // Back button on a legal page: return to checkout if we came from there, else landing.
+  const handleLegalBack = () => {
+    if (legalReturnHref) {
+      if (typeof window !== 'undefined' && window.history.replaceState) {
+        window.history.replaceState({}, '', legalReturnHref);
+      }
+      setLegalReturnHref(null);
+      setCurrentRoute('checkout');
+    } else {
+      goToLegal('landing');
+    }
+  };
+
   if (currentRoute === 'billing_success') {
     return (
       <ErrorBoundary
@@ -688,7 +713,7 @@ const App: React.FC = () => {
         onReset={() => setCurrentRoute('pricing')}
         resetLabel="BACK TO PRICING"
       >
-        <CheckoutPage email={userEmail} onBack={() => setCurrentRoute('pricing')} />
+        <CheckoutPage email={userEmail} onBack={() => setCurrentRoute('pricing')} onViewLegal={handleViewLegal} />
       </ErrorBoundary>
     );
   }
@@ -712,7 +737,7 @@ const App: React.FC = () => {
   if (currentRoute === 'terms') {
     return (
       <ErrorBoundary name="route:terms" resetKey={currentRoute} onReset={() => goToLegal('landing')} resetLabel="BACK TO LANDING">
-        <TermsOfService onBack={() => goToLegal('landing')} />
+        <TermsOfService onBack={handleLegalBack} backLabel={legalReturnHref ? 'Back to checkout' : 'Back'} />
       </ErrorBoundary>
     );
   }
@@ -720,7 +745,7 @@ const App: React.FC = () => {
   if (currentRoute === 'privacy') {
     return (
       <ErrorBoundary name="route:privacy" resetKey={currentRoute} onReset={() => goToLegal('landing')} resetLabel="BACK TO LANDING">
-        <PrivacyPolicy onBack={() => goToLegal('landing')} />
+        <PrivacyPolicy onBack={handleLegalBack} backLabel={legalReturnHref ? 'Back to checkout' : 'Back'} />
       </ErrorBoundary>
     );
   }

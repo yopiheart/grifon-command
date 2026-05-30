@@ -68,6 +68,15 @@ For a real PR/diff, a multi-component change, or any check that gates "is this U
 - For brand-mark icons specifically: zoom to 200% AND verify the official colors actually render distinctly against the button surface. If the brand color and button color collide (Google Yellow on Grifon Gold), the surface is wrong — fix the button, don't ship the muddy mark.
 - Build-clean + page-scale screenshot does NOT count as visual verification. Many alignment failures are invisible at page scale and obvious at element zoom.
 
+**Responsive fit & legibility — the $100k-designer gate (Neil's STANDING ask, every UI review)**
+*Walk this on EVERY brand-check, no exceptions. Judge the touched surface as a $100k product designer would: it must look perfect at BOTH 375x667 mobile AND 1280x900+ desktop — not "fine on desktop, cramped on mobile."* Flag any of these:
+- **Sizing fits both viewports.** No element that overflows, clips, wraps awkwardly, or gets a horizontal scrollbar at 375px; nothing that looks lost/undersized in a desktop column. Segmented controls, badges, pills, and buttons must hold their shape at the narrow width (no squished text, no 1-char-per-line wraps).
+- **Font legibility floor.** Body/interactive text ≥ `text-xs` (12px); the `text-[10px]` mono sub-label is the FLOOR and only for true meta/labels — never for anything the user must read to act. Flag `text-[9px]` or smaller, and any low-contrast text below the white→zinc-500 ladder (e.g. `text-zinc-600` on `bg-zinc-950` for real content).
+- **Visibility / contrast.** Gold-on-gold, zinc-on-zinc, or accent badges that disappear against their surface (the Google-Yellow-on-Gold failure mode, generalized). Active vs inactive states must be unmistakable at a glance on both screens.
+- **Button quality.** Tap target ≥ 44px height on mobile; label never truncates or wraps mid-word; disabled/hover/active states all visible; only ONE primary gold CTA per fold (secondary actions are ghost/outline, not a second solid-gold button competing with it).
+- **Emoji / image / icon alignment.** Icons are lucide SVG with `shrink-0`, `w-4 h-4 + gap-2` (normal text) or `w-5 h-5 + gap-3` (bold/uppercase), optically centered to the FIRST text line when text can wrap (`items-start` + a 1–2px nudge is correct, not a hack). No raw emoji as a UI icon element (emoji inside a toast/copy STRING is OK). Any `<img>`/avatar: explicit width/height, `object-contain`/`object-cover` as appropriate, no squash/stretch, and it must not jump or overflow at 375px.
+- **Verdict impact:** a surface that breaks at 375px (overflow, illegible text, invisible state, truncated CTA) is a **CRITICAL** flag, not a nit — it fails the gate even if every color token is on-brand.
+
 **Smell tests**
 - Inline class blob that re-implements an existing primitive instead of importing GlassPanel/GoldButton — call this out as "use the primitive" even if classes are technically correct.
 - New legacy-style accent (pink/cyan border) introduced on a touched component — DESIGN.md mandates purging these on any component you touch.

@@ -60,7 +60,7 @@ export const CycleToggle: React.FC<CycleToggleProps> = ({
               role="radio"
               aria-checked={active}
               onClick={() => select(seg.id)}
-              className="relative z-10 flex items-center justify-center gap-1.5 rounded-lg px-3 py-2.5 text-sm font-semibold transition-colors"
+              className="relative z-10 flex flex-col items-center justify-center gap-1 rounded-lg px-3 py-2.5 text-sm font-semibold transition-colors"
             >
               {active && (
                 <motion.span
@@ -71,12 +71,12 @@ export const CycleToggle: React.FC<CycleToggleProps> = ({
                   }
                 />
               )}
-              <span className={`relative z-10 ${active ? 'text-black' : 'text-zinc-400'}`}>
+              <span className={`relative z-10 leading-none ${active ? 'text-black' : 'text-zinc-400'}`}>
                 {seg.label}
               </span>
               {seg.id === 'annual' && (
                 <span
-                  className={`relative z-10 rounded-full px-1.5 py-0.5 text-[10px] font-mono uppercase tracking-widest ${
+                  className={`relative z-10 rounded-full px-1.5 py-0.5 text-[10px] font-mono uppercase tracking-widest leading-none ${
                     active ? 'bg-black/15 text-black' : 'bg-[#FFCC00]/10 text-[#FFCC00]'
                   }`}
                 >
@@ -94,23 +94,23 @@ export const CycleToggle: React.FC<CycleToggleProps> = ({
           initial={reduce ? false : { opacity: 0, y: -4 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: reduce ? 0 : 0.25 }}
-          className="mt-3 flex items-start gap-2.5 rounded-xl border border-[#FFCC00]/25 bg-[#FFCC00]/5 px-3.5 py-3"
+          className="mt-3 rounded-xl border border-[#FFCC00]/25 bg-[#FFCC00]/5 px-3.5 py-3"
         >
-          <TrendingDown className="mt-0.5 h-4 w-4 shrink-0 text-[#FFCC00]" />
-          <div className="min-w-0 text-xs leading-relaxed">
-            <p className="text-zinc-200">
+          <div className="flex items-start gap-2.5">
+            <TrendingDown className="mt-0.5 h-4 w-4 shrink-0 text-[#FFCC00]" />
+            <p className="text-xs leading-5 text-zinc-200">
               Stay monthly and you'll pay{' '}
               <span className="font-semibold text-[#FFCC00]">{formatPHP(savings)} more</span> this year.
             </p>
-            <button
-              type="button"
-              onClick={() => select('annual')}
-              className="mt-1.5 inline-flex items-center gap-1 font-semibold text-[#FFCC00] hover:underline"
-            >
-              <Sparkles className="h-3 w-3 shrink-0" />
-              Switch to annual — get 2 months free
-            </button>
           </div>
+          <button
+            type="button"
+            onClick={() => select('annual')}
+            className="mt-2.5 flex min-h-[44px] w-full items-center justify-center gap-2 rounded-lg border border-[#FFCC00]/40 bg-[#FFCC00]/10 px-3 py-2.5 text-xs font-semibold text-[#FFCC00] transition-colors hover:bg-[#FFCC00]/15"
+          >
+            <Sparkles className="h-4 w-4 shrink-0" />
+            Switch to annual — 2 months free
+          </button>
         </motion.div>
       )}
 

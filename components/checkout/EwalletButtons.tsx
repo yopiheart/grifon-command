@@ -10,6 +10,8 @@ interface EwalletButtonsProps {
   authorizationText: string;
   /** When true, the continue action is blocked (e.g. terms not yet agreed). */
   submitDisabled?: boolean;
+  /** Rendered immediately above the continue button (e.g. the terms agreement checkbox). */
+  termsSlot?: React.ReactNode;
 }
 
 const LABELS: Record<EwalletMethod, string> = {
@@ -18,7 +20,7 @@ const LABELS: Record<EwalletMethod, string> = {
   grab_pay: 'GrabPay',
 };
 
-export const EwalletButtons: React.FC<EwalletButtonsProps> = ({ active, onContinue, isSubmitting, authorizationText, submitDisabled = false }) => {
+export const EwalletButtons: React.FC<EwalletButtonsProps> = ({ active, onContinue, isSubmitting, authorizationText, submitDisabled = false, termsSlot }) => {
   const label = LABELS[active];
   return (
     <div className="space-y-4">
@@ -30,6 +32,8 @@ export const EwalletButtons: React.FC<EwalletButtonsProps> = ({ active, onContin
           Pay with your {label} balance. After payment, you'll return to Grifon Command.
         </p>
       </div>
+
+      {termsSlot}
 
       <button
         type="button"

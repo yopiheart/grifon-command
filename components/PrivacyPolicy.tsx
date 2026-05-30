@@ -1,10 +1,10 @@
 import React from 'react';
 import LegalPageLayout from './ui/LegalPageLayout';
 
-type Props = { onBack: () => void };
+type Props = { onBack: () => void; backLabel?: string };
 
-const PrivacyPolicy: React.FC<Props> = ({ onBack }) => (
-  <LegalPageLayout title="Privacy Policy" effectiveDate="April 20, 2026" onBack={onBack}>
+const PrivacyPolicy: React.FC<Props> = ({ onBack, backLabel }) => (
+  <LegalPageLayout title="Privacy Policy" effectiveDate="April 20, 2026" onBack={onBack} backLabel={backLabel}>
     <p>
       This Privacy Policy explains how Haste Enterprises ("we", "us") collects,
       uses, and shares information when you use Grifon.AI ("Grifon"). It is

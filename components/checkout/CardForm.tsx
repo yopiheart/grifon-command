@@ -16,6 +16,8 @@ interface CardFormProps {
   authorizationText: string;
   /** When true, the submit is blocked (e.g. terms not yet agreed). */
   submitDisabled?: boolean;
+  /** Rendered immediately above the Pay button (e.g. the terms agreement checkbox). */
+  termsSlot?: React.ReactNode;
 }
 
 const formatCardNumber = (v: string): string => {
@@ -29,7 +31,7 @@ const formatExp = (v: string): string => {
   return `${digits.slice(0, 2)} / ${digits.slice(2)}`;
 };
 
-export const CardForm: React.FC<CardFormProps> = ({ onSubmit, isSubmitting, totalLabel, authorizationText, submitDisabled = false }) => {
+export const CardForm: React.FC<CardFormProps> = ({ onSubmit, isSubmitting, totalLabel, authorizationText, submitDisabled = false, termsSlot }) => {
   const [cardNumber, setCardNumber] = useState('');
   const [exp, setExp] = useState('');
   const [cvc, setCvc] = useState('');
@@ -111,6 +113,8 @@ export const CardForm: React.FC<CardFormProps> = ({ onSubmit, isSubmitting, tota
       <p className="text-[10px] text-zinc-500 flex items-center gap-1.5">
         <Lock className="w-3 h-3" /> Encrypted by PayMongo &middot; 256-bit TLS
       </p>
+
+      {termsSlot}
 
       <button
         type="submit"
