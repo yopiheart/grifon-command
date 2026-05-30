@@ -5,10 +5,12 @@ type Props = {
   title: string;
   effectiveDate: string;
   onBack: () => void;
+  /** Back-button text. Defaults to "Back"; e.g. "Back to checkout" when arriving from checkout. */
+  backLabel?: string;
   children: React.ReactNode;
 };
 
-const LegalPageLayout: React.FC<Props> = ({ title, effectiveDate, onBack, children }) => {
+const LegalPageLayout: React.FC<Props> = ({ title, effectiveDate, onBack, backLabel = 'Back', children }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -22,7 +24,7 @@ const LegalPageLayout: React.FC<Props> = ({ title, effectiveDate, onBack, childr
             className="flex items-center gap-2 text-zinc-400 hover:text-white transition-all font-mono text-[11px] uppercase tracking-[0.2em]"
           >
             <ChevronLeft className="w-4 h-4" />
-            Back
+            {backLabel}
           </button>
           <div className="flex items-center gap-2">
             <img src="/logo.png" alt="GRIFON Logo" className="h-7 w-auto object-contain" />

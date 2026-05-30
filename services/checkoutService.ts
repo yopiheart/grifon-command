@@ -225,3 +225,56 @@ export const formatPHP = (centavos: number): string => {
     maximumFractionDigits: 2,
   })}`;
 };
+
+/**
+ * Checkout draft persistence — lets the buyer leave the page (e.g. to read the
+ * Terms / Privacy policy) and return without re-entering anything. Mirrors the
+ * sessionStorage pattern in billingService.ts.
+ *
+ * SECURITY: never store card number / CVC / cardholder name here. Card data
+ * stays in the CardForm's local state only (PCI SAQ A). This draft holds the
+ * non-sensitive selections — phone, add-ons, billing cycle, terms agreement.
+ */
+const CHECKOUT_DRAFT_KEY = 'grifon_checkout_draft';
+
+export type CheckoutDraft = {
+  phone: string;
+  agreedToTerms: boolean;
+  selectedAddOns: string[];
+  cycle: BillingCycle;
+};
+
+export const saveCheckoutDraft = (draft: CheckoutDraft): void => {
+  try {
+    sessionStorage.setItem(CHECKOUT_DRAFT_KEY, JSON.stringify(draft));
+  } catch {
+    /* sessionStorage may be unavailable (private mode) */
+  }
+};
+
+export const loadCheckoutDraft = (): CheckoutDraft | null => {
+  try {
+    const raw = sessionStorage.getItem(CHECKOUT_DRAFT_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (parsed && typeof parsed.phone === 'string' && Array.isArray(parsed.selectedAddOns)) {
+      return {
+        phone: parsed.phone,
+        agreedToTerms: !!parsed.agreedToTerms,
+        selectedAddOns: parsed.selectedAddOns.filter((id: unknown) => typeof id === 'string'),
+        cycle: parsed.cycle === 'annual' ? 'annual' : 'monthly',
+      };
+    }
+    return null;
+  } catch {
+    return null;
+  }
+};
+
+export const clearCheckoutDraft = (): void => {
+  try {
+    sessionStorage.removeItem(CHECKOUT_DRAFT_KEY);
+  } catch {
+    /* ignore */
+  }
+};
