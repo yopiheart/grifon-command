@@ -115,7 +115,7 @@ export const ExitIntentModal: React.FC<ExitIntentModalProps> = ({ triggered, onD
             {/* Headline — sentence-case (overrides the global uppercase heading LAW) for the
                 conversational Taglish jab. */}
             <h2 className="!normal-case px-6 mt-5 text-3xl font-black leading-tight tracking-tight text-white">
-              Akala mo AI <span className="text-[#FFCC00]">garbage</span> lang &apos;to?
+              Akala mo AI <span className="text-[#FFCC00]">garbage</span> lang to?
             </h2>
 
             <p className="px-6 mt-3 text-sm leading-relaxed text-zinc-400">
