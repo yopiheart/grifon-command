@@ -43,11 +43,11 @@ export const UrgencyBar: React.FC = () => {
     <div className="relative w-full bg-zinc-950 border-b border-[#FFCC00]/15">
       {/* gold hairline */}
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#FFCC00]/60 to-transparent" />
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 py-1.5 flex items-center justify-center gap-2.5 sm:gap-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-1.5 flex items-center justify-center gap-3 sm:gap-4">
         {/* LIMITED pill */}
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-[#FFCC00]/10 border border-[#FFCC00]/25 px-2.5 py-0.5">
+        <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#FFCC00]/10 border border-[#FFCC00]/25 px-2.5 py-0.5">
           <span className="w-1.5 h-1.5 rounded-full bg-[#FFCC00] animate-pulse" />
-          <span className="text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.18em] text-[#FFCC00]">
+          <span className="text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.18em] text-[#FFCC00] whitespace-nowrap">
             Limited slots
           </span>
         </span>
@@ -58,12 +58,12 @@ export const UrgencyBar: React.FC = () => {
           <span className="text-[#FFCC00] font-bold">{FOUNDING_OFFER.foundingPriceLabel}</span>
           <span className="text-zinc-500"> · closes {FOUNDING_OFFER.closesLabel}</span>
         </span>
-        <span className="sm:hidden text-[10px] text-zinc-400 font-mono uppercase tracking-wide">
+        <span className="sm:hidden shrink-0 text-[10px] text-zinc-400 font-mono uppercase tracking-wide whitespace-nowrap">
           Ends in
         </span>
 
         {/* Countdown */}
-        <div className="flex items-end gap-1">
+        <div className="flex shrink-0 items-end gap-1">
           <Unit value={days} label="D" />
           <span className="text-zinc-600 text-xs pb-2.5">:</span>
           <Unit value={hours} label="H" />
@@ -73,8 +73,8 @@ export const UrgencyBar: React.FC = () => {
           <Unit value={seconds} label="S" />
         </div>
 
-        {/* Seats left */}
-        <span className="inline-flex items-center text-[10px] sm:text-xs font-mono text-[#FFCC00] whitespace-nowrap">
+        {/* Seats left — desktop only (too cramped on mobile) */}
+        <span className="hidden sm:inline-flex items-center text-[10px] sm:text-xs font-mono text-[#FFCC00] whitespace-nowrap">
           {remaining}/{FOUNDING_OFFER.seatCap} left
         </span>
       </div>
