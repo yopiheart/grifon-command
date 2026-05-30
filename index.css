@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Smooth in-page anchor scrolling (header anchor nav). Respect reduced motion. */
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
 @keyframes float-glow {
   0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.8; }
   33% { transform: translate(30px, -20px) scale(1.1); opacity: 1; }
