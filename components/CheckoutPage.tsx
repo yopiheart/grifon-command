@@ -16,6 +16,7 @@ import {
   type PlanId,
   type BillingCycle,
 } from '../services/checkoutService';
+import { ORDER_BUMP } from '../config/checkout';
 
 interface CheckoutPageProps {
   email: string | null;
@@ -41,6 +42,12 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack }) => {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [phone, setPhone] = useState('');
   const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [selectedAddOns, setSelectedAddOns] = useState<string[]>([]);
+
+  const toggleAddOn = () =>
+    setSelectedAddOns((prev) =>
+      prev.includes(ORDER_BUMP.id) ? prev.filter((id) => id !== ORDER_BUMP.id) : [...prev, ORDER_BUMP.id]
+    );
 
   // Gate on terms agreed + a contact number entered (basic PH length check).
   const canSubmit = agreedToTerms && phone.replace(/\D/g, '').length >= 10;
@@ -48,7 +55,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack }) => {
   useEffect(() => {
     let cancelled = false;
     setIntentError(null);
-    fetchIntent(planId, cycle)
+    fetchIntent(planId, cycle, selectedAddOns)
       .then((res) => {
         if (!cancelled) setIntent(res);
       })
@@ -63,7 +70,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack }) => {
     return () => {
       cancelled = true;
     };
-  }, [planId, cycle]);
+  }, [planId, cycle, selectedAddOns]);
 
   const handleCardSubmit = async (data: CardFormData) => {
     if (!intent) return;
@@ -187,6 +194,9 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack }) => {
           monthlyEquivalentCentavos={breakdown.monthly_equivalent_centavos ?? undefined}
           monthlyComparisonSavingsCentavos={breakdown.annual_savings_centavos ?? undefined}
           reservationKey={`${planId}_${cycle}`}
+          addOnSelected={selectedAddOns.includes(ORDER_BUMP.id)}
+          addOnCentavos={breakdown.add_on_centavos}
+          onToggleAddOn={toggleAddOn}
           onBack={onBack}
         />
 

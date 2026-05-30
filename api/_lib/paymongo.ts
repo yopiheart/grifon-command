@@ -44,6 +44,45 @@ export const PLAN_CATALOG: Record<PlanId, PlanCatalogEntry> = {
   },
 };
 
+// ── One-time order-bump add-ons ──────────────────────────────────────────────
+// Amounts in centavos. Source of truth for add-on price — never trust client.
+export type AddOnId = 'onboarding_call';
+
+export type AddOnCatalogEntry = {
+  id: AddOnId;
+  name: string;
+  description: string;
+  centavos: number;
+};
+
+export const ADD_ON_CATALOG: Record<AddOnId, AddOnCatalogEntry> = {
+  onboarding_call: {
+    id: 'onboarding_call',
+    name: '1-on-1 Onboarding Call',
+    description: 'A 30-minute setup & strategy call so you win in your first week.',
+    centavos: 99_700, // ₱997 — confirmed with Neil 2026-05-30
+  },
+};
+
+const ADD_ON_IDS = Object.keys(ADD_ON_CATALOG) as AddOnId[];
+
+export const isAddOnId = (value: string): value is AddOnId =>
+  ADD_ON_IDS.includes(value as AddOnId);
+
+/**
+ * Server-authoritative sum of selected add-ons. Throws `unknown_add_on:<id>` on
+ * any unrecognised ID so the client can never inject an arbitrary amount.
+ */
+export const sumAddOnCentavos = (addOnIds: readonly string[]): number => {
+  let total = 0;
+  for (const id of addOnIds) {
+    const addOn = ADD_ON_CATALOG[id as AddOnId];
+    if (!addOn) throw new Error(`unknown_add_on:${id}`);
+    total += addOn.centavos;
+  }
+  return total;
+};
+
 export type CreateCheckoutParams = {
   plan_id: PlanId;
   billing_cycle: BillingCycle;

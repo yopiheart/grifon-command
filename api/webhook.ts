@@ -84,6 +84,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const plan_id = metadata.plan_id as PlanId | undefined;
     const billing_cycle = metadata.billing_cycle as BillingCycle | undefined;
     const intent_id: string | undefined = event?.data?.attributes?.data?.id;
+    const add_ons =
+      typeof metadata.add_ons === 'string' && metadata.add_ons.length
+        ? metadata.add_ons.split(',')
+        : null;
 
     if (!user_id || !plan_id || !billing_cycle) {
       return res.status(200).json({ ignored: 'missing_metadata' });
@@ -100,6 +104,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           billing_cycle,
           current_period_end: periodEnd(billing_cycle),
           paymongo_last_checkout_id: intent_id ?? null,
+          add_ons,
           updated_at: new Date().toISOString(),
         },
         { onConflict: 'user_id' }

@@ -2,6 +2,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { z } from 'zod';
 import {
   PLAN_CATALOG,
+  sumAddOnCentavos,
   attachPaymentMethod,
   createEwalletPaymentMethod,
   createPaymentIntent,
@@ -27,6 +28,9 @@ type Action = (typeof ACTIONS)[number];
 const IntentBody = z.object({
   plan_id: z.enum(['creator', 'pro', 'business']),
   billing_cycle: z.enum(['monthly', 'annual']),
+  // Optional order-bump add-on IDs. Validated server-side against ADD_ON_CATALOG;
+  // the client only ever sends IDs, never an amount.
+  add_ons: z.array(z.string()).max(5).optional(),
 });
 
 const ConfirmBody = z.object({
@@ -95,19 +99,31 @@ async function handleIntent(req: VercelRequest, res: VercelResponse, user: Authe
     return res.status(400).json({ error: 'invalid_body', issues: parsed.error.issues });
   }
   const { plan_id, billing_cycle } = parsed.data;
+  const addOnIds = parsed.data.add_ons ?? [];
   const plan = PLAN_CATALOG[plan_id];
   if (!plan) return res.status(400).json({ error: 'unknown_plan' });
 
   if (!(await enforceRateLimit(res, `billing_intent:${user.id}`, 10, 60))) return;
 
-  const total = billing_cycle === 'annual' ? plan.annualCentavos : plan.monthlyCentavos;
-  const description = `${plan.name} — ${billing_cycle} subscription`;
+  const baseTotal = billing_cycle === 'annual' ? plan.annualCentavos : plan.monthlyCentavos;
+  // Server-authoritative: add-on price is looked up here, never sent by the client.
+  let addOnCentavos = 0;
+  try {
+    addOnCentavos = sumAddOnCentavos(addOnIds);
+  } catch {
+    return res.status(400).json({ error: 'unknown_add_on' });
+  }
+  const total = baseTotal + addOnCentavos;
+  const description = addOnIds.length
+    ? `${plan.name} — ${billing_cycle} + ${addOnIds.length} add-on(s)`
+    : `${plan.name} — ${billing_cycle} subscription`;
   const metadata: Record<string, string> = {
     user_id: user.id,
     user_email: user.email ?? '',
     plan_id,
     billing_cycle,
   };
+  if (addOnIds.length) metadata.add_ons = addOnIds.join(',');
 
   try {
     const intent = await createPaymentIntent({
@@ -131,6 +147,7 @@ async function handleIntent(req: VercelRequest, res: VercelResponse, user: Authe
         subtotal_centavos: subtotal,
         vat_centavos: vat,
         total_centavos: total,
+        add_on_centavos: addOnCentavos,
         monthly_equivalent_centavos:
           billing_cycle === 'annual' ? monthlyEquivalent(plan.annualCentavos) : null,
         annual_savings_centavos:

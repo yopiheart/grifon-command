@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { ArrowLeft, ChevronDown, Tag } from 'lucide-react';
+import { ArrowLeft, ChevronDown, Tag, Check } from 'lucide-react';
 import { GlassPanel } from '../ui/GlassPanel';
 import { CheckoutReservation } from './CheckoutReservation';
+import { ORDER_BUMP } from '../../config/checkout';
 
 interface OrderSummaryProps {
   planName: string;
@@ -14,6 +15,10 @@ interface OrderSummaryProps {
   monthlyComparisonSavingsCentavos?: number;
   /** When set, shows the honest reservation countdown, persisted under this key. */
   reservationKey?: string;
+  /** Order-bump add-on. Display via ORDER_BUMP; the charge is server-authoritative. */
+  addOnSelected?: boolean;
+  addOnCentavos?: number;
+  onToggleAddOn?: () => void;
   onBack: () => void;
 }
 
@@ -32,10 +37,17 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
   monthlyEquivalentCentavos,
   monthlyComparisonSavingsCentavos,
   reservationKey,
+  addOnSelected = false,
+  addOnCentavos,
+  onToggleAddOn,
   onBack,
 }) => {
   const [vatOpen, setVatOpen] = useState(false);
   const [promoOpen, setPromoOpen] = useState(false);
+
+  // The one-time add-on is shown separately; the recurring price excludes it.
+  const addOn = addOnCentavos ?? 0;
+  const planCentavos = Math.max(0, totalCentavos - addOn);
 
   return (
     <GlassPanel className="lg:sticky lg:top-8 self-start">
@@ -55,14 +67,14 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
 
       <div className="mb-6">
         <p className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500 leading-none">
-          {formatPHP(totalCentavos)}
+          {formatPHP(planCentavos)}
         </p>
         <p className="text-zinc-400 text-sm mt-2">
           per {cycle === 'monthly' ? 'month' : 'year'}
         </p>
         {cycle === 'monthly' && (
           <p className="text-zinc-500 text-xs mt-1">
-            Just <span className="text-[#FFCC00]">₱{Math.floor(totalCentavos / 100 / 30)}/day</span> — less than your morning coffee.
+            Just <span className="text-[#FFCC00]">₱{Math.floor(planCentavos / 100 / 30)}/day</span> — less than your morning coffee.
           </p>
         )}
         {cycle === 'annual' && monthlyEquivalentCentavos !== undefined && (
@@ -84,16 +96,50 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
           <p className="font-semibold">{planName}</p>
           <p className="text-zinc-500 text-xs mt-1 leading-relaxed">{description}</p>
         </div>
-        <p className="text-white shrink-0">{formatPHP(totalCentavos)}</p>
+        <p className="text-white shrink-0">{formatPHP(planCentavos)}</p>
       </div>
 
       <div className="border-t border-white/10 my-6" />
 
+      {onToggleAddOn && (
+        <>
+          <button
+            type="button"
+            onClick={onToggleAddOn}
+            aria-pressed={addOnSelected}
+            className={`w-full text-left flex items-start gap-3 rounded-xl border p-3.5 transition-colors ${
+              addOnSelected ? 'border-[#FFCC00]/50 bg-[#FFCC00]/5' : 'border-white/10 bg-zinc-950 hover:border-white/30'
+            }`}
+          >
+            <span
+              className={`mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded border ${
+                addOnSelected ? 'border-[#FFCC00] bg-[#FFCC00]' : 'border-white/30'
+              }`}
+            >
+              {addOnSelected && <Check className="w-3 h-3 text-black" />}
+            </span>
+            <span className="min-w-0">
+              <span className="block text-sm font-semibold text-white">
+                {ORDER_BUMP.title} <span className="text-[#FFCC00]">+{ORDER_BUMP.priceLabel}</span>
+              </span>
+              <span className="mt-0.5 block text-xs text-zinc-500 leading-relaxed">{ORDER_BUMP.blurb}</span>
+            </span>
+          </button>
+          <div className="border-t border-white/10 my-6" />
+        </>
+      )}
+
       <div className="space-y-3 text-sm">
         <div className="flex justify-between text-zinc-300">
           <span>Subtotal</span>
-          <span>{formatPHP(totalCentavos)}</span>
+          <span>{formatPHP(planCentavos)}</span>
         </div>
+        {addOn > 0 && (
+          <div className="flex justify-between text-zinc-300">
+            <span>{ORDER_BUMP.title}</span>
+            <span>{formatPHP(addOn)}</span>
+          </div>
+        )}
 
         <button
           type="button"
