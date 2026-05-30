@@ -6,6 +6,7 @@ import { AnimatedBorder } from "./ui/AnimatedBorder";
 import { SiteHeader, type SiteNavLink } from "./ui/SiteHeader";
 import { UrgencyBar } from "./ui/UrgencyBar";
 import { startCheckout, type PlanId, type BillingCycle } from "../services/billingService";
+import { PLAN_FEATURES } from "../config/planFeatures";
 
 const Check = () => <CheckIcon size={16} strokeWidth={2.5} className="text-[#FFCC00]" />;
 const X = () => <XIcon size={14} strokeWidth={1.5} className="text-zinc-600" />;
@@ -505,38 +506,10 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
                       "5 AI images (watermarked)",
                       "Email support",
                     ] : []),
-                    // Creator
-                    ...(i === 1 ? [
-                      "15 video ad workflows",
-                      "5 research reports",
-                      "100 captions & headlines",
-                      "50 AI images (1080p, clean)",
-                      "No watermarks on exports",
-                    ] : []),
-                    // Pro
-                    ...(i === 2 ? [
-                      "40 video ad workflows",
-                      "15 research reports",
-                      "300 captions & headlines",
-                      "150 AI images",
-                      "15 AI video ads/month",
-                      "5 brand profiles",
-                      "Community + monthly calls",
-                      "Priority support",
-                    ] : []),
-                    // Business
-                    ...(i === 3 ? [
-                      "100 video ad workflows",
-                      "40 research reports",
-                      "500 captions & headlines",
-                      "300 AI images",
-                      "40 AI video ads/month",
-                      "10 team seats",
-                      "White-label exports",
-                      "All advanced modules",
-                      "Dedicated account manager",
-                      "Weekly strategy calls",
-                    ] : []),
+                    // Creator / Pro / Business — shared source of truth (config/planFeatures.ts)
+                    ...(i === 1 ? PLAN_FEATURES.creator : []),
+                    ...(i === 2 ? PLAN_FEATURES.pro : []),
+                    ...(i === 3 ? PLAN_FEATURES.business : []),
                   ].map((f, fi) => (
                     <div key={fi} style={{
                       display: "flex", alignItems: "center", gap: 8,
