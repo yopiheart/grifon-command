@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Loader2, ShieldCheck } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { GlassPanel } from './ui/GlassPanel';
 import { MessengerFloat } from './ui/MessengerFloat';
 import { RecentActivityToast } from './ui/RecentActivityToast';
@@ -20,6 +20,7 @@ import {
   type BillingCycle,
 } from '../services/checkoutService';
 import { ORDER_BUMP } from '../config/checkout';
+import { PLAN_FEATURES } from '../config/planFeatures';
 
 interface CheckoutPageProps {
   email: string | null;
@@ -223,6 +224,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack, onViewLegal 
           planName={intent.plan.name}
           cycle={cycle}
           description={outcomeDescription}
+          inclusions={PLAN_FEATURES[planId]}
           totalCentavos={breakdown.total_centavos}
           subtotalCentavos={breakdown.subtotal_centavos}
           vatCentavos={breakdown.vat_centavos}
@@ -268,15 +270,6 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack, onViewLegal 
           </p>
           <div className="mb-6">
             <PaymentMethodTabs active={activeMethod} onChange={setActiveMethod} />
-          </div>
-
-          <div className="mb-6 px-4 py-3.5 rounded-xl border border-white/10 bg-zinc-950/60">
-            <div className="flex items-start gap-2.5 text-xs text-zinc-300 leading-relaxed">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#FFCC00] mt-0.5 shrink-0" />
-              <span>
-                <strong className="text-white">7-day money-back guarantee.</strong> Hindi nag-work? Full refund, walang tanong.
-              </span>
-            </div>
           </div>
 
           {submitError && (

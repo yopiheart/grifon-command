@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { ArrowLeft, ChevronDown, Tag, Check } from 'lucide-react';
+import { ArrowLeft, ChevronDown, Tag, Check, ShieldCheck } from 'lucide-react';
 import { GlassPanel } from '../ui/GlassPanel';
+import { AnimatedBorder } from '../ui/AnimatedBorder';
 import { CheckoutReservation } from './CheckoutReservation';
 import { CycleToggle } from './CycleToggle';
 import { ORDER_BUMP } from '../../config/checkout';
@@ -9,6 +10,8 @@ interface OrderSummaryProps {
   planName: string;
   cycle: 'monthly' | 'annual';
   description: string;
+  /** Per-plan "what's included" bullets (config/planFeatures.ts). Rendered as a checkmark list. */
+  inclusions?: string[];
   totalCentavos: number;
   subtotalCentavos: number;
   vatCentavos: number;
@@ -34,6 +37,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
   planName,
   cycle,
   description,
+  inclusions,
   totalCentavos,
   subtotalCentavos,
   vatCentavos,
@@ -104,13 +108,32 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
 
       <div className="border-t border-white/10 my-6" />
 
-      <div className="flex justify-between text-sm">
-        <div className="text-white pr-4">
-          <p className="font-semibold">{planName}</p>
-          <p className="text-zinc-500 text-xs mt-1 leading-relaxed">{description}</p>
+      {/* Plan tagline + itemized value stack */}
+      <p className="text-zinc-400 text-sm leading-relaxed mb-5">{description}</p>
+
+      {inclusions && inclusions.length > 0 && (
+        <>
+          <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-3">What's included</p>
+          <ul className="space-y-2.5 mb-6">
+            {inclusions.map((feature) => (
+              <li key={feature} className="flex items-start gap-3 text-sm text-zinc-300">
+                <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#FFCC00]" />
+                <span>{feature}</span>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+
+      {/* 7-day guarantee — risk-reversal at the pay moment, framed by the rotating gold light */}
+      <AnimatedBorder className="bg-zinc-950" containerClassName="mb-6">
+        <div className="flex items-start gap-3 px-4 py-3.5 text-sm text-zinc-300 leading-relaxed">
+          <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-[#FFCC00]" />
+          <span>
+            <strong className="text-white">7-day money-back guarantee.</strong> Hindi nag-work? Full refund, walang tanong.
+          </span>
         </div>
-        <p className="text-white shrink-0">{formatPHP(planCentavos)}</p>
-      </div>
+      </AnimatedBorder>
 
       <div className="border-t border-white/10 my-6" />
 
