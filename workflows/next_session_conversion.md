@@ -9,17 +9,54 @@
 
 ## STATUS (updated 2026-05-31)
 
-- **Feature A — SHIPPED ✅** (annual upsell `b160281`, then polished across `ab6aafb`, `3031ca9`,
-  `8edd78a`): cycle toggle + loss-aversion callout, terms checkbox above Pay, in-app policy view with
-  state-preserving "Back to checkout", value-stack checkmark inclusions, guarantee moved into Order
-  Summary with the rotating gold light, glossy gold CTA, sentence-case terms consent.
-- **Tier upgrades (Creator→Pro→Business) — decided: NOT at checkout.** They belong in the **dashboard
-  at the quota wall** ("15/15 workflows used → unlock Pro") — highest-intent moment, keeps checkout a
-  single decision. New, separate feature; not yet built.
-- **Deferred Monetise-style ₱-anchor value stack** (strikethrough per-item value + total): needs
-  Creator/Business value numbers Neil signs off on (Pro has the existing ₱170k stack). Escalate to
-  `grifon-cmo`.
-- **Feature B — still DEFERRED** (landing exit-intent "Start Free" popup). Spec below unchanged.
+**Both original features SHIPPED ✅ — this file is now the deferred-queue tracker.**
+
+- **Feature A — SHIPPED** (annual upsell `b160281`, polished across `ab6aafb`, `3031ca9`, `8edd78a`):
+  cycle toggle + loss-aversion callout, terms checkbox above Pay, in-app policy view with
+  state-preserving "Back to checkout", value-stack checkmark inclusions, guarantee in Order Summary
+  with the rotating gold light, glossy gold CTA, sentence-case terms consent.
+- **Feature B — SHIPPED** (`8906e57`, copy fixes `d692101`/`bc246f9`): desktop-only exit-intent
+  "FINAL TAKE" clapboard (`components/ui/useExitIntent.ts` + `ExitIntentModal.tsx`); mobile trigger
+  killed per CMO; Taglish objection-killer copy; honest founding-seat scarcity.
+
+---
+
+## NEXT SESSION — start here (3 deferred items, in priority order)
+
+Deferred 2026-05-31 to protect the context window. Each has enough scope to resume cold.
+
+### 1. Dashboard quota-wall tier-upgrade (Creator→Pro→Business) — the next conversion build
+- **What:** A contextual upgrade nudge inside the app when a user hits a plan limit ("15/15 video
+  workflows used → unlock 40 with Pro"). This is the agreed home for tier upsells — deliberately NOT
+  at checkout (re-deciding the plan at the pay moment risks the primary conversion).
+- **Why it's the highest-intent moment:** they've felt the value and hit the wall — the pain sells the
+  upgrade. Highest-converting upgrade trigger, separate from the initial purchase decision.
+- **Where to start:** find where per-plan quotas are enforced/surfaced in-app (quota check in
+  `api/_lib/` + wherever the dashboard shows usage). Reuse `PLAN_FEATURES` (`config/planFeatures.ts`)
+  for the "what you unlock" diff, `GoldButton` → `startCheckout(nextTier, cycle)` from
+  `services/billingService.ts`. Likely a new `components/` upgrade card/modal gated on usage ≥ cap.
+- **Scope:** net-new feature; needs its own plan + `/goal`. Pull in `grifon-cmo` for the nudge copy
+  and `grifon-creative-director` if it gets a distinctive design.
+
+### 2. Monetise-style ₱-anchor value stack (checkout OrderSummary) — BLOCKED on Neil's numbers
+- **What:** Upgrade the checkmark "What's included" list into a value stack with a struck-through ₱
+  value per item + a struck total vs the actual price (the Monetise screenshot inspiration).
+- **Blocker:** Pro already has the data (`valueStack` + ₱170,000 total in `GrifonPricingPage.tsx`
+  ~line 119). **Creator + Business need per-item ₱ value numbers that Neil signs off on** — do NOT
+  invent these (they're offer/pricing claims). Escalate to `grifon-cmo` with Neil.
+- **Where:** `components/checkout/OrderSummary.tsx` (the inclusions block) + a shared value-stack data
+  source (extend `config/planFeatures.ts` or a sibling). Reuse the `.value-line` strikethrough class
+  already in the pricing page.
+
+### 3. Interactive checkout Playwright smoke — verification debt
+- **What:** The only checkout verification never run (build + brand-check covered the rest). Needs a
+  **signed-in session** (checkout is auth-gated) OR a `?devpreview` mock that doesn't exist yet.
+- **Test at 390px & 1440px:** cycle toggle flips + price/breakdown update; loss-aversion callout on
+  monthly only (Pro → ₱4,992); reservation timer NOT reset on toggle; add-on persists across switch;
+  Terms/Privacy → in-app page → "Back to checkout" restores phone/add-on/cycle/tick (card fields
+  blank); guarantee rotating light visible; glossy CTA legible + ≥44px.
+- **Note:** Playwright in the cafe-PC env hit a locked browser profile (needs `--isolated`). Neil can
+  drive it logged-in, or build the `?devpreview` harness first.
 
 ---
 
