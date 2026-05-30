@@ -14,6 +14,8 @@ interface CardFormProps {
   isSubmitting: boolean;
   totalLabel: string;
   authorizationText: string;
+  /** When true, the submit is blocked (e.g. terms not yet agreed). */
+  submitDisabled?: boolean;
 }
 
 const formatCardNumber = (v: string): string => {
@@ -27,7 +29,7 @@ const formatExp = (v: string): string => {
   return `${digits.slice(0, 2)} / ${digits.slice(2)}`;
 };
 
-export const CardForm: React.FC<CardFormProps> = ({ onSubmit, isSubmitting, totalLabel, authorizationText }) => {
+export const CardForm: React.FC<CardFormProps> = ({ onSubmit, isSubmitting, totalLabel, authorizationText, submitDisabled = false }) => {
   const [cardNumber, setCardNumber] = useState('');
   const [exp, setExp] = useState('');
   const [cvc, setCvc] = useState('');
@@ -35,6 +37,7 @@ export const CardForm: React.FC<CardFormProps> = ({ onSubmit, isSubmitting, tota
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (submitDisabled || isSubmitting) return;
     const expDigits = exp.replace(/\D/g, '');
     const expMonth = expDigits.slice(0, 2);
     const expYearShort = expDigits.slice(2, 4);
@@ -111,7 +114,7 @@ export const CardForm: React.FC<CardFormProps> = ({ onSubmit, isSubmitting, tota
 
       <button
         type="submit"
-        disabled={isSubmitting}
+        disabled={isSubmitting || submitDisabled}
         className="w-full bg-[#FFCC00] text-black font-bold uppercase tracking-widest py-4 rounded-xl hover:shadow-[0_0_20px_rgba(255,204,0,0.4)] hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
       >
         {isSubmitting ? 'Processing…' : totalLabel}

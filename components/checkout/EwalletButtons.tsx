@@ -8,6 +8,8 @@ interface EwalletButtonsProps {
   onContinue: () => void;
   isSubmitting: boolean;
   authorizationText: string;
+  /** When true, the continue action is blocked (e.g. terms not yet agreed). */
+  submitDisabled?: boolean;
 }
 
 const LABELS: Record<EwalletMethod, string> = {
@@ -16,7 +18,7 @@ const LABELS: Record<EwalletMethod, string> = {
   grab_pay: 'GrabPay',
 };
 
-export const EwalletButtons: React.FC<EwalletButtonsProps> = ({ active, onContinue, isSubmitting, authorizationText }) => {
+export const EwalletButtons: React.FC<EwalletButtonsProps> = ({ active, onContinue, isSubmitting, authorizationText, submitDisabled = false }) => {
   const label = LABELS[active];
   return (
     <div className="space-y-4">
@@ -32,7 +34,7 @@ export const EwalletButtons: React.FC<EwalletButtonsProps> = ({ active, onContin
       <button
         type="button"
         onClick={onContinue}
-        disabled={isSubmitting}
+        disabled={isSubmitting || submitDisabled}
         className="w-full bg-[#FFCC00] text-black font-bold uppercase tracking-widest py-4 rounded-xl hover:shadow-[0_0_20px_rgba(255,204,0,0.4)] hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2"
       >
         {isSubmitting ? (

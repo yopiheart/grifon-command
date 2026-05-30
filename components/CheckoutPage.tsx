@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Loader2, ShieldCheck } from 'lucide-react';
 import { GlassPanel } from './ui/GlassPanel';
 import { MessengerFloat } from './ui/MessengerFloat';
+import { RecentActivityToast } from './ui/RecentActivityToast';
 import { OrderSummary } from './checkout/OrderSummary';
 import { PaymentMethodTabs, type PaymentMethod } from './checkout/PaymentMethodTabs';
 import { CardForm, type CardFormData } from './checkout/CardForm';
@@ -38,6 +39,11 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack }) => {
   const [activeMethod, setActiveMethod] = useState<PaymentMethod>('card');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [phone, setPhone] = useState('');
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
+
+  // Gate on terms agreed + a contact number entered (basic PH length check).
+  const canSubmit = agreedToTerms && phone.replace(/\D/g, '').length >= 10;
 
   useEffect(() => {
     let cancelled = false;
@@ -75,6 +81,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack }) => {
         cvc: data.cvc,
         cardholder_name: data.cardholderName,
         email,
+        phone: phone.trim() || undefined,
       });
 
       if (result.next_action?.redirect?.url) {
@@ -179,6 +186,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack }) => {
           vatCentavos={breakdown.vat_centavos}
           monthlyEquivalentCentavos={breakdown.monthly_equivalent_centavos ?? undefined}
           monthlyComparisonSavingsCentavos={breakdown.annual_savings_centavos ?? undefined}
+          reservationKey={`${planId}_${cycle}`}
           onBack={onBack}
         />
 
@@ -186,9 +194,27 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack }) => {
           <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">
             Contact information
           </p>
-          <div className="bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 mb-6">
+          <div className="bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 mb-4">
             <p className="text-zinc-300 text-sm">{email ?? 'Not signed in'}</p>
             <p className="text-[10px] text-zinc-500 mt-1">Receipt will be sent here</p>
+          </div>
+
+          <div className="mb-6">
+            <label htmlFor="checkout-phone" className="block text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">
+              Contact number
+            </label>
+            <input
+              id="checkout-phone"
+              type="tel"
+              inputMode="tel"
+              autoComplete="tel"
+              placeholder="09XX XXX XXXX"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-zinc-600 focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00]"
+              required
+            />
+            <p className="text-[10px] text-zinc-500 mt-1.5">For order updates and support via Viber / SMS.</p>
           </div>
 
           <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-3">
@@ -213,12 +239,28 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack }) => {
             </div>
           )}
 
+          <label className="mb-4 flex items-start gap-2.5 cursor-pointer select-none">
+            <input
+              type="checkbox"
+              checked={agreedToTerms}
+              onChange={(e) => setAgreedToTerms(e.target.checked)}
+              className="mt-0.5 h-4 w-4 shrink-0 rounded border-white/20 bg-zinc-950 accent-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00]"
+            />
+            <span className="text-xs text-zinc-400 leading-relaxed">
+              I agree to the{' '}
+              <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-[#FFCC00] hover:underline">Terms of Service</a>{' '}
+              and have read the{' '}
+              <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-[#FFCC00] hover:underline">Privacy Policy</a>.
+            </span>
+          </label>
+
           {activeMethod === 'card' ? (
             <CardForm
               onSubmit={handleCardSubmit}
               isSubmitting={isSubmitting}
               totalLabel={totalLabel}
               authorizationText={authorizationText}
+              submitDisabled={!canSubmit}
             />
           ) : (
             <EwalletButtons
@@ -226,6 +268,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack }) => {
               onContinue={handleEwalletContinue}
               isSubmitting={isSubmitting}
               authorizationText={authorizationText}
+              submitDisabled={!canSubmit}
             />
           )}
         </GlassPanel>
@@ -242,7 +285,8 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack }) => {
         </a>
       </p>
 
-      <MessengerFloat />
+      <RecentActivityToast />
+      <MessengerFloat side="right" />
     </div>
   );
 };

@@ -37,6 +37,8 @@ export type CardDetails = {
   cvc: string;
   cardholder_name: string;
   email: string;
+  /** Optional PH contact number, attached to the PayMongo billing object. */
+  phone?: string;
 };
 
 export type PaymentNextAction =
@@ -112,6 +114,7 @@ const tokenizeCard = async (details: CardDetails): Promise<string> => {
           billing: {
             name: details.cardholder_name,
             email: details.email,
+            ...(details.phone ? { phone: details.phone } : {}),
           },
         },
       },
