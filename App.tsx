@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useSyncExternalStore } from 'react';
 import { ChevronLeft, Lightbulb, RotateCw, Mail } from 'lucide-react';
 import { ClientDetails, BusinessInfo, Script, Scene, VideoPrompt, Avatar, CinematicNarrativeScene, SceneBatchEntry } from './types';
 import StepIndicator from './components/StepIndicator';
@@ -48,6 +48,10 @@ import {
   updatePassword,
 } from './services/supabaseClient';
 import { popIntendedPlan, startCheckout } from './services/billingService';
+import { QuotaWallModal } from './components/ui/QuotaWallModal';
+import { quotaWallStore } from './services/quotaWallStore';
+import { useSubscription } from './hooks/useSubscription';
+import { nextTier } from './utils/planGate';
 import { getSession, setSession, clearSession, type WizardSessionV1 } from './services/wizardSessionStore';
 
 const TOTAL_STEPS = 8;
@@ -110,6 +114,12 @@ const App: React.FC = () => {
   const [legalReturnHref, setLegalReturnHref] = useState<string | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isBooting, setIsBooting] = useState(false);
+
+  // Quota-wall: published by the transport layer (proxyCall) when a metered
+  // generation hits the user's monthly plan allowance (HTTP 402). Rendered once
+  // at the app root so any module/wizard step triggers it without prop drilling.
+  const quotaWall = useSyncExternalStore(quotaWallStore.subscribe, quotaWallStore.getSnapshot);
+  const { plan_id: currentPlan, billing_cycle } = useSubscription();
   const [bootLine, setBootLine] = useState(0);
   const [authEmail, setAuthEmail] = useState('');
   const [authPassword, setAuthPassword] = useState('');
@@ -1322,6 +1332,8 @@ const App: React.FC = () => {
     moduleElement = <PlaceholderTool moduleName={activeModule} onBack={() => setActiveModule(null)} />;
   }
 
+  const upsellTier = nextTier(currentPlan);
+
   return (
     <ErrorBoundary
       name={`feature:${activeModule ?? 'dashboard'}`}
@@ -1330,6 +1342,18 @@ const App: React.FC = () => {
       resetLabel="BACK TO COMMAND CENTER"
     >
       {moduleElement}
+      <QuotaWallModal
+        open={quotaWall.open}
+        scope={quotaWall.scope}
+        currentPlan={currentPlan}
+        nextPlan={upsellTier}
+        used={quotaWall.used}
+        limit={quotaWall.limit}
+        onUpgrade={() => {
+          if (upsellTier) startCheckout(upsellTier, billing_cycle ?? 'monthly');
+        }}
+        onDismiss={() => quotaWallStore.dismiss()}
+      />
     </ErrorBoundary>
   );
 };

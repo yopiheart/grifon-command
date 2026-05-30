@@ -16,14 +16,19 @@ import {
 } from './_lib/billing-math.js';
 import { getUserFromAccessToken } from './_lib/supabaseAdmin.js';
 import { rateLimitCheck } from './_lib/rateLimit.js';
+import { getUserPlan } from './_lib/userPlan.js';
+import { peekMonthly, type MeterUnit } from './_lib/quota.js';
 
-// Consolidated billing endpoint. The 4 original handlers
-// (intent / confirm / ewallet / status) live below as branches off ?action=...
-// Folded together to stay under Vercel Hobby's 12-function cap.
+// Consolidated billing endpoint. The 5 handlers
+// (intent / confirm / ewallet / status / usage) live below as branches off
+// ?action=... Folded together to stay under Vercel Hobby's 12-function cap.
 
 const ALLOWED_METHODS: PaymentMethodType[] = ['card', 'gcash', 'paymaya', 'grab_pay'];
-const ACTIONS = ['intent', 'confirm', 'ewallet', 'status'] as const;
+const ACTIONS = ['intent', 'confirm', 'ewallet', 'status', 'usage'] as const;
 type Action = (typeof ACTIONS)[number];
+
+// Units surfaced to the dashboard quota meter + wall.
+const METER_UNITS: MeterUnit[] = ['workflows', 'reports', 'captions', 'images', 'video_ads'];
 
 const IntentBody = z.object({
   plan_id: z.enum(['creator', 'pro', 'business']),
@@ -52,7 +57,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(400).json({ error: 'unknown_action' });
   }
 
-  const expectedMethod = action === 'status' ? 'GET' : 'POST';
+  const expectedMethod = action === 'status' || action === 'usage' ? 'GET' : 'POST';
   if (req.method !== expectedMethod) {
     res.setHeader('Allow', expectedMethod);
     return res.status(405).json({ error: 'method_not_allowed' });
@@ -73,6 +78,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return handleEwallet(req, res, user);
     case 'status':
       return handleStatus(req, res, user);
+    case 'usage':
+      return handleUsage(req, res, user);
   }
 }
 
@@ -244,4 +251,24 @@ async function handleStatus(req: VercelRequest, res: VercelResponse, user: Authe
   } catch (err: any) {
     return res.status(502).json({ error: 'paymongo_error', detail: err?.message ?? 'unknown' });
   }
+}
+
+// Read-only monthly usage snapshot for the current user. Drives the dashboard
+// QuotaMeter + the quota-wall modal. peekMonthly reads the rate_limits counter
+// without consuming a slot, so this is safe to poll.
+async function handleUsage(_req: VercelRequest, res: VercelResponse, user: AuthedUser) {
+  if (!(await enforceRateLimit(res, `billing_usage:${user.id}`, 30, 60))) return;
+
+  const plan = await getUserPlan(user.id);
+  const entries = await Promise.all(
+    METER_UNITS.map(async (unit) => {
+      const { used, limit, remaining } = await peekMonthly(unit, user.id, plan);
+      return [unit, { used, limit, remaining }] as const;
+    })
+  );
+
+  return res.status(200).json({
+    plan,
+    ...Object.fromEntries(entries),
+  });
 }

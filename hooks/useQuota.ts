@@ -1,0 +1,80 @@
+import { useCallback, useEffect, useState } from 'react';
+import { getSupabase } from '../services/supabaseClient';
+import type { PlanId } from '../utils/planGate';
+
+export type MeterUnit = 'workflows' | 'reports' | 'captions' | 'images' | 'video_ads';
+
+export type UnitUsage = { used: number; limit: number; remaining: number };
+
+export type Quota = Record<MeterUnit, UnitUsage> & {
+  plan: PlanId;
+  loading: boolean;
+  refetch: () => void;
+};
+
+const ZERO: UnitUsage = { used: 0, limit: 0, remaining: 0 };
+
+const DEFAULT: Omit<Quota, 'refetch'> = {
+  plan: 'free',
+  workflows: ZERO,
+  reports: ZERO,
+  captions: ZERO,
+  images: ZERO,
+  video_ads: ZERO,
+  loading: true,
+};
+
+/**
+ * Reads the current user's monthly usage snapshot from
+ * GET /api/billing?action=usage. Mirrors useSubscription's shape. Unlike the
+ * subscription hook there is no realtime channel — usage changes are driven by
+ * the user's own actions, so callers refetch() after a generation or on the
+ * quota-wall dismiss.
+ */
+export const useQuota = (): Quota => {
+  const [state, setState] = useState<Omit<Quota, 'refetch'>>(DEFAULT);
+
+  const load = useCallback(async () => {
+    const sb = getSupabase();
+    const { data: sessionData } = await sb.auth.getSession();
+    const token = sessionData.session?.access_token;
+    if (!token) {
+      setState({ ...DEFAULT, loading: false });
+      return;
+    }
+    try {
+      const res = await fetch('/api/billing?action=usage', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!res.ok) {
+        setState((s) => ({ ...s, loading: false }));
+        return;
+      }
+      const data = await res.json();
+      setState({
+        plan: (data.plan as PlanId) ?? 'free',
+        workflows: data.workflows ?? ZERO,
+        reports: data.reports ?? ZERO,
+        captions: data.captions ?? ZERO,
+        images: data.images ?? ZERO,
+        video_ads: data.video_ads ?? ZERO,
+        loading: false,
+      });
+    } catch {
+      setState((s) => ({ ...s, loading: false }));
+    }
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    void (async () => {
+      await load();
+      if (cancelled) return;
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [load]);
+
+  return { ...state, refetch: load };
+};

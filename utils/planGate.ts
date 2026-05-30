@@ -16,7 +16,7 @@ export const PLAN_LIMITS: Record<PlanId, PlanLimits> = {
   business: { workflows: 100, reports: 40, captions: 500, images: 300, video_ads: 40, watermark: false },
 };
 
-const PLAN_RANK: Record<PlanId, number> = {
+export const PLAN_RANK: Record<PlanId, number> = {
   free: 0,
   creator: 1,
   pro: 2,
@@ -25,3 +25,16 @@ const PLAN_RANK: Record<PlanId, number> = {
 
 export const planAtLeast = (current: PlanId, required: PlanId): boolean =>
   PLAN_RANK[current] >= PLAN_RANK[required];
+
+// Ordered, lowest → highest, for next-tier lookups.
+const PLAN_ORDER: PlanId[] = ['free', 'creator', 'pro', 'business'];
+
+/**
+ * The next tier up from `current`, or null if already on the top plan.
+ * Returns Exclude<PlanId,'free'> because the only thing below creator is free,
+ * and you never "upgrade" to free — every real target is a checkout plan.
+ */
+export const nextTier = (current: PlanId): Exclude<PlanId, 'free'> | null => {
+  const next = PLAN_ORDER[PLAN_RANK[current] + 1];
+  return (next as Exclude<PlanId, 'free'> | undefined) ?? null;
+};
