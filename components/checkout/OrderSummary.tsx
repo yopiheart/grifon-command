@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowLeft, ChevronDown, Tag } from 'lucide-react';
 import { GlassPanel } from '../ui/GlassPanel';
+import { CheckoutReservation } from './CheckoutReservation';
 
 interface OrderSummaryProps {
   planName: string;
@@ -11,6 +12,8 @@ interface OrderSummaryProps {
   vatCentavos: number;
   monthlyEquivalentCentavos?: number;
   monthlyComparisonSavingsCentavos?: number;
+  /** When set, shows the honest reservation countdown, persisted under this key. */
+  reservationKey?: string;
   onBack: () => void;
 }
 
@@ -28,6 +31,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
   vatCentavos,
   monthlyEquivalentCentavos,
   monthlyComparisonSavingsCentavos,
+  reservationKey,
   onBack,
 }) => {
   const [vatOpen, setVatOpen] = useState(false);
@@ -41,6 +45,8 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
       >
         <ArrowLeft className="w-4 h-4" /> Back to plans
       </button>
+
+      {reservationKey && <CheckoutReservation storageKey={reservationKey} />}
 
       <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">Subscribe to</p>
       <h1 className="text-xl font-semibold text-white mb-6">
@@ -75,7 +81,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
 
       <div className="flex justify-between text-sm">
         <div className="text-white pr-4">
-          <p className="font-medium">{planName}</p>
+          <p className="font-semibold">{planName}</p>
           <p className="text-zinc-500 text-xs mt-1 leading-relaxed">{description}</p>
         </div>
         <p className="text-white shrink-0">{formatPHP(totalCentavos)}</p>
@@ -120,7 +126,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
       <div className="border-t border-white/10 my-6" />
 
       <div className="flex justify-between items-baseline">
-        <span className="text-white font-medium">Total due today</span>
+        <span className="text-white font-semibold">Total due today</span>
         <span className="text-2xl font-bold text-white">
           <span className="text-[#FFCC00]">&#8369;</span>
           {(totalCentavos / 100).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}

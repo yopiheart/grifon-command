@@ -8,11 +8,20 @@ import { playTick } from '../../services/uiSoundService';
  * a plain link, not the heavy FB Customer-Chat SDK, so there's no cookie/consent
  * weight. Sits low-left so it never covers a primary CTA on mobile.
  */
-export const MessengerFloat: React.FC = () => {
+interface MessengerFloatProps {
+  /** Which corner to dock in. Default 'left'; use 'right' to clear bottom-left popups. */
+  side?: 'left' | 'right';
+}
+
+export const MessengerFloat: React.FC<MessengerFloatProps> = ({ side = 'left' }) => {
   const [showTip, setShowTip] = useState(true);
 
   return (
-    <div className="fixed left-4 bottom-4 z-40 flex items-end gap-2 print:hidden">
+    <div
+      className={`fixed bottom-4 z-40 flex items-end gap-2 print:hidden ${
+        side === 'right' ? 'right-4 flex-row-reverse' : 'left-4'
+      }`}
+    >
       <a
         href={CONTACT.messengerUrl}
         target="_blank"
@@ -25,7 +34,11 @@ export const MessengerFloat: React.FC = () => {
       </a>
 
       {showTip && (
-        <div className="relative mb-1 max-w-[200px] rounded-2xl rounded-bl-sm bg-zinc-900/90 backdrop-blur-xl border border-white/10 px-3.5 py-2.5">
+        <div
+          className={`relative mb-1 max-w-[200px] rounded-2xl bg-zinc-900/90 backdrop-blur-xl border border-white/10 px-3.5 py-2.5 ${
+            side === 'right' ? 'rounded-br-sm' : 'rounded-bl-sm'
+          }`}
+        >
           <button
             onClick={() => setShowTip(false)}
             aria-label="Dismiss"
