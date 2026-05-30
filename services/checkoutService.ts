@@ -18,6 +18,8 @@ export type IntentBreakdown = {
   subtotal_centavos: number;
   vat_centavos: number;
   total_centavos: number;
+  /** Sum of selected order-bump add-ons (server-computed). */
+  add_on_centavos?: number;
   monthly_equivalent_centavos: number | null;
   annual_savings_centavos: number | null;
 };
@@ -74,7 +76,8 @@ const proxyError = async (res: Response, prefix: string): Promise<never> => {
 
 export const fetchIntent = async (
   plan_id: PlanId,
-  billing_cycle: BillingCycle
+  billing_cycle: BillingCycle,
+  addOns: string[] = []
 ): Promise<IntentResponse> => {
   const token = await getAuthToken();
   const res = await fetch('/api/billing?action=intent', {
@@ -83,7 +86,11 @@ export const fetchIntent = async (
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ plan_id, billing_cycle }),
+    body: JSON.stringify({
+      plan_id,
+      billing_cycle,
+      ...(addOns.length ? { add_ons: addOns } : {}),
+    }),
   });
   if (!res.ok) await proxyError(res, 'INTENT_FAILED');
   return res.json();

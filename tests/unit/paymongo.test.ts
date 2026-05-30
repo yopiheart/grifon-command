@@ -1,6 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import crypto from 'node:crypto';
-import { verifyWebhookSignature, PLAN_CATALOG } from '../../api/_lib/paymongo.js';
+import {
+  verifyWebhookSignature,
+  PLAN_CATALOG,
+  ADD_ON_CATALOG,
+  sumAddOnCentavos,
+} from '../../api/_lib/paymongo.js';
 
 const SECRET = 'whsec_test_abc123';
 
@@ -59,5 +64,24 @@ describe('PLAN_CATALOG', () => {
       // Annual should be cheaper per-month than monthly × 12 (otherwise why offer it)
       expect(plan.annualCentavos).toBeLessThan(plan.monthlyCentavos * 12);
     }
+  });
+});
+
+describe('order-bump add-ons (sumAddOnCentavos)', () => {
+  it('prices the onboarding call at ₱997 (99,700 centavos)', () => {
+    expect(ADD_ON_CATALOG.onboarding_call.centavos).toBe(99_700);
+  });
+
+  it('returns 0 when no add-ons are selected', () => {
+    expect(sumAddOnCentavos([])).toBe(0);
+  });
+
+  it('sums known add-on IDs server-side (price is never client-supplied)', () => {
+    expect(sumAddOnCentavos(['onboarding_call'])).toBe(99_700);
+  });
+
+  it('throws on any unknown add-on ID so the client cannot inject an amount', () => {
+    expect(() => sumAddOnCentavos(['onboarding_call', 'totally_made_up'])).toThrow(/unknown_add_on/);
+    expect(() => sumAddOnCentavos(['0; DROP TABLE subscriptions'])).toThrow(/unknown_add_on/);
   });
 });
