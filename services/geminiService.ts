@@ -3,6 +3,26 @@ import { BusinessInfo, Script, Scene, StoryboardResponse, VideoPrompt, MarketRes
 import { getSupabase } from './supabaseClient';
 import { startJob, endJob, type JobKind } from './activeJobsService';
 import { saveActiveJob, clearActiveJob } from './activeJobStore';
+import { triggerQuotaWall } from './quotaWallStore';
+import type { MeterUnit } from '../hooks/useQuota';
+import type { PlanId } from '../utils/planGate';
+
+/**
+ * Thrown when a metered generation hits the user's monthly plan allowance
+ * (server returns HTTP 402 `quota_exceeded`). Distinct from a transient 429:
+ * retryWithBackoff must NOT retry this — it only clears with an upgrade. The
+ * quota-wall modal is published as a side effect before this throws so callers
+ * just need to stop their spinners.
+ */
+export class QuotaExceededError extends Error {
+  status = 402 as const;
+  scope: MeterUnit;
+  constructor(scope: MeterUnit) {
+    super(`QUOTA_EXCEEDED: ${scope}`);
+    this.name = 'QuotaExceededError';
+    this.scope = scope;
+  }
+}
 
 export interface ProxyCallOpts {
   jobLabel?: string;
@@ -108,6 +128,18 @@ const proxyCall = async <T = GenerateContentResponse>(endpoint: string, params: 
 
     if (!res.ok) {
       const body = await res.json().catch(() => ({} as any));
+      // Monthly plan allowance exhausted → raise the upgrade wall (side effect)
+      // and throw a non-retryable typed error. Distinct from 429 below, which
+      // retryWithBackoff retries; a 402 only clears with an upgrade.
+      if (res.status === 402 && body?.error === 'quota_exceeded') {
+        triggerQuotaWall({
+          scope: body.scope as MeterUnit,
+          plan: (body.plan as PlanId) ?? 'free',
+          used: Number(body.used) || 0,
+          limit: Number(body.limit) || 0,
+        });
+        throw new QuotaExceededError(body.scope as MeterUnit);
+      }
       if (res.status === 429) {
         const err: any = new Error(body?.detail ? `429: ${body.detail}` : 'RESOURCE_EXHAUSTED');
         err.status = 429;

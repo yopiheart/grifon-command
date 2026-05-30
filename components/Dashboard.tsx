@@ -7,6 +7,7 @@ import {
   LogOut, HelpCircle, Crown, Zap, X
 } from 'lucide-react';
 import { useSubscription } from '../hooks/useSubscription';
+import { useQuota } from '../hooks/useQuota';
 import { Aurora } from './ui/Aurora';
 import { QuotaMeter } from './ui/QuotaMeter';
 import { CommandPalette, type CommandItem } from './ui/CommandPalette';
@@ -194,6 +195,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
   }, [showUpgradeBanner, bannerMessage]);
 
   const { plan_id: userPlan } = useSubscription();
+  const quota = useQuota();
   const displayEmail = userEmail || '';
   const userName = displayEmail
     ? displayEmail.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
@@ -313,7 +315,12 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
               </span>
             </div>
 
-            <QuotaMeter plan={userPlan} />
+            <QuotaMeter
+              plan={userPlan}
+              used={quota.workflows.used}
+              limit={quota.loading ? undefined : quota.workflows.limit}
+              label="Workflows"
+            />
 
           </div>
         </div>

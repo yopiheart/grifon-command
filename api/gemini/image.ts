@@ -3,6 +3,8 @@ import { z } from 'zod';
 import { GoogleGenAI } from '@google/genai';
 import { getUserFromAccessToken } from '../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../_lib/rateLimit.js';
+import { getUserPlan } from '../_lib/userPlan.js';
+import { consumeMonthly } from '../_lib/quota.js';
 
 const Body = z.object({
   model: z.string().min(1),
@@ -51,6 +53,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       error: 'rate_limited',
       scope: 'image',
       retry_after_seconds: IMAGE_WINDOW_SECONDS,
+    });
+  }
+
+  // Monthly plan allowance (images). Every image generation counts, including
+  // the 3-4 in a storyboard daisy-chain (per Neil 2026-05-31). Distinct from the
+  // per-minute rate-limit above; raises the in-app upgrade wall via the 402
+  // quota_exceeded contract proxyCall recognizes.
+  const plan = await getUserPlan(user.id);
+  const imageQuota = await consumeMonthly('images', user.id, plan);
+  if (!imageQuota.allowed) {
+    return res.status(402).json({
+      error: 'quota_exceeded',
+      scope: 'images',
+      used: imageQuota.used,
+      limit: imageQuota.limit,
+      remaining: 0,
+      plan,
     });
   }
 

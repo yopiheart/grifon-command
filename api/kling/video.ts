@@ -2,6 +2,8 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { z } from 'zod';
 import { getUserFromAccessToken } from '../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../_lib/rateLimit.js';
+import { getUserPlan } from '../_lib/userPlan.js';
+import { consumeMonthly } from '../_lib/quota.js';
 import { getKlingAccessToken, invalidateKlingAccessToken, KLING_API_BASE } from '../_lib/klingAuth.js';
 
 const Body = z.object({
@@ -53,6 +55,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       error: 'rate_limited',
       scope: 'video',
       retry_after_seconds: VIDEO_WINDOW_SECONDS,
+    });
+  }
+
+  // Monthly plan allowance (video_ads). Shared cap across Veo + Kling. Distinct
+  // from both the hourly rate-limit above and the Kling balance-exhausted 402
+  // below (error: 'kling_balance_exhausted'); this 402 uses the quota_exceeded
+  // contract that raises the in-app upgrade wall.
+  const plan = await getUserPlan(user.id);
+  const videoQuota = await consumeMonthly('video_ads', user.id, plan);
+  if (!videoQuota.allowed) {
+    return res.status(402).json({
+      error: 'quota_exceeded',
+      scope: 'video_ads',
+      used: videoQuota.used,
+      limit: videoQuota.limit,
+      remaining: 0,
+      plan,
     });
   }
 
