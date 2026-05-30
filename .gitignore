@@ -18,6 +18,9 @@ token.json
 # WAT intermediates
 .tmp/
 
+# Portable tools downloaded per-session (e.g. gh CLI via scripts/restore-gh-cli.ps1)
+.tools/
+
 # Playwright MCP output (snapshots, console logs)
 .playwright-mcp/
 
