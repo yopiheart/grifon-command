@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Lock } from 'lucide-react';
+import { GLOSSY_GOLD_CLASS, ButtonSheen } from './glossyGoldButton';
 
 export type CardFormData = {
   cardNumber: string;
@@ -119,9 +120,10 @@ export const CardForm: React.FC<CardFormProps> = ({ onSubmit, isSubmitting, tota
       <button
         type="submit"
         disabled={isSubmitting || submitDisabled}
-        className="w-full bg-[#FFCC00] text-black font-bold uppercase tracking-widest py-4 rounded-xl hover:shadow-[0_0_20px_rgba(255,204,0,0.4)] hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+        className={GLOSSY_GOLD_CLASS}
       >
-        {isSubmitting ? 'Processing…' : totalLabel}
+        <ButtonSheen />
+        <span className="relative z-10">{isSubmitting ? 'Processing…' : totalLabel}</span>
       </button>
 
       <p className="text-[11px] text-zinc-500 leading-relaxed">{authorizationText}</p>

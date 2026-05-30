@@ -1,5 +1,6 @@
 import React from 'react';
 import { ChevronRight } from 'lucide-react';
+import { GLOSSY_GOLD_CLASS, ButtonSheen } from './glossyGoldButton';
 
 export type EwalletMethod = 'gcash' | 'paymaya' | 'grab_pay';
 
@@ -39,16 +40,19 @@ export const EwalletButtons: React.FC<EwalletButtonsProps> = ({ active, onContin
         type="button"
         onClick={onContinue}
         disabled={isSubmitting || submitDisabled}
-        className="w-full bg-[#FFCC00] text-black font-bold uppercase tracking-widest py-4 rounded-xl hover:shadow-[0_0_20px_rgba(255,204,0,0.4)] hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2"
+        className={GLOSSY_GOLD_CLASS}
       >
-        {isSubmitting ? (
-          'Redirecting…'
-        ) : (
-          <>
-            Continue with {label}
-            <ChevronRight className="w-4 h-4" />
-          </>
-        )}
+        <ButtonSheen />
+        <span className="relative z-10 inline-flex items-center justify-center gap-2">
+          {isSubmitting ? (
+            'Redirecting…'
+          ) : (
+            <>
+              Continue with {label}
+              <ChevronRight className="w-4 h-4" />
+            </>
+          )}
+        </span>
       </button>
 
       <p className="text-[11px] text-zinc-500 leading-relaxed">{authorizationText}</p>

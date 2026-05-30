@@ -109,7 +109,7 @@ export const CycleToggle: React.FC<CycleToggleProps> = ({
             className="mt-2.5 flex min-h-[44px] w-full items-center justify-center gap-2 rounded-lg border border-[#FFCC00]/40 bg-[#FFCC00]/10 px-3 py-2.5 text-xs font-semibold text-[#FFCC00] transition-colors hover:bg-[#FFCC00]/15"
           >
             <Sparkles className="h-4 w-4 shrink-0" />
-            Switch to annual — 2 months free
+            Switch to annual
           </button>
         </motion.div>
       )}
