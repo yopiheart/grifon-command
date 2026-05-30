@@ -34,7 +34,9 @@ const parseQuery = (): { planId: PlanId; cycle: BillingCycle } => {
 };
 
 const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack }) => {
-  const { planId, cycle } = useMemo(parseQuery, []);
+  const { planId, cycle: initialCycle } = useMemo(parseQuery, []);
+  // Cycle is lifted into state so the in-checkout monthly↔annual toggle can re-fetch the intent.
+  const [cycle, setCycle] = useState<BillingCycle>(initialCycle);
   const [intent, setIntent] = useState<IntentResponse | null>(null);
   const [intentError, setIntentError] = useState<string | null>(null);
   const [activeMethod, setActiveMethod] = useState<PaymentMethod>('card');
@@ -193,7 +195,8 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack }) => {
           vatCentavos={breakdown.vat_centavos}
           monthlyEquivalentCentavos={breakdown.monthly_equivalent_centavos ?? undefined}
           monthlyComparisonSavingsCentavos={breakdown.annual_savings_centavos ?? undefined}
-          reservationKey={`${planId}_${cycle}`}
+          onCycleChange={setCycle}
+          reservationKey={`${planId}`}
           addOnSelected={selectedAddOns.includes(ORDER_BUMP.id)}
           addOnCentavos={breakdown.add_on_centavos}
           onToggleAddOn={toggleAddOn}
