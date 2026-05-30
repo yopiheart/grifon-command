@@ -7,6 +7,22 @@
 
 ---
 
+## STATUS (updated 2026-05-31)
+
+- **Feature A — SHIPPED ✅** (annual upsell `b160281`, then polished across `ab6aafb`, `3031ca9`,
+  `8edd78a`): cycle toggle + loss-aversion callout, terms checkbox above Pay, in-app policy view with
+  state-preserving "Back to checkout", value-stack checkmark inclusions, guarantee moved into Order
+  Summary with the rotating gold light, glossy gold CTA, sentence-case terms consent.
+- **Tier upgrades (Creator→Pro→Business) — decided: NOT at checkout.** They belong in the **dashboard
+  at the quota wall** ("15/15 workflows used → unlock Pro") — highest-intent moment, keeps checkout a
+  single decision. New, separate feature; not yet built.
+- **Deferred Monetise-style ₱-anchor value stack** (strikethrough per-item value + total): needs
+  Creator/Business value numbers Neil signs off on (Pro has the existing ₱170k stack). Escalate to
+  `grifon-cmo`.
+- **Feature B — still DEFERRED** (landing exit-intent "Start Free" popup). Spec below unchanged.
+
+---
+
 ## Feature A — Checkout: monthly→annual upsell (loss aversion)
 
 **Why:** Checkout locks in the cycle chosen on pricing (`?cycle=monthly`). No nudge to switch to annual = missed
