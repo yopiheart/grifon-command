@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ArrowLeft, ChevronDown, Tag, Check } from 'lucide-react';
 import { GlassPanel } from '../ui/GlassPanel';
 import { CheckoutReservation } from './CheckoutReservation';
+import { CycleToggle } from './CycleToggle';
 import { ORDER_BUMP } from '../../config/checkout';
 
 interface OrderSummaryProps {
@@ -13,6 +14,8 @@ interface OrderSummaryProps {
   vatCentavos: number;
   monthlyEquivalentCentavos?: number;
   monthlyComparisonSavingsCentavos?: number;
+  /** When set, mounts the reversible monthly↔annual switch (loss-aversion upsell). */
+  onCycleChange?: (cycle: 'monthly' | 'annual') => void;
   /** When set, shows the honest reservation countdown, persisted under this key. */
   reservationKey?: string;
   /** Order-bump add-on. Display via ORDER_BUMP; the charge is server-authoritative. */
@@ -36,6 +39,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
   vatCentavos,
   monthlyEquivalentCentavos,
   monthlyComparisonSavingsCentavos,
+  onCycleChange,
   reservationKey,
   addOnSelected = false,
   addOnCentavos,
@@ -59,6 +63,15 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
       </button>
 
       {reservationKey && <CheckoutReservation storageKey={reservationKey} />}
+
+      {onCycleChange && (
+        <CycleToggle
+          cycle={cycle}
+          onChange={onCycleChange}
+          annualSavingsCentavos={monthlyComparisonSavingsCentavos}
+          monthlyEquivalentCentavos={monthlyEquivalentCentavos}
+        />
+      )}
 
       <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">Subscribe to</p>
       <h1 className="text-xl font-semibold text-white mb-6">

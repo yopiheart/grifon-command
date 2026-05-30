@@ -148,12 +148,12 @@ async function handleIntent(req: VercelRequest, res: VercelResponse, user: Authe
         vat_centavos: vat,
         total_centavos: total,
         add_on_centavos: addOnCentavos,
-        monthly_equivalent_centavos:
-          billing_cycle === 'annual' ? monthlyEquivalent(plan.annualCentavos) : null,
-        annual_savings_centavos:
-          billing_cycle === 'annual'
-            ? annualSavingsVsMonthly(plan.annualCentavos, plan.monthlyCentavos)
-            : null,
+        // Display-only: these are properties of the plan, not the chosen cycle, so we
+        // return them for BOTH cycles. The monthly checkout view uses annual_savings_centavos
+        // to render the honest "switch to annual & save ₱X" nudge. The charged `total`
+        // (computed above) is unchanged and stays server-authoritative.
+        monthly_equivalent_centavos: monthlyEquivalent(plan.annualCentavos),
+        annual_savings_centavos: annualSavingsVsMonthly(plan.annualCentavos, plan.monthlyCentavos),
       },
     });
   } catch (err: any) {
