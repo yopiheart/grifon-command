@@ -126,7 +126,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
       )}
 
       {/* 7-day guarantee — risk-reversal at the pay moment, framed by the rotating gold light */}
-      <AnimatedBorder className="bg-zinc-950" containerClassName="mb-6">
+      <AnimatedBorder intense className="bg-zinc-950" containerClassName="mb-6">
         <div className="flex items-start gap-3 px-4 py-3.5 text-sm text-zinc-300 leading-relaxed">
           <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-[#FFCC00]" />
           <span>

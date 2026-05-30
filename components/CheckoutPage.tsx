@@ -201,7 +201,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack, onViewLegal 
   // Rendered directly above the Pay button (in both card + e-wallet modes) so the tick stays in view.
   // Legal links open in-app (onViewLegal) so the buyer returns to a fully-restored checkout.
   const termsCheckbox = (
-    <label className="flex items-start gap-2.5 cursor-pointer select-none">
+    <label className="terms-consent flex items-start gap-2.5 cursor-pointer select-none">
       <input
         type="checkbox"
         checked={agreedToTerms}
