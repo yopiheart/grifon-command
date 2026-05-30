@@ -683,6 +683,7 @@ const App: React.FC = () => {
           onEnterApp={() => setCurrentRoute('app')}
           onNavigatePricing={() => setCurrentRoute('pricing')}
           onNavigateLegal={goToLegal}
+          isAuthenticated={isAuthenticated}
         />
       </ErrorBoundary>
     );

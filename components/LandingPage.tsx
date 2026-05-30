@@ -7,6 +7,9 @@ import { AnimatedBorder } from './ui/AnimatedBorder';
 import { Aurora } from './ui/Aurora';
 import { SiteHeader, type SiteNavLink } from './ui/SiteHeader';
 import { UrgencyBar } from './ui/UrgencyBar';
+import { ExitIntentModal } from './ui/ExitIntentModal';
+import { useExitIntent } from './ui/useExitIntent';
+import { FOUNDING_OFFER } from '../config/foundingOffer';
 import { DirectorDemo, ResearchDemo, OfferDemo, CaptionDemo, ImageDemo } from './landing/InclusionDemos';
 import { CONTACT } from '../config/contact';
 
@@ -16,9 +19,14 @@ interface LandingPageProps {
   onEnterApp: () => void;
   onNavigatePricing: () => void;
   onNavigateLegal: (page: LegalRoute) => void;
+  isAuthenticated?: boolean;
 }
 
-const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing, onNavigateLegal }) => {
+const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing, onNavigateLegal, isAuthenticated = false }) => {
+  // Desktop-only exit-intent recapture — once/session, never for logged-in visitors.
+  const { triggered: exitTriggered, dismiss: dismissExit } = useExitIntent({
+    enabled: !isAuthenticated && FOUNDING_OFFER.enabled,
+  });
   const navLinks: SiteNavLink[] = [
     { label: 'What You Get', href: '#what-you-get' },
     { label: 'Reviews', href: '#reviews' },
@@ -28,6 +36,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white font-sans overflow-x-clip selection:bg-[#FFCC00] selection:text-black">
+
+      <ExitIntentModal triggered={exitTriggered} onDismiss={dismissExit} onEnterApp={onEnterApp} />
 
       <Aurora intensity="marketing" />
 
