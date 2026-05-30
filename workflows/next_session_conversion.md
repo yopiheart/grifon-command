@@ -25,18 +25,33 @@
 
 Deferred 2026-05-31 to protect the context window. Each has enough scope to resume cold.
 
-### 1. Dashboard quota-wall tier-upgrade (Creator→Pro→Business) — the next conversion build
-- **What:** A contextual upgrade nudge inside the app when a user hits a plan limit ("15/15 video
-  workflows used → unlock 40 with Pro"). This is the agreed home for tier upsells — deliberately NOT
-  at checkout (re-deciding the plan at the pay moment risks the primary conversion).
-- **Why it's the highest-intent moment:** they've felt the value and hit the wall — the pain sells the
-  upgrade. Highest-converting upgrade trigger, separate from the initial purchase decision.
-- **Where to start:** find where per-plan quotas are enforced/surfaced in-app (quota check in
-  `api/_lib/` + wherever the dashboard shows usage). Reuse `PLAN_FEATURES` (`config/planFeatures.ts`)
-  for the "what you unlock" diff, `GoldButton` → `startCheckout(nextTier, cycle)` from
-  `services/billingService.ts`. Likely a new `components/` upgrade card/modal gated on usage ≥ cap.
-- **Scope:** net-new feature; needs its own plan + `/goal`. Pull in `grifon-cmo` for the nudge copy
-  and `grifon-creative-director` if it gets a distinctive design.
+### 1. Dashboard quota-wall tier-upgrade (Creator→Pro→Business) — ✅ SHIPPED 2026-05-31
+**Branch `feat/quota-wall-metering` (commits `9fcf77d`, `c2fb109`, `7104736`). Full monthly metering — all 5 units enforced.**
+
+Built the agreed in-app upgrade wall: when a user hits a monthly plan limit, a 402
+`quota_exceeded` from the metered handler raises `QuotaWallModal` with the next-tier
+unlock diff and a `startCheckout(nextTier, cycle)` CTA.
+
+- **The gap that was filled:** `PLAN_LIMITS` (`utils/planGate.ts`) defined caps but nothing
+  counted against them. Now `api/_lib/quota.ts` adds `MONTHLY_LIMITS` + `consumeMonthly()`/
+  `peekMonthly()` over the existing `rate_limits` table + `rate_limit_check` RPC, keyed by
+  calendar month (`${unit}:monthly:${YYYY}-${MM}:${userId}`) — zero DB migration.
+- **Enforcement (server, additive; escalated + approved):** reports←marketmind & workflows←adscript
+  (`api/gemini/text.ts`), images←every gen (`api/gemini/image.ts`), video_ads←Veo+Kling shared key
+  (`api/gemini/video.ts`, `api/kling/video.ts`, `api/kling/omni-video.ts`), captions←`meterUnit`
+  body hint from `generateCaptionAndHeadline` (zod strips it before Gemini, so only caption calls meter).
+- **Client:** `hooks/useQuota.ts`, `services/quotaWallStore.ts` (pub-sub, no Context),
+  `components/ui/QuotaWallModal.tsx` (ExitIntentModal pattern), `proxyCall` 402 branch +
+  `QuotaExceededError` (non-retryable), `GET /api/billing?action=usage`, `nextTier()`/`PLAN_RANK`
+  exported, Dashboard `QuotaMeter` wired to real numbers.
+- **Unit decisions (Neil 2026-05-31):** 1 workflow = each ad-script gen (regens included);
+  captions via opt-in hint; images count every gen (daisy-chain included).
+- **Verified:** build clean (0 TS errors), 11 new + 26 stable unit tests green, brand-check 44/50
+  (0 critical), no TUNED prompt/schema/model edits.
+- **Follow-ups (not blockers):** (a) `consumeMonthly` consumes *before* forwarding, so a failed
+  upstream still burns a unit (matches existing hourly-limit behavior) — switch to consume-on-success
+  if undesired; (b) reset is calendar-month, not billing-cycle-aligned (would need a `user_usage`
+  table); (c) interactive Playwright smoke of the live wall not yet run.
 
 ### 2. Monetise-style ₱-anchor value stack (checkout OrderSummary) — BLOCKED on Neil's numbers
 - **What:** Upgrade the checkmark "What's included" list into a value stack with a struck-through ₱
