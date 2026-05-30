@@ -119,9 +119,9 @@ export const ExitIntentModal: React.FC<ExitIntentModalProps> = ({ triggered, onD
             </h2>
 
             <p className="px-6 mt-3 text-sm leading-relaxed text-zinc-400">
-              Patunayan mo. Gawa ng isang totoong ad —{' '}
+              Patunayan mo. Gumawa ng isang totoong ad —{' '}
               <span className="font-semibold text-zinc-200">free, in 30 minutes.</span> Walang credit
-              card. Kung basura, wala kang nawala.
+              card. Kung basura, wala namang mawawala.
             </p>
 
             <div className="px-6 mt-6">
