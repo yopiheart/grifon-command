@@ -22,6 +22,8 @@ import { z } from 'zod';
 import { GoogleGenAI } from '@google/genai';
 import { getUserFromAccessToken } from '../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../_lib/rateLimit.js';
+import { getUserPlan } from '../_lib/userPlan.js';
+import { consumeMonthly } from '../_lib/quota.js';
 import {
   SAFETY_SETTINGS,
   cleanJson,
@@ -207,6 +209,26 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       scope: isFlowMode ? `flow:${rawBody.flow}` : 'text',
       retry_after_seconds: TEXT_WINDOW_SECONDS,
     });
+  }
+
+  // Monthly plan allowance (reports = MarketMind). Distinct from the per-minute
+  // rate-limit above: this counts toward the user's tier cap and, when hit,
+  // raises the in-app upgrade wall via the 402 quota_exceeded contract that
+  // proxyCall recognizes. Consumes a slot before forwarding (same atomic
+  // pre-forward model as rate_limit_check).
+  if (isFlowMode && rawBody.flow === 'marketmind') {
+    const plan = await getUserPlan(user.id);
+    const quota = await consumeMonthly('reports', user.id, plan);
+    if (!quota.allowed) {
+      return res.status(402).json({
+        error: 'quota_exceeded',
+        scope: 'reports',
+        used: quota.used,
+        limit: quota.limit,
+        remaining: 0,
+        plan,
+      });
+    }
   }
 
   try {

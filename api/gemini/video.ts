@@ -3,6 +3,8 @@ import { z } from 'zod';
 import { GoogleGenAI } from '@google/genai';
 import { getUserFromAccessToken } from '../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../_lib/rateLimit.js';
+import { getUserPlan } from '../_lib/userPlan.js';
+import { consumeMonthly } from '../_lib/quota.js';
 
 const Body = z.object({
   model: z.string().min(1),
@@ -60,6 +62,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       error: 'rate_limited',
       scope: 'video',
       retry_after_seconds: VIDEO_WINDOW_SECONDS,
+    });
+  }
+
+  // Monthly plan allowance (video_ads). Distinct from the hourly rate-limit
+  // above: this counts toward the user's tier cap (shared across Veo + Kling)
+  // and raises the in-app upgrade wall via the 402 quota_exceeded contract.
+  const plan = await getUserPlan(user.id);
+  const videoQuota = await consumeMonthly('video_ads', user.id, plan);
+  if (!videoQuota.allowed) {
+    return res.status(402).json({
+      error: 'quota_exceeded',
+      scope: 'video_ads',
+      used: videoQuota.used,
+      limit: videoQuota.limit,
+      remaining: 0,
+      plan,
     });
   }
 
