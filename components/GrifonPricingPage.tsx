@@ -1,34 +1,16 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { ShieldCheck } from "lucide-react";
+import { ShieldCheck, Check as CheckIcon, X as XIcon, Lock as LockIcon, Star as StarIcon, Film as FilmIcon } from "lucide-react";
 import { toast } from "sonner";
 import { AnimatedBorder } from "./ui/AnimatedBorder";
+import { SiteHeader, type SiteNavLink } from "./ui/SiteHeader";
+import { UrgencyBar } from "./ui/UrgencyBar";
 import { startCheckout, type PlanId, type BillingCycle } from "../services/billingService";
 
-const Check = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M13.3 4.3L6 11.6L2.7 8.3" stroke="#FFCC00" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-const X = () => (
-  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M10.5 3.5L3.5 10.5M3.5 3.5L10.5 10.5" stroke="#52525b" strokeWidth="1.5" strokeLinecap="round"/>
-  </svg>
-);
-
-const Lock = () => (
-  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="3" y="6" width="8" height="6" rx="1.5" stroke="#FFCC00" strokeWidth="1.2"/>
-    <path d="M5 6V4.5a2 2 0 114 0V6" stroke="#FFCC00" strokeWidth="1.2" strokeLinecap="round"/>
-  </svg>
-);
-
-const Star = () => (
-  <svg width="14" height="14" viewBox="0 0 14 14" fill="#FFCC00" xmlns="http://www.w3.org/2000/svg">
-    <path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27 3.48 11.85l.67-3.93L1.3 5.14l3.94-.57L7 1z"/>
-  </svg>
-);
+const Check = () => <CheckIcon size={16} strokeWidth={2.5} className="text-[#FFCC00]" />;
+const X = () => <XIcon size={14} strokeWidth={1.5} className="text-zinc-600" />;
+const Lock = () => <LockIcon size={14} strokeWidth={1.2} className="text-[#FFCC00]" />;
+const Star = () => <StarIcon size={14} strokeWidth={0} fill="#FFCC00" className="text-[#FFCC00]" />;
 
 type Plan = {
   price: string;
@@ -147,6 +129,10 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
 
   const totalValue = "₱170,000";
 
+  const navLinks: SiteNavLink[] = [
+    { label: 'Home', onClick: onNavigateHome },
+  ];
+
   return (
     <div className="font-sans" style={{
       minHeight: "100vh",
@@ -165,7 +151,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
         
         .card-hover:hover {
           transform: translateY(-4px);
-          box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+          box-shadow: 0 0 30px rgba(255,204,0,0.12), 0 0 60px rgba(255,204,0,0.05);
         }
         
         .gold-btn {
@@ -252,28 +238,13 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
         />
       </div>
 
-      <div style={{ position: "relative", zIndex: 1, paddingTop: "80px" }}>
+      <div style={{ position: "relative", zIndex: 1 }}>
 
-      {/* BILLIONAIRE STICKY HEADER */}
-      <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-zinc-950/80 border-b border-white/10">
-        <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8 py-3 max-w-7xl mx-auto">
-          {/* Left Side: Brand Logo */}
-          <div className="flex items-center gap-2 cursor-pointer" onClick={onNavigateHome}>
-            <img src="/logo.png" alt="GRIFON Logo" className="h-8 w-auto object-contain" />
-            <span className="font-black text-xl tracking-tighter text-white italic">GRIFON<span className="text-[#FFCC00]">.AI</span></span>
-          </div>
-
-          {/* Center: HOME link */}
-          <button onClick={onNavigateHome} className="bg-transparent border border-white/20 text-white text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.2em] px-4 py-1.5 rounded-full hover:bg-white/10 transition-all cursor-pointer">
-            HOME
-          </button>
-
-          {/* Right: START FREE button */}
-          <button onClick={onEnterApp} className="bg-transparent border border-[#FFCC00] text-[#FFCC00] text-[11px] font-black uppercase tracking-widest px-5 py-2 rounded-full hover:bg-[#FFCC00]/10 hover:shadow-[0_0_15px_rgba(255,204,0,0.3)] hover:scale-105 transition-all">
-            START FREE
-          </button>
-        </div>
-      </header>
+      {/* STICKY TOP — founding urgency bar + nav */}
+      <div className="sticky top-0 z-50">
+        <UrgencyBar />
+        <SiteHeader onEnterApp={onEnterApp} navLinks={navLinks} onLogoClick={onNavigateHome} showLogin={false} />
+      </div>
 
         {/* ===== HERO SECTION ===== */}
         <section className="grid-bg" style={{ 
@@ -334,7 +305,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
               <div className="w-8 h-8 rounded-full border-2 border-zinc-900 bg-zinc-600 flex items-center justify-center text-[10px] font-bold text-white">JL</div>
               <div className="w-8 h-8 rounded-full border-2 border-zinc-900 bg-zinc-500 flex items-center justify-center text-[10px] font-bold text-white">CM</div>
             </div>
-            <span className="text-sm text-zinc-300 font-medium">
+            <span className="text-sm text-zinc-300 font-semibold">
               Trusted by <span className="text-[#FFCC00] font-bold">100+</span> Filipino Business Owners
             </span>
           </div>
@@ -460,7 +431,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
                   <span style={{ 
                     fontSize: isFree ? 36 : 14, 
                     color: isFree ? "#a1a1aa" : "#71717a",
-                    fontWeight: 500,
+                    fontWeight: 600,
                   }}>
                     {isFree ? "" : "₱"}
                   </span>
@@ -473,7 +444,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
                     {isFree ? "Free" : plan.price}
                   </span>
                   {!isFree && (
-                    <span style={{ fontSize: 13, color: "#52525b", fontWeight: 500 }}>
+                    <span style={{ fontSize: 13, color: "#52525b", fontWeight: 600 }}>
                       {plan.period}
                     </span>
                   )}
@@ -548,7 +519,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
                       "15 research reports",
                       "300 captions & headlines",
                       "150 AI images",
-                      "15 AI video ads/month ★",
+                      "15 AI video ads/month",
                       "5 brand profiles",
                       "Community + monthly calls",
                       "Priority support",
@@ -579,15 +550,14 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
                   ))}
 
                   {i === 2 && (
-                    <div className="font-mono" style={{
+                    <div className="font-mono flex items-center justify-center gap-1.5" style={{
                       marginTop: 16, padding: "10px 12px",
                       background: "rgba(255,204,0,0.06)",
                       border: "1px solid rgba(255,204,0,0.15)",
                       borderRadius: 10, fontSize: 11,
                       color: "#FFCC00",
-                      textAlign: "center",
                     }}>
-                      🎬 VIDEO ADS UNLOCKED ON PRO
+                      <FilmIcon size={12} strokeWidth={2} /> VIDEO ADS UNLOCKED ON PRO
                     </div>
                   )}
                 </div>
@@ -743,12 +713,12 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
               border: "1px solid rgba(255,255,255,0.08)",
               borderRadius: 16, padding: "clamp(16px, 3vw, 32px)",
             }}>
-              <p className="font-mono" style={{
+              <p className="font-mono flex items-center gap-1.5" style={{
                 fontSize: 10, color: "#71717a",
                 textTransform: "uppercase", letterSpacing: "0.15em",
                 marginBottom: 16,
               }}>
-                ✕ THE OLD WAY
+                <XIcon size={12} strokeWidth={2} /> THE OLD WAY
               </p>
               {[
                 "₱5,000/video × freelancer",
@@ -774,12 +744,12 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
               border: "1px solid rgba(255,204,0,0.15)",
               borderRadius: 16, padding: "clamp(16px, 3vw, 32px)",
             }}>
-              <p className="font-mono" style={{
+              <p className="font-mono flex items-center gap-1.5" style={{
                 fontSize: 10, color: "#FFCC00",
                 textTransform: "uppercase", letterSpacing: "0.15em",
                 marginBottom: 16,
               }}>
-                ✓ THE GRIFON WAY
+                <CheckIcon size={12} strokeWidth={2.5} /> THE GRIFON WAY
               </p>
               {[
                 "15 video ads/month for ₱2,497",
@@ -821,7 +791,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
                   <div className="px-2 flex-1 flex flex-col">
                     <div className="flex gap-1 mb-4">
                       {[1, 2, 3, 4, 5].map((star) => (
-                        <span key={star} className="text-[#FFCC00] text-lg">★</span>
+                        <StarIcon key={star} size={16} strokeWidth={0} fill="#FFCC00" className="text-[#FFCC00]" />
                       ))}
                     </div>
                     <p className="text-sm sm:text-base text-zinc-300 italic leading-relaxed mb-6 flex-1">
@@ -967,7 +937,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
             <a href="/refund" onClick={(e) => { e.preventDefault(); onNavigateLegal('refund'); }} style={{ color: "#71717a", textDecoration: "none" }}>Refund</a>
             <a href="/support" onClick={(e) => { e.preventDefault(); onNavigateLegal('support'); }} style={{ color: "#71717a", textDecoration: "none" }}>Support</a>
           </div>
-          GRIFON.AI © 2026 — Haste Enterprises — Built in the Philippines 🇵🇭
+          GRIFON.AI © 2026 — Haste Enterprises — Built in the Philippines
         </footer>
       </div>
     </div>

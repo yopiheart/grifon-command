@@ -1,10 +1,14 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Play, Rocket, ChevronDown, ShieldCheck, MessageSquare, Palette, Sparkles, Film, Search, Target, Type, ImageIcon, Building2, UtensilsCrossed, ShoppingBag } from 'lucide-react';
+import { Play, Rocket, ChevronDown, ShieldCheck, MessageSquare, Palette, Sparkles, Film, Search, Target, Type, ImageIcon, Building2, UtensilsCrossed, ShoppingBag, Lock, Star } from 'lucide-react';
 import { GoldButton } from './ui/GoldButton';
 import { GlassPanel } from './ui/GlassPanel';
 import { AnimatedBorder } from './ui/AnimatedBorder';
 import { Aurora } from './ui/Aurora';
+import { SiteHeader, type SiteNavLink } from './ui/SiteHeader';
+import { UrgencyBar } from './ui/UrgencyBar';
+import { DirectorDemo, ResearchDemo, OfferDemo, CaptionDemo, ImageDemo } from './landing/InclusionDemos';
+import { CONTACT } from '../config/contact';
 
 type LegalRoute = 'terms' | 'privacy' | 'refund' | 'support';
 
@@ -15,37 +19,26 @@ interface LandingPageProps {
 }
 
 const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing, onNavigateLegal }) => {
+  const navLinks: SiteNavLink[] = [
+    { label: 'What You Get', href: '#what-you-get' },
+    { label: 'Reviews', href: '#reviews' },
+    { label: 'FAQ', href: '#faq' },
+    { label: 'Pricing', onClick: onNavigatePricing },
+  ];
+
   return (
-    <div className="min-h-screen bg-zinc-950 text-white font-sans overflow-x-hidden selection:bg-[#FFCC00] selection:text-black">
-      
+    <div className="min-h-screen bg-zinc-950 text-white font-sans overflow-x-clip selection:bg-[#FFCC00] selection:text-black">
+
       <Aurora intensity="marketing" />
 
-      {/* BILLIONAIRE STICKY HEADER */}
-      <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-zinc-950/80 border-b border-white/10">
-        <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8 py-3 max-w-7xl mx-auto">
-          {/* Left Side: Brand Logo */}
-          <div className="flex items-center gap-2">
-            <img src="/logo.png" alt="GRIFON Logo" className="h-8 w-auto object-contain" />
-            <span className="font-black text-xl tracking-tighter text-white italic">GRIFON<span className="text-[#FFCC00]">.AI</span></span>
-          </div>
-
-          {/* Right Side: Links & CTA */}
-          <div className="flex items-center gap-4 md:gap-8">
-            <button onClick={onNavigatePricing} className="bg-transparent border border-white/20 text-white text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.2em] px-4 py-1.5 rounded-full hover:bg-white/10 transition-all cursor-pointer">
-              PRICING
-            </button>
-            <button onClick={onEnterApp} className="hidden md:block text-[11px] font-mono uppercase tracking-[0.2em] text-zinc-400 hover:text-white transition-all cursor-pointer">
-              LOG IN
-            </button>
-            <button onClick={onEnterApp} className="bg-transparent border border-[#FFCC00] text-[#FFCC00] text-[11px] font-black uppercase tracking-widest px-5 py-2 rounded-full hover:bg-[#FFCC00]/10 hover:shadow-[0_0_15px_rgba(255,204,0,0.3)] hover:scale-105 transition-all">
-              START FREE
-            </button>
-          </div>
-        </div>
-      </header>
+      {/* STICKY TOP — founding urgency bar + nav */}
+      <div className="sticky top-0 z-50">
+        <UrgencyBar />
+        <SiteHeader onEnterApp={onEnterApp} navLinks={navLinks} showLogin />
+      </div>
 
       {/* SECTION 1: THE HERO (SaaS Refinement) */}
-      <section className="relative pt-32 pb-12 md:pt-40 md:pb-20 px-4 sm:px-6 lg:px-8 min-h-screen flex flex-col justify-center overflow-hidden z-10">
+      <section className="relative pt-10 pb-12 md:pt-16 md:pb-20 px-4 sm:px-6 lg:px-8 min-h-[80vh] flex flex-col justify-center overflow-hidden z-10">
         <div className="relative z-10 w-full flex flex-col items-center">
           {/* Centered headline */}
           <motion.h1 
@@ -284,7 +277,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
       </section>
 
       {/* SECTION 3: SOCIAL PROOF */}
-      <section className="py-12 md:py-24 border-y border-white/5 bg-transparent backdrop-blur-sm relative z-10">
+      <section id="reviews" className="scroll-mt-28 py-12 md:py-24 border-y border-white/5 bg-transparent backdrop-blur-sm relative z-10">
         <div className="max-w-7xl mx-auto px-4">
           <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#FFCC00] text-center mb-2">
             // WHAT EARLY USERS ARE SAYING
@@ -307,7 +300,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
                 <div className="px-2 flex-1 flex flex-col">
                   <div className="flex gap-1 mb-4">
                     {[1, 2, 3, 4, 5].map((star) => (
-                      <span key={star} className="text-[#FFCC00] text-lg">★</span>
+                      <Star key={star} size={18} strokeWidth={0} fill="#FFCC00" className="text-[#FFCC00]" />
                     ))}
                   </div>
                   <p className="text-sm sm:text-base text-zinc-300 italic leading-relaxed mb-6 flex-1">
@@ -324,10 +317,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
         </div>
       </section>
 
-      {/* SECTION 4: THE BENTO GRID */}
-      <section className="py-16 md:py-32 px-4 sm:px-6 lg:px-8 relative z-10">
+      {/* SECTION 4: WHAT YOU GET — animated module demos */}
+      <section id="what-you-get" className="scroll-mt-28 py-16 md:py-32 px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -335,59 +328,57 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
             className="text-center mb-16"
           >
             <div className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest text-center mb-4">
-              WHAT'S INSIDE
+              WHAT YOU GET
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 uppercase tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
               Everything You Need. Nothing You Don't.
             </h2>
-            <p className="text-zinc-400 text-center max-w-2xl mx-auto mb-12 text-base">
-              Five battle-tested AI modules. Each one replaces a freelancer, an agency, or 6 hours of your time.
+            <p className="text-zinc-400 text-center max-w-2xl mx-auto text-base">
+              Five battle-tested AI modules. Each one replaces a freelancer, an agency, or 6 hours of your time. Hindi lang sinasabi — ipinapakita.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {[
-              { title: 'Director AI', desc: '8-step video ad workflow. From script to shot list to finished campaign.', icon: Film, span: 'md:col-span-2' },
-              { title: 'Market Research', desc: 'Deep-dive reports on your market, competitors, and dream customer.', icon: Search, span: '' },
-              { title: 'Offer Optimizer', desc: 'Build irresistible offers using proven pricing psychology.', icon: Target, span: '' },
-              { title: 'Caption & Headline', desc: 'Scroll-stopping copy for every platform. Generated in seconds.', icon: Type, span: '' },
-              { title: 'Image Studio', desc: 'AI-generated ad images. Product shots, lifestyle, anything you need.', icon: ImageIcon, span: '' }
+              { title: 'Director AI', label: 'Video Ads', desc: 'Your whole video ad — script, storyboard, shot list — in one 8-step flow. Replaces a ₱24k/yr video team.', icon: Film, Demo: DirectorDemo },
+              { title: 'Market Research', label: 'Intelligence', desc: 'Know your market, competitors, and dream buyer before you spend a single peso on ads.', icon: Search, Demo: ResearchDemo },
+              { title: 'Offer Optimizer', label: 'Conversion', desc: 'Build an offer people feel stupid saying no to — using real pricing psychology.', icon: Target, Demo: OfferDemo },
+              { title: 'Caption & Headline', label: 'Copywriting', desc: 'Scroll-stopping hooks and captions for every platform, generated in seconds.', icon: Type, Demo: CaptionDemo },
+              { title: 'Image Studio', label: 'Visuals', desc: 'Studio-grade ad images — product shots, lifestyle, anything — walang photographer.', icon: ImageIcon, Demo: ImageDemo }
             ].map((module, idx) => {
-              const CardContent = (
+              const inner = (
                 <>
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-                  <module.icon className="w-8 h-8 text-[#FFCC00] mb-4 relative z-10" />
-                  <h3 className="text-lg font-bold text-white mb-2 relative z-10">{module.title}</h3>
-                  <p className="text-sm text-zinc-400 relative z-10">{module.desc}</p>
+                  <module.Demo />
+                  <div className="mt-5 flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+                    <module.icon className="w-3.5 h-3.5 text-[#FFCC00]" />
+                    {module.label}
+                  </div>
+                  <h3 className="mt-2 text-lg font-bold text-white">{module.title}</h3>
+                  <p className="mt-2 text-sm text-zinc-400 leading-relaxed">{module.desc}</p>
                 </>
               );
 
-              return idx === 0 ? (
+              return (
                 <motion.div
                   key={module.title}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: idx * 0.1 }}
-                  className={module.span}
+                  transition={{ duration: 0.5, delay: idx * 0.08 }}
+                  className="h-full"
                 >
-                  <AnimatedBorder 
-                    containerClassName="h-full w-full" 
-                    className="bg-zinc-900/40 backdrop-blur-2xl border border-white/10 rounded-3xl overflow-hidden relative group p-8 md:p-10"
-                  >
-                    {CardContent}
-                  </AnimatedBorder>
-                </motion.div>
-              ) : (
-                <motion.div
-                  key={module.title}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: idx * 0.1 }}
-                  className={`bg-zinc-900/40 backdrop-blur-2xl border border-white/10 rounded-3xl overflow-hidden relative group p-8 md:p-10 ${module.span}`}
-                >
-                  {CardContent}
+                  {idx === 0 ? (
+                    <AnimatedBorder
+                      containerClassName="h-full w-full"
+                      className="h-full bg-zinc-900/40 backdrop-blur-2xl rounded-3xl p-6 md:p-7"
+                    >
+                      {inner}
+                    </AnimatedBorder>
+                  ) : (
+                    <div className="h-full bg-zinc-900/40 backdrop-blur-2xl border border-white/10 rounded-3xl p-6 md:p-7">
+                      {inner}
+                    </div>
+                  )}
                 </motion.div>
               );
             })}
@@ -608,10 +599,11 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
 
           {/* The FAQ */}
           <motion.div
+            id="faq"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="space-y-4"
+            className="scroll-mt-28 space-y-4"
           >
             <h3 className="text-2xl font-bold uppercase tracking-tight mb-8 text-center">FREQUENTLY ASKED QUESTIONS</h3>
             {[
@@ -641,7 +633,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
           >
             <div className="inline-flex flex-col items-center gap-4 p-8 border border-white/5 rounded-2xl bg-zinc-950/50 backdrop-blur-sm">
               <p className="text-zinc-400">Still have questions? Our onboarding team is standing by.</p>
-              <a href="viber://chat?number=" target="_blank" rel="noopener noreferrer" className="px-6 py-3 rounded-full border border-white/20 text-white font-mono text-xs tracking-widest uppercase hover:bg-white/10 transition-colors flex items-center gap-2">
+              <a href={CONTACT.viberUrl} target="_blank" rel="noopener noreferrer" className="px-6 py-3 rounded-full border border-white/20 text-white font-mono text-xs tracking-widest uppercase hover:bg-white/10 transition-colors flex items-center gap-2">
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.144 19.382c-.105-.084-.21-.168-.315-.252-.42-.336-.84-.672-1.26-1.008-.315-.252-.63-.504-.945-.756-.105-.084-.21-.168-.315-.252-.21-.168-.42-.252-.63-.168-.21.084-.42.252-.525.42-.21.336-.42.672-.63 1.008-.105.168-.21.336-.315.504-.105.168-.21.252-.42.252-.105 0-.21-.084-.315-.168-.42-.252-.84-.504-1.26-.756-1.155-.756-2.205-1.68-3.15-2.73-.84-.945-1.575-1.995-2.1-3.15-.105-.21-.21-.42-.315-.63-.084-.21 0-.42.168-.525.168-.105.336-.21.504-.315.336-.21.672-.42 1.008-.63.168-.105.252-.315.336-.525.084-.21 0-.42-.084-.63-.084-.105-.168-.21-.252-.315-.252-.315-.504-.63-.756-.945-.336-.42-.672-.84-1.008-1.26-.084-.105-.168-.21-.252-.315-.168-.21-.336-.21-.525-.168-.21.084-.42.252-.525.42-.21.21-.42.42-.63.63-.336.336-.672.672-.945 1.008-.21.21-.315.42-.42.63-.105.336-.105.672-.105 1.008 0 .42.105.84.21 1.26.21 1.05.525 2.1.945 3.15.84 2.1 1.995 3.99 3.36 5.67 1.47 1.785 3.15 3.36 5.145 4.62 1.47.945 3.045 1.68 4.725 2.1.63.105 1.26.21 1.89.21.42 0 .84 0 1.26-.105.42-.105.84-.21 1.155-.42.336-.21.672-.42.84-.756.21-.336.42-.672.63-1.008.105-.21.21-.42.21-.63.084-.21 0-.42-.168-.525zM24 10.038c0-5.544-4.494-10.038-10.038-10.038S3.924 4.494 3.924 10.038c0 1.68.42 3.255 1.155 4.725l-1.47 4.41 4.515-1.47c1.47.735 3.045 1.155 4.725 1.155 5.544 0 10.038-4.494 10.038-10.038zm-2.1 0c0 4.41-3.57 7.98-7.98 7.98-1.47 0-2.835-.42-4.095-1.05l-.315-.105-2.94.945.945-2.94-.21-.315c-.735-1.26-1.155-2.73-1.155-4.2 0-4.41 3.57-7.98 7.98-7.98s7.98 3.57 7.98 7.98z"/></svg>
                 CHAT ON VIBER
               </a>
@@ -659,6 +651,12 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
 
       {/* PROFESSIONAL FOOTER */}
       <footer className="border-t border-white/5 bg-zinc-950 px-4 sm:px-6 lg:px-8 py-12">
+        {/* Trust row */}
+        <div className="max-w-7xl mx-auto mb-10 pb-10 border-b border-white/5 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-[11px] font-mono uppercase tracking-widest text-zinc-500">
+          <span className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-[#FFCC00]" /> 7-Day Money-Back Guarantee</span>
+          <span className="flex items-center gap-2"><Lock className="w-4 h-4 text-[#FFCC00]" /> Secure Checkout · PayMongo</span>
+          <span className="flex items-center gap-2"><Sparkles className="w-4 h-4 text-[#FFCC00]" /> Built for Filipino Businesses</span>
+        </div>
         <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
           {/* Brand Column */}
           <div className="col-span-2 md:col-span-1 mb-8 md:mb-0">
@@ -684,8 +682,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
               <a href="#" className="text-sm text-zinc-500 hover:text-white transition-all block">Market Research</a>
               <a href="#" className="text-sm text-zinc-500 hover:text-white transition-all block">Offer Optimizer</a>
               <a href="#" className="text-sm text-zinc-500 hover:text-white transition-all block">Caption & Headline</a>
-              <a href="#" className="text-sm text-zinc-500 hover:text-white transition-all block">Image Studio</a>
-              <a href="#" className="text-sm text-zinc-500 hover:text-white transition-all block">Pricing</a>
+              <a href="#what-you-get" className="text-sm text-zinc-500 hover:text-white transition-all block">Image Studio</a>
+              <a href="/pricing" onClick={(e) => { e.preventDefault(); onNavigatePricing(); }} className="text-sm text-zinc-500 hover:text-white transition-all block">Pricing</a>
             </nav>
           </div>
 
@@ -704,10 +702,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
           <div>
             <h4 className="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-4">CONNECT</h4>
             <nav className="space-y-2">
-              <a href="#" className="text-sm text-zinc-500 hover:text-white transition-all block">Facebook</a>
-              <a href="#" className="text-sm text-zinc-500 hover:text-white transition-all block">Instagram</a>
-              <a href="#" className="text-sm text-zinc-500 hover:text-white transition-all block">TikTok</a>
-              <a href="#" className="text-sm text-zinc-500 hover:text-white transition-all block">Viber Community</a>
+              <a href={CONTACT.facebookUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-zinc-500 hover:text-white transition-all block">Facebook</a>
+              <a href={CONTACT.instagramUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-zinc-500 hover:text-white transition-all block">Instagram</a>
+              <a href={CONTACT.tiktokUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-zinc-500 hover:text-white transition-all block">TikTok</a>
+              <a href={CONTACT.viberUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-zinc-500 hover:text-white transition-all block">Viber Community</a>
             </nav>
           </div>
         </div>

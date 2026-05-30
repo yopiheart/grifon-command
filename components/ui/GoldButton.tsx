@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { toast } from 'sonner';
 import { CheckCircle } from 'lucide-react';
+import { playTick } from '../../services/uiSoundService';
 
 interface GoldButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
@@ -10,10 +11,11 @@ export const GoldButton: React.FC<GoldButtonProps> = ({ children, className = ''
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    playTick();
     if (onClick) {
       onClick(e);
     }
-    
+
     const text = buttonRef.current?.textContent?.toUpperCase() || '';
     const icon = <CheckCircle className="w-4 h-4 text-[#FFCC00]" />;
     

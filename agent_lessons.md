@@ -675,3 +675,27 @@ regression** (the changed path demonstrably produces the bad output). Reporting 
 didn't cause this, here's the actual cause" honestly — with evidence — is more useful than
 defensively fixing a phantom. The recurring image-API 502s this session were load, not us;
 saying so (and just regenerating) was the correct response.
+
+### 2026-05-30 — `backdrop-filter` (and `transform`/`filter`) on an ancestor traps `position: fixed` to that ancestor's box
+**Context:** Building a shared `SiteHeader` with a mobile hamburger that opens a full-screen
+overlay (`fixed inset-0 z-[60] bg-zinc-950/95`). The overlay rendered, but instead of
+covering the viewport it was clamped to a **382×56px** strip — the header's own size — so the
+hero showed straight through and menu items overlapped it. Looked like a z-index/opacity bug
+(chased `bg-zinc-950/95`, the fade animation, stacking contexts) — none were the cause.
+**What went wrong:** The overlay was a child of the `<header>`, which carries
+`backdrop-blur-xl` (`backdrop-filter`). Per CSS spec, an ancestor with a non-`none`
+`transform`, `filter`, `backdrop-filter`, `perspective`, `will-change`, or `contain:paint`
+becomes the **containing block for `position: fixed` descendants** — so `fixed inset-0`
+resolved against the 56px header, not the viewport. `getBoundingClientRect()` (width 382,
+height 56, top 46) is what exposed it; the computed `backgroundColor` was correctly
+`rgba(9,9,11,0.95)` and `opacity:1`, which ruled out the "obvious" suspects.
+**Lesson:** When a `position: fixed` element is mysteriously sized/positioned to a parent box
+instead of the viewport, stop chasing z-index/opacity and **measure its rect, then walk
+ancestors for `transform`/`filter`/`backdrop-filter`/`perspective`/`will-change`/`contain`.**
+Any one of those silently re-parents fixed positioning. The robust fix is to render the
+overlay through a **React portal to `document.body`** (`createPortal(...)`), escaping the
+filtered ancestor entirely — cleaner than hoisting it out of the JSX tree by hand. Also note:
+`overflow-x: hidden` on a tall root establishes a scroll container that breaks
+`position: sticky` descendants; use `overflow-x: clip` instead (it clips without creating the
+scroll container). Both gotchas hit in the same header build; both verified fixed in vivo via
+Playwright at 390px. Shipped this session (landing + pricing shared header + urgency bar).

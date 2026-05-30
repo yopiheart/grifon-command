@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Loader2, ShieldCheck } from 'lucide-react';
 import { GlassPanel } from './ui/GlassPanel';
+import { MessengerFloat } from './ui/MessengerFloat';
 import { OrderSummary } from './checkout/OrderSummary';
 import { PaymentMethodTabs, type PaymentMethod } from './checkout/PaymentMethodTabs';
 import { CardForm, type CardFormData } from './checkout/CardForm';
@@ -240,6 +241,8 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack }) => {
           Privacy
         </a>
       </p>
+
+      <MessengerFloat />
     </div>
   );
 };
