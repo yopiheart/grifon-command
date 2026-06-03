@@ -5,6 +5,20 @@
 > by folding them into one render+voice pipeline. **Phase 0 (ffmpeg spike) is the decision gate —
 > build nothing on Vercel until it passes.** Verification of the end result is **PC-gated** (Neil
 > renders a real batch and watches it); cannot be closed from mobile.
+>
+> **Status (2026-06-04):** Phase 0 ✅ (BUILD ON VERCEL). **Phases 1–3 BUILT + pushed** on
+> `claude/effort-estimation-AhHqn` (commits `bb06353` voice routing, `3c4e064` render executor,
+> `eddcc4d` AI Editor UI). Decisions this session: skip the throwaway confirmation deploy; async
+> fire-then-poll via `waitUntil` (Vercel **Pro**, `maxDuration 300`); `@vercel/functions` added.
+> Build green, 23 unit tests pass (routing + silencedetect parse + audio-less fallback + sceneIdx
+> keying), client-bundle leak check 0, brand-check `BRAND_PASS_WITH_NITS 37/50`. **STILL OPEN — the
+> PC-gated smoke is the only remaining gate:** real wizard run → Render All → Consolidate Voice →
+> Render Final Video → confirm lip-sync + no dead-air tail + `sceneIdx` order. The first real Vercel
+> render also yields the wall-time the skipped confirmation deploy left unmeasured (reopen the
+> worker fallback only if it breaches ~120s). Two carry-forward notes: (a) `waitUntil` must survive
+> past the response on the live tier — else flip `api/render/final.ts` to the synchronous-long-call
+> fallback; (b) the suite has 15 pre-existing failures in `geminiService.*`/`edit-decision-list`
+> (the separate `generateEditDecisionList` feature), unrelated to #10.
 
 ## Context
 
