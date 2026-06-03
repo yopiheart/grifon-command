@@ -89,6 +89,33 @@ export interface SceneBatchEntry {
   type: 'talking' | 'b-roll' | 'cinematic';
 }
 
+/**
+ * One scene fed to the server-side voice consolidator (`api/voice/consolidate.ts`).
+ * Routing is by `type`: talking → speech-to-speech on the scene MP4's audio
+ * track (preserves lip-sync), b-roll → TTS on `scriptLine`, cinematic → TTS if
+ * `scriptLine` is non-empty else skipped. `videoUrl` (a signed MP4 URL) is
+ * required for the talking STS path; without it a talking scene falls back to
+ * TTS on `scriptLine`.
+ */
+export interface ConsolidationScene {
+  sceneIdx: number;
+  type: 'talking' | 'b-roll' | 'cinematic';
+  scriptLine: string;
+  videoUrl?: string;
+}
+
+/**
+ * Per-scene result of voice consolidation. `audioUrl` is a 24h Supabase-signed
+ * MP3 URL (never a browser `blob:` URL — the render path must be server-reachable).
+ * `audioUrl` is null when the scene was `skipped` (visual-only) or hit an `error`.
+ */
+export interface ConsolidationResult {
+  sceneIdx: number;
+  audioUrl: string | null;
+  skipped?: boolean;
+  error?: string;
+}
+
 export interface AllData {
     clientDetails: ClientDetails;
     businessInfo: BusinessInfo;
