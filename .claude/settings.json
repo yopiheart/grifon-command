@@ -4,6 +4,27 @@
     "type": "command",
     "command": "powershell -NoProfile -NonInteractive -File .claude\\statusline.ps1"
   },
+  "permissions": {
+    "comment": "Read-only inspection + the verify-changes build/test commands are pre-approved so they never prompt. Survives the cafe-PC defreezer because it lives in the repo. Deliberately omits git commit/push and rm — CLAUDE.md says commit only when asked, so those stay prompt-gated.",
+    "allow": [
+      "Bash(npm run build)",
+      "Bash(npm run test)",
+      "Bash(npm run test:watch)",
+      "Bash(npm run design:lint)",
+      "Bash(npm run design:tailwind)",
+      "Bash(npm run design:spec)",
+      "Bash(npx vitest run:*)",
+      "Bash(npx tsc:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(git branch:*)",
+      "Bash(gh pr view:*)",
+      "Bash(gh pr list:*)",
+      "Bash(gh pr diff:*)"
+    ]
+  },
   "hooks": {
     "PostToolUse": [
       {
@@ -23,7 +44,7 @@
           {
             "type": "command",
             "shell": "bash",
-            "command": "[ -f .tmp/.edits-this-turn ] && { rm -f .tmp/.edits-this-turn; printf '{\"systemMessage\":\"Edits touched api/services/components/App.tsx — run `npm test && npm run build` before declaring done.\"}\\n'; } || true"
+            "command": "bash .claude/hooks/build-gate.sh"
           }
         ]
       }
