@@ -59,6 +59,48 @@ Prove ffmpeg can run in a Vercel function before building anything on top.
   Resolves premortem #1 (60s ceiling) + #2 (packaging) before any real build.
 - **Record the verdict in this file.**
 
+#### ✅ VERDICT (2026-06-04): BUILD ON VERCEL (ffmpeg-static) — gate PASSED on both axes.
+
+Spike harness: [`scripts/ffmpeg-spike.mjs`](../scripts/ffmpeg-spike.mjs) (throwaway, NOT a deployed
+function — see note below). Faithfully mirrors Phase 2: silent 1080×1920 scene MP4s + separate MP3s
+→ per-scene trim-to-speech-end + mux + normalize (fps/scale/sar/48k, H.264/AAC) → **concat *filter*
+re-encode** (not the demuxer). `ffmpeg-static` 5.3.0 / ffmpeg 6.1.1, `libx264 -preset veryfast -crf
+20`. Measured on a 12-core cafe PC.
+
+| Axis | Gate | Measured | Result |
+|---|---|---|---|
+| **Function bundle** | < 250 MB unzipped | **76.1 MB** (linux-x64 ffmpeg, the real Vercel binary; HEAD on the `b6.1.1` release) + small node deps | ✅ **3.3× under** |
+| **Wall-time, 7 scenes** | < ~50 s | **15.8 s** all-cores / **16.6 s** single-thread (`-threads 1`, ~1-vCPU proxy) | ✅ **~3× under** |
+| **Wall-time, 5 scenes** | < ~50 s | 15.3 s / 12.9 s | ✅ |
+| **Wall-time, 2 scenes** | (sanity) | 5.2 s / 5.8 s | ✅ |
+| **Output size, 7 scenes** | (info) | 19.8 MB (~28 s of final video) | small |
+
+**Why Vercel, not a worker:** both gate criteria pass with multiples of headroom, and the
+dedicated-worker fallback (Railway/Render/Fly) is the heavier path — new deploy target, new secrets,
+new infra to babysit on defreezer cafe PCs. Default to Vercel unless the gate is *clearly* blown; it
+is not. The Decision #2 worker fallback stays in reserve, triggered only if the confirmation deploy
+below shows real Vercel renders breaching the budget.
+
+**Two honest caveats carried into Phase 2 (do not lose these):**
+1. **Synthetic source under-states real cost.** `testsrc2` needs no H.264 *decode* and didn't
+   saturate x264 (all-cores ≈ single-thread), so real Veo/Kling footage on a slower Vercel vCPU will
+   cost more than 16 s. Conservative envelope — 2.5× Vercel-vCPU penalty × 1.4× real-footage/decode
+   penalty on the 7-scene single-thread number → **≈ 45–55 s of compute worst case.** That sits at
+   the edge of the 50 s gate, so: **(a)** the render call must NOT use `proxyCall`'s 55 s client
+   abort — give the render endpoint its own longer client timeout (or poll a status row); **(b)**
+   set the Vercel fn `maxDuration` generously (≥120 s; confirm the plan ceiling) so a long worst-case
+   render can't be killed mid-encode. This is also *why* Phase 2 already plans `api/render/final/poll.ts`
+   — treat render as out-of-band of the standard 55 s abort.
+2. **Vercel per-vCPU speed was not measured directly** (spike is PC/local per the plan). Before
+   fixing Phase 2's `maxDuration` and committing the synchronous-vs-poll shape, do **one throwaway
+   Vercel deploy of the 7-scene case** and record the real wall-time here. If it breaches ~120 s,
+   reopen the worker fallback.
+
+**Note on "throwaway endpoint":** the spike is a `scripts/` Node script, not an `api/` file, *on
+purpose* — any file under `api/` becomes a live Vercel function on the next deploy, and the script
+issues the byte-identical ffmpeg invocations a function would. No prod surface touched. `ffmpeg-static`
+was added to `dependencies` (Phases 1–2 need it regardless of host).
+
 ### Phase 1 — Voice routing server-side (Phase 5 talking-half + persistence)
 Generate per-scene voice **on the server** and persist to Supabase. This is also #10's "step
 zero" and **eliminates premortem #3** (no browser blob in the render path).
