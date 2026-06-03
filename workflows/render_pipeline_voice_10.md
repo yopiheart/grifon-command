@@ -191,6 +191,41 @@ render endpoints; if Phase 0 says worker, no Vercel render fn).
 5. **Build gate:** `npm run build` exit 0 (cite its pass message); crown-jewel leak check = 0 (no
    prompt content touched — expected trivially clean).
 
+### PC-gated smoke checklist (the only open gate — tick each box)
+
+Phases 1–3 are built + pushed (PR #9); this is the manual end-to-end pass that closes #10. Run on a
+real wizard ad, not a fixture. Local (`npm run dev`) or the deployed Vercel preview both work — note
+that `waitUntil` only fires on Vercel, so a *deployed* run is the truest test of the async path.
+
+**Setup**
+- [ ] Keys present: `ELEVEN_LABS_API_KEY`, `GEMINI_API_KEY`, `SUPABASE_SERVICE_ROLE_KEY` (+ `VITE_*`)
+      — in `.env` for local, or Vercel env for the preview deploy.
+- [ ] Signed in on a **Creator+** account (free-tier TTS/STS daily caps are 3/2 — too low for a full batch).
+
+**Run**
+- [ ] Wizard → generate an 8-scene ad with at least one **talking** scene and one **b-roll**.
+- [ ] **Render All** → every scene reaches READY (silent MP4s persisted).
+- [ ] Open AI Editor (BatchEditMode) → the **FINAL_RENDER** panel shows at top.
+- [ ] Pick a brand voice → **Consolidate Voice** → "✓ N voice track(s) persisted" appears;
+      note any per-scene skip/quota lines.
+- [ ] **Render Final Video** → progress state → result `<video>` plays; **Download Final MP4** works.
+
+**Confirm on the played MP4 (the actual acceptance criteria)**
+- [ ] Talking scene is **lip-synced** (≤ ~50 ms drift) — voice-changer preserved Veo timing.
+- [ ] Each scene **ends at speech-end** — **no 4–6s dead-air / blur tail** (the headline bug).
+- [ ] Scenes are concatenated in **`sceneIdx` order**; final ends clean (no A/V drift at joins).
+- [ ] Audio-less / visual-only scenes kept their full clip with no glitch.
+
+**Record**
+- [ ] **First-render wall-time** (Vercel logs or stopwatch): ________ s. If > ~120 s → reopen the
+      dedicated-worker fallback (Decision #2). This is the number the skipped confirmation deploy left open.
+- [ ] If fire returns a `jobId` but poll never reaches `done` → `waitUntil` didn't survive the
+      response on this tier; flip `api/render/final.ts` to the synchronous-long-call fallback.
+
+**Close-out**
+- [ ] Smoke passed → update the Status block at top, merge PR #9 (mind the 15 pre-existing
+      `geminiService.*`/`edit-decision-list` failures if `main` has a CI test gate), tag #10 done.
+
 ## Guardrails for execution
 
 - **No TUNED edits expected.** This is render/transport/voice-routing — it does not touch prompt
