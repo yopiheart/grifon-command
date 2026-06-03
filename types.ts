@@ -116,6 +116,40 @@ export interface ConsolidationResult {
   error?: string;
 }
 
+/**
+ * One scene fed to the final-render executor (`api/render/final.ts`). Pairs the
+ * silent scene MP4 with its consolidated voice MP3 (Phase 1 output). When
+ * `audioUrl` is absent (visual-only scene), `fallbackDurationSec` (from the EDL
+ * `keepSegments`) sets the clip length; without either, the full clip is kept.
+ */
+export interface FinalRenderScene {
+  sceneIdx: number;
+  videoUrl: string;
+  audioUrl?: string | null;
+  fallbackDurationSec?: number;
+}
+
+export interface FinalRenderRequest {
+  scenes: FinalRenderScene[];
+  aspectRatio: '9:16' | '16:9' | '1:1';
+}
+
+/** Returned immediately by the fire endpoint; the client polls with this jobId. */
+export interface FinalRenderJob {
+  jobId: string;
+}
+
+export type FinalRenderStatus = 'processing' | 'done' | 'failed';
+
+/** Poll result + persisted status sidecar (gemini-videos/${uid}/final/${jobId}.status.json). */
+export interface FinalRenderResult {
+  done: boolean;
+  status?: FinalRenderStatus;
+  url?: string;
+  downloadUrl?: string;
+  error?: string;
+}
+
 export interface AllData {
     clientDetails: ClientDetails;
     businessInfo: BusinessInfo;

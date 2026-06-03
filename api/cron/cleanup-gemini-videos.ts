@@ -31,16 +31,35 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const toDelete: string[] = [];
   const errors: string[] = [];
 
+  // Walk each user folder, reaping aged files. Files live both directly under
+  // the user folder (legacy gemini videos: ${uid}/x.mp4) and one level deeper in
+  // the voice/render subfolders (${uid}/audio/x.mp3, ${uid}/final/x.mp4 +
+  // x.status.json). Descend one level so the Phase 1/2 artifacts get reaped too.
+  const reapDir = async (prefix: string) => {
+    const { data, error } = await admin.storage.from(BUCKET).list(prefix, { limit: LIST_PAGE });
+    if (error) throw error;
+    const subDirs: string[] = [];
+    for (const obj of data ?? []) {
+      if ((obj as any)?.id === null && obj?.name) {
+        subDirs.push(`${prefix}/${obj.name}`); // nested folder (e.g. audio, final)
+        continue;
+      }
+      const created = obj?.created_at ? new Date(obj.created_at).getTime() : 0;
+      if (created && created < cutoff) {
+        toDelete.push(`${prefix}/${obj.name}`);
+      }
+    }
+    return subDirs;
+  };
+
   for (const folder of folders) {
     try {
-      const { data, error } = await admin.storage
-        .from(BUCKET)
-        .list(folder.name, { limit: LIST_PAGE });
-      if (error) throw error;
-      for (const obj of data ?? []) {
-        const created = obj?.created_at ? new Date(obj.created_at).getTime() : 0;
-        if (created && created < cutoff) {
-          toDelete.push(`${folder.name}/${obj.name}`);
+      const subDirs = await reapDir(folder.name);
+      for (const sub of subDirs) {
+        try {
+          await reapDir(sub); // one level of nesting (audio/, final/) — no further recursion expected
+        } catch (err: any) {
+          errors.push(`${sub}: ${err?.message ?? 'unknown'}`);
         }
       }
     } catch (err: any) {
