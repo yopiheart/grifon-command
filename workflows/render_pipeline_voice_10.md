@@ -95,6 +95,14 @@ below shows real Vercel renders breaching the budget.
    fixing Phase 2's `maxDuration` and committing the synchronous-vs-poll shape, do **one throwaway
    Vercel deploy of the 7-scene case** and record the real wall-time here. If it breaches ~120 s,
    reopen the worker fallback.
+   - **Status (2026-06-04): confirmation deploy DEFERRED, not done.** A ready-to-deploy token-gated
+     endpoint (`api/render/_spike.ts` + `vercel.json` maxDuration 300 / `includeFiles` for the ffmpeg
+     binary) was built and pushed, then **removed** — Neil opted to skip the manual Vercel deploy and
+     move on (PC margin is ~3×, and the live feature will yield a real number anyway). To redo:
+     recover `api/render/_spike.ts` from git history (commit `537b257` on `claude/effort-estimation-AhHqn`),
+     re-add the `vercel.json` entry, deploy a *preview*, and curl
+     `/api/render/_spike?key=grifon-phase0-spike-7e3f1a&n=7&threads=1`. **Still recommended before
+     Phase 2 locks `maxDuration`.**
 
 **Note on "throwaway endpoint":** the spike is a `scripts/` Node script, not an `api/` file, *on
 purpose* — any file under `api/` becomes a live Vercel function on the next deploy, and the script
