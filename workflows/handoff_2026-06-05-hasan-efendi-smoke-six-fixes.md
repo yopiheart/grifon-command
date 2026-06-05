@@ -51,6 +51,15 @@
    Consolidate Voice → Render Final → watch the MP4. That closes #10. (Path gated on `allDone` —
    `components/SignalModulator/ScenePipelineTile.tsx:73,338`; editor `editorBatch` null until
    `onSendToAiEditor` — `App.tsx:1168`.)
+   - **VOICE STAGE DE-RISKED 2026-06-05 (was the big unknown, now GREEN):** the audio pipeline
+     (sceneVoiceRoute → TTS for hook/b-roll, STS voice-changer for talking avatars → ffmpeg mux) is
+     fully implemented + the routing/trim logic is unit-tested. An isolated pre-check
+     (`node scripts/check-elevenlabs-voice.mjs`) first caught an **unpaid ElevenLabs invoice** (TTS 401
+     `payment_issue`) that would have failed all scenes mid-smoke; Neil paid it, and TTS **and** STS now
+     return 200 — **STS is confirmed available on the plan.** Remaining voice items are eyeball-only:
+     lip-sync drift on talking scenes, do Consolidate+Render in one sitting (24h signed-URL window),
+     re-run any scene whose MP4 download hiccups. **Run the pre-check before each smoke.**
+   - **Net:** the ONLY remaining external blocker for #10 is **Gemini/Veo billing** (item a above).
 2. **Pro video_ads = 15/month may be too low** for a real Pro user (separate from the dev bypass).
    Raising it needs `MONTHLY_LIMITS` (api/_lib/quota.ts:108) + `PLAN_LIMITS` (utils/planGate.ts) parity
    (deep-equal'd by `tests/unit/quota.parity.test.ts`) + the marketing copy in `config/planFeatures.ts`.
