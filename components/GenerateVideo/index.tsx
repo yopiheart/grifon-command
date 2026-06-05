@@ -648,17 +648,19 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
           // Pass the AUTO-ROUTED model so Kling's [5,10] duration set is
           // consulted (not Veo's [4,6,8]) when a scene is routed to Kling.
           const scriptLine = storyboard[i]?.scriptLine;
-          // Hook cap (handoff 2026-06-04, Fix B): the hook always routes to
-          // Kling_O1; an 11-word Taglish line snaps UP to 10s so the morph
-          // never finishes inside the clip. Deterministically cap scene 0 to
-          // 5s — NOT the tuned words/2.5+0.8 heuristic. agent_lessons.md
-          // (2026-05-29): prefer a code fallback over trusting the model's
-          // 5–8 word hook. Snap to the routed model's valid set as a guard.
+          const validDurations = getValidDurations(sceneModel, config.resolution);
+          const shortDuration = validDurations.includes(5) ? 5 : validDurations[0];
+          // Hook cap (Fix B, 2026-06-04) + B-roll cap (Fix C, 2026-06-05): the
+          // hook AND every b-roll clip render at the SHORT duration (5s on Kling).
+          // A ~12-word Taglish b-roll line computes ~5.6s and the snap-UP heuristic
+          // (suggestDurationForScript) jumps it to Kling's only other option, 10s —
+          // bloating pacing. b-roll always routes to Kling (autoRouteModelForType),
+          // so shortDuration is 5. Talking/cinematic scenes KEEP the per-line
+          // heuristic so the avatar's lip-sync is never truncated. agent_lessons.md
+          // (2026-05-29): prefer a deterministic code cap over trusting the model.
           const sceneDuration =
-            i === 0
-              ? (getValidDurations(sceneModel, config.resolution).includes(5)
-                  ? 5
-                  : getValidDurations(sceneModel, config.resolution)[0])
+            i === 0 || p.type === 'b-roll'
+              ? shortDuration
               : scriptLine
                 ? suggestDurationForScript(scriptLine, sceneModel, config.resolution)
                 : config.duration;

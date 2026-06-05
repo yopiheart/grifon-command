@@ -430,10 +430,11 @@ export const buildAdScriptPrompt = (
          - Any "X for Y" or "buy 1 take 1" with prices
          Even if "${offer}" contains explicit prices, STRIP them. The CTA's job is to make them tap — the LP/Messenger reveals the price.
 
-         REQUIRED IN OUTPUT: at least ONE scarcity word (e.g., "first 50", "limited", "today only") AND ALL non-price value-adds named in "${offer}" — bonuses, free shipping, guarantees, ebooks — appear verbatim or near-verbatim. Drop the peso amounts but keep the bonus items by name.
-         - ✅ "Tara, click mo na sa baba — first 50 lang may libreng shipping at recipe ebook, subukan mo na." (Tagalog-dominant; opens "Tara", closes "subukan mo na")
+         REQUIRED IN OUTPUT: at least ONE scarcity word (e.g., "first 50", "limited", "today only"). Then include ONLY the non-price value-adds that LITERALLY appear in "${offer}" (e.g. free shipping, a bonus, a guarantee), named verbatim or near-verbatim — and NOTHING ELSE. Do NOT invent or add any bonus that is not in "${offer}": no free ebook, no freebie, no guarantee unless the offer actually states it. Drop the peso amounts; keep only the bonus items the offer names.
+         - ✅ offer "₱199 per bottle (Buy 3, free shipping)" → "Tara, click mo na sa baba — first 50 lang may libreng shipping, subukan mo na." (Tagalog-dominant; opens "Tara", closes "subukan mo na"; only the offer's real value-add)
+         - ❌ "Tara, click mo na — may libreng recipe ebook!" (invents an ebook the offer never mentioned — banned)
          - ❌ "Click below, first 50 for P999 may free shipping!" (English-dominant AND leaks price — banned)
-         If offer is empty, fall back to: "Tara, click mo na sa baba para subukan."
+         If "${offer}" is empty OR names no non-price value-add (price only), DROP the bonus clause entirely and use a clean scarcity CTA: "Tara, click mo na sa baba, limited lang — subukan mo na."
 
       **INTRO PATTERN EXAMPLES** (for beat 1 — adapt content to audience, do not copy literally):
       - OFW audience → "Ako si Mark. 5 years na akong nasa Saudi para mabuhay yung pamilya — pero may isang bagay na halos natalo ako."
@@ -473,10 +474,11 @@ export const buildAdScriptPrompt = (
            - Any "X for Y" or "buy 1 take 1" with prices
            Even if "${offer}" contains explicit prices, STRIP them. The CTA's job is to make them tap — the LP/Messenger reveals the price.
 
-           REQUIRED IN OUTPUT: at least ONE scarcity word (e.g., "first 50", "limited slots", "today only") AND ALL non-price value-adds named in "${offer}" — bonuses, free shipping, guarantees, ebooks — appear verbatim or near-verbatim. Drop the peso amounts but keep the bonus items by name.
-           - ✅ "Tara, click mo na sa baba — first 50 lang may libreng shipping at recipe ebook, ngayon na!" (Tagalog-dominant; opens "Tara", closes "ngayon na"; no banned 'i-' prefix)
+           REQUIRED IN OUTPUT: at least ONE scarcity word (e.g., "first 50", "limited slots", "today only"). Then include ONLY the non-price value-adds that LITERALLY appear in "${offer}" (e.g. free shipping, a bonus, a guarantee), named verbatim or near-verbatim — and NOTHING ELSE. Do NOT invent or add any bonus that is not in "${offer}": no free ebook, no freebie, no guarantee unless the offer actually states it. Drop the peso amounts; keep only the bonus items the offer names.
+           - ✅ offer "₱199 per bottle (Buy 3, free shipping)" → "Tara, click mo na sa baba — first 50 lang may libreng shipping, ngayon na!" (Tagalog-dominant; opens "Tara", closes "ngayon na"; only the offer's real value-add; no banned 'i-' prefix)
+           - ❌ "Tara, click mo na — may libreng recipe ebook ngayon!" (invents an ebook the offer never mentioned — banned)
            - ❌ "Click below, 50 slots for P299, P499, P999, free shipping!" (English-dominant AND leaks price — banned)
-           If offer is empty, fall back to: "Tara, click mo na sa baba ngayon."
+           If "${offer}" is empty OR names no non-price value-add (price only), DROP the bonus clause entirely and use a clean scarcity CTA: "Tara, click mo na sa baba ngayon, limited lang!"
 
         **IDENTITY PATTERN EXAMPLES** (for beat 2 — adapt to audience, do not copy literally):
         - OFW family audience → "Tuwing umagang malayo sa pamilya, kape ang nag-aalala sa'yo."

@@ -119,7 +119,7 @@ const App: React.FC = () => {
   // generation hits the user's monthly plan allowance (HTTP 402). Rendered once
   // at the app root so any module/wizard step triggers it without prop drilling.
   const quotaWall = useSyncExternalStore(quotaWallStore.subscribe, quotaWallStore.getSnapshot);
-  const { plan_id: currentPlan, billing_cycle } = useSubscription();
+  const { billing_cycle } = useSubscription();
   const [bootLine, setBootLine] = useState(0);
   const [authEmail, setAuthEmail] = useState('');
   const [authPassword, setAuthPassword] = useState('');
@@ -1332,7 +1332,13 @@ const App: React.FC = () => {
     moduleElement = <PlaceholderTool moduleName={activeModule} onBack={() => setActiveModule(null)} />;
   }
 
-  const upsellTier = nextTier(currentPlan);
+  // Quota-wall plan is server-authoritative: the 402 body carries the plan the
+  // server actually metered against (quotaWall.plan), so plan + used + limit all
+  // come from ONE source. Reading the client useSubscription() value here was a
+  // bug — it could resolve to 'free' (default/stale) while the server returned
+  // 'pro/15/15', producing a "FREE 15/15 → upgrade to Creator" wall on a Pro acct.
+  const wallPlan = quotaWall.plan;
+  const wallUpsell = nextTier(wallPlan);
 
   return (
     <ErrorBoundary
@@ -1345,12 +1351,12 @@ const App: React.FC = () => {
       <QuotaWallModal
         open={quotaWall.open}
         scope={quotaWall.scope}
-        currentPlan={currentPlan}
-        nextPlan={upsellTier}
+        currentPlan={wallPlan}
+        nextPlan={wallUpsell}
         used={quotaWall.used}
         limit={quotaWall.limit}
         onUpgrade={() => {
-          if (upsellTier) startCheckout(upsellTier, billing_cycle ?? 'monthly');
+          if (wallUpsell) startCheckout(wallUpsell, billing_cycle ?? 'monthly');
         }}
         onDismiss={() => quotaWallStore.dismiss()}
       />
