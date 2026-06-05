@@ -115,6 +115,39 @@ export function detectTrimSec(mp3Path: string): number | null {
   return parseTrimSec(stderr, duration);
 }
 
+export interface TrimPlan {
+  trimSec: number | null;
+  /** Pad the audio to the video length (hook): keeps the full visual reveal. */
+  padAudio: boolean;
+}
+
+/**
+ * Deterministic per-scene trim decision (Phase 1 fix). Priority:
+ *  1. keepFullClip (hook)      → full clip, pad short audio under the reveal.
+ *  2. targetDurationSec (cap)  → hard-cap to the spoken-length estimate; this is
+ *     what cuts Veo's filler tail on talking scenes (silencedetect can't — the
+ *     filler is audible, not silent).
+ *  3. audioUrl                 → legacy silencedetect result.
+ *  4. fallbackDurationSec      → explicit duration.
+ *  5. else                     → full clip.
+ */
+export function chooseTrim(
+  scene: Pick<FinalRenderScene, 'keepFullClip' | 'targetDurationSec' | 'audioUrl' | 'fallbackDurationSec'>,
+  probeSec: number | null,
+  detectedSec: number | null
+): TrimPlan {
+  if (scene.keepFullClip) return { trimSec: probeSec, padAudio: !!scene.audioUrl };
+  if (typeof scene.targetDurationSec === 'number' && scene.targetDurationSec > 0) {
+    const capped = typeof probeSec === 'number' ? Math.min(scene.targetDurationSec, probeSec) : scene.targetDurationSec;
+    return { trimSec: capped, padAudio: false };
+  }
+  if (scene.audioUrl) return { trimSec: detectedSec, padAudio: false };
+  if (typeof scene.fallbackDurationSec === 'number' && scene.fallbackDurationSec > 0) {
+    return { trimSec: scene.fallbackDurationSec, padAudio: false };
+  }
+  return { trimSec: probeSec, padAudio: false };
+}
+
 /**
  * Trim + mux + normalize one scene to `outPath`. With a voice MP3 the video is
  * trimmed to the voice's speech-end; audio-less scenes get a silent track so the
@@ -125,19 +158,26 @@ function buildScene(
   audioPath: string | null,
   trimSec: number | null,
   [w, h]: [number, number],
-  outPath: string
+  outPath: string,
+  padAudioToVideo = false
 ): void {
   const vFilter =
     `[0:v]fps=${FPS},scale=${w}:${h}:force_original_aspect_ratio=decrease,` +
     `pad=${w}:${h}:(ow-iw)/2:(oh-ih)/2,setsar=1[v]`;
   const tArgs = trimSec !== null ? ['-t', trimSec.toFixed(3)] : [];
 
+  // keepFullClip scenes (the hook): pad the short VO with trailing silence so
+  // `-shortest` resolves to the full video, preserving the visual reveal. The
+  // `-t` (full clip duration) caps the otherwise-infinite apad stream.
+  const filterComplex = padAudioToVideo && audioPath ? `${vFilter};[1:a]apad[a]` : vFilter;
+  const audioMap = padAudioToVideo && audioPath ? '[a]' : '1:a';
+
   const args = audioPath
     ? [
         '-y', '-i', videoPath, '-i', audioPath,
         ...tArgs,
-        '-filter_complex', vFilter,
-        '-map', '[v]', '-map', '1:a',
+        '-filter_complex', filterComplex,
+        '-map', '[v]', '-map', audioMap,
         '-c:v', 'libx264', '-preset', PRESET, '-crf', CRF,
         '-c:a', 'aac', '-ar', '48000', '-ac', '2', '-shortest', outPath,
       ]
@@ -200,20 +240,24 @@ export async function renderFinalVideo(
       await downloadToFile(scene.videoUrl, videoPath);
 
       let audioPath: string | null = null;
-      let trimSec: number | null = null;
-
       if (scene.audioUrl) {
         audioPath = join(dir, `voice_${i}.mp3`);
         await downloadToFile(scene.audioUrl, audioPath);
-        trimSec = detectTrimSec(audioPath);
-      } else if (typeof scene.fallbackDurationSec === 'number' && scene.fallbackDurationSec > 0) {
-        trimSec = scene.fallbackDurationSec;
-      } else {
-        trimSec = probeDurationSec(videoPath); // keep the whole clip
       }
 
+      const probeSec = probeDurationSec(videoPath);
+      // Only run silencedetect when chooseTrim would actually use it (the legacy
+      // fallback path) — i.e. not when we already have a full-clip or hard cap.
+      const needsDetect =
+        !!audioPath &&
+        !scene.keepFullClip &&
+        !(typeof scene.targetDurationSec === 'number' && scene.targetDurationSec > 0);
+      const detectedSec = needsDetect ? detectTrimSec(audioPath as string) : null;
+
+      const { trimSec, padAudio } = chooseTrim(scene, probeSec, detectedSec);
+
       const outPath = join(dir, `muxed_${i}.mp4`);
-      buildScene(videoPath, audioPath, trimSec, dims, outPath);
+      buildScene(videoPath, audioPath, trimSec, dims, outPath, padAudio);
       muxed.push(outPath);
     }
 

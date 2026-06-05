@@ -1149,6 +1149,18 @@ const App: React.FC = () => {
           seedPrompts={videoPrompts}
           storyboard={storyboard}
           defaultAspectRatio={aspectRatio ?? '9:16'}
+          onSendToAiEditor={(batch) => {
+            // Default path — skip Signal Modulator's redundant TTS pass. The AI
+            // Editor consolidates voice once (audioOverlays unused, so []).
+            setSceneBatch(batch);
+            setEditorBatch({
+              sceneBatch: batch,
+              audioOverlays: [],
+              aspectRatio: aspectRatio ?? '9:16',
+              finalScript: finalScript.join(' '),
+            });
+            setActiveModule('edit_video');
+          }}
           onSendToSignalModulator={(batch) => {
             setSceneBatch(batch);
             setActiveModule('signal_modulator');

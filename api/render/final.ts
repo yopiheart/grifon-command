@@ -17,6 +17,8 @@ const SceneSchema = z.object({
   sceneIdx: z.number().int().nonnegative(),
   videoUrl: z.string().url(),
   audioUrl: z.string().url().nullish(),
+  targetDurationSec: z.number().positive().nullish(),
+  keepFullClip: z.boolean().optional(),
   fallbackDurationSec: z.number().positive().optional(),
 });
 

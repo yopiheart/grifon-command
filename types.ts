@@ -118,14 +118,24 @@ export interface ConsolidationResult {
 
 /**
  * One scene fed to the final-render executor (`api/render/final.ts`). Pairs the
- * silent scene MP4 with its consolidated voice MP3 (Phase 1 output). When
- * `audioUrl` is absent (visual-only scene), `fallbackDurationSec` (from the EDL
- * `keepSegments`) sets the clip length; without either, the full clip is kept.
+ * silent scene MP4 with its consolidated voice MP3 (Phase 1 output).
+ *
+ * Trim policy (deterministic per-type cap — Phase 1 fix):
+ * - `keepFullClip` true (the hook): keep the whole clip so the product-reveal
+ *   end-frame survives; the short VO is padded with trailing silence.
+ * - `targetDurationSec` set (talking + regular b-roll): hard-cap the clip to the
+ *   spoken-length estimate, cutting Veo's filler tail (which silencedetect can't).
+ * - else `audioUrl` present: legacy silencedetect fallback.
+ * - else `fallbackDurationSec` / full clip.
  */
 export interface FinalRenderScene {
   sceneIdx: number;
   videoUrl: string;
   audioUrl?: string | null;
+  /** Hard cap (sec) from the spoken-length estimate; cuts Veo filler tails. */
+  targetDurationSec?: number | null;
+  /** Keep the full clip (hook): preserves the visual reveal; pads short audio. */
+  keepFullClip?: boolean;
   fallbackDurationSec?: number;
 }
 

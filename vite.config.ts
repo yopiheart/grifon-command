@@ -98,6 +98,14 @@ export default defineConfig(({ mode }) => {
   }
   return {
     plugins: [react(), vercelApiDevPlugin()],
+    server: {
+      watch: {
+        // The Playwright MCP downloads artifacts (e.g. the final MP4) into the
+        // repo tree; watching a large/locked .mp4 crashes the dev server with
+        // EBUSY. Ignore the download dir and any media so smokes can't kill it.
+        ignored: ['**/.playwright-mcp/**', '**/*.mp4'],
+      },
+    },
     build: {
       // Vite 8 defaults to lightningcss, which warns on every @tailwind directive
       // it doesn't recognize. esbuild minifies fine and stays quiet.

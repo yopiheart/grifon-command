@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { parseDurationSec, parseTrimSec, dimsFor } from '../../api/_lib/renderFfmpeg.js';
+import { parseDurationSec, parseTrimSec, dimsFor, chooseTrim } from '../../api/_lib/renderFfmpeg.js';
 
 // Encodes the Phase 2 trim intent (workflows/render_pipeline_voice_10.md):
 // speech-end = start of the trailing silence run, + 0.3s pad, clamped to the
@@ -74,5 +74,39 @@ describe('dimsFor', () => {
 
   it('defaults to 9:16 for an unknown ratio', () => {
     expect(dimsFor('weird')).toEqual([1080, 1920]);
+  });
+});
+
+describe('chooseTrim', () => {
+  const PROBE = 6.0; // full clip length
+
+  it('keeps the full clip for the hook and pads its short audio (visual reveal survives)', () => {
+    // The headline over-trim bug: a short hook VO must NOT cut the product-reveal end-frame.
+    const plan = chooseTrim({ keepFullClip: true, audioUrl: 'x' }, PROBE, 2.8);
+    expect(plan.trimSec).toBeCloseTo(PROBE, 3);
+    expect(plan.padAudio).toBe(true);
+  });
+
+  it('hard-caps a talking scene to the spoken estimate, ignoring filler (silencedetect would miss it)', () => {
+    // 6s Veo clip with audible filler tail → silencedetect returns ~6s; the cap cuts it.
+    const plan = chooseTrim({ targetDurationSec: 3.4, audioUrl: 'x' }, PROBE, 6.0);
+    expect(plan.trimSec).toBeCloseTo(3.4, 3);
+    expect(plan.padAudio).toBe(false);
+  });
+
+  it('clamps the cap to the clip duration', () => {
+    expect(chooseTrim({ targetDurationSec: 99 }, PROBE, null).trimSec).toBeCloseTo(PROBE, 3);
+  });
+
+  it('falls back to silencedetect when no cap and audio is present', () => {
+    expect(chooseTrim({ audioUrl: 'x' }, PROBE, 2.8).trimSec).toBeCloseTo(2.8, 3);
+  });
+
+  it('uses an explicit fallback duration when there is no cap and no audio', () => {
+    expect(chooseTrim({ fallbackDurationSec: 4 }, PROBE, null).trimSec).toBeCloseTo(4, 3);
+  });
+
+  it('keeps the full clip when nothing else applies', () => {
+    expect(chooseTrim({}, PROBE, null).trimSec).toBeCloseTo(PROBE, 3);
   });
 });

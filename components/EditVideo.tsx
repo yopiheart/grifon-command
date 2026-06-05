@@ -8,6 +8,7 @@ import { generateVideoEditPlan, generateEditDecisionList } from '../services/gem
 import { fetchVoices } from '../services/voiceService';
 import { consolidateVoices } from '../services/voiceConsolidationService';
 import { renderFinalVideo } from '../services/finalRenderService';
+import { estimateSpokenSec } from '../utils/spokenDuration';
 import { RECOMMENDED_VOICE_IDS } from './SignalModulator/pinoyReady';
 import { compressImageForUpload } from '../utils/imageCompression';
 import { GlassPanel } from './ui/GlassPanel';
@@ -158,11 +159,20 @@ const BatchEditMode: React.FC<{
     try {
       const scenes: FinalRenderScene[] = editorBatch.sceneBatch
         .filter((s) => s.renderedUrl)
-        .map((s) => ({
-          sceneIdx: s.sceneIdx,
-          videoUrl: s.renderedUrl as string,
-          audioUrl: voicedOverlays[s.sceneIdx] ?? null,
-        }));
+        .map((s) => {
+          // Per-type dead-air trim: keep the hook (scene 0) full so its
+          // product-reveal end-frame survives; cap every other scene to the
+          // spoken-length estimate so Veo's filler tail is cut.
+          const isHook = s.sceneIdx === 0;
+          const estimate = estimateSpokenSec(s.scriptLine);
+          return {
+            sceneIdx: s.sceneIdx,
+            videoUrl: s.renderedUrl as string,
+            audioUrl: voicedOverlays[s.sceneIdx] ?? null,
+            keepFullClip: isHook,
+            targetDurationSec: isHook || estimate <= 0 ? null : estimate,
+          };
+        });
       if (scenes.length === 0) {
         setRenderError('No rendered scene videos found in this batch.');
         return;
