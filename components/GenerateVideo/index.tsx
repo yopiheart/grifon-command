@@ -648,9 +648,20 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
           // Pass the AUTO-ROUTED model so Kling's [5,10] duration set is
           // consulted (not Veo's [4,6,8]) when a scene is routed to Kling.
           const scriptLine = storyboard[i]?.scriptLine;
-          const sceneDuration = scriptLine
-            ? suggestDurationForScript(scriptLine, sceneModel, config.resolution)
-            : config.duration;
+          // Hook cap (handoff 2026-06-04, Fix B): the hook always routes to
+          // Kling_O1; an 11-word Taglish line snaps UP to 10s so the morph
+          // never finishes inside the clip. Deterministically cap scene 0 to
+          // 5s — NOT the tuned words/2.5+0.8 heuristic. agent_lessons.md
+          // (2026-05-29): prefer a code fallback over trusting the model's
+          // 5–8 word hook. Snap to the routed model's valid set as a guard.
+          const sceneDuration =
+            i === 0
+              ? (getValidDurations(sceneModel, config.resolution).includes(5)
+                  ? 5
+                  : getValidDurations(sceneModel, config.resolution)[0])
+              : scriptLine
+                ? suggestDurationForScript(scriptLine, sceneModel, config.resolution)
+                : config.duration;
           setStatus(i, 'queued');
           return { sceneIdx: i, prompt: p.prompt, startFrame, endFrame, duration: sceneDuration, model: sceneModel };
         })

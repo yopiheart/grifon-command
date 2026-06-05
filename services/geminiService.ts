@@ -2109,6 +2109,11 @@ export const generateVideoPrompts = async (storyboard: Scene[], businessInfo: Bu
       2. **OTHERWISE:**
          - SCENE 1 (THE HOOK) IS ALWAYS "b-roll".
          - SCENE 2+: Decide by lens engagement + script delivery context.
+            - **MOUTH-OBSTRUCTION OVERRIDE (decide this FIRST):** If the description shows the avatar's
+              mouth covered or occupied by the product or an action — drinking, sipping, mid-sip, taking a
+              sip, eating, biting, applying product to lips/mouth/face, or a bottle/cup/hand at the mouth —
+              classify "b-roll" REGARDLESS of lens engagement or script line. Lip-sync would morph the face
+              through the obstruction; the voice-over carries the line.
             - **"talking"** when BOTH: (a) description shows the avatar ORIENTED TO THE LENS ("looking at camera", "smiling at camera", "facing the camera", "looking into the lens", "to camera") AND (b) the script line is a direct verbal delivery — a CTA ("click below", "tap below", "visit", "message us", "DM us"), a testimonial line ("I tried...", "Ako si...", "Iba ang..."), or a direct first-person claim the avatar naturally speaks to camera.
             - **"b-roll"** when either signal is missing, OR when the description shows: thoughtful expression / touching cheek / hands near mouth / mirror reflection without lens contact / looking off-camera / pure product shot without avatar. Voice-over carries the script; the avatar's mouth need not be in sync.
 
