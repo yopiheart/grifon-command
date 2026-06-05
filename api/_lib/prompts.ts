@@ -517,6 +517,17 @@ const capHookLine = (hook: unknown): string => {
   return kept.length ? kept.join(' ') : trimmed;
 };
 
+// Collapse a hook array to a single capped line. The model sometimes splits one
+// hook variation across multiple array elements (each individually <=12 words);
+// the Step 3 UI and the downstream consumer both treat the whole array as the
+// hook, so capping per-element lets the join re-inflate past the ceiling. Join
+// first, THEN cap, so the ceiling governs the hook as it is actually used.
+const capHookArray = (arr: unknown): string[] => {
+  if (!Array.isArray(arr)) return [];
+  const joined = arr.filter((x): x is string => typeof x === 'string').join(' ').trim();
+  return joined ? [capHookLine(joined)] : [];
+};
+
 /**
  * Parse the JSON returned by the adscript prompt into the canonical Script shape.
  * Mirrors the client-side parser that previously lived in generateAdScript.
@@ -525,8 +536,8 @@ export const parseAdScriptResponse = (rawText: string): Script => {
   const cleanedText = cleanJson(rawText);
   const json = JSON.parse(cleanedText);
   return {
-    hook1: Array.isArray(json.hook1) ? json.hook1.map(capHookLine) : [],
-    hook2: Array.isArray(json.hook2) ? json.hook2.map(capHookLine) : [],
+    hook1: capHookArray(json.hook1),
+    hook2: capHookArray(json.hook2),
     body: Array.isArray(json.body) ? json.body : [],
     strategicAudit: json.strategicAudit || '',
   };
