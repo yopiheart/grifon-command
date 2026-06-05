@@ -1,6 +1,35 @@
 # Spec: One-Click Autopilot ("Just make me an ad")
 
-**Status:** Approved direction (Neil, 2026-06-05). NOT built. Build next session once PR #9
+> **CORRECTION (2026-06-05): a v1 ALREADY EXISTS — do NOT build from scratch.**
+> "Headless One-Click Ad v1" was built on branch **`feat/headless-autopilot-v1`** (commit
+> `e257a57`, ~1,162 lines: `components/HeadlessAutopilot/index.tsx` + `services/autopilotService.ts`
+> + tests), with handoff `workflows/handoff_2026-05-29-headless-autopilot-v1.md` (on that branch).
+> It is **code-complete, build-clean, unit-tested, admin-only, NEVER merged, NEVER live-smoked.**
+> It already implements this spec's one-checkpoint model (deterministic self-check + ONE approval
+> before render) and reuses the tuned functions. **The from-scratch framing below is SUPERSEDED —
+> the task is to FINISH/GRADUATE the existing v1, not rebuild it.**
+>
+> **Key unblock (today):** v1 deferred the stitched single video to "Remotion Phase 2" and ships
+> only a bundle + per-scene clips. The **#10 ffmpeg final-render pipeline fixed today**
+> (`api/render/final.ts` `renderFinalVideo` + Phase 1 deterministic trim) IS that missing final
+> stage — wire it as autopilot's last step instead of waiting for Remotion → real "one finished
+> video" deliverable.
+>
+> **Finish plan (next session):** (1) merge PR #9 to main; (2) rebase `feat/headless-autopilot-v1`
+> onto main to pick up the #10 final-render + hook/camera fixes; (3) add a stitch stage in
+> `services/autopilotService.ts` calling `renderFinalVideo` after per-scene render; (4) admin
+> live-smoke (`?admin=on` → Dashboard → "One-Click Ad", MrBeast, saved MarketMind report) +
+> `gemini-eval`; (5) resolve the 3 open judgment calls in the v1 handoff (hide wizard? reaper cron?
+> AI-judge self-check?); (6) ungate from admin → wire the paid "Autopilot" tier.
+>
+> Sections below are the original (now redundant) from-scratch spec, kept only as a feature-
+> requirements reference. Defer to the existing v1's design where they conflict.
+
+---
+
+**Status:** v1 EXISTS on `feat/headless-autopilot-v1` (admin-only, unmerged). Finish next session
+after PR #9 merges + Gemini quota resets. (Original line below superseded by the correction above.)
+Approved direction (Neil, 2026-06-05). Build next session once PR #9
 (final-render pipeline) is merged and Gemini quota has reset.
 
 ## Goal
