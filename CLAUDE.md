@@ -195,6 +195,7 @@ Deliverables go to cloud services (Google Sheets, Slides, etc.) where the user c
 - `workflows/fix_broken_feature.md` — SOP for fixing one item from the audit
 - `workflows/infra_setup.md` — Supabase, PayMongo, Google OAuth, domain, hosting checklist
 - `workflows/post_beta_roadmap.md` — **next file to open when `launch_readiness.md` hits 100%.** Endorsed-but-deferred ideas with resume triggers (currently: nightly regression `/loop`, Odyssey-as-Cron / Autopilot tier).
+- `workflows/session_reminders.md` — re-arm commands for in-session loops the defreezer wipes (currently: hourly break reminder). Offer to re-arm at session start.
 
 ## The Self-Improvement Loop
 
