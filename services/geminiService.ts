@@ -764,10 +764,10 @@ export const deleteVideoLibraryItem = async (path: string): Promise<void> => {
 // so consecutive scenes get different framings. SIDE_PROFILE_TALK and DYNAMIC_SHOULDER were dropped
 // because the model silently collapsed them to a frontal portrait when IDENTITY_LOCK was firing.
 const AVATAR_CAMERA_ANGLES = [
-    "INTIMATE_CLOSE_UP: Framing neck up. Face fully toward camera. Focus: Eyes. Mandatory: Slight lens breathing and micro-handheld jitter.",
-    "MEDIUM_FRONTAL: Chest-up, eye-level frontal angle. Face squarely toward camera. Subtle handheld sway. 50mm lens feel. Casual conversational vibe.",
-    "WIDE_BUST_SHOT: Waist up, near-frontal angle. Face toward camera. Natural handheld sway. Background depth-of-field matches 85mm lens.",
-    "HIGH_ANGLE_SELFIE: Camera above eye-level looking down at face. Relatable, casual handheld vlog vibe with consistent micro-jitter. Subject looks UP at camera (face fully toward camera)."
+    "INTIMATE_CLOSE_UP: Framing neck up. Face fully toward camera. Focus: Eyes. Steady, locked framing.",
+    "MEDIUM_FRONTAL: Chest-up, eye-level frontal angle. Face squarely toward camera. Steady tripod-style framing. 50mm lens feel. Casual conversational vibe.",
+    "WIDE_BUST_SHOT: Waist up, near-frontal angle. Face toward camera. Steady framing. Background depth-of-field matches 85mm lens.",
+    "HIGH_ANGLE_SELFIE: Camera above eye-level looking down at face. Relatable, casual vlog vibe, steady framing. Subject looks UP at camera (face fully toward camera)."
 ];
 
 const LIGHTING_TOKENS = {
@@ -2132,9 +2132,9 @@ export const generateVideoPrompts = async (storyboard: Scene[], businessInfo: Bu
 
       **OPTION A-REGULAR: IF TYPE IS "b-roll" AND THIS IS NOT SCENE 1 (Scene 2+ visuals):**
          - **IDENTITY RULE:** Refer to the product only as "${productName}".
-         - **CAMERA PHYSICS (MANDATORY — open the prose with this, never static):**
-           - "slow dolly-out with upward tilt revealing scale" | "aggressive macro push-in" | "smooth lateral tracking pan with subtle counter-roll"
-         - **MOTION CONTINUITY:** The chosen camera move runs through the FULL clip duration. Camera position at frame 0 and final frame MUST be visibly different — STATIC SHOTS ARE FORBIDDEN.
+         - **CAMERA PHYSICS (minimal, smooth — open the prose with this):**
+           - "slow dolly-out with a gentle upward tilt" | "slow macro push-in" | "smooth, slow lateral tracking pan"
+         - **MOTION CONTINUITY:** The chosen GENTLE camera move runs smoothly through the clip. No handheld shake, jitter, counter-roll, parallactic/background-reveal shifts, or rack/pull focus. Keep the background stable. Err toward calm, smooth motion over dynamic.
          - **REGULAR B-ROLL DIRECTIVE:** Focus on the product's action.
          - **NEGATIVE PHRASE:** Append at the end as a comma-separated tail — "Avoid low quality, blurry, distorted, deformation, morphing, melting, glitching, extra limbs, text, watermark, writing, letters, subtitles."
          - **OUTPUT FORMAT:** A single cohesive cinematic paragraph. NO bracketed labels, NO [Model:] tag, NO VISUAL:/CAMERA:/AUDIO:/NEGATIVE: headers — those are stale routing markers from a manual copy-paste workflow. Open with the visual action, weave in the camera physics, end with the audio direction and the negative phrase as natural prose.
@@ -2145,7 +2145,7 @@ export const generateVideoPrompts = async (storyboard: Scene[], businessInfo: Bu
          - **Start with Direct Dialogue:** Lead with the script line in quotes.
          - **IDENTITY RULE:** If character mentions product, they say "${productName}".
          - **Performance & Micro-expressions:** Describe facial tension, eye movement, and mouth shapes — all already in motion at frame 0.
-         - **Cinematic Grammar (CAMERA MOTION IS MANDATORY — never static):** Open the prose with the camera physics directive. Use specific lenses (35mm, 85mm) and pick ONE camera move per scene: dolly-in (intimacy/escalation), parallactic shift (reveal/payoff), or aggressive handheld (urgency). The camera position at frame 0 and the final frame MUST be visibly different — the viewer should feel motion at any moment. CAMERA MOVE BEGINS WITH THE FIRST SYLLABLE — never before — so movement happens DURING dialogue. On 4s clips: modest but visible (not subtle). On 6–8s clips: pronounced. STATIC SHOTS ARE FORBIDDEN.
+         - **Cinematic Grammar (minimal, smooth motion):** Open the prose with the camera physics directive. Use specific lenses (35mm, 85mm) and pick ONE GENTLE camera move per scene: a slow dolly-in or a subtle push-in toward the subject. Do NOT use parallactic/background-reveal shifts, handheld movement, camera shake, jitter, lens breathing, or rack/pull focus — they read as blur or a changing background and break the clean talking-head look. Keep the background stable. CAMERA MOVE BEGINS WITH THE FIRST SYLLABLE — never before — so the slow move happens DURING dialogue. Keep it subtle and smooth on all durations; avoid fully frozen frames, but err toward calm over dynamic.
          - **Audio Landscape:** Define the sync-sound environment (SFX: distant room tone, Ambient: low electrical hum).
          - **First & Last Frame Logic:** Starting frame = avatar mid-syllable forming the opening word, mouth shape unambiguous. Last frame = next syllable or natural breath, NOT a post-speech resolve-state with a closed mouth and neutral expression.
          - **OUTPUT FORMAT:** A single, cohesive cinematic paragraph starting with the dialogue in quotes. Seamlessly blend performance details, camera physics, lighting atmosphere, and frame logic into a natural narrative flow. DO NOT use bracketed headers or labels daylight [Subject Performance] or [Camera Motion/Lens].
