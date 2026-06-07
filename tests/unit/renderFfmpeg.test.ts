@@ -41,6 +41,28 @@ describe('parseTrimSec', () => {
     expect(parseTrimSec(stderr, 5.0, PAD)).toBeCloseTo(5.0, 3);
   });
 
+  it('trims trailing silence that ffmpeg CLOSES at EOF (the real-output dead-air bug)', () => {
+    // Real ffmpeg emits BOTH silence_start and silence_end (~EOF) for a trailing
+    // tail — previously misread as "speech runs to the end" and never trimmed.
+    const stderr = [
+      'Duration: 00:00:06.00,',
+      '[silencedetect] silence_start: 1.0',
+      '[silencedetect] silence_end: 1.5 | silence_duration: 0.5',   // mid-clip pause (ignored)
+      '[silencedetect] silence_start: 4.4',
+      '[silencedetect] silence_end: 5.98 | silence_duration: 1.58', // trailing, closed at ~EOF
+    ].join('\n');
+    expect(parseTrimSec(stderr, 6.0, PAD)).toBeCloseTo(4.7, 3); // 4.4 + 0.3
+  });
+
+  it('keeps the full clip when the last silence ends well before EOF (speech resumes)', () => {
+    const stderr = [
+      'Duration: 00:00:06.00,',
+      '[silencedetect] silence_start: 4.4',
+      '[silencedetect] silence_end: 4.9 | silence_duration: 0.5', // 4.9 << 6.0 → not trailing
+    ].join('\n');
+    expect(parseTrimSec(stderr, 6.0, PAD)).toBeCloseTo(6.0, 3);
+  });
+
   it('keeps the full clip when there is no trailing silence (speech runs to EOF)', () => {
     const stderr = [
       'Duration: 00:00:06.00,',

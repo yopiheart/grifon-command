@@ -52,39 +52,57 @@ export function parseDurationSec(stderr: string): number | null {
   return Number(m[1]) * 3600 + Number(m[2]) * 60 + Number(m[3]);
 }
 
+/** A trailing silence region's end counts as "at EOF" within this slack (s). */
+const EOF_EPS = 0.25;
+
 /**
  * From a `silencedetect` stderr dump + the clip duration, compute the trim
  * length: speech-end + pad, clamped to duration.
  *
- * Speech-end = the start of the TRAILING silence run (the last silence_start with
- * no silence_end after it). If the clip does not end in silence (last event is a
- * silence_end, or there are no silence events), speech runs to the end → trim to
- * the full duration. Returns null only when duration is unknown and no trailing
- * silence was detected (caller falls back to -shortest / full clip).
+ * Speech-end = the start of the TRAILING silence run. A run is "trailing" when it
+ * is the last silence region AND it reaches the end of the file — i.e. either the
+ * region is dangling (a silence_start with no silence_end after it) OR real ffmpeg
+ * closed it with a silence_end at/near EOF (`>= duration - EOF_EPS`). Both forms
+ * occur in practice; the EOF-closed form is what ffmpeg actually emits and was
+ * previously misread as "speech runs to the end" (the dead-air bug).
+ *
+ * If the last silence region ends well before EOF (speech resumes after it), or
+ * there are no silence regions, speech runs to the end → trim to the full
+ * duration. Returns null only when duration is unknown and no trailing silence
+ * was detected (caller falls back to -shortest / full clip).
  */
 export function parseTrimSec(
   stderr: string,
   durationSec: number | null,
   padSec: number = PAD_SEC
 ): number | null {
-  const events: Array<{ kind: 'start' | 'end'; t: number }> = [];
+  const regions: Array<{ start: number; end: number | null }> = [];
+  let openStart: number | null = null;
   for (const line of stderr.split(/\r?\n/)) {
     let m: RegExpExecArray | null;
     if ((m = /silence_start:\s*(-?[\d.]+)/.exec(line))) {
-      events.push({ kind: 'start', t: parseFloat(m[1]) });
+      openStart = parseFloat(m[1]);
     } else if ((m = /silence_end:\s*([\d.]+)/.exec(line))) {
-      events.push({ kind: 'end', t: parseFloat(m[1]) });
+      if (openStart !== null) {
+        regions.push({ start: openStart, end: parseFloat(m[1]) });
+        openStart = null;
+      }
     }
   }
+  if (openStart !== null) regions.push({ start: openStart, end: null });
 
-  const last = events[events.length - 1];
-  const trailingSilenceStart = last && last.kind === 'start' ? last.t : null;
+  const last = regions[regions.length - 1];
+  if (!last) return durationSec; // no silence detected → speech reaches the end
 
-  if (trailingSilenceStart !== null) {
-    const padded = Math.max(0, trailingSilenceStart) + padSec;
+  const reachesEof =
+    last.end === null ||
+    (durationSec !== null && last.end >= durationSec - EOF_EPS);
+
+  if (reachesEof) {
+    const padded = Math.max(0, last.start) + padSec;
     return durationSec !== null ? Math.min(padded, durationSec) : padded;
   }
-  // No trailing silence → speech reaches the end.
+  // Last silence ends before EOF → speech resumes after it → keep the full clip.
   return durationSec;
 }
 
