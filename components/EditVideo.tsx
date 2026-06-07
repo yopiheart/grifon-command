@@ -375,7 +375,7 @@ const BatchEditMode: React.FC<{
                 </div>
                 <div>
                   <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest">FORMULA</p>
-                  <p className="text-white font-mono uppercase">{edl.meta.formulaApplied.join(' + ')}</p>
+                  <p className="text-white font-mono uppercase">{(edl.meta.formulaApplied ?? []).join(' + ') || '—'}</p>
                 </div>
               </div>
               <div className="mt-4 pt-4 border-t border-white/5">
@@ -411,7 +411,7 @@ const BatchEditMode: React.FC<{
                         )}
                       </div>
                       <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest">
-                        {scene.keepSegments
+                        {(scene.keepSegments ?? [])
                           .map((s) => `${formatSec(s.startSec)}–${formatSec(s.endSec)}`)
                           .join(', ')}
                       </span>
