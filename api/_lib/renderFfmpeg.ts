@@ -22,6 +22,7 @@ const CRF = '20';
 const PAD_SEC = 0.3;            // keep a soft final word from being clipped
 const SILENCE_NOISE_DB = '-35dB';
 const SILENCE_MIN_SEC = '0.4';  // min trailing-silence run to treat as dead air
+const HOOK_REVEAL_HOLD_SEC = 1.0; // hook: hold the product reveal this long past the VO end (vs a long silent morph tail)
 
 const DIMS: Record<string, [number, number]> = {
   '9:16': [1080, 1920],
@@ -122,26 +123,38 @@ export interface TrimPlan {
 }
 
 /**
- * Deterministic per-scene trim decision (Phase 1 fix). Priority:
- *  1. keepFullClip (hook)      → full clip, pad short audio under the reveal.
- *  2. targetDurationSec (cap)  → hard-cap to the spoken-length estimate; this is
- *     what cuts Veo's filler tail on talking scenes (silencedetect can't — the
- *     filler is audible, not silent).
- *  3. audioUrl                 → legacy silencedetect result.
- *  4. fallbackDurationSec      → explicit duration.
- *  5. else                     → full clip.
+ * Per-scene trim decision. Ground-truth, script/product-agnostic:
+ *
+ *  PRIMARY — voiced scene → trim to the ACTUAL voice-over end measured from the
+ *    VO MP3 (`detectedSec` = silencedetect speech-end + pad, capped to the clip).
+ *    This never cuts the VO and removes BOTH the silent video tail AND any
+ *    trailing silence baked into the MP3. The hook (`keepFullClip`) holds the
+ *    product reveal a beat past the VO instead of a long silent morph tail.
+ *    Replaces the old word-count `targetDurationSec` estimate, which under-trimmed
+ *    some scenes (dead air) and over-trimmed others (cut the VO mid-word).
+ *
+ *  FALLBACKS (no audio, or silencedetect produced nothing):
+ *    keepFullClip → full clip · targetDurationSec → estimate cap ·
+ *    fallbackDurationSec → explicit duration · else → full clip.
  */
 export function chooseTrim(
   scene: Pick<FinalRenderScene, 'keepFullClip' | 'targetDurationSec' | 'audioUrl' | 'fallbackDurationSec'>,
   probeSec: number | null,
   detectedSec: number | null
 ): TrimPlan {
+  const cap = (t: number) => (typeof probeSec === 'number' ? Math.min(t, probeSec) : t);
+
+  if (scene.audioUrl && typeof detectedSec === 'number' && detectedSec > 0) {
+    if (scene.keepFullClip) {
+      return { trimSec: cap(detectedSec + HOOK_REVEAL_HOLD_SEC), padAudio: true };
+    }
+    return { trimSec: cap(detectedSec), padAudio: false };
+  }
+
   if (scene.keepFullClip) return { trimSec: probeSec, padAudio: !!scene.audioUrl };
   if (typeof scene.targetDurationSec === 'number' && scene.targetDurationSec > 0) {
-    const capped = typeof probeSec === 'number' ? Math.min(scene.targetDurationSec, probeSec) : scene.targetDurationSec;
-    return { trimSec: capped, padAudio: false };
+    return { trimSec: cap(scene.targetDurationSec), padAudio: false };
   }
-  if (scene.audioUrl) return { trimSec: detectedSec, padAudio: false };
   if (typeof scene.fallbackDurationSec === 'number' && scene.fallbackDurationSec > 0) {
     return { trimSec: scene.fallbackDurationSec, padAudio: false };
   }
@@ -246,13 +259,9 @@ export async function renderFinalVideo(
       }
 
       const probeSec = probeDurationSec(videoPath);
-      // Only run silencedetect when chooseTrim would actually use it (the legacy
-      // fallback path) — i.e. not when we already have a full-clip or hard cap.
-      const needsDetect =
-        !!audioPath &&
-        !scene.keepFullClip &&
-        !(typeof scene.targetDurationSec === 'number' && scene.targetDurationSec > 0);
-      const detectedSec = needsDetect ? detectTrimSec(audioPath as string) : null;
+      // Measure the actual VO speech-end for every voiced scene — this is now the
+      // PRIMARY trim signal (chooseTrim), ground-truth across any script/product.
+      const detectedSec = audioPath ? detectTrimSec(audioPath) : null;
 
       const { trimSec, padAudio } = chooseTrim(scene, probeSec, detectedSec);
 

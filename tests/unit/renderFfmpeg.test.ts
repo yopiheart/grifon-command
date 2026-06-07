@@ -80,29 +80,53 @@ describe('dimsFor', () => {
 describe('chooseTrim', () => {
   const PROBE = 6.0; // full clip length
 
-  it('keeps the full clip for the hook and pads its short audio (visual reveal survives)', () => {
-    // The headline over-trim bug: a short hook VO must NOT cut the product-reveal end-frame.
-    const plan = chooseTrim({ keepFullClip: true, audioUrl: 'x' }, PROBE, 2.8);
-    expect(plan.trimSec).toBeCloseTo(PROBE, 3);
-    expect(plan.padAudio).toBe(true);
-  });
-
-  it('hard-caps a talking scene to the spoken estimate, ignoring filler (silencedetect would miss it)', () => {
-    // 6s Veo clip with audible filler tail → silencedetect returns ~6s; the cap cuts it.
-    const plan = chooseTrim({ targetDurationSec: 3.4, audioUrl: 'x' }, PROBE, 6.0);
+  it('trims a voiced scene to the measured VO end (ground truth, any script/product)', () => {
+    // detectedSec = real voice speech-end + pad measured from the VO MP3.
+    const plan = chooseTrim({ audioUrl: 'x' }, PROBE, 3.4);
     expect(plan.trimSec).toBeCloseTo(3.4, 3);
     expect(plan.padAudio).toBe(false);
   });
 
-  it('clamps the cap to the clip duration', () => {
+  it('never lets the VO-end trim overrun the clip (capped to probe)', () => {
+    expect(chooseTrim({ audioUrl: 'x' }, PROBE, 99).trimSec).toBeCloseTo(PROBE, 3);
+  });
+
+  it('measured VO end wins over the word-count estimate (estimate is fallback-only now)', () => {
+    // Old behavior hard-capped to targetDurationSec (3.4) and cut the VO mid-word;
+    // now the measured voice end (4.1) is authoritative so the VO is never truncated.
+    const plan = chooseTrim({ audioUrl: 'x', targetDurationSec: 3.4 }, PROBE, 4.1);
+    expect(plan.trimSec).toBeCloseTo(4.1, 3);
+    expect(plan.padAudio).toBe(false);
+  });
+
+  it('hook: holds the reveal ~1s past the VO end and pads the short audio', () => {
+    const plan = chooseTrim({ keepFullClip: true, audioUrl: 'x' }, PROBE, 2.8);
+    expect(plan.trimSec).toBeCloseTo(3.8, 3); // 2.8 VO end + 1.0 reveal hold
+    expect(plan.padAudio).toBe(true);
+  });
+
+  it('hook: the reveal-hold cannot overrun the clip', () => {
+    const plan = chooseTrim({ keepFullClip: true, audioUrl: 'x' }, 4.0, 3.6);
+    expect(plan.trimSec).toBeCloseTo(4.0, 3); // 3.6 + 1.0 capped to the 4.0 clip
+    expect(plan.padAudio).toBe(true);
+  });
+
+  it('falls back to the word-count estimate when there is no measured VO end', () => {
+    // e.g. silencedetect produced nothing (detectedSec null) but audio exists.
+    expect(chooseTrim({ audioUrl: 'x', targetDurationSec: 3.4 }, PROBE, null).trimSec).toBeCloseTo(3.4, 3);
+  });
+
+  it('clamps the estimate fallback to the clip duration', () => {
     expect(chooseTrim({ targetDurationSec: 99 }, PROBE, null).trimSec).toBeCloseTo(PROBE, 3);
   });
 
-  it('falls back to silencedetect when no cap and audio is present', () => {
-    expect(chooseTrim({ audioUrl: 'x' }, PROBE, 2.8).trimSec).toBeCloseTo(2.8, 3);
+  it('hook with no measured VO end keeps the full clip (fallback) and pads audio', () => {
+    const plan = chooseTrim({ keepFullClip: true, audioUrl: 'x' }, PROBE, null);
+    expect(plan.trimSec).toBeCloseTo(PROBE, 3);
+    expect(plan.padAudio).toBe(true);
   });
 
-  it('uses an explicit fallback duration when there is no cap and no audio', () => {
+  it('uses an explicit fallback duration when there is no audio at all', () => {
     expect(chooseTrim({ fallbackDurationSec: 4 }, PROBE, null).trimSec).toBeCloseTo(4, 3);
   });
 
