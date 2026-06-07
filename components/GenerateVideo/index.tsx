@@ -74,6 +74,10 @@ interface GenerateVideoProps {
    * rail shows a "SEND TO SIGNAL MODULATOR ↗" button that hands off the
    * scriptLines (+ rendered MP4 URLs) for batch voice generation. */
   onSendToSignalModulator?: (batch: SceneBatchEntry[]) => void;
+  /** Default path — hands the finished render batch straight to the AI Editor
+   * (Final Render), where voice is consolidated once. Skips Signal Modulator's
+   * redundant TTS pass (which the editor ignores), avoiding double spend. */
+  onSendToAiEditor?: (batch: SceneBatchEntry[]) => void;
 }
 
 const ACTIVE_MODELS: VideoModelType[] = ['Veo_3.1_Fast', 'Veo_3.1_Quality', 'Veo_3.1_Lite', 'Kling_3_0', 'Kling_O1'];
@@ -103,6 +107,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
   storyboard = [],
   defaultAspectRatio,
   onSendToSignalModulator,
+  onSendToAiEditor,
 }) => {
   const hasSeedPrompts = seedPrompts.length > 0;
   const [mode, setMode] = useState<Mode>(hasSeedPrompts ? 'pipeline' : 'one-shot');
@@ -648,9 +653,22 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
           // Pass the AUTO-ROUTED model so Kling's [5,10] duration set is
           // consulted (not Veo's [4,6,8]) when a scene is routed to Kling.
           const scriptLine = storyboard[i]?.scriptLine;
-          const sceneDuration = scriptLine
-            ? suggestDurationForScript(scriptLine, sceneModel, config.resolution)
-            : config.duration;
+          const validDurations = getValidDurations(sceneModel, config.resolution);
+          const shortDuration = validDurations.includes(5) ? 5 : validDurations[0];
+          // Hook cap (Fix B, 2026-06-04) + B-roll cap (Fix C, 2026-06-05): the
+          // hook AND every b-roll clip render at the SHORT duration (5s on Kling).
+          // A ~12-word Taglish b-roll line computes ~5.6s and the snap-UP heuristic
+          // (suggestDurationForScript) jumps it to Kling's only other option, 10s —
+          // bloating pacing. b-roll always routes to Kling (autoRouteModelForType),
+          // so shortDuration is 5. Talking/cinematic scenes KEEP the per-line
+          // heuristic so the avatar's lip-sync is never truncated. agent_lessons.md
+          // (2026-05-29): prefer a deterministic code cap over trusting the model.
+          const sceneDuration =
+            i === 0 || p.type === 'b-roll'
+              ? shortDuration
+              : scriptLine
+                ? suggestDurationForScript(scriptLine, sceneModel, config.resolution)
+                : config.duration;
           setStatus(i, 'queued');
           return { sceneIdx: i, prompt: p.prompt, startFrame, endFrame, duration: sceneDuration, model: sceneModel };
         })
@@ -1532,16 +1550,25 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
     </GlassPanel>
   );
 
-  const handleSendToSignalFromBar = () => {
-    if (!onSendToSignalModulator) return;
-    const batch: SceneBatchEntry[] = seedPrompts.map((p, i) => ({
+  const buildSceneBatch = (): SceneBatchEntry[] =>
+    seedPrompts.map((p, i) => ({
       sceneIdx: i,
       scriptLine: storyboard[i]?.scriptLine ?? '',
       renderedUrl: sceneResults[i]?.url,
       type: p.type,
     }));
-    onSendToSignalModulator(batch);
+
+  const handleSendToSignalFromBar = () => {
+    if (!onSendToSignalModulator) return;
+    onSendToSignalModulator(buildSceneBatch());
   };
+
+  const handleSendToAiEditorFromBar = () => {
+    if (!onSendToAiEditor) return;
+    onSendToAiEditor(buildSceneBatch());
+  };
+
+  const allRendered = renderedCount === seedPrompts.length && renderedCount > 0;
 
   /* ─── STICKY PIPELINE COMMAND BAR ─── */
   const PipelineCommandBar = (
@@ -1566,15 +1593,29 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
 
         <div className="flex-1" />
 
-        {onSendToSignalModulator && renderedCount === seedPrompts.length && renderedCount > 0 ? (
-          <button
-            type="button"
-            onClick={handleSendToSignalFromBar}
-            className="text-[10px] font-mono font-bold tracking-widest uppercase rounded-xl border border-[#FFCC00]/40 bg-[#FFCC00]/10 text-[#FFCC00] px-4 py-2.5 hover:bg-[#FFCC00]/20 hover:border-[#FFCC00] transition-all whitespace-nowrap"
-            title="Pass scriptLines + rendered MP4 URLs to Signal Modulator for batch voice generation"
-          >
-            // SEND TO SIGNAL MODULATOR ↗
-          </button>
+        {allRendered && (onSendToAiEditor || onSendToSignalModulator) ? (
+          <div className="flex items-center gap-2 flex-wrap">
+            {onSendToSignalModulator && (
+              <button
+                type="button"
+                onClick={handleSendToSignalFromBar}
+                className="text-[10px] font-mono font-bold tracking-widest uppercase rounded-xl border border-white/10 bg-zinc-950 text-zinc-400 px-4 py-2.5 hover:border-[#FFCC00] hover:text-[#FFCC00] transition-all whitespace-nowrap"
+                title="Optional: audition/preview voices in Signal Modulator. Final voice is consolidated once in the AI Editor — this preview is not reused, so it re-bills."
+              >
+                // VOICE STUDIO (OPTIONAL)
+              </button>
+            )}
+            {onSendToAiEditor && (
+              <button
+                type="button"
+                onClick={handleSendToAiEditorFromBar}
+                className="text-[10px] font-mono font-bold tracking-widest uppercase rounded-xl border border-[#FFCC00]/40 bg-[#FFCC00]/10 text-[#FFCC00] px-4 py-2.5 hover:bg-[#FFCC00]/20 hover:border-[#FFCC00] transition-all whitespace-nowrap"
+                title="Hand the finished render batch to the AI Editor — voice is consolidated once there (no double spend)."
+              >
+                // SEND TO AI EDITOR ↗
+              </button>
+            )}
+          </div>
         ) : busy ? (
           <button
             type="button"

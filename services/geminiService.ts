@@ -764,10 +764,10 @@ export const deleteVideoLibraryItem = async (path: string): Promise<void> => {
 // so consecutive scenes get different framings. SIDE_PROFILE_TALK and DYNAMIC_SHOULDER were dropped
 // because the model silently collapsed them to a frontal portrait when IDENTITY_LOCK was firing.
 const AVATAR_CAMERA_ANGLES = [
-    "INTIMATE_CLOSE_UP: Framing neck up. Face fully toward camera. Focus: Eyes. Mandatory: Slight lens breathing and micro-handheld jitter.",
-    "MEDIUM_FRONTAL: Chest-up, eye-level frontal angle. Face squarely toward camera. Subtle handheld sway. 50mm lens feel. Casual conversational vibe.",
-    "WIDE_BUST_SHOT: Waist up, near-frontal angle. Face toward camera. Natural handheld sway. Background depth-of-field matches 85mm lens.",
-    "HIGH_ANGLE_SELFIE: Camera above eye-level looking down at face. Relatable, casual handheld vlog vibe with consistent micro-jitter. Subject looks UP at camera (face fully toward camera)."
+    "INTIMATE_CLOSE_UP: Framing neck up. Face fully toward camera. Focus: Eyes. Steady, locked framing.",
+    "MEDIUM_FRONTAL: Chest-up, eye-level frontal angle. Face squarely toward camera. Steady tripod-style framing. 50mm lens feel. Casual conversational vibe.",
+    "WIDE_BUST_SHOT: Waist up, near-frontal angle. Face toward camera. Steady framing. Background depth-of-field matches 85mm lens.",
+    "HIGH_ANGLE_SELFIE: Camera above eye-level looking down at face. Relatable, casual vlog vibe, steady framing. Subject looks UP at camera (face fully toward camera)."
 ];
 
 const LIGHTING_TOKENS = {
@@ -1886,8 +1886,8 @@ export const generateSceneImage = async (
         1. **IDENTITY:** Reproduce the product from Reference Image 1 EXACTLY — same packaging shape, same colors, same label position, same proportions, same materials/finish (matte vs glossy). Do NOT redesign, restyle, or substitute the product with a similar-looking product.
         2. **VISUAL_GROUND_TRUTH_PRIORITY (overrides text metadata):** Reference Image 1 is the VISUAL GROUND TRUTH for the product. Do NOT infer visual properties (color, jar shape, label design, finish, fill level, packaging material) from the product NAME or DESCRIPTION text fields below. If text says "Ube-Calamansi Marmalade" but Reference Image 1 shows a red/strawberry-jam jar with a pink label, render the RED/strawberry jar exactly as photographed — do NOT render a purple ube jar. Text metadata controls ONLY: wordmark text language, product category confirmation, and the words appearing on the label. IMAGE wins every visual tie.
         3. **NO_LOGO_HALLUCINATION:** PRESERVE the uploaded product label EXACTLY — every wordmark, illustration, color block, and panel that appears in Reference Image 1 must match in this scene. Do not invent NEW labels, do not blank or simplify the existing label, do not substitute a generic kraft or plain surface. Naturalistic composition (partial hand occlusion, angled view, partial visibility from camera framing) is acceptable as long as the VISIBLE portions of the label match the reference photo content.
-        4. **ANATOMICAL_LOCK:** If the prompt requires hands or fingers, render exactly TWO hands with FIVE fingers each. No extra limbs, no extra fingers, no partial hands, no third hand entering frame. "A pair of hands" means exactly two hands.
-        5. **NO HUMAN FACES:** Do NOT render faces, full bodies, or recognizable people. Hands are allowed only when the prompt explicitly requires them (per rule 4).
+        4. **ANATOMICAL_LOCK:** Render ONLY the number of hands the action needs — one hand pouring/holding the product = exactly ONE hand; a two-handed action = exactly TWO. Five fingers each. NEVER add an extra, third, phantom, or duplicate hand to "complete a pair", and never a disembodied hand entering frame. Anatomy matches the action, not a fixed count.
+        5. **NO HUMAN FACES / NO INVENTED PEOPLE (reference override):** Do NOT render faces, full bodies, or recognizable people. If Reference Image 1 shows a hand, arm, or person holding or presenting the product, treat that human as NON-CANONICAL: ignore and exclude them — reproduce ONLY the product object and its setting, and NEVER extrapolate, complete, or invent a face/body/model from the partial person in the reference photo. A hand may appear ONLY if THIS scene's prompt explicitly calls for one (per rule 4); otherwise the frame contains NO human at all.
         6. **LUMEN_SYNC:** Use the lighting temperature and color profile from Reference Image 1. Match the warmth/coolness of its highlights.
         7. **SUBJECT:** Focus on the product described in the prompt; the product from Reference Image 1 is the hero.
         `;
@@ -1907,7 +1907,7 @@ export const generateSceneImage = async (
         6. **PRODUCT IDENTITY:** Reproduce the product from Reference Image 2 EXACTLY — same packaging shape, same colors, same label position, same proportions, same materials/finish. Do NOT redesign or substitute the product.
         7. **NO_LOGO_HALLUCINATION:** PRESERVE the uploaded product label EXACTLY — every wordmark, illustration, color block, and panel that appears in Reference Image 2 must match in this scene. Do not invent NEW labels, do not blank or simplify the existing label, do not substitute a generic kraft or plain surface. Naturalistic composition (partial hand occlusion, angled view, partial visibility from camera framing) is acceptable as long as the VISIBLE portions of the label match the reference photo content.
         8. **VISUAL_GROUND_TRUTH_PRIORITY — PRODUCT (overrides text metadata):** Reference Image 2 (product photo) is VISUAL GROUND TRUTH for the product. Do NOT infer product visual properties (color, shape, label design, finish) from the product NAME or DESCRIPTION text. If the photo and the name disagree, the photo wins. Text controls only the wordmark/variant text on the label, not the visual appearance of the jar/container.
-        9. **ANATOMICAL_LOCK:** If the prompt requires hands holding the product, render exactly TWO hands with FIVE fingers each. No extra limbs, no extra fingers, no partial hands.
+        9. **ANATOMICAL_LOCK:** Render ONLY the number of hands the action needs — one hand holding the product = exactly ONE hand; a two-handed action = exactly TWO. Five fingers each. NEVER add an extra, third, phantom, or duplicate hand to "complete a pair", and never a disembodied hand entering frame. Anatomy matches the action, not a fixed count.
 
         **LIGHTING (DUAL_LUMEN_SYNC):**
         - Scene lighting prioritizes the avatar's environment (Reference Image 1) — the scene IS in the avatar's home, so use that warm/natural light profile for the overall image.
@@ -2109,6 +2109,11 @@ export const generateVideoPrompts = async (storyboard: Scene[], businessInfo: Bu
       2. **OTHERWISE:**
          - SCENE 1 (THE HOOK) IS ALWAYS "b-roll".
          - SCENE 2+: Decide by lens engagement + script delivery context.
+            - **MOUTH-OBSTRUCTION OVERRIDE (decide this FIRST):** If the description shows the avatar's
+              mouth covered or occupied by the product or an action — drinking, sipping, mid-sip, taking a
+              sip, eating, biting, applying product to lips/mouth/face, or a bottle/cup/hand at the mouth —
+              classify "b-roll" REGARDLESS of lens engagement or script line. Lip-sync would morph the face
+              through the obstruction; the voice-over carries the line.
             - **"talking"** when BOTH: (a) description shows the avatar ORIENTED TO THE LENS ("looking at camera", "smiling at camera", "facing the camera", "looking into the lens", "to camera") AND (b) the script line is a direct verbal delivery — a CTA ("click below", "tap below", "visit", "message us", "DM us"), a testimonial line ("I tried...", "Ako si...", "Iba ang..."), or a direct first-person claim the avatar naturally speaks to camera.
             - **"b-roll"** when either signal is missing, OR when the description shows: thoughtful expression / touching cheek / hands near mouth / mirror reflection without lens contact / looking off-camera / pure product shot without avatar. Voice-over carries the script; the avatar's mouth need not be in sync.
 
@@ -2127,9 +2132,9 @@ export const generateVideoPrompts = async (storyboard: Scene[], businessInfo: Bu
 
       **OPTION A-REGULAR: IF TYPE IS "b-roll" AND THIS IS NOT SCENE 1 (Scene 2+ visuals):**
          - **IDENTITY RULE:** Refer to the product only as "${productName}".
-         - **CAMERA PHYSICS (MANDATORY — open the prose with this, never static):**
-           - "slow dolly-out with upward tilt revealing scale" | "aggressive macro push-in" | "smooth lateral tracking pan with subtle counter-roll"
-         - **MOTION CONTINUITY:** The chosen camera move runs through the FULL clip duration. Camera position at frame 0 and final frame MUST be visibly different — STATIC SHOTS ARE FORBIDDEN.
+         - **CAMERA PHYSICS (minimal, smooth — open the prose with this):**
+           - "slow dolly-out with a gentle upward tilt" | "slow macro push-in" | "smooth, slow lateral tracking pan"
+         - **MOTION CONTINUITY:** The chosen GENTLE camera move runs smoothly through the clip. No handheld shake, jitter, counter-roll, parallactic/background-reveal shifts, or rack/pull focus. Keep the background stable. Err toward calm, smooth motion over dynamic.
          - **REGULAR B-ROLL DIRECTIVE:** Focus on the product's action.
          - **NEGATIVE PHRASE:** Append at the end as a comma-separated tail — "Avoid low quality, blurry, distorted, deformation, morphing, melting, glitching, extra limbs, text, watermark, writing, letters, subtitles."
          - **OUTPUT FORMAT:** A single cohesive cinematic paragraph. NO bracketed labels, NO [Model:] tag, NO VISUAL:/CAMERA:/AUDIO:/NEGATIVE: headers — those are stale routing markers from a manual copy-paste workflow. Open with the visual action, weave in the camera physics, end with the audio direction and the negative phrase as natural prose.
@@ -2140,7 +2145,7 @@ export const generateVideoPrompts = async (storyboard: Scene[], businessInfo: Bu
          - **Start with Direct Dialogue:** Lead with the script line in quotes.
          - **IDENTITY RULE:** If character mentions product, they say "${productName}".
          - **Performance & Micro-expressions:** Describe facial tension, eye movement, and mouth shapes — all already in motion at frame 0.
-         - **Cinematic Grammar (CAMERA MOTION IS MANDATORY — never static):** Open the prose with the camera physics directive. Use specific lenses (35mm, 85mm) and pick ONE camera move per scene: dolly-in (intimacy/escalation), parallactic shift (reveal/payoff), or aggressive handheld (urgency). The camera position at frame 0 and the final frame MUST be visibly different — the viewer should feel motion at any moment. CAMERA MOVE BEGINS WITH THE FIRST SYLLABLE — never before — so movement happens DURING dialogue. On 4s clips: modest but visible (not subtle). On 6–8s clips: pronounced. STATIC SHOTS ARE FORBIDDEN.
+         - **Cinematic Grammar (minimal, smooth motion):** Open the prose with the camera physics directive. Use specific lenses (35mm, 85mm) and pick ONE GENTLE camera move per scene: a slow dolly-in or a subtle push-in toward the subject. Do NOT use parallactic/background-reveal shifts, handheld movement, camera shake, jitter, lens breathing, or rack/pull focus — they read as blur or a changing background and break the clean talking-head look. Keep the background stable. CAMERA MOVE BEGINS WITH THE FIRST SYLLABLE — never before — so the slow move happens DURING dialogue. Keep it subtle and smooth on all durations; avoid fully frozen frames, but err toward calm over dynamic.
          - **Audio Landscape:** Define the sync-sound environment (SFX: distant room tone, Ambient: low electrical hum).
          - **First & Last Frame Logic:** Starting frame = avatar mid-syllable forming the opening word, mouth shape unambiguous. Last frame = next syllable or natural breath, NOT a post-speech resolve-state with a closed mouth and neutral expression.
          - **OUTPUT FORMAT:** A single, cohesive cinematic paragraph starting with the dialogue in quotes. Seamlessly blend performance details, camera physics, lighting atmosphere, and frame logic into a natural narrative flow. DO NOT use bracketed headers or labels daylight [Subject Performance] or [Camera Motion/Lens].

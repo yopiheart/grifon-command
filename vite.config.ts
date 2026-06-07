@@ -98,6 +98,17 @@ export default defineConfig(({ mode }) => {
   }
   return {
     plugins: [react(), vercelApiDevPlugin()],
+    server: {
+      watch: {
+        // Runtime-written, gitignored dirs inside the repo crash the dev server
+        // with EBUSY when Vite tries to watch a large/locked file in them:
+        //   .playwright-mcp/  — MCP artifact downloads (e.g. the final MP4)
+        //   .tmp/             — disposable scratch (smoke heroes / fixtures)
+        //   .tools/           — restore-*.ps1 portable binaries (e.g. gh.exe/zip)
+        // Ignore them (and any media) so smokes / tooling can't kill the server.
+        ignored: ['**/.playwright-mcp/**', '**/.tmp/**', '**/.tools/**', '**/*.mp4'],
+      },
+    },
     build: {
       // Vite 8 defaults to lightningcss, which warns on every @tailwind directive
       // it doesn't recognize. esbuild minifies fine and stays quiet.
