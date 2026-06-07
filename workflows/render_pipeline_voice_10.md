@@ -19,6 +19,19 @@
 > past the response on the live tier — else flip `api/render/final.ts` to the synchronous-long-call
 > fallback; (b) the suite has 15 pre-existing failures in `geminiService.*`/`edit-decision-list`
 > (the separate `generateEditDecisionList` feature), unrelated to #10.
+>
+> **Status (2026-06-08): ✅ SMOKE GATE GREEN — PC-gated smoke PASSED, PR #9 merged.** Drove a
+> full Director smoke (The Ordinary, Taglish Testimonial, 8 scenes) end-to-end → Render All →
+> Send to AI Editor → Consolidate Voice → Render Final → watched the MP4. Lip-sync + brand voice
+> 100% (Neil). Dead-air eliminated and verified objectively via `silencedetect`: the final 35.86s
+> MP4 has **only the intended 0.3s soft-word pad** at scene ends (was 1.45s + 1.26s dead-air tails
+> pre-fix); VO is never truncated; hook reveal-hold timing approved. Five real defects found+fixed
+> this smoke (all on PR #9): Vite `.tmp`/`.tools` EBUSY (`60d1cee`), AI-Editor crash on missing EDL
+> fields (`b505786`), product-mode hero-hand face-leak — tuned guard (`627ccb2`), VO-end trim vs
+> word-estimate (`72edf95`), and trailing-silence detection that ffmpeg closes at EOF (`ad8d6f8`).
+> **Deferred (next phase, not #10):** burn-in of overlay text / auto-captions / SFX / transitions /
+> background music (the EDL already *plans* these; v1 renderer is trim+concat only by design).
+> Also separate: the hook Kling-morph transition *quality* (creative pass).
 
 ## Context
 
