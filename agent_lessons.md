@@ -699,3 +699,24 @@ filtered ancestor entirely — cleaner than hoisting it out of the JSX tree by h
 `position: sticky` descendants; use `overflow-x: clip` instead (it clips without creating the
 scroll container). Both gotchas hit in the same header build; both verified fixed in vivo via
 Playwright at 390px. Shipped this session (landing + pricing shared header + urgency bar).
+
+### 2026-06-08 — A leaked face in a product-only frame is the REFERENCE image, not the prompt (and not always the avatar)
+**Context:** During The Ordinary smoke, the hook end-frame and a product b-roll rendered a **western woman**
+composited over the serum bottle — in frames whose prompt said "serum bottle on marble, no human." Two days
+of other products never did this. First instinct (and a first patch attempt) blamed the **avatar** leaking
+into the reveal.
+**What went wrong / the trap:** It was NOT the avatar. A talking scene proved the avatar rendered correctly
+as a **Filipino** woman — but the leaked face was **western**. The real source was the **hero product photo**
+(`h_ointment.jpg`): a handheld lifestyle shot with a prominent **western hand/arm**. In `'product'` reference
+mode, the image model **completed a whole western person** from that partial hand — the visual reference +
+IDENTITY_LOCK overrode the text rule "NO HUMAN FACES." It only surfaced now because this hero is person-
+prominent; cleaner product heroes didn't trigger it. (It's also stochastic — scene 7, same setup, came out
+clean.)
+**Lesson:** When an image defies a clearly-worded prompt, suspect the **reference image + consistency-lock
+mode FIRST**, not the prompt wording — an attached reference + IDENTITY_LOCK beats "no human" every time.
+And before blaming the avatar, **look at a talking scene to confirm the avatar's actual render** (ethnicity/
+identity) — the leaked face may come from the *product* reference, in which case dropping the avatar does
+nothing. Fix shipped: a TUNED `'product'`-mode guard in `services/geminiService.ts` `generateSceneImage`
+("reproduce ONLY the product; ignore/exclude any hands/arms/people in the reference; never invent a person"),
+Neil-approved per-diff, commit `627ccb2`. Verified: the hook reveal + b-roll regenerated clean. Keep the
+handheld hero (it's the size anchor) — fix the prompt rule, not the hero.
