@@ -100,10 +100,13 @@ export default defineConfig(({ mode }) => {
     plugins: [react(), vercelApiDevPlugin()],
     server: {
       watch: {
-        // The Playwright MCP downloads artifacts (e.g. the final MP4) into the
-        // repo tree; watching a large/locked .mp4 crashes the dev server with
-        // EBUSY. Ignore the download dir and any media so smokes can't kill it.
-        ignored: ['**/.playwright-mcp/**', '**/*.mp4'],
+        // Runtime-written, gitignored dirs inside the repo crash the dev server
+        // with EBUSY when Vite tries to watch a large/locked file in them:
+        //   .playwright-mcp/  — MCP artifact downloads (e.g. the final MP4)
+        //   .tmp/             — disposable scratch (smoke heroes / fixtures)
+        //   .tools/           — restore-*.ps1 portable binaries (e.g. gh.exe/zip)
+        // Ignore them (and any media) so smokes / tooling can't kill the server.
+        ignored: ['**/.playwright-mcp/**', '**/.tmp/**', '**/.tools/**', '**/*.mp4'],
       },
     },
     build: {
