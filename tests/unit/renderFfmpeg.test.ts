@@ -3,7 +3,7 @@ import {
   parseDurationSec, parseTrimSec, dimsFor, chooseTrim,
   clampWindow, clampAnchor, escFilterPath,
   safeZone, fitText, wrapTwoLines, stripUnrenderable, evenSplit, chunkCaption,
-  planScene, buildTextFilter, buildBoxFilter,
+  planScene, buildTextFilter, buildBoxFilter, WIPE_SLICES,
 } from '../../api/_lib/renderFfmpeg.js';
 import type { FinalRenderScene } from '../../types.js';
 
@@ -314,9 +314,13 @@ describe('buildTextFilter / buildBoxFilter (filtergraph)', () => {
     expect(f).toMatch(/y='\d+\+\d+\*\(1-min\(1,max\(0,\(t-0\.4\)\/0\.7\)\)\)'/);
     expect(f).toContain("alpha='min(1,max(0,(t-0.4)/0.7))'");
   });
-  it('box wipe animates width L→R and never escapes commas (quoted)', () => {
-    const f = buildBoxFilter({ kind: 'box', x: 200, y: 800, w: 150, h: 50, color: '0xD90429', startSec: 0.55, wipeDur: 0.4 });
-    expect(f).toContain("w='min(150,375*max(0,t-0.55))'");  // 150/0.4 = 375 px/s
-    expect(f).not.toContain('\\,');                          // quoting, not escaping
+  it('box wipe is a left→right cascade of time-gated slices (drawbox has no eval=frame)', () => {
+    const f = buildBoxFilter({ kind: 'box', x: 200, y: 800, w: 240, h: 50, color: '0xD90429', startSec: 0.55, wipeDur: 0.4 });
+    const slices = f.split(',drawbox=').length - 1 + (f.startsWith('drawbox=') ? 1 : 0);
+    expect(slices).toBe(WIPE_SLICES);
+    expect(f).toContain("enable='gte(t,0.550)'");            // first slice at startSec
+    expect(f).toContain("enable='gte(t,0.933)'");            // last slice ~startSec+wipeDur*23/24
+    expect(f).toContain('color=0xD90429@0.9');
+    expect(f).not.toContain("min(");                          // no eval-once width expr
   });
 });

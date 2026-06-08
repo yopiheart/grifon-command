@@ -377,13 +377,30 @@ export function buildTextFilter(l: TextLayer, fontName: string, textName: string
   return `drawtext=${opts.join(':')}`;
 }
 
-/** drawbox L→R wipe for one BoxLayer (width animates from 0 to w over wipeDur). */
+/** Number of vertical slices used to animate the L→R box wipe. */
+export const WIPE_SLICES = 24;
+
+/**
+ * L→R wipe for one BoxLayer. ffmpeg's `drawbox` evaluates w/x/y/h ONCE (no
+ * `eval=frame` option in this build), so a `t`-based width can't animate. Instead
+ * we emit WIPE_SLICES thin static boxes left→right, each revealed by a time-gated
+ * `enable` (which IS per-frame) — cumulatively they fill the box from the left.
+ */
 export function buildBoxFilter(l: BoxLayer): string {
-  const speed = (l.w / l.wipeDur).toFixed(0);
-  return (
-    `drawbox=x=${l.x}:y=${l.y}:w='min(${l.w},${speed}*max(0,t-${l.startSec}))':` +
-    `h=${l.h}:color=${l.color}@0.9:t=fill:enable='gte(t,${l.startSec})'`
-  );
+  const sliceW = l.w / WIPE_SLICES;
+  const step = l.wipeDur / WIPE_SLICES;
+  const parts: string[] = [];
+  for (let i = 0; i < WIPE_SLICES; i++) {
+    // Integer-tiled boundaries → adjacent slices with no overlap (no alpha-doubled
+    // seam) and no gap, so the cascade reads as one clean bar growing L→R.
+    const x = Math.round(l.x + i * sliceW);
+    const xNext = Math.round(l.x + (i + 1) * sliceW);
+    const tOn = (l.startSec + i * step).toFixed(3);
+    parts.push(
+      `drawbox=x=${x}:y=${l.y}:w=${xNext - x}:h=${l.h}:color=${l.color}@0.9:t=fill:enable='gte(t,${tOn})'`
+    );
+  }
+  return parts.join(',');
 }
 
 // ---------------------------------------------------------------------------
