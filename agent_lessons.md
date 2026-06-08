@@ -755,6 +755,28 @@ synthetic harness (`tests/integration/burnin-render.test.ts`, gated) seeded with
 input (Taglish apostrophe+comma+emoji) so escaping regressions fail fast and free. Shipped:
 slice-wipe + bare-filename/cwd + single-quote escaping, branch `feat/burn-in-overlays-sfx-music`.
 
+### 2026-06-08 — Audio for ads: judge full-ad not excerpts; SFX timing must be engine-deterministic; less is more
+**Context:** After the burn-in merge, polishing the final render's audio on Neil's real 8-scene ad
+(music bed + SFX). Three separate traps, each only caught by Neil's ear on the FULL render.
+**What went wrong / lessons:**
+1. **Music level can't be judged on a short excerpt.** I A/B'd 8-second clips and Neil picked
+   "balanced" (`MUSIC_VOLUME 0.34` + soft duck) — which then *fought the VO* across the full ad.
+   Fix: bed `0.18` + harder/faster 4:1 duck AND a **`loudnorm=I=-14:TP=-1.5:LRA=11` master** so every
+   ad ships VO-clear at the social standard regardless of the client's VO level. **Always confirm an
+   audio mix on the whole timeline, not a snippet** — and pin final loudness deterministically.
+2. **A text LLM can't time in-scene SFX** — the EDL writes `sfxCues[].anchorSec` but never sees the
+   rendered frame, so "ding on the product reveal" / "whoosh on the transition" drift early/late
+   (Neil saw exactly this). Fix: **place SFX from events the ENGINE knows exactly** — transition
+   sounds snap to the cut (scene boundary), the hook accent to the flip (`HOOK_DELAY`), and emphasis
+   sounds to each overlay's own `startSec` (`TextLayer.emphasisSfx`). Drop the EDL's guessed
+   in-scene anchors. Generalizes: if a deterministic signal exists for "when", don't let the LLM guess it.
+3. **Stacked/over-dense SFX read as cheap/AI-slop.** A whoosh on every cut + a pop stacked on the
+   same beat sounded amateur. Fix: a restraint pass (`pickSceneSfx`) — no two within 0.4s, transition
+   whooshes capped per ad, emphasis wins collisions. **For ads, 3–5 SFX / 30s max; silence is
+   premium, mistimed noise is cheap.** Shipped `3d90474`/`732a4bf`/`259570a` on main. Verify audio
+   work by re-stitching the real ad + uploading (`.tmp/upload.mjs`) for Neil to *hear* — frames/specs
+   don't prove a mix.
+
 ### 2026-06-08 — ffmpeg drawtext `fontsize` DOES animate per-frame (verified) — so scale-pop is real
 **Context:** Punching up the hook reveal (Neil: the old linear slide+fade read as a plain fade).
 Building a "flip/scale-pop" variant needs the glyph size to animate, but the drawbox trap above

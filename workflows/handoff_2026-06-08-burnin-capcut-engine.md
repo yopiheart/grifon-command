@@ -15,8 +15,20 @@
 > NOTE for re-sourcing: all CC0 sites (Pixabay/Mixkit/Freesound) sign download URLs server-side,
 > so they CANNOT be hotlinked/auto-fetched — manual download (or a Freesound API token) required.
 >
+> **Audio polish shipped today (2026-06-08, all on main):** `8a1c168` 13 Pixabay-CC audio files +
+> provenance; `9f52cb1`→superseded bed mix; `3d90474` VO-first mix (`MUSIC_VOLUME 0.18`, 4:1 duck)
+> + **−14 LUFS loudnorm master** + deterministic SFX sync (transition→cut, hook→flip);
+> `732a4bf` **SFX↔text pairing** (each strategic overlay's sound lands on its on-screen frame via
+> `TextLayer.emphasisSfx`: hook→boom, callout→pop, punchline→ding); `259570a` **SFX restraint cap**
+> (`pickSceneSfx`: no two within 0.4s, whooshes capped at 3/ad, emphasis wins). Net SFX model is
+> fully deterministic — cuts→whoosh, text reveals→pop/ding/boom, nothing floats. Verified on Neil's
+> real ad each step (uploads via `.tmp/upload.mjs` → Supabase signed URLs).
+>
 > **Open follow-ups (none block anything):** (a) audio override UI fast-follow (see "Audio control"
-> below). (b) TASK 2 One-Click Autopilot. (c) scene-1 Kling transition pass. (d) billing/metering.
+> below). (b) **Whisper word-sync** — perfect caption timing + in-scene SFX on the spoken word (the
+> one remaining "estimate" in the audio pipeline). (c) TASK 2 One-Click Autopilot. (d) scene-1 Kling
+> transition pass. (e) billing/metering. (f) TUNED: EDL SFX-discipline (cue fewer, on real beats) —
+> needs Neil per-diff approval, no `/goal`.
 
 ## What shipped on the branch (in order)
 1. `8021fef` Slice A: thread EDL → renderer; burn simple drawtext overlays + SFX (`adelay+amix`) +
