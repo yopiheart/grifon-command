@@ -137,11 +137,29 @@ export interface FinalRenderScene {
   /** Keep the full clip (hook): preserves the visual reveal; pads short audio. */
   keepFullClip?: boolean;
   fallbackDurationSec?: number;
+  // ---- Burn-in (from the EDL; times are scene-relative, clamped to the trim) ----
+  /** Hook/callout/subtitle/punchline text burned via ffmpeg drawtext. */
+  overlayText?: OverlayText[];
+  /** Beat-aligned SFX cues mixed in at their anchorSec. */
+  sfxCues?: SfxCue[];
+  /** Planned transition INTO this scene. Threaded now; not yet rendered (Slice B). */
+  transitionIn?: { type: TransitionType; durationSec: number };
+  // ---- Overlay/caption engine inputs ----
+  /** Spoken line for this scene → drives the auto-captions (scenes 2+). */
+  scriptLine?: string;
+  /** Scene type from the batch — picks the caption band (talking→face-clear). */
+  sceneType?: 'talking' | 'b-roll' | 'cinematic';
+  /** Scene 1 = the hook (slide-up reveal + crimson wipe-box on the last word). */
+  isHook?: boolean;
+  /** Face-clear band (fractions of height) from browser detection; caption goes here. */
+  captionRegion?: { yFracTop: number; yFracBottom: number };
 }
 
 export interface FinalRenderRequest {
   scenes: FinalRenderScene[];
   aspectRatio: '9:16' | '16:9' | '1:1';
+  /** Style-keyed background-music bed (chosen in code from EDL meta.scriptStyleDetected). */
+  music?: { style: 'mrbeast' | 'temu' | 'testimonial'; enabled: boolean };
 }
 
 /** Returned immediately by the fire endpoint; the client polls with this jobId. */

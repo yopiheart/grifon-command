@@ -720,3 +720,54 @@ nothing. Fix shipped: a TUNED `'product'`-mode guard in `services/geminiService.
 ("reproduce ONLY the product; ignore/exclude any hands/arms/people in the reference; never invent a person"),
 Neil-approved per-diff, commit `627ccb2`. Verified: the hook reveal + b-roll regenerated clean. Keep the
 handheld hero (it's the size anchor) — fix the prompt rule, not the hero.
+
+### 2026-06-08 — ffmpeg burn-in: filtergraph escaping + drawbox can't animate (build-passes ≠ renders-right)
+**Context:** Building the CapCut-grade overlay/caption engine in `api/_lib/renderFfmpeg.ts`
+(Inter-Black drawtext + a crimson L→R "wipe" highlight box behind the hook title). Two ffmpeg
+foot-guns bit in sequence, both invisible to the build and the type-checker.
+**What went wrong (two distinct traps):**
+1. **Windows drive-colon in filtergraph paths.** `drawtext=fontfile=C\:/…` (even escaped) made
+   the filter parser throw `Invalid argument`. The synthetic harness caught it on the first run.
+   Fix: copy the font into the scene temp dir, write textfiles there, and run ffmpeg with
+   `cwd=dir` referencing **bare filenames** — no drive/colon ever enters the graph. Also: protect
+   commas inside expression option values by **single-quoting** the value (`y='min(1,max(0,…))'`),
+   NOT backslash-escaping (`\,`) — inside single quotes commas are literal; a stray backslash
+   inside quotes breaks the expression parser. Validate empirically with a real Taglish line that
+   contains an apostrophe AND a comma AND an emoji.
+2. **`drawbox` evaluates w/x/y/h ONCE — no animation.** A `t`-based width
+   `w='min(W,speed*max(0,t-start))'` rendered a *static full box*, not a wipe (`t` is NaN at
+   init → `min()` returns W). This build of ffmpeg has **no `eval=frame` option on drawbox**
+   (`Error applying option 'eval' to filter 'drawbox': Option not found`) — so you cannot animate
+   a box dimension via the time variable at all. Fix: animate via **`enable` instead of geometry**
+   — emit N (24) integer-tiled static drawbox slices left→right, each gated by
+   `enable='gte(t,startSec+i*step)'` (enable IS evaluated per-frame), so they cascade on to fill
+   the bar L→R. Same trick generalizes to any "reveal/wipe/progress" effect drawbox can't tween.
+   The static box shipped unnoticed through build + unit tests + a frame I read at the wrong
+   timestamp (post-wipe) — only a mid-wipe-window frame (and Neil's eye on the moving video)
+   exposed it.
+**Lesson — three parts.** (a) For ffmpeg work, **build-clean and even a passing render are not
+proof**; assert the *motion* by extracting frames INSIDE the animation window (here 0.55–0.95s),
+not just one resolved frame (pairs with the 2026-05-22 frame-sampling-grid lesson). (b) Before
+relying on a `t`/per-frame expression in a filter, confirm that filter actually re-evaluates it
+(many ffmpeg filters eval-once unless they expose `eval=frame`; drawtext does, drawbox does not in
+this build) — `-filters`/`-h filter=drawbox` and a 3-frame smoke settle it in 30s. (c) Keep the
+synthetic harness (`tests/integration/burnin-render.test.ts`, gated) seeded with the nastiest real
+input (Taglish apostrophe+comma+emoji) so escaping regressions fail fast and free. Shipped:
+slice-wipe + bare-filename/cwd + single-quote escaping, branch `feat/burn-in-overlays-sfx-music`.
+
+### 2026-06-08 — ffmpeg drawtext `fontsize` DOES animate per-frame (verified) — so scale-pop is real
+**Context:** Punching up the hook reveal (Neil: the old linear slide+fade read as a plain fade).
+Building a "flip/scale-pop" variant needs the glyph size to animate, but the drawbox trap above
+made me distrust per-frame eval. Ran the 30s capability smoke before committing flip: a 1s clip
+with `drawtext=...:fontsize='40+360*t'`, frames at t=0.1 vs t=0.9.
+**Result:** Glyphs scaled from ~76px → ~364px — **`fontsize` IS re-evaluated per frame** in this
+ffmpeg-static build (exit 0, no `Option not found`). Unlike `drawbox` geometry, `fontsize` takes a
+`t`-based expression directly (single-quote it so inner commas in `max(10,...)` stay literal).
+**Lesson:** drawtext animates **y, alpha, AND fontsize** per-frame — only `drawbox` w/x/y/h is
+eval-once here. So scale/flip effects belong on the text via `fontsize`, not on a box. Always run
+the one-clip smoke first (it's the same 30s check that would've caught the drawbox trap) rather
+than assuming a filter does or doesn't re-eval. Hook reveal now ships three styles behind
+`HOOK_REVEAL` (`bounce` easeOutBack overshoot / `slam` easeOutQuart hard slide / `flip` uniform
+scale-grow), alpha snapping in 0.15s so motion carries the reveal. `pow()` bases kept ≥0 via
+`(1-p)` so eval never hits `pow(negative,...)`. Verify by reading frames **inside 0.42–0.60s**
+(the punch window) — wider samples land post-settle and look identical across styles.

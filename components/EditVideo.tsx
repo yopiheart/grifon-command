@@ -14,7 +14,7 @@ import { compressImageForUpload } from '../utils/imageCompression';
 import { GlassPanel } from './ui/GlassPanel';
 import { GoldButton } from './ui/GoldButton';
 import Loader from './ui/Loader';
-import { Copy, ChevronLeft, UploadCloud, Image as ImageIcon, Trash2, Download, Scissors, Sparkles, Mic, Clapperboard } from 'lucide-react';
+import { Copy, ChevronLeft, UploadCloud, Image as ImageIcon, Trash2, Download, Scissors, Sparkles, Mic, Clapperboard, CheckSquare, Square } from 'lucide-react';
 import saveAs from 'file-saver';
 
 export interface EditorBatchPayload {
@@ -93,6 +93,11 @@ const BatchEditMode: React.FC<{
   const [isRendering, setIsRendering] = useState(false);
   const [renderResult, setRenderResult] = useState<FinalRenderResult | null>(null);
   const [renderError, setRenderError] = useState<string | null>(null);
+  // Burn-in: drawtext overlays/captions + SFX + ducked music bed from the EDL.
+  const [burnInEnabled, setBurnInEnabled] = useState(true);
+  // Face-clear caption bands per talking scene (MediaPipe, AI-Editor-only).
+  // Graceful: empty → the renderer uses its per-type heuristic band.
+  const [captionRegions, setCaptionRegions] = useState<Record<number, { yFracTop: number; yFracBottom: number }>>({});
 
   useEffect(() => {
     let cancelled = false;
@@ -115,6 +120,23 @@ const BatchEditMode: React.FC<{
       cancelled = true;
     };
   }, []);
+
+  // Detect face-clear caption bands for talking scenes (dynamic-imported MediaPipe;
+  // runs once per batch, fully graceful — failure leaves captionRegions empty).
+  useEffect(() => {
+    let cancelled = false;
+    const talking = editorBatch.sceneBatch.filter((s) => s.type === 'talking' && s.renderedUrl);
+    if (!talking.length) return;
+    import('../services/captionRegionDetect')
+      .then(({ detectCaptionRegions }) =>
+        detectCaptionRegions(
+          editorBatch.sceneBatch.map((s) => ({ sceneIdx: s.sceneIdx, videoUrl: s.renderedUrl, type: s.type }))
+        )
+      )
+      .then((r) => { if (!cancelled) setCaptionRegions(r); })
+      .catch(() => { /* heuristic fallback */ });
+    return () => { cancelled = true; };
+  }, [editorBatch]);
 
   const handleConsolidate = async () => {
     if (!voiceId) {
@@ -165,19 +187,35 @@ const BatchEditMode: React.FC<{
           // spoken-length estimate so Veo's filler tail is cut.
           const isHook = s.sceneIdx === 0;
           const estimate = estimateSpokenSec(s.scriptLine);
+          // Burn-in: thread this scene's EDL plan (overlays/captions, SFX,
+          // transition) into the renderer. Absent EDL → bare stitch for the scene.
+          const plan = edl?.scenes.find((e) => e.sceneIdx === s.sceneIdx);
           return {
             sceneIdx: s.sceneIdx,
             videoUrl: s.renderedUrl as string,
             audioUrl: voicedOverlays[s.sceneIdx] ?? null,
             keepFullClip: isHook,
             targetDurationSec: isHook || estimate <= 0 ? null : estimate,
+            overlayText: plan?.overlayText,
+            sfxCues: plan?.sfxCues,
+            transitionIn: plan?.transitionIn,
+            // Overlay/caption engine inputs:
+            scriptLine: s.scriptLine,
+            sceneType: s.type,
+            isHook,
+            // Face-clear band from browser detection (talking scenes); absent → heuristic.
+            captionRegion: captionRegions[s.sceneIdx],
           };
         });
       if (scenes.length === 0) {
         setRenderError('No rendered scene videos found in this batch.');
         return;
       }
-      const result = await renderFinalVideo({ scenes, aspectRatio: editorBatch.aspectRatio });
+      // Background-music bed chosen in code from the EDL's detected script style.
+      const music = burnInEnabled
+        ? { style: edl?.meta.scriptStyleDetected ?? 'mrbeast', enabled: true as const }
+        : undefined;
+      const result = await renderFinalVideo({ scenes, aspectRatio: editorBatch.aspectRatio, music });
       if (result.status === 'failed') setRenderError(result.error ?? 'RENDER_FAILED');
       else setRenderResult(result);
     } catch (err: any) {
@@ -289,6 +327,16 @@ const BatchEditMode: React.FC<{
             <label className="block text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">
               // STEP_2 · ASSEMBLE_FINAL_MP4
             </label>
+            <button
+              type="button"
+              onClick={() => setBurnInEnabled((v) => !v)}
+              className="flex items-center gap-2 mb-3 text-[10px] font-mono uppercase tracking-widest text-zinc-400 hover:text-white transition-colors"
+            >
+              {burnInEnabled
+                ? <CheckSquare className="w-4 h-4 shrink-0 text-[#FFCC00]" />
+                : <Square className="w-4 h-4 shrink-0 text-zinc-500" />}
+              // BURN-IN · CAPTIONS · SFX · MUSIC
+            </button>
             <GoldButton
               onClick={handleRenderFinal}
               disabled={isRendering || !voiceReady}
@@ -499,12 +547,11 @@ const BatchEditMode: React.FC<{
                 </p>
               </div>
               <p className="text-zinc-400 text-sm">
-                This EDL is a reference plan from the stub brain — a deterministic fixture
-                seeded from your render batch. Phase 1 half (b) replaces the stub with the
-                real Gemini multimodal call once the TUNED prompt is signed off. The
-                <span className="text-zinc-300"> Final Render</span> panel above already
-                assembles the playable MP4 (server-side ffmpeg trim + voice mux + concat);
-                burned-in overlays/SFX from this EDL land in a later pass.
+                This EDL drives the render. With
+                <span className="text-zinc-300"> Burn-in</span> on, the
+                <span className="text-zinc-300"> Final Render</span> panel above burns these
+                overlays/captions and SFX into the MP4 and lays a ducked music bed under the
+                voice-over — on top of the server-side trim + voice mux + concat.
               </p>
             </GlassPanel>
           </div>
