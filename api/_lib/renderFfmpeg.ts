@@ -124,10 +124,16 @@ export function estWidth(text: string, fontsize: number): number {
   return text.length * fontsize * INTER_ADV;
 }
 
-/** Strip emoji / non-BMP / symbol glyphs Inter-Black can't render (tofu boxes). */
+/**
+ * Clean burned text: strip emoji/symbol glyphs Inter-Black can't render (tofu),
+ * AND strip apostrophes (straight/curly/backtick) — Neil: a leading "'to"/"'tong"
+ * reads as AI-generated; "TIGNAN MO 'TO" → "TIGNAN MO TO". Applied to BOTH overlays
+ * and captions so nothing burned ever shows an apostrophe.
+ */
 export function stripUnrenderable(s: string): string {
   return s
     .replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE00}-\u{FE0F}\u{2190}-\u{21FF}\u{2300}-\u{23FF}\u{2B00}-\u{2BFF}]/gu, '')
+    .replace(/['‘’ʼ`]/g, '')
     .replace(/\s+/g, ' ')
     .trim();
 }
@@ -274,20 +280,21 @@ export function planScene(scene: FinalRenderScene, trimSec: number | null, dims:
   const overlay = scene.overlayText?.[0];
 
   if (scene.isHook) {
-    const text = overlay?.text?.trim();
+    const text = overlay?.text ? stripUnrenderable(overlay.text) : '';
     if (!text) return layers;
     const { fontsize, lines } = fitText(text, sz.usableW, Math.round(h * 0.060));
     const yTop = Math.round(h * HOOK_TOP_FRAC);
-    // Crimson wipe-box behind the last word of the last line (estimated geometry).
-    const lastLine = lines[lines.length - 1];
-    const lastWord = lastLine.split(' ').pop() ?? lastLine;
-    const lineW = estWidth(lastLine, fontsize), wordW = estWidth(lastWord, fontsize);
+    // Crimson wipe-box behind the WHOLE title (Neil: highlight the full line, not
+    // just the last word). Spans the widest line; height covers all lines' lower band.
+    const maxLineW = Math.max(...lines.map((l) => estWidth(l, fontsize)));
     const pad = Math.round(fontsize * 0.14);
-    const boxX = Math.round((w - lineW) / 2 + (lineW - wordW) - pad);
-    const lineYTop = yTop + (lines.length - 1) * Math.round(fontsize * 1.15);
+    const lineH = Math.round(fontsize * 1.15);
     layers.push({
-      kind: 'box', x: Math.max(sz.xMargin, boxX), y: Math.round(lineYTop + fontsize * 0.42),
-      w: Math.round(wordW) + 2 * pad, h: Math.round(fontsize * 0.58),
+      kind: 'box',
+      x: Math.max(sz.xMargin, Math.round((w - maxLineW) / 2 - pad)),
+      y: Math.round(yTop + fontsize * 0.42),
+      w: Math.round(maxLineW) + 2 * pad,
+      h: (lines.length - 1) * lineH + Math.round(fontsize * 0.58),
       color: HOOK_BOX_COLOR, startSec: HOOK_BOX_DELAY, wipeDur: HOOK_WIPE_DUR,
     });
     layers.push({
@@ -298,7 +305,7 @@ export function planScene(scene: FinalRenderScene, trimSec: number | null, dims:
   }
 
   // Scenes 2+: EDL overlay (≥hold) → chunked script-line captions.
-  const oText = overlay?.text?.trim();
+  const oText = overlay?.text ? stripUnrenderable(overlay.text) : '';
   const cap = scene.scriptLine ? stripUnrenderable(scene.scriptLine) : '';
   const dup = !!(oText && cap && normText(oText) === normText(cap));
   const cy = captionY(dims, sz, scene);

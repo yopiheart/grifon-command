@@ -236,8 +236,9 @@ describe('stripUnrenderable', () => {
   it('drops emoji/symbols Inter-Black cannot render and collapses spaces', () => {
     expect(stripUnrenderable('Grabe 🔥 ang  resulta ✨')).toBe('Grabe ang resulta');
   });
-  it('keeps Taglish apostrophes and commas', () => {
-    expect(stripUnrenderable("Iba 'to, promise")).toBe("Iba 'to, promise");
+  it('strips apostrophes (reads as AI) but keeps commas', () => {
+    expect(stripUnrenderable("Iba 'to, promise")).toBe('Iba to, promise');
+    expect(stripUnrenderable("TIGNAN MO 'TO")).toBe('TIGNAN MO TO');
   });
 });
 
