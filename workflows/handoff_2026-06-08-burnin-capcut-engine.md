@@ -43,8 +43,16 @@ constants; MediaPipe face-detect (talking-only, graceful) on jsdelivr CDN; same 
 1. **Neil's SFX + music files** → `api/_lib/assets/{sfx,music}/` per `api/_lib/assets/README.md`
    (10 SFX named == SfxBankId; 3 beds mrbeast/temu/testimonial; commercial-redistribution license).
    Until then the audio layers graceful-skip (captions/overlays still render).
-2. **One final re-stitch with sound** once assets land → Neil watches → merge.
-3. Captions in this demo used **placeholder scriptLines** (loose-files test). In a real wizard run
+2. **Hook reveal animation is too weak (Neil, 2026-06-08).** Current `anim:'slideup'` reads as a
+   plain FADE-IN, not a punchy flip-up/bounce — "not powerful enough to catch attention." Next
+   session: make the hook entrance pop. Options within ffmpeg drawtext (animate `y`/`alpha`/
+   `fontsize` via `t`, which drawtext DOES eval per-frame — unlike drawbox): an **overshoot/bounce**
+   (y springs past the target then settles), a **scale-pop** (fontsize 70%→110%→100%), or a faster
+   harder slide with a back-ease. Tune in `buildTextFilter` (the `slideup` branch) + `HOOK_*`
+   constants in `renderFfmpeg.ts`. Verify by extracting frames INSIDE the 0.4–1.1s window (see the
+   2026-06-08 ffmpeg lesson) and on the moving video.
+3. **One final re-stitch with sound** once assets land → Neil watches → merge.
+4. Captions in this demo used **placeholder scriptLines** (loose-files test). In a real wizard run
    captions come from `sceneBatch[].scriptLine` (the actual spoken script) automatically — no paste
    needed. Caption *timing* is even-split (not word-synced); Whisper ASR is the deferred upgrade.
 
