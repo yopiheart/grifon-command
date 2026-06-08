@@ -46,6 +46,13 @@ const SceneSchema = z.object({
       durationSec: z.number().nonnegative(),
     })
     .optional(),
+  // Overlay/caption engine inputs.
+  scriptLine: z.string().max(500).optional(),
+  sceneType: z.enum(['talking', 'b-roll', 'cinematic']).optional(),
+  isHook: z.boolean().optional(),
+  captionRegion: z
+    .object({ yFracTop: z.number().min(0).max(1), yFracBottom: z.number().min(0).max(1) })
+    .optional(),
 });
 
 const Body = z.object({

@@ -56,11 +56,10 @@ d('burn-in render (synthetic, free)', () => {
       videoUrl: `${base}/scene0.mp4`,
       audioUrl: `${base}/voice0.mp3`,
       keepFullClip: true,
+      isHook: withBurnIn,
+      // Hook: slide-up reveal + crimson wipe-box on the last word; apostrophe in the line.
       overlayText: withBurnIn
-        ? [
-            { text: 'WAIT FOR IT', startSec: 0, endSec: 2, style: 'hook', position: 'center' },
-            { text: 'AKO SI TEST', startSec: 0.5, endSec: 2.5, style: 'subtitle', position: 'bottom' },
-          ]
+        ? [{ text: "TIGNAN MO 'TO", startSec: 0, endSec: 5, style: 'hook', position: 'center' }]
         : undefined,
       sfxCues: withBurnIn ? [{ sfxId: 'whoosh', anchorSec: 0, reason: 't' }] : undefined,
     },
@@ -69,6 +68,10 @@ d('burn-in render (synthetic, free)', () => {
       videoUrl: `${base}/scene1.mp4`,
       audioUrl: `${base}/voice1.mp3`,
       targetDurationSec: 2.2,
+      sceneType: 'talking',
+      // Caption path: Taglish line with an apostrophe AND a comma AND an emoji
+      // (must render without a filtergraph error; emoji stripped). + EDL overlay.
+      scriptLine: withBurnIn ? "Iba 'to, grabe 🔥 ang resulta promise" : undefined,
       overlayText: withBurnIn
         ? [{ text: 'DERMA-TESTED', startSec: 0, endSec: 2, style: 'callout', position: 'top' }]
         : undefined,

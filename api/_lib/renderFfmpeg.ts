@@ -4,7 +4,7 @@ import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import ffmpegPath from 'ffmpeg-static';
-import type { FinalRenderScene, OverlayText, OverlayStyle, OverlayPosition } from '../../types.js';
+import type { FinalRenderScene } from '../../types.js';
 
 // Final-render executor muscle (Phase 2 of workflows/render_pipeline_voice_10.md).
 // Mirrors the Phase-0-validated invocations in scripts/ffmpeg-spike.mjs exactly:
@@ -74,7 +74,7 @@ export function findAsset(rel: string): string | null {
 
 const sfxPath = (id: string) => findAsset(join('sfx', `${id}.mp3`));
 const musicPath = (style: string) => findAsset(join('music', `${style}.mp3`));
-const fontPath = () => findAsset(join('fonts', 'Anton-Regular.ttf'));
+const fontPath = () => findAsset(join('fonts', 'Inter-Black.ttf'));
 
 /** Escape a filesystem path for use inside an ffmpeg filtergraph option value
  * (forward-slash the separators, escape the Windows drive colon). spawnSync
@@ -83,34 +83,126 @@ export function escFilterPath(p: string): string {
   return p.replace(/\\/g, '/').replace(/:/g, '\\:');
 }
 
-export interface DrawtextPreset {
-  fontsize: number;
-  fontcolor: string;
-  boxalpha: number;   // boxcolor=black@<alpha>
-  boxborderw: number;
-  /** y expression for drawtext given the chosen position. */
-  yExpr: string;
+// ---------------------------------------------------------------------------
+// CapCut-grade overlay/caption engine — pure helpers (unit-tested), no ffmpeg.
+// All "where/when" is computed here (or upstream in EditVideo); ffmpeg just draws.
+// ---------------------------------------------------------------------------
+
+// Styling (tunable constants). Colors are ffmpeg color syntax.
+const HOOK_BOX_COLOR = '0xD90429';   // crimson highlight behind the hook power-word
+const BOX_ALPHA = 0.85;              // black caption/overlay box opacity
+const SHADOW_COLOR = 'black@0.73';   // hard 45° drop shadow (no Gaussian blur in drawtext)
+const SHADOW_DX = 6, SHADOW_DY = 6;  // distance 8 @ 45° ≈ (5.7, 5.7)
+const INTER_ADV = 0.62;              // est. Inter-Black glyph advance / fontsize (tune visually)
+
+// Safe zone (fractions). Erring toward Reels' aggressive bottom UI.
+const SZ_SIDE = 0.10, SZ_TOP = 0.14, SZ_BOTTOM = 0.22;
+const HOOK_TOP_FRAC = 0.32;          // hook text top, upper-center
+const CAPTION_FRAC = 0.67;           // caption/overlay band (talking); b-roll a touch lower
+const BROLL_CAPTION_FRAC = 0.72;
+
+// Hook animation + wipe.
+const HOOK_DELAY = 0.4, HOOK_ANIM = 0.7, HOOK_RISE_PX = 55;
+const HOOK_BOX_DELAY = 0.55, HOOK_WIPE_DUR = 0.4;
+
+// Scene-2+ overlay + caption timing.
+const OVERLAY_HOLD_SEC = 1.5, OVERLAY_FADE = 0.25, CAPTION_START_PAD = 0.3;
+const MIN_CHUNK_SEC = 0.7;
+
+export interface SafeZone { xMargin: number; topY: number; bottomY: number; usableW: number; }
+export function safeZone([w, h]: [number, number]): SafeZone {
+  return {
+    xMargin: Math.round(w * SZ_SIDE),
+    topY: Math.round(h * SZ_TOP),
+    bottomY: Math.round(h * (1 - SZ_BOTTOM)),
+    usableW: Math.round(w * (1 - 2 * SZ_SIDE)),
+  };
 }
 
-/** Style + position → drawtext visual preset, sized proportionally to height. */
-export function drawtextPreset(
-  style: OverlayStyle,
-  position: OverlayPosition,
-  [, h]: [number, number]
-): DrawtextPreset {
-  const sizeFrac =
-    style === 'hook' || style === 'punchline' ? 0.060
-    : style === 'callout' ? 0.040
-    : 0.038; // subtitle
-  const fontcolor =
-    style === 'callout' || style === 'punchline' ? '0xFFCC00' : 'white';
-  const boxalpha = style === 'subtitle' ? 0.65 : style === 'hook' ? 0.40 : 0.50;
-  const boxborderw = style === 'hook' || style === 'punchline' ? 26 : 16;
-  const yExpr =
-    position === 'top' ? `h*0.08`
-    : position === 'bottom' ? `h*0.80`
-    : `(h-text_h)/2`;
-  return { fontsize: Math.round(h * sizeFrac), fontcolor, boxalpha, boxborderw, yExpr };
+/** Rough rendered width of a line at a font size (Inter-Black caps advance). */
+export function estWidth(text: string, fontsize: number): number {
+  return text.length * fontsize * INTER_ADV;
+}
+
+/** Strip emoji / non-BMP / symbol glyphs Inter-Black can't render (tofu boxes). */
+export function stripUnrenderable(s: string): string {
+  return s
+    .replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE00}-\u{FE0F}\u{2190}-\u{21FF}\u{2300}-\u{23FF}\u{2B00}-\u{2BFF}]/gu, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/** Fit text into maxWidthPx: shrink the font (to 70%), then wrap to ≤2 lines. */
+export function fitText(text: string, maxWidthPx: number, baseSize: number): { fontsize: number; lines: string[] } {
+  const minSize = Math.round(baseSize * 0.7);
+  let size = baseSize;
+  if (estWidth(text, size) <= maxWidthPx) return { fontsize: size, lines: [text] };
+  while (size > minSize && estWidth(text, size) > maxWidthPx) size -= 2;
+  if (estWidth(text, size) <= maxWidthPx) return { fontsize: size, lines: [text] };
+  // Still too wide → wrap to two balanced lines, then re-shrink to the longest.
+  const lines = wrapTwoLines(text);
+  size = baseSize;
+  const longest = () => Math.max(...lines.map((l) => estWidth(l, size)));
+  while (size > minSize && longest() > maxWidthPx) size -= 2;
+  return { fontsize: size, lines };
+}
+
+/** Split into two balanced lines; a single overlong token is hard-broken. */
+export function wrapTwoLines(text: string): string[] {
+  const words = text.split(/\s+/).filter(Boolean);
+  if (words.length <= 1) {
+    const t = words[0] ?? text;
+    const mid = Math.ceil(t.length / 2);
+    return [t.slice(0, mid), t.slice(mid)];
+  }
+  let best = 1, bestDiff = Infinity;
+  const total = text.length;
+  for (let i = 1; i < words.length; i++) {
+    const left = words.slice(0, i).join(' ').length;
+    const diff = Math.abs(left - (total - left));
+    if (diff < bestDiff) { bestDiff = diff; best = i; }
+  }
+  return [words.slice(0, best).join(' '), words.slice(best).join(' ')];
+}
+
+// Taglish/English particles that should never START a caption chunk.
+const PARTICLES = new Set([
+  'ng', 'na', 'sa', 'ay', 'at', 'si', 'ni', 'ko', 'mo', 'to', "'to", 'po',
+  'ba', 'pa', 'rin', 'din', 'ka', 'yan', 'ito', 'iyan', 'and', 'the', 'a', 'of', 'to',
+]);
+
+/** Split a contiguous word list into `n` as-even-as-possible groups. */
+export function evenSplit<T>(items: T[], n: number): T[][] {
+  const out: T[][] = [];
+  const base = Math.floor(items.length / n), extra = items.length % n;
+  let i = 0;
+  for (let g = 0; g < n; g++) {
+    const len = base + (g < extra ? 1 : 0);
+    out.push(items.slice(i, i + len));
+    i += len;
+  }
+  return out.filter((g) => g.length);
+}
+
+/**
+ * Chunk a spoken line into readable caption groups (~3–4 words), honoring a
+ * minimum on-screen time of MIN_CHUNK_SEC/chunk given `availSec`, and never
+ * starting a chunk with a particle (pulled back to the previous chunk).
+ */
+export function chunkCaption(line: string, availSec: number): string[] {
+  const clean = stripUnrenderable(line);
+  if (!clean) return [];
+  const words = clean.split(/\s+/);
+  const maxByTime = Math.max(1, Math.floor(availSec / MIN_CHUNK_SEC));
+  const target = Math.min(maxByTime, Math.max(1, Math.ceil(words.length / 3.5)));
+  const groups = evenSplit(words, target);
+  // Pull a particle that landed at a chunk head back onto the previous chunk.
+  for (let g = 1; g < groups.length; g++) {
+    while (groups[g].length && PARTICLES.has(groups[g][0].toLowerCase())) {
+      groups[g - 1].push(groups[g].shift() as string);
+    }
+  }
+  return groups.filter((g) => g.length).map((g) => g.join(' '));
 }
 
 /** Clamp a scene-relative [start,end] window to [0, trimSec]. Returns null when
@@ -133,6 +225,158 @@ export function clampAnchor(anchorSec: number, trimSec: number | null): number |
   const cap = typeof trimSec === 'number' && trimSec > 0 ? trimSec : Infinity;
   const a = Math.max(0, anchorSec);
   return a < cap ? a : null;
+}
+
+// ---- Per-scene draw plan (the single source of truth for what/when/where) ----
+
+export interface TextLayer {
+  kind: 'text';
+  text: string;        // may contain \n for wrapped lines (written to a textfile)
+  fontsize: number;
+  color: string;       // ffmpeg color (white / 0xFFCC00 / ...)
+  boxAlpha: number;    // 0 → no box; else black@<alpha> behind the text
+  xExpr: string;       // ffmpeg x expression (usually centered)
+  yBase: number;       // resolved top y in px
+  startSec: number;
+  endSec: number;
+  anim: 'slideup' | 'fade' | 'none';
+}
+export interface BoxLayer {
+  kind: 'box';
+  x: number; y: number; w: number; h: number;
+  color: string; startSec: number; wipeDur: number;
+}
+export type DrawLayer = TextLayer | BoxLayer;
+
+const normText = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+/** Y (top of text) for a scene's caption/overlay band, region-aware + safe-clamped. */
+function captionY([, h]: [number, number], sz: SafeZone, scene: FinalRenderScene): number {
+  let frac = scene.sceneType && scene.sceneType !== 'talking' ? BROLL_CAPTION_FRAC : CAPTION_FRAC;
+  if (scene.captionRegion) {
+    const mid = (scene.captionRegion.yFracTop + scene.captionRegion.yFracBottom) / 2;
+    frac = Math.min(0.70, Math.max(0.50, mid));
+  }
+  return Math.min(Math.round(h * frac), sz.bottomY - 150);
+}
+
+/**
+ * Compile a scene into ordered draw layers. Hook (scene 1): big slide-up text in
+ * the upper band + a crimson L→R wipe-box behind the LAST word. Scenes 2+: the
+ * EDL overlay (fade, ≥hold) then chunked script-line captions in the face-clear
+ * band — never overlapping; overlay skipped if it duplicates the caption text.
+ */
+export function planScene(scene: FinalRenderScene, trimSec: number | null, dims: [number, number]): DrawLayer[] {
+  const [w, h] = dims;
+  const sz = safeZone(dims);
+  const end = typeof trimSec === 'number' && trimSec > 0 ? trimSec : 999;
+  const layers: DrawLayer[] = [];
+  const overlay = scene.overlayText?.[0];
+
+  if (scene.isHook) {
+    const text = overlay?.text?.trim();
+    if (!text) return layers;
+    const { fontsize, lines } = fitText(text, sz.usableW, Math.round(h * 0.060));
+    const yTop = Math.round(h * HOOK_TOP_FRAC);
+    // Crimson wipe-box behind the last word of the last line (estimated geometry).
+    const lastLine = lines[lines.length - 1];
+    const lastWord = lastLine.split(' ').pop() ?? lastLine;
+    const lineW = estWidth(lastLine, fontsize), wordW = estWidth(lastWord, fontsize);
+    const pad = Math.round(fontsize * 0.14);
+    const boxX = Math.round((w - lineW) / 2 + (lineW - wordW) - pad);
+    const lineYTop = yTop + (lines.length - 1) * Math.round(fontsize * 1.15);
+    layers.push({
+      kind: 'box', x: Math.max(sz.xMargin, boxX), y: Math.round(lineYTop + fontsize * 0.42),
+      w: Math.round(wordW) + 2 * pad, h: Math.round(fontsize * 0.58),
+      color: HOOK_BOX_COLOR, startSec: HOOK_BOX_DELAY, wipeDur: HOOK_WIPE_DUR,
+    });
+    layers.push({
+      kind: 'text', text: lines.join('\n'), fontsize, color: 'white', boxAlpha: 0,
+      xExpr: '(w-text_w)/2', yBase: yTop, startSec: HOOK_DELAY, endSec: end, anim: 'slideup',
+    });
+    return layers;
+  }
+
+  // Scenes 2+: EDL overlay (≥hold) → chunked script-line captions.
+  const oText = overlay?.text?.trim();
+  const cap = scene.scriptLine ? stripUnrenderable(scene.scriptLine) : '';
+  const dup = !!(oText && cap && normText(oText) === normText(cap));
+  const cy = captionY(dims, sz, scene);
+  let capStart = CAPTION_START_PAD;
+
+  if (oText && !dup) {
+    const { fontsize, lines } = fitText(oText, sz.usableW, Math.round(h * 0.044));
+    const color = overlay!.style === 'callout' || overlay!.style === 'punchline' ? '0xFFCC00' : 'white';
+    const oEnd = Math.min(end, OVERLAY_HOLD_SEC);
+    if (oEnd >= 0.4) {
+      layers.push({
+        kind: 'text', text: lines.join('\n'), fontsize, color, boxAlpha: BOX_ALPHA,
+        xExpr: '(w-text_w)/2', yBase: cy, startSec: 0, endSec: oEnd, anim: 'fade',
+      });
+      capStart = oEnd + 0.1;
+    }
+  }
+
+  if (cap) {
+    const avail = end - capStart;
+    if (avail >= MIN_CHUNK_SEC) {
+      const chunks = chunkCaption(cap, avail);
+      const each = avail / Math.max(1, chunks.length);
+      chunks.forEach((c, i) => {
+        const { fontsize, lines } = fitText(c, sz.usableW, Math.round(h * 0.040));
+        layers.push({
+          kind: 'text', text: lines.join('\n'), fontsize, color: 'white', boxAlpha: BOX_ALPHA,
+          xExpr: '(w-text_w)/2', yBase: cy, anim: 'none',
+          startSec: +(capStart + i * each).toFixed(3), endSec: +(capStart + (i + 1) * each).toFixed(3),
+        });
+      });
+    }
+  }
+  return layers;
+}
+
+// ---- ffmpeg layer builders. Expression option values are SINGLE-QUOTED so the
+// filtergraph parser treats inner commas as literal (no backslash escaping). ----
+
+/** drawtext for one TextLayer; fontName/textName are bare (ffmpeg runs cwd=dir). */
+export function buildTextFilter(l: TextLayer, fontName: string, textName: string): string {
+  const yExpr =
+    l.anim === 'slideup'
+      ? `${l.yBase}+${HOOK_RISE_PX}*(1-min(1,max(0,(t-${l.startSec})/${HOOK_ANIM})))`
+      : `${l.yBase}`;
+  const alpha =
+    l.anim === 'slideup'
+      ? `min(1,max(0,(t-${l.startSec})/${HOOK_ANIM}))`
+      : l.anim === 'fade'
+        ? `max(0,min(1,min((t-${l.startSec})/${OVERLAY_FADE},(${l.endSec}-t)/${OVERLAY_FADE})))`
+        : `1`;
+  const opts = [
+    `fontfile=${fontName}`,
+    `textfile=${textName}`,
+    `fontsize=${l.fontsize}`,
+    `fontcolor=${l.color}`,
+    `shadowcolor=${SHADOW_COLOR}`,
+    `shadowx=${SHADOW_DX}`,
+    `shadowy=${SHADOW_DY}`,
+    `line_spacing=10`,
+    ...(l.boxAlpha > 0
+      ? [`box=1`, `boxcolor=black@${l.boxAlpha}`, `boxborderw=${Math.round(l.fontsize * 0.22)}`]
+      : []),
+    `x='${l.xExpr}'`,
+    `y='${yExpr}'`,
+    `alpha='${alpha}'`,
+    `enable='between(t,${l.startSec},${l.endSec})'`,
+  ];
+  return `drawtext=${opts.join(':')}`;
+}
+
+/** drawbox L→R wipe for one BoxLayer (width animates from 0 to w over wipeDur). */
+export function buildBoxFilter(l: BoxLayer): string {
+  const speed = (l.w / l.wipeDur).toFixed(0);
+  return (
+    `drawbox=x=${l.x}:y=${l.y}:w='min(${l.w},${speed}*max(0,t-${l.startSec}))':` +
+    `h=${l.h}:color=${l.color}@0.9:t=fill:enable='gte(t,${l.startSec})'`
+  );
 }
 
 // ---------------------------------------------------------------------------
@@ -273,33 +517,6 @@ export function chooseTrim(
   return { trimSec: probeSec, padAudio: false };
 }
 
-/** One drawtext filter for a single overlay, given its already-written textfile.
- * Pure (no I/O) so it can be unit-tested. */
-export function buildDrawtext(
-  style: OverlayStyle,
-  position: OverlayPosition,
-  dims: [number, number],
-  win: { start: number; end: number },
-  fontFile: string,
-  textFile: string
-): string {
-  const p = drawtextPreset(style, position, dims);
-  const opts = [
-    `fontfile=${escFilterPath(fontFile)}`,
-    `textfile=${escFilterPath(textFile)}`,
-    `fontsize=${p.fontsize}`,
-    `fontcolor=${p.fontcolor}`,
-    `box=1`,
-    `boxcolor=black@${p.boxalpha}`,
-    `boxborderw=${p.boxborderw}`,
-    `line_spacing=8`,
-    `x=(w-text_w)/2`,
-    `y=${p.yExpr}`,
-    `enable='between(t,${win.start.toFixed(3)},${win.end.toFixed(3)})'`,
-  ];
-  return `drawtext=${opts.join(':')}`;
-}
-
 /** Resolved-and-clamped SFX cue ready for the audio graph. */
 export interface PreparedSfx {
   path: string;
@@ -324,28 +541,27 @@ function buildScene(
   padAudioToVideo: boolean,
   dir: string,
   sceneIdx: number,
-  overlays: OverlayText[],
+  layers: DrawLayer[],
   sfx: PreparedSfx[],
   fontName: string | null  // BARE filename inside `dir` (ffmpeg runs with cwd=dir)
 ): void {
   const [w, h] = dims;
 
-  // --- Video chain: normalize, then chain a drawtext per clamped overlay. ---
-  // drawtext's fontfile/textfile are referenced as BARE filenames and ffmpeg is
-  // run with cwd=dir, so Windows drive-colon paths never enter the filtergraph
+  // --- Video chain: normalize, then apply the scene's draw plan (boxes + text).
+  // drawtext/drawbox font/text files are referenced as BARE filenames and ffmpeg
+  // runs with cwd=dir, so Windows drive-colon paths never enter the filtergraph
   // (an escaped `C:\` still breaks the parser — caught by the synthetic harness).
   let vChain =
     `[0:v]fps=${FPS},scale=${w}:${h}:force_original_aspect_ratio=decrease,` +
     `pad=${w}:${h}:(ow-iw)/2:(oh-ih)/2,setsar=1`;
-  if (fontName) {
-    let k = 0;
-    for (const ov of overlays) {
-      const win = clampWindow(ov.startSec, ov.endSec, trimSec);
-      if (!win) continue;
-      const textName = `ov_${sceneIdx}_${k}.txt`;
-      writeFileSync(join(dir, textName), ov.text, 'utf8');
-      vChain += `,${buildDrawtext(ov.style, ov.position, dims, win, fontName, textName)}`;
-      k++;
+  let k = 0;
+  for (const layer of layers) {
+    if (layer.kind === 'box') {
+      vChain += `,${buildBoxFilter(layer)}`;
+    } else if (fontName) {
+      const textName = `ov_${sceneIdx}_${k++}.txt`;
+      writeFileSync(join(dir, textName), layer.text, 'utf8');
+      vChain += `,${buildTextFilter(layer, fontName, textName)}`;
     }
   }
   vChain += '[v]';
@@ -499,10 +715,13 @@ export async function renderFinalVideo(
         sfx.push({ path: p, anchorSec: anchor });
       }
 
+      // Compile the scene's draw plan (hook reveal+wipe / overlay→caption) once.
+      const layers = planScene(scene, trimSec, dims);
+
       const outPath = join(dir, `muxed_${i}.mp4`);
       buildScene(
         videoPath, audioPath, trimSec, dims, outPath, padAudio,
-        dir, scene.sceneIdx, scene.overlayText ?? [], sfx, fontName
+        dir, scene.sceneIdx, layers, sfx, fontName
       );
       muxed.push(outPath);
     }

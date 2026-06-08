@@ -144,6 +144,15 @@ export interface FinalRenderScene {
   sfxCues?: SfxCue[];
   /** Planned transition INTO this scene. Threaded now; not yet rendered (Slice B). */
   transitionIn?: { type: TransitionType; durationSec: number };
+  // ---- Overlay/caption engine inputs ----
+  /** Spoken line for this scene → drives the auto-captions (scenes 2+). */
+  scriptLine?: string;
+  /** Scene type from the batch — picks the caption band (talking→face-clear). */
+  sceneType?: 'talking' | 'b-roll' | 'cinematic';
+  /** Scene 1 = the hook (slide-up reveal + crimson wipe-box on the last word). */
+  isHook?: boolean;
+  /** Face-clear band (fractions of height) from browser detection; caption goes here. */
+  captionRegion?: { yFracTop: number; yFracBottom: number };
 }
 
 export interface FinalRenderRequest {

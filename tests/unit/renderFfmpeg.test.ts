@@ -1,8 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import {
   parseDurationSec, parseTrimSec, dimsFor, chooseTrim,
-  drawtextPreset, clampWindow, clampAnchor, escFilterPath, buildDrawtext,
+  clampWindow, clampAnchor, escFilterPath,
+  safeZone, fitText, wrapTwoLines, stripUnrenderable, evenSplit, chunkCaption,
+  planScene, buildTextFilter, buildBoxFilter,
 } from '../../api/_lib/renderFfmpeg.js';
+import type { FinalRenderScene } from '../../types.js';
 
 // Encodes the Phase 2 trim intent (workflows/render_pipeline_voice_10.md):
 // speech-end = start of the trailing silence run, + 0.3s pad, clamped to the
@@ -190,21 +193,6 @@ describe('clampAnchor', () => {
   });
 });
 
-describe('drawtextPreset', () => {
-  const dims: [number, number] = [1080, 1920];
-  it('sizes proportionally to height and picks gold for callout/punchline', () => {
-    expect(drawtextPreset('hook', 'center', dims).fontsize).toBe(Math.round(1920 * 0.060));
-    expect(drawtextPreset('subtitle', 'bottom', dims).fontsize).toBe(Math.round(1920 * 0.038));
-    expect(drawtextPreset('callout', 'top', dims).fontcolor).toBe('0xFFCC00');
-    expect(drawtextPreset('subtitle', 'bottom', dims).fontcolor).toBe('white');
-  });
-  it('maps position to the right y expression', () => {
-    expect(drawtextPreset('callout', 'top', dims).yExpr).toBe('h*0.08');
-    expect(drawtextPreset('subtitle', 'bottom', dims).yExpr).toBe('h*0.80');
-    expect(drawtextPreset('hook', 'center', dims).yExpr).toBe('(h-text_h)/2');
-  });
-});
-
 describe('escFilterPath', () => {
   it('forward-slashes separators and escapes the Windows drive colon', () => {
     expect(escFilterPath('C:\\Users\\x\\font.ttf')).toBe('C\\:/Users/x/font.ttf');
@@ -214,14 +202,120 @@ describe('escFilterPath', () => {
   });
 });
 
-describe('buildDrawtext', () => {
-  const dims: [number, number] = [1080, 1920];
-  it('emits an enable window and references the escaped font + textfile', () => {
-    const f = buildDrawtext('subtitle', 'bottom', dims, { start: 1, end: 2.5 }, 'C:\\f\\Anton.ttf', 'C:\\t\\ov.txt');
-    expect(f).toContain("enable='between(t,1.000,2.500)'");
-    expect(f).toContain('fontfile=C\\:/f/Anton.ttf');
-    expect(f).toContain('textfile=C\\:/t/ov.txt');
-    expect(f).toContain('x=(w-text_w)/2');
-    expect(f.startsWith('drawtext=')).toBe(true);
+// --- Overlay/caption engine ---
+
+const DIMS: [number, number] = [1080, 1920];
+
+describe('safeZone', () => {
+  it('derives 10% side / 14% top / 22% bottom margins for 9:16', () => {
+    const sz = safeZone(DIMS);
+    expect(sz.xMargin).toBe(108);
+    expect(sz.topY).toBe(269);          // round(1920*0.14)
+    expect(sz.bottomY).toBe(1498);      // round(1920*0.78)
+    expect(sz.usableW).toBe(864);       // 1080*0.8
+  });
+});
+
+describe('fitText', () => {
+  it('keeps a short line on one line at full size', () => {
+    const r = fitText('ORDER NA', 864, 120);
+    expect(r.lines).toEqual(['ORDER NA']);
+    expect(r.fontsize).toBe(120);
+  });
+  it('shrinks then wraps a long line to two balanced lines', () => {
+    const r = fitText('Sobrang lambot ng skin ko ngayon promise', 864, 80);
+    expect(r.lines.length).toBe(2);
+    expect(r.fontsize).toBeLessThanOrEqual(80);
+  });
+  it('hard-breaks a single overlong token', () => {
+    expect(wrapTwoLines('Supercalifragilistic').length).toBe(2);
+  });
+});
+
+describe('stripUnrenderable', () => {
+  it('drops emoji/symbols Inter-Black cannot render and collapses spaces', () => {
+    expect(stripUnrenderable('Grabe 🔥 ang  resulta ✨')).toBe('Grabe ang resulta');
+  });
+  it('keeps Taglish apostrophes and commas', () => {
+    expect(stripUnrenderable("Iba 'to, promise")).toBe("Iba 'to, promise");
+  });
+});
+
+describe('evenSplit', () => {
+  it('splits as evenly as possible, remainder to the front groups', () => {
+    expect(evenSplit([1, 2, 3, 4, 5], 2).map((g) => g.length)).toEqual([3, 2]);
+    expect(evenSplit([1, 2, 3], 3).map((g) => g.length)).toEqual([1, 1, 1]);
+  });
+});
+
+describe('chunkCaption', () => {
+  it('groups ~3-4 words and respects the min-duration chunk cap', () => {
+    // 8 words but only 1.5s available → at most 2 chunks (0.7s min each)
+    const chunks = chunkCaption('isa dalawa tatlo apat lima anim pito walo', 1.5);
+    expect(chunks.length).toBeLessThanOrEqual(2);
+  });
+  it('never starts a chunk with a particle (pulled back to the previous)', () => {
+    const chunks = chunkCaption('Grabe ang lambot ng skin ko ngayon talaga', 99);
+    for (let i = 1; i < chunks.length; i++) {
+      expect(['ng', 'na', 'ang', 'sa'].includes(chunks[i].split(' ')[0].toLowerCase())).toBe(false);
+    }
+  });
+  it('returns [] for an empty/emoji-only line', () => {
+    expect(chunkCaption('🔥✨', 5)).toEqual([]);
+  });
+});
+
+describe('planScene', () => {
+  const hook: FinalRenderScene = {
+    sceneIdx: 0, videoUrl: 'v', isHook: true,
+    overlayText: [{ text: "TIGNAN MO 'TO", startSec: 0, endSec: 5, style: 'hook', position: 'center' }],
+  };
+  it('hook: emits a wipe-box BEFORE the slide-up text (box drawn behind)', () => {
+    const layers = planScene(hook, 4, DIMS);
+    expect(layers[0].kind).toBe('box');
+    expect(layers[1].kind).toBe('text');
+    const text = layers[1] as Extract<typeof layers[1], { kind: 'text' }>;
+    expect(text.anim).toBe('slideup');
+  });
+  it('scene 2+: overlay (fade) then chunked captions, never overlapping', () => {
+    const scene: FinalRenderScene = {
+      sceneIdx: 1, videoUrl: 'v', sceneType: 'talking', scriptLine: 'Grabe ang lambot ng skin ko ngayon',
+      overlayText: [{ text: 'DERMA-TESTED', startSec: 0, endSec: 5, style: 'callout', position: 'top' }],
+    };
+    const layers = planScene(scene, 6, DIMS).filter((l) => l.kind === 'text') as any[];
+    expect(layers[0].anim).toBe('fade');                 // overlay first
+    expect(layers[1].startSec).toBeGreaterThanOrEqual(layers[0].endSec); // caption after, no overlap
+  });
+  it('scene 2+: skips the overlay when it duplicates the caption text', () => {
+    const scene: FinalRenderScene = {
+      sceneIdx: 2, videoUrl: 'v', sceneType: 'talking', scriptLine: 'Ako si Maria',
+      overlayText: [{ text: 'Ako si Maria!', startSec: 0, endSec: 5, style: 'subtitle', position: 'bottom' }],
+    };
+    const fades = planScene(scene, 5, DIMS).filter((l) => l.kind === 'text' && (l as any).anim === 'fade');
+    expect(fades.length).toBe(0);
+  });
+});
+
+describe('buildTextFilter / buildBoxFilter (filtergraph)', () => {
+  const base = {
+    kind: 'text' as const, text: 'X', fontsize: 80, color: 'white', boxAlpha: 0.85,
+    xExpr: '(w-text_w)/2', yBase: 1200, startSec: 0.4, endSec: 2.5, anim: 'none' as const,
+  };
+  it('single-quotes expression values so inner commas stay literal', () => {
+    const f = buildTextFilter(base, 'font.ttf', 'ov.txt');
+    expect(f).toContain("enable='between(t,0.4,2.5)'");
+    expect(f).toContain("alpha='1'");
+    expect(f).toContain('fontfile=font.ttf');        // bare names (cwd=dir)
+    expect(f).toContain('box=1');
+  });
+  it('hook slide-up animates y + alpha by t', () => {
+    const f = buildTextFilter({ ...base, anim: 'slideup', boxAlpha: 0 }, 'font.ttf', 'h.txt');
+    expect(f).toMatch(/y='\d+\+\d+\*\(1-min\(1,max\(0,\(t-0\.4\)\/0\.7\)\)\)'/);
+    expect(f).toContain("alpha='min(1,max(0,(t-0.4)/0.7))'");
+  });
+  it('box wipe animates width L→R and never escapes commas (quoted)', () => {
+    const f = buildBoxFilter({ kind: 'box', x: 200, y: 800, w: 150, h: 50, color: '0xD90429', startSec: 0.55, wipeDur: 0.4 });
+    expect(f).toContain("w='min(150,375*max(0,t-0.55))'");  // 150/0.4 = 375 px/s
+    expect(f).not.toContain('\\,');                          // quoting, not escaping
   });
 });
