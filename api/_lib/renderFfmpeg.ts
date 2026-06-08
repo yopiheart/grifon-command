@@ -50,9 +50,12 @@ export function dimsFor(aspectRatio: string): [number, number] {
 // ---------------------------------------------------------------------------
 
 const SFX_VOLUME = 0.6;          // SFX sit under the VO, not over it
-const MUSIC_VOLUME = 0.22;       // bed gain before sidechain ducking
+// Bed gain + duck — locked "balanced" mix (Neil, 2026-06-08, A/B on his real ad).
+// The original 0.22 + 8:1 duck buried the bed under continuous VO; 0.34 + a softer
+// 4:1 duck (higher 0.12 threshold) lets it sit audibly without fighting the VO.
+const MUSIC_VOLUME = 0.34;       // bed gain before sidechain ducking
 const MUSIC_FADE_SEC = 0.4;      // afade in/out on the bed
-const MUSIC_DUCK = 'threshold=0.05:ratio=8:attack=20:release=350'; // duck under VO
+const MUSIC_DUCK = 'threshold=0.12:ratio=4:attack=20:release=250'; // duck under VO (4:1)
 
 // Resolve `assets/<rel>` from either the compiled module dir (local/dev) or the
 // repo-root path Vercel's includeFiles preserves into the lambda. `GRIFON_ASSET_DIR`
