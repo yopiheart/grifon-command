@@ -16,8 +16,10 @@ interface SceneInput {
 }
 
 const SAMPLE_FRACS = [0.3, 0.55, 0.75]; // where in the clip to sample faces
-const MODEL = '/mediapipe/blaze_face_short_range.tflite';
-const WASM = '/mediapipe/wasm';
+const MODEL = '/mediapipe/blaze_face_short_range.tflite'; // self-hosted (229KB)
+// WASM from jsdelivr (pinned) — the 33MB runtime stays out of the repo. A CDN
+// miss is fully covered by the graceful fallback to the renderer heuristic.
+const WASM = 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.35/wasm';
 
 /** Detect a face-clear caption band per talking scene. Returns {} on any failure. */
 export async function detectCaptionRegions(scenes: SceneInput[]): Promise<Record<number, CaptionRegion>> {
