@@ -7,12 +7,16 @@
 > issue). **Audio was DECOUPLED from the merge** (Neil's call): the engine graceful-skips missing
 > SFX/music, so the banks drop in later as a trivial data-only commit — no re-merge, no review.
 >
-> **Open follow-ups (none block anything):** (a) drop the 13 audio files into
-> `api/_lib/assets/{sfx,music}/` — curated Pixabay links are in the session log; **all CC0 sites
-> (Pixabay/Mixkit/Freesound) sign download URLs server-side, so they CANNOT be hotlinked/auto-
-> fetched — manual download, or a Freesound API token, is required.** (b) audio override UI
-> fast-follow (see "Audio control" below). (c) TASK 2 One-Click Autopilot. (d) scene-1 Kling
-> transition pass. (e) billing/metering.
+> **Audio bank is now LANDED** (`8a1c168`): 13 Pixabay-CC files placed (10 SFX + 3 beds, names
+> match `SfxBankId` + `scriptStyleDetected`, provenance in `api/_lib/assets/PROVENANCE.md`).
+> Music+SFX muxing verified on Neil's real ad (bed-only render -26.8dB = loads+mixes). Bed mix
+> **tuned to "balanced"** (`9f52cb1`): `MUSIC_VOLUME 0.22→0.34` + softer 4:1 duck (threshold 0.12)
+> — the original buried the bed under continuous VO. **Burn-in is fully DONE on main.**
+> NOTE for re-sourcing: all CC0 sites (Pixabay/Mixkit/Freesound) sign download URLs server-side,
+> so they CANNOT be hotlinked/auto-fetched — manual download (or a Freesound API token) required.
+>
+> **Open follow-ups (none block anything):** (a) audio override UI fast-follow (see "Audio control"
+> below). (b) TASK 2 One-Click Autopilot. (c) scene-1 Kling transition pass. (d) billing/metering.
 
 ## What shipped on the branch (in order)
 1. `8021fef` Slice A: thread EDL → renderer; burn simple drawtext overlays + SFX (`adelay+amix`) +
