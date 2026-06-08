@@ -1,9 +1,18 @@
-# Handoff — 2026-06-08 — Burn-in phase: CapCut-grade overlay/caption engine (NOT merged)
+# Handoff — 2026-06-08 — Burn-in phase: CapCut-grade overlay/caption engine (MERGED to main)
 
-> **TL;DR:** Priority 1 (burn-in) is built and verified on Neil's real 8-scene ad. Branch
-> **`feat/burn-in-overlays-sfx-music`** is pushed (7 commits), build green, 47 unit tests +
-> synthetic + real re-stitch passing, crown-jewel leak 0, zero new test failures.
-> **It is NOT merged** — waiting on (a) Neil's SFX/music files, (b) one final re-stitch with sound.
+> **TL;DR:** Priority 1 (burn-in) is built, verified on Neil's real 8-scene ad, and **MERGED to
+> `main` (merge commit `1275cf2`).** Hook reveal **locked to `flip`** (scale-pop) — verified on
+> real footage. Build green, renderFfmpeg unit tests green, zero NEW test failures (the 15
+> pre-existing `geminiService`/EDL model-ID failures are untouched by this branch — separate TUNED
+> issue). **Audio was DECOUPLED from the merge** (Neil's call): the engine graceful-skips missing
+> SFX/music, so the banks drop in later as a trivial data-only commit — no re-merge, no review.
+>
+> **Open follow-ups (none block anything):** (a) drop the 13 audio files into
+> `api/_lib/assets/{sfx,music}/` — curated Pixabay links are in the session log; **all CC0 sites
+> (Pixabay/Mixkit/Freesound) sign download URLs server-side, so they CANNOT be hotlinked/auto-
+> fetched — manual download, or a Freesound API token, is required.** (b) audio override UI
+> fast-follow (see "Audio control" below). (c) TASK 2 One-Click Autopilot. (d) scene-1 Kling
+> transition pass. (e) billing/metering.
 
 ## What shipped on the branch (in order)
 1. `8021fef` Slice A: thread EDL → renderer; burn simple drawtext overlays + SFX (`adelay+amix`) +
