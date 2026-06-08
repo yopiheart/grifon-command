@@ -13,6 +13,23 @@ import type { FinalRenderScene } from '../../types.js';
 // Vercel; floating promise in dev), and reports progress via a status sidecar
 // that api/render/final/poll.ts reads.
 
+const OverlayTextSchema = z.object({
+  text: z.string().max(120),
+  startSec: z.number().nonnegative(),
+  endSec: z.number().nonnegative(),
+  style: z.enum(['hook', 'callout', 'subtitle', 'punchline']),
+  position: z.enum(['top', 'center', 'bottom']),
+});
+
+const SfxCueSchema = z.object({
+  sfxId: z.enum([
+    'whoosh', 'glitch', 'pop', 'ding', 'riser',
+    'drop', 'snap', 'swish', 'boom', 'sparkle',
+  ]),
+  anchorSec: z.number().nonnegative(),
+  reason: z.string().optional(),
+});
+
 const SceneSchema = z.object({
   sceneIdx: z.number().int().nonnegative(),
   videoUrl: z.string().url(),
@@ -20,11 +37,26 @@ const SceneSchema = z.object({
   targetDurationSec: z.number().positive().nullish(),
   keepFullClip: z.boolean().optional(),
   fallbackDurationSec: z.number().positive().optional(),
+  // Burn-in (from the EDL). All optional — absent → today's bare stitch for that scene.
+  overlayText: z.array(OverlayTextSchema).max(8).optional(),
+  sfxCues: z.array(SfxCueSchema).max(8).optional(),
+  transitionIn: z
+    .object({
+      type: z.enum(['cut', 'flash', 'whip', 'zoom', 'particles']),
+      durationSec: z.number().nonnegative(),
+    })
+    .optional(),
 });
 
 const Body = z.object({
   scenes: z.array(SceneSchema).min(1).max(12),
   aspectRatio: z.enum(['9:16', '16:9', '1:1']),
+  music: z
+    .object({
+      style: z.enum(['mrbeast', 'temu', 'testimonial']),
+      enabled: z.boolean(),
+    })
+    .optional(),
 });
 
 const RENDER_LIMIT = 6;
@@ -49,7 +81,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(400).json({ error: 'invalid_body', issues: parsed.error.issues });
   }
 
-  const { scenes, aspectRatio } = parsed.data;
+  const { scenes, aspectRatio, music } = parsed.data;
 
   // Audio↔video keying contract (premortem #4a): sceneIdx must be unique.
   const idxSeen = new Set<number>();
@@ -79,7 +111,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     updatedAt: new Date().toISOString(),
   });
 
-  const work = runRender(user.id, jobId, scenes as FinalRenderScene[], aspectRatio).catch(() => {});
+  const work = runRender(user.id, jobId, scenes as FinalRenderScene[], aspectRatio, music).catch(() => {});
 
   if (process.env.VERCEL) {
     try {
@@ -97,12 +129,13 @@ async function runRender(
   userId: string,
   jobId: string,
   scenes: FinalRenderScene[],
-  aspectRatio: '9:16' | '16:9' | '1:1'
+  aspectRatio: '9:16' | '16:9' | '1:1',
+  music?: { style: 'mrbeast' | 'temu' | 'testimonial'; enabled: boolean }
 ): Promise<void> {
   const admin = getSupabaseAdmin();
   const sKey = statusKey(userId, jobId);
   try {
-    const { buffer } = await renderFinalVideo(scenes, aspectRatio);
+    const { buffer } = await renderFinalVideo(scenes, aspectRatio, music);
 
     const fKey = finalKey(userId, jobId);
     const upload = await admin.storage.from(RENDER_BUCKET).upload(fKey, buffer, {

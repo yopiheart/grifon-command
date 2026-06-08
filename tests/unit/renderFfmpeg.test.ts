@@ -1,5 +1,8 @@
 import { describe, it, expect } from 'vitest';
-import { parseDurationSec, parseTrimSec, dimsFor, chooseTrim } from '../../api/_lib/renderFfmpeg.js';
+import {
+  parseDurationSec, parseTrimSec, dimsFor, chooseTrim,
+  drawtextPreset, clampWindow, clampAnchor, escFilterPath, buildDrawtext,
+} from '../../api/_lib/renderFfmpeg.js';
 
 // Encodes the Phase 2 trim intent (workflows/render_pipeline_voice_10.md):
 // speech-end = start of the trailing silence run, + 0.3s pad, clamped to the
@@ -154,5 +157,71 @@ describe('chooseTrim', () => {
 
   it('keeps the full clip when nothing else applies', () => {
     expect(chooseTrim({}, PROBE, null).trimSec).toBeCloseTo(PROBE, 3);
+  });
+});
+
+// --- Burn-in pure helpers (overlays/captions timing + drawtext construction) ---
+
+describe('clampWindow', () => {
+  it('clamps an overlay window to [0, trimSec]', () => {
+    expect(clampWindow(1, 3, 5)).toEqual({ start: 1, end: 3 });
+    expect(clampWindow(-1, 9, 5)).toEqual({ start: 0, end: 5 }); // clamped both ends
+  });
+  it('drops a cue that starts at/after the trimmed end', () => {
+    expect(clampWindow(5, 6, 5)).toBeNull();
+    expect(clampWindow(6, 7, 5)).toBeNull();
+  });
+  it('drops a window too short to read after clamping', () => {
+    expect(clampWindow(4.99, 6, 5)).toBeNull(); // 0.01s visible
+  });
+  it('treats a null/zero trim as uncapped', () => {
+    expect(clampWindow(1, 3, null)).toEqual({ start: 1, end: 3 });
+  });
+});
+
+describe('clampAnchor', () => {
+  it('keeps an anchor inside the clip and floors negatives to 0', () => {
+    expect(clampAnchor(2, 5)).toBe(2);
+    expect(clampAnchor(-1, 5)).toBe(0);
+  });
+  it('drops an anchor at/after the trimmed end', () => {
+    expect(clampAnchor(5, 5)).toBeNull();
+    expect(clampAnchor(9, 5)).toBeNull();
+  });
+});
+
+describe('drawtextPreset', () => {
+  const dims: [number, number] = [1080, 1920];
+  it('sizes proportionally to height and picks gold for callout/punchline', () => {
+    expect(drawtextPreset('hook', 'center', dims).fontsize).toBe(Math.round(1920 * 0.060));
+    expect(drawtextPreset('subtitle', 'bottom', dims).fontsize).toBe(Math.round(1920 * 0.038));
+    expect(drawtextPreset('callout', 'top', dims).fontcolor).toBe('0xFFCC00');
+    expect(drawtextPreset('subtitle', 'bottom', dims).fontcolor).toBe('white');
+  });
+  it('maps position to the right y expression', () => {
+    expect(drawtextPreset('callout', 'top', dims).yExpr).toBe('h*0.08');
+    expect(drawtextPreset('subtitle', 'bottom', dims).yExpr).toBe('h*0.80');
+    expect(drawtextPreset('hook', 'center', dims).yExpr).toBe('(h-text_h)/2');
+  });
+});
+
+describe('escFilterPath', () => {
+  it('forward-slashes separators and escapes the Windows drive colon', () => {
+    expect(escFilterPath('C:\\Users\\x\\font.ttf')).toBe('C\\:/Users/x/font.ttf');
+  });
+  it('leaves a posix path with no colon untouched', () => {
+    expect(escFilterPath('/tmp/x/font.ttf')).toBe('/tmp/x/font.ttf');
+  });
+});
+
+describe('buildDrawtext', () => {
+  const dims: [number, number] = [1080, 1920];
+  it('emits an enable window and references the escaped font + textfile', () => {
+    const f = buildDrawtext('subtitle', 'bottom', dims, { start: 1, end: 2.5 }, 'C:\\f\\Anton.ttf', 'C:\\t\\ov.txt');
+    expect(f).toContain("enable='between(t,1.000,2.500)'");
+    expect(f).toContain('fontfile=C\\:/f/Anton.ttf');
+    expect(f).toContain('textfile=C\\:/t/ov.txt');
+    expect(f).toContain('x=(w-text_w)/2');
+    expect(f.startsWith('drawtext=')).toBe(true);
   });
 });
