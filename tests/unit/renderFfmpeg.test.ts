@@ -3,7 +3,7 @@ import {
   parseDurationSec, parseTrimSec, dimsFor, chooseTrim,
   clampWindow, clampAnchor, escFilterPath,
   safeZone, fitText, wrapTwoLines, stripUnrenderable, evenSplit, chunkCaption,
-  planScene, buildTextFilter, buildBoxFilter, WIPE_SLICES,
+  planScene, buildTextFilter, buildBoxFilter, WIPE_SLICES, snapSfxAnchor,
 } from '../../api/_lib/renderFfmpeg.js';
 import type { FinalRenderScene } from '../../types.js';
 
@@ -327,5 +327,25 @@ describe('buildTextFilter / buildBoxFilter (filtergraph)', () => {
     expect(f).toContain("enable='gte(t,0.933)'");            // last slice ~startSec+wipeDur*23/24
     expect(f).toContain('color=0xD90429@0.9');
     expect(f).not.toContain("min(");                          // no eval-once width expr
+  });
+});
+
+describe('snapSfxAnchor (deterministic SFX placement)', () => {
+  it('snaps the hook accent to the flip reveal (HOOK_DELAY=0.4), whatever the cue', () => {
+    expect(snapSfxAnchor('boom', 1.5, 0, true)).toBe(0.4);   // hook gets its accent on the pop
+    expect(snapSfxAnchor('whoosh', 0.0, 0, true)).toBe(0.4); // even a whoosh on the hook → reveal
+  });
+  it('snaps a transition sound (whoosh/swish) to t=0 of the incoming scene', () => {
+    expect(snapSfxAnchor('whoosh', 1.7, 2, false)).toBe(0); // EDL guessed 1.7s → snap to the cut
+    expect(snapSfxAnchor('swish', 0.9, 3, false)).toBe(0);
+  });
+  it('drops a transition sound on a non-hook first scene (nothing transitions INTO it)', () => {
+    expect(snapSfxAnchor('whoosh', 0.4, 0, false)).toBeNull();
+    expect(snapSfxAnchor('swish', 0.2, 0, false)).toBeNull();
+  });
+  it('leaves non-transition sounds at their anchor on later scenes', () => {
+    expect(snapSfxAnchor('ding', 0.6, 1, false)).toBe(0.6);
+    expect(snapSfxAnchor('boom', 1.2, 4, false)).toBe(1.2);
+    expect(snapSfxAnchor('riser', 0.0, 2, false)).toBe(0.0);
   });
 });

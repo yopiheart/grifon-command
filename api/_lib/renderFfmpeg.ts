@@ -4,7 +4,7 @@ import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import ffmpegPath from 'ffmpeg-static';
-import type { FinalRenderScene } from '../../types.js';
+import type { FinalRenderScene, SfxBankId } from '../../types.js';
 
 // Final-render executor muscle (Phase 2 of workflows/render_pipeline_voice_10.md).
 // Mirrors the Phase-0-validated invocations in scripts/ffmpeg-spike.mjs exactly:
@@ -50,12 +50,20 @@ export function dimsFor(aspectRatio: string): [number, number] {
 // ---------------------------------------------------------------------------
 
 const SFX_VOLUME = 0.6;          // SFX sit under the VO, not over it
-// Bed gain + duck — locked "balanced" mix (Neil, 2026-06-08, A/B on his real ad).
-// The original 0.22 + 8:1 duck buried the bed under continuous VO; 0.34 + a softer
-// 4:1 duck (higher 0.12 threshold) lets it sit audibly without fighting the VO.
-const MUSIC_VOLUME = 0.34;       // bed gain before sidechain ducking
+// VO-FIRST bed (Neil, 2026-06-08): in direct-response the voice-over IS the sale,
+// so music is seasoning. 0.34 fought the VO on a full-ad listen; drop to 0.18 with
+// a moderate fast duck so the bed only breathes in the gaps. Final loudness is
+// pinned by the -14 LUFS master (LOUDNORM) so every ad ships at a consistent level.
+const MUSIC_VOLUME = 0.18;       // bed gain before sidechain ducking
 const MUSIC_FADE_SEC = 0.4;      // afade in/out on the bed
-const MUSIC_DUCK = 'threshold=0.12:ratio=4:attack=20:release=250'; // duck under VO (4:1)
+const MUSIC_DUCK = 'threshold=0.04:ratio=5:attack=5:release=280'; // duck hard+fast under VO
+const LOUDNORM = 'loudnorm=I=-14:TP=-1.5:LRA=11'; // social/Reels target, VO-anchored
+
+// Transition-class SFX land on a CUT, not mid-scene. The renderer knows the exact
+// cut (a scene boundary), so these snap to it deterministically — the text EDL's
+// guessed anchorSec can't (it never sees the rendered frame). See snapSfxAnchor.
+const TRANSITION_SFX: ReadonlySet<SfxBankId> = new Set<SfxBankId>(['whoosh', 'swish']);
+const DEFAULT_HOOK_SFX: SfxBankId = 'boom'; // hook must punch — fallback if the EDL cues none
 
 // Resolve `assets/<rel>` from either the compiled module dir (local/dev) or the
 // repo-root path Vercel's includeFiles preserves into the lambda. `GRIFON_ASSET_DIR`
@@ -251,6 +259,29 @@ export function clampAnchor(anchorSec: number, trimSec: number | null): number |
   const cap = typeof trimSec === 'number' && trimSec > 0 ? trimSec : Infinity;
   const a = Math.max(0, anchorSec);
   return a < cap ? a : null;
+}
+
+/**
+ * Effective anchor for one SFX cue, applying deterministic snapping the text EDL
+ * can't do (it never sees the rendered frame). Three cases:
+ *  - HOOK scene: its single accent lands on the flip REVEAL (HOOK_DELAY) — the
+ *    most important moment in the ad must punctuate the title pop, not sit silent.
+ *  - Transition sounds (whoosh/swish) on a later scene: snap to t=0 of the
+ *    incoming scene (the exact CUT). Dropped on a non-hook first scene (nothing
+ *    transitions INTO it — that spurious opener read as "too early").
+ *  - Everything else: keep its anchor (in-scene sync stays an estimate until
+ *    Whisper word-timing lands).
+ * Returns the effective anchorSec, or null to drop the cue.
+ */
+export function snapSfxAnchor(
+  sfxId: SfxBankId,
+  anchorSec: number,
+  sceneIndex: number,
+  isHook: boolean
+): number | null {
+  if (isHook) return HOOK_DELAY;
+  if (TRANSITION_SFX.has(sfxId)) return sceneIndex === 0 ? null : 0;
+  return anchorSec;
 }
 
 // ---- Per-scene draw plan (the single source of truth for what/when/where) ----
@@ -715,6 +746,27 @@ function mixMusic(
   return true;
 }
 
+/**
+ * Final master: normalize the whole program to the social/broadcast loudness
+ * target (-14 LUFS) so every ad ships at a consistent perceived level regardless
+ * of the client's VO recording. VO dominates the mix, so this anchors the VO
+ * while keeping the (already low + ducked) bed underneath. Non-critical: on any
+ * failure the un-normalized render is kept rather than failing the whole job.
+ */
+function masterAudio(inPath: string, outPath: string): boolean {
+  const args = [
+    '-y', '-i', inPath,
+    '-c:v', 'copy', '-af', LOUDNORM,
+    '-c:a', 'aac', '-ar', '48000', '-ac', '2', '-movflags', '+faststart', outPath,
+  ];
+  const { status, stderr } = ffmpeg(args);
+  if (status !== 0) {
+    console.warn(`[renderFfmpeg] loudnorm master failed (kept un-normalized): ${stderr.slice(-200)}`);
+    return false;
+  }
+  return true;
+}
+
 async function downloadToFile(url: string, path: string): Promise<void> {
   const r = await fetch(url);
   if (!r.ok) throw new RenderError(`download_failed_${r.status}`);
@@ -767,14 +819,24 @@ export async function renderFinalVideo(
 
       const { trimSec, padAudio } = chooseTrim(scene, probeSec, detectedSec);
 
-      // Resolve + clamp SFX cues for this scene (missing asset → skip that cue).
+      // Resolve + snap + clamp SFX cues for this scene (missing asset → skip).
+      // Transition sounds snap to the cut (i is the ordered scene index).
       const sfx: PreparedSfx[] = [];
       for (const cue of scene.sfxCues ?? []) {
         const p = sfxPath(cue.sfxId);
         if (!p) { console.warn(`[renderFfmpeg] sfx missing: ${cue.sfxId}`); continue; }
-        const anchor = clampAnchor(cue.anchorSec, trimSec);
+        const snapped = snapSfxAnchor(cue.sfxId, cue.anchorSec, i, !!scene.isHook);
+        if (snapped === null) continue;
+        const anchor = clampAnchor(snapped, trimSec);
         if (anchor === null) continue;
         sfx.push({ path: p, anchorSec: anchor });
+      }
+      // The hook must never be silent: if the EDL cued no usable SFX, drop a
+      // default impact on the flip reveal (HOOK_DELAY).
+      if (scene.isHook && !sfx.length) {
+        const p = sfxPath(DEFAULT_HOOK_SFX);
+        const anchor = clampAnchor(HOOK_DELAY, trimSec);
+        if (p && anchor !== null) sfx.push({ path: p, anchorSec: anchor });
       }
 
       // Compile the scene's draw plan (hook reveal+wipe / overlay→caption) once.
@@ -804,6 +866,10 @@ export async function renderFinalVideo(
         console.warn(`[renderFfmpeg] music bed missing for style=${music.style}; skipping`);
       }
     }
+
+    // Final master: pin loudness to -14 LUFS (+ faststart for instant streaming).
+    const masteredPath = join(dir, 'final_master.mp4');
+    if (masterAudio(resultPath, masteredPath)) resultPath = masteredPath;
 
     const buffer = readFileSync(resultPath);
     return { buffer, sizeBytes: statSync(resultPath).size };
