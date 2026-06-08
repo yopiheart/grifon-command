@@ -101,9 +101,26 @@ const HOOK_TOP_FRAC = 0.32;          // hook text top, upper-center
 const CAPTION_FRAC = 0.67;           // caption/overlay band (talking); b-roll a touch lower
 const BROLL_CAPTION_FRAC = 0.72;
 
-// Hook animation + wipe.
-const HOOK_DELAY = 0.4, HOOK_ANIM = 0.7, HOOK_RISE_PX = 55;
+// Hook reveal entrance + wipe. drawtext re-evals y/alpha/fontsize per-frame
+// (verified 2026-06-08, see agent_lessons.md), so all three styles are REAL
+// motion — not the old linear slide that read as a plain fade. HOOK_REVEAL picks
+// the style; the env override lets the synthetic harness A/B all three with no edit.
+const HOOK_DELAY = 0.4;
 const HOOK_BOX_DELAY = 0.55, HOOK_WIPE_DUR = 0.4;
+// flip = uniform scale-grow "pop" — Neil's pick (2026-06-08). Switch styles by
+// changing this literal: 'bounce' (easeOutBack overshoot) | 'slam' (easeOutQuart
+// hard slide) | 'flip'. The union annotation keeps the alternate branches valid
+// (a bare literal would narrow the type and break the `=== 'slam'` comparison).
+const HOOK_REVEAL: 'bounce' | 'slam' | 'flip' = 'flip';
+const HOOK_FADE_SEC = 0.15;            // alpha snap-in, decoupled from motion (so it's NOT a slow fade)
+// bounce: spring up PAST the target then settle (easeOutBack; c1=3 → ~25% overshoot)
+const HOOK_BOUNCE_DUR = 0.45, HOOK_BOUNCE_RISE = 60, BOUNCE_C1 = 3.0, BOUNCE_C3 = 4.0;
+// slam: fast hard-decelerating slide, no overshoot (easeOutQuart)
+const HOOK_SLAM_DUR = 0.30, HOOK_SLAM_RISE = 120;
+// flip: uniform scale-grow from 45%→100% (+slight overshoot) + small rise. drawtext
+// scales glyphs uniformly, so this is a scale-pop "unfold", not a true axis flip.
+const HOOK_FLIP_DUR = 0.35, HOOK_FLIP_RISE = 28, HOOK_FLIP_MINSCALE = 0.45;
+const HOOK_FLIP_SPAN = 1 - HOOK_FLIP_MINSCALE, FLIP_C1 = 1.70158, FLIP_C3 = 2.70158;
 
 // Scene-2+ overlay + caption timing.
 const OVERLAY_HOLD_SEC = 1.5, OVERLAY_FADE = 0.25, CAPTION_START_PAD = 0.3;
@@ -347,20 +364,38 @@ export function planScene(scene: FinalRenderScene, trimSec: number | null, dims:
 
 /** drawtext for one TextLayer; fontName/textName are bare (ffmpeg runs cwd=dir). */
 export function buildTextFilter(l: TextLayer, fontName: string, textName: string): string {
-  const yExpr =
-    l.anim === 'slideup'
-      ? `${l.yBase}+${HOOK_RISE_PX}*(1-min(1,max(0,(t-${l.startSec})/${HOOK_ANIM})))`
-      : `${l.yBase}`;
-  const alpha =
-    l.anim === 'slideup'
-      ? `min(1,max(0,(t-${l.startSec})/${HOOK_ANIM}))`
-      : l.anim === 'fade'
-        ? `max(0,min(1,min((t-${l.startSec})/${OVERLAY_FADE},(${l.endSec}-t)/${OVERLAY_FADE})))`
-        : `1`;
+  const s = l.startSec;
+  let yExpr = `${l.yBase}`;
+  let fontsizeOpt = `fontsize=${l.fontsize}`;
+  let alpha = `1`;
+
+  if (l.anim === 'slideup') {
+    // Hook entrance, HOOK_REVEAL-keyed. Alpha SNAPS in over HOOK_FADE_SEC so the
+    // motion (not a slow opacity ramp) carries the reveal — the old linear slide+
+    // fade read as a plain fade (Neil, 2026-06-08). pow() bases are kept ≥0 via
+    // (1-p) so ffmpeg's eval never hits pow(negative,...).
+    alpha = `min(1,max(0,(t-${s})/${HOOK_FADE_SEC}))`;
+    if (HOOK_REVEAL === 'slam') {
+      const p = `min(1,max(0,(t-${s})/${HOOK_SLAM_DUR}))`;
+      yExpr = `${l.yBase}+${HOOK_SLAM_RISE}*pow(1-${p},4)`;
+    } else if (HOOK_REVEAL === 'flip') {
+      const p = `min(1,max(0,(t-${s})/${HOOK_FLIP_DUR}))`;
+      const ease = `(1-${FLIP_C3}*pow(1-${p},3)+${FLIP_C1}*pow(1-${p},2))`;
+      fontsizeOpt = `fontsize='max(10,${l.fontsize}*(${HOOK_FLIP_MINSCALE}+${HOOK_FLIP_SPAN}*${ease}))'`;
+      yExpr = `${l.yBase}+${HOOK_FLIP_RISE}*(1-${p})`;
+    } else {
+      // bounce (default): easeOutBack overshoots the target then settles.
+      const p = `min(1,max(0,(t-${s})/${HOOK_BOUNCE_DUR}))`;
+      yExpr = `${l.yBase}+${HOOK_BOUNCE_RISE}*(${BOUNCE_C3}*pow(1-${p},3)-${BOUNCE_C1}*pow(1-${p},2))`;
+    }
+  } else if (l.anim === 'fade') {
+    alpha = `max(0,min(1,min((t-${s})/${OVERLAY_FADE},(${l.endSec}-t)/${OVERLAY_FADE})))`;
+  }
+
   const opts = [
     `fontfile=${fontName}`,
     `textfile=${textName}`,
-    `fontsize=${l.fontsize}`,
+    fontsizeOpt,
     `fontcolor=${l.color}`,
     `shadowcolor=${SHADOW_COLOR}`,
     `shadowx=${SHADOW_DX}`,

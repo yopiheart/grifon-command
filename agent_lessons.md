@@ -754,3 +754,20 @@ this build) — `-filters`/`-h filter=drawbox` and a 3-frame smoke settle it in 
 synthetic harness (`tests/integration/burnin-render.test.ts`, gated) seeded with the nastiest real
 input (Taglish apostrophe+comma+emoji) so escaping regressions fail fast and free. Shipped:
 slice-wipe + bare-filename/cwd + single-quote escaping, branch `feat/burn-in-overlays-sfx-music`.
+
+### 2026-06-08 — ffmpeg drawtext `fontsize` DOES animate per-frame (verified) — so scale-pop is real
+**Context:** Punching up the hook reveal (Neil: the old linear slide+fade read as a plain fade).
+Building a "flip/scale-pop" variant needs the glyph size to animate, but the drawbox trap above
+made me distrust per-frame eval. Ran the 30s capability smoke before committing flip: a 1s clip
+with `drawtext=...:fontsize='40+360*t'`, frames at t=0.1 vs t=0.9.
+**Result:** Glyphs scaled from ~76px → ~364px — **`fontsize` IS re-evaluated per frame** in this
+ffmpeg-static build (exit 0, no `Option not found`). Unlike `drawbox` geometry, `fontsize` takes a
+`t`-based expression directly (single-quote it so inner commas in `max(10,...)` stay literal).
+**Lesson:** drawtext animates **y, alpha, AND fontsize** per-frame — only `drawbox` w/x/y/h is
+eval-once here. So scale/flip effects belong on the text via `fontsize`, not on a box. Always run
+the one-clip smoke first (it's the same 30s check that would've caught the drawbox trap) rather
+than assuming a filter does or doesn't re-eval. Hook reveal now ships three styles behind
+`HOOK_REVEAL` (`bounce` easeOutBack overshoot / `slam` easeOutQuart hard slide / `flip` uniform
+scale-grow), alpha snapping in 0.15s so motion carries the reveal. `pow()` bases kept ≥0 via
+`(1-p)` so eval never hits `pow(negative,...)`. Verify by reading frames **inside 0.42–0.60s**
+(the punch window) — wider samples land post-settle and look identical across styles.

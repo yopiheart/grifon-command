@@ -309,10 +309,15 @@ describe('buildTextFilter / buildBoxFilter (filtergraph)', () => {
     expect(f).toContain('fontfile=font.ttf');        // bare names (cwd=dir)
     expect(f).toContain('box=1');
   });
-  it('hook slide-up animates y + alpha by t', () => {
+  it('hook reveal (locked: flip) snaps alpha + animates fontsize scale + rises', () => {
     const f = buildTextFilter({ ...base, anim: 'slideup', boxAlpha: 0 }, 'font.ttf', 'h.txt');
-    expect(f).toMatch(/y='\d+\+\d+\*\(1-min\(1,max\(0,\(t-0\.4\)\/0\.7\)\)\)'/);
-    expect(f).toContain("alpha='min(1,max(0,(t-0.4)/0.7))'");
+    // alpha snaps in over HOOK_FADE_SEC (0.15s), NOT the old slow 0.7s fade
+    expect(f).toContain("alpha='min(1,max(0,(t-0.4)/0.15))'");
+    // flip = clamped uniform scale-grow 45%→100% (+overshoot); single-quoted so the
+    // commas inside max(10,…) stay literal (2026-06-08 escaping lesson). pow base ≥0.
+    expect(f).toMatch(/fontsize='max\(10,80\*\(0\.45\+0\.55\*\(1-2\.70158\*pow\(1-min\(1,max\(0,\(t-0\.4\)\/0\.35\)\),3\)/);
+    // small rise rides along with the scale
+    expect(f).toContain("y='1200+28*(1-min(1,max(0,(t-0.4)/0.35)))'");
   });
   it('box wipe is a left→right cascade of time-gated slices (drawbox has no eval=frame)', () => {
     const f = buildBoxFilter({ kind: 'box', x: 200, y: 800, w: 240, h: 50, color: '0xD90429', startSec: 0.55, wipeDur: 0.4 });
