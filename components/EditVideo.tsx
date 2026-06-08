@@ -95,6 +95,9 @@ const BatchEditMode: React.FC<{
   const [renderError, setRenderError] = useState<string | null>(null);
   // Burn-in: drawtext overlays/captions + SFX + ducked music bed from the EDL.
   const [burnInEnabled, setBurnInEnabled] = useState(true);
+  // Face-clear caption bands per talking scene (MediaPipe, AI-Editor-only).
+  // Graceful: empty → the renderer uses its per-type heuristic band.
+  const [captionRegions, setCaptionRegions] = useState<Record<number, { yFracTop: number; yFracBottom: number }>>({});
 
   useEffect(() => {
     let cancelled = false;
@@ -117,6 +120,23 @@ const BatchEditMode: React.FC<{
       cancelled = true;
     };
   }, []);
+
+  // Detect face-clear caption bands for talking scenes (dynamic-imported MediaPipe;
+  // runs once per batch, fully graceful — failure leaves captionRegions empty).
+  useEffect(() => {
+    let cancelled = false;
+    const talking = editorBatch.sceneBatch.filter((s) => s.type === 'talking' && s.renderedUrl);
+    if (!talking.length) return;
+    import('../services/captionRegionDetect')
+      .then(({ detectCaptionRegions }) =>
+        detectCaptionRegions(
+          editorBatch.sceneBatch.map((s) => ({ sceneIdx: s.sceneIdx, videoUrl: s.renderedUrl, type: s.type }))
+        )
+      )
+      .then((r) => { if (!cancelled) setCaptionRegions(r); })
+      .catch(() => { /* heuristic fallback */ });
+    return () => { cancelled = true; };
+  }, [editorBatch]);
 
   const handleConsolidate = async () => {
     if (!voiceId) {
@@ -179,6 +199,12 @@ const BatchEditMode: React.FC<{
             overlayText: plan?.overlayText,
             sfxCues: plan?.sfxCues,
             transitionIn: plan?.transitionIn,
+            // Overlay/caption engine inputs:
+            scriptLine: s.scriptLine,
+            sceneType: s.type,
+            isHook,
+            // Face-clear band from browser detection (talking scenes); absent → heuristic.
+            captionRegion: captionRegions[s.sceneIdx],
           };
         });
       if (scenes.length === 0) {
