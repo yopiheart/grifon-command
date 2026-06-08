@@ -43,14 +43,15 @@ constants; MediaPipe face-detect (talking-only, graceful) on jsdelivr CDN; same 
 1. **Neil's SFX + music files** → `api/_lib/assets/{sfx,music}/` per `api/_lib/assets/README.md`
    (10 SFX named == SfxBankId; 3 beds mrbeast/temu/testimonial; commercial-redistribution license).
    Until then the audio layers graceful-skip (captions/overlays still render).
-2. **Hook reveal animation is too weak (Neil, 2026-06-08).** Current `anim:'slideup'` reads as a
-   plain FADE-IN, not a punchy flip-up/bounce — "not powerful enough to catch attention." Next
-   session: make the hook entrance pop. Options within ffmpeg drawtext (animate `y`/`alpha`/
-   `fontsize` via `t`, which drawtext DOES eval per-frame — unlike drawbox): an **overshoot/bounce**
-   (y springs past the target then settles), a **scale-pop** (fontsize 70%→110%→100%), or a faster
-   harder slide with a back-ease. Tune in `buildTextFilter` (the `slideup` branch) + `HOOK_*`
-   constants in `renderFfmpeg.ts`. Verify by extracting frames INSIDE the 0.4–1.1s window (see the
-   2026-06-08 ffmpeg lesson) and on the moving video.
+2. ~~**Hook reveal animation is too weak.**~~ **DONE (commit `83d6be2`).** Reworked
+   `buildTextFilter`'s `slideup` branch into three `HOOK_REVEAL` styles (`bounce` easeOutBack
+   overshoot / `slam` easeOutQuart hard slide / `flip` uniform fontsize scale-grow), alpha now
+   **snaps in 0.15s** (decoupled from motion) so it no longer reads as a fade. **Locked to `flip`**
+   (Neil's pick, 2026-06-08) — a 45%→100% scale-pop. Verified on synthetic-harness frames inside
+   the **0.42–0.60s** punch window (wider samples land post-settle, look identical). Gated on a 30s
+   smoke proving drawtext re-evals `fontsize` per-frame (see the new 2026-06-08 `agent_lessons.md`
+   entry). Build + unit tests green. STILL PENDING: Neil watches `flip` on **real moving footage**
+   (the final re-stitch in #3) before merge — synthetic flat-bg approval only so far.
 3. **One final re-stitch with sound** once assets land → Neil watches → merge.
 4. Captions in this demo used **placeholder scriptLines** (loose-files test). In a real wizard run
    captions come from `sceneBatch[].scriptLine` (the actual spoken script) automatically — no paste
