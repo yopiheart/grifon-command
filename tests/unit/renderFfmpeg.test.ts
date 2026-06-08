@@ -271,21 +271,34 @@ describe('planScene', () => {
     sceneIdx: 0, videoUrl: 'v', isHook: true,
     overlayText: [{ text: "TIGNAN MO 'TO", startSec: 0, endSec: 5, style: 'hook', position: 'center' }],
   };
-  it('hook: emits a wipe-box BEFORE the slide-up text (box drawn behind)', () => {
+  it('hook: emits a wipe-box BEFORE the slide-up text (box drawn behind), boom on the pop', () => {
     const layers = planScene(hook, 4, DIMS);
     expect(layers[0].kind).toBe('box');
     expect(layers[1].kind).toBe('text');
     const text = layers[1] as Extract<typeof layers[1], { kind: 'text' }>;
     expect(text.anim).toBe('slideup');
+    expect(text.emphasisSfx).toBe('boom');               // hook accent paired to the flip
+    expect(text.startSec).toBe(0.4);                      // ...at HOOK_DELAY (the pop)
   });
-  it('scene 2+: overlay (fade) then chunked captions, never overlapping', () => {
+  it('scene 2+: callout (fade) carries a pop, offset after the cut; captions carry none', () => {
     const scene: FinalRenderScene = {
       sceneIdx: 1, videoUrl: 'v', sceneType: 'talking', scriptLine: 'Grabe ang lambot ng skin ko ngayon',
       overlayText: [{ text: 'DERMA-TESTED', startSec: 0, endSec: 5, style: 'callout', position: 'top' }],
     };
     const layers = planScene(scene, 6, DIMS).filter((l) => l.kind === 'text') as any[];
     expect(layers[0].anim).toBe('fade');                 // overlay first
+    expect(layers[0].emphasisSfx).toBe('pop');           // callout → pop on its reveal
+    expect(layers[0].startSec).toBeCloseTo(0.3);         // offset off the cut (CALLOUT_LEAD)
     expect(layers[1].startSec).toBeGreaterThanOrEqual(layers[0].endSec); // caption after, no overlap
+    expect(layers[1].emphasisSfx).toBeUndefined();       // spoken-word captions get no SFX
+  });
+  it('scene 2+: a punchline CTA overlay pairs a ding', () => {
+    const scene: FinalRenderScene = {
+      sceneIdx: 7, videoUrl: 'v', sceneType: 'b-roll',
+      overlayText: [{ text: 'ORDER NA', startSec: 0, endSec: 5, style: 'punchline', position: 'bottom' }],
+    };
+    const fade = planScene(scene, 5, DIMS).find((l) => l.kind === 'text') as any;
+    expect(fade.emphasisSfx).toBe('ding');
   });
   it('scene 2+: skips the overlay when it duplicates the caption text', () => {
     const scene: FinalRenderScene = {
@@ -330,22 +343,17 @@ describe('buildTextFilter / buildBoxFilter (filtergraph)', () => {
   });
 });
 
-describe('snapSfxAnchor (deterministic SFX placement)', () => {
-  it('snaps the hook accent to the flip reveal (HOOK_DELAY=0.4), whatever the cue', () => {
-    expect(snapSfxAnchor('boom', 1.5, 0, true)).toBe(0.4);   // hook gets its accent on the pop
-    expect(snapSfxAnchor('whoosh', 0.0, 0, true)).toBe(0.4); // even a whoosh on the hook → reveal
+describe('snapSfxAnchor (keep only deterministic transition cues)', () => {
+  it('snaps a transition sound (whoosh/swish) to t=0 of the incoming scene (the cut)', () => {
+    expect(snapSfxAnchor('whoosh', 2, false)).toBe(0);
+    expect(snapSfxAnchor('swish', 3, false)).toBe(0);
   });
-  it('snaps a transition sound (whoosh/swish) to t=0 of the incoming scene', () => {
-    expect(snapSfxAnchor('whoosh', 1.7, 2, false)).toBe(0); // EDL guessed 1.7s → snap to the cut
-    expect(snapSfxAnchor('swish', 0.9, 3, false)).toBe(0);
+  it('drops transition sounds on the hook / first scene (no incoming cut)', () => {
+    expect(snapSfxAnchor('whoosh', 0, false)).toBeNull(); // spurious "too early" opener
+    expect(snapSfxAnchor('swish', 2, true)).toBeNull();   // hook accent comes from the layer, not here
   });
-  it('drops a transition sound on a non-hook first scene (nothing transitions INTO it)', () => {
-    expect(snapSfxAnchor('whoosh', 0.4, 0, false)).toBeNull();
-    expect(snapSfxAnchor('swish', 0.2, 0, false)).toBeNull();
-  });
-  it('leaves non-transition sounds at their anchor on later scenes', () => {
-    expect(snapSfxAnchor('ding', 0.6, 1, false)).toBe(0.6);
-    expect(snapSfxAnchor('boom', 1.2, 4, false)).toBe(1.2);
-    expect(snapSfxAnchor('riser', 0.0, 2, false)).toBe(0.0);
+  it('drops EDL non-transition cues (their guessed in-scene timing is unreliable)', () => {
+    expect(snapSfxAnchor('ding', 1, false)).toBeNull();   // emphasis now comes from text-paired layers
+    expect(snapSfxAnchor('boom', 4, false)).toBeNull();
   });
 });

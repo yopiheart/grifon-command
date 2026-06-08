@@ -4,7 +4,7 @@ import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import ffmpegPath from 'ffmpeg-static';
-import type { FinalRenderScene, SfxBankId } from '../../types.js';
+import type { FinalRenderScene, SfxBankId, OverlayStyle } from '../../types.js';
 
 // Final-render executor muscle (Phase 2 of workflows/render_pipeline_voice_10.md).
 // Mirrors the Phase-0-validated invocations in scripts/ffmpeg-spike.mjs exactly:
@@ -63,7 +63,17 @@ const LOUDNORM = 'loudnorm=I=-14:TP=-1.5:LRA=11'; // social/Reels target, VO-anc
 // cut (a scene boundary), so these snap to it deterministically — the text EDL's
 // guessed anchorSec can't (it never sees the rendered frame). See snapSfxAnchor.
 const TRANSITION_SFX: ReadonlySet<SfxBankId> = new Set<SfxBankId>(['whoosh', 'swish']);
-const DEFAULT_HOOK_SFX: SfxBankId = 'boom'; // hook must punch — fallback if the EDL cues none
+// Each strategic overlay carries a paired sound that lands on its EXACT on-screen
+// frame (planScene tags the layer; renderFinalVideo places it at layer.startSec) —
+// the "emphasize what the viewer sees" sync, deterministic unlike the text EDL's
+// guessed anchorSec. Chunked spoken-word captions get none (restraint: 1/scene).
+const OVERLAY_SFX: Record<OverlayStyle, SfxBankId | null> = {
+  hook: 'boom',       // title pop on the flip
+  callout: 'pop',     // key-word callout
+  punchline: 'ding',  // final CTA
+  subtitle: null,     // testimonial spoken subtitle — stays sincere, no SFX
+};
+const CALLOUT_LEAD = 0.3; // delay a callout/punchline so its pop reads distinct from the cut whoosh
 
 // Resolve `assets/<rel>` from either the compiled module dir (local/dev) or the
 // repo-root path Vercel's includeFiles preserves into the lambda. `GRIFON_ASSET_DIR`
@@ -262,26 +272,23 @@ export function clampAnchor(anchorSec: number, trimSec: number | null): number |
 }
 
 /**
- * Effective anchor for one SFX cue, applying deterministic snapping the text EDL
- * can't do (it never sees the rendered frame). Three cases:
- *  - HOOK scene: its single accent lands on the flip REVEAL (HOOK_DELAY) — the
- *    most important moment in the ad must punctuate the title pop, not sit silent.
- *  - Transition sounds (whoosh/swish) on a later scene: snap to t=0 of the
- *    incoming scene (the exact CUT). Dropped on a non-hook first scene (nothing
- *    transitions INTO it — that spurious opener read as "too early").
- *  - Everything else: keep its anchor (in-scene sync stays an estimate until
- *    Whisper word-timing lands).
+ * Effective anchor for one EDL SFX cue. The text EDL never sees the rendered
+ * frame, so its `anchorSec` is an unreliable guess — we keep only what we can
+ * time deterministically:
+ *  - Transition sounds (whoosh/swish) snap to t=0 of the incoming scene (the
+ *    exact CUT). Dropped on the hook / first scene (nothing transitions INTO it —
+ *    that spurious opener read as "too early").
+ *  - Everything else is dropped here; in-scene emphasis now comes from the
+ *    text-paired layers (OVERLAY_SFX), frame-locked to the overlay's appearance.
  * Returns the effective anchorSec, or null to drop the cue.
  */
 export function snapSfxAnchor(
   sfxId: SfxBankId,
-  anchorSec: number,
   sceneIndex: number,
   isHook: boolean
 ): number | null {
-  if (isHook) return HOOK_DELAY;
-  if (TRANSITION_SFX.has(sfxId)) return sceneIndex === 0 ? null : 0;
-  return anchorSec;
+  if (TRANSITION_SFX.has(sfxId)) return isHook || sceneIndex === 0 ? null : 0;
+  return null;
 }
 
 // ---- Per-scene draw plan (the single source of truth for what/when/where) ----
@@ -297,6 +304,7 @@ export interface TextLayer {
   startSec: number;
   endSec: number;
   anim: 'slideup' | 'fade' | 'none';
+  emphasisSfx?: SfxBankId; // a sound to fire ON this text's appearance (startSec)
 }
 export interface BoxLayer {
   kind: 'box';
@@ -351,6 +359,7 @@ export function planScene(scene: FinalRenderScene, trimSec: number | null, dims:
     layers.push({
       kind: 'text', text: lines.join('\n'), fontsize, color: 'white', boxAlpha: 0,
       xExpr: '(w-text_w)/2', yBase: yTop, startSec: HOOK_DELAY, endSec: end, anim: 'slideup',
+      emphasisSfx: OVERLAY_SFX.hook ?? undefined, // boom on the flip pop
     });
     return layers;
   }
@@ -365,11 +374,16 @@ export function planScene(scene: FinalRenderScene, trimSec: number | null, dims:
   if (oText && !dup) {
     const { fontsize, lines } = fitText(oText, sz.usableW, Math.round(h * 0.044));
     const color = overlay!.style === 'callout' || overlay!.style === 'punchline' ? '0xFFCC00' : 'white';
+    const emphasisSfx = OVERLAY_SFX[overlay!.style] ?? undefined;
     const oEnd = Math.min(end, OVERLAY_HOLD_SEC);
-    if (oEnd >= 0.4) {
+    // Offset a sound-paired overlay so its pop reads after the cut whoosh — but
+    // never so far that the overlay shows < 0.4s.
+    const oStart = emphasisSfx ? Math.min(CALLOUT_LEAD, Math.max(0, oEnd - 0.4)) : 0;
+    if (oEnd - oStart >= 0.4) {
       layers.push({
         kind: 'text', text: lines.join('\n'), fontsize, color, boxAlpha: BOX_ALPHA,
-        xExpr: '(w-text_w)/2', yBase: cy, startSec: 0, endSec: oEnd, anim: 'fade',
+        xExpr: '(w-text_w)/2', yBase: cy, startSec: oStart, endSec: oEnd, anim: 'fade',
+        emphasisSfx,
       });
       capStart = oEnd + 0.1;
     }
@@ -819,28 +833,29 @@ export async function renderFinalVideo(
 
       const { trimSec, padAudio } = chooseTrim(scene, probeSec, detectedSec);
 
-      // Resolve + snap + clamp SFX cues for this scene (missing asset → skip).
-      // Transition sounds snap to the cut (i is the ordered scene index).
+      // EDL cues: keep only transition sounds, snapped to the cut (i = ordered idx).
       const sfx: PreparedSfx[] = [];
       for (const cue of scene.sfxCues ?? []) {
+        const snapped = snapSfxAnchor(cue.sfxId, i, !!scene.isHook);
+        if (snapped === null) continue;
         const p = sfxPath(cue.sfxId);
         if (!p) { console.warn(`[renderFfmpeg] sfx missing: ${cue.sfxId}`); continue; }
-        const snapped = snapSfxAnchor(cue.sfxId, cue.anchorSec, i, !!scene.isHook);
-        if (snapped === null) continue;
         const anchor = clampAnchor(snapped, trimSec);
         if (anchor === null) continue;
         sfx.push({ path: p, anchorSec: anchor });
       }
-      // The hook must never be silent: if the EDL cued no usable SFX, drop a
-      // default impact on the flip reveal (HOOK_DELAY).
-      if (scene.isHook && !sfx.length) {
-        const p = sfxPath(DEFAULT_HOOK_SFX);
-        const anchor = clampAnchor(HOOK_DELAY, trimSec);
-        if (p && anchor !== null) sfx.push({ path: p, anchorSec: anchor });
-      }
 
       // Compile the scene's draw plan (hook reveal+wipe / overlay→caption) once.
       const layers = planScene(scene, trimSec, dims);
+
+      // Emphasis SFX: each strategic overlay's paired sound lands on its EXACT
+      // on-screen frame (the layer's own startSec) — frame-locked to the text.
+      for (const l of layers) {
+        if (l.kind !== 'text' || !l.emphasisSfx) continue;
+        const p = sfxPath(l.emphasisSfx);
+        const anchor = clampAnchor(l.startSec, trimSec);
+        if (p && anchor !== null) sfx.push({ path: p, anchorSec: anchor });
+      }
 
       const outPath = join(dir, `muxed_${i}.mp4`);
       buildScene(
