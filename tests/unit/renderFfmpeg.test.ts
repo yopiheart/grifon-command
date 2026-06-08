@@ -3,8 +3,9 @@ import {
   parseDurationSec, parseTrimSec, dimsFor, chooseTrim,
   clampWindow, clampAnchor, escFilterPath,
   safeZone, fitText, wrapTwoLines, stripUnrenderable, evenSplit, chunkCaption,
-  planScene, buildTextFilter, buildBoxFilter, WIPE_SLICES, snapSfxAnchor,
+  planScene, buildTextFilter, buildBoxFilter, WIPE_SLICES, snapSfxAnchor, pickSceneSfx,
 } from '../../api/_lib/renderFfmpeg.js';
+import type { SfxCandidate } from '../../api/_lib/renderFfmpeg.js';
 import type { FinalRenderScene } from '../../types.js';
 
 // Encodes the Phase 2 trim intent (workflows/render_pipeline_voice_10.md):
@@ -355,5 +356,33 @@ describe('snapSfxAnchor (keep only deterministic transition cues)', () => {
   it('drops EDL non-transition cues (their guessed in-scene timing is unreliable)', () => {
     expect(snapSfxAnchor('ding', 1, false)).toBeNull();   // emphasis now comes from text-paired layers
     expect(snapSfxAnchor('boom', 4, false)).toBeNull();
+  });
+});
+
+describe('pickSceneSfx (restraint: no stacking, capped whooshes, emphasis wins)', () => {
+  it('drops a transition whoosh that collides with an emphasis pop (emphasis wins)', () => {
+    const cands: SfxCandidate[] = [
+      { sfxId: 'whoosh', globalSec: 10.0, transition: true },
+      { sfxId: 'pop', globalSec: 10.3, transition: false }, // 0.3 < 0.4 gap
+    ];
+    expect(pickSceneSfx(cands, [], 0).map((k) => k.sfxId)).toEqual(['pop']);
+  });
+  it('keeps both when spaced beyond the min-gap', () => {
+    const cands: SfxCandidate[] = [
+      { sfxId: 'whoosh', globalSec: 10.0, transition: true },
+      { sfxId: 'pop', globalSec: 11.0, transition: false },
+    ];
+    expect(pickSceneSfx(cands, [], 0).length).toBe(2);
+  });
+  it('caps transition whooshes at MAX_WHOOSH (3); emphasis stays uncapped', () => {
+    const trans: SfxCandidate[] = [12, 16, 20, 24].map((t) => ({ sfxId: 'whoosh', globalSec: t, transition: true }));
+    expect(pickSceneSfx(trans, [], 3).length).toBe(0); // budget exhausted
+    expect(pickSceneSfx(trans, [], 2).length).toBe(1); // 1 left
+    const ding: SfxCandidate[] = [{ sfxId: 'ding', globalSec: 30, transition: false }];
+    expect(pickSceneSfx(ding, [], 3).length).toBe(1);  // emphasis ignores the whoosh cap
+  });
+  it('respects already-placed times across scenes (min-gap is global)', () => {
+    const cands: SfxCandidate[] = [{ sfxId: 'ding', globalSec: 5.2, transition: false }];
+    expect(pickSceneSfx(cands, [5.0], 0).length).toBe(0); // 5.2 within 0.4 of placed 5.0
   });
 });

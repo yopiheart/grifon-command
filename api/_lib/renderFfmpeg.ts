@@ -75,6 +75,13 @@ const OVERLAY_SFX: Record<OverlayStyle, SfxBankId | null> = {
 };
 const CALLOUT_LEAD = 0.3; // delay a callout/punchline so its pop reads distinct from the cut whoosh
 
+// Restraint — keep ads from sounding cheap (Neil: multiple stacked sounds read as
+// AI slop). No two SFX within MIN_SFX_GAP (kills whoosh+pop stacking); transition
+// whooshes capped per ad. Emphasis SFX (hook/callout/CTA) are uncapped — they're
+// tied to overlays and self-limit, and they win when a whoosh collides with them.
+const MIN_SFX_GAP = 0.4;   // seconds between any two placed SFX
+const MAX_WHOOSH = 3;      // transition whooshes per ad
+
 // Resolve `assets/<rel>` from either the compiled module dir (local/dev) or the
 // repo-root path Vercel's includeFiles preserves into the lambda. `GRIFON_ASSET_DIR`
 // (first when set) lets the synthetic test harness point at temp assets without
@@ -289,6 +296,44 @@ export function snapSfxAnchor(
 ): number | null {
   if (TRANSITION_SFX.has(sfxId)) return isHook || sceneIndex === 0 ? null : 0;
   return null;
+}
+
+export interface SfxCandidate {
+  sfxId: SfxBankId;
+  globalSec: number;   // position on the whole-ad timeline
+  transition: boolean; // true = cut whoosh/swish (capped); false = emphasis (uncapped)
+}
+
+/**
+ * Pick which of a scene's SFX candidates to keep, given what's already placed
+ * across the ad. Rules: emphasis wins over transitions (sorted first), nothing
+ * lands within `minGap` of an already-placed sound (kills stacking), and
+ * transition whooshes are capped at `maxWhoosh` per ad. Pure + order-stable so it
+ * unit-tests cleanly; the caller threads `placedSec` / `whooshUsed` across scenes.
+ */
+export function pickSceneSfx(
+  candidates: SfxCandidate[],
+  placedSec: number[],
+  whooshUsed: number,
+  maxWhoosh: number = MAX_WHOOSH,
+  minGap: number = MIN_SFX_GAP
+): SfxCandidate[] {
+  const ordered = [...candidates].sort(
+    (a, b) => Number(a.transition) - Number(b.transition) || a.globalSec - b.globalSec
+  );
+  const placed = [...placedSec];
+  const kept: SfxCandidate[] = [];
+  let whoosh = whooshUsed;
+  for (const c of ordered) {
+    if (placed.some((t) => Math.abs(t - c.globalSec) < minGap)) continue;
+    if (c.transition) {
+      if (whoosh >= maxWhoosh) continue;
+      whoosh++;
+    }
+    kept.push(c);
+    placed.push(c.globalSec);
+  }
+  return kept;
 }
 
 // ---- Per-scene draw plan (the single source of truth for what/when/where) ----
@@ -814,6 +859,10 @@ export async function renderFinalVideo(
   try {
     const ordered = [...scenes].sort((a, b) => a.sceneIdx - b.sceneIdx);
     const muxed: string[] = [];
+    // SFX restraint state, threaded across scenes (whole-ad timeline).
+    const placedSec: number[] = [];
+    let whooshUsed = 0;
+    let elapsed = 0; // cumulative timeline position = current scene's start
 
     for (let i = 0; i < ordered.length; i++) {
       const scene = ordered[i];
@@ -833,28 +882,33 @@ export async function renderFinalVideo(
 
       const { trimSec, padAudio } = chooseTrim(scene, probeSec, detectedSec);
 
-      // EDL cues: keep only transition sounds, snapped to the cut (i = ordered idx).
-      const sfx: PreparedSfx[] = [];
-      for (const cue of scene.sfxCues ?? []) {
-        const snapped = snapSfxAnchor(cue.sfxId, i, !!scene.isHook);
-        if (snapped === null) continue;
-        const p = sfxPath(cue.sfxId);
-        if (!p) { console.warn(`[renderFfmpeg] sfx missing: ${cue.sfxId}`); continue; }
-        const anchor = clampAnchor(snapped, trimSec);
-        if (anchor === null) continue;
-        sfx.push({ path: p, anchorSec: anchor });
-      }
-
-      // Compile the scene's draw plan (hook reveal+wipe / overlay→caption) once.
+      // Compile the draw plan first — emphasis SFX are derived from its layers.
       const layers = planScene(scene, trimSec, dims);
 
-      // Emphasis SFX: each strategic overlay's paired sound lands on its EXACT
-      // on-screen frame (the layer's own startSec) — frame-locked to the text.
+      // Gather this scene's SFX candidates on the GLOBAL timeline:
+      //  - transition cues (whoosh/swish) snapped to the cut,
+      //  - emphasis sounds frame-locked to each strategic overlay's appearance.
+      const cands: SfxCandidate[] = [];
+      for (const cue of scene.sfxCues ?? []) {
+        const snapped = snapSfxAnchor(cue.sfxId, i, !!scene.isHook);
+        if (snapped !== null) cands.push({ sfxId: cue.sfxId, globalSec: elapsed + snapped, transition: true });
+      }
       for (const l of layers) {
-        if (l.kind !== 'text' || !l.emphasisSfx) continue;
-        const p = sfxPath(l.emphasisSfx);
-        const anchor = clampAnchor(l.startSec, trimSec);
-        if (p && anchor !== null) sfx.push({ path: p, anchorSec: anchor });
+        if (l.kind === 'text' && l.emphasisSfx) {
+          cands.push({ sfxId: l.emphasisSfx, globalSec: elapsed + l.startSec, transition: false });
+        }
+      }
+
+      // Restraint: keep it tasteful (no stacking, capped whooshes, emphasis wins).
+      const sfx: PreparedSfx[] = [];
+      for (const c of pickSceneSfx(cands, placedSec, whooshUsed)) {
+        const p = sfxPath(c.sfxId);
+        const anchor = clampAnchor(c.globalSec - elapsed, trimSec);
+        if (!p) { console.warn(`[renderFfmpeg] sfx missing: ${c.sfxId}`); continue; }
+        if (anchor === null) continue;
+        sfx.push({ path: p, anchorSec: anchor });
+        placedSec.push(c.globalSec);
+        if (c.transition) whooshUsed++;
       }
 
       const outPath = join(dir, `muxed_${i}.mp4`);
@@ -863,6 +917,7 @@ export async function renderFinalVideo(
         dir, scene.sceneIdx, layers, sfx, fontName
       );
       muxed.push(outPath);
+      elapsed += trimSec ?? probeSec ?? 0; // advance the timeline by this scene's length
     }
 
     const finalPath = join(dir, 'final.mp4');
