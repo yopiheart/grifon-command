@@ -89,6 +89,95 @@ export interface SceneBatchEntry {
   type: 'talking' | 'b-roll' | 'cinematic';
 }
 
+/**
+ * One scene fed to the server-side voice consolidator (`api/voice/consolidate.ts`).
+ * Routing is by `type`: talking → speech-to-speech on the scene MP4's audio
+ * track (preserves lip-sync), b-roll → TTS on `scriptLine`, cinematic → TTS if
+ * `scriptLine` is non-empty else skipped. `videoUrl` (a signed MP4 URL) is
+ * required for the talking STS path; without it a talking scene falls back to
+ * TTS on `scriptLine`.
+ */
+export interface ConsolidationScene {
+  sceneIdx: number;
+  type: 'talking' | 'b-roll' | 'cinematic';
+  scriptLine: string;
+  videoUrl?: string;
+}
+
+/**
+ * Per-scene result of voice consolidation. `audioUrl` is a 24h Supabase-signed
+ * MP3 URL (never a browser `blob:` URL — the render path must be server-reachable).
+ * `audioUrl` is null when the scene was `skipped` (visual-only) or hit an `error`.
+ */
+export interface ConsolidationResult {
+  sceneIdx: number;
+  audioUrl: string | null;
+  skipped?: boolean;
+  error?: string;
+}
+
+/**
+ * One scene fed to the final-render executor (`api/render/final.ts`). Pairs the
+ * silent scene MP4 with its consolidated voice MP3 (Phase 1 output).
+ *
+ * Trim policy (deterministic per-type cap — Phase 1 fix):
+ * - `keepFullClip` true (the hook): keep the whole clip so the product-reveal
+ *   end-frame survives; the short VO is padded with trailing silence.
+ * - `targetDurationSec` set (talking + regular b-roll): hard-cap the clip to the
+ *   spoken-length estimate, cutting Veo's filler tail (which silencedetect can't).
+ * - else `audioUrl` present: legacy silencedetect fallback.
+ * - else `fallbackDurationSec` / full clip.
+ */
+export interface FinalRenderScene {
+  sceneIdx: number;
+  videoUrl: string;
+  audioUrl?: string | null;
+  /** Hard cap (sec) from the spoken-length estimate; cuts Veo filler tails. */
+  targetDurationSec?: number | null;
+  /** Keep the full clip (hook): preserves the visual reveal; pads short audio. */
+  keepFullClip?: boolean;
+  fallbackDurationSec?: number;
+  // ---- Burn-in (from the EDL; times are scene-relative, clamped to the trim) ----
+  /** Hook/callout/subtitle/punchline text burned via ffmpeg drawtext. */
+  overlayText?: OverlayText[];
+  /** Beat-aligned SFX cues mixed in at their anchorSec. */
+  sfxCues?: SfxCue[];
+  /** Planned transition INTO this scene. Threaded now; not yet rendered (Slice B). */
+  transitionIn?: { type: TransitionType; durationSec: number };
+  // ---- Overlay/caption engine inputs ----
+  /** Spoken line for this scene → drives the auto-captions (scenes 2+). */
+  scriptLine?: string;
+  /** Scene type from the batch — picks the caption band (talking→face-clear). */
+  sceneType?: 'talking' | 'b-roll' | 'cinematic';
+  /** Scene 1 = the hook (slide-up reveal + crimson wipe-box on the last word). */
+  isHook?: boolean;
+  /** Face-clear band (fractions of height) from browser detection; caption goes here. */
+  captionRegion?: { yFracTop: number; yFracBottom: number };
+}
+
+export interface FinalRenderRequest {
+  scenes: FinalRenderScene[];
+  aspectRatio: '9:16' | '16:9' | '1:1';
+  /** Style-keyed background-music bed (chosen in code from EDL meta.scriptStyleDetected). */
+  music?: { style: 'mrbeast' | 'temu' | 'testimonial'; enabled: boolean };
+}
+
+/** Returned immediately by the fire endpoint; the client polls with this jobId. */
+export interface FinalRenderJob {
+  jobId: string;
+}
+
+export type FinalRenderStatus = 'processing' | 'done' | 'failed';
+
+/** Poll result + persisted status sidecar (gemini-videos/${uid}/final/${jobId}.status.json). */
+export interface FinalRenderResult {
+  done: boolean;
+  status?: FinalRenderStatus;
+  url?: string;
+  downloadUrl?: string;
+  error?: string;
+}
+
 export interface AllData {
     clientDetails: ClientDetails;
     businessInfo: BusinessInfo;

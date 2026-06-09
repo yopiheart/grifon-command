@@ -699,3 +699,97 @@ filtered ancestor entirely — cleaner than hoisting it out of the JSX tree by h
 `position: sticky` descendants; use `overflow-x: clip` instead (it clips without creating the
 scroll container). Both gotchas hit in the same header build; both verified fixed in vivo via
 Playwright at 390px. Shipped this session (landing + pricing shared header + urgency bar).
+
+### 2026-06-08 — A leaked face in a product-only frame is the REFERENCE image, not the prompt (and not always the avatar)
+**Context:** During The Ordinary smoke, the hook end-frame and a product b-roll rendered a **western woman**
+composited over the serum bottle — in frames whose prompt said "serum bottle on marble, no human." Two days
+of other products never did this. First instinct (and a first patch attempt) blamed the **avatar** leaking
+into the reveal.
+**What went wrong / the trap:** It was NOT the avatar. A talking scene proved the avatar rendered correctly
+as a **Filipino** woman — but the leaked face was **western**. The real source was the **hero product photo**
+(`h_ointment.jpg`): a handheld lifestyle shot with a prominent **western hand/arm**. In `'product'` reference
+mode, the image model **completed a whole western person** from that partial hand — the visual reference +
+IDENTITY_LOCK overrode the text rule "NO HUMAN FACES." It only surfaced now because this hero is person-
+prominent; cleaner product heroes didn't trigger it. (It's also stochastic — scene 7, same setup, came out
+clean.)
+**Lesson:** When an image defies a clearly-worded prompt, suspect the **reference image + consistency-lock
+mode FIRST**, not the prompt wording — an attached reference + IDENTITY_LOCK beats "no human" every time.
+And before blaming the avatar, **look at a talking scene to confirm the avatar's actual render** (ethnicity/
+identity) — the leaked face may come from the *product* reference, in which case dropping the avatar does
+nothing. Fix shipped: a TUNED `'product'`-mode guard in `services/geminiService.ts` `generateSceneImage`
+("reproduce ONLY the product; ignore/exclude any hands/arms/people in the reference; never invent a person"),
+Neil-approved per-diff, commit `627ccb2`. Verified: the hook reveal + b-roll regenerated clean. Keep the
+handheld hero (it's the size anchor) — fix the prompt rule, not the hero.
+
+### 2026-06-08 — ffmpeg burn-in: filtergraph escaping + drawbox can't animate (build-passes ≠ renders-right)
+**Context:** Building the CapCut-grade overlay/caption engine in `api/_lib/renderFfmpeg.ts`
+(Inter-Black drawtext + a crimson L→R "wipe" highlight box behind the hook title). Two ffmpeg
+foot-guns bit in sequence, both invisible to the build and the type-checker.
+**What went wrong (two distinct traps):**
+1. **Windows drive-colon in filtergraph paths.** `drawtext=fontfile=C\:/…` (even escaped) made
+   the filter parser throw `Invalid argument`. The synthetic harness caught it on the first run.
+   Fix: copy the font into the scene temp dir, write textfiles there, and run ffmpeg with
+   `cwd=dir` referencing **bare filenames** — no drive/colon ever enters the graph. Also: protect
+   commas inside expression option values by **single-quoting** the value (`y='min(1,max(0,…))'`),
+   NOT backslash-escaping (`\,`) — inside single quotes commas are literal; a stray backslash
+   inside quotes breaks the expression parser. Validate empirically with a real Taglish line that
+   contains an apostrophe AND a comma AND an emoji.
+2. **`drawbox` evaluates w/x/y/h ONCE — no animation.** A `t`-based width
+   `w='min(W,speed*max(0,t-start))'` rendered a *static full box*, not a wipe (`t` is NaN at
+   init → `min()` returns W). This build of ffmpeg has **no `eval=frame` option on drawbox**
+   (`Error applying option 'eval' to filter 'drawbox': Option not found`) — so you cannot animate
+   a box dimension via the time variable at all. Fix: animate via **`enable` instead of geometry**
+   — emit N (24) integer-tiled static drawbox slices left→right, each gated by
+   `enable='gte(t,startSec+i*step)'` (enable IS evaluated per-frame), so they cascade on to fill
+   the bar L→R. Same trick generalizes to any "reveal/wipe/progress" effect drawbox can't tween.
+   The static box shipped unnoticed through build + unit tests + a frame I read at the wrong
+   timestamp (post-wipe) — only a mid-wipe-window frame (and Neil's eye on the moving video)
+   exposed it.
+**Lesson — three parts.** (a) For ffmpeg work, **build-clean and even a passing render are not
+proof**; assert the *motion* by extracting frames INSIDE the animation window (here 0.55–0.95s),
+not just one resolved frame (pairs with the 2026-05-22 frame-sampling-grid lesson). (b) Before
+relying on a `t`/per-frame expression in a filter, confirm that filter actually re-evaluates it
+(many ffmpeg filters eval-once unless they expose `eval=frame`; drawtext does, drawbox does not in
+this build) — `-filters`/`-h filter=drawbox` and a 3-frame smoke settle it in 30s. (c) Keep the
+synthetic harness (`tests/integration/burnin-render.test.ts`, gated) seeded with the nastiest real
+input (Taglish apostrophe+comma+emoji) so escaping regressions fail fast and free. Shipped:
+slice-wipe + bare-filename/cwd + single-quote escaping, branch `feat/burn-in-overlays-sfx-music`.
+
+### 2026-06-08 — Audio for ads: judge full-ad not excerpts; SFX timing must be engine-deterministic; less is more
+**Context:** After the burn-in merge, polishing the final render's audio on Neil's real 8-scene ad
+(music bed + SFX). Three separate traps, each only caught by Neil's ear on the FULL render.
+**What went wrong / lessons:**
+1. **Music level can't be judged on a short excerpt.** I A/B'd 8-second clips and Neil picked
+   "balanced" (`MUSIC_VOLUME 0.34` + soft duck) — which then *fought the VO* across the full ad.
+   Fix: bed `0.18` + harder/faster 4:1 duck AND a **`loudnorm=I=-14:TP=-1.5:LRA=11` master** so every
+   ad ships VO-clear at the social standard regardless of the client's VO level. **Always confirm an
+   audio mix on the whole timeline, not a snippet** — and pin final loudness deterministically.
+2. **A text LLM can't time in-scene SFX** — the EDL writes `sfxCues[].anchorSec` but never sees the
+   rendered frame, so "ding on the product reveal" / "whoosh on the transition" drift early/late
+   (Neil saw exactly this). Fix: **place SFX from events the ENGINE knows exactly** — transition
+   sounds snap to the cut (scene boundary), the hook accent to the flip (`HOOK_DELAY`), and emphasis
+   sounds to each overlay's own `startSec` (`TextLayer.emphasisSfx`). Drop the EDL's guessed
+   in-scene anchors. Generalizes: if a deterministic signal exists for "when", don't let the LLM guess it.
+3. **Stacked/over-dense SFX read as cheap/AI-slop.** A whoosh on every cut + a pop stacked on the
+   same beat sounded amateur. Fix: a restraint pass (`pickSceneSfx`) — no two within 0.4s, transition
+   whooshes capped per ad, emphasis wins collisions. **For ads, 3–5 SFX / 30s max; silence is
+   premium, mistimed noise is cheap.** Shipped `3d90474`/`732a4bf`/`259570a` on main. Verify audio
+   work by re-stitching the real ad + uploading (`.tmp/upload.mjs`) for Neil to *hear* — frames/specs
+   don't prove a mix.
+
+### 2026-06-08 — ffmpeg drawtext `fontsize` DOES animate per-frame (verified) — so scale-pop is real
+**Context:** Punching up the hook reveal (Neil: the old linear slide+fade read as a plain fade).
+Building a "flip/scale-pop" variant needs the glyph size to animate, but the drawbox trap above
+made me distrust per-frame eval. Ran the 30s capability smoke before committing flip: a 1s clip
+with `drawtext=...:fontsize='40+360*t'`, frames at t=0.1 vs t=0.9.
+**Result:** Glyphs scaled from ~76px → ~364px — **`fontsize` IS re-evaluated per frame** in this
+ffmpeg-static build (exit 0, no `Option not found`). Unlike `drawbox` geometry, `fontsize` takes a
+`t`-based expression directly (single-quote it so inner commas in `max(10,...)` stay literal).
+**Lesson:** drawtext animates **y, alpha, AND fontsize** per-frame — only `drawbox` w/x/y/h is
+eval-once here. So scale/flip effects belong on the text via `fontsize`, not on a box. Always run
+the one-clip smoke first (it's the same 30s check that would've caught the drawbox trap) rather
+than assuming a filter does or doesn't re-eval. Hook reveal now ships three styles behind
+`HOOK_REVEAL` (`bounce` easeOutBack overshoot / `slam` easeOutQuart hard slide / `flip` uniform
+scale-grow), alpha snapping in 0.15s so motion carries the reveal. `pow()` bases kept ≥0 via
+`(1-p)` so eval never hits `pow(negative,...)`. Verify by reading frames **inside 0.42–0.60s**
+(the punch window) — wider samples land post-settle and look identical across styles.

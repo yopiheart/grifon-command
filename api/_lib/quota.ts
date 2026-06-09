@@ -145,6 +145,18 @@ export async function consumeMonthly(
   userId: string,
   plan: ServerPlanId
 ): Promise<ConsumeResult> {
+  // Dev-only video bypass (Neil 2026-06-05): when GRIFON_DEV_UNMETERED_VIDEO='true'
+  // — set in LOCAL .env only, never on Vercel — skip the monthly video meter so
+  // local smoke-testing doesn't burn the real per-plan video_ads cap. Scoped to
+  // video_ads ONLY; every other meter and all of production stay fully enforced.
+  // The flag is absent under vitest, so quota.monthly.test.ts still asserts the
+  // real cap. Placed before the limit<=0 short-circuit so it also unblocks tiers
+  // whose video_ads allowance is 0 (free/creator) during local testing.
+  if (unit === 'video_ads' && process.env.GRIFON_DEV_UNMETERED_VIDEO === 'true') {
+    const devLimit = MONTHLY_LIMITS[plan][unit] || 999;
+    return { allowed: true, used: 0, limit: devLimit, remaining: devLimit };
+  }
+
   const limit = MONTHLY_LIMITS[plan][unit];
   if (limit <= 0) {
     return { allowed: false, used: 0, limit, remaining: 0 };

@@ -5,6 +5,33 @@
 > by folding them into one render+voice pipeline. **Phase 0 (ffmpeg spike) is the decision gate —
 > build nothing on Vercel until it passes.** Verification of the end result is **PC-gated** (Neil
 > renders a real batch and watches it); cannot be closed from mobile.
+>
+> **Status (2026-06-04):** Phase 0 ✅ (BUILD ON VERCEL). **Phases 1–3 BUILT + pushed** on
+> `claude/effort-estimation-AhHqn` (commits `bb06353` voice routing, `3c4e064` render executor,
+> `eddcc4d` AI Editor UI). Decisions this session: skip the throwaway confirmation deploy; async
+> fire-then-poll via `waitUntil` (Vercel **Pro**, `maxDuration 300`); `@vercel/functions` added.
+> Build green, 23 unit tests pass (routing + silencedetect parse + audio-less fallback + sceneIdx
+> keying), client-bundle leak check 0, brand-check `BRAND_PASS_WITH_NITS 37/50`. **STILL OPEN — the
+> PC-gated smoke is the only remaining gate:** real wizard run → Render All → Consolidate Voice →
+> Render Final Video → confirm lip-sync + no dead-air tail + `sceneIdx` order. The first real Vercel
+> render also yields the wall-time the skipped confirmation deploy left unmeasured (reopen the
+> worker fallback only if it breaches ~120s). Two carry-forward notes: (a) `waitUntil` must survive
+> past the response on the live tier — else flip `api/render/final.ts` to the synchronous-long-call
+> fallback; (b) the suite has 15 pre-existing failures in `geminiService.*`/`edit-decision-list`
+> (the separate `generateEditDecisionList` feature), unrelated to #10.
+>
+> **Status (2026-06-08): ✅ SMOKE GATE GREEN — PC-gated smoke PASSED, PR #9 merged.** Drove a
+> full Director smoke (The Ordinary, Taglish Testimonial, 8 scenes) end-to-end → Render All →
+> Send to AI Editor → Consolidate Voice → Render Final → watched the MP4. Lip-sync + brand voice
+> 100% (Neil). Dead-air eliminated and verified objectively via `silencedetect`: the final 35.86s
+> MP4 has **only the intended 0.3s soft-word pad** at scene ends (was 1.45s + 1.26s dead-air tails
+> pre-fix); VO is never truncated; hook reveal-hold timing approved. Five real defects found+fixed
+> this smoke (all on PR #9): Vite `.tmp`/`.tools` EBUSY (`60d1cee`), AI-Editor crash on missing EDL
+> fields (`b505786`), product-mode hero-hand face-leak — tuned guard (`627ccb2`), VO-end trim vs
+> word-estimate (`72edf95`), and trailing-silence detection that ffmpeg closes at EOF (`ad8d6f8`).
+> **Deferred (next phase, not #10):** burn-in of overlay text / auto-captions / SFX / transitions /
+> background music (the EDL already *plans* these; v1 renderer is trim+concat only by design).
+> Also separate: the hook Kling-morph transition *quality* (creative pass).
 
 ## Context
 
@@ -95,6 +122,14 @@ below shows real Vercel renders breaching the budget.
    fixing Phase 2's `maxDuration` and committing the synchronous-vs-poll shape, do **one throwaway
    Vercel deploy of the 7-scene case** and record the real wall-time here. If it breaches ~120 s,
    reopen the worker fallback.
+   - **Status (2026-06-04): confirmation deploy DEFERRED, not done.** A ready-to-deploy token-gated
+     endpoint (`api/render/_spike.ts` + `vercel.json` maxDuration 300 / `includeFiles` for the ffmpeg
+     binary) was built and pushed, then **removed** — Neil opted to skip the manual Vercel deploy and
+     move on (PC margin is ~3×, and the live feature will yield a real number anyway). To redo:
+     recover `api/render/_spike.ts` from git history (commit `537b257` on `claude/effort-estimation-AhHqn`),
+     re-add the `vercel.json` entry, deploy a *preview*, and curl
+     `/api/render/_spike?key=grifon-phase0-spike-7e3f1a&n=7&threads=1`. **Still recommended before
+     Phase 2 locks `maxDuration`.**
 
 **Note on "throwaway endpoint":** the spike is a `scripts/` Node script, not an `api/` file, *on
 purpose* — any file under `api/` becomes a live Vercel function on the next deploy, and the script
@@ -168,6 +203,41 @@ render endpoints; if Phase 0 says worker, no Vercel render fn).
    light; cannot be closed from mobile.
 5. **Build gate:** `npm run build` exit 0 (cite its pass message); crown-jewel leak check = 0 (no
    prompt content touched — expected trivially clean).
+
+### PC-gated smoke checklist (the only open gate — tick each box)
+
+Phases 1–3 are built + pushed (PR #9); this is the manual end-to-end pass that closes #10. Run on a
+real wizard ad, not a fixture. Local (`npm run dev`) or the deployed Vercel preview both work — note
+that `waitUntil` only fires on Vercel, so a *deployed* run is the truest test of the async path.
+
+**Setup**
+- [ ] Keys present: `ELEVEN_LABS_API_KEY`, `GEMINI_API_KEY`, `SUPABASE_SERVICE_ROLE_KEY` (+ `VITE_*`)
+      — in `.env` for local, or Vercel env for the preview deploy.
+- [ ] Signed in on a **Creator+** account (free-tier TTS/STS daily caps are 3/2 — too low for a full batch).
+
+**Run**
+- [ ] Wizard → generate an 8-scene ad with at least one **talking** scene and one **b-roll**.
+- [ ] **Render All** → every scene reaches READY (silent MP4s persisted).
+- [ ] Open AI Editor (BatchEditMode) → the **FINAL_RENDER** panel shows at top.
+- [ ] Pick a brand voice → **Consolidate Voice** → "✓ N voice track(s) persisted" appears;
+      note any per-scene skip/quota lines.
+- [ ] **Render Final Video** → progress state → result `<video>` plays; **Download Final MP4** works.
+
+**Confirm on the played MP4 (the actual acceptance criteria)**
+- [ ] Talking scene is **lip-synced** (≤ ~50 ms drift) — voice-changer preserved Veo timing.
+- [ ] Each scene **ends at speech-end** — **no 4–6s dead-air / blur tail** (the headline bug).
+- [ ] Scenes are concatenated in **`sceneIdx` order**; final ends clean (no A/V drift at joins).
+- [ ] Audio-less / visual-only scenes kept their full clip with no glitch.
+
+**Record**
+- [ ] **First-render wall-time** (Vercel logs or stopwatch): ________ s. If > ~120 s → reopen the
+      dedicated-worker fallback (Decision #2). This is the number the skipped confirmation deploy left open.
+- [ ] If fire returns a `jobId` but poll never reaches `done` → `waitUntil` didn't survive the
+      response on this tier; flip `api/render/final.ts` to the synchronous-long-call fallback.
+
+**Close-out**
+- [ ] Smoke passed → update the Status block at top, merge PR #9 (mind the 15 pre-existing
+      `geminiService.*`/`edit-decision-list` failures if `main` has a CI test gate), tag #10 done.
 
 ## Guardrails for execution
 

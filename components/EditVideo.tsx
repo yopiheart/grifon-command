@@ -1,12 +1,20 @@
 
 import React, { useEffect, useState } from 'react';
-import { VideoEditInput, EditDecisionList, SceneBatchEntry, EditTargetPlatform } from '../types';
+import {
+  VideoEditInput, EditDecisionList, SceneBatchEntry, EditTargetPlatform,
+  ConsolidationScene, FinalRenderScene, FinalRenderResult, VoiceLibrary, StabilityMode,
+} from '../types';
 import { generateVideoEditPlan, generateEditDecisionList } from '../services/geminiService';
+import { fetchVoices } from '../services/voiceService';
+import { consolidateVoices } from '../services/voiceConsolidationService';
+import { renderFinalVideo } from '../services/finalRenderService';
+import { estimateSpokenSec } from '../utils/spokenDuration';
+import { RECOMMENDED_VOICE_IDS } from './SignalModulator/pinoyReady';
 import { compressImageForUpload } from '../utils/imageCompression';
 import { GlassPanel } from './ui/GlassPanel';
 import { GoldButton } from './ui/GoldButton';
 import Loader from './ui/Loader';
-import { Copy, ChevronLeft, UploadCloud, Image as ImageIcon, Trash2, Download, Scissors, Sparkles } from 'lucide-react';
+import { Copy, ChevronLeft, UploadCloud, Image as ImageIcon, Trash2, Download, Scissors, Sparkles, Mic, Clapperboard, CheckSquare, Square } from 'lucide-react';
 import saveAs from 'file-saver';
 
 export interface EditorBatchPayload {
@@ -72,6 +80,151 @@ const BatchEditMode: React.FC<{
     saveAs(blob, `edit-decision-list-${Date.now()}.json`);
   };
 
+  // --- Final-render pipeline (voice consolidation → server ffmpeg render) ----
+  const [voices, setVoices] = useState<VoiceLibrary | null>(null);
+  const [voiceId, setVoiceId] = useState<string>('');
+  const stabilityMode: StabilityMode = 'robust';
+  const [isConsolidating, setIsConsolidating] = useState(false);
+  const [voicedOverlays, setVoicedOverlays] = useState<Record<number, string>>({});
+  const [consolidateNotes, setConsolidateNotes] = useState<string[]>([]);
+  const [consolidateError, setConsolidateError] = useState<string | null>(null);
+  const [voiceReady, setVoiceReady] = useState(false);
+
+  const [isRendering, setIsRendering] = useState(false);
+  const [renderResult, setRenderResult] = useState<FinalRenderResult | null>(null);
+  const [renderError, setRenderError] = useState<string | null>(null);
+  // Burn-in: drawtext overlays/captions + SFX + ducked music bed from the EDL.
+  const [burnInEnabled, setBurnInEnabled] = useState(true);
+  // Face-clear caption bands per talking scene (MediaPipe, AI-Editor-only).
+  // Graceful: empty → the renderer uses its per-type heuristic band.
+  const [captionRegions, setCaptionRegions] = useState<Record<number, { yFracTop: number; yFracBottom: number }>>({});
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchVoices()
+      .then((lib) => {
+        if (cancelled) return;
+        setVoices(lib);
+        const first =
+          lib.libraryVoices[0]?.voice_id ??
+          lib.myVoices[0]?.voice_id ??
+          lib.stockVoices[0]?.voice_id ??
+          RECOMMENDED_VOICE_IDS[0] ??
+          '';
+        setVoiceId(first);
+      })
+      .catch(() => {
+        if (!cancelled) setVoiceId(RECOMMENDED_VOICE_IDS[0] ?? '');
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // Detect face-clear caption bands for talking scenes (dynamic-imported MediaPipe;
+  // runs once per batch, fully graceful — failure leaves captionRegions empty).
+  useEffect(() => {
+    let cancelled = false;
+    const talking = editorBatch.sceneBatch.filter((s) => s.type === 'talking' && s.renderedUrl);
+    if (!talking.length) return;
+    import('../services/captionRegionDetect')
+      .then(({ detectCaptionRegions }) =>
+        detectCaptionRegions(
+          editorBatch.sceneBatch.map((s) => ({ sceneIdx: s.sceneIdx, videoUrl: s.renderedUrl, type: s.type }))
+        )
+      )
+      .then((r) => { if (!cancelled) setCaptionRegions(r); })
+      .catch(() => { /* heuristic fallback */ });
+    return () => { cancelled = true; };
+  }, [editorBatch]);
+
+  const handleConsolidate = async () => {
+    if (!voiceId) {
+      setConsolidateError('Pick a voice first.');
+      return;
+    }
+    setIsConsolidating(true);
+    setConsolidateError(null);
+    setConsolidateNotes([]);
+    try {
+      const scenes: ConsolidationScene[] = editorBatch.sceneBatch.map((s) => ({
+        sceneIdx: s.sceneIdx,
+        type: s.type,
+        scriptLine: s.scriptLine,
+        videoUrl: s.renderedUrl,
+      }));
+      const results = await consolidateVoices(scenes, voiceId, stabilityMode);
+      const overlays: Record<number, string> = {};
+      const notes: string[] = [];
+      for (const r of results) {
+        if (r.audioUrl) overlays[r.sceneIdx] = r.audioUrl;
+        else if (r.skipped) notes.push(`Scene ${r.sceneIdx + 1}: skipped (${r.error ?? 'visual-only'})`);
+        else if (r.error) notes.push(`Scene ${r.sceneIdx + 1}: ${r.error}`);
+      }
+      setVoicedOverlays(overlays);
+      setConsolidateNotes(notes);
+      setVoiceReady(true);
+      if (Object.keys(overlays).length === 0) {
+        setConsolidateError('No voice tracks were produced — check your daily quota or scene scripts.');
+      }
+    } catch (err: any) {
+      setConsolidateError(err?.message ?? 'VOICE_CONSOLIDATION_FAILED');
+    } finally {
+      setIsConsolidating(false);
+    }
+  };
+
+  const handleRenderFinal = async () => {
+    setIsRendering(true);
+    setRenderError(null);
+    setRenderResult(null);
+    try {
+      const scenes: FinalRenderScene[] = editorBatch.sceneBatch
+        .filter((s) => s.renderedUrl)
+        .map((s) => {
+          // Per-type dead-air trim: keep the hook (scene 0) full so its
+          // product-reveal end-frame survives; cap every other scene to the
+          // spoken-length estimate so Veo's filler tail is cut.
+          const isHook = s.sceneIdx === 0;
+          const estimate = estimateSpokenSec(s.scriptLine);
+          // Burn-in: thread this scene's EDL plan (overlays/captions, SFX,
+          // transition) into the renderer. Absent EDL → bare stitch for the scene.
+          const plan = edl?.scenes.find((e) => e.sceneIdx === s.sceneIdx);
+          return {
+            sceneIdx: s.sceneIdx,
+            videoUrl: s.renderedUrl as string,
+            audioUrl: voicedOverlays[s.sceneIdx] ?? null,
+            keepFullClip: isHook,
+            targetDurationSec: isHook || estimate <= 0 ? null : estimate,
+            overlayText: plan?.overlayText,
+            sfxCues: plan?.sfxCues,
+            transitionIn: plan?.transitionIn,
+            // Overlay/caption engine inputs:
+            scriptLine: s.scriptLine,
+            sceneType: s.type,
+            isHook,
+            // Face-clear band from browser detection (talking scenes); absent → heuristic.
+            captionRegion: captionRegions[s.sceneIdx],
+          };
+        });
+      if (scenes.length === 0) {
+        setRenderError('No rendered scene videos found in this batch.');
+        return;
+      }
+      // Background-music bed chosen in code from the EDL's detected script style.
+      const music = burnInEnabled
+        ? { style: edl?.meta.scriptStyleDetected ?? 'mrbeast', enabled: true as const }
+        : undefined;
+      const result = await renderFinalVideo({ scenes, aspectRatio: editorBatch.aspectRatio, music });
+      if (result.status === 'failed') setRenderError(result.error ?? 'RENDER_FAILED');
+      else setRenderResult(result);
+    } catch (err: any) {
+      setRenderError(err?.message ?? 'FINAL_RENDER_FAILED');
+    } finally {
+      setIsRendering(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-zinc-950 text-white font-sans flex flex-col items-center p-4 sm:p-6 md:p-8">
       <div className="w-full max-w-6xl mx-auto">
@@ -86,13 +239,144 @@ const BatchEditMode: React.FC<{
           </div>
           <div>
             <h1 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight break-words whitespace-normal leading-tight">
-              Viral Video Editor <span className="text-[#FFCC00]">// AI EDL</span>
+              Viral Video Editor <span className="text-[#FFCC00]">// FINAL RENDER</span>
             </h1>
             <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mt-2">
-              // STRUCTURED EDIT DECISION LIST — STUB BRAIN (PHASE 1A)
+              // VOICE CONSOLIDATION → DEAD-AIR TRIM → FINAL MP4
             </p>
           </div>
         </header>
+
+        {/* FINAL RENDER — primary pipeline CTA */}
+        <GlassPanel className="p-6 mb-6">
+          <div className="flex items-center gap-2 border-b border-white/10 pb-4 mb-4">
+            <Clapperboard className="w-4 h-4 shrink-0 text-[#FFCC00]" />
+            <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest">
+              // FINAL_RENDER · {editorBatch.sceneBatch.length}_SCENES
+            </span>
+          </div>
+
+          {/* Step 1 — consolidate voice */}
+          <div className="flex flex-col md:flex-row md:items-end gap-4">
+            <div className="flex-1">
+              <label className="block text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">
+                // STEP_1 · BRAND_VOICE
+              </label>
+              <select
+                value={voiceId}
+                onChange={(e) => setVoiceId(e.target.value)}
+                className="w-full bg-zinc-950 border border-white/10 rounded-xl p-3 text-white text-sm focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00]"
+              >
+                {voices ? (
+                  <>
+                    {voices.libraryVoices.length > 0 && (
+                      <optgroup label="Filipino Library">
+                        {voices.libraryVoices.map((v) => (
+                          <option key={v.voice_id} value={v.voice_id}>{v.name}</option>
+                        ))}
+                      </optgroup>
+                    )}
+                    {voices.myVoices.length > 0 && (
+                      <optgroup label="My Voices">
+                        {voices.myVoices.map((v) => (
+                          <option key={v.voice_id} value={v.voice_id}>{v.name}</option>
+                        ))}
+                      </optgroup>
+                    )}
+                    {voices.stockVoices.length > 0 && (
+                      <optgroup label="Stock">
+                        {voices.stockVoices.map((v) => (
+                          <option key={v.voice_id} value={v.voice_id}>{v.name}</option>
+                        ))}
+                      </optgroup>
+                    )}
+                  </>
+                ) : (
+                  <option value="">Loading voices…</option>
+                )}
+              </select>
+            </div>
+            <button
+              type="button"
+              onClick={handleConsolidate}
+              disabled={isConsolidating || !voiceId}
+              className="flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-zinc-950 border border-white/10 hover:border-[#FFCC00] hover:text-[#FFCC00] text-zinc-300 text-[10px] font-bold uppercase tracking-widest transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              <Mic className="w-3.5 h-3.5 shrink-0" />
+              {isConsolidating ? 'CONSOLIDATING…' : voiceReady ? 'RE-CONSOLIDATE' : 'CONSOLIDATE VOICE'}
+            </button>
+          </div>
+
+          <p className="text-[10px] text-zinc-500 font-mono mt-2">
+            // Talking scenes use the voice-changer (preserves lip-sync); b-roll/hook use TTS. Spends your daily TTS/STS quota (Creator+).
+          </p>
+          {voiceReady && (
+            <p className="text-[10px] text-[#FFCC00] font-mono mt-1">
+              ✓ {Object.keys(voicedOverlays).length} voice track(s) persisted.
+            </p>
+          )}
+          {consolidateNotes.map((n, i) => (
+            <p key={i} className="text-[10px] text-zinc-500 font-mono">// {n}</p>
+          ))}
+          {consolidateError && (
+            <p className="text-[10px] text-red-400 font-mono mt-1">// {consolidateError}</p>
+          )}
+
+          {/* Step 2 — assemble final MP4 */}
+          <div className="mt-5 pt-5 border-t border-white/5">
+            <label className="block text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">
+              // STEP_2 · ASSEMBLE_FINAL_MP4
+            </label>
+            <button
+              type="button"
+              onClick={() => setBurnInEnabled((v) => !v)}
+              className="flex items-center gap-2 mb-3 text-[10px] font-mono uppercase tracking-widest text-zinc-400 hover:text-white transition-colors"
+            >
+              {burnInEnabled
+                ? <CheckSquare className="w-4 h-4 shrink-0 text-[#FFCC00]" />
+                : <Square className="w-4 h-4 shrink-0 text-zinc-500" />}
+              // BURN-IN · CAPTIONS · SFX · MUSIC
+            </button>
+            <GoldButton
+              onClick={handleRenderFinal}
+              disabled={isRendering || !voiceReady}
+              className="w-full py-4 rounded-xl tracking-widest whitespace-nowrap"
+            >
+              {isRendering ? 'RENDERING FINAL VIDEO…' : 'RENDER FINAL VIDEO'}
+            </GoldButton>
+            {!voiceReady && (
+              <p className="text-[10px] text-zinc-500 font-mono mt-2 text-center">
+                // Consolidate voice first to enable render.
+              </p>
+            )}
+            {renderError && (
+              <p className="text-[10px] text-red-400 font-mono mt-2">// RENDER_ERROR: {renderError}</p>
+            )}
+          </div>
+
+          {isRendering && (
+            <div className="mt-4">
+              <Loader message="TRIMMING DEAD AIR · MUXING VOICE · CONCATENATING…" />
+            </div>
+          )}
+
+          {renderResult?.url && (
+            <div className="mt-6 flex flex-col gap-3">
+              <video
+                src={renderResult.url}
+                controls
+                className="w-full max-h-[60vh] rounded-xl border border-white/10 bg-zinc-950"
+              />
+              <a
+                href={renderResult.downloadUrl ?? renderResult.url}
+                download
+                className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-zinc-950 border border-white/10 hover:border-[#FFCC00] hover:text-[#FFCC00] text-zinc-300 text-[10px] font-bold uppercase tracking-widest transition-colors"
+              >
+                <Download className="w-3.5 h-3.5 shrink-0" /> DOWNLOAD FINAL MP4
+              </a>
+            </div>
+          )}
+        </GlassPanel>
 
         {isPlanning && (
           <GlassPanel className="p-12 flex items-center justify-center">
@@ -139,7 +423,7 @@ const BatchEditMode: React.FC<{
                 </div>
                 <div>
                   <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest">FORMULA</p>
-                  <p className="text-white font-mono uppercase">{edl.meta.formulaApplied.join(' + ')}</p>
+                  <p className="text-white font-mono uppercase">{(edl.meta.formulaApplied ?? []).join(' + ') || '—'}</p>
                 </div>
               </div>
               <div className="mt-4 pt-4 border-t border-white/5">
@@ -175,7 +459,7 @@ const BatchEditMode: React.FC<{
                         )}
                       </div>
                       <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest">
-                        {scene.keepSegments
+                        {(scene.keepSegments ?? [])
                           .map((s) => `${formatSec(s.startSec)}–${formatSec(s.endSec)}`)
                           .join(', ')}
                       </span>
@@ -263,10 +547,11 @@ const BatchEditMode: React.FC<{
                 </p>
               </div>
               <p className="text-zinc-400 text-sm">
-                This EDL was generated by the stub brain — a deterministic fixture seeded
-                from your render batch. Phase 1 half (b) replaces the stub with the real
-                Gemini multimodal call once the TUNED prompt is signed off. Phase 2 wires
-                Remotion Lambda to render this JSON into a final MP4.
+                This EDL drives the render. With
+                <span className="text-zinc-300"> Burn-in</span> on, the
+                <span className="text-zinc-300"> Final Render</span> panel above burns these
+                overlays/captions and SFX into the MP4 and lays a ducked music bed under the
+                voice-over — on top of the server-side trim + voice mux + concat.
               </p>
             </GlassPanel>
           </div>
