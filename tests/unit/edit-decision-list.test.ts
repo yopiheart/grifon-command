@@ -9,9 +9,10 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 //      transition / camera / overlay-style / overlay-position / target-
 //      platform / formulaApplied / scriptStyleDetected value outside its
 //      declared union.
-//   3. Request-shape regressions — sceneBatch.renderedUrl + audioOverlays
-//      MUST land as fileData parts on the outbound /api/gemini/text body
-//      in the documented order (text prompt → per-scene video → audio
+//   3. Request-shape regressions — sceneBatch.renderedUrl MUST land as
+//      fileData parts and audioOverlays as base64 inlineData parts (blob:
+//      URLs can't go to Gemini's File API) on the outbound /api/gemini/text
+//      body in the documented order (text prompt → per-scene video → audio
 //      overlays).
 //
 // Does NOT catch (by design):
@@ -38,6 +39,23 @@ const okGemini = (payload: unknown) => ({
   status: 200,
   json: async () => ({ text: JSON.stringify(payload) }),
 });
+
+// generateEditDecisionList fetches each audioOverlay URL (ElevenLabs blob:
+// URLs live in browser memory) and inlines it as base64 before calling the
+// proxy. Route the global fetch mock by URL: blob fetches get a Blob-shaped
+// response whose bytes are the URL itself (so each overlay's base64 payload
+// stays distinguishable), everything else gets the canned Gemini response.
+const blobResponse = (url: string) => ({
+  blob: async () => ({
+    arrayBuffer: async () => new TextEncoder().encode(url).buffer,
+  }),
+});
+
+const mockFetchRouting = (edl: unknown) => {
+  fetchMock.mockImplementation(async (url: any) =>
+    typeof url === 'string' && url.startsWith('blob:') ? blobResponse(url) : okGemini(edl)
+  );
+};
 
 const captureLastFetchBody = (): any => {
   const calls = fetchMock.mock.calls;
@@ -197,7 +215,7 @@ describe('generateEditDecisionList (Phase 1 half (b) — real Gemini call)', () 
       aspectRatio: '9:16' as const,
       targetPlatform: 'tiktok' as const,
     };
-    fetchMock.mockResolvedValueOnce(okGemini(cannedEdl(inputSpec)));
+    mockFetchRouting(cannedEdl(inputSpec));
 
     const result = await generateEditDecisionList({
       ...inputSpec,
@@ -226,7 +244,7 @@ describe('generateEditDecisionList (Phase 1 half (b) — real Gemini call)', () 
       aspectRatio: '1:1' as const,
       targetPlatform: 'reels' as const,
     };
-    fetchMock.mockResolvedValueOnce(okGemini(cannedEdl(inputSpec)));
+    mockFetchRouting(cannedEdl(inputSpec));
 
     const result = await generateEditDecisionList({
       ...inputSpec,
@@ -257,7 +275,7 @@ describe('generateEditDecisionList (Phase 1 half (b) — real Gemini call)', () 
       aspectRatio: '16:9' as const,
       targetPlatform: 'youtube' as const,
     };
-    fetchMock.mockResolvedValueOnce(okGemini(cannedEdl(inputSpec)));
+    mockFetchRouting(cannedEdl(inputSpec));
 
     const result = await generateEditDecisionList({
       ...inputSpec,
@@ -271,7 +289,7 @@ describe('generateEditDecisionList (Phase 1 half (b) — real Gemini call)', () 
     expect(result.scenes[0].sourceAudioUrl).toBe('blob:y-0');
   });
 
-  it('sends fileData parts in the documented order: [text prompt, ...video URLs, ...audio URLs]', async () => {
+  it('sends parts in the documented order: [text prompt, ...video fileData, ...audio inlineData]', async () => {
     const inputSpec = {
       sceneBatch: [
         { sceneIdx: 0, scriptLine: 'A', renderedUrl: 'https://example.com/a.mp4', type: 'talking' as const },
@@ -285,7 +303,7 @@ describe('generateEditDecisionList (Phase 1 half (b) — real Gemini call)', () 
       aspectRatio: '9:16' as const,
       targetPlatform: 'tiktok' as const,
     };
-    fetchMock.mockResolvedValueOnce(okGemini(cannedEdl(inputSpec)));
+    mockFetchRouting(cannedEdl(inputSpec));
 
     await generateEditDecisionList({
       ...inputSpec,
@@ -305,8 +323,9 @@ describe('generateEditDecisionList (Phase 1 half (b) — real Gemini call)', () 
     expect(parts[1].fileData).toEqual({ fileUri: 'https://example.com/a.mp4', mimeType: 'video/mp4' });
     expect(parts[2].fileData).toEqual({ fileUri: 'https://example.com/b.mp4', mimeType: 'video/mp4' });
 
-    // Parts 3..4: audio overlay URLs, in audioOverlays array order (NOT sceneIdx order)
-    expect(parts[3].fileData).toEqual({ fileUri: 'blob:for-scene-1', mimeType: 'audio/mpeg' });
-    expect(parts[4].fileData).toEqual({ fileUri: 'blob:for-scene-0', mimeType: 'audio/mpeg' });
+    // Parts 3..4: audio overlays inlined as base64, in audioOverlays array
+    // order (NOT sceneIdx order). The bytes are the blob URL itself (see mock).
+    expect(parts[3].inlineData).toEqual({ mimeType: 'audio/mpeg', data: btoa('blob:for-scene-1') });
+    expect(parts[4].inlineData).toEqual({ mimeType: 'audio/mpeg', data: btoa('blob:for-scene-0') });
   });
 });

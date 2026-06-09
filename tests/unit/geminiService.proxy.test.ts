@@ -25,10 +25,12 @@ vi.mock('../../services/supabaseClient', () => ({
 const fetchMock = vi.fn();
 vi.stubGlobal('fetch', fetchMock);
 
-const okGemini = (payload: unknown) => ({
+// generateAdScript runs in flow mode: api/gemini/text.ts executes the
+// server-side prompt + parser and returns the parsed Script as the body.
+const okFlow = (payload: unknown) => ({
   ok: true,
   status: 200,
-  json: async () => ({ text: JSON.stringify(payload) }),
+  json: async () => payload,
 });
 
 const unauthorized = () => ({
@@ -64,7 +66,7 @@ describe('proxyCall JWT auto-refresh + 401 retry', () => {
     });
     fetchMock
       .mockResolvedValueOnce(unauthorized())
-      .mockResolvedValueOnce(okGemini({
+      .mockResolvedValueOnce(okFlow({
         hook1: ['x'], hook2: ['x'], body: ['x'],
       }));
 
@@ -104,7 +106,7 @@ describe('proxyCall JWT auto-refresh + 401 retry', () => {
     getSessionMock.mockResolvedValueOnce({
       data: { session: { access_token: 'good-token' } },
     });
-    fetchMock.mockResolvedValueOnce(okGemini({
+    fetchMock.mockResolvedValueOnce(okFlow({
       hook1: ['x'], hook2: ['x'], body: ['x'],
     }));
 
