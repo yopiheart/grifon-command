@@ -1,2 +1,6 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Shell scripts must stay LF — they run under bash (incl. the build-gate Stop hook
+# in .claude/hooks/). CRLF breaks bash with $'\r' errors after a Windows re-clone.
+*.sh text eol=lf

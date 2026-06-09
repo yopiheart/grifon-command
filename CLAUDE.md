@@ -70,6 +70,7 @@ If a planning conversation introduces a new domain concept not in `UBIQUITOUS_LA
 LLM reasoning degrades sharply past ~100k tokens of context. Treat the conversation window as a budget.
 
 - **Prefer `/clear` over `/compact`** when the current thread has wandered. Compaction keeps the model in a degraded state; clearing returns it to a fresh, smart baseline.
+- **Use `/btw` for throwaway side questions** — the answer lands in a dismissible overlay and never enters conversation history, so a quick check doesn't spend the context budget.
 - **The Ralph Loop destination doc** is `workflows/launch_readiness.md`. When you `/clear`, that file plus this `CLAUDE.md` and `UBIQUITOUS_LANGUAGE.md` are enough to resume work — no need to re-explain context.
 - **After exploring `services/geminiService.ts`** (91 KB), the smart zone is largely consumed. Finish the current task or summarize findings to a workflow file *before* taking on a second large exploration in the same session.
 - **Sub-agent calls are expensive in tokens** — a single `Explore` agent can consume tens of thousands of tokens before reporting back. Use them once per session for big-picture exploration; afterwards work from the report, not from re-exploring.
@@ -128,51 +129,13 @@ This gives Neil a two-gate workflow: approve the plan, then approve the goal tha
 
 ## Design System
 
-All UI **must** follow [DESIGN.md](DESIGN.md). Key rules:
-
-- **Canvas:** `bg-zinc-950` (never `bg-black`)
-- **Primary accent:** `#FFCC00` (Grifon Gold) — active states, main buttons, focus rings
-- **Panels:** Use `<GlassPanel>` (`components/ui/GlassPanel.tsx`) to wrap all forms and tool settings
-- **Primary button:** `<GoldButton>` (`components/ui/GoldButton.tsx`)
-- **Ghost button:** `bg-zinc-950 border border-white/10` with gold hover
-- **Inputs:** `bg-zinc-950 border border-white/10 rounded-xl focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00]`
-- **Icons:** Only `lucide-react` SVG icons — never raw text strings
-- **Typography:** Main text `text-white`/`text-zinc-300`; headers use `bg-gradient-to-r from-zinc-100 to-zinc-500`; sub-labels `text-[10px] text-zinc-500 font-mono uppercase tracking-widest`
-
-Reusable UI primitives live in `components/ui/`. Use them; don't recreate them inline.
+All UI **must** follow [DESIGN.md](DESIGN.md) — canvas `bg-zinc-950` (never `bg-black`), accent `#FFCC00` (Grifon Gold), `<GlassPanel>` + `<GoldButton>` primitives from `components/ui/`, `lucide-react` icons only. The full token rules (buttons, inputs, typography) live in DESIGN.md; the `brand-check` skill diffs UI work against them. Use the `components/ui/` primitives — don't recreate them inline.
 
 ---
 
-# WAT Framework (Agent Instructions)
+# WAT Framework, File Structure & Workflows
 
-You're working inside the **WAT framework** (Workflows, Agents, Tools). This architecture separates concerns so that probabilistic AI handles reasoning while deterministic code handles execution.
-
-## The WAT Architecture
-
-**Layer 1: Workflows (The Instructions)**
-- Markdown SOPs stored in `workflows/`
-- Each workflow defines the objective, required inputs, which tools to use, expected outputs, and how to handle edge cases
-
-**Layer 2: Agents (The Decision-Maker)**
-- Read the relevant workflow, run tools in the correct sequence, handle failures gracefully, and ask clarifying questions when needed
-- Example: If you need to pull data from a website, read `workflows/scrape_website.md`, figure out the required inputs, then execute the appropriate tool script
-
-**Layer 3: Tools (The Execution)**
-- Python scripts in `tools/` that do the actual work
-- Credentials and API keys are stored in `.env`
-
-**Why this matters:** When AI handles every step directly, accuracy compounds down. Offloading execution to deterministic scripts keeps AI focused on orchestration.
-
-## How to Operate
-
-**1. Look for existing tools first.** Check `tools/` before building anything new.
-
-**2. Learn and adapt when things fail.**
-- Read the full error trace
-- Fix the script and retest (check before re-running if it uses paid API calls)
-- Document learnings in the workflow (rate limits, timing quirks, unexpected behavior)
-
-**3. Keep workflows current.** Update workflows when you find better methods or discover constraints. Don't create or overwrite workflows without asking unless explicitly told to.
+You operate inside the **WAT framework** (Workflows → Agents → Tools): markdown SOPs in `workflows/` drive deterministic Python tools in `tools/`, with the agent orchestrating. The full operating rules — the three layers, "look for existing tools first," learn-and-adapt-on-failure, keep-workflows-current, and the self-improvement loop — live in [workflows/wat-framework.md](workflows/wat-framework.md). **Read it before building or editing anything under `tools/` or `workflows/`.**
 
 ## File Structure
 
@@ -196,11 +159,3 @@ Deliverables go to cloud services (Google Sheets, Slides, etc.) where the user c
 - `workflows/infra_setup.md` — Supabase, PayMongo, Google OAuth, domain, hosting checklist
 - `workflows/post_beta_roadmap.md` — **next file to open when `launch_readiness.md` hits 100%.** Endorsed-but-deferred ideas with resume triggers (currently: nightly regression `/loop`, Odyssey-as-Cron / Autopilot tier).
 - `workflows/session_reminders.md` — re-arm commands for in-session loops the defreezer wipes (currently: hourly break reminder). Offer to re-arm at session start.
-
-## The Self-Improvement Loop
-
-1. Identify what broke
-2. Fix the tool
-3. Verify the fix works
-4. Update the workflow with the new approach
-5. Move on with a more robust system
