@@ -4,6 +4,38 @@
 
 This is the meta-workflow. It doesn't do the work itself — it points to the workflows that do, and tracks overall progress. **Source of truth = the code + `git log`.** This file summarizes; it does not replace.
 
+## Status as of 2026-06-09 (core pipeline feature-complete + burn-in shipped — beta gate is now product/billing calls)
+
+**The 18-day gap since the 2026-05-22 section closed the two biggest engineering risks. Source of truth = `main` + the June handoffs cited below; this section is the meta-summary.**
+
+Two arcs shipped to `main` and were live-smoke-verified on real brands since 2026-05-22:
+
+| Arc | Status | Merge | Verified |
+|---|---|---|---|
+| **#10 Final-render executor** (the parked "AI Editor final-render + trailing-silence trim", `post_beta_roadmap.md` #10) | **GREEN — shipped** | PR #9 `1c975bc` | The Ordinary, Taglish Testimonial, 8 scenes → clean 35.86s MP4; 100% lip-sync; **dead-air eliminated** (silencedetect-confirmed; trim-to-actual-VO-end + EOF-trailing-silence fix). Also smoked on Truly + others. |
+| **Burn-in phase** (overlay text, chunked captions, SFX, ducked music bed) | **DONE — shipped** | merge `1275cf2` + audio `8a1c168`→`259570a` | Neil's real 8-scene ad: hook `flip` scale-pop + crimson wipe-box across the title, face-clearing captions, deterministic SFX (cuts→whoosh, reveals→pop/ding/boom, restraint-capped), −14 LUFS master, balanced ducked music. |
+
+This retires the two items that were called "the single biggest launch-readiness gap": `post_beta_roadmap.md` **#10** (final-render/silence-trim) and the **#9 Omni head-trim** context. They are no longer gaps.
+
+### The beta gate is no longer engineering — it's Neil's product calls
+Per [handoff_2026-06-08-pr9-merged-launch-pendings.md](handoff_2026-06-08-pr9-merged-launch-pendings.md) + [handoff_2026-06-08-burnin-capcut-engine.md](handoff_2026-06-08-burnin-capcut-engine.md), what remains before taking paying users:
+
+1. **Billing/metering decisions (Neil-only — gate real-money flows, not code blockers):** Pro `video_ads` cap parity (`api/_lib/quota.ts` MONTHLY_LIMITS + `utils/planGate.ts` PLAN_LIMITS + `config/planFeatures.ts`); the `useSubscription` `plan_id`-ignores-`status` metering muddle; the deploy-enabled-at-7/8 storyboard gate.
+2. **Optional polish (non-blocking):** audio-override UI fast-follow (music-bed dropdown + master SFX toggle, small, needs plan+goal); Whisper word-sync captions (deferred — caption timing is currently even-split); scene-1 Kling hook transition creative pass (the first-3s "cheap morph").
+3. **Revenue feature, post-launch:** TASK 2 One-Click Autopilot (`feat/headless-autopilot-v1`, admin-only/unmerged) — rebase onto main, wire `renderFinalVideo` as the stitch stage, `grill-me` → plan. This is `post_beta_roadmap.md` #2 / the Autopilot tier. (When built with an agentic-QC director, see the Fable-5 "Autopilot Director" design in the image-evaluation assessment file.)
+
+### Test baseline (not new breakage)
+`npm run test` = 71 pass; the **15 failures are the documented pre-existing `geminiService.schemas` / `edit-decision-list` model-ID baseline** — unrelated to the render/burn-in arcs. Harness repair (assert against the server-side prompt registry) stays P2, not a blocker.
+
+### Tooling housekeeping
+- **PR #8** (`chore/adopt-cc-best-practices` — real build-gate hook, permission allowlist, CLAUDE.md slim, `.gitattributes`) is **open with a trivial 1-file conflict**: `main` added 2 pointer lines to `CLAUDE.md` (`director-smoke` skill + `session_reminders.md` workflow) that collide with the slim. Resolution = keep the slim **and** re-add those 2 pointers. Not beta-blocking (dev-ergonomics).
+- **Fable-5 subscription window** (frontier Claude bundled free until **June 23**) is the slot for any heavy fixes the next full smoke surfaces — see the image-evaluation assessment addenda.
+
+### Next gate action
+Core product is feature-complete and smoke-verified. The launch decision is now Neil's billing/metering calls (item 1) → then hand-pick the 5–10 beta owners and go live. A fresh full-pipeline `director-smoke` on a new brand is the recommended final confidence check before cohort.
+
+---
+
 ## Status as of 2026-05-22 (Omni hook arc C–G logged · RENDER ALL → Signal Modulator hand-off verified)
 
 This file skipped 12 days — the Omni hook arc (Sessions C–G) shipped + closed without landing here. Two things bring it current: (1) the Omni arc summary, (2) a verification verdict on the RENDER ALL → Signal Modulator hand-off.
