@@ -10,6 +10,9 @@ const TAGLISH_PHONETIC_MAP: Array<[RegExp, string]> = [
   [/\blang\b/gi, 'lahng'],
   [/\bmukha\b/gi, 'moo-khah'],
   [/\bmabilisang\b/gi, 'mah-beh-lee-sahng'],
+  // 2026-06-10 final-render review: TTS read "swabe" with an English long-a
+  // ("swave"). Respell to force the Filipino sah-WAH-beh cadence.
+  [/\bswabe\b/gi, 'swah-beh'],
 ];
 
 export const normalizeTaglish = (text: string): string => {

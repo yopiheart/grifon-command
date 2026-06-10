@@ -63,9 +63,16 @@ describe('hookTitleLayout (reference-grade title stack)', () => {
     // line 2 sits one line-height below line 1
     expect(t[2].yPx!).toBeGreaterThan(t[0].yPx!);
     expect(t[2].yPx).toBe(t[3].yPx);
-    // each line independently centered
-    const line2X = (1080 - estWidth('FREE WEBSITES', 100, 0.64)) / 2;
-    expect(t[2].xPx).toBe(Math.round(line2X));
+    // each line independently centered — layout intent, not exact-pixel math:
+    // line midpoint lands on frame center (uppercase-aware advance + explicit
+    // 0.34em word gap; "LUMA LANG" fused-words regression, 2026-06-10)
+    const gap = Math.round(100 * 0.34);
+    const upper = (wd: string) => estWidth(wd, 100, 0.64 + 0.10);
+    const line2W = upper('FREE') + gap + upper('WEBSITES');
+    expect(t[2].xPx).toBe(Math.round((1080 - line2W) / 2));
+    // the explicit gap survives between adjacent words: word 4 starts a full
+    // gap after word 3's rendered (uppercase-corrected) width
+    expect(t[3].xPx! - t[2].xPx!).toBe(Math.round(upper('FREE')) + gap);
   });
 
   it('power words go gold: numbers + lexicon; at least one highlight guaranteed', () => {

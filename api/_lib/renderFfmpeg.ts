@@ -306,19 +306,30 @@ export function hookTitleLayout(
   cadenceSec: number
 ): WordTiming[] {
   const lineH = Math.round(fontsize * 1.18);
+  // Explicit inter-word gap + uppercase-aware advance. estWidth is length×advRatio,
+  // but the extrabold hook fonts' UPPERCASE glyphs really advance ~0.1em/char wider
+  // than the preset ratio — a 4-letter caps word overruns its estimate by ~0.4em,
+  // swallowing the space-char advance entirely, so adjacent words rendered fused
+  // ("LUMA LANG" read as "LUMALANG", 2026-06-10 final-render review).
+  const gap = Math.round(fontsize * 0.34);
+  const wAdv = (wd: string) =>
+    estWidth(wd, fontsize, advRatio + (/[A-Z]/.test(wd) && wd === wd.toUpperCase() ? 0.10 : 0));
   const out: WordTiming[] = [];
   let idx = 0;
   for (let li = 0; li < lines.length; li++) {
     const words = lines[li].split(/\s+/).filter(Boolean);
-    let x = (frameW - estWidth(lines[li], fontsize, advRatio)) / 2;
-    for (const wd of words) {
+    const wordWs = words.map(wAdv);
+    const lineW = wordWs.reduce((s, ww) => s + ww, 0) + gap * Math.max(0, words.length - 1);
+    let x = (frameW - lineW) / 2;
+    for (let wi = 0; wi < words.length; wi++) {
+      const wd = words[wi];
       const start = +(startSec + idx * cadenceSec).toFixed(3);
       out.push({
         word: wd, start, end: start, // end is overwritten by the caller (persist)
         xPx: Math.round(x), yPx: yTop + li * lineH,
         highlight: isPowerWord(wd),
       });
-      x += estWidth(`${wd} `, fontsize, advRatio);
+      x += wordWs[wi] + gap;
       idx++;
     }
   }
@@ -568,7 +579,9 @@ export function planScene(
   const cap = scene.scriptLine ? stripUnrenderable(scene.scriptLine) : '';
   const dup = !!(oText && cap && normText(oText) === normText(cap));
   const cy = captionY(dims, sz, scene, preset);
-  let capStart = CAPTION_START_PAD;
+  const capStart = CAPTION_START_PAD;
+  // Captions may not draw before this moment (overlay owns the band until then).
+  let overlayClearSec = 0;
 
   if (oText && !dup) {
     const { fontsize, lines } = fitText(oText, sz.usableW, Math.round(h * preset.caption.overlaySizeFrac), adv);
@@ -588,7 +601,7 @@ export function planScene(
         xExpr: '(w-text_w)/2', yBase: cy, startSec: oStart, endSec: oEnd, anim: 'fade',
         emphasisSfx,
       });
-      capStart = oEnd + 0.1;
+      overlayClearSec = oEnd + 0.1;
     }
   }
 
@@ -598,6 +611,13 @@ export function planScene(
     const wordLevel = preset.caption.chunkAnim === 'word-pop' || preset.caption.chunkAnim === 'karaoke';
     const wordsPer = preset.caption.chunkAnim === 'none' ? 3.5 : 2.5;
     const minChunk = preset.caption.chunkAnim === 'none' ? MIN_CHUNK_SEC : 0.5;
+    // Captions pace across the FULL speech window — the same layout an
+    // overlay-less scene gets — so they stay synced to the VO. Chunks whose
+    // slot falls inside the overlay hold are SACRIFICED, not shifted: the old
+    // capStart = overlay-end behavior compressed the whole line into the tail,
+    // lagging the speaker by seconds (Neil, 2026-06-10 final-render review:
+    // "the only autocaption that should show is the live script the character
+    // is saying at the moment — okay to sacrifice the overlapped words").
     const avail = end - capStart;
     if (avail >= minChunk) {
       const chunks = chunkCaption(cap, avail, wordsPer, minChunk);
@@ -606,6 +626,7 @@ export function planScene(
         const { fontsize, lines } = fitText(c, sz.usableW, Math.round(h * preset.caption.baseSizeFrac), adv);
         const startSec = +(capStart + i * each).toFixed(3);
         const endSec = +(capStart + (i + 1) * each).toFixed(3);
+        if (startSec < overlayClearSec) return; // slot owned by the overlay — drop the chunk
         // Word timing/x math assumes one line — a wrapped chunk falls back to pop.
         if (wordLevel && lines.length === 1) {
           layers.push({
