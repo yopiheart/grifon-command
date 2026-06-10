@@ -6,8 +6,9 @@ import { fileURLToPath } from 'node:url';
 import ffmpegPath from 'ffmpeg-static';
 import type { FinalRenderScene, SfxBankId, CameraEffect } from '../../types.js';
 import {
-  CLASSIC,
+  CLASSIC, pickHookPalette,
   type RenderPreset, type HookRevealStyle, type TransitionStyle, type CameraStyle,
+  type HookPalette,
 } from './renderPresets.js';
 
 // Final-render executor muscle (Phase 2 of workflows/render_pipeline_voice_10.md).
@@ -457,6 +458,9 @@ export interface TextLayer {
   words?: WordTiming[];
   /** Which bundled font renders this layer (hook title may differ from captions). */
   font?: 'caption' | 'hook';
+  /** Premium metallic fill: gradient palette clipped into the glyphs + light
+   * sweep (hook title only; flat fill when absent). */
+  gradient?: HookPalette;
 }
 export interface BoxLayer {
   kind: 'box';
@@ -495,7 +499,8 @@ export function planScene(
   scene: FinalRenderScene,
   trimSec: number | null,
   dims: [number, number],
-  preset: RenderPreset = CLASSIC
+  preset: RenderPreset = CLASSIC,
+  variantSeed: number = 0
 ): DrawLayer[] {
   const [w, h] = dims;
   const sz = safeZone(dims);
@@ -523,6 +528,9 @@ export function planScene(
         xExpr: `${Math.round((w - Math.max(...lines.map((l) => estWidth(l, fontsize, hookAdv)))) / 2)}`,
         yBase: yTop, startSec: 0.05, endSec: end, anim: 'word-pop', words, font: 'hook',
         emphasisSfx: overlaySfx.hook ?? undefined,
+        // Premium metallic fill + light sweep, palette rotated per render so
+        // consecutive ads don't match (Neil 2026-06-10 polish round).
+        gradient: pickHookPalette(variantSeed),
       });
       return layers;
     }
@@ -902,17 +910,23 @@ export function buildWordFilters(
   fontName: string,
   wordTextNames: string[],
   preset: RenderPreset,
-  baseTextName: string | null = null
+  baseTextName: string | null = null,
+  mode: 'normal' | 'bed' | 'mask' = 'normal'
+  // 'bed'  = all-black glyphs WITH outline+shadow (the contrast bed a gradient
+  //          fill sits on); 'mask' = pure white glyphs, no decoration (the
+  //          clipping mask that cuts the gradient into letter shapes).
 ): string {
   const words = l.words ?? [];
   if (!words.length) return buildTextFilter({ ...l, anim: 'pop' }, fontName, baseTextName ?? wordTextNames[0], preset);
   const sh = preset.caption.shadow;
   const outlineW = Math.max(2, Math.round(l.fontsize * Math.max(preset.caption.borderWFrac, 0.06)));
-  const deco = [
-    ...(sh ? [`shadowcolor=${sh.color}`, `shadowx=${sh.dx}`, `shadowy=${sh.dy}`] : []),
-    `borderw=${outlineW}`,
-    `bordercolor=black`,
-  ].join(':');
+  const deco = mode === 'mask'
+    ? ''
+    : [
+        ...(sh ? [`shadowcolor=${sh.color}`, `shadowx=${sh.dx}`, `shadowy=${sh.dy}`] : []),
+        `borderw=${outlineW}`,
+        `bordercolor=black`,
+      ].join(':');
   const parts: string[] = [];
 
   if (l.anim === 'karaoke' && baseTextName) {
@@ -937,16 +951,102 @@ export function buildWordFilters(
     const wd = words[j];
     const p = `min(1,max(0,(t-${wd.start})/0.22))`;
     const ease = `(1-${FLIP_C3}*pow(1-${p},3)+${FLIP_C1}*pow(1-${p},2))`;
-    const color = wd.highlight ? hlColor : l.color;
+    const color =
+      mode === 'bed' ? 'black' :
+      mode === 'mask' ? 'white' :
+      wd.highlight ? hlColor : l.color;
     parts.push(
       `drawtext=fontfile=${fontName}:textfile=${wordTextNames[j]}:` +
       `fontsize='max(8,${l.fontsize}*(0.2+0.8*${ease}))':` +
-      `fontcolor=${color}:${deco}:` +
+      `fontcolor=${color}${deco ? `:${deco}` : ''}:` +
       `x=${wd.xPx}:y=${wd.yPx ?? l.yBase}:` +
       `alpha='min(1,max(0,(t-${wd.start})/0.05))':enable='between(t,${wd.start},${l.endSec})'`
     );
   }
   return parts.join(',');
+}
+
+/**
+ * Premium hook fill (Neil 2026-06-10 polish round): the title words become a
+ * CLIPPING MASK that cuts a vertical metallic gradient (+ an animated diagonal
+ * light sweep) into the glyphs — the CC-Light-Sweep / gradient-overlay look,
+ * built from ffmpeg primitives:
+ *
+ *   bed   = black glyphs + outline + shadow, drawn in the main chain (contrast)
+ *   mask  = white glyphs on black, same word animations (this fn)
+ *   fill  = gradients source (hi palette for power words, base for the rest),
+ *           sweep.png overlaid sliding diagonally across once (hi class only)
+ *   out   = fill alphamerge'd with the mask, overlaid on the bed
+ *
+ * Pure: emits the semicolon-separated filtergraph statements that take
+ * `inLabel` (video after the bed) to `outLabel`. `sweepInputIdx` is the ffmpeg
+ * input index of sweep.png, or null to skip the sweep.
+ */
+export function buildPremiumHookStmts(
+  l: TextLayer,
+  dims: [number, number],
+  hookFontName: string,
+  wordTextNames: string[],
+  preset: RenderPreset,
+  inLabel: string,
+  outLabel: string,
+  sweepInputIdx: number | null,
+  durSec: number
+): string[] {
+  const [w, h] = dims;
+  const pal = l.gradient!;
+  const words = l.words ?? [];
+  const lineH = Math.round(l.fontsize * 1.18);
+  const yTopPx = l.yBase;
+  const yBotPx = yTopPx + (Math.max(0, ...words.map((wd) => (wd.yPx ?? yTopPx) - yTopPx)) + lineH);
+  const D = durSec.toFixed(3);
+  const stmts: string[] = [];
+  const classes: Array<{ tag: string; colors: [string, string]; pick: (wd: WordTiming) => boolean; sweep: boolean }> = [
+    { tag: 'hi', colors: pal.hi, pick: (wd) => !!wd.highlight, sweep: true },
+    { tag: 'bs', colors: pal.base, pick: (wd) => !wd.highlight, sweep: false },
+  ];
+
+  const present = classes.filter((cls) => words.some(cls.pick));
+  let cur = inLabel;
+  present.forEach((cls, ci) => {
+    const clsWords = words.filter(cls.pick);
+    const clsLayer: TextLayer = { ...l, words: clsWords };
+    const clsNames = words
+      .map((wd, j) => ({ wd, name: wordTextNames[j] }))
+      .filter(({ wd }) => cls.pick(wd))
+      .map(({ name }) => name);
+
+    // Mask: white animated glyphs of this class on black.
+    stmts.push(
+      `color=c=black:s=${w}x${h}:r=${FPS}:d=${D},` +
+      buildWordFilters(clsLayer, hookFontName, clsNames, preset, null, 'mask') +
+      `,format=gray[m_${cls.tag}]`
+    );
+
+    // Fill: vertical metallic gradient spanning the title block (+ light sweep).
+    const grad =
+      `gradients=s=${w}x${h}:c0=${cls.colors[0]}:c1=${cls.colors[1]}:` +
+      `x0=${Math.round(w / 2)}:y0=${yTopPx}:x1=${Math.round(w / 2)}:y1=${yBotPx}:d=${D}`;
+    if (cls.sweep && sweepInputIdx !== null) {
+      const t0 = (words[words.length - 1]?.start ?? 0) + 0.45; // sweep after the last word lands
+      stmts.push(`${grad}[gf_${cls.tag}]`);
+      stmts.push(
+        `[gf_${cls.tag}][${sweepInputIdx}:v]overlay=` +
+        `x='-480+(t-${t0.toFixed(3)})*${Math.round(w * 1.6)}':y=${yTopPx - 400}:` +
+        `enable='between(t,${t0.toFixed(3)},${(t0 + 1.0).toFixed(3)})',format=rgba[f_${cls.tag}]`
+      );
+    } else {
+      stmts.push(`${grad},format=rgba[f_${cls.tag}]`);
+    }
+
+    // Clip the fill into the glyphs, drop it on the bed.
+    stmts.push(`[f_${cls.tag}][m_${cls.tag}]alphamerge[c_${cls.tag}]`);
+    const next = ci === present.length - 1 ? outLabel : `[pv_${cls.tag}]`;
+    stmts.push(`${cur}[c_${cls.tag}]overlay=0:0${next}`);
+    cur = next;
+  });
+  if (!present.length) stmts.push(`${cur}null${outLabel}`);
+  return stmts;
 }
 
 /** Number of vertical slices used to animate the L→R box wipe. */
@@ -1143,7 +1243,8 @@ function buildScene(
   transitionFilters: string = '', // boundary fades/blur, appended after drawtext
   cameraFilter: string | null = null, // zoom/pan/punch, applied before drawtext
   preset: RenderPreset = CLASSIC,
-  hookFontName: string | null = null // BARE hook-title font (falls back to fontName)
+  hookFontName: string | null = null, // BARE hook-title font (falls back to fontName)
+  sweepName: string | null = null // BARE sweep.png in `dir` (premium hook glint)
 ): void {
   const [w, h] = dims;
 
@@ -1151,6 +1252,15 @@ function buildScene(
   // drawtext/drawbox font/text files are referenced as BARE filenames and ffmpeg
   // runs with cwd=dir, so Windows drive-colon paths never enter the filtergraph
   // (an escaped `C:\` still breaks the parser — caught by the synthetic harness).
+  // Premium hook layers need extra graph statements (mask/fill/overlay) that
+  // can't live in one linear chain — collect statements and split labels.
+  const needsSweep = sweepName !== null &&
+    layers.some((l) => l.kind === 'text' && l.gradient && l.words?.length);
+  const sweepInputIdx = needsSweep ? 2 + sfx.length : null;
+  const premiumDur = trimSec ?? 12;
+  const stmts: string[] = [];
+  let split = 0;
+
   let vChain =
     `[0:v]fps=${FPS},scale=${w}:${h}:force_original_aspect_ratio=decrease,` +
     `pad=${w}:${h}:(ow-iw)/2:(oh-ih)/2,setsar=1`;
@@ -1173,7 +1283,23 @@ function buildScene(
           writeFileSync(join(dir, baseName), layer.text, 'utf8');
         }
         k++;
-        vChain += `,${buildWordFilters(layer, layerFont, wordNames, preset, baseName)}`;
+        if (layer.gradient && layer.anim === 'word-pop') {
+          // Bed (black glyphs + outline/shadow) in the main chain, then split:
+          // gradient fills clipped by word masks overlay on top.
+          vChain += `,${buildWordFilters(layer, layerFont, wordNames, preset, null, 'bed')}`;
+          const inLabel = `[vb${split}]`;
+          const outLabel = `[vp${split}]`;
+          split++;
+          stmts.push(`${vChain}${inLabel}`);
+          stmts.push(...buildPremiumHookStmts(
+            layer, dims, layerFont, wordNames, preset,
+            inLabel, outLabel, sweepInputIdx, premiumDur
+          ));
+          // `null` pass-through so later appends stay comma-legal after a label.
+          vChain = `${outLabel}null`;
+        } else {
+          vChain += `,${buildWordFilters(layer, layerFont, wordNames, preset, baseName)}`;
+        }
       } else {
         const textName = `ov_${sceneIdx}_${k++}.txt`;
         writeFileSync(join(dir, textName), layer.text, 'utf8');
@@ -1183,12 +1309,15 @@ function buildScene(
   }
   if (transitionFilters) vChain += `,${transitionFilters}`;
   vChain += '[v]';
+  stmts.push(vChain);
+  const vGraph = stmts.join(';');
 
-  // --- Inputs: [0]=video, [1]=audio (voice or silence), [2..]=sfx. ---
+  // --- Inputs: [0]=video, [1]=audio (voice or silence), [2..]=sfx, [last]=sweep. ---
   const inputs: string[] = ['-y', '-i', videoPath];
   if (audioPath) inputs.push('-i', audioPath);
   else inputs.push('-f', 'lavfi', '-i', 'anullsrc=channel_layout=stereo:sample_rate=48000');
   for (const s of sfx) inputs.push('-i', s.path);
+  if (sweepInputIdx !== null) inputs.push('-loop', '1', '-t', premiumDur.toFixed(3), '-i', join(dir, sweepName as string));
 
   // --- Audio chain: base (voice padded/passthrough or silence) + SFX amix. ---
   const base = padAudioToVideo && audioPath ? `[1:a]apad[abase]` : `[1:a]anull[abase]`;
@@ -1209,7 +1338,7 @@ function buildScene(
   const args = [
     ...inputs,
     ...tArgs,
-    '-filter_complex', `${vChain};${aChain}`,
+    '-filter_complex', `${vGraph};${aChain}`,
     '-map', '[v]', '-map', aOut,
     '-c:v', 'libx264', '-preset', PRESET, '-crf', CRF,
     '-c:a', 'aac', '-ar', '48000', '-ac', '2', '-shortest', outPath,
@@ -1308,7 +1437,8 @@ export async function renderFinalVideo(
   scenes: FinalRenderScene[],
   aspectRatio: string,
   music?: { style: 'mrbeast' | 'temu' | 'testimonial'; enabled: boolean },
-  preset: RenderPreset = CLASSIC
+  preset: RenderPreset = CLASSIC,
+  variantSeed: number = 0 // rotates the premium hook palette per render
 ): Promise<{ buffer: Buffer; sizeBytes: number }> {
   if (!scenes.length) throw new RenderError('no_scenes');
   const tTotal = Date.now();
@@ -1331,6 +1461,13 @@ export async function renderFinalVideo(
   if (hookFontSrc) {
     hookFontName = 'hook.ttf';
     copyFileSync(hookFontSrc, join(dir, hookFontName));
+  }
+  // Light-sweep band for the premium hook fill (skip silently if missing).
+  let sweepName: string | null = null;
+  const sweepSrc = findAsset(join('fx', 'sweep.png'));
+  if (sweepSrc) {
+    sweepName = 'sweep.png';
+    copyFileSync(sweepSrc, join(dir, sweepName));
   }
   try {
     const ordered = [...scenes].sort((a, b) => a.sceneIdx - b.sceneIdx);
@@ -1367,7 +1504,7 @@ export async function renderFinalVideo(
       const { trimSec, padAudio } = chooseTrim(scene, probeSec, detectedSec);
 
       // Compile the draw plan first — emphasis SFX are derived from its layers.
-      const layers = planScene(scene, trimSec, dims, preset);
+      const layers = planScene(scene, trimSec, dims, preset, variantSeed);
 
       // Gather this scene's SFX candidates on the GLOBAL timeline:
       //  - transition cues (whoosh/swish) snapped to the cut,
@@ -1417,7 +1554,7 @@ export async function renderFinalVideo(
         videoPath, audioPath, trimSec, dims, outPath, padAudio,
         dir, scene.sceneIdx, layers, sfx, fontName,
         buildTransitionFilters(transitions[i], preset.transition, trimSec),
-        camFilter, preset, hookFontName
+        camFilter, preset, hookFontName, sweepName
       );
       console.log(
         `[renderFfmpeg] scene=${i} dl=${dlMs}ms build=${Date.now() - tBuild}ms ` +

@@ -245,6 +245,27 @@ export const CLEAN: RenderPreset = {
   },
 };
 
+/** Premium hook fill: vertical metallic gradient pair [top, bottom] per word
+ * class (Neil 2026-06-10: "5 BEST" gold→dark-gold, "FREE" white→steel). One
+ * palette per render, rotated by seed so consecutive ads don't match. */
+export interface HookPalette {
+  /** Power words (gold class in the reference). */
+  hi: [string, string];
+  /** Connector words (white→steel class). */
+  base: [string, string];
+}
+
+export const HOOK_PALETTES: HookPalette[] = [
+  { hi: ['0xFFE860', '0xC07F00'], base: ['0xFFFFFF', '0x9EA3AA'] }, // gold + silver ("5 BEST FREE")
+  { hi: ['0x9BD8FF', '0x1E5F9E'], base: ['0xFFFFFF', '0xB9C2CC'] }, // sky/water blue + silver (billboard)
+  { hi: ['0xFFD400', '0xFF7A00'], base: ['0xFFFFFF', '0xC9CDD3'] }, // sunset gold
+  { hi: ['0x8CFFC0', '0x0E8F5E'], base: ['0xFFFFFF', '0xAEB6BF'] }, // emerald
+];
+
+export function pickHookPalette(variantSeed: number): HookPalette {
+  return HOOK_PALETTES[Math.abs(variantSeed) % HOOK_PALETTES.length];
+}
+
 export const PRESETS: Record<PresetId, RenderPreset> = {
   classic: CLASSIC,
   impact: IMPACT,

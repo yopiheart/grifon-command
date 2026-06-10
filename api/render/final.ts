@@ -4,7 +4,7 @@ import { randomUUID } from 'node:crypto';
 import { getUserFromAccessToken, getSupabaseAdmin } from '../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../_lib/rateLimit.js';
 import { renderFinalVideo } from '../_lib/renderFfmpeg.js';
-import { resolvePreset, rotationSeed, type RenderPreset } from '../_lib/renderPresets.js';
+import { resolvePreset, rotationSeed, fnv1a, type RenderPreset } from '../_lib/renderPresets.js';
 import { statusKey, finalKey, writeSidecar, RENDER_BUCKET } from '../_lib/renderJob.js';
 import type { FinalRenderScene } from '../../types.js';
 
@@ -97,11 +97,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   // Edit-style preset: same ad re-renders identically (seed = sorted videoUrls),
   // successive ads rotate looks within the script style's pool. classic = today.
-  const preset = resolvePreset(
-    music?.style,
-    presetReq?.id,
-    rotationSeed(scenes.map((s) => s.videoUrl))
-  );
+  const seed = rotationSeed(scenes.map((s) => s.videoUrl));
+  const preset = resolvePreset(music?.style, presetReq?.id, seed);
+  // Same seed also rotates the premium hook palette (independent of preset id).
+  const variantSeed = fnv1a(seed);
 
   // Audio↔video keying contract (premortem #4a): sceneIdx must be unique.
   const idxSeen = new Set<number>();
@@ -131,7 +130,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     updatedAt: new Date().toISOString(),
   });
 
-  const work = runRender(user.id, jobId, scenes as FinalRenderScene[], aspectRatio, music, preset).catch(() => {});
+  const work = runRender(user.id, jobId, scenes as FinalRenderScene[], aspectRatio, music, preset, variantSeed).catch(() => {});
 
   if (process.env.VERCEL) {
     try {
@@ -151,12 +150,13 @@ async function runRender(
   scenes: FinalRenderScene[],
   aspectRatio: '9:16' | '16:9' | '1:1',
   music?: { style: 'mrbeast' | 'temu' | 'testimonial'; enabled: boolean },
-  preset?: RenderPreset
+  preset?: RenderPreset,
+  variantSeed?: number
 ): Promise<void> {
   const admin = getSupabaseAdmin();
   const sKey = statusKey(userId, jobId);
   try {
-    const { buffer } = await renderFinalVideo(scenes, aspectRatio, music, preset);
+    const { buffer } = await renderFinalVideo(scenes, aspectRatio, music, preset, variantSeed);
 
     const fKey = finalKey(userId, jobId);
     const upload = await admin.storage.from(RENDER_BUCKET).upload(fKey, buffer, {
