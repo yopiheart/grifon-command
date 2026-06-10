@@ -1923,13 +1923,19 @@ export const generateSceneImage = async (
     }
 
     // 1. RE-INSERT THE CAMERA LOGIC
+    // AVATAR_CAMERA_ANGLES describe a HUMAN subject ("face fully toward camera", "focus: eyes").
+    // Only inject them when a human belongs in frame (avatar/both). In product/none modes the
+    // mandatory face demand contradicts the NO-HUMAN rules and pulls the person from the hero
+    // reference photo into frame (2026-06-10 validation render: hook end-frame person leak —
+    // the 627ccb2 rule-5 text fix alone couldn't beat a MUST-render-a-face instruction).
+    const humanSubjectInFrame = referenceImageMode === 'avatar' || referenceImageMode === 'both';
     const randomAngle = AVATAR_CAMERA_ANGLES[variationIndex % AVATAR_CAMERA_ANGLES.length];
-    const cameraMandatory = `
+    const cameraMandatory = humanSubjectInFrame ? `
     **CAMERA_MANDATORY (overrides IDENTITY_LOCK's default-frontal preference):**
     You MUST render this exact framing: ${randomAngle}.
     - The DISTANCE (close-up vs medium vs wide) and ELEVATION (eye-level vs above-eye selfie) are MANDATORY — do NOT collapse to a standard chest-up frontal medium shot.
     - If the Scene Prompt describes an action (gesturing, pointing, holding, looking down at a phone), execute that action AT this framing — do NOT shift the camera to a default flattering portrait angle to accommodate the action.
-    `;
+    ` : "";
 
     // 2. WARDROBE: locked from Reference Image 1 by IDENTITY_LOCK rule 1.
     // WARDROBE_LOGIC variation removed — was conflicting with identity preservation across scenes.
