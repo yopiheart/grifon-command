@@ -199,6 +199,7 @@ const BatchEditMode: React.FC<{
             overlayText: plan?.overlayText,
             sfxCues: plan?.sfxCues,
             transitionIn: plan?.transitionIn,
+            cameraEffect: plan?.cameraEffect,
             // Overlay/caption engine inputs:
             scriptLine: s.scriptLine,
             sceneType: s.type,

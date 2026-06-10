@@ -144,6 +144,8 @@ export interface FinalRenderScene {
   sfxCues?: SfxCue[];
   /** Planned transition INTO this scene. Threaded now; not yet rendered (Slice B). */
   transitionIn?: { type: TransitionType; durationSec: number };
+  /** EDL camera-effect hint — rendered as a preset-gated zoom/pan/punch burn-in. */
+  cameraEffect?: CameraEffect;
   // ---- Overlay/caption engine inputs ----
   /** Spoken line for this scene → drives the auto-captions (scenes 2+). */
   scriptLine?: string;

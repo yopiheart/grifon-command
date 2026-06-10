@@ -4,8 +4,11 @@ import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import ffmpegPath from 'ffmpeg-static';
-import type { FinalRenderScene, SfxBankId, OverlayStyle } from '../../types.js';
-import { CLASSIC, type RenderPreset, type HookRevealStyle, type TransitionStyle } from './renderPresets.js';
+import type { FinalRenderScene, SfxBankId, OverlayStyle, CameraEffect } from '../../types.js';
+import {
+  CLASSIC,
+  type RenderPreset, type HookRevealStyle, type TransitionStyle, type CameraStyle,
+} from './renderPresets.js';
 
 // Final-render executor muscle (Phase 2 of workflows/render_pipeline_voice_10.md).
 // Mirrors the Phase-0-validated invocations in scripts/ffmpeg-spike.mjs exactly:
@@ -459,6 +462,80 @@ export function planScene(scene: FinalRenderScene, trimSec: number | null, dims:
 // or N-1 extra re-encodes). References (edit_style_research.md §3): whip-pan
 // blur is the universal mask; flash/strobe bookend two of three short refs. ----
 
+// ---- Camera effects (preset-driven). The EDL's cameraEffect hint becomes a real
+// burn-in: per-frame `scale … eval=frame` + center crop (zoompan rejected — it's
+// a stills tool and resamples fps; animated crop w/h rejected — w/h eval once in
+// this build, same constraint as drawbox). Inserted BEFORE drawtext so captions
+// never zoom and stay inside safe zones. References (edit_style_research.md §3):
+// "always be zooming" — 3-6%/s push on every shot, alternating direction. ----
+
+/**
+ * The effect actually rendered for a scene: explicit EDL hint wins; otherwise
+ * the preset's default, with zoom direction alternating per scene index so
+ * back-to-back scenes don't creep the same way (fake-handheld energy). Returns
+ * null when the preset ignores camera work (classic, intensity 0).
+ */
+export function effectiveCameraEffect(
+  hint: CameraEffect | undefined,
+  sceneIndex: number,
+  cam: CameraStyle
+): CameraEffect | null {
+  if (cam.intensity === 0) return null;
+  if (hint && hint !== 'none') return hint;
+  if (cam.defaultEffect === 'none') return null;
+  if (cam.defaultEffect === 'zoom-in' || cam.defaultEffect === 'zoom-out') {
+    const flip = cam.defaultEffect === 'zoom-in' ? 'zoom-out' : 'zoom-in';
+    return sceneIndex % 2 === 0 ? cam.defaultEffect : flip;
+  }
+  return cam.defaultEffect;
+}
+
+/**
+ * ffmpeg filter for one scene's camera move, or null for none. Zooms ramp
+ * linearly over the trimmed scene length; chunk punches add an instant +punchZoom
+ * that decays over 0.25s at each caption-chunk start (the beat-cut feel without
+ * cutting). Width is trunc'd to even for the encoder; crop x/y re-center per
+ * frame. Pan slides a static 6% oversize left→right across the scene.
+ */
+export function buildCameraFilter(
+  effect: CameraEffect | null,
+  durSec: number | null,
+  dims: [number, number],
+  cam: CameraStyle,
+  punchTimes: number[] = []
+): string | null {
+  if (!effect || effect === 'none' || cam.intensity === 0) return null;
+  if (typeof durSec !== 'number' || durSec <= 0) return null;
+  const [w, h] = dims;
+  const D = durSec.toFixed(3);
+  const span = +(cam.sceneZoom - 1).toFixed(4);
+  const punch = +(cam.chunkPunchZoom - 1).toFixed(4);
+  const punches = cam.chunkPunch && punch > 0
+    ? punchTimes
+        .filter((t) => t < durSec)
+        .slice(0, cam.maxPunchesPerScene)
+        .map((t) => `+${punch}*gte(t,${t.toFixed(3)})*max(0,1-(t-${t.toFixed(3)})/0.25)`)
+        .join('')
+    : '';
+
+  let zExpr: string | null = null;
+  if (effect === 'zoom-in') zExpr = `1+${span}*min(1,t/${D})${punches}`;
+  else if (effect === 'zoom-out') zExpr = `${cam.sceneZoom}-${span}*min(1,t/${D})${punches}`;
+  else if (effect === 'shake') {
+    // v1: a single decaying punch at the cut (true jitter reads cheap at 30fps).
+    zExpr = `1+${(punch > 0 ? punch : 0.05).toFixed(4)}*max(0,1-t/0.25)${punches}`;
+  }
+  if (zExpr) {
+    return (
+      `scale=w='trunc(${w}*(${zExpr})/2)*2':h=-2:eval=frame,` +
+      `crop=${w}:${h}:(iw-${w})/2:(ih-${h})/2`
+    );
+  }
+  // pan: static oversize, x sweeps L→R across the scene (crop x IS per-frame).
+  const ow = Math.round((w * 1.06) / 2) * 2;
+  return `scale=${ow}:-2,crop=${w}:${h}:x='(iw-${w})*min(1,t/${D})':y=(ih-${h})/2`;
+}
+
 export interface TransitionPlan { fadeOutTail: boolean; fadeInHead: boolean; }
 
 /**
@@ -760,7 +837,8 @@ function buildScene(
   layers: DrawLayer[],
   sfx: PreparedSfx[],
   fontName: string | null, // BARE filename inside `dir` (ffmpeg runs with cwd=dir)
-  transitionFilters: string = '' // boundary fades/blur, appended after drawtext
+  transitionFilters: string = '', // boundary fades/blur, appended after drawtext
+  cameraFilter: string | null = null // zoom/pan/punch, applied before drawtext
 ): void {
   const [w, h] = dims;
 
@@ -771,6 +849,7 @@ function buildScene(
   let vChain =
     `[0:v]fps=${FPS},scale=${w}:${h}:force_original_aspect_ratio=decrease,` +
     `pad=${w}:${h}:(ow-iw)/2:(oh-ih)/2,setsar=1`;
+  if (cameraFilter) vChain += `,${cameraFilter}`;
   let k = 0;
   for (const layer of layers) {
     if (layer.kind === 'box') {
@@ -989,12 +1068,22 @@ export async function renderFinalVideo(
         if (c.transition) whooshUsed++;
       }
 
+      // Camera move: EDL hint (or preset default), punches at caption-chunk starts.
+      const punchTimes = layers
+        .filter((l): l is TextLayer => l.kind === 'text' && l.anim === 'none')
+        .map((l) => l.startSec);
+      const camFilter = buildCameraFilter(
+        effectiveCameraEffect(scene.cameraEffect, i, preset.camera),
+        trimSec ?? probeSec, dims, preset.camera, punchTimes
+      );
+
       const outPath = join(dir, `muxed_${i}.mp4`);
       const tBuild = Date.now();
       buildScene(
         videoPath, audioPath, trimSec, dims, outPath, padAudio,
         dir, scene.sceneIdx, layers, sfx, fontName,
-        buildTransitionFilters(transitions[i], preset.transition, trimSec)
+        buildTransitionFilters(transitions[i], preset.transition, trimSec),
+        camFilter
       );
       console.log(
         `[renderFfmpeg] scene=${i} dl=${dlMs}ms build=${Date.now() - tBuild}ms ` +

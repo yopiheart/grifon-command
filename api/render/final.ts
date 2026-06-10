@@ -46,6 +46,7 @@ const SceneSchema = z.object({
       durationSec: z.number().nonnegative(),
     })
     .optional(),
+  cameraEffect: z.enum(['zoom-in', 'zoom-out', 'pan', 'shake', 'none']).optional(),
   // Overlay/caption engine inputs.
   scriptLine: z.string().max(500).optional(),
   sceneType: z.enum(['talking', 'b-roll', 'cinematic']).optional(),
