@@ -5,6 +5,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import ffmpegPath from 'ffmpeg-static';
 import type { FinalRenderScene, SfxBankId, OverlayStyle } from '../../types.js';
+import { CLASSIC, type RenderPreset, type HookRevealStyle } from './renderPresets.js';
 
 // Final-render executor muscle (Phase 2 of workflows/render_pipeline_voice_10.md).
 // Mirrors the Phase-0-validated invocations in scripts/ffmpeg-spike.mjs exactly:
@@ -49,7 +50,7 @@ export function dimsFor(aspectRatio: string): [number, number] {
 // stitch rather than failing the render.
 // ---------------------------------------------------------------------------
 
-const SFX_VOLUME = 0.6;          // SFX sit under the VO, not over it
+const SFX_VOLUME = CLASSIC.sfx.volume; // SFX sit under the VO, not over it
 // VO-FIRST bed (Neil, 2026-06-08): in direct-response the voice-over IS the sale,
 // so music is seasoning. 0.34 fought the VO on a full-ad listen; drop to 0.18 with
 // a moderate fast duck so the bed only breathes in the gaps. Final loudness is
@@ -67,12 +68,8 @@ const TRANSITION_SFX: ReadonlySet<SfxBankId> = new Set<SfxBankId>(['whoosh', 'sw
 // frame (planScene tags the layer; renderFinalVideo places it at layer.startSec) —
 // the "emphasize what the viewer sees" sync, deterministic unlike the text EDL's
 // guessed anchorSec. Chunked spoken-word captions get none (restraint: 1/scene).
-const OVERLAY_SFX: Record<OverlayStyle, SfxBankId | null> = {
-  hook: 'boom',       // title pop on the flip
-  callout: 'pop',     // key-word callout
-  punchline: 'ding',  // final CTA
-  subtitle: null,     // testimonial spoken subtitle — stays sincere, no SFX
-};
+// (boom on the hook flip, pop on callouts, ding on the CTA, nothing on subtitles.)
+const OVERLAY_SFX: Record<OverlayStyle, SfxBankId | null> = CLASSIC.sfx.overlayMap;
 const CALLOUT_LEAD = 0.3; // delay a callout/punchline so its pop reads distinct from the cut whoosh
 
 // Restraint — keep ads from sounding cheap (Neil: multiple stacked sounds read as
@@ -80,7 +77,7 @@ const CALLOUT_LEAD = 0.3; // delay a callout/punchline so its pop reads distinct
 // whooshes capped per ad. Emphasis SFX (hook/callout/CTA) are uncapped — they're
 // tied to overlays and self-limit, and they win when a whoosh collides with them.
 const MIN_SFX_GAP = 0.4;   // seconds between any two placed SFX
-const MAX_WHOOSH = 3;      // transition whooshes per ad
+const MAX_WHOOSH = CLASSIC.sfx.maxWhoosh; // transition whooshes per ad
 
 // Resolve `assets/<rel>` from either the compiled module dir (local/dev) or the
 // repo-root path Vercel's includeFiles preserves into the lambda. `GRIFON_ASSET_DIR`
@@ -116,18 +113,21 @@ export function escFilterPath(p: string): string {
 // All "where/when" is computed here (or upstream in EditVideo); ffmpeg just draws.
 // ---------------------------------------------------------------------------
 
-// Styling (tunable constants). Colors are ffmpeg color syntax.
-const HOOK_BOX_COLOR = '0xD90429';   // crimson highlight behind the hook power-word
-const BOX_ALPHA = 0.85;              // black caption/overlay box opacity
-const SHADOW_COLOR = 'black@0.73';   // hard 45° drop shadow (no Gaussian blur in drawtext)
-const SHADOW_DX = 6, SHADOW_DY = 6;  // distance 8 @ 45° ≈ (5.7, 5.7)
-const INTER_ADV = 0.62;              // est. Inter-Black glyph advance / fontsize (tune visually)
+// Styling — derived from the CLASSIC preset (api/_lib/renderPresets.ts) so the
+// preset object is the single source of truth and CLASSIC can never drift from
+// the live render. Colors are ffmpeg color syntax.
+const HOOK_BOX_COLOR = CLASSIC.hook.wipeColor;   // crimson highlight behind the hook power-word
+const BOX_ALPHA = CLASSIC.caption.boxAlpha;      // black caption/overlay box opacity
+const CLASSIC_SHADOW = CLASSIC.caption.shadow ?? { dx: 0, dy: 0, color: 'black@0' };
+const SHADOW_COLOR = CLASSIC_SHADOW.color;       // hard 45° drop shadow (no Gaussian blur in drawtext)
+const SHADOW_DX = CLASSIC_SHADOW.dx, SHADOW_DY = CLASSIC_SHADOW.dy;
+const INTER_ADV = CLASSIC.caption.advRatio;      // est. Inter-Black glyph advance / fontsize (tune visually)
 
 // Safe zone (fractions). Erring toward Reels' aggressive bottom UI.
 const SZ_SIDE = 0.10, SZ_TOP = 0.14, SZ_BOTTOM = 0.22;
 const HOOK_TOP_FRAC = 0.32;          // hook text top, upper-center
-const CAPTION_FRAC = 0.67;           // caption/overlay band (talking); b-roll a touch lower
-const BROLL_CAPTION_FRAC = 0.72;
+const CAPTION_FRAC = CLASSIC.caption.yFracTalking; // caption/overlay band (talking); b-roll a touch lower
+const BROLL_CAPTION_FRAC = CLASSIC.caption.yFracBroll;
 
 // Hook reveal entrance + wipe. drawtext re-evals y/alpha/fontsize per-frame
 // (verified 2026-06-08, see agent_lessons.md), so all three styles are REAL
@@ -135,11 +135,10 @@ const BROLL_CAPTION_FRAC = 0.72;
 // the style; the env override lets the synthetic harness A/B all three with no edit.
 const HOOK_DELAY = 0.4;
 const HOOK_BOX_DELAY = 0.55, HOOK_WIPE_DUR = 0.4;
-// flip = uniform scale-grow "pop" — Neil's pick (2026-06-08). Switch styles by
-// changing this literal: 'bounce' (easeOutBack overshoot) | 'slam' (easeOutQuart
-// hard slide) | 'flip'. The union annotation keeps the alternate branches valid
-// (a bare literal would narrow the type and break the `=== 'slam'` comparison).
-const HOOK_REVEAL: 'bounce' | 'slam' | 'flip' = 'flip';
+// flip = uniform scale-grow "pop" — Neil's pick (2026-06-08), now carried by the
+// CLASSIC preset ('bounce' = easeOutBack overshoot | 'slam' = easeOutQuart hard
+// slide | 'flip'). The wide annotation keeps the alternate branches type-valid.
+const HOOK_REVEAL: HookRevealStyle = CLASSIC.hook.reveal;
 const HOOK_FADE_SEC = 0.15;            // alpha snap-in, decoupled from motion (so it's NOT a slow fade)
 // bounce: spring up PAST the target then settle (easeOutBack; c1=3 → ~25% overshoot)
 const HOOK_BOUNCE_DUR = 0.45, HOOK_BOUNCE_RISE = 60, BOUNCE_C1 = 3.0, BOUNCE_C3 = 4.0;
@@ -386,7 +385,7 @@ export function planScene(scene: FinalRenderScene, trimSec: number | null, dims:
   if (scene.isHook) {
     const text = overlay?.text ? stripUnrenderable(overlay.text) : '';
     if (!text) return layers;
-    const { fontsize, lines } = fitText(text, sz.usableW, Math.round(h * 0.060));
+    const { fontsize, lines } = fitText(text, sz.usableW, Math.round(h * CLASSIC.hook.sizeFrac));
     const yTop = Math.round(h * HOOK_TOP_FRAC);
     // Crimson wipe-box behind the WHOLE title (Neil: highlight the full line, not
     // just the last word). Spans the widest line; height covers all lines' lower band.
@@ -402,7 +401,7 @@ export function planScene(scene: FinalRenderScene, trimSec: number | null, dims:
       color: HOOK_BOX_COLOR, startSec: HOOK_BOX_DELAY, wipeDur: HOOK_WIPE_DUR,
     });
     layers.push({
-      kind: 'text', text: lines.join('\n'), fontsize, color: 'white', boxAlpha: 0,
+      kind: 'text', text: lines.join('\n'), fontsize, color: CLASSIC.hook.textColor, boxAlpha: 0,
       xExpr: '(w-text_w)/2', yBase: yTop, startSec: HOOK_DELAY, endSec: end, anim: 'slideup',
       emphasisSfx: OVERLAY_SFX.hook ?? undefined, // boom on the flip pop
     });
@@ -417,7 +416,7 @@ export function planScene(scene: FinalRenderScene, trimSec: number | null, dims:
   let capStart = CAPTION_START_PAD;
 
   if (oText && !dup) {
-    const { fontsize, lines } = fitText(oText, sz.usableW, Math.round(h * 0.044));
+    const { fontsize, lines } = fitText(oText, sz.usableW, Math.round(h * CLASSIC.caption.overlaySizeFrac));
     const color = overlay!.style === 'callout' || overlay!.style === 'punchline' ? '0xFFCC00' : 'white';
     const emphasisSfx = OVERLAY_SFX[overlay!.style] ?? undefined;
     const oEnd = Math.min(end, OVERLAY_HOLD_SEC);
@@ -440,7 +439,7 @@ export function planScene(scene: FinalRenderScene, trimSec: number | null, dims:
       const chunks = chunkCaption(cap, avail);
       const each = avail / Math.max(1, chunks.length);
       chunks.forEach((c, i) => {
-        const { fontsize, lines } = fitText(c, sz.usableW, Math.round(h * 0.040));
+        const { fontsize, lines } = fitText(c, sz.usableW, Math.round(h * CLASSIC.caption.baseSizeFrac));
         layers.push({
           kind: 'text', text: lines.join('\n'), fontsize, color: 'white', boxAlpha: BOX_ALPHA,
           xExpr: '(w-text_w)/2', yBase: cy, anim: 'none',
@@ -841,9 +840,11 @@ async function downloadToFile(url: string, path: string): Promise<void> {
 export async function renderFinalVideo(
   scenes: FinalRenderScene[],
   aspectRatio: string,
-  music?: { style: 'mrbeast' | 'temu' | 'testimonial'; enabled: boolean }
+  music?: { style: 'mrbeast' | 'temu' | 'testimonial'; enabled: boolean },
+  preset: RenderPreset = CLASSIC
 ): Promise<{ buffer: Buffer; sizeBytes: number }> {
   if (!scenes.length) throw new RenderError('no_scenes');
+  const tTotal = Date.now();
   const dims = dimsFor(aspectRatio);
   const dir = mkdtempSync(join(tmpdir(), 'grifon-render-'));
   // Copy the caption font into the temp dir under a bare name so drawtext can
@@ -866,6 +867,7 @@ export async function renderFinalVideo(
 
     for (let i = 0; i < ordered.length; i++) {
       const scene = ordered[i];
+      const tScene = Date.now();
       const videoPath = join(dir, `scene_${i}.mp4`);
       await downloadToFile(scene.videoUrl, videoPath);
 
@@ -874,6 +876,7 @@ export async function renderFinalVideo(
         audioPath = join(dir, `voice_${i}.mp3`);
         await downloadToFile(scene.audioUrl, audioPath);
       }
+      const dlMs = Date.now() - tScene;
 
       const probeSec = probeDurationSec(videoPath);
       // Measure the actual VO speech-end for every voiced scene — this is now the
@@ -912,16 +915,23 @@ export async function renderFinalVideo(
       }
 
       const outPath = join(dir, `muxed_${i}.mp4`);
+      const tBuild = Date.now();
       buildScene(
         videoPath, audioPath, trimSec, dims, outPath, padAudio,
         dir, scene.sceneIdx, layers, sfx, fontName
+      );
+      console.log(
+        `[renderFfmpeg] scene=${i} dl=${dlMs}ms build=${Date.now() - tBuild}ms ` +
+        `trim=${trimSec?.toFixed(2) ?? 'full'} layers=${layers.length} sfx=${sfx.length}`
       );
       muxed.push(outPath);
       elapsed += trimSec ?? probeSec ?? 0; // advance the timeline by this scene's length
     }
 
     const finalPath = join(dir, 'final.mp4');
+    const tConcat = Date.now();
     concatScenes(muxed, finalPath);
+    const concatMs = Date.now() - tConcat;
 
     // Optional final pass: ducked background-music bed across the whole program.
     let resultPath = finalPath;
@@ -942,6 +952,10 @@ export async function renderFinalVideo(
     if (masterAudio(resultPath, masteredPath)) resultPath = masteredPath;
 
     const buffer = readFileSync(resultPath);
+    console.log(
+      `[renderFfmpeg] total=${Date.now() - tTotal}ms scenes=${ordered.length} ` +
+      `preset=${preset.id} concat=${concatMs}ms size=${statSync(resultPath).size}B`
+    );
     return { buffer, sizeBytes: statSync(resultPath).size };
   } finally {
     rmSync(dir, { recursive: true, force: true });
