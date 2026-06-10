@@ -116,8 +116,9 @@ export const CLASSIC: RenderPreset = {
   },
 };
 
-/** Bold direct-response look: Anton condensed caps, white-on-outline with gold
- * karaoke keyword sweep, white flash on alternating cuts, slow scene push-in. */
+/** Bold direct-response look: Anton condensed caps, white-on-outline chunk pop
+ * (the dominant 2026 meta per edit_style_research.md §3), white flash on
+ * alternating cuts, slow scene push-in. */
 export const IMPACT: RenderPreset = {
   id: 'impact',
   caption: {
@@ -128,7 +129,7 @@ export const IMPACT: RenderPreset = {
     boxAlpha: 0,
     borderWFrac: 0.08,
     shadow: { dx: 4, dy: 4, color: 'black@0.6' },
-    chunkAnim: 'karaoke',
+    chunkAnim: 'pop',
     baseSizeFrac: 0.042,
     overlaySizeFrac: 0.046,
     yFracTalking: 0.66,
