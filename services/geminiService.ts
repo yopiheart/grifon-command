@@ -1879,6 +1879,7 @@ export const generateSceneImage = async (
         3. **CAMERA:** angle, distance, and framing follow the CAMERA_MANDATORY block below.
         4. **ENVIRONMENT (FLEXIBLE):** Same residence/setting as Reference Image 1 (e.g., the same home interior). The avatar may be in different spots within that residence (kitchen counter → dining table → living room couch) per the Scene Prompt, but never in an unrelated location (no offices, no cafes, no streets).
         5. **ETHNICITY:** Strictly **${ethnicity}**.
+        6. **NO_UNSOLICITED_PRODUCT:** Do NOT place the brand's product, packaging, bags, bottles, boxes, or ANY branded/labeled props in the scene unless the Scene Prompt explicitly names them. This frame has no product reference photo — any label you render would be an invented fake, the single worst brand-trust failure. Generic unbranded props (plain mug, plain laptop) are fine. When in doubt, leave the surface empty.
         `;
     } else if (referenceImageMode === 'product' && references.productUrl) {
         consistencyRules = `
@@ -1942,7 +1943,13 @@ export const generateSceneImage = async (
     const wardrobeInstruction = "";
 
     // 3. KEEP YOUR NEW PRODUCT CONTEXT
-    const productContext = (productName || productDescription)
+    // Only when this frame carries a product reference photo. In avatar/none frames the
+    // name+description text is hallucination bait — with no photo to copy, the model
+    // decorates the scene with an invented lookalike package (2026-06-10 validation
+    // render: fake orange carton on the Scene-2 desk). Product scenes are tagged
+    // 'product'/'both' by the narrative generator and carry the hero photo.
+    const carriesProductRef = referenceImageMode === 'product' || referenceImageMode === 'both';
+    const productContext = (carriesProductRef && (productName || productDescription))
       ? `\n**PRODUCT_IDENTITY_CORE:**\n- NAME: ${productName || 'N/A'}\n- DESCRIPTION: ${productDescription || 'N/A'}`
       : "";
 
