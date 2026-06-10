@@ -1,6 +1,24 @@
 # Workflow: Validation Render — prove the hook fix + Viral Editor 2.0 on clean footage
 
-**Status: QUEUED — execute on a FRESH session** (Neil, 2026-06-10: "next session, fresh context").
+**Status: EXECUTED 2026-06-10 — both validation targets CONFIRMED.** Hook blob ~1/10 vs
+8/10 baseline (Phase D + anchor-color fix validated live); editor verified on clean
+footage. Full session log: `launch_readiness.md` 2026-06-10 section (11 fixes shipped).
+
+## ⏭ TOMORROW (2026-06-11) — first moves
+
+1. **Baseline video**: [`baselines/2026-06-10-bean-block-final-baseline.mp4`](../baselines/2026-06-10-bean-block-final-baseline.mp4)
+   (committed — survives the defreezer). Remaining defects, BOTH source-clip damage
+   (trim log proved VO fills those clips end-to-end, nothing cuttable):
+   - ~15.5–16s: baked blur in scene 4's final frames (scene 4 = sceneIdx 3, VO 6.09s of a 6.0s clip)
+   - ~27–28s: baked ghost/double-exposure in scene 6's final frames (VO 7.95s of an 8s clip)
+2. **The fix is already shipped** (END-CLEAN negatives in A-Regular + Option B video
+   prompts, Neil-approved): **REGEN the scene 4 + scene 6 VIDEOS** in Generate Video
+   (regenerates their prompts through the new rules), then re-render and frame-compare
+   against the baseline at the two stamps.
+3. Pre-flight per director-smoke: `.\scripts\enable-dev-unmetered-video.ps1` + restart
+   dev (`npm run dev -- --host > .tmp/dev-server.log 2>&1`). Wizard state restores via
+   the resume pill (STEP_08 — BEAN BLOCK). `[renderFfmpeg:trim]` logs land in the file.
+
 This file + `CLAUDE.md` + `UBIQUITOUS_LANGUAGE.md` are enough to resume; no re-explaining needed.
 
 ## Context

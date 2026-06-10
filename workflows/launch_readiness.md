@@ -4,7 +4,27 @@
 
 This is the meta-workflow. It doesn't do the work itself — it points to the workflows that do, and tracks overall progress. **Source of truth = the code + `git log`.** This file summarizes; it does not replace.
 
-> **⏭ NEXT SESSION (queued 2026-06-10):** execute [`validation_render.md`](validation_render.md) — full Bukidnon Brew wizard E2E proving the hook-anchor prompt fix (`109d367`) + Viral Editor 2.0 (`b8034be`→`5c7fd26`: 4 rotating edit presets, premium metallic hook, film burn, word-pop captions) on clean footage. This file is stale below this line (missing the render-pipeline arc and the full Viral Editor 2.0 arc — see `git log 2fad4e1..5c7fd26` and `edit_style_research.md`); the catch-up write-up is folded into that run's wrap-up step.
+> **⏭ NEXT SESSION (2026-06-11):** scene-6/5 video regen to verify the END-CLEAN video-prompt negatives (ghost-tail kill), then one FINAL_RENDER to verify the tighter trim pads + read `[renderFfmpeg:trim]` numbers. Backlog surfaced 2026-06-10, Neil-gated: voice auto-preselect by avatar gender; end-card offer recap overlay ("FIRST 50: FREE DRIP BAG"); price-anchor callout at product reveal; product-aware hook text dodge (vision pass is face-only today); EDL responseSchema (kill the drift class at decode time when the Phase-1A stub brain gets its real upgrade).
+
+## Status as of 2026-06-10 (VALIDATION RENDER EXECUTED — hook blob KILLED · 11-fix hardening day)
+
+The queued [`validation_render.md`](validation_render.md) ran end-to-end on a fresh brand (**Bean Block** Bukidnon Arabica — real Shopee hero, woman-holding-bag) through MarketMind → Director (all auto-prefill regression checks PASS) → storyboard → Kling/Veo RENDER ALL → Signal Modulator → AI Editor → FINAL_RENDER. **Both validation targets confirmed:**
+
+1. **Hook blob: DEAD.** Frame-stepped the fresh Kling Omni morph — grounds→bag tracks through the orange anchor, zero flesh tones. ~1/10 vs the 8/10 baseline. Phase D (`109d367`) + the anchor-color fix validated live.
+2. **Viral Editor 2.0 on clean footage: works** — title-stack hook, word-pop captions, preset rotation, CTA hold; surfaced a quality punch-list that became the fix chain below.
+
+**11 fixes shipped + pushed this session** (`7cd60cb`→`42200d9`), every one root-caused from a live failure Neil hit:
+
+| Theme | Fixes |
+|---|---|
+| Scene-gen person/product leaks | CAMERA_MANDATORY gated to avatar/both modes (face demand was pulling the hero's person into product frames); HOOK ANCHOR color now derives FROM the product (was recoloring the bag); PRODUCT_IDENTITY_CORE gated off no-ref frames + NO_UNSOLICITED_PRODUCT (invented fake-label props) |
+| EDL stochastic drift (no responseSchema) | scenes-array guarantee, overlayText/sfxCues coercion to the render contract, formulaCheck/globalSfxPicks defaults, UI nullish guards — module-crash + FINAL_RENDER 400 class closed |
+| Renderer quality (Neil's scene-by-scene reviews) | caption VO-sync (chunks pace the speech window; overlay-overlapped chunks sacrificed); hook word fusing (uppercase-aware advance + explicit gap); hook moved to top safe band (was blocking the product); preset rotation stabilized (signed-URL tokens were re-rolling the style per re-render); em-dash strip; PAD_SEC 0.3→0.18 + last-scene razor trim 0.06s; `[renderFfmpeg:trim]` per-scene log |
+| Voice | normalizeTaglish was DEAD CODE — wired into BOTH TTS paths (client voiceService + server consolidator); "swabe"→"swah-beh" entry |
+| Video prompts (TUNED, Neil-approved) | END-CLEAN negatives on A-Regular + Option B (which had NO negative phrase at all) — Kling/Veo bake ghost/dissolve into final frames; renderer can't cut what overlaps speech |
+| Dev infra | `GRIFON_DEV_UNMETERED_VIDEO` now bypasses hourly rate-limit too (Neil hit 402 then 429 mid-smoke); `scripts/enable-dev-unmetered-video.ps1`; director-smoke skill pre-flight step 0 = unmeter first |
+
+**Known-open:** ghost-during-speech on scene 6 is source-clip damage (only a regen fixes the existing clip); scene 6 CTA intentionally suppresses captions (punchline owns the band); ImageAdsGen/OrganicCalendar still have the parked referenceImageMode wiring bug (now also skips PRODUCT_IDENTITY_CORE text — fold into that Tier-4 fix).
 
 ## Status as of 2026-05-22 (Omni hook arc C–G logged · RENDER ALL → Signal Modulator hand-off verified)
 

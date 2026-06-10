@@ -91,6 +91,18 @@ The sections below are the technical-vocabulary deep dives — wizard internals 
 | --- | --- | --- |
 | **Audio Mode** | The voiceover delivery mode: `BROADCAST` (high-fidelity narration) or `CONVERSION` (sales-led delivery). | Voice mode |
 
+## AI Editor & final render (Viral Editor 2.0)
+
+| Term | Definition | Aliases to avoid |
+| --- | --- | --- |
+| **EDL** | The Edit Decision List (`EditDecisionList`) the AI Editor drafts from a **Scene Batch**: per-scene keep-segments, overlay text, SFX cues, transitions, camera hints, plus `meta` + `formulaCheck`. The render contract `/api/render/final` enforces. | Edit plan, cut list |
+| **Edit Style Preset** | One of the named looks in `renderPresets.ts` (`classic` / `impact` / `hype` / `clean`): hook layout, caption animation, transition style, camera energy, SFX map. Rotates deterministically per ad (seed = scene bucket paths, query-stripped) so the SAME ad always re-renders identically. | Render theme, style pack |
+| **Title Stack** | The reference-grade hook layout: words pop sequentially with elastic overshoot, lines stacked in the TOP safe band, power words in the highlight color. | Hook stack, big text |
+| **Hook Palette** | The metallic gradient + light-sweep fill applied to title-stack hook text, rotated per render so consecutive ads don't match. | Gradient skin |
+| **Film Burn** | The light-leak transition reserved for the hook→scene-2 cut (warm overexposed wash, 3 decaying steps each side). | Light leak (as a generic) |
+| **Word-Pop** | The caption animation where 1–3-word chunks swap on VO cadence, each word timed by character weight. Captions pace the FULL speech window; chunks overlapped by an overlay are sacrificed, never delayed. | Karaoke captions (that's a distinct `chunkAnim`) |
+| **Razor Trim** | The last scene's tail trim at speech-end + 0.06s (vs the standard 0.18s pad) so the ad's closing frame is the CTA — never a ghost tail, dead beat, or black frame. | End trim |
+
 ## Inputs & outputs
 
 | Term | Definition | Aliases to avoid |
