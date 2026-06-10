@@ -63,6 +63,8 @@ Before any planning conversation, large refactor, or new module spec, load:
 - **`.claude/skills/surgical-edit/`** — invoke before any edit. Match the scope of the change to the scope of the request. Hard rules for `services/geminiService.ts` and `api/_lib/` live here.
 - **`.claude/skills/director-smoke/`** — **MANDATORY before driving the Director AI wizard end-to-end as a smoke/manual test** (or generating a full N-scene ad to exercise downstream pipelines like Signal Modulator / AI Editor / FINAL_RENDER). Enforces hero-image-FIRST, Market Research before Director, and **never manually typing brand/offer fields** (they must auto-prefill from Market Research). Do NOT click "Start with Director" for a test without loading it first.
 
+All smoke tests must be delegated to the `smoke-tester` subagent (defined in [.claude/agents/smoke-tester.md](.claude/agents/smoke-tester.md)).
+
 If a planning conversation introduces a new domain concept not in `UBIQUITOUS_LANGUAGE.md`, propose adding it before writing code.
 
 ## Context Hygiene
