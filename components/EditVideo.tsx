@@ -435,10 +435,10 @@ const BatchEditMode: React.FC<{
 
             <GlassPanel className="p-6">
               <h2 className="text-[10px] text-zinc-400 font-mono uppercase tracking-widest border-b border-white/10 pb-2 mb-4">
-                // TIMELINE · {edl.scenes.length}_SCENES
+                // TIMELINE · {(edl.scenes ?? []).length}_SCENES
               </h2>
               <div className="flex flex-col gap-3">
-                {edl.scenes.map((scene) => (
+                {(edl.scenes ?? []).map((scene) => (
                   <div
                     key={scene.sceneIdx}
                     className="flex flex-col gap-2 p-4 rounded-xl bg-zinc-950 border border-white/5"

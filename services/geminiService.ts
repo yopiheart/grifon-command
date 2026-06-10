@@ -1403,12 +1403,22 @@ the nearest valid value. Never emit anything else.
   const raw = response.text || '{}';
   const parsed = JSON.parse(cleanJson(raw)) as EditDecisionList;
 
+  // Shape guarantee: this call has responseMimeType json but NO responseSchema,
+  // so the model occasionally drifts shape (2026-06-10 live smoke: a draft with
+  // no scenes array crashed the Edit module; a draft with overlayText as a single
+  // OBJECT + sfxCues missing anchorSec got zod-rejected by /api/render/final as
+  // FINAL_RENDER_START_FAILED 400). Throwing here surfaces the module's normal
+  // error state instead of a component crash. Transport concern, not creative.
+  if (!Array.isArray(parsed.scenes) || parsed.scenes.length === 0) {
+    throw new Error('EDL_MALFORMED: model returned no scenes array — re-draft the EDL.');
+  }
+
   // Defensive passthrough: the model occasionally substitutes long Supabase
   // signed URLs with shortened placeholders ("scene_0.mp4"). Overwrite the
   // input-echoing fields verbatim so Remotion always receives the real
   // sources. Transport concern, not creative — fair game per services/CLAUDE.md.
   const audioBySceneIdx = new Map(input.audioOverlays.map((a) => [a.sceneIdx, a.audioUrl]));
-  if (Array.isArray(parsed.scenes) && parsed.scenes.length === input.sceneBatch.length) {
+  if (parsed.scenes.length === input.sceneBatch.length) {
     parsed.scenes = parsed.scenes.map((scene, i) => ({
       ...scene,
       sceneIdx: input.sceneBatch[i].sceneIdx,
@@ -1416,10 +1426,29 @@ the nearest valid value. Never emit anything else.
       sourceAudioUrl: audioBySceneIdx.get(input.sceneBatch[i].sceneIdx) ?? '',
     }));
   }
-  if (parsed.meta) {
-    parsed.meta.aspectRatio = input.aspectRatio;
-    parsed.meta.targetPlatform = input.targetPlatform;
-  }
+
+  // Mechanical coercion to the render contract (api/render/final.ts zod schema):
+  // overlayText single-object → 1-element array, text clamped to the 120-char cap,
+  // sfx cues without a numeric anchorSec dropped (decorative — never fail a render
+  // over them), keepSegments always an array.
+  parsed.scenes = parsed.scenes.map((scene: any) => ({
+    ...scene,
+    keepSegments: Array.isArray(scene.keepSegments) ? scene.keepSegments : [],
+    overlayText: scene.overlayText == null
+      ? undefined
+      : (Array.isArray(scene.overlayText) ? scene.overlayText : [scene.overlayText])
+          .filter((o: any) => o && typeof o.text === 'string')
+          .map((o: any) => ({ ...o, text: o.text.slice(0, 120) })),
+    sfxCues: Array.isArray(scene.sfxCues)
+      ? scene.sfxCues.filter((c: any) => c && typeof c.anchorSec === 'number')
+      : undefined,
+  }));
+
+  parsed.meta = {
+    ...(parsed.meta ?? ({} as EditDecisionList['meta'])),
+    aspectRatio: input.aspectRatio,
+    targetPlatform: input.targetPlatform,
+  };
   return parsed;
 };
 
