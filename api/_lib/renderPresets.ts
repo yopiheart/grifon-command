@@ -15,7 +15,8 @@ export type PresetId = 'classic' | 'impact' | 'hype' | 'clean';
 export type ScriptStyle = 'mrbeast' | 'temu' | 'testimonial';
 export type ChunkAnim = 'none' | 'pop' | 'word-pop' | 'karaoke';
 export type HookRevealStyle = 'bounce' | 'slam' | 'flip';
-export type TransitionKind = 'none' | 'flash' | 'dip' | 'whip';
+export type HookLayoutStyle = 'wipe' | 'title-stack';
+export type TransitionKind = 'none' | 'flash' | 'dip' | 'whip' | 'burn';
 
 export interface CaptionStyle {
   /** Font file relative to api/_lib/assets/ (copied bare-named into the temp dir). */
@@ -40,12 +41,24 @@ export interface CaptionStyle {
 }
 
 export interface HookStyle {
+  /** 'wipe' = classic single-block reveal behind a wipe box. 'title-stack' =
+   * reference-grade word-by-word elastic pop title (no box), gold/white
+   * two-tone — see edit_style_research.md websites5 hook + Neil 2026-06-10. */
+  layout: HookLayoutStyle;
   reveal: HookRevealStyle;
+  /** Hook title font (copied separately as hook.ttf; captions keep their own). */
+  fontFile: string;
+  /** Glyph advance ratio for the hook font (width estimation). */
+  advRatio: number;
   textColor: string;
   wipeBox: boolean;
   wipeColor: string;
   /** Hook title fontsize as a fraction of video height. */
   sizeFrac: number;
+  /** Seconds between sequential word pops (title-stack). */
+  wordCadenceSec: number;
+  /** Light-leak / film-burn transition at the hook→scene-2 cut. */
+  burnTransition: boolean;
 }
 
 export interface TransitionStyle {
@@ -103,7 +116,11 @@ export const CLASSIC: RenderPreset = {
     yFracTalking: 0.67,
     yFracBroll: 0.72,
   },
-  hook: { reveal: 'flip', textColor: 'white', wipeBox: true, wipeColor: '0xD90429', sizeFrac: 0.06 },
+  hook: {
+    layout: 'wipe', reveal: 'flip', fontFile: 'fonts/Inter-Black.ttf', advRatio: 0.62,
+    textColor: 'white', wipeBox: true, wipeColor: '0xD90429', sizeFrac: 0.06,
+    wordCadenceSec: 0, burnTransition: false,
+  },
   transition: { kind: 'none', halfDurSec: 0, everyN: 1, maxPerAd: 0 },
   camera: {
     intensity: 0, defaultEffect: 'none', sceneZoom: 1,
@@ -135,10 +152,16 @@ export const IMPACT: RenderPreset = {
     yFracTalking: 0.66,
     yFracBroll: 0.7,
   },
-  hook: { reveal: 'slam', textColor: 'black', wipeBox: true, wipeColor: '0xFFCC00', sizeFrac: 0.062 },
+  hook: {
+    layout: 'title-stack', reveal: 'slam', fontFile: 'fonts/Montserrat-ExtraBold.ttf', advRatio: 0.64,
+    textColor: 'white', wipeBox: false, wipeColor: '0xFFCC00', sizeFrac: 0.058,
+    wordCadenceSec: 0.32, burnTransition: true,
+  },
   transition: { kind: 'flash', halfDurSec: 0.07, everyN: 2, maxPerAd: 3 },
+  // Camera motion is the video-generation prompt's job — generated clips carry
+  // their own moves, and renderer zoom on top reads as a pulse (Neil 2026-06-10).
   camera: {
-    intensity: 1, defaultEffect: 'zoom-in', sceneZoom: 1.08,
+    intensity: 0, defaultEffect: 'none', sceneZoom: 1,
     chunkPunch: false, chunkPunchZoom: 1, maxPunchesPerScene: 0,
   },
   sfx: {
@@ -166,11 +189,16 @@ export const HYPE: RenderPreset = {
     yFracTalking: 0.64,
     yFracBroll: 0.68,
   },
-  hook: { reveal: 'bounce', textColor: 'white', wipeBox: true, wipeColor: '0x111111', sizeFrac: 0.064 },
+  hook: {
+    layout: 'title-stack', reveal: 'bounce', fontFile: 'fonts/Montserrat-ExtraBold.ttf', advRatio: 0.64,
+    textColor: 'white', wipeBox: false, wipeColor: '0x111111', sizeFrac: 0.06,
+    wordCadenceSec: 0.3, burnTransition: true,
+  },
   transition: { kind: 'whip', halfDurSec: 0.05, everyN: 2, maxPerAd: 4 },
+  // Camera motion lives in generation, not the renderer (pulse guard — see impact).
   camera: {
-    intensity: 2, defaultEffect: 'zoom-in', sceneZoom: 1.08,
-    chunkPunch: true, chunkPunchZoom: 1.05, maxPunchesPerScene: 3,
+    intensity: 0, defaultEffect: 'none', sceneZoom: 1,
+    chunkPunch: false, chunkPunchZoom: 1, maxPunchesPerScene: 0,
   },
   sfx: {
     overlayMap: { hook: 'boom', callout: 'pop', punchline: 'ding', subtitle: null },
@@ -197,10 +225,15 @@ export const CLEAN: RenderPreset = {
     yFracTalking: 0.67,
     yFracBroll: 0.72,
   },
-  hook: { reveal: 'flip', textColor: 'white', wipeBox: false, wipeColor: '0xD90429', sizeFrac: 0.056 },
+  hook: {
+    layout: 'title-stack', reveal: 'flip', fontFile: 'fonts/ArchivoBlack-Regular.ttf', advRatio: 0.66,
+    textColor: 'white', wipeBox: false, wipeColor: '0xD90429', sizeFrac: 0.052,
+    wordCadenceSec: 0.34, burnTransition: false,
+  },
   transition: { kind: 'dip', halfDurSec: 0.12, everyN: 3, maxPerAd: 2 },
+  // Camera motion lives in generation, not the renderer (pulse guard — see impact).
   camera: {
-    intensity: 1, defaultEffect: 'zoom-out', sceneZoom: 1.06,
+    intensity: 0, defaultEffect: 'none', sceneZoom: 1,
     chunkPunch: false, chunkPunchZoom: 1, maxPunchesPerScene: 0,
   },
   sfx: {

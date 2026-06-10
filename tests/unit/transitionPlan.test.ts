@@ -89,3 +89,44 @@ describe('buildTransitionFilters', () => {
     expect(buildTransitionFilters({ fadeOutTail: true, fadeInHead: true }, CLASSIC.transition, 4)).toBe('');
   });
 });
+
+describe('film-burn at the hook cut (hookBurn)', () => {
+  it('reserves the hook cut for the burn, both sides, not counted vs maxPerAd', () => {
+    const plans = planTransitions(8, FLASH, true);
+    expect(plans[0]).toMatchObject({ fadeOutTail: true, tailKind: 'burn' });
+    expect(plans[1]).toMatchObject({ fadeInHead: true, headKind: 'burn' });
+    // the general flash budget still lands 3 transitions on later cuts
+    const flashHeads = plans.filter((p) => p.fadeInHead && p.headKind !== 'burn').length;
+    expect(flashHeads).toBe(3);
+    // and cut 1 isn't double-booked by the flash loop
+    expect(plans[1].headKind).toBe('burn');
+  });
+
+  it('hookBurn works even when the preset has no general transitions (clean=false, manual true)', () => {
+    const plans = planTransitions(5, CLASSIC.transition, true);
+    expect(plans[0].tailKind).toBe('burn');
+    expect(plans[1].headKind).toBe('burn');
+    expect(plans.slice(2).every((p) => !p.fadeInHead && !p.fadeOutTail)).toBe(true);
+  });
+
+  it('burn head = warm wash decaying in 3 steps; burn tail ramps up into the cut', () => {
+    const head = buildTransitionFilters({ fadeOutTail: false, fadeInHead: true, headKind: 'burn' }, HYPE.transition, 4);
+    expect(head).toContain("eq=brightness=0.32:saturation=1.4:gamma_r=1.45:gamma_g=1.15:enable='lt(t,0.120)'");
+    expect(head).toContain("gblur=sigma=6:enable='lt(t,0.120)'");
+    expect(head).toContain("enable='between(t,0.120,0.240)'");
+
+    const tail = buildTransitionFilters({ fadeOutTail: true, fadeInHead: false, tailKind: 'burn' }, HYPE.transition, 4);
+    expect(tail).toContain("enable='gte(t,3.880)'"); // strongest step rides into the cut
+    expect(tail).toContain('gblur=sigma=6');
+    // unknown trim → tail skipped entirely
+    expect(buildTransitionFilters({ fadeOutTail: true, fadeInHead: false, tailKind: 'burn' }, HYPE.transition, null)).toBe('');
+  });
+
+  it('per-side kinds mix: burn head + flash tail on the same scene', () => {
+    const f = buildTransitionFilters(
+      { fadeOutTail: true, fadeInHead: true, headKind: 'burn' }, FLASH, 5
+    );
+    expect(f).toContain('eq=brightness=0.32');              // burn in
+    expect(f).toContain('fade=t=out:st=4.930:d=0.07:color=white'); // flash out
+  });
+});

@@ -45,14 +45,26 @@ describe('planScene — classic identity', () => {
 });
 
 describe('planScene — preset styling', () => {
-  it('hype: hook text lands on frame ~0 with the preset wipe color', () => {
-    const layers = planScene(hook, 4, DIMS, HYPE);
-    const box = layers[0] as BoxLayer;
-    expect(box.color).toBe('0x111111');
-    expect((layers[1] as TextLayer).startSec).toBeLessThanOrEqual(0.1);
+  it('hype/impact hook is a title stack: no box, hook font, sequential elastic words', () => {
+    for (const preset of [HYPE, IMPACT]) {
+      const layers = planScene(hook, 4, DIMS, preset);
+      expect(layers.some((l) => l.kind === 'box')).toBe(false);
+      const title = layers[0] as TextLayer;
+      expect(title.anim).toBe('word-pop');
+      expect(title.font).toBe('hook');
+      expect(title.words!.length).toBe(3); // TIGNAN MO TO
+      expect(title.words![0].start).toBeLessThanOrEqual(0.1); // text on frame ~0
+      // sequential cadence + persistence to scene end
+      expect(title.words![1].start).toBeGreaterThan(title.words![0].start);
+      expect(title.words![2].end).toBeCloseTo(4, 3);
+      // two-tone: TIGNAN is a power word → gold highlight
+      expect(title.words![0].highlight).toBe(true);
+      expect(title.words![1].highlight).toBeFalsy();
+      expect(title.emphasisSfx).toBe('boom');
+    }
   });
 
-  it('clean: no hook wipe box at all', () => {
+  it('clean: title stack with no box, white base', () => {
     const layers = planScene(hook, 4, DIMS, CLEAN);
     expect(layers.some((l) => l.kind === 'box')).toBe(false);
     expect((layers[0] as TextLayer).color).toBe('white');

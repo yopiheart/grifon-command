@@ -28,7 +28,9 @@ describe('preset definitions', () => {
     expect(CLASSIC.caption.yFracTalking).toBe(0.67);
     expect(CLASSIC.caption.yFracBroll).toBe(0.72);
     expect(CLASSIC.hook).toEqual({
-      reveal: 'flip', textColor: 'white', wipeBox: true, wipeColor: '0xD90429', sizeFrac: 0.06,
+      layout: 'wipe', reveal: 'flip', fontFile: 'fonts/Inter-Black.ttf', advRatio: 0.62,
+      textColor: 'white', wipeBox: true, wipeColor: '0xD90429', sizeFrac: 0.06,
+      wordCadenceSec: 0, burnTransition: false,
     });
     expect(CLASSIC.transition.kind).toBe('none');
     expect(CLASSIC.camera.intensity).toBe(0);
@@ -40,6 +42,19 @@ describe('preset definitions', () => {
   it('every preset uses either a box or an outline, never both', () => {
     for (const p of Object.values(PRESETS)) {
       expect(p.caption.boxAlpha > 0 && p.caption.borderWFrac > 0, p.id).toBe(false);
+    }
+  });
+
+  it('every preset ships with renderer camera motion OFF (pulse guard — camera lives in generation)', () => {
+    for (const p of Object.values(PRESETS)) {
+      expect(p.camera.intensity, p.id).toBe(0);
+      expect(p.camera.chunkPunch, p.id).toBe(false);
+    }
+  });
+
+  it('every hook font file is bundled', () => {
+    for (const p of Object.values(PRESETS)) {
+      expect(existsSync(join(ASSETS, p.hook.fontFile)), `${p.id}: ${p.hook.fontFile}`).toBe(true);
     }
   });
 });

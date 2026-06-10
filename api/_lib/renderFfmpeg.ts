@@ -271,6 +271,58 @@ export interface WordTiming {
   start: number; // scene-relative seconds
   end: number;
   xPx: number;   // absolute left edge of the word (line centered at frameW/2)
+  /** Absolute top y when the word sits off the layer's base line (title stack). */
+  yPx?: number;
+  /** Render in the preset's highlight color (gold power word) instead of base. */
+  highlight?: boolean;
+}
+
+// Power words pop GOLD in the title stack (reference grammar: numbers +
+// superlatives/commands = gold, connectors = white — websites5 hook).
+const POWER_WORDS = new Set([
+  'tignan', 'grabe', 'best', 'free', 'libre', 'secret', 'sale', 'bago', 'new',
+  'viral', 'stop', 'wag', 'huwag', 'top', 'sulit', 'mura', 'promo', 'alam',
+]);
+
+export function isPowerWord(word: string): boolean {
+  const w = word.toLowerCase().replace(/[^a-z0-9]/g, '');
+  return /\d/.test(w) || POWER_WORDS.has(w);
+}
+
+/**
+ * Title-stack hook layout (reference-grade hook, Neil 2026-06-10): every word
+ * pops sequentially with an elastic overshoot, lines stacked and centered,
+ * power words in the highlight color. Pure: returns word timings with absolute
+ * x/y. Guarantees at least one highlighted word (falls back to the first).
+ */
+export function hookTitleLayout(
+  lines: string[],
+  fontsize: number,
+  advRatio: number,
+  frameW: number,
+  yTop: number,
+  startSec: number,
+  cadenceSec: number
+): WordTiming[] {
+  const lineH = Math.round(fontsize * 1.18);
+  const out: WordTiming[] = [];
+  let idx = 0;
+  for (let li = 0; li < lines.length; li++) {
+    const words = lines[li].split(/\s+/).filter(Boolean);
+    let x = (frameW - estWidth(lines[li], fontsize, advRatio)) / 2;
+    for (const wd of words) {
+      const start = +(startSec + idx * cadenceSec).toFixed(3);
+      out.push({
+        word: wd, start, end: start, // end is overwritten by the caller (persist)
+        xPx: Math.round(x), yPx: yTop + li * lineH,
+        highlight: isPowerWord(wd),
+      });
+      x += estWidth(`${wd} `, fontsize, advRatio);
+      idx++;
+    }
+  }
+  if (out.length && !out.some((w) => w.highlight)) out[0].highlight = true;
+  return out;
 }
 
 /**
@@ -403,6 +455,8 @@ export interface TextLayer {
   emphasisSfx?: SfxBankId; // a sound to fire ON this text's appearance (startSec)
   /** Word-level timing/position for 'word-pop' / 'karaoke' (single-line chunks). */
   words?: WordTiming[];
+  /** Which bundled font renders this layer (hook title may differ from captions). */
+  font?: 'caption' | 'hook';
 }
 export interface BoxLayer {
   kind: 'box';
@@ -455,8 +509,25 @@ export function planScene(
   if (scene.isHook) {
     const text = overlay?.text ? stripUnrenderable(overlay.text) : '';
     if (!text) return layers;
-    const { fontsize, lines } = fitText(text, sz.usableW, Math.round(h * preset.hook.sizeFrac), adv);
+    const hookAdv = preset.hook.advRatio;
+    const { fontsize, lines } = fitText(text, sz.usableW, Math.round(h * preset.hook.sizeFrac), hookAdv);
     const yTop = Math.round(h * HOOK_TOP_FRAC);
+
+    if (preset.hook.layout === 'title-stack') {
+      // Reference-grade hook: word-by-word elastic pop, gold/white two-tone,
+      // no box (websites5 grammar; Neil 2026-06-10 redesign).
+      const words = hookTitleLayout(lines, fontsize, hookAdv, w, yTop, 0.05, preset.hook.wordCadenceSec);
+      words.forEach((wd) => { wd.end = end; }); // every word persists to scene end
+      layers.push({
+        kind: 'text', text: lines.join('\n'), fontsize, color: preset.hook.textColor, boxAlpha: 0,
+        xExpr: `${Math.round((w - Math.max(...lines.map((l) => estWidth(l, fontsize, hookAdv)))) / 2)}`,
+        yBase: yTop, startSec: 0.05, endSec: end, anim: 'word-pop', words, font: 'hook',
+        emphasisSfx: overlaySfx.hook ?? undefined,
+      });
+      return layers;
+    }
+
+    // Classic 'wipe' layout: single-block reveal behind the wipe box.
     // Non-classic: text on frame ~0 (references put the hook caption on frame 1 —
     // edit_style_research.md §3.8); classic keeps the shipped 0.4s entrance.
     const hookDelay = cls ? HOOK_DELAY : 0.05;
@@ -637,7 +708,13 @@ export function buildCameraFilter(
   return `scale=${ow}:-2,crop=${w}:${h}:x='(iw-${w})*min(1,t/${D})':y=(ih-${h})/2,setsar=1`;
 }
 
-export interface TransitionPlan { fadeOutTail: boolean; fadeInHead: boolean; }
+export interface TransitionPlan {
+  fadeOutTail: boolean;
+  fadeInHead: boolean;
+  /** Per-side kind overrides (hook cut may burn while other cuts flash/whip). */
+  tailKind?: TransitionStyle['kind'];
+  headKind?: TransitionStyle['kind'];
+}
 
 /**
  * Decide which cuts get a transition. Pure + deterministic (mirrors pickSceneSfx
@@ -645,17 +722,32 @@ export interface TransitionPlan { fadeOutTail: boolean; fadeInHead: boolean; }
  * a head transition (nothing transitions into the hook). Every Nth cut starting
  * from the first, capped at maxPerAd. Whip is incoming-only (the blur reads as
  * camera movement); flash/dip burn both sides of the cut.
+ *
+ * `hookBurn` reserves the hook→scene-2 cut for a light-leak/film-burn (both
+ * sides, kind 'burn', NOT counted against maxPerAd) — the reference move for
+ * blending the hook into the body (Neil 2026-06-10).
  */
-export function planTransitions(sceneCount: number, t: TransitionStyle): TransitionPlan[] {
+export function planTransitions(
+  sceneCount: number,
+  t: TransitionStyle,
+  hookBurn: boolean = false
+): TransitionPlan[] {
   const plans: TransitionPlan[] = Array.from(
     { length: Math.max(0, sceneCount) },
     () => ({ fadeOutTail: false, fadeInHead: false })
   );
+  if (sceneCount >= 2 && hookBurn) {
+    plans[0].fadeOutTail = true;
+    plans[0].tailKind = 'burn';
+    plans[1].fadeInHead = true;
+    plans[1].headKind = 'burn';
+  }
   if (t.kind === 'none' || t.maxPerAd <= 0 || sceneCount < 2) return plans;
   const everyN = Math.max(1, t.everyN);
   let used = 0;
   for (let cut = 1; cut < sceneCount && used < t.maxPerAd; cut++) {
     if ((cut - 1) % everyN !== 0) continue;
+    if (cut === 1 && hookBurn) continue; // the burn owns the hook cut
     if (t.kind !== 'whip') plans[cut - 1].fadeOutTail = true;
     plans[cut].fadeInHead = true;
     used++;
@@ -670,26 +762,57 @@ export function planTransitions(sceneCount: number, t: TransitionStyle): Transit
  * 3-step decaying boxblur over the first 3×halfDur (blur radius can't animate
  * per-frame in this build; time-gated `enable` can — same trick as the wipe box).
  */
+/** Film-burn step length (per side, 3 decaying/ramping steps each). */
+const BURN_STEP = 0.12;
+
 export function buildTransitionFilters(
   plan: TransitionPlan,
   style: TransitionStyle,
   trimSec: number | null
 ): string {
-  const d = style.halfDurSec;
-  if (style.kind === 'none' || d <= 0) return '';
   const parts: string[] = [];
-  if (style.kind === 'flash' || style.kind === 'dip') {
-    const color = style.kind === 'flash' ? 'white' : 'black';
-    if (plan.fadeInHead) parts.push(`fade=t=in:st=0:d=${d}:color=${color}`);
-    if (plan.fadeOutTail && typeof trimSec === 'number' && trimSec > 2 * d) {
-      parts.push(`fade=t=out:st=${(trimSec - d).toFixed(3)}:d=${d}:color=${color}`);
-    }
-  } else if (style.kind === 'whip' && plan.fadeInHead) {
+  const headKind = plan.fadeInHead ? plan.headKind ?? style.kind : 'none';
+  const tailKind = plan.fadeOutTail ? plan.tailKind ?? style.kind : 'none';
+  const d = style.halfDurSec;
+
+  // --- incoming head ---
+  if ((headKind === 'flash' || headKind === 'dip') && d > 0) {
+    parts.push(`fade=t=in:st=0:d=${d}:color=${headKind === 'flash' ? 'white' : 'black'}`);
+  } else if (headKind === 'whip' && d > 0) {
     parts.push(
       `boxblur=18:1:enable='lt(t,${d.toFixed(3)})'`,
       `boxblur=8:1:enable='between(t,${d.toFixed(3)},${(2 * d).toFixed(3)})'`,
       `boxblur=3:1:enable='between(t,${(2 * d).toFixed(3)},${(3 * d).toFixed(3)})'`
     );
+  } else if (headKind === 'burn') {
+    // Light-leak in: warm overexposed wash decaying over 3 steps (eq/gblur have
+    // timeline support; their params can't animate per-frame, so step the decay).
+    const b = BURN_STEP;
+    parts.push(
+      `eq=brightness=0.32:saturation=1.4:gamma_r=1.45:gamma_g=1.15:enable='lt(t,${b.toFixed(3)})'`,
+      `gblur=sigma=6:enable='lt(t,${b.toFixed(3)})'`,
+      `eq=brightness=0.16:saturation=1.2:gamma_r=1.22:gamma_g=1.08:enable='between(t,${b.toFixed(3)},${(2 * b).toFixed(3)})'`,
+      `eq=brightness=0.07:gamma_r=1.1:enable='between(t,${(2 * b).toFixed(3)},${(3 * b).toFixed(3)})'`
+    );
+  }
+
+  // --- outgoing tail (needs the trimmed length to anchor) ---
+  if (typeof trimSec === 'number') {
+    if ((tailKind === 'flash' || tailKind === 'dip') && d > 0 && trimSec > 2 * d) {
+      parts.push(`fade=t=out:st=${(trimSec - d).toFixed(3)}:d=${d}:color=${tailKind === 'flash' ? 'white' : 'black'}`);
+    } else if (tailKind === 'burn' && trimSec > 4 * BURN_STEP) {
+      // Light-leak out: ramp UP into the cut (mirror of the head).
+      const b = BURN_STEP;
+      const t3 = (trimSec - b).toFixed(3);
+      const t2 = (trimSec - 2 * b).toFixed(3);
+      const t1 = (trimSec - 3 * b).toFixed(3);
+      parts.push(
+        `eq=brightness=0.07:gamma_r=1.1:enable='between(t,${t1},${t2})'`,
+        `eq=brightness=0.16:saturation=1.2:gamma_r=1.22:gamma_g=1.08:enable='between(t,${t2},${t3})'`,
+        `eq=brightness=0.32:saturation=1.4:gamma_r=1.45:gamma_g=1.15:enable='gte(t,${t3})'`,
+        `gblur=sigma=6:enable='gte(t,${t3})'`
+      );
+    }
   }
   return parts.join(',');
 }
@@ -799,20 +922,25 @@ export function buildWordFilters(
       parts.push(
         `drawtext=fontfile=${fontName}:textfile=${wordTextNames[j]}:fontsize=${l.fontsize}:` +
         `fontcolor=${preset.caption.highlightColor}:${deco}:` +
-        `x=${wd.xPx}:y=${l.yBase}:enable='between(t,${wd.start},${wd.end})'`
+        `x=${wd.xPx}:y=${wd.yPx ?? l.yBase}:enable='between(t,${wd.start},${wd.end})'`
       );
     }
     return parts.join(',');
   }
 
-  // word-pop (default): accumulate until the chunk ends.
+  // word-pop (default): each word lands with an elastic overshoot pop (scale
+  // 20%→~108%→100%, easeOutBack — the reference "scale bounce") and persists.
   for (let j = 0; j < words.length; j++) {
     const wd = words[j];
+    const p = `min(1,max(0,(t-${wd.start})/0.22))`;
+    const ease = `(1-${FLIP_C3}*pow(1-${p},3)+${FLIP_C1}*pow(1-${p},2))`;
+    const color = wd.highlight ? preset.caption.highlightColor : l.color;
     parts.push(
-      `drawtext=fontfile=${fontName}:textfile=${wordTextNames[j]}:fontsize=${l.fontsize}:` +
-      `fontcolor=${l.color}:${deco}:` +
-      `x=${wd.xPx}:y='${l.yBase}+14*max(0,1-(t-${wd.start})/0.12)':` +
-      `alpha='min(1,max(0,(t-${wd.start})/0.06))':enable='between(t,${wd.start},${l.endSec})'`
+      `drawtext=fontfile=${fontName}:textfile=${wordTextNames[j]}:` +
+      `fontsize='max(8,${l.fontsize}*(0.2+0.8*${ease}))':` +
+      `fontcolor=${color}:${deco}:` +
+      `x=${wd.xPx}:y=${wd.yPx ?? l.yBase}:` +
+      `alpha='min(1,max(0,(t-${wd.start})/0.05))':enable='between(t,${wd.start},${l.endSec})'`
     );
   }
   return parts.join(',');
@@ -1011,7 +1139,8 @@ function buildScene(
   fontName: string | null, // BARE filename inside `dir` (ffmpeg runs with cwd=dir)
   transitionFilters: string = '', // boundary fades/blur, appended after drawtext
   cameraFilter: string | null = null, // zoom/pan/punch, applied before drawtext
-  preset: RenderPreset = CLASSIC
+  preset: RenderPreset = CLASSIC,
+  hookFontName: string | null = null // BARE hook-title font (falls back to fontName)
 ): void {
   const [w, h] = dims;
 
@@ -1028,6 +1157,7 @@ function buildScene(
     if (layer.kind === 'box') {
       vChain += `,${buildBoxFilter(layer)}`;
     } else if (fontName) {
+      const layerFont = layer.font === 'hook' && hookFontName ? hookFontName : fontName;
       if (layer.words?.length && (layer.anim === 'word-pop' || layer.anim === 'karaoke')) {
         const wordNames = layer.words.map((wd, j) => {
           const n = `ov_${sceneIdx}_${k}_w${j}.txt`;
@@ -1040,11 +1170,11 @@ function buildScene(
           writeFileSync(join(dir, baseName), layer.text, 'utf8');
         }
         k++;
-        vChain += `,${buildWordFilters(layer, fontName, wordNames, preset, baseName)}`;
+        vChain += `,${buildWordFilters(layer, layerFont, wordNames, preset, baseName)}`;
       } else {
         const textName = `ov_${sceneIdx}_${k++}.txt`;
         writeFileSync(join(dir, textName), layer.text, 'utf8');
-        vChain += `,${buildTextFilter(layer, fontName, textName, preset)}`;
+        vChain += `,${buildTextFilter(layer, layerFont, textName, preset)}`;
       }
     }
   }
@@ -1192,11 +1322,22 @@ export async function renderFinalVideo(
   } else {
     console.warn('[renderFfmpeg] caption font missing; overlays/captions skipped');
   }
+  // Hook title font (title-stack presets); falls back to the caption font.
+  let hookFontName: string | null = null;
+  const hookFontSrc = findAsset(preset.hook.fontFile);
+  if (hookFontSrc) {
+    hookFontName = 'hook.ttf';
+    copyFileSync(hookFontSrc, join(dir, hookFontName));
+  }
   try {
     const ordered = [...scenes].sort((a, b) => a.sceneIdx - b.sceneIdx);
     const muxed: string[] = [];
-    // Preset-driven cut transitions, planned once for the whole ad.
-    const transitions = planTransitions(ordered.length, preset.transition);
+    // Preset-driven cut transitions, planned once for the whole ad. The hook
+    // cut gets the film-burn when the preset asks for it AND scene 0 is a hook.
+    const transitions = planTransitions(
+      ordered.length, preset.transition,
+      preset.hook.burnTransition && !!ordered[0]?.isHook
+    );
     // SFX restraint state, threaded across scenes (whole-ad timeline).
     const placedSec: number[] = [];
     let whooshUsed = 0;
@@ -1273,7 +1414,7 @@ export async function renderFinalVideo(
         videoPath, audioPath, trimSec, dims, outPath, padAudio,
         dir, scene.sceneIdx, layers, sfx, fontName,
         buildTransitionFilters(transitions[i], preset.transition, trimSec),
-        camFilter, preset
+        camFilter, preset, hookFontName
       );
       console.log(
         `[renderFfmpeg] scene=${i} dl=${dlMs}ms build=${Date.now() - tBuild}ms ` +
