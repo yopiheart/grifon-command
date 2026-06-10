@@ -27,6 +27,24 @@ every time. This skill makes the rule trigger automatically. Source of truth + h
    ([components/Step3AdScript.tsx](../../../components/Step3AdScript.tsx) ~L49-94) and
    starves Director of the market context that powers hook quality.
 
+## Pre-flight: unmeter local video FIRST (do this BEFORE Step 0)
+
+If this smoke will reach the video stage (RENDER ALL / GENERATE VIDEO / FINAL_RENDER),
+set the dev-unmetered flag **before** you start — not after the render dies. A real
+account hits TWO server gates mid-render: the monthly `video_ads` quota (HTTP 402) and
+the hourly 5-renders rate-limit (HTTP 429, the "50M TO RESUME" wall). Both are bypassed
+locally by `GRIFON_DEV_UNMETERED_VIDEO=true` in `.env`. The defreezer wipes `.env`, so
+this is per-session, not one-time:
+
+```powershell
+.\scripts\enable-dev-unmetered-video.ps1   # appends/flips the flag in .env
+# then restart the dev server so it's read:  (stop npm run dev) ; npm run dev
+```
+
+The flag is LOCAL-ONLY (never on Vercel; prod stays metered). Neil hit both gates
+mid-smoke on 2026-06-10 — it destroys the run because the render queue fails partway and
+the rate-limit window locks you out for ~50 min. ALWAYS unmeter first.
+
 ## The exact sequence
 
 0. **Find a handheld hero product photo FIRST** — a *hand holding the product* (NOT a

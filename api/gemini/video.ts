@@ -51,7 +51,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(400).json({ error: 'invalid_body', issues: parsed.error.issues });
   }
 
-  const allowed = await rateLimitCheck(
+  // Dev-only unmetered bypass (Neil 2026-06-10): GRIFON_DEV_UNMETERED_VIDEO='true'
+  // in LOCAL .env skips the hourly video rate-limit for back-to-back smoke renders.
+  // NEVER set on Vercel — prod stays limited. Pairs with quota.ts monthly bypass.
+  const devUnmetered = process.env.GRIFON_DEV_UNMETERED_VIDEO === 'true';
+  const allowed = devUnmetered || await rateLimitCheck(
     `gemini:video:${user.id}`,
     VIDEO_LIMIT,
     VIDEO_WINDOW_SECONDS
