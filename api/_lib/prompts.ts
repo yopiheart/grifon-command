@@ -822,6 +822,8 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
 
       **HOOK END-FRAME = RESOLVED REVEAL (Scene 1 endFramePrompt):** The hook's end frame is the moment AFTER the transition completes — the product is ALREADY fully revealed, sitting still and intact in frame. Describe ONLY that finished state (e.g., "The [product] sitting centered on a clean counter, front label facing camera, sharp focus"). Do NOT narrate the reveal itself (no "disintegrating to reveal", no "pixels forming into"). NO people, faces, hands, or bodies in the hook end frame unless the avatar is explicitly the subject of the reveal.
 
+      **HOOK ANCHOR RULE (Scene 1 startFramePrompt + endFramePrompt):** The two stills MUST share ONE named concrete anchor: the SAME dominant color (named in BOTH prompts) AND the SAME silhouette occupying the SAME position in frame (e.g., start = "a dome of wet brown coffee grounds, centered, filling the lower third of frame" → end = "the amber-brown serum bottle, centered, filling the lower third of frame"). State the anchor color and the silhouette position explicitly in BOTH prompts. A morph between two frames that do not share color + silhouette position forces the video model to interpolate through formless flesh-toned mush — the single worst failure mode for the hook.
+
       **APPEARANCE_LOCK_RULE (when scene's referenceImage='avatar'):**
       The \`imagePrompt\`, \`startFramePrompt\`, and \`endFramePrompt\` MUST NOT describe the avatar's physical appearance. Identity is preserved by an upstream LOCK; redescribing it creates conflicts and corrupts the render.
 
