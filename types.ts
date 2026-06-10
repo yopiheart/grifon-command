@@ -162,6 +162,8 @@ export interface FinalRenderRequest {
   aspectRatio: '9:16' | '16:9' | '1:1';
   /** Style-keyed background-music bed (chosen in code from EDL meta.scriptStyleDetected). */
   music?: { style: 'mrbeast' | 'temu' | 'testimonial'; enabled: boolean };
+  /** Explicit edit-style override; absent → server rotates deterministically. */
+  preset?: { id?: 'classic' | 'impact' | 'hype' | 'clean' };
 }
 
 /** Returned immediately by the fire endpoint; the client polls with this jobId. */

@@ -4,7 +4,7 @@ import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import ffmpegPath from 'ffmpeg-static';
-import type { FinalRenderScene, SfxBankId, OverlayStyle, CameraEffect } from '../../types.js';
+import type { FinalRenderScene, SfxBankId, CameraEffect } from '../../types.js';
 import {
   CLASSIC,
   type RenderPreset, type HookRevealStyle, type TransitionStyle, type CameraStyle,
@@ -68,11 +68,10 @@ const LOUDNORM = 'loudnorm=I=-14:TP=-1.5:LRA=11'; // social/Reels target, VO-anc
 // guessed anchorSec can't (it never sees the rendered frame). See snapSfxAnchor.
 const TRANSITION_SFX: ReadonlySet<SfxBankId> = new Set<SfxBankId>(['whoosh', 'swish']);
 // Each strategic overlay carries a paired sound that lands on its EXACT on-screen
-// frame (planScene tags the layer; renderFinalVideo places it at layer.startSec) —
-// the "emphasize what the viewer sees" sync, deterministic unlike the text EDL's
-// guessed anchorSec. Chunked spoken-word captions get none (restraint: 1/scene).
-// (boom on the hook flip, pop on callouts, ding on the CTA, nothing on subtitles.)
-const OVERLAY_SFX: Record<OverlayStyle, SfxBankId | null> = CLASSIC.sfx.overlayMap;
+// frame (planScene tags the layer from preset.sfx.overlayMap; renderFinalVideo
+// places it at layer.startSec) — the "emphasize what the viewer sees" sync,
+// deterministic unlike the text EDL's guessed anchorSec. Chunked spoken-word
+// captions get none (restraint: 1/scene).
 const CALLOUT_LEAD = 0.3; // delay a callout/punchline so its pop reads distinct from the cut whoosh
 
 // Restraint — keep ads from sounding cheap (Neil: multiple stacked sounds read as
@@ -116,21 +115,14 @@ export function escFilterPath(p: string): string {
 // All "where/when" is computed here (or upstream in EditVideo); ffmpeg just draws.
 // ---------------------------------------------------------------------------
 
-// Styling — derived from the CLASSIC preset (api/_lib/renderPresets.ts) so the
-// preset object is the single source of truth and CLASSIC can never drift from
-// the live render. Colors are ffmpeg color syntax.
-const HOOK_BOX_COLOR = CLASSIC.hook.wipeColor;   // crimson highlight behind the hook power-word
-const BOX_ALPHA = CLASSIC.caption.boxAlpha;      // black caption/overlay box opacity
-const CLASSIC_SHADOW = CLASSIC.caption.shadow ?? { dx: 0, dy: 0, color: 'black@0' };
-const SHADOW_COLOR = CLASSIC_SHADOW.color;       // hard 45° drop shadow (no Gaussian blur in drawtext)
-const SHADOW_DX = CLASSIC_SHADOW.dx, SHADOW_DY = CLASSIC_SHADOW.dy;
-const INTER_ADV = CLASSIC.caption.advRatio;      // est. Inter-Black glyph advance / fontsize (tune visually)
+// Styling lives in the presets (api/_lib/renderPresets.ts) — every color, font,
+// box/outline, shadow and y-band is preset-driven; CLASSIC is the shipped look
+// and the default everywhere, so omitting the preset reproduces today's render.
+const INTER_ADV = CLASSIC.caption.advRatio;      // default glyph advance (Inter-Black; per-preset via advRatio)
 
 // Safe zone (fractions). Erring toward Reels' aggressive bottom UI.
 const SZ_SIDE = 0.10, SZ_TOP = 0.14, SZ_BOTTOM = 0.22;
 const HOOK_TOP_FRAC = 0.32;          // hook text top, upper-center
-const CAPTION_FRAC = CLASSIC.caption.yFracTalking; // caption/overlay band (talking); b-roll a touch lower
-const BROLL_CAPTION_FRAC = CLASSIC.caption.yFracBroll;
 
 // Hook reveal entrance + wipe. drawtext re-evals y/alpha/fontsize per-frame
 // (verified 2026-06-08, see agent_lessons.md), so all three styles are REAL
@@ -166,9 +158,9 @@ export function safeZone([w, h]: [number, number]): SafeZone {
   };
 }
 
-/** Rough rendered width of a line at a font size (Inter-Black caps advance). */
-export function estWidth(text: string, fontsize: number): number {
-  return text.length * fontsize * INTER_ADV;
+/** Rough rendered width of a line at a font size (per-font glyph advance). */
+export function estWidth(text: string, fontsize: number, advRatio: number = INTER_ADV): number {
+  return text.length * fontsize * advRatio;
 }
 
 /**
@@ -186,16 +178,21 @@ export function stripUnrenderable(s: string): string {
 }
 
 /** Fit text into maxWidthPx: shrink the font (to 70%), then wrap to ≤2 lines. */
-export function fitText(text: string, maxWidthPx: number, baseSize: number): { fontsize: number; lines: string[] } {
+export function fitText(
+  text: string,
+  maxWidthPx: number,
+  baseSize: number,
+  advRatio: number = INTER_ADV
+): { fontsize: number; lines: string[] } {
   const minSize = Math.round(baseSize * 0.7);
   let size = baseSize;
-  if (estWidth(text, size) <= maxWidthPx) return { fontsize: size, lines: [text] };
-  while (size > minSize && estWidth(text, size) > maxWidthPx) size -= 2;
-  if (estWidth(text, size) <= maxWidthPx) return { fontsize: size, lines: [text] };
+  if (estWidth(text, size, advRatio) <= maxWidthPx) return { fontsize: size, lines: [text] };
+  while (size > minSize && estWidth(text, size, advRatio) > maxWidthPx) size -= 2;
+  if (estWidth(text, size, advRatio) <= maxWidthPx) return { fontsize: size, lines: [text] };
   // Still too wide → wrap to two balanced lines, then re-shrink to the longest.
   const lines = wrapTwoLines(text);
   size = baseSize;
-  const longest = () => Math.max(...lines.map((l) => estWidth(l, size)));
+  const longest = () => Math.max(...lines.map((l) => estWidth(l, size, advRatio)));
   while (size > minSize && longest() > maxWidthPx) size -= 2;
   return { fontsize: size, lines };
 }
@@ -242,12 +239,17 @@ export function evenSplit<T>(items: T[], n: number): T[][] {
  * minimum on-screen time of MIN_CHUNK_SEC/chunk given `availSec`, and never
  * starting a chunk with a particle (pulled back to the previous chunk).
  */
-export function chunkCaption(line: string, availSec: number): string[] {
+export function chunkCaption(
+  line: string,
+  availSec: number,
+  wordsPerChunk: number = 3.5,
+  minChunkSec: number = MIN_CHUNK_SEC
+): string[] {
   const clean = stripUnrenderable(line);
   if (!clean) return [];
   const words = clean.split(/\s+/);
-  const maxByTime = Math.max(1, Math.floor(availSec / MIN_CHUNK_SEC));
-  const target = Math.min(maxByTime, Math.max(1, Math.ceil(words.length / 3.5)));
+  const maxByTime = Math.max(1, Math.floor(availSec / minChunkSec));
+  const target = Math.min(maxByTime, Math.max(1, Math.ceil(words.length / wordsPerChunk)));
   const groups = evenSplit(words, target);
   // Pull a particle that landed at a chunk head back onto the previous chunk.
   for (let g = 1; g < groups.length; g++) {
@@ -350,7 +352,7 @@ export interface TextLayer {
   yBase: number;       // resolved top y in px
   startSec: number;
   endSec: number;
-  anim: 'slideup' | 'fade' | 'none';
+  anim: 'slideup' | 'fade' | 'pop' | 'none';
   emphasisSfx?: SfxBankId; // a sound to fire ON this text's appearance (startSec)
 }
 export interface BoxLayer {
@@ -362,9 +364,17 @@ export type DrawLayer = TextLayer | BoxLayer;
 
 const normText = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
 
-/** Y (top of text) for a scene's caption/overlay band, region-aware + safe-clamped. */
-function captionY([, h]: [number, number], sz: SafeZone, scene: FinalRenderScene): number {
-  let frac = scene.sceneType && scene.sceneType !== 'talking' ? BROLL_CAPTION_FRAC : CAPTION_FRAC;
+/** Y (top of text) for a scene's caption/overlay band, region-aware + safe-clamped.
+ * Face-avoidance (captionRegion) clamps the band in EVERY preset (premortem guard). */
+function captionY(
+  [, h]: [number, number],
+  sz: SafeZone,
+  scene: FinalRenderScene,
+  preset: RenderPreset = CLASSIC
+): number {
+  let frac = scene.sceneType && scene.sceneType !== 'talking'
+    ? preset.caption.yFracBroll
+    : preset.caption.yFracTalking;
   if (scene.captionRegion) {
     const mid = (scene.captionRegion.yFracTop + scene.captionRegion.yFracBottom) / 2;
     frac = Math.min(0.70, Math.max(0.50, mid));
@@ -378,35 +388,49 @@ function captionY([, h]: [number, number], sz: SafeZone, scene: FinalRenderScene
  * EDL overlay (fade, ≥hold) then chunked script-line captions in the face-clear
  * band — never overlapping; overlay skipped if it duplicates the caption text.
  */
-export function planScene(scene: FinalRenderScene, trimSec: number | null, dims: [number, number]): DrawLayer[] {
+export function planScene(
+  scene: FinalRenderScene,
+  trimSec: number | null,
+  dims: [number, number],
+  preset: RenderPreset = CLASSIC
+): DrawLayer[] {
   const [w, h] = dims;
   const sz = safeZone(dims);
   const end = typeof trimSec === 'number' && trimSec > 0 ? trimSec : 999;
   const layers: DrawLayer[] = [];
   const overlay = scene.overlayText?.[0];
+  const cls = preset.id === 'classic';
+  const adv = preset.caption.advRatio;
+  const overlaySfx = preset.sfx.overlayMap;
 
   if (scene.isHook) {
     const text = overlay?.text ? stripUnrenderable(overlay.text) : '';
     if (!text) return layers;
-    const { fontsize, lines } = fitText(text, sz.usableW, Math.round(h * CLASSIC.hook.sizeFrac));
+    const { fontsize, lines } = fitText(text, sz.usableW, Math.round(h * preset.hook.sizeFrac), adv);
     const yTop = Math.round(h * HOOK_TOP_FRAC);
-    // Crimson wipe-box behind the WHOLE title (Neil: highlight the full line, not
-    // just the last word). Spans the widest line; height covers all lines' lower band.
-    const maxLineW = Math.max(...lines.map((l) => estWidth(l, fontsize)));
-    const pad = Math.round(fontsize * 0.14);
-    const lineH = Math.round(fontsize * 1.15);
+    // Non-classic: text on frame ~0 (references put the hook caption on frame 1 —
+    // edit_style_research.md §3.8); classic keeps the shipped 0.4s entrance.
+    const hookDelay = cls ? HOOK_DELAY : 0.05;
+    const boxDelay = cls ? HOOK_BOX_DELAY : 0.2;
+    if (preset.hook.wipeBox) {
+      // Wipe-box behind the WHOLE title (Neil: highlight the full line, not just
+      // the last word). Spans the widest line; height covers all lines' lower band.
+      const maxLineW = Math.max(...lines.map((l) => estWidth(l, fontsize, adv)));
+      const pad = Math.round(fontsize * 0.14);
+      const lineH = Math.round(fontsize * 1.15);
+      layers.push({
+        kind: 'box',
+        x: Math.max(sz.xMargin, Math.round((w - maxLineW) / 2 - pad)),
+        y: Math.round(yTop + fontsize * 0.42),
+        w: Math.round(maxLineW) + 2 * pad,
+        h: (lines.length - 1) * lineH + Math.round(fontsize * 0.58),
+        color: preset.hook.wipeColor, startSec: boxDelay, wipeDur: HOOK_WIPE_DUR,
+      });
+    }
     layers.push({
-      kind: 'box',
-      x: Math.max(sz.xMargin, Math.round((w - maxLineW) / 2 - pad)),
-      y: Math.round(yTop + fontsize * 0.42),
-      w: Math.round(maxLineW) + 2 * pad,
-      h: (lines.length - 1) * lineH + Math.round(fontsize * 0.58),
-      color: HOOK_BOX_COLOR, startSec: HOOK_BOX_DELAY, wipeDur: HOOK_WIPE_DUR,
-    });
-    layers.push({
-      kind: 'text', text: lines.join('\n'), fontsize, color: CLASSIC.hook.textColor, boxAlpha: 0,
-      xExpr: '(w-text_w)/2', yBase: yTop, startSec: HOOK_DELAY, endSec: end, anim: 'slideup',
-      emphasisSfx: OVERLAY_SFX.hook ?? undefined, // boom on the flip pop
+      kind: 'text', text: lines.join('\n'), fontsize, color: preset.hook.textColor, boxAlpha: 0,
+      xExpr: '(w-text_w)/2', yBase: yTop, startSec: hookDelay, endSec: end, anim: 'slideup',
+      emphasisSfx: overlaySfx.hook ?? undefined, // boom on the flip pop
     });
     return layers;
   }
@@ -415,20 +439,24 @@ export function planScene(scene: FinalRenderScene, trimSec: number | null, dims:
   const oText = overlay?.text ? stripUnrenderable(overlay.text) : '';
   const cap = scene.scriptLine ? stripUnrenderable(scene.scriptLine) : '';
   const dup = !!(oText && cap && normText(oText) === normText(cap));
-  const cy = captionY(dims, sz, scene);
+  const cy = captionY(dims, sz, scene, preset);
   let capStart = CAPTION_START_PAD;
 
   if (oText && !dup) {
-    const { fontsize, lines } = fitText(oText, sz.usableW, Math.round(h * CLASSIC.caption.overlaySizeFrac));
-    const color = overlay!.style === 'callout' || overlay!.style === 'punchline' ? '0xFFCC00' : 'white';
-    const emphasisSfx = OVERLAY_SFX[overlay!.style] ?? undefined;
-    const oEnd = Math.min(end, OVERLAY_HOLD_SEC);
+    const { fontsize, lines } = fitText(oText, sz.usableW, Math.round(h * preset.caption.overlaySizeFrac), adv);
+    const color = overlay!.style === 'callout' || overlay!.style === 'punchline'
+      ? preset.caption.highlightColor
+      : preset.caption.fillColor;
+    const emphasisSfx = overlaySfx[overlay!.style] ?? undefined;
+    // Non-classic: a punchline (CTA) holds to the END of the scene — the baseline
+    // autopsy showed "ORDER NA" vanishing 3s before the video ends (research §1.4).
+    const oEnd = !cls && overlay!.style === 'punchline' ? end : Math.min(end, OVERLAY_HOLD_SEC);
     // Offset a sound-paired overlay so its pop reads after the cut whoosh — but
     // never so far that the overlay shows < 0.4s.
     const oStart = emphasisSfx ? Math.min(CALLOUT_LEAD, Math.max(0, oEnd - 0.4)) : 0;
     if (oEnd - oStart >= 0.4) {
       layers.push({
-        kind: 'text', text: lines.join('\n'), fontsize, color, boxAlpha: BOX_ALPHA,
+        kind: 'text', text: lines.join('\n'), fontsize, color, boxAlpha: preset.caption.boxAlpha,
         xExpr: '(w-text_w)/2', yBase: cy, startSec: oStart, endSec: oEnd, anim: 'fade',
         emphasisSfx,
       });
@@ -437,15 +465,21 @@ export function planScene(scene: FinalRenderScene, trimSec: number | null, dims:
   }
 
   if (cap) {
+    // Word-level presets read best as small fast chunks (1–3 words swapped on VO
+    // cadence — research §3.1); classic keeps the shipped 3–4-word pacing.
+    const chunkAnim: TextLayer['anim'] = preset.caption.chunkAnim === 'none' ? 'none' : 'pop';
+    const wordsPer = preset.caption.chunkAnim === 'none' ? 3.5 : 2.5;
+    const minChunk = preset.caption.chunkAnim === 'none' ? MIN_CHUNK_SEC : 0.5;
     const avail = end - capStart;
-    if (avail >= MIN_CHUNK_SEC) {
-      const chunks = chunkCaption(cap, avail);
+    if (avail >= minChunk) {
+      const chunks = chunkCaption(cap, avail, wordsPer, minChunk);
       const each = avail / Math.max(1, chunks.length);
       chunks.forEach((c, i) => {
-        const { fontsize, lines } = fitText(c, sz.usableW, Math.round(h * CLASSIC.caption.baseSizeFrac));
+        const { fontsize, lines } = fitText(c, sz.usableW, Math.round(h * preset.caption.baseSizeFrac), adv);
         layers.push({
-          kind: 'text', text: lines.join('\n'), fontsize, color: 'white', boxAlpha: BOX_ALPHA,
-          xExpr: '(w-text_w)/2', yBase: cy, anim: 'none',
+          kind: 'text', text: lines.join('\n'), fontsize, color: preset.caption.fillColor,
+          boxAlpha: preset.caption.boxAlpha,
+          xExpr: '(w-text_w)/2', yBase: cy, anim: chunkAnim,
           startSec: +(capStart + i * each).toFixed(3), endSec: +(capStart + (i + 1) * each).toFixed(3),
         });
       });
@@ -597,7 +631,12 @@ export function buildTransitionFilters(
 // filtergraph parser treats inner commas as literal (no backslash escaping). ----
 
 /** drawtext for one TextLayer; fontName/textName are bare (ffmpeg runs cwd=dir). */
-export function buildTextFilter(l: TextLayer, fontName: string, textName: string): string {
+export function buildTextFilter(
+  l: TextLayer,
+  fontName: string,
+  textName: string,
+  preset: RenderPreset = CLASSIC
+): string {
   const s = l.startSec;
   let yExpr = `${l.yBase}`;
   let fontsizeOpt = `fontsize=${l.fontsize}`;
@@ -624,20 +663,30 @@ export function buildTextFilter(l: TextLayer, fontName: string, textName: string
     }
   } else if (l.anim === 'fade') {
     alpha = `max(0,min(1,min((t-${s})/${OVERLAY_FADE},(${l.endSec}-t)/${OVERLAY_FADE})))`;
+  } else if (l.anim === 'pop') {
+    // Chunk pop (the dominant 2026 caption meta — research §3.1): alpha snaps in
+    // near-instantly while the glyphs scale 85%→100% with a slight easeOutBack
+    // overshoot over 0.15s. Same pow(1-p,…) shape as the hook flip (base ≥0).
+    const p = `min(1,max(0,(t-${s})/0.15))`;
+    const ease = `(1-${FLIP_C3}*pow(1-${p},3)+${FLIP_C1}*pow(1-${p},2))`;
+    fontsizeOpt = `fontsize='max(8,${l.fontsize}*(0.85+0.15*${ease}))'`;
+    alpha = `min(1,max(0,(t-${s})/0.06))`;
   }
 
+  const sh = preset.caption.shadow;
+  const outlineW = l.boxAlpha > 0 ? 0 : Math.round(l.fontsize * preset.caption.borderWFrac);
   const opts = [
     `fontfile=${fontName}`,
     `textfile=${textName}`,
     fontsizeOpt,
     `fontcolor=${l.color}`,
-    `shadowcolor=${SHADOW_COLOR}`,
-    `shadowx=${SHADOW_DX}`,
-    `shadowy=${SHADOW_DY}`,
+    ...(sh ? [`shadowcolor=${sh.color}`, `shadowx=${sh.dx}`, `shadowy=${sh.dy}`] : []),
     `line_spacing=10`,
     ...(l.boxAlpha > 0
       ? [`box=1`, `boxcolor=black@${l.boxAlpha}`, `boxborderw=${Math.round(l.fontsize * 0.22)}`]
-      : []),
+      : outlineW > 0
+        ? [`borderw=${outlineW}`, `bordercolor=black`]
+        : []),
     `x='${l.xExpr}'`,
     `y='${yExpr}'`,
     `alpha='${alpha}'`,
@@ -838,7 +887,8 @@ function buildScene(
   sfx: PreparedSfx[],
   fontName: string | null, // BARE filename inside `dir` (ffmpeg runs with cwd=dir)
   transitionFilters: string = '', // boundary fades/blur, appended after drawtext
-  cameraFilter: string | null = null // zoom/pan/punch, applied before drawtext
+  cameraFilter: string | null = null, // zoom/pan/punch, applied before drawtext
+  preset: RenderPreset = CLASSIC
 ): void {
   const [w, h] = dims;
 
@@ -857,7 +907,7 @@ function buildScene(
     } else if (fontName) {
       const textName = `ov_${sceneIdx}_${k++}.txt`;
       writeFileSync(join(dir, textName), layer.text, 'utf8');
-      vChain += `,${buildTextFilter(layer, fontName, textName)}`;
+      vChain += `,${buildTextFilter(layer, fontName, textName, preset)}`;
     }
   }
   if (transitionFilters) vChain += `,${transitionFilters}`;
@@ -993,9 +1043,10 @@ export async function renderFinalVideo(
   const tTotal = Date.now();
   const dims = dimsFor(aspectRatio);
   const dir = mkdtempSync(join(tmpdir(), 'grifon-render-'));
-  // Copy the caption font into the temp dir under a bare name so drawtext can
-  // reference it without an absolute (colon-bearing) path. See buildScene.
-  const fontSrc = fontPath();
+  // Copy the preset's caption font into the temp dir under a bare name so
+  // drawtext can reference it without an absolute (colon-bearing) path. Falls
+  // back to Inter-Black if the preset font is missing from the bundle.
+  const fontSrc = findAsset(preset.caption.fontFile) ?? fontPath();
   let fontName: string | null = null;
   if (fontSrc) {
     fontName = 'caption.ttf';
@@ -1034,7 +1085,7 @@ export async function renderFinalVideo(
       const { trimSec, padAudio } = chooseTrim(scene, probeSec, detectedSec);
 
       // Compile the draw plan first — emphasis SFX are derived from its layers.
-      const layers = planScene(scene, trimSec, dims);
+      const layers = planScene(scene, trimSec, dims, preset);
 
       // Gather this scene's SFX candidates on the GLOBAL timeline:
       //  - transition cues (whoosh/swish) snapped to the cut,
@@ -1083,7 +1134,7 @@ export async function renderFinalVideo(
         videoPath, audioPath, trimSec, dims, outPath, padAudio,
         dir, scene.sceneIdx, layers, sfx, fontName,
         buildTransitionFilters(transitions[i], preset.transition, trimSec),
-        camFilter
+        camFilter, preset
       );
       console.log(
         `[renderFfmpeg] scene=${i} dl=${dlMs}ms build=${Date.now() - tBuild}ms ` +

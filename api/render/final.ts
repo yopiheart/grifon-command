@@ -4,6 +4,7 @@ import { randomUUID } from 'node:crypto';
 import { getUserFromAccessToken, getSupabaseAdmin } from '../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../_lib/rateLimit.js';
 import { renderFinalVideo } from '../_lib/renderFfmpeg.js';
+import { resolvePreset, rotationSeed, type RenderPreset } from '../_lib/renderPresets.js';
 import { statusKey, finalKey, writeSidecar, RENDER_BUCKET } from '../_lib/renderJob.js';
 import type { FinalRenderScene } from '../../types.js';
 
@@ -65,6 +66,9 @@ const Body = z.object({
       enabled: z.boolean(),
     })
     .optional(),
+  // Explicit edit-style override (kill switch / future UI picker). Absent →
+  // deterministic rotation keyed by script style + scene-URL hash.
+  preset: z.object({ id: z.enum(['classic', 'impact', 'hype', 'clean']).optional() }).optional(),
 });
 
 const RENDER_LIMIT = 6;
@@ -89,7 +93,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(400).json({ error: 'invalid_body', issues: parsed.error.issues });
   }
 
-  const { scenes, aspectRatio, music } = parsed.data;
+  const { scenes, aspectRatio, music, preset: presetReq } = parsed.data;
+
+  // Edit-style preset: same ad re-renders identically (seed = sorted videoUrls),
+  // successive ads rotate looks within the script style's pool. classic = today.
+  const preset = resolvePreset(
+    music?.style,
+    presetReq?.id,
+    rotationSeed(scenes.map((s) => s.videoUrl))
+  );
 
   // Audio↔video keying contract (premortem #4a): sceneIdx must be unique.
   const idxSeen = new Set<number>();
@@ -119,7 +131,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     updatedAt: new Date().toISOString(),
   });
 
-  const work = runRender(user.id, jobId, scenes as FinalRenderScene[], aspectRatio, music).catch(() => {});
+  const work = runRender(user.id, jobId, scenes as FinalRenderScene[], aspectRatio, music, preset).catch(() => {});
 
   if (process.env.VERCEL) {
     try {
@@ -138,12 +150,13 @@ async function runRender(
   jobId: string,
   scenes: FinalRenderScene[],
   aspectRatio: '9:16' | '16:9' | '1:1',
-  music?: { style: 'mrbeast' | 'temu' | 'testimonial'; enabled: boolean }
+  music?: { style: 'mrbeast' | 'temu' | 'testimonial'; enabled: boolean },
+  preset?: RenderPreset
 ): Promise<void> {
   const admin = getSupabaseAdmin();
   const sKey = statusKey(userId, jobId);
   try {
-    const { buffer } = await renderFinalVideo(scenes, aspectRatio, music);
+    const { buffer } = await renderFinalVideo(scenes, aspectRatio, music, preset);
 
     const fKey = finalKey(userId, jobId);
     const upload = await admin.storage.from(RENDER_BUCKET).upload(fKey, buffer, {
