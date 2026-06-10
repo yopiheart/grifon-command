@@ -5,7 +5,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import ffmpegPath from 'ffmpeg-static';
 import type { FinalRenderScene, SfxBankId, OverlayStyle } from '../../types.js';
-import { CLASSIC, type RenderPreset, type HookRevealStyle } from './renderPresets.js';
+import { CLASSIC, type RenderPreset, type HookRevealStyle, type TransitionStyle } from './renderPresets.js';
 
 // Final-render executor muscle (Phase 2 of workflows/render_pipeline_voice_10.md).
 // Mirrors the Phase-0-validated invocations in scripts/ffmpeg-spike.mjs exactly:
@@ -451,6 +451,71 @@ export function planScene(scene: FinalRenderScene, trimSec: number | null, dims:
   return layers;
 }
 
+// ---- Cut transitions (preset-driven). Visual burn-ins at scene boundaries that
+// keep the per-scene-then-concat architecture intact: the outgoing scene's tail
+// and/or the incoming scene's head get a fade/blur, so the concat point reads as
+// a flash / dip-to-black / whip-pan instead of a bare hard cut. xfade was
+// rejected — it needs overlapping frames across scene files (a mega-filtergraph
+// or N-1 extra re-encodes). References (edit_style_research.md §3): whip-pan
+// blur is the universal mask; flash/strobe bookend two of three short refs. ----
+
+export interface TransitionPlan { fadeOutTail: boolean; fadeInHead: boolean; }
+
+/**
+ * Decide which cuts get a transition. Pure + deterministic (mirrors pickSceneSfx
+ * restraint): cut k is the boundary INTO scene k (k≥1) — scene 0 never receives
+ * a head transition (nothing transitions into the hook). Every Nth cut starting
+ * from the first, capped at maxPerAd. Whip is incoming-only (the blur reads as
+ * camera movement); flash/dip burn both sides of the cut.
+ */
+export function planTransitions(sceneCount: number, t: TransitionStyle): TransitionPlan[] {
+  const plans: TransitionPlan[] = Array.from(
+    { length: Math.max(0, sceneCount) },
+    () => ({ fadeOutTail: false, fadeInHead: false })
+  );
+  if (t.kind === 'none' || t.maxPerAd <= 0 || sceneCount < 2) return plans;
+  const everyN = Math.max(1, t.everyN);
+  let used = 0;
+  for (let cut = 1; cut < sceneCount && used < t.maxPerAd; cut++) {
+    if ((cut - 1) % everyN !== 0) continue;
+    if (t.kind !== 'whip') plans[cut - 1].fadeOutTail = true;
+    plans[cut].fadeInHead = true;
+    used++;
+  }
+  return plans;
+}
+
+/**
+ * ffmpeg filter snippet for one scene's transition burn-ins (appended AFTER
+ * drawtext so a flash covers captions too). Tail fades need the trimmed length;
+ * when trimSec is unknown the tail is skipped (head still renders). Whip = a
+ * 3-step decaying boxblur over the first 3×halfDur (blur radius can't animate
+ * per-frame in this build; time-gated `enable` can — same trick as the wipe box).
+ */
+export function buildTransitionFilters(
+  plan: TransitionPlan,
+  style: TransitionStyle,
+  trimSec: number | null
+): string {
+  const d = style.halfDurSec;
+  if (style.kind === 'none' || d <= 0) return '';
+  const parts: string[] = [];
+  if (style.kind === 'flash' || style.kind === 'dip') {
+    const color = style.kind === 'flash' ? 'white' : 'black';
+    if (plan.fadeInHead) parts.push(`fade=t=in:st=0:d=${d}:color=${color}`);
+    if (plan.fadeOutTail && typeof trimSec === 'number' && trimSec > 2 * d) {
+      parts.push(`fade=t=out:st=${(trimSec - d).toFixed(3)}:d=${d}:color=${color}`);
+    }
+  } else if (style.kind === 'whip' && plan.fadeInHead) {
+    parts.push(
+      `boxblur=18:1:enable='lt(t,${d.toFixed(3)})'`,
+      `boxblur=8:1:enable='between(t,${d.toFixed(3)},${(2 * d).toFixed(3)})'`,
+      `boxblur=3:1:enable='between(t,${(2 * d).toFixed(3)},${(3 * d).toFixed(3)})'`
+    );
+  }
+  return parts.join(',');
+}
+
 // ---- ffmpeg layer builders. Expression option values are SINGLE-QUOTED so the
 // filtergraph parser treats inner commas as literal (no backslash escaping). ----
 
@@ -694,7 +759,8 @@ function buildScene(
   sceneIdx: number,
   layers: DrawLayer[],
   sfx: PreparedSfx[],
-  fontName: string | null  // BARE filename inside `dir` (ffmpeg runs with cwd=dir)
+  fontName: string | null, // BARE filename inside `dir` (ffmpeg runs with cwd=dir)
+  transitionFilters: string = '' // boundary fades/blur, appended after drawtext
 ): void {
   const [w, h] = dims;
 
@@ -715,6 +781,7 @@ function buildScene(
       vChain += `,${buildTextFilter(layer, fontName, textName)}`;
     }
   }
+  if (transitionFilters) vChain += `,${transitionFilters}`;
   vChain += '[v]';
 
   // --- Inputs: [0]=video, [1]=audio (voice or silence), [2..]=sfx. ---
@@ -860,6 +927,8 @@ export async function renderFinalVideo(
   try {
     const ordered = [...scenes].sort((a, b) => a.sceneIdx - b.sceneIdx);
     const muxed: string[] = [];
+    // Preset-driven cut transitions, planned once for the whole ad.
+    const transitions = planTransitions(ordered.length, preset.transition);
     // SFX restraint state, threaded across scenes (whole-ad timeline).
     const placedSec: number[] = [];
     let whooshUsed = 0;
@@ -896,6 +965,12 @@ export async function renderFinalVideo(
         const snapped = snapSfxAnchor(cue.sfxId, i, !!scene.isHook);
         if (snapped !== null) cands.push({ sfxId: cue.sfxId, globalSec: elapsed + snapped, transition: true });
       }
+      // A visual transition INTO this scene carries its own whoosh at the cut —
+      // sight + sound land together. Restraint still applies below (min gap +
+      // whoosh cap), so an EDL cue at the same cut just dedupes.
+      if (transitions[i].fadeInHead && i > 0) {
+        cands.push({ sfxId: 'whoosh', globalSec: elapsed, transition: true });
+      }
       for (const l of layers) {
         if (l.kind === 'text' && l.emphasisSfx) {
           cands.push({ sfxId: l.emphasisSfx, globalSec: elapsed + l.startSec, transition: false });
@@ -904,7 +979,7 @@ export async function renderFinalVideo(
 
       // Restraint: keep it tasteful (no stacking, capped whooshes, emphasis wins).
       const sfx: PreparedSfx[] = [];
-      for (const c of pickSceneSfx(cands, placedSec, whooshUsed)) {
+      for (const c of pickSceneSfx(cands, placedSec, whooshUsed, preset.sfx.maxWhoosh)) {
         const p = sfxPath(c.sfxId);
         const anchor = clampAnchor(c.globalSec - elapsed, trimSec);
         if (!p) { console.warn(`[renderFfmpeg] sfx missing: ${c.sfxId}`); continue; }
@@ -918,7 +993,8 @@ export async function renderFinalVideo(
       const tBuild = Date.now();
       buildScene(
         videoPath, audioPath, trimSec, dims, outPath, padAudio,
-        dir, scene.sceneIdx, layers, sfx, fontName
+        dir, scene.sceneIdx, layers, sfx, fontName,
+        buildTransitionFilters(transitions[i], preset.transition, trimSec)
       );
       console.log(
         `[renderFfmpeg] scene=${i} dl=${dlMs}ms build=${Date.now() - tBuild}ms ` +
