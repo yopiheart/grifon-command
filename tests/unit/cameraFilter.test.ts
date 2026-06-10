@@ -40,7 +40,7 @@ describe('buildCameraFilter', () => {
     const f = buildCameraFilter('zoom-in', 4, DIMS, IMPACT.camera);
     expect(f).toBe(
       "scale=w='trunc(1080*(1+0.08*min(1,t/4.000))/2)*2':h=-2:eval=frame," +
-      'crop=1080:1920:(iw-1080)/2:(ih-1920)/2'
+      'crop=1080:1920:(iw-1080)/2:(ih-1920)/2,setsar=1'
     );
   });
 
@@ -72,7 +72,7 @@ describe('buildCameraFilter', () => {
   it('pan: static 6% oversize, crop x sweeps across the scene', () => {
     const f = buildCameraFilter('pan', 4, DIMS, IMPACT.camera);
     expect(f).toBe(
-      "scale=1144:-2,crop=1080:1920:x='(iw-1080)*min(1,t/4.000)':y=(ih-1920)/2"
+      "scale=1144:-2,crop=1080:1920:x='(iw-1080)*min(1,t/4.000)':y=(ih-1920)/2,setsar=1"
     );
   });
 

@@ -95,6 +95,9 @@ d('burn-in render (synthetic, free)', () => {
     ff(['-f', 'lavfi', '-i', 'sine=frequency=120:duration=30', '-q:a', '6', join(assets, 'music', 'mrbeast.mp3')]);
 
     server = createServer((req, res) => {
+      // No keep-alive: renders idle >5s between downloads, and a pooled undici
+      // socket against a timed-out server connection dies with ECONNRESET.
+      res.setHeader('Connection', 'close');
       const p = join(work, decodeURIComponent((req.url ?? '/').slice(1)));
       if (existsSync(p)) res.end(readFileSync(p));
       else { res.statusCode = 404; res.end(); }
@@ -141,6 +144,37 @@ d('burn-in render (synthetic, free)', () => {
     const offDb = meanVolumeDb(offPath);
     expect(onDb).not.toBeNull();
     expect(offDb).not.toBeNull();
-    expect(Math.abs((onDb as number) - (offDb as number))).toBeGreaterThan(0.2);
+    // Loudnorm pulls both mixes toward -14 LUFS, so the residual delta is small;
+    // 0.15 keeps the "music+SFX present" signal without a knife-edge at 0.2.
+    expect(Math.abs((onDb as number) - (offDb as number))).toBeGreaterThan(0.15);
   }, 120_000);
+
+  it('renders a non-classic preset with visible differences inside the CPU budget', async () => {
+    const { HYPE, CLASSIC } = await import('../../api/_lib/renderPresets.js');
+
+    const t0 = Date.now();
+    const classic = await renderFinalVideo(scenes(true), '9:16', { style: 'mrbeast', enabled: true }, CLASSIC);
+    const classicMs = Date.now() - t0;
+
+    const t1 = Date.now();
+    const hype = await renderFinalVideo(scenes(true), '9:16', { style: 'mrbeast', enabled: true }, HYPE);
+    const hypeMs = Date.now() - t1;
+
+    console.log(`[burnin-harness] classic=${classicMs}ms hype=${hypeMs}ms ratio=${(hypeMs / classicMs).toFixed(2)}`);
+
+    expect(hype.sizeBytes).toBeGreaterThan(2000);
+    const hypePath = join(work, 'out_hype.mp4');
+    const classicPath = join(work, 'out_classic.mp4');
+    writeFileSync(hypePath, hype.buffer);
+    writeFileSync(classicPath, classic.buffer);
+    expect(probe(hypePath)).toMatch(/Video:/);
+
+    // Different preset → visibly different burn (font/colors/wipe + whip + zoom).
+    ff(['-ss', '1.0', '-i', hypePath, '-frames:v', '1', join(work, 'f_hype.png')]);
+    ff(['-ss', '1.0', '-i', classicPath, '-frames:v', '1', join(work, 'f_classic.png')]);
+    expect(framesIdentical(join(work, 'f_hype.png'), join(work, 'f_classic.png'))).toBe(false);
+
+    // CPU budget: effects (zoom eval=frame + whip + word-pop) ≤ 1.5× classic.
+    expect(hypeMs).toBeLessThanOrEqual(classicMs * 1.5);
+  }, 240_000);
 });

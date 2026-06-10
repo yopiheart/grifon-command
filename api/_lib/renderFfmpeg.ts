@@ -623,15 +623,18 @@ export function buildCameraFilter(
     // v1: a single decaying punch at the cut (true jitter reads cheap at 30fps).
     zExpr = `1+${(punch > 0 ? punch : 0.05).toFixed(4)}*max(0,1-t/0.25)${punches}`;
   }
+  // setsar=1 re-pins the sample ratio after scaling — h=-2 rounding nudges SAR
+  // off 1:1 (e.g. 2331:2332 at the end of a zoom-out ramp), and concat refuses
+  // mixed-SAR inputs ("Failed to configure output pad").
   if (zExpr) {
     return (
       `scale=w='trunc(${w}*(${zExpr})/2)*2':h=-2:eval=frame,` +
-      `crop=${w}:${h}:(iw-${w})/2:(ih-${h})/2`
+      `crop=${w}:${h}:(iw-${w})/2:(ih-${h})/2,setsar=1`
     );
   }
   // pan: static oversize, x sweeps L→R across the scene (crop x IS per-frame).
   const ow = Math.round((w * 1.06) / 2) * 2;
-  return `scale=${ow}:-2,crop=${w}:${h}:x='(iw-${w})*min(1,t/${D})':y=(ih-${h})/2`;
+  return `scale=${ow}:-2,crop=${w}:${h}:x='(iw-${w})*min(1,t/${D})':y=(ih-${h})/2,setsar=1`;
 }
 
 export interface TransitionPlan { fadeOutTail: boolean; fadeInHead: boolean; }
