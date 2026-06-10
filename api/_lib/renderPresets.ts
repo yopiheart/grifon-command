@@ -291,9 +291,13 @@ export function fnv1a(s: string): number {
   return h >>> 0;
 }
 
-/** Stable rotation seed from the request's scene video URLs (order-independent). */
+/** Stable rotation seed from the request's scene video URLs (order-independent).
+ * Query strings are stripped: Supabase signed URLs carry a rotating token, so
+ * seeding on the full URL re-rolled the preset on every re-render of the SAME ad
+ * (2026-06-10: hook flipped metallic title-stack → red wipe-box between renders,
+ * scene-2 film burn vanished). The bucket path is a clip's stable identity. */
 export function rotationSeed(videoUrls: string[]): string {
-  return [...videoUrls].sort().join('|');
+  return [...videoUrls].map((u) => u.split('?')[0]).sort().join('|');
 }
 
 /**

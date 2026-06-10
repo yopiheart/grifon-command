@@ -123,7 +123,12 @@ const INTER_ADV = CLASSIC.caption.advRatio;      // default glyph advance (Inter
 
 // Safe zone (fractions). Erring toward Reels' aggressive bottom UI.
 const SZ_SIDE = 0.10, SZ_TOP = 0.14, SZ_BOTTOM = 0.22;
-const HOOK_TOP_FRAC = 0.32;          // hook text top, upper-center
+// Hook text hugs the TOP safe band (just under SZ_TOP) instead of upper-center:
+// the hook end-frame anchors the product center/lower-third, and 0.32 parked the
+// title right on top of it — text and product fighting for the eye (Neil,
+// 2026-06-10 final-render review). Top placement is also the viral-reference
+// grammar: text top, subject below.
+const HOOK_TOP_FRAC = 0.15;
 
 // Hook reveal entrance + wipe. drawtext re-evals y/alpha/fontsize per-frame
 // (verified 2026-06-08, see agent_lessons.md), so all three styles are REAL
@@ -174,6 +179,10 @@ export function stripUnrenderable(s: string): string {
   return s
     .replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE00}-\u{FE0F}\u{2190}-\u{21FF}\u{2300}-\u{23FF}\u{2B00}-\u{2BFF}]/gu, '')
     .replace(/['‘’ʼ`]/g, '')
+    // Em/en dashes: script punctuation, not caption material — a chunk boundary
+    // landing on one burned "— first 50 lang" (2026-06-10 review). Word hyphens
+    // ("9-AM") are untouched.
+    .replace(/[—–]/g, '')
     .replace(/\s+/g, ' ')
     .trim();
 }
