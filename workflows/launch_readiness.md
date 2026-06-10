@@ -92,7 +92,7 @@ Shared-state action; explicit go-ahead required. If Neil prefers verify-first, r
 
 ### P2 follow-ups (NOT blocking beta)
 
-- **Test suite repair:** 10 of 27 unit tests fail because they assert prompt text in client fetch bodies, but post-crown-jewel-migration the client only sends `{flow, input}` and the prompt text lives in `api/_lib/prompts.ts`. Repair the test harness to introspect the server-side prompt registry instead. Mud-on-mud risk if more prompt tests are added before this is fixed.
+- ~~**Test suite repair**~~ — **DONE 2026-06-09.** Was 15 failures across 3 files (the original 10 prompt-text assertions, plus 4 EDL tests whose fetch mock predated audio base64-inlining, plus 1 proxy-retry test expecting the legacy `{text}` envelope). Prompt-invariant tests now introspect the `api/_lib/prompts.ts` builders directly; flow-mode mocks return parsed objects; the EDL mock routes blob: fetches. Suite green: 118 passed / 10 skipped-by-design. Every `/goal` can now cite `npm run test` exit 0 (see `workflows/loops.md`).
 - **`Step2BusinessInfo` same `useState(data)` anti-pattern:** currently safe by mount-timing (Step 2 mounts AFTER auto-prefill ran). Single-line fix when needed; not currently broken.
 - **SCENE 1 hook schema extension:** SCENE 1's `referenceImage` is hardcoded to `"none"`. Latent: if a user's script hook explicitly shows the actual product, the SCENE_07-style fake-label bug returns. Surface if/when seen in a real run.
 - **Generate Video module:** intentionally deferred from Phase 5 ("test these 3 modules first"). Not blocked, just gated.

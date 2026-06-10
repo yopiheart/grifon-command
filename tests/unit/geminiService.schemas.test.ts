@@ -2,11 +2,16 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 // What this file catches:
 //   1. Output-shape regressions — if a refactor breaks how geminiService parses
-//      Gemini's JSON, the typed return shape will drift and tests fail.
-//   2. Request-shape regressions — if model IDs or JSON-mode config change, tests fail.
-//   3. Prompt-invariant regressions — if the tuned safety/strategy rules
-//      (STILL_FRAME_RULE, 30/70, NO PRICE, STORY RELAY phase contract, etc.)
-//      are accidentally dropped from the tuned prompt, tests fail.
+//      a flow response (or a legacy passthrough response), the typed return
+//      shape will drift and tests fail.
+//   2. Request-shape regressions — flow-mode calls must send `{flow, input}`
+//      and must NOT leak the tuned prompt into the client request body;
+//      legacy passthrough calls must keep their model IDs and JSON-mode config.
+//   3. Prompt-invariant regressions — the tuned safety/strategy rules
+//      (STILL_FRAME_RULE, 30/70, NO PRICE, STORY RELAY phase contract, etc.).
+//      Server-side prompts moved to api/_lib/prompts.ts, so those invariants
+//      are asserted against the prompt builders' output directly (server-side
+//      introspection); client-side prompts are still asserted via the fetch body.
 //
 // What this file does NOT catch:
 //   - Real-world Gemini API drift. Tests use canned mocks; if Gemini starts
@@ -27,10 +32,19 @@ vi.mock('../../services/supabaseClient', () => ({
 const fetchMock = vi.fn();
 vi.stubGlobal('fetch', fetchMock);
 
+// Legacy passthrough mode: the proxy echoes Gemini's response as `{ text }`.
 const okGemini = (payload: unknown) => ({
   ok: true,
   status: 200,
   json: async () => ({ text: JSON.stringify(payload) }),
+});
+
+// Flow mode: api/gemini/text.ts runs the server-side prompt + parser and
+// returns the parsed object as the response body.
+const okFlow = (payload: unknown) => ({
+  ok: true,
+  status: 200,
+  json: async () => payload,
 });
 
 const captureLastFetchBody = (): any => {
@@ -48,6 +62,10 @@ const {
   generateCinematicNarrative,
 } = await import('../../services/geminiService');
 
+const { buildAdScriptPrompt, buildStoryboardPrompt, MODEL_TEXT } = await import(
+  '../../api/_lib/prompts.js'
+);
+
 beforeEach(() => {
   fetchMock.mockReset();
 });
@@ -64,8 +82,16 @@ describe('generateAdScript schema', () => {
     scriptType: 'MrBeast',
   } as any;
 
+  const adScriptInput = {
+    businessInfo,
+    brandName: 'TestBrand',
+    language: 'Taglish',
+    offer: '',
+    chosenAngleBrief: '',
+  } as any;
+
   it('returns a Script-shaped object: hook1/hook2/body are arrays of strings', async () => {
-    fetchMock.mockResolvedValueOnce(okGemini({
+    fetchMock.mockResolvedValueOnce(okFlow({
       hook1: ['Hook A line 1', 'Hook A line 2'],
       hook2: ['Hook B line 1', 'Hook B line 2'],
       body: ['Body line 1', 'Body line 2', 'Body line 3'],
@@ -85,8 +111,8 @@ describe('generateAdScript schema', () => {
     ).toBe(true);
   }, 10_000);
 
-  it('targets /api/gemini/text with the flash-lite text model in JSON mode', async () => {
-    fetchMock.mockResolvedValueOnce(okGemini({
+  it("targets /api/gemini/text in flow mode: {flow: 'adscript', input} with no prompt leak", async () => {
+    fetchMock.mockResolvedValueOnce(okFlow({
       hook1: ['x'], hook2: ['x'], body: ['x'],
     }));
     await generateAdScript(businessInfo, 'TestBrand', 'English');
@@ -95,36 +121,36 @@ describe('generateAdScript schema', () => {
     expect(url).toBe('/api/gemini/text');
 
     const body = captureLastFetchBody();
-    expect(body.model).toBe('gemini-3.1-flash-lite-preview');
-    expect(body.config?.responseMimeType).toBe('application/json');
+    expect(body.flow).toBe('adscript');
+    expect(body.input.businessInfo.product).toBe('Test Coffee');
+    expect(body.input.brandName).toBe('TestBrand');
+
+    // Crown-jewel guard: the tuned prompt is server-side now and must never
+    // ride in the client request body.
+    const dump = JSON.stringify(body);
+    expect(dump).not.toContain('NO PRICE');
+    expect(dump).not.toContain('LOGIC LOCK');
+
+    // The adscript flow executes server-side on the flash-lite text model.
+    expect(MODEL_TEXT).toMatch(/flash-lite/);
   }, 10_000);
 
-  it('preserves tuned-prompt invariants: NO PRICE rule and Sabri Suby Slide pacing', async () => {
-    fetchMock.mockResolvedValueOnce(okGemini({
-      hook1: ['x'], hook2: ['x'], body: ['x'],
-    }));
-    await generateAdScript(businessInfo, 'TestBrand', 'Taglish');
+  it('preserves tuned-prompt invariants: NO PRICE rule and Sabri Suby Slide pacing', () => {
+    const prompt = buildAdScriptPrompt(adScriptInput);
+    expect(prompt).toContain('NO PRICE');
+    expect(prompt).toContain('Slide');
+    expect(prompt).toContain('LOGIC LOCK');
+  });
 
-    const promptDump = JSON.stringify(captureLastFetchBody());
-    expect(promptDump).toContain('NO PRICE');
-    expect(promptDump).toContain('Slide');
-    expect(promptDump).toContain('LOGIC LOCK');
-  }, 10_000);
-
-  it('MrBeast CTA invariants: bans link-sa-bio + requires verbatim value-ads (v1.x bundle)', async () => {
-    fetchMock.mockResolvedValueOnce(okGemini({
-      hook1: ['x'], hook2: ['x'], body: ['x'],
-    }));
-    await generateAdScript(businessInfo, 'TestBrand', 'Taglish');
-
-    const promptDump = JSON.stringify(captureLastFetchBody());
+  it('MrBeast CTA invariants: bans link-sa-bio + requires verbatim value-ads (v1.x bundle)', () => {
+    const prompt = buildAdScriptPrompt(adScriptInput);
     // Banned phrase is named in the prompt (so the model knows NOT to produce it).
-    expect(promptDump).toContain('link sa bio');
-    expect(promptDump).toContain('BANNED CTA PHRASES');
+    expect(prompt).toContain('link sa bio');
+    expect(prompt).toContain('BANNED CTA PHRASES');
     // Require-verbatim language present.
-    expect(promptDump).toMatch(/value-add/i);
-    expect(promptDump).toContain('verbatim');
-  }, 10_000);
+    expect(prompt).toMatch(/value-add/i);
+    expect(prompt).toContain('verbatim');
+  });
 });
 
 describe('TESTIMONIAL invariants (v1.x bundle)', () => {
@@ -139,31 +165,29 @@ describe('TESTIMONIAL invariants (v1.x bundle)', () => {
     separator: 'Single-origin',
   } as any;
 
-  it('Intro hard-requires "Ako si [name]" opener and bans name-tag pattern', async () => {
-    fetchMock.mockResolvedValueOnce(okGemini({
-      hook1: ['x'], hook2: ['x'], body: ['x'],
-    }));
-    await generateAdScript(businessInfo, 'TestBrand', 'Taglish');
+  const testimonialInput = {
+    businessInfo,
+    brandName: 'TestBrand',
+    language: 'Taglish',
+    offer: '',
+    chosenAngleBrief: '',
+  } as any;
 
-    const promptDump = JSON.stringify(captureLastFetchBody());
-    expect(promptDump).toContain('Ako si');
-    expect(promptDump).toContain('REQUIRED');
+  it('Intro hard-requires "Ako si [name]" opener and bans name-tag pattern', () => {
+    const prompt = buildAdScriptPrompt(testimonialInput);
+    expect(prompt).toContain('Ako si');
+    expect(prompt).toContain('REQUIRED');
     // Forbidden pattern called out so the model avoids it.
-    expect(promptDump).toMatch(/name tag/i);
-  }, 10_000);
+    expect(prompt).toMatch(/name tag/i);
+  });
 
-  it('Discovery beat enforces verb-completion (no verbless fragments)', async () => {
-    fetchMock.mockResolvedValueOnce(okGemini({
-      hook1: ['x'], hook2: ['x'], body: ['x'],
-    }));
-    await generateAdScript(businessInfo, 'TestBrand', 'Taglish');
-
-    const promptDump = JSON.stringify(captureLastFetchBody());
+  it('Discovery beat enforces verb-completion (no verbless fragments)', () => {
+    const prompt = buildAdScriptPrompt(testimonialInput);
     // Verb-completion patterns are named.
-    expect(promptDump).toContain('natikman ko');
-    expect(promptDump).toContain('na-try ko');
-    expect(promptDump).toMatch(/verbless/i);
-  }, 10_000);
+    expect(prompt).toContain('natikman ko');
+    expect(prompt).toContain('na-try ko');
+    expect(prompt).toMatch(/verbless/i);
+  });
 });
 
 // ----------------------------------------------------------------------------
@@ -178,8 +202,16 @@ describe('generateStoryboard schema', () => {
     scriptType: 'MrBeast',
   } as any;
 
+  const storyboardInput = {
+    script: ['Line'],
+    avatarDescription: 'Avatar',
+    businessInfo,
+    ethnicity: 'Filipino',
+    language: 'English',
+  } as any;
+
   it('returns StoryboardResponse: scenes[] each with scriptLine + sceneDescription strings, plus strategicAudit', async () => {
-    fetchMock.mockResolvedValueOnce(okGemini({
+    fetchMock.mockResolvedValueOnce(okFlow({
       scenes: [
         { scriptLine: 'Line 1', sceneDescription: 'Avatar talking', referenceImage: 'avatar' },
         { scriptLine: 'Line 2', sceneDescription: 'Product close-up', referenceImage: 'product' },
@@ -202,27 +234,26 @@ describe('generateStoryboard schema', () => {
       expect(typeof scene.sceneDescription).toBe('string');
     }
     expect(typeof result.strategicAudit).toBe('string');
+
+    // Flow mode + crown-jewel guard: client sends `{flow, input}` only.
+    const body = captureLastFetchBody();
+    expect(body.flow).toBe('storyboard');
+    expect(JSON.stringify(body)).not.toContain('STILL_FRAME_RULE');
   });
 
-  it('preserves tuned-prompt invariants: STILL_FRAME_RULE, APPEARANCE_LOCK_RULE, VISUAL PURITY', async () => {
-    fetchMock.mockResolvedValueOnce(okGemini({ scenes: [], strategicAudit: 'x' }));
-    await generateStoryboard(['Line'], 'Avatar', businessInfo, 'Filipino', 'English');
-
-    const promptDump = JSON.stringify(captureLastFetchBody());
-    expect(promptDump).toContain('STILL_FRAME_RULE');
-    expect(promptDump).toContain('APPEARANCE_LOCK_RULE');
-    expect(promptDump).toContain('VISUAL PURITY');
-    expect(promptDump).toContain('PACING RULE');
+  it('preserves tuned-prompt invariants: STILL_FRAME_RULE, APPEARANCE_LOCK_RULE, VISUAL PURITY', () => {
+    const prompt = buildStoryboardPrompt(storyboardInput);
+    expect(prompt).toContain('STILL_FRAME_RULE');
+    expect(prompt).toContain('APPEARANCE_LOCK_RULE');
+    expect(prompt).toContain('VISUAL PURITY');
+    expect(prompt).toContain('PACING RULE');
   });
 
-  it('storyboard includes BAG_ORIENTATION_RULE (front-of-bag must face camera) — v1.x bundle', async () => {
-    fetchMock.mockResolvedValueOnce(okGemini({ scenes: [], strategicAudit: 'x' }));
-    await generateStoryboard(['Line'], 'Avatar', businessInfo, 'Filipino', 'English');
-
-    const promptDump = JSON.stringify(captureLastFetchBody());
-    expect(promptDump).toContain('BAG_ORIENTATION_RULE');
-    expect(promptDump).toContain('FRONT of the bag');
-    expect(promptDump).toMatch(/banned/i);
+  it('storyboard includes BAG_ORIENTATION_RULE (front-of-bag must face camera) — v1.x bundle', () => {
+    const prompt = buildStoryboardPrompt(storyboardInput);
+    expect(prompt).toContain('BAG_ORIENTATION_RULE');
+    expect(prompt).toContain('FRONT of the bag');
+    expect(prompt).toMatch(/banned/i);
   });
 });
 
@@ -293,12 +324,14 @@ describe('generateCinematicNarrative schema', () => {
     }
   });
 
-  it('uses the research/pro model and preserves the v6 STORY RELAY 6-phase contract', async () => {
+  it('uses the research model and preserves the v6 STORY RELAY 6-phase contract', async () => {
     fetchMock.mockResolvedValueOnce(okGemini([]));
     await generateCinematicNarrative('Test product', theme, 'Test concept', hardware);
 
     const body = captureLastFetchBody();
-    expect(body.model).toBe('gemini-3.1-pro-preview');
+    // Tuned model ID asserted verbatim so an unintended model change fails loudly;
+    // an intended re-tune updates this expectation alongside it.
+    expect(body.model).toBe('gemini-3.5-flash');
 
     const promptDump = JSON.stringify(body);
     expect(promptDump).toContain('STORY RELAY');

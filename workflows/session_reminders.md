@@ -17,5 +17,6 @@ shell command), so this doc is the restore mechanism: paste the command to re-ar
 - Session-only, recurring; auto-expires after 7 days.
 - Cancel early: ask Claude to `CronDelete` the job (it returns the job ID when armed).
 
-> If Claude is reading this at session start and the user previously had the break
-> reminder running, offer to re-arm it.
+> The SessionStart hook ([.claude/hooks/session-start.sh](../.claude/hooks/session-start.sh))
+> surfaces every `/loop` line in this file automatically at session start — keep new
+> re-arm commands on their own line starting with `/loop` so the hook picks them up.
