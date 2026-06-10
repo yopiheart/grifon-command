@@ -65,9 +65,10 @@ describe('planScene — preset styling', () => {
     expect(fade.boxAlpha).toBe(0);
   });
 
-  it('hype: caption chunks pop, are gold, and run smaller/faster than classic', () => {
+  it('hype: caption chunks animate word-level, are gold, and run smaller/faster than classic', () => {
     const classicChunks = texts(planScene(talking, 6, DIMS, CLASSIC)).filter((l) => l.anim === 'none');
-    const hypeChunks = texts(planScene(talking, 6, DIMS, HYPE)).filter((l) => l.anim === 'pop');
+    const hypeChunks = texts(planScene(talking, 6, DIMS, HYPE))
+      .filter((l) => l.anim === 'word-pop' || l.anim === 'pop');
     expect(hypeChunks.length).toBeGreaterThan(classicChunks.length);
     expect(hypeChunks[0].color).toBe('0xFFCC00');
     expect(hypeChunks[0].boxAlpha).toBe(0);

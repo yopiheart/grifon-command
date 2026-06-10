@@ -260,6 +260,53 @@ export function chunkCaption(
   return groups.filter((g) => g.length).map((g) => g.join(' '));
 }
 
+// ---- Word-level caption timing (no word timestamps exist — ElevenLabs returns
+// opaque MP3s — so words are interpolated across the chunk window by character
+// weight, the same estimate class as estimateSpokenSec/advRatio already
+// shipping). v2 swaps in real ElevenLabs with-timestamps alignment behind this
+// same WordTiming[] interface. ----
+
+export interface WordTiming {
+  word: string;
+  start: number; // scene-relative seconds
+  end: number;
+  xPx: number;   // absolute left edge of the word (line centered at frameW/2)
+}
+
+/**
+ * Split one caption chunk's [startSec, endSec] window across its words by
+ * character weight (longer words speak longer; trailing punctuation adds a
+ * beat). x positions are cumulative estimated widths from the centered line
+ * start — single-line chunks only (the caller falls back to chunk-pop when
+ * fitText wrapped).
+ */
+export function wordTimings(
+  chunk: string,
+  startSec: number,
+  endSec: number,
+  fontsize: number,
+  advRatio: number,
+  frameW: number
+): WordTiming[] {
+  const words = chunk.split(/\s+/).filter(Boolean);
+  if (!words.length || endSec <= startSec) return [];
+  const weight = (wd: string) => wd.length + 1 + (/[,.!?]$/.test(wd) ? 1.5 : 0);
+  const total = words.reduce((s, wd) => s + weight(wd), 0);
+  const span = endSec - startSec;
+  const lineX = (frameW - estWidth(chunk, fontsize, advRatio)) / 2;
+  const out: WordTiming[] = [];
+  let t = startSec;
+  let x = lineX;
+  for (const wd of words) {
+    const dur = (weight(wd) / total) * span;
+    out.push({ word: wd, start: +t.toFixed(3), end: +Math.min(endSec, t + dur).toFixed(3), xPx: Math.round(x) });
+    t += dur;
+    x += estWidth(`${wd} `, fontsize, advRatio);
+  }
+  out[out.length - 1].end = +endSec.toFixed(3); // absorb rounding into the last word
+  return out;
+}
+
 /** Clamp a scene-relative [start,end] window to [0, trimSec]. Returns null when
  * the window falls entirely outside the trimmed clip (cue dropped). */
 export function clampWindow(
@@ -352,8 +399,10 @@ export interface TextLayer {
   yBase: number;       // resolved top y in px
   startSec: number;
   endSec: number;
-  anim: 'slideup' | 'fade' | 'pop' | 'none';
+  anim: 'slideup' | 'fade' | 'pop' | 'word-pop' | 'karaoke' | 'none';
   emphasisSfx?: SfxBankId; // a sound to fire ON this text's appearance (startSec)
+  /** Word-level timing/position for 'word-pop' / 'karaoke' (single-line chunks). */
+  words?: WordTiming[];
 }
 export interface BoxLayer {
   kind: 'box';
@@ -467,7 +516,7 @@ export function planScene(
   if (cap) {
     // Word-level presets read best as small fast chunks (1–3 words swapped on VO
     // cadence — research §3.1); classic keeps the shipped 3–4-word pacing.
-    const chunkAnim: TextLayer['anim'] = preset.caption.chunkAnim === 'none' ? 'none' : 'pop';
+    const wordLevel = preset.caption.chunkAnim === 'word-pop' || preset.caption.chunkAnim === 'karaoke';
     const wordsPer = preset.caption.chunkAnim === 'none' ? 3.5 : 2.5;
     const minChunk = preset.caption.chunkAnim === 'none' ? MIN_CHUNK_SEC : 0.5;
     const avail = end - capStart;
@@ -476,12 +525,27 @@ export function planScene(
       const each = avail / Math.max(1, chunks.length);
       chunks.forEach((c, i) => {
         const { fontsize, lines } = fitText(c, sz.usableW, Math.round(h * preset.caption.baseSizeFrac), adv);
-        layers.push({
-          kind: 'text', text: lines.join('\n'), fontsize, color: preset.caption.fillColor,
-          boxAlpha: preset.caption.boxAlpha,
-          xExpr: '(w-text_w)/2', yBase: cy, anim: chunkAnim,
-          startSec: +(capStart + i * each).toFixed(3), endSec: +(capStart + (i + 1) * each).toFixed(3),
-        });
+        const startSec = +(capStart + i * each).toFixed(3);
+        const endSec = +(capStart + (i + 1) * each).toFixed(3);
+        // Word timing/x math assumes one line — a wrapped chunk falls back to pop.
+        if (wordLevel && lines.length === 1) {
+          layers.push({
+            kind: 'text', text: c, fontsize, color: preset.caption.fillColor,
+            boxAlpha: preset.caption.boxAlpha,
+            xExpr: `${Math.round((w - estWidth(c, fontsize, adv)) / 2)}`, yBase: cy,
+            anim: preset.caption.chunkAnim as TextLayer['anim'],
+            startSec, endSec,
+            words: wordTimings(c, startSec, endSec, fontsize, adv, w),
+          });
+        } else {
+          layers.push({
+            kind: 'text', text: lines.join('\n'), fontsize, color: preset.caption.fillColor,
+            boxAlpha: preset.caption.boxAlpha,
+            xExpr: '(w-text_w)/2', yBase: cy,
+            anim: preset.caption.chunkAnim === 'none' ? 'none' : 'pop',
+            startSec, endSec,
+          });
+        }
       });
     }
   }
@@ -695,6 +759,62 @@ export function buildTextFilter(
   return `drawtext=${opts.join(':')}`;
 }
 
+/**
+ * Per-word drawtext filters for a word-level caption layer. Words use OUTLINE
+ * (never per-word boxes — they'd render as fragmented tiles; matches the CapCut
+ * look anyway). `wordTextNames[j]` is word j's bare textfile name; `baseTextName`
+ * is the whole-chunk file (karaoke only).
+ *
+ *  - word-pop: words accumulate — each pops on at its start (alpha snap + 14px
+ *    settle) and stays until the chunk ends.
+ *  - karaoke: the whole chunk renders in fillColor (numeric x so the highlight
+ *    offsets share its origin) and a highlightColor copy of each word sits on
+ *    top only during that word's window — an L→R sweep.
+ */
+export function buildWordFilters(
+  l: TextLayer,
+  fontName: string,
+  wordTextNames: string[],
+  preset: RenderPreset,
+  baseTextName: string | null = null
+): string {
+  const words = l.words ?? [];
+  if (!words.length) return buildTextFilter({ ...l, anim: 'pop' }, fontName, baseTextName ?? wordTextNames[0], preset);
+  const sh = preset.caption.shadow;
+  const outlineW = Math.max(2, Math.round(l.fontsize * Math.max(preset.caption.borderWFrac, 0.06)));
+  const deco = [
+    ...(sh ? [`shadowcolor=${sh.color}`, `shadowx=${sh.dx}`, `shadowy=${sh.dy}`] : []),
+    `borderw=${outlineW}`,
+    `bordercolor=black`,
+  ].join(':');
+  const parts: string[] = [];
+
+  if (l.anim === 'karaoke' && baseTextName) {
+    parts.push(buildTextFilter({ ...l, anim: 'none', words: undefined, boxAlpha: 0 }, fontName, baseTextName, preset));
+    for (let j = 0; j < words.length; j++) {
+      const wd = words[j];
+      parts.push(
+        `drawtext=fontfile=${fontName}:textfile=${wordTextNames[j]}:fontsize=${l.fontsize}:` +
+        `fontcolor=${preset.caption.highlightColor}:${deco}:` +
+        `x=${wd.xPx}:y=${l.yBase}:enable='between(t,${wd.start},${wd.end})'`
+      );
+    }
+    return parts.join(',');
+  }
+
+  // word-pop (default): accumulate until the chunk ends.
+  for (let j = 0; j < words.length; j++) {
+    const wd = words[j];
+    parts.push(
+      `drawtext=fontfile=${fontName}:textfile=${wordTextNames[j]}:fontsize=${l.fontsize}:` +
+      `fontcolor=${l.color}:${deco}:` +
+      `x=${wd.xPx}:y='${l.yBase}+14*max(0,1-(t-${wd.start})/0.12)':` +
+      `alpha='min(1,max(0,(t-${wd.start})/0.06))':enable='between(t,${wd.start},${l.endSec})'`
+    );
+  }
+  return parts.join(',');
+}
+
 /** Number of vertical slices used to animate the L→R box wipe. */
 export const WIPE_SLICES = 24;
 
@@ -905,9 +1025,24 @@ function buildScene(
     if (layer.kind === 'box') {
       vChain += `,${buildBoxFilter(layer)}`;
     } else if (fontName) {
-      const textName = `ov_${sceneIdx}_${k++}.txt`;
-      writeFileSync(join(dir, textName), layer.text, 'utf8');
-      vChain += `,${buildTextFilter(layer, fontName, textName, preset)}`;
+      if (layer.words?.length && (layer.anim === 'word-pop' || layer.anim === 'karaoke')) {
+        const wordNames = layer.words.map((wd, j) => {
+          const n = `ov_${sceneIdx}_${k}_w${j}.txt`;
+          writeFileSync(join(dir, n), wd.word, 'utf8');
+          return n;
+        });
+        let baseName: string | null = null;
+        if (layer.anim === 'karaoke') {
+          baseName = `ov_${sceneIdx}_${k}_base.txt`;
+          writeFileSync(join(dir, baseName), layer.text, 'utf8');
+        }
+        k++;
+        vChain += `,${buildWordFilters(layer, fontName, wordNames, preset, baseName)}`;
+      } else {
+        const textName = `ov_${sceneIdx}_${k++}.txt`;
+        writeFileSync(join(dir, textName), layer.text, 'utf8');
+        vChain += `,${buildTextFilter(layer, fontName, textName, preset)}`;
+      }
     }
   }
   if (transitionFilters) vChain += `,${transitionFilters}`;
@@ -1119,9 +1254,10 @@ export async function renderFinalVideo(
         if (c.transition) whooshUsed++;
       }
 
-      // Camera move: EDL hint (or preset default), punches at caption-chunk starts.
+      // Camera move: EDL hint (or preset default), punches at caption-chunk
+      // starts (chunks = any text layer that isn't the hook or an EDL overlay).
       const punchTimes = layers
-        .filter((l): l is TextLayer => l.kind === 'text' && l.anim === 'none')
+        .filter((l): l is TextLayer => l.kind === 'text' && l.anim !== 'slideup' && l.anim !== 'fade')
         .map((l) => l.startSec);
       const camFilter = buildCameraFilter(
         effectiveCameraEffect(scene.cameraEffect, i, preset.camera),
