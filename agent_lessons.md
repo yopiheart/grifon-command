@@ -793,3 +793,21 @@ than assuming a filter does or doesn't re-eval. Hook reveal now ships three styl
 scale-grow), alpha snapping in 0.15s so motion carries the reveal. `pow()` bases kept ≥0 via
 `(1-p)` so eval never hits `pow(negative,...)`. Verify by reading frames **inside 0.42–0.60s**
 (the punch window) — wider samples land post-settle and look identical across styles.
+
+### 2026-06-10 — Background subagents auto-deny every permission prompt; split tools-vs-reading
+**Context:** Viral Editor 2.0 Phase A needed ffmpeg frame extraction + Playwright capture across 6
+videos. Launched 5 background agents to do extraction+analysis end-to-end; every one died — Bash
+ffmpeg, PowerShell, Playwright MCP, even WebFetch were all denied (~30k tokens each burned just
+discovering it). Permission prompts can't surface from `run_in_background` agents, so anything off
+the pre-approved allowlist is auto-denied.
+**Lesson:** Division of labor on this repo: the FOREGROUND main thread runs every privileged
+command (one approval covers the loop — ffmpeg extraction, curl downloads, Playwright), writes
+artifacts to `.tmp/`; BACKGROUND agents get read-only briefs over those artifacts (Read/Glob only —
+ideal for token-heavy frame reading they can do in their own context). Same pattern for FB Ad
+Library: main thread navigates + grabs `video.currentSrc` via Playwright evaluate, curls the CDN
+mp4, agents read the extracted frames. Also: the defreezer wipes git identity — re-set
+`git config user.email/user.name` (repo-local) before the first commit of a session.
+**Bonus ffmpeg trap (found via RUN_BURNIN, not unit tests):** `scale=h=-2:eval=frame` rounding
+nudges SAR off 1:1 (e.g. 2331:2332 at the end of a zoom-out ramp) and concat then rejects the
+mixed-SAR inputs with "Failed to configure output pad". Any dynamic scale in a per-scene chain
+must end `,setsar=1`. Unit-test strings can't catch this class — only the real-render harness can.
