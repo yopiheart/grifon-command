@@ -4,6 +4,8 @@
 
 This is the meta-workflow. It doesn't do the work itself — it points to the workflows that do, and tracks overall progress. **Source of truth = the code + `git log`.** This file summarizes; it does not replace.
 
+> **⏭ NEXT SESSION (queued 2026-06-10):** execute [`validation_render.md`](validation_render.md) — full Bukidnon Brew wizard E2E proving the hook-anchor prompt fix (`109d367`) + Viral Editor 2.0 (`b8034be`→`5c7fd26`: 4 rotating edit presets, premium metallic hook, film burn, word-pop captions) on clean footage. This file is stale below this line (missing the render-pipeline arc and the full Viral Editor 2.0 arc — see `git log 2fad4e1..5c7fd26` and `edit_style_research.md`); the catch-up write-up is folded into that run's wrap-up step.
+
 ## Status as of 2026-05-22 (Omni hook arc C–G logged · RENDER ALL → Signal Modulator hand-off verified)
 
 This file skipped 12 days — the Omni hook arc (Sessions C–G) shipped + closed without landing here. Two things bring it current: (1) the Omni arc summary, (2) a verification verdict on the RENDER ALL → Signal Modulator hand-off.

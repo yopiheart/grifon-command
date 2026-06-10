@@ -1,0 +1,81 @@
+# Workflow: Validation Render — prove the hook fix + Viral Editor 2.0 on clean footage
+
+**Status: QUEUED — execute on a FRESH session** (Neil, 2026-06-10: "next session, fresh context").
+This file + `CLAUDE.md` + `UBIQUITOUS_LANGUAGE.md` are enough to resume; no re-explaining needed.
+
+## Context
+
+Viral Editor 2.0 shipped (commits `b8034be` → `5c7fd26`, 2026-06-10) and Neil approved the
+demo re-edits — but the demo re-used old footage with the hook blob baked in. Two things
+remain unproven live:
+
+1. **Phase D hook-anchor prompts** (`109d367`, TUNED files, Neil-approved): do freshly
+   generated hooks avoid the 1.8–3.4s flesh-blob morph? Baseline severity 8/10 — autopsy
+   in [edit_style_research.md](edit_style_research.md) §1.
+2. **The new editor on clean scenes**: premium metallic-gradient hook + light sweep, film
+   burn at the hook cut, word-pop captions, preset+palette rotation — without the old
+   baked-in captions underneath (the demo's known artifact).
+
+One full wizard E2E answers both. Budget: ~$3–5 (Veo/Kling/ElevenLabs).
+Test brand: **Bukidnon Brew** (the established regression brand per launch_readiness).
+
+## Hard rules (from `.claude/skills/director-smoke` — MANDATORY pre-flight)
+
+- Load the `director-smoke` skill BEFORE touching the wizard — it governs the whole run.
+- **Market Research FIRST**, then Director AI; **hero image FIRST**.
+- **Never manually type brand/offer fields** — they must auto-prefill from Market Research
+  (the auto-prefill is itself a regression check, Phase 6b `8fdc1f9`).
+- No `/goal` needed — evaluation run, no planned code edits (skip clause).
+
+## Steps
+
+1. **Pre-flight**: invoke `director-smoke`; `npm run dev` up; confirm `.env` keys
+   (GEMINI_API_KEY, ELEVEN_LABS_API_KEY, Supabase) live.
+2. **Market Research**: run MarketMind on the Bukidnon Brew brief (Playwright drives the dev app).
+3. **Wizard**: Start with Director (auto-prefilled), hero image first, walk Steps 1–7.
+4. **CHECKPOINT A — storyboard, BEFORE spending video credits**: inspect Scene 1
+   `startFramePrompt` / `endFramePrompt` / hook video prompt for HOOK ANCHOR RULE
+   compliance (same named dominant color + same silhouette position in BOTH frames;
+   decisive verbs — compresses/crystallizes/snaps; zero amorphous-state language).
+   Run `gemini-eval` on the storyboard. Non-compliant → regen once; still bad → STOP and
+   report (prompt fix needs iteration — cheaper to learn here than after video spend).
+5. **Generate**: scene images → hook video (Kling Omni start→end morph) → remaining
+   scenes (RENDER ALL).
+6. **CHECKPOINT B — hook blob autopsy on the fresh clip**: extract 5fps frames
+   (`node_modules/ffmpeg-static/ffmpeg.exe`, same method as edit_style_research), grade
+   against baseline criteria (amorphous mass? flesh tones? mush window length?).
+   Verdict: severity /10 vs the 8/10 baseline.
+7. **Voice + edit**: Signal Modulator (voice consolidation) → AI Editor EDL →
+   FINAL_RENDER with burn-in ON. Log which preset+palette the rotation picked (the
+   `[renderFfmpeg] … preset=` timing line). Verify in frames: title-stack hook with
+   metallic gradient + sweep, film burn at hook cut, word-pop captions, CTA holding to
+   the last frame, **no double captions** (clean footage).
+8. **Report**: side-by-side frames (old hook vs new hook), `gemini-eval` verdicts, render
+   timing log, final MP4 + download link for Neil.
+
+## Failure paths
+
+- **Blob persists at Checkpoint B** → ship the designed Phase D insurance: renderer-side
+  hook reveal cover (speed-ramp the morph window + whip-blur + whoosh) — design in
+  [edit_style_research.md](edit_style_research.md) §6. VO-sync caveat documented there.
+- **Pipeline bug found** → fix in scope IF small + non-tuned; tuned-file changes go back
+  through the diff-approval gate (agent_lessons 2026-05-09).
+- **Cost guard**: max 1 regen per stage; beyond that, stop and report instead of burning credits.
+
+## Verification
+
+- Checkpoint A: storyboard JSON + gemini-eval verdict in transcript.
+- Checkpoint B: frame grid of the fresh hook + severity grade vs 8/10 baseline.
+- Final: rendered MP4 frame-checked; preset/palette logged; `verify-changes` only if code touched.
+- Wrap-up (same session): log the render-pipeline + Viral Editor 2.0 arc in
+  [launch_readiness.md](launch_readiness.md) (stale since 2026-05-22) + add the new
+  editor terms to `UBIQUITOUS_LANGUAGE.md` (Edit Style Preset, Title Stack, Hook
+  Palette, Film Burn, Word-Pop, Edit DNA) — do the docs while renders run.
+
+## Carry-over backlog (after this run, Neil-gated)
+
+- Editor v2 extras: true texture fills inside letters (mask machinery ready, needs
+  texture assets), sweep tuned against `HOOK FONT STYLE AND ANIMATION SAMPLE.webm`
+  (repo root, untracked — re-supply if defreezed), hard-cut reveal hook variant
+  (storyboard prompt, TUNED), ElevenLabs with-timestamps word sync.
+- Neil's own pendings ("important thing in the lineup" — pre-editor detour, Neil to brief).
