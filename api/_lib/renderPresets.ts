@@ -51,6 +51,8 @@ export interface HookStyle {
   /** Glyph advance ratio for the hook font (width estimation). */
   advRatio: number;
   textColor: string;
+  /** Power-word color in the title stack (gold vs the white base — reference grammar). */
+  highlightColor: string;
   wipeBox: boolean;
   wipeColor: string;
   /** Hook title fontsize as a fraction of video height. */
@@ -118,7 +120,7 @@ export const CLASSIC: RenderPreset = {
   },
   hook: {
     layout: 'wipe', reveal: 'flip', fontFile: 'fonts/Inter-Black.ttf', advRatio: 0.62,
-    textColor: 'white', wipeBox: true, wipeColor: '0xD90429', sizeFrac: 0.06,
+    textColor: 'white', highlightColor: '0xFFCC00', wipeBox: true, wipeColor: '0xD90429', sizeFrac: 0.06,
     wordCadenceSec: 0, burnTransition: false,
   },
   transition: { kind: 'none', halfDurSec: 0, everyN: 1, maxPerAd: 0 },
@@ -154,7 +156,7 @@ export const IMPACT: RenderPreset = {
   },
   hook: {
     layout: 'title-stack', reveal: 'slam', fontFile: 'fonts/Montserrat-ExtraBold.ttf', advRatio: 0.64,
-    textColor: 'white', wipeBox: false, wipeColor: '0xFFCC00', sizeFrac: 0.058,
+    textColor: 'white', highlightColor: '0xFFD400', wipeBox: false, wipeColor: '0xFFCC00', sizeFrac: 0.058,
     wordCadenceSec: 0.32, burnTransition: true,
   },
   transition: { kind: 'flash', halfDurSec: 0.07, everyN: 2, maxPerAd: 3 },
@@ -191,7 +193,7 @@ export const HYPE: RenderPreset = {
   },
   hook: {
     layout: 'title-stack', reveal: 'bounce', fontFile: 'fonts/Montserrat-ExtraBold.ttf', advRatio: 0.64,
-    textColor: 'white', wipeBox: false, wipeColor: '0x111111', sizeFrac: 0.06,
+    textColor: 'white', highlightColor: '0xFFD400', wipeBox: false, wipeColor: '0x111111', sizeFrac: 0.06,
     wordCadenceSec: 0.3, burnTransition: true,
   },
   transition: { kind: 'whip', halfDurSec: 0.05, everyN: 2, maxPerAd: 4 },
@@ -227,7 +229,7 @@ export const CLEAN: RenderPreset = {
   },
   hook: {
     layout: 'title-stack', reveal: 'flip', fontFile: 'fonts/ArchivoBlack-Regular.ttf', advRatio: 0.66,
-    textColor: 'white', wipeBox: false, wipeColor: '0xD90429', sizeFrac: 0.052,
+    textColor: 'white', highlightColor: '0xFFCC00', wipeBox: false, wipeColor: '0xD90429', sizeFrac: 0.052,
     wordCadenceSec: 0.34, burnTransition: false,
   },
   transition: { kind: 'dip', halfDurSec: 0.12, everyN: 3, maxPerAd: 2 },

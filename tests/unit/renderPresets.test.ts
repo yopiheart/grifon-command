@@ -29,8 +29,8 @@ describe('preset definitions', () => {
     expect(CLASSIC.caption.yFracBroll).toBe(0.72);
     expect(CLASSIC.hook).toEqual({
       layout: 'wipe', reveal: 'flip', fontFile: 'fonts/Inter-Black.ttf', advRatio: 0.62,
-      textColor: 'white', wipeBox: true, wipeColor: '0xD90429', sizeFrac: 0.06,
-      wordCadenceSec: 0, burnTransition: false,
+      textColor: 'white', highlightColor: '0xFFCC00', wipeBox: true, wipeColor: '0xD90429',
+      sizeFrac: 0.06, wordCadenceSec: 0, burnTransition: false,
     });
     expect(CLASSIC.transition.kind).toBe('none');
     expect(CLASSIC.camera.intensity).toBe(0);

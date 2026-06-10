@@ -930,11 +930,14 @@ export function buildWordFilters(
 
   // word-pop (default): each word lands with an elastic overshoot pop (scale
   // 20%→~108%→100%, easeOutBack — the reference "scale bounce") and persists.
+  // Hook title power words use the HOOK highlight (caption highlight can be
+  // inverted, e.g. hype's gold-fill/white-highlight captions).
+  const hlColor = l.font === 'hook' ? preset.hook.highlightColor : preset.caption.highlightColor;
   for (let j = 0; j < words.length; j++) {
     const wd = words[j];
     const p = `min(1,max(0,(t-${wd.start})/0.22))`;
     const ease = `(1-${FLIP_C3}*pow(1-${p},3)+${FLIP_C1}*pow(1-${p},2))`;
-    const color = wd.highlight ? preset.caption.highlightColor : l.color;
+    const color = wd.highlight ? hlColor : l.color;
     parts.push(
       `drawtext=fontfile=${fontName}:textfile=${wordTextNames[j]}:` +
       `fontsize='max(8,${l.fontsize}*(0.2+0.8*${ease}))':` +
