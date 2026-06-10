@@ -25,7 +25,11 @@ import {
 const FPS = 30;
 const PRESET = 'veryfast';
 const CRF = '20';
-const PAD_SEC = 0.3;            // keep a soft final word from being clipped
+const PAD_SEC = 0.18;           // keep a soft final word from being clipped
+// Last scene trims razor-tight: its tail is the ad's closing frame, and Kling
+// clips often bake a ghost/dissolve into their final beats (2026-06-10 review:
+// 27.5-28s double-exposure + black frame). 0.06s still clears the final word.
+const LAST_SCENE_PAD_SEC = 0.06;
 const SILENCE_NOISE_DB = '-35dB';
 const SILENCE_MIN_SEC = '0.4';  // min trailing-silence run to treat as dead air
 const HOOK_REVEAL_HOLD_SEC = 1.0; // hook: hold the product reveal this long past the VO end (vs a long silent morph tail)
@@ -1529,9 +1533,19 @@ export async function renderFinalVideo(
       const probeSec = probeDurationSec(videoPath);
       // Measure the actual VO speech-end for every voiced scene — this is now the
       // PRIMARY trim signal (chooseTrim), ground-truth across any script/product.
-      const detectedSec = audioPath ? detectTrimSec(audioPath) : null;
+      let detectedSec = audioPath ? detectTrimSec(audioPath) : null;
+      // The last scene closes the ad: swap the standard pad for the razor pad so
+      // the final frame is the CTA, not a ghost tail or dead beat.
+      const isLastScene = i === scenes.length - 1;
+      if (isLastScene && typeof detectedSec === 'number') {
+        detectedSec = Math.max(0.5, detectedSec - PAD_SEC + LAST_SCENE_PAD_SEC);
+      }
 
       const { trimSec, padAudio } = chooseTrim(scene, probeSec, detectedSec);
+      console.log('[renderFfmpeg:trim]', {
+        sceneIdx: scene.sceneIdx, probeSec, detectedSec, trimSec,
+        keepFullClip: !!scene.keepFullClip, isLastScene,
+      });
 
       // Compile the draw plan first — emphasis SFX are derived from its layers.
       const layers = planScene(scene, trimSec, dims, preset, variantSeed);
