@@ -507,18 +507,18 @@ const BatchEditMode: React.FC<{
                 <div>
                   <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">RULES APPLIED</p>
                   <ul className="space-y-1">
-                    {edl.formulaCheck.rulesApplied.map((r, i) => (
+                    {(edl.formulaCheck?.rulesApplied ?? []).map((r, i) => (
                       <li key={i} className="text-zinc-300 text-sm">✓ {r}</li>
                     ))}
                   </ul>
                 </div>
                 <div>
                   <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">WEAKNESSES FLAGGED</p>
-                  {edl.formulaCheck.weaknessesFlagged.length === 0 ? (
+                  {(edl.formulaCheck?.weaknessesFlagged ?? []).length === 0 ? (
                     <p className="text-zinc-500 text-sm italic">// None — formula intact.</p>
                   ) : (
                     <ul className="space-y-1">
-                      {edl.formulaCheck.weaknessesFlagged.map((w, i) => (
+                      {(edl.formulaCheck?.weaknessesFlagged ?? []).map((w, i) => (
                         <li key={i} className="text-[#FFCC00] text-sm">⚠ {w}</li>
                       ))}
                     </ul>
@@ -528,7 +528,7 @@ const BatchEditMode: React.FC<{
               <div className="mt-4 pt-4 border-t border-white/5">
                 <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">GLOBAL SFX PICKS</p>
                 <div className="flex gap-2 flex-wrap">
-                  {edl.globalSfxPicks.map((sfx) => (
+                  {(edl.globalSfxPicks ?? []).map((sfx) => (
                     <span
                       key={sfx}
                       className="px-3 py-1 rounded-full bg-zinc-900 border border-white/10 text-[10px] font-mono text-zinc-300 uppercase tracking-widest"

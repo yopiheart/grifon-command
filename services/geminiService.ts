@@ -1449,6 +1449,14 @@ the nearest valid value. Never emit anything else.
     aspectRatio: input.aspectRatio,
     targetPlatform: input.targetPlatform,
   };
+  // Remaining top-level fields the UI reads unconditionally — same drift class
+  // (a draft without formulaCheck crashed the module on .rulesApplied,
+  // 2026-06-10 retest). Default every one of them.
+  parsed.formulaCheck = {
+    rulesApplied: Array.isArray(parsed.formulaCheck?.rulesApplied) ? parsed.formulaCheck.rulesApplied : [],
+    weaknessesFlagged: Array.isArray(parsed.formulaCheck?.weaknessesFlagged) ? parsed.formulaCheck.weaknessesFlagged : [],
+  };
+  if (!Array.isArray(parsed.globalSfxPicks)) parsed.globalSfxPicks = [];
   return parsed;
 };
 
