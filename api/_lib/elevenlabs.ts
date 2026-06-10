@@ -9,6 +9,8 @@
 // "do not modify" contract, so these constants are duplicated here. If you tune
 // the model ID or stability curve in one place, update the other to match.
 
+import { normalizeTaglish } from '../../services/phoneticNormalizer.js';
+
 export type StabilityMode = 'creative' | 'natural' | 'robust';
 
 const TTS_MODEL_ID = 'eleven_v3';
@@ -59,7 +61,12 @@ export async function synthesizeTts(
         Accept: 'audio/mpeg',
       },
       body: JSON.stringify({
-        text,
+        // Taglish phonetic respelling — the batch consolidator is the path that
+        // actually voices scene VO, and it bypasses the client's voiceService
+        // (2026-06-10: "swabe" reached ElevenLabs raw and synthesized "swave"
+        // even after the client-side wiring). Captions keep the original text;
+        // only what the TTS engine hears changes.
+        text: normalizeTaglish(text),
         model_id: TTS_MODEL_ID,
         voice_settings: stabilitySettings(stabilityMode),
       }),
