@@ -364,6 +364,24 @@ during the gate session.
 
 ---
 
+### 12. "Edit like THIS video" — per-video style mimicry (the Higgsfield answer)
+
+**What:** User pastes a viral YouTube URL into the AI Editor → `api/autopsy/analyze.ts` has Gemini watch it natively (YouTube URL ingestion, no download) → a deterministic `dnaToPreset` compiler maps its Edit DNA (caption churn, treatment, transitions, SFX density, hook mechanics) onto the existing `renderPresets.ts` parameter space → the user's ad renders in that style. Full build plan, capability matrix, clamp table, gating, and flywheel: **[workflows/edit_like_this_video.md](edit_like_this_video.md)**.
+
+**Why it matters:** This is Neil's "first in the Philippines" superpower — the AI *is* the editor, no Premiere skills, no Higgsfield credits. Pairs with item #11 (the mimicry card is the last card in the preset picker) and feeds the Swipe File flywheel (every user analysis is free research).
+
+**Why parked:** (1) Gated items need Neil first: 2 prompt sign-offs, the `video_style_cache` Supabase migration, Pro-vs-Business tier decision. (2) The capability matrix has `CONFIRM-LOCAL` rows pending the 3-demo runbook. (3) Competes with `launch_readiness.md` P0s.
+
+**When to resume:** When Neil clears the Gated Items checklist in `edit_like_this_video.md` §3 (the runbook takes ~5 min on the cafe PC), OR when a beta user asks "can my ad look like this video?"
+
+**Where to start:** `edit_like_this_video.md` Phase 1 → 4 in order; Phase 2's compiler unit tests first (`tests/unit/dnaToPreset.test.ts` golden fixtures from Swipe File E4/E5).
+
+**Scope estimate:** Phase 1+2 ~1–2 days; Phase 3 ~half day; Phase 4 ~1 day (build together with item #11's picker).
+
+**Source:** Neil, 2026-06-11 — dropped 3 Higgsfield×Adobe demo Shorts: *"is that possible to have this kind of super power to my editor like adobe premiere? without using higgsgield or adobe? … we will be the first in the Philippines if possible."* Grilled same session; scope locked to Grifon-generated ads, per-video mimicry.
+
+---
+
 ## How to add new items
 
 When Neil endorses an idea but says "not now":

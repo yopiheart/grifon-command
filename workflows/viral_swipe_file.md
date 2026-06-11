@@ -22,6 +22,11 @@ below are condensed pointers, not replacements).
   preset picker) — see `workflows/post_beta_roadmap.md`.
 - [ ] When Slice 3/4 renderer work lands, re-autopsy our own FINAL_RENDER
   output and compare against baseline entry E0 to measure the gap closed.
+- [ ] When the "Edit like THIS video" feature ships (see
+  `workflows/edit_like_this_video.md` §6), harvest new `video_style_cache` rows
+  into Entries here (agent-curated, not automated) and bump Pattern Index
+  corroboration counts — in-app analyses become free swipe-file fuel. Tool
+  demos stay out (product research lives in that workflow doc, not here).
 
 ## Pattern Index
 

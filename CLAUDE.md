@@ -164,3 +164,4 @@ Deliverables go to cloud services (Google Sheets, Slides, etc.) where the user c
 - `workflows/session_reminders.md` — re-arm commands for in-session loops the defreezer wipes (currently: hourly break reminder). The SessionStart hook surfaces these automatically.
 - `workflows/loops.md` — the loop registry: every self-checking loop (build-gate, `/goal`, session re-arm, parked nightly regression, meta, PR-babysit), its arm command, verifier, and kill switch.
 - `workflows/viral_swipe_file.md` — the Swipe File: compounding database of Viral Autopsy entries, Pattern Index, and gated proposals. Maintained by the `viral-autopsy` skill.
+- `workflows/edit_like_this_video.md` — build plan for "Edit like THIS video" (per-video style mimicry: paste a viral URL → Gemini extracts Edit DNA → ad renders in that style). Includes the Higgsfield×Adobe capability matrix + demo-analysis runbook (`tools/analyze_capability_demo.py`). Parked as roadmap item #12.
