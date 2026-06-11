@@ -364,6 +364,49 @@ during the gate session.
 
 ---
 
+### 12. "Connections" Business-Data Layer — agent-queryable Grifon-the-business state
+
+**What:** A read-only, agent-queryable surface for live business data, organized by the standard pillars: Revenue (PayMongo via Supabase billing rows), Customers/Usage (Supabase), Calendar/Communications (Gmail). Likely shape: one `tools/business_snapshot.py` (or `.ts`) emitting a fresh snapshot + a `workflows/business_state.md` SOP documenting what's queryable — NOT a new app surface.
+
+**Why it matters:** This is the one pillar of the 4 C's framework (Context / Connections / Capabilities / Cadence) not already built in this repo — Context, Capabilities, and Cadence map to CLAUDE.md+workflows/, .claude/skills/+WAT, and the parked items #1/#2 respectively. With it, a session can answer "how many active beta users / what's MRR / who rendered this week" without Neil pasting screenshots, and Cadence loops (#1, #2) can cite real business state in their conditions.
+
+**Why parked:** Pre-beta there is no business data worth braining — no paying users, no revenue rows to query. Building the surface now is leverage with no load. (The source brief's own documented gap applies here too: static cached context goes stale — its system under-reported subscribers by ~200k. Prefer live queries at run time over cached markdown snapshots.)
+
+**When to resume:** Beta live AND first paying users exist (real revenue/usage rows in Supabase).
+
+**Where to start:**
+1. Data-tier audit: list each pillar (Revenue, Customers, Usage, Calendar, Communications) and where it actually lives today (Supabase tables, PayMongo dashboard, Gmail).
+2. Access path: scoped read-only Supabase key or RPC views — NOT the service-role key (item #13 is the prerequisite policy).
+3. `tools/business_snapshot.py` emitting markdown/JSON; `workflows/business_state.md` SOP with a freshness rule (query live, never trust a snapshot older than the session).
+
+**Scope estimate:** ~1 day for v1, once there is data.
+
+**Source:** 2026-06-11 NotebookLM-style brief — Nate Herk, *Claude Fable as a Second Brain / AI Operating System* (4 C's framework). Full-brief verdict from the same session: ~80% already built in this repo; this and item #13 were the only extractions worth keeping. Processed per the `agent_lessons.md` 2026-05-09 rule (analysis-and-flag-conflicts, never strategy-rewrite). Neil endorsed parking during the 2026-06-11 plan review.
+
+---
+
+### 13. Credential-Scoping Audit — least-privilege agent sessions
+
+**What:** Inventory every write-capable credential an agent session can reach — Supabase service-role (MCP `execute_sql`/`apply_migration`), Vercel deploy, Gmail, `gh` push rights, paid-API keys (Gemini/Kling/ElevenLabs = spend power), the `scripts/restore-*.ps1` re-registrations — then define and apply a least-privilege policy: which session types get write access, which are read-only, and what gets scoped tokens or spend caps.
+
+**Why it matters:** *"A prompt is never a permission layer."* The source brief's cautionary tale: an un-permissioned agent pulled a task file and broadcast an unapproved discount code to a 150–200k client list. Grifon's existing gates (two-gate plan→goal, TUNED-file rules, build-gate) are process-level — the credentials underneath are mostly full-power. That asymmetry compounds as autonomy arms: Tier-3 nightly regression, Tier-5 PR-babysit (`loops.md`), and eventually Odyssey-as-Cron (#2) all run without Neil watching.
+
+**Why parked:** Not launch-blocking, and the autonomy that makes it urgent is itself parked. It is a half-day of work best done as the *precondition* of arming those loops — a hard gate, not a someday.
+
+**When to resume:** BEFORE arming any Tier-3+ loop in `loops.md`, BEFORE Odyssey-as-Cron (#2) ships, or IMMEDIATELY if an agent session ever takes an unintended state-changing action. Hard rule once resumed: no autonomous loop arms until its credential line is written.
+
+**Where to start:**
+1. Inventory: `.env` keys, `.claude/settings.json` permissions, MCP registrations (local `~/.claude.json` via restore scripts + remote-session servers), `gh`/git push scope. Table: credential × capability × which session types hold it.
+2. Classify sessions: interactive (Neil present) vs autonomous (cron, loops, babysit). Autonomous defaults to read-only + narrowly scoped writes.
+3. Concrete swaps where possible: anon/publishable Supabase key or scoped RPCs instead of service-role; deploy rights out of autonomous sessions; provider spend caps on video/voice keys.
+4. Add a ground rule to `workflows/loops.md`: every loop spec must state which credentials it holds and why (same pattern as its existing "a loop is only as good as its verifier" rule).
+
+**Scope estimate:** ~half day for inventory + policy + low-hanging config. Token re-issuance, if needed, is follow-up.
+
+**Source:** Same 2026-06-11 brief, "Construct Programmatic Isolation Guardrails" strategy. Neil endorsed parking during the 2026-06-11 plan review.
+
+---
+
 ## How to add new items
 
 When Neil endorses an idea but says "not now":
