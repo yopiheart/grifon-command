@@ -5,6 +5,8 @@ import { toast } from "sonner";
 import { AnimatedBorder } from "./ui/AnimatedBorder";
 import { SiteHeader, type SiteNavLink } from "./ui/SiteHeader";
 import { UrgencyBar } from "./ui/UrgencyBar";
+import { Marquee } from "./landing/Marquee";
+import { SignatureScribble } from "./landing/SignatureScribble";
 import { startCheckout, type PlanId, type BillingCycle } from "../services/billingService";
 import { PLAN_FEATURES } from "../config/planFeatures";
 
@@ -266,7 +268,9 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
           }}>
             Stop Spending 6 Hours<br/>
             Making One Ad That<br/>
-            <span style={{ color: "#FFCC00" }}>Doesn't Convert.</span>
+            <SignatureScribble variant="underline" delay={0.8}>
+              <span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">doesn't convert.</span>
+            </SignatureScribble>
           </h1>
 
           <p className={loaded ? "fade-up" : ""} style={{ 
@@ -389,7 +393,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
               return (
                 <div
                   key={i}
-                  className={`card-hover snap-center flex-shrink-0 w-[85vw] max-w-[340px] ${isPro ? "gold-glow" : ""}`}
+                  className={`card-hover snap-center flex-shrink-0 w-[76vw] max-w-[340px] ${isPro ? "gold-glow" : ""}`}
                   style={{
                     position: "relative",
                     background: isPro 
@@ -603,9 +607,11 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
                   <Check />
                   <span style={{ fontSize: 14, color: "#d4d4d8" }}>{item.item}</span>
                 </div>
-                <span className="value-line" style={{ fontSize: 14, fontWeight: 600 }}>
-                  {item.value}
-                </span>
+                <SignatureScribble variant="strike" delay={0.3 + i * 0.1} strokeWidth={2.5}>
+                  <span style={{ fontSize: 14, fontWeight: 600, color: "#71717a" }}>
+                    {item.value}
+                  </span>
+                </SignatureScribble>
               </div>
             ))}
 
@@ -617,14 +623,10 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
               <p style={{ fontSize: 13, color: "#71717a", marginBottom: 4 }}>
                 Total value if you hired freelancers:
               </p>
-              <p style={{
-                fontSize: 36, fontWeight: 900,
-                color: "#52525b",
-                textDecoration: "line-through",
-                letterSpacing: "-0.02em",
-                marginBottom: 8,
-              }}>
-                {totalValue}/mo
+              <p style={{ fontSize: 36, fontWeight: 900, letterSpacing: "-0.02em", marginBottom: 8 }}>
+                <SignatureScribble variant="strike" delay={0.6} strokeWidth={3}>
+                  <span style={{ color: "#52525b" }}>{totalValue}/mo</span>
+                </SignatureScribble>
               </p>
               <p style={{ fontSize: 13, color: "#a1a1aa", marginBottom: 4 }}>
                 Your price with Grifon Pro:
@@ -674,7 +676,8 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
             textTransform: "uppercase",
             letterSpacing: "-0.02em",
           }}>
-            The Old Way vs. <span style={{ color: "#FFCC00" }}>The Grifon Way</span>
+            The Old Way vs.{" "}
+            <span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">the Grifon way</span>
           </h2>
 
           <div style={{
@@ -744,8 +747,16 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
           </div>
         </section>
 
+        {/* ===== KINETIC STRIP (synced with landing) ===== */}
+        <Marquee
+          items={['30 minutes', 'NOT 3 DAYS', '₱997/mo', 'BUILT FOR FILIPINO BUSINESSES']}
+          duration={26}
+          reverse
+          className="relative z-10 bg-zinc-950/60 mb-0"
+        />
+
         {/* ===== SOCIAL PROOF ===== */}
-        <section className="py-12 md:py-24 border-y border-white/5 bg-transparent backdrop-blur-sm relative z-10">
+        <section className="py-12 md:py-24 border-b border-white/5 bg-transparent backdrop-blur-sm relative z-10">
           <div className="max-w-7xl mx-auto px-4">
             <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#FFCC00] text-center mb-2">
               // WHAT EARLY USERS ARE SAYING
@@ -873,7 +884,8 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
             letterSpacing: "-0.02em",
           }}>
             Your competitors are creating<br/>
-            10 ads while you make <span style={{ color: "#FFCC00" }}>one.</span>
+            10 ads while you make{" "}
+            <span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">one.</span>
           </h2>
           <p style={{
             fontSize: 15, color: "#a1a1aa",
