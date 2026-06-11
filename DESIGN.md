@@ -78,6 +78,9 @@ components:
   subLabel:
     textColor: "{colors.on-surface-sublabel}"
     typography: "{typography.label-caps}"
+  proofBand:
+    backgroundColor: "{colors.proof-band}"
+    textColor: "#18181B"
 ---
 
 ## Overview
