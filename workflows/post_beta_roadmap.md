@@ -342,6 +342,28 @@ during the gate session.
 
 ---
 
+### 11. Client-Facing Edit Style Preset Picker (autopsy-derived styles as a product feature)
+
+**What:** Let users choose their ad's **Edit Style Preset** (`classic` / `impact` / `hype` / `clean` + future autopsy-derived presets like a `vsl` style) instead of the current deterministic rotation in `api/_lib/renderPresets.ts`. A picker in the AI Editor step (or Step 7), with the sincerity guard kept as a hard filter (Testimonial never offers `hype`) and the rotation seed kept as the default when the user doesn't choose.
+
+**Why it matters:** Pairs with the `viral-autopsy` → Swipe File → preset pipeline: every pattern that crosses the 3-video corroboration threshold can become a new named style, and "N editing styles cloned from proven viral ads" is a sellable pricing-page line. Choice also reduces "my ad looks like everyone else's" objections.
+
+**Why parked:** (1) The pipeline hasn't produced its first new preset yet — a picker over the existing four is polish, not leverage; the differentiated styles are what make it worth UI surface. (2) It's app-surface work (`components/` + render contract) competing with `launch_readiness.md` P0s. (3) Needs a design decision on how user choice coexists with the deterministic re-render seed (same ad must still re-render identically once chosen — persist the choice, don't re-roll).
+
+**When to resume:** When the first autopsy-derived preset ships via a Gated Proposal (the `vsl` candidate in `workflows/viral_swipe_file.md` is closest — needs 1 more corroborating video), OR when a beta user asks to change how their ad is edited.
+
+**Where to start:**
+1. Ship the new preset itself first (renderPresets.ts, via the Swipe File Gated Proposal flow — `surgical-edit` + `verify-changes`).
+2. Persist an explicit `presetId` on the ad (extend the render contract `/api/render/final` + wherever the rotation seed is computed) — explicit choice overrides rotation, absent choice falls back to rotation.
+3. Picker UI in the AI Editor step: GlassPanel cards per preset (name, 3-word description, mini style chips), sincerity guard filters the options per ScriptStyle.
+4. Smoke: same ad re-rendered twice with a chosen preset must be byte-identical in style decisions; Testimonial must never show `hype`.
+
+**Scope estimate:** ~1 day for picker + persistence once a 5th preset exists. The preset itself ships separately via the autopsy pipeline.
+
+**Source:** Neil, 2026-06-11 viral-autopsy session — *"would that be possible that viral autopsy could help to communicate it directly to my viral editor so that i could easily copy or create different types of editing style that my clients could choose from?"* Endorsed parking the picker and pointing near-term effort at earning the first autopsy-derived preset.
+
+---
+
 ## How to add new items
 
 When Neil endorses an idea but says "not now":

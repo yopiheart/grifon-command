@@ -12,8 +12,14 @@ below are condensed pointers, not replacements).
 
 ## Pending Actions
 
-- [ ] First live run of `tools/analyze_video.py` on a cafe PC (needs `.env`
-  GEMINI_API_KEY + outbound network) — pick one fresh PH-market TikTok ad.
+- [ ] **Autopsy a 3rd long-running PH VSL ad** (FB Ad Library, sorted by
+  impressions/longest-running — same sourcing as E4/E5). If it corroborates the
+  P9 composite grammar, draft the `vsl` Edit Style Preset as a Gated Proposal
+  (concrete `renderPresets.ts` values pulled from the three entries). This is
+  also the first live run of `tools/analyze_video.py` (cafe PC: needs `.env`
+  GEMINI_API_KEY + outbound network).
+- [ ] When the `vsl` preset ships, unpark roadmap item #11 (client-facing
+  preset picker) — see `workflows/post_beta_roadmap.md`.
 - [ ] When Slice 3/4 renderer work lands, re-autopsy our own FINAL_RENDER
   output and compare against baseline entry E0 to measure the gap closed.
 
@@ -32,6 +38,7 @@ Proposals or applied discussion) → `applied` (shipped in Grifon).
 | P6 | Proof is graphic, not spoken — pills, chips, dashboards, numerals popped on screen | 3 | observed |
 | P7 | Text on frame 1 — hook caption already on screen when the video starts | 4 | applied — hook text delay → 0 (Slice 3) |
 | P8 | Strobe/flash bookends (1–3 frames) open and close short-form edits — cheap scroll-stop + clean out | 2 | observed (below threshold) |
+| P9 | **VSL grammar (composite, preset candidate `vsl`)**: 5–6s shots, white ExtraBold Italic 1–3 word captions w/ hard pop, solo word-cards for key numbers, invisible match-cuts/whip-pans, title-card product slam ~40–45%, always-zooming 3–6%/s, ONE deliberate pre-payoff pause | 2 (E4, E5) | observed (below threshold — 1 more video unlocks a Gated Proposal) |
 
 ## Gated Proposals
 
