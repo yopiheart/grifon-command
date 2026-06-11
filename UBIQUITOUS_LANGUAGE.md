@@ -103,6 +103,14 @@ The sections below are the technical-vocabulary deep dives — wizard internals 
 | **Word-Pop** | The caption animation where 1–3-word chunks swap on VO cadence, each word timed by character weight. Captions pace the FULL speech window; chunks overlapped by an overlay are sacrificed, never delayed. | Karaoke captions (that's a distinct `chunkAnim`) |
 | **Razor Trim** | The last scene's tail trim at speech-end + 0.06s (vs the standard 0.18s pad) so the ad's closing frame is the CTA — never a ghost tail, dead beat, or black frame. | End trim |
 
+## Viral intelligence (Viral Autopsy)
+
+| Term | Definition | Aliases to avoid |
+| --- | --- | --- |
+| **Viral Autopsy** | An evidence-bound breakdown of an *existing* social video/ad (not Grifon's own output): hook anatomy, Edit DNA, storytelling format, timestamped why-it-works claims. Produced by `tools/analyze_video.py` + the `viral-autopsy` skill. | Video review, ad analysis (when ambiguous) |
+| **Swipe File** | The committed database of Viral Autopsies at `workflows/viral_swipe_file.md`: Pending Actions, Pattern Index, Gated Proposals, Entries. Patterns need ≥3 corroborating videos before they may be proposed for adoption. | Research notes, inspiration folder |
+| **Edit DNA** | The measured edit-mechanics profile of a video: shot stats, perceived-pace driver, caption mechanics, edit grammar, camera motion, reveal mechanic, CTA timing. (Term originates in `workflows/edit_style_research.md`.) | Edit style (that's the preset concept) |
+
 ## Inputs & outputs
 
 | Term | Definition | Aliases to avoid |

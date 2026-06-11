@@ -62,6 +62,7 @@ Before any planning conversation, large refactor, or new module spec, load:
 - **`.claude/skills/verify-changes/`** — run the verification loop (build, test, smoke) after any edit to `api/`, `services/`, `components/`, or `App.tsx`, and before reporting a task as complete.
 - **`.claude/skills/surgical-edit/`** — invoke before any edit. Match the scope of the change to the scope of the request. Hard rules for `services/geminiService.ts` and `api/_lib/` live here.
 - **`.claude/skills/director-smoke/`** — **MANDATORY before driving the Director AI wizard end-to-end as a smoke/manual test** (or generating a full N-scene ad to exercise downstream pipelines like Signal Modulator / AI Editor / FINAL_RENDER). Enforces hero-image-FIRST, Market Research before Director, and **never manually typing brand/offer fields** (they must auto-prefill from Market Research). Do NOT click "Start with Director" for a test without loading it first.
+- **`.claude/skills/viral-autopsy/`** — invoke when Neil drops a social video/ad (URL or file) to analyze why it works. Runs `tools/analyze_video.py` (Gemini watches the video), appends an evidence-bound entry to `workflows/viral_swipe_file.md`, and optionally remixes findings via `grifon-cmo`. Never edits tuned prompts — proposals are gated behind ≥3 corroborating videos.
 
 All smoke tests must be delegated to the `smoke-tester` subagent (defined in [.claude/agents/smoke-tester.md](.claude/agents/smoke-tester.md)).
 
@@ -162,3 +163,4 @@ Deliverables go to cloud services (Google Sheets, Slides, etc.) where the user c
 - `workflows/post_beta_roadmap.md` — **next file to open when `launch_readiness.md` hits 100%.** Endorsed-but-deferred ideas with resume triggers (currently: nightly regression `/loop`, Odyssey-as-Cron / Autopilot tier).
 - `workflows/session_reminders.md` — re-arm commands for in-session loops the defreezer wipes (currently: hourly break reminder). The SessionStart hook surfaces these automatically.
 - `workflows/loops.md` — the loop registry: every self-checking loop (build-gate, `/goal`, session re-arm, parked nightly regression, meta, PR-babysit), its arm command, verifier, and kill switch.
+- `workflows/viral_swipe_file.md` — the Swipe File: compounding database of Viral Autopsy entries, Pattern Index, and gated proposals. Maintained by the `viral-autopsy` skill.
