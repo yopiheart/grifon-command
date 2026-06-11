@@ -1,6 +1,6 @@
 # Fable 5 Enhancement Audit — Punch List
 
-> **Status header (resume from repo alone):** `AUDITED: A, B, C, D / FIXES: Tier-1 docs batch DONE (C1, C3, C4, C5, C7 + loops.md 11→12) / NEXT: Tier-1 A5 alias swap, D tests, then Tier-2 approval round`
+> **Status header (resume from repo alone):** `AUDITED: A, B, C, D / FIXES: Tier-1 DONE (docs batch; A5 alias swap; D1/D3/D4 tests — suite now 206 passing) / NEXT: Tier-2 approval round with Neil (see Tier-2 tables above), then POST-VALIDATION items after scene-6/5 clears`
 >
 > Produced by the Fable 5 enhancement pass (plan approved 2026-06-11, branch
 > `claude/grifon-fable5-enhancement-go90ga`). Rules of this pass:
@@ -133,6 +133,16 @@ Top 5 proposed (priority order; patterns per `tests/CLAUDE.md`, `.js`-extension 
 | D3 | `tests/unit/supabaseAdmin.auth-token.test.ts` | Token-verification keystone for all metered endpoints: valid→user, invalid→null, error→null | High | Tier 1 (additive) |
 | D4 | `tests/unit/phoneticNormalizer.test.ts` | Every `TAGLISH_PHONETIC_MAP` rule, case-insensitivity, boundary + rule-interference lock | Med | Tier 1 (additive) |
 | D5 | Expand `geminiService.schemas.test.ts` to influencer/cinematic flows (output-shape only — no prompt content assertions) | Schema drift on newer flows | Med | Tier 2 (touches existing tuned-adjacent test; verify no prompt-content reading needed) |
+
+**D1, D3, D4 SHIPPED (Tier-1, 2026-06-11):**
+`tests/unit/billingService.checkout-flow.test.ts` (checkout-resume stash
+round-trip + corrupt-JSON/quota edges + unauthenticated startCheckout),
+`tests/unit/supabaseAdmin.auth-token.test.ts` (auth keystone: valid→user,
+invalid→null, fail-closed), `tests/unit/phoneticNormalizer.test.ts` (every
+TAGLISH_PHONETIC_MAP rule + boundaries + idempotence; documented the
+hyphen-reduplication edge `kabago-bago`→`kabago-Bah-goh` as KNOWN EDGE).
+Suite: 189 → 206 passing. D2 stays Tier 2 (`detectInitialRoute` is not
+exported from App.tsx — needs a tiny export refactor first).
 
 Backlog (documented, not scheduled): wizardSessionStore/activeJobStore
 IndexedDB round-trips, activeJobsService pub/sub lifecycle, checkoutService
