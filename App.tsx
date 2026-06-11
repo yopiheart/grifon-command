@@ -722,7 +722,7 @@ const App: React.FC = () => {
         onReset={() => setCurrentRoute('app')}
         resetLabel="CONTINUE TO APP"
       >
-        <BillingSuccess onContinue={() => setCurrentRoute('app')} />
+        <BillingSuccess onContinue={() => setCurrentRoute('app')} email={userEmail} />
       </ErrorBoundary>
     );
   }
