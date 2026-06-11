@@ -17,7 +17,18 @@ import { ActiveJobsPanel } from './ui/ActiveJobsPanel';
 import { useActiveJobs } from '../hooks/useActiveJobs';
 import { OnboardingNudge } from './ui/OnboardingNudge';
 import { ResumeDraftCard } from './ui/ResumeDraftCard';
+import { SignatureScribble } from './landing/SignatureScribble';
 import { getSession, clearSession, type WizardSessionV1 } from '../services/wizardSessionStore';
+
+// Rotating omnibox placeholders — real outcomes, not tool names. The input
+// should read like a wish, not a search box.
+const OMNIBOX_PROMPTS = [
+  'Make a video ad for my milk tea shop…',
+  'Research the condo market in Cebu…',
+  "Build an offer they can't refuse…",
+  'Write 30 Taglish captions for my page…',
+  'Turn my product photo into an ad…',
+];
 
 const GrifonLogo = ({ className = "h-8 w-auto" }) => (
   <img src="/logo.png" alt="GRIFON Logo" className={`object-contain ${className}`} />
@@ -201,6 +212,19 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
     ? displayEmail.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
     : 'Operator';
   const userAvatarUrl = '';
+
+  // Time-aware greeting + first name: the dashboard should know who walked in.
+  const firstName = userName.split(' ')[0];
+  const hour = new Date().getHours();
+  const dayPart = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
+
+  // Rotating omnibox placeholder (paused for reduced-motion users).
+  const [promptIndex, setPromptIndex] = useState(0);
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const id = setInterval(() => setPromptIndex((i) => (i + 1) % OMNIBOX_PROMPTS.length), 3200);
+    return () => clearInterval(id);
+  }, []);
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
@@ -408,15 +432,42 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
               />
             </div>
 
-            {/* Calm sentence-case greeting — non-heading element so it escapes the global h1..h6 uppercase rule */}
+            {/* Calm sentence-case greeting — non-heading elements so they escape the global h1..h6 uppercase rule.
+                Personal + time-aware: the dashboard greets YOU, then asks the question. */}
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="text-center text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight text-zinc-200 mb-8 lg:mb-12"
+              className="text-center text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight text-zinc-200 mb-3 lg:mb-4"
+            >
+              {dayPart},{' '}
+              <SignatureScribble variant="underline" delay={0.9} strokeWidth={2.5}>
+                <span className="font-medium text-white">{firstName}</span>
+              </SignatureScribble>
+              .
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.12 }}
+              className="text-center text-base lg:text-lg text-zinc-500 mb-3"
             >
               What are we creating today?
             </motion.p>
+            {/* Momentum line — real usage only, framed as achievement */}
+            {!quota.loading && quota.workflows.used > 0 && (
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.25 }}
+                className="text-center text-xs text-zinc-500 mb-8 lg:mb-10"
+              >
+                You've shipped{' '}
+                <span className="text-[#FFCC00] font-semibold">{quota.workflows.used}</span>{' '}
+                workflow{quota.workflows.used === 1 ? '' : 's'} this month. Tuloy lang.
+              </motion.p>
+            )}
+            {(quota.loading || quota.workflows.used === 0) && <div className="mb-6 lg:mb-9" />}
 
             <motion.div
               initial={{ opacity: 0, y: 16 }}
@@ -429,10 +480,10 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                 <Sparkles className="w-5 h-5 text-[#FFCC00] flex-shrink-0" />
                 <input
                   type="text"
-                  placeholder="Jump to any tool"
+                  placeholder={OMNIBOX_PROMPTS[promptIndex]}
                   onFocus={() => { setPaletteQuery(''); setPaletteOpen(true); }}
                   onClick={() => { setPaletteQuery(''); setPaletteOpen(true); }}
-                  className="bg-transparent text-white text-sm lg:text-base flex-1 min-w-0 outline-none placeholder:text-zinc-600 cursor-pointer"
+                  className="bg-transparent text-white text-sm lg:text-base flex-1 min-w-0 outline-none placeholder:text-zinc-600 cursor-pointer transition-opacity duration-300"
                   readOnly
                 />
                 <kbd className="hidden md:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-mono text-zinc-500 bg-zinc-800/80 rounded mr-1">
