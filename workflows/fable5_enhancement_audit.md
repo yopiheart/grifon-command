@@ -1,6 +1,6 @@
 # Fable 5 Enhancement Audit — Punch List
 
-> **Status header (resume from repo alone):** `AUDITED: A, B / PENDING: C, D / FIXES: not started`
+> **Status header (resume from repo alone):** `AUDITED: A, B, C, D / PENDING: — / FIXES: not started`
 >
 > Produced by the Fable 5 enhancement pass (plan approved 2026-06-11, branch
 > `claude/grifon-fable5-enhancement-go90ga`). Rules of this pass:
@@ -81,8 +81,45 @@ single-intent (no repeat of the 2026-05-04 incident).
 
 ## Area C — Workflows + skills docs
 
-_Pending._
+**Verdict:** No Critical (nothing actively misleads the agent into breaking
+things). A handful of stale counts and missing footnotes. All fixes are
+markdown edits → **Tier 1** by definition.
+
+| # | Finding | Where | Sev | Tier |
+|---|---------|-------|-----|------|
+| C1 | "11 modules" ×3 — CLAUDE.md lists 12 dashboard modules (verified at lines 25, 27, 31) | `workflows/post_beta_roadmap.md` | High | Tier 1 |
+| C2 | Pre-flight step 0 (`enable-dev-unmetered-video.ps1`) doesn't say the `.env` flag is per-session on cafe PCs — user hits the rate-limit wall mid-smoke and thinks pre-flight is broken | `.claude/skills/director-smoke/SKILL.md` | High | Tier 1 |
+| C3 | WAT three-layer model presented as current practice; several workflows actually run agent-driven (Layer 2) without `tools/` scripts — needs a one-paragraph reality-check note | `workflows/wat-framework.md` | High | Tier 1 |
+| C4 | Stale "(91 KB)" size claim for geminiService.ts — drop the precise number | `CLAUDE.md` (Context Hygiene) | Polish | Tier 1 |
+| C5 | gemini-eval wiring-check cites InfluencerForge "11 positional args" with no instruction to re-count on signature drift | `.claude/skills/gemini-eval/SKILL.md` | Polish | Tier 1 |
+| C6 | viral-autopsy Step 2 doesn't state `GEMINI_API_KEY` + network prerequisites up front | `.claude/skills/viral-autopsy/SKILL.md` | Polish | Tier 1 |
+| C7 | loops.md Tier-3 references `.golden/` dir that doesn't exist yet (parked) — add a "created when unparked" note | `workflows/loops.md` | Polish | Tier 1 |
+| C8 | skill-creator references optional `agents/grader.md` etc. that don't exist in this repo — mark as optional/external | `.claude/skills/skill-creator/SKILL.md` | Polish | Tier 1 |
+
+**False positive (dropped):** claim that the build-gate marker mechanism is
+undocumented — `.claude/hooks/build-gate.sh:1-15` already carries a full
+explanatory header.
+
+---
 
 ## Area D — Test coverage gaps
 
-_Pending._
+**Verdict:** 21 files give solid coverage of the render/caption/quota math
+(~40% of surface). Highest-risk uncovered paths: revenue funnel resume,
+auth keystone, routing, and voice normalization. New tests are **additive
+(Tier 1)** when they need no production-code changes; anything requiring an
+export refactor is Tier 2.
+
+Top 5 proposed (priority order; patterns per `tests/CLAUDE.md`, `.js`-extension ESM imports, mock patterns from `quota.monthly.test.ts` / `geminiService.schemas.test.ts`):
+
+| # | Proposed test | Covers | Value | Tier |
+|---|---------------|--------|-------|------|
+| D1 | `tests/unit/billingService.checkout-flow.test.ts` | `popIntendedPlan` round-trip (the ONLY resume mechanism after sign-in), bad-JSON/quota-full edge cases, `fetchIntent` error envelope | High | Tier 1 (additive) |
+| D2 | `tests/unit/app-routing.test.ts` | `detectInitialRoute()` per path + trailing-slash/query edge cases; invalid module IDs | High | Tier 1 if `detectInitialRoute` is exportable without refactor, else Tier 2 |
+| D3 | `tests/unit/supabaseAdmin.auth-token.test.ts` | Token-verification keystone for all metered endpoints: valid→user, invalid→null, error→null | High | Tier 1 (additive) |
+| D4 | `tests/unit/phoneticNormalizer.test.ts` | Every `TAGLISH_PHONETIC_MAP` rule, case-insensitivity, boundary + rule-interference lock | Med | Tier 1 (additive) |
+| D5 | Expand `geminiService.schemas.test.ts` to influencer/cinematic flows (output-shape only — no prompt content assertions) | Schema drift on newer flows | Med | Tier 2 (touches existing tuned-adjacent test; verify no prompt-content reading needed) |
+
+Backlog (documented, not scheduled): wizardSessionStore/activeJobStore
+IndexedDB round-trips, activeJobsService pub/sub lifecycle, checkoutService
+tokenization, elevenlabs/kling/cron handler tests, auth-modal state machine.
