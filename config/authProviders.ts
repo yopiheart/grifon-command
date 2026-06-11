@@ -9,5 +9,5 @@
 export const OAUTH_PROVIDERS = {
   google: true,
   github: true,
-  apple: true,
+  apple: false, // off until Neil enrolls in the Apple Developer Program ($99/yr)
 } as const;

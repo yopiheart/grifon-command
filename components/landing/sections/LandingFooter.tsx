@@ -33,7 +33,7 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onEnterApp, onNavi
           <div className="flex items-center gap-2">
             <img src="/logo.png" alt="GRIFON Logo" className="h-8 w-auto object-contain" />
             <span className="text-white font-black italic text-xl tracking-tight">
-              GRIFON<span className="text-[#FFCC00]">.AI</span>
+              GRIFON
             </span>
           </div>
           <p className="text-xs text-zinc-500 mt-3 leading-relaxed max-w-[200px]">

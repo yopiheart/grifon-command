@@ -29,7 +29,7 @@ const LegalPageLayout: React.FC<Props> = ({ title, effectiveDate, onBack, backLa
           <div className="flex items-center gap-2">
             <img src="/logo.png" alt="GRIFON Logo" className="h-7 w-auto object-contain" />
             <span className="text-white font-black italic text-lg tracking-tight">
-              GRIFON<span className="text-[#FFCC00]">.AI</span>
+              GRIFON
             </span>
           </div>
         </div>

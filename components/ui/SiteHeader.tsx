@@ -124,7 +124,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
     >
       <img src="/logo.png" alt="GRIFON Logo" className="h-8 w-auto object-contain" />
       <span className="font-black text-xl tracking-tighter text-white italic">
-        GRIFON<span className="text-[#FFCC00]">.AI</span>
+        GRIFON
       </span>
     </div>
   );
