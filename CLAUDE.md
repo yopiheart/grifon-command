@@ -164,3 +164,4 @@ Deliverables go to cloud services (Google Sheets, Slides, etc.) where the user c
 - `workflows/session_reminders.md` — re-arm commands for in-session loops the defreezer wipes (currently: hourly break reminder). The SessionStart hook surfaces these automatically.
 - `workflows/loops.md` — the loop registry: every self-checking loop (build-gate, `/goal`, session re-arm, parked nightly regression, meta, PR-babysit), its arm command, verifier, and kill switch.
 - `workflows/viral_swipe_file.md` — the Swipe File: compounding database of Viral Autopsy entries, Pattern Index, and gated proposals. Maintained by the `viral-autopsy` skill.
+- `workflows/experiment_log.md` — append-only index of every paid render experiment (hypothesis · cost · result · keep/discard · source handoff). Check it before re-probing a lever; add a row whenever an experiment concludes.
