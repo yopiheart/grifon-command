@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Lock } from 'lucide-react';
 import { GlassPanel } from './ui/GlassPanel';
 import { MessengerFloat } from './ui/MessengerFloat';
 import { RecentActivityToast } from './ui/RecentActivityToast';
@@ -218,8 +218,29 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack, onViewLegal 
   );
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-white py-8 lg:py-16 px-4 lg:px-8">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+    <div className="min-h-screen bg-zinc-950 text-white py-6 lg:py-10 px-4 lg:px-8 relative">
+      {/* Command-environment backdrop — same family as the auth gateway */}
+      <div className="pointer-events-none fixed inset-0" aria-hidden="true">
+        <div
+          className="absolute inset-0 opacity-[0.05]"
+          style={{ backgroundImage: 'radial-gradient(#FFCC00 1px, transparent 1px)', backgroundSize: '28px 28px' }}
+        />
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#FFCC00]/70 to-transparent shadow-[0_0_18px_2px_rgba(255,204,0,0.25)]" />
+      </div>
+
+      {/* Secure-checkout masthead — brand + trust at the anxiety moment */}
+      <div className="relative max-w-6xl mx-auto flex items-center justify-between mb-6 lg:mb-10">
+        <div className="flex items-center gap-2">
+          <img src="/logo.png" alt="GRIFON Logo" className="h-7 w-auto object-contain" />
+          <span className="text-white font-black italic text-lg tracking-tight">GRIFON</span>
+        </div>
+        <p className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.25em] text-zinc-500">
+          <Lock className="w-3.5 h-3.5 shrink-0 text-[#FFCC00]" />
+          Secure checkout
+        </p>
+      </div>
+
+      <div className="relative max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
         <OrderSummary
           planName={intent.plan.name}
           cycle={cycle}
@@ -300,8 +321,21 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack, onViewLegal 
         </GlassPanel>
       </div>
 
-      <p className="text-center text-zinc-600 text-xs mt-8">
-        Powered by PayMongo &middot;{' '}
+      {/* Payment trust strip — every badge is a real capability, no fake marks */}
+      <div className="relative max-w-6xl mx-auto mt-8 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+        <span className="flex items-center gap-1.5"><Lock className="w-3 h-3 shrink-0 text-[#FFCC00]" /> 256-bit SSL</span>
+        <span className="text-zinc-700">·</span>
+        <span>Powered by PayMongo</span>
+        <span className="text-zinc-700">·</span>
+        <span>GCash</span>
+        <span className="text-zinc-700">·</span>
+        <span>Maya</span>
+        <span className="text-zinc-700">·</span>
+        <span>Visa</span>
+        <span className="text-zinc-700">·</span>
+        <span>Mastercard</span>
+      </div>
+      <p className="relative text-center text-zinc-600 text-xs mt-3">
         <button type="button" onClick={() => onViewLegal?.('terms')} className="hover:text-zinc-400 transition-colors">
           Terms
         </button>{' '}
