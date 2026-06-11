@@ -587,7 +587,7 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
            </div>
         </div>
         <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex gap-4 bg-zinc-950/80 backdrop-blur-2xl p-4 rounded-full border border-white/10 shadow-2xl">
-          <GoldButton onClick={onGenerateThumbnail} disabled={isLoading} className="rounded-full px-10 py-3 text-xs font-black uppercase bg-[#FFCC00] text-black shadow-neon-yellow">GENERATE_THUMBNAIL</GoldButton>
+          <GoldButton onClick={onGenerateThumbnail} disabled={isLoading} className="rounded-full px-10 py-3 text-xs font-black uppercase bg-[#FFCC00] text-black">GENERATE_THUMBNAIL</GoldButton>
           <GoldButton 
             onClick={onGeneratePrompts} 
             disabled={isLoading || loadingScenes.length > 0} 
@@ -762,13 +762,13 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
                 <div className="flex gap-2">
                     <button 
                     onClick={injectOfferStack}
-                    className="text-[9px] font-black text-[#FFCC00] border-2 border-[#FFCC00] shadow-[0_0_15_rgba(255,204,0,0.2)] px-4 py-2 rounded-full hover:bg-[#FFCC00] hover:text-black transition-all uppercase font-mono"
+                    className="text-[9px] font-black text-[#FFCC00] border-2 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)] px-4 py-2 rounded-full hover:bg-[#FFCC00] hover:text-black transition-all uppercase font-mono"
                     >
                     [ INJECT_OFFERSTACK ]
                     </button>
                     <button 
                     onClick={injectMarketMind}
-                    className="text-[9px] font-black text-[#FFCC00] border-2 border-[#FFCC00] shadow-[0_0_15_rgba(255,204,0,0.2)] px-4 py-2 rounded-full hover:bg-[#FFCC00] hover:text-black transition-all uppercase font-mono"
+                    className="text-[9px] font-black text-[#FFCC00] border-2 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)] px-4 py-2 rounded-full hover:bg-[#FFCC00] hover:text-black transition-all uppercase font-mono"
                     >
                     [ INJECT_MARKETMIND_REPORT ]
                     </button>

@@ -76,36 +76,9 @@ const GrifonLogo = ({ className = "h-24 w-auto" }) => (
   <img src="/logo.png" alt="GRIFON Logo" className={`object-contain ${className}`} />
 );
 
-type Route = 'landing' | 'pricing' | 'checkout' | 'billing_3ds_return' | 'app' | 'billing_success' | 'terms' | 'privacy' | 'refund' | 'support';
-
-const detectInitialRoute = (): Route => {
-  if (typeof window === 'undefined') return 'landing';
-  const path = window.location.pathname;
-  if (path.startsWith('/billing/3ds-return')) return 'billing_3ds_return';
-  if (path.startsWith('/billing/success')) return 'billing_success';
-  if (path.startsWith('/billing/cancel')) return 'pricing';
-  if (path.startsWith('/checkout')) return 'checkout';
-  if (path.startsWith('/pricing')) return 'pricing';
-  if (path.startsWith('/terms')) return 'terms';
-  if (path.startsWith('/privacy')) return 'privacy';
-  if (path.startsWith('/refund')) return 'refund';
-  if (path.startsWith('/support')) return 'support';
-  if (path.startsWith('/app')) return 'app';
-  return 'landing';
-};
-
-const ROUTE_PATHS: Record<Route, string> = {
-  landing: '/',
-  pricing: '/pricing',
-  checkout: '/checkout',
-  billing_3ds_return: '/billing/3ds-return',
-  app: '/app',
-  billing_success: '/billing/success',
-  terms: '/terms',
-  privacy: '/privacy',
-  refund: '/refund',
-  support: '/support',
-};
+// Route detection lives in utils/routing.ts (dependency-free) so tests can
+// import it without pulling the entire component graph. Behavior unchanged.
+import { detectInitialRoute, ROUTE_PATHS, type Route } from './utils/routing';
 
 const App: React.FC = () => {
   const [currentRoute, setCurrentRoute] = useState<Route>(detectInitialRoute);

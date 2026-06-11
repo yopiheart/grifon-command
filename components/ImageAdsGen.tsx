@@ -126,7 +126,7 @@ const ImageAdsGen: React.FC<ImageAdsGenProps> = ({ businessInfo, avatar, clientD
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-20">
             {variants.map((v, idx) => (
                 <div key={idx} className="glass-morphism rounded-[3rem] p-10 border border-white/10 relative overflow-hidden group">
-                    <div className="absolute top-8 right-10 bg-[#FFCC00] text-black text-[10px] font-black px-4 py-1.5 rounded-full z-10 shadow-neon-yellow font-mono">
+                    <div className="absolute top-8 right-10 bg-[#FFCC00] text-black text-[10px] font-black px-4 py-1.5 rounded-full z-10 shadow-[0_0_15px_rgba(255,204,0,0.3)] font-mono">
                         THE {v.templateType.toUpperCase()} WRAPPER
                     </div>
 

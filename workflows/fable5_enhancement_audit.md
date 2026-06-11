@@ -1,6 +1,18 @@
 # Fable 5 Enhancement Audit — Punch List
 
-> **Status header (resume from repo alone):** `AUDITED: A, B, C, D / FIXES: Tier-1 DONE (docs batch; A5 alias swap; D1/D3/D4 tests — suite now 206 passing) / NEXT: Tier-2 approval round with Neil (see Tier-2 tables above), then POST-VALIDATION items after scene-6/5 clears`
+> **Status header (resume from repo alone):** `AUDITED: A, B, C, D / FIXES: Tier-1 DONE; Tier-2 approved subset DONE (B3, B4, A1, A10, D2, D5 — suite now 217 passing) / REMAINING: declined-for-now backlog below + POST-VALIDATION items (B7, B8) after scene-6/5 clears`
+>
+> **Tier-2 round outcome (Neil, 2026-06-11):** APPROVED+SHIPPED: B3 (interval
+> leak — stopElapsedTick before start), B4 (refresh dedup cleared in `finally`,
+> transport layer only), A1+A10 (dead glow shadows → GoldButton-canonical
+> `0_0_15px_rgba(255,204,0,0.3)`; dead override removed from the GoldButton
+> instance), D2 (routing extracted to dependency-free `utils/routing.ts` —
+> export-from-App.tsx failed because importing App.tsx drags jspdf into node —
+> + `tests/unit/app-routing.test.ts`), D5 (schema tests for the 3 uncovered
+> crown-jewel flows: influencer-script, offer-optimizer, marketmind; influencer
+> storyboard + cinematic narrative were ALREADY covered — audit D5 claim was
+> stale). DECLINED FOR NOW (backlog, re-raise post-validation): B1, B2 (wizard
+> state races), B5, B6, B9, A2 (amber→gold), A3, A4 (Viber SVG), A6–A9.
 >
 > Produced by the Fable 5 enhancement pass (plan approved 2026-06-11, branch
 > `claude/grifon-fable5-enhancement-go90ga`). Rules of this pass:
