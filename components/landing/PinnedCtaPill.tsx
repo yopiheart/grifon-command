@@ -6,9 +6,9 @@ import { playTick } from '../../services/uiSoundService';
 interface PinnedCtaPillProps {
   onEnterApp: () => void;
   /** Sentinel at the end of the hero — pill appears once it scrolls past. */
-  heroSentinelRef: React.RefObject<HTMLDivElement | null>;
+  heroSentinelRef: React.RefObject<HTMLElement>;
   /** Sentinel at the offer stack / footer — pill hides while it's on screen. */
-  endSentinelRef: React.RefObject<HTMLDivElement | null>;
+  endSentinelRef: React.RefObject<HTMLElement>;
 }
 
 /**
