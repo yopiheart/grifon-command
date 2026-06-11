@@ -1,6 +1,6 @@
 # Fable 5 Enhancement Audit — Punch List
 
-> **Status header (resume from repo alone):** `AUDITED: A / PENDING: B, C, D / FIXES: not started`
+> **Status header (resume from repo alone):** `AUDITED: A, B / PENDING: C, D / FIXES: not started`
 >
 > Produced by the Fable 5 enhancement pass (plan approved 2026-06-11, branch
 > `claude/grifon-fable5-enhancement-go90ga`). Rules of this pass:
@@ -54,7 +54,30 @@ occurrences), icons.tsx lucide discipline (except A4).
 
 ## Area B — Code quality (non-tuned)
 
-_Pending — background audit running._
+**Verdict:** No cross-user data leaks. Issues cluster in App.tsx wizard
+state-management races and timer/closure hygiene. Tuned prompt content was
+NOT read or evaluated (per pass rules); `geminiService.ts` was audited at
+transport layer only. All B code fixes are behavior changes → **Tier 2**
+(per-item approval), except where tagged. Each finding needs a repro check
+at fix time — severities below are from static reading.
+
+| # | Finding | Where | Sev | Tier |
+|---|---------|-------|-----|------|
+| B1 | Wizard session autosave debounce captures stale snapshot — pending 500ms timer can fire after user navigates/steps back and overwrite the fresher session | `App.tsx:312-344` | High | Tier 2 (add cancelled-flag in effect cleanup) |
+| B2 | Two uncoordinated autofill effects (`marketResearch` + `offerOptimizer`) race when a report completes during pendingSession restore | `App.tsx:350-447` | High | Tier 2 (single-authority guard) |
+| B3 | `startElapsedTick` interval not cleared on scene switch — multiple 1s intervals accumulate across `activeIdx` changes | `components/GenerateVideo/index.tsx:422-435` | High | Tier 2 (stop before start) |
+| B4 | `refreshAccessToken` in-flight dedup cleared via setTimeout instead of `finally` — a rejected refresh can be awaited by the next caller instead of retrying | `services/geminiService.ts:49-64` (transport layer — fair game) | High | Tier 2 |
+| B5 | `grifon_pendingAutofillTs` shared by two writers (MarketResearch, OfferOptimizer) without namespacing — first reader wins on near-simultaneous writes; impact capped by 10-min expiry | `App.tsx`, `MarketResearch.tsx`, `OfferOptimizer.tsx` | Polish | Tier 2 |
+| B6 | `openDb()` retries failed IndexedDB open with no backoff/error cache | `services/activeJobStore.ts:37-59` | Polish | Tier 2 |
+| B7 | No base64 shape validation on `videoBytes` before `Buffer.from` — corrupt payload uploads silently | `api/gemini/video/poll.ts:113-147` | Polish | **POST-VALIDATION** (frozen render path) |
+| B8 | Kling poll JWT refresh lacks in-flight dedup (gemini transport has it) | `api/kling/video/poll.ts:88-96` | Polish | **POST-VALIDATION** (frozen render path) |
+| B9 | `?admin=` URL param parsed at module scope only (no re-sync on route change); `isAdmin` read once on mount with no storage listener | `App.tsx:59-73`, `components/Dashboard.tsx:100-104` | Polish | Tier 2 |
+
+**Clean / false positives:** `checkoutService` sessionStorage already
+try/catch-wrapped; `api/billing.ts` rate-limit return path correct.
+Full localStorage key→consumer registry was built during audit: 18 keys,
+only the B5 pair has a multi-writer collision; `grifon_admin` is now
+single-intent (no repeat of the 2026-05-04 incident).
 
 ## Area C — Workflows + skills docs
 
