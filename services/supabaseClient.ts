@@ -26,16 +26,23 @@ export const getSupabase = (): SupabaseClient => {
   return _client;
 };
 
-export const signInWithGoogle = async (): Promise<void> => {
+export type OAuthProvider = 'google' | 'github' | 'apple';
+
+// NOTE: each provider must also be enabled in Supabase Dashboard → Auth → Providers.
+// GitHub needs a (free) GitHub OAuth App; Apple needs an Apple Developer account
+// (Service ID + key). Unconfigured providers fail with a Supabase error toast.
+export const signInWithProvider = async (provider: OAuthProvider): Promise<void> => {
   const supabase = getSupabase();
   const redirectTo =
     typeof window !== 'undefined' ? window.location.origin : undefined;
   const { error } = await supabase.auth.signInWithOAuth({
-    provider: 'google',
+    provider,
     options: redirectTo ? { redirectTo } : undefined,
   });
   if (error) throw error;
 };
+
+export const signInWithGoogle = (): Promise<void> => signInWithProvider('google');
 
 export const signUpWithPassword = async (
   email: string,

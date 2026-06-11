@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useRef, useSyncExternalStore } from 'react';
-import { ChevronLeft, Lightbulb, RotateCw, Mail, Check, Star } from 'lucide-react';
+import { ChevronLeft, Lightbulb, RotateCw, Mail, Check, Star, Apple } from 'lucide-react';
 import { ClientDetails, BusinessInfo, Script, Scene, VideoPrompt, Avatar, CinematicNarrativeScene, SceneBatchEntry } from './types';
 import StepIndicator from './components/StepIndicator';
 import Step1ClientDetails from './components/Step1ClientDetails';
@@ -41,13 +41,15 @@ import Support from './components/Support';
 import { toast } from 'sonner';
 import {
   getSupabase,
-  signInWithGoogle,
+  signInWithProvider,
+  type OAuthProvider,
   signUpWithPassword,
   requestPasswordReset,
   resendSignupConfirmation,
   updatePassword,
 } from './services/supabaseClient';
 import { popIntendedPlan, startCheckout } from './services/billingService';
+import { OAUTH_PROVIDERS } from './config/authProviders';
 import { QuotaWallModal } from './components/ui/QuotaWallModal';
 import { quotaWallStore } from './services/quotaWallStore';
 import { useSubscription } from './hooks/useSubscription';
@@ -471,13 +473,14 @@ const App: React.FC = () => {
     }
   };
 
-  const handleGoogleSignIn = async () => {
+  const handleOAuthSignIn = async (provider: OAuthProvider) => {
     setAuthError('');
     setIsSigningIn(true);
     try {
-      await signInWithGoogle();
+      await signInWithProvider(provider);
     } catch (err: any) {
-      setAuthError(err?.message || 'Google sign-in failed.');
+      const label = provider === 'google' ? 'Google' : provider === 'github' ? 'GitHub' : 'Apple';
+      setAuthError(err?.message || `${label} sign-in failed.`);
       setIsSigningIn(false);
     }
   };
@@ -905,20 +908,51 @@ const App: React.FC = () => {
 
                 {(authMode === 'sign_in' || authMode === 'sign_up') && (
                   <>
-                    <button
-                      type="button"
-                      onClick={handleGoogleSignIn}
-                      disabled={isSigningIn}
-                      className="w-full flex items-center justify-center gap-3 py-3 md:py-4 px-6 bg-zinc-950 border border-white/15 hover:border-[#FFCC00]/50 hover:bg-zinc-900 text-white font-medium text-sm rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed mb-4 md:mb-6"
-                    >
-                      <svg className="w-5 h-5 shrink-0" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8c-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4C12.955 4 4 12.955 4 24s8.955 20 20 20s20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/>
-                        <path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4C16.318 4 9.656 8.337 6.306 14.691z"/>
-                        <path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/>
-                        <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002l6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/>
-                      </svg>
-                      {isSigningIn ? 'Connecting...' : 'Continue with Google'}
-                    </button>
+                    {OAUTH_PROVIDERS.google && (
+                      <button
+                        type="button"
+                        onClick={() => handleOAuthSignIn('google')}
+                        disabled={isSigningIn}
+                        className="w-full flex items-center justify-center gap-3 py-3 md:py-4 px-6 bg-zinc-950 border border-white/15 hover:border-[#FFCC00]/50 hover:bg-zinc-900 text-white font-medium text-sm rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed mb-2.5 md:mb-3"
+                      >
+                        <svg className="w-5 h-5 shrink-0" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                          <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8c-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4C12.955 4 4 12.955 4 24s8.955 20 20 20s20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/>
+                          <path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4C16.318 4 9.656 8.337 6.306 14.691z"/>
+                          <path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/>
+                          <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002l6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/>
+                        </svg>
+                        {isSigningIn ? 'Connecting...' : 'Continue with Google'}
+                      </button>
+                    )}
+                    {(OAUTH_PROVIDERS.github || OAUTH_PROVIDERS.apple) && (
+                      <div className="grid grid-cols-2 gap-2.5 mb-4 md:mb-6">
+                        {OAUTH_PROVIDERS.github && (
+                          <button
+                            type="button"
+                            onClick={() => handleOAuthSignIn('github')}
+                            disabled={isSigningIn}
+                            className={`flex items-center justify-center gap-2.5 py-3 px-4 bg-zinc-950 border border-white/15 hover:border-[#FFCC00]/50 hover:bg-zinc-900 text-white font-medium text-sm rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${!OAUTH_PROVIDERS.apple ? 'col-span-2' : ''}`}
+                          >
+                            {/* Canonical GitHub octicon (mark-github) — lucide dropped brand icons */}
+                            <svg className="w-5 h-5 shrink-0" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                              <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z" />
+                            </svg>
+                            GitHub
+                          </button>
+                        )}
+                        {OAUTH_PROVIDERS.apple && (
+                          <button
+                            type="button"
+                            onClick={() => handleOAuthSignIn('apple')}
+                            disabled={isSigningIn}
+                            className={`flex items-center justify-center gap-2.5 py-3 px-4 bg-zinc-950 border border-white/15 hover:border-[#FFCC00]/50 hover:bg-zinc-900 text-white font-medium text-sm rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${!OAUTH_PROVIDERS.github ? 'col-span-2' : ''}`}
+                          >
+                            <Apple className="w-5 h-5 shrink-0" aria-hidden="true" />
+                            Apple
+                          </button>
+                        )}
+                      </div>
+                    )}
                     <div className="flex items-center gap-3 mb-4 md:mb-6">
                       <div className="flex-1 border-t border-white/10"></div>
                       <span className="text-[10px] font-mono text-zinc-500 tracking-widest uppercase">OR CONTINUE WITH EMAIL</span>
