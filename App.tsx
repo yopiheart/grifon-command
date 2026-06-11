@@ -847,9 +847,9 @@ const App: React.FC = () => {
         ) : (
           <div className="relative z-10 w-full flex flex-col items-center">
             {/* Compact header — the whole gateway must fit one phone screen without scrolling */}
-            <div className="mb-3 md:mb-6 text-center flex flex-col items-center">
-              <div className="mb-1.5 md:mb-3 flex items-center gap-2.5">
-                <GrifonLogo className="h-9 md:h-14 w-auto text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]" />
+            <div className="mb-2 md:mb-6 text-center flex flex-col items-center">
+              <div className="mb-1 md:mb-3 flex items-center gap-2.5">
+                <GrifonLogo className="h-8 md:h-14 w-auto text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]" />
                 <h1 className="text-2xl md:text-4xl font-[900] italic text-white uppercase tracking-tighter">
                   GRIFON
                 </h1>
@@ -860,7 +860,7 @@ const App: React.FC = () => {
                 <span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">30 minutes</span>{' '}
                 AWAY.
               </h2>
-              <p className="text-[9px] md:text-[10px] font-mono text-zinc-500 tracking-[0.3em] uppercase flex items-center justify-center gap-2">
+              <p className="auth-compact-hide text-[9px] md:text-[10px] font-mono text-zinc-500 tracking-[0.3em] uppercase flex items-center justify-center gap-2">
                 <span className="w-1.5 h-1.5 shrink-0 rounded-full bg-[#FFCC00] animate-pulse shadow-[0_0_6px_rgba(255,204,0,0.8)]" aria-hidden="true" />
                 // FREE PLAN — NO CREDIT CARD NEEDED
               </p>
@@ -973,10 +973,10 @@ const App: React.FC = () => {
                 {authMode === 'sign_up' && (
                   <form onSubmit={handleSignUp} className="space-y-3 md:space-y-5">
                     {/* Free-plan claims mirror the pricing page — no invented numbers */}
-                    <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 -mt-1 text-[11px] md:text-xs text-zinc-400">
-                      <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 shrink-0 text-[#FFCC00]" strokeWidth={2.5} /> 3 free ad workflows/mo</span>
-                      <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 shrink-0 text-[#FFCC00]" strokeWidth={2.5} /> No credit card</span>
-                      <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 shrink-0 text-[#FFCC00]" strokeWidth={2.5} /> Cancel anytime</span>
+                    <div className="flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 -mt-1 text-[10px] md:text-xs text-zinc-400 whitespace-nowrap">
+                      <span className="flex items-center gap-1"><Check className="w-3 h-3 shrink-0 text-[#FFCC00]" strokeWidth={2.5} /> 3 free ad workflows/mo</span>
+                      <span className="flex items-center gap-1"><Check className="w-3 h-3 shrink-0 text-[#FFCC00]" strokeWidth={2.5} /> No credit card</span>
+                      <span className="flex items-center gap-1"><Check className="w-3 h-3 shrink-0 text-[#FFCC00]" strokeWidth={2.5} /> Cancel anytime</span>
                     </div>
                     <Input
                       id="signup-email"
@@ -1126,9 +1126,9 @@ const App: React.FC = () => {
                   </div>
                 )}
 
-                <div className="mt-4 md:mt-8 pt-3 md:pt-4 border-t border-white/10 flex flex-col items-center gap-2 md:gap-3">
+                <div className="mt-3 md:mt-8 pt-3 md:pt-4 border-t border-white/10 flex flex-col items-center gap-1.5 md:gap-3">
                   {/* Same trust claim as the pricing page social-proof pill — stars stacked above */}
-                  <div className="flex flex-col items-center gap-1.5 text-xs text-zinc-400 text-center">
+                  <div className="auth-compact-hide flex flex-col items-center gap-1.5 text-xs text-zinc-400 text-center">
                     <span className="flex gap-1">
                       {[1, 2, 3, 4, 5].map((s) => (
                         <Star key={s} className="w-3.5 h-3.5 shrink-0" strokeWidth={0} fill="#FFCC00" />
@@ -1145,7 +1145,7 @@ const App: React.FC = () => {
                     <span className="text-zinc-700">·</span>
                     <button type="button" onClick={() => goToLegal('support')} className="hover:text-[#FFCC00] transition-colors">SUPPORT</button>
                   </div>
-                  <p className="text-[10px] font-mono text-zinc-600 tracking-[0.4em] uppercase">// SESSION_ENCRYPTED</p>
+                  <p className="hidden md:block text-[10px] font-mono text-zinc-600 tracking-[0.4em] uppercase">// SESSION_ENCRYPTED</p>
                 </div>
             </GlassPanel>
           </div>

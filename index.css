@@ -46,6 +46,12 @@ html { scroll-behavior: smooth; }
   100% { transform: translateX(100%); }
 }
 
+/* Auth gateway: on ultra-short viewports (iPhone SE class) drop decorative
+   extras so the full sign-up form + CTA fit one screen without scrolling. */
+@media (max-height: 700px) {
+  .auth-compact-hide { display: none !important; }
+}
+
 /* Infinite text marquee (landing kinetic strips). Content is duplicated exactly
    twice inside a w-max flex track, so -50% loops seamlessly. GPU transform only. */
 @keyframes marquee {
