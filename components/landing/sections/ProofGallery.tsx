@@ -46,7 +46,7 @@ export const ProofGallery: React.FC = () => (
                 <div className="bg-gradient-to-br from-zinc-800 to-zinc-900 aspect-[9/16] rounded-2xl border border-white/10 flex items-center justify-center relative overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.8)]">
                   <div className="absolute inset-0 bg-zinc-950/20 group-hover:bg-transparent transition-colors duration-500" />
                   <Icon className="w-16 h-16 text-zinc-700 z-10" />
-                  <div className="absolute top-4 left-4 px-3 py-1 bg-black/50 rounded-full border border-white/10 text-[10px] font-mono text-zinc-300 tracking-widest">
+                  <div className="absolute top-4 left-4 px-3 py-1 bg-zinc-950/60 rounded-full border border-white/10 text-[10px] font-mono text-zinc-300 tracking-widest">
                     {card.label}
                   </div>
                   <div className="absolute bottom-4 right-4 w-8 h-8 rounded-full bg-[#FFCC00] flex items-center justify-center shadow-[0_0_15px_rgba(255,204,0,0.5)]">

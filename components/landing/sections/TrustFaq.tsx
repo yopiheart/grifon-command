@@ -45,7 +45,7 @@ export const TrustFaq: React.FC = () => (
           <details key={idx} className="group bg-zinc-900/50 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden [&_summary::-webkit-details-marker]:hidden">
             <summary className="flex items-center justify-between p-6 cursor-pointer font-bold uppercase tracking-wide hover:bg-white/5 transition-colors">
               {faq.q}
-              <ChevronDown className="w-5 h-5 text-zinc-500 group-open:rotate-180 transition-transform" />
+              <ChevronDown className="w-5 h-5 shrink-0 ml-4 text-zinc-500 group-open:rotate-180 transition-transform" />
             </summary>
             <div className="p-6 pt-0 text-zinc-400 border-t border-white/5">
               {faq.a}

@@ -82,7 +82,7 @@ export const AdMontagePhone: React.FC<{ className?: string }> = ({ className = '
             >
               {/* Ad chrome: industry tag */}
               <div className="pt-10 px-4 flex items-center justify-between">
-                <span className="px-2.5 py-1 bg-black/50 rounded-full border border-white/10 text-[8px] font-mono text-zinc-300 tracking-widest">
+                <span className="px-2.5 py-1 bg-zinc-950/60 rounded-full border border-white/10 text-[8px] font-mono text-zinc-300 tracking-widest">
                   {frame.label}
                 </span>
                 <span className="text-[8px] font-mono text-zinc-500 tracking-widest">AD · 0:15</span>
@@ -106,15 +106,15 @@ export const AdMontagePhone: React.FC<{ className?: string }> = ({ className = '
 
               {/* Result badge — existing proof-wall claims only */}
               <div className="pb-5 px-4 flex items-center justify-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#FFCC00] shadow-[0_0_8px_rgba(255,204,0,0.6)]" />
-                <span className="text-[8px] font-mono text-zinc-300 tracking-widest">{frame.badge}</span>
+                <span className="w-1.5 h-1.5 shrink-0 rounded-full bg-[#FFCC00] shadow-[0_0_8px_rgba(255,204,0,0.6)]" />
+                <span className="text-[10px] font-mono text-zinc-300 tracking-widest whitespace-nowrap">{frame.badge}</span>
               </div>
             </motion.div>
           </AnimatePresence>
 
           {/* Play affordance — reads as a video ad */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -mt-24 pointer-events-none">
-            <div className="w-8 h-8 rounded-full bg-black/40 border border-white/20 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-full bg-zinc-950/60 border border-white/20 flex items-center justify-center">
               <Play className="w-3 h-3 text-white/70 ml-0.5" fill="currentColor" />
             </div>
           </div>

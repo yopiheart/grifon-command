@@ -69,7 +69,7 @@ export const ProofBand: React.FC = () => (
         transition={{ duration: 0.6 }}
         className="text-center mb-12 md:mb-16 border-t border-zinc-900/10 pt-14 md:pt-20"
       >
-        <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#B28F00] mb-4">// WHAT EARLY USERS ARE SAYING</p>
+        <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-zinc-500 mb-4">// WHAT EARLY USERS ARE SAYING</p>
         <h2 className="text-2xl md:text-4xl font-bold uppercase tracking-tight text-zinc-900">
           TRUSTED BY FILIPINO BUSINESS OWNERS
         </h2>

@@ -7,8 +7,8 @@ interface PinnedCtaPillProps {
   onEnterApp: () => void;
   /** Sentinel at the end of the hero — pill appears once it scrolls past. */
   heroSentinelRef: React.RefObject<HTMLElement>;
-  /** Sentinel at the offer stack / footer — pill hides while it's on screen. */
-  endSentinelRef: React.RefObject<HTMLElement>;
+  /** Regions with their own CTAs (offer stack, trust/footer) — pill hides while any is on screen. */
+  hideRefs: React.RefObject<HTMLElement>[];
 }
 
 /**
@@ -20,31 +20,34 @@ interface PinnedCtaPillProps {
 export const PinnedCtaPill: React.FC<PinnedCtaPillProps> = ({
   onEnterApp,
   heroSentinelRef,
-  endSentinelRef,
+  hideRefs,
 }) => {
   const [pastHero, setPastHero] = useState(false);
-  const [endInView, setEndInView] = useState(false);
+  const [hiddenZoneInView, setHiddenZoneInView] = useState(false);
 
   useEffect(() => {
     const hero = heroSentinelRef.current;
-    const end = endSentinelRef.current;
-    if (!hero || !end) return;
+    const hideEls = hideRefs.map((r) => r.current).filter((el): el is HTMLElement => !!el);
+    if (!hero || hideEls.length === 0) return;
 
     const heroObserver = new IntersectionObserver(([entry]) => {
       setPastHero(!entry.isIntersecting && entry.boundingClientRect.top < 0);
     });
-    const endObserver = new IntersectionObserver(([entry]) => {
-      setEndInView(entry.isIntersecting);
+    const inView = new Map<Element, boolean>();
+    const hideObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => inView.set(entry.target, entry.isIntersecting));
+      setHiddenZoneInView([...inView.values()].some(Boolean));
     });
     heroObserver.observe(hero);
-    endObserver.observe(end);
+    hideEls.forEach((el) => hideObserver.observe(el));
     return () => {
       heroObserver.disconnect();
-      endObserver.disconnect();
+      hideObserver.disconnect();
     };
-  }, [heroSentinelRef, endSentinelRef]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [heroSentinelRef, ...hideRefs]);
 
-  const visible = pastHero && !endInView;
+  const visible = pastHero && !hiddenZoneInView;
 
   return (
     <div

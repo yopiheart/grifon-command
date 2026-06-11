@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { ArrowRight } from 'lucide-react';
 import { GlassPanel } from '../../ui/GlassPanel';
 import { GoldButton } from '../../ui/GoldButton';
 import { SignatureScribble } from '../SignatureScribble';
@@ -55,10 +56,10 @@ export const OfferStack: React.FC<OfferStackProps> = ({ onNavigatePricing, secti
                 </SignatureScribble>
               </motion.div>
             ))}
-            <div className="flex items-center justify-between pt-4">
-              <span className="text-xl font-bold">TOTAL VALUE</span>
+            <div className="flex items-center justify-between gap-4 pt-4">
+              <span className="text-lg md:text-xl font-bold whitespace-nowrap">TOTAL VALUE</span>
               <SignatureScribble variant="strike" delay={1.2} strokeWidth={3}>
-                <span className="font-mono text-xl font-bold text-zinc-400">₱66,000/yr</span>
+                <span className="font-mono text-lg md:text-xl font-bold text-zinc-400 whitespace-nowrap">₱66,000/yr</span>
               </SignatureScribble>
             </div>
             <div className="flex items-center justify-center pt-6">
@@ -69,7 +70,10 @@ export const OfferStack: React.FC<OfferStackProps> = ({ onNavigatePricing, secti
           </div>
 
           <GoldButton onClick={onNavigatePricing} className="w-full md:w-auto text-lg md:text-xl px-12 py-6 shadow-[0_0_40px_rgba(255,204,0,0.4)]">
-            SEE ALL PLANS →
+            <span className="inline-flex items-center justify-center gap-3">
+              SEE ALL PLANS
+              <ArrowRight className="w-5 h-5 shrink-0" />
+            </span>
           </GoldButton>
           <p className="text-[10px] font-mono text-zinc-500 mt-6 tracking-widest uppercase">
             // SECURE 256-BIT ENCRYPTION • 7-DAY GUARANTEE

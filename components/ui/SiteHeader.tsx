@@ -49,10 +49,11 @@ const SoundToggle: React.FC<{ className?: string; withLabel?: boolean }> = ({
   );
 };
 
-// Hand-drawn squiggle drawn over the active nav label (landonorris.com pattern).
+// Hand-drawn squiggle underline for the active nav label (landonorris.com pattern,
+// underline position — strike-through is reserved for dead prices on this site).
 const ActiveSquiggle: React.FC = () => (
   <svg
-    className="absolute -inset-x-1 top-1/2 -translate-y-1/2 h-[0.9em] w-[calc(100%+0.5rem)] pointer-events-none"
+    className="absolute -inset-x-1 -bottom-[0.45em] h-[0.5em] w-[calc(100%+0.5rem)] pointer-events-none"
     viewBox="0 0 100 20"
     preserveAspectRatio="none"
     fill="none"

@@ -65,7 +65,7 @@ export const SignatureScribble: React.FC<SignatureScribbleProps> = ({
           vectorEffect="non-scaling-stroke"
           initial={reduceMotion ? false : { pathLength: 0 }}
           whileInView={{ pathLength: 1 }}
-          viewport={{ once: true, amount: 0.9 }}
+          viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.8, delay, ease: 'easeInOut' }}
         />
       </svg>

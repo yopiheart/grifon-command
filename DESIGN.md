@@ -106,7 +106,8 @@ A minimal palette: a single gold accent against neutral ink gradients on deep OL
 
 Marketing pages (landing, pricing, sales) MAY include **at most ONE** full-width section on `proof-band` (`#F2F1EA`) for editorial contrast — the high-trust "printed page" moment (testimonials, how-it-works). Rules inside the band:
 
-- Text uses a dark zinc ladder: `text-zinc-900` headings, `text-zinc-600` body, `text-zinc-500` meta. Gold `#FFCC00` remains the sole accent.
+- Text uses a dark zinc ladder: `text-zinc-900` headings, `text-zinc-600` body, `text-zinc-500` meta. Gold stays the sole accent *hue*, but `#FFCC00` is near-invisible on `#F2F1EA` (~1.3:1) — accent **text and icons** on the band use `brand-yellow-dark` (`#B28F00`); pure `#FFCC00` is reserved for decorative strokes (scribbles, stars, rules) that don't carry information.
+- Serif (Instrument Serif italic) is additionally licensed on the band for testimonial pull-quotes and oversized decorative step numerals — the "printed editorial" register. This does NOT extend to dark surfaces or in-app.
 - Cards are **solid** (`bg-white border border-zinc-900/10 rounded-2xl/3xl`) — no glass, no `backdrop-blur` on the band.
 - The band must be fully opaque and sit above global chrome (flashlight/grid): `relative z-10`.
 - Never propagate `proof-band` into the app shell, wizard, dashboard, or modules. One band per page, marketing only.

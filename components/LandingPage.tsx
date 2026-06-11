@@ -36,6 +36,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
 
   const heroSentinelRef = useRef<HTMLDivElement>(null);
   const offerStackRef = useRef<HTMLElement>(null);
+  // Trust/FAQ/footer zone has its own CTAs (Viber, login, footer links) — pill stays out of it.
+  const bottomZoneRef = useRef<HTMLDivElement>(null);
   const [activeHref, setActiveHref] = useState<string | undefined>(undefined);
 
   useEffect(() => {
@@ -55,9 +57,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
     return () => observer.disconnect();
   }, []);
 
+  // Order mirrors the actual section order (reviews band renders before the modules grid).
   const navLinks: SiteNavLink[] = [
-    { label: 'What You Get', href: '#what-you-get' },
     { label: 'Reviews', href: '#reviews' },
+    { label: 'What You Get', href: '#what-you-get' },
     { label: 'FAQ', href: '#faq' },
     { label: 'Pricing', onClick: onNavigatePricing },
   ];
@@ -100,18 +103,20 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
 
       <OfferStack onNavigatePricing={onNavigatePricing} sectionRef={offerStackRef} />
 
-      <TrustFaq />
+      <div ref={bottomZoneRef}>
+        <TrustFaq />
 
-      <LandingFooter
-        onEnterApp={onEnterApp}
-        onNavigatePricing={onNavigatePricing}
-        onNavigateLegal={onNavigateLegal}
-      />
+        <LandingFooter
+          onEnterApp={onEnterApp}
+          onNavigatePricing={onNavigatePricing}
+          onNavigateLegal={onNavigateLegal}
+        />
+      </div>
 
       <PinnedCtaPill
         onEnterApp={onEnterApp}
         heroSentinelRef={heroSentinelRef}
-        endSentinelRef={offerStackRef}
+        hideRefs={[offerStackRef, bottomZoneRef]}
       />
     </div>
   );
