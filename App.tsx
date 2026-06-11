@@ -50,6 +50,7 @@ import {
 } from './services/supabaseClient';
 import { popIntendedPlan, startCheckout } from './services/billingService';
 import { OAUTH_PROVIDERS } from './config/authProviders';
+import { RouteVeil, type VeilState } from './components/ui/RouteVeil';
 import { QuotaWallModal } from './components/ui/QuotaWallModal';
 import { quotaWallStore } from './services/quotaWallStore';
 import { useSubscription } from './hooks/useSubscription';
@@ -656,6 +657,41 @@ const App: React.FC = () => {
     setCurrentRoute(route);
   };
 
+  // Route-transition veil (marketing pages only): cover 0.36s → swap route under
+  // the panel → reveal. Skipped under prefers-reduced-motion and while one is
+  // already running. The app entry keeps its existing boot sequence instead.
+  const [veil, setVeil] = useState<VeilState | null>(null);
+  const veilBusy = useRef(false);
+  const runVeilTransition = (label: string, commit: () => void) => {
+    const reduceMotion =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion || veilBusy.current) {
+      commit();
+      if (typeof window !== 'undefined') window.scrollTo(0, 0);
+      return;
+    }
+    veilBusy.current = true;
+    setVeil({ label });
+    window.setTimeout(() => {
+      commit();
+      window.scrollTo(0, 0);
+    }, 380);
+    window.setTimeout(() => {
+      setVeil(null);
+      veilBusy.current = false;
+    }, 1000);
+  };
+  const veilToLegal = (route: 'terms' | 'privacy' | 'refund' | 'support') => {
+    const labels = {
+      terms: '// TERMS_OF_SERVICE',
+      privacy: '// PRIVACY_POLICY',
+      refund: '// REFUND_POLICY',
+      support: '// SUPPORT',
+    } as const;
+    runVeilTransition(labels[route], () => goToLegal(route));
+  };
+
   // Open a legal page from checkout, remembering the exact checkout URL (incl. ?plan=&cycle=)
   // so we can return the buyer to it with their entries intact.
   const handleViewLegal = (route: 'terms' | 'privacy') => {
@@ -674,7 +710,7 @@ const App: React.FC = () => {
       setLegalReturnHref(null);
       setCurrentRoute('checkout');
     } else {
-      goToLegal('landing');
+      runVeilTransition('// GRIFON COMMAND', () => goToLegal('landing'));
     }
   };
 
@@ -696,10 +732,11 @@ const App: React.FC = () => {
       <ErrorBoundary name="route:landing" resetKey={currentRoute} resetLabel="RETRY">
         <LandingPage
           onEnterApp={() => setCurrentRoute('app')}
-          onNavigatePricing={() => setCurrentRoute('pricing')}
-          onNavigateLegal={goToLegal}
+          onNavigatePricing={() => runVeilTransition('// PREPARING YOUR PLANS', () => setCurrentRoute('pricing'))}
+          onNavigateLegal={veilToLegal}
           isAuthenticated={isAuthenticated}
         />
+        <RouteVeil veil={veil} />
       </ErrorBoundary>
     );
   }
@@ -714,9 +751,10 @@ const App: React.FC = () => {
       >
         <GrifonPricingPage
           onEnterApp={() => setCurrentRoute('app')}
-          onNavigateHome={() => setCurrentRoute('landing')}
-          onNavigateLegal={goToLegal}
+          onNavigateHome={() => runVeilTransition('// GRIFON COMMAND', () => setCurrentRoute('landing'))}
+          onNavigateLegal={veilToLegal}
         />
+        <RouteVeil veil={veil} />
       </ErrorBoundary>
     );
   }
@@ -754,6 +792,7 @@ const App: React.FC = () => {
     return (
       <ErrorBoundary name="route:terms" resetKey={currentRoute} onReset={() => goToLegal('landing')} resetLabel="BACK TO LANDING">
         <TermsOfService onBack={handleLegalBack} backLabel={legalReturnHref ? 'Back to checkout' : 'Back'} />
+        <RouteVeil veil={veil} />
       </ErrorBoundary>
     );
   }
@@ -762,6 +801,7 @@ const App: React.FC = () => {
     return (
       <ErrorBoundary name="route:privacy" resetKey={currentRoute} onReset={() => goToLegal('landing')} resetLabel="BACK TO LANDING">
         <PrivacyPolicy onBack={handleLegalBack} backLabel={legalReturnHref ? 'Back to checkout' : 'Back'} />
+        <RouteVeil veil={veil} />
       </ErrorBoundary>
     );
   }
@@ -769,7 +809,8 @@ const App: React.FC = () => {
   if (currentRoute === 'refund') {
     return (
       <ErrorBoundary name="route:refund" resetKey={currentRoute} onReset={() => goToLegal('landing')} resetLabel="BACK TO LANDING">
-        <RefundPolicy onBack={() => goToLegal('landing')} />
+        <RefundPolicy onBack={() => runVeilTransition('// GRIFON COMMAND', () => goToLegal('landing'))} />
+        <RouteVeil veil={veil} />
       </ErrorBoundary>
     );
   }
@@ -777,7 +818,8 @@ const App: React.FC = () => {
   if (currentRoute === 'support') {
     return (
       <ErrorBoundary name="route:support" resetKey={currentRoute} onReset={() => goToLegal('landing')} resetLabel="BACK TO LANDING">
-        <Support onBack={() => goToLegal('landing')} />
+        <Support onBack={() => runVeilTransition('// GRIFON COMMAND', () => goToLegal('landing'))} />
+        <RouteVeil veil={veil} />
       </ErrorBoundary>
     );
   }
