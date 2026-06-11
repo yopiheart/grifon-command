@@ -17,7 +17,8 @@ const PATHS: Record<ScribbleVariant, { d: string; viewBox: string; svgClass: str
   underline: {
     d: 'M2 12 C 18 16, 38 6, 58 10 C 72 13, 88 8, 98 12',
     viewBox: '0 0 100 20',
-    svgClass: 'left-[-0.1em] right-[-0.1em] -bottom-[0.28em] h-[0.32em] w-[calc(100%+0.2em)]',
+    // Hugs the baseline so tight headline leading (0.9) never collides with the next line.
+    svgClass: 'left-[-0.1em] right-[-0.1em] bottom-[-0.02em] h-[0.18em] w-[calc(100%+0.2em)]',
   },
   circle: {
     d: 'M62 6 C 30 2, 5 10, 4 22 C 3 36, 20 44, 45 46 C 70 48, 96 40, 97 25 C 98 12, 78 2, 50 4',
