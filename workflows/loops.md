@@ -57,9 +57,10 @@ wipe the repo.
 
 ## Tier 3 — Nightly regression loop · ⏸ PARKED (do not arm)
 
-Golden-path inputs through the 11 modules, output diffed against a `.golden/`
+Golden-path inputs through the 12 modules, output diffed against a `.golden/`
 baseline by a separate harsh evaluator, failures posted to a channel. Full
-spec: [post_beta_roadmap.md](post_beta_roadmap.md) #1.
+spec: [post_beta_roadmap.md](post_beta_roadmap.md) #1. (The `.golden/`
+directory does not exist yet — it gets created when this loop is unparked.)
 
 - Resume trigger (Neil's, reconfirmed 2026-06-09): **beta is live AND a second
   post-beta change shipped without manual regression.** Until then, the manual

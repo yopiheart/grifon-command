@@ -75,7 +75,7 @@ LLM reasoning degrades sharply past ~100k tokens of context. Treat the conversat
 - **Prefer `/clear` over `/compact`** when the current thread has wandered. Compaction keeps the model in a degraded state; clearing returns it to a fresh, smart baseline.
 - **Use `/btw` for throwaway side questions** — the answer lands in a dismissible overlay and never enters conversation history, so a quick check doesn't spend the context budget.
 - **The Ralph Loop destination doc** is `workflows/launch_readiness.md`. When you `/clear`, that file plus this `CLAUDE.md` and `UBIQUITOUS_LANGUAGE.md` are enough to resume work — no need to re-explain context.
-- **After exploring `services/geminiService.ts`** (91 KB), the smart zone is largely consumed. Finish the current task or summarize findings to a workflow file *before* taking on a second large exploration in the same session.
+- **After exploring `services/geminiService.ts`** (>100 KB), the smart zone is largely consumed. Finish the current task or summarize findings to a workflow file *before* taking on a second large exploration in the same session.
 - **Sub-agent calls are expensive in tokens** — a single `Explore` agent can consume tens of thousands of tokens before reporting back. Use them once per session for big-picture exploration; afterwards work from the report, not from re-exploring.
 - **Vertical slices over horizontal layers.** When adding a new module or feature, build types + service call + UI + state in one slice through one feature. Don't do "all types first, then all services" — it produces no working feedback until the very end.
 

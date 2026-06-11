@@ -22,6 +22,13 @@ You're working inside the **WAT framework** (Workflows, Agents, Tools). This arc
 
 **Why this matters:** When AI handles every step directly, accuracy compounds down. Offloading execution to deterministic scripts keeps AI focused on orchestration.
 
+> **Reality check (2026-06-11):** Not every workflow uses the full three-layer
+> stack yet. Several (e.g. `app_audit.md`, parts of `viral-autopsy`) run
+> agent-driven via Grep/Read with no `tools/` script behind them — that's
+> Layer 2 only, and it's fine. Treat the three layers as the target shape,
+> not a claim about every existing workflow; wrap a workflow in a `tools/`
+> script when repetition makes determinism worth it, not before.
+
 ## How to Operate
 
 **1. Look for existing tools first.** Check `tools/` before building anything new.

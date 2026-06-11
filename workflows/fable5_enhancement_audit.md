@@ -1,6 +1,6 @@
 # Fable 5 Enhancement Audit — Punch List
 
-> **Status header (resume from repo alone):** `AUDITED: A, B, C, D / PENDING: — / FIXES: not started`
+> **Status header (resume from repo alone):** `AUDITED: A, B, C, D / FIXES: Tier-1 docs batch DONE (C1, C3, C4, C5, C7 + loops.md 11→12) / NEXT: Tier-1 A5 alias swap, D tests, then Tier-2 approval round`
 >
 > Produced by the Fable 5 enhancement pass (plan approved 2026-06-11, branch
 > `claude/grifon-fable5-enhancement-go90ga`). Rules of this pass:
@@ -96,9 +96,16 @@ markdown edits → **Tier 1** by definition.
 | C7 | loops.md Tier-3 references `.golden/` dir that doesn't exist yet (parked) — add a "created when unparked" note | `workflows/loops.md` | Polish | Tier 1 |
 | C8 | skill-creator references optional `agents/grader.md` etc. that don't exist in this repo — mark as optional/external | `.claude/skills/skill-creator/SKILL.md` | Polish | Tier 1 |
 
-**False positive (dropped):** claim that the build-gate marker mechanism is
-undocumented — `.claude/hooks/build-gate.sh:1-15` already carries a full
-explanatory header.
+**False positives (dropped after verification):**
+- build-gate marker "undocumented" — `.claude/hooks/build-gate.sh:1-15` already carries a full explanatory header.
+- C2 — director-smoke SKILL.md:36-37 already states the `.env` flag is per-session ("The defreezer wipes `.env`").
+- C6 — viral-autopsy SKILL.md:56-57 already documents `GEMINI_API_KEY` from `.env`.
+- C8 — `.claude/skills/skill-creator/agents/{grader,comparator,analyzer}.md` all exist.
+
+**Fixed in Tier-1 docs batch (2026-06-11):** C1 (post_beta_roadmap 11→12 ×5
++ same fix in loops.md:60), C3 (WAT reality-check note), C4 (CLAUDE.md size
+claim — file is 131 KB now), C5 (gemini-eval re-count instruction), C7
+(.golden parked note).
 
 ---
 

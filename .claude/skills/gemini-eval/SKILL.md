@@ -16,7 +16,7 @@ For any rule whose output looks wrong, first confirm the rule actually fires:
 1. Grep `services/geminiService.ts` for the rule name (e.g. `IDENTITY_LOCK`, `STILL_FRAME_RULE`, `LANGUAGE_LOCK`).
 2. Identify the call site (which `generate*` function, which scene path).
 3. Trace the call site back to the component (`Step5Storyboard.tsx`, `InfluencerForge.tsx`, etc.) — is every required parameter actually being passed?
-4. The `generateSceneImage` signature has 11 positional args. The known-good reference for a fully-wired call is `InfluencerForge.tsx`. If the failing path passes fewer args than InfluencerForge, suspect wiring before content.
+4. The known-good reference for a fully-wired call is `InfluencerForge.tsx`. Count the required positional args from the CURRENT `generateSceneImage` signature in `services/geminiService.ts` (11 as of 2026-06 — re-count rather than trusting this number if the signature has drifted). If the failing path passes fewer args than InfluencerForge, suspect wiring before content.
 
 **If wiring is broken:** flag as `WIRING_BUG`, point at the call-site fix, do not propose rule-text edits.
 **If wiring is fine:** proceed to content checks below.
