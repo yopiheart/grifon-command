@@ -46,6 +46,22 @@ html { scroll-behavior: smooth; }
   100% { transform: translateX(100%); }
 }
 
+/* Infinite text marquee (landing kinetic strips). Content is duplicated exactly
+   twice inside a w-max flex track, so -50% loops seamlessly. GPU transform only. */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee var(--marquee-duration, 30s) linear infinite;
+}
+.animate-marquee.marquee-reverse {
+  animation-direction: reverse;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee { animation: none; }
+}
+
 /*
  * Terms-consent microcopy escape hatch. The global "LAW" in index.html forces every <label> to
  * JetBrains Mono + uppercase + wide tracking (great for sub-labels, unreadable for a sentence of

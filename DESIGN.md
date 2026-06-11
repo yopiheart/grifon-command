@@ -1,7 +1,7 @@
 ---
 version: alpha
 name: Grifon.AI
-description: Cinematic, premium AI marketing SaaS. Dark mode only.
+description: Cinematic, premium AI marketing SaaS. Dark mode only (one documented marketing light band excepted).
 colors:
   primary: "#FFCC00"
   surface: "#09090B"
@@ -10,6 +10,7 @@ colors:
   on-surface-muted: "#D4D4D8"
   on-surface-dim: "#A1A1AA"
   on-surface-sublabel: "#71717A"
+  proof-band: "#F2F1EA"
 typography:
   headline-display:
     fontFamily: Inter, Geist, SF Pro
@@ -38,6 +39,10 @@ typography:
     fontSize: 0.625rem
     fontWeight: 600
     letterSpacing: 0.15em
+  serif-accent:
+    fontFamily: Instrument Serif, Georgia
+    fontStyle: italic
+    fontWeight: 400
 rounded:
   none: 0
   sm: 0.5rem
@@ -92,6 +97,16 @@ A minimal palette: a single gold accent against neutral ink gradients on deep OL
 - **Surface-elevated (`#18181B`, zinc-900) at 80% opacity:** Glass panel base. Always paired with `backdrop-blur-xl`.
 - **On-surface ladder (white → zinc-500):** A four-step text hierarchy — `on-surface` for active text, `on-surface-muted` for body, `on-surface-dim` for passive, `on-surface-sublabel` for meta.
 - **Borders:** Subtle borders are `white` at 10% alpha (Tailwind `border-white/10`). Alpha-on-color is an *effect*, not a color role, so it isn't a token — apply it directly in component CSS.
+- **Proof-band (`#F2F1EA`):** Warm off-white reserved EXCLUSIVELY for the marketing light band exception below. Never an in-app surface.
+
+### Marketing light band exception
+
+Marketing pages (landing, pricing, sales) MAY include **at most ONE** full-width section on `proof-band` (`#F2F1EA`) for editorial contrast — the high-trust "printed page" moment (testimonials, how-it-works). Rules inside the band:
+
+- Text uses a dark zinc ladder: `text-zinc-900` headings, `text-zinc-600` body, `text-zinc-500` meta. Gold `#FFCC00` remains the sole accent.
+- Cards are **solid** (`bg-white border border-zinc-900/10 rounded-2xl/3xl`) — no glass, no `backdrop-blur` on the band.
+- The band must be fully opaque and sit above global chrome (flashlight/grid): `relative z-10`.
+- Never propagate `proof-band` into the app shell, wizard, dashboard, or modules. One band per page, marketing only.
 
 ## Typography
 
@@ -100,6 +115,7 @@ A minimal palette: a single gold accent against neutral ink gradients on deep OL
 - **Weight ladder is 400 / 600 / 700 — no 500.** Weight 500 reads in-between and undermines hierarchy; if a label needs more presence than body (400), go to 600. Bold is 700. (Aligned with Apple's typographic discipline.)
 - **body-lg / body-md:** Same sans family.
 - **label-caps:** JetBrains Mono, uppercase, wide tracking. Reserved for sub-labels and technical data to reinforce the "control panel" feel.
+- **serif-accent:** Instrument Serif italic 400, **marketing surfaces only**. Used for a maximum of 1–2 accent words per headline (rendered in Grifon Gold) and for kinetic marquee strips. Because the global heading LAW (`index.html`) forces Inter 900 uppercase on `h1`–`h6` with `!important`, serif accents MUST be `<span className="font-serif italic normal-case tracking-normal">` inside the heading — never applied to the heading element itself. Never in-app, never for body text, never a third weight.
 
 ## Layout
 

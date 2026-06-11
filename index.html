@@ -171,7 +171,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
     <style>
       :root {
         /* Sourced from DESIGN.md — see colors section. */
@@ -345,6 +345,8 @@
               sans: ['Inter', 'sans-serif'],
               mono: ['JetBrains Mono', 'monospace'],
               oswald: ['Oswald', 'sans-serif'],
+              // serif-accent (DESIGN.md): marketing headline accent words + marquees ONLY
+              serif: ['Instrument Serif', 'Georgia', 'serif'],
             },
             colors: {
               // --- DESIGN.md roles (canonical) ---
@@ -372,6 +374,8 @@
               'text-primary':        '#FFFFFF', // → on-surface
               'text-secondary':      '#A1A1AA', // → on-surface-dim
               'border-color':        'rgba(255, 255, 255, 0.08)',
+              // Marketing light band exception (DESIGN.md) — max ONE band per marketing page
+              'proof-band':          '#F2F1EA',
             }
           }
         }
