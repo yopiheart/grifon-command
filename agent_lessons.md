@@ -811,3 +811,18 @@ mp4, agents read the extracted frames. Also: the defreezer wipes git identity �
 nudges SAR off 1:1 (e.g. 2331:2332 at the end of a zoom-out ramp) and concat then rejects the
 mixed-SAR inputs with "Failed to configure output pad". Any dynamic scale in a per-scene chain
 must end `,setsar=1`. Unit-test strings can't catch this class — only the real-render harness can.
+
+### 2026-06-11 — Audit subagents confabulate findings; verify load-bearing claims before ranking or fixing
+**Context:** Fable 5 enhancement pass fanned out 4 read-only audit agents (design, code, docs, tests).
+Of their findings, FIVE were false positives that a verify-first pass caught before any fix shipped:
+"undefined" Tailwind tokens that ARE defined in index.html's inline config (would have been ranked
+Critical); a "missing" per-session note that director-smoke already carries; "missing" GEMINI_API_KEY
+docs already in viral-autopsy Step 2; "non-existent" skill-creator agents/ files that exist; an
+"undocumented" build-gate marker fully explained in the hook's own header. One D-area claim was also
+stale (influencer/cinematic schema tests "missing" — they already existed; the real gap was the other
+3 crown-jewel flows).
+**Lesson:** Treat subagent audit reports as LEADS, not findings. Before a lead becomes a ranked
+punch-list entry — and absolutely before it becomes an edit — re-verify it with one targeted
+grep/read in the main thread (the same evidence-bound discipline gemini-eval applies to Gemini
+output). Corollary proven the same day: importing App.tsx in a node test drags the whole component
+graph (jspdf crash) — testability extractions beat export-and-import for root-component logic.

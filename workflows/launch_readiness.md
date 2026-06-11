@@ -4,6 +4,8 @@
 
 This is the meta-workflow. It doesn't do the work itself — it points to the workflows that do, and tracks overall progress. **Source of truth = the code + `git log`.** This file summarizes; it does not replace.
 
+> **🔍 Fable 5 enhancement pass (2026-06-11):** full-project audit + tiered fixes ran on branch `claude/grifon-fable5-enhancement-go90ga` — punch list, false-positive log, shipped fixes, and the declined-for-now backlog all live in [`fable5_enhancement_audit.md`](fable5_enhancement_audit.md). Suite grew 189 → 217 passing. Render path untouched (frozen until scene-6/5 validation below clears); POST-VALIDATION items B7/B8 wait there.
+>
 > **⏭ NEXT SESSION (2026-06-11):** scene-6/5 video regen to verify the END-CLEAN video-prompt negatives (ghost-tail kill), then one FINAL_RENDER to verify the tighter trim pads + read `[renderFfmpeg:trim]` numbers. Backlog surfaced 2026-06-10, Neil-gated: voice auto-preselect by avatar gender; end-card offer recap overlay ("FIRST 50: FREE DRIP BAG"); price-anchor callout at product reveal; product-aware hook text dodge (vision pass is face-only today); EDL responseSchema (kill the drift class at decode time when the Phase-1A stub brain gets its real upgrade).
 
 ## Status as of 2026-06-10 (VALIDATION RENDER EXECUTED — hook blob KILLED · 11-fix hardening day)
