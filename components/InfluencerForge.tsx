@@ -527,7 +527,7 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
            )}
 
            <div className="p-8 bg-[#FFCC00]/5 border border-[#FFCC00]/20 rounded-[2.5rem] relative">
-              <span className="absolute top-0 left-0 bg-brand-yellow text-black text-[9px] px-3 py-1 font-black">[ DIRECTOR_STRATEGY ]</span>
+              <span className="absolute top-0 left-0 bg-[#FFCC00] text-black text-[9px] px-3 py-1 font-black">[ DIRECTOR_STRATEGY ]</span>
               <p className="text-sm italic text-gray-300">"{storyboardResult.directorNote || "Visual rhythm optimized for 30/70 conversion ratio."}"</p>
            </div>
 
@@ -554,7 +554,7 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
                           <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity z-20">
                              <button onClick={() => onSynthesizeSingleScene(i)} className="p-2 bg-zinc-950/80 rounded-full text-[#FFCC00] hover:scale-110 transition-all border border-white/10"><RefreshCw className="w-4 h-4" /></button>
                              {s.endFrameImageUrl && (
-                               <button onClick={() => setActiveLightbox({ index: i, frame: 'end' })} className="p-2 bg-zinc-950/80 rounded-full text-brand-yellow hover:scale-110 transition-all border border-white/10" title="View End Frame"><Activity className="w-4 h-4" /></button>
+                               <button onClick={() => setActiveLightbox({ index: i, frame: 'end' })} className="p-2 bg-zinc-950/80 rounded-full text-[#FFCC00] hover:scale-110 transition-all border border-white/10" title="View End Frame"><Activity className="w-4 h-4" /></button>
                              )}
                           </div>
                         </>
@@ -571,7 +571,7 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
                       
                       <div className="absolute top-3 left-3 flex flex-col gap-1 z-10 pointer-events-none">
                          <span className="bg-zinc-950/80 text-[#FFCC00] text-[7px] px-2 py-0.5 rounded font-black tracking-tighter uppercase border border-[#FFCC00]/20">SCENE_0{i+1}</span>
-                         <span className="bg-brand-yellow text-black text-[6px] px-2 py-0.5 rounded font-black uppercase tracking-tighter">{SCENE_LABELS[i] || '[ CONTENT ]'}</span>
+                         <span className="bg-[#FFCC00] text-black text-[6px] px-2 py-0.5 rounded font-black uppercase tracking-tighter">{SCENE_LABELS[i] || '[ CONTENT ]'}</span>
                          {i === 0 && <span className="bg-white/10 backdrop-blur-md text-white text-[5px] px-2 py-0.5 rounded font-black uppercase tracking-tighter border border-white/10">[ DUAL_FRAME_HOOK ]</span>}
                       </div>
                    </div>
@@ -587,7 +587,7 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
            </div>
         </div>
         <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex gap-4 bg-zinc-950/80 backdrop-blur-2xl p-4 rounded-full border border-white/10 shadow-2xl">
-          <GoldButton onClick={onGenerateThumbnail} disabled={isLoading} className="rounded-full px-10 py-3 text-xs font-black uppercase bg-brand-yellow text-black shadow-neon-yellow">GENERATE_THUMBNAIL</GoldButton>
+          <GoldButton onClick={onGenerateThumbnail} disabled={isLoading} className="rounded-full px-10 py-3 text-xs font-black uppercase bg-[#FFCC00] text-black shadow-neon-yellow">GENERATE_THUMBNAIL</GoldButton>
           <GoldButton 
             onClick={onGeneratePrompts} 
             disabled={isLoading || loadingScenes.length > 0} 
@@ -613,7 +613,7 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
           <main className="flex-1 overflow-y-auto pr-4 custom-scrollbar space-y-4">
              <div className="p-6 bg-[#FFCC00]/5 border border-[#FFCC00]/20 rounded-3xl mb-6 relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-1 h-full bg-[#FFCC00] animate-pulse"></div>
-                <p className="text-xs text-brand-yellow font-black uppercase mb-2">[ STRATEGIC_AUDIT ]</p>
+                <p className="text-xs text-[#FFCC00] font-black uppercase mb-2">[ STRATEGIC_AUDIT ]</p>
                 <p className="text-sm text-gray-300 italic">"{scriptResult.strategicAudit}"</p>
              </div>
              <div className="p-6 bg-zinc-950 border border-white/10 rounded-3xl">
@@ -762,13 +762,13 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
                 <div className="flex gap-2">
                     <button 
                     onClick={injectOfferStack}
-                    className="text-[9px] font-black text-brand-yellow border-2 border-brand-yellow shadow-[0_0_15_rgba(255,204,0,0.2)] px-4 py-2 rounded-full hover:bg-brand-yellow hover:text-black transition-all uppercase font-mono"
+                    className="text-[9px] font-black text-[#FFCC00] border-2 border-[#FFCC00] shadow-[0_0_15_rgba(255,204,0,0.2)] px-4 py-2 rounded-full hover:bg-[#FFCC00] hover:text-black transition-all uppercase font-mono"
                     >
                     [ INJECT_OFFERSTACK ]
                     </button>
                     <button 
                     onClick={injectMarketMind}
-                    className="text-[9px] font-black text-brand-yellow border-2 border-brand-yellow shadow-[0_0_15_rgba(255,204,0,0.2)] px-4 py-2 rounded-full hover:bg-brand-yellow hover:text-black transition-all uppercase font-mono"
+                    className="text-[9px] font-black text-[#FFCC00] border-2 border-[#FFCC00] shadow-[0_0_15_rgba(255,204,0,0.2)] px-4 py-2 rounded-full hover:bg-[#FFCC00] hover:text-black transition-all uppercase font-mono"
                     >
                     [ INJECT_MARKETMIND_REPORT ]
                     </button>
@@ -778,7 +778,7 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
              <div className="space-y-6">
                 <div className="space-y-4">
                     <div className="flex justify-between items-center">
-                        <label className="text-[10px] font-black text-brand-yellow uppercase tracking-widest">SELECT_MONETIZATION_GAME</label>
+                        <label className="text-[10px] font-black text-[#FFCC00] uppercase tracking-widest">SELECT_MONETIZATION_GAME</label>
                         <div className="bg-[#FFCC00] text-black text-[9px] font-black px-3 py-1 font-mono tracking-widest uppercase shadow-lg">
                             [ DIRECTOR_AUDIT ]
                         </div>
@@ -824,8 +824,8 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
 
                 <div className="space-y-4 pt-4 border-t border-white/10">
                     <div className="flex justify-between items-center mb-2">
-                        <label className="text-[10px] font-black text-brand-yellow uppercase tracking-widest">DEEP_INTEL_MATRIX</label>
-                        {isExtracting && <span className="text-[8px] text-brand-yellow animate-pulse font-mono uppercase">SYNCING_DATA...</span>}
+                        <label className="text-[10px] font-black text-[#FFCC00] uppercase tracking-widest">DEEP_INTEL_MATRIX</label>
+                        {isExtracting && <span className="text-[8px] text-[#FFCC00] animate-pulse font-mono uppercase">SYNCING_DATA...</span>}
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

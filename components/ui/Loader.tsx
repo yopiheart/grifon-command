@@ -39,12 +39,12 @@ const Loader: React.FC<LoaderProps> = ({ message, size = 'md' }) => {
             {/* TERMINAL HEADER */}
             <div className="flex flex-col items-center gap-6">
                 <div className="relative">
-                    <div className={`${sizeClasses[size]} border-brand-primary border-t-transparent rounded-full animate-spin shadow-[0_0_30px_rgba(255,204,0,0.3)]`}></div>
+                    <div className={`${sizeClasses[size]} border-[#FFCC00] border-t-transparent rounded-full animate-spin shadow-[0_0_30px_rgba(255,204,0,0.3)]`}></div>
                     <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-2 h-2 bg-brand-yellow rounded-full animate-pulse"></div>
+                        <div className="w-2 h-2 bg-[#FFCC00] rounded-full animate-pulse"></div>
                     </div>
                 </div>
-                <p className="text-text-primary text-xl font-black italic tracking-tight font-sans animate-pulse text-center leading-tight">
+                <p className="text-white text-xl font-black italic tracking-tight font-sans animate-pulse text-center leading-tight">
                     {message}
                 </p>
             </div>
@@ -65,11 +65,11 @@ const Loader: React.FC<LoaderProps> = ({ message, size = 'md' }) => {
                         {NEURAL_PLAN_STEPS.slice(0, step + 1).map((s, i) => (
                             <div 
                                 key={i} 
-                                className={`flex items-center gap-2 transition-all duration-300 ${i === step ? 'text-brand-primary translate-x-1' : 'text-gray-600 opacity-60'}`}
+                                className={`flex items-center gap-2 transition-all duration-300 ${i === step ? 'text-[#FFCC00] translate-x-1' : 'text-gray-600 opacity-60'}`}
                             >
                                 <span className="font-bold shrink-0 w-6">[OK]</span>
                                 <span className="tracking-tighter truncate">{s}</span>
-                                {i === step && <span className="w-1 h-3 bg-brand-primary animate-pulse ml-auto shadow-[0_0_8px_#FFCC00]"></span>}
+                                {i === step && <span className="w-1 h-3 bg-[#FFCC00] animate-pulse ml-auto shadow-[0_0_8px_#FFCC00]"></span>}
                             </div>
                         ))}
                     </div>

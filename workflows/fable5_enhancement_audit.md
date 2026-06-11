@@ -45,6 +45,13 @@ render correctly today, so alias usage is **Polish (consistency)**, not broken.
 | A7 | `GrifonPricingPage.tsx:472-485` CTA buttons via inline `<style>` block (`gold-btn`/`ghost-btn`) instead of ui/ primitives | `components/GrifonPricingPage.tsx` | Polish | Tier 2 (or document as marketing-page exception) |
 | A8 | InfluencerForge has 30+ inline button styles that could reuse `Button`/`GoldButton` | `components/InfluencerForge.tsx` | Polish | Tier 2 (batch refactor, low urgency) |
 | A9 | Fake-browser traffic lights use `bg-yellow-500` (likely intentional OS-chrome mimicry) | `components/ui/Loader.tsx:58`, `components/LandingPage.tsx:473,493,513` | Polish | Tier 2 (confirm intent; likely "won't fix — intentional") |
+| A10 | `shadow-[0_0_15_rgba(255,204,0,0.2)]` — missing `px` unit makes the box-shadow invalid CSS (silent no-op, same class as A1's problem) | `components/InfluencerForge.tsx:765,771` | High | Tier 2 (one-char fix `15px`, but visual change — restores intended glow) |
+
+**A5 FIXED (Tier-1, 2026-06-11):** all `brand-yellow`/`brand-primary`/`text-text-primary`
+usages in `components/ui/Loader.tsx`, `components/InfluencerForge.tsx`,
+`components/ImageAdsGen.tsx` swapped to explicit `[#FFCC00]`/`text-white` —
+value-identical (aliases resolve to the same hex in `index.html:360-372`),
+zero visual delta, build clean. Config aliases left in place (no deletions).
 
 **Clean (no findings):** gradient headers, GlassPanel/Input/Textarea specs,
 `bg-black` (zero occurrences — all canvas is `bg-zinc-950`), `#FFD700` (zero

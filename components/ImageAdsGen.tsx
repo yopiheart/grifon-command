@@ -126,7 +126,7 @@ const ImageAdsGen: React.FC<ImageAdsGenProps> = ({ businessInfo, avatar, clientD
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-20">
             {variants.map((v, idx) => (
                 <div key={idx} className="glass-morphism rounded-[3rem] p-10 border border-white/10 relative overflow-hidden group">
-                    <div className="absolute top-8 right-10 bg-brand-yellow text-black text-[10px] font-black px-4 py-1.5 rounded-full z-10 shadow-neon-yellow font-mono">
+                    <div className="absolute top-8 right-10 bg-[#FFCC00] text-black text-[10px] font-black px-4 py-1.5 rounded-full z-10 shadow-neon-yellow font-mono">
                         THE {v.templateType.toUpperCase()} WRAPPER
                     </div>
 
@@ -153,16 +153,16 @@ const ImageAdsGen: React.FC<ImageAdsGenProps> = ({ businessInfo, avatar, clientD
 
                         <div className="flex-1 space-y-6">
                             <div>
-                                <span className="text-[9px] font-black text-brand-yellow/60 uppercase tracking-widest font-mono">PRIMARY_HEADLINE</span>
+                                <span className="text-[9px] font-black text-[#FFCC00]/60 uppercase tracking-widest font-mono">PRIMARY_HEADLINE</span>
                                 <h2 className="text-2xl font-black uppercase italic leading-tight">{v.headline}</h2>
                             </div>
                             <div>
-                                <span className="text-[9px] font-black text-brand-yellow/60 uppercase tracking-widest font-mono">AD_COPY_PITCH</span>
+                                <span className="text-[9px] font-black text-[#FFCC00]/60 uppercase tracking-widest font-mono">AD_COPY_PITCH</span>
                                 <p className="text-xs text-gray-400 font-mono leading-relaxed mt-2">{v.caption}</p>
                             </div>
                             <div className="p-4 bg-white/5 rounded-2xl border border-white/10">
-                                <span className="text-[9px] font-black text-brand-yellow uppercase tracking-widest font-mono">HOOK_LOGIC</span>
-                                <p className="text-[10px] text-brand-yellow/80 mt-1">{v.hookLogic}</p>
+                                <span className="text-[9px] font-black text-[#FFCC00] uppercase tracking-widest font-mono">HOOK_LOGIC</span>
+                                <p className="text-[10px] text-[#FFCC00]/80 mt-1">{v.hookLogic}</p>
                             </div>
                             
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
