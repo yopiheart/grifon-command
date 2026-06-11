@@ -119,7 +119,7 @@ Marketing pages (landing, pricing, sales) MAY include **at most ONE** full-width
 - **Weight ladder is 400 / 600 / 700 — no 500.** Weight 500 reads in-between and undermines hierarchy; if a label needs more presence than body (400), go to 600. Bold is 700. (Aligned with Apple's typographic discipline.)
 - **body-lg / body-md:** Same sans family.
 - **label-caps:** JetBrains Mono, uppercase, wide tracking. Reserved for sub-labels and technical data to reinforce the "control panel" feel.
-- **serif-accent:** Instrument Serif italic 400, **marketing surfaces only**. Used for a maximum of 1–2 accent words per headline (rendered in Grifon Gold) and for kinetic marquee strips. Because the global heading LAW (`index.html`) forces Inter 900 uppercase on `h1`–`h6` with `!important`, serif accents MUST be `<span className="font-serif italic normal-case tracking-normal">` inside the heading — never applied to the heading element itself. Never in-app, never for body text, never a third weight.
+- **serif-accent:** Instrument Serif italic 400, **marketing surfaces only** (the pre-auth gateway — sign-in/sign-up screen — counts as a marketing surface; the authed app does not). Used for a maximum of 1–2 accent words per headline (rendered in Grifon Gold) and for kinetic marquee strips. Because the global heading LAW (`index.html`) forces Inter 900 uppercase on `h1`–`h6` with `!important`, serif accents MUST be `<span className="font-serif italic normal-case tracking-normal">` inside the heading — never applied to the heading element itself. Never in-app, never for body text, never a third weight.
 
 ## Layout
 

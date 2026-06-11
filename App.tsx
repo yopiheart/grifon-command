@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useRef, useSyncExternalStore } from 'react';
-import { ChevronLeft, Lightbulb, RotateCw, Mail } from 'lucide-react';
+import { ChevronLeft, Lightbulb, RotateCw, Mail, Check, Star } from 'lucide-react';
 import { ClientDetails, BusinessInfo, Script, Scene, VideoPrompt, Avatar, CinematicNarrativeScene, SceneBatchEntry } from './types';
 import StepIndicator from './components/StepIndicator';
 import Step1ClientDetails from './components/Step1ClientDetails';
@@ -125,7 +125,9 @@ const App: React.FC = () => {
   const [authPassword, setAuthPassword] = useState('');
   const [authConfirm, setAuthConfirm] = useState('');
   const [authError, setAuthError] = useState('');
-  const [authMode, setAuthMode] = useState<'sign_in' | 'sign_up' | 'forgot' | 'check_email' | 'reset_password'>('sign_in');
+  // Default to sign_up: most unauthenticated arrivals come from a START FREE CTA.
+  // Returning users are one tap away, and Google OAuth handles both modes anyway.
+  const [authMode, setAuthMode] = useState<'sign_in' | 'sign_up' | 'forgot' | 'check_email' | 'reset_password'>('sign_up');
   const [authNotice, setAuthNotice] = useState('');
   const [pendingSignUpEmail, setPendingSignUpEmail] = useState('');
   const [userEmail, setUserEmail] = useState<string | null>(null);
@@ -851,10 +853,16 @@ const App: React.FC = () => {
               <h1 className="text-3xl md:text-5xl font-[900] italic text-white uppercase tracking-tighter mb-2">
                 GRIFON
               </h1>
-              <h2 className="text-[10px] font-mono text-[#FFCC00] tracking-[0.4em] uppercase flex items-center justify-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#FFCC00] animate-pulse shadow-[0_0_6px_rgba(255,204,0,0.8)]" aria-hidden="true" />
-                // NEURAL_ENGINE_ACTIVE
+              {/* Outcome-first gateway copy — what the visitor GETS, not what the engine does */}
+              <h2 className="text-base md:text-lg font-bold uppercase tracking-tight text-zinc-200 mb-2">
+                YOUR FIRST AD IS{' '}
+                <span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">30 minutes</span>{' '}
+                AWAY.
               </h2>
+              <p className="text-[10px] font-mono text-zinc-500 tracking-[0.3em] uppercase flex items-center justify-center gap-2">
+                <span className="w-1.5 h-1.5 shrink-0 rounded-full bg-[#FFCC00] animate-pulse shadow-[0_0_6px_rgba(255,204,0,0.8)]" aria-hidden="true" />
+                // FREE PLAN — NO CREDIT CARD NEEDED
+              </p>
             </div>
 
             <GlassPanel className="relative w-full max-w-md p-6 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -871,6 +879,17 @@ const App: React.FC = () => {
                   <div className="grid grid-cols-2 mb-6 -mt-1">
                     <button
                       type="button"
+                      onClick={() => goToAuthMode('sign_up')}
+                      className={`pb-3 text-[10px] font-mono uppercase tracking-widest transition-all border-b-2 ${
+                        authMode === 'sign_up'
+                          ? 'text-white border-[#FFCC00]'
+                          : 'text-zinc-500 border-white/10 hover:text-white'
+                      }`}
+                    >
+                      // START_FREE
+                    </button>
+                    <button
+                      type="button"
                       onClick={() => goToAuthMode('sign_in')}
                       className={`pb-3 text-[10px] font-mono uppercase tracking-widest transition-all border-b-2 ${
                         authMode === 'sign_in'
@@ -879,17 +898,6 @@ const App: React.FC = () => {
                       }`}
                     >
                       // SIGN_IN
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => goToAuthMode('sign_up')}
-                      className={`pb-3 text-[10px] font-mono uppercase tracking-widest transition-all border-b-2 ${
-                        authMode === 'sign_up'
-                          ? 'text-white border-[#FFCC00]'
-                          : 'text-zinc-500 border-white/10 hover:text-white'
-                      }`}
-                    >
-                      // SIGN_UP
                     </button>
                   </div>
                 )}
@@ -963,7 +971,12 @@ const App: React.FC = () => {
 
                 {authMode === 'sign_up' && (
                   <form onSubmit={handleSignUp} className="space-y-5">
-                    <p className="text-[10px] font-mono text-[#FFCC00] tracking-[0.4em] uppercase text-center -mt-1 mb-1">// REQUEST_CLEARANCE</p>
+                    {/* Free-plan claims mirror the pricing page — no invented numbers */}
+                    <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 -mt-1 mb-1 text-xs text-zinc-400">
+                      <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 shrink-0 text-[#FFCC00]" strokeWidth={2.5} /> 3 free ad workflows/mo</span>
+                      <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 shrink-0 text-[#FFCC00]" strokeWidth={2.5} /> No credit card</span>
+                      <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 shrink-0 text-[#FFCC00]" strokeWidth={2.5} /> Cancel anytime</span>
+                    </div>
                     <Input
                       id="signup-email"
                       type="email"
@@ -997,7 +1010,7 @@ const App: React.FC = () => {
                       <p className="text-red-500 text-sm font-mono text-center border border-red-900/50 bg-red-900/20 p-2 rounded-xl">{authError}</p>
                     )}
                     <GoldButton type="submit" className="w-full justify-center py-4" disabled={isSigningIn}>
-                      {isSigningIn ? 'SIGNING UP...' : 'SIGN UP'}
+                      {isSigningIn ? 'CREATING ACCOUNT...' : 'CREATE MY FREE ACCOUNT'}
                     </GoldButton>
                   </form>
                 )}
@@ -1113,6 +1126,15 @@ const App: React.FC = () => {
                 )}
 
                 <div className="mt-8 pt-4 border-t border-white/10 flex flex-col items-center gap-3">
+                  {/* Same trust claim as the pricing page social-proof pill */}
+                  <div className="flex items-center gap-2 text-xs text-zinc-400">
+                    <span className="flex gap-0.5">
+                      {[1, 2, 3, 4, 5].map((s) => (
+                        <Star key={s} className="w-3 h-3 shrink-0" strokeWidth={0} fill="#FFCC00" />
+                      ))}
+                    </span>
+                    Trusted by 100+ Filipino business owners
+                  </div>
                   <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[10px] font-mono text-zinc-500 uppercase tracking-widest">
                     <button type="button" onClick={() => goToLegal('terms')} className="hover:text-[#FFCC00] transition-colors">TERMS</button>
                     <span className="text-zinc-700">·</span>
