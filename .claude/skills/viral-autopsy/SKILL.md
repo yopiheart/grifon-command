@@ -56,6 +56,33 @@ python tools/analyze_video.py <url-or-path> --niche "<niche>" --source <source>
 Output JSON lands in `.tmp/viral-intel/<slug>.json` and stdout. The script
 self-installs `yt-dlp` / `google-genai` and reads `GEMINI_API_KEY` from `.env`.
 
+### Step 2b — Download fallback ladder (when the tool exits `DOWNLOAD_FAILED`)
+
+The tool already exhausted rungs 1–3 internally (plain yt-dlp → logged-in
+browser cookies → generic extractor). The agent climbs the rest — the goal is
+always a real MP4 **with audio**, because Gemini must hear the VO/music:
+
+4. **Resolve a direct .mp4 via a downloader service.** Use web tools
+   (firecrawl/WebFetch/browser) against a snaptik-class service — e.g.
+   snaptik.app or ssstik.io (TikTok), fdown.net or getfvid (Facebook reels),
+   snapinsta-class (Instagram) — paste the original link, extract the direct
+   .mp4 URL from the result page, then **re-run the tool with that direct
+   URL** (the generic extractor downloads plain .mp4 links fine). These
+   services churn and grow popups: when one works, record it here as the
+   known-good (WAT learn-and-adapt); when one dies, replace it.
+5. **Ask Neil for a manual download** (browser extension, or the service above
+   driven by hand) and take the file path instead.
+6. **Last resort — screen recording, WITH audio.** Windows Game Bar
+   (`Win+Alt+R`) and OBS both capture **system audio**, so sound is preserved;
+   phone screen recorders also capture audio. Tell Neil to play the video
+   full-screen, record, and hand over the file. Caveat for the entry: cropped
+   UI/watermarks may slightly distort caption-position and height% readings —
+   note `screen-recorded` in the entry's source field.
+
+Never skip the audio: a muted capture invalidates `edit_grammar` (SFX, music,
+silences) and the transcript — half the Edit DNA. If only a silent capture is
+possible, analyze anyway but mark those fields `LOW_CONFIDENCE` in the entry.
+
 ### Step 3 — Specificity gate
 
 Exit code 3 (`GENERIC_OUTPUT`) means the analysis lacked timestamps/numbers:

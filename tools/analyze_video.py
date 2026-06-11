@@ -120,9 +120,7 @@ def slugify(text: str) -> str:
     return slug[:60] or "video"
 
 
-def download_video(url: str, out_dir: Path) -> Path:
-    ensure_package("yt_dlp", "yt-dlp")
-    out_dir.mkdir(parents=True, exist_ok=True)
+def _run_ytdlp(url: str, out_dir: Path, extra_args: list[str]) -> tuple[Path | None, str]:
     cmd = [
         sys.executable, "-m", "yt_dlp", url,
         "--no-playlist",
@@ -131,14 +129,43 @@ def download_video(url: str, out_dir: Path) -> Path:
         "--no-simulate",
         "--print", "after_move:filepath",
         "--quiet", "--no-warnings",
+        *extra_args,
     ]
     result = subprocess.run(cmd, capture_output=True, text=True)
     if result.returncode != 0:
-        fail(2, "DOWNLOAD_FAILED", result.stderr.strip()[-800:] or "yt-dlp gave no error output")
+        return None, result.stderr.strip()[-300:] or "yt-dlp gave no error output"
     filepath = result.stdout.strip().splitlines()[-1] if result.stdout.strip() else ""
     if not filepath or not Path(filepath).is_file():
-        fail(2, "DOWNLOAD_FAILED", f"yt-dlp reported no output file (stdout: {result.stdout.strip()[:200]})")
-    return Path(filepath)
+        return None, f"yt-dlp reported no output file (stdout: {result.stdout.strip()[:200]})"
+    return Path(filepath), ""
+
+
+def download_video(url: str, out_dir: Path) -> Path:
+    """Fallback ladder: plain yt-dlp -> logged-in browser cookies (unlocks most
+    IG/FB on the cafe PC) -> generic extractor (handles direct .mp4 links, e.g.
+    ones resolved by a snaptik-class service). Each failure is collected so the
+    agent can pick the next rung (see viral-autopsy SKILL.md download ladder)."""
+    ensure_package("yt_dlp", "yt-dlp")
+    out_dir.mkdir(parents=True, exist_ok=True)
+    attempts = [
+        ("plain", []),
+        ("cookies:chrome", ["--cookies-from-browser", "chrome"]),
+        ("cookies:edge", ["--cookies-from-browser", "edge"]),
+        ("cookies:firefox", ["--cookies-from-browser", "firefox"]),
+        ("generic-extractor", ["--force-generic-extractor"]),
+    ]
+    errors = []
+    for label, extra in attempts:
+        print(f"[download] attempt {label}", file=sys.stderr)
+        path, err = _run_ytdlp(url, out_dir, extra)
+        if path:
+            return path
+        errors.append(f"[{label}] {err}")
+    fail(2, "DOWNLOAD_FAILED",
+         "all download attempts failed:\n  " + "\n  ".join(errors) +
+         "\nNext rungs (agent): resolve a direct .mp4 via a snaptik-class service and re-run "
+         "with that link; else ask Neil for a manual download or a Game Bar screen recording "
+         "(Win+Alt+R — captures system audio).")
 
 
 def analyze_with_gemini(video_path: Path, model: str, api_key: str) -> dict:
