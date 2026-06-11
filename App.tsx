@@ -846,26 +846,27 @@ const App: React.FC = () => {
           </GlassPanel>
         ) : (
           <div className="relative z-10 w-full flex flex-col items-center">
-            <div className="mb-4 md:mb-6 text-center flex flex-col items-center">
-              <div className="mb-2 md:mb-4">
-                <GrifonLogo className="h-16 md:h-20 w-auto text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]" />
+            {/* Compact header — the whole gateway must fit one phone screen without scrolling */}
+            <div className="mb-3 md:mb-6 text-center flex flex-col items-center">
+              <div className="mb-1.5 md:mb-3 flex items-center gap-2.5">
+                <GrifonLogo className="h-9 md:h-14 w-auto text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]" />
+                <h1 className="text-2xl md:text-4xl font-[900] italic text-white uppercase tracking-tighter">
+                  GRIFON
+                </h1>
               </div>
-              <h1 className="text-3xl md:text-5xl font-[900] italic text-white uppercase tracking-tighter mb-2">
-                GRIFON
-              </h1>
               {/* Outcome-first gateway copy — what the visitor GETS, not what the engine does */}
-              <h2 className="text-base md:text-lg font-bold uppercase tracking-tight text-zinc-200 mb-2">
+              <h2 className="text-sm md:text-lg font-bold uppercase tracking-tight text-zinc-200 mb-1">
                 YOUR FIRST AD IS{' '}
                 <span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">30 minutes</span>{' '}
                 AWAY.
               </h2>
-              <p className="text-[10px] font-mono text-zinc-500 tracking-[0.3em] uppercase flex items-center justify-center gap-2">
+              <p className="text-[9px] md:text-[10px] font-mono text-zinc-500 tracking-[0.3em] uppercase flex items-center justify-center gap-2">
                 <span className="w-1.5 h-1.5 shrink-0 rounded-full bg-[#FFCC00] animate-pulse shadow-[0_0_6px_rgba(255,204,0,0.8)]" aria-hidden="true" />
                 // FREE PLAN — NO CREDIT CARD NEEDED
               </p>
             </div>
 
-            <GlassPanel className="relative w-full max-w-md p-6 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <GlassPanel className="relative w-full max-w-md p-4 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
                 {/* Terminal-frame hairlines — gold HUD corners */}
                 <span aria-hidden="true" className="pointer-events-none absolute top-0 left-0 w-3 h-px bg-[#FFCC00]/60" />
                 <span aria-hidden="true" className="pointer-events-none absolute top-0 left-0 w-px h-3 bg-[#FFCC00]/60" />
@@ -876,7 +877,7 @@ const App: React.FC = () => {
                 <span aria-hidden="true" className="pointer-events-none absolute bottom-0 right-0 w-3 h-px bg-[#FFCC00]/60" />
                 <span aria-hidden="true" className="pointer-events-none absolute bottom-0 right-0 w-px h-3 bg-[#FFCC00]/60" />
                 {(authMode === 'sign_in' || authMode === 'sign_up') && (
-                  <div className="grid grid-cols-2 mb-6 -mt-1">
+                  <div className="grid grid-cols-2 mb-4 md:mb-6 -mt-1">
                     <button
                       type="button"
                       onClick={() => goToAuthMode('sign_up')}
@@ -908,7 +909,7 @@ const App: React.FC = () => {
                       type="button"
                       onClick={handleGoogleSignIn}
                       disabled={isSigningIn}
-                      className="w-full flex items-center justify-center gap-3 py-4 px-6 bg-zinc-950 border border-white/15 hover:border-[#FFCC00]/50 hover:bg-zinc-900 text-white font-medium text-sm rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed mb-6"
+                      className="w-full flex items-center justify-center gap-3 py-3 md:py-4 px-6 bg-zinc-950 border border-white/15 hover:border-[#FFCC00]/50 hover:bg-zinc-900 text-white font-medium text-sm rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed mb-4 md:mb-6"
                     >
                       <svg className="w-5 h-5 shrink-0" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8c-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4C12.955 4 4 12.955 4 24s8.955 20 20 20s20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/>
@@ -918,7 +919,7 @@ const App: React.FC = () => {
                       </svg>
                       {isSigningIn ? 'Connecting...' : 'Continue with Google'}
                     </button>
-                    <div className="flex items-center gap-3 mb-6">
+                    <div className="flex items-center gap-3 mb-4 md:mb-6">
                       <div className="flex-1 border-t border-white/10"></div>
                       <span className="text-[10px] font-mono text-zinc-500 tracking-widest uppercase">OR CONTINUE WITH EMAIL</span>
                       <div className="flex-1 border-t border-white/10"></div>
@@ -927,7 +928,7 @@ const App: React.FC = () => {
                 )}
 
                 {authMode === 'sign_in' && (
-                  <form onSubmit={handleLogin} className="space-y-6">
+                  <form onSubmit={handleLogin} className="space-y-4 md:space-y-6">
                     <Input
                       id="auth-email"
                       type="email"
@@ -970,9 +971,9 @@ const App: React.FC = () => {
                 )}
 
                 {authMode === 'sign_up' && (
-                  <form onSubmit={handleSignUp} className="space-y-5">
+                  <form onSubmit={handleSignUp} className="space-y-3 md:space-y-5">
                     {/* Free-plan claims mirror the pricing page — no invented numbers */}
-                    <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 -mt-1 mb-1 text-xs text-zinc-400">
+                    <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 -mt-1 text-[11px] md:text-xs text-zinc-400">
                       <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 shrink-0 text-[#FFCC00]" strokeWidth={2.5} /> 3 free ad workflows/mo</span>
                       <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 shrink-0 text-[#FFCC00]" strokeWidth={2.5} /> No credit card</span>
                       <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 shrink-0 text-[#FFCC00]" strokeWidth={2.5} /> Cancel anytime</span>
@@ -1009,7 +1010,7 @@ const App: React.FC = () => {
                     {authError && (
                       <p className="text-red-500 text-sm font-mono text-center border border-red-900/50 bg-red-900/20 p-2 rounded-xl">{authError}</p>
                     )}
-                    <GoldButton type="submit" className="w-full justify-center py-4" disabled={isSigningIn}>
+                    <GoldButton type="submit" className="w-full justify-center py-3 md:py-4" disabled={isSigningIn}>
                       {isSigningIn ? 'CREATING ACCOUNT...' : 'CREATE MY FREE ACCOUNT'}
                     </GoldButton>
                   </form>
@@ -1125,12 +1126,12 @@ const App: React.FC = () => {
                   </div>
                 )}
 
-                <div className="mt-8 pt-4 border-t border-white/10 flex flex-col items-center gap-3">
-                  {/* Same trust claim as the pricing page social-proof pill */}
-                  <div className="flex items-center gap-2 text-xs text-zinc-400">
-                    <span className="flex gap-0.5">
+                <div className="mt-4 md:mt-8 pt-3 md:pt-4 border-t border-white/10 flex flex-col items-center gap-2 md:gap-3">
+                  {/* Same trust claim as the pricing page social-proof pill — stars stacked above */}
+                  <div className="flex flex-col items-center gap-1.5 text-xs text-zinc-400 text-center">
+                    <span className="flex gap-1">
                       {[1, 2, 3, 4, 5].map((s) => (
-                        <Star key={s} className="w-3 h-3 shrink-0" strokeWidth={0} fill="#FFCC00" />
+                        <Star key={s} className="w-3.5 h-3.5 shrink-0" strokeWidth={0} fill="#FFCC00" />
                       ))}
                     </span>
                     Trusted by 100+ Filipino business owners
