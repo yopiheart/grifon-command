@@ -811,3 +811,29 @@ mp4, agents read the extracted frames. Also: the defreezer wipes git identity �
 nudges SAR off 1:1 (e.g. 2331:2332 at the end of a zoom-out ramp) and concat then rejects the
 mixed-SAR inputs with "Failed to configure output pad". Any dynamic scale in a per-scene chain
 must end `,setsar=1`. Unit-test strings can't catch this class — only the real-render harness can.
+
+### 2026-06-12 — Playwright tool results in main context silently dominated plan usage; delegate browser driving to a foreground subagent
+**Context:** Neil's Max 5x usage dashboard (7-day view) showed 50% of all plan usage came from
+the playwright MCP server and 80% of usage happened at >150k context. The server's tool
+*schemas* were never the cost (they're deferred via ToolSearch) — the cost is the tool
+**results**: every `browser_snapshot`/screenshot is 10–50k tokens and stays in the main
+conversation for the rest of the session, re-billed on every subsequent turn once past the
+prompt-cache window.
+**What went wrong:** Months of smoke tests and brand checks drove playwright directly in the
+main thread. Each individual call looked cheap; the compounding re-read of accumulated
+snapshots across long (>150k-context) sessions was invisible until the usage dashboard
+surfaced it as half the bill.
+**Lesson:** Any MCP server whose tool results are large (page snapshots, video frames, full
+API dumps) must be driven from inside a subagent — the results die with the subagent's context
+and only findings return. For this repo: browser work goes through the `smoke-tester` agent
+(its frontmatter now grants `mcp__playwright`), spawned in the **foreground**. This REFINES,
+not contradicts, the 2026-06-10 division of labor: that lesson's constraint was that
+*background* agents auto-deny permission prompts — a foreground subagent surfaces prompts
+fine, so privileged browser driving can live there; background agents stay read-only over
+`.tmp/` artifacts. Companion changes shipped same day: the statusline now goes red with a
+`/clear?` hint at 65% context, and `"model": "claude-fable-5"` is pinned in
+`.claude/settings.json`. Note the pin was originally `opusplan` (cheaper execution) but Neil
+overrode it mid-session: *"Make sure that the quality wouldn't sacrifice. It's better to
+spend more just to get the quality."* — so the savings strategy is hygiene-only (delegation
++ `/clear`), never model downgrades. Those two levers carry no quality cost; they're a
+quality GAIN, since reasoning degrades past ~100k context anyway.

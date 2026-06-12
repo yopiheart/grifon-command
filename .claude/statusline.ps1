@@ -36,17 +36,19 @@ $white  = "$ESC[37m"
 # --- Context budget segment ---
 $ctxSegment = ""
 if ($used -ne $null) {
-    if ($used -lt 50) {
+    $hint = ""
+    if ($used -lt 40) {
         $ctxColor = $green
         $icon = "o"
-    } elseif ($used -lt 75) {
+    } elseif ($used -lt 65) {
         $ctxColor = $yellow
         $icon = "!"
     } else {
         $ctxColor = $red
         $icon = "X"
+        $hint = " ${dim}/clear?${reset}"
     }
-    $ctxSegment = "${ctxColor}[$icon ctx:${used}%]${reset}"
+    $ctxSegment = "${ctxColor}[$icon ctx:${used}%]${reset}${hint}"
 } else {
     $ctxSegment = "${dim}[ctx:-]${reset}"
 }
