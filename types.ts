@@ -159,12 +159,14 @@ export interface FinalRenderScene {
   captionRegion?: { yFracTop: number; yFracBottom: number };
 }
 
-/** End-card burn-ins for the LAST scene: offer recap + price-anchor callout. */
+/** End-card burn-in for the LAST scene: the offer recap line.
+ * Price-anchor callout removed 2026-06-13 (Neil): PH advertisers hide price in
+ * ads to drive curiosity DMs — and the fixed-band overlay sat on the
+ * presenter's face. Don't reintroduce without a face-aware placement AND a
+ * marketing case. */
 export interface FinalRenderEndCard {
   /** Offer recap line, e.g. "FIRST 50: FREE DRIP BAG". Prefilled from the wizard offer. */
   recapText?: string;
-  /** Price-anchor line, e.g. "₱899 VALUE — TODAY ₱499". */
-  priceAnchorText?: string;
 }
 
 export interface FinalRenderRequest {
@@ -174,7 +176,7 @@ export interface FinalRenderRequest {
   music?: { style: 'mrbeast' | 'temu' | 'testimonial'; enabled: boolean };
   /** Explicit edit-style override; absent → server rotates deterministically. */
   preset?: { id?: 'classic' | 'impact' | 'hype' | 'clean' };
-  /** Offer recap + price-anchor overlays held to the end of the last scene. */
+  /** Offer-recap overlay held to the end of the last scene. */
   endCard?: FinalRenderEndCard;
 }
 

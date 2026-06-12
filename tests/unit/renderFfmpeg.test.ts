@@ -311,16 +311,16 @@ describe('planScene', () => {
   });
 });
 
-describe('planEndCardLayers', () => {
-  const card = { recapText: 'FIRST 50: FREE DRIP BAG', priceAnchorText: '₱899 VALUE — TODAY ₱499' };
+describe('planEndCardLayers (recap only — price anchor removed 2026-06-13)', () => {
+  const card = { recapText: 'FIRST 50: FREE DRIP BAG' };
   it('returns [] when the end card is absent or blank', () => {
     expect(planEndCardLayers(undefined, 5, DIMS)).toEqual([]);
     expect(planEndCardLayers({}, 5, DIMS)).toEqual([]);
-    expect(planEndCardLayers({ recapText: '  ', priceAnchorText: '🔥' }, 5, DIMS)).toEqual([]);
+    expect(planEndCardLayers({ recapText: '  ' }, 5, DIMS)).toEqual([]);
   });
-  it('recap: gold highlight, pop-in, holds to the trim end, NO sfx (anchor owns the accent)', () => {
+  it('recap: gold highlight, pop-in, holds to the trim end, NO sfx', () => {
     const layers = planEndCardLayers(card, 5, DIMS) as any[];
-    expect(layers).toHaveLength(2);
+    expect(layers).toHaveLength(1);
     const recap = layers[0];
     expect(recap.color).toBe('0xFFCC00');               // CLASSIC highlightColor
     expect(recap.anim).toBe('pop');
@@ -328,29 +328,27 @@ describe('planEndCardLayers', () => {
     expect(recap.endSec).toBe(5);                       // holds to scene end, no 1.5s cutoff
     expect(recap.emphasisSfx).toBeUndefined();          // 0.3s would collide with cut/overlay sfx
   });
-  it('anchor stacks BELOW the recap, white fill, staggered in, ding', () => {
-    const layers = planEndCardLayers(card, 5, DIMS) as any[];
-    const [recap, anchor] = layers;
-    expect(anchor.yBase).toBeGreaterThan(recap.yBase);  // stacked under, never overlapping
-    expect(anchor.color).toBe('white');
-    expect(anchor.startSec).toBeCloseTo(0.8);
-    expect(anchor.endSec).toBe(5);
-    expect(anchor.emphasisSfx).toBe('ding');            // CLASSIC punchline sfx
-    expect(anchor.text).toContain('₱');                 // peso glyph survives the strip
-    expect(anchor.text).not.toContain('—');             // em-dash dropped (caption rule)
+  it('ignores a stale priceAnchorText field (removed; zod also strips it server-side)', () => {
+    const stale = { recapText: 'FREE SHIPPING TODAY', priceAnchorText: '₱499 ONLY' } as any;
+    expect(planEndCardLayers(stale, 5, DIMS)).toHaveLength(1);
   });
-  it('a single field still renders alone', () => {
-    expect(planEndCardLayers({ recapText: 'FREE SHIPPING TODAY' }, 5, DIMS)).toHaveLength(1);
-    expect(planEndCardLayers({ priceAnchorText: '₱499 ONLY' }, 5, DIMS)).toHaveLength(1);
-  });
-  it('skips lines that cannot show ≥0.4s before the scene ends', () => {
-    // 0.6s scene: recap (in at 0.3) fits 0.3s → dropped; anchor (0.8) starts after the end.
+  it('skips a recap that cannot show ≥0.4s before the scene ends', () => {
     expect(planEndCardLayers(card, 0.6, DIMS)).toEqual([]);
   });
-  it('drops a line that duplicates text the scene already burns (EDL overlay / caption)', () => {
-    const layers = planEndCardLayers(card, 5, DIMS, undefined, ['First 50, free drip bag!']) as any[];
-    expect(layers).toHaveLength(1);                     // recap deduped away
-    expect(layers[0].text).toContain('₱');              // anchor survives
+  it('drops a recap that duplicates text the scene already burns (EDL overlay / caption)', () => {
+    expect(planEndCardLayers(card, 5, DIMS, undefined, ['First 50, free drip bag!'])).toEqual([]);
+  });
+  it('face-aware: with a measured captionRegion the recap moves to the band top, not 0.26h', () => {
+    // Talking-head close: face fills the upper-middle; clear band is the lower third.
+    const region = { yFracTop: 0.62, yFracBottom: 0.85 };
+    const fixed = planEndCardLayers(card, 5, DIMS) as any[];
+    const aware = planEndCardLayers(card, 5, DIMS, undefined, [], region) as any[];
+    expect(fixed[0].yBase).toBe(Math.round(1920 * 0.26));      // legacy fixed band
+    expect(aware[0].yBase).toBe(Math.round(1920 * 0.62));      // top of face-clear band
+  });
+  it('face-aware y stays clamped inside the safe zone', () => {
+    const aware = planEndCardLayers(card, 5, DIMS, undefined, [], { yFracTop: 0.99, yFracBottom: 1 }) as any[];
+    expect(aware[0].yBase).toBeLessThan(1920);                  // not pushed off-frame
   });
 });
 
@@ -427,5 +425,24 @@ describe('pickSceneSfx (restraint: no stacking, capped whooshes, emphasis wins)'
   it('respects already-placed times across scenes (min-gap is global)', () => {
     const cands: SfxCandidate[] = [{ sfxId: 'ding', globalSec: 5.2, transition: false }];
     expect(pickSceneSfx(cands, [5.0], 0).length).toBe(0); // 5.2 within 0.4 of placed 5.0
+  });
+  it('caps any single emphasis sound at 2 per ad (every-scene "drop" tick, 2026-06-13)', () => {
+    // 7 scenes all defaulting the same EDL cue, well beyond min-gap
+    const drops: SfxCandidate[] = [2, 7, 12, 17, 22, 27, 32].map(
+      (t) => ({ sfxId: 'drop', globalSec: t, transition: false })
+    );
+    expect(pickSceneSfx(drops, [], 0).length).toBe(2);
+    // distinct sounds are unaffected by each other's budgets
+    const varied: SfxCandidate[] = [
+      { sfxId: 'drop', globalSec: 2, transition: false },
+      { sfxId: 'ding', globalSec: 7, transition: false },
+      { sfxId: 'boom', globalSec: 12, transition: false },
+    ];
+    expect(pickSceneSfx(varied, [], 0).length).toBe(3);
+  });
+  it('threads per-sound use across scenes via soundUse', () => {
+    const cand: SfxCandidate[] = [{ sfxId: 'drop', globalSec: 20, transition: false }];
+    expect(pickSceneSfx(cand, [], 0, 3, 0.4, { drop: 2 }).length).toBe(0); // budget spent in earlier scenes
+    expect(pickSceneSfx(cand, [], 0, 3, 0.4, { drop: 1 }).length).toBe(1); // 1 left
   });
 });

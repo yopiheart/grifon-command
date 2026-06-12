@@ -85,6 +85,11 @@ const CALLOUT_LEAD = 0.3; // delay a callout/punchline so its pop reads distinct
 // tied to overlays and self-limit, and they win when a whoosh collides with them.
 const MIN_SFX_GAP = 0.4;   // seconds between any two placed SFX
 const MAX_WHOOSH = CLASSIC.sfx.maxWhoosh; // transition whooshes per ad
+// Any single emphasis sound max 2x per ad: the EDL happily defaults the same
+// cue onto every scene ("drop" ticked on all 7 scenes, 2026-06-13 final-render
+// review) and an identical repeating SFX is itself an AI-slop tell. Transition
+// whooshes are exempt — they already have their own maxWhoosh budget.
+const MAX_PER_SOUND = 2;
 
 // Resolve `assets/<rel>` from either the compiled module dir (local/dev) or the
 // repo-root path Vercel's includeFiles preserves into the lambda. `GRIFON_ASSET_DIR`
@@ -435,21 +440,26 @@ export interface SfxCandidate {
 /**
  * Pick which of a scene's SFX candidates to keep, given what's already placed
  * across the ad. Rules: emphasis wins over transitions (sorted first), nothing
- * lands within `minGap` of an already-placed sound (kills stacking), and
- * transition whooshes are capped at `maxWhoosh` per ad. Pure + order-stable so it
- * unit-tests cleanly; the caller threads `placedSec` / `whooshUsed` across scenes.
+ * lands within `minGap` of an already-placed sound (kills stacking), transition
+ * whooshes are capped at `maxWhoosh` per ad, and any single emphasis sound is
+ * capped at `maxPerSound` per ad (the every-scene "drop" tick). Pure +
+ * order-stable so it unit-tests cleanly; the caller threads `placedSec` /
+ * `whooshUsed` / `soundUse` across scenes.
  */
 export function pickSceneSfx(
   candidates: SfxCandidate[],
   placedSec: number[],
   whooshUsed: number,
   maxWhoosh: number = MAX_WHOOSH,
-  minGap: number = MIN_SFX_GAP
+  minGap: number = MIN_SFX_GAP,
+  soundUse: Partial<Record<SfxBankId, number>> = {},
+  maxPerSound: number = MAX_PER_SOUND
 ): SfxCandidate[] {
   const ordered = [...candidates].sort(
     (a, b) => Number(a.transition) - Number(b.transition) || a.globalSec - b.globalSec
   );
   const placed = [...placedSec];
+  const use: Partial<Record<SfxBankId, number>> = { ...soundUse };
   const kept: SfxCandidate[] = [];
   let whoosh = whooshUsed;
   for (const c of ordered) {
@@ -457,6 +467,9 @@ export function pickSceneSfx(
     if (c.transition) {
       if (whoosh >= maxWhoosh) continue;
       whoosh++;
+    } else {
+      if ((use[c.sfxId] ?? 0) >= maxPerSound) continue;
+      use[c.sfxId] = (use[c.sfxId] ?? 0) + 1;
     }
     kept.push(c);
     placed.push(c.globalSec);
@@ -665,27 +678,31 @@ export function planScene(
   return layers;
 }
 
-// ---- End-card overlays (offer recap + price-anchor callout) ----
-// Burned ONLY into the LAST scene (the CTA close): gold offer-recap line over a
-// smaller price-anchor line, both popping in and holding to the end of the ad.
-// Stacked in the upper-middle band — below the hook band (hook is scene 1 only
-// anyway) and above the caption/CTA band the punchline already owns — so the
-// existing overlay/caption engine is untouched and nothing collides.
+// ---- End-card overlay (offer recap) ----
+// Burned ONLY into the LAST scene (the CTA close): a gold offer-recap line
+// popping in and holding to the end of the ad. (The price-anchor second line
+// was removed 2026-06-13 — PH advertisers hide price to drive curiosity DMs.)
+// Default band is upper-middle, but when the scene carries a measured
+// face-clear band (captionRegion — the same signal captions use) the recap
+// drops to the TOP of that band instead: the fixed 0.26h band sat directly on
+// the presenter's head in talking-head closes (2026-06-13 final-render review).
+// Captions center at the band's mid, so band-top keeps the two clear.
 const END_CARD_TOP_FRAC = 0.26;
-const END_CARD_RECAP_IN = 0.3, END_CARD_ANCHOR_IN = 0.8;
+const END_CARD_RECAP_IN = 0.3;
 
 export function planEndCardLayers(
   endCard: FinalRenderEndCard | undefined,
   trimSec: number | null,
   dims: [number, number],
   preset: RenderPreset = CLASSIC,
-  // Texts the scene already burns (EDL overlay, script line) — a recap/anchor
-  // that duplicates one is dropped, mirroring planScene's overlay-vs-caption dedup.
-  existingTexts: (string | undefined)[] = []
+  // Texts the scene already burns (EDL overlay, script line) — a recap that
+  // duplicates one is dropped, mirroring planScene's overlay-vs-caption dedup.
+  existingTexts: (string | undefined)[] = [],
+  // The last scene's measured face-clear band; absent → fixed upper-middle band.
+  captionRegion?: { yFracTop: number; yFracBottom: number }
 ): DrawLayer[] {
   const recap = endCard?.recapText ? stripUnrenderable(endCard.recapText) : '';
-  const anchor = endCard?.priceAnchorText ? stripUnrenderable(endCard.priceAnchorText) : '';
-  if (!recap && !anchor) return [];
+  if (!recap) return [];
   const existing = existingTexts.filter((t): t is string => !!t).map(normText);
   const dup = (t: string) => existing.includes(normText(t));
   const [, h] = dims;
@@ -693,28 +710,20 @@ export function planEndCardLayers(
   const end = typeof trimSec === 'number' && trimSec > 0 ? trimSec : 999;
   const adv = preset.caption.advRatio;
   const layers: DrawLayer[] = [];
-  let y = Math.round(h * END_CARD_TOP_FRAC);
+  // Face-aware: top of the face-clear band when measured (captions own the
+  // band's mid), clamped inside the safe zone; else the legacy fixed band.
+  const y = captionRegion
+    ? Math.min(Math.max(Math.round(h * captionRegion.yFracTop), sz.topY), sz.bottomY - Math.round(h * preset.caption.overlaySizeFrac))
+    : Math.round(h * END_CARD_TOP_FRAC);
 
-  if (recap && !dup(recap) && end - END_CARD_RECAP_IN >= 0.4) {
+  if (!dup(recap) && end - END_CARD_RECAP_IN >= 0.4) {
     const { fontsize, lines } = fitText(recap, sz.usableW, Math.round(h * preset.caption.overlaySizeFrac), adv);
-    // No emphasisSfx on the recap: at 0.3s it would collide (min-gap 0.4) with the
-    // cut whoosh / the EDL overlay's own sound and evict one — the anchor's ding
-    // at 0.8s is the single end-card accent.
+    // No emphasisSfx on the recap: at 0.3s it would collide (min-gap 0.4) with
+    // the cut whoosh / the EDL overlay's own sound and evict one.
     layers.push({
       kind: 'text', text: lines.join('\n'), fontsize, color: preset.caption.highlightColor,
       boxAlpha: preset.caption.boxAlpha, xExpr: '(w-text_w)/2', yBase: y,
       startSec: END_CARD_RECAP_IN, endSec: end, anim: 'pop',
-    });
-    y += Math.round(lines.length * fontsize * 1.15 + fontsize * 0.5);
-  }
-
-  if (anchor && !dup(anchor) && end - END_CARD_ANCHOR_IN >= 0.4) {
-    const { fontsize, lines } = fitText(anchor, sz.usableW, Math.round(h * preset.caption.baseSizeFrac), adv);
-    layers.push({
-      kind: 'text', text: lines.join('\n'), fontsize, color: preset.caption.fillColor,
-      boxAlpha: preset.caption.boxAlpha, xExpr: '(w-text_w)/2', yBase: y,
-      startSec: END_CARD_ANCHOR_IN, endSec: end, anim: 'pop',
-      emphasisSfx: preset.sfx.overlayMap.punchline ?? undefined,
     });
   }
   return layers;
@@ -1571,6 +1580,7 @@ export async function renderFinalVideo(
     // SFX restraint state, threaded across scenes (whole-ad timeline).
     const placedSec: number[] = [];
     let whooshUsed = 0;
+    const soundUse: Partial<Record<SfxBankId, number>> = {};
     let elapsed = 0; // cumulative timeline position = current scene's start
 
     for (let i = 0; i < ordered.length; i++) {
@@ -1613,7 +1623,7 @@ export async function renderFinalVideo(
         endCardLayers = planEndCardLayers(endCard, trimSec, dims, preset, [
           scene.overlayText?.[0]?.text,
           scene.scriptLine,
-        ]);
+        ], scene.captionRegion);
         layers.push(...endCardLayers);
       } else if (isLastScene && endCard && scene.isHook) {
         console.log('[renderFfmpeg] endCard skipped: last scene is the hook (band collision)');
@@ -1641,7 +1651,7 @@ export async function renderFinalVideo(
 
       // Restraint: keep it tasteful (no stacking, capped whooshes, emphasis wins).
       const sfx: PreparedSfx[] = [];
-      for (const c of pickSceneSfx(cands, placedSec, whooshUsed, preset.sfx.maxWhoosh)) {
+      for (const c of pickSceneSfx(cands, placedSec, whooshUsed, preset.sfx.maxWhoosh, MIN_SFX_GAP, soundUse)) {
         const p = sfxPath(c.sfxId);
         const anchor = clampAnchor(c.globalSec - elapsed, trimSec);
         if (!p) { console.warn(`[renderFfmpeg] sfx missing: ${c.sfxId}`); continue; }
@@ -1649,6 +1659,7 @@ export async function renderFinalVideo(
         sfx.push({ path: p, anchorSec: anchor });
         placedSec.push(c.globalSec);
         if (c.transition) whooshUsed++;
+        else soundUse[c.sfxId] = (soundUse[c.sfxId] ?? 0) + 1;
       }
 
       // Camera move: EDL hint (or preset default), punches at caption-chunk
