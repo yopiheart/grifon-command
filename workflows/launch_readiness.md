@@ -608,6 +608,8 @@ After all 6 ship: bundled commit, then beta launch.
 | Strategic Audit prompt rewrite — current is generic and self-praising | Quality concern, not a beta blocker |
 | 40-second ad length — tighten storyboard prompt to 5-6 scenes (~25-30s ads) | Beta will tell us if length is the bottleneck |
 | Wizard input audit follow-up | Superseded for `offer`/`separator`/`audience` by polish-bundle item #3e. Remaining v1.2: instrument Step 1/2 fill-rates per field across beta cohort once #3e ships. Beta data > assumptions. |
+| Storyboard prompt rule: max 2 consecutive same-type scenes (CMO-endorsed, Neil parked 2026-06-13 "tomorrow with other pendings") | Kills the testimonial triple-b-roll mid-ad dead zone (scenes 3-4-5 ≈ 18-24s faceless = retention drop). One tuned-prompt line in `api/_lib/prompts.ts` storyboard flow — needs Neil's explicit go since it's tuned. Convert the middle b-roll to a talking reaction beat. |
+| Live-verify the 2026-06-13 fix batch (`2e70c5a`…`1ea88e3`) on next FINAL_RENDER | Neil verifying himself: (1) opening line ≤2 English words → whole VO Filipino, (2) captions land ON the spoken word (forced alignment), (3) no repeating SFX tick, (4) recap face-aware + no ₱, (5) watch "swabe" for regression now phonetics are gone. `tools/render_qa.mjs <url>` machine-watches it first. |
 
 ## Readiness Gates
 
