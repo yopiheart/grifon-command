@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Loader2, Lock } from 'lucide-react';
 import { GlassPanel } from './ui/GlassPanel';
 import { MessengerFloat } from './ui/MessengerFloat';
@@ -67,21 +67,45 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack, onViewLegal 
   // Gate on terms agreed + a contact number entered (basic PH length check).
   const canSubmit = agreedToTerms && phone.replace(/\D/g, '').length >= 10;
 
+  // Intents cached per cycle+add-ons so the monthly↔annual toggle swaps prices instantly
+  // instead of waiting on a fresh server round-trip. Math stays server-authoritative —
+  // every cached entry is a real server-issued intent for exactly that combination.
+  const intentCache = useRef<Map<string, IntentResponse>>(new Map());
+  const intentKey = (c: BillingCycle, addOns: string[]) => `${c}|${[...addOns].sort().join(',')}`;
+
   useEffect(() => {
     let cancelled = false;
     setIntentError(null);
-    fetchIntent(planId, cycle, selectedAddOns)
-      .then((res) => {
-        if (!cancelled) setIntent(res);
-      })
-      .catch((err: Error) => {
-        if (cancelled) return;
-        if (err.message === 'NOT_AUTHENTICATED') {
-          setIntentError('You need to sign in before checking out.');
-        } else {
-          setIntentError(err.message ?? 'Could not start your checkout. Please try again.');
-        }
-      });
+    const key = intentKey(cycle, selectedAddOns);
+    const cached = intentCache.current.get(key);
+    if (cached) {
+      setIntent(cached);
+    } else {
+      fetchIntent(planId, cycle, selectedAddOns)
+        .then((res) => {
+          intentCache.current.set(key, res);
+          if (!cancelled) setIntent(res);
+        })
+        .catch((err: Error) => {
+          if (cancelled) return;
+          if (err.message === 'NOT_AUTHENTICATED') {
+            setIntentError('You need to sign in before checking out.');
+          } else {
+            setIntentError(err.message ?? 'Could not start your checkout. Please try again.');
+          }
+        });
+    }
+    // Warm the opposite cycle in the background so the first toggle is also instant.
+    // A miss here is non-fatal — the toggle just falls back to a live fetch.
+    const otherCycle: BillingCycle = cycle === 'monthly' ? 'annual' : 'monthly';
+    const otherKey = intentKey(otherCycle, selectedAddOns);
+    if (!intentCache.current.has(otherKey)) {
+      fetchIntent(planId, otherCycle, selectedAddOns)
+        .then((res) => {
+          intentCache.current.set(otherKey, res);
+        })
+        .catch(() => {});
+    }
     return () => {
       cancelled = true;
     };
