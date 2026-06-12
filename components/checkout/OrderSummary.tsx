@@ -4,6 +4,7 @@ import { GlassPanel } from '../ui/GlassPanel';
 import { AnimatedBorder } from '../ui/AnimatedBorder';
 import { CheckoutReservation } from './CheckoutReservation';
 import { CycleToggle } from './CycleToggle';
+import { SignatureScribble } from '../landing/SignatureScribble';
 import { ORDER_BUMP } from '../../config/checkout';
 
 interface OrderSummaryProps {
@@ -79,7 +80,8 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
 
       <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">Subscribe to</p>
       <h1 className="text-xl font-semibold text-white mb-6">
-        {planName} <span className="text-zinc-500">— {cycle}</span>
+        {planName}{' '}
+        <span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">— {cycle}</span>
       </h1>
 
       <div className="mb-6">
@@ -90,8 +92,12 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
           per {cycle === 'monthly' ? 'month' : 'year'}
         </p>
         {cycle === 'monthly' && (
-          <p className="text-zinc-500 text-xs mt-1">
-            Just <span className="text-[#FFCC00]">₱{Math.floor(planCentavos / 100 / 30)}/day</span> — less than your morning coffee.
+          <p className="text-zinc-400 text-sm mt-2.5">
+            Just{' '}
+            <SignatureScribble variant="circle" delay={0.5} strokeWidth={2}>
+              <span className="font-serif italic text-lg text-[#FFCC00] px-0.5">₱{Math.floor(planCentavos / 100 / 30)}/day</span>
+            </SignatureScribble>{' '}
+            — less than your morning coffee.
           </p>
         )}
         {cycle === 'annual' && monthlyEquivalentCentavos !== undefined && (
@@ -205,15 +211,19 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
         )}
       </div>
 
-      <div className="border-t border-white/10 my-6" />
+      {/* Receipt stub — perforated edge, mono ledger type. The money moment gets ceremony. */}
+      <div className="border-t border-dashed border-white/25 my-6" />
 
-      <div className="flex justify-between items-baseline">
-        <span className="text-white font-semibold">Total due today</span>
-        <span className="text-2xl font-bold text-white">
+      <div className="flex justify-between items-baseline font-mono">
+        <span className="text-[11px] text-zinc-300 uppercase tracking-[0.2em]">Total due today</span>
+        <span className="text-2xl font-bold text-white tracking-tight">
           <span className="text-[#FFCC00]">&#8369;</span>
           {(totalCentavos / 100).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
         </span>
       </div>
+      <p className="mt-2 text-right text-[10px] font-mono uppercase tracking-widest text-zinc-600">
+        // One-time payment — no auto-renew
+      </p>
 
       <button
         type="button"

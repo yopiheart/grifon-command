@@ -21,6 +21,8 @@ interface SiteHeaderProps {
   /** Show the LOG IN link (landing yes, pricing optional). */
   showLogin?: boolean;
   ctaLabel?: string;
+  /** Href of the section currently in view — gets the gold squiggle-strike treatment. */
+  activeHref?: string;
 }
 
 const SoundToggle: React.FC<{ className?: string; withLabel?: boolean }> = ({
@@ -47,12 +49,36 @@ const SoundToggle: React.FC<{ className?: string; withLabel?: boolean }> = ({
   );
 };
 
+// Hand-drawn squiggle underline for the active nav label (landonorris.com pattern,
+// underline position — strike-through is reserved for dead prices on this site).
+const ActiveSquiggle: React.FC = () => (
+  <svg
+    className="absolute -inset-x-1 -bottom-[0.45em] h-[0.5em] w-[calc(100%+0.5rem)] pointer-events-none"
+    viewBox="0 0 100 20"
+    preserveAspectRatio="none"
+    fill="none"
+    aria-hidden="true"
+  >
+    <motion.path
+      d="M2 12 C 18 16, 38 6, 58 10 C 72 13, 88 8, 98 12"
+      stroke="#FFCC00"
+      strokeWidth={2.5}
+      strokeLinecap="round"
+      vectorEffect="non-scaling-stroke"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 0.45, ease: 'easeInOut' }}
+    />
+  </svg>
+);
+
 export const SiteHeader: React.FC<SiteHeaderProps> = ({
   onEnterApp,
   navLinks = [],
   onLogoClick,
   showLogin = true,
   ctaLabel = 'START FREE',
+  activeHref,
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -66,11 +92,16 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
     if (link.onClick) link.onClick();
   };
 
-  // Desktop nav item with an animated gold underline on hover.
+  // Desktop nav item with an animated gold underline on hover; the in-view
+  // section gets the squiggle-strike instead (keyed so it redraws on change).
   const renderNavLink = (link: SiteNavLink) => {
-    const cls =
-      'group relative text-[11px] font-mono uppercase tracking-[0.2em] text-zinc-400 hover:text-white transition-colors cursor-pointer';
-    const underline = (
+    const isActive = !!link.href && link.href === activeHref;
+    const cls = `group relative text-[11px] font-mono uppercase tracking-[0.2em] transition-colors cursor-pointer ${
+      isActive ? 'text-white' : 'text-zinc-400 hover:text-white'
+    }`;
+    const underline = isActive ? (
+      <ActiveSquiggle key={link.href} />
+    ) : (
       <span className="absolute -bottom-1.5 left-0 h-px w-full bg-[#FFCC00] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
     );
     return link.href ? (
@@ -93,7 +124,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
     >
       <img src="/logo.png" alt="GRIFON Logo" className="h-8 w-auto object-contain" />
       <span className="font-black text-xl tracking-tighter text-white italic">
-        GRIFON<span className="text-[#FFCC00]">.AI</span>
+        GRIFON
       </span>
     </div>
   );
@@ -184,7 +215,10 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
                     onClick={() => setMenuOpen(false)}
                     className="py-3 text-lg font-mono uppercase tracking-[0.2em] text-zinc-300 hover:text-[#FFCC00] transition-colors border-b border-white/5"
                   >
-                    {link.label}
+                    <span className="relative inline-block">
+                      {link.label}
+                      {link.href === activeHref && <ActiveSquiggle />}
+                    </span>
                   </a>
                 ) : (
                   <button
