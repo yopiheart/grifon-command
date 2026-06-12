@@ -7,7 +7,6 @@ import {
   BudgetStatus,
 } from '../types';
 import { getSupabase } from './supabaseClient';
-import { normalizeTaglish } from './phoneticNormalizer';
 
 const getAccessToken = async (): Promise<string> => {
   const sb = getSupabase();
@@ -40,15 +39,12 @@ const postForAudio = async (
 };
 
 export const synthesizeSpeech = async (req: TtsRequest): Promise<string> =>
-  // normalizeTaglish was written for exactly this path but never wired in — TTS
-  // pronounced "swabe" as English "swave" (2026-06-10 final-render review).
-  // Respell Taglish tokens before synthesis; the burned captions use the
-  // original text (this only changes what the TTS engine hears).
-  postForAudio(
-    '/api/elevenlabs/text-to-speech',
-    { ...req, text: normalizeTaglish(req.text) },
-    'TTS_SYNTHESIS_FAILED'
-  );
+  // Raw Taglish goes to TTS verbatim. Phonetic respelling was removed
+  // 2026-06-13 (Neil): per-word respellings ("moo-khah") read WORSE than the
+  // engine's own pronunciation, and the script-opening language rule in the
+  // adscript prompt now handles accent detection at the root. See
+  // agent_lessons.md 2026-06-13 before reintroducing any respelling.
+  postForAudio('/api/elevenlabs/text-to-speech', { ...req }, 'TTS_SYNTHESIS_FAILED');
 
 export const convertSpeech = async (req: VoiceChangerRequest): Promise<string> => {
   if (!req.sourceFile) throw new Error('STS_MISSING_SOURCE');

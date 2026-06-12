@@ -9,8 +9,6 @@
 // "do not modify" contract, so these constants are duplicated here. If you tune
 // the model ID or stability curve in one place, update the other to match.
 
-import { normalizeTaglish } from '../../services/phoneticNormalizer.js';
-
 export type StabilityMode = 'creative' | 'natural' | 'robust';
 
 const TTS_MODEL_ID = 'eleven_v3';
@@ -61,12 +59,11 @@ export async function synthesizeTts(
         Accept: 'audio/mpeg',
       },
       body: JSON.stringify({
-        // Taglish phonetic respelling — the batch consolidator is the path that
-        // actually voices scene VO, and it bypasses the client's voiceService
-        // (2026-06-10: "swabe" reached ElevenLabs raw and synthesized "swave"
-        // even after the client-side wiring). Captions keep the original text;
-        // only what the TTS engine hears changes.
-        text: normalizeTaglish(text),
+        // Raw Taglish verbatim — phonetic respelling removed 2026-06-13 (Neil:
+        // respellings like "moo-khah" read worse than the engine's own
+        // pronunciation; the adscript opening-language rule handles accent
+        // detection at the root). See agent_lessons.md 2026-06-13.
+        text,
         model_id: TTS_MODEL_ID,
         voice_settings: stabilitySettings(stabilityMode),
       }),
