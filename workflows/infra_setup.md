@@ -23,7 +23,8 @@ Track status in this section. Update as items complete.
 ### 2. PayMongo (Billing, PH market) — TEST MODE LIVE 2026-05-02
 - [x] Test API keys in `.env` (`PAYMONGO_PUBLIC_KEY`, `PAYMONGO_SECRET_KEY`, `PAYMONGO_WEBHOOK_SECRET`)
 - [x] Same three keys added to Vercel (Production scope)
-- [x] Test webhook registered in PayMongo Test Mode dashboard at `https://app.grifon.ai/api/webhook` listening for `checkout_session.payment.paid`
+- [x] Test webhook registered in PayMongo Test Mode dashboard, listening for `checkout_session.payment.paid`
+  - [ ] **2026-06-13 TODO: re-point webhook URL from `https://app.grifon.ai/api/webhook` → `https://grifon.ai/api/webhook`** (canonical-domain cutover). The 308 redirect makes the old URL still resolve, but webhooks POST — don't rely on a redirect for them; point at the apex directly.
 - [x] Webhook signing secret pasted into Vercel `PAYMONGO_WEBHOOK_SECRET` (matches PayMongo's value)
 - [x] Products/prices match `GrifonPricingPage.tsx` (catalog defined in `api/_lib/paymongo.ts:23-45`)
 - [x] Checkout tested end-to-end with `4343 4343 4343 4345` — subscription row activated in Supabase, UI tier reflected
@@ -43,17 +44,23 @@ Track status in this section. Update as items complete.
 - [ ] Quota confirmed (which tier? which models?)
 - [ ] Billing alert set
 
-### 5. Domain: grifon.ai — PURCHASED 2026-05-02
+### 5. Domain: grifon.ai — PRIMARY / CANONICAL 2026-06-13
 - [x] Registrar: Vercel (DNS auto-managed, no nameserver config needed)
 - [x] `grifon.ai` purchased
 - [x] Nameservers configured (handled by Vercel since they sold the domain)
+- [x] **`grifon.ai` attached to Vercel project as Production primary — serves the whole app (landing + dashboard, path-based routing). Verified 200 + SSL.**
+- [x] **`www.grifon.ai` attached (serves app; canonical tag points to apex grifon.ai)**
+- [x] **Canonical-domain cutover 2026-06-13:** every hardcoded `app.grifon.ai` SEO/canonical ref in repo replaced with `grifon.ai` (index.html, sitemap.xml, robots.txt, llms.txt, .env.example) — commit `a532276`. Routing is path-based, no app-logic change.
+- [x] Supabase Auth: Site URL → `https://grifon.ai`; Redirect URLs include `https://grifon.ai/**` (kept `app.grifon.ai/**` for in-flight magic-link cutover)
+- [x] Vercel Production env `APP_URL=https://grifon.ai` (drives PayMongo success/cancel in `api/checkout.ts:48`)
 
-### 6. Subdomain: app.grifon.ai — LIVE 2026-05-02
+### 6. Subdomain: app.grifon.ai — NOW 308-REDIRECTS TO grifon.ai (was primary, 2026-05-02 → 2026-06-13)
 - [x] Vercel project `grifon-command` created (team `neilmaglayabusiness22-2085s-projects`, Hobby plan)
 - [x] Linked to GitHub repo `yopiheart/grifon-command`, branch `main` (every push auto-deploys)
 - [x] `app.grifon.ai` attached, SSL valid
+- [x] **`app.grifon.ai` → 308 Permanent Redirect → `grifon.ai` (verified: `/` and `/pricing` both 308). Kept alive indefinitely so old links/bookmarks/indexed URLs pass SEO equity to apex.**
 - [x] Production env vars pasted (Supabase URL/anon/service-role, Gemini, ElevenLabs, APP_URL, APP_ENV=production, GRIFON_VOICE_CLONING_ENABLED=false)
-- [x] First production deploy reachable at https://app.grifon.ai
+- [x] First production deploy reachable at https://app.grifon.ai (now redirects)
 - Outstanding: Vercel billing address incomplete (Settings → Billing → Update Address) — non-blocking but Vercel will eventually nag
 
 ## Tools
