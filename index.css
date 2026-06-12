@@ -68,6 +68,41 @@ html { scroll-behavior: smooth; }
   .animate-marquee { animation: none; }
 }
 
+/* Footer publish-strip glint: gold letters with a travelling light sweep
+   (background-clip text + animated gradient position). Static gold under
+   prefers-reduced-motion. */
+@keyframes marquee-glint {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.marquee-glint {
+  color: transparent;
+  background-image: linear-gradient(110deg, #8a6f00 30%, #ffcc00 45%, #fff3b0 50%, #ffcc00 55%, #8a6f00 70%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: marquee-glint 4.5s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-glint { animation: none; background: none; color: #ffcc00; }
+}
+
+/* Director AI viewfinder frame: breathing corner brackets + blinking REC dot.
+   Both decay to static under prefers-reduced-motion. */
+@keyframes finder-breathe {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 1; }
+}
+@keyframes rec-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.15; }
+}
+.finder-corner { animation: finder-breathe 3.2s ease-in-out infinite; }
+.rec-dot { animation: rec-blink 1.6s steps(1, end) infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .finder-corner, .rec-dot { animation: none; }
+}
+
 /*
  * Terms-consent microcopy escape hatch. The global "LAW" in index.html forces every <label> to
  * JetBrains Mono + uppercase + wide tracking (great for sub-labels, unreadable for a sentence of

@@ -34,6 +34,7 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onEnterApp, onNavi
           {/* Where Bryan's ads end up — honest platform row, not fake partnerships. */}
           <Marquee
             variant="mono"
+            shine
             duration={22}
             items={['YOUR ADS ON', 'FACEBOOK', 'TIKTOK', 'INSTAGRAM', 'SHOPEE', 'LAZADA', 'YOUTUBE']}
           />

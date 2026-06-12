@@ -1,8 +1,26 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Film, Search, Target, Type, ImageIcon } from 'lucide-react';
-import { AnimatedBorder } from '../../ui/AnimatedBorder';
 import { DirectorDemo, ResearchDemo, OfferDemo, CaptionDemo, ImageDemo } from '../InclusionDemos';
+
+/**
+ * Director AI's signature frame: a camera viewfinder — breathing gold corner
+ * brackets + a blinking REC chip. Distinct from the guarantee's rotating-arc
+ * AnimatedBorder (TrustFaq) so the two hero treatments never read as twins.
+ */
+const ViewfinderFrame: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <div className="relative rounded-3xl border border-white/10 bg-zinc-900/40 p-6 backdrop-blur-2xl md:p-10">
+    <span aria-hidden="true" className="finder-corner pointer-events-none absolute left-3 top-3 h-6 w-6 rounded-tl-lg border-l-2 border-t-2 border-[#FFCC00]" />
+    <span aria-hidden="true" className="finder-corner pointer-events-none absolute right-3 top-3 h-6 w-6 rounded-tr-lg border-r-2 border-t-2 border-[#FFCC00]" style={{ animationDelay: '0.8s' }} />
+    <span aria-hidden="true" className="finder-corner pointer-events-none absolute bottom-3 left-3 h-6 w-6 rounded-bl-lg border-b-2 border-l-2 border-[#FFCC00]" style={{ animationDelay: '1.6s' }} />
+    <span aria-hidden="true" className="finder-corner pointer-events-none absolute bottom-3 right-3 h-6 w-6 rounded-br-lg border-b-2 border-r-2 border-[#FFCC00]" style={{ animationDelay: '2.4s' }} />
+    <span className="pointer-events-none absolute right-12 top-4 flex items-center gap-1.5 text-[9px] font-mono uppercase tracking-widest text-[#FFCC00]">
+      <span className="rec-dot h-1.5 w-1.5 rounded-full bg-red-500" />
+      REC
+    </span>
+    {children}
+  </div>
+);
 
 const SECONDARY_MODULES = [
   { title: 'Market Research', label: 'Intelligence', desc: 'Know your market, competitors, and dream buyer before you spend a single peso on ads.', icon: Search, Demo: ResearchDemo },
@@ -40,7 +58,7 @@ export const Modules: React.FC = () => (
         transition={{ duration: 0.6 }}
         className="mb-6"
       >
-        <AnimatedBorder containerClassName="w-full" className="bg-zinc-900/40 backdrop-blur-2xl rounded-3xl p-6 md:p-10">
+        <ViewfinderFrame>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             <div>
               <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500">
@@ -54,7 +72,7 @@ export const Modules: React.FC = () => (
             </div>
             <DirectorDemo />
           </div>
-        </AnimatedBorder>
+        </ViewfinderFrame>
       </motion.div>
 
       {/* Remaining working modules */}

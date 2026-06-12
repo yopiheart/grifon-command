@@ -8,6 +8,8 @@ interface MarqueeProps {
   duration?: number;
   reverse?: boolean;
   className?: string;
+  /** Gold text with a travelling light-sweep glint (mono variant only — footer publish strip). */
+  shine?: boolean;
 }
 
 /**
@@ -21,6 +23,7 @@ export const Marquee: React.FC<MarqueeProps> = ({
   duration = 30,
   reverse = false,
   className = '',
+  shine = false,
 }) => {
   const renderItems = (ariaHidden: boolean) => (
     <div aria-hidden={ariaHidden} className="flex items-baseline shrink-0">
@@ -32,7 +35,7 @@ export const Marquee: React.FC<MarqueeProps> = ({
                 ? i % 2 === 0
                   ? 'font-serif italic text-[#FFCC00] text-3xl md:text-5xl whitespace-nowrap'
                   : 'font-sans font-black uppercase tracking-tighter text-zinc-200 text-3xl md:text-5xl whitespace-nowrap'
-                : 'font-mono uppercase tracking-widest text-zinc-500 text-xs whitespace-nowrap'
+                : `font-mono uppercase tracking-widest text-xs whitespace-nowrap ${shine ? 'marquee-glint font-bold' : 'text-zinc-500'}`
             }
           >
             {item}
@@ -41,7 +44,7 @@ export const Marquee: React.FC<MarqueeProps> = ({
             className={
               variant === 'serif'
                 ? 'text-[#FFCC00]/40 text-2xl md:text-4xl px-5 md:px-8'
-                : 'text-zinc-700 text-xs px-4'
+                : `text-xs px-4 ${shine ? 'text-[#FFCC00]/40' : 'text-zinc-700'}`
             }
           >
             ◆

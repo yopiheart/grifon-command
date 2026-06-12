@@ -39,6 +39,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
   const offerStackRef = useRef<HTMLElement>(null);
   // Trust/FAQ/footer zone has its own CTAs (Viber, login, footer links) — pill stays out of it.
   const bottomZoneRef = useRef<HTMLDivElement>(null);
+  // The Receipts Rail ends on its own CTA card — pill hides so they never compete.
+  const railZoneRef = useRef<HTMLDivElement>(null);
   const [activeHref, setActiveHref] = useState<string | undefined>(undefined);
 
   useEffect(() => {
@@ -91,7 +93,9 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
 
       <ProofBand />
 
-      <ReceiptsRail onEnterApp={onEnterApp} />
+      <div ref={railZoneRef}>
+        <ReceiptsRail onEnterApp={onEnterApp} />
+      </div>
 
       <Modules />
 
@@ -119,7 +123,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
       <PinnedCtaPill
         onEnterApp={onEnterApp}
         heroSentinelRef={heroSentinelRef}
-        hideRefs={[offerStackRef, bottomZoneRef]}
+        hideRefs={[railZoneRef, offerStackRef, bottomZoneRef]}
       />
     </div>
   );
