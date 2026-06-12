@@ -83,6 +83,21 @@ Never skip the audio: a muted capture invalidates `edit_grammar` (SFX, music,
 silences) and the transcript — half the Edit DNA. If only a silent capture is
 possible, analyze anyway but mark those fields `LOW_CONFIDENCE` in the entry.
 
+### Batch mode — channel deconstruction (Phase Zero)
+
+When the target is a **benchmark channel/advertiser** rather than a single
+video (Neil says "deconstruct this channel", or a Pending Action calls for it):
+loop Steps 1–4 over **5–10 of that creator's top/longest-running videos** in
+one session. One Swipe File entry per video — the specificity gate (Step 3)
+applies to each individually; a vague analysis is dropped, not averaged in.
+After the last entry, write or refresh the channel's **Creator Recipe** block
+in `workflows/viral_swipe_file.md` (house hook/title mechanics, repeatable
+formats, house edit grammar) and apply the same-channel annotation rule to any
+Pattern Index rows the batch bumped (e.g. `3 (2 same-channel)`). All hard
+guardrails are unchanged — batch volume never shortcuts the ≥3 corroboration
+rule or the tuned-file ban. Source: Phase Zero deconstruction method,
+2026-06-12 brief.
+
 ### Step 3 — Specificity gate
 
 Exit code 3 (`GENERIC_OUTPUT`) means the analysis lacked timestamps/numbers:
