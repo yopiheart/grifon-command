@@ -837,3 +837,38 @@ overrode it mid-session: *"Make sure that the quality wouldn't sacrifice. It's b
 spend more just to get the quality."* — so the savings strategy is hygiene-only (delegation
 + `/clear`), never model downgrades. Those two levers carry no quality cost; they're a
 quality GAIN, since reasoning degrades past ~100k context anyway.
+
+### 2026-06-13 — Per-word phonetic respelling made TTS WORSE; the accent is locked by the script's OPENING words, not per-word spelling
+**Context:** The Taglish phonetic middleware (`phoneticNormalizer.ts`, 6 mappings like
+`mukha → moo-khah`) was built 2026-05-26 to stop ElevenLabs/Veo reading Taglish tokens with
+English phonetics. Neil A/B-listened on the 2026-06-13 The-Ordinary final render.
+**What went wrong:** Two compounding findings. (1) The respellings overcorrected: `moo-khah`
+synthesized as an unnaturally stretched syllable — plain `mukha` sounded BETTER on the same
+voice. Per-word respelling fixes one token at the cost of cadence. (2) The real accent driver
+was upstream all along: Neil empirically found `eleven_v3` LOCKS the language/accent for the
+ENTIRE read from the script's opening tokens — 3+ consecutive English words at the start
+("Stop drying your face…") force an American accent on every Tagalog word after; ≤2 English
+words before the first Tagalog word ("Stop na sa drying…") locks Filipino. The middleware
+never touched the opening, so it treated symptoms while the trigger stayed.
+**Lesson:** Fix language detection at the SOURCE (script structure) — the OPENING ACCENT
+TRIGGER rule now lives in the adscript prompt's TAGLISH ACCENT LOCK (api/_lib/prompts.ts,
+approved by Neil). The normalizer was removed entirely (was: services/phoneticNormalizer.ts).
+Do NOT reintroduce respellings wholesale; if a specific word verifiably mispronounces
+(2026-06-10 "swabe"→"swave" class), A/B-listen BOTH forms first — respelling is a last resort
+for individually verified words, never a blanket map. Watch whether "swabe" regresses now that
+its mapping is gone; if it does, that's the one candidate for a single-word re-add (A/B'd).
+
+### 2026-06-13 — An uncapped "default" SFX in the EDL prompt ticked on every scene; restraint engines need a per-sound budget, not just per-class
+**Context:** Neil heard a water-drop tick on EVERY scene of the final render. Traced: the EDL
+prompt suggests `"drop"` as the default sfxCue, so Gemini placed one per scene; the renderer's
+restraint pass (`pickSceneSfx`) capped transition whooshes (3/ad) and stacking (0.4s min-gap)
+but emphasis sounds were uncapped BY DESIGN ("they're intentional") — 7 scenes × same default
+= the most audible AI-slop tell in the ad. Bonus: `drop.mp3` is nominally a "bass drop" but at
+0.6 volume under VO it reads as a water drip.
+**What went wrong:** The restraint engine modeled the failure mode "too many sounds at once"
+(stacking) and "too many transition sounds" (whoosh cap) but not "the SAME sound too many
+times" — which is what a prompt-suggested default produces at scale.
+**Lesson:** Whenever a tuned prompt names a DEFAULT value for a per-scene field, assume the
+model will emit it on most scenes and budget for repetition downstream in deterministic code
+(renderer caps), not in the prompt. Shipped: `MAX_PER_SOUND = 2` per emphasis sound per ad in
+`pickSceneSfx`. The prompt's "drop" default is untouched (tuned); the cap makes it harmless.
