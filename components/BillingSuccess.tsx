@@ -54,21 +54,39 @@ const BillingSuccess: React.FC<Props> = ({ onContinue, email }) => {
       const blob: Blob | null = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
       if (!blob) return;
       const file = new File([blob], 'grifon-founding-creator.png', { type: 'image/png' });
-      if (typeof navigator.share === 'function' && navigator.canShare?.({ files: [file] })) {
-        await navigator.share({
-          files: [file],
-          text: 'Officially in. My ads are now made by Grifon. 🦅',
-        });
-      } else {
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'grifon-founding-creator.png';
-        a.click();
-        URL.revokeObjectURL(url);
+
+      // Native share sheet — mobile and some desktops. If it's unavailable OR
+      // throws anything other than a user-cancel, fall through to download so
+      // desktop (esp. Firefox / Windows Chrome with no share target) still works.
+      const canNativeShare =
+        typeof navigator.share === 'function' &&
+        typeof navigator.canShare === 'function' &&
+        navigator.canShare({ files: [file] });
+      if (canNativeShare) {
+        try {
+          await navigator.share({
+            files: [file],
+            text: 'Officially in. My ads are now made by Grifon. 🦅',
+          });
+          return; // shared successfully
+        } catch (err) {
+          // User dismissed the sheet → done. Any other error → download instead.
+          if (err instanceof DOMException && err.name === 'AbortError') return;
+        }
       }
+
+      // Desktop / no-share fallback: download the PNG. The anchor MUST be in the
+      // DOM before click() or Firefox silently ignores it.
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'grifon-founding-creator.png';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
     } catch {
-      /* user cancelled the share sheet — nothing to recover */
+      /* card render failed — nothing to recover */
     } finally {
       setSharing(false);
     }
