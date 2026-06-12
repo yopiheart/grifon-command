@@ -55,6 +55,11 @@ const SceneSchema = z.object({
   captionRegion: z
     .object({ yFracTop: z.number().min(0).max(1), yFracBottom: z.number().min(0).max(1) })
     .optional(),
+  // Measured VO word timings (forced alignment) — real caption pacing.
+  voiceWords: z
+    .array(z.object({ text: z.string().max(80), start: z.number().nonnegative(), end: z.number().nonnegative() }))
+    .max(200)
+    .optional(),
 });
 
 const Body = z.object({

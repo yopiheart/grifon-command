@@ -3,7 +3,7 @@ import {
   parseDurationSec, parseTrimSec, dimsFor, chooseTrim,
   clampWindow, clampAnchor, escFilterPath,
   safeZone, fitText, wrapTwoLines, stripUnrenderable, evenSplit, chunkCaption,
-  planScene, planEndCardLayers, buildTextFilter, buildBoxFilter, WIPE_SLICES, snapSfxAnchor, pickSceneSfx,
+  planScene, planEndCardLayers, buildTextFilter, buildBoxFilter, WIPE_SLICES, snapSfxAnchor, pickSceneSfx, voiceChunkWindows,
 } from '../../api/_lib/renderFfmpeg.js';
 import type { SfxCandidate } from '../../api/_lib/renderFfmpeg.js';
 import type { FinalRenderScene } from '../../types.js';
@@ -444,5 +444,32 @@ describe('pickSceneSfx (restraint: no stacking, capped whooshes, emphasis wins)'
     const cand: SfxCandidate[] = [{ sfxId: 'drop', globalSec: 20, transition: false }];
     expect(pickSceneSfx(cand, [], 0, 3, 0.4, { drop: 2 }).length).toBe(0); // budget spent in earlier scenes
     expect(pickSceneSfx(cand, [], 0, 3, 0.4, { drop: 1 }).length).toBe(1); // 1 left
+  });
+});
+
+describe('voiceChunkWindows (measured caption pacing from forced alignment)', () => {
+  const w = (text: string, start: number, end: number) => ({ text, start, end });
+  it('opens each chunk when its first word is SPOKEN, holding to the next chunk', () => {
+    // VO starts 0.8s in — the even-spread estimate would have shown text at ~0.27s.
+    const words = [w('Pag-uwi', 0.8, 1.2), w('galing', 1.25, 1.6), w('trabaho', 1.65, 2.2),
+                   w('oily', 2.6, 2.9), w('na', 2.95, 3.05), w('agad', 3.1, 3.5)];
+    const wins = voiceChunkWindows(['Pag-uwi galing trabaho', 'oily na agad'], words, 6)!;
+    expect(wins[0].start).toBeCloseTo(0.8, 2);   // real speech start, not estimate
+    expect(wins[0].end).toBeCloseTo(2.6, 2);     // holds until chunk 2 opens (continuous)
+    expect(wins[1].start).toBeCloseTo(2.6, 2);
+    expect(wins[1].end).toBeCloseTo(3.9, 2);     // last word end + 0.4 read-out beat
+  });
+  it('maps proportionally when the aligner tokenized differently than the script split', () => {
+    const words = [w('a', 0.5, 0.8), w('b', 0.9, 1.2), w('c', 1.3, 1.6)]; // 3 aligned vs 4 script words
+    const wins = voiceChunkWindows(['one two', 'three four'], words, 6)!;
+    expect(wins).toHaveLength(2);
+    expect(wins[0].start).toBeCloseTo(0.5, 2);
+    expect(wins[1].start).toBeGreaterThan(wins[0].start);  // monotonic
+  });
+  it('clamps to the scene trim and returns null with nothing to map', () => {
+    const wins = voiceChunkWindows(['hello there'], [w('hello', 1, 2), w('there', 2, 9)], 3)!;
+    expect(wins[0].end).toBeLessThanOrEqual(3);
+    expect(voiceChunkWindows([], [w('x', 0, 1)], 5)).toBeNull();
+    expect(voiceChunkWindows(['x'], [], 5)).toBeNull();
   });
 });

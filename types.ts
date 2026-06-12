@@ -106,14 +106,27 @@ export interface ConsolidationScene {
   videoUrl?: string;
 }
 
+/** One spoken word with its measured time window (seconds, relative to the
+ * scene's VO MP3 start). From ElevenLabs forced alignment — REAL timings, not
+ * the char-weight estimates the caption engine falls back to. */
+export interface VoiceWord {
+  text: string;
+  start: number;
+  end: number;
+}
+
 /**
  * Per-scene result of voice consolidation. `audioUrl` is a 24h Supabase-signed
  * MP3 URL (never a browser `blob:` URL — the render path must be server-reachable).
  * `audioUrl` is null when the scene was `skipped` (visual-only) or hit an `error`.
+ * `words` is the forced-alignment of the scene's scriptLine against the produced
+ * MP3 (works for both TTS and STS paths); absent when alignment failed — caption
+ * timing then falls back to estimates.
  */
 export interface ConsolidationResult {
   sceneIdx: number;
   audioUrl: string | null;
+  words?: VoiceWord[];
   skipped?: boolean;
   error?: string;
 }
@@ -157,6 +170,9 @@ export interface FinalRenderScene {
   isHook?: boolean;
   /** Face-clear band (fractions of height) from browser detection; caption goes here. */
   captionRegion?: { yFracTop: number; yFracBottom: number };
+  /** Measured word timings for this scene's VO (forced alignment). When present,
+   * caption chunks pace on REAL speech times; absent → even-spread estimate. */
+  voiceWords?: VoiceWord[];
 }
 
 /** End-card burn-in for the LAST scene: the offer recap line.

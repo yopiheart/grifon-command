@@ -76,6 +76,38 @@ export async function synthesizeTts(
   return Buffer.from(await upstream.arrayBuffer());
 }
 
+/** Word-level timings from ElevenLabs forced alignment: the produced MP3 plus
+ * the script line it speaks → measured word start/end times. Works for BOTH
+ * voice paths (TTS and STS — STS has no synthesis-time timestamps at all).
+ * Throws ElevenLabsError on upstream failure; callers treat alignment as
+ * best-effort and fall back to caption-timing estimates. */
+export async function forcedAlignment(
+  audio: Buffer,
+  text: string
+): Promise<Array<{ text: string; start: number; end: number }>> {
+  const ab = new ArrayBuffer(audio.byteLength);
+  new Uint8Array(ab).set(audio);
+  const formData = new FormData();
+  formData.append('file', new Blob([ab], { type: 'audio/mpeg' }), 'vo.mp3');
+  formData.append('text', text);
+
+  const upstream = await fetch('https://api.elevenlabs.io/v1/forced-alignment', {
+    method: 'POST',
+    headers: { 'xi-api-key': getApiKey() },
+    body: formData,
+  });
+  if (!upstream.ok) {
+    const detail = await upstream.text().catch(() => upstream.statusText);
+    throw new ElevenLabsError(upstream.status, detail);
+  }
+  const json: any = await upstream.json();
+  const words = Array.isArray(json?.words) ? json.words : [];
+  return words
+    .filter((w: any) => typeof w?.start === 'number' && typeof w?.end === 'number')
+    .map((w: any) => ({ text: String(w.text ?? ''), start: w.start, end: w.end }))
+    .filter((w: { text: string }) => w.text.trim().length > 0); // drop pure-space tokens
+}
+
 export async function convertSts(
   voiceId: string,
   audio: Buffer,

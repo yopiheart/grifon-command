@@ -5,7 +5,7 @@ import { getUserFromAccessToken, getSupabaseAdmin } from '../_lib/supabaseAdmin.
 import { rateLimitCheck } from '../_lib/rateLimit.js';
 import { getUserPlan } from '../_lib/userPlan.js';
 import { TTS_DAILY, STS_DAILY, DAILY_WINDOW_SECONDS, ttsDailyKey, stsDailyKey } from '../_lib/quota.js';
-import { synthesizeTts, convertSts, ElevenLabsError } from '../_lib/elevenlabs.js';
+import { synthesizeTts, convertSts, forcedAlignment, ElevenLabsError } from '../_lib/elevenlabs.js';
 import { extractAudioFromMp4 } from '../_lib/audioExtract.js';
 import { routeScene, assertUniqueSceneIdx } from '../_lib/sceneVoiceRoute.js';
 import type { ConsolidationScene, ConsolidationResult } from '../../types.js';
@@ -131,7 +131,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         continue;
       }
 
-      results.push({ sceneIdx: scene.sceneIdx, audioUrl: sign.data.signedUrl });
+      // Best-effort word alignment: REAL caption timings for the renderer
+      // (the even-spread estimate lagged the speaker — 2026-06-13 review).
+      // Works for both paths (STS has no synthesis-time timestamps at all).
+      // Failure is non-fatal: captions fall back to estimates.
+      let words: ConsolidationResult['words'];
+      if (scene.scriptLine.trim()) {
+        try {
+          const aligned = await forcedAlignment(mp3, scene.scriptLine);
+          if (aligned.length) words = aligned;
+        } catch (err: any) {
+          console.warn(`[api/voice/consolidate] alignment failed for scene ${scene.sceneIdx}:`, err?.message ?? err);
+        }
+      }
+
+      results.push({ sceneIdx: scene.sceneIdx, audioUrl: sign.data.signedUrl, ...(words ? { words } : {}) });
     } catch (err: any) {
       const reason =
         err instanceof ElevenLabsError ? `elevenlabs_${err.status}` :

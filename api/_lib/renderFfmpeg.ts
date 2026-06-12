@@ -4,7 +4,7 @@ import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import ffmpegPath from 'ffmpeg-static';
-import type { FinalRenderScene, FinalRenderEndCard, SfxBankId, CameraEffect } from '../../types.js';
+import type { FinalRenderScene, FinalRenderEndCard, SfxBankId, CameraEffect, VoiceWord } from '../../types.js';
 import {
   CLASSIC, pickHookPalette,
   type RenderPreset, type HookRevealStyle, type TransitionStyle, type CameraStyle,
@@ -279,11 +279,10 @@ export function chunkCaption(
   return groups.filter((g) => g.length).map((g) => g.join(' '));
 }
 
-// ---- Word-level caption timing (no word timestamps exist — ElevenLabs returns
-// opaque MP3s — so words are interpolated across the chunk window by character
-// weight, the same estimate class as estimateSpokenSec/advRatio already
-// shipping). v2 swaps in real ElevenLabs with-timestamps alignment behind this
-// same WordTiming[] interface. ----
+// ---- Word-level caption timing. When the scene carries voiceWords (ElevenLabs
+// forced alignment, shipped 2026-06-13) chunk windows pace on REAL speech
+// times; otherwise words are interpolated across the chunk window by character
+// weight, the same estimate class as estimateSpokenSec/advRatio. ----
 
 export interface WordTiming {
   word: string;
@@ -352,6 +351,49 @@ export function hookTitleLayout(
     }
   }
   if (out.length && !out.some((w) => w.highlight)) out[0].highlight = true;
+  return out;
+}
+
+/**
+ * Map caption chunks onto MEASURED speech times (forced alignment). Each
+ * chunk's window opens when its first word is actually spoken and holds until
+ * the next chunk opens (continuous, CapCut-style — what kills perceived lag is
+ * a chunk appearing AFTER its words were said). Word-count mismatches between
+ * the script split and the aligner's tokenization map proportionally — close
+ * enough at chunk granularity, and still measured, not estimated. Returns null
+ * when there is nothing to map (caller falls back to the even-spread estimate).
+ */
+export function voiceChunkWindows(
+  chunks: string[],
+  words: VoiceWord[],
+  endCap: number
+): Array<{ start: number; end: number }> | null {
+  if (!chunks.length || !words.length) return null;
+  const counts = chunks.map((c) => c.split(/\s+/).filter(Boolean).length);
+  const total = counts.reduce((s, n) => s + n, 0);
+  if (!total) return null;
+  const scale = words.length / total;
+  const out: Array<{ start: number; end: number }> = [];
+  let acc = 0;
+  for (const n of counts) {
+    const a = Math.min(words.length - 1, Math.floor(acc * scale));
+    const b = Math.min(words.length - 1, Math.max(a, Math.ceil((acc + n) * scale) - 1));
+    out.push({ start: words[a].start, end: words[b].end });
+    acc += n;
+  }
+  // Continuous + monotonic, two passes: (1) starts strictly increase, then
+  // (2) each chunk holds to the next one's settled start; the last gets a
+  // short read-out beat. Everything clamps to the scene trim.
+  for (let i = 1; i < out.length; i++) {
+    out[i].start = Math.max(out[i].start, out[i - 1].start + 0.1);
+  }
+  for (let i = 0; i < out.length; i++) {
+    out[i].end = i < out.length - 1 ? out[i + 1].start : out[i].end + 0.4;
+  }
+  for (const w of out) {
+    w.start = +Math.min(w.start, endCap).toFixed(3);
+    w.end = +Math.min(Math.max(w.end, w.start), endCap).toFixed(3);
+  }
   return out;
 }
 
@@ -648,10 +690,18 @@ export function planScene(
     if (avail >= minChunk) {
       const chunks = chunkCaption(cap, avail, wordsPer, minChunk);
       const each = avail / Math.max(1, chunks.length);
+      // Measured speech times beat the even-spread estimate whenever the scene
+      // carries forced-alignment words (2026-06-13: captions popped late on
+      // every talking scene because the estimate ignored where the VO actually
+      // was). Estimate remains the fallback for unaligned scenes.
+      const real = scene.voiceWords?.length
+        ? voiceChunkWindows(chunks, scene.voiceWords, end)
+        : null;
       chunks.forEach((c, i) => {
         const { fontsize, lines } = fitText(c, sz.usableW, Math.round(h * preset.caption.baseSizeFrac), adv);
-        const startSec = +(capStart + i * each).toFixed(3);
-        const endSec = +(capStart + (i + 1) * each).toFixed(3);
+        const startSec = real ? Math.max(real[i].start, capStart) : +(capStart + i * each).toFixed(3);
+        const endSec = real ? real[i].end : +(capStart + (i + 1) * each).toFixed(3);
+        if (endSec - startSec < 0.1) return; // degenerate window (trim-clamped)
         if (startSec < overlayClearSec) return; // slot owned by the overlay — drop the chunk
         // Word timing/x math assumes one line — a wrapped chunk falls back to pop.
         if (wordLevel && lines.length === 1) {

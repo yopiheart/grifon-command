@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import {
   VideoEditInput, EditDecisionList, SceneBatchEntry, EditTargetPlatform,
   ConsolidationScene, FinalRenderScene, FinalRenderResult, VoiceLibrary, StabilityMode,
+  VoiceWord,
 } from '../types';
 import { generateVideoEditPlan, generateEditDecisionList } from '../services/geminiService';
 import { fetchVoices } from '../services/voiceService';
@@ -91,6 +92,8 @@ const BatchEditMode: React.FC<{
   const stabilityMode: StabilityMode = 'robust';
   const [isConsolidating, setIsConsolidating] = useState(false);
   const [voicedOverlays, setVoicedOverlays] = useState<Record<number, string>>({});
+  // Measured VO word timings per scene (forced alignment) — real caption pacing.
+  const [voicedWords, setVoicedWords] = useState<Record<number, VoiceWord[]>>({});
   const [consolidateNotes, setConsolidateNotes] = useState<string[]>([]);
   const [consolidateError, setConsolidateError] = useState<string | null>(null);
   const [voiceReady, setVoiceReady] = useState(false);
@@ -167,13 +170,18 @@ const BatchEditMode: React.FC<{
       }));
       const results = await consolidateVoices(scenes, voiceId, stabilityMode);
       const overlays: Record<number, string> = {};
+      const wordsByScene: Record<number, VoiceWord[]> = {};
       const notes: string[] = [];
       for (const r of results) {
-        if (r.audioUrl) overlays[r.sceneIdx] = r.audioUrl;
+        if (r.audioUrl) {
+          overlays[r.sceneIdx] = r.audioUrl;
+          if (r.words?.length) wordsByScene[r.sceneIdx] = r.words;
+        }
         else if (r.skipped) notes.push(`Scene ${r.sceneIdx + 1}: skipped (${r.error ?? 'visual-only'})`);
         else if (r.error) notes.push(`Scene ${r.sceneIdx + 1}: ${r.error}`);
       }
       setVoicedOverlays(overlays);
+      setVoicedWords(wordsByScene);
       setConsolidateNotes(notes);
       setVoiceReady(true);
       if (Object.keys(overlays).length === 0) {
@@ -218,6 +226,8 @@ const BatchEditMode: React.FC<{
             isHook,
             // Face-clear band from browser detection (talking scenes); absent → heuristic.
             captionRegion: captionRegions[s.sceneIdx],
+            // Measured VO word timings (forced alignment) → real caption pacing.
+            voiceWords: voicedWords[s.sceneIdx],
           };
         });
       if (scenes.length === 0) {
