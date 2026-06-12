@@ -48,6 +48,15 @@ Why this shape works:
 
 If you can't compress all three Phase 1 lines into a single transcript-verifiable condition, the task is too large or too vague for `/goal` — break it into smaller goals or drive it by hand.
 
+## Repo-specific verification rules (promoted from agent_lessons.md)
+
+Each of these bit us at least twice before being promoted here (Tier 4, [workflows/loops.md](../../../workflows/loops.md)). Full post-mortems: [agent_lessons.md](../../../agent_lessons.md) / [workflows/agent_lessons_archive.md](../../../workflows/agent_lessons_archive.md).
+
+- **Verify at the output boundary, not an intermediate one.** A utility that crosses module boundaries needs `grep -rn` for every call site, plus the question: does the value reach the *external system* (Veo, the rendered MP4, the browser) or just the next internal stage? Then test the **side effect** (the real Veo audio, the rendered frame), not the data transformation. (2026-05-26 ×2)
+- **Sample model compliance with any new prompt classification/labeling rule in-vivo (2–3 runs) before merging.** A rule the model ignores is a no-op that looks shipped. Sample the upstream generator's actual vocabulary before anchoring a classifier on phrases it may never produce. When the downstream effect is deterministic and compliance is unreliable, anchor it in code, not the prompt. (2026-05-26, 2026-05-29)
+- **Assert motion inside the motion window.** For any animation/transition/render check, first locate WHERE the motion happens, then extract frames densely inside that window — never inherit a sampling grid from a subject that moved at a different speed; a resolved-state frame proves nothing. (2026-05-22, 2026-06-08)
+- **Triage "your change broke X" before fixing it.** `git diff` — does the change touch the failing path at all? Then classify: upstream (console 502/timeout → provider, retry), stochastic (regenerate; a clean second sample disproves a regression), or real code regression. (2026-05-13, 2026-05-29)
+
 ## What this skill does NOT cover
 
 - Stochastic Gemini outputs (creative scripts, storyboards, images) — manual eyeballing still required
