@@ -15,6 +15,11 @@ footage. Full session log: `launch_readiness.md` 2026-06-10 section (11 fixes sh
    prompts, Neil-approved): **REGEN the scene 4 + scene 6 VIDEOS** in Generate Video
    (regenerates their prompts through the new rules), then re-render and frame-compare
    against the baseline at the two stamps.
+   - **Before spending video credits:** Checkpoint-A-style pre-check — confirm the
+     regenerated scene 4 + 6 video PROMPTS literally contain the END-CLEAN negative
+     phrases. Missing → it's a wiring issue, not a model issue; stop and fix instead
+     of regenerating.
+   - Cost guard applies: max 1 regen per scene, then stop and report.
 3. Pre-flight per director-smoke: `.\scripts\enable-dev-unmetered-video.ps1` + restart
    dev (`npm run dev -- --host > .tmp/dev-server.log 2>&1`). Wizard state restores via
    the resume pill (STEP_08 — BEAN BLOCK). `[renderFfmpeg:trim]` logs land in the file.
@@ -73,6 +78,28 @@ Test brand: **Bukidnon Brew** (the established regression brand per launch_readi
 
 ## Failure paths
 
+- **Ghost/blur persists at the 15.5–16s / 27–28s stamps after the END-CLEAN regen**
+  (2026-06-12 contingency, Neil-approved — assume the model can always ignore the
+  negative; escalate by layer, do NOT iterate prompts past the 1-regen guard):
+  - **Layer 2 — HEADROOM, not shrink:** the trimmer couldn't cut the damage because VO
+    filled the clips end-to-end (scene 4: VO 6.09s on a 6.0s clip — zero trim headroom,
+    and the voice outran the visual). Fix: in `suggestDurationForScript`
+    (`services/geminiService.ts:490`), when the VO estimate lands within ~1s of the
+    chosen duration ceiling, bump to the NEXT valid duration step (6s→8s) so the
+    model's dirty final second always lands in trimmable dead air. This extends the
+    Session N calibration already in the code ("dead air is trimmable; truncation is
+    not") and mirrors roadmap #9's render-longer-trim-the-dirt philosophy. Structural,
+    not tuned content — but it's `geminiService.ts`, so Neil approves the diff first.
+    ❌ Rejected alternatives (2026-06-12 discussion): blanket 6s→4s durations and
+    4s-capped scripts — both would truncate real Taglish VO (the failing scenes speak
+    6.09s and 7.95s; Session N proved tightening truncates mid-syllable), and
+    handoff 2026-05-29 #3 forbids masking renderer issues by prompt-hacking clip
+    lengths. End-of-clip bake just relocates to whatever the duration is.
+  - **Layer 3 (shipped):** `[renderFfmpeg:trim]` + PAD_SEC 0.18 cuts the tail once
+    headroom exists — no new work.
+  - **Layer 4 — cover:** if a damaged window still overlaps speech, place a transition
+    (film burn / whip) AT the dirty scene boundary — the generalized form of the §6
+    hook-cover insurance below; edit grammar exists to hide cuts.
 - **Blob persists at Checkpoint B** → ship the designed Phase D insurance: renderer-side
   hook reveal cover (speed-ramp the morph window + whip-blur + whoosh) — design in
   [edit_style_research.md](edit_style_research.md) §6. VO-sync caveat documented there.

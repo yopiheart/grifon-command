@@ -382,6 +382,108 @@ during the gate session.
 
 ---
 
+### 13. Autopsy-Derived Script Formats — expand the UGC scripting menu
+
+**What:** Extend the autopsy → Swipe File → ≥3-corroboration → Gated Proposal engine
+from *edit styles* to *script/storyboard formats*. New scriptTypes alongside
+MrBeast / Testimonial / TEMU, each earned from ≥3 winning ads (FB Ad Library / YT /
+TikTok / IG) that share one story structure — the analyzer already extracts
+`storytelling_format` per video. Each new format is an **additive** block in
+`api/_lib/prompts.ts` (TUNED — Neil signs every diff; existing formats untouched) +
+a wizard scriptType option. Phase 2 (after products prove out): vertical format
+packs — services / real estate / app — each earned from its own niche batch autopsy.
+
+**Why it matters:** "N scripting formats cloned from proven winners" is a sellable
+pricing-page line and answers "my ad sounds like everyone else's." Highest
+value-per-effort of the 2026-06-12 ideas: the entire evidence engine (batch
+deconstruction, Creator Recipes, Pattern Index, gating) ships this with zero new
+infrastructure. Bonus for verticals: services/real estate dodge the product-scale
+liability (item #4) entirely — no physical SKU to mis-size.
+
+**Why parked:** (1) `launch_readiness.md` P0s first. (2) The evidence pipeline should
+prove itself end-to-end on the `vsl` *edit preset* (Swipe File batch run → Gated
+Proposal → ship) before the same flow touches script prompts. (3) Format
+proliferation multiplies regression surface — item #6's CTA-parity question exists
+with only TWO formats; cap new formats at 2–3 before beta feedback.
+
+**When to resume:** When the `vsl` preset has shipped via the batch-deconstruction
+flow (proves the pipeline), AND a batch autopsy surfaces ≥3 winners sharing a story
+structure the current scriptTypes don't cover.
+
+**Where to start:**
+1. Batch autopsy per niche (the viral-autopsy skill's batch mode) — entries note
+   `storytelling_format`; a recurring structure at ≥3 becomes a Gated Proposal.
+2. Draft the format block (beats, tone, CTA mechanics — keep the shared banned-phrase
+   + scarcity rules from existing formats) as a proposal, NOT an edit.
+3. After Neil approves: additive block in `api/_lib/prompts.ts`, wizard scriptType
+   option, `gemini-eval` ruleset entry + golden baseline for the new format.
+4. Verticals only after ≥1 product-niche format ships clean.
+
+**Scope estimate:** ~1 day per format once its evidence exists (prompt block + UI
+option + eval baseline). The autopsy runs are the ongoing cost.
+
+**Source:** Neil, 2026-06-12 — *"pwede ba natin madagdagan tong mga format style ng
+story and scripting based dun sa mga winning videos/ads… so that ung user magkakaroon
+sya ng multiple choices"* — endorsed for parking same session.
+
+---
+
+### 14. Seedance 2.0 Commercial / Spec-Ad Tier (prerequisite: provider verification)
+
+**What:** A new ad category beside UGC: **spec/commercial ads** (Nike-class big-brand
+look) generated end-to-end on **Seedance 2.0 only** — no Kling, no Veo, and no
+post-render edit layer, since Seedance generates camera movement, multi-shot
+sequences, VFX, and joint audio natively (15s multi-shot, up to 12 input assets).
+The autopsy engine gets a **Cinematography DNA** variant (shot list, camera grammar,
+lighting, pacing, sound design — instead of caption/cut Edit DNA) whose output is a
+**structured prompt template** learned from viral/big-brand spec ads. User inputs:
+product image + character + the compiled prompt. No image-storyboard step — the
+prompt drives everything. Open question carried from the idea: whether a light text
+overlay/end-card pass (CTA card) is still wanted on top.
+
+**PREREQUISITE — verify before any build planning:**
+1. **Access + cost:** Seedance 2.0 API availability (BytePlus per the watch-list note
+   in `edit_like_this_video.md` §1), price per clip, billing workable from PH.
+2. **Paid smoke test, 3–5 generations with a real PH product hero:** product fidelity
+   (the item-#4 scale problem will exist here too, possibly worse), label/text
+   rendering in-video, character consistency across shots. Demo reels are curated;
+   only this test says what the floor looks like.
+
+**Why it matters:** A "commercial look" tier is a clean premium SKU (Business/
+Autopilot pricing fit) and a different market segment than UGC — brands that want
+agency-grade spec ads at compute cost. Architecturally cheap to slot: a new provider
+follows the proven `api/kling/*` pattern (`api/seedance/*`, fire-then-poll).
+
+**Why parked:** (1) Provider entirely unverified — watch-list only. (2) Biggest
+swing of the 2026-06-12 ideas; #13 should prove the format-expansion flow first.
+(3) Competes with `launch_readiness.md` P0s.
+
+**When to resume:** After item #13 ships its first format (proves the autopsy→format
+flow), AND the prerequisite verification passes — OR earlier if a beta user asks for
+"commercial/cinematic look" ads (demand signal beats sequencing).
+
+**Where to start:**
+1. Run the prerequisite verification (half a day; the smoke test needs budget).
+2. Cinematography-DNA analyzer variant: new ANALYSIS_PROMPT flavor for
+   `tools/analyze_video.py` (spec-ad fields), entries into the Swipe File under the
+   same ≥3-corroboration discipline. Autopsy big-brand ads for *structure/grammar*
+   only — extracted patterns, never assets.
+3. `api/seedance/*` proxy following the Kling pattern (generate + poll), provider
+   entry in `VIDEO_MODEL_SPECS`.
+4. Prompt-template compiler (Cinematography DNA → structured Seedance prompt) — the
+   spec-ad sibling of `dnaToPreset.ts`; Gated Proposal path for the template text.
+5. Tier gating + pricing decision (Business vs Autopilot) — Neil's call.
+
+**Scope estimate:** Verification ~half day + smoke budget. Build is multi-day (new
+provider + new flow + new analyzer variant); do not start before the prerequisite.
+
+**Source:** Neil, 2026-06-12 — *"hahanap ako ng mga spec ads/commercial type ads na
+ipapa autopsy… pero dito ibang model ang gagamitin natin NO KLING AND NO VEO, PURE
+SEEDANCE 2.0… ang need lang is product image, character, and magandang structured
+prompt"* — endorsed for parking same session, with the verification prerequisite.
+
+---
+
 ## How to add new items
 
 When Neil endorses an idea but says "not now":
