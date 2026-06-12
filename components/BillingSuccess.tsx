@@ -48,9 +48,20 @@ const BillingSuccess: React.FC<Props> = ({ onContinue, email }) => {
     setSharing(true);
     try {
       const { default: html2canvas } = await import('html2canvas');
+      await document.fonts.ready; // exact mono metrics before measuring text
       const canvas = await html2canvas(cardRef.current, {
         backgroundColor: '#09090B',
         scale: 3,
+        // html2canvas draws text a touch lower than the browser inside
+        // overflow-hidden boxes, so `truncate` lines come out half-clipped in
+        // the PNG. Un-clip them in the capture clone only (screen unaffected).
+        onclone: (doc) => {
+          doc.querySelectorAll('.truncate').forEach((el) => {
+            el.classList.remove('truncate');
+            (el as HTMLElement).style.overflow = 'visible';
+            (el as HTMLElement).style.whiteSpace = 'nowrap';
+          });
+        },
       });
       const blob: Blob | null = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
       if (!blob) return;
