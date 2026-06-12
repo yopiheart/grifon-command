@@ -6,7 +6,7 @@ import { rateLimitCheck } from '../_lib/rateLimit.js';
 import { renderFinalVideo } from '../_lib/renderFfmpeg.js';
 import { resolvePreset, rotationSeed, fnv1a, type RenderPreset } from '../_lib/renderPresets.js';
 import { statusKey, finalKey, writeSidecar, RENDER_BUCKET } from '../_lib/renderJob.js';
-import type { FinalRenderScene } from '../../types.js';
+import type { FinalRenderScene, FinalRenderEndCard } from '../../types.js';
 
 // Final-render executor — FIRE half (Phase 2 of render_pipeline_voice_10.md).
 // Async fire-then-poll, out-of-band of the 55s client abort: returns a jobId
@@ -69,6 +69,13 @@ const Body = z.object({
   // Explicit edit-style override (kill switch / future UI picker). Absent →
   // deterministic rotation keyed by script style + scene-URL hash.
   preset: z.object({ id: z.enum(['classic', 'impact', 'hype', 'clean']).optional() }).optional(),
+  // Offer recap + price-anchor overlays burned into the LAST scene, held to its end.
+  endCard: z
+    .object({
+      recapText: z.string().max(80).optional(),
+      priceAnchorText: z.string().max(80).optional(),
+    })
+    .optional(),
 });
 
 const RENDER_LIMIT = 6;
@@ -93,7 +100,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(400).json({ error: 'invalid_body', issues: parsed.error.issues });
   }
 
-  const { scenes, aspectRatio, music, preset: presetReq } = parsed.data;
+  const { scenes, aspectRatio, music, preset: presetReq, endCard } = parsed.data;
 
   // Edit-style preset: same ad re-renders identically (seed = sorted videoUrls),
   // successive ads rotate looks within the script style's pool. classic = today.
@@ -130,7 +137,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     updatedAt: new Date().toISOString(),
   });
 
-  const work = runRender(user.id, jobId, scenes as FinalRenderScene[], aspectRatio, music, preset, variantSeed).catch(() => {});
+  const work = runRender(user.id, jobId, scenes as FinalRenderScene[], aspectRatio, music, preset, variantSeed, endCard).catch(() => {});
 
   if (process.env.VERCEL) {
     try {
@@ -151,12 +158,13 @@ async function runRender(
   aspectRatio: '9:16' | '16:9' | '1:1',
   music?: { style: 'mrbeast' | 'temu' | 'testimonial'; enabled: boolean },
   preset?: RenderPreset,
-  variantSeed?: number
+  variantSeed?: number,
+  endCard?: FinalRenderEndCard
 ): Promise<void> {
   const admin = getSupabaseAdmin();
   const sKey = statusKey(userId, jobId);
   try {
-    const { buffer } = await renderFinalVideo(scenes, aspectRatio, music, preset, variantSeed);
+    const { buffer } = await renderFinalVideo(scenes, aspectRatio, music, preset, variantSeed, endCard);
 
     const fKey = finalKey(userId, jobId);
     const upload = await admin.storage.from(RENDER_BUCKET).upload(fKey, buffer, {

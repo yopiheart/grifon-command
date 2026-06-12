@@ -179,6 +179,7 @@ const App: React.FC = () => {
     audioOverlays: { sceneIdx: number; audioUrl: string }[];
     aspectRatio: '9:16' | '16:9' | '1:1';
     finalScript: string;
+    offer?: string;
   } | null>(null);
   const [cinematicResult, setCinematicResult] = useState<Scene[] | null>(null);
 
@@ -1259,6 +1260,7 @@ const App: React.FC = () => {
               audioOverlays: [],
               aspectRatio: aspectRatio ?? '9:16',
               finalScript: finalScript.join(' '),
+              offer: clientDetails.offer,
             });
             setActiveModule('edit_video');
           }}
@@ -1285,6 +1287,7 @@ const App: React.FC = () => {
             audioOverlays,
             aspectRatio: aspectRatio ?? '9:16',
             finalScript: finalScript.join(' '),
+            offer: clientDetails.offer,
           });
           setActiveModule('edit_video');
         }}

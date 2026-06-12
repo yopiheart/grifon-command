@@ -23,6 +23,8 @@ export interface EditorBatchPayload {
   audioOverlays: { sceneIdx: number; audioUrl: string }[];
   aspectRatio: '9:16' | '16:9' | '1:1';
   finalScript: string;
+  /** Wizard offer (clientDetails.offer) — prefills the end-card recap field. */
+  offer?: string;
 }
 
 interface EditVideoProps {
@@ -96,6 +98,11 @@ const BatchEditMode: React.FC<{
   const [isRendering, setIsRendering] = useState(false);
   const [renderResult, setRenderResult] = useState<FinalRenderResult | null>(null);
   const [renderError, setRenderError] = useState<string | null>(null);
+  // End card: offer recap auto-pulled from the wizard (editable), price anchor typed.
+  // Both optional — blank fields render the last scene exactly as before. The prefill
+  // is clamped to the server's 80-char cap (maxLength only constrains typing).
+  const [endCardRecap, setEndCardRecap] = useState((editorBatch.offer ?? '').slice(0, 80));
+  const [endCardAnchor, setEndCardAnchor] = useState('');
   // Burn-in: drawtext overlays/captions + SFX + ducked music bed from the EDL.
   const [burnInEnabled, setBurnInEnabled] = useState(true);
   // Face-clear caption bands per talking scene (MediaPipe, AI-Editor-only).
@@ -222,7 +229,17 @@ const BatchEditMode: React.FC<{
       const music = burnInEnabled
         ? { style: edl?.meta.scriptStyleDetected ?? 'mrbeast', enabled: true as const }
         : undefined;
-      const result = await renderFinalVideo({ scenes, aspectRatio: editorBatch.aspectRatio, music });
+      // End card: burned text, so it follows the burn-in toggle; only sent when at
+      // least one field has text (blank → today's render). Clamped to the zod cap.
+      const recapText = endCardRecap.trim().slice(0, 80);
+      const priceAnchorText = endCardAnchor.trim().slice(0, 80);
+      const endCard = burnInEnabled && (recapText || priceAnchorText)
+        ? {
+            ...(recapText ? { recapText } : {}),
+            ...(priceAnchorText ? { priceAnchorText } : {}),
+          }
+        : undefined;
+      const result = await renderFinalVideo({ scenes, aspectRatio: editorBatch.aspectRatio, music, endCard });
       if (result.status === 'failed') setRenderError(result.error ?? 'RENDER_FAILED');
       else setRenderResult(result);
     } catch (err: any) {
@@ -329,10 +346,42 @@ const BatchEditMode: React.FC<{
             <p className="text-[10px] text-red-400 font-mono mt-1">// {consolidateError}</p>
           )}
 
-          {/* Step 2 — assemble final MP4 */}
+          {/* Step 2 — end card (offer recap + price anchor, burned into the last scene) */}
           <div className="mt-5 pt-5 border-t border-white/5">
             <label className="block text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">
-              // STEP_2 · ASSEMBLE_FINAL_MP4
+              // STEP_2 · END_CARD <span className="text-zinc-600">· OPTIONAL · LAST SCENE</span>
+            </label>
+            <div className="flex flex-col md:flex-row gap-3">
+              <div className="flex-1">
+                <input
+                  type="text"
+                  value={endCardRecap}
+                  onChange={(e) => setEndCardRecap(e.target.value)}
+                  maxLength={80}
+                  placeholder="OFFER RECAP — e.g. FIRST 50: FREE DRIP BAG"
+                  className="w-full bg-zinc-950 border border-white/10 rounded-xl p-3 text-white text-sm focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] placeholder:text-zinc-600"
+                />
+              </div>
+              <div className="flex-1">
+                <input
+                  type="text"
+                  value={endCardAnchor}
+                  onChange={(e) => setEndCardAnchor(e.target.value)}
+                  maxLength={80}
+                  placeholder="PRICE ANCHOR — e.g. ₱899 VALUE - TODAY ₱499"
+                  className="w-full bg-zinc-950 border border-white/10 rounded-xl p-3 text-white text-sm focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] placeholder:text-zinc-600"
+                />
+              </div>
+            </div>
+            <p className="text-[10px] text-zinc-500 font-mono mt-2">
+              // Recap auto-pulled from your wizard offer — edit freely. Both lines hold on screen to the end of the ad.
+            </p>
+          </div>
+
+          {/* Step 3 — assemble final MP4 */}
+          <div className="mt-5 pt-5 border-t border-white/5">
+            <label className="block text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">
+              // STEP_3 · ASSEMBLE_FINAL_MP4
             </label>
             <button
               type="button"

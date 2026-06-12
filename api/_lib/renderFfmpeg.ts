@@ -4,7 +4,7 @@ import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import ffmpegPath from 'ffmpeg-static';
-import type { FinalRenderScene, SfxBankId, CameraEffect } from '../../types.js';
+import type { FinalRenderScene, FinalRenderEndCard, SfxBankId, CameraEffect } from '../../types.js';
 import {
   CLASSIC, pickHookPalette,
   type RenderPreset, type HookRevealStyle, type TransitionStyle, type CameraStyle,
@@ -661,6 +661,61 @@ export function planScene(
         }
       });
     }
+  }
+  return layers;
+}
+
+// ---- End-card overlays (offer recap + price-anchor callout) ----
+// Burned ONLY into the LAST scene (the CTA close): gold offer-recap line over a
+// smaller price-anchor line, both popping in and holding to the end of the ad.
+// Stacked in the upper-middle band — below the hook band (hook is scene 1 only
+// anyway) and above the caption/CTA band the punchline already owns — so the
+// existing overlay/caption engine is untouched and nothing collides.
+const END_CARD_TOP_FRAC = 0.26;
+const END_CARD_RECAP_IN = 0.3, END_CARD_ANCHOR_IN = 0.8;
+
+export function planEndCardLayers(
+  endCard: FinalRenderEndCard | undefined,
+  trimSec: number | null,
+  dims: [number, number],
+  preset: RenderPreset = CLASSIC,
+  // Texts the scene already burns (EDL overlay, script line) — a recap/anchor
+  // that duplicates one is dropped, mirroring planScene's overlay-vs-caption dedup.
+  existingTexts: (string | undefined)[] = []
+): DrawLayer[] {
+  const recap = endCard?.recapText ? stripUnrenderable(endCard.recapText) : '';
+  const anchor = endCard?.priceAnchorText ? stripUnrenderable(endCard.priceAnchorText) : '';
+  if (!recap && !anchor) return [];
+  const existing = existingTexts.filter((t): t is string => !!t).map(normText);
+  const dup = (t: string) => existing.includes(normText(t));
+  const [, h] = dims;
+  const sz = safeZone(dims);
+  const end = typeof trimSec === 'number' && trimSec > 0 ? trimSec : 999;
+  const adv = preset.caption.advRatio;
+  const layers: DrawLayer[] = [];
+  let y = Math.round(h * END_CARD_TOP_FRAC);
+
+  if (recap && !dup(recap) && end - END_CARD_RECAP_IN >= 0.4) {
+    const { fontsize, lines } = fitText(recap, sz.usableW, Math.round(h * preset.caption.overlaySizeFrac), adv);
+    // No emphasisSfx on the recap: at 0.3s it would collide (min-gap 0.4) with the
+    // cut whoosh / the EDL overlay's own sound and evict one — the anchor's ding
+    // at 0.8s is the single end-card accent.
+    layers.push({
+      kind: 'text', text: lines.join('\n'), fontsize, color: preset.caption.highlightColor,
+      boxAlpha: preset.caption.boxAlpha, xExpr: '(w-text_w)/2', yBase: y,
+      startSec: END_CARD_RECAP_IN, endSec: end, anim: 'pop',
+    });
+    y += Math.round(lines.length * fontsize * 1.15 + fontsize * 0.5);
+  }
+
+  if (anchor && !dup(anchor) && end - END_CARD_ANCHOR_IN >= 0.4) {
+    const { fontsize, lines } = fitText(anchor, sz.usableW, Math.round(h * preset.caption.baseSizeFrac), adv);
+    layers.push({
+      kind: 'text', text: lines.join('\n'), fontsize, color: preset.caption.fillColor,
+      boxAlpha: preset.caption.boxAlpha, xExpr: '(w-text_w)/2', yBase: y,
+      startSec: END_CARD_ANCHOR_IN, endSec: end, anim: 'pop',
+      emphasisSfx: preset.sfx.overlayMap.punchline ?? undefined,
+    });
   }
   return layers;
 }
@@ -1472,7 +1527,8 @@ export async function renderFinalVideo(
   aspectRatio: string,
   music?: { style: 'mrbeast' | 'temu' | 'testimonial'; enabled: boolean },
   preset: RenderPreset = CLASSIC,
-  variantSeed: number = 0 // rotates the premium hook palette per render
+  variantSeed: number = 0, // rotates the premium hook palette per render
+  endCard?: FinalRenderEndCard // offer recap + price anchor, burned into the last scene
 ): Promise<{ buffer: Buffer; sizeBytes: number }> {
   if (!scenes.length) throw new RenderError('no_scenes');
   const tTotal = Date.now();
@@ -1549,6 +1605,19 @@ export async function renderFinalVideo(
 
       // Compile the draw plan first — emphasis SFX are derived from its layers.
       const layers = planScene(scene, trimSec, dims, preset, variantSeed);
+      // End card rides the last scene — kept in a separate list so it joins the
+      // SFX/draw pipeline but never the caption-chunk camera punches. Skipped when
+      // the last scene IS the hook (1-scene ad): the hook title owns that band.
+      let endCardLayers: DrawLayer[] = [];
+      if (isLastScene && endCard && !scene.isHook) {
+        endCardLayers = planEndCardLayers(endCard, trimSec, dims, preset, [
+          scene.overlayText?.[0]?.text,
+          scene.scriptLine,
+        ]);
+        layers.push(...endCardLayers);
+      } else if (isLastScene && endCard && scene.isHook) {
+        console.log('[renderFfmpeg] endCard skipped: last scene is the hook (band collision)');
+      }
 
       // Gather this scene's SFX candidates on the GLOBAL timeline:
       //  - transition cues (whoosh/swish) snapped to the cut,
@@ -1583,9 +1652,10 @@ export async function renderFinalVideo(
       }
 
       // Camera move: EDL hint (or preset default), punches at caption-chunk
-      // starts (chunks = any text layer that isn't the hook or an EDL overlay).
+      // starts (chunks = any text layer that isn't the hook, an EDL overlay, or
+      // an end-card line — end-card pops must not jolt the camera).
       const punchTimes = layers
-        .filter((l): l is TextLayer => l.kind === 'text' && l.anim !== 'slideup' && l.anim !== 'fade')
+        .filter((l): l is TextLayer => l.kind === 'text' && !endCardLayers.includes(l) && l.anim !== 'slideup' && l.anim !== 'fade')
         .map((l) => l.startSec);
       const camFilter = buildCameraFilter(
         effectiveCameraEffect(scene.cameraEffect, i, preset.camera),

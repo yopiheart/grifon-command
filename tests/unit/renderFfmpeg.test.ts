@@ -3,7 +3,7 @@ import {
   parseDurationSec, parseTrimSec, dimsFor, chooseTrim,
   clampWindow, clampAnchor, escFilterPath,
   safeZone, fitText, wrapTwoLines, stripUnrenderable, evenSplit, chunkCaption,
-  planScene, buildTextFilter, buildBoxFilter, WIPE_SLICES, snapSfxAnchor, pickSceneSfx,
+  planScene, planEndCardLayers, buildTextFilter, buildBoxFilter, WIPE_SLICES, snapSfxAnchor, pickSceneSfx,
 } from '../../api/_lib/renderFfmpeg.js';
 import type { SfxCandidate } from '../../api/_lib/renderFfmpeg.js';
 import type { FinalRenderScene } from '../../types.js';
@@ -308,6 +308,49 @@ describe('planScene', () => {
     };
     const fades = planScene(scene, 5, DIMS).filter((l) => l.kind === 'text' && (l as any).anim === 'fade');
     expect(fades.length).toBe(0);
+  });
+});
+
+describe('planEndCardLayers', () => {
+  const card = { recapText: 'FIRST 50: FREE DRIP BAG', priceAnchorText: '₱899 VALUE — TODAY ₱499' };
+  it('returns [] when the end card is absent or blank', () => {
+    expect(planEndCardLayers(undefined, 5, DIMS)).toEqual([]);
+    expect(planEndCardLayers({}, 5, DIMS)).toEqual([]);
+    expect(planEndCardLayers({ recapText: '  ', priceAnchorText: '🔥' }, 5, DIMS)).toEqual([]);
+  });
+  it('recap: gold highlight, pop-in, holds to the trim end, NO sfx (anchor owns the accent)', () => {
+    const layers = planEndCardLayers(card, 5, DIMS) as any[];
+    expect(layers).toHaveLength(2);
+    const recap = layers[0];
+    expect(recap.color).toBe('0xFFCC00');               // CLASSIC highlightColor
+    expect(recap.anim).toBe('pop');
+    expect(recap.startSec).toBeCloseTo(0.3);
+    expect(recap.endSec).toBe(5);                       // holds to scene end, no 1.5s cutoff
+    expect(recap.emphasisSfx).toBeUndefined();          // 0.3s would collide with cut/overlay sfx
+  });
+  it('anchor stacks BELOW the recap, white fill, staggered in, ding', () => {
+    const layers = planEndCardLayers(card, 5, DIMS) as any[];
+    const [recap, anchor] = layers;
+    expect(anchor.yBase).toBeGreaterThan(recap.yBase);  // stacked under, never overlapping
+    expect(anchor.color).toBe('white');
+    expect(anchor.startSec).toBeCloseTo(0.8);
+    expect(anchor.endSec).toBe(5);
+    expect(anchor.emphasisSfx).toBe('ding');            // CLASSIC punchline sfx
+    expect(anchor.text).toContain('₱');                 // peso glyph survives the strip
+    expect(anchor.text).not.toContain('—');             // em-dash dropped (caption rule)
+  });
+  it('a single field still renders alone', () => {
+    expect(planEndCardLayers({ recapText: 'FREE SHIPPING TODAY' }, 5, DIMS)).toHaveLength(1);
+    expect(planEndCardLayers({ priceAnchorText: '₱499 ONLY' }, 5, DIMS)).toHaveLength(1);
+  });
+  it('skips lines that cannot show ≥0.4s before the scene ends', () => {
+    // 0.6s scene: recap (in at 0.3) fits 0.3s → dropped; anchor (0.8) starts after the end.
+    expect(planEndCardLayers(card, 0.6, DIMS)).toEqual([]);
+  });
+  it('drops a line that duplicates text the scene already burns (EDL overlay / caption)', () => {
+    const layers = planEndCardLayers(card, 5, DIMS, undefined, ['First 50, free drip bag!']) as any[];
+    expect(layers).toHaveLength(1);                     // recap deduped away
+    expect(layers[0].text).toContain('₱');              // anchor survives
   });
 });
 
