@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'motion/react';
 import { ShieldCheck, Lock, Sparkles, ArrowRight } from 'lucide-react';
 import { CONTACT } from '../../../config/contact';
 import { Marquee } from '../Marquee';
@@ -108,19 +109,32 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onEnterApp, onNavi
             </h2>
           </div>
 
-          {/* Final CTA + griffin glyph rising behind it, cropped by the card edge (the helmet move) */}
+          {/* Final CTA + griffin emblem rising behind it, cropped by the card edge
+              (the helmet move). Static sculpture, staged motion only: one-time
+              rise-on-reveal + a slow-breathing gold aura — animating the emblem
+              itself would cheapen the realism that sells it. */}
           <div className="relative z-10 mt-10 flex justify-center md:mt-12">
             <GoldButton onClick={onEnterApp} className="rounded-full px-10 py-4 text-sm shadow-[0_8px_30px_rgba(0,0,0,0.45)]">
               START FREE
               <ArrowRight className="ml-2 inline h-4 w-4" />
             </GoldButton>
           </div>
-          <img
-            src="/logo.png"
-            alt=""
-            aria-hidden="true"
-            className="pointer-events-none relative z-0 mx-auto -mt-10 -mb-24 h-56 w-auto select-none object-contain opacity-90 md:-mt-12 md:-mb-36 md:h-80"
-          />
+          <div className="relative">
+            <div
+              aria-hidden="true"
+              className="griffin-glow pointer-events-none absolute left-1/2 top-1/3 h-72 w-72 -translate-x-1/2 rounded-full bg-[#FFCC00]/20 blur-[90px]"
+            />
+            <motion.img
+              src="/griffin-emblem.png"
+              alt=""
+              aria-hidden="true"
+              initial={{ opacity: 0, y: 64 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.8, ease: 'easeOut' }}
+              className="pointer-events-none relative z-0 mx-auto -mt-12 -mb-28 h-72 w-auto select-none object-contain md:-mt-16 md:-mb-44 md:h-[26rem]"
+            />
+          </div>
         </div>
       </div>
 

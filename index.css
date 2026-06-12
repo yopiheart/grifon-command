@@ -99,8 +99,10 @@ html { scroll-behavior: smooth; }
 }
 .finder-corner { animation: finder-breathe 3.2s ease-in-out infinite; }
 .rec-dot { animation: rec-blink 1.6s steps(1, end) infinite; }
+/* Footer griffin emblem aura — same breathe keyframe, statue-slow. */
+.griffin-glow { animation: finder-breathe 7s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) {
-  .finder-corner, .rec-dot { animation: none; }
+  .finder-corner, .rec-dot, .griffin-glow { animation: none; }
 }
 
 /*
