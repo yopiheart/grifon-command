@@ -138,14 +138,14 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onEnterApp, onNavi
         </div>
       </div>
 
-      {/* Gold closing strip */}
+      {/* Gold closing strip — stacked + centered on mobile, justified on desktop. */}
       <div className="mt-10 bg-[#FFCC00] text-black md:mt-14">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-x-6 gap-y-2 px-4 py-4 sm:px-6 lg:px-8">
-          <nav className="flex flex-wrap items-center gap-x-6 gap-y-1 text-xs font-bold uppercase tracking-widest">
+        <div className="mx-auto flex max-w-7xl flex-col items-center gap-3 px-4 py-5 text-center sm:flex-row sm:justify-between sm:gap-6 sm:px-6 sm:py-4 sm:text-left lg:px-8">
+          <nav className="flex items-center gap-6 text-xs font-bold uppercase tracking-widest">
             <a href="/privacy" onClick={(e) => { e.preventDefault(); onNavigateLegal('privacy'); }} className="hover:underline">Privacy Policy</a>
             <a href="/terms" onClick={(e) => { e.preventDefault(); onNavigateLegal('terms'); }} className="hover:underline">Terms</a>
           </nav>
-          <span className="text-xs font-semibold">© 2026 Haste Enterprises. All rights reserved</span>
+          <span className="text-xs font-medium text-black/70">© 2026 Haste Enterprises. All rights reserved</span>
         </div>
       </div>
     </footer>
