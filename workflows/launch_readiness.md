@@ -4,7 +4,33 @@
 
 This is the meta-workflow. It doesn't do the work itself — it points to the workflows that do, and tracks overall progress. **Source of truth = the code + `git log`.** This file summarizes; it does not replace.
 
-> **⏭ NEXT SESSION (2026-06-11):** scene-6/5 video regen to verify the END-CLEAN video-prompt negatives (ghost-tail kill), then one FINAL_RENDER to verify the tighter trim pads + read `[renderFfmpeg:trim]` numbers. Backlog surfaced 2026-06-10, Neil-gated: voice auto-preselect by avatar gender; end-card offer recap overlay ("FIRST 50: FREE DRIP BAG"); price-anchor callout at product reveal; product-aware hook text dodge (vision pass is face-only today); EDL responseSchema (kill the drift class at decode time when the Phase-1A stub brain gets its real upgrade).
+> **⏭ NEXT SESSION (2026-06-12+):** (1) **Billing-success page** is the one redesign surface never live-verified — exercise the "Founding Creator" share card + native share via a real test purchase or a phone on the prod deploy. (2) Resume the render-pipeline thread parked since 2026-06-10: scene-6/5 video regen to verify END-CLEAN negatives (ghost-tail kill), then one FINAL_RENDER for the tighter trim pads + read `[renderFfmpeg:trim]` numbers. Neil-gated render backlog still open: voice auto-preselect by avatar gender; end-card offer recap overlay ("FIRST 50: FREE DRIP BAG"); price-anchor callout at product reveal; product-aware hook text dodge (vision pass is face-only today); EDL responseSchema.
+
+## Status as of 2026-06-12 (FULL-FUNNEL KINETIC REDESIGN MERGED TO MAIN — landonorris-inspired)
+
+The `claude/landing-page-redesign-g7zaca` bundle (entrance → daily habit, one kinetic visual language) was **verified on PC by Neil and merged to `main` via `--no-ff` (`1a9097d`); origin updated `08be4b2..1a9097d`.** Vercel auto-deploys `main` to prod. Source of truth = `git log`; this is the summary.
+
+**The redesign (pre-merge, on the branch):** landing rebuilt with kinetic ad-montage hero, Instrument Serif gold accents, marquees, SignatureScribble system, cream proof band, scattered proof gallery, pinned START FREE pill w/ hide-zones, squiggle scroll-spy nav; pricing kinetic pass; auth gateway outcome-first + **GitHub OAuth live in Supabase** (Apple wired but OFF, needs $99/yr account — `config/authProviders.ts` is the per-provider kill switch); route veil page transitions; checkout/billing-success/dashboard restyle. DESIGN.md amended (serif-accent token, proof-band `#F2F1EA` light-band exception, heading LAW). `.AI` suffix dropped everywhere. Full pre-merge detail: [`handoff_2026-06-11-funnel-redesign.md`](handoff_2026-06-11-funnel-redesign.md).
+
+**This session's verification + conversion pass (CMO-locked, on top of the bundle):**
+
+| Theme | What shipped |
+|---|---|
+| Animations "broken" — root cause | NOT a bug: every motion system gates on `useReducedMotion()`; Neil's PC had Windows animation effects OFF → Chrome reported `prefers-reduced-motion: reduce` → all static by design. Confirmed live (Playwright matchMedia + marquee `playState`). DevTools "no-preference" emulation unblocked verification. |
+| Checkout price-switch lag | Real. `CheckoutPage.tsx` re-fetched the intent on every monthly↔annual toggle. Now caches per cycle+add-ons key and **pre-warms the opposite cycle** → instant swap, math stays server-authoritative (`d113216`). |
+| Hero CTA (CMO) | Split layout kept (vertical-phone visual; centering pushes CTA below fold). Copy → **"CREATE MY FIRST AD — FREE"** (first-person outcome); risk-reversal moved to a ★ click-trigger trust row. Pinned pill gained "₱0 today · no card". |
+| Receipts Rail (NEW `ReceiptsRail.tsx`) | Replaces the static testimonial grid. Scroll-pinned horizontal strip, canvas/heading morph dark→cream + cards zoom 92→100% on pin; **7 cards = 3 real quotes interleaved with 3 clearly-labeled SAMPLE-AD receipts (proof-wall stats restated — never invented reviews) + a RESERVED CTA end-card**; ticker 01→07. Mobile: cream snap-carousel that auto-plays left→right then hands off to swipe (suspends mandatory snap for the glide). Pill hides across the rail. |
+| Footer rebuild | Lando anatomy: publish-everywhere gold **glint** marquee, trust row, link cols (wiring unchanged), giant "ALWAYS *shipping* THE AD." scribble tagline, **sculpted griffin emblem** (`public/griffin-emblem.png`) rising out of the card edge w/ breathing gold aura + START FREE on its chest, gold closing strip (centered on mobile — last fix before merge). |
+| Director AI card | AnimatedBorder → **viewfinder frame** (breathing gold corner brackets + blinking REC) so it no longer twins the guarantee's rotating arc. |
+| Polish | Scribble underline dropped below baseline (descender collision); mobile "TRUSTED BY…" headline centered. |
+
+**Commits this session (all on `main` via the merge):** `d113216` checkout prefetch · `80218db` vite `*.webm` watch-ignore (locked screen recordings were crashing the dev server) · `219231b` rail+footer+CTA v1 · `51f955e` rail v2 light-flip + mobile auto-play + viewfinder + glint · `9f56f48` griffin emblem · `48bbb5a` gold-strip mobile centering.
+
+**Griffin asset note:** the ChatGPT-generated PNG had the checkerboard **baked in as white pixels** (no real alpha). Keyed out via a .NET LockBits pass (`scripts`-free, inline) — grayish near-white → transparent, feathered. If regenerated, request a true transparent PNG or a solid `#09090b` background.
+
+**Tooling re-arm (defreezer):** `gh` restored via `scripts/restore-gh-cli.ps1` but **was never auth'd** — the merge went through plain `git` (push creds already worked this session), not `gh`. Next session needs `gh auth login` (or `$env:GH_TOKEN`) before any PR-based flow.
+
+**Known-open from the redesign:** billing-success share card unverified (see NEXT SESSION); reduced-motion users still see only ad-frame-0 in the hero montage (content gap, not just motion — parked); ImageAdsGen/OrganicCalendar `referenceImageMode` bug still parked (render-side, untouched here).
 
 ## Status as of 2026-06-10 (VALIDATION RENDER EXECUTED — hook blob KILLED · 11-fix hardening day)
 
