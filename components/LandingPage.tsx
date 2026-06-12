@@ -10,6 +10,7 @@ import { PinnedCtaPill } from './landing/PinnedCtaPill';
 import { Hero } from './landing/sections/Hero';
 import { ProofGallery } from './landing/sections/ProofGallery';
 import { ProofBand } from './landing/sections/ProofBand';
+import { ReceiptsRail } from './landing/sections/ReceiptsRail';
 import { Modules } from './landing/sections/Modules';
 import { RoiMetrics } from './landing/sections/RoiMetrics';
 import { OfferStack } from './landing/sections/OfferStack';
@@ -89,6 +90,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
       <ProofGallery />
 
       <ProofBand />
+
+      <ReceiptsRail onEnterApp={onEnterApp} />
 
       <Modules />
 

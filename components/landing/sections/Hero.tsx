@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { Star } from 'lucide-react';
 import { GoldButton } from '../../ui/GoldButton';
 import { AdMontagePhone } from '../AdMontagePhone';
 import { SignatureScribble } from '../SignatureScribble';
@@ -66,8 +67,20 @@ export const Hero: React.FC<HeroProps> = ({ onEnterApp, heroSentinelRef }) => (
 
         <motion.div variants={lineReveal} className="mt-9">
           <GoldButton onClick={onEnterApp} className="w-full sm:w-auto text-sm md:text-base px-10 py-4">
-            START FREE — NO CREDIT CARD NEEDED
+            CREATE MY FIRST AD — FREE
           </GoldButton>
+          {/* Click-trigger trust row: one last "why believe" at the decision pixel.
+              Claims mirror the proof band — nothing new is asserted here. */}
+          <div className="mt-4 flex flex-wrap items-center justify-center lg:justify-start gap-x-2 gap-y-1 text-[11px] font-mono uppercase tracking-widest text-zinc-500">
+            <span className="flex items-center gap-0.5" aria-label="5 stars">
+              {[1, 2, 3, 4, 5].map((s) => (
+                <Star key={s} size={11} strokeWidth={0} fill="#FFCC00" />
+              ))}
+            </span>
+            <span>early Filipino business owners</span>
+            <span className="text-zinc-700">·</span>
+            <span>No credit card needed</span>
+          </div>
         </motion.div>
       </motion.div>
 

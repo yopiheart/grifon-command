@@ -65,10 +65,16 @@ export const PinnedCtaPill: React.FC<PinnedCtaPillProps> = ({
               playTick();
               onEnterApp();
             }}
-            className="pointer-events-auto flex items-center gap-2 rounded-full bg-[#FFCC00] text-black font-bold uppercase text-xs tracking-widest px-6 py-3.5 shadow-[0_8px_30px_rgba(255,204,0,0.35)] hover:shadow-[0_8px_40px_rgba(255,204,0,0.55)] hover:scale-105 active:scale-95 transition-[box-shadow,transform] whitespace-nowrap"
+            className="pointer-events-auto flex flex-col items-center rounded-full bg-[#FFCC00] text-black px-6 py-2.5 shadow-[0_8px_30px_rgba(255,204,0,0.35)] hover:shadow-[0_8px_40px_rgba(255,204,0,0.55)] hover:scale-105 active:scale-95 transition-[box-shadow,transform] whitespace-nowrap"
           >
-            START FREE
-            <ArrowRight className="w-4 h-4" />
+            <span className="flex items-center gap-2 font-bold uppercase text-xs tracking-widest">
+              START FREE
+              <ArrowRight className="w-4 h-4" />
+            </span>
+            {/* Real risk-reversal microcopy — the pill's own "why now" (no fake urgency). */}
+            <span className="text-[9px] font-mono uppercase tracking-widest text-black/60 leading-tight">
+              ₱0 today · no card
+            </span>
           </motion.button>
         )}
       </AnimatePresence>
