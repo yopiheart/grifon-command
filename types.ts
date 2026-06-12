@@ -39,6 +39,8 @@ export interface Avatar {
     url: string;
     description: string;
     ethnicity: string;
+    /* Step 4 explicit pick; uploaded avatars infer from description instead */
+    gender?: 'Male' | 'Female' | 'Any';
 }
 
 export interface Scene {

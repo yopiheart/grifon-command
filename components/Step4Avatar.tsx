@@ -47,7 +47,7 @@ const Step4Avatar: React.FC<Step4Props> = ({ businessInfo, avatar, setAvatar, on
           '1K', 
           []
       );
-      const newAvatar = { prompt: `An avatar for an ad targeting ${businessInfo.audience}`, url, description, ethnicity };
+      const newAvatar = { prompt: `An avatar for an ad targeting ${businessInfo.audience}`, url, description, ethnicity, gender };
       setGeneratedAvatar(newAvatar);
     } catch (err) {
       setError('CRITICAL_ERROR: AVATAR_GEN_FAILED');

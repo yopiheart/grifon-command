@@ -10,6 +10,7 @@ import { consolidateVoices } from '../services/voiceConsolidationService';
 import { renderFinalVideo } from '../services/finalRenderService';
 import { estimateSpokenSec } from '../utils/spokenDuration';
 import { RECOMMENDED_VOICE_IDS } from './SignalModulator/pinoyReady';
+import { preferGenderVoice, type AvatarVoiceGender } from '../utils/voiceSelect';
 import { compressImageForUpload } from '../utils/imageCompression';
 import { GlassPanel } from './ui/GlassPanel';
 import { GoldButton } from './ui/GoldButton';
@@ -27,6 +28,7 @@ export interface EditorBatchPayload {
 interface EditVideoProps {
   onBack: () => void;
   editorBatch?: EditorBatchPayload | null;
+  avatarGender?: AvatarVoiceGender;
 }
 
 const aspectRatioToPlatform = (ar: '9:16' | '16:9' | '1:1'): EditTargetPlatform => {
@@ -44,7 +46,8 @@ const formatSec = (s: number): string => {
 const BatchEditMode: React.FC<{
   editorBatch: EditorBatchPayload;
   onBack: () => void;
-}> = ({ editorBatch, onBack }) => {
+  avatarGender?: AvatarVoiceGender;
+}> = ({ editorBatch, onBack, avatarGender }) => {
   const [edl, setEdl] = useState<EditDecisionList | null>(null);
   const [isPlanning, setIsPlanning] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -105,11 +108,14 @@ const BatchEditMode: React.FC<{
       .then((lib) => {
         if (cancelled) return;
         setVoices(lib);
+        // Avatar gender prefers a matching voice WITHIN each tier; tier order
+        // (Filipino library → my voices → stock) is unchanged.
         const first =
+          preferGenderVoice(lib.libraryVoices, avatarGender)?.voice_id ??
           lib.libraryVoices[0]?.voice_id ??
           lib.myVoices[0]?.voice_id ??
+          preferGenderVoice(lib.stockVoices, avatarGender)?.voice_id ??
           lib.stockVoices[0]?.voice_id ??
-          RECOMMENDED_VOICE_IDS[0] ??
           '';
         setVoiceId(first);
       })
@@ -119,7 +125,7 @@ const BatchEditMode: React.FC<{
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [avatarGender]);
 
   // Detect face-clear caption bands for talking scenes (dynamic-imported MediaPipe;
   // runs once per batch, fully graceful — failure leaves captionRegions empty).
@@ -562,9 +568,9 @@ const BatchEditMode: React.FC<{
   );
 };
 
-const EditVideo: React.FC<EditVideoProps> = ({ onBack, editorBatch }) => {
+const EditVideo: React.FC<EditVideoProps> = ({ onBack, editorBatch, avatarGender }) => {
   if (editorBatch && editorBatch.sceneBatch.length > 0) {
-    return <BatchEditMode editorBatch={editorBatch} onBack={onBack} />;
+    return <BatchEditMode editorBatch={editorBatch} onBack={onBack} avatarGender={avatarGender} />;
   }
 
   const [formData, setFormData] = useState<VideoEditInput>({

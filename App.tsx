@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useRef, useSyncExternalStore } from 'react';
+import React, { useState, useEffect, useMemo, useRef, useSyncExternalStore } from 'react';
 import { ChevronLeft, Lightbulb, RotateCw, Mail, Check, Star, Apple } from 'lucide-react';
 import { ClientDetails, BusinessInfo, Script, Scene, VideoPrompt, Avatar, CinematicNarrativeScene, SceneBatchEntry } from './types';
 import StepIndicator from './components/StepIndicator';
@@ -49,6 +49,7 @@ import {
   updatePassword,
 } from './services/supabaseClient';
 import { popIntendedPlan, startCheckout } from './services/billingService';
+import { inferAvatarGender } from './utils/voiceSelect';
 import { OAUTH_PROVIDERS } from './config/authProviders';
 import { RouteVeil, type VeilState } from './components/ui/RouteVeil';
 import { QuotaWallModal } from './components/ui/QuotaWallModal';
@@ -157,6 +158,7 @@ const App: React.FC = () => {
   const [language, setLanguage] = useState<'English' | 'Taglish' | null>(null);
   const [finalScript, setFinalScript] = useState<string[]>([]);
   const [avatar, setAvatar] = useState<Avatar | null>(null);
+  const avatarGender = useMemo(() => inferAvatarGender(avatar), [avatar]);
   const [storyboard, setStoryboard] = useState<Scene[]>([]);
   const [videoPrompts, setVideoPrompts] = useState<VideoPrompt[]>([]);
   const [aspectRatio, setAspectRatio] = useState<'9:16' | '16:9' | null>(null);
@@ -1276,6 +1278,7 @@ const App: React.FC = () => {
         }}
         globalScript={finalScript}
         sceneBatch={sceneBatch}
+        avatarGender={avatarGender}
         onSendToAiEditor={(audioOverlays) => {
           setEditorBatch({
             sceneBatch,
@@ -1303,6 +1306,7 @@ const App: React.FC = () => {
           setActiveModule(null);
         }}
         editorBatch={editorBatch}
+        avatarGender={avatarGender}
       />
     );
   } else if (activeModule === 'image_editor') {

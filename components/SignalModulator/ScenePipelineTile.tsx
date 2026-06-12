@@ -4,7 +4,8 @@ import JSZip from 'jszip';
 import { GlassPanel } from '../ui/GlassPanel';
 import { GoldButton } from '../ui/GoldButton';
 import { synthesizeSpeech } from '../../services/voiceService';
-import type { SceneBatchEntry, StabilityMode, VoiceLibrary } from '../../types';
+import type { SceneBatchEntry, StabilityMode, StockVoice, VoiceLibrary } from '../../types';
+import { preferGenderVoice, type AvatarVoiceGender } from '../../utils/voiceSelect';
 import VoicePicker from './VoicePicker';
 import { RECOMMENDED_VOICE_IDS } from './pinoyReady';
 import { STABILITY_LABELS, downloadAudio } from './utils';
@@ -13,6 +14,7 @@ import type { SessionHistoryApi } from './useSessionHistory';
 interface ScenePipelineTileProps {
   library: VoiceLibrary;
   sceneBatch: SceneBatchEntry[];
+  avatarGender?: AvatarVoiceGender;
   history: SessionHistoryApi;
   onUsageReported?: () => void;
   onSendToAiEditor?: (audioOverlays: { sceneIdx: number; audioUrl: string }[]) => void;
@@ -29,6 +31,7 @@ interface SceneState {
 const ScenePipelineTile: React.FC<ScenePipelineTileProps> = ({
   library,
   sceneBatch,
+  avatarGender,
   history,
   onUsageReported,
   onSendToAiEditor,
@@ -43,11 +46,14 @@ const ScenePipelineTile: React.FC<ScenePipelineTileProps> = ({
 
   // Default to first Filipino library voice on mount; falls back to recommended,
   // then first stock voice. Same selection logic as TextToSpeechTile so users
-  // don't have to re-learn the picker.
+  // don't have to re-learn the picker. The avatar's gender prefers a matching
+  // voice WITHIN each tier (never promotes a lower tier, never overrides a
+  // manual pick — this only runs while voiceId is empty).
   useEffect(() => {
     if (voiceId) return;
     if (library.libraryVoices.length > 0) {
-      setVoiceId(library.libraryVoices[0].voice_id);
+      const preferred = preferGenderVoice(library.libraryVoices, avatarGender);
+      setVoiceId((preferred ?? library.libraryVoices[0]).voice_id);
       return;
     }
     if (library.myVoices.length > 0) {
@@ -55,11 +61,18 @@ const ScenePipelineTile: React.FC<ScenePipelineTileProps> = ({
       return;
     }
     if (library.stockVoices.length > 0) {
-      const stockIds = new Set(library.stockVoices.map((v) => v.voice_id));
-      const firstRecommended = RECOMMENDED_VOICE_IDS.find((id) => stockIds.has(id));
-      setVoiceId(firstRecommended ?? library.stockVoices[0].voice_id);
+      const stockById = new Map(library.stockVoices.map((v) => [v.voice_id, v]));
+      const recommended = RECOMMENDED_VOICE_IDS
+        .map((id) => stockById.get(id))
+        .filter((v): v is StockVoice => Boolean(v));
+      const pick =
+        preferGenderVoice(recommended, avatarGender) ??
+        preferGenderVoice(library.stockVoices, avatarGender) ??
+        recommended[0] ??
+        library.stockVoices[0];
+      setVoiceId(pick.voice_id);
     }
-  }, [library, voiceId]);
+  }, [library, voiceId, avatarGender]);
 
   const totalChars = useMemo(
     () => sceneBatch.reduce((sum, s) => sum + (s.scriptLine?.length ?? 0), 0),

@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { ChevronLeft, Mic, MessageSquare, Wand2, History, Layers } from 'lucide-react';
 import { fetchVoices, fetchBudget } from '../../services/voiceService';
 import type { VoiceLibrary, HistoryTake, BudgetStatus, SceneBatchEntry } from '../../types';
+import type { AvatarVoiceGender } from '../../utils/voiceSelect';
 import { useSubscription } from '../../hooks/useSubscription';
 import { planAtLeast } from '../../utils/planGate';
 import TextToSpeechTile from './TextToSpeechTile';
@@ -17,12 +18,13 @@ interface SignalModulatorProps {
   onBack: () => void;
   globalScript?: string[];
   sceneBatch?: SceneBatchEntry[];
+  avatarGender?: AvatarVoiceGender;
   onSendToAiEditor?: (audioOverlays: { sceneIdx: number; audioUrl: string }[]) => void;
 }
 
 const EMPTY_LIBRARY: VoiceLibrary = { stockVoices: [], myVoices: [], libraryVoices: [], quotaUsed: 0, quotaMax: 1 };
 
-const SignalModulator: React.FC<SignalModulatorProps> = ({ onBack, globalScript = [], sceneBatch = [], onSendToAiEditor }) => {
+const SignalModulator: React.FC<SignalModulatorProps> = ({ onBack, globalScript = [], sceneBatch = [], avatarGender, onSendToAiEditor }) => {
   // When the user routes here via "// SEND TO SIGNAL MODULATOR ↗" from Generate
   // Video, sceneBatch arrives populated — auto-select the Scene Pipeline tab so
   // they don't have to hunt for it.
@@ -148,6 +150,7 @@ const SignalModulator: React.FC<SignalModulatorProps> = ({ onBack, globalScript 
         <ScenePipelineTile
           library={library}
           sceneBatch={sceneBatch}
+          avatarGender={avatarGender}
           history={history}
           onUsageReported={refreshBudget}
           onSendToAiEditor={onSendToAiEditor}
