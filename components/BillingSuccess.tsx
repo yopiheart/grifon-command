@@ -26,6 +26,7 @@ const BillingSuccess: React.FC<Props> = ({ onContinue, email }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [sharing, setSharing] = useState(false);
+  const [saved, setSaved] = useState(false);
 
   useEffect(() => {
     // Strip query string so refresh doesn't re-enter this screen forever.
@@ -55,10 +56,12 @@ const BillingSuccess: React.FC<Props> = ({ onContinue, email }) => {
       if (!blob) return;
       const file = new File([blob], 'grifon-founding-creator.png', { type: 'image/png' });
 
-      // Native share sheet — mobile and some desktops. If it's unavailable OR
-      // throws anything other than a user-cancel, fall through to download so
-      // desktop (esp. Firefox / Windows Chrome with no share target) still works.
+      // Native share sheet — touch devices only. Desktop Chrome reports
+      // canShare=true but the html2canvas render outlives the click's user
+      // activation (~5s), so share() rejects with NotAllowedError and the
+      // sheet never opens. Desktop goes straight to download instead.
       const canNativeShare =
+        navigator.maxTouchPoints > 0 &&
         typeof navigator.share === 'function' &&
         typeof navigator.canShare === 'function' &&
         navigator.canShare({ files: [file] });
@@ -85,6 +88,8 @@ const BillingSuccess: React.FC<Props> = ({ onContinue, email }) => {
       a.click();
       a.remove();
       URL.revokeObjectURL(url);
+      setSaved(true);
+      window.setTimeout(() => setSaved(false), 3000);
     } catch {
       /* card render failed — nothing to recover */
     } finally {
@@ -169,8 +174,10 @@ const BillingSuccess: React.FC<Props> = ({ onContinue, email }) => {
 
             <div className="relative h-full flex flex-col justify-between">
               <div className="flex items-start justify-between">
+                {/* Explicit square dims (logo.png is 512×512): html2canvas renders
+                    w-auto imgs at NATURAL size, blowing up the captured PNG layout. */}
                 <div className="flex items-center gap-2">
-                  <img src="/logo.png" alt="" className="h-6 w-auto object-contain" />
+                  <img src="/logo.png" alt="" width={24} height={24} className="h-6 w-6 object-contain" />
                   <span className="text-white font-black italic text-sm tracking-tight">GRIFON</span>
                 </div>
                 <span className="text-[8px] font-mono uppercase tracking-[0.25em] text-[#FFCC00]">
@@ -227,7 +234,7 @@ const BillingSuccess: React.FC<Props> = ({ onContinue, email }) => {
             className="w-full flex items-center justify-center gap-2.5 py-3.5 rounded-full bg-zinc-950 border border-white/15 text-zinc-300 text-xs font-bold uppercase tracking-widest hover:border-[#FFCC00] hover:text-white transition-all disabled:opacity-50"
           >
             <Share2 className="w-4 h-4 shrink-0" />
-            {sharing ? 'Preparing card…' : 'Share my card'}
+            {sharing ? 'Preparing card…' : saved ? 'Card saved — check Downloads' : 'Share my card'}
           </button>
           <p className="text-[10px] font-mono uppercase tracking-widest text-zinc-600 mt-1">
             // Your first ad in 30 minutes — starting now
