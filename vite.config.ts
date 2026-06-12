@@ -106,7 +106,7 @@ export default defineConfig(({ mode }) => {
         //   .tmp/             — disposable scratch (smoke heroes / fixtures)
         //   .tools/           — restore-*.ps1 portable binaries (e.g. gh.exe/zip)
         // Ignore them (and any media) so smokes / tooling can't kill the server.
-        ignored: ['**/.playwright-mcp/**', '**/.tmp/**', '**/.tools/**', '**/*.mp4'],
+        ignored: ['**/.playwright-mcp/**', '**/.tmp/**', '**/.tools/**', '**/*.mp4', '**/*.webm'],
       },
     },
     build: {
