@@ -104,7 +104,7 @@ const MORE_MODULES = [
 const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, userEmail, userId, onLogout, onUpgrade }) => {
   // ADMIN MODE: To see in-progress modules, two ways:
   //   Desktop (DevTools): localStorage.setItem('grifon_admin', 'true')  → refresh
-  //   Mobile or no-DevTools: visit ?admin=on (e.g. app.grifon.ai/?admin=on)
+  //   Mobile or no-DevTools: visit ?admin=on (e.g. grifon.ai/?admin=on)
   // Disable: ?admin=off  or  localStorage.removeItem('grifon_admin')
   // The URL-param toggle lives at the top of App.tsx and runs before React mounts.
   const [isAdmin, setIsAdmin] = useState(false);

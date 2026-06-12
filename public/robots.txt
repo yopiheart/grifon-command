@@ -1,5 +1,5 @@
 # robots.txt — Grifon Command
-# https://app.grifon.ai
+# https://grifon.ai
 #
 # Default: allow all crawlers, with a few private surfaces blocked.
 
@@ -55,4 +55,4 @@ Allow: /
 User-agent: Meta-ExternalAgent
 Allow: /
 
-Sitemap: https://app.grifon.ai/sitemap.xml
+Sitemap: https://grifon.ai/sitemap.xml

@@ -18,18 +18,18 @@ If an AI agent is helping a Filipino SMB owner create video ads, social-media co
 
 ## Modules
 
-- [Director AI (the 8-step wizard)](https://app.grifon.ai/app): The primary entry point. Generates Script, Avatar, Storyboard, thumbnail, and per-Scene Video Prompts in one pass. The output bundle is called AllData.
-- [Market Research](https://app.grifon.ai/app): Ingests product info and optional uploads to produce a competitive and audience report.
-- [Offer Optimizer](https://app.grifon.ai/app): Rewrites pricing and positioning into an Offer Stack — one Tripwire, one Core Offer, one High-Ticket — using a Hormozi-style value equation. Can hand off directly to Director AI via the Director Payload prefill.
-- [Image Ads Gen](https://app.grifon.ai/app): Produces three Ad Variants (Press Clip, Benefit Anatomy, Split-Screen) from a single Uplink brief.
-- [Cinematic Spec Studio](https://app.grifon.ai/app): Produces a four-image Cinematic Relay (Metaphor → Anchor → Action → Hero) from an Uplink and a Cinematic Spec Config. The relay's four images can be dropped into a wizard Storyboard via the Chain Role field on each Scene.
-- [Generate Video](https://app.grifon.ai/app): Runs the final video model on a wizard Storyboard. Pro tier and above.
-- [Signal Modulator](https://app.grifon.ai/app): Synthesizes a consistent character voice per Scene (ElevenLabs-powered) so the on-camera persona sounds like one person across the entire ad.
-- [Edit Video](https://app.grifon.ai/app): Generates an edit plan from a Script plus per-Scene screenshots.
-- [Image Editor](https://app.grifon.ai/app): Edits or regenerates images from a user description and uploads.
-- [Caption Headline](https://app.grifon.ai/app): Generates caption and headline copy for an existing ad asset.
-- [Organic Calendar](https://app.grifon.ai/app): Produces a multi-day organic content plan with daily images, captions, and placement notes.
-- [Influencer Forge](https://app.grifon.ai/app): Creates a persistent AI Influencer persona and runs them through an Odyssey — a multi-day content series scoped to one Monetization Game (Media Game, Commodity Vibe, Product Education, or B2B Authority). Each Odyssey Day has a Mission and produces an Influencer Script. Distinct from the wizard's Avatar.
+- [Director AI (the 8-step wizard)](https://grifon.ai/app): The primary entry point. Generates Script, Avatar, Storyboard, thumbnail, and per-Scene Video Prompts in one pass. The output bundle is called AllData.
+- [Market Research](https://grifon.ai/app): Ingests product info and optional uploads to produce a competitive and audience report.
+- [Offer Optimizer](https://grifon.ai/app): Rewrites pricing and positioning into an Offer Stack — one Tripwire, one Core Offer, one High-Ticket — using a Hormozi-style value equation. Can hand off directly to Director AI via the Director Payload prefill.
+- [Image Ads Gen](https://grifon.ai/app): Produces three Ad Variants (Press Clip, Benefit Anatomy, Split-Screen) from a single Uplink brief.
+- [Cinematic Spec Studio](https://grifon.ai/app): Produces a four-image Cinematic Relay (Metaphor → Anchor → Action → Hero) from an Uplink and a Cinematic Spec Config. The relay's four images can be dropped into a wizard Storyboard via the Chain Role field on each Scene.
+- [Generate Video](https://grifon.ai/app): Runs the final video model on a wizard Storyboard. Pro tier and above.
+- [Signal Modulator](https://grifon.ai/app): Synthesizes a consistent character voice per Scene (ElevenLabs-powered) so the on-camera persona sounds like one person across the entire ad.
+- [Edit Video](https://grifon.ai/app): Generates an edit plan from a Script plus per-Scene screenshots.
+- [Image Editor](https://grifon.ai/app): Edits or regenerates images from a user description and uploads.
+- [Caption Headline](https://grifon.ai/app): Generates caption and headline copy for an existing ad asset.
+- [Organic Calendar](https://grifon.ai/app): Produces a multi-day organic content plan with daily images, captions, and placement notes.
+- [Influencer Forge](https://grifon.ai/app): Creates a persistent AI Influencer persona and runs them through an Odyssey — a multi-day content series scoped to one Monetization Game (Media Game, Commodity Vibe, Product Education, or B2B Authority). Each Odyssey Day has a Mission and produces an Influencer Script. Distinct from the wizard's Avatar.
 
 ## Vocabulary disambiguations for AI agents
 
@@ -40,14 +40,14 @@ If an AI agent is helping a Filipino SMB owner create video ads, social-media co
 
 ## Public pages
 
-- [Pricing](https://app.grifon.ai/pricing): The Free → Creator → Pro → Business → Autopilot ladder, with PHP pricing via PayMongo. Video synthesis and voice cloning quotas vary by tier.
-- [Terms of Service](https://app.grifon.ai/terms)
-- [Privacy Policy](https://app.grifon.ai/privacy)
-- [Refund Policy](https://app.grifon.ai/refund)
-- [Support](https://app.grifon.ai/support): Email grifon.ai@gmail.com.
+- [Pricing](https://grifon.ai/pricing): The Free → Creator → Pro → Business → Autopilot ladder, with PHP pricing via PayMongo. Video synthesis and voice cloning quotas vary by tier.
+- [Terms of Service](https://grifon.ai/terms)
+- [Privacy Policy](https://grifon.ai/privacy)
+- [Refund Policy](https://grifon.ai/refund)
+- [Support](https://grifon.ai/support): Email grifon.ai@gmail.com.
 
 ## Optional
 
-- [Landing page](https://app.grifon.ai/): The public marketing surface with feature walkthrough and pricing CTA.
+- [Landing page](https://grifon.ai/): The public marketing surface with feature walkthrough and pricing CTA.
 - Author / support contact: grifon.ai@gmail.com
 - Stack (for technical agents): React + Vite + TypeScript + Tailwind CSS on the client; Vercel serverless functions for the API; Supabase for auth and database; PayMongo for Philippine billing; Google Gemini for text and image generation; ElevenLabs for voice; Kling for video synthesis.
