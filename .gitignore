@@ -48,3 +48,9 @@ Thumbs.db
 
 .vercel
 public/mediapipe/wasm/
+
+# Local screen recordings / scratch video dropped in repo root (smoke-test
+# captures). Root-anchored so intentional videos in baselines/ demos/
+# websiteinspodesigns/ stay trackable without `git add -f`.
+/*.webm
+/*.mp4
