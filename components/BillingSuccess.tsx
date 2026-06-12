@@ -61,6 +61,14 @@ const BillingSuccess: React.FC<Props> = ({ onContinue, email }) => {
             (el as HTMLElement).style.overflow = 'visible';
             (el as HTMLElement).style.whiteSpace = 'nowrap';
           });
+          // html2canvas paints this text run ~7px lower than the browser does
+          // (NOT an italic/font-loading issue — measured via card-repro harness,
+          // 2026-06-13: -7px nudge → -0.2px residual). Clone-only correction.
+          const wm = doc.querySelector('[data-capture-nudge]') as HTMLElement | null;
+          if (wm) {
+            wm.style.position = 'relative';
+            wm.style.top = '-7px';
+          }
         },
       });
       const blob: Blob | null = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
@@ -179,17 +187,18 @@ const BillingSuccess: React.FC<Props> = ({ onContinue, email }) => {
           >
             {/* Foil sheen */}
             <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-[#FFCC00]/[0.07] to-transparent" aria-hidden="true" />
+            {/* logo.png is 745×997 — explicit true-aspect dims everywhere in this
+                card: html2canvas ignores object-fit and stretches the bitmap to
+                fill the box, fattening the griffin in the captured PNG. */}
             <div className="absolute -right-8 -bottom-10 opacity-[0.08]" aria-hidden="true">
-              <img src="/logo.png" alt="" className="w-44 h-44 object-contain" />
+              <img src="/logo.png" alt="" className="h-44 w-[132px]" />
             </div>
 
             <div className="relative h-full flex flex-col justify-between">
               <div className="flex items-start justify-between">
-                {/* Explicit square dims (logo.png is 512×512): html2canvas renders
-                    w-auto imgs at NATURAL size, blowing up the captured PNG layout. */}
                 <div className="flex items-center gap-2">
-                  <img src="/logo.png" alt="" width={24} height={24} className="h-6 w-6 object-contain" />
-                  <span className="text-white font-black italic text-sm tracking-tight">GRIFON</span>
+                  <img src="/logo.png" alt="" width={18} height={24} className="h-6 w-[18px]" />
+                  <span data-capture-nudge className="text-white font-black italic text-sm tracking-tight">GRIFON</span>
                 </div>
                 <span className="text-[8px] font-mono uppercase tracking-[0.25em] text-[#FFCC00]">
                   {founding ? 'Founding Creator' : 'Creator'}
