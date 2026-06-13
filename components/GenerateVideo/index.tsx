@@ -15,6 +15,7 @@ import {
   Pencil,
   Eye,
   Loader2,
+  Play,
 } from 'lucide-react';
 import type {
   VideoGenConfig,
@@ -57,6 +58,7 @@ interface PreviewItem {
   id: string;
   url: string;
   downloadUrl: string;
+  posterUrl?: string;
   mimeType: string;
   prompt: string;
   sceneIdx?: number;
@@ -1228,12 +1230,16 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
         </div>
       ) : previewItem ? (
         <>
+          {/* Egress fix (2026-06-13): preload="none" + no autoPlay so the MP4
+              downloads only when the user presses play, not on every selection.
+              poster shows the first frame meanwhile (when available). */}
           <video
             key={previewItem.url}
             src={previewItem.url}
+            poster={previewItem.posterUrl}
             controls
-            autoPlay
             loop
+            preload="none"
             className="w-full max-h-[60vh] rounded-xl border border-[#FFCC00]/40 shadow-[0_0_30px_rgba(255,204,0,0.15)] bg-black"
           />
           <div className="space-y-2">
@@ -1332,6 +1338,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
       id: `library:${item.path}`,
       url: item.url,
       downloadUrl: item.downloadUrl,
+      posterUrl: item.posterUrl,
       mimeType: item.mimeType,
       prompt: item.prompt,
       sceneIdx: item.sceneIdx,
@@ -1396,23 +1403,29 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
             {variantCount}×
           </div>
         )}
-        <video
-          src={item.url}
-          loop
-          muted
-          playsInline
-          preload="metadata"
-          onMouseEnter={(e) => {
-            const v = e.currentTarget;
-            v.play().catch(() => {});
-          }}
-          onMouseLeave={(e) => {
-            const v = e.currentTarget;
-            v.pause();
-            v.currentTime = 0;
-          }}
-          className="w-full aspect-video object-cover bg-black"
-        />
+        {/* Egress fix (2026-06-13): the tile no longer mounts a <video> — that
+            downloaded the full MP4 on hover/load. Show a tiny poster JPEG (or a
+            zero-egress placeholder when none exists); the full clip loads only
+            when the tile is clicked into the preview canvas. */}
+        <div className="relative w-full aspect-video bg-zinc-950 overflow-hidden">
+          {item.posterUrl ? (
+            <img
+              src={item.posterUrl}
+              alt={item.prompt || sceneLabel}
+              loading="lazy"
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-zinc-900 to-zinc-950">
+              <VideoIcon className="w-7 h-7 text-zinc-700" />
+            </div>
+          )}
+          <div className="absolute inset-0 flex items-center justify-center bg-zinc-950/30 opacity-0 hover:opacity-100 transition-opacity">
+            <div className="w-9 h-9 rounded-full bg-[#FFCC00] flex items-center justify-center shadow-[0_0_15px_rgba(255,204,0,0.4)]">
+              <Play className="w-4 h-4 text-black fill-black ml-0.5" />
+            </div>
+          </div>
+        </div>
         <div className="p-3 space-y-1.5">
           <div className="flex items-center justify-between gap-2">
             <div
