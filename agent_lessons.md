@@ -872,3 +872,19 @@ times" — which is what a prompt-suggested default produces at scale.
 model will emit it on most scenes and budget for repetition downstream in deterministic code
 (renderer caps), not in the prompt. Shipped: `MAX_PER_SOUND = 2` per emphasis sound per ad in
 `pickSceneSfx`. The prompt's "drop" default is untouched (tuned); the cap makes it harmless.
+
+### 2026-06-13 — Fable 5 / Mythos 5 suspended by US export-control directive; re-pinned default to Opus 4.8
+**Context:** Anthropic was ordered by a US export-control directive to suspend ALL access to
+Claude Fable 5 and Mythos 5 for every customer (https://www.anthropic.com/news/fable-mythos-access);
+other Claude models are unaffected. Our `.claude/settings.json` pinned `"model": "claude-fable-5"`
+(set 2026-06-12, see the 2026-06-12 entry above), so every defreezer-fresh cafe-PC session was
+booting on a now-dead model. Neil hit it, ran `/model default` (→ Opus 4.8) to keep working, and
+asked to strip the committed Fable 5 references.
+**What went wrong:** Nothing in our code — external. But the first instinct was to wave off the
+"Fable suspended" claim as implausible; the Anthropic announcement confirmed it. Lesson on the
+meta level: verify provider/model-availability claims against the source before dismissing them.
+**Lesson:** Re-pinned default to `claude-opus-4-8` — the best *available* quality model, which
+honors Neil's "quality first, never downgrade to save tokens" rule (Fable is simply gone, not a
+cost cut). Updated `.claude/settings.json` + the CLAUDE.md usage-budget paragraph. **Revert the
+pin to `claude-fable-5` when access is restored** (Anthropic says they're working on it). Do not
+re-add the "Fable burns ≈2x Opus" budgeting math until then.
