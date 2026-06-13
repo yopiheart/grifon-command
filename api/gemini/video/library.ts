@@ -6,12 +6,16 @@ const LIBRARY_LIMIT = 30;
 const LIBRARY_WINDOW_SECONDS = 60;
 const SIGNED_URL_TTL_SECONDS = 86400;
 const BUCKET = 'gemini-videos';
-const MAX_ITEMS = 100;
+// Egress fix (2026-06-13): cap the gallery at 30 (matches the UI list limit).
+// Each render now has up to 3 objects in the listing — .mp4 + .meta.json + .jpg
+// poster — so request 4x headroom when listing so 30 mp4s always come back.
+const MAX_ITEMS = 30;
 
 interface LibraryItem {
   path: string;
   url: string;
   downloadUrl: string;
+  posterUrl?: string;
   mimeType: string;
   prompt: string;
   sceneIdx?: number;
@@ -52,7 +56,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const admin = getSupabaseAdmin();
 
   const listResult = await admin.storage.from(BUCKET).list(user.id, {
-    limit: MAX_ITEMS * 2, // double to leave room for sidecars in the same listing
+    limit: MAX_ITEMS * 4, // headroom: each render has up to .mp4 + .meta.json + .jpg
     sortBy: { column: 'created_at', order: 'desc' },
   });
   if (listResult.error) {
@@ -65,6 +69,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     .filter((e) => e.name.endsWith('.mp4'))
     .slice(0, MAX_ITEMS);
   const sidecarNames = new Set(entries.filter((e) => e.name.endsWith('.meta.json')).map((e) => e.name));
+  const posterNames = new Set(entries.filter((e) => e.name.endsWith('.jpg')).map((e) => e.name));
 
   const items = await Promise.all(
     videoEntries.map(async (entry): Promise<LibraryItem | null> => {
@@ -98,11 +103,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         }
       }
 
-      const [playSign, dlSign] = await Promise.all([
+      const posterName = `${entry.name}.jpg`;
+      const hasPoster = posterNames.has(posterName);
+      const [playSign, dlSign, posterSign] = await Promise.all([
         admin.storage.from(BUCKET).createSignedUrl(path, SIGNED_URL_TTL_SECONDS),
         admin.storage.from(BUCKET).createSignedUrl(path, SIGNED_URL_TTL_SECONDS, {
           download: 'grifon-video.mp4',
         }),
+        hasPoster
+          ? admin.storage.from(BUCKET).createSignedUrl(`${user.id}/${posterName}`, SIGNED_URL_TTL_SECONDS)
+          : Promise.resolve(null),
       ]);
 
       if (playSign.error || !playSign.data?.signedUrl || dlSign.error || !dlSign.data?.signedUrl) {
@@ -122,6 +132,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         path,
         url: playSign.data.signedUrl,
         downloadUrl: dlSign.data.signedUrl,
+        posterUrl: posterSign && !posterSign.error ? posterSign.data?.signedUrl : undefined,
         mimeType: metadata.mimeType ?? 'video/mp4',
         prompt: metadata.prompt ?? '',
         sceneIdx: metadata.sceneIdx,

@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { randomUUID } from 'node:crypto';
 import { getUserFromAccessToken, getSupabaseAdmin } from '../../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../../_lib/rateLimit.js';
+import { extractPosterFromMp4 } from '../../_lib/videoPoster.js';
 
 const Body = z.object({
   operation: z.unknown(),
@@ -182,6 +183,26 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         sidecarUpload.error.message
       );
     }
+  }
+
+  // Best-effort poster: a tiny first-frame JPEG so the library gallery can show
+  // a thumbnail without downloading the full MP4 (the egress fix's serving half).
+  // Strictly non-fatal — the video is already uploaded; a failure just falls back
+  // to the gallery's static placeholder card.
+  try {
+    const poster = await extractPosterFromMp4(buffer);
+    if (poster) {
+      const posterUpload = await admin.storage.from(BUCKET).upload(`${path}.jpg`, poster, {
+        contentType: 'image/jpeg',
+        cacheControl: '3600',
+        upsert: false,
+      });
+      if (posterUpload.error) {
+        console.warn('[api/gemini/video/poll] poster upload failed (non-fatal):', posterUpload.error.message);
+      }
+    }
+  } catch (err: any) {
+    console.warn('[api/gemini/video/poll] poster step failed (non-fatal):', err?.message);
   }
 
   const playSign = await admin.storage.from(BUCKET).createSignedUrl(path, SIGNED_URL_TTL_SECONDS);

@@ -4,6 +4,7 @@ import { randomUUID } from 'node:crypto';
 import { getUserFromAccessToken, getSupabaseAdmin } from '../../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../../_lib/rateLimit.js';
 import { getKlingAccessToken, invalidateKlingAccessToken, KLING_API_BASE } from '../../_lib/klingAuth.js';
+import { extractPosterFromMp4 } from '../../_lib/videoPoster.js';
 
 const Body = z.object({
   operation: z.object({
@@ -216,6 +217,24 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         sidecarUpload.error.message
       );
     }
+  }
+
+  // Best-effort poster: tiny first-frame JPEG so the gallery shows a thumbnail
+  // without downloading the full MP4. Non-fatal — falls back to a placeholder.
+  try {
+    const poster = await extractPosterFromMp4(buffer);
+    if (poster) {
+      const posterUpload = await admin.storage.from(BUCKET).upload(`${path}.jpg`, poster, {
+        contentType: 'image/jpeg',
+        cacheControl: '3600',
+        upsert: false,
+      });
+      if (posterUpload.error) {
+        console.warn('[api/kling/video/poll] poster upload failed (non-fatal):', posterUpload.error.message);
+      }
+    }
+  } catch (err: any) {
+    console.warn('[api/kling/video/poll] poster step failed (non-fatal):', err?.message);
   }
 
   const playSign = await admin.storage.from(BUCKET).createSignedUrl(path, SIGNED_URL_TTL_SECONDS);

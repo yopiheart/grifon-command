@@ -642,6 +642,9 @@ export interface VideoLibraryItem {
   path: string;
   url: string;
   downloadUrl: string;
+  /** Tiny first-frame JPEG (signed). Lets the gallery show a thumbnail without
+   * downloading the full MP4. Absent on older renders / when extraction failed. */
+  posterUrl?: string;
   mimeType: string;
   prompt: string;
   sceneIdx?: number;
