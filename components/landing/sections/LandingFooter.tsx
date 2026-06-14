@@ -5,14 +5,24 @@ import { CONTACT } from '../../../config/contact';
 import { Marquee } from '../Marquee';
 import { SignatureScribble } from '../SignatureScribble';
 import { GoldButton } from '../../ui/GoldButton';
+import { FacebookIcon, InstagramIcon, TikTokIcon, ViberIcon } from '../SocialIcons';
 
 type LegalRoute = 'terms' | 'privacy' | 'refund' | 'support';
 
 interface LandingFooterProps {
   onEnterApp: () => void;
-  onNavigatePricing: () => void;
   onNavigateLegal: (page: LegalRoute) => void;
 }
+
+/** Social channels shown as clickable black glyphs in the gold strip. */
+const SOCIALS = [
+  { label: 'Facebook', href: CONTACT.facebookUrl, Icon: FacebookIcon },
+  { label: 'Instagram', href: CONTACT.instagramUrl, Icon: InstagramIcon },
+  { label: 'TikTok', href: CONTACT.tiktokUrl, Icon: TikTokIcon },
+  // TODO(Neil): Viber number pending — icon renders but the link is inert until
+  // CONTACT.viberUrl gets a real number/community URL.
+  { label: 'Viber', href: CONTACT.viberUrl, Icon: ViberIcon },
+];
 
 /**
  * Lando-anatomy footer: dark rounded card (publish-everywhere marquee → trust
@@ -20,7 +30,7 @@ interface LandingFooterProps {
  * card edge with the final CTA on top) closed by a gold strip. Link content
  * and wiring unchanged from the proven page — only the staging is new.
  */
-export const LandingFooter: React.FC<LandingFooterProps> = ({ onEnterApp, onNavigatePricing, onNavigateLegal }) => (
+export const LandingFooter: React.FC<LandingFooterProps> = ({ onEnterApp, onNavigateLegal }) => (
   <>
     {/* Mobile Login Link */}
     <div className="md:hidden text-center py-6">
@@ -47,59 +57,10 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onEnterApp, onNavi
             <span className="flex items-center gap-2"><Sparkles className="w-4 h-4 text-[#FFCC00]" /> Built for Filipino Businesses</span>
           </div>
 
-          {/* Link columns */}
-          <div className="grid grid-cols-2 gap-8 px-6 py-10 sm:px-10 md:grid-cols-4 md:py-12">
-            {/* Brand Column */}
-            <div className="col-span-2 mb-8 md:col-span-1 md:mb-0">
-              <div className="flex items-center gap-2">
-                <img src="/logo.png" alt="GRIFON Logo" className="h-8 w-auto object-contain" />
-                <span className="text-white font-black italic text-xl tracking-tight">
-                  GRIFON
-                </span>
-              </div>
-              <p className="text-xs text-zinc-500 mt-3 leading-relaxed max-w-[200px]">
-                AI-powered marketing studio. Built in the Philippines.
-              </p>
-            </div>
-
-            {/* Product Column */}
-            <div>
-              <h4 className="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-4">PRODUCT</h4>
-              <nav className="space-y-2">
-                <a href="#what-you-get" className="text-sm text-zinc-500 hover:text-white transition-all block">Director AI</a>
-                <a href="#what-you-get" className="text-sm text-zinc-500 hover:text-white transition-all block">Market Research</a>
-                <a href="#what-you-get" className="text-sm text-zinc-500 hover:text-white transition-all block">Offer Optimizer</a>
-                <a href="#what-you-get" className="text-sm text-zinc-500 hover:text-white transition-all block">Caption & Headline</a>
-                <a href="#what-you-get" className="text-sm text-zinc-500 hover:text-white transition-all block">Image Studio</a>
-                <a href="/pricing" onClick={(e) => { e.preventDefault(); onNavigatePricing(); }} className="text-sm text-zinc-500 hover:text-white transition-all block">Pricing</a>
-              </nav>
-            </div>
-
-            {/* Legal Column */}
-            <div>
-              <h4 className="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-4">LEGAL</h4>
-              <nav className="space-y-2">
-                <a href="/privacy" onClick={(e) => { e.preventDefault(); onNavigateLegal('privacy'); }} className="text-sm text-zinc-500 hover:text-white transition-all block">Privacy Policy</a>
-                <a href="/terms" onClick={(e) => { e.preventDefault(); onNavigateLegal('terms'); }} className="text-sm text-zinc-500 hover:text-white transition-all block">Terms of Service</a>
-                <a href="/refund" onClick={(e) => { e.preventDefault(); onNavigateLegal('refund'); }} className="text-sm text-zinc-500 hover:text-white transition-all block">Refund Policy</a>
-                <a href="/support" onClick={(e) => { e.preventDefault(); onNavigateLegal('support'); }} className="text-sm text-zinc-500 hover:text-white transition-all block">Support</a>
-              </nav>
-            </div>
-
-            {/* Social Column */}
-            <div>
-              <h4 className="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-4">CONNECT</h4>
-              <nav className="space-y-2">
-                <a href={CONTACT.facebookUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-zinc-500 hover:text-white transition-all block">Facebook</a>
-                <a href={CONTACT.instagramUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-zinc-500 hover:text-white transition-all block">Instagram</a>
-                <a href={CONTACT.tiktokUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-zinc-500 hover:text-white transition-all block">TikTok</a>
-                <a href={CONTACT.viberUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-zinc-500 hover:text-white transition-all block">Viber Community</a>
-              </nav>
-            </div>
-          </div>
-
-          {/* Signature tagline — the brand's closing line */}
-          <div className="border-t border-white/5 px-6 pt-14 text-center md:pt-20">
+          {/* Signature tagline — the brand's closing line. Follows the trust row
+              directly now that the link-column grid is gone (the trust row's
+              own border-b is the only divider needed — no border-t here). */}
+          <div className="px-6 pt-16 text-center md:pt-24">
             <h2 className="text-4xl font-black uppercase tracking-tighter leading-[0.95] sm:text-6xl md:text-7xl">
               <span className="bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">ALWAYS </span>
               <SignatureScribble variant="underline" strokeWidth={2.5} delay={0.4}>
@@ -138,14 +99,37 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onEnterApp, onNavi
         </div>
       </div>
 
-      {/* Gold closing strip — stacked + centered on mobile, justified on desktop. */}
+      {/* Gold closing strip — Huly-style: social glyphs on the left, legal +
+          copyright on the right. Stacked + centered on mobile (icons → legal →
+          copyright), justified on desktop. */}
       <div className="mt-10 bg-[#FFCC00] text-black md:mt-14">
-        <div className="mx-auto flex max-w-7xl flex-col items-center gap-3 px-4 py-5 text-center sm:flex-row sm:justify-between sm:gap-6 sm:px-6 sm:py-4 sm:text-left lg:px-8">
-          <nav className="flex items-center gap-6 text-xs font-bold uppercase tracking-widest">
-            <a href="/privacy" onClick={(e) => { e.preventDefault(); onNavigateLegal('privacy'); }} className="hover:underline">Privacy Policy</a>
-            <a href="/terms" onClick={(e) => { e.preventDefault(); onNavigateLegal('terms'); }} className="hover:underline">Terms</a>
+        <div className="mx-auto flex max-w-7xl flex-col items-center gap-4 px-4 py-6 text-center sm:flex-row sm:justify-between sm:gap-6 sm:px-6 sm:py-4 sm:text-left lg:px-8">
+          {/* Social icons — anchors are 44px touch targets (mobile floor) with
+              the 20px glyph optically centered; negative inline margin keeps the
+              visual gap tight despite the padded hit area. */}
+          <nav className="flex items-center gap-1 -mx-2" aria-label="Social media">
+            {SOCIALS.map(({ label, href, Icon }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={label}
+                className="flex h-11 w-11 items-center justify-center text-black opacity-80 transition hover:opacity-100 hover:scale-110"
+              >
+                <Icon />
+              </a>
+            ))}
           </nav>
-          <span className="text-xs font-medium text-black/70">© 2026 Haste Enterprises. All rights reserved</span>
+
+          {/* Legal + copyright */}
+          <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-6">
+            <nav className="flex items-center gap-6 text-xs font-bold uppercase tracking-widest">
+              <a href="/privacy" onClick={(e) => { e.preventDefault(); onNavigateLegal('privacy'); }} className="hover:underline">Privacy Policy</a>
+              <a href="/terms" onClick={(e) => { e.preventDefault(); onNavigateLegal('terms'); }} className="hover:underline">Terms</a>
+            </nav>
+            <span className="text-xs font-normal text-black/70">© 2026 Haste Enterprises. All rights reserved</span>
+          </div>
         </div>
       </div>
     </footer>

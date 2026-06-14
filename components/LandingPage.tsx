@@ -115,7 +115,6 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
 
         <LandingFooter
           onEnterApp={onEnterApp}
-          onNavigatePricing={onNavigatePricing}
           onNavigateLegal={onNavigateLegal}
         />
       </div>
