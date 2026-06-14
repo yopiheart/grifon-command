@@ -11,6 +11,6 @@ export const CONTACT = {
   /** TODO(Neil): confirm real IG / TikTok handles (assumed @grifonai). */
   instagramUrl: 'https://instagram.com/grifonai',
   tiktokUrl: 'https://www.tiktok.com/@grifonai',
-  /** TODO(Neil): Viber pending — button shows but does nothing until a number is set. */
-  viberUrl: 'viber://chat?number=',
+  /** Opens a Viber 1:1 chat with the Grifon line (+63 926 681 0142). */
+  viberUrl: 'viber://chat?number=%2B639266810142',
 } as const;
