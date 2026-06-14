@@ -123,7 +123,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
       className="flex items-center gap-2.5 cursor-pointer"
       onClick={handleLogo}
     >
-      <GrifonMark className="h-9 w-9" />
+      <GrifonMark className="h-10 w-10" />
       <span className="font-black text-xl tracking-tighter text-white italic">
         GRIFON
       </span>

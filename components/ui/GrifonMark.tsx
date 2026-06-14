@@ -1,26 +1,18 @@
 import React from 'react';
 
 /**
- * Higgsfield-style app-icon mark: the griffin head knocked to solid black inside a
- * gold squircle tile. The tile reuses the glossy-CTA gold gradient + inset sheen so the
- * brand mark and the buttons speak the same language.
+ * Grifon brand mark: the white griffin head inside a glowing gold ring (coin/seal badge).
+ * The source PNG (`/logo-badge.png`, 1254×1254) bakes in the ring, griffin, and dark bg, so
+ * we render it inside a `rounded-full` mask — this clips the PNG's dark square corners to a
+ * clean circle on the dark header (no square edge against bg-zinc-950).
  *
- * The griffin source (`/logo.png`) is white line-art on transparent; `brightness(0)`
- * forces it black (alpha preserved) for a high-contrast black-on-gold seal — white-on-gold
- * would be near-invisible (~1.4:1). To flip back to white, drop the `filter` style.
- *
- * `className` controls the tile size (default h-9 w-9). The griffin scales to 2/3 of it.
+ * `className` controls the badge size (default h-10 w-10).
  */
-export const GrifonMark: React.FC<{ className?: string }> = ({ className = 'h-9 w-9' }) => (
+export const GrifonMark: React.FC<{ className?: string }> = ({ className = 'h-10 w-10' }) => (
   <span
     aria-hidden="true"
-    className={`inline-flex shrink-0 items-center justify-center rounded-xl bg-gradient-to-b from-[#FFD83D] to-[#E6B800] shadow-[inset_0_1px_0_rgba(255,255,255,0.45)] ${className}`}
+    className={`inline-flex shrink-0 overflow-hidden rounded-full ${className}`}
   >
-    <img
-      src="/logo.png"
-      alt=""
-      className="h-2/3 w-auto object-contain"
-      style={{ filter: 'brightness(0)' }}
-    />
+    <img src="/logo-badge.png" alt="" className="h-full w-full object-cover" />
   </span>
 );
