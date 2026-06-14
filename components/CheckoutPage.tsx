@@ -256,7 +256,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack, onViewLegal 
       <div className="relative max-w-6xl mx-auto flex items-center justify-between mb-6 lg:mb-10">
         <div className="flex items-center gap-2">
           <img src="/logo.png" alt="GRIFON Logo" className="h-7 w-auto object-contain" />
-          <span className="font-bold text-lg tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">GRIFON</span>
+          <span className="text-white font-black italic text-lg tracking-tight">GRIFON</span>
         </div>
         <p className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.25em] text-zinc-500">
           <Lock className="w-3.5 h-3.5 shrink-0 text-[#FFCC00]" />

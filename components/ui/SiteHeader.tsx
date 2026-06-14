@@ -123,7 +123,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
       onClick={handleLogo}
     >
       <img src="/logo.png" alt="GRIFON Logo" className="h-8 w-auto object-contain" />
-      <span className="font-bold text-xl tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
+      <span className="font-black text-xl tracking-tighter text-white italic">
         GRIFON
       </span>
     </div>
