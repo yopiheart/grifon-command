@@ -13,6 +13,7 @@ import Step6VideoPrompts from './components/Step6VideoPrompts';
 import Step7FinalOutput from './components/Step7FinalOutput';
 import { GlassPanel } from './components/ui/GlassPanel';
 import { GoldButton } from './components/ui/GoldButton';
+import { GrifonMark } from './components/ui/GrifonMark';
 import Input from './components/ui/Input';
 import { ErrorBoundary } from './components/ui/ErrorBoundary';
 import Dashboard from './components/Dashboard';
@@ -897,7 +898,7 @@ const App: React.FC = () => {
             {/* Compact header — the whole gateway must fit one phone screen without scrolling */}
             <div className="mb-2 md:mb-6 text-center flex flex-col items-center">
               <div className="mb-1 md:mb-3 flex items-center gap-2.5">
-                <GrifonLogo className="h-8 md:h-14 w-auto text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]" />
+                <GrifonMark className="h-8 w-8 md:h-14 md:w-14" />
                 <h1 className="text-2xl md:text-4xl font-[900] italic text-white uppercase tracking-tighter">
                   GRIFON
                 </h1>
