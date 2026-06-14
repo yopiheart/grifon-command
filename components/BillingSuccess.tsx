@@ -198,7 +198,7 @@ const BillingSuccess: React.FC<Props> = ({ onContinue, email }) => {
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-2">
                   <img src="/logo.png" alt="" width={18} height={24} className="h-6 w-[18px]" />
-                  <span data-capture-nudge className="text-white font-black italic text-sm tracking-tight">GRIFON</span>
+                  <span data-capture-nudge className="font-bold text-sm tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-400">GRIFON</span>
                 </div>
                 <span className="text-[8px] font-mono uppercase tracking-[0.25em] text-[#FFCC00]">
                   {founding ? 'Founding Creator' : 'Creator'}

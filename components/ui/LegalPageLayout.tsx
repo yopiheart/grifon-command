@@ -28,7 +28,7 @@ const LegalPageLayout: React.FC<Props> = ({ title, effectiveDate, onBack, backLa
           </button>
           <div className="flex items-center gap-2">
             <img src="/logo.png" alt="GRIFON Logo" className="h-7 w-auto object-contain" />
-            <span className="text-white font-black italic text-lg tracking-tight">
+            <span className="font-bold text-lg tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
               GRIFON
             </span>
           </div>
