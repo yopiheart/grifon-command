@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { CheckCircle2, Loader2, Share2, ArrowRight } from 'lucide-react';
 import { useSubscription } from '../hooks/useSubscription';
+import { GrifonMark } from './ui/GrifonMark';
 import { GlassPanel } from './ui/GlassPanel';
 import { GoldButton } from './ui/GoldButton';
 import { FOUNDING_OFFER } from '../config/foundingOffer';
@@ -197,7 +198,7 @@ const BillingSuccess: React.FC<Props> = ({ onContinue, email }) => {
             <div className="relative h-full flex flex-col justify-between">
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-2">
-                  <img src="/logo.png" alt="" width={18} height={24} className="h-6 w-[18px]" />
+                  <GrifonMark className="h-7 w-7" />
                   <span data-capture-nudge className="text-white font-black italic text-sm tracking-tight">GRIFON</span>
                 </div>
                 <span className="text-[8px] font-mono uppercase tracking-[0.25em] text-[#FFCC00]">

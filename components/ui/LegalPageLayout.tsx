@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { ChevronLeft } from 'lucide-react';
+import { GrifonMark } from './GrifonMark';
 
 type Props = {
   title: string;
@@ -27,7 +28,7 @@ const LegalPageLayout: React.FC<Props> = ({ title, effectiveDate, onBack, backLa
             {backLabel}
           </button>
           <div className="flex items-center gap-2">
-            <img src="/logo.png" alt="GRIFON Logo" className="h-7 w-auto object-contain" />
+            <GrifonMark className="h-9 w-9" />
             <span className="text-white font-black italic text-lg tracking-tight">
               GRIFON
             </span>

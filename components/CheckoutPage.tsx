@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Loader2, Lock } from 'lucide-react';
 import { GlassPanel } from './ui/GlassPanel';
+import { GrifonMark } from './ui/GrifonMark';
 import { MessengerFloat } from './ui/MessengerFloat';
 import { RecentActivityToast } from './ui/RecentActivityToast';
 import { OrderSummary } from './checkout/OrderSummary';
@@ -255,7 +256,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack, onViewLegal 
       {/* Secure-checkout masthead — brand + trust at the anxiety moment */}
       <div className="relative max-w-6xl mx-auto flex items-center justify-between mb-6 lg:mb-10">
         <div className="flex items-center gap-2">
-          <img src="/logo.png" alt="GRIFON Logo" className="h-7 w-auto object-contain" />
+          <GrifonMark className="h-9 w-9" />
           <span className="text-white font-black italic text-lg tracking-tight">GRIFON</span>
         </div>
         <p className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.25em] text-zinc-500">
