@@ -270,9 +270,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
           }}>
             Stop Spending 6 Hours<br/>
             Making One Ad That<br/>
-            <SignatureScribble variant="underline" delay={0.8}>
-              <span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">doesn't convert.</span>
-            </SignatureScribble>
+            <span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">doesn't convert.</span>
           </h1>
 
           <p className={loaded ? "fade-up" : ""} style={{ 
