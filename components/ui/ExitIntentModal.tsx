@@ -125,7 +125,7 @@ export const ExitIntentModal: React.FC<ExitIntentModalProps> = ({ triggered, onD
             </p>
 
             <div className="px-6 mt-6">
-              <GoldButton className="w-full" onClick={handleStartFree}>
+              <GoldButton glossy className="w-full" onClick={handleStartFree}>
                 <span className="flex items-center justify-center gap-3">
                   <Clapperboard className="h-5 w-5 shrink-0" /> Gawin Ko — Free, No Card
                 </span>

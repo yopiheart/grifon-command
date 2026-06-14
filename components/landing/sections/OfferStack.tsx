@@ -69,7 +69,7 @@ export const OfferStack: React.FC<OfferStackProps> = ({ onNavigatePricing, secti
             </div>
           </div>
 
-          <GoldButton onClick={onNavigatePricing} className="w-full md:w-auto text-lg md:text-xl px-12 py-6 shadow-[0_0_40px_rgba(255,204,0,0.4)]">
+          <GoldButton glossy onClick={onNavigatePricing} className="w-full md:w-auto text-lg md:text-xl px-12 py-6">
             <span className="inline-flex items-center justify-center gap-3">
               SEE ALL PLANS
               <ArrowRight className="w-5 h-5 shrink-0" />

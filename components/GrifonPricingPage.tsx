@@ -158,18 +158,20 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
         }
         
         .gold-btn {
-          background: #FFCC00;
+          background: linear-gradient(to bottom, #FFD83D, #FFCC00 60%, #E6B800);
           color: #000;
           border: none;
           font-weight: 900;
           text-transform: uppercase;
           letter-spacing: 0.1em;
           cursor: pointer;
+          box-shadow: inset 0 1px 0 rgba(255,255,255,0.55), 0 0 18px rgba(255,204,0,0.35);
           transition: all 0.2s;
         }
         .gold-btn:hover {
-          box-shadow: 0 0 30px rgba(255,204,0,0.4);
-          transform: scale(1.02);
+          background: linear-gradient(to bottom, #FFE266, #F0C200);
+          box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), 0 0 28px rgba(255,204,0,0.55);
+          transform: translateY(-2px);
         }
         
         .ghost-btn {
@@ -477,7 +479,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
                   className={isPro || isFree ? "gold-btn" : "ghost-btn"}
                   style={{
                     width: "100%", padding: "14px 0",
-                    borderRadius: 12, fontSize: 13,
+                    borderRadius: 999, fontSize: 13,
                     marginBottom: 24,
                     opacity: isCheckingOut === PLAN_IDS[i] ? 0.7 : 1,
                     cursor: isCheckingOut ? "wait" : "pointer",
@@ -794,7 +796,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
 
         {/* ===== GUARANTEE ===== */}
         <section className="max-w-[600px] mx-auto mb-20 px-5 text-center">
-          <AnimatedBorder containerClassName="h-full w-full" className="p-10 md:p-12 text-center bg-zinc-900/80 backdrop-blur-xl relative overflow-hidden">
+          <AnimatedBorder intense containerClassName="h-full w-full" className="p-10 md:p-12 text-center bg-zinc-900/80 backdrop-blur-xl relative overflow-hidden">
             <ShieldCheck className="w-12 h-12 text-[#FFCC00] mx-auto mb-4" />
             <h3 className="text-2xl md:text-3xl font-bold uppercase tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
               7-Day Money-Back Guarantee

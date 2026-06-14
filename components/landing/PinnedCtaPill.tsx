@@ -65,9 +65,9 @@ export const PinnedCtaPill: React.FC<PinnedCtaPillProps> = ({
               playTick();
               onEnterApp();
             }}
-            className="pointer-events-auto flex flex-col items-center rounded-full bg-[#FFCC00] text-black px-6 py-2.5 shadow-[0_8px_30px_rgba(255,204,0,0.35)] hover:shadow-[0_8px_40px_rgba(255,204,0,0.55)] hover:scale-105 active:scale-95 transition-[box-shadow,transform] whitespace-nowrap"
+            className="pointer-events-auto relative overflow-hidden flex flex-col items-center rounded-full bg-gradient-to-b from-[#FFD83D] via-[#FFCC00] to-[#E6B800] text-black px-6 py-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.55),0_8px_30px_rgba(255,204,0,0.35)] hover:-translate-y-0.5 hover:from-[#FFE266] hover:to-[#F0C200] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.65),0_8px_40px_rgba(255,204,0,0.55)] active:translate-y-0 active:scale-[0.99] transition-all whitespace-nowrap"
           >
-            <span className="flex items-center gap-2 font-bold uppercase text-xs tracking-widest">
+            <span className="flex items-center gap-2 font-black uppercase text-xs tracking-widest">
               START FREE
               <ArrowRight className="w-4 h-4" />
             </span>

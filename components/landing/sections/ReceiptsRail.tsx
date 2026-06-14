@@ -130,7 +130,7 @@ const RailCards: React.FC<{ onEnterApp: () => void; snap?: boolean }> = ({ onEnt
           Your ad could be <span className="text-[#B28F00]">here.</span>
         </p>
         <div className="mt-6">
-          <GoldButton onClick={onEnterApp} className="w-full px-8 py-3.5 text-sm">
+          <GoldButton glossy onClick={onEnterApp} className="w-full px-8 py-3.5 text-sm">
             CREATE MY FIRST AD — FREE
             <ArrowRight className="ml-2 inline h-4 w-4" />
           </GoldButton>

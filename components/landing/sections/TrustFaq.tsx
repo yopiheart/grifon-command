@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { ShieldCheck, ChevronDown } from 'lucide-react';
 import { AnimatedBorder } from '../../ui/AnimatedBorder';
+import { GlassPanel } from '../../ui/GlassPanel';
 import { CONTACT } from '../../../config/contact';
 import { MessengerIcon } from '../SocialIcons';
 
@@ -22,7 +23,7 @@ export const TrustFaq: React.FC = () => (
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
       >
-        <AnimatedBorder containerClassName="h-full w-full" className="p-8 md:p-12 text-center bg-zinc-900/80 backdrop-blur-xl relative overflow-hidden">
+        <AnimatedBorder intense containerClassName="h-full w-full" className="p-8 md:p-12 text-center bg-zinc-900/80 backdrop-blur-xl relative overflow-hidden">
           <ShieldCheck className="w-12 h-12 text-[#FFCC00] mb-4 mx-auto" />
           <h2 className="text-3xl md:text-5xl font-bold uppercase tracking-tight mb-4 text-[#FFCC00]">
             7-DAY MONEY-BACK GUARANTEE
@@ -62,7 +63,9 @@ export const TrustFaq: React.FC = () => (
         viewport={{ once: true }}
         className="text-center"
       >
-        <AnimatedBorder containerClassName="inline-block" className="flex flex-col items-center gap-4 p-6 md:p-8 bg-zinc-900/80 backdrop-blur-xl">
+        {/* Static glass (not AnimatedBorder) — deliberately distinct from the rotating-light
+            guarantee box so the two don't read as twins. The pulsing dot carries the life. */}
+        <GlassPanel className="inline-flex flex-col items-center gap-4 p-6 md:p-8">
           {/* Live presence indicator — functional status semaphore, not a brand accent */}
           <span className="flex items-center gap-2 text-[10px] text-zinc-500 font-mono uppercase tracking-widest">
             <span className="relative flex h-2 w-2">
@@ -81,7 +84,7 @@ export const TrustFaq: React.FC = () => (
             <MessengerIcon className="h-5 w-5 shrink-0 text-[#0084FF]" />
             Chat on Messenger
           </a>
-        </AnimatedBorder>
+        </GlassPanel>
       </motion.div>
     </div>
   </section>

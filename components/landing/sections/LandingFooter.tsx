@@ -75,7 +75,7 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onEnterApp, onNavi
               rise-on-reveal + a slow-breathing gold aura — animating the emblem
               itself would cheapen the realism that sells it. */}
           <div className="relative z-10 mt-10 flex justify-center md:mt-12">
-            <GoldButton onClick={onEnterApp} className="rounded-full px-10 py-4 text-sm shadow-[0_8px_30px_rgba(0,0,0,0.45)]">
+            <GoldButton glossy onClick={onEnterApp} className="rounded-full px-10 py-4 text-sm">
               START FREE
               <ArrowRight className="ml-2 inline h-4 w-4" />
             </GoldButton>

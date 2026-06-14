@@ -66,7 +66,7 @@ export const Hero: React.FC<HeroProps> = ({ onEnterApp, heroSentinelRef }) => (
         </motion.p>
 
         <motion.div variants={lineReveal} className="mt-9">
-          <GoldButton onClick={onEnterApp} className="w-full sm:w-auto text-sm md:text-base px-10 py-4">
+          <GoldButton glossy onClick={onEnterApp} className="w-full sm:w-auto text-sm md:text-base px-10 py-4">
             CREATE MY FIRST AD — FREE
           </GoldButton>
           {/* Click-trigger trust row: one last "why believe" at the decision pixel.
