@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { Menu, X, Volume2, VolumeX } from 'lucide-react';
 import { useUiSound } from '../../services/uiSoundService';
+import { GrifonMark } from './GrifonMark';
 
 export interface SiteNavLink {
   label: string;
@@ -119,10 +120,10 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
 
   const Logo = (
     <div
-      className="flex items-center gap-2 cursor-pointer"
+      className="flex items-center gap-2.5 cursor-pointer"
       onClick={handleLogo}
     >
-      <img src="/logo.png" alt="GRIFON Logo" className="h-8 w-auto object-contain" />
+      <GrifonMark className="h-9 w-9" />
       <span className="font-black text-xl tracking-tighter text-white italic">
         GRIFON
       </span>
