@@ -290,7 +290,10 @@ export const ReceiptsRail: React.FC<ReceiptsRailProps> = ({ onEnterApp }) => {
         <div
           ref={scrollerRef}
           className="proof-scroll mt-10 flex snap-x snap-mandatory items-stretch gap-5 overflow-x-auto px-4 pb-4"
-          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
+          // touch-action: pan-x locks this rail to horizontal swipes only — every
+          // vertical gesture bubbles to the page so a stray touch here never traps
+          // the user (they can always scroll down past the section).
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch', touchAction: 'pan-x' }}
         >
           <style>{`.proof-scroll::-webkit-scrollbar { display: none; }`}</style>
           <RailCards onEnterApp={onEnterApp} snap />
