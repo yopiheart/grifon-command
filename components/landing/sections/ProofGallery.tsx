@@ -43,7 +43,9 @@ export const ProofGallery: React.FC = () => (
       <style>{`.proof-scroll::-webkit-scrollbar { display: none; }`}</style>
       <div
         className="proof-scroll flex gap-4 lg:gap-10 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none scroll-smooth px-4 pb-6 md:justify-center md:items-start"
-        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
+        // pan-x: same as the Receipts Rail — this mobile snap-carousel handles
+        // horizontal swipes only so a stray vertical touch scrolls the page.
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch', touchAction: 'pan-x' }}
       >
         {CARDS.map((card, idx) => {
           const Icon = card.icon;
