@@ -78,7 +78,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
   navLinks = [],
   onLogoClick,
   showLogin = true,
-  ctaLabel = 'START FREE',
+  ctaLabel = 'Sign up',
   activeHref,
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
