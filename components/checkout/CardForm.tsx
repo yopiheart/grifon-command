@@ -123,7 +123,9 @@ export const CardForm: React.FC<CardFormProps> = ({ onSubmit, isSubmitting, tota
         className={GLOSSY_GOLD_CLASS}
       >
         <ButtonSheen />
-        <span className="relative z-10">{isSubmitting ? 'Processing…' : totalLabel}</span>
+        <span className="relative z-10 inline-flex items-center justify-center gap-2 leading-tight">
+          {isSubmitting ? 'Processing…' : (<><Lock className="w-4 h-4 shrink-0" /> {totalLabel}</>)}
+        </span>
       </button>
 
       <p className="text-[11px] text-zinc-500 leading-relaxed">{authorizationText}</p>

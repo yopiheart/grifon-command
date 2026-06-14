@@ -214,11 +214,11 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack, onViewLegal 
   }
 
   const { breakdown } = intent;
-  const totalLabel = `Pay ${formatPHP(breakdown.total_centavos)}`;
+  const totalLabel = `Unlock ${intent.plan.name} — ${formatPHP(breakdown.total_centavos)}`;
   const cycleNoun = cycle === 'monthly' ? '30 days' : '1 year';
   const outcomeCycle = cycle === 'monthly' ? 'an entire month' : 'an entire year';
   const outcomeDescription = `Replaces your marketing agency. End-to-end: research, offer, scripts, AI video ads, captions, and images — for ${outcomeCycle}. Walang ₱30K agency, walang freelancer.`;
-  const authorizationText = `By clicking Pay, you authorize Grifon Command to charge ${formatPHP(
+  const authorizationText = `By clicking the button above, you authorize Grifon Command to charge ${formatPHP(
     breakdown.total_centavos
   )} to your selected payment method. This is a one-time payment for ${cycleNoun} of ${intent.plan.name} access. We'll email you before renewal — your subscription does not auto-renew.`;
 
