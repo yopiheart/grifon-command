@@ -50,6 +50,11 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
   const [loaded, setLoaded] = useState(false);
   const [activeCardIndex, setActiveCardIndex] = useState(2); // Default to Pro
   const [isCheckingOut, setIsCheckingOut] = useState<PlanId | null>(null);
+  // The scribble underline renders cleanly at desktop headline sizes but collapses
+  // into stray dots on the small mobile headline — so animate on desktop only.
+  const [isDesktop, setIsDesktop] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(min-width: 1024px)').matches
+  );
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const PLAN_IDS: Array<'free' | PlanId> = ['free', 'creator', 'pro', 'business'];
@@ -78,7 +83,15 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
     }
   };
 
-  useEffect(() => { 
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1024px)');
+    const update = () => setIsDesktop(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
+
+  useEffect(() => {
     setTimeout(() => setLoaded(true), 100);
     
     // Scroll to Pro card on load only on smaller screens
@@ -270,7 +283,13 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
           }}>
             Stop Spending 6 Hours<br/>
             Making One Ad That<br/>
-            <span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">doesn't convert.</span>
+            {isDesktop ? (
+              <SignatureScribble variant="underline" delay={0.8}>
+                <span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">doesn't convert.</span>
+              </SignatureScribble>
+            ) : (
+              <span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">doesn't convert.</span>
+            )}
           </h1>
 
           <p className={loaded ? "fade-up" : ""} style={{ 
