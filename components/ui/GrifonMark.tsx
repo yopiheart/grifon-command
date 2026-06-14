@@ -11,8 +11,8 @@ import React from 'react';
 export const GrifonMark: React.FC<{ className?: string }> = ({ className = 'h-10 w-10' }) => (
   <span
     aria-hidden="true"
-    className={`inline-flex shrink-0 items-center justify-center rounded-full bg-transparent ring-1 ring-[#FFCC00] shadow-[0_0_12px_rgba(255,204,0,0.5)] ${className}`}
+    className={`inline-flex shrink-0 items-center justify-center rounded-full bg-transparent ring-1 ring-[#FFCC00] shadow-[0_0_14px_rgba(255,204,0,0.35)] ${className}`}
   >
-    <img src="/logo.png" alt="" className="h-3/5 w-auto object-contain" />
+    <img src="/logo.png" alt="" className="h-3/4 w-auto object-contain" />
   </span>
 );
