@@ -319,7 +319,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack, onViewLegal 
           </div>
 
           {submitError && (
-            <div className="mb-4 px-4 py-3 rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-200 text-xs leading-relaxed">
+            <div className="mb-4 px-4 py-3 rounded-xl border border-[#FFCC00]/30 bg-[#FFCC00]/10 text-[#FFCC00] text-xs leading-relaxed">
               {submitError}
             </div>
           )}

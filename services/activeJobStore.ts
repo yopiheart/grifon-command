@@ -33,11 +33,19 @@ const DB_VERSION = 1;
 const RESUME_TTL_MS = 6 * 60 * 60 * 1000; // 6 hours
 
 let dbPromise: Promise<IDBDatabase> | null = null;
+// Cooldown after a hard open failure (private mode, blocked storage, quota) so
+// we don't re-attempt indexedDB.open on every save/clear/list call.
+let openFailedUntil = 0;
+const OPEN_BACKOFF_MS = 5000;
 
 function openDb(): Promise<IDBDatabase> {
   if (dbPromise) return dbPromise;
+  if (Date.now() < openFailedUntil) {
+    return Promise.reject(new Error('IndexedDB open recently failed — backing off'));
+  }
   dbPromise = new Promise((resolve, reject) => {
     if (typeof indexedDB === 'undefined') {
+      openFailedUntil = Date.now() + OPEN_BACKOFF_MS;
       reject(new Error('IndexedDB not available'));
       return;
     }
@@ -52,6 +60,7 @@ function openDb(): Promise<IDBDatabase> {
     req.onsuccess = () => resolve(req.result);
     req.onerror = () => {
       dbPromise = null;
+      openFailedUntil = Date.now() + OPEN_BACKOFF_MS;
       reject(req.error);
     };
   });

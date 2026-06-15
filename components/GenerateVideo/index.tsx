@@ -1600,7 +1600,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
 
         {resumeAt && (
           <span
-            className="text-[10px] font-mono uppercase tracking-widest text-amber-400 border border-amber-500/30 bg-amber-500/5 rounded px-2 py-1 whitespace-nowrap"
+            className="text-[10px] font-mono uppercase tracking-widest text-[#FFCC00] border border-[#FFCC00]/30 bg-[#FFCC00]/5 rounded px-2 py-1 whitespace-nowrap"
             title="Veo enforces an hourly quota. Scenes auto-resume when the window clears — no action needed."
           >
             // RATE LIMITED · {queuedCount} queued · {formatEta(Math.max(0, Math.ceil((resumeAt - Date.now()) / 1000)))} to resume · AUTO-RESUMES

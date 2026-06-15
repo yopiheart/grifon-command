@@ -40,7 +40,7 @@ export const CheckoutReservation: React.FC<CheckoutReservationProps> = ({ storag
 
   if (expired) {
     return (
-      <div className="mb-6 flex items-center gap-2 rounded-xl border border-amber-500/30 bg-amber-500/10 px-3.5 py-2.5 text-xs text-amber-200">
+      <div className="mb-6 flex items-center gap-2 rounded-xl border border-[#FFCC00]/30 bg-[#FFCC00]/10 px-3.5 py-2.5 text-xs text-[#FFCC00]">
         <Clock className="w-4 h-4 shrink-0" />
         <span>
           <strong className="font-semibold">Reservation expired.</strong> Complete now to keep this price.

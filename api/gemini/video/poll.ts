@@ -126,7 +126,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   let buffer: Buffer | null = null;
   if (videoBytes) {
+    // Guard before decode: a corrupt/non-base64 payload would otherwise produce
+    // a garbage Buffer that uploads silently as a broken .mp4.
+    const ok =
+      typeof videoBytes === 'string' &&
+      videoBytes.length > 0 &&
+      /^[A-Za-z0-9+/]+={0,2}$/.test(videoBytes);
+    if (!ok) {
+      console.error('[api/gemini/video/poll] VEO_BAD_BASE64 — videoBytes is not valid base64');
+      return res.status(200).json({ done: true, error: { code: 'VEO_BAD_BASE64' } });
+    }
     buffer = Buffer.from(videoBytes, 'base64');
+    if (buffer.length === 0) {
+      console.error('[api/gemini/video/poll] VEO_BAD_BASE64 — decoded to an empty buffer');
+      return res.status(200).json({ done: true, error: { code: 'VEO_BAD_BASE64' } });
+    }
   } else if (video.uri) {
     const key = process.env.GEMINI_API_KEY;
     const sep = video.uri.includes('?') ? '&' : '?';
