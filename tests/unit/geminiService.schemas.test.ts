@@ -60,6 +60,9 @@ const {
   generateStoryboard,
   generateInfluencerStoryboard,
   generateCinematicNarrative,
+  generateInfluencerScript,
+  generateOfferOptimization,
+  generateMarketResearch,
 } = await import('../../services/geminiService');
 
 const { buildAdScriptPrompt, buildStoryboardPrompt, MODEL_TEXT } = await import(
@@ -341,4 +344,136 @@ describe('generateCinematicNarrative schema', () => {
     expect(promptDump).toContain('FORBIDDEN');
     expect(promptDump).toContain('MANDATORY');
   });
+});
+
+// ----------------------------------------------------------------------------
+// generateInfluencerScript -> Promise<InfluencerScriptResponse>  (crown jewel)
+// ----------------------------------------------------------------------------
+
+describe('generateInfluencerScript schema', () => {
+  const config = { monetizationGame: 'Affiliate', format: 'Reel' } as any;
+  const strategicInput = { niche: 'Coffee', audience: 'Filipino SMB owners' } as any;
+
+  it('returns InfluencerScriptResponse: hook string, body string[], strategicAudit string', async () => {
+    fetchMock.mockResolvedValueOnce(okFlow({
+      hook: 'Opening hook line',
+      body: ['Beat 1', 'Beat 2', 'Beat 3'],
+      strategicAudit: 'CCC beats land in order.',
+      daySummary: 'Day 1 established the origin story.',
+    }));
+
+    const result = await generateInfluencerScript(config, strategicInput, 1, '');
+
+    expect(typeof result.hook).toBe('string');
+    expect(Array.isArray(result.body)).toBe(true);
+    expect(result.body.every((s: unknown) => typeof s === 'string')).toBe(true);
+    expect(typeof result.strategicAudit).toBe('string');
+    expect(
+      result.daySummary === undefined || typeof result.daySummary === 'string'
+    ).toBe(true);
+  }, 15_000);
+
+  it("flow mode: {flow: 'influencer-script', input: {config, input, dayNumber, seriesContext}} with no prompt leak", async () => {
+    fetchMock.mockResolvedValueOnce(okFlow({ hook: 'x', body: ['x'], strategicAudit: 'x' }));
+    await generateInfluencerScript(config, strategicInput, 3, 'Day 2 recap');
+
+    const [url] = fetchMock.mock.calls[0];
+    expect(url).toBe('/api/gemini/text');
+
+    const body = captureLastFetchBody();
+    expect(body.flow).toBe('influencer-script');
+    expect(body.input.dayNumber).toBe(3);
+    expect(body.input.seriesContext).toBe('Day 2 recap');
+
+    // Crown-jewel guard: server-side prompt must never ride in the request.
+    const dump = JSON.stringify(body);
+    expect(dump).not.toContain('CCC FRAMEWORK');
+  }, 15_000);
+});
+
+// ----------------------------------------------------------------------------
+// generateOfferOptimization -> Promise<OfferOptimizerResult>  (crown jewel)
+// ----------------------------------------------------------------------------
+
+describe('generateOfferOptimization schema', () => {
+  const tier = { name: 'Tier', price: '499', deliverable: 'Thing', reason: 'Why' } as any;
+  const payload = {
+    analysis: 'Pricing rationale.',
+    tripwire: tier,
+    coreOffer: tier,
+    highTicket: tier,
+    conversionAssets: { guarantees: ['G1'], bonuses: ['B1'] },
+    directorPayload: { offer: 'O', angle: 'A' },
+  };
+
+  it('returns OfferOptimizerResult with analysis string and all three tiers present', async () => {
+    fetchMock.mockResolvedValueOnce(okFlow(payload));
+
+    const result = await generateOfferOptimization({ product: 'Coffee' } as any);
+
+    expect(typeof result.analysis).toBe('string');
+    for (const key of ['tripwire', 'coreOffer', 'highTicket'] as const) {
+      expect(result[key]).toBeTruthy();
+      expect(typeof result[key]).toBe('object');
+    }
+    expect(result.conversionAssets).toBeTruthy();
+    expect(result.directorPayload).toBeTruthy();
+  }, 15_000);
+
+  it("flow mode: {flow: 'offer-optimizer', input} with no Hormozi prompt leak", async () => {
+    fetchMock.mockResolvedValueOnce(okFlow(payload));
+    await generateOfferOptimization({ product: 'Coffee' } as any);
+
+    const body = captureLastFetchBody();
+    expect(body.flow).toBe('offer-optimizer');
+    expect(body.input.product).toBe('Coffee');
+
+    const dump = JSON.stringify(body);
+    expect(dump).not.toContain('Godfather Offer');
+    expect(dump).not.toContain('Grand Slam');
+  }, 15_000);
+});
+
+// ----------------------------------------------------------------------------
+// generateMarketResearch -> Promise<MarketResearchReport>  (crown jewel)
+// ----------------------------------------------------------------------------
+
+describe('generateMarketResearch schema', () => {
+  // Downstream consumers (Director AI auto-prefill, injectMarketMind,
+  // CaptionHeadline) read these structured fields directly — locking the
+  // shape here guards the whole prefill chain, per services/CLAUDE.md.
+  const report = {
+    subject: 'Bukidnon Brew',
+    winningAvatar: 'Tired call-center mom',
+    demographics: '25-40, urban PH',
+    dayInTheLife: 'Up at 5am...',
+    bleedingNeck: 'No energy for sideline',
+    deepFear: 'Stuck forever',
+    threeAmThought: 'Paano na bukas?',
+    graveyard: [{ competitor: 'Brand X', failure: 'Generic ads' }],
+  };
+
+  it('returns MarketResearchReport with the prefill-critical string fields', async () => {
+    fetchMock.mockResolvedValueOnce(okFlow(report));
+
+    const result = await generateMarketResearch({ subject: 'Bukidnon Brew' } as any);
+
+    for (const key of [
+      'subject', 'winningAvatar', 'demographics', 'dayInTheLife',
+      'bleedingNeck', 'deepFear', 'threeAmThought',
+    ] as const) {
+      expect(typeof (result as any)[key]).toBe('string');
+    }
+    expect(Array.isArray(result.graveyard)).toBe(true);
+  }, 15_000);
+
+  it("flow mode: {flow: 'marketmind', input} with no system-instruction leak", async () => {
+    fetchMock.mockResolvedValueOnce(okFlow(report));
+    await generateMarketResearch({ subject: 'Bukidnon Brew' } as any);
+
+    const body = captureLastFetchBody();
+    expect(body.flow).toBe('marketmind');
+    expect(body.input.subject).toBe('Bukidnon Brew');
+    expect(JSON.stringify(body)).not.toContain('MarketMind by Zam');
+  }, 15_000);
 });

@@ -422,6 +422,9 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
   };
 
   const startElapsedTick = (idx: number) => {
+    // Clear any tick from a previous scene first — otherwise switching
+    // scenes stacks intervals (one per switch, all firing every 1s).
+    stopElapsedTick();
     const startedAt = Date.now();
     setElapsed((prev) => ({ ...prev, [idx]: 0 }));
     elapsedTickRef.current = window.setInterval(() => {

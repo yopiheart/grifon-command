@@ -126,7 +126,7 @@ This gives Neil a two-gate workflow: approve the plan, then approve the goal tha
 - `billingService.ts` — PayMongo checkout flow
 - `voiceService.ts` — ElevenLabs voice synthesis
 
-  Also: `activeJobsService.ts` / `activeJobStore.ts` (async render-job tracking → `ui/ActiveJobsPanel.tsx`), `wizardSessionStore.ts` (wizard draft persistence/resume → `ui/ResumeDraftCard.tsx`), `recentWorkService.ts` (→ `ui/RecentWorkCard.tsx`), `checkoutService.ts` (checkout state), `phoneticNormalizer.ts` (voice text normalization).
+  Also: `activeJobsService.ts` / `activeJobStore.ts` (async render-job tracking → `ui/ActiveJobsPanel.tsx`), `wizardSessionStore.ts` (wizard draft persistence/resume → `ui/ResumeDraftCard.tsx`), `recentWorkService.ts` (→ `ui/RecentWorkCard.tsx`), `checkoutService.ts` (checkout state).
 
 **Async video pattern** — Video renders are long-running, so they are fire-then-poll: a generate call returns a job, then the client polls `api/gemini/video/poll.ts` / `api/kling/video/poll.ts` until done. A Vercel cron, `api/cron/cleanup-gemini-videos.ts`, reaps expired Gemini video artifacts.
 

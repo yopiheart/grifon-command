@@ -57,7 +57,10 @@ const refreshAccessToken = async (): Promise<string | null> => {
     } catch {
       return null;
     } finally {
-      setTimeout(() => { inFlightRefresh = null; }, 0);
+      // Clear synchronously on settle. The deferred setTimeout variant left a
+      // window where a new caller could be handed an already-failed refresh
+      // instead of starting a fresh one.
+      inFlightRefresh = null;
     }
   })();
   return inFlightRefresh;
