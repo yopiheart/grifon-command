@@ -53,6 +53,8 @@ Half-baked ideas don't go here — they go in conversation and either die or get
 
 **Why parked:** Two reasons. (1) `launch_readiness.md` P0 wizard state persistence comes first — autopilot is meaningless if a session can't survive auth expiration. (2) Don't build a beautiful Autopilot tier for a tool nobody has validated demand for. **Beta has to prove Influencer Forge is wanted before this is worth 3–5 days of build.**
 
+> **Hard prerequisite — Output-Claim Guardrail (item #12, 2026-06-15):** Autopilot publishes login-less, on a schedule, for 30 days — which removes the human who today eyeballs every ad before it goes live. That makes the post-generation claim guardrail (item #12) a **blocking gate, not a nice-to-have**: do NOT ship autonomous publishing until item #12's validator + output-conduct constitution are live. Until then, every Grifon ad still passes a human + the platform's own ad-review before posting; Autopilot deletes both of those safety nets at once.
+
 **When to resume:** When ≥3 of the 5–10 beta users have asked for "can this just keep running" or equivalent. The signal is unprompted demand for automation, not Neil deciding it'd be cool.
 
 **Where to start:**
@@ -61,6 +63,7 @@ Half-baked ideas don't go here — they go in conversation and either die or get
 3. Scheduler: Supabase pg_cron preferred (no new infra), hits the endpoint hourly, endpoint decides whose Day-N is due. Vercel Cron is the fallback.
 4. UI in `components/InfluencerForge/`: schedule config in setup, "Pause / Resume / Skip Day" controls in the runtime view.
 5. Billing gate: Autopilot tier check via real `useSubscription` plan-tier check, NOT `localStorage.grifon_admin` (per the `agent_lessons.md:33-36` lesson about that key being load-bearing for the admin preview switch).
+6. **Blocking dependency:** ship item #12 (Output-Claim Guardrail) FIRST — `api/odyssey/tick.ts` must run each generated Day's copy through the validator and refuse-to-publish (not just flag) on a hard violation, since no human reviews an autopilot post. Wire the validator into the tick handler before the cron is allowed to go live.
 
 **Scope estimate:** 3–5 days for v1. Bulk of the work is the cron + idempotency + cost guard, not the UI.
 
@@ -361,6 +364,28 @@ during the gate session.
 **Scope estimate:** ~1 day for picker + persistence once a 5th preset exists. The preset itself ships separately via the autopsy pipeline.
 
 **Source:** Neil, 2026-06-11 viral-autopsy session — *"would that be possible that viral autopsy could help to communicate it directly to my viral editor so that i could easily copy or create different types of editing style that my clients could choose from?"* Endorsed parking the picker and pointing near-term effort at earning the first autopsy-derived preset.
+
+---
+
+### 12. Output-Claim Guardrail — auditable claim-check on generated marketing copy
+
+**What:** A lightweight, **non-tuned** post-generation validator that screens generated copy (Director AI scripts, Offer Optimizer offers, Influencer scripts, captions) for the deceptions Grifon's own prompts are built to manufacture — false/unsubstantiated health or income claims, fake scarcity, fabricated testimonials/social proof, illegal-to-advertise products — plus a short **output-conduct constitution** doc (the disallowed-claim taxonomy for PH/SMB direct response) that the validator reads from. Flags surface in the existing review UI pre-render; on a hard violation in the autopilot path, it refuses to publish.
+
+**Why it matters:** Today `api/_lib/prompts.ts` sets `SAFETY_SETTINGS` to `BLOCK_NONE` on all four Gemini harm categories (a deliberate choice — Gemini over-refuses legit direct-response language), so the *only* output safety is whatever lives inside the tuned prompt strings. There is **zero post-generation claim validation**: Offer Optimizer is instructed to manufacture scarcity + mandatory guarantees + Cialdini levers, and Director AI anchors every ad on an unverified "contrarian truth." The audience is financially-stressed SMB owners and OFW-diaspora targets. The real-world failure mode is not exotic — it's Facebook/TikTok ad disapprovals, consumer-claims exposure (DTI-style), and brand damage from copy nobody vetted. This is the one genuinely-transferable idea from the 2026-06-15 Amodei "Adolescence of Technology" evaluation: not frontier-lab safety machinery, but "don't ship superficial guards — have a legible, auditable layer that catches the domain-specific harms YOUR product can produce."
+
+**Why parked:** Not needed *now*. There is still a human in the loop — every ad is eyeballed by the user before posting, and FB/TikTok's own ad-approval gauntlet rejects the worst of it for free. The validator's value is highest exactly when that human disappears, i.e. the Autopilot tier (item #2). Building it during the get-to-beta sprint is solving an Autopilot-era problem early and pulls toward over-engineering that `launch_readiness.md` is built to resist.
+
+**When to resume:** When EITHER (a) item #2 (Autopilot/Odyssey-as-Cron) is scoped for build — this is its hard prerequisite, autonomous publishing must not ship without it; OR (b) a beta user, or a platform ad-review, flags a deceptive claim in generated copy before then.
+
+**Where to start:**
+1. Write the output-conduct constitution: `workflows/output_conduct.md` (or a section in `UBIQUITOUS_LANGUAGE.md`) — the disallowed-claim taxonomy (health/medical, income/earnings guarantees, fake scarcity, fabricated proof, regulated/illegal categories) with PH-specific examples. Neil-owned, like the eval taste bar (item #8).
+2. Reuse the `gemini-eval` separate-critic pattern (`.claude/skills/gemini-eval/SKILL.md`) for the check — a validator pass that returns a structured verdict (`CLAIM-SAFE / FLAG / BLOCK` + reason), kept as its own verdict line, not folded into existing compliance checks.
+3. Implement as a **non-tuned** layer (own module / API step), NOT by editing `SAFETY_SETTINGS` or the tuned prompt rules in `api/_lib/prompts.ts` — those are surgical-edit / TUNED-file territory requiring explicit Neil approval. Pre-render: surface flags in the review UI (advisory). Autopilot path: hard-block on `BLOCK` (wired into `api/odyssey/tick.ts` per item #2 step 6).
+4. Smoke/test: a fixture set of known-bad copy (income guarantee, "cures X", "only 3 left" with no real cap, invented testimonial) — confirm each is flagged pre-render and refused-to-publish in the autopilot path.
+
+**Scope estimate:** ~1–2 days for v1 (constitution doc + validator module + review-UI flag). The autopilot refuse-to-publish wiring is part of item #2's build, not this item.
+
+**Source:** 2026-06-15 evaluation of the Dario Amodei "Adolescence of Technology" strategic brief against the Grifon codebase (plan file `root-claude-uploads-...-fizzy-wand.md`). Verdict was "mostly no — wrong altitude for a downstream API consumer," with this the single transferable move. Neil endorsed parking it as a hard prerequisite for the Autopilot tier rather than building now ("is this needed now?" → no, human-in-loop covers it pre-Autopilot).
 
 ---
 
