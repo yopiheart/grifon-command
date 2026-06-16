@@ -1,8 +1,9 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { z } from 'zod';
 import { randomUUID } from 'node:crypto';
-import { getUserFromAccessToken, getSupabaseAdmin } from '../_lib/supabaseAdmin.js';
+import { getUserFromAccessToken } from '../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../_lib/rateLimit.js';
+import { putMedia, getMediaUrl } from '../_lib/mediaStore.js';
 import { getUserPlan } from '../_lib/userPlan.js';
 import { TTS_DAILY, STS_DAILY, DAILY_WINDOW_SECONDS, ttsDailyKey, stsDailyKey } from '../_lib/quota.js';
 import { synthesizeTts, convertSts, forcedAlignment, ElevenLabsError } from '../_lib/elevenlabs.js';
@@ -33,7 +34,6 @@ const Body = z.object({
 const CONSOLIDATE_LIMIT = 6;            // batch requests / window (each fans out many EL calls)
 const CONSOLIDATE_WINDOW_SECONDS = 60;
 const SIGNED_URL_TTL_SECONDS = 86_400;  // 24h
-const BUCKET = 'gemini-videos';
 const MAX_MP4_BYTES = 60 * 1024 * 1024; // guard against pulling an oversized source
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -77,7 +77,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const plan = await getUserPlan(user.id);
-  const admin = getSupabaseAdmin();
   const results: ConsolidationResult[] = [];
 
   // Sequential per scene: respects ElevenLabs rate limits, bounds memory, and
@@ -115,19 +114,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
 
       const path = `${user.id}/audio/${randomUUID()}.mp3`;
-      const upload = await admin.storage.from(BUCKET).upload(path, mp3, {
-        contentType: 'audio/mpeg',
-        cacheControl: '3600',
-        upsert: false,
-      });
+      const upload = await putMedia(path, mp3, 'audio/mpeg', { cacheControl: '3600', upsert: false });
       if (upload.error) {
-        results.push({ sceneIdx: scene.sceneIdx, audioUrl: null, error: `storage_upload_failed:${upload.error.message}` });
+        results.push({ sceneIdx: scene.sceneIdx, audioUrl: null, error: `storage_upload_failed:${upload.error}` });
         continue;
       }
 
-      const sign = await admin.storage.from(BUCKET).createSignedUrl(path, SIGNED_URL_TTL_SECONDS);
-      if (sign.error || !sign.data?.signedUrl) {
-        results.push({ sceneIdx: scene.sceneIdx, audioUrl: null, error: `sign_failed:${sign.error?.message ?? 'unknown'}` });
+      const sign = await getMediaUrl(path, SIGNED_URL_TTL_SECONDS);
+      if (sign.error || !sign.url) {
+        results.push({ sceneIdx: scene.sceneIdx, audioUrl: null, error: `sign_failed:${sign.error ?? 'unknown'}` });
         continue;
       }
 
@@ -145,7 +140,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         }
       }
 
-      results.push({ sceneIdx: scene.sceneIdx, audioUrl: sign.data.signedUrl, ...(words ? { words } : {}) });
+      results.push({ sceneIdx: scene.sceneIdx, audioUrl: sign.url, ...(words ? { words } : {}) });
     } catch (err: any) {
       const reason =
         err instanceof ElevenLabsError ? `elevenlabs_${err.status}` :

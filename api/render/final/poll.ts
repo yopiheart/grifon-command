@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { getUserFromAccessToken, getSupabaseAdmin } from '../../_lib/supabaseAdmin.js';
+import { getUserFromAccessToken } from '../../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../../_lib/rateLimit.js';
 import { statusKey, readSidecar } from '../../_lib/renderJob.js';
 import type { FinalRenderResult } from '../../../types.js';
@@ -33,8 +33,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(429).json({ error: 'rate_limited', scope: 'render-poll', retry_after_seconds: POLL_WINDOW_SECONDS });
   }
 
-  const admin = getSupabaseAdmin();
-  const sidecar = await readSidecar(admin, statusKey(user.id, jobId));
+  const sidecar = await readSidecar(statusKey(user.id, jobId));
 
   // No sidecar yet (or transient read miss) → still processing from the client's view.
   if (!sidecar) {

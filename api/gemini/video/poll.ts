@@ -1,8 +1,9 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { z } from 'zod';
 import { randomUUID } from 'node:crypto';
-import { getUserFromAccessToken, getSupabaseAdmin } from '../../_lib/supabaseAdmin.js';
+import { getUserFromAccessToken } from '../../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../../_lib/rateLimit.js';
+import { putMedia, getMediaUrl } from '../../_lib/mediaStore.js';
 import { extractPosterFromMp4 } from '../../_lib/videoPoster.js';
 
 const Body = z.object({
@@ -21,7 +22,6 @@ const Body = z.object({
 const POLL_LIMIT = 60;
 const POLL_WINDOW_SECONDS = 60;
 const SIGNED_URL_TTL_SECONDS = 86400; // 24h
-const BUCKET = 'gemini-videos';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
@@ -148,16 +148,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const path = `${user.id}/${randomUUID()}.mp4`;
-  const admin = getSupabaseAdmin();
 
-  const upload = await admin.storage.from(BUCKET).upload(path, buffer, {
-    contentType: mimeType,
-    cacheControl: '3600',
-    upsert: false,
-  });
+  const upload = await putMedia(path, buffer, mimeType, { cacheControl: '3600', upsert: false });
   if (upload.error) {
-    console.error('[api/gemini/video/poll] supabase upload failed:', upload.error.message);
-    return res.status(502).json({ error: 'storage_upload_failed', status: 0, detail: upload.error.message });
+    console.error('[api/gemini/video/poll] media upload failed:', upload.error);
+    return res.status(502).json({ error: 'storage_upload_failed', status: 0, detail: upload.error });
   }
 
   // Best-effort: write a JSON sidecar with the prompt + render context so the
@@ -172,15 +167,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       createdAt: new Date().toISOString(),
     };
     const sidecarBuffer = Buffer.from(JSON.stringify(sidecar), 'utf-8');
-    const sidecarUpload = await admin.storage.from(BUCKET).upload(sidecarPath, sidecarBuffer, {
-      contentType: 'application/json',
+    const sidecarUpload = await putMedia(sidecarPath, sidecarBuffer, 'application/json', {
       cacheControl: '3600',
       upsert: false,
     });
     if (sidecarUpload.error) {
       console.warn(
         '[api/gemini/video/poll] sidecar upload failed (non-fatal):',
-        sidecarUpload.error.message
+        sidecarUpload.error
       );
     }
   }
@@ -192,34 +186,31 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const poster = await extractPosterFromMp4(buffer);
     if (poster) {
-      const posterUpload = await admin.storage.from(BUCKET).upload(`${path}.jpg`, poster, {
-        contentType: 'image/jpeg',
+      const posterUpload = await putMedia(`${path}.jpg`, poster, 'image/jpeg', {
         cacheControl: '3600',
         upsert: false,
       });
       if (posterUpload.error) {
-        console.warn('[api/gemini/video/poll] poster upload failed (non-fatal):', posterUpload.error.message);
+        console.warn('[api/gemini/video/poll] poster upload failed (non-fatal):', posterUpload.error);
       }
     }
   } catch (err: any) {
     console.warn('[api/gemini/video/poll] poster step failed (non-fatal):', err?.message);
   }
 
-  const playSign = await admin.storage.from(BUCKET).createSignedUrl(path, SIGNED_URL_TTL_SECONDS);
-  const dlSign = await admin.storage
-    .from(BUCKET)
-    .createSignedUrl(path, SIGNED_URL_TTL_SECONDS, { download: 'grifon-video.mp4' });
+  const playSign = await getMediaUrl(path, SIGNED_URL_TTL_SECONDS);
+  const dlSign = await getMediaUrl(path, SIGNED_URL_TTL_SECONDS, { downloadName: 'grifon-video.mp4' });
 
-  if (playSign.error || !playSign.data?.signedUrl || dlSign.error || !dlSign.data?.signedUrl) {
-    const detail = playSign.error?.message ?? dlSign.error?.message ?? 'sign_failed';
+  if (playSign.error || !playSign.url || dlSign.error || !dlSign.url) {
+    const detail = playSign.error ?? dlSign.error ?? 'sign_failed';
     console.error('[api/gemini/video/poll] sign url failed:', detail);
     return res.status(502).json({ error: 'storage_upload_failed', status: 0, detail });
   }
 
   return res.status(200).json({
     done: true,
-    url: playSign.data.signedUrl,
-    downloadUrl: dlSign.data.signedUrl,
+    url: playSign.url,
+    downloadUrl: dlSign.url,
     mimeType,
   });
 }

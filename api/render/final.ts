@@ -1,11 +1,12 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { z } from 'zod';
 import { randomUUID } from 'node:crypto';
-import { getUserFromAccessToken, getSupabaseAdmin } from '../_lib/supabaseAdmin.js';
+import { getUserFromAccessToken } from '../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../_lib/rateLimit.js';
+import { putMedia, getMediaUrl } from '../_lib/mediaStore.js';
 import { renderFinalVideo } from '../_lib/renderFfmpeg.js';
 import { resolvePreset, rotationSeed, fnv1a, type RenderPreset } from '../_lib/renderPresets.js';
-import { statusKey, finalKey, writeSidecar, RENDER_BUCKET } from '../_lib/renderJob.js';
+import { statusKey, finalKey, writeSidecar } from '../_lib/renderJob.js';
 import type { FinalRenderScene, FinalRenderEndCard } from '../../types.js';
 
 // Final-render executor — FIRE half (Phase 2 of render_pipeline_voice_10.md).
@@ -135,10 +136,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const jobId = randomUUID();
-  const admin = getSupabaseAdmin();
 
   // Write 'processing' BEFORE returning so the first poll never 404s.
-  await writeSidecar(admin, statusKey(user.id, jobId), {
+  await writeSidecar(statusKey(user.id, jobId), {
     status: 'processing',
     updatedAt: new Date().toISOString(),
   });
@@ -167,37 +167,30 @@ async function runRender(
   variantSeed?: number,
   endCard?: FinalRenderEndCard
 ): Promise<void> {
-  const admin = getSupabaseAdmin();
   const sKey = statusKey(userId, jobId);
   try {
     const { buffer } = await renderFinalVideo(scenes, aspectRatio, music, preset, variantSeed, endCard);
 
     const fKey = finalKey(userId, jobId);
-    const upload = await admin.storage.from(RENDER_BUCKET).upload(fKey, buffer, {
-      contentType: 'video/mp4',
-      cacheControl: '3600',
-      upsert: true,
-    });
-    if (upload.error) throw new Error(`upload_failed: ${upload.error.message}`);
+    const upload = await putMedia(fKey, buffer, 'video/mp4', { cacheControl: '3600', upsert: true });
+    if (upload.error) throw new Error(`upload_failed: ${upload.error}`);
 
-    const playSign = await admin.storage.from(RENDER_BUCKET).createSignedUrl(fKey, SIGNED_URL_TTL_SECONDS);
-    const dlSign = await admin.storage
-      .from(RENDER_BUCKET)
-      .createSignedUrl(fKey, SIGNED_URL_TTL_SECONDS, { download: 'grifon-final.mp4' });
-    if (playSign.error || !playSign.data?.signedUrl || dlSign.error || !dlSign.data?.signedUrl) {
-      throw new Error(`sign_failed: ${playSign.error?.message ?? dlSign.error?.message ?? 'unknown'}`);
+    const playSign = await getMediaUrl(fKey, SIGNED_URL_TTL_SECONDS);
+    const dlSign = await getMediaUrl(fKey, SIGNED_URL_TTL_SECONDS, { downloadName: 'grifon-final.mp4' });
+    if (playSign.error || !playSign.url || dlSign.error || !dlSign.url) {
+      throw new Error(`sign_failed: ${playSign.error ?? dlSign.error ?? 'unknown'}`);
     }
 
-    await writeSidecar(admin, sKey, {
+    await writeSidecar(sKey, {
       status: 'done',
-      url: playSign.data.signedUrl,
-      downloadUrl: dlSign.data.signedUrl,
+      url: playSign.url,
+      downloadUrl: dlSign.url,
       updatedAt: new Date().toISOString(),
     });
   } catch (err: any) {
     const msg = err?.message ?? 'render_failed';
     console.error(`[api/render/final] job ${jobId} failed:`, msg);
-    await writeSidecar(admin, sKey, {
+    await writeSidecar(sKey, {
       status: 'failed',
       error: msg,
       updatedAt: new Date().toISOString(),

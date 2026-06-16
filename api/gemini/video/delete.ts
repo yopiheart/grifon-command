@@ -1,6 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { getUserFromAccessToken, getSupabaseAdmin } from '../../_lib/supabaseAdmin.js';
+import { getUserFromAccessToken } from '../../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../../_lib/rateLimit.js';
+import { deleteMedia } from '../../_lib/mediaStore.js';
 
 /**
  * Phase 4h.2 — Server-side DELETE for a single library entry.
@@ -18,7 +19,6 @@ import { rateLimitCheck } from '../../_lib/rateLimit.js';
 
 const DELETE_LIMIT = 20;
 const DELETE_WINDOW_SECONDS = 60;
-const BUCKET = 'gemini-videos';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
@@ -56,19 +56,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     });
   }
 
-  const admin = getSupabaseAdmin();
-  const result = await admin.storage.from(BUCKET).remove([path, `${path}.meta.json`]);
+  const result = await deleteMedia([path, `${path}.meta.json`]);
 
   if (result.error) {
-    console.error('[api/gemini/video/delete] remove failed:', result.error.message);
-    return res.status(502).json({ error: 'delete_failed', detail: result.error.message });
+    console.error('[api/gemini/video/delete] remove failed:', result.error);
+    return res.status(502).json({ error: 'delete_failed', detail: result.error });
   }
 
   console.log('[grifon:gv:delete-done]', {
     t: Date.now(),
     userId: user.id,
     path,
-    removed: result.data?.length ?? 0,
+    removed: result.removed,
   });
 
   return res.status(200).json({ deleted: true });

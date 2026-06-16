@@ -1,11 +1,11 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { getUserFromAccessToken, getSupabaseAdmin } from '../../_lib/supabaseAdmin.js';
+import { getUserFromAccessToken } from '../../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../../_lib/rateLimit.js';
+import { listMedia, getMediaUrl, downloadMediaText } from '../../_lib/mediaStore.js';
 
 const LIBRARY_LIMIT = 30;
 const LIBRARY_WINDOW_SECONDS = 60;
 const SIGNED_URL_TTL_SECONDS = 86400;
-const BUCKET = 'gemini-videos';
 // Egress fix (2026-06-13): cap the gallery at 30 (matches the UI list limit).
 // Each render now has up to 3 objects in the listing — .mp4 + .meta.json + .jpg
 // poster — so request 4x headroom when listing so 30 mp4s always come back.
@@ -53,18 +53,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     });
   }
 
-  const admin = getSupabaseAdmin();
-
-  const listResult = await admin.storage.from(BUCKET).list(user.id, {
+  const listResult = await listMedia(user.id, {
     limit: MAX_ITEMS * 4, // headroom: each render has up to .mp4 + .meta.json + .jpg
-    sortBy: { column: 'created_at', order: 'desc' },
+    sortByCreatedDesc: true,
   });
   if (listResult.error) {
-    console.error('[api/gemini/video/library] list failed:', listResult.error.message);
-    return res.status(502).json({ error: 'list_failed', detail: listResult.error.message });
+    console.error('[api/gemini/video/library] list failed:', listResult.error);
+    return res.status(502).json({ error: 'list_failed', detail: listResult.error });
   }
 
-  const entries = listResult.data ?? [];
+  const entries = listResult.entries;
   const videoEntries = entries
     .filter((e) => e.name.endsWith('.mp4'))
     .slice(0, MAX_ITEMS);
@@ -89,10 +87,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       if (sidecarNames.has(sidecarName)) {
         try {
-          const dl = await admin.storage.from(BUCKET).download(sidecarPath);
-          if (!dl.error && dl.data) {
-            const text = await dl.data.text();
-            metadata = JSON.parse(text);
+          const dl = await downloadMediaText(sidecarPath);
+          if (!dl.error && dl.text) {
+            metadata = JSON.parse(dl.text);
           }
         } catch (err: any) {
           console.warn(
@@ -106,40 +103,35 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const posterName = `${entry.name}.jpg`;
       const hasPoster = posterNames.has(posterName);
       const [playSign, dlSign, posterSign] = await Promise.all([
-        admin.storage.from(BUCKET).createSignedUrl(path, SIGNED_URL_TTL_SECONDS),
-        admin.storage.from(BUCKET).createSignedUrl(path, SIGNED_URL_TTL_SECONDS, {
-          download: 'grifon-video.mp4',
-        }),
+        getMediaUrl(path, SIGNED_URL_TTL_SECONDS),
+        getMediaUrl(path, SIGNED_URL_TTL_SECONDS, { downloadName: 'grifon-video.mp4' }),
         hasPoster
-          ? admin.storage.from(BUCKET).createSignedUrl(`${user.id}/${posterName}`, SIGNED_URL_TTL_SECONDS)
+          ? getMediaUrl(`${user.id}/${posterName}`, SIGNED_URL_TTL_SECONDS)
           : Promise.resolve(null),
       ]);
 
-      if (playSign.error || !playSign.data?.signedUrl || dlSign.error || !dlSign.data?.signedUrl) {
+      if (playSign.error || !playSign.url || dlSign.error || !dlSign.url) {
         console.warn(
           '[api/gemini/video/library] sign failed (skipping item):',
-          playSign.error?.message ?? dlSign.error?.message
+          playSign.error ?? dlSign.error
         );
         return null;
       }
 
-      const sizeBytes =
-        typeof (entry as any).metadata?.size === 'number'
-          ? (entry as any).metadata.size
-          : undefined;
+      const sizeBytes = entry.size ?? undefined;
 
       return {
         path,
-        url: playSign.data.signedUrl,
-        downloadUrl: dlSign.data.signedUrl,
-        posterUrl: posterSign && !posterSign.error ? posterSign.data?.signedUrl : undefined,
+        url: playSign.url,
+        downloadUrl: dlSign.url,
+        posterUrl: posterSign && !posterSign.error ? posterSign.url ?? undefined : undefined,
         mimeType: metadata.mimeType ?? 'video/mp4',
         prompt: metadata.prompt ?? '',
         sceneIdx: metadata.sceneIdx,
         model: metadata.model,
         aspectRatio: metadata.aspectRatio,
         duration: metadata.duration,
-        createdAt: metadata.createdAt ?? (entry as any).created_at ?? new Date().toISOString(),
+        createdAt: metadata.createdAt ?? entry.createdAt ?? new Date().toISOString(),
         sizeBytes,
       };
     })
