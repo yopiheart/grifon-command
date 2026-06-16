@@ -1,13 +1,14 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { z } from 'zod';
-import { getUserFromAccessToken, getSupabaseAdmin } from '../_lib/supabaseAdmin.js';
+import { getUserFromAccessToken } from '../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../_lib/rateLimit.js';
 import { getUserPlan } from '../_lib/userPlan.js';
 import { isMusicGenEnabled } from '../_lib/voiceConfig.js';
 import { composeMusic } from '../_lib/elevenlabs.js';
 import { musicPromptFor } from '../_lib/musicPrompts.js';
 import { rotationSeed } from '../_lib/renderPresets.js';
-import { RENDER_BUCKET, musicBedKey } from '../_lib/renderJob.js';
+import { musicBedKey } from '../_lib/renderJob.js';
+import { putMedia, getMediaUrl, listMedia } from '../_lib/mediaStore.js';
 import {
   MUSIC_DAILY, MUSIC_GLOBAL_DAILY, DAILY_WINDOW_SECONDS,
   musicDailyKey, musicGlobalDailyKey,
@@ -65,14 +66,24 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(403).json({ error: 'music_gen_not_in_plan', plan });
   }
 
-  const admin = getSupabaseAdmin();
   const seed = rotationSeed(videoUrls);
   const bedKey = musicBedKey(user.id, seed, style);
 
   // Cache hit: this ad already has a bed → return it, NO generation, NO quota.
-  const cached = await admin.storage.from(RENDER_BUCKET).createSignedUrl(bedKey, SIGNED_URL_TTL_SECONDS);
-  if (cached.data?.signedUrl && !cached.error) {
-    return res.status(200).json({ bedUrl: cached.data.signedUrl, cached: true });
+  // Check the object's EXISTENCE first, then sign. Under MEDIA_STORE='r2',
+  // getMediaUrl→presignGet mints a signed URL unconditionally — even for a
+  // missing key — so a successful sign can no longer stand in for "the bed
+  // exists" the way Supabase's createSignedUrl error did. List the bed's prefix
+  // and match its exact filename; only sign on a real hit.
+  const slash = bedKey.lastIndexOf('/');
+  const bedPrefix = bedKey.slice(0, slash); // `${uid}/music`
+  const bedFile = bedKey.slice(slash + 1);  // `${seed}-${style}.mp3`
+  const { entries } = await listMedia(bedPrefix);
+  if (entries.some((e) => !e.isFolder && e.name === bedFile)) {
+    const { url, error } = await getMediaUrl(bedKey, SIGNED_URL_TTL_SECONDS);
+    if (url && !error) {
+      return res.status(200).json({ bedUrl: url, cached: true });
+    }
   }
 
   // Cache miss → we will generate. Apply the guards in order, cheapest first.
@@ -111,18 +122,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const mp3 = await composeMusic(musicPromptFor(style), lengthMs);
 
-    const upload = await admin.storage.from(RENDER_BUCKET).upload(bedKey, mp3, {
-      contentType: 'audio/mpeg',
+    const { error: putError } = await putMedia(bedKey, mp3, 'audio/mpeg', {
       cacheControl: '86400',
       upsert: true,
     });
-    if (upload.error) throw new Error(`upload_failed: ${upload.error.message}`);
+    if (putError) throw new Error(`upload_failed: ${putError}`);
 
-    const signed = await admin.storage.from(RENDER_BUCKET).createSignedUrl(bedKey, SIGNED_URL_TTL_SECONDS);
-    if (signed.error || !signed.data?.signedUrl) {
-      throw new Error(`sign_failed: ${signed.error?.message ?? 'unknown'}`);
+    const { url, error: signError } = await getMediaUrl(bedKey, SIGNED_URL_TTL_SECONDS);
+    if (signError || !url) {
+      throw new Error(`sign_failed: ${signError ?? 'unknown'}`);
     }
-    return res.status(200).json({ bedUrl: signed.data.signedUrl, cached: false });
+    return res.status(200).json({ bedUrl: url, cached: false });
   } catch (err: any) {
     const msg = err?.message ?? 'unknown';
     console.error('[api/music/compose] error:', msg);

@@ -39,17 +39,15 @@ Open render-side items to confirm:
 > PASSES — two 30s beds generate to `.tmp/` (re-run via the Node equivalent, since Python
 > isn't installed on the cafe PC). Awaiting Neil's ear test.
 >
-> **🚧 MERGE-TO-MAIN BLOCKED — music branch predates the R2 refactor.** Attempted to merge
-> `claude/gemini-audio-stack-transfer-eglwp5` into `main` (to make the next smoke one-pass).
-> Text-merge is CLEAN but **`tsc` fails**: `api/music/compose.ts` imports `RENDER_BUCKET`
-> from `renderJob.ts`, which the R2 migration removed. `compose.ts` does **3 direct
-> `admin.storage.from(RENDER_BUCKET)…` calls** (cache-check / upload / sign) that bypass the
-> new `mediaStore` facade. **Reconciliation needed (~30 min, own PR):** port those 3 calls to
-> `mediaStore.putMedia` / `getMediaUrl`, and rework the "is the bed already cached?" check —
-> R2's `presignGet` always succeeds even when the object is missing, so it needs an explicit
-> existence check (e.g. `listMedia` on the key) instead of relying on a signed-URL error.
-> Merge aborted; `main` is green. **Until reconciled, music-under-VO is a SEPARATE render on
-> the music branch — NOT part of the main one-pass smoke.**
+> **✅ MERGED TO MAIN (2026-06-16, `4d57cfa`).** R2 reconciliation done: `api/music/compose.ts`'s
+> 3 direct `admin.storage.from(RENDER_BUCKET)…` calls (cache-check / upload / sign) ported to the
+> `mediaStore` facade (`putMedia` / `getMediaUrl` / `listMedia`); `RENDER_BUCKET` import dropped,
+> `musicBedKey` kept. Bed-cache existence check reworked — R2's `presignGet` mints a URL even for a
+> missing key, so the check now `listMedia`s the bed key's parent prefix and matches the exact
+> basename before signing (self-consistent with the slash-containing `rotationSeed` key scheme).
+> Tests rewired to mock the `mediaStore` boundary + a phantom-cache-hit regression. Build + full
+> suite green (225 passed); pushed. **Music-under-VO is now part of the main one-pass smoke** —
+> ships dark behind `GRIFON_MUSIC_GEN_ENABLED` (default off → 503 → static-bed fallback).
 
 Branch: `claude/gemini-audio-stack-transfer-eglwp5` (fetch when starting).
 - `ELEVEN_LABS_API_KEY=sk_... python3 tools/smoke_music_bed.py` → two MP3s in `.tmp/`
