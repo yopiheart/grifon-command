@@ -35,14 +35,21 @@ Open render-side items to confirm:
 ### 2. Test the new ElevenLabs music bed — BANK THE FREE WIN
 *(same smoke session, ~30 min, GATED)*
 
-> **🚧 BLOCKED (2026-06-16 smoke):** the smoke ran but **failed at the API** — the
-> ElevenLabs key in `.env` is missing the **`music_generation`** permission
-> (`HTTP 401 missing_permissions`). The endpoint + request were correct; this is a
-> **key/tier capability**, not code. **Action for Neil:** enable `music_generation`
-> on the ElevenLabs account/key (likely a higher tier / explicit feature toggle in the
-> dashboard), then re-run. Also note: **Python isn't installed on this cafe PC** —
-> `tools/smoke_music_bed.py` can't run as-is; the smoke used a Node equivalent. Until the
-> permission lands, this step is parked and the new ad styles ship on the existing static beds.
+> **✅ API UNBLOCKED (2026-06-16):** `music_generation` permission enabled; the smoke now
+> PASSES — two 30s beds generate to `.tmp/` (re-run via the Node equivalent, since Python
+> isn't installed on the cafe PC). Awaiting Neil's ear test.
+>
+> **🚧 MERGE-TO-MAIN BLOCKED — music branch predates the R2 refactor.** Attempted to merge
+> `claude/gemini-audio-stack-transfer-eglwp5` into `main` (to make the next smoke one-pass).
+> Text-merge is CLEAN but **`tsc` fails**: `api/music/compose.ts` imports `RENDER_BUCKET`
+> from `renderJob.ts`, which the R2 migration removed. `compose.ts` does **3 direct
+> `admin.storage.from(RENDER_BUCKET)…` calls** (cache-check / upload / sign) that bypass the
+> new `mediaStore` facade. **Reconciliation needed (~30 min, own PR):** port those 3 calls to
+> `mediaStore.putMedia` / `getMediaUrl`, and rework the "is the bed already cached?" check —
+> R2's `presignGet` always succeeds even when the object is missing, so it needs an explicit
+> existence check (e.g. `listMedia` on the key) instead of relying on a signed-URL error.
+> Merge aborted; `main` is green. **Until reconciled, music-under-VO is a SEPARATE render on
+> the music branch — NOT part of the main one-pass smoke.**
 
 Branch: `claude/gemini-audio-stack-transfer-eglwp5` (fetch when starting).
 - `ELEVEN_LABS_API_KEY=sk_... python3 tools/smoke_music_bed.py` → two MP3s in `.tmp/`
