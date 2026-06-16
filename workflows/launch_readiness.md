@@ -6,6 +6,38 @@ This is the meta-workflow. It doesn't do the work itself — it points to the wo
 
 > **⏭ NEXT SESSION (2026-06-14+):** (1) **ONE FINAL_RENDER live-verify session** (Neil at the wheel, director-smoke pre-flight, smoke-tester delegation, unmeter first): end-card recap + price-anchor overlays (SHIPPED 2026-06-13 code-side — eyeball band placement at 0.26h, gold recap legibility, ₱ glyph rendering in EVERY preset font, anchor ding timing) + the parked scene-6/5 regen (END-CLEAN ghost-tail kill) + tighter trim pads + Scene Pipeline defaulting to a female Filipino voice for the BEAN BLOCK avatar. (2) ~~Billing-success page live-verify~~ — **CLOSED 2026-06-13: Neil tested the "Founding Creator" share card + native share live and confirmed it works ("its perfect already").** Remaining Neil-gated render backlog: product-aware hook text dodge (vision pass is face-only today); EDL responseSchema; structured `gender` field on `FilipinoLibraryEntry` (replaces the description-regex match — api/_lib/, needs approval gate).
 
+## Status as of 2026-06-16 (DIRECTION SHIFT — core product first; website/pricing parked)
+
+**Decision (Neil, 2026-06-16):** Before any website / payment / pricing work, the priority is
+the **core product — the generated video ads**. New ad styles for **Services / Real Estate /
+App-commercial** are this week's headline (logged as `post_beta_roadmap.md` #12/#13/#14). Full
+ordered plan: [`this_week_plan.md`](this_week_plan.md). Launch target = **free, hand-picked
+beta** (no payment) → **Gate 3-prod live billing is OFF the critical path.**
+
+**Gate snapshot:** 1, 2, 3-dev, 4, 5, 6, 7 CLOSED. 3-prod (live billing) deferred — not needed
+for a free beta.
+
+**Real blockers to inviting anyone (not infra gates):**
+1. **⚠️ LOGIN ISSUE.** Neil reports he can't log in. Gate 2 is *nominally* closed, but a live
+   auth failure gates the entire beta — must be confirmed working before any invite.
+   *Diagnosing 2026-06-16.* Leading hypotheses: defreezer wiped `VITE_SUPABASE_*` from `.env`,
+   or the Supabase project is restricted by the egress 402 overage (below).
+2. **🎬 FINAL_RENDER never eyeballed live.** End-card overlays (₱ glyph in every preset font,
+   gold recap legibility, anchor-ding timing) + scene-6/5 ghost-tail + BEAN BLOCK female-voice
+   default — code shipped 2026-06-13, human eyeball still pending. = step 1 of `this_week_plan.md`.
+
+**New since 2026-06-13:**
+- **R2 media migration** — Phase 1 (dormant facade, default supabase, `4c499c1`) + Phase 2
+  dev-verified (bucket+token+CORS live, `643dbe9`). The fix path for the Supabase **egress** risk
+  (hit 356% of free-tier quota, refills ~June 18). Next: Vercel env. See [`r2_media_migration.md`](r2_media_migration.md).
+- **Beta polish** shipped (`7b47a35`): responsive Step 6 thumbnail tile + footer dead-link guard.
+- **ElevenLabs music bed** (generation): was BLOCKED on the key's `music_generation` permission;
+  **Neil enabled it 2026-06-16** — re-test pending. Static beds remain the shipping default.
+  Note: Python is absent on the cafe PC; the smoke runs via a Node equivalent.
+- **Pricing scope-honesty punch-list** captured (public pricing page sells paid plans through a
+  **test-mode** PayMongo checkout; video-tier expectation) — parked with website work until the
+  product is locked.
+
 ## Status as of 2026-06-13 late (END-CARD OFFER RECAP + PRICE-ANCHOR CALLOUT SHIPPED — code-side)
 
 The overlay bundle from the NEXT SESSION pointer is in. Neil answered the open question: **auto-pull, editable** — the recap prefills from the wizard's `clientDetails.offer`, both fields editable in the AI Editor before FINAL_RENDER (price anchor typed, placeholder-guided). Flow: `App.tsx` threads `offer` into both `setEditorBatch` call sites → `EditVideo` STEP_2 · END_CARD panel (two inputs, 80-char clamped) → `FinalRenderRequest.endCard` (new zod-validated field, [api/render/final.ts](../api/render/final.ts)) → new `planEndCardLayers` in [api/_lib/renderFfmpeg.ts](../api/_lib/renderFfmpeg.ts) burns the gold recap (0.26h band) over a smaller white price-anchor line into the **last scene only**, both popping in (0.3s/0.8s) and holding to the end; ding on the anchor. EDL brain untouched (tuned files clean — overlays come from the request, not the model).
