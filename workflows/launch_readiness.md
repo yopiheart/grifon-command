@@ -18,10 +18,10 @@ beta** (no payment) → **Gate 3-prod live billing is OFF the critical path.**
 for a free beta.
 
 **Real blockers to inviting anyone (not infra gates):**
-1. **⚠️ LOGIN ISSUE.** Neil reports he can't log in. Gate 2 is *nominally* closed, but a live
-   auth failure gates the entire beta — must be confirmed working before any invite.
-   *Diagnosing 2026-06-16.* Leading hypotheses: defreezer wiped `VITE_SUPABASE_*` from `.env`,
-   or the Supabase project is restricted by the egress 402 overage (below).
+1. **✅ LOGIN — RESOLVED 2026-06-16.** Was transient. Verified via Supabase MCP: project
+   `varoqxjccqmskzeejagn` is `ACTIVE_HEALTHY`, `.env` `VITE_SUPABASE_URL` matches it, and the
+   auth logs show Neil's Google login succeeding (`/callback` 302 → `/user` 200) with **zero
+   failed-login/error events in 24h**. Neil confirmed he can log in now. Gate 2 genuinely green.
 2. **🎬 FINAL_RENDER never eyeballed live.** End-card overlays (₱ glyph in every preset font,
    gold recap legibility, anchor-ding timing) + scene-6/5 ghost-tail + BEAN BLOCK female-voice
    default — code shipped 2026-06-13, human eyeball still pending. = step 1 of `this_week_plan.md`.
