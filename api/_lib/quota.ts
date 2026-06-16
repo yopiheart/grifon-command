@@ -29,6 +29,26 @@ export const CLONE_DAILY: Record<ServerPlanId, number> = {
   business: 10,
 };
 
+// Generative music beds (ElevenLabs Music) — a Pro/Business perk. free/creator
+// are 0 belt-and-suspenders: the client gates the toggle on tier, but the server
+// is authoritative, so a free/creator request can never burn the shared credit
+// pool — it just falls back to a static bed. Music draws from the SAME ElevenLabs
+// credit pool as TTS/STS, so these are deliberately modest. Caching (one gen per
+// ad, keyed by render seed) keeps real spend well under these caps. Tune from
+// real credit-cost telemetry before raising.
+export const MUSIC_DAILY: Record<ServerPlanId, number> = {
+  free: 0,
+  creator: 0,
+  pro: 10,
+  business: 25,
+};
+
+// Global circuit-breaker on music generation across ALL users in a rolling 24h.
+// This is the "voice wins" guard: it hard-caps total music spend so a burst can
+// never starve the shared ElevenLabs credit pool that TTS/STS (the core feature)
+// depends on. Conservative on purpose; raise once cost telemetry exists.
+export const MUSIC_GLOBAL_DAILY = 200;
+
 export const DAILY_WINDOW_SECONDS = 86_400;
 
 export type QuotaStatus = {
@@ -83,6 +103,9 @@ export async function peekQuota(
 export const ttsDailyKey = (userId: string) => `tts:daily:${userId}`;
 export const stsDailyKey = (userId: string) => `sts:daily:${userId}`;
 export const cloneDailyKey = (userId: string) => `clone:daily:${userId}`;
+export const musicDailyKey = (userId: string) => `music:daily:${userId}`;
+// Single shared key — the global music ceiling is account-wide, not per-user.
+export const musicGlobalDailyKey = () => `music:global:daily`;
 
 // ---------------------------------------------------------------------------
 // Monthly usage metering (quota-wall tier-upgrade feature).

@@ -9,6 +9,13 @@ import { putMedia, downloadMediaText } from './mediaStore.js';
 export const statusKey = (userId: string, jobId: string) => `${userId}/final/${jobId}.status.json`;
 export const finalKey = (userId: string, jobId: string) => `${userId}/final/${jobId}.mp4`;
 
+// Generated music bed — cached per AD, keyed by the render's deterministic seed
+// (rotationSeed = hash of sorted scene videoUrls) + style. The same ad re-renders
+// reuse this object (no regen, no extra credits), preserving the "same ad renders
+// identically" contract. Stored in the same bucket so the cleanup cron reaps it.
+export const musicBedKey = (userId: string, seed: string, style: string) =>
+  `${userId}/music/${seed}-${style}.mp3`;
+
 export interface RenderSidecar {
   status: FinalRenderStatus;
   url?: string;

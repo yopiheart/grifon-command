@@ -3,13 +3,16 @@ import React, { useEffect, useState } from 'react';
 import {
   VideoEditInput, EditDecisionList, SceneBatchEntry, EditTargetPlatform,
   ConsolidationScene, FinalRenderScene, FinalRenderResult, VoiceLibrary, StabilityMode,
-  VoiceWord,
+  VoiceWord, FinalRenderRequest,
 } from '../types';
 import { generateVideoEditPlan, generateEditDecisionList } from '../services/geminiService';
 import { fetchVoices } from '../services/voiceService';
 import { consolidateVoices } from '../services/voiceConsolidationService';
 import { renderFinalVideo } from '../services/finalRenderService';
+import { composeMusicBed } from '../services/musicService';
 import { estimateSpokenSec } from '../utils/spokenDuration';
+import { useSubscription } from '../hooks/useSubscription';
+import { musicGenEligible } from '../utils/planGate';
 import { RECOMMENDED_VOICE_IDS } from './SignalModulator/pinoyReady';
 import { preferGenderVoice, type AvatarVoiceGender } from '../utils/voiceSelect';
 import { compressImageForUpload } from '../utils/imageCompression';
@@ -107,6 +110,12 @@ const BatchEditMode: React.FC<{
   const [endCardRecap, setEndCardRecap] = useState((editorBatch.offer ?? '').slice(0, 80));
   // Burn-in: drawtext overlays/captions + SFX + ducked music bed from the EDL.
   const [burnInEnabled, setBurnInEnabled] = useState(true);
+  // Generative music bed (ElevenLabs Music) — Pro/Business perk, default-on for
+  // eligible tiers. Server is authoritative (MUSIC_DAILY); this only governs the
+  // toggle + the pre-render compose call. Off / ineligible → tuned static bed.
+  const sub = useSubscription();
+  const musicEligible = musicGenEligible(sub.plan_id);
+  const [musicGenOn, setMusicGenOn] = useState(true);
   // Face-clear caption bands per talking scene (MediaPipe, AI-Editor-only).
   // Graceful: empty → the renderer uses its per-type heuristic band.
   const [captionRegions, setCaptionRegions] = useState<Record<number, { yFracTop: number; yFracBottom: number }>>({});
@@ -235,9 +244,31 @@ const BatchEditMode: React.FC<{
         return;
       }
       // Background-music bed chosen in code from the EDL's detected script style.
-      const music = burnInEnabled
-        ? { style: edl?.meta.scriptStyleDetected ?? 'mrbeast', enabled: true as const }
-        : undefined;
+      // Eligible tiers with the toggle on first try to generate a custom bed
+      // (pre-step); on any miss/failure `music` stays style-only and the render
+      // falls back to the tuned static bed.
+      let music: FinalRenderRequest['music'];
+      if (burnInEnabled) {
+        const style = edl?.meta.scriptStyleDetected ?? 'mrbeast';
+        music = { style, enabled: true };
+        if (musicGenOn && musicEligible) {
+          const lengthMs = Math.max(
+            8000,
+            Math.round(
+              scenes.reduce(
+                (sum, s) => sum + (s.targetDurationSec ?? Math.max(2, estimateSpokenSec(s.scriptLine || ''))),
+                0
+              ) * 1000
+            ) + 1500 // small tail pad
+          );
+          const composed = await composeMusicBed({
+            style,
+            videoUrls: scenes.map((s) => s.videoUrl),
+            lengthMs,
+          });
+          if (composed?.bedUrl) music = { ...music, bedUrl: composed.bedUrl };
+        }
+      }
       // End card: burned text, so it follows the burn-in toggle; only sent when
       // the recap has text (blank → today's render). Clamped to the zod cap.
       // (Price anchor removed 2026-06-13 — PH ads hide price to drive DMs.)
@@ -385,6 +416,19 @@ const BatchEditMode: React.FC<{
                 : <Square className="w-4 h-4 shrink-0 text-zinc-500" />}
               // BURN-IN · CAPTIONS · SFX · MUSIC
             </button>
+            {/* Generative music — Pro/Business only. Off / ineligible → tuned static bed. */}
+            {musicEligible && burnInEnabled && (
+              <button
+                type="button"
+                onClick={() => setMusicGenOn((v) => !v)}
+                className="flex items-center gap-2 mb-3 text-[10px] font-mono uppercase tracking-widest text-zinc-400 hover:text-white transition-colors"
+              >
+                {musicGenOn
+                  ? <CheckSquare className="w-4 h-4 shrink-0 text-[#FFCC00]" />
+                  : <Square className="w-4 h-4 shrink-0 text-zinc-500" />}
+                // CUSTOM_MUSIC_BED <span className="text-[#FFCC00]">· PRO</span>
+              </button>
+            )}
             <GoldButton
               onClick={handleRenderFinal}
               disabled={isRendering || !voiceReady}

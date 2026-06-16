@@ -1584,7 +1584,7 @@ async function downloadToFile(url: string, path: string): Promise<void> {
 export async function renderFinalVideo(
   scenes: FinalRenderScene[],
   aspectRatio: string,
-  music?: { style: 'mrbeast' | 'temu' | 'testimonial'; enabled: boolean },
+  music?: { style: 'mrbeast' | 'temu' | 'testimonial'; enabled: boolean; bedUrl?: string },
   preset: RenderPreset = CLASSIC,
   variantSeed: number = 0, // rotates the premium hook palette per render
   endCard?: FinalRenderEndCard // offer recap + price anchor, burned into the last scene
@@ -1745,9 +1745,23 @@ export async function renderFinalVideo(
     const concatMs = Date.now() - tConcat;
 
     // Optional final pass: ducked background-music bed across the whole program.
+    // Bed source priority (each step degrades gracefully to the next):
+    //   1. generated bed (music.bedUrl, from api/music/compose) — downloaded here,
+    //   2. tuned static bed (musicPath(style)),
+    //   3. bare stitch (no music).
     let resultPath = finalPath;
     if (music?.enabled) {
-      const bed = musicPath(music.style);
+      let bed: string | null = null;
+      if (music.bedUrl) {
+        try {
+          const genBed = join(dir, 'music_bed.mp3');
+          await downloadToFile(music.bedUrl, genBed);
+          bed = genBed;
+        } catch (err: any) {
+          console.warn(`[renderFfmpeg] generated bed download failed (falling back to static): ${err?.message ?? err}`);
+        }
+      }
+      if (!bed) bed = musicPath(music.style);
       if (bed) {
         const musicedPath = join(dir, 'final_music.mp4');
         if (mixMusic(finalPath, bed, probeDurationSec(finalPath), musicedPath)) {
