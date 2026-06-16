@@ -104,10 +104,6 @@ const BatchEditMode: React.FC<{
   const [isRendering, setIsRendering] = useState(false);
   const [renderResult, setRenderResult] = useState<FinalRenderResult | null>(null);
   const [renderError, setRenderError] = useState<string | null>(null);
-  // End card: offer recap auto-pulled from the wizard (editable), price anchor typed.
-  // Both optional — blank fields render the last scene exactly as before. The prefill
-  // is clamped to the server's 80-char cap (maxLength only constrains typing).
-  const [endCardRecap, setEndCardRecap] = useState((editorBatch.offer ?? '').slice(0, 80));
   // Burn-in: drawtext overlays/captions + SFX + ducked music bed from the EDL.
   const [burnInEnabled, setBurnInEnabled] = useState(true);
   // Generative music bed (ElevenLabs Music) — Pro/Business perk, default-on for
@@ -269,12 +265,11 @@ const BatchEditMode: React.FC<{
           if (composed?.bedUrl) music = { ...music, bedUrl: composed.bedUrl };
         }
       }
-      // End card: burned text, so it follows the burn-in toggle; only sent when
-      // the recap has text (blank → today's render). Clamped to the zod cap.
-      // (Price anchor removed 2026-06-13 — PH ads hide price to drive DMs.)
-      const recapText = endCardRecap.trim().slice(0, 80);
-      const endCard = burnInEnabled && recapText ? { recapText } : undefined;
-      const result = await renderFinalVideo({ scenes, aspectRatio: editorBatch.aspectRatio, music, endCard });
+      // End-card recap overlay removed 2026-06-16 (Neil): it auto-pulled the
+      // wizard offer — which carries the price — and burned it onto the last
+      // scene (and covered the presenter's face). No auto-applied recap now; the
+      // last scene renders clean, like before the 2026-06-13 feature.
+      const result = await renderFinalVideo({ scenes, aspectRatio: editorBatch.aspectRatio, music });
       if (result.status === 'failed') setRenderError(result.error ?? 'RENDER_FAILED');
       else setRenderResult(result);
     } catch (err: any) {
@@ -381,30 +376,10 @@ const BatchEditMode: React.FC<{
             <p className="text-[10px] text-red-400 font-mono mt-1">// {consolidateError}</p>
           )}
 
-          {/* Step 2 — end card (offer recap, burned into the last scene).
-              Price-anchor input removed 2026-06-13: PH advertisers hide price
-              in ads to drive curiosity DMs (Neil). */}
+          {/* Step 2 — assemble final MP4 (end-card recap removed 2026-06-16) */}
           <div className="mt-5 pt-5 border-t border-white/5">
             <label className="block text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">
-              // STEP_2 · END_CARD <span className="text-zinc-600">· OPTIONAL · LAST SCENE</span>
-            </label>
-            <input
-              type="text"
-              value={endCardRecap}
-              onChange={(e) => setEndCardRecap(e.target.value)}
-              maxLength={80}
-              placeholder="OFFER RECAP — e.g. FIRST 50: FREE DRIP BAG"
-              className="w-full bg-zinc-950 border border-white/10 rounded-xl p-3 text-white text-sm focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] placeholder:text-zinc-600"
-            />
-            <p className="text-[10px] text-zinc-500 font-mono mt-2">
-              // Recap auto-pulled from your wizard offer — edit freely. Holds on screen to the end of the ad. No price here — keep them curious, let the DMs ask.
-            </p>
-          </div>
-
-          {/* Step 3 — assemble final MP4 */}
-          <div className="mt-5 pt-5 border-t border-white/5">
-            <label className="block text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">
-              // STEP_3 · ASSEMBLE_FINAL_MP4
+              // STEP_2 · ASSEMBLE_FINAL_MP4
             </label>
             <button
               type="button"
