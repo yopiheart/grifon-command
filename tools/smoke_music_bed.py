@@ -29,19 +29,24 @@ from pathlib import Path
 # The two most-contrasting styles. KEEP IN SYNC with MUSIC_STYLE_PROMPTS in
 # api/_lib/musicPrompts.ts (that file is the source of truth; this is a listen
 # aid). If you tune a prompt there, mirror it here before re-running the test.
+_NO_VOCALS = (
+    " Purely instrumental — absolutely NO vocals of any kind: no singing, no human "
+    "voice, no spoken words, no rapping, no choir, no \"ooh\"/\"aah\" vocal pads, and no "
+    "vocal samples or chops anywhere. Music and instruments only, with no vocal intro "
+    "— instrumental from the very first second to the last."
+)
 PROMPTS = {
     "mrbeast": (
         "High-energy instrumental hype background music for a fast-paced social ad. "
         "Driving electronic drums, punchy bass, rising tension, ~120 BPM, modern and "
-        "exciting. Strictly instrumental — no vocals, no lyrics, no vocal chops. Keep "
-        "the midrange clean and the dynamics steady so a spoken voiceover sits clearly "
-        "on top."
+        "exciting. Keep the midrange clean and the dynamics steady so a spoken "
+        "voiceover sits clearly on top." + _NO_VOCALS
     ),
     "testimonial": (
         "Warm, sincere instrumental background music for a trustworthy testimonial ad. "
         "Soft piano or warm pads, gentle pulse, understated and emotional, ~90 BPM. "
-        "Strictly instrumental — no vocals, no lyrics. Low and supportive, leaving plenty "
-        "of headroom for a calm spoken voiceover."
+        "Low and supportive, leaving plenty of headroom for a calm spoken voiceover."
+        + _NO_VOCALS
     ),
 }
 

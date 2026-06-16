@@ -61,4 +61,14 @@ describe('canned music prompts', () => {
       expect(p).toContain('voiceover');
     }
   });
+
+  it('every prompt hard-bans singing/vocal intros (DR ads: any vocal fights the VO)', () => {
+    // Regression guard for the 2026-06-16 leak (a sung vocal intro). The API's
+    // force_instrumental is primary; these negatives are the belt-and-suspenders.
+    for (const style of STYLES) {
+      const p = MUSIC_STYLE_PROMPTS[style].toLowerCase();
+      expect(p).toContain('no singing');
+      expect(p).toContain('no vocal intro');
+    }
+  });
 });
