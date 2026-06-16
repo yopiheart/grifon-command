@@ -274,11 +274,15 @@ export const PRESETS: Record<PresetId, RenderPreset> = {
 };
 
 /** Rotation pools per script style. Testimonial deliberately excludes the
- * high-energy looks — a hyped testimonial reads fake (premortem guard). */
+ * high-energy looks — a hyped testimonial reads fake (premortem guard).
+ * `classic` is dropped from rotation (Neil, 2026-06-16): it is the only preset
+ * with a solid wipe-box behind the hook (red band) + the left-anchored 'wipe'
+ * hook layout. The remaining presets all use the centered `title-stack` hook
+ * with no band. classic stays defined as an explicit kill-switch override. */
 export const ROTATION: Record<ScriptStyle, PresetId[]> = {
-  mrbeast: ['impact', 'hype', 'classic'],
-  temu: ['hype', 'impact', 'classic'],
-  testimonial: ['clean', 'classic'],
+  mrbeast: ['impact', 'hype'],
+  temu: ['hype', 'impact'],
+  testimonial: ['clean'],
 };
 
 /** FNV-1a 32-bit — stable across runs/platforms (no Math.random, no Date). */
@@ -312,6 +316,6 @@ export function resolvePreset(
 ): RenderPreset {
   if (explicitId && explicitId in PRESETS) return PRESETS[explicitId as PresetId];
   const pool = scriptStyle ? ROTATION[scriptStyle as ScriptStyle] : undefined;
-  if (!pool?.length) return CLASSIC;
+  if (!pool?.length) return IMPACT; // no-band default (classic dropped from rotation 2026-06-16)
   return PRESETS[pool[fnv1a(seed) % pool.length]];
 }

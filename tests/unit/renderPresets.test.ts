@@ -93,9 +93,10 @@ describe('resolvePreset', () => {
     expect(resolvePreset('temu', 'clean', 'whatever').id).toBe('clean');
   });
 
-  it('unknown style or explicit id degrades to classic / rotation, never throws', () => {
-    expect(resolvePreset('cinematic-nonsense', undefined, 's').id).toBe('classic');
-    expect(resolvePreset(undefined, undefined, 's').id).toBe('classic');
+  it('unknown style or explicit id degrades to the no-band default / rotation, never throws', () => {
+    // Fallback is impact (no band) since classic left rotation 2026-06-16.
+    expect(resolvePreset('cinematic-nonsense', undefined, 's').id).toBe('impact');
+    expect(resolvePreset(undefined, undefined, 's').id).toBe('impact');
     expect(resolvePreset('mrbeast', 'bogus' as PresetId, 'seed-123').id)
       .toBe(resolvePreset('mrbeast', undefined, 'seed-123').id);
   });
