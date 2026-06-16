@@ -17,14 +17,14 @@ subagent (foreground); pre-flight per `.claude/skills/director-smoke`.
 - If the cafe-PC rebooted since staging: restore `.env` keys, re-run
   `.\scripts\enable-dev-unmetered-video.ps1`, restart `npm run dev`, re-source the hero.
 
-## Hero (staged — Neil to approve before render)
-- **File:** `.tmp/hero_smoke/the-ordinary-ha-hero.jpg` (handheld, readable label — verified).
-- **Brand (read off label):** The Ordinary
-- **Product:** Hyaluronic Acid 2% + B5 — hydrating serum, 30ml dropper bottle
-- **Description:** Water-based hydrating serum; multiple HA molecular weights + vitamin B5
-  draw moisture in for plumper, smoother skin. Affordable cult skincare staple.
-- **Price:** ₱650
-- **Source:** Unsplash (free commercial use) — `photo-1643379852776-308d9bbf8645`.
+## Hero (Neil's pick — Snapple, candidate 1)
+- **File:** `.tmp/hero_smoke/snapple-mango-hero.jpg` (handheld, readable label — verified).
+- **Brand (read off label):** Snapple
+- **Product:** Mango Madness — flavored juice drink, 473 mL (16 fl oz) bottle
+- **Description:** Snapple Mango Madness — an all-natural ready-to-drink flavored juice drink, a
+  sweet tropical blend of mango and kiwi from concentrate, 190 cal per bottle. Sold in a 473 mL bottle.
+- **Price:** ₱95 (plausible PH retail for an imported Snapple bottle)
+- **Source:** Unsplash (free commercial use), handheld convenience-store shot.
 
 ## Sequence (director-smoke — do NOT improvise)
 1. **Hero FIRST.** Use the staged photo above; brand is DERIVED from its label ("The Ordinary").
