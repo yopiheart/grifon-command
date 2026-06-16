@@ -364,6 +364,87 @@ during the gate session.
 
 ---
 
+### 12. New Ad Style — Services vertical
+
+> **Status (2026-06-16): ⚡ PROMOTED TO ACTIVE — building this week.** Not parked.
+> The working execution plan lives in [`this_week_plan.md`](this_week_plan.md) (step 4).
+> This entry is the durable record so the idea survives the cafe-PC defreezer; the real
+> spec gets written via `grill-me` before any code.
+
+**What:** A new ad-creation style tuned for **service businesses** (salons, gyms, clinics,
+restaurants, agencies) — distinct from the current product-e-commerce assumption baked into
+the wizard/storyboard. Likely covers service-in-action scenes, storefront/staff framing, and
+booking/appointment CTAs rather than buy-now product CTAs.
+
+**Why it matters:** Expands the addressable market beyond physical-product sellers to the much
+larger Filipino service-SMB segment — the same users who already see the "Service business?"
+hints added in roadmap item #4. The render pipeline exists; this is a style/prompt layer on top.
+
+**Why parked:** *Not parked* — promoted to active 2026-06-16. Sequenced **first** of the three
+new styles because it's closest to the existing product/testimonial flow (least bespoke).
+
+**When to resume:** Now (this week).
+
+**Where to start:** `grill-me` spec session → vertical slice (types + service call + UI + state
+through the Services style) → `smoke-tester`. TUNED-prompt edits in
+`services/geminiService.ts` / `api/_lib/prompts.ts` need Neil's explicit go (surgical-edit).
+
+**Scope estimate:** TBD pending the grill-me spec.
+
+**Source:** Neil, 2026-06-16 — *"im planning to add a new ads style for services."*
+
+---
+
+### 13. New Ad Style — Real Estate vertical
+
+> **Status (2026-06-16): ⚡ PROMOTED TO ACTIVE — building this week.** Not parked.
+> Working plan: [`this_week_plan.md`](this_week_plan.md) (step 4). Spec via `grill-me` first.
+
+**What:** An ad style tuned for **real-estate** listings/agents — property walkthroughs,
+location/lifestyle framing, price + inquiry CTAs. More bespoke scene logic than Services
+(property as the hero, not a held product or a talking avatar).
+
+**Why it matters:** A high-ticket Filipino vertical (brokers, developers, condo/lot sellers)
+where a strong scroll-stopping video ad maps directly to lead value.
+
+**Why parked:** *Not parked* — active 2026-06-16. Sequenced **second** (after Services).
+
+**When to resume:** Now (this week), after the Services slice lands.
+
+**Where to start:** `grill-me` spec → vertical slice → `smoke-tester`. Watch the property-scale
+/ scene-identity behavior (related to the Veo scale limits in item #4).
+
+**Scope estimate:** TBD pending spec.
+
+**Source:** Neil, 2026-06-16 — *"Real estate ... commercial ads will be finish this week."*
+
+---
+
+### 14. New Ad Style — App / Commercial vertical
+
+> **Status (2026-06-16): ⚡ PROMOTED TO ACTIVE — building this week.** Not parked.
+> Working plan: [`this_week_plan.md`](this_week_plan.md) (step 4). Spec via `grill-me` first.
+
+**What:** An ad style for **apps and general commercial spots** — UI/screen-in-context shots,
+feature-benefit beats, download/sign-up CTAs. The most bespoke of the three (digital product,
+no physical SKU; may need screen-recording/mockup framing in the storyboard).
+
+**Why it matters:** Opens Grifon to app developers and brands wanting polished commercial
+spots, broadening beyond SMB product/service sellers.
+
+**Why parked:** *Not parked* — active 2026-06-16. Sequenced **third** (most bespoke).
+
+**When to resume:** Now (this week), after Services + Real Estate.
+
+**Where to start:** `grill-me` spec → vertical slice → `smoke-tester`. Decide how app
+screens/mockups enter the storyboard (upload vs generated) during the spec.
+
+**Scope estimate:** TBD pending spec.
+
+**Source:** Neil, 2026-06-16 — *"App, commercial ads will be finish this week."*
+
+---
+
 ## How to add new items
 
 When Neil endorses an idea but says "not now":
