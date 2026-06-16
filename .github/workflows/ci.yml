@@ -1,0 +1,37 @@
+name: CI
+
+# Cloud-side verification gate. Mirrors the local build-gate Stop hook
+# (.claude/hooks/build-gate.sh) but runs independent of any Claude session,
+# so edits from worktrees, web sessions, or a fresh defreezer-wiped machine
+# still get gated before they reach main. Status feeds the PR-babysit loop.
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # No secrets / .env required: env validation is deferred to runtime,
+      # and the live Gemini regression (RUN_REGRESSION) + ffmpeg integration
+      # suites (RUN_BURNIN) stay off by default so CI never burns quota.
+      - name: Build (tsc + vite)
+        run: npm run build
+
+      - name: Test (vitest)
+        run: npm run test
+
+      - name: Design token lint
+        run: npm run design:lint
