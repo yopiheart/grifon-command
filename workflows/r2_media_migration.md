@@ -1,6 +1,6 @@
 # Design Doc — Move heavy media to Cloudflare R2 (zero egress)
 
-**Status:** Phase 1 SHIPPED (facade landed, dormant). Phases 2–5 pending Neil's R2 setup.
+**Status:** Phase 1 SHIPPED. Phase 2 R2 layer VERIFIED in dev. Pending: Vercel env + prod eyeball.
 **Author:** 2026-06-13, during the Supabase egress incident.
 **Companion:** [STORAGE_AUDIT.md](../STORAGE_AUDIT.md) (why) · gallery fixes already shipped (Phase 2A+B).
 
@@ -32,13 +32,25 @@
      bucket drains, then gets replaced by an R2 lifecycle rule (Phase 5).
    - **Dependency added:** `aws4fetch@^1.0.20`.
 
+**DONE (2026-06-16):**
+- ✅ R2 activated (free tier, $0/mo) + bucket **`grifon-media`** created (Public Access disabled).
+- ✅ API token `grifon-media-rw` (Object Read & Write, scoped to the bucket). All four `R2_*` vars
+  + `MEDIA_STORE=r2` in **local `.env`** (`R2_ACCOUNT_ID=93ea411300021aff8536667a73d13e80`). Token
+  secrets live only in `.env` (gitignored) — roll via R2 → Manage API Tokens if leaked.
+- ✅ CORS policy on the bucket: origins `www.grifon.ai` / `grifon.ai` / `localhost:5173`, GET, `*`.
+- ✅ **Phase 2 VERIFIED in dev** — both the raw aws4fetch transport AND the real `mediaStore.ts`
+  facade round-trip PASSED against the live bucket: upload MP4 + sidecar → hour-bucketed presign →
+  fetch-back (byte match) → list user prefix → read sidecar → delete → confirm-gone. Verification
+  scripts were disposable (removed). NOTE: a full UI render smoke was skipped — the app uses Google
+  OAuth and there's no headless dev-login bypass, so an automated browser smoke stalls at auth.
+
 **NEXT ACTIONS (blocked on Neil):**
-1. Create a Cloudflare R2 bucket (free tier is plenty — ~0.22 GB working set).
-2. Add `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_BUCKET` to `.env` + Vercel.
-3. Set `MEDIA_STORE=r2`, then run Phase 2: verify a one-render round-trip (upload → presign → play
-   → delete), Phase 3 (flip `library.ts` reads — old Supabase objects TTL out at 48h, no backfill),
-   Phase 4 (full Director→render→final smoke via `smoke-tester`), Phase 5 (after ~1 week clean,
-   delete Supabase upload paths + swap cron for R2 lifecycle rule, **then downgrade Pro → free**).
+1. **Add the four `R2_*` vars + `MEDIA_STORE=r2` to Vercel** project env (Production), then redeploy.
+2. **Eyeball one real render in prod** (Neil can log in): generate a clip, confirm it plays from a
+   `*.r2.cloudflarestorage.com` URL and shows in the Rendered Rail. Old Supabase objects TTL out at
+   48h — no backfill.
+3. Phase 5 (after ~1 week clean on R2): delete the Supabase upload paths, swap the cleanup cron for
+   an R2 lifecycle rule, and **downgrade the Supabase org Pro → free** (egress will be ~zero).
 
 ---
 
