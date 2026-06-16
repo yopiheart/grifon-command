@@ -668,6 +668,7 @@ Test-mode plumbing fully proven on prod 2026-05-02 (E2E test purchase activated 
 - [ ] Copy live signing secret (`whsk_live_...`) → update `PAYMONGO_WEBHOOK_SECRET` in Vercel
 - [ ] Redeploy (Deployments → ⋯ → Redeploy, no cache)
 - [ ] Test purchase with a real card on Creator tier (₱997); confirm row in Supabase, then refund yourself in PayMongo dashboard
+- [ ] **Harden `api/webhook.ts` before accepting real-money events** (surfaced by `straw-man-audit` 2026-06-16). Signature verification is already solid (`api/_lib/paymongo.ts:161`, HMAC-SHA256 + constant-time compare — forgery does not work). The gap is **replay/idempotency**: the signed `t=` timestamp is parsed but never freshness-checked, and there's no event-id dedupe (`api/webhook.ts:43-75`). Add (a) a timestamp-freshness window (reject events older than ~5 min) and (b) event-id dedupe so a captured valid event can't be replayed to extend a subscription. LOW risk under the free beta (no real money; `user_id`/`plan_id` are inside the signed payload, so no cross-user impact) — this is a pre-Live-Mode hardening item, not a beta blocker.
 
 ## Locked design briefs (in-flight)
 
