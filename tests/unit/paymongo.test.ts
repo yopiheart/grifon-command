@@ -2,6 +2,8 @@ import { describe, it, expect } from 'vitest';
 import crypto from 'node:crypto';
 import {
   verifyWebhookSignature,
+  webhookEventAgeSeconds,
+  WEBHOOK_MAX_AGE_SECONDS,
   PLAN_CATALOG,
   ADD_ON_CATALOG,
   sumAddOnCentavos,
@@ -51,6 +53,49 @@ describe('verifyWebhookSignature', () => {
     const sig = sign(ts, body);
     const header = `t=${ts},te=${sig}`;
     expect(verifyWebhookSignature(body, header, SECRET)).toBe(true);
+  });
+});
+
+describe('webhookEventAgeSeconds (replay-window guard)', () => {
+  // Anchor "now" so the math is deterministic regardless of when the test runs.
+  const now = new Date('2026-06-16T12:00:00Z');
+  const nowUnix = Math.floor(now.getTime() / 1000);
+
+  it('reports a small age for a freshly-timestamped event', () => {
+    const header = `t=${nowUnix - 10},li=deadbeef`;
+    expect(webhookEventAgeSeconds(header, now)).toBe(10);
+  });
+
+  it('reports an age beyond the window for an old (replayed) event', () => {
+    const header = `t=${nowUnix - 3600},li=deadbeef`;
+    const age = webhookEventAgeSeconds(header, now);
+    expect(age).toBe(3600);
+    expect(Math.abs(age!)).toBeGreaterThan(WEBHOOK_MAX_AGE_SECONDS);
+  });
+
+  it('reports a negative age for a future-dated event (caller rejects via abs())', () => {
+    const header = `t=${nowUnix + 3600},li=deadbeef`;
+    const age = webhookEventAgeSeconds(header, now);
+    expect(age).toBe(-3600);
+    expect(Math.abs(age!)).toBeGreaterThan(WEBHOOK_MAX_AGE_SECONDS);
+  });
+
+  it('returns null when the header is missing entirely', () => {
+    expect(webhookEventAgeSeconds(undefined, now)).toBeNull();
+  });
+
+  it('returns null when the header carries no timestamp field', () => {
+    expect(webhookEventAgeSeconds('li=deadbeef', now)).toBeNull();
+  });
+
+  it('returns null when the timestamp is not a finite number', () => {
+    expect(webhookEventAgeSeconds('t=notanumber,li=deadbeef', now)).toBeNull();
+  });
+
+  it('keeps a same-second real signed payload inside the freshness window', () => {
+    // Belt-and-suspenders: a genuinely fresh event is well under the 5-min ceiling.
+    const header = `t=${nowUnix},li=deadbeef`;
+    expect(Math.abs(webhookEventAgeSeconds(header, now)!)).toBeLessThan(WEBHOOK_MAX_AGE_SECONDS);
   });
 });
 

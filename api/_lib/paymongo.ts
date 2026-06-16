@@ -191,6 +191,35 @@ export const verifyWebhookSignature = (
   }
 };
 
+// Replay window. A signature stays cryptographically valid forever, so signature
+// verification alone does not stop a captured-and-resent event. Pairing it with a
+// freshness window means a replayed event is only accepted within this many seconds
+// of its signed `t=` timestamp. 5 min matches the common provider tolerance (Stripe's
+// default) and comfortably absorbs PayMongo↔Vercel clock skew.
+export const WEBHOOK_MAX_AGE_SECONDS = 300;
+
+// Age (in seconds) of a PayMongo webhook, derived from the `t=` field of the
+// signature header (`t=<unix>,li=<sig>`). Returns `now - t`, or null if the header
+// is absent or carries no parseable timestamp. A negative result means the event is
+// timestamped in the future (clock skew or a forged-future replay) — callers should
+// treat |age| > WEBHOOK_MAX_AGE_SECONDS as stale in either direction.
+export const webhookEventAgeSeconds = (
+  signatureHeader: string | undefined,
+  now: Date = new Date()
+): number | null => {
+  if (!signatureHeader) return null;
+  const parts = Object.fromEntries(
+    signatureHeader.split(',').map((p) => {
+      const [k, v] = p.split('=');
+      return [k.trim(), (v ?? '').trim()];
+    })
+  );
+  if (!parts.t) return null;
+  const t = Number(parts.t);
+  if (!Number.isFinite(t)) return null;
+  return Math.floor(now.getTime() / 1000) - t;
+};
+
 // ----- Payment Intents API (custom on-domain checkout) ---------------------
 //
 // Cards are tokenized CLIENT-SIDE via PayMongo.js using PAYMONGO_PUBLIC_KEY

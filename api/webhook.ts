@@ -1,8 +1,34 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { verifyWebhookSignature, type BillingCycle, type PlanId } from './_lib/paymongo.js';
+import type { SupabaseClient } from '@supabase/supabase-js';
+import {
+  verifyWebhookSignature,
+  webhookEventAgeSeconds,
+  WEBHOOK_MAX_AGE_SECONDS,
+  type BillingCycle,
+  type PlanId,
+} from './_lib/paymongo.js';
 import { getSupabaseAdmin } from './_lib/supabaseAdmin.js';
 
 export const config = { api: { bodyParser: false } };
+
+// Idempotency guard. A valid signature can be replayed within the freshness window,
+// and PayMongo itself delivers at-least-once, so the same event can legitimately
+// arrive twice. We dedupe on the event's own id against the last one we recorded for
+// this user (subscriptions.paymongo_last_checkout_id) — if it matches, this exact
+// activation was already applied, so re-processing is a no-op. No new table needed.
+const alreadyProcessed = async (
+  admin: SupabaseClient,
+  user_id: string,
+  eventId: string | undefined
+): Promise<boolean> => {
+  if (!eventId) return false;
+  const { data } = await admin
+    .from('subscriptions')
+    .select('paymongo_last_checkout_id')
+    .eq('user_id', user_id)
+    .maybeSingle();
+  return Boolean(data) && data!.paymongo_last_checkout_id === eventId;
+};
 
 const readRawBody = (req: VercelRequest): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -33,6 +59,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(400).json({ error: 'invalid_signature' });
   }
 
+  // Reject stale (or future-dated) events even when the signature checks out — this
+  // is what stops a captured valid event from being replayed indefinitely.
+  const ageSeconds = webhookEventAgeSeconds(sig);
+  if (ageSeconds === null || Math.abs(ageSeconds) > WEBHOOK_MAX_AGE_SECONDS) {
+    return res.status(400).json({ error: 'stale_event' });
+  }
+
   let event: any;
   try {
     event = JSON.parse(rawBody);
@@ -55,6 +88,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const admin = getSupabaseAdmin();
+    if (await alreadyProcessed(admin, user_id, checkout_id)) {
+      return res.status(200).json({ ignored: 'duplicate_event' });
+    }
     const { error } = await admin
       .from('subscriptions')
       .upsert(
@@ -94,6 +130,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const admin = getSupabaseAdmin();
+    if (await alreadyProcessed(admin, user_id, intent_id)) {
+      return res.status(200).json({ ignored: 'duplicate_event' });
+    }
     const { error } = await admin
       .from('subscriptions')
       .upsert(
