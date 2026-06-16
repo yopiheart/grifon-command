@@ -54,6 +54,25 @@ subagent (foreground); pre-flight per `.claude/skills/director-smoke`.
 - [ ] The static bed sits UNDER the VO — **invisible > impressive**: no clashing, no vocal/singing
       intro, doesn't fight the voice. (Generated-bed A/B is Neil's separate step-2 ear test.)
 
+## Defect-fix status (2026-06-16 night — fixed while Neil rests; re-audit 2026-06-17)
+
+Render a FRESH ad tomorrow (dev server restarted with the fixes) and `node tools/render_audit.mjs <r2-url>` to verify. Shipped fixes (all pushed to main):
+
+| # | Defect | Status | Commit |
+|---|---|---|---|
+| 1 | Scene-6 caption inversion ("kailangan ng kape" drops "hindi") | ✅ FIXED — render-side C1: b-roll drops the WHOLE subtitle when a callout owns the line's opening (no inverting tail). Talking scenes keep their subtitle. +2 regression tests. | `7b893c8` |
+| 2 | End-card recap auto-applied the **price** + covered the face | ✅ FIXED — removed the STEP_2 END_CARD field; last scene renders clean. | `f2270ac` |
+| 3 | Red hook band + left-aligned "HINDI MO" | ✅ FIXED — dropped `classic` (only preset with the red wipe-box + left-anchored wipe hook) from rotation; fallback now `impact`. Remaining presets use the centered title-stack hook (each line centered). | `1ddf59d` |
+| 4 | Scene-7 caption ≠ spoken CTA ("lang, ngayon na!" vs "click mo na sa baba") | 🚧 BLOCKED (needs Neil) — face-cover part fixed by #2; the residual caption-vs-VO **content** mismatch is generation/EDL (TUNED). Needs the EDL JSON from a fresh render to pin + Neil's go to edit a tuned prompt. | — |
+| 5 | Scene-1 morph slop (coffee cup → bottle) | 🚧 BLOCKED (needs Neil) — video **generation** (Veo/Kling from storyboard), TUNED. Not render-side. | — |
+| — | render_audit "talking vs b-roll" mis-count (smoke-tester said 3, real = 1) | ℹ️ Not a render_audit bug — the tool reads pixels and can't know lip-sync intent. Talking-vs-b-roll truth = the storyboard tag (Veo=talking, Kling=b-roll), NOT a pixel guess. Use the EDL/storyboard for that count, not vision. | — |
+| — | ElevenLabs generated music not used | ℹ️ EXPECTED — `GRIFON_MUSIC_GEN_ENABLED` is OFF (your call); static bed by design. | — |
+| — | No inter-scene transitions | ℹ️ BY DESIGN this baseline — part of your new-styles build (flare/swipe presets). | — |
+
+**Tuned-prompt guardrail:** #4 and #5 require editing `services/geminiService.ts` / storyboard prompts. Per surgical-edit + CLAUDE.md, those need your **explicit per-change approval** — I did NOT self-approve them under "fix everything." Bring them up tomorrow and I'll draft the diffs.
+
+---
+
 ## Regression — HARNESS STALE, not a product regression (flagged 2026-06-16)
 `tests/regression/script-gen.regression.test.ts` currently FAILS (8/8) with a `@google/genai`
 `formatMap` null crash. Root cause: `generateAdScript` was migrated to the server-side flow
