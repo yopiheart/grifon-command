@@ -23,6 +23,11 @@ Open render-side items to confirm:
   legibility, anchor-ding timing
 - BEAN BLOCK avatar defaults to a **female Filipino voice**
 - regression harness green: `$env:RUN_REGRESSION='1'; npx vitest run tests/regression/script-gen.regression.test.ts`
+- **R2 cutover check (FREE RIDER — this session renders anyway):** R2 Production env vars
+  added + redeploy triggered 2026-06-16 (`2d6a887`). Confirm the rendered media URL is the
+  **R2 domain, not `*.supabase.co`**, and it plays. If good → R2 is live in prod. **Then after
+  ~1 week proven, downgrade the Supabase org Pro → free** to kill the temporary egress-bridge
+  cost (see [`r2_media_migration.md`](r2_media_migration.md)).
 
 **Why first:** can't build 3 new styles on a base we haven't re-confirmed. This is the
 "siguraduhin ayos na" gate.
