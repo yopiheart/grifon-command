@@ -1,8 +1,44 @@
 # Design Doc — Move heavy media to Cloudflare R2 (zero egress)
 
-**Status:** Proposed (design only). Implementation deferred to a future session.
+**Status:** Phase 1 SHIPPED (facade landed, dormant). Phases 2–5 pending Neil's R2 setup.
 **Author:** 2026-06-13, during the Supabase egress incident.
 **Companion:** [STORAGE_AUDIT.md](../STORAGE_AUDIT.md) (why) · gallery fixes already shipped (Phase 2A+B).
+
+---
+
+## ⏱️ CURRENT STATE — resume here (updated 2026-06-16)
+
+**The egress incident recurred and was resolved.** Free-tier egress lockout (17.8 GB / 5 GB)
+402-restricted the project on ~2026-06-16; Google login returned the
+`exceed_egress_quota` violation JSON. Two things happened:
+
+1. **Login restored — Pro bridge ACTIVE.** Org `ybbjvbgacbxblaaorglo` upgraded **free → `pro`**
+   (250 GB egress), lockout lifted, login confirmed working. ⚠️ **This Pro upgrade is a temporary
+   bridge.** Once R2 (Phases 2–5) is proven, **downgrade the org back to free** — egress will be
+   near zero. Don't leave Pro running indefinitely if cost matters.
+
+2. **Phase 1 SHIPPED + committed.** Branch `r2-media-migration-phase1` (commit `4c499c1`), pushed
+   to GitHub. Build + tests green. No behavior change — everything is dormant behind the
+   `MEDIA_STORE` flag (default `supabase`).
+   - **New:** `api/_lib/r2.ts` (aws4fetch S3 client — `putObject`/`presignGet`/`getObjectText`/
+     `deleteObjects`/`listPrefix`, hour-bucketed presign for CDN-cacheable URLs) and
+     `api/_lib/mediaStore.ts` (the `putMedia`/`getMediaUrl`/`listMedia`/`deleteMedia`/
+     `downloadMediaText` facade).
+   - **Routed through the facade:** `api/gemini/video/poll.ts`, `api/kling/video/poll.ts`,
+     `api/kling/omni-video/poll.ts`, `api/voice/consolidate.ts`, `api/render/final.ts`
+     (+ `api/_lib/renderJob.ts` helpers, `api/render/final/poll.ts`),
+     `api/gemini/video/library.ts`, `api/gemini/video/delete.ts`.
+   - **Intentionally left on Supabase:** `api/cron/cleanup-gemini-videos.ts` — stays until the old
+     bucket drains, then gets replaced by an R2 lifecycle rule (Phase 5).
+   - **Dependency added:** `aws4fetch@^1.0.20`.
+
+**NEXT ACTIONS (blocked on Neil):**
+1. Create a Cloudflare R2 bucket (free tier is plenty — ~0.22 GB working set).
+2. Add `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_BUCKET` to `.env` + Vercel.
+3. Set `MEDIA_STORE=r2`, then run Phase 2: verify a one-render round-trip (upload → presign → play
+   → delete), Phase 3 (flip `library.ts` reads — old Supabase objects TTL out at 48h, no backfill),
+   Phase 4 (full Director→render→final smoke via `smoke-tester`), Phase 5 (after ~1 week clean,
+   delete Supabase upload paths + swap cron for R2 lifecycle rule, **then downgrade Pro → free**).
 
 ---
 
