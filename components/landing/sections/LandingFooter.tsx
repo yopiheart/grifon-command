@@ -19,10 +19,9 @@ const SOCIALS = [
   { label: 'Facebook', href: CONTACT.facebookUrl, Icon: FacebookIcon },
   { label: 'Instagram', href: CONTACT.instagramUrl, Icon: InstagramIcon },
   { label: 'TikTok', href: CONTACT.tiktokUrl, Icon: TikTokIcon },
-  // TODO(Neil): Viber number pending — icon renders but the link is inert until
-  // CONTACT.viberUrl gets a real number/community URL.
   { label: 'Viber', href: CONTACT.viberUrl, Icon: ViberIcon },
-];
+  // Guard: a channel with no URL yet renders no dead link (filtered below).
+].filter(({ href }) => Boolean(href));
 
 /**
  * Lando-anatomy footer: dark rounded card (publish-everywhere marquee → trust

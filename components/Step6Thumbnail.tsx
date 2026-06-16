@@ -90,7 +90,7 @@ const Step6Thumbnail: React.FC<Step6ThumbnailProps> = ({ script, avatar, busines
         {thumbnailUrl && !loading && (
           <>
             <div
-              className={`overflow-hidden border-2 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.3)] rounded-xl cursor-pointer transition-transform hover:scale-105 bg-zinc-950 ${aspectRatio === '9:16' ? 'w-48 h-80' : 'w-80 h-48'}`}
+              className={`overflow-hidden border-2 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.3)] rounded-xl cursor-pointer transition-transform hover:scale-105 bg-zinc-950 ${aspectRatio === '16:9' ? 'w-full max-w-[480px] aspect-video' : 'w-full max-w-[280px] aspect-[9/16]'}`}
               onClick={() => setIsModalOpen(true)}
               role="button"
               aria-label="View thumbnail in fullscreen"
