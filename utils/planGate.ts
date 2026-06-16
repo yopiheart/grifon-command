@@ -26,6 +26,12 @@ export const PLAN_RANK: Record<PlanId, number> = {
 export const planAtLeast = (current: PlanId, required: PlanId): boolean =>
   PLAN_RANK[current] >= PLAN_RANK[required];
 
+// Generative music beds (ElevenLabs Music) are a Pro+ perk. Mirrors the
+// server-authoritative MUSIC_DAILY gate in api/_lib/quota.ts (free/creator = 0):
+// this only governs whether the AI Editor shows + defaults-on the toggle.
+export const musicGenEligible = (current: PlanId): boolean =>
+  planAtLeast(current, 'pro');
+
 // Ordered, lowest → highest, for next-tier lookups.
 const PLAN_ORDER: PlanId[] = ['free', 'creator', 'pro', 'business'];
 

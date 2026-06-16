@@ -108,6 +108,39 @@ export async function forcedAlignment(
     .filter((w: { text: string }) => w.text.trim().length > 0); // drop pure-space tokens
 }
 
+// ElevenLabs Music compose (https://api.elevenlabs.io/v1/music). Generates an
+// instrumental background bed from a text prompt, returned as raw MP3 bytes
+// (server-reachable, like synthesizeTts). force_instrumental guarantees no
+// vocals so the bed ducks cleanly under the VO; the prompt ALSO states
+// "instrumental, no vocals" belt-and-suspanders. music_length_ms is clamped to
+// the API's 3s–600s window by the caller. Commercial use is cleared on paid
+// ElevenLabs plans (Starter+).
+const MUSIC_MIN_MS = 3_000;
+const MUSIC_MAX_MS = 600_000;
+
+export async function composeMusic(prompt: string, lengthMs: number): Promise<Buffer> {
+  const clamped = Math.round(Math.min(MUSIC_MAX_MS, Math.max(MUSIC_MIN_MS, lengthMs)));
+  const upstream = await fetch('https://api.elevenlabs.io/v1/music', {
+    method: 'POST',
+    headers: {
+      'xi-api-key': getApiKey(),
+      'Content-Type': 'application/json',
+      Accept: 'audio/mpeg',
+    },
+    body: JSON.stringify({
+      prompt,
+      music_length_ms: clamped,
+      force_instrumental: true,
+      output_format: 'mp3_44100_128',
+    }),
+  });
+  if (!upstream.ok) {
+    const detail = await upstream.text().catch(() => upstream.statusText);
+    throw new ElevenLabsError(upstream.status, detail);
+  }
+  return Buffer.from(await upstream.arrayBuffer());
+}
+
 export async function convertSts(
   voiceId: string,
   audio: Buffer,

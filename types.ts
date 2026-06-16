@@ -188,8 +188,10 @@ export interface FinalRenderEndCard {
 export interface FinalRenderRequest {
   scenes: FinalRenderScene[];
   aspectRatio: '9:16' | '16:9' | '1:1';
-  /** Style-keyed background-music bed (chosen in code from EDL meta.scriptStyleDetected). */
-  music?: { style: 'mrbeast' | 'temu' | 'testimonial'; enabled: boolean };
+  /** Style-keyed background-music bed (chosen in code from EDL meta.scriptStyleDetected).
+   * `bedUrl` (optional) is a generated bed from api/music/compose; when present and
+   * reachable it overrides the static `style` bed, else the render falls back to it. */
+  music?: { style: 'mrbeast' | 'temu' | 'testimonial'; enabled: boolean; bedUrl?: string };
   /** Explicit edit-style override; absent → server rotates deterministically. */
   preset?: { id?: 'classic' | 'impact' | 'hype' | 'clean' };
   /** Offer-recap overlay held to the end of the last scene. */
@@ -199,6 +201,22 @@ export interface FinalRenderRequest {
 /** Returned immediately by the fire endpoint; the client polls with this jobId. */
 export interface FinalRenderJob {
   jobId: string;
+}
+
+/** Request to api/music/compose: generate (or reuse) an instrumental bed for an ad.
+ * `videoUrls` are the ad's scene clips — the server derives the per-ad cache seed
+ * from them (rotationSeed), identical to the render. */
+export interface MusicComposeRequest {
+  style: 'mrbeast' | 'temu' | 'testimonial';
+  videoUrls: string[];
+  lengthMs: number;
+}
+
+/** Response from api/music/compose. `cached` is true when an existing per-ad bed
+ * was reused (no generation, no quota consumed). */
+export interface MusicComposeResponse {
+  bedUrl: string;
+  cached: boolean;
 }
 
 export type FinalRenderStatus = 'processing' | 'done' | 'failed';

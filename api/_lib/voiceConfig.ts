@@ -17,3 +17,12 @@ export const getVoiceSlotMax = (plan: ServerPlanId): number => VOICE_SLOTS[plan]
 
 export const isCloningEnabled = (): boolean =>
   process.env.GRIFON_VOICE_CLONING_ENABLED === 'true';
+
+// Generative music beds (ElevenLabs Music) ship dark behind this flag. Plumbing
+// is live in code but no music is generated until this is 'true' — the kill
+// switch for the whole feature AND the gate we flip only after the A/B listen
+// test proves a generated bed >= the tuned static beds. Anything other than
+// 'true' (incl. unset) → api/music/compose returns 503 and the render falls back
+// to the static bed. Mirrors GRIFON_VOICE_CLONING_ENABLED.
+export const isMusicGenEnabled = (): boolean =>
+  process.env.GRIFON_MUSIC_GEN_ENABLED === 'true';
