@@ -29,6 +29,16 @@ Open render-side items to confirm:
 
 ### 2. Test the new ElevenLabs music bed — BANK THE FREE WIN
 *(same smoke session, ~30 min, GATED)*
+
+> **🚧 BLOCKED (2026-06-16 smoke):** the smoke ran but **failed at the API** — the
+> ElevenLabs key in `.env` is missing the **`music_generation`** permission
+> (`HTTP 401 missing_permissions`). The endpoint + request were correct; this is a
+> **key/tier capability**, not code. **Action for Neil:** enable `music_generation`
+> on the ElevenLabs account/key (likely a higher tier / explicit feature toggle in the
+> dashboard), then re-run. Also note: **Python isn't installed on this cafe PC** —
+> `tools/smoke_music_bed.py` can't run as-is; the smoke used a Node equivalent. Until the
+> permission lands, this step is parked and the new ad styles ship on the existing static beds.
+
 Branch: `claude/gemini-audio-stack-transfer-eglwp5` (fetch when starting).
 - `ELEVEN_LABS_API_KEY=sk_... python3 tools/smoke_music_bed.py` → two MP3s in `.tmp/`
 - Listen bar: **invisible > impressive** — bed must disappear under a VO, **no singing /
