@@ -301,6 +301,29 @@ describe('planScene', () => {
     const fade = planScene(scene, 5, DIMS).find((l) => l.kind === 'text') as any;
     expect(fade.emphasisSfx).toBe('ding');
   });
+  it('b-roll: a callout owning the opening drops the WHOLE subtitle (no inverting tail) — C1', () => {
+    // The bug: a callout held over the line's opening sacrificed only the EARLY
+    // chunks, leaving a tail that strands the opening — e.g. VO "hindi mo
+    // kailangan ng kape" rendering as "kailangan ng kape" (meaning inverted).
+    // C1 (Neil 2026-06-16): on b-roll, show ONLY the callout, never a fragment.
+    const scene: FinalRenderScene = {
+      sceneIdx: 3, videoUrl: 'v', sceneType: 'b-roll',
+      scriptLine: 'hindi mo kailangan ng kape',
+      overlayText: [{ text: 'ENERGY RESET', startSec: 0, endSec: 5, style: 'callout', position: 'top' }],
+    };
+    const texts = planScene(scene, 6, DIMS).filter((l) => l.kind === 'text') as any[];
+    expect(texts).toHaveLength(1);          // only the callout, no stranded tail
+    expect(texts[0].text).toBe('ENERGY RESET');
+  });
+  it('talking: the subtitle still resumes after the callout (C1 is b-roll-only)', () => {
+    const scene: FinalRenderScene = {
+      sceneIdx: 2, videoUrl: 'v', sceneType: 'talking',
+      scriptLine: 'Grabe ang lambot ng skin ko ngayon talaga',
+      overlayText: [{ text: 'DERMA-TESTED', startSec: 0, endSec: 5, style: 'callout', position: 'top' }],
+    };
+    const texts = planScene(scene, 6, DIMS).filter((l) => l.kind === 'text') as any[];
+    expect(texts.length).toBeGreaterThan(1); // callout + spoken-word caption chunks
+  });
   it('scene 2+: skips the overlay when it duplicates the caption text', () => {
     const scene: FinalRenderScene = {
       sceneIdx: 2, videoUrl: 'v', sceneType: 'talking', scriptLine: 'Ako si Maria',

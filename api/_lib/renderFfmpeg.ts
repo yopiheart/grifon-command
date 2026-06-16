@@ -680,12 +680,14 @@ export function planScene(
     const wordsPer = preset.caption.chunkAnim === 'none' ? 3.5 : 2.5;
     const minChunk = preset.caption.chunkAnim === 'none' ? MIN_CHUNK_SEC : 0.5;
     // Captions pace across the FULL speech window — the same layout an
-    // overlay-less scene gets — so they stay synced to the VO. Chunks whose
-    // slot falls inside the overlay hold are SACRIFICED, not shifted: the old
-    // capStart = overlay-end behavior compressed the whole line into the tail,
-    // lagging the speaker by seconds (Neil, 2026-06-10 final-render review:
-    // "the only autocaption that should show is the live script the character
-    // is saying at the moment — okay to sacrifice the overlapped words").
+    // overlay-less scene gets — so they stay synced to the VO (no compress,
+    // which lagged the speaker — Neil, 2026-06-10). C1 (Neil, 2026-06-16): if a
+    // callout owns the slot while the line BEGINS, show ONLY the callout and
+    // skip the subtitle entirely. The old per-chunk sacrifice kept the surviving
+    // TAIL, which stranded the line's opening and could invert meaning (scene-6:
+    // VO "hindi kailangan ng kape" → caption "kailangan ng kape"). The callout
+    // already carries the message and is face-aware (can't block the subject), so
+    // a partial/misleading fragment is never worth showing.
     const avail = end - capStart;
     if (avail >= minChunk) {
       const chunks = chunkCaption(cap, avail, wordsPer, minChunk);
@@ -697,13 +699,21 @@ export function planScene(
       const real = scene.voiceWords?.length
         ? voiceChunkWindows(chunks, scene.voiceWords, end)
         : null;
-      chunks.forEach((c, i) => {
+      // C1: on B-ROLL, skip the WHOLE subtitle when the callout owns the slot at
+      // the line's OPENING (else the surviving tail strands the opening / inverts
+      // meaning). TALKING scenes keep their designed subtitle-after-callout
+      // behavior — the speaker's live words matter and the callout there is brief.
+      const lineStart = real ? (real[0]?.start ?? capStart) : capStart;
+      const openingObstructed = scene.sceneType !== 'talking'
+        && overlayClearSec > 0 && lineStart < overlayClearSec;
+      if (!openingObstructed) chunks.forEach((c, i) => {
         const { fontsize, lines } = fitText(c, sz.usableW, Math.round(h * preset.caption.baseSizeFrac), adv);
         const startSec = real ? Math.max(real[i].start, capStart) : +(capStart + i * each).toFixed(3);
         const endSec = real ? real[i].end : +(capStart + (i + 1) * each).toFixed(3);
         if (endSec - startSec < 0.1) return; // degenerate window (trim-clamped)
-        if (startSec < overlayClearSec) return; // slot owned by the overlay — drop the chunk
-        // Word timing/x math assumes one line — a wrapped chunk falls back to pop.
+        // Talking scenes: chunks under the callout are sacrificed so the subtitle
+        // resumes after it clears (b-roll already dropped the whole line above).
+        if (startSec < overlayClearSec) return;
         if (wordLevel && lines.length === 1) {
           layers.push({
             kind: 'text', text: c, fontsize, color: preset.caption.fillColor,
