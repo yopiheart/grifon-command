@@ -4,15 +4,28 @@ import { compressImageForUpload } from '../utils/imageCompression';
 import { GlassPanel } from './ui/GlassPanel';
 import { GoldButton } from './ui/GoldButton';
 import Loader from './ui/Loader';
-import { Trash2, RefreshCw, Copy, Check, Sparkles, Image as ImageIcon, ChevronLeft, Wand2 } from 'lucide-react';
+import { Trash2, RefreshCw, Copy, Check, Sparkles, Image as ImageIcon, ChevronLeft, Wand2, Layers } from 'lucide-react';
 import saveAs from 'file-saver';
+import GeneratedFrameTile from './ui/GeneratedFrameTile';
 
 interface ImageEditorProps {
   onBack: () => void;
   ethnicity?: string;
 }
 
-type StudioState = 'idle' | 'optimizing' | 'review' | 'generating' | 'result';
+type StudioState = 'idle' | 'optimizing' | 'review' | 'generating' | 'result' | 'diverging' | 'variants';
+
+// Opt-in divergence: how many variations to flesh out the possibility space in
+// one pass. Bounded to protect Gemini quota — this is N× the single-output cost.
+const VARIATION_COUNT = 3;
+
+const ASPECT_CLASS: Record<string, string> = {
+  '1:1': 'aspect-square',
+  '16:9': 'aspect-video',
+  '9:16': 'aspect-[9/16]',
+  '4:5': 'aspect-[4/5]',
+  '3:4': 'aspect-[3/4]',
+};
 
 const TikTokOverlay: React.FC = () => (
     <div className="absolute inset-0 pointer-events-none flex flex-col justify-between p-4 bg-gradient-to-b from-black/20 via-transparent to-black/40 animate-in fade-in">
@@ -58,6 +71,8 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ onBack, ethnicity = 'Global' 
   const [showTikTokPreview, setShowTikTokPreview] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [refineCount, setRefineCount] = useState(0);
+  const [variants, setVariants] = useState<string[]>([]);
+  const [rerollingIndex, setRerollingIndex] = useState<number | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -142,6 +157,47 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ onBack, ethnicity = 'Global' 
     }
   };
 
+  // Divergence: flesh out the possibility space by synthesizing several variations
+  // from the same prompt at once (Gemini is stochastic per call). Opt-in, bounded.
+  const onExploreVariations = async () => {
+    if (!suggestion || !aspectRatio) return;
+    setStudioState('diverging');
+    setError(null);
+    try {
+      const results = await Promise.all(
+        Array.from({ length: VARIATION_COUNT }).map(() =>
+          executeStudioCommand(suggestion.finalPrompt, images, aspectRatio as any, ethnicity)
+        )
+      );
+      setVariants(results);
+      setStudioState('variants');
+    } catch (err) {
+      setError("SYSTEM_ERROR: DIVERGENCE_FAILED");
+      setStudioState('review');
+    }
+  };
+
+  const rerollVariant = async (idx: number) => {
+    if (!suggestion || !aspectRatio) return;
+    setRerollingIndex(idx);
+    try {
+      const next = await executeStudioCommand(suggestion.finalPrompt, images, aspectRatio as any, ethnicity);
+      setVariants(prev => prev.map((v, i) => (i === idx ? next : v)));
+    } catch (err) {
+      setError("SYSTEM_ERROR: GENERATION_FAILED");
+    } finally {
+      setRerollingIndex(null);
+    }
+  };
+
+  // Convergence: prune to the chosen branch. It lands in the same result view as a
+  // single synthesis, so REFINE (mold-the-clay) picks up from here unchanged.
+  const selectVariant = (url: string) => {
+    setFinalImage(url);
+    setVariants([]);
+    setStudioState('result');
+  };
+
   const handleReset = () => {
     setStudioState('idle');
     setSuggestion(null);
@@ -150,6 +206,8 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ onBack, ethnicity = 'Global' 
     setAspectRatio(null);
     setShowTikTokPreview(false);
     setRefineCount(0);
+    setVariants([]);
+    setRerollingIndex(null);
   };
 
   // Mold the clay: promote the just-generated result to the new base asset so the
@@ -271,7 +329,34 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ onBack, ethnicity = 'Global' 
             </div>
         )}
 
-        {(studioState === 'optimizing' || studioState === 'generating') && (
+        {studioState === 'variants' && (
+            <div className="w-full max-w-6xl mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700 mb-24">
+                <div className="flex items-center justify-between mb-6 border-b border-white/10 pb-4">
+                    <div className="flex items-center gap-3 min-w-0">
+                        <Layers className="w-4 h-4 text-[#FFCC00] shrink-0" />
+                        <span className="text-[9px] md:text-xs font-mono text-[#FFCC00] uppercase tracking-[0.2em] truncate">// DIVERGENCE_FIELD : SELECT_TO_CONVERGE</span>
+                    </div>
+                    <button onClick={() => setStudioState('review')} className="text-[9px] md:text-[10px] text-zinc-500 uppercase hover:text-white underline font-mono tracking-widest shrink-0 ml-4">&larr; REVISE PROMPT</button>
+                </div>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    {variants.map((v, idx) => (
+                        <GeneratedFrameTile
+                            key={idx}
+                            imageUrl={v}
+                            busy={rerollingIndex === idx}
+                            className={aspectRatio ? ASPECT_CLASS[aspectRatio] : 'aspect-[4/5]'}
+                            label={`0${idx + 1}`}
+                            actions={[
+                                { icon: Check, label: 'SELECT', primary: true, onClick: () => selectVariant(v) },
+                                { icon: RefreshCw, label: 'RE-ROLL', onClick: () => rerollVariant(idx), busy: rerollingIndex === idx },
+                            ]}
+                        />
+                    ))}
+                </div>
+            </div>
+        )}
+
+        {(studioState === 'optimizing' || studioState === 'generating' || studioState === 'diverging') && (
             <div className="flex-1 flex flex-col items-center justify-center gap-10">
                 <div className="relative">
                     <div className="w-32 h-32 md:w-48 md:h-48 border border-[#FFCC00]/20 animate-spin-slow rounded-full"></div>
@@ -279,7 +364,7 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ onBack, ethnicity = 'Global' 
                         <Sparkles className="w-10 h-10 md:w-16 md:h-16 text-[#FFCC00] animate-pulse" />
                     </div>
                 </div>
-                <Loader message={studioState === 'optimizing' ? "SYSTEM_OPTIMIZING_PHYSICS..." : "RECONSTRUCTING_PIXELS..."} />
+                <Loader message={studioState === 'optimizing' ? "SYSTEM_OPTIMIZING_PHYSICS.." : studioState === 'diverging' ? "EXPLORING_POSSIBILITY_SPACE.." : "RECONSTRUCTING_PIXELS.."} />
             </div>
         )}
       </main>
@@ -300,12 +385,17 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ onBack, ethnicity = 'Global' 
                         onChange={(e) => setSuggestion({...suggestion, finalPrompt: e.target.value})}
                         className="w-full bg-zinc-900 border border-white/10 text-sm text-zinc-300 focus:ring-1 focus:ring-[#FFCC00] focus:border-[#FFCC00] p-6 rounded-xl h-32 font-mono leading-relaxed resize-none custom-scrollbar outline-none"
                     />
-                    <div className="flex justify-between items-center mt-8">
-                        <button onClick={handleReset} className="text-[9px] md:text-[10px] text-zinc-500 uppercase hover:text-white underline font-mono tracking-widest">ABORT PROTOCOL</button>
-                        <GoldButton onClick={onRunCommand} className="px-10 py-4 text-xs md:text-sm flex items-center gap-3 rounded-xl font-mono tracking-widest">
-                            <Check className="w-4 h-4 md:w-5 md:h-5" />
-                            EXECUTE SYNTHESIS
-                        </GoldButton>
+                    <div className="flex justify-between items-center mt-8 gap-4">
+                        <button onClick={handleReset} className="text-[9px] md:text-[10px] text-zinc-500 uppercase hover:text-white underline font-mono tracking-widest shrink-0">ABORT PROTOCOL</button>
+                        <div className="flex items-center gap-3">
+                            <button onClick={onExploreVariations} title={`Synthesize ${VARIATION_COUNT} variations to compare`} className="px-5 py-4 text-[10px] md:text-xs flex items-center gap-2 rounded-xl font-mono tracking-widest uppercase bg-zinc-950 border border-white/10 text-zinc-300 hover:border-[#FFCC00] hover:text-[#FFCC00] transition-all">
+                                <Layers className="w-4 h-4" /> EXPLORE {VARIATION_COUNT}&times;
+                            </button>
+                            <GoldButton onClick={onRunCommand} className="px-8 md:px-10 py-4 text-xs md:text-sm flex items-center gap-3 rounded-xl font-mono tracking-widest">
+                                <Check className="w-4 h-4 md:w-5 md:h-5" />
+                                EXECUTE
+                            </GoldButton>
+                        </div>
                     </div>
                 </GlassPanel>
             )}
