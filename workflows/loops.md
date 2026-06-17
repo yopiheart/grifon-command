@@ -106,3 +106,10 @@ When working from Claude Code on the web with a PR open:
 `subscribe_pr_activity` to babysit it — CI failures and review comments arrive
 as events and get fixed without polling. Unsubscribe (or merge/close) ends the
 loop.
+
+**Fresh-critic review step.** While babysitting (or right after opening a PR),
+run [pr_review_loop.md](pr_review_loop.md): a *fresh* `general-purpose`
+sub-agent reviews the head diff (builder ≠ reviewer), posts ranked findings as a
+PR comment, and flags — never auto-applies — anything touching the TUNED files
+(`services/geminiService.ts`, `api/_lib/prompts.ts`). Report-only; merge stays
+gated by Tier 0b CI + Neil.

@@ -164,5 +164,6 @@ Deliverables go to cloud services (Google Sheets, Slides, etc.) where the user c
 - `workflows/infra_setup.md` — Supabase, PayMongo, Google OAuth, domain, hosting checklist
 - `workflows/post_beta_roadmap.md` — **next file to open when `launch_readiness.md` hits 100%.** Endorsed-but-deferred ideas with resume triggers (currently: nightly regression `/loop`, Odyssey-as-Cron / Autopilot tier).
 - `workflows/session_reminders.md` — re-arm commands for in-session loops the defreezer wipes (currently: hourly break reminder). The SessionStart hook surfaces these automatically.
-- `workflows/loops.md` — the loop registry: every self-checking loop (build-gate, `/goal`, session re-arm, parked nightly regression, meta, PR-babysit), its arm command, verifier, and kill switch.
+- `workflows/loops.md` — the loop registry: every self-checking loop (build-gate, cloud CI, `/goal`, session re-arm, parked nightly regression, meta, PR-babysit), its arm command, verifier, and kill switch.
+- `workflows/pr_review_loop.md` — SOP for the fresh-context PR critic: a separate `general-purpose` sub-agent reviews the diff (builder ≠ reviewer), posts ranked findings, flags-not-applies TUNED-file changes. The review step of the Tier 5 PR-babysit loop.
 - `workflows/viral_swipe_file.md` — the Swipe File: compounding database of Viral Autopsy entries, Pattern Index, and gated proposals. Maintained by the `viral-autopsy` skill.
