@@ -7,7 +7,8 @@ import { GlassPanel } from './ui/GlassPanel';
 import { GoldButton } from './ui/GoldButton';
 import Loader from './ui/Loader';
 import ImageModal from './ui/ImageModal';
-import { RefreshCw, Search, Copy, Sparkles, AlertTriangle } from 'lucide-react';
+import SceneClayStudio from './SceneClayStudio';
+import { RefreshCw, Search, Copy, Sparkles, AlertTriangle, Layers } from 'lucide-react';
 import JSZip from 'jszip';
 import saveAs from 'file-saver';
 
@@ -37,6 +38,7 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [currentUploadIndex, setCurrentUploadIndex] = useState<{index: number, frame: 'start' | 'end'} | null>(null);
   const [critiqueExpanded, setCritiqueExpanded] = useState(false);
+  const [clayIndex, setClayIndex] = useState<number | null>(null);
 
   const hasFetchedRef = useRef(false);
   const isCinematic = businessInfo.scriptType === 'Cinematic';
@@ -220,6 +222,18 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
     } finally {
         setGeneratingImageIndex(null);
     }
+  };
+
+  // Clay studio commits a reshot/refined take back to the scene. Only imageUrl
+  // changes — scriptLine, order, references, and chainRole are untouched, so the
+  // narrative sequence and identity lock survive the reshoot.
+  const handleClayCommit = (newUrl: string) => {
+    if (clayIndex === null) return;
+    const updated = [...storyboardData];
+    updated[clayIndex] = { ...updated[clayIndex], imageUrl: newUrl };
+    setStoryboardData(updated);
+    setStoryboard(updated);
+    setClayIndex(null);
   };
 
   const handleManualUploadClick = (index: number, frame: 'start' | 'end') => {
@@ -500,7 +514,27 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
       )}
       {error && <p className="text-red-500 text-center mb-4 p-4 backdrop-blur-md rounded-xl font-mono text-sm border border-red-900/20 bg-red-900/10">{error}</p>}
       {modalImageUrl && <ImageModal imageUrl={modalImageUrl} onClose={() => setModalImageUrl(null)} filename={modalImageFilename} />}
-      
+
+      {clayIndex !== null && aspectRatio && storyboardData[clayIndex] && (() => {
+        const s = storyboardData[clayIndex];
+        return (
+          <SceneClayStudio
+            sceneLabel={`SCENE_0${clayIndex + 1}`}
+            scenePrompt={s.imagePrompt || ''}
+            currentImageUrl={s.imageUrl}
+            aspectRatio={aspectRatio}
+            references={getReferenceData(s, clayIndex)}
+            referenceImageMode={s.referenceImage || 'none'}
+            ethnicity={avatar?.ethnicity || 'Global/Neutral'}
+            brandColors={getBrandColors()}
+            scriptType={businessInfo.scriptType || 'MrBeast'}
+            productDesc={businessInfo.productImageDescription || businessInfo.product || 'the product'}
+            onCommit={handleClayCommit}
+            onClose={() => setClayIndex(null)}
+          />
+        );
+      })()}
+
       {!loadingStoryboard && storyboardData.length > 0 && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 max-h-[58vh] overflow-y-auto pr-1 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             {storyboardData.map((scene, index) => (
@@ -525,6 +559,20 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
                                 </button>
                             );
                         })()}
+                        {/* Clay reshoot — SIMPLE single-frame scenes only. Hook-morph
+                            (start/end pair) and cinematic-chain scenes keep REGEN to
+                            protect their cross-frame continuity. */}
+                        {!scene.startFramePrompt && !scene.endFramePrompt && !!scene.imagePrompt
+                          && !scene.manualUploadUrl && !!scene.imageUrl && !!aspectRatio && (
+                            <button
+                                onClick={() => setClayIndex(index)}
+                                disabled={generatingImageIndex !== null || loadingImages}
+                                className="text-[9px] font-mono tracking-widest text-zinc-400 hover:text-[#FFCC00] disabled:opacity-30 disabled:cursor-not-allowed transition-colors flex items-center gap-1.5 px-2 py-1 border border-white/10 hover:border-[#FFCC00]/40 rounded-full"
+                                title="Reshoot this scene — 3 takes, pick your favorite, then refine"
+                            >
+                                <Layers className="w-3 h-3" /> RESHOOT
+                            </button>
+                        )}
                     </div>
 
                     <div className="flex justify-center gap-3 items-center">
