@@ -4,7 +4,7 @@ import { compressImageForUpload } from '../utils/imageCompression';
 import { GlassPanel } from './ui/GlassPanel';
 import { GoldButton } from './ui/GoldButton';
 import Loader from './ui/Loader';
-import { Trash2, RefreshCw, Copy, Check, Sparkles, Image as ImageIcon, ChevronLeft } from 'lucide-react';
+import { Trash2, RefreshCw, Copy, Check, Sparkles, Image as ImageIcon, ChevronLeft, Wand2 } from 'lucide-react';
 import saveAs from 'file-saver';
 
 interface ImageEditorProps {
@@ -57,6 +57,7 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ onBack, ethnicity = 'Global' 
   const [error, setError] = useState<string | null>(null);
   const [showTikTokPreview, setShowTikTokPreview] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const [refineCount, setRefineCount] = useState(0);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -148,6 +149,21 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ onBack, ethnicity = 'Global' 
     setUserRequest('');
     setAspectRatio(null);
     setShowTikTokPreview(false);
+    setRefineCount(0);
+  };
+
+  // Mold the clay: promote the just-generated result to the new base asset so the
+  // next modification request reshapes THIS output instead of starting from scratch.
+  // Aspect ratio is kept so the molding stays consistent across passes.
+  const handleRefine = () => {
+    if (!finalImage) return;
+    setImages([finalImage]);
+    setSuggestion(null);
+    setFinalImage(null);
+    setUserRequest('');
+    setShowTikTokPreview(false);
+    setRefineCount(c => c + 1);
+    setStudioState('idle');
   };
 
 
@@ -232,13 +248,22 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ onBack, ethnicity = 'Global' 
                 <GlassPanel className="relative border-2 border-[#FFCC00]/40 shadow-[0_40px_100px_rgba(0,0,0,0.8)] p-2 md:p-3">
                     <img src={finalImage} className="w-full max-h-[70vh] object-contain mx-auto rounded-xl" alt="Final Synthesis" />
                     {showTikTokPreview && <TikTokOverlay />}
-                    
+
+                    {refineCount > 0 && (
+                        <div className="absolute top-6 left-6 bg-zinc-900/80 backdrop-blur-xl border border-[#FFCC00]/30 px-3 py-1.5 rounded-full text-[9px] font-mono tracking-widest uppercase text-[#FFCC00] shadow-xl">
+                            MOLD PASS 0{refineCount}
+                        </div>
+                    )}
+
                     <div className="absolute top-6 right-6 flex flex-col md:flex-row gap-3">
+                        <button onClick={handleRefine} title="Continue molding this result" className="px-4 py-2 rounded-full text-[9px] md:text-[10px] font-mono tracking-widest uppercase transition-all shadow-xl backdrop-blur-xl border bg-[#FFCC00] text-black border-[#FFCC00] hover:shadow-[0_0_20px_rgba(255,204,0,0.4)] flex items-center gap-2">
+                            <Wand2 className="w-3.5 h-3.5" /> REFINE
+                        </button>
                         <button onClick={() => setShowTikTokPreview(!showTikTokPreview)} className={`px-4 py-2 rounded-full text-[9px] md:text-[10px] font-mono tracking-widest uppercase transition-all shadow-xl backdrop-blur-xl border ${showTikTokPreview ? 'bg-white text-black border-white' : 'bg-zinc-900/80 border-white/20 text-white hover:bg-white/10'}`}>
                             {showTikTokPreview ? 'HIDE PREVIEW' : 'AD PREVIEW'}
                         </button>
                         <div className="flex gap-2">
-                            <button onClick={handleReset} className="bg-zinc-900/80 backdrop-blur-xl border border-white/20 p-3 text-zinc-300 rounded-full hover:text-[#FFCC00] transition-colors shadow-xl"><RefreshCw className="w-4 h-4"/></button>
+                            <button onClick={handleReset} title="Start over from scratch" className="bg-zinc-900/80 backdrop-blur-xl border border-white/20 p-3 text-zinc-300 rounded-full hover:text-[#FFCC00] transition-colors shadow-xl"><RefreshCw className="w-4 h-4"/></button>
                             <button onClick={() => saveAs(finalImage, 'studio-core-render.png')} className="bg-[#FFCC00] p-3 text-black rounded-full hover:shadow-[0_0_20px_rgba(255,204,0,0.4)] transition-all shadow-xl"><Copy className="w-4 h-4"/></button>
                         </div>
                     </div>
