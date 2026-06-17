@@ -19,8 +19,8 @@ no GitHub Action running Claude and no `ANTHROPIC_API_KEY` in CI (deferred — s
 
 - `mcp__github__pull_request_read` (method `get_diff`) — the diff to review.
 - `Agent` tool with `subagent_type: general-purpose` — the fresh critic.
-- `mcp__github__add_issue_comment` — post the findings summary. (Built-in `code-review --comment`
-  is the inline-comment alternative.)
+- `mcp__github__add_issue_comment` — post the findings summary. (The `code-review` skill with
+  `--comment` is the in-session alternative.)
 - TUNED reference: [../services/CLAUDE.md](../services/CLAUDE.md) Hard Rules, `CLAUDE.md` TUNED-file
   guardrail, [../.claude/skills/surgical-edit/](../.claude/skills/surgical-edit/).
 
@@ -48,12 +48,14 @@ no GitHub Action running Claude and no `ANTHROPIC_API_KEY` in CI (deferred — s
    `services/geminiService.ts` (prompts, schemas, model IDs, safety rules), `api/_lib/prompts.ts`
    (crown-jewel prompts), or `api/_lib/` signatures/RPC names — as **"⚠️ REQUIRES NEIL — do not
    auto-apply."** Escalate; never auto-fix or auto-approve tuned diffs (`CLAUDE.md` TUNED-file
-   guardrail; `agent_lessons.md` 2026-05-09).
+   guardrail; `agent_lessons.md` 2026-05-09). This list is intentionally **broader** than the
+   `CLAUDE.md` `/goal` guardrail (which scopes to prompt/schema content only) — it mirrors the
+   fuller `services/CLAUDE.md` Hard Rules.
 4. **Post the findings** as a single PR comment via `add_issue_comment`: grouped by severity, each
    with `file:line` and a one-line fix suggestion, TUNED items clearly flagged.
-5. **Act within the babysit rules** (see `CLAUDE.md` → "Handling PR Activity Events"):
+5. **Act within the babysit rules** (the PR-babysit loop — [loops.md](loops.md) Tier 5):
    - Apply only **small, clearly-correct, non-TUNED** fixes, then push.
-   - Anything ambiguous, architectural, or TUNED → comment + ask Neil via `AskUserQuestion`.
+   - Anything ambiguous, architectural, or TUNED → comment + ask Neil.
    - Re-run this whole loop on each significant new push to the PR.
 
 ## Output
