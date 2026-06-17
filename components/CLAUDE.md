@@ -17,6 +17,8 @@ All UI lives here. Wizard and module state lives in [`../App.tsx`](../App.tsx) a
 
 `GlassPanel`, `GoldButton`, `Button`, `Card`, `Input`, `Textarea`, `Badge`, `Loader`, `AnimatedBorder`, `AudioRecorder`, `ImageModal`, `ErrorBoundary`, `LegalPageLayout`, `PlaceholderTool`. **Use them. Don't recreate inline.**
 
+`GeneratedFrameTile` — one generated-image tile: image + hover-action overlay (regenerate/download/edit/select…) + label badge, with empty/loading states. It's the repeated atom under the inline frame grids and the building block for side-by-side variation/divergence galleries. Adopted in [`CinematicSpecStudio`](CinematicSpecStudio.tsx) (phase grid) and [`ImageEditor`](ImageEditor.tsx) (opt-in divergence grid → SELECT converges into the refine/clay loop). The lightbox/dual-frame grid in [`InfluencerForge`](InfluencerForge.tsx) and the rich-card grid in [`ImageAdsGen`](ImageAdsGen.tsx) are pending adopters — fold them in when touching those modules (ideally alongside any multi-variant work). Model ONE frame: keep domain chrome (copy blocks, FB export, lightbox wiring) in the caller.
+
 ## Conventions
 
 - **Wizard:** [`Step1ClientDetails`](Step1ClientDetails.tsx) → [`Step7FinalOutput`](Step7FinalOutput.tsx). Step 6 forks ([`Step6Thumbnail`](Step6Thumbnail.tsx) and [`Step6VideoPrompts`](Step6VideoPrompts.tsx)) — preserve the fork; don't collapse without checking [`../App.tsx`](../App.tsx)'s flow logic.

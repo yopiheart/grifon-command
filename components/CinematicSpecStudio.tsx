@@ -5,7 +5,7 @@ import { generateCinematicSpec, generateCinematicNarrative, generateSinglePhase 
 import { compressImageForUpload } from '../utils/imageCompression';
 import { GoldButton } from './ui/GoldButton';
 import { GlassPanel } from './ui/GlassPanel';
-import Loader from './ui/Loader';
+import GeneratedFrameTile from './ui/GeneratedFrameTile';
 import { RefreshCcw, UploadCloud, Video, ChevronLeft, ChevronDown, Settings2, Image as ImageIcon, MonitorPlay, Download, Edit2 } from 'lucide-react';
 import saveAs from 'file-saver';
 import Step6VideoPrompts from './Step6VideoPrompts';
@@ -356,32 +356,18 @@ const CinematicSpecStudio: React.FC<CinematicSpecStudioProps> = ({
             {(Object.keys(frameMap).length > 0 || (isLoading && narrative)) && (
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 w-full h-full relative z-10 p-6 sm:p-10">
                 {phases.map((phase, idx) => (
-                  <div key={phase.key} className={`relative group overflow-hidden border border-white/10 rounded-2xl bg-zinc-900 shadow-xl transition-all duration-500 ${!frameMap[phase.key] ? 'opacity-40 animate-pulse' : 'opacity-100'}`}>
-                    {frameMap[phase.key] ? (
-                      <>
-                        <img src={frameMap[phase.key]} className={`w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-105 ${regeneratingIndex === idx ? 'opacity-50 animate-pulse' : ''}`} />
-                        <div className="absolute inset-0 bg-zinc-950/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-center gap-3 p-6 z-20">
-                             <button onClick={() => handleRegeneratePhase(idx, phase.key)} className="w-full flex items-center justify-center gap-2 py-2.5 bg-white/10 hover:bg-white/20 text-white transition-all text-[10px] font-bold uppercase rounded-xl">
-                                <RefreshCcw className={`w-3 h-3 ${regeneratingIndex === idx ? 'animate-spin' : ''}`} /> REGENERATE
-                             </button>
-                             <button onClick={() => handleDownload(frameMap[phase.key]!, phase.key)} className="w-full flex items-center justify-center gap-2 py-2.5 bg-white/10 hover:bg-white/20 text-white transition-all text-[10px] font-bold uppercase rounded-xl">
-                                <Download className="w-3 h-3" /> DOWNLOAD
-                             </button>
-                             <button onClick={() => handleEditInStudio(frameMap[phase.key]!)} className="w-full flex items-center justify-center gap-2 py-2.5 bg-[#FFCC00] hover:bg-[#FFCC00]/90 text-black transition-all text-[10px] font-bold uppercase rounded-xl">
-                                <Edit2 className="w-3 h-3" /> EDIT
-                             </button>
-                        </div>
-                      </>
-                    ) : (
-                      <div className="w-full h-full flex flex-col items-center justify-center gap-3">
-                        <Loader message="" size="sm" />
-                        <p className="text-[10px] font-mono text-zinc-500 tracking-widest uppercase">// PIXEL_LOCKED</p>
-                      </div>
-                    )}
-                    <div className="absolute top-3 left-3 bg-zinc-950/80 backdrop-blur-md text-[#FFCC00] text-[10px] font-mono px-3 py-1 rounded-lg uppercase tracking-widest z-10 border border-white/10">
-                      {phase.label}
-                    </div>
-                  </div>
+                  <GeneratedFrameTile
+                    key={phase.key}
+                    imageUrl={frameMap[phase.key]}
+                    busy={regeneratingIndex === idx}
+                    label={phase.label}
+                    loadingMessage="// PIXEL_LOCKED"
+                    actions={frameMap[phase.key] ? [
+                      { icon: RefreshCcw, label: 'REGENERATE', onClick: () => handleRegeneratePhase(idx, phase.key), busy: regeneratingIndex === idx },
+                      { icon: Download, label: 'DOWNLOAD', onClick: () => handleDownload(frameMap[phase.key]!, phase.key) },
+                      { icon: Edit2, label: 'EDIT', onClick: () => handleEditInStudio(frameMap[phase.key]!), primary: true },
+                    ] : []}
+                  />
                 ))}
               </div>
             )}
