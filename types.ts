@@ -89,6 +89,9 @@ export interface SceneBatchEntry {
   scriptLine: string;
   renderedUrl?: string;
   type: 'talking' | 'b-roll' | 'cinematic';
+  /* Carried from the storyboard Scene so the Scene Pipeline can shape v3
+     delivery by the cinematic-relay role (cinematic scenes only; see deliveryTag). */
+  chainRole?: Scene['chainRole'];
 }
 
 /**

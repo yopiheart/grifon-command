@@ -1569,6 +1569,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
       scriptLine: storyboard[i]?.scriptLine ?? '',
       renderedUrl: sceneResults[i]?.url,
       type: p.type,
+      chainRole: storyboard[i]?.chainRole,
     }));
 
   const handleSendToSignalFromBar = () => {
