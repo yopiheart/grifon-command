@@ -445,6 +445,62 @@ screens/mockups enter the storyboard (upload vs generated) during the spec.
 
 ---
 
+### 15. Agent-Scaling / CI Validation-Pipeline Follow-ons
+
+> **Context (2026-06-17):** From the session evaluating Kun Chen's "40 PRs/day" multi-agent brief
+> against Grifon. Verdict: adopt the *validation-pipeline* half, reject the *velocity/token-maxing*
+> half (conflicts with the Max-5x quality-first budget + single-session cafe-PC reality + the
+> prompt-as-moat guardrail). **Already shipped to `main` that session** (so these are the *leftovers*,
+> not the whole thing): cloud CI (`.github/workflows/ci.yml` — build + test + design:lint), the
+> crown-jewel bundle-leak guard (`tools/check-bundle-leak.mjs`), the zero-quota Playwright boot/render
+> smoke (`tests/e2e/boot.spec.ts` + the CI `e2e` job), and the fresh-context PR critic SOP
+> (`workflows/pr_review_loop.md`, wired into `loops.md` Tier 5). Three follow-ons were deferred:
+
+**What — three independent sub-items, each separately resumable:**
+
+- **A. Mocked wizard walk (Playwright scope B).** Extend the boot smoke past the auth wall: stub the
+  Supabase session + route-intercept the Gemini call-graph with canned fixtures, then navigate the
+  wizard Steps 1→7 asserting render/navigation (still zero quota).
+  - *Why parked:* getting past the auth hard-wall needs a brittle Supabase-session stub keyed on
+    supabase-js's localStorage storage-key derivation, AND the authoring sandbox **blocks the
+    Playwright browser download** — so it can't be iterated locally, only via slow push-to-CI cycles.
+    High effort + brittle + bad dev loop.
+  - *When to resume:* when Playwright browsers can run locally (different env), OR when the auth-stub
+    is worth the CI-only iteration. Reuses the canned-fixture patterns in
+    `tests/regression/script-gen.regression.test.ts` + `tests/unit/geminiService.schemas.test.ts`.
+    Related to item #1 (Tier-3 regression) — coordinate so they don't duplicate.
+
+- **B. Extend doc-lint beyond design tokens.** `npm run design:lint` only checks DESIGN.md tokens.
+  Add a light consistency lint (e.g. UBIQUITOUS_LANGUAGE term drift, dead `workflows/*.md` links).
+  - *Why parked:* nice-to-have, not load-bearing; lowest lever of the four moves.
+  - *When to resume:* when a doc-drift bug actually bites, or as a quiet-day cleanup. Wire into the CI
+    `verify` job beside `design:lint`.
+
+- **C. Full-auto Claude-in-CI review.** A GitHub Action that runs the fresh-context critic
+  automatically on every PR open (no human in the loop), vs. today's in-session
+  `workflows/pr_review_loop.md` convention.
+  - *Why parked:* needs an `ANTHROPIC_API_KEY` **secret in CI** — a security-surface change. Deferred
+    deliberately; the in-session critic already delivers the value with zero secret.
+  - *When to resume:* only after running `straw-man-audit` on adding a CI secret, AND Neil's explicit
+    go. Do not add the secret unilaterally.
+
+**Why it matters:** Compounds the validation pipeline already on `main` — each closes a gap CI can't
+currently see (A: authenticated-app render regressions; B: doc rot; C: removes the human trigger from
+the review loop).
+
+**When to resume:** Per-sub-item triggers above. None blocks beta.
+
+**Where to start:** Re-read `workflows/loops.md` (the current loop registry — Tier 0b CI, Tier 5 PR
+critic) and `workflows/pr_review_loop.md` for what already exists before building.
+
+**Scope estimate:** A ≈ 1 day (brittle); B ≈ 2–3h; C ≈ half a day + the security review.
+
+**Source:** 2026-06-17 session evaluating Kun Chen's "How This Ex-Meta L8 Engineer Ships 40 PRs a Day
+with AI Agents" brief against the Grifon codebase. Neil shipped Moves 1/2A/bundle-guard/3, chose to
+defer 2B / doc-lint / full-auto-CI.
+
+---
+
 ## How to add new items
 
 When Neil endorses an idea but says "not now":
