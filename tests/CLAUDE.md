@@ -1,13 +1,15 @@
 # tests/ — vitest Unit Tests
 
-Run via `npm run test` (one-shot) or `npm run test:watch` (watch mode). No Jest, no Playwright, no Cypress — vitest is the only runner.
+Run via `npm run test` (one-shot) or `npm run test:watch` (watch mode). vitest is the unit/integration runner (no Jest, no Cypress). Browser e2e lives separately in [`e2e/`](e2e/) and runs on **Playwright** via `npm run test:e2e` — vitest is configured to ignore `tests/e2e/**`.
 
 ## Current Coverage
 
 - [`unit/paymongo.test.ts`](unit/paymongo.test.ts) — webhook signature verification + plan catalog invariants
 - [`unit/rateLimit.test.ts`](unit/rateLimit.test.ts) — rate-limit RPC mocking + fail-open behavior
 
-**Coverage gap:** zero tests on [`../services/geminiService.ts`](../services/geminiService.ts), zero tests on components, zero e2e. Schema tests for the four schema-fragile flows (`generateStoryboard`, `generateAdScript`, `generateInfluencerStoryboard`, `generateCinematicNarrative`) are the highest-leverage next addition — see [`../workflows/launch_readiness.md`](../workflows/launch_readiness.md).
+- [`e2e/boot.spec.ts`](e2e/boot.spec.ts) — Playwright boot/render smoke: boots the app against dummy Supabase env and asserts the public pre-auth routes (`/`, `/pricing`, `/terms`, `/privacy`) mount and render without the ErrorBoundary crash fallback. Zero quota — never reaches auth or Gemini.
+
+**Coverage gap:** zero tests on [`../services/geminiService.ts`](../services/geminiService.ts), zero tests on components, and the e2e is boot-only (no wizard walk yet — that's Move 2 scope B, deferred). Schema tests for the four schema-fragile flows (`generateStoryboard`, `generateAdScript`, `generateInfluencerStoryboard`, `generateCinematicNarrative`) are the highest-leverage next addition — see [`../workflows/launch_readiness.md`](../workflows/launch_readiness.md).
 
 ## Patterns
 

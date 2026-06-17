@@ -25,19 +25,25 @@ passes. Pass message: `Build-gate PASSED: …` — cite it in `/goal` conditions
 
 ## Tier 0b — Cloud-side CI gate · ✅ live, automatic
 
-**GitHub Actions CI** ([.github/workflows/ci.yml](../.github/workflows/ci.yml)). Runs
-`npm run build` + `npm run test` + `npm run design:lint` on every `pull_request`
-to `main` and every `push` to `main`. Same checks as the Tier 0 build-gate, but
-cloud-side and agent-independent: build-gate = inner/local (only fires when a
-Claude session is live, only on api/services/components/App.tsx edits), CI =
-outer/cloud (fires on everything that reaches a PR or main, including worktree /
-web-session / post-defreezer edits). Redundant on purpose. Status feeds the
-Tier 5 PR-babysit loop.
+**GitHub Actions CI** ([.github/workflows/ci.yml](../.github/workflows/ci.yml)). Two jobs
+on every `pull_request` to `main` and every `push` to `main`:
+- `verify` — `npm run build` + `npm run test` (vitest) + `npm run design:lint`.
+- `e2e` — boot/render smoke (`npm run test:e2e`, Playwright): boots the app
+  against dummy Supabase env and asserts the public pre-auth routes render
+  without crashing. Zero quota (never reaches auth/Gemini). Catches the
+  green-build-but-white-screen class the build-only checks can't.
+
+Same spirit as the Tier 0 build-gate, but cloud-side and agent-independent:
+build-gate = inner/local (only fires when a Claude session is live, only on
+api/services/components/App.tsx edits), CI = outer/cloud (fires on everything
+that reaches a PR or main, including worktree / web-session / post-defreezer
+edits). Redundant on purpose. Status feeds the Tier 5 PR-babysit loop.
 
 - Arm: nothing — wired in the workflow file; runs on PR/push to main.
-- Verifier: the `verify` job's exit code (build, unit tests, design lint).
+- Verifier: the `verify` + `e2e` job exit codes.
 - No secrets: regression (`RUN_REGRESSION`) and integration (`RUN_BURNIN`)
-  suites stay off by default so CI never burns Gemini quota.
+  suites stay off by default so CI never burns Gemini quota; the `e2e` smoke
+  uses dummy env and never reaches a real API.
 - Kill switch: delete `.github/workflows/ci.yml` (or disable the workflow in the
   repo's Actions settings).
 
