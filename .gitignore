@@ -27,6 +27,10 @@ token.json
 # Playwright MCP output (snapshots, console logs)
 .playwright-mcp/
 
+# Playwright test runner output (boot/render smoke artifacts, HTML report)
+test-results/
+playwright-report/
+
 # Python
 __pycache__/
 *.py[cod]

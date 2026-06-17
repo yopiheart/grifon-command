@@ -35,3 +35,35 @@ jobs:
 
       - name: Design token lint
         run: npm run design:lint
+
+  # Boot/render smoke (Move 2, scope A). Separate job so its result is
+  # distinguishable from the build/unit gate and runs in parallel. Boots the
+  # app against dummy Supabase env and verifies the public, pre-auth routes
+  # render without crashing — zero Gemini/ElevenLabs calls, no quota burn.
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright (chromium)
+        run: npx playwright install --with-deps chromium
+
+      - name: Boot/render smoke
+        run: npm run test:e2e
+
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: boot-smoke-screenshots
+          path: test-results/
+          if-no-files-found: ignore
+          retention-days: 7
