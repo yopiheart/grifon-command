@@ -55,6 +55,11 @@ grep -cE "MarketMind by Zam|DIRECTOR_CRITIQUE_PROTOCOL|COMMON_RULES|MRBEAST STRU
 # expected: 0
 ```
 
+This is now **CI-enforced**: `npm run check:bundle-leak`
+([`../tools/check-bundle-leak.mjs`](../tools/check-bundle-leak.mjs)) runs the
+same patterns over the built `dist/` in the `verify` job and fails the build on
+any leak. Keep the marker list in that script in sync with the grep above.
+
 **Temporary cost downgrade (2026-05-09):** the `marketmind` flow runs on
 `MODEL_TEXT` (gemini-3.1-flash-lite-preview) instead of `MODEL_RESEARCH`
 (gemini-3.1-pro-preview) for cost control during early ramp. Revert path

@@ -30,6 +30,11 @@ jobs:
       - name: Build (tsc + vite)
         run: npm run build
 
+      # Fail the build if any of the 5 server-side crown-jewel prompts leaked
+      # into the client bundle (must run after build — needs dist/).
+      - name: Crown-jewel bundle-leak guard
+        run: npm run check:bundle-leak
+
       - name: Test (vitest)
         run: npm run test
 

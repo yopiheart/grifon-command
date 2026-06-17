@@ -27,7 +27,9 @@ passes. Pass message: `Build-gate PASSED: …` — cite it in `/goal` conditions
 
 **GitHub Actions CI** ([.github/workflows/ci.yml](../.github/workflows/ci.yml)). Two jobs
 on every `pull_request` to `main` and every `push` to `main`:
-- `verify` — `npm run build` + `npm run test` (vitest) + `npm run design:lint`.
+- `verify` — `npm run build` + `npm run check:bundle-leak` (crown-jewel
+  leak guard — fails if any of the 5 server-side prompts leaked into the
+  client bundle) + `npm run test` (vitest) + `npm run design:lint`.
 - `e2e` — boot/render smoke (`npm run test:e2e`, Playwright): boots the app
   against dummy Supabase env and asserts the public pre-auth routes render
   without crashing. Zero quota (never reaches auth/Gemini). Catches the
