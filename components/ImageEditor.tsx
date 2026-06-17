@@ -71,7 +71,7 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ onBack, ethnicity = 'Global' 
   const [showTikTokPreview, setShowTikTokPreview] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [refineCount, setRefineCount] = useState(0);
-  const [variants, setVariants] = useState<string[]>([]);
+  const [variants, setVariants] = useState<(string | null)[]>([]);
   const [rerollingIndex, setRerollingIndex] = useState<number | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -164,11 +164,19 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ onBack, ethnicity = 'Global' 
     setStudioState('diverging');
     setError(null);
     try {
-      const results = await Promise.all(
+      const settled = await Promise.allSettled(
         Array.from({ length: VARIATION_COUNT }).map(() =>
           executeStudioCommand(suggestion.finalPrompt, images, aspectRatio as any, ethnicity)
         )
       );
+      const results = settled.map(s => (s.status === 'fulfilled' ? s.value : null));
+      // Only bail if EVERY variation failed. A single failure must not nuke a 3x
+      // quota spend — keep the survivors and let RE-ROLL recover the empty slots.
+      if (results.every(r => r === null)) {
+        setError("SYSTEM_ERROR: DIVERGENCE_FAILED");
+        setStudioState('review');
+        return;
+      }
       setVariants(results);
       setStudioState('variants');
     } catch (err) {
@@ -346,10 +354,19 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ onBack, ethnicity = 'Global' 
                             busy={rerollingIndex === idx}
                             className={aspectRatio ? ASPECT_CLASS[aspectRatio] : 'aspect-[4/5]'}
                             label={`0${idx + 1}`}
-                            actions={[
+                            actions={v ? [
                                 { icon: Check, label: 'SELECT', primary: true, onClick: () => selectVariant(v) },
                                 { icon: RefreshCw, label: 'RE-ROLL', onClick: () => rerollVariant(idx), busy: rerollingIndex === idx },
-                            ]}
+                            ] : []}
+                            emptyState={v === null && rerollingIndex !== idx ? (
+                                <button
+                                    onClick={() => rerollVariant(idx)}
+                                    className="w-full h-full flex flex-col items-center justify-center gap-3 text-zinc-500 hover:text-[#FFCC00] transition-colors"
+                                >
+                                    <RefreshCw className="w-6 h-6" />
+                                    <span className="text-[10px] font-mono uppercase tracking-widest">VARIATION_FAILED &middot; RE-ROLL</span>
+                                </button>
+                            ) : undefined}
                         />
                     ))}
                 </div>
