@@ -5,6 +5,7 @@ import { getUserFromAccessToken } from '../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../_lib/rateLimit.js';
 import { getUserPlan } from '../_lib/userPlan.js';
 import { consumeMonthly } from '../_lib/quota.js';
+import { logImageUsage } from '../_lib/modelCosts.js';
 
 const Body = z.object({
   model: z.string().min(1),
@@ -76,6 +77,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const ai = getAi();
     const response = await ai.models.generateContent(parsed.data as any);
+    logImageUsage('image', parsed.data.model, 1);
 
     return res.status(200).json({
       candidates: response.candidates ?? [],
