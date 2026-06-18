@@ -4,7 +4,7 @@ import {
   Film, Search, Target, Type, Image as ImageIcon,
   Settings, Sparkles, ArrowRight, ChevronRight,
   Video, User, Clapperboard, Wand2, Calendar, Scissors, Mic,
-  LogOut, HelpCircle, Crown, Zap, X, Flame
+  LogOut, HelpCircle, Crown, Zap, X, Flame, Aperture
 } from 'lucide-react';
 import { useSubscription } from '../hooks/useSubscription';
 import { useQuota } from '../hooks/useQuota';
@@ -92,6 +92,7 @@ const NAV_ITEMS: { id: string; label: string; icon: any; badge?: 'Beta' }[] = [
 ];
 
 const MORE_MODULES = [
+  { id: 'hook_lab', name: 'Hook Lab', icon: Aperture, desc: 'Surreal, scroll-stopping opening hooks for your ads.' },
   { id: 'cinematic_studio', name: 'Cinematic Studio', icon: Video, desc: 'High-fidelity video synthesis with custom camera paths and lighting control.' },
   { id: 'influencer_forge', name: 'Influencer Forge', icon: User, desc: 'Generate consistent digital personas for social campaigns and brand storytelling.' },
   { id: 'generate_video', name: 'Video Synthesis', icon: Clapperboard, desc: 'Render final video assets from storyboards and prompts.' },

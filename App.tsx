@@ -26,6 +26,7 @@ import CaptionHeadline from './components/CaptionHeadline';
 import OrganicCalendar from './components/OrganicCalendar';
 import ImageAdsGen from './components/ImageAdsGen';
 import CinematicSpecStudio from './components/CinematicSpecStudio';
+import HookLab from './components/HookLab';
 import GenerateVideo from './components/GenerateVideo';
 import PlanGate from './components/PlanGate';
 import SignalModulator from './components/SignalModulator';
@@ -1321,6 +1322,8 @@ const App: React.FC = () => {
     moduleElement = <OrganicCalendar businessInfo={businessInfo} avatar={avatar} clientDetails={clientDetails} onBack={() => setActiveModule(null)} />;
   } else if (activeModule === 'image_ads') {
     moduleElement = <ImageAdsGen businessInfo={businessInfo} avatar={avatar} clientDetails={clientDetails} onBack={() => setActiveModule(null)} />;
+  } else if (activeModule === 'hook_lab') {
+    moduleElement = <HookLab businessInfo={businessInfo} onBack={() => setActiveModule(null)} />;
   } else if (activeModule === 'creative_director') {
     const hasRunResearch = !!localStorage.getItem('marketMindReport');
     const wizardPristine = currentStep === 1 && !clientDetails.brandName && !businessInfo.product && script === null;
