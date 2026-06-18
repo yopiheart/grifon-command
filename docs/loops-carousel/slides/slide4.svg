@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="1080" height="1080" fill="#09090b"/>
+  <rect x="0" y="0" width="14" height="1080" fill="#FFCC00"/>
+
+  <text x="80" y="130" fill="#71717a" font-size="30" font-weight="bold" letter-spacing="3">THE FOUNDATION</text>
+  <text x="80" y="200" fill="#fafafa" font-size="50" font-weight="bold">Let AI think.</text>
+  <text x="80" y="262" fill="#FFCC00" font-size="50" font-weight="bold">Let code do.</text>
+
+  <text x="80" y="335" fill="#d4d4d8" font-size="34">🧠 AI is great at deciding <tspan font-weight="bold" fill="#fff">what</tspan> to do.</text>
+  <text x="80" y="383" fill="#d4d4d8" font-size="34">⚙️ Plain code is great at <tspan font-weight="bold" fill="#fff">doing</tspan> it reliably.</text>
+  <text x="80" y="445" fill="#a1a1aa" font-size="31">Split the jobs and your accuracy goes way up.</text>
+
+  <line x1="80" y1="490" x2="1000" y2="490" stroke="#27272a" stroke-width="2"/>
+
+  <text x="80" y="555" fill="#71717a" font-size="30" font-weight="bold" letter-spacing="3">WHEN SOMETHING BREAKS — 7 STEPS</text>
+
+  <g font-size="34" fill="#e4e4e7">
+    <text x="80" y="615"><tspan fill="#FFCC00" font-weight="bold">1. Reproduce</tspan>  — see the bug yourself</text>
+    <text x="80" y="665"><tspan fill="#FFCC00" font-weight="bold">2. Locate</tspan>  — find which file</text>
+    <text x="80" y="715"><tspan fill="#FFCC00" font-weight="bold">3. Plan</tspan>  — say what you'll change + why</text>
+    <text x="80" y="765"><tspan fill="#FFCC00" font-weight="bold">4. Edit</tspan>  — the SMALLEST fix possible</text>
+    <text x="80" y="815"><tspan fill="#FFCC00" font-weight="bold">5. Verify</tspan>  — build it, test it, click around</text>
+    <text x="80" y="865"><tspan fill="#FFCC00" font-weight="bold">6. Update</tspan>  — cross it off the list</text>
+    <text x="80" y="915"><tspan fill="#FFCC00" font-weight="bold">7. Report</tspan>  — one line: what + what to test</text>
+  </g>
+
+  <text x="80" y="985" fill="#a1a1aa" font-size="30" font-style="italic">Small edits = easy to find what broke.</text>
+
+  <text x="1000" y="1045" fill="#52525b" font-size="30" text-anchor="end" font-weight="bold">4 / 5</text>
+</svg>

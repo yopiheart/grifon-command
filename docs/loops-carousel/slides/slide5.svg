@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="1080" height="1080" fill="#09090b"/>
+  <rect x="0" y="0" width="1080" height="14" fill="#FFCC00"/>
+  <rect x="0" y="1066" width="1080" height="14" fill="#FFCC00"/>
+
+  <text x="540" y="150" fill="#71717a" font-size="32" font-weight="bold" letter-spacing="3" text-anchor="middle">3 TAKEAWAYS FOR BEGINNERS</text>
+
+  <!-- 1 -->
+  <rect x="80" y="210" width="920" height="180" rx="20" fill="#18181b" stroke="#3f3f46" stroke-width="2"/>
+  <text x="120" y="285" fill="#FFCC00" font-size="60" font-weight="bold">1</text>
+  <text x="200" y="270" fill="#fafafa" font-size="38" font-weight="bold">Use checks that BLOCK you,</text>
+  <text x="200" y="318" fill="#fafafa" font-size="38" font-weight="bold">not just warn you.</text>
+  <text x="200" y="362" fill="#a1a1aa" font-size="30">A warning gets ignored. A gate doesn't.</text>
+
+  <!-- 2 -->
+  <rect x="80" y="415" width="920" height="180" rx="20" fill="#18181b" stroke="#3f3f46" stroke-width="2"/>
+  <text x="120" y="490" fill="#FFCC00" font-size="60" font-weight="bold">2</text>
+  <text x="200" y="490" fill="#fafafa" font-size="38" font-weight="bold">Make small changes.</text>
+  <text x="200" y="540" fill="#a1a1aa" font-size="30">The smaller the edit, the easier to find</text>
+  <text x="200" y="575" fill="#a1a1aa" font-size="30">what broke.</text>
+
+  <!-- 3 -->
+  <rect x="80" y="620" width="920" height="180" rx="20" fill="#18181b" stroke="#3f3f46" stroke-width="2"/>
+  <text x="120" y="695" fill="#FFCC00" font-size="60" font-weight="bold">3</text>
+  <text x="200" y="695" fill="#fafafa" font-size="38" font-weight="bold">Write down every lesson.</text>
+  <text x="200" y="745" fill="#a1a1aa" font-size="30">Your notes are what turn a beginner into</text>
+  <text x="200" y="780" fill="#a1a1aa" font-size="30">someone who actually ships.</text>
+
+  <text x="540" y="890" fill="#FFCC00" font-size="40" font-weight="bold" text-anchor="middle">You don't need to be a genius. 🚀</text>
+  <text x="540" y="945" fill="#d4d4d8" font-size="34" text-anchor="middle">You just need loops that catch your</text>
+  <text x="540" y="990" fill="#d4d4d8" font-size="34" text-anchor="middle">mistakes before your users do.</text>
+
+  <text x="80" y="1045" fill="#52525b" font-size="28" font-weight="bold">♻️ Share this with a friend who's building.</text>
+  <text x="1000" y="1045" fill="#52525b" font-size="30" text-anchor="end" font-weight="bold">5 / 5</text>
+</svg>

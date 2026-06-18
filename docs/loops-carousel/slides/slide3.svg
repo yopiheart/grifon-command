@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="1080" height="1080" fill="#09090b"/>
+  <rect x="0" y="0" width="14" height="1080" fill="#FFCC00"/>
+
+  <text x="80" y="130" fill="#71717a" font-size="30" font-weight="bold" letter-spacing="3">THE 6 LOOPS (cont.)</text>
+
+  <!-- card 4 -->
+  <rect x="80" y="175" width="920" height="195" rx="20" fill="#18181b" stroke="#3f3f46" stroke-width="2"/>
+  <text x="120" y="245" fill="#FFCC00" font-size="42" font-weight="bold">⏰ 4. The Session Reset</text>
+  <text x="120" y="295" fill="#e4e4e7" font-size="34">Don't trust your memory. Every fresh start,</text>
+  <text x="120" y="340" fill="#e4e4e7" font-size="34">the setup re-reminds you of your own rules.</text>
+
+  <!-- card 5 -->
+  <rect x="80" y="395" width="920" height="195" rx="20" fill="#18181b" stroke="#3f3f46" stroke-width="2"/>
+  <text x="120" y="465" fill="#FFCC00" font-size="42" font-weight="bold">🌙 5. The Nightly Test</text>
+  <text x="120" y="515" fill="#e4e4e7" font-size="34">Test every feature each night. Skip this early</text>
+  <text x="120" y="560" fill="#e4e4e7" font-size="34">on — don't over-engineer before you have users.</text>
+
+  <!-- card 6 -->
+  <rect x="80" y="615" width="920" height="280" rx="20" fill="#1c1917" stroke="#FFCC00" stroke-width="3"/>
+  <text x="120" y="685" fill="#FFCC00" font-size="42" font-weight="bold">🧠 6. The Lesson Loop</text>
+  <text x="120" y="730" fill="#a1a1aa" font-size="29" font-style="italic">The most important habit:</text>
+  <text x="120" y="785" fill="#e4e4e7" font-size="34">Something broke → fix it →</text>
+  <text x="120" y="830" fill="#FFCC00" font-size="34" font-weight="bold">WRITE DOWN the lesson.</text>
+  <text x="120" y="880" fill="#e4e4e7" font-size="34">Same mistake twice? Build a guardrail so it</text>
+  <text x="120" y="918" fill="#e4e4e7" font-size="34">literally can't happen again.</text>
+
+  <text x="540" y="990" fill="#d4d4d8" font-size="36" text-anchor="middle" font-weight="bold">Your app gets safer while you sleep. 😴</text>
+
+  <text x="1000" y="1045" fill="#52525b" font-size="30" text-anchor="end" font-weight="bold">3 / 5</text>
+</svg>

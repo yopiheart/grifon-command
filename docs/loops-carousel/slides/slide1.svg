@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="1080" height="1080" fill="#09090b"/>
+  <rect x="0" y="0" width="1080" height="14" fill="#FFCC00"/>
+  <rect x="0" y="1066" width="1080" height="14" fill="#FFCC00"/>
+
+  <text x="90" y="240" fill="#71717a" font-size="30" font-weight="bold" letter-spacing="4">FOR PINOYS BUILDING APPS 🇵🇭</text>
+
+  <text x="90" y="380" fill="#fafafa" font-size="88" font-weight="bold">How I Build</text>
+  <text x="90" y="480" fill="#fafafa" font-size="88" font-weight="bold">Apps Without</text>
+  <text x="90" y="580" fill="#FFCC00" font-size="88" font-weight="bold">Breaking Them</text>
+
+  <rect x="90" y="650" width="120" height="8" fill="#FFCC00"/>
+
+  <text x="90" y="740" fill="#d4d4d8" font-size="40">The scariest part of coding isn't</text>
+  <text x="90" y="795" fill="#d4d4d8" font-size="40">writing it — it's not knowing if</text>
+  <text x="90" y="850" fill="#d4d4d8" font-size="40">you just <tspan fill="#FFCC00" font-weight="bold">broke something.</tspan></text>
+
+  <text x="90" y="960" fill="#fafafa" font-size="44" font-weight="bold">My fix: 6 simple "loops" 🔁</text>
+
+  <text x="90" y="1030" fill="#71717a" font-size="28">Swipe → start with the one that matters most</text>
+</svg>

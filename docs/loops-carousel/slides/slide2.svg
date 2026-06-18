@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="1080" height="1080" fill="#09090b"/>
+  <rect x="0" y="0" width="14" height="1080" fill="#FFCC00"/>
+
+  <text x="80" y="130" fill="#71717a" font-size="30" font-weight="bold" letter-spacing="3">WHAT IS A LOOP?</text>
+  <text x="80" y="195" fill="#fafafa" font-size="46" font-weight="bold">An action + a checker + a stop rule.</text>
+  <text x="80" y="248" fill="#a1a1aa" font-size="34">Set it up once, it guards your code by itself.</text>
+
+  <!-- card 1 -->
+  <rect x="80" y="300" width="920" height="220" rx="20" fill="#18181b" stroke="#FFCC00" stroke-width="3"/>
+  <text x="120" y="375" fill="#FFCC00" font-size="42" font-weight="bold">🚪 1. The Build Gate</text>
+  <text x="120" y="425" fill="#e4e4e7" font-size="34">You can't "finish" if the app won't even build.</text>
+  <text x="120" y="470" fill="#e4e4e7" font-size="34">It checks automatically. Fix it or you're stuck.</text>
+  <text x="120" y="505" fill="#71717a" font-size="29" font-style="italic">→ If you do ONE thing, do this.</text>
+
+  <!-- card 2 -->
+  <rect x="80" y="545" width="920" height="195" rx="20" fill="#18181b" stroke="#3f3f46" stroke-width="2"/>
+  <text x="120" y="615" fill="#FFCC00" font-size="42" font-weight="bold">☁️ 2. The Cloud Check</text>
+  <text x="120" y="665" fill="#e4e4e7" font-size="34">A free robot re-runs your build + tests in the</text>
+  <text x="120" y="710" fill="#e4e4e7" font-size="34">cloud — even when your PC is off. Backup eyes.</text>
+
+  <!-- card 3 -->
+  <rect x="80" y="765" width="920" height="220" rx="20" fill="#18181b" stroke="#3f3f46" stroke-width="2"/>
+  <text x="120" y="835" fill="#FFCC00" font-size="42" font-weight="bold">🎯 3. The Goal Loop</text>
+  <text x="120" y="885" fill="#e4e4e7" font-size="34">Give a finish line: "Make it work, here's how</text>
+  <text x="120" y="930" fill="#e4e4e7" font-size="34">you'll PROVE it, stop after 20 tries." Then</text>
+  <text x="120" y="965" fill="#e4e4e7" font-size="34">let it run. The "prove it" part is the secret.</text>
+
+  <text x="1000" y="1045" fill="#52525b" font-size="30" text-anchor="end" font-weight="bold">2 / 5</text>
+</svg>
