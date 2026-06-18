@@ -4,7 +4,7 @@ import {
   Film, Search, Target, Type, Image as ImageIcon,
   Settings, Sparkles, ArrowRight, ChevronRight,
   Video, User, Clapperboard, Wand2, Calendar, Scissors, Mic,
-  LogOut, HelpCircle, Crown, Zap, X
+  LogOut, HelpCircle, Crown, Zap, X, Flame
 } from 'lucide-react';
 import { useSubscription } from '../hooks/useSubscription';
 import { useQuota } from '../hooks/useQuota';
@@ -12,7 +12,7 @@ import { Aurora } from './ui/Aurora';
 import { QuotaMeter } from './ui/QuotaMeter';
 import { CommandPalette, type CommandItem } from './ui/CommandPalette';
 import { RecentWorkCard } from './ui/RecentWorkCard';
-import { loadRecentWork, recordRecentWork, type RecentItem } from '../services/recentWorkService';
+import { loadRecentWork, recordRecentWork, activeDaysThisWeek, type RecentItem } from '../services/recentWorkService';
 import { ActiveJobsPanel } from './ui/ActiveJobsPanel';
 import { useActiveJobs } from '../hooks/useActiveJobs';
 import { OnboardingNudge } from './ui/OnboardingNudge';
@@ -123,6 +123,9 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
   const [onboardingDismissed, setOnboardingDismissed] = useState(true);
   const [draftSession, setDraftSession] = useState<WizardSessionV1 | null>(null);
   const activeJobs = useActiveJobs();
+  // Honest weekly-momentum signal — distinct days active in the trailing 7 days.
+  // Reflects real return visits only; recomputed whenever the recent feed changes.
+  const weeklyActiveDays = useMemo(() => activeDaysThisWeek(), [recent]);
 
   useEffect(() => {
     const initialRecent = loadRecentWork();
@@ -466,6 +469,21 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                 <span className="text-[#FFCC00] font-semibold">{quota.workflows.used}</span>{' '}
                 workflow{quota.workflows.used === 1 ? '' : 's'} this month. Tuloy lang.
               </motion.p>
+            )}
+            {/* Honest weekly-momentum chip — distinct active days this week, real activity only.
+                Shown from 2+ days so a single visit never reads as a "streak". */}
+            {weeklyActiveDays >= 2 && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="flex justify-center -mt-4 mb-8 lg:mb-10"
+              >
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-900/70 ring-1 ring-white/[0.06] text-[11px] text-zinc-400">
+                  <Flame className="w-3.5 h-3.5 text-[#FFCC00] shrink-0" />
+                  <span className="text-[#FFCC00] font-semibold">{weeklyActiveDays}</span> days creating this week
+                </span>
+              </motion.div>
             )}
             {(quota.loading || quota.workflows.used === 0) && <div className="mb-6 lg:mb-9" />}
 

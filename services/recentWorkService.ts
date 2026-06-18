@@ -47,6 +47,23 @@ export const recordRecentWork = (item: Omit<RecentItem, 'ts'>): RecentItem[] => 
   return next;
 };
 
+/**
+ * Distinct calendar days with recorded activity in the trailing 7 days — an
+ * honest weekly-momentum signal for the dashboard. Reflects real return visits
+ * only; it is capped by MAX_ITEMS, so for very heavy users it under-counts
+ * rather than over-claims, which keeps the number truthful. Never a fabricated
+ * streak.
+ */
+export const activeDaysThisWeek = (now: number = Date.now()): number => {
+  const weekAgo = now - 7 * 24 * 60 * 60 * 1000;
+  const days = new Set<string>();
+  for (const item of loadRecentWork()) {
+    if (item.ts < weekAgo || item.ts > now) continue;
+    days.add(new Date(item.ts).toDateString());
+  }
+  return days.size;
+};
+
 export const clearRecentWork = (): void => {
   if (!isBrowser()) return;
   try {

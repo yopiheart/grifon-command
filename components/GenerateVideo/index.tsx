@@ -37,6 +37,7 @@ import {
 } from '../../services/geminiService';
 import { getSupabase } from '../../services/supabaseClient';
 import { listActiveJobs, clearActiveJob } from '../../services/activeJobStore';
+import { ensureNotificationPermission, notify } from '../../services/notificationService';
 import { compressImageForUpload } from '../../utils/imageCompression';
 import { GoldButton } from '../ui/GoldButton';
 import { GlassPanel } from '../ui/GlassPanel';
@@ -488,6 +489,10 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
       return;
     }
 
+    // Renders are long-running; ask once (contextually, at submit) so a
+    // backgrounded tab still gets a system notification when this finishes.
+    void ensureNotificationPermission();
+
     // Phase 4a — diagnostic: one log per user click. Correlates with
     // [grifon:gv:proxy] (client) and [grifon:gv:submit] (server) via requestId
     // injected in proxyGenerateVideo. If the double-render bug recurs, the log
@@ -581,12 +586,15 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
       setCanvasView('preview');
       void refreshLibrary();
       toast.success('RENDER COMPLETE');
+      // Backgrounded-tab pull-back; no-op when the tab is focused (toast covers that).
+      notify({ title: 'Your video ad is ready 🎬', body: 'RENDER COMPLETE — tap to view.', tag: 'grifon-render' });
     } catch (e: any) {
       const msg = e?.message ?? 'Unknown error';
       if (msg !== 'ABORTED') {
         setError(msg);
         if (mode === 'pipeline') setStatus(activeIdx, 'failed');
         toast.error('RENDER FAILED', { description: msg });
+        notify({ title: 'Render failed', body: msg.slice(0, 120), tag: 'grifon-render' });
       } else if (mode === 'pipeline') {
         setStatus(activeIdx, 'ready');
       }
@@ -603,6 +611,10 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
       toast.error('MODEL LOCKED', { description: 'Pick an active Veo 3.1 engine.' });
       return;
     }
+
+    // Long multi-scene queue; ask once (contextually) so the user gets pulled
+    // back by a system notification when the whole pipeline finishes.
+    void ensureNotificationPermission();
 
     setError(null);
     setBusy(true);
@@ -742,6 +754,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
         toast('RESUMING QUEUE...');
       } else if (evt.type === 'complete') {
         toast.success('SCENE PIPELINE COMPLETE');
+        notify({ title: 'Your scenes are ready 🎬', body: 'SCENE PIPELINE COMPLETE — tap to view.', tag: 'grifon-render' });
       }
     };
 
@@ -763,6 +776,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
       if (msg !== 'ABORTED') {
         setError(msg);
         toast.error('PIPELINE FAILED', { description: msg });
+        notify({ title: 'Render failed', body: msg.slice(0, 120), tag: 'grifon-render' });
       }
     } finally {
       stopElapsedTick();
