@@ -16,6 +16,7 @@ import { loadRecentWork, recordRecentWork, activeDaysThisWeek, type RecentItem }
 import { computeUpgradeNudge } from '../config/upgradeNudge';
 import { ActiveJobsPanel } from './ui/ActiveJobsPanel';
 import { useActiveJobs } from '../hooks/useActiveJobs';
+import { useServerRenderJobs } from '../hooks/useServerRenderJobs';
 import { OnboardingNudge } from './ui/OnboardingNudge';
 import { ResumeDraftCard } from './ui/ResumeDraftCard';
 import { SignatureScribble } from './landing/SignatureScribble';
@@ -126,6 +127,9 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
   const [onboardingDismissed, setOnboardingDismissed] = useState(true);
   const [draftSession, setDraftSession] = useState<WizardSessionV1 | null>(null);
   const activeJobs = useActiveJobs();
+  // Cross-device resume (Phase 4): surface renders fired on another device + ping
+  // once for any that finished while away. Best-effort; runs once when logged in.
+  useServerRenderJobs(Boolean(userId));
   // Honest weekly-momentum signal — distinct days active in the trailing 7 days.
   // Reflects real return visits only; recomputed whenever the recent feed changes.
   const weeklyActiveDays = useMemo(() => activeDaysThisWeek(), [recent]);
