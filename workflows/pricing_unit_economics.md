@@ -100,3 +100,22 @@ Quota/price numbers above are placeholders until these land from beta render log
 4. **CAC inputs:** FB cost per free signup · **Free→Pro conversion rate** · avg paid tenure (churn).
 
 When these arrive, re-run §2–§4 and lock final included counts.
+
+---
+
+## 7. Restructure build progress (resume breadcrumb — branch `feat/pricing-restructure-starter-ladder`)
+
+The pricing restructure ships as vertical slices. **Slices 0–5 are committed + pushed.** Resume at Slice 6 with a fresh session (this doc + the slice list below are enough context — the ephemeral plan `~/.claude/plans/free-tier-let-greedy-matsumoto.md` is gone).
+
+**Done:**
+- **0–1** — ladder Free/Starter/Pro/Business; Autopilot invite-only; PlanId narrowed; top-ups registered (commit `8f70bea`).
+- **2** — one-shot wizard: `DirectorOneShot` + `useOneShotGeneration` + shared `utils/sceneRender.ts`; steps preserved (`821903f`).
+- **3** — per-finished-ad metering (`meterVideoRequest`/`consumeFinishedAd`, `finishedAdId` plumbed through all 3 video proxies); client `SCENE_CAP`; Free→`LockedVideoPreview`; Free exports watermarked at `Step7FinalOutput` (`e84a4df`).
+- **4** — Director (step) mode → Pro+ (CMO call, not Business-only); advanced 4K/quality/model controls → Business; engine names (Veo/Kling) hidden behind outcome labels; `grifon_dev_unlock` localStorage bypass for dev (`041c400`).
+- **5** — beta modules graduated off `grifon_admin` onto plan tiers (`MODULE_TIER`: generate_video Starter+, edit_video+signal_modulator Pro+, cinematic_studio Business); AI editor AUTO/RAW toggle (`2849b12`).
+
+**Remaining:**
+- **6** — Pricing page polish (value stack, marquee) + wire the top-up purchase flow (top-ups already in `PLAN_CATALOG`/`api/_lib/paymongo.ts`) + ₱499 single-ad fallback UI.
+- **7** — Full verification: build/test, bundle-leak, brand-check, and **smoke via `smoke-tester`** — including (a) the deferred 375px Dashboard locked-tile check, and (b) the parked **render-default decision** (bump standard from Lite/720p → Fast/1080p) which MUST be render-smoked first (see `agent_lessons.md` 2026-06-19 — it can break the working talking-scene pacing).
+
+**Parked follow-ups (not blocking):** server-side scene-cap hardening (client-only today); watermark full sweep (Step7 only today); Starter auto-edit path (edit_video is Pro+, so Starter has no auto-edit despite the §3 label); migrate remaining client-side prompts (thumbnail/avatar/scene) server-side.
