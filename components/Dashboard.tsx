@@ -4,7 +4,7 @@ import {
   Film, Search, Target, Type, Image as ImageIcon,
   Settings, Sparkles, ArrowRight, ChevronRight,
   Video, User, Clapperboard, Wand2, Calendar, Scissors, Mic,
-  LogOut, HelpCircle, Crown, Zap, X
+  LogOut, HelpCircle, Crown, Zap, X, Flame, Aperture
 } from 'lucide-react';
 import { useSubscription } from '../hooks/useSubscription';
 import { useQuota } from '../hooks/useQuota';
@@ -12,9 +12,11 @@ import { Aurora } from './ui/Aurora';
 import { QuotaMeter } from './ui/QuotaMeter';
 import { CommandPalette, type CommandItem } from './ui/CommandPalette';
 import { RecentWorkCard } from './ui/RecentWorkCard';
-import { loadRecentWork, recordRecentWork, type RecentItem } from '../services/recentWorkService';
+import { loadRecentWork, recordRecentWork, activeDaysThisWeek, type RecentItem } from '../services/recentWorkService';
+import { computeUpgradeNudge } from '../config/upgradeNudge';
 import { ActiveJobsPanel } from './ui/ActiveJobsPanel';
 import { useActiveJobs } from '../hooks/useActiveJobs';
+import { useServerRenderJobs } from '../hooks/useServerRenderJobs';
 import { OnboardingNudge } from './ui/OnboardingNudge';
 import { ResumeDraftCard } from './ui/ResumeDraftCard';
 import { SignatureScribble } from './landing/SignatureScribble';
@@ -91,6 +93,7 @@ const NAV_ITEMS: { id: string; label: string; icon: any; badge?: 'Beta' }[] = [
 ];
 
 const MORE_MODULES = [
+  { id: 'hook_lab', name: 'Hook Lab', icon: Aperture, desc: 'Surreal, scroll-stopping opening hooks for your ads.' },
   { id: 'cinematic_studio', name: 'Cinematic Studio', icon: Video, desc: 'High-fidelity video synthesis with custom camera paths and lighting control.' },
   { id: 'influencer_forge', name: 'Influencer Forge', icon: User, desc: 'Generate consistent digital personas for social campaigns and brand storytelling.' },
   { id: 'generate_video', name: 'Video Synthesis', icon: Clapperboard, desc: 'Render final video assets from storyboards and prompts.' },
@@ -119,10 +122,17 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
   const [paletteQuery, setPaletteQuery] = useState('');
   const [showUpgradeBanner, setShowUpgradeBanner] = useState(false);
   const [bannerMessage, setBannerMessage] = useState('');
+  const [bannerUrgency, setBannerUrgency] = useState<'low' | 'final'>('low');
   const [recent, setRecent] = useState<RecentItem[]>([]);
   const [onboardingDismissed, setOnboardingDismissed] = useState(true);
   const [draftSession, setDraftSession] = useState<WizardSessionV1 | null>(null);
   const activeJobs = useActiveJobs();
+  // Cross-device resume (Phase 4): surface renders fired on another device + ping
+  // once for any that finished while away. Best-effort; runs once when logged in.
+  useServerRenderJobs(Boolean(userId));
+  // Honest weekly-momentum signal — distinct days active in the trailing 7 days.
+  // Reflects real return visits only; recomputed whenever the recent feed changes.
+  const weeklyActiveDays = useMemo(() => activeDaysThisWeek(), [recent]);
 
   useEffect(() => {
     const initialRecent = loadRecentWork();
@@ -246,21 +256,23 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
     ...MORE_MODULES.map(m => ({ id: m.id, name: m.name, desc: m.desc, icon: m.icon, group: 'More', onSelect: () => handleSelectModule(m.id) })),
   ];
 
+  // Honest moment-of-value nudge — only surfaces once the user has felt the
+  // limit (shipped work + running low), quoting the real remaining number.
+  // Replaces the old permanent generic banner. The hard cap is the QuotaWallModal.
   useEffect(() => {
-    const isDismissed = localStorage.getItem('grifon_banner_dismissed') === 'true';
-    if (isDismissed) return;
-    
-    // Tier-based messaging
-    if (userPlan === 'free') {
-      setBannerMessage("You're on Free. Unlock AI Video Ads with Pro.");
-      setShowUpgradeBanner(true);
-    } else if (userPlan === 'creator') {
-      setBannerMessage("Upgrade to Pro. Get 15 AI Video Ads/month.");
+    if (localStorage.getItem('grifon_banner_dismissed') === 'true') {
+      setShowUpgradeBanner(false);
+      return;
+    }
+    const nudge = computeUpgradeNudge(userPlan, quota.workflows, quota.loading);
+    if (nudge) {
+      setBannerMessage(nudge.message);
+      setBannerUrgency(nudge.urgency);
       setShowUpgradeBanner(true);
     } else {
       setShowUpgradeBanner(false);
     }
-  }, [userPlan]);
+  }, [userPlan, quota.loading, quota.workflows.used, quota.workflows.limit, quota.workflows.remaining]);
 
   const dismissBanner = () => {
     localStorage.setItem('grifon_banner_dismissed', 'true');
@@ -281,7 +293,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
 
       {/* Upgrade Banner */}
       {showUpgradeBanner && (
-        <div ref={bannerRef} className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[#FFCC00]/10 via-[#FFCC00]/15 to-[#FFCC00]/10 border-b border-[#FFCC00]/20 backdrop-blur-xl">
+        <div ref={bannerRef} className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-xl border-b ${bannerUrgency === 'final' ? 'bg-gradient-to-r from-[#FFCC00]/15 via-[#FFCC00]/25 to-[#FFCC00]/15 border-[#FFCC00]/35' : 'bg-gradient-to-r from-[#FFCC00]/10 via-[#FFCC00]/15 to-[#FFCC00]/10 border-[#FFCC00]/20'}`}>
           <div className="max-w-7xl mx-auto pl-4 pr-10 py-2.5 flex items-center justify-center gap-3 relative">
             <Zap className="w-4 h-4 text-[#FFCC00] flex-shrink-0" />
             <p className="text-xs lg:text-sm text-zinc-300 text-center">
@@ -466,6 +478,21 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                 <span className="text-[#FFCC00] font-semibold">{quota.workflows.used}</span>{' '}
                 workflow{quota.workflows.used === 1 ? '' : 's'} this month. Tuloy lang.
               </motion.p>
+            )}
+            {/* Honest weekly-momentum chip — distinct active days this week, real activity only.
+                Shown from 2+ days so a single visit never reads as a "streak". */}
+            {weeklyActiveDays >= 2 && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="flex justify-center -mt-4 mb-8 lg:mb-10"
+              >
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-900/70 ring-1 ring-white/[0.06] text-[11px] text-zinc-400">
+                  <Flame className="w-3.5 h-3.5 text-[#FFCC00] shrink-0" />
+                  <span className="text-[#FFCC00] font-semibold">{weeklyActiveDays}</span> days creating this week
+                </span>
+              </motion.div>
             )}
             {(quota.loading || quota.workflows.used === 0) && <div className="mb-6 lg:mb-9" />}
 

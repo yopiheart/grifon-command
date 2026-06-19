@@ -1,6 +1,8 @@
 # Design Doc — Move heavy media to Cloudflare R2 (zero egress)
 
-**Status:** Phase 1 SHIPPED. Phase 2 R2 layer VERIFIED in dev. Pending: Vercel env + prod eyeball.
+**Status:** ✅ LIVE IN PROD as of 2026-06-17 (Neil). Phases 1–2 shipped, `MEDIA_STORE=r2` + the
+four `R2_*` vars wired into Vercel Production, redeployed, and a real prod render eyeballed.
+Egress risk closed. Remaining = Phase 5 cleanup only (see below), not a blocker.
 **Author:** 2026-06-13, during the Supabase egress incident.
 **Companion:** [STORAGE_AUDIT.md](../STORAGE_AUDIT.md) (why) · gallery fixes already shipped (Phase 2A+B).
 
@@ -44,13 +46,14 @@
   scripts were disposable (removed). NOTE: a full UI render smoke was skipped — the app uses Google
   OAuth and there's no headless dev-login bypass, so an automated browser smoke stalls at auth.
 
-**NEXT ACTIONS (blocked on Neil):**
-1. **Add the four `R2_*` vars + `MEDIA_STORE=r2` to Vercel** project env (Production), then redeploy.
-2. **Eyeball one real render in prod** (Neil can log in): generate a clip, confirm it plays from a
-   `*.r2.cloudflarestorage.com` URL and shows in the Rendered Rail. Old Supabase objects TTL out at
-   48h — no backfill.
-3. Phase 5 (after ~1 week clean on R2): delete the Supabase upload paths, swap the cleanup cron for
-   an R2 lifecycle rule, and **downgrade the Supabase org Pro → free** (egress will be ~zero).
+**NEXT ACTIONS:**
+1. ✅ **DONE 2026-06-17 (Neil)** — four `R2_*` vars + `MEDIA_STORE=r2` added to Vercel Production env
+   and redeployed.
+2. ✅ **DONE 2026-06-17 (Neil)** — real prod render eyeballed, plays from `*.r2.cloudflarestorage.com`.
+   Old Supabase objects TTL'd out at 48h (no backfill).
+3. ⏳ **Phase 5 (deferred cleanup, NOT a blocker)** — after ~1 week clean on R2: delete the Supabase
+   upload paths, swap the cleanup cron for an R2 lifecycle rule, and **downgrade the Supabase org
+   Pro → free** (egress will be ~zero).
 
 ---
 
