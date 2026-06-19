@@ -751,8 +751,8 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                         className="bg-zinc-900/50 backdrop-blur-xl rounded-2xl p-4 relative overflow-hidden group hover:bg-zinc-900/80 active:scale-[0.98] transition-all duration-500 ease-out cursor-pointer flex flex-col"
                       >
                         {!unlocked && tier && (
-                          <span className="absolute top-3 right-3 flex items-center gap-1 text-[9px] font-black uppercase tracking-widest text-[#FFCC00] bg-[#FFCC00]/10 border border-[#FFCC00]/30 rounded-full px-1.5 py-0.5">
-                            <Lock className="w-3 h-3" /> {tier}
+                          <span className="absolute top-3 right-3 flex items-center gap-1 text-[10px] font-black uppercase tracking-wide text-[#FFCC00] bg-[#FFCC00]/10 border border-[#FFCC00]/30 rounded-full px-1.5 py-0.5">
+                            <Lock className="w-3 h-3 shrink-0" /> {tier}
                           </span>
                         )}
                         <div className="w-8 h-8 bg-zinc-800 rounded-lg flex items-center justify-center mb-3">
