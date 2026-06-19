@@ -27,12 +27,14 @@ export const PLAN_FEATURES: Record<PlanId, string[]> = {
   ],
   // Honesty pass (2026-06-19): dropped 'brand profiles', 'team seats' and
   // 'White-label exports' — none are built, and white-label contradicts the ToS.
-  // Director mode moved to Pro (it's a Pro+ unlock — App.tsx directorUnlocked),
-  // so Business shows only its real incremental unlocks.
+  // Director mode moved to Pro (it's a Pro+ unlock — App.tsx directorUnlocked).
+  // 'Commercial-grade cinematic ads' is on the card per Neil — the cinematic
+  // render is scheduled to ship this week; it MUST be live before Business goes
+  // on sale or the claim is false (tracked in pricing_unit_economics.md §7).
   business: [
     '15 finished video ads a month',
-    '4K ultra-real images',
-    'Choose your video render quality — up to 4K',
+    'Commercial-grade cinematic ads — premium up to 4K rendering',
+    'Photoreal up to 4K product images',
     'Commercial & cinematic ad studio',
     'Weekly strategy call + dedicated account manager',
   ],
