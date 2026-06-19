@@ -4,7 +4,7 @@ import {
   Film, Search, Target, Type, Image as ImageIcon,
   Settings, Sparkles, ArrowRight, ChevronRight,
   Video, User, Clapperboard, Wand2, Calendar, Scissors, Mic,
-  LogOut, HelpCircle, Crown, Zap, X, Flame, Aperture, Lock
+  LogOut, HelpCircle, Crown, Zap, X, Flame, Aperture, Lock, LayoutGrid
 } from 'lucide-react';
 import { useSubscription } from '../hooks/useSubscription';
 import { planAtLeast, type PlanId } from '../utils/planGate';
@@ -109,6 +109,7 @@ const MORE_MODULES = [
   { id: 'influencer_forge', name: 'Influencer Forge', icon: User, desc: 'Generate consistent digital personas for social campaigns and brand storytelling.' },
   { id: 'generate_video', name: 'Video Synthesis', icon: Clapperboard, desc: 'Render final video assets from storyboards and prompts.' },
   { id: 'image_ads', name: 'Ad Creative Gen', icon: Wand2, desc: 'Generate high-converting image ads and variations.' },
+  { id: 'batch_fanout', name: 'Batch Creative Gen', icon: LayoutGrid, desc: '100+ ad creatives from one hero image — minutes, ~$0.' },
   { id: 'image_editor', name: 'Image Editor', icon: ImageIcon, desc: 'AI-generated ad images — in active improvement.' },
   { id: 'organic_calendar', name: 'Social Planner', icon: Calendar, desc: 'Schedule and automate your organic content calendar.' },
   { id: 'edit_video', name: 'Video Editor', icon: Scissors, desc: 'Timeline-based editing, trimming, and assembly.' },

@@ -526,6 +526,25 @@ export interface AdVariant {
   imageUrl?: string;
 }
 
+// Batch Creative Fan-Out — one hero image fanned into N template-composited
+// creatives. The LLM produces BatchHeadline[] (text only, one call); the client
+// Canvas compositor stamps each onto the hero to produce a BatchCreative.
+export interface BatchHeadline {
+  headline: string;   // short, punchy primary line (≤6 words)
+  subhead: string;    // supporting line / offer (≤10 words)
+  badge: string;      // 1-3 word corner flag (e.g. "8-IN-1", "HIP & JOINT")
+  angle: string;      // the psychological angle (for the user's reference)
+}
+
+export interface BatchCreative {
+  id: number;
+  headline: string;
+  subhead: string;
+  badge: string;
+  template: string;        // layout preset id used for this render
+  imageUrl?: string;       // composited PNG data URL (populated after render)
+}
+
 export interface UplinkData {
   brandIdentityName: string;
   originalPrice: string;

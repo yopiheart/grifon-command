@@ -29,6 +29,7 @@ import ImageEditor from './components/ImageEditor';
 import CaptionHeadline from './components/CaptionHeadline';
 import OrganicCalendar from './components/OrganicCalendar';
 import ImageAdsGen from './components/ImageAdsGen';
+import BatchFanOut from './components/BatchFanOut/BatchFanOut';
 import CinematicSpecStudio from './components/CinematicSpecStudio';
 import HookLab from './components/HookLab';
 import GenerateVideo from './components/GenerateVideo';
@@ -1364,6 +1365,8 @@ const App: React.FC = () => {
     moduleElement = <OrganicCalendar businessInfo={businessInfo} avatar={avatar} clientDetails={clientDetails} onBack={() => setActiveModule(null)} />;
   } else if (activeModule === 'image_ads') {
     moduleElement = <ImageAdsGen businessInfo={businessInfo} avatar={avatar} clientDetails={clientDetails} onBack={() => setActiveModule(null)} />;
+  } else if (activeModule === 'batch_fanout') {
+    moduleElement = <BatchFanOut businessInfo={businessInfo} avatar={avatar} clientDetails={clientDetails} onBack={() => setActiveModule(null)} />;
   } else if (activeModule === 'hook_lab') {
     moduleElement = <HookLab businessInfo={businessInfo} onBack={() => setActiveModule(null)} />;
   } else if (activeModule === 'creative_director') {
