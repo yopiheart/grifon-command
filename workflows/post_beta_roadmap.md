@@ -552,6 +552,69 @@ nafifinalize ung price and offer."*
 
 ---
 
+### 17. Prorated Tier Upgrades (pay only the gap + reset to fresh 30 days)
+
+**What:** When a paying user upgrades mid-cycle, charge only the **difference** — a prorated
+credit for the unused days of the current plan, applied against the new tier's price — then
+**reset the billing cycle to a fresh 30 days from the upgrade day** and renew at the new full
+price thereafter. Modeled exactly on Claude's "Adjust usage" flow (Neil's 2026-06-19
+screenshots): upgrade June 19 → credit −$48.82 → pay the gap $169.32 today → renewal moves to
+July 19 (today + 1 month). Scope v1: **same-cycle tier upgrades only** (monthly→monthly,
+annual→annual); cross-cycle and downgrades excluded.
+
+Design pieces (greenfield — no proration exists today):
+- `api/_lib/billing-math.ts`: pure `proratedCredit(oldCentavos, daysRemaining, cycleDays)` +
+  `proratedUpgradeDueCentavos(newCentavos, credit)`; reuse `splitVatInclusive` for the receipt.
+- `api/billing.ts`: server-authoritative upgrade intent — reads the authed user's current
+  `plan_id`/`billing_cycle`/`current_period_end`, computes the credit, creates a PaymentIntent
+  for the gap (client never sends an amount). Free→paid stays full price.
+- `api/webhook.ts`: stamp `plan_id = new tier`; the existing `periodEnd()` already resets the
+  cycle to `now + 1 month`, so "reset" is the default — we only add the credit, not the reset.
+- Checkout UI (`components/CheckoutPage.tsx` / order-summary): an "Order details" view —
+  Current plan, New plan, Adjustments (prorated credit −₱X), Subtotal, VAT, Total due today,
+  "Renews on <new date>." `brand-check` before done.
+- **Quota:** no change. `api/_lib/quota.ts` is calendar-based (`unit:monthly:YYYY-MM:user`), so an
+  upgrade auto-grants the higher limit for the current month — no quota-reset code needed.
+
+**Why it matters:** Pay-the-gap kills the "sayang, kakabayad ko lang ngayong buwan" friction that
+stops mid-cycle upgrades. Lower friction → more and earlier Creator→Pro / Pro→Business upgrades.
+**Funnel:** Free→Pro (priority #2) + Creator→Pro. **Metric:** upgrade rate + time-to-upgrade. The
+credit-and-reset model is fair (not gameable — you pay for what you get) and matches the mental
+model users already trust from Claude/Netflix, which protects Bryan's "is this scammy?" trust
+(grifon-cmo endorsed, 2026-06-19).
+
+**Why parked (Neil chose "plan now, park execution," 2026-06-19):** Two hard dependencies.
+(1) **Prices/offer aren't finalized** — same gate as items #5/#16; the proration *math* is
+price-agnostic (reads `PLAN_CATALOG`) but shipping a billing change before the ladder is locked is
+premature. (2) **Auto-renew does not exist** — billing is one-time PayMongo PaymentIntents; nothing
+charges again at the renewal date (`api/webhook.ts` sets `current_period_end` but no recurring
+charge fires). Proration is the "upgrade" half of a recurring system whose "renew" half isn't
+built — building it first is a second floor with no first floor.
+
+**When to resume:** When BOTH (a) the price + offer ladder is finalized AND (b) recurring auto-renew
+(or at minimum a renewal-reminder + manual re-checkout) is wired. Until renewal exists, the
+reset-to-fresh-cycle promise can't be honored end-to-end.
+
+**Where to start:**
+1. Build/confirm the renewal mechanism first (dependency) — proration is meaningless without it.
+2. Add the two pure proration fns to `api/_lib/billing-math.ts` + unit tests (edge cases:
+   last-day upgrade → credit ≈ 0 → pay ≈ full; day-1 upgrade → credit ≈ old price → pay ≈ gap).
+3. Wire the server-authoritative upgrade intent in `api/billing.ts` (read `current_period_end` via
+   a small helper alongside `getUserPlan`); reject cross-cycle/downgrade in v1.
+4. Webhook stamps the new plan; build the order-summary proration line; `brand-check`.
+5. Optional accuracy: add `current_period_start` to `subscriptions` for exact period-length
+   proration instead of the 30/365-day approximation.
+
+**Scope estimate:** ~1 day for proration once renewal exists (2 pure fns + intent branch + webhook
+stamp + one UI view). The renewal/auto-renew dependency is a separate, larger item.
+
+**Source:** Neil, 2026-06-19 — *"may current plan ka na… the user doesnt need to pay for the whole
+amount for the upgrade, instead they will just pay the pro rated amount… subscription would restart
+on the day when it was upgraded so that it would still reset back to 30 days."* + the Claude
+"Adjust usage" screenshots. grifon-cmo endorsed the credit-and-reset model; Neil deferred execution.
+
+---
+
 ## How to add new items
 
 When Neil endorses an idea but says "not now":
