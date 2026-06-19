@@ -204,63 +204,82 @@ export const renderCreative = (input: RenderInput): string => {
   // 1. hero photo, cover-fit
   drawCover(ctx, hero, W, H);
 
-  // 2. compute the band rect
+  // 2. measure the text FIRST so a solid band can grow to contain it. (Fixed
+  // band heights let the subhead spill onto the photo, where its band-tuned
+  // colour goes invisible — so geometry follows content, not the other way.)
   const short = Math.min(W, H);
-  const bandH = Math.round(short * preset.bandHeightFrac);
-  let rect: { x: number; y: number; w: number; h: number };
-  if (preset.band === 'top') rect = { x: 0, y: 0, w: W, h: bandH };
-  else if (preset.band === 'left') rect = { x: 0, y: 0, w: Math.round(W * 0.62), h: H };
-  else rect = { x: 0, y: H - bandH, w: W, h: bandH }; // bottom / framed / scrim
+  const minBand = Math.round(short * preset.bandHeightFrac);
+  const padX = Math.round(W * 0.055);
+  const isLeft = preset.band === 'left';
+  const bandW = isLeft ? Math.round(W * 0.62) : W;
+  const innerW = bandW - padX * 2;
+  const centered = preset.headlineAlign === 'center';
+
+  const { size, lines } = fitHeadline(ctx, headline, innerW, Math.round(W * 0.085), 3);
+  const lineH = size * 1.06;
+  const subSize = Math.round(size * 0.42);
+  const subLineH = subSize * 1.2;
+
+  let subLines: string[] = [];
+  if (subhead) {
+    ctx.font = `600 ${subSize}px Arial, sans-serif`;
+    subLines = wrap(ctx, subhead, innerW).slice(0, 2);
+  }
+
+  const padY = Math.round(size * 0.55);
+  const contentH = lines.length * lineH + (subLines.length ? subSize * 0.8 + subLines.length * subLineH : 0);
+
+  // band geometry: grow solid bands to fit; left band and framed scrim are fixed.
+  let bandH: number;
+  let bandY: number;
+  if (preset.band === 'top') {
+    bandH = Math.max(minBand, contentH + padY * 2);
+    bandY = 0;
+  } else if (isLeft) {
+    bandH = H;
+    bandY = 0;
+  } else if (preset.band === 'framed') {
+    bandH = Math.round(H * 0.55);
+    bandY = H - bandH;
+  } else {
+    bandH = Math.max(minBand, contentH + padY * 2);
+    bandY = H - bandH;
+  }
 
   // 3. paint the band
   if (preset.band === 'framed') {
-    // full-height bottom scrim + thin gold frame
-    const g = resolveFill('scrim', brand, ctx, { x: 0, y: H * 0.45, w: W, h: H * 0.55 });
+    const g = resolveFill('scrim', brand, ctx, { x: 0, y: bandY, w: W, h: bandH });
     ctx.fillStyle = g;
-    ctx.fillRect(0, Math.round(H * 0.45), W, Math.round(H * 0.55));
+    ctx.fillRect(0, bandY, W, bandH);
     ctx.strokeStyle = GOLD;
     ctx.lineWidth = Math.max(4, Math.round(W * 0.008));
     const inset = Math.round(W * 0.03);
     ctx.strokeRect(inset, inset, W - inset * 2, H - inset * 2);
   } else {
-    ctx.fillStyle = resolveFill(preset.bandFill, brand, ctx, rect) as string | CanvasGradient;
-    ctx.fillRect(rect.x, rect.y, rect.w, rect.h);
+    ctx.fillStyle = resolveFill(preset.bandFill, brand, ctx, { x: 0, y: bandY, w: bandW, h: bandH }) as string | CanvasGradient;
+    ctx.fillRect(0, bandY, bandW, bandH);
   }
 
-  // 4. headline + subhead
+  // 4. headline + subhead, vertically centred within the band's content box
   const textColor = resolveText(preset.headlineColor, preset.bandFill, brand);
-  const padX = Math.round(W * 0.055);
-  const innerW = (preset.band === 'left' ? rect.w : W) - padX * 2;
-  const centered = preset.headlineAlign === 'center';
   ctx.textAlign = centered ? 'center' : 'left';
   ctx.textBaseline = 'alphabetic';
+  const tx = centered ? bandW / 2 : padX;
 
-  const { size, lines } = fitHeadline(ctx, headline, innerW, Math.round(W * 0.085), 3);
-  const lineH = size * 1.06;
-  const subSize = Math.round(size * 0.42);
-  const blockH = lines.length * lineH + (subhead ? subSize * 1.8 : 0);
+  const blockTop = preset.band === 'framed' ? bandY + bandH - contentH - padY : bandY + (bandH - contentH) / 2;
+  const baseY = blockTop + size * 0.82; // first-line baseline (≈ cap height)
 
-  // vertical anchor inside the band
-  let cy: number;
-  if (preset.band === 'top') cy = rect.h / 2 - blockH / 2 + size;
-  else if (preset.band === 'left') cy = H / 2 - blockH / 2 + size;
-  else if (preset.band === 'framed') cy = H - bandH * 0.9;
-  else cy = H - rect.h + (rect.h - blockH) / 2 + size;
-
-  const tx = centered ? (preset.band === 'left' ? rect.w / 2 : W / 2) : padX;
   ctx.fillStyle = textColor;
   lines.forEach((ln, i) => {
     ctx.font = `900 ${size}px Arial, sans-serif`;
-    ctx.fillText(ln, tx, cy + i * lineH);
+    ctx.fillText(ln, tx, baseY + i * lineH);
   });
 
-  if (subhead) {
+  if (subLines.length) {
     ctx.font = `600 ${subSize}px Arial, sans-serif`;
     ctx.fillStyle = textColor === '#ffffff' ? 'rgba(255,255,255,0.88)' : 'rgba(10,10,10,0.82)';
-    const subLines = wrap(ctx, subhead, innerW).slice(0, 2);
-    subLines.forEach((ln, i) => {
-      ctx.fillText(ln, tx, cy + lines.length * lineH + subSize * 1.4 + i * subSize * 1.2);
-    });
+    const subTop = baseY + (lines.length - 1) * lineH + subSize * 0.8 + subLineH;
+    subLines.forEach((ln, i) => ctx.fillText(ln, tx, subTop + i * subLineH));
   }
 
   // 5. badge
