@@ -133,18 +133,27 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
 
   const current = plans[billing as keyof typeof plans];
 
+  // The single Pro differentiator the eye should catch vs Starter (Free→Pro is the
+  // #2 funnel priority — video is the bait). We underline only the feature NAME
+  // ("AI video editor"), not the whole line, so the scribble can't span a wrapped
+  // multi-line block. Pro only — a second scribble on Business would split the cue.
+  const PRO_HIGHLIGHT = PLAN_FEATURES.pro.find((f) => f.startsWith('AI video editor')) ?? '';
+  const [proHighlightHead, proHighlightTail] = PRO_HIGHLIGHT.split(' — ');
+
   const valueStack = [
     { item: "40 AI Video Ad Scripts", value: "₱20,000" },
     { item: "15 Deep Market Research Reports", value: "₱22,500" },
     { item: "15 Offer Optimizations", value: "₱15,000" },
     { item: "300 Ad Captions & Headlines", value: "₱15,000" },
     { item: "150 AI Ad Images", value: "₱15,000" },
-    { item: "15 AI Video Ads", value: "₱75,000" },
+    // Pro includes 8 finished ads (utils/planGate SCENE_CAP / quota MONTHLY_LIMITS),
+    // priced at the same ₱5,000/ad rate the other lines imply (was 15 → ₱75,000).
+    { item: "8 AI Video Ads", value: "₱40,000" },
     { item: "Monthly Strategy Call", value: "₱5,000" },
     { item: "Private Community Access", value: "₱2,500" },
   ];
 
-  const totalValue = "₱170,000";
+  const totalValue = "₱135,000";
 
   const navLinks: SiteNavLink[] = [
     { label: 'Home', onClick: onNavigateHome },
@@ -542,7 +551,16 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
                       lineHeight: 1.4,
                     }}>
                       <span style={{ flexShrink: 0 }}><Check /></span>
-                      <span>{f}</span>
+                      {i === 2 && f === PRO_HIGHLIGHT && proHighlightHead ? (
+                        <span>
+                          <SignatureScribble variant="underline" delay={0.4} strokeWidth={2.5}>
+                            <span className="text-white font-semibold">{proHighlightHead}</span>
+                          </SignatureScribble>
+                          {proHighlightTail ? ` — ${proHighlightTail}` : ''}
+                        </span>
+                      ) : (
+                        <span>{f}</span>
+                      )}
                     </div>
                   ))}
 
@@ -748,7 +766,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
                 <CheckIcon size={12} strokeWidth={2.5} /> THE GRIFON WAY
               </p>
               {[
-                "15 video ads/month for ₱2,497",
+                "8 video ads/month for ₱2,497",
                 "Everything in ONE app",
                 "30 minutes per campaign",
                 "AI scripts using proven frameworks",
@@ -769,7 +787,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
 
         {/* ===== KINETIC STRIP (synced with landing) ===== */}
         <Marquee
-          items={['30 minutes', 'NOT 3 DAYS', '₱997/mo', 'BUILT FOR FILIPINO BUSINESSES']}
+          items={['30 minutes', 'NOT 3 DAYS', '₱997/mo', 'NEED MORE? ₱499/AD', 'BUILT FOR FILIPINO BUSINESSES']}
           duration={26}
           reverse
           className="relative z-10 bg-zinc-950/60 mb-0"

@@ -13,12 +13,12 @@ export const PLAN_FEATURES: Record<PlanId, string[]> = {
   starter: [
     '1 finished video ad a month',
     'Your full ad plan: research, script, storyboard, avatar & thumbnail',
-    'Ready to post — auto-edited for you',
+    "Clean-cut video — your character's real voice, no dead air",
     'No watermarks',
   ],
   pro: [
     '8 finished video ads a month',
-    'AI editor: captions, music & effects — ready to post',
+    'AI video editor — captions, music & effects that keep viewers watching to the end',
     'Choose your storyboard format & editing style',
     'Facebook caption & headline packs',
     '3 brand profiles',
