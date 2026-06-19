@@ -12,11 +12,13 @@ import { creditsForAddOns, grantCredits } from './_lib/credits.js';
 
 export const config = { api: { bodyParser: false } };
 
-// Idempotency guard. A valid signature can be replayed within the freshness window,
-// and PayMongo itself delivers at-least-once, so the same event can legitimately
-// arrive twice. We dedupe on the event's own id against the last one we recorded for
-// this user (subscriptions.paymongo_last_checkout_id) — if it matches, this exact
-// activation was already applied, so re-processing is a no-op. No new table needed.
+// Idempotency guard for the LEGACY checkout_session.payment.paid branch only.
+// That branch performs an idempotent plan upsert (no additive grant), so a
+// last-write-wins marker is adequate: re-applying the same activation is a no-op.
+// The payment_intent.succeeded branch (which DOES additive credit grants) uses the
+// stronger atomic claimEvent() below instead — a mutable marker can't safely dedupe
+// an additive operation. We dedupe on the event's own id against the last one we
+// recorded for this user (subscriptions.paymongo_last_checkout_id).
 const alreadyProcessed = async (
   admin: SupabaseClient,
   user_id: string,
@@ -29,6 +31,30 @@ const alreadyProcessed = async (
     .eq('user_id', user_id)
     .maybeSingle();
   return Boolean(data) && data!.paymongo_last_checkout_id === eventId;
+};
+
+// Atomic idempotency claim for a webhook event, keyed on the PayMongo intent id
+// via the existing rate_limit_check RPC (limit 1). First delivery → count 1 →
+// claimed (true); any concurrent OR replayed delivery → count > 1 → false. This
+// is the dedup that the mutable `paymongo_last_checkout_id` marker could not
+// provide for ADDITIVE credit grants — that marker is last-write-wins, so a
+// concurrent double-delivery or a replay after a later purchase overwrote it
+// could grant credits twice for one payment. The claim is one atomic statement,
+// so concurrent deliveries can't both win.
+//
+// THROWS on RPC error: the handler then returns 5xx and PayMongo re-delivers
+// (at-least-once), so we never grant on an unconfirmed claim (no double-grant)
+// AND never silently drop a first delivery (the retry re-claims cleanly). The
+// window only has to outlive the 300s freshness gate above; 1h is ample.
+const WEBHOOK_CLAIM_WINDOW_SECONDS = 3600;
+const claimEvent = async (admin: SupabaseClient, intentId: string): Promise<boolean> => {
+  const { data, error } = await admin.rpc('rate_limit_check', {
+    p_key: `webhook:evt:${intentId}`,
+    p_limit: 1,
+    p_window_seconds: WEBHOOK_CLAIM_WINDOW_SECONDS,
+  });
+  if (error) throw new Error(`claim_rpc_failed: ${error.message}`);
+  return data === true;
 };
 
 const readRawBody = (req: VercelRequest): Promise<string> =>
@@ -127,17 +153,32 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (!user_id) {
       return res.status(200).json({ ignored: 'missing_metadata' });
     }
+    // No idempotency key → we can't safely run an additive credit grant. A real
+    // payment_intent.succeeded always carries an id; bail rather than risk a
+    // dedup-less grant.
+    if (!intent_id) {
+      return res.status(200).json({ ignored: 'missing_intent_id' });
+    }
 
     const admin = getSupabaseAdmin();
-    if (await alreadyProcessed(admin, user_id, intent_id)) {
+    // Atomic claim (replaces the last-write-wins alreadyProcessed marker for this
+    // branch) — closes the additive-grant double-grant window. On claim-RPC error
+    // we 5xx so PayMongo re-delivers; we never grant on an unconfirmed claim.
+    let claimed: boolean;
+    try {
+      claimed = await claimEvent(admin, intent_id);
+    } catch {
+      return res.status(500).json({ error: 'claim_failed' });
+    }
+    if (!claimed) {
       return res.status(200).json({ ignored: 'duplicate_event' });
     }
 
     // Standalone top-up purchase — grant finished-ad credits WITHOUT touching the
     // user's plan/status. This is the ₱499 single-ad door for Free users and the
     // overage door for subscribers; the intent carries purchase_type='topup' and
-    // no plan_id. Grant precedes the dedupe-marker write, so a rare in-window
-    // replay over-grants in the buyer's favor rather than dropping a paid credit.
+    // no plan_id. The atomic claimEvent() above has already guaranteed exactly-once
+    // delivery, so this additive grant runs at most once per payment.
     if (metadata.purchase_type === 'topup') {
       if (!add_ons) {
         return res.status(200).json({ ignored: 'topup_no_add_ons' });
