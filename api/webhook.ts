@@ -8,6 +8,7 @@ import {
   type PlanId,
 } from './_lib/paymongo.js';
 import { getSupabaseAdmin } from './_lib/supabaseAdmin.js';
+import { creditsForAddOns, grantCredits } from './_lib/credits.js';
 
 export const config = { api: { bodyParser: false } };
 
@@ -117,21 +118,47 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (type === 'payment_intent.succeeded') {
     const metadata = payload.metadata ?? {};
     const user_id: string | undefined = metadata.user_id;
-    const plan_id = metadata.plan_id as PlanId | undefined;
-    const billing_cycle = metadata.billing_cycle as BillingCycle | undefined;
     const intent_id: string | undefined = event?.data?.attributes?.data?.id;
     const add_ons =
       typeof metadata.add_ons === 'string' && metadata.add_ons.length
         ? metadata.add_ons.split(',')
         : null;
 
-    if (!user_id || !plan_id || !billing_cycle) {
+    if (!user_id) {
       return res.status(200).json({ ignored: 'missing_metadata' });
     }
 
     const admin = getSupabaseAdmin();
     if (await alreadyProcessed(admin, user_id, intent_id)) {
       return res.status(200).json({ ignored: 'duplicate_event' });
+    }
+
+    // Standalone top-up purchase — grant finished-ad credits WITHOUT touching the
+    // user's plan/status. This is the ₱499 single-ad door for Free users and the
+    // overage door for subscribers; the intent carries purchase_type='topup' and
+    // no plan_id. Grant precedes the dedupe-marker write, so a rare in-window
+    // replay over-grants in the buyer's favor rather than dropping a paid credit.
+    if (metadata.purchase_type === 'topup') {
+      if (!add_ons) {
+        return res.status(200).json({ ignored: 'topup_no_add_ons' });
+      }
+      const { video, cinematic } = creditsForAddOns(add_ons);
+      await grantCredits(user_id, video, cinematic);
+      await admin
+        .from('subscriptions')
+        .update({
+          paymongo_last_checkout_id: intent_id ?? null,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('user_id', user_id);
+      return res.status(200).json({ ok: true, granted: { video, cinematic } });
+    }
+
+    // Subscription activation (existing flow).
+    const plan_id = metadata.plan_id as PlanId | undefined;
+    const billing_cycle = metadata.billing_cycle as BillingCycle | undefined;
+    if (!plan_id || !billing_cycle) {
+      return res.status(200).json({ ignored: 'missing_metadata' });
     }
     const { error } = await admin
       .from('subscriptions')
@@ -150,6 +177,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       );
     if (error) {
       return res.status(500).json({ error: 'db_upsert_failed', detail: error.message });
+    }
+    // Grant any video-credit add-ons bought as order bumps alongside the plan
+    // (no-op for non-credit bumps like onboarding_call).
+    if (add_ons) {
+      const { video, cinematic } = creditsForAddOns(add_ons);
+      await grantCredits(user_id, video, cinematic);
     }
     return res.status(200).json({ ok: true });
   }

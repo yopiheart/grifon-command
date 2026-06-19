@@ -72,14 +72,34 @@ describe('consumeFinishedAd', () => {
     expect(rpcMock).not.toHaveBeenCalled();
   });
 
-  it('blocks (and never marks the ad) when the plan has 0 video credits', async () => {
-    // free.video_ads === 0 → consumeMonthly short-circuits without an RPC
+  it('blocks when the allowance is 0 AND no top-up credits remain', async () => {
+    // free.video_ads === 0 → consumeMonthly short-circuits without an RPC, then
+    // we fall back to consume_credit, which finds no credit (data:false).
     maybeSingleMock.mockResolvedValueOnce(fresh());
+    rpcMock.mockResolvedValue({ data: false, error: null }); // consume_credit → none
 
     const res = await consumeFinishedAd('u1', 'free', 'ad-1');
     expect(res.allowed).toBe(false);
     expect(res.alreadyCounted).toBe(false);
-    expect(rpcMock).not.toHaveBeenCalled();
+    expect(res.fromCredit).toBeUndefined();
+    // only the credit probe — no monthly consume, no job-marker write
+    expect(rpcMock).toHaveBeenCalledTimes(1);
+    expect(rpcMock.mock.calls[0][0]).toBe('consume_credit');
+  });
+
+  it('falls back to a purchased top-up credit when the allowance is exhausted', async () => {
+    // free.video_ads === 0 → consumeMonthly short-circuits, then consume_credit
+    // succeeds (data:true) and the job marker is written so later scenes are free.
+    maybeSingleMock.mockResolvedValueOnce(fresh());
+    rpcMock.mockResolvedValue({ data: true, error: null });
+
+    const res = await consumeFinishedAd('u1', 'free', 'ad-credit');
+    expect(res.allowed).toBe(true);
+    expect(res.fromCredit).toBe(true);
+    expect(res.alreadyCounted).toBe(false);
+    // consume_credit + job-marker write (rate_limit_check), in that order
+    expect(rpcMock).toHaveBeenCalledTimes(2);
+    expect(rpcMock.mock.calls.map((c) => c[0])).toEqual(['consume_credit', 'rate_limit_check']);
   });
 });
 
@@ -99,8 +119,9 @@ describe('meterVideoRequest', () => {
     expect(rpcMock).toHaveBeenCalledTimes(1);
   });
 
-  it('rejects free video regardless of finishedAdId', async () => {
+  it('rejects free video when no allowance and no credit', async () => {
     maybeSingleMock.mockResolvedValue(fresh());
+    rpcMock.mockResolvedValue({ data: false, error: null }); // consume_credit → none
     const res = await meterVideoRequest('u1', 'free', 'ad-9');
     expect(res.ok).toBe(false);
   });

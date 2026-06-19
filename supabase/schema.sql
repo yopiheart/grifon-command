@@ -15,6 +15,10 @@ create table if not exists public.subscriptions (
   current_period_end timestamptz,
   paymongo_customer_id text,
   paymongo_last_checkout_id text,
+  -- Top-up finished-ad credits (see credits.sql). Granted by add-on purchases,
+  -- consumed when the monthly video_ads allowance is exhausted.
+  video_ad_credits int not null default 0,
+  cinematic_credits int not null default 0,
   updated_at timestamptz not null default now()
 );
 

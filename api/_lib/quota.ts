@@ -1,5 +1,6 @@
 import { getSupabaseAdmin } from './supabaseAdmin.js';
 import { rateLimitCheck } from './rateLimit.js';
+import { consumeCredit } from './credits.js';
 import type { ServerPlanId } from './userPlan.js';
 
 // Per-tier daily request budgets for ElevenLabs hot paths.
@@ -162,10 +163,14 @@ export const MONTHLY_WINDOW_SECONDS = 31 * 86_400;
 export const finishedAdJobKey = (userId: string, finishedAdId: string): string =>
   `vidjob:${userId}:${finishedAdId}`;
 
-export type FinishedAdResult = ConsumeResult & { alreadyCounted: boolean };
+// `fromCredit` is true when the ad was funded by a purchased top-up credit
+// rather than the monthly allowance (used/limit then reflect the now-full meter).
+export type FinishedAdResult = ConsumeResult & { alreadyCounted: boolean; fromCredit?: boolean };
 
-// Consumes ONE video_ad credit the first time finishedAdId is seen; subsequent
-// scenes of the same ad return allowed:true without touching the monthly meter.
+// Consumes ONE video_ad allowance the first time finishedAdId is seen; subsequent
+// scenes of the same ad return allowed:true without touching the meter. When the
+// monthly allowance is exhausted, falls back to a purchased top-up credit so a
+// buyer's overage ad still renders.
 export async function consumeFinishedAd(
   userId: string,
   plan: ServerPlanId,
@@ -173,20 +178,32 @@ export async function consumeFinishedAd(
 ): Promise<FinishedAdResult> {
   const jobKey = finishedAdJobKey(userId, finishedAdId);
 
-  // Already metered this ad? peek the marker WITHOUT incrementing.
+  // Already metered this ad? peek the marker WITHOUT incrementing. Covers ads
+  // funded by either the monthly meter OR a top-up credit — the marker is set
+  // in both cases, so later scenes are always free.
   const seen = await peekQuota(jobKey, 1, MONTHLY_WINDOW_SECONDS);
   if (seen.used >= 1) {
     const status = await peekMonthly('video_ads', userId, plan);
     return { allowed: true, alreadyCounted: true, used: status.used, limit: status.limit, remaining: status.remaining };
   }
 
-  // First scene of a new finished ad → consume one credit.
+  // First scene of a new finished ad → consume one monthly credit.
   const result = await consumeMonthly('video_ads', userId, plan);
   if (result.allowed) {
     // Mark the ad as counted (0→1) so later scenes are free. Only on success, so
     // a rejected (out-of-quota) ad can still be metered after the user upgrades.
     await rateLimitCheck(jobKey, 1, MONTHLY_WINDOW_SECONDS);
+    return { ...result, alreadyCounted: false };
   }
+
+  // Monthly allowance exhausted → fall back to a purchased top-up credit. The
+  // RPC fails closed, so on infra error we don't hand out a free render.
+  const spentCredit = await consumeCredit(userId, 'video_ad');
+  if (spentCredit) {
+    await rateLimitCheck(jobKey, 1, MONTHLY_WINDOW_SECONDS);
+    return { allowed: true, alreadyCounted: false, fromCredit: true, used: result.used, limit: result.limit, remaining: 0 };
+  }
+
   return { ...result, alreadyCounted: false };
 }
 
