@@ -27,10 +27,13 @@ for a free beta.
    the BEAN BLOCK female-voice default all confirmed in Neil's most-recent render smoke.
 3. **✅ Resume-pill on refresh — verified working (Neil, long-standing).** Wizard state survives a
    hard refresh; the `[RESUME]` pill restores all step state (`App.tsx:611-623`, `:1330`).
-4. **⏳ R2 media migration — Vercel env wiring (the ONLY remaining Tier-0 gate to beta).** Add the
-   four `R2_*` vars + `MEDIA_STORE=r2` to Vercel Production env, redeploy, eyeball one prod render.
-   Closes the Supabase egress risk (hit 356% of free-tier quota). See
-   [`r2_media_migration.md`](r2_media_migration.md) lines 47-49.
+4. **✅ R2 media migration — LIVE IN PROD, RESOLVED 2026-06-17 (Neil).** `MEDIA_STORE=r2` + the four
+   `R2_*` vars wired into Vercel Production, redeployed, prod render eyeballed from
+   `*.r2.cloudflarestorage.com`. Supabase egress risk (had hit 356% of free-tier quota) closed.
+   Only Phase 5 cleanup remains — deferred, not a blocker. See
+   [`r2_media_migration.md`](r2_media_migration.md).
+
+**→ All Tier-0 launch gates are now cleared. Grifon is beta-ready; invite the first hand-picked user.**
 
 **New since 2026-06-13:**
 - **R2 media migration** — Phase 1 (dormant facade, default supabase, `4c499c1`) + Phase 2
