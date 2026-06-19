@@ -9,6 +9,7 @@ import { generateVideoEditPlan, generateEditDecisionList } from '../services/gem
 import { fetchVoices } from '../services/voiceService';
 import { consolidateVoices } from '../services/voiceConsolidationService';
 import { renderFinalVideo } from '../services/finalRenderService';
+import { triggerRenderFeedback } from '../services/feedbackModalStore';
 import { composeMusicBed } from '../services/musicService';
 import { estimateSpokenSec } from '../utils/spokenDuration';
 import { useSubscription } from '../hooks/useSubscription';
@@ -271,7 +272,11 @@ const BatchEditMode: React.FC<{
       // last scene renders clean, like before the 2026-06-13 feature.
       const result = await renderFinalVideo({ scenes, aspectRatio: editorBatch.aspectRatio, music });
       if (result.status === 'failed') setRenderError(result.error ?? 'RENDER_FAILED');
-      else setRenderResult(result);
+      else {
+        setRenderResult(result);
+        // The video is delivered — peak moment to ask for a rating + upgrade nudge.
+        if (result.url) triggerRenderFeedback(result.url);
+      }
     } catch (err: any) {
       setRenderError(err?.message ?? 'FINAL_RENDER_FAILED');
     } finally {

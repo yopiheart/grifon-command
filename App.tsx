@@ -56,6 +56,8 @@ import { OAUTH_PROVIDERS } from './config/authProviders';
 import { RouteVeil, type VeilState } from './components/ui/RouteVeil';
 import { QuotaWallModal } from './components/ui/QuotaWallModal';
 import { quotaWallStore } from './services/quotaWallStore';
+import { feedbackModalStore } from './services/feedbackModalStore';
+import { RenderFeedbackModal } from './components/ui/RenderFeedbackModal';
 import { useSubscription } from './hooks/useSubscription';
 import { nextTier } from './utils/planGate';
 import { getSession, setSession, clearSession, type WizardSessionV1 } from './services/wizardSessionStore';
@@ -125,6 +127,7 @@ const App: React.FC = () => {
   // generation hits the user's monthly plan allowance (HTTP 402). Rendered once
   // at the app root so any module/wizard step triggers it without prop drilling.
   const quotaWall = useSyncExternalStore(quotaWallStore.subscribe, quotaWallStore.getSnapshot);
+  const feedbackModal = useSyncExternalStore(feedbackModalStore.subscribe, feedbackModalStore.getSnapshot);
   const { billing_cycle } = useSubscription();
   const [bootLine, setBootLine] = useState(0);
   const [authEmail, setAuthEmail] = useState('');
@@ -1481,6 +1484,11 @@ const App: React.FC = () => {
           if (wallUpsell) startCheckout(wallUpsell, billing_cycle ?? 'monthly');
         }}
         onDismiss={() => quotaWallStore.dismiss()}
+      />
+      <RenderFeedbackModal
+        open={feedbackModal.open}
+        renderId={feedbackModal.renderId}
+        onDismiss={() => feedbackModalStore.dismiss()}
       />
     </ErrorBoundary>
   );

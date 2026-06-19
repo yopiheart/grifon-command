@@ -60,3 +60,34 @@ create trigger on_auth_user_created
 insert into public.subscriptions (user_id, plan_id, status)
 select id, 'free', 'active' from auth.users
 on conflict (user_id) do nothing;
+
+-- ============================================================
+-- render_feedback: one row per post-render rating a user leaves
+-- after a video is delivered (final MP4 or full scene pipeline).
+-- Writes come from api/feedback.ts via service role; reads are
+-- user-scoped via RLS. There is deliberately NO tip/payment column
+-- here — this captures rating + (optional) testimonial/feedback only.
+-- ============================================================
+create table if not exists public.render_feedback (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  render_id text not null,
+  rating int not null check (rating between 1 and 5),
+  testimonial text,
+  feedback text,
+  consent_to_share boolean not null default false,
+  display_name text,
+  created_at timestamptz not null default now()
+);
+
+create index if not exists render_feedback_user_id_idx
+  on public.render_feedback (user_id);
+
+alter table public.render_feedback enable row level security;
+
+drop policy if exists "users read own render_feedback" on public.render_feedback;
+create policy "users read own render_feedback"
+  on public.render_feedback for select
+  using (auth.uid() = user_id);
+
+-- No insert/update/delete policies => only service role (api/feedback.ts) writes.
