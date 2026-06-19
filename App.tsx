@@ -10,6 +10,7 @@ import Step4Avatar from './components/Step4Avatar';
 import Step5Storyboard from './components/Step5Storyboard';
 import DirectorOneShot from './components/DirectorOneShot';
 import LockedVideoPreview from './components/LockedVideoPreview';
+import PlanGate from './components/PlanGate';
 import type { OneShotSinks } from './hooks/useOneShotGeneration';
 import Step6Thumbnail from './components/Step6Thumbnail';
 import Step6VideoPrompts from './components/Step6VideoPrompts';
@@ -59,7 +60,7 @@ import { RouteVeil, type VeilState } from './components/ui/RouteVeil';
 import { QuotaWallModal } from './components/ui/QuotaWallModal';
 import { quotaWallStore } from './services/quotaWallStore';
 import { useSubscription } from './hooks/useSubscription';
-import { nextTier, planAtLeast } from './utils/planGate';
+import { nextTier, planAtLeast, type PlanId } from './utils/planGate';
 import { getSession, setSession, clearSession, type WizardSessionV1 } from './services/wizardSessionStore';
 
 const TOTAL_STEPS = 8;
@@ -128,6 +129,19 @@ const App: React.FC = () => {
   // at the app root so any module/wizard step triggers it without prop drilling.
   const quotaWall = useSyncExternalStore(quotaWallStore.subscribe, quotaWallStore.getSnapshot);
   const { billing_cycle, plan_id, loading: subLoading } = useSubscription();
+  // Slice 5 — gate a graduated module's RENDER behind a plan tier, with the
+  // grifon_dev_unlock bypass. Catches direct access (e.g. the video→AI-editor
+  // hand-off), not just the Dashboard tile. Server stays authoritative for the
+  // underlying AI calls.
+  const devUnlocked = typeof localStorage !== 'undefined' && localStorage.getItem('grifon_dev_unlock') === '1';
+  const gateModule = (node: React.ReactNode, requires: Exclude<PlanId, 'free'>, featureName: string): React.ReactNode =>
+    devUnlocked
+      ? node
+      : (
+        <PlanGate requires={requires} featureName={featureName} onBack={() => setActiveModule(null)} onUpgrade={() => { setActiveModule(null); setCurrentRoute('pricing'); }}>
+          {node}
+        </PlanGate>
+      );
   const [bootLine, setBootLine] = useState(0);
   const [authEmail, setAuthEmail] = useState('');
   const [authPassword, setAuthPassword] = useState('');
@@ -1293,7 +1307,7 @@ const App: React.FC = () => {
       );
     }
   } else if (activeModule === 'signal_modulator') {
-    moduleElement = (
+    moduleElement = gateModule((
       <SignalModulator
         onBack={() => {
           setSceneBatch([]);
@@ -1313,17 +1327,17 @@ const App: React.FC = () => {
           setActiveModule('edit_video');
         }}
       />
-    );
+    ), 'pro', 'Voice Studio');
   } else if (activeModule === 'influencer_forge') {
     moduleElement = <InfluencerForge onBack={() => setActiveModule(null)} ethnicity={avatar?.ethnicity} />;
   } else if (activeModule === 'cinematic_studio') {
-    moduleElement = <CinematicSpecStudio onBack={() => setActiveModule(null)} onNavigate={setActiveModule} businessInfo={businessInfo} narrative={cinematicNarrative} setNarrative={setCinematicNarrative} frameMap={cinematicFrameMap} setFrameMap={setCinematicFrameMap} result={cinematicResult} setResult={setCinematicResult} />;
+    moduleElement = gateModule(<CinematicSpecStudio onBack={() => setActiveModule(null)} onNavigate={setActiveModule} businessInfo={businessInfo} narrative={cinematicNarrative} setNarrative={setCinematicNarrative} frameMap={cinematicFrameMap} setFrameMap={setCinematicFrameMap} result={cinematicResult} setResult={setCinematicResult} />, 'business', 'Commercial & Cinematic Studio');
   } else if (activeModule === 'market_research') {
     moduleElement = <MarketResearch onBack={() => setActiveModule(null)} onNavigate={setActiveModule} />;
   } else if (activeModule === 'offer_optimizer') {
     moduleElement = <OfferOptimizer onBack={() => setActiveModule(null)} onNavigate={setActiveModule} />;
   } else if (activeModule === 'edit_video') {
-    moduleElement = (
+    moduleElement = gateModule((
       <EditVideo
         onBack={() => {
           setEditorBatch(null);
@@ -1332,7 +1346,7 @@ const App: React.FC = () => {
         editorBatch={editorBatch}
         avatarGender={avatarGender}
       />
-    );
+    ), 'pro', 'AI Video Editor');
   } else if (activeModule === 'image_editor') {
     moduleElement = <ImageEditor onBack={() => setActiveModule(null)} ethnicity={avatar?.ethnicity} />;
   } else if (activeModule === 'caption_headline') {

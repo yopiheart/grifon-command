@@ -381,16 +381,35 @@ const BatchEditMode: React.FC<{
             <label className="block text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">
               // STEP_2 · ASSEMBLE_FINAL_MP4
             </label>
-            <button
-              type="button"
-              onClick={() => setBurnInEnabled((v) => !v)}
-              className="flex items-center gap-2 mb-3 text-[10px] font-mono uppercase tracking-widest text-zinc-400 hover:text-white transition-colors"
-            >
-              {burnInEnabled
-                ? <CheckSquare className="w-4 h-4 shrink-0 text-[#FFCC00]" />
-                : <Square className="w-4 h-4 shrink-0 text-zinc-500" />}
-              // BURN-IN · CAPTIONS · SFX · MUSIC
-            </button>
+            {/* Raw / Auto edit mode. AUTO = captions + SFX + music burned in
+                (ready to post). RAW = stitched clips only, edit it yourself. */}
+            <div className="mb-3">
+              <span className="block text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">// EDIT_MODE</span>
+              <div className="flex gap-2">
+                {([
+                  { v: true, label: 'Auto' },
+                  { v: false, label: 'Raw' },
+                ] as const).map(({ v, label }) => (
+                  <button
+                    key={label}
+                    type="button"
+                    onClick={() => setBurnInEnabled(v)}
+                    className={`px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wide transition-colors border ${
+                      burnInEnabled === v
+                        ? 'bg-[#FFCC00] text-zinc-950 border-[#FFCC00]'
+                        : 'bg-zinc-950 text-zinc-400 border-white/10 hover:border-[#FFCC00]/50'
+                    }`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+              <p className="text-[10px] text-zinc-500 font-mono mt-2">
+                {burnInEnabled
+                  ? '// Captions · SFX · music — ready to post'
+                  : '// Stitched clips only — edit it yourself'}
+              </p>
+            </div>
             {/* Generative music — Pro/Business only. Off / ineligible → tuned static bed. */}
             {musicEligible && burnInEnabled && (
               <button
