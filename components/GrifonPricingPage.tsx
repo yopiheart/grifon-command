@@ -553,7 +553,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
                       <span style={{ flexShrink: 0 }}><Check /></span>
                       {i === 2 && f === PRO_HIGHLIGHT && proHighlightHead ? (
                         <span>
-                          <SignatureScribble variant="underline" delay={0.4} strokeWidth={2.5}>
+                          <SignatureScribble variant="underline" playOnMount delay={0.4} strokeWidth={2.5}>
                             <span className="text-white font-semibold">{proHighlightHead}</span>
                           </SignatureScribble>
                           {proHighlightTail ? ` — ${proHighlightTail}` : ''}
