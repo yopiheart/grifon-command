@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useMemo, useRef, useSyncExternalStore } from 'react';
-import { ChevronLeft, Lightbulb, RotateCw, Mail, Check, Star, Apple } from 'lucide-react';
+import { ChevronLeft, Lightbulb, RotateCw, Mail, Check, Star, Apple, Sparkles } from 'lucide-react';
 import { ClientDetails, BusinessInfo, Script, Scene, VideoPrompt, Avatar, CinematicNarrativeScene, SceneBatchEntry } from './types';
 import StepIndicator from './components/StepIndicator';
 import Step1ClientDetails from './components/Step1ClientDetails';
@@ -8,6 +8,8 @@ import Step2BusinessInfo from './components/Step2BusinessInfo';
 import Step3AdScript from './components/Step3AdScript';
 import Step4Avatar from './components/Step4Avatar';
 import Step5Storyboard from './components/Step5Storyboard';
+import DirectorOneShot from './components/DirectorOneShot';
+import type { OneShotSinks } from './hooks/useOneShotGeneration';
 import Step6Thumbnail from './components/Step6Thumbnail';
 import Step6VideoPrompts from './components/Step6VideoPrompts';
 import Step7FinalOutput from './components/Step7FinalOutput';
@@ -142,6 +144,10 @@ const App: React.FC = () => {
   const [activeModule, setActiveModule] = useState<string | null>(null);
   const [directorNudgeDismissed, setDirectorNudgeDismissed] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
+  // Director AI entry mode: one-shot (default — auto-generate the whole ad) vs
+  // the preserved 8-step wizard ('steps', advanced/Director mode). Slice 4 gates
+  // 'steps' to Business.
+  const [directorMode, setDirectorMode] = useState<'oneshot' | 'steps'>('oneshot');
   const [clientDetails, setClientDetails] = useState<ClientDetails>({ brandName: '', offer: '' });
   const [businessInfo, setBusinessInfo] = useState<BusinessInfo>({
     product: '',
@@ -623,6 +629,7 @@ const App: React.FC = () => {
     setThumbnailUrl(pendingSession.thumbnailUrl);
     setPendingSession(null);
     setHasRestored(true);
+    setDirectorMode('steps'); // resumed work is mid-wizard — keep the step view
     toast.success(`// SESSION_RESUMED — STEP_${stepLabel}_OF_08`, {
       description: 'Your earlier work has been restored.',
       duration: 6000,
@@ -653,6 +660,7 @@ const App: React.FC = () => {
     setCinematicResult(null);
     setPrefillSource(null);
     setMarketMindLoadedAvatar(null);
+    setDirectorMode('oneshot'); // a finished/restarted ad returns to the default surface
   };
 
   const goToLegal = (route: Route) => {
@@ -1330,6 +1338,12 @@ const App: React.FC = () => {
     const showResumePill = !isLoadingSession && pendingSession !== null && !hasRestored && wizardPristine;
     const showNudge = !hasRunResearch && !directorNudgeDismissed && !showResumePill;
     const showLoadedConfirmation = hasRunResearch && marketMindLoadedAvatar && !showResumePill;
+    // One-shot is the default surface; a pending step session forces steps mode
+    // so the user can resume where they left off.
+    const showOneShot = directorMode === 'oneshot' && !showResumePill;
+    const oneShotSinks: OneShotSinks = {
+      setScript, setFinalScript, setAvatar, setStoryboard, setThumbnailUrl, setVideoPrompts, setLanguage,
+    };
 
     moduleElement = (
         <div className="min-h-screen bg-zinc-950 font-sans flex flex-col items-center p-4 sm:p-6 md:p-8 text-white">
@@ -1395,8 +1409,27 @@ const App: React.FC = () => {
               <div className="flex items-center justify-center h-64">
                 <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest animate-pulse">// LOADING_SESSION...</p>
               </div>
+            ) : showOneShot ? (
+              <DirectorOneShot
+                clientDetails={clientDetails}
+                businessInfo={businessInfo}
+                aspectRatio={aspectRatio}
+                setAspectRatio={setAspectRatio}
+                language={language}
+                sinks={oneShotSinks}
+                onSwitchToSteps={() => { setDirectorMode('steps'); setCurrentStep(1); }}
+                onReview={() => { setDirectorMode('steps'); setCurrentStep(8); }}
+              />
             ) : (
             <>
+            {directorMode === 'steps' && !showResumePill && (
+              <button
+                onClick={() => setDirectorMode('oneshot')}
+                className="mb-6 flex items-center gap-2 text-[10px] font-mono text-zinc-500 hover:text-[#FFCC00] uppercase tracking-widest transition-colors"
+              >
+                <Sparkles className="w-3.5 h-3.5" /> Back to one-shot
+              </button>
+            )}
             {showResumePill && pendingSession && (
               <div className="bg-zinc-900 border border-[#FFCC00]/30 rounded-xl p-4 mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 <div className="flex items-start gap-3">
