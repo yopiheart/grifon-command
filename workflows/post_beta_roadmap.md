@@ -501,6 +501,57 @@ defer 2B / doc-lint / full-auto-CI.
 
 ---
 
+### 16. Lock the AI Editor to Pro+ (gate off Free + Creator)
+
+**What:** Wrap the AI Editor module (`edit_video`) in `<PlanGate requires="pro">` in
+[`App.tsx`](../App.tsx) — exactly like Video Synthesis (`generate_video`) already is
+(`App.tsx` ~1245) — so Free and Creator users hit a showroom-style upgrade gate instead
+of an empty editor. Both tiers get locked (both are `video_ads: 0` in
+[`utils/planGate.ts`](../utils/planGate.ts)).
+
+**Why it matters:** The whole video pipeline is *effectively* Pro+ already — Video
+Synthesis is `PlanGate requires="pro"`, and Free/Creator have `video_ads: 0`, so they can
+never produce scenes to feed the editor. But `edit_video` has **no PlanGate today**, so a
+Free/Creator user can open it from the Dashboard nav and land in a **dead room** (no
+scenes to assemble). That teases a broken feature → feeds Bryan's #1 objection ("just
+another AI tool na sira"). Locking it (a) kills the dead-room experience and (b) turns the
+locked door into a second desire-building upgrade surface at the moment a Free user is
+exploring (commitment/consistency + dream-outcome anchoring, per the grifon-cmo read
+2026-06-19). This is **coherence + a second upgrade trigger**, not a new revenue gate —
+the money gate is already upstream at video generation.
+
+**Why parked:** Neil hasn't finalized the **price + offer** yet (2026-06-19), and the gate's
+upgrade copy + which-tier-unlocks-what depend on that. Locking the editor before the offer
+is locked risks shipping a gate that points at an unfinalized plan. Also lower-priority than
+the in-flight `this_week_plan.md` core-product work (new ad styles). This is the
+pricing-dependent sibling of `this_week_plan.md` parked item #5 (website/payment/pricing).
+
+**When to resume:** When the price + offer are finalized (the same gate as
+`this_week_plan.md` #5). The trigger is "the Free→Creator→Pro tier boundaries and the
+Pro upgrade pitch are locked" — then the gate's showroom copy can be written truthfully.
+
+**Where to start:**
+1. Mirror the `generate_video` block in [`App.tsx`](../App.tsx) (~1245): wrap `<EditVideo>`
+   (~1307) in `<PlanGate requires="pro" featureName="AI Editor" onBack=… onUpgrade=…>`.
+2. Make the gate a **showroom, not a wall** (grifon-cmo): sell the outcome —
+   "Your finished, ready-to-post ad — captions burned in, voice synced, music scored.
+   Unlock with Pro." — not "PRO_TIER_REQUIRED". `PlanGate` already renders an upgrade CTA;
+   pass outcome-led `featureName`/copy.
+3. Confirm there's no legitimate Free/Creator path into the editor that should survive
+   (today the only entries are from Generate Video / Signal Modulator, both Pro+).
+4. `verify-changes` (build + smoke that Free/Creator see the gate, Pro+ pass through) +
+   `brand-check` on the gate surface.
+
+**Scope estimate:** ~30 min (one `PlanGate` wrap + outcome-led copy). Trivial once the
+offer is locked — the pattern already exists.
+
+**Source:** Neil, 2026-06-19 — *"gusto ko sana ung ai editor ay only for Pro+ tiers only.
+locked sya sa free and creator."* grifon-cmo endorsed (lock it: coherence + second upgrade
+trigger; make it a showroom). Neil deferred: *"oo ipending muna natin to. since diko pa
+nafifinalize ung price and offer."*
+
+---
+
 ## How to add new items
 
 When Neil endorses an idea but says "not now":
