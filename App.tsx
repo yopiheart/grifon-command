@@ -37,6 +37,7 @@ import InfluencerForge from './components/InfluencerForge';
 import LandingPage from './components/LandingPage';
 import GrifonPricingPage from './components/GrifonPricingPage';
 import CheckoutPage from './components/CheckoutPage';
+import TopUpCheckoutPage from './components/TopUpCheckoutPage';
 import Billing3dsReturn from './components/Billing3dsReturn';
 import BillingSuccess from './components/BillingSuccess';
 import TermsOfService from './components/TermsOfService';
@@ -787,6 +788,9 @@ const App: React.FC = () => {
   }
 
   if (currentRoute === 'checkout') {
+    // A ?topup=<id> query routes to the standalone credit purchase (no plan);
+    // everything else is the subscription checkout.
+    const isTopupCheckout = new URLSearchParams(window.location.search).has('topup');
     return (
       <ErrorBoundary
         name="route:checkout"
@@ -794,7 +798,11 @@ const App: React.FC = () => {
         onReset={() => setCurrentRoute('pricing')}
         resetLabel="BACK TO PRICING"
       >
-        <CheckoutPage email={userEmail} onBack={() => setCurrentRoute('pricing')} onViewLegal={handleViewLegal} />
+        {isTopupCheckout ? (
+          <TopUpCheckoutPage email={userEmail} onBack={() => setCurrentRoute('app')} onViewLegal={handleViewLegal} />
+        ) : (
+          <CheckoutPage email={userEmail} onBack={() => setCurrentRoute('pricing')} onViewLegal={handleViewLegal} />
+        )}
       </ErrorBoundary>
     );
   }
@@ -1275,6 +1283,7 @@ const App: React.FC = () => {
         <LockedVideoPreview
           onBack={() => setActiveModule(null)}
           onUpgrade={() => { setActiveModule(null); setCurrentRoute('pricing'); }}
+          onBuyTopup={() => { window.location.href = '/checkout?topup=video_ad_single'; }}
           thumbnailUrl={thumbnailUrl}
           previewImageUrl={storyboard[0]?.imageUrl}
         />
@@ -1545,6 +1554,7 @@ const App: React.FC = () => {
         onUpgrade={() => {
           if (wallUpsell) startCheckout(wallUpsell, billing_cycle ?? 'monthly');
         }}
+        onBuyTopup={(id) => { window.location.href = `/checkout?topup=${id}`; }}
         onDismiss={() => quotaWallStore.dismiss()}
       />
     </ErrorBoundary>

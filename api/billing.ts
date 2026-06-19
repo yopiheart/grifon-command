@@ -51,12 +51,16 @@ const ConfirmBody = z.object({
   intent_id: z.string().min(1),
   client_key: z.string().min(1),
   payment_method_id: z.string().min(1),
+  // True for a standalone top-up — tags the 3DS return_url so the post-payment
+  // screen doesn't claim a subscription was activated.
+  topup: z.boolean().optional(),
 });
 
 const EwalletBody = z.object({
   intent_id: z.string().min(1),
   client_key: z.string().min(1),
   type: z.enum(['gcash', 'paymaya', 'grab_pay']),
+  topup: z.boolean().optional(),
 });
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -251,12 +255,12 @@ async function handleConfirm(req: VercelRequest, res: VercelResponse, user: Auth
   if (!parsed.success) {
     return res.status(400).json({ error: 'invalid_body', issues: parsed.error.issues });
   }
-  const { intent_id, client_key, payment_method_id } = parsed.data;
+  const { intent_id, client_key, payment_method_id, topup } = parsed.data;
 
   if (!(await enforceRateLimit(res, `billing_confirm:${user.id}`, 10, 60))) return;
 
   const appUrl = process.env.APP_URL || `https://${req.headers.host}`;
-  const return_url = `${appUrl}/billing/3ds-return?intent=${encodeURIComponent(intent_id)}`;
+  const return_url = `${appUrl}/billing/3ds-return?intent=${encodeURIComponent(intent_id)}${topup ? '&topup=1' : ''}`;
 
   try {
     const intent = await attachPaymentMethod({
@@ -280,7 +284,7 @@ async function handleEwallet(req: VercelRequest, res: VercelResponse, user: Auth
   if (!parsed.success) {
     return res.status(400).json({ error: 'invalid_body', issues: parsed.error.issues });
   }
-  const { intent_id, client_key, type } = parsed.data;
+  const { intent_id, client_key, type, topup } = parsed.data;
 
   if (!(await enforceRateLimit(res, `billing_ewallet:${user.id}`, 10, 60))) return;
 
@@ -289,7 +293,7 @@ async function handleEwallet(req: VercelRequest, res: VercelResponse, user: Auth
   // GCash/Maya/GrabPay anyway, so a non-empty placeholder is enough.
   const billingName = email ? email.split('@')[0] : 'Grifon Customer';
   const appUrl = process.env.APP_URL || `https://${req.headers.host}`;
-  const return_url = `${appUrl}/billing/3ds-return?intent=${encodeURIComponent(intent_id)}`;
+  const return_url = `${appUrl}/billing/3ds-return?intent=${encodeURIComponent(intent_id)}${topup ? '&topup=1' : ''}`;
 
   try {
     const pm = await createEwalletPaymentMethod({

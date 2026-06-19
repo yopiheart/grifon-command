@@ -16,6 +16,8 @@ import { GoldButton } from './ui/GoldButton';
 interface LockedVideoPreviewProps {
   onBack: () => void;
   onUpgrade: () => void;
+  /** Standalone ₱499 single-ad door — render this ONE ad without subscribing. */
+  onBuyTopup?: () => void;
   /** The user's generated thumbnail (preferred teaser). */
   thumbnailUrl?: string | null;
   /** Fallback teaser — the first storyboard scene image. */
@@ -25,6 +27,7 @@ interface LockedVideoPreviewProps {
 const LockedVideoPreview: React.FC<LockedVideoPreviewProps> = ({
   onBack,
   onUpgrade,
+  onBuyTopup,
   thumbnailUrl,
   previewImageUrl,
 }) => {
@@ -84,6 +87,20 @@ const LockedVideoPreview: React.FC<LockedVideoPreviewProps> = ({
             <Sparkles className="w-4 h-4 mr-2 inline" />
             See plans &amp; unlock video
           </GoldButton>
+
+          {onBuyTopup && (
+            <p className="mt-5 text-sm text-zinc-400">
+              Just need this one?{' '}
+              <button
+                type="button"
+                onClick={onBuyTopup}
+                className="text-[#FFCC00] font-semibold hover:underline"
+              >
+                Get 1 ad for ₱499
+              </button>{' '}
+              — no subscription.
+            </p>
+          )}
         </GlassPanel>
       </div>
     </div>

@@ -16,6 +16,11 @@ const MAX_ATTEMPTS = 20;
 const Billing3dsReturn: React.FC<Props> = ({ onContinue, onRetry }) => {
   const [phase, setPhase] = useState<Phase>('polling');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  // Top-up purchases carry &topup=1 — the success copy must not claim a
+  // subscription was activated (a Free user's plan is unchanged; only credits land).
+  const isTopup =
+    typeof window !== 'undefined' &&
+    new URLSearchParams(window.location.search).get('topup') === '1';
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -86,13 +91,15 @@ const Billing3dsReturn: React.FC<Props> = ({ onContinue, onRetry }) => {
             <CheckCircle2 className="w-10 h-10 text-emerald-400 mx-auto mb-4" />
             <h1 className="text-xl font-semibold text-white mb-2">Payment confirmed</h1>
             <p className="text-zinc-400 text-sm mb-6">
-              Your subscription is active. Welcome to Grifon.
+              {isTopup
+                ? 'Your extra video-ad credits are ready. Render away.'
+                : 'Your subscription is active. Welcome to Grifon.'}
             </p>
             <button
               onClick={onContinue}
               className="w-full bg-[#FFCC00] text-black font-bold uppercase tracking-widest py-3 rounded-xl hover:shadow-[0_0_20px_rgba(255,204,0,0.4)] transition-all"
             >
-              Continue to Dashboard
+              {isTopup ? 'Back to my ads' : 'Continue to Dashboard'}
             </button>
           </>
         )}

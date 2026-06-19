@@ -16,6 +16,8 @@ interface QuotaWallModalProps {
   used: number;
   limit: number;
   onUpgrade: () => void;
+  /** Buy a standalone top-up (video_ads scope only). id is an ADD_ON / TopUp id. */
+  onBuyTopup?: (id: 'video_ad_single' | 'video_ad_pack5') => void;
   onDismiss: () => void;
 }
 
@@ -48,6 +50,7 @@ export const QuotaWallModal: React.FC<QuotaWallModalProps> = ({
   used,
   limit,
   onUpgrade,
+  onBuyTopup,
   onDismiss,
 }) => {
   const reduce = useReducedMotion();
@@ -81,6 +84,40 @@ export const QuotaWallModal: React.FC<QuotaWallModalProps> = ({
     onUpgrade();
     onDismiss();
   };
+
+  // Top-up door — only for video ads (the one metered unit with standalone
+  // credits). Lets a capped user buy more now instead of waiting for the reset,
+  // and is the ONLY path for a Business user already on the top plan.
+  const showTopup = scope === 'video_ads' && !!onBuyTopup;
+  const handleTopup = (id: 'video_ad_single' | 'video_ad_pack5') => {
+    onBuyTopup?.(id);
+    onDismiss();
+  };
+  const topupRow = showTopup ? (
+    <div className="px-6 mt-4">
+      <div className="mb-2 flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+        <span className="h-px flex-1 bg-white/10" /> or top up now <span className="h-px flex-1 bg-white/10" />
+      </div>
+      <div className="grid grid-cols-2 gap-2">
+        <button
+          type="button"
+          onClick={() => handleTopup('video_ad_single')}
+          className="rounded-xl border border-white/10 bg-zinc-950 px-3 py-2.5 text-left transition-colors hover:border-[#FFCC00]"
+        >
+          <span className="block text-sm font-semibold text-zinc-200">1 more ad</span>
+          <span className="block text-xs text-zinc-400">₱499</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => handleTopup('video_ad_pack5')}
+          className="rounded-xl border border-white/10 bg-zinc-950 px-3 py-2.5 text-left transition-colors hover:border-[#FFCC00]"
+        >
+          <span className="block text-sm font-semibold text-zinc-200">5-pack</span>
+          <span className="block text-xs text-zinc-400">₱2,250 · ₱450/ad</span>
+        </button>
+      </div>
+    </div>
+  ) : null;
 
   return createPortal(
     <AnimatePresence>
@@ -161,6 +198,8 @@ export const QuotaWallModal: React.FC<QuotaWallModalProps> = ({
                   </GoldButton>
                 </div>
 
+                {topupRow}
+
                 <button
                   type="button"
                   onClick={onDismiss}
@@ -175,9 +214,13 @@ export const QuotaWallModal: React.FC<QuotaWallModalProps> = ({
                   You're on our top plan
                 </h2>
                 <p className="px-6 mt-3 text-sm leading-relaxed text-zinc-400">
-                  You've reached this month's {scopeLabel} allowance on Business. Need more? Reach out
-                  and we'll sort out a custom limit for you.
+                  {showTopup
+                    ? `You've used this month's ${scopeLabel} allowance on Business. Top up now to keep rendering — credits don't expire.`
+                    : `You've reached this month's ${scopeLabel} allowance on Business. Need more? Reach out and we'll sort out a custom limit for you.`}
                 </p>
+
+                {topupRow}
+
                 <div className="px-6 mt-6 mb-6">
                   <button
                     type="button"
