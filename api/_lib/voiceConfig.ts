@@ -6,9 +6,12 @@ import type { ServerPlanId } from './userPlan.js';
 // for user clones). Tier these so paid plans get headroom — but stay conservative
 // because Starter capacity is finite. Upgrading ElevenLabs tier (Creator/Pro)
 // raises the global cap and lets these numbers scale.
+// Our pricing tiers (free/starter/pro/business). Starter is a bare trial tier —
+// 0 voice slots (cloning is Pro+). NOTE: the "Starter/Creator/Pro" names in the
+// comment above are ElevenLabs' OWN plan tiers, unrelated to these keys.
 export const VOICE_SLOTS: Record<ServerPlanId, number> = {
   free: 0,
-  creator: 1,
+  starter: 0,
   pro: 3,
   business: 5,
 };

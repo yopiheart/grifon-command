@@ -9,36 +9,37 @@ import type { ServerPlanId } from './userPlan.js';
 // effect on the next call (the rate_limit_check RPC reads the limit per-call).
 export const TTS_DAILY: Record<ServerPlanId, number> = {
   free: 3,
-  creator: 20,
+  starter: 10,
   pro: 60,
   business: 150,
 };
 
 export const STS_DAILY: Record<ServerPlanId, number> = {
   free: 2,
-  creator: 15,
+  starter: 8,
   pro: 40,
   business: 100,
 };
 
-// Voice clone is creator+ gated upstream; free is 0 belt-and-suspenders.
+// Voice clone is Pro+ gated upstream; free/starter are 0 belt-and-suspenders
+// (Starter is a deliberately bare trial tier — cloning is a Pro perk).
 export const CLONE_DAILY: Record<ServerPlanId, number> = {
   free: 0,
-  creator: 2,
+  starter: 0,
   pro: 5,
   business: 10,
 };
 
-// Generative music beds (ElevenLabs Music) — a Pro/Business perk. free/creator
+// Generative music beds (ElevenLabs Music) — a Pro/Business perk. free/starter
 // are 0 belt-and-suspenders: the client gates the toggle on tier, but the server
-// is authoritative, so a free/creator request can never burn the shared credit
+// is authoritative, so a free/starter request can never burn the shared credit
 // pool — it just falls back to a static bed. Music draws from the SAME ElevenLabs
 // credit pool as TTS/STS, so these are deliberately modest. Caching (one gen per
 // ad, keyed by render seed) keeps real spend well under these caps. Tune from
 // real credit-cost telemetry before raising.
 export const MUSIC_DAILY: Record<ServerPlanId, number> = {
   free: 0,
-  creator: 0,
+  starter: 0,
   pro: 10,
   business: 25,
 };
@@ -125,11 +126,15 @@ export const musicGlobalDailyKey = () => `music:global:daily`;
 
 export type MeterUnit = 'workflows' | 'reports' | 'captions' | 'images' | 'video_ads';
 
+// NOTE (2026-06-19): `video_ads` is now a FINISHED-AD allowance (one completed
+// one-shot render), not a per-scene clip count. The consume call site moves from
+// per-clip (api/gemini/video.ts) to once-per-finished-job in the render pipeline.
+// `workflows` = ad PLANS (one-shot consultations); Free = 1 complete plan.
 export const MONTHLY_LIMITS: Record<ServerPlanId, Record<MeterUnit, number>> = {
-  free:     { workflows: 3,   reports: 1,  captions: 10,  images: 5,   video_ads: 0  },
-  creator:  { workflows: 15,  reports: 5,  captions: 100, images: 50,  video_ads: 0  },
-  pro:      { workflows: 40,  reports: 15, captions: 300, images: 150, video_ads: 15 },
-  business: { workflows: 100, reports: 40, captions: 500, images: 300, video_ads: 40 },
+  free:     { workflows: 1,   reports: 1,  captions: 10,  images: 5,   video_ads: 0  },
+  starter:  { workflows: 3,   reports: 2,  captions: 30,  images: 25,  video_ads: 1  },
+  pro:      { workflows: 40,  reports: 15, captions: 300, images: 150, video_ads: 8  },
+  business: { workflows: 100, reports: 40, captions: 500, images: 300, video_ads: 15 },
 };
 
 // 31 days — a generous safety expiry. The YYYY-MM stamp is the real reset.
@@ -161,7 +166,7 @@ export type ConsumeResult = {
 
 // Atomically consumes one unit of the user's monthly allowance.
 // Returns allowed:false (without touching the counter) when the plan's limit
-// for this unit is 0 — e.g. free/creator video_ads. Otherwise increments via
+// for this unit is 0 — e.g. free video_ads. Otherwise increments via
 // the same atomic rate_limit_check RPC, then peeks to report the live count.
 export async function consumeMonthly(
   unit: MeterUnit,
@@ -174,7 +179,7 @@ export async function consumeMonthly(
   // video_ads ONLY; every other meter and all of production stay fully enforced.
   // The flag is absent under vitest, so quota.monthly.test.ts still asserts the
   // real cap. Placed before the limit<=0 short-circuit so it also unblocks tiers
-  // whose video_ads allowance is 0 (free/creator) during local testing.
+  // whose video_ads allowance is 0 (free) during local testing.
   if (unit === 'video_ads' && process.env.GRIFON_DEV_UNMETERED_VIDEO === 'true') {
     const devLimit = MONTHLY_LIMITS[plan][unit] || 999;
     return { allowed: true, used: 0, limit: devLimit, remaining: devLimit };

@@ -117,7 +117,7 @@ const BillingSuccess: React.FC<Props> = ({ onContinue, email }) => {
     }
   };
 
-  const planLabel = (plan_id ?? 'creator').toUpperCase();
+  const planLabel = (plan_id ?? 'pro').toUpperCase();
   const founding = FOUNDING_OFFER.enabled;
   const estDate = new Date().toLocaleDateString('en-PH', { month: 'short', year: 'numeric' }).toUpperCase();
 

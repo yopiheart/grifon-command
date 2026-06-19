@@ -9,7 +9,7 @@
 -- ============================================================
 create table if not exists public.subscriptions (
   user_id uuid primary key references auth.users(id) on delete cascade,
-  plan_id text not null check (plan_id in ('free','creator','pro','business')),
+  plan_id text not null check (plan_id in ('free','starter','pro','business')),
   status text not null check (status in ('active','past_due','canceled','trialing','incomplete')),
   billing_cycle text check (billing_cycle in ('monthly','annual')),
   current_period_end timestamptz,

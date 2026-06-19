@@ -10,38 +10,34 @@ const usage = (used: number, limit: number): UnitUsage => ({
 
 describe('computeUpgradeNudge — honest moment-of-value timing', () => {
   it('does not nag a fresh Free user who has shipped nothing', () => {
-    expect(computeUpgradeNudge('free', usage(0, 3))).toBeNull();
+    expect(computeUpgradeNudge('free', usage(0, 1))).toBeNull();
   });
 
-  it('stays quiet while a Free user has healthy headroom', () => {
+  it('stays quiet while a Free user still has plan headroom', () => {
+    // (Hypothetical multi-plan free) — fires only once fully spent.
     expect(computeUpgradeNudge('free', usage(1, 3))).toBeNull();
   });
 
-  it('fires for a Free user down to their last workflow, quoting the real number', () => {
-    const nudge = computeUpgradeNudge('free', usage(2, 3));
+  it('fires (final) once a Free user has built their plan — pitch the video', () => {
+    const nudge = computeUpgradeNudge('free', usage(1, 1));
     expect(nudge).not.toBeNull();
-    expect(nudge!.urgency).toBe('low');
-    expect(nudge!.message).toContain('1 free workflow');
-  });
-
-  it('escalates to final urgency once a Free user is fully spent', () => {
-    const nudge = computeUpgradeNudge('free', usage(3, 3));
     expect(nudge!.urgency).toBe('final');
+    expect(nudge!.message).toContain('ad plan');
   });
 
   it('never nudges while quota is still loading', () => {
-    expect(computeUpgradeNudge('free', usage(3, 3), true)).toBeNull();
+    expect(computeUpgradeNudge('free', usage(1, 1), true)).toBeNull();
   });
 
   it('guards against an unmetered (limit 0) plan', () => {
     expect(computeUpgradeNudge('free', usage(0, 0))).toBeNull();
   });
 
-  it('nudges Creator toward Pro only when the workflow tank runs low', () => {
-    expect(computeUpgradeNudge('creator', usage(10, 15))).toBeNull();
-    const low = computeUpgradeNudge('creator', usage(13, 15));
-    expect(low).not.toBeNull();
-    expect(low!.message).toContain('AI video ads');
+  it('nudges Starter toward Pro once its allowance is spent', () => {
+    expect(computeUpgradeNudge('starter', usage(1, 3))).toBeNull();
+    const spent = computeUpgradeNudge('starter', usage(3, 3));
+    expect(spent).not.toBeNull();
+    expect(spent!.message).toContain('video ads');
   });
 
   it('never shows a standing nag on Pro or Business', () => {

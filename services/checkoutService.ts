@@ -11,7 +11,7 @@ import { getSupabase } from './supabaseClient';
  * us in PCI SAQ A scope.
  */
 
-export type PlanId = 'creator' | 'pro' | 'business';
+export type PlanId = 'starter' | 'pro' | 'business';
 export type BillingCycle = 'monthly' | 'annual';
 
 export type IntentBreakdown = {

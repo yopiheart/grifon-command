@@ -20,15 +20,15 @@ interface QuotaWallModalProps {
 }
 
 const SCOPE_LABEL: Record<MeterUnit, string> = {
-  workflows: 'video ad workflows',
+  workflows: 'ad plans',
   reports: 'research reports',
   captions: 'captions & headlines',
   images: 'AI images',
-  video_ads: 'AI video ads',
+  video_ads: 'video ads',
 };
 
 const TIER_LABEL: Record<Exclude<PlanId, 'free'>, string> = {
-  creator: 'Creator',
+  starter: 'Starter',
   pro: 'Pro',
   business: 'Business',
 };

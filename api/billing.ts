@@ -31,7 +31,7 @@ type Action = (typeof ACTIONS)[number];
 const METER_UNITS: MeterUnit[] = ['workflows', 'reports', 'captions', 'images', 'video_ads'];
 
 const IntentBody = z.object({
-  plan_id: z.enum(['creator', 'pro', 'business']),
+  plan_id: z.enum(['starter', 'pro', 'business']),
   billing_cycle: z.enum(['monthly', 'annual']),
   // Optional order-bump add-on IDs. Validated server-side against ADD_ON_CATALOG;
   // the client only ever sends IDs, never an amount.

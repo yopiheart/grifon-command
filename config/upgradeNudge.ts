@@ -5,7 +5,7 @@ import type { UnitUsage } from '../hooks/useQuota';
  * Honest moment-of-value upgrade nudge (engagement Phase 2).
  *
  * Replaces the old permanent "You're on Free — upgrade" banner, which nagged
- * every Free/Creator user from their very first visit, before they'd gotten any
+ * every Free/Starter user from their very first visit, before they'd gotten any
  * value. High-trust tone: we only surface the pitch once the user has actually
  * FELT the limit (shipped real work and run low on their key monthly
  * allowance), and we always quote the true remaining number — never invented
@@ -30,26 +30,22 @@ export const computeUpgradeNudge = (
   if (limit <= 0) return null;
 
   if (plan === 'free') {
-    // Only after they've shipped at least one workflow AND are down to the last
-    // slot — pitch lands when the limit is real, not on a cold first visit.
-    if (used <= 0 || remaining > 1) return null;
-    return remaining === 0
-      ? {
-          message: `Ubos na ang ${limit} free workflows mo this month. Mag-Pro — 40 na/buwan, hindi ka na mauubusan. Tuloy lang.`,
-          urgency: 'final',
-        }
-      : {
-          message: `${remaining} free workflow na lang ngayong buwan. Mag-Pro para hindi ka maubusan — plus AI video ads.`,
-          urgency: 'low',
-        };
+    // Free = one complete ad plan. Once they've built it, the honest pitch is:
+    // turn the plan into a real video. Lands at the moment of value, not cold.
+    if (used <= 0 || remaining > 0) return null;
+    return {
+      message: `Gawa mo na ang free ad plan mo — i-render na natin into a real video ad. Mag-Starter (₱997) para sa unang video, o mag-Pro para sa 8/buwan.`,
+      urgency: 'final',
+    };
   }
 
-  if (plan === 'creator') {
-    // Creator never gets AI video ads; nudge toward Pro as the workflow tank runs low.
-    if (remaining > 2) return null;
+  if (plan === 'starter') {
+    // Starter is deliberately bare (1 video ad). Nudge toward Pro for more ads
+    // + the editor/presets/caption packs once they've used their plan slots.
+    if (remaining > 0) return null;
     return {
-      message: `${remaining} sa ${limit} workflows na lang. Mag-Pro para may AI video ads ka na — ito ang kulang sa Creator.`,
-      urgency: remaining === 0 ? 'final' : 'low',
+      message: `Nasubukan mo na ang Starter — Mag-Pro para sa 8 video ads/buwan, editing styles, at Facebook caption packs.`,
+      urgency: 'final',
     };
   }
 

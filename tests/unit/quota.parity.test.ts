@@ -9,7 +9,7 @@ import { MONTHLY_LIMITS, type MeterUnit } from '../../api/_lib/quota.js';
 import { PLAN_LIMITS, type PlanId } from '../../utils/planGate.js';
 
 const UNITS: MeterUnit[] = ['workflows', 'reports', 'captions', 'images', 'video_ads'];
-const PLANS: PlanId[] = ['free', 'creator', 'pro', 'business'];
+const PLANS: PlanId[] = ['free', 'starter', 'pro', 'business'];
 
 describe('MONTHLY_LIMITS / PLAN_LIMITS parity', () => {
   it('matches PLAN_LIMITS for every plan and metered unit', () => {

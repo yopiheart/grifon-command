@@ -803,7 +803,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                   <span className="text-xs text-zinc-400">Daily AI</span>
                 </div>
                 <span className="text-xs font-mono font-bold text-white">
-                  {userPlan === 'pro' || userPlan === 'business' ? 'Unlimited' : userPlan === 'creator' ? '0 / 20' : '0 / 3'}
+                  {userPlan === 'pro' || userPlan === 'business' ? 'Unlimited' : userPlan === 'starter' ? '0 / 10' : '0 / 3'}
                 </span>
               </div>
             </div>
@@ -813,7 +813,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
               <div className="flex items-center gap-2">
                 <Crown className="w-3.5 h-3.5 text-[#FFCC00]" />
                 <span className="text-xs font-semibold text-white">
-                  {userPlan === 'free' ? 'Free Edition' : userPlan === 'creator' ? 'Creator Edition' : 'Pro Edition'}
+                  {userPlan === 'free' ? 'Free Edition' : userPlan === 'starter' ? 'Starter Edition' : 'Pro Edition'}
                 </span>
               </div>
             </div>
