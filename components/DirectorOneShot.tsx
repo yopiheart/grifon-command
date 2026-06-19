@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, Loader2, Check, X, Circle, ArrowRight, AlertTriangle, Settings2, RotateCw } from 'lucide-react';
+import { Sparkles, Loader2, Check, X, Circle, ArrowRight, AlertTriangle, Settings2, RotateCw, Lock } from 'lucide-react';
 import type { ClientDetails, BusinessInfo } from '../types';
 import { GlassPanel } from './ui/GlassPanel';
 import { GoldButton } from './ui/GoldButton';
@@ -19,6 +19,10 @@ interface DirectorOneShotProps {
   setAspectRatio: (r: '9:16' | '16:9') => void;
   language: 'English' | 'Taglish' | null;
   sinks: OneShotSinks;
+  /** Pro+ unlock for Director (step-by-step) mode. Free/Starter get the upsell. */
+  directorUnlocked: boolean;
+  /** Route to pricing when a locked user reaches for Director mode. */
+  onUpgrade: () => void;
   /** Advanced step-by-step wizard (also the place to set up a brief manually). */
   onSwitchToSteps: () => void;
   /** After a successful run → Step 8 review + video hand-off. */
@@ -60,6 +64,8 @@ const DirectorOneShot: React.FC<DirectorOneShotProps> = ({
   setAspectRatio,
   language,
   sinks,
+  directorUnlocked,
+  onUpgrade,
   onSwitchToSteps,
   onReview,
 }) => {
@@ -127,7 +133,7 @@ const DirectorOneShot: React.FC<DirectorOneShotProps> = ({
               <RotateCw className="w-4 h-4" /> {oneShot.error ? 'Try again' : 'Start over'}
             </button>
           )}
-          {oneShot.done && (
+          {oneShot.done && directorUnlocked && (
             <button
               onClick={onSwitchToSteps}
               className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wide text-zinc-400 bg-zinc-950 border border-white/10 hover:border-[#FFCC00]/50 transition-colors"
@@ -155,9 +161,11 @@ const DirectorOneShot: React.FC<DirectorOneShotProps> = ({
       <GlassPanel className="p-5 space-y-4">
         <div className="flex items-center justify-between">
           <span className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest">// YOUR_BRIEF</span>
-          <button onClick={onSwitchToSteps} className="text-[10px] text-[#FFCC00] font-mono uppercase tracking-widest hover:underline">
-            Edit
-          </button>
+          {directorUnlocked && (
+            <button onClick={onSwitchToSteps} className="text-[10px] text-[#FFCC00] font-mono uppercase tracking-widest hover:underline">
+              Edit
+            </button>
+          )}
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <BriefRow label="Brand" value={clientDetails.brandName} />
@@ -173,7 +181,7 @@ const DirectorOneShot: React.FC<DirectorOneShotProps> = ({
           <div>
             <h3 className="text-sm font-bold text-white mb-1">Finish your brief first</h3>
             <p className="text-xs text-zinc-400">
-              Brand, offer, product and audience are required. Run Market Research to auto-fill them, or set them up in Director mode.
+              Brand, offer, product and audience are required. Run Market Research to auto-fill them{directorUnlocked ? ', or set them up in Director mode.' : '.'}
             </p>
           </div>
         </div>
@@ -200,12 +208,21 @@ const DirectorOneShot: React.FC<DirectorOneShotProps> = ({
         <GoldButton onClick={handleGenerate} disabled={!ready} className="flex items-center justify-center gap-2 disabled:opacity-40 disabled:pointer-events-none disabled:hover:scale-100">
           <Sparkles className="w-4 h-4" /> Generate my ad
         </GoldButton>
-        <button
-          onClick={onSwitchToSteps}
-          className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wide text-zinc-400 bg-zinc-950 border border-white/10 hover:border-[#FFCC00]/50 transition-colors"
-        >
-          <Settings2 className="w-4 h-4" /> Control every scene — Director mode
-        </button>
+        {directorUnlocked ? (
+          <button
+            onClick={onSwitchToSteps}
+            className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wide text-zinc-400 bg-zinc-950 border border-white/10 hover:border-[#FFCC00]/50 transition-colors"
+          >
+            <Settings2 className="w-4 h-4" /> Control every scene — Director mode
+          </button>
+        ) : (
+          <button
+            onClick={onUpgrade}
+            className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wide text-zinc-400 bg-zinc-950 border border-white/10 hover:border-[#FFCC00]/50 transition-colors"
+          >
+            <Lock className="w-3.5 h-3.5" /> Control every scene — <span className="text-[#FFCC00]">Pro</span>
+          </button>
+        )}
       </div>
     </div>
   );

@@ -272,7 +272,7 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
           {storyboardData.length > 0 && !loadingImages && (
             <div className="p-6 border border-[#FFCC00]/20 bg-zinc-950/50 backdrop-blur-md rounded-xl max-w-xl text-center">
               <p className="text-xs text-[#FFCC00] font-mono font-bold mb-2 uppercase tracking-widest">[ ENGINE_REPORT ]</p>
-              <p className="text-[11px] text-zinc-400 font-mono italic">"Daisy chain relay complete. Anchor identity locked at 98.4% variance. Clips are ready for Kling O1 Frame interpolation."</p>
+              <p className="text-[11px] text-zinc-400 font-mono italic">"Daisy chain relay complete. Anchor identity locked at 98.4% variance. Clips are ready for cinematic frame interpolation."</p>
               <div className="flex gap-4 justify-center mt-6">
                 <button onClick={handleGenerateCinematicChain} className="text-[10px] rounded-full px-6 py-2 border border-white/10 text-white hover:bg-white/5 transition-colors">RE-GENERATE CHAIN</button>
                 <button onClick={handleDownloadAllImages} className="text-[10px] rounded-full px-6 py-2 border border-white/10 text-white hover:bg-white/5 transition-colors">DOWNLOAD_RELAY (.ZIP)</button>

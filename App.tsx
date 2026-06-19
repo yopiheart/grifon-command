@@ -59,7 +59,7 @@ import { RouteVeil, type VeilState } from './components/ui/RouteVeil';
 import { QuotaWallModal } from './components/ui/QuotaWallModal';
 import { quotaWallStore } from './services/quotaWallStore';
 import { useSubscription } from './hooks/useSubscription';
-import { nextTier } from './utils/planGate';
+import { nextTier, planAtLeast } from './utils/planGate';
 import { getSession, setSession, clearSession, type WizardSessionV1 } from './services/wizardSessionStore';
 
 const TOTAL_STEPS = 8;
@@ -1355,6 +1355,11 @@ const App: React.FC = () => {
     const oneShotSinks: OneShotSinks = {
       setScript, setFinalScript, setAvatar, setStoryboard, setThumbnailUrl, setVideoPrompts, setLanguage,
     };
+    // Slice 4 — Director (step-by-step) mode is a Pro+ unlock ("control every
+    // scene"). Free/Starter ride the one-shot only. `grifon_dev_unlock` flips it
+    // on for dev/Neil on any account (console: localStorage.grifon_dev_unlock='1').
+    const devUnlock = typeof localStorage !== 'undefined' && localStorage.getItem('grifon_dev_unlock') === '1';
+    const directorUnlocked = devUnlock || planAtLeast(plan_id, 'pro');
 
     moduleElement = (
         <div className="min-h-screen bg-zinc-950 font-sans flex flex-col items-center p-4 sm:p-6 md:p-8 text-white">
@@ -1428,6 +1433,8 @@ const App: React.FC = () => {
                 setAspectRatio={setAspectRatio}
                 language={language}
                 sinks={oneShotSinks}
+                directorUnlocked={directorUnlocked}
+                onUpgrade={() => { setActiveModule(null); setCurrentRoute('pricing'); }}
                 onSwitchToSteps={() => { setDirectorMode('steps'); setCurrentStep(1); }}
                 onReview={() => { setDirectorMode('steps'); setCurrentStep(8); }}
               />
@@ -1471,7 +1478,7 @@ const App: React.FC = () => {
                 </div>
               </div>
             )}
-            {currentStep <= TOTAL_STEPS && <StepIndicator currentStep={currentStep} totalSteps={TOTAL_STEPS} onStepClick={(s) => s < currentStep && setCurrentStep(s)} />}
+            {currentStep <= TOTAL_STEPS && <StepIndicator currentStep={currentStep} totalSteps={TOTAL_STEPS} onStepClick={(s) => s < currentStep && directorUnlocked && setCurrentStep(s)} />}
             <div className="mt-8">
                 {currentStep === 1 && <Step1ClientDetails
                   data={clientDetails}
@@ -1486,7 +1493,7 @@ const App: React.FC = () => {
                 {currentStep === 5 && <Step5Storyboard script={finalScript} avatar={avatar} businessInfo={businessInfo} storyboard={storyboard} setStoryboard={setStoryboard} onNext={() => setCurrentStep(6)} onBack={() => setCurrentStep(4)} aspectRatio={aspectRatio} language={language} />}
                 {currentStep === 6 && <Step6Thumbnail script={finalScript} avatar={avatar} businessInfo={businessInfo} aspectRatio={aspectRatio} thumbnailUrl={thumbnailUrl} setThumbnailUrl={setThumbnailUrl} onNext={() => setCurrentStep(7)} onBack={() => setCurrentStep(5)} />}
                 {currentStep === 7 && <Step6VideoPrompts storyboard={storyboard} videoPrompts={videoPrompts} setVideoPrompts={setVideoPrompts} onNext={() => setCurrentStep(8)} onBack={() => setCurrentStep(6)} businessInfo={businessInfo} />}
-                {currentStep === 8 && <Step7FinalOutput allData={{ clientDetails, businessInfo, finalScript, avatar, storyboard, videoPrompts, thumbnailUrl, aspectRatio }} onRestart={restart} onBack={() => setCurrentStep(7)} onGenerateVideo={() => setActiveModule('generate_video')} />}
+                {currentStep === 8 && <Step7FinalOutput allData={{ clientDetails, businessInfo, finalScript, avatar, storyboard, videoPrompts, thumbnailUrl, aspectRatio }} onRestart={restart} onBack={directorUnlocked ? () => setCurrentStep(7) : () => setDirectorMode('oneshot')} onGenerateVideo={() => setActiveModule('generate_video')} />}
             </div>
             </>
             )}
