@@ -36,6 +36,8 @@ import {
   resumeVideoOperation,
 } from '../../services/geminiService';
 import { getSupabase } from '../../services/supabaseClient';
+import { useSubscription } from '../../hooks/useSubscription';
+import { SCENE_CAP } from '../../utils/planGate';
 import { listActiveJobs, clearActiveJob } from '../../services/activeJobStore';
 import { ensureNotificationPermission, notify } from '../../services/notificationService';
 import { compressImageForUpload } from '../../utils/imageCompression';
@@ -138,6 +140,19 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
   const [libraryLoading, setLibraryLoading] = useState(true);
   const [tick, setTick] = useState(0); // re-renders to refresh relative timestamps every minute
   const [userId, setUserId] = useState<string | null>(null); // Phase 4d — needed for IndexedDB resume keying
+
+  // Slice 3 — one stable id for THIS finished ad. Every scene render in this
+  // session shares it, so the server meters one video_ad credit per ad (not
+  // per scene). Lazily initialised once per GenerateVideo mount.
+  const finishedAdIdRef = useRef<string>('');
+  if (!finishedAdIdRef.current) {
+    finishedAdIdRef.current =
+      globalThis.crypto?.randomUUID?.() ?? `ad-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+  }
+  // Per-plan scene cap (the COGS dial) — Render All renders at most this many
+  // scenes per finished ad. Free is gated out of this module entirely.
+  const { plan_id } = useSubscription();
+  const sceneCap = SCENE_CAP[plan_id];
 
   // Phase 4a — cost guardrail confirm dialog. Resolves the promise stored on the
   // state so the GENERATE handler can await the user's choice before proceeding.
@@ -556,6 +571,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
         signal: ctrl.signal,
         metadata: mode === 'pipeline' ? { sceneIdx: activeIdx } : undefined,
         userId: userId ?? undefined,
+        finishedAdId: finishedAdIdRef.current,
       });
       if (mode === 'pipeline') {
         setSceneResults((prev) => ({ ...prev, [activeIdx]: result }));
@@ -621,10 +637,19 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
     setCanvasView('preview'); // big-preview spinner fires for the active scene as the queue runs
     toast('PREPARING SCENE PIPELINE...', { description: 'Loading storyboard images.' });
 
+    // Slice 3 — per-plan scene cap (the COGS dial). Render at most `sceneCap`
+    // scenes for this finished ad; longer storyboards are trimmed to the cap.
+    const cappedPrompts = sceneCap > 0 ? seedPrompts.slice(0, sceneCap) : seedPrompts;
+    if (seedPrompts.length > cappedPrompts.length) {
+      toast('SCENE CAP APPLIED', {
+        description: `Your plan renders up to ${sceneCap} scenes per ad — rendering the first ${sceneCap}.`,
+      });
+    }
+
     let jobs: RenderJob[];
     try {
       const prepared = await Promise.all(
-        seedPrompts.map(async (p, i): Promise<RenderJob | null> => {
+        cappedPrompts.map(async (p, i): Promise<RenderJob | null> => {
           if (sceneResults[i]) return null;
           const sceneImage = storyboard[i]?.imageUrl ?? storyboard[i]?.manualUploadUrl;
           let startFrame: string | undefined;
@@ -770,6 +795,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
         signal: ctrl.signal,
         onEvent,
         userId: userId ?? undefined,
+        finishedAdId: finishedAdIdRef.current,
       });
     } catch (e: any) {
       const msg = e?.message ?? 'Queue error';

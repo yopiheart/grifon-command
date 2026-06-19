@@ -140,6 +140,80 @@ export const MONTHLY_LIMITS: Record<ServerPlanId, Record<MeterUnit, number>> = {
 // 31 days — a generous safety expiry. The YYYY-MM stamp is the real reset.
 export const MONTHLY_WINDOW_SECONDS = 31 * 86_400;
 
+// ---------------------------------------------------------------------------
+// Finished-ad metering (2026-06-19 restructure — Slice 3).
+//
+// `video_ads` is a FINISHED-AD allowance, not a per-scene clip count. A finished
+// ad renders many scene-clips; metering each clip under-delivered vs the label
+// ("8 ads" really meant ~8 scene renders ≈ 2 ads) and broke trust. We now meter
+// ONE credit the first time a given finishedAdId is seen, then let every later
+// scene-clip of that same ad through free. Keeping the meter co-located with the
+// real upstream render call (rather than a separate "claim" endpoint) means a
+// direct per-clip call can't bypass it.
+//
+// SCENE_CAP (the per-ad COGS dial — caps ad length) is enforced CLIENT-side in
+// utils/planGate.ts: a monotonic server-side per-job counter would wrongly count
+// scene REGENERATIONS against the cap. Server hardening of the cap is a parked
+// follow-up; the per-ad credit above is the load-bearing margin control.
+// ---------------------------------------------------------------------------
+
+// `vidjob:${userId}:${finishedAdId}` — limit-1 marker: set once the ad's first
+// scene has consumed a credit, so later scenes/regenerations don't double-charge.
+export const finishedAdJobKey = (userId: string, finishedAdId: string): string =>
+  `vidjob:${userId}:${finishedAdId}`;
+
+export type FinishedAdResult = ConsumeResult & { alreadyCounted: boolean };
+
+// Consumes ONE video_ad credit the first time finishedAdId is seen; subsequent
+// scenes of the same ad return allowed:true without touching the monthly meter.
+export async function consumeFinishedAd(
+  userId: string,
+  plan: ServerPlanId,
+  finishedAdId: string,
+): Promise<FinishedAdResult> {
+  const jobKey = finishedAdJobKey(userId, finishedAdId);
+
+  // Already metered this ad? peek the marker WITHOUT incrementing.
+  const seen = await peekQuota(jobKey, 1, MONTHLY_WINDOW_SECONDS);
+  if (seen.used >= 1) {
+    const status = await peekMonthly('video_ads', userId, plan);
+    return { allowed: true, alreadyCounted: true, used: status.used, limit: status.limit, remaining: status.remaining };
+  }
+
+  // First scene of a new finished ad → consume one credit.
+  const result = await consumeMonthly('video_ads', userId, plan);
+  if (result.allowed) {
+    // Mark the ad as counted (0→1) so later scenes are free. Only on success, so
+    // a rejected (out-of-quota) ad can still be metered after the user upgrades.
+    await rateLimitCheck(jobKey, 1, MONTHLY_WINDOW_SECONDS);
+  }
+  return { ...result, alreadyCounted: false };
+}
+
+export type VideoMeterResult =
+  | { ok: true; used: number; limit: number; remaining: number }
+  | { ok: false; used: number; limit: number };
+
+// Single entry point the three video proxies share. With a finishedAdId it
+// meters per finished ad (idempotent); without one it falls back to the legacy
+// per-call meter so ad-hoc single renders behave exactly as before.
+export async function meterVideoRequest(
+  userId: string,
+  plan: ServerPlanId,
+  finishedAdId?: string,
+): Promise<VideoMeterResult> {
+  if (!finishedAdId) {
+    const r = await consumeMonthly('video_ads', userId, plan);
+    return r.allowed
+      ? { ok: true, used: r.used, limit: r.limit, remaining: r.remaining }
+      : { ok: false, used: r.used, limit: r.limit };
+  }
+  const credit = await consumeFinishedAd(userId, plan, finishedAdId);
+  return credit.allowed
+    ? { ok: true, used: credit.used, limit: credit.limit, remaining: credit.remaining }
+    : { ok: false, used: credit.used, limit: credit.limit };
+}
+
 // `${unit}:monthly:${YYYY}-${MM}:${userId}` — UTC calendar month.
 export function monthlyKey(unit: MeterUnit, userId: string, when: Date = new Date()): string {
   const yyyy = when.getUTCFullYear();

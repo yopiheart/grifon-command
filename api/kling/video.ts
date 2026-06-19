@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { getUserFromAccessToken } from '../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../_lib/rateLimit.js';
 import { getUserPlan } from '../_lib/userPlan.js';
-import { consumeMonthly } from '../_lib/quota.js';
+import { meterVideoRequest } from '../_lib/quota.js';
 import { getKlingAccessToken, invalidateKlingAccessToken, KLING_API_BASE } from '../_lib/klingAuth.js';
 
 const Body = z.object({
@@ -17,6 +17,8 @@ const Body = z.object({
   aspect_ratio: z.string().min(1),
   cfg_scale: z.number().min(0).max(1).optional(),
   requestId: z.string().optional(),
+  // Per-finished-ad id — metered once per ad (Slice 3); shared Veo+Kling key.
+  finishedAdId: z.string().optional(),
 });
 
 const VIDEO_LIMIT = 5;
@@ -68,8 +70,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   // below (error: 'kling_balance_exhausted'); this 402 uses the quota_exceeded
   // contract that raises the in-app upgrade wall.
   const plan = await getUserPlan(user.id);
-  const videoQuota = await consumeMonthly('video_ads', user.id, plan);
-  if (!videoQuota.allowed) {
+  const videoQuota = await meterVideoRequest(user.id, plan, parsed.data.finishedAdId);
+  if (!videoQuota.ok) {
     return res.status(402).json({
       error: 'quota_exceeded',
       scope: 'video_ads',
@@ -80,7 +82,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     });
   }
 
-  const { requestId, ...klingBody } = parsed.data;
+  const { requestId, finishedAdId, ...klingBody } = parsed.data;
   console.log('[grifon:kling:submit]', {
     t: Date.now(),
     userId: user.id,
@@ -90,6 +92,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     aspect: klingBody.aspect_ratio,
     hasTail: !!klingBody.image_tail,
     requestId,
+    finishedAdId,
   });
 
   let jwt: string;

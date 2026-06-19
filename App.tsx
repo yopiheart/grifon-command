@@ -9,6 +9,7 @@ import Step3AdScript from './components/Step3AdScript';
 import Step4Avatar from './components/Step4Avatar';
 import Step5Storyboard from './components/Step5Storyboard';
 import DirectorOneShot from './components/DirectorOneShot';
+import LockedVideoPreview from './components/LockedVideoPreview';
 import type { OneShotSinks } from './hooks/useOneShotGeneration';
 import Step6Thumbnail from './components/Step6Thumbnail';
 import Step6VideoPrompts from './components/Step6VideoPrompts';
@@ -30,7 +31,6 @@ import ImageAdsGen from './components/ImageAdsGen';
 import CinematicSpecStudio from './components/CinematicSpecStudio';
 import HookLab from './components/HookLab';
 import GenerateVideo from './components/GenerateVideo';
-import PlanGate from './components/PlanGate';
 import SignalModulator from './components/SignalModulator';
 import InfluencerForge from './components/InfluencerForge';
 import LandingPage from './components/LandingPage';
@@ -127,7 +127,7 @@ const App: React.FC = () => {
   // generation hits the user's monthly plan allowance (HTTP 402). Rendered once
   // at the app root so any module/wizard step triggers it without prop drilling.
   const quotaWall = useSyncExternalStore(quotaWallStore.subscribe, quotaWallStore.getSnapshot);
-  const { billing_cycle } = useSubscription();
+  const { billing_cycle, plan_id, loading: subLoading } = useSubscription();
   const [bootLine, setBootLine] = useState(0);
   const [authEmail, setAuthEmail] = useState('');
   const [authPassword, setAuthPassword] = useState('');
@@ -1249,13 +1249,24 @@ const App: React.FC = () => {
   if (!activeModule) {
     moduleElement = <Dashboard onSelectModule={setActiveModule} activeModule={activeModule} userEmail={userEmail} userId={userId} onLogout={handleLogout} onUpgrade={() => setCurrentRoute('pricing')} />;
   } else if (activeModule === 'generate_video') {
-    moduleElement = (
-      <PlanGate
-        requires="pro"
-        featureName="Video Synthesis"
-        onBack={() => setActiveModule(null)}
-        onUpgrade={() => { setActiveModule(null); setCurrentRoute('pricing'); }}
-      >
+    // Slice 3 — video is metered per FINISHED AD. Starter+ render (1/8/15 ads);
+    // Free renders 0 and instead lands on the LockedVideoPreview upsell at the
+    // hand-off. Server stays authoritative (meterVideoRequest); this is the UX
+    // gate. PlanGate is bypassed here so Free gets the tailored upsell, not the
+    // generic lock screen.
+    if (subLoading) {
+      moduleElement = <div className="min-h-screen bg-zinc-950" />;
+    } else if (plan_id === 'free') {
+      moduleElement = (
+        <LockedVideoPreview
+          onBack={() => setActiveModule(null)}
+          onUpgrade={() => { setActiveModule(null); setCurrentRoute('pricing'); }}
+          thumbnailUrl={thumbnailUrl}
+          previewImageUrl={storyboard[0]?.imageUrl}
+        />
+      );
+    } else {
+      moduleElement = (
         <GenerateVideo
           onBack={() => setActiveModule(null)}
           seedPrompts={videoPrompts}
@@ -1279,8 +1290,8 @@ const App: React.FC = () => {
             setActiveModule('signal_modulator');
           }}
         />
-      </PlanGate>
-    );
+      );
+    }
   } else if (activeModule === 'signal_modulator') {
     moduleElement = (
       <SignalModulator

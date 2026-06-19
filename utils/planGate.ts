@@ -21,6 +21,19 @@ export const PLAN_LIMITS: Record<PlanId, PlanLimits> = {
   business: { workflows: 100, reports: 40, captions: 500, images: 300, video_ads: 15, watermark: false },
 };
 
+// Per-plan scene cap — the COGS dial that bounds finished-ad length (and so the
+// video gen cost that is ~80% of every ad's COGS). Pro/Starter sit at 4 scenes
+// (~16–32s, the FB/reels sweet spot); Business gets 6 (8 for Commercial/Spec).
+// Enforced where Render All builds its job list (components/GenerateVideo). Free
+// is 0 — Free renders no video at all (video_ads: 0). See workflows/
+// pricing_unit_economics.md §2 for the cost-per-scene math behind these.
+export const SCENE_CAP: Record<PlanId, number> = {
+  free: 0,
+  starter: 4,
+  pro: 4,
+  business: 6,
+};
+
 export const PLAN_RANK: Record<PlanId, number> = {
   free: 0,
   starter: 1,

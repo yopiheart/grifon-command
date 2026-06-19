@@ -12,6 +12,10 @@ This pairs with the implementation plan `~/.claude/plans/free-tier-let-greedy-ma
 
 **Finalized model:** advertise AND meter in **finished ads**. One credit = one completed one-shot render job, capped at N scenes. The **scene cap is the margin dial** — without it, one user's 12-scene epic blows the per-ad COGS.
 
+> **Implementation status (Slice 3, 2026-06-19) — SHIPPED.** Metering moved from per-clip to **per-finished-ad**: every video proxy now carries a `finishedAdId`; `meterVideoRequest`/`consumeFinishedAd` ([api/_lib/quota.ts](../api/_lib/quota.ts)) charge ONE `video_ads` credit the first time an ad is seen and let later scenes/regenerations through free (idempotent via a `vidjob:` marker). Free renders 0 → lands on [LockedVideoPreview](../components/LockedVideoPreview.tsx) instead of a raw 402. Scene cap (`SCENE_CAP` in [utils/planGate.ts](../utils/planGate.ts): free 0 / starter·pro 4 / business 6) is enforced **client-side** in Render All. Free exports are watermarked at the central export surface ([Step7FinalOutput](../components/Step7FinalOutput.tsx)).
+>
+> **Parked hardening (follow-ups):** (1) *server-side* scene cap — a naive per-job counter wrongly counts regenerations against the cap, so the cap is client-only for now; per-ad credit metering is the load-bearing margin control. (2) Watermark **full sweep** — applied only at Step7 exports so far; the scattered per-module download sites (ImageModal, gallery tiles) still export clean. Both tracked for a focused pass.
+
 ---
 
 ## 2. Cost per finished ad (verified unit prices, 2026-06-19)
