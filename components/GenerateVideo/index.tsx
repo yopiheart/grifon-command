@@ -38,7 +38,6 @@ import {
 import { getSupabase } from '../../services/supabaseClient';
 import { listActiveJobs, clearActiveJob } from '../../services/activeJobStore';
 import { ensureNotificationPermission, notify } from '../../services/notificationService';
-import { triggerRenderFeedback } from '../../services/feedbackModalStore';
 import { compressImageForUpload } from '../../utils/imageCompression';
 import { GoldButton } from '../ui/GoldButton';
 import { GlassPanel } from '../ui/GlassPanel';
@@ -704,9 +703,6 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
     const ctrl = new AbortController();
     queueAbortRef.current = ctrl;
 
-    // Stable id for this pipeline run so the post-render feedback prompt fires once.
-    const runId = `${Date.now()}`;
-
     const startedAtPerScene = new Map<number, number>();
     const startTick = (idx: number) => {
       startedAtPerScene.set(idx, Date.now());
@@ -759,8 +755,6 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
       } else if (evt.type === 'complete') {
         toast.success('SCENE PIPELINE COMPLETE');
         notify({ title: 'Your scenes are ready 🎬', body: 'SCENE PIPELINE COMPLETE — tap to view.', tag: 'grifon-render' });
-        // Scenes delivered — peak moment to ask for a rating + upgrade nudge.
-        triggerRenderFeedback(`scene-pipeline:${runId}`);
       }
     };
 
