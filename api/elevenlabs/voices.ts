@@ -284,7 +284,7 @@ async function handleClone(req: VercelRequest, res: VercelResponse) {
   if (dailyLimit <= 0) {
     return res.status(403).json({
       error: 'plan_does_not_allow_cloning',
-      message: 'Voice cloning requires a Creator plan or higher. Upgrade to start cloning voices.',
+      message: 'Voice cloning requires a Pro plan or higher. Upgrade to start cloning voices.',
       plan,
     });
   }
