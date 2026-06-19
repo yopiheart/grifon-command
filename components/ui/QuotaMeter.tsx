@@ -12,7 +12,7 @@ interface QuotaMeterProps {
 
 const TIER_LABELS: Record<PlanId, string> = {
   free: 'Free',
-  creator: 'Creator',
+  starter: 'Starter',
   pro: 'Pro',
   business: 'Business',
 };
@@ -22,7 +22,7 @@ const TIER_LABELS: Record<PlanId, string> = {
 // counter — the real numbers will flow in via props once a useQuota hook lands.
 const DEFAULT_LIMITS: Record<PlanId, number | null> = {
   free: 3,
-  creator: 20,
+  starter: 10,
   pro: null,
   business: null,
 };

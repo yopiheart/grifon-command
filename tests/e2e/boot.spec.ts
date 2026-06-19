@@ -21,7 +21,7 @@ type Route = {
 
 const ROUTES: Route[] = [
   { path: '/', name: 'landing', anchor: '#what-you-get' },
-  { path: '/pricing', name: 'pricing', text: 'Creator' },
+  { path: '/pricing', name: 'pricing', text: 'Starter' },
   { path: '/terms', name: 'terms' },
   { path: '/privacy', name: 'privacy' },
 ];

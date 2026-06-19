@@ -4,7 +4,7 @@ import { GoogleGenAI } from '@google/genai';
 import { getUserFromAccessToken } from '../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../_lib/rateLimit.js';
 import { getUserPlan } from '../_lib/userPlan.js';
-import { consumeMonthly } from '../_lib/quota.js';
+import { meterVideoRequest } from '../_lib/quota.js';
 
 const Body = z.object({
   model: z.string().min(1),
@@ -19,6 +19,9 @@ const Body = z.object({
   // Phase 4a diagnostic: client-generated UUID correlates :click: → :proxy: → :submit:
   // logs so we can confirm whether a single user click produces multiple Veo calls.
   requestId: z.string().optional(),
+  // Stable per-finished-ad id. Present → metered ONCE per ad (Slice 3); absent →
+  // legacy per-call metering. All scenes of one Render All share the same value.
+  finishedAdId: z.string().optional(),
 });
 
 const VIDEO_LIMIT = 5;
@@ -69,12 +72,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     });
   }
 
-  // Monthly plan allowance (video_ads). Distinct from the hourly rate-limit
-  // above: this counts toward the user's tier cap (shared across Veo + Kling)
-  // and raises the in-app upgrade wall via the 402 quota_exceeded contract.
+  // Monthly plan allowance — now a FINISHED-AD credit (shared across Veo + Kling).
+  // Metered once per finishedAdId; raises the in-app upgrade wall via the 402
+  // quota_exceeded contract. Distinct from the hourly rate-limit above.
   const plan = await getUserPlan(user.id);
-  const videoQuota = await consumeMonthly('video_ads', user.id, plan);
-  if (!videoQuota.allowed) {
+  const videoQuota = await meterVideoRequest(user.id, plan, parsed.data.finishedAdId);
+  if (!videoQuota.ok) {
     return res.status(402).json({
       error: 'quota_exceeded',
       scope: 'video_ads',
@@ -87,8 +90,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const ai = getAi();
-    // Strip requestId before forwarding to Veo (diagnostic-only, not part of Veo's API surface).
-    const { requestId, ...veoParams } = parsed.data;
+    // Strip client-only fields before forwarding to Veo (not part of Veo's API surface).
+    const { requestId, finishedAdId, ...veoParams } = parsed.data;
     const cfg: any = (veoParams as any).config ?? {};
     console.log('[grifon:gv:submit]', {
       t: Date.now(),
@@ -97,6 +100,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       resolution: cfg.resolution,
       duration: cfg.durationSeconds,
       requestId,
+      finishedAdId,
     });
     const operation = await ai.models.generateVideos(veoParams as any);
     return res.status(200).json({ operation });

@@ -1,5 +1,6 @@
 import { getSupabaseAdmin } from './supabaseAdmin.js';
 import { rateLimitCheck } from './rateLimit.js';
+import { consumeCredit } from './credits.js';
 import type { ServerPlanId } from './userPlan.js';
 
 // Per-tier daily request budgets for ElevenLabs hot paths.
@@ -9,36 +10,37 @@ import type { ServerPlanId } from './userPlan.js';
 // effect on the next call (the rate_limit_check RPC reads the limit per-call).
 export const TTS_DAILY: Record<ServerPlanId, number> = {
   free: 3,
-  creator: 20,
+  starter: 10,
   pro: 60,
   business: 150,
 };
 
 export const STS_DAILY: Record<ServerPlanId, number> = {
   free: 2,
-  creator: 15,
+  starter: 8,
   pro: 40,
   business: 100,
 };
 
-// Voice clone is creator+ gated upstream; free is 0 belt-and-suspenders.
+// Voice clone is Pro+ gated upstream; free/starter are 0 belt-and-suspenders
+// (Starter is a deliberately bare trial tier — cloning is a Pro perk).
 export const CLONE_DAILY: Record<ServerPlanId, number> = {
   free: 0,
-  creator: 2,
+  starter: 0,
   pro: 5,
   business: 10,
 };
 
-// Generative music beds (ElevenLabs Music) — a Pro/Business perk. free/creator
+// Generative music beds (ElevenLabs Music) — a Pro/Business perk. free/starter
 // are 0 belt-and-suspenders: the client gates the toggle on tier, but the server
-// is authoritative, so a free/creator request can never burn the shared credit
+// is authoritative, so a free/starter request can never burn the shared credit
 // pool — it just falls back to a static bed. Music draws from the SAME ElevenLabs
 // credit pool as TTS/STS, so these are deliberately modest. Caching (one gen per
 // ad, keyed by render seed) keeps real spend well under these caps. Tune from
 // real credit-cost telemetry before raising.
 export const MUSIC_DAILY: Record<ServerPlanId, number> = {
   free: 0,
-  creator: 0,
+  starter: 0,
   pro: 10,
   business: 25,
 };
@@ -125,15 +127,109 @@ export const musicGlobalDailyKey = () => `music:global:daily`;
 
 export type MeterUnit = 'workflows' | 'reports' | 'captions' | 'images' | 'video_ads';
 
+// NOTE (2026-06-19): `video_ads` is now a FINISHED-AD allowance (one completed
+// one-shot render), not a per-scene clip count. The consume call site moves from
+// per-clip (api/gemini/video.ts) to once-per-finished-job in the render pipeline.
+// `workflows` = ad PLANS (one-shot consultations); Free = 1 complete plan.
 export const MONTHLY_LIMITS: Record<ServerPlanId, Record<MeterUnit, number>> = {
-  free:     { workflows: 3,   reports: 1,  captions: 10,  images: 5,   video_ads: 0  },
-  creator:  { workflows: 15,  reports: 5,  captions: 100, images: 50,  video_ads: 0  },
-  pro:      { workflows: 40,  reports: 15, captions: 300, images: 150, video_ads: 15 },
-  business: { workflows: 100, reports: 40, captions: 500, images: 300, video_ads: 40 },
+  free:     { workflows: 1,   reports: 1,  captions: 10,  images: 5,   video_ads: 0  },
+  starter:  { workflows: 3,   reports: 2,  captions: 30,  images: 25,  video_ads: 1  },
+  pro:      { workflows: 40,  reports: 15, captions: 300, images: 150, video_ads: 8  },
+  business: { workflows: 100, reports: 40, captions: 500, images: 300, video_ads: 15 },
 };
 
 // 31 days — a generous safety expiry. The YYYY-MM stamp is the real reset.
 export const MONTHLY_WINDOW_SECONDS = 31 * 86_400;
+
+// ---------------------------------------------------------------------------
+// Finished-ad metering (2026-06-19 restructure — Slice 3).
+//
+// `video_ads` is a FINISHED-AD allowance, not a per-scene clip count. A finished
+// ad renders many scene-clips; metering each clip under-delivered vs the label
+// ("8 ads" really meant ~8 scene renders ≈ 2 ads) and broke trust. We now meter
+// ONE credit the first time a given finishedAdId is seen, then let every later
+// scene-clip of that same ad through free. Keeping the meter co-located with the
+// real upstream render call (rather than a separate "claim" endpoint) means a
+// direct per-clip call can't bypass it.
+//
+// SCENE_CAP (the per-ad COGS dial — caps ad length) is enforced CLIENT-side in
+// utils/planGate.ts: a monotonic server-side per-job counter would wrongly count
+// scene REGENERATIONS against the cap. Server hardening of the cap is a parked
+// follow-up; the per-ad credit above is the load-bearing margin control.
+// ---------------------------------------------------------------------------
+
+// `vidjob:${userId}:${finishedAdId}` — limit-1 marker: set once the ad's first
+// scene has consumed a credit, so later scenes/regenerations don't double-charge.
+export const finishedAdJobKey = (userId: string, finishedAdId: string): string =>
+  `vidjob:${userId}:${finishedAdId}`;
+
+// `fromCredit` is true when the ad was funded by a purchased top-up credit
+// rather than the monthly allowance (used/limit then reflect the now-full meter).
+export type FinishedAdResult = ConsumeResult & { alreadyCounted: boolean; fromCredit?: boolean };
+
+// Consumes ONE video_ad allowance the first time finishedAdId is seen; subsequent
+// scenes of the same ad return allowed:true without touching the meter. When the
+// monthly allowance is exhausted, falls back to a purchased top-up credit so a
+// buyer's overage ad still renders.
+export async function consumeFinishedAd(
+  userId: string,
+  plan: ServerPlanId,
+  finishedAdId: string,
+): Promise<FinishedAdResult> {
+  const jobKey = finishedAdJobKey(userId, finishedAdId);
+
+  // Already metered this ad? peek the marker WITHOUT incrementing. Covers ads
+  // funded by either the monthly meter OR a top-up credit — the marker is set
+  // in both cases, so later scenes are always free.
+  const seen = await peekQuota(jobKey, 1, MONTHLY_WINDOW_SECONDS);
+  if (seen.used >= 1) {
+    const status = await peekMonthly('video_ads', userId, plan);
+    return { allowed: true, alreadyCounted: true, used: status.used, limit: status.limit, remaining: status.remaining };
+  }
+
+  // First scene of a new finished ad → consume one monthly credit.
+  const result = await consumeMonthly('video_ads', userId, plan);
+  if (result.allowed) {
+    // Mark the ad as counted (0→1) so later scenes are free. Only on success, so
+    // a rejected (out-of-quota) ad can still be metered after the user upgrades.
+    await rateLimitCheck(jobKey, 1, MONTHLY_WINDOW_SECONDS);
+    return { ...result, alreadyCounted: false };
+  }
+
+  // Monthly allowance exhausted → fall back to a purchased top-up credit. The
+  // RPC fails closed, so on infra error we don't hand out a free render.
+  const spentCredit = await consumeCredit(userId, 'video_ad');
+  if (spentCredit) {
+    await rateLimitCheck(jobKey, 1, MONTHLY_WINDOW_SECONDS);
+    return { allowed: true, alreadyCounted: false, fromCredit: true, used: result.used, limit: result.limit, remaining: 0 };
+  }
+
+  return { ...result, alreadyCounted: false };
+}
+
+export type VideoMeterResult =
+  | { ok: true; used: number; limit: number; remaining: number }
+  | { ok: false; used: number; limit: number };
+
+// Single entry point the three video proxies share. With a finishedAdId it
+// meters per finished ad (idempotent); without one it falls back to the legacy
+// per-call meter so ad-hoc single renders behave exactly as before.
+export async function meterVideoRequest(
+  userId: string,
+  plan: ServerPlanId,
+  finishedAdId?: string,
+): Promise<VideoMeterResult> {
+  if (!finishedAdId) {
+    const r = await consumeMonthly('video_ads', userId, plan);
+    return r.allowed
+      ? { ok: true, used: r.used, limit: r.limit, remaining: r.remaining }
+      : { ok: false, used: r.used, limit: r.limit };
+  }
+  const credit = await consumeFinishedAd(userId, plan, finishedAdId);
+  return credit.allowed
+    ? { ok: true, used: credit.used, limit: credit.limit, remaining: credit.remaining }
+    : { ok: false, used: credit.used, limit: credit.limit };
+}
 
 // `${unit}:monthly:${YYYY}-${MM}:${userId}` — UTC calendar month.
 export function monthlyKey(unit: MeterUnit, userId: string, when: Date = new Date()): string {
@@ -161,7 +257,7 @@ export type ConsumeResult = {
 
 // Atomically consumes one unit of the user's monthly allowance.
 // Returns allowed:false (without touching the counter) when the plan's limit
-// for this unit is 0 — e.g. free/creator video_ads. Otherwise increments via
+// for this unit is 0 — e.g. free video_ads. Otherwise increments via
 // the same atomic rate_limit_check RPC, then peeks to report the live count.
 export async function consumeMonthly(
   unit: MeterUnit,
@@ -174,7 +270,7 @@ export async function consumeMonthly(
   // video_ads ONLY; every other meter and all of production stay fully enforced.
   // The flag is absent under vitest, so quota.monthly.test.ts still asserts the
   // real cap. Placed before the limit<=0 short-circuit so it also unblocks tiers
-  // whose video_ads allowance is 0 (free/creator) during local testing.
+  // whose video_ads allowance is 0 (free) during local testing.
   if (unit === 'video_ads' && process.env.GRIFON_DEV_UNMETERED_VIDEO === 'true') {
     const devLimit = MONTHLY_LIMITS[plan][unit] || 999;
     return { allowed: true, used: 0, limit: devLimit, remaining: devLimit };

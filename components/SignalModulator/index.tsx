@@ -38,7 +38,7 @@ const SignalModulator: React.FC<SignalModulatorProps> = ({ onBack, globalScript 
   const [historyOpen, setHistoryOpen] = useState(false);
   const [budget, setBudget] = useState<BudgetStatus | null>(null);
   const { plan_id, loading: subLoading } = useSubscription();
-  const canClone = !subLoading && planAtLeast(plan_id, 'creator');
+  const canClone = !subLoading && planAtLeast(plan_id, 'pro');
   const history = useSessionHistory();
 
   const refreshLibrary = useCallback(async () => {

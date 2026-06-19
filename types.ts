@@ -707,7 +707,7 @@ export interface VoiceLibrary {
   quotaMax: number;
 }
 
-export type BudgetPlan = 'free' | 'creator' | 'pro' | 'business';
+export type BudgetPlan = 'free' | 'starter' | 'pro' | 'business';
 
 export interface BudgetBucket {
   used: number;

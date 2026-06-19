@@ -198,6 +198,7 @@ interface KlingSubmitBody {
   mode: 'std' | 'pro';
   aspect_ratio: string;
   cfg_scale?: number;
+  finishedAdId?: string;     // per-finished-ad metering id (Slice 3)
 }
 
 interface KlingOperation {
@@ -243,6 +244,7 @@ interface KlingOmniSubmitBody {
   aspect_ratio?: string;
   cfg_scale?: number;
   sound: 'on' | 'off';
+  finishedAdId?: string;     // per-finished-ad metering id (Slice 3)
 }
 
 const proxyGenerateKlingOmniVideo = (
@@ -518,6 +520,10 @@ interface GenerateVideoOpts {
    * operation to IndexedDB so the client can resume polling after a tab
    * close / browser restart / PC reboot. Phase 4d resilience. */
   userId?: string;
+  /** Stable id for the finished ad this render belongs to. When present, the
+   * server meters ONE video_ad credit per finishedAdId (Slice 3) — all scenes
+   * of one Render All share it, so the ad costs one credit, not one-per-scene. */
+  finishedAdId?: string;
 }
 
 const parseDataUrl = (dataUrl: string): { imageBytes: string; mimeType: string } => {
@@ -593,6 +599,7 @@ export const generateVideo = async (
       mode: 'std',
       aspect_ratio: config.aspectRatio,
       sound: 'off', // SignalModulator owns voiceover; Omni audio would be discarded.
+      finishedAdId: opts.finishedAdId,
     });
     initialOperation = omniResult.operation;
   } else if (routing.apiSurface === 'kling-image2video') {
@@ -611,12 +618,14 @@ export const generateVideo = async (
       mode: 'std', // Session B default; per-scene mode picker is Session C.
       aspect_ratio: config.aspectRatio,
       cfg_scale: 0.5,
+      finishedAdId: opts.finishedAdId,
     });
     initialOperation = klingResult.operation;
   } else {
     const params: any = {
       model: routing.modelId,
       prompt: config.prompt.trim(),
+      finishedAdId: opts.finishedAdId,
       config: {
         numberOfVideos: 1,
         aspectRatio: config.aspectRatio,

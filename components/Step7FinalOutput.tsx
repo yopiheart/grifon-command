@@ -6,6 +6,8 @@ import ImageModal from './ui/ImageModal';
 import { Copy, Check, Download, Package, Video, ChevronLeft, Search, RotateCcw } from 'lucide-react';
 import JSZip from 'jszip';
 import saveAs from 'file-saver';
+import { useSubscription } from '../hooks/useSubscription';
+import { watermarkImage } from '../utils/watermark';
 
 interface Step7Props {
   allData: AllData;
@@ -42,11 +44,14 @@ const CopyableContent: React.FC<{ title: string; content: string }> = ({ title, 
   );
 };
 
-const ImageAssetPanel: React.FC<{ title: string; src: string; aspectRatio: '9:16' | '16:9' | null; filename: string; onPreview: () => void }> = ({ title, src, aspectRatio, filename, onPreview }) => {
+const ImageAssetPanel: React.FC<{ title: string; src: string; aspectRatio: '9:16' | '16:9' | null; filename: string; onPreview: () => void; watermark?: boolean }> = ({ title, src, aspectRatio, filename, onPreview, watermark = false }) => {
   const containerDims = aspectRatio === '16:9' ? 'w-full max-w-[480px] aspect-video' : 'w-full max-w-[280px] aspect-[9/16]';
-  const handleDownload = () => {
+  const handleDownload = async () => {
+    // Free exports carry a watermark. watermarkImage returns the original on any
+    // failure, so the download always succeeds.
+    const out = watermark ? await watermarkImage(src) : src;
     const link = document.createElement('a');
-    link.href = src;
+    link.href = out;
     link.download = filename;
     link.click();
   };
@@ -82,6 +87,8 @@ const ImageAssetPanel: React.FC<{ title: string; src: string; aspectRatio: '9:16
 
 const Step7FinalOutput: React.FC<Step7Props> = ({ allData, onRestart, onBack, onGenerateVideo }) => {
   const { clientDetails, finalScript, avatar, storyboard, videoPrompts, thumbnailUrl, aspectRatio } = allData;
+  const { plan_id } = useSubscription();
+  const isFree = plan_id === 'free'; // Free exports are watermarked (Slice 3)
   const [activeTab, setActiveTab] = useState<TabKey>('script');
   const [exporting, setExporting] = useState(false);
   const [previewImage, setPreviewImage] = useState<{ url: string; filename: string } | null>(null);
@@ -115,12 +122,16 @@ const Step7FinalOutput: React.FC<Step7Props> = ({ allData, onRestart, onBack, on
       zip.file('script.txt', fullScriptText);
       zip.file('storyboard.json', JSON.stringify(storyboard, null, 2));
       zip.file('video_prompts.txt', videoPromptsText);
-      if (avatar?.url) zip.file('avatar.png', avatar.url.split(',')[1], { base64: true });
-      if (thumbnailUrl) zip.file('thumbnail.png', thumbnailUrl.split(',')[1], { base64: true });
-      storyboard.forEach((s, i) => {
-        if (s.imageUrl) zip.file(`scenes/scene_${i + 1}.png`, s.imageUrl.split(',')[1], { base64: true });
-        if (s.endFrameImageUrl) zip.file(`scenes/scene_${i + 1}_end.png`, s.endFrameImageUrl.split(',')[1], { base64: true });
-      });
+      // Free exports are watermarked. markImg is a no-op for paid plans.
+      const markImg = async (url: string): Promise<string> => (isFree ? watermarkImage(url) : url);
+      const b64 = (url: string): string => url.split(',')[1];
+      if (avatar?.url) zip.file('avatar.png', b64(await markImg(avatar.url)), { base64: true });
+      if (thumbnailUrl) zip.file('thumbnail.png', b64(await markImg(thumbnailUrl)), { base64: true });
+      for (let i = 0; i < storyboard.length; i++) {
+        const s = storyboard[i];
+        if (s.imageUrl) zip.file(`scenes/scene_${i + 1}.png`, b64(await markImg(s.imageUrl)), { base64: true });
+        if (s.endFrameImageUrl) zip.file(`scenes/scene_${i + 1}_end.png`, b64(await markImg(s.endFrameImageUrl)), { base64: true });
+      }
       const blob = await zip.generateAsync({ type: 'blob' });
       const safeName = (clientDetails.brandName || 'GRIFON_Project').replace(/[^a-zA-Z0-9_-]+/g, '_');
       saveAs(blob, `${safeName}_Bundle.zip`);
@@ -150,6 +161,7 @@ const Step7FinalOutput: React.FC<Step7Props> = ({ allData, onRestart, onBack, on
             src={avatar.url}
             aspectRatio="9:16"
             filename="avatar.png"
+            watermark={isFree}
             onPreview={() => setPreviewImage({ url: avatar.url, filename: 'avatar.png' })}
           />
         ) : (
@@ -162,6 +174,7 @@ const Step7FinalOutput: React.FC<Step7Props> = ({ allData, onRestart, onBack, on
             src={thumbnailUrl}
             aspectRatio={aspectRatio ?? '9:16'}
             filename="thumbnail.png"
+            watermark={isFree}
             onPreview={() => setPreviewImage({ url: thumbnailUrl, filename: 'thumbnail.png' })}
           />
         ) : (

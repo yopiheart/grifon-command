@@ -5,7 +5,7 @@ import { getUserFromAccessToken } from './_lib/supabaseAdmin.js';
 import { rateLimitCheck } from './_lib/rateLimit.js';
 
 const CheckoutBody = z.object({
-  plan_id: z.enum(['creator', 'pro', 'business']),
+  plan_id: z.enum(['starter', 'pro', 'business']),
   billing_cycle: z.enum(['monthly', 'annual']),
 });
 

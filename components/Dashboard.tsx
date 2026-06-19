@@ -4,9 +4,10 @@ import {
   Film, Search, Target, Type, Image as ImageIcon,
   Settings, Sparkles, ArrowRight, ChevronRight,
   Video, User, Clapperboard, Wand2, Calendar, Scissors, Mic,
-  LogOut, HelpCircle, Crown, Zap, X, Flame, Aperture
+  LogOut, HelpCircle, Crown, Zap, X, Flame, Aperture, Lock
 } from 'lucide-react';
 import { useSubscription } from '../hooks/useSubscription';
+import { planAtLeast, type PlanId } from '../utils/planGate';
 import { useQuota } from '../hooks/useQuota';
 import { Aurora } from './ui/Aurora';
 import { QuotaMeter } from './ui/QuotaMeter';
@@ -92,6 +93,16 @@ const NAV_ITEMS: { id: string; label: string; icon: any; badge?: 'Beta' }[] = [
   { id: 'caption_headline',  label: 'Caption',  icon: Type }
 ];
 
+// Slice 5 — graduated beta modules and the plan tier that unlocks each. Modules
+// NOT listed here stay dev-only (grifon_admin / grifon_dev_unlock). Server stays
+// authoritative for the underlying AI calls; this is the access UI.
+const MODULE_TIER: Record<string, PlanId> = {
+  generate_video: 'starter',   // already starter+ at the render gate (Slice 3)
+  edit_video: 'pro',           // AI editor
+  signal_modulator: 'pro',     // Voice
+  cinematic_studio: 'business', // Commercial/Spec studio
+};
+
 const MORE_MODULES = [
   { id: 'hook_lab', name: 'Hook Lab', icon: Aperture, desc: 'Surreal, scroll-stopping opening hooks for your ads.' },
   { id: 'cinematic_studio', name: 'Cinematic Studio', icon: Video, desc: 'High-fidelity video synthesis with custom camera paths and lighting control.' },
@@ -114,7 +125,8 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
 
   useEffect(() => {
     const adminFlag = localStorage.getItem('grifon_admin');
-    setIsAdmin(adminFlag === 'true');
+    const devUnlock = localStorage.getItem('grifon_dev_unlock') === '1';
+    setIsAdmin(adminFlag === 'true' || devUnlock);
   }, []);
 
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
@@ -216,6 +228,11 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
   }, [showUpgradeBanner, bannerMessage]);
 
   const { plan_id: userPlan } = useSubscription();
+  // A graduated module is reachable if the user is dev (grifon_admin /
+  // grifon_dev_unlock, folded into isAdmin) or their plan meets the module's
+  // required tier. Non-graduated beta modules (no MODULE_TIER entry) stay dev-only.
+  const moduleUnlocked = (id: string): boolean =>
+    isAdmin || (MODULE_TIER[id] ? planAtLeast(userPlan, MODULE_TIER[id]) : false);
   const quota = useQuota();
   const displayEmail = userEmail || '';
   const userName = displayEmail
@@ -253,7 +270,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
   const paletteItems: CommandItem[] = [
     { id: 'creative_director', name: 'Director', desc: DIRECTOR_DESC, icon: Film, group: 'Core', onSelect: () => handleSelectModule('creative_director') },
     ...CORE_MODULES.map(m => ({ id: m.id, name: m.name, desc: m.desc, icon: m.icon, group: 'Core', onSelect: () => handleSelectModule(m.id) })),
-    ...MORE_MODULES.map(m => ({ id: m.id, name: m.name, desc: m.desc, icon: m.icon, group: 'More', onSelect: () => handleSelectModule(m.id) })),
+    ...MORE_MODULES.filter(m => moduleUnlocked(m.id)).map(m => ({ id: m.id, name: m.name, desc: m.desc, icon: m.icon, group: 'More', onSelect: () => handleSelectModule(m.id) })),
   ];
 
   // Honest moment-of-value nudge — only surfaces once the user has felt the
@@ -366,7 +383,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
       <nav className="fixed bottom-0 left-0 right-0 z-50 bg-zinc-950/95 backdrop-blur-xl border-t border-white/10 px-1 py-2 flex items-center justify-around lg:hidden">
         {NAV_ITEMS.map((item) => {
           const isBeta = item.badge === 'Beta';
-          const isClickable = !isBeta || isAdmin;
+          const isClickable = !isBeta || moduleUnlocked(item.id);
           const isActive = activeModule === item.id;
           return (
             <div
@@ -390,7 +407,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
 
         {NAV_ITEMS.map((item) => {
           const isBeta = item.badge === 'Beta';
-          const isClickable = !isBeta || isAdmin;
+          const isClickable = !isBeta || moduleUnlocked(item.id);
           const isActive = activeModule === item.id;
           return (
             <div
@@ -582,7 +599,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                 { num: 7, label: 'Caption', id: 'caption_headline' }
               ].map((step, idx, arr) => {
                 const isBeta = step.badge === 'Beta';
-                const isClickable = !isBeta || isAdmin;
+                const isClickable = !isBeta || moduleUnlocked(step.id);
                 return (
                   <React.Fragment key={step.id}>
                     <div
@@ -712,42 +729,44 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
             </div>
           </div>
 
-          {/* More Modules Section */}
-          {isAdmin && (
-            <div className="max-w-3xl mx-auto w-full">
-              <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mb-4">
-                // MORE MODULES
-              </p>
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
-                {MORE_MODULES.map((mod) => (
-                  <div
-                    key={mod.id}
-                    onClick={() => handleSelectModule(mod.id)}
-                    className="bg-zinc-900/50 backdrop-blur-xl rounded-2xl p-4 relative overflow-hidden group hover:bg-zinc-900/80 active:scale-[0.98] transition-all duration-500 ease-out cursor-pointer flex flex-col"
-                  >
-                    <div className="w-8 h-8 bg-zinc-800 rounded-lg flex items-center justify-center mb-3">
-                      <mod.icon className="w-4 h-4 text-zinc-400 group-hover:text-[#FFCC00] transition-colors" />
-                    </div>
-                    <p className="text-xs font-bold text-white tracking-tight mb-1">{mod.name}</p>
-                    <p className="text-[10px] text-zinc-500 leading-snug line-clamp-2">{mod.desc}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {!isAdmin && (
-            <section className="mt-8 lg:mt-10 max-w-3xl mx-auto w-full px-4">
-              <div className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mb-3">
-                // COMING SOON
-              </div>
-              <div className="bg-zinc-900/50 backdrop-blur-xl rounded-2xl p-5 text-center">
-                <p className="text-sm text-zinc-500">
-                  New modules drop monthly. Stay tuned.
+          {/* More Modules Section — graduated modules are plan-gated; dev sees all.
+              Below-tier modules render LOCKED with a tier badge → upgrade (upsell). */}
+          {(() => {
+            // Dev sees every module; everyone else sees the graduated ones only.
+            const visible = MORE_MODULES.filter((mod) => isAdmin || MODULE_TIER[mod.id]);
+            if (visible.length === 0) return null;
+            return (
+              <div className="max-w-3xl mx-auto w-full">
+                <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mb-4">
+                  // MORE MODULES
                 </p>
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
+                  {visible.map((mod) => {
+                    const unlocked = moduleUnlocked(mod.id);
+                    const tier = MODULE_TIER[mod.id];
+                    return (
+                      <div
+                        key={mod.id}
+                        onClick={() => (unlocked ? handleSelectModule(mod.id) : onUpgrade?.())}
+                        className="bg-zinc-900/50 backdrop-blur-xl rounded-2xl p-4 relative overflow-hidden group hover:bg-zinc-900/80 active:scale-[0.98] transition-all duration-500 ease-out cursor-pointer flex flex-col"
+                      >
+                        {!unlocked && tier && (
+                          <span className="absolute top-3 right-3 flex items-center gap-1 text-[10px] font-black uppercase tracking-wide text-[#FFCC00] bg-[#FFCC00]/10 border border-[#FFCC00]/30 rounded-full px-1.5 py-0.5">
+                            <Lock className="w-3 h-3 shrink-0" /> {tier}
+                          </span>
+                        )}
+                        <div className="w-8 h-8 bg-zinc-800 rounded-lg flex items-center justify-center mb-3">
+                          <mod.icon className="w-4 h-4 text-zinc-400 group-hover:text-[#FFCC00] transition-colors" />
+                        </div>
+                        <p className={`text-xs font-bold text-white tracking-tight mb-1${!unlocked && tier ? ' pr-12' : ''}`}>{mod.name}</p>
+                        <p className="text-[10px] text-zinc-500 leading-snug line-clamp-2">{mod.desc}</p>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-            </section>
-          )}
+            );
+          })()}
 
         </div>
       </main>
@@ -803,7 +822,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                   <span className="text-xs text-zinc-400">Daily AI</span>
                 </div>
                 <span className="text-xs font-mono font-bold text-white">
-                  {userPlan === 'pro' || userPlan === 'business' ? 'Unlimited' : userPlan === 'creator' ? '0 / 20' : '0 / 3'}
+                  {userPlan === 'pro' || userPlan === 'business' ? 'Unlimited' : userPlan === 'starter' ? '0 / 10' : '0 / 3'}
                 </span>
               </div>
             </div>
@@ -813,7 +832,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
               <div className="flex items-center gap-2">
                 <Crown className="w-3.5 h-3.5 text-[#FFCC00]" />
                 <span className="text-xs font-semibold text-white">
-                  {userPlan === 'free' ? 'Free Edition' : userPlan === 'creator' ? 'Creator Edition' : 'Pro Edition'}
+                  {userPlan === 'free' ? 'Free Edition' : userPlan === 'starter' ? 'Starter Edition' : 'Pro Edition'}
                 </span>
               </div>
             </div>

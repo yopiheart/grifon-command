@@ -1,7 +1,8 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Scene, Avatar, BusinessInfo, StoryboardResponse } from '../types';
-import { generateStoryboard, generateSceneImage, generateDaisyChainScenes } from '../services/geminiService';
+import { generateStoryboard, generateDaisyChainScenes } from '../services/geminiService';
+import { renderSceneImages } from '../utils/sceneRender';
 import { compressImageForUpload } from '../utils/imageCompression';
 import { GlassPanel } from './ui/GlassPanel';
 import { GoldButton } from './ui/GoldButton';
@@ -95,30 +96,6 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
     }
   };
 
-  const getBrandColors = () => businessInfo.brandColors 
-    ? businessInfo.brandColors.split(',').map(c => c.trim()).filter(c => c) 
-    : [];
-
-  const getReferenceData = (scene: Scene, _sceneIndex: number) => {
-    const refs: { avatarUrl?: string; productUrl?: string } = {};
-
-    if ((scene.referenceImage === 'avatar' || scene.referenceImage === 'both') && avatar) {
-        refs.avatarUrl = avatar.url;
-    }
-
-    if (
-      (scene.referenceImage === 'product' || scene.referenceImage === 'both') &&
-      businessInfo.productImageUrls &&
-      businessInfo.productImageUrls.length > 0
-    ) {
-        // Always anchor product identity to photo[0]. Photos 1+ are stored but
-        // unused for scene generation until a v2 per-photo tagging UX exists.
-        refs.productUrl = businessInfo.productImageUrls[0];
-    }
-
-    return refs;
-  };
-
   const handleGenerateAllScenes = async () => {
     if (isCinematic) {
       handleGenerateCinematicChain();
@@ -141,81 +118,11 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
 
     if (!scene) return;
 
-    if (force) {
-      scene.imageUrl = undefined;
-      scene.endFrameImageUrl = undefined;
-    }
-
     try {
-        const references = getReferenceData(scene, index);
-        const ethnicity = avatar?.ethnicity || "Global/Neutral";
-        const scriptType = businessInfo.scriptType || 'MrBeast';
-        const productDesc = businessInfo.productImageDescription || businessInfo.product || "the product";
-
-        // Hook morph (start+end frame): the START frame is the "before" metaphor and
-        // must stay product-free; the hero reference belongs on the END frame (reveal).
-        const isHookMorph = !!scene.startFramePrompt && !!scene.endFramePrompt;
-        const startFrameRefs = isHookMorph ? { ...references, productUrl: undefined } : references;
-
-        // When the hook's END frame reveals the product, anchor it to the hero photo even
-        // though the model reliably tags scenes[0].referenceImage "none" (3/3 in testing) —
-        // otherwise the end frame gets no reference and img-gen invents a look-alike that
-        // drifts from the uploaded hero. GUARD: only force the hero when the end-frame prompt
-        // actually names the product, so a PURELY abstract-metaphor hook (reveal isn't the
-        // product) stays product-free. getReferenceData uses productImageUrls[0].
-        const heroProductUrl = businessInfo.productImageUrls?.[0];
-        const PRODUCT_STOPWORDS = new Set(['the', 'and', 'for', 'with', 'your', 'this', 'that', 'from', 'sleek', 'clean', 'portable']);
-        const productWords = (businessInfo.product || '')
-            .toLowerCase()
-            .split(/[^a-z0-9]+/)
-            .filter(w => w.length >= 3 && !PRODUCT_STOPWORDS.has(w));
-        const endFrameRevealsProduct = isHookMorph && !!heroProductUrl && !!scene.endFramePrompt
-            && productWords.some(w => scene.endFramePrompt!.toLowerCase().includes(w));
-        const endFrameRefs = endFrameRevealsProduct
-            ? { ...references, productUrl: heroProductUrl }
-            : references;
-        const endFrameMode: 'avatar' | 'product' | 'both' | 'none' | undefined = endFrameRevealsProduct
-            ? (references.avatarUrl ? 'both' : 'product')
-            : scene.referenceImage;
-
-        if (scene.startFramePrompt || scene.imagePrompt) {
-            const prompt = scene.startFramePrompt || scene.imagePrompt;
-            if ((!scene.imageUrl || force) && prompt) {
-                scene.imageUrl = await generateSceneImage(
-                    prompt,
-                    aspectRatio,
-                    '1K',
-                    startFrameRefs,
-                    ethnicity,
-                    getBrandColors(),
-                    scriptType,
-                    productDesc,
-                    undefined,
-                    index,
-                    scene.referenceImage
-                );
-            }
-        }
-
-        if (scene.endFramePrompt && (!scene.endFrameImageUrl || force)) {
-            scene.endFrameImageUrl = await generateSceneImage(
-                scene.endFramePrompt,
-                aspectRatio,
-                '1K',
-                endFrameRefs,
-                ethnicity,
-                getBrandColors(),
-                scriptType,
-                productDesc,
-                undefined,
-                index + 100,
-                endFrameMode
-            );
-        }
-
+        await renderSceneImages(scene, index, { aspectRatio, avatar, businessInfo }, force);
         setStoryboardData([...updatedStoryboard]);
         setStoryboard(updatedStoryboard);
-    } catch (err) { 
+    } catch (err) {
         console.error("Single Scene Gen Error:", err); 
     } finally {
         setGeneratingImageIndex(null);
@@ -365,7 +272,7 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
           {storyboardData.length > 0 && !loadingImages && (
             <div className="p-6 border border-[#FFCC00]/20 bg-zinc-950/50 backdrop-blur-md rounded-xl max-w-xl text-center">
               <p className="text-xs text-[#FFCC00] font-mono font-bold mb-2 uppercase tracking-widest">[ ENGINE_REPORT ]</p>
-              <p className="text-[11px] text-zinc-400 font-mono italic">"Daisy chain relay complete. Anchor identity locked at 98.4% variance. Clips are ready for Kling O1 Frame interpolation."</p>
+              <p className="text-[11px] text-zinc-400 font-mono italic">"Daisy chain relay complete. Anchor identity locked at 98.4% variance. Clips are ready for cinematic frame interpolation."</p>
               <div className="flex gap-4 justify-center mt-6">
                 <button onClick={handleGenerateCinematicChain} className="text-[10px] rounded-full px-6 py-2 border border-white/10 text-white hover:bg-white/5 transition-colors">RE-GENERATE CHAIN</button>
                 <button onClick={handleDownloadAllImages} className="text-[10px] rounded-full px-6 py-2 border border-white/10 text-white hover:bg-white/5 transition-colors">DOWNLOAD_RELAY (.ZIP)</button>

@@ -170,7 +170,7 @@ const ScenePipelineTile: React.FC<ScenePipelineTileProps> = ({
       '',
       'How to merge in CapCut:',
       '  1. Drop your rendered MP4s on the timeline in scene order.',
-      '  2. Mute each MP4 (the silent Veo render).',
+      '  2. Mute each MP4 (the silent video render).',
       '  3. Drop the matching MP3 from this zip onto the audio track.',
       '  4. Sync to the avatar\'s mouth movement (talking scenes).',
       '  5. Export 9:16 vertical for FB/IG/TikTok.',

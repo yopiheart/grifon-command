@@ -11,7 +11,7 @@ import { getSupabase } from './supabaseClient';
  * us in PCI SAQ A scope.
  */
 
-export type PlanId = 'creator' | 'pro' | 'business';
+export type PlanId = 'starter' | 'pro' | 'business';
 export type BillingCycle = 'monthly' | 'annual';
 
 export type IntentBreakdown = {
@@ -28,7 +28,8 @@ export type IntentResponse = {
   intent_id: string;
   client_key: string;
   status: string;
-  plan: { id: PlanId; name: string; description: string; billing_cycle: BillingCycle };
+  // 'topup' is the synthetic descriptor for a standalone credit purchase (no plan).
+  plan: { id: PlanId | 'topup'; name: string; description: string; billing_cycle: BillingCycle };
   breakdown: IntentBreakdown;
 };
 
@@ -96,6 +97,26 @@ export const fetchIntent = async (
   return res.json();
 };
 
+/**
+ * Standalone top-up intent — one-time finished-ad credits, no subscription. The
+ * returned shape parallels fetchIntent so the same card / e-wallet processors
+ * apply; pass { topup: true } when confirming so the 3DS return screen knows not
+ * to claim a subscription was activated.
+ */
+export const fetchTopupIntent = async (addOns: string[]): Promise<IntentResponse> => {
+  const token = await getAuthToken();
+  const res = await fetch('/api/billing?action=topup', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ add_ons: addOns }),
+  });
+  if (!res.ok) await proxyError(res, 'TOPUP_INTENT_FAILED');
+  return res.json();
+};
+
 const tokenizeCard = async (details: CardDetails): Promise<string> => {
   const env = (import.meta as any).env || {};
   const publicKey = env.VITE_PAYMONGO_PUBLIC_KEY;
@@ -146,7 +167,8 @@ const tokenizeCard = async (details: CardDetails): Promise<string> => {
 const confirmIntent = async (
   intent_id: string,
   client_key: string,
-  payment_method_id: string
+  payment_method_id: string,
+  topup = false
 ): Promise<ConfirmResponse> => {
   const token = await getAuthToken();
   const res = await fetch('/api/billing?action=confirm', {
@@ -155,7 +177,7 @@ const confirmIntent = async (
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ intent_id, client_key, payment_method_id }),
+    body: JSON.stringify({ intent_id, client_key, payment_method_id, ...(topup ? { topup: true } : {}) }),
   });
   if (!res.ok) await proxyError(res, 'CONFIRM_FAILED');
   return res.json();
@@ -170,10 +192,11 @@ const confirmIntent = async (
  */
 export const processCardPayment = async (
   intent: IntentResponse,
-  card: CardDetails
+  card: CardDetails,
+  opts: { topup?: boolean } = {}
 ): Promise<ConfirmResponse> => {
   const payment_method_id = await tokenizeCard(card);
-  return confirmIntent(intent.intent_id, intent.client_key, payment_method_id);
+  return confirmIntent(intent.intent_id, intent.client_key, payment_method_id, opts.topup);
 };
 
 export type EwalletType = 'gcash' | 'paymaya' | 'grab_pay';
@@ -187,7 +210,8 @@ export type EwalletType = 'gcash' | 'paymaya' | 'grab_pay';
  */
 export const processEwalletPayment = async (
   intent: IntentResponse,
-  type: EwalletType
+  type: EwalletType,
+  opts: { topup?: boolean } = {}
 ): Promise<ConfirmResponse> => {
   const token = await getAuthToken();
   const res = await fetch('/api/billing?action=ewallet', {
@@ -200,6 +224,7 @@ export const processEwalletPayment = async (
       intent_id: intent.intent_id,
       client_key: intent.client_key,
       type,
+      ...(opts.topup ? { topup: true } : {}),
     }),
   });
   if (!res.ok) await proxyError(res, 'EWALLET_FAILED');

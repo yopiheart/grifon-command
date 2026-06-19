@@ -25,13 +25,13 @@ type Plan = {
 const plans: Record<string, Plan[]> = {
   monthly: [
     { price: "0", period: "/forever", label: "Free" },
-    { price: "997", period: "/mo", label: "Creator" },
+    { price: "997", period: "/mo", label: "Starter" },
     { price: "2,497", period: "/mo", label: "Pro" },
     { price: "4,997", period: "/mo", label: "Business" },
   ],
   annual: [
     { price: "0", period: "/forever", label: "Free" },
-    { price: "831", period: "/mo", label: "Creator", savings: "Save ₱1,992/yr" },
+    { price: "831", period: "/mo", label: "Starter", savings: "Save ₱1,992/yr" },
     { price: "2,081", period: "/mo", label: "Pro", savings: "Save ₱4,992/yr" },
     { price: "4,164", period: "/mo", label: "Business", savings: "Save ₱9,996/yr" },
   ],
@@ -57,13 +57,14 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
   );
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const PLAN_IDS: Array<'free' | PlanId> = ['free', 'creator', 'pro', 'business'];
+  const PLAN_IDS: Array<'free' | PlanId> = ['free', 'starter', 'pro', 'business'];
 
   const handleCtaClick = async (index: number) => {
     const planId = PLAN_IDS[index];
-    if (planId === 'free' || index === 3) {
-      // Free tier goes straight into the app. Business tier = Contact sales;
-      // for now send them to signup too (ship first, add contact form later).
+    if (planId === 'free') {
+      // Free tier goes straight into the app (full ad plan, no video).
+      // Starter / Pro / Business are all self-serve checkout. Autopilot is
+      // invite-only and never appears on this page.
       onEnterApp();
       return;
     }
@@ -132,18 +133,27 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
 
   const current = plans[billing as keyof typeof plans];
 
+  // The single Pro differentiator the eye should catch vs Starter (Free→Pro is the
+  // #2 funnel priority — video is the bait). We underline only the feature NAME
+  // ("AI video editor"), not the whole line, so the scribble can't span a wrapped
+  // multi-line block. Pro only — a second scribble on Business would split the cue.
+  const PRO_HIGHLIGHT = PLAN_FEATURES.pro.find((f) => f.startsWith('AI video editor')) ?? '';
+  const [proHighlightHead, proHighlightTail] = PRO_HIGHLIGHT.split(' — ');
+
   const valueStack = [
     { item: "40 AI Video Ad Scripts", value: "₱20,000" },
     { item: "15 Deep Market Research Reports", value: "₱22,500" },
     { item: "15 Offer Optimizations", value: "₱15,000" },
     { item: "300 Ad Captions & Headlines", value: "₱15,000" },
     { item: "150 AI Ad Images", value: "₱15,000" },
-    { item: "15 AI Video Ads", value: "₱75,000" },
+    // Pro includes 8 finished ads (utils/planGate SCENE_CAP / quota MONTHLY_LIMITS),
+    // priced at the same ₱5,000/ad rate the other lines imply (was 15 → ₱75,000).
+    { item: "8 AI Video Ads", value: "₱40,000" },
     { item: "Monthly Strategy Call", value: "₱5,000" },
     { item: "Private Community Access", value: "₱2,500" },
   ];
 
-  const totalValue = "₱170,000";
+  const totalValue = "₱135,000";
 
   const navLinks: SiteNavLink[] = [
     { label: 'Home', onClick: onNavigateHome },
@@ -402,12 +412,12 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
               const isFree = i === 0;
               const tierColors = ["#71717a", "#a1a1aa", "#FFCC00", "#e4e4e7"];
               const tierDescs = [
-                "Test the waters. No risk.",
-                "For business owners ready to create.",
-                "For marketers who want to dominate.",
-                "For agencies managing multiple brands.",
+                "Your full ad plan, free. See it before you buy.",
+                "Try it. Your first video ad, ready to post.",
+                "8 finished video ads a month. The whole machine.",
+                "Scale it. Director control, 4K & commercial ads.",
               ];
-              const ctas = ["Get Started Free", "Start Creating", "Start Dominating", "Contact Us"];
+              const ctas = ["Get my free plan", "Start with 1 video ad", "Get the full machine", "Scale my brand"];
 
               return (
                 <div
@@ -521,16 +531,16 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
                   </p>
 
                   {[
-                    // Free highlights
+                    // Free highlights — one complete ad plan, no video.
                     ...(i === 0 ? [
-                      "3 video ad workflows",
-                      "1 market research report",
-                      "10 caption generations",
-                      "5 AI images (watermarked)",
-                      "Email support",
+                      "1 complete ad plan",
+                      "Market research + winning script",
+                      "Storyboard plan, avatar & thumbnail",
+                      "Offer optimizer",
+                      "Watermarked exports · Email support",
                     ] : []),
-                    // Creator / Pro / Business — shared source of truth (config/planFeatures.ts)
-                    ...(i === 1 ? PLAN_FEATURES.creator : []),
+                    // Starter / Pro / Business — shared source of truth (config/planFeatures.ts)
+                    ...(i === 1 ? PLAN_FEATURES.starter : []),
                     ...(i === 2 ? PLAN_FEATURES.pro : []),
                     ...(i === 3 ? PLAN_FEATURES.business : []),
                   ].map((f, fi) => (
@@ -541,7 +551,16 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
                       lineHeight: 1.4,
                     }}>
                       <span style={{ flexShrink: 0 }}><Check /></span>
-                      <span>{f}</span>
+                      {i === 2 && f === PRO_HIGHLIGHT && proHighlightHead ? (
+                        <span>
+                          <SignatureScribble variant="underline" playOnMount delay={0.4} strokeWidth={2.5}>
+                            <span className="text-white font-semibold">{proHighlightHead}</span>
+                          </SignatureScribble>
+                          {proHighlightTail ? ` — ${proHighlightTail}` : ''}
+                        </span>
+                      ) : (
+                        <span>{f}</span>
+                      )}
                     </div>
                   ))}
 
@@ -747,7 +766,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
                 <CheckIcon size={12} strokeWidth={2.5} /> THE GRIFON WAY
               </p>
               {[
-                "15 video ads/month for ₱2,497",
+                "8 video ads/month for ₱2,497",
                 "Everything in ONE app",
                 "30 minutes per campaign",
                 "AI scripts using proven frameworks",
@@ -768,7 +787,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
 
         {/* ===== KINETIC STRIP (synced with landing) ===== */}
         <Marquee
-          items={['30 minutes', 'NOT 3 DAYS', '₱997/mo', 'BUILT FOR FILIPINO BUSINESSES']}
+          items={['30 minutes', 'NOT 3 DAYS', '₱997/mo', 'NEED MORE? ₱499/AD', 'BUILT FOR FILIPINO BUSINESSES']}
           duration={26}
           reverse
           className="relative z-10 bg-zinc-950/60 mb-0"
@@ -842,17 +861,17 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
           </h2>
 
           {[
-            { 
-              q: "How does the Free plan work?", 
-              a: "Sign up, start creating immediately. No credit card needed. You get 3 ad workflows, 1 research report, 10 captions, and 5 watermarked images every month — forever. When you want more, upgrade to Creator or Pro." 
+            {
+              q: "How does the Free plan work?",
+              a: "Sign up and build one complete ad plan — free, no credit card. You get the market research, the winning script, the storyboard plan, your avatar, and a thumbnail. It's your whole ad, mapped out. When you're ready to turn it into a real video, upgrade — your plan carries over, so you never redo it."
             },
-            { 
-              q: "Can I switch plans later?", 
-              a: "Absolutely. Upgrade, downgrade, or cancel anytime from your dashboard. Your unused credits carry over when you upgrade." 
+            {
+              q: "Can I switch plans later?",
+              a: "Absolutely. Upgrade, downgrade, or cancel anytime from your dashboard. Your unused credits carry over when you upgrade."
             },
-            { 
-              q: "Why can't I get video ads on Creator?", 
-              a: "AI video generation is expensive to run. To keep Creator affordable at ₱997/month, video is exclusive to Pro and Business. You get everything else — scripts, research, images, captions — on Creator." 
+            {
+              q: "What's the difference between Starter and Pro?",
+              a: "Starter (₱997/mo) is the easiest way to try it — 1 finished video ad a month, ready to post. Pro (₱2,497/mo) is the full machine: 8 finished video ads a month, the AI editor, format presets and editing styles, plus Facebook caption and headline packs. Most people start on Starter and move up fast."
             },
             { 
               q: "What payment methods do you accept?", 

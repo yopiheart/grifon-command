@@ -35,7 +35,7 @@ const parseQuery = (): { planId: PlanId; cycle: BillingCycle } => {
   const rawPlan = params.get('plan');
   const rawCycle = params.get('cycle');
   const planId: PlanId =
-    rawPlan === 'creator' || rawPlan === 'business' ? rawPlan : 'pro';
+    rawPlan === 'starter' || rawPlan === 'business' ? rawPlan : 'pro';
   const cycle: BillingCycle = rawCycle === 'annual' ? 'annual' : 'monthly';
   return { planId, cycle };
 };

@@ -501,6 +501,49 @@ defer 2B / doc-lint / full-auto-CI.
 
 ---
 
+### 16. CAC / LTV instrumentation — close the acquisition-economics loop
+
+> **Context (2026-06-19):** During the pricing restructure (Free→Pro→Business→Autopilot, one-shot
+> flow), Neil asked whether to add ad/acquisition spend "on top of" the per-ad COGS. Decision:
+> **NO — track it as a separate layer, not inside gross margin.** The full finalized model + this
+> reasoning live in the durable doc [`pricing_unit_economics.md`](pricing_unit_economics.md) (§5–§6).
+> This roadmap item is the "go gather the data" trigger.
+
+**What:** Instrument the four acquisition/economics inputs the finalized pricing leaves as
+placeholders, then re-run the margin + CAC math and lock final included video-ad quotas:
+1. Avg scenes (and seconds) per finished ad — validates the scene-cap COGS.
+2. Regeneration rate — validates the ~30% buffer.
+3. Avg finished ads a real Pro user makes/month — the breakage number that sets safe quotas.
+4. CAC inputs: FB cost per free signup · **Free→Pro conversion rate** · avg paid tenure (churn).
+
+**Why it matters:** Every quota/price number in `pricing_unit_economics.md` is a defensible
+*estimate* until these land. Free→Pro conversion in particular decides whether the entire free-
+consultation strategy is profitable (10% → ~₱2,200 CAC healthy; 3% → ~₱7,300 underwater). The
+locked-video upsell (`components/LockedVideoPreview.tsx`) is the lever that moves it.
+
+**Why parked:** No live paid traffic + no shipped one-shot render logs yet → nothing to measure.
+The pricing ships on conservative estimates now; this is the post-data tuning pass.
+
+**When to resume:** When EITHER (a) the restructure is live AND there's ≥2–4 weeks of one-shot
+render logs + paid checkouts to read, OR (b) margin looks off in practice (COGS creeping above
+target). Pull the four numbers, re-run §2–§4 of `pricing_unit_economics.md`, lock final quotas.
+
+**Where to start:**
+1. Render logs: avg scenes/ad + regen rate from the one-shot job records (the `consumeMonthly`
+   call site + `activeJobsService` history).
+2. Conversion + tenure: Supabase `subscriptions` (free→paid transitions, tenure before churn) +
+   whatever FB Ads spend/signup attribution exists.
+3. Re-run the margin tables; adjust `PLAN_LIMITS` / `MONTHLY_LIMITS` included counts + scene caps.
+
+**Scope estimate:** ~half a day once the data exists (mostly analysis + a quota-number tune, not
+a build). The instrumentation to capture it may be a separate small task if logs are thin.
+
+**Source:** Neil, 2026-06-19 pricing restructure session — *"should we add also a ads expense on
+the top of it or not a good idea?"* → decision to keep CAC separate from COGS and log it for a
+data-driven pass post-launch.
+
+---
+
 ## How to add new items
 
 When Neil endorses an idea but says "not now":

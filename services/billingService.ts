@@ -1,6 +1,6 @@
 import { getSupabase } from './supabaseClient';
 
-export type PlanId = 'creator' | 'pro' | 'business';
+export type PlanId = 'starter' | 'pro' | 'business';
 export type BillingCycle = 'monthly' | 'annual';
 
 const INTENDED_PLAN_KEY = 'grifon_intended_plan';

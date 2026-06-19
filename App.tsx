@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useMemo, useRef, useSyncExternalStore } from 'react';
-import { ChevronLeft, Lightbulb, RotateCw, Mail, Check, Star, Apple } from 'lucide-react';
+import { ChevronLeft, Lightbulb, RotateCw, Mail, Check, Star, Apple, Sparkles } from 'lucide-react';
 import { ClientDetails, BusinessInfo, Script, Scene, VideoPrompt, Avatar, CinematicNarrativeScene, SceneBatchEntry } from './types';
 import StepIndicator from './components/StepIndicator';
 import Step1ClientDetails from './components/Step1ClientDetails';
@@ -8,6 +8,10 @@ import Step2BusinessInfo from './components/Step2BusinessInfo';
 import Step3AdScript from './components/Step3AdScript';
 import Step4Avatar from './components/Step4Avatar';
 import Step5Storyboard from './components/Step5Storyboard';
+import DirectorOneShot from './components/DirectorOneShot';
+import LockedVideoPreview from './components/LockedVideoPreview';
+import PlanGate from './components/PlanGate';
+import type { OneShotSinks } from './hooks/useOneShotGeneration';
 import Step6Thumbnail from './components/Step6Thumbnail';
 import Step6VideoPrompts from './components/Step6VideoPrompts';
 import Step7FinalOutput from './components/Step7FinalOutput';
@@ -28,12 +32,12 @@ import ImageAdsGen from './components/ImageAdsGen';
 import CinematicSpecStudio from './components/CinematicSpecStudio';
 import HookLab from './components/HookLab';
 import GenerateVideo from './components/GenerateVideo';
-import PlanGate from './components/PlanGate';
 import SignalModulator from './components/SignalModulator';
 import InfluencerForge from './components/InfluencerForge';
 import LandingPage from './components/LandingPage';
 import GrifonPricingPage from './components/GrifonPricingPage';
 import CheckoutPage from './components/CheckoutPage';
+import TopUpCheckoutPage from './components/TopUpCheckoutPage';
 import Billing3dsReturn from './components/Billing3dsReturn';
 import BillingSuccess from './components/BillingSuccess';
 import TermsOfService from './components/TermsOfService';
@@ -57,7 +61,7 @@ import { RouteVeil, type VeilState } from './components/ui/RouteVeil';
 import { QuotaWallModal } from './components/ui/QuotaWallModal';
 import { quotaWallStore } from './services/quotaWallStore';
 import { useSubscription } from './hooks/useSubscription';
-import { nextTier } from './utils/planGate';
+import { nextTier, planAtLeast, type PlanId } from './utils/planGate';
 import { getSession, setSession, clearSession, type WizardSessionV1 } from './services/wizardSessionStore';
 
 const TOTAL_STEPS = 8;
@@ -125,7 +129,20 @@ const App: React.FC = () => {
   // generation hits the user's monthly plan allowance (HTTP 402). Rendered once
   // at the app root so any module/wizard step triggers it without prop drilling.
   const quotaWall = useSyncExternalStore(quotaWallStore.subscribe, quotaWallStore.getSnapshot);
-  const { billing_cycle } = useSubscription();
+  const { billing_cycle, plan_id, loading: subLoading } = useSubscription();
+  // Slice 5 — gate a graduated module's RENDER behind a plan tier, with the
+  // grifon_dev_unlock bypass. Catches direct access (e.g. the video→AI-editor
+  // hand-off), not just the Dashboard tile. Server stays authoritative for the
+  // underlying AI calls.
+  const devUnlocked = typeof localStorage !== 'undefined' && localStorage.getItem('grifon_dev_unlock') === '1';
+  const gateModule = (node: React.ReactNode, requires: Exclude<PlanId, 'free'>, featureName: string): React.ReactNode =>
+    devUnlocked
+      ? node
+      : (
+        <PlanGate requires={requires} featureName={featureName} onBack={() => setActiveModule(null)} onUpgrade={() => { setActiveModule(null); setCurrentRoute('pricing'); }}>
+          {node}
+        </PlanGate>
+      );
   const [bootLine, setBootLine] = useState(0);
   const [authEmail, setAuthEmail] = useState('');
   const [authPassword, setAuthPassword] = useState('');
@@ -142,6 +159,10 @@ const App: React.FC = () => {
   const [activeModule, setActiveModule] = useState<string | null>(null);
   const [directorNudgeDismissed, setDirectorNudgeDismissed] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
+  // Director AI entry mode: one-shot (default — auto-generate the whole ad) vs
+  // the preserved 8-step wizard ('steps', advanced/Director mode). Slice 4 gates
+  // 'steps' to Business.
+  const [directorMode, setDirectorMode] = useState<'oneshot' | 'steps'>('oneshot');
   const [clientDetails, setClientDetails] = useState<ClientDetails>({ brandName: '', offer: '' });
   const [businessInfo, setBusinessInfo] = useState<BusinessInfo>({
     product: '',
@@ -623,6 +644,7 @@ const App: React.FC = () => {
     setThumbnailUrl(pendingSession.thumbnailUrl);
     setPendingSession(null);
     setHasRestored(true);
+    setDirectorMode('steps'); // resumed work is mid-wizard — keep the step view
     toast.success(`// SESSION_RESUMED — STEP_${stepLabel}_OF_08`, {
       description: 'Your earlier work has been restored.',
       duration: 6000,
@@ -653,6 +675,7 @@ const App: React.FC = () => {
     setCinematicResult(null);
     setPrefillSource(null);
     setMarketMindLoadedAvatar(null);
+    setDirectorMode('oneshot'); // a finished/restarted ad returns to the default surface
   };
 
   const goToLegal = (route: Route) => {
@@ -765,6 +788,9 @@ const App: React.FC = () => {
   }
 
   if (currentRoute === 'checkout') {
+    // A ?topup=<id> query routes to the standalone credit purchase (no plan);
+    // everything else is the subscription checkout.
+    const isTopupCheckout = new URLSearchParams(window.location.search).has('topup');
     return (
       <ErrorBoundary
         name="route:checkout"
@@ -772,7 +798,11 @@ const App: React.FC = () => {
         onReset={() => setCurrentRoute('pricing')}
         resetLabel="BACK TO PRICING"
       >
-        <CheckoutPage email={userEmail} onBack={() => setCurrentRoute('pricing')} onViewLegal={handleViewLegal} />
+        {isTopupCheckout ? (
+          <TopUpCheckoutPage email={userEmail} onBack={() => setCurrentRoute('app')} onViewLegal={handleViewLegal} />
+        ) : (
+          <CheckoutPage email={userEmail} onBack={() => setCurrentRoute('pricing')} onViewLegal={handleViewLegal} />
+        )}
       </ErrorBoundary>
     );
   }
@@ -1241,13 +1271,25 @@ const App: React.FC = () => {
   if (!activeModule) {
     moduleElement = <Dashboard onSelectModule={setActiveModule} activeModule={activeModule} userEmail={userEmail} userId={userId} onLogout={handleLogout} onUpgrade={() => setCurrentRoute('pricing')} />;
   } else if (activeModule === 'generate_video') {
-    moduleElement = (
-      <PlanGate
-        requires="pro"
-        featureName="Video Synthesis"
-        onBack={() => setActiveModule(null)}
-        onUpgrade={() => { setActiveModule(null); setCurrentRoute('pricing'); }}
-      >
+    // Slice 3 — video is metered per FINISHED AD. Starter+ render (1/8/15 ads);
+    // Free renders 0 and instead lands on the LockedVideoPreview upsell at the
+    // hand-off. Server stays authoritative (meterVideoRequest); this is the UX
+    // gate. PlanGate is bypassed here so Free gets the tailored upsell, not the
+    // generic lock screen.
+    if (subLoading) {
+      moduleElement = <div className="min-h-screen bg-zinc-950" />;
+    } else if (plan_id === 'free') {
+      moduleElement = (
+        <LockedVideoPreview
+          onBack={() => setActiveModule(null)}
+          onUpgrade={() => { setActiveModule(null); setCurrentRoute('pricing'); }}
+          onBuyTopup={() => { window.location.href = '/checkout?topup=video_ad_single'; }}
+          thumbnailUrl={thumbnailUrl}
+          previewImageUrl={storyboard[0]?.imageUrl}
+        />
+      );
+    } else {
+      moduleElement = (
         <GenerateVideo
           onBack={() => setActiveModule(null)}
           seedPrompts={videoPrompts}
@@ -1271,10 +1313,10 @@ const App: React.FC = () => {
             setActiveModule('signal_modulator');
           }}
         />
-      </PlanGate>
-    );
+      );
+    }
   } else if (activeModule === 'signal_modulator') {
-    moduleElement = (
+    moduleElement = gateModule((
       <SignalModulator
         onBack={() => {
           setSceneBatch([]);
@@ -1294,17 +1336,17 @@ const App: React.FC = () => {
           setActiveModule('edit_video');
         }}
       />
-    );
+    ), 'pro', 'Voice Studio');
   } else if (activeModule === 'influencer_forge') {
     moduleElement = <InfluencerForge onBack={() => setActiveModule(null)} ethnicity={avatar?.ethnicity} />;
   } else if (activeModule === 'cinematic_studio') {
-    moduleElement = <CinematicSpecStudio onBack={() => setActiveModule(null)} onNavigate={setActiveModule} businessInfo={businessInfo} narrative={cinematicNarrative} setNarrative={setCinematicNarrative} frameMap={cinematicFrameMap} setFrameMap={setCinematicFrameMap} result={cinematicResult} setResult={setCinematicResult} />;
+    moduleElement = gateModule(<CinematicSpecStudio onBack={() => setActiveModule(null)} onNavigate={setActiveModule} businessInfo={businessInfo} narrative={cinematicNarrative} setNarrative={setCinematicNarrative} frameMap={cinematicFrameMap} setFrameMap={setCinematicFrameMap} result={cinematicResult} setResult={setCinematicResult} />, 'business', 'Commercial & Cinematic Studio');
   } else if (activeModule === 'market_research') {
     moduleElement = <MarketResearch onBack={() => setActiveModule(null)} onNavigate={setActiveModule} />;
   } else if (activeModule === 'offer_optimizer') {
     moduleElement = <OfferOptimizer onBack={() => setActiveModule(null)} onNavigate={setActiveModule} />;
   } else if (activeModule === 'edit_video') {
-    moduleElement = (
+    moduleElement = gateModule((
       <EditVideo
         onBack={() => {
           setEditorBatch(null);
@@ -1313,7 +1355,7 @@ const App: React.FC = () => {
         editorBatch={editorBatch}
         avatarGender={avatarGender}
       />
-    );
+    ), 'pro', 'AI Video Editor');
   } else if (activeModule === 'image_editor') {
     moduleElement = <ImageEditor onBack={() => setActiveModule(null)} ethnicity={avatar?.ethnicity} />;
   } else if (activeModule === 'caption_headline') {
@@ -1330,6 +1372,17 @@ const App: React.FC = () => {
     const showResumePill = !isLoadingSession && pendingSession !== null && !hasRestored && wizardPristine;
     const showNudge = !hasRunResearch && !directorNudgeDismissed && !showResumePill;
     const showLoadedConfirmation = hasRunResearch && marketMindLoadedAvatar && !showResumePill;
+    // One-shot is the default surface; a pending step session forces steps mode
+    // so the user can resume where they left off.
+    const showOneShot = directorMode === 'oneshot' && !showResumePill;
+    const oneShotSinks: OneShotSinks = {
+      setScript, setFinalScript, setAvatar, setStoryboard, setThumbnailUrl, setVideoPrompts, setLanguage,
+    };
+    // Slice 4 — Director (step-by-step) mode is a Pro+ unlock ("control every
+    // scene"). Free/Starter ride the one-shot only. `grifon_dev_unlock` flips it
+    // on for dev/Neil on any account (console: localStorage.grifon_dev_unlock='1').
+    const devUnlock = typeof localStorage !== 'undefined' && localStorage.getItem('grifon_dev_unlock') === '1';
+    const directorUnlocked = devUnlock || planAtLeast(plan_id, 'pro');
 
     moduleElement = (
         <div className="min-h-screen bg-zinc-950 font-sans flex flex-col items-center p-4 sm:p-6 md:p-8 text-white">
@@ -1395,8 +1448,29 @@ const App: React.FC = () => {
               <div className="flex items-center justify-center h-64">
                 <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest animate-pulse">// LOADING_SESSION...</p>
               </div>
+            ) : showOneShot ? (
+              <DirectorOneShot
+                clientDetails={clientDetails}
+                businessInfo={businessInfo}
+                aspectRatio={aspectRatio}
+                setAspectRatio={setAspectRatio}
+                language={language}
+                sinks={oneShotSinks}
+                directorUnlocked={directorUnlocked}
+                onUpgrade={() => { setActiveModule(null); setCurrentRoute('pricing'); }}
+                onSwitchToSteps={() => { setDirectorMode('steps'); setCurrentStep(1); }}
+                onReview={() => { setDirectorMode('steps'); setCurrentStep(8); }}
+              />
             ) : (
             <>
+            {directorMode === 'steps' && !showResumePill && (
+              <button
+                onClick={() => setDirectorMode('oneshot')}
+                className="mb-6 flex items-center gap-2 text-[10px] font-mono text-zinc-500 hover:text-[#FFCC00] uppercase tracking-widest transition-colors"
+              >
+                <Sparkles className="w-3.5 h-3.5" /> Back to one-shot
+              </button>
+            )}
             {showResumePill && pendingSession && (
               <div className="bg-zinc-900 border border-[#FFCC00]/30 rounded-xl p-4 mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 <div className="flex items-start gap-3">
@@ -1427,7 +1501,7 @@ const App: React.FC = () => {
                 </div>
               </div>
             )}
-            {currentStep <= TOTAL_STEPS && <StepIndicator currentStep={currentStep} totalSteps={TOTAL_STEPS} onStepClick={(s) => s < currentStep && setCurrentStep(s)} />}
+            {currentStep <= TOTAL_STEPS && <StepIndicator currentStep={currentStep} totalSteps={TOTAL_STEPS} onStepClick={(s) => s < currentStep && directorUnlocked && setCurrentStep(s)} />}
             <div className="mt-8">
                 {currentStep === 1 && <Step1ClientDetails
                   data={clientDetails}
@@ -1442,7 +1516,7 @@ const App: React.FC = () => {
                 {currentStep === 5 && <Step5Storyboard script={finalScript} avatar={avatar} businessInfo={businessInfo} storyboard={storyboard} setStoryboard={setStoryboard} onNext={() => setCurrentStep(6)} onBack={() => setCurrentStep(4)} aspectRatio={aspectRatio} language={language} />}
                 {currentStep === 6 && <Step6Thumbnail script={finalScript} avatar={avatar} businessInfo={businessInfo} aspectRatio={aspectRatio} thumbnailUrl={thumbnailUrl} setThumbnailUrl={setThumbnailUrl} onNext={() => setCurrentStep(7)} onBack={() => setCurrentStep(5)} />}
                 {currentStep === 7 && <Step6VideoPrompts storyboard={storyboard} videoPrompts={videoPrompts} setVideoPrompts={setVideoPrompts} onNext={() => setCurrentStep(8)} onBack={() => setCurrentStep(6)} businessInfo={businessInfo} />}
-                {currentStep === 8 && <Step7FinalOutput allData={{ clientDetails, businessInfo, finalScript, avatar, storyboard, videoPrompts, thumbnailUrl, aspectRatio }} onRestart={restart} onBack={() => setCurrentStep(7)} onGenerateVideo={() => setActiveModule('generate_video')} />}
+                {currentStep === 8 && <Step7FinalOutput allData={{ clientDetails, businessInfo, finalScript, avatar, storyboard, videoPrompts, thumbnailUrl, aspectRatio }} onRestart={restart} onBack={directorUnlocked ? () => setCurrentStep(7) : () => setDirectorMode('oneshot')} onGenerateVideo={() => setActiveModule('generate_video')} />}
             </div>
             </>
             )}
@@ -1480,6 +1554,7 @@ const App: React.FC = () => {
         onUpgrade={() => {
           if (wallUpsell) startCheckout(wallUpsell, billing_cycle ?? 'monthly');
         }}
+        onBuyTopup={(id) => { window.location.href = `/checkout?topup=${id}`; }}
         onDismiss={() => quotaWallStore.dismiss()}
       />
     </ErrorBoundary>

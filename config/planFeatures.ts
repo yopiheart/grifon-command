@@ -10,33 +10,30 @@ import type { PlanId } from '../services/checkoutService';
  * stays inline in the pricing page.)
  */
 export const PLAN_FEATURES: Record<PlanId, string[]> = {
-  creator: [
-    '15 video ad workflows',
-    '5 research reports',
-    '100 captions & headlines',
-    '50 AI images (1080p, clean)',
-    'No watermarks on exports',
+  starter: [
+    '1 finished video ad a month',
+    'Your full ad plan: research, script, storyboard, avatar & thumbnail',
+    "Clean-cut video — your character's real voice, no dead air",
+    'No watermarks',
   ],
   pro: [
-    '40 video ad workflows',
-    '15 research reports',
-    '300 captions & headlines',
-    '150 AI images',
-    '15 AI video ads/month',
-    '5 brand profiles',
-    'Community + monthly calls',
+    '8 finished video ads a month',
+    'AI video editor — captions, music & effects that keep viewers watching to the end',
+    'Director mode — control every scene',
+    'Choose your storyboard format & editing style',
+    'Facebook caption & headline packs',
+    'Community + monthly group call',
     'Priority support',
   ],
+  // Honesty pass (2026-06-19): dropped 'brand profiles', 'team seats' and
+  // 'White-label exports' — none are built, and white-label contradicts the ToS.
+  // Director mode moved to Pro (it's a Pro+ unlock — App.tsx directorUnlocked),
+  // so Business shows only its real incremental unlocks.
   business: [
-    '100 video ad workflows',
-    '40 research reports',
-    '500 captions & headlines',
-    '300 AI images',
-    '40 AI video ads/month',
-    '10 team seats',
-    'White-label exports',
-    'All advanced modules',
-    'Dedicated account manager',
-    'Weekly strategy calls',
+    '15 finished video ads a month',
+    '4K ultra-real images',
+    'Choose your video render quality — up to 4K',
+    'Commercial & cinematic ad studio',
+    'Weekly strategy call + dedicated account manager',
   ],
 };
