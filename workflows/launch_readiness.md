@@ -22,9 +22,15 @@ for a free beta.
    `varoqxjccqmskzeejagn` is `ACTIVE_HEALTHY`, `.env` `VITE_SUPABASE_URL` matches it, and the
    auth logs show Neil's Google login succeeding (`/callback` 302 → `/user` 200) with **zero
    failed-login/error events in 24h**. Neil confirmed he can log in now. Gate 2 genuinely green.
-2. **🎬 FINAL_RENDER never eyeballed live.** End-card overlays (₱ glyph in every preset font,
-   gold recap legibility, anchor-ding timing) + scene-6/5 ghost-tail + BEAN BLOCK female-voice
-   default — code shipped 2026-06-13, human eyeball still pending. = step 1 of `this_week_plan.md`.
+2. **✅ FINAL_RENDER eyeballed live — RESOLVED 2026-06-17 (Neil's smoke).** End-card overlays
+   (₱ glyph per preset font, gold recap legibility, anchor-ding timing), scene-6/5 ghost-tail, and
+   the BEAN BLOCK female-voice default all confirmed in Neil's most-recent render smoke.
+3. **✅ Resume-pill on refresh — verified working (Neil, long-standing).** Wizard state survives a
+   hard refresh; the `[RESUME]` pill restores all step state (`App.tsx:611-623`, `:1330`).
+4. **⏳ R2 media migration — Vercel env wiring (the ONLY remaining Tier-0 gate to beta).** Add the
+   four `R2_*` vars + `MEDIA_STORE=r2` to Vercel Production env, redeploy, eyeball one prod render.
+   Closes the Supabase egress risk (hit 356% of free-tier quota). See
+   [`r2_media_migration.md`](r2_media_migration.md) lines 47-49.
 
 **New since 2026-06-13:**
 - **R2 media migration** — Phase 1 (dormant facade, default supabase, `4c499c1`) + Phase 2
