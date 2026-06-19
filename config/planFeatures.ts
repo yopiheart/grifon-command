@@ -19,19 +19,21 @@ export const PLAN_FEATURES: Record<PlanId, string[]> = {
   pro: [
     '8 finished video ads a month',
     'AI video editor — captions, music & effects that keep viewers watching to the end',
+    'Director mode — control every scene',
     'Choose your storyboard format & editing style',
     'Facebook caption & headline packs',
-    '3 brand profiles',
     'Community + monthly group call',
     'Priority support',
   ],
+  // Honesty pass (2026-06-19): dropped 'brand profiles', 'team seats' and
+  // 'White-label exports' — none are built, and white-label contradicts the ToS.
+  // Director mode moved to Pro (it's a Pro+ unlock — App.tsx directorUnlocked),
+  // so Business shows only its real incremental unlocks.
   business: [
     '15 finished video ads a month',
-    'Director mode — control every scene',
     '4K ultra-real images',
+    'Choose your video render quality — up to 4K',
     'Commercial & cinematic ad studio',
-    '10 brand profiles · 10 team seats',
-    'White-label exports',
-    'Weekly strategy call + dedicated manager',
+    'Weekly strategy call + dedicated account manager',
   ],
 };
