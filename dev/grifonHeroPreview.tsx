@@ -6,10 +6,12 @@
 // plate purely to prove the real-font overlay (wordmark/headline/CTA in true
 // Inter + Instrument Serif). Swap `photoSrc` to the generated plates once the cap
 // resets — the overlay is identical.
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { HeroAdCard, type HeadlineSegment } from '../components/grifon-ads/HeroAdCard';
-import standInPlate from '../assets/brand/zam-ref.jpg';
+
+// Stand-in plate referenced by Vite-served URL (avoids a typed asset import).
+// Swap to the no-text Codex plate path once the usage cap resets.
+const standInPlate = '/assets/brand/zam-ref.jpg';
 
 const cards: { id: string; label: string; badge: string; headline: HeadlineSegment[]; cta: string }[] = [
   { id: 'hero-30min', label: 'First Ad In 30 Minutes (cold → Try It Free)', badge: 'START FREE', cta: 'Try It Free', headline: [{ t: 'First Ad In' }, { t: '30 Minutes', gold: true }] },
