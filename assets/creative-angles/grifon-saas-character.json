@@ -1,0 +1,34 @@
+{
+  "_meta": {
+    "cmoReviewed": true,
+    "reviewedBy": "grifon-cmo",
+    "date": "2026-06-21",
+    "note": "Codex CHARACTER slate v2 (Zam hero) with feedback applied: no VIP, stage-aware CTA (cold=Try It Free, warm=Upgrade to Pro, Autopilot=Apply — invite-only), charcoal wardrobe, centered text, per-angle expression + camera angle. Niche callouts + comparisons now live as React→PNG (components/grifon-ads), not here."
+  },
+  "angles": [
+    {
+      "id": "saas-5days",
+      "headline": "First Ad In 5 Days",
+      "badge": "START FREE",
+      "cta": "Try It Free",
+      "principle": "Dream outcome + speed (cold acquisition CTA)",
+      "scene": "Zam energized and genuinely excited — bright open smile, leaning slightly forward toward camera, one hand mid-gesture; slight LOW camera angle for momentum and authority; bright confident gold glow behind her"
+    },
+    {
+      "id": "saas-agency",
+      "headline": "Fire Your Ad Agency",
+      "badge": "AGENCY KILLER",
+      "cta": "Upgrade to Pro",
+      "principle": "Villain + anchoring (warm upsell CTA)",
+      "scene": "Zam bold and decisive — confident half-smirk, one eyebrow slightly raised, arms crossed; straight-on power framing, tighter crop from the chest up; strong dramatic gold rim light"
+    },
+    {
+      "id": "saas-autopilot",
+      "headline": "Marketing On Autopilot",
+      "badge": "AUTOPILOT",
+      "cta": "Apply for Autopilot",
+      "principle": "Done-for-you dream outcome (Autopilot is invite-only → apply CTA)",
+      "scene": "Zam calm and in-command — relaxed assured expression, leaning back slightly with hands clasped; 3/4 turn of the body, slightly wider executive framing; premium soft gold glow"
+    }
+  ]
+}

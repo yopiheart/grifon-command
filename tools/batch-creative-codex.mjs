@@ -40,7 +40,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, '..');
 
 function parseArgs(argv) {
-  const out = { concurrency: 3, size: '1024x1536', dryRun: false };
+  const out = { concurrency: 4, size: '1024x1536', dryRun: false };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--angles') out.angles = argv[++i];
@@ -120,7 +120,8 @@ function composePrompt(angle) {
   return master
     .replaceAll('{{HEADLINE}}', (angle.headline || '').trim())
     .replaceAll('{{SCENE}}', (angle.scene || 'clean premium studio backdrop').trim())
-    .replaceAll('{{BADGE}}', (angle.badge || 'GRIFON AI · VIP').trim());
+    .replaceAll('{{BADGE}}', (angle.badge || 'GRIFON AI').trim())
+    .replaceAll('{{CTA}}', (angle.cta || 'Try It Free').trim());
 }
 
 // --- Reference photo (optional) ---
