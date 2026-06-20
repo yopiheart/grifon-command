@@ -516,14 +516,36 @@ export interface DayContent {
   imageUrl?: string;
 }
 
+// The creative family chosen in the Intelligence Uplink. 'product' keeps the
+// original 3 photo-templates; 'callout' (GP-2) and 'saas-offer' (GP-1, Slice 2)
+// are the text-composited families. See workflows/static_ad_swipe_file.md.
+export type AdCreativeFamily = 'product' | 'saas-offer' | 'callout';
+
+// Structured, renderable copy for the text-composited templates. Each template
+// component reads the subset it needs; the model fills the relevant fields.
+export interface AdComposition {
+  // Niche Callout (GP-2)
+  niche?: string;        // the exact buyer, bolded — e.g. "coffee shop owner"
+  qualifier?: string;    // the real proof-of-fit, bolded — e.g. "doing 2+ closings a month"
+  leadMagnet?: string;   // the free asset offered — e.g. "Scaling Roadmap"
+  // SaaS Offer / Upsell (GP-1, Slice 2)
+  subhead?: string;
+  bullets?: string[];
+  guarantee?: string;
+  badge?: string;
+  ctaLabel?: string;
+  tiers?: { name: string; lines: string[]; highlight?: boolean }[];
+}
+
 export interface AdVariant {
   id: number;
-  templateType: "Press Clip" | "Benefit Anatomy" | "Split-Screen";
+  templateType: "Press Clip" | "Benefit Anatomy" | "Split-Screen" | "Niche Callout";
   headline: string;
   imagePrompt: string;
   caption: string;
   hookLogic: string;
   imageUrl?: string;
+  composition?: AdComposition;
 }
 
 export interface UplinkData {
@@ -546,6 +568,7 @@ export interface UplinkData {
   logoAsset?: string;
   productAssets: string[];
   avatarAsset?: string;
+  family?: AdCreativeFamily; // defaults to 'product' when unset (preserves legacy behavior)
 }
 
 export interface CinematicSpecConfig {

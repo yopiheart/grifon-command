@@ -34,6 +34,7 @@ const IntelligenceUplink: React.FC<IntelligenceUplinkProps> = ({ onComplete, onB
     language: 'ENGLISH',
     productAssets: globalBusinessInfo?.productImageUrls || [],
     logoAsset: globalBusinessInfo?.logoImageUrl || undefined,
+    family: 'product',
   });
 
   const logoRef = useRef<HTMLInputElement>(null);
@@ -215,6 +216,20 @@ const IntelligenceUplink: React.FC<IntelligenceUplinkProps> = ({ onComplete, onB
         {/* FOOTER CONFIG BAR */}
         <GlassPanel className="p-6 md:p-8 flex flex-col gap-8">
           <div className="flex flex-wrap gap-x-12 gap-y-6 items-start">
+            <div className="space-y-2">
+              <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">CREATIVE_FAMILY</p>
+              <div className="flex gap-2 bg-zinc-950 p-1 rounded-xl border border-white/10">
+                {[{ id: 'product', label: 'PRODUCT' }, { id: 'callout', label: 'NICHE CALLOUT' }].map(fam => (
+                  <button
+                    key={fam.id}
+                    onClick={() => setFormData({...formData, family: fam.id as any})}
+                    className={`text-[10px] px-4 py-2 rounded-lg font-bold font-mono transition-all ${(formData.family ?? 'product') === fam.id ? 'bg-[#FFCC00] text-black' : 'text-zinc-500 hover:text-white'}`}
+                  >
+                    {fam.label}
+                  </button>
+                ))}
+              </div>
+            </div>
             <div className="space-y-2">
               <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">ASPECT_RATIO</p>
               <div className="flex gap-2 bg-zinc-950 p-1 rounded-xl border border-white/10">

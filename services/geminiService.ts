@@ -2423,7 +2423,7 @@ JSON STRUCTURE:
 
 export const generateAdCreatives = async (data: UplinkData): Promise<AdVariant[]> => {
     await delay(1000);
-    const prompt = `
+    const productPrompt = `
 ### Role: Direct Response Creative Director
 Task: Generate 2 high-conversion Image Ad variants for "${data.brandIdentityName}".
 
@@ -2455,6 +2455,43 @@ JSON STRUCTURE:
   "hookLogic": "Brief explanation of the psychological trigger used"
 }
     `;
+
+    // GP-2 "Niche Callout" family (text-composited; see workflows/static_ad_swipe_file.md).
+    // Self-identification pattern-interrupt — the niche + qualifier carry the ad.
+    const calloutPrompt = `
+### Role: Direct Response Strategist — Niche Callout Ads
+Task: Generate 3 "Niche Callout" image-ad variants for "${data.brandIdentityName}". Each ad self-selects ONE hyper-specific buyer and offers a value-first asset.
+
+INTELLIGENCE:
+Brand: ${data.brandIdentityName}
+Audience: ${data.targetDemographic} (${data.ageRange})
+Main Benefit: ${data.primaryBenefit}
+Market Pain Point: ${data.marketPainPoint}
+Unique Value Proposition: ${data.uvp}
+Products / Services offered: ${data.inventoryList}
+Language: ${data.language}
+
+PATTERN (Sabri Suby dream-buyer callout):
+"If you run a [NICHE] [QUALIFIER?], we built [VALUE-FIRST OFFER] for you."
+- niche = ONE specific, named buyer segment — VARY it across the 3 variants.
+- qualifier = a REAL proof-of-fit (size / revenue / situation) ONLY IF grounded in the Audience above. If none is known, OMIT it entirely ("If you run a [niche], we built …"). NEVER invent a number.
+- leadMagnet = a REAL value-first offer grounded in the Benefit / Products / UVP (a free guide, audit, sample, trial, or the core offer reframed as the reason to act). NEVER name a freebie that may not exist; when unsure, use the real core offer/benefit.
+
+TRUST GUARDRAIL: no fake scarcity, no invented stats, no fake testimonials. Every qualifier must be plausibly real for ${data.brandIdentityName}.
+
+Return a JSON array of 3 objects:
+{
+  "id": number,
+  "templateType": "Niche Callout",
+  "headline": "the full callout sentence",
+  "caption": "Primary ad copy text in ${data.language}",
+  "hookLogic": "the psychological trigger (specificity / self-identification)",
+  "imagePrompt": "",
+  "composition": { "niche": "...", "qualifier": "...", "leadMagnet": "..." }
+}
+    `;
+
+    const prompt = data.family === 'callout' ? calloutPrompt : productPrompt;
 
     const response: GenerateContentResponse = await retryWithBackoff(() => proxyGenerateContent({
         model: textModel,
