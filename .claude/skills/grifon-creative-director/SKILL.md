@@ -36,7 +36,7 @@ PlanId = `free | starter | pro | business`. **Autopilot is invite-only — never
 
 ## DESIGN SYSTEM — SOURCE OF TRUTH
 
-The canonical design system lives in [DESIGN.md](DESIGN.md). Re-read it before generating any new `.tsx` UI. Do not improvise tokens from memory — pull them from DESIGN.md and the existing `components/ui/` primitives so the output matches the rest of the app.
+The canonical design system lives in [DESIGN.md](DESIGN.md). Re-read it before generating any new `.tsx` UI. Do not improvise tokens from memory — pull them from DESIGN.md and the existing `components/ui/` primitives so the output matches the rest of the app. **DESIGN.md WINS on any conflict with the summary below — it is amended often (recent adds: `serif-accent` Instrument Serif, the `proof-band` marketing light band, `brand-yellow-dark`, the `proofBand`/`goldButtonGhost` components, dashboard borderless-tonal pilot). This quick reference can lag; treat it as a pointer, not the spec.**
 
 Quick reference (full spec in DESIGN.md):
 - **Canvas:** `bg-zinc-950` (`#09090B`). Never `bg-black` or `#000000` — flat black breaks the cinematic feel.
@@ -47,7 +47,9 @@ Quick reference (full spec in DESIGN.md):
 - **Type ladder:** `text-white` (active) → `text-zinc-300` (body) → `text-zinc-400` (passive) → `text-zinc-500` (meta).
 - **Headline gradient:** `bg-gradient-to-r from-zinc-100 to-zinc-500`.
 - **Sub-labels:** `text-[10px] text-zinc-500 font-mono uppercase tracking-widest`.
-- **Typography families:** Inter / Geist / SF Pro for sans, JetBrains Mono for `label-caps`. (NOT Outfit, NOT DM Sans — those are not in this project.)
+- **Typography families:** Inter / Geist / SF Pro for sans, JetBrains Mono for `label-caps`, **Instrument Serif italic (`serif-accent`)** for 1–2 gold accent words on MARKETING headlines only (e.g. "the *Grifon way*") — never in-app, never body. The global h1–h6 LAW forces Inter 900 uppercase `!important`, so a serif accent MUST be a `<span className="font-serif italic normal-case tracking-normal">` inside the heading, not on the heading element. (NOT Outfit, NOT DM Sans.)
+- **Marketing light band (exception to dark-only):** marketing pages (landing/pricing/sales) MAY use AT MOST ONE full-width `proof-band` (`#F2F1EA`) section for editorial contrast. Inside it: dark zinc text ladder (`text-zinc-900/600/500`), accent text + icons use **`brand-yellow-dark` (`#B28F00`)** (gold `#FFCC00` is ~invisible on cream — reserve pure gold for decorative strokes only), solid cards (`bg-white border-zinc-900/10`, NO glass/blur), `relative z-10`. Never propagate into the app/wizard/dashboard.
+- **Button rounding by surface:** `rounded-full` on MARKETING surfaces + AD CREATIVES (pills sell premium action); `rounded-xl` in-app (wizard/dashboard/modules/settings). Inputs always `rounded-xl`.
 
 **Real React primitives** in [components/ui/](components/ui/): `GlassPanel`, `GoldButton`, `Button`, `Input`, `Textarea`, `Card`, `Badge`, `Loader`, `AnimatedBorder`, `AudioRecorder`, `ErrorBoundary`, `ImageModal`, `LegalPageLayout`. Use these — don't recreate them inline. **Ghost button** is a Tailwind class pattern (`bg-zinc-950 border border-white/10 text-zinc-400 hover:text-white hover:border-[#FFCC00] transition-all rounded-xl`), not a component file — apply it directly.
 
@@ -127,7 +129,7 @@ For anything beyond a headline or button label, hand the copy brief to `grifon-c
 ## HARD CONSTRAINTS
 
 - **Banned colors:** pink, cyan, pure black (`#000000`).
-- **Background:** `bg-zinc-950` (`#09090B`). **Accent:** `#FFCC00`. No exceptions.
+- **Background:** `bg-zinc-950` (`#09090B`). **Accent:** `#FFCC00`. No exceptions in-app — the ONLY documented exception is the single marketing `proof-band` (`#F2F1EA`) light section per page (accent text there = `brand-yellow-dark` `#B28F00`). See DESIGN.md "Marketing light band".
 - **Icons:** `lucide-react` only. Never raw text strings (`movie_filter`, `play_arrow`) and never icon fonts.
 - **Typography:** Inter / Geist / SF Pro for sans, JetBrains Mono for label-caps. Do not introduce other families without an explicit brief from Neil.
 - **`services/geminiService.ts` is tuned.** Never modify its prompts, schemas, model IDs, or system instructions when generating code. Transport, types, and structural refactors are fair game only when the task explicitly calls for them.
