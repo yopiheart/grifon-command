@@ -26,16 +26,25 @@ Proposal) → `applied` (shipped as an Image Ads Gen template or CMO playbook).
 
 | ID | Pattern | Corroborations | Status |
 | --- | --- | --- | --- |
-| S1 | **Risk-reversal headline** — the promise IS the guarantee ("kick-off in 5 days OR all your money back"). Removes the buy-risk at the headline, not the fine print. | 3 (E1, E2, E3) | observed |
+| S1 | **Risk-reversal headline / guarantee** — the promise IS the guarantee ("kick-off in 5 days OR all your money back"; "TRY RISK-FREE"; "30-day money-back"). Removes the buy-risk at the headline, not the fine print. | 6 (E1, E2, E3; E11 Grüns; E12, E17 IM8) | proposed |
 | S2 | **Authority portrait hero** — founder cut-out, confident pose, gold rim-light on black; the *person* is the proof when there's no physical product. | 4 (E1–E4) | observed |
 | S3 | **Ticket / tier comparison** — Free (dull, glass) vs paid (gold, glowing) cards side by side; anchoring makes the upgrade obvious. | 2 (E3, E2-partial) | observed |
 | S4 | **Offer-stack checklist** — gold/green ✅ list of what they GET (calls, templates, bonuses) + guarantee tag. Reciprocity + commitment. | 2 (E2, E3) | observed |
 | S5 | **Gold-on-black SaaS palette** — `#FFCC00`-class gold + near-black, glassy cards, gold lozenge "VIP/PRO" badge, gold gradient CTA bar. (Already Grifon's palette.) | 4 (E1–E4) | observed |
 | S6 | **CTA-bar color A/B test** — same creative shipped with gold / green / blue "Learn more" bars across the set; they're testing button color, not just creative. | 3 (E1 gold, E2 green, E4 blue) | observed |
 | S7 | **Fake-DM / manufactured scarcity** — "pre-approved," blurred meeting invite, "selecting a few people." **ANTI-PATTERN for Grifon** — recorded so we copy the *layout* (cohort offer) but never the fabrication. | 2 (E4, E1-urgency) | observed (do-not-replicate) |
-| S8 | **Hyper-specific niche callout** — "If you own a *[exact niche]* doing *[real revenue]* a year, we made this *[free asset]* for you." Self-identification + specificity (Sabri Suby dream-buyer). ONE template → N niche variants off a swapped variable. | 1 (E5 = 3 niche variants of one creative) | observed |
+| S8 | **Hyper-specific audience callout** — name the exact buyer in the hook ("If you own a *[niche]* doing *[revenue]*"; "on GLP-1"; "Women 40+"; "Postpartum…"). Self-identification + specificity (Sabri Suby dream-buyer). ONE template → N variants off a swapped variable. | **5 across 3 brands** (E5 service; E8/E11 Grüns; E13 IM8) | **proposed — strongest pattern, drives GP-2** |
 | S9 | **Anti-design text-only pattern interrupt** — flat solid bg, centered white sans, zero imagery/logo/CTA button; reads as a personal note, not an ad. **Contradicts S5 + Grifon's cinematic brand** — adopt the copy mechanic; test the bare visual only as a deliberate experiment. | 1 (E5) | observed (brand-conflict) |
-| S10 | **Value-first lead magnet (TOF)** — gives a free asset ("Scaling Roadmap") to a cold dream-buyer. Top-of-funnel; the opposite end from the E1–E4 bottom-funnel upsell. | 1 (E5) | observed |
+| S10 | **Value-first lead magnet (TOF)** — gives a free asset ("Scaling Roadmap", "FREE Starter Kit") to a cold dream-buyer. Top-of-funnel; the opposite end from the E1–E4 bottom-funnel upsell. | 2 (E5; E12 IM8) | observed |
+| S11 | **Trend-hijack** — ride a live cultural wave so the ad feels like the moment, not a pitch (GLP-1 / Ozempic). Grifon's wave is **"AI"**. | 5 (E7, E8, E10 Grüns; E14, E16 IM8) | observed |
+| S12 | **Pattern-interrupt hook** — curiosity/novelty/fake-apology that doesn't read as an ad ("We NEVER do this", "WE'RE SO SORRY"). | 2 (E6, E7 Grüns) | observed |
+| S13 | **Mascot / recall device** — a repeated motif (gummy bear) carries instant brand ID. Grifon's mark + gold light-sweep is the under-used equivalent. | 1 (E6–E11 Grüns, one brand) | observed |
+| S14 | **Full-canvas color A/B** — test the *whole background* color (green/yellow/blue/beige), not just the CTA. Extends S6. | 1 (E6–E11 Grüns, one brand) | observed |
+| S15 | **Stat-stack proof** — numerals as proof, stacked ("21 vitamins. 20 cal. 1 net carb."). | 3 (E8, E10 Grüns; E14 IM8) | observed |
+| S16 | **Borrowed authority** — social proof by association (celebrity / sports partnership: Inter Miami CF). Grifon = client logos / testimonials / "trusted by N PH businesses." | 1 (E15 IM8) | observed |
+| S17 | **"Imagine…" future-pace + objection-handling** — paint the after-state, defuse the fear ("Imagine your GLP-1 journey, without the side effects"). | 1 (E16 IM8) | observed |
+| S18 | **Style axis: premium-editorial vs flat-graphic** — IM8 (crimson, serif, lifestyle photography, restraint) vs Grüns (loud color-block, mascot, discount). **Grifon = the premium lane** (cinematic gold/black). | brand-level (Grüns flat E6–E11; IM8 premium E12–E17) | observed |
+| S19 | **Placement / multi-ratio + safe-zone** — ship one creative as 4:5 (feed) + 1:1 + 9:16 (stories/reels), keeping text in the 9:16 central ~60% safe band; more ratios = more Andromeda inventory. See the Placement strategy section. | cross-set observation | observed |
 
 ## Gated Proposals
 
@@ -137,9 +146,133 @@ seller, real-estate, resto, online coach). **Funnel slot:** cold TOF lead magnet
   `saas-offer`) + `niche` / `qualifier` / `leadMagnet` inputs. Same TUNED gating
   as GP-1.
 
+### GP-3 — "Product Graphic" family (flat-graphic, Grüns-style)
+
+**Why:** E6–E11 (Grüns). Flat brand-color canvas + bold display hook + product
+hero + mascot motif + discount roundel + ✅ benefit checklist + scarcity bar. The
+*loud / value* energy. E8 maps almost exactly onto the existing **Benefit
+Anatomy** template — so GP-3 partly *upgrades* what's already there.
+- **CMO:** hook types = curiosity pattern-interrupt (S12), trend-hijack (S11),
+  audience callout (S8), stat-stack (S15). Guardrail: stats real; no fake
+  scarcity; FDA/claim-style lines only if true (Grifon: no fake proof, ever).
+- **CD:** flat brand-color background (color is an A/B variable, S14), condensed
+  bold type as hero, product/asset hero, **Grifon mark as recall motif** (S13),
+  reusable discount-roundel + scarcity-bar components. ⚠️ This is the *loud* lane
+  — off Grifon's premium brand; reserve for value/discount offers, default to
+  GP-4 for brand consistency.
+- **Build:** same `captureToPng` pipeline; product shot from `generateSceneImage`
+  (text-free) + graphic text overlay. Family `product-graphic`.
+
+### GP-4 — "Premium Lifestyle" family (IM8-style) — Grifon's natural lane
+
+**Why:** E9, E12–E17 (IM8 + Grüns-premium). Premium photoreal lifestyle/product-
+in-light + restrained type + benefit chips + a single gold CTA + optional
+social-proof strip. This is the lane Grifon's cinematic gold/black already lives
+in — highest brand fit.
+- **CMO:** hooks = audience callout (S8), "Imagine…" future-pace (S17), pain-state
+  (E17), trend-hijack (S11), borrowed authority (S16). Outcome-framed, never
+  feature-listed.
+- **CD:** `generateSceneImage` makes the premium lifestyle/product shot (text-
+  free — its strength), then `captureToPng` overlays: headline with a **gold→
+  transparent scrim for guaranteed contrast** (fixes IM8's readability wobble),
+  benefit chips, ONE gold `#FFCC00` CTA (fixes IM8's drifting CTA colors), Grifon
+  corner motif. Family `product-lifestyle`. Multi-ratio + safe-zone aware (S19).
+- **Note:** GP-4 and GP-1 (SaaS upsell) share the *exact* architecture
+  (text-free background + branded overlay) — build GP-1 and GP-4 reuse the same
+  composite path.
+
+## Cross-Vertical Pattern Map
+
+These patterns are **not** about supplements or coaching — they're portable
+persuasion templates. The same engine + the family selector spins variants for
+any Grifon vertical. This is the reusable map (and the answer to "can we apply
+this to Grifon / personal brand / SaaS / services / app / real estate").
+
+| Pattern | Grifon translation across verticals |
+| --- | --- |
+| **Audience callout** (S8) | SaaS: "For PH coaches who hate posting." · Real estate: "For agents doing 2+ closings/mo." · Services: "For salons booked solid but invisible online." |
+| **Trend-hijack** (S11) | Ride **"AI"**: "Your AI marketing team for the price of one boosted post." Personal brand: "I replaced my agency with AI — here's the system." |
+| **"Imagine… without [pain]"** (S17) | "Imagine launching a winning ad — without the ₱30K agency or the all-nighter." (app / services / personal brand identical) |
+| **Benefit anatomy / checklist** (S4, S15) | Outcome ✅ list (never feature-list): "Ad script ✓ Storyboard ✓ Voiceover ✓ Caption ✓ — one sitting." Real estate: listing-feature checklist. |
+| **Borrowed authority** (S16) | Client logos, "trusted by N PH businesses," a testimonial card. Personal brand: "as seen on / N followers." |
+| **Risk-reversal / free starter** (S1, S10) | Free plan, "try risk-free," 30-day guarantee (GP-1 Guarantee Hero). |
+| **Pain-state hook** (E17) | Name Bryan's bleeding neck: "The end of 'I spent ₱15K on ads and got 2 sales.'" |
+
+## Placement & Aspect-Ratio Strategy
+
+Shipping one creative in multiple ratios is deliberate **placement optimization**,
+not indecision (Neil's observation, 2026-06-20). Each placement has a native
+shape; give only one ratio and the platform auto-crops the rest, chopping the
+headline/CTA. Fix = supply the right ratio per placement (Meta **placement asset
+customization**).
+
+| Ratio | Placement | Why |
+| --- | --- | --- |
+| **4:5** (1080×1350) | Feed (default) | Tallest in-feed = most thumb-stopping real estate, often lower CPM |
+| **1:1** (1080×1080) | Feed / Explore | Universal, never cropped oddly |
+| **9:16** (1080×1920) | Stories / Reels / TikTok | Full-screen immersive |
+
+**9:16 safe zone:** top ~14% (header) and bottom ~20–35% (caption + CTA + icon
+rail) are covered by UI — keep all text/product in the central **~60% safe band**.
+
+**Build implication:** because templates render via `captureToPng`, exporting all
+three ratios is nearly free — re-render the same React card at each canvas size
+with safe-zone padding tokens. **Bake safe-zone awareness in from GP-2; multi-ratio
+export turns Grifon from "makes an image" into "makes a placement-ready ad set."**
+More ratios also = more inventory for Andromeda to retrieve against. Logged to the
+`grifon-ad-strategist` playbook.
+
 ## Entries
 
 Append newest at the top.
+
+### 2026-06-20 — E6 Grüns "We NEVER do this!" (IG, DTC supplement / greens gummies)
+**Levers:** pattern-interrupt curiosity hook (S12) + discount roundel ("61% OFF + FREE GIFTS") + scarcity bar ("ENDING SOON") + product pouch hero + gummy-bear mascot (S13) on flat green (S14).
+**So What:** GP-3 flat-graphic. The "we never do this" curiosity hook is platform- and vertical-agnostic — reusable for a Grifon limited-offer. **Patterns:** S12, S13, S14, S6 (scarcity bar).
+
+### 2026-06-20 — E7 Grüns "WE'RE SO SORRY!" (IG, DTC supplement)
+**Levers:** fake-apology pattern-interrupt (S12) + reciprocity ("make it right" → 61% off) + education (serving = 12 cups raw broccoli fiber) + GLP-1 trend-hijack (S11).
+**So What:** the apology-reframe is a strong cold hook; GP-3. **Patterns:** S11, S12.
+
+### 2026-06-20 — E8 Grüns "Help keep your sh*t moving on GLP-1" (IG, DTC supplement)
+**Levers:** crude/relatable problem callout + **audience callout "on GLP-1"** (S8) + GLP-1 trend (S11) + benefit anatomy (✅ more fiber than 2 cups broccoli / 20+ vitamins / 20 cal, S15) + "52% OFF" bar + FDA fine print.
+**So What:** this *is* the existing **Benefit Anatomy** template, premium-ized → GP-3 upgrades it. **Patterns:** S8, S11, S15.
+
+### 2026-06-20 — E9 Grüns "Ozempic's New Bestie" (IG, DTC supplement — premium variant)
+**Levers:** trend-association headline (S11) + premium minimal aesthetic (beige, green serif, single giant gummy hero) + crude humor ("1 pack a day → More 💩").
+**So What:** proves even Grüns goes *premium* for a segment → the style axis (S18). GP-4-adjacent. **Patterns:** S11, S18 (premium).
+
+### 2026-06-20 — E10 Grüns "Shedding pounds? Don't shed your nutrition." (IG, DTC supplement)
+**Levers:** wordplay hook + weight-loss/GLP-1 trend (S11) + stat-stack ("21 vitamins. 20 cal. 1 net carb.", S15) on flat yellow (S14).
+**So What:** stat-stack proof transfers cleanly to SaaS ("3 modules. 1 ad. 0 agency."). GP-3. **Patterns:** S11, S14, S15.
+
+### 2026-06-20 — E11 Grüns "Postpartum hair shedding is a whole thing" (IG, DTC supplement)
+**Levers:** **hyper-specific audience callout** (postpartum moms, S8) + ingredient education (biotin/zinc/iron/A/D) + "61% off + free gifts" + **30-DAY money-back badge** (S1) on flat blue (S14).
+**So What:** audience callout corroborates S8; guarantee badge is a reusable component. GP-3. **Patterns:** S8, S1, S14.
+
+### 2026-06-20 — E12 IM8 "Claim Your FREE Starter Kit" (IG, premium DTC supplement)
+**Levers:** reciprocity / tripwire (free starter kit, S10) + premium gifting (red box + gold bow) + aspirational context (gym) + white serif restraint.
+**So What:** free-starter TOF offer in the *premium* lane → GP-4. **Patterns:** S10, S1 (free), S18 (premium).
+
+### 2026-06-20 — E13 IM8 "The Daily Foundation for Women 40+" (IG, premium DTC supplement)
+**Levers:** **audience callout** (Women 40+, S8) + relatable-model-as-authority (target holds product, smiles) + single orange "SHOP NOW" pill on red gradient.
+**So What:** audience callout (3rd brand → S8 now proposed). Model-as-proof = a Grifon avatar holding the "result." GP-4. **Patterns:** S8, S18.
+
+### 2026-06-20 — E14 IM8 "Every Nutrient Your GLP-1 Depletes. Zero Nausea." (IG, premium DTC supplement)
+**Levers:** trend-hijack (S11) + problem/solution (depletes → replenishes) + detailed benefit anatomy (✅ D3 250% DV, B12, Mg, Zn/Ca/Fe, probiotics, MSM, S15) + objection-handling ("zero nausea") + red CTA.
+**So What:** premium **Benefit Anatomy** for an informed buyer → GP-4. **Patterns:** S8 (GLP-1 audience), S11, S15.
+
+### 2026-06-20 — E15 IM8 "The Squad Has a New Daily Drink" (IG, premium DTC — Inter Miami CF)
+**Levers:** **borrowed authority** (official partner of Inter Miami CF / Messi's club, S16) + announcement/news hook + premium product duo on dark.
+**So What:** social proof by association → Grifon = client logos / testimonials / "trusted by N PH businesses." GP-4. **Patterns:** S16, S18.
+
+### 2026-06-20 — E16 IM8 "Imagine Your GLP-1 Journey, Without the Side Effects" (IG, premium DTC supplement)
+**Levers:** **"Imagine…" future-pace** + objection-handling (S17) + benefit chips (Gut feels normal / Energy stays / Hair full / Weight loss continues / Skin firm) + GLP-1 audience (S8/S11) + airy hands-passing-pen lifestyle.
+**So What:** the "Imagine… without [pain]" hook + chip-row layout is a strong GP-4 template — maps to "Imagine launching an ad without the ₱30K agency." **Patterns:** S17, S11, S8.
+
+### 2026-06-20 — E17 IM8 "The End of 'I'm Too Tired'" (IG, premium DTC supplement)
+**Levers:** pain-state callout ("I'm too tired") + outcome ("smooth sustained energy, natural, all day") + **risk-reversal** ("TRY IM8 RISK-FREE", S1) on premium stone lifestyle.
+**So What:** name-the-bleeding-neck hook + risk-free = a GP-4 template; for Grifon, name Bryan's pain directly. **Patterns:** S1, S18.
 
 ### 2026-06-20 — E5 Sabri Suby / King Kong "Scaling Roadmap" niche callout (FB/IG, B2B lead-gen) — 3 niche variants
 **Why swiped:** Neil flagged it as a best-performing, long-running **active** ad from the Sabri Suby / King Kong stable (Sabri Suby = *Sell Like Crazy*, already canon in `grifon-cmo`). Long duration + still live = proven. **Format:** 4:5 / 1:1 feed static, text-only.

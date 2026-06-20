@@ -62,6 +62,7 @@ Flags worth knowing: `--format json|table|plain` (use `json` when you need to pa
 - **Creative diversification is the lever, not the targeting.** Andromeda flags *visual* similarity — recolors and button swaps don't count as new creatives. Brief the CD for **distinct concepts/formats/angles**. Volume + variety is what the engine retrieves against.
 - **Advantage+ / broad targeting** is the 2026 default for cold prospecting; let the algo find buyers, put the work into creative. Keep ~10–20% of spend on always-on testing of new angles.
 - **CBO vs ABO:** ABO when there's budget to absorb per-ad-set learning losses (cleaner reads); CBO when budget's tight (Meta pre-allocates). Default: ABO test → CBO scale.
+- **Placement optimization (free lever).** Ship each creative in multiple ratios — **4:5 for feed** (tallest = most real estate, often lower CPM), **1:1** (universal), **9:16** for Stories/Reels/TikTok — keeping text in the 9:16 central ~60% safe band (top ~14% + bottom ~20–35% are UI). One ratio → the platform auto-crops and chops the CTA; supply per-placement assets (Meta placement asset customization). More ratios = more inventory for Andromeda. Brief the CD for safe-zone-aware, multi-ratio exports (see `workflows/static_ad_swipe_file.md` → Placement strategy).
 
 ## Testing → kill → scale
 
