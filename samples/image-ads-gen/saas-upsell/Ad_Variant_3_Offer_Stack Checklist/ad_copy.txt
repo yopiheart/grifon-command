@@ -1,0 +1,4 @@
+HEADLINE: Try Our Barako Risk-Free: If You Aren't Energized, We Pay You Back.
+TEMPLATE: Offer Stack Checklist
+CAPTION: Ready to graduate from instant coffee? We’ve made it simple to switch. Grab our Barako Gold Roast for just ₱399 and taste why traditional Batangas beans remain the gold standard for Filipino coffee enthusiasts. No gimmicks, just pure, fresh-roasted flavor delivered to your doorstep.
+HOOK_LOGIC: The checklist simplifies the decision by highlighting the specific quality markers (single-origin, small-batch) that justify the upgrade price.
