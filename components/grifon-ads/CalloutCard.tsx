@@ -18,7 +18,7 @@ export interface CalloutCardProps {
 }
 
 export const CalloutCard = forwardRef<HTMLDivElement, CalloutCardProps>(
-  ({ format = '1:1', brand = 'GRIFON AI', badge, preLine, accentLine, cta = 'Try It Free', logoSrc = '/logo-badge.png' }, ref) => {
+  ({ format = '1:1', brand = 'GRIFON AI', badge, preLine, accentLine, cta = 'Try It Free', logoSrc = '' }, ref) => {
     const { w, h } = AD_DIMENSIONS[format] ?? AD_DIMENSIONS['1:1'];
     const pad = Math.round(w * 0.1);
     const brandSize = Math.round(w * 0.034);

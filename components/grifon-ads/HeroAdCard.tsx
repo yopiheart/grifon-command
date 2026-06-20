@@ -24,7 +24,7 @@ export interface HeroAdCardProps {
 }
 
 export const HeroAdCard = forwardRef<HTMLDivElement, HeroAdCardProps>(
-  ({ photoSrc, format = '4:5', brand = 'GRIFON AI', badge, headline, cta = 'Try It Free', logoSrc = '/logo-badge.png' }, ref) => {
+  ({ photoSrc, format = '4:5', brand = 'GRIFON AI', badge, headline, cta = 'Try It Free', logoSrc = '' }, ref) => {
     const { w, h } = AD_DIMENSIONS[format] ?? AD_DIMENSIONS['4:5'];
     const brandSize = Math.round(w * 0.038);
     const badgeSize = Math.round(w * 0.024);
