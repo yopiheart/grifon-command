@@ -9,6 +9,7 @@ Use this when:
 > **Two methods, don't confuse them.** The in-app **Batch Creative Gen** module (`components/BatchFanOut/`) is the *cheap* method: ONE Gemini hero + Canvas text overlay, and it bills customers via Gemini. **This** workflow is the *distinct-plate* method: one Codex image per angle, $0 on a personal ChatGPT sub — for your own use, not customer-facing.
 
 ## Prerequisites
+- **A paid ChatGPT plan (Plus $20/mo or higher).** Codex CLI is free, but its `codex login` path bills against your ChatGPT plan — the **free** tier does **not** include Codex usage. "$0" = no per-image charge on top of the sub, not no sub. (`$imagegen` inclusion/limits per tier can change — confirm on OpenAI's plan page. An `OPENAI_API_KEY` is the pay-per-image alternative this tool does *not* use.)
 - **Codex CLI installed + logged in.** Run `scripts/restore-codex.ps1` (installs `@openai/codex`, runs `codex login`). Verify with `node .claude/skills/codex-image/generate.mjs --prompt "a husky in snow" --out .tmp/test.png`.
 - Does **not** run in the locked web sandbox (no Codex there). Local machine only.
 

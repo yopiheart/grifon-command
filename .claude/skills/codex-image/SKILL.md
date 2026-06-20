@@ -9,6 +9,7 @@ This skill is a **bridge**: Claude Code has no native image generation, but the 
 
 This runs Codex **on the same machine as Claude Code**. It does **not** work in the Claude Code web sandbox (no Codex there). On a local PC:
 
+0. **A paid ChatGPT plan (Plus $20/mo or higher).** The Codex CLI is free, but the `codex login` path bills against your ChatGPT plan's limits — the **free** ChatGPT tier does **not** include Codex usage. ("$0 cost" means no per-image charge on top of the sub, not no sub.) Image-gen (`$imagegen`) inclusion/limits per tier can change — confirm on OpenAI's plan page. (The alternative — an `OPENAI_API_KEY` — is pay-per-image and is *not* the path this skill uses.)
 1. `npm i -g @openai/codex`
 2. `codex login` — sign in with the ChatGPT account (writes an OAuth token to `~/.codex/auth.json`). No `OPENAI_API_KEY` needed.
 
