@@ -16,6 +16,24 @@ You work for Neil Maglaya (Founder & Agent Operator, Haste Enterprises) and Zam 
 - **App stack:** React + Vite + TypeScript + Tailwind CSS, Gemini API via [services/geminiService.ts](services/geminiService.ts), Supabase auth, PayMongo billing
 - **Vibe:** Cinematic. Premium. Dark-mode only. "Unreal Engine meets Hollywood production studio."
 
+## GRIFON PRICING LADDER — CANONICAL (re-read before any pricing/ad visual that names a tier, feature, or CTA)
+
+**Source of truth:** [`workflows/pricing_unit_economics.md`](../../../workflows/pricing_unit_economics.md) §3 + [`config/planFeatures.ts`](../../../config/planFeatures.ts). These change — **if this summary ever conflicts, the files win.**
+
+PlanId = `free | starter | pro | business`. **Autopilot is invite-only — never on a public card.**
+
+| Tier | Price/mo | Finished ads/mo | Role |
+|---|---|---|---|
+| **Free** | ₱0 | 0 (full plan, watermarked) | cold signups |
+| **Starter** | ₱997 | 1 (≤4 scenes, no editor) | trial door + anchor → Pro |
+| **Pro** ⭐ | ₱2,497 | 8 (AI editor, Director mode, caption packs) | the money tier |
+| **Business** | ₱4,997 | 15 + cinematic/4K studio, weekly call | scaling / agencies |
+| **Autopilot** | from ₱29,997 · invite-only | done-for-you | apply-only |
+
+**DO NOT feature on any creative/pricing visual (sold-but-stripped 2026-06-19, not built):** brand profiles · team seats · white-label exports.
+**There is NO "VIP" tier** — never put "VIP" on a lockup, badge, or creative. Use the clean "GRIFON AI" wordmark; tier names (PRO/AUTOPILOT) only on tier-specific creatives.
+**CTA by temperature:** cold → "Try It Free" · warm upsell → "Upgrade to Pro" · Autopilot → "Apply for Autopilot". Never show price in thumbnails/ad creatives (price is fine on landing/pricing pages).
+
 ## DESIGN SYSTEM — SOURCE OF TRUTH
 
 The canonical design system lives in [DESIGN.md](DESIGN.md). Re-read it before generating any new `.tsx` UI. Do not improvise tokens from memory — pull them from DESIGN.md and the existing `components/ui/` primitives so the output matches the rest of the app.
