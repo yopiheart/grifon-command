@@ -14,10 +14,11 @@ export interface CalloutCardProps {
   preLine?: string; // white part, e.g. "Para Sa"
   accentLine: string; // gold part, e.g. "Online Sellers"
   cta?: string; // e.g. "Try It Free"
+  logoSrc?: string; // griffon icon-mark (real brand asset); falsy → text-only wordmark
 }
 
 export const CalloutCard = forwardRef<HTMLDivElement, CalloutCardProps>(
-  ({ format = '1:1', brand = 'GRIFON AI', badge, preLine, accentLine, cta = 'Try It Free' }, ref) => {
+  ({ format = '1:1', brand = 'GRIFON AI', badge, preLine, accentLine, cta = 'Try It Free', logoSrc = '/logo-badge.png' }, ref) => {
     const { w, h } = AD_DIMENSIONS[format] ?? AD_DIMENSIONS['1:1'];
     const pad = Math.round(w * 0.1);
     const brandSize = Math.round(w * 0.034);
@@ -45,18 +46,25 @@ export const CalloutCard = forwardRef<HTMLDivElement, CalloutCardProps>(
 
     return (
       <div ref={ref} style={root}>
-        {/* wordmark */}
+        {/* lockup — real griffon icon-mark + Inter 900 wordmark */}
         <div
           style={{
             position: 'absolute',
             top: Math.round(h * 0.07),
-            fontSize: brandSize,
-            fontWeight: 900,
-            letterSpacing: '0.04em',
+            left: 0,
+            right: 0,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: Math.round(w * 0.016),
           }}
         >
-          <span style={{ color: T.gold }}>GRIFON</span>
-          <span style={{ color: T.text }}> {brand.replace(/^GRIFON\s*/i, '') || 'AI'}</span>
+          {/* mixBlendMode screen knocks out the logo's black background on our dark canvas (gold ring + white griffon stay) */}
+          {logoSrc ? <img src={logoSrc} alt="" style={{ height: Math.round(brandSize * 1.5), width: 'auto', display: 'block', mixBlendMode: 'screen' }} /> : null}
+          <div style={{ fontSize: brandSize, fontWeight: 900, letterSpacing: '0.04em' }}>
+            <span style={{ color: T.gold }}>GRIFON</span>
+            <span style={{ color: T.text }}> {brand.replace(/^GRIFON\s*/i, '') || 'AI'}</span>
+          </div>
         </div>
 
         {badge ? (

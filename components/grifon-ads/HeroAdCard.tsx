@@ -20,10 +20,11 @@ export interface HeroAdCardProps {
   badge?: string; // eyebrow pill
   headline: HeadlineSegment[];
   cta?: string;
+  logoSrc?: string; // griffon icon-mark (real brand asset); falsy → text-only wordmark
 }
 
 export const HeroAdCard = forwardRef<HTMLDivElement, HeroAdCardProps>(
-  ({ photoSrc, format = '4:5', brand = 'GRIFON AI', badge, headline, cta = 'Try It Free' }, ref) => {
+  ({ photoSrc, format = '4:5', brand = 'GRIFON AI', badge, headline, cta = 'Try It Free', logoSrc = '/logo-badge.png' }, ref) => {
     const { w, h } = AD_DIMENSIONS[format] ?? AD_DIMENSIONS['4:5'];
     const brandSize = Math.round(w * 0.038);
     const badgeSize = Math.round(w * 0.024);
@@ -52,22 +53,26 @@ export const HeroAdCard = forwardRef<HTMLDivElement, HeroAdCardProps>(
         <div style={{ ...fill, top: 0, height: Math.round(h * 0.22), background: `linear-gradient(to bottom, rgba(9,9,11,0.92) 0%, rgba(9,9,11,0) 100%)` }} />
         <div style={{ ...fill, bottom: 0, height: Math.round(h * 0.5), background: `linear-gradient(to top, rgba(9,9,11,0.97) 0%, rgba(9,9,11,0.85) 35%, rgba(9,9,11,0) 100%)` }} />
 
-        {/* wordmark — real Inter 900 */}
+        {/* lockup — real griffon icon-mark + real Inter 900 wordmark */}
         <div
           style={{
             position: 'absolute',
             top: Math.round(h * 0.05),
             left: 0,
             right: 0,
-            textAlign: 'center',
-            fontSize: brandSize,
-            fontWeight: 900,
-            letterSpacing: '0.04em',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: Math.round(w * 0.018),
             zIndex: 2,
           }}
         >
-          <span style={{ color: T.gold }}>GRIFON</span>
-          <span style={{ color: T.text }}> {restName}</span>
+          {/* mixBlendMode screen knocks out the logo's black background on our dark canvas (gold ring + white griffon stay) */}
+          {logoSrc ? <img src={logoSrc} alt="" style={{ height: Math.round(brandSize * 1.5), width: 'auto', display: 'block', mixBlendMode: 'screen' }} /> : null}
+          <div style={{ fontSize: brandSize, fontWeight: 900, letterSpacing: '0.04em' }}>
+            <span style={{ color: T.gold }}>GRIFON</span>
+            <span style={{ color: T.text }}> {restName}</span>
+          </div>
         </div>
 
         {/* bottom stack — badge / headline / CTA, all centered, real fonts */}
