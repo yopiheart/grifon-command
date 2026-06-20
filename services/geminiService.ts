@@ -2435,22 +2435,23 @@ Main Benefit: ${data.primaryBenefit}
 Market Pain Point: ${data.marketPainPoint}
 Unique Value Proposition: ${data.uvp}
 Key Features: ${data.keyFeatures}
-Brand Colors: ${data.hexCodes}
+Brand Palette (reference only): ${data.hexCodes}
 
 TEMPLATES TO CHOOSE FROM:
 1. "Press Clip" (Looks daylight a news snippet)
 2. "Benefit Anatomy" (Labels pointing to product features)
 3. "Split-Screen" (Before/After or Problem/Solution)
 
-CRITICAL VISUAL RULE:
+CRITICAL VISUAL RULES:
 - If a device (phone/laptop) is shown, the SCREEN MUST FACE THE VIEWER directly.
+- The "imagePrompt" must describe the brand palette in PLAIN WORDS (e.g. "deep forest green and warm white"), NEVER as hex codes. Do NOT put any "#" hex value, price, or literal text into the imagePrompt — the image model renders text unreliably (NO_TEXT_CONSTRAINT); on-image copy is composited separately.
 
 JSON STRUCTURE:
 {
   "id": number,
   "templateType": "Press Clip" | "Benefit Anatomy" | "Split-Screen",
   "headline": "Short punchy headline",
-  "imagePrompt": "Detailed technical prompt for image gen. Include wardrobe, lighting, ${data.ethnicityProfile} characters, and ${data.aspectRatio} layout.",
+  "imagePrompt": "Detailed technical prompt for image gen. Include wardrobe, lighting, ${data.ethnicityProfile} characters, ${data.aspectRatio} layout, and the brand palette described in plain words (no hex codes, no embedded text).",
   "caption": "Primary ad copy text in ${data.language}",
   "hookLogic": "Brief explanation of the psychological trigger used"
 }
@@ -2509,20 +2510,23 @@ Language: ${data.language}
 
 TRUST GUARDRAIL: no fake scarcity, no fake testimonials, no invented numbers. A guarantee must be a real, honored policy. No "unlimited" promises.
 
+HEADLINE RULE: EVERY object MUST have a non-empty "headline" — it is the largest line on the ad. Never leave it blank; never return only a brand name.
+
 Return a JSON array of EXACTLY 3 objects, ONE per templateType:
 
 1) "Guarantee Hero" — a risk-reversal headline (the dream outcome fused to a real guarantee).
-   composition: { "guarantee": "<the real reversal>", "ctaLabel": "<2-4 word CTA>", "badge": "<short offer/guarantee badge>" }
+   headline: "<the risk-reversal hero line — REQUIRED, e.g. 'First ad live in 24h or your month is free.'>"
+   composition: { "guarantee": "<the real reversal, restated briefly>", "ctaLabel": "<2-4 word CTA>", "badge": "<short offer/guarantee badge>" }
 
 2) "Ticket Compare" — anchor the current (free/lower) tier against the target tier.
-   headline: "<short directive, e.g. CHOOSE YOUR LEVEL>"
+   headline: "<short directive — REQUIRED, e.g. CHOOSE YOUR LEVEL>"
    composition: { "tiers": [ {"name":"Free","lines":["<2-3 plain limits>"],"highlight":false}, {"name":"<target tier>","lines":["<3-4 outcome lines>"],"highlight":true} ], "ctaLabel": "<CTA>" }
 
 3) "Offer Stack Checklist" — a guarantee headline + a what-you-GET list.
-   headline: "<the guarantee line>"
+   headline: "<the guarantee line — REQUIRED>"
    composition: { "bullets": ["<outcome 1>","<outcome 2>","<outcome 3>","<outcome 4>"], "guarantee": "<penny-back tag>", "ctaLabel": "<CTA>" }
 
-Every object MUST also include: "id" (number), "templateType" (exact string above), "caption" (primary ad copy in ${data.language}), "hookLogic" (the persuasion lever), "imagePrompt": "".
+Every object MUST also include: "id" (number), "templateType" (exact string above), a non-empty "headline" (per the HEADLINE RULE), "caption" (primary ad copy in ${data.language}), "hookLogic" (the persuasion lever), "imagePrompt": "".
     `;
 
     const prompt = data.family === 'callout' ? calloutPrompt

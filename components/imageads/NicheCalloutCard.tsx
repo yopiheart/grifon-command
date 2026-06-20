@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react';
 import type { AdComposition } from '../../types';
 import { AD_RATIO_DIMENSIONS } from '../../utils/captureToPng';
+import { resolveAdTheme, type AdTheme } from '../../utils/adTheme';
 
 // GP-2 "Niche Callout" template (see workflows/static_ad_swipe_file.md, E5 /
 // pattern S8). A self-identification pattern-interrupt: "If you run a [niche]
@@ -8,31 +9,26 @@ import { AD_RATIO_DIMENSIONS } from '../../utils/captureToPng';
 // ad. Rendered as a real DOM node so captureToPng() can rasterize legible text
 // (the Gemini image model can't render text — NO_TEXT_CONSTRAINT).
 //
-// The creative belongs to the CUSTOMER, so it accents with their brand color
-// (first hex of UplinkData.hexCodes), falling back to Grifon gold. Layout is
-// safe-zone aware: on 9:16 the content sits in the central band so the
-// Stories/Reels UI (top header, bottom caption + CTA rail) never covers it.
-
-const FALLBACK_ACCENT = '#FFCC00';
-
-const firstHex = (hexCodes?: string): string => {
-  const match = (hexCodes || '').match(/#?[0-9a-fA-F]{6}/);
-  if (!match) return FALLBACK_ACCENT;
-  const hex = match[0].startsWith('#') ? match[0] : `#${match[0]}`;
-  return hex;
-};
+// The creative belongs to the CUSTOMER, so its color scheme is resolved by
+// utils/adTheme.ts (bold solid brand block / clean light / true-dark + accent),
+// always contrast-safe — NEVER Grifon's muddy dark-on-dark UI. niche/qualifier
+// are emphasized by CONTRAST + weight (accent only when it clears contrast).
+// Layout is safe-zone aware: on 9:16 the content sits in the central band so the
+// Stories/Reels UI never covers it.
 
 interface NicheCalloutCardProps {
   composition: AdComposition;
   aspectRatio: '9:16' | '4:5' | '1:1' | '16:9';
+  theme?: AdTheme;
+  // Legacy inputs (resolved into a theme when `theme` isn't supplied).
   hexCodes?: string;
   brandName?: string;
 }
 
 export const NicheCalloutCard = forwardRef<HTMLDivElement, NicheCalloutCardProps>(
-  ({ composition, aspectRatio, hexCodes, brandName }, ref) => {
+  ({ composition, aspectRatio, theme, hexCodes, brandName }, ref) => {
     const { w, h } = AD_RATIO_DIMENSIONS[aspectRatio] ?? AD_RATIO_DIMENSIONS['4:5'];
-    const accent = firstHex(hexCodes);
+    const t = theme ?? resolveAdTheme({ hexCodes });
 
     // Type + spacing scale off card width so every ratio reads correctly.
     const bodySize = Math.round(w * 0.066);
@@ -49,24 +45,27 @@ export const NicheCalloutCard = forwardRef<HTMLDivElement, NicheCalloutCardProps
     const { niche, qualifier, leadMagnet } = composition;
 
     const rootStyle: React.CSSProperties = {
-          width: w,
-          height: h,
-          background: `radial-gradient(120% 90% at 50% 38%, ${accent}1f 0%, #09090B 58%)`,
-          fontFamily: 'Inter, Geist, "SF Pro", system-ui, sans-serif',
-          paddingLeft: padX,
-          paddingRight: padX,
-          paddingTop: padTop,
-          paddingBottom: padBottom,
-          boxSizing: 'border-box',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          textAlign: 'center',
-          color: '#FAFAFA',
-          position: 'relative',
-          overflow: 'hidden',
+      width: w,
+      height: h,
+      background: t.bg, // SOLID brand block / clean light / true-dark — never a tint
+      fontFamily: 'Inter, Geist, "SF Pro", system-ui, sans-serif',
+      paddingLeft: padX,
+      paddingRight: padX,
+      paddingTop: padTop,
+      paddingBottom: padBottom,
+      boxSizing: 'border-box',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      textAlign: 'center',
+      color: t.text,
+      position: 'relative',
+      overflow: 'hidden',
     };
+
+    // Emphasis = weight + contrast-safe accent (accent already clears 4.5:1 vs bg).
+    const emph: React.CSSProperties = { color: t.accent, fontWeight: 800 };
 
     return (
       <div ref={ref} style={rootStyle}>
@@ -76,10 +75,9 @@ export const NicheCalloutCard = forwardRef<HTMLDivElement, NicheCalloutCardProps
               fontSize: brandSize,
               letterSpacing: '0.32em',
               textTransform: 'uppercase',
-              color: accent,
-              fontWeight: 700,
+              color: t.accent, // legible (contrast-resolved) — no faint ghost
+              fontWeight: 800,
               marginBottom: Math.round(h * 0.05),
-              opacity: 0.95,
             }}
           >
             {brandName}
@@ -93,32 +91,30 @@ export const NicheCalloutCard = forwardRef<HTMLDivElement, NicheCalloutCardProps
             fontWeight: 600,
             margin: 0,
             maxWidth: '100%',
+            color: t.text,
           }}
         >
           If you run a{' '}
-          <strong style={{ color: accent, fontWeight: 800 }}>{niche || 'business'}</strong>
+          <strong style={emph}>{niche || 'business'}</strong>
           {qualifier ? (
             <>
               {' '}
-              <strong style={{ color: accent, fontWeight: 800 }}>{qualifier}</strong>
+              <strong style={emph}>{qualifier}</strong>
             </>
           ) : null}
           , we built{' '}
-          <strong style={{ color: '#FFFFFF', fontWeight: 800 }}>
-            {leadMagnet || 'this'}
-          </strong>{' '}
+          <strong style={{ color: t.text, fontWeight: 800 }}>{leadMagnet || 'this'}</strong>{' '}
           for you.
         </p>
 
-        {/* subtle gold/accent underline accent under the sentence */}
+        {/* accent underline under the sentence */}
         <div
           style={{
             marginTop: Math.round(h * 0.045),
             width: Math.round(w * 0.18),
-            height: Math.max(3, Math.round(w * 0.006)),
+            height: Math.max(4, Math.round(w * 0.008)),
             borderRadius: 999,
-            background: accent,
-            boxShadow: `0 0 ${Math.round(w * 0.03)}px ${accent}`,
+            background: t.accent,
           }}
         />
       </div>

@@ -521,6 +521,11 @@ export interface DayContent {
 // are the text-composited families. See workflows/static_ad_swipe_file.md.
 export type AdCreativeFamily = 'product' | 'saas-offer' | 'callout';
 
+// Brand Kit "vibe" — drives the composited-ad color scheme in utils/adTheme.ts.
+// Bold/Playful → solid saturated brand block; Premium → true-dark + strong
+// accent; Clean → bright white + one accent. See image_ads_design_system.md.
+export type AdVibe = 'Bold' | 'Premium' | 'Playful' | 'Clean';
+
 // Structured, renderable copy for the text-composited templates. Each template
 // component reads the subset it needs; the model fills the relevant fields.
 export interface AdComposition {
@@ -569,6 +574,8 @@ export interface UplinkData {
   productAssets: string[];
   avatarAsset?: string;
   family?: AdCreativeFamily; // defaults to 'product' when unset (preserves legacy behavior)
+  brandVibe?: AdVibe; // Brand Kit vibe for composited families (defaults to 'Bold' in adTheme)
+  stylePreset?: string; // chosen Style Preset id (AD_STYLE_PRESETS); overrides hex/vibe. Falsy = use brand colors
 }
 
 export interface CinematicSpecConfig {

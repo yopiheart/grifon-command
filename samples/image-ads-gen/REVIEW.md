@@ -1,3 +1,11 @@
+> ⚠️ **SUPERSEDED 2026-06-20 by the v2 contrast redesign.** The `callout/`,
+> `saas-upsell/`, and `product/` PNGs below are the OLD dark-on-dark muddy design
+> Neil rejected. The rebuilt creatives (contrast-safe `utils/adTheme.ts` + Style
+> Presets) are smoked in [`v2-redesign/contrast-matrix-full.png`](v2-redesign/contrast-matrix-full.png)
+> — bold solid brand blocks, legible both ways. See
+> `workflows/image_ads_design_system.md`. The old PNGs can be deleted once Neil
+> has eyeballed the v2 matrix.
+
 # Image Ads Gen — Sample Gallery (for Neil's review)
 
 Generated 2026-06-20 while you were at dinner. Same test brand across all families

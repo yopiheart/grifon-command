@@ -8,6 +8,7 @@ import IntelligenceUplink from './IntelligenceUplink';
 import { NicheCalloutCard } from './imageads/NicheCalloutCard';
 import { SaasOfferCard } from './imageads/SaasOfferCard';
 import { captureToPng } from '../utils/captureToPng';
+import { resolveAdTheme } from '../utils/adTheme';
 import JSZip from 'jszip';
 import saveAs from 'file-saver';
 
@@ -229,13 +230,20 @@ const ImageAdsGen: React.FC<ImageAdsGenProps> = ({ businessInfo, avatar, clientD
           <div aria-hidden style={{ position: 'fixed', left: -99999, top: 0, pointerEvents: 'none', opacity: 0 }}>
             {variants.map((v, idx) => PLACEMENT_RATIOS.map((ratio) => {
               const refCb = (el: HTMLDivElement | null) => { calloutRefs.current[`${idx}:${ratio}`] = el; };
+              // One contrast-safe theme resolved from the customer's brand kit.
+              const theme = resolveAdTheme({
+                hexCodes: uplinkData.hexCodes,
+                logo: uplinkData.logoAsset,
+                vibe: uplinkData.brandVibe,
+                presetId: uplinkData.stylePreset,
+              });
               return uplinkData.family === 'saas-offer' ? (
                 <SaasOfferCard
                   key={`${idx}:${ratio}`}
                   ref={refCb}
                   variant={v}
                   aspectRatio={ratio}
-                  hexCodes={uplinkData.hexCodes}
+                  theme={theme}
                   brandName={uplinkData.brandIdentityName}
                 />
               ) : (
@@ -244,7 +252,7 @@ const ImageAdsGen: React.FC<ImageAdsGenProps> = ({ businessInfo, avatar, clientD
                   ref={refCb}
                   composition={v.composition || {}}
                   aspectRatio={ratio}
-                  hexCodes={uplinkData.hexCodes}
+                  theme={theme}
                   brandName={uplinkData.brandIdentityName}
                 />
               );

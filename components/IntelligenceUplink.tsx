@@ -5,6 +5,7 @@ import { GlassPanel } from './ui/GlassPanel';
 import { GoldButton } from './ui/GoldButton';
 import { UploadCloud, Image as ImageIcon, Camera, ChevronLeft } from 'lucide-react';
 import { compressImageForUpload } from '../utils/imageCompression';
+import { AD_STYLE_PRESETS } from '../utils/adTheme';
 
 interface IntelligenceUplinkProps {
   onComplete: (data: UplinkData) => void;
@@ -35,6 +36,7 @@ const IntelligenceUplink: React.FC<IntelligenceUplinkProps> = ({ onComplete, onB
     productAssets: globalBusinessInfo?.productImageUrls || [],
     logoAsset: globalBusinessInfo?.logoImageUrl || undefined,
     family: 'product',
+    brandVibe: 'Bold',
   });
 
   const logoRef = useRef<HTMLInputElement>(null);
@@ -230,6 +232,51 @@ const IntelligenceUplink: React.FC<IntelligenceUplinkProps> = ({ onComplete, onB
                 ))}
               </div>
             </div>
+            {/* Style Preset gallery — one-click swipe-file looks for users who
+                don't know their brand color/vibe. A preset overrides hex+vibe;
+                "MY BRAND COLORS" falls back to the hex field + the vibe selector.
+                Only the text-composited families consume it. */}
+            {(formData.family === 'saas-offer' || formData.family === 'callout') && (
+              <div className="space-y-2 w-full">
+                <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">STYLE_PRESET</p>
+                <div className="flex flex-wrap gap-2">
+                  <button
+                    onClick={() => setFormData({ ...formData, stylePreset: undefined })}
+                    className={`flex items-center gap-2 px-3 py-2 rounded-xl border text-[10px] font-bold font-mono transition-all ${!formData.stylePreset ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]' : 'border-white/10 text-zinc-400 hover:text-white'}`}
+                  >
+                    <span className="w-4 h-4 rounded-full border border-white/30 bg-gradient-to-br from-zinc-200 to-zinc-600" />
+                    MY BRAND COLORS
+                  </button>
+                  {AD_STYLE_PRESETS.map(p => (
+                    <button
+                      key={p.id}
+                      title={p.description}
+                      onClick={() => setFormData({ ...formData, stylePreset: p.id })}
+                      className={`flex items-center gap-2 px-3 py-2 rounded-xl border text-[10px] font-bold font-mono transition-all ${formData.stylePreset === p.id ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]' : 'border-white/10 text-zinc-400 hover:text-white'}`}
+                    >
+                      <span className="w-4 h-4 rounded-full border border-white/20" style={{ background: p.swatch.bg }}>
+                        <span className="block w-1.5 h-1.5 rounded-full m-[3px]" style={{ background: p.swatch.accent }} />
+                      </span>
+                      {p.label.toUpperCase()}
+                    </button>
+                  ))}
+                </div>
+                {/* Vibe refinement only matters when using your own brand colors. */}
+                {!formData.stylePreset && (
+                  <div className="flex gap-2 bg-zinc-950 p-1 rounded-xl border border-white/10 w-fit mt-2">
+                    {(['Bold', 'Premium', 'Playful', 'Clean'] as const).map(vibe => (
+                      <button
+                        key={vibe}
+                        onClick={() => setFormData({ ...formData, brandVibe: vibe })}
+                        className={`text-[10px] px-4 py-2 rounded-lg font-bold font-mono transition-all ${(formData.brandVibe ?? 'Bold') === vibe ? 'bg-[#FFCC00] text-black' : 'text-zinc-500 hover:text-white'}`}
+                      >
+                        {vibe.toUpperCase()}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
             <div className="space-y-2">
               <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">ASPECT_RATIO</p>
               <div className="flex gap-2 bg-zinc-950 p-1 rounded-xl border border-white/10">
