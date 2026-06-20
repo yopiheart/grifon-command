@@ -1,0 +1,18 @@
+Photorealistic premium social-media advertisement, vertical 4:5 format.
+
+BRAND SYSTEM (Grifon — keep identical across every creative):
+- Background: deep near-black charcoal (#09090B). NEVER pure black (#000000).
+- A dramatic Grifon-Gold (#FFCC00) radial glow emanating from directly behind the subject, fading into the dark background — cinematic, premium, high-contrast.
+- Subject: the confident person from the provided reference image, upper body, centered, looking at camera, polished and authoritative. Keep their face and identity faithful to the reference.
+- Top lockup: a bold gold "GRIFON AI" wordmark with a small gold rounded "VIP" badge beside it (like a premium membership mark). Clean, modern, sans-serif.
+- Optional gold pill call-to-action button near the bottom reading "Learn More →".
+
+THIS CREATIVE'S VARIATION:
+- Scene / mood: {{SCENE}}
+- Badge / eyebrow label: {{BADGE}}
+- Headline (render this text large, bold, white with gold accent words, 3-7 words, perfectly spelled, high contrast, clean placement in the upper third or lower third — do not let it overlap the subject's face):
+  "{{HEADLINE}}"
+
+STYLE: Hollywood-grade studio lighting, sharp focus, glossy premium finish, the polished look of a high-end coaching / SaaS launch ad.
+
+FORBIDDEN: pink, cyan, teal, pure black backgrounds, cluttered layouts, tiny or garbled text, stray logos, watermarks, extra brand marks, lorem-ipsum, more than one headline.

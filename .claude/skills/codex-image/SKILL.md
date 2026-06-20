@@ -40,6 +40,8 @@ node .claude/skills/codex-image/generate.mjs \
 
 Then feed that PNG into **Batch Creative Gen** as the hero, or composite it locally.
 
+**Batches:** to fan a list of angles out into N distinct on-brand creatives (the "100 creatives in ~4 min, $0" workflow), don't loop this skill by hand — use the orchestrator `tools/batch-creative-codex.mjs`. See **[workflows/batch_creative_codex.md](../../../workflows/batch_creative_codex.md)**.
+
 ## After generating
 
 - Verify the file exists (the wrapper prints `✓ saved <path>` and exits non-zero if not).
