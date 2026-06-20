@@ -23,7 +23,13 @@
 //   --concurrency <n>     parallel generations (default 3) — the "4 minutes" lever
 //   --limit <n>           only generate the first N angles (cheap smoke runs)
 //   --master <file>       override the brand master prompt template
+//   --require-cmo         hard-fail unless the angles carry _meta.cmoReviewed:true
 //   --dry-run             compose + print every prompt and command; spawn nothing
+//
+// Angles file: either a bare JSON array of { id?, headline, principle?, scene?, badge? }
+// or, preferred, { "_meta": { "cmoReviewed": true, "reviewedBy": "grifon-cmo" },
+// "angles": [ ... ] } — the headline is baked INTO the image, so it must be
+// copy the grifon-cmo skill has verified (see workflows/batch_creative_codex.md).
 
 import { spawn } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -44,6 +50,7 @@ function parseArgs(argv) {
     else if (a === '--concurrency') out.concurrency = Math.max(1, parseInt(argv[++i], 10) || 1);
     else if (a === '--limit') out.limit = parseInt(argv[++i], 10);
     else if (a === '--master') out.master = argv[++i];
+    else if (a === '--require-cmo') out.requireCmo = true;
     else if (a === '--dry-run') out.dryRun = true;
   }
   return out;
@@ -69,19 +76,40 @@ if (!args.angles) die('Missing --angles <file.json>. See workflows/batch_creativ
 // --- Load + validate the angles list ---
 const anglesPath = path.resolve(args.angles);
 if (!existsSync(anglesPath)) die(`Angles file not found: ${anglesPath}`);
-let angles;
+let raw;
 try {
-  angles = JSON.parse(readFileSync(anglesPath, 'utf8'));
+  raw = JSON.parse(readFileSync(anglesPath, 'utf8'));
 } catch (e) {
   die(`Angles file is not valid JSON: ${e.message}`);
 }
-if (!Array.isArray(angles) || angles.length === 0) die('Angles file must be a non-empty JSON array.');
+// Accept either { _meta, angles: [...] } (CMO-stamped) or a bare [...] array.
+const meta = (raw && !Array.isArray(raw) && raw._meta) || {};
+let angles = Array.isArray(raw) ? raw : raw && raw.angles;
+if (!Array.isArray(angles) || angles.length === 0) {
+  die('Angles file must be a non-empty array, or an object with a non-empty "angles" array.');
+}
 for (const [i, a] of angles.entries()) {
   if (!a || typeof a.headline !== 'string' || !a.headline.trim()) {
     die(`Angle #${i} is missing a non-empty "headline".`);
   }
 }
 if (Number.isInteger(args.limit) && args.limit > 0) angles = angles.slice(0, args.limit);
+
+// --- CMO copy-verification gate ---
+// The headline text is baked INTO each image, so it must be CMO-verified copy.
+// grifon-cmo stamps `_meta.cmoReviewed: true` once the angles pass review.
+const cmoReviewed = meta.cmoReviewed === true;
+if (!cmoReviewed) {
+  if (args.requireCmo) {
+    die('Copy is NOT CMO-verified (no "_meta.cmoReviewed": true) and --require-cmo is set.\n' +
+        '  Run the angles through the grifon-cmo skill, stamp _meta.cmoReviewed, then re-run.\n' +
+        '  See workflows/batch_creative_codex.md (Step 1).');
+  }
+  console.error('[batch-creative] ⚠️  copy is NOT CMO-verified ("_meta.cmoReviewed" missing/false).');
+  console.error('[batch-creative] ⚠️  run grifon-cmo first (workflows/batch_creative_codex.md), or pass --require-cmo to enforce.');
+} else {
+  console.error(`[batch-creative] ✓ copy CMO-verified by ${meta.reviewedBy || 'grifon-cmo'}${meta.date ? ` (${meta.date})` : ''}.`);
+}
 
 // --- Load the brand master prompt template ---
 const masterPath = args.master ? path.resolve(args.master) : path.join(__dirname, 'batch-creative-codex.master.txt');
@@ -175,6 +203,8 @@ const results = await runPool(jobs, args.concurrency, runJob);
 const manifest = {
   generatedAt: new Date().toISOString(),
   anglesFile: path.relative(repoRoot, anglesPath),
+  cmoReviewed,
+  reviewedBy: cmoReviewed ? (meta.reviewedBy || 'grifon-cmo') : null,
   ref: refAbs ? path.relative(repoRoot, refAbs) : null,
   size: args.size,
   master: path.relative(repoRoot, masterPath),
@@ -184,6 +214,7 @@ const manifest = {
     ok: r.ok,
     error: r.error,
     headline: r.angle.headline,
+    principle: r.angle.principle || null,
     scene: r.angle.scene || null,
     badge: r.angle.badge || null,
     prompt: r.prompt.trim(),

@@ -13,17 +13,22 @@ Use this when:
 - Does **not** run in the locked web sandbox (no Codex there). Local machine only.
 
 ## Required inputs
-- **Angles JSON** — array of `{ id?, headline, scene?, badge? }`. Starter: [`assets/creative-angles/grifon-zam.starter.json`](../assets/creative-angles/grifon-zam.starter.json) (~12 angles). Expand toward 100 (Step 1).
+- **Angles JSON** — `{ "_meta": { "cmoReviewed": true, "reviewedBy": "grifon-cmo", "date": "..." }, "angles": [ { id?, headline, principle?, scene?, badge? }, ... ] }`. Starter: [`assets/creative-angles/grifon-zam.starter.json`](../assets/creative-angles/grifon-zam.starter.json) (12 CMO-verified angles). Expand toward 100 (Step 1). A bare array is also accepted but won't carry the CMO marker.
 - **Zam's headshot** at `assets/brand/zam-ref.jpg` — commit it so it survives the defreezer.
 
 ## Tools
-- `tools/batch-creative-codex.mjs` — orchestrator (composes prompts, runs a concurrency pool, writes a manifest). Shells out to `.claude/skills/codex-image/generate.mjs` per angle.
-- `tools/batch-creative-codex.master.txt` — the **brand master prompt** (slots: `{{HEADLINE}}`, `{{SCENE}}`, `{{BADGE}}`). Edit this to tune the look. ⚠️ Brand-sensitive — eyeball changes.
+- `tools/batch-creative-codex.mjs` — orchestrator (composes prompts, runs a concurrency pool, writes a manifest, enforces the CMO marker). Shells out to `.claude/skills/codex-image/generate.mjs` per angle.
+- `tools/batch-creative-codex.master.txt` — the **brand master prompt** (slots: `{{HEADLINE}}`, `{{SCENE}}`, `{{BADGE}}`). ⚠️ Brand-sensitive — eyeball changes.
+
+## DESIGN.md alignment
+The headline + text are **baked into** each image, so the creative IS a brand surface. `DESIGN.md` explicitly governs *ad creatives* as a **marketing surface**, and the master prompt encodes its tokens: canvas `#09090B` (zinc-950, never pure `#000000`), gold `#FFCC00` as the **single** accent hue, panel/badge fill `#18181B`, Inter/Geist **700** tight-tracking headlines, an optional Instrument-Serif-italic gold accent word (marketing-only), and a gold pill CTA (`#FFCC00` fill, black text). Forbidden: pink/cyan/teal or any non-gold accent, pure black, clutter.
 
 ## Procedure
-1. **Write/expand the angles JSON.** Invoke the `grifon-cmo` skill to generate angles (risk-reversal, "selecting a few," "kick-off in 5 days," Free→Business ladder hooks) in Grifon's Taglish/direct-response voice. Keep each `headline` **short (3–7 words)** — baked text garbles if long. Save as e.g. `assets/creative-angles/grifon-zam.json`.
+1. **Author + verify the copy with grifon-cmo (the CMO gate — copy is baked into the image, so it must be vetted).**
+   1. **Author** — invoke the `grifon-cmo` skill for angles (risk-reversal, "selecting a few," first-ad-in-5-days, anti-30K-agency, 100-ads-volume, authority/proof, free entry, loss-aversion) across the Free→Creator→Pro→Business→Autopilot ladder, in Grifon's Taglish direct-response voice. Keep each `headline` **short (3–7 words)** and apostrophe-light — baked text garbles if long/ornate.
+   2. **Verify + stamp** — grifon-cmo reviews the final list, tags each angle with its `principle`, and stamps the file's `_meta.cmoReviewed: true` (+ `reviewedBy`, `date`). Save as e.g. `assets/creative-angles/grifon-zam.json`. Without this marker the tool warns (and `--require-cmo` hard-fails — see Step 5).
 2. **Drop Zam's photo** at `assets/brand/zam-ref.jpg` and commit it.
-3. **Dry run** (composes every prompt, spawns nothing — sanity-check the wording):
+3. **Dry run** (composes every prompt, spawns nothing — confirms the CMO ✓ line, no ⚠️):
    ```
    npm run creative:batch -- --angles assets/creative-angles/grifon-zam.json --ref assets/brand/zam-ref.jpg --dry-run
    ```
@@ -31,20 +36,21 @@ Use this when:
    ```
    npm run creative:batch -- --angles assets/creative-angles/grifon-zam.json --ref assets/brand/zam-ref.jpg --limit 2
    ```
-   Open the 2 PNGs in `.tmp/batch-creative/<timestamp>/`. Check: Zam's face is faithful, gold-glow brand reads right, headline is spelled correctly and doesn't cover his face.
-5. **Full batch:**
+   Open the 2 PNGs in `.tmp/batch-creative/<timestamp>/`. Check: Zam's face is faithful, gold-glow brand reads right, headline is **spelled correctly** and doesn't cover his face. (This is the post-bake *fidelity* check — distinct from the CMO *copy-quality* gate in Step 1; gpt-image-2 can garble even verified copy.)
+5. **Full batch** (`--require-cmo` hard-blocks any un-vetted copy before you spend 100 images):
    ```
-   npm run creative:batch -- --angles assets/creative-angles/grifon-zam.json --ref assets/brand/zam-ref.jpg --concurrency 4
+   npm run creative:batch -- --angles assets/creative-angles/grifon-zam.json --ref assets/brand/zam-ref.jpg --concurrency 4 --require-cmo
    ```
-6. **Collect winners.** Review `.tmp/batch-creative/<timestamp>/` + `manifest.json`. Copy the keepers somewhere durable (`.tmp/` is gitignored and disposable). Re-run any failed/garbled angles individually.
+6. **Collect winners.** Review `.tmp/batch-creative/<timestamp>/` + `manifest.json` (records `cmoReviewed`, each `principle`, and the composed prompt). Copy the keepers somewhere durable (`.tmp/` is gitignored and disposable). Re-run any failed/garbled angles individually.
 
 ## Output(s)
 - `.tmp/batch-creative/<timestamp>/NN-slug.png` — one creative per angle.
-- `.tmp/batch-creative/<timestamp>/manifest.json` — each creative's headline/scene/badge, the composed prompt, and ok/fail.
+- `.tmp/batch-creative/<timestamp>/manifest.json` — `cmoReviewed` + per-creative headline/principle/scene/badge, the composed prompt, and ok/fail.
 
 ## Flags
 - `--concurrency <n>` (default 3) — the "4 minutes" lever. Raise for speed; lower if Codex throttles.
 - `--limit <n>` — cap (cheap smoke runs).
+- `--require-cmo` — hard-fail unless the angles carry `_meta.cmoReviewed: true` (use on the full batch).
 - `--size <WxH>` (default `1024x1536`, 4:5 feed). Also `1024x1024`, `1536x1024`.
 - `--master <file>` — swap the brand prompt template.
 - `--dry-run` — compose + print, generate nothing.

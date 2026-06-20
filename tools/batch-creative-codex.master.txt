@@ -1,18 +1,24 @@
 Photorealistic premium social-media advertisement, vertical 4:5 format.
+Follow the Grifon design system (DESIGN.md) — ad creatives are a governed marketing surface.
 
-BRAND SYSTEM (Grifon — keep identical across every creative):
-- Background: deep near-black charcoal (#09090B). NEVER pure black (#000000).
-- A dramatic Grifon-Gold (#FFCC00) radial glow emanating from directly behind the subject, fading into the dark background — cinematic, premium, high-contrast.
+BRAND SYSTEM (keep identical across every creative):
+- Canvas background: deep near-black charcoal #09090B (zinc-950). NEVER pure black #000000 — it reads flat; zinc-950 retains cinematic atmosphere.
+- A dramatic Grifon-Gold #FFCC00 radial glow emanating from directly behind the subject, fading into the dark canvas. Gold #FFCC00 is the SINGLE accent hue in the whole image.
+- Any panel / badge / chip fill: elevated charcoal #18181B (zinc-900).
 - Subject: the confident person from the provided reference image, upper body, centered, looking at camera, polished and authoritative. Keep their face and identity faithful to the reference.
-- Top lockup: a bold gold "GRIFON AI" wordmark with a small gold rounded "VIP" badge beside it (like a premium membership mark). Clean, modern, sans-serif.
-- Optional gold pill call-to-action button near the bottom reading "Learn More →".
+- Top lockup: a bold gold #FFCC00 "GRIFON AI" wordmark with a small gold rounded "VIP" badge beside it (premium membership mark). Clean modern sans.
+- Optional call-to-action: a fully-rounded gold pill button (#FFCC00 fill, BLACK #000000 text) near the bottom reading "Learn More".
 
 THIS CREATIVE'S VARIATION:
 - Scene / mood: {{SCENE}}
 - Badge / eyebrow label: {{BADGE}}
-- Headline (render this text large, bold, white with gold accent words, 3-7 words, perfectly spelled, high contrast, clean placement in the upper third or lower third — do not let it overlap the subject's face):
+- Headline — render this exact text, large and perfectly spelled, 3-7 words, high contrast, clean placement in the upper third or lower third (do NOT overlap the subject's face):
   "{{HEADLINE}}"
 
-STYLE: Hollywood-grade studio lighting, sharp focus, glossy premium finish, the polished look of a high-end coaching / SaaS launch ad.
+TYPOGRAPHY (DESIGN.md):
+- Headline font: Inter / Geist / SF Pro — clean geometric sans, weight 700 (bold), tight letter-spacing. White text, with at most ONE or TWO accent words in Grifon-Gold #FFCC00.
+- Optional flourish: render 1-2 of the gold accent words in an elegant italic serif (Instrument Serif style) for an editorial premium feel — keep the rest bold sans.
 
-FORBIDDEN: pink, cyan, teal, pure black backgrounds, cluttered layouts, tiny or garbled text, stray logos, watermarks, extra brand marks, lorem-ipsum, more than one headline.
+STYLE: Hollywood-grade studio lighting, sharp focus, glossy premium finish — the polished look of a high-end coaching / SaaS launch ad. "Unreal Engine meets Hollywood production studio."
+
+FORBIDDEN: pink, cyan, teal, or any non-gold accent hue; pure black #000000 backgrounds; cluttered layouts; tiny or garbled text; misspellings; stray logos; watermarks; extra brand marks; lorem-ipsum; more than one headline.
