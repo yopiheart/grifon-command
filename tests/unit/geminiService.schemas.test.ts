@@ -406,4 +406,22 @@ describe('generateAdCreatives schema', () => {
     expect(sent).toContain('Press Clip');
     expect(sent).not.toContain('Niche Callout');
   }, 10_000);
+
+  it('saas-offer family returns the 3 upsell templates with composition', async () => {
+    fetchMock.mockResolvedValueOnce(okGemini([
+      { id: 1, templateType: 'Guarantee Hero', headline: 'First ad live in 24h or your month is free.', caption: 'x', hookLogic: 'risk-reversal', imagePrompt: '', composition: { guarantee: 'Money back', ctaLabel: 'Upgrade now', badge: '24H' } },
+      { id: 2, templateType: 'Ticket Compare', headline: 'CHOOSE YOUR LEVEL', caption: 'y', hookLogic: 'anchoring', imagePrompt: '', composition: { tiers: [{ name: 'Free', lines: ['DIY'], highlight: false }, { name: 'Pro', lines: ['Done for you'], highlight: true }], ctaLabel: 'Go Pro' } },
+      { id: 3, templateType: 'Offer Stack Checklist', headline: 'All your money back if not 100%.', caption: 'z', hookLogic: 'reciprocity', imagePrompt: '', composition: { bullets: ['Ad script', 'Storyboard', 'Voiceover', 'Caption'], guarantee: 'Penny back', ctaLabel: 'Upgrade' } },
+    ]));
+
+    const result = await generateAdCreatives({ ...baseUplink, family: 'saas-offer' });
+
+    expect(result.map((r: any) => r.templateType)).toEqual(['Guarantee Hero', 'Ticket Compare', 'Offer Stack Checklist']);
+    expect(Array.isArray(result[1].composition?.tiers)).toBe(true);
+    expect(Array.isArray(result[2].composition?.bullets)).toBe(true);
+
+    const sent = JSON.stringify(captureLastFetchBody());
+    expect(sent).toContain('SaaS Upsell Ads');
+    expect(sent).not.toContain('Press Clip');
+  }, 10_000);
 });

@@ -2491,7 +2491,43 @@ Return a JSON array of 3 objects:
 }
     `;
 
-    const prompt = data.family === 'callout' ? calloutPrompt : productPrompt;
+    // GP-1 "SaaS Offer / Upsell" family (text-composited over a dark premium lane;
+    // see workflows/static_ad_swipe_file.md). Warm-retarget upgrade creatives.
+    const saasPrompt = `
+### Role: Direct Response Strategist — SaaS Upsell Ads
+Task: Generate 3 warm-retarget upsell ad variants for "${data.brandIdentityName}" — ONE of each template below. The viewer already knows the brand (free / engaged user); drive the upgrade. Outcome-framed, NEVER feature-listed.
+
+INTELLIGENCE:
+Brand: ${data.brandIdentityName}
+Audience: ${data.targetDemographic} (${data.ageRange})
+Main Benefit: ${data.primaryBenefit}
+Pain Point: ${data.marketPainPoint}
+UVP: ${data.uvp}
+Key Inclusions: ${data.keyFeatures}
+Offer Price: ${data.offerPrice} (was ${data.originalPrice})
+Language: ${data.language}
+
+TRUST GUARDRAIL: no fake scarcity, no fake testimonials, no invented numbers. A guarantee must be a real, honored policy. No "unlimited" promises.
+
+Return a JSON array of EXACTLY 3 objects, ONE per templateType:
+
+1) "Guarantee Hero" — a risk-reversal headline (the dream outcome fused to a real guarantee).
+   composition: { "guarantee": "<the real reversal>", "ctaLabel": "<2-4 word CTA>", "badge": "<short offer/guarantee badge>" }
+
+2) "Ticket Compare" — anchor the current (free/lower) tier against the target tier.
+   headline: "<short directive, e.g. CHOOSE YOUR LEVEL>"
+   composition: { "tiers": [ {"name":"Free","lines":["<2-3 plain limits>"],"highlight":false}, {"name":"<target tier>","lines":["<3-4 outcome lines>"],"highlight":true} ], "ctaLabel": "<CTA>" }
+
+3) "Offer Stack Checklist" — a guarantee headline + a what-you-GET list.
+   headline: "<the guarantee line>"
+   composition: { "bullets": ["<outcome 1>","<outcome 2>","<outcome 3>","<outcome 4>"], "guarantee": "<penny-back tag>", "ctaLabel": "<CTA>" }
+
+Every object MUST also include: "id" (number), "templateType" (exact string above), "caption" (primary ad copy in ${data.language}), "hookLogic" (the persuasion lever), "imagePrompt": "".
+    `;
+
+    const prompt = data.family === 'callout' ? calloutPrompt
+      : data.family === 'saas-offer' ? saasPrompt
+      : productPrompt;
 
     const response: GenerateContentResponse = await retryWithBackoff(() => proxyGenerateContent({
         model: textModel,

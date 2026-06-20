@@ -539,7 +539,7 @@ export interface AdComposition {
 
 export interface AdVariant {
   id: number;
-  templateType: "Press Clip" | "Benefit Anatomy" | "Split-Screen" | "Niche Callout";
+  templateType: "Press Clip" | "Benefit Anatomy" | "Split-Screen" | "Niche Callout" | "Guarantee Hero" | "Ticket Compare" | "Offer Stack Checklist";
   headline: string;
   imagePrompt: string;
   caption: string;

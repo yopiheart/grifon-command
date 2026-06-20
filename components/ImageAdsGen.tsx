@@ -6,6 +6,7 @@ import Loader from './ui/Loader';
 import { RefreshCw, Check, Copy, Image as ImageIcon, ChevronLeft } from 'lucide-react';
 import IntelligenceUplink from './IntelligenceUplink';
 import { NicheCalloutCard } from './imageads/NicheCalloutCard';
+import { SaasOfferCard } from './imageads/SaasOfferCard';
 import { captureToPng } from '../utils/captureToPng';
 import JSZip from 'jszip';
 import saveAs from 'file-saver';
@@ -22,6 +23,9 @@ interface ImageAdsGenProps {
 // in workflows/static_ad_swipe_file.md.
 const PLACEMENT_RATIOS = ['4:5', '1:1', '9:16'] as const;
 const PLACEMENT_LABELS: Record<string, string> = { '4:5': 'feed_4x5', '1:1': 'square_1x1', '9:16': 'story_9x16' };
+// Text-composited families render branded React cards → PNG (html2canvas) instead
+// of calling the Gemini image model. Both share the capture + Placement Pack path.
+const isCompositedFamily = (f?: string) => f === 'callout' || f === 'saas-offer';
 // Preview uses the selected ratio when it's a supported placement, else feed 4:5.
 const calloutPreviewRatio = (r: string): '4:5' | '1:1' | '9:16' =>
   (PLACEMENT_RATIOS as readonly string[]).includes(r) ? (r as '4:5' | '1:1' | '9:16') : '4:5';
@@ -58,10 +62,10 @@ const ImageAdsGen: React.FC<ImageAdsGenProps> = ({ businessInfo, avatar, clientD
     const updated = [...variants];
     setLoading(true);
     try {
-      // Text-composited families (GP-2 Niche Callout) render a branded React
-      // card → PNG via html2canvas instead of the Gemini image model, which is
-      // hard-blocked from rendering legible text (NO_TEXT_CONSTRAINT).
-      if ((uplinkData.family ?? 'product') === 'callout') {
+      // Text-composited families (Niche Callout, SaaS Upsell) render a branded
+      // React card → PNG via html2canvas instead of the Gemini image model, which
+      // is hard-blocked from rendering legible text (NO_TEXT_CONSTRAINT).
+      if (isCompositedFamily(uplinkData.family)) {
         const node = calloutRefs.current[`${idx}:${calloutPreviewRatio(uplinkData.aspectRatio)}`];
         if (!node) throw new Error('callout capture node not mounted');
         const png = await captureToPng(node, { scale: 2 });
@@ -100,9 +104,9 @@ const ImageAdsGen: React.FC<ImageAdsGenProps> = ({ businessInfo, avatar, clientD
     const content = `HEADLINE: ${v.headline}\nTEMPLATE: ${v.templateType}\nCAPTION: ${v.caption}\nHOOK_LOGIC: ${v.hookLogic}`;
     zip.file(`${folderName}/ad_copy.txt`, content);
 
-    // Callout family → export a placement-ready pack: feed (4:5), square (1:1),
-    // and story/reel (9:16), each captured from its safe-zone-framed card.
-    if ((uplinkData?.family ?? 'product') === 'callout') {
+    // Composited families → export a placement-ready pack: feed (4:5), square
+    // (1:1), and story/reel (9:16), each captured from its safe-zone-framed card.
+    if (isCompositedFamily(uplinkData?.family)) {
       const idx = variants.indexOf(v);
       for (const ratio of PLACEMENT_RATIOS) {
         const node = calloutRefs.current[`${idx}:${ratio}`];
@@ -207,7 +211,7 @@ const ImageAdsGen: React.FC<ImageAdsGenProps> = ({ businessInfo, avatar, clientD
                             
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                               <button onClick={() => handleDownloadAsset(v)} className="w-full flex items-center justify-center gap-2 py-3 text-[10px] border border-white/10 hover:border-[#FFCC00] text-zinc-400 hover:text-[#FFCC00] rounded-xl transition-all font-bold uppercase tracking-widest">
-                                <Copy className="w-4 h-4" /> {(uplinkData.family ?? 'product') === 'callout' ? 'PLACEMENT PACK (3)' : 'DOWNLOAD ASSET'}
+                                <Copy className="w-4 h-4" /> {isCompositedFamily(uplinkData.family) ? 'PLACEMENT PACK (3)' : 'DOWNLOAD ASSET'}
                               </button>
                               <GoldButton className="w-full flex items-center justify-center gap-2 py-3 text-[10px] rounded-xl">
                                   <Check className="w-5 h-5" /> EXPORT TO FB
@@ -219,20 +223,32 @@ const ImageAdsGen: React.FC<ImageAdsGenProps> = ({ businessInfo, avatar, clientD
             ))}
         </div>
 
-        {/* Hidden capture stage: each callout variant rendered off-screen at all
-            three placement ratios so captureToPng() can rasterize the pack. */}
-        {(uplinkData.family ?? 'product') === 'callout' && (
+        {/* Hidden capture stage: each composited variant rendered off-screen at
+            all three placement ratios so captureToPng() can rasterize the pack. */}
+        {isCompositedFamily(uplinkData.family) && (
           <div aria-hidden style={{ position: 'fixed', left: -99999, top: 0, pointerEvents: 'none', opacity: 0 }}>
-            {variants.map((v, idx) => PLACEMENT_RATIOS.map((ratio) => (
-              <NicheCalloutCard
-                key={`${idx}:${ratio}`}
-                ref={(el) => { calloutRefs.current[`${idx}:${ratio}`] = el; }}
-                composition={v.composition || {}}
-                aspectRatio={ratio}
-                hexCodes={uplinkData.hexCodes}
-                brandName={uplinkData.brandIdentityName}
-              />
-            )))}
+            {variants.map((v, idx) => PLACEMENT_RATIOS.map((ratio) => {
+              const refCb = (el: HTMLDivElement | null) => { calloutRefs.current[`${idx}:${ratio}`] = el; };
+              return uplinkData.family === 'saas-offer' ? (
+                <SaasOfferCard
+                  key={`${idx}:${ratio}`}
+                  ref={refCb}
+                  variant={v}
+                  aspectRatio={ratio}
+                  hexCodes={uplinkData.hexCodes}
+                  brandName={uplinkData.brandIdentityName}
+                />
+              ) : (
+                <NicheCalloutCard
+                  key={`${idx}:${ratio}`}
+                  ref={refCb}
+                  composition={v.composition || {}}
+                  aspectRatio={ratio}
+                  hexCodes={uplinkData.hexCodes}
+                  brandName={uplinkData.brandIdentityName}
+                />
+              );
+            }))}
           </div>
         )}
 

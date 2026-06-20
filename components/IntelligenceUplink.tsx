@@ -219,7 +219,7 @@ const IntelligenceUplink: React.FC<IntelligenceUplinkProps> = ({ onComplete, onB
             <div className="space-y-2">
               <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">CREATIVE_FAMILY</p>
               <div className="flex gap-2 bg-zinc-950 p-1 rounded-xl border border-white/10">
-                {[{ id: 'product', label: 'PRODUCT' }, { id: 'callout', label: 'NICHE CALLOUT' }].map(fam => (
+                {[{ id: 'product', label: 'PRODUCT' }, { id: 'saas-offer', label: 'SAAS-UPSELL' }, { id: 'callout', label: 'NICHE CALLOUT' }].map(fam => (
                   <button
                     key={fam.id}
                     onClick={() => setFormData({...formData, family: fam.id as any})}
