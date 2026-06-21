@@ -870,6 +870,12 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
         - FORBIDDEN: inventing interiors / equipment / vehicles / signage grander or different from
           what the photos/description evidence. When unsure: VENUE-LED → still show the venue, kept
           simple and true-to-tier; WORK-LED → favor the customer/problem/relief over a guessed gear shot.
+        - FORBIDDEN AESTHETIC WORDS (in every scene's imagePrompt / startFramePrompt / endFramePrompt):
+          never write "high-end", "luxury", "luxurious", "premium", "upscale", "elegant", "5-star",
+          "resort", "boutique-hotel", "modern minimalist", or "sleek" for a VENUE-LED scene. Even when
+          the brief, differentiator, benefit, or offer uses aspirational / "luxury" language, IGNORE it
+          for the VISUALS — the uploaded photo's tier is the ONLY ground truth. Render the venue at its
+          real, modest, true-to-tier level (warm, simple, lived-in, authentically Filipino).
         - Setting, faces, clothing, vehicles, signage, props must read authentically Filipino.
         `;
   } else {

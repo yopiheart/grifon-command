@@ -2002,9 +2002,18 @@ export const generateSceneImage = async (
     const realismProtocol = scriptType === 'Cinematic' ? REALISM_INSTRUCTION_CINEMATIC : REALISM_INSTRUCTION_UGC;
     const brandColorInstruction = brandColors.length > 0 ? `\n**BRAND COLORS:** Incorporate these colors subtly: ${brandColors.join(', ')}` : '';
 
+    // Services scenes can place a Filipino CUSTOMER / staff in non-avatar b-roll (e.g. the
+    // problem-hook). The non-avatar render modes inject NO ethnicity → the model defaulted to a
+    // foreign/Western person (Naya smoke 2026-06-21). Scoped to scriptType==='Services' so the
+    // product / MrBeast / Testimonial / Temu / Cinematic paths stay byte-identical.
+    const serviceCastLock = (scriptType === 'Services')
+      ? `\n**FILIPINO_CAST_LOCK:** This is a Philippine business. Any human who appears — customer, staff, bystander, or even just hands — MUST be Filipino${ethnicity && ethnicity !== 'Global' ? ` (${ethnicity})` : ''} (authentically Filipino face, build, and styling). NEVER render a foreign / Western / non-Filipino person.`
+      : "";
+
     // 4. COMBINE EVERYTHING INTO THE FINAL PROMPT
     const finalPromptText = `
     ${consistencyRules}
+    ${serviceCastLock}
     ${cameraMandatory}
     ${wardrobeInstruction}
     ${productContext}

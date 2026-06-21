@@ -27,6 +27,13 @@ export interface BusinessInfo {
   // formulas); 'service' shows the Services style. Custom shows in both. Defaults from Market Research's
   // isLocalService at prefill; user can override via the Step 2 toggle.
   businessType?: 'product' | 'service';
+  // Services "primary hero" qualifier — what the ad LEADS with (scene-1 + b-roll). Smart-defaulted
+  // from the description in Step 2, user-overridable. Soft hint, not an exclusive mode: it biases the
+  // lead, it does not strip capability (e.g. before/after stays available to venue too). Phase 2 uses
+  // it to drive guided photo-upload + per-scene real-photo routing (Business-tier Advanced Mode).
+  // 'venue' = place is the draw (spa/salon/gym/resto/clinic); 'work' = result is the draw
+  // (cleaning/pest/repair); 'practitioner' = the person is the draw (coach/advisor/agency).
+  serviceArchetype?: 'venue' | 'work' | 'practitioner';
   customScriptFile?: string[];
   selectedTheme?: VisualTheme;
 }
