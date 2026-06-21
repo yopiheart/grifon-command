@@ -38,7 +38,7 @@ export interface BusinessInfo {
   // implicit classification). Separate from productImageUrls so the product/testimonial pipeline
   // is untouched; productImageUrls is kept in sync (hero-first) for back-compat. The per-scene
   // router (Slice 5) reads these to anchor each scene to the right real photo.
-  servicePhotos?: { url: string; slot: 'exterior' | 'interior' | 'ambiance' | 'staff' | 'before' | 'after' }[];
+  servicePhotos?: { url: string; slot: 'exterior' | 'interior' | 'ambiance' | 'staff' | 'before' | 'after'; description?: string }[];
   customScriptFile?: string[];
   selectedTheme?: VisualTheme;
 }

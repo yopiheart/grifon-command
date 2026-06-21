@@ -76,6 +76,9 @@ export const renderSceneImages = async (
   const venuePhoto = scene.venueSlot
     ? businessInfo.servicePhotos?.find(p => p.slot === scene.venueSlot)
     : undefined;
+  // PRECEDENCE (intended): for a Services scene, an explicit venueSlot WINS over a 'product'
+  // tag — a service business has no physical product hero, so venueSlot is the deliberate
+  // "anchor to the real place/result" signal. Avatar/both still take priority (identity lock).
   const useVenue = !!venuePhoto && !isHookMorph
     && scene.referenceImage !== 'avatar' && scene.referenceImage !== 'both';
   const mainRefs = useVenue ? { productUrl: venuePhoto!.url } : startFrameRefs;

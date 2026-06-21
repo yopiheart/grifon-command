@@ -59,6 +59,13 @@ const ARCHETYPE_UPLOAD_SLOTS: Record<ServiceArchetype, { slot: ServiceSlot; labe
   ],
 };
 
+// Rebuild productImageDescription from the CURRENT servicePhotos (slot-labeled) on every add/remove,
+// so re-uploading or removing a slot never leaves a stale or duplicated [slot] block.
+const buildServiceDescription = (
+  photos: NonNullable<BusinessInfo['servicePhotos']>,
+): string | undefined =>
+  photos.length ? photos.map(p => `[${p.slot}] ${(p.description ?? '').trim()}`).join('\n\n') : undefined;
+
 // Smart-default the archetype from the user's own words. SCORE each bucket by keyword hits and
 // take the highest — first-match-by-order misrouted "Naya Boutique Spa … maintenance for your body"
 // to 'work' on the broad word "maintenance" (2026-06-21 smoke), even though "spa"+"massage" are
@@ -249,16 +256,17 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
       const c = await compressImageForUpload(file);
       const desc = await describeBusinessAsset(c.base64, c.mimeType);
       setFormData(prev => {
-        const order = ARCHETYPE_UPLOAD_SLOTS[effectiveArchetype].map(s => s.slot);
-        const next = [...(prev.servicePhotos || []).filter(p => p.slot !== slot), { url: c.dataUrl, slot }]
+        // Read the archetype from prev (not the outer closure) so an override in the same tick sorts right.
+        const arch = prev.serviceArchetype
+          ?? inferServiceArchetype(`${prev.product || ''} ${prev.productImageDescription || ''} ${prev.features || ''}`);
+        const order = ARCHETYPE_UPLOAD_SLOTS[arch].map(s => s.slot);
+        const next = [...(prev.servicePhotos || []).filter(p => p.slot !== slot), { url: c.dataUrl, slot, description: desc }]
           .sort((a, b) => order.indexOf(a.slot) - order.indexOf(b.slot));
         return {
           ...prev,
           servicePhotos: next,
           productImageUrls: next.map(p => p.url).slice(0, 5),
-          productImageDescription: prev.productImageDescription
-            ? `${prev.productImageDescription}\n\n[${slot}] ${desc}`
-            : `[${slot}] ${desc}`,
+          productImageDescription: buildServiceDescription(next),
         };
       });
     } catch (err) {
@@ -273,7 +281,12 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
   const removeSlot = (slot: ServiceSlot) => {
     setFormData(prev => {
       const next = (prev.servicePhotos || []).filter(p => p.slot !== slot);
-      return { ...prev, servicePhotos: next, productImageUrls: next.map(p => p.url).slice(0, 5) };
+      return {
+        ...prev,
+        servicePhotos: next,
+        productImageUrls: next.map(p => p.url).slice(0, 5),
+        productImageDescription: buildServiceDescription(next),
+      };
     });
   };
 
