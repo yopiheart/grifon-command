@@ -34,6 +34,11 @@ export interface BusinessInfo {
   // 'venue' = place is the draw (spa/salon/gym/resto/clinic); 'work' = result is the draw
   // (cleaning/pest/repair); 'practitioner' = the person is the draw (coach/advisor/agency).
   serviceArchetype?: 'venue' | 'work' | 'practitioner';
+  // Phase 2: guided service-venue uploads, each tagged by SLOT (the upload slot IS the tag —
+  // implicit classification). Separate from productImageUrls so the product/testimonial pipeline
+  // is untouched; productImageUrls is kept in sync (hero-first) for back-compat. The per-scene
+  // router (Slice 5) reads these to anchor each scene to the right real photo.
+  servicePhotos?: { url: string; slot: 'exterior' | 'interior' | 'ambiance' | 'staff' | 'before' | 'after' }[];
   customScriptFile?: string[];
   selectedTheme?: VisualTheme;
 }

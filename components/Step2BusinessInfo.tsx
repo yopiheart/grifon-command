@@ -35,6 +35,30 @@ const ARCHETYPE_META: Record<ServiceArchetype, {
 const ARCHETYPE_ORDER: ServiceArchetype[] = ['venue', 'work', 'practitioner'];
 const BAD_SAMPLE = { src: '/examples/services-blurry-bad.png', caption: 'Dark & blurry' };
 
+type ServiceSlot = NonNullable<BusinessInfo['servicePhotos']>[number]['slot'];
+
+// Phase 2 guided upload slots per archetype. The slot the user drops into IS the photo's tag
+// (implicit-by-slot classification) → drives per-scene routing downstream. List order = hero-first
+// (productImageUrls is synced in this order for back-compat).
+const ARCHETYPE_UPLOAD_SLOTS: Record<ServiceArchetype, { slot: ServiceSlot; label: string; hint: string }[]> = {
+  venue: [
+    { slot: 'exterior', label: 'Storefront', hint: 'facade + your sign/logo' },
+    { slot: 'interior', label: 'Inside', hint: 'where the service happens' },
+    { slot: 'ambiance', label: 'The vibe', hint: 'what makes it feel good' },
+    { slot: 'staff', label: 'You / staff', hint: 'optional' },
+  ],
+  work: [
+    { slot: 'before', label: 'Before', hint: 'the problem / mess' },
+    { slot: 'after', label: 'After', hint: 'the clean result' },
+    { slot: 'staff', label: 'Crew', hint: 'optional — plain, real' },
+  ],
+  practitioner: [
+    { slot: 'staff', label: 'You / team', hint: 'friendly, clear headshot' },
+    { slot: 'before', label: 'Proof: before', hint: 'optional' },
+    { slot: 'after', label: 'Proof: after', hint: 'optional' },
+  ],
+};
+
 // Smart-default the archetype from the user's own words. SCORE each bucket by keyword hits and
 // take the highest — first-match-by-order misrouted "Naya Boutique Spa … maintenance for your body"
 // to 'work' on the broad word "maintenance" (2026-06-21 smoke), even though "spa"+"massage" are
@@ -213,6 +237,46 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
       setFormData(prev => ({ ...prev, productImageUrls: updatedImages }));
   };
 
+  // Phase 2 guided-slot upload: stores {url, slot} in servicePhotos (the slot IS the tag) and keeps
+  // productImageUrls in sync (hero-first by the archetype's slot order) so the existing pipeline +
+  // hero/anchor logic stay fed until the per-scene router (Slice 5) lands.
+  const handleSlotUpload = async (e: React.ChangeEvent<HTMLInputElement>, slot: ServiceSlot) => {
+    if (!e.target.files || e.target.files.length === 0) return;
+    setIsAnalyzing(true);
+    setUploadError(null);
+    try {
+      const file = e.target.files[0] as File;
+      const c = await compressImageForUpload(file);
+      const desc = await describeBusinessAsset(c.base64, c.mimeType);
+      setFormData(prev => {
+        const order = ARCHETYPE_UPLOAD_SLOTS[effectiveArchetype].map(s => s.slot);
+        const next = [...(prev.servicePhotos || []).filter(p => p.slot !== slot), { url: c.dataUrl, slot }]
+          .sort((a, b) => order.indexOf(a.slot) - order.indexOf(b.slot));
+        return {
+          ...prev,
+          servicePhotos: next,
+          productImageUrls: next.map(p => p.url).slice(0, 5),
+          productImageDescription: prev.productImageDescription
+            ? `${prev.productImageDescription}\n\n[${slot}] ${desc}`
+            : `[${slot}] ${desc}`,
+        };
+      });
+    } catch (err) {
+      console.error(err);
+      setUploadError('Failed to upload/analyze image.');
+    } finally {
+      setIsAnalyzing(false);
+      if (e.target) e.target.value = '';
+    }
+  };
+
+  const removeSlot = (slot: ServiceSlot) => {
+    setFormData(prev => {
+      const next = (prev.servicePhotos || []).filter(p => p.slot !== slot);
+      return { ...prev, servicePhotos: next, productImageUrls: next.map(p => p.url).slice(0, 5) };
+    });
+  };
+
   const handleNext = () => {
     setData(formData);
     onNext();
@@ -333,7 +397,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                 // Business Visuals (Upload 3-5 Photos)
             </label>
 
-            {hasImages && (
+            {hasImages && !isServices && (
                 <>
                     <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mb-1">
                         // Photo 1 (HERO) anchors all scene visuals — remove + re-upload to reorder
@@ -409,6 +473,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
               </div>
             )}
 
+            {!isServices ? (
             <label className="block p-6 border-2 border-dashed border-white/10 bg-zinc-950/50 rounded-xl text-center hover:border-[#FFCC00] hover:bg-zinc-800/80 transition-all cursor-pointer">
                  {isAnalyzing ? (
                     <Loader message="ANALYZING ASSETS..." size="sm" />
@@ -435,6 +500,50 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                     </div>
                  )}
             </label>
+            ) : (
+            /* Phase 2: archetype-driven guided slots. The slot you drop into IS the tag, so each
+               scene can later be anchored to the right real photo (per-scene routing, Slice 5). */
+            <div className="space-y-2">
+              <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase">
+                // Upload your REAL photos — tagged per slot ↓
+              </p>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                {ARCHETYPE_UPLOAD_SLOTS[effectiveArchetype].map(({ slot, label, hint }) => {
+                  const existing = (formData.servicePhotos || []).find(p => p.slot === slot);
+                  return (
+                    <div key={slot} className="flex flex-col">
+                      <label className={`relative aspect-square w-full rounded-xl border overflow-hidden cursor-pointer flex items-center justify-center transition-all ${existing ? 'border-[#FFCC00] shadow-[0_0_8px_rgba(255,204,0,0.25)]' : 'border-dashed border-white/15 bg-zinc-950/50 hover:border-[#FFCC00] hover:bg-zinc-800/60'}`}>
+                        {existing ? (
+                          <>
+                            <img src={existing.url} alt={label} className="w-full h-full object-cover" />
+                            <button
+                              type="button"
+                              onClick={(ev) => { ev.preventDefault(); removeSlot(slot); }}
+                              className="absolute top-1 right-1 bg-red-600/90 text-white w-5 h-5 rounded-full flex items-center justify-center"
+                            >
+                              <X className="w-3 h-3" />
+                            </button>
+                          </>
+                        ) : (
+                          <div className="flex flex-col items-center gap-1 p-2 text-center">
+                            <UploadCloud className="w-5 h-5 text-zinc-500" />
+                            <span className="text-[9px] text-zinc-500 font-mono uppercase tracking-tighter">+ Add</span>
+                          </div>
+                        )}
+                        <input type="file" accept="image/*" className="hidden" onChange={(e) => handleSlotUpload(e, slot)} />
+                      </label>
+                      <p className="text-[9px] font-bold text-white font-mono uppercase mt-1 text-center leading-tight">{label}</p>
+                      <p className="text-[8px] text-zinc-500 font-mono text-center leading-tight">{hint}</p>
+                    </div>
+                  );
+                })}
+              </div>
+              {isAnalyzing && <div className="pt-1"><Loader message="ANALYZING..." size="sm" /></div>}
+              <p className="text-[9px] text-zinc-500 font-mono tracking-tighter">
+                Tinatatak namin kung saan napupunta ang bawat photo — para tumugma ang ad sa totoong lugar mo. Skip ang ayaw mong ilagay.
+              </p>
+            </div>
+            )}
             
             {formData.productImageDescription && (
                 <div className="p-4 bg-zinc-950 border border-white/10 rounded-xl">
