@@ -431,11 +431,35 @@ assigned photo (today `sceneRender.ts` hardcodes `productImageUrls[0]`; photos 1
    small tuned-prompt addition (Neil-approval gated). Reframe humble realities as benefits where
    honest (e.g. plain closed van = *discreet*, "walang kaalam-alam ang kapitbahay").
 
-**Open — Oceanides smoke (queued):** test Services end-to-end with a real PH siphoning brand
-(archetype C), steered to authenticity. Hero `siphoning-service.jpg` (+ 3 real photos staged in
-`.tmp/hero_smoke/`). Pass/fail must include: book/inquire not buy-now; no over-glamorizing; scenes
-come out freshly generated + varied (NOT echoes of the hero); mediocre hero quality doesn't degrade
-output. Blocked on Neil: Google OAuth login (no headless bypass) + price/offer + service area.
+**Oceanides smoke #1 (2026-06-21) — surfaced 3 coherence gaps → drove v2.** Script formula was
+good (Taglish, discreet angle, book CTA); the breakage was everywhere Phase 1 left on PRODUCT rails:
+(1) hook did a product-reveal (hose nozzle in a clean sink) instead of a problem-open; (2) the
+COMPANY-voice script clashed with a CUSTOMER avatar ("Anxious Homeowner Anna" appeared to be selling
+the service); (3) scene-gen invented glamorized, non-PH industrial equipment (real rig = a steel tank
+hidden in a plain closed van). Diagnosis: only the ad-script was Services-tuned; storyboard/avatar/
+scene-gen still ran product-centric.
+
+**Services formula v2 — SHIPPED (customer-testimonial + PH-realism, GENERAL across all service types).**
+Driven by the smoke + a grifon-cmo pressure-test. Key calls:
+- **Voice = first-person CUSTOMER testimonial** ("Ako si [name]") — fixes the avatar mismatch WITHOUT
+  touching the avatar engine (the customer persona was always correct; the script voice was the outlier).
+- **Category auto-adapt (not siphoning-tuned)** per Neil 2026-06-21 ("fit for ALL service types"):
+  the prompt infers the customer's #1 emotional payoff (privacy / confidence / peace-of-mind / time /
+  pride) and disarms the category's #1 trust fear (surprise pricing / "gagana ba sa akin" / hygiene /
+  reliability) from the user's own inputs — no hardcoded vertical.
+- **Storyboard:** Scene-1 hook = THE PROBLEM (product-reveal hook rules made conditional, off for
+  Services); customer talking-head + service-in-action/relief b-roll.
+- **PH ground-truth realism guardrail** (mandatory, all services): depict the real PH version, treat
+  uploaded-photo description as ground truth, never invent Western/premium/industrial gear; when unsure,
+  favor customer/problem/relief over a guessed equipment shot.
+- **No peso figure in the script** (CMO + house rule); offer stated as words ("libreng inspection").
+- Files: `api/_lib/prompts.ts` (adscript + storyboard Services branches), leak-guard markers updated.
+  Build/tests/leak green. The accuracy GUARANTEE (their real photos per scene) still = Phase 2 / Business.
+
+**Open — Oceanides re-smoke (queued):** confirm v2 — problem-hook (no hose-in-sink), customer-voice
+script, PH-humble visuals (no glamorized rig), book/inquire CTA. Hero `siphoning-service.jpg` + real
+photos must be RE-DROPPED into `.tmp/hero_smoke/` next session (defreezer wipes `.tmp`). Blocked on
+Neil: Google OAuth login + the photos.
 
 ---
 

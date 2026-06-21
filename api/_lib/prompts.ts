@@ -376,9 +376,11 @@ export const buildAdScriptPrompt = (
   const { businessInfo, brandName, language, offer, chosenAngleBrief } = input;
   const isTestimonial = businessInfo.scriptType === 'Testimonial';
   const isTemu = businessInfo.scriptType === 'Temu';
-  // Services (Phase 1): trust-forward service ads — book/inquire CTA (not buy-now),
-  // service-not-product framing, archetype A (practitioner-led) + C (work/result-led)
-  // auto-detected from inputs. Phase 2 adds venue-led (B) per-scene photo routing.
+  // Services (v2): customer-testimonial service ads (first-person customer story),
+  // book/inquire CTA (not buy-now), category-auto-adapting across ALL service types
+  // (emotional payoff + trust-fear inferred from inputs; no peso amount in the script).
+  // Avatar engine unchanged (customer persona is correct). Phase 2 = per-scene real-photo
+  // routing (venue + before/after) gated as Business-tier Advanced Mode.
   const isServices = businessInfo.scriptType === 'Services';
 
   const COMMON_RULES = ADSCRIPT_COMMON_RULES(businessInfo, brandName, language);
@@ -408,34 +410,46 @@ export const buildAdScriptPrompt = (
   } else if (isServices) {
     return `
       Role: Senior Direct Response Copywriter for Filipino SERVICE businesses.
-      Strategy: Trust-Forward Service Ad (book/inquire, not buy-now).
+      Strategy: Customer-Testimonial Service Ad — first-person CUSTOMER story; book/inquire, NOT buy-now.
       Service: "${businessInfo.product}"
       Brand: "${brandName}"
 
       ${COMMON_RULES}
       ${HOOK_SEED_PROTOCOL}
 
-      **ARCHETYPE AUTO-DETECT (from the service + audience + uploaded asset):**
-      - PRACTITIONER-LED (advisor, coach, tutor, agency, insurance): the person IS the
-        proof. Lean on credibility, the client's outcome, and a calm authority tone.
-      - WORK/RESULT-LED (cleaning, pest control, aircon, detailing, plumbing): the RESULT
-        is the proof. Lean on the before→after change, shown HONESTLY (see honesty rule).
-      Do NOT name the archetype in the copy — let the chosen beats reflect it.
+      **VOICE — FIRST-PERSON CUSTOMER (never the company):**
+      The speaker is a real, relatable CUSTOMER of "${brandName}" sharing their own experience —
+      NOT the business pitching itself. NEVER write "Kami sa ${brandName}" / "we offer" / company "amin".
+      Write as the customer: "Ako si [Filipino first name]," telling how the service helped them.
 
-      **SERVICES 6-BEAT STRUCTURE (no held product, no "buy now"):**
-      0. **Hook (3s / 5-8 words):** Pattern interrupt on the audience's pain or desire.
+      **CATEGORY AUTO-ADAPT (works for ANY service — salon, gym, clinic, restaurant, laundry,
+      cleaning, pest control, repair, tutor, advisor, events, etc.). Infer from the service +
+      "${businessInfo.audience}" + "${businessInfo.painPoint}" + "${businessInfo.benefit}":**
+      - Find the customer's #1 EMOTIONAL PAYOFF and make it the through-line (hook → relief).
+        Examples (pick what FITS; never force one): privacy / "walang nakaalam" (private or
+        embarrassing services), confidence / "bagong tiwala" (salon, gym, derma, dental),
+        peace-of-mind / "panatag ang loob" (pest, repair, security, clinic), time / "may oras
+        ka ulit" (laundry, cleaning, errands), pride / "proud kang i-serve" (restaurant, events).
+      - Find and DISARM the category's #1 TRUST FEAR. Examples: surprise pricing ("presyong
+        usap, presyong bayad — walang dagdag") for trades/repair; "gagana ba sa akin?"
+        (realistic proof, no fabricated guarantee) for results-based; hygiene/safety for
+        food/health; reliability / no-show ("on-time, maaasahan") for home services.
+
+      **SERVICES TESTIMONIAL 6-BEAT (no held product, no "buy now", and NO peso amount in the script):**
+      0. **Hook (3s / 5-8 words):** Pattern interrupt. Hit ONE of: {named pain + the emotional
+         payoff} · {fear/consequence before it worsens} · {anti-villain of the category}.
          PROVIDE 2 VARIATIONS — populate hook1 AND hook2.
-      1. **Trust / Identity:** Open with the practitioner/team and what they do, framed as
-         a story-opener, not a label. Establish "these are real people who do this well."
-      2. **Service in action:** Describe the service being performed — the value made visible.
-      3. **Before / after (result):** The transformation the client gets. HONESTY RULE:
-         never invent a specific guaranteed outcome or fabricate a dramatic result; speak to
-         a realistic, representative change ("most clients leave feeling…", "results vary").
-      4. **Proof:** A short trust beat — a satisfied client's reaction or a credibility marker.
-      5. **Offer + CTA:** Anchor an offer (free consult, first-visit discount, limited slots)
-         and drive to BOOK / MESSAGE / INQUIRE. Default channels: Viber, Messenger/DM, or
-         walk-in — NOT a checkout link. Forbidden: "buy now", "add to cart", "order now",
-         product-scarcity ("only 3 left in stock").
+      1. **Intro:** "Ako si [Filipino first name]," + life context that implicitly identifies
+         "${businessInfo.audience}" (story-opener, NOT a demographic label or name-tag).
+      2. **The Problem:** Agitate the real pain — "${businessInfo.painPoint}".
+      3. **The Turn:** How they found/called "${brandName}" + the ONE thing that disarmed their
+         trust fear (see CATEGORY AUTO-ADAPT). Use a COMPLETE verb construction, never a verbless fragment.
+      4. **The Relief:** Pain → Result ("${businessInfo.benefit}"), carrying the emotional payoff.
+         HONESTY RULE: realistic/representative; never fabricate a guaranteed or exaggerated outcome.
+      5. **Offer + CTA:** They recommend it + the offer as WORDS ONLY (e.g. "libreng inspection/
+         konsulta", "free first consult") — NEVER state a peso figure. Drive to BOOK / MESSAGE /
+         INQUIRE via Viber, Messenger/DM, or walk-in — NOT a checkout link. Forbidden: "buy now",
+         "add to cart", "order now", product-scarcity ("only 3 left").
 
       ${DIRECTOR_CRITIQUE_INSTRUCTION}
       ${USER_CHOSEN_ANGLE_BLOCK}
@@ -790,6 +804,7 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
   const fullScript = script.join('\n');
   const productDesc = businessInfo.productImageDescription || 'N/A';
   const isTemu = businessInfo.scriptType === 'Temu';
+  const isServices = businessInfo.scriptType === 'Services';
 
   const DIRECTOR_CRITIQUE_INSTRUCTION = `
     **DIRECTOR_CRITIQUE_PROTOCOL:**
@@ -819,6 +834,31 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
         - ${ethnicity} Context.
         - High-key lighting, fast motion, handheld feel.
         - Focus on HANDS and OBJECTS for scenes 2-6.
+        `;
+  } else if (isServices) {
+    strategyInstructions = `
+        **STRATEGY: CUSTOMER-TESTIMONIAL SERVICE AD (works for ANY service — salon, gym,
+        clinic, restaurant, laundry, cleaning, pest, repair, tutor, advisor, events, etc.)**
+        1. **SCENE 1 (THE HOOK) = THE PROBLEM, not a product reveal.** Open on the real-world
+           PAIN moment the customer felt (the mess, the worry, the before-state) — an environment/
+           object/situation shot. There is NO product to reveal; do NOT invent or "reveal" a gadget.
+        2. **SCENE 2 (THE CONNECTION):** **MUST be "Avatar Talking"** — the avatar is the CUSTOMER
+           sharing their story (NOT the business pitching). Bridge from the hook.
+        3. **MIDDLE SCENES:** Alternate **Avatar Talking (customer)** with **Service B-Roll** —
+           the service being performed and the RELIEF/result. Honest, representative.
+        4. **FINAL SCENE (CTA):** Customer recommending + a book/inquire gesture (phone/message).
+
+        **PHILIPPINE GROUND-TRUTH REALISM (mandatory):**
+        - This is a Philippine SMB. Depict the service EXACTLY as it appears in the real-world
+          Philippines — humble, local, true-to-life. NOT a Western, premium, or idealized version.
+        - Treat the uploaded photo description ("${productDesc}") as VISUAL GROUND TRUTH. Render
+          what the photos actually show (e.g. plain-clothes crew, a plain/worn closed vehicle) —
+          NEVER upgrade it to shiny branded trucks, uniformed staff, or imported/industrial
+          equipment that does not exist in the local setting.
+        - FORBIDDEN: inventing equipment / interiors / vehicles / signage not evidenced by the
+          photos or description. When unsure how the real scene looks, DO NOT fabricate it —
+          favor the customer, the problem, and the relief/result over a guessed equipment/venue shot.
+        - Setting, faces, clothing, vehicles, signage, props must read authentically Filipino.
         `;
   } else {
     strategyInstructions = `
@@ -861,9 +901,9 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
 
       Motion lives in \`transitionEffect\` (e.g., "Explosion Reveal", "Character Morph") — that field describes the MOTION between two stills. The frame prompts describe two STILL moments. Frames = stills. Transitions = motion.
 
-      **HOOK END-FRAME = RESOLVED REVEAL (Scene 1 endFramePrompt):** The hook's end frame is the moment AFTER the transition completes — the product is ALREADY fully revealed, sitting still and intact in frame. Describe ONLY that finished state (e.g., "The [product] sitting centered on a clean counter, front label facing camera, sharp focus"). Do NOT narrate the reveal itself (no "disintegrating to reveal", no "pixels forming into"). NO people, faces, hands, or bodies in the hook end frame unless the avatar is explicitly the subject of the reveal.
+      ${isServices ? `**HOOK FRAMES (Scene 1, Services) = THE PROBLEM, NO product reveal:** The start and end frames depict the real-world PROBLEM moment (the mess, the worry, the before-state) as an environment / object / situation — authentically Filipino and humble. There is NO product to reveal; do NOT place, "reveal", or invent any gadget, device, branded vehicle, uniform, or imported equipment in the hook. Keep both stills STATIC. The two frames MAY share one named dominant color + silhouette position for a clean transition, but the anchor comes FROM THE PROBLEM SCENE (e.g. an overflowing drain, a cluttered room, a worried face at home), never from a product.` : `**HOOK END-FRAME = RESOLVED REVEAL (Scene 1 endFramePrompt):** The hook's end frame is the moment AFTER the transition completes — the product is ALREADY fully revealed, sitting still and intact in frame. Describe ONLY that finished state (e.g., "The [product] sitting centered on a clean counter, front label facing camera, sharp focus"). Do NOT narrate the reveal itself (no "disintegrating to reveal", no "pixels forming into"). NO people, faces, hands, or bodies in the hook end frame unless the avatar is explicitly the subject of the reveal.
 
-      **HOOK ANCHOR RULE (Scene 1 startFramePrompt + endFramePrompt):** The two stills MUST share ONE named concrete anchor: the SAME dominant color (named in BOTH prompts) AND the SAME silhouette occupying the SAME position in frame. **The anchor color comes FROM THE PRODUCT.** Derive the shared dominant color from the product's actual uploaded packaging, then design the START frame's subject/setting to carry that color naturally. NEVER recolor, mute, or restyle the product's packaging to match the start frame — the uploaded product photo is ground truth for the end frame. (e.g., product = vibrant orange coffee bag → start = "dark coffee grounds beside a burnt-orange ceramic mug, warm orange light, centered, filling the lower third of frame" → end = "the vibrant orange coffee bag, centered, filling the lower third of frame"). State the anchor color and the silhouette position explicitly in BOTH prompts. A morph between two frames that do not share color + silhouette position forces the video model to interpolate through formless flesh-toned mush — the single worst failure mode for the hook.
+      **HOOK ANCHOR RULE (Scene 1 startFramePrompt + endFramePrompt):** The two stills MUST share ONE named concrete anchor: the SAME dominant color (named in BOTH prompts) AND the SAME silhouette occupying the SAME position in frame. **The anchor color comes FROM THE PRODUCT.** Derive the shared dominant color from the product's actual uploaded packaging, then design the START frame's subject/setting to carry that color naturally. NEVER recolor, mute, or restyle the product's packaging to match the start frame — the uploaded product photo is ground truth for the end frame. (e.g., product = vibrant orange coffee bag → start = "dark coffee grounds beside a burnt-orange ceramic mug, warm orange light, centered, filling the lower third of frame" → end = "the vibrant orange coffee bag, centered, filling the lower third of frame"). State the anchor color and the silhouette position explicitly in BOTH prompts. A morph between two frames that do not share color + silhouette position forces the video model to interpolate through formless flesh-toned mush — the single worst failure mode for the hook.`}
 
       **APPEARANCE_LOCK_RULE (when scene's referenceImage='avatar'):**
       The \`imagePrompt\`, \`startFramePrompt\`, and \`endFramePrompt\` MUST NOT describe the avatar's physical appearance. Identity is preserved by an upstream LOCK; redescribing it creates conflicts and corrupts the render.
