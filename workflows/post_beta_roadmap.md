@@ -414,6 +414,15 @@ marker. Build/tests/leak green. Before/after for C is generated representative b
 **Phase 2 — DEFERRED = the per-scene photo-routing layer.** Classify uploaded photos
 (exterior/interior/staff/menu/before/after) → map to specific scenes → render-path uses the
 assigned photo (today `sceneRender.ts` hardcodes `productImageUrls[0]`; photos 1+ are dormant).
+**Includes a smart-defaulted ARCHETYPE QUALIFIER** (Neil 2026-06-21): 3 plain-language buttons —
+venue-led / work-result / practitioner — auto-pre-selected from the description, user-overridable.
+Build it WITH Phase 2 (not before), because that's when it earns its keep: it drives the GUIDED
+photo-upload per archetype (venue → "upload reception/rooms/vibe"; work → before/after; practitioner
+→ headshot/logo) and the per-scene routing. Interim = auto-infer in the prompt (proven on the
+Oceanides work-led smoke). Re-smoke #2 (2026-06-21) PASSED for work-led: problem-hook, customer
+voice, plain crew + plain white van (no glamorized tanker), hose outside the tank — humble + PH-real.
+Open finding: venue-led truly needs Phase 2 (representative venue ≠ their real place — and customers
+avail BECAUSE they saw the real place).
 
 **Two product decisions (Neil, 2026-06-21) — to honor in Phase 2 / a Services-tune pass:**
 
