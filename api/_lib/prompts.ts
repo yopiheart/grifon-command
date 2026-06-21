@@ -842,25 +842,34 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
     strategyInstructions = `
         **STRATEGY: CUSTOMER-TESTIMONIAL SERVICE AD (works for ANY service — salon, gym,
         clinic, restaurant, laundry, cleaning, pest, repair, tutor, advisor, events, etc.)**
-        1. **SCENE 1 (THE HOOK) = THE PROBLEM, not a product reveal.** Open on the real-world
-           PAIN moment the customer felt (the mess, the worry, the before-state) — an environment/
-           object/situation shot. There is NO product to reveal; do NOT invent or "reveal" a gadget.
+        1. **SCENE 1 (THE HOOK) = THE PROBLEM / desire, not a product reveal.** Open on the
+           real-world pain or longing the customer felt (the mess/worry/before-state, OR for
+           appearance/venue services the "before" or the moment of wanting). NO product to reveal.
         2. **SCENE 2 (THE CONNECTION):** **MUST be "Avatar Talking"** — the avatar is the CUSTOMER
            sharing their story (NOT the business pitching). Bridge from the hook.
         3. **MIDDLE SCENES:** Alternate **Avatar Talking (customer)** with **Service B-Roll** —
-           the service being performed and the RELIEF/result. Honest, representative.
+           the service happening and the RESULT. (See SERVICE ARCHETYPE for what the b-roll shows.)
         4. **FINAL SCENE (CTA):** Customer recommending + a book/inquire gesture (phone/message).
 
-        **PHILIPPINE GROUND-TRUTH REALISM (mandatory):**
-        - This is a Philippine SMB. Depict the service EXACTLY as it appears in the real-world
-          Philippines — humble, local, true-to-life. NOT a Western, premium, or idealized version.
-        - Treat the uploaded photo description ("${productDesc}") as VISUAL GROUND TRUTH. Render
-          what the photos actually show (e.g. plain-clothes crew, a plain/worn closed vehicle) —
-          NEVER upgrade it to shiny branded trucks, uniformed staff, or imported/industrial
-          equipment that does not exist in the local setting.
-        - FORBIDDEN: inventing equipment / interiors / vehicles / signage not evidenced by the
-          photos or description. When unsure how the real scene looks, DO NOT fabricate it —
-          favor the customer, the problem, and the relief/result over a guessed equipment/venue shot.
+        **SERVICE ARCHETYPE — decide what the b-roll SHOWS (infer from the service + photos):**
+        - **VENUE-LED** (spa, salon, clinic, gym, restaurant, hotel, café): the PLACE is the draw.
+          SHOWCASE the venue — interiors, ambiance, the experience — so the viewer FEELS what it's
+          like to be there and wants to visit. Do NOT suppress venue shots; they are the selling power.
+        - **WORK/RESULT-LED** (cleaning, pest, siphoning, repair, laundry): the RESULT is the draw.
+          Lead with problem→relief and DE-EMPHASIZE equipment/gear (it isn't attractive). Humble.
+        - **PRACTITIONER-LED** (advisor, coach, tutor, agency): the PERSON is the draw. Lean on the
+          customer + the outcome; minimal b-roll.
+
+        **PHILIPPINE GROUND-TRUTH REALISM (mandatory, ALL archetypes):**
+        - This is a Philippine SMB. Depict the service as it really appears in the Philippines —
+          true-to-life and true-to-THEIR-TIER. NOT a Western, luxury, or idealized version.
+        - Treat the uploaded photo description ("${productDesc}") as VISUAL GROUND TRUTH; match the
+          actual vibe, tier, and look the photos show. VENUE-LED → render a venue that resembles
+          THEIR place's real style/level (do NOT upgrade a modest spa into a 5-star resort).
+          WORK-LED → render plain crew / plain vehicle as shown (never a shiny branded truck or uniform).
+        - FORBIDDEN: inventing interiors / equipment / vehicles / signage grander or different from
+          what the photos/description evidence. When unsure: VENUE-LED → still show the venue, kept
+          simple and true-to-tier; WORK-LED → favor the customer/problem/relief over a guessed gear shot.
         - Setting, faces, clothing, vehicles, signage, props must read authentically Filipino.
         `;
   } else {

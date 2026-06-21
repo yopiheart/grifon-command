@@ -450,8 +450,12 @@ Driven by the smoke + a grifon-cmo pressure-test. Key calls:
 - **Storyboard:** Scene-1 hook = THE PROBLEM (product-reveal hook rules made conditional, off for
   Services); customer talking-head + service-in-action/relief b-roll.
 - **PH ground-truth realism guardrail** (mandatory, all services): depict the real PH version, treat
-  uploaded-photo description as ground truth, never invent Western/premium/industrial gear; when unsure,
-  favor customer/problem/relief over a guessed equipment shot.
+  uploaded-photo description as ground truth, never invent Western/premium/industrial gear.
+- **Archetype-aware b-roll (Neil 2026-06-21)**: storyboard now infers VENUE-LED (spa/salon/clinic/gym/
+  restaurant → SHOWCASE the venue, grounded in their real tier — don't suppress, don't upgrade a modest
+  spa to a 5-star resort) vs WORK/RESULT-LED (cleaning/pest/siphoning → humble, de-emphasize gear,
+  favor problem→relief) vs PRACTITIONER-LED (person + outcome). Default mode = representative-but-true-to-
+  tier venue; EXACT venue per scene = Phase 2 / Business Advanced Mode (real-photo routing).
 - **No peso figure in the script** (CMO + house rule); offer stated as words ("libreng inspection").
 - Files: `api/_lib/prompts.ts` (adscript + storyboard Services branches), leak-guard markers updated.
   Build/tests/leak green. The accuracy GUARANTEE (their real photos per scene) still = Phase 2 / Business.
