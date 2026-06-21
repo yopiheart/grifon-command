@@ -395,6 +395,87 @@ through the Services style) → `smoke-tester`. TUNED-prompt edits in
 
 ---
 
+#### Services — grill-me spec + Phase 1 shipped (2026-06-21)
+
+**Spec (locked via grill-me):** new peer `scriptType: 'Services'`. Hybrid avatar talking-head +
+service-in-action b-roll. 6-beat arc: hook → trust → action → before/after → proof → CTA.
+**Book/inquire CTA** (Viber/Messenger/DM + walk-in), NOT buy-now. Music reuses the warm
+`testimonial` bed; `clean` preset. Sub-vertical inferred from description + hero (no new field).
+
+**Three archetypes (Real Estate is separate — see #13):**
+- **A · Practitioner-led** (advisor, coach, agency): person is hero; reuses existing avatar lock.
+- **B · Venue-led** (restaurant, salon, gym, clinic): place is hero; needs per-scene photo routing.
+- **C · Work/result-led** (cleaning, pest control, siphoning): result is hero; uniform + before/after.
+
+**Phase 1 — SHIPPED `feat/services-ad-style` (commit 397dec2):** A + C on existing rails.
+Type union + Step 2 Services card + dedicated tuned adscript branch (Neil-approved) + bundle-leak
+marker. Build/tests/leak green. Before/after for C is generated representative b-roll (honest).
+
+**Phase 2 — DEFERRED = the per-scene photo-routing layer.** Classify uploaded photos
+(exterior/interior/staff/menu/before/after) → map to specific scenes → render-path uses the
+assigned photo (today `sceneRender.ts` hardcodes `productImageUrls[0]`; photos 1+ are dormant).
+**Includes a smart-defaulted ARCHETYPE QUALIFIER** (Neil 2026-06-21): 3 plain-language buttons —
+venue-led / work-result / practitioner — auto-pre-selected from the description, user-overridable.
+Build it WITH Phase 2 (not before), because that's when it earns its keep: it drives the GUIDED
+photo-upload per archetype (venue → "upload reception/rooms/vibe"; work → before/after; practitioner
+→ headshot/logo) and the per-scene routing. Interim = auto-infer in the prompt (proven on the
+Oceanides work-led smoke). Re-smoke #2 (2026-06-21) PASSED for work-led: problem-hook, customer
+voice, plain crew + plain white van (no glamorized tanker), hose outside the tank — humble + PH-real.
+Open finding: venue-led truly needs Phase 2 (representative venue ≠ their real place — and customers
+avail BECAUSE they saw the real place).
+
+**Two product decisions (Neil, 2026-06-21) — to honor in Phase 2 / a Services-tune pass:**
+
+1. **Advanced Mode = Business-tier gate for Phase 2.** Default (all tiers): an uploaded image is
+   **reference/context only** — Director understands it and generates **fresh, scene-fitting**
+   visuals; it must NEVER just animate the user's raw photo into a scene. Placing the user's
+   **literal photos into specific scenes** (real venue/before-after/crew — the Phase 2 routing)
+   is an **Advanced Mode reserved for Business**. *Nuance to confirm:* product-identity fidelity
+   (a real SKU must look like itself) stays on lower tiers; what's gated is literal-photo-into-scene,
+   not product accuracy. Connects to the Business "commercial-grade" differentiator + cinematic gate.
+
+2. **Authenticity / expectation-accuracy guardrail.** The style must NOT over-glamorize humble
+   trades (e.g. dress a sando-and-tsinelas malabanan crew in a fake logo'd uniform / shiny branded
+   truck) — that sets on-arrival expectations the business can't meet and burns trust. Likely a
+   small tuned-prompt addition (Neil-approval gated). Reframe humble realities as benefits where
+   honest (e.g. plain closed van = *discreet*, "walang kaalam-alam ang kapitbahay").
+
+**Oceanides smoke #1 (2026-06-21) — surfaced 3 coherence gaps → drove v2.** Script formula was
+good (Taglish, discreet angle, book CTA); the breakage was everywhere Phase 1 left on PRODUCT rails:
+(1) hook did a product-reveal (hose nozzle in a clean sink) instead of a problem-open; (2) the
+COMPANY-voice script clashed with a CUSTOMER avatar ("Anxious Homeowner Anna" appeared to be selling
+the service); (3) scene-gen invented glamorized, non-PH industrial equipment (real rig = a steel tank
+hidden in a plain closed van). Diagnosis: only the ad-script was Services-tuned; storyboard/avatar/
+scene-gen still ran product-centric.
+
+**Services formula v2 — SHIPPED (customer-testimonial + PH-realism, GENERAL across all service types).**
+Driven by the smoke + a grifon-cmo pressure-test. Key calls:
+- **Voice = first-person CUSTOMER testimonial** ("Ako si [name]") — fixes the avatar mismatch WITHOUT
+  touching the avatar engine (the customer persona was always correct; the script voice was the outlier).
+- **Category auto-adapt (not siphoning-tuned)** per Neil 2026-06-21 ("fit for ALL service types"):
+  the prompt infers the customer's #1 emotional payoff (privacy / confidence / peace-of-mind / time /
+  pride) and disarms the category's #1 trust fear (surprise pricing / "gagana ba sa akin" / hygiene /
+  reliability) from the user's own inputs — no hardcoded vertical.
+- **Storyboard:** Scene-1 hook = THE PROBLEM (product-reveal hook rules made conditional, off for
+  Services); customer talking-head + service-in-action/relief b-roll.
+- **PH ground-truth realism guardrail** (mandatory, all services): depict the real PH version, treat
+  uploaded-photo description as ground truth, never invent Western/premium/industrial gear.
+- **Archetype-aware b-roll (Neil 2026-06-21)**: storyboard now infers VENUE-LED (spa/salon/clinic/gym/
+  restaurant → SHOWCASE the venue, grounded in their real tier — don't suppress, don't upgrade a modest
+  spa to a 5-star resort) vs WORK/RESULT-LED (cleaning/pest/siphoning → humble, de-emphasize gear,
+  favor problem→relief) vs PRACTITIONER-LED (person + outcome). Default mode = representative-but-true-to-
+  tier venue; EXACT venue per scene = Phase 2 / Business Advanced Mode (real-photo routing).
+- **No peso figure in the script** (CMO + house rule); offer stated as words ("libreng inspection").
+- Files: `api/_lib/prompts.ts` (adscript + storyboard Services branches), leak-guard markers updated.
+  Build/tests/leak green. The accuracy GUARANTEE (their real photos per scene) still = Phase 2 / Business.
+
+**Open — Oceanides re-smoke (queued):** confirm v2 — problem-hook (no hose-in-sink), customer-voice
+script, PH-humble visuals (no glamorized rig), book/inquire CTA. Hero `siphoning-service.jpg` + real
+photos must be RE-DROPPED into `.tmp/hero_smoke/` next session (defreezer wipes `.tmp`). Blocked on
+Neil: Google OAuth login + the photos.
+
+---
+
 ### 13. New Ad Style — Real Estate vertical
 
 > **Status (2026-06-16): ⚡ PROMOTED TO ACTIVE — building this week.** Not parked.

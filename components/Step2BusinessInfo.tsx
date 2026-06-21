@@ -31,8 +31,26 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleScriptTypeSelect = (type: 'MrBeast' | 'Testimonial' | 'Temu' | 'Custom') => {
+  const handleScriptTypeSelect = (type: 'MrBeast' | 'Testimonial' | 'Temu' | 'Custom' | 'Services') => {
     setFormData(prev => ({ ...prev, scriptType: type }));
+  };
+
+  // Product vs Service gate. Product-formulated styles (MrBeast/Testimonial/Temu) and the
+  // Services style are mutually exclusive in the picker; Custom shows in both. Derived from
+  // businessType, falling back to the current scriptType for resumed drafts.
+  const businessType: 'product' | 'service' =
+    formData.businessType ?? (formData.scriptType === 'Services' ? 'service' : 'product');
+
+  const selectBusinessType = (bt: 'product' | 'service') => {
+    setFormData(prev => {
+      const productOk: string[] = ['MrBeast', 'Testimonial', 'Custom'];
+      const serviceOk: string[] = ['Services', 'Custom'];
+      let scriptType = prev.scriptType;
+      // Keep a valid selection for the chosen group (preserve Custom across both).
+      if (bt === 'service' && !serviceOk.includes(scriptType ?? '')) scriptType = 'Services';
+      if (bt === 'product' && !productOk.includes(scriptType ?? '')) scriptType = 'MrBeast';
+      return { ...prev, businessType: bt, scriptType };
+    });
   };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, type: 'product' | 'logo' | 'script') => {
@@ -320,9 +338,27 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
 
       <div className="mt-8 border-t border-white/10 pt-6">
         <h3 className="text-[10px] font-bold text-center text-zinc-400 uppercase tracking-widest mb-6 font-mono">// Ad Script Strategy</h3>
-        
+
+        <div className="flex justify-center gap-2 mb-6">
+            <button
+                type="button"
+                onClick={() => selectBusinessType('product')}
+                className={`px-5 py-2.5 rounded-xl text-xs font-bold uppercase font-mono border transition-all ${businessType === 'product' ? 'bg-[#FFCC00] text-zinc-950 border-[#FFCC00]' : 'bg-zinc-950 text-zinc-400 border-white/10 hover:border-[#FFCC00]'}`}
+            >
+                Physical Product
+            </button>
+            <button
+                type="button"
+                onClick={() => selectBusinessType('service')}
+                className={`px-5 py-2.5 rounded-xl text-xs font-bold uppercase font-mono border transition-all ${businessType === 'service' ? 'bg-[#FFCC00] text-zinc-950 border-[#FFCC00]' : 'bg-zinc-950 text-zinc-400 border-white/10 hover:border-[#FFCC00]'}`}
+            >
+                Service
+            </button>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div 
+            {businessType === 'product' && (
+            <div
                 onClick={() => handleScriptTypeSelect('MrBeast')}
                 className={`p-6 rounded-xl border cursor-pointer transition-all hover:translate-y-[-2px] ${formData.scriptType === 'MrBeast' ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
             >
@@ -332,8 +368,10 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                 </div>
                 <p className="text-[10px] text-zinc-500 font-mono">Hook, Identity, Struggles, Results, CTA.</p>
             </div>
+            )}
 
-            <div 
+            {businessType === 'product' && (
+            <div
                 onClick={() => handleScriptTypeSelect('Testimonial')}
                 className={`p-6 rounded-xl border cursor-pointer transition-all hover:translate-y-[-2px] ${formData.scriptType === 'Testimonial' ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
             >
@@ -343,7 +381,25 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                 </div>
                 <p className="text-[10px] text-zinc-500 font-mono">Intro, Pain Story, Transformation, Proof.</p>
             </div>
-            
+            )}
+
+            {businessType === 'service' && (
+            <div
+                onClick={() => handleScriptTypeSelect('Services')}
+                className={`p-6 rounded-xl border cursor-pointer transition-all hover:translate-y-[-2px] ${formData.scriptType === 'Services' ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
+            >
+                <div className="flex justify-between items-center mb-2">
+                    <div className="flex items-center gap-2">
+                        <Store className="w-4 h-4 text-[#FFCC00]"/>
+                        <h4 className="font-bold text-white uppercase font-mono text-xs">Services</h4>
+                    </div>
+                    {formData.scriptType === 'Services' && <Check className="w-4 h-4 text-[#FFCC00]" />}
+                </div>
+                <p className="text-[10px] text-zinc-500 font-mono">Trust, Service-in-Action, Proof, Book Now.</p>
+            </div>
+            )}
+
+            {businessType === 'product' && (
              <div
                 aria-disabled="true"
                 title="Coming in v1.1 — beta launches with MrBeast + Testimonial only."
@@ -360,8 +416,9 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                 </div>
                 <p className="text-[10px] text-zinc-500 font-mono">High-energy Unboxing. Gadgets, Toys, Decor.</p>
             </div>
+            )}
 
-            <div 
+            <div
                 onClick={() => handleScriptTypeSelect('Custom')}
                 className={`p-6 rounded-xl border-dashed border cursor-pointer transition-all hover:translate-y-[-2px] relative ${formData.scriptType === 'Custom' ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
             >
