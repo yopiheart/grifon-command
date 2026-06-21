@@ -395,6 +395,50 @@ through the Services style) → `smoke-tester`. TUNED-prompt edits in
 
 ---
 
+#### Services — grill-me spec + Phase 1 shipped (2026-06-21)
+
+**Spec (locked via grill-me):** new peer `scriptType: 'Services'`. Hybrid avatar talking-head +
+service-in-action b-roll. 6-beat arc: hook → trust → action → before/after → proof → CTA.
+**Book/inquire CTA** (Viber/Messenger/DM + walk-in), NOT buy-now. Music reuses the warm
+`testimonial` bed; `clean` preset. Sub-vertical inferred from description + hero (no new field).
+
+**Three archetypes (Real Estate is separate — see #13):**
+- **A · Practitioner-led** (advisor, coach, agency): person is hero; reuses existing avatar lock.
+- **B · Venue-led** (restaurant, salon, gym, clinic): place is hero; needs per-scene photo routing.
+- **C · Work/result-led** (cleaning, pest control, siphoning): result is hero; uniform + before/after.
+
+**Phase 1 — SHIPPED `feat/services-ad-style` (commit 397dec2):** A + C on existing rails.
+Type union + Step 2 Services card + dedicated tuned adscript branch (Neil-approved) + bundle-leak
+marker. Build/tests/leak green. Before/after for C is generated representative b-roll (honest).
+
+**Phase 2 — DEFERRED = the per-scene photo-routing layer.** Classify uploaded photos
+(exterior/interior/staff/menu/before/after) → map to specific scenes → render-path uses the
+assigned photo (today `sceneRender.ts` hardcodes `productImageUrls[0]`; photos 1+ are dormant).
+
+**Two product decisions (Neil, 2026-06-21) — to honor in Phase 2 / a Services-tune pass:**
+
+1. **Advanced Mode = Business-tier gate for Phase 2.** Default (all tiers): an uploaded image is
+   **reference/context only** — Director understands it and generates **fresh, scene-fitting**
+   visuals; it must NEVER just animate the user's raw photo into a scene. Placing the user's
+   **literal photos into specific scenes** (real venue/before-after/crew — the Phase 2 routing)
+   is an **Advanced Mode reserved for Business**. *Nuance to confirm:* product-identity fidelity
+   (a real SKU must look like itself) stays on lower tiers; what's gated is literal-photo-into-scene,
+   not product accuracy. Connects to the Business "commercial-grade" differentiator + cinematic gate.
+
+2. **Authenticity / expectation-accuracy guardrail.** The style must NOT over-glamorize humble
+   trades (e.g. dress a sando-and-tsinelas malabanan crew in a fake logo'd uniform / shiny branded
+   truck) — that sets on-arrival expectations the business can't meet and burns trust. Likely a
+   small tuned-prompt addition (Neil-approval gated). Reframe humble realities as benefits where
+   honest (e.g. plain closed van = *discreet*, "walang kaalam-alam ang kapitbahay").
+
+**Open — Oceanides smoke (queued):** test Services end-to-end with a real PH siphoning brand
+(archetype C), steered to authenticity. Hero `siphoning-service.jpg` (+ 3 real photos staged in
+`.tmp/hero_smoke/`). Pass/fail must include: book/inquire not buy-now; no over-glamorizing; scenes
+come out freshly generated + varied (NOT echoes of the hero); mediocre hero quality doesn't degrade
+output. Blocked on Neil: Google OAuth login (no headless bypass) + price/offer + service area.
+
+---
+
 ### 13. New Ad Style — Real Estate vertical
 
 > **Status (2026-06-16): ⚡ PROMOTED TO ACTIVE — building this week.** Not parked.
