@@ -23,6 +23,10 @@ export interface BusinessInfo {
   logoImageUrl?: string;
   brandColors?: string; 
   scriptType?: 'MrBeast' | 'Testimonial' | 'Temu' | 'Custom' | 'Cinematic' | 'Services';
+  // Gates the Step 2 script-style picker: 'product' shows MrBeast/Testimonial/Temu (physical-product
+  // formulas); 'service' shows the Services style. Custom shows in both. Defaults from Market Research's
+  // isLocalService at prefill; user can override via the Step 2 toggle.
+  businessType?: 'product' | 'service';
   customScriptFile?: string[];
   selectedTheme?: VisualTheme;
 }

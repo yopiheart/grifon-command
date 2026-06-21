@@ -402,6 +402,17 @@ const App: React.FC = () => {
       const safeStr = (v: unknown): string => (typeof v === 'string' ? v : '');
       const avatar = safeStr(r.winningAvatar);
       const demo = safeStr(r.demographics);
+      // The Big Idea (r.bigIdea) is a marketing thesis, not the user's actual offer —
+      // Filipino SMB users come with their own working offer/promo, so we carry the
+      // user-typed brandName/priceOffer forward via the sidecar instead. We also read
+      // isLocalService here to smart-default the Step 2 Product/Service gate.
+      let userInputs: { brandName?: string; priceOffer?: string; isLocalService?: boolean } = {};
+      try {
+        const raw = localStorage.getItem('marketMindUserInputs');
+        if (raw) userInputs = JSON.parse(raw);
+      } catch {
+        // Legacy report saved before sidecar existed — autofill leaves these fields empty.
+      }
       setBusinessInfo(prev => ({
         ...prev,
         product: prev.product || safeStr(r.subject),
@@ -410,17 +421,14 @@ const App: React.FC = () => {
         benefit: prev.benefit || safeStr(r.magicGenie),
         separator: prev.separator || safeStr(r.contrarianTruth) || safeStr(r.villain),
         features: prev.features || safeStr(r.bigIdea),
+        // Smart-default the business-type gate; if a local service, also pre-select the
+        // Services style. User can override both via the Step 2 toggle. Never clobber a
+        // prior choice (re-entry / resumed draft).
+        businessType: prev.businessType ?? (userInputs.isLocalService ? 'service' : 'product'),
+        scriptType: prev.businessType ? prev.scriptType
+          : userInputs.isLocalService ? 'Services'
+          : prev.scriptType,
       }));
-      // The Big Idea (r.bigIdea) is a marketing thesis, not the user's actual offer —
-      // Filipino SMB users come with their own working offer/promo, so we carry the
-      // user-typed brandName/priceOffer forward via the sidecar instead.
-      let userInputs: { brandName?: string; priceOffer?: string } = {};
-      try {
-        const raw = localStorage.getItem('marketMindUserInputs');
-        if (raw) userInputs = JSON.parse(raw);
-      } catch {
-        // Legacy report saved before sidecar existed — autofill leaves these fields empty.
-      }
       setClientDetails(prev => ({
         ...prev,
         brandName: prev.brandName || userInputs.brandName || '',
@@ -660,7 +668,7 @@ const App: React.FC = () => {
   const restart = () => {
     setCurrentStep(1);
     setClientDetails({ brandName: '', offer: '' });
-    setBusinessInfo({ product: '', audience: '', benefit: '', painPoint: '', separator: '', features: '', productImageUrls: [], productImageDescription: undefined, logoImageUrl: undefined, brandColors: '', scriptType: 'MrBeast' });
+    setBusinessInfo({ product: '', audience: '', benefit: '', painPoint: '', separator: '', features: '', productImageUrls: [], productImageDescription: undefined, logoImageUrl: undefined, brandColors: '', scriptType: 'MrBeast', businessType: 'product' });
     setScript(null);
     setDirectorAngleBrief(null);
     setLanguage(null);
