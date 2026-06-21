@@ -668,7 +668,7 @@ const App: React.FC = () => {
   const restart = () => {
     setCurrentStep(1);
     setClientDetails({ brandName: '', offer: '' });
-    setBusinessInfo({ product: '', audience: '', benefit: '', painPoint: '', separator: '', features: '', productImageUrls: [], productImageDescription: undefined, logoImageUrl: undefined, brandColors: '', scriptType: 'MrBeast', businessType: 'product' });
+    setBusinessInfo({ product: '', audience: '', benefit: '', painPoint: '', separator: '', features: '', productImageUrls: [], productImageDescription: undefined, logoImageUrl: undefined, brandColors: '', scriptType: 'MrBeast' });
     setScript(null);
     setDirectorAngleBrief(null);
     setLanguage(null);
