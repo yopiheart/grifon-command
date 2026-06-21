@@ -69,6 +69,19 @@ export const renderSceneImages = async (
   const isHookMorph = !!scene.startFramePrompt && !!scene.endFramePrompt;
   const startFrameRefs = isHookMorph ? { ...references, productUrl: undefined } : references;
 
+  // Phase 2 venue routing — makes Slices 2-4 live. If the storyboard tagged this scene with a
+  // venueSlot the user actually uploaded, anchor it to that REAL photo in 'venue' mode
+  // (place-identity-lock + camera-freedom). Scoped to non-hook, non-avatar scenes; any miss
+  // (no slot / no matching upload / hook / avatar) falls through to existing behavior unchanged.
+  const venuePhoto = scene.venueSlot
+    ? businessInfo.servicePhotos?.find(p => p.slot === scene.venueSlot)
+    : undefined;
+  const useVenue = !!venuePhoto && !isHookMorph
+    && scene.referenceImage !== 'avatar' && scene.referenceImage !== 'both';
+  const mainRefs = useVenue ? { productUrl: venuePhoto!.url } : startFrameRefs;
+  const mainMode: 'avatar' | 'product' | 'both' | 'none' | 'venue' | undefined =
+    useVenue ? 'venue' : scene.referenceImage;
+
   // When the hook's END frame reveals the product, anchor it to the hero photo even
   // though the model reliably tags scenes[0].referenceImage "none" (3/3 in testing) —
   // otherwise the end frame gets no reference and img-gen invents a look-alike that
@@ -96,14 +109,14 @@ export const renderSceneImages = async (
         prompt,
         aspectRatio,
         '1K',
-        startFrameRefs,
+        mainRefs,
         ethnicity,
         getBrandColors(businessInfo),
         scriptType,
         productDesc,
         undefined,
         index,
-        scene.referenceImage,
+        mainMode,
       );
     }
   }
