@@ -1894,7 +1894,7 @@ export const generateSceneImage = async (
     productDescription?: string,
     productName?: string,
     variationIndex: number = 0,
-    referenceImageMode: 'avatar' | 'product' | 'both' | 'none' = 'none'
+    referenceImageMode: 'avatar' | 'product' | 'both' | 'none' | 'venue' = 'none'
 ): Promise<string> => {
     
     await delay(2500);
@@ -1960,6 +1960,26 @@ export const generateSceneImage = async (
         - Scene lighting prioritizes the avatar's environment (Reference Image 1) — the scene IS in the avatar's home, so use that warm/natural light profile for the overall image.
         - Product label colors are preserved as PRINTED on Reference Image 2 — do not relight the label with studio lighting; let it sit naturally in the avatar's environmental light.
         `;
+    } else if (referenceImageMode === 'venue' && references.productUrl) {
+        consistencyRules = `
+        **PLACE_IDENTITY_LOCK (Reference Image 1 = the business's REAL place/result photo):**
+        1. **IDENTITY:** Reproduce the REAL place from Reference Image 1 — same layout, furniture/
+           fixtures, decor, materials, signage/logo text, and color palette. This is the ACTUAL business
+           the viewer will visit; it MUST be recognizably the SAME place, not a look-alike or invention.
+        2. **CAMERA_FREEDOM (authoritative over a static copy):** You MAY change camera angle, distance,
+           framing, and crop to fit the scene and add cinematic variety — but it must stay the SAME place
+           seen from a new viewpoint, NEVER a different or invented location. Keep angle change MODERATE;
+           do not over-rotate the room into something unrecognizable.
+        3. **TIER_TRUTH:** Match the real tier shown in Reference Image 1. NEVER upgrade or glamorize —
+           forbidden: "high-end", "luxury", "premium", "upscale", "5-star", "resort", "modern minimalist".
+           A modest place stays modest.
+        4. **PEOPLE ALLOWED (unlike product mode):** A Filipino customer or staff member MAY appear IF the
+           Scene Prompt calls for a person — strictly ${ethnicity} (authentically Filipino, not glamorized).
+           If the Scene Prompt names no person, render the place alone; do NOT invent crowds.
+        5. **NO_LOGO_HALLUCINATION:** Preserve the real signage/branding visible in Reference Image 1
+           exactly; never invent or substitute a new logo.
+        6. **LUMEN_SYNC:** Keep the lighting character (warmth/coolness) of Reference Image 1.
+        `;
     } else {
         consistencyRules = `
         **STRICT_NEGATIVE (VISUAL AIDS):**
@@ -2002,9 +2022,18 @@ export const generateSceneImage = async (
     const realismProtocol = scriptType === 'Cinematic' ? REALISM_INSTRUCTION_CINEMATIC : REALISM_INSTRUCTION_UGC;
     const brandColorInstruction = brandColors.length > 0 ? `\n**BRAND COLORS:** Incorporate these colors subtly: ${brandColors.join(', ')}` : '';
 
+    // Services scenes can place a Filipino CUSTOMER / staff in non-avatar b-roll (e.g. the
+    // problem-hook). The non-avatar render modes inject NO ethnicity → the model defaulted to a
+    // foreign/Western person (Naya smoke 2026-06-21). Scoped to scriptType==='Services' so the
+    // product / MrBeast / Testimonial / Temu / Cinematic paths stay byte-identical.
+    const serviceCastLock = (scriptType === 'Services')
+      ? `\n**FILIPINO_CAST_LOCK:** This is a Philippine business. Any human who appears — customer, staff, bystander, or even just hands — MUST be Filipino${ethnicity && !ethnicity.startsWith('Global') ? ` (${ethnicity})` : ''} (authentically Filipino face, build, and styling). NEVER render a foreign / Western / non-Filipino person.`
+      : "";
+
     // 4. COMBINE EVERYTHING INTO THE FINAL PROMPT
     const finalPromptText = `
     ${consistencyRules}
+    ${serviceCastLock}
     ${cameraMandatory}
     ${wardrobeInstruction}
     ${productContext}

@@ -27,6 +27,18 @@ export interface BusinessInfo {
   // formulas); 'service' shows the Services style. Custom shows in both. Defaults from Market Research's
   // isLocalService at prefill; user can override via the Step 2 toggle.
   businessType?: 'product' | 'service';
+  // Services "primary hero" qualifier — what the ad LEADS with (scene-1 + b-roll). Smart-defaulted
+  // from the description in Step 2, user-overridable. Soft hint, not an exclusive mode: it biases the
+  // lead, it does not strip capability (e.g. before/after stays available to venue too). Phase 2 uses
+  // it to drive guided photo-upload + per-scene real-photo routing (Business-tier Advanced Mode).
+  // 'venue' = place is the draw (spa/salon/gym/resto/clinic); 'work' = result is the draw
+  // (cleaning/pest/repair); 'practitioner' = the person is the draw (coach/advisor/agency).
+  serviceArchetype?: 'venue' | 'work' | 'practitioner';
+  // Phase 2: guided service-venue uploads, each tagged by SLOT (the upload slot IS the tag —
+  // implicit classification). Separate from productImageUrls so the product/testimonial pipeline
+  // is untouched; productImageUrls is kept in sync (hero-first) for back-compat. The per-scene
+  // router (Slice 5) reads these to anchor each scene to the right real photo.
+  servicePhotos?: { url: string; slot: 'exterior' | 'interior' | 'ambiance' | 'staff' | 'before' | 'after'; description?: string }[];
   customScriptFile?: string[];
   selectedTheme?: VisualTheme;
 }
@@ -59,6 +71,10 @@ export interface Scene {
   manualUploadUrl?: string;
   manualEndFrameUrl?: string;
   referenceImage?: 'avatar' | 'product' | 'both' | 'none';
+  /* Phase 2 (Services): which uploaded servicePhotos SLOT best fits this scene. Set by the
+     storyboard generator (Services only); the per-scene router (Slice 5) anchors the scene to
+     that real photo. Omitted when no uploaded slot fits → renderer falls back to representative. */
+  venueSlot?: 'exterior' | 'interior' | 'ambiance' | 'staff' | 'before' | 'after';
   /* chainRole tracks the position in the cinematic relay chain */
   chainRole?: 'Metaphor_A' | 'Anchor_B' | 'Action_C' | 'Hero_D';
   /* Custom B-roll injection */

@@ -8,6 +8,110 @@ import { GoldButton } from './ui/GoldButton';
 import Loader from './ui/Loader';
 import { Check, Package, ShoppingBag, Sparkles, Store, UploadCloud, X } from 'lucide-react';
 
+type ServiceArchetype = NonNullable<BusinessInfo['serviceArchetype']>;
+
+// Services "primary hero" qualifier. Bryan-facing labels (outcome, not jargon) + a recognition
+// sub-caption + the "lead with" statement + the upload samples to teach (all humble/PH per the
+// CMO realism guardrail). Internal values stay engine-clean (venue|work|practitioner).
+const ARCHETYPE_META: Record<ServiceArchetype, {
+  label: string; sub: string; lead: string; samples: { src: string; caption: string }[];
+}> = {
+  venue: {
+    label: 'Show off my place', sub: 'Salon, gym, resto, clinic', lead: 'Your place',
+    samples: [{ src: '/examples/services-venue-clear.png', caption: 'Your place — clear & bright' }],
+  },
+  work: {
+    label: 'Show the results', sub: 'Cleaning, repair, pest', lead: 'Your results',
+    samples: [
+      { src: '/examples/services-work-before.png', caption: 'Before' },
+      { src: '/examples/services-work-after.png', caption: 'After' },
+    ],
+  },
+  practitioner: {
+    label: 'Feature me & my team', sub: 'Coach, consultant, agency', lead: 'You & your team',
+    samples: [{ src: '/examples/services-practitioner.png', caption: 'You — friendly & clear' }],
+  },
+};
+const ARCHETYPE_ORDER: ServiceArchetype[] = ['venue', 'work', 'practitioner'];
+const BAD_SAMPLE = { src: '/examples/services-blurry-bad.png', caption: 'Dark & blurry' };
+
+type ServiceSlot = NonNullable<BusinessInfo['servicePhotos']>[number]['slot'];
+
+// Phase 2 guided upload slots per archetype. The slot the user drops into IS the photo's tag
+// (implicit-by-slot classification) → drives per-scene routing downstream. List order = hero-first
+// (productImageUrls is synced in this order for back-compat).
+const ARCHETYPE_UPLOAD_SLOTS: Record<ServiceArchetype, { slot: ServiceSlot; label: string; hint: string }[]> = {
+  venue: [
+    { slot: 'exterior', label: 'Storefront', hint: 'facade + your sign/logo' },
+    { slot: 'interior', label: 'Inside', hint: 'where the service happens' },
+    { slot: 'ambiance', label: 'The vibe', hint: 'what makes it feel good' },
+    { slot: 'staff', label: 'You / staff', hint: 'optional' },
+  ],
+  work: [
+    { slot: 'before', label: 'Before', hint: 'the problem / mess' },
+    { slot: 'after', label: 'After', hint: 'the clean result' },
+    { slot: 'staff', label: 'Crew', hint: 'optional — plain, real' },
+  ],
+  practitioner: [
+    { slot: 'staff', label: 'You / team', hint: 'friendly, clear headshot' },
+    { slot: 'before', label: 'Proof: before', hint: 'optional' },
+    { slot: 'after', label: 'Proof: after', hint: 'optional' },
+  ],
+};
+
+// Rebuild productImageDescription from the CURRENT servicePhotos (slot-labeled) on every add/remove,
+// so re-uploading or removing a slot never leaves a stale or duplicated [slot] block.
+const buildServiceDescription = (
+  photos: NonNullable<BusinessInfo['servicePhotos']>,
+): string | undefined =>
+  photos.length ? photos.map(p => `[${p.slot}] ${(p.description ?? '').trim()}`).join('\n\n') : undefined;
+
+// Smart-default the archetype from the user's own words. SCORE each bucket by keyword hits and
+// take the highest — first-match-by-order misrouted "Naya Boutique Spa … maintenance for your body"
+// to 'work' on the broad word "maintenance" (2026-06-21 smoke), even though "spa"+"massage" are
+// stronger venue signals. Ties / no match → 'venue' (most common PH service SMB + safest visual).
+const inferServiceArchetype = (text: string): ServiceArchetype => {
+  const t = (text || '').toLowerCase();
+  const score = (...words: string[]) => words.reduce((n, w) => n + (t.includes(w) ? 1 : 0), 0);
+  // Place-as-draw. Strong, specific nouns only (dropped broad 'store'/'shop' — they hit retail).
+  const venue = score('spa', 'salon', 'barber', 'gym', 'fitness', 'clinic', 'derma', 'dental',
+    'restaurant', 'resto', 'cafe', 'café', 'hotel', 'resort', 'parlor', 'massage', 'hilot',
+    'kainan', 'eatery', 'lounge', 'studio');
+  // Result-as-draw. Dropped over-broad 'ayos'/'maintenance' — they fire on non-trade benefit copy.
+  const work = score('clean', 'linis', 'pest', 'peste', 'siphon', 'malaban', 'repair', 'laundr',
+    'labada', 'plumb', 'aircon', 'disinfect', 'declog', 'detailing', 'carwash', 'car wash',
+    'exterm', 'hauling', 'pickup', 'pick-up', 'moving');
+  // Person-as-draw. Unambiguous professional-service nouns only.
+  const practitioner = score('coach', 'consult', 'advisor', 'tutor', 'agency', 'accountant',
+    'lawyer', 'freelanc', 'mentor', 'strategist');
+  if (venue >= work && venue >= practitioner && venue > 0) return 'venue';
+  if (work >= practitioner && work > 0) return 'work';
+  if (practitioner > 0) return 'practitioner';
+  return 'venue';
+};
+
+// One upload-sample tile: image with an icon fallback so a missing/late JPG never shows a broken
+// image (the curated PNGs land in public/examples/; until then the tile degrades to a lucide icon).
+const SampleTile: React.FC<{ src: string; caption: string; good: boolean }> = ({ src, caption, good }) => {
+  const [err, setErr] = useState(false);
+  const FallbackIcon = good ? Sparkles : X;
+  return (
+    <div className="flex flex-col items-center">
+      <div className={`relative aspect-square w-full bg-zinc-900 border rounded-xl flex items-center justify-center overflow-hidden ${good ? 'border-[#FFCC00]/40' : 'border-red-900/50'}`}>
+        {!err ? (
+          <img src={src} alt={caption} onError={() => setErr(true)} className={`w-full h-full object-cover ${good ? '' : 'opacity-80'}`} />
+        ) : (
+          <FallbackIcon className={`w-8 h-8 ${good ? 'text-[#FFCC00]/60' : 'text-red-500/60'}`} />
+        )}
+        <span className={`absolute top-1 left-1 w-5 h-5 rounded-full flex items-center justify-center ${good ? 'bg-[#FFCC00] text-zinc-950' : 'bg-red-600 text-white'}`}>
+          {good ? <Check className="w-3 h-3" /> : <X className="w-3 h-3" />}
+        </span>
+      </div>
+      <p className="text-[8px] text-zinc-500 font-mono uppercase tracking-tighter mt-1.5 text-center">{caption}</p>
+    </div>
+  );
+};
+
 interface Step2Props {
   data: BusinessInfo;
   setData: (data: BusinessInfo) => void;
@@ -40,6 +144,27 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
   // businessType, falling back to the current scriptType for resumed drafts.
   const businessType: 'product' | 'service' =
     formData.businessType ?? (formData.scriptType === 'Services' ? 'service' : 'product');
+
+  const isServices = businessType === 'service' && formData.scriptType === 'Services';
+  // What the ad leads with. Falls back to the inferred default so the UI + sample strip have a
+  // value even on the first render before the auto-select effect writes it into state.
+  const effectiveArchetype: ServiceArchetype = formData.serviceArchetype
+    ?? inferServiceArchetype(`${formData.product || ''} ${formData.productImageDescription || ''} ${formData.features || ''}`);
+
+  const selectArchetype = (a: ServiceArchetype) =>
+    setFormData(prev => ({ ...prev, serviceArchetype: a }));
+
+  // Auto-pre-select the archetype when Services is active and none chosen yet — never clobber a
+  // prior pick (re-entry / resumed draft / manual override). Mirrors the businessType smart-default.
+  useEffect(() => {
+    if (formData.scriptType !== 'Services' || formData.serviceArchetype) return;
+    const inferred = inferServiceArchetype(
+      `${formData.product || ''} ${formData.productImageDescription || ''} ${formData.features || ''}`,
+    );
+    setFormData(prev =>
+      prev.scriptType === 'Services' && !prev.serviceArchetype ? { ...prev, serviceArchetype: inferred } : prev,
+    );
+  }, [formData.scriptType, formData.serviceArchetype, formData.product, formData.productImageDescription, formData.features]);
 
   const selectBusinessType = (bt: 'product' | 'service') => {
     setFormData(prev => {
@@ -117,6 +242,52 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
       const currentImages = formData.productImageUrls || [];
       const updatedImages = currentImages.filter((_, index) => index !== indexToRemove);
       setFormData(prev => ({ ...prev, productImageUrls: updatedImages }));
+  };
+
+  // Phase 2 guided-slot upload: stores {url, slot} in servicePhotos (the slot IS the tag) and keeps
+  // productImageUrls in sync (hero-first by the archetype's slot order) so the existing pipeline +
+  // hero/anchor logic stay fed until the per-scene router (Slice 5) lands.
+  const handleSlotUpload = async (e: React.ChangeEvent<HTMLInputElement>, slot: ServiceSlot) => {
+    if (!e.target.files || e.target.files.length === 0) return;
+    setIsAnalyzing(true);
+    setUploadError(null);
+    try {
+      const file = e.target.files[0] as File;
+      const c = await compressImageForUpload(file);
+      const desc = await describeBusinessAsset(c.base64, c.mimeType);
+      setFormData(prev => {
+        // Read the archetype from prev (not the outer closure) so an override in the same tick sorts right.
+        const arch = prev.serviceArchetype
+          ?? inferServiceArchetype(`${prev.product || ''} ${prev.productImageDescription || ''} ${prev.features || ''}`);
+        const order = ARCHETYPE_UPLOAD_SLOTS[arch].map(s => s.slot);
+        const next = [...(prev.servicePhotos || []).filter(p => p.slot !== slot), { url: c.dataUrl, slot, description: desc }]
+          .sort((a, b) => order.indexOf(a.slot) - order.indexOf(b.slot));
+        return {
+          ...prev,
+          servicePhotos: next,
+          productImageUrls: next.map(p => p.url).slice(0, 5),
+          productImageDescription: buildServiceDescription(next),
+        };
+      });
+    } catch (err) {
+      console.error(err);
+      setUploadError('Failed to upload/analyze image.');
+    } finally {
+      setIsAnalyzing(false);
+      if (e.target) e.target.value = '';
+    }
+  };
+
+  const removeSlot = (slot: ServiceSlot) => {
+    setFormData(prev => {
+      const next = (prev.servicePhotos || []).filter(p => p.slot !== slot);
+      return {
+        ...prev,
+        servicePhotos: next,
+        productImageUrls: next.map(p => p.url).slice(0, 5),
+        productImageDescription: buildServiceDescription(next),
+      };
+    });
   };
 
   const handleNext = () => {
@@ -239,7 +410,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                 // Business Visuals (Upload 3-5 Photos)
             </label>
 
-            {hasImages && (
+            {hasImages && !isServices && (
                 <>
                     <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mb-1">
                         // Photo 1 (HERO) anchors all scene visuals — remove + re-upload to reorder
@@ -269,33 +440,53 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                 </>
             )}
 
-            {/* Upload examples — icon placeholders for now; swap to curated photos by setting imageUrl on each entry */}
-            <div className="space-y-2">
-              <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase">
-                // Good upload examples ↓
-              </p>
-              <div className="grid grid-cols-3 gap-3">
-                {[
-                  { Icon: Package, caption: 'Product in hand', imageUrl: '' },
-                  { Icon: Store, caption: 'Storefront + logo', imageUrl: '' },
-                  { Icon: Sparkles, caption: 'Service in action', imageUrl: '' },
-                ].map((ex, idx) => (
-                  <div key={idx} className="flex flex-col items-center">
-                    <div className="aspect-square w-full bg-zinc-900 border border-white/10 rounded-xl flex items-center justify-center overflow-hidden">
-                      {ex.imageUrl ? (
-                        <img src={ex.imageUrl} alt={ex.caption} className="w-full h-full object-cover" />
-                      ) : (
-                        <ex.Icon className="w-8 h-8 text-[#FFCC00]/60" />
-                      )}
-                    </div>
-                    <p className="text-[8px] text-zinc-500 font-mono uppercase tracking-tighter mt-1.5 text-center">
-                      {ex.caption}
-                    </p>
-                  </div>
-                ))}
+            {/* Upload examples. For Services, the chosen archetype drives WHICH samples to teach
+                (✓ humble/PH per archetype + a ✗ blurry contrast). For products, the generic icon
+                strip stays. Curated PNGs live in public/examples/ with an icon fallback per tile. */}
+            {isServices ? (
+              <div className="space-y-2">
+                <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase">
+                  // What to upload — clear &amp; bright wins ↓
+                </p>
+                <div className="grid grid-cols-3 gap-3">
+                  {ARCHETYPE_META[effectiveArchetype].samples.map((ex, idx) => (
+                    <SampleTile key={`good-${idx}`} src={ex.src} caption={ex.caption} good />
+                  ))}
+                  <SampleTile src={BAD_SAMPLE.src} caption={BAD_SAMPLE.caption} good={false} />
+                </div>
+                <p className="text-[9px] text-zinc-500 font-mono tracking-tighter">
+                  Kahit simple — basta malinaw at maliwanag.
+                </p>
               </div>
-            </div>
+            ) : (
+              <div className="space-y-2">
+                <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase">
+                  // Good upload examples ↓
+                </p>
+                <div className="grid grid-cols-3 gap-3">
+                  {[
+                    { Icon: Package, caption: 'Product in hand', imageUrl: '' },
+                    { Icon: Store, caption: 'Storefront + logo', imageUrl: '' },
+                    { Icon: Sparkles, caption: 'Service in action', imageUrl: '' },
+                  ].map((ex, idx) => (
+                    <div key={idx} className="flex flex-col items-center">
+                      <div className="aspect-square w-full bg-zinc-900 border border-white/10 rounded-xl flex items-center justify-center overflow-hidden">
+                        {ex.imageUrl ? (
+                          <img src={ex.imageUrl} alt={ex.caption} className="w-full h-full object-cover" />
+                        ) : (
+                          <ex.Icon className="w-8 h-8 text-[#FFCC00]/60" />
+                        )}
+                      </div>
+                      <p className="text-[8px] text-zinc-500 font-mono uppercase tracking-tighter mt-1.5 text-center">
+                        {ex.caption}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
+            {!isServices ? (
             <label className="block p-6 border-2 border-dashed border-white/10 bg-zinc-950/50 rounded-xl text-center hover:border-[#FFCC00] hover:bg-zinc-800/80 transition-all cursor-pointer">
                  {isAnalyzing ? (
                     <Loader message="ANALYZING ASSETS..." size="sm" />
@@ -322,6 +513,50 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                     </div>
                  )}
             </label>
+            ) : (
+            /* Phase 2: archetype-driven guided slots. The slot you drop into IS the tag, so each
+               scene can later be anchored to the right real photo (per-scene routing, Slice 5). */
+            <div className="space-y-2">
+              <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase">
+                // Upload your REAL photos — tagged per slot ↓
+              </p>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                {ARCHETYPE_UPLOAD_SLOTS[effectiveArchetype].map(({ slot, label, hint }) => {
+                  const existing = (formData.servicePhotos || []).find(p => p.slot === slot);
+                  return (
+                    <div key={slot} className="flex flex-col">
+                      <label className={`relative aspect-square w-full rounded-xl border overflow-hidden cursor-pointer flex items-center justify-center transition-all ${existing ? 'border-[#FFCC00] shadow-[0_0_8px_rgba(255,204,0,0.25)]' : 'border-dashed border-white/15 bg-zinc-950/50 hover:border-[#FFCC00] hover:bg-zinc-800/60'}`}>
+                        {existing ? (
+                          <>
+                            <img src={existing.url} alt={label} className="w-full h-full object-cover" />
+                            <button
+                              type="button"
+                              onClick={(ev) => { ev.preventDefault(); removeSlot(slot); }}
+                              className="absolute top-1 right-1 bg-red-600/90 text-white w-5 h-5 rounded-full flex items-center justify-center"
+                            >
+                              <X className="w-3 h-3" />
+                            </button>
+                          </>
+                        ) : (
+                          <div className="flex flex-col items-center gap-1 p-2 text-center">
+                            <UploadCloud className="w-5 h-5 text-zinc-500" />
+                            <span className="text-[9px] text-zinc-500 font-mono uppercase tracking-tighter">+ Add</span>
+                          </div>
+                        )}
+                        <input type="file" accept="image/*" className="hidden" onChange={(e) => handleSlotUpload(e, slot)} />
+                      </label>
+                      <p className="text-[9px] font-bold text-white font-mono uppercase mt-1 text-center leading-tight">{label}</p>
+                      <p className="text-[8px] text-zinc-500 font-mono text-center leading-tight">{hint}</p>
+                    </div>
+                  );
+                })}
+              </div>
+              {isAnalyzing && <div className="pt-1"><Loader message="ANALYZING..." size="sm" /></div>}
+              <p className="text-[9px] text-zinc-500 font-mono tracking-tighter">
+                Tinatatak namin kung saan napupunta ang bawat photo — para tumugma ang ad sa totoong lugar mo. Skip ang ayaw mong ilagay.
+              </p>
+            </div>
+            )}
             
             {formData.productImageDescription && (
                 <div className="p-4 bg-zinc-950 border border-white/10 rounded-xl">
@@ -435,6 +670,45 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                 <p className="text-[10px] text-zinc-500 font-mono">Provide your own script via .txt or manual input.</p>
             </div>
         </div>
+
+        {isServices && (
+            <div className="mt-6 p-6 bg-zinc-900/50 rounded-xl border border-white/10 animate-in fade-in slide-in-from-top-4">
+                {/* Statement-with-✓, not a question: we picked the lead from the description; user can override.
+                    Internal values venue|work|practitioner; labels are Bryan-facing outcomes. */}
+                <div className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-[#FFCC00]" />
+                    <p className="text-sm font-bold text-white font-mono">
+                        Your ad will lead with — <span className="text-[#FFCC00]">{ARCHETYPE_META[effectiveArchetype].lead}</span>
+                    </p>
+                </div>
+                <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mt-1 mb-4">
+                    // We picked this from your description. Not quite? Tap another.
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    {ARCHETYPE_ORDER.map((a) => {
+                        const meta = ARCHETYPE_META[a];
+                        const active = effectiveArchetype === a;
+                        return (
+                            <button
+                                key={a}
+                                type="button"
+                                onClick={() => selectArchetype(a)}
+                                className={`p-4 rounded-xl border text-left transition-all hover:translate-y-[-2px] ${active ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
+                            >
+                                <div className="flex justify-between items-center mb-1">
+                                    <span className="text-xs font-bold text-white font-mono uppercase">{meta.label}</span>
+                                    {active && <Check className="w-4 h-4 text-[#FFCC00] shrink-0" />}
+                                </div>
+                                <span className="text-[10px] text-zinc-500 font-mono">{meta.sub}</span>
+                            </button>
+                        );
+                    })}
+                </div>
+                <p className="text-[10px] text-[#FFCC00]/80 font-mono tracking-tighter uppercase mt-3">
+                    This decides what your ad shows first.
+                </p>
+            </div>
+        )}
 
         {formData.scriptType === 'Custom' && (
             <div className="mt-6 space-y-4 p-6 bg-zinc-900/50 rounded-xl border border-white/10 animate-in fade-in slide-in-from-top-4">
