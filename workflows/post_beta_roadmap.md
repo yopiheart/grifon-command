@@ -366,10 +366,12 @@ during the gate session.
 
 ### 12. New Ad Style — Services vertical
 
-> **Status (2026-06-16): ⚡ PROMOTED TO ACTIVE — building this week.** Not parked.
-> The working execution plan lives in [`this_week_plan.md`](this_week_plan.md) (step 4).
-> This entry is the durable record so the idea survives the cafe-PC defreezer; the real
-> spec gets written via `grill-me` before any code.
+> **Status (2026-06-22): ✅ SHIPPED & MERGED TO MAIN.** Phase 1 (archetypes A + C on existing
+> rails) AND Phase 2 (per-scene real-photo routing + venue render mode + archetype qualifier)
+> are both merged to `main` (merge `5395e00`, branch `feat/services-phase2`). Locked spec:
+> [`services_phase2_spec.md`](services_phase2_spec.md). Venue (Naya Boutique Spa) + work
+> (Oceanides) smokes PASS; fresh-context PR critic clean. **Open follow-ups:** practitioner
+> archetype not yet smoke-tested; avatar-in-venue carve-out (Q8) deferred.
 
 **What:** A new ad-creation style tuned for **service businesses** (salons, gyms, clinics,
 restaurants, agencies) — distinct from the current product-e-commerce assumption baked into
@@ -411,22 +413,33 @@ service-in-action b-roll. 6-beat arc: hook → trust → action → before/after
 Type union + Step 2 Services card + dedicated tuned adscript branch (Neil-approved) + bundle-leak
 marker. Build/tests/leak green. Before/after for C is generated representative b-roll (honest).
 
-**Phase 2 — DEFERRED = the per-scene photo-routing layer.** Classify uploaded photos
-(exterior/interior/staff/menu/before/after) → map to specific scenes → render-path uses the
-assigned photo (today `sceneRender.ts` hardcodes `productImageUrls[0]`; photos 1+ are dormant).
-**Includes a smart-defaulted ARCHETYPE QUALIFIER** (Neil 2026-06-21): 3 plain-language buttons —
-venue-led / work-result / practitioner — auto-pre-selected from the description, user-overridable.
-Build it WITH Phase 2 (not before), because that's when it earns its keep: it drives the GUIDED
-photo-upload per archetype (venue → "upload reception/rooms/vibe"; work → before/after; practitioner
-→ headshot/logo) and the per-scene routing. Interim = auto-infer in the prompt (proven on the
-Oceanides work-led smoke). Re-smoke #2 (2026-06-21) PASSED for work-led: problem-hook, customer
-voice, plain crew + plain white van (no glamorized tanker), hose outside the tank — humble + PH-real.
-Open finding: venue-led truly needs Phase 2 (representative venue ≠ their real place — and customers
-avail BECAUSE they saw the real place).
+**Phase 2 — ✅ SHIPPED & MERGED (2026-06-22, merge `5395e00`).** The per-scene real-photo-routing
+layer is built and live. Implemented as 5 slices (all build/tests/leak green, each TUNED edit
+Neil-approved): (1) `serviceArchetype` field + Step 2 smart-defaulted archetype qualifier (3
+outcome-labeled buttons — "Show off my place" / "Show the results" / "Feature me & my team" —
+statement-with-✓ framing + archetype-aware upload sample strip); (2) `servicePhotos {url,slot}` +
+archetype-driven **guided upload slots** (the slot IS the tag — implicit classification; synced to
+`productImageUrls` for back-compat); (3) storyboard emits per-scene `venueSlot` (Services-only,
+additive); (4) new **VENUE render mode** in `generateSceneImage` (PLACE_IDENTITY_LOCK +
+CAMERA_FREEDOM — same real place, scene-fitting angle, Filipino people allowed; additive 5th branch,
+the 4 originals byte-identical); (5) `sceneRender.ts` routes `venueSlot` → the matching uploaded
+photo in venue mode (replaces the old `productImageUrls[0]`-only behavior; falls back to
+representative gen on any miss). Plus `FILIPINO_CAST_LOCK` (foreigner-in-hook fix) + venue
+tier-drift guard (no "high-end/luxury") + hook gender-coherence. Architecture-aware: venue = full
+routing; work = representative-by-default, before/after-routing only if uploaded; practitioner =
+headshot/logo. **Smokes:** Naya Boutique Spa (venue) PASS — real storefront + treatment room
+rendered, true-to-tier; Oceanides (work) PASS, no regression — real aluminum closed-van truck routed
+from upload. Fresh-context PR critic clean (Minor 4/5 + Major 1/2 resolved; quota dev-bypass
+confirmed fail-CLOSED). **Open follow-ups:** practitioner archetype not yet smoke-tested;
+avatar-in-venue carve-out (Q8) deferred; venue same-place-multi-angle consistency only lightly
+tested (one scene per space so far).
 
 **Two product decisions (Neil, 2026-06-21) — to honor in Phase 2 / a Services-tune pass:**
 
-1. **Advanced Mode = Business-tier gate for Phase 2.** Default (all tiers): an uploaded image is
+1. **Advanced Mode = Business-tier gate for Phase 2.** ⚠️ **SUPERSEDED 2026-06-22:** Neil chose to
+   ship Phase 2 real-photo routing **services-wide (NOT Business-gated)** — for venue-led services the
+   real place IS the conversion asset, so accuracy is a core need, not a premium perk. The original
+   gating idea below is kept for the record but is no longer how it shipped. Default (all tiers): an uploaded image is
    **reference/context only** — Director understands it and generates **fresh, scene-fitting**
    visuals; it must NEVER just animate the user's raw photo into a scene. Placing the user's
    **literal photos into specific scenes** (real venue/before-after/crew — the Phase 2 routing)
