@@ -376,6 +376,10 @@ export const buildAdScriptPrompt = (
   const { businessInfo, brandName, language, offer, chosenAngleBrief } = input;
   const isTestimonial = businessInfo.scriptType === 'Testimonial';
   const isTemu = businessInfo.scriptType === 'Temu';
+  // Services (Phase 1): trust-forward service ads — book/inquire CTA (not buy-now),
+  // service-not-product framing, archetype A (practitioner-led) + C (work/result-led)
+  // auto-detected from inputs. Phase 2 adds venue-led (B) per-scene photo routing.
+  const isServices = businessInfo.scriptType === 'Services';
 
   const COMMON_RULES = ADSCRIPT_COMMON_RULES(businessInfo, brandName, language);
   const DIRECTOR_CRITIQUE_INSTRUCTION = ADSCRIPT_DIRECTOR_CRITIQUE_INSTRUCTION;
@@ -396,6 +400,42 @@ export const buildAdScriptPrompt = (
       ${subType === 'ASMR' ? '- Focus: "Unbox with me...". Satisfying audio cues.' : ''}
       ${subType === 'Reaction' ? '- Focus: "I can\'t believe I got this...". Shock value.' : ''}
       ${subType === 'Utility' ? '- Focus: POV Problem Solving. "TikTok made me buy it".' : ''}
+
+      ${DIRECTOR_CRITIQUE_INSTRUCTION}
+      ${USER_CHOSEN_ANGLE_BLOCK}
+      Format: Return valid JSON: { "hook1": [...], "hook2": [...], "body": [...], "strategicAudit": "..." }
+    `;
+  } else if (isServices) {
+    return `
+      Role: Senior Direct Response Copywriter for Filipino SERVICE businesses.
+      Strategy: Trust-Forward Service Ad (book/inquire, not buy-now).
+      Service: "${businessInfo.product}"
+      Brand: "${brandName}"
+
+      ${COMMON_RULES}
+      ${HOOK_SEED_PROTOCOL}
+
+      **ARCHETYPE AUTO-DETECT (from the service + audience + uploaded asset):**
+      - PRACTITIONER-LED (advisor, coach, tutor, agency, insurance): the person IS the
+        proof. Lean on credibility, the client's outcome, and a calm authority tone.
+      - WORK/RESULT-LED (cleaning, pest control, aircon, detailing, plumbing): the RESULT
+        is the proof. Lean on the before→after change, shown HONESTLY (see honesty rule).
+      Do NOT name the archetype in the copy — let the chosen beats reflect it.
+
+      **SERVICES 6-BEAT STRUCTURE (no held product, no "buy now"):**
+      0. **Hook (3s / 5-8 words):** Pattern interrupt on the audience's pain or desire.
+         PROVIDE 2 VARIATIONS — populate hook1 AND hook2.
+      1. **Trust / Identity:** Open with the practitioner/team and what they do, framed as
+         a story-opener, not a label. Establish "these are real people who do this well."
+      2. **Service in action:** Describe the service being performed — the value made visible.
+      3. **Before / after (result):** The transformation the client gets. HONESTY RULE:
+         never invent a specific guaranteed outcome or fabricate a dramatic result; speak to
+         a realistic, representative change ("most clients leave feeling…", "results vary").
+      4. **Proof:** A short trust beat — a satisfied client's reaction or a credibility marker.
+      5. **Offer + CTA:** Anchor an offer (free consult, first-visit discount, limited slots)
+         and drive to BOOK / MESSAGE / INQUIRE. Default channels: Viber, Messenger/DM, or
+         walk-in — NOT a checkout link. Forbidden: "buy now", "add to cart", "order now",
+         product-scarcity ("only 3 left in stock").
 
       ${DIRECTOR_CRITIQUE_INSTRUCTION}
       ${USER_CHOSEN_ANGLE_BLOCK}

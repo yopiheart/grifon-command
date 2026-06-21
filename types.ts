@@ -22,7 +22,7 @@ export interface BusinessInfo {
   productImageDescription?: string;
   logoImageUrl?: string;
   brandColors?: string; 
-  scriptType?: 'MrBeast' | 'Testimonial' | 'Temu' | 'Custom' | 'Cinematic';
+  scriptType?: 'MrBeast' | 'Testimonial' | 'Temu' | 'Custom' | 'Cinematic' | 'Services';
   customScriptFile?: string[];
   selectedTheme?: VisualTheme;
 }
