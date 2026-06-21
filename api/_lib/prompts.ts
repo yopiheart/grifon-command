@@ -442,8 +442,11 @@ export const buildAdScriptPrompt = (
       1. **Intro:** "Ako si [Filipino first name]," + life context that implicitly identifies
          "${businessInfo.audience}" (story-opener, NOT a demographic label or name-tag).
       2. **The Problem:** Agitate the real pain — "${businessInfo.painPoint}".
-      3. **The Turn:** How they found/called "${brandName}" + the ONE thing that disarmed their
-         trust fear (see CATEGORY AUTO-ADAPT). Use a COMPLETE verb construction, never a verbless fragment.
+      3. **The Turn:** How they found/called "${brandName}" + the ONE thing that won their trust.
+         Anchor on the real differentiator: "${businessInfo.separator}" — this is the "why believe you"
+         line, and it should double as the disarm of the category's #1 trust fear (see CATEGORY AUTO-ADAPT).
+         If the differentiator is empty, disarm the trust fear directly. Use a COMPLETE verb construction,
+         never a verbless fragment.
       4. **The Relief:** Pain → Result ("${businessInfo.benefit}"), carrying the emotional payoff.
          HONESTY RULE: realistic/representative; never fabricate a guaranteed or exaggerated outcome.
       5. **Offer + CTA:** They recommend it + the offer as WORDS ONLY (e.g. "libreng inspection/
