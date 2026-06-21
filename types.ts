@@ -71,6 +71,10 @@ export interface Scene {
   manualUploadUrl?: string;
   manualEndFrameUrl?: string;
   referenceImage?: 'avatar' | 'product' | 'both' | 'none';
+  /* Phase 2 (Services): which uploaded servicePhotos SLOT best fits this scene. Set by the
+     storyboard generator (Services only); the per-scene router (Slice 5) anchors the scene to
+     that real photo. Omitted when no uploaded slot fits → renderer falls back to representative. */
+  venueSlot?: 'exterior' | 'interior' | 'ambiance' | 'staff' | 'before' | 'after';
   /* chainRole tracks the position in the cinematic relay chain */
   chainRole?: 'Metaphor_A' | 'Anchor_B' | 'Action_C' | 'Hero_D';
   /* Custom B-roll injection */

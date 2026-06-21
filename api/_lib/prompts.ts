@@ -888,6 +888,26 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
         `;
   }
 
+  // Phase 2 (Services): tell the model to tag each place/result/staff scene with the best-fitting
+  // UPLOADED slot, chosen ONLY from what the user actually uploaded. Empty list → no block →
+  // current prompt unchanged. Renderer (Slice 5) consumes scene.venueSlot to anchor the real photo.
+  const availableServiceSlots = (businessInfo.servicePhotos || []).map(p => p.slot);
+  const venueSlotRouting = (isServices && availableServiceSlots.length > 0) ? `
+      **VENUE_SLOT_ROUTING (Services — anchor scenes to the user's REAL uploaded photos):**
+      The user uploaded real photos tagged by slot. AVAILABLE SLOTS: ${availableServiceSlots.join(', ')}.
+      For each scene that depicts the business's PLACE, RESULT, or STAFF, add a "venueSlot" field set to
+      the ONE available slot that best fits — chosen ONLY from the list above. Map by meaning:
+        establishing / arrival ("dinala ako sa...") -> exterior
+        the service happening / inside the place    -> interior
+        mood / relief / ambiance beat               -> ambiance
+        the practitioner or staff at work           -> staff
+        the problem / before-state                  -> before
+        the result / after-state                    -> after
+      Rules: use a slot ONLY if it is in AVAILABLE SLOTS; if none fits, OMIT "venueSlot" (renderer falls
+      back to representative generation). NEVER invent a slot not in the list. Avatar talking-head scenes
+      (referenceImage="avatar") OMIT "venueSlot".
+  ` : '';
+
   return `
       You are an Expert Viral Video Strategist.
       Task: Create a detailed frame-by-frame storyboard JSON.
@@ -1012,6 +1032,7 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
       - "product" (or "both" if the avatar is also in the reveal) — the hook's END frame reveals the ACTUAL hero product (the real labeled package materializes, the morph resolves into the real product, the explosion/teleport reveals the real product).
       - "none" — the hook is a pure abstract metaphor (coffee-ring, dumped beans, environment-only) OR the end frame shows only a categorical look-alike, not the actual hero product. The CRITICAL ANTI-PATTERN above applies in full: a generic look-alike stays "none".
 
+      ${venueSlotRouting}
       **OUTPUT SCHEMA (CRITICAL):**
       Return a valid JSON Object with keys "scenes" (Array) and "strategicAudit" (String).
 
@@ -1020,6 +1041,7 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
         "scriptLine": "...",
         "sceneDescription": "...",
         "referenceImage": "product" | "both" | "none",   // classify the END/REVEAL frame ONLY — see SCENE 1 (HOOK) END-FRAME REFERENCE rule above
+        "venueSlot": "before",   // Services ONLY, OPTIONAL — set per VENUE_SLOT_ROUTING; omit otherwise
         "startFramePrompt": "Static composition of the FIRST FROZEN FRAME — describe the world-state at moment 1 as a still photograph. No motion verbs (see STILL_FRAME_RULE).",
         "endFramePrompt": "Static composition of the FINAL FROZEN FRAME — describe the world-state at moment 2 as a still photograph. No motion verbs (see STILL_FRAME_RULE).",
         "transitionEffect": "Name of the VFX that animates between the two stills (the only field where motion lives)."
@@ -1030,6 +1052,7 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
         "scriptLine": "...",
         "sceneDescription": "...",
         "referenceImage": "avatar" | "product" | "both" | "none",
+        "venueSlot": "exterior",   // Services ONLY, OPTIONAL — set per VENUE_SLOT_ROUTING; omit when no slot fits or non-Services
         "imagePrompt": "Description of the single image"
       }
 
