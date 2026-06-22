@@ -2,21 +2,22 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Building2, UtensilsCrossed, ShoppingBag, Play, ChevronRight } from 'lucide-react';
 
-// Hooks/CTAs mirror the hero AdMontagePhone frames — sample creative, not claims.
-// ROAS/time badges reuse the page's existing proof-wall stats only.
+// Hooks/CTAs are illustrative sample creative (what a Grifon ad LOOKS like) —
+// not real campaigns, so no ROAS/time claims. WS2 replaces these mockups with
+// real client UGC videos hosted on R2.
 const CARDS = [
   {
-    title: 'Condo Pre-Selling Ad', roas: '4.8×', time: '20 min', label: 'REAL ESTATE', icon: Building2,
+    title: 'Condo Pre-Selling Ad', label: 'REAL ESTATE', icon: Building2,
     hook: 'YOUR DREAM CONDO.', hookAccent: 'Closer than you think.', cta: 'BOOK A FREE TOUR',
     tilt: 'md:-rotate-2 md:translate-y-6',
   },
   {
-    title: 'Food Business Launch', roas: '3.2×', time: '15 min', label: 'F&B', icon: UtensilsCrossed,
+    title: 'Food Business Launch', label: 'F&B', icon: UtensilsCrossed,
     hook: 'LUTONG BAHAY.', hookAccent: 'Delivered in 30.', cta: 'ORDER NA',
     tilt: 'md:rotate-1 md:-translate-y-2',
   },
   {
-    title: 'Online Store Campaign', roas: '5.1×', time: '25 min', label: 'E-COMMERCE', icon: ShoppingBag,
+    title: 'Online Store Campaign', label: 'E-COMMERCE', icon: ShoppingBag,
     hook: 'BIG SALE.', hookAccent: 'Ends tonight.', cta: 'SHOP NOW',
     tilt: 'md:-rotate-1 md:translate-y-10',
   },
@@ -33,9 +34,9 @@ export const ProofGallery: React.FC = () => (
     <div className="max-w-7xl mx-auto px-4 text-center mb-12 md:mb-20">
       <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-zinc-500 mb-4">// THE RECEIPTS</p>
       <h2 className="text-3xl md:text-5xl font-bold uppercase tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500 max-w-4xl mx-auto">
-        THESE ADS WERE MADE BY AI. THEY{' '}
-        <span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">outperformed</span>{' '}
-        AGENCIES.
+        THESE ADS WERE MADE WITH GRIFON.{' '}
+        <span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">Real businesses</span>{' '}
+        RAN THEM.
       </h2>
     </div>
 
@@ -95,7 +96,7 @@ export const ProofGallery: React.FC = () => (
                 <div className="mt-4 px-1">
                   <h3 className="text-base font-bold text-white">{card.title}</h3>
                   <p className="mt-1 text-[10px] font-mono uppercase tracking-widest text-zinc-500">
-                    // ROAS <span className="text-[#FFCC00]">{card.roas}</span> — MADE IN {card.time}
+                    // MADE WITH <span className="text-[#FFCC00]">GRIFON</span>
                   </p>
                 </div>
               </div>
