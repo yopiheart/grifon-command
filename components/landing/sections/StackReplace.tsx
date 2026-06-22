@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { PenLine, AudioLines, Clapperboard, ImageIcon, BarChart3, Target } from 'lucide-react';
+import { PenLine, AudioLines, Clapperboard, ImageIcon, BarChart3, Target, Scissors } from 'lucide-react';
 
 // The software-consolidation anchor (distinct from the deliverable value stack):
 // one subscription replaces a whole rack of separate AI tools. Framed by
@@ -34,11 +34,11 @@ export const StackReplace: React.FC = () => (
       >
         <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-zinc-500 mb-4">// REPLACES YOUR WHOLE AI STACK</p>
         <h2 className="text-3xl md:text-5xl font-bold uppercase tracking-tight leading-tight max-w-3xl mx-auto bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
-          SIX AI SUBSCRIPTIONS.{' '}
+          SIX AI TOOLS + YOUR VIDEO EDITOR.{' '}
           <span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">Or one Grifon.</span>
         </h2>
         <p className="mt-5 text-base md:text-lg text-zinc-400 max-w-2xl mx-auto">
-          No more juggling a separate tool — and a separate bill — for every step. It's all in one app.
+          No more juggling a separate tool — or a freelancer — for every step. All of it, built for Filipino businesses, in one app.
         </p>
       </motion.div>
 
@@ -62,7 +62,32 @@ export const StackReplace: React.FC = () => (
         ))}
       </div>
 
-      {/* The anchor: a rack of tools at $120+/mo, or one app at ₱2,497. */}
+      {/* Featured: the AI video editor — the band's hero (the single biggest
+          labor cost it kills). Filipino-first framing per the leadership-claim
+          decision; we do NOT claim "first in PH" (unverifiable). */}
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.55, delay: 0.1 }}
+        className="mt-4 flex flex-col gap-4 rounded-2xl border border-[#FFCC00]/30 bg-gradient-to-br from-[#FFCC00]/10 to-zinc-900/40 backdrop-blur-sm p-6 md:p-7 sm:flex-row sm:items-center"
+      >
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-[#FFCC00]/30 bg-[#FFCC00]/15">
+          <Scissors className="w-6 h-6 text-[#FFCC00]" />
+        </div>
+        <div className="flex-1">
+          <div className="text-lg md:text-xl font-bold text-white">AI Video Editor — built for Filipino content</div>
+          <p className="mt-1 text-sm text-zinc-300">
+            Auto-captions, cuts, music, and retention effects that keep viewers watching — Taglish-ready, no timeline, no skills. Stop paying a freelance editor every single video.
+          </p>
+        </div>
+        <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest sm:flex-col sm:items-end sm:gap-1">
+          <span className="text-zinc-500 line-through decoration-zinc-600">a freelance editor</span>
+          <span className="text-[#FFCC00]">included</span>
+        </div>
+      </motion.div>
+
+      {/* The anchor: a rack of tools + an editor, or one app at ₱2,497. */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -71,8 +96,8 @@ export const StackReplace: React.FC = () => (
         className="mt-10 flex flex-col items-center gap-1.5 text-center"
       >
         <p className="text-base md:text-lg text-zinc-300">
-          That's <span className="font-bold text-white">$120+/mo</span> of separate AI tools
-          {' '}(<span className="font-mono">~₱7,000</span>) — replaced by{' '}
+          That's <span className="font-bold text-white">$120+/mo</span> of AI tools
+          {' '}(<span className="font-mono">~₱7,000</span>) — plus a freelance editor every video — replaced by{' '}
           <span className="font-bold text-[#FFCC00]">one app at ₱2,497/mo.</span>
         </p>
         <p className="text-[10px] font-mono uppercase tracking-widest text-zinc-600">
