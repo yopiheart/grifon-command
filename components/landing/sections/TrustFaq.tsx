@@ -9,8 +9,8 @@ import { MessengerIcon } from '../SocialIcons';
 const FAQS = [
   { q: 'DO I NEED ANY TECHNICAL SKILLS?', a: 'No. If you can type what you sell, Grifon does the rest. No design skills. No copywriting experience. No video editing.' },
   { q: 'HOW IS THIS DIFFERENT FROM CANVA OR CHATGPT?', a: 'Canva gives you templates. ChatGPT gives you generic text. Neither gives you market research, ad strategy, or a complete campaign. Grifon does all of it in one app.' },
-  { q: 'IS THERE A LIMIT ON WHAT I CAN CREATE?', a: 'Yes. Each plan has specific limits. Free gives you 3 ad workflows per month. Creator gives you 15. Pro gives you 40 plus video ads. See the pricing page for full details.' },
-  { q: "WHAT IF IT DOESN'T WORK FOR MY BUSINESS?", a: "Every paid plan has a 7-day money-back guarantee. If it doesn't save you time, you get a full refund." },
+  { q: 'IS THERE A LIMIT ON WHAT I CAN CREATE?', a: 'Yes — each plan has its own limits. Free gives you 1 complete ad plan a month (preview only). Starter adds 1 finished video ad, Pro gives you 40 workflows and 8 finished video ads a month, and Business 100 workflows and 15. See the pricing page for the full breakdown.' },
+  { q: "WHAT IF IT DOESN'T WORK FOR MY BUSINESS?", a: "Every paid plan has a 7-day money-back guarantee. Generate your first ad — if it's not something you'd actually run, get a full refund and keep the plan." },
 ];
 
 /** Guarantee + FAQ + Messenger support CTA with a live presence indicator. */
@@ -29,7 +29,7 @@ export const TrustFaq: React.FC = () => (
             7-DAY MONEY-BACK GUARANTEE
           </h2>
           <p className="text-zinc-300 md:text-lg max-w-2xl mx-auto">
-            Subscribe to any paid plan. If Grifon doesn't save you at least 10 hours in your first week, we'll refund you 100%. No questions. No hoops.
+            Subscribe to any paid plan and generate your first ad. If it's not something you'd actually run, get a full refund within 7 days — and keep the ad plan either way. No questions. No hoops.
           </p>
         </AnimatedBorder>
       </motion.div>

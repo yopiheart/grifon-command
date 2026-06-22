@@ -9,6 +9,7 @@ import { Marquee } from "./landing/Marquee";
 import { SignatureScribble } from "./landing/SignatureScribble";
 import { startCheckout, type PlanId, type BillingCycle } from "../services/billingService";
 import { PLAN_FEATURES } from "../config/planFeatures";
+import { PRO_VALUE_STACK, PRO_VALUE_TOTAL, FOUNDING_NOTE } from "../config/valueStack";
 
 const Check = () => <CheckIcon size={16} strokeWidth={2.5} className="text-[#FFCC00]" />;
 const X = () => <XIcon size={14} strokeWidth={1.5} className="text-zinc-600" />;
@@ -140,20 +141,11 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
   const PRO_HIGHLIGHT = PLAN_FEATURES.pro.find((f) => f.startsWith('AI video editor')) ?? '';
   const [proHighlightHead, proHighlightTail] = PRO_HIGHLIGHT.split(' — ');
 
-  const valueStack = [
-    { item: "40 AI Video Ad Scripts", value: "₱20,000" },
-    { item: "15 Deep Market Research Reports", value: "₱22,500" },
-    { item: "15 Offer Optimizations", value: "₱15,000" },
-    { item: "300 Ad Captions & Headlines", value: "₱15,000" },
-    { item: "150 AI Ad Images", value: "₱15,000" },
-    // Pro includes 8 finished ads (utils/planGate SCENE_CAP / quota MONTHLY_LIMITS),
-    // priced at the same ₱5,000/ad rate the other lines imply (was 15 → ₱75,000).
-    { item: "8 AI Video Ads", value: "₱40,000" },
-    { item: "Monthly Strategy Call", value: "₱5,000" },
-    { item: "Private Community Access", value: "₱2,500" },
-  ];
-
-  const totalValue = "₱135,000";
+  // Shared with the landing OfferStack via config/valueStack.ts so the two
+  // surfaces can never drift. Pro-anchored, deliverable-based (quantities mirror
+  // Pro's monthly limits in utils/planGate.ts).
+  const valueStack = PRO_VALUE_STACK;
+  const totalValue = PRO_VALUE_TOTAL;
 
   const navLinks: SiteNavLink[] = [
     { label: 'Home', onClick: onNavigateHome },
@@ -677,11 +669,18 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
               }}>
                 ₱2,497<span style={{ fontSize: 16, color: "#71717a" }}>/mo</span>
               </p>
+              <p className="font-mono" style={{
+                fontSize: 10, color: "rgba(255,204,0,0.85)",
+                textTransform: "uppercase", letterSpacing: "0.18em",
+                marginTop: 10,
+              }}>
+                {FOUNDING_NOTE}
+              </p>
               <p style={{
                 fontSize: 14, color: "#a1a1aa", fontWeight: 700,
                 marginTop: 8, marginBottom: 24,
               }}>
-                That's <span style={{ color: "#FFCC00", fontWeight: 900 }}>99%</span> less than doing it the old way.
+                That's <span style={{ color: "#FFCC00", fontWeight: 900 }}>98%</span> less than doing it the old way.
               </p>
               <button
                 className="gold-btn"

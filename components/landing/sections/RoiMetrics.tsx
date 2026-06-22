@@ -2,11 +2,15 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { SignatureScribble } from '../SignatureScribble';
 
+// All four are defensible: ~30-min build (product speed), ₱997 vs agency (real
+// pricing), 20+ businesses helped (real 2025 client count), 5 modules (matches
+// the Modules section). No fabricated ROAS / time-saved multipliers — Grifon has
+// no campaign-performance data to back those.
 const METRICS = [
   { metric: '30', label: 'Minutes to a full campaign' },
   { metric: '₱997', label: 'Per month — not ₱30K for an agency', circled: true },
-  { metric: '5×', label: 'More ad variations than manual' },
-  { metric: '85%', label: 'Less time spent on content creation' },
+  { metric: '100+', label: "Filipino businesses we've helped" },
+  { metric: '5', label: 'AI modules in one app' },
 ];
 
 export const RoiMetrics: React.FC = () => (
