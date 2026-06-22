@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef, useLayoutEffect, useMemo } from 'react';
 import { motion } from 'motion/react';
 import {
-  Film, Search, Target, Type, Image as ImageIcon,
+  Film, Search, Target, Type,
   Settings, Sparkles, ArrowRight, ChevronRight,
-  Video, User, Clapperboard, Wand2, Calendar, Scissors, Mic,
-  LogOut, HelpCircle, Crown, Zap, X, Flame, Aperture, Lock
+  User, LogOut, HelpCircle, Crown, Zap, X, Flame, Lock
 } from 'lucide-react';
 import { useSubscription } from '../hooks/useSubscription';
 import { planAtLeast, type PlanId } from '../utils/planGate';
@@ -22,6 +21,7 @@ import { OnboardingNudge } from './ui/OnboardingNudge';
 import { ResumeDraftCard } from './ui/ResumeDraftCard';
 import { SignatureScribble } from './landing/SignatureScribble';
 import { getSession, clearSession, type WizardSessionV1 } from '../services/wizardSessionStore';
+import { MODULE_IDENTITY, getModuleIdentity, hueAlpha } from '../config/moduleIdentity';
 
 // Rotating omnibox placeholders — real outcomes, not tool names. The input
 // should read like a wish, not a search box.
@@ -60,14 +60,29 @@ interface DashboardProps {
 
 const WIZARD_TOTAL_STEPS = 8;
 
-const CORE_MODULES = [
-  { id: 'market_research', name: 'Research', icon: Search, desc: 'Know your market, outsmart competitors' },
-  { id: 'offer_optimizer', name: 'Offer', icon: Target, desc: "Build an offer they can't refuse" },
-  { id: 'caption_headline', name: 'Captions', icon: Type, desc: 'Copy that stops the scroll' }
-];
+// GRIFON COMMAND identity (branded name + outcome descriptor + signature hue +
+// icon) lives in config/moduleIdentity.ts. The dashboard derives every tile,
+// nav item and palette entry from it so a rename is a one-line change there.
+const CORE_MODULES = ['market_research', 'offer_optimizer', 'caption_headline'].map((id) => {
+  const m = getModuleIdentity(id);
+  return { id, name: m.name, icon: m.icon, desc: m.descriptor, hue: m.hue };
+});
 
-// Director's subtitle is shared across the card blocks and the command palette.
-const DIRECTOR_DESC = 'Your finished video ad, start to finish';
+// Flagship — rides the brand gold (its registry hue IS #FFCC00).
+const DIRECTOR = getModuleIdentity('creative_director');
+const DirectorIcon = DIRECTOR.icon;
+
+// Compact labels for the icon rail + recommended-flow chips, where a full
+// branded name won't fit a 64px column. Full names live on tiles/palette/headers.
+const NAV_SHORT: Record<string, string> = {
+  creative_director: 'Director',
+  market_research: 'Recon',
+  offer_optimizer: 'War Room',
+  generate_video: 'Render',
+  signal_modulator: 'Signal',
+  edit_video: 'Edit',
+  caption_headline: 'Broadcast',
+};
 
 // Outcome-named quick-start chips under the command input — deep-link into modules.
 const STARTER_CHIPS = [
@@ -83,15 +98,20 @@ const STARTER_CHIPS = [
 // dashboard's RECOMMENDED FLOW path, which intentionally diverges so users
 // see both "fastest path to the tool" (nav) and "best practice order" (path).
 // Beta items are admin-only-clickable; display-only for non-admin.
-const NAV_ITEMS: { id: string; label: string; icon: any; badge?: 'Beta' }[] = [
-  { id: 'creative_director', label: 'Director', icon: Film },
-  { id: 'market_research',   label: 'Research', icon: Search },
-  { id: 'offer_optimizer',   label: 'Offer',    icon: Target },
-  { id: 'generate_video',    label: 'Video',    icon: Clapperboard },
-  { id: 'signal_modulator',  label: 'Voice',    icon: Mic,         badge: 'Beta' },
-  { id: 'edit_video',        label: 'Edit',     icon: Scissors,    badge: 'Beta' },
-  { id: 'caption_headline',  label: 'Caption',  icon: Type }
-];
+const NAV_ITEMS: { id: string; label: string; icon: any; badge?: 'Beta' }[] = (
+  [
+    { id: 'creative_director' },
+    { id: 'market_research' },
+    { id: 'offer_optimizer' },
+    { id: 'generate_video' },
+    { id: 'signal_modulator', badge: 'Beta' as const },
+    { id: 'edit_video', badge: 'Beta' as const },
+    { id: 'caption_headline' },
+  ] as { id: string; badge?: 'Beta' }[]
+).map((d) => {
+  const m = getModuleIdentity(d.id);
+  return { id: d.id, label: NAV_SHORT[d.id] ?? m.name, icon: m.icon, badge: d.badge };
+});
 
 // Slice 5 — graduated beta modules and the plan tier that unlocks each. Modules
 // NOT listed here stay dev-only (grifon_admin / grifon_dev_unlock). Server stays
@@ -104,16 +124,12 @@ const MODULE_TIER: Record<string, PlanId> = {
 };
 
 const MORE_MODULES = [
-  { id: 'hook_lab', name: 'Hook Lab', icon: Aperture, desc: 'Surreal, scroll-stopping opening hooks for your ads.' },
-  { id: 'cinematic_studio', name: 'Cinematic Studio', icon: Video, desc: 'High-fidelity video synthesis with custom camera paths and lighting control.' },
-  { id: 'influencer_forge', name: 'Influencer Forge', icon: User, desc: 'Generate consistent digital personas for social campaigns and brand storytelling.' },
-  { id: 'generate_video', name: 'Video Synthesis', icon: Clapperboard, desc: 'Render final video assets from storyboards and prompts.' },
-  { id: 'image_ads', name: 'Ad Creative Gen', icon: Wand2, desc: 'Generate high-converting image ads and variations.' },
-  { id: 'image_editor', name: 'Image Editor', icon: ImageIcon, desc: 'AI-generated ad images — in active improvement.' },
-  { id: 'organic_calendar', name: 'Social Planner', icon: Calendar, desc: 'Schedule and automate your organic content calendar.' },
-  { id: 'edit_video', name: 'Video Editor', icon: Scissors, desc: 'Timeline-based editing, trimming, and assembly.' },
-  { id: 'signal_modulator', name: 'Signal Modulator', icon: Mic, desc: 'Voice cloning, TTS, and audio enhancement.' }
-];
+  'hook_lab', 'cinematic_studio', 'influencer_forge', 'generate_video',
+  'image_ads', 'image_editor', 'organic_calendar', 'edit_video', 'signal_modulator',
+].map((id) => {
+  const m = getModuleIdentity(id);
+  return { id, name: m.name, icon: m.icon, desc: m.descriptor, hue: m.hue };
+});
 
 const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, userEmail, userId, onLogout, onUpgrade }) => {
   // ADMIN MODE: To see in-progress modules, two ways:
@@ -186,10 +202,8 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
   const showOnboarding = !onboardingDismissed && recent.length === 0;
 
   const ALL_MODULE_LOOKUP = useMemo(() => {
-    const map: Record<string, { name: string }> = {
-      creative_director: { name: 'Director' },
-    };
-    [...CORE_MODULES, ...MORE_MODULES].forEach(m => { map[m.id] = { name: m.name }; });
+    const map: Record<string, { name: string }> = {};
+    Object.values(MODULE_IDENTITY).forEach((m) => { map[m.key] = { name: m.name }; });
     return map;
   }, []);
 
@@ -268,7 +282,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
   }, []);
 
   const paletteItems: CommandItem[] = [
-    { id: 'creative_director', name: 'Director', desc: DIRECTOR_DESC, icon: Film, group: 'Core', onSelect: () => handleSelectModule('creative_director') },
+    { id: 'creative_director', name: DIRECTOR.name, desc: DIRECTOR.descriptor, icon: DIRECTOR.icon, group: 'Core', onSelect: () => handleSelectModule('creative_director') },
     ...CORE_MODULES.map(m => ({ id: m.id, name: m.name, desc: m.desc, icon: m.icon, group: 'Core', onSelect: () => handleSelectModule(m.id) })),
     ...MORE_MODULES.filter(m => moduleUnlocked(m.id)).map(m => ({ id: m.id, name: m.name, desc: m.desc, icon: m.icon, group: 'More', onSelect: () => handleSelectModule(m.id) })),
   ];
@@ -590,13 +604,13 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
             </p>
             <div className="flex items-center justify-center flex-wrap gap-y-3 lg:gap-y-0 lg:flex-nowrap pb-2 px-1 lg:px-0">
               {[
-                { num: 1, label: 'Research', id: 'market_research' },
-                { num: 2, label: 'Offer', id: 'offer_optimizer' },
+                { num: 1, label: 'Recon', id: 'market_research' },
+                { num: 2, label: 'War Room', id: 'offer_optimizer' },
                 { num: 3, label: 'Director', id: 'creative_director' },
-                { num: 4, label: 'Video', id: 'generate_video' },
-                { num: 5, label: 'Voice', id: 'signal_modulator', badge: 'Beta' },
+                { num: 4, label: 'Render', id: 'generate_video' },
+                { num: 5, label: 'Signal', id: 'signal_modulator', badge: 'Beta' },
                 { num: 6, label: 'Edit', id: 'edit_video', badge: 'Beta' },
-                { num: 7, label: 'Caption', id: 'caption_headline' }
+                { num: 7, label: 'Broadcast', id: 'caption_headline' }
               ].map((step, idx, arr) => {
                 const isBeta = step.badge === 'Beta';
                 const isClickable = !isBeta || moduleUnlocked(step.id);
@@ -659,11 +673,11 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-[#FFCC00]/5 to-transparent pointer-events-none" />
                 <div className="w-12 h-12 bg-[#FFCC00]/10 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform duration-500 ease-out">
-                  <Film className="w-6 h-6 text-[#FFCC00]" />
+                  <DirectorIcon className="w-6 h-6 text-[#FFCC00]" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-base font-bold text-white tracking-tight">Director</p>
-                  <p className="text-xs text-zinc-400 mt-0.5">{DIRECTOR_DESC}</p>
+                  <p className="text-base font-bold text-white tracking-tight">{DIRECTOR.name}</p>
+                  <p className="text-xs text-zinc-400 mt-0.5">{DIRECTOR.descriptor}</p>
                 </div>
                 <ChevronRight className="w-5 h-5 text-zinc-600 group-hover:text-[#FFCC00] transition-colors relative z-10" />
               </motion.div>
@@ -679,8 +693,11 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                   className="bg-zinc-900/70 backdrop-blur-xl rounded-2xl p-4 relative overflow-hidden group cursor-pointer aspect-square flex flex-col justify-between hover:scale-[1.01] hover:bg-zinc-900 hover:shadow-[0_8px_30px_rgba(255,204,0,0.12)] active:scale-[0.98] transition-all duration-500 ease-out"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-                  <div className="w-10 h-10 bg-[#FFCC00]/10 rounded-xl flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-500 ease-out">
-                    <mod.icon className="w-5 h-5 text-[#FFCC00]" />
+                  <div
+                    className="w-10 h-10 rounded-xl flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-500 ease-out"
+                    style={{ backgroundColor: hueAlpha(mod.hue, 0.1) }}
+                  >
+                    <mod.icon className="w-5 h-5" style={{ color: mod.hue }} />
                   </div>
                   <div>
                     <p className="text-sm font-bold text-white tracking-tight leading-tight">{mod.name}</p>
@@ -702,10 +719,10 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-[#FFCC00]/5 to-transparent pointer-events-none" />
                 <div className="w-14 h-14 lg:w-16 lg:h-16 bg-[#FFCC00]/10 rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:scale-105 transition-transform duration-500 ease-out">
-                  <Film className="w-7 h-7 lg:w-8 lg:h-8 text-[#FFCC00]" />
+                  <DirectorIcon className="w-7 h-7 lg:w-8 lg:h-8 text-[#FFCC00]" />
                 </div>
-                <p className="text-sm lg:text-sm xl:text-base font-bold text-white tracking-tight">Director</p>
-                <p className="text-[11px] lg:text-xs text-zinc-500 mt-1">{DIRECTOR_DESC}</p>
+                <p className="text-sm lg:text-sm xl:text-base font-bold text-white tracking-tight">{DIRECTOR.name}</p>
+                <p className="text-[11px] lg:text-xs text-zinc-500 mt-1">{DIRECTOR.descriptor}</p>
               </motion.div>
 
               {/* Standard Modules (Desktop) */}
@@ -719,8 +736,11 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                   className="flex-1 bg-zinc-900/70 backdrop-blur-xl rounded-2xl p-6 relative overflow-hidden group cursor-pointer text-center min-w-0 hover:scale-[1.01] hover:bg-zinc-900 hover:shadow-[0_8px_30px_rgba(255,204,0,0.12)] active:scale-[0.98] transition-all duration-500 ease-out"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-                  <div className="w-14 h-14 lg:w-16 lg:h-16 bg-zinc-800/80 rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:scale-105 transition-transform duration-500 ease-out">
-                    <mod.icon className="w-7 h-7 lg:w-8 lg:h-8 text-[#FFCC00]" />
+                  <div
+                    className="w-14 h-14 lg:w-16 lg:h-16 rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:scale-105 transition-transform duration-500 ease-out"
+                    style={{ backgroundColor: hueAlpha(mod.hue, 0.1) }}
+                  >
+                    <mod.icon className="w-7 h-7 lg:w-8 lg:h-8" style={{ color: mod.hue }} />
                   </div>
                   <p className="text-sm lg:text-sm xl:text-base font-bold text-white tracking-tight">{mod.name}</p>
                   <p className="text-[11px] lg:text-xs text-zinc-500 mt-1">{mod.desc}</p>
@@ -755,8 +775,11 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                             <Lock className="w-3 h-3 shrink-0" /> {tier}
                           </span>
                         )}
-                        <div className="w-8 h-8 bg-zinc-800 rounded-lg flex items-center justify-center mb-3">
-                          <mod.icon className="w-4 h-4 text-zinc-400 group-hover:text-[#FFCC00] transition-colors" />
+                        <div
+                          className="w-8 h-8 rounded-lg flex items-center justify-center mb-3"
+                          style={{ backgroundColor: hueAlpha(mod.hue, 0.1) }}
+                        >
+                          <mod.icon className="w-4 h-4 transition-colors" style={{ color: mod.hue }} />
                         </div>
                         <p className={`text-xs font-bold text-white tracking-tight mb-1${!unlocked && tier ? ' pr-12' : ''}`}>{mod.name}</p>
                         <p className="text-[10px] text-zinc-500 leading-snug line-clamp-2">{mod.desc}</p>
