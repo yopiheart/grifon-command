@@ -7,7 +7,7 @@ import {
 import { useSubscription } from '../hooks/useSubscription';
 import { planAtLeast, type PlanId } from '../utils/planGate';
 import { useQuota } from '../hooks/useQuota';
-import { Aurora } from './ui/Aurora';
+import { SmokeAura } from './ui/SmokeAura';
 import { CommandPalette, type CommandItem } from './ui/CommandPalette';
 import { loadRecentWork, recordRecentWork, activeDaysThisWeek, type RecentItem } from '../services/recentWorkService';
 import { computeUpgradeNudge } from '../config/upgradeNudge';
@@ -280,11 +280,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white font-sans selection:bg-[#FFCC00] selection:text-black relative">
-      <Aurora intensity="dashboard" />
-      <div
-        className="fixed inset-0 pointer-events-none opacity-[0.03] z-0"
-        style={{ backgroundImage: 'radial-gradient(#FFCC00 1px, transparent 1px)', backgroundSize: '32px 32px' }}
-      />
+      <SmokeAura />
 
       <DashboardSidebar
         collapsed={collapsed}
@@ -328,17 +324,6 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
 
           {/* HERO — the one-shot entry */}
           <div className="flex-1 flex flex-col justify-center min-h-[70vh] py-10">
-            {/* Ambient gold spotlight */}
-            <div className="absolute inset-0 flex items-start justify-center pointer-events-none overflow-hidden -z-10">
-              <div
-                className="w-[700px] h-[700px] lg:w-[1100px] lg:h-[1100px] rounded-full mt-[-200px]"
-                style={{
-                  background: 'radial-gradient(circle at center, rgba(255,204,0,0.06) 0%, rgba(255,204,0,0.02) 40%, transparent 75%)',
-                  filter: 'blur(60px)', mixBlendMode: 'screen',
-                }}
-              />
-            </div>
-
             <motion.p
               initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
               className="text-center text-2xl sm:text-3xl lg:text-4xl font-normal tracking-tight text-zinc-200 mb-2"
@@ -354,7 +339,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-center text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500 mb-7"
+              className="text-center text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.3] pb-1 bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500 mb-7"
             >
               What are we selling today?
             </motion.div>
