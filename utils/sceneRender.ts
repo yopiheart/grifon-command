@@ -78,12 +78,21 @@ export const renderSceneImages = async (
     : undefined;
   // PRECEDENCE (intended): for a Services scene, an explicit venueSlot WINS over a 'product'
   // tag — a service business has no physical product hero, so venueSlot is the deliberate
-  // "anchor to the real place/result" signal. Avatar/both still take priority (identity lock).
-  const useVenue = !!venuePhoto && !isHookMorph
-    && scene.referenceImage !== 'avatar' && scene.referenceImage !== 'both';
-  const mainRefs = useVenue ? { productUrl: venuePhoto!.url } : startFrameRefs;
-  const mainMode: 'avatar' | 'product' | 'both' | 'none' | 'venue' | undefined =
-    useVenue ? 'venue' : scene.referenceImage;
+  // "anchor to the real place/result" signal.
+  const isRealEstate = scriptType === 'RealEstate';
+  const isAvatarScene = scene.referenceImage === 'avatar' || scene.referenceImage === 'both';
+  // RealEstate avatar-in-property: a talking scene tagged with a room the user uploaded composites
+  // the AGENT (avatar identity) INTO that REAL room (place identity), instead of a generic lookalike.
+  const useAvatarVenue = isRealEstate && !!venuePhoto && !isHookMorph && isAvatarScene && !!avatar;
+  // Plain venue (b-roll, no person): anchor the place to its real photo.
+  const useVenue = !!venuePhoto && !isHookMorph && !isAvatarScene;
+  const mainRefs = useAvatarVenue
+    ? { avatarUrl: avatar!.url, productUrl: venuePhoto!.url }
+    : useVenue
+      ? { productUrl: venuePhoto!.url }
+      : startFrameRefs;
+  const mainMode: 'avatar' | 'product' | 'both' | 'none' | 'venue' | 'avatar_venue' | undefined =
+    useAvatarVenue ? 'avatar_venue' : useVenue ? 'venue' : scene.referenceImage;
 
   // When the hook's END frame reveals the product, anchor it to the hero photo even
   // though the model reliably tags scenes[0].referenceImage "none" (3/3 in testing) —

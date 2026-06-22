@@ -190,6 +190,97 @@ describe('TESTIMONIAL invariants (v1.x bundle)', () => {
   });
 });
 
+describe('REAL ESTATE (#13) invariants', () => {
+  const baseInfo = {
+    product: 'Modern 3BR house and lot, Cavite',
+    features: 'Sala, kitchen, 3 bedrooms, balcony view',
+    productImageDescription: '[facade] two-storey house\n\n[living] sala',
+    scriptType: 'RealEstate',
+    realEstateArchetype: 'listing',
+    audience: 'Young Filipino family',
+    painPoint: 'Renting forever',
+    benefit: 'Own home',
+    separator: 'Near schools + flexible terms',
+  } as any;
+
+  const reInput = (overrides: Record<string, unknown> = {}) => ({
+    businessInfo: { ...baseInfo, ...overrides },
+    brandName: 'TestRealty',
+    language: 'Taglish',
+    offer: '',
+    chosenAngleBrief: '',
+  } as any);
+
+  it('routes to the agent-led WALKTHROUGH branch (not customer-testimonial / MrBeast)', () => {
+    const prompt = buildAdScriptPrompt(reInput());
+    expect(prompt).toContain('REAL ESTATE WALKTHROUGH 6-BEAT');
+    expect(prompt).toMatch(/agent-led/i);
+    // It is the agent's own voice — explicitly NOT the customer-testimonial opener.
+    expect(prompt).toContain('NEVER write "Ako si');
+  });
+
+  it('drives an inquiry/viewing CTA, never a checkout', () => {
+    const prompt = buildAdScriptPrompt(reInput());
+    expect(prompt).toMatch(/viewing/i);
+    expect(prompt).toContain('NOT a checkout');
+    expect(prompt).toContain('buy now');     // named as forbidden
+    expect(prompt).toContain('add to cart'); // named as forbidden
+  });
+
+  it('PRICE RULE — blank price => inquiry-only, never invent a peso figure', () => {
+    const prompt = buildAdScriptPrompt(reInput({ listingPrice: '' }));
+    expect(prompt).toContain('INQUIRY-ONLY');
+    expect(prompt).toMatch(/NEVER invent or imply a peso figure/i);
+  });
+
+  it('PRICE RULE — given price => affordability reframe, stated as given, no inventing/rounding', () => {
+    const prompt = buildAdScriptPrompt(reInput({ listingPrice: '₱4.2M' }));
+    expect(prompt).toContain('₱4.2M');
+    expect(prompt).toMatch(/affordability reframe/i);
+    expect(prompt).toMatch(/exactly as given/i);
+    expect(prompt).toMatch(/never invent, round/i);
+  });
+
+  it('includes the legitimacy/trust beat + a low-friction keyword DM CTA (CMO spec)', () => {
+    const prompt = buildAdScriptPrompt(reInput());
+    expect(prompt).toMatch(/legitimacy/i);   // disarms "baka scam"
+    expect(prompt).toMatch(/title/i);         // clean-title proof
+    expect(prompt).toMatch(/COMPUTATION|BAHAY/); // keyword DM CTA
+  });
+
+  it('storyboard uses the agent-walkthrough strategy + property ground-truth realism', () => {
+    const prompt = buildStoryboardPrompt({
+      script: ['Pasok tayo sa sala'],
+      avatarDescription: 'Filipino agent',
+      businessInfo: baseInfo,
+      ethnicity: 'Filipino',
+      language: 'Taglish',
+    } as any);
+    expect(prompt).toContain('AGENT-LED PROPERTY WALKTHROUGH');
+    expect(prompt).toContain('PHILIPPINE GROUND-TRUTH REALISM');
+  });
+
+  it('storyboard venueSlot routing fires for RealEstate when property photos exist (property slots)', () => {
+    const prompt = buildStoryboardPrompt({
+      script: ['Pasok tayo sa sala'],
+      avatarDescription: 'Filipino agent',
+      businessInfo: {
+        ...baseInfo,
+        servicePhotos: [
+          { url: 'data:,', slot: 'facade' },
+          { url: 'data:,', slot: 'living' },
+        ],
+      },
+      ethnicity: 'Filipino',
+      language: 'Taglish',
+    } as any);
+    expect(prompt).toContain('VENUE_SLOT_ROUTING');
+    expect(prompt).toContain('facade');
+    // The agent headshot slot must NOT be routed through place-identity-lock venue mode.
+    expect(prompt).not.toMatch(/->\s*agent/);
+  });
+});
+
 // ----------------------------------------------------------------------------
 // generateStoryboard -> Promise<StoryboardResponse>
 // ----------------------------------------------------------------------------

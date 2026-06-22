@@ -118,6 +118,7 @@ export const useOneShotGeneration = (): UseOneShotGeneration => {
         aspectRatio,
         '1K',
         [],
+        businessInfo.scriptType,
       );
       const avatar: Avatar = {
         prompt: `An avatar for an ad targeting ${businessInfo.audience}`,

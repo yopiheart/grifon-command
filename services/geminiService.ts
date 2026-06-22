@@ -1569,7 +1569,8 @@ export const generateAvatarImage = async (
     ethnicity: string, 
     aspectRatio: '9:16' | '16:9',
     imageQuality: '1K' | '2K',
-    brandColors: string[]
+    brandColors: string[],
+    scriptType?: string
 ): Promise<{ url: string; description: string; }> => {
   await delay(1000);
   
@@ -1595,10 +1596,19 @@ export const generateAvatarImage = async (
 
   const brandColorInstruction = brandColors.length > 0 ? `Incorporate these brand colors subtly into the wardrobe or background: ${brandColors.join(', ')}.` : '';
 
+  // RealEstate (#13): the generated avatar is the AGENT on camera. Dress them as a trustworthy
+  // Filipino broker — the ID lanyard is the PH legitimacy cue. NOT a Western suit (intimidating),
+  // NOT pambahay (reads as uninvolved homeowner). Uploaded avatars keep their real outfit (identity
+  // lock), so this only shapes the GENERATED fallback.
+  const wardrobeInstruction = scriptType === 'RealEstate'
+    ? `\n    **WARDROBE (real-estate agent):** Dress the subject as an approachable, trustworthy Filipino real-estate agent — a clean, neat polo or smart blouse with a simple ID LANYARD around the neck (the legitimacy cue). NOT a formal Western business suit or blazer, and NOT casual house clothes / pambahay. Smart-casual, professional, friendly.`
+    : '';
+
   const prompt = `
     **Subject:** Photorealistic close-up headshot of ${subjectDescription}.
     **Target Audience Context:** "${audience}".
     ${brandColorInstruction}
+    ${wardrobeInstruction}
 
     **SMART CASTING DIRECTOR LOGIC:**
     - **Age Anchor:** Use the provided age range of ${ageRange} as the primary anchor for bone structure and skin elasticity. DO NOT allow skin conditions ( daylight Melasma, Acne, or Pigmentation) to force the subject into looking older than the requested range.
@@ -1894,7 +1904,7 @@ export const generateSceneImage = async (
     productDescription?: string,
     productName?: string,
     variationIndex: number = 0,
-    referenceImageMode: 'avatar' | 'product' | 'both' | 'none' | 'venue' = 'none'
+    referenceImageMode: 'avatar' | 'product' | 'both' | 'none' | 'venue' | 'avatar_venue' = 'none'
 ): Promise<string> => {
     
     await delay(2500);
@@ -1923,7 +1933,9 @@ export const generateSceneImage = async (
         2. **VARIES (driven by the Scene Prompt, AUTHORITATIVE over IDENTITY_LOCK):** facial expression, gaze direction, body pose, hand position, and held props (mug, phone, etc.). IDENTITY_LOCK does NOT override scene-driven expressions, gestures, or actions. If the Scene Prompt says "looking down with brow furrowed, holding an empty mug," render exactly that — do not inherit the reference's smile or grip.
         2b. **FACE_TO_CAMERA (REQUIRED whenever the scene carries a script line the avatar speaks aloud):** Camera angle CAN vary (frontal, 3/4, side body, over-shoulder) for cinematic variety per CAMERA_MANDATORY. BUT the avatar's face/head MUST be oriented toward camera enough that BOTH eyes and the mouth are clearly visible — required for downstream lip sync. Side body angle with face turned toward camera = ALLOWED. Eyes-closed, looking-down-at-mug, looking-at-own-pointing-finger, full-side-profile-with-face-away = BANNED for talking scenes. For non-speaking B-roll (avatar performs an action without voice-over), free creative direction.
         3. **CAMERA:** angle, distance, and framing follow the CAMERA_MANDATORY block below.
-        4. **ENVIRONMENT (FLEXIBLE):** Same residence/setting as Reference Image 1 (e.g., the same home interior). The avatar may be in different spots within that residence (kitchen counter → dining table → living room couch) per the Scene Prompt, but never in an unrelated location (no offices, no cafes, no streets).
+        4. **ENVIRONMENT (FLEXIBLE):** ${scriptType === 'RealEstate'
+          ? 'The setting is the PROPERTY being toured (the listing / development) — the agent may move room to room (entrance → sala → kitchen → bedroom → balcony) or stand at the facade per the Scene Prompt. Render a believable Philippine property true-to-tier (never glamorize a modest unit into a luxury one), and never an unrelated location (no malls, no offices, no random streets).'
+          : 'Same residence/setting as Reference Image 1 (e.g., the same home interior). The avatar may be in different spots within that residence (kitchen counter → dining table → living room couch) per the Scene Prompt, but never in an unrelated location (no offices, no cafes, no streets).'}
         5. **ETHNICITY:** Strictly **${ethnicity}**.
         6. **NO_UNSOLICITED_PRODUCT:** Do NOT place the brand's product, packaging, bags, bottles, boxes, or ANY branded/labeled props in the scene unless the Scene Prompt explicitly names them. This frame has no product reference photo — any label you render would be an invented fake, the single worst brand-trust failure. Generic unbranded props (plain mug, plain laptop) are fine. When in doubt, leave the surface empty.
         `;
@@ -1980,6 +1992,18 @@ export const generateSceneImage = async (
            exactly; never invent or substitute a new logo.
         6. **LUMEN_SYNC:** Keep the lighting character (warmth/coolness) of Reference Image 1.
         `;
+    } else if (referenceImageMode === 'avatar_venue' && references.avatarUrl && references.productUrl) {
+        // RealEstate avatar-in-property: the AGENT (Ref 1) stands INSIDE the user's REAL room (Ref 2).
+        // Combines avatar IDENTITY_LOCK with the venue PLACE_IDENTITY_LOCK + CAMERA_FREEDOM.
+        consistencyRules = `
+        **AGENT_IN_PROPERTY (Reference Image 1 = the AGENT; Reference Image 2 = the REAL property room):**
+        1. **IDENTITY (Reference Image 1, LOCKED across scenes — non-negotiable):** preserve face, skin tone, bone structure, hair styling (color AND style), wardrobe (color, cut, fabric — the SAME outfit every scene), body type. Scene action MAY change pose/expression/gesture, but NEVER identity or wardrobe.
+        1b. **FACE_TO_CAMERA (required whenever the agent speaks the line):** both eyes AND mouth clearly visible for lip-sync. Camera angle can vary (frontal, 3/4, side body) but the face stays toward camera. Eyes-closed / full-side-profile-face-away = BANNED for talking scenes.
+        2. **ENVIRONMENT (Reference Image 2 = PLACE_IDENTITY_LOCK):** Place the agent AT this exact real place — if Reference Image 2 is a room INTERIOR, she is INSIDE it; if it is the building EXTERIOR / facade, she stands IN FRONT OF it. Reproduce the SAME layout/structure, furniture/fixtures, materials, palette, and signage as Reference Image 2 — the SAME actual place, NOT a look-alike and NOT an invented one. **CAMERA_FREEDOM:** you MAY change angle, distance, and framing to fit the beat, but it must stay recognizably the SAME place seen from a new viewpoint (keep rotation MODERATE).
+        3. **TIER_TRUTH:** match the real tier of Reference Image 2 — NEVER upgrade or glamorize. Forbidden: "luxury", "high-end", "premium", "upscale", "5-star", "resort", "modern minimalist". A modest unit stays modest.
+        4. **ETHNICITY:** the agent is strictly ${ethnicity} (authentically Filipino, not glamorized).
+        5. **NO_UNSOLICITED_PRODUCT:** do NOT add branded packaging, boxes, or invented props — this is a property walkthrough, not a product ad.
+        `;
     } else {
         consistencyRules = `
         **STRICT_NEGATIVE (VISUAL AIDS):**
@@ -1995,7 +2019,7 @@ export const generateSceneImage = async (
     // mandatory face demand contradicts the NO-HUMAN rules and pulls the person from the hero
     // reference photo into frame (2026-06-10 validation render: hook end-frame person leak —
     // the 627ccb2 rule-5 text fix alone couldn't beat a MUST-render-a-face instruction).
-    const humanSubjectInFrame = referenceImageMode === 'avatar' || referenceImageMode === 'both';
+    const humanSubjectInFrame = referenceImageMode === 'avatar' || referenceImageMode === 'both' || referenceImageMode === 'avatar_venue';
     const randomAngle = AVATAR_CAMERA_ANGLES[variationIndex % AVATAR_CAMERA_ANGLES.length];
     const cameraMandatory = humanSubjectInFrame ? `
     **CAMERA_MANDATORY (overrides IDENTITY_LOCK's default-frontal preference):**
@@ -2022,12 +2046,12 @@ export const generateSceneImage = async (
     const realismProtocol = scriptType === 'Cinematic' ? REALISM_INSTRUCTION_CINEMATIC : REALISM_INSTRUCTION_UGC;
     const brandColorInstruction = brandColors.length > 0 ? `\n**BRAND COLORS:** Incorporate these colors subtly: ${brandColors.join(', ')}` : '';
 
-    // Services scenes can place a Filipino CUSTOMER / staff in non-avatar b-roll (e.g. the
-    // problem-hook). The non-avatar render modes inject NO ethnicity → the model defaulted to a
-    // foreign/Western person (Naya smoke 2026-06-21). Scoped to scriptType==='Services' so the
-    // product / MrBeast / Testimonial / Temu / Cinematic paths stay byte-identical.
-    const serviceCastLock = (scriptType === 'Services')
-      ? `\n**FILIPINO_CAST_LOCK:** This is a Philippine business. Any human who appears — customer, staff, bystander, or even just hands — MUST be Filipino${ethnicity && !ethnicity.startsWith('Global') ? ` (${ethnicity})` : ''} (authentically Filipino face, build, and styling). NEVER render a foreign / Western / non-Filipino person.`
+    // Services / RealEstate scenes can place a Filipino CUSTOMER / staff / agent in non-avatar b-roll
+    // (e.g. the problem-hook, an agent at the facade). The non-avatar render modes inject NO ethnicity
+    // → the model defaulted to a foreign/Western person (Naya smoke 2026-06-21). Scoped to Services +
+    // RealEstate so the product / MrBeast / Testimonial / Temu / Cinematic paths stay byte-identical.
+    const serviceCastLock = (scriptType === 'Services' || scriptType === 'RealEstate')
+      ? `\n**FILIPINO_CAST_LOCK:** This is a Philippine business. Any human who appears — customer, staff, agent, bystander, or even just hands — MUST be Filipino${ethnicity && !ethnicity.startsWith('Global') ? ` (${ethnicity})` : ''} (authentically Filipino face, build, and styling). NEVER render a foreign / Western / non-Filipino person.`
       : "";
 
     // 4. COMBINE EVERYTHING INTO THE FINAL PROMPT
