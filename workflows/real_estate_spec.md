@@ -69,7 +69,17 @@ bedroom/view). Confirm: agent-led walkthrough script (agent voice, not customer)
 (no checkout). Run the same-room/2-angles identity check. **Quality call is Neil's.**
 Smoke assets live in `.tmp/` (defreezer-wiped) — re-source listing photos at smoke time.
 
+## Status update (2026-06-22)
+SHIPPED. Smoke PASSED with an uploaded Filipino agent: avatar-in-property landed (agent inside the real
+sala/bedroom, identity + lanyard preserved), b-roll anchored to uploads, agent-led script with the
+CMO-tuned legitimacy + affordability + keyword-DM beats. Post-smoke refinements added: `avatar_venue`
+render mode (incl. exterior facade on the CTA shot), agent wardrobe (lanyard) on generated avatars.
+
 ## Follow-ups / deferred
+- **MORE FORMATS (Neil, 2026-06-22):** add a **buyer/owner UGC-testimonial** Real Estate format — a client
+  who BOUGHT a house sharing their experience (first-person buyer voice, softer "ask them how / inquire"
+  CTA, pambahay OK). Expose alongside agent-led via a "Who's on camera?" toggle (Agent broker ↔ Happy
+  buyer); the Testimonial/Services voice already exists to build on. Maybe a developer pre-selling format too.
 - Curated `public/examples/realestate-{listing,agent,developer}.png` upload-sample images (tiles fall back
   to a lucide icon until present — same pattern as Services).
 - Agent archetype: the `agent` slot photo currently syncs into `productImageUrls` but is not used as an

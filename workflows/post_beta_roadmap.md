@@ -491,13 +491,21 @@ Neil: Google OAuth login + the photos.
 
 ### 13. New Ad Style — Real Estate vertical
 
-> **Status (2026-06-22): 🔨 BUILT — smoke pending.** Spec LOCKED via grill-me →
-> [`real_estate_spec.md`](real_estate_spec.md). Slices 1–6 landed (types + Step 2 UI +
-> ad-script branch + storyboard routing + cast-lock/avatar carve-out + bundle-leak marker); build green.
-> **Remaining:** `smoke-tester` E2E on a real Filipino listing (agent-led walkthrough, scenes anchored to
-> uploaded rooms, optional price, same-room/2-angle identity check) → then flip to SHIPPED on merge.
-> Key reuse: rides the Services Phase 2 venue render-mode + venueSlot routing unchanged.
-> Working plan: [`this_week_plan.md`](this_week_plan.md) (step 4).
+> **Status (2026-06-22): ✅ SHIPPED & merged to main.** Spec LOCKED via grill-me →
+> [`real_estate_spec.md`](real_estate_spec.md). Agent-led property walkthrough: types + Step 2 UI +
+> tuned ad-script + storyboard routing + cast-lock + bundle-leak marker, PLUS CMO-tuned refinements
+> (legitimacy/affordability/keyword-DM beats), agent wardrobe (lanyard), and **avatar-in-property**
+> (`avatar_venue` render mode — the agent stands INSIDE the real uploaded rooms, incl. the facade on
+> the CTA shot). Smoke PASSED 2026-06-22 (Bahay Realty / Imus 3BR, uploaded Filipino agent): agent in
+> real sala/bedroom, identity + lanyard preserved across scenes, b-roll anchored to uploads. Build +
+> bundle-leak + 278 tests green. Key reuse: rides the Services Phase 2 venue render-mode + venueSlot.
+>
+> **Follow-up (Neil, 2026-06-22) — add more Real Estate formats:** beyond the agent-led walkthrough,
+> add a **buyer/owner UGC-testimonial** format — a client who BOUGHT a house sharing their experience
+> (first-person buyer voice, softer "inquire/ask them how" CTA, pambahay OK). Door already left open:
+> the Testimonial/Services voice exists; expose via a small "Who's on camera?" toggle inside Real
+> Estate (Agent broker ↔ Happy buyer). Possibly also a developer-pre-selling format. Spec via grill-me
+> when picked up.
 
 **What:** An ad style tuned for **real-estate** listings/agents — property walkthroughs,
 location/lifestyle framing, price + inquiry CTAs. More bespoke scene logic than Services
