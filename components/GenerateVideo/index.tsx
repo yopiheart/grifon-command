@@ -890,7 +890,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
       </div>
       <div>
         <h1 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight break-words whitespace-normal leading-tight">
-          Generate Video
+          Render Bay
         </h1>
         <p className={`${labelCaps} mt-2`}>
           //{' '}

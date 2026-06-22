@@ -112,6 +112,18 @@ Marketing pages (landing, pricing, sales) MAY include **at most ONE** full-width
 - The band must be fully opaque and sit above global chrome (flashlight/grid): `relative z-10`.
 - Never propagate `proof-band` into the app shell, wizard, dashboard, or modules. One band per page, marketing only.
 
+### Per-module identity (in-app)
+
+Gold `#FFCC00` is the sole **action** color — every CTA, primary button, focus ring, toggle, selected/active state, and nav active state, app-wide. That rule is absolute and unchanged.
+
+For module **identity** only, each dashboard module additionally carries a signature **hue** + **lucide icon** from the GRIFON COMMAND registry ([config/moduleIdentity.ts](config/moduleIdentity.ts)). The hue gives each module its own "world" without fracturing the one design system:
+
+- **Allowed (identity surfaces only):** the module's icon, its icon-tile background (hue at ~10% alpha), the module header glow, and decorative in-module accents. Apply via **inline style** (hex + alpha) — never dynamic Tailwind classes, which the purge step strips.
+- **Forbidden:** never tint an action with the hue. CTAs, buttons, focus rings, selected/active states, and links stay gold. "Gold = do this" must never be diluted.
+- **Palette (tactical; no banned pink/cyan):** Director AI `#FFCC00` · Recon `#60A5FA` · War Room `#F87171` · Broadcast `#34D399` · Render Bay `#A78BFA` · Signal Modulator `#818CF8` · Edit Bay `#94A3B8` · Hook Lab `#A3E635` · Cinema Command `#2DD4BF` · Influencer Forge `#FB923C` · Creative Strike `#FBBF24` · Image Lab `#4ADE80` · Campaign Planner `#A8A29E` · Intelligence Uplink `#818CF8` (internal).
+
+This is the ONLY sanctioned use of non-gold hues. Outside module identity, gold remains the only accent.
+
 ## Typography
 
 - **headline-display / headline-lg:** Inter / Geist / SF Pro — clean geometric sans. Page titles frequently use a gradient fill (`bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500`) for the cinematic effect. Vertical (`to-b`) over horizontal (`to-r`) — multi-line headlines fade top-to-bottom like a movie title card; horizontal washes look like a banner gradient and break the cinematic register.
@@ -172,5 +184,5 @@ The dashboard (`components/Dashboard.tsx` and its exclusive cards — `CommandPa
 **Don't:**
 - Don't use `bg-black` — always `bg-zinc-950` (surface).
 - Don't use conventional drop shadows for elevation — use glass + blur.
-- Don't introduce new accent colors — gold is the only driver.
+- Don't introduce new accent colors — gold is the only driver. (Sole exception: the documented per-module **identity** hues — icon/header/glow only, never actions. See Colors → Per-module identity.)
 - Don't use icon fonts or text-string icons — lucide-react only.

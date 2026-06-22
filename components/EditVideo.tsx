@@ -293,7 +293,7 @@ const BatchEditMode: React.FC<{
           </div>
           <div>
             <h1 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight break-words whitespace-normal leading-tight">
-              Viral Video Editor <span className="text-[#FFCC00]">// FINAL RENDER</span>
+              Edit Bay <span className="text-[#FFCC00]">// FINAL RENDER</span>
             </h1>
             <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mt-2">
               // VOICE CONSOLIDATION → DEAD-AIR TRIM → FINAL MP4
@@ -736,7 +736,7 @@ const EditVideo: React.FC<EditVideoProps> = ({ onBack, editorBatch, avatarGender
           </div>
           <div>
             <h1 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight break-words whitespace-normal leading-tight">
-                Viral Video Editor
+                Edit Bay
             </h1>
             <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mt-2">
                 // TURN RAW FOOTAGE INTO VIRAL GOLD
