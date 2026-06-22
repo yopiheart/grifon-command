@@ -491,8 +491,13 @@ Neil: Google OAuth login + the photos.
 
 ### 13. New Ad Style — Real Estate vertical
 
-> **Status (2026-06-16): ⚡ PROMOTED TO ACTIVE — building this week.** Not parked.
-> Working plan: [`this_week_plan.md`](this_week_plan.md) (step 4). Spec via `grill-me` first.
+> **Status (2026-06-22): 🔨 BUILT — smoke pending.** Spec LOCKED via grill-me →
+> [`real_estate_spec.md`](real_estate_spec.md). Slices 1–6 landed (types + Step 2 UI +
+> ad-script branch + storyboard routing + cast-lock/avatar carve-out + bundle-leak marker); build green.
+> **Remaining:** `smoke-tester` E2E on a real Filipino listing (agent-led walkthrough, scenes anchored to
+> uploaded rooms, optional price, same-room/2-angle identity check) → then flip to SHIPPED on merge.
+> Key reuse: rides the Services Phase 2 venue render-mode + venueSlot routing unchanged.
+> Working plan: [`this_week_plan.md`](this_week_plan.md) (step 4).
 
 **What:** An ad style tuned for **real-estate** listings/agents — property walkthroughs,
 location/lifestyle framing, price + inquiry CTAs. More bespoke scene logic than Services

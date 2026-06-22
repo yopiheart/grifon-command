@@ -6,7 +6,7 @@ import { compressImageForUpload } from '../utils/imageCompression';
 import { GlassPanel } from './ui/GlassPanel';
 import { GoldButton } from './ui/GoldButton';
 import Loader from './ui/Loader';
-import { Check, Package, ShoppingBag, Sparkles, Store, UploadCloud, X } from 'lucide-react';
+import { Building2, Check, Package, ShoppingBag, Sparkles, Store, UploadCloud, X } from 'lucide-react';
 
 type ServiceArchetype = NonNullable<BusinessInfo['serviceArchetype']>;
 
@@ -90,6 +90,73 @@ const inferServiceArchetype = (text: string): ServiceArchetype => {
   return 'venue';
 };
 
+// ── RealEstate (#13) — mirrors the Services archetype machinery above. A property is a real PLACE,
+// so it rides the SAME servicePhotos / venue-render-mode / venueSlot pipeline; only the labels,
+// guided slots, and inference keywords differ. Internal values stay engine-clean
+// (listing|agent|developer); labels are Bryan-facing outcomes (humble/PH realism guardrail).
+type RealEstateArchetype = NonNullable<BusinessInfo['realEstateArchetype']>;
+
+const RE_ARCHETYPE_META: Record<RealEstateArchetype, {
+  label: string; sub: string; lead: string; samples: { src: string; caption: string }[];
+}> = {
+  listing: {
+    label: 'Sell this property', sub: 'House, condo, lot — sale or rent', lead: 'The property',
+    samples: [{ src: '/examples/realestate-listing.png', caption: 'The property — bright & wide' }],
+  },
+  agent: {
+    label: 'Build my agent brand', sub: 'Broker / realtor personal brand', lead: 'You + your listings',
+    samples: [{ src: '/examples/realestate-agent.png', caption: 'You — trusted & clear' }],
+  },
+  developer: {
+    label: 'Launch a project', sub: 'Pre-selling / new development', lead: 'The development',
+    samples: [{ src: '/examples/realestate-developer.png', caption: 'The project — unit / render' }],
+  },
+};
+const RE_ARCHETYPE_ORDER: RealEstateArchetype[] = ['listing', 'agent', 'developer'];
+
+// Guided property-photo slots per archetype (the slot the user drops into IS the photo's tag →
+// drives per-scene venueSlot routing downstream, identical mechanism to Services venues).
+const RE_UPLOAD_SLOTS: Record<RealEstateArchetype, { slot: ServiceSlot; label: string; hint: string }[]> = {
+  listing: [
+    { slot: 'facade', label: 'Exterior', hint: 'facade / curb view' },
+    { slot: 'living', label: 'Living area', hint: 'sala / main space' },
+    { slot: 'kitchen', label: 'Kitchen', hint: 'optional' },
+    { slot: 'bedroom', label: 'Bedroom', hint: 'optional' },
+    { slot: 'view', label: 'View / balcony', hint: 'optional' },
+  ],
+  agent: [
+    { slot: 'agent', label: 'You', hint: 'friendly, clear headshot' },
+    { slot: 'facade', label: 'A listing', hint: 'exterior of a property you sell' },
+    { slot: 'living', label: 'Inside a listing', hint: 'optional' },
+    { slot: 'view', label: 'Best feature', hint: 'optional' },
+  ],
+  developer: [
+    { slot: 'facade', label: 'Building / render', hint: 'project exterior or render' },
+    { slot: 'living', label: 'Model unit', hint: 'showroom interior' },
+    { slot: 'amenities', label: 'Amenities', hint: 'pool / gym / lobby' },
+    { slot: 'location', label: 'Location', hint: 'neighborhood / map area' },
+  ],
+};
+
+// Smart-default the real-estate archetype from the user's own words (SCORE-by-keyword, like Services).
+// Ties / no match → 'listing' (the most common single-seller case + safest visual: property is hero).
+const inferRealEstateArchetype = (text: string): RealEstateArchetype => {
+  const t = (text || '').toLowerCase();
+  const score = (...words: string[]) => words.reduce((n, w) => n + (t.includes(w) ? 1 : 0), 0);
+  // Person-as-draw — broker building a personal brand.
+  const agent = score('agent', 'broker', 'realtor', 'realty', 'salesperson', 'kasama mo', 'i help you find');
+  // Project-as-draw — developer pre-selling a new development.
+  const developer = score('pre-sell', 'preselling', 'pre-selling', 'developer', 'rfo', 'turnover',
+    'model unit', 'showroom', 'subdivision', 'township', 'enclave', 'project launch', 'new development');
+  // Property-as-draw — a specific unit/lot for sale or rent.
+  const listing = score('house', 'condo', 'lot', 'townhouse', 'apartment', 'studio', 'bungalow',
+    'duplex', 'bahay', 'lupa', 'for sale', 'for rent', 'resale', 'foreclosed', 'unit');
+  if (agent >= developer && agent >= listing && agent > 0) return 'agent';
+  if (developer >= listing && developer > 0) return 'developer';
+  if (listing > 0) return 'listing';
+  return 'listing';
+};
+
 // One upload-sample tile: image with an icon fallback so a missing/late JPG never shows a broken
 // image (the curated PNGs land in public/examples/; until then the tile degrades to a lucide icon).
 const SampleTile: React.FC<{ src: string; caption: string; good: boolean }> = ({ src, caption, good }) => {
@@ -135,17 +202,24 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleScriptTypeSelect = (type: 'MrBeast' | 'Testimonial' | 'Temu' | 'Custom' | 'Services') => {
+  const handleScriptTypeSelect = (type: 'MrBeast' | 'Testimonial' | 'Temu' | 'Custom' | 'Services' | 'RealEstate') => {
     setFormData(prev => ({ ...prev, scriptType: type }));
   };
 
-  // Product vs Service gate. Product-formulated styles (MrBeast/Testimonial/Temu) and the
-  // Services style are mutually exclusive in the picker; Custom shows in both. Derived from
-  // businessType, falling back to the current scriptType for resumed drafts.
-  const businessType: 'product' | 'service' =
-    formData.businessType ?? (formData.scriptType === 'Services' ? 'service' : 'product');
+  // Product / Service / Real-Estate gate. Product-formulated styles (MrBeast/Testimonial/Temu), the
+  // Services style, and the RealEstate style are mutually exclusive in the picker; Custom shows in
+  // all. Derived from businessType, falling back to the current scriptType for resumed drafts.
+  const businessType: 'product' | 'service' | 'realestate' =
+    formData.businessType
+      ?? (formData.scriptType === 'Services' ? 'service'
+        : formData.scriptType === 'RealEstate' ? 'realestate'
+        : 'product');
 
   const isServices = businessType === 'service' && formData.scriptType === 'Services';
+  const isRealEstate = businessType === 'realestate' && formData.scriptType === 'RealEstate';
+  // Both Services and RealEstate use the guided real-photo upload + archetype picker (a property is
+  // a real place → same servicePhotos/venue pipeline). isGuided toggles the shared UI fork.
+  const isGuided = isServices || isRealEstate;
   // What the ad leads with. Falls back to the inferred default so the UI + sample strip have a
   // value even on the first render before the auto-select effect writes it into state.
   const effectiveArchetype: ServiceArchetype = formData.serviceArchetype
@@ -153,6 +227,12 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
 
   const selectArchetype = (a: ServiceArchetype) =>
     setFormData(prev => ({ ...prev, serviceArchetype: a }));
+
+  // RealEstate archetype — mirrors the Services pair above.
+  const effectiveReArchetype: RealEstateArchetype = formData.realEstateArchetype
+    ?? inferRealEstateArchetype(`${formData.product || ''} ${formData.productImageDescription || ''} ${formData.features || ''}`);
+  const selectReArchetype = (a: RealEstateArchetype) =>
+    setFormData(prev => ({ ...prev, realEstateArchetype: a }));
 
   // Auto-pre-select the archetype when Services is active and none chosen yet — never clobber a
   // prior pick (re-entry / resumed draft / manual override). Mirrors the businessType smart-default.
@@ -166,13 +246,26 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
     );
   }, [formData.scriptType, formData.serviceArchetype, formData.product, formData.productImageDescription, formData.features]);
 
-  const selectBusinessType = (bt: 'product' | 'service') => {
+  // RealEstate counterpart of the Services auto-select effect above.
+  useEffect(() => {
+    if (formData.scriptType !== 'RealEstate' || formData.realEstateArchetype) return;
+    const inferred = inferRealEstateArchetype(
+      `${formData.product || ''} ${formData.productImageDescription || ''} ${formData.features || ''}`,
+    );
+    setFormData(prev =>
+      prev.scriptType === 'RealEstate' && !prev.realEstateArchetype ? { ...prev, realEstateArchetype: inferred } : prev,
+    );
+  }, [formData.scriptType, formData.realEstateArchetype, formData.product, formData.productImageDescription, formData.features]);
+
+  const selectBusinessType = (bt: 'product' | 'service' | 'realestate') => {
     setFormData(prev => {
       const productOk: string[] = ['MrBeast', 'Testimonial', 'Custom'];
       const serviceOk: string[] = ['Services', 'Custom'];
+      const realEstateOk: string[] = ['RealEstate', 'Custom'];
       let scriptType = prev.scriptType;
-      // Keep a valid selection for the chosen group (preserve Custom across both).
+      // Keep a valid selection for the chosen group (preserve Custom across all).
       if (bt === 'service' && !serviceOk.includes(scriptType ?? '')) scriptType = 'Services';
+      if (bt === 'realestate' && !realEstateOk.includes(scriptType ?? '')) scriptType = 'RealEstate';
       if (bt === 'product' && !productOk.includes(scriptType ?? '')) scriptType = 'MrBeast';
       return { ...prev, businessType: bt, scriptType };
     });
@@ -257,9 +350,13 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
       const desc = await describeBusinessAsset(c.base64, c.mimeType);
       setFormData(prev => {
         // Read the archetype from prev (not the outer closure) so an override in the same tick sorts right.
-        const arch = prev.serviceArchetype
-          ?? inferServiceArchetype(`${prev.product || ''} ${prev.productImageDescription || ''} ${prev.features || ''}`);
-        const order = ARCHETYPE_UPLOAD_SLOTS[arch].map(s => s.slot);
+        // RealEstate and Services share this handler — pick the matching slot-order for hero-first sync.
+        const blob = `${prev.product || ''} ${prev.productImageDescription || ''} ${prev.features || ''}`;
+        const isRE = (prev.businessType ?? (prev.scriptType === 'RealEstate' ? 'realestate' : '')) === 'realestate'
+          || prev.scriptType === 'RealEstate';
+        const order = isRE
+          ? RE_UPLOAD_SLOTS[prev.realEstateArchetype ?? inferRealEstateArchetype(blob)].map(s => s.slot)
+          : ARCHETYPE_UPLOAD_SLOTS[prev.serviceArchetype ?? inferServiceArchetype(blob)].map(s => s.slot);
         const next = [...(prev.servicePhotos || []).filter(p => p.slot !== slot), { url: c.dataUrl, slot, description: desc }]
           .sort((a, b) => order.indexOf(a.slot) - order.indexOf(b.slot));
         return {
@@ -302,6 +399,15 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
       const val = formData[field];
       return typeof val === 'string' && val.trim() !== '';
   });
+
+  // Shared inputs for the "guided" upload + archetype UI (Services OR RealEstate). Same JSX, just
+  // archetype-specific data — for Services these resolve to the exact prior values (rendering identical).
+  const guidedSamples = isRealEstate ? RE_ARCHETYPE_META[effectiveReArchetype].samples : ARCHETYPE_META[effectiveArchetype].samples;
+  const guidedLead = isRealEstate ? RE_ARCHETYPE_META[effectiveReArchetype].lead : ARCHETYPE_META[effectiveArchetype].lead;
+  const guidedSlots = isRealEstate ? RE_UPLOAD_SLOTS[effectiveReArchetype] : ARCHETYPE_UPLOAD_SLOTS[effectiveArchetype];
+  const guidedArchetypes: { key: string; label: string; sub: string; active: boolean; onSelect: () => void }[] = isRealEstate
+    ? RE_ARCHETYPE_ORDER.map(a => ({ key: a, label: RE_ARCHETYPE_META[a].label, sub: RE_ARCHETYPE_META[a].sub, active: effectiveReArchetype === a, onSelect: () => selectReArchetype(a) }))
+    : ARCHETYPE_ORDER.map(a => ({ key: a, label: ARCHETYPE_META[a].label, sub: ARCHETYPE_META[a].sub, active: effectiveArchetype === a, onSelect: () => selectArchetype(a) }));
 
   return (
     <GlassPanel>
@@ -410,7 +516,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                 // Business Visuals (Upload 3-5 Photos)
             </label>
 
-            {hasImages && !isServices && (
+            {hasImages && !isGuided && (
                 <>
                     <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mb-1">
                         // Photo 1 (HERO) anchors all scene visuals — remove + re-upload to reorder
@@ -443,13 +549,13 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
             {/* Upload examples. For Services, the chosen archetype drives WHICH samples to teach
                 (✓ humble/PH per archetype + a ✗ blurry contrast). For products, the generic icon
                 strip stays. Curated PNGs live in public/examples/ with an icon fallback per tile. */}
-            {isServices ? (
+            {isGuided ? (
               <div className="space-y-2">
                 <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase">
                   // What to upload — clear &amp; bright wins ↓
                 </p>
                 <div className="grid grid-cols-3 gap-3">
-                  {ARCHETYPE_META[effectiveArchetype].samples.map((ex, idx) => (
+                  {guidedSamples.map((ex, idx) => (
                     <SampleTile key={`good-${idx}`} src={ex.src} caption={ex.caption} good />
                   ))}
                   <SampleTile src={BAD_SAMPLE.src} caption={BAD_SAMPLE.caption} good={false} />
@@ -486,7 +592,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
               </div>
             )}
 
-            {!isServices ? (
+            {!isGuided ? (
             <label className="block p-6 border-2 border-dashed border-white/10 bg-zinc-950/50 rounded-xl text-center hover:border-[#FFCC00] hover:bg-zinc-800/80 transition-all cursor-pointer">
                  {isAnalyzing ? (
                     <Loader message="ANALYZING ASSETS..." size="sm" />
@@ -521,7 +627,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                 // Upload your REAL photos — tagged per slot ↓
               </p>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                {ARCHETYPE_UPLOAD_SLOTS[effectiveArchetype].map(({ slot, label, hint }) => {
+                {guidedSlots.map(({ slot, label, hint }) => {
                   const existing = (formData.servicePhotos || []).find(p => p.slot === slot);
                   return (
                     <div key={slot} className="flex flex-col">
@@ -589,6 +695,13 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
             >
                 Service
             </button>
+            <button
+                type="button"
+                onClick={() => selectBusinessType('realestate')}
+                className={`px-5 py-2.5 rounded-xl text-xs font-bold uppercase font-mono border transition-all ${businessType === 'realestate' ? 'bg-[#FFCC00] text-zinc-950 border-[#FFCC00]' : 'bg-zinc-950 text-zinc-400 border-white/10 hover:border-[#FFCC00]'}`}
+            >
+                Real Estate
+            </button>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -634,6 +747,22 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
             </div>
             )}
 
+            {businessType === 'realestate' && (
+            <div
+                onClick={() => handleScriptTypeSelect('RealEstate')}
+                className={`p-6 rounded-xl border cursor-pointer transition-all hover:translate-y-[-2px] ${formData.scriptType === 'RealEstate' ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
+            >
+                <div className="flex justify-between items-center mb-2">
+                    <div className="flex items-center gap-2">
+                        <Building2 className="w-4 h-4 text-[#FFCC00]"/>
+                        <h4 className="font-bold text-white uppercase font-mono text-xs">Real Estate</h4>
+                    </div>
+                    {formData.scriptType === 'RealEstate' && <Check className="w-4 h-4 text-[#FFCC00]" />}
+                </div>
+                <p className="text-[10px] text-zinc-500 font-mono">Walkthrough, Location, Highlights, Inquire.</p>
+            </div>
+            )}
+
             {businessType === 'product' && (
              <div
                 aria-disabled="true"
@@ -671,42 +800,60 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
             </div>
         </div>
 
-        {isServices && (
+        {isGuided && (
             <div className="mt-6 p-6 bg-zinc-900/50 rounded-xl border border-white/10 animate-in fade-in slide-in-from-top-4">
                 {/* Statement-with-✓, not a question: we picked the lead from the description; user can override.
-                    Internal values venue|work|practitioner; labels are Bryan-facing outcomes. */}
+                    Internal values venue|work|practitioner (Services) or listing|agent|developer (RealEstate);
+                    labels are Bryan-facing outcomes. */}
                 <div className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-[#FFCC00]" />
                     <p className="text-sm font-bold text-white font-mono">
-                        Your ad will lead with — <span className="text-[#FFCC00]">{ARCHETYPE_META[effectiveArchetype].lead}</span>
+                        Your ad will lead with — <span className="text-[#FFCC00]">{guidedLead}</span>
                     </p>
                 </div>
                 <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mt-1 mb-4">
                     // We picked this from your description. Not quite? Tap another.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    {ARCHETYPE_ORDER.map((a) => {
-                        const meta = ARCHETYPE_META[a];
-                        const active = effectiveArchetype === a;
-                        return (
-                            <button
-                                key={a}
-                                type="button"
-                                onClick={() => selectArchetype(a)}
-                                className={`p-4 rounded-xl border text-left transition-all hover:translate-y-[-2px] ${active ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
-                            >
-                                <div className="flex justify-between items-center mb-1">
-                                    <span className="text-xs font-bold text-white font-mono uppercase">{meta.label}</span>
-                                    {active && <Check className="w-4 h-4 text-[#FFCC00] shrink-0" />}
-                                </div>
-                                <span className="text-[10px] text-zinc-500 font-mono">{meta.sub}</span>
-                            </button>
-                        );
-                    })}
+                    {guidedArchetypes.map((a) => (
+                        <button
+                            key={a.key}
+                            type="button"
+                            onClick={a.onSelect}
+                            className={`p-4 rounded-xl border text-left transition-all hover:translate-y-[-2px] ${a.active ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
+                        >
+                            <div className="flex justify-between items-center mb-1">
+                                <span className="text-xs font-bold text-white font-mono uppercase">{a.label}</span>
+                                {a.active && <Check className="w-4 h-4 text-[#FFCC00] shrink-0" />}
+                            </div>
+                            <span className="text-[10px] text-zinc-500 font-mono">{a.sub}</span>
+                        </button>
+                    ))}
                 </div>
                 <p className="text-[10px] text-[#FFCC00]/80 font-mono tracking-tighter uppercase mt-3">
                     This decides what your ad shows first.
                 </p>
+
+                {/* RealEstate-only: optional listing price. If given, the ad surfaces it on the CTA beat
+                    + end-card recap; if blank, the ad stays inquiry-only. (Services renders no peso.) */}
+                {isRealEstate && (
+                    <div className="mt-5 pt-5 border-t border-white/10 space-y-2">
+                        <label htmlFor="listingPrice" className="block text-[10px] text-zinc-400 font-mono uppercase tracking-widest">
+                            // Listing Price — Optional
+                        </label>
+                        <input
+                            id="listingPrice"
+                            name="listingPrice"
+                            value={formData.listingPrice || ''}
+                            onChange={handleChange}
+                            placeholder="e.g., ₱4.2M  ·  25k/month  ·  leave blank for inquiry-only"
+                            className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-all text-sm"
+                        />
+                        <p className="text-[9px] text-zinc-500 font-mono tracking-tighter">
+                            Iwanang blangko kung gusto mong &quot;DM for price&quot; lang — hindi ipapakita ang halaga.
+                        </p>
+                    </div>
+                )}
             </div>
         )}
 

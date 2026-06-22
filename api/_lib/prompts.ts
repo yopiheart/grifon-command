@@ -382,6 +382,10 @@ export const buildAdScriptPrompt = (
   // Avatar engine unchanged (customer persona is correct). Phase 2 = per-scene real-photo
   // routing (venue + before/after) gated as Business-tier Advanced Mode.
   const isServices = businessInfo.scriptType === 'Services';
+  // RealEstate (#13): agent-led property walkthrough (first-person agent/seller), inquiry/viewing CTA
+  // (not buy-now), optional price (rendered ONLY if the user supplied one — see PRICE RULE). Reuses
+  // the venue render-mode + venueSlot routing (a property is a real place). Avatar = the AGENT.
+  const isRealEstate = businessInfo.scriptType === 'RealEstate';
 
   const COMMON_RULES = ADSCRIPT_COMMON_RULES(businessInfo, brandName, language);
   const DIRECTOR_CRITIQUE_INSTRUCTION = ADSCRIPT_DIRECTOR_CRITIQUE_INSTRUCTION;
@@ -453,6 +457,60 @@ export const buildAdScriptPrompt = (
          konsulta", "free first consult") — NEVER state a peso figure. Drive to BOOK / MESSAGE /
          INQUIRE via Viber, Messenger/DM, or walk-in — NOT a checkout link. Forbidden: "buy now",
          "add to cart", "order now", product-scarcity ("only 3 left").
+
+      ${DIRECTOR_CRITIQUE_INSTRUCTION}
+      ${USER_CHOSEN_ANGLE_BLOCK}
+      Format: Return valid JSON: { "hook1": [...], "hook2": [...], "body": [...], "strategicAudit": "..." }
+    `;
+  } else if (isRealEstate) {
+    const priceGiven = !!(businessInfo.listingPrice && businessInfo.listingPrice.trim());
+    const PRICE_RULE = priceGiven
+      ? `A price was given: "${businessInfo.listingPrice!.trim()}". You MAY state it ONCE on the CTA beat EXACTLY as given — do NOT invent, round, convert, or add financing/monthly terms the user did not provide. Pair it with the inquiry CTA.`
+      : `NO price was given — this ad is INQUIRY-ONLY. NEVER invent or imply a peso figure. Drive to "message/DM for price & viewing".`;
+    return `
+      Role: Senior Direct Response Copywriter for Filipino REAL ESTATE sellers.
+      Strategy: Agent-Led Property Walkthrough — the agent/seller TOURS the property and drives an
+      inquiry/viewing, NOT a checkout.
+      Listing: "${businessInfo.product}"
+      Brand: "${brandName}"
+
+      ${COMMON_RULES}
+      ${HOOK_SEED_PROTOCOL}
+
+      **VOICE — FIRST-PERSON AGENT/SELLER (warm, trusted, never hypey):**
+      The speaker is the agent/broker/seller personally showing the property — "Pasok tayo,"
+      "Tingnan natin ang...". NOT a customer testimonial, NOT a faceless announcer. A kasama who
+      helps you find a home, not a hard-seller. NEVER write "Ako si [customer name]" — this is the
+      agent's own voice touring the place.
+
+      **ARCHETYPE AUTO-ADAPT (infer from the listing + "${businessInfo.audience}"):**
+      - LISTING (one house/condo/lot): the PROPERTY is the hero — walk the spaces, sell the lifestyle.
+      - AGENT (personal brand): lead with the agent's trust + service; listings are proof they deliver.
+      - DEVELOPER (pre-selling): the development is the hero — model unit, amenities, location,
+        RFO/turnover.
+
+      **REAL ESTATE WALKTHROUGH 6-BEAT (agent-led; price is OPTIONAL — see PRICE RULE):**
+      0. **Hook (3s / 5-8 words):** Pattern interrupt on the DREAM or the DEAL. Hit ONE of: {the
+         lifestyle/feeling of the place} · {the specific standout feature} · {the "is this real?"
+         value}. PROVIDE 2 VARIATIONS — populate hook1 AND hook2. NEVER a demographic label.
+      1. **Location / Lifestyle:** Anchor WHERE it is + the life they'd live here — who it fits
+         ("${businessInfo.audience}") carried implicitly by the scene, NOT a demographic tag.
+      2. **The Walkthrough:** Tour the standout spaces ("Pasok tayo sa sala... ang kusina dito...").
+         Name real rooms/features from "${businessInfo.features}". This is the heart — make them
+         picture themselves living inside.
+      3. **The Standout / Differentiator:** The ONE thing that makes it worth it — anchor on
+         "${businessInfo.separator}" (view, location, price-per-sqm, amenities, flexible terms). Use a
+         COMPLETE verb construction, never a verbless fragment. If the differentiator is empty, lead
+         with the strongest feature instead.
+      4. **Trust / Disarm:** Disarm the category's #1 fear — legitimacy / clean title / hidden costs /
+         "baka scam" — with calm proof (clean title, in-person viewing welcome, transparent terms).
+         HONESTY RULE: never fabricate guarantees, fake awards, or invented accreditations.
+      5. **Price + CTA:** ${priceGiven ? 'State the price per PRICE RULE, then drive' : 'Drive'} to
+         MESSAGE / DM / book a VIEWING (Viber, Messenger, call, walk-in) — NOT a checkout link.
+         Forbidden: "buy now", "add to cart", "order now", product-scarcity gimmicks ("only 3 left").
+         Real urgency only if true (e.g. "limited units", "RFO", "pre-selling price").
+
+      **PRICE RULE:** ${PRICE_RULE}
 
       ${DIRECTOR_CRITIQUE_INSTRUCTION}
       ${USER_CHOSEN_ANGLE_BLOCK}
@@ -808,6 +866,7 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
   const productDesc = businessInfo.productImageDescription || 'N/A';
   const isTemu = businessInfo.scriptType === 'Temu';
   const isServices = businessInfo.scriptType === 'Services';
+  const isRealEstate = businessInfo.scriptType === 'RealEstate';
 
   const DIRECTOR_CRITIQUE_INSTRUCTION = `
     **DIRECTOR_CRITIQUE_PROTOCOL:**
@@ -878,6 +937,39 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
           real, modest, true-to-tier level (warm, simple, lived-in, authentically Filipino).
         - Setting, faces, clothing, vehicles, signage, props must read authentically Filipino.
         `;
+  } else if (isRealEstate) {
+    strategyInstructions = `
+        **STRATEGY: AGENT-LED PROPERTY WALKTHROUGH**
+        1. **SCENE 1 (THE HOOK):** the dream/standout or an establishing EXTERIOR of the property —
+           NOT a product reveal, NOT a held object. Open on the place or the feeling of living there.
+        2. **SCENE 2 (THE CONNECTION):** **MUST be "Avatar Talking"** — the AGENT/seller introducing
+           the place in their own voice (NOT a customer testimonial). Bridge from the hook.
+        3. **MIDDLE SCENES:** Alternate **Avatar Talking (agent)** with **Property B-Roll** — the
+           rooms, spaces, view, and amenities being toured. (See REAL-ESTATE ARCHETYPE below.)
+        4. **FINAL SCENE (CTA):** the agent inviting the viewer to message / book a viewing (phone/
+           message gesture).
+
+        **REAL-ESTATE ARCHETYPE — decide what the b-roll SHOWS (infer from the listing + photos):**
+        - **LISTING** (one house/condo/lot): the PROPERTY's spaces are the draw — facade, sala,
+          kitchen, bedroom, view. Walk the viewer through it so they picture themselves living there.
+        - **AGENT** (personal brand): the AGENT is the draw — feature them on camera + a listing or two
+          as proof they deliver. Lean on trust.
+        - **DEVELOPER** (pre-selling): the PROJECT is the draw — model unit, amenities, location/site,
+          render/turnover.
+
+        **PHILIPPINE GROUND-TRUTH REALISM (mandatory):**
+        - This is a Philippine property. Treat the uploaded photo description ("${productDesc}") as
+          VISUAL GROUND TRUTH; render the property true-to-its-real-TIER. A modest unit stays modest —
+          do NOT upgrade a townhouse into a luxury penthouse.
+        - FORBIDDEN: inventing rooms / views / amenities / finishes grander or different from what the
+          photos/description evidence.
+        - FORBIDDEN AESTHETIC WORDS (in every scene's imagePrompt / startFramePrompt / endFramePrompt):
+          never write "high-end", "luxury", "luxurious", "premium", "upscale", "5-star", "resort",
+          "modern minimalist", or "sleek" unless the uploaded photo's tier actually evidences it. Even
+          when the brief/differentiator/benefit uses aspirational language, IGNORE it for the VISUALS —
+          the uploaded photo's tier is the ONLY ground truth.
+        - Setting, faces, clothing, signage, props must read authentically Filipino.
+        `;
   } else {
     strategyInstructions = `
         **STRATEGY: NARRATIVE RETENTION RHYTHOR**
@@ -892,17 +984,25 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
   // UPLOADED slot, chosen ONLY from what the user actually uploaded. Empty list → no block →
   // current prompt unchanged. Renderer (Slice 5) consumes scene.venueSlot to anchor the real photo.
   const availableServiceSlots = (businessInfo.servicePhotos || []).map(p => p.slot);
-  const venueSlotRouting = (isServices && availableServiceSlots.length > 0) ? `
-      **VENUE_SLOT_ROUTING (Services — anchor scenes to the user's REAL uploaded photos):**
-      The user uploaded real photos tagged by slot. AVAILABLE SLOTS: ${availableServiceSlots.join(', ')}.
-      For each scene that depicts the business's PLACE, RESULT, or STAFF, add a "venueSlot" field set to
-      the ONE available slot that best fits — chosen ONLY from the list above. Map by meaning:
+  // Slot→meaning legend differs by style: Services venues vs RealEstate property rooms. Same routing
+  // mechanism (renderer consumes scene.venueSlot to anchor the real photo); only the mapping changes.
+  const slotLegend = isRealEstate ? `
+        establishing / arrival / exterior shot      -> facade
+        inside a room being toured                  -> living, kitchen, or bedroom (pick the fitting one)
+        the view / balcony / outlook beat           -> view
+        amenities (pool / gym / lobby) beat         -> amenities
+        the neighborhood / location beat            -> location` : `
         establishing / arrival ("dinala ako sa...") -> exterior
         the service happening / inside the place    -> interior
         mood / relief / ambiance beat               -> ambiance
         the practitioner or staff at work           -> staff
         the problem / before-state                  -> before
-        the result / after-state                    -> after
+        the result / after-state                    -> after`;
+  const venueSlotRouting = ((isServices || isRealEstate) && availableServiceSlots.length > 0) ? `
+      **VENUE_SLOT_ROUTING (anchor scenes to the user's REAL uploaded photos):**
+      The user uploaded real photos tagged by slot. AVAILABLE SLOTS: ${availableServiceSlots.join(', ')}.
+      For each scene that depicts the ${isRealEstate ? 'PROPERTY, a ROOM, the VIEW, AMENITIES, or the LOCATION' : "business's PLACE, RESULT, or STAFF"}, add a "venueSlot" field set to
+      the ONE available slot that best fits — chosen ONLY from the list above. Map by meaning:${slotLegend}
       Rules: use a slot ONLY if it is in AVAILABLE SLOTS; if none fits, OMIT "venueSlot" (renderer falls
       back to representative generation). NEVER invent a slot not in the list. Avatar talking-head scenes
       (referenceImage="avatar") OMIT "venueSlot".
