@@ -16,6 +16,7 @@ import { useActiveJobs } from '../hooks/useActiveJobs';
 import { useServerRenderJobs } from '../hooks/useServerRenderJobs';
 import { OnboardingNudge } from './ui/OnboardingNudge';
 import { ResumeDraftCard } from './ui/ResumeDraftCard';
+import { SignatureScribble } from './landing/SignatureScribble';
 import { getSession, clearSession, type WizardSessionV1 } from '../services/wizardSessionStore';
 import { MODULE_IDENTITY, getModuleIdentity, hueAlpha } from '../config/moduleIdentity';
 import { DashboardSidebar, type SidebarNavItem } from './dashboard/DashboardSidebar';
@@ -342,7 +343,14 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
               initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
               className="text-center text-2xl sm:text-3xl lg:text-4xl font-normal tracking-tight text-zinc-200 mb-2"
             >
-              {dayPart}, <span className="font-semibold text-white">{firstName}</span>.
+              {dayPart},{' '}
+              {isDesktop ? (
+                <SignatureScribble variant="underline" delay={0.9} strokeWidth={2.5}>
+                  <span className="font-semibold text-white">{firstName}</span>
+                </SignatureScribble>
+              ) : (
+                <span className="font-semibold text-white">{firstName}</span>
+              )}.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}
