@@ -52,6 +52,19 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
     }
   }, []);
 
+  // Hero handoff — a one-shot prompt typed on the dashboard prefills the product
+  // description so Recon starts from the user's own words. One-time, then cleared.
+  useEffect(() => {
+    try {
+      const hero = localStorage.getItem('grifon_heroPrompt');
+      if (hero) {
+        setFormData(prev => ({ ...prev, productDescription: prev.productDescription || hero }));
+        localStorage.removeItem('grifon_heroPrompt');
+        localStorage.removeItem('grifon_heroPromptTs');
+      }
+    } catch { /* best-effort */ }
+  }, []);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
     if (type === 'checkbox') {
