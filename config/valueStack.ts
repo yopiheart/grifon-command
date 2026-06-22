@@ -20,7 +20,7 @@ export const PRO_VALUE_STACK: ValueStackEntry[] = [
   { item: '300 Ad Captions & Headlines', value: '₱15,000' },
   { item: '150 AI Ad Images', value: '₱15,000' },
   { item: '8 Finished AI Video Ads', value: '₱40,000' },
-  { item: 'Monthly Strategy Call', value: '₱5,000' },
+  { item: 'Monthly Group Call', value: '₱5,000' },
   { item: 'Private Community Access', value: '₱2,500' },
 ];
 
