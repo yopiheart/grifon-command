@@ -62,7 +62,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = (props) => {
           aria-label={mobile ? 'GRIFON' : 'Toggle sidebar'}
         >
           <GrifonMark className="h-9 w-9 shrink-0 group-hover:scale-105 transition-transform" />
-          {expanded && <span className="font-black text-lg tracking-tighter text-white italic">GRIFON</span>}
+          {expanded && <span className="font-sans font-black text-xl tracking-tighter text-white italic">GRIFON</span>}
         </button>
         {expanded && !mobile && (
           <button onClick={onToggleCollapsed} aria-label="Hide sidebar" className="w-8 h-8 rounded-lg text-zinc-500 hover:text-white hover:bg-white/[0.06] transition-colors flex items-center justify-center">
