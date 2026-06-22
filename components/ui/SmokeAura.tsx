@@ -23,21 +23,24 @@ export const SmokeAura: React.FC<{ className?: string }> = ({ className = '' }) 
       }}
     />
 
-    {/* Base gold light source rising from the bottom */}
-    <div
-      className="absolute left-1/2 -translate-x-1/2 bottom-[-25%] w-[150vw] h-[80vh] blur-[50px] aura-pulse"
-      style={{ background: 'radial-gradient(ellipse at center bottom, rgba(255,204,0,0.12) 0%, rgba(255,204,0,0.05) 35%, transparent 68%)' }}
-    />
-
-    {/* Drifting haze layers (smoke ref) — bottom corners */}
-    <div
-      className="absolute -left-[15%] bottom-[-20%] w-[80vw] h-[70vh] rounded-full blur-[70px] md:blur-[100px] aura-drift-a"
-      style={{ background: 'radial-gradient(circle at center, rgba(255,204,0,0.08) 0%, rgba(255,176,0,0.03) 45%, transparent 70%)' }}
-    />
-    <div
-      className="absolute -right-[15%] bottom-[-25%] w-[75vw] h-[65vh] rounded-full blur-[70px] md:blur-[110px] aura-drift-b"
-      style={{ background: 'radial-gradient(circle at center, rgba(255,204,0,0.07) 0%, rgba(255,200,0,0.03) 45%, transparent 70%)' }}
-    />
+    {/* Gold pool (glow + drifting haze). Softened ~18% on mobile, where the
+        narrow viewport concentrates the same vw-sized layers and reads hotter. */}
+    <div className="absolute inset-0 opacity-[0.82] md:opacity-100">
+      {/* Base gold light source rising from the bottom */}
+      <div
+        className="absolute left-1/2 -translate-x-1/2 bottom-[-25%] w-[150vw] h-[80vh] blur-[50px] aura-pulse"
+        style={{ background: 'radial-gradient(ellipse at center bottom, rgba(255,204,0,0.12) 0%, rgba(255,204,0,0.05) 35%, transparent 68%)' }}
+      />
+      {/* Drifting haze layers (smoke ref) — bottom corners */}
+      <div
+        className="absolute -left-[15%] bottom-[-20%] w-[80vw] h-[70vh] rounded-full blur-[70px] md:blur-[100px] aura-drift-a"
+        style={{ background: 'radial-gradient(circle at center, rgba(255,204,0,0.08) 0%, rgba(255,176,0,0.03) 45%, transparent 70%)' }}
+      />
+      <div
+        className="absolute -right-[15%] bottom-[-25%] w-[75vw] h-[65vh] rounded-full blur-[70px] md:blur-[110px] aura-drift-b"
+        style={{ background: 'radial-gradient(circle at center, rgba(255,204,0,0.07) 0%, rgba(255,200,0,0.03) 45%, transparent 70%)' }}
+      />
+    </div>
 
     {/* Floating gold dust motes (spotlight ref) */}
     <div
