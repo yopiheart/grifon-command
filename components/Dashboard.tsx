@@ -310,7 +310,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
         <button onClick={() => setMobileOpen(true)} aria-label="Menu" className="w-11 h-11 rounded-xl text-zinc-300 hover:text-white hover:bg-white/[0.06] transition-colors flex items-center justify-center">
           <Menu className="w-5 h-5" />
         </button>
-        <span className="text-sm font-bold tracking-[0.2em] text-white">GRIFON</span>
+        <span className="text-lg font-black tracking-tighter text-white italic">GRIFON</span>
         <button onClick={() => setNotifOpen(true)} aria-label="Notifications" className="relative w-11 h-11 rounded-xl text-zinc-300 hover:text-white hover:bg-white/[0.06] transition-colors flex items-center justify-center">
           <Bell className="w-5 h-5" />
           {(activeJobs.length > 0 || quotaLow) && <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#FFCC00] ring-2 ring-zinc-950 animate-pulse" />}
@@ -344,9 +344,13 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
               className="text-center text-2xl sm:text-3xl lg:text-4xl font-normal tracking-tight text-zinc-200 mb-2"
             >
               {dayPart},{' '}
-              <SignatureScribble variant="underline" delay={0.9} strokeWidth={2.5}>
+              {isDesktop ? (
+                <SignatureScribble variant="underline" delay={0.9} strokeWidth={2.5}>
+                  <span className="font-semibold text-white">{firstName}</span>
+                </SignatureScribble>
+              ) : (
                 <span className="font-semibold text-white">{firstName}</span>
-              </SignatureScribble>.
+              )}.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}

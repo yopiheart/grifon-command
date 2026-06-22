@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import {
   Plus, Search, PanelLeftClose, PanelLeft, Bell, Settings, Lock, History, X, type LucideIcon,
 } from 'lucide-react';
+import { GrifonMark } from '../ui/GrifonMark';
 
 export interface SidebarNavItem {
   id: string;
@@ -38,10 +39,6 @@ interface DashboardSidebarProps {
   onOpenSettings: () => void;
 }
 
-const GrifonLogo: React.FC<{ className?: string }> = ({ className = 'h-9 w-9' }) => (
-  <img src="/logo.png" alt="GRIFON" className={`object-contain ${className}`} />
-);
-
 /**
  * GRIFON COMMAND sidebar — a label rail that collapses to an icon rail (Meta-AI
  * pattern, Grifon register). Logo toggles collapse on desktop; a hide button
@@ -64,8 +61,8 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = (props) => {
           className="flex items-center gap-2.5 group"
           aria-label={mobile ? 'GRIFON' : 'Toggle sidebar'}
         >
-          <GrifonLogo className="h-9 w-9 shrink-0 group-hover:scale-105 transition-transform" />
-          {expanded && <span className="text-sm font-bold tracking-[0.2em] text-white">GRIFON</span>}
+          <GrifonMark className="h-9 w-9 shrink-0 group-hover:scale-105 transition-transform" />
+          {expanded && <span className="font-black text-lg tracking-tighter text-white italic">GRIFON</span>}
         </button>
         {expanded && !mobile && (
           <button onClick={onToggleCollapsed} aria-label="Hide sidebar" className="w-8 h-8 rounded-lg text-zinc-500 hover:text-white hover:bg-white/[0.06] transition-colors flex items-center justify-center">
@@ -90,10 +87,11 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = (props) => {
         {/* New Ad — the one gold action */}
         <button
           onClick={onNewAd}
-          className={`w-full flex items-center rounded-xl bg-[#FFCC00] text-black font-bold transition-all hover:shadow-[0_0_20px_rgba(255,204,0,0.35)] active:scale-[0.98] ${expanded ? 'gap-2.5 px-3 py-2.5 justify-start' : 'justify-center h-11'}`}
+          className={`relative overflow-hidden w-full flex items-center rounded-xl bg-gradient-to-b from-[#FFD83D] via-[#FFCC00] to-[#E6B800] text-black font-bold shadow-[inset_0_1px_0_rgba(255,255,255,0.55),0_0_18px_rgba(255,204,0,0.35)] hover:-translate-y-0.5 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.65),0_0_28px_rgba(255,204,0,0.55)] active:translate-y-0 active:scale-[0.99] transition-all ${expanded ? 'gap-2.5 px-3 py-2.5 justify-start' : 'justify-center h-11'}`}
         >
-          <Plus className="w-5 h-5 shrink-0" strokeWidth={2.5} />
-          {expanded && <span className="text-sm">New Ad</span>}
+          <span aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/35 to-transparent" />
+          <Plus className="w-5 h-5 shrink-0 relative z-10" strokeWidth={2.5} />
+          {expanded && <span className="text-sm relative z-10">New Ad</span>}
         </button>
 
         {/* Search → command palette */}
