@@ -465,8 +465,8 @@ export const buildAdScriptPrompt = (
   } else if (isRealEstate) {
     const priceGiven = !!(businessInfo.listingPrice && businessInfo.listingPrice.trim());
     const PRICE_RULE = priceGiven
-      ? `A price was given: "${businessInfo.listingPrice!.trim()}". You MAY state it ONCE on the CTA beat EXACTLY as given — do NOT invent, round, convert, or add financing/monthly terms the user did not provide. Pair it with the inquiry CTA.`
-      : `NO price was given — this ad is INQUIRY-ONLY. NEVER invent or imply a peso figure. Drive to "message/DM for price & viewing".`;
+      ? `A price was given: "${businessInfo.listingPrice!.trim()}". AFFORDABILITY REFRAME (PH first-time buyers think in monthly + downpayment, NOT lump sum): if the value reads as monthly/DP terms (e.g. "25k/month", "50k DP"), LEAD with that, stated once EXACTLY as given. If it is ONLY a large lump sum (e.g. "₱4.2M"), do NOT make that scary sticker the headline — fold it in once softly, OR (better) withhold it and drive the DM ("PM kita ng full computation") to protect curiosity and qualify the lead. NEVER invent, round, convert, or fabricate monthly/financing/DP terms the user did not actually provide.`
+      : `NO price was given — INQUIRY-ONLY. NEVER invent or imply a peso figure. Drive to "message/DM for the price, computation & viewing".`;
     return `
       Role: Senior Direct Response Copywriter for Filipino REAL ESTATE sellers.
       Strategy: Agent-Led Property Walkthrough — the agent/seller TOURS the property and drives an
@@ -502,13 +502,17 @@ export const buildAdScriptPrompt = (
          "${businessInfo.separator}" (view, location, price-per-sqm, amenities, flexible terms). Use a
          COMPLETE verb construction, never a verbless fragment. If the differentiator is empty, lead
          with the strongest feature instead.
-      4. **Trust / Disarm:** Disarm the category's #1 fear — legitimacy / clean title / hidden costs /
-         "baka scam" — with calm proof (clean title, in-person viewing welcome, transparent terms).
-         HONESTY RULE: never fabricate guarantees, fake awards, or invented accreditations.
-      5. **Price + CTA:** ${priceGiven ? 'State the price per PRICE RULE, then drive' : 'Drive'} to
-         MESSAGE / DM / book a VIEWING (Viber, Messenger, call, walk-in) — NOT a checkout link.
-         Forbidden: "buy now", "add to cart", "order now", product-scarcity gimmicks ("only 3 left").
-         Real urgency only if true (e.g. "limited units", "RFO", "pre-selling price").
+      4. **Trust / Legitimacy (REQUIRED — the #1 lever in PH property):** Kill "baka scam / fly-by-night /
+         walang title". Hit legitimacy + a guiding hand: clean title, transparent terms, in-person viewing
+         welcome, "sasamahan kita from viewing hanggang turnover" (Authority + Liking). HONESTY RULE: do NOT
+         fabricate a specific license number, award, or accreditation the user never provided — phrase it as
+         the agent's standard ("malinaw ang title, legit ang process, gagabayan kita"), not a fake credential.
+      5. **Affordability + CTA:** ${priceGiven ? 'Handle price per the PRICE RULE (reframe to monthly/DP, never flash a scary lump sum), then drive' : 'Drive'} to a LOW-FRICTION inquiry. PREFER an info-first keyword
+         DM — "Message mo lang ako ng 'BAHAY' (o 'COMPUTATION'), ipapadala ko ang monthly, DP, at requirements"
+         — over an immediate viewing ask (a viewing is a big commitment off a short video). A site VIEWING is
+         the SECONDARY CTA, used only when REAL scarcity exists (e.g. open-house this weekend). Channel: Viber /
+         Messenger / call — NOT a checkout link. Forbidden: "buy now", "add to cart", "order now",
+         product-scarcity gimmicks ("only 3 left"). Real urgency only if true (limited units / RFO / pre-selling).
 
       **PRICE RULE:** ${PRICE_RULE}
 
@@ -1004,8 +1008,9 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
       For each scene that depicts the ${isRealEstate ? 'PROPERTY, a ROOM, the VIEW, AMENITIES, or the LOCATION' : "business's PLACE, RESULT, or STAFF"}, add a "venueSlot" field set to
       the ONE available slot that best fits — chosen ONLY from the list above. Map by meaning:${slotLegend}
       Rules: use a slot ONLY if it is in AVAILABLE SLOTS; if none fits, OMIT "venueSlot" (renderer falls
-      back to representative generation). NEVER invent a slot not in the list. Avatar talking-head scenes
-      (referenceImage="avatar") OMIT "venueSlot".
+      back to representative generation). NEVER invent a slot not in the list.${isRealEstate
+        ? ' AGENT-IN-PROPERTY: for an Avatar talking scene (referenceImage="avatar") where the agent is in a specific SPACE of the property — INSIDE a room (touring the sala -> living, kitchen -> kitchen, a bedroom -> bedroom) OR OUTSIDE at the building exterior / entrance, INCLUDING the closing / CTA shot at the facade (-> facade) — ALSO set "venueSlot" to that space so the agent is composited into the REAL place, not a lookalike. Only OMIT "venueSlot" on a neutral talking head not tied to any space.'
+        : ' Avatar talking-head scenes (referenceImage="avatar") OMIT "venueSlot".'}
   ` : '';
 
   return `

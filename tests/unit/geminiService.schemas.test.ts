@@ -233,11 +233,19 @@ describe('REAL ESTATE (#13) invariants', () => {
     expect(prompt).toMatch(/NEVER invent or imply a peso figure/i);
   });
 
-  it('PRICE RULE — given price => stated ONCE verbatim, no inventing/rounding', () => {
+  it('PRICE RULE — given price => affordability reframe, stated as given, no inventing/rounding', () => {
     const prompt = buildAdScriptPrompt(reInput({ listingPrice: '₱4.2M' }));
     expect(prompt).toContain('₱4.2M');
-    expect(prompt).toMatch(/ONCE/);
-    expect(prompt).toMatch(/do NOT invent, round/i);
+    expect(prompt).toMatch(/affordability reframe/i);
+    expect(prompt).toMatch(/exactly as given/i);
+    expect(prompt).toMatch(/never invent, round/i);
+  });
+
+  it('includes the legitimacy/trust beat + a low-friction keyword DM CTA (CMO spec)', () => {
+    const prompt = buildAdScriptPrompt(reInput());
+    expect(prompt).toMatch(/legitimacy/i);   // disarms "baka scam"
+    expect(prompt).toMatch(/title/i);         // clean-title proof
+    expect(prompt).toMatch(/COMPUTATION|BAHAY/); // keyword DM CTA
   });
 
   it('storyboard uses the agent-walkthrough strategy + property ground-truth realism', () => {

@@ -1569,7 +1569,8 @@ export const generateAvatarImage = async (
     ethnicity: string, 
     aspectRatio: '9:16' | '16:9',
     imageQuality: '1K' | '2K',
-    brandColors: string[]
+    brandColors: string[],
+    scriptType?: string
 ): Promise<{ url: string; description: string; }> => {
   await delay(1000);
   
@@ -1595,10 +1596,19 @@ export const generateAvatarImage = async (
 
   const brandColorInstruction = brandColors.length > 0 ? `Incorporate these brand colors subtly into the wardrobe or background: ${brandColors.join(', ')}.` : '';
 
+  // RealEstate (#13): the generated avatar is the AGENT on camera. Dress them as a trustworthy
+  // Filipino broker — the ID lanyard is the PH legitimacy cue. NOT a Western suit (intimidating),
+  // NOT pambahay (reads as uninvolved homeowner). Uploaded avatars keep their real outfit (identity
+  // lock), so this only shapes the GENERATED fallback.
+  const wardrobeInstruction = scriptType === 'RealEstate'
+    ? `\n    **WARDROBE (real-estate agent):** Dress the subject as an approachable, trustworthy Filipino real-estate agent — a clean, neat polo or smart blouse with a simple ID LANYARD around the neck (the legitimacy cue). NOT a formal Western business suit or blazer, and NOT casual house clothes / pambahay. Smart-casual, professional, friendly.`
+    : '';
+
   const prompt = `
     **Subject:** Photorealistic close-up headshot of ${subjectDescription}.
     **Target Audience Context:** "${audience}".
     ${brandColorInstruction}
+    ${wardrobeInstruction}
 
     **SMART CASTING DIRECTOR LOGIC:**
     - **Age Anchor:** Use the provided age range of ${ageRange} as the primary anchor for bone structure and skin elasticity. DO NOT allow skin conditions ( daylight Melasma, Acne, or Pigmentation) to force the subject into looking older than the requested range.
@@ -1894,7 +1904,7 @@ export const generateSceneImage = async (
     productDescription?: string,
     productName?: string,
     variationIndex: number = 0,
-    referenceImageMode: 'avatar' | 'product' | 'both' | 'none' | 'venue' = 'none'
+    referenceImageMode: 'avatar' | 'product' | 'both' | 'none' | 'venue' | 'avatar_venue' = 'none'
 ): Promise<string> => {
     
     await delay(2500);
@@ -1982,6 +1992,18 @@ export const generateSceneImage = async (
            exactly; never invent or substitute a new logo.
         6. **LUMEN_SYNC:** Keep the lighting character (warmth/coolness) of Reference Image 1.
         `;
+    } else if (referenceImageMode === 'avatar_venue' && references.avatarUrl && references.productUrl) {
+        // RealEstate avatar-in-property: the AGENT (Ref 1) stands INSIDE the user's REAL room (Ref 2).
+        // Combines avatar IDENTITY_LOCK with the venue PLACE_IDENTITY_LOCK + CAMERA_FREEDOM.
+        consistencyRules = `
+        **AGENT_IN_PROPERTY (Reference Image 1 = the AGENT; Reference Image 2 = the REAL property room):**
+        1. **IDENTITY (Reference Image 1, LOCKED across scenes — non-negotiable):** preserve face, skin tone, bone structure, hair styling (color AND style), wardrobe (color, cut, fabric — the SAME outfit every scene), body type. Scene action MAY change pose/expression/gesture, but NEVER identity or wardrobe.
+        1b. **FACE_TO_CAMERA (required whenever the agent speaks the line):** both eyes AND mouth clearly visible for lip-sync. Camera angle can vary (frontal, 3/4, side body) but the face stays toward camera. Eyes-closed / full-side-profile-face-away = BANNED for talking scenes.
+        2. **ENVIRONMENT (Reference Image 2 = PLACE_IDENTITY_LOCK):** Place the agent AT this exact real place — if Reference Image 2 is a room INTERIOR, she is INSIDE it; if it is the building EXTERIOR / facade, she stands IN FRONT OF it. Reproduce the SAME layout/structure, furniture/fixtures, materials, palette, and signage as Reference Image 2 — the SAME actual place, NOT a look-alike and NOT an invented one. **CAMERA_FREEDOM:** you MAY change angle, distance, and framing to fit the beat, but it must stay recognizably the SAME place seen from a new viewpoint (keep rotation MODERATE).
+        3. **TIER_TRUTH:** match the real tier of Reference Image 2 — NEVER upgrade or glamorize. Forbidden: "luxury", "high-end", "premium", "upscale", "5-star", "resort", "modern minimalist". A modest unit stays modest.
+        4. **ETHNICITY:** the agent is strictly ${ethnicity} (authentically Filipino, not glamorized).
+        5. **NO_UNSOLICITED_PRODUCT:** do NOT add branded packaging, boxes, or invented props — this is a property walkthrough, not a product ad.
+        `;
     } else {
         consistencyRules = `
         **STRICT_NEGATIVE (VISUAL AIDS):**
@@ -1997,7 +2019,7 @@ export const generateSceneImage = async (
     // mandatory face demand contradicts the NO-HUMAN rules and pulls the person from the hero
     // reference photo into frame (2026-06-10 validation render: hook end-frame person leak —
     // the 627ccb2 rule-5 text fix alone couldn't beat a MUST-render-a-face instruction).
-    const humanSubjectInFrame = referenceImageMode === 'avatar' || referenceImageMode === 'both';
+    const humanSubjectInFrame = referenceImageMode === 'avatar' || referenceImageMode === 'both' || referenceImageMode === 'avatar_venue';
     const randomAngle = AVATAR_CAMERA_ANGLES[variationIndex % AVATAR_CAMERA_ANGLES.length];
     const cameraMandatory = humanSubjectInFrame ? `
     **CAMERA_MANDATORY (overrides IDENTITY_LOCK's default-frontal preference):**

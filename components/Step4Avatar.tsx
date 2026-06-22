@@ -43,9 +43,10 @@ const Step4Avatar: React.FC<Step4Props> = ({ businessInfo, avatar, setAvatar, on
           gender, 
           ageRange, 
           ethnicity, 
-          aspectRatio, 
-          '1K', 
-          []
+          aspectRatio,
+          '1K',
+          [],
+          businessInfo.scriptType
       );
       const newAvatar = { prompt: `An avatar for an ad targeting ${businessInfo.audience}`, url, description, ethnicity, gender };
       setGeneratedAvatar(newAvatar);
