@@ -297,7 +297,7 @@ export const LaunchScreen: React.FC<{
                               : 'border-white/10 text-zinc-400 hover:border-white/30'
                         }`}
                       >
-                        <Icon className="h-4 w-4" />
+                        <Icon className="h-4 w-4 shrink-0" />
                         {label}
                         {locked && <SoonBadge />}
                       </button>
@@ -315,7 +315,7 @@ export const LaunchScreen: React.FC<{
                         disabled={f.locked}
                         onClick={() => !f.locked && chooseFormat(f.value)}
                         title={f.desc}
-                        className={`relative rounded-lg border px-2 py-2 text-xs font-mono uppercase tracking-wide transition-all ${
+                        className={`relative truncate min-w-0 rounded-xl border px-2 py-2 text-xs font-mono uppercase tracking-wide transition-all ${
                           f.locked
                             ? 'cursor-not-allowed border-white/5 text-zinc-600'
                             : format === f.value
@@ -339,7 +339,7 @@ export const LaunchScreen: React.FC<{
                           key={s.value}
                           type="button"
                           onClick={() => setStrategy(s.value)}
-                          className={`flex-1 rounded-lg border px-2 py-2 text-left transition-all ${
+                          className={`flex-1 rounded-xl border px-2 py-2 text-left transition-all ${
                             strategy === s.value ? 'border-[#FFCC00] bg-[#FFCC00]/10' : 'border-white/10 hover:border-white/30'
                           }`}
                         >
@@ -403,7 +403,7 @@ export const LaunchScreen: React.FC<{
                               key={g}
                               type="button"
                               onClick={() => setGender(g)}
-                              className={`flex-1 rounded-lg px-2 py-1.5 text-[10px] font-mono uppercase tracking-wide transition-all ${
+                              className={`flex-1 rounded-xl px-2 py-1.5 text-[10px] font-mono uppercase tracking-wide transition-all ${
                                 gender === g ? 'bg-[#FFCC00] text-black' : 'border border-white/10 text-zinc-400 hover:border-white/30'
                               }`}
                             >
@@ -430,7 +430,7 @@ export const LaunchScreen: React.FC<{
                             type="button"
                             onClick={genAvatar}
                             disabled={avatarBusy}
-                            className="inline-flex items-center gap-1.5 rounded-lg border border-[#FFCC00]/40 bg-[#FFCC00]/10 px-3 py-1.5 text-[11px] font-mono uppercase tracking-wide text-[#FFCC00] transition-all hover:bg-[#FFCC00]/20 disabled:opacity-50"
+                            className="inline-flex items-center gap-1.5 rounded-xl border border-[#FFCC00]/40 bg-[#FFCC00]/10 px-3 py-1.5 text-[11px] font-mono uppercase tracking-wide text-[#FFCC00] transition-all hover:bg-[#FFCC00]/20 disabled:opacity-50"
                           >
                             {avatarBusy ? <Loader2 className="h-3 w-3 animate-spin" /> : <Wand2 className="h-3 w-3" />}
                             {avatarUrl ? 'Regenerate' : 'Generate presenter'}
@@ -487,7 +487,7 @@ export const LaunchScreen: React.FC<{
                     <button
                       type="button"
                       onClick={() => setResolution('720p')}
-                      className={`flex-1 rounded-lg border px-2 py-2 text-xs font-mono uppercase tracking-wide transition-all ${
+                      className={`flex-1 rounded-xl border px-2 py-2 text-xs font-mono uppercase tracking-wide transition-all ${
                         resolution === '720p' ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]' : 'border-white/10 text-zinc-400 hover:border-white/30'
                       }`}
                     >
@@ -497,7 +497,7 @@ export const LaunchScreen: React.FC<{
                       type="button"
                       disabled
                       title="1080p unlocks on the Business plan"
-                      className="relative flex-1 cursor-not-allowed rounded-lg border border-white/5 px-2 py-2 text-xs font-mono uppercase tracking-wide text-zinc-600"
+                      className="relative flex-1 cursor-not-allowed rounded-xl border border-white/5 px-2 py-2 text-xs font-mono uppercase tracking-wide text-zinc-600"
                     >
                       1080p
                       <BusinessBadge />
@@ -594,9 +594,9 @@ const Chip: React.FC<{ icon: typeof User; active?: boolean; warn?: boolean; onCl
           : 'border-white/10 text-zinc-400 hover:border-white/30'
     }`}
   >
-    <Icon className="h-3 w-3" />
+    <Icon className="h-3 w-3 shrink-0" />
     {children}
-    {active && !warn && <Check className="h-3 w-3 opacity-60" />}
+    {active && !warn && <Check className="h-3 w-3 shrink-0 opacity-60" />}
   </button>
 );
 
@@ -604,11 +604,11 @@ const ModeTab: React.FC<{ active: boolean; onClick: () => void; icon: typeof Wan
   <button
     type="button"
     onClick={onClick}
-    className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-[10px] font-mono uppercase tracking-wide transition-all ${
+    className={`inline-flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-[10px] font-mono uppercase tracking-wide transition-all ${
       active ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]' : 'border-white/10 text-zinc-400 hover:border-white/30'
     }`}
   >
-    <Icon className="h-3 w-3" />
+    <Icon className="h-3 w-3 shrink-0" />
     {children}
   </button>
 );
