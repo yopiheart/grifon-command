@@ -6,178 +6,15 @@ import { compressImageForUpload } from '../utils/imageCompression';
 import { GlassPanel } from './ui/GlassPanel';
 import { GoldButton } from './ui/GoldButton';
 import Loader from './ui/Loader';
-import { Building2, Check, Package, ShoppingBag, Sparkles, Store, UploadCloud, X } from 'lucide-react';
+import { Building2, Check, Package, ShoppingBag, Sparkles, Store, UploadCloud, X, ZoomIn } from 'lucide-react';
+import ImageModal from './ui/ImageModal';
+import {
+  ARCHETYPE_META, ARCHETYPE_ORDER, BAD_SAMPLE, ARCHETYPE_UPLOAD_SLOTS, inferServiceArchetype,
+  RE_ARCHETYPE_META, RE_ARCHETYPE_ORDER, RE_UPLOAD_SLOTS, inferRealEstateArchetype,
+  buildServiceDescription, SampleTile,
+  type ServiceArchetype, type RealEstateArchetype, type ServiceSlot,
+} from "./guidedPhotoSlots";
 
-type ServiceArchetype = NonNullable<BusinessInfo['serviceArchetype']>;
-
-// Services "primary hero" qualifier. Bryan-facing labels (outcome, not jargon) + a recognition
-// sub-caption + the "lead with" statement + the upload samples to teach (all humble/PH per the
-// CMO realism guardrail). Internal values stay engine-clean (venue|work|practitioner).
-const ARCHETYPE_META: Record<ServiceArchetype, {
-  label: string; sub: string; lead: string; samples: { src: string; caption: string }[];
-}> = {
-  venue: {
-    label: 'Show off my place', sub: 'Salon, gym, resto, clinic', lead: 'Your place',
-    samples: [{ src: '/examples/services-venue-clear.png', caption: 'Your place — clear & bright' }],
-  },
-  work: {
-    label: 'Show the results', sub: 'Cleaning, repair, pest', lead: 'Your results',
-    samples: [
-      { src: '/examples/services-work-before.png', caption: 'Before' },
-      { src: '/examples/services-work-after.png', caption: 'After' },
-    ],
-  },
-  practitioner: {
-    label: 'Feature me & my team', sub: 'Coach, consultant, agency', lead: 'You & your team',
-    samples: [{ src: '/examples/services-practitioner.png', caption: 'You — friendly & clear' }],
-  },
-};
-const ARCHETYPE_ORDER: ServiceArchetype[] = ['venue', 'work', 'practitioner'];
-const BAD_SAMPLE = { src: '/examples/services-blurry-bad.png', caption: 'Dark & blurry' };
-
-type ServiceSlot = NonNullable<BusinessInfo['servicePhotos']>[number]['slot'];
-
-// Phase 2 guided upload slots per archetype. The slot the user drops into IS the photo's tag
-// (implicit-by-slot classification) → drives per-scene routing downstream. List order = hero-first
-// (productImageUrls is synced in this order for back-compat).
-const ARCHETYPE_UPLOAD_SLOTS: Record<ServiceArchetype, { slot: ServiceSlot; label: string; hint: string }[]> = {
-  venue: [
-    { slot: 'exterior', label: 'Storefront', hint: 'facade + your sign/logo' },
-    { slot: 'interior', label: 'Inside', hint: 'where the service happens' },
-    { slot: 'ambiance', label: 'The vibe', hint: 'what makes it feel good' },
-    { slot: 'staff', label: 'You / staff', hint: 'optional' },
-  ],
-  work: [
-    { slot: 'before', label: 'Before', hint: 'the problem / mess' },
-    { slot: 'after', label: 'After', hint: 'the clean result' },
-    { slot: 'staff', label: 'Crew', hint: 'optional — plain, real' },
-  ],
-  practitioner: [
-    { slot: 'staff', label: 'You / team', hint: 'friendly, clear headshot' },
-    { slot: 'before', label: 'Proof: before', hint: 'optional' },
-    { slot: 'after', label: 'Proof: after', hint: 'optional' },
-  ],
-};
-
-// Rebuild productImageDescription from the CURRENT servicePhotos (slot-labeled) on every add/remove,
-// so re-uploading or removing a slot never leaves a stale or duplicated [slot] block.
-const buildServiceDescription = (
-  photos: NonNullable<BusinessInfo['servicePhotos']>,
-): string | undefined =>
-  photos.length ? photos.map(p => `[${p.slot}] ${(p.description ?? '').trim()}`).join('\n\n') : undefined;
-
-// Smart-default the archetype from the user's own words. SCORE each bucket by keyword hits and
-// take the highest — first-match-by-order misrouted "Naya Boutique Spa … maintenance for your body"
-// to 'work' on the broad word "maintenance" (2026-06-21 smoke), even though "spa"+"massage" are
-// stronger venue signals. Ties / no match → 'venue' (most common PH service SMB + safest visual).
-const inferServiceArchetype = (text: string): ServiceArchetype => {
-  const t = (text || '').toLowerCase();
-  const score = (...words: string[]) => words.reduce((n, w) => n + (t.includes(w) ? 1 : 0), 0);
-  // Place-as-draw. Strong, specific nouns only (dropped broad 'store'/'shop' — they hit retail).
-  const venue = score('spa', 'salon', 'barber', 'gym', 'fitness', 'clinic', 'derma', 'dental',
-    'restaurant', 'resto', 'cafe', 'café', 'hotel', 'resort', 'parlor', 'massage', 'hilot',
-    'kainan', 'eatery', 'lounge', 'studio');
-  // Result-as-draw. Dropped over-broad 'ayos'/'maintenance' — they fire on non-trade benefit copy.
-  const work = score('clean', 'linis', 'pest', 'peste', 'siphon', 'malaban', 'repair', 'laundr',
-    'labada', 'plumb', 'aircon', 'disinfect', 'declog', 'detailing', 'carwash', 'car wash',
-    'exterm', 'hauling', 'pickup', 'pick-up', 'moving');
-  // Person-as-draw. Unambiguous professional-service nouns only.
-  const practitioner = score('coach', 'consult', 'advisor', 'tutor', 'agency', 'accountant',
-    'lawyer', 'freelanc', 'mentor', 'strategist');
-  if (venue >= work && venue >= practitioner && venue > 0) return 'venue';
-  if (work >= practitioner && work > 0) return 'work';
-  if (practitioner > 0) return 'practitioner';
-  return 'venue';
-};
-
-// ── RealEstate (#13) — mirrors the Services archetype machinery above. A property is a real PLACE,
-// so it rides the SAME servicePhotos / venue-render-mode / venueSlot pipeline; only the labels,
-// guided slots, and inference keywords differ. Internal values stay engine-clean
-// (listing|agent|developer); labels are Bryan-facing outcomes (humble/PH realism guardrail).
-type RealEstateArchetype = NonNullable<BusinessInfo['realEstateArchetype']>;
-
-const RE_ARCHETYPE_META: Record<RealEstateArchetype, {
-  label: string; sub: string; lead: string; samples: { src: string; caption: string }[];
-}> = {
-  listing: {
-    label: 'Sell this property', sub: 'House, condo, lot — sale or rent', lead: 'The property',
-    samples: [{ src: '/examples/realestate-listing.png', caption: 'The property — bright & wide' }],
-  },
-  agent: {
-    label: 'Build my agent brand', sub: 'Broker / realtor personal brand', lead: 'You + your listings',
-    samples: [{ src: '/examples/realestate-agent.png', caption: 'You — trusted & clear' }],
-  },
-  developer: {
-    label: 'Launch a project', sub: 'Pre-selling / new development', lead: 'The development',
-    samples: [{ src: '/examples/realestate-developer.png', caption: 'The project — unit / render' }],
-  },
-};
-const RE_ARCHETYPE_ORDER: RealEstateArchetype[] = ['listing', 'agent', 'developer'];
-
-// Guided property-photo slots per archetype (the slot the user drops into IS the photo's tag →
-// drives per-scene venueSlot routing downstream, identical mechanism to Services venues).
-const RE_UPLOAD_SLOTS: Record<RealEstateArchetype, { slot: ServiceSlot; label: string; hint: string }[]> = {
-  listing: [
-    { slot: 'facade', label: 'Exterior', hint: 'facade / curb view' },
-    { slot: 'living', label: 'Living area', hint: 'sala / main space' },
-    { slot: 'kitchen', label: 'Kitchen', hint: 'optional' },
-    { slot: 'bedroom', label: 'Bedroom', hint: 'optional' },
-    { slot: 'view', label: 'View / balcony', hint: 'optional' },
-  ],
-  agent: [
-    { slot: 'agent', label: 'You', hint: 'friendly, clear headshot' },
-    { slot: 'facade', label: 'A listing', hint: 'exterior of a property you sell' },
-    { slot: 'living', label: 'Inside a listing', hint: 'optional' },
-    { slot: 'view', label: 'Best feature', hint: 'optional' },
-  ],
-  developer: [
-    { slot: 'facade', label: 'Building / render', hint: 'project exterior or render' },
-    { slot: 'living', label: 'Model unit', hint: 'showroom interior' },
-    { slot: 'amenities', label: 'Amenities', hint: 'pool / gym / lobby' },
-    { slot: 'location', label: 'Location', hint: 'neighborhood / map area' },
-  ],
-};
-
-// Smart-default the real-estate archetype from the user's own words (SCORE-by-keyword, like Services).
-// Ties / no match → 'listing' (the most common single-seller case + safest visual: property is hero).
-const inferRealEstateArchetype = (text: string): RealEstateArchetype => {
-  const t = (text || '').toLowerCase();
-  const score = (...words: string[]) => words.reduce((n, w) => n + (t.includes(w) ? 1 : 0), 0);
-  // Person-as-draw — broker building a personal brand.
-  const agent = score('agent', 'broker', 'realtor', 'realty', 'salesperson', 'kasama mo', 'i help you find');
-  // Project-as-draw — developer pre-selling a new development.
-  const developer = score('pre-sell', 'preselling', 'pre-selling', 'developer', 'rfo', 'turnover',
-    'model unit', 'showroom', 'subdivision', 'township', 'enclave', 'project launch', 'new development');
-  // Property-as-draw — a specific unit/lot for sale or rent.
-  const listing = score('house', 'condo', 'lot', 'townhouse', 'apartment', 'studio', 'bungalow',
-    'duplex', 'bahay', 'lupa', 'for sale', 'for rent', 'resale', 'foreclosed', 'unit');
-  if (agent >= developer && agent >= listing && agent > 0) return 'agent';
-  if (developer >= listing && developer > 0) return 'developer';
-  if (listing > 0) return 'listing';
-  return 'listing';
-};
-
-// One upload-sample tile: image with an icon fallback so a missing/late JPG never shows a broken
-// image (the curated PNGs land in public/examples/; until then the tile degrades to a lucide icon).
-const SampleTile: React.FC<{ src: string; caption: string; good: boolean }> = ({ src, caption, good }) => {
-  const [err, setErr] = useState(false);
-  const FallbackIcon = good ? Sparkles : X;
-  return (
-    <div className="flex flex-col items-center">
-      <div className={`relative aspect-square w-full bg-zinc-900 border rounded-xl flex items-center justify-center overflow-hidden ${good ? 'border-[#FFCC00]/40' : 'border-red-900/50'}`}>
-        {!err ? (
-          <img src={src} alt={caption} onError={() => setErr(true)} className={`w-full h-full object-cover ${good ? '' : 'opacity-80'}`} />
-        ) : (
-          <FallbackIcon className={`w-8 h-8 ${good ? 'text-[#FFCC00]/60' : 'text-red-500/60'}`} />
-        )}
-        <span className={`absolute top-1 left-1 w-5 h-5 rounded-full flex items-center justify-center ${good ? 'bg-[#FFCC00] text-zinc-950' : 'bg-red-600 text-white'}`}>
-          {good ? <Check className="w-3 h-3" /> : <X className="w-3 h-3" />}
-        </span>
-      </div>
-      <p className="text-[8px] text-zinc-500 font-mono uppercase tracking-tighter mt-1.5 text-center">{caption}</p>
-    </div>
-  );
-};
 
 interface Step2Props {
   data: BusinessInfo;
@@ -192,6 +29,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
   const [formData, setFormData] = useState(data);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [viewImage, setViewImage] = useState<string | null>(null);
 
   useEffect(() => {
     setFormData(data);
@@ -410,6 +248,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
     : ARCHETYPE_ORDER.map(a => ({ key: a, label: ARCHETYPE_META[a].label, sub: ARCHETYPE_META[a].sub, active: effectiveArchetype === a, onSelect: () => selectArchetype(a) }));
 
   return (
+    <>
     <GlassPanel>
       <div className="mb-8 border-b border-white/10 pb-6">
         <h2 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight">
@@ -556,9 +395,9 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                 </p>
                 <div className="grid grid-cols-3 gap-3">
                   {guidedSamples.map((ex, idx) => (
-                    <SampleTile key={`good-${idx}`} src={ex.src} caption={ex.caption} good />
+                    <SampleTile key={`good-${idx}`} src={ex.src} caption={ex.caption} good onZoom={setViewImage} />
                   ))}
-                  <SampleTile src={BAD_SAMPLE.src} caption={BAD_SAMPLE.caption} good={false} />
+                  <SampleTile src={BAD_SAMPLE.src} caption={BAD_SAMPLE.caption} good={false} onZoom={setViewImage} />
                 </div>
                 <p className="text-[9px] text-zinc-500 font-mono tracking-tighter">
                   Kahit simple — basta malinaw at maliwanag.
@@ -627,7 +466,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                 // Upload your REAL photos — tagged per slot ↓
               </p>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                {guidedSlots.map(({ slot, label, hint }) => {
+                {guidedSlots.map(({ slot, label, hint, example }) => {
                   const existing = (formData.servicePhotos || []).find(p => p.slot === slot);
                   return (
                     <div key={slot} className="flex flex-col">
@@ -644,10 +483,30 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                             </button>
                           </>
                         ) : (
-                          <div className="flex flex-col items-center gap-1 p-2 text-center">
-                            <UploadCloud className="w-5 h-5 text-zinc-500" />
-                            <span className="text-[9px] text-zinc-500 font-mono uppercase tracking-tighter">+ Add</span>
-                          </div>
+                          <>
+                            {example && (
+                              <img
+                                src={example}
+                                alt={`${label} example`}
+                                onError={(ev) => { (ev.currentTarget as HTMLImageElement).style.display = 'none'; }}
+                                className="absolute inset-0 w-full h-full object-cover opacity-25"
+                              />
+                            )}
+                            <div className="relative z-10 flex flex-col items-center gap-1 p-2 text-center">
+                              <UploadCloud className="w-5 h-5 text-zinc-300" />
+                              <span className="text-[9px] text-zinc-300 font-mono uppercase tracking-tighter">+ Add</span>
+                            </div>
+                            {example && (
+                              <button
+                                type="button"
+                                onClick={(ev) => { ev.preventDefault(); setViewImage(example); }}
+                                aria-label={`Preview ${label} example`}
+                                className="absolute bottom-1 right-1 z-10 flex h-5 w-5 items-center justify-center rounded-md bg-black/70 text-zinc-200 hover:text-[#FFCC00]"
+                              >
+                                <ZoomIn className="w-3 h-3" />
+                              </button>
+                            )}
+                          </>
                         )}
                         <input type="file" accept="image/*" className="hidden" onChange={(e) => handleSlotUpload(e, slot)} />
                       </label>
@@ -907,6 +766,8 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
         </GoldButton>
       </div>
     </GlassPanel>
+    {viewImage && <ImageModal imageUrl={viewImage} onClose={() => setViewImage(null)} />}
+    </>
   );
 };
 
