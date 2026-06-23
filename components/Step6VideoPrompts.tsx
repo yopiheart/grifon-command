@@ -2,24 +2,26 @@
 import React, { useState, useEffect } from 'react';
 import { VideoPrompt, Scene, BusinessInfo } from '../types';
 import { generateVideoPrompts } from '../services/geminiService';
-import { GoldButton } from './ui/GoldButton';
-import { GlassPanel } from './ui/GlassPanel';
 import Loader from './ui/Loader';
-import { Camera, User, Copy, Sparkles, RefreshCw } from 'lucide-react';
+import { AlertTriangle, Camera, User, Copy, Sparkles, RefreshCw } from 'lucide-react';
+import { StepShell } from './ui/StepShell';
+import { StepFooter } from './ui/StepFooter';
 
 interface Step6Props {
-  storyboard: Scene[]; 
+  storyboard: Scene[];
   videoPrompts: VideoPrompt[];
   setVideoPrompts: (prompts: VideoPrompt[]) => void;
   onNext: () => void;
   onBack: () => void;
-  businessInfo: BusinessInfo; 
+  businessInfo: BusinessInfo;
 }
 
 const Step6VideoPrompts: React.FC<Step6Props> = ({ storyboard, videoPrompts, setVideoPrompts, onNext, onBack, businessInfo }) => {
   const [loading, setLoading] = useState(videoPrompts.length === 0);
   const [error, setError] = useState<string | null>(null);
   const [prompts, setPrompts] = useState<VideoPrompt[]>(videoPrompts);
+  // Smart validator: flips true once the user forces Confirm with no prompts. Presentational.
+  const [triedNext, setTriedNext] = useState(false);
 
   useEffect(() => {
     const fetchPrompts = async () => {
@@ -103,19 +105,22 @@ const Step6VideoPrompts: React.FC<Step6Props> = ({ storyboard, videoPrompts, set
     }
   };
 
+  // A forced Confirm with no prompts flags it, instead of sitting disabled. The onNext gate
+  // (prompts present) stays the source of truth.
+  const guardedNext = () => {
+    if (loading) return;
+    if (prompts.length > 0) { onNext(); return; }
+    setTriedNext(true);
+  };
+
   return (
-    <GlassPanel className="max-w-6xl mx-auto">
-      <div className="mb-8 border-b border-white/10 pb-6">
-        <h2 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight">
-          Step 7: Create Video Prompts
-        </h2>
-        <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mt-2">
-          // The AI has generated video prompts for each line, deciding between a talking avatar, B-roll, or cinematic relay.
-        </p>
-      </div>
+    <StepShell sublabel="STEP 7 · VIDEO PROMPTS" title="Create Video Prompts" panelClassName="max-w-6xl mx-auto">
+      <p className="-mt-4 mb-6 text-[11px] font-mono leading-relaxed text-zinc-500">
+        The AI has generated video prompts for each line, deciding between a talking avatar, B-roll, or cinematic relay.
+      </p>
 
       {loading && <Loader message="TRANSLATING SCENES TO VIDEO PROMPTS..." />}
-      {error && <p className="text-red-500 text-center mb-4 font-mono">{error}</p>}
+      {error && <p className="text-red-500 text-center mb-4 font-mono border border-red-900/50 bg-red-900/20 p-3 rounded-xl">{error}</p>}
 
       {!loading && prompts.length > 0 && (
         <>
@@ -136,7 +141,7 @@ const Step6VideoPrompts: React.FC<Step6Props> = ({ storyboard, videoPrompts, set
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 max-h-[55vh] overflow-y-auto pr-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             {prompts.map((p, index) => {
                 const displayLine = storyboard[index]?.scriptLine || p.scriptLine;
-                
+
                 return (
                 <div key={index} className="p-6 bg-zinc-900/50 rounded-2xl border border-white/10 hover:border-[#FFCC00]/50 transition-colors">
                     <h4 className="text-[#FFCC00] font-bold mb-2 text-[10px] uppercase tracking-widest font-mono">// Scene {index + 1}</h4>
@@ -159,15 +164,18 @@ const Step6VideoPrompts: React.FC<Step6Props> = ({ storyboard, videoPrompts, set
         </>
       )}
 
-      <div className="mt-8 flex justify-between items-center pt-6 border-t border-white/10">
-        <button onClick={onBack} className="px-8 py-3 rounded-full border border-white/10 text-zinc-400 hover:text-white hover:bg-white/5 text-xs font-bold uppercase transition-all">
-          &lt; BACK
-        </button>
-        <GoldButton onClick={onNext} disabled={loading || prompts.length === 0} className="text-xs">
-          CONFIRM & PROCEED &gt;
-        </GoldButton>
-      </div>
-    </GlassPanel>
+      {triedNext && !loading && prompts.length === 0 && (
+        <div className="mt-6 flex items-start gap-2 rounded-xl border border-red-500/40 bg-red-500/10 p-4">
+          <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-red-400" />
+          <p className="text-xs font-mono text-red-200">
+            <span className="font-bold uppercase tracking-widest text-red-400">Incomplete — </span>
+            generate video prompts before proceeding
+          </p>
+        </div>
+      )}
+
+      <StepFooter onBack={onBack} onNext={guardedNext} nextLabel="CONFIRM & PROCEED" />
+    </StepShell>
   );
 };
 
