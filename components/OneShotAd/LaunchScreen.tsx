@@ -2,15 +2,25 @@ import React, { useEffect, useRef, useState } from 'react';
 import {
   ImageUp, Sparkles, Zap, Lock, Wand2, Upload, User, Mic,
   Film, Gauge, Check, Loader2, Package, Wrench, Smartphone, Building2, RefreshCw,
-  Settings2, ChevronDown, Play, Square, X, Languages,
+  Settings2, ChevronDown, Play, Square, X, Languages, Maximize2, UploadCloud, Images,
 } from 'lucide-react';
 import { GlassPanel } from '../ui/GlassPanel';
 import ImageModal from '../ui/ImageModal';
 import { DriftOrbs } from './motion';
 import { RECOMMENDED_VOICES } from '../SignalModulator/pinoyReady';
-import { generateAvatarImage } from '../../services/geminiService';
+import { generateAvatarImage, describeBusinessAsset } from '../../services/geminiService';
 import { fetchVoices } from '../../services/voiceService';
+import { compressImageForUpload } from '../../utils/imageCompression';
 import type { AutopilotInput } from '../../services/oneShotIntake';
+import type { BusinessInfo } from '../../types';
+import {
+  ARCHETYPE_META, ARCHETYPE_ORDER, ARCHETYPE_UPLOAD_SLOTS, inferServiceArchetype,
+  RE_ARCHETYPE_META, RE_ARCHETYPE_ORDER, RE_UPLOAD_SLOTS, inferRealEstateArchetype,
+  BAD_SAMPLE, SampleTile,
+  type ServiceArchetype, type RealEstateArchetype, type ServiceSlot,
+} from '../guidedPhotoSlots';
+
+type ServicePhoto = NonNullable<BusinessInfo['servicePhotos']>[number];
 
 // ===========================================================================
 // TOKEN SYSTEM — one source of truth (see workflows/oneshot_composer_redesign.md).
@@ -98,11 +108,18 @@ export const LaunchScreen: React.FC<{
   onSwitchToSteps: () => void;
 }> = ({ onLaunch, directorUnlocked, onUpgrade, onSwitchToSteps }) => {
   // --- Brief --------------------------------------------------------------
-  const [hero, setHero] = useState<string>('');
+  const [hero, setHero] = useState<string>('');          // Product vertical: single product-in-hand photo
   const [offer, setOffer] = useState('');
   const [brandName, setBrandName] = useState('');
   const [price, setPrice] = useState('');
   const [forceFresh, setForceFresh] = useState(false);
+
+  // --- Guided assets (Service / RealEstate verticals — per-slot real photos) ---
+  const [servicePhotos, setServicePhotos] = useState<ServicePhoto[]>([]);
+  const [serviceArchetype, setServiceArchetype] = useState<ServiceArchetype>('venue');
+  const [reArchetype, setReArchetype] = useState<RealEstateArchetype>('listing');
+  const [slotBusy, setSlotBusy] = useState(false);
+  const [assetErr, setAssetErr] = useState('');
 
   // --- Creative axes ------------------------------------------------------
   const [vertical, setVertical] = useState('product');
@@ -186,6 +203,47 @@ export const LaunchScreen: React.FC<{
   const formatLabel = FORMATS.find((f) => f.value === format)?.label ?? 'UGC';
   const formatLocked = vertical !== 'product'; // Service/RealEstate drive their own formula
 
+  // Service/RealEstate use the guided per-slot real-photo upload ("Assets");
+  // Product uses a single product-in-hand photo. (One-Shot collects the SAME
+  // inputs as advanced mode, just on one page — Director AI does the rest.)
+  const isService = vertical === 'service';
+  const isRealEstate = vertical === 'real_estate';
+  const isGuided = isService || isRealEstate;
+  const guidedMeta = isRealEstate ? RE_ARCHETYPE_META[reArchetype] : ARCHETYPE_META[serviceArchetype];
+  const guidedSlots = isRealEstate ? RE_UPLOAD_SLOTS[reArchetype] : ARCHETYPE_UPLOAD_SLOTS[serviceArchetype];
+  const guidedArchetypeTabs = isRealEstate
+    ? RE_ARCHETYPE_ORDER.map((a) => ({ key: a, ...RE_ARCHETYPE_META[a], active: reArchetype === a, onSelect: () => setReArchetype(a) }))
+    : ARCHETYPE_ORDER.map((a) => ({ key: a, ...ARCHETYPE_META[a], active: serviceArchetype === a, onSelect: () => setServiceArchetype(a) }));
+
+  // Smart-default the archetype off the offer once, when entering a guided vertical.
+  useEffect(() => {
+    if (isService) setServiceArchetype(inferServiceArchetype(offer));
+    if (isRealEstate) setReArchetype(inferRealEstateArchetype(offer));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [vertical]);
+
+  // Guided slot upload: the slot dropped into IS the tag. Describe is best-effort
+  // (a 401/quota must not block the upload — research re-derives context anyway).
+  const uploadSlot = async (file: File, slot: ServiceSlot) => {
+    setSlotBusy(true);
+    setAssetErr('');
+    try {
+      const c = await compressImageForUpload(file);
+      let description: string | undefined;
+      try { description = await describeBusinessAsset(c.base64, c.mimeType); } catch { /* best-effort */ }
+      const order = guidedSlots.map((s) => s.slot);
+      setServicePhotos((prev) =>
+        [...prev.filter((p) => p.slot !== slot), { url: c.dataUrl, slot, description }]
+          .sort((a, b) => order.indexOf(a.slot) - order.indexOf(b.slot)),
+      );
+    } catch {
+      setAssetErr('Could not read that image — try another.');
+    } finally {
+      setSlotBusy(false);
+    }
+  };
+  const removeSlotPhoto = (slot: ServiceSlot) => setServicePhotos((prev) => prev.filter((p) => p.slot !== slot));
+
   // Seedance (Commercial) can't speak a native Filipino accent → Commercial is
   // English-only, and the two are mutually exclusive.
   const chooseFormat = (f: Format) => {
@@ -201,10 +259,12 @@ export const LaunchScreen: React.FC<{
   // Commercial (Seedance) handles its own audio. Service/RealEstate (formatLocked)
   // run UGC-style and always need a voice.
   const voiceNeeded = formatLocked || format !== 'commercial';
+  // Product → one product photo; Service/RealEstate → at least one guided asset.
+  const assetReady = isGuided ? servicePhotos.length > 0 : !!hero;
   // Brand + price are load-bearing — they feed Market Research (which writes the
   // whole script). Required, not optional.
-  const ready = !!(hero && offer.trim() && brandName.trim() && price.trim() && presenterReady && (!voiceNeeded || voiceId));
-  const reason = !hero ? 'Add a product photo'
+  const ready = !!(assetReady && offer.trim() && brandName.trim() && price.trim() && presenterReady && (!voiceNeeded || voiceId));
+  const reason = !assetReady ? (isGuided ? 'Add your photos' : 'Add a product photo')
     : !offer.trim() ? 'Describe your offer'
       : !brandName.trim() ? 'Add your brand'
         : !price.trim() ? 'Add your price'
@@ -240,13 +300,17 @@ export const LaunchScreen: React.FC<{
       price: price.trim(),
       productName: brand,
       productDescription: offer.trim(),
-      heroImageBase64: hero,
+      // Guided verticals anchor research on the hero-slot photo; Product on the single hero.
+      heroImageBase64: isGuided ? (servicePhotos[0]?.url ?? '') : hero,
       avatar: { url: avatarUrl, description: `A ${ethnicity} presenter`, ethnicity, prompt: '' },
       voiceId,
       language,
       aspectRatio,
       resolution,
       scriptType,
+      servicePhotos: isGuided ? servicePhotos : undefined,
+      serviceArchetype: isService ? serviceArchetype : undefined,
+      realEstateArchetype: isRealEstate ? reArchetype : undefined,
       forceFreshResearch: forceFresh,
     });
   };
@@ -358,7 +422,7 @@ export const LaunchScreen: React.FC<{
                   <Segmented value={aspectRatio} onChange={(v) => setAspectRatio(v as AutopilotInput['aspectRatio'])} opts={['9:16', '1:1', '16:9']} />
                 </SettingRow>
 
-                <SettingRow label="Quality" icon={Gauge}>
+                <SettingRow label="Video quality" icon={Gauge}>
                   <div className="flex gap-2">
                     <SegBtn active={resolution === '720p'} onClick={() => setResolution('720p')}>720p</SegBtn>
                     <button
@@ -371,6 +435,7 @@ export const LaunchScreen: React.FC<{
                       <BusinessBadge />
                     </button>
                   </div>
+                  <p className="mt-1 text-[10px] text-zinc-500">Resolution of the final rendered video.</p>
                 </SettingRow>
 
                 <SettingRow label="Language" icon={Languages}>
@@ -379,6 +444,9 @@ export const LaunchScreen: React.FC<{
                     onChange={(v) => chooseLanguage(v as AutopilotInput['language'])}
                     opts={format === 'commercial' ? ['English'] : ['Taglish', 'English']}
                   />
+                  {format === 'commercial' && (
+                    <p className="mt-1 text-[10px] text-amber-400/80">Commercial is English-only (Taglish not supported by the cinematic engine).</p>
+                  )}
                 </SettingRow>
 
                 {voiceNeeded && (
@@ -406,12 +474,14 @@ export const LaunchScreen: React.FC<{
             </Popover>
           </div>
 
-          {/* ---- Asset tiles: PRODUCT · AVATAR (full-width rows on mobile per spec) ---- */}
+          {/* ---- Asset tiles: PRODUCT/ASSETS · PRESENTER (full-width rows on mobile) ---- */}
           <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
             <AssetTile
-              label="Product"
-              icon={ImageUp}
-              thumb={hero}
+              label={isGuided ? 'Assets' : 'Product'}
+              icon={isGuided ? Images : ImageUp}
+              thumb={isGuided ? servicePhotos[0]?.url : hero}
+              busy={slotBusy}
+              count={isGuided ? servicePhotos.length : undefined}
               onClick={() => setAssetModal('product')}
             />
             <AssetTile
@@ -540,8 +610,8 @@ export const LaunchScreen: React.FC<{
         </Modal>
       )}
 
-      {/* ---- Product modal (Phase 1: single upload; Phase 2 = per-vertical slots) ---- */}
-      {assetModal === 'product' && (
+      {/* ---- Product modal — single product photo (Product vertical) ---- */}
+      {assetModal === 'product' && !isGuided && (
         <Modal title="Product photo" onClose={() => setAssetModal(null)}>
           <UploadDropzone
             thumb={hero}
@@ -553,11 +623,97 @@ export const LaunchScreen: React.FC<{
         </Modal>
       )}
 
+      {/* ---- Assets modal — guided per-slot real photos (Service / RealEstate) ---- */}
+      {assetModal === 'product' && isGuided && (
+        <Modal title={isRealEstate ? 'Property photos' : 'Service photos'} wide onClose={() => setAssetModal(null)}>
+          {/* What does the ad lead with? — archetype picker */}
+          <p className={`mb-1.5 text-zinc-400 ${T_LABEL}`}>// What should the ad lead with?</p>
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+            {guidedArchetypeTabs.map((a) => (
+              <button
+                key={a.key}
+                type="button"
+                onClick={a.onSelect}
+                className={`border px-3 py-2.5 text-left ${R_CTRL} transition-all ${
+                  a.active ? 'border-[#FFCC00] bg-[#FFCC00]/10' : 'border-white/10 hover:border-white/30'
+                }`}
+              >
+                <span className={`block ${T_CTRL} ${a.active ? 'text-[#FFCC00]' : 'text-zinc-200'}`}>{a.label}</span>
+                <span className="mt-0.5 block text-[11px] leading-snug text-zinc-500">{a.sub}</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Reference examples — the real /examples assets (✓ good + ✗ bad) */}
+          <p className={`mb-2 mt-4 text-zinc-500 ${T_LABEL}`}>// What to upload — clear &amp; bright wins ↓</p>
+          <div className="grid grid-cols-3 gap-3">
+            {guidedMeta.samples.map((ex, idx) => (
+              <SampleTile key={`good-${idx}`} src={ex.src} caption={ex.caption} good />
+            ))}
+            <SampleTile src={BAD_SAMPLE.src} caption={BAD_SAMPLE.caption} good={false} />
+          </div>
+
+          {/* Guided slots — the slot you drop into IS the tag */}
+          <p className={`mb-2 mt-4 text-zinc-500 ${T_LABEL}`}>// Upload your REAL photos — tagged per slot ↓</p>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            {guidedSlots.map(({ slot, label, hint }) => {
+              const existing = servicePhotos.find((p) => p.slot === slot);
+              return (
+                <div key={`${slot}-${label}`} className="flex flex-col">
+                  <label className={`relative flex aspect-square w-full cursor-pointer items-center justify-center overflow-hidden border transition-all ${R_CTRL} ${
+                    existing ? 'border-[#FFCC00] shadow-[0_0_8px_rgba(255,204,0,0.25)]' : 'border-dashed border-white/15 bg-zinc-950/50 hover:border-[#FFCC00] hover:bg-zinc-800/60'
+                  }`}>
+                    {existing ? (
+                      <>
+                        <img src={existing.url} alt={label} className="h-full w-full object-cover" />
+                        <button
+                          type="button"
+                          onClick={(ev) => { ev.preventDefault(); setViewImage(existing.url); }}
+                          aria-label="View full"
+                          className="absolute bottom-1 left-1 flex h-5 w-5 items-center justify-center rounded-md bg-black/70 text-zinc-200 hover:text-[#FFCC00]"
+                        >
+                          <Maximize2 className="h-3 w-3" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={(ev) => { ev.preventDefault(); removeSlotPhoto(slot); }}
+                          aria-label="Remove"
+                          className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-600/90 text-white"
+                        >
+                          <X className="h-3 w-3" />
+                        </button>
+                      </>
+                    ) : (
+                      <div className="flex flex-col items-center gap-1 p-2 text-center text-zinc-500">
+                        {slotBusy ? <Loader2 className="h-5 w-5 animate-spin text-[#FFCC00]" /> : <UploadCloud className="h-5 w-5" />}
+                        <span className="text-[9px] font-mono uppercase tracking-tighter">+ Add</span>
+                      </div>
+                    )}
+                    <input type="file" accept="image/*" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) void uploadSlot(f, slot); e.target.value = ''; }} />
+                  </label>
+                  <p className="mt-1 text-center text-[9px] font-mono font-bold uppercase leading-tight text-white">{label}</p>
+                  <p className="text-center text-[8px] font-mono leading-tight text-zinc-500">{hint}</p>
+                </div>
+              );
+            })}
+          </div>
+          {assetErr && <p className="mt-2 text-[11px] text-amber-400/80">{assetErr}</p>}
+
+          <button
+            type="button"
+            onClick={() => setAssetModal(null)}
+            className={`mt-5 flex w-full items-center justify-center gap-2 ${CTRL_H} ${R_CTRL} ${T_CTRL} bg-[#FFCC00] text-black transition-all hover:shadow-[0_0_20px_rgba(255,204,0,0.4)]`}
+          >
+            <Check className="h-4 w-4 shrink-0" /> Done — {servicePhotos.length} photo{servicePhotos.length === 1 ? '' : 's'}
+          </button>
+        </Modal>
+      )}
+
       {/* ---- Presenter modal (clean vertical layout: preview → controls → CTA) ---- */}
       {assetModal === 'avatar' && (
         <Modal title="Presenter" onClose={() => setAssetModal(null)}>
           <div className="mb-4 flex gap-2">
-            <ModeTab active={avatarMode === 'generate'} onClick={() => setAvatarMode('generate')} icon={Wand2}>Generate</ModeTab>
+            <ModeTab active={avatarMode === 'generate'} onClick={() => setAvatarMode('generate')} icon={Wand2}>Create</ModeTab>
             <ModeTab active={avatarMode === 'upload'} onClick={() => setAvatarMode('upload')} icon={Upload}>Upload</ModeTab>
           </div>
 
@@ -571,14 +727,24 @@ export const LaunchScreen: React.FC<{
             />
           ) : (
             <div className="space-y-3">
-              {/* Preview block on top — generous, centered (no cramped tiny square) */}
+              {/* Preview block on top — generous, centered, click to view full */}
               <div className={`relative mx-auto flex aspect-square w-full max-w-[180px] items-center justify-center overflow-hidden border bg-zinc-950 ${R_PANEL} ${avatarUrl ? 'border-[#FFCC00]/60' : 'border-white/10'}`}>
                 {avatarBusy ? (
                   <Loader2 className="h-7 w-7 animate-spin text-[#FFCC00]" />
                 ) : avatarUrl ? (
-                  <button type="button" onClick={() => setViewImage(avatarUrl)} className="h-full w-full">
-                    <img src={avatarUrl} alt="Presenter" className="h-full w-full object-cover" />
-                  </button>
+                  <>
+                    <button type="button" onClick={() => setViewImage(avatarUrl)} aria-label="View full presenter" className="h-full w-full">
+                      <img src={avatarUrl} alt="Presenter" className="h-full w-full object-cover" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setViewImage(avatarUrl)}
+                      aria-label="View full presenter"
+                      className="absolute bottom-1.5 right-1.5 flex h-6 w-6 items-center justify-center rounded-md bg-black/70 text-zinc-200 hover:text-[#FFCC00]"
+                    >
+                      <Maximize2 className="h-3.5 w-3.5" />
+                    </button>
+                  </>
                 ) : (
                   <div className="flex flex-col items-center gap-2 text-zinc-600">
                     <User className="h-8 w-8" />
@@ -610,7 +776,7 @@ export const LaunchScreen: React.FC<{
                 }`}
               >
                 {avatarBusy ? <Loader2 className="h-4 w-4 shrink-0 animate-spin" /> : <Wand2 className="h-4 w-4 shrink-0" />}
-                {avatarUrl ? 'Regenerate presenter' : 'Generate presenter'}
+                {avatarUrl ? 'Recreate presenter' : 'Create presenter'}
                 {avatarGens >= FREE_AVATAR_GENS ? ' · 1 credit' : ''}
               </button>
               <p className={`text-center text-zinc-500 ${T_LABEL}`}>
@@ -747,35 +913,43 @@ const AssetTile: React.FC<{
   icon: typeof User;
   thumb?: string;
   busy?: boolean;
+  /** For guided "Assets" — number of slots filled (drives the sub-label + badge). */
+  count?: number;
   onClick: () => void;
-}> = ({ label, icon: Icon, thumb, busy, onClick }) => (
-  <button
-    type="button"
-    onClick={onClick}
-    className={`group relative flex h-20 items-center gap-3 overflow-hidden border px-3 text-left transition-all ${R_CTRL} ${
-      thumb ? 'border-[#FFCC00]/60 bg-[#FFCC00]/[0.06]' : 'border-dashed border-white/20 hover:border-[#FFCC00]/60'
-    }`}
-  >
-    <div className={`relative h-14 w-14 shrink-0 overflow-hidden border border-white/10 bg-zinc-900 ${R_CTRL}`}>
-      {busy ? (
-        <div className="flex h-full w-full items-center justify-center"><Loader2 className="h-5 w-5 animate-spin text-[#FFCC00]" /></div>
-      ) : thumb ? (
-        <img src={thumb} alt={label} className="h-full w-full object-cover" />
-      ) : (
-        <div className="flex h-full w-full items-center justify-center"><Icon className="h-5 w-5 text-zinc-600 group-hover:text-[#FFCC00]" /></div>
+}> = ({ label, icon: Icon, thumb, busy, count, onClick }) => {
+  const filled = count !== undefined ? count > 0 : !!thumb;
+  const sub = count !== undefined
+    ? (count > 0 ? `${count} photo${count === 1 ? '' : 's'} · tap to edit` : 'Tap to add')
+    : (thumb ? 'Tap to change' : 'Tap to add');
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`group relative flex h-20 items-center gap-3 overflow-hidden border px-3 text-left transition-all ${R_CTRL} ${
+        filled ? 'border-[#FFCC00]/60 bg-[#FFCC00]/[0.06]' : 'border-dashed border-white/20 hover:border-[#FFCC00]/60'
+      }`}
+    >
+      <div className={`relative h-14 w-14 shrink-0 overflow-hidden border border-white/10 bg-zinc-900 ${R_CTRL}`}>
+        {busy ? (
+          <div className="flex h-full w-full items-center justify-center"><Loader2 className="h-5 w-5 animate-spin text-[#FFCC00]" /></div>
+        ) : thumb ? (
+          <img src={thumb} alt={label} className="h-full w-full object-cover" />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center"><Icon className="h-5 w-5 text-zinc-600 group-hover:text-[#FFCC00]" /></div>
+        )}
+      </div>
+      <div className="min-w-0">
+        <span className={`block text-zinc-200 ${T_CTRL}`}>{label}</span>
+        <span className={`mt-0.5 block text-zinc-500 ${T_LABEL}`}>{sub}</span>
+      </div>
+      {filled && !busy && (
+        <span className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#FFCC00] text-black">
+          <Check className="h-3 w-3" />
+        </span>
       )}
-    </div>
-    <div className="min-w-0">
-      <span className={`block text-zinc-200 ${T_CTRL}`}>{label}</span>
-      <span className={`mt-0.5 block text-zinc-500 ${T_LABEL}`}>{thumb ? 'Tap to change' : 'Tap to add'}</span>
-    </div>
-    {thumb && !busy && (
-      <span className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#FFCC00] text-black">
-        <Check className="h-3 w-3" />
-      </span>
-    )}
-  </button>
-);
+    </button>
+  );
+};
 
 /** Centered modal shell (rounded-3xl). Backdrop click closes. `wide` for the
  * format picker; scrolls inside on short viewports. */

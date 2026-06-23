@@ -1,5 +1,13 @@
 import type { Avatar, BusinessInfo, ClientDetails, MarketResearchReport } from '../types';
 
+/** Slot-labeled description block from the guided photos — mirrors advanced mode's
+ * buildServiceDescription so the per-scene router reads the same shape. Kept inline
+ * to keep this module pure (no React/component imports). */
+const buildServicePhotoDescription = (
+  photos: NonNullable<BusinessInfo['servicePhotos']>,
+): string | undefined =>
+  photos.length ? photos.map((p) => `[${p.slot}] ${(p.description ?? '').trim()}`).join('\n\n') : undefined;
+
 /**
  * Light intake layer for the One-Shot Ad module. Holds the intake payload type
  * and the pure projection from a MarketMind report → wizard state. Salvaged from
@@ -28,6 +36,13 @@ export interface AutopilotInput {
   resolution?: '720p' | '1080p';
   /** Script style — derived from the Format × Strategy axes and the chosen vertical. */
   scriptType: NonNullable<BusinessInfo['scriptType']>;
+  /** Phase 2: guided per-slot real photos for Service/RealEstate verticals (the slot IS the tag).
+   * Feeds the per-scene real-photo router. Empty/absent for Product (which uses heroImageBase64). */
+  servicePhotos?: BusinessInfo['servicePhotos'];
+  /** Which beat the Service ad leads with (venue|work|practitioner). */
+  serviceArchetype?: BusinessInfo['serviceArchetype'];
+  /** Which beat the RealEstate ad leads with (listing|agent|developer). */
+  realEstateArchetype?: BusinessInfo['realEstateArchetype'];
   /** When true, ignore any cached market research for this product and run fresh (intake "Re-research"). */
   forceFreshResearch?: boolean;
 }
@@ -47,6 +62,16 @@ export function mapReportToWizard(
   input: AutopilotInput,
   report: MarketResearchReport,
 ): { clientDetails: ClientDetails; businessInfo: BusinessInfo } {
+  // Guided verticals (Service/RealEstate) carry per-slot real photos; Product uses the single hero.
+  const guided = input.servicePhotos ?? [];
+  const hasGuided = guided.length > 0;
+  const productImageUrls = hasGuided
+    ? guided.map((p) => p.url).slice(0, 5)
+    : input.heroImageBase64 ? [input.heroImageBase64] : [];
+  const productImageDescription = hasGuided
+    ? buildServicePhotoDescription(guided) ?? input.productDescription
+    : input.productDescription;
+
   return {
     clientDetails: { brandName: input.brandName, offer: input.offer },
     businessInfo: {
@@ -56,8 +81,11 @@ export function mapReportToWizard(
       painPoint: report.bleedingNeck || report.threeAmThought || '',
       separator: report.contrarianTruth || report.villain || '',
       features: input.productDescription,
-      productImageUrls: [input.heroImageBase64],
-      productImageDescription: input.productDescription,
+      productImageUrls,
+      productImageDescription,
+      servicePhotos: hasGuided ? guided : undefined,
+      serviceArchetype: input.serviceArchetype,
+      realEstateArchetype: input.realEstateArchetype,
       scriptType: input.scriptType,
       businessType: businessTypeFor(input.scriptType),
       listingPrice: input.scriptType === 'RealEstate' ? input.price : undefined,
