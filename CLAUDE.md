@@ -167,3 +167,4 @@ Deliverables go to cloud services (Google Sheets, Slides, etc.) where the user c
 - `workflows/loops.md` — the loop registry: every self-checking loop (build-gate, cloud CI, `/goal`, session re-arm, parked nightly regression, meta, PR-babysit), its arm command, verifier, and kill switch.
 - `workflows/pr_review_loop.md` — SOP for the fresh-context PR critic: a separate `general-purpose` sub-agent reviews the diff (builder ≠ reviewer), posts ranked findings, flags-not-applies TUNED-file changes. The review step of the Tier 5 PR-babysit loop.
 - `workflows/viral_swipe_file.md` — the Swipe File: compounding database of Viral Autopsy entries, Pattern Index, and gated proposals. Maintained by the `viral-autopsy` skill.
+- `workflows/advanced_mode_cleanup.md` — planned: reorganize the 8-step wizard to read as clean as the One-Shot composer (token system, progressive disclosure, less scroll). Has a paste-ready kickoff message for the next session.
