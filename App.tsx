@@ -8,7 +8,7 @@ import Step2BusinessInfo from './components/Step2BusinessInfo';
 import Step3AdScript from './components/Step3AdScript';
 import Step4Avatar from './components/Step4Avatar';
 import Step5Storyboard from './components/Step5Storyboard';
-import DirectorOneShot from './components/DirectorOneShot';
+import OneShotAd from './components/OneShotAd';
 import LockedVideoPreview from './components/LockedVideoPreview';
 import PlanGate from './components/PlanGate';
 import type { OneShotSinks } from './hooks/useOneShotGeneration';
@@ -1392,6 +1392,23 @@ const App: React.FC = () => {
     const devUnlock = typeof localStorage !== 'undefined' && localStorage.getItem('grifon_dev_unlock') === '1';
     const directorUnlocked = devUnlock || planAtLeast(plan_id, 'pro');
 
+    if (showOneShot) {
+      // One-Shot Ad — full-screen intake → research → generate → Step 8 review.
+      moduleElement = (
+        <OneShotAd
+          userId={userId}
+          sinks={oneShotSinks}
+          setClientDetails={setClientDetails}
+          setBusinessInfo={setBusinessInfo}
+          setAspectRatio={setAspectRatio}
+          directorUnlocked={directorUnlocked}
+          onBack={() => setActiveModule(null)}
+          onUpgrade={() => { setActiveModule(null); setCurrentRoute('pricing'); }}
+          onSwitchToSteps={() => { setDirectorMode('steps'); setCurrentStep(1); }}
+          onReview={() => { setDirectorMode('steps'); setCurrentStep(8); }}
+        />
+      );
+    } else {
     moduleElement = (
         <div className="min-h-screen bg-zinc-950 font-sans flex flex-col items-center p-4 sm:p-6 md:p-8 text-white">
         <div className="w-full max-w-6xl mx-auto">
@@ -1456,19 +1473,6 @@ const App: React.FC = () => {
               <div className="flex items-center justify-center h-64">
                 <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest animate-pulse">// LOADING_SESSION...</p>
               </div>
-            ) : showOneShot ? (
-              <DirectorOneShot
-                clientDetails={clientDetails}
-                businessInfo={businessInfo}
-                aspectRatio={aspectRatio}
-                setAspectRatio={setAspectRatio}
-                language={language}
-                sinks={oneShotSinks}
-                directorUnlocked={directorUnlocked}
-                onUpgrade={() => { setActiveModule(null); setCurrentRoute('pricing'); }}
-                onSwitchToSteps={() => { setDirectorMode('steps'); setCurrentStep(1); }}
-                onReview={() => { setDirectorMode('steps'); setCurrentStep(8); }}
-              />
             ) : (
             <>
             {directorMode === 'steps' && !showResumePill && (
@@ -1532,6 +1536,7 @@ const App: React.FC = () => {
         </div>
         </div>
     );
+    }
   } else {
     moduleElement = <PlaceholderTool moduleName={activeModule} onBack={() => setActiveModule(null)} />;
   }
