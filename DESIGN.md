@@ -166,6 +166,37 @@ Elevation is expressed through **frosted glass**, not drop shadows:
 - **uploadDropzone:** `bg-zinc-950/50 border-2 border-dashed border-white/10 rounded-xl hover:border-[#FFCC00] hover:bg-zinc-800/80 transition-all cursor-pointer flex flex-col items-center justify-center p-6`. Native `<input type="file">` MUST be hidden.
 - **Icons:** ONLY `lucide-react` SVGs. Never raw text strings like `movie_filter`.
 
+## Wizard control system (shared tokens)
+
+The ad-creation wizard and the One-Shot composer read from ONE token source —
+[components/ui/wizardTokens.ts](components/ui/wizardTokens.ts) — so heights, radii, type, and
+spacing never drift step-to-step. Values were lifted from the One-Shot composer
+([components/OneShotAd/LaunchScreen.tsx](components/OneShotAd/LaunchScreen.tsx)), the reference
+for "clean." Import the consts (or the primitives below) instead of inlining strings.
+
+- **Control floor — `h-11` (44px, `CTRL_H`).** Every interactive control — pills, selects,
+  inputs, segmented toggles, popover triggers — sits on this tap-target floor. The primary CTA
+  may step up to `h-12`. No ad-hoc `py-*` heights on controls.
+- **Three radius tiers.** Controls `rounded-xl` (`R_CTRL`, 12px) · panels/cards `rounded-2xl`
+  (`R_PANEL`, 16px) · modals `rounded-3xl` (`R_MODAL`, 24px). (Consistent with Shapes above —
+  in-app controls stay rectangular, not pills.)
+- **Type scale.** `T_DISPLAY` (page title) · `T_CTRL` (`text-sm font-semibold`, control labels) ·
+  `T_VALUE` (`text-xs font-mono`, current values) · `T_LABEL` (`text-[10px]` mono caps, the
+  `//` meta-labels). These are the label-caps register applied consistently.
+- **Progressive disclosure (anti-dumbing rule).** Secondary/optional controls may be tucked into a
+  [Popover](components/ui/Popover.tsx) or [Modal](components/ui/Modal.tsx) to cut scroll — BUT
+  the control's current value stays visible on the collapsed trigger (`T_VALUE`), nothing used on
+  every run gets buried, and expand is one click. Disclosure must feel like *tidy*, not *taken
+  away*. Advanced/Director mode is the expert surface — never hide what an expert reaches for.
+
+**Shared primitives (use them; don't re-style inline):**
+[StepShell](components/ui/StepShell.tsx) (panel + standardized header) ·
+[StepFooter](components/ui/StepFooter.tsx) (sticky BACK/CONFIRM nav) ·
+[Popover](components/ui/Popover.tsx) · [Modal](components/ui/Modal.tsx) ·
+[FieldLabel](components/ui/FieldLabel.tsx) · [TextField + TextArea](components/ui/TextField.tsx)
+(tokenized successors to ui/Input + ui/Textarea) ·
+[SegButton + Pill](components/ui/SegButton.tsx) (toggle groups).
+
 ## Dashboard pilot (Gemini-inspired)
 
 The dashboard (`components/Dashboard.tsx` and its exclusive cards — `CommandPalette`, `RecentWorkCard`, `ResumeDraftCard`, `OnboardingNudge`, `ActiveJobsPanel`) runs a scoped pilot that intentionally deviates from two rules above. The rest of the app still follows them — do not propagate these without sign-off.
