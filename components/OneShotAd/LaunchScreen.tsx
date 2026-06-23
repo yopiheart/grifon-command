@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import {
   ImageUp, Sparkles, Zap, Lock, Wand2, Upload, User, Mic,
   Film, Gauge, Check, Loader2, Package, Wrench, Smartphone, Building2, RefreshCw,
-  Settings2, ChevronDown, Play, Square, X, Languages, Maximize2, UploadCloud, Images,
+  Settings2, ChevronDown, Play, Square, X, Languages, Maximize2, UploadCloud, Images, ZoomIn,
 } from 'lucide-react';
 import { GlassPanel } from '../ui/GlassPanel';
 import ImageModal from '../ui/ImageModal';
@@ -16,7 +16,7 @@ import type { BusinessInfo } from '../../types';
 import {
   ARCHETYPE_META, ARCHETYPE_ORDER, ARCHETYPE_UPLOAD_SLOTS, inferServiceArchetype,
   RE_ARCHETYPE_META, RE_ARCHETYPE_ORDER, RE_UPLOAD_SLOTS, inferRealEstateArchetype,
-  BAD_SAMPLE, SampleTile,
+  BAD_SAMPLE, SampleTile, PRODUCT_EXAMPLE,
   type ServiceArchetype, type RealEstateArchetype, type ServiceSlot,
 } from '../guidedPhotoSlots';
 
@@ -213,7 +213,6 @@ export const LaunchScreen: React.FC<{
   const isService = vertical === 'service';
   const isRealEstate = vertical === 'real_estate';
   const isGuided = isService || isRealEstate;
-  const guidedMeta = isRealEstate ? RE_ARCHETYPE_META[reArchetype] : ARCHETYPE_META[serviceArchetype];
   const guidedSlots = isRealEstate ? RE_UPLOAD_SLOTS[reArchetype] : ARCHETYPE_UPLOAD_SLOTS[serviceArchetype];
   const guidedArchetypeTabs = isRealEstate
     ? RE_ARCHETYPE_ORDER.map((a) => ({ key: a, ...RE_ARCHETYPE_META[a], active: reArchetype === a, onSelect: () => setReArchetype(a) }))
@@ -499,7 +498,7 @@ export const LaunchScreen: React.FC<{
 
                 {voiceNeeded && (
                   <SettingRow label="Voice" icon={Mic}>
-                    <div className="max-h-44 space-y-1.5 overflow-y-auto pr-1">
+                    <div className="max-h-60 space-y-1.5 overflow-y-auto pr-1">
                       {voiceOpts.map((v) => (
                         <VoiceRow
                           key={v.id}
@@ -662,9 +661,15 @@ export const LaunchScreen: React.FC<{
       {/* ---- Product modal — single product photo (Product vertical) ---- */}
       {assetModal === 'product' && !isGuided && (
         <Modal title="Product photo" onClose={() => setAssetModal(null)}>
+          {/* Reference guide — handheld, brand + whole product visible (phone shot is fine) */}
+          <p className={`mb-2 text-zinc-500 ${T_LABEL}`}>// Aim for this — product in hand, brand visible · tap <ZoomIn className="inline h-3 w-3 align-text-bottom" /> to zoom ↓</p>
+          <div className="mx-auto mb-3 grid max-w-[260px] grid-cols-2 gap-3">
+            <SampleTile src={PRODUCT_EXAMPLE} caption="In hand · brand clear" good onZoom={setViewImage} />
+            <SampleTile src={BAD_SAMPLE.src} caption="Dark & blurry" good={false} onZoom={setViewImage} />
+          </div>
           <UploadDropzone
             thumb={hero}
-            hint="For best results use a product-in-hand shot — it keeps the product size consistent across scenes."
+            hint="A plain phone shot is fine — just hold the product so the brand name and whole product are clear."
             onFile={async (f) => setHero(await fileToDataUrl(f))}
             onClear={() => setHero('')}
             onView={hero ? () => setViewImage(hero) : undefined}
@@ -697,19 +702,10 @@ export const LaunchScreen: React.FC<{
             ))}
           </div>
 
-          {/* Reference examples — the real /examples assets (✓ good + ✗ bad) */}
-          <p className={`mb-2 mt-4 text-zinc-500 ${T_LABEL}`}>// What to upload — clear &amp; bright wins ↓</p>
-          <div className="grid grid-cols-3 gap-3">
-            {guidedMeta.samples.map((ex, idx) => (
-              <SampleTile key={`good-${idx}`} src={ex.src} caption={ex.caption} good />
-            ))}
-            <SampleTile src={BAD_SAMPLE.src} caption={BAD_SAMPLE.caption} good={false} />
-          </div>
-
-          {/* Guided slots — the slot you drop into IS the tag */}
-          <p className={`mb-2 mt-4 text-zinc-500 ${T_LABEL}`}>// Upload your REAL photos — tagged per slot ↓</p>
+          {/* Guided slots — each shows ITS OWN example (dimmed, tap ⌕ to zoom). The slot you drop into IS the tag. */}
+          <p className={`mb-2 mt-4 text-zinc-500 ${T_LABEL}`}>// Each slot shows what to upload — tap <ZoomIn className="inline h-3 w-3 align-text-bottom" /> to zoom · clear &amp; bright wins ↓</p>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {guidedSlots.map(({ slot, label, hint }) => {
+            {guidedSlots.map(({ slot, label, hint, example }) => {
               const existing = servicePhotos.find((p) => p.slot === slot);
               return (
                 <div key={`${slot}-${label}`} className="flex flex-col">
@@ -737,10 +733,31 @@ export const LaunchScreen: React.FC<{
                         </button>
                       </>
                     ) : (
-                      <div className="flex flex-col items-center gap-1 p-2 text-center text-zinc-500">
-                        {slotBusy ? <Loader2 className="h-5 w-5 animate-spin text-[#FFCC00]" /> : <UploadCloud className="h-5 w-5" />}
-                        <span className="text-[9px] font-mono uppercase tracking-tighter">+ Add</span>
-                      </div>
+                      <>
+                        {/* Dimmed reference example — "this is what goes here" */}
+                        {example && (
+                          <img
+                            src={example}
+                            alt={`${label} example`}
+                            onError={(ev) => { (ev.currentTarget as HTMLImageElement).style.display = 'none'; }}
+                            className="absolute inset-0 h-full w-full object-cover opacity-25"
+                          />
+                        )}
+                        <div className="relative z-10 flex flex-col items-center gap-1 p-2 text-center text-zinc-300">
+                          {slotBusy ? <Loader2 className="h-5 w-5 animate-spin text-[#FFCC00]" /> : <UploadCloud className="h-5 w-5" />}
+                          <span className="text-[9px] font-mono uppercase tracking-tighter">+ Add</span>
+                        </div>
+                        {example && (
+                          <button
+                            type="button"
+                            onClick={(ev) => { ev.preventDefault(); setViewImage(example); }}
+                            aria-label={`Preview ${label} example`}
+                            className="absolute bottom-1 right-1 z-10 flex h-5 w-5 items-center justify-center rounded-md bg-black/70 text-zinc-200 hover:text-[#FFCC00]"
+                          >
+                            <ZoomIn className="h-3 w-3" />
+                          </button>
+                        )}
+                      </>
                     )}
                     <input type="file" accept="image/*" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) void uploadSlot(f, slot); e.target.value = ''; }} />
                   </label>
@@ -775,8 +792,8 @@ export const LaunchScreen: React.FC<{
               {/* Guide — the angle/clarity the AI reads best (clear, front-facing, good light) */}
               <p className={`text-zinc-500 ${T_LABEL}`}>// Aim for this — clear face, good light ↓</p>
               <div className="mx-auto grid max-w-[260px] grid-cols-2 gap-3">
-                <SampleTile src="/examples/services-practitioner.png" caption="Clear & front-facing" good />
-                <SampleTile src="/examples/services-blurry-bad.png" caption="Dark & blurry" good={false} />
+                <SampleTile src="/examples/services-practitioner.png" caption="Clear & front-facing" good onZoom={setViewImage} />
+                <SampleTile src="/examples/services-blurry-bad.png" caption="Dark & blurry" good={false} onZoom={setViewImage} />
               </div>
               <UploadDropzone
                 thumb={avatarUrl}
@@ -897,7 +914,7 @@ const Popover: React.FC<{
         {trigger}
       </button>
       {open && !disabled && (
-        <div className={`absolute z-40 mt-2 border border-white/10 bg-zinc-900/90 p-3 backdrop-blur-xl ${R_PANEL} ${align === 'right' ? 'right-0' : 'left-0'} max-md:left-0 max-md:right-0`}>
+        <div className={`absolute z-40 mt-2 max-h-[70vh] overflow-y-auto border border-white/10 bg-zinc-900/90 p-3 backdrop-blur-xl ${R_PANEL} ${align === 'right' ? 'right-0' : 'left-0'} max-md:left-0 max-md:right-0`}>
           {children}
         </div>
       )}
