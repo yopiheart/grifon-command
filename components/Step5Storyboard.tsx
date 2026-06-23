@@ -8,6 +8,8 @@ import { GlassPanel } from './ui/GlassPanel';
 import { GoldButton } from './ui/GoldButton';
 import Loader from './ui/Loader';
 import ImageModal from './ui/ImageModal';
+import { StepShell } from './ui/StepShell';
+import { StepFooter } from './ui/StepFooter';
 import { RefreshCw, Search, Copy, Sparkles, AlertTriangle } from 'lucide-react';
 import JSZip from 'jszip';
 import saveAs from 'file-saver';
@@ -38,6 +40,8 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [currentUploadIndex, setCurrentUploadIndex] = useState<{index: number, frame: 'start' | 'end'} | null>(null);
   const [critiqueExpanded, setCritiqueExpanded] = useState(false);
+  // Smart validator: flips true once the user forces Confirm with no synthesized visuals. Presentational.
+  const [triedNext, setTriedNext] = useState(false);
 
   const hasFetchedRef = useRef(false);
   const isCinematic = businessInfo.scriptType === 'Cinematic';
@@ -167,7 +171,16 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
     setIsDownloading(false);
   };
 
-  const SceneImageDisplay: React.FC<{ 
+  // A forced Confirm with no synthesized scene flags it + scrolls to the controls, instead of
+  // sitting disabled. The onNext gate (some scene has an image) stays the source of truth.
+  const guardedNext = () => {
+    if (loadingImages || loadingStoryboard) return;
+    if (storyboardData.some(s => s.imageUrl || s.manualUploadUrl)) { onNext(); return; }
+    setTriedNext(true);
+    document.getElementById('storyboard-controls')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  };
+
+  const SceneImageDisplay: React.FC<{
     src?: string, 
     isManual?: boolean,
     isLoading: boolean, 
@@ -292,17 +305,12 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
   }
 
   return (
-    <GlassPanel>
-      <div className="mb-8 border-b border-white/10 pb-6">
-        <h2 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight">
-          Storyboard Synthesis
-        </h2>
-        <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mt-2">
-          // Visual artifacts generated based on your strategic ad script.
-        </p>
-      </div>
-      <input 
-        type="file" 
+    <StepShell sublabel="STEP 5 · STORYBOARD" title="Storyboard Synthesis">
+      <p className="-mt-4 mb-6 text-[11px] font-mono leading-relaxed text-zinc-500">
+        Visual artifacts generated based on your strategic ad script.
+      </p>
+      <input
+        type="file"
         accept="image/*" 
         ref={fileInputRef} 
         className="hidden" 
@@ -342,7 +350,7 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
         </div>
       )}
 
-      <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4 border-b border-white/10 pb-8">
+      <div id="storyboard-controls" className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4 border-b border-white/10 pb-8">
          <div className="flex flex-wrap gap-4">
              <GoldButton onClick={handleGenerateAllScenes} disabled={loadingImages || loadingStoryboard} className="rounded-full px-8 flex items-center gap-3">
                 <RefreshCw className={`w-5 h-5 ${loadingImages ? 'animate-spin' : ''}`} />
@@ -486,13 +494,18 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
         </div>
       )}
 
-      <div className="mt-6 pt-6 border-t border-white/10 flex justify-between items-center gap-6">
-        <button onClick={onBack} className="text-zinc-400 hover:text-white transition-colors font-mono text-sm tracking-widest uppercase">&lt; BACK</button>
-        <GoldButton onClick={onNext} disabled={loadingImages || loadingStoryboard || !(storyboardData.some(s => s.imageUrl || s.manualUploadUrl))} className="rounded-full px-12">
-            CONFIRM & DEPLOY &gt;
-        </GoldButton>
-      </div>
-    </GlassPanel>
+      {triedNext && !(storyboardData.some(s => s.imageUrl || s.manualUploadUrl)) && (
+        <div className="mt-6 flex items-start gap-2 rounded-xl border border-red-500/40 bg-red-500/10 p-4">
+          <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-red-400" />
+          <p className="text-xs font-mono text-red-200">
+            <span className="font-bold uppercase tracking-widest text-red-400">Incomplete — </span>
+            synthesize at least one scene's visuals before deploying
+          </p>
+        </div>
+      )}
+
+      <StepFooter onBack={onBack} onNext={guardedNext} nextLabel="CONFIRM & DEPLOY" />
+    </StepShell>
   );
 };
 
