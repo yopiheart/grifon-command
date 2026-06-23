@@ -125,8 +125,9 @@ export const RE_UPLOAD_SLOTS: Record<RealEstateArchetype, UploadSlot[]> = {
     { slot: 'bedroom', label: 'Bedroom', hint: 'optional', example: '/examples/ex-bedroom.png' },
     { slot: 'view', label: 'View / balcony', hint: 'optional', example: '/examples/ex-view.png' },
   ],
+  // No 'agent' slot — the broker IS the on-camera presenter (set in the Presenter
+  // tile). These slots are the listings the agent brand showcases.
   agent: [
-    { slot: 'agent', label: 'Agent', hint: 'real broker headshot', example: '/examples/services-practitioner.png' },
     { slot: 'facade', label: 'A listing', hint: 'exterior of a property you sell', example: '/examples/ex-facade.png' },
     { slot: 'living', label: 'Inside a listing', hint: 'optional', example: '/examples/ex-living.png' },
     { slot: 'view', label: 'Best feature', hint: 'optional', example: '/examples/ex-view.png' },
