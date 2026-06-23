@@ -73,16 +73,19 @@ const VERTICALS: { value: string; label: string; Icon: typeof Package; locked?: 
   { value: 'app', label: 'App', Icon: Smartphone, locked: true },
 ];
 
-/** Close a popover/menu when clicking outside its wrapper. */
-function useClickOutside<T extends HTMLElement>(onClose: () => void) {
+/** Close a popover/menu when clicking outside its wrapper. Only listens while
+ * `enabled` (open) — otherwise a CLOSED popover's listener would fire on every
+ * click and slam the OPEN sibling shut on mousedown, eating the real click. */
+function useClickOutside<T extends HTMLElement>(onClose: () => void, enabled: boolean) {
   const ref = useRef<T>(null);
   useEffect(() => {
+    if (!enabled) return;
     const onDown = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) onClose();
     };
     document.addEventListener('mousedown', onDown);
     return () => document.removeEventListener('mousedown', onDown);
-  }, [onClose]);
+  }, [onClose, enabled]);
   return ref;
 }
 
@@ -166,8 +169,9 @@ export const LaunchScreen: React.FC<{
   };
   useEffect(() => () => stopPreview(), []); // cleanup on unmount
 
-  // --- UI surfaces (popovers + asset modals) ------------------------------
-  const [menu, setMenu] = useState<null | 'format' | 'settings'>(null);
+  // --- UI surfaces (settings popover + format/asset modals) ---------------
+  const [menu, setMenu] = useState<null | 'settings'>(null);
+  const [showFormat, setShowFormat] = useState(false);
   const [assetModal, setAssetModal] = useState<null | 'product' | 'avatar'>(null);
   const [viewImage, setViewImage] = useState<string | null>(null);
 
@@ -197,14 +201,16 @@ export const LaunchScreen: React.FC<{
   // Commercial (Seedance) handles its own audio. Service/RealEstate (formatLocked)
   // run UGC-style and always need a voice.
   const voiceNeeded = formatLocked || format !== 'commercial';
-  // Fast-path: product photo + offer + presenter (+ voice when needed) is enough.
-  // Brand/price/details are optional and default off the offer.
-  const ready = !!(hero && offer.trim() && presenterReady && (!voiceNeeded || voiceId));
+  // Brand + price are load-bearing — they feed Market Research (which writes the
+  // whole script). Required, not optional.
+  const ready = !!(hero && offer.trim() && brandName.trim() && price.trim() && presenterReady && (!voiceNeeded || voiceId));
   const reason = !hero ? 'Add a product photo'
     : !offer.trim() ? 'Describe your offer'
-      : !presenterReady ? 'Add a presenter'
-        : voiceNeeded && !voiceId ? 'Pick a voice'
-          : '';
+      : !brandName.trim() ? 'Add your brand'
+        : !price.trim() ? 'Add your price'
+          : !presenterReady ? 'Add a presenter'
+            : voiceNeeded && !voiceId ? 'Pick a voice'
+              : '';
 
   const genAvatar = async () => {
     if (!ethnicity.trim() || !ageRange.trim()) {
@@ -227,9 +233,7 @@ export const LaunchScreen: React.FC<{
 
   const launch = () => {
     if (!ready) return;
-    // Fast-path defaults: brand/name fall back to the first words of the offer,
-    // product details to the full offer. Market research fills the rest.
-    const brand = brandName.trim() || offer.trim().split(/\s+/).slice(0, 3).join(' ');
+    const brand = brandName.trim();
     onLaunch({
       brandName: brand,
       offer: offer.trim(),
@@ -269,10 +273,10 @@ export const LaunchScreen: React.FC<{
             className={`w-full resize-none border border-white/10 bg-zinc-950 p-4 text-sm text-white placeholder-zinc-600 transition-all focus:border-[#FFCC00] focus:outline-none focus:ring-1 focus:ring-[#FFCC00] ${R_CTRL}`}
           />
 
-          {/* Optional brand + price (fast-path defaults them off the offer) */}
+          {/* Brand + price feed Market Research — required */}
           <div className="mt-3 grid grid-cols-2 gap-3">
-            <MiniInput placeholder="Brand (optional)" value={brandName} onChange={setBrandName} />
-            <MiniInput placeholder="Price (optional) ₱199" value={price} onChange={setPrice} />
+            <MiniInput placeholder="Brand name" value={brandName} onChange={setBrandName} />
+            <MiniInput placeholder="Price ₱199" value={price} onChange={setPrice} />
           </div>
 
           {/* AI-research reassurance + re-research toggle */}
@@ -318,63 +322,23 @@ export const LaunchScreen: React.FC<{
               })}
             </div>
 
-            {/* Format ▾ */}
-            <Popover
-              open={menu === 'format'}
-              onOpen={() => setMenu('format')}
-              onClose={() => setMenu(null)}
+            {/* Format — opens a sample picker box (not a dropdown) */}
+            <button
+              type="button"
               disabled={formatLocked}
-              trigger={
-                <span className="inline-flex items-center gap-2">
-                  <Film className="h-4 w-4 shrink-0" />
-                  {formatLocked ? 'Auto' : formatLabel}
-                  <ChevronDown className="h-4 w-4 shrink-0 opacity-60" />
-                </span>
-              }
+              onClick={() => setShowFormat(true)}
+              className={`inline-flex shrink-0 items-center justify-center gap-2 border px-4 ${CTRL_H} ${R_CTRL} ${T_CTRL} transition-all md:w-auto ${
+                formatLocked
+                  ? 'cursor-not-allowed border-white/5 text-zinc-600'
+                  : showFormat
+                    ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]'
+                    : 'border-white/10 text-zinc-300 hover:border-white/30'
+              }`}
+              title={formatLocked ? 'Format is set automatically for this vertical' : 'Pick a format'}
             >
-              <div className="w-64 space-y-2">
-                <p className={`text-zinc-500 ${T_LABEL}`}>// Format</p>
-                {FORMATS.map((f) => (
-                  <button
-                    key={f.value}
-                    type="button"
-                    disabled={f.locked}
-                    onClick={() => { if (!f.locked) chooseFormat(f.value); }}
-                    className={`relative block w-full border px-3 py-2 text-left ${R_CTRL} transition-all ${
-                      f.locked
-                        ? 'cursor-not-allowed border-white/5 text-zinc-600'
-                        : format === f.value
-                          ? 'border-[#FFCC00] bg-[#FFCC00]/10'
-                          : 'border-white/10 hover:border-white/30'
-                    }`}
-                  >
-                    <span className={`block ${T_CTRL} ${format === f.value && !f.locked ? 'text-[#FFCC00]' : 'text-zinc-200'}`}>{f.label}</span>
-                    <span className="mt-0.5 block text-[11px] text-zinc-500">{f.desc}</span>
-                    {f.locked && <BusinessBadge />}
-                  </button>
-                ))}
-                {format === 'ugc' && (
-                  <>
-                    <p className={`pt-1 text-zinc-500 ${T_LABEL}`}>// Strategy</p>
-                    <div className="flex gap-2">
-                      {STRATEGIES.map((s) => (
-                        <button
-                          key={s.value}
-                          type="button"
-                          onClick={() => setStrategy(s.value)}
-                          title={s.desc}
-                          className={`flex-1 border px-2 py-2 ${R_CTRL} ${T_VALUE} uppercase transition-all ${
-                            strategy === s.value ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]' : 'border-white/10 text-zinc-300 hover:border-white/30'
-                          }`}
-                        >
-                          {s.label}
-                        </button>
-                      ))}
-                    </div>
-                  </>
-                )}
-              </div>
-            </Popover>
+              <Film className="h-4 w-4 shrink-0" />
+              {formatLocked ? 'Auto' : formatLabel}
+            </button>
 
             {/* Settings ▾ */}
             <Popover
@@ -501,9 +465,84 @@ export const LaunchScreen: React.FC<{
         </GlassPanel>
       </div>
 
-      {/* ---- Asset modals (Phase 1: simple single upload; Phase 2 = per-vertical slots) ---- */}
+      {/* ---- Format picker box (Higgsfield-style; per-format sample slots) ---- */}
+      {showFormat && (
+        <Modal title="Pick the format that hits" wide onClose={() => setShowFormat(false)}>
+          <p className="mb-4 text-sm text-zinc-400">Choose the type of video that fits your product and audience.</p>
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+            {FORMATS.map((f) => {
+              const active = format === f.value;
+              return (
+                <button
+                  key={f.value}
+                  type="button"
+                  disabled={f.locked}
+                  onClick={() => { if (!f.locked) chooseFormat(f.value); }}
+                  className={`group relative flex flex-col overflow-hidden border text-left transition-all ${R_PANEL} ${
+                    f.locked
+                      ? 'cursor-not-allowed border-white/5'
+                      : active
+                        ? 'border-[#FFCC00] bg-[#FFCC00]/[0.06]'
+                        : 'border-white/10 hover:border-white/30'
+                  }`}
+                >
+                  {/* Sample preview slot — empty until Neil's reference clips land (no fake stock) */}
+                  <div className="relative flex aspect-[4/5] w-full items-center justify-center bg-zinc-950/60">
+                    <div className="flex flex-col items-center gap-1.5 text-zinc-600">
+                      <Film className="h-6 w-6" />
+                      <span className={T_LABEL}>Sample soon</span>
+                    </div>
+                    {active && !f.locked && (
+                      <span className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#FFCC00] text-black">
+                        <Check className="h-3 w-3" />
+                      </span>
+                    )}
+                    {f.locked && <BusinessBadge />}
+                  </div>
+                  <div className="p-3">
+                    <span className={`block ${T_CTRL} ${active && !f.locked ? 'text-[#FFCC00]' : 'text-zinc-200'}`}>{f.label}</span>
+                    <span className="mt-0.5 block text-[11px] leading-snug text-zinc-500">{f.desc}</span>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Strategy (UGC only) */}
+          {format === 'ugc' && (
+            <div className="mt-4">
+              <p className={`mb-1.5 text-zinc-400 ${T_LABEL}`}>// Strategy</p>
+              <div className="flex gap-2">
+                {STRATEGIES.map((s) => (
+                  <button
+                    key={s.value}
+                    type="button"
+                    onClick={() => setStrategy(s.value)}
+                    title={s.desc}
+                    className={`flex-1 border px-3 ${CTRL_H} ${R_CTRL} ${T_VALUE} uppercase transition-all ${
+                      strategy === s.value ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]' : 'border-white/10 text-zinc-300 hover:border-white/30'
+                    }`}
+                  >
+                    {s.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <button
+            type="button"
+            onClick={() => setShowFormat(false)}
+            className={`mt-5 flex w-full items-center justify-center gap-2 ${CTRL_H} ${R_CTRL} ${T_CTRL} bg-[#FFCC00] text-black transition-all hover:shadow-[0_0_20px_rgba(255,204,0,0.4)]`}
+          >
+            <Check className="h-4 w-4 shrink-0" /> Use {formatLabel}
+          </button>
+        </Modal>
+      )}
+
+      {/* ---- Product modal (Phase 1: single upload; Phase 2 = per-vertical slots) ---- */}
       {assetModal === 'product' && (
-        <AssetModal title="Product photo" onClose={() => setAssetModal(null)}>
+        <Modal title="Product photo" onClose={() => setAssetModal(null)}>
           <UploadDropzone
             thumb={hero}
             hint="For best results use a product-in-hand shot — it keeps the product size consistent across scenes."
@@ -511,12 +550,13 @@ export const LaunchScreen: React.FC<{
             onClear={() => setHero('')}
             onView={hero ? () => setViewImage(hero) : undefined}
           />
-        </AssetModal>
+        </Modal>
       )}
 
+      {/* ---- Presenter modal (clean vertical layout: preview → controls → CTA) ---- */}
       {assetModal === 'avatar' && (
-        <AssetModal title="Presenter" onClose={() => setAssetModal(null)}>
-          <div className="mb-3 flex gap-2">
+        <Modal title="Presenter" onClose={() => setAssetModal(null)}>
+          <div className="mb-4 flex gap-2">
             <ModeTab active={avatarMode === 'generate'} onClick={() => setAvatarMode('generate')} icon={Wand2}>Generate</ModeTab>
             <ModeTab active={avatarMode === 'upload'} onClick={() => setAvatarMode('upload')} icon={Upload}>Upload</ModeTab>
           </div>
@@ -531,58 +571,55 @@ export const LaunchScreen: React.FC<{
             />
           ) : (
             <div className="space-y-3">
-              <div className="flex items-start gap-3">
-                <div className={`relative h-20 w-20 shrink-0 overflow-hidden border border-white/15 bg-zinc-900 ${R_CTRL}`}>
-                  {avatarBusy ? (
-                    <div className="flex h-full w-full items-center justify-center"><Loader2 className="h-6 w-6 animate-spin text-[#FFCC00]" /></div>
-                  ) : avatarUrl ? (
-                    <button type="button" onClick={() => setViewImage(avatarUrl)} className="h-full w-full">
-                      <img src={avatarUrl} alt="Presenter" className="h-full w-full object-cover" />
-                    </button>
-                  ) : (
-                    <div className="flex h-full w-full items-center justify-center"><User className="h-6 w-6 text-zinc-600" /></div>
-                  )}
-                </div>
-                <div className="flex-1 space-y-2">
-                  <div className="flex gap-1.5">
-                    {(['Any', 'Male', 'Female'] as const).map((g) => (
-                      <button
-                        key={g}
-                        type="button"
-                        onClick={() => setGender(g)}
-                        className={`flex-1 ${R_CTRL} px-2 py-2 ${T_VALUE} uppercase transition-all ${
-                          gender === g ? 'bg-[#FFCC00] text-black' : 'border border-white/10 text-zinc-400 hover:border-white/30'
-                        }`}
-                      >
-                        {g}
-                      </button>
-                    ))}
+              {/* Preview block on top — generous, centered (no cramped tiny square) */}
+              <div className={`relative mx-auto flex aspect-square w-full max-w-[180px] items-center justify-center overflow-hidden border bg-zinc-950 ${R_PANEL} ${avatarUrl ? 'border-[#FFCC00]/60' : 'border-white/10'}`}>
+                {avatarBusy ? (
+                  <Loader2 className="h-7 w-7 animate-spin text-[#FFCC00]" />
+                ) : avatarUrl ? (
+                  <button type="button" onClick={() => setViewImage(avatarUrl)} className="h-full w-full">
+                    <img src={avatarUrl} alt="Presenter" className="h-full w-full object-cover" />
+                  </button>
+                ) : (
+                  <div className="flex flex-col items-center gap-2 text-zinc-600">
+                    <User className="h-8 w-8" />
+                    <span className={T_LABEL}>Preview</span>
                   </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    <input value={ethnicity} onChange={(e) => setEthnicity(e.target.value)} placeholder="Ethnicity" className={`w-full border border-white/10 bg-zinc-950 p-2 text-xs text-white focus:border-[#FFCC00] focus:outline-none focus:ring-1 focus:ring-[#FFCC00] ${R_CTRL}`} />
-                    <input value={ageRange} onChange={(e) => setAgeRange(e.target.value)} placeholder="Age (e.g. 25-34)" className={`w-full border border-white/10 bg-zinc-950 p-2 text-xs text-white focus:border-[#FFCC00] focus:outline-none focus:ring-1 focus:ring-[#FFCC00] ${R_CTRL}`} />
-                  </div>
-                </div>
+                )}
               </div>
-              <div className="flex flex-wrap items-center gap-2">
-                <button
-                  type="button"
-                  onClick={genAvatar}
-                  disabled={avatarBusy}
-                  className={`inline-flex items-center gap-1.5 border border-[#FFCC00]/40 bg-[#FFCC00]/10 px-3 ${CTRL_H} ${R_CTRL} ${T_VALUE} uppercase text-[#FFCC00] transition-all hover:bg-[#FFCC00]/20 disabled:opacity-50`}
-                >
-                  {avatarBusy ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Wand2 className="h-3.5 w-3.5" />}
-                  {avatarUrl ? 'Regenerate' : 'Generate presenter'}
-                  {avatarGens >= FREE_AVATAR_GENS ? ' · 1 credit' : ''}
-                </button>
-                <span className={`text-zinc-500 ${T_LABEL}`}>
-                  {avatarGens < FREE_AVATAR_GENS ? `${FREE_AVATAR_GENS - avatarGens} free left` : 'extra gens use 1 credit'}
-                </span>
+
+              {/* Gender — equal-height segmented (consistent with Settings) */}
+              <div className="flex gap-2">
+                {(['Any', 'Male', 'Female'] as const).map((g) => (
+                  <SegBtn key={g} active={gender === g} onClick={() => setGender(g)}>{g}</SegBtn>
+                ))}
               </div>
-              {avatarErr && <p className="text-[11px] text-amber-400/80">{avatarErr}</p>}
+
+              {/* Ethnicity + Age — reuse the h-11 input primitive */}
+              <div className="grid grid-cols-2 gap-2">
+                <MiniInput placeholder="Ethnicity" value={ethnicity} onChange={setEthnicity} />
+                <MiniInput placeholder="Age (e.g. 25-34)" value={ageRange} onChange={setAgeRange} />
+              </div>
+
+              {/* Generate CTA — full-width gold */}
+              <button
+                type="button"
+                onClick={genAvatar}
+                disabled={avatarBusy}
+                className={`flex w-full items-center justify-center gap-2 ${CTRL_H} ${R_CTRL} ${T_CTRL} transition-all ${
+                  avatarBusy ? 'cursor-not-allowed bg-zinc-800 text-zinc-500' : 'bg-[#FFCC00] text-black hover:shadow-[0_0_20px_rgba(255,204,0,0.4)]'
+                }`}
+              >
+                {avatarBusy ? <Loader2 className="h-4 w-4 shrink-0 animate-spin" /> : <Wand2 className="h-4 w-4 shrink-0" />}
+                {avatarUrl ? 'Regenerate presenter' : 'Generate presenter'}
+                {avatarGens >= FREE_AVATAR_GENS ? ' · 1 credit' : ''}
+              </button>
+              <p className={`text-center text-zinc-500 ${T_LABEL}`}>
+                {avatarGens < FREE_AVATAR_GENS ? `${FREE_AVATAR_GENS - avatarGens} free left` : 'extra gens use 1 credit'}
+              </p>
+              {avatarErr && <p className="text-center text-[11px] text-amber-400/80">{avatarErr}</p>}
             </div>
           )}
-        </AssetModal>
+        </Modal>
       )}
 
       {viewImage && <ImageModal imageUrl={viewImage} onClose={() => setViewImage(null)} />}
@@ -613,7 +650,7 @@ const Popover: React.FC<{
   align?: 'left' | 'right';
   disabled?: boolean;
 }> = ({ open, onOpen, onClose, trigger, children, align = 'left', disabled }) => {
-  const ref = useClickOutside<HTMLDivElement>(onClose);
+  const ref = useClickOutside<HTMLDivElement>(onClose, open);
   return (
     <div ref={ref} className="relative shrink-0">
       <button
@@ -740,16 +777,17 @@ const AssetTile: React.FC<{
   </button>
 );
 
-/** Centered modal shell (rounded-3xl). Backdrop click closes. */
-const AssetModal: React.FC<{ title: string; onClose: () => void; children: React.ReactNode }> = ({ title, onClose, children }) => (
+/** Centered modal shell (rounded-3xl). Backdrop click closes. `wide` for the
+ * format picker; scrolls inside on short viewports. */
+const Modal: React.FC<{ title: string; onClose: () => void; children: React.ReactNode; wide?: boolean }> = ({ title, onClose, children, wide }) => (
   <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/70 p-4 backdrop-blur-sm sm:items-center" onClick={onClose}>
     <div
-      className={`w-full max-w-md border border-white/10 bg-zinc-900/80 p-5 backdrop-blur-xl ${R_MODAL}`}
+      className={`max-h-[90vh] w-full overflow-y-auto border border-white/10 bg-zinc-900/80 p-5 backdrop-blur-xl ${R_MODAL} ${wide ? 'max-w-2xl' : 'max-w-md'}`}
       onClick={(e) => e.stopPropagation()}
     >
       <div className="mb-4 flex items-center justify-between">
         <h3 className={`text-zinc-100 ${T_CTRL}`}>{title}</h3>
-        <button type="button" onClick={onClose} aria-label="Close" className="text-zinc-500 hover:text-white">
+        <button type="button" onClick={onClose} aria-label="Close" className="shrink-0 text-zinc-500 hover:text-white">
           <X className="h-5 w-5" />
         </button>
       </div>
