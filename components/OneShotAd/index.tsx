@@ -61,7 +61,8 @@ const OneShotAd: React.FC<OneShotAdProps> = ({
         productName: input.productName,
         productDescription: input.productDescription,
         priceOffer: input.price ? `${input.offer} (${input.price})` : input.offer,
-        isLocalService: input.scriptType === 'Services' || input.scriptType === 'RealEstate',
+        isLocalService: input.isLocalService ?? (input.scriptType === 'Services' || input.scriptType === 'RealEstate'),
+        businessAddress: input.businessAddress?.trim() || undefined,
         uploadedImages: input.heroImageBase64 ? [input.heroImageBase64] : [],
       });
 
