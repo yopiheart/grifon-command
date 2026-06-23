@@ -1,5 +1,5 @@
 import React from 'react';
-import { CTRL_H, R_CTRL, INPUT_SHELL } from './wizardTokens';
+import { CTRL_H, R_CTRL, INPUT_SHELL, INPUT_SHELL_INVALID } from './wizardTokens';
 import { FieldLabel } from './FieldLabel';
 
 // ===========================================================================
@@ -15,31 +15,31 @@ import { FieldLabel } from './FieldLabel';
 // ===========================================================================
 
 export const TextField: React.FC<
-  React.InputHTMLAttributes<HTMLInputElement> & { label?: string }
-> = ({ label, className = '', id, ...props }) => (
+  React.InputHTMLAttributes<HTMLInputElement> & { label?: string; invalid?: boolean }
+> = ({ label, invalid = false, className = '', id, ...props }) => (
   <div className="group/field w-full">
     {label && (
-      <FieldLabel htmlFor={id} className="mb-2">
+      <FieldLabel htmlFor={id} className="mb-2" invalid={invalid}>
         {label}
       </FieldLabel>
     )}
-    <input id={id} className={`${INPUT_SHELL} ${CTRL_H} ${R_CTRL} ${className}`} {...props} />
+    <input id={id} className={`${invalid ? INPUT_SHELL_INVALID : INPUT_SHELL} ${CTRL_H} ${R_CTRL} ${className}`} {...props} />
   </div>
 );
 
 export const TextArea: React.FC<
-  React.TextareaHTMLAttributes<HTMLTextAreaElement> & { label?: string }
-> = ({ label, className = '', id, rows = 3, ...props }) => (
+  React.TextareaHTMLAttributes<HTMLTextAreaElement> & { label?: string; invalid?: boolean }
+> = ({ label, invalid = false, className = '', id, rows = 3, ...props }) => (
   <div className="group/field w-full">
     {label && (
-      <FieldLabel htmlFor={id} className="mb-2">
+      <FieldLabel htmlFor={id} className="mb-2" invalid={invalid}>
         {label}
       </FieldLabel>
     )}
     <textarea
       id={id}
       rows={rows}
-      className={`${INPUT_SHELL} resize-none py-3 leading-relaxed ${R_CTRL} ${className}`}
+      className={`${invalid ? INPUT_SHELL_INVALID : INPUT_SHELL} resize-none py-3 leading-relaxed ${R_CTRL} ${className}`}
       {...props}
     />
   </div>

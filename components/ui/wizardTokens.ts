@@ -46,3 +46,7 @@ export const CTRL_RESTING = 'border border-white/10 text-zinc-300 hover:border-w
 /** The canonical text-input shell (h-11 floor, gold focus ring). Compose with R_CTRL. */
 export const INPUT_SHELL =
   'w-full border border-white/10 bg-zinc-950 px-4 text-sm text-white placeholder-zinc-600 transition-all focus:border-[#FFCC00] focus:outline-none focus:ring-1 focus:ring-[#FFCC00]';
+
+/** Invalid-state input shell (red border + red focus ring) — for the on-confirm validator. */
+export const INPUT_SHELL_INVALID =
+  'w-full border border-red-500/70 bg-zinc-950 px-4 text-sm text-white placeholder-zinc-600 transition-all focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500';

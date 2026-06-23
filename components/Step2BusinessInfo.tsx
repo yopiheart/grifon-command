@@ -3,15 +3,20 @@ import React, { useEffect, useState } from 'react';
 import { BusinessInfo } from '../types';
 import { describeBusinessAsset } from '../services/geminiService';
 import { compressImageForUpload } from '../utils/imageCompression';
-import { GlassPanel } from './ui/GlassPanel';
-import { GoldButton } from './ui/GoldButton';
 import Loader from './ui/Loader';
-import { Building2, Check, Package, ShoppingBag, Sparkles, Store, UploadCloud, X, ZoomIn } from 'lucide-react';
+import { AlertTriangle, Building2, Check, ChevronDown, ShoppingBag, Sparkles, Store, UploadCloud, X, ZoomIn } from 'lucide-react';
 import ImageModal from './ui/ImageModal';
+import { StepShell } from './ui/StepShell';
+import { StepFooter } from './ui/StepFooter';
+import { TitledCard } from './ui/TitledCard';
+import { FieldLabel } from './ui/FieldLabel';
+import { TextField, TextArea } from './ui/TextField';
+import { SegButton } from './ui/SegButton';
+import { Popover } from './ui/Popover';
 import {
-  ARCHETYPE_META, ARCHETYPE_ORDER, BAD_SAMPLE, ARCHETYPE_UPLOAD_SLOTS, inferServiceArchetype,
+  ARCHETYPE_META, ARCHETYPE_ORDER, ARCHETYPE_UPLOAD_SLOTS, inferServiceArchetype,
   RE_ARCHETYPE_META, RE_ARCHETYPE_ORDER, RE_UPLOAD_SLOTS, inferRealEstateArchetype,
-  buildServiceDescription, SampleTile,
+  buildServiceDescription, PRODUCT_EXAMPLE,
   type ServiceArchetype, type RealEstateArchetype, type ServiceSlot,
 } from "./guidedPhotoSlots";
 
@@ -30,6 +35,12 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [viewImage, setViewImage] = useState<string | null>(null);
+  // Presentational only: controls the optional brand-colors disclosure popover.
+  // Opens pre-expanded when a resumed draft already carries a value (nothing hidden).
+  const [showColors, setShowColors] = useState(false);
+  // Smart validator: flips true once the user forces Confirm with gaps, lighting up the
+  // missing required fields. Presentational UI state — does not touch what data is written.
+  const [triedNext, setTriedNext] = useState(false);
 
   useEffect(() => {
     setFormData(data);
@@ -229,135 +240,265 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
     setData(formData);
     onNext();
   };
-  
+
   const requiredFields: (keyof BusinessInfo)[] = ['product', 'audience', 'benefit', 'painPoint', 'separator', 'features'];
   const hasImages = formData.productImageUrls && formData.productImageUrls.length > 0;
-  
+
   const isFormValid = !!aspectRatio && requiredFields.every(field => {
       const val = formData[field];
       return typeof val === 'string' && val.trim() !== '';
   });
 
+  // Smart validator helpers. isBlank/missingLabels read the SAME isFormValid criteria — they
+  // only surface what's missing; they never change the gate or any written value.
+  const isBlank = (id: keyof BusinessInfo) => {
+    const v = formData[id];
+    return typeof v !== 'string' || v.trim() === '';
+  };
+  const requiredLabels: Record<string, string> = {
+    product: 'Service/Product', audience: 'Target Audience', benefit: 'Dream Result',
+    painPoint: '3 AM Worry', separator: 'Main Differentiator', features: 'Main Features',
+  };
+  const missingLabels: string[] = [
+    ...(aspectRatio ? [] : ['Project Aspect Ratio']),
+    ...requiredFields.filter(isBlank).map(f => requiredLabels[f as string] ?? String(f)),
+  ];
+  // A forced Confirm with anything missing flags the gaps + scrolls to the first one, instead of
+  // sitting silently disabled — so the marketer is required to go back and fill/select it.
+  const guardedNext = () => {
+    if (isFormValid) { handleNext(); return; }
+    setTriedNext(true);
+    const firstId = !aspectRatio ? 'field-aspectRatio' : (requiredFields.find(isBlank) as string | undefined);
+    if (firstId) document.getElementById(firstId)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  };
+
   // Shared inputs for the "guided" upload + archetype UI (Services OR RealEstate). Same JSX, just
   // archetype-specific data — for Services these resolve to the exact prior values (rendering identical).
-  const guidedSamples = isRealEstate ? RE_ARCHETYPE_META[effectiveReArchetype].samples : ARCHETYPE_META[effectiveArchetype].samples;
   const guidedLead = isRealEstate ? RE_ARCHETYPE_META[effectiveReArchetype].lead : ARCHETYPE_META[effectiveArchetype].lead;
   const guidedSlots = isRealEstate ? RE_UPLOAD_SLOTS[effectiveReArchetype] : ARCHETYPE_UPLOAD_SLOTS[effectiveArchetype];
   const guidedArchetypes: { key: string; label: string; sub: string; active: boolean; onSelect: () => void }[] = isRealEstate
     ? RE_ARCHETYPE_ORDER.map(a => ({ key: a, label: RE_ARCHETYPE_META[a].label, sub: RE_ARCHETYPE_META[a].sub, active: effectiveReArchetype === a, onSelect: () => selectReArchetype(a) }))
     : ARCHETYPE_ORDER.map(a => ({ key: a, label: ARCHETYPE_META[a].label, sub: ARCHETYPE_META[a].sub, active: effectiveArchetype === a, onSelect: () => selectArchetype(a) }));
 
-  return (
-    <>
-    <GlassPanel>
-      <div className="mb-8 border-b border-white/10 pb-6">
-        <h2 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight">
-          Step 2: Seed AI With Business Information
-        </h2>
-        <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mt-2">
-          // Provide detailed information to help the AI understand the product, its value, and the target audience.
-        </p>
+  const productFields = [
+    { id: 'product', label: 'Service/Product', placeholder: 'e.g., Eco-friendly home cleaning service' },
+    { id: 'audience', label: 'Target Audience', placeholder: 'e.g., Busy young professionals' },
+    { id: 'benefit', label: 'Dream Result', placeholder: 'e.g., Wakes up energized, naka-2 hours back every morning, mas chill ang pasok sa work' },
+    { id: 'painPoint', label: '3 AM Worry', placeholder: 'e.g., 3 AM, hindi makatulog kasi tuition deadline na bukas — wala pang pera' },
+  ];
+
+  // ---- Ad Script Strategy card (shared markup; rendered above Business Visuals) ----
+  const scriptStrategyCard = (
+    <TitledCard title="Ad Script Strategy">
+      <div className="mb-6">
+        <SegButton
+          value={businessType}
+          onChange={selectBusinessType}
+          options={[
+            { value: 'product', label: 'Physical Product' },
+            { value: 'service', label: 'Service' },
+            { value: 'realestate', label: 'Real Estate' },
+          ]}
+        />
       </div>
 
-      <div className="mb-8 p-6 border border-white/10 bg-zinc-950/50 rounded-xl">
-        <h3 className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-4 font-mono">// Select Project Aspect Ratio</h3>
-        <div className="flex justify-center gap-4">
-            <button 
-              onClick={() => setAspectRatio('9:16')} 
-              className={`px-6 py-3 rounded-xl text-xs font-bold uppercase tracking-widest transition-all ${aspectRatio === '9:16' ? 'bg-[#FFCC00] text-black' : 'bg-zinc-900 text-zinc-400 border border-white/10 hover:border-white/20 hover:text-white'}`}
-            >
-              9:16 (Vertical)
-            </button>
-            <button 
-              onClick={() => setAspectRatio('16:9')} 
-              className={`px-6 py-3 rounded-xl text-xs font-bold uppercase tracking-widest transition-all ${aspectRatio === '16:9' ? 'bg-[#FFCC00] text-black' : 'bg-zinc-900 text-zinc-400 border border-white/10 hover:border-white/20 hover:text-white'}`}
-            >
-              16:9 (Landscape)
-            </button>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {businessType === 'product' && (
+        <div
+            onClick={() => handleScriptTypeSelect('MrBeast')}
+            className={`p-6 rounded-xl border cursor-pointer transition-all hover:translate-y-[-2px] ${formData.scriptType === 'MrBeast' ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
+        >
+            <div className="flex justify-between items-center mb-2">
+                <h4 className="font-bold text-white uppercase font-mono text-xs">Viral / MrBeast</h4>
+                {formData.scriptType === 'MrBeast' && <Check className="w-4 h-4 text-[#FFCC00]" />}
+            </div>
+            <p className="text-[10px] text-zinc-500 font-mono">Hook, Identity, Struggles, Results, CTA.</p>
+        </div>
+        )}
+
+        {businessType === 'product' && (
+        <div
+            onClick={() => handleScriptTypeSelect('Testimonial')}
+            className={`p-6 rounded-xl border cursor-pointer transition-all hover:translate-y-[-2px] ${formData.scriptType === 'Testimonial' ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
+        >
+            <div className="flex justify-between items-center mb-2">
+                <h4 className="font-bold text-white uppercase font-mono text-xs">Testimonial</h4>
+                {formData.scriptType === 'Testimonial' && <Check className="w-4 h-4 text-[#FFCC00]" />}
+            </div>
+            <p className="text-[10px] text-zinc-500 font-mono">Intro, Pain Story, Transformation, Proof.</p>
+        </div>
+        )}
+
+        {businessType === 'service' && (
+        <div
+            onClick={() => handleScriptTypeSelect('Services')}
+            className={`p-6 rounded-xl border cursor-pointer transition-all hover:translate-y-[-2px] ${formData.scriptType === 'Services' ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
+        >
+            <div className="flex justify-between items-center mb-2">
+                <div className="flex items-center gap-2">
+                    <Store className="w-4 h-4 text-[#FFCC00]"/>
+                    <h4 className="font-bold text-white uppercase font-mono text-xs">Services</h4>
+                </div>
+                {formData.scriptType === 'Services' && <Check className="w-4 h-4 text-[#FFCC00]" />}
+            </div>
+            <p className="text-[10px] text-zinc-500 font-mono">Trust, Service-in-Action, Proof, Book Now.</p>
+        </div>
+        )}
+
+        {businessType === 'realestate' && (
+        <div
+            onClick={() => handleScriptTypeSelect('RealEstate')}
+            className={`p-6 rounded-xl border cursor-pointer transition-all hover:translate-y-[-2px] ${formData.scriptType === 'RealEstate' ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
+        >
+            <div className="flex justify-between items-center mb-2">
+                <div className="flex items-center gap-2">
+                    <Building2 className="w-4 h-4 text-[#FFCC00]"/>
+                    <h4 className="font-bold text-white uppercase font-mono text-xs">Real Estate</h4>
+                </div>
+                {formData.scriptType === 'RealEstate' && <Check className="w-4 h-4 text-[#FFCC00]" />}
+            </div>
+            <p className="text-[10px] text-zinc-500 font-mono">Walkthrough, Location, Highlights, Inquire.</p>
+        </div>
+        )}
+
+        {businessType === 'product' && (
+         <div
+            aria-disabled="true"
+            title="Coming in v1.1 — beta launches with MrBeast + Testimonial only."
+            className="p-6 rounded-xl border bg-zinc-950 border-white/10 cursor-not-allowed opacity-60 transition-all relative"
+        >
+            <div className="absolute top-2 right-2 text-[8px] font-mono text-[#FFCC00]/60 uppercase tracking-tighter select-none">
+              // COMING_IN_V1.1
+            </div>
+            <div className="flex justify-between items-center mb-2">
+                <div className="flex items-center gap-2">
+                    <ShoppingBag className="w-4 h-4 text-zinc-500"/>
+                    <h4 className="font-bold text-zinc-400 uppercase font-mono text-xs">Temu / Haul</h4>
+                </div>
+            </div>
+            <p className="text-[10px] text-zinc-500 font-mono">High-energy Unboxing. Gadgets, Toys, Decor.</p>
+        </div>
+        )}
+
+        <div
+            onClick={() => handleScriptTypeSelect('Custom')}
+            className={`p-6 rounded-xl border-dashed border cursor-pointer transition-all hover:translate-y-[-2px] relative ${formData.scriptType === 'Custom' ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
+        >
+            <div className="absolute top-2 right-2 text-[8px] font-mono text-[#FFCC00]/60 uppercase tracking-tighter select-none">
+              [ MANUAL_OVERRIDE ]
+            </div>
+            <div className="flex justify-between items-center mb-2">
+                <div className="flex items-center gap-2">
+                    <UploadCloud className="w-4 h-4 text-[#FFCC00]"/>
+                    <h4 className="font-bold text-white uppercase font-mono text-xs">Upload Script</h4>
+                </div>
+                {formData.scriptType === 'Custom' && <Check className="w-4 h-4 text-[#FFCC00]" />}
+            </div>
+            <p className="text-[10px] text-zinc-500 font-mono">Provide your own script via .txt or manual input.</p>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {[
-          { id: 'product', label: 'Service/Product', placeholder: 'e.g., Eco-friendly home cleaning service', helper: '' },
-          { id: 'audience', label: 'Target Audience', placeholder: 'e.g., Busy young professionals', helper: '' },
-          { id: 'benefit', label: 'Dream Result', placeholder: 'e.g., Wakes up energized, naka-2 hours back every morning, mas chill ang pasok sa work', helper: '' },
-          { id: 'painPoint', label: '3 AM Worry', placeholder: 'e.g., 3 AM, hindi makatulog kasi tuition deadline na bukas — wala pang pera', helper: '' }
-        ].map(field => (
-          <div key={field.id} className="space-y-2">
-            <label htmlFor={field.id} className="block text-[10px] text-zinc-400 font-mono uppercase tracking-widest">
-              // {field.label}
-            </label>
-            <input
-              id={field.id}
-              name={field.id}
-              value={formData[field.id as keyof BusinessInfo] as string}
-              onChange={handleChange}
-              placeholder={field.placeholder}
-              className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-all text-sm"
-            />
-            {field.helper && (
-              <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase">
-                // {field.helper}
+      {isGuided && (
+          <div className="mt-6 p-6 bg-zinc-900/50 rounded-xl border border-white/10 animate-in fade-in slide-in-from-top-4">
+              {/* Statement-with-✓, not a question: we picked the lead from the description; user can override.
+                  Internal values venue|work|practitioner (Services) or listing|agent|developer (RealEstate);
+                  labels are Bryan-facing outcomes. */}
+              <div className="flex items-center gap-2">
+                  <Check className="w-4 h-4 text-[#FFCC00]" />
+                  <p className="text-sm font-bold text-white font-mono">
+                      Your ad will lead with — <span className="text-[#FFCC00]">{guidedLead}</span>
+                  </p>
+              </div>
+              <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mt-1 mb-4">
+                  // We picked this from your description. Not quite? Tap another.
               </p>
-            )}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  {guidedArchetypes.map((a) => (
+                      <button
+                          key={a.key}
+                          type="button"
+                          onClick={a.onSelect}
+                          className={`p-4 rounded-xl border text-left transition-all hover:translate-y-[-2px] ${a.active ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
+                      >
+                          <div className="flex justify-between items-center mb-1">
+                              <span className="text-xs font-bold text-white font-mono uppercase">{a.label}</span>
+                              {a.active && <Check className="w-4 h-4 text-[#FFCC00] shrink-0" />}
+                          </div>
+                          <span className="text-[10px] text-zinc-500 font-mono">{a.sub}</span>
+                      </button>
+                  ))}
+              </div>
+              <p className="text-[10px] text-[#FFCC00]/80 font-mono tracking-tighter uppercase mt-3">
+                  This decides what your ad shows first.
+              </p>
+
+              {/* RealEstate-only: optional listing price. If given, the ad surfaces it on the CTA beat
+                  + end-card recap; if blank, the ad stays inquiry-only. (Services renders no peso.) */}
+              {isRealEstate && (
+                  <div className="mt-5 pt-5 border-t border-white/10 space-y-2">
+                      <TextField
+                          label="Listing Price — Optional"
+                          id="listingPrice"
+                          name="listingPrice"
+                          value={formData.listingPrice || ''}
+                          onChange={handleChange}
+                          placeholder="e.g., ₱4.2M  ·  25k/month  ·  leave blank for inquiry-only"
+                      />
+                      <p className="text-[9px] text-zinc-500 font-mono tracking-tighter">
+                          Iwanang blangko kung gusto mong &quot;DM for price&quot; lang — hindi ipapakita ang halaga.
+                      </p>
+                  </div>
+              )}
           </div>
-        ))}
-        
-        <div className="space-y-2 md:col-span-2">
-          <label htmlFor="separator" className="block text-[10px] text-zinc-400 font-mono uppercase tracking-widest">
-            // Main Differentiator
-          </label>
-          <textarea
-            id="separator"
-            name="separator"
-            value={formData.separator}
-            onChange={handleChange}
-            placeholder="e.g., We use 100% non-toxic, plant-based products"
-            rows={3}
-            className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-all resize-none text-sm"
-          />
-        </div>
+      )}
 
-        <div className="space-y-2 md:col-span-2">
-          <label htmlFor="features" className="block text-[10px] text-zinc-400 font-mono uppercase tracking-widest">
-            // Main Features
-          </label>
-          <textarea
-            id="features"
-            name="features"
-            value={formData.features}
-            onChange={handleChange}
-            placeholder="e.g., Easy online booking, certified cleaners, satisfaction guarantee"
-            rows={4}
-            className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-all resize-none text-sm"
-          />
-        </div>
-        
-        <div className="space-y-2 md:col-span-2">
-          <label htmlFor="brandColors" className="block text-[10px] text-zinc-400 font-mono uppercase tracking-widest">
-            // Brand Color Palette (Hex) - Optional
-          </label>
-          <input
-            id="brandColors"
-            name="brandColors"
-            value={formData.brandColors || ''}
-            onChange={handleChange}
-            placeholder="#FFFFFF, #000000, #FF0000"
-            className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-all text-sm"
-          />
-        </div>
+      {formData.scriptType === 'Custom' && (
+          <div className="mt-6 space-y-4 p-6 bg-zinc-900/50 rounded-xl border border-white/10 animate-in fade-in slide-in-from-top-4">
+              <div className="flex flex-col md:flex-row gap-6">
+                  <div className="flex-1 space-y-2">
+                      <TextArea
+                          label="Paste Your Script Here"
+                          id="customManualScript"
+                          name="customManualScript"
+                          value={formData.customScriptFile?.join('\n') || ''}
+                          onChange={(e) => setFormData(prev => ({ ...prev, customScriptFile: e.target.value.split('\n') }))}
+                          placeholder="Hook line 1...&#10;Hook line 2...&#10;Body line 1..."
+                          rows={8}
+                      />
+                  </div>
+                  <label className="w-full md:w-64 flex flex-col items-center justify-center border-2 border-dashed border-white/10 rounded-xl bg-zinc-950/50 p-6 cursor-pointer hover:border-[#FFCC00] hover:bg-zinc-800/80 transition-all">
+                      <UploadCloud className="w-6 h-6 text-zinc-500 mb-4" />
+                      <p className="text-[10px] font-mono text-zinc-400 uppercase mb-4 text-center">OR UPLOAD .TXT FILE</p>
+                      <input
+                          type="file"
+                          accept=".txt"
+                          className="hidden"
+                          onChange={(e) => handleFileUpload(e, 'script')}
+                      />
+                      <span className="inline-block py-2 px-4 bg-zinc-900 border border-white/10 text-zinc-400 rounded-xl text-xs font-bold hover:border-[#FFCC00] hover:text-[#FFCC00] transition-colors">
+                          SELECT FILE
+                      </span>
+                      {formData.customScriptFile && formData.customScriptFile.length > 0 && (
+                          <p className="text-[10px] text-[#FFCC00] mt-4 font-mono">FILE_LOADED: {formData.customScriptFile.length} lines detected.</p>
+                      )}
+                  </label>
+              </div>
+          </div>
+      )}
+    </TitledCard>
+  );
 
-        <div className="md:col-span-2 border-t border-white/10 my-4"></div>
-
-        <div className="md:col-span-2 space-y-4">
-            <label className="block text-[10px] font-bold text-zinc-400 uppercase tracking-widest font-mono">
-                // Business Visuals (Upload 3-5 Photos)
-            </label>
-
-            {hasImages && !isGuided && (
+  // ---- Business Visuals card (rendered below Ad Script Strategy) ----
+  const businessVisualsCard = (
+    <TitledCard title="Business Visuals">
+      <div className="space-y-4">
+        {!isGuided ? (
+          // Product: a single hero ask — "Product in hand" — with its own View-sample
+          // reference. The uploaded-photos grid above stays for multi-photo management.
+          <div className="space-y-4">
+            {hasImages && (
                 <>
-                    <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mb-1">
+                    <p className="mb-1 text-[10px] font-mono uppercase tracking-widest text-zinc-500">
                         // Photo 1 (HERO) anchors all scene visuals — remove + re-upload to reorder
                     </p>
                     <div className="grid grid-cols-5 gap-2 mb-2">
@@ -385,380 +526,227 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                 </>
             )}
 
-            {/* Upload examples. For Services, the chosen archetype drives WHICH samples to teach
-                (✓ humble/PH per archetype + a ✗ blurry contrast). For products, the generic icon
-                strip stays. Curated PNGs live in public/examples/ with an icon fallback per tile. */}
-            {isGuided ? (
-              <div className="space-y-2">
-                <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase">
-                  // What to upload — clear &amp; bright wins ↓
-                </p>
-                <div className="grid grid-cols-3 gap-3">
-                  {guidedSamples.map((ex, idx) => (
-                    <SampleTile key={`good-${idx}`} src={ex.src} caption={ex.caption} good onZoom={setViewImage} />
-                  ))}
-                  <SampleTile src={BAD_SAMPLE.src} caption={BAD_SAMPLE.caption} good={false} onZoom={setViewImage} />
-                </div>
-                <p className="text-[9px] text-zinc-500 font-mono tracking-tighter">
-                  Kahit simple — basta malinaw at maliwanag.
-                </p>
-              </div>
-            ) : (
-              <div className="space-y-2">
-                <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase">
-                  // Good upload examples ↓
-                </p>
-                <div className="grid grid-cols-3 gap-3">
-                  {[
-                    { Icon: Package, caption: 'Product in hand', imageUrl: '' },
-                    { Icon: Store, caption: 'Storefront + logo', imageUrl: '' },
-                    { Icon: Sparkles, caption: 'Service in action', imageUrl: '' },
-                  ].map((ex, idx) => (
-                    <div key={idx} className="flex flex-col items-center">
-                      <div className="aspect-square w-full bg-zinc-900 border border-white/10 rounded-xl flex items-center justify-center overflow-hidden">
-                        {ex.imageUrl ? (
-                          <img src={ex.imageUrl} alt={ex.caption} className="w-full h-full object-cover" />
-                        ) : (
-                          <ex.Icon className="w-8 h-8 text-[#FFCC00]/60" />
-                        )}
-                      </div>
-                      <p className="text-[8px] text-zinc-500 font-mono uppercase tracking-tighter mt-1.5 text-center">
-                        {ex.caption}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {!isGuided ? (
-            <label className="block p-6 border-2 border-dashed border-white/10 bg-zinc-950/50 rounded-xl text-center hover:border-[#FFCC00] hover:bg-zinc-800/80 transition-all cursor-pointer">
-                 {isAnalyzing ? (
-                    <Loader message="ANALYZING ASSETS..." size="sm" />
-                 ) : (
-                    <div className="flex flex-col items-center justify-center space-y-2">
-                        <UploadCloud className="w-6 h-6 text-zinc-500 mb-2" />
-                        <p className="text-sm font-mono text-white">[CLICK TO UPLOAD FILES]</p>
-                        <p className="text-[10px] text-zinc-500 font-mono tracking-tighter uppercase">
-                          Note: Skipping uploads will disable high-fidelity visual consistency in the Storyboard and Image Editor modules.
-                        </p>
-                        <p className="text-[10px] text-[#FFCC00]/80 font-mono tracking-tighter uppercase">
-                          Selling products? Upload product-in-hand FIRST — anchors size + appearance for every scene.
-                        </p>
-                        <p className="text-[10px] text-[#FFCC00]/80 font-mono tracking-tighter uppercase">
-                          Service business (salon, gym, restaurant)? Upload hero photo FIRST, then storefront / interior / service-in-action.
-                        </p>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            multiple
-                            className="hidden"
-                            onChange={(e) => handleFileUpload(e, 'product')}
-                        />
-                    </div>
-                 )}
-            </label>
-            ) : (
-            /* Phase 2: archetype-driven guided slots. The slot you drop into IS the tag, so each
-               scene can later be anchored to the right real photo (per-scene routing, Slice 5). */
-            <div className="space-y-2">
-              <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase">
-                // Upload your REAL photos — tagged per slot ↓
-              </p>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                {guidedSlots.map(({ slot, label, hint, example }) => {
-                  const existing = (formData.servicePhotos || []).find(p => p.slot === slot);
-                  return (
-                    <div key={slot} className="flex flex-col">
-                      {/* "View sample" — visible, tappable gold pill above the box; keeps the
-                          upload box clean/full; click to see the WHOLE reference image. */}
-                      {example && !existing && (
-                        <button
-                          type="button"
-                          onClick={() => setViewImage(example)}
-                          aria-label={`View ${label} sample`}
-                          className="mb-1.5 inline-flex w-full items-center justify-center gap-1 rounded-md border border-[#FFCC00]/40 bg-[#FFCC00]/10 px-2 py-1.5 text-[10px] font-mono font-bold uppercase tracking-wide text-[#FFCC00] transition-all hover:bg-[#FFCC00]/20"
-                        >
-                          <ZoomIn className="w-3 h-3 shrink-0" /> View sample
-                        </button>
-                      )}
-                      {/* Clean, full upload box — a tap always uploads */}
-                      <label className={`relative aspect-square w-full rounded-xl border overflow-hidden cursor-pointer flex items-center justify-center transition-all ${existing ? 'border-[#FFCC00] shadow-[0_0_8px_rgba(255,204,0,0.25)]' : 'border-dashed border-white/15 bg-zinc-950/50 hover:border-[#FFCC00] hover:bg-zinc-800/60'}`}>
-                        {existing ? (
-                          <>
-                            <img src={existing.url} alt={label} className="w-full h-full object-cover" />
-                            <button
-                              type="button"
-                              onClick={(ev) => { ev.preventDefault(); removeSlot(slot); }}
-                              className="absolute top-1 right-1 bg-red-600/90 text-white w-5 h-5 rounded-full flex items-center justify-center"
-                            >
-                              <X className="w-3 h-3" />
-                            </button>
-                          </>
-                        ) : (
-                          <div className="flex flex-col items-center gap-1 p-2 text-center">
-                            <UploadCloud className="w-5 h-5 text-zinc-400" />
-                            <span className="text-[9px] text-zinc-400 font-mono uppercase tracking-tighter">+ Add</span>
-                          </div>
-                        )}
-                        <input type="file" accept="image/*" className="hidden" onChange={(e) => handleSlotUpload(e, slot)} />
-                      </label>
-                      <p className="text-[9px] font-bold text-white font-mono uppercase mt-1 text-center leading-tight">{label}</p>
-                      <p className="text-[8px] text-zinc-500 font-mono text-center leading-tight">{hint}</p>
-                    </div>
-                  );
-                })}
-              </div>
-              {isAnalyzing && <div className="pt-1"><Loader message="ANALYZING..." size="sm" /></div>}
-              <p className="text-[9px] text-zinc-500 font-mono tracking-tighter">
-                Tinatatak namin kung saan napupunta ang bawat photo — para tumugma ang ad sa totoong lugar mo. Skip ang ayaw mong ilagay.
-              </p>
-            </div>
-            )}
-            
-            {formData.productImageDescription && (
-                <div className="p-4 bg-zinc-950 border border-white/10 rounded-xl">
-                    <p className="text-xs text-zinc-400 font-mono italic">
-                        <span className="text-[#FFCC00] font-bold">AI ANALYSIS:</span> {formData.productImageDescription}
-                    </p>
-                </div>
-            )}
-            
-             {uploadError && <p className="text-red-500 text-center font-mono text-sm border border-red-900/50 bg-red-900/20 p-4 rounded-xl">{uploadError}</p>}
-        </div>
-
-      </div>
-
-      <div className="mt-8 border-t border-white/10 pt-6">
-        <h3 className="text-[10px] font-bold text-center text-zinc-400 uppercase tracking-widest mb-6 font-mono">// Ad Script Strategy</h3>
-
-        <div className="flex justify-center gap-2 mb-6">
-            <button
-                type="button"
-                onClick={() => selectBusinessType('product')}
-                className={`px-5 py-2.5 rounded-xl text-xs font-bold uppercase font-mono border transition-all ${businessType === 'product' ? 'bg-[#FFCC00] text-zinc-950 border-[#FFCC00]' : 'bg-zinc-950 text-zinc-400 border-white/10 hover:border-[#FFCC00]'}`}
-            >
-                Physical Product
-            </button>
-            <button
-                type="button"
-                onClick={() => selectBusinessType('service')}
-                className={`px-5 py-2.5 rounded-xl text-xs font-bold uppercase font-mono border transition-all ${businessType === 'service' ? 'bg-[#FFCC00] text-zinc-950 border-[#FFCC00]' : 'bg-zinc-950 text-zinc-400 border-white/10 hover:border-[#FFCC00]'}`}
-            >
-                Service
-            </button>
-            <button
-                type="button"
-                onClick={() => selectBusinessType('realestate')}
-                className={`px-5 py-2.5 rounded-xl text-xs font-bold uppercase font-mono border transition-all ${businessType === 'realestate' ? 'bg-[#FFCC00] text-zinc-950 border-[#FFCC00]' : 'bg-zinc-950 text-zinc-400 border-white/10 hover:border-[#FFCC00]'}`}
-            >
-                Real Estate
-            </button>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {businessType === 'product' && (
-            <div
-                onClick={() => handleScriptTypeSelect('MrBeast')}
-                className={`p-6 rounded-xl border cursor-pointer transition-all hover:translate-y-[-2px] ${formData.scriptType === 'MrBeast' ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
-            >
-                <div className="flex justify-between items-center mb-2">
-                    <h4 className="font-bold text-white uppercase font-mono text-xs">Viral / MrBeast</h4>
-                    {formData.scriptType === 'MrBeast' && <Check className="w-4 h-4 text-[#FFCC00]" />}
-                </div>
-                <p className="text-[10px] text-zinc-500 font-mono">Hook, Identity, Struggles, Results, CTA.</p>
-            </div>
-            )}
-
-            {businessType === 'product' && (
-            <div
-                onClick={() => handleScriptTypeSelect('Testimonial')}
-                className={`p-6 rounded-xl border cursor-pointer transition-all hover:translate-y-[-2px] ${formData.scriptType === 'Testimonial' ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
-            >
-                <div className="flex justify-between items-center mb-2">
-                    <h4 className="font-bold text-white uppercase font-mono text-xs">Testimonial</h4>
-                    {formData.scriptType === 'Testimonial' && <Check className="w-4 h-4 text-[#FFCC00]" />}
-                </div>
-                <p className="text-[10px] text-zinc-500 font-mono">Intro, Pain Story, Transformation, Proof.</p>
-            </div>
-            )}
-
-            {businessType === 'service' && (
-            <div
-                onClick={() => handleScriptTypeSelect('Services')}
-                className={`p-6 rounded-xl border cursor-pointer transition-all hover:translate-y-[-2px] ${formData.scriptType === 'Services' ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
-            >
-                <div className="flex justify-between items-center mb-2">
-                    <div className="flex items-center gap-2">
-                        <Store className="w-4 h-4 text-[#FFCC00]"/>
-                        <h4 className="font-bold text-white uppercase font-mono text-xs">Services</h4>
-                    </div>
-                    {formData.scriptType === 'Services' && <Check className="w-4 h-4 text-[#FFCC00]" />}
-                </div>
-                <p className="text-[10px] text-zinc-500 font-mono">Trust, Service-in-Action, Proof, Book Now.</p>
-            </div>
-            )}
-
-            {businessType === 'realestate' && (
-            <div
-                onClick={() => handleScriptTypeSelect('RealEstate')}
-                className={`p-6 rounded-xl border cursor-pointer transition-all hover:translate-y-[-2px] ${formData.scriptType === 'RealEstate' ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
-            >
-                <div className="flex justify-between items-center mb-2">
-                    <div className="flex items-center gap-2">
-                        <Building2 className="w-4 h-4 text-[#FFCC00]"/>
-                        <h4 className="font-bold text-white uppercase font-mono text-xs">Real Estate</h4>
-                    </div>
-                    {formData.scriptType === 'RealEstate' && <Check className="w-4 h-4 text-[#FFCC00]" />}
-                </div>
-                <p className="text-[10px] text-zinc-500 font-mono">Walkthrough, Location, Highlights, Inquire.</p>
-            </div>
-            )}
-
-            {businessType === 'product' && (
-             <div
-                aria-disabled="true"
-                title="Coming in v1.1 — beta launches with MrBeast + Testimonial only."
-                className="p-6 rounded-xl border bg-zinc-950 border-white/10 cursor-not-allowed opacity-60 transition-all relative"
-            >
-                <div className="absolute top-2 right-2 text-[8px] font-mono text-[#FFCC00]/60 uppercase tracking-tighter select-none">
-                  // COMING_IN_V1.1
-                </div>
-                <div className="flex justify-between items-center mb-2">
-                    <div className="flex items-center gap-2">
-                        <ShoppingBag className="w-4 h-4 text-zinc-500"/>
-                        <h4 className="font-bold text-zinc-400 uppercase font-mono text-xs">Temu / Haul</h4>
-                    </div>
-                </div>
-                <p className="text-[10px] text-zinc-500 font-mono">High-energy Unboxing. Gadgets, Toys, Decor.</p>
-            </div>
-            )}
-
-            <div
-                onClick={() => handleScriptTypeSelect('Custom')}
-                className={`p-6 rounded-xl border-dashed border cursor-pointer transition-all hover:translate-y-[-2px] relative ${formData.scriptType === 'Custom' ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
-            >
-                <div className="absolute top-2 right-2 text-[8px] font-mono text-[#FFCC00]/60 uppercase tracking-tighter select-none">
-                  [ MANUAL_OVERRIDE ]
-                </div>
-                <div className="flex justify-between items-center mb-2">
-                    <div className="flex items-center gap-2">
-                        <UploadCloud className="w-4 h-4 text-[#FFCC00]"/>
-                        <h4 className="font-bold text-white uppercase font-mono text-xs">Upload Script</h4>
-                    </div>
-                    {formData.scriptType === 'Custom' && <Check className="w-4 h-4 text-[#FFCC00]" />}
-                </div>
-                <p className="text-[10px] text-zinc-500 font-mono">Provide your own script via .txt or manual input.</p>
-            </div>
-        </div>
-
-        {isGuided && (
-            <div className="mt-6 p-6 bg-zinc-900/50 rounded-xl border border-white/10 animate-in fade-in slide-in-from-top-4">
-                {/* Statement-with-✓, not a question: we picked the lead from the description; user can override.
-                    Internal values venue|work|practitioner (Services) or listing|agent|developer (RealEstate);
-                    labels are Bryan-facing outcomes. */}
-                <div className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-[#FFCC00]" />
-                    <p className="text-sm font-bold text-white font-mono">
-                        Your ad will lead with — <span className="text-[#FFCC00]">{guidedLead}</span>
-                    </p>
-                </div>
-                <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mt-1 mb-4">
-                    // We picked this from your description. Not quite? Tap another.
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    {guidedArchetypes.map((a) => (
-                        <button
-                            key={a.key}
-                            type="button"
-                            onClick={a.onSelect}
-                            className={`p-4 rounded-xl border text-left transition-all hover:translate-y-[-2px] ${a.active ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
-                        >
-                            <div className="flex justify-between items-center mb-1">
-                                <span className="text-xs font-bold text-white font-mono uppercase">{a.label}</span>
-                                {a.active && <Check className="w-4 h-4 text-[#FFCC00] shrink-0" />}
-                            </div>
-                            <span className="text-[10px] text-zinc-500 font-mono">{a.sub}</span>
-                        </button>
-                    ))}
-                </div>
-                <p className="text-[10px] text-[#FFCC00]/80 font-mono tracking-tighter uppercase mt-3">
-                    This decides what your ad shows first.
-                </p>
-
-                {/* RealEstate-only: optional listing price. If given, the ad surfaces it on the CTA beat
-                    + end-card recap; if blank, the ad stays inquiry-only. (Services renders no peso.) */}
-                {isRealEstate && (
-                    <div className="mt-5 pt-5 border-t border-white/10 space-y-2">
-                        <label htmlFor="listingPrice" className="block text-[10px] text-zinc-400 font-mono uppercase tracking-widest">
-                            // Listing Price — Optional
-                        </label>
-                        <input
-                            id="listingPrice"
-                            name="listingPrice"
-                            value={formData.listingPrice || ''}
-                            onChange={handleChange}
-                            placeholder="e.g., ₱4.2M  ·  25k/month  ·  leave blank for inquiry-only"
-                            className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-all text-sm"
-                        />
-                        <p className="text-[9px] text-zinc-500 font-mono tracking-tighter">
-                            Iwanang blangko kung gusto mong &quot;DM for price&quot; lang — hindi ipapakita ang halaga.
-                        </p>
-                    </div>
+            <div className="w-full max-w-[240px]">
+              {!hasImages && (
+                <button
+                  type="button"
+                  onClick={() => setViewImage(PRODUCT_EXAMPLE)}
+                  aria-label="View product-in-hand sample"
+                  className="mb-1.5 inline-flex w-full items-center justify-center gap-1 rounded-md border border-[#FFCC00]/40 bg-[#FFCC00]/10 px-2 py-1.5 text-[10px] font-mono font-bold uppercase tracking-wide text-[#FFCC00] transition-all hover:bg-[#FFCC00]/20"
+                >
+                  <ZoomIn className="w-3 h-3 shrink-0" /> View sample
+                </button>
+              )}
+              <label className="relative aspect-square w-full rounded-xl border border-dashed border-white/15 bg-zinc-950/50 overflow-hidden cursor-pointer flex items-center justify-center transition-all hover:border-[#FFCC00] hover:bg-zinc-800/60">
+                {isAnalyzing ? (
+                  <Loader message="ANALYZING ASSETS..." size="sm" />
+                ) : (
+                  <div className="flex flex-col items-center gap-1 p-2 text-center text-zinc-400">
+                    <UploadCloud className="w-6 h-6" />
+                    <span className="text-[11px] font-mono uppercase tracking-tighter">{hasImages ? '+ Add more' : '+ Add · Product in hand'}</span>
+                  </div>
                 )}
+                <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    className="hidden"
+                    onChange={(e) => handleFileUpload(e, 'product')}
+                />
+              </label>
+              <p className="mt-1 text-center text-[10px] font-mono uppercase tracking-tighter text-zinc-500">Product in hand · brand visible</p>
+              <p className="mt-1 text-center text-[10px] font-mono uppercase tracking-tighter text-[#FFCC00]/80">Hero anchors size + appearance for every scene.</p>
             </div>
-        )}
-
-        {formData.scriptType === 'Custom' && (
-            <div className="mt-6 space-y-4 p-6 bg-zinc-900/50 rounded-xl border border-white/10 animate-in fade-in slide-in-from-top-4">
-                <div className="flex flex-col md:flex-row gap-6">
-                    <div className="flex-1 space-y-2">
-                        <label htmlFor="customManualScript" className="block text-[10px] text-zinc-400 font-mono uppercase tracking-widest">
-                          // Paste Your Script Here
-                        </label>
-                        <textarea 
-                            id="customManualScript"
-                            name="customManualScript"
-                            value={formData.customScriptFile?.join('\n') || ''}
-                            onChange={(e) => setFormData(prev => ({ ...prev, customScriptFile: e.target.value.split('\n') }))}
-                            placeholder="Hook line 1...&#10;Hook line 2...&#10;Body line 1..."
-                            rows={8}
-                            className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-all resize-none"
-                        />
-                    </div>
-                    <label className="w-full md:w-64 flex flex-col items-center justify-center border-2 border-dashed border-white/10 rounded-xl bg-zinc-950/50 p-6 cursor-pointer hover:border-[#FFCC00] hover:bg-zinc-800/80 transition-all">
-                        <UploadCloud className="w-6 h-6 text-zinc-500 mb-4" />
-                        <p className="text-[10px] font-mono text-zinc-400 uppercase mb-4 text-center">OR UPLOAD .TXT FILE</p>
-                        <input 
-                            type="file" 
-                            accept=".txt" 
-                            className="hidden" 
-                            onChange={(e) => handleFileUpload(e, 'script')} 
-                        />
-                        <span className="inline-block py-2 px-4 bg-zinc-900 border border-white/10 text-zinc-400 rounded-xl text-xs font-bold hover:border-[#FFCC00] hover:text-[#FFCC00] transition-colors">
-                            SELECT FILE
-                        </span>
-                        {formData.customScriptFile && formData.customScriptFile.length > 0 && (
-                            <p className="text-[10px] text-[#FFCC00] mt-4 font-mono">FILE_LOADED: {formData.customScriptFile.length} lines detected.</p>
-                        )}
+          </div>
+        ) : (
+          /* Phase 2: archetype-driven guided slots. The slot you drop into IS the tag, so each
+             scene can later be anchored to the right real photo (per-scene routing, Slice 5). */
+          <div className="space-y-2">
+            <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase">
+              // Upload your REAL photos — tagged per slot ↓
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {guidedSlots.map(({ slot, label, hint, example }) => {
+                const existing = (formData.servicePhotos || []).find(p => p.slot === slot);
+                return (
+                  <div key={slot} className="flex flex-col">
+                    {/* "View sample" — visible, tappable gold pill above the box; keeps the
+                        upload box clean/full; click to see the WHOLE reference image. */}
+                    {example && !existing && (
+                      <button
+                        type="button"
+                        onClick={() => setViewImage(example)}
+                        aria-label={`View ${label} sample`}
+                        className="mb-1.5 inline-flex w-full items-center justify-center gap-1 rounded-md border border-[#FFCC00]/40 bg-[#FFCC00]/10 px-2 py-1.5 text-[10px] font-mono font-bold uppercase tracking-wide text-[#FFCC00] transition-all hover:bg-[#FFCC00]/20"
+                      >
+                        <ZoomIn className="w-3 h-3 shrink-0" /> View sample
+                      </button>
+                    )}
+                    {/* Clean, full upload box — a tap always uploads */}
+                    <label className={`relative aspect-square w-full rounded-xl border overflow-hidden cursor-pointer flex items-center justify-center transition-all ${existing ? 'border-[#FFCC00] shadow-[0_0_8px_rgba(255,204,0,0.25)]' : 'border-dashed border-white/15 bg-zinc-950/50 hover:border-[#FFCC00] hover:bg-zinc-800/60'}`}>
+                      {existing ? (
+                        <>
+                          <img src={existing.url} alt={label} className="w-full h-full object-cover" />
+                          <button
+                            type="button"
+                            onClick={(ev) => { ev.preventDefault(); removeSlot(slot); }}
+                            className="absolute top-1 right-1 bg-red-600/90 text-white w-5 h-5 rounded-full flex items-center justify-center"
+                          >
+                            <X className="w-3 h-3" />
+                          </button>
+                        </>
+                      ) : (
+                        <div className="flex flex-col items-center gap-1 p-2 text-center">
+                          <UploadCloud className="w-5 h-5 text-zinc-400" />
+                          <span className="text-[9px] text-zinc-400 font-mono uppercase tracking-tighter">+ Add</span>
+                        </div>
+                      )}
+                      <input type="file" accept="image/*" className="hidden" onChange={(e) => handleSlotUpload(e, slot)} />
                     </label>
-                </div>
+                    <p className="text-[9px] font-bold text-white font-mono uppercase mt-1 text-center leading-tight">{label}</p>
+                    <p className="text-[8px] text-zinc-500 font-mono text-center leading-tight">{hint}</p>
+                  </div>
+                );
+              })}
+            </div>
+            {isAnalyzing && <div className="pt-1"><Loader message="ANALYZING..." size="sm" /></div>}
+            <p className="text-[9px] text-zinc-500 font-mono tracking-tighter">
+              Tinatatak namin kung saan napupunta ang bawat photo — para tumugma ang ad sa totoong lugar mo. Skip ang ayaw mong ilagay.
+            </p>
+          </div>
+        )}
+
+        {formData.productImageDescription && (
+            <div className="p-4 bg-zinc-950 border border-white/10 rounded-xl">
+                <p className="text-xs text-zinc-400 font-mono italic">
+                    <span className="text-[#FFCC00] font-bold">AI ANALYSIS:</span> {formData.productImageDescription}
+                </p>
             </div>
         )}
+
+         {uploadError && <p className="text-red-500 text-center font-mono text-sm border border-red-900/50 bg-red-900/20 p-4 rounded-xl">{uploadError}</p>}
+      </div>
+    </TitledCard>
+  );
+
+  return (
+    <>
+    <StepShell sublabel="STEP 2 · BUSINESS INFO" title="Seed AI With Business Information">
+      <p className="-mt-4 mb-6 text-[11px] font-mono leading-relaxed text-zinc-500">
+        Provide detailed information to help the AI understand the product, its value, and the target audience.
+      </p>
+
+      <div className="space-y-6">
+        {/* ---- Output settings: aspect ratio (required, kept visible) + optional brand colors ---- */}
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div id="field-aspectRatio">
+            <FieldLabel className="mb-2" invalid={triedNext && !aspectRatio}>Project Aspect Ratio</FieldLabel>
+            <SegButton
+              value={(aspectRatio ?? '') as '9:16' | '16:9'}
+              onChange={(v) => setAspectRatio(v)}
+              options={[
+                { value: '9:16', label: '9:16 · Vertical' },
+                { value: '16:9', label: '16:9 · Landscape' },
+              ]}
+            />
+            {!aspectRatio && (
+              <p className={`mt-2 text-[10px] font-mono uppercase tracking-widest ${triedNext ? 'text-red-400' : 'text-amber-400/80'}`}>
+                {triedNext ? '// Required — pick one' : '// Pick one to continue'}
+              </p>
+            )}
+          </div>
+          <div>
+            <FieldLabel className="mb-2">Brand Color Palette — optional</FieldLabel>
+            <Popover
+              open={showColors}
+              onOpen={() => setShowColors(true)}
+              onClose={() => setShowColors(false)}
+              align="right"
+              fullWidth
+              trigger={
+                <>
+                  <span className={`flex-1 truncate text-left ${formData.brandColors ? 'text-zinc-200' : 'text-zinc-500'}`}>
+                    {formData.brandColors || 'Add hex palette'}
+                  </span>
+                  <ChevronDown className="h-4 w-4 shrink-0 opacity-60" />
+                </>
+              }
+            >
+              <div className="w-[min(80vw,18rem)]">
+                <TextField
+                  id="brandColors"
+                  name="brandColors"
+                  value={formData.brandColors || ''}
+                  onChange={handleChange}
+                  placeholder="#FFFFFF, #000000, #FF0000"
+                />
+                <p className="mt-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500">// Used to color-match generated visuals</p>
+              </div>
+            </Popover>
+          </div>
+        </div>
+
+        {/* ---- Business basics: the six required fields ---- */}
+        <TitledCard title="Business Basics">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+            {productFields.map(field => (
+              <TextField
+                key={field.id}
+                label={field.label}
+                id={field.id}
+                name={field.id}
+                value={formData[field.id as keyof BusinessInfo] as string}
+                onChange={handleChange}
+                placeholder={field.placeholder}
+                invalid={triedNext && isBlank(field.id as keyof BusinessInfo)}
+              />
+            ))}
+            <div className="sm:col-span-2">
+              <TextArea
+                label="Main Differentiator"
+                id="separator"
+                name="separator"
+                value={formData.separator}
+                onChange={handleChange}
+                placeholder="e.g., We use 100% non-toxic, plant-based products"
+                rows={3}
+                invalid={triedNext && isBlank('separator')}
+              />
+            </div>
+            <div className="sm:col-span-2">
+              <TextArea
+                label="Main Features"
+                id="features"
+                name="features"
+                value={formData.features}
+                onChange={handleChange}
+                placeholder="e.g., Easy online booking, certified cleaners, satisfaction guarantee"
+                rows={4}
+                invalid={triedNext && isBlank('features')}
+              />
+            </div>
+          </div>
+        </TitledCard>
+
+        {/* ---- Ad script strategy (moved above Business Visuals per Neil) ---- */}
+        {scriptStrategyCard}
+
+        {/* ---- Business visuals (now the final ask) ---- */}
+        {businessVisualsCard}
       </div>
 
-      <div className="mt-10 flex justify-between items-center pt-6 border-t border-white/10">
-        <button 
-          onClick={onBack} 
-          className="text-[10px] font-bold tracking-widest text-zinc-400 border border-white/10 px-6 py-3 rounded-full hover:bg-white/5 hover:text-white transition-all uppercase"
-        >
-          &lt; BACK
-        </button>
-        <GoldButton onClick={handleNext} disabled={!isFormValid} className="px-8 py-3">
-          CONFIRM & PROCEED &gt;
-        </GoldButton>
-      </div>
-    </GlassPanel>
+      {triedNext && !isFormValid && (
+        <div className="mt-6 flex items-start gap-2 rounded-xl border border-red-500/40 bg-red-500/10 p-4">
+          <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-red-400" />
+          <p className="text-xs font-mono text-red-200">
+            <span className="font-bold uppercase tracking-widest text-red-400">Incomplete — </span>
+            please complete: {missingLabels.join(' · ')}
+          </p>
+        </div>
+      )}
+
+      <StepFooter onBack={onBack} onNext={guardedNext} nextLabel="CONFIRM & PROCEED" />
+    </StepShell>
     {viewImage && <ImageModal imageUrl={viewImage} onClose={() => setViewImage(null)} />}
     </>
   );

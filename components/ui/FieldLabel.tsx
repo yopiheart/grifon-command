@@ -12,10 +12,12 @@ export const FieldLabel: React.FC<
   React.LabelHTMLAttributes<HTMLLabelElement> & {
     /** Show the leading `// ` marker (house convention). Default true. */
     marker?: boolean;
+    /** Turns the label red (on-confirm validator). */
+    invalid?: boolean;
   }
-> = ({ children, className = '', marker = true, ...props }) => (
+> = ({ children, className = '', marker = true, invalid = false, ...props }) => (
   <label
-    className={`block text-zinc-400 ${T_LABEL} group-focus-within/field:text-[#FFCC00] transition-colors ${className}`}
+    className={`block ${invalid ? 'text-red-400' : 'text-zinc-400 group-focus-within/field:text-[#FFCC00]'} ${T_LABEL} transition-colors ${className}`}
     {...props}
   >
     {marker ? '// ' : ''}
