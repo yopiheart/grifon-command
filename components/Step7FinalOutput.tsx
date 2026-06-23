@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { AllData } from '../types';
-import { GlassPanel } from './ui/GlassPanel';
 import { GoldButton } from './ui/GoldButton';
 import ImageModal from './ui/ImageModal';
-import { Copy, Check, Download, Package, Video, ChevronLeft, Search, RotateCcw } from 'lucide-react';
+import { StepShell } from './ui/StepShell';
+import { StepFooter } from './ui/StepFooter';
+import { Copy, Check, Download, Package, Video, Search, RotateCcw } from 'lucide-react';
 import JSZip from 'jszip';
 import saveAs from 'file-saver';
 import { useSubscription } from '../hooks/useSubscription';
@@ -188,15 +189,10 @@ const Step7FinalOutput: React.FC<Step7Props> = ({ allData, onRestart, onBack, on
   };
 
   return (
-    <GlassPanel>
-      <div className="mb-8 border-b border-white/10 pb-6">
-        <h2 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight">
-          Step 8: Final Output & Assets
-        </h2>
-        <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mt-2">
-          // Review your campaign, export the bundle, ship the video.
-        </p>
-      </div>
+    <StepShell sublabel="STEP 8 · FINAL OUTPUT" title="Final Output & Assets">
+      <p className="-mt-4 mb-6 text-[11px] font-mono leading-relaxed text-zinc-500">
+        Review your campaign, export the bundle, ship the video.
+      </p>
 
       <div className="flex gap-2 mb-6 overflow-x-auto pb-1">
         {tabs.map((t) => {
@@ -223,15 +219,10 @@ const Step7FinalOutput: React.FC<Step7Props> = ({ allData, onRestart, onBack, on
 
       <div className="min-h-[420px]">{renderPanel()}</div>
 
-      <div className="mt-10 pt-6 border-t border-white/10">
-        <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
-          <button
-            onClick={onBack}
-            className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors font-mono text-xs tracking-widest uppercase"
-          >
-            <ChevronLeft className="w-4 h-4" /> Back
-          </button>
-
+      <StepFooter
+        onBack={onBack}
+        backLabel="Back"
+        renderNext={
           <div className="flex flex-col sm:flex-row gap-3">
             <button
               onClick={exportBundle}
@@ -244,16 +235,16 @@ const Step7FinalOutput: React.FC<Step7Props> = ({ allData, onRestart, onBack, on
               <Video className="w-4 h-4" /> GENERATE VIDEO NOW &gt;
             </GoldButton>
           </div>
-        </div>
+        }
+      />
 
-        <div className="mt-6 flex justify-center">
-          <button
-            onClick={onRestart}
-            className="flex items-center gap-2 text-[10px] font-mono tracking-widest uppercase text-zinc-500 hover:text-zinc-200 hover:border-white/20 transition-colors border border-white/5 rounded-full px-4 py-1.5"
-          >
-            <RotateCcw className="w-3 h-3" /> Clear Session &amp; Restart
-          </button>
-        </div>
+      <div className="mt-6 flex justify-center">
+        <button
+          onClick={onRestart}
+          className="flex items-center gap-2 text-[10px] font-mono tracking-widest uppercase text-zinc-500 hover:text-zinc-200 hover:border-white/20 transition-colors border border-white/5 rounded-full px-4 py-1.5"
+        >
+          <RotateCcw className="w-3 h-3" /> Clear Session &amp; Restart
+        </button>
       </div>
 
       {previewImage && (
@@ -263,7 +254,7 @@ const Step7FinalOutput: React.FC<Step7Props> = ({ allData, onRestart, onBack, on
           filename={previewImage.filename}
         />
       )}
-    </GlassPanel>
+    </StepShell>
   );
 };
 
