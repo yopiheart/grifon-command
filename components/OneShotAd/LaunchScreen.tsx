@@ -402,6 +402,7 @@ export const LaunchScreen: React.FC<{
             >
               <Film className="h-4 w-4 shrink-0" />
               {formatLocked ? 'Auto' : formatLabel}
+              <ChevronDown className="h-4 w-4 shrink-0 opacity-60" />
             </button>
 
             {/* Settings ▾ */}
@@ -718,13 +719,21 @@ export const LaunchScreen: React.FC<{
           </div>
 
           {avatarMode === 'upload' ? (
-            <UploadDropzone
-              thumb={avatarUrl}
-              hint="Upload a presenter photo with the face clearly visible."
-              onFile={async (f) => { setAvatarUrl(await fileToDataUrl(f)); setAvatarErr(''); }}
-              onClear={() => setAvatarUrl('')}
-              onView={avatarUrl ? () => setViewImage(avatarUrl) : undefined}
-            />
+            <div className="space-y-3">
+              {/* Guide — the angle/clarity the AI reads best (clear, front-facing, good light) */}
+              <p className={`text-zinc-500 ${T_LABEL}`}>// Aim for this — clear face, good light ↓</p>
+              <div className="mx-auto grid max-w-[260px] grid-cols-2 gap-3">
+                <SampleTile src="/examples/services-practitioner.png" caption="Clear & front-facing" good />
+                <SampleTile src="/examples/services-blurry-bad.png" caption="Dark & blurry" good={false} />
+              </div>
+              <UploadDropzone
+                thumb={avatarUrl}
+                hint="Upload a presenter photo with the face clearly visible."
+                onFile={async (f) => { setAvatarUrl(await fileToDataUrl(f)); setAvatarErr(''); }}
+                onClear={() => setAvatarUrl('')}
+                onView={avatarUrl ? () => setViewImage(avatarUrl) : undefined}
+              />
+            </div>
           ) : (
             <div className="space-y-3">
               {/* Preview block on top — generous, centered, click to view full */}
