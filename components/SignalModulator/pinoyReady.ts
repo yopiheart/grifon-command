@@ -13,13 +13,28 @@
 // `conversational`, and `advertisement` use_cases.
 //
 // To revise: keep the list tight (5–10). Order = display order (best first).
-export const RECOMMENDED_VOICE_IDS: string[] = [
-  'EXAVITQu4vr4xnSDxMaL', // Sarah — female, young, professional (entertainment_tv)
-  'TX3LPaxmHKxFdv7VOQHJ', // Liam — male, young, confident (social_media)
-  'FGY2WhTYpPnrIDTdsKH5', // Laura — female, young, sassy (social_media)
-  'bIHbv24MWmeRgasZH58o', // Will — male, young, chill (conversational)
-  'cgSgspJ2msm6clMCkdW9', // Jessica — female, young, cute (conversational)
-  'nPczCjzI2devNBz1zQrb', // Brian — male, middle_aged, classy (social_media)
-  'hpp4J3VqNfWAUOO0d1Us', // Bella — female, middle_aged, professional
-  'pqHfZKP75CvOlQylNhV4', // Bill — male, old, crisp (advertisement)
+export interface RecommendedVoice {
+  id: string;
+  /** Friendly display name — what the user sees instead of the raw voice id. */
+  name: string;
+  gender: 'female' | 'male';
+  /** One-word vibe for the picker label, e.g. "Sarah — professional". */
+  vibe: string;
+}
+
+/**
+ * Friendly metadata for the curated voices, in display order (best first).
+ * Lets pickers show a human "Name — vibe" label instead of an ElevenLabs id.
+ */
+export const RECOMMENDED_VOICES: RecommendedVoice[] = [
+  { id: 'EXAVITQu4vr4xnSDxMaL', name: 'Sarah', gender: 'female', vibe: 'professional' },
+  { id: 'TX3LPaxmHKxFdv7VOQHJ', name: 'Liam', gender: 'male', vibe: 'confident' },
+  { id: 'FGY2WhTYpPnrIDTdsKH5', name: 'Laura', gender: 'female', vibe: 'sassy' },
+  { id: 'bIHbv24MWmeRgasZH58o', name: 'Will', gender: 'male', vibe: 'chill' },
+  { id: 'cgSgspJ2msm6clMCkdW9', name: 'Jessica', gender: 'female', vibe: 'cute' },
+  { id: 'nPczCjzI2devNBz1zQrb', name: 'Brian', gender: 'male', vibe: 'classy' },
+  { id: 'hpp4J3VqNfWAUOO0d1Us', name: 'Bella', gender: 'female', vibe: 'warm' },
+  { id: 'pqHfZKP75CvOlQylNhV4', name: 'Bill', gender: 'male', vibe: 'crisp' },
 ];
+
+export const RECOMMENDED_VOICE_IDS: string[] = RECOMMENDED_VOICES.map((v) => v.id);
