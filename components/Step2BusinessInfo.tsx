@@ -470,19 +470,19 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                   const existing = (formData.servicePhotos || []).find(p => p.slot === slot);
                   return (
                     <div key={slot} className="flex flex-col">
-                      {/* Reference example — SEPARATE from the upload box (tap to zoom, never blocks upload) */}
+                      {/* "View sample" — visible, tappable gold pill above the box; keeps the
+                          upload box clean/full; click to see the WHOLE reference image. */}
                       {example && !existing && (
                         <button
                           type="button"
                           onClick={() => setViewImage(example)}
-                          aria-label={`Preview ${label} example`}
-                          className="group relative mb-1 h-12 w-full overflow-hidden rounded-lg border border-white/10"
+                          aria-label={`View ${label} sample`}
+                          className="mb-1.5 inline-flex w-full items-center justify-center gap-1 rounded-md border border-[#FFCC00]/40 bg-[#FFCC00]/10 px-2 py-1.5 text-[10px] font-mono font-bold uppercase tracking-wide text-[#FFCC00] transition-all hover:bg-[#FFCC00]/20"
                         >
-                          <img src={example} alt={`${label} example`} onError={(ev) => { (ev.currentTarget as HTMLImageElement).style.display = 'none'; }} className="w-full h-full object-cover opacity-70 transition-opacity group-hover:opacity-100" />
-                          <span className="absolute bottom-0.5 right-0.5 flex h-4 w-4 items-center justify-center rounded bg-black/70 text-zinc-200 group-hover:text-[#FFCC00]"><ZoomIn className="w-2.5 h-2.5" /></span>
+                          <ZoomIn className="w-3 h-3 shrink-0" /> View sample
                         </button>
                       )}
-                      {/* Clean upload box — no example behind it, so a tap always uploads */}
+                      {/* Clean, full upload box — a tap always uploads */}
                       <label className={`relative aspect-square w-full rounded-xl border overflow-hidden cursor-pointer flex items-center justify-center transition-all ${existing ? 'border-[#FFCC00] shadow-[0_0_8px_rgba(255,204,0,0.25)]' : 'border-dashed border-white/15 bg-zinc-950/50 hover:border-[#FFCC00] hover:bg-zinc-800/60'}`}>
                         {existing ? (
                           <>

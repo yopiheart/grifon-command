@@ -464,59 +464,65 @@ export const LaunchScreen: React.FC<{
                   </>
                 }
               >
-                <div className="w-72 space-y-4">
-                <SettingRow label="Aspect" icon={Gauge}>
-                  <Segmented value={aspectRatio} onChange={(v) => setAspectRatio(v as AutopilotInput['aspectRatio'])} opts={['9:16', '1:1', '16:9']} />
-                </SettingRow>
+                {/* Two columns so the Voice list lives on the RIGHT and never gets pushed
+                    off the bottom of the screen (stacked, it ran past the viewport). */}
+                <div className={`grid gap-4 ${voiceNeeded ? 'w-[min(88vw,34rem)] grid-cols-1 sm:grid-cols-2' : 'w-72 grid-cols-1'}`}>
+                  <div className="space-y-4">
+                    <SettingRow label="Aspect" icon={Gauge}>
+                      <Segmented value={aspectRatio} onChange={(v) => setAspectRatio(v as AutopilotInput['aspectRatio'])} opts={['9:16', '1:1', '16:9']} />
+                    </SettingRow>
 
-                <SettingRow label="Video quality" icon={Gauge}>
-                  <div className="flex gap-2">
-                    <SegBtn active={resolution === '720p'} onClick={() => setResolution('720p')}>720p</SegBtn>
-                    <button
-                      type="button"
-                      disabled
-                      title="1080p unlocks on the Business plan"
-                      className={`relative flex-1 cursor-not-allowed border border-white/5 px-2 text-zinc-600 ${CTRL_H} ${R_CTRL} ${T_VALUE} uppercase`}
-                    >
-                      1080p
-                      <BusinessBadge />
-                    </button>
+                    <SettingRow label="Video quality" icon={Gauge}>
+                      <div className="flex gap-2">
+                        <SegBtn active={resolution === '720p'} onClick={() => setResolution('720p')}>720p</SegBtn>
+                        <button
+                          type="button"
+                          disabled
+                          title="1080p unlocks on the Business plan"
+                          className={`relative flex-1 cursor-not-allowed border border-white/5 px-2 text-zinc-600 ${CTRL_H} ${R_CTRL} ${T_VALUE} uppercase`}
+                        >
+                          1080p
+                          <BusinessBadge />
+                        </button>
+                      </div>
+                      <p className="mt-1 text-[10px] text-zinc-500">Resolution of the final rendered video.</p>
+                    </SettingRow>
+
+                    <SettingRow label="Language" icon={Languages}>
+                      <Segmented
+                        value={language}
+                        onChange={(v) => chooseLanguage(v as AutopilotInput['language'])}
+                        opts={format === 'commercial' ? ['English'] : ['Taglish', 'English']}
+                      />
+                      {format === 'commercial' && (
+                        <p className="mt-1 text-[10px] text-amber-400/80">Commercial is English-only (Taglish not supported by the cinematic engine).</p>
+                      )}
+                    </SettingRow>
                   </div>
-                  <p className="mt-1 text-[10px] text-zinc-500">Resolution of the final rendered video.</p>
-                </SettingRow>
 
-                <SettingRow label="Language" icon={Languages}>
-                  <Segmented
-                    value={language}
-                    onChange={(v) => chooseLanguage(v as AutopilotInput['language'])}
-                    opts={format === 'commercial' ? ['English'] : ['Taglish', 'English']}
-                  />
-                  {format === 'commercial' && (
-                    <p className="mt-1 text-[10px] text-amber-400/80">Commercial is English-only (Taglish not supported by the cinematic engine).</p>
-                  )}
-                </SettingRow>
-
-                {voiceNeeded && (
-                  <SettingRow label="Voice" icon={Mic}>
-                    <div className="max-h-60 space-y-1.5 overflow-y-auto pr-1">
-                      {voiceOpts.map((v) => (
-                        <VoiceRow
-                          key={v.id}
-                          opt={v}
-                          selected={voiceId === v.id}
-                          playing={previewId === v.id}
-                          onSelect={() => setVoiceId(v.id)}
-                          onPreview={() => playPreview(v)}
-                        />
-                      ))}
+                  {voiceNeeded && (
+                    <div className="min-w-0">
+                      <SettingRow label="Voice" icon={Mic}>
+                        <div className="max-h-72 space-y-1.5 overflow-y-auto pr-1">
+                          {voiceOpts.map((v) => (
+                            <VoiceRow
+                              key={v.id}
+                              opt={v}
+                              selected={voiceId === v.id}
+                              playing={previewId === v.id}
+                              onSelect={() => setVoiceId(v.id)}
+                              onPreview={() => playPreview(v)}
+                            />
+                          ))}
+                        </div>
+                        {!voicesFromMine && (
+                          <p className="mt-1.5 text-[11px] text-amber-400/80">
+                            No Filipino voices found — using a stock voice. Your Filipino library loads here in the live app.
+                          </p>
+                        )}
+                      </SettingRow>
                     </div>
-                    {!voicesFromMine && (
-                      <p className="mt-1.5 text-[11px] text-amber-400/80">
-                        No Filipino voices found — using a stock voice. Your Filipino library loads here in the live app.
-                      </p>
-                    )}
-                  </SettingRow>
-                )}
+                  )}
                 </div>
               </Popover>
             </div>
@@ -703,25 +709,25 @@ export const LaunchScreen: React.FC<{
           </div>
 
           {/* Guided slots — each shows ITS OWN example (dimmed, tap ⌕ to zoom). The slot you drop into IS the tag. */}
-          <p className={`mb-2 mt-4 text-zinc-500 ${T_LABEL}`}>// Each slot shows what to upload — tap <ZoomIn className="inline h-3 w-3 align-text-bottom" /> to zoom · clear &amp; bright wins ↓</p>
+          <p className={`mb-2 mt-4 text-zinc-500 ${T_LABEL}`}>// Tap VIEW SAMPLE on a slot to see the full reference · clear &amp; bright wins ↓</p>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             {guidedSlots.map(({ slot, label, hint, example }) => {
               const existing = servicePhotos.find((p) => p.slot === slot);
               return (
                 <div key={`${slot}-${label}`} className="flex flex-col">
-                  {/* Reference example — SEPARATE from the upload box (tap to zoom, never blocks upload) */}
+                  {/* "View sample" — visible, tappable gold pill above the box; keeps the
+                      upload box clean/full; click to see the WHOLE reference image. */}
                   {example && !existing && (
                     <button
                       type="button"
                       onClick={() => setViewImage(example)}
-                      aria-label={`Preview ${label} example`}
-                      className="group relative mb-1 h-12 w-full overflow-hidden rounded-lg border border-white/10"
+                      aria-label={`View ${label} sample`}
+                      className="mb-1.5 inline-flex w-full items-center justify-center gap-1 rounded-md border border-[#FFCC00]/40 bg-[#FFCC00]/10 px-2 py-1.5 text-[10px] font-mono font-bold uppercase tracking-wide text-[#FFCC00] transition-all hover:bg-[#FFCC00]/20"
                     >
-                      <img src={example} alt={`${label} example`} onError={(ev) => { (ev.currentTarget as HTMLImageElement).style.display = 'none'; }} className="h-full w-full object-cover opacity-70 transition-opacity group-hover:opacity-100" />
-                      <span className="absolute bottom-0.5 right-0.5 flex h-4 w-4 items-center justify-center rounded bg-black/70 text-zinc-200 group-hover:text-[#FFCC00]"><ZoomIn className="h-2.5 w-2.5" /></span>
+                      <ZoomIn className="h-3 w-3 shrink-0" /> View sample
                     </button>
                   )}
-                  {/* Clean upload box — no example behind it, so a tap always uploads */}
+                  {/* Clean, full upload box — a tap always uploads */}
                   <label className={`relative flex aspect-square w-full cursor-pointer items-center justify-center overflow-hidden border transition-all ${R_CTRL} ${
                     existing ? 'border-[#FFCC00] shadow-[0_0_8px_rgba(255,204,0,0.25)]' : 'border-dashed border-white/15 bg-zinc-950/50 hover:border-[#FFCC00] hover:bg-zinc-800/60'
                   }`}>
