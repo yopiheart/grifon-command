@@ -43,6 +43,10 @@ export interface AutopilotInput {
   serviceArchetype?: BusinessInfo['serviceArchetype'];
   /** Which beat the RealEstate ad leads with (listing|agent|developer). */
   realEstateArchetype?: BusinessInfo['realEstateArchetype'];
+  /** Local-business research toggle (Service: user checkbox; RealEstate: always true). */
+  isLocalService?: boolean;
+  /** Service venue / property location — feeds local Market Research grounding. */
+  businessAddress?: string;
   /** When true, ignore any cached market research for this product and run fresh (intake "Re-research"). */
   forceFreshResearch?: boolean;
 }

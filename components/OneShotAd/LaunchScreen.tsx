@@ -120,6 +120,9 @@ export const LaunchScreen: React.FC<{
   const [reArchetype, setReArchetype] = useState<RealEstateArchetype>('listing');
   const [slotBusy, setSlotBusy] = useState(false);
   const [assetErr, setAssetErr] = useState('');
+  // Local-service grounding for Market Research (Service: opt-in checkbox; RealEstate: location is required).
+  const [localService, setLocalService] = useState(false);
+  const [businessAddress, setBusinessAddress] = useState('');
 
   // --- Creative axes ------------------------------------------------------
   const [vertical, setVertical] = useState('product');
@@ -186,8 +189,8 @@ export const LaunchScreen: React.FC<{
   };
   useEffect(() => () => stopPreview(), []); // cleanup on unmount
 
-  // --- UI surfaces (settings popover + format/asset modals) ---------------
-  const [menu, setMenu] = useState<null | 'settings'>(null);
+  // --- UI surfaces (niche + settings popovers, format/asset modals) -------
+  const [menu, setMenu] = useState<null | 'niche' | 'settings'>(null);
   const [showFormat, setShowFormat] = useState(false);
   const [assetModal, setAssetModal] = useState<null | 'product' | 'avatar'>(null);
   const [viewImage, setViewImage] = useState<string | null>(null);
@@ -201,6 +204,7 @@ export const LaunchScreen: React.FC<{
           : strategy;
 
   const formatLabel = FORMATS.find((f) => f.value === format)?.label ?? 'UGC';
+  const activeVertical = VERTICALS.find((v) => v.value === vertical) ?? VERTICALS[0];
   const formatLocked = vertical !== 'product'; // Service/RealEstate drive their own formula
 
   // Service/RealEstate use the guided per-slot real-photo upload ("Assets");
@@ -261,16 +265,19 @@ export const LaunchScreen: React.FC<{
   const voiceNeeded = formatLocked || format !== 'commercial';
   // Product → one product photo; Service/RealEstate → at least one guided asset.
   const assetReady = isGuided ? servicePhotos.length > 0 : !!hero;
+  // RealEstate must have the property location; everything else just needs brand+price.
+  const addressReady = !isRealEstate || !!businessAddress.trim();
   // Brand + price are load-bearing — they feed Market Research (which writes the
   // whole script). Required, not optional.
-  const ready = !!(assetReady && offer.trim() && brandName.trim() && price.trim() && presenterReady && (!voiceNeeded || voiceId));
+  const ready = !!(assetReady && offer.trim() && brandName.trim() && price.trim() && addressReady && presenterReady && (!voiceNeeded || voiceId));
   const reason = !assetReady ? (isGuided ? 'Add your photos' : 'Add a product photo')
     : !offer.trim() ? 'Describe your offer'
       : !brandName.trim() ? 'Add your brand'
         : !price.trim() ? 'Add your price'
-          : !presenterReady ? 'Add a presenter'
-            : voiceNeeded && !voiceId ? 'Pick a voice'
-              : '';
+          : !addressReady ? 'Add the property location'
+            : !presenterReady ? 'Add a presenter'
+              : voiceNeeded && !voiceId ? 'Pick a voice'
+                : '';
 
   const genAvatar = async () => {
     if (!ethnicity.trim() || !ageRange.trim()) {
@@ -311,6 +318,9 @@ export const LaunchScreen: React.FC<{
       servicePhotos: isGuided ? servicePhotos : undefined,
       serviceArchetype: isService ? serviceArchetype : undefined,
       realEstateArchetype: isRealEstate ? reArchetype : undefined,
+      // RealEstate is always local (location required); Service is opt-in via the checkbox.
+      isLocalService: isRealEstate ? true : isService ? localService : false,
+      businessAddress: (isRealEstate || (isService && localService)) ? businessAddress.trim() : undefined,
       forceFreshResearch: forceFresh,
     });
   };
@@ -343,6 +353,22 @@ export const LaunchScreen: React.FC<{
             <MiniInput placeholder="Price ₱199" value={price} onChange={setPrice} />
           </div>
 
+          {/* Niche-specific location (RealEstate: required; Service: opt-in local) */}
+          {isRealEstate && (
+            <div className="mt-3">
+              <MiniInput placeholder="Property location / address (required)" value={businessAddress} onChange={setBusinessAddress} />
+            </div>
+          )}
+          {isService && (
+            <div className="mt-3 space-y-2">
+              <label className="flex cursor-pointer items-center gap-2 text-xs text-zinc-300">
+                <input type="checkbox" checked={localService} onChange={(e) => setLocalService(e.target.checked)} className="h-4 w-4 shrink-0 accent-[#FFCC00]" />
+                Is this a local service? <span className="text-zinc-500">— adds local market research</span>
+              </label>
+              {localService && <MiniInput placeholder="Business address" value={businessAddress} onChange={setBusinessAddress} />}
+            </div>
+          )}
+
           {/* AI-research reassurance + re-research toggle */}
           <p className={`mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-zinc-500 ${T_LABEL}`}>
             <span className="flex items-center gap-2">
@@ -359,66 +385,87 @@ export const LaunchScreen: React.FC<{
             </button>
           </p>
 
-          {/* ---- Control row: Vertical · Format ▾ · Settings ▾ --------------- */}
-          <div className="mt-5 flex flex-col gap-3 md:flex-row md:items-center">
-            {/* Vertical pills — scroll-x on mobile, never a forced bar at 375px */}
-            <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 md:flex-1 md:overflow-visible md:pb-0">
-              {VERTICALS.map(({ value, label, Icon, locked }) => {
-                const active = vertical === value;
-                return (
-                  <button
-                    key={value}
-                    type="button"
-                    disabled={locked}
-                    onClick={() => !locked && setVertical(value)}
-                    className={`relative inline-flex shrink-0 items-center gap-2 border px-3 ${CTRL_H} ${R_CTRL} ${T_CTRL} transition-all ${
-                      locked
-                        ? 'cursor-not-allowed border-white/5 text-zinc-600'
-                        : active
-                          ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]'
-                          : 'border-white/10 text-zinc-300 hover:border-white/30'
-                    }`}
-                  >
-                    <Icon className="h-4 w-4 shrink-0" /> {label}
-                    {locked && <SoonBadge />}
-                  </button>
-                );
-              })}
+          {/* ---- Control row: Niche ▾ · Format ▾ · Settings ▾ (labeled control panel) ---- */}
+          <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
+            {/* Niche — dropdown so it scales (App/etc.) without widening the row */}
+            <div className="flex flex-col gap-1">
+              <label className={`text-zinc-400 ${T_LABEL}`}>// Niche</label>
+              <Popover
+                open={menu === 'niche'}
+                onOpen={() => setMenu('niche')}
+                onClose={() => setMenu(null)}
+                fullWidth
+                trigger={
+                  <>
+                    <span className="inline-flex items-center gap-2 truncate">
+                      <activeVertical.Icon className="h-4 w-4 shrink-0" /> {activeVertical.label}
+                    </span>
+                    <ChevronDown className="h-4 w-4 shrink-0 opacity-60" />
+                  </>
+                }
+              >
+                <div className="w-56 space-y-1.5">
+                  <p className={`text-zinc-500 ${T_LABEL}`}>// What are you advertising?</p>
+                  {VERTICALS.map(({ value, label, Icon, locked }) => (
+                    <button
+                      key={value}
+                      type="button"
+                      disabled={locked}
+                      onClick={() => { if (!locked) { setVertical(value); setMenu(null); } }}
+                      className={`relative flex w-full items-center gap-2 border px-3 py-2 ${R_CTRL} ${T_CTRL} transition-all ${
+                        locked
+                          ? 'cursor-not-allowed border-white/5 text-zinc-600'
+                          : vertical === value
+                            ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]'
+                            : 'border-white/10 text-zinc-300 hover:border-white/30'
+                      }`}
+                    >
+                      <Icon className="h-4 w-4 shrink-0" /> {label}
+                      {locked && <SoonBadge />}
+                    </button>
+                  ))}
+                </div>
+              </Popover>
             </div>
 
-            {/* Format — opens a sample picker box (not a dropdown) */}
-            <button
-              type="button"
-              disabled={formatLocked}
-              onClick={() => setShowFormat(true)}
-              className={`inline-flex shrink-0 items-center justify-center gap-2 border px-4 ${CTRL_H} ${R_CTRL} ${T_CTRL} transition-all md:w-auto ${
-                formatLocked
-                  ? 'cursor-not-allowed border-white/5 text-zinc-600'
-                  : showFormat
-                    ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]'
-                    : 'border-white/10 text-zinc-300 hover:border-white/30'
-              }`}
-              title={formatLocked ? 'Format is set automatically for this vertical' : 'Pick a format'}
-            >
-              <Film className="h-4 w-4 shrink-0" />
-              {formatLocked ? 'Auto' : formatLabel}
-              <ChevronDown className="h-4 w-4 shrink-0 opacity-60" />
-            </button>
+            {/* Format — opens the sample picker box */}
+            <div className="flex flex-col gap-1">
+              <label className={`text-zinc-400 ${T_LABEL}`}>// Format</label>
+              <button
+                type="button"
+                disabled={formatLocked}
+                onClick={() => setShowFormat(true)}
+                className={`inline-flex w-full items-center justify-between gap-2 border px-4 ${CTRL_H} ${R_CTRL} ${T_CTRL} transition-all ${
+                  formatLocked
+                    ? 'cursor-not-allowed border-white/5 text-zinc-600'
+                    : showFormat
+                      ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]'
+                      : 'border-white/10 text-zinc-300 hover:border-white/30'
+                }`}
+                title={formatLocked ? 'Format is set automatically for this niche' : 'Pick a format'}
+              >
+                <span className="inline-flex items-center gap-2 truncate"><Film className="h-4 w-4 shrink-0" /> {formatLocked ? 'Auto' : formatLabel}</span>
+                <ChevronDown className="h-4 w-4 shrink-0 opacity-60" />
+              </button>
+            </div>
 
             {/* Settings ▾ */}
-            <Popover
-              open={menu === 'settings'}
-              onOpen={() => setMenu('settings')}
-              onClose={() => setMenu(null)}
-              align="right"
-              trigger={
-                <span className="inline-flex items-center gap-2">
-                  <Settings2 className="h-4 w-4 shrink-0" /> Settings
-                  <ChevronDown className="h-4 w-4 shrink-0 opacity-60" />
-                </span>
-              }
-            >
-              <div className="w-72 space-y-4">
+            <div className="flex flex-col gap-1">
+              <label className={`text-zinc-400 ${T_LABEL}`}>// Settings</label>
+              <Popover
+                open={menu === 'settings'}
+                onOpen={() => setMenu('settings')}
+                onClose={() => setMenu(null)}
+                align="right"
+                fullWidth
+                trigger={
+                  <>
+                    <span className="inline-flex items-center gap-2"><Settings2 className="h-4 w-4 shrink-0" /> Settings</span>
+                    <ChevronDown className="h-4 w-4 shrink-0 opacity-60" />
+                  </>
+                }
+              >
+                <div className="w-72 space-y-4">
                 <SettingRow label="Aspect" icon={Gauge}>
                   <Segmented value={aspectRatio} onChange={(v) => setAspectRatio(v as AutopilotInput['aspectRatio'])} opts={['9:16', '1:1', '16:9']} />
                 </SettingRow>
@@ -471,8 +518,9 @@ export const LaunchScreen: React.FC<{
                     )}
                   </SettingRow>
                 )}
-              </div>
-            </Popover>
+                </div>
+              </Popover>
+            </div>
           </div>
 
           {/* ---- Asset tiles: PRODUCT/ASSETS · PRESENTER (full-width rows on mobile) ---- */}
@@ -627,6 +675,10 @@ export const LaunchScreen: React.FC<{
       {/* ---- Assets modal — guided per-slot real photos (Service / RealEstate) ---- */}
       {assetModal === 'product' && isGuided && (
         <Modal title={isRealEstate ? 'Property photos' : 'Service photos'} wide onClose={() => setAssetModal(null)}>
+          {/* Clarify the role: these are anchors, not the performer (presenter is separate) */}
+          <p className="mb-4 text-[11px] leading-snug text-zinc-400">
+            Real photos of your {isRealEstate ? 'property' : 'business'} — these anchor the AI's scenes so they look like the real place. Your on-camera presenter is set separately.
+          </p>
           {/* What does the ad lead with? — archetype picker */}
           <p className={`mb-1.5 text-zinc-400 ${T_LABEL}`}>// What should the ad lead with?</p>
           <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
@@ -824,15 +876,17 @@ const Popover: React.FC<{
   children: React.ReactNode;
   align?: 'left' | 'right';
   disabled?: boolean;
-}> = ({ open, onOpen, onClose, trigger, children, align = 'left', disabled }) => {
+  /** Fill the parent column (labeled control row) instead of shrinking on desktop. */
+  fullWidth?: boolean;
+}> = ({ open, onOpen, onClose, trigger, children, align = 'left', disabled, fullWidth }) => {
   const ref = useClickOutside<HTMLDivElement>(onClose, open);
   return (
-    <div ref={ref} className="relative shrink-0">
+    <div ref={ref} className={`relative ${fullWidth ? 'w-full' : 'shrink-0'}`}>
       <button
         type="button"
         disabled={disabled}
         onClick={() => (open ? onClose() : onOpen())}
-        className={`inline-flex w-full items-center justify-center border px-4 ${CTRL_H} ${R_CTRL} ${T_CTRL} transition-all md:w-auto ${
+        className={`inline-flex w-full items-center gap-2 border px-4 ${CTRL_H} ${R_CTRL} ${T_CTRL} transition-all ${fullWidth ? 'justify-between' : 'justify-center md:w-auto'} ${
           disabled
             ? 'cursor-not-allowed border-white/5 text-zinc-600'
             : open

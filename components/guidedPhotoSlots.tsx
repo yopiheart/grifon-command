@@ -55,19 +55,21 @@ export const ARCHETYPE_ORDER: ServiceArchetype[] = ['venue', 'work', 'practition
 export const BAD_SAMPLE = { src: '/examples/services-blurry-bad.png', caption: 'Dark & blurry' };
 
 export const ARCHETYPE_UPLOAD_SLOTS: Record<ServiceArchetype, UploadSlot[]> = {
+  // NOTE: slot labels avoid "You" — the on-camera presenter is set separately
+  // (Presenter tile). These are REAL photos that anchor scenes to the actual place/people.
   venue: [
     { slot: 'exterior', label: 'Storefront', hint: 'facade + your sign/logo' },
     { slot: 'interior', label: 'Inside', hint: 'where the service happens' },
     { slot: 'ambiance', label: 'The vibe', hint: 'what makes it feel good' },
-    { slot: 'staff', label: 'You / staff', hint: 'optional' },
+    { slot: 'staff', label: 'Staff', hint: 'real staff — optional' },
   ],
   work: [
     { slot: 'before', label: 'Before', hint: 'the problem / mess' },
     { slot: 'after', label: 'After', hint: 'the clean result' },
-    { slot: 'staff', label: 'Crew', hint: 'optional — plain, real' },
+    { slot: 'staff', label: 'Crew', hint: 'real crew — optional' },
   ],
   practitioner: [
-    { slot: 'staff', label: 'You / team', hint: 'friendly, clear headshot' },
+    { slot: 'staff', label: 'Team', hint: 'real team at work' },
     { slot: 'before', label: 'Proof: before', hint: 'optional' },
     { slot: 'after', label: 'Proof: after', hint: 'optional' },
   ],
@@ -118,7 +120,7 @@ export const RE_UPLOAD_SLOTS: Record<RealEstateArchetype, UploadSlot[]> = {
     { slot: 'view', label: 'View / balcony', hint: 'optional' },
   ],
   agent: [
-    { slot: 'agent', label: 'You', hint: 'friendly, clear headshot' },
+    { slot: 'agent', label: 'Agent', hint: 'real broker headshot' },
     { slot: 'facade', label: 'A listing', hint: 'exterior of a property you sell' },
     { slot: 'living', label: 'Inside a listing', hint: 'optional' },
     { slot: 'view', label: 'Best feature', hint: 'optional' },
