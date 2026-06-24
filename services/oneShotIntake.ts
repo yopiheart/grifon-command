@@ -26,8 +26,13 @@ export interface AutopilotInput {
   productDescription: string;
   /** Hero product image (base64 / data URL) — product-in-hand for size anchoring. */
   heroImageBase64: string;
-  /** Presenter locked at intake (uploaded or generated+accepted) so the run honors the user's pick. */
+  /** Presenter locked at intake. When `avatar.url` is set (the user uploaded one)
+   * the run honors it; when empty the user chose AUTO and AI Director casts the
+   * spokesperson from the research persona post-research (see `castHints`). */
   avatar: Avatar;
+  /** AUTO-cast demographic hints — optional constraints that shape AI Director's
+   * casting when the user didn't upload a presenter. Ignored once `avatar.url` is set. */
+  castHints?: { gender: 'Male' | 'Female' | 'Any'; ageRange: string; ethnicity: string };
   /** Pinoy/pinay voice id chosen at intake. */
   voiceId: string;
   language: 'English' | 'Taglish';

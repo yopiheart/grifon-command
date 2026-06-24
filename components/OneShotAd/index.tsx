@@ -94,7 +94,7 @@ const OneShotAd: React.FC<OneShotAdProps> = ({
 
       // 3 — Run the generation chain, honoring the intake presenter.
       const ok = await oneShot.run(
-        { clientDetails, businessInfo, language: input.language, aspectRatio: ar, presetAvatar: input.avatar },
+        { clientDetails, businessInfo, language: input.language, aspectRatio: ar, presetAvatar: input.avatar, castHints: input.castHints },
         sinks,
       );
       if (ok) {

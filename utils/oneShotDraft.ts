@@ -37,12 +37,11 @@ export interface OneShotDraft {
   vertical: string;
   format: 'ugc' | 'product_ugc' | 'commercial';
   strategy: 'Testimonial' | 'MrBeast';
-  avatarMode: 'generate' | 'upload';
+  presenterMode: 'auto' | 'upload';
   gender: 'Any' | 'Male' | 'Female';
   ageRange: string;
   ethnicity: string;
   avatarUrl: string;
-  avatarGens: number;
   language: AutopilotInput['language'];
   aspectRatio: AutopilotInput['aspectRatio'];
   resolution: NonNullable<AutopilotInput['resolution']>;

@@ -11,7 +11,7 @@ import { saveOneShotDraft, loadOneShotDraft, clearOneShotDraft } from '../../uti
 import ImageModal from '../ui/ImageModal';
 import { DriftOrbs } from './motion';
 import { RECOMMENDED_VOICES } from '../SignalModulator/pinoyReady';
-import { generateAvatarImage, describeBusinessAsset } from '../../services/geminiService';
+import { describeBusinessAsset } from '../../services/geminiService';
 import { fetchVoices } from '../../services/voiceService';
 import { compressImageForUpload } from '../../utils/imageCompression';
 import type { AutopilotInput } from '../../services/oneShotIntake';
@@ -42,9 +42,6 @@ const T_LABEL = 'text-[10px] uppercase tracking-widest font-mono'; // meta label
 /** A voice option for the picker. `name` is the chip label, `label` the dropdown row,
  * `preview` the ElevenLabs sample URL that powers the 3-sec play-preview (Grifon edge). */
 type VoiceOpt = { id: string; name: string; label: string; sub?: string; preview?: string };
-
-/** Free presenter generations per session before a generate costs a credit. */
-const FREE_AVATAR_GENS = 3;
 
 /** Curated stock fallback — only used when the account has no Filipino/cloned voices
  * (e.g. the auth-less preview). Stock voices have no preview clip (play-preview disabled). */
@@ -163,15 +160,15 @@ export const LaunchScreen: React.FC<{
   const [format, setFormat] = useState<Format>(restored?.format ?? 'ugc');
   const [strategy, setStrategy] = useState<Strategy>(restored?.strategy ?? 'Testimonial');
 
-  // --- Presenter (generate via Director AI, or upload) --------------------
-  const [avatarMode, setAvatarMode] = useState<'generate' | 'upload'>(restored?.avatarMode ?? 'generate');
+  // --- Presenter — AUTO (AI Director casts from the research persona) or upload.
+  // No generation at intake: casting fires AFTER Market Research so it uses the
+  // full target-market formula (the gender/age/ethnicity below are optional hints).
+  const [presenterMode, setPresenterMode] = useState<'auto' | 'upload'>(restored?.presenterMode ?? 'auto');
   const [gender, setGender] = useState<'Any' | 'Male' | 'Female'>(restored?.gender ?? 'Any');
   const [ageRange, setAgeRange] = useState(restored?.ageRange ?? '25-34');
   const [ethnicity, setEthnicity] = useState(restored?.ethnicity ?? 'Filipino');
   const [avatarUrl, setAvatarUrl] = useState<string>(restored?.avatarUrl ?? '');
-  const [avatarBusy, setAvatarBusy] = useState(false);
   const [avatarErr, setAvatarErr] = useState('');
-  const [avatarGens, setAvatarGens] = useState(restored?.avatarGens ?? 0);
 
   // --- Settings -----------------------------------------------------------
   const [language, setLanguage] = useState<AutopilotInput['language']>(restored?.language ?? 'Taglish');
@@ -295,7 +292,8 @@ export const LaunchScreen: React.FC<{
     if (l === 'Taglish' && format === 'commercial') setFormat('ugc');
   };
 
-  const presenterReady = !!avatarUrl;
+  // AUTO mode is always ready (AI Director casts post-research); UPLOAD needs a photo.
+  const presenterReady = presenterMode === 'auto' || !!avatarUrl;
   // Commercial (Seedance) handles its own audio. Service/RealEstate (formatLocked)
   // run UGC-style and always need a voice.
   const voiceNeeded = formatLocked || format !== 'commercial';
@@ -311,36 +309,9 @@ export const LaunchScreen: React.FC<{
       : !brandName.trim() ? 'Add your brand'
         : !price.trim() ? 'Add your price'
           : !addressReady ? 'Add the property location'
-            : !presenterReady ? 'Add a presenter'
+            : !presenterReady ? 'Upload your presenter photo'
               : voiceNeeded && !voiceId ? 'Pick a voice'
                 : '';
-
-  const genAvatar = async () => {
-    if (!ethnicity.trim() || !ageRange.trim()) {
-      setAvatarErr('Add ethnicity + age first.');
-      return;
-    }
-    setAvatarBusy(true);
-    setAvatarErr('');
-    try {
-      const ar: '9:16' | '16:9' = aspectRatio === '16:9' ? '16:9' : '9:16';
-      // One-Shot generates the presenter during intake — BEFORE Market Research
-      // exists — so we can't pass the research persona the wizard uses. Best
-      // available context: the offer itself (so the avatar models the ideal
-      // customer for THIS offer, not a generic Filipino). scriptType drives the
-      // wardrobe (e.g. RealEstate → the lanyard agent) the same as the wizard.
-      const audience = offer.trim()
-        ? `The ideal ${ethnicity} customer for this offer: ${offer.trim()}`
-        : `${ethnicity} consumers`;
-      const { url } = await generateAvatarImage(audience, gender, ageRange, ethnicity, ar, '1K', [], scriptType);
-      setAvatarUrl(url);
-      setAvatarGens((n) => n + 1);
-    } catch {
-      setAvatarErr('Generation failed — try again or upload a photo.');
-    } finally {
-      setAvatarBusy(false);
-    }
-  };
 
   const launch = () => {
     if (!ready) return;
@@ -354,7 +325,12 @@ export const LaunchScreen: React.FC<{
       productDescription: offer.trim(),
       // Guided verticals anchor research on the hero-slot photo; Product on the single hero.
       heroImageBase64: isGuided ? (servicePhotos[0]?.url ?? '') : hero,
-      avatar: { url: avatarUrl, description: `A ${ethnicity} presenter`, ethnicity, prompt: '' },
+      // UPLOAD → the run honors the user's photo. AUTO → empty url so AI Director
+      // casts the spokesperson from the research persona, shaped by castHints.
+      avatar: presenterMode === 'upload'
+        ? { url: avatarUrl, description: `A ${ethnicity} presenter`, ethnicity, gender, prompt: '' }
+        : { url: '', description: '', ethnicity: '', gender: 'Any', prompt: '' },
+      castHints: presenterMode === 'auto' ? { gender, ageRange, ethnicity } : undefined,
       voiceId,
       language,
       aspectRatio,
@@ -386,7 +362,7 @@ export const LaunchScreen: React.FC<{
         hero, offer, brandName, price, forceFresh,
         servicePhotos, serviceArchetype, reArchetype, localService, businessAddress,
         vertical, format, strategy,
-        avatarMode, gender, ageRange, ethnicity, avatarUrl, avatarGens,
+        presenterMode, gender, ageRange, ethnicity, avatarUrl,
         language, aspectRatio, resolution, voiceId,
       });
     }, 700);
@@ -395,7 +371,7 @@ export const LaunchScreen: React.FC<{
     dirty, hero, offer, brandName, price, forceFresh,
     servicePhotos, serviceArchetype, reArchetype, localService, businessAddress,
     vertical, format, strategy,
-    avatarMode, gender, ageRange, ethnicity, avatarUrl, avatarGens,
+    presenterMode, gender, ageRange, ethnicity, avatarUrl,
     language, aspectRatio, resolution, voiceId,
   ]);
 
@@ -407,8 +383,8 @@ export const LaunchScreen: React.FC<{
     setServicePhotos([]); setServiceArchetype('venue'); setReArchetype('listing');
     setLocalService(false); setBusinessAddress('');
     setVertical('product'); setFormat('ugc'); setStrategy('Testimonial');
-    setAvatarMode('generate'); setGender('Any'); setAgeRange('25-34'); setEthnicity('Filipino');
-    setAvatarUrl(''); setAvatarGens(0);
+    setPresenterMode('auto'); setGender('Any'); setAgeRange('25-34'); setEthnicity('Filipino');
+    setAvatarUrl('');
     setLanguage('Taglish'); setAspectRatio('9:16'); setResolution('720p');
     setVoiceId(voiceOpts[0]?.id ?? STOCK_FALLBACK[0]?.id ?? '');
     clearOneShotDraft();
@@ -489,7 +465,7 @@ export const LaunchScreen: React.FC<{
                     hero, offer, brandName, price, forceFresh,
                     servicePhotos, serviceArchetype, reArchetype, localService, businessAddress,
                     vertical, format, strategy,
-                    avatarMode, gender, ageRange, ethnicity, avatarUrl, avatarGens,
+                    presenterMode, gender, ageRange, ethnicity, avatarUrl,
                     language, aspectRatio, resolution, voiceId,
                   });
                   onCloneVoice();
@@ -734,9 +710,10 @@ export const LaunchScreen: React.FC<{
             />
             <AssetTile
               label="Presenter"
-              icon={User}
-              thumb={avatarUrl}
-              busy={avatarBusy}
+              icon={presenterMode === 'auto' ? Wand2 : User}
+              thumb={presenterMode === 'upload' ? avatarUrl : undefined}
+              sub={presenterMode === 'auto' ? 'AI Director casts it · tap to set' : (avatarUrl ? 'Tap to change' : 'Tap to upload')}
+              forceFilled={presenterMode === 'auto' || !!avatarUrl}
               onClick={() => setAssetModal('avatar')}
             />
           </div>
@@ -952,15 +929,54 @@ export const LaunchScreen: React.FC<{
         </Modal>
       )}
 
-      {/* ---- Presenter modal (clean vertical layout: preview → controls → CTA) ---- */}
+      {/* ---- Presenter modal — AUTO (AI Director casts from research) or Upload ---- */}
       {assetModal === 'avatar' && (
         <Modal title="Presenter" onClose={() => setAssetModal(null)}>
           <div className="mb-4 flex gap-2">
-            <ModeTab active={avatarMode === 'generate'} onClick={() => setAvatarMode('generate')} icon={Wand2}>Create</ModeTab>
-            <ModeTab active={avatarMode === 'upload'} onClick={() => setAvatarMode('upload')} icon={Upload}>Upload</ModeTab>
+            <ModeTab active={presenterMode === 'auto'} onClick={() => setPresenterMode('auto')} icon={Wand2}>AI Director</ModeTab>
+            <ModeTab active={presenterMode === 'upload'} onClick={() => setPresenterMode('upload')} icon={Upload}>Upload</ModeTab>
           </div>
 
-          {avatarMode === 'upload' ? (
+          {presenterMode === 'auto' ? (
+            <div className="space-y-4">
+              {/* The pitch: cast from YOUR market, not a stock face. */}
+              <div className={`border border-[#FFCC00]/30 bg-[#FFCC00]/[0.05] p-4 ${R_PANEL}`}>
+                <div className="mb-1.5 flex items-center gap-2 text-[#FFCC00]">
+                  <Sparkles className="h-4 w-4 shrink-0" />
+                  <span className={T_LABEL}>// AI Director casts it · Recommended</span>
+                </div>
+                <p className="text-sm leading-snug text-zinc-300">
+                  Grifon's AI Director picks the perfect spokesperson for your market — cast from your live market research, not a generic stock face.
+                  {isRealEstate ? ' For real estate it dresses them as a trustworthy local agent.' : isService ? ' For services it casts the right practitioner.' : ''}
+                </p>
+                <p className="mt-2 text-[11px] leading-snug text-zinc-500">
+                  You'll meet them in your finished ad — you can swap or upload your own anytime after.
+                </p>
+              </div>
+
+              {/* Optional casting hints — leave on "Any" to let the Director decide fully. */}
+              <div>
+                <p className={`mb-1.5 text-zinc-400 ${T_LABEL}`}>// Optional casting hints</p>
+                <div className="flex gap-2">
+                  {(['Any', 'Male', 'Female'] as const).map((g) => (
+                    <SegBtn key={g} active={gender === g} onClick={() => setGender(g)}>{g}</SegBtn>
+                  ))}
+                </div>
+                <div className="mt-2 grid grid-cols-2 gap-2">
+                  <MiniInput placeholder="Ethnicity" value={ethnicity} onChange={setEthnicity} />
+                  <MiniInput placeholder="Age (e.g. 25-34)" value={ageRange} onChange={setAgeRange} />
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => { sfx.play('select'); setAssetModal(null); }}
+                className={`flex w-full items-center justify-center gap-2 ${CTRL_H} ${R_CTRL} ${T_CTRL} bg-[#FFCC00] text-black transition-all hover:shadow-[0_0_20px_rgba(255,204,0,0.4)]`}
+              >
+                <Check className="h-4 w-4 shrink-0" /> Done — AI Director will cast it
+              </button>
+            </div>
+          ) : (
             <div className="space-y-3">
               {/* Guide — the angle/clarity the AI reads best (clear, front-facing, good light) */}
               <p className={`text-zinc-500 ${T_LABEL}`}>// Aim for this — clear face, good light ↓</p>
@@ -970,70 +986,22 @@ export const LaunchScreen: React.FC<{
               </div>
               <UploadDropzone
                 thumb={avatarUrl}
-                hint="Upload a presenter photo with the face clearly visible."
+                hint="Upload a presenter photo with the face clearly visible (your real agent / practitioner / yourself)."
                 onFile={async (f) => { setAvatarUrl(await fileToDataUrl(f)); setAvatarErr(''); }}
                 onClear={() => setAvatarUrl('')}
                 onView={avatarUrl ? () => setViewImage(avatarUrl) : undefined}
               />
-            </div>
-          ) : (
-            <div className="space-y-3">
-              {/* Preview block on top — generous, centered, click to view full */}
-              <div className={`relative mx-auto flex aspect-square w-full max-w-[180px] items-center justify-center overflow-hidden border bg-zinc-950 ${R_PANEL} ${avatarUrl ? 'border-[#FFCC00]/60' : 'border-white/10'}`}>
-                {avatarBusy ? (
-                  <Loader2 className="h-7 w-7 animate-spin text-[#FFCC00]" />
-                ) : avatarUrl ? (
-                  <>
-                    <button type="button" onClick={() => setViewImage(avatarUrl)} aria-label="View full presenter" className="h-full w-full">
-                      <img src={avatarUrl} alt="Presenter" className="h-full w-full object-cover" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setViewImage(avatarUrl)}
-                      aria-label="View full presenter"
-                      className="absolute bottom-1.5 right-1.5 flex h-6 w-6 items-center justify-center rounded-md bg-black/70 text-zinc-200 hover:text-[#FFCC00]"
-                    >
-                      <Maximize2 className="h-3.5 w-3.5" />
-                    </button>
-                  </>
-                ) : (
-                  <div className="flex flex-col items-center gap-2 text-zinc-600">
-                    <User className="h-8 w-8" />
-                    <span className={T_LABEL}>Preview</span>
-                  </div>
-                )}
-              </div>
-
-              {/* Gender — equal-height segmented (consistent with Settings) */}
-              <div className="flex gap-2">
-                {(['Any', 'Male', 'Female'] as const).map((g) => (
-                  <SegBtn key={g} active={gender === g} onClick={() => setGender(g)}>{g}</SegBtn>
-                ))}
-              </div>
-
-              {/* Ethnicity + Age — reuse the h-11 input primitive */}
-              <div className="grid grid-cols-2 gap-2">
-                <MiniInput placeholder="Ethnicity" value={ethnicity} onChange={setEthnicity} />
-                <MiniInput placeholder="Age (e.g. 25-34)" value={ageRange} onChange={setAgeRange} />
-              </div>
-
-              {/* Generate CTA — full-width gold */}
+              {avatarErr && <p className="text-center text-[11px] text-amber-400/80">{avatarErr}</p>}
               <button
                 type="button"
-                onClick={genAvatar}
-                disabled={avatarBusy}
+                onClick={() => { sfx.play('select'); setAssetModal(null); }}
+                disabled={!avatarUrl}
                 className={`flex w-full items-center justify-center gap-2 ${CTRL_H} ${R_CTRL} ${T_CTRL} transition-all ${
-                  avatarBusy ? 'cursor-not-allowed bg-zinc-800 text-zinc-500' : 'bg-[#FFCC00] text-black hover:shadow-[0_0_20px_rgba(255,204,0,0.4)]'
+                  avatarUrl ? 'bg-[#FFCC00] text-black hover:shadow-[0_0_20px_rgba(255,204,0,0.4)]' : 'cursor-not-allowed bg-zinc-800 text-zinc-500'
                 }`}
               >
-                {avatarBusy ? <Loader2 className="h-4 w-4 shrink-0 animate-spin" /> : <Wand2 className="h-4 w-4 shrink-0" />}
-                {avatarUrl ? 'Recreate presenter' : 'Create presenter'}
-                {avatarGens >= FREE_AVATAR_GENS ? ' · 1 credit' : ''}
+                <Check className="h-4 w-4 shrink-0" /> Use this presenter
               </button>
-              <p className={`text-center text-zinc-500 ${T_LABEL}`}>
-                {avatarGens < FREE_AVATAR_GENS ? `${FREE_AVATAR_GENS - avatarGens} free left` : 'extra gens use 1 credit'}
-              </p>
-              {avatarErr && <p className="text-center text-[11px] text-amber-400/80">{avatarErr}</p>}
             </div>
           )}
         </Modal>
@@ -1173,12 +1141,16 @@ const AssetTile: React.FC<{
   busy?: boolean;
   /** For guided "Assets" — number of slots filled (drives the sub-label + badge). */
   count?: number;
+  /** Override the auto sub-label (e.g. the AUTO-presenter explainer). */
+  sub?: string;
+  /** Treat the tile as filled/active even without a thumb (e.g. AUTO presenter). */
+  forceFilled?: boolean;
   onClick: () => void;
-}> = ({ label, icon: Icon, thumb, busy, count, onClick }) => {
-  const filled = count !== undefined ? count > 0 : !!thumb;
-  const sub = count !== undefined
+}> = ({ label, icon: Icon, thumb, busy, count, sub: subOverride, forceFilled, onClick }) => {
+  const filled = forceFilled || (count !== undefined ? count > 0 : !!thumb);
+  const sub = subOverride ?? (count !== undefined
     ? (count > 0 ? `${count} photo${count === 1 ? '' : 's'} · tap to edit` : 'Tap to add')
-    : (thumb ? 'Tap to change' : 'Tap to add');
+    : (thumb ? 'Tap to change' : 'Tap to add'));
   return (
     <button
       type="button"
