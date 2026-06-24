@@ -139,7 +139,7 @@ export const ScriptStudio: React.FC<{
               </span>
             }
           >
-            <p className="mb-4 text-[11px] leading-relaxed text-zinc-500">
+            <p className="mb-4 text-[11px] leading-relaxed text-zinc-400">
               One beat renders <span className="text-zinc-300">one shot</span> — keep each box to a single
               place or moment. Naming several places in one beat shows only one of them.
             </p>
@@ -168,7 +168,7 @@ export const ScriptStudio: React.FC<{
                       <span className="text-[10px] text-amber-500/80">Keep the hook to {b.sentenceCap} sentence{b.sentenceCap === 1 ? '' : 's'}.</span>
                     )}
                     {multiPlace && (
-                      <span className="flex items-center gap-1 text-[10px] text-amber-500/80">
+                      <span className="flex items-center gap-1.5 text-[10px] text-amber-500/80">
                         <AlertTriangle className="h-3 w-3 shrink-0" />
                         Lists several places — one scene renders one image. Split it or name the hero shot.
                       </span>

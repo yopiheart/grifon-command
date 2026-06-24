@@ -291,7 +291,7 @@ export const IntakeScreen: React.FC<{
                 onPick={onAvatar}
                 onClear={() => setIntake((s) => ({ ...s, avatarUrl: undefined }))}
               />
-              <p className="col-span-full text-[11px] leading-relaxed text-zinc-500 sm:col-span-3">
+              <p className="col-span-full text-[11px] leading-relaxed text-zinc-400 sm:col-span-3">
                 Frame the presenter <span className="text-zinc-300">head-to-chest</span> in bright light so
                 the face fills the frame — a plain iPhone shot is fine. Avoid full-body shots: the face gets
                 too small for the AI to match across scenes.
