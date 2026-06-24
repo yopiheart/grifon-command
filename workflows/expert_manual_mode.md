@@ -261,7 +261,11 @@ bundle-leak clean, brand-check 42/50 (BRAND_PASS_WITH_NITS, 0 critical). **Zero 
 - **nits** — brand-check follow-up: instructional helper copy `zinc-500 → zinc-400` (contrast floor);
   multi-place warning `gap-1 → gap-1.5` (rhythm parity with sibling warning).
 
-**A4** (pre-upload dark/blurry nudge) — still OPTIONAL, not done.
+- **A4** (`feat … upload-quality gate`) — SHIPPED. `utils/imageQuality.ts` (canvas-free scoring
+  helpers + browser wrapper; 12 unit tests) flags dark / blurry / low-res uploads with a soft amber
+  nudge (never blocks). Wired into Expert intake (presenter/hero/venue tiles) + One-Shot
+  (presenter/hero/guided venue+facade slots, via a shared `QualityNudge`). Direct answer to the
+  Scene-6 "bad upload damages the story" fear — gate the input.
 
 # ⏸ BUCKET B — APPLIED & HELD FOR REGRESSION (tuned `geminiService.ts`, commit `b3638a3`)
 
