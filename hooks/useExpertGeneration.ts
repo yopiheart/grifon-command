@@ -152,7 +152,10 @@ export const useExpertGeneration = (): UseExpertGeneration => {
       // F2 — a directed scene's plain-language note becomes its optimized image prompt. These are
       // independent text calls (no ordering dependency), so run them concurrently. A directed scene
       // also DROPS any AI hook-morph frames so it renders as one image the expert controls (otherwise
-      // only the start frame would honor the direction and the AI would author a divergent reveal).
+      // only the start frame would honor the direction and the AI would author a divergent reveal),
+      // and DROPS its venueSlot so the venue PLACE_IDENTITY_LOCK can't copy-paste the uploaded room
+      // over the direction — "Direct this scene" recreates from the user's prompt, not the venue photo
+      // (first-smoke Finding 4). Any avatar referenceImage stays, so the presenter is still locked.
       await Promise.all(scenes.map(async (s, i) => {
         const note = directions[i]?.description?.trim();
         if (!note || s.manualUploadUrl) return;
@@ -161,6 +164,7 @@ export const useExpertGeneration = (): UseExpertGeneration => {
           scenes[i] = {
             ...scenes[i],
             userImagePromptOverride: optimized.finalPrompt,
+            venueSlot: undefined,
             startFramePrompt: undefined,
             endFramePrompt: undefined,
             transitionEffect: undefined,
