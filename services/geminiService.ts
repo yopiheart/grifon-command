@@ -1978,10 +1978,14 @@ export const generateSceneImage = async (
         1. **IDENTITY:** Reproduce the REAL place from Reference Image 1 — same layout, furniture/
            fixtures, decor, materials, signage/logo text, and color palette. This is the ACTUAL business
            the viewer will visit; it MUST be recognizably the SAME place, not a look-alike or invention.
-        2. **CAMERA_FREEDOM (authoritative over a static copy):** You MAY change camera angle, distance,
-           framing, and crop to fit the scene and add cinematic variety — but it must stay the SAME place
-           seen from a new viewpoint, NEVER a different or invented location. Keep angle change MODERATE;
-           do not over-rotate the room into something unrecognizable.
+           If Reference Image 1 is a building exterior/facade, reproduce its distinguishing structure
+           exactly — floor count, facade material, window/balcony pattern, roofline, and signage — never
+           substitute a generic modern look-alike.
+        2. **CAMERA_FREEDOM (authoritative over a static copy):** Compose a genuinely NEW cinematic
+           viewpoint — change camera angle, distance, framing, and crop to fit the scene; do NOT flatly
+           reproduce the reference photo's framing. It must stay the SAME place (same distinguishing
+           architecture, fixtures, signage, and palette) seen from a new angle, NEVER a different or
+           invented location.
         3. **TIER_TRUTH:** Match the real tier shown in Reference Image 1. NEVER upgrade or glamorize —
            forbidden: "high-end", "luxury", "premium", "upscale", "5-star", "resort", "modern minimalist".
            A modest place stays modest.
@@ -1991,6 +1995,11 @@ export const generateSceneImage = async (
         5. **NO_LOGO_HALLUCINATION:** Preserve the real signage/branding visible in Reference Image 1
            exactly; never invent or substitute a new logo.
         6. **LUMEN_SYNC:** Keep the lighting character (warmth/coolness) of Reference Image 1.
+        7. **CINEMATIC_GRADE (enhance, don't fabricate):** Render with a clean, consistent cinematic
+           grade — even exposure, gentle filmic contrast, natural color — so scenes cut together as one
+           ad. You MAY lift a muddy or underexposed phone-shot capture, but NEVER change the real tier,
+           materials, or palette (TIER_TRUTH holds); LUMEN_SYNC's warmth/coolness still anchors to
+           Reference Image 1.
         `;
     } else if (referenceImageMode === 'avatar_venue' && references.avatarUrl && references.productUrl) {
         // RealEstate avatar-in-property: the AGENT (Ref 1) stands INSIDE the user's REAL room (Ref 2).
@@ -1999,10 +2008,12 @@ export const generateSceneImage = async (
         **AGENT_IN_PROPERTY (Reference Image 1 = the AGENT; Reference Image 2 = the REAL property room):**
         1. **IDENTITY (Reference Image 1, LOCKED across scenes — non-negotiable):** preserve face, skin tone, bone structure, hair styling (color AND style), wardrobe (color, cut, fabric — the SAME outfit every scene), body type. Scene action MAY change pose/expression/gesture, but NEVER identity or wardrobe.
         1b. **FACE_TO_CAMERA (required whenever the agent speaks the line):** both eyes AND mouth clearly visible for lip-sync. Camera angle can vary (frontal, 3/4, side body) but the face stays toward camera. Eyes-closed / full-side-profile-face-away = BANNED for talking scenes.
-        2. **ENVIRONMENT (Reference Image 2 = PLACE_IDENTITY_LOCK):** Place the agent AT this exact real place — if Reference Image 2 is a room INTERIOR, she is INSIDE it; if it is the building EXTERIOR / facade, she stands IN FRONT OF it. Reproduce the SAME layout/structure, furniture/fixtures, materials, palette, and signage as Reference Image 2 — the SAME actual place, NOT a look-alike and NOT an invented one. **CAMERA_FREEDOM:** you MAY change angle, distance, and framing to fit the beat, but it must stay recognizably the SAME place seen from a new viewpoint (keep rotation MODERATE).
+        2. **ENVIRONMENT (Reference Image 2 = PLACE_IDENTITY_LOCK):** Place the agent AT this exact real place — if Reference Image 2 is a room INTERIOR, she is INSIDE it; if it is the building EXTERIOR / facade, she stands IN FRONT OF it. Reproduce the SAME layout/structure, furniture/fixtures, materials, palette, and signage as Reference Image 2 — the SAME actual place, NOT a look-alike and NOT an invented one. **CAMERA_FREEDOM:** compose a genuinely NEW cinematic angle, distance, and framing for the beat — do NOT flatly reproduce the reference photo's framing — while keeping it recognizably the SAME place (same distinguishing structure, fixtures, signage, palette), never an invented one.
         3. **TIER_TRUTH:** match the real tier of Reference Image 2 — NEVER upgrade or glamorize. Forbidden: "luxury", "high-end", "premium", "upscale", "5-star", "resort", "modern minimalist". A modest unit stays modest.
         4. **ETHNICITY:** the agent is strictly ${ethnicity} (authentically Filipino, not glamorized).
         5. **NO_UNSOLICITED_PRODUCT:** do NOT add branded packaging, boxes, or invented props — this is a property walkthrough, not a product ad.
+        6. **AVATAR_RELIGHT (anti-composite):** Light the agent WITH the room — match the direction, color temperature, and intensity of Reference Image 2's environmental light on her face and wardrobe, with contact shadows where she meets the floor/furniture. She must look PHOTOGRAPHED in the room, not pasted on top of it. Preserve her IDENTITY from rule 1 — relight, never restyle.
+        7. **CINEMATIC_GRADE:** Apply one consistent, clean cinematic grade across scenes (even exposure, gentle filmic contrast, natural color) so the walkthrough cuts together. You MAY enhance muddy phone-shot capture quality, but NEVER upgrade the real tier (TIER_TRUTH holds).
         `;
     } else {
         consistencyRules = `
