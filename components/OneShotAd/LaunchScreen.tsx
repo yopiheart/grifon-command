@@ -41,7 +41,7 @@ const T_LABEL = 'text-[10px] uppercase tracking-widest font-mono'; // meta label
 
 /** A voice option for the picker. `name` is the chip label, `label` the dropdown row,
  * `preview` the ElevenLabs sample URL that powers the 3-sec play-preview (Grifon edge). */
-type VoiceOpt = { id: string; name: string; label: string; preview?: string };
+type VoiceOpt = { id: string; name: string; label: string; sub?: string; preview?: string };
 
 /** Free presenter generations per session before a generate costs a credit. */
 const FREE_AVATAR_GENS = 3;
@@ -52,6 +52,7 @@ const STOCK_FALLBACK: VoiceOpt[] = RECOMMENDED_VOICES.map((v) => ({
   id: v.id,
   name: v.name,
   label: `${v.name} — ${v.vibe} (stock)`,
+  sub: `${v.vibe} (stock)`,
 }));
 
 const fileToDataUrl = (file: File): Promise<string> =>
@@ -186,8 +187,8 @@ export const LaunchScreen: React.FC<{
     let alive = true;
     void fetchVoices().then((lib) => {
       if (!alive) return;
-      const filipino: VoiceOpt[] = lib.libraryVoices.map((v) => ({ id: v.voice_id, name: v.name, label: v.description ? `${v.name} — ${v.description}` : v.name, preview: v.preview_url }));
-      const mine: VoiceOpt[] = lib.myVoices.map((v) => ({ id: v.voice_id, name: v.name, label: `${v.name} (your clone)`, preview: v.preview_url }));
+      const filipino: VoiceOpt[] = lib.libraryVoices.map((v) => ({ id: v.voice_id, name: v.name, label: v.description ? `${v.name} — ${v.description}` : v.name, sub: v.description || undefined, preview: v.preview_url }));
+      const mine: VoiceOpt[] = lib.myVoices.map((v) => ({ id: v.voice_id, name: v.name, label: `${v.name} (your clone)`, sub: 'Your clone', preview: v.preview_url }));
       const opts = [...filipino, ...mine];
       if (opts.length === 0) return; // keep stock fallback
       setVoiceOpts(opts);
@@ -745,13 +746,16 @@ export const LaunchScreen: React.FC<{
             </div>
           )}
 
-          <button
-            type="button"
-            onClick={() => setShowFormat(false)}
-            className={`mt-5 flex w-full items-center justify-center gap-2 ${CTRL_H} ${R_CTRL} ${T_CTRL} bg-[#FFCC00] text-black transition-all hover:shadow-[0_0_20px_rgba(255,204,0,0.4)]`}
-          >
-            <Check className="h-4 w-4 shrink-0" /> Use {formatLabel}
-          </button>
+          {/* Sticky so the CTA stays visible without scrolling past a tall preview. */}
+          <div className="sticky bottom-0 -mx-5 -mb-5 mt-5 border-t border-white/10 bg-zinc-900/95 px-5 pb-5 pt-3 backdrop-blur-xl">
+            <button
+              type="button"
+              onClick={() => setShowFormat(false)}
+              className={`flex w-full items-center justify-center gap-2 ${CTRL_H} ${R_CTRL} ${T_CTRL} bg-[#FFCC00] text-black transition-all hover:shadow-[0_0_20px_rgba(255,204,0,0.4)]`}
+            >
+              <Check className="h-4 w-4 shrink-0" /> Use {formatLabel}
+            </button>
+          </div>
         </Modal>
       )}
 
@@ -1053,9 +1057,14 @@ const VoiceRow: React.FC<{
       selected ? 'border-[#FFCC00]/60 bg-[#FFCC00]/10' : 'border-white/10 hover:border-white/30'
     }`}
   >
-    <button type="button" onClick={onSelect} className="flex min-w-0 flex-1 items-center gap-2 py-2 text-left">
+    <button type="button" onClick={onSelect} className="flex min-w-0 flex-1 items-center gap-2 py-1.5 text-left">
       {selected ? <Check className="h-3.5 w-3.5 shrink-0 text-[#FFCC00]" /> : <span className="h-3.5 w-3.5 shrink-0" />}
-      <span className={`truncate text-xs ${selected ? 'text-[#FFCC00]' : 'text-zinc-300'}`}>{opt.label}</span>
+      {/* Two lines so the full identity (name + gender/age/vibe) stays visible
+          instead of truncating the gender off the end of one line. */}
+      <span className="min-w-0 flex-1">
+        <span className={`block truncate text-xs font-medium ${selected ? 'text-[#FFCC00]' : 'text-zinc-200'}`}>{opt.name}</span>
+        {opt.sub && <span className={`block truncate text-[10px] font-mono ${selected ? 'text-[#FFCC00]/70' : 'text-zinc-500'}`}>{opt.sub}</span>}
+      </span>
     </button>
     <button
       type="button"
@@ -1228,9 +1237,9 @@ const FormatCard: React.FC<{
           : 'border-white/10 hover:border-white/30'
     }`}
   >
-    {/* Sample preview slot — 9:16 to preview the real vertical-video shape (empty
-        until Neil's reference clips land; no fake stock). */}
-    <div className="relative flex aspect-[9/16] w-full items-center justify-center bg-zinc-950/60">
+    {/* Sample preview slot — 9:16 to preview the real vertical-video shape, capped
+        on mobile so the modal's CTA stays in view (empty until clips land). */}
+    <div className="relative flex aspect-[9/16] max-h-[42vh] w-full items-center justify-center bg-zinc-950/60 sm:max-h-[58vh]">
       <div className="flex flex-col items-center gap-1.5 text-zinc-600">
         <Film className="h-6 w-6" />
         <span className={T_LABEL}>Sample soon</span>
