@@ -303,3 +303,44 @@ fabricate."
 **Verify-before-ship:** `gemini-eval` on Bukidnon Brew (product — must stay clean; product-lock mode
 shouldn't be touched) + one RealEstate/Services brand (the verticals these blocks drive). Then the F1
 parity render: same Verdé Heights assets through One-Shot RealEstate vs Expert, side-by-side.
+
+---
+
+# ▶▶ RESUME TOMORROW (2026-06-25) — the Bucket B regression is set up but AUTH-BLOCKED
+
+Neil approved the regression ("GO!") and authorized `GRIFON_DEV_UNMETERED`. We stopped at the **auth
+wall** before any live render ran. **Nothing rendered yet — Bucket B is still UNVERIFIED.**
+
+**State at stop:**
+- All code committed + pushed on `feat/expert-mode-directors-cut`. Bucket A (A1–A4) shipped; Bucket B
+  applied & HELD (commit `b3638a3`). Build + 314 tests green.
+- `.env` had `GRIFON_DEV_UNMETERED=true` + `GRIFON_DEV_UNMETERED_VIDEO=true` already set (lines 28–29)
+  — meter bypass is live **IF the machine hasn't rebooted**. After a defreezer reboot these are wiped
+  (`.env` is gitignored) → re-add via an Edit (classifier blocks the enable script; Neil already
+  authorized the flag, so the Edit is pre-approved).
+- Verdé Heights assets survived in `.tmp/dc-smoke/` (presenter/facade/living/kitchen/view + bedroom).
+  Disposable — if a reboot wiped them, regenerate the INPUTS from `.tmp/dc-smoke/RUNBOOK.md` (codex
+  image skill, local machine).
+- Dev server was running at **http://localhost:5174/** (5173 was busy). Restart with `npm run dev`.
+
+**THE ONE BLOCKER — auth.** App is auth-gated (App.tsx:883) and `api/*` verifies the Supabase token
+server-side; `grifon_dev_unlock` only bypasses plan-gating, not auth. A playwright smoke-tester runs
+its own browser context → no shared session. Email/password sign-in exists (App.tsx:504) and IS
+headless-drivable; Google OAuth is not. **First thing tomorrow: pick the auth path** — (a) a test
+email+password for the smoke-tester to type, or (b) Neil signs in and click-throughs the runbook
+himself while Claude analyzes the exported scenes.
+
+**Then drive (in priority order):**
+1. **Verdé Expert re-render** (the direct before/after) — re-run `.tmp/dc-smoke/RUNBOOK.md` exactly,
+   compare NEW Scenes 1/2/6 vs the Findings table: did `AVATAR_RELIGHT` kill the Scene-2 composite
+   feel? did the anti-look-alike clause keep Scene 6 the REAL facade? did camera-freedom give Scene 1
+   a new angle? Confirm Scene 5 didn't regress; confirm `TIER_TRUTH`/`PLACE_IDENTITY_LOCK` still hold.
+2. **One-Shot RealEstate parity** — same Verdé assets through One-Shot RE; is the venue behavior
+   shared, and did it improve the same way?
+3. **Bukidnon Brew product "don't regress"** — product-lock mode was NOT edited, so this is a sanity
+   gate before merge (needs product assets staged).
+4. Run `gemini-eval` on the outputs. If clean + improved → Bucket B is cleared to merge. If a finding
+   persists (esp. Scene-1 end-frame, which may route through `none`/`product` reveal mode that the
+   Bucket B edit did NOT touch), that's a small targeted follow-up.
+
+Smoke = `smoke-tester` subagent (foreground). Don't drive playwright in the main conversation.
