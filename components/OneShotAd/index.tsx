@@ -29,6 +29,8 @@ interface OneShotAdProps {
   onUpgrade: () => void;
   /** Switch to the advanced 8-step wizard (the brief carries over). */
   onSwitchToSteps: () => void;
+  /** Open Signal Modulator's Voice Cloning tab from the voice picker. */
+  onCloneVoice: () => void;
   /** After a successful run → Step 8 review + video hand-off. */
   onReview: () => void;
 }
@@ -43,6 +45,7 @@ const OneShotAd: React.FC<OneShotAdProps> = ({
   onBack,
   onUpgrade,
   onSwitchToSteps,
+  onCloneVoice,
   onReview,
 }) => {
   const oneShot = useOneShotGeneration();
@@ -110,34 +113,36 @@ const OneShotAd: React.FC<OneShotAdProps> = ({
     );
   }
 
-  let screen: React.ReactNode;
+  // Running screen has no header of its own → keep the absolute back link.
   if (phase === 'running') {
-    screen = <RunningScreen researching={researching} stages={oneShot.stages} onMinimize={onBack} />;
-  } else {
-    screen = (
-      <>
-        {phase === 'error' && (
-          <div className="mx-auto mt-14 flex max-w-xl items-center gap-2 rounded-xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-xs text-red-300">
-            <AlertTriangle className="h-4 w-4 shrink-0" /> {errMsg} — adjust and try again.
-            <button onClick={() => { oneShot.reset(); setPhase('launch'); }} className="ml-auto flex items-center gap-1 text-[#FFCC00] hover:underline">
-              <RotateCw className="h-3.5 w-3.5" /> Start over
-            </button>
-          </div>
-        )}
-        <LaunchScreen
-          onLaunch={start}
-          directorUnlocked={directorUnlocked}
-          onUpgrade={onUpgrade}
-          onSwitchToSteps={onSwitchToSteps}
-        />
-      </>
+    return (
+      <div className="relative">
+        {BackBar}
+        <RunningScreen researching={researching} stages={oneShot.stages} onMinimize={onBack} />
+      </div>
     );
   }
 
+  // LaunchScreen renders the canonical left-aligned module header (with its own
+  // back button), so the absolute BackBar is omitted here to avoid a duplicate.
   return (
     <div className="relative">
-      {BackBar}
-      {screen}
+      {phase === 'error' && (
+        <div className="mx-auto mt-6 flex max-w-xl items-center gap-2 rounded-xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-xs text-red-300">
+          <AlertTriangle className="h-4 w-4 shrink-0" /> {errMsg} — adjust and try again.
+          <button onClick={() => { oneShot.reset(); setPhase('launch'); }} className="ml-auto flex items-center gap-1 text-[#FFCC00] hover:underline">
+            <RotateCw className="h-3.5 w-3.5" /> Start over
+          </button>
+        </div>
+      )}
+      <LaunchScreen
+        onLaunch={start}
+        directorUnlocked={directorUnlocked}
+        onUpgrade={onUpgrade}
+        onSwitchToSteps={onSwitchToSteps}
+        onBack={onBack}
+        onCloneVoice={onCloneVoice}
+      />
     </div>
   );
 };

@@ -2,9 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import {
   ImageUp, Sparkles, Zap, Lock, Wand2, Upload, User, Mic,
   Film, Gauge, Check, Loader2, Package, Wrench, Smartphone, Building2, RefreshCw,
-  Settings2, ChevronDown, Play, Square, X, Languages, Maximize2, UploadCloud, Images, ZoomIn,
+  Settings2, ChevronDown, ChevronLeft, ChevronRight, Play, Square, X, Languages,
+  Maximize2, UploadCloud, Images, ZoomIn, Volume2, VolumeX,
 } from 'lucide-react';
 import { GlassPanel } from '../ui/GlassPanel';
+import { useOneShotSfx } from '../../services/uiSoundService';
 import ImageModal from '../ui/ImageModal';
 import { DriftOrbs } from './motion';
 import { RECOMMENDED_VOICES } from '../SignalModulator/pinoyReady';
@@ -99,6 +101,23 @@ function useClickOutside<T extends HTMLElement>(onClose: () => void, enabled: bo
   return ref;
 }
 
+/** True below Tailwind's `sm` breakpoint (640px) — drives mobile-only layout
+ * swaps (Settings → bottom-sheet, Format → swipe carousel). SSR-safe. */
+function useIsMobile(): boolean {
+  const [mobile, setMobile] = useState<boolean>(
+    typeof window !== 'undefined' ? window.matchMedia('(max-width: 639px)').matches : false,
+  );
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const mq = window.matchMedia('(max-width: 639px)');
+    const onChange = () => setMobile(mq.matches);
+    onChange();
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+  return mobile;
+}
+
 export const LaunchScreen: React.FC<{
   onLaunch: (input: AutopilotInput) => void;
   /** Pro+ unlock for Director (step-by-step) mode. Free/Starter get the upsell. */
@@ -106,7 +125,14 @@ export const LaunchScreen: React.FC<{
   onUpgrade: () => void;
   /** Switch to the advanced 8-step wizard — the brief carries over. */
   onSwitchToSteps: () => void;
-}> = ({ onLaunch, directorUnlocked, onUpgrade, onSwitchToSteps }) => {
+  /** Back to Command Center — renders the canonical left-aligned module header. */
+  onBack?: () => void;
+  /** Open Signal Modulator's Voice Cloning tab to record/clone a custom voice. */
+  onCloneVoice?: () => void;
+}> = ({ onLaunch, directorUnlocked, onUpgrade, onSwitchToSteps, onBack, onCloneVoice }) => {
+  // Premium cinematic click cues — One-Shot only, ON by default, mutable.
+  const sfx = useOneShotSfx();
+  const isMobile = useIsMobile();
   // --- Brief --------------------------------------------------------------
   const [hero, setHero] = useState<string>('');          // Product vertical: single product-in-hand photo
   const [offer, setOffer] = useState('');
@@ -324,16 +350,119 @@ export const LaunchScreen: React.FC<{
     });
   };
 
+  // Settings body — shared by the desktop popover and the mobile bottom-sheet so
+  // there's ONE definition. On mobile the Modal owns the width + the single scroll
+  // container, so the fixed desktop widths are dropped there.
+  const settingsInner = (
+    <div className={`grid grid-cols-1 gap-4 ${isMobile ? '' : voiceNeeded ? 'w-[min(88vw,34rem)] sm:grid-cols-2' : 'w-72'}`}>
+      <div className="space-y-4">
+        <SettingRow label="Aspect" icon={Gauge}>
+          <Segmented value={aspectRatio} onChange={(v) => { setAspectRatio(v as AutopilotInput['aspectRatio']); sfx.play('select'); }} opts={['9:16', '1:1', '16:9']} />
+        </SettingRow>
+
+        <SettingRow label="Video quality" icon={Gauge}>
+          <div className="flex gap-2">
+            <SegBtn active={resolution === '720p'} onClick={() => { setResolution('720p'); sfx.play('select'); }}>720p</SegBtn>
+            <button
+              type="button"
+              disabled
+              title="1080p unlocks on the Business plan"
+              className={`relative flex-1 cursor-not-allowed border border-white/5 px-2 text-zinc-600 ${CTRL_H} ${R_CTRL} ${T_VALUE} uppercase`}
+            >
+              1080p
+              <BusinessBadge />
+            </button>
+          </div>
+          <p className="mt-1 text-[10px] text-zinc-500">Resolution of the final rendered video.</p>
+        </SettingRow>
+
+        <SettingRow label="Language" icon={Languages}>
+          <Segmented
+            value={language}
+            onChange={(v) => { chooseLanguage(v as AutopilotInput['language']); sfx.play('select'); }}
+            opts={format === 'commercial' ? ['English'] : ['Taglish', 'English']}
+          />
+          {format === 'commercial' && (
+            <p className="mt-1 text-[10px] text-amber-400/80">Commercial is English-only (Taglish not supported by the cinematic engine).</p>
+          )}
+        </SettingRow>
+      </div>
+
+      {voiceNeeded && (
+        <div className="min-w-0">
+          <SettingRow label="Voice" icon={Mic}>
+            <div className="max-h-[45vh] space-y-1.5 overflow-y-auto pr-1 sm:max-h-72">
+              {voiceOpts.map((v) => (
+                <VoiceRow
+                  key={v.id}
+                  opt={v}
+                  selected={voiceId === v.id}
+                  playing={previewId === v.id}
+                  onSelect={() => { setVoiceId(v.id); sfx.play('select'); }}
+                  onPreview={() => playPreview(v)}
+                />
+              ))}
+            </div>
+            {/* Clone-your-own-voice on-ramp → Signal Modulator Voice Cloning tab.
+                Always visible; cloning's own paywall/flag messaging gates ineligible users. */}
+            {onCloneVoice && (
+              <button
+                type="button"
+                onClick={() => { sfx.play('open'); onCloneVoice(); }}
+                className={`mt-2 flex w-full items-center justify-center gap-2 border border-dashed border-[#FFCC00]/40 ${CTRL_H} ${R_CTRL} ${T_VALUE} uppercase text-[#FFCC00] transition-all hover:bg-[#FFCC00]/10`}
+              >
+                <Mic className="h-3.5 w-3.5 shrink-0" /> Clone your own voice
+              </button>
+            )}
+            {!voicesFromMine && (
+              <p className="mt-1.5 text-[11px] text-amber-400/80">
+                No Filipino voices found — using a stock voice. Your Filipino library loads here in the live app.
+              </p>
+            )}
+          </SettingRow>
+        </div>
+      )}
+    </div>
+  );
+
   return (
     <div className="relative min-h-screen overflow-hidden bg-zinc-950 px-4 py-10 pb-28 text-white md:pb-10">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,rgba(255,204,0,0.07),transparent_60%)]" />
       <DriftOrbs />
 
       <div className="relative mx-auto w-full max-w-4xl">
-        <p className={`mb-3 text-center text-zinc-500 ${T_LABEL}`}>// ONE SHOT · NO GRIND</p>
-        <h1 className={`mb-8 text-center uppercase text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 ${T_DISPLAY}`}>
-          Turn any product<br className="hidden sm:block" /> into a video ad
-        </h1>
+        {/* Canonical module header — left-aligned, matches Recon / War Room / Director AI */}
+        <header className="mb-8 flex flex-col items-start gap-4 border-b border-white/10 pb-6">
+          <div className="flex w-full items-center justify-between">
+            {onBack ? (
+              <button
+                type="button"
+                onClick={onBack}
+                className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500 transition-colors hover:text-white md:text-xs"
+              >
+                <ChevronLeft className="h-4 w-4 shrink-0" /> <span className="hidden md:inline">Command Center</span><span className="md:hidden">Back</span>
+              </button>
+            ) : <span />}
+            {/* One-Shot cinematic SFX mute — scoped to this module only */}
+            <button
+              type="button"
+              onClick={sfx.toggle}
+              aria-label={sfx.enabled ? 'Mute click sounds' : 'Unmute click sounds'}
+              title={sfx.enabled ? 'Sound on — tap to mute' : 'Sound off — tap to unmute'}
+              className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-all ${
+                sfx.enabled ? 'border-[#FFCC00]/40 text-[#FFCC00] hover:bg-[#FFCC00]/10' : 'border-white/10 text-zinc-500 hover:border-white/30'
+              }`}
+            >
+              {sfx.enabled ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}
+            </button>
+          </div>
+          <div className="flex flex-col items-start gap-2">
+            <h1 className={`uppercase text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 ${T_DISPLAY}`}>
+              Turn any product into a video ad
+            </h1>
+            <p className={`text-zinc-500 ${T_LABEL}`}>// One shot · No grind</p>
+          </div>
+        </header>
 
         <GlassPanel className={`p-5 sm:p-7 ${R_PANEL}`}>
           {/* ---- Composer: the offer is the one thing we ask for up-front ---- */}
@@ -433,7 +562,7 @@ export const LaunchScreen: React.FC<{
               <button
                 type="button"
                 disabled={formatLocked}
-                onClick={() => setShowFormat(true)}
+                onClick={() => { setShowFormat(true); sfx.play('open'); }}
                 className={`inline-flex w-full items-center justify-between gap-2 border px-4 ${CTRL_H} ${R_CTRL} ${T_CTRL} transition-all ${
                   formatLocked
                     ? 'cursor-not-allowed border-white/5 text-zinc-600'
@@ -448,83 +577,43 @@ export const LaunchScreen: React.FC<{
               </button>
             </div>
 
-            {/* Settings ▾ */}
+            {/* Settings ▾ — desktop: right-aligned popover · mobile: bottom-sheet
+                (the absolute popover got cut off / un-scrollable on short phones). */}
             <div className="flex flex-col gap-1">
               <label className={`text-zinc-400 ${T_LABEL}`}>// Settings</label>
-              <Popover
-                open={menu === 'settings'}
-                onOpen={() => setMenu('settings')}
-                onClose={() => setMenu(null)}
-                align="right"
-                fullWidth
-                trigger={
-                  <>
+              {isMobile ? (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => { setMenu('settings'); sfx.play('open'); }}
+                    className={`inline-flex w-full items-center justify-between gap-2 border px-4 ${CTRL_H} ${R_CTRL} ${T_CTRL} transition-all ${
+                      menu === 'settings' ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]' : 'border-white/10 text-zinc-300 hover:border-white/30'
+                    }`}
+                  >
                     <span className="inline-flex items-center gap-2"><Settings2 className="h-4 w-4 shrink-0" /> Settings</span>
                     <ChevronDown className="h-4 w-4 shrink-0 opacity-60" />
-                  </>
-                }
-              >
-                {/* Two columns so the Voice list lives on the RIGHT and never gets pushed
-                    off the bottom of the screen (stacked, it ran past the viewport). */}
-                <div className={`grid gap-4 ${voiceNeeded ? 'w-[min(88vw,34rem)] grid-cols-1 sm:grid-cols-2' : 'w-72 grid-cols-1'}`}>
-                  <div className="space-y-4">
-                    <SettingRow label="Aspect" icon={Gauge}>
-                      <Segmented value={aspectRatio} onChange={(v) => setAspectRatio(v as AutopilotInput['aspectRatio'])} opts={['9:16', '1:1', '16:9']} />
-                    </SettingRow>
-
-                    <SettingRow label="Video quality" icon={Gauge}>
-                      <div className="flex gap-2">
-                        <SegBtn active={resolution === '720p'} onClick={() => setResolution('720p')}>720p</SegBtn>
-                        <button
-                          type="button"
-                          disabled
-                          title="1080p unlocks on the Business plan"
-                          className={`relative flex-1 cursor-not-allowed border border-white/5 px-2 text-zinc-600 ${CTRL_H} ${R_CTRL} ${T_VALUE} uppercase`}
-                        >
-                          1080p
-                          <BusinessBadge />
-                        </button>
-                      </div>
-                      <p className="mt-1 text-[10px] text-zinc-500">Resolution of the final rendered video.</p>
-                    </SettingRow>
-
-                    <SettingRow label="Language" icon={Languages}>
-                      <Segmented
-                        value={language}
-                        onChange={(v) => chooseLanguage(v as AutopilotInput['language'])}
-                        opts={format === 'commercial' ? ['English'] : ['Taglish', 'English']}
-                      />
-                      {format === 'commercial' && (
-                        <p className="mt-1 text-[10px] text-amber-400/80">Commercial is English-only (Taglish not supported by the cinematic engine).</p>
-                      )}
-                    </SettingRow>
-                  </div>
-
-                  {voiceNeeded && (
-                    <div className="min-w-0">
-                      <SettingRow label="Voice" icon={Mic}>
-                        <div className="max-h-72 space-y-1.5 overflow-y-auto pr-1">
-                          {voiceOpts.map((v) => (
-                            <VoiceRow
-                              key={v.id}
-                              opt={v}
-                              selected={voiceId === v.id}
-                              playing={previewId === v.id}
-                              onSelect={() => setVoiceId(v.id)}
-                              onPreview={() => playPreview(v)}
-                            />
-                          ))}
-                        </div>
-                        {!voicesFromMine && (
-                          <p className="mt-1.5 text-[11px] text-amber-400/80">
-                            No Filipino voices found — using a stock voice. Your Filipino library loads here in the live app.
-                          </p>
-                        )}
-                      </SettingRow>
-                    </div>
+                  </button>
+                  {menu === 'settings' && (
+                    <Modal title="Settings" wide onClose={() => setMenu(null)}>{settingsInner}</Modal>
                   )}
-                </div>
-              </Popover>
+                </>
+              ) : (
+                <Popover
+                  open={menu === 'settings'}
+                  onOpen={() => { setMenu('settings'); sfx.play('open'); }}
+                  onClose={() => setMenu(null)}
+                  align="right"
+                  fullWidth
+                  trigger={
+                    <>
+                      <span className="inline-flex items-center gap-2"><Settings2 className="h-4 w-4 shrink-0" /> Settings</span>
+                      <ChevronDown className="h-4 w-4 shrink-0 opacity-60" />
+                    </>
+                  }
+                >
+                  {settingsInner}
+                </Popover>
+              )}
             </div>
           </div>
 
@@ -552,7 +641,7 @@ export const LaunchScreen: React.FC<{
             <button
               type="button"
               disabled={!ready}
-              onClick={launch}
+              onClick={() => { if (ready) sfx.play('confirm'); launch(); }}
               className={`relative flex w-full items-center justify-center gap-2 ${R_CTRL} h-12 font-mono text-sm font-bold uppercase tracking-widest transition-all active:scale-[0.99] ${
                 ready
                   ? 'bg-[#FFCC00] text-black shadow-[0_0_24px_rgba(255,204,0,0.4)] hover:shadow-[0_0_40px_rgba(255,204,0,0.6)]'
@@ -593,44 +682,22 @@ export const LaunchScreen: React.FC<{
       {showFormat && (
         <Modal title="Pick the format that hits" wide onClose={() => setShowFormat(false)}>
           <p className="mb-4 text-sm text-zinc-400">Choose the type of video that fits your product and audience.</p>
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-            {FORMATS.map((f) => {
-              const active = format === f.value;
-              return (
-                <button
+          {/* Mobile: horizontal swipe carousel (stays one screen tall, scales to many
+              formats) · Desktop: 3-up grid. */}
+          {isMobile ? (
+            <FormatCarousel formats={FORMATS} activeValue={format} onChoose={(v) => { chooseFormat(v); sfx.play('select'); }} />
+          ) : (
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+              {FORMATS.map((f) => (
+                <FormatCard
                   key={f.value}
-                  type="button"
-                  disabled={f.locked}
-                  onClick={() => { if (!f.locked) chooseFormat(f.value); }}
-                  className={`group relative flex flex-col overflow-hidden border text-left transition-all ${R_PANEL} ${
-                    f.locked
-                      ? 'cursor-not-allowed border-white/5'
-                      : active
-                        ? 'border-[#FFCC00] bg-[#FFCC00]/[0.06]'
-                        : 'border-white/10 hover:border-white/30'
-                  }`}
-                >
-                  {/* Sample preview slot — empty until Neil's reference clips land (no fake stock) */}
-                  <div className="relative flex aspect-[4/5] w-full items-center justify-center bg-zinc-950/60">
-                    <div className="flex flex-col items-center gap-1.5 text-zinc-600">
-                      <Film className="h-6 w-6" />
-                      <span className={T_LABEL}>Sample soon</span>
-                    </div>
-                    {active && !f.locked && (
-                      <span className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#FFCC00] text-black">
-                        <Check className="h-3 w-3" />
-                      </span>
-                    )}
-                    {f.locked && <BusinessBadge />}
-                  </div>
-                  <div className="p-3">
-                    <span className={`block ${T_CTRL} ${active && !f.locked ? 'text-[#FFCC00]' : 'text-zinc-200'}`}>{f.label}</span>
-                    <span className="mt-0.5 block text-[11px] leading-snug text-zinc-500">{f.desc}</span>
-                  </div>
-                </button>
-              );
-            })}
-          </div>
+                  f={f}
+                  active={format === f.value}
+                  onChoose={() => { chooseFormat(f.value); sfx.play('select'); }}
+                />
+              ))}
+            </div>
+          )}
 
           {/* Strategy (UGC only) */}
           {format === 'ugc' && (
@@ -641,7 +708,7 @@ export const LaunchScreen: React.FC<{
                   <button
                     key={s.value}
                     type="button"
-                    onClick={() => setStrategy(s.value)}
+                    onClick={() => { setStrategy(s.value); sfx.play('select'); }}
                     title={s.desc}
                     className={`flex-1 border px-3 ${CTRL_H} ${R_CTRL} ${T_VALUE} uppercase transition-all ${
                       strategy === s.value ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]' : 'border-white/10 text-zinc-300 hover:border-white/30'
@@ -1117,3 +1184,129 @@ const SoonBadge: React.FC = () => (
     Soon
   </span>
 );
+
+/** One format option card — shared by the desktop grid and the mobile carousel. */
+const FormatCard: React.FC<{
+  f: (typeof FORMATS)[number];
+  active: boolean;
+  onChoose: () => void;
+  className?: string;
+}> = ({ f, active, onChoose, className }) => (
+  <button
+    type="button"
+    disabled={f.locked}
+    onClick={() => { if (!f.locked) onChoose(); }}
+    className={`group relative flex flex-col overflow-hidden border text-left transition-all ${R_PANEL} ${className ?? ''} ${
+      f.locked
+        ? 'cursor-not-allowed border-white/5'
+        : active
+          ? 'border-[#FFCC00] bg-[#FFCC00]/[0.06]'
+          : 'border-white/10 hover:border-white/30'
+    }`}
+  >
+    {/* Sample preview slot — empty until Neil's reference clips land (no fake stock) */}
+    <div className="relative flex aspect-[4/5] w-full items-center justify-center bg-zinc-950/60">
+      <div className="flex flex-col items-center gap-1.5 text-zinc-600">
+        <Film className="h-6 w-6" />
+        <span className={T_LABEL}>Sample soon</span>
+      </div>
+      {active && !f.locked && (
+        <span className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#FFCC00] text-black">
+          <Check className="h-3 w-3" />
+        </span>
+      )}
+      {f.locked && <BusinessBadge />}
+    </div>
+    <div className="p-3">
+      <span className={`block ${T_CTRL} ${active && !f.locked ? 'text-[#FFCC00]' : 'text-zinc-200'}`}>{f.label}</span>
+      <span className="mt-0.5 block text-[11px] leading-snug text-zinc-500">{f.desc}</span>
+    </div>
+  </button>
+);
+
+/** Mobile format picker — snap-scrolling row with dot indicators + arrow buttons.
+ * Stays one screen tall no matter how many formats land (vs. a deep vertical stack). */
+const FormatCarousel: React.FC<{
+  formats: typeof FORMATS;
+  activeValue: Format;
+  onChoose: (v: Format) => void;
+}> = ({ formats, activeValue, onChoose }) => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [idx, setIdx] = useState(0);
+
+  const scrollToIdx = (i: number) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const clamped = Math.max(0, Math.min(formats.length - 1, i));
+    const child = el.children[clamped] as HTMLElement | undefined;
+    child?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  };
+
+  const onScroll = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const center = el.scrollLeft + el.clientWidth / 2;
+    let nearest = 0;
+    let best = Infinity;
+    Array.from(el.children).forEach((c, i) => {
+      const ch = c as HTMLElement;
+      const cc = ch.offsetLeft + ch.clientWidth / 2;
+      const d = Math.abs(cc - center);
+      if (d < best) { best = d; nearest = i; }
+    });
+    setIdx(nearest);
+  };
+
+  return (
+    <div className="relative">
+      <div
+        ref={scrollRef}
+        onScroll={onScroll}
+        className="flex snap-x snap-mandatory gap-3 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        {formats.map((f) => (
+          <FormatCard
+            key={f.value}
+            f={f}
+            active={activeValue === f.value}
+            onChoose={() => onChoose(f.value)}
+            className="w-[78%] shrink-0 snap-center"
+          />
+        ))}
+      </div>
+      <div className="mt-3 flex items-center justify-center gap-3">
+        <button
+          type="button"
+          onClick={() => scrollToIdx(idx - 1)}
+          disabled={idx === 0}
+          aria-label="Previous format"
+          className="flex h-8 w-8 items-center justify-center rounded-full border border-white/10 text-zinc-400 transition-all enabled:hover:border-[#FFCC00]/50 enabled:hover:text-[#FFCC00] disabled:cursor-not-allowed disabled:opacity-30"
+        >
+          <ChevronLeft className="h-4 w-4" />
+        </button>
+        <div className="flex items-center gap-1.5">
+          {formats.map((f, i) => (
+            <button
+              key={f.value}
+              type="button"
+              onClick={() => scrollToIdx(i)}
+              aria-label={`Go to ${f.label}`}
+              className="flex items-center justify-center p-2"
+            >
+              <span className={`h-1.5 rounded-full transition-all ${i === idx ? 'w-5 bg-[#FFCC00]' : 'w-1.5 bg-white/20'}`} />
+            </button>
+          ))}
+        </div>
+        <button
+          type="button"
+          onClick={() => scrollToIdx(idx + 1)}
+          disabled={idx === formats.length - 1}
+          aria-label="Next format"
+          className="flex h-8 w-8 items-center justify-center rounded-full border border-white/10 text-zinc-400 transition-all enabled:hover:border-[#FFCC00]/50 enabled:hover:text-[#FFCC00] disabled:cursor-not-allowed disabled:opacity-30"
+        >
+          <ChevronRight className="h-4 w-4" />
+        </button>
+      </div>
+    </div>
+  );
+};

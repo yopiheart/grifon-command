@@ -157,6 +157,9 @@ const App: React.FC = () => {
   const [isCheckingSession, setIsCheckingSession] = useState(true);
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [activeModule, setActiveModule] = useState<string | null>(null);
+  // Deep-link target tab when routing into Signal Modulator (e.g. One-Shot's
+  // "Clone your own voice" → the Voice Cloning tab).
+  const [signalInitialTile, setSignalInitialTile] = useState<'tts' | 'vc' | 'clone' | 'scene-pipeline' | undefined>(undefined);
   const [directorNudgeDismissed, setDirectorNudgeDismissed] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   // Director AI entry mode: one-shot (default — auto-generate the whole ad) vs
@@ -1328,11 +1331,13 @@ const App: React.FC = () => {
       <SignalModulator
         onBack={() => {
           setSceneBatch([]);
+          setSignalInitialTile(undefined);
           setActiveModule(null);
         }}
         globalScript={finalScript}
         sceneBatch={sceneBatch}
         avatarGender={avatarGender}
+        initialTile={signalInitialTile}
         onSendToAiEditor={(audioOverlays) => {
           setEditorBatch({
             sceneBatch,
@@ -1405,6 +1410,7 @@ const App: React.FC = () => {
           onBack={() => setActiveModule(null)}
           onUpgrade={() => { setActiveModule(null); setCurrentRoute('pricing'); }}
           onSwitchToSteps={() => { setDirectorMode('steps'); setCurrentStep(1); }}
+          onCloneVoice={() => { setSignalInitialTile('clone'); setActiveModule('signal_modulator'); }}
           onReview={() => { setDirectorMode('steps'); setCurrentStep(8); }}
         />
       );
