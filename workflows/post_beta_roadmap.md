@@ -649,6 +649,46 @@ a build). The instrumentation to capture it may be a separate small task if logs
 the top of it or not a good idea?"* → decision to keep CAC separate from COGS and log it for a
 data-driven pass post-launch.
 
+> **Cross-ref (2026-06-24):** The instrumentation this item needs (FB cost per signup, Free→Pro
+> conversion, attribution) is specced as **Phase 0** of [`growth_loop.md`](growth_loop.md) — see
+> Item #17. Build that first and this item becomes mostly analysis.
+
+---
+
+### 17. Data-Driven Growth Loop — ingest-only learning + own-funnel instrumentation
+
+> **Full spec:** [`growth_loop.md`](growth_loop.md). This block is the parking-lot pointer; the
+> evaluation, metrics taxonomy, loop SOP, phases, and risks live in that file.
+
+**What:** Give Grifon eyes (Meta Pixel + server-side CAPI by reusing `api/webhook.ts`, plus an
+in-app `events` telemetry table), capture client feedback, then *read* ad performance (ingest-only)
+and feed the existing `viral-autopsy → viral_swipe_file.md → grifon-cmo` loop so Grifon proposes
+the next creative — Neil approves and publishes. Four phases: (0) pixel + telemetry foundation,
+(1) feedback capture, (2) ad-performance ingestion + creative learning, (3) tier segmentation +
+retargeting briefs.
+
+**Why it matters:** Grifon is generation-only today — it never sees results, so it can't learn from
+them. This is the foundation that unblocks Items #7 (perf-triggered OfferOptimizer rescue) and #16
+(CAC/LTV), and turns "post manually, guess what works" into a measured, human-gated learning loop
+for Neil's own growth marketing.
+
+**Why parked:** Same beta-first gate as the rest of this file. But Neil chose (2026-06-24) to build
+the **Phase 0 plumbing now, parallel to beta**, so there's real data to learn from at launch — so
+Phase 0 may unpark ahead of the others.
+
+**When to resume:** Phase 0 on Neil's go (he's endorsed building it during beta). Phases 1–3 follow
+once Phase 0 is live and there's paid traffic + ad spend to read.
+
+**Where to start:** Phase 0 as one vertical slice — pixel + Purchase CAPI (reuse `api/webhook.ts`) +
+one telemetry event end-to-end. Own plan + `/goal` citing the build-gate + `verify-changes`. Run
+`straw-man-audit` on the new `api/` + consent surface.
+
+**Scope estimate:** Phase 0 ≈ 1–2 days (thin slice). Phases 1–3 each their own plan/goal; Phase 2 is
+the largest (ad-platform read integration + attribution).
+
+**Source:** Neil, 2026-06-24 — "data-driven learning/feedback loop" brief; grill resolved to
+own-growth / ingest-only / build-now. Endorsed persisting as a spec (chose option A).
+
 ---
 
 ## How to add new items
