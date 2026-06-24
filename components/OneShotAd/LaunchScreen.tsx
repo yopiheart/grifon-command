@@ -324,7 +324,15 @@ export const LaunchScreen: React.FC<{
     setAvatarErr('');
     try {
       const ar: '9:16' | '16:9' = aspectRatio === '16:9' ? '16:9' : '9:16';
-      const { url } = await generateAvatarImage(`${ethnicity} consumers`, gender, ageRange, ethnicity, ar, '1K', []);
+      // One-Shot generates the presenter during intake — BEFORE Market Research
+      // exists — so we can't pass the research persona the wizard uses. Best
+      // available context: the offer itself (so the avatar models the ideal
+      // customer for THIS offer, not a generic Filipino). scriptType drives the
+      // wardrobe (e.g. RealEstate → the lanyard agent) the same as the wizard.
+      const audience = offer.trim()
+        ? `The ideal ${ethnicity} customer for this offer: ${offer.trim()}`
+        : `${ethnicity} consumers`;
+      const { url } = await generateAvatarImage(audience, gender, ageRange, ethnicity, ar, '1K', [], scriptType);
       setAvatarUrl(url);
       setAvatarGens((n) => n + 1);
     } catch {
