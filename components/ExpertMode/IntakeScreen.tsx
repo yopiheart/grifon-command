@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ImageUp, X, Check, Loader2, PenLine } from 'lucide-react';
+import { ImageUp, X, Check, Loader2, PenLine, AlertTriangle } from 'lucide-react';
 import { StepShell } from '../ui/StepShell';
 import { StepFooter } from '../ui/StepFooter';
 import { TitledCard } from '../ui/TitledCard';
@@ -11,6 +11,7 @@ import {
   type ServiceSlot, type ServiceArchetype, type RealEstateArchetype, type UploadSlot,
 } from '../guidedPhotoSlots';
 import { compressImageForUpload } from '../../utils/imageCompression';
+import { analyzeImageQuality } from '../../utils/imageQuality';
 import { describeBusinessAsset } from '../../services/geminiService';
 import { fetchVoices } from '../../services/voiceService';
 import type { ExpertIntake } from './types';
@@ -32,9 +33,10 @@ const UploadTile: React.FC<{
   label: string;
   hint?: string;
   busy?: boolean;
+  warnings?: string[];
   onPick: (file: File) => void;
   onClear?: () => void;
-}> = ({ url, example, label, hint, busy, onPick, onClear }) => {
+}> = ({ url, example, label, hint, busy, warnings, onPick, onClear }) => {
   const ref = useRef<HTMLInputElement | null>(null);
   return (
     <div className="flex flex-col gap-1.5">
@@ -77,6 +79,15 @@ const UploadTile: React.FC<{
           </button>
         )}
       </div>
+      {url && warnings && warnings.length > 0 && (
+        <div className="flex flex-col gap-0.5">
+          {warnings.map((w, i) => (
+            <p key={i} className="flex items-start gap-1 text-[10px] leading-tight text-amber-500/80">
+              <AlertTriangle className="mt-px h-3 w-3 shrink-0" /> {w}
+            </p>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
@@ -89,6 +100,17 @@ export const IntakeScreen: React.FC<{
 }> = ({ intake, setIntake, onBack, onNext }) => {
   const [busy, setBusy] = useState<string | null>(null);
   const [voices, setVoices] = useState<VoiceOpt[]>([]);
+  // Per-tile upload-quality nudges, keyed by 'hero' | 'avatar' | <ServiceSlot>. Soft, never blocks.
+  const [quality, setQuality] = useState<Record<string, string[]>>({});
+
+  // Best-effort quality check on a freshly compressed upload; stores nudges under `key`.
+  const checkQuality = (key: string, dataUrl: string) => {
+    void analyzeImageQuality(dataUrl)
+      .then((q) => setQuality((s) => ({ ...s, [key]: q.warnings })))
+      .catch(() => { /* measurement failures never block an upload */ });
+  };
+  const clearQuality = (key: string) =>
+    setQuality((s) => { const { [key]: _drop, ...rest } = s; return rest; });
 
   const isProduct = intake.businessType === 'product';
   const isRealEstate = intake.businessType === 'realestate';
@@ -136,6 +158,7 @@ export const IntakeScreen: React.FC<{
       let description: string | undefined;
       try { description = await describeBusinessAsset(c.base64, c.mimeType); } catch { /* best-effort */ }
       setIntake((s) => ({ ...s, productHeroUrl: c.dataUrl, productHeroDescription: description }));
+      checkQuality('hero', c.dataUrl);
     } catch { /* ignore */ } finally { setBusy(null); }
   };
 
@@ -144,6 +167,7 @@ export const IntakeScreen: React.FC<{
     try {
       const c = await compress(file);
       setIntake((s) => ({ ...s, avatarUrl: c.dataUrl }));
+      checkQuality('avatar', c.dataUrl);
     } catch { /* ignore */ } finally { setBusy(null); }
   };
 
@@ -159,11 +183,14 @@ export const IntakeScreen: React.FC<{
         servicePhotos: [...s.servicePhotos.filter((p) => p.slot !== slot), { url: c.dataUrl, slot, description }]
           .sort((a, b) => order.indexOf(a.slot) - order.indexOf(b.slot)),
       }));
+      checkQuality(slot, c.dataUrl);
     } catch { /* ignore */ } finally { setBusy(null); }
   };
 
-  const clearSlot = (slot: ServiceSlot) =>
+  const clearSlot = (slot: ServiceSlot) => {
     setIntake((s) => ({ ...s, servicePhotos: s.servicePhotos.filter((p) => p.slot !== slot) }));
+    clearQuality(slot);
+  };
 
   const archetypeOptions = isRealEstate
     ? RE_ARCHETYPE_ORDER.map((a) => ({ value: a, label: a }))
@@ -226,8 +253,9 @@ export const IntakeScreen: React.FC<{
                 label="Product in hand"
                 hint="brand visible"
                 busy={busy === 'hero'}
+                warnings={quality.hero}
                 onPick={onHero}
-                onClear={() => setIntake((s) => ({ ...s, productHeroUrl: undefined, productHeroDescription: undefined }))}
+                onClear={() => { setIntake((s) => ({ ...s, productHeroUrl: undefined, productHeroDescription: undefined })); clearQuality('hero'); }}
               />
             </div>
           ) : (
@@ -242,6 +270,7 @@ export const IntakeScreen: React.FC<{
                     label={g.label}
                     hint={g.hint}
                     busy={busy === g.slot}
+                    warnings={quality[g.slot]}
                     onPick={(f) => onSlot(f, g.slot)}
                     onClear={() => clearSlot(g.slot)}
                   />
@@ -288,8 +317,9 @@ export const IntakeScreen: React.FC<{
                 label="Your presenter"
                 hint="head-to-chest · face fills frame"
                 busy={busy === 'avatar'}
+                warnings={quality.avatar}
                 onPick={onAvatar}
-                onClear={() => setIntake((s) => ({ ...s, avatarUrl: undefined }))}
+                onClear={() => { setIntake((s) => ({ ...s, avatarUrl: undefined })); clearQuality('avatar'); }}
               />
               <p className="col-span-full text-[11px] leading-relaxed text-zinc-400 sm:col-span-3">
                 Frame the presenter <span className="text-zinc-300">head-to-chest</span> in bright light so

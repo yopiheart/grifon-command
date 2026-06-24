@@ -3,7 +3,7 @@ import {
   ImageUp, Sparkles, Zap, Lock, Wand2, Upload, User, Mic,
   Film, Gauge, Check, Loader2, Package, Wrench, Smartphone, Building2, RefreshCw,
   Settings2, ChevronDown, ChevronLeft, ChevronRight, Play, Square, X, Languages,
-  Maximize2, UploadCloud, Images, ZoomIn, Volume2, VolumeX, RotateCcw, PenLine,
+  Maximize2, UploadCloud, Images, ZoomIn, Volume2, VolumeX, RotateCcw, PenLine, AlertTriangle,
 } from 'lucide-react';
 import { GlassPanel } from '../ui/GlassPanel';
 import { useOneShotSfx } from '../../services/uiSoundService';
@@ -14,6 +14,7 @@ import { RECOMMENDED_VOICES } from '../SignalModulator/pinoyReady';
 import { describeBusinessAsset } from '../../services/geminiService';
 import { fetchVoices } from '../../services/voiceService';
 import { compressImageForUpload } from '../../utils/imageCompression';
+import { analyzeImageQuality } from '../../utils/imageQuality';
 import type { AutopilotInput } from '../../services/oneShotIntake';
 import type { BusinessInfo } from '../../types';
 import {
@@ -153,6 +154,15 @@ export const LaunchScreen: React.FC<{
   const [reArchetype, setReArchetype] = useState<RealEstateArchetype>(restored?.reArchetype ?? 'listing');
   const [slotBusy, setSlotBusy] = useState(false);
   const [assetErr, setAssetErr] = useState('');
+  // Soft upload-quality nudges, keyed by 'hero' | 'avatar' | <ServiceSlot>. Never blocks an upload.
+  const [quality, setQuality] = useState<Record<string, string[]>>({});
+  const checkQuality = (key: string, dataUrl: string) => {
+    void analyzeImageQuality(dataUrl)
+      .then((q) => setQuality((s) => ({ ...s, [key]: q.warnings })))
+      .catch(() => { /* measurement failures never block an upload */ });
+  };
+  const clearQuality = (key: string) =>
+    setQuality((s) => { const { [key]: _drop, ...rest } = s; return rest; });
   // Local-service grounding for Market Research (Service: opt-in checkbox; RealEstate: location is required).
   const [localService, setLocalService] = useState(restored?.localService ?? false);
   const [businessAddress, setBusinessAddress] = useState(restored?.businessAddress ?? '');
@@ -281,13 +291,17 @@ export const LaunchScreen: React.FC<{
         [...prev.filter((p) => p.slot !== slot), { url: c.dataUrl, slot, description }]
           .sort((a, b) => order.indexOf(a.slot) - order.indexOf(b.slot)),
       );
+      checkQuality(slot, c.dataUrl);
     } catch {
       setAssetErr('Could not read that image — try another.');
     } finally {
       setSlotBusy(false);
     }
   };
-  const removeSlotPhoto = (slot: ServiceSlot) => setServicePhotos((prev) => prev.filter((p) => p.slot !== slot));
+  const removeSlotPhoto = (slot: ServiceSlot) => {
+    setServicePhotos((prev) => prev.filter((p) => p.slot !== slot));
+    clearQuality(slot);
+  };
 
   // Seedance (Commercial) can't speak a native Filipino accent → Commercial is
   // English-only, and the two are mutually exclusive.
@@ -846,10 +860,11 @@ export const LaunchScreen: React.FC<{
           <UploadDropzone
             thumb={hero}
             hint="A plain phone shot is fine — just hold the product so the brand name and whole product are clear."
-            onFile={async (f) => setHero(await fileToDataUrl(f))}
-            onClear={() => setHero('')}
+            onFile={async (f) => { const d = await fileToDataUrl(f); setHero(d); checkQuality('hero', d); }}
+            onClear={() => { setHero(''); clearQuality('hero'); }}
             onView={hero ? () => setViewImage(hero) : undefined}
           />
+          <QualityNudge warnings={hero ? quality.hero : undefined} />
         </Modal>
       )}
 
@@ -931,6 +946,7 @@ export const LaunchScreen: React.FC<{
                   </label>
                   <p className="mt-1 text-center text-[9px] font-mono font-bold uppercase leading-tight text-white">{label}</p>
                   <p className="text-center text-[8px] font-mono leading-tight text-zinc-500">{hint}</p>
+                  <QualityNudge warnings={existing ? quality[slot] : undefined} className="mt-1" />
                 </div>
               );
             })}
@@ -1019,11 +1035,12 @@ export const LaunchScreen: React.FC<{
               <UploadDropzone
                 thumb={avatarUrl}
                 hint="Frame the presenter head-to-chest with the face clearly visible (your real agent / practitioner / yourself). Avoid full-body shots — the face gets too small to match across scenes."
-                onFile={async (f) => { setAvatarUrl(await fileToDataUrl(f)); setAvatarErr(''); }}
-                onClear={() => setAvatarUrl('')}
+                onFile={async (f) => { const d = await fileToDataUrl(f); setAvatarUrl(d); setAvatarErr(''); checkQuality('avatar', d); }}
+                onClear={() => { setAvatarUrl(''); clearQuality('avatar'); }}
                 onView={avatarUrl ? () => setViewImage(avatarUrl) : undefined}
               />
               {avatarErr && <p className="text-center text-[11px] text-amber-400/80">{avatarErr}</p>}
+              <QualityNudge warnings={avatarUrl ? quality.avatar : undefined} />
               <button
                 type="button"
                 onClick={() => { sfx.play('select'); setAssetModal(null); }}
@@ -1231,6 +1248,20 @@ const Modal: React.FC<{ title: string; onClose: () => void; children: React.Reac
     </div>
   </div>
 );
+
+/** Soft upload-quality nudges (dark / blurry / low-res). Advisory — renders nothing when clean. */
+const QualityNudge: React.FC<{ warnings?: string[]; className?: string }> = ({ warnings, className }) => {
+  if (!warnings || warnings.length === 0) return null;
+  return (
+    <div className={`flex flex-col gap-0.5 ${className ?? ''}`}>
+      {warnings.map((w, i) => (
+        <p key={i} className="flex items-start gap-1 text-[10px] leading-tight text-amber-400/80">
+          <AlertTriangle className="mt-px h-3 w-3 shrink-0" /> {w}
+        </p>
+      ))}
+    </div>
+  );
+};
 
 /** Single-upload dropzone with optional clear + view. */
 const UploadDropzone: React.FC<{
