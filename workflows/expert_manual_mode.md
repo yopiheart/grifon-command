@@ -263,11 +263,16 @@ bundle-leak clean, brand-check 42/50 (BRAND_PASS_WITH_NITS, 0 critical). **Zero 
 
 **A4** (pre-upload dark/blurry nudge) — still OPTIONAL, not done.
 
-# ⏸ BUCKET B — DRAFTED, AWAITING NEIL'S EXPLICIT GO (tuned `geminiService.ts`)
+# ⏸ BUCKET B — APPLIED & HELD FOR REGRESSION (tuned `geminiService.ts`, commit `b3638a3`)
 
-**DO NOT APPLY without Neil's explicit approval + `gemini-eval` regression (Bukidnon Brew product +
-one service/RE brand) BEFORE shipping.** Affects One-Shot + 8-step too. Target: the `venue`
-(~L1976–1994) and `avatar_venue` (~L1998–2006) consistency-rule blocks. Goal = camera freedom for a
+**Neil approved + applied to the branch (working tree), 2026-06-24 session 2. NOT merged.** Build +
+302 tests green, bundle-leak clean. **MUST NOT ship** until a `gemini-eval` regression (Bukidnon Brew
+product — must stay clean — + one RE/service brand) and the F1 parity render pass. The regression
+needs a live render: dev-unlock (`localStorage.grifon_dev_unlock='1'`) + `GRIFON_DEV_UNMETERED='true'`
+in `.env` (defreezer-wiped; the auto-classifier blocks the enable script, so add the line via an Edit
+with Neil's explicit authorization) + the `smoke-tester` subagent (foreground). Affects One-Shot +
+8-step too. Target was the `venue` (~L1976–1994) and `avatar_venue` (~L1998–2006) consistency-rule
+blocks. Goal = camera freedom for a
 REAL new angle + relight the avatar to the scene + one consistent cinematic grade, while KEEPING
 `PLACE_IDENTITY_LOCK` (anti-drift, Finding 2a) and `TIER_TRUTH` (no fake luxury). "Enhance, don't
 fabricate."
