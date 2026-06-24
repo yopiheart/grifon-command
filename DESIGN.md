@@ -124,6 +124,14 @@ For module **identity** only, each dashboard module additionally carries a signa
 
 This is the ONLY sanctioned use of non-gold hues. Outside module identity, gold remains the only accent.
 
+### Feedback states (in-app)
+
+Gold means "do this" — it must never be overloaded to mean "watch out." For **non-blocking caution/over-limit feedback** (an over-budget duration meter, a word/sentence count past its cap, a "this won't render" notice), use the sanctioned warning hue **`#F59E0B` (amber-500, Tailwind `text-amber-500`)**. It reads as caution without competing with gold CTAs.
+
+- **Allowed:** validation/over-limit text, meter values that crossed a soft limit, the inline AlertTriangle/Clock signal next to them. Pair with a lucide icon, not color alone.
+- **Forbidden:** never on an action (buttons, focus rings, selected states stay gold), and never as a decorative accent. Warning hue appears only when something is actually out of range.
+- **Distinct from module identity:** do NOT use the Creative Strike identity hue `#FBBF24` (amber-400) for warnings — that hue is reserved for that module's identity. The feedback warning hue is the deeper `#F59E0B`.
+
 ## Typography
 
 - **headline-display / headline-lg:** Inter / Geist / SF Pro — clean geometric sans. Page titles frequently use a gradient fill (`bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500`) for the cinematic effect. Vertical (`to-b`) over horizontal (`to-r`) — multi-line headlines fade top-to-bottom like a movie title card; horizontal washes look like a banner gradient and break the cinematic register.

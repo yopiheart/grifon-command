@@ -123,7 +123,7 @@ export const ScriptStudio: React.FC<{
             options={TARGETS.map((t) => ({ value: String(t), label: `${t}s` }))}
           />
           {sceneCount === 0 && (
-            <p className="mt-3 flex items-center gap-2 text-xs text-amber-400/80">
+            <p className="mt-3 flex items-center gap-2 text-xs text-amber-500/80">
               <AlertTriangle className="h-3.5 w-3.5 shrink-0" /> Your plan renders no video. Upgrade to write an ad.
             </p>
           )}
@@ -133,7 +133,7 @@ export const ScriptStudio: React.FC<{
           <TitledCard
             title="SCENES"
             right={
-              <span className={`flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest ${overBudget ? 'text-amber-400' : 'text-zinc-500'}`}>
+              <span className={`flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest ${overBudget ? 'text-amber-500' : 'text-zinc-500'}`}>
                 <Clock className="h-3 w-3 shrink-0" /> ~{totalSec.toFixed(1)}s / {target}s
               </span>
             }
@@ -147,7 +147,7 @@ export const ScriptStudio: React.FC<{
                       <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-400">
                         {i + 1}. {b.label}
                       </span>
-                      <span className={`text-[10px] font-mono ${v.overWordCap || v.overSentenceCap ? 'text-amber-400' : 'text-zinc-500'}`}>
+                      <span className={`text-[10px] font-mono ${v.overWordCap || v.overSentenceCap ? 'text-amber-500' : 'text-zinc-500'}`}>
                         {v.wordCount}/{b.wordCap}w · ~{v.estSeconds.toFixed(1)}s
                       </span>
                     </div>
@@ -159,7 +159,7 @@ export const ScriptStudio: React.FC<{
                       invalid={v.overSentenceCap}
                     />
                     {v.overSentenceCap && (
-                      <span className="text-[10px] text-amber-400/80">Keep the hook to {b.sentenceCap} sentence{b.sentenceCap === 1 ? '' : 's'}.</span>
+                      <span className="text-[10px] text-amber-500/80">Keep the hook to {b.sentenceCap} sentence{b.sentenceCap === 1 ? '' : 's'}.</span>
                     )}
                   </div>
                 );
