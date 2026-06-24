@@ -164,9 +164,15 @@ export const LaunchScreen: React.FC<{
   // No generation at intake: casting fires AFTER Market Research so it uses the
   // full target-market formula (the gender/age/ethnicity below are optional hints).
   const [presenterMode, setPresenterMode] = useState<'auto' | 'upload'>(restored?.presenterMode ?? 'auto');
+  // Casting hints are BLANK by default so an untouched AUTO = AI Director casts
+  // purely from the research persona (the formula at full strength). Power users
+  // can pin a look under "Advanced".
   const [gender, setGender] = useState<'Any' | 'Male' | 'Female'>(restored?.gender ?? 'Any');
-  const [ageRange, setAgeRange] = useState(restored?.ageRange ?? '25-34');
-  const [ethnicity, setEthnicity] = useState(restored?.ethnicity ?? 'Filipino');
+  const [ageRange, setAgeRange] = useState(restored?.ageRange ?? '');
+  const [ethnicity, setEthnicity] = useState(restored?.ethnicity ?? '');
+  const [showCastHints, setShowCastHints] = useState<boolean>(
+    !!(restored?.ethnicity || restored?.ageRange || (restored?.gender && restored.gender !== 'Any')),
+  );
   const [avatarUrl, setAvatarUrl] = useState<string>(restored?.avatarUrl ?? '');
   const [avatarErr, setAvatarErr] = useState('');
 
@@ -328,7 +334,7 @@ export const LaunchScreen: React.FC<{
       // UPLOAD → the run honors the user's photo. AUTO → empty url so AI Director
       // casts the spokesperson from the research persona, shaped by castHints.
       avatar: presenterMode === 'upload'
-        ? { url: avatarUrl, description: `A ${ethnicity} presenter`, ethnicity, gender, prompt: '' }
+        ? { url: avatarUrl, description: ethnicity.trim() ? `A ${ethnicity.trim()} presenter` : 'An uploaded presenter', ethnicity, gender, prompt: '' }
         : { url: '', description: '', ethnicity: '', gender: 'Any', prompt: '' },
       castHints: presenterMode === 'auto' ? { gender, ageRange, ethnicity } : undefined,
       voiceId,
@@ -383,7 +389,7 @@ export const LaunchScreen: React.FC<{
     setServicePhotos([]); setServiceArchetype('venue'); setReArchetype('listing');
     setLocalService(false); setBusinessAddress('');
     setVertical('product'); setFormat('ugc'); setStrategy('Testimonial');
-    setPresenterMode('auto'); setGender('Any'); setAgeRange('25-34'); setEthnicity('Filipino');
+    setPresenterMode('auto'); setGender('Any'); setAgeRange(''); setEthnicity(''); setShowCastHints(false);
     setAvatarUrl('');
     setLanguage('Taglish'); setAspectRatio('9:16'); setResolution('720p');
     setVoiceId(voiceOpts[0]?.id ?? STOCK_FALLBACK[0]?.id ?? '');
@@ -954,18 +960,31 @@ export const LaunchScreen: React.FC<{
                 </p>
               </div>
 
-              {/* Optional casting hints — leave on "Any" to let the Director decide fully. */}
+              {/* Advanced — pin a specific look. Hidden by default so the magic stays
+                  "AI decides"; blank fields = the Director casts purely from research. */}
               <div>
-                <p className={`mb-1.5 text-zinc-400 ${T_LABEL}`}>// Optional casting hints</p>
-                <div className="flex gap-2">
-                  {(['Any', 'Male', 'Female'] as const).map((g) => (
-                    <SegBtn key={g} active={gender === g} onClick={() => setGender(g)}>{g}</SegBtn>
-                  ))}
-                </div>
-                <div className="mt-2 grid grid-cols-2 gap-2">
-                  <MiniInput placeholder="Ethnicity" value={ethnicity} onChange={setEthnicity} />
-                  <MiniInput placeholder="Age (e.g. 25-34)" value={ageRange} onChange={setAgeRange} />
-                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowCastHints((v) => !v)}
+                  className={`flex w-full items-center justify-between gap-2 border border-white/10 bg-zinc-950 px-4 ${CTRL_H} ${R_CTRL} ${T_LABEL} text-zinc-400 transition-colors hover:border-white/30 hover:text-white`}
+                >
+                  <span className="inline-flex items-center gap-2"><Settings2 className="h-3.5 w-3.5 shrink-0" /> Advanced · specify look (optional)</span>
+                  <ChevronDown className={`h-4 w-4 shrink-0 opacity-60 transition-transform ${showCastHints ? 'rotate-180' : ''}`} />
+                </button>
+                {showCastHints && (
+                  <div className="mt-2 space-y-2">
+                    <div className="flex gap-2">
+                      {(['Any', 'Male', 'Female'] as const).map((g) => (
+                        <SegBtn key={g} active={gender === g} onClick={() => setGender(g)}>{g}</SegBtn>
+                      ))}
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <MiniInput placeholder="e.g. Filipino" value={ethnicity} onChange={setEthnicity} />
+                      <MiniInput placeholder="e.g. 25-34" value={ageRange} onChange={setAgeRange} />
+                    </div>
+                    <p className="text-[11px] leading-snug text-zinc-500">Leave blank to let AI Director cast from your market research.</p>
+                  </div>
+                )}
               </div>
 
               <button
