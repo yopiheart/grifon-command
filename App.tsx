@@ -160,6 +160,10 @@ const App: React.FC = () => {
   // Deep-link target tab when routing into Signal Modulator (e.g. One-Shot's
   // "Clone your own voice" → the Voice Cloning tab).
   const [signalInitialTile, setSignalInitialTile] = useState<'tts' | 'vc' | 'clone' | 'scene-pipeline' | undefined>(undefined);
+  // When One-Shot sends the user to Signal Modulator to clone a voice, BACK
+  // should return to the One-Shot brief (preserved) instead of the dashboard.
+  // Standalone Signal Modulator (from the dashboard) keeps the dashboard default.
+  const [signalReturnToOneShot, setSignalReturnToOneShot] = useState(false);
   const [directorNudgeDismissed, setDirectorNudgeDismissed] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   // Director AI entry mode: one-shot (default — auto-generate the whole ad) vs
@@ -1332,7 +1336,14 @@ const App: React.FC = () => {
         onBack={() => {
           setSceneBatch([]);
           setSignalInitialTile(undefined);
-          setActiveModule(null);
+          if (signalReturnToOneShot) {
+            // Return to the One-Shot composer with the brief intact.
+            setSignalReturnToOneShot(false);
+            setDirectorMode('oneshot');
+            setActiveModule('creative_director');
+          } else {
+            setActiveModule(null);
+          }
         }}
         globalScript={finalScript}
         sceneBatch={sceneBatch}
@@ -1410,7 +1421,7 @@ const App: React.FC = () => {
           onBack={() => setActiveModule(null)}
           onUpgrade={() => { setActiveModule(null); setCurrentRoute('pricing'); }}
           onSwitchToSteps={() => { setDirectorMode('steps'); setCurrentStep(1); }}
-          onCloneVoice={() => { setSignalInitialTile('clone'); setActiveModule('signal_modulator'); }}
+          onCloneVoice={() => { setSignalInitialTile('clone'); setSignalReturnToOneShot(true); setActiveModule('signal_modulator'); }}
           onReview={() => { setDirectorMode('steps'); setCurrentStep(8); }}
         />
       );

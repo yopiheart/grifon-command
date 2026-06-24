@@ -306,7 +306,6 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
         <button onClick={() => setMobileOpen(true)} aria-label="Menu" className="w-11 h-11 rounded-xl text-zinc-300 hover:text-white hover:bg-white/[0.06] transition-colors flex items-center justify-center">
           <Menu className="w-5 h-5" />
         </button>
-        <span className="font-sans text-xl font-black tracking-tighter text-white italic">GRIFON</span>
         <button onClick={() => setNotifOpen(true)} aria-label="Notifications" className="relative w-11 h-11 rounded-xl text-zinc-300 hover:text-white hover:bg-white/[0.06] transition-colors flex items-center justify-center">
           <Bell className="w-5 h-5" />
           {(activeJobs.length > 0 || quotaLow) && <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#FFCC00] ring-2 ring-zinc-950 animate-pulse" />}

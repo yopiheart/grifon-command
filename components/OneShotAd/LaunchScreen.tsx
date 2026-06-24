@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { GlassPanel } from '../ui/GlassPanel';
 import { useOneShotSfx } from '../../services/uiSoundService';
+import { saveOneShotDraft, loadOneShotDraft, clearOneShotDraft } from '../../utils/oneShotDraft';
 import ImageModal from '../ui/ImageModal';
 import { DriftOrbs } from './motion';
 import { RECOMMENDED_VOICES } from '../SignalModulator/pinoyReady';
@@ -133,45 +134,51 @@ export const LaunchScreen: React.FC<{
   // Premium cinematic click cues — One-Shot only, ON by default, mutable.
   const sfx = useOneShotSfx();
   const isMobile = useIsMobile();
+
+  // Restore an in-flight brief if the user bounced out mid-session (e.g. to clone
+  // a voice). Held in memory by oneShotDraft; saved at nav-time, cleared on launch
+  // or an explicit back-to-Command-Center. Read once per mount.
+  const restored = useRef(loadOneShotDraft()).current;
+
   // --- Brief --------------------------------------------------------------
-  const [hero, setHero] = useState<string>('');          // Product vertical: single product-in-hand photo
-  const [offer, setOffer] = useState('');
-  const [brandName, setBrandName] = useState('');
-  const [price, setPrice] = useState('');
-  const [forceFresh, setForceFresh] = useState(false);
+  const [hero, setHero] = useState<string>(restored?.hero ?? '');          // Product vertical: single product-in-hand photo
+  const [offer, setOffer] = useState(restored?.offer ?? '');
+  const [brandName, setBrandName] = useState(restored?.brandName ?? '');
+  const [price, setPrice] = useState(restored?.price ?? '');
+  const [forceFresh, setForceFresh] = useState(restored?.forceFresh ?? false);
 
   // --- Guided assets (Service / RealEstate verticals — per-slot real photos) ---
-  const [servicePhotos, setServicePhotos] = useState<ServicePhoto[]>([]);
-  const [serviceArchetype, setServiceArchetype] = useState<ServiceArchetype>('venue');
-  const [reArchetype, setReArchetype] = useState<RealEstateArchetype>('listing');
+  const [servicePhotos, setServicePhotos] = useState<ServicePhoto[]>(restored?.servicePhotos ?? []);
+  const [serviceArchetype, setServiceArchetype] = useState<ServiceArchetype>(restored?.serviceArchetype ?? 'venue');
+  const [reArchetype, setReArchetype] = useState<RealEstateArchetype>(restored?.reArchetype ?? 'listing');
   const [slotBusy, setSlotBusy] = useState(false);
   const [assetErr, setAssetErr] = useState('');
   // Local-service grounding for Market Research (Service: opt-in checkbox; RealEstate: location is required).
-  const [localService, setLocalService] = useState(false);
-  const [businessAddress, setBusinessAddress] = useState('');
+  const [localService, setLocalService] = useState(restored?.localService ?? false);
+  const [businessAddress, setBusinessAddress] = useState(restored?.businessAddress ?? '');
 
   // --- Creative axes ------------------------------------------------------
-  const [vertical, setVertical] = useState('product');
-  const [format, setFormat] = useState<Format>('ugc');
-  const [strategy, setStrategy] = useState<Strategy>('Testimonial');
+  const [vertical, setVertical] = useState(restored?.vertical ?? 'product');
+  const [format, setFormat] = useState<Format>(restored?.format ?? 'ugc');
+  const [strategy, setStrategy] = useState<Strategy>(restored?.strategy ?? 'Testimonial');
 
   // --- Presenter (generate via Director AI, or upload) --------------------
-  const [avatarMode, setAvatarMode] = useState<'generate' | 'upload'>('generate');
-  const [gender, setGender] = useState<'Any' | 'Male' | 'Female'>('Any');
-  const [ageRange, setAgeRange] = useState('25-34');
-  const [ethnicity, setEthnicity] = useState('Filipino');
-  const [avatarUrl, setAvatarUrl] = useState<string>('');
+  const [avatarMode, setAvatarMode] = useState<'generate' | 'upload'>(restored?.avatarMode ?? 'generate');
+  const [gender, setGender] = useState<'Any' | 'Male' | 'Female'>(restored?.gender ?? 'Any');
+  const [ageRange, setAgeRange] = useState(restored?.ageRange ?? '25-34');
+  const [ethnicity, setEthnicity] = useState(restored?.ethnicity ?? 'Filipino');
+  const [avatarUrl, setAvatarUrl] = useState<string>(restored?.avatarUrl ?? '');
   const [avatarBusy, setAvatarBusy] = useState(false);
   const [avatarErr, setAvatarErr] = useState('');
-  const [avatarGens, setAvatarGens] = useState(0);
+  const [avatarGens, setAvatarGens] = useState(restored?.avatarGens ?? 0);
 
   // --- Settings -----------------------------------------------------------
-  const [language, setLanguage] = useState<AutopilotInput['language']>('Taglish');
-  const [aspectRatio, setAspectRatio] = useState<AutopilotInput['aspectRatio']>('9:16');
-  const [resolution, setResolution] = useState<NonNullable<AutopilotInput['resolution']>>('720p');
+  const [language, setLanguage] = useState<AutopilotInput['language']>(restored?.language ?? 'Taglish');
+  const [aspectRatio, setAspectRatio] = useState<AutopilotInput['aspectRatio']>(restored?.aspectRatio ?? '9:16');
+  const [resolution, setResolution] = useState<NonNullable<AutopilotInput['resolution']>>(restored?.resolution ?? '720p');
 
   // --- Voice picker (Filipino library first, then clones; stock fallback) --
-  const [voiceId, setVoiceId] = useState<string>(STOCK_FALLBACK[0]?.id ?? '');
+  const [voiceId, setVoiceId] = useState<string>(restored?.voiceId ?? STOCK_FALLBACK[0]?.id ?? '');
   const [voiceOpts, setVoiceOpts] = useState<VoiceOpt[]>(STOCK_FALLBACK);
   const [voicesFromMine, setVoicesFromMine] = useState(false);
 
@@ -185,7 +192,9 @@ export const LaunchScreen: React.FC<{
       if (opts.length === 0) return; // keep stock fallback
       setVoiceOpts(opts);
       setVoicesFromMine(true);
-      setVoiceId(opts[0].id);
+      // Keep a restored/valid selection; only default to the first when the
+      // current pick isn't in the freshly-loaded list.
+      setVoiceId((prev) => (opts.some((o) => o.id === prev) ? prev : opts[0].id));
     });
     return () => { alive = false; };
   }, []);
@@ -325,6 +334,7 @@ export const LaunchScreen: React.FC<{
 
   const launch = () => {
     if (!ready) return;
+    clearOneShotDraft(); // brief is consumed — a fresh One-Shot starts clean
     const brand = brandName.trim();
     onLaunch({
       brandName: brand,
@@ -408,7 +418,19 @@ export const LaunchScreen: React.FC<{
             {onCloneVoice && (
               <button
                 type="button"
-                onClick={() => { sfx.play('open'); onCloneVoice(); }}
+                onClick={() => {
+                  sfx.play('open');
+                  // Snapshot the brief so it survives the detour to Voice Cloning
+                  // and is restored when the user comes back.
+                  saveOneShotDraft({
+                    hero, offer, brandName, price, forceFresh,
+                    servicePhotos, serviceArchetype, reArchetype, localService, businessAddress,
+                    vertical, format, strategy,
+                    avatarMode, gender, ageRange, ethnicity, avatarUrl, avatarGens,
+                    language, aspectRatio, resolution, voiceId,
+                  });
+                  onCloneVoice();
+                }}
                 className={`mt-2 flex w-full items-center justify-center gap-2 border border-dashed border-[#FFCC00]/40 ${CTRL_H} ${R_CTRL} ${T_VALUE} uppercase text-[#FFCC00] transition-all hover:bg-[#FFCC00]/10`}
               >
                 <Mic className="h-3.5 w-3.5 shrink-0" /> Clone your own voice
@@ -437,7 +459,7 @@ export const LaunchScreen: React.FC<{
             {onBack ? (
               <button
                 type="button"
-                onClick={onBack}
+                onClick={() => { clearOneShotDraft(); onBack(); }}
                 className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500 transition-colors hover:text-white md:text-xs"
               >
                 <ChevronLeft className="h-4 w-4 shrink-0" /> <span className="hidden md:inline">Command Center</span><span className="md:hidden">Back</span>
