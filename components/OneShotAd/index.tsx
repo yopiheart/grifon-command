@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { ChevronLeft, AlertTriangle, RotateCw } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { ChevronLeft, AlertTriangle, RotateCw, Loader2, Sparkles, FilePlus2 } from 'lucide-react';
 import type { ClientDetails, BusinessInfo } from '../../types';
 import { generateMarketResearch } from '../../services/geminiService';
 import { mapReportToWizard, type AutopilotInput } from '../../services/oneShotIntake';
 import { useOneShotGeneration, type OneShotSinks } from '../../hooks/useOneShotGeneration';
+import { hydrateOneShotDraft, loadOneShotDraft, clearOneShotDraft } from '../../utils/oneShotDraft';
 import { LaunchScreen } from './LaunchScreen';
 import { RunningScreen } from './RunningScreen';
 
@@ -52,6 +53,20 @@ const OneShotAd: React.FC<OneShotAdProps> = ({
   const [phase, setPhase] = useState<'launch' | 'running' | 'error'>('launch');
   const [researching, setResearching] = useState(false);
   const [errMsg, setErrMsg] = useState('');
+
+  // Resume gating: a warm draft (same session — e.g. the clone-voice detour)
+  // restores silently; a cold draft (browser was closed) offers Resume / Start
+  // fresh so the user keeps control. `go` mounts the composer.
+  const [resume, setResume] = useState<'loading' | 'ask' | 'go'>(() => (loadOneShotDraft() ? 'go' : 'loading'));
+  useEffect(() => {
+    if (loadOneShotDraft()) { setResume('go'); return; } // warm → silent restore
+    let alive = true;
+    void hydrateOneShotDraft().then((d) => {
+      if (!alive) return;
+      setResume(d ? 'ask' : 'go');
+    });
+    return () => { alive = false; };
+  }, []);
 
   const start = async (input: AutopilotInput) => {
     setErrMsg('');
@@ -119,6 +134,54 @@ const OneShotAd: React.FC<OneShotAdProps> = ({
       <div className="relative">
         {BackBar}
         <RunningScreen researching={researching} stages={oneShot.stages} onMinimize={onBack} />
+      </div>
+    );
+  }
+
+  // Cold-start: a quick blank while IndexedDB hydrates (sub-frame in practice).
+  if (resume === 'loading') {
+    return (
+      <div className="relative min-h-screen bg-zinc-950">
+        {BackBar}
+        <div className="flex min-h-screen items-center justify-center">
+          <Loader2 className="h-6 w-6 animate-spin text-[#FFCC00]" />
+        </div>
+      </div>
+    );
+  }
+
+  // Cold-start with a saved draft → let the user choose resume vs. fresh.
+  if (resume === 'ask') {
+    const d = loadOneShotDraft();
+    return (
+      <div className="relative min-h-screen bg-zinc-950 px-4 py-10 text-white">
+        {BackBar}
+        <div className="mx-auto mt-16 max-w-md rounded-2xl border border-white/10 bg-zinc-900/70 p-6 backdrop-blur-xl">
+          <div className="mb-3 flex items-center gap-2 text-[#FFCC00]">
+            <Sparkles className="h-4 w-4 shrink-0" />
+            <span className="text-[10px] font-mono uppercase tracking-widest">// Unfinished ad</span>
+          </div>
+          <h2 className="text-lg font-black text-white">Resume your draft?</h2>
+          <p className="mt-1 text-sm text-zinc-400">
+            You have an unfinished ad{d?.brandName ? ` for ${d.brandName}` : ''}{d?.offer ? ` — “${d.offer.slice(0, 60)}${d.offer.length > 60 ? '…' : ''}”` : ''}. Pick up where you left off, or start fresh.
+          </p>
+          <div className="mt-5 flex flex-col gap-2 sm:flex-row">
+            <button
+              type="button"
+              onClick={() => setResume('go')}
+              className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#FFCC00] px-4 py-3 text-sm font-semibold text-black transition-all hover:shadow-[0_0_20px_rgba(255,204,0,0.4)]"
+            >
+              <RotateCw className="h-4 w-4 shrink-0" /> Resume
+            </button>
+            <button
+              type="button"
+              onClick={() => { clearOneShotDraft(); setResume('go'); }}
+              className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-white/10 bg-zinc-950 px-4 py-3 text-sm font-semibold text-zinc-300 transition-colors hover:border-[#FFCC00]/50 hover:text-white"
+            >
+              <FilePlus2 className="h-4 w-4 shrink-0" /> Start fresh
+            </button>
+          </div>
+        </div>
       </div>
     );
   }

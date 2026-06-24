@@ -3,7 +3,7 @@ import {
   ImageUp, Sparkles, Zap, Lock, Wand2, Upload, User, Mic,
   Film, Gauge, Check, Loader2, Package, Wrench, Smartphone, Building2, RefreshCw,
   Settings2, ChevronDown, ChevronLeft, ChevronRight, Play, Square, X, Languages,
-  Maximize2, UploadCloud, Images, ZoomIn, Volume2, VolumeX,
+  Maximize2, UploadCloud, Images, ZoomIn, Volume2, VolumeX, RotateCcw,
 } from 'lucide-react';
 import { GlassPanel } from '../ui/GlassPanel';
 import { useOneShotSfx } from '../../services/uiSoundService';
@@ -230,6 +230,7 @@ export const LaunchScreen: React.FC<{
   const [showFormat, setShowFormat] = useState(false);
   const [assetModal, setAssetModal] = useState<null | 'product' | 'avatar'>(null);
   const [viewImage, setViewImage] = useState<string | null>(null);
+  const [confirmReset, setConfirmReset] = useState(false); // two-tap guard on Reset
 
   // Vertical takes precedence (Services/RealEstate are their own styles); within
   // Product, Format × Strategy picks the formula. All map onto the scriptType enum.
@@ -361,6 +362,59 @@ export const LaunchScreen: React.FC<{
     });
   };
 
+  // Has the user put anything in the brief yet? Drives the Reset affordance +
+  // the "don't persist an empty form" guard.
+  const dirty = !!(
+    offer.trim() || brandName.trim() || price.trim() || hero || avatarUrl ||
+    servicePhotos.length || businessAddress.trim()
+  );
+
+  // Autosave (debounced) — the brief survives reload / lost connection / a closed
+  // browser. Skips an untouched form so a fresh visit never leaves a phantom draft.
+  useEffect(() => {
+    if (!dirty) return;
+    const t = setTimeout(() => {
+      saveOneShotDraft({
+        hero, offer, brandName, price, forceFresh,
+        servicePhotos, serviceArchetype, reArchetype, localService, businessAddress,
+        vertical, format, strategy,
+        avatarMode, gender, ageRange, ethnicity, avatarUrl, avatarGens,
+        language, aspectRatio, resolution, voiceId,
+      });
+    }, 700);
+    return () => clearTimeout(t);
+  }, [
+    dirty, hero, offer, brandName, price, forceFresh,
+    servicePhotos, serviceArchetype, reArchetype, localService, businessAddress,
+    vertical, format, strategy,
+    avatarMode, gender, ageRange, ethnicity, avatarUrl, avatarGens,
+    language, aspectRatio, resolution, voiceId,
+  ]);
+
+  // Reset — wipe the whole brief back to defaults + drop the saved draft. Guarded
+  // by a two-tap confirm (destructive: nukes typed details + uploads).
+  const resetTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const resetAll = () => {
+    setHero(''); setOffer(''); setBrandName(''); setPrice(''); setForceFresh(false);
+    setServicePhotos([]); setServiceArchetype('venue'); setReArchetype('listing');
+    setLocalService(false); setBusinessAddress('');
+    setVertical('product'); setFormat('ugc'); setStrategy('Testimonial');
+    setAvatarMode('generate'); setGender('Any'); setAgeRange('25-34'); setEthnicity('Filipino');
+    setAvatarUrl(''); setAvatarGens(0);
+    setLanguage('Taglish'); setAspectRatio('9:16'); setResolution('720p');
+    setVoiceId(voiceOpts[0]?.id ?? STOCK_FALLBACK[0]?.id ?? '');
+    clearOneShotDraft();
+    setConfirmReset(false);
+    sfx.play('select');
+  };
+  const onResetClick = () => {
+    if (confirmReset) { resetAll(); return; }
+    setConfirmReset(true);
+    if (resetTimer.current) clearTimeout(resetTimer.current);
+    resetTimer.current = setTimeout(() => setConfirmReset(false), 3000);
+  };
+  useEffect(() => () => { if (resetTimer.current) clearTimeout(resetTimer.current); }, []);
+
   // Settings body — shared by the desktop popover and the mobile bottom-sheet so
   // there's ONE definition. On mobile the Modal owns the width + the single scroll
   // container, so the fixed desktop widths are dropped there.
@@ -460,26 +514,44 @@ export const LaunchScreen: React.FC<{
             {onBack ? (
               <button
                 type="button"
-                onClick={() => { clearOneShotDraft(); onBack(); }}
+                onClick={onBack}
                 className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500 transition-colors hover:text-white md:text-xs"
               >
                 <ChevronLeft className="h-4 w-4 shrink-0" /> <span className="hidden md:inline">Command Center</span><span className="md:hidden">Back</span>
               </button>
             ) : <span />}
-            {/* One-Shot cinematic SFX toggle — labeled pill so it's discoverable
-                (scoped to this module only). Gold fill when on. */}
-            <button
-              type="button"
-              onClick={sfx.toggle}
-              aria-label={sfx.enabled ? 'Mute click sounds' : 'Unmute click sounds'}
-              title={sfx.enabled ? 'Sound on — tap to mute' : 'Sound off — tap to unmute'}
-              className={`flex h-9 shrink-0 items-center gap-1.5 rounded-full border px-3 transition-all ${T_LABEL} ${
-                sfx.enabled ? 'border-[#FFCC00]/40 bg-[#FFCC00]/10 text-[#FFCC00] hover:bg-[#FFCC00]/20' : 'border-white/10 text-zinc-400 hover:border-white/30'
-              }`}
-            >
-              {sfx.enabled ? <Volume2 className="h-4 w-4 shrink-0" /> : <VolumeX className="h-4 w-4 shrink-0" />}
-              <span>{sfx.enabled ? 'Sound on' : 'Sound off'}</span>
-            </button>
+            <div className="flex shrink-0 items-center gap-2">
+              {/* Reset — two-tap guard; only shown once the brief has content.
+                  Ghost (never competes with the gold "Make My Ad" CTA). */}
+              {dirty && (
+                <button
+                  type="button"
+                  onClick={onResetClick}
+                  aria-label="Reset the whole brief"
+                  title="Wipe all details, settings, presenter and uploads"
+                  className={`flex h-9 shrink-0 items-center gap-1.5 rounded-full border px-3 transition-all ${T_LABEL} ${
+                    confirmReset ? 'border-red-500/50 text-red-300 hover:bg-red-500/10' : 'border-white/10 text-zinc-400 hover:border-white/30'
+                  }`}
+                >
+                  <RotateCcw className="h-3.5 w-3.5 shrink-0" />
+                  <span>{confirmReset ? 'Tap to wipe' : 'Reset'}</span>
+                </button>
+              )}
+              {/* One-Shot cinematic SFX toggle — labeled pill so it's discoverable
+                  (scoped to this module only). Gold fill when on. */}
+              <button
+                type="button"
+                onClick={sfx.toggle}
+                aria-label={sfx.enabled ? 'Mute click sounds' : 'Unmute click sounds'}
+                title={sfx.enabled ? 'Sound on — tap to mute' : 'Sound off — tap to unmute'}
+                className={`flex h-9 shrink-0 items-center gap-1.5 rounded-full border px-3 transition-all ${T_LABEL} ${
+                  sfx.enabled ? 'border-[#FFCC00]/40 bg-[#FFCC00]/10 text-[#FFCC00] hover:bg-[#FFCC00]/20' : 'border-white/10 text-zinc-400 hover:border-white/30'
+                }`}
+              >
+                {sfx.enabled ? <Volume2 className="h-4 w-4 shrink-0" /> : <VolumeX className="h-4 w-4 shrink-0" />}
+                <span>{sfx.enabled ? 'Sound on' : 'Sound off'}</span>
+              </button>
+            </div>
           </div>
           <div className="flex flex-col items-start gap-2">
             <h1 className={`uppercase text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 ${T_DISPLAY}`}>
