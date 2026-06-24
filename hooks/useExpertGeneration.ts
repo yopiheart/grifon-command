@@ -149,18 +149,26 @@ export const useExpertGeneration = (): UseExpertGeneration => {
       }));
       // F1 — force referenceImage from shot intent (never dropping a needed reference).
       scenes = applyShotIntents(scenes, avail);
-      // F2 — a directed scene's plain-language note becomes its optimized image prompt.
-      for (let i = 0; i < scenes.length; i++) {
+      // F2 — a directed scene's plain-language note becomes its optimized image prompt. These are
+      // independent text calls (no ordering dependency), so run them concurrently. A directed scene
+      // also DROPS any AI hook-morph frames so it renders as one image the expert controls (otherwise
+      // only the start frame would honor the direction and the AI would author a divergent reveal).
+      await Promise.all(scenes.map(async (s, i) => {
         const note = directions[i]?.description?.trim();
-        if (note && !scenes[i].manualUploadUrl) {
-          try {
-            const optimized = await optimizeImagePrompt(note, []);
-            scenes[i] = { ...scenes[i], userImagePromptOverride: optimized.finalPrompt };
-          } catch (err) {
-            console.error(`Expert scene ${i} prompt optimize failed:`, err);
-          }
+        if (!note || s.manualUploadUrl) return;
+        try {
+          const optimized = await optimizeImagePrompt(note, []);
+          scenes[i] = {
+            ...scenes[i],
+            userImagePromptOverride: optimized.finalPrompt,
+            startFramePrompt: undefined,
+            endFramePrompt: undefined,
+            transitionEffect: undefined,
+          };
+        } catch (err) {
+          console.error(`Expert scene ${i} prompt optimize failed:`, err);
         }
-      }
+      }));
       sinks.setStoryboard([...scenes]);
       patch('direction', 'done');
 

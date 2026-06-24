@@ -136,10 +136,11 @@ export const renderSceneImages = async (
     }
   }
 
-  const endPrompt = scene.userEndFramePromptOverride || scene.endFramePrompt;
-  if (endPrompt && (!scene.endFrameImageUrl || force)) {
+  // End-frame (hook morph) keeps the AI prompt: a directed Expert scene drops its morph frames
+  // upstream (useExpertGeneration), so there is no end frame to diverge from the user's direction.
+  if (scene.endFramePrompt && (!scene.endFrameImageUrl || force)) {
     scene.endFrameImageUrl = await generateSceneImage(
-      endPrompt,
+      scene.endFramePrompt,
       aspectRatio,
       '1K',
       endFrameRefs,

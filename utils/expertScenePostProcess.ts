@@ -98,18 +98,28 @@ export const overrideVideoPromptTypes = (
   prompts: VideoPrompt[],
   scenes: Scene[],
   avail: AssetAvailability,
-): VideoPrompt[] =>
-  prompts.map((p, i) => {
-    const scene = scenes[i];
+): VideoPrompt[] => {
+  // generateVideoPrompts returns raw model JSON with no length/order guarantee. Align by index only
+  // when the counts match; otherwise fall back to matching each prompt to its scene by scriptLine so
+  // a dropped/reordered prompt can't force a shot type onto the wrong clip.
+  const aligned = prompts.length === scenes.length;
+  return prompts.map((p, i) => {
+    const scene = aligned ? scenes[i] : scenes.find((s) => s.scriptLine === p.scriptLine);
     if (!scene) return p;
     const { type } = mapShotIntent(scene.shotIntent, avail, scene.sceneDescription);
     return type ? { ...p, type } : p;
   });
+};
 
-/** A neutral filler scene for a missing expert line (1:1 adapter pad). */
+/**
+ * A filler scene for a missing expert line (1:1 adapter pad). Carries an imagePrompt derived from the
+ * line so it actually RENDERS — otherwise renderSceneImages would skip it (no prompt) yet the caller
+ * would still count it as rendered, leaving a silently-blank scene.
+ */
 const fillerScene = (scriptLine: string, neighbor?: Scene): Scene => ({
   scriptLine,
-  sceneDescription: '',
+  sceneDescription: scriptLine,
+  imagePrompt: scriptLine,
   referenceImage: neighbor?.referenceImage ?? 'none',
   shotIntent: 'auto',
 });

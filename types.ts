@@ -97,11 +97,10 @@ export interface Scene {
      editing any tuned prompt. Identity-lock still rides on referenceImage + injected URLs. */
   shotIntent?: 'auto' | 'talking-avatar' | 'b-roll' | 'product-highlight' | 'avatar-product';
   /* Expert Mode: when the user "directs" a scene with a plain-language description, the optimized
-     image prompt is stored here and rendered INSTEAD of imagePrompt. The optimized prompt is NEVER
-     shown to the user — only the rendered image. Mirrors manualUploadUrl precedence. */
+     image prompt is stored here and rendered INSTEAD of imagePrompt. A directed scene also drops any
+     AI hook-morph frames (see useExpertGeneration) so it renders as ONE image the expert controls.
+     The optimized prompt is NEVER shown to the user — only the rendered image. */
   userImagePromptOverride?: string;
-  /* Expert Mode: end-frame counterpart of userImagePromptOverride (hook two-frame morphs). */
-  userEndFramePromptOverride?: string;
 }
 
 export interface CinematicNarrativeScene {

@@ -107,6 +107,22 @@ describe('overrideVideoPromptTypes — hard type guarantee', () => {
     expect(out[2].type).toBe('talking'); // forced
     expect(out[0].prompt).toBe('p0'); // prompt text preserved
   });
+
+  it('falls back to scriptLine matching when prompt count != scene count (drift-safe)', () => {
+    const scenes = [
+      scene({ scriptLine: 'a', shotIntent: 'auto' }),
+      scene({ scriptLine: 'b', shotIntent: 'product-highlight' }),
+      scene({ scriptLine: 'c', shotIntent: 'talking-avatar' }),
+    ];
+    // Model dropped scene 'a' → fewer prompts, reordered: index alignment would mis-tag.
+    const prompts: VideoPrompt[] = [
+      { scriptLine: 'b', type: 'talking', prompt: 'pb' },
+      { scriptLine: 'c', type: 'b-roll', prompt: 'pc' },
+    ];
+    const out = overrideVideoPromptTypes(prompts, scenes, BOTH);
+    expect(out[0].type).toBe('b-roll'); // matched scene 'b' (product-highlight), not index 0
+    expect(out[1].type).toBe('talking'); // matched scene 'c' (talking-avatar)
+  });
 });
 
 describe('reconcileSceneCount — 1:1 adapter (premortem F4)', () => {
@@ -136,6 +152,8 @@ describe('reconcileSceneCount — 1:1 adapter (premortem F4)', () => {
     expect(out).toHaveLength(3);
     expect(out.map((s) => s.scriptLine)).toEqual(lines);
     expect(out[2].scriptLine).toBe('cta line');
+    // Filler must carry a prompt so it actually renders (not a silently-blank "rendered" scene).
+    expect(out[2].imagePrompt).toBeTruthy();
   });
 });
 
