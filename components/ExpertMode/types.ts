@@ -1,5 +1,6 @@
 import type { ServiceArchetype, RealEstateArchetype, ServiceSlot } from '../guidedPhotoSlots';
-import type { ExpertBusinessType } from '../../utils/scriptGuardrails';
+import type { ExpertBusinessType, ExpertFormatId } from '../../utils/scriptGuardrails';
+import type { ClientDetails, BusinessInfo } from '../../types';
 
 export type { ExpertBusinessType };
 
@@ -77,3 +78,34 @@ export interface SceneDirection {
 }
 
 export const emptySceneDirection = (): SceneDirection => ({ shotIntent: 'auto', description: '' });
+
+/**
+ * Project the slim intake onto the wizard's ClientDetails + BusinessInfo so the existing
+ * generateStoryboard / render / video-prompt chain consumes it unchanged. The 5 persuasion fields
+ * are intentionally blank — the expert's own script encodes them (R1: generateStoryboard tolerates
+ * empty audience/benefit; product identity rides on productName + the asset photos).
+ */
+export const buildExpertWizardState = (
+  intake: ExpertIntake,
+  formatId: ExpertFormatId,
+): { clientDetails: ClientDetails; businessInfo: BusinessInfo } => {
+  // Hero-first product image list: the single product hero, else the guided slot photos.
+  const productImageUrls = intake.productHeroUrl
+    ? [intake.productHeroUrl]
+    : intake.servicePhotos.map((p) => p.url);
+
+  return {
+    clientDetails: { brandName: intake.brandName, offer: intake.productName },
+    businessInfo: {
+      product: intake.productName,
+      audience: '', benefit: '', painPoint: '', separator: '', features: '',
+      productImageUrls,
+      productImageDescription: intake.productHeroDescription,
+      scriptType: formatId,
+      businessType: intake.businessType,
+      servicePhotos: intake.servicePhotos,
+      serviceArchetype: intake.serviceArchetype,
+      realEstateArchetype: intake.realEstateArchetype,
+    },
+  };
+};

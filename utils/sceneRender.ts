@@ -114,8 +114,11 @@ export const renderSceneImages = async (
     ? (references.avatarUrl ? 'both' : 'product')
     : scene.referenceImage;
 
-  if (scene.startFramePrompt || scene.imagePrompt) {
-    const prompt = scene.startFramePrompt || scene.imagePrompt;
+  if (scene.userImagePromptOverride || scene.startFramePrompt || scene.imagePrompt) {
+    // Expert Mode (Director's Cut): a user-directed scene supplies its own optimized prompt.
+    // This changes the prompt TEXT only — the identity-lock references (mainRefs/mainMode above)
+    // are unchanged, so the avatar/product stay locked exactly as in One-Shot. See F1/F2.
+    const prompt = scene.userImagePromptOverride || scene.startFramePrompt || scene.imagePrompt;
     if ((!scene.imageUrl || force) && prompt) {
       scene.imageUrl = await generateSceneImage(
         prompt,
@@ -133,9 +136,10 @@ export const renderSceneImages = async (
     }
   }
 
-  if (scene.endFramePrompt && (!scene.endFrameImageUrl || force)) {
+  const endPrompt = scene.userEndFramePromptOverride || scene.endFramePrompt;
+  if (endPrompt && (!scene.endFrameImageUrl || force)) {
     scene.endFrameImageUrl = await generateSceneImage(
-      scene.endFramePrompt,
+      endPrompt,
       aspectRatio,
       '1K',
       endFrameRefs,
