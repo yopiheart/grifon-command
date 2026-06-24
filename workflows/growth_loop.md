@@ -178,3 +178,8 @@ Item #7 (OfferOptimizer rescue) explicitly waits on. Phase 0 unblocks both.
 
 **First action when built:** Phase 0 only, as one vertical slice, with its own plan + `/goal`
 (cite the build-gate + `verify-changes`). Each later phase is its own plan + goal.
+
+> **Build sheet:** the plug-and-play Phase 0 checklist (credentials, env vars, build order,
+> verification, ready-to-fire `/goal`) lives at
+> [`growth_loop_phase0_checklist.md`](growth_loop_phase0_checklist.md). The `events` table migration
+> is already written at [`../supabase/events.sql`](../supabase/events.sql).
