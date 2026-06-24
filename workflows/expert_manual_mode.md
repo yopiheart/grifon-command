@@ -237,3 +237,60 @@ file — no re-discovery required. The defreezer wipes everything except the git
 > directed scenes, A2 head-to-chest avatar guidance + One-Shot parity, A3 one-visual-per-beat
 > guardrail). Draft Bucket B (tuned venue relight/camera-freedom) for my approval — do NOT edit
 > geminiService.ts without my go. Commit each slice; build-gate + brand-check.
+
+---
+
+# ✅ BUCKET A — SHIPPED (2026-06-24, session 2)
+
+Branch `feat/expert-mode-directors-cut`, 4 commits on top of `3697d7a`. Build + 302 tests green,
+bundle-leak clean, brand-check 42/50 (BRAND_PASS_WITH_NITS, 0 critical). **Zero tuned-file edits.**
+
+- **A1** (`fix … directed scenes drop venueSlot`) — a "Direct this scene" note set
+  `userImagePromptOverride` but kept `venueSlot`, so `sceneRender` still routed it through
+  `venue`/`avatar_venue` PLACE_IDENTITY_LOCK and copy-pasted the room over the direction (Finding 4).
+  Now drops `venueSlot` beside the morph-frame drop in `hooks/useExpertGeneration.ts`. Avatar
+  `referenceImage` untouched → presenter stays locked.
+- **A2** (`fix … head-to-chest presenter guidance + One-Shot parity`) — new shared
+  `PRESENTER_EXAMPLE` (`/examples/services-practitioner.png`, a head-to-chest shot) in
+  `guidedPhotoSlots.tsx`; Expert intake presenter tile gets the dimmed example + "head-to-chest ·
+  face fills frame" hint + a why-full-body-fails caption; One-Shot presenter modal updated to match
+  (good sample, guide label, dropzone hint). Fixes Finding 2b guidance gap.
+- **A3** (`feat … one-visual-per-beat guardrail`) — new `multiPlaceBeat()` heuristic
+  (word-boundary place-word count ≥2) in `utils/scriptGuardrails.ts`; Script Studio shows a standing
+  "one beat = one shot" hint + a soft amber per-beat flag. Advisory only, never blocks. Finding 3.
+- **nits** — brand-check follow-up: instructional helper copy `zinc-500 → zinc-400` (contrast floor);
+  multi-place warning `gap-1 → gap-1.5` (rhythm parity with sibling warning).
+
+**A4** (pre-upload dark/blurry nudge) — still OPTIONAL, not done.
+
+# ⏸ BUCKET B — DRAFTED, AWAITING NEIL'S EXPLICIT GO (tuned `geminiService.ts`)
+
+**DO NOT APPLY without Neil's explicit approval + `gemini-eval` regression (Bukidnon Brew product +
+one service/RE brand) BEFORE shipping.** Affects One-Shot + 8-step too. Target: the `venue`
+(~L1976–1994) and `avatar_venue` (~L1998–2006) consistency-rule blocks. Goal = camera freedom for a
+REAL new angle + relight the avatar to the scene + one consistent cinematic grade, while KEEPING
+`PLACE_IDENTITY_LOCK` (anti-drift, Finding 2a) and `TIER_TRUTH` (no fake luxury). "Enhance, don't
+fabricate."
+
+**Proposed edits (4 surgical changes):**
+
+1. `venue` rule 1 (PLACE_IDENTITY_LOCK) — append an exterior anti-look-alike clause: *"If Reference
+   Image 1 is a building exterior/facade, reproduce its distinguishing structure exactly — floor
+   count, facade material, window/balcony pattern, roofline, signage — do NOT substitute a generic
+   modern look-alike."* (Finding 2a)
+2. `venue` rule 2 (CAMERA_FREEDOM) — replace the "keep angle change MODERATE / do not over-rotate"
+   tail with a directive to compose a genuinely NEW cinematic viewpoint of the SAME place (same
+   distinguishing architecture/fixtures/signage/palette), never a flat reproduction of the
+   reference's framing and never an invented location. (Findings 1/5/6)
+3. Add a `CINEMATIC_GRADE` rule to BOTH blocks: one consistent clean grade (even exposure, gentle
+   filmic contrast, natural color) so scenes cut together; enhance muddy phone-shot capture WITHOUT
+   changing the real tier/materials/palette (TIER_TRUTH + LUMEN_SYNC still hold). (Findings 1/6)
+4. Add an `AVATAR_RELIGHT` rule to `avatar_venue` only: light the agent WITH the room — match the
+   direction/color-temp/intensity of Reference Image 2's environmental light on her face + wardrobe,
+   with contact shadows where she meets floor/furniture; she must look PHOTOGRAPHED in the room, not
+   pasted on. Preserve identity (rule 1) — relight, never restyle. (Finding 1, the composite feel)
+   Also loosen `avatar_venue` rule 2's "keep rotation MODERATE" the same way as venue rule 2.
+
+**Verify-before-ship:** `gemini-eval` on Bukidnon Brew (product — must stay clean; product-lock mode
+shouldn't be touched) + one RealEstate/Services brand (the verticals these blocks drive). Then the F1
+parity render: same Verdé Heights assets through One-Shot RealEstate vs Expert, side-by-side.
