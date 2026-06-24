@@ -30,6 +30,8 @@ interface OneShotAdProps {
   onUpgrade: () => void;
   /** Switch to the advanced 8-step wizard (the brief carries over). */
   onSwitchToSteps: () => void;
+  /** Switch to Expert Mode (Director's Cut). Dev-unlock gated for v1 — undefined hides the door. */
+  onSwitchToExpert?: () => void;
   /** Open Signal Modulator's Voice Cloning tab from the voice picker. */
   onCloneVoice: () => void;
   /** After a successful run → Step 8 review + video hand-off. */
@@ -46,6 +48,7 @@ const OneShotAd: React.FC<OneShotAdProps> = ({
   onBack,
   onUpgrade,
   onSwitchToSteps,
+  onSwitchToExpert,
   onCloneVoice,
   onReview,
 }) => {
@@ -203,6 +206,7 @@ const OneShotAd: React.FC<OneShotAdProps> = ({
         directorUnlocked={directorUnlocked}
         onUpgrade={onUpgrade}
         onSwitchToSteps={onSwitchToSteps}
+        onSwitchToExpert={onSwitchToExpert}
         onBack={onBack}
         onCloneVoice={onCloneVoice}
       />

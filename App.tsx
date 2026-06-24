@@ -9,6 +9,7 @@ import Step3AdScript from './components/Step3AdScript';
 import Step4Avatar from './components/Step4Avatar';
 import Step5Storyboard from './components/Step5Storyboard';
 import OneShotAd from './components/OneShotAd';
+import ExpertMode from './components/ExpertMode';
 import LockedVideoPreview from './components/LockedVideoPreview';
 import PlanGate from './components/PlanGate';
 import type { OneShotSinks } from './hooks/useOneShotGeneration';
@@ -167,9 +168,10 @@ const App: React.FC = () => {
   const [directorNudgeDismissed, setDirectorNudgeDismissed] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   // Director AI entry mode: one-shot (default — auto-generate the whole ad) vs
-  // the preserved 8-step wizard ('steps', advanced/Director mode). Slice 4 gates
-  // 'steps' to Business.
-  const [directorMode, setDirectorMode] = useState<'oneshot' | 'steps'>('oneshot');
+  // the preserved 8-step wizard ('steps', advanced/Director mode) vs Expert Mode
+  // ('expert' — Director's Cut, bring-your-own-script; dev-unlock gated for v1).
+  // Slice 4 gates 'steps' to Business.
+  const [directorMode, setDirectorMode] = useState<'oneshot' | 'steps' | 'expert'>('oneshot');
   const [clientDetails, setClientDetails] = useState<ClientDetails>({ brandName: '', offer: '' });
   const [businessInfo, setBusinessInfo] = useState<BusinessInfo>({
     product: '',
@@ -1408,7 +1410,11 @@ const App: React.FC = () => {
     const devUnlock = typeof localStorage !== 'undefined' && localStorage.getItem('grifon_dev_unlock') === '1';
     const directorUnlocked = devUnlock || planAtLeast(plan_id, 'pro');
 
-    if (showOneShot) {
+    if (directorMode === 'expert') {
+      // Expert Mode — "Director's Cut" (bring-your-own-script). Additive door,
+      // dev-unlock gated for v1 (the entry button below only renders for devUnlock).
+      moduleElement = <ExpertMode onBack={() => setDirectorMode('oneshot')} />;
+    } else if (showOneShot) {
       // One-Shot Ad — full-screen intake → research → generate → Step 8 review.
       moduleElement = (
         <OneShotAd
@@ -1421,6 +1427,9 @@ const App: React.FC = () => {
           onBack={() => setActiveModule(null)}
           onUpgrade={() => { setActiveModule(null); setCurrentRoute('pricing'); }}
           onSwitchToSteps={() => { setDirectorMode('steps'); setCurrentStep(1); }}
+          // Dev-unlock gated for v1: prop is undefined for normal users, so the
+          // "Director's Cut" door does not render for them.
+          onSwitchToExpert={devUnlock ? () => setDirectorMode('expert') : undefined}
           onCloneVoice={() => { setSignalInitialTile('clone'); setSignalReturnToOneShot(true); setActiveModule('signal_modulator'); }}
           onReview={() => { setDirectorMode('steps'); setCurrentStep(8); }}
         />

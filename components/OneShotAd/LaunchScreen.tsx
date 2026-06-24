@@ -3,7 +3,7 @@ import {
   ImageUp, Sparkles, Zap, Lock, Wand2, Upload, User, Mic,
   Film, Gauge, Check, Loader2, Package, Wrench, Smartphone, Building2, RefreshCw,
   Settings2, ChevronDown, ChevronLeft, ChevronRight, Play, Square, X, Languages,
-  Maximize2, UploadCloud, Images, ZoomIn, Volume2, VolumeX, RotateCcw,
+  Maximize2, UploadCloud, Images, ZoomIn, Volume2, VolumeX, RotateCcw, PenLine,
 } from 'lucide-react';
 import { GlassPanel } from '../ui/GlassPanel';
 import { useOneShotSfx } from '../../services/uiSoundService';
@@ -124,11 +124,13 @@ export const LaunchScreen: React.FC<{
   onUpgrade: () => void;
   /** Switch to the advanced 8-step wizard — the brief carries over. */
   onSwitchToSteps: () => void;
+  /** Switch to Expert Mode (Director's Cut). Dev-unlock gated for v1 — undefined hides the door. */
+  onSwitchToExpert?: () => void;
   /** Back to Command Center — renders the canonical left-aligned module header. */
   onBack?: () => void;
   /** Open Signal Modulator's Voice Cloning tab to record/clone a custom voice. */
   onCloneVoice?: () => void;
-}> = ({ onLaunch, directorUnlocked, onUpgrade, onSwitchToSteps, onBack, onCloneVoice }) => {
+}> = ({ onLaunch, directorUnlocked, onUpgrade, onSwitchToSteps, onSwitchToExpert, onBack, onCloneVoice }) => {
   // Premium cinematic click cues — One-Shot only, ON by default, mutable.
   const sfx = useOneShotSfx();
   const isMobile = useIsMobile();
@@ -760,6 +762,17 @@ export const LaunchScreen: React.FC<{
                 className={`mt-3 flex w-full items-center justify-center gap-2 whitespace-nowrap border border-white/10 bg-zinc-950 ${CTRL_H} ${R_CTRL} ${T_LABEL} font-bold text-zinc-400 transition-colors hover:border-[#FFCC00]/50 hover:text-white`}
               >
                 <Lock className="h-3 w-3 shrink-0" /> Control every scene — <span className="text-[#FFCC00]">Pro</span>
+              </button>
+            )}
+            {/* Expert Mode (Director's Cut) — bring-your-own-script. Dev-unlock gated
+                for v1: only rendered when App passes onSwitchToExpert (devUnlock). */}
+            {onSwitchToExpert && (
+              <button
+                type="button"
+                onClick={onSwitchToExpert}
+                className={`mt-3 flex w-full items-center justify-center gap-2 whitespace-nowrap border border-white/10 bg-zinc-950 ${CTRL_H} ${R_CTRL} ${T_LABEL} font-bold text-zinc-400 transition-colors hover:border-[#FFCC00]/50 hover:text-white`}
+              >
+                <PenLine className="h-3.5 w-3.5 shrink-0" /> I&apos;ll write my own script — Director&apos;s Cut
               </button>
             )}
           </div>
