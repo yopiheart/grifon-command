@@ -749,7 +749,7 @@ export const LaunchScreen: React.FC<{
               <button
                 type="button"
                 onClick={onSwitchToSteps}
-                className={`mt-3 flex w-full items-center justify-center gap-2 border border-white/10 bg-zinc-950 ${CTRL_H} ${R_CTRL} ${T_LABEL} font-bold text-zinc-400 transition-colors hover:border-[#FFCC00]/50 hover:text-white`}
+                className={`mt-3 flex w-full items-center justify-center gap-2 whitespace-nowrap border border-white/10 bg-zinc-950 ${CTRL_H} ${R_CTRL} ${T_LABEL} font-bold text-zinc-400 transition-colors hover:border-[#FFCC00]/50 hover:text-white`}
               >
                 <Settings2 className="h-3.5 w-3.5 shrink-0" /> Control every scene — Director mode
               </button>
@@ -757,7 +757,7 @@ export const LaunchScreen: React.FC<{
               <button
                 type="button"
                 onClick={onUpgrade}
-                className={`mt-3 flex w-full items-center justify-center gap-2 border border-white/10 bg-zinc-950 ${CTRL_H} ${R_CTRL} ${T_LABEL} font-bold text-zinc-400 transition-colors hover:border-[#FFCC00]/50 hover:text-white`}
+                className={`mt-3 flex w-full items-center justify-center gap-2 whitespace-nowrap border border-white/10 bg-zinc-950 ${CTRL_H} ${R_CTRL} ${T_LABEL} font-bold text-zinc-400 transition-colors hover:border-[#FFCC00]/50 hover:text-white`}
               >
                 <Lock className="h-3 w-3 shrink-0" /> Control every scene — <span className="text-[#FFCC00]">Pro</span>
               </button>
@@ -787,34 +787,33 @@ export const LaunchScreen: React.FC<{
             </div>
           )}
 
-          {/* Strategy (UGC only) */}
-          {format === 'ugc' && (
-            <div className="mt-4">
-              <p className={`mb-1.5 text-zinc-400 ${T_LABEL}`}>// Strategy</p>
-              <div className="flex gap-2">
-                {STRATEGIES.map((s) => (
-                  <button
-                    key={s.value}
-                    type="button"
-                    onClick={() => { setStrategy(s.value); sfx.play('select'); }}
-                    title={s.desc}
-                    className={`flex-1 border px-3 ${CTRL_H} ${R_CTRL} ${T_VALUE} uppercase transition-all ${
-                      strategy === s.value ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]' : 'border-white/10 text-zinc-300 hover:border-white/30'
-                    }`}
-                  >
-                    {s.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Sticky so the CTA stays visible without scrolling past a tall preview. */}
+          {/* Strategy + CTA pinned together so BOTH stay visible without scrolling
+              past a tall preview card (UGC adds the Strategy row). */}
           <div className="sticky bottom-0 -mx-5 -mb-5 mt-5 border-t border-white/10 bg-zinc-900/95 px-5 pb-5 pt-3 backdrop-blur-xl">
+            {format === 'ugc' && (
+              <div className="mb-3">
+                <p className={`mb-1.5 text-zinc-400 ${T_LABEL}`}>// Strategy</p>
+                <div className="flex gap-2">
+                  {STRATEGIES.map((s) => (
+                    <button
+                      key={s.value}
+                      type="button"
+                      onClick={() => { setStrategy(s.value); sfx.play('select'); }}
+                      title={s.desc}
+                      className={`flex-1 border px-3 ${CTRL_H} ${R_CTRL} ${T_VALUE} uppercase transition-all ${
+                        strategy === s.value ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]' : 'border-white/10 text-zinc-300 hover:border-white/30'
+                      }`}
+                    >
+                      {s.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
             <button
               type="button"
               onClick={() => setShowFormat(false)}
-              className={`flex w-full items-center justify-center gap-2 ${CTRL_H} ${R_CTRL} ${T_CTRL} bg-[#FFCC00] text-black transition-all hover:shadow-[0_0_20px_rgba(255,204,0,0.4)]`}
+              className={`flex w-full items-center justify-center gap-2 whitespace-nowrap ${CTRL_H} ${R_CTRL} ${T_CTRL} bg-[#FFCC00] text-black transition-all hover:shadow-[0_0_20px_rgba(255,204,0,0.4)]`}
             >
               <Check className="h-4 w-4 shrink-0" /> Use {formatLabel}
             </button>
@@ -990,9 +989,9 @@ export const LaunchScreen: React.FC<{
               <button
                 type="button"
                 onClick={() => { sfx.play('select'); setAssetModal(null); }}
-                className={`flex w-full items-center justify-center gap-2 ${CTRL_H} ${R_CTRL} ${T_CTRL} bg-[#FFCC00] text-black transition-all hover:shadow-[0_0_20px_rgba(255,204,0,0.4)]`}
+                className={`flex w-full items-center justify-center gap-2 whitespace-nowrap ${CTRL_H} ${R_CTRL} ${T_CTRL} bg-[#FFCC00] text-black transition-all hover:shadow-[0_0_20px_rgba(255,204,0,0.4)]`}
               >
-                <Check className="h-4 w-4 shrink-0" /> Done — AI Director will cast it
+                <Check className="h-4 w-4 shrink-0" /> Done — AI casts it
               </button>
             </div>
           ) : (
@@ -1015,7 +1014,7 @@ export const LaunchScreen: React.FC<{
                 type="button"
                 onClick={() => { sfx.play('select'); setAssetModal(null); }}
                 disabled={!avatarUrl}
-                className={`flex w-full items-center justify-center gap-2 ${CTRL_H} ${R_CTRL} ${T_CTRL} transition-all ${
+                className={`flex w-full items-center justify-center gap-2 whitespace-nowrap ${CTRL_H} ${R_CTRL} ${T_CTRL} transition-all ${
                   avatarUrl ? 'bg-[#FFCC00] text-black hover:shadow-[0_0_20px_rgba(255,204,0,0.4)]' : 'cursor-not-allowed bg-zinc-800 text-zinc-500'
                 }`}
               >
@@ -1310,7 +1309,7 @@ const FormatCard: React.FC<{
   >
     {/* Sample preview slot — 9:16 to preview the real vertical-video shape, capped
         on mobile so the modal's CTA stays in view (empty until clips land). */}
-    <div className="relative flex aspect-[9/16] max-h-[42vh] w-full items-center justify-center bg-zinc-950/60 sm:max-h-[58vh]">
+    <div className="relative flex aspect-[9/16] max-h-[36vh] w-full items-center justify-center bg-zinc-950/60 sm:max-h-[58vh]">
       <div className="flex flex-col items-center gap-1.5 text-zinc-600">
         <Film className="h-6 w-6" />
         <span className={T_LABEL}>Sample soon</span>
