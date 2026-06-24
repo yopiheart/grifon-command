@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { ChevronLeft, Clapperboard, Sparkles } from 'lucide-react';
 import { GlassPanel } from '../ui/GlassPanel';
 import { IntakeScreen } from './IntakeScreen';
 import { ScriptStudio } from './ScriptStudio';
-import { emptyExpertIntake, type ExpertIntake } from './types';
+import { SceneDirectionScreen } from './SceneDirection';
+import { emptyExpertIntake, emptySceneDirection, type ExpertIntake, type SceneDirection } from './types';
 import type { PlanId } from '../../utils/planGate';
-import type { ExpertFormatId, TargetDurationSec } from '../../utils/scriptGuardrails';
+import {
+  EXPERT_FORMATS, formatsFor, recommendedSceneCount, beatsForCount,
+  type ExpertFormatId, type TargetDurationSec,
+} from '../../utils/scriptGuardrails';
 
 // ===========================================================================
 // Expert Mode — "Director's Cut" (bring-your-own-script door in Director AI).
@@ -19,7 +23,7 @@ import type { ExpertFormatId, TargetDurationSec } from '../../utils/scriptGuardr
 // state; writes to App's wizard state only when the flow generates (slice 5).
 // ===========================================================================
 
-type Phase = 'intake' | 'studio' | 'direction';
+type Phase = 'intake' | 'studio' | 'direction' | 'review';
 
 export interface ExpertModeProps {
   onBack: () => void;
@@ -35,6 +39,25 @@ const ExpertMode: React.FC<ExpertModeProps> = ({ onBack, plan }) => {
   const [formatId, setFormatId] = useState<ExpertFormatId | null>(null);
   const [target, setTarget] = useState<TargetDurationSec>(20);
   const [lines, setLines] = useState<string[]>([]);
+
+  // Scene Direction state — one entry per script line.
+  const [directions, setDirections] = useState<SceneDirection[]>([]);
+
+  // Beat labels for the current format/length (for Scene Direction headers).
+  const beats = useMemo(() => {
+    const format = EXPERT_FORMATS.find((f) => f.id === formatId) ?? formatsFor(intake.businessType)[0];
+    return format ? beatsForCount(format, recommendedSceneCount(target, plan)) : [];
+  }, [formatId, intake.businessType, target, plan]);
+
+  // Keep directions length in lock-step with the script lines (preserve by index).
+  useEffect(() => {
+    setDirections((prev) =>
+      prev.length === lines.length ? prev : lines.map((_, i) => prev[i] ?? emptySceneDirection()),
+    );
+  }, [lines.length]);
+
+  const setDirection = (i: number, d: SceneDirection) =>
+    setDirections((prev) => prev.map((cur, idx) => (idx === i ? d : cur)));
 
   if (phase === 'intake') {
     return (
@@ -68,18 +91,34 @@ const ExpertMode: React.FC<ExpertModeProps> = ({ onBack, plan }) => {
     );
   }
 
-  // Slice 5 lands here — Scene Direction + generation wiring. Stub for now.
+  if (phase === 'direction') {
+    return (
+      <Frame onBack={() => setPhase('studio')} backLabel="BACK TO SCRIPT">
+        <SceneDirectionScreen
+          lines={lines}
+          beats={beats}
+          directions={directions}
+          setDirection={setDirection}
+          onBack={() => setPhase('studio')}
+          onGenerate={() => setPhase('review')}
+        />
+      </Frame>
+    );
+  }
+
+  // Slice 5b lands here — Generate All wiring + Step 8 review hand-off. Stub for now.
+  const overrides = directions.filter((d) => d.shotIntent !== 'auto' || d.description || d.manualUploadUrl).length;
   return (
-    <Frame onBack={() => setPhase('studio')} backLabel="BACK TO SCRIPT">
+    <Frame onBack={() => setPhase('direction')} backLabel="BACK TO DIRECTION">
       <GlassPanel className="mx-auto flex max-w-4xl flex-col items-start gap-4">
         <div className="flex items-center gap-3">
           <Sparkles className="h-5 w-5 text-[#FFCC00]" />
-          <h2 className="text-sm font-bold text-white">Scene Direction — next up</h2>
+          <h2 className="text-sm font-bold text-white">Generate All — wiring next</h2>
         </div>
         <p className="text-sm text-zinc-400">
-          {lines.filter((l) => l.trim()).length} scene{lines.filter((l) => l.trim()).length === 1 ? '' : 's'} captured for{' '}
-          <span className="text-[#FFCC00]">{intake.brandName || '—'}</span>. Per-scene shot direction +
-          Generate All lands in the next slice.
+          {lines.filter((l) => l.trim()).length} scenes for <span className="text-[#FFCC00]">{intake.brandName || '—'}</span>,{' '}
+          {overrides} directed. The Generate All pipeline (storyboard → scene images → thumbnail → video
+          prompts, honoring your shot intents) lands in slice 5b.
         </p>
       </GlassPanel>
     </Frame>

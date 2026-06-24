@@ -61,3 +61,19 @@ export const intakeReady = (i: ExpertIntake): boolean =>
   i.brandName.trim().length > 0 &&
   i.productName.trim().length > 0 &&
   (i.presenterMode === 'auto' || !!i.avatarUrl);
+
+export type ShotIntent = 'auto' | 'talking-avatar' | 'b-roll' | 'product-highlight' | 'avatar-product';
+
+/**
+ * Per-scene direction the expert sets in Scene Direction (slice 5). Maps 1:1 to the script lines.
+ * 'auto' shotIntent + empty description = let the AI Director decide (current behaviour).
+ */
+export interface SceneDirection {
+  shotIntent: ShotIntent;
+  /** Optional plain-language "direct this scene" note → optimizeImagePrompt → userImagePromptOverride. */
+  description: string;
+  /** Optional "anchor your own photo" for this scene → Scene.manualUploadUrl (skips AI render). */
+  manualUploadUrl?: string;
+}
+
+export const emptySceneDirection = (): SceneDirection => ({ shotIntent: 'auto', description: '' });
