@@ -43,6 +43,10 @@ export interface OneShotParams {
    * auto-casts a spokesperson — behavior there is unchanged.
    */
   presetAvatar?: Avatar | null;
+  /** AUTO-cast hints — when no presetAvatar is supplied, AI Director casts the
+   * spokesperson from the research persona, constrained by these (Director one-shot
+   * passes none and stays fully auto). */
+  castHints?: { gender: 'Male' | 'Female' | 'Any'; ageRange: string; ethnicity: string } | null;
 }
 
 /** Setters into App.tsx's central wizard state — keeps both paths in sync. */
@@ -98,7 +102,7 @@ export const useOneShotGeneration = (): UseOneShotGeneration => {
     if (runningRef.current) return false;
     runningRef.current = true;
 
-    const { clientDetails, businessInfo, language, aspectRatio, presetAvatar } = params;
+    const { clientDetails, businessInfo, language, aspectRatio, presetAvatar, castHints } = params;
     setStages(INITIAL_STAGES.map(s => ({ ...s, status: 'pending', detail: undefined })));
     setRunning(true);
     setDone(false);
@@ -122,11 +126,13 @@ export const useOneShotGeneration = (): UseOneShotGeneration => {
       if (presetAvatar?.url) {
         avatar = presetAvatar;
       } else {
+        // AI Director casts the spokesperson from the full research persona,
+        // constrained by the user's optional intake hints (gender/age/ethnicity).
         const { url, description } = await generateAvatarImage(
           businessInfo.audience,
-          'Any',
-          '',
-          '',
+          castHints?.gender ?? 'Any',
+          castHints?.ageRange ?? '',
+          castHints?.ethnicity ?? '',
           aspectRatio,
           '1K',
           [],
@@ -136,8 +142,8 @@ export const useOneShotGeneration = (): UseOneShotGeneration => {
           prompt: `An avatar for an ad targeting ${businessInfo.audience}`,
           url,
           description,
-          ethnicity: '',
-          gender: 'Any',
+          ethnicity: castHints?.ethnicity ?? '',
+          gender: castHints?.gender ?? 'Any',
         };
       }
       sinks.setAvatar(avatar);
