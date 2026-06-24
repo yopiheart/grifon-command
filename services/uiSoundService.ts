@@ -131,36 +131,49 @@ const readOneShotInitial = (): boolean => {
 
 let oneShotEnabled = typeof window !== 'undefined' ? readOneShotInitial() : true;
 const oneShotListeners = new Set<(value: boolean) => void>();
-const cuePool: Partial<Record<SfxCue, HTMLAudioElement>> = {};
+
+// Decoded sample buffers. Web Audio gives sample-accurate, near-zero-latency
+// playback — HTMLAudioElement.play() lagged perceptibly behind the tap/swipe.
+// Each clip is fetched + decoded ONCE; every cue then fires a throwaway
+// BufferSource that starts instantly and in sync with the gesture.
+const cueBuffers: Partial<Record<SfxCue, AudioBuffer>> = {};
+const cueLoading: Partial<Record<SfxCue, Promise<void>>> = {};
 
 export const isOneShotSfxEnabled = (): boolean => oneShotEnabled;
 
-const primeCue = (cue: SfxCue): HTMLAudioElement | null => {
-  if (typeof window === 'undefined' || typeof Audio === 'undefined') return null;
-  let base = cuePool[cue];
-  if (!base) {
-    try {
-      base = new Audio(CUE_SRC[cue]);
-      base.preload = 'auto';
-      base.volume = CUE_GAIN[cue];
-      cuePool[cue] = base;
-    } catch {
-      return null;
-    }
-  }
-  return base;
+const loadCue = (cue: SfxCue): void => {
+  if (cueBuffers[cue] || cueLoading[cue]) return;
+  const ctx = ensureContext();
+  if (!ctx || typeof fetch === 'undefined') return;
+  cueLoading[cue] = fetch(CUE_SRC[cue])
+    .then((r) => r.arrayBuffer())
+    .then((ab) => ctx.decodeAudioData(ab))
+    .then((buf) => { cueBuffers[cue] = buf; })
+    .catch(() => { /* best-effort — a missing clip just stays silent */ });
 };
 
-/** Fire a cinematic cue. No-op when One-Shot SFX is muted. Never throws. */
+/** Warm all cue buffers up-front so the FIRST tap is already in sync. Safe to
+ * call before a gesture — decode works on a suspended context; the first cue
+ * resumes it for playback. */
+export const preloadCues = (): void => {
+  (Object.keys(CUE_SRC) as SfxCue[]).forEach(loadCue);
+};
+
+/** Fire a cinematic cue — instant + sample-accurate. No-op when muted. Never throws. */
 export const playCue = (cue: SfxCue): void => {
   if (!oneShotEnabled) return;
-  const base = primeCue(cue);
-  if (!base) return;
+  const ctx = ensureContext();
+  if (!ctx) return;
+  const buf = cueBuffers[cue];
+  if (!buf) { loadCue(cue); return; } // not decoded yet — skip rather than fire late
   try {
-    // Clone so overlapping taps don't cut each other off mid-play.
-    const node = base.cloneNode(true) as HTMLAudioElement;
-    node.volume = CUE_GAIN[cue];
-    void node.play().catch(() => { /* autoplay/policy — best-effort */ });
+    const src = ctx.createBufferSource();
+    src.buffer = buf;
+    const gain = ctx.createGain();
+    gain.gain.value = CUE_GAIN[cue];
+    src.connect(gain);
+    gain.connect(ctx.destination);
+    src.start(0);
   } catch {
     /* never throw on a click */
   }
@@ -179,11 +192,13 @@ export const setOneShotSfxEnabled = (value: boolean): void => {
 
 export const toggleOneShotSfx = (): void => setOneShotSfxEnabled(!oneShotEnabled);
 
-/** React binding for the One-Shot mute control + cue firing. */
+/** React binding for the One-Shot mute control + cue firing. Warms the cue
+ * buffers on mount so the first tap/swipe is already in sync. */
 export const useOneShotSfx = (): { enabled: boolean; toggle: () => void; play: (cue: SfxCue) => void } => {
   const [value, setValue] = useState<boolean>(isOneShotSfxEnabled());
   useEffect(() => {
     oneShotListeners.add(setValue);
+    preloadCues();
     return () => { oneShotListeners.delete(setValue); };
   }, []);
   return { enabled: value, toggle: toggleOneShotSfx, play: playCue };

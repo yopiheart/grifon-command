@@ -443,17 +443,19 @@ export const LaunchScreen: React.FC<{
                 <ChevronLeft className="h-4 w-4 shrink-0" /> <span className="hidden md:inline">Command Center</span><span className="md:hidden">Back</span>
               </button>
             ) : <span />}
-            {/* One-Shot cinematic SFX mute — scoped to this module only */}
+            {/* One-Shot cinematic SFX toggle — labeled pill so it's discoverable
+                (scoped to this module only). Gold fill when on. */}
             <button
               type="button"
               onClick={sfx.toggle}
               aria-label={sfx.enabled ? 'Mute click sounds' : 'Unmute click sounds'}
               title={sfx.enabled ? 'Sound on — tap to mute' : 'Sound off — tap to unmute'}
-              className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-all ${
-                sfx.enabled ? 'border-[#FFCC00]/40 text-[#FFCC00] hover:bg-[#FFCC00]/10' : 'border-white/10 text-zinc-500 hover:border-white/30'
+              className={`flex h-9 shrink-0 items-center gap-1.5 rounded-full border px-3 transition-all ${T_LABEL} ${
+                sfx.enabled ? 'border-[#FFCC00]/40 bg-[#FFCC00]/10 text-[#FFCC00] hover:bg-[#FFCC00]/20' : 'border-white/10 text-zinc-400 hover:border-white/30'
               }`}
             >
-              {sfx.enabled ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}
+              {sfx.enabled ? <Volume2 className="h-4 w-4 shrink-0" /> : <VolumeX className="h-4 w-4 shrink-0" />}
+              <span>{sfx.enabled ? 'Sound on' : 'Sound off'}</span>
             </button>
           </div>
           <div className="flex flex-col items-start gap-2">
@@ -1204,8 +1206,9 @@ const FormatCard: React.FC<{
           : 'border-white/10 hover:border-white/30'
     }`}
   >
-    {/* Sample preview slot — empty until Neil's reference clips land (no fake stock) */}
-    <div className="relative flex aspect-[4/5] w-full items-center justify-center bg-zinc-950/60">
+    {/* Sample preview slot — 9:16 to preview the real vertical-video shape (empty
+        until Neil's reference clips land; no fake stock). */}
+    <div className="relative flex aspect-[9/16] w-full items-center justify-center bg-zinc-950/60">
       <div className="flex flex-col items-center gap-1.5 text-zinc-600">
         <Film className="h-6 w-6" />
         <span className={T_LABEL}>Sample soon</span>
@@ -1270,7 +1273,7 @@ const FormatCarousel: React.FC<{
             f={f}
             active={activeValue === f.value}
             onChoose={() => onChoose(f.value)}
-            className="w-[78%] shrink-0 snap-center"
+            className="w-[82%] shrink-0 snap-center"
           />
         ))}
       </div>
