@@ -232,3 +232,27 @@ export const validateBeat = (line: string, b: SceneBeat): BeatValidation => {
 /** Total estimated spoken seconds across all scene lines (for the budget bar). */
 export const totalEstSeconds = (lines: string[]): number =>
   lines.reduce((sum, l) => sum + estimateSpokenSec(l), 0);
+
+// ── One-visual-per-beat guardrail (smoke Finding 3) ─────────────────────────────────────────────
+// The render pipeline is 1 scene = 1 image: a beat that names several places renders only one of
+// them (the storyboard AI picks a single venueSlot), so the other places silently vanish. This is a
+// soft advisory — it nudges the expert to split the beat or name the hero shot; it never blocks.
+const PLACE_WORDS = [
+  'kitchen', 'bedroom', 'bathroom', 'living', 'dining', 'balcony', 'garden', 'pool', 'facade',
+  'exterior', 'interior', 'lobby', 'office', 'storefront', 'rooftop', 'garage', 'hallway', 'view',
+  'patio', 'terrace', 'yard', 'lanai', 'porch', 'basement', 'attic', 'studio', 'gym',
+];
+
+/**
+ * True when a scene line names two or more distinct places — a sign the beat asks for multiple shots
+ * the single-image render can't deliver. Word-boundary matched so "view" doesn't fire on "review".
+ */
+export const multiPlaceBeat = (line: string): boolean => {
+  const l = (line ?? '').toLowerCase();
+  let distinct = 0;
+  for (const w of PLACE_WORDS) {
+    if (new RegExp(`\\b${w}\\b`).test(l)) distinct += 1;
+    if (distinct >= 2) return true;
+  }
+  return false;
+};

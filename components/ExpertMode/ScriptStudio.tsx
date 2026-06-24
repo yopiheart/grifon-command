@@ -8,7 +8,8 @@ import { SegButton } from '../ui/SegButton';
 import type { PlanId } from '../../utils/planGate';
 import {
   EXPERT_FORMATS, formatsFor, recommendedSceneCount, beatsForCount, validateBeat, totalEstSeconds,
-  wordCount, type ExpertFormat, type ExpertFormatId, type ExpertBusinessType, type TargetDurationSec,
+  wordCount, multiPlaceBeat,
+  type ExpertFormat, type ExpertFormatId, type ExpertBusinessType, type TargetDurationSec,
 } from '../../utils/scriptGuardrails';
 
 // ===========================================================================
@@ -138,9 +139,14 @@ export const ScriptStudio: React.FC<{
               </span>
             }
           >
+            <p className="mb-4 text-[11px] leading-relaxed text-zinc-500">
+              One beat renders <span className="text-zinc-300">one shot</span> — keep each box to a single
+              place or moment. Naming several places in one beat shows only one of them.
+            </p>
             <div className="flex flex-col gap-4">
               {beats.map((b, i) => {
                 const v = validateBeat(lines[i] ?? '', b);
+                const multiPlace = multiPlaceBeat(lines[i] ?? '');
                 return (
                   <div key={i} className="flex flex-col gap-1.5">
                     <div className="flex items-center justify-between gap-2">
@@ -160,6 +166,12 @@ export const ScriptStudio: React.FC<{
                     />
                     {v.overSentenceCap && (
                       <span className="text-[10px] text-amber-500/80">Keep the hook to {b.sentenceCap} sentence{b.sentenceCap === 1 ? '' : 's'}.</span>
+                    )}
+                    {multiPlace && (
+                      <span className="flex items-center gap-1 text-[10px] text-amber-500/80">
+                        <AlertTriangle className="h-3 w-3 shrink-0" />
+                        Lists several places — one scene renders one image. Split it or name the hero shot.
+                      </span>
                     )}
                   </div>
                 );
