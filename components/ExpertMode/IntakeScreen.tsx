@@ -7,7 +7,7 @@ import { TextField } from '../ui/TextField';
 import { SegButton } from '../ui/SegButton';
 import {
   ARCHETYPE_UPLOAD_SLOTS, RE_UPLOAD_SLOTS, ARCHETYPE_ORDER, RE_ARCHETYPE_ORDER,
-  inferServiceArchetype, inferRealEstateArchetype, PRODUCT_EXAMPLE,
+  inferServiceArchetype, inferRealEstateArchetype, PRODUCT_EXAMPLE, PRESENTER_EXAMPLE,
   type ServiceSlot, type ServiceArchetype, type RealEstateArchetype, type UploadSlot,
 } from '../guidedPhotoSlots';
 import { compressImageForUpload } from '../../utils/imageCompression';
@@ -284,12 +284,18 @@ export const IntakeScreen: React.FC<{
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
               <UploadTile
                 url={intake.avatarUrl}
+                example={PRESENTER_EXAMPLE}
                 label="Your presenter"
-                hint="clear face, front-on"
+                hint="head-to-chest · face fills frame"
                 busy={busy === 'avatar'}
                 onPick={onAvatar}
                 onClear={() => setIntake((s) => ({ ...s, avatarUrl: undefined }))}
               />
+              <p className="col-span-full text-[11px] leading-relaxed text-zinc-500 sm:col-span-3">
+                Frame the presenter <span className="text-zinc-300">head-to-chest</span> in bright light so
+                the face fills the frame — a plain iPhone shot is fine. Avoid full-body shots: the face gets
+                too small for the AI to match across scenes.
+              </p>
             </div>
           )}
         </TitledCard>

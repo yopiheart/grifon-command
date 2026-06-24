@@ -19,7 +19,7 @@ import type { BusinessInfo } from '../../types';
 import {
   ARCHETYPE_META, ARCHETYPE_ORDER, ARCHETYPE_UPLOAD_SLOTS, inferServiceArchetype,
   RE_ARCHETYPE_META, RE_ARCHETYPE_ORDER, RE_UPLOAD_SLOTS, inferRealEstateArchetype,
-  BAD_SAMPLE, SampleTile, PRODUCT_EXAMPLE,
+  BAD_SAMPLE, SampleTile, PRODUCT_EXAMPLE, PRESENTER_EXAMPLE,
   type ServiceArchetype, type RealEstateArchetype, type ServiceSlot,
 } from '../guidedPhotoSlots';
 
@@ -1009,15 +1009,16 @@ export const LaunchScreen: React.FC<{
             </div>
           ) : (
             <div className="space-y-3">
-              {/* Guide — the angle/clarity the AI reads best (clear, front-facing, good light) */}
-              <p className={`text-zinc-500 ${T_LABEL}`}>// Aim for this — clear face, good light ↓</p>
+              {/* Guide — the framing/clarity the AI reads best: head-to-chest, face fills frame, good light.
+                  Full-body sources make the face too small to identity-lock (smoke Finding 2b). */}
+              <p className={`text-zinc-500 ${T_LABEL}`}>// Aim for this — head-to-chest, face fills frame ↓</p>
               <div className="mx-auto grid max-w-[260px] grid-cols-2 gap-3">
-                <SampleTile src="/examples/services-practitioner.png" caption="Clear & front-facing" good onZoom={setViewImage} />
-                <SampleTile src="/examples/services-blurry-bad.png" caption="Dark & blurry" good={false} onZoom={setViewImage} />
+                <SampleTile src={PRESENTER_EXAMPLE} caption="Head-to-chest · clear" good onZoom={setViewImage} />
+                <SampleTile src={BAD_SAMPLE.src} caption={BAD_SAMPLE.caption} good={false} onZoom={setViewImage} />
               </div>
               <UploadDropzone
                 thumb={avatarUrl}
-                hint="Upload a presenter photo with the face clearly visible (your real agent / practitioner / yourself)."
+                hint="Frame the presenter head-to-chest with the face clearly visible (your real agent / practitioner / yourself). Avoid full-body shots — the face gets too small to match across scenes."
                 onFile={async (f) => { setAvatarUrl(await fileToDataUrl(f)); setAvatarErr(''); }}
                 onClear={() => setAvatarUrl('')}
                 onView={avatarUrl ? () => setViewImage(avatarUrl) : undefined}
