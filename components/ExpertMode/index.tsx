@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { ChevronLeft, Clapperboard, PenLine } from 'lucide-react';
+import { ChevronLeft, Clapperboard, Sparkles } from 'lucide-react';
 import { GlassPanel } from '../ui/GlassPanel';
 import { IntakeScreen } from './IntakeScreen';
+import { ScriptStudio } from './ScriptStudio';
 import { emptyExpertIntake, type ExpertIntake } from './types';
+import type { PlanId } from '../../utils/planGate';
+import type { ExpertFormatId, TargetDurationSec } from '../../utils/scriptGuardrails';
 
 // ===========================================================================
 // Expert Mode — "Director's Cut" (bring-your-own-script door in Director AI).
@@ -16,15 +19,22 @@ import { emptyExpertIntake, type ExpertIntake } from './types';
 // state; writes to App's wizard state only when the flow generates (slice 5).
 // ===========================================================================
 
-type Phase = 'intake' | 'studio';
+type Phase = 'intake' | 'studio' | 'direction';
 
 export interface ExpertModeProps {
   onBack: () => void;
+  /** Effective plan tier for the scene cap (dev-unlock passes 'business'). */
+  plan: PlanId;
 }
 
-const ExpertMode: React.FC<ExpertModeProps> = ({ onBack }) => {
+const ExpertMode: React.FC<ExpertModeProps> = ({ onBack, plan }) => {
   const [phase, setPhase] = useState<Phase>('intake');
   const [intake, setIntake] = useState<ExpertIntake>(emptyExpertIntake);
+
+  // Script Studio state (lifted so it survives back/forward navigation).
+  const [formatId, setFormatId] = useState<ExpertFormatId | null>(null);
+  const [target, setTarget] = useState<TargetDurationSec>(20);
+  const [lines, setLines] = useState<string[]>([]);
 
   if (phase === 'intake') {
     return (
@@ -39,17 +49,37 @@ const ExpertMode: React.FC<ExpertModeProps> = ({ onBack }) => {
     );
   }
 
-  // Slice 4 lands here — Script Studio. Stub for now.
+  if (phase === 'studio') {
+    return (
+      <Frame onBack={() => setPhase('intake')} backLabel="BACK TO INTAKE">
+        <ScriptStudio
+          businessType={intake.businessType}
+          plan={plan}
+          formatId={formatId}
+          setFormatId={setFormatId}
+          target={target}
+          setTarget={setTarget}
+          lines={lines}
+          setLines={setLines}
+          onBack={() => setPhase('intake')}
+          onNext={() => setPhase('direction')}
+        />
+      </Frame>
+    );
+  }
+
+  // Slice 5 lands here — Scene Direction + generation wiring. Stub for now.
   return (
-    <Frame onBack={() => setPhase('intake')} backLabel="BACK TO INTAKE">
+    <Frame onBack={() => setPhase('studio')} backLabel="BACK TO SCRIPT">
       <GlassPanel className="mx-auto flex max-w-4xl flex-col items-start gap-4">
         <div className="flex items-center gap-3">
-          <PenLine className="h-5 w-5 text-[#FFCC00]" />
-          <h2 className="text-sm font-bold text-white">Script Studio — next up</h2>
+          <Sparkles className="h-5 w-5 text-[#FFCC00]" />
+          <h2 className="text-sm font-bold text-white">Scene Direction — next up</h2>
         </div>
         <p className="text-sm text-zinc-400">
-          Intake captured for <span className="text-[#FFCC00]">{intake.brandName || '—'}</span>. Script
-          Studio (pick a format, type your hard-capped beats to your target length) lands in the next slice.
+          {lines.filter((l) => l.trim()).length} scene{lines.filter((l) => l.trim()).length === 1 ? '' : 's'} captured for{' '}
+          <span className="text-[#FFCC00]">{intake.brandName || '—'}</span>. Per-scene shot direction +
+          Generate All lands in the next slice.
         </p>
       </GlassPanel>
     </Frame>

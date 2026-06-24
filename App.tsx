@@ -1413,7 +1413,8 @@ const App: React.FC = () => {
     if (directorMode === 'expert') {
       // Expert Mode — "Director's Cut" (bring-your-own-script). Additive door,
       // dev-unlock gated for v1 (the entry button below only renders for devUnlock).
-      moduleElement = <ExpertMode onBack={() => setDirectorMode('oneshot')} />;
+      // Dev-unlock testers get the Business cap (6 scenes) to exercise the full range.
+      moduleElement = <ExpertMode onBack={() => setDirectorMode('oneshot')} plan={devUnlock ? 'business' : plan_id} />;
     } else if (showOneShot) {
       // One-Shot Ad — full-screen intake → research → generate → Step 8 review.
       moduleElement = (

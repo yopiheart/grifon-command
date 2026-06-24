@@ -68,7 +68,7 @@ const UploadTile: React.FC<{
       </button>
       <div className="flex items-center justify-between gap-2">
         <div className="min-w-0">
-          <p className="truncate text-[10px] font-mono uppercase tracking-wide text-zinc-400">{label}</p>
+          <p className="truncate text-[10px] font-mono uppercase tracking-widest text-zinc-400">{label}</p>
           {hint && <p className="truncate text-[10px] text-zinc-500">{hint}</p>}
         </div>
         {url && onClear && (
