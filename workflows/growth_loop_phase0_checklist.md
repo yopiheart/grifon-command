@@ -32,7 +32,7 @@ on the PC — don't paste them here.
 | Name | Where | Notes |
 |---|---|---|
 | `VITE_META_PIXEL_ID` | client (bundled) | `1921429268517231` — Pixel ID for the browser snippet |
-| `META_PIXEL_ID` | server (no prefix) | `1921429268517231` — same ID, read by `api/meta/capi.ts` |
+| `META_PIXEL_ID` | server (no prefix) | `1921429268517231` — same ID, read by `api/_lib/metaCapi.ts` |
 | `META_CAPI_ACCESS_TOKEN` | server (no prefix) | **secret** — server-only, CAPI auth |
 | `META_CAPI_TEST_EVENT_CODE` | server (no prefix) | optional — only set while testing, remove for prod |
 
@@ -46,7 +46,7 @@ unprefixed secrets in `npm run dev` exactly as on Vercel (see CLAUDE.md → Dev 
 - [ ] **DB:** apply [`supabase/events.sql`](../supabase/events.sql) (Supabase SQL editor, or the
       Supabase MCP `apply_migration`). Already written + idempotent — just run it. Telemetry sink is
       **service-role-only** (RLS on, no policies — like `rate_limits`, *not* user-owned).
-- [ ] **Server CAPI helper:** new `api/meta/capi.ts` — posts a Conversions API event (access token
+- [ ] **Server CAPI helper:** new `api/_lib/metaCapi.ts` — posts a Conversions API event (access token
       **server-only**, never bundled). Small, single-purpose; matches the `api/_lib` proxy style.
 - [ ] **Purchase via CAPI:** wire a server `Purchase` into **`api/webhook.ts`** (the PayMongo webhook —
       already authoritative on payment). **Reuse the existing event-claim/dedup pattern** so a retried
@@ -75,7 +75,7 @@ unprefixed secrets in `npm run dev` exactly as on Vercel (see CLAUDE.md → Dev 
 - [ ] PayMongo **test** payment → server **`Purchase`** via CAPI, **deduped** against the pixel.
 - [ ] Query `public.events` → the wizard-step row is there.
 - [ ] Run **`verify-changes`** (build-gate + tests + smoke).
-- [ ] Run **`straw-man-audit`** on the new `api/meta/capi.ts` + `api/events` + consent surface
+- [ ] Run **`straw-man-audit`** on the new `api/_lib/metaCapi.ts` + `api/events` + consent surface
       (token-leak, anon-write, dedup/replay on the webhook path).
 - [ ] Run **`brand-check`** on the consent surface.
 - [ ] Smoke via the **`smoke-tester`** subagent (foreground) — pixel fires after consent, event lands.
@@ -90,7 +90,7 @@ Touches `api/` + `components/` → this is a **`/goal`-eligible** build, not dir
 
 ```
 /goal Phase 0 of growth_loop.md is shipped as one vertical slice on branch
-claude/data-feedback-loop-ads-app-yqqyer — supabase/events.sql applied, api/meta/capi.ts +
+claude/data-feedback-loop-ads-app-yqqyer — supabase/events.sql applied, api/_lib/metaCapi.ts +
 a server Purchase in api/webhook.ts (reusing the event-claim dedup), a consent-gated client
 pixel firing PageView + one funnel event, and services/analyticsService.ts emitting one
 wizard-step row via a service-role api/events handler — verified by: the build-gate Stop hook

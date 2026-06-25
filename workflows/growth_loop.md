@@ -57,7 +57,7 @@ next creative.** Lower risk, faster to value, and the only version with data to 
 | Creative learning loop | ✅ **reuse** | `viral-autopsy` → `viral_swipe_file.md` → `grifon-cmo` |
 | Server-secret pattern (no `VITE_` leak) | ✅ **reuse** | `api/_lib/` handlers; `straw-man-audit` guards it |
 | Event/telemetry table + service | ❌ net-new | new `events` table + `services/analyticsService.ts` |
-| Meta Pixel + Conversions API (CAPI) | ❌ net-new | new `api/meta/capi.ts` + client pixel init |
+| Meta Pixel + Conversions API (CAPI) | ❌ net-new | new `api/_lib/metaCapi.ts` + client pixel init |
 | Feedback capture | ❌ net-new | new `feedback` table + in-app widget |
 | Ad-performance ingestion | ❌ net-new | new `ad_performance` table + `tools/meta_insights_pull.py` |
 | Creative→performance attribution | ❌ net-new | stamp generated creatives with an ID; join to ad results |
@@ -106,7 +106,7 @@ paid tenure (for CAC/LTV, Item #16).
 ### Phase 0 — Give Grifon eyes (foundation; everything else is blind without it)
 - **Meta Pixel + server CAPI.** Client pixel for PageView/ViewContent/Lead/InitiateCheckout;
   **server CAPI for Purchase by reusing `api/webhook.ts`** (already authoritative on payment; dedup
-  on the existing event-claim pattern). New `api/meta/capi.ts`. Access token **server-only**.
+  on the existing event-claim pattern). New `api/_lib/metaCapi.ts`. Access token **server-only**.
 - **In-app telemetry.** New Supabase `events` table (user_id, event, module, step, meta jsonb, ts) +
   `services/analyticsService.ts` (mirror `recentWorkService.ts`). RLS like `user_voices`. Answers
   "why visitors don't convert" + "who hit checkout and bailed."
