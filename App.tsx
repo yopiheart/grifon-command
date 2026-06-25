@@ -55,6 +55,9 @@ import {
   updatePassword,
 } from './services/supabaseClient';
 import { popIntendedPlan, startCheckout } from './services/billingService';
+import { ConsentBanner } from './components/ui/ConsentBanner';
+import { getPixelConsent, trackEvent } from './services/analyticsService';
+import { initPixel, trackPixel } from './services/metaPixel';
 import { inferAvatarGender } from './utils/voiceSelect';
 import { OAUTH_PROVIDERS } from './config/authProviders';
 import { RouteVeil, type VeilState } from './components/ui/RouteVeil';
@@ -312,6 +315,13 @@ const App: React.FC = () => {
     return () => { sub.subscription.unsubscribe(); };
   }, []);
 
+  // Meta Pixel: only init (and fire PageView) if the user has already granted
+  // consent on a previous visit. First-time visitors init via ConsentBanner's
+  // Accept. initPixel() is idempotent and a no-op when the pixel id is unset.
+  useEffect(() => {
+    if (getPixelConsent()?.granted) initPixel();
+  }, []);
+
   useEffect(() => {
     if (!isAuthenticated) return;
     const intended = popIntendedPlan();
@@ -553,6 +563,11 @@ const App: React.FC = () => {
     setIsSigningIn(true);
     try {
       const { hasSession } = await signUpWithPassword(email, authPassword);
+      // Genuine new signup (both the in-flow-session and confirm-email paths) —
+      // fire the Lead pixel here, NOT in onAuthStateChange (which can't tell a
+      // signup from a returning login). trackPixel self-guards: it no-ops until
+      // the pixel was initialized via consent, so this respects the consent gate.
+      trackPixel('Lead');
       if (hasSession) {
         setIsBooting(true);
       } else {
@@ -779,6 +794,7 @@ const App: React.FC = () => {
           onNavigateLegal={veilToLegal}
           isAuthenticated={isAuthenticated}
         />
+        <ConsentBanner onConsent={(granted) => { if (granted) initPixel(); }} />
         <RouteVeil veil={veil} />
       </ErrorBoundary>
     );
@@ -797,6 +813,7 @@ const App: React.FC = () => {
           onNavigateHome={() => runVeilTransition('// GRIFON COMMAND', () => setCurrentRoute('landing'))}
           onNavigateLegal={veilToLegal}
         />
+        <ConsentBanner onConsent={(granted) => { if (granted) initPixel(); }} />
         <RouteVeil veil={veil} />
       </ErrorBoundary>
     );
@@ -1535,7 +1552,7 @@ const App: React.FC = () => {
                 {currentStep === 1 && <Step1ClientDetails
                   data={clientDetails}
                   setData={setClientDetails}
-                  onNext={() => setCurrentStep(2)}
+                  onNext={() => { trackEvent({ event: 'wizard_step', module: 'wizard', step: 'step_1_complete' }); setCurrentStep(2); }}
                   prefilled={prefillSource !== null && !!clientDetails.brandName && !!clientDetails.offer}
                   prefilledFrom={prefillSource}
                 />}
