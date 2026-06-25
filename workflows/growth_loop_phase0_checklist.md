@@ -13,12 +13,12 @@
 These are the only true blockers. Nothing fires without them.
 
 - [x] **Meta Pixel ID** — `1921429268517231` (created 2026-06-24, dataset "Grifon Pixel" under
-      business "Hidden Luxurious Condos…", id 2055039121369832). **Not secret** — this is the public
-      client-side ID → `VITE_META_PIXEL_ID`. ⚠️ Confirm with Neil whether this business/ad account is
-      the right one for Grifon tracking before going live.
-- [ ] **CAPI access token** — Events Manager → the `Grifon Pixel` dataset → Settings → *Conversions
-      API* → *Generate access token* (NOT the Stape/CAPI-Gateway partner path).
-      **Server-only secret. NEVER paste it in chat or commit it.** Goes in `.env` + Vercel env.
+      business "Zam Grifon - Personal Brand", id 2055039121369832). **Not secret** — public client-side
+      ID → `VITE_META_PIXEL_ID`. Business confirmed correct for Grifon (personal-brand account that
+      runs the UGC/content promoting the Grifon app).
+- [x] **CAPI access token** — generated 2026-06-24 (direct integration, Dataset Quality API, scoped to
+      the Grifon Pixel dataset only). **Server-only secret — lives in `.env` + Vercel env, never
+      committed/chatted.** → `META_CAPI_ACCESS_TOKEN`.
 - [ ] **Test Event Code** (optional but recommended) — Events Manager → *Test Events* tab → copy the
       `TEST#####` code. Lets us watch `Lead`/`Purchase` land live during the smoke test.
 
