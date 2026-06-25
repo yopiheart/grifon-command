@@ -97,7 +97,7 @@ export const FeedbackWidget: React.FC<FeedbackWidgetProps> = ({ active, module }
               </button>
 
               <div className="flex items-start gap-3">
-                <MessageCircle className="w-4 h-4 text-[#FFCC00] shrink-0 mt-0.5" />
+                <MessageCircle className="w-5 h-5 text-[#FFCC00] shrink-0 mt-0.5" />
                 <div className="min-w-0">
                   <p className="text-[10px] font-mono uppercase tracking-widest text-[#FFCC00]">
                     // QUICK FEEDBACK
@@ -109,9 +109,12 @@ export const FeedbackWidget: React.FC<FeedbackWidgetProps> = ({ active, module }
               </div>
 
               <div className="mt-4">
-                <div className="grid grid-cols-6 sm:grid-cols-11 gap-1">
+                {/* grid-cols-6 at all widths: 0–5 then 6–10 as a tidy number pad.
+                    Keeps each cell wide enough for the Pill's built-in px-3 (no fragile
+                    class-order override) and avoids an 11-col row clipping "10" at 384px. */}
+                <div className="grid grid-cols-6 gap-1">
                   {SCORES.map((n) => (
-                    <Pill key={n} active={score === n} onClick={() => setScore(n)} className="px-0">
+                    <Pill key={n} active={score === n} onClick={() => setScore(n)}>
                       {n}
                     </Pill>
                   ))}
