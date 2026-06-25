@@ -25,9 +25,11 @@ Open render-side items to confirm:
 - regression harness green: `$env:RUN_REGRESSION='1'; npx vitest run tests/regression/script-gen.regression.test.ts`
 - **R2 cutover check (FREE RIDER — this session renders anyway):** R2 Production env vars
   added + redeploy triggered 2026-06-16 (`2d6a887`). Confirm the rendered media URL is the
-  **R2 domain, not `*.supabase.co`**, and it plays. If good → R2 is live in prod. **Then after
-  ~1 week proven, downgrade the Supabase org Pro → free** to kill the temporary egress-bridge
-  cost (see [`r2_media_migration.md`](r2_media_migration.md)).
+  **R2 domain, not `*.supabase.co`**, and it plays. If good → R2 is live in prod. ✅ **DONE
+  2026-06-25 (Neil): Supabase org downgraded Pro → free** after ~1 week proven, killing the
+  temporary egress-bridge cost. Verified safe first (egress ~0, DB 12 MB, Storage 554 MB — all
+  within free caps). ⚠️ Follow-up: 554 MB / 320 stale Storage objects remain → Phase 5 cleanup
+  trigger (see [`r2_media_migration.md`](r2_media_migration.md)).
 
 **Why first:** can't build 3 new styles on a base we haven't re-confirmed. This is the
 "siguraduhin ayos na" gate.
