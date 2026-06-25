@@ -103,6 +103,7 @@ const BatchEditMode: React.FC<{
 
   const [isRendering, setIsRendering] = useState(false);
   const [renderResult, setRenderResult] = useState<FinalRenderResult | null>(null);
+  const [creativeIdCopied, setCreativeIdCopied] = useState(false);
   const [renderError, setRenderError] = useState<string | null>(null);
   // Burn-in: drawtext overlays/captions + SFX + ducked music bed from the EDL.
   const [burnInEnabled, setBurnInEnabled] = useState(true);
@@ -460,6 +461,33 @@ const BatchEditMode: React.FC<{
               >
                 <Download className="w-3.5 h-3.5 shrink-0" /> DOWNLOAD FINAL MP4
               </a>
+
+              {renderResult.creativeId && (
+                <div className="rounded-xl bg-zinc-950 border border-white/10 p-4">
+                  <p className="text-[10px] font-mono uppercase tracking-widest text-[#FFCC00]">
+                    // CREATIVE ID
+                  </p>
+                  <div className="mt-2 flex items-center gap-2">
+                    <code className="flex-1 min-w-0 truncate text-xs font-mono text-zinc-300">
+                      grifon-{renderResult.creativeId}
+                    </code>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigator.clipboard?.writeText(`grifon-${renderResult.creativeId}`);
+                        setCreativeIdCopied(true);
+                        setTimeout(() => setCreativeIdCopied(false), 1500);
+                      }}
+                      className="flex items-center gap-1.5 shrink-0 px-3 py-3 rounded-xl bg-zinc-950 border border-white/10 hover:border-[#FFCC00] hover:text-[#FFCC00] text-zinc-300 text-[10px] font-bold uppercase tracking-widest transition-colors"
+                    >
+                      <Copy className="w-3.5 h-3.5 shrink-0" /> {creativeIdCopied ? 'Copied' : 'Copy'}
+                    </button>
+                  </div>
+                  <p className="mt-2 text-xs text-zinc-500">
+                    Name your Meta ad with this so Grifon can read its results.
+                  </p>
+                </div>
+              )}
             </div>
           )}
         </GlassPanel>

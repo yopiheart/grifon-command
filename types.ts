@@ -260,6 +260,9 @@ export interface FinalRenderResult {
   url?: string;
   downloadUrl?: string;
   error?: string;
+  /** Attribution id (= render jobId) for the Data-Driven Growth Loop. Shown to
+   * the user so they can name the Meta ad "grifon-<creativeId>". */
+  creativeId?: string;
 }
 
 export interface AllData {

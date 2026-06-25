@@ -47,6 +47,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       status: 'done',
       url: sidecar.url,
       downloadUrl: sidecar.downloadUrl,
+      creativeId: sidecar.creativeId,
     };
     return res.status(200).json(result);
   }
