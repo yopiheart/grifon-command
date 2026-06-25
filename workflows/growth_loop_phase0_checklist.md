@@ -12,9 +12,13 @@
 
 These are the only true blockers. Nothing fires without them.
 
-- [ ] **Meta Pixel ID** — Meta Events Manager → your pixel/dataset → copy the numeric ID.
-- [ ] **CAPI access token** — Events Manager → Settings → *Generate access token* (Conversions API).
-      **Server-only secret. NEVER paste it in chat or commit it.** Goes in `.env` + Vercel env tomorrow.
+- [x] **Meta Pixel ID** — `1921429268517231` (created 2026-06-24, dataset "Grifon Pixel" under
+      business "Hidden Luxurious Condos…", id 2055039121369832). **Not secret** — this is the public
+      client-side ID → `VITE_META_PIXEL_ID`. ⚠️ Confirm with Neil whether this business/ad account is
+      the right one for Grifon tracking before going live.
+- [ ] **CAPI access token** — Events Manager → the `Grifon Pixel` dataset → Settings → *Conversions
+      API* → *Generate access token* (NOT the Stape/CAPI-Gateway partner path).
+      **Server-only secret. NEVER paste it in chat or commit it.** Goes in `.env` + Vercel env.
 - [ ] **Test Event Code** (optional but recommended) — Events Manager → *Test Events* tab → copy the
       `TEST#####` code. Lets us watch `Lead`/`Purchase` land live during the smoke test.
 
@@ -27,8 +31,8 @@ on the PC — don't paste them here.
 
 | Name | Where | Notes |
 |---|---|---|
-| `VITE_META_PIXEL_ID` | client (bundled) | numeric Pixel ID for the browser pixel snippet |
-| `META_PIXEL_ID` | server (no prefix) | same ID, read by `api/meta/capi.ts` |
+| `VITE_META_PIXEL_ID` | client (bundled) | `1921429268517231` — Pixel ID for the browser snippet |
+| `META_PIXEL_ID` | server (no prefix) | `1921429268517231` — same ID, read by `api/meta/capi.ts` |
 | `META_CAPI_ACCESS_TOKEN` | server (no prefix) | **secret** — server-only, CAPI auth |
 | `META_CAPI_TEST_EVENT_CODE` | server (no prefix) | optional — only set while testing, remove for prod |
 
