@@ -61,7 +61,8 @@ next creative.** Lower risk, faster to value, and the only version with data to 
 | Feedback capture | ❌ net-new | new `feedback` table + in-app widget |
 | Ad-performance ingestion | ❌ net-new | new `ad_performance` table + `tools/meta_insights_pull.py` |
 | Creative→performance attribution | ❌ net-new | stamp generated creatives with an ID; join to ad results |
-| Custom Audience / retargeting push | ❌ net-new | Phase 3 |
+| Segmentation + hashed-email rosters | ✅ **built (Phase 3)** | `tools/segment_pull.py` + `retargeting-briefs` skill (roster-export-only; Neil uploads) |
+| Automated Custom Audience push | ❌ deferred | crosses ingest-only; revisit after consent capture + live data |
 
 ---
 
@@ -123,12 +124,20 @@ paid tenure (for CAC/LTV, Item #16).
   `growth_debriefs.md` → routes winners into the viral-autopsy/CMO loop above (gated). Live data
   pending Neil's `ads_read` token; aggregation verified against a committed fixture.
 
-### Phase 3 — Segmentation + retargeting briefs (Neil-as-approver)
-- Join `subscriptions` tiers + funnel events → audiences (checkout-abandoners, free-not-converted,
-  free→pro). Per-segment creative briefs via `grifon-cmo` + Director AI → **Neil approves → publishes.**
+### Phase 3 — Segmentation + retargeting briefs (Neil-as-approver) ✅ **built**
+- The `retargeting-briefs` skill + `tools/segment_pull.py` join `subscriptions` tiers to the `events`
+  funnel + `feedback` → 5 audiences (checkout-abandoners, power-users-still-free, free-not-converted,
+  detractors, promoters). Per-segment creative briefs via `grifon-cmo` + `grifon-creative-director` +
+  Director AI → land in `retargeting_briefs.md` → **Neil approves → publishes.**
+- **Roster-export-only** (the chosen boundary): the tool writes **hashed-email CSV rosters** for Neil
+  to upload to a Meta Custom Audience **by hand** — no automated push (stays ingest-only). stdout is
+  PII-free; rosters are an opt-in `.tmp/` artifact, never committed.
+- **Consent gate:** any real upload is **blocked** until a marketing-consent capture ships (its own
+  task, touches the consent UI). Verified against a fixture; live pull waits on Phase-0 telemetry.
+  See [`growth_loop_phase3_checklist.md`](growth_loop_phase3_checklist.md).
 
-**Deferred (correctly):** autonomous publish/spend. Out of scope per ingest-only + the human-gate
-doctrine. Revisit only after Phase 2 proves the loop's judgment.
+**Deferred (correctly):** autonomous publish/spend + automated Custom Audience push. Out of scope per
+ingest-only + the human-gate doctrine. Revisit only after the loop proves its judgment on live data.
 
 ---
 
@@ -144,8 +153,12 @@ doctrine. Revisit only after Phase 2 proves the loop's judgment.
   writes the ranked "why it won / failed" debrief that feeds CMO. The one genuinely new agent
   capability. Backed by `tools/growth_debrief_pull.py` (deterministic aggregation) + a committed
   fixture; lands entries in `growth_debriefs.md`.
-- `tools/meta_insights_pull.py` ✅, `tools/growth_debrief_pull.py` ✅ — deterministic WAT pulls.
-  (`tools/funnel_report.py` folded into `growth_debrief_pull.py` — one consolidated read, not two.)
+- `tools/meta_insights_pull.py` ✅, `tools/growth_debrief_pull.py` ✅, `tools/segment_pull.py` ✅ —
+  deterministic WAT pulls. (`tools/funnel_report.py` folded into `growth_debrief_pull.py` — one
+  consolidated read, not two.)
+- A **`retargeting-briefs` skill** ✅ **built (Phase 3)** — segments users + writes per-segment
+  creative briefs (roster-export-only, consent-gated). Backed by `tools/segment_pull.py` + a fixture;
+  lands briefs in `retargeting_briefs.md`.
 - *(Decided: folded inline, not a separate skill)* the **`grifon-media-buyer`** persona Neil named —
   frequency / ROAS-decay / budget-pacing *metrics reading* — now lives **inside `growth-debrief`**
   (it plays the media-buyer, then hands strategy to CMO / visuals to CD). Revisit a standalone
