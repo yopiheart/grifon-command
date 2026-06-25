@@ -70,5 +70,8 @@ The tool never logs the token; on missing creds (without `--fixture`) it exits `
       Supabase (two writes → one row, value updated), then cleaned up.
 - [ ] Live `--dry-run` against a real ad account once the token exists (Neil).
 
-*Next file after 2a lands: Phase 2b — the `growth-debrief` skill (reads `ad_performance` + `events` →
-ranked "why it won / failed" → feeds the viral-autopsy/CMO loop).*
+*Phase 2b is **built**: the `growth-debrief` skill + `tools/growth_debrief_pull.py` read
+`ad_performance` + `events` + `feedback` → ranked "why it won / failed" debrief in
+[`growth_debriefs.md`](growth_debriefs.md), routing winners into the viral-autopsy/CMO loop (gated).
+Aggregation verified against `tools/fixtures/growth_debrief_sample.json`; the first **live** debrief
+waits on the same `ads_read` token + live Meta pull above (and Python 3.10+ on the PC).*

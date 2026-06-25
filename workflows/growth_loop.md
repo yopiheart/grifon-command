@@ -116,8 +116,12 @@ paid tenure (for CAC/LTV, Item #16).
   and via `useExitIntent.ts`. Combine with Phase-0 drop-off → ranked list feeding `app_audit.md`.
 
 ### Phase 2 — Ad-performance ingestion + creative learning (the core of the brief)
-- `tools/meta_insights_pull.py` (WAT-style deterministic pull, like `analyze_video.py`) →
-  `ad_performance`. Creative→performance attribution. Feed the existing viral-autopsy/CMO loop above.
+- **2a (built):** `tools/meta_insights_pull.py` (WAT-style deterministic pull, like `analyze_video.py`)
+  → `ad_performance`. Creative→performance attribution via the `grifon-<jobId>` ad-name stamp.
+- **2b (built):** the `growth-debrief` skill + `tools/growth_debrief_pull.py` — reads
+  `ad_performance` + `events` + `feedback` → ranked "why it won / why it failed" debrief in
+  `growth_debriefs.md` → routes winners into the viral-autopsy/CMO loop above (gated). Live data
+  pending Neil's `ads_read` token; aggregation verified against a committed fixture.
 
 ### Phase 3 — Segmentation + retargeting briefs (Neil-as-approver)
 - Join `subscriptions` tiers + funnel events → audiences (checkout-abandoners, free-not-converted,
@@ -136,12 +140,16 @@ doctrine. Revisit only after Phase 2 proves the loop's judgment.
 
 **Net-new (small, worth creating):**
 - `workflows/growth_loop.md` — **this file** (the SOP).
-- A **growth-debrief skill** — reads `ad_performance` + funnel data, writes the ranked
-  "why it won / failed" debrief that feeds CMO. The one genuinely new agent capability.
-- `tools/meta_insights_pull.py`, `tools/funnel_report.py` — deterministic WAT pulls.
-- *(Optional)* a **`grifon-media-buyer`** skill — the "ads specialist" persona Neil named; owns
-  frequency / ROAS-decay / budget-pacing judgment. CMO owns strategy/copy, CD owns visuals — no
-  persona currently owns media-buying *metrics reading*. This is the gap.
+- A **growth-debrief skill** ✅ **built (Phase 2b)** — reads `ad_performance` + funnel + feedback,
+  writes the ranked "why it won / failed" debrief that feeds CMO. The one genuinely new agent
+  capability. Backed by `tools/growth_debrief_pull.py` (deterministic aggregation) + a committed
+  fixture; lands entries in `growth_debriefs.md`.
+- `tools/meta_insights_pull.py` ✅, `tools/growth_debrief_pull.py` ✅ — deterministic WAT pulls.
+  (`tools/funnel_report.py` folded into `growth_debrief_pull.py` — one consolidated read, not two.)
+- *(Decided: folded inline, not a separate skill)* the **`grifon-media-buyer`** persona Neil named —
+  frequency / ROAS-decay / budget-pacing *metrics reading* — now lives **inside `growth-debrief`**
+  (it plays the media-buyer, then hands strategy to CMO / visuals to CD). Revisit a standalone
+  persona only if the judgment outgrows one skill.
 
 ---
 
