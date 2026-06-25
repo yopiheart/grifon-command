@@ -56,6 +56,7 @@ import {
 } from './services/supabaseClient';
 import { popIntendedPlan, startCheckout } from './services/billingService';
 import { ConsentBanner } from './components/ui/ConsentBanner';
+import { FeedbackWidget } from './components/ui/FeedbackWidget';
 import { getPixelConsent, trackEvent } from './services/analyticsService';
 import { initPixel, trackPixel } from './services/metaPixel';
 import { inferAvatarGender } from './utils/voiceSelect';
@@ -1604,6 +1605,9 @@ const App: React.FC = () => {
         onBuyTopup={(id) => { window.location.href = `/checkout?topup=${id}`; }}
         onDismiss={() => quotaWallStore.dismiss()}
       />
+      {/* Growth Loop Phase 1: NPS prompt at the finished-ad review screen. Self-gates
+          to once/session + ~30d cooldown; never blocks the page. */}
+      <FeedbackWidget active={currentStep === 8} module="wizard_final" />
     </ErrorBoundary>
   );
 };
