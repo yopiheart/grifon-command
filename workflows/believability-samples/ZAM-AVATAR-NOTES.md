@@ -34,4 +34,7 @@ to her photo) — so identity is built on her actual pixels, not text-gen.
 2. Regenerate registers + variations from the multi-ref set.
 3. Take the single strongest frame into **ONE Veo 3.1 motion + lip-sync test** —
    the actual make-or-break for "Zam the avatar can carry video ads." Stills are
-   not an avatar until she holds identity *in motion*.
+   not an avatar until she holds identity *in motion*. Render it **RAW / ungraded**
+   — a LUT would mask the temporal artifacts we're judging. LUT + captions + short
+   cuts are finishing (step 3), applied only after raw motion is proven. See the
+   "Surface-A LUT / raw-first rule" section in [../believability_dna.md](../believability_dna.md).

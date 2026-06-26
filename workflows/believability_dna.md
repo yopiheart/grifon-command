@@ -70,6 +70,30 @@ compress hard anyway). **Preserve imperfection at delivery resolution > add
 clarity.** (Clarity/4K is only "right" for the cinematic register — the one that
 reads as an ad.)
 
+## Surface-A LUT / color preset (UGC finishing) — and the raw-first rule (2026-06-26, Neil)
+
+A color LUT is a **Surface-A** lever (post-production ffmpeg, zero slop risk — the
+AI never sees it). It helps believability **only in the right direction**:
+
+- **UGC LUT (use):** flat-ish contrast, mild desaturation, subtle warm/cool phone-
+  camera cast, a hint of sensor noise/compression. This *adds imperfection* — the
+  LUT form of "preserve imperfection at delivery resolution." ≈ +5% realism.
+- **Cinematic/filmic LUT (avoid for UGC):** teal-orange, crushed blacks, "graded."
+  Pushes toward the `cinematic` register → reads as **an ad**. Wrong for raw-ugc.
+
+**A LUT cannot fix motion.** What makes AI video read as fake is **temporal**
+(identity flicker/morph between frames, lip-sync drift, uncanny micro-expression,
+hand/background warp) — color sits on top and hides none of it. A nice grade on
+fundamentally-AI motion reads as *polished fake* = more uncanny, not less.
+
+**Sequencing rule:** test the **raw, ungraded** Veo render FIRST. A LUT during
+evaluation masks the exact artifacts we're judging — we need the avatar *naked in
+motion* to get an honest verdict. Only after motion is proven do we bolt on the
+UGC LUT + captions/B-roll as finishing. (Captions/motion-graphics, also Surface-A,
+do *more* for perceived realism than a LUT — real UGC always has them, and they
+distract the eye from micro-artifacts. Also: keep shots **short** — Veo artifacts
+compound over duration; fast cuts are native UGC anyway.) **LUT is step 3, not step 1.**
+
 ## AI-slop source guardrail (premortem failure-mode 1)
 
 A 30-day winner might **itself be AI slop**. Copying it wholesale amplifies slop.
