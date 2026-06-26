@@ -18,6 +18,12 @@ below are condensed pointers, not replacements).
   (see below). Lesson banked: P9 is a *kinetic* edit grammar, not "any long-running
   supplement ad." Ad Recon + free fbcdn download + render_audit verification all
   proven this session.
+- [ ] **Build Believability DNA** (spec: `workflows/believability_dna.md`) — extend
+  the autopsy to capture what makes a subject feel REAL (performance, voice, lighting,
+  camera, realism, lip-sync) → route to renderer / Veo prompt / TTS. Start with the
+  safe *capture* schema; generation-prompt *application* is frozen behind a ≥3 + A/B
+  validation loop. New P11+ Believability pattern family + `source_realism_verdict`
+  guardrail (don't learn slop from AI-generated "winners").
 - [ ] **Decide the `vsl` Gated Proposal** (below): tuned `IMPACT` variant vs a 5th
   preset, and the ROTATION pool. Then build under `surgical-edit` + `verify-changes`
   (TUNED file `api/_lib/renderPresets.ts`). Separately design the structural kernel
