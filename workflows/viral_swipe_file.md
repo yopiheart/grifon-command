@@ -12,14 +12,16 @@ below are condensed pointers, not replacements).
 
 ## Pending Actions
 
-- [ ] **Find P9's 3rd corroboration — needs a genuine *kinetic* VSL.** Ad Recon's
-  first live run (2026-06-26, IM8 Health) autopsied the authority/gastro VSL → **E6**,
-  which did NOT corroborate P9 (message-similar, edit-DNA-different; spawned new
-  candidate **P10**). Lesson: P9 is a kinetic edit grammar, not "any long-running
-  supplement ad." Next candidates: IM8's date-filtered genuine winner **"GLP-1 /
-  Daily Essentials PRO"** (`1019504114362909`, ~38d) — autopsy to test if it's
-  kinetic; or recon a DR brand known for fast-cut VSLs (One Peak-style). Ad Recon
-  + free fbcdn download now both proven (`spy_intel.md`).
+- [x] **P9 reached 3 corroborations (2026-06-26).** E6 (authority/gastro VSL) did
+  NOT corroborate (→ new candidate P10); **E7 (IM8 GLP-1 kinetic VSL) did** — Neil
+  accepted it as #3 (kernel match). The `vsl` preset is now a **Gated Proposal**
+  (see below). Lesson banked: P9 is a *kinetic* edit grammar, not "any long-running
+  supplement ad." Ad Recon + free fbcdn download + render_audit verification all
+  proven this session.
+- [ ] **Decide the `vsl` Gated Proposal** (below): tuned `IMPACT` variant vs a 5th
+  preset, and the ROTATION pool. Then build under `surgical-edit` + `verify-changes`
+  (TUNED file `api/_lib/renderPresets.ts`). Separately design the structural kernel
+  (solo number word-cards as an EDL overlay; title-card product slam) — gated.
 - [ ] **`find_winning_ads.py` enhancement:** parse `asset_age_days` from the
   captured fbcdn video URL's `efg` param as a second longevity signal (the
   displayed "Started running" date resets on edit; the date filter + asset age
@@ -44,7 +46,7 @@ Proposals or applied discussion) → `applied` (shipped in Grifon).
 | P6 | Proof is graphic, not spoken — pills, chips, dashboards, numerals popped on screen | 4 (+E7) | observed; E6 contradicts (data spoken, not popped); E7 confirms (stat + nutrient word-cards) |
 | P7 | Text on frame 1 — hook caption already on screen when the video starts | 6 (+E6,E7) | applied — hook text delay → 0 (Slice 3) |
 | P8 | Strobe/flash bookends (1–3 frames) open and close short-form edits — cheap scroll-stop + clean out | 2 | observed (below threshold) |
-| P9 | **VSL grammar (composite, preset candidate `vsl`)**: 5–6s shots, white ExtraBold Italic 1–3 word captions w/ hard pop, solo word-cards for key numbers, invisible match-cuts/whip-pans, title-card product slam ~40–45%, always-zooming 3–6%/s, ONE deliberate pre-payoff pause | 2 + **E7 candidate** | **at threshold — Neil's call.** E6 (authority-UGC) did NOT corroborate; **E7 (kinetic GLP-1 VSL) hits P9's distinctive *kernel*** (1–3w word-pop captions, solo number/word-cards, whip-pans, title-card product slam, post-zoom, zero dead air, text-on-frame-1) but diverges on E4/E5-specific specs (shots ~2.4s not 5–6s; reveal ~62% not 40–45%; no pre-payoff pause; ALL-CAPS not Italic). If accepted as #3 → draft the kernel-based `vsl` Gated Proposal (specs marked variable). |
+| P9 | **VSL grammar — KERNEL (preset candidate `vsl`)**: white 1–3 word word-pop captions churning sub-0.5s, **solo word-cards for key numbers/nutrients**, whip-pan/match cuts, title-card product slam, post-zoom (from generation), zero dead air, text-on-frame-1. *Variable (studio/length-specific, do not bake):* 5–6s vs ~2.4s shots, reveal 40–45% vs ~62%, the single pre-payoff pause, ExtraBold-Italic vs ALL-CAPS. | 3 (E4, E5, **E7**) | **proposed** (Neil accepted E7 as #3, 2026-06-26 — kernel cross-confirmed across 2 studios + long-form & short formats) → see Gated Proposals |
 | P10 | **Authority/practitioner talking-head UGC**: credentialed expert (scrubs/title-card on frame 1) → problem → solution → CTA; plain white sentence-case captions, hard cuts, *static* camera, ingredient/data points spoken in VO not popped | 1 (E6) | observed (new candidate) |
 
 ## Gated Proposals
@@ -56,6 +58,33 @@ corroborations may appear here. The viral-autopsy skill never applies these.*
   alongside the metaphor-morph hook (end scene on the cut; product b-roll scene
   follows), killing the morph dependency. Evidence: 5/5 references, plus
   baseline blob severity 8/10. Full design: `edit_style_research.md` §5–6.
+  Status: with Neil.
+
+- **P9 → new `vsl` Edit Style Preset (TUNED — `api/_lib/renderPresets.ts`).**
+  Evidence: 3 corroborations (E4, E5 One Peak long-form VSLs; E7 IM8 GLP-1 kinetic
+  VSL) — kernel cross-confirmed across 2 studios + 2 formats. **Proposed, never
+  applied — for Neil. The kernel maps cleanly onto the existing `RenderPreset`
+  shape; it's close to `IMPACT`+`HYPE`, so the cheapest path may be a tuned
+  `IMPACT` variant rather than a 5th preset.** Concrete starting values:
+
+  | Field | Proposed `vsl` value | Why (kernel evidence) | Closest existing |
+  | --- | --- | --- | --- |
+  | `caption.fontFile` | `Anton-Regular` or `Montserrat-ExtraBold` | white ExtraBold/condensed caps (E4/E5 Italic, E7 ALL-CAPS — case is the *variable* axis, weight is the constant) | IMPACT (Anton) |
+  | `caption.chunkAnim` | `word-pop` | 1–3 word pop, sub-0.5s churn (E7 swap ~0.4s, verified) | HYPE |
+  | `caption.boxAlpha` / `borderWFrac` | `0` / `~0.08` | outline, never box (P2) | IMPACT |
+  | `caption.fillColor` / `highlightColor` | `white` / accent on numbers | color-shift emphasis on key numerals (E7) | IMPACT |
+  | `transition.kind` / `everyN` / `halfDurSec` | `whip` / `2` / `~0.05` | whip-pan/match cuts on alternating cuts (E4/E5/E7) | HYPE |
+  | `hook.layout` / `reveal` | `title-stack` / `slam` | text-on-frame-1, punchy reveal (P7) | IMPACT |
+  | `sfx.maxWhoosh` | `~4` | whoosh hits on cuts (E7) | HYPE |
+  | `camera.*` | **leave `intensity: 0`** | ⚠️ P9's "always-zoom" comes from **generation**, NOT the renderer — adding renderer zoom contradicts the locked pulse-guard (Neil 2026-06-10). Do NOT bake. | all presets |
+  | `ROTATION` pool | Neil's call (DR/`temu`? new `vsl` script style?) | VSL is long-form direct-response, distinct from mrbeast/testimonial | — |
+
+  **NOT in this preset (separate, also gated):** the *structural* kernel —
+  **solo word-cards for key numbers/nutrients** (needs a new EDL overlay variant,
+  not a caption-style field), the **title-card product slam** at a mid-point, and
+  the **educational runway / one pre-payoff pause** — these are storyboard/EDL +
+  prompt concerns (`prompts.ts` / EDL), to be designed under `surgical-edit` +
+  `verify-changes`, never as an autopsy side effect.
   Status: with Neil.
 
 ## Entries
