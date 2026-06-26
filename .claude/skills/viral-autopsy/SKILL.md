@@ -28,6 +28,14 @@ into Grifon, and unverified findings polluting tuned prompts.
 4. Renderer/preset implications (e.g. `api/_lib/renderPresets.ts` candidates)
    are *recorded* here but *executed* under their own task with `surgical-edit`
    + `verify-changes` — never as a side effect of an autopsy run.
+5. **AI-slop source guardrail (Believability DNA).** A long-running winner may
+   *itself* be AI slop — copying it wholesale amplifies slop. A **believability**
+   proposal may draw corroboration **only** from `real-human`
+   (`source_realism_verdict`) sources; `likely-ai` sources are **excluded from the
+   count** and instead feed the **AI-tells / avoid anti-pattern catalog** in the
+   Swipe File (what makes *theirs* fake = what to avoid in ours). Longevity
+   qualifies a candidate; human-authenticity qualifies a *believability* source.
+   (Full spec: `workflows/believability_dna.md`.)
 
 ## Procedure
 
@@ -115,6 +123,13 @@ cuts where Gemini said 6) → trust ffmpeg for timing, re-read captions off the
 frames, and correct the entry before it pollutes a pattern decision. (Node, not
 Python — survives the defreezer; same engine backs FINAL_RENDER smoke.)
 
+The same frame vision also **cross-checks the visual register**: confirm Gemini's
+`believability.observed_register` against the still frames (raw-ugc = unretouched
+skin / available light / lived-in background; cinematic = graded, clean, studio).
+A mismatch (Gemini said `raw-ugc`, frames look studio-graded) → correct the
+register before it feeds a Believability pattern count, exactly as you'd correct a
+miscounted cut.
+
 ### Step 4 — Write the Swipe File entry
 
 Append to `workflows/viral_swipe_file.md` under **Entries** using the entry
@@ -150,6 +165,19 @@ vibes.
 | --- | --- | --- | --- | --- | --- | --- |
 | <text-on-frame-1? subject @Xs, type> | <driver + rate> | <chunk/swap/style> | <transitions/SFX/silences> | <motion + rate> | <@Xs, mechanic> | <@Xs, holds-to-end?> |
 
+**Believability DNA:** *(from the `believability` block — capture-only; Surface B/C never become a tuned change here)*
+
+| Dimension | Read | Surface |
+| --- | --- | --- |
+| Performance | <energy/eye-contact/gesture/affect, or n/a> (conf) | B |
+| Voice delivery | <tone/pace/pauses, or n/a> (conf) | B if `talking` / C if `cinematic`-VO |
+| Lighting | <available/ring/studio> (conf) | B (or A if a graded look) |
+| Camera / lens | <selfie vs framed; drift vs locked> (conf) | B |
+| Image realism | <skin/imperfection/background/props> (conf) | B |
+| Lip-sync | <mouth↔audio match> (conf) | B (Veo-native audio — never break) |
+
+**Realism register:** `<raw-ugc | polished-ugc | cinematic>` · **Source-authenticity:** `<real-human | likely-ai | mixed>` — <tells> (conf)
+
 **Why it works (timestamped):**
 1. <claim> — @<t>, <numeric evidence> (<confidence>)
 ...
@@ -158,6 +186,7 @@ vibes.
 
 **So What for Grifon:** *(mandatory — an entry without this is incomplete)*
 - <finding> → target: <`renderPresets.ts` candidate | caption preset | grifon-cmo hook template | storyboard discussion (TUNED, gated) | wizard UX | none — explain why>
+- *Believability findings route by surface:* A (renderer/presets) → normal review; **B (Veo prompt) / C (TTS) → FROZEN** behind the ≥3-`real-human` + manual-A/B loop in `believability_dna.md` — record, never apply.
 **Patterns:** corroborates <P-IDs>; new candidate: <or none>; contradicts: <or none>
 ```
 

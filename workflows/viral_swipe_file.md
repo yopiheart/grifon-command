@@ -18,12 +18,16 @@ below are condensed pointers, not replacements).
   (see below). Lesson banked: P9 is a *kinetic* edit grammar, not "any long-running
   supplement ad." Ad Recon + free fbcdn download + render_audit verification all
   proven this session.
-- [ ] **Build Believability DNA** (spec: `workflows/believability_dna.md`) — extend
-  the autopsy to capture what makes a subject feel REAL (performance, voice, lighting,
-  camera, realism, lip-sync) → route to renderer / Veo prompt / TTS. Start with the
-  safe *capture* schema; generation-prompt *application* is frozen behind a ≥3 + A/B
-  validation loop. New P11+ Believability pattern family + `source_realism_verdict`
-  guardrail (don't learn slop from AI-generated "winners").
+- [x] **Build Believability DNA — CAPTURE half (2026-06-26).** `analyze_video.py`
+  now emits a `believability` block (6 dims + `observed_register` +
+  `source_realism_verdict`, soft-captured, qualitative+confidence); the entry
+  template carries a Believability table + register/authenticity line; Step 3c
+  cross-checks the visual register; the P11+ family + AI-tells catalog are seeded
+  (above); the source guardrail is in the skill. No tuned-prompt change.
+  - [ ] **APPLY half still frozen** (spec `believability_dna.md` Next-steps 3–4):
+    establish the avatar **identity-lock baseline + consistency**, then per-fragment
+    **Gated Proposals** through the ≥3-`real-human` + manual-A/B-on-Veo loop. Surface
+    B/C cues never touch a tuned prompt until that loop closes.
 - [ ] **Decide the `vsl` Gated Proposal** (below): tuned `IMPACT` variant vs a 5th
   preset, and the ROTATION pool. Then build under `surgical-edit` + `verify-changes`
   (TUNED file `api/_lib/renderPresets.ts`). Separately design the structural kernel
@@ -54,6 +58,26 @@ Proposals or applied discussion) → `applied` (shipped in Grifon).
 | P8 | Strobe/flash bookends (1–3 frames) open and close short-form edits — cheap scroll-stop + clean out | 2 | observed (below threshold) |
 | P9 | **VSL grammar — KERNEL (preset candidate `vsl`)**: white 1–3 word word-pop captions churning sub-0.5s, **solo word-cards for key numbers/nutrients**, whip-pan/match cuts, title-card product slam, post-zoom (from generation), zero dead air, text-on-frame-1. *Variable (studio/length-specific, do not bake):* 5–6s vs ~2.4s shots, reveal 40–45% vs ~62%, the single pre-payoff pause, ExtraBold-Italic vs ALL-CAPS. | 3 (E4, E5, **E7**) | **proposed** (Neil accepted E7 as #3, 2026-06-26 — kernel cross-confirmed across 2 studios + long-form & short formats) → see Gated Proposals |
 | P10 | **Authority/practitioner talking-head UGC**: credentialed expert (scrubs/title-card on frame 1) → problem → solution → CTA; plain white sentence-case captions, hard cuts, *static* camera, ingredient/data points spoken in VO not popped | 1 (E6) | observed (new candidate) |
+
+### P11+ — Believability family (capture live 2026-06-26; see `believability_dna.md`)
+
+What makes a *human subject* read as real and trustworthy (vs "AI slop") —
+performance, voice delivery, lighting, camera/lens, image realism, lip-sync — plus
+the **realism register** (`raw-ugc` / `polished-ugc` / `cinematic`). Distinct from
+the Edit-DNA patterns above (P1–P10) because each cue is **surface-tagged**:
+
+- **A** = renderer/presets (post-production) — normal review, **zero slop risk**.
+- **B** = Veo 3.1 video prompt — **FROZEN** behind the ≥3 + manual-A/B loop.
+- **C** = ElevenLabs TTS (cinematic/narrator-VO only) — **FROZEN**, same loop.
+
+**Gating rules for this family** (stricter than P1–P10): a candidate corroborates
+**only** from `real-human` (`source_realism_verdict`) sources — `likely-ai` winners
+are excluded and instead feed the **AI-tells / avoid** catalog below. Real P11,
+P12… rows are created the first time a `real-human` autopsy surfaces a recurring
+believability cue (same lifecycle as P1–P10); Surface B/C rows can reach
+`proposed` only via `believability_dna.md`'s validation loop, never a bare ≥3.
+
+*(No rows yet — seeded empty on purpose; the first `real-human` autopsy populates them.)*
 
 ## Gated Proposals
 
@@ -92,6 +116,17 @@ corroborations may appear here. The viral-autopsy skill never applies these.*
   prompt concerns (`prompts.ts` / EDL), to be designed under `surgical-edit` +
   `verify-changes`, never as an autopsy side effect.
   Status: with Neil.
+
+## AI-tells / avoid (anti-pattern catalog)
+
+*The inverse of the Believability family: cues that made a `likely-ai`-verdicted
+source read **fake**. These winners are excluded from believability corroboration
+(they may be long-running but they're slop) — what makes *theirs* fake is exactly
+what to avoid in *ours*. Populated as `likely-ai` `source_realism_verdict`s accrue;
+each entry cites the autopsy + the specific tell (skin/hands/teeth/eye artifact,
+lip-sync drift, impossible lighting, plastic over-clean texture).*
+
+*(Empty — seeded on purpose; the first `likely-ai` autopsy populates it.)*
 
 ## Entries
 
