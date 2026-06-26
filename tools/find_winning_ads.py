@@ -59,6 +59,9 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_OUT_DIR = REPO_ROOT / ".tmp" / "ad-recon"
 AD_LIBRARY_BASE = "https://www.facebook.com/ads/library/"
+# The earliest date the Ad Library "Impressions by date" FROM picker offers;
+# we leave FROM at this floor and only move TO (start_date[max]).
+AD_LIBRARY_DATE_FLOOR = "2019-06-26"
 
 # What we ask the scraper to pull out of each ad card.
 SCRAPE_SCHEMA = {
@@ -132,15 +135,26 @@ def slugify(text: str) -> str:
     return slug[:60] or "brand"
 
 
-def build_pinned_url(page_id: str, country: str, media_type: str) -> str:
+def build_pinned_url(page_id: str, country: str, media_type: str,
+                     started_before: str = "") -> str:
     # Advertiser-pinned (search_type=page), sorted by impressions desc as the
     # best-available high-performer proxy; we re-rank by days_active after.
-    return (
+    url = (
         f"{AD_LIBRARY_BASE}?active_status=active&ad_type=all&country={country}"
         f"&is_targeted_country=false&media_type={media_type}&search_type=page"
         f"&sort_data[direction]=desc&sort_data[mode]=total_impressions"
         f"&view_all_page_id={page_id}"
     )
+    # Longevity gate at the SOURCE (2026-06-26 live finding): the Ad Library
+    # "Impressions by date: on or before <TO>" filter only returns ads already
+    # running by that date. Set TO = today - min_days, leave FROM at the floor,
+    # and even ads whose displayed "Started running" date reset on edit still
+    # surface here iff they are provably >= min_days old. Far cleaner than
+    # trusting the (resettable) displayed date alone.
+    if started_before:
+        url += (f"&start_date[min]={AD_LIBRARY_DATE_FLOOR}"
+                f"&start_date[max]={started_before}")
+    return url
 
 
 def parse_days_active(started_running: str):
@@ -190,18 +204,25 @@ def scrape_via_firecrawl(url: str, api_key: str):
     return data
 
 
-def rank(ads, top, min_days):
+def rank(ads, top, min_days, trust_membership=False):
     enriched, skipped_low_imp, skipped_no_date = [], 0, 0
     for ad in ads or []:
         if ad.get("low_impression_badge"):
             skipped_low_imp += 1
             continue
         days = parse_days_active(ad.get("started_running", ""))
-        if days is None:
-            skipped_no_date += 1
-            continue
-        if days < min_days:
-            continue
+        if trust_membership:
+            # The server-side "on or before" date filter already proved this ad
+            # has run >= min_days; the displayed date may read younger (resets on
+            # edit), so floor it to min_days rather than drop a real winner.
+            if days is None or days < min_days:
+                days = min_days
+        else:
+            if days is None:
+                skipped_no_date += 1
+                continue
+            if days < min_days:
+                continue
         permalink = (
             f"{AD_LIBRARY_BASE}?id={ad['library_id']}" if ad.get("library_id") else ""
         )
@@ -234,6 +255,11 @@ def main():
     p.add_argument("--min-days", type=int, default=30)
     p.add_argument("--print-url", action="store_true")
     p.add_argument("--from-json", help="rank a pre-scraped ads JSON file instead of scraping")
+    p.add_argument("--started-before",
+                   help="Ad Library 'Impressions by date' TO value (YYYY-MM-DD). "
+                        "Default: today - min_days. The longevity gate, enforced server-side.")
+    p.add_argument("--no-date-filter", action="store_true",
+                   help="disable the start_date[max] longevity filter (debug / wide scan)")
     p.add_argument("--out-dir", default=str(DEFAULT_OUT_DIR))
     args = p.parse_args()
 
@@ -241,8 +267,18 @@ def main():
         fail(1, "MISSING_TARGET",
              "Provide --page-id (the view_all_page_id from the browser URL) or --from-json.")
 
+    # The longevity TO date: today - min_days unless overridden / disabled.
+    if args.no_date_filter:
+        started_before = ""
+    elif args.started_before:
+        started_before = args.started_before
+    else:
+        started_before = (
+            datetime.date.today() - datetime.timedelta(days=args.min_days)
+        ).isoformat()
+
     if args.page_id and args.print_url:
-        print(build_pinned_url(args.page_id, args.country, args.media_type))
+        print(build_pinned_url(args.page_id, args.country, args.media_type, started_before))
         return
 
     # Gather raw ad records: from a file, or by scraping.
@@ -257,7 +293,7 @@ def main():
         source_url = raw.get("source_url", "") if isinstance(raw, dict) else ""
     else:
         api_key = load_env_key("FIRECRAWL_API_KEY")
-        url = build_pinned_url(args.page_id, args.country, args.media_type)
+        url = build_pinned_url(args.page_id, args.country, args.media_type, started_before)
         source_url = url
         if not api_key:
             fail(2, "FIRECRAWL_NOT_CONFIGURED",
@@ -273,7 +309,11 @@ def main():
              f"Ad Library returned '{page_state}'. Try the agent's browser/MCP scrape "
              "of the pinned URL, then --from-json. (Catch 2: anti-bot fragility.)")
 
-    shortlist, stats = rank(ads, args.top, args.min_days)
+    # Trust the server-side longevity filter (don't re-drop by displayed date)
+    # whenever the scrape came from a date-filtered URL -- auto-detected from the
+    # source_url so --from-json inherits it without an extra flag.
+    trust_membership = "start_date[max]" in (source_url or "")
+    shortlist, stats = rank(ads, args.top, args.min_days, trust_membership=trust_membership)
 
     label = args.brand or (f"page-{args.page_id}" if args.page_id else "from-json")
     out = {
@@ -282,8 +322,14 @@ def main():
         "country": args.country,
         "source_url": source_url,
         "generated": datetime.date.today().isoformat(),
+        "started_before": started_before,
         "result_count_header": result_header,
-        "winning_signal": f"longevity (>= {args.min_days} days active), impressions tiebreak",
+        "winning_signal": (
+            f"longevity: only ads running on/before {started_before} "
+            f"(>= {args.min_days}d), impressions tiebreak"
+            if trust_membership
+            else f"longevity (>= {args.min_days} days active), impressions tiebreak"
+        ),
         "stats": stats,
         "shortlist": shortlist,
     }

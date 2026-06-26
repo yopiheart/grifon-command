@@ -27,7 +27,7 @@ Brand/advertiser name
 tools/find_winning_ads.py  (advertiser-pinned URL, longevity rank)
    │  Step 2: Ad Recon Shortlist (top-N Winning Ads + captions + permalinks)
    ▼
-Neil one-click AdLibNote download   (Step 3 — agent handles no login)
+Free fbcdn .mp4 capture (public ad)   (Step 3 — agent handles no login)
    ▼
 viral-autopsy skill → analyze_video.py → Swipe File entry   (Step 4)
    ▼
@@ -39,9 +39,15 @@ workflows/viral_swipe_file.md  (entries + Pattern Index compound; gated)
 1. **Brand-pinned search, never keyword.** `search_type=page&view_all_page_id=<id>`,
    not `q=<brand>`. Keyword search is contaminated (proven 2026-06-26: ~3,400
    fuzzy results incl. Sony/AbbVie vs ~2,400 pure IM8).
-2. **"Winning" = longevity.** Rank by `days_active` (≥30d winner, ≥60–90d
-   scaled). Impressions is the Ad Library's only sort, so the pinned URL sorts by
-   `total_impressions` as a *candidate* surface; the tool then re-ranks by days.
+2. **"Winning" = longevity, gated at the source.** The pinned URL adds the
+   "Impressions by date" filter `start_date[max] = today − min_days` (FROM left
+   at the floor), so Meta returns ONLY ads already running by that date — i.e.
+   provably ≥`min_days` old. Proven 2026-06-26: this collapses IM8's ~660 video
+   ads to the ~4 genuine 30+ day survivors. Critical because the displayed
+   "Started running" date **resets when an ad is edited** (a 52d creative shows
+   "17d"), so it can't be trusted alone — sort stays impressions desc as the
+   in-bucket tiebreak. `find_winning_ads.py` applies the filter by default and
+   the ranker *trusts membership* (won't drop a survivor for a reset date).
 3. **Ad Recon sources only.** No Swipe File writes, no preset/prompt proposals,
    no tuned-file edits. The ≥3-corroboration rule and Gated Proposals stay in
    `viral-autopsy`.
@@ -51,11 +57,14 @@ workflows/viral_swipe_file.md  (entries + Pattern Index compound; gated)
 ## Known-good reference (first live target)
 
 - **IM8 Health** (Gary Brecka supplement, DTC/VSL) — `view_all_page_id =
-  345914995276546`, ~2,400 active ads. Winning format visible from copy alone:
-  **authority/practitioner testimonial UGC** ("As a gastroenterologist…", "20
-  years in sports medicine, I'm skeptical…"). This is the candidate **3rd VSL
-  long-runner** that could push Pattern **P9** (`vsl` preset) over ≥3
-  corroborations → unlock its Gated Proposal. See `viral_swipe_file.md`.
+  345914995276546`. Date-filtered genuine 30+ day winners (2026-06-26):
+  the **"GLP-1 / Daily Essentials PRO"** benefit-list video (`1019504114362909`,
+  ~38d) plus partner-page ads (*The Dodo*, *Health NewsExplained*). IM8's
+  **authority/practitioner testimonial UGC** ("As a gastroenterologist…") is a
+  strong format but was **autopsied (E6) and did NOT corroborate P9** — it's
+  message-similar to a VSL but its edit-DNA is plain talking-head (new candidate
+  **P10**), not the P9 kinetic grammar. **Lesson: P9 needs a genuine *kinetic*
+  VSL, not just any long-running supplement ad.** See `viral_swipe_file.md`.
 
 ## Brand-selection guidance
 
@@ -75,6 +84,29 @@ flaky, occasional login walls — all observed live). Mitigations, in order:
    AdSpy, AdMapix) — trades money for the fragility. WAT self-heal: keep all the
    brittle scrape logic in `tools/find_winning_ads.py` so one file absorbs DOM
    changes.
+
+## Download (Step 3) — free, no login, no AdLibNote
+
+The original "1B hybrid" plan was a one-click **AdLibNote** download. It turned
+out to **paywall downloads behind a credit-card trial** (2026-06-26), so we
+dropped it. The Ad Library is a *public* transparency tool — the ad video is an
+`fbcdn.net` MP4 in the page — so we grab it ourselves for free, still with zero
+login/credential handling:
+
+1. Delegate to a **foreground `smoke-tester` subagent** (keeps the huge page
+   snapshots out of the main context). It `browser_navigate`s the `ad_permalink`,
+   clicks Play, then `browser_network_requests` to find the `fbcdn` `.mp4`
+   request (progressive `sve_sd`/`sve_hd`; prefer HD).
+2. `curl -L -A "<browser UA>" -o .tmp/ad-recon/<slug>.mp4 "<url>"`; verify size
+   > ~200 KB (a few KB = error page → try the other variant). Proven this
+   session: pulled a 1.5 MB / 38s IM8 MP4 with audio.
+3. Bonus longevity signal: the video URL's decoded `efg` param carries
+   `asset_age_days` (truer creative age than the displayed date). Parking a
+   `find_winning_ads.py` enhancement to parse it.
+
+If the video streams as DASH segments (no single `.mp4`) or a wall appears, fall
+back to the viral-autopsy download ladder (snaptik-class resolver, screen-record
+with audio).
 
 ## Follow-ups (parked, post-v1)
 

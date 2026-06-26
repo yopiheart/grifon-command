@@ -22,7 +22,13 @@ guardrails.
    pure). If you only have a brand name, get its page-id first (Step 1).
 3. **"Winning" = longevity, not impressions.** Rank by days-active: ≥30d =
    winner, ≥60–90d = scaled. Impressions is a tiebreaker only. The tool enforces
-   this; don't override it with "highest impressions" reasoning.
+   this **at the source** via the Ad Library "Impressions by date" filter
+   (`start_date[max] = today − min_days`, FROM left at the floor) — proven
+   2026-06-26: it collapses IM8's ~660 video ads to the ~4 that have genuinely
+   run ≥30d. This beats trusting the displayed "Started running" date, which
+   **resets when the advertiser edits the ad** (a 52-day-old creative can show
+   "17 days"). `find_winning_ads.py` adds this filter by default; the ranker
+   then *trusts membership* and won't drop a survivor for a reset date.
 4. **No silent caps.** If the scrape is blocked/partial (login wall, captcha,
    timeout — Catch 2 fragility), say so. Never present a truncated list as "the
    winners."
@@ -60,17 +66,34 @@ proxy, waitFor ≥12s), save the result as `{ "ads": [...] }` JSON, then:
 python tools/find_winning_ads.py --from-json scraped.json --brand "<name>" --top 5 --min-days 30
 ```
 
-The tool drops "Low Impression Count" ads, computes `days_active`, filters by
-`--min-days`, ranks by longevity, and writes the shortlist to
-`.tmp/ad-recon/<brand>-<date>.json`. Exit code 3 = no ad cleared the bar (report
-it; don't invent winners).
+The tool drops "Low Impression Count" ads, applies the `start_date[max]`
+longevity filter automatically (override with `--started-before YYYY-MM-DD`, or
+`--no-date-filter` for a wide scan), ranks by longevity, and writes the
+shortlist to `.tmp/ad-recon/<brand>-<date>.json`. Exit code 3 = no ad cleared
+the bar (report it; don't invent winners).
 
-### Step 3 — Present the shortlist + point to the downloads
+Heads-up: a page-pinned + date-filtered scrape can surface **partner/creator
+pages** running the brand's branded content (e.g. IM8's ads via *The Dodo* /
+*Health NewsExplained*). That's real brand spend, but if you want the brand's
+*own* creative, prefer shortlist rows where `advertiser` == the brand.
+
+### Step 3 — Present the shortlist + download the winner (free, no login)
 Show the ranked table (rank · days-active · advertiser · hook · `ad_permalink`).
-Tell the user exactly which `ad_permalink`s to open and **one-click download via
-the AdLibNote browser extension** (hybrid model: the agent never handles the
-login; the user's own logged-in browser does the download). Capture each
-returned MP4 path.
+Then get the MP4 — **the Meta Ad Library is a public transparency tool, so the
+video is just an `fbcdn.net` MP4 in the page; no login, no extension, no
+payment.** (AdLibNote was the original plan but it paywalls downloads behind a
+credit-card trial — 2026-06-26 — so we don't depend on it.)
+
+Free download method (delegate to a foreground `smoke-tester` subagent so the
+heavy page snapshots never enter the main context):
+1. `browser_navigate` to the chosen `ad_permalink` (`?id=<library_id>`).
+2. Wait for the card to render; click Play if needed.
+3. `browser_network_requests` → find the request whose host contains `fbcdn`
+   and path ends `.mp4` (progressive `sve_sd`/`sve_hd`). Prefer HD.
+4. `curl -L -A "<browser UA>" -o .tmp/ad-recon/<slug>.mp4 "<video_url>"`; verify
+   size > ~200 KB (a few KB = an error page → try the other variant).
+The subagent returns just the path + URL. Tip: the video URL's decoded `efg`
+param carries `asset_age_days` — a truer creative age than the displayed date.
 
 Captions/headlines are already in the shortlist (`caption` field) — carry them
 forward; they seed the working-hook idea bank without any extra step.
