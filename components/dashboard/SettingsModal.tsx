@@ -4,6 +4,7 @@ import {
   X, User, Crown, Bell, Palette, LifeBuoy, Shield, LogOut, ArrowRight, Check,
 } from 'lucide-react';
 import type { PlanId } from '../../utils/planGate';
+import { grant as grantConsent, withdraw as withdrawConsent, getMarketingConsent } from '../../services/consentService';
 
 interface SettingsModalProps {
   open: boolean;
@@ -58,11 +59,34 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
 }) => {
   const [renderPing, setRenderPing] = useState(true);
   const [tips, setTips] = useState(true);
+  // Marketing/retargeting consent — server-backed (NOT localStorage like the two
+  // above). Withdrawal here is legally mandatory, so it always reflects the real
+  // record. See consentService / workflows/consent_capture_plan.md.
+  const [marketingAds, setMarketingAds] = useState(false);
+  const [marketingBusy, setMarketingBusy] = useState(false);
 
   useEffect(() => {
     setRenderPing(localStorage.getItem('grifon_notif_render') !== 'false');
     setTips(localStorage.getItem('grifon_notif_tips') !== 'false');
+    if (open) {
+      getMarketingConsent().then((c) => setMarketingAds(c.granted)).catch(() => {});
+    }
   }, [open]);
+
+  const toggleMarketing = async () => {
+    if (marketingBusy) return;
+    const next = !marketingAds;
+    setMarketingAds(next); // optimistic
+    setMarketingBusy(true);
+    try {
+      if (next) await grantConsent();
+      else await withdrawConsent();
+    } catch {
+      setMarketingAds(!next); // revert on failure
+    } finally {
+      setMarketingBusy(false);
+    }
+  };
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
@@ -129,6 +153,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               <Section icon={<Bell className="w-3.5 h-3.5" />} title="Notifications">
                 <Row label="Render finished" sub="Ping me when my ad is ready" right={<Switch on={renderPing} onToggle={() => toggle('grifon_notif_render', !renderPing, setRenderPing)} />} />
                 <Row label="Tips & product news" sub="Occasional in-app tips" right={<Switch on={tips} onToggle={() => toggle('grifon_notif_tips', !tips, setTips)} />} />
+                <Row label="Personalized ads" sub="Share limited data with ad partners (e.g. Meta) for relevant ads" right={<Switch on={marketingAds} onToggle={toggleMarketing} />} />
               </Section>
 
               <Section icon={<Palette className="w-3.5 h-3.5" />} title="Appearance">

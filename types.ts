@@ -791,6 +791,18 @@ export interface CloneVoiceRequest {
   audio: string;
 }
 
+// Current marketing/retargeting consent state for the signed-in user, as read
+// back from api/consent (?action=status). Distinct from the device-level pixel
+// cookie consent. `granted` is the derived current state
+// (consent_at set AND withdrawn_at null); the raw timestamps are exposed for an
+// auditable trail in Settings. See workflows/consent_capture_plan.md.
+export interface MarketingConsent {
+  granted: boolean;
+  consentAt: string | null;
+  withdrawnAt: string | null;
+  policyVersion: string | null;
+}
+
 export interface CloneVoiceResponse {
   voice_id: string;
   voice_name: string;
