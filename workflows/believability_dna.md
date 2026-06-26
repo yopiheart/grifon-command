@@ -121,12 +121,38 @@ cross-generation consistency is a live, unsolved risk.
 ## Empirical proof (2026-06-26)
 
 Codex `gpt-image-2` (1024×1536) generated the same UGC subject across all 3
-registers (`.tmp/believability-registers/`, disposable). `raw-ugc` read most
-authentically human (skin texture, messy kitchen, selfie framing); `cinematic`
-read as a produced ad. Validates the taxonomy + the "production ≠ trust" thesis.
+registers. `raw-ugc` read most authentically human (skin texture, messy kitchen,
+selfie framing); `cinematic` read as a produced ad; a pushed "8K ultra-clarity"
+cinematic variant read even *more* like a polished commercial — confirming
+**clarity is the cinematic register's tool and it destroys UGC trust.** Validates
+the taxonomy + the "production ≠ trust" thesis from both ends.
+
+**Reference samples (committed, do not delete):** `workflows/believability-samples/`
+— `register-1-raw-ugc.png` (trust winner), `register-2-polished-ugc.png`,
+`register-3-cinematic.png`, `register-3b-cinematic-4k-clarity.png` (the "looks
+like an ad" extreme).
+
 **Caveat:** gpt-image-2 stills ≠ the production Veo/Gemini stack — the *direction*
 is proven, the exact register *fragments* still need the real A/B-on-Veo
 validation before they touch a tuned prompt.
+
+## Model notes (2026-06-26 observations — eval, don't assume)
+
+- **gpt-image-2 (Codex) realism appears notably better than Gemini 3.1 Flash
+  Image** (our production hero/scene image model). If true, the realism
+  *bottleneck* is the **model**, not just the prompt — meaning a key believability
+  lever is **model choice**, parallel to the register fragments. **Action: a head-
+  to-head realism eval** (same subject + register, gpt-image-2 vs Gemini Flash
+  Image) before assuming prompt directives alone close the gap. Constraint:
+  codex-image is dev-only (billed to a ChatGPT plan, not wired into the product);
+  a product swap would need the OpenAI image API (pay-per-image) or another route
+  — a real cost/integration decision, not a free swap.
+- **Seedance 4K (cinematic register).** Seedance's new 4K settings reportedly look
+  "absolutely real" and are trending — a candidate model specifically for the
+  **`cinematic`** register (premium brand-ad archetype), where clarity is wanted.
+  Registers may therefore be **model-routed**, not just prompt-routed: `raw-ugc`/
+  `polished-ugc` → the most authentic-imperfection model; `cinematic` → Seedance-
+  class 4K. Evaluate when the cinematic register comes up.
 
 ## Next steps
 
