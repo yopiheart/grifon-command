@@ -12,9 +12,11 @@ below are condensed pointers, not replacements).
 
 ## Pending Actions
 
-- [ ] **Autopsy a 3rd long-running PH VSL ad** (FB Ad Library, sorted by
-  impressions/longest-running — same sourcing as E4/E5). If it corroborates the
-  P9 composite grammar, draft the `vsl` Edit Style Preset as a Gated Proposal
+- [ ] **Autopsy a 3rd long-running VSL ad** — now sourced via **Ad Recon**
+  (`workflows/spy_intel.md` / `ad-recon` skill). First live target: **IM8 Health**
+  (DTC supplement VSL, `view_all_page_id=345914995276546`), whose long-runners
+  read as authority/practitioner testimonial UGC. If it corroborates the P9
+  composite grammar, draft the `vsl` Edit Style Preset as a Gated Proposal
   (concrete `renderPresets.ts` values pulled from the three entries). This is
   also the first live run of `tools/analyze_video.py` (cafe PC: needs `.env`
   GEMINI_API_KEY + outbound network).
