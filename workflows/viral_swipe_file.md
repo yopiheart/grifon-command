@@ -36,15 +36,15 @@ Proposals or applied discussion) → `applied` (shipped in Grifon).
 
 | ID | Pattern | Corroborations | Status |
 | --- | --- | --- | --- |
-| P1 | Caption churn is the engine of perceived pace, not cut rate — 1–3 word chunks swap every 0.4–0.6s while shots hold 4–7s | 5 (all refs, 2026-06-10) | applied — drives Slice 4 word-pop/chunk sizing |
+| P1 | Caption churn is the engine of perceived pace, not cut rate — 1–3 word chunks swap every 0.4–0.6s while shots hold 4–7s | 6 (+E7) | applied — drives Slice 4 word-pop/chunk sizing |
 | P2 | Caption treatment: outline+shadow, never a background box; gold/yellow or white; emphasis via solo-word card or two-tone | 5 | applied — renderPresets caption styles |
-| P3 | Nobody morphs, ever — product reveals are hard cuts, title-card slams, or in-hand-from-frame-1; whip-pan blur masks big changes | 6 (+E6) | proposed — hook blob fix (TUNED, gated; see edit_style_research §6) |
+| P3 | Nobody morphs, ever — product reveals are hard cuts, title-card slams, or in-hand-from-frame-1; whip-pan blur masks big changes | 7 (+E6,E7) | proposed — hook blob fix (TUNED, gated; see edit_style_research §6) |
 | P4 | Always be zooming: 3–6%/s push on every static shot, alternating direction; punch-ins reserved for pivots/CTA | 4 | applied — preset camera defaults; **contradicted by E3 (stunt UGC) + E6 (authority talking-head)** — static wins when subject/credibility carries it |
-| P5 | Zero dead air: VO fills ≥99% of timeline; at most ONE deliberate ≤0.5s pause right before the payoff | 6 (+E6) | observed |
-| P6 | Proof is graphic, not spoken — pills, chips, dashboards, numerals popped on screen | 3 | observed; **E6 contradicts** (data spoken in VO, not popped) |
-| P7 | Text on frame 1 — hook caption already on screen when the video starts | 5 (+E6) | applied — hook text delay → 0 (Slice 3) |
+| P5 | Zero dead air: VO fills ≥99% of timeline; at most ONE deliberate ≤0.5s pause right before the payoff | 7 (+E6,E7) | observed |
+| P6 | Proof is graphic, not spoken — pills, chips, dashboards, numerals popped on screen | 4 (+E7) | observed; E6 contradicts (data spoken, not popped); E7 confirms (stat + nutrient word-cards) |
+| P7 | Text on frame 1 — hook caption already on screen when the video starts | 6 (+E6,E7) | applied — hook text delay → 0 (Slice 3) |
 | P8 | Strobe/flash bookends (1–3 frames) open and close short-form edits — cheap scroll-stop + clean out | 2 | observed (below threshold) |
-| P9 | **VSL grammar (composite, preset candidate `vsl`)**: 5–6s shots, white ExtraBold Italic 1–3 word captions w/ hard pop, solo word-cards for key numbers, invisible match-cuts/whip-pans, title-card product slam ~40–45%, always-zooming 3–6%/s, ONE deliberate pre-payoff pause | 2 (E4, E5) | observed (still below threshold — **E6 did NOT corroborate**: IM8 authority-UGC is message-similar but edit-DNA-different. P9 needs a genuine *kinetic* VSL, not any long-running VSL) |
+| P9 | **VSL grammar (composite, preset candidate `vsl`)**: 5–6s shots, white ExtraBold Italic 1–3 word captions w/ hard pop, solo word-cards for key numbers, invisible match-cuts/whip-pans, title-card product slam ~40–45%, always-zooming 3–6%/s, ONE deliberate pre-payoff pause | 2 + **E7 candidate** | **at threshold — Neil's call.** E6 (authority-UGC) did NOT corroborate; **E7 (kinetic GLP-1 VSL) hits P9's distinctive *kernel*** (1–3w word-pop captions, solo number/word-cards, whip-pans, title-card product slam, post-zoom, zero dead air, text-on-frame-1) but diverges on E4/E5-specific specs (shots ~2.4s not 5–6s; reveal ~62% not 40–45%; no pre-payoff pause; ALL-CAPS not Italic). If accepted as #3 → draft the kernel-based `vsl` Gated Proposal (specs marked variable). |
 | P10 | **Authority/practitioner talking-head UGC**: credentialed expert (scrubs/title-card on frame 1) → problem → solution → CTA; plain white sentence-case captions, hard cuts, *static* camera, ingredient/data points spoken in VO not popped | 1 (E6) | observed (new candidate) |
 
 ## Gated Proposals
@@ -128,3 +128,29 @@ test the handoff hypothesis that an IM8 authority-testimonial would push **P9**.
 - `asset_age_days` embedded in the fbcdn video URL is a **truer longevity signal** than the displayed "Started running" date → target: `tools/find_winning_ads.py` enhancement (parse `asset_age_days` from the captured video URL as the longevity field).
 **Patterns:** corroborates **P3** (hard-cut reveal, no morph), **P5** (zero dead air), **P7** (text on frame 1); partial **P2** (white outline, no box — but no emphasis mechanic); **contradicts P4** (wins with a static camera — 2nd P4 contradiction after E3, and this one is a talking-head, not a stunt); **does NOT corroborate P9** (edit-DNA mismatch on every axis — message-similar ≠ grammar-similar). New candidate: **P10**.
 **Verified (2026-06-26):** cross-checked with `tools/render_audit.mjs` (ffmpeg ground-truth timing + still-frame OCR). Gemini's numbers held within tolerance — duration 39.0 vs ffmpeg 38.15s; shots 9 vs ~7–8; longest 15.2 vs 14.4s; captions 3–6w/1.5s vs observed 2–4w/~1–2s; transcript matched verbatim across two independent reads + the burned captions. Single pass missed only the pinned `USE CODE "DRALAN"` overlay + white CTA band + karaoke-build captions (called "instant swap") — none change the P9 verdict.
+
+### 2026-06-26 — E7 IM8 "GLP-1 / Daily Essentials PRO" VSL (fb-ad-library, supplements)
+**Why autopsied:** Ad Recon's first **date-filtered genuine winner** — IM8's own
+ad that cleared the `start_date[max]` longevity gate (displayed May 19 = 38d;
+fbcdn `asset_age_days=44`). Picked to re-test **P9** on a *proven* long-runner
+after E6 (authority-UGC) missed. · **File:** `.tmp/viral-intel/im8-glp1-1019504114362909.json` (disposable)
+**Format:** kinetic VSL, hook-problem-agitate-solve (educational), 62s, ~20 shots (ffmpeg; median ~2.4s) — a fast TikTok-native VSL vs E4/E5's 200s+ long-form.
+
+| Hook | Pace driver | Captions | Edit grammar | Camera | Reveal | CTA |
+| --- | --- | --- | --- | --- | --- | --- |
+| "Three stages people go through on GLP-1" — text on frame 1 @0.4s, curiosity gap | sub-second caption churn + ~2.4s cuts + content swaps | **1–3 word ALL-CAPS, white+red, ~0.4–0.8s swap**, color-shift emphasis, **solo word-cards** (`ENERGY`,`FATIGUE`,`10 BILLION`,`[16+]`, nutrient cards `Mg/B12/CoQ10/Zn`) | whip-zoom @4.8s, slide, cross-dissolve, **whoosh SFX hits**; synth bed; **0 silences** | static + post digital zooms/pans | **title-card slam** "I·M·8 Daily Ultimate Essentials" @~38.5s (~62%) | end card @~60s + clinical stats + money-back |
+
+**Why it works (timestamped):**
+1. Targeted curiosity hook — names "GLP-1" + warns of "Stage 3" in first 3s (high)
+2. Rhythmic kinetic pacing — ~20 cuts + sub-second caption churn over 62s prevents drop-off (high)
+3. Value-first structure — ~38s (62%) of physiology education before the pitch (high)
+4. Graphic proof — "95% felt an energy boost", "85% better digestion" stat cards near the close (medium)
+
+**Weaknesses:** late product reveal (~62%) risks pre-pitch drop-off; the long education runway is the bet.
+
+**So What for Grifon:**
+- This is the **kinetic VSL grammar** P9 describes, corroborated by a 3rd independent video (different studio, shorter format) → strengthens the `vsl` preset case. → target: `renderPresets.ts` `vsl` candidate (TUNED/gated — Gated Proposal).
+- Solo word-cards for numbers/nutrients + sub-0.5s caption churn → the word-pop/chunk engine Slice 4 already targets (P1/P6); confirms it generalizes to VSLs.
+- `grifon-cmo`: the "3 stages / Stage 3 is where it costs you" agitation + GLP-1 audience-naming is a reusable hook structure.
+**Patterns:** corroborates **P1** (sub-0.5s caption churn), **P3** (title-card/hard-cut reveal, no morph), **P5** (zero dead air), **P6** (graphic proof + word-cards), **P7** (text on frame 1); **P9 kernel** — hits the *distinctive* P9 elements (1–3w word-pop captions, **solo word-cards for numbers**, whip-pans, title-card product slam, post-zoom) but diverges on the E4/E5-specific specs (shots ~2.4s not 5–6s; reveal ~62% not 40–45%; no pre-payoff pause; ALL-CAPS not Italic).
+**Verified (2026-06-26):** `render_audit.mjs` — duration 62.0 vs ffmpeg 62.21s; shots 24 vs ffmpeg ~20; median 2.0 vs ~2.4s; caption swap 0.4s confirmed (new caption nearly every 0.5s frame); solo word-cards + title-card slam confirmed off frames; transcript matched verbatim. Reads trustworthy.
