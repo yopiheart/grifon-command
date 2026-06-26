@@ -16,8 +16,12 @@
       creds; logic cross-checked in Node — checkout_abandoners 1 / power 1 / free_not_converted 2 /
       detractors 1 / promoters 2 / anon_skipped 2).
 - [x] `.claude/skills/retargeting-briefs/SKILL.md` + `workflows/retargeting_briefs.md` (brief log).
-- [ ] **Marketing-consent capture** — does NOT exist yet; blocks any real upload (see §2).
-- [ ] **Live segment pull** — blocked on live Phase-0 telemetry + consent (deferred; not part of 3a).
+- [x] **Marketing-consent capture** — BUILT (`consent_capture_plan.md` Slice 1: `marketing_consent`
+      table + `api/consent.ts` + signup opt-in + Settings toggle + Privacy disclosure). Enforcement
+      wired into `segment_pull.py` (Slice 2): only current grants are uploaded; removal rosters for
+      withdrawals. **One remaining manual step:** apply `supabase/marketing_consent.sql` to the live DB.
+- [ ] **Live segment pull** — blocked only on live Phase-0 telemetry now; consent gate is built
+      and enforced in code (deferred; not part of 3a).
 
 ## 1. Credentials / prerequisites
 
@@ -29,17 +33,21 @@ service role already in `.env`:
       `--with-emails` uses to resolve user_id → email for hashing. **Server-only.**
 - [ ] **Python 3.10+** on the PC (the defreezer wipes it — install before running).
 
-## 2. The consent gate (HARD prerequisite before any upload)
+## 2. The consent gate (BUILT — enforced in code)
 
-Retargeting on user PII needs a lawful marketing/retargeting **consent basis**. Today there is
-**none**: `user_voices` consent is voice-cloning-specific. Before a single roster goes to Meta:
+Retargeting on user PII needs a lawful marketing/retargeting **consent basis**. This now exists and is
+enforced automatically by `segment_pull.py` (no longer a manual hold):
 
-- [ ] Build marketing-consent capture (its own gated task — touches the consent UI in
-      `components/`/`App.tsx`, so its own plan + `/goal`; reuse the `user_voices` consent_at/consent_ip
-      pattern). Run `straw-man-audit` on it.
-- [ ] Update the `terms`/`privacy` routes to disclose retargeting.
-- [ ] Until both land, the `retargeting-briefs` skill marks every roster **BLOCKED — consent not built**
-      and ships the brief as a *plan* only.
+- [x] Marketing-consent capture built — `marketing_consent` table (server-stamped `consent_at`/
+      `consent_ip`/`policy_version`, RLS read-own + service-role-write), `api/consent.ts` grant/withdraw,
+      signup opt-in + Settings toggle. `straw-man-audit`: STRAW_MAN_PASS (0 critical).
+- [x] `terms`/`privacy` updated — `PrivacyPolicy.tsx` §8 discloses retargeting / Custom Audiences
+      (pixel vs CA distinction) + withdrawal mechanism.
+- [x] Enforcement — `segment_pull.py` uploads **only** current grants, emits **removal rosters** for
+      consented→withdrawn (Meta §4), reports `excluded_no_consent`, fail-closed on empty consent data.
+- [ ] **Apply `supabase/marketing_consent.sql` to the live DB** (the one remaining manual prod step —
+      until then live rosters come back empty, by design).
+- **At upload:** Neil makes the Jan-2025 Meta certification + applies removal rosters; re-run ≤30 days.
 
 ## 3. Running the tool
 

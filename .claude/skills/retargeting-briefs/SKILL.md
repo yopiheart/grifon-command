@@ -22,14 +22,20 @@ cafe-PC defreezer.
    Meta, never publishes, never sets budget. `segment_pull.py` writes **hashed-email
    CSV rosters**; **Neil uploads them to a Meta Custom Audience by hand.** No
    automated push exists, by design (the whole loop's doctrine).
-2. **Privacy gate — confirm a consent basis BEFORE any roster upload.** Building a
-   retargeting audience from user PII requires a lawful marketing/retargeting consent
-   basis. A dedicated marketing-consent capture does **not** exist yet (the
-   `user_voices` consent is voice-cloning-specific) — **building it is a separate,
-   gated task that touches the consent UI** (`components/`/`App.tsx` → its own plan +
-   `/goal`). Until it ships, treat any real upload as **blocked pending Neil's
-   explicit confirmation** that he has a consent basis. Also update the
-   `terms`/`privacy` routes before going live. Say this out loud in every brief.
+2. **Privacy gate — consent is BUILT and enforced in code.** Building a retargeting
+   audience from user PII requires a lawful marketing/retargeting consent basis. This
+   now exists: the `marketing_consent` capture (signup opt-in + Settings toggle +
+   Privacy-Policy §8 disclosure, server-stamped `policy_version`). `segment_pull.py`
+   enforces it automatically — it uploads **only** users with a current grant
+   (`consent_at` set, `withdrawn_at` null), excludes everyone else
+   (`excluded_no_consent`), and emits `removal/<segment>.csv` rosters for
+   consented→withdrawn users that Neil must **remove** from the live audience (Meta CA
+   Terms §4). Standing rules for every brief: (a) never upload from a run where the
+   consent table was empty — that's fail-closed, not a bug to work around; (b) apply
+   the removal roster, don't just skip; (c) re-run and reconcile ≤30 days; (d) Neil
+   makes the Meta certification at upload. **One prod step remains:** apply
+   `supabase/marketing_consent.sql` to the live DB (until then live rosters are empty
+   by design). Say the consent posture (granted / excluded / to-remove) in every brief.
 3. **Least-PII by default.** `segment_pull.py` stdout is **always PII-free** (counts
    + signal only — never user_ids or emails). Hashed rosters are a separate opt-in
    (`--out-dir` + emails) written to `.tmp/` (disposable, never committed). Never
@@ -92,10 +98,13 @@ builds it in Director AI (load `director-smoke` first for that run).
 
 ### Step 4 — Privacy gate (before any roster ships)
 
-If the brief implies a real Custom Audience upload, **stop and confirm with Neil that
-a marketing/retargeting consent basis exists** (guardrail 2). If not, the brief still
-ships as a *plan*, but the roster is marked **blocked — consent capture not built**.
-Promoters used as a *lookalike seed* still require the same basis.
+If the brief implies a real Custom Audience upload, the consent basis is enforced
+automatically (guardrail 2): the roster already contains **only** consented users, and
+a `removal/<segment>.csv` lists consented→withdrawn users for Neil to remove. State the
+consent posture in the brief — `<n> granted (uploaded) · <n> excluded_no_consent · <n>
+to-remove` — straight from the `segment_pull.py` output. If a run's upload roster is
+empty because the consent table is empty/unapplied, the brief ships as a *plan* only
+(no roster to upload yet). Promoters used as a *lookalike seed* require the same basis.
 
 ### Step 5 — Land it in the brief log + route
 
@@ -131,7 +140,8 @@ the model" note):
 - **Analyzing an external swipe video** → `viral-autopsy`.
 - **Pushing an audience to Meta / publishing / budgeting** → Neil, by hand. This skill
   never does — roster export only.
-- **Building the marketing-consent capture UI** → a separate gated task touching
-  `components/`/`App.tsx` (its own plan + `/goal`); this skill only *gates on* it.
+- **Changing the marketing-consent capture** (the `marketing_consent` table, `api/consent.ts`,
+  signup opt-in / Settings toggle) → that's its own surface (`consent_capture_plan.md`); this skill
+  only *consumes* its output via `segment_pull.py`. Don't edit it from a brief.
 - **Building this into an in-app audience dashboard** → post-beta idea →
   `workflows/post_beta_roadmap.md`, not scope creep here.

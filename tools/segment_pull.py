@@ -54,6 +54,28 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 # Funnel-top events that do NOT count as "engaged" usage (everything else does).
 NON_ENGAGED = {"PageView", "ViewContent"}
 
+# Meta marks a Custom Audience too small to deliver below ~1,000 matches. Exact
+# floor is unverified (see consent_capture_plan.md); we warn-but-still-write.
+MATCH_FLOOR = 1000
+
+
+def consent_state(row: dict) -> str:
+    """Current marketing/retargeting consent for one public.marketing_consent row.
+
+    granted    consent_at set AND withdrawn_at null  -> eligible for an UPLOAD roster
+    withdrawn  consent_at set AND withdrawn_at set    -> genuinely consented->withdrawn;
+               must be REMOVED from already-uploaded audiences (Meta CA Terms §4)
+    none       anything else (no row, or an explicit opt-out with no prior consent:
+               consent_at null) -> never upload, never a removal target
+    """
+    consent_at = row.get("consent_at")
+    withdrawn_at = row.get("withdrawn_at")
+    if consent_at and withdrawn_at:
+        return "withdrawn"
+    if consent_at and not withdrawn_at:
+        return "granted"
+    return "none"
+
 
 def fail(code: int, label: str, detail: str) -> None:
     print(f"{label}: {detail}", file=sys.stderr)
@@ -107,7 +129,13 @@ def fetch_supabase(sb_url: str, sb_key: str, since: str) -> dict:
     rows["feedback"] = _get(
         f"{base}/feedback?ts=gte.{since}T00:00:00Z&select=user_id,nps_score,ts&order=ts.desc&limit=50000",
         sb_key, "feedback")
-    for table in ("subscriptions", "events", "feedback"):
+    # Consent is the gate for any PII upload. Full-table read (not windowed): a grant
+    # or withdrawal is current-state, not a time-series event.
+    print("[read] marketing_consent", file=sys.stderr)
+    rows["marketing_consent"] = _get(
+        f"{base}/marketing_consent?select=user_id,consent_at,withdrawn_at&limit=200000",
+        sb_key, "marketing_consent")
+    for table in ("subscriptions", "events", "feedback", "marketing_consent"):
         if not isinstance(rows[table], list):
             fail(3, "SUPABASE_SHAPE", f"{table}: expected a JSON array")
     return rows
@@ -148,6 +176,12 @@ def load_fixture(path: str) -> tuple[dict, dict]:
         if not isinstance(data, list):
             fail(3, "FIXTURE_SHAPE", f"`{table}` must be an array")
         rows[table] = data
+    # marketing_consent is optional in older fixtures; absent => everyone "none"
+    # (fail-closed: no consent data means no upload roster, by design).
+    consent = payload.get("marketing_consent", [])
+    if not isinstance(consent, list):
+        fail(3, "FIXTURE_SHAPE", "`marketing_consent` must be an array")
+    rows["marketing_consent"] = consent
     # Optional email map for testing the roster path offline: [{user_id, email}, ...].
     emails = {u["user_id"]: u["email"] for u in payload.get("auth_users", [])
               if u.get("user_id") and u.get("email")}
@@ -219,29 +253,69 @@ def build_segments(rows: dict, power_threshold: int) -> tuple[dict, int]:
     return segments, anon_skipped
 
 
-def write_rosters(segments: dict, emails: dict, out_dir: str) -> dict:
-    """Write one hashed-email file per non-empty segment. Returns {segment: {file, hashed, missing_email}}."""
+def write_rosters(segments: dict, emails: dict, consent: dict, out_dir: str) -> dict:
+    """Write consent-gated rosters per segment. Returns per-segment counts.
+
+    For each segment, members are split by current consent state (consent_state):
+      - granted   -> UPLOAD roster   out_dir/<segment>.csv          (hashed emails)
+      - withdrawn -> REMOVAL roster  out_dir/removal/<segment>.csv  (hashed emails)
+                     so Neil removes consented->withdrawn users from the live
+                     audience (Meta Custom Audience Terms §4).
+      - none      -> excluded entirely, counted as excluded_no_consent.
+    Fail-closed: a user with no consent row is "none" and is never uploaded.
+    """
     out = {}
     base = Path(out_dir)
     base.mkdir(parents=True, exist_ok=True)
-    for name, seg in segments.items():
-        members = seg["members"]
-        if not members:
-            continue
+    removal_dir = base / "removal"
+
+    def hash_set(uids):
         hashed, missing = [], 0
-        for uid in sorted(members):
+        for uid in sorted(uids):
             email = emails.get(uid)
             if email:
                 hashed.append(hash_email(email))
             else:
                 missing += 1
-        if not hashed:
-            out[name] = {"file": None, "hashed": 0, "missing_email": missing}
-            continue
-        path = base / f"{name}.csv"
-        # Meta Custom Audience CSV: a header line then one SHA-256 email hash per row.
-        path.write_text("email_sha256\n" + "\n".join(hashed) + "\n", encoding="utf-8")
-        out[name] = {"file": str(path), "hashed": len(hashed), "missing_email": missing}
+        return hashed, missing
+
+    for name, seg in segments.items():
+        members = seg["members"]
+        granted = {u for u in members if consent.get(u) == "granted"}
+        withdrawn = {u for u in members if consent.get(u) == "withdrawn"}
+        excluded_no_consent = sum(1 for u in members if consent.get(u, "none") == "none")
+
+        up_hashed, up_missing = hash_set(granted)
+        rm_hashed, _ = hash_set(withdrawn)
+
+        rec = {
+            "file": None,
+            "hashed": len(up_hashed),
+            "missing_email": up_missing,
+            "excluded_no_consent": excluded_no_consent,
+            "removal_file": None,
+            "removal_hashed": len(rm_hashed),
+            "below_match_floor": 0 < len(up_hashed) < MATCH_FLOOR,
+        }
+        if up_hashed:
+            path = base / f"{name}.csv"
+            # Meta Custom Audience CSV: header line then one SHA-256 email hash per row.
+            path.write_text("email_sha256\n" + "\n".join(up_hashed) + "\n", encoding="utf-8")
+            rec["file"] = str(path)
+            if rec["below_match_floor"]:
+                print(f"[roster] WARN {name}: {len(up_hashed)} matches < ~{MATCH_FLOOR} "
+                      f"Meta floor — audience may not deliver; writing anyway", file=sys.stderr)
+        if rm_hashed:
+            removal_dir.mkdir(parents=True, exist_ok=True)
+            rpath = removal_dir / f"{name}.csv"
+            rpath.write_text("email_sha256\n" + "\n".join(rm_hashed) + "\n", encoding="utf-8")
+            rec["removal_file"] = str(rpath)
+            print(f"[roster] {name}: {len(rm_hashed)} consented->withdrawn -> removal roster "
+                  f"(remove from the live audience, Meta §4)", file=sys.stderr)
+        if excluded_no_consent:
+            print(f"[roster] {name}: excluded {excluded_no_consent} member(s) with no current consent",
+                  file=sys.stderr)
+        out[name] = rec
     return out
 
 
@@ -278,6 +352,14 @@ def main() -> None:
 
     segments, anon_skipped = build_segments(rows, args.power_threshold)
 
+    # Current consent state per user (fail-closed: absent => "none" => never uploaded).
+    consent_map = {c["user_id"]: consent_state(c)
+                   for c in rows.get("marketing_consent", []) if c.get("user_id")}
+    consent_totals = {
+        "granted": sum(1 for s in consent_map.values() if s == "granted"),
+        "withdrawn": sum(1 for s in consent_map.values() if s == "withdrawn"),
+    }
+
     rosters = {}
     pii_included = False
     if args.out_dir:
@@ -285,7 +367,7 @@ def main() -> None:
             print("[roster] no emails available (need --fixture auth_users or live --with-emails); "
                   "writing PII-free analysis only", file=sys.stderr)
         else:
-            rosters = write_rosters(segments, emails, args.out_dir)
+            rosters = write_rosters(segments, emails, consent_map, args.out_dir)
             pii_included = True
             print(f"[roster] wrote {len(rosters)} segment file(s) to {args.out_dir}", file=sys.stderr)
 
@@ -296,6 +378,9 @@ def main() -> None:
         "source": source,
         "thresholds": {"power_events": args.power_threshold},
         "anon_events_skipped": anon_skipped,
+        # Consent posture across all users (PII-free): how many have a current grant
+        # vs a recorded withdrawal. Rosters are gated on these, per Meta CA Terms.
+        "consent": consent_totals,
         "pii_included": pii_included,
         "segments": {
             name: {

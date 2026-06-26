@@ -1,8 +1,14 @@
 # Marketing/Retargeting Consent Capture — Approved Plan (resume sheet)
 
-**Status:** Plan **approved by Neil 2026-06-25**; build deferred to the next session
-("we'll proceed tomorrow"). This is the durable record so it survives the defreezer —
-the grill + Meta research below are *done*; **tomorrow starts at Slice 1, no re-grill.**
+**Status:** ✅ **BUILT 2026-06-27** on branch `consent-capture` (off
+`claude/data-feedback-loop-ads-app-yqqyer`). **Slice 1** (commit `5b4da2f`) — table +
+`api/consent.ts` + signup opt-in + Settings toggle + Privacy disclosure; verified
+build-gate PASS, 281 tests, `straw-man-audit` STRAW_MAN_PASS (HIGH-1 policy-version
+provenance + HIGH-2 withdraw race both fixed), `brand-check` 0 critical (41/50).
+**Slice 2** — `segment_pull.py` consent enforcement (upload only current grants, removal
+rosters for withdrawals, `excluded_no_consent`, fail-closed) + fixture + SOP docs flipped
+live. **One manual step left:** apply `supabase/marketing_consent.sql` to the live DB
+(deferred by Neil 2026-06-27). Kept as the historical record of the grill + decisions.
 
 **Why this exists:** it's the **gating prerequisite** for the Phase 3
 [`retargeting-briefs`](retargeting_briefs.md) loop to go live — no hashed-email roster
