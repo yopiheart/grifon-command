@@ -94,6 +94,27 @@ Spot-check 2–3 claims yourself against the JSON's own timeline fields (e.g. a
 `why_it_works` claim about caption churn should be consistent with
 `captions.swap_interval_s`). Internal contradictions → flag, don't transcribe.
 
+### Step 3c — Ground-truth the timing/captions (REQUIRED for pattern-driving entries)
+
+`analyze_video.py` uploads the whole clip but Gemini samples visuals at ~1 fps,
+so the *timing* fields (shot count, cut times, caption swap-rate, zoom %) are
+soft estimates — fine for a passing read, NOT for deciding whether a video
+corroborates a Pattern. Before an entry increments/blocks a Pattern Index count,
+cross-check with the deterministic auditor:
+
+```bash
+node tools/render_audit.mjs <mp4-path> --focus "exact shot/cut count, caption text + swap rate, verbatim transcript"
+```
+
+It fuses **ffmpeg** (model-free exact duration + scene cuts) + **still-frame OCR**
+(catches sub-second captions the 1 fps watch misses) + a 2nd transcript read.
+Diff its `deterministic` block + `timeline` against the autopsy's `shots`,
+`captions`, and `transcript`. Within tolerance → record "verified via
+render_audit" in the entry (see E6). A material mismatch (e.g. ffmpeg finds 18
+cuts where Gemini said 6) → trust ffmpeg for timing, re-read captions off the
+frames, and correct the entry before it pollutes a pattern decision. (Node, not
+Python — survives the defreezer; same engine backs FINAL_RENDER smoke.)
+
 ### Step 4 — Write the Swipe File entry
 
 Append to `workflows/viral_swipe_file.md` under **Entries** using the entry
