@@ -6,6 +6,11 @@ Paste-ready context so next session starts without re-explaining. Read this + th
 approved plan summary below, then continue **manually, calmly — NO `/goal`** (the
 autonomous goal caused a chaotic over-build last session; Neil felt overwhelmed).
 
+> **Where to pick up (2026-06-27):** Phase A (refactor) + look-lock **Pieces 1 & 2
+> are SHIPPED** on this branch (commit `d308061`) — lock-only (option **C**) works
+> end-to-end. The one open decision is the **composite image preview: option B vs
+> ship lock-only**. See "NEXT" below. Branch is committed but **not pushed**.
+
 ---
 
 ## ✅ DONE & SHIPPED on this branch (Phase A — the refactor)
@@ -30,47 +35,60 @@ Verified: `npm run build` zero errors · `npx vitest run tests/unit/drawPlan.sna
 
 ---
 
-## ⏭️ NEXT (the pre-render look-lock feature — was built then REVERTED, by choice)
+## ✅ SHIPPED — pre-render look-lock, Pieces 1 & 2 (commit `d308061`, 2026-06-27)
 
-The feature was fully scoped via `grill-me` + premortem, built end-to-end, then
-**reverted** because it got rushed/overwhelming. Phase A (above) was the only part
-kept. The design is sound — rebuild it **slowly, manually, one piece at a time,
-with Neil reviewing each.** All decisions below are settled (from the grill):
+**Goal:** reduce end-stage surprise — let the user lock the edit-style look at
+GenerateVideo's "Render All", BEFORE the video+voice+render spend, so the finished
+ad matches what they picked. Built **manually, one reviewed piece at a time** (NOT
+via `/goal`). Lock-only (option **C**) now works end-to-end; AUTO keeps today's
+rotation byte-identical.
 
-**Goal:** reduce end-stage surprise — let the user **preview the composite look
-(scene + caption/hook) and lock it** at GenerateVideo's "Render All", BEFORE the
-video+voice+render spend, so the finished ad matches what they picked.
+**Piece 1 — the tested pipe** (premortem #1: locked id silently dropped on the
+GenerateVideo → `editorBatch` → EditVideo → `renderFinalVideo()` hop):
+- `types.ts` — named union `LockablePresetId` (`classic|impact|hype|clean`), reused
+  in `FinalRenderRequest.preset.id`. `resolvePreset()` already honors an explicit id.
+- **`services/renderLock.ts`** (new) — `buildLockedPreset(id)`, the ONE pure
+  chokepoint that builds `FinalRenderRequest.preset`: id → `{id}`, absent →
+  `undefined` (server rotates). All preset construction funnels through here.
+- **`tests/unit/renderLock.test.ts`** (new) — proves the id survives verbatim for
+  all 4 presets, and absence = rotate (not a dropped id). The premortem-#1 guard.
+- Threaded `lockedPresetId` through all three hops: GenerateVideo prop
+  `onSendToAiEditor(batch, lockedPresetId?)` → App.tsx `editorBatch` state →
+  `components/EditVideo.tsx` `BatchEditMode` render call (now
+  `preset: buildLockedPreset(editorBatch.lockedPresetId)`).
 
-**Settled decisions:**
-- **Lock mechanism (the easy, safe win — do this FIRST):** the user picks a look;
-  it threads as `FinalRenderRequest.preset.id` (the override field already exists
-  in `types.ts`; `resolvePreset()` already honors it). No lock → server rotates
-  (today's behavior). The plumbing is half-built already.
-- **Premortem #1 (the real risk):** the locked `presetId` silently getting dropped
-  on the hop GenerateVideo → `editorBatch` (App.tsx state) → EditVideo →
-  `renderFinalVideo()`. Guard with a tiny pure chokepoint helper + a unit test that
-  proves the id arrives. (NOTE: `wizardSessionStore` does NOT persist `editorBatch`,
-  so there's no draft-resume hop to worry about — simpler than the plan feared.)
-- **Composite preview (the bigger piece — Neil to decide approach):** show the
-  scene image with the caption/hook burned on, faithfully. Two options:
-  - **B) server `api/render/preview-frame.ts`** — additive, isolated ffmpeg-on-a-
-    still endpoint reusing `drawPlan` in Node with the real fonts. Faithful,
-    doesn't touch the existing render path. The grilled plan chose this.
-  - **A) client-side render from `planScene`** — now possible (drawPlan is pure/
-    importable) but has client `.js`-resolution + font-serving hurdles → riskier.
-    Rejected on reflection.
-  - **C) ship lock-only, no image composite** — smallest.
-- **Panel:** non-blocking, at the Render All entry, labeled exactly
-  *"static look preview — motion & timing added at render."*
-- **v1 scope (read-only):** preview + pick-ONE-look-per-ad. Deferred: caption
-  reposition/retype, per-scene looks, motion preview, collision detection.
+**Piece 2 — the picker UI** (`components/GenerateVideo/index.tsx`):
+- `LOOK_OPTIONS` (module-level) + `lockedPresetId` state + a `// LOOK` second row in
+  the Render All command bar: **AUTO** (default, no lock) + **Impact / Hype / Clean**.
+  `classic` deliberately NOT surfaced (kill-switch, not a creative choice; pipe still
+  supports it). Hints condensed from each preset's doc comment in `renderPresets.ts`.
+- **Copy note:** dropped the originally-planned label *"static look preview — motion
+  & timing added at render"* — that promises a preview IMAGE that only exists once
+  option B is built. Lock-only copy says `· applied at final render` instead. **If
+  you build B, restore the "static look preview" wording.**
 
-**Wiring map (from last session, for the rebuild):**
-- Look picker / lock lives in `components/GenerateVideo/index.tsx` (the Render All
-  command bar, `handleSendToAiEditorFromBar` ~L1675).
-- Handoff: `onSendToAiEditor(batch, lockedPresetId?)` → App.tsx `editorBatch` state
-  (~L203) → `<EditVideo editorBatch=...>`.
-- Apply: `components/EditVideo.tsx` `BatchEditMode` final-render call (`renderFinalVideo({ scenes, aspectRatio, music })` ~L272) — add `preset: { id: lockedPresetId }`.
+Verified: `npm run build` clean · the drawPlan snapshot guard stayed green (proof the
+tuned look is byte-identical) · 90 unit tests pass.
+
+---
+
+## ⏭️ NEXT — the ONE open decision: composite image preview (B) vs ship lock-only (C)
+
+Everything else is settled and shipped. The remaining choice (Neil's call) is whether
+to show the scene image with the caption/hook burned on, faithfully, at the Render All
+entry — or stop at the working lock-only UI.
+
+- **B) server `api/render/preview-frame.ts`** — additive, isolated ffmpeg-on-a-still
+  endpoint reusing `drawPlan` in Node with the real fonts. Faithful; doesn't touch the
+  existing render path. The grilled plan chose this. If built: panel is non-blocking,
+  at the Render All entry, and restore the label *"static look preview — motion &
+  timing added at render."*
+  - (Rejected alt **A**: client-side render from `planScene` — now importable, but
+    client `.js`-resolution + font-serving hurdles make it riskier.)
+- **C) ship lock-only, no image composite** — already shipped & working. Smallest.
+
+**v1 scope (read-only), deferred either way:** caption reposition/retype, per-scene
+looks, motion preview, collision detection.
 
 **TUNED guardrail (always):** never edit the look/preset/prompt CONTENT of
 `renderFfmpeg.ts`, `drawPlan.ts`, or `renderPresets.ts`. The snapshot test failing
@@ -81,8 +99,11 @@ video+voice+render spend, so the finished ad matches what they picked.
 ## How to resume
 
 1. `git checkout drawplan-refactor`
-2. Skim this file + confirm `npm run build` + the snapshot test are green.
-3. Pick up the look-lock rebuild — **start with the lock mechanism + its
-   threading test** (smallest, safest, proves the core). Then ask Neil about the
-   composite preview approach (B vs C) before building it.
-4. **No `/goal`. Manual. One piece, review, next piece.**
+2. Skim this file + confirm `npm run build` + the snapshot test are green
+   (`npx vitest run tests/unit/drawPlan.snapshot.test.ts tests/unit/renderLock.test.ts`).
+3. Lock-only (C) is shipped & working. The only open question is the **composite
+   preview: B vs C** — ask Neil which before building anything. If C, the feature
+   is done; if B, build `api/render/preview-frame.ts` (and restore the "static look
+   preview" label per the copy note above).
+4. Branch is committed (`d308061`) but **not pushed** — push if/when Neil asks.
+5. **No `/goal`. Manual. One piece, review, next piece.**
