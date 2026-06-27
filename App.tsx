@@ -142,7 +142,7 @@ const App: React.FC = () => {
     devUnlocked
       ? node
       : (
-        <PlanGate requires={requires} featureName={featureName} onBack={() => setActiveModule(null)} onUpgrade={() => { setActiveModule(null); setCurrentRoute('pricing'); }}>
+        <PlanGate requires={requires} featureName={featureName} onBack={() => setActiveModule(null)} onUpgrade={() => { setActiveModule(null); goToLegal('pricing'); }}>
           {node}
         </PlanGate>
       );
@@ -293,6 +293,17 @@ const App: React.FC = () => {
       toast.info('Checkout canceled', { description: 'No charge was made. You can upgrade anytime.' });
       window.history.replaceState({}, '', '/pricing');
     }
+  }, []);
+
+  // Manual routing (no React Router): keep the React route in sync with the
+  // browser's back/forward buttons. Without this, a history pop changes the URL
+  // but leaves currentRoute stale. Pairs with the SPA catch-all rewrite in
+  // vercel.json, which lets deep links / refreshes resolve to index.html.
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const onPop = () => setCurrentRoute(detectInitialRoute());
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
   }, []);
 
   useEffect(() => {
@@ -778,6 +789,9 @@ const App: React.FC = () => {
     setDirectorMode('oneshot'); // a finished/restarted ad returns to the default surface
   };
 
+  // Generic URL-syncing navigation: swap the route AND the address bar so the
+  // URL matches the view (deep-linkable / refresh-safe under the vercel.json
+  // catch-all). Used for the legal pages and /pricing.
   const goToLegal = (route: Route) => {
     if (typeof window !== 'undefined' && window.history.replaceState) {
       window.history.replaceState({}, '', ROUTE_PATHS[route]);
@@ -868,7 +882,7 @@ const App: React.FC = () => {
       <ErrorBoundary name="route:landing" resetKey={currentRoute} resetLabel="RETRY">
         <LandingPage
           onEnterApp={() => setCurrentRoute('app')}
-          onNavigatePricing={() => runVeilTransition('// PREPARING YOUR PLANS', () => setCurrentRoute('pricing'))}
+          onNavigatePricing={() => runVeilTransition('// PREPARING YOUR PLANS', () => goToLegal('pricing'))}
           onNavigateLegal={veilToLegal}
           isAuthenticated={isAuthenticated}
         />
@@ -1383,7 +1397,7 @@ const App: React.FC = () => {
   let moduleElement: React.ReactNode;
 
   if (!activeModule) {
-    moduleElement = <Dashboard onSelectModule={setActiveModule} activeModule={activeModule} userEmail={userEmail} userId={userId} onLogout={handleLogout} onUpgrade={() => setCurrentRoute('pricing')} />;
+    moduleElement = <Dashboard onSelectModule={setActiveModule} activeModule={activeModule} userEmail={userEmail} userId={userId} onLogout={handleLogout} onUpgrade={() => goToLegal('pricing')} />;
   } else if (activeModule === 'generate_video') {
     // Slice 3 — video is metered per FINISHED AD. Starter+ render (1/8/15 ads);
     // Free renders 0 and instead lands on the LockedVideoPreview upsell at the
@@ -1396,7 +1410,7 @@ const App: React.FC = () => {
       moduleElement = (
         <LockedVideoPreview
           onBack={() => setActiveModule(null)}
-          onUpgrade={() => { setActiveModule(null); setCurrentRoute('pricing'); }}
+          onUpgrade={() => { setActiveModule(null); goToLegal('pricing'); }}
           onBuyTopup={() => { window.location.href = '/checkout?topup=video_ad_single'; }}
           thumbnailUrl={thumbnailUrl}
           previewImageUrl={storyboard[0]?.imageUrl}
@@ -1521,7 +1535,7 @@ const App: React.FC = () => {
           setAspectRatio={setAspectRatio}
           directorUnlocked={directorUnlocked}
           onBack={() => setActiveModule(null)}
-          onUpgrade={() => { setActiveModule(null); setCurrentRoute('pricing'); }}
+          onUpgrade={() => { setActiveModule(null); goToLegal('pricing'); }}
           onSwitchToSteps={() => { setDirectorMode('steps'); setCurrentStep(1); }}
           onCloneVoice={() => { setSignalInitialTile('clone'); setSignalReturnToOneShot(true); setActiveModule('signal_modulator'); }}
           onReview={() => { setDirectorMode('steps'); setCurrentStep(8); }}
