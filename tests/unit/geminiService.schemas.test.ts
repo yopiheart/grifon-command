@@ -60,6 +60,7 @@ const {
   generateStoryboard,
   generateInfluencerStoryboard,
   generateCinematicNarrative,
+  generateAdCreatives,
 } = await import('../../services/geminiService');
 
 const { buildAdScriptPrompt, buildStoryboardPrompt, MODEL_TEXT } = await import(
@@ -432,4 +433,86 @@ describe('generateCinematicNarrative schema', () => {
     expect(promptDump).toContain('FORBIDDEN');
     expect(promptDump).toContain('MANDATORY');
   });
+});
+
+// ----------------------------------------------------------------------------
+// generateAdCreatives -> Promise<AdVariant[]> (family-branched: product | callout)
+// ----------------------------------------------------------------------------
+describe('generateAdCreatives schema', () => {
+  const baseUplink = {
+    brandIdentityName: 'TestBrand',
+    originalPrice: '1999',
+    offerPrice: '997',
+    inventoryList: 'AI marketing app',
+    targetDemographic: 'PH coffee shop owners',
+    ageRange: '27-42',
+    ethnicityProfile: 'Filipino',
+    primaryBenefit: 'More sales with less work',
+    problemSolved: 'No time to make ads',
+    marketPainPoint: 'Ads that do not convert',
+    uvp: 'AI does the marketing for you',
+    keyFeatures: 'scripts, video, captions',
+    hexCodes: '#FFCC00',
+    aspectRatio: '4:5',
+    resolution: '1K',
+    language: 'ENGLISH',
+    productAssets: [],
+  } as any;
+
+  it('callout family returns Niche Callout variants with composition fields', async () => {
+    fetchMock.mockResolvedValueOnce(okGemini([
+      {
+        id: 1,
+        templateType: 'Niche Callout',
+        headline: 'If you run a coffee shop, we built the Sales Roadmap for you.',
+        caption: 'Tara, gawan natin ng ad.',
+        hookLogic: 'specificity / self-identification',
+        imagePrompt: '',
+        composition: { niche: 'coffee shop', qualifier: '', leadMagnet: 'Sales Roadmap' },
+      },
+    ]));
+
+    const result = await generateAdCreatives({ ...baseUplink, family: 'callout' });
+
+    expect(Array.isArray(result)).toBe(true);
+    expect(result[0].templateType).toBe('Niche Callout');
+    expect(typeof result[0].composition?.niche).toBe('string');
+    expect(typeof result[0].composition?.leadMagnet).toBe('string');
+
+    // The callout branch — not the legacy product templates — was sent.
+    const sent = JSON.stringify(captureLastFetchBody());
+    expect(sent).toContain('Niche Callout');
+    expect(sent).not.toContain('Press Clip');
+  }, 10_000);
+
+  it('product family (default) keeps the legacy product-templates branch untouched', async () => {
+    fetchMock.mockResolvedValueOnce(okGemini([
+      { id: 1, templateType: 'Press Clip', headline: 'BREAKING', caption: 'c', hookLogic: 'authority', imagePrompt: 'p' },
+    ]));
+
+    const result = await generateAdCreatives({ ...baseUplink });
+
+    expect(result[0].templateType).toBe('Press Clip');
+    const sent = JSON.stringify(captureLastFetchBody());
+    expect(sent).toContain('Press Clip');
+    expect(sent).not.toContain('Niche Callout');
+  }, 10_000);
+
+  it('saas-offer family returns the 3 upsell templates with composition', async () => {
+    fetchMock.mockResolvedValueOnce(okGemini([
+      { id: 1, templateType: 'Guarantee Hero', headline: 'First ad live in 24h or your month is free.', caption: 'x', hookLogic: 'risk-reversal', imagePrompt: '', composition: { guarantee: 'Money back', ctaLabel: 'Upgrade now', badge: '24H' } },
+      { id: 2, templateType: 'Ticket Compare', headline: 'CHOOSE YOUR LEVEL', caption: 'y', hookLogic: 'anchoring', imagePrompt: '', composition: { tiers: [{ name: 'Free', lines: ['DIY'], highlight: false }, { name: 'Pro', lines: ['Done for you'], highlight: true }], ctaLabel: 'Go Pro' } },
+      { id: 3, templateType: 'Offer Stack Checklist', headline: 'All your money back if not 100%.', caption: 'z', hookLogic: 'reciprocity', imagePrompt: '', composition: { bullets: ['Ad script', 'Storyboard', 'Voiceover', 'Caption'], guarantee: 'Penny back', ctaLabel: 'Upgrade' } },
+    ]));
+
+    const result = await generateAdCreatives({ ...baseUplink, family: 'saas-offer' });
+
+    expect(result.map((r: any) => r.templateType)).toEqual(['Guarantee Hero', 'Ticket Compare', 'Offer Stack Checklist']);
+    expect(Array.isArray(result[1].composition?.tiers)).toBe(true);
+    expect(Array.isArray(result[2].composition?.bullets)).toBe(true);
+
+    const sent = JSON.stringify(captureLastFetchBody());
+    expect(sent).toContain('SaaS Upsell Ads');
+    expect(sent).not.toContain('Press Clip');
+  }, 10_000);
 });

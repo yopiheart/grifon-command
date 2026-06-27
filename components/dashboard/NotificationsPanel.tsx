@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Loader2, Film, Search, Image as ImageIcon, Layers, Activity, Zap, BellOff, ArrowRight, X } from 'lucide-react';
+import { SPRING } from '../ui/motionTokens';
 import type { ActiveJob, JobKind } from '../../services/activeJobsService';
 
 const KIND_ICON: Record<JobKind, React.ComponentType<{ className?: string }>> = {
@@ -50,7 +51,7 @@ export const NotificationsPanel: React.FC<NotificationsPanelProps> = ({
             initial={{ opacity: 0, y: 16, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.98 }}
-            transition={{ type: 'spring', stiffness: 360, damping: 30 }}
+            transition={SPRING.standard}
             className="fixed z-[76] bg-zinc-900/95 backdrop-blur-xl ring-1 ring-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden
               left-3 right-3 bottom-3 rounded-3xl
               lg:left-24 lg:right-auto lg:bottom-6 lg:w-80 lg:rounded-2xl"

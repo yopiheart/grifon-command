@@ -1,0 +1,4 @@
+HEADLINE: undefined
+TEMPLATE: Guarantee Hero
+CAPTION: Tired of starting your morning with bland, watered-down instant coffee? You deserve the bold, authentic kick of Batangas Barako. Join thousands of coffee lovers who have upgraded their ritual. If our beans don't transform your morning cup, we'll refund every peso, no questions asked. Experience the difference of small-batch roasting today.
+HOOK_LOGIC: The guarantee removes the psychological barrier to switching brands by centering on the transformation from 'bland' to 'bold'.

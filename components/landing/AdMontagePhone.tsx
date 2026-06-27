@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform } from 'motion/react';
+import { EASE, DUR } from '../ui/motionTokens';
 import { Building2, UtensilsCrossed, ShoppingBag, Play } from 'lucide-react';
 
 // Sample creative only (what a Grifon ad LOOKS like) — illustrative, not real
@@ -78,7 +79,7 @@ export const AdMontagePhone: React.FC<{ className?: string }> = ({ className = '
               initial={reduceMotion ? false : { opacity: 0, scale: 1.03 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={reduceMotion ? undefined : { opacity: 0 }}
-              transition={{ duration: 0.45, ease: 'easeOut' }}
+              transition={{ duration: DUR.slow, ease: EASE.out }}
               className={`absolute inset-0 bg-gradient-to-br ${frame.bg} flex flex-col`}
             >
               {/* Ad chrome: industry tag */}

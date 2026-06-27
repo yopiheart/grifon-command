@@ -1,0 +1,1624 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`drawPlan golden baseline — end card / camera / transitions > buildTransitionFilters: flash / whip / dip / burn 1`] = `
+{
+  "burnTail": "eq=brightness=0.07:gamma_r=1.1:enable='between(t,4.640,4.760)',eq=brightness=0.16:saturation=1.2:gamma_r=1.22:gamma_g=1.08:enable='between(t,4.760,4.880)',eq=brightness=0.32:saturation=1.4:gamma_r=1.45:gamma_g=1.15:enable='gte(t,4.880)',gblur=sigma=6:enable='gte(t,4.880)'",
+  "dipBoth": "fade=t=in:st=0:d=0.12:color=black,fade=t=out:st=4.880:d=0.12:color=black",
+  "flashHead": "fade=t=in:st=0:d=0.07:color=white",
+  "whipHead": "boxblur=18:1:enable='lt(t,0.050)',boxblur=8:1:enable='between(t,0.050,0.100)',boxblur=3:1:enable='between(t,0.100,0.150)'",
+}
+`;
+
+exports[`drawPlan golden baseline — end card / camera / transitions > effectiveCameraEffect / buildCameraFilter 1`] = `
+{
+  "classicFilter": null,
+  "classicIgnoresHints": null,
+}
+`;
+
+exports[`drawPlan golden baseline — end card / camera / transitions > planEndCardLayers: recap, face-aware, dup-drop, too-short 1`] = `
+{
+  "classic": [
+    {
+      "anim": "pop",
+      "boxAlpha": 0.85,
+      "color": "0xFFCC00",
+      "endSec": 5,
+      "fontsize": 60,
+      "kind": "text",
+      "startSec": 0.3,
+      "text": "FIRST 50: FREE DRIP BAG",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 499,
+    },
+  ],
+  "dupDropped": [],
+  "faceAware": [
+    {
+      "anim": "pop",
+      "boxAlpha": 0.85,
+      "color": "0xFFCC00",
+      "endSec": 5,
+      "fontsize": 60,
+      "kind": "text",
+      "startSec": 0.3,
+      "text": "FIRST 50: FREE DRIP BAG",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 1190,
+    },
+  ],
+  "hype": [
+    {
+      "anim": "pop",
+      "boxAlpha": 0,
+      "color": "white",
+      "endSec": 5,
+      "fontsize": 78,
+      "kind": "text",
+      "startSec": 0.3,
+      "text": "FIRST 50: FREE DRIP BAG",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 499,
+    },
+  ],
+  "tooShort": [],
+}
+`;
+
+exports[`drawPlan golden baseline — end card / camera / transitions > planTransitions across presets (with/without hook burn) 1`] = `
+{
+  "classic": [
+    {
+      "fadeInHead": false,
+      "fadeOutTail": false,
+    },
+    {
+      "fadeInHead": false,
+      "fadeOutTail": false,
+    },
+    {
+      "fadeInHead": false,
+      "fadeOutTail": false,
+    },
+    {
+      "fadeInHead": false,
+      "fadeOutTail": false,
+    },
+    {
+      "fadeInHead": false,
+      "fadeOutTail": false,
+    },
+    {
+      "fadeInHead": false,
+      "fadeOutTail": false,
+    },
+    {
+      "fadeInHead": false,
+      "fadeOutTail": false,
+    },
+  ],
+  "clean": [
+    {
+      "fadeInHead": false,
+      "fadeOutTail": true,
+    },
+    {
+      "fadeInHead": true,
+      "fadeOutTail": false,
+    },
+    {
+      "fadeInHead": false,
+      "fadeOutTail": false,
+    },
+    {
+      "fadeInHead": false,
+      "fadeOutTail": true,
+    },
+    {
+      "fadeInHead": true,
+      "fadeOutTail": false,
+    },
+    {
+      "fadeInHead": false,
+      "fadeOutTail": false,
+    },
+    {
+      "fadeInHead": false,
+      "fadeOutTail": false,
+    },
+  ],
+  "hype": [
+    {
+      "fadeInHead": false,
+      "fadeOutTail": true,
+      "tailKind": "burn",
+    },
+    {
+      "fadeInHead": true,
+      "fadeOutTail": false,
+      "headKind": "burn",
+    },
+    {
+      "fadeInHead": false,
+      "fadeOutTail": false,
+    },
+    {
+      "fadeInHead": true,
+      "fadeOutTail": false,
+    },
+    {
+      "fadeInHead": false,
+      "fadeOutTail": false,
+    },
+    {
+      "fadeInHead": true,
+      "fadeOutTail": false,
+    },
+    {
+      "fadeInHead": false,
+      "fadeOutTail": false,
+    },
+  ],
+  "impact": [
+    {
+      "fadeInHead": false,
+      "fadeOutTail": true,
+    },
+    {
+      "fadeInHead": true,
+      "fadeOutTail": false,
+    },
+    {
+      "fadeInHead": false,
+      "fadeOutTail": true,
+    },
+    {
+      "fadeInHead": true,
+      "fadeOutTail": false,
+    },
+    {
+      "fadeInHead": false,
+      "fadeOutTail": true,
+    },
+    {
+      "fadeInHead": true,
+      "fadeOutTail": false,
+    },
+    {
+      "fadeInHead": false,
+      "fadeOutTail": false,
+    },
+  ],
+  "impactHookBurn": [
+    {
+      "fadeInHead": false,
+      "fadeOutTail": true,
+      "tailKind": "burn",
+    },
+    {
+      "fadeInHead": true,
+      "fadeOutTail": false,
+      "headKind": "burn",
+    },
+    {
+      "fadeInHead": false,
+      "fadeOutTail": true,
+    },
+    {
+      "fadeInHead": true,
+      "fadeOutTail": false,
+    },
+    {
+      "fadeInHead": false,
+      "fadeOutTail": true,
+    },
+    {
+      "fadeInHead": true,
+      "fadeOutTail": false,
+    },
+    {
+      "fadeInHead": false,
+      "fadeOutTail": false,
+    },
+  ],
+}
+`;
+
+exports[`drawPlan golden baseline — filtergraph string builders > buildBoxFilter: wipe cascade 1`] = `"drawbox=x=200:y=800:w=10:h=50:color=0xD90429@0.9:t=fill:enable='gte(t,0.550)',drawbox=x=210:y=800:w=10:h=50:color=0xD90429@0.9:t=fill:enable='gte(t,0.567)',drawbox=x=220:y=800:w=10:h=50:color=0xD90429@0.9:t=fill:enable='gte(t,0.583)',drawbox=x=230:y=800:w=10:h=50:color=0xD90429@0.9:t=fill:enable='gte(t,0.600)',drawbox=x=240:y=800:w=10:h=50:color=0xD90429@0.9:t=fill:enable='gte(t,0.617)',drawbox=x=250:y=800:w=10:h=50:color=0xD90429@0.9:t=fill:enable='gte(t,0.633)',drawbox=x=260:y=800:w=10:h=50:color=0xD90429@0.9:t=fill:enable='gte(t,0.650)',drawbox=x=270:y=800:w=10:h=50:color=0xD90429@0.9:t=fill:enable='gte(t,0.667)',drawbox=x=280:y=800:w=10:h=50:color=0xD90429@0.9:t=fill:enable='gte(t,0.683)',drawbox=x=290:y=800:w=10:h=50:color=0xD90429@0.9:t=fill:enable='gte(t,0.700)',drawbox=x=300:y=800:w=10:h=50:color=0xD90429@0.9:t=fill:enable='gte(t,0.717)',drawbox=x=310:y=800:w=10:h=50:color=0xD90429@0.9:t=fill:enable='gte(t,0.733)',drawbox=x=320:y=800:w=10:h=50:color=0xD90429@0.9:t=fill:enable='gte(t,0.750)',drawbox=x=330:y=800:w=10:h=50:color=0xD90429@0.9:t=fill:enable='gte(t,0.767)',drawbox=x=340:y=800:w=10:h=50:color=0xD90429@0.9:t=fill:enable='gte(t,0.783)',drawbox=x=350:y=800:w=10:h=50:color=0xD90429@0.9:t=fill:enable='gte(t,0.800)',drawbox=x=360:y=800:w=10:h=50:color=0xD90429@0.9:t=fill:enable='gte(t,0.817)',drawbox=x=370:y=800:w=10:h=50:color=0xD90429@0.9:t=fill:enable='gte(t,0.833)',drawbox=x=380:y=800:w=10:h=50:color=0xD90429@0.9:t=fill:enable='gte(t,0.850)',drawbox=x=390:y=800:w=10:h=50:color=0xD90429@0.9:t=fill:enable='gte(t,0.867)',drawbox=x=400:y=800:w=10:h=50:color=0xD90429@0.9:t=fill:enable='gte(t,0.883)',drawbox=x=410:y=800:w=10:h=50:color=0xD90429@0.9:t=fill:enable='gte(t,0.900)',drawbox=x=420:y=800:w=10:h=50:color=0xD90429@0.9:t=fill:enable='gte(t,0.917)',drawbox=x=430:y=800:w=10:h=50:color=0xD90429@0.9:t=fill:enable='gte(t,0.933)'"`;
+
+exports[`drawPlan golden baseline — filtergraph string builders > buildTextFilter: every animation branch 1`] = `
+{
+  "fade": "drawtext=fontfile=font.ttf:textfile=c.txt:fontsize=80:fontcolor=white:shadowcolor=black@0.73:shadowx=6:shadowy=6:line_spacing=10:box=1:boxcolor=black@0.85:boxborderw=18:x='(w-text_w)/2':y='1200':alpha='max(0,min(1,min((t-0.4)/0.25,(2.5-t)/0.25)))':enable='between(t,0.4,2.5)'",
+  "impactPreset": "drawtext=fontfile=font.ttf:textfile=c.txt:fontsize='max(8,80*(0.85+0.15*(1-2.70158*pow(1-min(1,max(0,(t-0.4)/0.15)),3)+1.70158*pow(1-min(1,max(0,(t-0.4)/0.15)),2))))':fontcolor=white:shadowcolor=black@0.6:shadowx=4:shadowy=4:line_spacing=10:box=1:boxcolor=black@0.85:boxborderw=18:x='(w-text_w)/2':y='1200':alpha='min(1,max(0,(t-0.4)/0.06))':enable='between(t,0.4,2.5)'",
+  "none": "drawtext=fontfile=font.ttf:textfile=ov.txt:fontsize=80:fontcolor=white:shadowcolor=black@0.73:shadowx=6:shadowy=6:line_spacing=10:box=1:boxcolor=black@0.85:boxborderw=18:x='(w-text_w)/2':y='1200':alpha='1':enable='between(t,0.4,2.5)'",
+  "pop": "drawtext=fontfile=font.ttf:textfile=c.txt:fontsize='max(8,80*(0.85+0.15*(1-2.70158*pow(1-min(1,max(0,(t-0.4)/0.15)),3)+1.70158*pow(1-min(1,max(0,(t-0.4)/0.15)),2))))':fontcolor=white:shadowcolor=black@0.73:shadowx=6:shadowy=6:line_spacing=10:box=1:boxcolor=black@0.85:boxborderw=18:x='(w-text_w)/2':y='1200':alpha='min(1,max(0,(t-0.4)/0.06))':enable='between(t,0.4,2.5)'",
+  "slideup": "drawtext=fontfile=font.ttf:textfile=h.txt:fontsize='max(10,80*(0.45+0.55*(1-2.70158*pow(1-min(1,max(0,(t-0.4)/0.35)),3)+1.70158*pow(1-min(1,max(0,(t-0.4)/0.35)),2))))':fontcolor=white:shadowcolor=black@0.73:shadowx=6:shadowy=6:line_spacing=10:x='(w-text_w)/2':y='1200+28*(1-min(1,max(0,(t-0.4)/0.35)))':alpha='min(1,max(0,(t-0.4)/0.15))':enable='between(t,0.4,2.5)'",
+}
+`;
+
+exports[`drawPlan golden baseline — planScene across presets > planScene battery — CLASSIC 1`] = `
+{
+  "brollCallout": [
+    {
+      "anim": "fade",
+      "boxAlpha": 0.85,
+      "color": "0xFFCC00",
+      "emphasisSfx": "pop",
+      "endSec": 1.5,
+      "fontsize": 84,
+      "kind": "text",
+      "startSec": 0.3,
+      "text": "ENERGY RESET",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 1348,
+    },
+  ],
+  "hook": [
+    {
+      "color": "0xD90429",
+      "h": 199,
+      "kind": "box",
+      "startSec": 0.55,
+      "w": 888,
+      "wipeDur": 0.4,
+      "x": 108,
+      "y": 336,
+    },
+    {
+      "anim": "slideup",
+      "boxAlpha": 0,
+      "color": "white",
+      "emphasisSfx": "boom",
+      "endSec": 4,
+      "fontsize": 115,
+      "kind": "text",
+      "startSec": 0.4,
+      "text": "TIGNAN MO TO
+BAGO MAUBOS",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 288,
+    },
+  ],
+  "plainCaption": [
+    {
+      "anim": "none",
+      "boxAlpha": 0.85,
+      "color": "white",
+      "endSec": 1.867,
+      "fontsize": 73,
+      "kind": "text",
+      "startSec": 0.3,
+      "text": "Ako si Maria at ito",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 1286,
+    },
+    {
+      "anim": "none",
+      "boxAlpha": 0.85,
+      "color": "white",
+      "endSec": 3.433,
+      "fontsize": 77,
+      "kind": "text",
+      "startSec": 1.867,
+      "text": "ang",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 1286,
+    },
+    {
+      "anim": "none",
+      "boxAlpha": 0.85,
+      "color": "white",
+      "endSec": 5,
+      "fontsize": 77,
+      "kind": "text",
+      "startSec": 3.433,
+      "text": "sikreto ko",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 1286,
+    },
+  ],
+  "plainCaptionLandscape": [
+    {
+      "anim": "none",
+      "boxAlpha": 0.85,
+      "color": "white",
+      "endSec": 1.867,
+      "fontsize": 43,
+      "kind": "text",
+      "startSec": 0.3,
+      "text": "Ako si Maria at ito",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 692,
+    },
+    {
+      "anim": "none",
+      "boxAlpha": 0.85,
+      "color": "white",
+      "endSec": 3.433,
+      "fontsize": 43,
+      "kind": "text",
+      "startSec": 1.867,
+      "text": "ang",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 692,
+    },
+    {
+      "anim": "none",
+      "boxAlpha": 0.85,
+      "color": "white",
+      "endSec": 5,
+      "fontsize": 43,
+      "kind": "text",
+      "startSec": 3.433,
+      "text": "sikreto ko",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 692,
+    },
+  ],
+  "punchline": [
+    {
+      "anim": "fade",
+      "boxAlpha": 0.85,
+      "color": "0xFFCC00",
+      "emphasisSfx": "ding",
+      "endSec": 1.5,
+      "fontsize": 84,
+      "kind": "text",
+      "startSec": 0.3,
+      "text": "ORDER NA",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 1348,
+    },
+  ],
+  "talkingCallout": [
+    {
+      "anim": "fade",
+      "boxAlpha": 0.85,
+      "color": "0xFFCC00",
+      "emphasisSfx": "pop",
+      "endSec": 1.5,
+      "fontsize": 84,
+      "kind": "text",
+      "startSec": 0.3,
+      "text": "DERMA-TESTED",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 1286,
+    },
+    {
+      "anim": "none",
+      "boxAlpha": 0.85,
+      "color": "white",
+      "endSec": 2.25,
+      "fontsize": 77,
+      "kind": "text",
+      "startSec": 1.7,
+      "text": "skin ko",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 1286,
+    },
+    {
+      "anim": "none",
+      "boxAlpha": 0.85,
+      "color": "white",
+      "endSec": 3.7,
+      "fontsize": 77,
+      "kind": "text",
+      "startSec": 2.25,
+      "text": "ngayon talaga",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 1286,
+    },
+  ],
+}
+`;
+
+exports[`drawPlan golden baseline — planScene across presets > planScene battery — CLEAN 1`] = `
+{
+  "brollCallout": [
+    {
+      "anim": "fade",
+      "boxAlpha": 0.6,
+      "color": "0xFFCC00",
+      "emphasisSfx": undefined,
+      "endSec": 1.5,
+      "fontsize": 81,
+      "kind": "text",
+      "startSec": 0,
+      "text": "ENERGY RESET",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 1348,
+    },
+  ],
+  "hook": [
+    {
+      "anim": "word-pop",
+      "boxAlpha": 0,
+      "color": "white",
+      "emphasisSfx": "sparkle",
+      "endSec": 4,
+      "font": "hook",
+      "fontsize": 100,
+      "gradient": {
+        "base": [
+          "0xFFFFFF",
+          "0x9EA3AA",
+        ],
+        "hi": [
+          "0xFFE860",
+          "0xC07F00",
+        ],
+      },
+      "kind": "text",
+      "startSec": 0.05,
+      "text": "TIGNAN MO TO
+BAGO MAUBOS",
+      "words": [
+        {
+          "end": 4,
+          "highlight": true,
+          "start": 0.05,
+          "word": "TIGNAN",
+          "xPx": 126,
+          "yPx": 288,
+        },
+        {
+          "end": 4,
+          "highlight": false,
+          "start": 0.39,
+          "word": "MO",
+          "xPx": 616,
+          "yPx": 288,
+        },
+        {
+          "end": 4,
+          "highlight": false,
+          "start": 0.73,
+          "word": "TO",
+          "xPx": 802,
+          "yPx": 288,
+        },
+        {
+          "end": 4,
+          "highlight": true,
+          "start": 1.07,
+          "word": "BAGO",
+          "xPx": 143,
+          "yPx": 406,
+        },
+        {
+          "end": 4,
+          "highlight": false,
+          "start": 1.41,
+          "word": "MAUBOS",
+          "xPx": 481,
+          "yPx": 406,
+        },
+      ],
+      "xExpr": "144",
+      "yBase": 288,
+    },
+  ],
+  "plainCaption": [
+    {
+      "anim": "none",
+      "boxAlpha": 0.6,
+      "color": "white",
+      "endSec": 1.867,
+      "fontsize": 67,
+      "kind": "text",
+      "startSec": 0.3,
+      "text": "Ako si Maria at ito",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 1286,
+    },
+    {
+      "anim": "none",
+      "boxAlpha": 0.6,
+      "color": "white",
+      "endSec": 3.433,
+      "fontsize": 73,
+      "kind": "text",
+      "startSec": 1.867,
+      "text": "ang",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 1286,
+    },
+    {
+      "anim": "none",
+      "boxAlpha": 0.6,
+      "color": "white",
+      "endSec": 5,
+      "fontsize": 73,
+      "kind": "text",
+      "startSec": 3.433,
+      "text": "sikreto ko",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 1286,
+    },
+  ],
+  "plainCaptionLandscape": [
+    {
+      "anim": "none",
+      "boxAlpha": 0.6,
+      "color": "white",
+      "endSec": 1.867,
+      "fontsize": 41,
+      "kind": "text",
+      "startSec": 0.3,
+      "text": "Ako si Maria at ito",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 692,
+    },
+    {
+      "anim": "none",
+      "boxAlpha": 0.6,
+      "color": "white",
+      "endSec": 3.433,
+      "fontsize": 41,
+      "kind": "text",
+      "startSec": 1.867,
+      "text": "ang",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 692,
+    },
+    {
+      "anim": "none",
+      "boxAlpha": 0.6,
+      "color": "white",
+      "endSec": 5,
+      "fontsize": 41,
+      "kind": "text",
+      "startSec": 3.433,
+      "text": "sikreto ko",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 692,
+    },
+  ],
+  "punchline": [
+    {
+      "anim": "fade",
+      "boxAlpha": 0.6,
+      "color": "0xFFCC00",
+      "emphasisSfx": "ding",
+      "endSec": 5,
+      "fontsize": 81,
+      "kind": "text",
+      "startSec": 0.3,
+      "text": "ORDER NA",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 1348,
+    },
+  ],
+  "talkingCallout": [
+    {
+      "anim": "fade",
+      "boxAlpha": 0.6,
+      "color": "0xFFCC00",
+      "emphasisSfx": undefined,
+      "endSec": 1.5,
+      "fontsize": 81,
+      "kind": "text",
+      "startSec": 0,
+      "text": "DERMA-TESTED",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 1286,
+    },
+    {
+      "anim": "none",
+      "boxAlpha": 0.6,
+      "color": "white",
+      "endSec": 2.25,
+      "fontsize": 73,
+      "kind": "text",
+      "startSec": 1.7,
+      "text": "skin ko",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 1286,
+    },
+    {
+      "anim": "none",
+      "boxAlpha": 0.6,
+      "color": "white",
+      "endSec": 3.7,
+      "fontsize": 73,
+      "kind": "text",
+      "startSec": 2.25,
+      "text": "ngayon talaga",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 1286,
+    },
+  ],
+}
+`;
+
+exports[`drawPlan golden baseline — planScene across presets > planScene battery — HYPE 1`] = `
+{
+  "brollCallout": [
+    {
+      "anim": "fade",
+      "boxAlpha": 0,
+      "color": "white",
+      "emphasisSfx": "pop",
+      "endSec": 1.5,
+      "fontsize": 92,
+      "kind": "text",
+      "startSec": 0.3,
+      "text": "ENERGY RESET",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 1306,
+    },
+  ],
+  "hook": [
+    {
+      "anim": "word-pop",
+      "boxAlpha": 0,
+      "color": "white",
+      "emphasisSfx": "boom",
+      "endSec": 4,
+      "font": "hook",
+      "fontsize": 111,
+      "gradient": {
+        "base": [
+          "0xFFFFFF",
+          "0x9EA3AA",
+        ],
+        "hi": [
+          "0xFFE860",
+          "0xC07F00",
+        ],
+      },
+      "kind": "text",
+      "startSec": 0.05,
+      "text": "TIGNAN MO TO
+BAGO MAUBOS",
+      "words": [
+        {
+          "end": 4,
+          "highlight": true,
+          "start": 0.05,
+          "word": "TIGNAN",
+          "xPx": 91,
+          "yPx": 288,
+        },
+        {
+          "end": 4,
+          "highlight": false,
+          "start": 0.35,
+          "word": "MO",
+          "xPx": 622,
+          "yPx": 288,
+        },
+        {
+          "end": 4,
+          "highlight": false,
+          "start": 0.65,
+          "word": "TO",
+          "xPx": 824,
+          "yPx": 288,
+        },
+        {
+          "end": 4,
+          "highlight": true,
+          "start": 0.95,
+          "word": "BAGO",
+          "xPx": 110,
+          "yPx": 419,
+        },
+        {
+          "end": 4,
+          "highlight": false,
+          "start": 1.25,
+          "word": "MAUBOS",
+          "xPx": 477,
+          "yPx": 419,
+        },
+      ],
+      "xExpr": "114",
+      "yBase": 288,
+    },
+  ],
+  "plainCaption": [
+    {
+      "anim": "word-pop",
+      "boxAlpha": 0,
+      "color": "0xFFCC00",
+      "endSec": 1.475,
+      "fontsize": 84,
+      "kind": "text",
+      "startSec": 0.3,
+      "text": "Ako si",
+      "words": [
+        {
+          "end": 0.971,
+          "start": 0.3,
+          "word": "Ako",
+          "xPx": 419,
+        },
+        {
+          "end": 1.475,
+          "start": 0.971,
+          "word": "si",
+          "xPx": 580,
+        },
+      ],
+      "xExpr": "419",
+      "yBase": 1229,
+    },
+    {
+      "anim": "word-pop",
+      "boxAlpha": 0,
+      "color": "0xFFCC00",
+      "endSec": 2.65,
+      "fontsize": 84,
+      "kind": "text",
+      "startSec": 1.475,
+      "text": "Maria at ito",
+      "words": [
+        {
+          "end": 2.017,
+          "start": 1.475,
+          "word": "Maria",
+          "xPx": 298,
+        },
+        {
+          "end": 2.288,
+          "start": 2.017,
+          "word": "at",
+          "xPx": 540,
+        },
+        {
+          "end": 2.65,
+          "start": 2.288,
+          "word": "ito",
+          "xPx": 661,
+        },
+      ],
+      "xExpr": "298",
+      "yBase": 1229,
+    },
+    {
+      "anim": "word-pop",
+      "boxAlpha": 0,
+      "color": "0xFFCC00",
+      "endSec": 3.825,
+      "fontsize": 84,
+      "kind": "text",
+      "startSec": 2.65,
+      "text": "ang",
+      "words": [
+        {
+          "end": 3.825,
+          "start": 2.65,
+          "word": "ang",
+          "xPx": 480,
+        },
+      ],
+      "xExpr": "480",
+      "yBase": 1229,
+    },
+    {
+      "anim": "word-pop",
+      "boxAlpha": 0,
+      "color": "0xFFCC00",
+      "endSec": 5,
+      "fontsize": 84,
+      "kind": "text",
+      "startSec": 3.825,
+      "text": "sikreto ko",
+      "words": [
+        {
+          "end": 4.68,
+          "start": 3.825,
+          "word": "sikreto",
+          "xPx": 338,
+        },
+        {
+          "end": 5,
+          "start": 4.68,
+          "word": "ko",
+          "xPx": 661,
+        },
+      ],
+      "xExpr": "338",
+      "yBase": 1229,
+    },
+  ],
+  "plainCaptionLandscape": [
+    {
+      "anim": "word-pop",
+      "boxAlpha": 0,
+      "color": "0xFFCC00",
+      "endSec": 1.475,
+      "fontsize": 48,
+      "kind": "text",
+      "startSec": 0.3,
+      "text": "Ako si",
+      "words": [
+        {
+          "end": 0.971,
+          "start": 0.3,
+          "word": "Ako",
+          "xPx": 891,
+        },
+        {
+          "end": 1.475,
+          "start": 0.971,
+          "word": "si",
+          "xPx": 983,
+        },
+      ],
+      "xExpr": "891",
+      "yBase": 691,
+    },
+    {
+      "anim": "word-pop",
+      "boxAlpha": 0,
+      "color": "0xFFCC00",
+      "endSec": 2.65,
+      "fontsize": 48,
+      "kind": "text",
+      "startSec": 1.475,
+      "text": "Maria at ito",
+      "words": [
+        {
+          "end": 2.017,
+          "start": 1.475,
+          "word": "Maria",
+          "xPx": 822,
+        },
+        {
+          "end": 2.288,
+          "start": 2.017,
+          "word": "at",
+          "xPx": 960,
+        },
+        {
+          "end": 2.65,
+          "start": 2.288,
+          "word": "ito",
+          "xPx": 1029,
+        },
+      ],
+      "xExpr": "822",
+      "yBase": 691,
+    },
+    {
+      "anim": "word-pop",
+      "boxAlpha": 0,
+      "color": "0xFFCC00",
+      "endSec": 3.825,
+      "fontsize": 48,
+      "kind": "text",
+      "startSec": 2.65,
+      "text": "ang",
+      "words": [
+        {
+          "end": 3.825,
+          "start": 2.65,
+          "word": "ang",
+          "xPx": 925,
+        },
+      ],
+      "xExpr": "925",
+      "yBase": 691,
+    },
+    {
+      "anim": "word-pop",
+      "boxAlpha": 0,
+      "color": "0xFFCC00",
+      "endSec": 5,
+      "fontsize": 48,
+      "kind": "text",
+      "startSec": 3.825,
+      "text": "sikreto ko",
+      "words": [
+        {
+          "end": 4.68,
+          "start": 3.825,
+          "word": "sikreto",
+          "xPx": 845,
+        },
+        {
+          "end": 5,
+          "start": 4.68,
+          "word": "ko",
+          "xPx": 1029,
+        },
+      ],
+      "xExpr": "845",
+      "yBase": 691,
+    },
+  ],
+  "punchline": [
+    {
+      "anim": "fade",
+      "boxAlpha": 0,
+      "color": "white",
+      "emphasisSfx": "ding",
+      "endSec": 5,
+      "fontsize": 92,
+      "kind": "text",
+      "startSec": 0.3,
+      "text": "ORDER NA",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 1306,
+    },
+  ],
+  "talkingCallout": [
+    {
+      "anim": "fade",
+      "boxAlpha": 0,
+      "color": "white",
+      "emphasisSfx": "pop",
+      "endSec": 1.5,
+      "fontsize": 92,
+      "kind": "text",
+      "startSec": 0.3,
+      "text": "DERMA-TESTED",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 1229,
+    },
+    {
+      "anim": "word-pop",
+      "boxAlpha": 0,
+      "color": "0xFFCC00",
+      "endSec": 2.25,
+      "fontsize": 84,
+      "kind": "text",
+      "startSec": 1.7,
+      "text": "skin ko",
+      "words": [
+        {
+          "end": 2.044,
+          "start": 1.7,
+          "word": "skin",
+          "xPx": 399,
+        },
+        {
+          "end": 2.25,
+          "start": 2.044,
+          "word": "ko",
+          "xPx": 600,
+        },
+      ],
+      "xExpr": "399",
+      "yBase": 1229,
+    },
+    {
+      "anim": "word-pop",
+      "boxAlpha": 0,
+      "color": "0xFFCC00",
+      "endSec": 3.7,
+      "fontsize": 84,
+      "kind": "text",
+      "startSec": 2.25,
+      "text": "ngayon talaga",
+      "words": [
+        {
+          "end": 2.975,
+          "start": 2.25,
+          "word": "ngayon",
+          "xPx": 278,
+        },
+        {
+          "end": 3.7,
+          "start": 2.975,
+          "word": "talaga",
+          "xPx": 560,
+        },
+      ],
+      "xExpr": "278",
+      "yBase": 1229,
+    },
+  ],
+}
+`;
+
+exports[`drawPlan golden baseline — planScene across presets > planScene battery — IMPACT 1`] = `
+{
+  "brollCallout": [
+    {
+      "anim": "fade",
+      "boxAlpha": 0,
+      "color": "0xFFCC00",
+      "emphasisSfx": "snap",
+      "endSec": 1.5,
+      "fontsize": 88,
+      "kind": "text",
+      "startSec": 0.3,
+      "text": "ENERGY RESET",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 1344,
+    },
+  ],
+  "hook": [
+    {
+      "anim": "word-pop",
+      "boxAlpha": 0,
+      "color": "white",
+      "emphasisSfx": "boom",
+      "endSec": 4,
+      "font": "hook",
+      "fontsize": 111,
+      "gradient": {
+        "base": [
+          "0xFFFFFF",
+          "0x9EA3AA",
+        ],
+        "hi": [
+          "0xFFE860",
+          "0xC07F00",
+        ],
+      },
+      "kind": "text",
+      "startSec": 0.05,
+      "text": "TIGNAN MO TO
+BAGO MAUBOS",
+      "words": [
+        {
+          "end": 4,
+          "highlight": true,
+          "start": 0.05,
+          "word": "TIGNAN",
+          "xPx": 91,
+          "yPx": 288,
+        },
+        {
+          "end": 4,
+          "highlight": false,
+          "start": 0.37,
+          "word": "MO",
+          "xPx": 622,
+          "yPx": 288,
+        },
+        {
+          "end": 4,
+          "highlight": false,
+          "start": 0.69,
+          "word": "TO",
+          "xPx": 824,
+          "yPx": 288,
+        },
+        {
+          "end": 4,
+          "highlight": true,
+          "start": 1.01,
+          "word": "BAGO",
+          "xPx": 110,
+          "yPx": 419,
+        },
+        {
+          "end": 4,
+          "highlight": false,
+          "start": 1.33,
+          "word": "MAUBOS",
+          "xPx": 477,
+          "yPx": 419,
+        },
+      ],
+      "xExpr": "114",
+      "yBase": 288,
+    },
+  ],
+  "plainCaption": [
+    {
+      "anim": "pop",
+      "boxAlpha": 0,
+      "color": "white",
+      "endSec": 1.475,
+      "fontsize": 81,
+      "kind": "text",
+      "startSec": 0.3,
+      "text": "Ako si",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 1267,
+    },
+    {
+      "anim": "pop",
+      "boxAlpha": 0,
+      "color": "white",
+      "endSec": 2.65,
+      "fontsize": 81,
+      "kind": "text",
+      "startSec": 1.475,
+      "text": "Maria at ito",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 1267,
+    },
+    {
+      "anim": "pop",
+      "boxAlpha": 0,
+      "color": "white",
+      "endSec": 3.825,
+      "fontsize": 81,
+      "kind": "text",
+      "startSec": 2.65,
+      "text": "ang",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 1267,
+    },
+    {
+      "anim": "pop",
+      "boxAlpha": 0,
+      "color": "white",
+      "endSec": 5,
+      "fontsize": 81,
+      "kind": "text",
+      "startSec": 3.825,
+      "text": "sikreto ko",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 1267,
+    },
+  ],
+  "plainCaptionLandscape": [
+    {
+      "anim": "pop",
+      "boxAlpha": 0,
+      "color": "white",
+      "endSec": 1.475,
+      "fontsize": 45,
+      "kind": "text",
+      "startSec": 0.3,
+      "text": "Ako si",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 692,
+    },
+    {
+      "anim": "pop",
+      "boxAlpha": 0,
+      "color": "white",
+      "endSec": 2.65,
+      "fontsize": 45,
+      "kind": "text",
+      "startSec": 1.475,
+      "text": "Maria at ito",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 692,
+    },
+    {
+      "anim": "pop",
+      "boxAlpha": 0,
+      "color": "white",
+      "endSec": 3.825,
+      "fontsize": 45,
+      "kind": "text",
+      "startSec": 2.65,
+      "text": "ang",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 692,
+    },
+    {
+      "anim": "pop",
+      "boxAlpha": 0,
+      "color": "white",
+      "endSec": 5,
+      "fontsize": 45,
+      "kind": "text",
+      "startSec": 3.825,
+      "text": "sikreto ko",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 692,
+    },
+  ],
+  "punchline": [
+    {
+      "anim": "fade",
+      "boxAlpha": 0,
+      "color": "0xFFCC00",
+      "emphasisSfx": "ding",
+      "endSec": 5,
+      "fontsize": 88,
+      "kind": "text",
+      "startSec": 0.3,
+      "text": "ORDER NA",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 1344,
+    },
+  ],
+  "talkingCallout": [
+    {
+      "anim": "fade",
+      "boxAlpha": 0,
+      "color": "0xFFCC00",
+      "emphasisSfx": "snap",
+      "endSec": 1.5,
+      "fontsize": 88,
+      "kind": "text",
+      "startSec": 0.3,
+      "text": "DERMA-TESTED",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 1267,
+    },
+    {
+      "anim": "pop",
+      "boxAlpha": 0,
+      "color": "white",
+      "endSec": 2.25,
+      "fontsize": 81,
+      "kind": "text",
+      "startSec": 1.7,
+      "text": "skin ko",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 1267,
+    },
+    {
+      "anim": "pop",
+      "boxAlpha": 0,
+      "color": "white",
+      "endSec": 3.7,
+      "fontsize": 81,
+      "kind": "text",
+      "startSec": 2.25,
+      "text": "ngayon talaga",
+      "xExpr": "(w-text_w)/2",
+      "yBase": 1267,
+    },
+  ],
+}
+`;
+
+exports[`drawPlan golden baseline — planScene across presets > planScene: face-aware captionRegion clamps the band 1`] = `
+[
+  {
+    "anim": "fade",
+    "boxAlpha": 0.85,
+    "color": "0xFFCC00",
+    "emphasisSfx": "pop",
+    "endSec": 1.5,
+    "fontsize": 84,
+    "kind": "text",
+    "startSec": 0.3,
+    "text": "DERMA-TESTED",
+    "xExpr": "(w-text_w)/2",
+    "yBase": 1344,
+  },
+  {
+    "anim": "none",
+    "boxAlpha": 0.85,
+    "color": "white",
+    "endSec": 2.25,
+    "fontsize": 77,
+    "kind": "text",
+    "startSec": 1.7,
+    "text": "skin ko",
+    "xExpr": "(w-text_w)/2",
+    "yBase": 1344,
+  },
+  {
+    "anim": "none",
+    "boxAlpha": 0.85,
+    "color": "white",
+    "endSec": 3.7,
+    "fontsize": 77,
+    "kind": "text",
+    "startSec": 2.25,
+    "text": "ngayon talaga",
+    "xExpr": "(w-text_w)/2",
+    "yBase": 1344,
+  },
+]
+`;
+
+exports[`drawPlan golden baseline — primitive helpers > chunkCaption: pacing, particle pull-back, empties 1`] = `
+{
+  "emptyEmoji": [],
+  "particlePull": [
+    "Grabe ang lambot ng",
+    "skin ko",
+    "ngayon talaga",
+  ],
+  "timeCapped": [
+    "isa dalawa tatlo apat",
+    "lima anim pito walo",
+  ],
+  "wordLevel": [
+    "hindi mo kailangan ng",
+    "kape",
+    "para gumana",
+  ],
+}
+`;
+
+exports[`drawPlan golden baseline — primitive helpers > clampWindow / clampAnchor / snapSfxAnchor 1`] = `
+{
+  "clampAnchor": [
+    2,
+    0,
+    null,
+  ],
+  "clampWindow": [
+    {
+      "end": 3,
+      "start": 1,
+    },
+    {
+      "end": 5,
+      "start": 0,
+    },
+    null,
+    {
+      "end": 3,
+      "start": 1,
+    },
+  ],
+  "snapSfxAnchor": [
+    0,
+    null,
+    null,
+  ],
+}
+`;
+
+exports[`drawPlan golden baseline — primitive helpers > estWidth / isPowerWord / stripUnrenderable / evenSplit / wrapTwoLines 1`] = `
+{
+  "estWidth": [
+    595.2,
+    560,
+  ],
+  "evenSplit": [
+    [
+      [
+        1,
+        2,
+        3,
+      ],
+      [
+        4,
+        5,
+      ],
+    ],
+    [
+      [
+        1,
+        2,
+        3,
+      ],
+      [
+        4,
+        5,
+      ],
+      [
+        6,
+        7,
+      ],
+    ],
+  ],
+  "isPowerWord": [
+    [
+      "tignan",
+      true,
+    ],
+    [
+      "FREE",
+      true,
+    ],
+    [
+      "random",
+      false,
+    ],
+    [
+      "50",
+      true,
+    ],
+    [
+      "b3st",
+      true,
+    ],
+    [
+      "connector",
+      false,
+    ],
+  ],
+  "stripUnrenderable": [
+    "Grabe ang resulta",
+    "TIGNAN MO TO",
+    "first 50 lang promise",
+  ],
+  "wrapTwoLines": [
+    [
+      "Sobrang lambot ng",
+      "skin ko ngayon",
+    ],
+    [
+      "Supercalif",
+      "ragilistic",
+    ],
+  ],
+}
+`;
+
+exports[`drawPlan golden baseline — primitive helpers > fitText: fit / shrink / wrap 1`] = `
+{
+  "anton": {
+    "fontsize": 64,
+    "lines": [
+      "DERMA TESTED PROVEN RESULTS",
+    ],
+  },
+  "short": {
+    "fontsize": 120,
+    "lines": [
+      "ORDER NA",
+    ],
+  },
+  "shrinkWrap": {
+    "fontsize": 58,
+    "lines": [
+      "Sobrang lambot ng skin",
+      "ko ngayon promise talaga",
+    ],
+  },
+}
+`;
+
+exports[`drawPlan golden baseline — primitive helpers > hookTitleLayout: word stack, power-word highlight, cadence 1`] = `
+{
+  "hype": [
+    {
+      "end": 0.05,
+      "highlight": true,
+      "start": 0.05,
+      "word": "5",
+      "xPx": 304,
+      "yPx": 288,
+    },
+    {
+      "end": 0.35,
+      "highlight": true,
+      "start": 0.35,
+      "word": "BEST",
+      "xPx": 421,
+      "yPx": 288,
+    },
+    {
+      "end": 0.65,
+      "highlight": true,
+      "start": 0.65,
+      "word": "FREE",
+      "xPx": 76,
+      "yPx": 430,
+    },
+    {
+      "end": 0.95,
+      "highlight": false,
+      "start": 0.95,
+      "word": "NGAYON",
+      "xPx": 472,
+      "yPx": 430,
+    },
+  ],
+  "impact": [
+    {
+      "end": 0.05,
+      "highlight": true,
+      "start": 0.05,
+      "word": "STOP",
+      "xPx": -8,
+      "yPx": 288,
+    },
+    {
+      "end": 0.37,
+      "highlight": false,
+      "start": 0.37,
+      "word": "SCROLLING",
+      "xPx": 355,
+      "yPx": 288,
+    },
+    {
+      "end": 0.69,
+      "highlight": true,
+      "start": 0.69,
+      "word": "GRABE",
+      "xPx": 237,
+      "yPx": 418,
+    },
+    {
+      "end": 1.01,
+      "highlight": false,
+      "start": 1.01,
+      "word": "TO",
+      "xPx": 681,
+      "yPx": 418,
+    },
+  ],
+}
+`;
+
+exports[`drawPlan golden baseline — primitive helpers > pickSceneSfx: restraint, caps, emphasis-wins 1`] = `
+{
+  "capDrops": [
+    {
+      "globalSec": 2,
+      "sfxId": "drop",
+      "transition": false,
+    },
+    {
+      "globalSec": 7,
+      "sfxId": "drop",
+      "transition": false,
+    },
+  ],
+  "collide": [
+    {
+      "globalSec": 10.3,
+      "sfxId": "pop",
+      "transition": false,
+    },
+  ],
+  "soundUseThread": [
+    {
+      "globalSec": 20,
+      "sfxId": "drop",
+      "transition": false,
+    },
+  ],
+}
+`;
+
+exports[`drawPlan golden baseline — primitive helpers > safeZone across all aspect ratios 1`] = `
+{
+  "landscape": {
+    "bottomY": 842,
+    "topY": 151,
+    "usableW": 1536,
+    "xMargin": 192,
+  },
+  "portrait": {
+    "bottomY": 1498,
+    "topY": 269,
+    "usableW": 864,
+    "xMargin": 108,
+  },
+  "square": {
+    "bottomY": 842,
+    "topY": 151,
+    "usableW": 864,
+    "xMargin": 108,
+  },
+}
+`;
+
+exports[`drawPlan golden baseline — primitive helpers > voiceChunkWindows / wordTimings: measured forced-alignment pacing 1`] = `
+{
+  "mismatch": [
+    {
+      "end": 0.9,
+      "start": 0.5,
+    },
+    {
+      "end": 2,
+      "start": 0.9,
+    },
+  ],
+  "windows": [
+    {
+      "end": 2.6,
+      "start": 0.8,
+    },
+    {
+      "end": 3.9,
+      "start": 2.6,
+    },
+  ],
+  "wordTimings": [
+    {
+      "end": 1.635,
+      "start": 1,
+      "word": "Grabe",
+      "xPx": 223,
+    },
+    {
+      "end": 2.059,
+      "start": 1.635,
+      "word": "ang",
+      "xPx": 461,
+    },
+    {
+      "end": 2.8,
+      "start": 2.059,
+      "word": "lambot",
+      "xPx": 619,
+    },
+  ],
+}
+`;

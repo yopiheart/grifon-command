@@ -1,7 +1,7 @@
 import {
   Clapperboard, Radar, Target, Megaphone, Film, AudioWaveform,
   Scissors, FlaskConical, Aperture, Flame, Zap, Wand2, LayoutGrid,
-  Satellite, type LucideIcon,
+  Satellite, Layers, type LucideIcon,
 } from 'lucide-react';
 
 /**
@@ -114,6 +114,13 @@ export const MODULE_IDENTITY: Record<string, ModuleIdentity> = {
     descriptor: 'Generate scroll-stopping ad images',
     hue: '#FBBF24', // amber-400
     icon: Zap,
+  },
+  batch_fanout: {
+    key: 'batch_fanout',
+    name: 'Swarm',
+    descriptor: '100+ ad creatives from one hero image',
+    hue: '#F472B6', // pink-400
+    icon: Layers,
   },
   image_editor: {
     key: 'image_editor',

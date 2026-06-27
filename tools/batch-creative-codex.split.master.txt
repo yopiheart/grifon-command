@@ -1,0 +1,26 @@
+Photorealistic split-screen COMPARISON advertisement, vertical 4:5 format. ONE image divided into TWO equal vertical halves separated by a thin Grifon-Gold #FFCC00 divider line down the exact middle.
+
+GRIFON DESIGN SYSTEM (applies to the RIGHT / WINNING half only):
+- Background: deep near-black charcoal #09090B (zinc-950). NEVER pure black #000000.
+- A dramatic Grifon-Gold #FFCC00 radial glow. Gold is the SINGLE accent hue on this half.
+- Premium, crisp, sharp, polished, expensive, Hollywood-grade.
+- The confident person from the provided reference image appears on THIS winning half, faithful to the reference, looking great and in control.
+- A small gold "GRIFON AI" label on this half.
+
+LEFT / LOSING half:
+- Deliberately inferior: dull, desaturated, cold flat grey, cluttered, stressful, cheap, low quality — clearly the worse option. Muted neutral grey tones only (no bright colors).
+- A small muted grey tag labeling it the old/bad option.
+
+WHAT EACH HALF SHOWS (the comparison):
+{{SCENE}}
+
+LABELS (must be perfectly spelled and legible):
+- Centered top badge / eyebrow: "{{BADGE}}"
+- ONE bold headline banner across the BOTTOM third, spanning the full width, large, perfectly spelled, 3-7 words, high contrast — white text with 1-2 words in Grifon-Gold #FFCC00. Do NOT overlap faces.
+  "{{HEADLINE}}"
+
+TYPOGRAPHY (DESIGN.md): Inter / Geist / SF Pro — clean geometric sans, weight 700 (bold), tight letter-spacing.
+
+STYLE: the RIGHT half is high-end and gorgeous; the LEFT half is intentionally cheap, messy, and washed-out. The contrast between the two halves is the whole point.
+
+FORBIDDEN: pure black #000000 backgrounds; pink / cyan / teal or any non-gold accent on the winning half; GARBLED or MISSPELLED text in the BADGE or HEADLINE banner (the losing half's internal content may look bad, but the badge + headline must be crisp and correctly spelled); more than one headline banner; watermarks; stray logos; lorem-ipsum.

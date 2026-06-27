@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { DUR } from '../../ui/motionTokens';
 import { ArrowRight } from 'lucide-react';
 import { GlassPanel } from '../../ui/GlassPanel';
 import { GoldButton } from '../../ui/GoldButton';
@@ -23,7 +24,7 @@ export const OfferStack: React.FC<OfferStackProps> = ({ onNavigatePricing, secti
         initial={{ opacity: 0, scale: 0.95 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: DUR.expressive }}
       >
         <GlassPanel className="p-8 md:p-16 text-center bg-gradient-to-b from-zinc-900/80 to-zinc-950 border border-[#FFCC00]/20 relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#FFCC00] to-transparent"></div>
@@ -40,7 +41,7 @@ export const OfferStack: React.FC<OfferStackProps> = ({ onNavigatePricing, secti
                 initial={{ opacity: 0, x: -16 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: idx * 0.06 }}
+                transition={{ duration: DUR.slow, delay: idx * 0.06 }}
                 className="flex items-center justify-between border-b border-white/10 pb-4"
               >
                 <span className="text-zinc-400">{entry.item}</span>

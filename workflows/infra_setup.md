@@ -63,6 +63,17 @@ Track status in this section. Update as items complete.
 - [x] First production deploy reachable at https://app.grifon.ai (now redirects)
 - Outstanding: Vercel billing address incomplete (Settings → Billing → Update Address) — non-blocking but Vercel will eventually nag
 
+### 7. Meta Ads CLI (paid-ads execution) — NOT STARTED
+Prerequisite for the `grifon-ad-strategist` skill to pull live insights / draft spend commands. Until this is done, the skill runs on canon only and the Ad Performance Ledger stays empty.
+- [ ] `pip install meta-ads` on the working machine (cafe-PC: re-runs each session unless added to a restore script)
+- [ ] Create an **admin System User** in Meta Business Suite → Settings → Users → System Users
+- [ ] Assign assets to it: the ad account, the FB Page(s), pixel/dataset, catalog
+- [ ] Add the System User as **App Admin** in the Meta for Developers app
+- [ ] Generate a System User access token with scopes: `ads_management`, `business_management`, `read_insights`, `pages_show_list`, `pages_read_engagement`, `pages_manage_ads`, `catalog_management`
+- [ ] Put `ACCESS_TOKEN=<token>` and `AD_ACCOUNT_ID=<id>` in `.env` (never paste into chat — see Edge Cases)
+- [ ] Verify with `meta auth status` and `meta ads adaccount list`
+- [ ] TikTok has no CLI — run TikTok Ads Manager by hand; the skill drafts structure/decisions, Neil executes
+
 ## Tools
 
 No scripts yet. Each item is a manual console action. As we automate:

@@ -9,6 +9,7 @@ import { preferGenderVoice, type AvatarVoiceGender } from '../../utils/voiceSele
 import VoicePicker from './VoicePicker';
 import { RECOMMENDED_VOICE_IDS } from './pinoyReady';
 import { STABILITY_LABELS, downloadAudio } from './utils';
+import { pickDeliveryTag } from './deliveryTag';
 import type { SessionHistoryApi } from './useSessionHistory';
 
 interface ScenePipelineTileProps {
@@ -37,9 +38,40 @@ const ScenePipelineTile: React.FC<ScenePipelineTileProps> = ({
   onSendToAiEditor,
 }) => {
   const [voiceId, setVoiceId] = useState<string>('');
-  // Default to 'robust' for batch voice generation — keeps tone consistent
-  // across all scenes, which is the whole point of routing through here.
-  const [stabilityMode, setStabilityMode] = useState<StabilityMode>('robust');
+  // Emotion-aware delivery (default ON): inject an eleven_v3 delivery tag per
+  // scene based on its narrative role/position so the VO reads the ad's arc
+  // instead of a monotone. OFF restores the legacy flat behavior exactly.
+  const [emotionAware, setEmotionAware] = useState(true);
+  // When emotion-aware, default to 'natural' so the v3 tags actually express
+  // ('robust' suppresses them). Manual buttons still override either way; the
+  // toggle flips this default but never locks the user out of it.
+  const [stabilityMode, setStabilityMode] = useState<StabilityMode>('natural');
+
+  const toggleEmotionAware = () => {
+    setEmotionAware((prev) => {
+      const next = !prev;
+      setStabilityMode(next ? 'natural' : 'robust');
+      return next;
+    });
+  };
+
+  // Per-scene delivery tag, keyed by sceneIdx. Computed once so the row badge
+  // and the actual synthesis stay in lockstep. Uses array position (i) — the
+  // hook/CTA bookends — not the absolute sceneIdx.
+  const deliveryTags = useMemo(() => {
+    const map: Record<number, string> = {};
+    sceneBatch.forEach((s, i) => {
+      map[s.sceneIdx] = emotionAware
+        ? pickDeliveryTag({
+            type: s.type,
+            chainRole: s.chainRole,
+            sceneIdx: i,
+            sceneCount: sceneBatch.length,
+          })
+        : '';
+    });
+    return map;
+  }, [sceneBatch, emotionAware]);
   const [sceneStates, setSceneStates] = useState<Record<number, SceneState>>({});
   const [isGenerating, setIsGenerating] = useState(false);
   const [rateLimited, setRateLimited] = useState<number | null>(null);
@@ -121,10 +153,14 @@ const ScenePipelineTile: React.FC<ScenePipelineTileProps> = ({
         [scene.sceneIdx]: { status: 'rendering' },
       }));
 
+      // Prepend the v3 delivery tag (if any) so the engine shapes the read.
+      const tag = deliveryTags[scene.sceneIdx];
+      const text = tag ? `${tag} ${scene.scriptLine}` : scene.scriptLine;
+
       try {
         const url = await synthesizeSpeech({
           voiceId,
-          text: scene.scriptLine,
+          text,
           stabilityMode,
         });
         setSceneStates((prev) => ({
@@ -135,7 +171,7 @@ const ScenePipelineTile: React.FC<ScenePipelineTileProps> = ({
           kind: 'tts',
           voiceId,
           voiceName: voiceId,
-          text: scene.scriptLine,
+          text,
           stabilityMode,
           audioUrl: url,
         });
@@ -286,6 +322,33 @@ const ScenePipelineTile: React.FC<ScenePipelineTileProps> = ({
             ))}
           </div>
         </div>
+
+        <div className="flex flex-col gap-2 border-t border-white/10 pt-4">
+          <div className="flex items-center justify-between gap-4">
+            <label className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest">
+              // EMOTION_AWARE_DELIVERY
+            </label>
+            <button
+              type="button"
+              onClick={toggleEmotionAware}
+              disabled={isGenerating}
+              role="switch"
+              aria-checked={emotionAware}
+              className={`px-4 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest border transition-all ${
+                emotionAware
+                  ? 'bg-[#FFCC00]/10 border-[#FFCC00] text-[#FFCC00]'
+                  : 'border-white/10 text-zinc-500 hover:text-white'
+              } disabled:opacity-50 disabled:cursor-not-allowed`}
+            >
+              {emotionAware ? 'ON' : 'OFF'}
+            </button>
+          </div>
+          <p className="text-[10px] font-mono text-zinc-500 tracking-widest">
+            {emotionAware
+              ? '// v3 delivery tags shape each scene by its hook / build / CTA role'
+              : '// flat read — consistent tone, no expressive tags'}
+          </p>
+        </div>
       </GlassPanel>
 
       <GlassPanel className="p-6 flex flex-col gap-2">
@@ -302,6 +365,14 @@ const ScenePipelineTile: React.FC<ScenePipelineTileProps> = ({
               <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest shrink-0">
                 // {scene.type}
               </span>
+              {deliveryTags[scene.sceneIdx] && (
+                <span
+                  className="hidden sm:inline text-[9px] font-mono text-[#FFCC00] uppercase tracking-widest shrink-0"
+                  title="eleven_v3 delivery tag applied to this scene"
+                >
+                  {deliveryTags[scene.sceneIdx]}
+                </span>
+              )}
               <span className="flex-1 text-sm text-zinc-300 truncate font-sans">
                 {scene.scriptLine || <span className="italic text-zinc-600">(empty)</span>}
               </span>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { DUR, EASE } from '../../ui/motionTokens';
 import { Building2, UtensilsCrossed, ShoppingBag, Play, ChevronRight } from 'lucide-react';
 
 // Hooks/CTAs are illustrative sample creative (what a Grifon ad LOOKS like) —
@@ -54,7 +55,7 @@ export const ProofGallery: React.FC = () => (
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.6, delay: idx * 0.12, ease: 'easeOut' }}
+              transition={{ duration: DUR.entrance, delay: idx * 0.12, ease: EASE.out }}
               className="snap-center flex-shrink-0 w-[64vw] sm:w-[40vw] md:w-[28%] max-w-[280px]"
             >
               <div className={`group transition-transform duration-500 hover:rotate-0 hover:-translate-y-1 ${card.tilt}`}>
@@ -111,7 +112,7 @@ export const ProofGallery: React.FC = () => (
         SWIPE
         <motion.span
           animate={{ x: [0, 6, 0] }}
-          transition={{ duration: 1.2, repeat: Infinity, ease: 'easeInOut' }}
+          transition={{ duration: DUR.expressive, repeat: Infinity, ease: EASE.inOut }}
           className="inline-flex"
         >
           <ChevronRight className="w-4 h-4 shrink-0 text-[#FFCC00]" />

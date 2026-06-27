@@ -205,6 +205,29 @@ for "clean." Import the consts (or the primitives below) instead of inlining str
 (tokenized successors to ui/Input + ui/Textarea) ·
 [SegButton + Pill](components/ui/SegButton.tsx) (toggle groups).
 
+## Motion system (shared tokens)
+
+App-wide `motion@12` animation reads from ONE token source —
+[components/ui/motionTokens.ts](components/ui/motionTokens.ts) — the motion sibling of
+`wizardTokens.ts`. Where that file fixes heights/radii/type, this one fixes **easing**,
+**duration**, and **spring physics** so motion never drifts component-to-component. Import the
+tokens and snap to the nearest tier; don't inline raw numbers into a `transition`. (`brand-check`
+flags inline transition values against this section.)
+
+- **Easing (`EASE`).** `out` (`easeOut`, the default reveal) · `inOut` (`easeInOut`, ambient
+  loops) · `expressive` (`[0.22, 1, 0.36, 1]`, premium hero/card entrances) · `veil`
+  (`[0.65, 0, 0.35, 1]`, full-screen route wipes). Reach past these only for a genuinely new feel.
+- **Duration (`DUR`), seconds.** `instant` 0.15 · `fast` 0.2 · `base` 0.3 · `slow` 0.45 ·
+  `entrance` 0.6 · `expressive` 0.8. Infinite decorative loops use the separate
+  `DUR.ambient` family (`pulse` 2.5 · `breathe` 4 · `drift` 8 · `slowDrift` 12) — pick by feel.
+- **Spring (`SPRING`).** `pop` (modal/panel entrances) · `standard` (sliding chrome — sidebars,
+  layout indicators) · `snappy` (segmented toggles) · `overshoot` (reserved for signature beats
+  like the clapper snap). Spread into a transition to add a `delay` (`{ ...SPRING.standard, delay }`).
+- **Reduced motion.** Tokens replace the *values*, not the accessibility gating. Keep every
+  `useReducedMotion()` guard and the `prefers-reduced-motion` CSS in [index.css](index.css); use
+  the `reducedMotion(reduce, transition)` helper to standardize the `reduce ? {duration:0} : …`
+  ternary.
+
 ## Dashboard pilot (Gemini-inspired)
 
 The dashboard (`components/Dashboard.tsx` and its exclusive cards — `CommandPalette`, `RecentWorkCard`, `ResumeDraftCard`, `OnboardingNudge`, `ActiveJobsPanel`) runs a scoped pilot that intentionally deviates from two rules above. The rest of the app still follows them — do not propagate these without sign-off.

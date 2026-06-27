@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { DUR, EASE } from './motionTokens';
 
 type AuroraIntensity = 'marketing' | 'dashboard' | 'subtle';
 
@@ -24,13 +25,13 @@ export const Aurora: React.FC<AuroraProps> = ({ intensity = 'marketing', classNa
     >
       <motion.div
         animate={{ x: [0, 50, -30, 0], y: [0, -50, 30, 0], scale: [1, 1.1, 0.9, 1] }}
-        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+        transition={{ duration: DUR.ambient.drift, repeat: Infinity, ease: EASE.inOut }}
         style={{ opacity: preset.opacity }}
         className={`absolute top-[-10%] left-[-10%] w-[500px] md:w-[800px] aspect-square ${preset.a} rounded-full ${preset.blur}`}
       />
       <motion.div
         animate={{ x: [0, -40, 20, 0], y: [0, 40, -20, 0], scale: [1, 0.9, 1.1, 1] }}
-        transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+        transition={{ duration: DUR.ambient.slowDrift, repeat: Infinity, ease: EASE.inOut }}
         style={{ opacity: preset.opacity }}
         className={`absolute top-[20%] right-[-10%] w-[400px] md:w-[600px] aspect-square ${preset.b} rounded-full ${preset.blur}`}
       />

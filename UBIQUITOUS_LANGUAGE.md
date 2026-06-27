@@ -103,13 +103,33 @@ The sections below are the technical-vocabulary deep dives — wizard internals 
 | **Word-Pop** | The caption animation where 1–3-word chunks swap on VO cadence, each word timed by character weight. Captions pace the FULL speech window; chunks overlapped by an overlay are sacrificed, never delayed. | Karaoke captions (that's a distinct `chunkAnim`) |
 | **Razor Trim** | The last scene's tail trim at speech-end + 0.06s (vs the standard 0.18s pad) so the ad's closing frame is the CTA — never a ghost tail, dead beat, or black frame. | End trim |
 
-## Viral intelligence (Viral Autopsy)
+## Viral intelligence (Ad Recon → Viral Autopsy)
+
+The two-layer competitive-intelligence loop: **Ad Recon** *finds* winning
+competitor ads, **Viral Autopsy** *dissects* them, and the **Swipe File**
+*compounds* the findings. Ad Recon is the discovery layer that Viral Autopsy
+deliberately leaves out of scope ("discovery stays human").
 
 | Term | Definition | Aliases to avoid |
 | --- | --- | --- |
+| **Ad Recon** | The discovery layer that, given a competitor **brand/advertiser**, finds whether they run ads and surfaces their **Winning Ads** from the Meta Ad Library (advertiser-pinned search, ranked by longevity). Produced by `tools/find_winning_ads.py` + the `ad-recon` skill; hands its shortlist to **Viral Autopsy**. Sources only — never analyzes, never touches tuned prompts. | Ad spying, scraping (when ambiguous) |
+| **Winning Ad** | An *active* competitor ad judged a winner by **longevity** — still running after ≥30 days (≥60–90 = proven/scaled) — since advertisers kill losers. Impressions are a tiebreaker, not the primary signal. Sourced by **Ad Recon**. | Top ad, best ad (when ambiguous) |
+| **Ad Recon Shortlist** | The ranked output of one **Ad Recon** run: top-N **Winning Ads** for a brand with `library_id`, `started_running`, `days_active`, caption/headline copy, and the `ad_permalink` to download. The handoff artifact into **Viral Autopsy**. | Results, ad list |
 | **Viral Autopsy** | An evidence-bound breakdown of an *existing* social video/ad (not Grifon's own output): hook anatomy, Edit DNA, storytelling format, timestamped why-it-works claims. Produced by `tools/analyze_video.py` + the `viral-autopsy` skill. | Video review, ad analysis (when ambiguous) |
 | **Swipe File** | The committed database of Viral Autopsies at `workflows/viral_swipe_file.md`: Pending Actions, Pattern Index, Gated Proposals, Entries. Patterns need ≥3 corroborating videos before they may be proposed for adoption. | Research notes, inspiration folder |
 | **Edit DNA** | The measured edit-mechanics profile of a video: shot stats, perceived-pace driver, caption mechanics, edit grammar, camera motion, reveal mechanic, CTA timing. (Term originates in `workflows/edit_style_research.md`.) | Edit style (that's the preset concept) |
+
+## Paid media (Ad Strategist)
+
+| Term | Definition | Aliases to avoid |
+| --- | --- | --- |
+| **Ad Strategist** | The senior paid-ads **Media Buyer** role: runs/optimizes Meta (via the Meta Ads CLI) and TikTok campaigns. The execution partner `grifon-cmo` directs. Never spends autonomously — drafts spend commands for human approval. Produced by the `grifon-ad-strategist` skill. | Ads guy, ad manager, marketer (when ambiguous) |
+| **Meta Ads CLI** | The command-line tool (`pip install meta-ads`, invoked as `meta`) that wraps the Meta Marketing API for creating, editing, and reading FB/IG campaigns. Meta-only; TikTok has no equivalent and is run by hand. | FB Ads API, Marketing API (when referring to the CLI specifically) |
+| **Ad Performance Ledger** | The committed database of every paid campaign at `workflows/ad_performance_ledger.md`: North-Star Tracker, Pattern Index, Gated Proposals, Entries. Spend-strategy changes need ≥3 corroborating campaigns before they may be proposed. | Campaign log, ad tracker (when ambiguous) |
+| **MER** | **Marketing Efficiency Ratio** = total revenue ÷ total ad spend. The paid-media **North Star** (target 3–5×). Account-wide and blended; distinct from per-campaign **ROAS**. | Blended ROAS (don't conflate — ROAS is per-campaign) |
+| **ROAS** | **Return on Ad Spend** = revenue ÷ spend for one campaign/ad set. **Break-even ROAS = 1 ÷ net profit margin** — the line between scaling and bleeding. | MER (account-wide), return rate |
+| **Hook Rate** | 3-second video plays ÷ impressions — does the opener stop the scroll. A *diagnostic* (we scale on MER/ROAS, not hook rate). Distinct from the renderer's **Hook** layout concepts (**Title Stack** / **Hook Palette**). | Thumbstop (that's hold-rate-adjacent), scroll-stop rate |
+| **Hold Rate** | 15-second plays ÷ 3-second plays (i.e. average watch vs duration) — does the body hold after the hook. | Retention, watch-through (when ambiguous), AVD |
 
 ## Inputs & outputs
 

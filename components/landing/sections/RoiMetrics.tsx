@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { DUR } from '../../ui/motionTokens';
 import { SignatureScribble } from '../SignatureScribble';
 
 // All four are defensible: ~30-min build (product speed), ₱997 vs agency (real
@@ -20,7 +21,7 @@ export const RoiMetrics: React.FC = () => (
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: DUR.entrance }}
       >
         <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-[0.25em] text-center mb-2">// PROOF</p>
         <h2 className="text-2xl md:text-4xl font-bold text-center mb-10 md:mb-16 uppercase tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
@@ -36,7 +37,7 @@ export const RoiMetrics: React.FC = () => (
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: idx * 0.1 }}
+            transition={{ duration: DUR.entrance, delay: idx * 0.1 }}
             className="flex flex-col items-center"
           >
             <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-[#FFCC00] tracking-tighter leading-none">

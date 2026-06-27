@@ -344,6 +344,24 @@ during the gate session.
 
 ### 11. Client-Facing Edit Style Preset Picker (autopsy-derived styles as a product feature)
 
+> **Status (2026-06-27): ✅ Lock-only picker SHIPPED on `drawplan-refactor` (commit `d308061`),
+> not yet merged to main.** The picker + persistence MECHANISM this item describes (steps 2–3
+> below) is now live as the **pre-render look-lock**: a `// LOOK` row at GenerateVideo's "Render
+> All" lets the user lock **AUTO / Impact / Hype / Clean** (`classic` kept as an unsurfaced
+> kill-switch). The choice threads through one pure tested chokepoint (`services/renderLock.ts`
+> `buildLockedPreset`) → `FinalRenderRequest.preset.id`, which `resolvePreset()` already honored;
+> AUTO = today's deterministic rotation, byte-identical. Note the **location differs from this
+> item's original step 3**: Neil settled on the GenerateVideo Render All command bar (the spend
+> gate), NOT the AI Editor step. **Still open:** (a) the differentiated styles themselves — this
+> item's core leverage — still need to ship via the viral-autopsy → Swipe File pipeline (step 1;
+> a picker over the existing looks is the polish, the new styles are the product); (b) the
+> **composite image preview (option B)** — a server `api/render/preview-frame.ts` reusing
+> `drawPlan` to burn the caption/hook onto the scene still so the user SEES the look before
+> locking. Option B was scoped + offered 2026-06-27; **Neil chose to ship lock-only (option C)
+> for v1** and defer the visual preview. If B is built later, restore the panel label *"static
+> look preview — motion & timing added at render"* (the lock-only UI deliberately doesn't use it,
+> since there's no preview image yet). Full handoff: [`drawplan_refactor_resume.md`](drawplan_refactor_resume.md).
+
 **What:** Let users choose their ad's **Edit Style Preset** (`classic` / `impact` / `hype` / `clean` + future autopsy-derived presets like a `vsl` style) instead of the current deterministic rotation in `api/_lib/renderPresets.ts`. A picker in the AI Editor step (or Step 7), with the sincerity guard kept as a hard filter (Testimonial never offers `hype`) and the rotation seed kept as the default when the user doesn't choose.
 
 **Why it matters:** Pairs with the `viral-autopsy` → Swipe File → preset pipeline: every pattern that crosses the 3-video corroboration threshold can become a new named style, and "N editing styles cloned from proven viral ads" is a sellable pricing-page line. Choice also reduces "my ad looks like everyone else's" objections.
@@ -643,11 +661,49 @@ target). Pull the four numbers, re-run §2–§4 of `pricing_unit_economics.md`,
 3. Re-run the margin tables; adjust `PLAN_LIMITS` / `MONTHLY_LIMITS` included counts + scene caps.
 
 **Scope estimate:** ~half a day once the data exists (mostly analysis + a quota-number tune, not
-a build). The instrumentation to capture it may be a separate small task if logs are thin.
+a build). The instrumentation to capture it may be a separate small task if logs are thin —
+that instrumentation is now specced as **Item #17 / [`growth_loop.md`](growth_loop.md) Phase 0**
+(Meta CAPI + `events` table). Build Phase 0 and these four numbers fall out of it.
 
 **Source:** Neil, 2026-06-19 pricing restructure session — *"should we add also a ads expense on
 the top of it or not a good idea?"* → decision to keep CAC separate from COGS and log it for a
 data-driven pass post-launch.
+
+---
+
+### 17. Data-Driven Growth Loop (ingest-only) — full spec in [`growth_loop.md`](growth_loop.md)
+
+> **Context (2026-06-24):** Neil's brief — make the app improve over time from client feedback, and
+> automate his *own* Grifon growth marketing with himself as approver only. Evaluated against the
+> codebase and scoped via grill: **for Grifon's own growth** (single-tenant, not a client feature) ·
+> **ingest-only** (read ad performance & learn; Neil still publishes — no autonomous spend) ·
+> **build the data plumbing now**, parallel to beta. Full evaluation, metrics taxonomy, phased build,
+> skills assessment, and risks live in the durable doc — this is just the parking-lot pointer.
+
+**What:** Give Grifon the measurement foundation it completely lacks (no pixel / telemetry / ad-perf /
+feedback today), then run two human-gated loops on top: an app-improvement loop (feedback + telemetry
+→ ranked fixes) and a creative-performance loop (read ad results → learn *why* a creative sold →
+propose the next creative → Neil ships). Reuses the proven `viral-autopsy → viral_swipe_file.md →
+grifon-cmo` brain, fed with real performance data instead of only external swipe videos.
+
+**Why it matters:** "Learn from past creative results" is impossible today because the app never sees
+results. This unblocks Item #16 (CAC/LTV) and Item #7 (perf-triggered OfferOptimizer rescue), both of
+which wait on a perf-tracking surface that does not exist.
+
+**Why parked:** Beta + `launch_readiness.md` P0s come first. But **Phase 0 (Meta CAPI + `events`
+table) is the one piece Neil endorsed building now**, parallel to beta, so the data exists when the
+post-beta tuning items fire.
+
+**When to resume:** Phase 0 — anytime (endorsed for parallel build). Phases 1–3 — post-beta, each its
+own plan + `/goal`.
+
+**Where to start:** `growth_loop.md` → Phase 0, as one thin vertical slice (pixel + Purchase CAPI via
+reused `api/webhook.ts` + one telemetry event end-to-end). Run `straw-man-audit` on the new `api/`.
+
+**Scope estimate:** Phase 0 ≈ 1–2 days (vertical slice). Phases 1–3 are separate efforts.
+
+**Source:** Neil, 2026-06-24 — *"DATA DRIVEN LEARNING/Feedback LOOP… gusto ko approver or reviewer
+lang ako."* Evaluation persisted at his request (chose to persist the doc over building immediately).
 
 ---
 

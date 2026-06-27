@@ -1,0 +1,94 @@
+{
+  "_meta": {
+    "cmoReviewed": true,
+    "reviewedBy": "grifon-cmo",
+    "date": "2026-06-20",
+    "notes": "12 winners, each tied to a Cialdini/Sabri principle. Headlines kept 3-7 words and apostrophe-light so gpt-image-2 bakes them cleanly. Avatars: Burned-Out Business Owner Bryan (PH) + Olivia. 30K agency is the villain's cost (anchor), not Grifon's price."
+  },
+  "angles": [
+    {
+      "id": "results-or-nothing",
+      "headline": "Get Results Or Pay Nothing",
+      "principle": "risk-reversal",
+      "badge": "ZERO RISK",
+      "scene": "Zam confident with open palms, warm reassuring gold glow, premium and trustworthy"
+    },
+    {
+      "id": "only-10-businesses",
+      "headline": "I Only Take 10 Businesses",
+      "principle": "scarcity",
+      "badge": "10 SPOTS",
+      "scene": "Zam arms crossed, selective and serious expression, dramatic side gold rim light"
+    },
+    {
+      "id": "first-ad-5-days",
+      "headline": "Your First Ad In 5 Days",
+      "principle": "time-delay-speed",
+      "badge": "5-DAY START",
+      "scene": "Zam leaning forward with energy and momentum, bright gold burst behind him"
+    },
+    {
+      "id": "fire-your-agency",
+      "headline": "Fire Your 30K Agency",
+      "principle": "loss-aversion-villain-anchor",
+      "badge": "STOP OVERPAYING",
+      "scene": "Zam with a confident dismissive half-smile, bold and a little defiant, glossy lighting"
+    },
+    {
+      "id": "100-ads-one-day",
+      "headline": "100 Ads In One Day",
+      "principle": "dream-outcome-ai-volume",
+      "badge": "AI POWERED",
+      "scene": "Zam gesturing toward a glowing grid of ad thumbnails, futuristic gold hologram feel"
+    },
+    {
+      "id": "real-marketer",
+      "headline": "Built By A Real Marketer",
+      "principle": "authority",
+      "badge": "PROVEN",
+      "scene": "Zam grounded and credible, arms crossed, authoritative coaching energy, rich gold light"
+    },
+    {
+      "id": "start-free-today",
+      "headline": "Start Free Today",
+      "principle": "reciprocity-free-entry",
+      "badge": "FREE ACCESS",
+      "scene": "Zam offering an open inviting hand toward camera, generous, bright gold halo"
+    },
+    {
+      "id": "stop-wasting-budget",
+      "headline": "Stop Wasting Ad Budget",
+      "principle": "loss-aversion-named-pain",
+      "badge": "STOP THE BLEED",
+      "scene": "Zam serious and direct eye-contact, intense focused tone, dramatic gold spotlight"
+    },
+    {
+      "id": "not-garbage-ai",
+      "headline": "Not Another Garbage AI",
+      "principle": "objection-reframe-contrarian",
+      "badge": "ACTUALLY WORKS",
+      "scene": "Zam confident knowing half-smile, sharp and assured, premium studio finish"
+    },
+    {
+      "id": "scroll-stopping-ads",
+      "headline": "Make Scroll Stopping Ads",
+      "principle": "dream-outcome-video-bait",
+      "badge": "VIDEO ADS",
+      "scene": "Zam dynamic and energetic mid-gesture, motion and excitement, vivid gold burst"
+    },
+    {
+      "id": "para-sa-pinoy",
+      "headline": "Para Sa Pinoy Business",
+      "principle": "liking-identity-taglish",
+      "badge": "MADE FOR PH",
+      "scene": "Zam proud and grounded, warm national-pride tone, rich gold cinematic light"
+    },
+    {
+      "id": "we-run-marketing",
+      "headline": "We Run Your Marketing",
+      "principle": "authority-done-for-you-autopilot",
+      "badge": "AUTOPILOT",
+      "scene": "Zam assured leadership posture, calm and in-command, premium gold glow behind"
+    }
+  ]
+}

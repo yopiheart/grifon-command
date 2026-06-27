@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { BusinessInfo, Avatar, AdVariant, UplinkData, ClientDetails } from '../types';
 import { generateAdCreatives, generateSceneImage } from '../services/geminiService';
 import { GoldButton } from './ui/GoldButton';
 import Loader from './ui/Loader';
 import { RefreshCw, Check, Copy, Image as ImageIcon, ChevronLeft } from 'lucide-react';
 import IntelligenceUplink from './IntelligenceUplink';
+import { NicheCalloutCard } from './imageads/NicheCalloutCard';
+import { SaasOfferCard } from './imageads/SaasOfferCard';
+import { captureToPng } from '../utils/captureToPng';
+import { resolveAdTheme } from '../utils/adTheme';
 import JSZip from 'jszip';
 import saveAs from 'file-saver';
 
@@ -15,11 +19,25 @@ interface ImageAdsGenProps {
   onBack: () => void;
 }
 
+// Text-composited callout creatives export as a placement-ready set: feed (4:5),
+// square (1:1), story/reel (9:16) — safe-zone framed. See the Placement strategy
+// in workflows/static_ad_swipe_file.md.
+const PLACEMENT_RATIOS = ['4:5', '1:1', '9:16'] as const;
+const PLACEMENT_LABELS: Record<string, string> = { '4:5': 'feed_4x5', '1:1': 'square_1x1', '9:16': 'story_9x16' };
+// Text-composited families render branded React cards → PNG (html2canvas) instead
+// of calling the Gemini image model. Both share the capture + Placement Pack path.
+const isCompositedFamily = (f?: string) => f === 'callout' || f === 'saas-offer';
+// Preview uses the selected ratio when it's a supported placement, else feed 4:5.
+const calloutPreviewRatio = (r: string): '4:5' | '1:1' | '9:16' =>
+  (PLACEMENT_RATIOS as readonly string[]).includes(r) ? (r as '4:5' | '1:1' | '9:16') : '4:5';
+
 const ImageAdsGen: React.FC<ImageAdsGenProps> = ({ businessInfo, avatar, clientDetails, onBack }) => {
   const [uplinkData, setUplinkData] = useState<UplinkData | null>(null);
   const [variants, setVariants] = useState<AdVariant[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // Off-screen DOM nodes for text-composited templates, keyed `${idx}:${ratio}`.
+  const calloutRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   const handleUplinkComplete = (data: UplinkData) => {
     setUplinkData(data);
@@ -41,10 +59,22 @@ const ImageAdsGen: React.FC<ImageAdsGenProps> = ({ businessInfo, avatar, clientD
 
   const handleSynthesize = async (idx: number) => {
     if (!uplinkData) return;
-    
+
     const updated = [...variants];
     setLoading(true);
     try {
+      // Text-composited families (Niche Callout, SaaS Upsell) render a branded
+      // React card → PNG via html2canvas instead of the Gemini image model, which
+      // is hard-blocked from rendering legible text (NO_TEXT_CONSTRAINT).
+      if (isCompositedFamily(uplinkData.family)) {
+        const node = calloutRefs.current[`${idx}:${calloutPreviewRatio(uplinkData.aspectRatio)}`];
+        if (!node) throw new Error('callout capture node not mounted');
+        const png = await captureToPng(node, { scale: 2 });
+        if (!png) throw new Error('callout capture failed');
+        updated[idx].imageUrl = png;
+        setVariants([...updated]);
+        return;
+      }
       updated[idx].imageUrl = await generateSceneImage(
         updated[idx].imagePrompt,
         uplinkData.aspectRatio,
@@ -71,9 +101,24 @@ const ImageAdsGen: React.FC<ImageAdsGenProps> = ({ businessInfo, avatar, clientD
   const handleDownloadAsset = async (v: AdVariant) => {
     const zip = new JSZip();
     const folderName = `Ad_Variant_${v.id}_${v.templateType.replace(' ', '_')}`;
-    
+
     const content = `HEADLINE: ${v.headline}\nTEMPLATE: ${v.templateType}\nCAPTION: ${v.caption}\nHOOK_LOGIC: ${v.hookLogic}`;
     zip.file(`${folderName}/ad_copy.txt`, content);
+
+    // Composited families → export a placement-ready pack: feed (4:5), square
+    // (1:1), and story/reel (9:16), each captured from its safe-zone-framed card.
+    if (isCompositedFamily(uplinkData?.family)) {
+      const idx = variants.indexOf(v);
+      for (const ratio of PLACEMENT_RATIOS) {
+        const node = calloutRefs.current[`${idx}:${ratio}`];
+        if (!node) continue;
+        const png = await captureToPng(node, { scale: 2 });
+        if (png) zip.file(`${folderName}/${PLACEMENT_LABELS[ratio]}.png`, png.split(',')[1], { base64: true });
+      }
+      const pack = await zip.generateAsync({ type: 'blob' });
+      saveAs(pack, `${folderName}_placement_pack.zip`);
+      return;
+    }
 
     if (v.imageUrl) {
       const imgData = v.imageUrl.split(',')[1];
@@ -167,7 +212,7 @@ const ImageAdsGen: React.FC<ImageAdsGenProps> = ({ businessInfo, avatar, clientD
                             
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                               <button onClick={() => handleDownloadAsset(v)} className="w-full flex items-center justify-center gap-2 py-3 text-[10px] border border-white/10 hover:border-[#FFCC00] text-zinc-400 hover:text-[#FFCC00] rounded-xl transition-all font-bold uppercase tracking-widest">
-                                <Copy className="w-4 h-4" /> DOWNLOAD ASSET
+                                <Copy className="w-4 h-4" /> {isCompositedFamily(uplinkData.family) ? 'PLACEMENT PACK (3)' : 'DOWNLOAD ASSET'}
                               </button>
                               <GoldButton className="w-full flex items-center justify-center gap-2 py-3 text-[10px] rounded-xl">
                                   <Check className="w-5 h-5" /> EXPORT TO FB
@@ -178,6 +223,42 @@ const ImageAdsGen: React.FC<ImageAdsGenProps> = ({ businessInfo, avatar, clientD
                 </div>
             ))}
         </div>
+
+        {/* Hidden capture stage: each composited variant rendered off-screen at
+            all three placement ratios so captureToPng() can rasterize the pack. */}
+        {isCompositedFamily(uplinkData.family) && (
+          <div aria-hidden style={{ position: 'fixed', left: -99999, top: 0, pointerEvents: 'none', opacity: 0 }}>
+            {variants.map((v, idx) => PLACEMENT_RATIOS.map((ratio) => {
+              const refCb = (el: HTMLDivElement | null) => { calloutRefs.current[`${idx}:${ratio}`] = el; };
+              // One contrast-safe theme resolved from the customer's brand kit.
+              const theme = resolveAdTheme({
+                hexCodes: uplinkData.hexCodes,
+                logo: uplinkData.logoAsset,
+                vibe: uplinkData.brandVibe,
+                presetId: uplinkData.stylePreset,
+              });
+              return uplinkData.family === 'saas-offer' ? (
+                <SaasOfferCard
+                  key={`${idx}:${ratio}`}
+                  ref={refCb}
+                  variant={v}
+                  aspectRatio={ratio}
+                  theme={theme}
+                  brandName={uplinkData.brandIdentityName}
+                />
+              ) : (
+                <NicheCalloutCard
+                  key={`${idx}:${ratio}`}
+                  ref={refCb}
+                  composition={v.composition || {}}
+                  aspectRatio={ratio}
+                  theme={theme}
+                  brandName={uplinkData.brandIdentityName}
+                />
+              );
+            }))}
+          </div>
+        )}
 
         {variants.length > 0 && !loading && (
           <div className="fixed bottom-10 left-1/2 -translate-x-1/2 flex gap-4 bg-zinc-950/80 backdrop-blur-2xl p-4 rounded-full border border-white/10 shadow-2xl z-50 animate-in slide-in-from-bottom-10">

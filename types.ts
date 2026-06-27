@@ -131,6 +131,9 @@ export interface SceneBatchEntry {
   scriptLine: string;
   renderedUrl?: string;
   type: 'talking' | 'b-roll' | 'cinematic';
+  /* Carried from the storyboard Scene so the Scene Pipeline can shape v3
+     delivery by the cinematic-relay role (cinematic scenes only; see deliveryTag). */
+  chainRole?: Scene['chainRole'];
 }
 
 /**
@@ -227,6 +230,10 @@ export interface FinalRenderEndCard {
   recapText?: string;
 }
 
+/** Edit-style preset ids the user can lock pre-render (see api/_lib/renderPresets.ts).
+ * Shared across the GenerateVideo → EditVideo → FinalRenderRequest lock hop. */
+export type LockablePresetId = 'classic' | 'impact' | 'hype' | 'clean';
+
 export interface FinalRenderRequest {
   scenes: FinalRenderScene[];
   aspectRatio: '9:16' | '16:9' | '1:1';
@@ -235,7 +242,7 @@ export interface FinalRenderRequest {
    * reachable it overrides the static `style` bed, else the render falls back to it. */
   music?: { style: 'mrbeast' | 'temu' | 'testimonial'; enabled: boolean; bedUrl?: string };
   /** Explicit edit-style override; absent → server rotates deterministically. */
-  preset?: { id?: 'classic' | 'impact' | 'hype' | 'clean' };
+  preset?: { id?: LockablePresetId };
   /** Offer-recap overlay held to the end of the last scene. */
   endCard?: FinalRenderEndCard;
 }
@@ -270,6 +277,9 @@ export interface FinalRenderResult {
   url?: string;
   downloadUrl?: string;
   error?: string;
+  /** Attribution id (= render jobId) for the Data-Driven Growth Loop. Shown to
+   * the user so they can name the Meta ad "grifon-<creativeId>". */
+  creativeId?: string;
 }
 
 export interface AllData {
@@ -558,14 +568,60 @@ export interface DayContent {
   imageUrl?: string;
 }
 
+// The creative family chosen in the Intelligence Uplink. 'product' keeps the
+// original 3 photo-templates; 'callout' (GP-2) and 'saas-offer' (GP-1, Slice 2)
+// are the text-composited families. See workflows/static_ad_swipe_file.md.
+export type AdCreativeFamily = 'product' | 'saas-offer' | 'callout';
+
+// Brand Kit "vibe" — drives the composited-ad color scheme in utils/adTheme.ts.
+// Bold/Playful → solid saturated brand block; Premium → true-dark + strong
+// accent; Clean → bright white + one accent. See image_ads_design_system.md.
+export type AdVibe = 'Bold' | 'Premium' | 'Playful' | 'Clean';
+
+// Structured, renderable copy for the text-composited templates. Each template
+// component reads the subset it needs; the model fills the relevant fields.
+export interface AdComposition {
+  // Niche Callout (GP-2)
+  niche?: string;        // the exact buyer, bolded — e.g. "coffee shop owner"
+  qualifier?: string;    // the real proof-of-fit, bolded — e.g. "doing 2+ closings a month"
+  leadMagnet?: string;   // the free asset offered — e.g. "Scaling Roadmap"
+  // SaaS Offer / Upsell (GP-1, Slice 2)
+  subhead?: string;
+  bullets?: string[];
+  guarantee?: string;
+  badge?: string;
+  ctaLabel?: string;
+  tiers?: { name: string; lines: string[]; highlight?: boolean }[];
+}
+
 export interface AdVariant {
   id: number;
-  templateType: "Press Clip" | "Benefit Anatomy" | "Split-Screen";
+  templateType: "Press Clip" | "Benefit Anatomy" | "Split-Screen" | "Niche Callout" | "Guarantee Hero" | "Ticket Compare" | "Offer Stack Checklist";
   headline: string;
   imagePrompt: string;
   caption: string;
   hookLogic: string;
   imageUrl?: string;
+  composition?: AdComposition;
+}
+
+// Batch Creative Fan-Out — one hero image fanned into N template-composited
+// creatives. The LLM produces BatchHeadline[] (text only, one call); the client
+// Canvas compositor stamps each onto the hero to produce a BatchCreative.
+export interface BatchHeadline {
+  headline: string;   // short, punchy primary line (≤6 words)
+  subhead: string;    // supporting line / offer (≤10 words)
+  badge: string;      // 1-3 word corner flag (e.g. "8-IN-1", "HIP & JOINT")
+  angle: string;      // the psychological angle (for the user's reference)
+}
+
+export interface BatchCreative {
+  id: number;
+  headline: string;
+  subhead: string;
+  badge: string;
+  template: string;        // layout preset id used for this render
+  imageUrl?: string;       // composited PNG data URL (populated after render)
 }
 
 export interface UplinkData {
@@ -588,6 +644,9 @@ export interface UplinkData {
   logoAsset?: string;
   productAssets: string[];
   avatarAsset?: string;
+  family?: AdCreativeFamily; // defaults to 'product' when unset (preserves legacy behavior)
+  brandVibe?: AdVibe; // Brand Kit vibe for composited families (defaults to 'Bold' in adTheme)
+  stylePreset?: string; // chosen Style Preset id (AD_STYLE_PRESETS); overrides hex/vibe. Falsy = use brand colors
 }
 
 export interface CinematicSpecConfig {
@@ -796,6 +855,18 @@ export interface CloneVoiceRequest {
   description?: string;
   consent: true;
   audio: string;
+}
+
+// Current marketing/retargeting consent state for the signed-in user, as read
+// back from api/consent (?action=status). Distinct from the device-level pixel
+// cookie consent. `granted` is the derived current state
+// (consent_at set AND withdrawn_at null); the raw timestamps are exposed for an
+// auditable trail in Settings. See workflows/consent_capture_plan.md.
+export interface MarketingConsent {
+  granted: boolean;
+  consentAt: string | null;
+  withdrawnAt: string | null;
+  policyVersion: string | null;
 }
 
 export interface CloneVoiceResponse {

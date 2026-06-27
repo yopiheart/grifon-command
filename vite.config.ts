@@ -105,8 +105,10 @@ export default defineConfig(({ mode }) => {
         //   .playwright-mcp/  — MCP artifact downloads (e.g. the final MP4)
         //   .tmp/             — disposable scratch (smoke heroes / fixtures)
         //   .tools/           — restore-*.ps1 portable binaries (e.g. gh.exe/zip)
+        //   samples/          — committed review artifacts (ad creatives etc.);
+        //                       writing a batch here mid-dev otherwise EBUSY-crashes the server.
         // Ignore them (and any media) so smokes / tooling can't kill the server.
-        ignored: ['**/.playwright-mcp/**', '**/.tmp/**', '**/.tools/**', '**/*.mp4', '**/*.webm'],
+        ignored: ['**/.playwright-mcp/**', '**/.tmp/**', '**/.tools/**', '**/samples/**', '**/*.mp4', '**/*.webm'],
       },
     },
     build: {

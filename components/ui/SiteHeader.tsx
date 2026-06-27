@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
+import { DUR, EASE } from './motionTokens';
 import { Menu, X, Volume2, VolumeX } from 'lucide-react';
 import { useUiSound } from '../../services/uiSoundService';
 import { GrifonMark } from './GrifonMark';
@@ -68,7 +69,7 @@ const ActiveSquiggle: React.FC = () => (
       vectorEffect="non-scaling-stroke"
       initial={{ pathLength: 0 }}
       animate={{ pathLength: 1 }}
-      transition={{ duration: 0.45, ease: 'easeInOut' }}
+      transition={{ duration: DUR.slow, ease: EASE.inOut }}
     />
   </svg>
 );
@@ -188,7 +189,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: DUR.fast }}
             className="fixed inset-0 z-[60] bg-zinc-950/95 backdrop-blur-xl md:hidden flex flex-col"
           >
             <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
@@ -205,7 +206,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
             <motion.nav
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.25, delay: 0.05 }}
+              transition={{ duration: DUR.fast, delay: 0.05 }}
               className="flex-1 flex flex-col justify-center gap-2 px-6"
             >
               {navLinks.map((link) =>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { EASE, DUR } from './motionTokens';
 
 export interface VeilState {
   label: string;
@@ -23,7 +24,7 @@ export const RouteVeil: React.FC<{ veil: VeilState | null }> = ({ veil }) => (
         initial={{ y: '100%' }}
         animate={{ y: 0 }}
         exit={{ y: '-100%' }}
-        transition={{ duration: 0.32, ease: [0.65, 0, 0.35, 1] }}
+        transition={{ duration: DUR.base, ease: EASE.veil }}
         className="fixed inset-0 z-[100] bg-zinc-950 flex flex-col items-center justify-center overflow-hidden"
       >
         {/* Gold scanline leading edge — reads as a scanner sweeping the screen */}
@@ -39,7 +40,7 @@ export const RouteVeil: React.FC<{ veil: VeilState | null }> = ({ veil }) => (
         <motion.div
           initial={{ opacity: 0, scale: 0.92 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.25, delay: 0.18, ease: 'easeOut' }}
+          transition={{ duration: DUR.fast, delay: 0.18, ease: EASE.out }}
           className="relative flex flex-col items-center gap-4"
         >
           <img
@@ -52,7 +53,7 @@ export const RouteVeil: React.FC<{ veil: VeilState | null }> = ({ veil }) => (
           <motion.div
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
-            transition={{ duration: 0.5, delay: 0.22, ease: 'easeInOut' }}
+            transition={{ duration: DUR.slow, delay: 0.22, ease: EASE.inOut }}
             className="h-px w-28 origin-left bg-gradient-to-r from-[#FFCC00] to-[#FFCC00]/30"
           />
           <p className="text-[10px] font-mono text-zinc-500 tracking-[0.35em] uppercase">{veil.label}</p>
