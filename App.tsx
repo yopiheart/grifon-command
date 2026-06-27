@@ -1060,27 +1060,35 @@ const App: React.FC = () => {
                       onChange={(e) => setAuthEmail(e.target.value)}
                       required
                     />
-                    {/* Affirmative, unchecked-by-default retargeting opt-in. Optional —
-                        does not gate signup. Drives api/consent (see consentService). */}
-                    <label htmlFor="signup-marketing" className="flex items-start gap-2.5 cursor-pointer select-none text-left">
+                    {/* Affirmative, unchecked-by-default retargeting opt-in. Optional — does
+                        not gate signup. Drives api/consent (see consentService). Wrapped in a
+                        gold-tinted "perk" card for PROMINENCE (lifts the tick rate) — only the
+                        styling is loud; the box stays UNCHECKED by default, so the consent is
+                        still a deliberate, compliant action (no pre-tick). */}
+                    <label htmlFor="signup-marketing" className="group flex items-start gap-3 cursor-pointer select-none text-left rounded-xl border border-[#FFCC00]/30 bg-[#FFCC00]/[0.06] p-3 hover:border-[#FFCC00]/60 hover:bg-[#FFCC00]/[0.09] transition-colors">
                       <span className="relative flex items-center justify-center mt-0.5 shrink-0">
                         <input
                           id="signup-marketing"
                           type="checkbox"
                           checked={marketingOptIn}
                           onChange={(e) => setMarketingOptIn(e.target.checked)}
-                          className="peer appearance-none w-4 h-4 rounded bg-zinc-950 border border-white/20 checked:bg-[#FFCC00] checked:border-[#FFCC00] focus:outline-none focus:ring-1 focus:ring-[#FFCC00] transition-colors"
+                          className="peer appearance-none w-5 h-5 rounded-md bg-zinc-950 border border-[#FFCC00]/50 checked:bg-[#FFCC00] checked:border-[#FFCC00] focus:outline-none focus:ring-1 focus:ring-[#FFCC00] transition-colors"
                         />
-                        <Check className="pointer-events-none absolute w-3 h-3 text-zinc-950 opacity-0 peer-checked:opacity-100" strokeWidth={3} />
+                        <Check className="pointer-events-none absolute w-3.5 h-3.5 text-zinc-950 opacity-0 peer-checked:opacity-100" strokeWidth={3} />
                       </span>
-                      {/* normal-case overrides the global `label { uppercase }` law so this
-                          reads sentence-case. Benefit-first framing (Reciprocity) lifts the
-                          tick rate while staying an informed, affirmative, unchecked opt-in:
-                          the outcome leads, the Meta data-sharing is the demoted mechanism. */}
-                      <span className="text-xs text-zinc-400 leading-snug normal-case">
-                        Yes — send me deals and offers picked for my business. I'm okay sharing
-                        limited data with partners like Meta to keep them relevant.{' '}
-                        <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-[#FFCC00] hover:underline">Privacy Policy</a>.
+                      <span className="min-w-0">
+                        <span className="flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest text-[#FFCC00]">
+                          <Sparkles className="w-3 h-3 shrink-0" /> Members-only deals
+                        </span>
+                        {/* normal-case overrides the global `label { uppercase }` law so this
+                            reads sentence-case. Benefit-first framing (Reciprocity) lifts the
+                            tick rate while staying an informed, affirmative, unchecked opt-in:
+                            the outcome leads, the Meta data-sharing is the demoted mechanism. */}
+                        <span className="mt-1 block text-xs text-zinc-300 leading-snug normal-case">
+                          Yes — send me deals and offers picked for my business. I'm okay sharing
+                          limited data with partners like Meta to keep them relevant.{' '}
+                          <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-[#FFCC00] hover:underline">Privacy Policy</a>.
+                        </span>
                       </span>
                     </label>
                     {authError && (
