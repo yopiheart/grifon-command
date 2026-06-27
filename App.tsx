@@ -1239,10 +1239,11 @@ const App: React.FC = () => {
                         />
                         <Check className="pointer-events-none absolute w-3 h-3 text-zinc-950 opacity-0 peer-checked:opacity-100" strokeWidth={3} />
                       </span>
-                      <span className="text-xs text-zinc-400 leading-snug">
-                        Send me personalized offers and ads. You agree we may share limited
-                        data with advertising partners (e.g. Meta) to show you relevant ads.
-                        Optional — change anytime in Settings.{' '}
+                      {/* normal-case overrides the global `label { uppercase }` law so this
+                          dense legal microcopy reads as sentence case, not a shouty mono wall. */}
+                      <span className="text-xs text-zinc-400 leading-snug normal-case">
+                        Send me personalized offers. We may share limited data with partners
+                        like Meta to show you relevant ads. Optional —{' '}
                         <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-[#FFCC00] hover:underline">Privacy Policy</a>.
                       </span>
                     </label>
