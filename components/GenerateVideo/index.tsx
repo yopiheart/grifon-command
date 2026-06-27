@@ -25,6 +25,7 @@ import type {
   Scene,
   VideoLibraryItem,
   SceneBatchEntry,
+  LockablePresetId,
 } from '../../types';
 import {
   VIDEO_MODEL_SPECS,
@@ -83,7 +84,7 @@ interface GenerateVideoProps {
   /** Default path — hands the finished render batch straight to the AI Editor
    * (Final Render), where voice is consolidated once. Skips Signal Modulator's
    * redundant TTS pass (which the editor ignores), avoiding double spend. */
-  onSendToAiEditor?: (batch: SceneBatchEntry[]) => void;
+  onSendToAiEditor?: (batch: SceneBatchEntry[], lockedPresetId?: LockablePresetId) => void;
 }
 
 const ACTIVE_MODELS: VideoModelType[] = ['Veo_3.1_Fast', 'Veo_3.1_Quality', 'Veo_3.1_Lite', 'Kling_3_0', 'Kling_O1'];
@@ -132,6 +133,17 @@ const formatEta = (sec: number): string => {
   const m = Math.floor(sec / 60);
   return `${m}m`;
 };
+
+/** Pre-render look-lock options. `undefined` = AUTO (server rotates a look that
+ * fits the script style — today's default). The three locks mirror the rotation
+ * presets in api/_lib/renderPresets.ts (classic is a kill-switch, not surfaced).
+ * Hints are condensed from each preset's doc comment. */
+const LOOK_OPTIONS: { id: LockablePresetId | undefined; label: string; hint: string }[] = [
+  { id: undefined, label: 'AUTO', hint: 'Server picks a look that fits the script style (default).' },
+  { id: 'impact', label: 'IMPACT', hint: 'Bold direct-response — condensed caps, punchy white-flash cuts.' },
+  { id: 'hype', label: 'HYPE', hint: 'High-energy TikTok — gold word-pop captions, whip-blur cuts.' },
+  { id: 'clean', label: 'CLEAN', hint: 'Sincere testimonial — soft box, gentle dip-to-black fades.' },
+];
 
 const GenerateVideo: React.FC<GenerateVideoProps> = ({
   onBack,
@@ -201,6 +213,9 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
   // in manual mode (no scriptLine); pipeline mode auto-computes per-scene at
   // render time so this flag never fires there.
   const [manualDurationByScene, setManualDurationByScene] = useState<Record<number, boolean>>({});
+  // Pre-render look-lock: undefined → server rotates a look that fits the script
+  // style (today's behavior); a picked id locks that edit style for this ad.
+  const [lockedPresetId, setLockedPresetId] = useState<LockablePresetId | undefined>(undefined);
 
   const queueAbortRef = useRef<AbortController | null>(null);
   const singleAbortRef = useRef<AbortController | null>(null);
@@ -1667,7 +1682,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
 
   const handleSendToAiEditorFromBar = () => {
     if (!onSendToAiEditor) return;
-    onSendToAiEditor(buildSceneBatch());
+    onSendToAiEditor(buildSceneBatch(), lockedPresetId);
   };
 
   const allRendered = renderedCount === seedPrompts.length && renderedCount > 0;
@@ -1737,6 +1752,38 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
           </GoldButton>
         )}
       </div>
+
+      {allRendered && onSendToAiEditor && (
+        <div className="flex items-center gap-2 flex-wrap mt-2.5 pt-2.5 border-t border-white/5">
+          <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 whitespace-nowrap">
+            // LOOK
+          </span>
+          <div className="flex items-center gap-1 flex-wrap">
+            {LOOK_OPTIONS.map((opt) => {
+              const active = lockedPresetId === opt.id;
+              return (
+                <button
+                  key={opt.label}
+                  type="button"
+                  onClick={() => setLockedPresetId(opt.id)}
+                  title={opt.hint}
+                  className={`text-[10px] font-mono font-bold tracking-widest uppercase rounded-lg border px-3 py-1.5 transition-all whitespace-nowrap ${
+                    active
+                      ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]'
+                      : 'border-white/10 bg-zinc-950 text-zinc-400 hover:border-[#FFCC00]/50 hover:text-zinc-200'
+                  }`}
+                >
+                  {opt.label}
+                </button>
+              );
+            })}
+          </div>
+          <span className="text-[10px] font-mono text-zinc-500 whitespace-nowrap hidden md:inline">
+            {LOOK_OPTIONS.find((o) => o.id === lockedPresetId)?.hint}
+            <span className="text-zinc-600"> · applied at final render</span>
+          </span>
+        </div>
+      )}
     </div>
   );
 

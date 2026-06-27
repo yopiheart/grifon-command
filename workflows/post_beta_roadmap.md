@@ -344,6 +344,24 @@ during the gate session.
 
 ### 11. Client-Facing Edit Style Preset Picker (autopsy-derived styles as a product feature)
 
+> **Status (2026-06-27): ✅ Lock-only picker SHIPPED on `drawplan-refactor` (commit `d308061`),
+> not yet merged to main.** The picker + persistence MECHANISM this item describes (steps 2–3
+> below) is now live as the **pre-render look-lock**: a `// LOOK` row at GenerateVideo's "Render
+> All" lets the user lock **AUTO / Impact / Hype / Clean** (`classic` kept as an unsurfaced
+> kill-switch). The choice threads through one pure tested chokepoint (`services/renderLock.ts`
+> `buildLockedPreset`) → `FinalRenderRequest.preset.id`, which `resolvePreset()` already honored;
+> AUTO = today's deterministic rotation, byte-identical. Note the **location differs from this
+> item's original step 3**: Neil settled on the GenerateVideo Render All command bar (the spend
+> gate), NOT the AI Editor step. **Still open:** (a) the differentiated styles themselves — this
+> item's core leverage — still need to ship via the viral-autopsy → Swipe File pipeline (step 1;
+> a picker over the existing looks is the polish, the new styles are the product); (b) the
+> **composite image preview (option B)** — a server `api/render/preview-frame.ts` reusing
+> `drawPlan` to burn the caption/hook onto the scene still so the user SEES the look before
+> locking. Option B was scoped + offered 2026-06-27; **Neil chose to ship lock-only (option C)
+> for v1** and defer the visual preview. If B is built later, restore the panel label *"static
+> look preview — motion & timing added at render"* (the lock-only UI deliberately doesn't use it,
+> since there's no preview image yet). Full handoff: [`drawplan_refactor_resume.md`](drawplan_refactor_resume.md).
+
 **What:** Let users choose their ad's **Edit Style Preset** (`classic` / `impact` / `hype` / `clean` + future autopsy-derived presets like a `vsl` style) instead of the current deterministic rotation in `api/_lib/renderPresets.ts`. A picker in the AI Editor step (or Step 7), with the sincerity guard kept as a hard filter (Testimonial never offers `hype`) and the rotation seed kept as the default when the user doesn't choose.
 
 **Why it matters:** Pairs with the `viral-autopsy` → Swipe File → preset pipeline: every pattern that crosses the 3-video corroboration threshold can become a new named style, and "N editing styles cloned from proven viral ads" is a sellable pricing-page line. Choice also reduces "my ad looks like everyone else's" objections.

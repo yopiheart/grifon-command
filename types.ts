@@ -217,6 +217,10 @@ export interface FinalRenderEndCard {
   recapText?: string;
 }
 
+/** Edit-style preset ids the user can lock pre-render (see api/_lib/renderPresets.ts).
+ * Shared across the GenerateVideo → EditVideo → FinalRenderRequest lock hop. */
+export type LockablePresetId = 'classic' | 'impact' | 'hype' | 'clean';
+
 export interface FinalRenderRequest {
   scenes: FinalRenderScene[];
   aspectRatio: '9:16' | '16:9' | '1:1';
@@ -225,7 +229,7 @@ export interface FinalRenderRequest {
    * reachable it overrides the static `style` bed, else the render falls back to it. */
   music?: { style: 'mrbeast' | 'temu' | 'testimonial'; enabled: boolean; bedUrl?: string };
   /** Explicit edit-style override; absent → server rotates deterministically. */
-  preset?: { id?: 'classic' | 'impact' | 'hype' | 'clean' };
+  preset?: { id?: LockablePresetId };
   /** Offer-recap overlay held to the end of the last scene. */
   endCard?: FinalRenderEndCard;
 }
