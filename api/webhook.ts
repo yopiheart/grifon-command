@@ -26,12 +26,32 @@ const firePurchaseCapi = async (
   valueCentavos: number
 ): Promise<void> => {
   try {
-    let email: string | null = null;
+    // MARKETING-CONSENT GATE (straw-man-audit 2026-06-27, CRITICAL): the
+    // Privacy Policy promises the account email is shared with Meta ONLY when the
+    // user has actively opted in. Active consent = a marketing_consent row with
+    // consent_at set AND withdrawn_at null. Without it we still fire the Purchase
+    // for conversion measurement but OMIT the hashed email — external_id (the
+    // pseudonymous hashed user id) carries attribution. FAIL CLOSED: if the
+    // consent read errors, treat as no-consent and do NOT share the email.
+    let consented = false;
     try {
-      const { data } = await admin.auth.admin.getUserById(userId);
-      email = data.user?.email ?? null;
+      const { data: consentRow } = await admin
+        .from('marketing_consent')
+        .select('consent_at, withdrawn_at')
+        .eq('user_id', userId)
+        .maybeSingle();
+      consented = Boolean(consentRow?.consent_at) && !consentRow?.withdrawn_at;
     } catch {
-      // Fall back to external_id (userId) matching only.
+      consented = false;
+    }
+    let email: string | null = null;
+    if (consented) {
+      try {
+        const { data } = await admin.auth.admin.getUserById(userId);
+        email = data.user?.email ?? null;
+      } catch {
+        // Fall back to external_id (userId) matching only.
+      }
     }
     await sendCapiPurchase({
       eventId: `purchase:${intentId}`,
