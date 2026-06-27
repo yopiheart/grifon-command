@@ -120,9 +120,11 @@ const ROUTE_PATHS: Record<Route, string> = {
 
 const App: React.FC = () => {
   const [currentRoute, setCurrentRoute] = useState<Route>(detectInitialRoute);
-  // When a legal page is opened from checkout, remember the checkout URL so the
-  // "Back to checkout" button can restore it (the checkout draft restores the form).
-  const [legalReturnHref, setLegalReturnHref] = useState<string | null>(null);
+  // When a legal page is opened from checkout OR the auth gateway, remember the
+  // route + URL to return to so the page's Back button restores exactly where
+  // the user was. Form entries survive automatically — they live in this
+  // component's state, which doesn't unmount while a legal route renders.
+  const [legalReturn, setLegalReturn] = useState<{ route: Route; href: string } | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isBooting, setIsBooting] = useState(false);
 
@@ -755,26 +757,44 @@ const App: React.FC = () => {
       refund: '// REFUND_POLICY',
       support: '// SUPPORT',
     } as const;
+    setLegalReturn(null); // opened from landing/pricing → Back goes to landing
     runVeilTransition(labels[route], () => goToLegal(route));
   };
 
   // Open a legal page from checkout, remembering the exact checkout URL (incl. ?plan=&cycle=)
   // so we can return the buyer to it with their entries intact.
   const handleViewLegal = (route: 'terms' | 'privacy') => {
-    if (typeof window !== 'undefined') {
-      setLegalReturnHref(window.location.pathname + window.location.search);
-    }
+    setLegalReturn(
+      typeof window !== 'undefined'
+        ? { route: 'checkout', href: window.location.pathname + window.location.search }
+        : null
+    );
     goToLegal(route);
   };
 
-  // Back button on a legal page: return to checkout if we came from there, else landing.
+  // Open a legal page from the auth gateway (sign in / sign up), remembering the
+  // current screen so Back returns the user to the form — their typed email +
+  // opt-in survive (App state persists across the legal route). Reading a policy
+  // never costs them their place, which lifts signup completion.
+  const openLegalFromAuth = (route: Route) => {
+    setLegalReturn(
+      typeof window !== 'undefined'
+        ? { route: currentRoute, href: window.location.pathname + window.location.search }
+        : null
+    );
+    goToLegal(route);
+  };
+
+  // Back button on a legal page: return to wherever the user opened it from
+  // (checkout / auth gateway), else fall back to the marketing landing.
   const handleLegalBack = () => {
-    if (legalReturnHref) {
+    if (legalReturn) {
       if (typeof window !== 'undefined' && window.history.replaceState) {
-        window.history.replaceState({}, '', legalReturnHref);
+        window.history.replaceState({}, '', legalReturn.href);
       }
-      setLegalReturnHref(null);
-      setCurrentRoute('checkout');
+      const dest = legalReturn.route;
+      setLegalReturn(null);
+      setCurrentRoute(dest);
     } else {
       runVeilTransition('// GRIFON COMMAND', () => goToLegal('landing'));
     }
@@ -874,7 +894,7 @@ const App: React.FC = () => {
   if (currentRoute === 'terms') {
     return (
       <ErrorBoundary name="route:terms" resetKey={currentRoute} onReset={() => goToLegal('landing')} resetLabel="BACK TO LANDING">
-        <TermsOfService onBack={handleLegalBack} backLabel={legalReturnHref ? 'Back to checkout' : 'Back'} />
+        <TermsOfService onBack={handleLegalBack} backLabel={legalReturn?.route === 'checkout' ? 'Back to checkout' : 'Back'} />
         <RouteVeil veil={veil} />
       </ErrorBoundary>
     );
@@ -883,7 +903,7 @@ const App: React.FC = () => {
   if (currentRoute === 'privacy') {
     return (
       <ErrorBoundary name="route:privacy" resetKey={currentRoute} onReset={() => goToLegal('landing')} resetLabel="BACK TO LANDING">
-        <PrivacyPolicy onBack={handleLegalBack} backLabel={legalReturnHref ? 'Back to checkout' : 'Back'} />
+        <PrivacyPolicy onBack={handleLegalBack} backLabel={legalReturn?.route === 'checkout' ? 'Back to checkout' : 'Back'} />
         <RouteVeil veil={veil} />
       </ErrorBoundary>
     );
@@ -892,7 +912,7 @@ const App: React.FC = () => {
   if (currentRoute === 'refund') {
     return (
       <ErrorBoundary name="route:refund" resetKey={currentRoute} onReset={() => goToLegal('landing')} resetLabel="BACK TO LANDING">
-        <RefundPolicy onBack={() => runVeilTransition('// GRIFON COMMAND', () => goToLegal('landing'))} />
+        <RefundPolicy onBack={handleLegalBack} />
         <RouteVeil veil={veil} />
       </ErrorBoundary>
     );
@@ -901,7 +921,7 @@ const App: React.FC = () => {
   if (currentRoute === 'support') {
     return (
       <ErrorBoundary name="route:support" resetKey={currentRoute} onReset={() => goToLegal('landing')} resetLabel="BACK TO LANDING">
-        <Support onBack={() => runVeilTransition('// GRIFON COMMAND', () => goToLegal('landing'))} />
+        <Support onBack={handleLegalBack} />
         <RouteVeil veil={veil} />
       </ErrorBoundary>
     );
@@ -1087,7 +1107,8 @@ const App: React.FC = () => {
                         <span className="mt-1 block text-xs text-zinc-300 leading-snug normal-case">
                           Yes — send me deals and offers picked for my business. I'm okay sharing
                           limited data with partners like Meta to keep them relevant.{' '}
-                          <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-[#FFCC00] hover:underline">Privacy Policy</a>.
+                          {/* stopPropagation so opening the policy doesn't toggle the checkbox. */}
+                          <button type="button" onClick={(e) => { e.stopPropagation(); openLegalFromAuth('privacy'); }} className="text-[#FFCC00] hover:underline align-baseline">Privacy Policy</button>.
                         </span>
                       </span>
                     </label>
@@ -1103,9 +1124,9 @@ const App: React.FC = () => {
                         stays the explicit unchecked box. font-sans keeps it out of the mono law. */}
                     <p className="text-center text-[11px] text-zinc-500 leading-snug normal-case font-sans">
                       By continuing, you agree to our{' '}
-                      <button type="button" onClick={() => goToLegal('terms')} className="font-sans underline text-zinc-400 hover:text-[#FFCC00] transition-colors">Terms of Service</button>{' '}
+                      <button type="button" onClick={() => openLegalFromAuth('terms')} className="font-sans underline text-zinc-400 hover:text-[#FFCC00] transition-colors">Terms of Service</button>{' '}
                       and{' '}
-                      <button type="button" onClick={() => goToLegal('privacy')} className="font-sans underline text-zinc-400 hover:text-[#FFCC00] transition-colors">Privacy Policy</button>.
+                      <button type="button" onClick={() => openLegalFromAuth('privacy')} className="font-sans underline text-zinc-400 hover:text-[#FFCC00] transition-colors">Privacy Policy</button>.
                     </p>
                   </form>
                 )}
@@ -1173,14 +1194,13 @@ const App: React.FC = () => {
                     </span>
                     Trusted by 100+ Filipino business owners
                   </div>
+                  {/* Terms + Privacy live in the passive line above the button now, so the
+                      footer carries only what's unique here: Refund + Support. All return
+                      to the auth form (openLegalFromAuth) so reading them costs no entries. */}
                   <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[10px] font-mono text-zinc-500 uppercase tracking-widest">
-                    <button type="button" onClick={() => goToLegal('terms')} className="hover:text-[#FFCC00] transition-colors">TERMS</button>
+                    <button type="button" onClick={() => openLegalFromAuth('refund')} className="hover:text-[#FFCC00] transition-colors">REFUND</button>
                     <span className="text-zinc-700">·</span>
-                    <button type="button" onClick={() => goToLegal('privacy')} className="hover:text-[#FFCC00] transition-colors">PRIVACY</button>
-                    <span className="text-zinc-700">·</span>
-                    <button type="button" onClick={() => goToLegal('refund')} className="hover:text-[#FFCC00] transition-colors">REFUND</button>
-                    <span className="text-zinc-700">·</span>
-                    <button type="button" onClick={() => goToLegal('support')} className="hover:text-[#FFCC00] transition-colors">SUPPORT</button>
+                    <button type="button" onClick={() => openLegalFromAuth('support')} className="hover:text-[#FFCC00] transition-colors">SUPPORT</button>
                   </div>
                   <p className="hidden md:block text-[10px] font-mono text-zinc-600 tracking-[0.4em] uppercase">// SESSION_ENCRYPTED</p>
                 </div>
