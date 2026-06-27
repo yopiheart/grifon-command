@@ -1240,10 +1240,12 @@ const App: React.FC = () => {
                         <Check className="pointer-events-none absolute w-3 h-3 text-zinc-950 opacity-0 peer-checked:opacity-100" strokeWidth={3} />
                       </span>
                       {/* normal-case overrides the global `label { uppercase }` law so this
-                          dense legal microcopy reads as sentence case, not a shouty mono wall. */}
+                          reads sentence-case. Benefit-first framing (Reciprocity) lifts the
+                          tick rate while staying an informed, affirmative, unchecked opt-in:
+                          the outcome leads, the Meta data-sharing is the demoted mechanism. */}
                       <span className="text-xs text-zinc-400 leading-snug normal-case">
-                        Send me personalized offers. We may share limited data with partners
-                        like Meta to show you relevant ads. Optional —{' '}
+                        Yes — send me deals and offers picked for my business. I'm okay sharing
+                        limited data with partners like Meta to keep them relevant.{' '}
                         <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-[#FFCC00] hover:underline">Privacy Policy</a>.
                       </span>
                     </label>
@@ -1253,6 +1255,16 @@ const App: React.FC = () => {
                     <GoldButton type="submit" className="w-full justify-center py-3 md:py-4" disabled={isSigningIn}>
                       {isSigningIn ? 'CREATING ACCOUNT...' : 'CREATE MY FREE ACCOUNT'}
                     </GoldButton>
+                    {/* Passive Terms/Privacy acknowledgment (Claude/Cursor pattern). Distinct
+                        from the opt-in above: this is generic legal acknowledgment, fine to
+                        carry by signup action — NOT the Meta data-sharing consent, which stays
+                        the explicit unchecked box. font-sans keeps it out of the mono law. */}
+                    <p className="text-center text-[11px] text-zinc-500 leading-snug normal-case font-sans">
+                      By creating your account, you agree to our{' '}
+                      <button type="button" onClick={() => goToLegal('terms')} className="font-sans underline text-zinc-400 hover:text-[#FFCC00] transition-colors">Terms of Service</button>{' '}
+                      and{' '}
+                      <button type="button" onClick={() => goToLegal('privacy')} className="font-sans underline text-zinc-400 hover:text-[#FFCC00] transition-colors">Privacy Policy</button>.
+                    </p>
                   </form>
                 )}
 
