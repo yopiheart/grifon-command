@@ -11,6 +11,7 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "check:bundle-leak": "node tools/check-bundle-leak.mjs",
+    "creative:batch": "node tools/batch-creative-codex.mjs",
     "design:lint": "design.md lint DESIGN.md",
     "design:tailwind": "design.md export --format tailwind DESIGN.md > design.tokens.json",
     "design:spec": "design.md spec"

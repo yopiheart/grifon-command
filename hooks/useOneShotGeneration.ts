@@ -36,6 +36,17 @@ export interface OneShotParams {
   businessInfo: BusinessInfo;
   language: 'English' | 'Taglish';
   aspectRatio: '9:16' | '16:9';
+  /**
+   * Presenter chosen at intake (One-Shot Ad: uploaded or generated+accepted).
+   * When present, the avatar stage reuses it instead of generating a fresh one,
+   * so the user's pick is honored. Omitted by the Director one-shot, which
+   * auto-casts a spokesperson — behavior there is unchanged.
+   */
+  presetAvatar?: Avatar | null;
+  /** AUTO-cast hints — when no presetAvatar is supplied, AI Director casts the
+   * spokesperson from the research persona, constrained by these (Director one-shot
+   * passes none and stays fully auto). */
+  castHints?: { gender: 'Male' | 'Female' | 'Any'; ageRange: string; ethnicity: string } | null;
 }
 
 /** Setters into App.tsx's central wizard state — keeps both paths in sync. */
@@ -91,7 +102,7 @@ export const useOneShotGeneration = (): UseOneShotGeneration => {
     if (runningRef.current) return false;
     runningRef.current = true;
 
-    const { clientDetails, businessInfo, language, aspectRatio } = params;
+    const { clientDetails, businessInfo, language, aspectRatio, presetAvatar, castHints } = params;
     setStages(INITIAL_STAGES.map(s => ({ ...s, status: 'pending', detail: undefined })));
     setRunning(true);
     setDone(false);
@@ -108,24 +119,33 @@ export const useOneShotGeneration = (): UseOneShotGeneration => {
       sinks.setFinalScript(finalScript);
       patch('script', 'done');
 
-      // 2 — Avatar (critical)
+      // 2 — Avatar (critical). Honor an intake-supplied presenter (One-Shot Ad);
+      // otherwise auto-cast one (Director one-shot).
       patch('avatar', 'running');
-      const { url, description } = await generateAvatarImage(
-        businessInfo.audience,
-        'Any',
-        '',
-        '',
-        aspectRatio,
-        '1K',
-        [],
-      );
-      const avatar: Avatar = {
-        prompt: `An avatar for an ad targeting ${businessInfo.audience}`,
-        url,
-        description,
-        ethnicity: '',
-        gender: 'Any',
-      };
+      let avatar: Avatar;
+      if (presetAvatar?.url) {
+        avatar = presetAvatar;
+      } else {
+        // AI Director casts the spokesperson from the full research persona,
+        // constrained by the user's optional intake hints (gender/age/ethnicity).
+        const { url, description } = await generateAvatarImage(
+          businessInfo.audience,
+          castHints?.gender ?? 'Any',
+          castHints?.ageRange ?? '',
+          castHints?.ethnicity ?? '',
+          aspectRatio,
+          '1K',
+          [],
+          businessInfo.scriptType,
+        );
+        avatar = {
+          prompt: `An avatar for an ad targeting ${businessInfo.audience}`,
+          url,
+          description,
+          ethnicity: castHints?.ethnicity ?? '',
+          gender: castHints?.gender ?? 'Any',
+        };
+      }
       sinks.setAvatar(avatar);
       patch('avatar', 'done');
 

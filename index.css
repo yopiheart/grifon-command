@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Dashboard gold "volumetric haze" backdrop (components/ui/SmokeAura.tsx).
+   GPU-cheap transform/opacity loops; all motion stops under reduced-motion. */
+@keyframes aura-pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 0.85; } }
+@keyframes aura-rays  { 0%, 100% { opacity: 0.45; } 50% { opacity: 0.8; } }
+@keyframes aura-drift-a { 0%, 100% { transform: translate3d(0,0,0) scale(1); } 50% { transform: translate3d(5%,-4%,0) scale(1.15); } }
+@keyframes aura-drift-b { 0%, 100% { transform: translate3d(0,0,0) scale(1.08); } 50% { transform: translate3d(-6%,3%,0) scale(0.92); } }
+@keyframes aura-dust { from { background-position: 0 0; } to { background-position: 0 -96px; } }
+.aura-pulse   { animation: aura-pulse 9s ease-in-out infinite; }
+.aura-rays    { animation: aura-rays 11s ease-in-out infinite; }
+.aura-drift-a { animation: aura-drift-a 22s ease-in-out infinite; will-change: transform; }
+.aura-drift-b { animation: aura-drift-b 28s ease-in-out infinite; will-change: transform; }
+.aura-dust    { animation: aura-dust 26s linear infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .aura-pulse, .aura-rays, .aura-drift-a, .aura-drift-b, .aura-dust { animation: none; }
+}
+
 /* Smooth in-page anchor scrolling (header anchor nav). Respect reduced motion. */
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) {

@@ -4,7 +4,7 @@ import LegalPageLayout from './ui/LegalPageLayout';
 type Props = { onBack: () => void; backLabel?: string };
 
 const PrivacyPolicy: React.FC<Props> = ({ onBack, backLabel }) => (
-  <LegalPageLayout title="Privacy Policy" effectiveDate="April 20, 2026" onBack={onBack} backLabel={backLabel}>
+  <LegalPageLayout title="Privacy Policy" effectiveDate="June 25, 2026" onBack={onBack} backLabel={backLabel}>
     <p>
       This Privacy Policy explains how Haste Enterprises ("we", "us") collects,
       uses, and shares information when you use Grifon.AI ("Grifon"). It is
@@ -50,6 +50,11 @@ const PrivacyPolicy: React.FC<Props> = ({ onBack, backLabel }) => (
       <li><strong>PayMongo</strong> — processing subscription payments and sending us webhook notifications of successful or failed charges.</li>
       <li><strong>Google (Gemini, Veo)</strong> — generating AI outputs from the prompts and images you submit. Google's handling of that data is governed by its own terms.</li>
       <li><strong>Vercel</strong> — hosting the application and serverless functions.</li>
+      <li><strong>Meta (Facebook/Instagram)</strong> — <em>only if you opt in to
+      personalized ads</em> (see Section 8). We may share a securely hashed
+      (SHA-256) version of your email so Meta can match you to a Custom Audience
+      and show you relevant Grifon ads. We never share your password, content, or
+      payment details with Meta.</li>
     </ul>
     <p>
       We may also disclose information if required by law, subpoena, or to
@@ -98,33 +103,58 @@ const PrivacyPolicy: React.FC<Props> = ({ onBack, backLabel }) => (
 
     <h2>7. Cookies &amp; Local Storage</h2>
     <p>
-      Grifon uses essential cookies and browser localStorage strictly to keep
-      you signed in (Supabase Auth session tokens) and to remember your
-      selected plan during the checkout flow. We do not use third-party
-      advertising or tracking cookies.
+      Grifon uses essential cookies and browser localStorage to keep you signed
+      in (Supabase Auth session tokens) and to remember your selected plan during
+      the checkout flow. With your separate consent (the cookie banner shown on
+      your first visit), we also load the Meta Pixel for advertising measurement;
+      you can decline it without affecting the rest of the service.
     </p>
 
-    <h2>8. Security</h2>
+    <h2>8. Advertising &amp; Retargeting</h2>
+    <p>
+      We run two <em>distinct</em>, separately-consented advertising mechanisms,
+      and you can decline or withdraw from either independently:
+    </p>
+    <ul>
+      <li><strong>Meta Pixel (device-level).</strong> An anonymous, cookie-based
+      measurement pixel governed by the first-visit cookie banner. It is tied to
+      your browser/device, not to your account email.</li>
+      <li><strong>Custom Audiences (account-level).</strong> If — and only if —
+      you tick the optional "personalized ads" box at sign-up or enable it later
+      in Settings, we share a securely hashed (SHA-256) version of your account
+      email with Meta so it can show you relevant Grifon ads. This is a separate
+      act of consent from the pixel banner.</li>
+    </ul>
+    <p>
+      <strong>Withdrawing consent.</strong> You may withdraw personalized-ads
+      consent at any time via Settings → Notifications → "Personalized ads". When
+      you withdraw, we stop sharing your data for new audiences and remove your
+      hashed email from the advertising audiences we previously uploaded, on a
+      rolling basis no later than thirty (30) days. We honour your choice and
+      record when it was made.
+    </p>
+
+    <h2>9. Security</h2>
     <p>
       We use industry-standard safeguards, including HTTPS for all traffic,
       hashed passwords, signed webhooks, and scoped API keys. No system is
       perfectly secure; you use the service at your own risk.
     </p>
 
-    <h2>9. Children</h2>
+    <h2>10. Children</h2>
     <p>
       Grifon is not intended for users under 18 years old. We do not knowingly
       collect personal data from children. If you believe a child has submitted
       data to us, contact us and we will delete it.
     </p>
 
-    <h2>10. Changes to This Policy</h2>
+    <h2>11. Changes to This Policy</h2>
     <p>
       We may update this Policy. Material changes will be announced via email
       or in-app notice at least seven (7) days before they take effect.
     </p>
 
-    <h2>11. Contact</h2>
+    <h2>12. Contact</h2>
     <p>
       Data Protection Officer: Haste Enterprises, reachable at{' '}
       <a href="mailto:grifon.ai@gmail.com" className="text-[#FFCC00] hover:underline">grifon.ai@gmail.com</a>.

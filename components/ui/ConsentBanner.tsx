@@ -1,0 +1,73 @@
+import React, { useState } from 'react';
+import { Cookie, X } from 'lucide-react';
+import { GoldButton } from './GoldButton';
+import { getPixelConsent, setPixelConsent } from '../../services/analyticsService';
+
+// Minimal, consent-first cookie/analytics notice for the Data-Driven Growth Loop
+// (Phase 0). The Meta Pixel does NOT fire until the user accepts here. DESIGN.md
+// tokens only — glass panel, Grifon Gold accent, lucide icon. Self-gating: once a
+// choice (accept or decline) is recorded in localStorage, the banner never shows
+// again on this device.
+
+interface ConsentBannerProps {
+  /** Called with the user's choice. Parent inits the pixel on `true`. */
+  onConsent: (granted: boolean) => void;
+}
+
+export const ConsentBanner: React.FC<ConsentBannerProps> = ({ onConsent }) => {
+  // Only show when no decision has been made yet.
+  const [visible, setVisible] = useState(() => getPixelConsent() === null);
+
+  if (!visible) return null;
+
+  const decide = (granted: boolean) => {
+    setPixelConsent(granted);
+    setVisible(false);
+    onConsent(granted);
+  };
+
+  return (
+    <div
+      role="dialog"
+      aria-label="Analytics consent"
+      className="fixed bottom-4 left-4 right-4 z-40 sm:left-auto sm:right-4 sm:w-96 rounded-2xl border border-white/10 bg-zinc-900/80 backdrop-blur-xl p-5"
+    >
+      <button
+        onClick={() => decide(false)}
+        aria-label="Decline analytics"
+        className="absolute top-2 right-2 p-2 text-zinc-500 hover:text-white transition-colors"
+      >
+        <X className="w-4 h-4" />
+      </button>
+
+      <div className="flex items-start gap-3">
+        <Cookie className="w-4 h-4 text-[#FFCC00] flex-shrink-0 mt-0.5" />
+        <div className="min-w-0">
+          <p className="text-[10px] font-mono uppercase tracking-widest text-[#FFCC00]">
+            // PRIVACY
+          </p>
+          <p className="mt-1 text-sm font-semibold text-white">Cookies &amp; analytics</p>
+          <p className="mt-1 text-xs text-zinc-400">
+            We use analytics to understand how Grifon is used and improve it. Your call.{' '}
+            <a href="/privacy" className="text-[#FFCC00] hover:underline">
+              Privacy Policy
+            </a>
+            .
+          </p>
+        </div>
+      </div>
+
+      <div className="mt-4 flex gap-3">
+        <button
+          onClick={() => decide(false)}
+          className="flex-1 rounded-full border border-white/10 bg-zinc-950 py-3 text-xs font-bold uppercase text-zinc-400 hover:text-white hover:border-[#FFCC00] transition-all"
+        >
+          Decline
+        </button>
+        <GoldButton onClick={() => decide(true)} className="flex-1">
+          Accept
+        </GoldButton>
+      </div>
+    </div>
+  );
+};

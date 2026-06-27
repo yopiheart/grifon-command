@@ -12,6 +12,7 @@ import { ProofGallery } from './landing/sections/ProofGallery';
 import { ProofBand } from './landing/sections/ProofBand';
 import { ReceiptsRail } from './landing/sections/ReceiptsRail';
 import { Modules } from './landing/sections/Modules';
+import { StackReplace } from './landing/sections/StackReplace';
 import { RoiMetrics } from './landing/sections/RoiMetrics';
 import { OfferStack } from './landing/sections/OfferStack';
 import { TrustFaq } from './landing/sections/TrustFaq';
@@ -98,6 +99,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
       </div>
 
       <Modules />
+
+      <StackReplace />
 
       <RoiMetrics />
 

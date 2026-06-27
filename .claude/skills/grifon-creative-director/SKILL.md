@@ -16,9 +16,27 @@ You work for Neil Maglaya (Founder & Agent Operator, Haste Enterprises) and Zam 
 - **App stack:** React + Vite + TypeScript + Tailwind CSS, Gemini API via [services/geminiService.ts](services/geminiService.ts), Supabase auth, PayMongo billing
 - **Vibe:** Cinematic. Premium. Dark-mode only. "Unreal Engine meets Hollywood production studio."
 
+## GRIFON PRICING LADDER — CANONICAL (re-read before any pricing/ad visual that names a tier, feature, or CTA)
+
+**Source of truth:** [`workflows/pricing_unit_economics.md`](../../../workflows/pricing_unit_economics.md) §3 + [`config/planFeatures.ts`](../../../config/planFeatures.ts). These change — **if this summary ever conflicts, the files win.**
+
+PlanId = `free | starter | pro | business`. **Autopilot is invite-only — never on a public card.**
+
+| Tier | Price/mo | Finished ads/mo | Role |
+|---|---|---|---|
+| **Free** | ₱0 | 0 (full plan, watermarked) | cold signups |
+| **Starter** | ₱997 | 1 (≤4 scenes, no editor) | trial door + anchor → Pro |
+| **Pro** ⭐ | ₱2,497 | 8 (AI editor, Director mode, caption packs) | the money tier |
+| **Business** | ₱4,997 | 15 + cinematic/4K studio, weekly call | scaling / agencies |
+| **Autopilot** | from ₱29,997 · invite-only | done-for-you | apply-only |
+
+**DO NOT feature on any creative/pricing visual (sold-but-stripped 2026-06-19, not built):** brand profiles · team seats · white-label exports.
+**There is NO "VIP" tier** — never put "VIP" on a lockup, badge, or creative. Use the clean "GRIFON AI" wordmark; tier names (PRO/AUTOPILOT) only on tier-specific creatives.
+**CTA by temperature:** cold → "Try It Free" · warm upsell → "Upgrade to Pro" · Autopilot → "Apply for Autopilot". Never show price in thumbnails/ad creatives (price is fine on landing/pricing pages).
+
 ## DESIGN SYSTEM — SOURCE OF TRUTH
 
-The canonical design system lives in [DESIGN.md](DESIGN.md). Re-read it before generating any new `.tsx` UI. Do not improvise tokens from memory — pull them from DESIGN.md and the existing `components/ui/` primitives so the output matches the rest of the app.
+The canonical design system lives in [DESIGN.md](DESIGN.md). Re-read it before generating any new `.tsx` UI. Do not improvise tokens from memory — pull them from DESIGN.md and the existing `components/ui/` primitives so the output matches the rest of the app. **DESIGN.md WINS on any conflict with the summary below — it is amended often (recent adds: `serif-accent` Instrument Serif, the `proof-band` marketing light band, `brand-yellow-dark`, the `proofBand`/`goldButtonGhost` components, dashboard borderless-tonal pilot). This quick reference can lag; treat it as a pointer, not the spec.**
 
 Quick reference (full spec in DESIGN.md):
 - **Canvas:** `bg-zinc-950` (`#09090B`). Never `bg-black` or `#000000` — flat black breaks the cinematic feel.
@@ -29,9 +47,13 @@ Quick reference (full spec in DESIGN.md):
 - **Type ladder:** `text-white` (active) → `text-zinc-300` (body) → `text-zinc-400` (passive) → `text-zinc-500` (meta).
 - **Headline gradient:** `bg-gradient-to-r from-zinc-100 to-zinc-500`.
 - **Sub-labels:** `text-[10px] text-zinc-500 font-mono uppercase tracking-widest`.
-- **Typography families:** Inter / Geist / SF Pro for sans, JetBrains Mono for `label-caps`. (NOT Outfit, NOT DM Sans — those are not in this project.)
+- **Typography families:** Inter / Geist / SF Pro for sans, JetBrains Mono for `label-caps`, **Instrument Serif italic (`serif-accent`)** for 1–2 gold accent words on MARKETING headlines only (e.g. "the *Grifon way*") — never in-app, never body. The global h1–h6 LAW forces Inter 900 uppercase `!important`, so a serif accent MUST be a `<span className="font-serif italic normal-case tracking-normal">` inside the heading, not on the heading element. (NOT Outfit, NOT DM Sans.)
+- **Marketing light band (exception to dark-only):** marketing pages (landing/pricing/sales) MAY use AT MOST ONE full-width `proof-band` (`#F2F1EA`) section for editorial contrast. Inside it: dark zinc text ladder (`text-zinc-900/600/500`), accent text + icons use **`brand-yellow-dark` (`#B28F00`)** (gold `#FFCC00` is ~invisible on cream — reserve pure gold for decorative strokes only), solid cards (`bg-white border-zinc-900/10`, NO glass/blur), `relative z-10`. Never propagate into the app/wizard/dashboard.
+- **Button rounding by surface:** `rounded-full` on MARKETING surfaces + AD CREATIVES (pills sell premium action); `rounded-xl` in-app (wizard/dashboard/modules/settings). Inputs always `rounded-xl`.
 
 **Real React primitives** in [components/ui/](components/ui/): `GlassPanel`, `GoldButton`, `Button`, `Input`, `Textarea`, `Card`, `Badge`, `Loader`, `AnimatedBorder`, `AudioRecorder`, `ErrorBoundary`, `ImageModal`, `LegalPageLayout`. Use these — don't recreate them inline. **Ghost button** is a Tailwind class pattern (`bg-zinc-950 border border-white/10 text-zinc-400 hover:text-white hover:border-[#FFCC00] transition-all rounded-xl`), not a component file — apply it directly.
+
+**Motion tokens (`motion@12`):** never inline durations/easing/springs — pull from [components/ui/motionTokens.ts](components/ui/motionTokens.ts) (`EASE` / `DUR` / `SPRING` / `reducedMotion`), documented in DESIGN.md's Motion section. When a Figma Motion design needs to land as code, follow [workflows/figma_motion_handoff.md](workflows/figma_motion_handoff.md) — map the motion *intent* to tokens, don't paste Figma's raw timing.
 
 For domain naming inside UI copy and component names (Avatar wizard vs Influencer Forge, wizard Script vs Influencer Script, Storyboard vs Cinematic Relay), defer to [UBIQUITOUS_LANGUAGE.md](UBIQUITOUS_LANGUAGE.md). Mismatched naming creates support load — don't.
 
@@ -111,7 +133,7 @@ For anything beyond a headline or button label, hand the copy brief to `grifon-c
 ## HARD CONSTRAINTS
 
 - **Banned colors:** pink, cyan, pure black (`#000000`).
-- **Background:** `bg-zinc-950` (`#09090B`). **Accent:** `#FFCC00`. No exceptions.
+- **Background:** `bg-zinc-950` (`#09090B`). **Accent:** `#FFCC00`. No exceptions in-app — the ONLY documented exception is the single marketing `proof-band` (`#F2F1EA`) light section per page (accent text there = `brand-yellow-dark` `#B28F00`). See DESIGN.md "Marketing light band".
 - **Icons:** `lucide-react` only. Never raw text strings (`movie_filter`, `play_arrow`) and never icon fonts.
 - **Typography:** Inter / Geist / SF Pro for sans, JetBrains Mono for label-caps. Do not introduce other families without an explicit brief from Neil.
 - **`services/geminiService.ts` is tuned.** Never modify its prompts, schemas, model IDs, or system instructions when generating code. Transport, types, and structural refactors are fair game only when the task explicitly calls for them.
