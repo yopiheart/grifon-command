@@ -8,8 +8,10 @@ autonomous goal caused a chaotic over-build last session; Neil felt overwhelmed)
 
 > **Where to pick up (2026-06-27):** Phase A (refactor) + look-lock **Pieces 1 & 2
 > are SHIPPED** on this branch (commit `d308061`) — lock-only (option **C**) works
-> end-to-end. The one open decision is the **composite image preview: option B vs
-> ship lock-only**. See "NEXT" below. Branch is committed but **not pushed**.
+> end-to-end. **DECIDED 2026-06-27: Neil chose to ship lock-only (C); composite
+> preview (B) is deferred.** So the look-lock feature is **DONE for v1.** Remaining
+> housekeeping only: the branch is committed but **not pushed / not merged to main**
+> — push + PR when Neil's ready. Option B parked in `post_beta_roadmap.md` item #11.
 
 ---
 
@@ -72,11 +74,13 @@ tuned look is byte-identical) · 90 unit tests pass.
 
 ---
 
-## ⏭️ NEXT — the ONE open decision: composite image preview (B) vs ship lock-only (C)
+## ✅ DECIDED 2026-06-27 — shipped lock-only (C); composite preview (B) deferred
 
-Everything else is settled and shipped. The remaining choice (Neil's call) is whether
-to show the scene image with the caption/hook burned on, faithfully, at the Render All
-entry — or stop at the working lock-only UI.
+Neil chose option **C** (ship lock-only). The look-lock feature is **DONE for v1**.
+The composite preview (**B**) is parked in `post_beta_roadmap.md` item #11 with its
+resume trigger. Only housekeeping remains: **push the branch + open a PR to main**
+when Neil's ready (committed, not pushed). The B-vs-C options are kept below for the
+record / if B is ever unparked.
 
 - **B) server `api/render/preview-frame.ts`** — additive, isolated ffmpeg-on-a-still
   endpoint reusing `drawPlan` in Node with the real fonts. Faithful; doesn't touch the
