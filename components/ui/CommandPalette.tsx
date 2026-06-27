@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { DUR, EASE } from './motionTokens';
 import { Search, X } from 'lucide-react';
 
 export interface CommandItem {
@@ -99,7 +100,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ open, onClose, i
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.15 }}
+            transition={{ duration: DUR.instant }}
             onClick={onClose}
             className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm"
           />
@@ -107,7 +108,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ open, onClose, i
             initial={{ opacity: 0, y: -8, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -8, scale: 0.98 }}
-            transition={{ duration: 0.18, ease: 'easeOut' }}
+            transition={{ duration: DUR.fast, ease: EASE.out }}
             className="fixed left-4 right-4 top-[12%] z-[101] mx-auto max-w-xl bg-zinc-900/95 backdrop-blur-2xl rounded-3xl shadow-2xl shadow-black/50 overflow-hidden"
           >
             {/* Search */}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'motion/react';
+import { DUR, SPRING } from './ui/motionTokens';
 import {
   Sparkles, ArrowRight, ChevronRight, Film, Search, Target,
   Flame, Lock, Menu, Bell,
@@ -316,7 +317,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
       <motion.main
         initial={false}
         animate={{ paddingLeft: isDesktop ? (collapsed ? 76 : 268) : 0 }}
-        transition={{ type: 'spring', stiffness: 380, damping: 34 }}
+        transition={SPRING.standard}
         className="relative z-10 pt-14 lg:pt-0 min-h-screen flex flex-col"
       >
         <div className="w-full max-w-3xl lg:max-w-4xl mx-auto px-4 lg:px-8 flex-1 flex flex-col">
@@ -324,7 +325,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
           {/* HERO — the one-shot entry */}
           <div className="flex-1 flex flex-col justify-center min-h-[70vh] py-10">
             <motion.p
-              initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
+              initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: DUR.entrance }}
               className="text-center text-2xl sm:text-3xl lg:text-4xl font-normal tracking-tight text-zinc-200 mb-2"
             >
               {dayPart},{' '}
@@ -337,7 +338,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
               )}.
             </motion.p>
             <motion.div
-              initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}
+              initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: DUR.entrance, delay: 0.1 }}
               className="text-center text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.3] pb-1 bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500 mb-7"
             >
               What are we selling today?
@@ -345,7 +346,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
 
             {/* Hero input */}
             <motion.div
-              initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.18 }}
+              initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: DUR.entrance, delay: 0.18 }}
               className="w-full max-w-2xl mx-auto"
             >
               <div className="bg-zinc-900/70 backdrop-blur-xl rounded-2xl ring-1 ring-white/[0.08] p-3 lg:p-4 flex items-center gap-3 focus-within:ring-[#FFCC00]/40 transition-all">
@@ -437,7 +438,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                   <motion.button
                     key={tile.id}
                     initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: 0.05 + i * 0.04 }}
+                    transition={{ duration: DUR.slow, delay: 0.05 + i * 0.04 }}
                     onClick={() => (unlocked ? handleSelectModule(tile.id) : onUpgrade?.())}
                     className={`relative text-left rounded-2xl p-4 group transition-all duration-300 active:scale-[0.98] overflow-hidden ${
                       tile.featured

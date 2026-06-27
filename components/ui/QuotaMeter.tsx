@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { DUR, EASE } from './motionTokens';
 import { Sparkles, Infinity as InfinityIcon } from 'lucide-react';
 import type { PlanId } from '../../hooks/useSubscription';
 
@@ -66,7 +67,7 @@ export const QuotaMeter: React.FC<QuotaMeterProps> = ({ plan, used = 0, limit, l
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: `${fillPct}%` }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
+            transition={{ duration: DUR.expressive, ease: EASE.out }}
             className="h-full bg-gradient-to-r from-[#FFCC00] to-[#FFD93D] shadow-[0_0_8px_rgba(255,204,0,0.6)]"
           />
         </div>

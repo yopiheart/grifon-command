@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { DUR } from '../../ui/motionTokens';
 import { MessageSquare, Sparkles, Rocket, SlidersHorizontal } from 'lucide-react';
 import { CreamBand } from '../CreamBand';
 
@@ -43,7 +44,7 @@ export const ProofBand: React.FC = () => (
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: DUR.entrance }}
         className="text-center mb-12 md:mb-16"
       >
         <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-zinc-500 mb-4">// HOW IT WORKS</p>
@@ -64,7 +65,7 @@ export const ProofBand: React.FC = () => (
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: idx * 0.1 }}
+            transition={{ duration: DUR.entrance, delay: idx * 0.1 }}
             className="bg-white border border-zinc-900/10 rounded-3xl p-7 flex flex-col h-full"
           >
             <div className="font-serif italic text-6xl leading-none text-zinc-900/10 mb-4 select-none">{step.num}</div>
@@ -80,7 +81,7 @@ export const ProofBand: React.FC = () => (
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: 0.2 }}
+        transition={{ duration: DUR.slow, delay: 0.2 }}
         className="mt-8 flex items-center justify-center"
       >
         <div className="inline-flex items-center gap-3 rounded-full border border-zinc-900/10 bg-white/70 px-5 py-3 text-sm text-zinc-700">
