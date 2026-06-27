@@ -238,17 +238,23 @@ export function hookTitleLayout(
   frameW: number,
   yTop: number,
   startSec: number,
-  cadenceSec: number
+  cadenceSec: number,
+  measure?: (text: string, fontsize: number) => number
 ): WordTiming[] {
   const lineH = Math.round(fontsize * 1.18);
-  // Explicit inter-word gap + uppercase-aware advance. estWidth is length×advRatio,
-  // but the extrabold hook fonts' UPPERCASE glyphs really advance ~0.1em/char wider
-  // than the preset ratio — a 4-letter caps word overruns its estimate by ~0.4em,
-  // swallowing the space-char advance entirely, so adjacent words rendered fused
-  // ("LUMA LANG" read as "LUMALANG", 2026-06-10 final-render review).
+  // Explicit inter-word gap + per-word advance. PREFERRED: `measure` reads the
+  // hook font's REAL glyph advances (api/_lib/fontMetrics, loaded on the I/O side
+  // and passed in so this engine stays pure), so x is exact for any word.
+  // FALLBACK (font unreadable): the old length×advRatio estimate with a +0.1em
+  // uppercase nudge — but extrabold caps overrun the estimate, swallowing the gap
+  // and fusing adjacent words ("LUMA LANG" → "LUMALANG", "MATAPANG ANG" →
+  // "MATAPANGANG"; 2026-06-10 / 2026-06-17 final-render reviews). Real metrics end
+  // that whack-a-mole.
   const gap = Math.round(fontsize * 0.34);
   const wAdv = (wd: string) =>
-    estWidth(wd, fontsize, advRatio + (/[A-Z]/.test(wd) && wd === wd.toUpperCase() ? 0.10 : 0));
+    measure
+      ? measure(wd, fontsize)
+      : estWidth(wd, fontsize, advRatio + (/[A-Z]/.test(wd) && wd === wd.toUpperCase() ? 0.10 : 0));
   const out: WordTiming[] = [];
   let idx = 0;
   for (let li = 0; li < lines.length; li++) {
@@ -497,7 +503,11 @@ export function planScene(
   trimSec: number | null,
   dims: [number, number],
   preset: RenderPreset = CLASSIC,
-  variantSeed: number = 0
+  variantSeed: number = 0,
+  // Optional real-glyph measurer for the hook title-stack (api/_lib/fontMetrics,
+  // loaded on the I/O side). Absent → falls back to the advRatio estimate. Kept
+  // as a param so this engine stays pure (no fs) and the snapshot test is stable.
+  hookMeasure?: (text: string, fontsize: number) => number
 ): DrawLayer[] {
   const [w, h] = dims;
   const sz = safeZone(dims);
@@ -518,11 +528,12 @@ export function planScene(
     if (preset.hook.layout === 'title-stack') {
       // Reference-grade hook: word-by-word elastic pop, gold/white two-tone,
       // no box (websites5 grammar; Neil 2026-06-10 redesign).
-      const words = hookTitleLayout(lines, fontsize, hookAdv, w, yTop, 0.05, preset.hook.wordCadenceSec);
+      const words = hookTitleLayout(lines, fontsize, hookAdv, w, yTop, 0.05, preset.hook.wordCadenceSec, hookMeasure);
       words.forEach((wd) => { wd.end = end; }); // every word persists to scene end
+      const hookLineW = (l: string) => hookMeasure ? hookMeasure(l, fontsize) : estWidth(l, fontsize, hookAdv);
       layers.push({
         kind: 'text', text: lines.join('\n'), fontsize, color: preset.hook.textColor, boxAlpha: 0,
-        xExpr: `${Math.round((w - Math.max(...lines.map((l) => estWidth(l, fontsize, hookAdv)))) / 2)}`,
+        xExpr: `${Math.round((w - Math.max(...lines.map(hookLineW))) / 2)}`,
         yBase: yTop, startSec: 0.05, endSec: end, anim: 'word-pop', words, font: 'hook',
         emphasisSfx: overlaySfx.hook ?? undefined,
         // Premium metallic fill + light sweep, palette rotated per render so

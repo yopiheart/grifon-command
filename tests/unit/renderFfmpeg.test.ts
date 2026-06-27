@@ -1,10 +1,12 @@
 import { describe, it, expect } from 'vitest';
 import {
-  parseDurationSec, parseTrimSec, dimsFor, chooseTrim,
+  parseDurationSec, parseTrimSec, parseSilenceRegions, dimsFor, chooseTrim,
   clampWindow, clampAnchor, escFilterPath,
   safeZone, fitText, wrapTwoLines, stripUnrenderable, evenSplit, chunkCaption,
   planScene, planEndCardLayers, buildTextFilter, buildBoxFilter, WIPE_SLICES, snapSfxAnchor, pickSceneSfx, voiceChunkWindows,
+  hookTitleLayout, findAsset,
 } from '../../api/_lib/renderFfmpeg.js';
+import { loadGlyphWidths } from '../../api/_lib/fontMetrics.js';
 import type { SfxCandidate } from '../../api/_lib/renderFfmpeg.js';
 import type { FinalRenderScene } from '../../types.js';
 
@@ -161,6 +163,84 @@ describe('chooseTrim', () => {
 
   it('keeps the full clip when nothing else applies', () => {
     expect(chooseTrim({}, PROBE, null).trimSec).toBeCloseTo(PROBE, 3);
+  });
+});
+
+describe('parseTrimSec — quiet trailing blip (Scene-4 ghost guard, 2026-06-17)', () => {
+  const PAD = 0.3;
+  // Real Scene-4 VO: speech ends ~4.78s, then a 0.89s silence, then a 0.42s
+  // -45.9dB tick to EOF (6.09s). Naive detection saw "speech resumes after the
+  // silence" and kept the full clip → the Veo morph at ~5.25s leaked into the final.
+  const scene4Stderr = [
+    'Duration: 00:00:06.09,',
+    '[silencedetect] silence_start: 4.78',
+    '[silencedetect] silence_end: 5.67 | silence_duration: 0.89',
+  ].join('\n');
+
+  it('trims to the silence start when only a SHORT, QUIET blip follows (tailIsQuiet)', () => {
+    // remainder 6.09-5.67 = 0.42s (<0.9) AND the caller measured it quiet → artifact.
+    expect(parseTrimSec(scene4Stderr, 6.09, PAD, { tailIsQuiet: true })).toBeCloseTo(5.08, 2); // 4.78 + 0.3
+  });
+
+  it('keeps the full clip when the trailing remainder is LOUD (real speech, Scene-6-like)', () => {
+    expect(parseTrimSec(scene4Stderr, 6.09, PAD, { tailIsQuiet: false })).toBeCloseTo(6.09, 2);
+  });
+
+  it('keeps the full clip when the remainder is LONG even if quiet (not a blip)', () => {
+    // Scene-6 analog: mid-clip pause 1.68-2.09, then 2.27s to EOF (4.36). Far beyond
+    // the blip window → never trimmed regardless of the energy probe.
+    const stderr = ['Duration: 00:00:04.36,', 'silence_start: 1.68', 'silence_end: 2.09 |'].join('\n');
+    expect(parseTrimSec(stderr, 4.36, PAD, { tailIsQuiet: true })).toBeCloseTo(4.36, 2);
+  });
+
+  it('default (no opts) is unchanged — a pre-EOF silence keeps the full clip', () => {
+    expect(parseTrimSec(scene4Stderr, 6.09, PAD)).toBeCloseTo(6.09, 2);
+  });
+});
+
+describe('parseSilenceRegions', () => {
+  it('parses start/end pairs and a dangling trailing start', () => {
+    const stderr = [
+      'silence_start: 1.0', 'silence_end: 1.5 |',
+      'silence_start: 4.4', // dangling (no end → reaches EOF)
+    ].join('\n');
+    expect(parseSilenceRegions(stderr)).toEqual([
+      { start: 1.0, end: 1.5 },
+      { start: 4.4, end: null },
+    ]);
+  });
+});
+
+describe('hookTitleLayout — real glyph metrics prevent word fusion (#A, 2026-06-17)', () => {
+  // Regression for "MATAPANG ANG" → "MATAPANGANG": when words are positioned by a
+  // CHARACTER-COUNT estimate, extrabold caps overrun it and the next word lands
+  // inside the previous one. Real font advances (api/_lib/fontMetrics) end that.
+  const fontPath = findAsset('fonts/Montserrat-ExtraBold.ttf'); // title-stack hook font
+
+  it('the bundled hook font is measurable', () => {
+    expect(fontPath).toBeTruthy();
+    expect(loadGlyphWidths(fontPath!)).toBeTruthy();
+  });
+
+  it('adjacent caps words never overlap (start-to-start gap ≥ the true word width)', () => {
+    const measure = loadGlyphWidths(fontPath!)!;
+    const fontsize = 120;
+    const words = hookTitleLayout(
+      ['MATAPANG ANG', 'SHAMPOO MO'], fontsize, 0.64, 1080, 200, 0.05, 0.18, measure
+    );
+    expect(words).toHaveLength(4);
+    for (let i = 1; i < words.length; i++) {
+      if (words[i].yPx !== words[i - 1].yPx) continue; // different line → skip
+      const prevWidth = measure(words[i - 1].word, fontsize);
+      // next word starts at/after the end of the previous word (a real space ≥ 0)
+      expect(words[i].xPx - words[i - 1].xPx).toBeGreaterThanOrEqual(prevWidth);
+    }
+  });
+
+  it('degrades to the estimate (no crash) when no measurer is supplied', () => {
+    const words = hookTitleLayout(['LUMA LANG'], 120, 0.64, 1080, 200, 0.05, 0.18);
+    expect(words).toHaveLength(2);
+    expect(words[1].xPx).toBeGreaterThan(words[0].xPx);
   });
 });
 

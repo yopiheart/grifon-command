@@ -5,6 +5,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import ffmpegPath from 'ffmpeg-static';
 import type { FinalRenderScene, FinalRenderEndCard, SfxBankId } from '../../types.js';
+import { loadGlyphWidths } from './fontMetrics.js';
 import {
   CLASSIC,
   type RenderPreset,
@@ -283,6 +284,13 @@ export function parseDurationSec(stderr: string): number | null {
 
 /** A trailing silence region's end counts as "at EOF" within this slack (s). */
 const EOF_EPS = 0.25;
+// Ghost-tail energy gate (2026-06-17 render review): when the last silence ends
+// just before EOF, a SHORT (≤0.9s) + QUIET (<-30dBFS) remainder is a tick/breath,
+// not resumed speech — trim at the silence start instead of leaking a dead-air
+// morph tail (the Scene-4 ghost: a -45dB blip kept the full clip). Loud or long
+// trailing audio is real speech and keeps the clip.
+const TAIL_BLIP_MAX_SEC = 0.9;
+const TAIL_SPEECH_FLOOR_DB = -30;
 
 /**
  * From a `silencedetect` stderr dump + the clip duration, compute the trim
@@ -300,11 +308,8 @@ const EOF_EPS = 0.25;
  * duration. Returns null only when duration is unknown and no trailing silence
  * was detected (caller falls back to -shortest / full clip).
  */
-export function parseTrimSec(
-  stderr: string,
-  durationSec: number | null,
-  padSec: number = PAD_SEC
-): number | null {
+/** Parse `silencedetect` regions from an ffmpeg stderr dump (pure, testable). */
+export function parseSilenceRegions(stderr: string): Array<{ start: number; end: number | null }> {
   const regions: Array<{ start: number; end: number | null }> = [];
   let openStart: number | null = null;
   for (const line of stderr.split(/\r?\n/)) {
@@ -319,6 +324,19 @@ export function parseTrimSec(
     }
   }
   if (openStart !== null) regions.push({ start: openStart, end: null });
+  return regions;
+}
+
+export function parseTrimSec(
+  stderr: string,
+  durationSec: number | null,
+  padSec: number = PAD_SEC,
+  // `tailIsQuiet` is measured by the caller (detectTrimSec) via an energy probe of
+  // the post-silence remainder; it extends "trailing silence" to a short quiet
+  // blip that ffmpeg closed before EOF. See the TAIL_* gate above.
+  opts?: { tailIsQuiet?: boolean; tailBlipMaxSec?: number }
+): number | null {
+  const regions = parseSilenceRegions(stderr);
 
   const last = regions[regions.length - 1];
   if (!last) return durationSec; // no silence detected → speech reaches the end
@@ -327,11 +345,23 @@ export function parseTrimSec(
     last.end === null ||
     (durationSec !== null && last.end >= durationSec - EOF_EPS);
 
-  if (reachesEof) {
+  const speechEnd = () => {
     const padded = Math.max(0, last.start) + padSec;
     return durationSec !== null ? Math.min(padded, durationSec) : padded;
+  };
+
+  if (reachesEof) return speechEnd();
+
+  // Last silence ends before EOF. If only a SHORT, QUIET blip follows (the
+  // caller's energy probe), it's a non-speech artifact → speech-end is the
+  // silence start; otherwise speech resumes and we keep the full clip.
+  if (
+    opts?.tailIsQuiet &&
+    durationSec !== null && last.end !== null &&
+    durationSec - last.end <= (opts.tailBlipMaxSec ?? TAIL_BLIP_MAX_SEC)
+  ) {
+    return speechEnd();
   }
-  // Last silence ends before EOF → speech resumes after it → keep the full clip.
   return durationSec;
 }
 
@@ -352,7 +382,21 @@ export function probeDurationSec(path: string): number | null {
   return parseDurationSec(stderr);
 }
 
-/** Run silencedetect on the voice MP3 and return the trim length in seconds. */
+/** Peak volume (dBFS) of a [ssSec, toSec] window via volumedetect. Unknown → 0
+ * (treat as LOUD) so a failed probe never trims a scene we couldn't measure. */
+export function maxVolumeDb(path: string, ssSec: number, toSec: number): number {
+  const { stderr } = ffmpeg([
+    '-ss', ssSec.toFixed(3), '-to', toSec.toFixed(3), '-i', path,
+    '-af', 'volumedetect', '-f', 'null', '-',
+  ]);
+  const m = /max_volume:\s*(-?[\d.]+)\s*dB/.exec(stderr);
+  return m ? parseFloat(m[1]) : 0;
+}
+
+/** Run silencedetect on the voice MP3 and return the trim length in seconds.
+ * When the last silence ends just before EOF with only a SHORT remainder, peek at
+ * that remainder's loudness: a quiet tick/breath (not resumed speech) means the
+ * real speech-end is the silence start — this is what kept the Scene-4 ghost in. */
 export function detectTrimSec(mp3Path: string): number | null {
   const { stderr } = ffmpeg([
     '-i', mp3Path,
@@ -360,7 +404,17 @@ export function detectTrimSec(mp3Path: string): number | null {
     '-f', 'null', '-',
   ]);
   const duration = parseDurationSec(stderr);
-  return parseTrimSec(stderr, duration);
+
+  let tailIsQuiet = false;
+  const regions = parseSilenceRegions(stderr);
+  const last = regions[regions.length - 1];
+  if (last && last.end !== null && duration !== null && last.end < duration - EOF_EPS) {
+    const remainder = duration - last.end;
+    if (remainder > 0 && remainder <= TAIL_BLIP_MAX_SEC) {
+      tailIsQuiet = maxVolumeDb(mp3Path, last.end, duration) < TAIL_SPEECH_FLOOR_DB;
+    }
+  }
+  return parseTrimSec(stderr, duration, PAD_SEC, { tailIsQuiet, tailBlipMaxSec: TAIL_BLIP_MAX_SEC });
 }
 
 export interface TrimPlan {
@@ -658,6 +712,11 @@ export async function renderFinalVideo(
     hookFontName = 'hook.ttf';
     copyFileSync(hookFontSrc, join(dir, hookFontName));
   }
+  // Real-glyph measurer for the hook title-stack — reads the hook TTF's actual
+  // advances so caps words can't fuse ("MATAPANG ANG" → "MATAPANGANG", 2026-06-17).
+  // Loaded here (I/O side) and passed into the pure planScene; null if unreadable
+  // → planScene degrades to the advRatio estimate.
+  const hookMeasure = hookFontSrc ? loadGlyphWidths(hookFontSrc) ?? undefined : undefined;
   // Light-sweep band for the premium hook fill (skip silently if missing).
   let sweepName: string | null = null;
   const sweepSrc = findAsset(join('fx', 'sweep.png'));
@@ -711,7 +770,7 @@ export async function renderFinalVideo(
       });
 
       // Compile the draw plan first — emphasis SFX are derived from its layers.
-      const layers = planScene(scene, trimSec, dims, preset, variantSeed);
+      const layers = planScene(scene, trimSec, dims, preset, variantSeed, hookMeasure);
       // End card rides the last scene — kept in a separate list so it joins the
       // SFX/draw pipeline but never the caption-chunk camera punches. Skipped when
       // the last scene IS the hook (1-scene ad): the hook title owns that band.
