@@ -1,4 +1,5 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { POLICY_VERSION } from './consentConstants';
 
 let _client: SupabaseClient | null = null;
 
@@ -46,7 +47,12 @@ export const signInWithGoogle = (): Promise<void> => signInWithProvider('google'
 
 export const signUpWithPassword = async (
   email: string,
-  password: string
+  password: string,
+  // Retargeting/marketing opt-in carried as user_metadata so the INTENT survives
+  // the cross-device confirm-email round-trip. This is only the intent signal —
+  // the record-of-consent is server-stamped post-auth via api/consent
+  // (consentService). Never treat user_metadata as proof of consent.
+  marketingOptIn = false
 ): Promise<{ hasSession: boolean }> => {
   const supabase = getSupabase();
   const emailRedirectTo =
@@ -54,7 +60,15 @@ export const signUpWithPassword = async (
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
-    options: emailRedirectTo ? { emailRedirectTo } : undefined,
+    options: {
+      ...(emailRedirectTo ? { emailRedirectTo } : {}),
+      // Carry BOTH the intent and the policy version the user actually saw at
+      // signup. The reconcile (App.tsx) stamps THIS version, not the (possibly
+      // bumped) version in force on first login — accurate record-of-consent.
+      data: marketingOptIn
+        ? { marketing_opt_in: true, marketing_policy_version: POLICY_VERSION }
+        : { marketing_opt_in: false },
+    },
   });
   if (error) throw error;
   return { hasSession: !!data.session };

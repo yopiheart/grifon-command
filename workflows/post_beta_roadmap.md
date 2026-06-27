@@ -661,11 +661,49 @@ target). Pull the four numbers, re-run §2–§4 of `pricing_unit_economics.md`,
 3. Re-run the margin tables; adjust `PLAN_LIMITS` / `MONTHLY_LIMITS` included counts + scene caps.
 
 **Scope estimate:** ~half a day once the data exists (mostly analysis + a quota-number tune, not
-a build). The instrumentation to capture it may be a separate small task if logs are thin.
+a build). The instrumentation to capture it may be a separate small task if logs are thin —
+that instrumentation is now specced as **Item #17 / [`growth_loop.md`](growth_loop.md) Phase 0**
+(Meta CAPI + `events` table). Build Phase 0 and these four numbers fall out of it.
 
 **Source:** Neil, 2026-06-19 pricing restructure session — *"should we add also a ads expense on
 the top of it or not a good idea?"* → decision to keep CAC separate from COGS and log it for a
 data-driven pass post-launch.
+
+---
+
+### 17. Data-Driven Growth Loop (ingest-only) — full spec in [`growth_loop.md`](growth_loop.md)
+
+> **Context (2026-06-24):** Neil's brief — make the app improve over time from client feedback, and
+> automate his *own* Grifon growth marketing with himself as approver only. Evaluated against the
+> codebase and scoped via grill: **for Grifon's own growth** (single-tenant, not a client feature) ·
+> **ingest-only** (read ad performance & learn; Neil still publishes — no autonomous spend) ·
+> **build the data plumbing now**, parallel to beta. Full evaluation, metrics taxonomy, phased build,
+> skills assessment, and risks live in the durable doc — this is just the parking-lot pointer.
+
+**What:** Give Grifon the measurement foundation it completely lacks (no pixel / telemetry / ad-perf /
+feedback today), then run two human-gated loops on top: an app-improvement loop (feedback + telemetry
+→ ranked fixes) and a creative-performance loop (read ad results → learn *why* a creative sold →
+propose the next creative → Neil ships). Reuses the proven `viral-autopsy → viral_swipe_file.md →
+grifon-cmo` brain, fed with real performance data instead of only external swipe videos.
+
+**Why it matters:** "Learn from past creative results" is impossible today because the app never sees
+results. This unblocks Item #16 (CAC/LTV) and Item #7 (perf-triggered OfferOptimizer rescue), both of
+which wait on a perf-tracking surface that does not exist.
+
+**Why parked:** Beta + `launch_readiness.md` P0s come first. But **Phase 0 (Meta CAPI + `events`
+table) is the one piece Neil endorsed building now**, parallel to beta, so the data exists when the
+post-beta tuning items fire.
+
+**When to resume:** Phase 0 — anytime (endorsed for parallel build). Phases 1–3 — post-beta, each its
+own plan + `/goal`.
+
+**Where to start:** `growth_loop.md` → Phase 0, as one thin vertical slice (pixel + Purchase CAPI via
+reused `api/webhook.ts` + one telemetry event end-to-end). Run `straw-man-audit` on the new `api/`.
+
+**Scope estimate:** Phase 0 ≈ 1–2 days (vertical slice). Phases 1–3 are separate efforts.
+
+**Source:** Neil, 2026-06-24 — *"DATA DRIVEN LEARNING/Feedback LOOP… gusto ko approver or reviewer
+lang ako."* Evaluation persisted at his request (chose to persist the doc over building immediately).
 
 ---
 

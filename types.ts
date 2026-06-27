@@ -264,6 +264,9 @@ export interface FinalRenderResult {
   url?: string;
   downloadUrl?: string;
   error?: string;
+  /** Attribution id (= render jobId) for the Data-Driven Growth Loop. Shown to
+   * the user so they can name the Meta ad "grifon-<creativeId>". */
+  creativeId?: string;
 }
 
 export interface AllData {
@@ -790,6 +793,18 @@ export interface CloneVoiceRequest {
   description?: string;
   consent: true;
   audio: string;
+}
+
+// Current marketing/retargeting consent state for the signed-in user, as read
+// back from api/consent (?action=status). Distinct from the device-level pixel
+// cookie consent. `granted` is the derived current state
+// (consent_at set AND withdrawn_at null); the raw timestamps are exposed for an
+// auditable trail in Settings. See workflows/consent_capture_plan.md.
+export interface MarketingConsent {
+  granted: boolean;
+  consentAt: string | null;
+  withdrawnAt: string | null;
+  policyVersion: string | null;
 }
 
 export interface CloneVoiceResponse {

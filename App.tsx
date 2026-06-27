@@ -56,6 +56,11 @@ import {
   updatePassword,
 } from './services/supabaseClient';
 import { popIntendedPlan, startCheckout } from './services/billingService';
+import { grant as grantMarketingConsent, getMarketingConsent } from './services/consentService';
+import { ConsentBanner } from './components/ui/ConsentBanner';
+import { FeedbackWidget } from './components/ui/FeedbackWidget';
+import { getPixelConsent, trackEvent } from './services/analyticsService';
+import { initPixel, trackPixel } from './services/metaPixel';
 import { inferAvatarGender } from './utils/voiceSelect';
 import { OAUTH_PROVIDERS } from './config/authProviders';
 import { RouteVeil, type VeilState } from './components/ui/RouteVeil';
@@ -143,6 +148,10 @@ const App: React.FC = () => {
   const [authEmail, setAuthEmail] = useState('');
   const [authPassword, setAuthPassword] = useState('');
   const [authConfirm, setAuthConfirm] = useState('');
+  // Retargeting/marketing consent opt-in on the signup form. Unchecked by
+  // default (affirmative opt-in). Carried into signUp user_metadata; the
+  // record-of-consent is stamped server-side post-auth. See consentService.
+  const [marketingOptIn, setMarketingOptIn] = useState(false);
   const [authError, setAuthError] = useState('');
   // Default to sign_up: most unauthenticated arrivals come from a START FREE CTA.
   // Returning users are one tap away, and Google OAuth handles both modes anyway.
@@ -332,6 +341,13 @@ const App: React.FC = () => {
     return () => { sub.subscription.unsubscribe(); };
   }, []);
 
+  // Meta Pixel: only init (and fire PageView) if the user has already granted
+  // consent on a previous visit. First-time visitors init via ConsentBanner's
+  // Accept. initPixel() is idempotent and a no-op when the pixel id is unset.
+  useEffect(() => {
+    if (getPixelConsent()?.granted) initPixel();
+  }, []);
+
   useEffect(() => {
     if (!isAuthenticated) return;
     const intended = popIntendedPlan();
@@ -339,6 +355,43 @@ const App: React.FC = () => {
     startCheckout(intended.plan_id, intended.billing_cycle).catch((err) => {
       toast.error('Could not resume checkout', { description: err?.message ?? 'Please try again.' });
     });
+  }, [isAuthenticated]);
+
+  // Reconcile the signup marketing-opt-in INTENT into a server-stamped consent
+  // record, exactly once. Survives the cross-device confirm-email round-trip
+  // (the intent rides user_metadata until the first authenticated load). Guarded
+  // so it never resurrects a consent the user later withdrew in Settings: we
+  // only grant when no consent row exists yet (never granted AND never
+  // withdrawn). Non-blocking — failures are silent and retried next load.
+  const consentSyncedRef = useRef(false);
+  useEffect(() => {
+    if (!isAuthenticated || consentSyncedRef.current) return;
+    consentSyncedRef.current = true;
+    (async () => {
+      try {
+        const { data } = await getSupabase().auth.getSession();
+        const meta = data.session?.user?.user_metadata;
+        const optedIn = meta?.marketing_opt_in === true;
+        const signupVersion = meta?.marketing_policy_version;
+        if (!optedIn) return;
+        const current = await getMarketingConsent();
+        // Only reconcile when no consent row exists yet (never granted AND never
+        // withdrawn) — never resurrect a withdrawal. And only auto-grant when we
+        // know the policy version the user saw at signup; without it we cannot
+        // record an accurate version, so we defer to an explicit in-app opt-in
+        // (Settings toggle, which stamps the current policy).
+        if (
+          current.consentAt === null &&
+          current.withdrawnAt === null &&
+          typeof signupVersion === 'string' &&
+          signupVersion
+        ) {
+          await grantMarketingConsent(signupVersion);
+        }
+      } catch {
+        /* non-blocking: a failed sync retries on the next authenticated load */
+      }
+    })();
   }, [isAuthenticated]);
 
   useEffect(() => {
@@ -578,7 +631,12 @@ const App: React.FC = () => {
     }
     setIsSigningIn(true);
     try {
-      const { hasSession } = await signUpWithPassword(email, authPassword);
+      const { hasSession } = await signUpWithPassword(email, authPassword, marketingOptIn);
+      // Genuine new signup (both the in-flow-session and confirm-email paths) —
+      // fire the Lead pixel here, NOT in onAuthStateChange (which can't tell a
+      // signup from a returning login). trackPixel self-guards: it no-ops until
+      // the pixel was initialized via consent, so this respects the consent gate.
+      trackPixel('Lead');
       if (hasSession) {
         setIsBooting(true);
       } else {
@@ -813,6 +871,7 @@ const App: React.FC = () => {
           onNavigateLegal={veilToLegal}
           isAuthenticated={isAuthenticated}
         />
+        <ConsentBanner onConsent={(granted) => { if (granted) initPixel(); }} />
         <RouteVeil veil={veil} />
       </ErrorBoundary>
     );
@@ -831,6 +890,7 @@ const App: React.FC = () => {
           onNavigateHome={() => runVeilTransition('// GRIFON COMMAND', () => setCurrentRoute('landing'))}
           onNavigateLegal={veilToLegal}
         />
+        <ConsentBanner onConsent={(granted) => { if (granted) initPixel(); }} />
         <RouteVeil veil={veil} />
       </ErrorBoundary>
     );
@@ -1151,6 +1211,26 @@ const App: React.FC = () => {
                       required
                       minLength={8}
                     />
+                    {/* Affirmative, unchecked-by-default retargeting opt-in. Optional —
+                        does not gate signup. Drives api/consent (see consentService). */}
+                    <label htmlFor="signup-marketing" className="flex items-start gap-2.5 cursor-pointer select-none text-left">
+                      <span className="relative flex items-center justify-center mt-0.5 shrink-0">
+                        <input
+                          id="signup-marketing"
+                          type="checkbox"
+                          checked={marketingOptIn}
+                          onChange={(e) => setMarketingOptIn(e.target.checked)}
+                          className="peer appearance-none w-4 h-4 rounded bg-zinc-950 border border-white/20 checked:bg-[#FFCC00] checked:border-[#FFCC00] focus:outline-none focus:ring-1 focus:ring-[#FFCC00] transition-colors"
+                        />
+                        <Check className="pointer-events-none absolute w-3 h-3 text-zinc-950 opacity-0 peer-checked:opacity-100" strokeWidth={3} />
+                      </span>
+                      <span className="text-xs text-zinc-400 leading-snug">
+                        Send me personalized offers and ads. You agree we may share limited
+                        data with advertising partners (e.g. Meta) to show you relevant ads.
+                        Optional — change anytime in Settings.{' '}
+                        <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-[#FFCC00] hover:underline">Privacy Policy</a>.
+                      </span>
+                    </label>
                     {authError && (
                       <p className="text-red-500 text-sm font-mono text-center border border-red-900/50 bg-red-900/20 p-2 rounded-xl">{authError}</p>
                     )}
@@ -1554,7 +1634,7 @@ const App: React.FC = () => {
                 {currentStep === 1 && <Step1ClientDetails
                   data={clientDetails}
                   setData={setClientDetails}
-                  onNext={() => setCurrentStep(2)}
+                  onNext={() => { trackEvent({ event: 'wizard_step', module: 'wizard', step: 'step_1_complete' }); setCurrentStep(2); }}
                   prefilled={prefillSource !== null && !!clientDetails.brandName && !!clientDetails.offer}
                   prefilledFrom={prefillSource}
                 />}
@@ -1606,6 +1686,9 @@ const App: React.FC = () => {
         onBuyTopup={(id) => { window.location.href = `/checkout?topup=${id}`; }}
         onDismiss={() => quotaWallStore.dismiss()}
       />
+      {/* Growth Loop Phase 1: NPS prompt at the finished-ad review screen. Self-gates
+          to once/session + ~30d cooldown; never blocks the page. */}
+      <FeedbackWidget active={currentStep === 8} module="wizard_final" />
     </ErrorBoundary>
   );
 };
