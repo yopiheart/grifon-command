@@ -51,10 +51,8 @@ import {
   getSupabase,
   signInWithProvider,
   type OAuthProvider,
-  signUpWithPassword,
-  requestPasswordReset,
-  resendSignupConfirmation,
-  updatePassword,
+  sendEmailOtp,
+  verifyEmailOtp,
 } from './services/supabaseClient';
 import { popIntendedPlan, startCheckout } from './services/billingService';
 import { grant as grantMarketingConsent, getMarketingConsent } from './services/consentService';
@@ -147,16 +145,17 @@ const App: React.FC = () => {
         </PlanGate>
       );
   const [authEmail, setAuthEmail] = useState('');
-  const [authPassword, setAuthPassword] = useState('');
-  const [authConfirm, setAuthConfirm] = useState('');
+  // Passwordless email OTP: the 6-digit code the user types from their email.
+  const [authCode, setAuthCode] = useState('');
   // Retargeting/marketing consent opt-in on the signup form. Unchecked by
   // default (affirmative opt-in). Carried into signUp user_metadata; the
   // record-of-consent is stamped server-side post-auth. See consentService.
   const [marketingOptIn, setMarketingOptIn] = useState(false);
   const [authError, setAuthError] = useState('');
-  // Default to sign_up: most unauthenticated arrivals come from a START FREE CTA.
-  // Returning users are one tap away, and Google OAuth handles both modes anyway.
-  const [authMode, setAuthMode] = useState<'sign_in' | 'sign_up' | 'forgot' | 'check_email' | 'reset_password'>('sign_up');
+  // Two-screen passwordless flow: 'email' (enter email → send code) then 'otp'
+  // (type the 6-digit code). Sign-in and sign-up are one merged path; OAuth
+  // (Google/GitHub) sits above as the one-tap alternative.
+  const [authMode, setAuthMode] = useState<'email' | 'otp'>('email');
   const [authNotice, setAuthNotice] = useState('');
   const [pendingSignUpEmail, setPendingSignUpEmail] = useState('');
   const [userEmail, setUserEmail] = useState<string | null>(null);
@@ -325,20 +324,7 @@ const App: React.FC = () => {
       setIsCheckingSession(false);
     });
 
-    const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'PASSWORD_RECOVERY' && session?.user) {
-        // Recovery session is valid but we don't want to land them on the
-        // dashboard — push them to the reset_password form and keep
-        // isAuthenticated false until they actually set a new password.
-        setAuthMode('reset_password');
-        setAuthEmail(session.user.email ?? '');
-        setAuthError('');
-        setAuthNotice('');
-        if (typeof window !== 'undefined' && window.location.hash) {
-          window.history.replaceState({}, '', window.location.pathname + window.location.search);
-        }
-        return;
-      }
+    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session?.user) {
         setUserEmail(session.user.email ?? null);
         setUserId(session.user.id);
@@ -577,24 +563,25 @@ const App: React.FC = () => {
     }
   }, [activeModule, hasRestored, pendingSession]);
 
-  const handleLogin = async (e: React.FormEvent) => {
+  // Screen 1 → 2: send the 6-digit code, then advance to the OTP entry screen.
+  // Same call for new and returning users (shouldCreateUser in sendEmailOtp).
+  const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setAuthError('');
+    setAuthNotice('');
+    const email = authEmail.trim();
+    if (!email) {
+      setAuthError('Enter your email to continue.');
+      return;
+    }
     setIsSigningIn(true);
-    setIsBooting(true);
     try {
-      const supabase = getSupabase();
-      const { error } = await supabase.auth.signInWithPassword({
-        email: authEmail.trim(),
-        password: authPassword,
-      });
-      if (error) {
-        setIsBooting(false);
-        setAuthError(error.message || 'Sign-in failed.');
-      }
+      await sendEmailOtp(email, marketingOptIn);
+      setPendingSignUpEmail(email);
+      setAuthCode('');
+      setAuthMode('otp');
     } catch (err: any) {
-      setIsBooting(false);
-      setAuthError(err.message || 'Sign-in failed.');
+      setAuthError(err?.message || 'Could not send your code. Try again.');
     } finally {
       setIsSigningIn(false);
     }
@@ -618,102 +605,40 @@ const App: React.FC = () => {
     }
   };
 
-  const goToAuthMode = (mode: 'sign_in' | 'sign_up' | 'forgot' | 'check_email') => {
-    setAuthMode(mode);
-    setAuthError('');
-    setAuthNotice('');
-    if (mode !== 'check_email') {
-      setAuthPassword('');
-      setAuthConfirm('');
-    }
-  };
-
-  const handleSignUp = async (e: React.FormEvent) => {
+  // Screen 2: verify the code. On success, onAuthStateChange takes over (sets
+  // isAuthenticated + drives the boot). Fire the Lead pixel only on a genuine
+  // first signup — trackPixel self-guards against the consent gate (no-ops until
+  // the pixel was initialized via consent).
+  const handleVerifyOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     setAuthError('');
     setAuthNotice('');
-    const email = authEmail.trim();
-    if (authPassword.length < 8) {
-      setAuthError('Password must be at least 8 characters.');
-      return;
-    }
-    if (authPassword !== authConfirm) {
-      setAuthError('Passwords do not match.');
+    const code = authCode.trim();
+    if (code.length < 6) {
+      setAuthError('Enter the 6-digit code from your email.');
       return;
     }
     setIsSigningIn(true);
+    setIsBooting(true);
     try {
-      const { hasSession } = await signUpWithPassword(email, authPassword, marketingOptIn);
-      // Genuine new signup (both the in-flow-session and confirm-email paths) —
-      // fire the Lead pixel here, NOT in onAuthStateChange (which can't tell a
-      // signup from a returning login). trackPixel self-guards: it no-ops until
-      // the pixel was initialized via consent, so this respects the consent gate.
-      trackPixel('Lead');
-      if (hasSession) {
-        setIsBooting(true);
-      } else {
-        setPendingSignUpEmail(email);
-        setAuthMode('check_email');
-        setAuthPassword('');
-        setAuthConfirm('');
-      }
+      const { isNewUser } = await verifyEmailOtp(pendingSignUpEmail, code);
+      if (isNewUser) trackPixel('Lead');
     } catch (err: any) {
-      setAuthError(err?.message || 'Sign-up failed.');
+      setIsBooting(false);
+      setAuthError(err?.message || 'That code is invalid or expired. Try again.');
     } finally {
       setIsSigningIn(false);
     }
   };
 
-  const handleForgotPassword = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setAuthError('');
-    setAuthNotice('');
-    const email = authEmail.trim();
-    if (!email) {
-      setAuthError('Enter an email to recover your account.');
-      return;
-    }
-    setIsSigningIn(true);
-    try {
-      await requestPasswordReset(email);
-      setAuthNotice('Reset link sent. Check your inbox.');
-    } catch (err: any) {
-      setAuthError(err?.message || 'Could not send reset link.');
-    } finally {
-      setIsSigningIn(false);
-    }
-  };
-
-  const handleResetPassword = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setAuthError('');
-    setAuthNotice('');
-    if (!authPassword || authPassword.length < 8) {
-      setAuthError('Password must be at least 8 characters.');
-      return;
-    }
-    setIsSigningIn(true);
-    try {
-      await updatePassword(authPassword);
-      await getSupabase().auth.signOut();
-      setAuthPassword('');
-      setAuthMode('sign_in');
-      setAuthNotice('Password updated. Sign in with your new password.');
-    } catch (err: any) {
-      setAuthError(err?.message || 'Failed to update password. Try again.');
-    } finally {
-      setIsSigningIn(false);
-    }
-  };
-
-  const handleResendConfirmation = async () => {
+  const handleResendOtp = async () => {
     if (!pendingSignUpEmail) return;
     setAuthError('');
     setAuthNotice('');
     setIsSigningIn(true);
     try {
-      await resendSignupConfirmation(pendingSignUpEmail);
-      setAuthNotice('Confirmation link re-sent.');
+      await sendEmailOtp(pendingSignUpEmail, marketingOptIn);
+      setAuthNotice('New code sent. Check your inbox.');
     } catch (err: any) {
       setAuthError(err?.message || 'Resend failed.');
     } finally {
@@ -730,11 +655,10 @@ const App: React.FC = () => {
       setActiveModule(null);
       restart();
       setAuthEmail('');
-      setAuthPassword('');
-      setAuthConfirm('');
+      setAuthCode('');
       setAuthError('');
       setAuthNotice('');
-      setAuthMode('sign_in');
+      setAuthMode('email');
       setPendingSignUpEmail('');
     }
   };
@@ -1064,34 +988,7 @@ const App: React.FC = () => {
                 <span aria-hidden="true" className="pointer-events-none absolute bottom-0 left-0 w-px h-3 bg-[#FFCC00]/60" />
                 <span aria-hidden="true" className="pointer-events-none absolute bottom-0 right-0 w-3 h-px bg-[#FFCC00]/60" />
                 <span aria-hidden="true" className="pointer-events-none absolute bottom-0 right-0 w-px h-3 bg-[#FFCC00]/60" />
-                {(authMode === 'sign_in' || authMode === 'sign_up') && (
-                  <div className="grid grid-cols-2 mb-4 md:mb-6 -mt-1">
-                    <button
-                      type="button"
-                      onClick={() => goToAuthMode('sign_up')}
-                      className={`pb-3 text-[10px] font-mono uppercase tracking-widest transition-all border-b-2 ${
-                        authMode === 'sign_up'
-                          ? 'text-white border-[#FFCC00]'
-                          : 'text-zinc-500 border-white/10 hover:text-white'
-                      }`}
-                    >
-                      // START_FREE
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => goToAuthMode('sign_in')}
-                      className={`pb-3 text-[10px] font-mono uppercase tracking-widest transition-all border-b-2 ${
-                        authMode === 'sign_in'
-                          ? 'text-white border-[#FFCC00]'
-                          : 'text-zinc-500 border-white/10 hover:text-white'
-                      }`}
-                    >
-                      // SIGN_IN
-                    </button>
-                  </div>
-                )}
-
-                {(authMode === 'sign_in' || authMode === 'sign_up') && (
+                {authMode === 'email' && (
                   <>
                     {OAUTH_PROVIDERS.google && (
                       <button
@@ -1146,51 +1043,8 @@ const App: React.FC = () => {
                   </>
                 )}
 
-                {authMode === 'sign_in' && (
-                  <form onSubmit={handleLogin} className="space-y-4 md:space-y-6">
-                    <Input
-                      id="auth-email"
-                      type="email"
-                      label="EMAIL"
-                      placeholder="your@email.com"
-                      value={authEmail}
-                      onChange={(e) => setAuthEmail(e.target.value)}
-                      required
-                    />
-                    <div>
-                      <Input
-                        id="auth-password"
-                        type="password"
-                        label="PASSWORD"
-                        placeholder="Your password"
-                        value={authPassword}
-                        onChange={(e) => setAuthPassword(e.target.value)}
-                        required
-                      />
-                      <div className="mt-2 flex justify-end">
-                        <button
-                          type="button"
-                          onClick={() => goToAuthMode('forgot')}
-                          className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest hover:text-[#FFCC00] transition-colors"
-                        >
-                          // FORGOT_PASSWORD?
-                        </button>
-                      </div>
-                    </div>
-                    {authError && (
-                      <p className="text-red-500 text-sm font-mono text-center border border-red-900/50 bg-red-900/20 p-2 rounded-xl">{authError}</p>
-                    )}
-                    {authNotice && (
-                      <p className="text-[#FFCC00] text-sm font-mono text-center border border-yellow-900/40 bg-yellow-900/10 p-2 rounded-xl">{authNotice}</p>
-                    )}
-                    <GoldButton type="submit" className="w-full justify-center py-4" disabled={isSigningIn}>
-                      {isSigningIn ? 'SIGNING IN...' : 'SIGN IN'}
-                    </GoldButton>
-                  </form>
-                )}
-
-                {authMode === 'sign_up' && (
-                  <form onSubmit={handleSignUp} className="space-y-3 md:space-y-5">
+                {authMode === 'email' && (
+                  <form onSubmit={handleEmailSubmit} className="space-y-3 md:space-y-5">
                     {/* Free-plan claims mirror the pricing page — no invented numbers */}
                     <div className="flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 -mt-1 text-[10px] md:text-xs text-zinc-400 whitespace-nowrap">
                       <span className="flex items-center gap-1"><Check className="w-3 h-3 shrink-0 text-[#FFCC00]" strokeWidth={2.5} /> 3 free ad workflows/mo</span>
@@ -1205,26 +1059,6 @@ const App: React.FC = () => {
                       value={authEmail}
                       onChange={(e) => setAuthEmail(e.target.value)}
                       required
-                    />
-                    <Input
-                      id="signup-password"
-                      type="password"
-                      label="PASSWORD (MIN 8 CHARS)"
-                      placeholder="Create a password"
-                      value={authPassword}
-                      onChange={(e) => setAuthPassword(e.target.value)}
-                      required
-                      minLength={8}
-                    />
-                    <Input
-                      id="signup-confirm"
-                      type="password"
-                      label="CONFIRM_PASSWORD"
-                      placeholder="Repeat password"
-                      value={authConfirm}
-                      onChange={(e) => setAuthConfirm(e.target.value)}
-                      required
-                      minLength={8}
                     />
                     {/* Affirmative, unchecked-by-default retargeting opt-in. Optional —
                         does not gate signup. Drives api/consent (see consentService). */}
@@ -1253,14 +1087,14 @@ const App: React.FC = () => {
                       <p className="text-red-500 text-sm font-mono text-center border border-red-900/50 bg-red-900/20 p-2 rounded-xl">{authError}</p>
                     )}
                     <GoldButton type="submit" className="w-full justify-center py-3 md:py-4" disabled={isSigningIn}>
-                      {isSigningIn ? 'CREATING ACCOUNT...' : 'CREATE MY FREE ACCOUNT'}
+                      {isSigningIn ? 'SENDING CODE...' : 'CONTINUE WITH EMAIL'}
                     </GoldButton>
                     {/* Passive Terms/Privacy acknowledgment (Claude/Cursor pattern). Distinct
                         from the opt-in above: this is generic legal acknowledgment, fine to
-                        carry by signup action — NOT the Meta data-sharing consent, which stays
-                        the explicit unchecked box. font-sans keeps it out of the mono law. */}
+                        carry by the continue action — NOT the Meta data-sharing consent, which
+                        stays the explicit unchecked box. font-sans keeps it out of the mono law. */}
                     <p className="text-center text-[11px] text-zinc-500 leading-snug normal-case font-sans">
-                      By creating your account, you agree to our{' '}
+                      By continuing, you agree to our{' '}
                       <button type="button" onClick={() => goToLegal('terms')} className="font-sans underline text-zinc-400 hover:text-[#FFCC00] transition-colors">Terms of Service</button>{' '}
                       and{' '}
                       <button type="button" onClick={() => goToLegal('privacy')} className="font-sans underline text-zinc-400 hover:text-[#FFCC00] transition-colors">Privacy Policy</button>.
@@ -1268,114 +1102,57 @@ const App: React.FC = () => {
                   </form>
                 )}
 
-                {authMode === 'forgot' && (
-                  <>
-                    <div className="text-center mb-6">
-                      <p className="text-[10px] font-mono text-[#FFCC00] tracking-[0.4em] uppercase mb-3">// KEY_RECOVERY</p>
-                      <p className="text-sm text-zinc-400 font-mono leading-relaxed">
-                        Send a password reset link to your registered email.
-                      </p>
-                    </div>
-                    <form onSubmit={handleForgotPassword} className="space-y-6">
-                      <Input
-                        id="forgot-email"
-                        type="email"
-                        label="EMAIL"
-                        placeholder="your@email.com"
-                        value={authEmail}
-                        onChange={(e) => setAuthEmail(e.target.value)}
-                        required
-                      />
-                      {authError && (
-                        <p className="text-red-500 text-sm font-mono text-center border border-red-900/50 bg-red-900/20 p-2 rounded-xl">{authError}</p>
-                      )}
-                      {authNotice && (
-                        <p className="text-[#FFCC00] text-sm font-mono text-center border border-yellow-900/40 bg-yellow-900/10 p-2 rounded-xl">{authNotice}</p>
-                      )}
-                      <GoldButton type="submit" className="w-full justify-center py-4" disabled={isSigningIn}>
-                        {isSigningIn ? 'SENDING...' : 'SEND RESET LINK'}
-                      </GoldButton>
-                    </form>
-                    <div className="mt-6 text-center">
-                      <button
-                        type="button"
-                        onClick={() => goToAuthMode('sign_in')}
-                        className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest hover:text-[#FFCC00] transition-colors"
-                      >
-                        // BACK_TO_TERMINAL
-                      </button>
-                    </div>
-                  </>
-                )}
-
-                {authMode === 'reset_password' && (
-                  <>
-                    <div className="text-center mb-6">
-                      <p className="text-[10px] font-mono text-[#FFCC00] tracking-[0.4em] uppercase mb-3">// SET_NEW_PASSWORD</p>
-                      <p className="text-sm text-zinc-400 font-mono leading-relaxed">
-                        Choose a new password to finish recovery.
-                      </p>
-                    </div>
-                    <form onSubmit={handleResetPassword} className="space-y-6">
-                      <Input
-                        id="reset-password"
-                        type="password"
-                        label="NEW PASSWORD"
-                        placeholder="At least 8 characters"
-                        value={authPassword}
-                        onChange={(e) => setAuthPassword(e.target.value)}
-                        required
-                        minLength={8}
-                      />
-                      {authError && (
-                        <p className="text-red-500 text-sm font-mono text-center border border-red-900/50 bg-red-900/20 p-2 rounded-xl">{authError}</p>
-                      )}
-                      <GoldButton type="submit" className="w-full justify-center py-4" disabled={isSigningIn}>
-                        {isSigningIn ? 'UPDATING...' : 'UPDATE PASSWORD'}
-                      </GoldButton>
-                    </form>
-                  </>
-                )}
-
-                {authMode === 'check_email' && (
-                  <div className="text-center space-y-5 py-2">
-                    <div className="flex flex-col items-center gap-3">
-                      <div className="w-14 h-14 rounded-full border border-[#FFCC00]/40 bg-[#FFCC00]/10 flex items-center justify-center shadow-[0_0_20px_rgba(255,204,0,0.25)]">
+                {authMode === 'otp' && (
+                  <form onSubmit={handleVerifyOtp} className="space-y-5">
+                    <div className="text-center space-y-3">
+                      <div className="mx-auto w-14 h-14 rounded-full border border-[#FFCC00]/40 bg-[#FFCC00]/10 flex items-center justify-center shadow-[0_0_20px_rgba(255,204,0,0.25)]">
                         <Mail className="w-6 h-6 text-[#FFCC00]" />
                       </div>
-                      <p className="text-[10px] font-mono text-[#FFCC00] tracking-[0.4em] uppercase">// TRANSMISSION_SENT</p>
+                      <p className="text-[10px] font-mono text-[#FFCC00] tracking-[0.4em] uppercase">// CODE_SENT</p>
+                      <p className="text-sm text-zinc-300 font-mono leading-relaxed">
+                        Enter the 6-digit code we sent to
+                        <span className="block text-white mt-1 break-all">{pendingSignUpEmail}</span>
+                      </p>
                     </div>
-                    <p className="text-sm text-zinc-300 font-mono leading-relaxed">
-                      A confirmation link has been sent to
-                      <span className="block text-white mt-1 break-all">{pendingSignUpEmail}</span>
-                    </p>
-                    <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest">
-                      Click the link inside to activate your account.
-                    </p>
+                    <Input
+                      id="auth-otp"
+                      type="text"
+                      inputMode="numeric"
+                      autoComplete="one-time-code"
+                      label="VERIFICATION CODE"
+                      placeholder="123456"
+                      value={authCode}
+                      onChange={(e) => setAuthCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                      maxLength={6}
+                      required
+                    />
                     {authError && (
-                      <p className="text-red-500 text-sm font-mono border border-red-900/50 bg-red-900/20 p-2 rounded-xl">{authError}</p>
+                      <p className="text-red-500 text-sm font-mono text-center border border-red-900/50 bg-red-900/20 p-2 rounded-xl">{authError}</p>
                     )}
                     {authNotice && (
-                      <p className="text-[#FFCC00] text-sm font-mono border border-yellow-900/40 bg-yellow-900/10 p-2 rounded-xl">{authNotice}</p>
+                      <p className="text-[#FFCC00] text-sm font-mono text-center border border-yellow-900/40 bg-yellow-900/10 p-2 rounded-xl">{authNotice}</p>
                     )}
-                    <div className="flex flex-col gap-3 pt-2">
+                    <GoldButton type="submit" className="w-full justify-center py-4" disabled={isSigningIn}>
+                      {isSigningIn ? 'VERIFYING...' : 'VERIFY & CONTINUE'}
+                    </GoldButton>
+                    <div className="flex flex-col gap-3 pt-1 text-center">
                       <button
                         type="button"
-                        onClick={handleResendConfirmation}
-                        className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest hover:text-[#FFCC00] transition-colors disabled:opacity-50"
+                        onClick={handleResendOtp}
                         disabled={isSigningIn}
+                        className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest hover:text-[#FFCC00] transition-colors disabled:opacity-50"
                       >
-                        {isSigningIn ? '// RESENDING...' : '// RESEND_LINK'}
+                        {isSigningIn ? '// SENDING...' : '// RESEND_CODE'}
                       </button>
                       <button
                         type="button"
-                        onClick={() => goToAuthMode('sign_in')}
+                        onClick={() => { setAuthMode('email'); setAuthCode(''); setAuthError(''); setAuthNotice(''); }}
                         className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest hover:text-[#FFCC00] transition-colors"
                       >
-                        // BACK_TO_TERMINAL
+                        // CHANGE_EMAIL
                       </button>
                     </div>
-                  </div>
+                  </form>
                 )}
 
                 <div className="mt-3 md:mt-8 pt-3 md:pt-4 border-t border-white/10 flex flex-col items-center gap-1.5 md:gap-3">
