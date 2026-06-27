@@ -397,3 +397,48 @@ service-role key from `.env`). `.env` needs `GRIFON_DEV_UNMETERED=true` + `GRIFO
 (gitignored, defreezer-wiped — re-add via Edit). Smoke-tester signs in (email/password), sets
 `grifon_dev_unlock='1'`, takes the Expert door, leaves scenes on Auto, renders. Assets = the committed
 `public/examples/ex-*.png` set.
+
+---
+
+# ⚠️ CORRECTION — Bucket B is NOT clean: Scene-6 avatar is a composite (2026-06-28)
+
+Neil eyeballed the session-3 RE render and caught what the smoke-tester AND the first review pass missed:
+**`avatar_venue` still produces a pasted/composite avatar under bright neutral lighting.** Verified by
+comparing the render to the source portrait:
+- Source presenter `public/examples/services-practitioner.png` = soft, even light from the **LEFT**.
+- Scene 6 (was `.tmp/dc-smoke2/scene-6.jpg`, gone on reboot): the kitchen is reproduced perfectly
+  (PLACE_IDENTITY_LOCK ✓) **but the avatar keeps the source portrait's soft flat left-light, UNCHANGED** —
+  he does NOT pick up the kitchen's bright right-side daylight, and there's **no contact shadow**. Reads as
+  a studio portrait dropped into the room, not photographed in it.
+- **Root cause:** identity-lock preserved the avatar's baked-in source lighting → the Bucket B
+  `AVATAR_RELIGHT` rule was under-applied/ignored by the image model for this bright-neutral room.
+
+**Verdict correction:** AVATAR_RELIGHT is INCONSISTENT — ok on warm/outdoor (Scene 2 facade) but fails on
+bright-neutral interiors fed a soft-lit uploaded portrait. The earlier "gold standard" / "cleared to
+merge" call was **WRONG** (over-trusted the subagent report + a too-generous first look). **MERGE HELD.**
+(Process lesson: LOOK at the rendered images yourself — don't trust the smoke-tester's prose verdict.)
+NOTE: Scene 4's "city skyline" was NOT a bug — the AI correctly based it on the strong `ex-view.png`
+anchor (Neil's call). Drop it.
+
+**Likely mechanism + why One-Shot wins:** One-Shot AUTO-CASTS the avatar (AI-generated, no baked lighting
+to fight) → integrates better. Expert lets you UPLOAD a portrait whose baked lighting resists relight →
+composite. Ties to the comparison thesis (`oneshot_vs_expert_comparison.md`): **controlled inputs win.**
+
+## ▶ NEXT SESSION — START HERE (resume the auto-cast test)
+
+**Neil chose: test AI-auto-cast presenter vs uploaded.** One `smoke-tester` render (foreground): the SAME
+Expert → RealEstate flow, same 5 venue assets (`public/examples/ex-{facade,living,kitchen,bedroom,view}.png`),
+same 6-beat Verdé Heights Taglish script, all scenes on **Auto** — but **presenter = "Let AI cast one"
+(Male / Filipino / ~30s), NOT uploaded.** Then LOOK at the avatar-in-a-bright-interior scene yourself:
+- **If the auto-cast avatar picks up the room's directional daylight + casts a contact shadow (relit)** →
+  the fix is **INPUT-SIDE** (make auto-cast the Expert default, or guide users to upload neutral-lit
+  photos) — NOT a tuned/engine change. Cheapest, lowest-risk, and it explains One-Shot's edge.
+- **If the auto-cast avatar ALSO looks pasted** → it's a model/tuned limitation; consider a stronger
+  `AVATAR_RELIGHT` tuned edit (needs Neil's explicit go + `gemini-eval` on Bukidnon Brew + RE), accepting
+  it may hit a Nano-Banana relight ceiling.
+
+**Reusable smoke setup (defreezer-safe):** test account `smoketest-dc@grifon.dev` / `GrifonDcSmoke!2026`
+(recreate via the Supabase admin-create call + service-role key in `.env` if wiped). `.env` needs
+`GRIFON_DEV_UNMETERED=true` + `GRIFON_DEV_UNMETERED_VIDEO=true` (gitignored — re-add via Edit). Dev server
+`npm run dev` (was on :5174). Delegate to `smoke-tester` (foreground) BUT verify the renders with your own
+eyes.
