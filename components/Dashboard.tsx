@@ -57,7 +57,7 @@ const CORE_MODULES = ['market_research', 'offer_optimizer', 'caption_headline'].
 
 const MORE_MODULES = [
   'hook_lab', 'cinematic_studio', 'influencer_forge', 'generate_video',
-  'image_ads', 'image_editor', 'organic_calendar', 'edit_video', 'signal_modulator',
+  'image_ads', 'batch_fanout', 'image_editor', 'organic_calendar', 'edit_video', 'signal_modulator',
 ].map((id) => {
   const m = getModuleIdentity(id);
   return { id, name: m.name, icon: m.icon, desc: m.descriptor, hue: m.hue };

@@ -1,5 +1,5 @@
 import type { GenerateContentResponse } from "@google/genai";
-import { BusinessInfo, Script, Scene, StoryboardResponse, VideoPrompt, MarketResearchInput, MarketResearchReport, OfferOptimizerInput, OfferOptimizerResult, VideoEditInput, OptimizedPromptResponse, CaptionHeadlineInput, DayContent, AdVariant, UplinkData, CinematicSpecConfig, VisualTheme, CinematicNarrativeScene, VideoModelType, InfluencerConfig, InfluencerStrategicInput, InfluencerScriptResponse, EditDecisionInput, EditDecisionList, SfxBankId } from '../types';
+import { BusinessInfo, Script, Scene, StoryboardResponse, VideoPrompt, MarketResearchInput, MarketResearchReport, OfferOptimizerInput, OfferOptimizerResult, VideoEditInput, OptimizedPromptResponse, CaptionHeadlineInput, DayContent, AdVariant, BatchHeadline, UplinkData, CinematicSpecConfig, VisualTheme, CinematicNarrativeScene, VideoModelType, InfluencerConfig, InfluencerStrategicInput, InfluencerScriptResponse, EditDecisionInput, EditDecisionList, SfxBankId } from '../types';
 import { getSupabase } from './supabaseClient';
 import { startJob, endJob, type JobKind } from './activeJobsService';
 import { saveActiveJob, clearActiveJob } from './activeJobStore';
@@ -2520,6 +2520,50 @@ JSON STRUCTURE:
     }));
 
     return JSON.parse(cleanJson(response.text || "[]"));
+};
+
+// Batch Creative Fan-Out — ONE text call returns `count` distinct headline
+// angles. The hero image and the actual creatives are produced elsewhere (one
+// AI image + N local Canvas composites), so this is the only AI text cost of a
+// whole 100-creative batch.
+export const generateBatchHeadlines = async (data: UplinkData, count: number): Promise<BatchHeadline[]> => {
+    const n = Math.max(1, Math.min(count, 150));
+    const prompt = `
+### Role: Direct-Response Copy Machine
+Task: Generate ${n} DISTINCT ad-creative text variants for "${data.brandIdentityName}". Each is a different scroll-stopping angle on the SAME product hero image.
+
+TACTICAL INTELLIGENCE:
+Brand: ${data.brandIdentityName}
+Offer: ${data.originalPrice} -> ${data.offerPrice}
+Audience: ${data.targetDemographic} (${data.ageRange}, ${data.ethnicityProfile})
+Main Benefit: ${data.primaryBenefit}
+Pain Point: ${data.marketPainPoint}
+UVP: ${data.uvp}
+Key Features: ${data.keyFeatures}
+
+RULES:
+- Output language: ${data.language}.
+- Each "headline" is ≤6 words, punchy, no period.
+- Each "subhead" is ≤10 words — an offer, proof, or benefit.
+- Each "badge" is 1-3 words for a corner flag (a feature or hook, e.g. "8-IN-1", "FAST RELIEF").
+- Every variant must use a GENUINELY different angle: pain, dream outcome, curiosity, social proof, urgency, contrarian, feature spotlight, price, identity, FOMO. Cycle through them — do not repeat the same idea.
+- No two headlines may be near-duplicates.
+
+Return a JSON array of exactly ${n} objects:
+{ "headline": string, "subhead": string, "badge": string, "angle": string }
+    `;
+
+    const response: GenerateContentResponse = await retryWithBackoff(() => proxyGenerateContent({
+        model: textModel,
+        contents: prompt,
+        config: {
+            responseMimeType: "application/json",
+            safetySettings: SAFETY_SETTINGS
+        }
+    }));
+
+    const parsed = JSON.parse(cleanJson(response.text || "[]"));
+    return Array.isArray(parsed) ? parsed.slice(0, n) : [];
 };
 
 export const analyzeProductSignature = async (images: string[]): Promise<string> => {

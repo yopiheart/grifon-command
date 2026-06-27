@@ -1,0 +1,38 @@
+{
+  "_meta": {
+    "cmoReviewed": true,
+    "reviewedBy": "grifon-cmo",
+    "date": "2026-06-20",
+    "note": "Grifon self-promo slate (split-screen format): 2 Comparison old-vs-new + 2 UGC Grifon-vs-slop. Use with --master tools/batch-creative-codex.split.master.txt. SCENE carries the LEFT (losing) vs RIGHT (Grifon) description."
+  },
+  "angles": [
+    {
+      "id": "compare-oldnew",
+      "headline": "Old Way vs New Way",
+      "badge": "BEFORE AND AFTER",
+      "principle": "Contrast / transformation + Loss aversion",
+      "scene": "LEFT half (old way): an exhausted Filipino small-business owner at midnight, buried under laptops, paperwork and stacks of expensive agency invoices, cold dim grey light, stressed and overwhelmed. RIGHT half (new way): the confident person from the reference, relaxed and smiling, holding a phone showing finished polished ads, warm Grifon-gold glow, calm and in control."
+    },
+    {
+      "id": "compare-hardway",
+      "headline": "Stop The Hard Way",
+      "badge": "THE SHIFT",
+      "principle": "Pain to relief contrast",
+      "scene": "LEFT half (hard way): a chaotic do-it-yourself marketing mess — cluttered desk, messy half-finished designs, tangled cables, a frustrated overwhelmed person, washed-out grey tones. RIGHT half (easy way): the confident person from the reference, composed, one clean premium Grifon ad glowing on a phone, gold glow, effortless."
+    },
+    {
+      "id": "ugc-slop",
+      "headline": "Grifon vs AI Slop",
+      "badge": "SPOT THE DIFFERENCE",
+      "principle": "Quality authority — kills the 'AI makes garbage' objection",
+      "scene": "LEFT half (AI slop): an ugly generic AI-generated ad mockup — distorted warped features, muddy washed-out colors, cheap amateur layout, clearly low quality. RIGHT half (Grifon): a crisp premium ad featuring the confident person from the reference, clean bold headline, gold accents, sharp and professional."
+    },
+    {
+      "id": "ugc-deserve",
+      "headline": "Your Ads Deserve Better",
+      "badge": "NO MORE SLOP",
+      "principle": "Aspiration + quality authority",
+      "scene": "LEFT half: a low-quality messy generic AI ad, blurry, off-brand, forgettable, dull grey. RIGHT half: a polished premium Grifon ad featuring the confident person from the reference, gold glow, bold clean design, scroll-stopping."
+    }
+  ]
+}

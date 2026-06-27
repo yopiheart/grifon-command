@@ -1,0 +1,23 @@
+Photorealistic premium advertising PHOTO PLATE, vertical 4:5 format. This is a clean background photo — TEXT WILL BE ADDED LATER by a separate design layer, so the image itself must contain NO text of any kind.
+
+BRAND SYSTEM:
+- Canvas background: deep near-black charcoal #09090B (zinc-950). NEVER pure black #000000.
+- A dramatic Grifon-Gold #FFCC00 radial glow emanating from directly behind the subject, fading into the dark canvas. Gold #FFCC00 is the only accent hue.
+- Subject: the confident person from the provided reference image, polished and authoritative. Keep their FACIAL IDENTITY faithful to the reference — but the reference is an IDENTITY ANCHOR, not a pose lock: ADAPT expression, pose, gesture, and camera angle/crop to match the mood below.
+- Wardrobe: a tailored charcoal / near-black blazer (zinc-900) over a clean neutral top — do NOT reproduce off-brand clothing colors from the reference photo.
+
+MOOD / EXPRESSION / CAMERA: {{SCENE}}
+
+COMPOSITION FOR TEXT OVERLAY (critical):
+- Place the subject's FACE in the UPPER-MIDDLE of the frame. Keep the TOP ~12% of the image as clean, darker negative space (a brand wordmark goes there later).
+- Keep the BOTTOM ~32% of the image darker and uncluttered — the subject's body/shoulders fade into shadow there — so a headline and button can be laid over it later. No important detail (no hands-on-face, no props) in that bottom band.
+- Horizontally centered subject. Cinematic, premium, sharp focus.
+
+STYLE: Hollywood-grade studio lighting, glossy premium finish. "Unreal Engine meets Hollywood production studio."
+
+ABSOLUTELY FORBIDDEN — this is a text-free plate:
+- NO text, letters, words, numbers, captions, headlines, labels, eyebrows, or CTAs ANYWHERE in the image.
+- NO logos, wordmarks, watermarks, signatures, brand marks, badges, pills, or buttons.
+- NO UI elements, no phone screens showing text, no on-screen graphics.
+- NO pink/cyan/teal or any non-gold accent; no pure black #000000; no clutter.
+If you are tempted to add a brand name, headline, or button — DO NOT. Leave that space clean.
