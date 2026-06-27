@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { DUR, EASE } from '../../ui/motionTokens';
 import { ShieldCheck, Lock, Sparkles, ArrowRight } from 'lucide-react';
 import { CONTACT } from '../../../config/contact';
 import { Marquee } from '../Marquee';
@@ -91,7 +92,7 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onEnterApp, onNavi
               initial={{ opacity: 0, y: 64 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
+              transition={{ duration: DUR.expressive, ease: EASE.out }}
               className="pointer-events-none relative z-0 mx-auto -mt-6 -mb-28 h-72 w-auto select-none object-contain md:-mt-10 md:-mb-44 md:h-[26rem]"
             />
           </div>

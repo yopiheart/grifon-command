@@ -61,6 +61,9 @@ export interface RunQueueOpts {
   /** Phase 4d — when present, each in-flight render persists to IndexedDB
    * so it can be resumed if the client disconnects mid-poll. */
   userId?: string;
+  /** Per-finished-ad metering id (Slice 3) — shared by every scene in this
+   * queue so the whole Render All costs ONE video_ad credit, not one-per-scene. */
+  finishedAdId?: string;
 }
 
 const RATE_LIMIT_WINDOW_SEC = 3600;
@@ -101,6 +104,7 @@ export async function runQueue(jobs: RenderJob[], opts: RunQueueOpts): Promise<v
           signal: opts.signal,
           metadata: { sceneIdx: job.sceneIdx },
           userId: opts.userId,
+          finishedAdId: opts.finishedAdId,
         }
       );
       opts.onEvent({ type: 'status', sceneIdx: job.sceneIdx, status: 'done', result });

@@ -1,5 +1,5 @@
 import type { GenerateContentResponse } from "@google/genai";
-import { BusinessInfo, Script, Scene, StoryboardResponse, VideoPrompt, MarketResearchInput, MarketResearchReport, OfferOptimizerInput, OfferOptimizerResult, VideoEditInput, OptimizedPromptResponse, CaptionHeadlineInput, DayContent, AdVariant, UplinkData, CinematicSpecConfig, VisualTheme, CinematicNarrativeScene, VideoModelType, InfluencerConfig, InfluencerStrategicInput, InfluencerScriptResponse, EditDecisionInput, EditDecisionList, SfxBankId } from '../types';
+import { BusinessInfo, Script, Scene, StoryboardResponse, VideoPrompt, MarketResearchInput, MarketResearchReport, OfferOptimizerInput, OfferOptimizerResult, VideoEditInput, OptimizedPromptResponse, CaptionHeadlineInput, DayContent, AdVariant, BatchHeadline, UplinkData, CinematicSpecConfig, VisualTheme, CinematicNarrativeScene, VideoModelType, InfluencerConfig, InfluencerStrategicInput, InfluencerScriptResponse, EditDecisionInput, EditDecisionList, SfxBankId } from '../types';
 import { getSupabase } from './supabaseClient';
 import { startJob, endJob, type JobKind } from './activeJobsService';
 import { saveActiveJob, clearActiveJob } from './activeJobStore';
@@ -198,6 +198,7 @@ interface KlingSubmitBody {
   mode: 'std' | 'pro';
   aspect_ratio: string;
   cfg_scale?: number;
+  finishedAdId?: string;     // per-finished-ad metering id (Slice 3)
 }
 
 interface KlingOperation {
@@ -243,6 +244,7 @@ interface KlingOmniSubmitBody {
   aspect_ratio?: string;
   cfg_scale?: number;
   sound: 'on' | 'off';
+  finishedAdId?: string;     // per-finished-ad metering id (Slice 3)
 }
 
 const proxyGenerateKlingOmniVideo = (
@@ -518,6 +520,10 @@ interface GenerateVideoOpts {
    * operation to IndexedDB so the client can resume polling after a tab
    * close / browser restart / PC reboot. Phase 4d resilience. */
   userId?: string;
+  /** Stable id for the finished ad this render belongs to. When present, the
+   * server meters ONE video_ad credit per finishedAdId (Slice 3) — all scenes
+   * of one Render All share it, so the ad costs one credit, not one-per-scene. */
+  finishedAdId?: string;
 }
 
 const parseDataUrl = (dataUrl: string): { imageBytes: string; mimeType: string } => {
@@ -593,6 +599,7 @@ export const generateVideo = async (
       mode: 'std',
       aspect_ratio: config.aspectRatio,
       sound: 'off', // SignalModulator owns voiceover; Omni audio would be discarded.
+      finishedAdId: opts.finishedAdId,
     });
     initialOperation = omniResult.operation;
   } else if (routing.apiSurface === 'kling-image2video') {
@@ -611,12 +618,14 @@ export const generateVideo = async (
       mode: 'std', // Session B default; per-scene mode picker is Session C.
       aspect_ratio: config.aspectRatio,
       cfg_scale: 0.5,
+      finishedAdId: opts.finishedAdId,
     });
     initialOperation = klingResult.operation;
   } else {
     const params: any = {
       model: routing.modelId,
       prompt: config.prompt.trim(),
+      finishedAdId: opts.finishedAdId,
       config: {
         numberOfVideos: 1,
         aspectRatio: config.aspectRatio,
@@ -1560,7 +1569,8 @@ export const generateAvatarImage = async (
     ethnicity: string, 
     aspectRatio: '9:16' | '16:9',
     imageQuality: '1K' | '2K',
-    brandColors: string[]
+    brandColors: string[],
+    scriptType?: string
 ): Promise<{ url: string; description: string; }> => {
   await delay(1000);
   
@@ -1586,10 +1596,19 @@ export const generateAvatarImage = async (
 
   const brandColorInstruction = brandColors.length > 0 ? `Incorporate these brand colors subtly into the wardrobe or background: ${brandColors.join(', ')}.` : '';
 
+  // RealEstate (#13): the generated avatar is the AGENT on camera. Dress them as a trustworthy
+  // Filipino broker — the ID lanyard is the PH legitimacy cue. NOT a Western suit (intimidating),
+  // NOT pambahay (reads as uninvolved homeowner). Uploaded avatars keep their real outfit (identity
+  // lock), so this only shapes the GENERATED fallback.
+  const wardrobeInstruction = scriptType === 'RealEstate'
+    ? `\n    **WARDROBE (real-estate agent):** Dress the subject as an approachable, trustworthy Filipino real-estate agent — a clean, neat polo or smart blouse with a simple ID LANYARD around the neck (the legitimacy cue). NOT a formal Western business suit or blazer, and NOT casual house clothes / pambahay. Smart-casual, professional, friendly.`
+    : '';
+
   const prompt = `
     **Subject:** Photorealistic close-up headshot of ${subjectDescription}.
     **Target Audience Context:** "${audience}".
     ${brandColorInstruction}
+    ${wardrobeInstruction}
 
     **SMART CASTING DIRECTOR LOGIC:**
     - **Age Anchor:** Use the provided age range of ${ageRange} as the primary anchor for bone structure and skin elasticity. DO NOT allow skin conditions ( daylight Melasma, Acne, or Pigmentation) to force the subject into looking older than the requested range.
@@ -1885,7 +1904,7 @@ export const generateSceneImage = async (
     productDescription?: string,
     productName?: string,
     variationIndex: number = 0,
-    referenceImageMode: 'avatar' | 'product' | 'both' | 'none' = 'none'
+    referenceImageMode: 'avatar' | 'product' | 'both' | 'none' | 'venue' | 'avatar_venue' = 'none'
 ): Promise<string> => {
     
     await delay(2500);
@@ -1914,7 +1933,9 @@ export const generateSceneImage = async (
         2. **VARIES (driven by the Scene Prompt, AUTHORITATIVE over IDENTITY_LOCK):** facial expression, gaze direction, body pose, hand position, and held props (mug, phone, etc.). IDENTITY_LOCK does NOT override scene-driven expressions, gestures, or actions. If the Scene Prompt says "looking down with brow furrowed, holding an empty mug," render exactly that — do not inherit the reference's smile or grip.
         2b. **FACE_TO_CAMERA (REQUIRED whenever the scene carries a script line the avatar speaks aloud):** Camera angle CAN vary (frontal, 3/4, side body, over-shoulder) for cinematic variety per CAMERA_MANDATORY. BUT the avatar's face/head MUST be oriented toward camera enough that BOTH eyes and the mouth are clearly visible — required for downstream lip sync. Side body angle with face turned toward camera = ALLOWED. Eyes-closed, looking-down-at-mug, looking-at-own-pointing-finger, full-side-profile-with-face-away = BANNED for talking scenes. For non-speaking B-roll (avatar performs an action without voice-over), free creative direction.
         3. **CAMERA:** angle, distance, and framing follow the CAMERA_MANDATORY block below.
-        4. **ENVIRONMENT (FLEXIBLE):** Same residence/setting as Reference Image 1 (e.g., the same home interior). The avatar may be in different spots within that residence (kitchen counter → dining table → living room couch) per the Scene Prompt, but never in an unrelated location (no offices, no cafes, no streets).
+        4. **ENVIRONMENT (FLEXIBLE):** ${scriptType === 'RealEstate'
+          ? 'The setting is the PROPERTY being toured (the listing / development) — the agent may move room to room (entrance → sala → kitchen → bedroom → balcony) or stand at the facade per the Scene Prompt. Render a believable Philippine property true-to-tier (never glamorize a modest unit into a luxury one), and never an unrelated location (no malls, no offices, no random streets).'
+          : 'Same residence/setting as Reference Image 1 (e.g., the same home interior). The avatar may be in different spots within that residence (kitchen counter → dining table → living room couch) per the Scene Prompt, but never in an unrelated location (no offices, no cafes, no streets).'}
         5. **ETHNICITY:** Strictly **${ethnicity}**.
         6. **NO_UNSOLICITED_PRODUCT:** Do NOT place the brand's product, packaging, bags, bottles, boxes, or ANY branded/labeled props in the scene unless the Scene Prompt explicitly names them. This frame has no product reference photo — any label you render would be an invented fake, the single worst brand-trust failure. Generic unbranded props (plain mug, plain laptop) are fine. When in doubt, leave the surface empty.
         `;
@@ -1951,6 +1972,38 @@ export const generateSceneImage = async (
         - Scene lighting prioritizes the avatar's environment (Reference Image 1) — the scene IS in the avatar's home, so use that warm/natural light profile for the overall image.
         - Product label colors are preserved as PRINTED on Reference Image 2 — do not relight the label with studio lighting; let it sit naturally in the avatar's environmental light.
         `;
+    } else if (referenceImageMode === 'venue' && references.productUrl) {
+        consistencyRules = `
+        **PLACE_IDENTITY_LOCK (Reference Image 1 = the business's REAL place/result photo):**
+        1. **IDENTITY:** Reproduce the REAL place from Reference Image 1 — same layout, furniture/
+           fixtures, decor, materials, signage/logo text, and color palette. This is the ACTUAL business
+           the viewer will visit; it MUST be recognizably the SAME place, not a look-alike or invention.
+        2. **CAMERA_FREEDOM (authoritative over a static copy):** You MAY change camera angle, distance,
+           framing, and crop to fit the scene and add cinematic variety — but it must stay the SAME place
+           seen from a new viewpoint, NEVER a different or invented location. Keep angle change MODERATE;
+           do not over-rotate the room into something unrecognizable.
+        3. **TIER_TRUTH:** Match the real tier shown in Reference Image 1. NEVER upgrade or glamorize —
+           forbidden: "high-end", "luxury", "premium", "upscale", "5-star", "resort", "modern minimalist".
+           A modest place stays modest.
+        4. **PEOPLE ALLOWED (unlike product mode):** A Filipino customer or staff member MAY appear IF the
+           Scene Prompt calls for a person — strictly ${ethnicity} (authentically Filipino, not glamorized).
+           If the Scene Prompt names no person, render the place alone; do NOT invent crowds.
+        5. **NO_LOGO_HALLUCINATION:** Preserve the real signage/branding visible in Reference Image 1
+           exactly; never invent or substitute a new logo.
+        6. **LUMEN_SYNC:** Keep the lighting character (warmth/coolness) of Reference Image 1.
+        `;
+    } else if (referenceImageMode === 'avatar_venue' && references.avatarUrl && references.productUrl) {
+        // RealEstate avatar-in-property: the AGENT (Ref 1) stands INSIDE the user's REAL room (Ref 2).
+        // Combines avatar IDENTITY_LOCK with the venue PLACE_IDENTITY_LOCK + CAMERA_FREEDOM.
+        consistencyRules = `
+        **AGENT_IN_PROPERTY (Reference Image 1 = the AGENT; Reference Image 2 = the REAL property room):**
+        1. **IDENTITY (Reference Image 1, LOCKED across scenes — non-negotiable):** preserve face, skin tone, bone structure, hair styling (color AND style), wardrobe (color, cut, fabric — the SAME outfit every scene), body type. Scene action MAY change pose/expression/gesture, but NEVER identity or wardrobe.
+        1b. **FACE_TO_CAMERA (required whenever the agent speaks the line):** both eyes AND mouth clearly visible for lip-sync. Camera angle can vary (frontal, 3/4, side body) but the face stays toward camera. Eyes-closed / full-side-profile-face-away = BANNED for talking scenes.
+        2. **ENVIRONMENT (Reference Image 2 = PLACE_IDENTITY_LOCK):** Place the agent AT this exact real place — if Reference Image 2 is a room INTERIOR, she is INSIDE it; if it is the building EXTERIOR / facade, she stands IN FRONT OF it. Reproduce the SAME layout/structure, furniture/fixtures, materials, palette, and signage as Reference Image 2 — the SAME actual place, NOT a look-alike and NOT an invented one. **CAMERA_FREEDOM:** you MAY change angle, distance, and framing to fit the beat, but it must stay recognizably the SAME place seen from a new viewpoint (keep rotation MODERATE).
+        3. **TIER_TRUTH:** match the real tier of Reference Image 2 — NEVER upgrade or glamorize. Forbidden: "luxury", "high-end", "premium", "upscale", "5-star", "resort", "modern minimalist". A modest unit stays modest.
+        4. **ETHNICITY:** the agent is strictly ${ethnicity} (authentically Filipino, not glamorized).
+        5. **NO_UNSOLICITED_PRODUCT:** do NOT add branded packaging, boxes, or invented props — this is a property walkthrough, not a product ad.
+        `;
     } else {
         consistencyRules = `
         **STRICT_NEGATIVE (VISUAL AIDS):**
@@ -1966,7 +2019,7 @@ export const generateSceneImage = async (
     // mandatory face demand contradicts the NO-HUMAN rules and pulls the person from the hero
     // reference photo into frame (2026-06-10 validation render: hook end-frame person leak —
     // the 627ccb2 rule-5 text fix alone couldn't beat a MUST-render-a-face instruction).
-    const humanSubjectInFrame = referenceImageMode === 'avatar' || referenceImageMode === 'both';
+    const humanSubjectInFrame = referenceImageMode === 'avatar' || referenceImageMode === 'both' || referenceImageMode === 'avatar_venue';
     const randomAngle = AVATAR_CAMERA_ANGLES[variationIndex % AVATAR_CAMERA_ANGLES.length];
     const cameraMandatory = humanSubjectInFrame ? `
     **CAMERA_MANDATORY (overrides IDENTITY_LOCK's default-frontal preference):**
@@ -1993,9 +2046,18 @@ export const generateSceneImage = async (
     const realismProtocol = scriptType === 'Cinematic' ? REALISM_INSTRUCTION_CINEMATIC : REALISM_INSTRUCTION_UGC;
     const brandColorInstruction = brandColors.length > 0 ? `\n**BRAND COLORS:** Incorporate these colors subtly: ${brandColors.join(', ')}` : '';
 
+    // Services / RealEstate scenes can place a Filipino CUSTOMER / staff / agent in non-avatar b-roll
+    // (e.g. the problem-hook, an agent at the facade). The non-avatar render modes inject NO ethnicity
+    // → the model defaulted to a foreign/Western person (Naya smoke 2026-06-21). Scoped to Services +
+    // RealEstate so the product / MrBeast / Testimonial / Temu / Cinematic paths stay byte-identical.
+    const serviceCastLock = (scriptType === 'Services' || scriptType === 'RealEstate')
+      ? `\n**FILIPINO_CAST_LOCK:** This is a Philippine business. Any human who appears — customer, staff, agent, bystander, or even just hands — MUST be Filipino${ethnicity && !ethnicity.startsWith('Global') ? ` (${ethnicity})` : ''} (authentically Filipino face, build, and styling). NEVER render a foreign / Western / non-Filipino person.`
+      : "";
+
     // 4. COMBINE EVERYTHING INTO THE FINAL PROMPT
     const finalPromptText = `
     ${consistencyRules}
+    ${serviceCastLock}
     ${cameraMandatory}
     ${wardrobeInstruction}
     ${productContext}
@@ -2414,7 +2476,7 @@ JSON STRUCTURE:
 
 export const generateAdCreatives = async (data: UplinkData): Promise<AdVariant[]> => {
     await delay(1000);
-    const prompt = `
+    const productPrompt = `
 ### Role: Direct Response Creative Director
 Task: Generate 2 high-conversion Image Ad variants for "${data.brandIdentityName}".
 
@@ -2426,26 +2488,103 @@ Main Benefit: ${data.primaryBenefit}
 Market Pain Point: ${data.marketPainPoint}
 Unique Value Proposition: ${data.uvp}
 Key Features: ${data.keyFeatures}
-Brand Colors: ${data.hexCodes}
+Brand Palette (reference only): ${data.hexCodes}
 
 TEMPLATES TO CHOOSE FROM:
 1. "Press Clip" (Looks daylight a news snippet)
 2. "Benefit Anatomy" (Labels pointing to product features)
 3. "Split-Screen" (Before/After or Problem/Solution)
 
-CRITICAL VISUAL RULE:
+CRITICAL VISUAL RULES:
 - If a device (phone/laptop) is shown, the SCREEN MUST FACE THE VIEWER directly.
+- The "imagePrompt" must describe the brand palette in PLAIN WORDS (e.g. "deep forest green and warm white"), NEVER as hex codes. Do NOT put any "#" hex value, price, or literal text into the imagePrompt — the image model renders text unreliably (NO_TEXT_CONSTRAINT); on-image copy is composited separately.
 
 JSON STRUCTURE:
 {
   "id": number,
   "templateType": "Press Clip" | "Benefit Anatomy" | "Split-Screen",
   "headline": "Short punchy headline",
-  "imagePrompt": "Detailed technical prompt for image gen. Include wardrobe, lighting, ${data.ethnicityProfile} characters, and ${data.aspectRatio} layout.",
+  "imagePrompt": "Detailed technical prompt for image gen. Include wardrobe, lighting, ${data.ethnicityProfile} characters, ${data.aspectRatio} layout, and the brand palette described in plain words (no hex codes, no embedded text).",
   "caption": "Primary ad copy text in ${data.language}",
   "hookLogic": "Brief explanation of the psychological trigger used"
 }
     `;
+
+    // GP-2 "Niche Callout" family (text-composited; see workflows/static_ad_swipe_file.md).
+    // Self-identification pattern-interrupt — the niche + qualifier carry the ad.
+    const calloutPrompt = `
+### Role: Direct Response Strategist — Niche Callout Ads
+Task: Generate 3 "Niche Callout" image-ad variants for "${data.brandIdentityName}". Each ad self-selects ONE hyper-specific buyer and offers a value-first asset.
+
+INTELLIGENCE:
+Brand: ${data.brandIdentityName}
+Audience: ${data.targetDemographic} (${data.ageRange})
+Main Benefit: ${data.primaryBenefit}
+Market Pain Point: ${data.marketPainPoint}
+Unique Value Proposition: ${data.uvp}
+Products / Services offered: ${data.inventoryList}
+Language: ${data.language}
+
+PATTERN (Sabri Suby dream-buyer callout):
+"If you run a [NICHE] [QUALIFIER?], we built [VALUE-FIRST OFFER] for you."
+- niche = ONE specific, named buyer segment — VARY it across the 3 variants.
+- qualifier = a REAL proof-of-fit (size / revenue / situation) ONLY IF grounded in the Audience above. If none is known, OMIT it entirely ("If you run a [niche], we built …"). NEVER invent a number.
+- leadMagnet = a REAL value-first offer grounded in the Benefit / Products / UVP (a free guide, audit, sample, trial, or the core offer reframed as the reason to act). NEVER name a freebie that may not exist; when unsure, use the real core offer/benefit.
+
+TRUST GUARDRAIL: no fake scarcity, no invented stats, no fake testimonials. Every qualifier must be plausibly real for ${data.brandIdentityName}.
+
+Return a JSON array of 3 objects:
+{
+  "id": number,
+  "templateType": "Niche Callout",
+  "headline": "the full callout sentence",
+  "caption": "Primary ad copy text in ${data.language}",
+  "hookLogic": "the psychological trigger (specificity / self-identification)",
+  "imagePrompt": "",
+  "composition": { "niche": "...", "qualifier": "...", "leadMagnet": "..." }
+}
+    `;
+
+    // GP-1 "SaaS Offer / Upsell" family (text-composited over a dark premium lane;
+    // see workflows/static_ad_swipe_file.md). Warm-retarget upgrade creatives.
+    const saasPrompt = `
+### Role: Direct Response Strategist — SaaS Upsell Ads
+Task: Generate 3 warm-retarget upsell ad variants for "${data.brandIdentityName}" — ONE of each template below. The viewer already knows the brand (free / engaged user); drive the upgrade. Outcome-framed, NEVER feature-listed.
+
+INTELLIGENCE:
+Brand: ${data.brandIdentityName}
+Audience: ${data.targetDemographic} (${data.ageRange})
+Main Benefit: ${data.primaryBenefit}
+Pain Point: ${data.marketPainPoint}
+UVP: ${data.uvp}
+Key Inclusions: ${data.keyFeatures}
+Offer Price: ${data.offerPrice} (was ${data.originalPrice})
+Language: ${data.language}
+
+TRUST GUARDRAIL: no fake scarcity, no fake testimonials, no invented numbers. A guarantee must be a real, honored policy. No "unlimited" promises.
+
+HEADLINE RULE: EVERY object MUST have a non-empty "headline" — it is the largest line on the ad. Never leave it blank; never return only a brand name.
+
+Return a JSON array of EXACTLY 3 objects, ONE per templateType:
+
+1) "Guarantee Hero" — a risk-reversal headline (the dream outcome fused to a real guarantee).
+   headline: "<the risk-reversal hero line — REQUIRED, e.g. 'First ad live in 24h or your month is free.'>"
+   composition: { "guarantee": "<the real reversal, restated briefly>", "ctaLabel": "<2-4 word CTA>", "badge": "<short offer/guarantee badge>" }
+
+2) "Ticket Compare" — anchor the current (free/lower) tier against the target tier.
+   headline: "<short directive — REQUIRED, e.g. CHOOSE YOUR LEVEL>"
+   composition: { "tiers": [ {"name":"Free","lines":["<2-3 plain limits>"],"highlight":false}, {"name":"<target tier>","lines":["<3-4 outcome lines>"],"highlight":true} ], "ctaLabel": "<CTA>" }
+
+3) "Offer Stack Checklist" — a guarantee headline + a what-you-GET list.
+   headline: "<the guarantee line — REQUIRED>"
+   composition: { "bullets": ["<outcome 1>","<outcome 2>","<outcome 3>","<outcome 4>"], "guarantee": "<penny-back tag>", "ctaLabel": "<CTA>" }
+
+Every object MUST also include: "id" (number), "templateType" (exact string above), a non-empty "headline" (per the HEADLINE RULE), "caption" (primary ad copy in ${data.language}), "hookLogic" (the persuasion lever), "imagePrompt": "".
+    `;
+
+    const prompt = data.family === 'callout' ? calloutPrompt
+      : data.family === 'saas-offer' ? saasPrompt
+      : productPrompt;
 
     const response: GenerateContentResponse = await retryWithBackoff(() => proxyGenerateContent({
         model: textModel,
@@ -2458,6 +2597,50 @@ JSON STRUCTURE:
     }));
 
     return JSON.parse(cleanJson(response.text || "[]"));
+};
+
+// Batch Creative Fan-Out — ONE text call returns `count` distinct headline
+// angles. The hero image and the actual creatives are produced elsewhere (one
+// AI image + N local Canvas composites), so this is the only AI text cost of a
+// whole 100-creative batch.
+export const generateBatchHeadlines = async (data: UplinkData, count: number): Promise<BatchHeadline[]> => {
+    const n = Math.max(1, Math.min(count, 150));
+    const prompt = `
+### Role: Direct-Response Copy Machine
+Task: Generate ${n} DISTINCT ad-creative text variants for "${data.brandIdentityName}". Each is a different scroll-stopping angle on the SAME product hero image.
+
+TACTICAL INTELLIGENCE:
+Brand: ${data.brandIdentityName}
+Offer: ${data.originalPrice} -> ${data.offerPrice}
+Audience: ${data.targetDemographic} (${data.ageRange}, ${data.ethnicityProfile})
+Main Benefit: ${data.primaryBenefit}
+Pain Point: ${data.marketPainPoint}
+UVP: ${data.uvp}
+Key Features: ${data.keyFeatures}
+
+RULES:
+- Output language: ${data.language}.
+- Each "headline" is ≤6 words, punchy, no period.
+- Each "subhead" is ≤10 words — an offer, proof, or benefit.
+- Each "badge" is 1-3 words for a corner flag (a feature or hook, e.g. "8-IN-1", "FAST RELIEF").
+- Every variant must use a GENUINELY different angle: pain, dream outcome, curiosity, social proof, urgency, contrarian, feature spotlight, price, identity, FOMO. Cycle through them — do not repeat the same idea.
+- No two headlines may be near-duplicates.
+
+Return a JSON array of exactly ${n} objects:
+{ "headline": string, "subhead": string, "badge": string, "angle": string }
+    `;
+
+    const response: GenerateContentResponse = await retryWithBackoff(() => proxyGenerateContent({
+        model: textModel,
+        contents: prompt,
+        config: {
+            responseMimeType: "application/json",
+            safetySettings: SAFETY_SETTINGS
+        }
+    }));
+
+    const parsed = JSON.parse(cleanJson(response.text || "[]"));
+    return Array.isArray(parsed) ? parsed.slice(0, n) : [];
 };
 
 export const analyzeProductSignature = async (images: string[]): Promise<string> => {

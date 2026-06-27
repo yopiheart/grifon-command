@@ -1,19 +1,24 @@
 
 import React, { useState, useEffect, useMemo, useRef, useSyncExternalStore } from 'react';
-import { ChevronLeft, Lightbulb, RotateCw, Mail, Check, Star, Apple } from 'lucide-react';
-import { ClientDetails, BusinessInfo, Script, Scene, VideoPrompt, Avatar, CinematicNarrativeScene, SceneBatchEntry } from './types';
+import { ChevronLeft, Lightbulb, RotateCw, Mail, Check, Star, Apple, Sparkles } from 'lucide-react';
+import { ClientDetails, BusinessInfo, Script, Scene, VideoPrompt, Avatar, CinematicNarrativeScene, SceneBatchEntry, LockablePresetId } from './types';
 import StepIndicator from './components/StepIndicator';
 import Step1ClientDetails from './components/Step1ClientDetails';
 import Step2BusinessInfo from './components/Step2BusinessInfo';
 import Step3AdScript from './components/Step3AdScript';
 import Step4Avatar from './components/Step4Avatar';
 import Step5Storyboard from './components/Step5Storyboard';
+import OneShotAd from './components/OneShotAd';
+import LockedVideoPreview from './components/LockedVideoPreview';
+import PlanGate from './components/PlanGate';
+import type { OneShotSinks } from './hooks/useOneShotGeneration';
 import Step6Thumbnail from './components/Step6Thumbnail';
 import Step6VideoPrompts from './components/Step6VideoPrompts';
 import Step7FinalOutput from './components/Step7FinalOutput';
 import { GlassPanel } from './components/ui/GlassPanel';
 import { GoldButton } from './components/ui/GoldButton';
 import { GrifonMark } from './components/ui/GrifonMark';
+import { BootScreen } from './components/ui/BootScreen';
 import Input from './components/ui/Input';
 import { ErrorBoundary } from './components/ui/ErrorBoundary';
 import Dashboard from './components/Dashboard';
@@ -25,14 +30,16 @@ import ImageEditor from './components/ImageEditor';
 import CaptionHeadline from './components/CaptionHeadline';
 import OrganicCalendar from './components/OrganicCalendar';
 import ImageAdsGen from './components/ImageAdsGen';
+import BatchFanOut from './components/BatchFanOut/BatchFanOut';
 import CinematicSpecStudio from './components/CinematicSpecStudio';
+import HookLab from './components/HookLab';
 import GenerateVideo from './components/GenerateVideo';
-import PlanGate from './components/PlanGate';
 import SignalModulator from './components/SignalModulator';
 import InfluencerForge from './components/InfluencerForge';
 import LandingPage from './components/LandingPage';
 import GrifonPricingPage from './components/GrifonPricingPage';
 import CheckoutPage from './components/CheckoutPage';
+import TopUpCheckoutPage from './components/TopUpCheckoutPage';
 import Billing3dsReturn from './components/Billing3dsReturn';
 import BillingSuccess from './components/BillingSuccess';
 import TermsOfService from './components/TermsOfService';
@@ -50,13 +57,18 @@ import {
   updatePassword,
 } from './services/supabaseClient';
 import { popIntendedPlan, startCheckout } from './services/billingService';
+import { grant as grantMarketingConsent, getMarketingConsent } from './services/consentService';
+import { ConsentBanner } from './components/ui/ConsentBanner';
+import { FeedbackWidget } from './components/ui/FeedbackWidget';
+import { getPixelConsent, trackEvent } from './services/analyticsService';
+import { initPixel, trackPixel } from './services/metaPixel';
 import { inferAvatarGender } from './utils/voiceSelect';
 import { OAUTH_PROVIDERS } from './config/authProviders';
 import { RouteVeil, type VeilState } from './components/ui/RouteVeil';
 import { QuotaWallModal } from './components/ui/QuotaWallModal';
 import { quotaWallStore } from './services/quotaWallStore';
 import { useSubscription } from './hooks/useSubscription';
-import { nextTier } from './utils/planGate';
+import { nextTier, planAtLeast, type PlanId } from './utils/planGate';
 import { getSession, setSession, clearSession, type WizardSessionV1 } from './services/wizardSessionStore';
 
 const TOTAL_STEPS = 8;
@@ -77,11 +89,7 @@ if (typeof window !== 'undefined') {
   }
 }
 
-const GrifonLogo = ({ className = "h-24 w-auto" }) => (
-  <img src="/logo.png" alt="GRIFON Logo" className={`object-contain ${className}`} />
-);
-
-type Route = 'landing' | 'pricing' | 'checkout' | 'billing_3ds_return' | 'app' | 'billing_success' | 'terms' | 'privacy' | 'refund' | 'support';
+type Route ='landing' | 'pricing' | 'checkout' | 'billing_3ds_return' | 'app' | 'billing_success' | 'terms' | 'privacy' | 'refund' | 'support';
 
 const detectInitialRoute = (): Route => {
   if (typeof window === 'undefined') return 'landing';
@@ -124,11 +132,27 @@ const App: React.FC = () => {
   // generation hits the user's monthly plan allowance (HTTP 402). Rendered once
   // at the app root so any module/wizard step triggers it without prop drilling.
   const quotaWall = useSyncExternalStore(quotaWallStore.subscribe, quotaWallStore.getSnapshot);
-  const { billing_cycle } = useSubscription();
-  const [bootLine, setBootLine] = useState(0);
+  const { billing_cycle, plan_id, loading: subLoading } = useSubscription();
+  // Slice 5 — gate a graduated module's RENDER behind a plan tier, with the
+  // grifon_dev_unlock bypass. Catches direct access (e.g. the video→AI-editor
+  // hand-off), not just the Dashboard tile. Server stays authoritative for the
+  // underlying AI calls.
+  const devUnlocked = typeof localStorage !== 'undefined' && localStorage.getItem('grifon_dev_unlock') === '1';
+  const gateModule = (node: React.ReactNode, requires: Exclude<PlanId, 'free'>, featureName: string): React.ReactNode =>
+    devUnlocked
+      ? node
+      : (
+        <PlanGate requires={requires} featureName={featureName} onBack={() => setActiveModule(null)} onUpgrade={() => { setActiveModule(null); setCurrentRoute('pricing'); }}>
+          {node}
+        </PlanGate>
+      );
   const [authEmail, setAuthEmail] = useState('');
   const [authPassword, setAuthPassword] = useState('');
   const [authConfirm, setAuthConfirm] = useState('');
+  // Retargeting/marketing consent opt-in on the signup form. Unchecked by
+  // default (affirmative opt-in). Carried into signUp user_metadata; the
+  // record-of-consent is stamped server-side post-auth. See consentService.
+  const [marketingOptIn, setMarketingOptIn] = useState(false);
   const [authError, setAuthError] = useState('');
   // Default to sign_up: most unauthenticated arrivals come from a START FREE CTA.
   // Returning users are one tap away, and Google OAuth handles both modes anyway.
@@ -139,8 +163,19 @@ const App: React.FC = () => {
   const [isCheckingSession, setIsCheckingSession] = useState(true);
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [activeModule, setActiveModule] = useState<string | null>(null);
+  // Deep-link target tab when routing into Signal Modulator (e.g. One-Shot's
+  // "Clone your own voice" → the Voice Cloning tab).
+  const [signalInitialTile, setSignalInitialTile] = useState<'tts' | 'vc' | 'clone' | 'scene-pipeline' | undefined>(undefined);
+  // When One-Shot sends the user to Signal Modulator to clone a voice, BACK
+  // should return to the One-Shot brief (preserved) instead of the dashboard.
+  // Standalone Signal Modulator (from the dashboard) keeps the dashboard default.
+  const [signalReturnToOneShot, setSignalReturnToOneShot] = useState(false);
   const [directorNudgeDismissed, setDirectorNudgeDismissed] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
+  // Director AI entry mode: one-shot (default — auto-generate the whole ad) vs
+  // the preserved 8-step wizard ('steps', advanced/Director mode). Slice 4 gates
+  // 'steps' to Business.
+  const [directorMode, setDirectorMode] = useState<'oneshot' | 'steps'>('oneshot');
   const [clientDetails, setClientDetails] = useState<ClientDetails>({ brandName: '', offer: '' });
   const [businessInfo, setBusinessInfo] = useState<BusinessInfo>({
     product: '',
@@ -181,6 +216,7 @@ const App: React.FC = () => {
     aspectRatio: '9:16' | '16:9' | '1:1';
     finalScript: string;
     offer?: string;
+    lockedPresetId?: LockablePresetId;
   } | null>(null);
   const [cinematicResult, setCinematicResult] = useState<Scene[] | null>(null);
 
@@ -208,30 +244,48 @@ const App: React.FC = () => {
     prevScriptTypeRef.current = businessInfo.scriptType;
   }, [businessInfo.scriptType]);
 
-  const bootLines = [
-    "> INITIALIZING GRIFON_DNA...",
-    "> LOADING MARKET_INTEL_VAULT...",
-    "> SYNCING SIGNAL_MODULATOR...",
-    "> ACCESS_GRANTED."
-  ];
-
+  // FILM LEADER boot — hold the studio-ignition screen until the session and any
+  // pending wizard draft are genuinely resolved (real readiness, not a fake
+  // timer), with a minimum on-screen time so it plays as a beat, not a flash.
+  const bootStartRef = useRef<number | null>(null);
   useEffect(() => {
-    if (isBooting) {
-      const interval = setInterval(() => {
-        setBootLine(prev => {
-          if (prev >= bootLines.length - 1) {
-            clearInterval(interval);
-            setTimeout(() => {
-              setIsBooting(false);
-            }, 500);
-            return prev;
-          }
-          return prev + 1;
-        });
-      }, 350);
-      return () => clearInterval(interval);
+    if (!isBooting) {
+      bootStartRef.current = null;
+      return;
     }
-  }, [isBooting]);
+    if (bootStartRef.current === null) bootStartRef.current = Date.now();
+    const ready = !isCheckingSession && !isLoadingSession;
+    if (!ready) return;
+    const MIN_MS = 1400;
+    const elapsed = Date.now() - (bootStartRef.current ?? Date.now());
+    const t = window.setTimeout(() => setIsBooting(false), Math.max(0, MIN_MS - elapsed));
+    return () => window.clearTimeout(t);
+  }, [isBooting, isCheckingSession, isLoadingSession]);
+
+  // Post-auth redirect — once authenticated, move an operator who's sitting on the
+  // marketing gateway INTO the app (the boot screen is a visual beat, not a route
+  // change). Fires once per auth so a deliberate /pricing or /billing visit by a
+  // logged-in user is preserved. Without this, login lands back on '/'.
+  const postAuthRedirectedRef = useRef(false);
+  useEffect(() => {
+    if (!isAuthenticated) {
+      postAuthRedirectedRef.current = false;
+      return;
+    }
+    if (postAuthRedirectedRef.current) return;
+    postAuthRedirectedRef.current = true;
+    // Only the marketing gateway gets bounced into the app; a deliberate
+    // /pricing or /billing visit by a logged-in user is preserved.
+    if (currentRoute === 'landing') {
+      setCurrentRoute('app');
+      if (typeof window !== 'undefined') {
+        window.history.replaceState({}, '', ROUTE_PATHS.app);
+      }
+    }
+    // Fires once per authentication (ref-guarded) — intentionally keyed on
+    // isAuthenticated only, capturing the route at the moment auth resolves.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -249,6 +303,11 @@ const App: React.FC = () => {
         setUserEmail(data.session.user.email ?? null);
         setUserId(data.session.user.id);
         setIsAuthenticated(true);
+        // Returning from an OAuth redirect — play the Film Leader boot once.
+        if (typeof sessionStorage !== 'undefined' && sessionStorage.getItem('grifon_oauth_pending')) {
+          sessionStorage.removeItem('grifon_oauth_pending');
+          setIsBooting(true);
+        }
       } else {
         setIsLoadingSession(false);
       }
@@ -283,6 +342,13 @@ const App: React.FC = () => {
     return () => { sub.subscription.unsubscribe(); };
   }, []);
 
+  // Meta Pixel: only init (and fire PageView) if the user has already granted
+  // consent on a previous visit. First-time visitors init via ConsentBanner's
+  // Accept. initPixel() is idempotent and a no-op when the pixel id is unset.
+  useEffect(() => {
+    if (getPixelConsent()?.granted) initPixel();
+  }, []);
+
   useEffect(() => {
     if (!isAuthenticated) return;
     const intended = popIntendedPlan();
@@ -290,6 +356,43 @@ const App: React.FC = () => {
     startCheckout(intended.plan_id, intended.billing_cycle).catch((err) => {
       toast.error('Could not resume checkout', { description: err?.message ?? 'Please try again.' });
     });
+  }, [isAuthenticated]);
+
+  // Reconcile the signup marketing-opt-in INTENT into a server-stamped consent
+  // record, exactly once. Survives the cross-device confirm-email round-trip
+  // (the intent rides user_metadata until the first authenticated load). Guarded
+  // so it never resurrects a consent the user later withdrew in Settings: we
+  // only grant when no consent row exists yet (never granted AND never
+  // withdrawn). Non-blocking — failures are silent and retried next load.
+  const consentSyncedRef = useRef(false);
+  useEffect(() => {
+    if (!isAuthenticated || consentSyncedRef.current) return;
+    consentSyncedRef.current = true;
+    (async () => {
+      try {
+        const { data } = await getSupabase().auth.getSession();
+        const meta = data.session?.user?.user_metadata;
+        const optedIn = meta?.marketing_opt_in === true;
+        const signupVersion = meta?.marketing_policy_version;
+        if (!optedIn) return;
+        const current = await getMarketingConsent();
+        // Only reconcile when no consent row exists yet (never granted AND never
+        // withdrawn) — never resurrect a withdrawal. And only auto-grant when we
+        // know the policy version the user saw at signup; without it we cannot
+        // record an accurate version, so we defer to an explicit in-app opt-in
+        // (Settings toggle, which stamps the current policy).
+        if (
+          current.consentAt === null &&
+          current.withdrawnAt === null &&
+          typeof signupVersion === 'string' &&
+          signupVersion
+        ) {
+          await grantMarketingConsent(signupVersion);
+        }
+      } catch {
+        /* non-blocking: a failed sync retries on the next authenticated load */
+      }
+    })();
   }, [isAuthenticated]);
 
   useEffect(() => {
@@ -380,6 +483,17 @@ const App: React.FC = () => {
       const safeStr = (v: unknown): string => (typeof v === 'string' ? v : '');
       const avatar = safeStr(r.winningAvatar);
       const demo = safeStr(r.demographics);
+      // The Big Idea (r.bigIdea) is a marketing thesis, not the user's actual offer —
+      // Filipino SMB users come with their own working offer/promo, so we carry the
+      // user-typed brandName/priceOffer forward via the sidecar instead. We also read
+      // isLocalService here to smart-default the Step 2 Product/Service gate.
+      let userInputs: { brandName?: string; priceOffer?: string; isLocalService?: boolean } = {};
+      try {
+        const raw = localStorage.getItem('marketMindUserInputs');
+        if (raw) userInputs = JSON.parse(raw);
+      } catch {
+        // Legacy report saved before sidecar existed — autofill leaves these fields empty.
+      }
       setBusinessInfo(prev => ({
         ...prev,
         product: prev.product || safeStr(r.subject),
@@ -388,17 +502,14 @@ const App: React.FC = () => {
         benefit: prev.benefit || safeStr(r.magicGenie),
         separator: prev.separator || safeStr(r.contrarianTruth) || safeStr(r.villain),
         features: prev.features || safeStr(r.bigIdea),
+        // Smart-default the business-type gate; if a local service, also pre-select the
+        // Services style. User can override both via the Step 2 toggle. Never clobber a
+        // prior choice (re-entry / resumed draft).
+        businessType: prev.businessType ?? (userInputs.isLocalService ? 'service' : 'product'),
+        scriptType: prev.businessType ? prev.scriptType
+          : userInputs.isLocalService ? 'Services'
+          : prev.scriptType,
       }));
-      // The Big Idea (r.bigIdea) is a marketing thesis, not the user's actual offer —
-      // Filipino SMB users come with their own working offer/promo, so we carry the
-      // user-typed brandName/priceOffer forward via the sidecar instead.
-      let userInputs: { brandName?: string; priceOffer?: string } = {};
-      try {
-        const raw = localStorage.getItem('marketMindUserInputs');
-        if (raw) userInputs = JSON.parse(raw);
-      } catch {
-        // Legacy report saved before sidecar existed — autofill leaves these fields empty.
-      }
       setClientDetails(prev => ({
         ...prev,
         brandName: prev.brandName || userInputs.brandName || '',
@@ -482,6 +593,12 @@ const App: React.FC = () => {
     setAuthError('');
     setIsSigningIn(true);
     try {
+      // Mark this redirect as a deliberate OAuth login so that when the provider
+      // bounces back (full page reload), we play the Film Leader boot — without
+      // it, a logged-in user's ordinary refresh would also boot every time.
+      if (typeof sessionStorage !== 'undefined') {
+        sessionStorage.setItem('grifon_oauth_pending', '1');
+      }
       await signInWithProvider(provider);
     } catch (err: any) {
       const label = provider === 'google' ? 'Google' : provider === 'github' ? 'GitHub' : 'Apple';
@@ -515,7 +632,12 @@ const App: React.FC = () => {
     }
     setIsSigningIn(true);
     try {
-      const { hasSession } = await signUpWithPassword(email, authPassword);
+      const { hasSession } = await signUpWithPassword(email, authPassword, marketingOptIn);
+      // Genuine new signup (both the in-flow-session and confirm-email paths) —
+      // fire the Lead pixel here, NOT in onAuthStateChange (which can't tell a
+      // signup from a returning login). trackPixel self-guards: it no-ops until
+      // the pixel was initialized via consent, so this respects the consent gate.
+      trackPixel('Lead');
       if (hasSession) {
         setIsBooting(true);
       } else {
@@ -622,6 +744,7 @@ const App: React.FC = () => {
     setThumbnailUrl(pendingSession.thumbnailUrl);
     setPendingSession(null);
     setHasRestored(true);
+    setDirectorMode('steps'); // resumed work is mid-wizard — keep the step view
     toast.success(`// SESSION_RESUMED — STEP_${stepLabel}_OF_08`, {
       description: 'Your earlier work has been restored.',
       duration: 6000,
@@ -652,6 +775,7 @@ const App: React.FC = () => {
     setCinematicResult(null);
     setPrefillSource(null);
     setMarketMindLoadedAvatar(null);
+    setDirectorMode('oneshot'); // a finished/restarted ad returns to the default surface
   };
 
   const goToLegal = (route: Route) => {
@@ -731,7 +855,15 @@ const App: React.FC = () => {
     );
   }
 
-  if (currentRoute === 'landing') {
+  // A logged-in user — or one mid-OAuth-return (provider bounces back to '/',
+  // resetting the route to 'landing') — must NEVER see the marketing landing:
+  // it would flash for a frame before the post-auth redirect / Film Leader boot
+  // takes over. The OAuth flag distinguishes a returning login from a genuine
+  // public visit during the brief session check, so public visitors still get
+  // the landing immediately (no blank).
+  const oauthReturning =
+    typeof sessionStorage !== 'undefined' && !!sessionStorage.getItem('grifon_oauth_pending');
+  if (currentRoute === 'landing' && !isAuthenticated && !isBooting && !oauthReturning) {
     return (
       <ErrorBoundary name="route:landing" resetKey={currentRoute} resetLabel="RETRY">
         <LandingPage
@@ -740,6 +872,7 @@ const App: React.FC = () => {
           onNavigateLegal={veilToLegal}
           isAuthenticated={isAuthenticated}
         />
+        <ConsentBanner onConsent={(granted) => { if (granted) initPixel(); }} />
         <RouteVeil veil={veil} />
       </ErrorBoundary>
     );
@@ -758,12 +891,16 @@ const App: React.FC = () => {
           onNavigateHome={() => runVeilTransition('// GRIFON COMMAND', () => setCurrentRoute('landing'))}
           onNavigateLegal={veilToLegal}
         />
+        <ConsentBanner onConsent={(granted) => { if (granted) initPixel(); }} />
         <RouteVeil veil={veil} />
       </ErrorBoundary>
     );
   }
 
   if (currentRoute === 'checkout') {
+    // A ?topup=<id> query routes to the standalone credit purchase (no plan);
+    // everything else is the subscription checkout.
+    const isTopupCheckout = new URLSearchParams(window.location.search).has('topup');
     return (
       <ErrorBoundary
         name="route:checkout"
@@ -771,7 +908,11 @@ const App: React.FC = () => {
         onReset={() => setCurrentRoute('pricing')}
         resetLabel="BACK TO PRICING"
       >
-        <CheckoutPage email={userEmail} onBack={() => setCurrentRoute('pricing')} onViewLegal={handleViewLegal} />
+        {isTopupCheckout ? (
+          <TopUpCheckoutPage email={userEmail} onBack={() => setCurrentRoute('app')} onViewLegal={handleViewLegal} />
+        ) : (
+          <CheckoutPage email={userEmail} onBack={() => setCurrentRoute('pricing')} onViewLegal={handleViewLegal} />
+        )}
       </ErrorBoundary>
     );
   }
@@ -876,23 +1017,7 @@ const App: React.FC = () => {
         </div>
 
         {isBooting ? (
-          <GlassPanel className="w-full max-w-md p-10 z-20 animate-in fade-in zoom-in-95 duration-300">
-             <div className="mb-8 flex justify-center">
-                <GrifonLogo className="h-24 w-auto text-[#FFCC00] animate-pulse" />
-             </div>
-             <div className="space-y-4 font-mono text-sm">
-                {bootLines.slice(0, bootLine + 1).map((line, i) => (
-                  <div key={i} className={`flex items-center gap-3 ${i === bootLine ? 'text-[#FFCC00]' : 'text-zinc-500'}`}>
-                    <span className="shrink-0">[ OK ]</span>
-                    <span className="tracking-tighter">{line}</span>
-                    {i === bootLine && <span className="w-2 h-4 bg-[#FFCC00] animate-pulse"></span>}
-                  </div>
-                ))}
-             </div>
-             <div className="mt-10 pt-6 border-t border-white/10 text-center">
-                <p className="text-[10px] text-zinc-600 uppercase tracking-[0.5em] animate-pulse">ESTABLISHING_NEURAL_LINK</p>
-             </div>
-          </GlassPanel>
+          <BootScreen userEmail={userEmail} />
         ) : (
           <div className="relative z-10 w-full flex flex-col items-center">
             {/* Compact header — the whole gateway must fit one phone screen without scrolling */}
@@ -1087,6 +1212,26 @@ const App: React.FC = () => {
                       required
                       minLength={8}
                     />
+                    {/* Affirmative, unchecked-by-default retargeting opt-in. Optional —
+                        does not gate signup. Drives api/consent (see consentService). */}
+                    <label htmlFor="signup-marketing" className="flex items-start gap-2.5 cursor-pointer select-none text-left">
+                      <span className="relative flex items-center justify-center mt-0.5 shrink-0">
+                        <input
+                          id="signup-marketing"
+                          type="checkbox"
+                          checked={marketingOptIn}
+                          onChange={(e) => setMarketingOptIn(e.target.checked)}
+                          className="peer appearance-none w-4 h-4 rounded bg-zinc-950 border border-white/20 checked:bg-[#FFCC00] checked:border-[#FFCC00] focus:outline-none focus:ring-1 focus:ring-[#FFCC00] transition-colors"
+                        />
+                        <Check className="pointer-events-none absolute w-3 h-3 text-zinc-950 opacity-0 peer-checked:opacity-100" strokeWidth={3} />
+                      </span>
+                      <span className="text-xs text-zinc-400 leading-snug">
+                        Send me personalized offers and ads. You agree we may share limited
+                        data with advertising partners (e.g. Meta) to show you relevant ads.
+                        Optional — change anytime in Settings.{' '}
+                        <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-[#FFCC00] hover:underline">Privacy Policy</a>.
+                      </span>
+                    </label>
                     {authError && (
                       <p className="text-red-500 text-sm font-mono text-center border border-red-900/50 bg-red-900/20 p-2 rounded-xl">{authError}</p>
                     )}
@@ -1240,19 +1385,31 @@ const App: React.FC = () => {
   if (!activeModule) {
     moduleElement = <Dashboard onSelectModule={setActiveModule} activeModule={activeModule} userEmail={userEmail} userId={userId} onLogout={handleLogout} onUpgrade={() => setCurrentRoute('pricing')} />;
   } else if (activeModule === 'generate_video') {
-    moduleElement = (
-      <PlanGate
-        requires="pro"
-        featureName="Video Synthesis"
-        onBack={() => setActiveModule(null)}
-        onUpgrade={() => { setActiveModule(null); setCurrentRoute('pricing'); }}
-      >
+    // Slice 3 — video is metered per FINISHED AD. Starter+ render (1/8/15 ads);
+    // Free renders 0 and instead lands on the LockedVideoPreview upsell at the
+    // hand-off. Server stays authoritative (meterVideoRequest); this is the UX
+    // gate. PlanGate is bypassed here so Free gets the tailored upsell, not the
+    // generic lock screen.
+    if (subLoading) {
+      moduleElement = <div className="min-h-screen bg-zinc-950" />;
+    } else if (plan_id === 'free') {
+      moduleElement = (
+        <LockedVideoPreview
+          onBack={() => setActiveModule(null)}
+          onUpgrade={() => { setActiveModule(null); setCurrentRoute('pricing'); }}
+          onBuyTopup={() => { window.location.href = '/checkout?topup=video_ad_single'; }}
+          thumbnailUrl={thumbnailUrl}
+          previewImageUrl={storyboard[0]?.imageUrl}
+        />
+      );
+    } else {
+      moduleElement = (
         <GenerateVideo
           onBack={() => setActiveModule(null)}
           seedPrompts={videoPrompts}
           storyboard={storyboard}
           defaultAspectRatio={aspectRatio ?? '9:16'}
-          onSendToAiEditor={(batch) => {
+          onSendToAiEditor={(batch, lockedPresetId) => {
             // Default path — skip Signal Modulator's redundant TTS pass. The AI
             // Editor consolidates voice once (audioOverlays unused, so []).
             setSceneBatch(batch);
@@ -1262,6 +1419,7 @@ const App: React.FC = () => {
               aspectRatio: aspectRatio ?? '9:16',
               finalScript: finalScript.join(' '),
               offer: clientDetails.offer,
+              lockedPresetId,
             });
             setActiveModule('edit_video');
           }}
@@ -1270,18 +1428,27 @@ const App: React.FC = () => {
             setActiveModule('signal_modulator');
           }}
         />
-      </PlanGate>
-    );
+      );
+    }
   } else if (activeModule === 'signal_modulator') {
-    moduleElement = (
+    moduleElement = gateModule((
       <SignalModulator
         onBack={() => {
           setSceneBatch([]);
-          setActiveModule(null);
+          setSignalInitialTile(undefined);
+          if (signalReturnToOneShot) {
+            // Return to the One-Shot composer with the brief intact.
+            setSignalReturnToOneShot(false);
+            setDirectorMode('oneshot');
+            setActiveModule('creative_director');
+          } else {
+            setActiveModule(null);
+          }
         }}
         globalScript={finalScript}
         sceneBatch={sceneBatch}
         avatarGender={avatarGender}
+        initialTile={signalInitialTile}
         onSendToAiEditor={(audioOverlays) => {
           setEditorBatch({
             sceneBatch,
@@ -1293,17 +1460,17 @@ const App: React.FC = () => {
           setActiveModule('edit_video');
         }}
       />
-    );
+    ), 'pro', 'Voice Studio');
   } else if (activeModule === 'influencer_forge') {
     moduleElement = <InfluencerForge onBack={() => setActiveModule(null)} ethnicity={avatar?.ethnicity} />;
   } else if (activeModule === 'cinematic_studio') {
-    moduleElement = <CinematicSpecStudio onBack={() => setActiveModule(null)} onNavigate={setActiveModule} businessInfo={businessInfo} narrative={cinematicNarrative} setNarrative={setCinematicNarrative} frameMap={cinematicFrameMap} setFrameMap={setCinematicFrameMap} result={cinematicResult} setResult={setCinematicResult} />;
+    moduleElement = gateModule(<CinematicSpecStudio onBack={() => setActiveModule(null)} onNavigate={setActiveModule} businessInfo={businessInfo} narrative={cinematicNarrative} setNarrative={setCinematicNarrative} frameMap={cinematicFrameMap} setFrameMap={setCinematicFrameMap} result={cinematicResult} setResult={setCinematicResult} />, 'business', 'Commercial & Cinematic Studio');
   } else if (activeModule === 'market_research') {
     moduleElement = <MarketResearch onBack={() => setActiveModule(null)} onNavigate={setActiveModule} />;
   } else if (activeModule === 'offer_optimizer') {
     moduleElement = <OfferOptimizer onBack={() => setActiveModule(null)} onNavigate={setActiveModule} />;
   } else if (activeModule === 'edit_video') {
-    moduleElement = (
+    moduleElement = gateModule((
       <EditVideo
         onBack={() => {
           setEditorBatch(null);
@@ -1312,7 +1479,7 @@ const App: React.FC = () => {
         editorBatch={editorBatch}
         avatarGender={avatarGender}
       />
-    );
+    ), 'pro', 'AI Video Editor');
   } else if (activeModule === 'image_editor') {
     moduleElement = <ImageEditor onBack={() => setActiveModule(null)} ethnicity={avatar?.ethnicity} />;
   } else if (activeModule === 'caption_headline') {
@@ -1321,13 +1488,46 @@ const App: React.FC = () => {
     moduleElement = <OrganicCalendar businessInfo={businessInfo} avatar={avatar} clientDetails={clientDetails} onBack={() => setActiveModule(null)} />;
   } else if (activeModule === 'image_ads') {
     moduleElement = <ImageAdsGen businessInfo={businessInfo} avatar={avatar} clientDetails={clientDetails} onBack={() => setActiveModule(null)} />;
+  } else if (activeModule === 'batch_fanout') {
+    moduleElement = <BatchFanOut businessInfo={businessInfo} avatar={avatar} clientDetails={clientDetails} onBack={() => setActiveModule(null)} />;
+  } else if (activeModule === 'hook_lab') {
+    moduleElement = <HookLab businessInfo={businessInfo} onBack={() => setActiveModule(null)} />;
   } else if (activeModule === 'creative_director') {
     const hasRunResearch = !!localStorage.getItem('marketMindReport');
     const wizardPristine = currentStep === 1 && !clientDetails.brandName && !businessInfo.product && script === null;
     const showResumePill = !isLoadingSession && pendingSession !== null && !hasRestored && wizardPristine;
     const showNudge = !hasRunResearch && !directorNudgeDismissed && !showResumePill;
     const showLoadedConfirmation = hasRunResearch && marketMindLoadedAvatar && !showResumePill;
+    // One-shot is the default surface; a pending step session forces steps mode
+    // so the user can resume where they left off.
+    const showOneShot = directorMode === 'oneshot' && !showResumePill;
+    const oneShotSinks: OneShotSinks = {
+      setScript, setFinalScript, setAvatar, setStoryboard, setThumbnailUrl, setVideoPrompts, setLanguage,
+    };
+    // Slice 4 — Director (step-by-step) mode is a Pro+ unlock ("control every
+    // scene"). Free/Starter ride the one-shot only. `grifon_dev_unlock` flips it
+    // on for dev/Neil on any account (console: localStorage.grifon_dev_unlock='1').
+    const devUnlock = typeof localStorage !== 'undefined' && localStorage.getItem('grifon_dev_unlock') === '1';
+    const directorUnlocked = devUnlock || planAtLeast(plan_id, 'pro');
 
+    if (showOneShot) {
+      // One-Shot Ad — full-screen intake → research → generate → Step 8 review.
+      moduleElement = (
+        <OneShotAd
+          userId={userId}
+          sinks={oneShotSinks}
+          setClientDetails={setClientDetails}
+          setBusinessInfo={setBusinessInfo}
+          setAspectRatio={setAspectRatio}
+          directorUnlocked={directorUnlocked}
+          onBack={() => setActiveModule(null)}
+          onUpgrade={() => { setActiveModule(null); setCurrentRoute('pricing'); }}
+          onSwitchToSteps={() => { setDirectorMode('steps'); setCurrentStep(1); }}
+          onCloneVoice={() => { setSignalInitialTile('clone'); setSignalReturnToOneShot(true); setActiveModule('signal_modulator'); }}
+          onReview={() => { setDirectorMode('steps'); setCurrentStep(8); }}
+        />
+      );
+    } else {
     moduleElement = (
         <div className="min-h-screen bg-zinc-950 font-sans flex flex-col items-center p-4 sm:p-6 md:p-8 text-white">
         <div className="w-full max-w-6xl mx-auto">
@@ -1394,6 +1594,14 @@ const App: React.FC = () => {
               </div>
             ) : (
             <>
+            {directorMode === 'steps' && !showResumePill && (
+              <button
+                onClick={() => setDirectorMode('oneshot')}
+                className="mb-6 flex items-center gap-2 text-[10px] font-mono text-zinc-500 hover:text-[#FFCC00] uppercase tracking-widest transition-colors"
+              >
+                <Sparkles className="w-3.5 h-3.5" /> Back to one-shot
+              </button>
+            )}
             {showResumePill && pendingSession && (
               <div className="bg-zinc-900 border border-[#FFCC00]/30 rounded-xl p-4 mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 <div className="flex items-start gap-3">
@@ -1424,12 +1632,12 @@ const App: React.FC = () => {
                 </div>
               </div>
             )}
-            {currentStep <= TOTAL_STEPS && <StepIndicator currentStep={currentStep} totalSteps={TOTAL_STEPS} onStepClick={(s) => s < currentStep && setCurrentStep(s)} />}
+            {currentStep <= TOTAL_STEPS && <StepIndicator currentStep={currentStep} totalSteps={TOTAL_STEPS} onStepClick={(s) => s < currentStep && directorUnlocked && setCurrentStep(s)} />}
             <div className="mt-8">
                 {currentStep === 1 && <Step1ClientDetails
                   data={clientDetails}
                   setData={setClientDetails}
-                  onNext={() => setCurrentStep(2)}
+                  onNext={() => { trackEvent({ event: 'wizard_step', module: 'wizard', step: 'step_1_complete' }); setCurrentStep(2); }}
                   prefilled={prefillSource !== null && !!clientDetails.brandName && !!clientDetails.offer}
                   prefilledFrom={prefillSource}
                 />}
@@ -1439,7 +1647,7 @@ const App: React.FC = () => {
                 {currentStep === 5 && <Step5Storyboard script={finalScript} avatar={avatar} businessInfo={businessInfo} storyboard={storyboard} setStoryboard={setStoryboard} onNext={() => setCurrentStep(6)} onBack={() => setCurrentStep(4)} aspectRatio={aspectRatio} language={language} />}
                 {currentStep === 6 && <Step6Thumbnail script={finalScript} avatar={avatar} businessInfo={businessInfo} aspectRatio={aspectRatio} thumbnailUrl={thumbnailUrl} setThumbnailUrl={setThumbnailUrl} onNext={() => setCurrentStep(7)} onBack={() => setCurrentStep(5)} />}
                 {currentStep === 7 && <Step6VideoPrompts storyboard={storyboard} videoPrompts={videoPrompts} setVideoPrompts={setVideoPrompts} onNext={() => setCurrentStep(8)} onBack={() => setCurrentStep(6)} businessInfo={businessInfo} />}
-                {currentStep === 8 && <Step7FinalOutput allData={{ clientDetails, businessInfo, finalScript, avatar, storyboard, videoPrompts, thumbnailUrl, aspectRatio }} onRestart={restart} onBack={() => setCurrentStep(7)} onGenerateVideo={() => setActiveModule('generate_video')} />}
+                {currentStep === 8 && <Step7FinalOutput allData={{ clientDetails, businessInfo, finalScript, avatar, storyboard, videoPrompts, thumbnailUrl, aspectRatio }} onRestart={restart} onBack={directorUnlocked ? () => setCurrentStep(7) : () => setDirectorMode('oneshot')} onGenerateVideo={() => setActiveModule('generate_video')} />}
             </div>
             </>
             )}
@@ -1447,6 +1655,7 @@ const App: React.FC = () => {
         </div>
         </div>
     );
+    }
   } else {
     moduleElement = <PlaceholderTool moduleName={activeModule} onBack={() => setActiveModule(null)} />;
   }
@@ -1477,8 +1686,12 @@ const App: React.FC = () => {
         onUpgrade={() => {
           if (wallUpsell) startCheckout(wallUpsell, billing_cycle ?? 'monthly');
         }}
+        onBuyTopup={(id) => { window.location.href = `/checkout?topup=${id}`; }}
         onDismiss={() => quotaWallStore.dismiss()}
       />
+      {/* Growth Loop Phase 1: NPS prompt at the finished-ad review screen. Self-gates
+          to once/session + ~30d cooldown; never blocks the page. */}
+      <FeedbackWidget active={currentStep === 8} module="wizard_final" />
     </ErrorBoundary>
   );
 };

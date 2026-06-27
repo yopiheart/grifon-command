@@ -47,12 +47,13 @@ const QUOTES = [
   },
 ];
 
-// Clearly-labeled sample-ad receipts — stats already published on the proof
-// wall (ProofGallery), restated here. Sample creative, never user testimony.
+// Clearly-labeled sample-ad receipts — illustrative sample creative, never user
+// testimony and never campaign data. The stat states only the defensible
+// product-speed claim (~30-min build), not fabricated ROAS.
 const SAMPLES = [
-  { label: 'REAL ESTATE', icon: Building2, hook: 'YOUR DREAM CONDO.', accent: 'Closer than you think.', stat: 'ROAS 4.8× · MADE IN 20 MIN' },
-  { label: 'F&B', icon: UtensilsCrossed, hook: 'LUTONG BAHAY.', accent: 'Delivered in 30.', stat: 'ROAS 3.2× · MADE IN 15 MIN' },
-  { label: 'E-COMMERCE', icon: ShoppingBag, hook: 'BIG SALE.', accent: 'Ends tonight.', stat: 'ROAS 5.1× · MADE IN 25 MIN' },
+  { label: 'REAL ESTATE', icon: Building2, hook: 'YOUR DREAM CONDO.', accent: 'Closer than you think.', stat: 'COMPLETE AD · ~30 MIN' },
+  { label: 'F&B', icon: UtensilsCrossed, hook: 'LUTONG BAHAY.', accent: 'Delivered in 30.', stat: 'COMPLETE AD · ~30 MIN' },
+  { label: 'E-COMMERCE', icon: ShoppingBag, hook: 'BIG SALE.', accent: 'Ends tonight.', stat: 'COMPLETE AD · ~30 MIN' },
 ];
 
 // Interleave: quote, sample, quote, sample... then the reserved CTA card.

@@ -159,10 +159,10 @@ const OrganicCalendar: React.FC<OrganicCalendarProps> = ({ businessInfo, avatar,
             </div>
             <div>
                 <h1 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight break-words whitespace-normal leading-tight">
-                    Organic Calendar
+                    Campaign Planner
                 </h1>
                 <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mt-2">
-                    // CONTENT_STRATEGY 30-DAY SOCIAL PLAN
+                    // PLAN & SCHEDULE YOUR CONTENT
                 </p>
             </div>
         </header>

@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { Clapperboard, X } from 'lucide-react';
 import { GoldButton } from './GoldButton';
+import { DUR, SPRING } from './motionTokens';
 import { FOUNDING_OFFER, seatsRemaining } from '../../config/foundingOffer';
 
 interface ExitIntentModalProps {
@@ -54,7 +55,7 @@ export const ExitIntentModal: React.FC<ExitIntentModalProps> = ({ triggered, onD
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
+          transition={{ duration: DUR.fast }}
           onClick={onDismiss}
           role="dialog"
           aria-modal="true"
@@ -65,22 +66,52 @@ export const ExitIntentModal: React.FC<ExitIntentModalProps> = ({ triggered, onD
             initial={reduce ? { opacity: 0 } : { opacity: 0, y: 24, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: 16, scale: 0.98 }}
-            transition={{ type: 'spring', stiffness: 260, damping: 22 }}
+            transition={SPRING.pop}
             onClick={(e) => e.stopPropagation()}
-            className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/90 backdrop-blur-xl shadow-[0_0_60px_-12px_rgba(255,204,0,0.35)]"
+            className="relative w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl border border-white/10 bg-zinc-900/90 backdrop-blur-xl shadow-[0_0_60px_-12px_rgba(255,204,0,0.35)]"
           >
             {/* Clapper sticks — snap shut on entrance. */}
             <motion.div
               aria-hidden
               initial={reduce ? undefined : { rotate: -11 }}
               animate={{ rotate: 0 }}
-              transition={{ type: 'spring', stiffness: 480, damping: 12, delay: 0.1 }}
+              transition={{ ...SPRING.overshoot, delay: 0.1 }}
               style={{
                 transformOrigin: 'left center',
                 background: 'repeating-linear-gradient(115deg, #FFCC00 0 20px, #09090B 20px 40px)',
               }}
               className="h-9 w-full"
             />
+
+            {/* Proof slot — a real finished Grifon ad answers the headline's
+                "patunayan mo" in the same breath. Lazy by construction: the whole
+                modal only mounts on desktop exit-intent (once/session), so the
+                clip never loads on a normal visit. Reduced-motion -> poster only. */}
+            <div className="mx-auto mt-5 w-40 overflow-hidden rounded-xl border border-white/10 bg-zinc-950 aspect-[9/16] shadow-[0_0_30px_-10px_rgba(255,204,0,0.35)]">
+              {reduce ? (
+                <img
+                  src="/exit/proof-ad-poster.jpg"
+                  alt="A real ad made with Grifon"
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <video
+                  // Neil drops the real clip here (a webm <source> can be added alongside).
+                  src="/exit/proof-ad.mp4"
+                  poster="/exit/proof-ad-poster.jpg"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="none"
+                  aria-label="A real ad made with Grifon"
+                  className="h-full w-full object-cover"
+                />
+              )}
+            </div>
+            <p className="mt-2 text-center text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+              Real Grifon ad · 0 edits
+            </p>
 
             {/* Dismiss */}
             <button

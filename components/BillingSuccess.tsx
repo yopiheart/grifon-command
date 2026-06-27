@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
+import { EASE, DUR } from './ui/motionTokens';
 import { CheckCircle2, Loader2, Share2, ArrowRight } from 'lucide-react';
 import { useSubscription } from '../hooks/useSubscription';
 import { GrifonMark } from './ui/GrifonMark';
@@ -117,7 +118,7 @@ const BillingSuccess: React.FC<Props> = ({ onContinue, email }) => {
     }
   };
 
-  const planLabel = (plan_id ?? 'creator').toUpperCase();
+  const planLabel = (plan_id ?? 'pro').toUpperCase();
   const founding = FOUNDING_OFFER.enabled;
   const estDate = new Date().toLocaleDateString('en-PH', { month: 'short', year: 'numeric' }).toUpperCase();
 
@@ -152,7 +153,7 @@ const BillingSuccess: React.FC<Props> = ({ onContinue, email }) => {
       <motion.div
         initial={reduceMotion ? false : { opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: 'easeOut' }}
+        transition={{ duration: DUR.slow, ease: EASE.out }}
         className="relative w-full max-w-md flex flex-col items-center text-center"
       >
         {/* Confirmation badge */}
@@ -175,7 +176,7 @@ const BillingSuccess: React.FC<Props> = ({ onContinue, email }) => {
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, scale: 0.9, rotateX: 18 }}
           animate={{ opacity: 1, scale: 1, rotateX: 0 }}
-          transition={{ duration: 0.7, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: DUR.entrance, delay: 0.25, ease: EASE.expressive }}
           style={{ perspective: 800 }}
           className="w-full mb-3"
         >
@@ -239,7 +240,7 @@ const BillingSuccess: React.FC<Props> = ({ onContinue, email }) => {
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.7 }}
+          transition={{ duration: DUR.slow, delay: 0.7 }}
           className="w-full flex flex-col gap-3 mt-4 lg:mt-0"
         >
           <GoldButton onClick={onContinue} className="w-full justify-center py-4 text-sm">

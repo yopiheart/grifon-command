@@ -7,20 +7,20 @@ import { musicGenEligible, type PlanId } from '../../utils/planGate.js';
 import { musicBedKey } from '../../api/_lib/renderJob.js';
 import { MUSIC_STYLE_PROMPTS, type MusicStyle } from '../../api/_lib/musicPrompts.js';
 
-const PLANS: PlanId[] = ['free', 'creator', 'pro', 'business'];
+const PLANS: PlanId[] = ['free', 'starter', 'pro', 'business'];
 const STYLES: MusicStyle[] = ['mrbeast', 'temu', 'testimonial'];
 
 describe('generative-music quota + gating', () => {
-  it('free/creator can NEVER generate music (MUSIC_DAILY = 0); pro/business can', () => {
+  it('free/starter can NEVER generate music (MUSIC_DAILY = 0); pro/business can', () => {
     expect(MUSIC_DAILY.free).toBe(0);
-    expect(MUSIC_DAILY.creator).toBe(0);
+    expect(MUSIC_DAILY.starter).toBe(0);
     expect(MUSIC_DAILY.pro).toBeGreaterThan(0);
     expect(MUSIC_DAILY.business).toBeGreaterThan(0);
   });
 
   it('keeps the client tier gate in lockstep with the server cap (eligible iff cap > 0)', () => {
     // This is the seam that guarantees the UI toggle and the authoritative
-    // server gate agree — "free/creator never trigger gen" at BOTH layers.
+    // server gate agree — "free/starter never trigger gen" at BOTH layers.
     for (const plan of PLANS) {
       expect(musicGenEligible(plan)).toBe(MUSIC_DAILY[plan] > 0);
     }

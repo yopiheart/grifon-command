@@ -1,0 +1,52 @@
+{
+  "_meta": {
+    "cmoReviewed": true,
+    "reviewedBy": "grifon-cmo",
+    "date": "2026-06-20",
+    "note": "Grifon self-promo slate (Zam hero format): 3 Niche Callout (top PH SMB niches) + 3 SaaS upsell. Split-screen angles (compare/UGC) live in grifon-10slate-split.json."
+  },
+  "angles": [
+    {
+      "id": "niche-ecom",
+      "headline": "Para Sa Online Sellers",
+      "badge": "ECOM SELLERS",
+      "principle": "Self-identification / Specificity (Sabri dream-buyer callout)",
+      "scene": "Zam confident and friendly holding a phone that shows a polished product ad, subtle e-commerce motif (soft-focus parcels and a shopping-cart glyph) in the dark background, warm Grifon-gold glow"
+    },
+    {
+      "id": "niche-beauty",
+      "headline": "Para Sa Beauty Brands",
+      "badge": "SKINCARE BEAUTY",
+      "principle": "Liking + Authority for a premium niche",
+      "scene": "Zam polished and elegant, refined premium beauty-brand aesthetic, soft glossy gold glow, editorial high-end finish"
+    },
+    {
+      "id": "niche-food",
+      "headline": "Para Sa Food Business",
+      "badge": "FOOD RESTO",
+      "principle": "Self-identification + Liking",
+      "scene": "Zam warm and approachable, subtle food-business cue (soft steam and plate bokeh) in the dark background, appetizing warm gold glow"
+    },
+    {
+      "id": "saas-5days",
+      "headline": "First Ad In 5 Days",
+      "badge": "START FREE",
+      "principle": "Dream outcome + speed (time delay)",
+      "scene": "Zam energized and optimistic, motion-forward leaning posture, bright confident gold glow"
+    },
+    {
+      "id": "saas-agency",
+      "headline": "Fire Your Ad Agency",
+      "badge": "AGENCY KILLER",
+      "principle": "Villain + Anchoring (anti-agency)",
+      "scene": "Zam bold and decisive, arms crossed, strong dramatic gold rim light, commanding authoritative mood"
+    },
+    {
+      "id": "saas-autopilot",
+      "headline": "Marketing On Autopilot",
+      "badge": "AUTOPILOT",
+      "principle": "Dream outcome — done-for-you (top tier)",
+      "scene": "Zam calm and in-command, relaxed executive posture leaning back, premium gold glow"
+    }
+  ]
+}

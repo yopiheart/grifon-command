@@ -22,6 +22,10 @@ export interface RenderSidecar {
   downloadUrl?: string;
   error?: string;
   updatedAt: string;
+  // Attribution id (= jobId) for the Data-Driven Growth Loop. Surfaced to the
+  // user so they can name the Meta ad "grifon-<creativeId>"; meta_insights_pull.py
+  // parses it back out to join ad_performance to the creative that made the ad.
+  creativeId?: string;
 }
 
 export async function writeSidecar(key: string, body: RenderSidecar): Promise<void> {

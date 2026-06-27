@@ -16,6 +16,7 @@ import {
   Eye,
   Loader2,
   Play,
+  Lock,
 } from 'lucide-react';
 import type {
   VideoGenConfig,
@@ -24,6 +25,7 @@ import type {
   Scene,
   VideoLibraryItem,
   SceneBatchEntry,
+  LockablePresetId,
 } from '../../types';
 import {
   VIDEO_MODEL_SPECS,
@@ -36,7 +38,10 @@ import {
   resumeVideoOperation,
 } from '../../services/geminiService';
 import { getSupabase } from '../../services/supabaseClient';
+import { useSubscription } from '../../hooks/useSubscription';
+import { SCENE_CAP } from '../../utils/planGate';
 import { listActiveJobs, clearActiveJob } from '../../services/activeJobStore';
+import { ensureNotificationPermission, notify } from '../../services/notificationService';
 import { compressImageForUpload } from '../../utils/imageCompression';
 import { GoldButton } from '../ui/GoldButton';
 import { GlassPanel } from '../ui/GlassPanel';
@@ -79,11 +84,37 @@ interface GenerateVideoProps {
   /** Default path — hands the finished render batch straight to the AI Editor
    * (Final Render), where voice is consolidated once. Skips Signal Modulator's
    * redundant TTS pass (which the editor ignores), avoiding double spend. */
-  onSendToAiEditor?: (batch: SceneBatchEntry[]) => void;
+  onSendToAiEditor?: (batch: SceneBatchEntry[], lockedPresetId?: LockablePresetId) => void;
 }
 
 const ACTIVE_MODELS: VideoModelType[] = ['Veo_3.1_Fast', 'Veo_3.1_Quality', 'Veo_3.1_Lite', 'Kling_3_0', 'Kling_O1'];
 const LOCKED_MODELS: VideoModelType[] = ['Seedance_2_0_Fast', 'Seedance_2_0_Quality'];
+
+// Slice 4 — engine names (Veo/Kling) never reach user-facing copy. We show the
+// OUTCOME the user gets, not the engine that produces it. Internal displayName
+// (services/geminiService VIDEO_MODEL_SPECS) stays as debug/error truth.
+const MODEL_LABEL: Record<VideoModelType, string> = {
+  'Veo_3.1_Fast': 'Standard',
+  'Veo_3.1_Quality': 'Premium',
+  'Veo_3.1_Lite': 'Draft',
+  'Kling_3_0': 'Cinematic',
+  'Kling_O1': 'Cinematic Pro',
+  'Seedance_2_0_Fast': 'Express',
+  'Seedance_2_0_Quality': 'Express Pro',
+};
+const modelLabel = (m: VideoModelType): string => MODEL_LABEL[m] ?? 'Standard';
+
+// Some thrown errors embed an engine displayName (e.g. "INVALID_COMBO: Veo 3.1
+// Lite at 1080p…"). Scrub those to outcome labels before any error text reaches
+// the user — keeps engine names out of user-facing copy without editing the
+// (tuned) error strings at their source in geminiService.
+const scrubEngineNames = (msg: string): string => {
+  let out = msg;
+  (Object.keys(VIDEO_MODEL_SPECS) as VideoModelType[]).forEach((m) => {
+    out = out.split(VIDEO_MODEL_SPECS[m].displayName).join(modelLabel(m));
+  });
+  return out;
+};
 
 const initialConfig = (defaultAspectRatio?: '9:16' | '16:9' | null): VideoGenConfig => ({
   // Phase 4h.1 — default to Lite for beta cost-control. Cheapest tier;
@@ -102,6 +133,17 @@ const formatEta = (sec: number): string => {
   const m = Math.floor(sec / 60);
   return `${m}m`;
 };
+
+/** Pre-render look-lock options. `undefined` = AUTO (server rotates a look that
+ * fits the script style — today's default). The three locks mirror the rotation
+ * presets in api/_lib/renderPresets.ts (classic is a kill-switch, not surfaced).
+ * Hints are condensed from each preset's doc comment. */
+const LOOK_OPTIONS: { id: LockablePresetId | undefined; label: string; hint: string }[] = [
+  { id: undefined, label: 'AUTO', hint: 'Server picks a look that fits the script style (default).' },
+  { id: 'impact', label: 'IMPACT', hint: 'Bold direct-response — condensed caps, punchy white-flash cuts.' },
+  { id: 'hype', label: 'HYPE', hint: 'High-energy TikTok — gold word-pop captions, whip-blur cuts.' },
+  { id: 'clean', label: 'CLEAN', hint: 'Sincere testimonial — soft box, gentle dip-to-black fades.' },
+];
 
 const GenerateVideo: React.FC<GenerateVideoProps> = ({
   onBack,
@@ -138,6 +180,24 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
   const [tick, setTick] = useState(0); // re-renders to refresh relative timestamps every minute
   const [userId, setUserId] = useState<string | null>(null); // Phase 4d — needed for IndexedDB resume keying
 
+  // Slice 3 — one stable id for THIS finished ad. Every scene render in this
+  // session shares it, so the server meters one video_ad credit per ad (not
+  // per scene). Lazily initialised once per GenerateVideo mount.
+  const finishedAdIdRef = useRef<string>('');
+  if (!finishedAdIdRef.current) {
+    finishedAdIdRef.current =
+      globalThis.crypto?.randomUUID?.() ?? `ad-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+  }
+  // Per-plan scene cap (the COGS dial) — Render All renders at most this many
+  // scenes per finished ad. Free is gated out of this module entirely.
+  const { plan_id } = useSubscription();
+  const sceneCap = SCENE_CAP[plan_id];
+  // Slice 4 — advanced quality/engine/resolution controls (incl. 4K) are a
+  // Business unlock; lower tiers render on the standard auto pipeline. The
+  // grifon_dev_unlock flag opens the controls for dev/Neil on any account.
+  const devUnlock = typeof localStorage !== 'undefined' && localStorage.getItem('grifon_dev_unlock') === '1';
+  const showAdvanced = devUnlock || plan_id === 'business';
+
   // Phase 4a — cost guardrail confirm dialog. Resolves the promise stored on the
   // state so the GENERATE handler can await the user's choice before proceeding.
   const [confirmDialog, setConfirmDialog] = useState<{
@@ -153,6 +213,9 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
   // in manual mode (no scriptLine); pipeline mode auto-computes per-scene at
   // render time so this flag never fires there.
   const [manualDurationByScene, setManualDurationByScene] = useState<Record<number, boolean>>({});
+  // Pre-render look-lock: undefined → server rotates a look that fits the script
+  // style (today's behavior); a picked id locks that edit style for this ad.
+  const [lockedPresetId, setLockedPresetId] = useState<LockablePresetId | undefined>(undefined);
 
   const queueAbortRef = useRef<AbortController | null>(null);
   const singleAbortRef = useRef<AbortController | null>(null);
@@ -440,8 +503,8 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
   const handleModelPick = (m: VideoModelType) => {
     const newSpecs = VIDEO_MODEL_SPECS[m];
     if (newSpecs.locked) {
-      toast.error(`${newSpecs.displayName.toUpperCase()} // BETA`, {
-        description: 'Coming after integration. Beta launches with Veo 3.1 only.',
+      toast.error(`${modelLabel(m).toUpperCase()} // BETA`, {
+        description: 'Coming soon. Not available yet during beta.',
       });
       return;
     }
@@ -484,9 +547,13 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
       return;
     }
     if (isCurrentModelLocked) {
-      toast.error('MODEL LOCKED', { description: 'Pick an active Veo 3.1 engine.' });
+      toast.error('OPTION LOCKED', { description: 'Pick an available quality option.' });
       return;
     }
+
+    // Renders are long-running; ask once (contextually, at submit) so a
+    // backgrounded tab still gets a system notification when this finishes.
+    void ensureNotificationPermission();
 
     // Phase 4a — diagnostic: one log per user click. Correlates with
     // [grifon:gv:proxy] (client) and [grifon:gv:submit] (server) via requestId
@@ -551,6 +618,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
         signal: ctrl.signal,
         metadata: mode === 'pipeline' ? { sceneIdx: activeIdx } : undefined,
         userId: userId ?? undefined,
+        finishedAdId: finishedAdIdRef.current,
       });
       if (mode === 'pipeline') {
         setSceneResults((prev) => ({ ...prev, [activeIdx]: result }));
@@ -581,12 +649,16 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
       setCanvasView('preview');
       void refreshLibrary();
       toast.success('RENDER COMPLETE');
+      // Backgrounded-tab pull-back; no-op when the tab is focused (toast covers that).
+      notify({ title: 'Your video ad is ready 🎬', body: 'RENDER COMPLETE — tap to view.', tag: 'grifon-render' });
     } catch (e: any) {
-      const msg = e?.message ?? 'Unknown error';
-      if (msg !== 'ABORTED') {
+      const rawMsg = e?.message ?? 'Unknown error';
+      if (rawMsg !== 'ABORTED') {
+        const msg = scrubEngineNames(rawMsg);
         setError(msg);
         if (mode === 'pipeline') setStatus(activeIdx, 'failed');
         toast.error('RENDER FAILED', { description: msg });
+        notify({ title: 'Render failed', body: msg.slice(0, 120), tag: 'grifon-render' });
       } else if (mode === 'pipeline') {
         setStatus(activeIdx, 'ready');
       }
@@ -600,19 +672,32 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
   const handleRenderAll = async () => {
     if (!hasSeedPrompts) return;
     if (isCurrentModelLocked) {
-      toast.error('MODEL LOCKED', { description: 'Pick an active Veo 3.1 engine.' });
+      toast.error('OPTION LOCKED', { description: 'Pick an available quality option.' });
       return;
     }
+
+    // Long multi-scene queue; ask once (contextually) so the user gets pulled
+    // back by a system notification when the whole pipeline finishes.
+    void ensureNotificationPermission();
 
     setError(null);
     setBusy(true);
     setCanvasView('preview'); // big-preview spinner fires for the active scene as the queue runs
     toast('PREPARING SCENE PIPELINE...', { description: 'Loading storyboard images.' });
 
+    // Slice 3 — per-plan scene cap (the COGS dial). Render at most `sceneCap`
+    // scenes for this finished ad; longer storyboards are trimmed to the cap.
+    const cappedPrompts = sceneCap > 0 ? seedPrompts.slice(0, sceneCap) : seedPrompts;
+    if (seedPrompts.length > cappedPrompts.length) {
+      toast('SCENE CAP APPLIED', {
+        description: `Your plan renders up to ${sceneCap} scenes per ad — rendering the first ${sceneCap}.`,
+      });
+    }
+
     let jobs: RenderJob[];
     try {
       const prepared = await Promise.all(
-        seedPrompts.map(async (p, i): Promise<RenderJob | null> => {
+        cappedPrompts.map(async (p, i): Promise<RenderJob | null> => {
           if (sceneResults[i]) return null;
           const sceneImage = storyboard[i]?.imageUrl ?? storyboard[i]?.manualUploadUrl;
           let startFrame: string | undefined;
@@ -742,6 +827,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
         toast('RESUMING QUEUE...');
       } else if (evt.type === 'complete') {
         toast.success('SCENE PIPELINE COMPLETE');
+        notify({ title: 'Your scenes are ready 🎬', body: 'SCENE PIPELINE COMPLETE — tap to view.', tag: 'grifon-render' });
       }
     };
 
@@ -757,12 +843,14 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
         signal: ctrl.signal,
         onEvent,
         userId: userId ?? undefined,
+        finishedAdId: finishedAdIdRef.current,
       });
     } catch (e: any) {
       const msg = e?.message ?? 'Queue error';
       if (msg !== 'ABORTED') {
         setError(msg);
         toast.error('PIPELINE FAILED', { description: msg });
+        notify({ title: 'Render failed', body: msg.slice(0, 120), tag: 'grifon-render' });
       }
     } finally {
       stopElapsedTick();
@@ -817,7 +905,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
       </div>
       <div>
         <h1 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight break-words whitespace-normal leading-tight">
-          Generate Video
+          Render Bay
         </h1>
         <p className={`${labelCaps} mt-2`}>
           //{' '}
@@ -838,7 +926,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
       >
         <div className="flex flex-col items-start gap-0.5 text-left min-w-0">
           <span className="text-[9px] font-black text-[#FFCC00] uppercase tracking-widest">
-            {specs.displayName}
+            {modelLabel(config.model)}
           </span>
           <span className="text-[10px] text-zinc-400 truncate">{specs.tagline}</span>
         </div>
@@ -861,7 +949,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
                 }`}
               >
                 <div className="text-[10px] font-black text-white uppercase tracking-widest">
-                  {ms.displayName}
+                  {modelLabel(m)}
                 </div>
                 <div className="text-[10px] text-zinc-500 font-mono mt-0.5">{ms.tagline}</div>
               </button>
@@ -875,11 +963,11 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
                 key={m}
                 onClick={() => handleModelPick(m)}
                 className="w-full text-left px-3 py-2.5 rounded-xl border border-transparent hover:bg-white/5 opacity-50 cursor-not-allowed"
-                title="BETA — Coming after integration. Beta launches with Veo 3.1 only."
+                title="BETA — Coming soon. Not available yet during beta."
               >
                 <div className="flex items-center gap-2">
                   <div className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">
-                    {ms.displayName}
+                    {modelLabel(m)}
                   </div>
                   <span className="text-[7px] font-black text-[#FFCC00] bg-[#FFCC00]/10 border border-[#FFCC00]/30 rounded-full px-1.5 py-0.5 uppercase tracking-widest">
                     BETA
@@ -1012,7 +1100,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
                       const next = { ...p, resolution: res };
                       if (!allowed.includes(p.duration)) {
                         const clamped = allowed[allowed.length - 1] ?? p.duration;
-                        toast(`${VIDEO_MODEL_SPECS[p.model].displayName} locks ${res} to ${clamped}s`, {
+                        toast(`${modelLabel(p.model)} locks ${res} to ${clamped}s`, {
                           description: 'Duration auto-set. Switch to 720p for more pacing options.',
                           duration: 5000,
                         });
@@ -1033,7 +1121,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
             </div>
             {config.model === 'Veo_3.1_Lite' && config.resolution === '1080p' && (
               <div className="mt-2 text-[10px] text-[#FFCC00]/70 font-mono uppercase tracking-widest">
-                // Veo 3.1 Lite @ 1080p · all clips locked to 8s
+                // Draft @ 1080p · all clips locked to 8s
               </div>
             )}
           </div>
@@ -1084,8 +1172,24 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
   const EditView = (
     <div className="flex flex-col gap-5 animate-in fade-in duration-200">
       <div className="flex flex-col sm:flex-row gap-3">
-        <div className="sm:flex-1">{ModelPill}</div>
-        <div className="sm:w-56">{SettingsChip}</div>
+        {showAdvanced ? (
+          <>
+            <div className="sm:flex-1">{ModelPill}</div>
+            <div className="sm:w-56">{SettingsChip}</div>
+          </>
+        ) : (
+          // Lower tiers: standard auto pipeline, controls locked. 4K + per-engine
+          // quality control is a Business unlock.
+          <div className={`w-full ${ghostBtn} px-4 py-3 flex items-center justify-between gap-3 cursor-default`}>
+            <div className="flex flex-col items-start gap-0.5 text-left min-w-0">
+              <span className="text-[9px] font-black text-[#FFCC00] uppercase tracking-widest">Standard quality</span>
+              <span className="text-[10px] text-zinc-400 truncate">Auto-tuned for you · {config.aspectRatio}</span>
+            </div>
+            <span className="flex items-center gap-1.5 text-[9px] font-mono text-zinc-500 uppercase tracking-widest whitespace-nowrap">
+              <Lock className="w-3 h-3" /> 4K · Business
+            </span>
+          </div>
+        )}
       </div>
 
       <div className="space-y-2">
@@ -1223,8 +1327,8 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
             </div>
             <div className="text-[9px] text-zinc-500 font-mono">
               {mode === 'pipeline'
-                ? `SCENE ${String(activeIdx + 1).padStart(2, '0')} · ${specs.displayName}`
-                : specs.displayName}
+                ? `SCENE ${String(activeIdx + 1).padStart(2, '0')} · ${modelLabel(config.model)}`
+                : modelLabel(config.model)}
             </div>
           </div>
         </div>
@@ -1251,7 +1355,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
               )}
               {previewItem.model && (
                 <span className="text-zinc-500">
-                  · {VIDEO_MODEL_SPECS[previewItem.model]?.displayName ?? previewItem.model}
+                  · {modelLabel(previewItem.model)}
                 </span>
               )}
               {previewItem.createdAt && (
@@ -1579,7 +1683,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
 
   const handleSendToAiEditorFromBar = () => {
     if (!onSendToAiEditor) return;
-    onSendToAiEditor(buildSceneBatch());
+    onSendToAiEditor(buildSceneBatch(), lockedPresetId);
   };
 
   const allRendered = renderedCount === seedPrompts.length && renderedCount > 0;
@@ -1593,13 +1697,13 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
         </span>
 
         <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 border border-white/10 bg-zinc-950 rounded px-2 py-1 whitespace-nowrap hidden sm:inline-flex items-center">
-          {specs?.displayName ?? config.model} · {config.aspectRatio} · {config.resolution} · {config.duration}s
+          {specs ? modelLabel(config.model) : config.model} · {config.aspectRatio} · {config.resolution} · {config.duration}s
         </span>
 
         {resumeAt && (
           <span
             className="text-[10px] font-mono uppercase tracking-widest text-amber-400 border border-amber-500/30 bg-amber-500/5 rounded px-2 py-1 whitespace-nowrap"
-            title="Veo enforces an hourly quota. Scenes auto-resume when the window clears — no action needed."
+            title="There's an hourly render limit. Scenes auto-resume when the window clears — no action needed."
           >
             // RATE LIMITED · {queuedCount} queued · {formatEta(Math.max(0, Math.ceil((resumeAt - Date.now()) / 1000)))} to resume · AUTO-RESUMES
           </span>
@@ -1649,6 +1753,38 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
           </GoldButton>
         )}
       </div>
+
+      {allRendered && onSendToAiEditor && (
+        <div className="flex items-center gap-2 flex-wrap mt-2.5 pt-2.5 border-t border-white/5">
+          <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 whitespace-nowrap">
+            // LOOK
+          </span>
+          <div className="flex items-center gap-1 flex-wrap">
+            {LOOK_OPTIONS.map((opt) => {
+              const active = lockedPresetId === opt.id;
+              return (
+                <button
+                  key={opt.label}
+                  type="button"
+                  onClick={() => setLockedPresetId(opt.id)}
+                  title={opt.hint}
+                  className={`text-[10px] font-mono font-bold tracking-widest uppercase rounded-lg border px-3 py-1.5 transition-all whitespace-nowrap ${
+                    active
+                      ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]'
+                      : 'border-white/10 bg-zinc-950 text-zinc-400 hover:border-[#FFCC00]/50 hover:text-zinc-200'
+                  }`}
+                >
+                  {opt.label}
+                </button>
+              );
+            })}
+          </div>
+          <span className="text-[10px] font-mono text-zinc-500 whitespace-nowrap hidden md:inline">
+            {LOOK_OPTIONS.find((o) => o.id === lockedPresetId)?.hint}
+            <span className="text-zinc-600"> · applied at final render</span>
+          </span>
+        </div>
+      )}
     </div>
   );
 

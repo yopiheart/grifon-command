@@ -3,12 +3,13 @@ import React, { useEffect, useState } from 'react';
 import {
   VideoEditInput, EditDecisionList, SceneBatchEntry, EditTargetPlatform,
   ConsolidationScene, FinalRenderScene, FinalRenderResult, VoiceLibrary, StabilityMode,
-  VoiceWord, FinalRenderRequest,
+  VoiceWord, FinalRenderRequest, LockablePresetId,
 } from '../types';
 import { generateVideoEditPlan, generateEditDecisionList } from '../services/geminiService';
 import { fetchVoices } from '../services/voiceService';
 import { consolidateVoices } from '../services/voiceConsolidationService';
 import { renderFinalVideo } from '../services/finalRenderService';
+import { buildLockedPreset } from '../services/renderLock';
 import { composeMusicBed } from '../services/musicService';
 import { estimateSpokenSec } from '../utils/spokenDuration';
 import { useSubscription } from '../hooks/useSubscription';
@@ -29,6 +30,8 @@ export interface EditorBatchPayload {
   finalScript: string;
   /** Wizard offer (clientDetails.offer) — prefills the end-card recap field. */
   offer?: string;
+  /** Look locked at GenerateVideo's Render All; absent → server rotates. */
+  lockedPresetId?: LockablePresetId;
 }
 
 interface EditVideoProps {
@@ -103,6 +106,7 @@ const BatchEditMode: React.FC<{
 
   const [isRendering, setIsRendering] = useState(false);
   const [renderResult, setRenderResult] = useState<FinalRenderResult | null>(null);
+  const [creativeIdCopied, setCreativeIdCopied] = useState(false);
   const [renderError, setRenderError] = useState<string | null>(null);
   // Burn-in: drawtext overlays/captions + SFX + ducked music bed from the EDL.
   const [burnInEnabled, setBurnInEnabled] = useState(true);
@@ -269,7 +273,12 @@ const BatchEditMode: React.FC<{
       // wizard offer — which carries the price — and burned it onto the last
       // scene (and covered the presenter's face). No auto-applied recap now; the
       // last scene renders clean, like before the 2026-06-13 feature.
-      const result = await renderFinalVideo({ scenes, aspectRatio: editorBatch.aspectRatio, music });
+      const result = await renderFinalVideo({
+        scenes,
+        aspectRatio: editorBatch.aspectRatio,
+        music,
+        preset: buildLockedPreset(editorBatch.lockedPresetId),
+      });
       if (result.status === 'failed') setRenderError(result.error ?? 'RENDER_FAILED');
       else setRenderResult(result);
     } catch (err: any) {
@@ -293,7 +302,7 @@ const BatchEditMode: React.FC<{
           </div>
           <div>
             <h1 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight break-words whitespace-normal leading-tight">
-              Viral Video Editor <span className="text-[#FFCC00]">// FINAL RENDER</span>
+              Edit Bay <span className="text-[#FFCC00]">// FINAL RENDER</span>
             </h1>
             <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mt-2">
               // VOICE CONSOLIDATION → DEAD-AIR TRIM → FINAL MP4
@@ -381,16 +390,35 @@ const BatchEditMode: React.FC<{
             <label className="block text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">
               // STEP_2 · ASSEMBLE_FINAL_MP4
             </label>
-            <button
-              type="button"
-              onClick={() => setBurnInEnabled((v) => !v)}
-              className="flex items-center gap-2 mb-3 text-[10px] font-mono uppercase tracking-widest text-zinc-400 hover:text-white transition-colors"
-            >
-              {burnInEnabled
-                ? <CheckSquare className="w-4 h-4 shrink-0 text-[#FFCC00]" />
-                : <Square className="w-4 h-4 shrink-0 text-zinc-500" />}
-              // BURN-IN · CAPTIONS · SFX · MUSIC
-            </button>
+            {/* Raw / Auto edit mode. AUTO = captions + SFX + music burned in
+                (ready to post). RAW = stitched clips only, edit it yourself. */}
+            <div className="mb-3">
+              <span className="block text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">// EDIT_MODE</span>
+              <div className="flex gap-2">
+                {([
+                  { v: true, label: 'Auto' },
+                  { v: false, label: 'Raw' },
+                ] as const).map(({ v, label }) => (
+                  <button
+                    key={label}
+                    type="button"
+                    onClick={() => setBurnInEnabled(v)}
+                    className={`px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wide transition-colors border ${
+                      burnInEnabled === v
+                        ? 'bg-[#FFCC00] text-zinc-950 border-[#FFCC00]'
+                        : 'bg-zinc-950 text-zinc-400 border-white/10 hover:border-[#FFCC00]/50'
+                    }`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+              <p className="text-[10px] text-zinc-500 font-mono mt-2">
+                {burnInEnabled
+                  ? '// Captions · SFX · music — ready to post'
+                  : '// Stitched clips only — edit it yourself'}
+              </p>
+            </div>
             {/* Generative music — Pro/Business only. Off / ineligible → tuned static bed. */}
             {musicEligible && burnInEnabled && (
               <button
@@ -441,6 +469,33 @@ const BatchEditMode: React.FC<{
               >
                 <Download className="w-3.5 h-3.5 shrink-0" /> DOWNLOAD FINAL MP4
               </a>
+
+              {renderResult.creativeId && (
+                <div className="rounded-xl bg-zinc-950 border border-white/10 p-4">
+                  <p className="text-[10px] font-mono uppercase tracking-widest text-[#FFCC00]">
+                    // CREATIVE ID
+                  </p>
+                  <div className="mt-2 flex items-center gap-2">
+                    <code className="flex-1 min-w-0 truncate text-xs font-mono text-zinc-300">
+                      grifon-{renderResult.creativeId}
+                    </code>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigator.clipboard?.writeText(`grifon-${renderResult.creativeId}`);
+                        setCreativeIdCopied(true);
+                        setTimeout(() => setCreativeIdCopied(false), 1500);
+                      }}
+                      className="flex items-center gap-1.5 shrink-0 px-3 py-3 rounded-xl bg-zinc-950 border border-white/10 hover:border-[#FFCC00] hover:text-[#FFCC00] text-zinc-300 text-[10px] font-bold uppercase tracking-widest transition-colors"
+                    >
+                      <Copy className="w-3.5 h-3.5 shrink-0" /> {creativeIdCopied ? 'Copied' : 'Copy'}
+                    </button>
+                  </div>
+                  <p className="mt-2 text-xs text-zinc-500">
+                    Name your Meta ad with this so Grifon can read its results.
+                  </p>
+                </div>
+              )}
             </div>
           )}
         </GlassPanel>
@@ -717,7 +772,7 @@ const EditVideo: React.FC<EditVideoProps> = ({ onBack, editorBatch, avatarGender
           </div>
           <div>
             <h1 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight break-words whitespace-normal leading-tight">
-                Viral Video Editor
+                Edit Bay
             </h1>
             <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mt-2">
                 // TURN RAW FOOTAGE INTO VIRAL GOLD

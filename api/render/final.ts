@@ -180,7 +180,9 @@ async function runRender(
     if (upload.error) throw new Error(`upload_failed: ${upload.error}`);
 
     const playSign = await getMediaUrl(fKey, SIGNED_URL_TTL_SECONDS);
-    const dlSign = await getMediaUrl(fKey, SIGNED_URL_TTL_SECONDS, { downloadName: 'grifon-final.mp4' });
+    // Stamp the jobId into the download filename so the creative carries its
+    // attribution id on disk (grifon-<jobId>.mp4) — the Growth Loop join key.
+    const dlSign = await getMediaUrl(fKey, SIGNED_URL_TTL_SECONDS, { downloadName: `grifon-${jobId}.mp4` });
     if (playSign.error || !playSign.url || dlSign.error || !dlSign.url) {
       throw new Error(`sign_failed: ${playSign.error ?? dlSign.error ?? 'unknown'}`);
     }
@@ -189,6 +191,7 @@ async function runRender(
       status: 'done',
       url: playSign.url,
       downloadUrl: dlSign.url,
+      creativeId: jobId,
       updatedAt: new Date().toISOString(),
     });
   } catch (err: any) {

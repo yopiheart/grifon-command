@@ -1,50 +1,28 @@
-import React, { useState, useEffect, useRef, useLayoutEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'motion/react';
+import { DUR, SPRING } from './ui/motionTokens';
 import {
-  Film, Search, Target, Type, Image as ImageIcon,
-  Settings, Sparkles, ArrowRight, ChevronRight,
-  Video, User, Clapperboard, Wand2, Calendar, Scissors, Mic,
-  LogOut, HelpCircle, Crown, Zap, X
+  Sparkles, ArrowRight, ChevronRight, Film, Search, Target,
+  Flame, Lock, Menu, Bell,
 } from 'lucide-react';
 import { useSubscription } from '../hooks/useSubscription';
+import { planAtLeast, type PlanId } from '../utils/planGate';
 import { useQuota } from '../hooks/useQuota';
-import { Aurora } from './ui/Aurora';
-import { QuotaMeter } from './ui/QuotaMeter';
+import { SmokeAura } from './ui/SmokeAura';
 import { CommandPalette, type CommandItem } from './ui/CommandPalette';
-import { RecentWorkCard } from './ui/RecentWorkCard';
-import { loadRecentWork, recordRecentWork, type RecentItem } from '../services/recentWorkService';
+import { loadRecentWork, recordRecentWork, activeDaysThisWeek, type RecentItem } from '../services/recentWorkService';
+import { computeUpgradeNudge } from '../config/upgradeNudge';
 import { ActiveJobsPanel } from './ui/ActiveJobsPanel';
 import { useActiveJobs } from '../hooks/useActiveJobs';
+import { useServerRenderJobs } from '../hooks/useServerRenderJobs';
 import { OnboardingNudge } from './ui/OnboardingNudge';
 import { ResumeDraftCard } from './ui/ResumeDraftCard';
 import { SignatureScribble } from './landing/SignatureScribble';
 import { getSession, clearSession, type WizardSessionV1 } from '../services/wizardSessionStore';
-
-// Rotating omnibox placeholders — real outcomes, not tool names. The input
-// should read like a wish, not a search box.
-const OMNIBOX_PROMPTS = [
-  'Make a video ad for my milk tea shop…',
-  'Research the condo market in Cebu…',
-  "Build an offer they can't refuse…",
-  'Write 30 Taglish captions for my page…',
-  'Turn my product photo into an ad…',
-];
-
-const GrifonLogo = ({ className = "h-8 w-auto" }) => (
-  <img src="/logo.png" alt="GRIFON Logo" className={`object-contain ${className}`} />
-);
-
-const MenuItem = ({ icon, label, hasSubmenu, danger, onClick }: any) => (
-  <button 
-    onClick={onClick}
-    className={`w-full px-4 py-2.5 flex items-center gap-3 hover:bg-white/5 transition-colors
-    ${danger ? 'text-red-400' : 'text-zinc-300'}`}
-  >
-    <span className="w-4 h-4 flex-shrink-0">{icon}</span>
-    <span className="text-sm flex-1 text-left">{label}</span>
-    {hasSubmenu && <ChevronRight className="w-3.5 h-3.5 text-zinc-600" />}
-  </button>
-);
+import { MODULE_IDENTITY, getModuleIdentity, hueAlpha } from '../config/moduleIdentity';
+import { DashboardSidebar, type SidebarNavItem } from './dashboard/DashboardSidebar';
+import { SettingsModal } from './dashboard/SettingsModal';
+import { NotificationsPanel } from './dashboard/NotificationsPanel';
 
 interface DashboardProps {
   onSelectModule: (module: string) => void;
@@ -57,72 +35,99 @@ interface DashboardProps {
 
 const WIZARD_TOTAL_STEPS = 8;
 
-const CORE_MODULES = [
-  { id: 'market_research', name: 'Research', icon: Search, desc: 'Know your market, outsmart competitors' },
-  { id: 'offer_optimizer', name: 'Offer', icon: Target, desc: "Build an offer they can't refuse" },
-  { id: 'caption_headline', name: 'Captions', icon: Type, desc: 'Copy that stops the scroll' }
+// Rotating hero placeholders — real outcomes. The hero input is the one-shot
+// entry: describe the business → routes to Recon (research) → Director.
+const HERO_PROMPTS = [
+  'a milk tea shop in Cebu, buy-1-take-1 promo…',
+  'my condo units in BGC, for young professionals…',
+  'a home-based baking business, custom cakes…',
+  'my barbershop, walk-ins welcome, ₱150 cut…',
+  'a skincare line for Filipina moms…',
 ];
 
-// Director's subtitle is shared across the card blocks and the command palette.
-const DIRECTOR_DESC = 'Your finished video ad, start to finish';
+// Registry-driven dashboard data. Identity (name/descriptor/hue/icon) lives in
+// config/moduleIdentity.ts — one edit there updates every surface here.
+const DIRECTOR = getModuleIdentity('creative_director');
+const DirectorIcon = DIRECTOR.icon;
 
-// Outcome-named quick-start chips under the command input — deep-link into modules.
-const STARTER_CHIPS = [
+const CORE_MODULES = ['market_research', 'offer_optimizer', 'caption_headline'].map((id) => {
+  const m = getModuleIdentity(id);
+  return { id, name: m.name, icon: m.icon, desc: m.descriptor, hue: m.hue };
+});
+
+const MORE_MODULES = [
+  'hook_lab', 'cinematic_studio', 'influencer_forge', 'generate_video',
+  'image_ads', 'batch_fanout', 'image_editor', 'organic_calendar', 'edit_video', 'signal_modulator',
+].map((id) => {
+  const m = getModuleIdentity(id);
+  return { id, name: m.name, icon: m.icon, desc: m.descriptor, hue: m.hue };
+});
+
+// Sidebar rail — the primary modules, full branded names (the in-app world).
+const RAIL_DEFS: { id: string; badge?: 'Beta' }[] = [
+  { id: 'creative_director' },
+  { id: 'market_research' },
+  { id: 'offer_optimizer' },
+  { id: 'caption_headline' },
+  { id: 'generate_video', badge: 'Beta' },
+  { id: 'signal_modulator', badge: 'Beta' },
+  { id: 'edit_video', badge: 'Beta' },
+];
+
+// Outcome chips under the hero — deep-link straight into a module.
+const HERO_CHIPS = [
   { id: 'creative_director', label: 'Make a video ad', icon: Film },
   { id: 'market_research', label: 'Research my market', icon: Search },
   { id: 'offer_optimizer', label: 'Build an offer', icon: Target },
-  { id: 'caption_headline', label: 'Write captions', icon: Type },
 ];
 
-// Action-oriented nav for the left sidebar + mobile bottom nav.
-// Director leads — it's the flagship workflow and the most-clicked surface.
-// The educational journey (Research → Offer → Director → …) lives on the
-// dashboard's RECOMMENDED FLOW path, which intentionally diverges so users
-// see both "fastest path to the tool" (nav) and "best practice order" (path).
-// Beta items are admin-only-clickable; display-only for non-admin.
-const NAV_ITEMS: { id: string; label: string; icon: any; badge?: 'Beta' }[] = [
-  { id: 'creative_director', label: 'Director', icon: Film },
-  { id: 'market_research',   label: 'Research', icon: Search },
-  { id: 'offer_optimizer',   label: 'Offer',    icon: Target },
-  { id: 'generate_video',    label: 'Video',    icon: Clapperboard },
-  { id: 'signal_modulator',  label: 'Voice',    icon: Mic,         badge: 'Beta' },
-  { id: 'edit_video',        label: 'Edit',     icon: Scissors,    badge: 'Beta' },
-  { id: 'caption_headline',  label: 'Caption',  icon: Type }
-];
-
-const MORE_MODULES = [
-  { id: 'cinematic_studio', name: 'Cinematic Studio', icon: Video, desc: 'High-fidelity video synthesis with custom camera paths and lighting control.' },
-  { id: 'influencer_forge', name: 'Influencer Forge', icon: User, desc: 'Generate consistent digital personas for social campaigns and brand storytelling.' },
-  { id: 'generate_video', name: 'Video Synthesis', icon: Clapperboard, desc: 'Render final video assets from storyboards and prompts.' },
-  { id: 'image_ads', name: 'Ad Creative Gen', icon: Wand2, desc: 'Generate high-converting image ads and variations.' },
-  { id: 'image_editor', name: 'Image Editor', icon: ImageIcon, desc: 'AI-generated ad images — in active improvement.' },
-  { id: 'organic_calendar', name: 'Social Planner', icon: Calendar, desc: 'Schedule and automate your organic content calendar.' },
-  { id: 'edit_video', name: 'Video Editor', icon: Scissors, desc: 'Timeline-based editing, trimming, and assembly.' },
-  { id: 'signal_modulator', name: 'Signal Modulator', icon: Mic, desc: 'Voice cloning, TTS, and audio enhancement.' }
-];
+// Slice 5 — graduated beta modules and the plan tier that unlocks each.
+const MODULE_TIER: Record<string, PlanId> = {
+  generate_video: 'starter',
+  edit_video: 'pro',
+  signal_modulator: 'pro',
+  cinematic_studio: 'business',
+};
 
 const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, userEmail, userId, onLogout, onUpgrade }) => {
-  // ADMIN MODE: To see in-progress modules, two ways:
-  //   Desktop (DevTools): localStorage.setItem('grifon_admin', 'true')  → refresh
-  //   Mobile or no-DevTools: visit ?admin=on (e.g. grifon.ai/?admin=on)
-  // Disable: ?admin=off  or  localStorage.removeItem('grifon_admin')
-  // The URL-param toggle lives at the top of App.tsx and runs before React mounts.
   const [isAdmin, setIsAdmin] = useState(false);
-
   useEffect(() => {
     const adminFlag = localStorage.getItem('grifon_admin');
-    setIsAdmin(adminFlag === 'true');
+    const devUnlock = localStorage.getItem('grifon_dev_unlock') === '1';
+    setIsAdmin(adminFlag === 'true' || devUnlock);
   }, []);
 
-  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  // Shell state
+  const [collapsed, setCollapsed] = useState(true);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [notifOpen, setNotifOpen] = useState(false);
   const [paletteOpen, setPaletteOpen] = useState(false);
   const [paletteQuery, setPaletteQuery] = useState('');
-  const [showUpgradeBanner, setShowUpgradeBanner] = useState(false);
-  const [bannerMessage, setBannerMessage] = useState('');
+  const [isDesktop, setIsDesktop] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(min-width: 1024px)').matches
+  );
+
   const [recent, setRecent] = useState<RecentItem[]>([]);
   const [onboardingDismissed, setOnboardingDismissed] = useState(true);
   const [draftSession, setDraftSession] = useState<WizardSessionV1 | null>(null);
+  const [heroInput, setHeroInput] = useState('');
+  const [promptIndex, setPromptIndex] = useState(0);
+
   const activeJobs = useActiveJobs();
+  useServerRenderJobs(Boolean(userId));
+  const weeklyActiveDays = useMemo(() => activeDaysThisWeek(), [recent]);
+  const { plan_id: userPlan } = useSubscription();
+  const quota = useQuota();
+
+  useEffect(() => {
+    setCollapsed(localStorage.getItem('grifon_sidebar_collapsed') !== 'false');
+    const mq = window.matchMedia('(min-width: 1024px)');
+    const update = () => setIsDesktop(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
 
   useEffect(() => {
     const initialRecent = loadRecentWork();
@@ -132,30 +137,83 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
   }, []);
 
   useEffect(() => {
-    if (!userId) {
-      setDraftSession(null);
-      return;
-    }
+    if (!userId) { setDraftSession(null); return; }
     let cancelled = false;
-    getSession(userId).then(s => {
+    getSession(userId).then((s) => {
       if (cancelled) return;
-      // Only show resume CTA for an in-progress wizard (not finished, not blank).
-      if (s && s.currentStep > 1 && s.currentStep < WIZARD_TOTAL_STEPS) {
-        setDraftSession(s);
-      } else {
-        setDraftSession(null);
-      }
+      if (s && s.currentStep > 1 && s.currentStep < WIZARD_TOTAL_STEPS) setDraftSession(s);
+      else setDraftSession(null);
     });
     return () => { cancelled = true; };
   }, [userId, activeModule]);
 
-  const discardDraft = async () => {
-    if (userId) {
-      try { await clearSession(userId); } catch { /* best-effort */ }
-    }
-    setDraftSession(null);
+  // Rotating hero placeholder
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const id = setInterval(() => setPromptIndex((i) => (i + 1) % HERO_PROMPTS.length), 3400);
+    return () => clearInterval(id);
+  }, []);
+
+  // ⌘K opens search palette
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setPaletteQuery('');
+        setPaletteOpen((p) => !p);
+      }
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'b') {
+        e.preventDefault();
+        toggleCollapsed();
+      }
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const toggleCollapsed = () => {
+    setCollapsed((c) => {
+      const next = !c;
+      localStorage.setItem('grifon_sidebar_collapsed', String(next));
+      return next;
+    });
   };
 
+  const moduleUnlocked = (id: string): boolean =>
+    isAdmin || (MODULE_TIER[id] ? planAtLeast(userPlan, MODULE_TIER[id]) : false);
+
+  const ALL_MODULE_LOOKUP = useMemo(() => {
+    const map: Record<string, { name: string }> = {};
+    Object.values(MODULE_IDENTITY).forEach((m) => { map[m.key] = { name: m.name }; });
+    return map;
+  }, []);
+
+  const handleSelectModule = (moduleId: string) => {
+    const meta = ALL_MODULE_LOOKUP[moduleId];
+    if (meta) {
+      const next = recordRecentWork({ id: `visit:${moduleId}`, moduleId, title: meta.name, kind: 'visit' });
+      setRecent(next);
+    }
+    if (!onboardingDismissed) {
+      localStorage.setItem('grifon_onboarded', 'true');
+      setOnboardingDismissed(true);
+    }
+    setMobileOpen(false);
+    onSelectModule(moduleId);
+  };
+
+  // Sidebar select handles beta-lock → upgrade.
+  const sidebarSelect = (id: string) => {
+    const isBeta = RAIL_DEFS.find((d) => d.id === id)?.badge === 'Beta';
+    if (isBeta && !moduleUnlocked(id)) { onUpgrade?.(); return; }
+    handleSelectModule(id);
+  };
+
+  const discardDraft = async () => {
+    if (userId) { try { await clearSession(userId); } catch { /* best-effort */ } }
+    setDraftSession(null);
+  };
   const dismissOnboarding = () => {
     localStorage.setItem('grifon_onboarded', 'true');
     setOnboardingDismissed(true);
@@ -163,359 +221,188 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
 
   const showOnboarding = !onboardingDismissed && recent.length === 0;
 
-  const ALL_MODULE_LOOKUP = useMemo(() => {
-    const map: Record<string, { name: string }> = {
-      creative_director: { name: 'Director' },
-    };
-    [...CORE_MODULES, ...MORE_MODULES].forEach(m => { map[m.id] = { name: m.name }; });
-    return map;
-  }, []);
-
-  const handleSelectModule = (moduleId: string) => {
-    const meta = ALL_MODULE_LOOKUP[moduleId];
-    if (meta) {
-      const next = recordRecentWork({
-        id: `visit:${moduleId}`,
-        moduleId,
-        title: meta.name,
-        kind: 'visit',
-      });
-      setRecent(next);
+  // Hero submit → stash the brief and route to Recon (research-first doctrine).
+  const submitHero = () => {
+    const text = heroInput.trim();
+    if (text) {
+      localStorage.setItem('grifon_heroPrompt', text);
+      localStorage.setItem('grifon_heroPromptTs', Date.now().toString());
     }
-    if (!onboardingDismissed) {
-      localStorage.setItem('grifon_onboarded', 'true');
-      setOnboardingDismissed(true);
-    }
-    onSelectModule(moduleId);
+    handleSelectModule('market_research');
   };
-  const bannerRef = useRef<HTMLDivElement>(null);
-  const [bannerHeight, setBannerHeight] = useState(0);
 
-  useLayoutEffect(() => {
-    if (!showUpgradeBanner || !bannerRef.current) {
-      setBannerHeight(0);
-      return;
-    }
-    const el = bannerRef.current;
-    const observer = new ResizeObserver(([entry]) => {
-      setBannerHeight(entry.contentRect.height);
-    });
-    observer.observe(el);
-    setBannerHeight(el.getBoundingClientRect().height);
-    return () => observer.disconnect();
-  }, [showUpgradeBanner, bannerMessage]);
-
-  const { plan_id: userPlan } = useSubscription();
-  const quota = useQuota();
+  // Identity / greeting
   const displayEmail = userEmail || '';
   const userName = displayEmail
-    ? displayEmail.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+    ? displayEmail.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
     : 'Operator';
-  const userAvatarUrl = '';
-
-  // Time-aware greeting + first name: the dashboard should know who walked in.
   const firstName = userName.split(' ')[0];
   const hour = new Date().getHours();
   const dayPart = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
 
-  // Rotating omnibox placeholder (paused for reduced-motion users).
-  const [promptIndex, setPromptIndex] = useState(0);
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const id = setInterval(() => setPromptIndex((i) => (i + 1) % OMNIBOX_PROMPTS.length), 3200);
-    return () => clearInterval(id);
-  }, []);
+  // Quota label + low-nudge
+  const quotaLabel = quota.loading
+    ? '—'
+    : userPlan === 'pro' || userPlan === 'business'
+      ? 'Unlimited'
+      : typeof quota.workflows.remaining === 'number'
+        ? `${quota.workflows.remaining} left`
+        : '';
+  const quotaLow = Boolean(computeUpgradeNudge(userPlan, quota.workflows, quota.loading));
 
-  useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setProfileMenuOpen(false);
-      // Cmd+K (mac) / Ctrl+K (win) toggles the command palette
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-        e.preventDefault();
-        setPaletteQuery('');
-        setPaletteOpen(prev => !prev);
-      }
+  // Sidebar nav items from registry
+  const navItems: SidebarNavItem[] = RAIL_DEFS.map((d) => {
+    const m = getModuleIdentity(d.id);
+    return {
+      id: d.id, label: m.name, icon: m.icon, hue: m.hue,
+      badge: d.badge,
+      locked: d.badge === 'Beta' && !moduleUnlocked(d.id),
     };
-    window.addEventListener('keydown', handleKey);
-    return () => window.removeEventListener('keydown', handleKey);
-  }, []);
+  });
 
+  // Command palette
   const paletteItems: CommandItem[] = [
-    { id: 'creative_director', name: 'Director', desc: DIRECTOR_DESC, icon: Film, group: 'Core', onSelect: () => handleSelectModule('creative_director') },
-    ...CORE_MODULES.map(m => ({ id: m.id, name: m.name, desc: m.desc, icon: m.icon, group: 'Core', onSelect: () => handleSelectModule(m.id) })),
-    ...MORE_MODULES.map(m => ({ id: m.id, name: m.name, desc: m.desc, icon: m.icon, group: 'More', onSelect: () => handleSelectModule(m.id) })),
+    { id: 'creative_director', name: DIRECTOR.name, desc: DIRECTOR.descriptor, icon: DIRECTOR.icon, group: 'Core', onSelect: () => handleSelectModule('creative_director') },
+    ...CORE_MODULES.map((m) => ({ id: m.id, name: m.name, desc: m.desc, icon: m.icon, group: 'Core', onSelect: () => handleSelectModule(m.id) })),
+    ...MORE_MODULES.filter((m) => moduleUnlocked(m.id)).map((m) => ({ id: m.id, name: m.name, desc: m.desc, icon: m.icon, group: 'More', onSelect: () => handleSelectModule(m.id) })),
   ];
 
-  useEffect(() => {
-    const isDismissed = localStorage.getItem('grifon_banner_dismissed') === 'true';
-    if (isDismissed) return;
-    
-    // Tier-based messaging
-    if (userPlan === 'free') {
-      setBannerMessage("You're on Free. Unlock AI Video Ads with Pro.");
-      setShowUpgradeBanner(true);
-    } else if (userPlan === 'creator') {
-      setBannerMessage("Upgrade to Pro. Get 15 AI Video Ads/month.");
-      setShowUpgradeBanner(true);
-    } else {
-      setShowUpgradeBanner(false);
-    }
-  }, [userPlan]);
+  // Explore-tools grid tiles
+  const exploreTiles = useMemo(() => {
+    const more = MORE_MODULES.filter((m) => isAdmin || MODULE_TIER[m.id]);
+    return [
+      { id: 'creative_director', name: DIRECTOR.name, icon: DIRECTOR.icon, desc: DIRECTOR.descriptor, hue: DIRECTOR.hue, featured: true },
+      ...CORE_MODULES.map((m) => ({ ...m, featured: false })),
+      ...more.map((m) => ({ ...m, featured: false })),
+    ];
+  }, [isAdmin]);
 
-  const dismissBanner = () => {
-    localStorage.setItem('grifon_banner_dismissed', 'true');
-    setShowUpgradeBanner(false);
-  };
+  const recentForSidebar = recent.map((r) => ({ id: r.id, moduleId: r.moduleId, title: r.title }));
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white font-sans selection:bg-[#FFCC00] selection:text-black relative">
-      {/* Cinematic ambient layer — shared with landing/pricing for brand continuity */}
-      <Aurora intensity="dashboard" />
-      <div
-        className="fixed inset-0 pointer-events-none opacity-[0.03] z-0"
-        style={{
-          backgroundImage: 'radial-gradient(#FFCC00 1px, transparent 1px)',
-          backgroundSize: '32px 32px',
-        }}
+      <SmokeAura />
+
+      <DashboardSidebar
+        collapsed={collapsed}
+        onToggleCollapsed={toggleCollapsed}
+        mobileOpen={mobileOpen}
+        onMobileClose={() => setMobileOpen(false)}
+        activeModule={activeModule}
+        navItems={navItems}
+        recent={recentForSidebar}
+        onSelect={sidebarSelect}
+        onNewAd={() => handleSelectModule('creative_director')}
+        onSearch={() => { setPaletteQuery(''); setPaletteOpen(true); }}
+        onOpenNotifications={() => setNotifOpen(true)}
+        notifDot={activeJobs.length > 0 || quotaLow}
+        userName={userName}
+        userEmail={displayEmail}
+        quotaLabel={quotaLabel}
+        onOpenSettings={() => setSettingsOpen(true)}
       />
 
-      {/* Upgrade Banner */}
-      {showUpgradeBanner && (
-        <div ref={bannerRef} className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[#FFCC00]/10 via-[#FFCC00]/15 to-[#FFCC00]/10 border-b border-[#FFCC00]/20 backdrop-blur-xl">
-          <div className="max-w-7xl mx-auto pl-4 pr-10 py-2.5 flex items-center justify-center gap-3 relative">
-            <Zap className="w-4 h-4 text-[#FFCC00] flex-shrink-0" />
-            <p className="text-xs lg:text-sm text-zinc-300 text-center">
-              {bannerMessage}
-              <button onClick={onUpgrade} className="ml-2 text-[#FFCC00] font-semibold hover:underline inline-flex items-center gap-1">
-                Upgrade Now
-                <ArrowRight className="w-3 h-3" />
-              </button>
-            </p>
-            
-            {/* Dismiss button */}
-            <button 
-              onClick={dismissBanner}
-              className="absolute right-4 text-zinc-500 hover:text-white transition-colors"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Fixed Top Bar */}
-      <div
-        className="fixed left-0 right-0 z-40 bg-zinc-950/80 backdrop-blur-xl border-b border-white/5 transition-all"
-        style={{ top: bannerHeight }}
-      >
-        <div className="px-4 lg:pl-24 lg:pr-8 py-3 flex items-center justify-between">
-          {/* Mobile logo on left */}
-          <div className="lg:hidden">
-            <GrifonLogo className="w-8 h-8" />
-          </div>
-          
-          {/* Badges pushed to far right */}
-          <div className="flex items-center gap-3 ml-auto">
-            {/* Mobile Profile Avatar */}
-            <button 
-              onClick={() => setProfileMenuOpen(!profileMenuOpen)}
-              className="lg:hidden w-8 h-8 rounded-full bg-zinc-800 border border-white/10 overflow-hidden flex items-center justify-center flex-shrink-0"
-            >
-              {userAvatarUrl ? (
-                <img src={userAvatarUrl} alt="Profile" className="w-full h-full object-cover" />
-              ) : (
-                <User className="w-4 h-4 text-zinc-400" />
-              )}
-            </button>
-
-            {/* AI Agents Online Badge */}
-            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-zinc-900 rounded-full">
-              <div className="relative flex items-center justify-center">
-                <div className="w-2 h-2 rounded-full bg-green-500" />
-                <div className="absolute w-2 h-2 rounded-full bg-green-500 animate-ping opacity-75" />
-              </div>
-              <span className="text-[10px] font-mono font-semibold text-zinc-400 uppercase tracking-widest">
-                AI Agents Online
-              </span>
-            </div>
-
-            <QuotaMeter
-              plan={userPlan}
-              used={quota.workflows.used}
-              limit={quota.loading ? undefined : quota.workflows.limit}
-              label="Workflows"
-            />
-
-          </div>
-        </div>
+      {/* Mobile top bar */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-40 h-14 px-3 flex items-center justify-between bg-zinc-950/85 backdrop-blur-xl border-b border-white/[0.06]">
+        <button onClick={() => setMobileOpen(true)} aria-label="Menu" className="w-11 h-11 rounded-xl text-zinc-300 hover:text-white hover:bg-white/[0.06] transition-colors flex items-center justify-center">
+          <Menu className="w-5 h-5" />
+        </button>
+        <button onClick={() => setNotifOpen(true)} aria-label="Notifications" className="relative w-11 h-11 rounded-xl text-zinc-300 hover:text-white hover:bg-white/[0.06] transition-colors flex items-center justify-center">
+          <Bell className="w-5 h-5" />
+          {(activeJobs.length > 0 || quotaLow) && <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#FFCC00] ring-2 ring-zinc-950 animate-pulse" />}
+        </button>
       </div>
 
-      {/* Mobile Bottom Nav — 7-step canonical flow with Beta gating */}
-      <nav className="fixed bottom-0 left-0 right-0 z-50 bg-zinc-950/95 backdrop-blur-xl border-t border-white/10 px-1 py-2 flex items-center justify-around lg:hidden">
-        {NAV_ITEMS.map((item) => {
-          const isBeta = item.badge === 'Beta';
-          const isClickable = !isBeta || isAdmin;
-          const isActive = activeModule === item.id;
-          return (
-            <div
-              key={item.id}
-              onClick={isClickable ? () => handleSelectModule(item.id) : undefined}
-              className={`flex flex-col items-center gap-1 py-1 px-1.5 rounded-xl group ${
-                isClickable ? 'cursor-pointer' : 'cursor-default opacity-50'
-              }`}
-            >
-              <div className={`w-1 h-1 rounded-full mx-auto mb-0.5 ${isActive ? 'bg-[#FFCC00]' : 'bg-transparent'}`} />
-              <item.icon className={`w-5 h-5 ${isActive ? 'text-[#FFCC00]' : 'text-zinc-600 group-hover:text-zinc-400'}`} />
-              <span className={`text-[9px] font-medium ${isActive ? 'text-[#FFCC00]' : 'text-zinc-600 group-hover:text-zinc-400'}`}>{item.label}</span>
-            </div>
-          );
-        })}
-      </nav>
+      {/* Main */}
+      <motion.main
+        initial={false}
+        animate={{ paddingLeft: isDesktop ? (collapsed ? 76 : 268) : 0 }}
+        transition={SPRING.standard}
+        className="relative z-10 pt-14 lg:pt-0 min-h-screen flex flex-col"
+      >
+        <div className="w-full max-w-3xl lg:max-w-4xl mx-auto px-4 lg:px-8 flex-1 flex flex-col">
 
-      {/* Desktop Left Sidebar — 7-step canonical flow with Beta gating */}
-      <aside className="hidden lg:flex fixed left-0 top-0 bottom-0 z-50 w-20 bg-zinc-950/95 backdrop-blur-xl border-r border-white/10 flex-col items-center py-6 gap-2">
-        <GrifonLogo className="w-10 h-10 mb-6" />
-
-        {NAV_ITEMS.map((item) => {
-          const isBeta = item.badge === 'Beta';
-          const isClickable = !isBeta || isAdmin;
-          const isActive = activeModule === item.id;
-          return (
-            <div
-              key={item.id}
-              onClick={isClickable ? () => handleSelectModule(item.id) : undefined}
-              className={`relative flex flex-col items-center gap-1.5 py-2.5 px-2 rounded-xl w-16 transition-all group ${
-                isClickable ? 'cursor-pointer' : 'cursor-default opacity-50'
-              } ${isActive ? 'bg-zinc-900/80' : isClickable ? 'hover:bg-zinc-900/80' : ''}`}
-            >
-              {/* Active indicator bar */}
-              {isActive && (
-                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-6 bg-[#FFCC00] rounded-r-full" />
-              )}
-
-              <item.icon className={`w-5 h-5 ${isActive ? 'text-[#FFCC00]' : 'text-zinc-400 group-hover:text-white'}`} />
-              <span className={`text-[9px] font-medium tracking-wide ${isActive ? 'text-[#FFCC00]' : 'text-zinc-400 group-hover:text-white'}`}>{item.label}</span>
-            </div>
-          );
-        })}
-
-        <div className="mt-auto mb-4 relative">
-          <button 
-            onClick={() => setProfileMenuOpen(!profileMenuOpen)}
-            className="w-12 h-12 mx-auto rounded-full bg-zinc-800 border-2 border-white/10 hover:border-[#FFCC00]/50 transition-all overflow-hidden cursor-pointer flex items-center justify-center"
-          >
-            {userAvatarUrl ? (
-              <img src={userAvatarUrl} alt="Profile" className="w-full h-full object-cover" />
-            ) : (
-              <User className="w-5 h-5 text-zinc-400" />
-            )}
-          </button>
-        </div>
-      </aside>
-
-      {/* Main Content Wrapper */}
-      <main className={`pb-20 lg:pb-0 lg:pl-20 transition-all ${showUpgradeBanner ? 'pt-32 lg:pt-28' : 'pt-16 lg:pt-20'}`}>
-        <div className="max-w-4xl lg:max-w-6xl mx-auto px-4 lg:px-8 flex flex-col justify-center min-h-screen lg:min-h-screen">
-          
-          {/* Command Hero */}
-          <div className="mb-10 lg:mb-12 relative z-10">
-            {/* Ambient Gold Spotlight Behind Hero */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden -z-10">
-              <div
-                className="w-[800px] h-[800px] lg:w-[1200px] lg:h-[1200px] rounded-full"
-                style={{
-                  background: 'radial-gradient(circle at center, rgba(255,204,0,0.06) 0%, rgba(255,204,0,0.03) 30%, rgba(255,204,0,0.01) 60%, transparent 80%)',
-                  filter: 'blur(60px)',
-                  mixBlendMode: 'screen',
-                  animation: 'float-glow 12s ease-in-out infinite',
-                }}
-              />
-            </div>
-
-            {/* Calm sentence-case greeting — non-heading elements so they escape the global h1..h6 uppercase rule.
-                Personal + time-aware: the dashboard greets YOU, then asks the question. */}
+          {/* HERO — the one-shot entry */}
+          <div className="flex-1 flex flex-col justify-center min-h-[70vh] py-10">
             <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="text-center text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight text-zinc-200 mb-3 lg:mb-4"
+              initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: DUR.entrance }}
+              className="text-center text-2xl sm:text-3xl lg:text-4xl font-normal tracking-tight text-zinc-200 mb-2"
             >
               {dayPart},{' '}
-              <SignatureScribble variant="underline" delay={0.9} strokeWidth={2.5}>
-                <span className="font-medium text-white">{firstName}</span>
-              </SignatureScribble>
-              .
+              {isDesktop ? (
+                <SignatureScribble variant="underline" delay={0.9} strokeWidth={2.5}>
+                  <span className="font-semibold text-white">{firstName}</span>
+                </SignatureScribble>
+              ) : (
+                <span className="font-semibold text-white">{firstName}</span>
+              )}.
             </motion.p>
-            <motion.p
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.12 }}
-              className="text-center text-base lg:text-lg text-zinc-500 mb-3"
-            >
-              What are we creating today?
-            </motion.p>
-            {/* Momentum line — real usage only, framed as achievement */}
-            {!quota.loading && quota.workflows.used > 0 && (
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.25 }}
-                className="text-center text-xs text-zinc-500 mb-8 lg:mb-10"
-              >
-                You've shipped{' '}
-                <span className="text-[#FFCC00] font-semibold">{quota.workflows.used}</span>{' '}
-                workflow{quota.workflows.used === 1 ? '' : 's'} this month. Tuloy lang.
-              </motion.p>
-            )}
-            {(quota.loading || quota.workflows.used === 0) && <div className="mb-6 lg:mb-9" />}
-
             <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="max-w-2xl lg:max-w-3xl mx-auto w-full"
+              initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: DUR.entrance, delay: 0.1 }}
+              className="text-center text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.3] pb-1 bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500 mb-7"
             >
-              {/* Command input — borderless tonal, opens the Cmd+K palette */}
-              <div className="bg-zinc-900/70 backdrop-blur-xl rounded-2xl ring-1 ring-white/[0.06] p-4 lg:p-6 flex items-center gap-3">
-                <Sparkles className="w-5 h-5 text-[#FFCC00] flex-shrink-0" />
+              What are we selling today?
+            </motion.div>
+
+            {/* Hero input */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: DUR.entrance, delay: 0.18 }}
+              className="w-full max-w-2xl mx-auto"
+            >
+              <div className="bg-zinc-900/70 backdrop-blur-xl rounded-2xl ring-1 ring-white/[0.08] p-3 lg:p-4 flex items-center gap-3 focus-within:ring-[#FFCC00]/40 transition-all">
+                <Sparkles className="w-5 h-5 text-[#FFCC00] flex-shrink-0 ml-1" />
                 <input
                   type="text"
-                  placeholder={OMNIBOX_PROMPTS[promptIndex]}
-                  onFocus={() => { setPaletteQuery(''); setPaletteOpen(true); }}
-                  onClick={() => { setPaletteQuery(''); setPaletteOpen(true); }}
-                  className="bg-transparent text-white text-sm lg:text-base flex-1 min-w-0 outline-none placeholder:text-zinc-600 cursor-pointer transition-opacity duration-300"
-                  readOnly
+                  value={heroInput}
+                  onChange={(e) => setHeroInput(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === 'Enter') submitHero(); }}
+                  placeholder={`Tell me about your business — e.g. ${HERO_PROMPTS[promptIndex]}`}
+                  className="bg-transparent text-white text-sm lg:text-base flex-1 min-w-0 outline-none placeholder:text-zinc-600"
                 />
-                <kbd className="hidden md:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-mono text-zinc-500 bg-zinc-800/80 rounded mr-1">
-                  <span className="text-[11px]">⌘</span>K
-                </kbd>
                 <button
-                  onClick={() => { setPaletteQuery(''); setPaletteOpen(true); }}
-                  className="w-9 h-9 lg:w-12 lg:h-12 bg-[#FFCC00] rounded-xl flex items-center justify-center flex-shrink-0 hover:scale-105 active:scale-95 transition-all"
+                  onClick={submitHero}
+                  aria-label="Make my ad"
+                  className="w-10 h-10 lg:w-12 lg:h-12 bg-[#FFCC00] rounded-xl flex items-center justify-center flex-shrink-0 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,204,0,0.35)] active:scale-95 transition-all"
                 >
                   <ArrowRight className="w-5 h-5 text-black" />
                 </button>
               </div>
 
-              {/* Outcome-named starter chips — deep-link into modules */}
+              {/* Outcome chips */}
               <div className="flex flex-wrap items-center justify-center gap-2 mt-4">
-                {STARTER_CHIPS.map((chip) => (
+                {HERO_CHIPS.map((chip) => (
                   <button
                     key={chip.id}
                     onClick={() => handleSelectModule(chip.id)}
-                    className="flex items-center gap-1.5 bg-white/[0.04] rounded-full px-3.5 py-2 text-xs font-medium text-zinc-400 hover:text-white hover:bg-white/[0.08] transition-all"
+                    className="flex items-center gap-1.5 bg-white/[0.04] rounded-full px-3.5 py-2 text-xs font-semibold text-zinc-400 hover:text-white hover:bg-white/[0.08] transition-all"
                   >
                     <chip.icon className="w-3.5 h-3.5" />
                     {chip.label}
                   </button>
                 ))}
               </div>
+
+              <p className="text-center text-[11px] text-zinc-600 mt-4">
+                One prompt → a full video ad. Grifon researches, scripts, and storyboards it for you.
+              </p>
+
+              {!quota.loading && quota.workflows.used > 0 && (
+                <p className="text-center text-xs text-zinc-500 mt-3">
+                  You've shipped <span className="text-[#FFCC00] font-semibold">{quota.workflows.used}</span>{' '}
+                  workflow{quota.workflows.used === 1 ? '' : 's'} this month. Tuloy lang.
+                  {weeklyActiveDays >= 2 && (
+                    <span className="inline-flex items-center gap-1 ml-2 text-zinc-400">
+                      <Flame className="w-3.5 h-3.5 text-[#FFCC00]" /> {weeklyActiveDays} days this week
+                    </span>
+                  )}
+                </p>
+              )}
             </motion.div>
           </div>
 
-          {/* Resume in-progress wizard draft — highest priority surface */}
+          {/* Resume / onboarding */}
           {draftSession && (
-            <div className="mb-6 lg:mb-8 max-w-2xl lg:max-w-3xl mx-auto w-full">
+            <div className="mb-6 max-w-2xl mx-auto w-full">
               <ResumeDraftCard
                 currentStep={draftSession.currentStep}
                 totalSteps={WIZARD_TOTAL_STEPS}
@@ -527,279 +414,80 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
               />
             </div>
           )}
-
-          {/* Onboarding Nudge — first-timers only */}
           {showOnboarding && !draftSession && (
-            <div className="mb-6 lg:mb-8 max-w-2xl lg:max-w-3xl mx-auto w-full">
-              <OnboardingNudge
-                onStart={() => handleSelectModule('creative_director')}
-                onDismiss={dismissOnboarding}
-                delay={0.25}
-              />
+            <div className="mb-6 max-w-2xl mx-auto w-full">
+              <OnboardingNudge onStart={() => handleSelectModule('creative_director')} onDismiss={dismissOnboarding} delay={0.25} />
             </div>
           )}
-
-          {/* Recommended Flow Path — canonical 7-step ad creation journey (UBIQUITOUS_LANGUAGE.md) */}
-          <div className="mb-6 lg:mb-10 max-w-2xl lg:max-w-3xl mx-auto w-full">
-            <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mb-3 text-center lg:text-left">
-              // RECOMMENDED FLOW
-            </p>
-            <div className="flex items-center justify-center flex-wrap gap-y-3 lg:gap-y-0 lg:flex-nowrap pb-2 px-1 lg:px-0">
-              {[
-                { num: 1, label: 'Research', id: 'market_research' },
-                { num: 2, label: 'Offer', id: 'offer_optimizer' },
-                { num: 3, label: 'Director', id: 'creative_director' },
-                { num: 4, label: 'Video', id: 'generate_video' },
-                { num: 5, label: 'Voice', id: 'signal_modulator', badge: 'Beta' },
-                { num: 6, label: 'Edit', id: 'edit_video', badge: 'Beta' },
-                { num: 7, label: 'Caption', id: 'caption_headline' }
-              ].map((step, idx, arr) => {
-                const isBeta = step.badge === 'Beta';
-                const isClickable = !isBeta || isAdmin;
-                return (
-                  <React.Fragment key={step.id}>
-                    <div
-                      onClick={isClickable ? () => handleSelectModule(step.id) : undefined}
-                      className={`flex items-center gap-1.5 flex-shrink-0 transition-transform ${
-                        isClickable ? 'cursor-pointer active:scale-95' : 'cursor-default opacity-60'
-                      }`}
-                    >
-                      <div className="w-5 h-5 lg:w-6 lg:h-6 rounded-full bg-[#FFCC00]/10 border border-[#FFCC00]/30 flex items-center justify-center text-[9px] lg:text-[10px] font-mono font-bold text-[#FFCC00]">
-                        {step.num}
-                      </div>
-                      <span className="text-[10px] lg:text-xs font-medium text-zinc-400 whitespace-nowrap">{step.label}</span>
-                      {step.badge && (
-                        <span className="px-1 py-0.5 text-[8px] font-mono uppercase tracking-wider rounded bg-[#FFCC00]/10 text-[#FFCC00]/70 border border-[#FFCC00]/20">
-                          {step.badge}
-                        </span>
-                      )}
-                    </div>
-                    {idx < arr.length - 1 && (
-                      <div className={`w-3 lg:w-4 h-px bg-zinc-700 flex-shrink-0 mx-1 ${idx === 3 ? 'hidden lg:flex' : 'flex'}`} />
-                    )}
-                  </React.Fragment>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Active Jobs */}
           {activeJobs.length > 0 && (
-            <div className="mb-6 max-w-2xl lg:max-w-3xl mx-auto w-full">
+            <div className="mb-6 max-w-2xl mx-auto w-full">
               <ActiveJobsPanel jobs={activeJobs} delay={0.3} />
             </div>
           )}
 
-          {/* Recent Work */}
-          {recent.length > 0 && (
-            <div className="mb-8 lg:mb-10 max-w-2xl lg:max-w-3xl mx-auto w-full">
-              <RecentWorkCard
-                items={recent}
-                onResume={(item) => handleSelectModule(item.moduleId)}
-                delay={0.35}
-              />
-            </div>
-          )}
-
-          {/* Module Grid */}
-          <div className="max-w-3xl mx-auto w-full mb-12">
-            {/* Mobile Grid */}
-            <div className="grid grid-cols-2 gap-3 lg:hidden">
-              {/* Director AI (Mobile) */}
-              <motion.div
-                initial={{ opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.25 }}
-                onClick={() => handleSelectModule('creative_director')}
-                className="col-span-2 bg-[#FFCC00]/[0.06] backdrop-blur-xl rounded-2xl p-5 relative overflow-hidden group cursor-pointer flex items-center gap-4 hover:scale-[1.01] hover:bg-[#FFCC00]/[0.10] hover:shadow-[0_8px_40px_rgba(255,204,0,0.15)] active:scale-[0.98] transition-all duration-500 ease-out"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-[#FFCC00]/5 to-transparent pointer-events-none" />
-                <div className="w-12 h-12 bg-[#FFCC00]/10 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform duration-500 ease-out">
-                  <Film className="w-6 h-6 text-[#FFCC00]" />
-                </div>
-                <div className="flex-1">
-                  <p className="text-base font-bold text-white tracking-tight">Director</p>
-                  <p className="text-xs text-zinc-400 mt-0.5">{DIRECTOR_DESC}</p>
-                </div>
-                <ChevronRight className="w-5 h-5 text-zinc-600 group-hover:text-[#FFCC00] transition-colors relative z-10" />
-              </motion.div>
-
-              {/* Standard Modules (Mobile) */}
-              {CORE_MODULES.map((mod, i) => (
-                <motion.div
-                  key={mod.id}
-                  initial={{ opacity: 0, y: 14 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.3 + i * 0.06 }}
-                  onClick={() => handleSelectModule(mod.id)}
-                  className="bg-zinc-900/70 backdrop-blur-xl rounded-2xl p-4 relative overflow-hidden group cursor-pointer aspect-square flex flex-col justify-between hover:scale-[1.01] hover:bg-zinc-900 hover:shadow-[0_8px_30px_rgba(255,204,0,0.12)] active:scale-[0.98] transition-all duration-500 ease-out"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-                  <div className="w-10 h-10 bg-[#FFCC00]/10 rounded-xl flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-500 ease-out">
-                    <mod.icon className="w-5 h-5 text-[#FFCC00]" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-bold text-white tracking-tight leading-tight">{mod.name}</p>
-                    <p className="text-[11px] text-zinc-500 mt-1 leading-snug">{mod.desc}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Desktop Row */}
-            <div className="hidden lg:flex items-start justify-center gap-4">
-              {/* Director AI (Desktop) */}
-              <motion.div
-                initial={{ opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.25 }}
-                onClick={() => handleSelectModule('creative_director')}
-                className="flex-1 bg-[#FFCC00]/[0.06] backdrop-blur-xl rounded-2xl p-6 relative overflow-hidden group cursor-pointer text-center hover:scale-[1.01] hover:bg-[#FFCC00]/[0.10] hover:shadow-[0_8px_40px_rgba(255,204,0,0.15)] active:scale-[0.98] transition-all duration-500 ease-out"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-[#FFCC00]/5 to-transparent pointer-events-none" />
-                <div className="w-14 h-14 lg:w-16 lg:h-16 bg-[#FFCC00]/10 rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:scale-105 transition-transform duration-500 ease-out">
-                  <Film className="w-7 h-7 lg:w-8 lg:h-8 text-[#FFCC00]" />
-                </div>
-                <p className="text-sm lg:text-sm xl:text-base font-bold text-white tracking-tight">Director</p>
-                <p className="text-[11px] lg:text-xs text-zinc-500 mt-1">{DIRECTOR_DESC}</p>
-              </motion.div>
-
-              {/* Standard Modules (Desktop) */}
-              {CORE_MODULES.map((mod, i) => (
-                <motion.div
-                  key={mod.id}
-                  initial={{ opacity: 0, y: 14 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.3 + i * 0.06 }}
-                  onClick={() => handleSelectModule(mod.id)}
-                  className="flex-1 bg-zinc-900/70 backdrop-blur-xl rounded-2xl p-6 relative overflow-hidden group cursor-pointer text-center min-w-0 hover:scale-[1.01] hover:bg-zinc-900 hover:shadow-[0_8px_30px_rgba(255,204,0,0.12)] active:scale-[0.98] transition-all duration-500 ease-out"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-                  <div className="w-14 h-14 lg:w-16 lg:h-16 bg-zinc-800/80 rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:scale-105 transition-transform duration-500 ease-out">
-                    <mod.icon className="w-7 h-7 lg:w-8 lg:h-8 text-[#FFCC00]" />
-                  </div>
-                  <p className="text-sm lg:text-sm xl:text-base font-bold text-white tracking-tight">{mod.name}</p>
-                  <p className="text-[11px] lg:text-xs text-zinc-500 mt-1">{mod.desc}</p>
-                </motion.div>
-              ))}
+          {/* EXPLORE TOOLS */}
+          <div className="w-full mb-16">
+            <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mb-4">// EXPLORE TOOLS</p>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+              {exploreTiles.map((tile, i) => {
+                const isMore = !tile.featured && !CORE_MODULES.some((c) => c.id === tile.id);
+                const unlocked = !isMore || moduleUnlocked(tile.id);
+                const tier = MODULE_TIER[tile.id];
+                const Icon = tile.featured ? DirectorIcon : tile.icon;
+                return (
+                  <motion.button
+                    key={tile.id}
+                    initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: DUR.slow, delay: 0.05 + i * 0.04 }}
+                    onClick={() => (unlocked ? handleSelectModule(tile.id) : onUpgrade?.())}
+                    className={`relative text-left rounded-2xl p-4 group transition-all duration-300 active:scale-[0.98] overflow-hidden ${
+                      tile.featured
+                        ? 'bg-[#FFCC00]/[0.06] hover:bg-[#FFCC00]/[0.10] hover:shadow-[0_8px_40px_rgba(255,204,0,0.15)] col-span-2 lg:col-span-1'
+                        : 'bg-zinc-900/70 hover:bg-zinc-900 hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)]'
+                    }`}
+                  >
+                    {!unlocked && tier && (
+                      <span className="absolute top-3 right-3 flex items-center gap-1 text-[9px] font-black uppercase tracking-wide text-[#FFCC00] bg-[#FFCC00]/10 ring-1 ring-[#FFCC00]/30 rounded-full px-1.5 py-0.5">
+                        <Lock className="w-2.5 h-2.5 shrink-0" /> {tier}
+                      </span>
+                    )}
+                    <div
+                      className="w-11 h-11 rounded-xl flex items-center justify-center mb-3 group-hover:scale-105 transition-transform"
+                      style={{ backgroundColor: hueAlpha(tile.hue, 0.1) }}
+                    >
+                      <Icon className="w-5 h-5" style={{ color: tile.hue }} />
+                    </div>
+                    <p className="text-sm font-bold text-white tracking-tight">{tile.name}</p>
+                    <p className="text-[11px] text-zinc-500 mt-1 leading-snug line-clamp-2">{tile.desc}</p>
+                    {tile.featured && <ChevronRight className="absolute top-4 right-4 w-4 h-4 text-zinc-600 group-hover:text-[#FFCC00] transition-colors" />}
+                  </motion.button>
+                );
+              })}
             </div>
           </div>
-
-          {/* More Modules Section */}
-          {isAdmin && (
-            <div className="max-w-3xl mx-auto w-full">
-              <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mb-4">
-                // MORE MODULES
-              </p>
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
-                {MORE_MODULES.map((mod) => (
-                  <div
-                    key={mod.id}
-                    onClick={() => handleSelectModule(mod.id)}
-                    className="bg-zinc-900/50 backdrop-blur-xl rounded-2xl p-4 relative overflow-hidden group hover:bg-zinc-900/80 active:scale-[0.98] transition-all duration-500 ease-out cursor-pointer flex flex-col"
-                  >
-                    <div className="w-8 h-8 bg-zinc-800 rounded-lg flex items-center justify-center mb-3">
-                      <mod.icon className="w-4 h-4 text-zinc-400 group-hover:text-[#FFCC00] transition-colors" />
-                    </div>
-                    <p className="text-xs font-bold text-white tracking-tight mb-1">{mod.name}</p>
-                    <p className="text-[10px] text-zinc-500 leading-snug line-clamp-2">{mod.desc}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {!isAdmin && (
-            <section className="mt-8 lg:mt-10 max-w-3xl mx-auto w-full px-4">
-              <div className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mb-3">
-                // COMING SOON
-              </div>
-              <div className="bg-zinc-900/50 backdrop-blur-xl rounded-2xl p-5 text-center">
-                <p className="text-sm text-zinc-500">
-                  New modules drop monthly. Stay tuned.
-                </p>
-              </div>
-            </section>
-          )}
-
         </div>
-      </main>
+      </motion.main>
 
-      <CommandPalette
-        open={paletteOpen}
-        onClose={() => setPaletteOpen(false)}
-        items={paletteItems}
-        initialQuery={paletteQuery}
+      <CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} items={paletteItems} initialQuery={paletteQuery} />
+
+      <NotificationsPanel
+        open={notifOpen}
+        onClose={() => setNotifOpen(false)}
+        jobs={activeJobs}
+        quotaLow={quotaLow}
+        quotaRemaining={typeof quota.workflows.remaining === 'number' ? quota.workflows.remaining : undefined}
+        onUpgrade={() => { setNotifOpen(false); onUpgrade?.(); }}
       />
 
-      {/* Global Profile Menu */}
-      {profileMenuOpen && (
-        <>
-          {/* Backdrop to close on outside click */}
-          <div 
-            className="fixed inset-0 z-[60] bg-black/40 lg:bg-transparent backdrop-blur-sm lg:backdrop-blur-none" 
-            onClick={() => setProfileMenuOpen(false)}
-          />
-          
-          {/* Menu popover */}
-          <div className="fixed z-[70] w-[calc(100vw-32px)] max-w-sm lg:w-72 bg-zinc-900/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl shadow-black/50 overflow-hidden top-[88px] right-4 lg:top-auto lg:bottom-6 lg:left-24 lg:right-auto origin-top-right lg:origin-bottom-left">
-            
-            {/* User info header */}
-            <div className="p-4 border-b border-white/5 flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-zinc-800 border border-white/10 overflow-hidden flex items-center justify-center flex-shrink-0">
-                {userAvatarUrl ? (
-                  <img src={userAvatarUrl} className="w-full h-full object-cover" />
-                ) : (
-                  <User className="w-5 h-5 text-zinc-400" />
-                )}
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="text-sm font-semibold text-white truncate">
-                  {userName}
-                </div>
-                <div className="text-xs text-zinc-500 truncate">
-                  {displayEmail}
-                </div>
-              </div>
-            </div>
-            
-            {/* Plan + Credits Section */}
-            <div className="p-3 border-b border-white/5 space-y-2">
-              <button onClick={onUpgrade} className="w-full bg-[#FFCC00]/10 hover:bg-[#FFCC00]/15 border border-[#FFCC00]/20 rounded-lg px-3 py-2 flex items-center justify-between transition-all group">
-                <span className="text-xs font-semibold text-[#FFCC00]">Upgrade Plan</span>
-                <ArrowRight className="w-3.5 h-3.5 text-[#FFCC00] group-hover:translate-x-0.5 transition-transform" />
-              </button>
-              
-              <div className="bg-zinc-800/50 rounded-lg px-3 py-2 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Sparkles className="w-3.5 h-3.5 text-[#FFCC00]" />
-                  <span className="text-xs text-zinc-400">Daily AI</span>
-                </div>
-                <span className="text-xs font-mono font-bold text-white">
-                  {userPlan === 'pro' || userPlan === 'business' ? 'Unlimited' : userPlan === 'creator' ? '0 / 20' : '0 / 3'}
-                </span>
-              </div>
-            </div>
-            
-            {/* Plan Edition Label */}
-            <div className="px-4 py-2.5 border-b border-white/5">
-              <div className="flex items-center gap-2">
-                <Crown className="w-3.5 h-3.5 text-[#FFCC00]" />
-                <span className="text-xs font-semibold text-white">
-                  {userPlan === 'free' ? 'Free Edition' : userPlan === 'creator' ? 'Creator Edition' : 'Pro Edition'}
-                </span>
-              </div>
-            </div>
-            
-            {/* Menu Items */}
-            <div className="py-1">
-              <MenuItem icon={<Settings className="w-4 h-4" />} label="Settings" />
-              <MenuItem icon={<HelpCircle className="w-4 h-4" />} label="Help" hasSubmenu />
-              <MenuItem icon={<LogOut className="w-4 h-4" />} label="Sign out" danger onClick={onLogout} />
-            </div>
-          </div>
-        </>
-      )}
+      <SettingsModal
+        open={settingsOpen}
+        onClose={() => setSettingsOpen(false)}
+        userEmail={displayEmail}
+        userName={userName}
+        plan={userPlan}
+        onUpgrade={() => { setSettingsOpen(false); onUpgrade?.(); }}
+        onLogout={onLogout}
+      />
     </div>
   );
 };

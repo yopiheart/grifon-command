@@ -101,7 +101,7 @@ describe('webhookEventAgeSeconds (replay-window guard)', () => {
 
 describe('PLAN_CATALOG', () => {
   it('exposes all three plan tiers with monthly + annual prices in centavos', () => {
-    for (const id of ['creator', 'pro', 'business'] as const) {
+    for (const id of ['starter', 'pro', 'business'] as const) {
       const plan = PLAN_CATALOG[id];
       expect(plan.id).toBe(id);
       expect(plan.monthlyCentavos).toBeGreaterThan(0);

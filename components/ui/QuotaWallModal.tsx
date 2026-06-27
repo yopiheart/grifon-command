@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
+import { DUR, SPRING } from './motionTokens';
 import { Check, Crown, Sparkles, X } from 'lucide-react';
 import { GoldButton } from './GoldButton';
 import { PLAN_FEATURES } from '../../config/planFeatures';
@@ -16,19 +17,21 @@ interface QuotaWallModalProps {
   used: number;
   limit: number;
   onUpgrade: () => void;
+  /** Buy a standalone top-up (video_ads scope only). id is an ADD_ON / TopUp id. */
+  onBuyTopup?: (id: 'video_ad_single' | 'video_ad_pack5') => void;
   onDismiss: () => void;
 }
 
 const SCOPE_LABEL: Record<MeterUnit, string> = {
-  workflows: 'video ad workflows',
+  workflows: 'ad plans',
   reports: 'research reports',
   captions: 'captions & headlines',
   images: 'AI images',
-  video_ads: 'AI video ads',
+  video_ads: 'video ads',
 };
 
 const TIER_LABEL: Record<Exclude<PlanId, 'free'>, string> = {
-  creator: 'Creator',
+  starter: 'Starter',
   pro: 'Pro',
   business: 'Business',
 };
@@ -48,6 +51,7 @@ export const QuotaWallModal: React.FC<QuotaWallModalProps> = ({
   used,
   limit,
   onUpgrade,
+  onBuyTopup,
   onDismiss,
 }) => {
   const reduce = useReducedMotion();
@@ -82,6 +86,40 @@ export const QuotaWallModal: React.FC<QuotaWallModalProps> = ({
     onDismiss();
   };
 
+  // Top-up door — only for video ads (the one metered unit with standalone
+  // credits). Lets a capped user buy more now instead of waiting for the reset,
+  // and is the ONLY path for a Business user already on the top plan.
+  const showTopup = scope === 'video_ads' && !!onBuyTopup;
+  const handleTopup = (id: 'video_ad_single' | 'video_ad_pack5') => {
+    onBuyTopup?.(id);
+    onDismiss();
+  };
+  const topupRow = showTopup ? (
+    <div className="px-6 mt-4">
+      <div className="mb-2 flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+        <span className="h-px flex-1 bg-white/10" /> or top up now <span className="h-px flex-1 bg-white/10" />
+      </div>
+      <div className="grid grid-cols-2 gap-2">
+        <button
+          type="button"
+          onClick={() => handleTopup('video_ad_single')}
+          className="rounded-xl border border-white/10 bg-zinc-950 px-3 py-2.5 text-left transition-colors hover:border-[#FFCC00]"
+        >
+          <span className="block text-sm font-semibold text-zinc-200">1 more ad</span>
+          <span className="block text-xs text-zinc-400">₱499</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => handleTopup('video_ad_pack5')}
+          className="rounded-xl border border-white/10 bg-zinc-950 px-3 py-2.5 text-left transition-colors hover:border-[#FFCC00]"
+        >
+          <span className="block text-sm font-semibold text-zinc-200">5-pack</span>
+          <span className="block text-xs text-zinc-400">₱2,250 · ₱450/ad</span>
+        </button>
+      </div>
+    </div>
+  ) : null;
+
   return createPortal(
     <AnimatePresence>
       {open && (
@@ -90,7 +128,7 @@ export const QuotaWallModal: React.FC<QuotaWallModalProps> = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
+          transition={{ duration: DUR.fast }}
           onClick={onDismiss}
           role="dialog"
           aria-modal="true"
@@ -101,7 +139,7 @@ export const QuotaWallModal: React.FC<QuotaWallModalProps> = ({
             initial={reduce ? { opacity: 0 } : { opacity: 0, y: 24, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: 16, scale: 0.98 }}
-            transition={{ type: 'spring', stiffness: 260, damping: 22 }}
+            transition={SPRING.pop}
             onClick={(e) => e.stopPropagation()}
             className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/80 backdrop-blur-xl shadow-[0_0_60px_-12px_rgba(255,204,0,0.35)]"
           >
@@ -161,6 +199,8 @@ export const QuotaWallModal: React.FC<QuotaWallModalProps> = ({
                   </GoldButton>
                 </div>
 
+                {topupRow}
+
                 <button
                   type="button"
                   onClick={onDismiss}
@@ -175,9 +215,13 @@ export const QuotaWallModal: React.FC<QuotaWallModalProps> = ({
                   You're on our top plan
                 </h2>
                 <p className="px-6 mt-3 text-sm leading-relaxed text-zinc-400">
-                  You've reached this month's {scopeLabel} allowance on Business. Need more? Reach out
-                  and we'll sort out a custom limit for you.
+                  {showTopup
+                    ? `You've used this month's ${scopeLabel} allowance on Business. Top up now to keep rendering — credits don't expire.`
+                    : `You've reached this month's ${scopeLabel} allowance on Business. Need more? Reach out and we'll sort out a custom limit for you.`}
                 </p>
+
+                {topupRow}
+
                 <div className="px-6 mt-6 mb-6">
                   <button
                     type="button"

@@ -1,0 +1,4 @@
+HEADLINE: If you are a remote worker craving a stronger morning ritual, we built a Fresh-Roast Barako Drip Kit for you.
+TEMPLATE: Niche Callout
+CAPTION: Tired of the same bland instant coffee while grinding through your tasks? Experience the bold, authentic kick of Batangas Barako delivered straight to your home office. Roasted to order, so it hits your cup at peak freshness. Elevate your WFH setup today.
+HOOK_LOGIC: Targets the WFH professional segment by positioning Barako as an upgrade to their daily productivity ritual.

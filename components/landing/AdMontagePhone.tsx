@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform } from 'motion/react';
+import { EASE, DUR } from '../ui/motionTokens';
 import { Building2, UtensilsCrossed, ShoppingBag, Play } from 'lucide-react';
 
-// Sample creative only (what a Grifon ad LOOKS like). The ROAS / time badges
-// reuse the exact claims already published on the proof wall — no new stats.
+// Sample creative only (what a Grifon ad LOOKS like) — illustrative, not real
+// campaign data. No performance metrics asserted; the badge states only that the
+// creative was built in Grifon.
 const FRAMES = [
   {
     label: 'REAL ESTATE',
@@ -11,7 +13,7 @@ const FRAMES = [
     hook: 'YOUR DREAM CONDO.',
     hookAccent: 'Closer than you think.',
     cta: 'BOOK A FREE TOUR',
-    badge: 'ROAS 4.8× — 20 MIN',
+    badge: 'MADE WITH GRIFON',
     bg: 'from-zinc-800 via-zinc-900 to-zinc-950',
   },
   {
@@ -20,7 +22,7 @@ const FRAMES = [
     hook: 'LUTONG BAHAY.',
     hookAccent: 'Delivered in 30.',
     cta: 'ORDER NA',
-    badge: 'ROAS 3.2× — 15 MIN',
+    badge: 'MADE WITH GRIFON',
     bg: 'from-zinc-900 via-zinc-800 to-zinc-950',
   },
   {
@@ -29,7 +31,7 @@ const FRAMES = [
     hook: 'BIG SALE.',
     hookAccent: 'Ends tonight.',
     cta: 'SHOP NOW',
-    badge: 'ROAS 5.1× — 25 MIN',
+    badge: 'MADE WITH GRIFON',
     bg: 'from-zinc-800 via-zinc-950 to-zinc-900',
   },
 ];
@@ -77,7 +79,7 @@ export const AdMontagePhone: React.FC<{ className?: string }> = ({ className = '
               initial={reduceMotion ? false : { opacity: 0, scale: 1.03 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={reduceMotion ? undefined : { opacity: 0 }}
-              transition={{ duration: 0.45, ease: 'easeOut' }}
+              transition={{ duration: DUR.slow, ease: EASE.out }}
               className={`absolute inset-0 bg-gradient-to-br ${frame.bg} flex flex-col`}
             >
               {/* Ad chrome: industry tag */}

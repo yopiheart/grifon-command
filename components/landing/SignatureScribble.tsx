@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'motion/react';
+import { EASE, DUR } from '../ui/motionTokens';
 
 type ScribbleVariant = 'underline' | 'circle' | 'strike';
 
@@ -10,6 +11,15 @@ interface SignatureScribbleProps {
   children: React.ReactNode;
   className?: string;
   strokeWidth?: number;
+  /**
+   * Draw on mount instead of on scroll-into-view. Use this when the scribble
+   * lives in a container whose scroll/clip position makes `whileInView`
+   * unreliable — e.g. an element inside a horizontally-scrolling, partially
+   * clipped row (the pricing cards). With the default whileInView trigger, if
+   * the viewport `amount` threshold is never met the path stays at pathLength 0
+   * and the underline is invisible.
+   */
+  playOnMount?: boolean;
 }
 
 // Hand-drawn-feel paths, 100x20 (lines) / 100x50 (circle) boxes stretched to the word.
@@ -44,9 +54,18 @@ export const SignatureScribble: React.FC<SignatureScribbleProps> = ({
   children,
   className = '',
   strokeWidth = 3,
+  playOnMount = false,
 }) => {
   const reduceMotion = useReducedMotion();
   const { d, viewBox, svgClass } = PATHS[variant];
+
+  // Reduced motion → static full path (no draw). Otherwise either draw on mount
+  // (reliable anywhere) or draw once on scroll-into-view (the default delight).
+  const drawProps = reduceMotion
+    ? {}
+    : playOnMount
+      ? { animate: { pathLength: 1 } }
+      : { whileInView: { pathLength: 1 }, viewport: { once: true, amount: 0.5 } as const };
 
   return (
     <span className={`relative inline-block ${className}`}>
@@ -65,9 +84,8 @@ export const SignatureScribble: React.FC<SignatureScribbleProps> = ({
           strokeLinecap="round"
           vectorEffect="non-scaling-stroke"
           initial={reduceMotion ? false : { pathLength: 0 }}
-          whileInView={{ pathLength: 1 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.8, delay, ease: 'easeInOut' }}
+          {...drawProps}
+          transition={{ duration: DUR.expressive, delay, ease: EASE.inOut }}
         />
       </svg>
     </span>

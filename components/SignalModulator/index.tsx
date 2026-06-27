@@ -19,16 +19,21 @@ interface SignalModulatorProps {
   globalScript?: string[];
   sceneBatch?: SceneBatchEntry[];
   avatarGender?: AvatarVoiceGender;
+  /** Deep-link the opening tab (e.g. 'clone' when arriving from One-Shot's voice picker). */
+  initialTile?: Tile;
   onSendToAiEditor?: (audioOverlays: { sceneIdx: number; audioUrl: string }[]) => void;
 }
 
 const EMPTY_LIBRARY: VoiceLibrary = { stockVoices: [], myVoices: [], libraryVoices: [], quotaUsed: 0, quotaMax: 1 };
 
-const SignalModulator: React.FC<SignalModulatorProps> = ({ onBack, globalScript = [], sceneBatch = [], avatarGender, onSendToAiEditor }) => {
+const SignalModulator: React.FC<SignalModulatorProps> = ({ onBack, globalScript = [], sceneBatch = [], avatarGender, initialTile, onSendToAiEditor }) => {
   // When the user routes here via "// SEND TO SIGNAL MODULATOR ↗" from Generate
   // Video, sceneBatch arrives populated — auto-select the Scene Pipeline tab so
-  // they don't have to hunt for it.
-  const [activeTile, setActiveTile] = useState<Tile>(sceneBatch.length > 0 ? 'scene-pipeline' : 'tts');
+  // they don't have to hunt for it. An explicit `initialTile` (e.g. 'clone' from
+  // One-Shot's voice picker) wins when there's no scene batch to honor.
+  const [activeTile, setActiveTile] = useState<Tile>(
+    sceneBatch.length > 0 ? 'scene-pipeline' : (initialTile ?? 'tts'),
+  );
 
   useEffect(() => {
     if (sceneBatch.length > 0) setActiveTile('scene-pipeline');
@@ -38,7 +43,7 @@ const SignalModulator: React.FC<SignalModulatorProps> = ({ onBack, globalScript 
   const [historyOpen, setHistoryOpen] = useState(false);
   const [budget, setBudget] = useState<BudgetStatus | null>(null);
   const { plan_id, loading: subLoading } = useSubscription();
-  const canClone = !subLoading && planAtLeast(plan_id, 'creator');
+  const canClone = !subLoading && planAtLeast(plan_id, 'pro');
   const history = useSessionHistory();
 
   const refreshLibrary = useCallback(async () => {

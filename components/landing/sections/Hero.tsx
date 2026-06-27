@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { DUR, EASE } from '../../ui/motionTokens';
 import { Star } from 'lucide-react';
 import { GoldButton } from '../../ui/GoldButton';
 import { AdMontagePhone } from '../AdMontagePhone';
@@ -13,7 +14,7 @@ interface HeroProps {
 
 const lineReveal = {
   hidden: { opacity: 0, y: 28 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' as const } },
+  show: { opacity: 1, y: 0, transition: { duration: DUR.entrance, ease: EASE.out } },
 };
 
 /**
@@ -89,7 +90,7 @@ export const Hero: React.FC<HeroProps> = ({ onEnterApp, heroSentinelRef }) => (
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.8, delay: 0.3, ease: 'easeOut' }}
+        transition={{ duration: DUR.expressive, delay: 0.3, ease: EASE.out }}
       >
         <AdMontagePhone />
       </motion.div>

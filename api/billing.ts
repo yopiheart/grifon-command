@@ -2,13 +2,16 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { z } from 'zod';
 import {
   PLAN_CATALOG,
+  ADD_ON_CATALOG,
   sumAddOnCentavos,
   attachPaymentMethod,
   createEwalletPaymentMethod,
   createPaymentIntent,
   retrievePaymentIntent,
+  type AddOnId,
   type PaymentMethodType,
 } from './_lib/paymongo.js';
+import { peekCredits } from './_lib/credits.js';
 import {
   annualSavingsVsMonthly,
   monthlyEquivalent,
@@ -24,30 +27,40 @@ import { peekMonthly, type MeterUnit } from './_lib/quota.js';
 // ?action=... Folded together to stay under Vercel Hobby's 12-function cap.
 
 const ALLOWED_METHODS: PaymentMethodType[] = ['card', 'gcash', 'paymaya', 'grab_pay'];
-const ACTIONS = ['intent', 'confirm', 'ewallet', 'status', 'usage'] as const;
+const ACTIONS = ['intent', 'topup', 'confirm', 'ewallet', 'status', 'usage'] as const;
 type Action = (typeof ACTIONS)[number];
 
 // Units surfaced to the dashboard quota meter + wall.
 const METER_UNITS: MeterUnit[] = ['workflows', 'reports', 'captions', 'images', 'video_ads'];
 
 const IntentBody = z.object({
-  plan_id: z.enum(['creator', 'pro', 'business']),
+  plan_id: z.enum(['starter', 'pro', 'business']),
   billing_cycle: z.enum(['monthly', 'annual']),
   // Optional order-bump add-on IDs. Validated server-side against ADD_ON_CATALOG;
   // the client only ever sends IDs, never an amount.
   add_ons: z.array(z.string()).max(5).optional(),
 });
 
+// Standalone top-up purchase — credit-bearing add-ons only (no plan). The
+// onboarding_call (a subscription order-bump) is rejected here.
+const TopupBody = z.object({
+  add_ons: z.array(z.string()).min(1).max(5),
+});
+
 const ConfirmBody = z.object({
   intent_id: z.string().min(1),
   client_key: z.string().min(1),
   payment_method_id: z.string().min(1),
+  // True for a standalone top-up — tags the 3DS return_url so the post-payment
+  // screen doesn't claim a subscription was activated.
+  topup: z.boolean().optional(),
 });
 
 const EwalletBody = z.object({
   intent_id: z.string().min(1),
   client_key: z.string().min(1),
   type: z.enum(['gcash', 'paymaya', 'grab_pay']),
+  topup: z.boolean().optional(),
 });
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -72,6 +85,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   switch (action) {
     case 'intent':
       return handleIntent(req, res, user);
+    case 'topup':
+      return handleTopup(req, res, user);
     case 'confirm':
       return handleConfirm(req, res, user);
     case 'ewallet':
@@ -168,17 +183,84 @@ async function handleIntent(req: VercelRequest, res: VercelResponse, user: Authe
   }
 }
 
+async function handleTopup(req: VercelRequest, res: VercelResponse, user: AuthedUser) {
+  const parsed = TopupBody.safeParse(req.body ?? {});
+  if (!parsed.success) {
+    return res.status(400).json({ error: 'invalid_body', issues: parsed.error.issues });
+  }
+  const addOnIds = parsed.data.add_ons;
+  // Only credit-bearing add-ons can be bought standalone. Rejects unknown IDs and
+  // the onboarding_call (which has no videoAdCredits and is a subscription bump).
+  for (const id of addOnIds) {
+    const addOn = ADD_ON_CATALOG[id as AddOnId];
+    if (!addOn || !addOn.videoAdCredits) {
+      return res.status(400).json({ error: 'not_a_topup', detail: id });
+    }
+  }
+
+  if (!(await enforceRateLimit(res, `billing_topup:${user.id}`, 10, 60))) return;
+
+  // Server-authoritative total — the client only ever sends add-on IDs.
+  let total = 0;
+  try {
+    total = sumAddOnCentavos(addOnIds);
+  } catch {
+    return res.status(400).json({ error: 'unknown_add_on' });
+  }
+
+  const metadata: Record<string, string> = {
+    user_id: user.id,
+    user_email: user.email ?? '',
+    purchase_type: 'topup',
+    add_ons: addOnIds.join(','),
+  };
+
+  try {
+    const intent = await createPaymentIntent({
+      amountCentavos: total,
+      description: `Grifon top-up — ${addOnIds.length} item(s)`,
+      metadata,
+      payment_method_allowed: ALLOWED_METHODS,
+    });
+    const { subtotal, vat } = splitVatInclusive(total);
+    return res.status(200).json({
+      intent_id: intent.id,
+      client_key: intent.client_key,
+      status: intent.status,
+      // Shape parallels the subscription intent so the client checkout reuses the
+      // same card/e-wallet processor. `plan` is a synthetic top-up descriptor —
+      // no subscription is created; the webhook only grants credits.
+      plan: {
+        id: 'topup',
+        name: 'Top-up credits',
+        description: 'One-time finished-ad credits — no subscription.',
+        billing_cycle: 'monthly',
+      },
+      breakdown: {
+        subtotal_centavos: subtotal,
+        vat_centavos: vat,
+        total_centavos: total,
+        add_on_centavos: total,
+        monthly_equivalent_centavos: null,
+        annual_savings_centavos: null,
+      },
+    });
+  } catch (err: any) {
+    return res.status(502).json({ error: 'paymongo_error', detail: err?.message ?? 'unknown' });
+  }
+}
+
 async function handleConfirm(req: VercelRequest, res: VercelResponse, user: AuthedUser) {
   const parsed = ConfirmBody.safeParse(req.body ?? {});
   if (!parsed.success) {
     return res.status(400).json({ error: 'invalid_body', issues: parsed.error.issues });
   }
-  const { intent_id, client_key, payment_method_id } = parsed.data;
+  const { intent_id, client_key, payment_method_id, topup } = parsed.data;
 
   if (!(await enforceRateLimit(res, `billing_confirm:${user.id}`, 10, 60))) return;
 
   const appUrl = process.env.APP_URL || `https://${req.headers.host}`;
-  const return_url = `${appUrl}/billing/3ds-return?intent=${encodeURIComponent(intent_id)}`;
+  const return_url = `${appUrl}/billing/3ds-return?intent=${encodeURIComponent(intent_id)}${topup ? '&topup=1' : ''}`;
 
   try {
     const intent = await attachPaymentMethod({
@@ -202,7 +284,7 @@ async function handleEwallet(req: VercelRequest, res: VercelResponse, user: Auth
   if (!parsed.success) {
     return res.status(400).json({ error: 'invalid_body', issues: parsed.error.issues });
   }
-  const { intent_id, client_key, type } = parsed.data;
+  const { intent_id, client_key, type, topup } = parsed.data;
 
   if (!(await enforceRateLimit(res, `billing_ewallet:${user.id}`, 10, 60))) return;
 
@@ -211,7 +293,7 @@ async function handleEwallet(req: VercelRequest, res: VercelResponse, user: Auth
   // GCash/Maya/GrabPay anyway, so a non-empty placeholder is enough.
   const billingName = email ? email.split('@')[0] : 'Grifon Customer';
   const appUrl = process.env.APP_URL || `https://${req.headers.host}`;
-  const return_url = `${appUrl}/billing/3ds-return?intent=${encodeURIComponent(intent_id)}`;
+  const return_url = `${appUrl}/billing/3ds-return?intent=${encodeURIComponent(intent_id)}${topup ? '&topup=1' : ''}`;
 
   try {
     const pm = await createEwalletPaymentMethod({
@@ -260,15 +342,20 @@ async function handleUsage(_req: VercelRequest, res: VercelResponse, user: Authe
   if (!(await enforceRateLimit(res, `billing_usage:${user.id}`, 30, 60))) return;
 
   const plan = await getUserPlan(user.id);
-  const entries = await Promise.all(
-    METER_UNITS.map(async (unit) => {
-      const { used, limit, remaining } = await peekMonthly(unit, user.id, plan);
-      return [unit, { used, limit, remaining }] as const;
-    })
-  );
+  const [entries, credits] = await Promise.all([
+    Promise.all(
+      METER_UNITS.map(async (unit) => {
+        const { used, limit, remaining } = await peekMonthly(unit, user.id, plan);
+        return [unit, { used, limit, remaining }] as const;
+      })
+    ),
+    peekCredits(user.id),
+  ]);
 
   return res.status(200).json({
     plan,
     ...Object.fromEntries(entries),
+    // Purchased top-up balances (separate from the monthly meter above).
+    credits,
   });
 }

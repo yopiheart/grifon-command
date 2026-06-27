@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
+import { EASE, DUR } from '../ui/motionTokens';
 import { playTick } from '../../services/uiSoundService';
 
 interface PinnedCtaPillProps {
@@ -60,7 +61,7 @@ export const PinnedCtaPill: React.FC<PinnedCtaPillProps> = ({
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 24 }}
-            transition={{ duration: 0.3, ease: 'easeOut' }}
+            transition={{ duration: DUR.base, ease: EASE.out }}
             onClick={() => {
               playTick();
               onEnterApp();

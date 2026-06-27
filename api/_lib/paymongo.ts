@@ -8,7 +8,10 @@ const authHeader = (): string => {
   return 'Basic ' + Buffer.from(key + ':').toString('base64');
 };
 
-export type PlanId = 'creator' | 'pro' | 'business';
+// Self-serve checkout plans (2026-06-19 ladder). 'free' is not a checkout plan;
+// 'autopilot' is invite-only and never enters the catalog. 'starter' replaced
+// the retired 'creator' tier.
+export type PlanId = 'starter' | 'pro' | 'business';
 export type BillingCycle = 'monthly' | 'annual';
 
 export type PlanCatalogEntry = {
@@ -21,38 +24,50 @@ export type PlanCatalogEntry = {
 
 // Amounts in centavos (₱1 = 100). Source of truth for price — never trust client.
 export const PLAN_CATALOG: Record<PlanId, PlanCatalogEntry> = {
-  creator: {
-    id: 'creator',
-    name: 'Grifon Creator',
-    description: '15 video workflows, 5 reports, 100 captions, 50 images.',
-    monthlyCentavos: 99_700,
-    annualCentavos: 997_200,
+  starter: {
+    id: 'starter',
+    name: 'Grifon Starter',
+    description: '1 finished video ad a month — try the magic, no big commitment.',
+    monthlyCentavos: 99_700,   // ₱997
+    annualCentavos: 997_200,   // ₱9,972/yr ≈ ₱831/mo
   },
   pro: {
     id: 'pro',
     name: 'Grifon Pro',
-    description: '40 workflows, 15 reports, 300 captions, 150 images, 15 AI video ads.',
+    description: '8 finished video ads/mo + AI editor, format presets, and FB caption packs.',
     monthlyCentavos: 249_700,
     annualCentavos: 2_497_200,
   },
   business: {
     id: 'business',
     name: 'Grifon Business',
-    description: '100 workflows, 40 reports, 500 captions, 300 images, 40 AI video ads.',
+    description: '15 finished ads/mo + Director mode, 4K images, and the Commercial/Spec Studio.',
     monthlyCentavos: 499_700,
     annualCentavos: 4_996_800,
   },
 };
 
-// ── One-time order-bump add-ons ──────────────────────────────────────────────
+// ── One-time order-bump + top-up add-ons ─────────────────────────────────────
 // Amounts in centavos. Source of truth for add-on price — never trust client.
-export type AddOnId = 'onboarding_call';
+// Video-ad top-ups (2026-06-19) grant extra FINISHED-AD credits beyond a plan's
+// monthly allowance, priced ~2x marginal cost so overage is always profitable.
+// (Credit-granting flow is wired in the checkout/quota slice; this is the price
+// source of truth.)
+export type AddOnId =
+  | 'onboarding_call'
+  | 'video_ad_single'
+  | 'video_ad_pack5'
+  | 'video_ad_cinematic';
 
 export type AddOnCatalogEntry = {
   id: AddOnId;
   name: string;
   description: string;
   centavos: number;
+  /** Extra finished-ad credits this add-on grants (0 for non-credit add-ons). */
+  videoAdCredits?: number;
+  /** True for premium Quality+4K cinematic/spec credits (Business). */
+  cinematic?: boolean;
 };
 
 export const ADD_ON_CATALOG: Record<AddOnId, AddOnCatalogEntry> = {
@@ -61,6 +76,28 @@ export const ADD_ON_CATALOG: Record<AddOnId, AddOnCatalogEntry> = {
     name: '1-on-1 Onboarding Call',
     description: 'A 30-minute setup & strategy call so you win in your first week.',
     centavos: 99_700, // ₱997 — confirmed with Neil 2026-05-30
+  },
+  video_ad_single: {
+    id: 'video_ad_single',
+    name: '1 Extra Video Ad',
+    description: 'Render one more finished ad — no subscription needed.',
+    centavos: 49_900, // ₱499
+    videoAdCredits: 1,
+  },
+  video_ad_pack5: {
+    id: 'video_ad_pack5',
+    name: '5 Extra Video Ads',
+    description: 'Five more finished ads at the best per-ad price.',
+    centavos: 225_000, // ₱2,250 (₱450/ad)
+    videoAdCredits: 5,
+  },
+  video_ad_cinematic: {
+    id: 'video_ad_cinematic',
+    name: '1 Cinematic Commercial Ad',
+    description: 'One premium 4K cinematic/spec ad from the Commercial Studio.',
+    centavos: 120_000, // ₱1,200
+    videoAdCredits: 1,
+    cinematic: true,
   },
 };
 

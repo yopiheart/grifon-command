@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { AllData } from '../types';
-import { GlassPanel } from './ui/GlassPanel';
 import { GoldButton } from './ui/GoldButton';
 import ImageModal from './ui/ImageModal';
-import { Copy, Check, Download, Package, Video, ChevronLeft, Search, RotateCcw } from 'lucide-react';
+import { StepShell } from './ui/StepShell';
+import { StepFooter } from './ui/StepFooter';
+import { Copy, Check, Download, Package, Video, Search, RotateCcw } from 'lucide-react';
 import JSZip from 'jszip';
 import saveAs from 'file-saver';
+import { useSubscription } from '../hooks/useSubscription';
+import { watermarkImage } from '../utils/watermark';
 
 interface Step7Props {
   allData: AllData;
@@ -42,11 +45,14 @@ const CopyableContent: React.FC<{ title: string; content: string }> = ({ title, 
   );
 };
 
-const ImageAssetPanel: React.FC<{ title: string; src: string; aspectRatio: '9:16' | '16:9' | null; filename: string; onPreview: () => void }> = ({ title, src, aspectRatio, filename, onPreview }) => {
+const ImageAssetPanel: React.FC<{ title: string; src: string; aspectRatio: '9:16' | '16:9' | null; filename: string; onPreview: () => void; watermark?: boolean }> = ({ title, src, aspectRatio, filename, onPreview, watermark = false }) => {
   const containerDims = aspectRatio === '16:9' ? 'w-full max-w-[480px] aspect-video' : 'w-full max-w-[280px] aspect-[9/16]';
-  const handleDownload = () => {
+  const handleDownload = async () => {
+    // Free exports carry a watermark. watermarkImage returns the original on any
+    // failure, so the download always succeeds.
+    const out = watermark ? await watermarkImage(src) : src;
     const link = document.createElement('a');
-    link.href = src;
+    link.href = out;
     link.download = filename;
     link.click();
   };
@@ -82,6 +88,8 @@ const ImageAssetPanel: React.FC<{ title: string; src: string; aspectRatio: '9:16
 
 const Step7FinalOutput: React.FC<Step7Props> = ({ allData, onRestart, onBack, onGenerateVideo }) => {
   const { clientDetails, finalScript, avatar, storyboard, videoPrompts, thumbnailUrl, aspectRatio } = allData;
+  const { plan_id } = useSubscription();
+  const isFree = plan_id === 'free'; // Free exports are watermarked (Slice 3)
   const [activeTab, setActiveTab] = useState<TabKey>('script');
   const [exporting, setExporting] = useState(false);
   const [previewImage, setPreviewImage] = useState<{ url: string; filename: string } | null>(null);
@@ -115,12 +123,16 @@ const Step7FinalOutput: React.FC<Step7Props> = ({ allData, onRestart, onBack, on
       zip.file('script.txt', fullScriptText);
       zip.file('storyboard.json', JSON.stringify(storyboard, null, 2));
       zip.file('video_prompts.txt', videoPromptsText);
-      if (avatar?.url) zip.file('avatar.png', avatar.url.split(',')[1], { base64: true });
-      if (thumbnailUrl) zip.file('thumbnail.png', thumbnailUrl.split(',')[1], { base64: true });
-      storyboard.forEach((s, i) => {
-        if (s.imageUrl) zip.file(`scenes/scene_${i + 1}.png`, s.imageUrl.split(',')[1], { base64: true });
-        if (s.endFrameImageUrl) zip.file(`scenes/scene_${i + 1}_end.png`, s.endFrameImageUrl.split(',')[1], { base64: true });
-      });
+      // Free exports are watermarked. markImg is a no-op for paid plans.
+      const markImg = async (url: string): Promise<string> => (isFree ? watermarkImage(url) : url);
+      const b64 = (url: string): string => url.split(',')[1];
+      if (avatar?.url) zip.file('avatar.png', b64(await markImg(avatar.url)), { base64: true });
+      if (thumbnailUrl) zip.file('thumbnail.png', b64(await markImg(thumbnailUrl)), { base64: true });
+      for (let i = 0; i < storyboard.length; i++) {
+        const s = storyboard[i];
+        if (s.imageUrl) zip.file(`scenes/scene_${i + 1}.png`, b64(await markImg(s.imageUrl)), { base64: true });
+        if (s.endFrameImageUrl) zip.file(`scenes/scene_${i + 1}_end.png`, b64(await markImg(s.endFrameImageUrl)), { base64: true });
+      }
       const blob = await zip.generateAsync({ type: 'blob' });
       const safeName = (clientDetails.brandName || 'GRIFON_Project').replace(/[^a-zA-Z0-9_-]+/g, '_');
       saveAs(blob, `${safeName}_Bundle.zip`);
@@ -150,6 +162,7 @@ const Step7FinalOutput: React.FC<Step7Props> = ({ allData, onRestart, onBack, on
             src={avatar.url}
             aspectRatio="9:16"
             filename="avatar.png"
+            watermark={isFree}
             onPreview={() => setPreviewImage({ url: avatar.url, filename: 'avatar.png' })}
           />
         ) : (
@@ -162,6 +175,7 @@ const Step7FinalOutput: React.FC<Step7Props> = ({ allData, onRestart, onBack, on
             src={thumbnailUrl}
             aspectRatio={aspectRatio ?? '9:16'}
             filename="thumbnail.png"
+            watermark={isFree}
             onPreview={() => setPreviewImage({ url: thumbnailUrl, filename: 'thumbnail.png' })}
           />
         ) : (
@@ -175,15 +189,10 @@ const Step7FinalOutput: React.FC<Step7Props> = ({ allData, onRestart, onBack, on
   };
 
   return (
-    <GlassPanel>
-      <div className="mb-8 border-b border-white/10 pb-6">
-        <h2 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight">
-          Step 8: Final Output & Assets
-        </h2>
-        <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mt-2">
-          // Review your campaign, export the bundle, ship the video.
-        </p>
-      </div>
+    <StepShell sublabel="STEP 8 · FINAL OUTPUT" title="Final Output & Assets">
+      <p className="-mt-4 mb-6 text-[11px] font-mono leading-relaxed text-zinc-500">
+        Review your campaign, export the bundle, ship the video.
+      </p>
 
       <div className="flex gap-2 mb-6 overflow-x-auto pb-1">
         {tabs.map((t) => {
@@ -210,15 +219,10 @@ const Step7FinalOutput: React.FC<Step7Props> = ({ allData, onRestart, onBack, on
 
       <div className="min-h-[420px]">{renderPanel()}</div>
 
-      <div className="mt-10 pt-6 border-t border-white/10">
-        <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
-          <button
-            onClick={onBack}
-            className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors font-mono text-xs tracking-widest uppercase"
-          >
-            <ChevronLeft className="w-4 h-4" /> Back
-          </button>
-
+      <StepFooter
+        onBack={onBack}
+        backLabel="Back"
+        renderNext={
           <div className="flex flex-col sm:flex-row gap-3">
             <button
               onClick={exportBundle}
@@ -231,16 +235,16 @@ const Step7FinalOutput: React.FC<Step7Props> = ({ allData, onRestart, onBack, on
               <Video className="w-4 h-4" /> GENERATE VIDEO NOW &gt;
             </GoldButton>
           </div>
-        </div>
+        }
+      />
 
-        <div className="mt-6 flex justify-center">
-          <button
-            onClick={onRestart}
-            className="flex items-center gap-2 text-[10px] font-mono tracking-widest uppercase text-zinc-500 hover:text-zinc-200 hover:border-white/20 transition-colors border border-white/5 rounded-full px-4 py-1.5"
-          >
-            <RotateCcw className="w-3 h-3" /> Clear Session &amp; Restart
-          </button>
-        </div>
+      <div className="mt-6 flex justify-center">
+        <button
+          onClick={onRestart}
+          className="flex items-center gap-2 text-[10px] font-mono tracking-widest uppercase text-zinc-500 hover:text-zinc-200 hover:border-white/20 transition-colors border border-white/5 rounded-full px-4 py-1.5"
+        >
+          <RotateCcw className="w-3 h-3" /> Clear Session &amp; Restart
+        </button>
       </div>
 
       {previewImage && (
@@ -250,7 +254,7 @@ const Step7FinalOutput: React.FC<Step7Props> = ({ allData, onRestart, onBack, on
           filename={previewImage.filename}
         />
       )}
-    </GlassPanel>
+    </StepShell>
   );
 };
 

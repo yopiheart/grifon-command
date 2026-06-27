@@ -1,8 +1,8 @@
 import { getSupabaseAdmin } from './supabaseAdmin.js';
 
-export type ServerPlanId = 'free' | 'creator' | 'pro' | 'business';
+export type ServerPlanId = 'free' | 'starter' | 'pro' | 'business';
 
-const VALID_PLANS: readonly ServerPlanId[] = ['free', 'creator', 'pro', 'business'];
+const VALID_PLANS: readonly ServerPlanId[] = ['free', 'starter', 'pro', 'business'];
 
 // Reads the user's active plan from the subscriptions table.
 // Defaults to 'free' if no row exists OR the subscription isn't in a billable state.

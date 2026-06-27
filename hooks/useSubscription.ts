@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import { getSupabase } from '../services/supabaseClient';
 
-export type PlanId = 'free' | 'creator' | 'pro' | 'business';
+export type PlanId = 'free' | 'starter' | 'pro' | 'business';
+
+const VALID_PLAN_IDS: readonly PlanId[] = ['free', 'starter', 'pro', 'business'];
+const coercePlanId = (value: unknown): PlanId =>
+  VALID_PLAN_IDS.includes(value as PlanId) ? (value as PlanId) : 'free';
 export type SubscriptionStatus =
   | 'active'
   | 'past_due'
@@ -42,7 +46,7 @@ export const useSubscription = (): Subscription => {
       if (cancelled) return;
       if (data) {
         setSub({
-          plan_id: data.plan_id as PlanId,
+          plan_id: coercePlanId(data.plan_id),
           status: data.status as SubscriptionStatus,
           current_period_end: data.current_period_end ?? null,
           billing_cycle: (data.billing_cycle as 'monthly' | 'annual' | null) ?? null,

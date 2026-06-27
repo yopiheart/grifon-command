@@ -376,6 +376,16 @@ export const buildAdScriptPrompt = (
   const { businessInfo, brandName, language, offer, chosenAngleBrief } = input;
   const isTestimonial = businessInfo.scriptType === 'Testimonial';
   const isTemu = businessInfo.scriptType === 'Temu';
+  // Services (v2): customer-testimonial service ads (first-person customer story),
+  // book/inquire CTA (not buy-now), category-auto-adapting across ALL service types
+  // (emotional payoff + trust-fear inferred from inputs; no peso amount in the script).
+  // Avatar engine unchanged (customer persona is correct). Phase 2 = per-scene real-photo
+  // routing (venue + before/after) gated as Business-tier Advanced Mode.
+  const isServices = businessInfo.scriptType === 'Services';
+  // RealEstate (#13): agent-led property walkthrough (first-person agent/seller), inquiry/viewing CTA
+  // (not buy-now), optional price (rendered ONLY if the user supplied one — see PRICE RULE). Reuses
+  // the venue render-mode + venueSlot routing (a property is a real place). Avatar = the AGENT.
+  const isRealEstate = businessInfo.scriptType === 'RealEstate';
 
   const COMMON_RULES = ADSCRIPT_COMMON_RULES(businessInfo, brandName, language);
   const DIRECTOR_CRITIQUE_INSTRUCTION = ADSCRIPT_DIRECTOR_CRITIQUE_INSTRUCTION;
@@ -396,6 +406,115 @@ export const buildAdScriptPrompt = (
       ${subType === 'ASMR' ? '- Focus: "Unbox with me...". Satisfying audio cues.' : ''}
       ${subType === 'Reaction' ? '- Focus: "I can\'t believe I got this...". Shock value.' : ''}
       ${subType === 'Utility' ? '- Focus: POV Problem Solving. "TikTok made me buy it".' : ''}
+
+      ${DIRECTOR_CRITIQUE_INSTRUCTION}
+      ${USER_CHOSEN_ANGLE_BLOCK}
+      Format: Return valid JSON: { "hook1": [...], "hook2": [...], "body": [...], "strategicAudit": "..." }
+    `;
+  } else if (isServices) {
+    return `
+      Role: Senior Direct Response Copywriter for Filipino SERVICE businesses.
+      Strategy: Customer-Testimonial Service Ad — first-person CUSTOMER story; book/inquire, NOT buy-now.
+      Service: "${businessInfo.product}"
+      Brand: "${brandName}"
+
+      ${COMMON_RULES}
+      ${HOOK_SEED_PROTOCOL}
+
+      **VOICE — FIRST-PERSON CUSTOMER (never the company):**
+      The speaker is a real, relatable CUSTOMER of "${brandName}" sharing their own experience —
+      NOT the business pitching itself. NEVER write "Kami sa ${brandName}" / "we offer" / company "amin".
+      Write as the customer: "Ako si [Filipino first name]," telling how the service helped them.
+
+      **CATEGORY AUTO-ADAPT (works for ANY service — salon, gym, clinic, restaurant, laundry,
+      cleaning, pest control, repair, tutor, advisor, events, etc.). Infer from the service +
+      "${businessInfo.audience}" + "${businessInfo.painPoint}" + "${businessInfo.benefit}":**
+      - Find the customer's #1 EMOTIONAL PAYOFF and make it the through-line (hook → relief).
+        Examples (pick what FITS; never force one): privacy / "walang nakaalam" (private or
+        embarrassing services), confidence / "bagong tiwala" (salon, gym, derma, dental),
+        peace-of-mind / "panatag ang loob" (pest, repair, security, clinic), time / "may oras
+        ka ulit" (laundry, cleaning, errands), pride / "proud kang i-serve" (restaurant, events).
+      - Find and DISARM the category's #1 TRUST FEAR. Examples: surprise pricing ("presyong
+        usap, presyong bayad — walang dagdag") for trades/repair; "gagana ba sa akin?"
+        (realistic proof, no fabricated guarantee) for results-based; hygiene/safety for
+        food/health; reliability / no-show ("on-time, maaasahan") for home services.
+
+      **SERVICES TESTIMONIAL 6-BEAT (no held product, no "buy now", and NO peso amount in the script):**
+      0. **Hook (3s / 5-8 words):** Pattern interrupt. Hit ONE of: {named pain + the emotional
+         payoff} · {fear/consequence before it worsens} · {anti-villain of the category}.
+         PROVIDE 2 VARIATIONS — populate hook1 AND hook2.
+      1. **Intro:** "Ako si [Filipino first name]," + life context that implicitly identifies
+         "${businessInfo.audience}" (story-opener, NOT a demographic label or name-tag).
+      2. **The Problem:** Agitate the real pain — "${businessInfo.painPoint}".
+      3. **The Turn:** How they found/called "${brandName}" + the ONE thing that won their trust.
+         Anchor on the real differentiator: "${businessInfo.separator}" — this is the "why believe you"
+         line, and it should double as the disarm of the category's #1 trust fear (see CATEGORY AUTO-ADAPT).
+         If the differentiator is empty, disarm the trust fear directly. Use a COMPLETE verb construction,
+         never a verbless fragment.
+      4. **The Relief:** Pain → Result ("${businessInfo.benefit}"), carrying the emotional payoff.
+         HONESTY RULE: realistic/representative; never fabricate a guaranteed or exaggerated outcome.
+      5. **Offer + CTA:** They recommend it + the offer as WORDS ONLY (e.g. "libreng inspection/
+         konsulta", "free first consult") — NEVER state a peso figure. Drive to BOOK / MESSAGE /
+         INQUIRE via Viber, Messenger/DM, or walk-in — NOT a checkout link. Forbidden: "buy now",
+         "add to cart", "order now", product-scarcity ("only 3 left").
+
+      ${DIRECTOR_CRITIQUE_INSTRUCTION}
+      ${USER_CHOSEN_ANGLE_BLOCK}
+      Format: Return valid JSON: { "hook1": [...], "hook2": [...], "body": [...], "strategicAudit": "..." }
+    `;
+  } else if (isRealEstate) {
+    const priceGiven = !!(businessInfo.listingPrice && businessInfo.listingPrice.trim());
+    const PRICE_RULE = priceGiven
+      ? `A price was given: "${businessInfo.listingPrice!.trim()}". AFFORDABILITY REFRAME (PH first-time buyers think in monthly + downpayment, NOT lump sum): if the value reads as monthly/DP terms (e.g. "25k/month", "50k DP"), LEAD with that, stated once EXACTLY as given. If it is ONLY a large lump sum (e.g. "₱4.2M"), do NOT make that scary sticker the headline — fold it in once softly, OR (better) withhold it and drive the DM ("PM kita ng full computation") to protect curiosity and qualify the lead. NEVER invent, round, convert, or fabricate monthly/financing/DP terms the user did not actually provide.`
+      : `NO price was given — INQUIRY-ONLY. NEVER invent or imply a peso figure. Drive to "message/DM for the price, computation & viewing".`;
+    return `
+      Role: Senior Direct Response Copywriter for Filipino REAL ESTATE sellers.
+      Strategy: Agent-Led Property Walkthrough — the agent/seller TOURS the property and drives an
+      inquiry/viewing, NOT a checkout.
+      Listing: "${businessInfo.product}"
+      Brand: "${brandName}"
+
+      ${COMMON_RULES}
+      ${HOOK_SEED_PROTOCOL}
+
+      **VOICE — FIRST-PERSON AGENT/SELLER (warm, trusted, never hypey):**
+      The speaker is the agent/broker/seller personally showing the property — "Pasok tayo,"
+      "Tingnan natin ang...". NOT a customer testimonial, NOT a faceless announcer. A kasama who
+      helps you find a home, not a hard-seller. NEVER write "Ako si [customer name]" — this is the
+      agent's own voice touring the place.
+
+      **ARCHETYPE AUTO-ADAPT (infer from the listing + "${businessInfo.audience}"):**
+      - LISTING (one house/condo/lot): the PROPERTY is the hero — walk the spaces, sell the lifestyle.
+      - AGENT (personal brand): lead with the agent's trust + service; listings are proof they deliver.
+      - DEVELOPER (pre-selling): the development is the hero — model unit, amenities, location,
+        RFO/turnover.
+
+      **REAL ESTATE WALKTHROUGH 6-BEAT (agent-led; price is OPTIONAL — see PRICE RULE):**
+      0. **Hook (3s / 5-8 words):** Pattern interrupt on the DREAM or the DEAL. Hit ONE of: {the
+         lifestyle/feeling of the place} · {the specific standout feature} · {the "is this real?"
+         value}. PROVIDE 2 VARIATIONS — populate hook1 AND hook2. NEVER a demographic label.
+      1. **Location / Lifestyle:** Anchor WHERE it is + the life they'd live here — who it fits
+         ("${businessInfo.audience}") carried implicitly by the scene, NOT a demographic tag.
+      2. **The Walkthrough:** Tour the standout spaces ("Pasok tayo sa sala... ang kusina dito...").
+         Name real rooms/features from "${businessInfo.features}". This is the heart — make them
+         picture themselves living inside.
+      3. **The Standout / Differentiator:** The ONE thing that makes it worth it — anchor on
+         "${businessInfo.separator}" (view, location, price-per-sqm, amenities, flexible terms). Use a
+         COMPLETE verb construction, never a verbless fragment. If the differentiator is empty, lead
+         with the strongest feature instead.
+      4. **Trust / Legitimacy (REQUIRED — the #1 lever in PH property):** Kill "baka scam / fly-by-night /
+         walang title". Hit legitimacy + a guiding hand: clean title, transparent terms, in-person viewing
+         welcome, "sasamahan kita from viewing hanggang turnover" (Authority + Liking). HONESTY RULE: do NOT
+         fabricate a specific license number, award, or accreditation the user never provided — phrase it as
+         the agent's standard ("malinaw ang title, legit ang process, gagabayan kita"), not a fake credential.
+      5. **Affordability + CTA:** ${priceGiven ? 'Handle price per the PRICE RULE (reframe to monthly/DP, never flash a scary lump sum), then drive' : 'Drive'} to a LOW-FRICTION inquiry. PREFER an info-first keyword
+         DM — "Message mo lang ako ng 'BAHAY' (o 'COMPUTATION'), ipapadala ko ang monthly, DP, at requirements"
+         — over an immediate viewing ask (a viewing is a big commitment off a short video). A site VIEWING is
+         the SECONDARY CTA, used only when REAL scarcity exists (e.g. open-house this weekend). Channel: Viber /
+         Messenger / call — NOT a checkout link. Forbidden: "buy now", "add to cart", "order now",
+         product-scarcity gimmicks ("only 3 left"). Real urgency only if true (limited units / RFO / pre-selling).
+
+      **PRICE RULE:** ${PRICE_RULE}
 
       ${DIRECTOR_CRITIQUE_INSTRUCTION}
       ${USER_CHOSEN_ANGLE_BLOCK}
@@ -750,6 +869,8 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
   const fullScript = script.join('\n');
   const productDesc = businessInfo.productImageDescription || 'N/A';
   const isTemu = businessInfo.scriptType === 'Temu';
+  const isServices = businessInfo.scriptType === 'Services';
+  const isRealEstate = businessInfo.scriptType === 'RealEstate';
 
   const DIRECTOR_CRITIQUE_INSTRUCTION = `
     **DIRECTOR_CRITIQUE_PROTOCOL:**
@@ -780,6 +901,79 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
         - High-key lighting, fast motion, handheld feel.
         - Focus on HANDS and OBJECTS for scenes 2-6.
         `;
+  } else if (isServices) {
+    strategyInstructions = `
+        **STRATEGY: CUSTOMER-TESTIMONIAL SERVICE AD (works for ANY service — salon, gym,
+        clinic, restaurant, laundry, cleaning, pest, repair, tutor, advisor, events, etc.)**
+        1. **SCENE 1 (THE HOOK) = THE PROBLEM / desire, not a product reveal.** Open on the
+           real-world pain or longing the customer felt (the mess/worry/before-state, OR for
+           appearance/venue services the "before" or the moment of wanting). NO product to reveal.
+        2. **SCENE 2 (THE CONNECTION):** **MUST be "Avatar Talking"** — the avatar is the CUSTOMER
+           sharing their story (NOT the business pitching). Bridge from the hook.
+        3. **MIDDLE SCENES:** Alternate **Avatar Talking (customer)** with **Service B-Roll** —
+           the service happening and the RESULT. (See SERVICE ARCHETYPE for what the b-roll shows.)
+        4. **FINAL SCENE (CTA):** Customer recommending + a book/inquire gesture (phone/message).
+
+        **SERVICE ARCHETYPE — decide what the b-roll SHOWS (infer from the service + photos):**
+        - **VENUE-LED** (spa, salon, clinic, gym, restaurant, hotel, café): the PLACE is the draw.
+          SHOWCASE the venue — interiors, ambiance, the experience — so the viewer FEELS what it's
+          like to be there and wants to visit. Do NOT suppress venue shots; they are the selling power.
+        - **WORK/RESULT-LED** (cleaning, pest, siphoning, repair, laundry): the RESULT is the draw.
+          Lead with problem→relief and DE-EMPHASIZE equipment/gear (it isn't attractive). Humble.
+        - **PRACTITIONER-LED** (advisor, coach, tutor, agency): the PERSON is the draw. Lean on the
+          customer + the outcome; minimal b-roll.
+
+        **PHILIPPINE GROUND-TRUTH REALISM (mandatory, ALL archetypes):**
+        - This is a Philippine SMB. Depict the service as it really appears in the Philippines —
+          true-to-life and true-to-THEIR-TIER. NOT a Western, luxury, or idealized version.
+        - Treat the uploaded photo description ("${productDesc}") as VISUAL GROUND TRUTH; match the
+          actual vibe, tier, and look the photos show. VENUE-LED → render a venue that resembles
+          THEIR place's real style/level (do NOT upgrade a modest spa into a 5-star resort).
+          WORK-LED → render plain crew / plain vehicle as shown (never a shiny branded truck or uniform).
+        - FORBIDDEN: inventing interiors / equipment / vehicles / signage grander or different from
+          what the photos/description evidence. When unsure: VENUE-LED → still show the venue, kept
+          simple and true-to-tier; WORK-LED → favor the customer/problem/relief over a guessed gear shot.
+        - FORBIDDEN AESTHETIC WORDS (in every scene's imagePrompt / startFramePrompt / endFramePrompt):
+          never write "high-end", "luxury", "luxurious", "premium", "upscale", "elegant", "5-star",
+          "resort", "boutique-hotel", "modern minimalist", or "sleek" for a VENUE-LED scene. Even when
+          the brief, differentiator, benefit, or offer uses aspirational / "luxury" language, IGNORE it
+          for the VISUALS — the uploaded photo's tier is the ONLY ground truth. Render the venue at its
+          real, modest, true-to-tier level (warm, simple, lived-in, authentically Filipino).
+        - Setting, faces, clothing, vehicles, signage, props must read authentically Filipino.
+        `;
+  } else if (isRealEstate) {
+    strategyInstructions = `
+        **STRATEGY: AGENT-LED PROPERTY WALKTHROUGH**
+        1. **SCENE 1 (THE HOOK):** the dream/standout or an establishing EXTERIOR of the property —
+           NOT a product reveal, NOT a held object. Open on the place or the feeling of living there.
+        2. **SCENE 2 (THE CONNECTION):** **MUST be "Avatar Talking"** — the AGENT/seller introducing
+           the place in their own voice (NOT a customer testimonial). Bridge from the hook.
+        3. **MIDDLE SCENES:** Alternate **Avatar Talking (agent)** with **Property B-Roll** — the
+           rooms, spaces, view, and amenities being toured. (See REAL-ESTATE ARCHETYPE below.)
+        4. **FINAL SCENE (CTA):** the agent inviting the viewer to message / book a viewing (phone/
+           message gesture).
+
+        **REAL-ESTATE ARCHETYPE — decide what the b-roll SHOWS (infer from the listing + photos):**
+        - **LISTING** (one house/condo/lot): the PROPERTY's spaces are the draw — facade, sala,
+          kitchen, bedroom, view. Walk the viewer through it so they picture themselves living there.
+        - **AGENT** (personal brand): the AGENT is the draw — feature them on camera + a listing or two
+          as proof they deliver. Lean on trust.
+        - **DEVELOPER** (pre-selling): the PROJECT is the draw — model unit, amenities, location/site,
+          render/turnover.
+
+        **PHILIPPINE GROUND-TRUTH REALISM (mandatory):**
+        - This is a Philippine property. Treat the uploaded photo description ("${productDesc}") as
+          VISUAL GROUND TRUTH; render the property true-to-its-real-TIER. A modest unit stays modest —
+          do NOT upgrade a townhouse into a luxury penthouse.
+        - FORBIDDEN: inventing rooms / views / amenities / finishes grander or different from what the
+          photos/description evidence.
+        - FORBIDDEN AESTHETIC WORDS (in every scene's imagePrompt / startFramePrompt / endFramePrompt):
+          never write "high-end", "luxury", "luxurious", "premium", "upscale", "5-star", "resort",
+          "modern minimalist", or "sleek" unless the uploaded photo's tier actually evidences it. Even
+          when the brief/differentiator/benefit uses aspirational language, IGNORE it for the VISUALS —
+          the uploaded photo's tier is the ONLY ground truth.
+        - Setting, faces, clothing, signage, props must read authentically Filipino.
+        `;
   } else {
     strategyInstructions = `
         **STRATEGY: NARRATIVE RETENTION RHYTHOR**
@@ -789,6 +983,35 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
         4. **FINAL SCENE (CTA):** Product Shot or Avatar pointing.
         `;
   }
+
+  // Phase 2 (Services): tell the model to tag each place/result/staff scene with the best-fitting
+  // UPLOADED slot, chosen ONLY from what the user actually uploaded. Empty list → no block →
+  // current prompt unchanged. Renderer (Slice 5) consumes scene.venueSlot to anchor the real photo.
+  const availableServiceSlots = (businessInfo.servicePhotos || []).map(p => p.slot);
+  // Slot→meaning legend differs by style: Services venues vs RealEstate property rooms. Same routing
+  // mechanism (renderer consumes scene.venueSlot to anchor the real photo); only the mapping changes.
+  const slotLegend = isRealEstate ? `
+        establishing / arrival / exterior shot      -> facade
+        inside a room being toured                  -> living, kitchen, or bedroom (pick the fitting one)
+        the view / balcony / outlook beat           -> view
+        amenities (pool / gym / lobby) beat         -> amenities
+        the neighborhood / location beat            -> location` : `
+        establishing / arrival ("dinala ako sa...") -> exterior
+        the service happening / inside the place    -> interior
+        mood / relief / ambiance beat               -> ambiance
+        the practitioner or staff at work           -> staff
+        the problem / before-state                  -> before
+        the result / after-state                    -> after`;
+  const venueSlotRouting = ((isServices || isRealEstate) && availableServiceSlots.length > 0) ? `
+      **VENUE_SLOT_ROUTING (anchor scenes to the user's REAL uploaded photos):**
+      The user uploaded real photos tagged by slot. AVAILABLE SLOTS: ${availableServiceSlots.join(', ')}.
+      For each scene that depicts the ${isRealEstate ? 'PROPERTY, a ROOM, the VIEW, AMENITIES, or the LOCATION' : "business's PLACE, RESULT, or STAFF"}, add a "venueSlot" field set to
+      the ONE available slot that best fits — chosen ONLY from the list above. Map by meaning:${slotLegend}
+      Rules: use a slot ONLY if it is in AVAILABLE SLOTS; if none fits, OMIT "venueSlot" (renderer falls
+      back to representative generation). NEVER invent a slot not in the list.${isRealEstate
+        ? ' AGENT-IN-PROPERTY: for an Avatar talking scene (referenceImage="avatar") where the agent is in a specific SPACE of the property — INSIDE a room (touring the sala -> living, kitchen -> kitchen, a bedroom -> bedroom) OR OUTSIDE at the building exterior / entrance, INCLUDING the closing / CTA shot at the facade (-> facade) — ALSO set "venueSlot" to that space so the agent is composited into the REAL place, not a lookalike. Only OMIT "venueSlot" on a neutral talking head not tied to any space.'
+        : ' Avatar talking-head scenes (referenceImage="avatar") OMIT "venueSlot".'}
+  ` : '';
 
   return `
       You are an Expert Viral Video Strategist.
@@ -821,9 +1044,9 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
 
       Motion lives in \`transitionEffect\` (e.g., "Explosion Reveal", "Character Morph") — that field describes the MOTION between two stills. The frame prompts describe two STILL moments. Frames = stills. Transitions = motion.
 
-      **HOOK END-FRAME = RESOLVED REVEAL (Scene 1 endFramePrompt):** The hook's end frame is the moment AFTER the transition completes — the product is ALREADY fully revealed, sitting still and intact in frame. Describe ONLY that finished state (e.g., "The [product] sitting centered on a clean counter, front label facing camera, sharp focus"). Do NOT narrate the reveal itself (no "disintegrating to reveal", no "pixels forming into"). NO people, faces, hands, or bodies in the hook end frame unless the avatar is explicitly the subject of the reveal.
+      ${isServices ? `**HOOK FRAMES (Scene 1, Services) = THE PROBLEM, NO product reveal:** The start and end frames depict the real-world PROBLEM moment (the mess, the worry, the before-state) as an environment / object / situation — authentically Filipino and humble. There is NO product to reveal; do NOT place, "reveal", or invent any gadget, device, branded vehicle, uniform, or imported equipment in the hook. Keep both stills STATIC. The two frames MAY share one named dominant color + silhouette position for a clean transition, but the anchor comes FROM THE PROBLEM SCENE (e.g. an overflowing drain, a cluttered room, a worried face at home), never from a product. **CUSTOMER-COHERENCE:** If the hook depicts a person (the sufferer), render them the SAME gender and approximate age as the Character/customer described in this brief — the hook sufferer IS the same person who later tells the testimonial, so they must not differ in gender.` : `**HOOK END-FRAME = RESOLVED REVEAL (Scene 1 endFramePrompt):** The hook's end frame is the moment AFTER the transition completes — the product is ALREADY fully revealed, sitting still and intact in frame. Describe ONLY that finished state (e.g., "The [product] sitting centered on a clean counter, front label facing camera, sharp focus"). Do NOT narrate the reveal itself (no "disintegrating to reveal", no "pixels forming into"). NO people, faces, hands, or bodies in the hook end frame unless the avatar is explicitly the subject of the reveal.
 
-      **HOOK ANCHOR RULE (Scene 1 startFramePrompt + endFramePrompt):** The two stills MUST share ONE named concrete anchor: the SAME dominant color (named in BOTH prompts) AND the SAME silhouette occupying the SAME position in frame. **The anchor color comes FROM THE PRODUCT.** Derive the shared dominant color from the product's actual uploaded packaging, then design the START frame's subject/setting to carry that color naturally. NEVER recolor, mute, or restyle the product's packaging to match the start frame — the uploaded product photo is ground truth for the end frame. (e.g., product = vibrant orange coffee bag → start = "dark coffee grounds beside a burnt-orange ceramic mug, warm orange light, centered, filling the lower third of frame" → end = "the vibrant orange coffee bag, centered, filling the lower third of frame"). State the anchor color and the silhouette position explicitly in BOTH prompts. A morph between two frames that do not share color + silhouette position forces the video model to interpolate through formless flesh-toned mush — the single worst failure mode for the hook.
+      **HOOK ANCHOR RULE (Scene 1 startFramePrompt + endFramePrompt):** The two stills MUST share ONE named concrete anchor: the SAME dominant color (named in BOTH prompts) AND the SAME silhouette occupying the SAME position in frame. **The anchor color comes FROM THE PRODUCT.** Derive the shared dominant color from the product's actual uploaded packaging, then design the START frame's subject/setting to carry that color naturally. NEVER recolor, mute, or restyle the product's packaging to match the start frame — the uploaded product photo is ground truth for the end frame. (e.g., product = vibrant orange coffee bag → start = "dark coffee grounds beside a burnt-orange ceramic mug, warm orange light, centered, filling the lower third of frame" → end = "the vibrant orange coffee bag, centered, filling the lower third of frame"). State the anchor color and the silhouette position explicitly in BOTH prompts. A morph between two frames that do not share color + silhouette position forces the video model to interpolate through formless flesh-toned mush — the single worst failure mode for the hook.`}
 
       **APPEARANCE_LOCK_RULE (when scene's referenceImage='avatar'):**
       The \`imagePrompt\`, \`startFramePrompt\`, and \`endFramePrompt\` MUST NOT describe the avatar's physical appearance. Identity is preserved by an upstream LOCK; redescribing it creates conflicts and corrupts the render.
@@ -914,6 +1137,7 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
       - "product" (or "both" if the avatar is also in the reveal) — the hook's END frame reveals the ACTUAL hero product (the real labeled package materializes, the morph resolves into the real product, the explosion/teleport reveals the real product).
       - "none" — the hook is a pure abstract metaphor (coffee-ring, dumped beans, environment-only) OR the end frame shows only a categorical look-alike, not the actual hero product. The CRITICAL ANTI-PATTERN above applies in full: a generic look-alike stays "none".
 
+      ${venueSlotRouting}
       **OUTPUT SCHEMA (CRITICAL):**
       Return a valid JSON Object with keys "scenes" (Array) and "strategicAudit" (String).
 
@@ -922,6 +1146,7 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
         "scriptLine": "...",
         "sceneDescription": "...",
         "referenceImage": "product" | "both" | "none",   // classify the END/REVEAL frame ONLY — see SCENE 1 (HOOK) END-FRAME REFERENCE rule above
+        "venueSlot": "before",   // Services ONLY, OPTIONAL — set per VENUE_SLOT_ROUTING; omit otherwise
         "startFramePrompt": "Static composition of the FIRST FROZEN FRAME — describe the world-state at moment 1 as a still photograph. No motion verbs (see STILL_FRAME_RULE).",
         "endFramePrompt": "Static composition of the FINAL FROZEN FRAME — describe the world-state at moment 2 as a still photograph. No motion verbs (see STILL_FRAME_RULE).",
         "transitionEffect": "Name of the VFX that animates between the two stills (the only field where motion lives)."
@@ -932,6 +1157,7 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
         "scriptLine": "...",
         "sceneDescription": "...",
         "referenceImage": "avatar" | "product" | "both" | "none",
+        "venueSlot": "exterior",   // Services ONLY, OPTIONAL — set per VENUE_SLOT_ROUTING; omit when no slot fits or non-Services
         "imagePrompt": "Description of the single image"
       }
 

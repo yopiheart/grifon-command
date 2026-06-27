@@ -1,0 +1,74 @@
+{
+  "_comment": "Sample Supabase contents for tools/growth_debrief_pull.py (Phase 2b). Lets the aggregation path be verified with NO live creds. Mirrors the COLUMN shape of public.ad_performance / public.events / public.feedback (not the Meta API — creative_id is already parsed here). Intentionally tiny: counts are illustrative, not real scale, so the file stays readable while exercising every aggregation branch (per-creative rollup, winner vs fatigued loser vs untagged organic, funnel step-down + checkout abandon, NPS spread + free-text). The winner creative 3f9a2b7c... matches tools/fixtures/meta_insights_sample.json for continuity. Not real data.",
+
+  "ad_performance": [
+    {
+      "creative_id": "3f9a2b7c-1d4e-4a8b-9c2d-5e6f7a8b9c0d",
+      "ad_id": "120200000000000001", "campaign_id": "120200000000000100",
+      "ad_name": "Bukidnon Brew UGC — grifon-3f9a2b7c-1d4e-4a8b-9c2d-5e6f7a8b9c0d",
+      "date_start": "2026-06-23", "date_stop": "2026-06-23",
+      "impressions": 18432, "reach": 15120, "frequency": 1.219, "spend": 1450.50,
+      "clicks": 612, "ctr": 3.32, "cpc": 2.37, "cpm": 78.69,
+      "link_clicks": 498, "outbound_clicks": 471,
+      "video_3s_views": 9870, "thruplays": 4120, "avg_watch_time": 11,
+      "purchases": 27, "purchase_value": 13230.00, "roas": 9.12, "cpa": 53.72
+    },
+    {
+      "creative_id": "3f9a2b7c-1d4e-4a8b-9c2d-5e6f7a8b9c0d",
+      "ad_id": "120200000000000001", "campaign_id": "120200000000000100",
+      "ad_name": "Bukidnon Brew UGC — grifon-3f9a2b7c-1d4e-4a8b-9c2d-5e6f7a8b9c0d",
+      "date_start": "2026-06-24", "date_stop": "2026-06-24",
+      "impressions": 22000, "reach": 13750, "frequency": 1.6, "spend": 1700.00,
+      "clicks": 740, "ctr": 3.36, "cpc": 2.30, "cpm": 77.27,
+      "link_clicks": 610, "outbound_clicks": 588,
+      "video_3s_views": 11500, "thruplays": 5200, "avg_watch_time": 12,
+      "purchases": 33, "purchase_value": 16170.00, "roas": 9.51, "cpa": 51.52
+    },
+    {
+      "creative_id": "a1b2c3d4-9e8f-4012-b345-67890abcdef0",
+      "ad_id": "120200000000000003", "campaign_id": "120200000000000100",
+      "ad_name": "Bukidnon Brew testimonial v2 — grifon-a1b2c3d4-9e8f-4012-b345-67890abcdef0",
+      "date_start": "2026-06-24", "date_stop": "2026-06-24",
+      "impressions": 30000, "reach": 6186, "frequency": 4.85, "spend": 1800.00,
+      "clicks": 360, "ctr": 1.2, "cpc": 5.0, "cpm": 60.0,
+      "link_clicks": 240, "outbound_clicks": 222,
+      "video_3s_views": 9000, "thruplays": 1200, "avg_watch_time": 4,
+      "purchases": 4, "purchase_value": 1200.00, "roas": 0.67, "cpa": 450.0
+    },
+    {
+      "creative_id": null,
+      "ad_id": "120200000000000002", "campaign_id": "120200000000000100",
+      "ad_name": "Boosted page post — no creative tag",
+      "date_start": "2026-06-24", "date_stop": "2026-06-24",
+      "impressions": 5210, "reach": 4980, "frequency": 1.046, "spend": 420.00,
+      "clicks": 88, "ctr": 1.69, "cpc": 4.77, "cpm": 80.61,
+      "link_clicks": 61, "outbound_clicks": 55,
+      "purchases": 1, "purchase_value": 480.00, "roas": 1.14, "cpa": 420.0
+    }
+  ],
+
+  "events": [
+    { "event": "PageView", "module": "landing", "session_id": "s1" },
+    { "event": "PageView", "module": "landing", "session_id": "s2" },
+    { "event": "PageView", "module": "landing", "session_id": "s3" },
+    { "event": "PageView", "module": "pricing", "session_id": "s4" },
+    { "event": "PageView", "module": "pricing", "session_id": "s5" },
+    { "event": "ViewContent", "module": "pricing", "session_id": "s2" },
+    { "event": "ViewContent", "module": "pricing", "session_id": "s4" },
+    { "event": "ViewContent", "module": "pricing", "session_id": "s5" },
+    { "event": "Lead", "module": "app", "session_id": "s2" },
+    { "event": "Lead", "module": "app", "session_id": "s4" },
+    { "event": "wizard_step", "module": "app", "step": "step3_script", "session_id": "s2" },
+    { "event": "wizard_step", "module": "app", "step": "step3_script", "session_id": "s4" },
+    { "event": "InitiateCheckout", "module": "billing", "session_id": "s2" },
+    { "event": "InitiateCheckout", "module": "billing", "session_id": "s4" },
+    { "event": "Purchase", "module": "billing", "session_id": "s2" }
+  ],
+
+  "feedback": [
+    { "nps_score": 10, "module": "wizard_final", "free_text": "Sobrang bilis gumawa ng ad, grabe. Worth it." },
+    { "nps_score": 9, "module": "wizard_final", "free_text": "" },
+    { "nps_score": 7, "module": "wizard_final", "free_text": "Maganda pero medyo mabagal mag-render yung video." },
+    { "nps_score": 4, "module": "wizard_final", "free_text": "Yung storyboard hindi tugma sa script ko minsan." }
+  ]
+}

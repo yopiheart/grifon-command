@@ -344,6 +344,24 @@ during the gate session.
 
 ### 11. Client-Facing Edit Style Preset Picker (autopsy-derived styles as a product feature)
 
+> **Status (2026-06-27): ✅ Lock-only picker SHIPPED on `drawplan-refactor` (commit `d308061`),
+> not yet merged to main.** The picker + persistence MECHANISM this item describes (steps 2–3
+> below) is now live as the **pre-render look-lock**: a `// LOOK` row at GenerateVideo's "Render
+> All" lets the user lock **AUTO / Impact / Hype / Clean** (`classic` kept as an unsurfaced
+> kill-switch). The choice threads through one pure tested chokepoint (`services/renderLock.ts`
+> `buildLockedPreset`) → `FinalRenderRequest.preset.id`, which `resolvePreset()` already honored;
+> AUTO = today's deterministic rotation, byte-identical. Note the **location differs from this
+> item's original step 3**: Neil settled on the GenerateVideo Render All command bar (the spend
+> gate), NOT the AI Editor step. **Still open:** (a) the differentiated styles themselves — this
+> item's core leverage — still need to ship via the viral-autopsy → Swipe File pipeline (step 1;
+> a picker over the existing looks is the polish, the new styles are the product); (b) the
+> **composite image preview (option B)** — a server `api/render/preview-frame.ts` reusing
+> `drawPlan` to burn the caption/hook onto the scene still so the user SEES the look before
+> locking. Option B was scoped + offered 2026-06-27; **Neil chose to ship lock-only (option C)
+> for v1** and defer the visual preview. If B is built later, restore the panel label *"static
+> look preview — motion & timing added at render"* (the lock-only UI deliberately doesn't use it,
+> since there's no preview image yet). Full handoff: [`drawplan_refactor_resume.md`](drawplan_refactor_resume.md).
+
 **What:** Let users choose their ad's **Edit Style Preset** (`classic` / `impact` / `hype` / `clean` + future autopsy-derived presets like a `vsl` style) instead of the current deterministic rotation in `api/_lib/renderPresets.ts`. A picker in the AI Editor step (or Step 7), with the sincerity guard kept as a hard filter (Testimonial never offers `hype`) and the rotation seed kept as the default when the user doesn't choose.
 
 **Why it matters:** Pairs with the `viral-autopsy` → Swipe File → preset pipeline: every pattern that crosses the 3-video corroboration threshold can become a new named style, and "N editing styles cloned from proven viral ads" is a sellable pricing-page line. Choice also reduces "my ad looks like everyone else's" objections.
@@ -366,10 +384,12 @@ during the gate session.
 
 ### 12. New Ad Style — Services vertical
 
-> **Status (2026-06-16): ⚡ PROMOTED TO ACTIVE — building this week.** Not parked.
-> The working execution plan lives in [`this_week_plan.md`](this_week_plan.md) (step 4).
-> This entry is the durable record so the idea survives the cafe-PC defreezer; the real
-> spec gets written via `grill-me` before any code.
+> **Status (2026-06-22): ✅ SHIPPED & MERGED TO MAIN.** Phase 1 (archetypes A + C on existing
+> rails) AND Phase 2 (per-scene real-photo routing + venue render mode + archetype qualifier)
+> are both merged to `main` (merge `5395e00`, branch `feat/services-phase2`). Locked spec:
+> [`services_phase2_spec.md`](services_phase2_spec.md). Venue (Naya Boutique Spa) + work
+> (Oceanides) smokes PASS; fresh-context PR critic clean. **Open follow-ups:** practitioner
+> archetype not yet smoke-tested; avatar-in-venue carve-out (Q8) deferred.
 
 **What:** A new ad-creation style tuned for **service businesses** (salons, gyms, clinics,
 restaurants, agencies) — distinct from the current product-e-commerce assumption baked into
@@ -395,10 +415,115 @@ through the Services style) → `smoke-tester`. TUNED-prompt edits in
 
 ---
 
+#### Services — grill-me spec + Phase 1 shipped (2026-06-21)
+
+**Spec (locked via grill-me):** new peer `scriptType: 'Services'`. Hybrid avatar talking-head +
+service-in-action b-roll. 6-beat arc: hook → trust → action → before/after → proof → CTA.
+**Book/inquire CTA** (Viber/Messenger/DM + walk-in), NOT buy-now. Music reuses the warm
+`testimonial` bed; `clean` preset. Sub-vertical inferred from description + hero (no new field).
+
+**Three archetypes (Real Estate is separate — see #13):**
+- **A · Practitioner-led** (advisor, coach, agency): person is hero; reuses existing avatar lock.
+- **B · Venue-led** (restaurant, salon, gym, clinic): place is hero; needs per-scene photo routing.
+- **C · Work/result-led** (cleaning, pest control, siphoning): result is hero; uniform + before/after.
+
+**Phase 1 — SHIPPED `feat/services-ad-style` (commit 397dec2):** A + C on existing rails.
+Type union + Step 2 Services card + dedicated tuned adscript branch (Neil-approved) + bundle-leak
+marker. Build/tests/leak green. Before/after for C is generated representative b-roll (honest).
+
+**Phase 2 — ✅ SHIPPED & MERGED (2026-06-22, merge `5395e00`).** The per-scene real-photo-routing
+layer is built and live. Implemented as 5 slices (all build/tests/leak green, each TUNED edit
+Neil-approved): (1) `serviceArchetype` field + Step 2 smart-defaulted archetype qualifier (3
+outcome-labeled buttons — "Show off my place" / "Show the results" / "Feature me & my team" —
+statement-with-✓ framing + archetype-aware upload sample strip); (2) `servicePhotos {url,slot}` +
+archetype-driven **guided upload slots** (the slot IS the tag — implicit classification; synced to
+`productImageUrls` for back-compat); (3) storyboard emits per-scene `venueSlot` (Services-only,
+additive); (4) new **VENUE render mode** in `generateSceneImage` (PLACE_IDENTITY_LOCK +
+CAMERA_FREEDOM — same real place, scene-fitting angle, Filipino people allowed; additive 5th branch,
+the 4 originals byte-identical); (5) `sceneRender.ts` routes `venueSlot` → the matching uploaded
+photo in venue mode (replaces the old `productImageUrls[0]`-only behavior; falls back to
+representative gen on any miss). Plus `FILIPINO_CAST_LOCK` (foreigner-in-hook fix) + venue
+tier-drift guard (no "high-end/luxury") + hook gender-coherence. Architecture-aware: venue = full
+routing; work = representative-by-default, before/after-routing only if uploaded; practitioner =
+headshot/logo. **Smokes:** Naya Boutique Spa (venue) PASS — real storefront + treatment room
+rendered, true-to-tier; Oceanides (work) PASS, no regression — real aluminum closed-van truck routed
+from upload. Fresh-context PR critic clean (Minor 4/5 + Major 1/2 resolved; quota dev-bypass
+confirmed fail-CLOSED). **Open follow-ups:** practitioner archetype not yet smoke-tested;
+avatar-in-venue carve-out (Q8) deferred; venue same-place-multi-angle consistency only lightly
+tested (one scene per space so far).
+
+**Two product decisions (Neil, 2026-06-21) — to honor in Phase 2 / a Services-tune pass:**
+
+1. **Advanced Mode = Business-tier gate for Phase 2.** ⚠️ **SUPERSEDED 2026-06-22:** Neil chose to
+   ship Phase 2 real-photo routing **services-wide (NOT Business-gated)** — for venue-led services the
+   real place IS the conversion asset, so accuracy is a core need, not a premium perk. The original
+   gating idea below is kept for the record but is no longer how it shipped. Default (all tiers): an uploaded image is
+   **reference/context only** — Director understands it and generates **fresh, scene-fitting**
+   visuals; it must NEVER just animate the user's raw photo into a scene. Placing the user's
+   **literal photos into specific scenes** (real venue/before-after/crew — the Phase 2 routing)
+   is an **Advanced Mode reserved for Business**. *Nuance to confirm:* product-identity fidelity
+   (a real SKU must look like itself) stays on lower tiers; what's gated is literal-photo-into-scene,
+   not product accuracy. Connects to the Business "commercial-grade" differentiator + cinematic gate.
+
+2. **Authenticity / expectation-accuracy guardrail.** The style must NOT over-glamorize humble
+   trades (e.g. dress a sando-and-tsinelas malabanan crew in a fake logo'd uniform / shiny branded
+   truck) — that sets on-arrival expectations the business can't meet and burns trust. Likely a
+   small tuned-prompt addition (Neil-approval gated). Reframe humble realities as benefits where
+   honest (e.g. plain closed van = *discreet*, "walang kaalam-alam ang kapitbahay").
+
+**Oceanides smoke #1 (2026-06-21) — surfaced 3 coherence gaps → drove v2.** Script formula was
+good (Taglish, discreet angle, book CTA); the breakage was everywhere Phase 1 left on PRODUCT rails:
+(1) hook did a product-reveal (hose nozzle in a clean sink) instead of a problem-open; (2) the
+COMPANY-voice script clashed with a CUSTOMER avatar ("Anxious Homeowner Anna" appeared to be selling
+the service); (3) scene-gen invented glamorized, non-PH industrial equipment (real rig = a steel tank
+hidden in a plain closed van). Diagnosis: only the ad-script was Services-tuned; storyboard/avatar/
+scene-gen still ran product-centric.
+
+**Services formula v2 — SHIPPED (customer-testimonial + PH-realism, GENERAL across all service types).**
+Driven by the smoke + a grifon-cmo pressure-test. Key calls:
+- **Voice = first-person CUSTOMER testimonial** ("Ako si [name]") — fixes the avatar mismatch WITHOUT
+  touching the avatar engine (the customer persona was always correct; the script voice was the outlier).
+- **Category auto-adapt (not siphoning-tuned)** per Neil 2026-06-21 ("fit for ALL service types"):
+  the prompt infers the customer's #1 emotional payoff (privacy / confidence / peace-of-mind / time /
+  pride) and disarms the category's #1 trust fear (surprise pricing / "gagana ba sa akin" / hygiene /
+  reliability) from the user's own inputs — no hardcoded vertical.
+- **Storyboard:** Scene-1 hook = THE PROBLEM (product-reveal hook rules made conditional, off for
+  Services); customer talking-head + service-in-action/relief b-roll.
+- **PH ground-truth realism guardrail** (mandatory, all services): depict the real PH version, treat
+  uploaded-photo description as ground truth, never invent Western/premium/industrial gear.
+- **Archetype-aware b-roll (Neil 2026-06-21)**: storyboard now infers VENUE-LED (spa/salon/clinic/gym/
+  restaurant → SHOWCASE the venue, grounded in their real tier — don't suppress, don't upgrade a modest
+  spa to a 5-star resort) vs WORK/RESULT-LED (cleaning/pest/siphoning → humble, de-emphasize gear,
+  favor problem→relief) vs PRACTITIONER-LED (person + outcome). Default mode = representative-but-true-to-
+  tier venue; EXACT venue per scene = Phase 2 / Business Advanced Mode (real-photo routing).
+- **No peso figure in the script** (CMO + house rule); offer stated as words ("libreng inspection").
+- Files: `api/_lib/prompts.ts` (adscript + storyboard Services branches), leak-guard markers updated.
+  Build/tests/leak green. The accuracy GUARANTEE (their real photos per scene) still = Phase 2 / Business.
+
+**Open — Oceanides re-smoke (queued):** confirm v2 — problem-hook (no hose-in-sink), customer-voice
+script, PH-humble visuals (no glamorized rig), book/inquire CTA. Hero `siphoning-service.jpg` + real
+photos must be RE-DROPPED into `.tmp/hero_smoke/` next session (defreezer wipes `.tmp`). Blocked on
+Neil: Google OAuth login + the photos.
+
+---
+
 ### 13. New Ad Style — Real Estate vertical
 
-> **Status (2026-06-16): ⚡ PROMOTED TO ACTIVE — building this week.** Not parked.
-> Working plan: [`this_week_plan.md`](this_week_plan.md) (step 4). Spec via `grill-me` first.
+> **Status (2026-06-22): ✅ SHIPPED & merged to main.** Spec LOCKED via grill-me →
+> [`real_estate_spec.md`](real_estate_spec.md). Agent-led property walkthrough: types + Step 2 UI +
+> tuned ad-script + storyboard routing + cast-lock + bundle-leak marker, PLUS CMO-tuned refinements
+> (legitimacy/affordability/keyword-DM beats), agent wardrobe (lanyard), and **avatar-in-property**
+> (`avatar_venue` render mode — the agent stands INSIDE the real uploaded rooms, incl. the facade on
+> the CTA shot). Smoke PASSED 2026-06-22 (Bahay Realty / Imus 3BR, uploaded Filipino agent): agent in
+> real sala/bedroom, identity + lanyard preserved across scenes, b-roll anchored to uploads. Build +
+> bundle-leak + 278 tests green. Key reuse: rides the Services Phase 2 venue render-mode + venueSlot.
+>
+> **Follow-up (Neil, 2026-06-22) — add more Real Estate formats:** beyond the agent-led walkthrough,
+> add a **buyer/owner UGC-testimonial** format — a client who BOUGHT a house sharing their experience
+> (first-person buyer voice, softer "inquire/ask them how" CTA, pambahay OK). Door already left open:
+> the Testimonial/Services voice exists; expose via a small "Who's on camera?" toggle inside Real
+> Estate (Agent broker ↔ Happy buyer). Possibly also a developer-pre-selling format. Spec via grill-me
+> when picked up.
 
 **What:** An ad style tuned for **real-estate** listings/agents — property walkthroughs,
 location/lifestyle framing, price + inquiry CTAs. More bespoke scene logic than Services
@@ -498,6 +623,87 @@ critic) and `workflows/pr_review_loop.md` for what already exists before buildin
 **Source:** 2026-06-17 session evaluating Kun Chen's "How This Ex-Meta L8 Engineer Ships 40 PRs a Day
 with AI Agents" brief against the Grifon codebase. Neil shipped Moves 1/2A/bundle-guard/3, chose to
 defer 2B / doc-lint / full-auto-CI.
+
+---
+
+### 16. CAC / LTV instrumentation — close the acquisition-economics loop
+
+> **Context (2026-06-19):** During the pricing restructure (Free→Pro→Business→Autopilot, one-shot
+> flow), Neil asked whether to add ad/acquisition spend "on top of" the per-ad COGS. Decision:
+> **NO — track it as a separate layer, not inside gross margin.** The full finalized model + this
+> reasoning live in the durable doc [`pricing_unit_economics.md`](pricing_unit_economics.md) (§5–§6).
+> This roadmap item is the "go gather the data" trigger.
+
+**What:** Instrument the four acquisition/economics inputs the finalized pricing leaves as
+placeholders, then re-run the margin + CAC math and lock final included video-ad quotas:
+1. Avg scenes (and seconds) per finished ad — validates the scene-cap COGS.
+2. Regeneration rate — validates the ~30% buffer.
+3. Avg finished ads a real Pro user makes/month — the breakage number that sets safe quotas.
+4. CAC inputs: FB cost per free signup · **Free→Pro conversion rate** · avg paid tenure (churn).
+
+**Why it matters:** Every quota/price number in `pricing_unit_economics.md` is a defensible
+*estimate* until these land. Free→Pro conversion in particular decides whether the entire free-
+consultation strategy is profitable (10% → ~₱2,200 CAC healthy; 3% → ~₱7,300 underwater). The
+locked-video upsell (`components/LockedVideoPreview.tsx`) is the lever that moves it.
+
+**Why parked:** No live paid traffic + no shipped one-shot render logs yet → nothing to measure.
+The pricing ships on conservative estimates now; this is the post-data tuning pass.
+
+**When to resume:** When EITHER (a) the restructure is live AND there's ≥2–4 weeks of one-shot
+render logs + paid checkouts to read, OR (b) margin looks off in practice (COGS creeping above
+target). Pull the four numbers, re-run §2–§4 of `pricing_unit_economics.md`, lock final quotas.
+
+**Where to start:**
+1. Render logs: avg scenes/ad + regen rate from the one-shot job records (the `consumeMonthly`
+   call site + `activeJobsService` history).
+2. Conversion + tenure: Supabase `subscriptions` (free→paid transitions, tenure before churn) +
+   whatever FB Ads spend/signup attribution exists.
+3. Re-run the margin tables; adjust `PLAN_LIMITS` / `MONTHLY_LIMITS` included counts + scene caps.
+
+**Scope estimate:** ~half a day once the data exists (mostly analysis + a quota-number tune, not
+a build). The instrumentation to capture it may be a separate small task if logs are thin —
+that instrumentation is now specced as **Item #17 / [`growth_loop.md`](growth_loop.md) Phase 0**
+(Meta CAPI + `events` table). Build Phase 0 and these four numbers fall out of it.
+
+**Source:** Neil, 2026-06-19 pricing restructure session — *"should we add also a ads expense on
+the top of it or not a good idea?"* → decision to keep CAC separate from COGS and log it for a
+data-driven pass post-launch.
+
+---
+
+### 17. Data-Driven Growth Loop (ingest-only) — full spec in [`growth_loop.md`](growth_loop.md)
+
+> **Context (2026-06-24):** Neil's brief — make the app improve over time from client feedback, and
+> automate his *own* Grifon growth marketing with himself as approver only. Evaluated against the
+> codebase and scoped via grill: **for Grifon's own growth** (single-tenant, not a client feature) ·
+> **ingest-only** (read ad performance & learn; Neil still publishes — no autonomous spend) ·
+> **build the data plumbing now**, parallel to beta. Full evaluation, metrics taxonomy, phased build,
+> skills assessment, and risks live in the durable doc — this is just the parking-lot pointer.
+
+**What:** Give Grifon the measurement foundation it completely lacks (no pixel / telemetry / ad-perf /
+feedback today), then run two human-gated loops on top: an app-improvement loop (feedback + telemetry
+→ ranked fixes) and a creative-performance loop (read ad results → learn *why* a creative sold →
+propose the next creative → Neil ships). Reuses the proven `viral-autopsy → viral_swipe_file.md →
+grifon-cmo` brain, fed with real performance data instead of only external swipe videos.
+
+**Why it matters:** "Learn from past creative results" is impossible today because the app never sees
+results. This unblocks Item #16 (CAC/LTV) and Item #7 (perf-triggered OfferOptimizer rescue), both of
+which wait on a perf-tracking surface that does not exist.
+
+**Why parked:** Beta + `launch_readiness.md` P0s come first. But **Phase 0 (Meta CAPI + `events`
+table) is the one piece Neil endorsed building now**, parallel to beta, so the data exists when the
+post-beta tuning items fire.
+
+**When to resume:** Phase 0 — anytime (endorsed for parallel build). Phases 1–3 — post-beta, each its
+own plan + `/goal`.
+
+**Where to start:** `growth_loop.md` → Phase 0, as one thin vertical slice (pixel + Purchase CAPI via
+reused `api/webhook.ts` + one telemetry event end-to-end). Run `straw-man-audit` on the new `api/`.
+
+**Scope estimate:** Phase 0 ≈ 1–2 days (vertical slice). Phases 1–3 are separate efforts.
+
+**Source:** Neil, 2026-06-24 — *"DATA DRIVEN LEARNING/Feedback LOOP… gusto ko approver or reviewer
+lang ako."* Evaluation persisted at his request (chose to persist the doc over building immediately).
 
 ---
 

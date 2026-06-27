@@ -112,6 +112,18 @@ Marketing pages (landing, pricing, sales) MAY include **at most ONE** full-width
 - The band must be fully opaque and sit above global chrome (flashlight/grid): `relative z-10`.
 - Never propagate `proof-band` into the app shell, wizard, dashboard, or modules. One band per page, marketing only.
 
+### Per-module identity (in-app)
+
+Gold `#FFCC00` is the sole **action** color — every CTA, primary button, focus ring, toggle, selected/active state, and nav active state, app-wide. That rule is absolute and unchanged.
+
+For module **identity** only, each dashboard module additionally carries a signature **hue** + **lucide icon** from the GRIFON COMMAND registry ([config/moduleIdentity.ts](config/moduleIdentity.ts)). The hue gives each module its own "world" without fracturing the one design system:
+
+- **Allowed (identity surfaces only):** the module's icon, its icon-tile background (hue at ~10% alpha), the module header glow, and decorative in-module accents. Apply via **inline style** (hex + alpha) — never dynamic Tailwind classes, which the purge step strips.
+- **Forbidden:** never tint an action with the hue. CTAs, buttons, focus rings, selected/active states, and links stay gold. "Gold = do this" must never be diluted.
+- **Palette (tactical; no banned pink/cyan):** Director AI `#FFCC00` · Recon `#60A5FA` · War Room `#F87171` · Broadcast `#34D399` · Render Bay `#A78BFA` · Signal Modulator `#818CF8` · Edit Bay `#94A3B8` · Hook Lab `#A3E635` · Cinema Command `#2DD4BF` · Influencer Forge `#FB923C` · Creative Strike `#FBBF24` · Image Lab `#4ADE80` · Campaign Planner `#A8A29E` · Intelligence Uplink `#818CF8` (internal).
+
+This is the ONLY sanctioned use of non-gold hues. Outside module identity, gold remains the only accent.
+
 ## Typography
 
 - **headline-display / headline-lg:** Inter / Geist / SF Pro — clean geometric sans. Page titles frequently use a gradient fill (`bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500`) for the cinematic effect. Vertical (`to-b`) over horizontal (`to-r`) — multi-line headlines fade top-to-bottom like a movie title card; horizontal washes look like a banner gradient and break the cinematic register.
@@ -154,6 +166,60 @@ Elevation is expressed through **frosted glass**, not drop shadows:
 - **uploadDropzone:** `bg-zinc-950/50 border-2 border-dashed border-white/10 rounded-xl hover:border-[#FFCC00] hover:bg-zinc-800/80 transition-all cursor-pointer flex flex-col items-center justify-center p-6`. Native `<input type="file">` MUST be hidden.
 - **Icons:** ONLY `lucide-react` SVGs. Never raw text strings like `movie_filter`.
 
+## Wizard control system (shared tokens)
+
+The ad-creation wizard and the One-Shot composer read from ONE token source —
+[components/ui/wizardTokens.ts](components/ui/wizardTokens.ts) — so heights, radii, type, and
+spacing never drift step-to-step. Values were lifted from the One-Shot composer
+([components/OneShotAd/LaunchScreen.tsx](components/OneShotAd/LaunchScreen.tsx)), the reference
+for "clean." Import the consts (or the primitives below) instead of inlining strings.
+
+- **Control floor — `h-11` (44px, `CTRL_H`).** Every interactive control — pills, selects,
+  inputs, segmented toggles, popover triggers — sits on this tap-target floor. The primary CTA
+  may step up to `h-12`. No ad-hoc `py-*` heights on controls.
+- **Three radius tiers.** Controls `rounded-xl` (`R_CTRL`, 12px) · panels/cards `rounded-2xl`
+  (`R_PANEL`, 16px) · modals `rounded-3xl` (`R_MODAL`, 24px). (Consistent with Shapes above —
+  in-app controls stay rectangular, not pills.)
+- **Type scale.** `T_DISPLAY` (page title) · `T_CTRL` (`text-sm font-semibold`, control labels) ·
+  `T_VALUE` (`text-xs font-mono`, current values) · `T_LABEL` (`text-[10px]` mono caps, the
+  `//` meta-labels). These are the label-caps register applied consistently.
+- **Progressive disclosure (anti-dumbing rule).** Secondary/optional controls may be tucked into a
+  [Popover](components/ui/Popover.tsx) or [Modal](components/ui/Modal.tsx) to cut scroll — BUT
+  the control's current value stays visible on the collapsed trigger (`T_VALUE`), nothing used on
+  every run gets buried, and expand is one click. Disclosure must feel like *tidy*, not *taken
+  away*. Advanced/Director mode is the expert surface — never hide what an expert reaches for.
+
+**Shared primitives (use them; don't re-style inline):**
+[StepShell](components/ui/StepShell.tsx) (panel + standardized header) ·
+[StepFooter](components/ui/StepFooter.tsx) (sticky BACK/CONFIRM nav) ·
+[Popover](components/ui/Popover.tsx) · [Modal](components/ui/Modal.tsx) ·
+[FieldLabel](components/ui/FieldLabel.tsx) · [TextField + TextArea](components/ui/TextField.tsx)
+(tokenized successors to ui/Input + ui/Textarea) ·
+[SegButton + Pill](components/ui/SegButton.tsx) (toggle groups).
+
+## Motion system (shared tokens)
+
+App-wide `motion@12` animation reads from ONE token source —
+[components/ui/motionTokens.ts](components/ui/motionTokens.ts) — the motion sibling of
+`wizardTokens.ts`. Where that file fixes heights/radii/type, this one fixes **easing**,
+**duration**, and **spring physics** so motion never drifts component-to-component. Import the
+tokens and snap to the nearest tier; don't inline raw numbers into a `transition`. (`brand-check`
+flags inline transition values against this section.)
+
+- **Easing (`EASE`).** `out` (`easeOut`, the default reveal) · `inOut` (`easeInOut`, ambient
+  loops) · `expressive` (`[0.22, 1, 0.36, 1]`, premium hero/card entrances) · `veil`
+  (`[0.65, 0, 0.35, 1]`, full-screen route wipes). Reach past these only for a genuinely new feel.
+- **Duration (`DUR`), seconds.** `instant` 0.15 · `fast` 0.2 · `base` 0.3 · `slow` 0.45 ·
+  `entrance` 0.6 · `expressive` 0.8. Infinite decorative loops use the separate
+  `DUR.ambient` family (`pulse` 2.5 · `breathe` 4 · `drift` 8 · `slowDrift` 12) — pick by feel.
+- **Spring (`SPRING`).** `pop` (modal/panel entrances) · `standard` (sliding chrome — sidebars,
+  layout indicators) · `snappy` (segmented toggles) · `overshoot` (reserved for signature beats
+  like the clapper snap). Spread into a transition to add a `delay` (`{ ...SPRING.standard, delay }`).
+- **Reduced motion.** Tokens replace the *values*, not the accessibility gating. Keep every
+  `useReducedMotion()` guard and the `prefers-reduced-motion` CSS in [index.css](index.css); use
+  the `reducedMotion(reduce, transition)` helper to standardize the `reduce ? {duration:0} : …`
+  ternary.
+
 ## Dashboard pilot (Gemini-inspired)
 
 The dashboard (`components/Dashboard.tsx` and its exclusive cards — `CommandPalette`, `RecentWorkCard`, `ResumeDraftCard`, `OnboardingNudge`, `ActiveJobsPanel`) runs a scoped pilot that intentionally deviates from two rules above. The rest of the app still follows them — do not propagate these without sign-off.
@@ -172,5 +238,5 @@ The dashboard (`components/Dashboard.tsx` and its exclusive cards — `CommandPa
 **Don't:**
 - Don't use `bg-black` — always `bg-zinc-950` (surface).
 - Don't use conventional drop shadows for elevation — use glass + blur.
-- Don't introduce new accent colors — gold is the only driver.
+- Don't introduce new accent colors — gold is the only driver. (Sole exception: the documented per-module **identity** hues — icon/header/glow only, never actions. See Colors → Per-module identity.)
 - Don't use icon fonts or text-string icons — lucide-react only.

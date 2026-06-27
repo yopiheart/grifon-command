@@ -45,6 +45,7 @@ import {
   type StoryboardFlowInput,
 } from '../_lib/prompts.js';
 import type { MarketResearchInput, OfferOptimizerInput } from '../../types.js';
+import { logModelUsage } from '../_lib/modelCosts.js';
 
 const TEXT_LIMIT = 30;
 const TEXT_WINDOW_SECONDS = 60;
@@ -73,6 +74,7 @@ const classifyTemuProductServerSide = async (
     model: MODEL_FAST,
     contents: TEMU_CLASSIFIER_PROMPT(product, description),
   } as any);
+  logModelUsage('flow:adscript:temu-classify', MODEL_FAST, (response as any).usageMetadata);
   const text = response.text?.trim().toUpperCase() || 'REACTION';
   if (text.includes('ASMR')) return 'ASMR';
   if (text.includes('UTILITY')) return 'Utility';
@@ -97,6 +99,7 @@ const FLOW_REGISTRY: Record<string, FlowHandler> = {
       },
     } as any);
     const rawText = response.text || '{}';
+    logModelUsage('flow:marketmind', MODEL_TEXT, (response as any).usageMetadata);
     return JSON.parse(cleanJson(rawText));
   },
 
@@ -120,6 +123,7 @@ const FLOW_REGISTRY: Record<string, FlowHandler> = {
       },
     } as any);
     const rawText = response.text || '{}';
+    logModelUsage('flow:adscript', MODEL_TEXT, (response as any).usageMetadata);
     return parseAdScriptResponse(rawText);
   },
 
@@ -134,6 +138,7 @@ const FLOW_REGISTRY: Record<string, FlowHandler> = {
       },
     } as any);
     const rawText = response.text || '{}';
+    logModelUsage('flow:offer-optimizer', MODEL_TEXT, (response as any).usageMetadata);
     return parseOfferOptimizerResponse(rawText);
   },
 
@@ -148,6 +153,7 @@ const FLOW_REGISTRY: Record<string, FlowHandler> = {
         thinkingConfig: { thinkingBudget: 4000 },
       },
     } as any);
+    logModelUsage('flow:influencer-script', MODEL_TEXT, (response as any).usageMetadata);
     return parseInfluencerScriptResponse(response.text || '{}');
   },
 
@@ -161,6 +167,7 @@ const FLOW_REGISTRY: Record<string, FlowHandler> = {
         safetySettings: SAFETY_SETTINGS,
       },
     } as any);
+    logModelUsage('flow:storyboard', MODEL_FAST, (response as any).usageMetadata);
     return parseStoryboardResponse(response.text || '{}');
   },
 };
@@ -267,6 +274,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(400).json({ error: 'invalid_body', issues: parsed.error.issues });
     }
     const response = await ai.models.generateContent(parsed.data as any);
+    logModelUsage('legacy', parsed.data.model, (response as any).usageMetadata);
     return res.status(200).json({
       text: response.text ?? '',
       candidates: response.candidates ?? [],

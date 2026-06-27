@@ -1,6 +1,9 @@
 # Design Doc — Move heavy media to Cloudflare R2 (zero egress)
 
-**Status:** Phase 1 SHIPPED. Phase 2 R2 layer VERIFIED in dev. Pending: Vercel env + prod eyeball.
+**Status:** ✅ LIVE IN PROD as of 2026-06-17 (Neil). Phases 1–2 shipped, `MEDIA_STORE=r2` + the
+four `R2_*` vars wired into Vercel Production, redeployed, and a real prod render eyeballed.
+Egress risk closed. **Supabase org downgraded Pro → free on 2026-06-25 (Neil)** — the temporary
+egress bridge is retired. Remaining = Phase 5 cleanup only (see below), not a blocker.
 **Author:** 2026-06-13, during the Supabase egress incident.
 **Companion:** [STORAGE_AUDIT.md](../STORAGE_AUDIT.md) (why) · gallery fixes already shipped (Phase 2A+B).
 
@@ -12,10 +15,12 @@
 402-restricted the project on ~2026-06-16; Google login returned the
 `exceed_egress_quota` violation JSON. Two things happened:
 
-1. **Login restored — Pro bridge ACTIVE.** Org `ybbjvbgacbxblaaorglo` upgraded **free → `pro`**
-   (250 GB egress), lockout lifted, login confirmed working. ⚠️ **This Pro upgrade is a temporary
-   bridge.** Once R2 (Phases 2–5) is proven, **downgrade the org back to free** — egress will be
-   near zero. Don't leave Pro running indefinitely if cost matters.
+1. **Login restored — Pro bridge RETIRED 2026-06-25.** Org `ybbjvbgacbxblaaorglo` was upgraded
+   **free → `pro`** (250 GB egress) to lift the lockout. ✅ **Bridge downgraded back to `free` on
+   2026-06-25 (Neil)** after R2 was proven for ~1 week. Pre-flight verified safe via Supabase MCP:
+   egress ~0 (zero `/storage/v1/object` requests in API logs, empty storage service logs), DB 12 MB
+   (free cap 500 MB), Storage 554 MB / 320 objects (free cap 1 GB). All within free limits → no
+   read-only risk.
 
 2. **Phase 1 SHIPPED + committed.** Branch `r2-media-migration-phase1` (commit `4c499c1`), pushed
    to GitHub. Build + tests green. No behavior change — everything is dormant behind the
@@ -44,13 +49,20 @@
   scripts were disposable (removed). NOTE: a full UI render smoke was skipped — the app uses Google
   OAuth and there's no headless dev-login bypass, so an automated browser smoke stalls at auth.
 
-**NEXT ACTIONS (blocked on Neil):**
-1. **Add the four `R2_*` vars + `MEDIA_STORE=r2` to Vercel** project env (Production), then redeploy.
-2. **Eyeball one real render in prod** (Neil can log in): generate a clip, confirm it plays from a
-   `*.r2.cloudflarestorage.com` URL and shows in the Rendered Rail. Old Supabase objects TTL out at
-   48h — no backfill.
-3. Phase 5 (after ~1 week clean on R2): delete the Supabase upload paths, swap the cleanup cron for
-   an R2 lifecycle rule, and **downgrade the Supabase org Pro → free** (egress will be ~zero).
+**NEXT ACTIONS:**
+1. ✅ **DONE 2026-06-17 (Neil)** — four `R2_*` vars + `MEDIA_STORE=r2` added to Vercel Production env
+   and redeployed.
+2. ✅ **DONE 2026-06-17 (Neil)** — real prod render eyeballed, plays from `*.r2.cloudflarestorage.com`.
+   Old Supabase objects TTL'd out at 48h (no backfill).
+3. ✅ **DONE 2026-06-25 (Neil)** — Supabase org downgraded **Pro → free**. Egress bridge retired;
+   verified safe first (see Pro-bridge note above).
+4. ⏳ **Phase 5 (deferred cleanup, NOT a blocker — now the priority remnant)** — delete the Supabase
+   upload paths and swap the cleanup cron for an R2 lifecycle rule.
+   ⚠️ **CONCRETE TRIGGER (found 2026-06-25):** Supabase Storage still holds **320 objects / 554 MB**
+   that did NOT TTL out as assumed — likely buckets the gemini-videos cleanup cron doesn't touch.
+   It's under the free 1 GB cap today, but on `free` tier if that 554 MB grows past 1 GB the project
+   goes **read-only** — i.e. this is the seed of the *next* incident. Phase 5 cleanup (lifecycle rule
+   / sweep the stale buckets) is what closes it. Do before storage approaches ~1 GB.
 
 ---
 

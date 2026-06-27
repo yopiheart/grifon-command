@@ -9,12 +9,16 @@
 -- ============================================================
 create table if not exists public.subscriptions (
   user_id uuid primary key references auth.users(id) on delete cascade,
-  plan_id text not null check (plan_id in ('free','creator','pro','business')),
+  plan_id text not null check (plan_id in ('free','starter','pro','business')),
   status text not null check (status in ('active','past_due','canceled','trialing','incomplete')),
   billing_cycle text check (billing_cycle in ('monthly','annual')),
   current_period_end timestamptz,
   paymongo_customer_id text,
   paymongo_last_checkout_id text,
+  -- Top-up finished-ad credits (see credits.sql). Granted by add-on purchases,
+  -- consumed when the monthly video_ads allowance is exhausted.
+  video_ad_credits int not null default 0,
+  cinematic_credits int not null default 0,
   updated_at timestamptz not null default now()
 );
 
