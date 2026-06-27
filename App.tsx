@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useMemo, useRef, useSyncExternalStore } from 'react';
 import { ChevronLeft, Lightbulb, RotateCw, Mail, Check, Star, Apple, Sparkles } from 'lucide-react';
-import { ClientDetails, BusinessInfo, Script, Scene, VideoPrompt, Avatar, CinematicNarrativeScene, SceneBatchEntry } from './types';
+import { ClientDetails, BusinessInfo, Script, Scene, VideoPrompt, Avatar, CinematicNarrativeScene, SceneBatchEntry, LockablePresetId } from './types';
 import StepIndicator from './components/StepIndicator';
 import Step1ClientDetails from './components/Step1ClientDetails';
 import Step2BusinessInfo from './components/Step2BusinessInfo';
@@ -206,6 +206,7 @@ const App: React.FC = () => {
     aspectRatio: '9:16' | '16:9' | '1:1';
     finalScript: string;
     offer?: string;
+    lockedPresetId?: LockablePresetId;
   } | null>(null);
   const [cinematicResult, setCinematicResult] = useState<Scene[] | null>(null);
 
@@ -1327,7 +1328,7 @@ const App: React.FC = () => {
           seedPrompts={videoPrompts}
           storyboard={storyboard}
           defaultAspectRatio={aspectRatio ?? '9:16'}
-          onSendToAiEditor={(batch) => {
+          onSendToAiEditor={(batch, lockedPresetId) => {
             // Default path — skip Signal Modulator's redundant TTS pass. The AI
             // Editor consolidates voice once (audioOverlays unused, so []).
             setSceneBatch(batch);
@@ -1337,6 +1338,7 @@ const App: React.FC = () => {
               aspectRatio: aspectRatio ?? '9:16',
               finalScript: finalScript.join(' '),
               offer: clientDetails.offer,
+              lockedPresetId,
             });
             setActiveModule('edit_video');
           }}

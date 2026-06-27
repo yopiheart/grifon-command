@@ -3,12 +3,13 @@ import React, { useEffect, useState } from 'react';
 import {
   VideoEditInput, EditDecisionList, SceneBatchEntry, EditTargetPlatform,
   ConsolidationScene, FinalRenderScene, FinalRenderResult, VoiceLibrary, StabilityMode,
-  VoiceWord, FinalRenderRequest,
+  VoiceWord, FinalRenderRequest, LockablePresetId,
 } from '../types';
 import { generateVideoEditPlan, generateEditDecisionList } from '../services/geminiService';
 import { fetchVoices } from '../services/voiceService';
 import { consolidateVoices } from '../services/voiceConsolidationService';
 import { renderFinalVideo } from '../services/finalRenderService';
+import { buildLockedPreset } from '../services/renderLock';
 import { composeMusicBed } from '../services/musicService';
 import { estimateSpokenSec } from '../utils/spokenDuration';
 import { useSubscription } from '../hooks/useSubscription';
@@ -29,6 +30,8 @@ export interface EditorBatchPayload {
   finalScript: string;
   /** Wizard offer (clientDetails.offer) — prefills the end-card recap field. */
   offer?: string;
+  /** Look locked at GenerateVideo's Render All; absent → server rotates. */
+  lockedPresetId?: LockablePresetId;
 }
 
 interface EditVideoProps {
@@ -269,7 +272,12 @@ const BatchEditMode: React.FC<{
       // wizard offer — which carries the price — and burned it onto the last
       // scene (and covered the presenter's face). No auto-applied recap now; the
       // last scene renders clean, like before the 2026-06-13 feature.
-      const result = await renderFinalVideo({ scenes, aspectRatio: editorBatch.aspectRatio, music });
+      const result = await renderFinalVideo({
+        scenes,
+        aspectRatio: editorBatch.aspectRatio,
+        music,
+        preset: buildLockedPreset(editorBatch.lockedPresetId),
+      });
       if (result.status === 'failed') setRenderError(result.error ?? 'RENDER_FAILED');
       else setRenderResult(result);
     } catch (err: any) {
