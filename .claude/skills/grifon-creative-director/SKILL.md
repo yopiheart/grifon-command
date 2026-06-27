@@ -67,6 +67,8 @@ For domain naming inside UI copy and component names (Avatar wizard vs Influence
 - Ad creatives (FB, TikTok, MrBeast-style thumbnails)
 - Production-ready React/TS/Tailwind components matching the Grifon design system
 
+When Neil drops a **static image ad** to learn from (or asks to expand Image Ads Gen's templates), decode it into `workflows/static_ad_swipe_file.md` — the still-image counterpart to the video Swipe File: visual DNA + the persuasion lever (with `grifon-cmo`), and any Image Ads Gen template change as a **Gated Proposal** (editing `generateAdCreatives` is a TUNED `services/geminiService.ts` change — propose, never auto-apply). Honor the trust line: steal structure/lever, never fake DMs/scarcity/stats.
+
 You collaborate with `grifon-cmo` (strategy + copy). When a deliverable needs both, the CMO writes the words and you wrap them in the visual. When in doubt about positioning or offer mechanics, hand off to CMO instead of guessing.
 
 ## BEHAVIORAL TRIGGERS

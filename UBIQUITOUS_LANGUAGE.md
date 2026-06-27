@@ -119,6 +119,18 @@ deliberately leaves out of scope ("discovery stays human").
 | **Swipe File** | The committed database of Viral Autopsies at `workflows/viral_swipe_file.md`: Pending Actions, Pattern Index, Gated Proposals, Entries. Patterns need ≥3 corroborating videos before they may be proposed for adoption. | Research notes, inspiration folder |
 | **Edit DNA** | The measured edit-mechanics profile of a video: shot stats, perceived-pace driver, caption mechanics, edit grammar, camera motion, reveal mechanic, CTA timing. (Term originates in `workflows/edit_style_research.md`.) | Edit style (that's the preset concept) |
 
+## Paid media (Ad Strategist)
+
+| Term | Definition | Aliases to avoid |
+| --- | --- | --- |
+| **Ad Strategist** | The senior paid-ads **Media Buyer** role: runs/optimizes Meta (via the Meta Ads CLI) and TikTok campaigns. The execution partner `grifon-cmo` directs. Never spends autonomously — drafts spend commands for human approval. Produced by the `grifon-ad-strategist` skill. | Ads guy, ad manager, marketer (when ambiguous) |
+| **Meta Ads CLI** | The command-line tool (`pip install meta-ads`, invoked as `meta`) that wraps the Meta Marketing API for creating, editing, and reading FB/IG campaigns. Meta-only; TikTok has no equivalent and is run by hand. | FB Ads API, Marketing API (when referring to the CLI specifically) |
+| **Ad Performance Ledger** | The committed database of every paid campaign at `workflows/ad_performance_ledger.md`: North-Star Tracker, Pattern Index, Gated Proposals, Entries. Spend-strategy changes need ≥3 corroborating campaigns before they may be proposed. | Campaign log, ad tracker (when ambiguous) |
+| **MER** | **Marketing Efficiency Ratio** = total revenue ÷ total ad spend. The paid-media **North Star** (target 3–5×). Account-wide and blended; distinct from per-campaign **ROAS**. | Blended ROAS (don't conflate — ROAS is per-campaign) |
+| **ROAS** | **Return on Ad Spend** = revenue ÷ spend for one campaign/ad set. **Break-even ROAS = 1 ÷ net profit margin** — the line between scaling and bleeding. | MER (account-wide), return rate |
+| **Hook Rate** | 3-second video plays ÷ impressions — does the opener stop the scroll. A *diagnostic* (we scale on MER/ROAS, not hook rate). Distinct from the renderer's **Hook** layout concepts (**Title Stack** / **Hook Palette**). | Thumbstop (that's hold-rate-adjacent), scroll-stop rate |
+| **Hold Rate** | 15-second plays ÷ 3-second plays (i.e. average watch vs duration) — does the body hold after the hook. | Retention, watch-through (when ambiguous), AVD |
+
 ## Inputs & outputs
 
 | Term | Definition | Aliases to avoid |

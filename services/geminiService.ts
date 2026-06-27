@@ -2476,7 +2476,7 @@ JSON STRUCTURE:
 
 export const generateAdCreatives = async (data: UplinkData): Promise<AdVariant[]> => {
     await delay(1000);
-    const prompt = `
+    const productPrompt = `
 ### Role: Direct Response Creative Director
 Task: Generate 2 high-conversion Image Ad variants for "${data.brandIdentityName}".
 
@@ -2488,26 +2488,103 @@ Main Benefit: ${data.primaryBenefit}
 Market Pain Point: ${data.marketPainPoint}
 Unique Value Proposition: ${data.uvp}
 Key Features: ${data.keyFeatures}
-Brand Colors: ${data.hexCodes}
+Brand Palette (reference only): ${data.hexCodes}
 
 TEMPLATES TO CHOOSE FROM:
 1. "Press Clip" (Looks daylight a news snippet)
 2. "Benefit Anatomy" (Labels pointing to product features)
 3. "Split-Screen" (Before/After or Problem/Solution)
 
-CRITICAL VISUAL RULE:
+CRITICAL VISUAL RULES:
 - If a device (phone/laptop) is shown, the SCREEN MUST FACE THE VIEWER directly.
+- The "imagePrompt" must describe the brand palette in PLAIN WORDS (e.g. "deep forest green and warm white"), NEVER as hex codes. Do NOT put any "#" hex value, price, or literal text into the imagePrompt — the image model renders text unreliably (NO_TEXT_CONSTRAINT); on-image copy is composited separately.
 
 JSON STRUCTURE:
 {
   "id": number,
   "templateType": "Press Clip" | "Benefit Anatomy" | "Split-Screen",
   "headline": "Short punchy headline",
-  "imagePrompt": "Detailed technical prompt for image gen. Include wardrobe, lighting, ${data.ethnicityProfile} characters, and ${data.aspectRatio} layout.",
+  "imagePrompt": "Detailed technical prompt for image gen. Include wardrobe, lighting, ${data.ethnicityProfile} characters, ${data.aspectRatio} layout, and the brand palette described in plain words (no hex codes, no embedded text).",
   "caption": "Primary ad copy text in ${data.language}",
   "hookLogic": "Brief explanation of the psychological trigger used"
 }
     `;
+
+    // GP-2 "Niche Callout" family (text-composited; see workflows/static_ad_swipe_file.md).
+    // Self-identification pattern-interrupt — the niche + qualifier carry the ad.
+    const calloutPrompt = `
+### Role: Direct Response Strategist — Niche Callout Ads
+Task: Generate 3 "Niche Callout" image-ad variants for "${data.brandIdentityName}". Each ad self-selects ONE hyper-specific buyer and offers a value-first asset.
+
+INTELLIGENCE:
+Brand: ${data.brandIdentityName}
+Audience: ${data.targetDemographic} (${data.ageRange})
+Main Benefit: ${data.primaryBenefit}
+Market Pain Point: ${data.marketPainPoint}
+Unique Value Proposition: ${data.uvp}
+Products / Services offered: ${data.inventoryList}
+Language: ${data.language}
+
+PATTERN (Sabri Suby dream-buyer callout):
+"If you run a [NICHE] [QUALIFIER?], we built [VALUE-FIRST OFFER] for you."
+- niche = ONE specific, named buyer segment — VARY it across the 3 variants.
+- qualifier = a REAL proof-of-fit (size / revenue / situation) ONLY IF grounded in the Audience above. If none is known, OMIT it entirely ("If you run a [niche], we built …"). NEVER invent a number.
+- leadMagnet = a REAL value-first offer grounded in the Benefit / Products / UVP (a free guide, audit, sample, trial, or the core offer reframed as the reason to act). NEVER name a freebie that may not exist; when unsure, use the real core offer/benefit.
+
+TRUST GUARDRAIL: no fake scarcity, no invented stats, no fake testimonials. Every qualifier must be plausibly real for ${data.brandIdentityName}.
+
+Return a JSON array of 3 objects:
+{
+  "id": number,
+  "templateType": "Niche Callout",
+  "headline": "the full callout sentence",
+  "caption": "Primary ad copy text in ${data.language}",
+  "hookLogic": "the psychological trigger (specificity / self-identification)",
+  "imagePrompt": "",
+  "composition": { "niche": "...", "qualifier": "...", "leadMagnet": "..." }
+}
+    `;
+
+    // GP-1 "SaaS Offer / Upsell" family (text-composited over a dark premium lane;
+    // see workflows/static_ad_swipe_file.md). Warm-retarget upgrade creatives.
+    const saasPrompt = `
+### Role: Direct Response Strategist — SaaS Upsell Ads
+Task: Generate 3 warm-retarget upsell ad variants for "${data.brandIdentityName}" — ONE of each template below. The viewer already knows the brand (free / engaged user); drive the upgrade. Outcome-framed, NEVER feature-listed.
+
+INTELLIGENCE:
+Brand: ${data.brandIdentityName}
+Audience: ${data.targetDemographic} (${data.ageRange})
+Main Benefit: ${data.primaryBenefit}
+Pain Point: ${data.marketPainPoint}
+UVP: ${data.uvp}
+Key Inclusions: ${data.keyFeatures}
+Offer Price: ${data.offerPrice} (was ${data.originalPrice})
+Language: ${data.language}
+
+TRUST GUARDRAIL: no fake scarcity, no fake testimonials, no invented numbers. A guarantee must be a real, honored policy. No "unlimited" promises.
+
+HEADLINE RULE: EVERY object MUST have a non-empty "headline" — it is the largest line on the ad. Never leave it blank; never return only a brand name.
+
+Return a JSON array of EXACTLY 3 objects, ONE per templateType:
+
+1) "Guarantee Hero" — a risk-reversal headline (the dream outcome fused to a real guarantee).
+   headline: "<the risk-reversal hero line — REQUIRED, e.g. 'First ad live in 24h or your month is free.'>"
+   composition: { "guarantee": "<the real reversal, restated briefly>", "ctaLabel": "<2-4 word CTA>", "badge": "<short offer/guarantee badge>" }
+
+2) "Ticket Compare" — anchor the current (free/lower) tier against the target tier.
+   headline: "<short directive — REQUIRED, e.g. CHOOSE YOUR LEVEL>"
+   composition: { "tiers": [ {"name":"Free","lines":["<2-3 plain limits>"],"highlight":false}, {"name":"<target tier>","lines":["<3-4 outcome lines>"],"highlight":true} ], "ctaLabel": "<CTA>" }
+
+3) "Offer Stack Checklist" — a guarantee headline + a what-you-GET list.
+   headline: "<the guarantee line — REQUIRED>"
+   composition: { "bullets": ["<outcome 1>","<outcome 2>","<outcome 3>","<outcome 4>"], "guarantee": "<penny-back tag>", "ctaLabel": "<CTA>" }
+
+Every object MUST also include: "id" (number), "templateType" (exact string above), a non-empty "headline" (per the HEADLINE RULE), "caption" (primary ad copy in ${data.language}), "hookLogic" (the persuasion lever), "imagePrompt": "".
+    `;
+
+    const prompt = data.family === 'callout' ? calloutPrompt
+      : data.family === 'saas-offer' ? saasPrompt
+      : productPrompt;
 
     const response: GenerateContentResponse = await retryWithBackoff(() => proxyGenerateContent({
         model: textModel,

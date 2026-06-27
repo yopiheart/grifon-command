@@ -1,0 +1,4 @@
+HEADLINE: STOP SETTLING FOR LESS
+TEMPLATE: Ticket Compare
+CAPTION: Why keep settling for convenience at the cost of taste? Your morning ritual is the most important part of your day. See why switching from instant granules to our fresh-roasted single-origin Barako changes everything about how you start your shift.
+HOOK_LOGIC: Uses loss aversion by contrasting the mediocre experience of current habits against the sensory upgrade of the premium tier.
