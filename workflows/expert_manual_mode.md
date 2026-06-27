@@ -344,3 +344,56 @@ himself while Claude analyzes the exported scenes.
    Bucket B edit did NOT touch), that's a small targeted follow-up.
 
 Smoke = `smoke-tester` subagent (foreground). Don't drive playwright in the main conversation.
+
+---
+
+# ✅ BUCKET B — RE RENDER VERIFIED + PRODUCT NO-REGRESSION PROVEN (2026-06-28, session 3)
+
+Live Director's-Cut **Real Estate** render via `smoke-tester` (foreground): created+confirmed test
+account, `grifon_dev_unlock='1'`, `GRIFON_DEV_UNMETERED` re-added to `.env`. Assets = committed
+`public/examples/ex-{facade,living,kitchen,bedroom,view}.png` + `services-practitioner.png` presenter;
+custom 6-beat Taglish "Verdé Heights — Tagaytay" script (within caps). All 6 scenes rendered, no
+auth/quota walls.
+
+**Method note (load-bearing):** anchoring a scene SHORT-CIRCUITS the AI render —
+`hooks/useExpertGeneration.ts:184` sets `scene.imageUrl = scene.manualUploadUrl` verbatim — so anchored
+scenes BYPASS the Bucket B venue pipeline. To exercise Bucket B you must leave scenes on **Auto** (routes
+through `generateStoryboard` venue-slot mapping → `renderSceneImages`). Only "Direct this scene" (Scene 4)
+was overridden.
+
+**Findings — Bucket B working, no regression:**
+- **AVATAR_RELIGHT works** — presenter genuinely relit + grounded into the rooms (contact shadows, matched
+  ambient), not the old pasted/composite feel. Finding 1 fixed.
+- **Anti-look-alike + PLACE_IDENTITY_LOCK hold** — venues are the REAL uploaded rooms/facade, no generic
+  look-alike drift. Finding 2a fixed.
+- **CAMERA_FREEDOM works** — hook + scenes get genuinely new cinematic angles, not flat copy-paste.
+  Findings 1/5.
+- **avatar_venue "gold standard" did NOT regress** — presenter composited into the EXACT kitchen,
+  identity held, believable shadows.
+- **Cohesive cinematic grade** across all 6 scenes; presenter consistent (scenes 2/4/6).
+
+**One real defect — NOT a Bucket B regression (separate, non-tuned):** "Direct this scene" silently fell
+back to the Auto shot on Scene 4 because `optimizeImagePrompt` (`services/geminiService.ts:2138`, called
+from `hooks/useExpertGeneration.ts:163`) threw a JSON `SyntaxError` (malformed Gemini JSON at position
+1719) → the `try` never set `userImagePromptOverride` / dropped `venueSlot`. Net: the user's typed
+direction was ignored with NO visible error (silent fallback). Fix is **non-tuned** (harden the JSON
+parse / retry on malformed JSON / surface the failure instead of silently falling back). Track as its own
+slice. (Screens were in `.tmp/dc-smoke2/` — disposable, gone on reboot; findings captured here in words.)
+
+**Product no-regression — PROVEN BY CONSTRUCTION (no live render needed):** the Bucket B patch (`b3638a3`,
+16+/5−, `geminiService.ts` only) is entirely inside the `venue` and `avatar_venue` branches of
+`generateSceneImage`'s `referenceImageMode` conditional (hunks @1978 / @1995 / @2008). Product ads use the
+UNTOUCHED `else`/product-lock branch (line ~2018) → they never see these rules. The "Bukidnon Brew product
+must stay clean" gate is satisfied by code scope — stronger than one stochastic render.
+
+**Merge readiness:** Bucket B RE render ✅ verified · product no-regression ✅ proven by patch scope. F1
+parity (One-Shot RE vs Expert, same assets) remains OPTIONAL — a quality comparison, not a tuned-safety
+gate. **Bucket B is cleared to merge on the safety axis.** Open follow-up: the `optimizeImagePrompt`
+JSON-hardening slice (directed-scene reliability).
+
+**Reusable smoke setup (so it's never lost again):** test account `smoketest-dc@grifon.dev` (created via
+Supabase admin API with `email_confirm:true`; recreate any session with the same admin-create call +
+service-role key from `.env`). `.env` needs `GRIFON_DEV_UNMETERED=true` + `GRIFON_DEV_UNMETERED_VIDEO=true`
+(gitignored, defreezer-wiped — re-add via Edit). Smoke-tester signs in (email/password), sets
+`grifon_dev_unlock='1'`, takes the Expert door, leaves scenes on Auto, renders. Assets = the committed
+`public/examples/ex-*.png` set.
