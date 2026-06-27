@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import {
   X, User, Crown, Bell, Palette, LifeBuoy, Shield, LogOut, ArrowRight, Check,
 } from 'lucide-react';
+import { SPRING } from '../ui/motionTokens';
 import type { PlanId } from '../../utils/planGate';
 import { grant as grantConsent, withdraw as withdrawConsent, getMarketingConsent } from '../../services/consentService';
 
@@ -121,7 +122,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
             initial={{ opacity: 0, scale: 0.97, y: 16 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.97, y: 16 }}
-            transition={{ type: 'spring', stiffness: 320, damping: 30 }}
+            transition={SPRING.standard}
             className="relative w-full sm:max-w-lg h-full sm:h-auto sm:max-h-[85vh] bg-zinc-900/90 backdrop-blur-xl sm:rounded-3xl ring-1 ring-white/10 shadow-[0_0_60px_rgba(0,0,0,0.6)] flex flex-col overflow-hidden"
           >
             <div className="flex items-center justify-between px-5 py-4 border-b border-white/[0.06] shrink-0">

@@ -65,7 +65,17 @@ Return ONLY a JSON object with this exact shape (no markdown fence, no prose):
   "storytelling_format": {"name": "<e.g. hook-problem-agitate-solve, listicle, transformation, testimonial>", "beats": [{"t": "<start-end s>", "beat": "<beat name>", "summary": "<one line>"}]},
   "transcript": "<full verbatim transcript of VO/dialogue>",
   "why_it_works": [{"claim": "<one specific reason this video retains/converts>", "timestamp": "<the second(s) that prove it>", "evidence": "<the measurable observation backing the claim — must contain a number (a duration, a rate, a count, a %)>", "confidence": "<high | medium | low>"}],
-  "weaknesses": ["<anything this video does badly, with timestamp>"]
+  "weaknesses": ["<anything this video does badly, with timestamp>"],
+  "believability": {
+    "performance": {"observation": "<energy, eye-contact-to-lens, gesture, emotion arc, authenticity cues — or 'not assessable' if no on-screen person>", "evidence": "<what on screen shows it + ~timestamp>", "confidence": "<high | medium | low>"},
+    "voice_delivery": {"observation": "<tone, pace, emphasis, natural pauses/breaths — or 'not assessable' if no voice>", "evidence": "<...>", "confidence": "<high | medium | low>"},
+    "lighting": {"observation": "<available / ring / studio; flat vs modeled; window vs fixture>", "evidence": "<...>", "confidence": "<high | medium | low>"},
+    "camera_lens": {"observation": "<phone selfie vs framed; focal feel; handheld drift vs locked>", "evidence": "<...>", "confidence": "<high | medium | low>"},
+    "image_realism": {"observation": "<skin texture/pores, imperfections, lived-in background, real props vs plastic/over-clean>", "evidence": "<...>", "confidence": "<high | medium | low>"},
+    "lip_sync": {"observation": "<mouth↔audio match; any drift/desync — or 'not assessable' if no talking face>", "evidence": "<...>", "confidence": "<high | medium | low>"},
+    "observed_register": "<raw-ugc | polished-ugc | cinematic>",
+    "source_realism_verdict": {"verdict": "<real-human | likely-ai | mixed>", "evidence": "<the specific tells that decided it + ~timestamp>", "confidence": "<high | medium | low>"}
+  }
 }
 
 HARD RULES:
@@ -73,6 +83,7 @@ HARD RULES:
 - Estimate numbers honestly from what you observe (shot lengths, caption swap rate, zoom speed). Approximate is fine; vague is not.
 - transcript must be verbatim, not summarized.
 - Report what IS there, not what should be. If captions are absent, say so.
+- believability: classify exactly ONE observed_register (raw-ugc = phone selfie / available light / unretouched / lived-in; polished-ugc = creator-grade ring light, steady, clean-but-real; cinematic = premium/studio, reads as "an ad"). Judge source_realism_verdict from concrete tells (skin/hands/teeth/eye artifacts, lip-sync drift, impossible lighting, plastic texture) — NOT vibes. A believability dimension with no subject to read is "not assessable", not an invented read.
 """
 
 # why_it_works entries and core hook fields are checked for substance below;
@@ -82,6 +93,12 @@ REQUIRED_TOP_KEYS = [
     "edit_grammar", "camera", "storytelling_format", "transcript",
     "why_it_works",
 ]
+
+# believability is intentionally NOT in REQUIRED_TOP_KEYS (soft capture). These
+# enums are quoted from workflows/believability_dna.md (realism registers +
+# AI-slop source guardrail) and only typo-guard a present-but-malformed block.
+REGISTER_VALUES = {"raw-ugc", "polished-ugc", "cinematic"}
+REALISM_VERDICT_VALUES = {"real-human", "likely-ai", "mixed"}
 
 
 def fail(code: int, label: str, detail: str) -> None:
@@ -223,6 +240,18 @@ def validate_specificity(analysis: dict) -> list[str]:
             problems.append(f"why_it_works[{i}] evidence has no measured value: {ev[:80]!r}")
     if len(str(analysis.get("transcript", "")).strip()) < 20:
         problems.append("transcript missing or suspiciously short")
+    # believability is soft-captured: its absence never fails the gate (clips with
+    # no human subject legitimately omit it). Only typo-guard the two enums when
+    # the block IS present, so a malformed register can't pollute a pattern count.
+    bel = analysis.get("believability")
+    if isinstance(bel, dict):
+        register = bel.get("observed_register")
+        if register is not None and register not in REGISTER_VALUES:
+            problems.append(f"believability.observed_register not in {REGISTER_VALUES}: {register!r}")
+        verdict = (bel.get("source_realism_verdict") or {}).get("verdict") \
+            if isinstance(bel.get("source_realism_verdict"), dict) else None
+        if verdict is not None and verdict not in REALISM_VERDICT_VALUES:
+            problems.append(f"believability.source_realism_verdict.verdict not in {REALISM_VERDICT_VALUES}: {verdict!r}")
     return problems
 
 

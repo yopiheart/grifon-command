@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
+import { DUR, SPRING } from './motionTokens';
 import { Check, Crown, Sparkles, X } from 'lucide-react';
 import { GoldButton } from './GoldButton';
 import { PLAN_FEATURES } from '../../config/planFeatures';
@@ -127,7 +128,7 @@ export const QuotaWallModal: React.FC<QuotaWallModalProps> = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
+          transition={{ duration: DUR.fast }}
           onClick={onDismiss}
           role="dialog"
           aria-modal="true"
@@ -138,7 +139,7 @@ export const QuotaWallModal: React.FC<QuotaWallModalProps> = ({
             initial={reduce ? { opacity: 0 } : { opacity: 0, y: 24, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: 16, scale: 0.98 }}
-            transition={{ type: 'spring', stiffness: 260, damping: 22 }}
+            transition={SPRING.pop}
             onClick={(e) => e.stopPropagation()}
             className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/80 backdrop-blur-xl shadow-[0_0_60px_-12px_rgba(255,204,0,0.35)]"
           >

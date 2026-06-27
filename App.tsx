@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useMemo, useRef, useSyncExternalStore } from 'react';
 import { ChevronLeft, Lightbulb, RotateCw, Mail, Check, Star, Apple, Sparkles } from 'lucide-react';
-import { ClientDetails, BusinessInfo, Script, Scene, VideoPrompt, Avatar, CinematicNarrativeScene, SceneBatchEntry } from './types';
+import { ClientDetails, BusinessInfo, Script, Scene, VideoPrompt, Avatar, CinematicNarrativeScene, SceneBatchEntry, LockablePresetId } from './types';
 import StepIndicator from './components/StepIndicator';
 import Step1ClientDetails from './components/Step1ClientDetails';
 import Step2BusinessInfo from './components/Step2BusinessInfo';
@@ -18,6 +18,7 @@ import Step7FinalOutput from './components/Step7FinalOutput';
 import { GlassPanel } from './components/ui/GlassPanel';
 import { GoldButton } from './components/ui/GoldButton';
 import { GrifonMark } from './components/ui/GrifonMark';
+import { BootScreen } from './components/ui/BootScreen';
 import Input from './components/ui/Input';
 import { ErrorBoundary } from './components/ui/ErrorBoundary';
 import Dashboard from './components/Dashboard';
@@ -87,11 +88,7 @@ if (typeof window !== 'undefined') {
   }
 }
 
-const GrifonLogo = ({ className = "h-24 w-auto" }) => (
-  <img src="/logo.png" alt="GRIFON Logo" className={`object-contain ${className}`} />
-);
-
-type Route = 'landing' | 'pricing' | 'checkout' | 'billing_3ds_return' | 'app' | 'billing_success' | 'terms' | 'privacy' | 'refund' | 'support';
+type Route ='landing' | 'pricing' | 'checkout' | 'billing_3ds_return' | 'app' | 'billing_success' | 'terms' | 'privacy' | 'refund' | 'support';
 
 const detectInitialRoute = (): Route => {
   if (typeof window === 'undefined') return 'landing';
@@ -148,7 +145,6 @@ const App: React.FC = () => {
           {node}
         </PlanGate>
       );
-  const [bootLine, setBootLine] = useState(0);
   const [authEmail, setAuthEmail] = useState('');
   const [authPassword, setAuthPassword] = useState('');
   const [authConfirm, setAuthConfirm] = useState('');
@@ -219,6 +215,7 @@ const App: React.FC = () => {
     aspectRatio: '9:16' | '16:9' | '1:1';
     finalScript: string;
     offer?: string;
+    lockedPresetId?: LockablePresetId;
   } | null>(null);
   const [cinematicResult, setCinematicResult] = useState<Scene[] | null>(null);
 
@@ -246,30 +243,48 @@ const App: React.FC = () => {
     prevScriptTypeRef.current = businessInfo.scriptType;
   }, [businessInfo.scriptType]);
 
-  const bootLines = [
-    "> INITIALIZING GRIFON_DNA...",
-    "> LOADING MARKET_INTEL_VAULT...",
-    "> SYNCING SIGNAL_MODULATOR...",
-    "> ACCESS_GRANTED."
-  ];
-
+  // FILM LEADER boot — hold the studio-ignition screen until the session and any
+  // pending wizard draft are genuinely resolved (real readiness, not a fake
+  // timer), with a minimum on-screen time so it plays as a beat, not a flash.
+  const bootStartRef = useRef<number | null>(null);
   useEffect(() => {
-    if (isBooting) {
-      const interval = setInterval(() => {
-        setBootLine(prev => {
-          if (prev >= bootLines.length - 1) {
-            clearInterval(interval);
-            setTimeout(() => {
-              setIsBooting(false);
-            }, 500);
-            return prev;
-          }
-          return prev + 1;
-        });
-      }, 350);
-      return () => clearInterval(interval);
+    if (!isBooting) {
+      bootStartRef.current = null;
+      return;
     }
-  }, [isBooting]);
+    if (bootStartRef.current === null) bootStartRef.current = Date.now();
+    const ready = !isCheckingSession && !isLoadingSession;
+    if (!ready) return;
+    const MIN_MS = 1400;
+    const elapsed = Date.now() - (bootStartRef.current ?? Date.now());
+    const t = window.setTimeout(() => setIsBooting(false), Math.max(0, MIN_MS - elapsed));
+    return () => window.clearTimeout(t);
+  }, [isBooting, isCheckingSession, isLoadingSession]);
+
+  // Post-auth redirect — once authenticated, move an operator who's sitting on the
+  // marketing gateway INTO the app (the boot screen is a visual beat, not a route
+  // change). Fires once per auth so a deliberate /pricing or /billing visit by a
+  // logged-in user is preserved. Without this, login lands back on '/'.
+  const postAuthRedirectedRef = useRef(false);
+  useEffect(() => {
+    if (!isAuthenticated) {
+      postAuthRedirectedRef.current = false;
+      return;
+    }
+    if (postAuthRedirectedRef.current) return;
+    postAuthRedirectedRef.current = true;
+    // Only the marketing gateway gets bounced into the app; a deliberate
+    // /pricing or /billing visit by a logged-in user is preserved.
+    if (currentRoute === 'landing') {
+      setCurrentRoute('app');
+      if (typeof window !== 'undefined') {
+        window.history.replaceState({}, '', ROUTE_PATHS.app);
+      }
+    }
+    // Fires once per authentication (ref-guarded) — intentionally keyed on
+    // isAuthenticated only, capturing the route at the moment auth resolves.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -287,6 +302,11 @@ const App: React.FC = () => {
         setUserEmail(data.session.user.email ?? null);
         setUserId(data.session.user.id);
         setIsAuthenticated(true);
+        // Returning from an OAuth redirect — play the Film Leader boot once.
+        if (typeof sessionStorage !== 'undefined' && sessionStorage.getItem('grifon_oauth_pending')) {
+          sessionStorage.removeItem('grifon_oauth_pending');
+          setIsBooting(true);
+        }
       } else {
         setIsLoadingSession(false);
       }
@@ -572,6 +592,12 @@ const App: React.FC = () => {
     setAuthError('');
     setIsSigningIn(true);
     try {
+      // Mark this redirect as a deliberate OAuth login so that when the provider
+      // bounces back (full page reload), we play the Film Leader boot — without
+      // it, a logged-in user's ordinary refresh would also boot every time.
+      if (typeof sessionStorage !== 'undefined') {
+        sessionStorage.setItem('grifon_oauth_pending', '1');
+      }
       await signInWithProvider(provider);
     } catch (err: any) {
       const label = provider === 'google' ? 'Google' : provider === 'github' ? 'GitHub' : 'Apple';
@@ -828,7 +854,15 @@ const App: React.FC = () => {
     );
   }
 
-  if (currentRoute === 'landing') {
+  // A logged-in user — or one mid-OAuth-return (provider bounces back to '/',
+  // resetting the route to 'landing') — must NEVER see the marketing landing:
+  // it would flash for a frame before the post-auth redirect / Film Leader boot
+  // takes over. The OAuth flag distinguishes a returning login from a genuine
+  // public visit during the brief session check, so public visitors still get
+  // the landing immediately (no blank).
+  const oauthReturning =
+    typeof sessionStorage !== 'undefined' && !!sessionStorage.getItem('grifon_oauth_pending');
+  if (currentRoute === 'landing' && !isAuthenticated && !isBooting && !oauthReturning) {
     return (
       <ErrorBoundary name="route:landing" resetKey={currentRoute} resetLabel="RETRY">
         <LandingPage
@@ -982,23 +1016,7 @@ const App: React.FC = () => {
         </div>
 
         {isBooting ? (
-          <GlassPanel className="w-full max-w-md p-10 z-20 animate-in fade-in zoom-in-95 duration-300">
-             <div className="mb-8 flex justify-center">
-                <GrifonLogo className="h-24 w-auto text-[#FFCC00] animate-pulse" />
-             </div>
-             <div className="space-y-4 font-mono text-sm">
-                {bootLines.slice(0, bootLine + 1).map((line, i) => (
-                  <div key={i} className={`flex items-center gap-3 ${i === bootLine ? 'text-[#FFCC00]' : 'text-zinc-500'}`}>
-                    <span className="shrink-0">[ OK ]</span>
-                    <span className="tracking-tighter">{line}</span>
-                    {i === bootLine && <span className="w-2 h-4 bg-[#FFCC00] animate-pulse"></span>}
-                  </div>
-                ))}
-             </div>
-             <div className="mt-10 pt-6 border-t border-white/10 text-center">
-                <p className="text-[10px] text-zinc-600 uppercase tracking-[0.5em] animate-pulse">ESTABLISHING_NEURAL_LINK</p>
-             </div>
-          </GlassPanel>
+          <BootScreen userEmail={userEmail} />
         ) : (
           <div className="relative z-10 w-full flex flex-col items-center">
             {/* Compact header — the whole gateway must fit one phone screen without scrolling */}
@@ -1390,7 +1408,7 @@ const App: React.FC = () => {
           seedPrompts={videoPrompts}
           storyboard={storyboard}
           defaultAspectRatio={aspectRatio ?? '9:16'}
-          onSendToAiEditor={(batch) => {
+          onSendToAiEditor={(batch, lockedPresetId) => {
             // Default path — skip Signal Modulator's redundant TTS pass. The AI
             // Editor consolidates voice once (audioOverlays unused, so []).
             setSceneBatch(batch);
@@ -1400,6 +1418,7 @@ const App: React.FC = () => {
               aspectRatio: aspectRatio ?? '9:16',
               finalScript: finalScript.join(' '),
               offer: clientDetails.offer,
+              lockedPresetId,
             });
             setActiveModule('edit_video');
           }}

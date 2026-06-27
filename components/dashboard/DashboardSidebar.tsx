@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import {
   Plus, Search, PanelLeftClose, PanelLeft, Bell, Settings, Lock, History, X, type LucideIcon,
 } from 'lucide-react';
+import { SPRING } from '../ui/motionTokens';
 import { GrifonMark } from '../ui/GrifonMark';
 
 export interface SidebarNavItem {
@@ -199,7 +200,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = (props) => {
       <motion.aside
         initial={false}
         animate={{ width: collapsed ? 76 : 268 }}
-        transition={{ type: 'spring', stiffness: 380, damping: 34 }}
+        transition={SPRING.standard}
         className="hidden lg:flex fixed left-0 top-0 bottom-0 z-50 bg-zinc-950/90 backdrop-blur-xl border-r border-white/[0.06] overflow-hidden"
       >
         <Body expanded={!collapsed} />
@@ -216,7 +217,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = (props) => {
             />
             <motion.aside
               initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }}
-              transition={{ type: 'spring', stiffness: 360, damping: 34 }}
+              transition={SPRING.standard}
               className="fixed left-0 top-0 bottom-0 z-[61] w-[86vw] max-w-[320px] bg-zinc-950/95 backdrop-blur-xl border-r border-white/10 lg:hidden"
             >
               <Body expanded mobile />

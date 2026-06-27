@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import { EASE, DUR } from "./ui/motionTokens";
 import { ShieldCheck, Check as CheckIcon, X as XIcon, Lock as LockIcon, Star as StarIcon, Film as FilmIcon } from "lucide-react";
 import { toast } from "sonner";
 import { AnimatedBorder } from "./ui/AnimatedBorder";
@@ -244,7 +245,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
             y: [0, -50, 30, 0],
             scale: [1, 1.1, 0.9, 1] 
           }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: DUR.ambient.drift, repeat: Infinity, ease: EASE.inOut }}
           className="absolute top-[-10%] left-[-10%] w-[500px] md:w-[800px] aspect-square bg-[#FFCC00]/8 rounded-full blur-[100px] md:blur-[150px] opacity-60"
         />
         <motion.div 
@@ -253,7 +254,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
             y:[0, 40, -20, 0],
             scale:[1, 0.9, 1.1, 1] 
           }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: DUR.ambient.slowDrift, repeat: Infinity, ease: EASE.inOut }}
           className="absolute top-[20%] right-[-10%] w-[400px] md:w-[600px] aspect-square bg-[#FFCC00]/15 rounded-full blur-[100px] md:blur-[150px] opacity-60"
         />
       </div>

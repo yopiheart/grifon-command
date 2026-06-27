@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { DUR } from './motionTokens';
 import { Clock, ArrowRight, Film, Search, Target, Type, Image as ImageIcon, Video, User, Clapperboard, Wand2, Calendar, Scissors, Mic } from 'lucide-react';
 import type { RecentItem, RecentWorkKind } from '../../services/recentWorkService';
 
@@ -53,7 +54,7 @@ export const RecentWorkCard: React.FC<RecentWorkCardProps> = ({ items, onResume,
     <motion.div
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay }}
+      transition={{ duration: DUR.slow, delay }}
       className="bg-zinc-900/70 backdrop-blur-xl rounded-2xl p-4 lg:p-5"
     >
       <div className="flex items-center justify-between mb-3">

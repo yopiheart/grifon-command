@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { Play, Check } from 'lucide-react';
+import { EASE, DUR } from '../ui/motionTokens';
 
 /**
  * Tiny looping "show-don't-tell" demos, one per module, for the landing
@@ -27,7 +28,7 @@ export const DirectorDemo: React.FC = () => {
               transition={
                 reduce
                   ? undefined
-                  : { duration: 3, repeat: Infinity, delay: i * 0.35, ease: 'easeInOut' }
+                  : { duration: DUR.ambient.breathe, repeat: Infinity, delay: i * 0.35, ease: EASE.inOut }
               }
             >
               <span className="absolute top-1 left-1 text-[7px] font-mono text-zinc-600">0{i + 1}</span>
@@ -44,7 +45,7 @@ export const DirectorDemo: React.FC = () => {
             className="h-full bg-gradient-to-r from-[#FFCC00] to-[#FFCC00]/50"
             initial={false}
             animate={reduce ? { width: '64%' } : { width: ['8%', '100%'] }}
-            transition={reduce ? undefined : { duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+            transition={reduce ? undefined : { duration: DUR.ambient.breathe, repeat: Infinity, ease: EASE.inOut }}
           />
         </div>
       </div>
@@ -69,7 +70,7 @@ export const ResearchDemo: React.FC = () => {
             transition={
               reduce
                 ? undefined
-                : { duration: 2.6, repeat: Infinity, delay: i * 0.12, ease: 'easeInOut' }
+                : { duration: DUR.ambient.pulse, repeat: Infinity, delay: i * 0.12, ease: EASE.inOut }
             }
           />
         ))}
@@ -79,7 +80,7 @@ export const ResearchDemo: React.FC = () => {
           className="absolute left-0 right-0 h-px bg-[#FFCC00]/50"
           initial={false}
           animate={{ top: ['85%', '15%', '85%'] }}
-          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+          transition={{ duration: DUR.ambient.breathe, repeat: Infinity, ease: EASE.inOut }}
         />
       )}
     </div>
@@ -102,7 +103,7 @@ export const OfferDemo: React.FC = () => {
             transition={
               reduce
                 ? undefined
-                : { duration: 3.6, repeat: Infinity, delay: i * 0.5, ease: 'easeInOut' }
+                : { duration: DUR.ambient.breathe, repeat: Infinity, delay: i * 0.5, ease: EASE.inOut }
             }
           >
             <span className="w-4 h-4 rounded-full bg-[#FFCC00]/15 border border-[#FFCC00]/40 flex items-center justify-center">
@@ -147,7 +148,7 @@ export const CaptionDemo: React.FC = () => {
             key={idx}
             initial={reduce ? false : { opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: DUR.slow }}
             className="text-sm font-bold text-white leading-snug"
           >
             {HEADLINES[idx]}
@@ -155,7 +156,7 @@ export const CaptionDemo: React.FC = () => {
               <motion.span
                 className="inline-block w-1.5 h-4 ml-0.5 bg-[#FFCC00] align-middle"
                 animate={{ opacity: [1, 0, 1] }}
-                transition={{ duration: 1, repeat: Infinity }}
+                transition={{ duration: DUR.expressive, repeat: Infinity }}
               />
             )}
           </motion.p>
@@ -186,7 +187,7 @@ export const ImageDemo: React.FC = () => {
             transition={
               reduce
                 ? undefined
-                : { duration: 3.2, repeat: Infinity, delay: i * 0.2, ease: 'easeInOut' }
+                : { duration: DUR.ambient.breathe, repeat: Infinity, delay: i * 0.2, ease: EASE.inOut }
             }
           />
         ))}

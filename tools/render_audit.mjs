@@ -92,7 +92,13 @@ async function detectCuts(file, thresh) {
   const re = /pts_time:([0-9]+\.?[0-9]*)/g;
   let m;
   while ((m = re.exec(out)) !== null) cuts.push(parseFloat(m[1]));
-  return [...new Set(cuts)].sort((a, b) => a - b);
+  // ffmpeg sometimes double-fires on a single transition (e.g. 5.90 & 5.93);
+  // merge cuts within 0.25s so the scene count isn't inflated by duplicates.
+  const merged = [];
+  for (const c of [...new Set(cuts)].sort((a, b) => a - b)) {
+    if (!merged.length || c - merged[merged.length - 1] > 0.25) merged.push(c);
+  }
+  return merged;
 }
 
 // Map a timestamp to its scene index (1-based) given the cut boundaries.
@@ -266,7 +272,8 @@ const report = {
   deterministic: {
     duration_s: +duration.toFixed(2),
     scene_cut_timestamps_s: cuts.map((c) => +c.toFixed(2)),
-    scene_count: frames.length,
+    scene_count: cuts.length + 1,
+    frames_sampled: frames.length,
     scene_threshold: sceneThresh,
   },
   audio_and_content: watch,   // Gemini watch
