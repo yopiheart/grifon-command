@@ -4,11 +4,66 @@ import {
   verifyWebhookSignature,
   webhookEventAgeSeconds,
   WEBHOOK_MAX_AGE_SECONDS,
+  PLAN_CATALOG,
+  sumAddOnCentavos,
   type BillingCycle,
   type PlanId,
 } from './_lib/paymongo.js';
 import { getSupabaseAdmin } from './_lib/supabaseAdmin.js';
 import { creditsForAddOns, grantCredits } from './_lib/credits.js';
+import { sendCapiPurchase } from './_lib/metaCapi.js';
+
+// Fire a server-side Meta CAPI Purchase for a confirmed payment. Called only
+// AFTER the atomic claimEvent() above has guaranteed exactly-once delivery, so
+// it inherits that dedup and never double-counts. event_id is deterministic
+// (`purchase:${intentId}`) so a future browser-side Purchase pixel dedups
+// against this server event. Fail-SAFE: sendCapiPurchase never throws, and we
+// still wrap it so a CAPI hiccup can never fail the payment webhook.
+const firePurchaseCapi = async (
+  admin: SupabaseClient,
+  userId: string,
+  intentId: string,
+  valueCentavos: number
+): Promise<void> => {
+  try {
+    // MARKETING-CONSENT GATE (straw-man-audit 2026-06-27, CRITICAL): the
+    // Privacy Policy promises the account email is shared with Meta ONLY when the
+    // user has actively opted in. Active consent = a marketing_consent row with
+    // consent_at set AND withdrawn_at null. Without it we still fire the Purchase
+    // for conversion measurement but OMIT the hashed email — external_id (the
+    // pseudonymous hashed user id) carries attribution. FAIL CLOSED: if the
+    // consent read errors, treat as no-consent and do NOT share the email.
+    let consented = false;
+    try {
+      const { data: consentRow } = await admin
+        .from('marketing_consent')
+        .select('consent_at, withdrawn_at')
+        .eq('user_id', userId)
+        .maybeSingle();
+      consented = Boolean(consentRow?.consent_at) && !consentRow?.withdrawn_at;
+    } catch {
+      consented = false;
+    }
+    let email: string | null = null;
+    if (consented) {
+      try {
+        const { data } = await admin.auth.admin.getUserById(userId);
+        email = data.user?.email ?? null;
+      } catch {
+        // Fall back to external_id (userId) matching only.
+      }
+    }
+    await sendCapiPurchase({
+      eventId: `purchase:${intentId}`,
+      userId,
+      email,
+      value: valueCentavos / 100, // centavos → pesos
+      currency: 'PHP',
+    });
+  } catch (err) {
+    console.error('[webhook] CAPI Purchase failed (non-fatal):', err instanceof Error ? err.message : err);
+  }
+};
 
 export const config = { api: { bodyParser: false } };
 
@@ -192,6 +247,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           updated_at: new Date().toISOString(),
         })
         .eq('user_id', user_id);
+      let topupCentavos = 0;
+      try {
+        topupCentavos = sumAddOnCentavos(add_ons);
+      } catch {
+        // Unknown add-on id (shouldn't happen for a real intent we created) —
+        // skip value, still fire so the conversion is attributed.
+      }
+      await firePurchaseCapi(admin, user_id, intent_id, topupCentavos);
       return res.status(200).json({ ok: true, granted: { video, cinematic } });
     }
 
@@ -225,6 +288,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const { video, cinematic } = creditsForAddOns(add_ons);
       await grantCredits(user_id, video, cinematic);
     }
+    // Server-authoritative purchase value: plan price (by cycle) + any add-on
+    // order bumps. Never trust a client amount.
+    const planCentavos =
+      billing_cycle === 'annual'
+        ? PLAN_CATALOG[plan_id].annualCentavos
+        : PLAN_CATALOG[plan_id].monthlyCentavos;
+    let addOnCentavos = 0;
+    if (add_ons) {
+      try {
+        addOnCentavos = sumAddOnCentavos(add_ons);
+      } catch {
+        // Unknown add-on id — skip its value, still fire on the plan amount.
+      }
+    }
+    await firePurchaseCapi(admin, user_id, intent_id, planCentavos + addOnCentavos);
     return res.status(200).json({ ok: true });
   }
 

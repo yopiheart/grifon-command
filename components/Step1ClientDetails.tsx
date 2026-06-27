@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { ClientDetails } from '../types';
-import { GlassPanel } from './ui/GlassPanel';
-import { GoldButton } from './ui/GoldButton';
+import { AlertTriangle, Check } from 'lucide-react';
+import { StepShell } from './ui/StepShell';
+import { StepFooter } from './ui/StepFooter';
+import { FieldLabel } from './ui/FieldLabel';
+import { TextField } from './ui/TextField';
 
 interface Step1Props {
   data: ClientDetails;
@@ -14,6 +17,8 @@ interface Step1Props {
 const Step1ClientDetails: React.FC<Step1Props> = ({ data, setData, onNext, prefilled, prefilledFrom }) => {
   const [formData, setFormData] = useState(data);
   const [forceEdit, setForceEdit] = useState(false);
+  // Smart validator: flips true once the user forces Confirm with gaps. Presentational UI state.
+  const [triedNext, setTriedNext] = useState(false);
 
   // Without this, useState(data) freezes the prop at mount and silently
   // ignores subsequent parent updates (e.g. wizard auto-prefill).
@@ -33,100 +38,95 @@ const Step1ClientDetails: React.FC<Step1Props> = ({ data, setData, onNext, prefi
 
   const isFormValid = formData.brandName && formData.offer;
 
+  // A forced Confirm with anything missing flags the gaps + scrolls to the first, instead of
+  // sitting silently disabled. isFormValid stays the source of truth — this only surfaces it.
+  const missingLabels: string[] = [
+    ...(!formData.brandName ? ['Brand Name'] : []),
+    ...(!formData.offer ? ['Current Offer'] : []),
+  ];
+  const guardedNext = () => {
+    if (isFormValid) { handleNext(); return; }
+    setTriedNext(true);
+    const firstId = !formData.brandName ? 'brandName' : 'offer';
+    document.getElementById(firstId)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  };
+
   if (prefilled && !forceEdit && formData.brandName && formData.offer) {
     const sourceLabel = prefilledFrom === 'offerOptimizer' ? 'OFFER OPTIMIZER' : 'MARKET RESEARCH';
     return (
-      <GlassPanel>
-        <div className="mb-8 border-b border-white/10 pb-6">
-          <h2 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight">
-            Step 1: Confirm Brand
-          </h2>
-          <p className="text-[10px] text-[#FFCC00] font-mono tracking-widest uppercase mt-2">
-            // AUTO-PREFILLED FROM {sourceLabel}
-          </p>
-        </div>
-
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <label className="block text-[10px] text-zinc-500 font-mono uppercase tracking-widest">
-              // Brand Name / Page Name
-            </label>
-            <div className="bg-zinc-950 border border-white/10 rounded-xl p-4 text-white text-sm">
+      <StepShell
+        sublabel="STEP 1 · CONFIRM BRAND"
+        title="Confirm Brand"
+        headerRight={
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-[#FFCC00]/40 bg-[#FFCC00]/10 px-3 py-1.5 text-[10px] font-mono font-bold uppercase tracking-widest text-[#FFCC00]">
+            <Check className="h-3 w-3 shrink-0" /> Auto-prefilled · {sourceLabel}
+          </span>
+        }
+      >
+        <div className="space-y-5">
+          <div>
+            <FieldLabel className="mb-2">Brand Name / Page Name</FieldLabel>
+            <div className="rounded-xl border border-white/10 bg-zinc-950 px-4 py-3 text-sm text-white">
               {formData.brandName}
             </div>
           </div>
-          <div className="space-y-2">
-            <label className="block text-[10px] text-zinc-500 font-mono uppercase tracking-widest">
-              // Current Offer / Pricing
-            </label>
-            <div className="bg-zinc-950 border border-white/10 rounded-xl p-4 text-white text-sm">
+          <div>
+            <FieldLabel className="mb-2">Current Offer / Pricing</FieldLabel>
+            <div className="rounded-xl border border-white/10 bg-zinc-950 px-4 py-3 text-sm text-white">
               {formData.offer}
             </div>
           </div>
         </div>
 
-        <div className="mt-10 flex justify-between items-center pt-6 border-t border-white/10">
-          <button
-            onClick={() => setForceEdit(true)}
-            className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 hover:text-[#FFCC00] transition-colors"
-          >
-            // EDIT FIELDS INSTEAD
-          </button>
-          <GoldButton onClick={handleNext} className="px-8 py-3">
-            CONFIRM & PROCEED &gt;
-          </GoldButton>
-        </div>
-      </GlassPanel>
+        <StepFooter
+          onBack={() => setForceEdit(true)}
+          backLabel="// Edit fields instead"
+          onNext={handleNext}
+          nextLabel="CONFIRM & PROCEED"
+        />
+      </StepShell>
     );
   }
 
   return (
-    <GlassPanel>
-      <div className="mb-8 border-b border-white/10 pb-6">
-        <h2 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight">
-          Step 1: Collect Client Details
-        </h2>
-        <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mt-2">
-          // Start by providing some basic information about the client and their offerings.
-        </p>
+    <StepShell sublabel="STEP 1 · CLIENT DETAILS" title="Collect Client Details">
+      <p className="-mt-4 mb-6 text-[11px] font-mono leading-relaxed text-zinc-500">
+        Start by providing some basic information about the client and their offerings.
+      </p>
+
+      <div className="space-y-5">
+        <TextField
+          label="Brand Name / Page Name"
+          id="brandName"
+          name="brandName"
+          value={formData.brandName}
+          onChange={handleChange}
+          placeholder="e.g., SparkleClean"
+          invalid={triedNext && !formData.brandName}
+        />
+        <TextField
+          label="Current Offer / Pricing"
+          id="offer"
+          name="offer"
+          value={formData.offer}
+          onChange={handleChange}
+          placeholder="e.g., 50% off first cleaning for new customers"
+          invalid={triedNext && !formData.offer}
+        />
       </div>
 
-      <div className="space-y-6">
-        <div className="space-y-2">
-          <label htmlFor="brandName" className="block text-[10px] text-zinc-400 font-mono uppercase tracking-widest">
-            // Brand Name / Page Name
-          </label>
-          <input
-            id="brandName" 
-            name="brandName"
-            value={formData.brandName}
-            onChange={handleChange}
-            placeholder="e.g., SparkleClean"
-            className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-all text-sm"
-          />
+      {triedNext && !isFormValid && (
+        <div className="mt-6 flex items-start gap-2 rounded-xl border border-red-500/40 bg-red-500/10 p-4">
+          <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-red-400" />
+          <p className="text-xs font-mono text-red-200">
+            <span className="font-bold uppercase tracking-widest text-red-400">Incomplete — </span>
+            please complete: {missingLabels.join(' · ')}
+          </p>
         </div>
+      )}
 
-        <div className="space-y-2">
-          <label htmlFor="offer" className="block text-[10px] text-zinc-400 font-mono uppercase tracking-widest">
-            // Current Offer / Pricing
-          </label>
-          <input
-            id="offer"
-            name="offer"
-            value={formData.offer}
-            onChange={handleChange}
-            placeholder="e.g., 50% off first cleaning for new customers"
-            className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-all text-sm"
-          />
-        </div>
-      </div>
-      
-      <div className="mt-10 flex justify-end pt-6 border-t border-white/10">
-        <GoldButton onClick={handleNext} disabled={!isFormValid} className="px-8 py-3">
-          CONFIRM & PROCEED &gt;
-        </GoldButton>
-      </div>
-    </GlassPanel>
+      <StepFooter hideBack onNext={guardedNext} nextLabel="CONFIRM & PROCEED" />
+    </StepShell>
   );
 };
 

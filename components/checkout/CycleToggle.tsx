@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'motion/react';
+import { DUR, SPRING, reducedMotion } from '../ui/motionTokens';
 import { toast } from 'sonner';
 import { PartyPopper, Sparkles, TrendingDown } from 'lucide-react';
 import { formatPHP, type BillingCycle } from '../../services/checkoutService';
@@ -66,9 +67,7 @@ export const CycleToggle: React.FC<CycleToggleProps> = ({
                 <motion.span
                   layoutId="cycle-toggle-indicator"
                   className="absolute inset-0 rounded-lg bg-[#FFCC00]"
-                  transition={
-                    reduce ? { duration: 0 } : { type: 'spring', stiffness: 420, damping: 34 }
-                  }
+                  transition={reducedMotion(reduce, SPRING.snappy)}
                 />
               )}
               <span className={`relative z-10 leading-none ${active ? 'text-black' : 'text-zinc-400'}`}>
@@ -93,7 +92,7 @@ export const CycleToggle: React.FC<CycleToggleProps> = ({
         <motion.div
           initial={reduce ? false : { opacity: 0, y: -4 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: reduce ? 0 : 0.25 }}
+          transition={reducedMotion(reduce, { duration: DUR.fast })}
           className="mt-3 rounded-xl border border-[#FFCC00]/25 bg-[#FFCC00]/5 px-3.5 py-3"
         >
           <div className="flex items-start gap-2.5">

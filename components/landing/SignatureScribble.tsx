@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'motion/react';
+import { EASE, DUR } from '../ui/motionTokens';
 
 type ScribbleVariant = 'underline' | 'circle' | 'strike';
 
@@ -84,7 +85,7 @@ export const SignatureScribble: React.FC<SignatureScribbleProps> = ({
           vectorEffect="non-scaling-stroke"
           initial={reduceMotion ? false : { pathLength: 0 }}
           {...drawProps}
-          transition={{ duration: 0.8, delay, ease: 'easeInOut' }}
+          transition={{ duration: DUR.expressive, delay, ease: EASE.inOut }}
         />
       </svg>
     </span>

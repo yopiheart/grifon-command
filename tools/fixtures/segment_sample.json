@@ -1,0 +1,65 @@
+{
+  "_comment": "Sample Supabase contents for tools/segment_pull.py (Phase 3). Verifies segmentation + consent-gated roster hashing with NO live creds. Mirrors the column shape of public.subscriptions / public.events / public.feedback / public.marketing_consent; `auth_users` simulates the GoTrue admin user->email map (only used to test the hashed-roster path offline — never a real table). Designed so each segment is non-empty and mostly non-overlapping: u1 checkout-abandoner, u2 power-still-free + promoter, u3 free-not-converted, u4 pro purchaser + promoter, u5 free-not-converted + detractor, u6 starter purchaser (control). `marketing_consent` exercises every consent path: u1/u2 granted (upload rosters; each is 1 match -> below_match_floor warning), u4 consented->withdrawn (promoters REMOVAL roster, Meta §4), u5 phantom opt-out (consent_at null + withdrawn_at set -> excluded, NOT a removal target), u3/u6 no row (u3 excluded; u6 in no segment). Two anonymous PageViews exercise anon_skipped; PageView/ViewContent rows test the NON_ENGAGED exclusion. Not real data.",
+
+  "subscriptions": [
+    { "user_id": "u1", "plan_id": "free",     "status": "active" },
+    { "user_id": "u2", "plan_id": "free",     "status": "active" },
+    { "user_id": "u3", "plan_id": "free",     "status": "active" },
+    { "user_id": "u4", "plan_id": "pro",      "status": "active" },
+    { "user_id": "u5", "plan_id": "free",     "status": "active" },
+    { "user_id": "u6", "plan_id": "starter",  "status": "active" }
+  ],
+
+  "events": [
+    { "user_id": "u1", "event": "PageView" },
+    { "user_id": "u1", "event": "Lead" },
+    { "user_id": "u1", "event": "wizard_step" },
+    { "user_id": "u1", "event": "InitiateCheckout" },
+
+    { "user_id": "u2", "event": "Lead" },
+    { "user_id": "u2", "event": "wizard_step" },
+    { "user_id": "u2", "event": "wizard_step" },
+    { "user_id": "u2", "event": "wizard_step" },
+    { "user_id": "u2", "event": "wizard_step" },
+    { "user_id": "u2", "event": "wizard_step" },
+    { "user_id": "u2", "event": "ViewContent" },
+
+    { "user_id": "u3", "event": "ViewContent" },
+    { "user_id": "u3", "event": "Lead" },
+    { "user_id": "u3", "event": "wizard_step" },
+
+    { "user_id": "u4", "event": "InitiateCheckout" },
+    { "user_id": "u4", "event": "Purchase" },
+
+    { "user_id": "u5", "event": "Lead" },
+
+    { "user_id": "u6", "event": "InitiateCheckout" },
+    { "user_id": "u6", "event": "Purchase" },
+
+    { "user_id": null, "event": "PageView" },
+    { "user_id": null, "event": "PageView" }
+  ],
+
+  "feedback": [
+    { "user_id": "u4", "nps_score": 10 },
+    { "user_id": "u2", "nps_score": 9 },
+    { "user_id": "u5", "nps_score": 4 }
+  ],
+
+  "auth_users": [
+    { "user_id": "u1", "email": "u1@example.com" },
+    { "user_id": "u2", "email": "U2@Example.com " },
+    { "user_id": "u3", "email": "u3@example.com" },
+    { "user_id": "u4", "email": "u4@example.com" },
+    { "user_id": "u5", "email": "u5@example.com" },
+    { "user_id": "u6", "email": "u6@example.com" }
+  ],
+
+  "marketing_consent": [
+    { "user_id": "u1", "consent_at": "2026-06-20T10:00:00Z", "withdrawn_at": null },
+    { "user_id": "u2", "consent_at": "2026-06-20T10:05:00Z", "withdrawn_at": null },
+    { "user_id": "u4", "consent_at": "2026-06-19T08:00:00Z", "withdrawn_at": "2026-06-25T12:00:00Z" },
+    { "user_id": "u5", "consent_at": null, "withdrawn_at": "2026-06-24T09:00:00Z" },
+    { "user_id": "u6", "consent_at": "2026-06-18T07:00:00Z", "withdrawn_at": null }
+  ]
+}

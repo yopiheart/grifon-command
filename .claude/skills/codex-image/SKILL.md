@@ -41,7 +41,16 @@ node .claude/skills/codex-image/generate.mjs \
 
 Then feed that PNG into **Batch Creative Gen** as the hero, or composite it locally.
 
-**Batches:** to fan a list of angles out into N distinct on-brand creatives (the "100 creatives in ~4 min, $0" workflow), don't loop this skill by hand — use the orchestrator `tools/batch-creative-codex.mjs`. See **[workflows/batch_creative_codex.md](../../../workflows/batch_creative_codex.md)**.
+**Batches (multiple images) — ALWAYS run in parallel, never one-at-a-time.** When the request is for **more than one image**, do NOT loop the single-image wrapper sequentially (slow: N × ~2 min). Reach for the parallel batch runner automatically — the user should not have to ask for parallelism:
+
+```bash
+node tools/codex-image-batch.mjs --manifest <manifest.json> [--concurrency 8] [--force]
+# manifest.json = [{ "prompt": "...", "out": "public/x.png", "size": "1024x1024" }, ...]
+```
+
+It fans all prompts out concurrently, **skips files that already exist** (re-runnable), and **prints a per-image + total wall-clock timer**.
+
+**Realistic timing:** each Codex image is ~2 min on its own, but they run concurrently so wall-clock collapses toward the slowest one. Codex/the machine throttle to ~**8 concurrent** — beyond that, extras queue (a real 12-image run took ~6.4 min: first 8 in ~130s, last 3 queued to ~320–380s). The "100 in ~4 min" figure needs that managed concurrency, which `--concurrency` approximates. (An older `tools/batch-creative-codex.mjs` is referenced in some notes but does **not** exist in this repo — use `tools/codex-image-batch.mjs`.)
 
 ## After generating
 

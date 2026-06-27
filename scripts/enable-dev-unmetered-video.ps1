@@ -31,29 +31,35 @@ if (-not (Test-Path $envPath)) {
     exit 1
 }
 
+# GRIFON_DEV_UNMETERED (all monthly meters: images/reports/workflows/captions/
+# video_ads) is the one that matters for a full Director smoke — a storyboard
+# renders 6+ scene IMAGES + a Market Research report, which the older video-only
+# flag never covered (Neil burned images 150/150 mid-smoke 2026-06-21). We set
+# BOTH: the broad flag, plus the legacy video-only flag for back-compat.
 $lines = Get-Content $envPath
-$flagLine = "GRIFON_DEV_UNMETERED_VIDEO=true"
-$existing = $lines | Where-Object { $_ -match '^\s*GRIFON_DEV_UNMETERED_VIDEO\s*=' }
+$flags = @('GRIFON_DEV_UNMETERED', 'GRIFON_DEV_UNMETERED_VIDEO')
 
-if ($existing) {
-    if ($existing -match '=\s*true\s*$') {
-        Write-Host "OK: GRIFON_DEV_UNMETERED_VIDEO already = true (no change)." -ForegroundColor Green
-    } else {
-        $updated = $lines | ForEach-Object {
-            if ($_ -match '^\s*GRIFON_DEV_UNMETERED_VIDEO\s*=') { $flagLine } else { $_ }
+foreach ($name in $flags) {
+    $flagLine = "$name=true"
+    $existing = $lines | Where-Object { $_ -match "^\s*$name\s*=" }
+    if ($existing) {
+        if ($existing -match '=\s*true\s*$') {
+            Write-Host "OK: $name already = true (no change)." -ForegroundColor Green
+        } else {
+            $lines = $lines | ForEach-Object {
+                if ($_ -match "^\s*$name\s*=") { $flagLine } else { $_ }
+            }
+            Write-Host "OK: flipped $name to true." -ForegroundColor Green
         }
-        [System.IO.File]::WriteAllLines($envPath, $updated)
-        Write-Host "OK: flipped GRIFON_DEV_UNMETERED_VIDEO to true." -ForegroundColor Green
+    } else {
+        # Use WriteAllLines (not Add-Content): if .env lacks a trailing newline,
+        # Add-Content concatenates the flag onto the last line, silently breaking
+        # BOTH vars. Rebuilding the array guarantees a newline between every element.
+        $lines = $lines + $flagLine
+        Write-Host "OK: appended $name=true to .env." -ForegroundColor Green
     }
-} else {
-    # Use WriteAllLines (not Add-Content): if .env lacks a trailing newline,
-    # Add-Content concatenates the flag onto the last line (e.g.
-    # APP_ENV=developmentGRIFON_DEV_UNMETERED_VIDEO=true), silently breaking
-    # BOTH vars. WriteAllLines guarantees a newline between every element.
-    $updated = $lines + $flagLine
-    [System.IO.File]::WriteAllLines($envPath, $updated)
-    Write-Host "OK: appended GRIFON_DEV_UNMETERED_VIDEO=true to .env." -ForegroundColor Green
 }
+[System.IO.File]::WriteAllLines($envPath, $lines)
 
 Write-Host ""
 Write-Host "NEXT: restart the dev server so the flag is read:" -ForegroundColor Cyan

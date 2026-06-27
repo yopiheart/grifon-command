@@ -1,0 +1,55 @@
+{
+  "_comment": "Sample Meta Marketing/Insights API response (level=ad, time_increment=1) for tools/meta_insights_pull.py. Lets the map->upsert path be verified with NO live Meta creds. Row 1 has a Grifon-stamped ad name (grifon-<uuid>) so creative_id parsing is exercised; row 2 is an organic/non-Grifon ad (creative_id should be null). Not real data.",
+  "data": [
+    {
+      "ad_id": "120200000000000001",
+      "ad_name": "Bukidnon Brew UGC — grifon-3f9a2b7c-1d4e-4a8b-9c2d-5e6f7a8b9c0d",
+      "adset_id": "120200000000000010",
+      "campaign_id": "120200000000000100",
+      "date_start": "2026-06-18",
+      "date_stop": "2026-06-18",
+      "impressions": "18432",
+      "reach": "15120",
+      "frequency": "1.219",
+      "spend": "1450.50",
+      "clicks": "612",
+      "ctr": "3.32",
+      "cpc": "2.37",
+      "cpm": "78.69",
+      "inline_link_clicks": "498",
+      "outbound_clicks": [{ "action_type": "outbound_click", "value": "471" }],
+      "actions": [
+        { "action_type": "post_engagement", "value": "1340" },
+        { "action_type": "purchase", "value": "27" }
+      ],
+      "action_values": [
+        { "action_type": "purchase", "value": "13230.00" }
+      ],
+      "purchase_roas": [{ "action_type": "omni_purchase", "value": "9.12" }],
+      "video_3_sec_watched_actions": [{ "action_type": "video_view", "value": "9870" }],
+      "video_thruplay_watched_actions": [{ "action_type": "video_view", "value": "4120" }],
+      "video_avg_time_watched_actions": [{ "action_type": "video_view", "value": "11" }]
+    },
+    {
+      "ad_id": "120200000000000002",
+      "ad_name": "Boosted page post — no creative tag",
+      "adset_id": "120200000000000011",
+      "campaign_id": "120200000000000100",
+      "date_start": "2026-06-18",
+      "date_stop": "2026-06-18",
+      "impressions": "5210",
+      "reach": "4980",
+      "frequency": "1.046",
+      "spend": "420.00",
+      "clicks": "88",
+      "ctr": "1.69",
+      "cpc": "4.77",
+      "cpm": "80.61",
+      "inline_link_clicks": "61",
+      "actions": [
+        { "action_type": "post_engagement", "value": "210" }
+      ]
+    }
+  ],
+  "paging": {}
+}

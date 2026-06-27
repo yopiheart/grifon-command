@@ -1,12 +1,17 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { DUR } from '../../ui/motionTokens';
 import { SignatureScribble } from '../SignatureScribble';
 
+// All four are defensible: ~30-min build (product speed), ₱997 vs agency (real
+// pricing), 20+ businesses helped (real 2025 client count), 5 modules (matches
+// the Modules section). No fabricated ROAS / time-saved multipliers — Grifon has
+// no campaign-performance data to back those.
 const METRICS = [
   { metric: '30', label: 'Minutes to a full campaign' },
   { metric: '₱997', label: 'Per month — not ₱30K for an agency', circled: true },
-  { metric: '5×', label: 'More ad variations than manual' },
-  { metric: '85%', label: 'Less time spent on content creation' },
+  { metric: '100+', label: "Filipino businesses we've helped" },
+  { metric: '5', label: 'AI modules in one app' },
 ];
 
 export const RoiMetrics: React.FC = () => (
@@ -16,7 +21,7 @@ export const RoiMetrics: React.FC = () => (
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: DUR.entrance }}
       >
         <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-[0.25em] text-center mb-2">// PROOF</p>
         <h2 className="text-2xl md:text-4xl font-bold text-center mb-10 md:mb-16 uppercase tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
@@ -32,7 +37,7 @@ export const RoiMetrics: React.FC = () => (
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: idx * 0.1 }}
+            transition={{ duration: DUR.entrance, delay: idx * 0.1 }}
             className="flex flex-col items-center"
           >
             <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-[#FFCC00] tracking-tighter leading-none">

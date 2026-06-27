@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { DUR, EASE } from './motionTokens';
 import { Sparkles, ArrowDown, X } from 'lucide-react';
 
 interface OnboardingNudgeProps {
@@ -13,12 +14,12 @@ export const OnboardingNudge: React.FC<OnboardingNudgeProps> = ({ onStart, onDis
     <motion.div
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay }}
+      transition={{ duration: DUR.slow, delay }}
       className="bg-gradient-to-r from-[#FFCC00]/10 via-[#FFCC00]/15 to-[#FFCC00]/10 rounded-2xl p-4 lg:p-5 relative overflow-hidden"
     >
       <motion.div
         animate={{ opacity: [0.3, 0.6, 0.3] }}
-        transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
+        transition={{ duration: DUR.ambient.breathe, repeat: Infinity, ease: EASE.inOut }}
         className="absolute inset-0 bg-gradient-to-r from-transparent via-[#FFCC00]/5 to-transparent pointer-events-none"
       />
 

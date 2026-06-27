@@ -53,6 +53,8 @@ Quick reference (full spec in DESIGN.md):
 
 **Real React primitives** in [components/ui/](components/ui/): `GlassPanel`, `GoldButton`, `Button`, `Input`, `Textarea`, `Card`, `Badge`, `Loader`, `AnimatedBorder`, `AudioRecorder`, `ErrorBoundary`, `ImageModal`, `LegalPageLayout`. Use these — don't recreate them inline. **Ghost button** is a Tailwind class pattern (`bg-zinc-950 border border-white/10 text-zinc-400 hover:text-white hover:border-[#FFCC00] transition-all rounded-xl`), not a component file — apply it directly.
 
+**Motion tokens (`motion@12`):** never inline durations/easing/springs — pull from [components/ui/motionTokens.ts](components/ui/motionTokens.ts) (`EASE` / `DUR` / `SPRING` / `reducedMotion`), documented in DESIGN.md's Motion section. When a Figma Motion design needs to land as code, follow [workflows/figma_motion_handoff.md](workflows/figma_motion_handoff.md) — map the motion *intent* to tokens, don't paste Figma's raw timing.
+
 For domain naming inside UI copy and component names (Avatar wizard vs Influencer Forge, wizard Script vs Influencer Script, Storyboard vs Cinematic Relay), defer to [UBIQUITOUS_LANGUAGE.md](UBIQUITOUS_LANGUAGE.md). Mismatched naming creates support load — don't.
 
 ## SCOPE

@@ -1,23 +1,17 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { DUR } from '../../ui/motionTokens';
 import { ArrowRight } from 'lucide-react';
 import { GlassPanel } from '../../ui/GlassPanel';
 import { GoldButton } from '../../ui/GoldButton';
 import { SignatureScribble } from '../SignatureScribble';
+import { PRO_VALUE_STACK, PRO_VALUE_TOTAL, PRO_PRICE_LABEL, FOUNDING_NOTE } from '../../../config/valueStack';
 
 interface OfferStackProps {
   onNavigatePricing: () => void;
   /** Observed by PinnedCtaPill — pill hides while this section is on screen. */
   sectionRef: React.RefObject<HTMLElement>;
 }
-
-const LINE_ITEMS = [
-  { name: 'Director AI Studio Access', value: '₱24,000/yr' },
-  { name: 'Market Research Engine', value: '₱18,000/yr' },
-  { name: 'Offer Optimizer', value: '₱12,000/yr' },
-  { name: 'Caption & Headline Generator', value: '₱6,000/yr' },
-  { name: 'Image Studio', value: '₱6,000/yr' },
-];
 
 /**
  * Final CTA offer stack. The crossed-out prices are the scribble system's money
@@ -30,7 +24,7 @@ export const OfferStack: React.FC<OfferStackProps> = ({ onNavigatePricing, secti
         initial={{ opacity: 0, scale: 0.95 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: DUR.expressive }}
       >
         <GlassPanel className="p-8 md:p-16 text-center bg-gradient-to-b from-zinc-900/80 to-zinc-950 border border-[#FFCC00]/20 relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#FFCC00] to-transparent"></div>
@@ -41,30 +35,35 @@ export const OfferStack: React.FC<OfferStackProps> = ({ onNavigatePricing, secti
           </h2>
 
           <div className="space-y-4 mb-12 text-left max-w-md mx-auto">
-            {LINE_ITEMS.map((item, idx) => (
+            {PRO_VALUE_STACK.map((entry, idx) => (
               <motion.div
-                key={item.name}
+                key={entry.item}
                 initial={{ opacity: 0, x: -16 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: idx * 0.08 }}
+                transition={{ duration: DUR.slow, delay: idx * 0.06 }}
                 className="flex items-center justify-between border-b border-white/10 pb-4"
               >
-                <span className="text-zinc-400">{item.name}</span>
-                <SignatureScribble variant="strike" delay={0.4 + idx * 0.15} strokeWidth={2.5}>
-                  <span className="font-mono text-zinc-500">{item.value}</span>
+                <span className="text-zinc-400">{entry.item}</span>
+                <SignatureScribble variant="strike" delay={0.4 + idx * 0.12} strokeWidth={2.5}>
+                  <span className="font-mono text-zinc-500">{entry.value}</span>
                 </SignatureScribble>
               </motion.div>
             ))}
             <div className="flex items-center justify-between gap-4 pt-4">
               <span className="text-lg md:text-xl font-bold whitespace-nowrap">TOTAL VALUE</span>
               <SignatureScribble variant="strike" delay={1.2} strokeWidth={3}>
-                <span className="font-mono text-lg md:text-xl font-bold text-zinc-400 whitespace-nowrap">₱66,000/yr</span>
+                <span className="font-mono text-lg md:text-xl font-bold text-zinc-400 whitespace-nowrap">{PRO_VALUE_TOTAL}</span>
               </SignatureScribble>
             </div>
-            <div className="flex items-center justify-center pt-6">
-              <span className="text-lg font-bold text-white text-center uppercase tracking-tighter">
-                PLANS FROM FREE TO BUSINESS
+            {/* The anchor: ₱135k of deliverables, yours on Pro for a fraction. */}
+            <div className="flex flex-col items-center gap-1.5 pt-7">
+              <span className="text-base md:text-lg text-zinc-300 text-center">
+                Everything above — yours on <span className="font-bold text-white">Pro</span> for{' '}
+                <span className="font-bold text-[#FFCC00]">{PRO_PRICE_LABEL}</span>
+              </span>
+              <span className="text-[10px] font-mono uppercase tracking-widest text-[#FFCC00]/80 text-center">
+                {FOUNDING_NOTE}
               </span>
             </div>
           </div>
@@ -76,7 +75,7 @@ export const OfferStack: React.FC<OfferStackProps> = ({ onNavigatePricing, secti
             </span>
           </GoldButton>
           <p className="text-[10px] font-mono text-zinc-500 mt-6 tracking-widest uppercase">
-            // SECURE 256-BIT ENCRYPTION • 7-DAY GUARANTEE
+            // 7-DAY MONEY-BACK — KEEP THE PLAN • SECURE CHECKOUT
           </p>
         </GlassPanel>
       </motion.div>

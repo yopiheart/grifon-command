@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { DUR } from '../../ui/motionTokens';
 import { Film, Search, Target, Type, ImageIcon } from 'lucide-react';
 import { DirectorDemo, ResearchDemo, OfferDemo, CaptionDemo, ImageDemo } from '../InclusionDemos';
 
@@ -37,7 +38,7 @@ export const Modules: React.FC = () => (
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: DUR.entrance }}
         className="text-center mb-12 md:mb-16"
       >
         <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-[0.25em] mb-4">// WHAT YOU GET</p>
@@ -55,7 +56,7 @@ export const Modules: React.FC = () => (
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: DUR.entrance }}
         className="mb-6"
       >
         <ViewfinderFrame>
@@ -83,7 +84,7 @@ export const Modules: React.FC = () => (
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: idx * 0.08 }}
+            transition={{ duration: DUR.slow, delay: idx * 0.08 }}
             className="h-full bg-zinc-900/40 backdrop-blur-2xl border border-white/10 rounded-3xl p-6 md:p-7"
           >
             <module.Demo />

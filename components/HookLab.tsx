@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
+import { EASE, DUR } from './ui/motionTokens';
 import { ArrowLeft, Aperture, Sparkles, RefreshCw, Check, Copy } from 'lucide-react';
 import { toast } from 'sonner';
 import { GlassPanel } from './ui/GlassPanel';
@@ -92,7 +93,7 @@ const HookLab: React.FC<HookLabProps> = ({ businessInfo, onBack }) => {
         className="pointer-events-none fixed inset-0 z-0 opacity-[0.07]"
         style={{ background: 'radial-gradient(60% 50% at 50% 0%, #FFCC00 0%, transparent 70%)' }}
         animate={reduce ? undefined : { scale: [1, 1.08, 1], opacity: [0.05, 0.09, 0.05] }}
-        transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
+        transition={{ duration: DUR.ambient.slowDrift, repeat: Infinity, ease: EASE.inOut }}
       />
 
       <div className="relative z-10 max-w-5xl mx-auto px-4 lg:px-8 py-8">
@@ -157,11 +158,11 @@ const HookLab: React.FC<HookLabProps> = ({ businessInfo, onBack }) => {
                   key={v.id}
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: i * 0.06 }}
+                  transition={{ duration: DUR.slow, delay: i * 0.06 }}
                 >
                   <motion.div
                     animate={reduce ? undefined : { y: [0, -5, 0] }}
-                    transition={{ duration: 6 + i, repeat: Infinity, ease: 'easeInOut' }}
+                    transition={{ duration: 6 + i, repeat: Infinity, ease: EASE.inOut }}
                   >
                     <GeneratedFrameTile
                       className="aspect-[9/16]"

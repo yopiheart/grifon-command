@@ -5,7 +5,13 @@ import { generateAdScript, generateCinematicThemes } from '../services/geminiSer
 import { GlassPanel } from './ui/GlassPanel';
 import { GoldButton } from './ui/GoldButton';
 import Loader from './ui/Loader';
-import { Check, RefreshCw, Copy, ChevronLeft } from 'lucide-react';
+import { AlertTriangle, Check, RefreshCw, Copy, ChevronLeft } from 'lucide-react';
+import { StepShell } from './ui/StepShell';
+import { StepFooter } from './ui/StepFooter';
+import { TitledCard } from './ui/TitledCard';
+import { FieldLabel } from './ui/FieldLabel';
+import { TextArea } from './ui/TextField';
+import { SegButton } from './ui/SegButton';
 
 interface Step3Props {
   businessInfo: BusinessInfo;
@@ -37,7 +43,9 @@ const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, script, setScript, 
   const [selectedHook, setSelectedHook] = useState<1 | 2 | null>(null);
   const [localLanguage, setLocalLanguage] = useState<'English' | 'Taglish' | null>(propLanguage);
   const [step3Mode, setStep3Mode] = useState<'pick' | 'review'>(script ? 'review' : 'pick');
-  
+  // Smart validator: flips true once the user forces Confirm without selecting a hook. Presentational.
+  const [triedNext, setTriedNext] = useState(false);
+
   // Cinematic Specific State
   const [themes, setThemes] = useState<VisualTheme[]>([]);
   const [selectedThemeId, setSelectedThemeId] = useState<string | null>(businessInfo.selectedTheme?.id || null);
@@ -245,6 +253,14 @@ const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, script, setScript, 
     setSelectedThemeId(theme.id);
   };
 
+  // A forced Confirm without a selected hook flags it + scrolls to the hooks, instead of sitting
+  // disabled. The handleNext gate (generatedScript && selectedHook) stays the source of truth.
+  const guardedNext = () => {
+    if (generatedScript && selectedHook) { handleNext(); return; }
+    setTriedNext(true);
+    document.getElementById('hook-select')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  };
+
   const ScriptDisplay: React.FC<{ 
     title: string, 
     lines: string[], 
@@ -333,119 +349,110 @@ const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, script, setScript, 
   }
 
   return (
-    <GlassPanel>
-      <div className="mb-8 border-b border-white/10 pb-6">
-        <h2 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight">
-          Step 3: Generate Ad Script
-        </h2>
-        <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mt-2">
-          // Select a language, generate options, and then edit the script to perfection.
-        </p>
-      </div>
+    <StepShell sublabel="STEP 3 · AD SCRIPT" title="Generate Ad Script">
+      <p className="-mt-4 mb-6 text-[11px] font-mono leading-relaxed text-zinc-500">
+        Select a language, generate options, and then edit the script to perfection.
+      </p>
 
       {loading && <Loader message="PROCESSING LANGUAGE DATA..." />}
-      {error && <p className="text-red-500 text-center mb-4 font-mono">{error}</p>}
+      {error && <p className="text-red-500 text-center mb-4 font-mono border border-red-900/50 bg-red-900/20 p-3 rounded-xl">{error}</p>}
 
       {step3Mode === 'pick' && angleOptions && (
-        <div className="mb-8 bg-zinc-950/50 backdrop-blur-xl border border-white/10 rounded-2xl p-6 space-y-5">
-          <div className="flex items-center justify-between border-b border-white/10 pb-3">
-            <h3 className="text-[10px] text-[#FFCC00] font-mono uppercase tracking-widest">// PICK_YOUR_ANGLE</h3>
-            {directorAngleBrief && (
-              <button onClick={() => setDirectorAngleBrief(null)} className="text-[10px] text-zinc-500 hover:text-white font-mono uppercase tracking-widest transition-colors">
-                CLEAR SELECTION
-              </button>
+        <TitledCard
+          title="Pick Your Angle"
+          className="mb-6"
+          right={directorAngleBrief ? (
+            <button onClick={() => setDirectorAngleBrief(null)} className="text-[10px] text-zinc-500 hover:text-white font-mono uppercase tracking-widest transition-colors">
+              Clear selection
+            </button>
+          ) : undefined}
+        >
+          <div className="space-y-5">
+            <p className="text-xs text-zinc-400 leading-relaxed">
+              Pick ONE angle from your MarketMind report. Director AI will build the entire script around it. Skip to use the audience/pain prefill only.
+            </p>
+
+            {angleOptions.headlines.length > 0 && (
+              <div>
+                <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">// HEADLINES</p>
+                <div className="flex flex-wrap gap-2">
+                  {angleOptions.headlines.map((opt, i) => {
+                    if (opt.kind !== 'headline') return null;
+                    const isSelected = directorAngleBrief === opt.brief;
+                    return (
+                      <button
+                        key={`h-${i}`}
+                        onClick={() => handlePickAngle(opt.brief)}
+                        className={`text-left text-xs rounded-xl px-3 py-2 transition-all border ${isSelected ? 'bg-[#FFCC00]/10 border-[#FFCC00] text-[#FFCC00]' : 'bg-zinc-950 border-white/10 text-zinc-400 hover:border-white/30 hover:text-white'}`}
+                      >
+                        <span className="block text-[9px] font-mono uppercase tracking-widest opacity-70 mb-1">{opt.lever}</span>
+                        <span className="block">{opt.text}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {angleOptions.hooks.length > 0 && (
+              <div>
+                <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">// VIDEO_HOOKS</p>
+                <div className="flex flex-wrap gap-2">
+                  {angleOptions.hooks.map((opt, i) => {
+                    if (opt.kind !== 'hook') return null;
+                    const isSelected = directorAngleBrief === opt.brief;
+                    return (
+                      <button
+                        key={`v-${i}`}
+                        onClick={() => handlePickAngle(opt.brief)}
+                        className={`text-left text-xs rounded-xl px-3 py-2 max-w-md transition-all border ${isSelected ? 'bg-[#FFCC00]/10 border-[#FFCC00] text-[#FFCC00]' : 'bg-zinc-950 border-white/10 text-zinc-400 hover:border-white/30 hover:text-white'}`}
+                      >
+                        <span className="block text-[9px] font-mono uppercase tracking-widest opacity-70 mb-1">{opt.style}</span>
+                        <span className="block italic">"{opt.spokenLine}"</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {angleOptions.ads.length > 0 && (
+              <div>
+                <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">// AD_CONCEPTS</p>
+                <div className="flex flex-wrap gap-2">
+                  {angleOptions.ads.map((opt, i) => {
+                    if (opt.kind !== 'ad') return null;
+                    const isSelected = directorAngleBrief === opt.brief;
+                    return (
+                      <button
+                        key={`a-${i}`}
+                        onClick={() => handlePickAngle(opt.brief)}
+                        className={`text-left text-xs rounded-xl px-3 py-2 max-w-md transition-all border ${isSelected ? 'bg-[#FFCC00]/10 border-[#FFCC00] text-[#FFCC00]' : 'bg-zinc-950 border-white/10 text-zinc-400 hover:border-white/30 hover:text-white'}`}
+                      >
+                        <span className="block text-[9px] font-mono uppercase tracking-widest opacity-70 mb-1">{opt.format} · {opt.angle}</span>
+                        <span className="block italic">"{opt.openingLine}"</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
             )}
           </div>
-          <p className="text-xs text-zinc-400 leading-relaxed">
-            Pick ONE angle from your MarketMind report. Director AI will build the entire script around it. Skip to use the audience/pain prefill only.
-          </p>
-
-          {angleOptions.headlines.length > 0 && (
-            <div>
-              <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">// HEADLINES</p>
-              <div className="flex flex-wrap gap-2">
-                {angleOptions.headlines.map((opt, i) => {
-                  if (opt.kind !== 'headline') return null;
-                  const isSelected = directorAngleBrief === opt.brief;
-                  return (
-                    <button
-                      key={`h-${i}`}
-                      onClick={() => handlePickAngle(opt.brief)}
-                      className={`text-left text-xs rounded-xl px-3 py-2 transition-all border ${isSelected ? 'bg-[#FFCC00]/10 border-[#FFCC00] text-[#FFCC00]' : 'bg-zinc-950 border-white/10 text-zinc-400 hover:border-white/30 hover:text-white'}`}
-                    >
-                      <span className="block text-[9px] font-mono uppercase tracking-widest opacity-70 mb-1">{opt.lever}</span>
-                      <span className="block">{opt.text}</span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {angleOptions.hooks.length > 0 && (
-            <div>
-              <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">// VIDEO_HOOKS</p>
-              <div className="flex flex-wrap gap-2">
-                {angleOptions.hooks.map((opt, i) => {
-                  if (opt.kind !== 'hook') return null;
-                  const isSelected = directorAngleBrief === opt.brief;
-                  return (
-                    <button
-                      key={`v-${i}`}
-                      onClick={() => handlePickAngle(opt.brief)}
-                      className={`text-left text-xs rounded-xl px-3 py-2 max-w-md transition-all border ${isSelected ? 'bg-[#FFCC00]/10 border-[#FFCC00] text-[#FFCC00]' : 'bg-zinc-950 border-white/10 text-zinc-400 hover:border-white/30 hover:text-white'}`}
-                    >
-                      <span className="block text-[9px] font-mono uppercase tracking-widest opacity-70 mb-1">{opt.style}</span>
-                      <span className="block italic">"{opt.spokenLine}"</span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {angleOptions.ads.length > 0 && (
-            <div>
-              <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">// AD_CONCEPTS</p>
-              <div className="flex flex-wrap gap-2">
-                {angleOptions.ads.map((opt, i) => {
-                  if (opt.kind !== 'ad') return null;
-                  const isSelected = directorAngleBrief === opt.brief;
-                  return (
-                    <button
-                      key={`a-${i}`}
-                      onClick={() => handlePickAngle(opt.brief)}
-                      className={`text-left text-xs rounded-xl px-3 py-2 max-w-md transition-all border ${isSelected ? 'bg-[#FFCC00]/10 border-[#FFCC00] text-[#FFCC00]' : 'bg-zinc-950 border-white/10 text-zinc-400 hover:border-white/30 hover:text-white'}`}
-                    >
-                      <span className="block text-[9px] font-mono uppercase tracking-widest opacity-70 mb-1">{opt.format} · {opt.angle}</span>
-                      <span className="block italic">"{opt.openingLine}"</span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-        </div>
+        </TitledCard>
       )}
 
       {step3Mode === 'pick' && (
         <div className="mb-8 flex flex-col items-center justify-center space-y-6">
-           <div className="flex items-center gap-4 bg-zinc-950/50 backdrop-blur-xl p-4 border border-white/10 rounded-2xl">
-               <span className="text-[#FFCC00] font-bold font-mono text-xs uppercase">Target Language:</span>
-               <div className="flex gap-2">
-                   <button
-                      onClick={() => setLocalLanguage('English')}
-                      className={`py-2 px-6 rounded-xl text-xs font-bold uppercase tracking-widest transition-all ${localLanguage === 'English' ? 'bg-[#FFCC00] text-black' : 'bg-zinc-900 text-zinc-400 border border-white/10 hover:border-white/20 hover:text-white'}`}
-                   >
-                      ENGLISH
-                   </button>
-                   <button
-                      onClick={() => setLocalLanguage('Taglish')}
-                      className={`py-2 px-6 rounded-xl text-xs font-bold uppercase tracking-widest transition-all ${localLanguage === 'Taglish' ? 'bg-[#FFCC00] text-black' : 'bg-zinc-900 text-zinc-400 border border-white/10 hover:border-white/20 hover:text-white'}`}
-                   >
-                      TAGLISH
-                   </button>
-               </div>
+           <div className="w-full max-w-xs">
+               <FieldLabel className="mb-2 text-center">Target Language</FieldLabel>
+               <SegButton
+                 value={(localLanguage ?? '') as 'English' | 'Taglish'}
+                 onChange={(v) => setLocalLanguage(v)}
+                 options={[
+                   { value: 'English', label: 'English' },
+                   { value: 'Taglish', label: 'Taglish' },
+                 ]}
+               />
            </div>
 
            {!loading && !generatedScript && (
@@ -483,7 +490,7 @@ const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, script, setScript, 
             </div>
           )}
 
-          <div className="flex justify-between items-center border-b border-white/10 pb-2">
+          <div id="hook-select" className="flex justify-between items-center border-b border-white/10 pb-2">
             <h3 className="text-[#FFCC00] font-bold font-mono text-[10px] tracking-widest uppercase">// SELECT & EDIT HOOK</h3>
             <div className="flex gap-2">
                 {selectedHook && (
@@ -500,48 +507,51 @@ const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, script, setScript, 
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <ScriptDisplay 
-                title="Hook Variation 1" 
-                lines={generatedScript.hook1} 
+            <ScriptDisplay
+                title="Hook Variation 1"
+                lines={generatedScript.hook1}
                 onChange={(val) => handleScriptUpdate('hook1', val)}
-                onClick={() => handleSelectHook(1)} 
-                isSelected={selectedHook === 1} 
+                onClick={() => handleSelectHook(1)}
+                isSelected={selectedHook === 1}
             />
-            <ScriptDisplay 
-                title="Hook Variation 2" 
-                lines={generatedScript.hook2} 
+            <ScriptDisplay
+                title="Hook Variation 2"
+                lines={generatedScript.hook2}
                 onChange={(val) => handleScriptUpdate('hook2', val)}
-                onClick={() => handleSelectHook(2)} 
-                isSelected={selectedHook === 2} 
+                onClick={() => handleSelectHook(2)}
+                isSelected={selectedHook === 2}
             />
           </div>
-          
-          <div className="p-6 bg-zinc-950/50 border border-white/10 backdrop-blur-md rounded-xl">
-            <h4 className="font-bold text-[10px] text-[#FFCC00] uppercase tracking-widest font-mono mb-4">// Script Body (Shared)</h4>
-            <textarea
-                className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-all resize-y min-h-[150px] font-mono text-sm leading-relaxed"
+
+          <TitledCard title="Script Body (Shared)">
+            <TextArea
                 value={generatedScript.body.join('\n')}
                 onChange={(e) => handleScriptUpdate('body', e.target.value)}
                 placeholder="Edit script body here..."
+                rows={6}
+                className="min-h-[150px] resize-y font-mono leading-relaxed"
             />
-          </div>
+          </TitledCard>
         </div>
       )}
-      
-      <div className="mt-10 flex justify-between items-center pt-6 border-t border-white/10">
-        <button
-          onClick={onBack}
-          className="text-[10px] font-bold tracking-widest text-zinc-400 border border-white/10 px-6 py-3 rounded-full hover:bg-white/5 hover:text-white transition-all uppercase"
-        >
-          &lt; BACK
-        </button>
-        {step3Mode === 'review' && (
-          <GoldButton onClick={handleNext} disabled={!selectedHook || loading} className="px-8 py-3">
-            CONFIRM & PROCEED &gt;
-          </GoldButton>
-        )}
-      </div>
-    </GlassPanel>
+
+      {triedNext && step3Mode === 'review' && !selectedHook && (
+        <div className="mt-6 flex items-start gap-2 rounded-xl border border-red-500/40 bg-red-500/10 p-4">
+          <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-red-400" />
+          <p className="text-xs font-mono text-red-200">
+            <span className="font-bold uppercase tracking-widest text-red-400">Incomplete — </span>
+            select a hook variation to continue
+          </p>
+        </div>
+      )}
+
+      <StepFooter
+        onBack={onBack}
+        onNext={guardedNext}
+        nextLabel="CONFIRM & PROCEED"
+        renderNext={step3Mode !== 'review' ? <span /> : undefined}
+      />
+    </StepShell>
   );
 };
 

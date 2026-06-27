@@ -69,6 +69,31 @@ export const renderSceneImages = async (
   const isHookMorph = !!scene.startFramePrompt && !!scene.endFramePrompt;
   const startFrameRefs = isHookMorph ? { ...references, productUrl: undefined } : references;
 
+  // Phase 2 venue routing — makes Slices 2-4 live. If the storyboard tagged this scene with a
+  // venueSlot the user actually uploaded, anchor it to that REAL photo in 'venue' mode
+  // (place-identity-lock + camera-freedom). Scoped to non-hook, non-avatar scenes; any miss
+  // (no slot / no matching upload / hook / avatar) falls through to existing behavior unchanged.
+  const venuePhoto = scene.venueSlot
+    ? businessInfo.servicePhotos?.find(p => p.slot === scene.venueSlot)
+    : undefined;
+  // PRECEDENCE (intended): for a Services scene, an explicit venueSlot WINS over a 'product'
+  // tag — a service business has no physical product hero, so venueSlot is the deliberate
+  // "anchor to the real place/result" signal.
+  const isRealEstate = scriptType === 'RealEstate';
+  const isAvatarScene = scene.referenceImage === 'avatar' || scene.referenceImage === 'both';
+  // RealEstate avatar-in-property: a talking scene tagged with a room the user uploaded composites
+  // the AGENT (avatar identity) INTO that REAL room (place identity), instead of a generic lookalike.
+  const useAvatarVenue = isRealEstate && !!venuePhoto && !isHookMorph && isAvatarScene && !!avatar;
+  // Plain venue (b-roll, no person): anchor the place to its real photo.
+  const useVenue = !!venuePhoto && !isHookMorph && !isAvatarScene;
+  const mainRefs = useAvatarVenue
+    ? { avatarUrl: avatar!.url, productUrl: venuePhoto!.url }
+    : useVenue
+      ? { productUrl: venuePhoto!.url }
+      : startFrameRefs;
+  const mainMode: 'avatar' | 'product' | 'both' | 'none' | 'venue' | 'avatar_venue' | undefined =
+    useAvatarVenue ? 'avatar_venue' : useVenue ? 'venue' : scene.referenceImage;
+
   // When the hook's END frame reveals the product, anchor it to the hero photo even
   // though the model reliably tags scenes[0].referenceImage "none" (3/3 in testing) —
   // otherwise the end frame gets no reference and img-gen invents a look-alike that
@@ -96,14 +121,14 @@ export const renderSceneImages = async (
         prompt,
         aspectRatio,
         '1K',
-        startFrameRefs,
+        mainRefs,
         ethnicity,
         getBrandColors(businessInfo),
         scriptType,
         productDesc,
         undefined,
         index,
-        scene.referenceImage,
+        mainMode,
       );
     }
   }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { DUR, EASE } from './motionTokens';
 import { Film, ArrowRight, X } from 'lucide-react';
 
 interface ResumeDraftCardProps {
@@ -41,7 +42,7 @@ export const ResumeDraftCard: React.FC<ResumeDraftCardProps> = ({
     <motion.div
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay }}
+      transition={{ duration: DUR.slow, delay }}
       className="bg-[#FFCC00]/[0.06] backdrop-blur-xl rounded-2xl p-4 lg:p-5 relative overflow-hidden hover:bg-[#FFCC00]/[0.10] hover:shadow-[0_8px_40px_rgba(255,204,0,0.15)] transition-all duration-500 ease-out"
     >
       <div className="absolute inset-0 bg-gradient-to-br from-[#FFCC00]/5 to-transparent pointer-events-none" />
@@ -91,7 +92,7 @@ export const ResumeDraftCard: React.FC<ResumeDraftCardProps> = ({
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: `${pct * 100}%` }}
-          transition={{ duration: 0.7, ease: 'easeOut' }}
+          transition={{ duration: DUR.entrance, ease: EASE.out }}
           className="h-full bg-gradient-to-r from-[#FFCC00] to-[#FFD93D] shadow-[0_0_8px_rgba(255,204,0,0.6)]"
         />
       </div>
