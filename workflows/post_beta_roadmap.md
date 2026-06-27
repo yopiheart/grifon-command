@@ -64,6 +64,8 @@ Half-baked ideas don't go here — they go in conversation and either die or get
 
 **Scope estimate:** 3–5 days for v1. Bulk of the work is the cron + idempotency + cost guard, not the UI.
 
+**Prior art (recoverable):** An admin-only **headless One-Click Ad v1** (fully-automated, no-UI orchestrator) was prototyped on the deleted branch `feat/headless-autopilot-v1` — recoverable at commit `b877cf879cff339e69c8ddc395229ed27294bbd5`. Its resume trigger was "Remotion Phase 2." Its TUNED prompt fixes (BANNED-CTA language scoping, hook-ref hardening) already shipped to main. The branch was deleted in the 2026-06-27 cleanup as superseded by main's rebuilt One-Shot, but this commit is the closest existing starting point if/when this tier is built.
+
 **Source:** Same NotebookLM brief as item #1. Neil endorsed the consumer-side application of agent loops as the headline Autopilot feature.
 
 ---
