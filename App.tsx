@@ -89,7 +89,7 @@ if (typeof window !== 'undefined') {
   }
 }
 
-type Route ='landing' | 'pricing' | 'checkout' | 'billing_3ds_return' | 'app' | 'billing_success' | 'terms' | 'privacy' | 'refund' | 'support';
+type Route ='landing' | 'login' | 'pricing' | 'checkout' | 'billing_3ds_return' | 'app' | 'billing_success' | 'terms' | 'privacy' | 'refund' | 'support';
 
 const detectInitialRoute = (): Route => {
   if (typeof window === 'undefined') return 'landing';
@@ -103,12 +103,14 @@ const detectInitialRoute = (): Route => {
   if (path.startsWith('/privacy')) return 'privacy';
   if (path.startsWith('/refund')) return 'refund';
   if (path.startsWith('/support')) return 'support';
+  if (path.startsWith('/login')) return 'login';
   if (path.startsWith('/app')) return 'app';
   return 'landing';
 };
 
 const ROUTE_PATHS: Record<Route, string> = {
   landing: '/',
+  login: '/login',
   pricing: '/pricing',
   checkout: '/checkout',
   billing_3ds_return: '/billing/3ds-return',
@@ -276,9 +278,9 @@ const App: React.FC = () => {
     }
     if (postAuthRedirectedRef.current) return;
     postAuthRedirectedRef.current = true;
-    // Only the marketing gateway gets bounced into the app; a deliberate
-    // /pricing or /billing visit by a logged-in user is preserved.
-    if (currentRoute === 'landing') {
+    // The marketing gateway and the /login screen get bounced into the app; a
+    // deliberate /pricing or /billing visit by a logged-in user is preserved.
+    if (currentRoute === 'landing' || currentRoute === 'login') {
       setCurrentRoute('app');
       if (typeof window !== 'undefined') {
         window.history.replaceState({}, '', ROUTE_PATHS.app);
@@ -307,6 +309,18 @@ const App: React.FC = () => {
     window.addEventListener('popstate', onPop);
     return () => window.removeEventListener('popstate', onPop);
   }, []);
+
+  // SPA virtual pageviews — fire a Meta PageView on every route change so the
+  // funnel (landing → /login → /pricing → /app) is visible to the pixel and to
+  // URL-based Custom Audiences. initPixel() fires the FIRST PageView on consent;
+  // this covers every move after. trackPixel self-guards (no-op until the pixel
+  // is initialized post-consent), and route changes sync the URL before this
+  // runs, so each PageView reports the correct path.
+  const firstPageviewRef = useRef(true);
+  useEffect(() => {
+    if (firstPageviewRef.current) { firstPageviewRef.current = false; return; }
+    trackPixel('PageView');
+  }, [currentRoute]);
 
   useEffect(() => {
     const supabase = getSupabase();
@@ -735,9 +749,16 @@ const App: React.FC = () => {
       setAuthPassword('');
       setAuthConfirm('');
       setAuthError('');
-      setAuthNotice('');
+      setAuthNotice("You've been signed out.");
       setAuthMode('sign_in');
       setPendingSignUpEmail('');
+      // Land on the /login screen (not the marketing site) with a Claude-style
+      // ?from=logout marker — clean, deep-linkable, and pixel-visible — instead
+      // of leaving the URL stuck on /app.
+      setCurrentRoute('login');
+      if (typeof window !== 'undefined' && window.history.replaceState) {
+        window.history.replaceState({}, '', '/login?from=logout');
+      }
     }
   };
 
@@ -800,6 +821,12 @@ const App: React.FC = () => {
     }
     setCurrentRoute(route);
   };
+
+  // "Enter the app" CTA (landing / pricing). Unauthenticated visitors land on the
+  // /login gateway with a real URL (so the move is deep-linkable + pixel-visible);
+  // authenticated users go straight to /app. Replaces bare setCurrentRoute('app'),
+  // which left the URL stuck on the marketing page.
+  const enterApp = () => goToLegal(isAuthenticated ? 'app' : 'login');
 
   // Route-transition veil (marketing pages only): cover 0.36s → swap route under
   // the panel → reveal. Skipped under prefers-reduced-motion and while one is
@@ -901,7 +928,7 @@ const App: React.FC = () => {
     return (
       <ErrorBoundary name="route:landing" resetKey={currentRoute} resetLabel="RETRY">
         <LandingPage
-          onEnterApp={() => setCurrentRoute('app')}
+          onEnterApp={enterApp}
           onNavigatePricing={() => runVeilTransition('// PREPARING YOUR PLANS', () => goToLegal('pricing'))}
           onNavigateLegal={veilToLegal}
           isAuthenticated={isAuthenticated}
@@ -921,7 +948,7 @@ const App: React.FC = () => {
         resetLabel="RETURN TO LANDING"
       >
         <GrifonPricingPage
-          onEnterApp={() => setCurrentRoute('app')}
+          onEnterApp={enterApp}
           onNavigateHome={() => runVeilTransition('// GRIFON COMMAND', () => setCurrentRoute('landing'))}
           onNavigateLegal={veilToLegal}
         />
