@@ -45,7 +45,32 @@ Auto-resolution (name → page-id) is not automated yet (it's the fragile part).
 Fastest robust path: ask the user to open the Ad Library, search the brand,
 click the brand result, and **paste the `view_all_page_id=<number>` from their
 browser URL.** (5 seconds; proven this session — IM8 Health = `345914995276546`.)
-Confirm the target niche + country (default `US`; `ALL` is flaky).
+Confirm the target niche + country.
+
+#### Step 1 — Neil's verified browser procedure (2026-06-28, the reliable way)
+A page-pinned scrape (`search_type=page&view_all_page_id=...`) **reliably returns
+empty** — both Firecrawl and a real browser show *"No ads match your search
+criteria."* That is a **known Meta Ad Library bug, not a wrong page-id.** Do this
+**in a real browser (delegate to `smoke-tester`)**, in order:
+
+1. **Set the filters FIRST, before searching:** "Select country" → **All**, and
+   "Select ad category" → **All ads**. (Do this *before* typing the brand — Neil
+   2026-06-28. Overrides the old "default US / ALL is flaky" note above.)
+2. **Type the brand** (e.g. `Cursor`) in the search bar. The typeahead shows
+   multiple advertisers — **pick the correct one** (usually the first / verified:
+   for Cursor that's *Cursor · Software Company · @trycursor · 23.7K FB / 87.5K
+   IG*). Beware decoys (*Cursor Oy*, a *Cursor* band, *@cursor.pk*).
+3. After clicking the brand you'll see **"no ads match your search criteria" —
+   this is the bug. Press F5 / refresh the browser.** The full list of video +
+   image ads then renders.
+4. **Only now apply the longevity filter** ("Impressions by date" → ≥30 days, i.e.
+   the `start_date[max]` floor). **The bug fires AGAIN here** — after you change/set
+   the date it reverts to "no ads match." **Press F5 / refresh once more** and the
+   date-filtered list renders. (Rule of thumb: every filter change → refresh.)
+
+Because the empty state only clears on an in-session refresh, **the keyword-search
+JSON scrape can surface a brand's ads (good for a quick page-id sniff), but the
+authoritative full-library scan must be the smoke-tester browser flow above.**
 
 ### Step 2 — Get the ranked shortlist
 Preferred (deterministic tool does the ranking):
