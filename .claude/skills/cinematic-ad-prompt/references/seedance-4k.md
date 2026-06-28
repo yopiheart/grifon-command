@@ -2,7 +2,7 @@
 
 This file encodes how to prompt **Seedance 2.0** for Grifon ad prep, and which engine to use for what. Two authoritative sources, distilled below:
 - **Dreamina Seedance 2.0 Series Prompt Guide** (ByteDance / BytePlus ModelArk) — the formula, constraints, and craft tips here are quoted from it.
-- Neil's Higgsfield "Seedance 4K" brief — the 4K-native realism doctrine (10-bit, 21:9, micro-texture).
+- Neil's "Seedance 4K" brief — the 4K-native realism doctrine (10-bit, 21:9, micro-texture).
 
 Live references (both BytePlus URLs 403 to automated fetch — open by hand to update):
 https://docs.byteplus.com/en/docs/ModelArk/2222480 · https://seed.bytedance.com/en/seedance2_0 · https://higgsfield.ai/blog/Seedance-4k
@@ -11,11 +11,11 @@ https://docs.byteplus.com/en/docs/ModelArk/2222480 · https://seed.bytedance.com
 
 - **Seedance 2.0 = the 4K cinematic + b-roll engine for COMMERCIAL ADS.** Use it for hero product shots, cinematic commercial spots, b-roll, scroll-stoppers, transformations, and any visual/atmosphere layer. Unlocked at **Business tier**.
 - **Seedance CANNOT make a Filipino/Tagalog talking avatar.** Its text/audio natively supports **English, Japanese, Indonesian, Spanish, Portuguese — not Tagalog.** It *does* generate audio+video (SFX, ambience, even non-Tagalog VO), just not Filipino speech. So **never route a spoken-Tagalog talking-head to Seedance.** Those go to the **in-app avatar pipeline** (Veo + ElevenLabs voice).
-- **Image generation = ChatGPT Image 2 (GPT Image 2).** Generate first/last keyframes and any on-screen text with GPT Image 2, then feed them to Seedance as image-to-video. (Higgsfield's "Soul Cinema" is an optional alternative for stylized character/location plates, but GPT Image 2 is Grifon's default — it nails text rendering and precise layout.)
+- **Image generation = Codex CLI `gpt-image-2`** (the `codex-image` skill — billed to the ChatGPT plan, local-only). Generate all asset sheets, first/last keyframes, and any on-screen text with it, then feed them to Seedance as image-to-video. It's the default precisely because it nails readable text/labels and precise layout.
 
-## Why GPT Image 2 for the frames (face restriction)
+## Why Codex (gpt-image-2) for the frames (face restriction)
 
-Seedance **restricts direct upload of raw, unverified human faces** — use generated/placeholder/anonymized portraits instead. This is exactly why the image step is GPT Image 2: you generate a non-real, on-brand face/scene with accurate text, then drive Seedance from it. Never plan a Seedance shot around uploading a real customer's face.
+Seedance **restricts direct upload of raw, unverified human faces** — use generated/placeholder/anonymized portraits instead. This is exactly why the image step is Codex (gpt-image-2): you generate a non-real, on-brand face/scene with accurate text, then drive Seedance from it. Never plan a Seedance shot around uploading a real customer's face.
 
 ## The Seedance prompt formula (Dreamina)
 
@@ -48,7 +48,7 @@ Because Seedance **natively locks features from reference assets** (multimodal r
 - **4K is a necessity, not cosmetic.** Native 4K changes the model's grasp of 3D space, depth, and physical boundaries — 1080p melts crowds/warps objects and burns credits on rerolls. Generate 4K from the start for hero/realism shots.
 - **Micro-texture breaks the synthetic glaze.** Name skin pores, splitting ice, fabric weave, condensation, eye fibers — the detail that reads as real at 4K.
 - **10-bit color, "High" bitrate = no banding.** 8-bit (~16M colors) bands in gradients (smoke, haze, sky, soft falloff, bokeh); 10-bit (>1B colors) blends seamlessly. Specify it in TECHNICAL, especially for any shot with smoke/haze/gradients.
-- **Drive physics from an image.** For believable mass/momentum/weight, prefer image-to-video (GPT Image 2 frame → Seedance) over text-to-video.
+- **Drive physics from an image.** For believable mass/momentum/weight, prefer image-to-video (Codex (gpt-image-2) frame → Seedance) over text-to-video.
 - **Zero-hardware VFX.** Seedance can apply VFX to uploaded footage without green screen (native masking) — name the anchor object, the new element, and its light/contact-shadow/wet-film interaction; combine with the INPUT LOCK clause in `structure.md`.
 
 ## Model selection matrix (Dreamina)
@@ -67,7 +67,7 @@ ENVIRONMENT/STYLE: [location, light world, color accent]. 10-bit color, no bandi
 CAMERA: [one or two named moves — macro push-in, snap-rack, slow dolly].
 TEMPORAL ACTION (Motion): [what changes over time, with WEIGHT & FORCE verbs]. Physics: [mass, contact shadows, surface tension].
 AUDIO/SONIC: [diegetic SFX synced to the key visual beat — "at [event], [sound]"]. [VO only if EN/JA/ID/ES/PT; NO Tagalog speech.]
-TECH: native 4K, 10-bit, "High" bitrate, [aspect], [length]. No real faces (use GPT Image 2 keyframe). [Model: Standard | Fast/Mini.]
+TECH: native 4K, 10-bit, "High" bitrate, [aspect], [length]. No real faces (use Codex (gpt-image-2) keyframe). [Model: Standard | Fast/Mini.]
 ```
 
 ---
@@ -78,8 +78,8 @@ A prompt tuned for one engine does **not** auto-port (see `agent_lessons.md` 202
 
 | Need | Engine | Notes |
 |---|---|---|
-| 4K cinematic commercial, b-roll, product hero, scroll-stopper, before/after, non-Tagalog audio | **Seedance 2.0** (Higgsfield/ModelArk) | The default for visuals. Business tier. Formula + brevity above. No real faces, no Tagalog speech. |
-| First/last keyframes, on-screen text, anonymized faces | **GPT Image 2** | Feeds Seedance/Kling as image-to-video. |
+| 4K cinematic commercial, b-roll, product hero, scroll-stopper, before/after, non-Tagalog audio | **Seedance 2.0 API** (BytePlus ModelArk) | The default for visuals. Business tier. Formula + brevity above. No real faces, no Tagalog speech. |
+| First/last keyframes, on-screen text, anonymized faces | **Codex (gpt-image-2)** | Feeds Seedance/Kling as image-to-video. |
 | **Filipino/Tagalog talking avatar** (UGC, testimonial, founder) | **In-app avatar pipeline** (Veo + ElevenLabs) | NOT Seedance. This is Grifon's existing product feature; this skill writes the *shot* but the Filipino voice/avatar is the app's job. |
 | Image-to-video with explicit start→end frame interpolation | **Kling** | Strong i2v; supply first (and optional last) frame + bridge motion + a negative prompt. |
 
@@ -98,5 +98,5 @@ When writing a talking-head *shot* for the app (Filipino or other):
 ## Quick TECHNICAL block to paste (Seedance)
 
 ```
-TECH: native 4K, 10-bit color, "High" bitrate (no banding), [24fps], [aspect], [length]. No real faces (GPT Image 2 keyframe). Audio synced to the key beat. Model: [Standard | Fast/Mini].
+TECH: native 4K, 10-bit color, "High" bitrate (no banding), [24fps], [aspect], [length]. No real faces (Codex (gpt-image-2) keyframe). Audio synced to the key beat. Model: [Standard | Fast/Mini].
 ```
