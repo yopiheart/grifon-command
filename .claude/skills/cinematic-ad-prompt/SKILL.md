@@ -13,6 +13,8 @@ This is a Grifon-grade evolution of a Hollywood prompt builder: it keeps the pro
 
 - **This skill is for external prep only.** It writes prompts a human pastes into Higgsfield/Seedance/Veo/Kling. It does **NOT** edit Grifon's in-app generation pipeline. The TUNED files `services/geminiService.ts`, `api/_lib/prompts.ts`, `api/_lib/renderPresets.ts`, and `types.ts` are off-limits — never touch them from this skill.
 - **Adjacent skills (hand off, don't duplicate):** `grifon-cmo` owns the actual script/offer/funnel copy; `grifon-creative-director` owns finished-asset visual + preset lock; `viral-autopsy` analyzes competitor videos and feeds patterns. This skill turns an idea into a *shot prompt* and briefs those skills when copy or visual-lock is the real need.
+- **Single shot vs full commercial:** this skill writes ONE shot (a hero shot, hook, b-roll, short ad). For a **multi-scene commercial** — a full script/treatment broken into a numbered, continuity-locked shotlist with an HTML production checklist — hand off to **`seedance-shotlist-director`**. Trigger words: "shotlist", "break this script into prompts", "5-scene ad", "storyboard this into Seedance prompts".
+- **Lock assets first:** before prompting any video, build/freeze the character, product, and location references — see **`references/asset-prep.md`** (3-panel character sheets, multi-angle product sheets, 3/4 location plates, single-variable testing). Better assets beat longer prompts.
 
 ## Engine stack (know this before routing — see `references/seedance-4k.md`)
 
@@ -52,6 +54,7 @@ If the user is ambiguous, infer from the request and state the assumption in one
    - `references/seedance-4k.md` — Seedance 2.0/4K technical doctrine and the Veo/Kling portability profiles.
    - `references/direct-response.md` — hook/offer/CTA, Taglish, platform/aspect presets (DR mode).
    - `references/content-policy.md` — safe-construction rules (any risk surface).
+   - `references/asset-prep.md` — Step 1 asset-locking (character/product/location sheets) + Step 3 iteration discipline (granular choreography, micro-splicing). Lock assets before prompting.
    - `references/examples.md` — full worked Grifon ad prompts to pattern-match against.
 5. **Write the prompt** following the chosen template and the output standard below.
 6. **Deliver the prompt block directly** as one clean fenced block, with a one-line note on mode / engine / aspect / length and any assumption made. No padding.
