@@ -14,6 +14,13 @@ This is a Grifon-grade evolution of a Hollywood prompt builder: it keeps the pro
 - **This skill is for external prep only.** It writes prompts a human pastes into Higgsfield/Seedance/Veo/Kling. It does **NOT** edit Grifon's in-app generation pipeline. The TUNED files `services/geminiService.ts`, `api/_lib/prompts.ts`, `api/_lib/renderPresets.ts`, and `types.ts` are off-limits — never touch them from this skill.
 - **Adjacent skills (hand off, don't duplicate):** `grifon-cmo` owns the actual script/offer/funnel copy; `grifon-creative-director` owns finished-asset visual + preset lock; `viral-autopsy` analyzes competitor videos and feeds patterns. This skill turns an idea into a *shot prompt* and briefs those skills when copy or visual-lock is the real need.
 
+## Engine stack (know this before routing — see `references/seedance-4k.md`)
+
+- **Seedance 2.0 = the 4K cinematic + b-roll engine for commercial ads** (hero product, cinematic spots, b-roll, scroll-stoppers, transformations). Unlocked at **Business tier**. It natively makes audio+video but **cannot speak Filipino/Tagalog** (supports EN/JA/ID/ES/PT only), and **blocks raw real-face uploads**.
+- **GPT Image 2 (ChatGPT Image 2) = the image step.** Generate first/last keyframes and on-screen text with it, then feed Seedance/Kling as image-to-video. (Higgsfield "Soul Cinema" optional alternative.)
+- **Filipino/Tagalog talking avatars → the in-app avatar pipeline** (Veo + ElevenLabs voice), NOT Seedance. This skill still writes the talking *shot*, but the Filipino voice/identity is the app's job.
+- **Kling** = image-to-video with explicit start→end frame interpolation.
+
 ## The 5 non-negotiable principles
 
 Every prompt this skill produces obeys these, regardless of mode or style:
@@ -36,7 +43,8 @@ If the user is ambiguous, infer from the request and state the assumption in one
 ## Workflow
 
 1. **Pick the mode** (above) and the **style/format** (see Quick format selector below; recipes in `references/styles.md`).
-2. **Lock duration, aspect ratio, and target engine.** Oner (one unbroken take) vs multishot (hard cuts at stated times). Default length 15s; default aspect 16:9 for CINEMATIC, 9:16 for DIRECT-RESPONSE AD. Pick the engine profile from `references/seedance-4k.md` (Seedance/Higgsfield default; Veo for dialogue; Kling for image-to-video start/end frames).
+2. **Lock duration, aspect ratio, and target engine.** Oner (one unbroken take) vs multishot (hard cuts at stated times). Default length 15s; default aspect 16:9 for CINEMATIC, 9:16 for DIRECT-RESPONSE AD. Pick the engine from `references/seedance-4k.md`: **Seedance 2.0** for cinematic/b-roll/product/visual (the default, Business tier) — but **never for spoken Tagalog**; **in-app/Veo** for Filipino talking heads; **Kling** for explicit start→end image-to-video; **GPT Image 2** for the first/last keyframe + on-screen text.
+   - **Seedance prompts follow a formula and a brevity rule:** `Subject/Frame (Spatial) + Environment/Style + Camera + Temporal Action (with weight & force) + Audio/Sonic`, kept **under ~1000 words, key points first**. Use the compact template in `references/seedance-4k.md` for delivery; use the fuller 23-section vocabulary in `structure.md` only to *think through* the shot. Seedance also blocks real-face uploads — plan around a GPT Image 2 keyframe.
 3. **For DIRECT-RESPONSE AD only:** lock the hook angle (named pain / curiosity gap / contrarian claim), the offer/CTA beat, and the language register *first* — per `references/direct-response.md`. Hand the *finished selling copy* to `grifon-cmo` if the user wants the script polished; this skill writes the shot, not the campaign.
 4. **Load the relevant reference file(s)** before writing:
    - `references/structure.md` — the universal section vocabulary, ordering, and how to assemble a prompt. **Read this first, always.**
@@ -61,21 +69,23 @@ If the user is ambiguous, infer from the request and state the assumption in one
 
 ## Quick format selector
 
-| User says… | Mode | Format | Key reference |
-|---|---|---|---|
-| "cinematic", "hero shot", "epic", live-action | CINEMATIC | Live-action cinematic, oner or multishot | styles.md → Live-action |
-| "product", "packshot", "ad for my product" | either | Product/commercial spot, macro cuts, packshot resolve | styles.md → Product |
-| "UGC", "creator-style", "talking to camera selling" | DIRECT-RESPONSE AD | UGC spokesperson, 9:16 | styles.md → UGC + direct-response.md |
-| "testimonial", "talking head", "review" | DIRECT-RESPONSE AD | Testimonial talking-head | styles.md → Testimonial |
-| "founder", "me explaining", "story to camera" | DIRECT-RESPONSE AD | Founder-to-camera | styles.md → Founder |
-| "before and after", "transformation" | DIRECT-RESPONSE AD | Before/after | styles.md → Before/After |
-| "scroll-stopper", "hook b-roll", "first 3 seconds" | DIRECT-RESPONSE AD | Scroll-stopper hook b-roll | styles.md → Scroll-stopper |
-| "cartoon", "animated", "Pixar", talking creatures | CINEMATIC | 3D animated feature, multishot, dialogue | styles.md → Animated |
-| "game", "HUD", "boss", third-person | CINEMATIC | Game-engine cutscene, persistent HUD | styles.md → Game cutscene |
-| "racing game", "gameplay" | CINEMATIC | Gameplay footage, locked rig, live HUD | styles.md → Gameplay |
-| "oner", "one take", "FPV", "POV" | either | Single continuous shot, beat timestamps | styles.md → FPV/Oner |
-| "add X to my clip", "make the creature come out of" | CINEMATIC | VFX composite on source video, input-locked | styles.md → VFX composite |
-| "kaiju", "monster", "titan" | CINEMATIC | Creature/kaiju cinematic, original design | styles.md → Kaiju |
+| User says… | Mode | Format | Engine | Key reference |
+|---|---|---|---|---|
+| "cinematic", "hero shot", "epic", live-action | CINEMATIC | Live-action cinematic, oner or multishot | Seedance | styles.md → Live-action |
+| "product", "packshot", "ad for my product" | either | Product/commercial spot, macro cuts, packshot resolve | Seedance (GPT Image 2 frame) | styles.md → Product |
+| "before and after", "transformation" | DIRECT-RESPONSE AD | Before/after | Seedance or Kling (i2v) | styles.md → Before/After |
+| "scroll-stopper", "hook b-roll", "first 3 seconds" | DIRECT-RESPONSE AD | Scroll-stopper hook b-roll | Seedance | styles.md → Scroll-stopper |
+| "UGC", "creator-style", "talking to camera selling" (Filipino) | DIRECT-RESPONSE AD | UGC spokesperson, 9:16 | **In-app/Veo** (not Seedance — Tagalog) | styles.md → UGC + direct-response.md |
+| "testimonial", "talking head", "review" (Filipino) | DIRECT-RESPONSE AD | Testimonial talking-head | **In-app/Veo** (not Seedance — Tagalog) | styles.md → Testimonial |
+| "founder", "me explaining", "story to camera" (Filipino) | DIRECT-RESPONSE AD | Founder-to-camera | **In-app/Veo** (not Seedance — Tagalog) | styles.md → Founder |
+| "cartoon", "animated", "Pixar", talking creatures | CINEMATIC | 3D animated feature, multishot, dialogue | Seedance (EN/JA/ID/ES/PT only) | styles.md → Animated |
+| "game", "HUD", "boss", third-person | CINEMATIC | Game-engine cutscene, persistent HUD | Seedance | styles.md → Game cutscene |
+| "racing game", "gameplay" | CINEMATIC | Gameplay footage, locked rig, live HUD | Seedance | styles.md → Gameplay |
+| "oner", "one take", "FPV", "POV" | either | Single continuous shot, beat timestamps | Seedance | styles.md → FPV/Oner |
+| "add X to my clip", "make the creature come out of" | CINEMATIC | VFX composite on source video, input-locked | Seedance (native masking) | styles.md → VFX composite |
+| "kaiju", "monster", "titan" | CINEMATIC | Creature/kaiju cinematic, original design | Seedance | styles.md → Kaiju |
+
+**Tagalog rule:** Seedance can't speak Filipino/Tagalog. If the ad needs a Filipino *spoken* line, route the talking shot to the in-app/Veo pipeline; Seedance still carries any cinematic/b-roll/visual layer of the same campaign.
 
 When nothing fits cleanly, compose from `structure.md` directly — the section vocabulary is universal.
 

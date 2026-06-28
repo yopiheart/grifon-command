@@ -67,9 +67,12 @@ Each recipe lists the distinguishing ingredients of that style. Build on top of 
 
 # Part 2 — Grifon direct-response ad styles
 
-All DR styles default to **9:16 mobile-first**, keep the subject/action in the top two-thirds (caption-safe zone at the bottom), open on a **HOOK FRAME** at 0:00, and resolve on a **CTA / END CARD**. Pull hook angle, register, and CTA rules from `direct-response.md`. Pull engine choice from `seedance-4k.md` (Veo for spoken delivery; Seedance/Higgsfield or Kling image-to-video for everything else). Keep one spoken line max — hand fuller scripts to `grifon-cmo`.
+All DR styles default to **9:16 mobile-first**, keep the subject/action in the top two-thirds (caption-safe zone at the bottom), open on a **HOOK FRAME** at 0:00, and resolve on a **CTA / END CARD**. Pull hook angle, register, and CTA rules from `direct-response.md`. Keep one spoken line max — hand fuller scripts to `grifon-cmo`.
+
+**Engine routing (see `seedance-4k.md`):** the *visual* DR styles — **product hero, before/after, scroll-stopper** — render on **Seedance 2.0** (4K, Business tier; no real faces — use a GPT Image 2 keyframe; audio synced; weight & force in the motion). The *Filipino spoken* DR styles — **UGC spokesperson, testimonial, founder-to-camera** — are **NOT Seedance** (it can't speak Tagalog); they go to the **in-app/Veo** avatar pipeline. This skill still writes the talking *shot*; the Filipino voice/identity is the app's job. (Seedance *can* speak EN/JA/ID/ES/PT if a non-Tagalog VO is ever wanted.)
 
 ## UGC spokesperson (creator-style, selling to camera)
+**Engine:** in-app/Veo (Filipino spoken) — NOT Seedance.
 **Look:** authentic raw-to-polished UGC — handheld phone realism, natural window light, slightly imperfect framing, real skin texture (NOT glossy/CGI, NOT studio-perfect). Photoreal.
 **Subject:** one relatable creator/spokesperson (Bryan/Olivia archetype — see `direct-response.md`) talking straight to lens, holding/using the product.
 **Camera:** mostly locked phone-at-arms-length with organic micro-tremor; one gentle push-in on the hook line. Avoid Hollywood moves — this must read as a real person, not a commercial.
@@ -78,6 +81,7 @@ All DR styles default to **9:16 mobile-first**, keep the subject/action in the t
 **Audio:** one spoken line (premium Taglish or English per register), light room tone, NO music bed unless asked.
 
 ## Testimonial / talking-head (review-style)
+**Engine:** in-app/Veo (Filipino spoken) — NOT Seedance.
 **Look:** warm, credible, lightly polished — a real customer in a real space (home, shop, café). Photoreal, NOT studio glam.
 **Subject:** one person recounting a result, product visible nearby or in hand. Original/anonymous person; no fake reviewer badges (see `content-policy.md`).
 **Camera:** seated medium close-up, very gentle dolly-in over the line; soft practical key from a window.
@@ -86,6 +90,7 @@ All DR styles default to **9:16 mobile-first**, keep the subject/action in the t
 **Constraint:** outcome stays plausible/generic; no on-screen clinical or earnings claim.
 
 ## Product hero / packshot for SMB
+**Engine:** Seedance 2.0 (4K, Business tier), image-to-video from a GPT Image 2 keyframe (no real faces; accurate label/text). Audio synced to the key beat; weight & force in the motion ("serum beads and rolls with viscous weight", not "serum drips").
 **Look:** 4K editorial commercial, premium but grounded for an SMB product (food, supplement, skincare, gadget, apparel). Deep but not pretentious; one accent color world from the packaging.
 **Structure:** short oner or 3 fast macro cuts resolving on the hero packshot. Image-to-video from a real product photo for accurate label/physics.
 **Camera:** macro probe-lens, snap-rack focus, slow dolly-in on the packshot; particle drift; micro-bounce settle.
@@ -94,6 +99,7 @@ All DR styles default to **9:16 mobile-first**, keep the subject/action in the t
 **CTA:** clean end card or product-in-hand; one action; no price.
 
 ## Founder-to-camera (story / authority)
+**Engine:** in-app/Veo (Filipino spoken) — NOT Seedance.
 **Look:** intimate, authentic, slightly cinematic — the founder in their actual workspace. Photoreal, warm practical light.
 **Subject:** the founder speaking one honest line to camera (origin, mission, or a contrarian claim). Authority via realness, not a suit-and-studio.
 **Camera:** medium shot, gentle handheld breathe, one slow push-in on the key line.
@@ -101,6 +107,7 @@ All DR styles default to **9:16 mobile-first**, keep the subject/action in the t
 **Beat arc:** contrarian hook → the "why" → the offer's promise → invite CTA.
 
 ## Before / after transformation
+**Engine:** Seedance 2.0, or Kling for explicit start→end frame interpolation (GPT Image 2 keyframes; no real faces). Sync the cut to a beat ("clutter ambience drops to a calm tone on the match-cut").
 **Look:** honest, relatable, two clearly-different states of the same subject/space/product. Photoreal.
 **Structure:** a single match-cut or wipe between BEFORE and AFTER (state it happens once), or split-screen oner. Keep it plausible — no fabricated clinical result.
 **Camera:** identical framing on both states so the change reads instantly; gentle push-in on the AFTER.
@@ -109,6 +116,7 @@ All DR styles default to **9:16 mobile-first**, keep the subject/action in the t
 **Constraint:** transformation must be believable and the same subject; no fake numbers (see `content-policy.md`).
 
 ## Scroll-stopper hook b-roll (no face)
+**Engine:** Seedance 2.0 (4K). Lean on weight & force ("thick honey pours with viscous weight and stretches before impact") and audio-visual sync (the SFX hits exactly on the physical event). Often image-to-video from a GPT Image 2 frame.
 **Look:** hyper-real 4K macro / kinetic b-roll designed purely to stop the thumb in the first second. Photoreal, micro-texture forward.
 **Structure:** a 3–6s oner or 2 hard cuts; the *whole clip* is the hook (often pairs with a CMO voiceover or caption added later).
 **Camera:** crash-zoom or fast macro push into a satisfying physical event (pour, crack, bloom, slam, ignition) with real physics.

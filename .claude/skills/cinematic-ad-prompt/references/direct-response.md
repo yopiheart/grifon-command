@@ -37,6 +37,10 @@ Rules:
 - **Never show price on screen** (Grifon house rule). The CTA carries the action; pricing lives on the landing page.
 - The end card can be a clean brand lockup or the product/result in hand — premium, on-brand (gold `#FFCC00` on near-black `zinc-950` per `DESIGN.md`; never neon, never pure black).
 
+## Engine note — spoken Tagalog is NOT Seedance
+
+Seedance 2.0 cannot speak Filipino/Tagalog (it supports EN/JA/ID/ES/PT audio only) and blocks raw real-face uploads. So a **Taglish *spoken* ad** (UGC, testimonial, founder) routes to the **in-app avatar pipeline** (Veo + ElevenLabs voice) — see `seedance-4k.md`. Seedance still carries the **cinematic/b-roll/visual layer** and any **on-screen captions/overlays/end cards** (text is image, not speech). The hook/offer/CTA/register craft below applies to both: it shapes the spoken line for the in-app talking ad AND the on-screen copy for a Seedance visual ad.
+
 ## Language register (premium Taglish)
 
 - **Taglish (premium, not street):** matches Bryan's vocabulary, organic, conversational. Good for UGC, founder, testimonial aimed at PH.

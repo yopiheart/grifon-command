@@ -1,6 +1,8 @@
 # Worked Examples — Grifon ad prompts (copy-paste)
 
-Six complete prompts to pattern-match against. Each notes **mode / engine / aspect / length** on its first line. These are templates, not the only shapes — adapt the section vocabulary in `structure.md` freely. Products shown are generic placeholders (coffee, serum, app); swap in the real reference.
+Complete prompts to pattern-match against. Each notes **mode / engine / aspect / length** on its first line. Templates, not the only shapes — adapt freely. Products shown are placeholders (coffee, serum, app); swap in the real reference.
+
+**Engine reminder (see `seedance-4k.md`):** **Seedance 2.0** renders the cinematic/b-roll/product/visual examples (#1, #4, #5, #7) in 4K (Business tier) — it **can't speak Tagalog** and **blocks real-face uploads**, so any person comes from a **GPT Image 2** keyframe. **Filipino spoken** examples (#2, #3, #6) route to the **in-app/Veo** avatar pipeline, not Seedance. Seedance prompts stay **under ~1000 words, formula-first** (`Subject/Frame + Environment + Camera + Temporal Action + Audio`); the dense section layout below is fine as long as it stays tight — #7 shows the compact formula shape.
 
 ---
 
@@ -29,7 +31,7 @@ POSITIVE LOCKS: bag label reads exactly as @image_1; bean color and bag color do
 
 ---
 
-## 2) UGC spokesperson — skincare serum (DIRECT-RESPONSE AD · Veo 3.1 · 9:16 · 10s)
+## 2) UGC spokesperson — skincare serum (DIRECT-RESPONSE AD · In-app/Veo, Filipino talking — NOT Seedance · 9:16 · 10s)
 
 ```
 STYLE: authentic UGC, handheld phone realism, natural window light, real skin texture with visible pores, slightly imperfect framing. Photoreal — NOT glossy, NOT studio, NOT CGI.
@@ -50,7 +52,7 @@ POSITIVE LOCKS: same person throughout; serum stays green; one CTA.
 
 ---
 
-## 3) Testimonial talking-head — coaching/service (DIRECT-RESPONSE AD · Veo 3.1 · 9:16 · 12s)
+## 3) Testimonial talking-head — coaching/service (DIRECT-RESPONSE AD · In-app/Veo, Filipino talking — NOT Seedance · 9:16 · 12s)
 
 ```
 STYLE: warm credible testimonial, real customer in a real home/café, lightly polished. Photoreal, NOT studio glam.
@@ -111,7 +113,7 @@ Hand-off: bring this to `grifon-cmo` for the overlay hook + CTA, or stitch it as
 
 ---
 
-## 6) Founder-to-camera — authority/story (DIRECT-RESPONSE AD · Veo 3.1 · 9:16 · 12s)
+## 6) Founder-to-camera — authority/story (DIRECT-RESPONSE AD · In-app/Veo, Filipino talking — NOT Seedance · 9:16 · 12s)
 
 ```
 STYLE: intimate authentic founder shot, real workspace, warm practical light, lightly cinematic. Photoreal.
@@ -131,8 +133,32 @@ POSITIVE LOCKS: same person; one CTA; on-brand lockup.
 
 ---
 
+## 7) GPT Image 2 keyframe → compact Seedance shot — energy drink (CINEMATIC · GPT Image 2 + Seedance 2.0 4K · 9:16 · 6s)
+
+The two-step Seedance workflow: generate the first frame with GPT Image 2 (accurate label/text, no real faces), then drive a short 4K Seedance shot from it using the **compact formula** (under ~1000 words, formula-first, weight & force, audio synced).
+
+**Step A — GPT Image 2 (first frame):**
+```
+A photoreal 9:16 product hero still: a frost-covered matte-black energy-drink can centered on wet slate, condensation beading, single cold-blue rim light against deep near-black, shallow depth of field, premium editorial commercial look, 4K detail. The can label reads exactly "VOLT" in clean bold type, razor-sharp and correctly spelled. No people, no hands, no real faces. Leave the bottom 20% clean for captions.
+```
+
+**Step B — Seedance 2.0 (image-to-video from the frame above):**
+```
+STYLE: 4K photoreal energy-drink commercial, cold-blue accent, deep black crush. NOT 3D, NOT game.
+SUBJECT/FRAME (Spatial): the frost-covered "VOLT" can from the first frame — inherit can, label (reads exactly "VOLT", sharp), lighting and grade 100%; generate motion only.
+ENVIRONMENT/STYLE: wet slate, cold-blue rim, deep negative space. 10-bit color, no banding in the haze.
+CAMERA: slow macro push-in, slight orbit to camera-right.
+TEMPORAL ACTION (Motion): condensation droplets slide down with real weight and surface tension; a thin vapor curl rises and drifts; one droplet falls and beads on the slate with a small settle. No floating; correct contact shadows.
+AUDIO/SONIC: faint cold hiss + low bass drone; at the moment the droplet hits the slate, a crisp tick SFX. No music. No speech.
+TECH: native 4K, 10-bit, "High" bitrate, 24fps. 9:16. 6s. No real faces. Model: Standard.
+CONSTRAINTS: 9:16; label reads exactly "VOLT" and stays sharp; can color/finish locked; bottom 20% caption-safe; no slow-motion; final second holds opaque.
+```
+Note how the Seedance block is short, follows the formula order, names weight & force, syncs the SFX to a visual beat, and relies on the GPT Image 2 frame instead of any real-face upload.
+
+---
+
 ### Using these
 1. Copy the closest example, swap the product/reference/hook, keep the section order.
 2. Re-run the discipline checklist (`structure.md`) + the DR pre-flight (`direct-response.md`).
-3. Pick the engine per `seedance-4k.md` (talking → Veo; physics/i2v → Kling/Seedance; realism/texture → Seedance 4K).
+3. Pick the engine per `seedance-4k.md`: Filipino spoken → in-app/Veo (NOT Seedance); cinematic/b-roll/product/realism → Seedance 2.0 4K; explicit start→end i2v → Kling; first/last frame + text + faces → GPT Image 2.
 4. Need the full campaign/script? Hand the shot to `grifon-cmo`. Need it brand-locked as a finished asset? `grifon-creative-director`.
