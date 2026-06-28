@@ -56,7 +56,7 @@ import {
   resendSignupConfirmation,
   updatePassword,
 } from './services/supabaseClient';
-import { popIntendedPlan, startCheckout } from './services/billingService';
+import { popIntendedPlan, peekIntendedPlan, saveIntendedPlan, startCheckout } from './services/billingService';
 import { grant as grantMarketingConsent, getMarketingConsent } from './services/consentService';
 import { ConsentBanner } from './components/ui/ConsentBanner';
 import { FeedbackWidget } from './components/ui/FeedbackWidget';
@@ -296,6 +296,21 @@ const App: React.FC = () => {
     if (window.location.pathname.startsWith('/billing/cancel')) {
       toast.info('Checkout canceled', { description: 'No charge was made. You can upgrade anytime.' });
       window.history.replaceState({}, '', '/pricing');
+    }
+  }, []);
+
+  // Restore a pending plan from a ?plan= link on /login (a shared upgrade link, or
+  // a refresh of the login screen) so the post-auth resume picks it up and sends
+  // the user to checkout. Scoped to /login so it never interferes with /checkout
+  // (which owns its own plan/cycle params). 'free' has no checkout, so it's ignored.
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (!window.location.pathname.startsWith('/login')) return;
+    const params = new URLSearchParams(window.location.search);
+    const plan = params.get('plan');
+    const cycle = params.get('cycle') === 'annual' ? 'annual' : 'monthly';
+    if (plan === 'starter' || plan === 'pro' || plan === 'business') {
+      saveIntendedPlan(plan, cycle);
     }
   }, []);
 
@@ -826,7 +841,20 @@ const App: React.FC = () => {
   // /login gateway with a real URL (so the move is deep-linkable + pixel-visible);
   // authenticated users go straight to /app. Replaces bare setCurrentRoute('app'),
   // which left the URL stuck on the marketing page.
-  const enterApp = () => goToLegal(isAuthenticated ? 'app' : 'login');
+  const enterApp = () => {
+    if (isAuthenticated) { goToLegal('app'); return; }
+    // Mirror a guest's pending plan (saved by startCheckout when a plan CTA is
+    // clicked) into the /login URL — so the choice survives refresh, is
+    // shareable, and the pixel/Custom Audiences can see "wanted Pro, didn't buy".
+    const intent = peekIntendedPlan();
+    const href = intent
+      ? `${ROUTE_PATHS.login}?plan=${intent.plan_id}&cycle=${intent.billing_cycle}`
+      : ROUTE_PATHS.login;
+    if (typeof window !== 'undefined' && window.history.replaceState) {
+      window.history.replaceState({}, '', href);
+    }
+    setCurrentRoute('login');
+  };
 
   // Route-transition veil (marketing pages only): cover 0.36s → swap route under
   // the panel → reveal. Skipped under prefers-reduced-motion and while one is
