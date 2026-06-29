@@ -10,7 +10,7 @@ import {
 } from './types';
 import type { PlanId } from '../../utils/planGate';
 import {
-  EXPERT_FORMATS, formatsFor, recommendedSceneCount, beatsForCount,
+  customBeats,
   type ExpertFormatId, type TargetDurationSec,
 } from '../../utils/scriptGuardrails';
 import { useExpertGeneration, type ExpertStage } from '../../hooks/useExpertGeneration';
@@ -52,18 +52,14 @@ const ExpertMode: React.FC<ExpertModeProps> = ({
   const gen = useExpertGeneration();
 
   // Script Studio state (lifted so it survives back/forward navigation).
-  const [formatId, setFormatId] = useState<ExpertFormatId | null>(null);
   const [target, setTarget] = useState<TargetDurationSec>(20);
   const [lines, setLines] = useState<string[]>([]);
 
   // Scene Direction state — one entry per script line.
   const [directions, setDirections] = useState<SceneDirection[]>([]);
 
-  // Beat labels for the current format/length (for Scene Direction headers).
-  const beats = useMemo(() => {
-    const format = EXPERT_FORMATS.find((f) => f.id === formatId) ?? formatsFor(intake.businessType)[0];
-    return format ? beatsForCount(format, recommendedSceneCount(target, plan)) : [];
-  }, [formatId, intake.businessType, target, plan]);
+  // Generic beat labels (Hook → Scene N → CTA), 1:1 with the free-form script lines.
+  const beats = useMemo(() => customBeats(lines.length), [lines.length]);
 
   // Keep directions length in lock-step with the script lines (preserve by index).
   useEffect(() => {
@@ -77,7 +73,7 @@ const ExpertMode: React.FC<ExpertModeProps> = ({
 
   // Generate All — map intake → wizard state, run the chain (honoring direction), route to review.
   const handleGenerate = async () => {
-    const resolvedFormatId: ExpertFormatId = formatId ?? formatsFor(intake.businessType)[0]?.id ?? 'Custom';
+    const resolvedFormatId: ExpertFormatId = 'Custom';
     const { clientDetails, businessInfo } = buildExpertWizardState(intake, resolvedFormatId);
     setClientDetails(clientDetails);
     setBusinessInfo(businessInfo);
@@ -104,10 +100,7 @@ const ExpertMode: React.FC<ExpertModeProps> = ({
     return (
       <Frame onBack={() => setPhase('intake')} backLabel="BACK TO INTAKE">
         <ScriptStudio
-          businessType={intake.businessType}
           plan={plan}
-          formatId={formatId}
-          setFormatId={setFormatId}
           target={target}
           setTarget={setTarget}
           lines={lines}
