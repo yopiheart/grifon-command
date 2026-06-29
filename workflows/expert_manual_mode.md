@@ -463,12 +463,21 @@ portrait:
   character consistency. ✅
 - **Character identity held** across all presenter scenes (same face/wardrobe/lanyard).
 
-**Mechanism confirmed:** an AI-auto-cast presenter has NO baked-in source lighting to fight, so the engine
-relights it cleanly. An uploaded portrait carries baked lighting that resists relight → composite. This is
-the One-Shot-wins thesis ("controlled inputs win"), now empirically shown. → **Decision: auto-cast = the
-Concierge/Expert default presenter; uploads route through gpt-image-2 edit-mode (PoC-proven to relight
-uploads cleanly) + the shipped Bucket A quality gate. NO stronger `AVATAR_RELIGHT` tuned edit needed —
-the residual composite was an UPLOAD-input problem, not a Nano-Banana relight ceiling.**
+**Mechanism confirmed:** an AI-auto-cast presenter has NO baked-in source lighting to fight, so **Grifon's
+own Gemini engine** (`/api/gemini/image`, Nano-Banana — the SAME engine that rendered these scenes; NOT
+gpt-image-2) relights it cleanly. An uploaded portrait carries baked lighting that resists relight →
+composite. This is the One-Shot-wins thesis ("controlled inputs win"), now empirically shown. → **Decision:
+auto-cast = the Concierge/Expert default presenter (Gemini relights it cleanly — no other provider needed,
+no stronger `AVATAR_RELIGHT` tuned edit). The residual composite was an UPLOAD-input problem, not a
+Nano-Banana relight ceiling.**
+
+> **Uploaded-presenter path = still OPEN (do NOT treat as solved).** The Scene-1 Concierge PoC relit an
+> *uploaded* portrait cleanly with **gpt-image-2** — but that was via the `codex-image` skill, which is
+> **LOCAL-ONLY** (Codex CLI, billed to a ChatGPT plan) and **does NOT run in the deployed app.** So
+> gpt-image-2 is NOT a drop-in production fix for uploads. Production options if users insist on uploading
+> their own face: (a) just default them to auto-cast; (b) keep Gemini for uploads + the Bucket A quality
+> gate (accept some composite risk); or (c) integrate a real server-side OpenAI image API as a new provider
+> (new cost + work). Auto-cast default sidesteps the whole question.
 
 ## Answer 2 — VENUE axis: a NEW, more precise finding. Place-identity behavior splits 3 ways.
 This is separate from the avatar axis and was surfaced by Neil's eyeball:
