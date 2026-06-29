@@ -60,6 +60,19 @@ When objects must stay in fixed positions across multiple generations (a prop ne
 
 ---
 
+### E. Storyboard grid sheet (fast, credit-cheap previz)
+
+Instead of N separate keyframes, generate **one** Codex `gpt-image-2` image containing **all N panels in a grid** — a whole storyboard on a single sheet. Cheapest way to concept a full ad (especially motion design / logo ads) before spending on per-shot fidelity or any video.
+
+```
+Storyboard sheet, [N] sequential panels in a clean grid, thin borders, each panel labelled "Frame 1"…"Frame N".
+Frame 1: [scene/beat]. Frame 2: [beat]. … Frame N: [logo-lock / brand name].
+Each panel: [camera angle], [motion state], [mood/lighting]. Consistent [color palette / brand system] throughout.
+Visual style: [cinematic | classicMD | highMD]. [aspect] per panel.
+```
+
+**Trade-off:** the grid sheet is *concepting* — fast and cheap to iterate the whole arc. For the actual render, generate the chosen panels as **full-resolution per-shot keyframes** (the recipes above) and drive Seedance from those. Use the sheet to lock the story; use per-shot keyframes to lock the fidelity.
+
 ## Asset testing — the single-variable validation test
 
 Before committing to full production, **stress-test each asset under an identical motion baseline**, changing **one variable at a time**:

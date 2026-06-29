@@ -157,6 +157,41 @@ Note how the Seedance block is short, follows the formula order, names weight & 
 
 ---
 
+## 8) Motion design — logo reveal sting (CINEMATIC · classicMD · Codex gpt-image-2 + Seedance 2.0 · 16:9 · 5s)
+
+Graphic/kinetic, NOT photoreal. Codex makes the wordmark; Seedance animates; ends on a logo-lock.
+
+**Step A — Codex (gpt-image-2) wordmark plate:**
+```
+A clean flat brand wordmark "BUKIDNON BREW" in an elegant modern serif, warm amber on deep near-black, centered, generous negative space, subtle gold edge light. Vector-clean, no photo texture, no people. 16:9.
+```
+**Step B — Seedance (animate from the plate):**
+```
+STYLE: classicMD smooth motion design, graphic/animated — NOT photoreal, NOT live-action. Brand colors: amber on near-black.
+SUBJECT/FRAME: the "BUKIDNON BREW" wordmark — inherit the locked plate @image_1 100%.
+MOTION (beats): 0:00 a single warm light sweep glides across darkness revealing fine coffee-steam wisps; 0:01–0:03 the wordmark assembles letter by letter on the sweep, gentle camera push-in, elegant ease; weight on each letter settling.
+AUDIO: soft ambient swell + a single warm chime synced to the last letter. No speech.
+LOGO-LOCK: 0:03–0:05 static elegant hold on the full wordmark, faint steam drift, clean.
+TECH: native 4K, 10-bit, 16:9, 5s. No real faces. Model: Standard.
+```
+
+---
+
+## 9) Motion design — hypermotion product launch (CINEMATIC · highMD · Codex gpt-image-2 + Seedance 2.0 · 9:16 · 10s)
+
+highMD: fast cuts, CGI energy, no real humans (silhouettes/chrome/3D), hard-stop logo-lock.
+
+```
+STYLE: highMD high-intensity kinetic motion, graphic/CGI — NOT photoreal. Brand colors: electric blue + chrome on black.
+SUBJECT/FRAME: the sneaker (chrome/3D-abstract treatment) + wordmark "VELOX" — inherit the locked product+logo plate @image_1 100%. No realistic humans — chrome silhouettes only.
+MOTION (beats, 9:16): 0:00 chrome shards burst inward and snap-assemble the sneaker (freeze frame on impact); 0:02 aggressive match-cut, the shoe rockets up a neon grid with speed-blur; 0:04 freeze on a material stretch; 0:05–0:07 orbiting hero spin, sparks; weight & force on every hit. Hard cuts throughout.
+AUDIO: driving SFX + bass impacts synced to each cut; hard hit on the logo-lock. No speech.
+LOGO-LOCK: 0:07–0:10 hard stop — static "VELOX" wordmark + sneaker, electric-blue glow, clean.
+TECH: native 4K, 10-bit, 9:16, 10s. No real faces, no real humans (chrome/3D only). Model: Standard.
+```
+
+---
+
 ### Using these
 1. Copy the closest example, swap the product/reference/hook, keep the section order.
 2. Re-run the discipline checklist (`structure.md`) + the DR pre-flight (`direct-response.md`).

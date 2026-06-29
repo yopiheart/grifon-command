@@ -125,6 +125,30 @@ All DR styles default to **9:16 mobile-first**, keep the subject/action in the t
 
 ---
 
+# Part 3 — Motion design (graphic / kinetic — NOT photoreal)
+
+A distinct format from the live-action styles above: **animated brand graphics** — logo reveals, kinetic typography, brand stings, animated explainers, product-launch energy. The look is **graphic, designed, and kinetic — explicitly NOT photoreal** (no pore-level skin, no live-action grade). It uses its **own style prefix** (bold typography, clean vector/3D, a locked brand color system, motion blur/freeze, kinetic energy) — do not apply the photoreal Seedance doctrine here. Engine: **Seedance 2.0** animates from a **Codex (gpt-image-2)** logo / keyframe / storyboard. No real faces; audio = SFX/score, no spoken Tagalog. Every motion ad ends on a **logo-lock**.
+
+**Pick the energy (classicMD vs highMD):**
+- **classicMD — smooth & elegant** (digital products, brand promos, service presentations, logo reveals, atmospheric). Smooth transitions, elegant typography, cinematic camera moves, restrained palette. The logo can open, close, or both.
+- **highMD — hyper / kinetic** (physical products, tech/launch, sports, music, fashion drops). Fast cuts, extreme camera speed, aggressive match-cuts, peak-action freeze frames (frozen splash, shattered glass, material stretch), neon/contrast, CGI energy. **No realistic humans — use silhouettes, chrome figures, or 3D abstract shapes.**
+
+**Logo-lock (mandatory outro).** End on a static hold of the brand name/logo, proportional to length: **~1s for 5s · ~2s for 10s · ~2–3s for 15s.** Build it into the prompt explicitly (a hard stop for highMD; an elegant settle for classicMD).
+
+**Structure.** 6 / 8 / 9 beats (opening → build → climax → resolution → logo-lock). Each beat: camera position, subject/typography state, motion blur or freeze. For previz, generate **one storyboard grid sheet** (single Codex image, N labelled panels — see `asset-prep.md`) before rendering.
+
+**Compact Seedance prompt shape (motion design):**
+```
+STYLE: [classicMD smooth motion design | highMD high-intensity kinetic motion], graphic/animated — NOT photoreal, NOT live-action. Brand color system: [colors].
+SUBJECT/FRAME: [logo / wordmark / product silhouette]; inherit the locked logo from @image_1 100%.
+MOTION (beats): [beat-by-beat — e.g. "wordmark assembles letter by letter, light sweep, camera push"]; [classic: elegant transitions | hyper: aggressive match-cuts + freeze frames]. Weight & force on every move.
+AUDIO: SFX/score synced to the beats; impact hit on the logo-lock. No speech.
+LOGO-LOCK: final [~1–3s] static hold on "[brand]" wordmark, clean.
+TECH: native 4K, 10-bit, [aspect], [duration]. No real faces. Model: Standard.
+```
+
+---
+
 ## Composing a new style
 If the request matches nothing above, build from `structure.md` directly:
 1. Pick the render look and state what it is (and is NOT).

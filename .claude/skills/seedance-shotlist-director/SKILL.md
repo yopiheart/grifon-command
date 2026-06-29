@@ -30,7 +30,7 @@ A self-contained HTML file saved to **`.tmp/shotlists/<project-slug>.html`** (pe
 
 Pick a **mode** and capture the **brief** before writing (this is the Grifon upgrade over a pure film shotlist):
 
-- **Modes:** `Cinematic Film` · `UGC Ad` · `Product Demo` · `Founder Story` · `Testimonial` · `Problem/Solution`.
+- **Modes:** `Cinematic Film` · `UGC Ad` · `Product Demo` · `Founder Story` · `Testimonial` · `Problem/Solution` · `Motion Design` (logo reveal / kinetic brand — see the Motion Design block below).
 - **Brief fields** (DR modes): `Brand`, `Product`, `Offer`, `Audience` (Bryan/Olivia — see `../cinematic-ad-prompt/references/direct-response.md`), `Platform`, `CTA` (cold → "Try It Free"; warm → "Upgrade to Pro"; never show price on screen).
 - The brief shapes the hook (Scene 1 first 3s), the arc (pain→desire→offer→CTA), and the CTA scene. Spoken sell lines in Filipino → route to in-app/Veo; on-screen captions/end cards are fine on Seedance (text is image, not speech).
 - For deep copy (full script/offer), hand to `grifon-cmo`. This skill directs the *shots*.
@@ -54,6 +54,27 @@ Audio: Environmental SFX only, synced to the on-screen beat. No music. No subtit
 ```
 
 The Style Prefix appears **once** at the top of the HTML (collapsible) AND is prepended verbatim to every prompt's copy-block, so the user copies one prompt to Seedance and it works standalone.
+
+### Motion Design mode — different prefix, different rules
+
+When the mode is **Motion Design** (logo reveals, kinetic typography, brand stings, animated promos), the ad is **graphic/animated, NOT photoreal** — the default photoreal prefix above does not apply. Use this prefix instead, and read `../cinematic-ad-prompt/references/styles.md` → Motion design:
+
+```
+Style: classicMD smooth motion design (OR highMD high-intensity kinetic motion) — graphic/animated, NOT photoreal, NOT live-action, NOT game engine.
+Brand: locked color system [colors] + wordmark/logo from the reference, 100% consistent.
+Typography: bold clean type, kinetic; light sweeps, assembles, freezes.
+Camera/Motion: [classicMD: smooth elegant pushes + transitions | highMD: extreme speed, aggressive match-cuts, peak-action freeze frames]. Weight & force on every move; motion from frame one.
+Subjects: [classicMD: logo/product/typography | highMD: NO realistic humans — silhouettes, chrome figures, 3D abstract only].
+Color: 60:30:10, high contrast / neon for highMD.
+Technical: native 4K, 10-bit, no banding, 24fps, no jitter.
+Audio: SFX/score synced to the beats; impact hit on the logo-lock. No music-bed clash, no subtitles.
+```
+
+Motion-design specifics:
+- **classicMD** = smooth/elegant (digital products, brand promos). **highMD** = hyper/kinetic (physical products, launches, sports/music/fashion) — **no realistic humans**.
+- **Logo-lock outro is mandatory:** end on a static hold of the brand/logo, proportional to length (~1s/2s/2–3s for 5/10/15s). Hard stop for highMD; elegant settle for classicMD. Build it into the final beat explicitly.
+- **Frame counts** 6 / 8 / 9 beats (opening → build → climax → resolution → logo-lock); the keyframes are Codex `gpt-image-2` logo/typography plates, not photoreal scenes.
+- No pore-level-skin, no real faces, no spoken Tagalog (SFX/score only).
 
 ## Prompt structure (this is the law)
 

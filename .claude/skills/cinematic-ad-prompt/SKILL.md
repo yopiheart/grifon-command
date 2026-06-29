@@ -87,6 +87,9 @@ If the user is ambiguous, infer from the request and state the assumption in one
 | "oner", "one take", "FPV", "POV" | either | Single continuous shot, beat timestamps | Seedance | styles.md → FPV/Oner |
 | "add X to my clip", "make the creature come out of" | CINEMATIC | VFX composite on source video, input-locked | Seedance (native masking) | styles.md → VFX composite |
 | "kaiju", "monster", "titan" | CINEMATIC | Creature/kaiju cinematic, original design | Seedance | styles.md → Kaiju |
+| "animate my logo", "motion graphics", "brand sting", "kinetic typography", "logo reveal", "animated promo" | CINEMATIC | Motion design (classicMD/highMD), logo-lock outro | Seedance (Codex logo/keyframe) | styles.md → Motion design |
+
+**Motion design note:** logo/kinetic-brand requests use the **Motion Design** recipe — a *graphic/kinetic* look with its **own style prefix (NOT photoreal)**, classicMD (smooth, digital) vs highMD (hyper, physical, no real humans), always ending on a **logo-lock**. See `references/styles.md` → Motion design. For a multi-beat motion ad, hand to `seedance-shotlist-director` (Motion Design mode).
 
 **Tagalog rule:** Seedance can't speak Filipino/Tagalog. If the ad needs a Filipino *spoken* line, route the talking shot to the in-app/Veo pipeline; Seedance still carries any cinematic/b-roll/visual layer of the same campaign.
 
