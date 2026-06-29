@@ -14,6 +14,20 @@ export const saveIntendedPlan = (plan_id: PlanId, billing_cycle: BillingCycle) =
   } catch {}
 };
 
+// Non-destructive read (popIntendedPlan clears; this doesn't). Used to mirror a
+// guest's pending plan into the /login URL without consuming the resume intent.
+export const peekIntendedPlan = (): { plan_id: PlanId; billing_cycle: BillingCycle } | null => {
+  try {
+    const raw = sessionStorage.getItem(INTENDED_PLAN_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (parsed?.plan_id && parsed?.billing_cycle) return parsed;
+    return null;
+  } catch {
+    return null;
+  }
+};
+
 export const popIntendedPlan = (): { plan_id: PlanId; billing_cycle: BillingCycle } | null => {
   try {
     const raw = sessionStorage.getItem(INTENDED_PLAN_KEY);
