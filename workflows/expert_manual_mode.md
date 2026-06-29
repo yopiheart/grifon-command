@@ -442,3 +442,69 @@ same 6-beat Verdé Heights Taglish script, all scenes on **Auto** — but **pres
 `GRIFON_DEV_UNMETERED=true` + `GRIFON_DEV_UNMETERED_VIDEO=true` (gitignored — re-add via Edit). Dev server
 `npm run dev` (was on :5174). Delegate to `smoke-tester` (foreground) BUT verify the renders with your own
 eyes.
+
+---
+
+# ✅ AUTO-CAST TEST — DONE (2026-06-29). Two answers: avatar SOLVED, + a new precise venue finding.
+
+Ran the test above via `smoke-tester` (Expert → RealEstate, 5 venue assets, 6-beat Verdé Taglish script,
+all Auto, **presenter = AI auto-cast** Male/Filipino/~30s). 6 scenes rendered, saved to `.tmp/dc-autocast/`
+(disposable — gone on reboot; findings captured here in words). **Claude eyeballed scenes 2–6 directly;
+Neil eyeballed all incl. scene 1** (the Scene-6 process lesson — don't trust subagent prose).
+
+## Answer 1 — AVATAR axis: auto-cast SOLVES the composite. Fix is INPUT-SIDE. No avatar tuned edit.
+The auto-cast presenter integrated believably in EVERY scene — incl. the cases that BROKE with an uploaded
+portrait:
+- **Scene 3** (presenter against a wall beside a tall window — strong directional interior light): correctly
+  lit from the window side, grounded against the wall. This is exactly the bright-directional-interior case
+  that produced the old composite. ✅
+- **Scene 2** (bright lobby): soft even daylight matched, natural shadow. ✅
+- **Scene 6** (outdoor facade): warm directional light matched, **perfect** relight + camera switch +
+  character consistency. ✅
+- **Character identity held** across all presenter scenes (same face/wardrobe/lanyard).
+
+**Mechanism confirmed:** an AI-auto-cast presenter has NO baked-in source lighting to fight, so the engine
+relights it cleanly. An uploaded portrait carries baked lighting that resists relight → composite. This is
+the One-Shot-wins thesis ("controlled inputs win"), now empirically shown. → **Decision: auto-cast = the
+Concierge/Expert default presenter; uploads route through gpt-image-2 edit-mode (PoC-proven to relight
+uploads cleanly) + the shipped Bucket A quality gate. NO stronger `AVATAR_RELIGHT` tuned edit needed —
+the residual composite was an UPLOAD-input problem, not a Nano-Banana relight ceiling.**
+
+## Answer 2 — VENUE axis: a NEW, more precise finding. Place-identity behavior splits 3 ways.
+This is separate from the avatar axis and was surfaced by Neil's eyeball:
+
+| Venue type | Behavior | Why |
+|---|---|---|
+| **Exterior / facade** (scenes 4, 6) | ✅ **Locks perfectly** — real uploaded house, relit, new camera angle | Bucket B's anti-look-alike clause is **exterior-only** ("reproduce floor count, facade material, windows, roofline") and it works |
+| **Interior** (living=scenes 2/3, bedroom=scene 5) | ⚠️ **Drifts** — invents a *look-alike* room; bedroom window relocated vs `ex-bedroom.png`; lobby ≠ `ex-living.png` | **No interior equivalent** of the anti-look-alike clause → `CAMERA_FREEDOM` ("new viewpoint") dominates and re-composes the room |
+| **View** (scene 1 end-frame) | ⚠️ **Script overrode the asset** — rendered Tagaytay mountains, but `ex-view.png` is a BGC city skyline | Hook/reveal followed the brand/script text ("Verdé Heights — **Tagaytay**") over the uploaded view photo |
+
+**Root cause:** the Bucket B PLACE_IDENTITY_LOCK anti-drift wording covers exteriors only; interiors have no
+counterweight to CAMERA_FREEDOM. Real-estate angle: showing a *different* room than the actual listing is a
+TIER_TRUTH / misrepresentation risk, not just a quality nit.
+
+**Two fix paths for interior drift (NOT applied — Neil-gated):**
+1. **Input-side (safe, no tuned edit):** for fidelity-critical interiors, **anchor** the uploaded photo
+   per-scene (`SceneDirection` already supports it → `hooks/useExpertGeneration.ts:184` sets
+   `scene.imageUrl = scene.manualUploadUrl` verbatim, zero drift). Trade-off: loses camera-switch/relight.
+2. **Tuned (needs explicit go + `gemini-eval` on Bukidnon Brew + RE):** add an **interior** PLACE_IDENTITY_LOCK
+   clause mirroring the exterior one (reproduce window count/placement, cabinetry, flooring, layout — don't
+   relocate/invent), in the `venue`/`avatar_venue` blocks of `services/geminiService.ts`. Keeps camera-switch
+   while cutting drift; risk = over-locking fights camera-freedom.
+
+**Input-consistency note (Scene 1):** the story should match the uploaded assets (don't write "Tagaytay" with
+a BGC view photo); separately, consider whether the engine should prefer the uploaded VIEW asset over script
+text for that slot.
+
+## Bucket B merge status (updated)
+- **Safety axis: still clean** — no regression, exteriors improved, product untouched by patch scope. Avatar
+  relight works (auto-cast). The Scene-6-composite block is RESOLVED *for auto-cast* (the merge-holding issue
+  was upload-specific).
+- **Known limitation to document on merge:** interior place-identity drift (Answer 2) — pre-existing venue
+  behavior, not a Bucket B regression. Track as its own slice (input-side anchor default and/or the gated
+  interior anti-drift clause).
+- Open follow-up from session 3 still stands: the `optimizeImagePrompt` JSON-hardening slice (directed-scene
+  reliability).
+
+**Evidence (disposable):** `.tmp/dc-autocast/scene-{1,1-end,2,3,4,5,6}.png` — regenerate from this runbook if
+wiped. Assets used = committed `public/examples/ex-{facade,living,kitchen,bedroom,view}.png`, auto-cast presenter.
