@@ -1,7 +1,7 @@
 import {
   Clapperboard, Radar, Target, Megaphone, Film, AudioWaveform,
   Scissors, FlaskConical, Aperture, Flame, Zap, Wand2, LayoutGrid,
-  Satellite, Layers, type LucideIcon,
+  Satellite, Layers, SlidersHorizontal, type LucideIcon,
 } from 'lucide-react';
 
 /**
@@ -44,6 +44,13 @@ export const MODULE_IDENTITY: Record<string, ModuleIdentity> = {
     descriptor: 'Direct a full ad, scene by scene',
     hue: GRIFON_GOLD, // flagship rides the brand gold
     icon: Clapperboard,
+  },
+  concierge_mode: {
+    key: 'concierge_mode',
+    name: 'Concierge',
+    descriptor: 'Bring your own script; control every shot',
+    hue: '#C084FC', // purple-400
+    icon: SlidersHorizontal,
   },
   market_research: {
     key: 'market_research',
