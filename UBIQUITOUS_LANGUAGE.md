@@ -43,6 +43,7 @@ The sections below are the technical-vocabulary deep dives — wizard internals 
 | Term | Definition | Aliases to avoid |
 | --- | --- | --- |
 | **Market Research** | The module that ingests product info and uploads to produce a competitive/audience report. | Research tool |
+| **Premise Check** | The skippable, default-on assumption gate that runs *before* **Market Research**: it pressure-tests the founder's premise (who the customer really is + why they buy) against `googleSearch`-grounded alternatives, then appends the confirmed premise into the description so research runs on a sharpened input. Advisory only — never feeds a tuned prompt directly, never blocks. The echo-breaker for input risk. | Assumption test, premise gate (when ambiguous) |
 | **Offer Optimizer** | The module that rewrites pricing/positioning given market research text. | Pricing tool |
 | **Edit Video** | The module that generates an edit plan from a script + scene screenshots. | Video editor |
 | **Image Editor** | The module that edits/regenerates images from user description and uploads. | Photo editor |
