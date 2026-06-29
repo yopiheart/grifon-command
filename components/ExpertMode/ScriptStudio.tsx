@@ -1,79 +1,70 @@
 import React, { useEffect, useMemo } from 'react';
-import { Clapperboard, Clock, AlertTriangle, ArrowRight } from 'lucide-react';
+import { Clock, AlertTriangle, ArrowRight, Plus, Trash2 } from 'lucide-react';
 import { StepShell } from '../ui/StepShell';
 import { StepFooter } from '../ui/StepFooter';
 import { TitledCard } from '../ui/TitledCard';
 import { TextArea } from '../ui/TextField';
 import { SegButton } from '../ui/SegButton';
-import type { PlanId } from '../../utils/planGate';
+import { SCENE_CAP, type PlanId } from '../../utils/planGate';
 import {
-  EXPERT_FORMATS, formatsFor, recommendedSceneCount, beatsForCount, validateBeat, totalEstSeconds,
-  wordCount, multiPlaceBeat,
-  type ExpertFormat, type ExpertFormatId, type ExpertBusinessType, type TargetDurationSec,
+  customBeats, validateBeat, totalEstSeconds, multiPlaceBeat, recommendedSceneCount,
+  type TargetDurationSec,
 } from '../../utils/scriptGuardrails';
 
 // ===========================================================================
-// Expert Mode — Script Studio (slice 4). Pick a proven format (or Custom) + a
-// target length → exactly N hard-capped beat boxes (N ≤ plan cap). Each box
-// blocks typing past its word cap and shows a live seconds meter; a budget bar
-// totals vs the target. The boxes assemble into script[] (order preserved) for
-// the existing generateStoryboard. PRESENTATIONAL — owns no global state.
+// Concierge — Script Studio (free-form, Slice 2). No format card: the expert
+// brings their own structure. Add/remove scene boxes (1…plan SCENE_CAP), each a
+// generic beat (Hook → Scene N → CTA via customBeats). Word caps are SOFT — typing
+// is never blocked; the live seconds meter + an amber advisory do the nudging. A
+// budget bar totals vs the target length. The boxes assemble into script[] (order
+// preserved) for the existing generateStoryboard. PRESENTATIONAL — owns no global state.
 // ===========================================================================
 
 const TARGETS: TargetDurationSec[] = [15, 20, 30];
 
 export const ScriptStudio: React.FC<{
-  businessType: ExpertBusinessType;
   plan: PlanId;
-  formatId: ExpertFormatId | null;
-  setFormatId: (id: ExpertFormatId) => void;
   target: TargetDurationSec;
   setTarget: (t: TargetDurationSec) => void;
   lines: string[];
   setLines: React.Dispatch<React.SetStateAction<string[]>>;
   onBack: () => void;
   onNext: () => void;
-}> = ({ businessType, plan, formatId, setFormatId, target, setTarget, lines, setLines, onBack, onNext }) => {
-  const formats = useMemo(() => formatsFor(businessType), [businessType]);
-  const format: ExpertFormat | undefined =
-    EXPERT_FORMATS.find((f) => f.id === formatId) ?? formats[0];
+}> = ({ plan, target, setTarget, lines, setLines, onBack, onNext }) => {
+  const maxScenes = SCENE_CAP[plan];
 
-  const sceneCount = recommendedSceneCount(target, plan);
-  const beats = useMemo(
-    () => (format ? beatsForCount(format, sceneCount) : []),
-    [format, sceneCount],
-  );
-
-  // Keep the lines array length in lock-step with the beat count (preserve content by index).
+  // Seed the editor with a sensible starting scene count the FIRST time only (lines
+  // are lifted in the parent, so they survive back/forward navigation).
   useEffect(() => {
     setLines((prev) => {
-      if (prev.length === beats.length) return prev;
-      const next = beats.map((_, i) => prev[i] ?? '');
-      return next;
+      if (prev.length > 0) return prev;
+      const seed = Math.min(recommendedSceneCount(target, plan) || 1, maxScenes);
+      return Array.from({ length: Math.max(1, seed) }, () => '');
     });
-  }, [beats.length, setLines]);
-
-  // Default the format selection to the first available for this business type.
-  useEffect(() => {
-    if (!formatId && format) setFormatId(format.id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [format?.id]);
+  }, []);
 
-  const setLine = (i: number, value: string, wordCap: number) => {
+  const beats = useMemo(() => customBeats(lines.length), [lines.length]);
+
+  // Soft caps — accept any input; the meter + amber advisories nudge, never block.
+  const setLine = (i: number, value: string) => {
     setLines((prev) => {
-      const cur = prev[i] ?? '';
-      // Hard cap: reject growth past the word cap; always allow shrinking (edits/deletes).
-      if (value.length > cur.length && wordCount(value) > wordCap) return prev;
       const next = [...prev];
       next[i] = value;
       return next;
     });
   };
 
+  const addScene = () => setLines((prev) => (prev.length >= maxScenes ? prev : [...prev, '']));
+  const removeScene = (i: number) =>
+    setLines((prev) => (prev.length <= 1 ? prev : prev.filter((_, idx) => idx !== i)));
+
   const totalSec = totalEstSeconds(lines);
   const overBudget = totalSec > target + 3; // small grace before flagging
   const filled = lines.filter((l) => l.trim().length > 0).length;
-  const ready = sceneCount > 0 && filled === beats.length;
+  const ready = lines.length > 0 && filled === lines.length;
+  const atCap = lines.length >= maxScenes;
+  const noRender = maxScenes <= 0;
 
   return (
     <StepShell
@@ -82,39 +73,11 @@ export const ScriptStudio: React.FC<{
       panelClassName="max-w-4xl mx-auto"
     >
       <div className="flex flex-col gap-5">
-        <TitledCard title="FORMAT">
-          <div className="grid gap-3 sm:grid-cols-2">
-            {formats.map((f) => {
-              const active = format?.id === f.id;
-              return (
-                <button
-                  key={f.id}
-                  type="button"
-                  onClick={() => setFormatId(f.id)}
-                  className={`flex flex-col items-start gap-2 rounded-xl border p-4 text-left transition-all ${
-                    active
-                      ? 'border-[#FFCC00] bg-[#FFCC00]/10'
-                      : 'border-white/10 bg-zinc-950 hover:border-white/30'
-                  }`}
-                >
-                  <div className="flex w-full items-center justify-between gap-2">
-                    <span className={`text-sm font-bold ${active ? 'text-[#FFCC00]' : 'text-white'}`}>{f.name}</span>
-                    <span className="flex items-center gap-1 text-[10px] font-mono uppercase tracking-widest text-zinc-500">
-                      <Clapperboard className="h-3 w-3 shrink-0" /> {f.pacing}
-                    </span>
-                  </div>
-                  <span className="text-xs leading-relaxed text-zinc-400">{f.strategy}</span>
-                </button>
-              );
-            })}
-          </div>
-        </TitledCard>
-
         <TitledCard
           title="TARGET LENGTH"
           right={
             <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">
-              {sceneCount} scene{sceneCount === 1 ? '' : 's'} · plan cap
+              {lines.length} scene{lines.length === 1 ? '' : 's'} · cap {maxScenes}
             </span>
           }
         >
@@ -123,14 +86,14 @@ export const ScriptStudio: React.FC<{
             onChange={(v) => setTarget(Number(v) as TargetDurationSec)}
             options={TARGETS.map((t) => ({ value: String(t), label: `${t}s` }))}
           />
-          {sceneCount === 0 && (
+          {noRender && (
             <p className="mt-3 flex items-center gap-2 text-xs text-amber-500/80">
               <AlertTriangle className="h-3.5 w-3.5 shrink-0" /> Your plan renders no video. Upgrade to write an ad.
             </p>
           )}
         </TitledCard>
 
-        {sceneCount > 0 && (
+        {!noRender && (
           <TitledCard
             title="SCENES"
             right={
@@ -140,30 +103,49 @@ export const ScriptStudio: React.FC<{
             }
           >
             <p className="mb-4 text-[11px] leading-relaxed text-zinc-400">
-              One beat renders <span className="text-zinc-300">one shot</span> — keep each box to a single
-              place or moment. Naming several places in one beat shows only one of them.
+              One scene renders <span className="text-zinc-300">one shot</span> — keep each box to a single
+              place or moment. Caps are a guide, not a wall; the meter flags long lines.
             </p>
             <div className="flex flex-col gap-4">
               {beats.map((b, i) => {
                 const v = validateBeat(lines[i] ?? '', b);
                 const multiPlace = multiPlaceBeat(lines[i] ?? '');
+                const over = v.overWordCap || v.overSentenceCap;
                 return (
                   <div key={i} className="flex flex-col gap-1.5">
                     <div className="flex items-center justify-between gap-2">
                       <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-400">
                         {i + 1}. {b.label}
                       </span>
-                      <span className={`text-[10px] font-mono ${v.overWordCap || v.overSentenceCap ? 'text-amber-500' : 'text-zinc-500'}`}>
-                        {v.wordCount}/{b.wordCap}w · ~{v.estSeconds.toFixed(1)}s
-                      </span>
+                      <div className="flex items-center gap-2.5">
+                        <span className={`text-[10px] font-mono ${over ? 'text-amber-500' : 'text-zinc-500'}`}>
+                          {v.wordCount}/{b.wordCap}w · ~{v.estSeconds.toFixed(1)}s
+                        </span>
+                        {lines.length > 1 && (
+                          <button
+                            type="button"
+                            onClick={() => removeScene(i)}
+                            aria-label={`Remove scene ${i + 1}`}
+                            className="-my-3 -mr-3 flex min-h-11 min-w-11 items-center justify-center text-zinc-600 hover:text-white transition-colors"
+                          >
+                            <Trash2 className="h-3.5 w-3.5 shrink-0" />
+                          </button>
+                        )}
+                      </div>
                     </div>
                     <TextArea
                       rows={2}
                       placeholder={b.hint}
                       value={lines[i] ?? ''}
-                      onChange={(e) => setLine(i, e.target.value, b.wordCap)}
+                      onChange={(e) => setLine(i, e.target.value)}
                       invalid={v.overSentenceCap}
                     />
+                    {v.overWordCap && (
+                      <span className="flex items-center gap-1.5 text-[10px] text-amber-500/80">
+                        <AlertTriangle className="h-3 w-3 shrink-0" />
+                        Long for one shot — aim for ≤{b.wordCap} words so it paces clean.
+                      </span>
+                    )}
                     {v.overSentenceCap && (
                       <span className="text-[10px] text-amber-500/80">Keep the hook to {b.sentenceCap} sentence{b.sentenceCap === 1 ? '' : 's'}.</span>
                     )}
@@ -177,6 +159,20 @@ export const ScriptStudio: React.FC<{
                 );
               })}
             </div>
+
+            <button
+              type="button"
+              onClick={addScene}
+              disabled={atCap}
+              className="mt-4 flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-zinc-950 px-4 py-2.5 text-xs font-bold uppercase tracking-wide text-zinc-300 transition-colors hover:border-[#FFCC00]/50 hover:text-white disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-white/10 disabled:hover:text-zinc-300"
+            >
+              <Plus className="h-4 w-4 shrink-0" /> Add scene
+            </button>
+            {atCap && (
+              <p className="mt-2 text-center text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+                Plan cap reached ({maxScenes} scenes)
+              </p>
+            )}
           </TitledCard>
         )}
       </div>
