@@ -91,6 +91,16 @@ export interface Scene {
   chainRole?: 'Metaphor_A' | 'Anchor_B' | 'Action_C' | 'Hero_D';
   /* Custom B-roll injection */
   customBrollUrl?: string;
+  /* Expert Mode (Director's Cut): the user's per-scene shot intent. 'auto' (default) leaves today's
+     AI heuristic untouched; the other four are applied as a DETERMINISTIC post-process
+     (utils/expertScenePostProcess.ts) that forces referenceImage + the video-prompt type WITHOUT
+     editing any tuned prompt. Identity-lock still rides on referenceImage + injected URLs. */
+  shotIntent?: 'auto' | 'talking-avatar' | 'b-roll' | 'product-highlight' | 'avatar-product';
+  /* Expert Mode: when the user "directs" a scene with a plain-language description, the optimized
+     image prompt is stored here and rendered INSTEAD of imagePrompt. A directed scene also drops any
+     AI hook-morph frames (see useExpertGeneration) so it renders as ONE image the expert controls.
+     The optimized prompt is NEVER shown to the user — only the rendered image. */
+  userImagePromptOverride?: string;
 }
 
 export interface CinematicNarrativeScene {

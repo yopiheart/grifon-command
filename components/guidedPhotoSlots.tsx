@@ -38,6 +38,13 @@ export interface UploadSlot {
 /** Product (single upload) reference — handheld product-in-hand, brand visible. */
 export const PRODUCT_EXAMPLE = '/examples/ex-product-handheld.png';
 
+/**
+ * Presenter (uploaded performer) reference — head-to-chest, bright, face fills the frame.
+ * Shared by One-Shot's presenter modal and Expert Mode's presenter tile so the upload guidance
+ * stays identical. A full-body source makes the face too small to identity-lock (smoke Finding 2b).
+ */
+export const PRESENTER_EXAMPLE = '/examples/services-practitioner.png';
+
 // --- Services -------------------------------------------------------------
 export const ARCHETYPE_META: Record<ServiceArchetype, ArchetypeMeta> = {
   venue: {
