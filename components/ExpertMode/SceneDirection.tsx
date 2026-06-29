@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Sparkles, User, Film, Package, Users, ChevronDown, ImageUp, X, Wand2 } from 'lucide-react';
+import { Sparkles, User, Film, Package, Users, ChevronDown, ImageUp, X, Wand2, AlertTriangle } from 'lucide-react';
 import { StepShell } from '../ui/StepShell';
 import { StepFooter } from '../ui/StepFooter';
 import { TitledCard } from '../ui/TitledCard';
@@ -146,6 +146,12 @@ const SceneCard: React.FC<{
                 onChange={(e) => { const f = e.target.files?.[0]; if (f) pickPhoto(f); e.target.value = ''; }}
               />
             </div>
+            {(dir.description.trim() || dir.manualUploadUrl) && (
+              <p className="flex items-start gap-1.5 text-[10px] text-amber-500/80">
+                <AlertTriangle className="mt-0.5 h-3 w-3 shrink-0" />
+                This scene uses your exact input — it may look different from the AI-styled scenes.
+              </p>
+            )}
           </div>
         )}
       </div>
