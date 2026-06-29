@@ -56,7 +56,7 @@ const CORE_MODULES = ['market_research', 'offer_optimizer', 'caption_headline'].
 });
 
 const MORE_MODULES = [
-  'hook_lab', 'cinematic_studio', 'influencer_forge', 'generate_video',
+  'concierge_mode', 'hook_lab', 'cinematic_studio', 'influencer_forge', 'generate_video',
   'image_ads', 'batch_fanout', 'image_editor', 'organic_calendar', 'edit_video', 'signal_modulator',
 ].map((id) => {
   const m = getModuleIdentity(id);
@@ -87,6 +87,7 @@ const MODULE_TIER: Record<string, PlanId> = {
   edit_video: 'pro',
   signal_modulator: 'pro',
   cinematic_studio: 'business',
+  concierge_mode: 'business',
 };
 
 const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, userEmail, userId, onLogout, onUpgrade }) => {

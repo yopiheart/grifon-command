@@ -120,7 +120,7 @@ For module **identity** only, each dashboard module additionally carries a signa
 
 - **Allowed (identity surfaces only):** the module's icon, its icon-tile background (hue at ~10% alpha), the module header glow, and decorative in-module accents. Apply via **inline style** (hex + alpha) — never dynamic Tailwind classes, which the purge step strips.
 - **Forbidden:** never tint an action with the hue. CTAs, buttons, focus rings, selected/active states, and links stay gold. "Gold = do this" must never be diluted.
-- **Palette (tactical; no banned pink/cyan):** Director AI `#FFCC00` · Recon `#60A5FA` · War Room `#F87171` · Broadcast `#34D399` · Render Bay `#A78BFA` · Signal Modulator `#818CF8` · Edit Bay `#94A3B8` · Hook Lab `#A3E635` · Cinema Command `#2DD4BF` · Influencer Forge `#FB923C` · Creative Strike `#FBBF24` · Image Lab `#4ADE80` · Campaign Planner `#A8A29E` · Intelligence Uplink `#818CF8` (internal).
+- **Palette (tactical; no banned pink/cyan):** Director AI `#FFCC00` · Concierge `#C084FC` · Recon `#60A5FA` · War Room `#F87171` · Broadcast `#34D399` · Render Bay `#A78BFA` · Signal Modulator `#818CF8` · Edit Bay `#94A3B8` · Hook Lab `#A3E635` · Cinema Command `#2DD4BF` · Influencer Forge `#FB923C` · Creative Strike `#FBBF24` · Image Lab `#4ADE80` · Campaign Planner `#A8A29E` · Intelligence Uplink `#818CF8` (internal).
 
 This is the ONLY sanctioned use of non-gold hues. Outside module identity, gold remains the only accent.
 

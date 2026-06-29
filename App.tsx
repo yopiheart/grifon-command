@@ -1577,6 +1577,25 @@ const App: React.FC = () => {
     moduleElement = <InfluencerForge onBack={() => setActiveModule(null)} ethnicity={avatar?.ethnicity} />;
   } else if (activeModule === 'cinematic_studio') {
     moduleElement = gateModule(<CinematicSpecStudio onBack={() => setActiveModule(null)} onNavigate={setActiveModule} businessInfo={businessInfo} narrative={cinematicNarrative} setNarrative={setCinematicNarrative} frameMap={cinematicFrameMap} setFrameMap={setCinematicFrameMap} result={cinematicResult} setResult={setCinematicResult} />, 'business', 'Commercial & Cinematic Studio');
+  } else if (activeModule === 'concierge_mode') {
+    // Concierge (Slice 1) — Business-tier first-class door into the EXISTING
+    // ExpertMode ("bring your own script"). Reuses One-Shot's sinks + Step 8
+    // review hand-off, so the wizard sees identical AllData. Dev-unlock testers
+    // get the Business cap (6 scenes) to exercise the full range.
+    const conciergeSinks: OneShotSinks = {
+      setScript, setFinalScript, setAvatar, setStoryboard, setThumbnailUrl, setVideoPrompts, setLanguage,
+    };
+    moduleElement = gateModule((
+      <ExpertMode
+        onBack={() => setActiveModule(null)}
+        plan={devUnlocked ? 'business' : plan_id}
+        sinks={conciergeSinks}
+        setClientDetails={setClientDetails}
+        setBusinessInfo={setBusinessInfo}
+        setAspectRatio={setAspectRatio}
+        onReview={() => { setActiveModule('creative_director'); setDirectorMode('steps'); setCurrentStep(8); }}
+      />
+    ), 'business', 'Concierge');
   } else if (activeModule === 'market_research') {
     moduleElement = <MarketResearch onBack={() => setActiveModule(null)} onNavigate={setActiveModule} />;
   } else if (activeModule === 'offer_optimizer') {
