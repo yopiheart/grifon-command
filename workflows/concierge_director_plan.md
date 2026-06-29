@@ -1,9 +1,11 @@
 # Concierge / Director-Brain Plan
 
-**Status:** PLANNING — nothing built yet. Decisions partly settled, several still
-open (see §7). **Read this top-to-bottom before touching code.**
-**Last updated:** 2026-06-28
-**Branch this lives on:** `claude/video-ads-workflow-fgg2sy`
+**Status:** PLANNING — **RESCOPED 2026-06-29 (see §10 — read it FIRST).** The build
+is now scoped + verified; most of §7 is dissolved. **Read this top-to-bottom before
+touching code.**
+**Last updated:** 2026-06-29
+**Branch this lives on:** `claude/video-ads-workflow-fgg2sy` (rescope folded in via
+`docs/concierge-rescope`)
 
 > **One-line vision:** Turn Grifon's ad pipeline into two end-user modes —
 > **Auto** (hands-off: user drops assets + details, the AI Director decides
@@ -287,3 +289,93 @@ automate in Concierge.
 > me through Phase 0 setup (what to put in `.env`, `npm run dev`) and ask me for a
 > competitor brand + niche to recon. Do not edit any TUNED prompt. Delegate any
 > smoke test to the `smoke-tester` subagent.
+
+---
+
+# 10. RESCOPE (2026-06-29) — "You direct, the engine executes" · verified, NOT a new AI brain
+
+> Supersedes the scary framing of §1–§2 for the **Concierge** half. Neil's 2026-06-29
+> realization + a code-verified scoping pass. **Read this before §1–§9 when working
+> Concierge.** The **AUTO** half of the vision is unchanged and **deferred**.
+
+## The reframe that kills the "this is hard/long" fear
+
+Neil's fear came from conflating **two different "AI Directors"**:
+
+| | **AUTO mode** | **Concierge mode (what Neil wants)** |
+|---|---|---|
+| Who directs? | AI decides script + sequence + angles | **The user** — they bring the script + sequence |
+| Needs the server-side Claude "Director brain" (§7 #1, §2 Option A)? | **YES** (expensive, slow, uncertain) | **NO — the user IS the brain** |
+
+The hard/expensive Director brain belongs to **AUTO**. **Concierge does not need it** →
+deletes ~80% of the perceived difficulty. **Defer AUTO; ship Concierge** as an evolution
+of the **already-built Expert mode** (branch `feat/expert-mode-directors-cut`).
+
+## Verdict: BUILD it. Concierge = Expert mode, productized for Business tier.
+
+## The 3 "hard parts" — VERIFIED already built, ZERO tuned-prompt edits needed
+
+1. **Formula-free storyboard + strict 1:1 line→scene mapping — DONE.**
+   `generateStoryboard(script: string[], …)` (`services/geminiService.ts:1880`) is
+   format-agnostic — raw lines as-is, `businessInfo` near-empty OK, `scriptType`
+   guidance-only (`api/_lib/prompts.ts:867-1166`); blank persuasion fields tolerated.
+   The prompt doesn't mechanically enforce 1:1, **but we never touch the tuned prompt** —
+   the Expert branch already guarantees it client-side via the **non-tuned**
+   `reconcileSceneCount(scenes, lines)` (`hooks/useExpertGeneration.ts`), forcing exactly
+   N scenes = lines in order.
+2. **Auto-assemble + dead-air trim + preset-at-end — DONE.** `EditVideo.tsx`
+   `handleRenderFinal` → `renderFinalVideo()` = server-side trim + voice-mux + concat in
+   one job (`components/EditVideo.tsx:206-289`); dead-air trim is automatic + deterministic
+   (`api/_lib/renderFfmpeg.ts:394`, forced-alignment VO end, never mid-word). **Preset is
+   ALREADY chosen at the END** (GenerateVideo post-render: AUTO + IMPACT/HYPE/CLEAN,
+   `components/GenerateVideo/index.tsx:1757`) → answers the end-vs-upfront question: **end,
+   AUTO default, already there.**
+3. **Business-tier gate — reusable.** `MODULE_TIER` + `planAtLeast` + `<PlanGate requires>`
+   (`components/Dashboard.tsx:85`, `hooks/useSubscription.ts`); `cinematic_studio: 'business'`
+   is the copy-paste precedent; `grifon_dev_unlock` bypass for testing.
+
+**Per-scene sequence control also already exists** (Expert branch): `ShotIntent` =
+`'auto' | 'talking-avatar' | 'b-roll' | 'product-highlight' | 'avatar-product'` per scene,
+enforced non-tuned via `applyShotIntents` + `overrideVideoPromptTypes`.
+
+## The delta Concierge actually needs (small, all non-tuned)
+
+1. **Drop the script-format card** → free-form paste (one box/scene, add/remove), keep only
+   the soft pacing meter (`estimateSpokenSec`) + total-vs-duration budget. Pass
+   `scriptType: 'Custom'`.
+2. **Promote the per-scene `ShotIntent` picker to first-class** ("you set the sequence").
+3. **Business gate + entry door** (`concierge_mode` tile, `MODULE_TIER` `business`,
+   `<PlanGate>` in App.tsx). One-Shot stays the beginner door; standalone Expert **retires
+   into** Concierge (no capability lost — §4).
+
+Everything downstream (storyboard, render/consistency moat, thumbnail, video prompts,
+auto-assemble, dead-air trim, preset-at-end) is **reused unchanged.**
+
+## Build slices (vertical, each build-gated + brand-checked)
+
+0. **Land the Expert branch foundation** (merge-vs-evolve — see Open Decisions; HELD Bucket B
+   stays gated). 1. Concierge door + Business gate. 2. Free-form Script Studio. 3. Sequence
+   picker first-class. 4. Route through GenerateVideo → EditVideo (reused), retire standalone Expert.
+
+## Open decisions still gating the build (the §7 survivors)
+
+Rescope dissolves most of §7 (no Director brain; Expert→Concierge; override drawer kept as
+optional "advanced"). Remaining:
+- **Slice-0 merge-vs-evolve** of `feat/expert-mode-directors-cut`, **and** whether the HELD
+  tuned Bucket B (+ open **Scene-6 avatar-composite** issue + pending **auto-cast test**) ships
+  first or stays parked. This is the literal first gate — Concierge slices can't start on `main`
+  until the Expert branch is landed.
+- **Uploaded-presenter image model.** The Scene-6 composite defect hits Concierge too; the PoC
+  found **gpt-image-2 edit-mode relights uploads cleanly**. Decide: default uploads to gpt-image-2,
+  and/or make auto-cast the Concierge default. **Ties into the pending auto-cast vs upload test.**
+- **Business-tier pricing** line (no new per-run opex now that the Claude brain is deferred).
+
+## Verification (when built)
+
+Dev-unlock + `GRIFON_DEV_UNMETERED=true`(+`_VIDEO`) + test acct `smoketest-dc@grifon.dev` /
+`GrifonDcSmoke!2026`, via the `smoke-tester` subagent (foreground): enter Concierge (Business gate
+/ dev-bypass) → paste custom multi-scene script (soft meter, no format card) → set per-scene
+sequence → generate → 1:1 holds → Render All → pick preset at end → EditVideo auto-assembles one
+dead-air-trimmed MP4. Build-gate pass + brand-check + **Neil eyeballs the renders himself**
+(Scene-6 lesson — don't trust the subagent's prose verdict). **No tuned edits anywhere;** any
+`geminiService.ts` / `prompts.ts` / `renderPresets.ts` change = escalate to Neil.
