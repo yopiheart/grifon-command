@@ -63,36 +63,29 @@ if ($userPath -notlike "*$binDir*") {
 Write-Host ""
 & $ghExe --version
 
-# ── GH_TOKEN for headless use (lets the Claude Code tools drive gh) ───────────
-# Claude's sandboxed shells can't read the Windows keyring that `gh auth login`
-# writes to, so an interactive login is invisible to the agent. A Personal
-# Access Token stored at User scope IS readable by the agent via
-# [Environment]::GetEnvironmentVariable('GH_TOKEN','User'), so it can create/
-# merge PRs without you pasting commands. The defreezer wipes this, so re-run
-# this script each session. The token never enters the repo or any chat.
+# ── Authentication ───────────────────────────────────────────────────────────
+# `gh auth login` (web/device flow) writes the token to the Windows keyring,
+# which Claude Code's tools CAN read — so once you complete the login, the agent
+# can create/merge PRs directly, no token-pasting needed. The defreezer wipes
+# the keyring, so re-run the login each session.
 #
-# Create a fine-grained PAT once (save it in your password manager):
-#   https://github.com/settings/tokens?type=beta
-#   Repository access: yopiheart/grifon-command
-#   Permissions: Contents = Read and write, Pull requests = Read and write
-$existing = [Environment]::GetEnvironmentVariable("GH_TOKEN", "User")
-if (-not [string]::IsNullOrWhiteSpace($existing)) {
-    Write-Host ""
-    Write-Host "GH_TOKEN already set at User scope — Claude can drive gh." -ForegroundColor Green
+# CRITICAL: the device flow must COMPLETE in the terminal. After "Press Enter to
+# open github.com…", press Enter, authorize in the browser, then WAIT until the
+# terminal prints "✓ Logged in as <user>". Authorizing in the browser alone does
+# NOT store the token — the terminal command writes it only after it confirms.
+#
+# (Fallback, rarely needed: set a fine-grained PAT in the GH_TOKEN env var
+#  instead — https://github.com/settings/tokens?type=beta, Contents + Pull
+#  requests = Read/write. The keyring route above is simpler; prefer it.)
+$loggedIn = $false
+try { & $ghExe auth status 2>$null; if ($LASTEXITCODE -eq 0) { $loggedIn = $true } } catch {}
+Write-Host ""
+if ($loggedIn) {
+    Write-Host "gh is authenticated — Claude can drive PRs." -ForegroundColor Green
 } else {
-    Write-Host ""
-    Write-Host "Paste your GitHub Personal Access Token to let Claude open/merge PRs for you." -ForegroundColor Cyan
-    Write-Host "(Press Enter to skip — gh still works for YOU via 'gh auth login'.)" -ForegroundColor DarkGray
-    $sec = Read-Host "GH_TOKEN" -AsSecureString
-    $bstr = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($sec)
-    $tok  = [Runtime.InteropServices.Marshal]::PtrToStringAuto($bstr)
-    [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($bstr)
-    if (-not [string]::IsNullOrWhiteSpace($tok)) {
-        [Environment]::SetEnvironmentVariable("GH_TOKEN", $tok.Trim(), "User")
-        Write-Host "GH_TOKEN stored at User scope. Claude can now run gh headlessly." -ForegroundColor Green
-    } else {
-        Write-Host "Skipped GH_TOKEN. Claude can't drive gh until it's set; use 'gh auth login' for your own use." -ForegroundColor Yellow
-    }
+    Write-Host "gh is installed but NOT logged in. Run this and COMPLETE the device flow:" -ForegroundColor Yellow
+    Write-Host "    gh auth login" -ForegroundColor Cyan
+    Write-Host "  (GitHub.com -> HTTPS -> Yes -> Login with a web browser; wait for the green check.)"
 }
 
 Write-Host ""
