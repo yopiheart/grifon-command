@@ -70,7 +70,9 @@ call can't spin the job overnight. `concurrency` prevents overlapping runs.
 `GEMINI_API_KEY` must exist as a repo Actions secret (Settings → Secrets and
 variables → Actions). This is the *first* secret in CI — `ci.yml` is deliberately
 secret-free; this workflow is the one place a real key is needed. Until it's set,
-`workflow_dispatch` runs fail at the regression step.
+runs **skip cleanly** (green, with a `::warning::` + step-summary note) rather than
+failing — so merging before the secret is added does not spawn nightly false-alarm
+issues. The moment the secret exists, the next run tests for real.
 
 ## Kill switch
 

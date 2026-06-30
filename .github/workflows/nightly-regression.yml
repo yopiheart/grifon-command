@@ -51,14 +51,25 @@ jobs:
       # RUN_REGRESSION=1 opts the live suite in (it is describe.skipIf'd off by
       # default). The harness reads process.env.GEMINI_API_KEY directly; the
       # absent .env file in CI is handled by its own try/catch.
+      #
+      # Preflight guard: if the GEMINI_API_KEY secret is not set yet, SKIP
+      # cleanly (green, with a visible warning) instead of failing — otherwise
+      # the nightly cron would open a false-alarm "FAILED" issue every night
+      # before the secret is added. A skipped run is annotated, never silent
+      # (the paper's "no silent caps"). Once the secret exists it runs for real.
       - name: Run Gemini ad-script regression
         env:
           RUN_REGRESSION: '1'
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: >-
-          npx vitest run tests/regression/script-gen.regression.test.ts
-          --reporter=verbose
-          --reporter=json --outputFile=.tmp/regression/results.json
+        run: |
+          if [ -z "$GEMINI_API_KEY" ]; then
+            echo "::warning::GEMINI_API_KEY secret not set — skipping nightly regression (no-op). Add it in repo Settings → Secrets and variables → Actions to activate the loop."
+            echo "### ⏭️ Nightly regression skipped — GEMINI_API_KEY not set" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          npx vitest run tests/regression/script-gen.regression.test.ts \
+            --reporter=verbose \
+            --reporter=json --outputFile=.tmp/regression/results.json
 
       # Persistence #1: the run output survives the conversation/run (the
       # paper's "memory"). Always upload, pass or fail, so a flaky night is
