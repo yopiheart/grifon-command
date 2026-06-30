@@ -62,5 +62,38 @@ if ($userPath -notlike "*$binDir*") {
 
 Write-Host ""
 & $ghExe --version
+
+# ── GH_TOKEN for headless use (lets the Claude Code tools drive gh) ───────────
+# Claude's sandboxed shells can't read the Windows keyring that `gh auth login`
+# writes to, so an interactive login is invisible to the agent. A Personal
+# Access Token stored at User scope IS readable by the agent via
+# [Environment]::GetEnvironmentVariable('GH_TOKEN','User'), so it can create/
+# merge PRs without you pasting commands. The defreezer wipes this, so re-run
+# this script each session. The token never enters the repo or any chat.
+#
+# Create a fine-grained PAT once (save it in your password manager):
+#   https://github.com/settings/tokens?type=beta
+#   Repository access: yopiheart/grifon-command
+#   Permissions: Contents = Read and write, Pull requests = Read and write
+$existing = [Environment]::GetEnvironmentVariable("GH_TOKEN", "User")
+if (-not [string]::IsNullOrWhiteSpace($existing)) {
+    Write-Host ""
+    Write-Host "GH_TOKEN already set at User scope — Claude can drive gh." -ForegroundColor Green
+} else {
+    Write-Host ""
+    Write-Host "Paste your GitHub Personal Access Token to let Claude open/merge PRs for you." -ForegroundColor Cyan
+    Write-Host "(Press Enter to skip — gh still works for YOU via 'gh auth login'.)" -ForegroundColor DarkGray
+    $sec = Read-Host "GH_TOKEN" -AsSecureString
+    $bstr = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($sec)
+    $tok  = [Runtime.InteropServices.Marshal]::PtrToStringAuto($bstr)
+    [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($bstr)
+    if (-not [string]::IsNullOrWhiteSpace($tok)) {
+        [Environment]::SetEnvironmentVariable("GH_TOKEN", $tok.Trim(), "User")
+        Write-Host "GH_TOKEN stored at User scope. Claude can now run gh headlessly." -ForegroundColor Green
+    } else {
+        Write-Host "Skipped GH_TOKEN. Claude can't drive gh until it's set; use 'gh auth login' for your own use." -ForegroundColor Yellow
+    }
+}
+
 Write-Host ""
-Write-Host "OK: gh is ready. If a command says you are not logged in, run: gh auth login" -ForegroundColor Green
+Write-Host "OK: gh is ready." -ForegroundColor Green
