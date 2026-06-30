@@ -66,6 +66,8 @@ Before any planning conversation, large refactor, or new module spec, load:
 - **`.claude/skills/viral-autopsy/`** — invoke when Neil drops a social video/ad (URL or file) to analyze why it works. Runs `tools/analyze_video.py` (Gemini watches the video), appends an evidence-bound entry to `workflows/viral_swipe_file.md`, and optionally remixes findings via `grifon-cmo`. Never edits tuned prompts — proposals are gated behind ≥3 corroborating videos.
 - **`.claude/skills/grifon-ad-strategist/`** — the senior paid-ads media buyer. Runs/optimizes Meta ads via the **Meta Ads CLI** (`pip install meta-ads`) and TikTok by hand, to 2026 Andromeda best practice. **Never spends autonomously** — reads insights freely but drafts every spend command for Neil to fire. Logs every campaign to `workflows/ad_performance_ledger.md` (≥3-corroboration gate, same pattern as the Swipe File) so it learns over time. Pairs with `grifon-cmo` (offers/hooks) and `grifon-creative-director` (creatives).
 
+**User-invoked skills (summon by name — `disable-model-invocation: true`, they will NOT auto-fire):** `grill-me`, `ubiquitous-language`, `viral-autopsy`, `ad-recon`, `growth-debrief`, `retargeting-briefs`. These are deliberate, on-demand tools, so they're kept off model-invocation to cut passive context load and remove mis-fire risk — invoke them explicitly (`/grill-me`, `/viral-autopsy`, etc.) when you want them.
+
 All smoke tests must be delegated to the `smoke-tester` subagent (defined in [.claude/agents/smoke-tester.md](.claude/agents/smoke-tester.md)).
 
 If a planning conversation introduces a new domain concept not in `UBIQUITOUS_LANGUAGE.md`, propose adding it before writing code.

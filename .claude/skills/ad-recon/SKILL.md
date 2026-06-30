@@ -1,6 +1,7 @@
 ---
 name: ad-recon
 description: Find a competitor BRAND's winning ads in the Meta Ad Library and hand them to viral-autopsy. Use when the user names a brand/product/business to "spy on", asks "get the top N winning ads of <brand>", "is <brand> running ads", "what's working for <competitor>", "find winning ads for <niche/brand>", or wants to source winning competitor creative to learn from. This is the DISCOVERY layer (sourcing); viral-autopsy is the ANALYSIS layer. NOT for analyzing a video the user already supplies (that's viral-autopsy directly), grading Grifon's own output (gemini-eval), or trend-discovery with no brand named (Ad Recon needs a brand/advertiser to point at).
+disable-model-invocation: true
 ---
 
 Ad Recon is the discovery half of Grifon's competitive-intelligence loop:

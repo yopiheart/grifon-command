@@ -1,6 +1,7 @@
 ---
 name: growth-debrief
 description: Read the Data-Driven Growth Loop's collected data (ad_performance + events funnel + feedback) and write a ranked, evidence-bound "why it won / why it failed" debrief, then route winners into the viral-autopsy/grifon-cmo loop as GATED proposals. Use when Neil asks to "debrief the ads", "why did this ad win/lose", "what's working in our funnel", "which creative is fatiguing", "run a growth debrief", "review ad performance", does a weekly/periodic growth review, or right after tools/meta_insights_pull.py ingests fresh Meta metrics. INGEST-ONLY — never publishes, pauses, or spends; never edits a TUNED prompt. NOT for analyzing an external swipe video (that's viral-autopsy) or grading Grifon's own generated output against its rules (that's gemini-eval).
+disable-model-invocation: true
 ---
 
 This is the **read/diagnose half** of the ingest-only growth loop
