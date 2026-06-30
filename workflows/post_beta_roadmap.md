@@ -14,7 +14,24 @@ Half-baked ideas don't go here — they go in conversation and either die or get
 
 ## Parked Items
 
-### 1. Nightly Regression `/loop` — dev velocity
+### 1. Nightly Regression `/loop` — dev velocity · ✅ v1 SHIPPED 2026-06-30 (adscript) — remainder still parked
+
+> **v1 status (2026-06-30, Loop Engineering / Move 1):** The loop is ARMED as a
+> cloud GitHub Actions schedule — see [nightly_regression.md](nightly_regression.md)
+> and the Tier 3 entry in [loops.md](loops.md). Decisions made: hosting = **GitHub
+> Actions cron** (free, survives the defreezer — picked over VPS/Vercel Cron);
+> v1 module = **adscript** (the already-built `tests/regression/script-gen.regression.test.ts`,
+> chosen over storyboard to prove the skeleton with zero new test code); evaluator =
+> **deterministic invariants only** (no LLM critic / no `.golden/` diff in v1 —
+> Gemini output is stochastic, so byte-diff is the wrong tool and an LLM critic
+> needs `ANTHROPIC_API_KEY` in CI, which is security-gated). Output channel = GitHub
+> Issue per fail, as planned below. `tools/regression_runner.*` was NOT needed — the
+> workflow + vitest JSON reporter cover v1. **Still parked (the remainder of this
+> item):** (a) the Step 5 **storyboard** regression test — the spec's original v1
+> module, highest IDENTITY_LOCK history, now "increment 2"; (b) the **LLM
+> harsh-evaluator** that verifies by acting (Move 2); (c) **Bake-and-Leap** (below);
+> (d) expansion to the other modules + `.golden/` semantic baseline. The notes below
+> remain the resume context for all four.
 
 > **Primitive mapping (2026-05-15):** This is the textbook [`/loop`](https://code.claude.com/docs/en/scheduled-tasks#run-a-prompt-repeatedly-with-%2Floop) use case (time-driven). The per-run verification step inside the loop is a [`/goal`](https://code.claude.com/docs/en/goal) — e.g., `/goal "all 11 modules produce baseline-matching outputs against .golden/, OR stop after 20 turns"`. When you unpark this, see the "Goal-driven execution" section in `CLAUDE.md` for the condition template and TUNED-file guardrails.
 
