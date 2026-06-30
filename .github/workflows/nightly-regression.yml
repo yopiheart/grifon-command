@@ -1,0 +1,134 @@
+name: Nightly Regression
+
+# Tier 3 loop (Loop Engineering / Move 1). A true discovery→verify→persist
+# loop that runs in the cloud while Neil sleeps and survives the cafe-PC
+# defreezer (local /loop cannot — it needs the machine on). Runs the live
+# Gemini ad-script regression suite against real Gemini, and on failure opens
+# a GitHub Issue + uploads the run output. It NEVER edits prompts and NEVER
+# auto-merges — it only surfaces. Full SOP: workflows/nightly_regression.md.
+#
+# v1 scope: the existing adscript regression suite
+# (tests/regression/script-gen.regression.test.ts), deterministic-invariant
+# assertions only — no LLM evaluator, no ANTHROPIC_API_KEY in CI yet.
+on:
+  schedule:
+    # 18:00 UTC = ~02:00 PHT — runs overnight, Manila time.
+    # NOTE: GitHub runs scheduled workflows from the DEFAULT branch (main)
+    # only; pre-merge testing is via the workflow_dispatch trigger below.
+    - cron: '0 18 * * *'
+  workflow_dispatch:
+
+# One nightly run at a time; a new run does not pile on top of an in-flight one.
+concurrency:
+  group: nightly-regression
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    # Circuit breaker (paper's "cap before you ship"): the suite is a fixed
+    # 8 tests, no parallel fan-out, no retries — but cap wall-clock anyway so a
+    # hung Gemini call can never spin the job (and the bill) overnight.
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Stage output dir
+        run: mkdir -p .tmp/regression
+
+      # RUN_REGRESSION=1 opts the live suite in (it is describe.skipIf'd off by
+      # default). The harness reads process.env.GEMINI_API_KEY directly; the
+      # absent .env file in CI is handled by its own try/catch.
+      #
+      # Preflight guard: if the GEMINI_API_KEY secret is not set yet, SKIP
+      # cleanly (green, with a visible warning) instead of failing — otherwise
+      # the nightly cron would open a false-alarm "FAILED" issue every night
+      # before the secret is added. A skipped run is annotated, never silent
+      # (the paper's "no silent caps"). Once the secret exists it runs for real.
+      - name: Run Gemini ad-script regression
+        env:
+          RUN_REGRESSION: '1'
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          if [ -z "$GEMINI_API_KEY" ]; then
+            echo "::warning::GEMINI_API_KEY secret not set — skipping nightly regression (no-op). Add it in repo Settings → Secrets and variables → Actions to activate the loop."
+            echo "### ⏭️ Nightly regression skipped — GEMINI_API_KEY not set" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          npx vitest run tests/regression/script-gen.regression.test.ts \
+            --reporter=verbose \
+            --reporter=json --outputFile=.tmp/regression/results.json
+
+      # Persistence #1: the run output survives the conversation/run (the
+      # paper's "memory"). Always upload, pass or fail, so a flaky night is
+      # diagnosable from the artifact.
+      - name: Upload regression results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightly-regression-results
+          path: .tmp/regression/
+          if-no-files-found: warn
+          retention-days: 30
+
+      # Persistence #2 + the "say no" surfaced: on failure, open a GitHub Issue
+      # (the spec's v1 output channel — zero setup). The human-review door:
+      # this opens an issue for Neil; it never commits, edits a tuned prompt,
+      # or merges anything.
+      - name: Open issue on regression failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            let failed = [];
+            try {
+              const raw = JSON.parse(fs.readFileSync('.tmp/regression/results.json', 'utf8'));
+              for (const f of raw.testResults || []) {
+                for (const a of f.assertionResults || []) {
+                  if (a.status === 'failed') failed.push(a.fullName || a.title);
+                }
+              }
+            } catch (e) {
+              core.warning(`Could not parse results.json: ${e.message}`);
+            }
+            const date = new Date().toISOString().slice(0, 10);
+            const list = failed.length
+              ? failed.map(n => `- ${n}`).join('\n')
+              : '_Could not parse failed test names — see the run log / artifact._';
+            const body = [
+              `Nightly ad-script regression failed.`,
+              ``,
+              `**Run:** ${runUrl}`,
+              `**Artifact:** \`nightly-regression-results\` (attached to the run, 30-day retention)`,
+              ``,
+              `**Failed checks:**`,
+              list,
+              ``,
+              `---`,
+              `This is a deterministic-invariant regression on the live Gemini ad-script`,
+              `flow (hook/body starvation + schema shape). The loop only *reads* output —`,
+              `it never edits a tuned prompt. Triage per workflows/nightly_regression.md;`,
+              `any fix touching \`services/geminiService.ts\` / \`api/_lib/prompts.ts\` is`,
+              `TUNED — escalate, do not auto-apply.`,
+            ].join('\n');
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Nightly regression FAILED — ${date}`,
+              body,
+              labels: ['regression'],
+            });

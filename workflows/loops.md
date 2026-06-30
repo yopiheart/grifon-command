@@ -81,16 +81,32 @@ wipe the repo.
 - Adding a new session loop? Document its arm command as a `/loop …` line in
   `session_reminders.md` — the hook picks it up automatically.
 
-## Tier 3 — Nightly regression loop · ⏸ PARKED (do not arm)
+## Tier 3 — Nightly regression loop · ✅ live, automatic (v1: adscript, deterministic invariants)
 
-Golden-path inputs through the 11 modules, output diffed against a `.golden/`
-baseline by a separate harsh evaluator, failures posted to a channel. Full
-spec: [post_beta_roadmap.md](post_beta_roadmap.md) #1.
+Armed 2026-06-30 (Loop Engineering / Move 1). A cloud-scheduled GitHub Action
+runs the live Gemini ad-script regression nightly and surfaces any regression as
+a GitHub Issue. The first Grifon loop that discovers its own work and runs while
+Neil sleeps — cloud, so it survives the defreezer (local `/loop` can't). Full
+SOP: [nightly_regression.md](nightly_regression.md); spec:
+[post_beta_roadmap.md](post_beta_roadmap.md) #1.
 
-- Resume trigger (Neil's, reconfirmed 2026-06-09): **beta is live AND a second
-  post-beta change shipped without manual regression.** Until then, the manual
-  harness is `RUN_REGRESSION=1 npx vitest run tests/regression/...`.
-- v1 scope when armed: Step 5 storyboard only (highest regression history).
+- Arm: nothing — wired in [.github/workflows/nightly-regression.yml](../.github/workflows/nightly-regression.yml)
+  (`cron '0 18 * * *'` ≈ 02:00 PHT + `workflow_dispatch`). Schedule fires from
+  `main` only; test on a branch via dispatch.
+- Verifier: the suite's deterministic-invariant assertions
+  (`RUN_REGRESSION=1 npx vitest run tests/regression/script-gen.regression.test.ts`)
+  — hook/body starvation + schema shape. Stable across Gemini's stochastic output.
+- Persistence: GitHub Issue per failing night (label `regression`) + a
+  `nightly-regression-results` artifact every run (30-day retention).
+- Human-review door: read-only — opens an issue for Neil, never edits a tuned
+  prompt or merges. TUNED fixes escalate (flag-don't-apply, as `pr_review_loop.md`).
+- Prerequisite: `GEMINI_API_KEY` repo Actions secret (the first secret in CI).
+- Kill switch: disable the workflow in the repo's Actions settings, or delete the
+  workflow file.
+- Remaining increments: Step 5 storyboard test (inc 2, the spec's original v1
+  module) → LLM harsh-critic that verifies by acting (Move 2, needs
+  `ANTHROPIC_API_KEY` + a security review) → Bake-and-Leap inverse verdict (still
+  parked). Manual harness anytime: `RUN_REGRESSION=1 npx vitest run tests/regression/...`.
 
 ## Tier 4 — Meta loop (self-improvement) · ✅ live, by habit
 
