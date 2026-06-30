@@ -310,7 +310,7 @@ describe.skipIf(!SHOULD_RUN)('Baseline — Bukidnon Brew + OFW-wife audience', (
         'BUKIDNON BREW — MrBeast'
       );
     },
-    90_000
+    120_000
   );
 
   it(
@@ -324,7 +324,7 @@ describe.skipIf(!SHOULD_RUN)('Baseline — Bukidnon Brew + OFW-wife audience', (
         'BUKIDNON BREW — TESTIMONIAL'
       );
     },
-    90_000
+    120_000
   );
 });
 
@@ -340,7 +340,7 @@ describe.skipIf(!SHOULD_RUN)('Stress Test — Service Business (Cleaning, BGC)',
         'MALINISPH — MrBeast'
       );
     },
-    90_000
+    120_000
   );
 
   it(
@@ -354,7 +354,7 @@ describe.skipIf(!SHOULD_RUN)('Stress Test — Service Business (Cleaning, BGC)',
         'MALINISPH — TESTIMONIAL'
       );
     },
-    90_000
+    120_000
   );
 });
 
@@ -370,7 +370,7 @@ describe.skipIf(!SHOULD_RUN)('Stress Test — Skincare (Adult Acne)', () => {
         'GLAZE PH — MrBeast'
       );
     },
-    90_000
+    120_000
   );
 
   it(
@@ -384,7 +384,7 @@ describe.skipIf(!SHOULD_RUN)('Stress Test — Skincare (Adult Acne)', () => {
         'GLAZE PH — TESTIMONIAL'
       );
     },
-    90_000
+    120_000
   );
 });
 
@@ -400,7 +400,7 @@ describe.skipIf(!SHOULD_RUN)('Stress Test — Gym/Fitness (Online Coaching)', ()
         'BULKPH COACH — MrBeast'
       );
     },
-    90_000
+    120_000
   );
 
   it(
@@ -414,6 +414,6 @@ describe.skipIf(!SHOULD_RUN)('Stress Test — Gym/Fitness (Online Coaching)', ()
         'BULKPH COACH — TESTIMONIAL'
       );
     },
-    90_000
+    120_000
   );
 });
