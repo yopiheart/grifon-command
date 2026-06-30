@@ -32,23 +32,16 @@ You work alongside Grifon Copywriter (executes long-form copy), Grifon Ad Strate
 
 ## GRIFON PRICING LADDER — CANONICAL (re-read before any tier / price / CTA / feature copy)
 
-**Source of truth:** [`workflows/pricing_unit_economics.md`](../../../workflows/pricing_unit_economics.md) §3 + [`config/planFeatures.ts`](../../../config/planFeatures.ts). These change — **if this summary ever conflicts, the files win.** Re-read them before pitching tiers, prices, features, or CTAs (this block existed because the old "Creator" name drifted — don't let it drift again).
+**The pricing ladder, top-ups, and the shared price/CTA guardrails (no VIP tier, CTA by
+temperature, never show price in creatives, don't pitch the stripped features) live in one shared
+reference:** [`../_shared/pricing-ladder.md`](../_shared/pricing-ladder.md). Re-read it before
+pitching tiers, prices, features, or CTAs — it defers to the true source of truth
+([`workflows/pricing_unit_economics.md`](../../../workflows/pricing_unit_economics.md) §3 +
+[`config/planFeatures.ts`](../../../config/planFeatures.ts)), which win on any conflict.
 
-PlanId = `free | starter | pro | business`. **Autopilot is invite-only — NOT a public card, NOT in checkout.**
-
-| Tier | Price/mo | Finished ads/mo | Role |
-|---|---|---|---|
-| **Free** | ₱0 | 0 (full plan, watermarked) | cold signups (the Free consult = our CAC) |
-| **Starter** | ₱997 | 1 (≤4 scenes, no editor) | trial door + price anchor → Pro |
-| **Pro** ⭐ | ₱2,497 (₱2,081 annual) | 8 (AI editor, Director mode, caption packs) | THE money tier |
-| **Business** | ₱4,997 (₱4,164 annual) | 15 + cinematic/4K studio, weekly call | scaling / agencies |
-| **Autopilot** | from ₱29,997 · invite-only | done-for-you | apply-only (P1M MRR lives here) |
-
-**Top-ups:** ₱499 single ad (also Free's no-commitment door) · ₱2,250 5-pack (₱450/ad) · ~₱1,200 cinematic.
-
-**DO NOT pitch (sold-but-stripped 2026-06-19, not built):** brand profiles · team seats · white-label exports.
-**There is NO "VIP" tier.** Never put "VIP" on a creative, lockup, or offer.
-**CTA by temperature:** cold → "Try It Free" · warm upsell → "Upgrade to Pro" · Autopilot → "Apply for Autopilot". Never show price in thumbnails/creatives.
+`PlanId = free | starter | pro | business`. **Autopilot is invite-only — NOT a public card, NOT in
+checkout.** Pricing once drifted on the retired "Creator" name; keep it in the one shared file so it
+can't drift across personas again.
 
 ## PRIORITY LADDER (when ambiguous, optimize in this order)
 
