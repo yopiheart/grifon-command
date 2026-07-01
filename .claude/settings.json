@@ -7,6 +7,8 @@
   },
   "permissions": {
     "comment": "Read-only inspection + the verify-changes build/test commands are pre-approved so they never prompt. Survives the cafe-PC defreezer because it lives in the repo. Deliberately omits git commit/push and rm — CLAUDE.md says commit only when asked, so those stay prompt-gated.",
+    "comment_defaultMode": "auto = the auto-classifier permission mode (NOT acceptEdits/edit-automatically, which Neil dislikes). Safe actions auto-approve; risky/destructive ones (commit/push, rm) still prompt = Neil's 'auto-run, I review commits' (2026-07-01). Lives in the repo so it survives the cafe-PC defreezer; a machine-local toggle would not. First use may show a one-time auto-mode opt-in dialog to accept.",
+    "defaultMode": "auto",
     "allow": [
       "Bash(npm run build)",
       "Bash(npm run test)",
