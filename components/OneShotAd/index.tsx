@@ -7,6 +7,21 @@ import { useOneShotGeneration, type OneShotSinks } from '../../hooks/useOneShotG
 import { hydrateOneShotDraft, loadOneShotDraft, clearOneShotDraft } from '../../utils/oneShotDraft';
 import { LaunchScreen } from './LaunchScreen';
 import { RunningScreen } from './RunningScreen';
+import OneShotAutopilot from './OneShotAutopilot';
+
+/**
+ * Opt-in switch to the new orchestrator-driven flow (Running → storyboard gate →
+ * First Cut) while it bakes behind the live useOneShotGeneration→Step 8 path. Enable
+ * per-session with `?osaEngine=autopilot` (persists to localStorage) or `?osaEngine=steps`
+ * to force the legacy path. Lets the SIGLA smoke exercise the real flow non-destructively.
+ */
+const useAutopilotEngine = (): boolean => {
+  if (typeof window === 'undefined') return false;
+  const q = new URLSearchParams(window.location.search).get('osaEngine');
+  if (q === 'autopilot') { try { localStorage.setItem('osa_engine', 'autopilot'); } catch { /* ignore */ } return true; }
+  if (q === 'steps') { try { localStorage.removeItem('osa_engine'); } catch { /* ignore */ } return false; }
+  try { return localStorage.getItem('osa_engine') === 'autopilot'; } catch { return false; }
+};
 
 /**
  * One-Shot Ad module container. Collects a brief (LaunchScreen), runs market
@@ -52,6 +67,22 @@ const OneShotAd: React.FC<OneShotAdProps> = ({
   onCloneVoice,
   onReview,
 }) => {
+  // Opt-in orchestrator flow — early-return before the legacy hooks so hook order stays
+  // stable for the mount (the flag is constant per mount).
+  if (useAutopilotEngine()) {
+    return (
+      <OneShotAutopilot
+        userId={userId}
+        directorUnlocked={directorUnlocked}
+        onBack={onBack}
+        onUpgrade={onUpgrade}
+        onSwitchToSteps={onSwitchToSteps}
+        onSwitchToExpert={onSwitchToExpert}
+        onCloneVoice={onCloneVoice}
+      />
+    );
+  }
+
   const oneShot = useOneShotGeneration();
   const [phase, setPhase] = useState<'launch' | 'running' | 'error'>('launch');
   const [researching, setResearching] = useState(false);
