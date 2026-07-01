@@ -88,6 +88,18 @@ Disable "Nightly Regression" in the repo's Actions settings, or delete
 - **Move 2:** an LLM harsh-critic that *verifies by acting* (semantic judgment,
   watches/re-runs output). Requires `ANTHROPIC_API_KEY` in CI → run
   `straw-man-audit` on that exposure surface first, add hard token caps.
+  - **Cross-model by design:** Gemini authors, **Claude judges** — an
+    *independent* model is the whole reason it stays valuable. This is NOT
+    same-model self-grading (which matured base models make redundant); a
+    generator grading its own output is the anti-pattern, a different model
+    checking it is not. Reuse the `gemini-eval` ruleset as the judge's rubric.
+  - **Resume trigger:** build this when EITHER (a) a prompt-tuning sprint starts
+    on `services/geminiService.ts` / `api/_lib/prompts.ts` (frequent tuned-prompt
+    edits are exactly what deterministic invariants can't catch — structurally
+    valid but strategically bad output slips through), OR (b) active users cross
+    a threshold where a bad-but-valid script reaching a customer actually costs
+    us. Pre-launch, low volume → the cost of *not* having it is low, so it stays
+    parked. Don't spend a launch-readiness slot on it before the trigger fires.
 - **Bake-and-Leap:** the inverse verdict ("did a blocked, model-capped feature
   finally cross the threshold?") — same harness, opposite sign. Still parked;
   resume per [post_beta_roadmap.md](post_beta_roadmap.md) #1.
