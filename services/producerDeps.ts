@@ -1,11 +1,11 @@
-// Real-services wiring for the autopilot orchestrator (slice 3/4, 2026-07-01).
+// Real-services wiring for the producer orchestrator (slice 3/4, 2026-07-01).
 //
-// Assembles the concrete AutopilotDeps the app runs with: the tuned Gemini/voice/render
-// service functions + the server run-store (services/autopilotRunService.ts). The
+// Assembles the concrete ProducerDeps the app runs with: the tuned Gemini/voice/render
+// service functions + the server run-store (services/producerRunService.ts). The
 // orchestrator itself imports NONE of these at runtime (deps are injected) so it stays
 // unit-testable and the UI can import its types without pulling this heavy chain.
 
-import type { AutopilotDeps, AutopilotRun, AutopilotRunStore } from './autopilotOrchestrator';
+import type { ProducerDeps, ProductionRun, ProducerRunStore } from './producerOrchestrator';
 import {
   generateMarketResearch,
   generateAdScript,
@@ -25,10 +25,10 @@ import {
   flagScene,
   requeueScene,
   type RunCheckpoint,
-} from './autopilotRunService';
+} from './producerRunService';
 
 /** Map the full in-memory run to the partial server checkpoint (persist-after-every-transition). */
-const toCheckpoint = (run: AutopilotRun): RunCheckpoint => ({
+const toCheckpoint = (run: ProductionRun): RunCheckpoint => ({
   mode: run.mode ?? 'oneshot',
   status: run.status,
   currentStage: run.stages.find((s) => s.status === 'running')?.id ?? run.gate ?? null,
@@ -58,16 +58,16 @@ const toCheckpoint = (run: AutopilotRun): RunCheckpoint => ({
 // live pipeline. The no-double-spend guarantee does NOT depend on it — it rides the small,
 // authoritative per-scene claim calls below. Worst case a dropped checkpoint means a
 // coarser resume, never a lost render or a double charge.
-const persist = async (run: AutopilotRun): Promise<void> => {
+const persist = async (run: ProductionRun): Promise<void> => {
   try {
     await saveRunCheckpoint(run.runId, toCheckpoint(run));
   } catch (e) {
-    console.warn('[autopilot] checkpoint write failed (best-effort):', (e as Error)?.message);
+    console.warn('[producer] checkpoint write failed (best-effort):', (e as Error)?.message);
   }
 };
 
-/** Adapt the run-store client to the orchestrator's AutopilotRunStore shape. */
-const runStore: AutopilotRunStore = {
+/** Adapt the run-store client to the orchestrator's ProducerRunStore shape. */
+const runStore: ProducerRunStore = {
   seedScenes,
   claimScene: async (runId, sceneIdx) => {
     const { claimed, scene } = await claimScene(runId, sceneIdx);
@@ -79,7 +79,7 @@ const runStore: AutopilotRunStore = {
 };
 
 /** The app's default deps. `now` stays injectable via the spread for tests. */
-export const realAutopilotDeps: AutopilotDeps = {
+export const realProducerDeps: ProducerDeps = {
   generateMarketResearch,
   generateAdScript,
   generateStoryboard,

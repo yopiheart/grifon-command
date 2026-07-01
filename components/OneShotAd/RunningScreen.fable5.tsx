@@ -1,20 +1,20 @@
 import React from 'react';
 import { Minimize2, RefreshCw } from 'lucide-react';
 import { DriftOrbs, SceneReveal, SpineNode } from './motion';
-import type { AutopilotRun, AutopilotStageId } from '../../services/autopilotOrchestrator';
+import type { ProductionRun, ProductionStageId } from '../../services/producerOrchestrator';
 
 // Display-only grouping: the orchestrator keeps its 8 stages (resume needs them),
 // but the user sees 4 friendly film-crew PHASES — momentum reads better than a long
 // to-do list, and it blurs the exact pipeline shape.
-const PHASES: { label: string; stages: AutopilotStageId[] }[] = [
+const PHASES: { label: string; stages: ProductionStageId[] }[] = [
   { label: 'Researching your market', stages: ['market_research'] },
   { label: 'Directing your shoot', stages: ['script', 'storyboard', 'scene_images'] },
   { label: 'Filming your scenes', stages: ['video', 'voices'] },
   { label: 'Polishing the final cut', stages: ['edl', 'final_render'] },
 ];
 
-export const RunningScreen: React.FC<{ run: AutopilotRun; onMinimize: () => void }> = ({ run, onMinimize }) => {
-  const stageOf = (id: AutopilotStageId) => run.stages.find((s) => s.id === id);
+export const RunningScreen: React.FC<{ run: ProductionRun; onMinimize: () => void }> = ({ run, onMinimize }) => {
+  const stageOf = (id: ProductionStageId) => run.stages.find((s) => s.id === id);
   const phases = PHASES.map((p) => {
     const sts = p.stages.map((id) => stageOf(id)?.status ?? 'pending');
     const state: 'done' | 'active' | 'pending' = sts.every((s) => s === 'done')

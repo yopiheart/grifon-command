@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Download, RefreshCw, Wand2, Plus, CheckCircle2, AlertTriangle, Lock } from 'lucide-react';
 import { GlassPanel } from '../ui/GlassPanel';
 import { ShimmerButton, SceneReveal } from './motion';
-import type { AutopilotRun } from '../../services/autopilotOrchestrator';
+import type { ProductionRun } from '../../services/producerOrchestrator';
 import type { LockablePresetId } from '../../types';
 
 /** First Cut edit-preset switcher (Decision 8). AUTO = server rotation (free, all tiers);
@@ -18,7 +18,7 @@ const PRESETS: { id: LockablePresetId | null; label: string; pro: boolean }[] = 
 const FREE_TAKES = 2;
 
 export const FirstCutScreen: React.FC<{
-  run: AutopilotRun;
+  run: ProductionRun;
   reshooting: number | null;
   onReshoot: (sceneIdx: number) => void;
   onMakeAnother: () => void;

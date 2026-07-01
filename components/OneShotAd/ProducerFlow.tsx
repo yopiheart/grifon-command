@@ -2,40 +2,40 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ChevronLeft, AlertTriangle, RotateCw, Loader2 } from 'lucide-react';
 import type { Avatar, LockablePresetId } from '../../types';
 import { generateMarketResearch, generateAvatarImage } from '../../services/geminiService';
-import type { AutopilotInput as IntakeInput } from '../../services/oneShotIntake';
+import type { ProductionInput as IntakeInput } from '../../services/oneShotIntake';
 import { LaunchScreen } from './LaunchScreen';
 import { RunningScreen } from './RunningScreen.fable5';
 import { StoryboardGateScreen } from './StoryboardGateScreen';
 import { FirstCutScreen } from './FirstCutScreen';
 import { FeedbackWidget } from '../ui/FeedbackWidget';
 import {
-  createAutopilotRun,
-  runAutopilot,
+  createProductionRun,
+  runProduction,
   approveStoryboard,
   reshootScene,
   regenSceneImage,
   applyPreset,
   mapReportToWizard,
-  type AutopilotRun,
-  type AutopilotInput as OrchInput,
-} from '../../services/autopilotOrchestrator';
-import { realAutopilotDeps } from '../../services/autopilotDeps';
-import { newRunId, loadRun, type AutopilotRunRow, type AutopilotSceneRow } from '../../services/autopilotRunService';
+  type ProductionRun,
+  type ProductionInput as OrchInput,
+} from '../../services/producerOrchestrator';
+import { realProducerDeps } from '../../services/producerDeps';
+import { newRunId, loadRun, type ProductionRunRow, type ProductionSceneRow } from '../../services/producerRunService';
 
 /**
- * One-Shot AUTOPILOT container (slice 4, 2026-07-01 grill). Drives the real consumer
+ * One-Shot PRODUCER container (slice 4, 2026-07-01 grill). Drives the real consumer
  * flow on the rebuilt orchestrator: LaunchScreen → Running → storyboard-image gate →
  * First Cut, with resume-to-true-state and the no-double-spend fan-out. Users never see
  * the 8-step wizard.
  *
- * This is mounted opt-in (see OneShotAd/index.tsx `?osaEngine=autopilot`) so the live
+ * This is mounted opt-in (see OneShotAd/index.tsx `?osaEngine=producer`) so the live
  * useOneShotGeneration→Step 8 path stays intact until the SIGLA smoke signs this off.
  * The orchestrator OWNS its state (it does not write into App.tsx wizard state).
  */
-const ACTIVE_RUN_KEY = 'osa_autopilot_active_run';
+const ACTIVE_RUN_KEY = 'osa_producer_active_run';
 
 /** Rebuild an in-memory run from the server checkpoint (resume-to-true-state). */
-function fromRow(row: AutopilotRunRow, scenes: AutopilotSceneRow[]): AutopilotRun {
+function fromRow(row: ProductionRunRow, scenes: ProductionSceneRow[]): ProductionRun {
   const art = (row.artifacts ?? {}) as Record<string, any>;
   // Prefer the richer artifact scene snapshot; fall back to the server job-queue rows.
   const sceneState =
@@ -82,8 +82,8 @@ interface Props {
   onCloneVoice: () => void;
 }
 
-const OneShotAutopilot: React.FC<Props> = ({ userId, directorUnlocked, onBack, onUpgrade, onSwitchToSteps, onSwitchToExpert, onCloneVoice }) => {
-  const [run, setRun] = useState<AutopilotRun | null>(null);
+const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, onBack, onUpgrade, onSwitchToSteps, onSwitchToExpert, onCloneVoice }) => {
+  const [run, setRun] = useState<ProductionRun | null>(null);
   const [phase, setPhase] = useState<'launch' | 'researching' | 'error' | 'resuming'>('resuming');
   const [errMsg, setErrMsg] = useState('');
   const [reshooting, setReshooting] = useState<number | null>(null);
@@ -96,7 +96,7 @@ const OneShotAutopilot: React.FC<Props> = ({ userId, directorUnlocked, onBack, o
 
   // C1 fix: the orchestrator mutates its `run` object IN PLACE, so we MUST hand React a
   // fresh reference or useState bails the re-render (Object.is) and the UI freezes.
-  const cb = (r: AutopilotRun) => ({ onUpdate: (u: AutopilotRun) => setRun({ ...u }), signal: abortRef.current.signal, userId: r.userId });
+  const cb = (r: ProductionRun) => ({ onUpdate: (u: ProductionRun) => setRun({ ...u }), signal: abortRef.current.signal, userId: r.userId });
 
   // Resume-on-mount: if a run id is remembered, pull its true state from the server and
   // drop the user exactly where they were (mid-run, at a gate, or at First Cut).
@@ -117,7 +117,7 @@ const OneShotAutopilot: React.FC<Props> = ({ userId, directorUnlocked, onBack, o
         if (resumed.status === 'running' && !resumeStarted.current) {
           resumeStarted.current = true;
           abortRef.current = new AbortController();
-          void runAutopilot(resumed, cb(resumed), realAutopilotDeps);
+          void runProduction(resumed, cb(resumed), realProducerDeps);
         }
       })
       .catch(() => alive && setPhase('launch'));
@@ -186,14 +186,14 @@ const OneShotAutopilot: React.FC<Props> = ({ userId, directorUnlocked, onBack, o
       //     and drive it. runId is the stable idempotency anchor; remember it for resume.
       const runId = newRunId();
       if (typeof localStorage !== 'undefined') localStorage.setItem(ACTIVE_RUN_KEY, runId);
-      const fresh = createAutopilotRun(
+      const fresh = createProductionRun(
         { ...orchInputBase, avatar },
         userId,
         { runId, mode: 'oneshot', prefill: { report, clientDetails, businessInfo }, doneStages: ['market_research'] }
       );
       setRun(fresh);
       setPhase('launch'); // phase derives from run.status now
-      await runAutopilot(fresh, cb(fresh), realAutopilotDeps);
+      await runProduction(fresh, cb(fresh), realProducerDeps);
     } catch (e: unknown) {
       setErrMsg(e instanceof Error ? e.message : 'Something went wrong. Please try again.');
       setPhase('error');
@@ -202,7 +202,7 @@ const OneShotAutopilot: React.FC<Props> = ({ userId, directorUnlocked, onBack, o
 
   const handleApprove = async () => {
     if (!run) return;
-    await approveStoryboard(run, cb(run), realAutopilotDeps);
+    await approveStoryboard(run, cb(run), realProducerDeps);
   };
 
   // Storyboard gate: image-ONLY regen (cheap — the cost gate hasn't fired yet).
@@ -210,7 +210,7 @@ const OneShotAutopilot: React.FC<Props> = ({ userId, directorUnlocked, onBack, o
     if (!run || reshooting !== null) return;
     setReshooting(sceneIdx);
     try {
-      await regenSceneImage(run, sceneIdx, cb(run), realAutopilotDeps);
+      await regenSceneImage(run, sceneIdx, cb(run), realProducerDeps);
     } finally {
       setReshooting(null);
     }
@@ -221,7 +221,7 @@ const OneShotAutopilot: React.FC<Props> = ({ userId, directorUnlocked, onBack, o
     if (!run || reshooting !== null) return;
     setReshooting(sceneIdx);
     try {
-      await reshootScene(run, sceneIdx, cb(run), realAutopilotDeps);
+      await reshootScene(run, sceneIdx, cb(run), realProducerDeps);
     } finally {
       setReshooting(null);
     }
@@ -231,7 +231,7 @@ const OneShotAutopilot: React.FC<Props> = ({ userId, directorUnlocked, onBack, o
     if (!run || presetBusy) return;
     setPresetBusy(true);
     try {
-      await applyPreset(run, id, cb(run), realAutopilotDeps);
+      await applyPreset(run, id, cb(run), realProducerDeps);
     } finally {
       setPresetBusy(false);
     }
@@ -294,7 +294,7 @@ const OneShotAutopilot: React.FC<Props> = ({ userId, directorUnlocked, onBack, o
             onUpgrade={onUpgrade}
             presetBusy={presetBusy}
           />
-          <FeedbackWidget active={delivered} module="one_shot_autopilot" />
+          <FeedbackWidget active={delivered} module="one_shot_producer" />
         </div>
       );
     }
@@ -343,4 +343,4 @@ const OneShotAutopilot: React.FC<Props> = ({ userId, directorUnlocked, onBack, o
   );
 };
 
-export default OneShotAutopilot;
+export default ProducerFlow;

@@ -2,25 +2,25 @@ import React, { useEffect, useState } from 'react';
 import { ChevronLeft, AlertTriangle, RotateCw, Loader2, Sparkles, FilePlus2 } from 'lucide-react';
 import type { ClientDetails, BusinessInfo } from '../../types';
 import { generateMarketResearch } from '../../services/geminiService';
-import { mapReportToWizard, type AutopilotInput } from '../../services/oneShotIntake';
+import { mapReportToWizard, type ProductionInput } from '../../services/oneShotIntake';
 import { useOneShotGeneration, type OneShotSinks } from '../../hooks/useOneShotGeneration';
 import { hydrateOneShotDraft, loadOneShotDraft, clearOneShotDraft } from '../../utils/oneShotDraft';
 import { LaunchScreen } from './LaunchScreen';
 import { RunningScreen } from './RunningScreen';
-import OneShotAutopilot from './OneShotAutopilot';
+import ProducerFlow from './ProducerFlow';
 
 /**
  * Opt-in switch to the new orchestrator-driven flow (Running → storyboard gate →
  * First Cut) while it bakes behind the live useOneShotGeneration→Step 8 path. Enable
- * per-session with `?osaEngine=autopilot` (persists to localStorage) or `?osaEngine=steps`
+ * per-session with `?osaEngine=producer` (persists to localStorage) or `?osaEngine=steps`
  * to force the legacy path. Lets the SIGLA smoke exercise the real flow non-destructively.
  */
-const useAutopilotEngine = (): boolean => {
+const useProducerEngine = (): boolean => {
   if (typeof window === 'undefined') return false;
   const q = new URLSearchParams(window.location.search).get('osaEngine');
-  if (q === 'autopilot') { try { localStorage.setItem('osa_engine', 'autopilot'); } catch { /* ignore */ } return true; }
+  if (q === 'producer') { try { localStorage.setItem('osa_engine', 'producer'); } catch { /* ignore */ } return true; }
   if (q === 'steps') { try { localStorage.removeItem('osa_engine'); } catch { /* ignore */ } return false; }
-  try { return localStorage.getItem('osa_engine') === 'autopilot'; } catch { return false; }
+  try { return localStorage.getItem('osa_engine') === 'producer'; } catch { return false; }
 };
 
 /**
@@ -69,9 +69,9 @@ const OneShotAd: React.FC<OneShotAdProps> = ({
 }) => {
   // Opt-in orchestrator flow — early-return before the legacy hooks so hook order stays
   // stable for the mount (the flag is constant per mount).
-  if (useAutopilotEngine()) {
+  if (useProducerEngine()) {
     return (
-      <OneShotAutopilot
+      <ProducerFlow
         userId={userId}
         directorUnlocked={directorUnlocked}
         onBack={onBack}
@@ -102,7 +102,7 @@ const OneShotAd: React.FC<OneShotAdProps> = ({
     return () => { alive = false; };
   }, []);
 
-  const start = async (input: AutopilotInput) => {
+  const start = async (input: ProductionInput) => {
     setErrMsg('');
     setPhase('running');
     setResearching(true);

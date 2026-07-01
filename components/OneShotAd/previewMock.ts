@@ -1,4 +1,4 @@
-import type { AutopilotRun } from '../../services/autopilotOrchestrator';
+import type { ProductionRun } from '../../services/producerOrchestrator';
 
 /**
  * DEV-ONLY design preview fixtures. Used solely by the `?osaPreview=` hook in
@@ -9,7 +9,7 @@ import type { AutopilotRun } from '../../services/autopilotOrchestrator';
 
 const img = (seed: string) => `https://picsum.photos/seed/${seed}/240/420`;
 
-const baseInput: AutopilotRun['input'] = {
+const baseInput: ProductionRun['input'] = {
   brandName: 'Bukidnon Brew',
   offer: 'Buy 1 Take 1 this week',
   price: '₱199',
@@ -34,7 +34,7 @@ const STAGES = [
   { id: 'final_render', label: 'Final cut' },
 ] as const;
 
-export function makePreviewRun(kind: 'running' | 'firstcut'): AutopilotRun {
+export function makePreviewRun(kind: 'running' | 'firstcut'): ProductionRun {
   if (kind === 'running') {
     return {
       runId: 'preview-running',
@@ -44,7 +44,7 @@ export function makePreviewRun(kind: 'running' | 'firstcut'): AutopilotRun {
       status: 'running',
       input: baseInput,
       stages: STAGES.map((s, i) => ({
-        id: s.id as AutopilotRun['stages'][number]['id'],
+        id: s.id as ProductionRun['stages'][number]['id'],
         label: s.label,
         status: i < 4 ? 'done' : i === 4 ? 'running' : 'pending',
         attempts: i < 5 ? 1 : 0,
@@ -70,7 +70,7 @@ export function makePreviewRun(kind: 'running' | 'firstcut'): AutopilotRun {
     updatedAt: 0,
     status: 'review',
     input: baseInput,
-    stages: STAGES.map((s) => ({ id: s.id as AutopilotRun['stages'][number]['id'], label: s.label, status: 'done', attempts: 1 })),
+    stages: STAGES.map((s) => ({ id: s.id as ProductionRun['stages'][number]['id'], label: s.label, status: 'done', attempts: 1 })),
     scenes: [
       { sceneIdx: 0, status: 'done', imageUrl: img('s0'), videoUrl: img('s0') },
       { sceneIdx: 1, status: 'done', imageUrl: img('s1'), videoUrl: img('s1') },

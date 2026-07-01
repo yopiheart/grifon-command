@@ -2,22 +2,22 @@ import { getSupabase } from './supabaseClient';
 
 // Client-side run-store for the unified One-Shot / Concierge flow (grill 2026-07-01).
 // Thin fetch layer over the two service-role proxies:
-//   api/autopilot/run.ts     — run header: checkpoint (POST) + resume-read (GET)
-//   api/autopilot/advance.ts — per-scene video job queue (seed/claim/record/complete/flag/requeue)
+//   api/producer/run.ts     — run header: checkpoint (POST) + resume-read (GET)
+//   api/producer/advance.ts — per-scene video job queue (seed/claim/record/complete/flag/requeue)
 //
 // This is the durable half of Model A: the client drives the stage sequence, but every
 // transition is checkpointed here so a closed tab / lost connection / different device
 // resumes to true state, and the atomic 'claim' guarantees each render fires exactly once.
 
-export type AutopilotRunStatus = 'running' | 'review' | 'done' | 'error';
-export type AutopilotMode = 'oneshot' | 'concierge';
+export type ProductionRunStatus = 'running' | 'review' | 'done' | 'error';
+export type ProductionMode = 'oneshot' | 'concierge';
 export type SceneJobStatus = 'pending' | 'submitting' | 'rendering' | 'done' | 'flagged' | 'failed';
 
-export interface AutopilotRunRow {
+export interface ProductionRunRow {
   run_id: string;
   user_id: string;
-  mode: AutopilotMode;
-  status: AutopilotRunStatus;
+  mode: ProductionMode;
+  status: ProductionRunStatus;
   current_stage: string | null;
   input: Record<string, unknown>;
   stages: unknown[];
@@ -27,7 +27,7 @@ export interface AutopilotRunRow {
   updated_at: string;
 }
 
-export interface AutopilotSceneRow {
+export interface ProductionSceneRow {
   run_id: string;
   scene_idx: number;
   status: SceneJobStatus;
@@ -42,8 +42,8 @@ export interface AutopilotSceneRow {
 
 /** Partial run-header checkpoint — send only the fields that changed this transition. */
 export interface RunCheckpoint {
-  mode?: AutopilotMode;
-  status?: AutopilotRunStatus;
+  mode?: ProductionMode;
+  status?: ProductionRunStatus;
   currentStage?: string | null;
   input?: Record<string, unknown>;
   stages?: unknown[];
@@ -68,7 +68,7 @@ const post = async (path: string, body: unknown): Promise<any> => {
   });
   const data = await res.json().catch(() => ({} as any));
   if (!res.ok) {
-    const err = new Error(typeof data?.error === 'string' ? data.error : `AUTOPILOT_RUN_FAILED (${res.status})`);
+    const err = new Error(typeof data?.error === 'string' ? data.error : `PRODUCER_RUN_FAILED (${res.status})`);
     (err as any).status = res.status;
     throw err;
   }
@@ -90,30 +90,30 @@ export const newRunId = (): string => {
 // ── Run header ──────────────────────────────────────────────────────────────────
 /** Upsert the run header after a stage transition (persist-after-every-transition). */
 export const saveRunCheckpoint = (runId: string, patch: RunCheckpoint): Promise<void> =>
-  post('/api/autopilot/run', { runId, ...patch }).then(() => undefined);
+  post('/api/producer/run', { runId, ...patch }).then(() => undefined);
 
 /** Resume-read: the run header + its scene queue, or null if the run doesn't exist. */
 export const loadRun = async (
   runId: string
-): Promise<{ run: AutopilotRunRow; scenes: AutopilotSceneRow[] } | null> => {
+): Promise<{ run: ProductionRunRow; scenes: ProductionSceneRow[] } | null> => {
   const token = await getAccessToken();
-  const res = await fetch(`/api/autopilot/run?runId=${encodeURIComponent(runId)}`, {
+  const res = await fetch(`/api/producer/run?runId=${encodeURIComponent(runId)}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   if (res.status === 404) return null;
   const data = await res.json().catch(() => ({} as any));
   if (!res.ok) {
-    const err = new Error(typeof data?.error === 'string' ? data.error : `AUTOPILOT_LOAD_FAILED (${res.status})`);
+    const err = new Error(typeof data?.error === 'string' ? data.error : `PRODUCER_LOAD_FAILED (${res.status})`);
     (err as any).status = res.status;
     throw err;
   }
-  return { run: data.run as AutopilotRunRow, scenes: (data.scenes ?? []) as AutopilotSceneRow[] };
+  return { run: data.run as ProductionRunRow, scenes: (data.scenes ?? []) as ProductionSceneRow[] };
 };
 
 // ── Per-scene video job queue ────────────────────────────────────────────────────
 /** Seed one pending row per scene at video-stage entry. Idempotent — re-seed is safe. */
 export const seedScenes = (runId: string, sceneCount: number): Promise<void> =>
-  post('/api/autopilot/advance', { action: 'seed', runId, sceneCount }).then(() => undefined);
+  post('/api/producer/advance', { action: 'seed', runId, sceneCount }).then(() => undefined);
 
 /**
  * Atomically try to claim a scene for submission. `claimed:true` means THIS caller owns
@@ -122,21 +122,21 @@ export const seedScenes = (runId: string, sceneCount: number): Promise<void> =>
 export const claimScene = (
   runId: string,
   sceneIdx: number
-): Promise<{ claimed: boolean; scene: AutopilotSceneRow | null }> =>
-  post('/api/autopilot/advance', { action: 'claim', runId, sceneIdx });
+): Promise<{ claimed: boolean; scene: ProductionSceneRow | null }> =>
+  post('/api/producer/advance', { action: 'claim', runId, sceneIdx });
 
 /** Store the provider job handle after a winning claim submits (submitting → rendering). */
 export const recordScene = (runId: string, sceneIdx: number, jobHandle: Record<string, unknown>): Promise<void> =>
-  post('/api/autopilot/advance', { action: 'record', runId, sceneIdx, jobHandle }).then(() => undefined);
+  post('/api/producer/advance', { action: 'record', runId, sceneIdx, jobHandle }).then(() => undefined);
 
 /** Mark a scene done with its rendered urls (rendering → done). */
 export const completeScene = (runId: string, sceneIdx: number, videoUrl: string, audioUrl?: string): Promise<void> =>
-  post('/api/autopilot/advance', { action: 'complete', runId, sceneIdx, videoUrl, audioUrl }).then(() => undefined);
+  post('/api/producer/advance', { action: 'complete', runId, sceneIdx, videoUrl, audioUrl }).then(() => undefined);
 
 /** Flag a scene whose generation failed after retries (surfaced at a reshoot gate). */
 export const flagScene = (runId: string, sceneIdx: number, reason?: string): Promise<void> =>
-  post('/api/autopilot/advance', { action: 'flag', runId, sceneIdx, reason }).then(() => undefined);
+  post('/api/producer/advance', { action: 'flag', runId, sceneIdx, reason }).then(() => undefined);
 
 /** Reshoot: return a flagged/done scene to pending so the claim path re-runs it once. */
 export const requeueScene = (runId: string, sceneIdx: number): Promise<void> =>
-  post('/api/autopilot/advance', { action: 'requeue', runId, sceneIdx }).then(() => undefined);
+  post('/api/producer/advance', { action: 'requeue', runId, sceneIdx }).then(() => undefined);

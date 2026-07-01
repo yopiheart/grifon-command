@@ -5,16 +5,16 @@ import { rateLimitCheck } from '../_lib/rateLimit.js';
 
 // Server-side run-state for the unified One-Shot / Concierge flow (grill 2026-07-01).
 // This endpoint owns the RUN HEADER: create + checkpoint (POST) and resume-read (GET).
-// The per-scene video job queue (the no-double-spend fan-out) lives in autopilot_scenes
-// and is mutated only via api/autopilot/advance.ts.
+// The per-scene video job queue (the no-double-spend fan-out) lives in producer_scenes
+// and is mutated only via api/producer/advance.ts.
 //
 //   GET  ?runId=<id>  → { run, scenes }  (resume-to-true-state; ownership enforced)
 //   POST { runId, ...checkpoint }        → upsert the run header after a stage transition
 //
-// All writes go through the SERVICE ROLE (autopilot_runs is RLS-on/no-policies =
+// All writes go through the SERVICE ROLE (producer_runs is RLS-on/no-policies =
 // default deny), consistent with this app's "all writes via api/" architecture.
 
-// Run state carries the full AutopilotInput + storyboard artifacts (base64/urls) — the
+// Run state carries the full ProductionInput + storyboard artifacts (base64/urls) — the
 // header can legitimately be a few hundred KB. Keep a sane ceiling well under Vercel's
 // default parser but generous enough for the threaded input + stage checkpoint.
 export const config = { api: { bodyParser: { sizeLimit: '2mb' } } };
@@ -50,12 +50,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (!runId) return res.status(400).json({ error: 'missing_run_id' });
 
     const { data: run, error } = await admin
-      .from('autopilot_runs')
+      .from('producer_runs')
       .select('*')
       .eq('run_id', runId)
       .maybeSingle();
     if (error) {
-      console.error('[autopilot/run] select failed:', error.message);
+      console.error('[producer/run] select failed:', error.message);
       return res.status(500).json({ error: 'read_failed' });
     }
     if (!run) return res.status(404).json({ error: 'not_found' });
@@ -63,12 +63,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (run.user_id !== user.id) return res.status(403).json({ error: 'forbidden' });
 
     const { data: scenes, error: sErr } = await admin
-      .from('autopilot_scenes')
+      .from('producer_scenes')
       .select('*')
       .eq('run_id', runId)
       .order('scene_idx', { ascending: true });
     if (sErr) {
-      console.error('[autopilot/run] scenes select failed:', sErr.message);
+      console.error('[producer/run] scenes select failed:', sErr.message);
       return res.status(500).json({ error: 'read_failed' });
     }
     return res.status(200).json({ run, scenes: scenes ?? [] });
@@ -82,7 +82,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
     const { runId, ...patch } = parsed.data;
 
-    const allowed = await rateLimitCheck(`autopilot:run:${user.id}`, RUN_LIMIT, RUN_WINDOW_SECONDS);
+    const allowed = await rateLimitCheck(`producer:run:${user.id}`, RUN_LIMIT, RUN_WINDOW_SECONDS);
     if (!allowed) {
       res.setHeader('Retry-After', '30');
       return res.status(429).json({ error: 'rate_limited', retry_after_seconds: 30 });
@@ -90,12 +90,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // Ownership guard before any write: if the run exists, it must be this user's.
     const { data: existing, error: exErr } = await admin
-      .from('autopilot_runs')
+      .from('producer_runs')
       .select('user_id')
       .eq('run_id', runId)
       .maybeSingle();
     if (exErr) {
-      console.error('[autopilot/run] ownership check failed:', exErr.message);
+      console.error('[producer/run] ownership check failed:', exErr.message);
       return res.status(500).json({ error: 'write_failed' });
     }
     if (existing && existing.user_id !== user.id) {
@@ -114,10 +114,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (patch.error !== undefined) row.error = patch.error;
 
     const { error } = await admin
-      .from('autopilot_runs')
+      .from('producer_runs')
       .upsert(row, { onConflict: 'run_id' });
     if (error) {
-      console.error('[autopilot/run] upsert failed:', error.message);
+      console.error('[producer/run] upsert failed:', error.message);
       return res.status(500).json({ error: 'write_failed' });
     }
     return res.status(200).json({ ok: true });

@@ -5,8 +5,8 @@
 // production rollup input, so it never ships.
 //
 // These are the preserved, no-API preview of Fable 5's original design (recovered from
-// commit 91afea9 on the deleted feat/one-shot-ad-autopilot branch). The LIVE app uses
-// a different One-Shot engine — see services/autopilotOrchestrator.ts for the note.
+// commit 91afea9 on the deleted feat/one-shot-ad-producer branch). The LIVE app uses
+// a different One-Shot engine — see services/producerOrchestrator.ts for the note.
 // Fable 5's RunningScreen is preserved as RunningScreen.fable5.tsx so it doesn't clobber
 // main's current live RunningScreen.tsx (a different, stages-based variant).
 //

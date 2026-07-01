@@ -1,14 +1,14 @@
-// One-Shot / Concierge "autopilot" orchestrator — RUNTIME (slice 3, 2026-07-01 grill).
+// One-Shot / Concierge "producer" orchestrator — RUNTIME (slice 3, 2026-07-01 grill).
 //
 // Rebuilt from Fable 5's recovered blueprint (components/OneShotAd/_fable5-recovered/
-// autopilotOrchestrator.ts) against the CURRENT service signatures, plus the three
+// producerOrchestrator.ts) against the CURRENT service signatures, plus the three
 // things Fable 5 never had:
 //   1. TWO human gates — storyboard-image approval (before the expensive video render)
 //      and the First Cut preset gate — each PARKS the run (status: 'review').
 //   2. Fan-out video rendering with an atomic per-scene claim (exactly-once / no
 //      double-spend), replacing the sequential loop.
 //   3. Server-side run-state, injected via deps.run so a closed tab / lost connection /
-//      different device resumes to true state (see services/autopilotRunService.ts).
+//      different device resumes to true state (see services/producerRunService.ts).
 //
 // Service + run-store calls are INJECTED via `deps` so the state machine (advance /
 // persist→resume / retry-then-flag / gate-park / fan-out-claim) is unit-testable with
@@ -41,7 +41,7 @@ import type {
 } from '../types';
 import type { RenderJob, RunQueueOpts } from '../components/GenerateVideo/RenderAllRunner';
 
-export type AutopilotStageId =
+export type ProductionStageId =
   | 'market_research'
   | 'script'
   | 'storyboard'
@@ -53,8 +53,8 @@ export type AutopilotStageId =
 
 export type StageStatus = 'pending' | 'running' | 'done' | 'failed';
 
-export interface AutopilotStageState {
-  id: AutopilotStageId;
+export interface ProductionStageState {
+  id: ProductionStageId;
   /** Outcome-framed UI label ("Researching your market", not "calling MarketMind"). */
   label: string;
   status: StageStatus;
@@ -66,7 +66,7 @@ export interface AutopilotStageState {
 
 export type SceneStatus = 'pending' | 'rendering' | 'done' | 'flagged';
 
-export interface AutopilotSceneState {
+export interface ProductionSceneState {
   sceneIdx: number;
   status: SceneStatus;
   imageUrl?: string;
@@ -77,7 +77,7 @@ export interface AutopilotSceneState {
 }
 
 /** Everything the intake form collects (3 hero inputs + Customize-drawer defaults). */
-export interface AutopilotInput {
+export interface ProductionInput {
   brandName: string;
   offer: string;
   price: string;
@@ -103,33 +103,33 @@ export interface AutopilotInput {
   forceFreshResearch?: boolean;
 }
 
-export type AutopilotRunStatus = 'running' | 'review' | 'done' | 'error';
+export type ProductionRunStatus = 'running' | 'review' | 'done' | 'error';
 
 /** Which human gate a `review`-status run is parked at. */
-export type AutopilotGate = 'storyboard' | 'first_cut';
+export type ProductionGate = 'storyboard' | 'first_cut';
 
 /** One-Shot (auto research + script) vs Concierge (user brings script + direction). */
-export type AutopilotMode = 'oneshot' | 'concierge';
+export type ProductionMode = 'oneshot' | 'concierge';
 
-export interface AutopilotRun {
+export interface ProductionRun {
   runId: string;
   userId: string;
   createdAt: number;
   updatedAt: number;
-  status: AutopilotRunStatus;
+  status: ProductionRunStatus;
   /** Intake mode — Concierge prefills script/storyboard and skips research + script. */
-  mode?: AutopilotMode;
+  mode?: ProductionMode;
   /** Set when status === 'review' so the container shows the right gate screen. */
-  gate?: AutopilotGate;
+  gate?: ProductionGate;
   /** Flipped true when the user approves the storyboard-image gate; lets the driver
    * cross from scene_images into the expensive video stage. Persisted so resume holds. */
   storyboardApproved?: boolean;
   /** Chosen First Cut edit preset (Decision 8). Absent → AUTO (server rotation). Set by
    * applyPreset() when a Pro user picks IMPACT/CLEAN; the final_render honors it. */
   presetId?: LockablePresetId;
-  input: AutopilotInput;
-  stages: AutopilotStageState[];
-  scenes: AutopilotSceneState[];
+  input: ProductionInput;
+  stages: ProductionStageState[];
+  scenes: ProductionSceneState[];
   // ---- Persisted intermediate artifacts (so resume skips completed stages) ----
   report?: MarketResearchReport;
   clientDetails?: ClientDetails;
@@ -150,7 +150,7 @@ export interface AutopilotRun {
  * signatures (services/geminiService.ts, voiceConsolidationService.ts,
  * finalRenderService.ts, GenerateVideo/RenderAllRunner.ts) on 2026-07-01.
  */
-export interface AutopilotDeps {
+export interface ProducerDeps {
   generateMarketResearch: (input: MarketResearchInput) => Promise<MarketResearchReport>;
   generateAdScript: (
     businessInfo: BusinessInfo,
@@ -186,18 +186,18 @@ export interface AutopilotDeps {
   renderFinalVideo: (req: FinalRenderRequest, onProgress?: (s: 'processing') => void) => Promise<FinalRenderResult>;
   runQueue: (jobs: RenderJob[], opts: RunQueueOpts) => Promise<void>;
   /** Persist after every state change so a reload can resume (local + server). */
-  persist: (run: AutopilotRun) => Promise<void>;
+  persist: (run: ProductionRun) => Promise<void>;
   /** Server-side run-store — the no-double-spend + cross-device-resume half.
    * Injected so the state machine stays testable with mocks. */
-  run: AutopilotRunStore;
+  run: ProducerRunStore;
   /** Market-research cache (optional — absent in tests). */
   getCachedResearch?: (key: string) => Promise<MarketResearchReport | null>;
   putCachedResearch?: (key: string, report: MarketResearchReport) => Promise<void>;
   now: () => number;
 }
 
-/** The subset of services/autopilotRunService the orchestrator drives for fan-out. */
-export interface AutopilotRunStore {
+/** The subset of services/producerRunService the orchestrator drives for fan-out. */
+export interface ProducerRunStore {
   seedScenes: (runId: string, sceneCount: number) => Promise<void>;
   /** Atomically try to own scene submission. `claimed:false` → poll/reuse instead. */
   claimScene: (runId: string, sceneIdx: number) => Promise<{ claimed: boolean; status?: SceneJobStatus; videoUrl?: string | null; audioUrl?: string | null }>;
@@ -208,14 +208,14 @@ export interface AutopilotRunStore {
 
 export type SceneJobStatus = 'pending' | 'submitting' | 'rendering' | 'done' | 'flagged' | 'failed';
 
-export interface AutopilotCallbacks {
+export interface ProducerCallbacks {
   /** Fired after every state mutation so the UI can re-render live. */
-  onUpdate: (run: AutopilotRun) => void;
+  onUpdate: (run: ProductionRun) => void;
   signal: AbortSignal;
   userId: string;
 }
 
-const STAGE_ORDER: { id: AutopilotStageId; label: string }[] = [
+const STAGE_ORDER: { id: ProductionStageId; label: string }[] = [
   { id: 'market_research', label: 'Researching your market' },
   { id: 'script', label: 'Writing your hook' },
   { id: 'storyboard', label: 'Designing your scenes' },
@@ -227,7 +227,7 @@ const STAGE_ORDER: { id: AutopilotStageId; label: string }[] = [
 ];
 
 /** The gate boundary: everything BEFORE 'video' runs, then we park for storyboard approval. */
-const GATE_BEFORE: AutopilotStageId = 'video';
+const GATE_BEFORE: ProductionStageId = 'video';
 
 const MAX_STAGE_ATTEMPTS = 2;
 /** Fan-out concurrency cap. K=5 matches the current per-user hourly video budget until
@@ -239,11 +239,11 @@ const FANOUT_CONCURRENCY = 5;
  * artifacts a Concierge intake already has (script/storyboard), and `opts.doneStages`
  * marks those stages complete so the driver resumes past them.
  */
-export function createAutopilotRun(
-  input: AutopilotInput,
+export function createProductionRun(
+  input: ProductionInput,
   userId: string,
-  opts: { runId?: string; mode?: AutopilotMode; prefill?: Partial<AutopilotRun>; doneStages?: AutopilotStageId[]; now?: () => number } = {}
-): AutopilotRun {
+  opts: { runId?: string; mode?: ProductionMode; prefill?: Partial<ProductionRun>; doneStages?: ProductionStageId[]; now?: () => number } = {}
+): ProductionRun {
   const now = opts.now ?? Date.now;
   const ts = now();
   const done = new Set(opts.doneStages ?? []);
@@ -273,7 +273,7 @@ export function aspectRatioToPlatform(ar: '9:16' | '16:9' | '1:1'): EditTargetPl
 }
 
 /** Project the MarketMind report onto the wizard fields (mirrors App.tsx auto-prefill). */
-export function mapReportToWizard(input: AutopilotInput, report: MarketResearchReport): { clientDetails: ClientDetails; businessInfo: BusinessInfo } {
+export function mapReportToWizard(input: ProductionInput, report: MarketResearchReport): { clientDetails: ClientDetails; businessInfo: BusinessInfo } {
   return {
     clientDetails: { brandName: input.brandName, offer: input.offer },
     businessInfo: {
@@ -376,16 +376,16 @@ async function pooled<T>(items: T[], limit: number, worker: (item: T) => Promise
  * Resumable: skips completed stages, so a reload/reboot continues from the checkpoint.
  * On a resumed run already at a gate, it re-parks idempotently.
  */
-export async function runAutopilot(initial: AutopilotRun, cb: AutopilotCallbacks, deps: AutopilotDeps): Promise<AutopilotRun> {
+export async function runProduction(initial: ProductionRun, cb: ProducerCallbacks, deps: ProducerDeps): Promise<ProductionRun> {
   let run = initial;
 
-  const commit = async (mut: (r: AutopilotRun) => void) => {
+  const commit = async (mut: (r: ProductionRun) => void) => {
     mut(run);
     run.updatedAt = deps.now();
     await deps.persist(run);
     cb.onUpdate(run);
   };
-  const setStage = (id: AutopilotStageId, patch: Partial<AutopilotStageState>) =>
+  const setStage = (id: ProductionStageId, patch: Partial<ProductionStageState>) =>
     commit((r) => {
       const st = r.stages.find((s) => s.id === id);
       if (st) Object.assign(st, patch);
@@ -433,14 +433,14 @@ export async function runAutopilot(initial: AutopilotRun, cb: AutopilotCallbacks
  * Approve the storyboard-image gate and continue into the video render. Called from the
  * gate screen after the user verifies/regenerates the scene images. Idempotent.
  */
-export async function approveStoryboard(run: AutopilotRun, cb: AutopilotCallbacks, deps: AutopilotDeps): Promise<AutopilotRun> {
+export async function approveStoryboard(run: ProductionRun, cb: ProducerCallbacks, deps: ProducerDeps): Promise<ProductionRun> {
   run.storyboardApproved = true;
   run.status = 'running';
   run.gate = undefined;
   run.updatedAt = deps.now();
   await deps.persist(run);
   cb.onUpdate(run);
-  return runAutopilot(run, cb, deps);
+  return runProduction(run, cb, deps);
 }
 
 /**
@@ -449,8 +449,8 @@ export async function approveStoryboard(run: AutopilotRun, cb: AutopilotCallback
  * the (already-rendered) scenes are re-assembled — no video re-generation, no re-spend.
  * Returns the run parked back at the First Cut gate.
  */
-export async function applyPreset(run: AutopilotRun, presetId: LockablePresetId | null, cb: AutopilotCallbacks, deps: AutopilotDeps): Promise<AutopilotRun> {
-  const commit = async (mut: (r: AutopilotRun) => void) => {
+export async function applyPreset(run: ProductionRun, presetId: LockablePresetId | null, cb: ProducerCallbacks, deps: ProducerDeps): Promise<ProductionRun> {
+  const commit = async (mut: (r: ProductionRun) => void) => {
     mut(run);
     run.updatedAt = deps.now();
     await deps.persist(run);
@@ -488,8 +488,8 @@ export async function applyPreset(run: AutopilotRun, presetId: LockablePresetId 
  * that the expensive render hasn't run yet, so "Fix" here must stay cheap (image only).
  * (Contrast reshootScene, which re-runs the full pipeline at the First Cut gate.)
  */
-export async function regenSceneImage(run: AutopilotRun, sceneIdx: number, cb: AutopilotCallbacks, deps: AutopilotDeps): Promise<AutopilotRun> {
-  const commit = async (mut: (r: AutopilotRun) => void) => {
+export async function regenSceneImage(run: ProductionRun, sceneIdx: number, cb: ProducerCallbacks, deps: ProducerDeps): Promise<ProductionRun> {
+  const commit = async (mut: (r: ProductionRun) => void) => {
     mut(run);
     run.updatedAt = deps.now();
     await deps.persist(run);
@@ -545,8 +545,8 @@ export async function regenSceneImage(run: AutopilotRun, sceneIdx: number, cb: A
  * voice for that scene (via the atomic claim so it never double-spends), then re-assembles
  * the final cut. Used for a flagged scene OR a re-roll. Returns the run back in `review`.
  */
-export async function reshootScene(run: AutopilotRun, sceneIdx: number, cb: AutopilotCallbacks, deps: AutopilotDeps): Promise<AutopilotRun> {
-  const commit = async (mut: (r: AutopilotRun) => void) => {
+export async function reshootScene(run: ProductionRun, sceneIdx: number, cb: ProducerCallbacks, deps: ProducerDeps): Promise<ProductionRun> {
+  const commit = async (mut: (r: ProductionRun) => void) => {
     mut(run);
     run.updatedAt = deps.now();
     await deps.persist(run);
@@ -641,7 +641,7 @@ export async function reshootScene(run: AutopilotRun, sceneIdx: number, cb: Auto
 
 /** Render a single scene through the atomic claim (exactly-once). Returns the url, or
  * null if it failed or another driver already owns/finished it (already recorded). */
-async function renderOneScene(run: AutopilotRun, job: RenderJob, deps: AutopilotDeps, cb: AutopilotCallbacks): Promise<string | null> {
+async function renderOneScene(run: ProductionRun, job: RenderJob, deps: ProducerDeps, cb: ProducerCallbacks): Promise<string | null> {
   let claim = await deps.run.claimScene(run.runId, job.sceneIdx);
   if (!claim.claimed) {
     // A scene that's genuinely DONE (has a url) — reuse it, never re-submit.
@@ -677,13 +677,13 @@ async function renderOneScene(run: AutopilotRun, job: RenderJob, deps: Autopilot
 }
 
 async function runStage(
-  id: AutopilotStageId,
-  run: AutopilotRun,
-  deps: AutopilotDeps,
-  cb: AutopilotCallbacks,
-  setStage: (id: AutopilotStageId, patch: Partial<AutopilotStageState>) => Promise<void>
+  id: ProductionStageId,
+  run: ProductionRun,
+  deps: ProducerDeps,
+  cb: ProducerCallbacks,
+  setStage: (id: ProductionStageId, patch: Partial<ProductionStageState>) => Promise<void>
 ): Promise<void> {
-  const commit = async (mut: (r: AutopilotRun) => void) => {
+  const commit = async (mut: (r: ProductionRun) => void) => {
     mut(run);
     run.updatedAt = deps.now();
     await deps.persist(run);

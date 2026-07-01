@@ -2,7 +2,7 @@ import React from 'react';
 import { RefreshCw, Clapperboard, CheckCircle2, AlertTriangle, Film } from 'lucide-react';
 import { GlassPanel } from '../ui/GlassPanel';
 import { ShimmerButton, SceneReveal } from './motion';
-import type { AutopilotRun } from '../../services/autopilotOrchestrator';
+import type { ProductionRun } from '../../services/producerOrchestrator';
 
 /**
  * Storyboard-image approval gate (grill 2026-07-01, locked Decision 1). The PRE-RENDER
@@ -14,7 +14,7 @@ import type { AutopilotRun } from '../../services/autopilotOrchestrator';
  * the video fan-out. A flagged/regenerating image never reaches the render.
  */
 export const StoryboardGateScreen: React.FC<{
-  run: AutopilotRun;
+  run: ProductionRun;
   /** Scene index currently regenerating, or null. */
   regenerating: number | null;
   onRegenScene: (sceneIdx: number) => void;
