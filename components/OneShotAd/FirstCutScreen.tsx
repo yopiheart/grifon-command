@@ -1,8 +1,17 @@
 import React, { useState } from 'react';
-import { Download, RefreshCw, Wand2, Plus, CheckCircle2, AlertTriangle } from 'lucide-react';
+import { Download, RefreshCw, Wand2, Plus, CheckCircle2, AlertTriangle, Lock } from 'lucide-react';
 import { GlassPanel } from '../ui/GlassPanel';
 import { ShimmerButton, SceneReveal } from './motion';
 import type { AutopilotRun } from '../../services/autopilotOrchestrator';
+import type { LockablePresetId } from '../../types';
+
+/** First Cut edit-preset switcher (Decision 8). AUTO = server rotation (free, all tiers);
+ * IMPACT/CLEAN lock a look (Pro+). null = AUTO. */
+const PRESETS: { id: LockablePresetId | null; label: string; pro: boolean }[] = [
+  { id: null, label: 'AUTO', pro: false },
+  { id: 'impact', label: 'IMPACT', pro: true },
+  { id: 'clean', label: 'CLEAN', pro: true },
+];
 
 /** Free "takes" (manual re-rolls of a scene that already worked) per ad before
  * credits kick in. Fixing a FLAGGED scene is always free and never counts. */
@@ -13,7 +22,15 @@ export const FirstCutScreen: React.FC<{
   reshooting: number | null;
   onReshoot: (sceneIdx: number) => void;
   onMakeAnother: () => void;
-}> = ({ run, reshooting, onReshoot, onMakeAnother }) => {
+  /** Re-render the final cut with a chosen preset (null = AUTO). Absent → hide switcher. */
+  onChoosePreset?: (id: LockablePresetId | null) => void;
+  /** Pro+ unlock for IMPACT/CLEAN + raw export. Locked users get the upsell. */
+  proUnlocked?: boolean;
+  onUpgrade?: () => void;
+  /** True while a preset re-render is assembling. */
+  presetBusy?: boolean;
+}> = ({ run, reshooting, onReshoot, onMakeAnother, onChoosePreset, proUnlocked = false, onUpgrade, presetBusy = false }) => {
+  const activePreset = run.presetId ?? null;
   const flagged = run.scenes.filter((s) => s.status === 'flagged').length;
   // Per-run take allowance. Component-local for the seam; the real meter lives in
   // the billing slice (One-Shot is admin-gated/unmetered today).
@@ -122,6 +139,44 @@ export const FirstCutScreen: React.FC<{
             );
           })}
         </div>
+
+        {/* Edit-style switcher (Decision 8) — AUTO free/all-tiers; IMPACT/CLEAN Pro+. */}
+        {onChoosePreset && (
+          <div className="mt-6">
+            <div className="flex items-center gap-2">
+              {PRESETS.map((p) => {
+                const active = activePreset === p.id;
+                const locked = p.pro && !proUnlocked;
+                return (
+                  <button
+                    key={p.label}
+                    onClick={() => {
+                      if (presetBusy || active) return;
+                      if (locked) { onUpgrade?.(); return; }
+                      onChoosePreset(p.id);
+                    }}
+                    disabled={presetBusy}
+                    className={`flex items-center gap-1.5 rounded-full border px-4 py-2 text-[11px] font-mono uppercase tracking-widest transition-colors disabled:opacity-50 ${
+                      active ? 'border-[#FFCC00] bg-[#FFCC00]/15 text-[#FFCC00]' : 'border-white/10 bg-zinc-950 text-zinc-400 hover:border-[#FFCC00]/50 hover:text-white'
+                    }`}
+                  >
+                    {active && <CheckCircle2 className="h-3 w-3" />}
+                    {locked && <Lock className="h-3 w-3" />}
+                    {p.label}
+                  </button>
+                );
+              })}
+              {presetBusy && <RefreshCw className="h-3.5 w-3.5 animate-spin text-[#FFCC00]" />}
+            </div>
+            {/* Quiet Pro nudge — the "you're not locked in" raw-export lever (Decision 4). */}
+            {!proUnlocked && (
+              <p className="mt-2 text-[10px] leading-relaxed text-zinc-500">
+                May sariling editor? <span className="text-zinc-400">Kunin mo yung clean scene clips + voiceover + captions — i-edit mo sa paraan mo.</span>{' '}
+                <button onClick={onUpgrade} className="font-mono uppercase tracking-widest text-[#FFCC00] hover:underline">[PRO]</button>
+              </p>
+            )}
+          </div>
+        )}
 
         {/* Actions */}
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">

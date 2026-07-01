@@ -33,6 +33,7 @@ import type {
   FinalRenderRequest,
   FinalRenderResult,
   FinalRenderScene,
+  LockablePresetId,
   MarketResearchInput,
   StabilityMode,
   StoryboardResponse,
@@ -123,6 +124,9 @@ export interface AutopilotRun {
   /** Flipped true when the user approves the storyboard-image gate; lets the driver
    * cross from scene_images into the expensive video stage. Persisted so resume holds. */
   storyboardApproved?: boolean;
+  /** Chosen First Cut edit preset (Decision 8). Absent → AUTO (server rotation). Set by
+   * applyPreset() when a Pro user picks IMPACT/CLEAN; the final_render honors it. */
+  presetId?: LockablePresetId;
   input: AutopilotInput;
   stages: AutopilotStageState[];
   scenes: AutopilotSceneState[];
@@ -431,6 +435,45 @@ export async function approveStoryboard(run: AutopilotRun, cb: AutopilotCallback
   await deps.persist(run);
   cb.onUpdate(run);
   return runAutopilot(run, cb, deps);
+}
+
+/**
+ * Re-render the final cut with a chosen edit preset (Decision 8, Pro+ lever). AUTO passes
+ * `null` to clear the lock and let the server rotate; IMPACT/CLEAN lock that preset. Only
+ * the (already-rendered) scenes are re-assembled — no video re-generation, no re-spend.
+ * Returns the run parked back at the First Cut gate.
+ */
+export async function applyPreset(run: AutopilotRun, presetId: LockablePresetId | null, cb: AutopilotCallbacks, deps: AutopilotDeps): Promise<AutopilotRun> {
+  const commit = async (mut: (r: AutopilotRun) => void) => {
+    mut(run);
+    run.updatedAt = deps.now();
+    await deps.persist(run);
+    cb.onUpdate(run);
+  };
+  await commit((r) => {
+    r.presetId = presetId ?? undefined;
+    r.status = 'running';
+    r.gate = undefined;
+  });
+  try {
+    await runStage('final_render', run, deps, cb, async (id, patch) => {
+      await commit((r) => {
+        const st = r.stages.find((x) => x.id === id);
+        if (st) Object.assign(st, patch);
+      });
+    });
+    await commit((r) => {
+      r.status = 'review';
+      r.gate = 'first_cut';
+    });
+  } catch (e: any) {
+    await commit((r) => {
+      r.status = 'review';
+      r.gate = 'first_cut';
+      r.error = `preset: ${e?.message ?? 'failed'}`;
+    });
+  }
+  return run;
 }
 
 /**
@@ -793,7 +836,13 @@ async function runStage(
         });
       if (scenes.length === 0) throw new Error('NO_RENDERED_SCENES');
       const music = { style: run.edl?.meta.scriptStyleDetected ?? 'mrbeast', enabled: true as const };
-      const req: FinalRenderRequest = { scenes, aspectRatio: run.input.aspectRatio, music };
+      const req: FinalRenderRequest = {
+        scenes,
+        aspectRatio: run.input.aspectRatio,
+        music,
+        // AUTO (Decision 8) = omit preset so the server rotates; IMPACT/CLEAN lock it.
+        preset: run.presetId ? { id: run.presetId } : undefined,
+      };
       const result = await withRetry(() => deps.renderFinalVideo(req), MAX_STAGE_ATTEMPTS, bump);
       if (result.status === 'failed' || !result.url) throw new Error(result.error ?? 'RENDER_FAILED');
       await commit((r) => {

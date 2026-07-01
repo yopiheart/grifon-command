@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ChevronLeft, AlertTriangle, RotateCw, Loader2 } from 'lucide-react';
-import type { Avatar } from '../../types';
+import type { Avatar, LockablePresetId } from '../../types';
 import { generateMarketResearch, generateAvatarImage } from '../../services/geminiService';
 import type { AutopilotInput as IntakeInput } from '../../services/oneShotIntake';
 import { LaunchScreen } from './LaunchScreen';
@@ -13,6 +13,7 @@ import {
   runAutopilot,
   approveStoryboard,
   reshootScene,
+  applyPreset,
   mapReportToWizard,
   type AutopilotRun,
   type AutopilotInput as OrchInput,
@@ -80,6 +81,7 @@ const OneShotAutopilot: React.FC<Props> = ({ userId, directorUnlocked, onBack, o
   const [phase, setPhase] = useState<'launch' | 'researching' | 'error' | 'resuming'>('resuming');
   const [errMsg, setErrMsg] = useState('');
   const [reshooting, setReshooting] = useState<number | null>(null);
+  const [presetBusy, setPresetBusy] = useState(false);
   const [delivered, setDelivered] = useState(false);
   const abortRef = useRef<AbortController>(new AbortController());
 
@@ -198,6 +200,16 @@ const OneShotAutopilot: React.FC<Props> = ({ userId, directorUnlocked, onBack, o
     }
   };
 
+  const handleChoosePreset = async (id: LockablePresetId | null) => {
+    if (!run || presetBusy) return;
+    setPresetBusy(true);
+    try {
+      await applyPreset(run, id, cb(run), realAutopilotDeps);
+    } finally {
+      setPresetBusy(false);
+    }
+  };
+
   const handleMakeAnother = () => {
     abortRef.current.abort();
     if (typeof localStorage !== 'undefined') localStorage.removeItem(ACTIVE_RUN_KEY);
@@ -249,6 +261,10 @@ const OneShotAutopilot: React.FC<Props> = ({ userId, directorUnlocked, onBack, o
             reshooting={reshooting}
             onReshoot={handleReshoot}
             onMakeAnother={() => { setDelivered(true); handleMakeAnother(); }}
+            onChoosePreset={handleChoosePreset}
+            proUnlocked={directorUnlocked}
+            onUpgrade={onUpgrade}
+            presetBusy={presetBusy}
           />
           <FeedbackWidget active={delivered} module="one_shot_autopilot" />
         </div>
