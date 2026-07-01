@@ -67,7 +67,7 @@ import { RouteVeil, type VeilState } from './components/ui/RouteVeil';
 import { QuotaWallModal } from './components/ui/QuotaWallModal';
 import { quotaWallStore } from './services/quotaWallStore';
 import { useSubscription } from './hooks/useSubscription';
-import { nextTier, planAtLeast, type PlanId } from './utils/planGate';
+import { nextTier, type PlanId } from './utils/planGate';
 import { getSession, setSession, clearSession, type WizardSessionV1 } from './services/wizardSessionStore';
 
 const TOTAL_STEPS = 8;
@@ -1415,11 +1415,13 @@ const App: React.FC = () => {
     const oneShotSinks: OneShotSinks = {
       setScript, setFinalScript, setAvatar, setStoryboard, setThumbnailUrl, setVideoPrompts, setLanguage,
     };
-    // Slice 4 — Director (step-by-step) mode is a Pro+ unlock ("control every
-    // scene"). Free/Starter ride the one-shot only. `grifon_dev_unlock` flips it
-    // on for dev/Neil on any account (console: localStorage.grifon_dev_unlock='1').
+    // Director (step-by-step) mode is ADMIN/DEV-ONLY — the 8-step wizard is Neil's
+    // control cockpit, not a user surface. All paying tiers ride One-Shot (Free/
+    // Starter/Pro) or Concierge (Business); the wizard steps 1–7 never render for
+    // them. `grifon_dev_unlock` is the only key that opens it
+    // (console: localStorage.grifon_dev_unlock='1').
     const devUnlock = typeof localStorage !== 'undefined' && localStorage.getItem('grifon_dev_unlock') === '1';
-    const directorUnlocked = devUnlock || planAtLeast(plan_id, 'pro');
+    const directorUnlocked = devUnlock;
 
     if (directorMode === 'expert') {
       // Expert Mode — "Director's Cut" (bring-your-own-script). Additive door,
