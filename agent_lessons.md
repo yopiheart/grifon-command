@@ -913,3 +913,28 @@ re-add the "Fable burns ≈2x Opus" budgeting math until then.
 **Context:** After the OTP smoke test passed, opened a PR. `gh` wasn't installed (defreezer wipes it). Installed it via `scripts/restore-gh.ps1`, then tried to create the PR from the Bash/PowerShell tools.
 **What went wrong:** Two walls, and one wrong conclusion that wasted a detour. (1) `gh` isn't on PATH and isn't installed at all after a defreeze — had to download it. (2) Neil authorized the device code in the BROWSER but the terminal `gh auth login` command never completed (the "Press Enter to open…" step wasn't finished / got interrupted), so the token was never written to the keyring. `gh auth status` from BOTH Neil's terminal and the Claude tool then said "not logged in." I misread this as "the sandbox can't read the Windows keyring" and built a whole GH_TOKEN-at-User-scope workaround. Once Neil re-ran `gh auth login` and let it run to the "✓ Logged in as yopiheart" line, `gh auth status` from the Claude tool immediately showed `✓ Logged in … (keyring)` and `gh pr list` worked — proving the sandbox CAN read the keyring. The GH_TOKEN detour was unnecessary; worse, a botched paste stored a 1-char GH_TOKEN that then *blocked* the working keyring auth (gh prefers GH_TOKEN over keyring) until cleared. (Also: pasting a secret into a PowerShell `Read-Host -AsSecureString` prompt is fragile in the VS Code terminal — it often captures only the first char, shown as a single `*`.)
 **Lesson:** The real failure mode is incomplete auth, not keyring access. The `gh auth login` device flow only writes the token AFTER the terminal command confirms — you must press Enter at "Press Enter to open…", authorize in the browser, and WAIT for "✓ Logged in as <user>". Browser-authorize alone does nothing. Once that completes, Claude's sandboxed tools read the keyring fine and can drive gh directly (`gh pr create/merge/list`) — no token needed. Per-session ritual after defreeze: run `scripts/restore-gh.ps1` (reinstalls gh) then `gh auth login` (complete the device flow). Gotchas to remember: (a) fresh tool shells don't inherit `$env:` vars set mid-session via `SetEnvironmentVariable(…,'User')` — `$env:X` reads empty, though `[Environment]::GetEnvironmentVariable('X','User')` reads it from the registry; (b) if a GH_TOKEN env var is set, gh uses it *instead of* the keyring, so a bad/garbage GH_TOKEN silently breaks an otherwise-good keyring login — clear it. Plain `git push` already works from Claude's side via cached creds; only PR/merge ops depend on gh auth.
+
+### 2026-07-01 — Fable 5 restored; pinned back per the 2026-06-13 instruction, now as a per-role allocation (Fable plan/verify, Opus execute, Sonnet smoke)
+**Context:** Anthropic restored Fable 5 access with a promo until Jul 7, 2026: up to 50% of
+weekly plan limits on Fable, then usage credits — and Fable draws down much faster than
+Opus 4.8. The 2026-06-13 entry said "revert the pin to `claude-fable-5` when access is
+restored"; Neil wanted the revert but with the limited Fable budget spent only where its
+quality matters.
+**What shipped:** A three-role allocation, all in repo files so it survives the defreezer:
+`.claude/settings.json` re-pinned to `claude-fable-5` (main loop = planning, orchestration,
+verification); a NEW `code-executor` subagent (`.claude/agents/code-executor.md`, pinned
+`claude-opus-4-8`) that implements approved non-trivial plans from a full brief — Neil chose
+"substantial work only": multi-file/multi-step implementation delegates, one-liners/docs/config
+stay in the main loop where delegation overhead costs more than it saves; `smoke-tester`
+re-pinned from Opus to `claude-sonnet-5` (Playwright was ~50% of historical usage — biggest
+single saver). CLAUDE.md usage-budget bullet rewritten; a dated Jul 7 re-evaluation entry
+added to `workflows/session_reminders.md` (remind + decide with Neil, not auto-revert).
+**Lesson:** There is NO harness mechanism for "Fable for planning, Opus for execution"
+auto-switching — no `fableplan` composite (only `opusplan` exists, Opus→Sonnet), and hooks
+cannot change the model. The only supported auto-routing is main-loop pin + per-subagent
+`model:` frontmatter + description-driven delegation, which means the executor hand-off is
+enforced by the CLAUDE.md hard rule, not the harness — a session that ignores the rule
+silently burns Fable on code-writing. Also: an executor subagent starts with ZERO
+conversation context; the delegation brief must carry the plan (or its file path), scope,
+and acceptance criteria, or the Opus agent guesses. Quality-first still holds: this is
+role-routing, not a downgrade — verification stays on the smartest model.

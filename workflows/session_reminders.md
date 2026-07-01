@@ -20,3 +20,13 @@ shell command), so this doc is the restore mechanism: paste the command to re-ar
 > The SessionStart hook ([.claude/hooks/session-start.sh](../.claude/hooks/session-start.sh))
 > surfaces every `/loop` line in this file automatically at session start — keep new
 > re-arm commands on their own line starting with `/loop` so the hook picks them up.
+
+## Dated: on/after Jul 7, 2026 — Fable 5 promo ends, re-evaluate the model pin
+
+The 50%-of-weekly-limits Fable 5 promo expires **Jul 7, 2026**; after that Fable draws
+down at its full (much-faster-than-Opus) rate. On or after that date: check `/usage` with
+Neil and decide **together** whether to keep `"model": "claude-fable-5"` in
+`.claude/settings.json` or re-pin `claude-opus-4-8` — then update the CLAUDE.md
+usage-budget bullet to match. The `code-executor` (Opus 4.8) and `smoke-tester`
+(Sonnet 5) frontmatter pins stay regardless — they save tokens at zero quality cost.
+Delete this section once decided.
