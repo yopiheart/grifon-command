@@ -11,6 +11,43 @@ Created 2026-07-01. Owner: Neil. Related: [concierge_director_plan.md](concierge
 
 ---
 
+## SHIPPED 2026-07-01 (autonomous build session, branch `feat/oneshot-firstcut-recovery`)
+The grill locked the design (see the grill decisions below + the plan file
+`~/.claude/plans/origin-feat-oneshot-firstcut-recovery-gr-sunny-hedgehog.md`), then 6 of
+7 slices were built, each committed + pushed, **build + tsc + all 376 unit tests green**:
+- **Slice 1** — server run-state + no-double-spend spine: `supabase/autopilot_runs.sql`
+  (run header + per-scene job queue + atomic `autopilot_claim_scene` RPC),
+  `api/autopilot/run.ts` (checkpoint + resume-read), `api/autopilot/advance.ts`
+  (seed/claim/record/complete/flag/requeue), `services/autopilotRunService.ts`.
+- **Slice 3** — `services/autopilotOrchestrator.ts` RUNTIME (was types-only): rebuilt from
+  Fable 5's blueprint against current signatures + **two gates** (storyboard-image + First
+  Cut), **fan-out video with atomic claim**, persist-after-every-transition, `applyPreset`.
+  `services/autopilotDeps.ts` wires the real services.
+- **Slice 5** — `components/OneShotAd/StoryboardGateScreen.tsx` (pre-render cost gate).
+- **Slice 4 + 7** — `components/OneShotAd/OneShotAutopilot.tsx` (research → avatar cast →
+  runAutopilot → Running → storyboard gate → First Cut, resume-on-mount from server) +
+  FeedbackWidget after delivery. Mounted **opt-in behind `?osaEngine=autopilot`** so the
+  live useOneShotGeneration→Step 8 path stays intact. (`?osaEngine=steps` forces legacy.)
+- **Slice 6** — First Cut **AUTO/IMPACT/CLEAN** switcher (uses existing
+  `FinalRenderRequest.preset`; IMPACT/CLEAN Pro+; raw-export BUNDLE deferred).
+
+**STILL OPEN (need Neil):**
+1. **Slice 2 — rate-limit re-scope** (`api/gemini/video.ts` `VIDEO_LIMIT` per-clip →
+   per-ad-launch). TUNED infra — **your explicit sign-off gate**, deliberately untouched.
+   Until done, a >5-scene fan-out self-throttles on the hourly wall.
+2. **Live SIGLA smoke** (Concierge · Product · Auto-cast · 9:16 · Taglish) — needs API
+   spend + your eyeball via the `smoke-tester` subagent. Drive it with `?osaEngine=autopilot`.
+   MUST also run the **resume gate** (kill tab + drop net at each stage → exact-place
+   resume) and the **no-double-spend gate** (each scene fires one provider call; `video_ads`
+   metered once) — both are hard pass/fail.
+3. **Concierge wiring** — the container currently drives One-Shot (auto research+script);
+   Concierge-via-ExpertMode reuses the SAME orchestrator (`createAutopilotRun` already
+   supports `mode`+`prefill`+`doneStages`) — wire ExpertMode's script+direction into a run.
+4. **Raw-export bundle** (Pro+) — clean scene clips + VO + SRT + thumbnail + project file
+   zip. Per-clip trim already runs in `buildScene()`; needs the export path + zip.
+5. **Reshoot credit-charge** — 2-free-takes UX ships; paid take is flag-gated free (defer).
+6. **Apply `supabase/autopilot_runs.sql`** in the Supabase SQL editor before the smoke.
+
 ## Status as of 2026-07-01 (what's DONE)
 - **Fable 5's One-Shot Running + First Cut screens RECOVERED** and previewable with
   **zero API** at `/one-shot-flow-preview.html` (`npm run dev`). On branch
