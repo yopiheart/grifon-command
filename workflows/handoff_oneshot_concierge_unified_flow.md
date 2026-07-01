@@ -44,18 +44,31 @@ through every stage**: market research → script → storyboard → thumbnail �
 final edit. Fable 5's orchestrator threads one `AutopilotInput` through all stages by design →
 **this is the reason to revive/adapt that engine** (it structurally guarantees nothing is dropped).
 
-## Open decisions to settle in `/grill-me` BEFORE building
-1. **Storyboard approval** — its own screen, or a gate-state on the Running screen?
-2. **Engine** — revive/adapt Fable 5's orchestrator (threads inputs, resumable, per-scene reshoot,
-   in-flow final render — but abandoned; won't compile against current `main` as-is) **vs** extend the
-   current `useOneShotGeneration` (works today, but hands to Step 8, no in-flow final render).
-   *Lean: adapt Fable 5's — it's purpose-built for this exact flow.*
-3. **Two reshoot moments?** Pre-render storyboard-image approval (step 3) AND First Cut clip reshoot
-   (step 5) — keep both, or collapse to one?
-4. **Concierge pipeline variant** — skip `market_research`, inject the user's custom script + per-scene
-   direction; everything downstream identical to One-Shot.
-5. **Reshoot economics** — Fable 5 had "2 free takes, then 1 credit." In scope now or later?
-6. **Review/feedback placement** — inside First Cut vs a post-download step (tie to the tip-feedback branch).
+## Decisions — LOCKED (Neil, 2026-07-01)
+1. **Storyboard approval = a dedicated approve STEP/screen** (reads as a real gate, not a loading pause).
+2. **Engine = adapt Fable 5's orchestrator** (threads every input through every stage; in-flow final render).
+   It's purpose-built for the "acknowledged at every stage" requirement.
+3. **Two reshoot moments — KEEP BOTH:** pre-render storyboard-image approval (step 3) + First Cut
+   rendered-clip reshoot (step 5).
+4. **Final-edit choice lives at FIRST CUT (delivery), NOT intake / NOT Running.** (CMO call.)
+   - Default = **AUTO** edit, already assembled + auto-playing (dream outcome delivered instantly).
+   - Options: preset switcher (**AUTO / IMPACT / CLEAN**) + **"Don't edit — download raw clips."**
+   - **Tier:** finished AUTO ad = **all tiers** (the bait; never gate the wow / Free→Pro is priority #2);
+     **preset choice + raw-project export = Pro+** lever.
+   - **Raw export = a BUNDLE:** per-scene clips + voiceover track + captions/SRT + thumbnail + edit
+     project file ("full project files, hindi lang video").
+   - **Positioning:** *"Hindi ka naka-kulong / you're not locked in"* — kills Bryan's #1 objection. Placement
+     rationale: Launch = abstract friction pre-payoff; Running = don't interrupt the magic; First Cut =
+     informed + emotionally bought in = highest-satisfaction moment = best spot to plant the Pro nudge.
+   - First Cut copy: gold **DOWNLOAD AD**; row `AUTO ✓ · IMPACT · CLEAN`; quiet Pro line
+     *"May sariling editor? Kunin mo yung raw clips + voiceover + captions — i-edit mo sa paraan mo."* `[PRO]`
+
+## Still open for `/grill-me`
+- **Concierge pipeline variant** — skip `market_research`, inject the user's custom script + per-scene
+  direction; everything downstream identical to One-Shot.
+- **Reshoot economics** — Fable 5 had "2 free takes, then 1 credit." In scope now or later?
+- **Presets** — final list (AUTO / IMPACT / CLEAN / HYPE?) and whether IMPACT/CLEAN gate to Pro or stay free.
+- **Review/feedback wiring** — tie to the `post-delivery-tip-feedback` branch; exact trigger point in/after First Cut.
 
 ## After the flow is built: the SIGLA smoke test (already scoped this session)
 - **Mode:** Concierge · **Niche:** Product · **Avatar:** Auto-cast · 9:16 · Taglish.
