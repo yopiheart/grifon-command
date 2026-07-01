@@ -61,7 +61,18 @@ final edit. Fable 5's orchestrator threads one `AutopilotInput` through all stag
      rationale: Launch = abstract friction pre-payoff; Running = don't interrupt the magic; First Cut =
      informed + emotionally bought in = highest-satisfaction moment = best spot to plant the Pro nudge.
    - First Cut copy: gold **DOWNLOAD AD**; row `AUTO ✓ · IMPACT · CLEAN`; quiet Pro line
-     *"May sariling editor? Kunin mo yung raw clips + voiceover + captions — i-edit mo sa paraan mo."* `[PRO]`
+     *"May sariling editor? Kunin mo yung clean scene clips + voiceover + captions — i-edit mo sa paraan mo."* `[PRO]`
+5. **Clean atoms in, styled ad out — Bryan NEVER sees a flawed clip.** (Neil + CMO call.)
+   - **Dead air → auto-trim PER SCENE, before First Cut.** Today's forced-alignment dead-air trim
+     (`api/_lib/renderFfmpeg.ts`, VO end, never mid-word) runs at the final concat — move it to run PER
+     CLIP so every scene in the First Cut film-strip AND every exported clip is already lip-synced + tight.
+   - **Morphs / melts / artifacts → caught by the RESHOOT gates, not trimming** (you can't trim a bad
+     generation). Storyboard approval (image-level) + First Cut flagged-clip reshoot; Fable 5's engine
+     already auto-flags failed scenes. Nothing flawed ever reaches delivery/export.
+   - **Rename "raw clips" → "clean scene clips / your footage."** Export = trimmed, lip-synced, flaw-free
+     clips (UN-styled) + voiceover + captions/SRT + thumbnail + project file. The AI editor adds the STYLE
+     (stitch + transitions + SFX + music + overlay text + auto-captions + animations) per preset.
+   - Split: **per-scene stage = clean atoms; AI-editor stage = composition/style.**
 
 ## Still open for `/grill-me`
 - **Concierge pipeline variant** — skip `market_research`, inject the user's custom script + per-scene
