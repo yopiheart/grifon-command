@@ -13,6 +13,7 @@ import {
   runAutopilot,
   approveStoryboard,
   reshootScene,
+  regenSceneImage,
   applyPreset,
   mapReportToWizard,
   type AutopilotRun,
@@ -40,6 +41,11 @@ function fromRow(row: AutopilotRunRow, scenes: AutopilotSceneRow[]): AutopilotRu
   const sceneState =
     art.scenes ??
     scenes.map((s) => ({ sceneIdx: s.scene_idx, status: s.status === 'submitting' ? 'rendering' : s.status, videoUrl: s.video_url ?? undefined, audioUrl: s.audio_url ?? undefined, imageUrl: s.image_url ?? undefined }));
+  // M1 fix: `storyboardApproved` rides a best-effort checkpoint that can drop. Derive it
+  // from stage progress too — if any post-gate stage has started, the gate was crossed —
+  // so a dropped flag can't bounce a mid-render run back to the storyboard gate.
+  const stagesArr = ((row.stages as any[]) ?? []);
+  const impliedApproved = stagesArr.some((s) => ['video', 'voices', 'edl', 'final_render'].includes(s?.id) && s?.status && s.status !== 'pending');
   return {
     runId: row.run_id,
     userId: row.user_id,
@@ -48,7 +54,7 @@ function fromRow(row: AutopilotRunRow, scenes: AutopilotSceneRow[]): AutopilotRu
     status: row.status,
     mode: row.mode,
     gate: art.gate ?? undefined,
-    storyboardApproved: art.storyboardApproved ?? false,
+    storyboardApproved: art.storyboardApproved || impliedApproved,
     input: row.input as unknown as OrchInput,
     stages: (row.stages as any[]) ?? [],
     scenes: sceneState,
@@ -84,8 +90,13 @@ const OneShotAutopilot: React.FC<Props> = ({ userId, directorUnlocked, onBack, o
   const [presetBusy, setPresetBusy] = useState(false);
   const [delivered, setDelivered] = useState(false);
   const abortRef = useRef<AbortController>(new AbortController());
+  // Guards the resume auto-run so React 18 StrictMode's mount→cleanup→mount cycle can't
+  // double-drive (or abort) a resumed run.
+  const resumeStarted = useRef(false);
 
-  const cb = (r: AutopilotRun) => ({ onUpdate: setRun, signal: abortRef.current.signal, userId: r.userId });
+  // C1 fix: the orchestrator mutates its `run` object IN PLACE, so we MUST hand React a
+  // fresh reference or useState bails the re-render (Object.is) and the UI freezes.
+  const cb = (r: AutopilotRun) => ({ onUpdate: (u: AutopilotRun) => setRun({ ...u }), signal: abortRef.current.signal, userId: r.userId });
 
   // Resume-on-mount: if a run id is remembered, pull its true state from the server and
   // drop the user exactly where they were (mid-run, at a gate, or at First Cut).
@@ -101,14 +112,18 @@ const OneShotAutopilot: React.FC<Props> = ({ userId, directorUnlocked, onBack, o
         setRun(resumed);
         setPhase('launch'); // phase now derives from run.status below
         // If the run was interrupted mid-stage (running), continue the loop; a parked
-        // 'review' run just shows its gate and waits for a human tap.
-        if (resumed.status === 'running') void runAutopilot(resumed, cb(resumed), realAutopilotDeps);
+        // 'review' run just shows its gate and waits for a human tap. resumeStarted guards
+        // StrictMode's double-mount so we drive the loop exactly once, on a fresh signal.
+        if (resumed.status === 'running' && !resumeStarted.current) {
+          resumeStarted.current = true;
+          abortRef.current = new AbortController();
+          void runAutopilot(resumed, cb(resumed), realAutopilotDeps);
+        }
       })
       .catch(() => alive && setPhase('launch'));
-    return () => {
-      alive = false;
-      abortRef.current.abort();
-    };
+    // NOTE: no abort() here — StrictMode's synchronous cleanup would otherwise kill the
+    // resumed run before its second mount. Explicit teardown lives in handleMakeAnother.
+    return () => { alive = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -190,6 +205,18 @@ const OneShotAutopilot: React.FC<Props> = ({ userId, directorUnlocked, onBack, o
     await approveStoryboard(run, cb(run), realAutopilotDeps);
   };
 
+  // Storyboard gate: image-ONLY regen (cheap — the cost gate hasn't fired yet).
+  const handleRegenImage = async (sceneIdx: number) => {
+    if (!run || reshooting !== null) return;
+    setReshooting(sceneIdx);
+    try {
+      await regenSceneImage(run, sceneIdx, cb(run), realAutopilotDeps);
+    } finally {
+      setReshooting(null);
+    }
+  };
+
+  // First Cut: full reshoot (image → video → voice → re-assemble) for a rendered clip.
   const handleReshoot = async (sceneIdx: number) => {
     if (!run || reshooting !== null) return;
     setReshooting(sceneIdx);
@@ -212,6 +239,7 @@ const OneShotAutopilot: React.FC<Props> = ({ userId, directorUnlocked, onBack, o
 
   const handleMakeAnother = () => {
     abortRef.current.abort();
+    resumeStarted.current = false;
     if (typeof localStorage !== 'undefined') localStorage.removeItem(ACTIVE_RUN_KEY);
     setRun(null);
     setDelivered(false);
@@ -248,7 +276,7 @@ const OneShotAutopilot: React.FC<Props> = ({ userId, directorUnlocked, onBack, o
       return (
         <div className="relative">
           {BackBar}
-          <StoryboardGateScreen run={run} regenerating={reshooting} onRegenScene={handleReshoot} onApprove={handleApprove} />
+          <StoryboardGateScreen run={run} regenerating={reshooting} onRegenScene={handleRegenImage} onApprove={handleApprove} />
         </div>
       );
     }

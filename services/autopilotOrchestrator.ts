@@ -347,13 +347,19 @@ async function withRetry<T>(fn: () => Promise<T>, attempts: number, onAttempt?: 
   throw lastErr;
 }
 
-/** Bounded-concurrency map — the fan-out primitive (K in-flight at a time). */
+/** Bounded-concurrency map — the fan-out primitive (K in-flight at a time). One item's
+ * failure flags that item (inside the worker) and NEVER tears down the pool: a transient
+ * RPC blip on scene 3 must not abandon scenes 4-6 that already rendered. */
 async function pooled<T>(items: T[], limit: number, worker: (item: T) => Promise<void>): Promise<void> {
   let cursor = 0;
   const runners = Array.from({ length: Math.min(limit, items.length) }, async () => {
     while (cursor < items.length) {
       const idx = cursor++;
-      await worker(items[idx]);
+      try {
+        await worker(items[idx]);
+      } catch {
+        /* isolated per-item failure — the worker already flags the scene; keep the pool alive */
+      }
     }
   });
   await Promise.all(runners);
@@ -477,6 +483,64 @@ export async function applyPreset(run: AutopilotRun, presetId: LockablePresetId 
 }
 
 /**
+ * Regenerate a single scene's IMAGE ONLY — used by the storyboard gate (pre-render).
+ * Critically it does NOT touch video/voice/final_render: the whole point of the gate is
+ * that the expensive render hasn't run yet, so "Fix" here must stay cheap (image only).
+ * (Contrast reshootScene, which re-runs the full pipeline at the First Cut gate.)
+ */
+export async function regenSceneImage(run: AutopilotRun, sceneIdx: number, cb: AutopilotCallbacks, deps: AutopilotDeps): Promise<AutopilotRun> {
+  const commit = async (mut: (r: AutopilotRun) => void) => {
+    mut(run);
+    run.updatedAt = deps.now();
+    await deps.persist(run);
+    cb.onUpdate(run);
+  };
+  const scene = run.storyboard?.[sceneIdx];
+  const sc = run.scenes.find((s) => s.sceneIdx === sceneIdx);
+  if (!scene || !sc) return run;
+
+  await commit((r) => {
+    const s = r.scenes.find((x) => x.sceneIdx === sceneIdx)!;
+    s.status = 'rendering';
+    s.flaggedReason = undefined;
+  });
+  try {
+    const prompt = scene.imagePrompt || scene.startFramePrompt || scene.sceneDescription;
+    const imageUrl = await withRetry(
+      () =>
+        deps.generateSceneImage(
+          prompt,
+          run.input.aspectRatio === '1:1' ? '1:1' : run.input.aspectRatio,
+          '1K',
+          { avatarUrl: run.input.avatar.url, productUrl: run.input.heroImageBase64 },
+          run.input.avatar.ethnicity,
+          [],
+          run.input.scriptType,
+          run.input.productDescription,
+          run.input.productName,
+          1, // fresh variation
+          scene.referenceImage ?? 'avatar'
+        ),
+      MAX_STAGE_ATTEMPTS
+    );
+    await commit((r) => {
+      if (r.storyboard) r.storyboard[sceneIdx].imageUrl = imageUrl;
+      const s = r.scenes.find((x) => x.sceneIdx === sceneIdx)!;
+      s.imageUrl = imageUrl;
+      s.status = 'pending'; // image ready, video not started — back to gate-ready
+      s.flaggedReason = undefined;
+    });
+  } catch (e: any) {
+    await commit((r) => {
+      const s = r.scenes.find((x) => x.sceneIdx === sceneIdx)!;
+      s.status = 'flagged';
+      s.flaggedReason = `image: ${e?.message ?? 'failed'}`;
+    });
+  }
+  return run;
+}
+
+/**
  * Reshoot a single scene from the First Cut (one-tap regenerate). Re-runs image → video →
  * voice for that scene (via the atomic claim so it never double-spends), then re-assembles
  * the final cut. Used for a flagged scene OR a re-roll. Returns the run back in `review`.
@@ -578,10 +642,17 @@ export async function reshootScene(run: AutopilotRun, sceneIdx: number, cb: Auto
 /** Render a single scene through the atomic claim (exactly-once). Returns the url, or
  * null if it failed or another driver already owns/finished it (already recorded). */
 async function renderOneScene(run: AutopilotRun, job: RenderJob, deps: AutopilotDeps, cb: AutopilotCallbacks): Promise<string | null> {
-  const claim = await deps.run.claimScene(run.runId, job.sceneIdx);
+  let claim = await deps.run.claimScene(run.runId, job.sceneIdx);
   if (!claim.claimed) {
-    // Someone else owns/finished it — reuse their result, never re-submit.
-    return claim.videoUrl ?? null;
+    // A scene that's genuinely DONE (has a url) — reuse it, never re-submit.
+    if (claim.videoUrl) return claim.videoUrl;
+    // Otherwise it's ORPHANED: an interrupted run left it 'submitting' with no result
+    // (the tab died mid-render). In single-driver Model A, reclaim + re-render so the
+    // scene never gets stuck/wrongly-flagged on resume. (Cost: at most one extra provider
+    // render for that scene on a crash — the user's video_ad credit is deduped by runId.)
+    await deps.run.requeueScene(run.runId, job.sceneIdx);
+    claim = await deps.run.claimScene(run.runId, job.sceneIdx);
+    if (!claim.claimed) return claim.videoUrl ?? null; // still can't own it → leave to the owner
   }
   const resolution = run.input.resolution ?? '720p';
   const fallbackModel = routeModel('talking', 'Veo_3.1_Lite', undefined, resolution);
