@@ -78,8 +78,26 @@ machine, Concierge `mode`/`prefill` unvalidated.
    - **`supabase/producer_runs.sql` changed again** — `end_frame_url` column (already applied
      to the live DB via migration 2026-07-03). Preview harness gained a **Storyboard Gate tab**
      (`/one-shot-flow-preview.html`) — eyeballed ✓. 407 unit tests + build + bundle-leak green.
-   - **Next paid step (HOLD for Neil's GO): a GATE-STOP run** — intake → storyboard gate,
-     eyeball morph frames, do NOT click FILM IT (~₱20 images, zero video spend).
+   - **Next paid step — PARKED PENDING 2026-07-03 (Neil: "mark it as pending for now").**
+     The GATE-STOP run. Spec below is ALREADY DRAFTED and shown to Neil; preview design
+     approved ("this is fine for me"), but the paid fire itself was NOT GO'd — re-confirm
+     GO before running. Zero-API preview of the gate lives at `/one-shot-flow-preview.html`
+     (Storyboard Gate tab).
+     ```
+     TEST SPEC — Gate-stop run (SIGLA, images only)        drafted 2026-07-03
+     1 PURPOSE   Real morph frames through the fixed pipeline: scene-1 START→END pair at
+                 the gate; checkpoints small/healthy (no write_failed/timeout in dev log);
+                 images on producer_scenes rows. DO NOT CLICK "FILM IT" — park at gate.
+     2 MODULE    One-Shot producer, ?osaEngine=producer, module tile entry.
+     3 INTAKE    SIGLA · calamansi-ginger-honey shot · ₱249 · Product · 9:16 · Taglish ·
+                 auto-cast · UGC/Testimonial.
+     4 ASSETS    Codex SIGLA hero (.tmp/sigla-producer/hero.png; regenerate via codex-image
+                 if defreezer-wiped — prompt in this file's SIGLA section).
+     5 EVIDENCE  Gate screenshots (Neil eyeballs morph pair + floating-hand);
+                 DB: image_url/end_frame_url populated; server log clean.
+     6 COST      ~9 image gens (~₱20) + research/script text. ZERO video, ZERO Kling.
+     7 CLEANUP   Run parked at gate; delete rows after inspection.
+     ```
 2b. **Live producer smoke — ATTEMPTED 2026-07-02, BLOCKED on Gemini billing (then paid); resume HERE.**
    Neil-approved TEST SPEC filled (One-Shot producer, SIGLA, Product, auto-cast, 9:16, Taglish,
    Codex-generated SIGLA hero, METERED). Ran it end-to-end via smoke-tester: **sign-in, producer
