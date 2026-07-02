@@ -14,6 +14,8 @@ import {
 export interface SidebarNavItem {
   id: string;
   label: string;
+  /** One-line outcome descriptor from the module registry — surfaced as the row tooltip. */
+  descriptor?: string;
   icon: LucideIcon;
   hue: string;
   /** Plan word shown on locked rows (e.g. 'starter'); rendered via T_LABEL caps. */
@@ -140,11 +142,16 @@ const SidebarBody: React.FC<SidebarBodyProps> = ({
             {group.items.map((item) => {
               const active = activeModule === item.id;
               const Icon = item.icon;
+              // Expanded rows already show the label, so the tooltip carries the outcome
+              // descriptor; collapsed rows get label — descriptor (— tier when locked).
+              const tooltip = expanded
+                ? item.descriptor
+                : [item.label, item.descriptor, item.locked ? item.tier : undefined].filter(Boolean).join(' — ');
               return (
                 <button
                   key={item.id}
                   onClick={() => onSelect(item.id)}
-                  title={!expanded ? (item.locked && item.tier ? `${item.label} — ${item.tier}` : item.label) : undefined}
+                  title={tooltip || undefined}
                   className={`relative w-full flex items-center h-11 ${R_CTRL} transition-all group ${expanded ? 'gap-3 px-3 justify-start' : 'justify-center'} ${active ? ACTIVE_ROW : ROW_HOVER}`}
                 >
                   {active && <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 bg-[#FFCC00] rounded-r-full" />}

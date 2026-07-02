@@ -255,6 +255,14 @@ automate in Concierge.
    on a lower tier as a fallback?
 6. **Auto-bridge scope:** does Concierge auto-run CaptionHeadline at the end
    (close Bridge #2)? Does it auto-inject autopsy hooks (close Bridge #1)?
+7. **Persona identity for the Director brain.** Per the module-naming decision
+   (2026-07-03, plan `is-changing-my-module-deep-swan`): modules KEEP their
+   place/unit codenames (Recon, War Room, Render Bay…) — the "AI employee"
+   metaphor's endorsed home is HERE, as a named persona/character for Director AI
+   + Concierge (the agentic modes are already persona-shaped), plus marketing-layer
+   "your AI studio crew" copy via `grifon-cmo`. Settle the persona's name/character
+   via `grill-me` + `grifon-cmo` when this work resumes — do NOT rename modules
+   to job titles instead.
 
 ---
 
