@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<!-- DEV-ONLY: visual harness for the One-Shot Ad FLOW screens (Running + First Cut)
+     mounted with mock data — zero API calls. Served by `npm run dev` at
+     /one-shot-flow-preview.html. Not part of the production build (only index.html
+     is a rollup input). Rebuilt Path B after the original was lost with a deleted branch.
+
+     NOTE: this project has NO tailwind.config / postcss.config — Tailwind is loaded at
+     RUNTIME via the Play CDN in index.html. The existing dev previews (adPreview.tsx)
+     sidestep this by using inline styles. This harness mounts the REAL app components
+     (RunningScreen / FirstCut) which use Tailwind classes, so it MUST replicate index.html's
+     Tailwind CDN + config + "LAW" typography <style>. Keep in sync with index.html. -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>One-Shot Flow Preview — DEV</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --brand-primary: #FFCC00;
+        --brand-yellow: #FFCC00;
+        --bg-dark: #09090B;
+      }
+      body {
+        background-color: var(--bg-dark);
+        color: white;
+        overflow-x: hidden;
+        /* LAW: GLOBAL BODY TEXT */
+        font-family: 'Inter', sans-serif;
+        font-weight: 400;
+        line-height: 1.625;
+      }
+      /* LAW: ALL HEADINGS (Inter Black, Uppercase, Tighter) */
+      h1, h2, h3, h4, h5, h6 {
+        font-family: 'Inter', sans-serif !important;
+        font-weight: 900 !important;
+        text-transform: uppercase !important;
+        letter-spacing: -0.05em !important;
+      }
+      /* LAW: LABELS, BUTTONS, TECHNICAL DATA (JetBrains Mono, Widest) */
+      label, button, .font-mono, input, textarea, select, .tech-data {
+        font-family: 'JetBrains Mono', monospace !important;
+        letter-spacing: 0.1em !important;
+      }
+      label { text-transform: uppercase !important; }
+      /* Custom scrollbar (premium feel) */
+      ::-webkit-scrollbar { width: 8px; }
+      ::-webkit-scrollbar-track { background: #09090b; }
+      ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 9999px; }
+      ::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
+    </style>
+    <script>
+      // Inline Tailwind config — mirror of index.html (sourced from DESIGN.md).
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              mono: ['JetBrains Mono', 'monospace'],
+              serif: ['Instrument Serif', 'Georgia', 'serif'],
+            },
+            colors: {
+              primary: '#FFCC00',
+              surface: '#09090B',
+              'surface-elevated': '#18181B',
+              'on-surface': '#FFFFFF',
+              'on-surface-muted': '#D4D4D8',
+              'on-surface-dim': '#A1A1AA',
+              'on-surface-sublabel': '#71717A',
+              'brand-primary': '#FFCC00',
+              'brand-yellow': '#FFCC00',
+              'brand-yellow-dark': '#B28F00',
+              'brand-green': '#10B981',
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/dev/oneShotFlowPreview.tsx"></script>
+  </body>
+</html>

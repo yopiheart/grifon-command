@@ -1415,11 +1415,17 @@ const App: React.FC = () => {
     const oneShotSinks: OneShotSinks = {
       setScript, setFinalScript, setAvatar, setStoryboard, setThumbnailUrl, setVideoPrompts, setLanguage,
     };
-    // Slice 4 — Director (step-by-step) mode is a Pro+ unlock ("control every
-    // scene"). Free/Starter ride the one-shot only. `grifon_dev_unlock` flips it
-    // on for dev/Neil on any account (console: localStorage.grifon_dev_unlock='1').
+    // Director (step-by-step) mode is ADMIN/DEV-ONLY — the 8-step wizard is Neil's
+    // control cockpit, not a user surface. All paying tiers ride One-Shot (Free/
+    // Starter/Pro) or Concierge (Business); the wizard steps 1–7 never render for
+    // them. `grifon_dev_unlock` is the only key that opens it
+    // (console: localStorage.grifon_dev_unlock='1').
     const devUnlock = typeof localStorage !== 'undefined' && localStorage.getItem('grifon_dev_unlock') === '1';
-    const directorUnlocked = devUnlock || planAtLeast(plan_id, 'pro');
+    const directorUnlocked = devUnlock;
+    // First Cut edit presets (IMPACT/CLEAN) are a Pro+ lever, NOT the dev-only wizard lock.
+    // directorUnlocked gates the 8-step wizard door (dev-only); presetUnlocked gates the
+    // preset switcher for paying tiers (the pre-3c775f6 directorUnlocked expression).
+    const presetUnlocked = devUnlock || planAtLeast(plan_id, 'pro');
 
     if (directorMode === 'expert') {
       // Expert Mode — "Director's Cut" (bring-your-own-script). Additive door,
@@ -1447,6 +1453,7 @@ const App: React.FC = () => {
           setBusinessInfo={setBusinessInfo}
           setAspectRatio={setAspectRatio}
           directorUnlocked={directorUnlocked}
+          presetUnlocked={presetUnlocked}
           onBack={() => setActiveModule(null)}
           onUpgrade={() => { setActiveModule(null); goToLegal('pricing'); }}
           onSwitchToSteps={() => { setDirectorMode('steps'); setCurrentStep(1); }}

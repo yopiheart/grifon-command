@@ -556,10 +556,31 @@ const pollUntilDone = async (
   }
 };
 
-export const generateVideo = async (
+/**
+ * Serializable provider job handle returned by submitVideo — the poll target that survives
+ * a checkpoint round-trip (e.g. stored in producer_scenes.job_handle). Carries the render
+ * context resumeVideoOperation needs to poll to completion without re-submitting (re-spending).
+ */
+export interface VideoJobHandle {
+  operation: any;
+  prompt: string;
+  sceneIdx?: number;
+  model: VideoModelType;
+  aspectRatio: string;
+  duration: number;
+}
+
+/**
+ * Submit a video render WITHOUT polling — returns the serializable provider job handle so a
+ * caller can record it before the long poll and resume by polling that same handle after a
+ * crash (instead of re-submitting / re-spending). This is the SUBMIT half of the fire-then-poll
+ * pair; poll with resumeVideoOperation(handle). generateVideo composes submit + poll below, so
+ * both the single-shot wizard path and the split producer fan-out share ONE transport path.
+ */
+export const submitVideo = async (
   config: { model: VideoModelType; prompt: string; duration: number; resolution: string; aspectRatio: string; audioEnabled: boolean; startFrame?: string; endFrame?: string },
   opts: GenerateVideoOpts = {}
-): Promise<GeneratedVideoResult> => {
+): Promise<VideoJobHandle> => {
   const routing = VIDEO_MODEL_ROUTING[config.model];
   if (!routing) throw new Error(`UNSUPPORTED_MODEL: ${config.model}`);
   if (!routing.modelId) throw new Error(`MODEL_LOCKED: ${config.model} is not yet integrated`);
@@ -662,12 +683,34 @@ export const generateVideo = async (
     initialOperation = proxyResult.operation;
   }
 
-  const renderMetadata: VideoRenderMetadata = {
+  return {
+    operation: initialOperation,
     prompt: config.prompt.trim(),
     sceneIdx: opts.metadata?.sceneIdx,
     model: config.model,
     aspectRatio: config.aspectRatio,
     duration: config.duration,
+  };
+};
+
+/**
+ * Submit + poll a video render to completion (the single-shot path used by the wizard's
+ * RENDER ALL queue). Composes submitVideo (transport) with pollUntilDone, and keeps the
+ * Phase 4d IndexedDB resume behavior so a tab-close mid-poll can be resumed on next mount.
+ */
+export const generateVideo = async (
+  config: { model: VideoModelType; prompt: string; duration: number; resolution: string; aspectRatio: string; audioEnabled: boolean; startFrame?: string; endFrame?: string },
+  opts: GenerateVideoOpts = {}
+): Promise<GeneratedVideoResult> => {
+  const handle = await submitVideo(config, opts);
+  const initialOperation = handle.operation;
+
+  const renderMetadata: VideoRenderMetadata = {
+    prompt: handle.prompt,
+    sceneIdx: handle.sceneIdx,
+    model: handle.model,
+    aspectRatio: handle.aspectRatio,
+    duration: handle.duration,
   };
 
   // Phase 4d: persist this in-flight job to IndexedDB so that if the tab

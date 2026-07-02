@@ -15,7 +15,7 @@ import { describeBusinessAsset } from '../../services/geminiService';
 import { fetchVoices } from '../../services/voiceService';
 import { compressImageForUpload } from '../../utils/imageCompression';
 import { analyzeImageQuality } from '../../utils/imageQuality';
-import type { AutopilotInput } from '../../services/oneShotIntake';
+import type { ProductionInput } from '../../services/oneShotIntake';
 import type { BusinessInfo } from '../../types';
 import {
   ARCHETYPE_META, ARCHETYPE_ORDER, ARCHETYPE_UPLOAD_SLOTS, inferServiceArchetype,
@@ -62,7 +62,7 @@ const fileToDataUrl = (file: File): Promise<string> =>
   });
 
 // --- Creative taxonomy: two orthogonal axes (unchanged — "format picker stays current") ---
-// FORMAT = video genre; STRATEGY = persuasion angle. Both map onto AutopilotInput.scriptType,
+// FORMAT = video genre; STRATEGY = persuasion angle. Both map onto ProductionInput.scriptType,
 // so there's NO backend change: UGC + Real-talk → Testimonial · UGC + Hype → MrBeast · Product UGC → Temu.
 type Format = 'ugc' | 'product_ugc' | 'commercial';
 type Strategy = 'Testimonial' | 'MrBeast';
@@ -119,7 +119,7 @@ function useIsMobile(): boolean {
 }
 
 export const LaunchScreen: React.FC<{
-  onLaunch: (input: AutopilotInput) => void;
+  onLaunch: (input: ProductionInput) => void;
   /** Pro+ unlock for Director (step-by-step) mode. Free/Starter get the upsell. */
   directorUnlocked: boolean;
   onUpgrade: () => void;
@@ -189,9 +189,9 @@ export const LaunchScreen: React.FC<{
   const [avatarErr, setAvatarErr] = useState('');
 
   // --- Settings -----------------------------------------------------------
-  const [language, setLanguage] = useState<AutopilotInput['language']>(restored?.language ?? 'Taglish');
-  const [aspectRatio, setAspectRatio] = useState<AutopilotInput['aspectRatio']>(restored?.aspectRatio ?? '9:16');
-  const [resolution, setResolution] = useState<NonNullable<AutopilotInput['resolution']>>(restored?.resolution ?? '720p');
+  const [language, setLanguage] = useState<ProductionInput['language']>(restored?.language ?? 'Taglish');
+  const [aspectRatio, setAspectRatio] = useState<ProductionInput['aspectRatio']>(restored?.aspectRatio ?? '9:16');
+  const [resolution, setResolution] = useState<NonNullable<ProductionInput['resolution']>>(restored?.resolution ?? '720p');
 
   // --- Voice picker (Filipino library first, then clones; stock fallback) --
   const [voiceId, setVoiceId] = useState<string>(restored?.voiceId ?? STOCK_FALLBACK[0]?.id ?? '');
@@ -249,7 +249,7 @@ export const LaunchScreen: React.FC<{
 
   // Vertical takes precedence (Services/RealEstate are their own styles); within
   // Product, Format × Strategy picks the formula. All map onto the scriptType enum.
-  const scriptType: NonNullable<AutopilotInput['scriptType']> =
+  const scriptType: NonNullable<ProductionInput['scriptType']> =
     vertical === 'service' ? 'Services'
       : vertical === 'real_estate' ? 'RealEstate'
         : format === 'product_ugc' ? 'Temu'
@@ -309,7 +309,7 @@ export const LaunchScreen: React.FC<{
     setFormat(f);
     if (f === 'commercial') setLanguage('English');
   };
-  const chooseLanguage = (l: AutopilotInput['language']) => {
+  const chooseLanguage = (l: ProductionInput['language']) => {
     setLanguage(l);
     if (l === 'Taglish' && format === 'commercial') setFormat('ugc');
   };
@@ -428,7 +428,7 @@ export const LaunchScreen: React.FC<{
     <div className={`grid grid-cols-1 gap-4 ${isMobile ? '' : voiceNeeded ? 'w-[min(88vw,34rem)] sm:grid-cols-2' : 'w-72'}`}>
       <div className="space-y-4">
         <SettingRow label="Aspect" icon={Gauge}>
-          <Segmented value={aspectRatio} onChange={(v) => { setAspectRatio(v as AutopilotInput['aspectRatio']); sfx.play('select'); }} opts={['9:16', '1:1', '16:9']} />
+          <Segmented value={aspectRatio} onChange={(v) => { setAspectRatio(v as ProductionInput['aspectRatio']); sfx.play('select'); }} opts={['9:16', '1:1', '16:9']} />
         </SettingRow>
 
         <SettingRow label="Video quality" icon={Gauge}>
@@ -450,7 +450,7 @@ export const LaunchScreen: React.FC<{
         <SettingRow label="Language" icon={Languages}>
           <Segmented
             value={language}
-            onChange={(v) => { chooseLanguage(v as AutopilotInput['language']); sfx.play('select'); }}
+            onChange={(v) => { chooseLanguage(v as ProductionInput['language']); sfx.play('select'); }}
             opts={format === 'commercial' ? ['English'] : ['Taglish', 'English']}
           />
           {format === 'commercial' && (

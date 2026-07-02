@@ -2,11 +2,26 @@ import React, { useEffect, useState } from 'react';
 import { ChevronLeft, AlertTriangle, RotateCw, Loader2, Sparkles, FilePlus2 } from 'lucide-react';
 import type { ClientDetails, BusinessInfo } from '../../types';
 import { generateMarketResearch } from '../../services/geminiService';
-import { mapReportToWizard, type AutopilotInput } from '../../services/oneShotIntake';
+import { mapReportToWizard, type ProductionInput } from '../../services/oneShotIntake';
 import { useOneShotGeneration, type OneShotSinks } from '../../hooks/useOneShotGeneration';
 import { hydrateOneShotDraft, loadOneShotDraft, clearOneShotDraft } from '../../utils/oneShotDraft';
 import { LaunchScreen } from './LaunchScreen';
 import { RunningScreen } from './RunningScreen';
+import ProducerFlow from './ProducerFlow';
+
+/**
+ * Opt-in switch to the new orchestrator-driven flow (Running → storyboard gate →
+ * First Cut) while it bakes behind the live useOneShotGeneration→Step 8 path. Enable
+ * per-session with `?osaEngine=producer` (persists to localStorage) or `?osaEngine=steps`
+ * to force the legacy path. Lets the SIGLA smoke exercise the real flow non-destructively.
+ */
+const useProducerEngine = (): boolean => {
+  if (typeof window === 'undefined') return false;
+  const q = new URLSearchParams(window.location.search).get('osaEngine');
+  if (q === 'producer') { try { localStorage.setItem('osa_engine', 'producer'); } catch { /* ignore */ } return true; }
+  if (q === 'steps') { try { localStorage.removeItem('osa_engine'); } catch { /* ignore */ } return false; }
+  try { return localStorage.getItem('osa_engine') === 'producer'; } catch { return false; }
+};
 
 /**
  * One-Shot Ad module container. Collects a brief (LaunchScreen), runs market
@@ -23,8 +38,10 @@ interface OneShotAdProps {
   setClientDetails: (c: ClientDetails) => void;
   setBusinessInfo: (b: BusinessInfo) => void;
   setAspectRatio: (r: '9:16' | '16:9') => void;
-  /** Pro+ unlock for Director (step-by-step) mode. Free/Starter get the upsell. */
+  /** Dev-only unlock for Director (step-by-step) mode — the wizard door. */
   directorUnlocked: boolean;
+  /** Pro+ unlock for the First Cut edit presets (IMPACT/CLEAN). Free/Starter get the upsell. */
+  presetUnlocked: boolean;
   onBack: () => void;
   /** Route to pricing when a locked user reaches for Director mode. */
   onUpgrade: () => void;
@@ -45,6 +62,7 @@ const OneShotAd: React.FC<OneShotAdProps> = ({
   setBusinessInfo,
   setAspectRatio,
   directorUnlocked,
+  presetUnlocked,
   onBack,
   onUpgrade,
   onSwitchToSteps,
@@ -52,6 +70,23 @@ const OneShotAd: React.FC<OneShotAdProps> = ({
   onCloneVoice,
   onReview,
 }) => {
+  // Opt-in orchestrator flow — early-return before the legacy hooks so hook order stays
+  // stable for the mount (the flag is constant per mount).
+  if (useProducerEngine()) {
+    return (
+      <ProducerFlow
+        userId={userId}
+        directorUnlocked={directorUnlocked}
+        presetUnlocked={presetUnlocked}
+        onBack={onBack}
+        onUpgrade={onUpgrade}
+        onSwitchToSteps={onSwitchToSteps}
+        onSwitchToExpert={onSwitchToExpert}
+        onCloneVoice={onCloneVoice}
+      />
+    );
+  }
+
   const oneShot = useOneShotGeneration();
   const [phase, setPhase] = useState<'launch' | 'running' | 'error'>('launch');
   const [researching, setResearching] = useState(false);
@@ -71,7 +106,7 @@ const OneShotAd: React.FC<OneShotAdProps> = ({
     return () => { alive = false; };
   }, []);
 
-  const start = async (input: AutopilotInput) => {
+  const start = async (input: ProductionInput) => {
     setErrMsg('');
     setPhase('running');
     setResearching(true);

@@ -18,7 +18,7 @@ const buildServicePhotoDescription = (
  */
 
 /** Everything the intake form (LaunchScreen) collects: 3 hero inputs + Customize-drawer defaults. */
-export interface AutopilotInput {
+export interface ProductionInput {
   brandName: string;
   offer: string;
   price: string;
@@ -57,7 +57,7 @@ export interface AutopilotInput {
 }
 
 /** scriptType → the Step 2 businessType gate, so Services/RealEstate verticals route to the right style. */
-function businessTypeFor(scriptType: AutopilotInput['scriptType']): NonNullable<BusinessInfo['businessType']> {
+function businessTypeFor(scriptType: ProductionInput['scriptType']): NonNullable<BusinessInfo['businessType']> {
   if (scriptType === 'Services') return 'service';
   if (scriptType === 'RealEstate') return 'realestate';
   return 'product';
@@ -68,7 +68,7 @@ function businessTypeFor(scriptType: AutopilotInput['scriptType']): NonNullable<
  * auto-prefill does (App.tsx) — research is load-bearing context for the script.
  */
 export function mapReportToWizard(
-  input: AutopilotInput,
+  input: ProductionInput,
   report: MarketResearchReport,
 ): { clientDetails: ClientDetails; businessInfo: BusinessInfo } {
   // Guided verticals (Service/RealEstate) carry per-slot real photos; Product uses the single hero.

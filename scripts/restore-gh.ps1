@@ -1,16 +1,19 @@
-# Restore the GitHub CLI (`gh`) after the cafe defreezer wipes installed
-# programs overnight. `gh` is not bundled with the repo (binaries don't belong
-# in git), so this idempotent script re-downloads the latest release each
-# session and puts it on PATH. Same model as restore-notebooklm.ps1: re-run
-# once per fresh session.
+# Restore the GitHub CLI (gh) after the cafe defreezer wipes installed programs
+# overnight. gh is not bundled with the repo (binaries don't belong in git), so
+# this idempotent script re-downloads the latest release each session and puts it
+# on PATH. Same model as restore-notebooklm.ps1: re-run once per fresh session.
 #
 # Usage (from the grifon-command folder):
 #   Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass   # if not already set this session
 #   .\scripts\restore-gh.ps1
 #
-# After this finishes, `gh` is available in NEW terminals (and the current one).
-# First use per session still needs auth — run `gh auth login` once, OR rely on
+# After this finishes, gh is available in NEW terminals (and the current one).
+# First use per session still needs auth -- run "gh auth login" once, OR rely on
 # the git credential helper that already authenticates pushes.
+#
+# NOTE: this file is ASCII-only ON PURPOSE. Windows PowerShell 5.1 reads a .ps1
+# saved as UTF-8-without-BOM as Windows-1252, so any non-ASCII char (em-dash,
+# arrow, checkmark, smart quote) corrupts parsing. Keep every character ASCII.
 
 $ErrorActionPreference = "Stop"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
@@ -63,29 +66,29 @@ if ($userPath -notlike "*$binDir*") {
 Write-Host ""
 & $ghExe --version
 
-# ── Authentication ───────────────────────────────────────────────────────────
-# `gh auth login` (web/device flow) writes the token to the Windows keyring,
-# which Claude Code's tools CAN read — so once you complete the login, the agent
-# can create/merge PRs directly, no token-pasting needed. The defreezer wipes
-# the keyring, so re-run the login each session.
+# --- Authentication ---
+# "gh auth login" (web/device flow) writes the token to the Windows keyring,
+# which Claude Code's tools CAN read -- so once you complete the login, the agent
+# can create/merge PRs and read the API directly, no token-pasting needed. The
+# defreezer wipes the keyring, so re-run the login each session.
 #
-# CRITICAL: the device flow must COMPLETE in the terminal. After "Press Enter to
-# open github.com…", press Enter, authorize in the browser, then WAIT until the
-# terminal prints "✓ Logged in as <user>". Authorizing in the browser alone does
-# NOT store the token — the terminal command writes it only after it confirms.
+# CRITICAL: the login flow must COMPLETE in the terminal. After it prints the
+# one-time code and opens the browser, authorize in the browser, then WAIT until
+# the terminal prints "Logged in as <user>". Authorizing in the browser alone
+# does NOT store the token -- the terminal command writes it only after it confirms.
 #
 # (Fallback, rarely needed: set a fine-grained PAT in the GH_TOKEN env var
-#  instead — https://github.com/settings/tokens?type=beta, Contents + Pull
-#  requests = Read/write. The keyring route above is simpler; prefer it.)
+#  instead -- https://github.com/settings/tokens?type=beta , Contents + Pull
+#  requests = Read. The keyring route above is simpler; prefer it.)
 $loggedIn = $false
 try { & $ghExe auth status 2>$null; if ($LASTEXITCODE -eq 0) { $loggedIn = $true } } catch {}
 Write-Host ""
 if ($loggedIn) {
-    Write-Host "gh is authenticated — Claude can drive PRs." -ForegroundColor Green
+    Write-Host "gh is authenticated -- Claude can drive the API + PRs." -ForegroundColor Green
 } else {
-    Write-Host "gh is installed but NOT logged in. Run this and COMPLETE the device flow:" -ForegroundColor Yellow
+    Write-Host "gh is installed but NOT logged in. Run this and COMPLETE the login:" -ForegroundColor Yellow
     Write-Host "    gh auth login" -ForegroundColor Cyan
-    Write-Host "  (GitHub.com -> HTTPS -> Yes -> Login with a web browser; wait for the green check.)"
+    Write-Host "  (Choose: GitHub.com, then HTTPS, then Login with a web browser; wait for the confirmation line.)"
 }
 
 Write-Host ""

@@ -257,10 +257,10 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
   const dayPart = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
   // Call-sheet line — the studio register, time- and streak-aware.
   const callSheet = hour < 12
-    ? '// Morning call — set is yours'
+    ? '// Morning call — your crew is on set'
     : hour < 18
       ? `// On the lot${weeklyActiveDays >= 2 ? ` — day ${weeklyActiveDays} this week` : ''}`
-      : '// Night shoot — cameras still rolling';
+      : "// Night shoot — the crew's still rolling";
 
   // Quota label + low-nudge
   const quotaLabel = quota.loading
@@ -278,7 +278,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
     items: g.ids.map((id) => {
       const m = getModuleIdentity(id);
       return {
-        id, label: m.name, icon: m.icon, hue: m.hue,
+        id, label: m.name, descriptor: m.descriptor, icon: m.icon, hue: m.hue,
         tier: MODULE_TIER[id],
         locked: Boolean(MODULE_TIER[id]) && !moduleUnlocked(id),
       };
