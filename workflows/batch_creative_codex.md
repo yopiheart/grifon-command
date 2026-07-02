@@ -1,6 +1,6 @@
 # Workflow: Batch Creative Gen (Codex / distinct-plate)
 
-**Objective:** Produce N genuinely distinct, on-brand ad creatives — each starring Zam in the Grifon "black canvas + gold glow + bold headline + VIP lockup" system — by looping the `codex-image` skill over a list of angles with one locked master prompt. This is the "100 creatives in ~4 minutes, $0" method (billed to the ChatGPT plan via `codex login`).
+**Objective:** Produce N genuinely distinct, on-brand ad creatives — each starring Zam in the Grifon "black canvas + gold glow + bold headline + VIP lockup" system — by looping the `codex-image` skill over a list of angles with one locked master prompt. Billed **$0** via the ChatGPT plan (`codex login`). **Timing:** each plate is a full `codex exec` session (~2 min, ~8 concurrent), so a real batch runs at ~6.4 min / 12 → **~25–50 min for 100**, NOT the "4 minutes" earlier notes claimed (that needs the paid OpenAI Images API — see the codex-image skill).
 
 Use this when:
 - You want many *different* photoreal creatives (different scene/angle per ad), not one hero reused.

@@ -50,7 +50,11 @@ node tools/codex-image-batch.mjs --manifest <manifest.json> [--concurrency 8] [-
 
 It fans all prompts out concurrently, **skips files that already exist** (re-runnable), and **prints a per-image + total wall-clock timer**.
 
-**Realistic timing:** each Codex image is ~2 min on its own, but they run concurrently so wall-clock collapses toward the slowest one. Codex/the machine throttle to ~**8 concurrent** — beyond that, extras queue (a real 12-image run took ~6.4 min: first 8 in ~130s, last 3 queued to ~320–380s). The "100 in ~4 min" figure needs that managed concurrency, which `--concurrency` approximates. (An older `tools/batch-creative-codex.mjs` is referenced in some notes but does **not** exist in this repo — use `tools/codex-image-batch.mjs`.)
+**Realistic timing (measured, not aspirational):** each image is a *full* `codex exec` agentic session (~2 min of agent overhead), and Codex throttles to ~**8 concurrent** — so wall-clock scales with the number of 8-wide waves, NOT toward a single image. A real 12-image run took **~6.4 min** (first 8 in ~130s, last 4 queued to ~320–380s). Extrapolated, **100 images is ~25–50 min, not 4 min.** The "100 in ~4 min, $0" line in `tools/batch-creative-codex.mjs` and `workflows/batch_creative_codex.md` is aspirational — it is **not achievable on the `codex login` ($0) path**, because the bottleneck is the per-image Codex-agent overhead, not the image generation itself. Genuine 100-in-~4-min needs the OpenAI **Images API** directly (`gpt-image-1`, high parallelism), which is **pay-per-image** (~$1–4 / 100, needs `OPENAI_API_KEY`) — i.e. NOT this skill's $0 bridge.
+
+**Two batch runners exist — pick by need:**
+- `tools/codex-image-batch.mjs` — simple manifest fan-out (`[{prompt,out,size}]`), skips-existing, prints a wall-clock timer. Use for ad-hoc multi-image runs.
+- `tools/batch-creative-codex.mjs` — brand-master workflow: one locked Grifon master prompt over an *angles* list, optional Zam `--ref`, a `--require-cmo` copy gate, and a manifest. Use for on-brand ad-creative batches (see `workflows/batch_creative_codex.md`).
 
 ## After generating
 
