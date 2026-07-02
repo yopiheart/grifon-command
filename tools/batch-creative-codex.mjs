@@ -2,9 +2,12 @@
 // batch-creative-codex: fan a list of ad angles out into N DISTINCT on-brand
 // creatives by looping the existing codex-image skill (gpt-image-2, billed to
 // the ChatGPT plan via `codex login`) once per angle, with a locked brand
-// master prompt. This is the "100 creatives in ~4 minutes, $0" workflow — the
-// distinct-plate method (each angle gets its own generated image), as opposed
-// to the in-app BatchFanOut module (one hero + Canvas text overlay).
+// master prompt. Billed $0 via the codex login (ChatGPT-plan) path. NOTE on
+// speed: throughput is agent-per-image (~2 min each, ~8 concurrent → ~25–50 min
+// for 100), NOT the "4 minutes" some older notes claimed — genuine 100-in-4-min
+// needs the paid OpenAI Images API. Distinct-plate method (each angle gets its
+// own generated image), as opposed to the in-app BatchFanOut module (one hero +
+// Canvas text overlay).
 //
 // It is a pure orchestrator: it composes prompts and dispatches to
 // .claude/skills/codex-image/generate.mjs, which owns all Codex auth/preflight
@@ -20,7 +23,7 @@
 //   --ref <path>          optional reference photo (Zam) → forwarded to generate.mjs as --edit
 //   --out <dir>           output dir (default .tmp/batch-creative/<timestamp>/)
 //   --size <WxH>          image size (default 1024x1536, a 4:5 feed plate)
-//   --concurrency <n>     parallel generations (default 3) — the "4 minutes" lever
+//   --concurrency <n>     parallel generations (default 4) — the throughput lever
 //   --limit <n>           only generate the first N angles (cheap smoke runs)
 //   --master <file>       override the brand master prompt template
 //   --require-cmo         hard-fail unless the angles carry _meta.cmoReviewed:true
