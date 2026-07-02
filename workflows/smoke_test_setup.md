@@ -50,6 +50,29 @@ supersedes the scattered "Reusable smoke setup" notes in `expert_manual_mode.md`
 6. Pre-create any screenshot/output folder from the MAIN loop before spawning the agent
    (background agents auto-deny permission prompts — agent_lessons 2026-06-10).
 
+## ⛔ Test Spec gate — NO paid test fires without Neil approving this first (2026-07-02)
+
+Neil's standing rule, any module, any session: **finalize WHAT we're testing before testing.**
+Fill this template, show it to Neil, get his approve/edit — THEN drive. "Approved" applies to
+the spec as shown; if anything changes, re-ask. (Lesson: agent_lessons 2026-07-02.)
+
+```
+TEST SPEC — <name>                              date:
+1 PURPOSE     what this run PROVES + pre-agreed pass/fail criteria
+2 MODULE      module/flow + entry point (incl. flags like ?osaEngine=…)
+3 INTAKE      brand / offer / price / niche-vertical / format-aspect / language / settings
+4 ASSETS      exact files to upload; if an asset or character must be GENERATED,
+              use the Codex CLI (codex-image skill) — never stock-hunt or improvise
+5 PRESENTER   upload vs auto-cast, and why
+6 EVIDENCE    what comes back: screenshots (paths), DB queries, network counts;
+              what Neil eyeballs vs what the agent asserts
+7 COST        rough quota/spend estimate (scenes × renders; metered or unmetered)
+8 CLEANUP     what happens to test data/runs afterward
+```
+
+Cheap-first rule: if a zero-API preview exists for the surface (e.g.
+`/one-shot-flow-preview.html`), dry-run the UI there BEFORE the paid run.
+
 ## Driving rules (unchanged, enforced elsewhere but repeated for one-stop reading)
 
 - Load `.claude/skills/director-smoke` BEFORE any full-ad smoke: hero-image-FIRST
