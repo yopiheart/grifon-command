@@ -31,6 +31,36 @@ The grill locked the design (see the grill decisions below + the plan file
 - **Slice 6** — First Cut **AUTO/IMPACT/CLEAN** switcher (uses existing
   `FinalRenderRequest.preset`; IMPACT/CLEAN Pro+; raw-export BUNDLE deferred).
 
+## SHIPPED 2026-07-02 (review-fix session, commits 54cc749 → 429f14c)
+A three-agent fresh review (server spine / orchestrator / UI) of the slices found 3
+criticals + a half-wired double-spend protocol + 4 UX majors. All smoke-blockers fixed
+(Neil-approved scope: minors + Concierge hardening deferred), **build + 394 tests green**:
+- **A1** guided-vertical fields (`servicePhotos`/archetypes/`isLocalService`/`businessAddress`)
+  now thread intake → orchestrator → shared `mapReportToWizard` (was: silently dropped —
+  Service/RealEstate ads degraded to generic product ads).
+- **A2** run errors now render a Retry/Start-over screen (was: silent bounce to empty intake).
+- **A3** `tests/producerOrchestrator.test.ts` — 18 tests over the spend-bearing state machine
+  (the blueprint suite was dead: outside `tests/**`, importing a deleted path).
+- **B1** `recordScene`/`job_handle` wired: claim → submit → record → poll → complete; resume
+  POLLS a recorded handle instead of re-rendering. `services/geminiService.ts` got a
+  **transport-only** split (`submitVideo` extracted from `generateVideo`; zero tuned content
+  changed, bundle-leak check 0).
+- **B2** `requeue` guarded (flagged/done/failed or >10min stale claims) + all scene writes
+  return `changed:boolean` for lost-race detection.
+- **B3** checkpoint writes are revision-guarded (stale tab can't regress run state).
+  **`supabase/producer_runs.sql` changed — re-copy it into the SQL editor (adds `revision`).**
+- **C1** presets gated by new `presetUnlocked` (Pro+), not the dev-only wizard lock (was:
+  no paying tier could pick IMPACT/CLEAN). **C2** FeedbackWidget fires while First Cut is up
+  (was: never). **C3** reshoot/preset stays ON First Cut (busy substate; was: full Running
+  screen + free-take reset). **C4** `presetId` + `takesUsed` persisted across reloads.
+
+**Deferred from the review (post-smoke):** 12 minors — bg-black scrims vs DESIGN.md,
+inline gold button in `index.tsx`, seed doesn't prune on smaller re-seed, stage name not
+enum-validated, dead `image_url`/`'failed'` schema surface, cross-origin `download` attr
+won't save, all-scenes-fail dead-ends without a reshoot gate, abort flags interrupted
+scenes, no `aria-live`, research cache from blueprint unwired, casting outside the state
+machine, Concierge `mode`/`prefill` unvalidated.
+
 **STILL OPEN (need Neil):**
 1. **Slice 2 — rate-limit re-scope** (`api/gemini/video.ts` `VIDEO_LIMIT` per-clip →
    per-ad-launch). TUNED infra — **your explicit sign-off gate**, deliberately untouched.
