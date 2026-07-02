@@ -66,6 +66,12 @@ supersedes the scattered "Reusable smoke setup" notes in `expert_manual_mode.md`
    `?osaEngine=steps` forces legacy).
 6. Pre-create any screenshot/output folder from the MAIN loop before spawning the agent
    (background agents auto-deny permission prompts — agent_lessons 2026-06-10).
+7. **Playwright "Browser is already in use for …mcp-chrome-351a002" → orphaned MCP servers.**
+   Prior sessions leave `@playwright/mcp` node processes + their Chrome tree holding the
+   shared profile lock (hit 2026-07-03). Fix from the MAIN loop: list candidates with
+   `Get-CimInstance Win32_Process` filtered on `playwright*mcp` / `mcp-chrome-351a002`,
+   **keep the newest node pair (this session's own MCP server)**, `taskkill /T /F` the rest.
+   The smoke agent can't do this itself — its permission scope blocks the kill.
 
 ## ⛔ Test Spec gate — NO paid test fires without Neil approving this first (2026-07-02)
 
