@@ -38,8 +38,10 @@ interface OneShotAdProps {
   setClientDetails: (c: ClientDetails) => void;
   setBusinessInfo: (b: BusinessInfo) => void;
   setAspectRatio: (r: '9:16' | '16:9') => void;
-  /** Pro+ unlock for Director (step-by-step) mode. Free/Starter get the upsell. */
+  /** Dev-only unlock for Director (step-by-step) mode — the wizard door. */
   directorUnlocked: boolean;
+  /** Pro+ unlock for the First Cut edit presets (IMPACT/CLEAN). Free/Starter get the upsell. */
+  presetUnlocked: boolean;
   onBack: () => void;
   /** Route to pricing when a locked user reaches for Director mode. */
   onUpgrade: () => void;
@@ -60,6 +62,7 @@ const OneShotAd: React.FC<OneShotAdProps> = ({
   setBusinessInfo,
   setAspectRatio,
   directorUnlocked,
+  presetUnlocked,
   onBack,
   onUpgrade,
   onSwitchToSteps,
@@ -74,6 +77,7 @@ const OneShotAd: React.FC<OneShotAdProps> = ({
       <ProducerFlow
         userId={userId}
         directorUnlocked={directorUnlocked}
+        presetUnlocked={presetUnlocked}
         onBack={onBack}
         onUpgrade={onUpgrade}
         onSwitchToSteps={onSwitchToSteps}

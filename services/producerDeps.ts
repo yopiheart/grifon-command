@@ -44,6 +44,11 @@ const toCheckpoint = (run: ProductionRun): RunCheckpoint => ({
   artifacts: {
     gate: run.gate ?? null,
     storyboardApproved: run.storyboardApproved ?? false,
+    // C4: the applied First Cut preset, so the switcher highlights it (not AUTO) after reload.
+    presetId: run.presetId ?? null,
+    // C3: free-take counter + in-flight First-Cut op, so re-rolls survive remount/reload.
+    takesUsed: run.takesUsed ?? 0,
+    busy: run.busy ?? null,
     report: run.report,
     clientDetails: run.clientDetails,
     businessInfo: run.businessInfo,

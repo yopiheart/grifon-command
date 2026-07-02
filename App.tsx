@@ -67,7 +67,7 @@ import { RouteVeil, type VeilState } from './components/ui/RouteVeil';
 import { QuotaWallModal } from './components/ui/QuotaWallModal';
 import { quotaWallStore } from './services/quotaWallStore';
 import { useSubscription } from './hooks/useSubscription';
-import { nextTier, type PlanId } from './utils/planGate';
+import { nextTier, planAtLeast, type PlanId } from './utils/planGate';
 import { getSession, setSession, clearSession, type WizardSessionV1 } from './services/wizardSessionStore';
 
 const TOTAL_STEPS = 8;
@@ -1422,6 +1422,10 @@ const App: React.FC = () => {
     // (console: localStorage.grifon_dev_unlock='1').
     const devUnlock = typeof localStorage !== 'undefined' && localStorage.getItem('grifon_dev_unlock') === '1';
     const directorUnlocked = devUnlock;
+    // First Cut edit presets (IMPACT/CLEAN) are a Pro+ lever, NOT the dev-only wizard lock.
+    // directorUnlocked gates the 8-step wizard door (dev-only); presetUnlocked gates the
+    // preset switcher for paying tiers (the pre-3c775f6 directorUnlocked expression).
+    const presetUnlocked = devUnlock || planAtLeast(plan_id, 'pro');
 
     if (directorMode === 'expert') {
       // Expert Mode — "Director's Cut" (bring-your-own-script). Additive door,
@@ -1449,6 +1453,7 @@ const App: React.FC = () => {
           setBusinessInfo={setBusinessInfo}
           setAspectRatio={setAspectRatio}
           directorUnlocked={directorUnlocked}
+          presetUnlocked={presetUnlocked}
           onBack={() => setActiveModule(null)}
           onUpgrade={() => { setActiveModule(null); goToLegal('pricing'); }}
           onSwitchToSteps={() => { setDirectorMode('steps'); setCurrentStep(1); }}

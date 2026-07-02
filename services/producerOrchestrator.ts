@@ -167,6 +167,14 @@ export interface ProductionRun {
   /** Chosen First Cut edit preset (Decision 8). Absent → AUTO (server rotation). Set by
    * applyPreset() when a Pro user picks IMPACT/CLEAN; the final_render honors it. */
   presetId?: LockablePresetId;
+  /** A First-Cut-gate operation in flight WITHOUT leaving the gate: a per-scene reshoot or a
+   * preset re-assemble. Keeps status parked at 'review'/'first_cut' (so the container stays on
+   * FirstCutScreen instead of the full RunningScreen) while driving the spinner. Cleared on finish. */
+  busy?: 'reshoot' | 'preset';
+  /** Manual re-rolls of scenes that already worked, counted toward the free-take allowance
+   * (fixing a flagged scene is free and never counts). Lifted out of FirstCutScreen local state
+   * and persisted so free takes survive remount AND reload. */
+  takesUsed?: number;
   input: ProductionInput;
   stages: ProductionStageState[];
   scenes: ProductionSceneState[];
@@ -497,8 +505,11 @@ export async function applyPreset(run: ProductionRun, presetId: LockablePresetId
   };
   await commit((r) => {
     r.presetId = presetId ?? undefined;
-    r.status = 'running';
-    r.gate = undefined;
+    // Stay parked at First Cut during the re-assemble (no video re-gen) so the preset switch
+    // doesn't bounce the user to the "Building your ad" RunningScreen. run.busy drives the spinner.
+    r.status = 'review';
+    r.gate = 'first_cut';
+    r.busy = 'preset';
   });
   try {
     await runStage('final_render', run, deps, cb, async (id, patch) => {
@@ -510,11 +521,13 @@ export async function applyPreset(run: ProductionRun, presetId: LockablePresetId
     await commit((r) => {
       r.status = 'review';
       r.gate = 'first_cut';
+      r.busy = undefined;
     });
   } catch (e: any) {
     await commit((r) => {
       r.status = 'review';
       r.gate = 'first_cut';
+      r.busy = undefined;
       r.error = `preset: ${e?.message ?? 'failed'}`;
     });
   }
@@ -596,8 +609,12 @@ export async function reshootScene(run: ProductionRun, sceneIdx: number, cb: Pro
   if (!scene || !sc) return run;
 
   await commit((r) => {
-    r.status = 'running';
-    r.gate = undefined;
+    // Stay parked at the First Cut gate — a per-scene re-roll must NOT throw the user to the
+    // full "Building your ad · ~15-45 min" RunningScreen. run.busy + the scene's own 'rendering'
+    // status drive FirstCutScreen's spinner without a status flip (which would swap the screen).
+    r.status = 'review';
+    r.gate = 'first_cut';
+    r.busy = 'reshoot';
     const s = r.scenes.find((x) => x.sceneIdx === sceneIdx)!;
     s.status = 'rendering';
     s.flaggedReason = undefined;
@@ -612,6 +629,7 @@ export async function reshootScene(run: ProductionRun, sceneIdx: number, cb: Pro
       if (s) s.status = s.videoUrl ? 'done' : 'flagged';
       r.status = 'review';
       r.gate = 'first_cut';
+      r.busy = undefined;
     });
     return run;
   }
@@ -676,6 +694,7 @@ export async function reshootScene(run: ProductionRun, sceneIdx: number, cb: Pro
     await commit((r) => {
       r.status = 'review';
       r.gate = 'first_cut';
+      r.busy = undefined;
     });
   } catch (e: any) {
     await commit((r) => {
@@ -684,6 +703,7 @@ export async function reshootScene(run: ProductionRun, sceneIdx: number, cb: Pro
       s.flaggedReason = `reshoot: ${e?.message ?? 'failed'}`;
       r.status = 'review';
       r.gate = 'first_cut';
+      r.busy = undefined;
     });
   }
   return run;

@@ -158,14 +158,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       // exactly once. Clears the stale handle/urls so nothing dangles. GUARDED so it can never
       // wipe an in-flight scene: allowed when the scene is flagged/done/failed, OR when it is a
       // STALE 'submitting' claim (no recorded handle AND untouched for >10min) — the single-driver
-      // v1's reaper-free escape from a crash that died between claim and record. A 0-row result
-      // (changed:false) means the guard blocked it (e.g. actively rendering) → the client re-reads.
+      // v1's reaper-free escape from a crash that died between claim and record — OR a STALE
+      // 'rendering' scene (>10min): a reload mid-reshoot leaves a recorded handle nobody polls at
+      // the First Cut gate, and provider jobs finish or die well inside 10min, so after that the
+      // requeue costs at most one extra render vs. a permanently un-reshootable scene. A 0-row
+      // result (changed:false) means the guard blocked it (actively in flight) → the client re-reads.
       const staleIso = new Date(Date.now() - 10 * 60 * 1000).toISOString();
       const { data, error } = await admin
         .from('producer_scenes')
         .update({ status: 'pending', job_handle: null, video_url: null, audio_url: null, flagged_reason: null, updated_at: nowIso })
         .eq('run_id', body.runId).eq('scene_idx', body.sceneIdx)
-        .or(`status.in.(flagged,done,failed),and(status.eq.submitting,job_handle.is.null,updated_at.lt."${staleIso}")`)
+        .or(`status.in.(flagged,done,failed),and(status.eq.submitting,job_handle.is.null,updated_at.lt."${staleIso}"),and(status.eq.rendering,updated_at.lt."${staleIso}")`)
         .select('scene_idx');
       if (error) {
         console.error('[producer/advance] requeue failed:', error.message);

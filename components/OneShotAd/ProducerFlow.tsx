@@ -40,9 +40,21 @@ const ACTIVE_RUN_KEY = 'osa_producer_active_run';
 function fromRow(row: ProductionRunRow, scenes: ProductionSceneRow[]): ProductionRun {
   const art = (row.artifacts ?? {}) as Record<string, any>;
   // Prefer the richer artifact scene snapshot; fall back to the server job-queue rows.
-  const sceneState =
+  let sceneState =
     art.scenes ??
     scenes.map((s) => ({ sceneIdx: s.scene_idx, status: s.status === 'submitting' ? 'rendering' : s.status, videoUrl: s.video_url ?? undefined, audioUrl: s.audio_url ?? undefined, imageUrl: s.image_url ?? undefined }));
+  // Reload-mid-reshoot recovery (C3): a reshoot/preset op parks the run at first_cut with
+  // run.busy set and the reshot scene mid-'rendering'. We do NOT resume the in-flight reshoot —
+  // simplest correct behavior is to drop back to the last good First Cut with the scene claimable:
+  // clear busy (below) and normalize any 'rendering'/'submitting' scene to 'done' (its prior video
+  // is still attached) or 'flagged' (never rendered), so the user can just re-tap reshoot.
+  if ((art.gate ?? undefined) === 'first_cut') {
+    sceneState = sceneState.map((s: any) =>
+      s.status === 'rendering' || s.status === 'submitting'
+        ? { ...s, status: s.videoUrl ? 'done' : 'flagged' }
+        : s
+    );
+  }
   // M1 fix: `storyboardApproved` rides a best-effort checkpoint that can drop. Derive it
   // from stage progress too — if any post-gate stage has started, the gate was crossed —
   // so a dropped flag can't bounce a mid-render run back to the storyboard gate.
@@ -57,6 +69,12 @@ function fromRow(row: ProductionRunRow, scenes: ProductionSceneRow[]): Productio
     mode: row.mode,
     gate: art.gate ?? undefined,
     storyboardApproved: art.storyboardApproved || impliedApproved,
+    // C4: restore the applied preset so the switcher highlights it (not AUTO) after reload.
+    presetId: art.presetId ?? undefined,
+    // C3: restore the free-take counter; deliberately do NOT restore run.busy — a reload
+    // abandons any in-flight reshoot/preset op (see the scene normalization above).
+    takesUsed: typeof art.takesUsed === 'number' ? art.takesUsed : 0,
+    busy: undefined,
     input: row.input as unknown as OrchInput,
     stages: (row.stages as any[]) ?? [],
     scenes: sceneState,
@@ -79,7 +97,10 @@ function fromRow(row: ProductionRunRow, scenes: ProductionSceneRow[]): Productio
 
 interface Props {
   userId: string | null;
+  /** Dev-only unlock for the 8-step wizard door (LaunchScreen). */
   directorUnlocked: boolean;
+  /** Pro+ unlock for the First Cut edit presets (IMPACT/CLEAN). */
+  presetUnlocked: boolean;
   onBack: () => void;
   onUpgrade: () => void;
   onSwitchToSteps: () => void;
@@ -87,13 +108,12 @@ interface Props {
   onCloneVoice: () => void;
 }
 
-const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, onBack, onUpgrade, onSwitchToSteps, onSwitchToExpert, onCloneVoice }) => {
+const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocked, onBack, onUpgrade, onSwitchToSteps, onSwitchToExpert, onCloneVoice }) => {
   const [run, setRun] = useState<ProductionRun | null>(null);
   const [phase, setPhase] = useState<'launch' | 'researching' | 'error' | 'resuming'>('resuming');
   const [errMsg, setErrMsg] = useState('');
   const [reshooting, setReshooting] = useState<number | null>(null);
   const [presetBusy, setPresetBusy] = useState(false);
-  const [delivered, setDelivered] = useState(false);
   const abortRef = useRef<AbortController>(new AbortController());
   // Guards the resume auto-run so React 18 StrictMode's mount→cleanup→mount cycle can't
   // double-drive (or abort) a resumed run.
@@ -237,6 +257,11 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, onBack, onUpg
   const handleReshoot = async (sceneIdx: number) => {
     if (!run || reshooting !== null) return;
     setReshooting(sceneIdx);
+    // C3: a manual re-roll of a scene that already worked counts toward the free-take
+    // allowance; fixing a FLAGGED scene is always free. Mutating run.takesUsed here means
+    // reshootScene's own persist() checkpoints it, so the count survives remount AND reload.
+    const sc = run.scenes.find((s) => s.sceneIdx === sceneIdx);
+    if (sc && sc.status !== 'flagged') run.takesUsed = (run.takesUsed ?? 0) + 1;
     try {
       await reshootScene(run, sceneIdx, cb(run), realProducerDeps);
     } finally {
@@ -271,7 +296,6 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, onBack, onUpg
     resumeStarted.current = false;
     if (typeof localStorage !== 'undefined') localStorage.removeItem(ACTIVE_RUN_KEY);
     setRun(null);
-    setDelivered(false);
     setPhase('launch');
   };
 
@@ -299,9 +323,13 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, onBack, onUpg
     );
   }
 
-  // Live run → screen derives from run.status + run.gate (the resume/gate model).
+  // Live run → screen derives from run.gate FIRST, then status (the resume/gate model).
+  // Routing precedence: gate === 'storyboard' → StoryboardGateScreen; gate === 'first_cut'
+  // → FirstCutScreen; otherwise (running, no gate) → RunningScreen. Gate wins over status so
+  // a First-Cut reshoot/preset re-assemble (C3: status stays 'review'/'first_cut', run.busy set)
+  // keeps FirstCutScreen mounted instead of bouncing to the full "Building your ad" screen.
   if (run && (run.status === 'running' || run.status === 'review')) {
-    if (run.status === 'review' && run.gate === 'storyboard') {
+    if (run.gate === 'storyboard') {
       return (
         <div className="relative">
           {BackBar}
@@ -309,25 +337,33 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, onBack, onUpg
         </div>
       );
     }
-    if (run.status === 'review' && run.gate === 'first_cut') {
+    if (run.gate === 'first_cut') {
+      // Spinner props come alive from local state (instant, live session) OR the persisted run
+      // state (run.busy + the scene's own 'rendering' status), so a cross-tab/remount view still
+      // shows the in-flight reshoot/preset op.
+      const renderingSceneIdx = run.scenes.find((s) => s.status === 'rendering')?.sceneIdx ?? null;
+      const reshootingProp = reshooting ?? (run.busy === 'reshoot' ? renderingSceneIdx : null);
+      const presetBusyProp = presetBusy || run.busy === 'preset';
       return (
         <div className="relative">
           {BackBar}
           <FirstCutScreen
             run={run}
-            reshooting={reshooting}
+            reshooting={reshootingProp}
             onReshoot={handleReshoot}
-            onMakeAnother={() => { setDelivered(true); handleMakeAnother(); }}
+            onMakeAnother={handleMakeAnother}
             onChoosePreset={handleChoosePreset}
-            proUnlocked={directorUnlocked}
+            proUnlocked={presetUnlocked}
             onUpgrade={onUpgrade}
-            presetBusy={presetBusy}
+            presetBusy={presetBusyProp}
           />
-          <FeedbackWidget active={delivered} module="one_shot_producer" />
+          {/* NPS fires the whole time First Cut is up (value delivered), not on the make-another
+              click that unmounts the widget in the same batch. FeedbackWidget self-gates frequency. */}
+          <FeedbackWidget active={run.gate === 'first_cut'} module="one_shot_producer" />
         </div>
       );
     }
-    // status === 'running' → live build progress (Fable 5 screen).
+    // running with no gate → live build progress (Fable 5 screen).
     return (
       <div className="relative">
         {BackBar}

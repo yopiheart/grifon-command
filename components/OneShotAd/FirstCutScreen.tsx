@@ -32,9 +32,9 @@ export const FirstCutScreen: React.FC<{
 }> = ({ run, reshooting, onReshoot, onMakeAnother, onChoosePreset, proUnlocked = false, onUpgrade, presetBusy = false }) => {
   const activePreset = run.presetId ?? null;
   const flagged = run.scenes.filter((s) => s.status === 'flagged').length;
-  // Per-run take allowance. Component-local for the seam; the real meter lives in
-  // the billing slice (One-Shot is admin-gated/unmetered today).
-  const [takesUsed, setTakesUsed] = useState(0);
+  // Per-run take allowance, lifted into the run (persisted) so free takes survive remount AND
+  // reload — ProducerFlow.handleReshoot bumps run.takesUsed for a re-roll of a scene that worked.
+  const takesUsed = run.takesUsed ?? 0;
   const [armedIdx, setArmedIdx] = useState<number | null>(null);
   const freeTakesLeft = Math.max(0, FREE_TAKES - takesUsed);
 
@@ -101,10 +101,10 @@ export const FirstCutScreen: React.FC<{
                 return;
               }
               setArmedIdx(null);
-              // A "take" on a scene that already worked consumes the allowance;
-              // fixing a flagged scene is always free and never counts.
+              // A "take" on a scene that already worked consumes the allowance; fixing a flagged
+              // scene is always free and never counts. The counter now lives on the run and is
+              // bumped + persisted in ProducerFlow.handleReshoot (survives remount + reload).
               // TODO(billing): when One-Shot is metered, deduct 1 credit here when isPaid.
-              if (!isFlagged) setTakesUsed((t) => t + 1);
               onReshoot(sc.sceneIdx);
             };
 
