@@ -5,7 +5,7 @@
 // orchestrator itself imports NONE of these at runtime (deps are injected) so it stays
 // unit-testable and the UI can import its types without pulling this heavy chain.
 
-import type { ProducerDeps, ProductionRun, ProducerRunStore } from './producerOrchestrator';
+import type { ProducerDeps, ProductionRun, ProducerRunStore, VideoJobHandle } from './producerOrchestrator';
 import {
   generateMarketResearch,
   generateAdScript,
@@ -13,14 +13,16 @@ import {
   generateSceneImage,
   generateVideoPrompts,
   generateEditDecisionList,
+  submitVideo,
+  resumeVideoOperation,
 } from './geminiService';
 import { consolidateVoices } from './voiceConsolidationService';
 import { renderFinalVideo } from './finalRenderService';
-import { runQueue } from '../components/GenerateVideo/RenderAllRunner';
 import {
   saveRunCheckpoint,
   seedScenes,
   claimScene,
+  recordScene,
   completeScene,
   flagScene,
   requeueScene,
@@ -34,6 +36,9 @@ const toCheckpoint = (run: ProductionRun): RunCheckpoint => ({
   currentStage: run.stages.find((s) => s.status === 'running')?.id ?? run.gate ?? null,
   input: run.input as unknown as Record<string, unknown>,
   stages: run.stages,
+  // Optimistic-concurrency guard: the client's last-known revision (default 0 for a fresh run's
+  // first create). The server updates WHERE revision = this and increments (see api/producer/run.ts).
+  revision: run.revision ?? 0,
   // Only the resume-critical artifacts + the storyboard-approval flag. Heavy base64 hero
   // images live in run.input; scene images ride in storyboard[].imageUrl.
   artifacts: {
@@ -60,7 +65,17 @@ const toCheckpoint = (run: ProductionRun): RunCheckpoint => ({
 // coarser resume, never a lost render or a double charge.
 const persist = async (run: ProductionRun): Promise<void> => {
   try {
-    await saveRunCheckpoint(run.runId, toCheckpoint(run));
+    const res = await saveRunCheckpoint(run.runId, toCheckpoint(run));
+    if (res.changed) {
+      // Track the run's revision in memory so the next checkpoint sends the fresh value.
+      if (typeof res.revision === 'number') run.revision = res.revision;
+    } else {
+      // Stale-write conflict: a fresher checkpoint (e.g. another tab) already advanced the row.
+      // Persist is best-effort — do NOT overwrite; adopt the server's revision so a later write
+      // can win, log, and continue. The no-double-spend guarantee rides the per-scene claim, not this.
+      if (res.current && typeof res.current.revision === 'number') run.revision = res.current.revision;
+      console.warn('[producer] checkpoint superseded (revision conflict) — adopted server revision', run.revision);
+    }
   } catch (e) {
     console.warn('[producer] checkpoint write failed (best-effort):', (e as Error)?.message);
   }
@@ -71,8 +86,15 @@ const runStore: ProducerRunStore = {
   seedScenes,
   claimScene: async (runId, sceneIdx) => {
     const { claimed, scene } = await claimScene(runId, sceneIdx);
-    return { claimed, status: scene?.status, videoUrl: scene?.video_url, audioUrl: scene?.audio_url };
+    return {
+      claimed,
+      status: scene?.status,
+      videoUrl: scene?.video_url,
+      audioUrl: scene?.audio_url,
+      jobHandle: (scene?.job_handle as VideoJobHandle | null) ?? null,
+    };
   },
+  recordScene: (runId, sceneIdx, handle) => recordScene(runId, sceneIdx, handle as unknown as Record<string, unknown>),
   completeScene,
   flagScene,
   requeueScene,
@@ -88,7 +110,11 @@ export const realProducerDeps: ProducerDeps = {
   generateEditDecisionList,
   consolidateVoices,
   renderFinalVideo,
-  runQueue,
+  // Split video render: submit returns a serializable provider handle (recorded before the long
+  // poll); poll drives that handle to the final url with no re-spend. Reuses geminiService's
+  // existing transport (submitVideo + resumeVideoOperation) — no transport reimplemented here.
+  submitVideo,
+  pollVideo: (handle, opts) => resumeVideoOperation(handle as Parameters<typeof resumeVideoOperation>[0], opts),
   persist,
   run: runStore,
   now: () => Date.now(),

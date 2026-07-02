@@ -18,6 +18,9 @@ create table if not exists public.producer_runs (
   stages        jsonb not null default '[]'::jsonb,      -- ProductionStageState[] checkpoint
   artifacts     jsonb not null default '{}'::jsonb,      -- report/script/storyboard/edl + final urls
   error         text,
+  revision      integer not null default 0,              -- monotonic optimistic-concurrency guard:
+                                                         -- checkpoint UPDATE is guarded WHERE revision=known
+                                                         -- and increments, so a stale tab can't regress state.
   created_at    timestamptz not null default now(),
   updated_at    timestamptz not null default now()
 );

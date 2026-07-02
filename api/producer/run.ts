@@ -28,6 +28,9 @@ const CheckpointBody = z.object({
   stages: z.array(z.unknown()).optional(),
   artifacts: z.record(z.string(), z.unknown()).optional(),
   error: z.string().max(2000).nullable().optional(),
+  // Optimistic-concurrency guard: the client's last-known revision. The UPDATE is guarded on it
+  // and increments; on a create the row is inserted at revision 0 regardless of what's sent.
+  revision: z.number().int().nonnegative().optional(),
 });
 
 // Checkpoints fire after every stage transition — frequent but bounded per user. A
@@ -88,10 +91,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(429).json({ error: 'rate_limited', retry_after_seconds: 30 });
     }
 
-    // Ownership guard before any write: if the run exists, it must be this user's.
+    // Ownership guard before any write: if the run exists, it must be this user's. Also read the
+    // current revision so we can guard the UPDATE (optimistic concurrency) below.
     const { data: existing, error: exErr } = await admin
       .from('producer_runs')
-      .select('user_id')
+      .select('user_id, revision')
       .eq('run_id', runId)
       .maybeSingle();
     if (exErr) {
@@ -113,14 +117,47 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (patch.artifacts !== undefined) row.artifacts = patch.artifacts;
     if (patch.error !== undefined) row.error = patch.error;
 
-    const { error } = await admin
+    // ── Create: first checkpoint for this run → INSERT at revision 0. ──
+    if (!existing) {
+      row.revision = 0;
+      const { data: created, error } = await admin
+        .from('producer_runs')
+        .insert(row)
+        .select('*')
+        .maybeSingle();
+      if (error) {
+        console.error('[producer/run] insert failed:', error.message);
+        return res.status(500).json({ error: 'write_failed' });
+      }
+      return res.status(200).json({ ok: true, changed: true, revision: 0, current: created });
+    }
+
+    // ── Checkpoint: guarded UPDATE (WHERE revision = known) → increment. ──
+    // Last-write-wins is unsafe: a stale tab could regress stages/current_stage. Guard on the
+    // client's known revision; on 0 rows a fresher checkpoint already advanced the row, so return
+    // changed:false + the current row and let the client adopt the fresher header state.
+    const known = patch.revision ?? existing.revision ?? 0;
+    row.revision = known + 1;
+    const { data: updated, error } = await admin
       .from('producer_runs')
-      .upsert(row, { onConflict: 'run_id' });
+      .update(row)
+      .eq('run_id', runId)
+      .eq('revision', known)
+      .select('*')
+      .maybeSingle();
     if (error) {
-      console.error('[producer/run] upsert failed:', error.message);
+      console.error('[producer/run] update failed:', error.message);
       return res.status(500).json({ error: 'write_failed' });
     }
-    return res.status(200).json({ ok: true });
+    if (!updated) {
+      const { data: current } = await admin
+        .from('producer_runs')
+        .select('*')
+        .eq('run_id', runId)
+        .maybeSingle();
+      return res.status(200).json({ ok: true, changed: false, current: current ?? null });
+    }
+    return res.status(200).json({ ok: true, changed: true, revision: known + 1, current: updated });
   }
 
   res.setHeader('Allow', 'GET, POST');

@@ -111,56 +111,67 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     case 'record': {
       // Store the provider handle. Guard on status='submitting' so a stale/duplicate
-      // record can't clobber a scene that already advanced.
-      const { error } = await admin
+      // record can't clobber a scene that already advanced. `changed:false` (0 rows) tells the
+      // client it lost the race — the scene left 'submitting' under it — so it re-reads state.
+      const { data, error } = await admin
         .from('producer_scenes')
         .update({ job_handle: body.jobHandle, status: 'rendering', updated_at: nowIso })
-        .eq('run_id', body.runId).eq('scene_idx', body.sceneIdx).eq('status', 'submitting');
+        .eq('run_id', body.runId).eq('scene_idx', body.sceneIdx).eq('status', 'submitting')
+        .select('scene_idx');
       if (error) {
         console.error('[producer/advance] record failed:', error.message);
         return res.status(500).json({ error: 'write_failed' });
       }
-      return res.status(200).json({ ok: true });
+      return res.status(200).json({ ok: true, changed: (data?.length ?? 0) > 0 });
     }
 
     case 'complete': {
       const patch: Record<string, unknown> = { status: 'done', video_url: body.videoUrl, updated_at: nowIso };
       if (body.audioUrl !== undefined) patch.audio_url = body.audioUrl;
-      const { error } = await admin
+      const { data, error } = await admin
         .from('producer_scenes')
         .update(patch)
-        .eq('run_id', body.runId).eq('scene_idx', body.sceneIdx).in('status', ['submitting', 'rendering']);
+        .eq('run_id', body.runId).eq('scene_idx', body.sceneIdx).in('status', ['submitting', 'rendering'])
+        .select('scene_idx');
       if (error) {
         console.error('[producer/advance] complete failed:', error.message);
         return res.status(500).json({ error: 'write_failed' });
       }
-      return res.status(200).json({ ok: true });
+      return res.status(200).json({ ok: true, changed: (data?.length ?? 0) > 0 });
     }
 
     case 'flag': {
-      const { error } = await admin
+      const { data, error } = await admin
         .from('producer_scenes')
         .update({ status: 'flagged', flagged_reason: body.reason ?? null, updated_at: nowIso })
-        .eq('run_id', body.runId).eq('scene_idx', body.sceneIdx);
+        .eq('run_id', body.runId).eq('scene_idx', body.sceneIdx)
+        .select('scene_idx');
       if (error) {
         console.error('[producer/advance] flag failed:', error.message);
         return res.status(500).json({ error: 'write_failed' });
       }
-      return res.status(200).json({ ok: true });
+      return res.status(200).json({ ok: true, changed: (data?.length ?? 0) > 0 });
     }
 
     case 'requeue': {
-      // Reshoot: return a flagged/done scene to pending so the claim path can re-run it
-      // exactly once. Clears the stale handle/urls so nothing dangles.
-      const { error } = await admin
+      // Reshoot / stale-claim escape: return a scene to pending so the claim path can re-run it
+      // exactly once. Clears the stale handle/urls so nothing dangles. GUARDED so it can never
+      // wipe an in-flight scene: allowed when the scene is flagged/done/failed, OR when it is a
+      // STALE 'submitting' claim (no recorded handle AND untouched for >10min) — the single-driver
+      // v1's reaper-free escape from a crash that died between claim and record. A 0-row result
+      // (changed:false) means the guard blocked it (e.g. actively rendering) → the client re-reads.
+      const staleIso = new Date(Date.now() - 10 * 60 * 1000).toISOString();
+      const { data, error } = await admin
         .from('producer_scenes')
         .update({ status: 'pending', job_handle: null, video_url: null, audio_url: null, flagged_reason: null, updated_at: nowIso })
-        .eq('run_id', body.runId).eq('scene_idx', body.sceneIdx);
+        .eq('run_id', body.runId).eq('scene_idx', body.sceneIdx)
+        .or(`status.in.(flagged,done,failed),and(status.eq.submitting,job_handle.is.null,updated_at.lt."${staleIso}")`)
+        .select('scene_idx');
       if (error) {
         console.error('[producer/advance] requeue failed:', error.message);
         return res.status(500).json({ error: 'write_failed' });
       }
-      return res.status(200).json({ ok: true });
+      return res.status(200).json({ ok: true, changed: (data?.length ?? 0) > 0 });
     }
   }
 }

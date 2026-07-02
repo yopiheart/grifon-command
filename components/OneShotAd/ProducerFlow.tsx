@@ -71,6 +71,9 @@ function fromRow(row: ProductionRunRow, scenes: ProductionSceneRow[]): Productio
     finalVideoUrl: art.finalVideoUrl,
     finalDownloadUrl: art.finalDownloadUrl,
     error: row.error ?? undefined,
+    // Carry the server revision so the resumed run's next checkpoint guards on the fresh value
+    // (optimistic concurrency) instead of racing from 0.
+    revision: typeof row.revision === 'number' ? row.revision : 0,
   };
 }
 

@@ -23,6 +23,8 @@ export interface ProductionRunRow {
   stages: unknown[];
   artifacts: Record<string, unknown>;
   error: string | null;
+  /** Monotonic optimistic-concurrency guard (see api/producer/run.ts checkpoint). */
+  revision: number;
   created_at: string;
   updated_at: string;
 }
@@ -49,6 +51,9 @@ export interface RunCheckpoint {
   stages?: unknown[];
   artifacts?: Record<string, unknown>;
   error?: string | null;
+  /** The client's last-known revision — the server guards the UPDATE on it (WHERE revision=known)
+   * and increments. Omit on the first create (the row is inserted at revision 0). */
+  revision?: number;
 }
 
 const getAccessToken = async (): Promise<string> => {
@@ -88,9 +93,22 @@ export const newRunId = (): string => {
 };
 
 // ── Run header ──────────────────────────────────────────────────────────────────
-/** Upsert the run header after a stage transition (persist-after-every-transition). */
-export const saveRunCheckpoint = (runId: string, patch: RunCheckpoint): Promise<void> =>
-  post('/api/producer/run', { runId, ...patch }).then(() => undefined);
+/** Result of a checkpoint write. `changed:false` = a stale-write conflict (the server's
+ * revision moved on); `current` carries the fresher row so the caller can adopt it. */
+export interface CheckpointResult {
+  changed: boolean;
+  revision?: number;
+  current?: ProductionRunRow;
+}
+
+/** Upsert the run header after a stage transition (persist-after-every-transition), guarded by
+ * the optimistic-concurrency revision so a stale tab can't regress a fresher checkpoint. */
+export const saveRunCheckpoint = (runId: string, patch: RunCheckpoint): Promise<CheckpointResult> =>
+  post('/api/producer/run', { runId, ...patch }).then((d) => ({
+    changed: d?.changed !== false,
+    revision: typeof d?.revision === 'number' ? d.revision : undefined,
+    current: d?.current as ProductionRunRow | undefined,
+  }));
 
 /** Resume-read: the run header + its scene queue, or null if the run doesn't exist. */
 export const loadRun = async (
@@ -125,18 +143,24 @@ export const claimScene = (
 ): Promise<{ claimed: boolean; scene: ProductionSceneRow | null }> =>
   post('/api/producer/advance', { action: 'claim', runId, sceneIdx });
 
+/** A scene write's outcome. `changed:false` = the guarded update matched no row (a lost race);
+ * the caller re-reads scene state instead of proceeding blindly. */
+export interface SceneWriteResult { changed: boolean; }
+
+const toWriteResult = (d: any): SceneWriteResult => ({ changed: d?.changed !== false });
+
 /** Store the provider job handle after a winning claim submits (submitting → rendering). */
-export const recordScene = (runId: string, sceneIdx: number, jobHandle: Record<string, unknown>): Promise<void> =>
-  post('/api/producer/advance', { action: 'record', runId, sceneIdx, jobHandle }).then(() => undefined);
+export const recordScene = (runId: string, sceneIdx: number, jobHandle: Record<string, unknown>): Promise<SceneWriteResult> =>
+  post('/api/producer/advance', { action: 'record', runId, sceneIdx, jobHandle }).then(toWriteResult);
 
 /** Mark a scene done with its rendered urls (rendering → done). */
-export const completeScene = (runId: string, sceneIdx: number, videoUrl: string, audioUrl?: string): Promise<void> =>
-  post('/api/producer/advance', { action: 'complete', runId, sceneIdx, videoUrl, audioUrl }).then(() => undefined);
+export const completeScene = (runId: string, sceneIdx: number, videoUrl: string, audioUrl?: string): Promise<SceneWriteResult> =>
+  post('/api/producer/advance', { action: 'complete', runId, sceneIdx, videoUrl, audioUrl }).then(toWriteResult);
 
 /** Flag a scene whose generation failed after retries (surfaced at a reshoot gate). */
-export const flagScene = (runId: string, sceneIdx: number, reason?: string): Promise<void> =>
-  post('/api/producer/advance', { action: 'flag', runId, sceneIdx, reason }).then(() => undefined);
+export const flagScene = (runId: string, sceneIdx: number, reason?: string): Promise<SceneWriteResult> =>
+  post('/api/producer/advance', { action: 'flag', runId, sceneIdx, reason }).then(toWriteResult);
 
 /** Reshoot: return a flagged/done scene to pending so the claim path re-runs it once. */
-export const requeueScene = (runId: string, sceneIdx: number): Promise<void> =>
-  post('/api/producer/advance', { action: 'requeue', runId, sceneIdx }).then(() => undefined);
+export const requeueScene = (runId: string, sceneIdx: number): Promise<SceneWriteResult> =>
+  post('/api/producer/advance', { action: 'requeue', runId, sceneIdx }).then(toWriteResult);
