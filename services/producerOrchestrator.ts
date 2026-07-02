@@ -558,13 +558,16 @@ export async function regenSceneImage(run: ProductionRun, sceneIdx: number, cb: 
   });
   try {
     const prompt = scene.imagePrompt || scene.startFramePrompt || scene.sceneDescription;
+    // Hook morph: regen the PAIR (product-free start, then the end frame below) — a lone
+    // fresh start against a stale end frame would morph between mismatched compositions.
+    const isHookMorph = !!scene.startFramePrompt && !!scene.endFramePrompt;
     const imageUrl = await withRetry(
       () =>
         deps.generateSceneImage(
           prompt,
           run.input.aspectRatio === '1:1' ? '1:1' : run.input.aspectRatio,
           '1K',
-          { avatarUrl: run.input.avatar.url, productUrl: run.input.heroImageBase64 },
+          { avatarUrl: run.input.avatar.url, productUrl: isHookMorph ? undefined : run.input.heroImageBase64 },
           run.input.avatar.ethnicity,
           [],
           run.input.scriptType,
@@ -582,6 +585,12 @@ export async function regenSceneImage(run: ProductionRun, sceneIdx: number, cb: 
       s.status = 'pending'; // image ready, video not started — back to gate-ready
       s.flaggedReason = undefined;
     });
+    if (scene.endFramePrompt) {
+      const endUrl = await renderEndFrame(run, scene, sceneIdx, deps);
+      await commit((r) => {
+        if (r.storyboard) r.storyboard[sceneIdx].endFrameImageUrl = endUrl;
+      });
+    }
   } catch (e: any) {
     await commit((r) => {
       const s = r.scenes.find((x) => x.sceneIdx === sceneIdx)!;
@@ -635,15 +644,16 @@ export async function reshootScene(run: ProductionRun, sceneIdx: number, cb: Pro
   }
 
   try {
-    // 1. Fresh image
+    // 1. Fresh image (a hook-morph scene regens the PAIR — see regenSceneImage)
     const prompt = scene.imagePrompt || scene.startFramePrompt || scene.sceneDescription;
+    const isHookMorph = !!scene.startFramePrompt && !!scene.endFramePrompt;
     const imageUrl = await withRetry(
       () =>
         deps.generateSceneImage(
           prompt,
           run.input.aspectRatio === '1:1' ? '1:1' : run.input.aspectRatio,
           '1K',
-          { avatarUrl: run.input.avatar.url, productUrl: run.input.heroImageBase64 },
+          { avatarUrl: run.input.avatar.url, productUrl: isHookMorph ? undefined : run.input.heroImageBase64 },
           run.input.avatar.ethnicity,
           [],
           run.input.scriptType,
@@ -658,6 +668,12 @@ export async function reshootScene(run: ProductionRun, sceneIdx: number, cb: Pro
       if (r.storyboard) r.storyboard[sceneIdx].imageUrl = imageUrl;
       r.scenes.find((x) => x.sceneIdx === sceneIdx)!.imageUrl = imageUrl;
     });
+    if (scene.endFramePrompt) {
+      const endUrl = await renderEndFrame(run, scene, sceneIdx, deps);
+      await commit((r) => {
+        if (r.storyboard) r.storyboard[sceneIdx].endFrameImageUrl = endUrl;
+      });
+    }
 
     // 2. Video (claimed → exactly-once)
     const vp = run.videoPrompts?.[sceneIdx];
@@ -739,6 +755,46 @@ async function pollHandle(handle: VideoJobHandle, cb: ProducerCallbacks, deps: P
  * an expired handle takes the requeue + re-render path (the acceptable single-extra-render case).
  * Returns the url, or null if it failed or another driver owns/finished it.
  */
+const PRODUCT_STOPWORDS = new Set(['the', 'and', 'for', 'with', 'your', 'this', 'that', 'from', 'sleek', 'clean', 'portable']);
+
+/**
+ * Render the optional END keyframe for a hook-morph scene (startFramePrompt + endFramePrompt —
+ * the storyboard prompt emits the pair for scene-1 visual hooks in every structure). Mirrors
+ * utils/sceneRender.ts: the hero photo anchors the end frame ONLY when the prompt actually
+ * names the product; a purely abstract-metaphor reveal stays product-free. Returns undefined
+ * on failure — endFrame is optional downstream, so a failed end frame degrades the scene to
+ * a single-frame render instead of flagging it.
+ */
+async function renderEndFrame(run: ProductionRun, scene: Scene, sceneIdx: number, deps: ProducerDeps): Promise<string | undefined> {
+  if (!scene.endFramePrompt) return undefined;
+  const productWords = (run.input.productName || '')
+    .toLowerCase()
+    .split(/[^a-z0-9]+/)
+    .filter((w) => w.length >= 3 && !PRODUCT_STOPWORDS.has(w));
+  const reveals = productWords.some((w) => scene.endFramePrompt!.toLowerCase().includes(w));
+  try {
+    return await withRetry(
+      () =>
+        deps.generateSceneImage(
+          scene.endFramePrompt!,
+          run.input.aspectRatio === '1:1' ? '1:1' : run.input.aspectRatio,
+          '1K',
+          { avatarUrl: run.input.avatar.url, productUrl: reveals ? run.input.heroImageBase64 : undefined },
+          run.input.avatar.ethnicity,
+          [],
+          run.input.scriptType,
+          run.input.productDescription,
+          run.input.productName,
+          sceneIdx + 100, // end-frame variation seed — matches utils/sceneRender.ts
+          reveals ? 'both' : (scene.referenceImage ?? 'none')
+        ),
+      MAX_STAGE_ATTEMPTS
+    );
+  } catch {
+    return undefined;
+  }
+}
+
 async function renderOneScene(run: ProductionRun, job: RenderJob, deps: ProducerDeps, cb: ProducerCallbacks): Promise<string | null> {
   const resolution = run.input.resolution ?? '720p';
   const fallbackModel = routeModel('talking', 'Veo_3.1_Lite', undefined, resolution);
@@ -900,33 +956,47 @@ async function runStage(
       for (let i = 0; i < scenes.length; i++) {
         if (cb.signal.aborted) throw new Error('ABORTED');
         const scene = scenes[i];
-        if (run.scenes.find((s) => s.sceneIdx === i)?.imageUrl) continue; // resume: keep done images
+        const needsMain = !run.scenes.find((s) => s.sceneIdx === i)?.imageUrl; // resume: keep done images
+        const needsEnd = !!scene.endFramePrompt && !scene.endFrameImageUrl;
+        if (!needsMain && !needsEnd) continue;
         const prompt = scene.imagePrompt || scene.startFramePrompt || scene.sceneDescription;
         const mode = scene.referenceImage ?? 'avatar';
+        // Hook morph (start+end frame): the START frame is the "before" metaphor and must stay
+        // product-free; the hero reference belongs on the END frame (reveal). Mirrors
+        // utils/sceneRender.ts so the two surfaces don't drift.
+        const isHookMorph = !!scene.startFramePrompt && !!scene.endFramePrompt;
         try {
-          const url = await withRetry(
-            () =>
-              deps.generateSceneImage(
-                prompt,
-                run.input.aspectRatio === '1:1' ? '1:1' : run.input.aspectRatio,
-                '1K',
-                { avatarUrl: run.input.avatar.url, productUrl: run.input.heroImageBase64 },
-                run.input.avatar.ethnicity,
-                [],
-                run.input.scriptType,
-                run.input.productDescription,
-                run.input.productName,
-                0,
-                mode
-              ),
-            MAX_STAGE_ATTEMPTS,
-            bump
-          );
-          await commit((r) => {
-            if (r.storyboard) r.storyboard[i].imageUrl = url;
-            const sc = r.scenes.find((s) => s.sceneIdx === i);
-            if (sc) sc.imageUrl = url;
-          });
+          if (needsMain) {
+            const url = await withRetry(
+              () =>
+                deps.generateSceneImage(
+                  prompt,
+                  run.input.aspectRatio === '1:1' ? '1:1' : run.input.aspectRatio,
+                  '1K',
+                  { avatarUrl: run.input.avatar.url, productUrl: isHookMorph ? undefined : run.input.heroImageBase64 },
+                  run.input.avatar.ethnicity,
+                  [],
+                  run.input.scriptType,
+                  run.input.productDescription,
+                  run.input.productName,
+                  0,
+                  mode
+                ),
+              MAX_STAGE_ATTEMPTS,
+              bump
+            );
+            await commit((r) => {
+              if (r.storyboard) r.storyboard[i].imageUrl = url;
+              const sc = r.scenes.find((s) => s.sceneIdx === i);
+              if (sc) sc.imageUrl = url;
+            });
+          }
+          if (needsEnd) {
+            const endUrl = await renderEndFrame(run, scene, i, deps);
+            await commit((r) => {
+              if (r.storyboard) r.storyboard[i].endFrameImageUrl = endUrl;
+            });
+          }
         } catch (e: any) {
           if (e?.message === 'ABORTED') throw e;
           await commit((r) => {

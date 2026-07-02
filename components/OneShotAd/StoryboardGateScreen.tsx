@@ -58,6 +58,7 @@ export const StoryboardGateScreen: React.FC<{
             const busy = regenerating === sc.sceneIdx;
             const isFlagged = sc.status === 'flagged';
             const scriptLine = run.storyboard?.[sc.sceneIdx]?.scriptLine ?? '';
+            const endFrameUrl = run.storyboard?.[sc.sceneIdx]?.endFrameImageUrl;
             return (
               <GlassPanel
                 key={sc.sceneIdx}
@@ -66,6 +67,14 @@ export const StoryboardGateScreen: React.FC<{
                 <div className="aspect-[9/16]">
                   <SceneReveal imageUrl={sc.imageUrl} loading={busy} alt={`Scene ${sc.sceneIdx + 1}`} />
                 </div>
+                {/* Hook-morph END keyframe: the tile's main image is the START frame; the video
+                    morphs into this one. Inset so the user approves BOTH compositions. */}
+                {endFrameUrl && !busy && (
+                  <div className="absolute bottom-11 right-1.5 w-[36%] overflow-hidden rounded border border-white/25 shadow-lg">
+                    <img src={endFrameUrl} alt={`Scene ${sc.sceneIdx + 1} end frame`} className="block aspect-[9/16] w-full object-cover" />
+                    <div className="absolute left-0 top-0 rounded-br bg-black/70 px-1 py-0.5 text-[8px] font-mono uppercase text-zinc-300">End</div>
+                  </div>
+                )}
                 <div className="absolute left-1.5 top-1.5 rounded bg-black/70 px-1.5 py-0.5 text-[9px] font-mono text-zinc-300">
                   {sc.sceneIdx + 1}
                 </div>

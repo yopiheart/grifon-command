@@ -596,3 +596,138 @@ describe('runProduction — abort mid fan-out stops work without erroring the wh
     expect(spies.submitVideo).toHaveBeenCalledTimes(2);
   });
 });
+
+// --- 10. End-frame (hook morph) generation ---------------------------------
+// The storyboard prompt emits startFramePrompt + endFramePrompt for scene-1 visual
+// hooks (all structures). The producer must render BOTH keyframes and thread the end
+// frame to the video job — mirroring utils/sceneRender.ts's morph heuristics (start
+// frame product-free, hero anchors the end frame only when the prompt names the product).
+
+/** Scene 0 is a hook morph (no imagePrompt — main falls back to startFramePrompt). */
+const MORPH_SCENES: Scene[] = [
+  { scriptLine: 'Hook', sceneDescription: 'metaphor', startFramePrompt: 'START0', endFramePrompt: 'END0 Bukidnon Brew bottle reveal', transitionEffect: 'morph', referenceImage: 'none' },
+  { scriptLine: 'Line 1', sceneDescription: 'd1', imagePrompt: 'IMG1', referenceImage: 'product' },
+];
+
+function makeMorphDeps(over: Partial<ProducerDeps> = {}) {
+  return makeFakeDeps({
+    generateStoryboard: vi.fn(async () => ({ scenes: MORPH_SCENES.map((s) => ({ ...s })), strategicAudit: '' })) as any,
+    ...over,
+  });
+}
+
+describe('end-frame (hook morph) generation', () => {
+  it('scene_images renders BOTH keyframes for a morph scene: product-free start, hero-anchored reveal end', async () => {
+    const { deps, spies } = makeMorphDeps();
+    const run = createProductionRun(makeInput(), 'u1');
+
+    await runProduction(run, cb(), deps); // parks at the storyboard gate
+
+    // 3 image gens: START0 + END0 (scene 0 morph) + IMG1 (scene 1 single-frame).
+    expect(spies.generateSceneImage).toHaveBeenCalledTimes(3);
+    const calls = spies.generateSceneImage.mock.calls as any[];
+    const startCall = calls.find((c) => c[0] === 'START0')!;
+    const endCall = calls.find((c) => String(c[0]).startsWith('END0'))!;
+    const plainCall = calls.find((c) => c[0] === 'IMG1')!;
+    // Morph START frame = the "before" metaphor → product-free; plain scenes keep the hero ref.
+    expect(startCall[3]).toEqual({ avatarUrl: 'avatar.png', productUrl: undefined });
+    expect(plainCall[3]).toEqual({ avatarUrl: 'avatar.png', productUrl: 'data:image/png;base64,AAAA' });
+    // END frame names the product ("Bukidnon Brew") → hero-anchored, 'both' mode, +100 seed.
+    expect(endCall[3]).toEqual({ avatarUrl: 'avatar.png', productUrl: 'data:image/png;base64,AAAA' });
+    expect(endCall[9]).toBe(100);
+    expect(endCall[10]).toBe('both');
+    // Both urls persisted on the storyboard scene.
+    expect(run.storyboard![0].imageUrl).toBe('img://START0');
+    expect(run.storyboard![0].endFrameImageUrl).toBe('img://END0 Bukidnon Brew bottle reveal');
+    expect(run.storyboard![1].endFrameImageUrl).toBeUndefined();
+  });
+
+  it('an abstract end frame (prompt does not name the product) stays product-free', async () => {
+    const abstract: Scene[] = [{ ...MORPH_SCENES[0], endFramePrompt: 'ENDX smoke plume dissolving' }, { ...MORPH_SCENES[1] }];
+    const { deps, spies } = makeFakeDeps({
+      generateStoryboard: vi.fn(async () => ({ scenes: abstract.map((s) => ({ ...s })), strategicAudit: '' })) as any,
+    });
+    const run = createProductionRun(makeInput(), 'u1');
+
+    await runProduction(run, cb(), deps);
+
+    const endCall = (spies.generateSceneImage.mock.calls as any[]).find((c) => String(c[0]).startsWith('ENDX'))!;
+    expect(endCall[3]).toEqual({ avatarUrl: 'avatar.png', productUrl: undefined });
+    expect(endCall[10]).toBe('none'); // falls back to the scene's own referenceImage
+  });
+
+  it('the video fan-out threads the end frame to submitVideo (morph scene only)', async () => {
+    const { deps, spies } = makeMorphDeps();
+    const run = createProductionRun(makeInput(), 'u1');
+    const callbacks = cb();
+
+    await runProduction(run, callbacks, deps);
+    await approveStoryboard(run, callbacks, deps);
+
+    expect(spies.submitVideo).toHaveBeenCalledTimes(2);
+    const submits = spies.submitVideo.mock.calls as any[];
+    const scene0 = submits.find((c) => c[1].sceneIdx === 0)!;
+    const scene1 = submits.find((c) => c[1].sceneIdx === 1)!;
+    expect(scene0[0].startFrame).toBe('img://START0');
+    expect(scene0[0].endFrame).toBe('img://END0 Bukidnon Brew bottle reveal');
+    expect(scene1[0].endFrame).toBeUndefined();
+  });
+
+  it('end-frame failure degrades to a single-frame scene — never flags, never blocks the gate', async () => {
+    const { deps, spies } = makeMorphDeps();
+    (spies.generateSceneImage as any).mockImplementation(async (prompt: string) => {
+      if (prompt.startsWith('END0')) throw new Error('img gen down');
+      return `img://${prompt}`;
+    });
+    const run = createProductionRun(makeInput(), 'u1');
+
+    const out = await runProduction(run, cb(), deps);
+
+    expect(out.status).not.toBe('error');
+    expect(out.gate).toBe('storyboard'); // still parks at the gate
+    expect(out.storyboard![0].imageUrl).toBe('img://START0'); // main frame intact
+    expect(out.storyboard![0].endFrameImageUrl).toBeUndefined(); // degraded to single frame
+    expect(out.scenes[0].status).not.toBe('flagged');
+  });
+
+  it('regenSceneImage regenerates the PAIR for a morph scene (start+end stay in sync)', async () => {
+    const storyboard: Scene[] = MORPH_SCENES.map((s, i) => ({ ...s, imageUrl: `img://old-${i}`, ...(s.endFramePrompt ? { endFrameImageUrl: 'img://old-end' } : {}) }));
+    const run = createProductionRun(makeInput(), 'u1', {
+      doneStages: ['market_research', 'script', 'storyboard', 'scene_images'],
+      prefill: {
+        report: REPORT,
+        script: SCRIPT,
+        finalScript: assembleFinalScript(SCRIPT),
+        ...mapReportToWizard(makeInput(), REPORT),
+        storyboard,
+        videoPrompts: VIDEO_PROMPTS.map((v) => ({ ...v })),
+      },
+    });
+    const { deps, spies } = makeMorphDeps();
+
+    await regenSceneImage(run, 0, cb(), deps);
+
+    expect(spies.generateSceneImage).toHaveBeenCalledTimes(2); // start + end, nothing else
+    expect(run.storyboard![0].imageUrl).toBe('img://START0');
+    expect(run.storyboard![0].endFrameImageUrl).toBe('img://END0 Bukidnon Brew bottle reveal');
+    // Start frame stays product-free on regen too.
+    const startCall = (spies.generateSceneImage.mock.calls as any[]).find((c) => c[0] === 'START0')!;
+    expect(startCall[3]).toEqual({ avatarUrl: 'avatar.png', productUrl: undefined });
+  });
+
+  it('reshootScene re-renders the pair and threads the FRESH end frame to the reshoot video', async () => {
+    const { deps, spies } = makeMorphDeps();
+    const run = createProductionRun(makeInput(), 'u1');
+    const callbacks = cb();
+    await runProduction(run, callbacks, deps);
+    await approveStoryboard(run, callbacks, deps); // → First Cut, scenes done
+    (spies.submitVideo as any).mockClear();
+
+    await reshootScene(run, 0, callbacks, deps);
+
+    expect(spies.submitVideo).toHaveBeenCalledTimes(1);
+    const cfg = (spies.submitVideo.mock.calls as any[])[0][0];
+    expect(cfg.startFrame).toBe('img://START0');
+    expect(cfg.endFrame).toBe('img://END0 Bukidnon Brew bottle reveal');
+  });
+});
