@@ -330,13 +330,9 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
               className="text-center text-2xl sm:text-3xl lg:text-4xl font-normal tracking-tight text-zinc-200 mb-2"
             >
               {dayPart},{' '}
-              {isDesktop ? (
-                <SignatureScribble variant="underline" delay={0.9} strokeWidth={2.5}>
-                  <span className="font-semibold text-white">{firstName}</span>
-                </SignatureScribble>
-              ) : (
+              <SignatureScribble variant="underline" delay={0.9} strokeWidth={2.5} playOnMount>
                 <span className="font-semibold text-white">{firstName}</span>
-              )}.
+              </SignatureScribble>.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: DUR.entrance, delay: 0.1 }}
