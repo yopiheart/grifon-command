@@ -39,6 +39,23 @@ supersedes the scattered "Reusable smoke setup" notes in `expert_manual_mode.md`
 
 ## Per-session environment (defreezer wipes ALL of this)
 
+0. **GEMINI_API_KEY must be on a BILLING-ENABLED project — verify BEFORE any paid smoke.**
+   The whole One-Shot/Producer flow dies at step 1 (market research) if the key can't spend:
+   the free tier for `gemini-2.0-flash` is **`limit: 0`** (zero requests/day), so every
+   `POST /api/gemini/text` returns `429 RESOURCE_EXHAUSTED` and the flow just spins
+   "Researching your market…" through the ~124s retry backoff. This is NOT usage-exhaustion
+   that resets — waiting never clears a limit of 0. The defreezer-restored `.env` can carry a
+   personal free key instead of the production billing-enabled one (hit 2026-07-02, SIGLA smoke).
+   **Probe the key directly (not via the app) to be sure:**
+   ```bash
+   KEY=$(grep '^GEMINI_API_KEY=' .env | cut -d= -f2-)
+   curl -s -o /dev/null -w "%{http_code}\n" -X POST \
+     "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=$KEY" \
+     -H "Content-Type: application/json" -d '{"contents":[{"parts":[{"text":"hi"}]}]}'
+   ```
+   `200` = good to spend. `429` with `free_tier_requests, limit: 0` = billing off → escalate to
+   Neil (enable billing on the project, or supply a billing-enabled key). Note: the
+   dev-unmetered flag does NOT help — it gates Grifon's own credit metering, downstream of Gemini.
 1. `.env` restored (all keys — see CLAUDE.md list).
 2. `.\scripts\enable-dev-unmetered-video.ps1` → sets `GRIFON_DEV_UNMETERED=true` +
    `GRIFON_DEV_UNMETERED_VIDEO=true` (skips the 402 monthly quota + the 429 hourly wall,

@@ -65,7 +65,21 @@ machine, Concierge `mode`/`prefill` unvalidated.
 1. **Slice 2 — rate-limit re-scope** (`api/gemini/video.ts` `VIDEO_LIMIT` per-clip →
    per-ad-launch). TUNED infra — **your explicit sign-off gate**, deliberately untouched.
    Until done, a >5-scene fan-out self-throttles on the hourly wall.
-2. **Live producer smoke — PARKED 2026-07-02, resume HERE.** Everything is staged; it was
+2. **Live producer smoke — ATTEMPTED 2026-07-02, BLOCKED on Gemini billing; resume HERE.**
+   Neil-approved TEST SPEC filled (One-Shot producer, SIGLA, Product, auto-cast, 9:16, Taglish,
+   Codex-generated SIGLA hero, METERED). Ran it end-to-end via smoke-tester: **sign-in, producer
+   engine, and full SIGLA intake threading all PASSED on screen** — then died at market research.
+   Every `POST /api/gemini/text` → `429 RESOURCE_EXHAUSTED`, `free_tier_requests limit: 0` on
+   `gemini-2.0-flash`. The `.env` `GEMINI_API_KEY` is on a **no-billing project** (likely a
+   defreezer-restored personal free key). Zero credits spent, `producer_runs` still 0. The two
+   hard gates (resume + no-double-spend) were NOT reached. **To resume: fix the Gemini key
+   (enable billing OR swap in a billing-enabled key — see `smoke_test_setup.md` step 0 probe),
+   then re-fire the already-staged run (~2 min to clear research, ~6–10 min full).** Everything
+   else remains staged (SQL applied, business acct 999 cr, metered `.env`, dev server). Also
+   minor UX find: quota 429 spins "Researching your market…" through the full retry backoff with
+   no quota-specific error — short-circuit `limit:0`-class errors instead of retrying the wall.
+   (Original parked note below still applies for the mechanics.)
+   **Live producer smoke — PARKED 2026-07-02, resume HERE.** Everything is staged; it was
    stopped pre-launch (zero spend, `producer_runs` empty) because the run lacked a
    Neil-approved TEST SPEC. **Resume = open `workflows/smoke_test_setup.md`, fill the
    ⛔ Test Spec gate template (draft one for Neil: One-Shot producer flow, Product,
