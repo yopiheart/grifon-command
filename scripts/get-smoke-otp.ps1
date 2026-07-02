@@ -23,26 +23,41 @@ function Get-EnvValue([string]$name) {
   return $null
 }
 
-# The GoTrue ADMIN API (generate_link) 401s on the new sb_secret_* key format (observed
-# 2026-07-02); it wants the LEGACY service_role JWT. Prefer a dedicated var for it:
-# Supabase dashboard -> Settings -> API -> "legacy API keys" -> service_role (reveal),
-# then add to .env:  SUPABASE_SERVICE_ROLE_JWT=eyJ...
-$key = Get-EnvValue 'SUPABASE_SERVICE_ROLE_JWT'
-if (-not $key) { $key = Get-EnvValue 'SUPABASE_SERVICE_ROLE_KEY' }
+# Key preference (verified 2026-07-02 on this project): the NEW sb_secret_* key IS
+# accepted by the GoTrue admin API; the legacy service_role JWT is NOT (legacy keys are
+# disabled project-wide). Use SUPABASE_SERVICE_ROLE_KEY first; JWT only as fallback.
+$key = Get-EnvValue 'SUPABASE_SERVICE_ROLE_KEY'
+$fallback = Get-EnvValue 'SUPABASE_SERVICE_ROLE_JWT'
 $url = Get-EnvValue 'VITE_SUPABASE_URL'
-if (-not $key) { Write-Error 'SUPABASE_SERVICE_ROLE_JWT / _KEY missing from .env'; exit 1 }
-if ($key.StartsWith('sb_secret')) {
-  Write-Warning 'Only the new sb_secret key is in .env — the auth admin API may 401 on it. If it does, add SUPABASE_SERVICE_ROLE_JWT (legacy service_role JWT from the dashboard) to .env and re-run.'
-}
+if (-not $key -and -not $fallback) { Write-Error 'SUPABASE_SERVICE_ROLE_KEY missing from .env'; exit 1 }
+if (-not $key) { $key = $fallback; $fallback = $null }
+$keyType = if ($key.StartsWith('sb_secret')) { 'sb_secret' } elseif ($key.StartsWith('eyJ')) { 'legacy JWT' } else { 'unknown format' }
+Write-Host ("  using key type: " + $keyType + " (length " + $key.Length + ")")
 if (-not $url) { Write-Error 'VITE_SUPABASE_URL missing from .env'; exit 1 }
 
-$body = (@{ type = 'magiclink'; email = $EmailAddr } | ConvertTo-Json)
-try {
-  $resp = Invoke-RestMethod -Method Post -Uri ($url.TrimEnd('/') + '/auth/v1/admin/generate_link') `
-    -Headers @{ apikey = $key; Authorization = ('Bearer ' + $key) } `
+# PS 5.1: force TLS 1.2 (older default can be rejected upstream with an opaque error).
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
+function Invoke-GenerateLink([string]$k) {
+  $body = (@{ type = 'magiclink'; email = $EmailAddr } | ConvertTo-Json)
+  return Invoke-RestMethod -Method Post -Uri ($url.TrimEnd('/') + '/auth/v1/admin/generate_link') `
+    -Headers @{ apikey = $k; Authorization = ('Bearer ' + $k) } `
     -ContentType 'application/json' -Body $body
+}
+
+try {
+  $resp = Invoke-GenerateLink $key
 } catch {
-  Write-Error ("generate_link failed: " + $_.Exception.Message); exit 1
+  $status = $null
+  try { $status = [int]$_.Exception.Response.StatusCode } catch {}
+  if ($fallback) {
+    Write-Warning ("generate_link with " + $keyType + " failed (HTTP " + $status + ") - retrying with the other key from .env...")
+    try { $resp = Invoke-GenerateLink $fallback } catch {
+      Write-Error ("generate_link failed with BOTH keys: " + $_.Exception.Message + " - fallback: read the code from the Resend dashboard Emails log instead (see workflows/smoke_test_setup.md)."); exit 1
+    }
+  } else {
+    Write-Error ("generate_link failed (HTTP " + $status + "): " + $_.Exception.Message); exit 1
+  }
 }
 
 if ($resp.email_otp) {

@@ -60,6 +60,11 @@ supersedes the scattered "Reusable smoke setup" notes in `expert_manual_mode.md`
 ## Known auth facts (so nobody re-derives them)
 
 - Google OAuth: NO headless bypass; only used when Neil drives the login himself.
+- Supabase API keys (verified 2026-07-02): the project uses NEW-format keys; the
+  `sb_secret_*` in `SUPABASE_SERVICE_ROLE_KEY` works on REST **and** the GoTrue admin
+  API. The LEGACY `service_role` JWT is valid-but-rejected (legacy keys disabled
+  project-wide) — do NOT chase it; `SUPABASE_SERVICE_ROLE_JWT` in `.env` is only an
+  optional fallback slot for the script.
 - Email OTP: 6-digit input in the UI; `get-smoke-otp.ps1` prints whatever GoTrue mints —
   if the printed code isn't 6 digits, that's the otp-length mismatch from
   agent_lessons 2026-06 (fix the Supabase `otp_length` setting, don't fight the UI).
