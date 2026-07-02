@@ -65,11 +65,20 @@ machine, Concierge `mode`/`prefill` unvalidated.
 1. **Slice 2 — rate-limit re-scope** (`api/gemini/video.ts` `VIDEO_LIMIT` per-clip →
    per-ad-launch). TUNED infra — **your explicit sign-off gate**, deliberately untouched.
    Until done, a >5-scene fan-out self-throttles on the hourly wall.
-2. **Live SIGLA smoke** (Concierge · Product · Auto-cast · 9:16 · Taglish) — needs API
-   spend + your eyeball via the `smoke-tester` subagent. Drive it with `?osaEngine=producer`.
-   MUST also run the **resume gate** (kill tab + drop net at each stage → exact-place
-   resume) and the **no-double-spend gate** (each scene fires one provider call; `video_ads`
-   metered once) — both are hard pass/fail.
+2. **Live producer smoke — PARKED 2026-07-02, resume HERE.** Everything is staged; it was
+   stopped pre-launch (zero spend, `producer_runs` empty) because the run lacked a
+   Neil-approved TEST SPEC. **Resume = open `workflows/smoke_test_setup.md`, fill the
+   ⛔ Test Spec gate template (draft one for Neil: One-Shot producer flow, Product,
+   Auto-cast, 9:16, Taglish, the committed Sunrise handheld hero or a Codex-generated
+   asset — NEIL DECIDES), get his approve/edit, THEN fire.** Staged already: SQL applied
+   to live DB (incl. `revision`); smoke account = `neilmaglaya.business22+smoke@gmail.com`
+   (business plan, 999/999 credits); OTP read hands-free via Neil's Gmail connector
+   (scopes fixed); per-session env = unmetered script + `npm run dev` (defreezer wipes
+   both). Gates stay hard pass/fail: **resume gate** (kill tab mid-render → exact-place
+   resume, recorded handles POLLED not re-submitted) and **no-double-spend gate**
+   (`producer_scenes.attempts` = 1/scene; one submit call per scene; `video_ads` metered
+   once — note: unmetered flag bypasses metering locally, so that leg rides the
+   unit-tested finishedAdId dedup unless smoked metered).
 3. **Concierge wiring** — the container currently drives One-Shot (auto research+script);
    Concierge-via-ExpertMode reuses the SAME orchestrator (`createProductionRun` already
    supports `mode`+`prefill`+`doneStages`) — wire ExpertMode's script+direction into a run.
