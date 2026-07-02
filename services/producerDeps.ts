@@ -23,6 +23,7 @@ import {
   seedScenes,
   claimScene,
   recordScene,
+  recordSceneImage,
   completeScene,
   flagScene,
   requeueScene,
@@ -34,7 +35,11 @@ const toCheckpoint = (run: ProductionRun): RunCheckpoint => ({
   mode: run.mode ?? 'oneshot',
   status: run.status,
   currentStage: run.stages.find((s) => s.status === 'running')?.id ?? run.gate ?? null,
-  input: run.input as unknown as Record<string, unknown>,
+  // `input` is static after launch and carries the base64 hero + avatar — send it ONLY on the
+  // creating write (revision still 0; it stays 0 until a write succeeds, so a failed first
+  // write retries WITH input). Re-sending it on every transition was half the payload bloat
+  // behind the checkpoint statement timeouts (2026-07-02).
+  ...(run.revision ? {} : { input: run.input as unknown as Record<string, unknown> }),
   stages: run.stages,
   // Optimistic-concurrency guard: the client's last-known revision (default 0 for a fresh run's
   // first create). The server updates WHERE revision = this and increments (see api/producer/run.ts).
@@ -100,6 +105,7 @@ const runStore: ProducerRunStore = {
     };
   },
   recordScene: (runId, sceneIdx, handle) => recordScene(runId, sceneIdx, handle as unknown as Record<string, unknown>),
+  recordSceneImage,
   completeScene,
   flagScene,
   requeueScene,

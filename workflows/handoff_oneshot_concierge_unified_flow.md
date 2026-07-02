@@ -65,7 +65,22 @@ machine, Concierge `mode`/`prefill` unvalidated.
 1. **Slice 2 — rate-limit re-scope** (`api/gemini/video.ts` `VIDEO_LIMIT` per-clip →
    per-ad-launch). TUNED infra — **your explicit sign-off gate**, deliberately untouched.
    Until done, a >5-scene fan-out self-throttles on the hourly wall.
-2. **Live producer smoke — ATTEMPTED 2026-07-02, BLOCKED on Gemini billing; resume HERE.**
+2a. **SHIPPED 2026-07-03 (post-smoke fix session): the two bugs the smoke caught.**
+   - **End-frame morph restored** (`renderEndFrame` in producerOrchestrator + gate END inset):
+     the producer rebuild had dropped the start→end hook-morph the 8-step wizard still had
+     (utils/sceneRender.ts). Mirrors its heuristics; pair stays in sync on regen/reshoot.
+   - **Checkpoint-size bug fixed** (the wave-2 image re-spend root cause): base64 scene images
+     rode the artifacts jsonb twice → >2mb parser cap + Postgres statement timeouts → silent
+     stale checkpoints → resume re-bought images. Now: images persist once per scene on
+     `producer_scenes.image_url`/`end_frame_url` (new `record_image` action, 4mb cap),
+     checkpoints slimmed at the transport boundary (`slimCheckpointArtifacts`), `input` sent
+     only on create, resume rehydrates images from rows (ProducerFlow.fromRow).
+   - **`supabase/producer_runs.sql` changed again** — `end_frame_url` column (already applied
+     to the live DB via migration 2026-07-03). Preview harness gained a **Storyboard Gate tab**
+     (`/one-shot-flow-preview.html`) — eyeballed ✓. 407 unit tests + build + bundle-leak green.
+   - **Next paid step (HOLD for Neil's GO): a GATE-STOP run** — intake → storyboard gate,
+     eyeball morph frames, do NOT click FILM IT (~₱20 images, zero video spend).
+2b. **Live producer smoke — ATTEMPTED 2026-07-02, BLOCKED on Gemini billing (then paid); resume HERE.**
    Neil-approved TEST SPEC filled (One-Shot producer, SIGLA, Product, auto-cast, 9:16, Taglish,
    Codex-generated SIGLA hero, METERED). Ran it end-to-end via smoke-tester: **sign-in, producer
    engine, and full SIGLA intake threading all PASSED on screen** — then died at market research.

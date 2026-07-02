@@ -260,6 +260,9 @@ export interface ProducerRunStore {
   /** Store the provider job handle after a winning claim submits (submitting → rendering).
    * `changed:false` means the scene left 'submitting' under us — a lost race the caller re-reads. */
   recordScene: (runId: string, sceneIdx: number, jobHandle: VideoJobHandle) => Promise<{ changed: boolean }>;
+  /** Persist a scene's image(s) on its own row (written once per scene). Keeps multi-MB base64
+   * out of the run-header checkpoint; resume rehydrates storyboard images from these rows. */
+  recordSceneImage: (runId: string, sceneIdx: number, imageUrl: string, endFrameUrl?: string) => Promise<{ changed: boolean }>;
   completeScene: (runId: string, sceneIdx: number, videoUrl: string, audioUrl?: string) => Promise<{ changed: boolean }>;
   flagScene: (runId: string, sceneIdx: number, reason?: string) => Promise<{ changed: boolean }>;
   requeueScene: (runId: string, sceneIdx: number) => Promise<{ changed: boolean }>;
@@ -591,6 +594,10 @@ export async function regenSceneImage(run: ProductionRun, sceneIdx: number, cb: 
         if (r.storyboard) r.storyboard[sceneIdx].endFrameImageUrl = endUrl;
       });
     }
+    // Refresh the scene's durable image row (best-effort — see the scene_images stage).
+    try {
+      await deps.run.recordSceneImage(run.runId, sceneIdx, imageUrl, scene.endFrameImageUrl);
+    } catch { /* best-effort */ }
   } catch (e: any) {
     await commit((r) => {
       const s = r.scenes.find((x) => x.sceneIdx === sceneIdx)!;
@@ -674,6 +681,10 @@ export async function reshootScene(run: ProductionRun, sceneIdx: number, cb: Pro
         if (r.storyboard) r.storyboard[sceneIdx].endFrameImageUrl = endUrl;
       });
     }
+    // Refresh the scene's durable image row (best-effort — see the scene_images stage).
+    try {
+      await deps.run.recordSceneImage(run.runId, sceneIdx, imageUrl, scene.endFrameImageUrl);
+    } catch { /* best-effort */ }
 
     // 2. Video (claimed → exactly-once)
     const vp = run.videoPrompts?.[sceneIdx];
@@ -996,6 +1007,14 @@ async function runStage(
             await commit((r) => {
               if (r.storyboard) r.storyboard[i].endFrameImageUrl = endUrl;
             });
+          }
+          // Durable image persistence: the scene's OWN small row ('record_image'), never the fat
+          // checkpoint jsonb (slimmed at the transport boundary). Best-effort — a miss only means
+          // a coarser resume for this scene, never a lost render.
+          if (scene.imageUrl) {
+            try {
+              await deps.run.recordSceneImage(run.runId, i, scene.imageUrl, scene.endFrameImageUrl);
+            } catch { /* best-effort */ }
           }
         } catch (e: any) {
           if (e?.message === 'ABORTED') throw e;

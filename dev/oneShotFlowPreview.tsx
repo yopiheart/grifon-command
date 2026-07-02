@@ -15,11 +15,12 @@
 import { useState, type CSSProperties } from 'react';
 import ReactDOM from 'react-dom/client';
 import { RunningScreen as Fable5RunningScreen } from '../components/OneShotAd/RunningScreen.fable5';
+import { StoryboardGateScreen } from '../components/OneShotAd/StoryboardGateScreen';
 import { FirstCutScreen } from '../components/OneShotAd/FirstCutScreen';
 import { makePreviewRun } from '../components/OneShotAd/previewMock';
 import '../index.css';
 
-const TABS = ['running', 'firstcut'] as const;
+const TABS = ['running', 'gate', 'firstcut'] as const;
 type Tab = (typeof TABS)[number];
 
 const tabBtn = (active: boolean): CSSProperties => ({
@@ -64,7 +65,7 @@ const App = () => {
         <div style={{ marginLeft: 'auto', display: 'flex', gap: 4 }}>
           {TABS.map((t) => (
             <button key={t} onClick={() => setTab(t)} style={tabBtn(tab === t)}>
-              {t === 'running' ? 'Running' : 'First Cut'}
+              {t === 'running' ? 'Running' : t === 'gate' ? 'Storyboard Gate' : 'First Cut'}
             </button>
           ))}
         </div>
@@ -72,6 +73,16 @@ const App = () => {
 
       {tab === 'running' ? (
         <Fable5RunningScreen run={makePreviewRun('running')} onMinimize={() => {}} />
+      ) : tab === 'gate' ? (
+        <StoryboardGateScreen
+          run={makePreviewRun('gate')}
+          regenerating={reshooting}
+          onRegenScene={(i) => {
+            setReshooting(i);
+            window.setTimeout(() => setReshooting(null), 1200);
+          }}
+          onApprove={() => window.alert('approve → video render (mock)')}
+        />
       ) : (
         <FirstCutScreen
           run={makePreviewRun('firstcut')}

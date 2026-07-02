@@ -18,12 +18,16 @@ import { rateLimitCheck } from '../_lib/rateLimit.js';
 // Service-role only (producer_scenes is RLS-on/no-policies). Ownership is enforced
 // against producer_runs.user_id on every call — a client never asserts its own identity.
 
-export const config = { api: { bodyParser: { sizeLimit: '256kb' } } };
+// 4mb (was 256kb): 'record_image' carries ONE base64 scene image (+ optional end frame) per
+// call — this is what keeps multi-MB images OUT of the run-header checkpoint jsonb, whose
+// oversized writes hit Postgres statement timeouts (2026-07-02 SIGLA smoke).
+export const config = { api: { bodyParser: { sizeLimit: '4mb' } } };
 
 const Body = z.discriminatedUnion('action', [
   z.object({ action: z.literal('seed'), runId: z.string().min(8).max(200), sceneCount: z.number().int().min(1).max(24) }),
   z.object({ action: z.literal('claim'), runId: z.string().min(8).max(200), sceneIdx: z.number().int().min(0).max(23) }),
   z.object({ action: z.literal('record'), runId: z.string().min(8).max(200), sceneIdx: z.number().int().min(0).max(23), jobHandle: z.record(z.string(), z.unknown()) }),
+  z.object({ action: z.literal('record_image'), runId: z.string().min(8).max(200), sceneIdx: z.number().int().min(0).max(23), imageUrl: z.string().max(3_000_000), endFrameUrl: z.string().max(3_000_000).nullable().optional() }),
   z.object({ action: z.literal('complete'), runId: z.string().min(8).max(200), sceneIdx: z.number().int().min(0).max(23), videoUrl: z.string().max(4000), audioUrl: z.string().max(4000).optional() }),
   z.object({ action: z.literal('flag'), runId: z.string().min(8).max(200), sceneIdx: z.number().int().min(0).max(23), reason: z.string().max(500).optional() }),
   z.object({ action: z.literal('requeue'), runId: z.string().min(8).max(200), sceneIdx: z.number().int().min(0).max(23) }),
@@ -123,6 +127,25 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return res.status(500).json({ error: 'write_failed' });
       }
       return res.status(200).json({ ok: true, changed: (data?.length ?? 0) > 0 });
+    }
+
+    case 'record_image': {
+      // Persist the scene's image(s) on its OWN row, written once per scene — never inside the
+      // run-header checkpoint jsonb (multi-MB payloads there hit statement timeouts and the 2mb
+      // parser cap, leaving stale checkpoints that made resume re-buy images — 2026-07-02).
+      // UPSERT because images generate BEFORE the video-stage 'seed'; on conflict only the image
+      // columns update (status/attempts/handle untouched), so this can never reset an in-flight scene.
+      const { error } = await admin
+        .from('producer_scenes')
+        .upsert(
+          { run_id: body.runId, scene_idx: body.sceneIdx, image_url: body.imageUrl, end_frame_url: body.endFrameUrl ?? null, updated_at: nowIso },
+          { onConflict: 'run_id,scene_idx' }
+        );
+      if (error) {
+        console.error('[producer/advance] record_image failed:', error.message);
+        return res.status(500).json({ error: 'write_failed' });
+      }
+      return res.status(200).json({ ok: true, changed: true });
     }
 
     case 'complete': {

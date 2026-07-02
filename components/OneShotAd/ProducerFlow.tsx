@@ -39,10 +39,21 @@ const ACTIVE_RUN_KEY = 'osa_producer_active_run';
 /** Rebuild an in-memory run from the server checkpoint (resume-to-true-state). */
 function fromRow(row: ProductionRunRow, scenes: ProductionSceneRow[]): ProductionRun {
   const art = (row.artifacts ?? {}) as Record<string, any>;
+  const rowByIdx = new Map(scenes.map((s) => [s.scene_idx, s]));
   // Prefer the richer artifact scene snapshot; fall back to the server job-queue rows.
   let sceneState =
     art.scenes ??
     scenes.map((s) => ({ sceneIdx: s.scene_idx, status: s.status === 'submitting' ? 'rendering' : s.status, videoUrl: s.video_url ?? undefined, audioUrl: s.audio_url ?? undefined, imageUrl: s.image_url ?? undefined }));
+  // Rehydrate scene images from their per-scene rows. The checkpoint is deliberately slim —
+  // base64 images are stripped at the transport boundary (slimCheckpointArtifacts) because fat
+  // jsonb checkpoints hit statement timeouts, went stale, and made resume RE-BUY images
+  // (2026-07-02 SIGLA smoke). The durable copy lives in producer_scenes.image_url/end_frame_url.
+  sceneState = sceneState.map((s: any) => ({ ...s, imageUrl: s.imageUrl ?? rowByIdx.get(s.sceneIdx)?.image_url ?? undefined }));
+  const storyboard = (art.storyboard as any[] | undefined)?.map((sc, i) => ({
+    ...sc,
+    imageUrl: sc.imageUrl ?? rowByIdx.get(i)?.image_url ?? undefined,
+    endFrameImageUrl: sc.endFrameImageUrl ?? rowByIdx.get(i)?.end_frame_url ?? undefined,
+  }));
   // Reload-mid-reshoot recovery (C3): a reshoot/preset op parks the run at first_cut with
   // run.busy set and the reshot scene mid-'rendering'. We do NOT resume the in-flight reshoot —
   // simplest correct behavior is to drop back to the last good First Cut with the scene claimable:
@@ -83,7 +94,7 @@ function fromRow(row: ProductionRunRow, scenes: ProductionSceneRow[]): Productio
     businessInfo: art.businessInfo,
     script: art.script,
     finalScript: art.finalScript,
-    storyboard: art.storyboard,
+    storyboard,
     videoPrompts: art.videoPrompts,
     edl: art.edl,
     finalVideoUrl: art.finalVideoUrl,

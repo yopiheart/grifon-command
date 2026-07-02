@@ -34,7 +34,34 @@ const STAGES = [
   { id: 'final_render', label: 'Final cut' },
 ] as const;
 
-export function makePreviewRun(kind: 'running' | 'firstcut'): ProductionRun {
+export function makePreviewRun(kind: 'running' | 'gate' | 'firstcut'): ProductionRun {
+  if (kind === 'gate') {
+    // Storyboard approval gate, parked pre-render. Scene 0 is a HOOK MORPH (start + end
+    // keyframe) so the gate's END-frame inset is visually reviewable with zero API.
+    const scriptLines = [
+      'Akala ko normal na ’yung 3PM crash ko.',
+      'Isang shot pala — bago lahat.',
+      'Ngayon, buong araw akong may sigla.',
+      'Try mo — link nasa baba.',
+    ];
+    return {
+      runId: 'preview-gate',
+      userId: 'preview',
+      createdAt: 0,
+      updatedAt: 0,
+      status: 'review',
+      gate: 'storyboard',
+      input: baseInput,
+      stages: STAGES.map((s, i) => ({ id: s.id as ProductionRun['stages'][number]['id'], label: s.label, status: i < 4 ? 'done' : 'pending', attempts: i < 4 ? 1 : 0 })),
+      storyboard: scriptLines.map((scriptLine, i) => ({
+        scriptLine,
+        sceneDescription: `scene ${i}`,
+        imageUrl: img(`g${i}`),
+        ...(i === 0 ? { startFramePrompt: 'metaphor', endFramePrompt: 'product reveal', endFrameImageUrl: img('g0-end'), transitionEffect: 'morph' } : {}),
+      })),
+      scenes: scriptLines.map((_, i) => ({ sceneIdx: i, status: 'pending' as const, imageUrl: img(`g${i}`) })),
+    };
+  }
   if (kind === 'running') {
     return {
       runId: 'preview-running',

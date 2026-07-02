@@ -148,6 +148,12 @@ function makeFakeStore(seed: Record<number, Partial<FakeSceneRow>> = {}) {
       }
       return { changed: false }; // scene left 'submitting' under us → lost race
     }),
+    // Image persistence rides its own upsert (row may not exist pre-seed) and touches ONLY
+    // the image columns — mirrors advance.ts 'record_image'.
+    recordSceneImage: vi.fn(async (_runId: string, i: number, _imageUrl: string, _endFrameUrl?: string) => {
+      if (!rows.has(i)) rows.set(i, freshRow());
+      return { changed: true };
+    }),
     completeScene: vi.fn(async (_runId: string, i: number, videoUrl: string, audioUrl?: string) => {
       const s = rows.get(i);
       if (s && (s.status === 'submitting' || s.status === 'rendering')) {
@@ -729,5 +735,53 @@ describe('end-frame (hook morph) generation', () => {
     const cfg = (spies.submitVideo.mock.calls as any[])[0][0];
     expect(cfg.startFrame).toBe('img://START0');
     expect(cfg.endFrame).toBe('img://END0 Bukidnon Brew bottle reveal');
+  });
+});
+
+// --- 11. Durable scene-image persistence (the checkpoint-size fix) ----------
+// Scene images are multi-MB base64 blobs. They persist ONCE per scene on their own
+// producer_scenes row ('record_image') and are STRIPPED from the run-header checkpoint
+// (slimCheckpointArtifacts) — fat jsonb checkpoints hit statement timeouts, went stale,
+// and made resume re-buy images (2026-07-02 SIGLA smoke).
+
+describe('scene-image persistence (checkpoint-size fix)', () => {
+  it('scene_images records each scene image (+ end frame when morphing) on its own row', async () => {
+    const { deps, store } = makeMorphDeps();
+    const run = createProductionRun(makeInput(), 'u1');
+
+    await runProduction(run, cb(), deps);
+
+    expect(store.recordSceneImage).toHaveBeenCalledTimes(2);
+    expect(store.recordSceneImage).toHaveBeenCalledWith(run.runId, 0, 'img://START0', 'img://END0 Bukidnon Brew bottle reveal');
+    expect(store.recordSceneImage).toHaveBeenCalledWith(run.runId, 1, 'img://IMG1', undefined);
+  });
+
+  it('a failed image-row write never breaks the stage (best-effort, coarser resume only)', async () => {
+    const { deps, store } = makeMorphDeps();
+    (store.recordSceneImage as any).mockRejectedValue(new Error('db down'));
+    const run = createProductionRun(makeInput(), 'u1');
+
+    const out = await runProduction(run, cb(), deps);
+
+    expect(out.status).not.toBe('error');
+    expect(out.gate).toBe('storyboard'); // still parks at the gate, images intact in memory
+    expect(out.storyboard![0].imageUrl).toBe('img://START0');
+  });
+
+  it('regen + reshoot refresh the durable image row', async () => {
+    const { deps, store, spies } = makeMorphDeps();
+    const run = createProductionRun(makeInput(), 'u1');
+    const callbacks = cb();
+    await runProduction(run, callbacks, deps);
+    (store.recordSceneImage as any).mockClear();
+
+    await regenSceneImage(run, 0, callbacks, deps);
+    expect(store.recordSceneImage).toHaveBeenCalledWith(run.runId, 0, 'img://START0', 'img://END0 Bukidnon Brew bottle reveal');
+
+    await approveStoryboard(run, callbacks, deps);
+    (store.recordSceneImage as any).mockClear();
+    await reshootScene(run, 1, callbacks, deps);
+    expect(store.recordSceneImage).toHaveBeenCalledWith(run.runId, 1, 'img://IMG1', undefined);
+    expect(spies.submitVideo).toHaveBeenCalled();
   });
 });

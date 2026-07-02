@@ -37,7 +37,10 @@ create table if not exists public.producer_scenes (
   scene_idx     int  not null,
   status        text not null default 'pending',        -- pending|submitting|rendering|done|flagged|failed
   job_handle    jsonb,                                   -- Veo operation / Kling task handle (poll target)
-  image_url     text,
+  image_url     text,                                    -- scene image (base64 data URL) — written once via
+                                                         -- 'record_image'; keeps images OUT of the run-header
+                                                         -- checkpoint (multi-MB jsonb → statement timeouts)
+  end_frame_url text,                                    -- hook-morph END keyframe (same handling)
   video_url     text,
   audio_url     text,
   flagged_reason text,
@@ -45,6 +48,9 @@ create table if not exists public.producer_scenes (
   updated_at    timestamptz not null default now(),
   primary key (run_id, scene_idx)
 );
+
+-- Idempotent upgrade for tables created before end_frame_url existed (2026-07-03).
+alter table public.producer_scenes add column if not exists end_frame_url text;
 
 create index if not exists producer_scenes_run_idx on public.producer_scenes(run_id);
 

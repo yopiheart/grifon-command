@@ -35,6 +35,8 @@ export interface ProductionSceneRow {
   status: SceneJobStatus;
   job_handle: Record<string, unknown> | null;
   image_url: string | null;
+  /** Hook-morph END keyframe (scene-1 visual hooks) — see 'record_image'. */
+  end_frame_url: string | null;
   video_url: string | null;
   audio_url: string | null;
   flagged_reason: string | null;
@@ -101,10 +103,50 @@ export interface CheckpointResult {
   current?: ProductionRunRow;
 }
 
+const isDataUrl = (v: unknown): v is string => typeof v === 'string' && v.startsWith('data:');
+
+/**
+ * Strip base64 data-URL images out of a checkpoint's artifacts (pure — returns copies, never
+ * mutates the caller's run state). Scene images are multi-MB base64 blobs and rode the
+ * artifacts jsonb TWICE (storyboard[] + scenes[]), blowing past the endpoint's 2mb parser cap
+ * and hitting Postgres statement timeouts — every checkpoint then silently failed, the server
+ * state went stale, and resume re-bought the images (2026-07-02 SIGLA smoke). Images now
+ * persist once per scene on producer_scenes rows ('record_image'); resume rehydrates from
+ * there (ProducerFlow.fromRow). This is the transport-boundary guard so no caller can
+ * reintroduce the fat payload.
+ */
+export const slimCheckpointArtifacts = (artifacts: Record<string, unknown>): Record<string, unknown> => {
+  const out: Record<string, unknown> = { ...artifacts };
+  const stripSceneImages = (arr: unknown): unknown =>
+    Array.isArray(arr)
+      ? arr.map((s) => {
+          if (!s || typeof s !== 'object') return s;
+          const copy: Record<string, unknown> = { ...(s as Record<string, unknown>) };
+          if (isDataUrl(copy.imageUrl)) delete copy.imageUrl;
+          if (isDataUrl(copy.endFrameImageUrl)) delete copy.endFrameImageUrl;
+          return copy;
+        })
+      : arr;
+  if (out.storyboard) out.storyboard = stripSceneImages(out.storyboard);
+  if (out.scenes) out.scenes = stripSceneImages(out.scenes);
+  // businessInfo duplicates the hero as productImageUrls[0]; the durable copy lives in
+  // producer_runs.input (sent once, on create — see producerDeps.toCheckpoint).
+  const bi = out.businessInfo as Record<string, unknown> | undefined;
+  if (bi && Array.isArray(bi.productImageUrls)) {
+    out.businessInfo = { ...bi, productImageUrls: bi.productImageUrls.filter((u) => !isDataUrl(u)) };
+  }
+  return out;
+};
+
 /** Upsert the run header after a stage transition (persist-after-every-transition), guarded by
- * the optimistic-concurrency revision so a stale tab can't regress a fresher checkpoint. */
+ * the optimistic-concurrency revision so a stale tab can't regress a fresher checkpoint.
+ * Artifacts are slimmed at this choke-point — see slimCheckpointArtifacts. */
 export const saveRunCheckpoint = (runId: string, patch: RunCheckpoint): Promise<CheckpointResult> =>
-  post('/api/producer/run', { runId, ...patch }).then((d) => ({
+  post('/api/producer/run', {
+    runId,
+    ...patch,
+    ...(patch.artifacts ? { artifacts: slimCheckpointArtifacts(patch.artifacts) } : {}),
+  }).then((d) => ({
     changed: d?.changed !== false,
     revision: typeof d?.revision === 'number' ? d.revision : undefined,
     current: d?.current as ProductionRunRow | undefined,
@@ -152,6 +194,12 @@ const toWriteResult = (d: any): SceneWriteResult => ({ changed: d?.changed !== f
 /** Store the provider job handle after a winning claim submits (submitting → rendering). */
 export const recordScene = (runId: string, sceneIdx: number, jobHandle: Record<string, unknown>): Promise<SceneWriteResult> =>
   post('/api/producer/advance', { action: 'record', runId, sceneIdx, jobHandle }).then(toWriteResult);
+
+/** Persist a scene's image(s) on its own row (upsert; image columns only). Written once per
+ * scene so the multi-MB base64 stays out of the run-header checkpoint — resume rehydrates
+ * storyboard images from these rows. */
+export const recordSceneImage = (runId: string, sceneIdx: number, imageUrl: string, endFrameUrl?: string): Promise<SceneWriteResult> =>
+  post('/api/producer/advance', { action: 'record_image', runId, sceneIdx, imageUrl, endFrameUrl: endFrameUrl ?? null }).then(toWriteResult);
 
 /** Mark a scene done with its rendered urls (rendering → done). */
 export const completeScene = (runId: string, sceneIdx: number, videoUrl: string, audioUrl?: string): Promise<SceneWriteResult> =>
