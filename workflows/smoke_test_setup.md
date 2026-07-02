@@ -9,17 +9,23 @@ supersedes the scattered "Reusable smoke setup" notes in `expert_manual_mode.md`
 
 ## The test account
 
-- **Email:** `smoketest-dc@grifon.dev` — exists in live Supabase (created 2026-06-27 via
-  admin API, `email_confirm:true`).
+- **Email:** `neilmaglaya.business22+smoke@gmail.com` — a plus-alias of Neil's Gmail
+  (changed 2026-07-02 with Neil's GO, was `smoketest-dc@grifon.dev`; same Supabase user,
+  created 2026-06-27 via admin API, `email_confirm:true`).
 - **Auth is OTP-ONLY.** The app's email sign-in is passwordless (6-digit code). The old
   recorded password (`GrifonDcSmoke!2026`) is DEAD — there is no password field. Do not
   brief agents to use it.
-- **Sign-in procedure:** agent enters the email → app shows `// CODE_SENT` →
-  **Neil runs [`scripts/get-smoke-otp.ps1`](../scripts/get-smoke-otp.ps1) in a terminal**
-  (mints a valid code via the Supabase admin API using the service-role key in `.env`)
-  → the code is typed into the `// VERIFICATION CODE` field. The minted code REPLACES any
-  emailed one. The mint is deliberately human-run: agents' auto-mode classifier (correctly)
-  blocks credential materialization, so don't ask the agent or the main loop to mint it.
+- **Sign-in procedure (agent-readable OTP — the whole point of the plus-alias):**
+  smoke agent enters the email → app shows `// CODE_SENT` → the OTP email lands in
+  **Neil's Gmail inbox**, which the MAIN loop reads via the claude.ai Gmail connector
+  (`search_threads` for the newest Grifon/Supabase verification mail → extract the
+  6-digit code) → relay the code to the smoke agent → it types it into
+  `// VERIFICATION CODE`. Hands-free for Neil; no admin API involved.
+- **Do NOT chase `generate_link`:** `scripts/get-smoke-otp.ps1` is retired-in-place —
+  Supabase's hosted platform 401s `/auth/v1/admin/generate_link` with BOTH key classes
+  (while `/auth/v1/admin/users` accepts `sb_secret` fine), i.e. OTP extraction via the
+  admin API is platform-blocked. Verified 2026-07-02 after much pain. The Gmail path
+  above is the way.
 - **Plan state:** bumped to `business` + 999 video / 999 cinematic credits on 2026-07-02
   (Neil-approved) so smokes never hit upgrade walls. If a future session finds it
   downgraded, re-run (needs Neil's explicit GO — it writes prod DB):
