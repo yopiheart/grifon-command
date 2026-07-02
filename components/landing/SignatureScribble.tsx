@@ -23,23 +23,27 @@ interface SignatureScribbleProps {
 }
 
 // Hand-drawn-feel paths, 100x20 (lines) / 100x50 (circle) boxes stretched to the word.
-const PATHS: Record<ScribbleVariant, { d: string; viewBox: string; svgClass: string }> = {
+// Sizing is INLINE STYLE, not Tailwind arbitrary classes: the Play-CDN JIT has
+// dropped utilities like h-[0.18em] on some pages, letting the SVG fall back to
+// its tall viewBox aspect ratio and detach into stray dots (the recurring mobile
+// breakage — see 40f849e). Inline styles cannot be un-generated.
+const PATHS: Record<ScribbleVariant, { d: string; viewBox: string; svgStyle: React.CSSProperties }> = {
   underline: {
     d: 'M2 12 C 18 16, 38 6, 58 10 C 72 13, 88 8, 98 12',
     viewBox: '0 0 100 20',
     // Sits just below the baseline so descenders (g/y/p) stay clear, while tight
     // headline leading (0.9) still doesn't collide with the next line.
-    svgClass: 'left-[-0.1em] right-[-0.1em] bottom-[-0.12em] h-[0.18em] w-[calc(100%+0.2em)]',
+    svgStyle: { left: '-0.1em', bottom: '-0.12em', width: 'calc(100% + 0.2em)', height: '0.18em' },
   },
   circle: {
     d: 'M62 6 C 30 2, 5 10, 4 22 C 3 36, 20 44, 45 46 C 70 48, 96 40, 97 25 C 98 12, 78 2, 50 4',
     viewBox: '0 0 100 50',
-    svgClass: '-inset-x-[0.35em] -inset-y-[0.18em] w-[calc(100%+0.7em)] h-[calc(100%+0.36em)]',
+    svgStyle: { left: '-0.35em', top: '-0.18em', width: 'calc(100% + 0.7em)', height: 'calc(100% + 0.36em)' },
   },
   strike: {
     d: 'M2 11 C 30 7, 70 14, 98 9',
     viewBox: '0 0 100 20',
-    svgClass: 'left-[-0.15em] right-[-0.15em] top-1/2 -translate-y-1/2 h-[0.5em] w-[calc(100%+0.3em)]',
+    svgStyle: { left: '-0.15em', top: '50%', width: 'calc(100% + 0.3em)', height: '0.5em', transform: 'translateY(-50%)' },
   },
 };
 
@@ -57,7 +61,7 @@ export const SignatureScribble: React.FC<SignatureScribbleProps> = ({
   playOnMount = false,
 }) => {
   const reduceMotion = useReducedMotion();
-  const { d, viewBox, svgClass } = PATHS[variant];
+  const { d, viewBox, svgStyle } = PATHS[variant];
 
   // Reduced motion → static full path (no draw). Otherwise either draw on mount
   // (reliable anywhere) or draw once on scroll-into-view (the default delight).
@@ -71,7 +75,8 @@ export const SignatureScribble: React.FC<SignatureScribbleProps> = ({
     <span className={`relative inline-block ${className}`}>
       {children}
       <svg
-        className={`absolute pointer-events-none ${svgClass}`}
+        className="absolute pointer-events-none"
+        style={svgStyle}
         viewBox={viewBox}
         preserveAspectRatio="none"
         fill="none"
