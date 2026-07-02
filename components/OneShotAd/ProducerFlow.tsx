@@ -8,6 +8,8 @@ import { RunningScreen } from './RunningScreen.fable5';
 import { StoryboardGateScreen } from './StoryboardGateScreen';
 import { FirstCutScreen } from './FirstCutScreen';
 import { FeedbackWidget } from '../ui/FeedbackWidget';
+import { GlassPanel } from '../ui/GlassPanel';
+import { GoldButton } from '../ui/GoldButton';
 import {
   createProductionRun,
   runProduction,
@@ -107,7 +109,14 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, onBack, onUpg
     void loadRun(activeId)
       .then((res) => {
         if (!alive) return;
-        if (!res || res.run.status === 'done' || res.run.status === 'error') { setPhase('launch'); return; }
+        // Stale-key fix: a missing or already-finished run must not resume — drop the key.
+        if (!res || res.run.status === 'done') {
+          if (typeof localStorage !== 'undefined') localStorage.removeItem(ACTIVE_RUN_KEY);
+          setPhase('launch');
+          return;
+        }
+        // An `error` run is kept: fromRow surfaces it in the error branch so the user can
+        // Retry (resume) or Start over — only "Start over" clears the key.
         const resumed = fromRow(res.run, res.scenes);
         setRun(resumed);
         setPhase('launch'); // phase now derives from run.status below
@@ -158,6 +167,11 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, onBack, onUpg
         aspectRatio: input.aspectRatio,
         resolution: input.resolution,
         scriptType: input.scriptType,
+        servicePhotos: input.servicePhotos,
+        serviceArchetype: input.serviceArchetype,
+        realEstateArchetype: input.realEstateArchetype,
+        isLocalService: input.isLocalService,
+        businessAddress: input.businessAddress,
         forceFreshResearch: input.forceFreshResearch,
       };
       const { clientDetails, businessInfo } = mapReportToWizard(orchInputBase, report);
@@ -237,6 +251,18 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, onBack, onUpg
     }
   };
 
+  // Error recovery: re-enter the driver on the SAME run. runProduction skips completed
+  // stages and re-runs the failed one, so no work (or spend) is redone. Flip status back to
+  // 'running' first — setStage doesn't touch run.status, so this is what lifts the UI off
+  // the error screen onto live progress. Mirrors the resume path's fresh-controller pattern.
+  const handleRetry = async () => {
+    if (!run) return;
+    abortRef.current = new AbortController();
+    const resumed: ProductionRun = { ...run, status: 'running', error: undefined };
+    setRun(resumed);
+    await runProduction(resumed, cb(resumed), realProducerDeps);
+  };
+
   const handleMakeAnother = () => {
     abortRef.current.abort();
     resumeStarted.current = false;
@@ -303,6 +329,42 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, onBack, onUpg
       <div className="relative">
         {BackBar}
         <RunningScreen run={run} onMinimize={onBack} />
+      </div>
+    );
+  }
+
+  // A run whose driver hit a stage error parks in `error` (runProduction returns normally).
+  // Surface WHAT failed + a Retry (resume the same run) / Start over (drop it) choice.
+  if (run && run.status === 'error') {
+    const failedStage = run.stages.find((s) => s.status === 'failed');
+    return (
+      <div className="relative min-h-screen bg-zinc-950 px-4 py-10 text-white">
+        {BackBar}
+        <div className="mx-auto flex min-h-[70vh] max-w-lg flex-col items-center justify-center">
+          <GlassPanel className="w-full p-6 text-center">
+            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full border border-red-500/40 bg-red-500/10">
+              <AlertTriangle className="h-6 w-6 text-red-400" />
+            </div>
+            <p className="mb-1 text-[10px] font-mono uppercase tracking-widest text-zinc-500">// Production paused</p>
+            <h1 className="mb-3 text-2xl font-black uppercase tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500">
+              {failedStage?.label ?? 'A step hit a snag'}
+            </h1>
+            <p className="mb-6 text-sm text-zinc-400">
+              {run.error ?? 'Something went wrong mid-production.'} Your finished steps are saved — Retry picks up right where it stopped.
+            </p>
+            <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+              <GoldButton onClick={handleRetry} className="flex items-center gap-2">
+                <RotateCw className="h-4 w-4" /> Retry
+              </GoldButton>
+              <button
+                onClick={handleMakeAnother}
+                className="rounded-full border border-white/10 bg-zinc-950 px-6 py-3 text-xs font-bold uppercase tracking-widest text-zinc-400 transition-colors hover:border-[#FFCC00]/50 hover:text-white"
+              >
+                Start over
+              </button>
+            </div>
+          </GlassPanel>
+        </div>
       </div>
     );
   }

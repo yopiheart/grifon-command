@@ -17,6 +17,10 @@
 // keep importing these types without pulling the heavy gemini/voice/render chain.
 
 import { estimateSpokenSec } from '../utils/spokenDuration';
+// Reuse the intake's richer report→wizard projection (emits servicePhotos / archetypes /
+// businessType / listingPrice so the venue router resolves). oneShotIntake is a pure,
+// types-only module — importing it at runtime pulls no heavy Gemini/voice chain.
+import { mapReportToWizard } from './oneShotIntake';
 import type {
   Avatar,
   BusinessInfo,
@@ -98,6 +102,17 @@ export interface ProductionInput {
   /** Script strategy — auto-detected default, override in the Customize drawer. */
   scriptType: NonNullable<BusinessInfo['scriptType']>;
   stabilityMode?: StabilityMode;
+  /** Phase 2: guided per-slot real photos for Service/RealEstate verticals (the slot IS the tag).
+   * Feeds the per-scene real-photo router. Empty/absent for Product (which uses heroImageBase64). */
+  servicePhotos?: BusinessInfo['servicePhotos'];
+  /** Which beat the Service ad leads with (venue|work|practitioner). */
+  serviceArchetype?: BusinessInfo['serviceArchetype'];
+  /** Which beat the RealEstate ad leads with (listing|agent|developer). */
+  realEstateArchetype?: BusinessInfo['realEstateArchetype'];
+  /** Local-business research toggle (Service: user checkbox; RealEstate: always true). */
+  isLocalService?: boolean;
+  /** Service venue / property location — feeds local Market Research grounding. */
+  businessAddress?: string;
   /** When true, ignore any cached market research for this product and run fresh
    * (the intake "Re-research" toggle). Default: reuse the cache when present. */
   forceFreshResearch?: boolean;
@@ -272,23 +287,11 @@ export function aspectRatioToPlatform(ar: '9:16' | '16:9' | '1:1'): EditTargetPl
   return 'tiktok';
 }
 
-/** Project the MarketMind report onto the wizard fields (mirrors App.tsx auto-prefill). */
-export function mapReportToWizard(input: ProductionInput, report: MarketResearchReport): { clientDetails: ClientDetails; businessInfo: BusinessInfo } {
-  return {
-    clientDetails: { brandName: input.brandName, offer: input.offer },
-    businessInfo: {
-      product: input.productName,
-      audience: report.winningAvatar || report.demographics || '',
-      benefit: report.emotionalPayoff || report.magicGenie || input.offer,
-      painPoint: report.bleedingNeck || report.threeAmThought || '',
-      separator: report.contrarianTruth || report.villain || '',
-      features: input.productDescription,
-      productImageUrls: [input.heroImageBase64],
-      productImageDescription: input.productDescription,
-      scriptType: input.scriptType,
-    },
-  };
-}
+/** Project the MarketMind report onto the wizard fields. Re-exported from oneShotIntake so
+ * intake and the orchestrator share ONE mapper — the intake version emits servicePhotos /
+ * serviceArchetype / realEstateArchetype / businessType / listingPrice onto businessInfo so
+ * the per-scene venue router (utils/sceneRender.ts) resolves slot-tagged photos. */
+export { mapReportToWizard };
 
 /** Stable cache key for a product's market research — normalized brand+product. */
 export function researchCacheKey(brandName: string, productName: string): string {
@@ -704,7 +707,8 @@ async function runStage(
               productName: run.input.productName,
               productDescription: run.input.productDescription,
               priceOffer: run.input.price,
-              isLocalService: false,
+              isLocalService: run.input.isLocalService ?? false,
+              businessAddress: run.input.businessAddress?.trim() || undefined,
               uploadedImages: [run.input.heroImageBase64],
             }),
           MAX_STAGE_ATTEMPTS,
