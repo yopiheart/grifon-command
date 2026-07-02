@@ -23,9 +23,17 @@ function Get-EnvValue([string]$name) {
   return $null
 }
 
-$key = Get-EnvValue 'SUPABASE_SERVICE_ROLE_KEY'
+# The GoTrue ADMIN API (generate_link) 401s on the new sb_secret_* key format (observed
+# 2026-07-02); it wants the LEGACY service_role JWT. Prefer a dedicated var for it:
+# Supabase dashboard -> Settings -> API -> "legacy API keys" -> service_role (reveal),
+# then add to .env:  SUPABASE_SERVICE_ROLE_JWT=eyJ...
+$key = Get-EnvValue 'SUPABASE_SERVICE_ROLE_JWT'
+if (-not $key) { $key = Get-EnvValue 'SUPABASE_SERVICE_ROLE_KEY' }
 $url = Get-EnvValue 'VITE_SUPABASE_URL'
-if (-not $key) { Write-Error 'SUPABASE_SERVICE_ROLE_KEY missing from .env'; exit 1 }
+if (-not $key) { Write-Error 'SUPABASE_SERVICE_ROLE_JWT / _KEY missing from .env'; exit 1 }
+if ($key.StartsWith('sb_secret')) {
+  Write-Warning 'Only the new sb_secret key is in .env — the auth admin API may 401 on it. If it does, add SUPABASE_SERVICE_ROLE_JWT (legacy service_role JWT from the dashboard) to .env and re-run.'
+}
 if (-not $url) { Write-Error 'VITE_SUPABASE_URL missing from .env'; exit 1 }
 
 $body = (@{ type = 'magiclink'; email = $EmailAddr } | ConvertTo-Json)
