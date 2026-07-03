@@ -178,6 +178,39 @@ validation before they touch a tuned prompt.
   `polished-ugc` → the most authentic-imperfection model; `cinematic` → Seedance-
   class 4K. Evaluate when the cinematic register comes up.
 
+## Archival-DV register (2026-07-04, APPROVED by Neil — sits BELOW raw-ugc)
+
+New bottom rung of the ladder, from the viral "shoot like a 2003 camcorder"
+Seedance preset (aireresearches). Principle in its purest form: **the strongest
+realism lever is not how good the camera is, but how correctly it's broken.**
+Two approved variants, both anchored to the original ref (never chained):
+
+- **Heavy tape** (`zam-dv-heavy-tape-sample.png`): full 2003 MiniDV — interlacing,
+  chroma bleed, washed low-contrast color, camcorder OSD (REC + timestamp) as the
+  ultimate trust cue. For nostalgia/vintage posts. **gpt-image-2 wins this variant
+  decisively** — it renders true interlacing/compression; Nano Banana Pro outputs
+  read as clean-digicam-with-fade.
+- **Bright DV** (`zam-dv-selfie-high-APPROVED.png` — Neil-graded ~97%, best
+  identity+realism of the whole system): DV *style only* — faded warm color, mild
+  softness, fine analog noise — but bright, well-exposed, face clearly detailed.
+  NO OSD. For selfies + talking-head content
+  (`zam-dv-content-creator-corner/kapihan/azotea.png` — Filipino settings:
+  tricycle outside the kapihan window, azotea laundry + antennas + monobloc).
+
+Register pairing for content: **dark cinematic = authority/offer videos; bright
+DV = lifestyle/relatable.** Same show, two moods.
+
+Guardrails learned:
+- **Era-accuracy check on heavy tape:** the model puts modern props in 2003
+  frames (earbuds, branded coffee sleeves) — prompt "no modern accessories,
+  era-correct props" and inspect. Comments sections catch anachronisms instantly.
+- **OSD dates must match across a same-day set** (model invents different dates
+  per frame unless pinned).
+- **Hair drifts with era styling** — "early 2000s" pulls ponytails/longer hair;
+  pin "hair EXACTLY as reference, do NOT lengthen/tie" when consistency matters.
+- **Smile + angle change = ~5% identity drift** (session-consistent): straight-on
+  neutral holds best; three-quarter mid-laugh drifts most. Curate accordingly.
+
 ## Head-to-head eval: gpt-image-2 vs Nano Banana 2 Lite (2026-07-04)
 
 Ran Zam's 4 registers on `gemini-3.1-flash-lite-image` (Nano Banana 2 Lite) with
