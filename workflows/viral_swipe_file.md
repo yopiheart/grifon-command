@@ -50,7 +50,7 @@ Proposals or applied discussion) → `applied` (shipped in Grifon).
 | --- | --- | --- | --- |
 | P1 | Caption churn is the engine of perceived pace, not cut rate — 1–3 word chunks swap every 0.4–0.6s while shots hold 4–7s | 6 (+E7) | applied — drives Slice 4 word-pop/chunk sizing |
 | P2 | Caption treatment: outline+shadow, never a background box; gold/yellow or white; emphasis via solo-word card or two-tone | 5 | applied — renderPresets caption styles |
-| P3 | Nobody morphs, ever — product reveals are hard cuts, title-card slams, or in-hand-from-frame-1; whip-pan blur masks big changes | 7 (+E6,E7) | proposed — hook blob fix (TUNED, gated; see edit_style_research §6) |
+| P3 | Nobody morphs, ever — product reveals are hard cuts, title-card slams, or in-hand-from-frame-1; whip-pan blur masks big changes | 7 (+E6,E7) | proposed — hook blob fix (TUNED, gated; see edit_style_research §6). **REGISTER-SCOPED by E8:** holds for UGC/DR; the `cinematic` register inverts it (E8 wins BY morphing) — tag register on future counts |
 | P4 | Always be zooming: 3–6%/s push on every static shot, alternating direction; punch-ins reserved for pivots/CTA | 4 | applied — preset camera defaults; **contradicted by E3 (stunt UGC) + E6 (authority talking-head)** — static wins when subject/credibility carries it |
 | P5 | Zero dead air: VO fills ≥99% of timeline; at most ONE deliberate ≤0.5s pause right before the payoff | 7 (+E6,E7) | observed |
 | P6 | Proof is graphic, not spoken — pills, chips, dashboards, numerals popped on screen | 4 (+E7) | observed; E6 contradicts (data spoken, not popped); E7 confirms (stat + nutrient word-cards) |
@@ -58,6 +58,15 @@ Proposals or applied discussion) → `applied` (shipped in Grifon).
 | P8 | Strobe/flash bookends (1–3 frames) open and close short-form edits — cheap scroll-stop + clean out | 2 | observed (below threshold) |
 | P9 | **VSL grammar — KERNEL (preset candidate `vsl`)**: white 1–3 word word-pop captions churning sub-0.5s, **solo word-cards for key numbers/nutrients**, whip-pan/match cuts, title-card product slam, post-zoom (from generation), zero dead air, text-on-frame-1. *Variable (studio/length-specific, do not bake):* 5–6s vs ~2.4s shots, reveal 40–45% vs ~62%, the single pre-payoff pause, ExtraBold-Italic vs ALL-CAPS. | 3 (E4, E5, **E7**) | **proposed** (Neil accepted E7 as #3, 2026-06-26 — kernel cross-confirmed across 2 studios + long-form & short formats) → see Gated Proposals |
 | P10 | **Authority/practitioner talking-head UGC**: credentialed expert (scrubs/title-card on frame 1) → problem → solution → CTA; plain white sentence-case captions, hard cuts, *static* camera, ingredient/data points spoken in VO not popped | 1 (E6) | observed (new candidate) |
+
+### C-family — Cinematic brand-film grammar (register: `cinematic`; feeds the Cinematic Ad Studio lane, NOT wizard presets)
+
+| ID | Pattern | Corroborations | Status |
+| --- | --- | --- | --- |
+| C-MORPH | Morph-chain reveal with chained start/end frames — complex morphs need explicit start+end pairs; end frame of scene N = start frame of scene N+1 | 1 (E8, creator-confirmed) | observed |
+| C-LOOP | Logo-loop circular arc — open on the brand symbol in-world, close on the clean logo end card (flash transition, ~2–3s static hold) | 1 (E8) | observed |
+| C-MUSICFIRST | Cut the music track before generating anything — the track sets pacing/tone for the whole edit | 1 (E8, creator-stated) | observed |
+| C-IDWORLD | Identity-derived environment — the product's colorway/persona dictates the world (Ja=raptor jungle), making the reveal feel inevitable | 1 (E8) | observed |
 
 ### P11+ — Believability family (capture live 2026-06-26; see `believability_dna.md`)
 
@@ -224,3 +233,36 @@ after E6 (authority-UGC) missed. · **File:** `.tmp/viral-intel/im8-glp1-1019504
 - `grifon-cmo`: the "3 stages / Stage 3 is where it costs you" agitation + GLP-1 audience-naming is a reusable hook structure.
 **Patterns:** corroborates **P1** (sub-0.5s caption churn), **P3** (title-card/hard-cut reveal, no morph), **P5** (zero dead air), **P6** (graphic proof + word-cards), **P7** (text on frame 1); **P9 kernel** — hits the *distinctive* P9 elements (1–3w word-pop captions, **solo word-cards for numbers**, whip-pans, title-card product slam, post-zoom) but diverges on the E4/E5-specific specs (shots ~2.4s not 5–6s; reveal ~62% not 40–45%; no pre-payoff pause; ALL-CAPS not Italic).
 **Verified (2026-06-26):** `render_audit.mjs` — duration 62.0 vs ffmpeg 62.21s; shots 24 vs ffmpeg ~20; median 2.0 vs ~2.4s; caption swap 0.4s confirmed (new caption nearly every 0.5s frame); solo word-cards + title-card slam confirmed off frames; transcript matched verbatim. Reads trustworthy.
+
+### 2026-07-03 — E8 Karsten "The JA 3" Nike x Ja Morant AI spec commercial (file, sneaker brand film)
+**Why autopsied:** Neil-selected inspiration blueprint for the Nike Zoom Fly 6 Phase-A
+cinematic commercial (Cinematic Ad Studio lane) — one of the best-known AI spec ads;
+came WITH the creator's own breakdown + storyboard tutorials, so technique is ground
+truth, not inference. · **Files:** `.tmp/viral-intel/full-output-video-the-ja-3-nike-x-jamorant.json`,
+`.tmp/cinematic/nike-zoom-fly-6/{breakdown,storyboard}-technique.md` (disposable)
+**Format:** cinematic morph-chain product reveal, 20.8s, **5 scenes** (ffmpeg cuts @11.64/12.47/15.52/17.52s — the first 11.6s is ONE continuous morph chain), no VO, no captions, SFX+music only.
+
+| Hook | Pace driver | Captions | Edit grammar | Camera | Reveal | CTA |
+| --- | --- | --- | --- | --- | --- | --- |
+| symbol carved in jungle mud → creature morph @~2s, pattern interrupt, no text | continuous morph motion + music build, NOT cut rate (only 4 hard cuts in 20.8s) | none | morph transitions inside scenes, hard cuts between; SFX synced per beat (screech/whoosh/splash/vine); tribal-electronic build; 0 silences | dynamic 3D drift/orbit, low-angle slow dolly + faint handheld, speed contrast (pink blur rip vs slo-mo debris) | shoe materializes mid-chain (~7–12s), oversized hero, slow spin | flash-of-light @17.5s → white Swoosh on black, static hold ~3.3s to end |
+
+**Believability DNA:** register `cinematic`, source-authenticity **`likely-ai` (intentional
+CGI aesthetic — excluded from believability counts per guardrail 5)**. Lighting: dappled
+canopy shafts + mist (med). Camera: virtual 3D orbit (med). No humans/VO/lip-sync — n/a.
+
+**Why it works (timestamped):**
+1. Identity-derived world — the shoe's colorway/persona (Ja = raptor/scales) dictates the whole environment, so the product reveal feels inevitable, not inserted — @0–7s (high, corroborated by creator's own breakdown @0:07)
+2. Circular logo-loop arc — opens on the brand symbol in mud, closes on the Swoosh end card; the morph chain logo→creature→shoe→logo IS the story — @0.5s/@17.5–20.8s (high)
+3. Continuous-morph pace — perceived speed comes from in-scene morph motion + music build, not cuts (4 hard cuts total); dead-air-free SFX bed carries rhythm — ffmpeg-verified (high)
+4. Physics contrast sells realism — high-speed "pink blur rips" against slo-mo environmental reactions (drifting dust, settling leaves) — @~10s (medium)
+
+**Weaknesses:** no product name/details on screen (brand-film tradeoff); autopsy validator tripped on the empty transcript — structural for a no-VO film, both runs' analyses were otherwise specific.
+
+**So What for Grifon:** *(routes to the Cinematic Ad Studio lane — skills + PRD, NOT the tuned wizard pipeline)*
+- **Morph-chain + start/end-frame doctrine confirmed from creator ground truth**: every complex morph uses an explicit start+end frame pair; **end frame of scene N = start frame of scene N+1** (chained continuity). → target: `seedance-shotlist-director` + `cinematic-ad-prompt/references/asset-prep.md` already teach this; E8 is their first corroborating specimen.
+- **Music-first pacing** — Karsten cuts the licensed track BEFORE generating ("sets the pacing and tone for the entire edit") → target: `cinematic_pipeline.md` step order discussion; Neil owns the music bed on our runs.
+- **Film-language prompting** ("you're not prompting, you're directing"; Arri Alexa / 35mm / Cinestill 800 vocab; Scene/Camera/Effect/Atmosphere blocks) → matches `cinematic-ad-prompt` structure; his verbatim prompts captured in the technique docs.
+- **Iteration budget reality**: "over 500 generations" for 20.8s — micro-splicing doctrine is not optional; budget accordingly (our ladder: fast→720p→4K).
+- His stack (Nano Banana images / Kling 2.1 start+end / Magnific upscale / Premiere+Dehancer grade) maps to ours: Codex gpt-image-2 / Seedance 2.0 first+last frame / (upscale TBD) / Neil's edit.
+**Patterns:** **contradicts P3 loudly** ("nobody morphs, ever") — a winning ad built ENTIRELY on morphs; P3 stays valid for UGC/DR register, E8 shows the cinematic register plays by opposite rules (record register on future P3 counts). P5-adjacent (zero dead air) but via music/SFX, no VO — not counted. P7 contradicted in-register (no text at all). P8 partial — closing flash only. **New candidates (cinematic family, count 1 each):** C-MORPH (morph-chain w/ chained start/end frames), C-LOOP (logo-loop circular arc), C-MUSICFIRST (cut track before generating), C-IDWORLD (identity-derived environment theme).
+**Verified (2026-07-03):** `render_audit.mjs` ffmpeg — duration 20.8s, 4 cuts / 5 scenes vs Gemini's "9 shots" (morphs ≠ cuts; ffmpeg trusted); end-card hold 17.52→20.8s ≈ 3.3s (Gemini said ~2s — ffmpeg trusted); creator storyboard tutorial independently confirms the 5-scene structure (hook/build/feature/climax/logo).
