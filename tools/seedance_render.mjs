@@ -69,6 +69,9 @@ const lastFrame = flag('--last-frame');
 const refs = [];
 for (let i = 0; i < args.length; i++) if (args[i] === '--ref' && args[i + 1]) refs.push(args[i + 1]);
 if (refs.length > 9) die('too many --ref images (Seedance 2.0 caps reference_image at 9)');
+// API constraint (verified live 2026-07-03): reference_image content cannot be
+// mixed with first/last frame content — pick ONE consistency lever per render.
+if (refs.length && (firstFrame || lastFrame)) die('--ref cannot be combined with --first-frame/--last-frame (Seedance API rejects mixed content; choose keyframes OR references)');
 const aspect = flag('--aspect', '9:16');
 const duration = flag('--duration', '5');
 const mode = flag('--mode', 'standard');
