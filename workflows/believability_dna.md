@@ -178,6 +178,28 @@ validation before they touch a tuned prompt.
   `polished-ugc` → the most authentic-imperfection model; `cinematic` → Seedance-
   class 4K. Evaluate when the cinematic register comes up.
 
+## Head-to-head eval: gpt-image-2 vs Nano Banana 2 Lite (2026-07-04)
+
+Ran Zam's 4 registers on `gemini-3.1-flash-lite-image` (Nano Banana 2 Lite) with
+the exact same prompts + ref anchor as the gpt-image-2 set (harness:
+`.tmp/scratch/nb2lite-registers.mjs` pattern — plain generateContent with
+inline ref image + `responseModalities: [TEXT, IMAGE]`). Findings:
+
+- **UGC realism: NB2-Lite matches or beats gpt-image-2** on raw-ugc — the
+  2026-06-26 note "gpt-image-2 notably better than Gemini Flash Image" is
+  OUTDATED for the lite/3.1 generation. Environment detail (window haze,
+  clutter, skin shine) is production-grade.
+- **Identity lock: gpt-image-2 still wins.** NB2-Lite restyles hair and slims
+  the face as production rises (registers 3–4 drift to ~75–85%; gpt-image-2
+  holds ~92–95% across the ladder).
+- **Slop thesis replicated cross-model:** production ↑ = identity drift ↑ +
+  realism ↓ on BOTH engines. The register taxonomy is model-independent.
+- **Speed/cost:** ~4.5s and ~$0.10/image (already wired in the app) vs ~2min
+  on the Codex bridge (dev-only).
+- **Routing implication:** UGC registers are candidates for NB2-Lite in-product
+  (pending identity tightening via the multi-ref angle set); identity-critical /
+  anchored-avatar work stays on gpt-image-2 class until proven otherwise.
+
 ## Production Content Look — the 3-layer recipe (2026-07-03, APPROVED by Neil)
 
 Validated end-to-end on Zam + Neil (gpt-image-2 edit mode, anchored to their ref
