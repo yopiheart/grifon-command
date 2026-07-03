@@ -74,9 +74,15 @@ in hand before deciding whether Services / Real Estate / App reuse these or need
 *(the week's main work — one vertical slice at a time: spec → build → smoke → next)*
 Logged as roadmap **#12 Services**, **#13 Real Estate**, **#14 App / commercial**.
 Sequence by reuse:
-1. **Services** first — closest to the existing product/testimonial flow.
-2. **Real Estate** — more bespoke scene logic.
-3. **App / commercial** — most bespoke.
+1. **Services** first — closest to the existing product/testimonial flow. ✅ **SHIPPED**
+   (2026-06-21/22, Phase 1 + Phase 2 + formula v2 — see roadmap #12).
+2. **Real Estate** — more bespoke scene logic. ✅ **SHIPPED** (2026-06-22, agent-led
+   walkthrough + avatar-in-property — see roadmap #13).
+3. **App / commercial** — most bespoke. ⚡ **RE-SCOPED to App-only (Neil, 2026-07-03):**
+   the "general commercial spots" half now rides the **Cinematic Ad Studio** lane
+   ([`cinematic_ad_studio_prd.md`](cinematic_ad_studio_prd.md), Seedance 2.0 4K). The
+   App vertical (UI/screen shots, download/sign-up CTA) stays on the existing pipeline —
+   spec via `grill-me` → `app_adstyle_spec.md`, then the #12/#13 vertical-slice pattern.
 
 Per style: run `grill-me` to write the spec **before** code; build one vertical slice
 (types + service call + UI + state through one style) before starting the next; smoke each

@@ -564,12 +564,16 @@ where a strong scroll-stopping video ad maps directly to lead value.
 
 ---
 
-### 14. New Ad Style — App / Commercial vertical
+### 14. New Ad Style — App vertical
 
-> **Status (2026-06-16): ⚡ PROMOTED TO ACTIVE — building this week.** Not parked.
-> Working plan: [`this_week_plan.md`](this_week_plan.md) (step 4). Spec via `grill-me` first.
+> **Status (2026-07-03): ⚡ ACTIVE — re-scoped to App-only (Neil, via grill).** The
+> "general commercial spots" half moved to the **Cinematic Ad Studio** lane
+> ([`cinematic_ad_studio_prd.md`](cinematic_ad_studio_prd.md), Seedance 2.0 4K) — existing
+> pipeline = UGC/talking/Tagalog lane, Seedance = cinematic-commercial lane, per the PRD's
+> lane map. Working plan: [`this_week_plan.md`](this_week_plan.md) (step 4). Spec via
+> `grill-me` first → `workflows/app_adstyle_spec.md`.
 
-**What:** An ad style for **apps and general commercial spots** — UI/screen-in-context shots,
+**What:** An ad style for **apps** (mobile/web/SaaS) — UI/screen-in-context shots,
 feature-benefit beats, download/sign-up CTAs. The most bespoke of the three (digital product,
 no physical SKU; may need screen-recording/mockup framing in the storyboard).
 
