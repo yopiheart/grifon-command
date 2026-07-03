@@ -62,6 +62,8 @@ Required before running the tool (ask if missing):
 python tools/analyze_video.py <url-or-path> --niche "<niche>" --source <source>
 ```
 
+Node equivalent (cafe PCs — defreezer wipes Python): `node tools/analyze_video.mjs <path> --niche "..." --source ...` handles local files + direct `.mp4` URLs; platform-page URLs (tiktok/youtube/instagram/facebook) still need the `.py`'s yt-dlp or the Step-2b ladder.
+
 Output JSON lands in `.tmp/viral-intel/<slug>.json` and stdout. The script
 self-installs `yt-dlp` / `google-genai` and reads `GEMINI_API_KEY` from `.env`.
 
