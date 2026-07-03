@@ -116,6 +116,7 @@ if (keyframesOnly) {
       '--aspect', String(shot.aspect || '9:16'), '--duration', String(shot.duration ?? 5), '--mode', String(shot.mode || 'standard')];
     if (shot.resolution) cmd.push('--resolution', String(shot.resolution));
     if (shot.last_frame_prompt) cmd.push('--last-frame', endPng);
+    if (Array.isArray(shot.refs)) for (const r of shot.refs) cmd.push('--ref', String(r));
     if (dry) cmd.push('--dry-run');
 
     printCmd(cmd);
