@@ -49,8 +49,12 @@ node tools/cinematic_pipeline.mjs --manifest .tmp/cinematic/<project>/shots.json
 (`--force` to regenerate existing outputs; `--only <id>` to (re-)run a single shot.)
 Outputs: `.tmp/cinematic/<project>/<id>.png` (+ `.end.png`) and `<id>.mp4`. Re-runnable — existing files skipped unless `--force`.
 
-### 5. Harvest & assemble (micro-splicing)
-A finished ad is the **best seconds of many takes**. Re-render the weak shots (`--force` on that id), then cut the keepers together in your editor. Budget credits for this — it's the workflow, not a failure.
+### 5. Harvest & assemble (micro-splicing) — now manifest-driven
+A finished ad is the **best seconds of many takes**. Re-render the weak shots (`--force` on that id), then cut the keepers at pace — fast sections at ~1s per shot, not full-clip concats. The edit is REPRODUCIBLE, not hand-driven:
+
+1. Give each shot an optional `"cut": {"in": s, "out": s}` harvest window in `shots.json` (omit = full clip), and optionally a manifest-level `"assembly": ["s1", ...]` order.
+2. `node tools/assemble_cut.mjs --manifest .tmp/cinematic/<project>/shots.json` → trims, normalizes, concats → `FINECUT-<project>.mp4` **plus `SEAMS-<project>.png`** — one row per cut point: LAST frame of clip N beside FIRST frame of clip N+1. A broken story bridge (world jump, motion-vector flip, teleporting product) is visible as a mismatched pair before anyone watches the video.
+3. Judge the seam sheet + fine cut (render_qa.mjs with a sequence-focus prompt), tune the windows, re-run — the tool is idempotent and takes seconds. Neil's editor pass stays the final word; this gets the cut 90% there deterministically.
 
 ## Quality checklist (from the skills' doctrine)
 - [ ] Assets locked + single-variable tested before any video spend.
@@ -93,7 +97,14 @@ next run — **sequence first, clips second**:
    "bubble" SFX). Give each shot a distinct audio line; final sound design happens in the edit anyway.
 9. **Frames vs refs stays exclusive** (see below) — pick per shot: chained keyframes for
    morph/reveal/turns, multi-angle refs for free motion.
-10. **Intake spec (productization, Neil-approved direction):** require the full angle set from the user
+10. **Product-free connective scenes are legit (Neil, 2026-07-03; Karsten ground truth).** Not every
+    scene needs the product in frame — the JA 3's first 11.6s is logo→creature energy with no shoe.
+    Story continuity outranks product presence: brand-energy beats (the ribbon/trail), empty-world
+    beats, and transition bridges can carry whole scenes as long as each begins where the previous
+    clip's energy points. Corollary: a **bridge shot** (chained: previous clip's REAL last frame →
+    next scene's keyframe) is the standard fix when two adjacent shots read as "kinabit lang" —
+    generate the journey between them instead of cutting across it.
+11. **Intake spec (productization, Neil-approved direction):** require the full angle set from the user
     (front, back, both sides, sole, top, logo) like Real Estate ad intake; auto-detect + generate missing
     angles (confirm with user); auto-generate a brand-matched end card from the logo; feed per-scene
     asset+location+prompt bundles; deliver ffmpeg pre-cut harvests + a rough-cut preview.
@@ -119,6 +130,7 @@ next run — **sequence first, clips second**:
 - **Verified ModelArk contract (2026-07-03).** The `seedance_render.mjs` port implements this exactly (the old `.py` TODOs are resolved):
   - **Endpoints:** create `POST {base}/contents/generations/tasks`; poll `GET {base}/contents/generations/tasks/{id}` (~every 10s). Base default `https://ark.ap-southeast.bytepluses.com/api/v3`. Headers: `Authorization: Bearer <key>`, `Content-Type: application/json`.
   - **Params are TOP-LEVEL JSON**, not `--flags` appended to the prompt text: `resolution`, `ratio`, `duration`, `watermark:false`, `generate_audio:true`. **Do NOT send `seed`** — unsupported/ignored on Seedance 2.0.
+  - **Duration minimum is 4s in i2v (verified live 2026-07-03):** `duration: 3` returns `400 InvalidParameter` on `dreamina-seedance-2-0` i2v; 4s and 5s pass. Want a 3s beat? Render 4s and trim in the edit (micro-splicing). **480p is accepted** as a `resolution` value (cheapest ladder rung, verified same day).
   - **content[]:** `{type:'text',text}` + keyframes inlined as base64 data URLs `{type:'image_url',image_url:{url:'data:image/png;base64,…'},role:'first_frame'|'last_frame'}`. A last frame requires a first frame (both roles together).
   - **Status enum (6 values):** `queued | running | cancelled | succeeded | failed | expired`. Continue on queued/running; terminal on the other four. On `failed`, surface top-level `error.code` / `error.message`.
   - **Result:** `content.video_url` — **expires in 24h**, so download immediately (the tool streams it to `--out` and verifies non-zero size).
