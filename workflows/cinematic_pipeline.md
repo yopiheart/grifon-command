@@ -2,7 +2,9 @@
 
 **Objective:** produce a hyper-real cinematic ad **locally and cheaply** — Codex CLI (`gpt-image-2`) for every image, Seedance 2.0 API for every clip — so quality is validated on the PC **before** any in-app wiring. This is the Phase-A workflow behind [`cinematic_ad_studio_prd.md`](cinematic_ad_studio_prd.md).
 
-> Read [`wat-framework.md`](wat-framework.md) first. Tools used: `tools/cinematic_pipeline.py` (driver), `tools/seedance_render.py` (video), `.claude/skills/codex-image/generate.mjs` + `tools/codex-image-batch.mjs` (images). Skills used: `cinematic-ad-prompt`, `seedance-shotlist-director`, and `cinematic-ad-prompt/references/asset-prep.md`.
+> Read [`wat-framework.md`](wat-framework.md) first. Tools used: `tools/cinematic_pipeline.mjs` (driver), `tools/seedance_render.mjs` (video), `.claude/skills/codex-image/generate.mjs` + `tools/codex-image-batch.mjs` (images). Skills used: `cinematic-ad-prompt`, `seedance-shotlist-director`, and `cinematic-ad-prompt/references/asset-prep.md`.
+>
+> **Runtime: Node, not Python.** On cafe PCs the defreezer wipes Python entirely, so the `.mjs` ports (`cinematic_pipeline.mjs`, `seedance_render.mjs`) are the runnable path and supersede the `.py` originals (kept for reference). They use Node built-ins only — no npm deps, no `pip`.
 
 ## Stack (no Higgsfield)
 - **Images = Codex CLI `gpt-image-2`** — billed to the ChatGPT plan (no per-image API charge), local-only. Asset sheets + first/last keyframes + on-screen text.
@@ -11,9 +13,7 @@
 ## Prerequisites (local PC)
 1. **Codex CLI** installed + logged in: `npm i -g @openai/codex` then `codex login` (cafe-PC re-arm: `scripts/restore-codex.ps1`). See the `codex-image` skill.
 2. **Seedance key** in repo-root `.env`: `ARK_API_KEY=...` (or `SEEDANCE_API_KEY=...`). Optional `SEEDANCE_BASE_URL`, `SEEDANCE_MODEL_ID`.
-3. Python 3 (stdlib only — no pip needed for these tools).
-
-> ⚠️ **First-run TODO (with the key):** `tools/seedance_render.py` is scaffolded to the documented ModelArk create-task→poll pattern but the exact endpoint/field/status names are marked `# TODO confirm` (docs were unreachable). On the first real run, verify them against the ModelArk console, fix the TODOs, and **update this SOP** with what was true (WAT self-improvement loop).
+3. Node (ships with the repo toolchain — no pip / Python needed for these tools).
 
 ## Steps
 
@@ -42,10 +42,11 @@ Turn the shotlist into `.tmp/cinematic/<project>/shots.json`:
 
 ### 4. Dry-run, then keyframes, then render
 ```
-python tools/cinematic_pipeline.py --manifest .tmp/cinematic/<project>/shots.json --dry-run        # inspect every command
-python tools/cinematic_pipeline.py --manifest .tmp/cinematic/<project>/shots.json --keyframes-only  # lock images (cheap)
-python tools/cinematic_pipeline.py --manifest .tmp/cinematic/<project>/shots.json                   # render clips (spends credits)
+node tools/cinematic_pipeline.mjs --manifest .tmp/cinematic/<project>/shots.json --dry-run        # inspect every command
+node tools/cinematic_pipeline.mjs --manifest .tmp/cinematic/<project>/shots.json --keyframes-only  # lock images (cheap)
+node tools/cinematic_pipeline.mjs --manifest .tmp/cinematic/<project>/shots.json                   # render clips (spends credits)
 ```
+(`--force` to regenerate existing outputs; `--only <id>` to (re-)run a single shot.)
 Outputs: `.tmp/cinematic/<project>/<id>.png` (+ `.end.png`) and `<id>.mp4`. Re-runnable — existing files skipped unless `--force`.
 
 ### 5. Harvest & assemble (micro-splicing)
@@ -59,5 +60,12 @@ A finished ad is the **best seconds of many takes**. Re-render the weak shots (`
 - [ ] Continuity held across scenes (same character/product/wardrobe).
 
 ## Notes / learnings
-- (Add ModelArk endpoint/param truths here after the first real run.)
+- **Verified ModelArk contract (2026-07-03).** The `seedance_render.mjs` port implements this exactly (the old `.py` TODOs are resolved):
+  - **Endpoints:** create `POST {base}/contents/generations/tasks`; poll `GET {base}/contents/generations/tasks/{id}` (~every 10s). Base default `https://ark.ap-southeast.bytepluses.com/api/v3`. Headers: `Authorization: Bearer <key>`, `Content-Type: application/json`.
+  - **Params are TOP-LEVEL JSON**, not `--flags` appended to the prompt text: `resolution`, `ratio`, `duration`, `watermark:false`, `generate_audio:true`. **Do NOT send `seed`** — unsupported/ignored on Seedance 2.0.
+  - **content[]:** `{type:'text',text}` + keyframes inlined as base64 data URLs `{type:'image_url',image_url:{url:'data:image/png;base64,…'},role:'first_frame'|'last_frame'}`. A last frame requires a first frame (both roles together).
+  - **Status enum (6 values):** `queued | running | cancelled | succeeded | failed | expired`. Continue on queued/running; terminal on the other four. On `failed`, surface top-level `error.code` / `error.message`.
+  - **Result:** `content.video_url` — **expires in 24h**, so download immediately (the tool streams it to `--out` and verifies non-zero size).
+  - **Model IDs:** standard → `dreamina-seedance-2-0-260128` (only this full 2.0 model does **4K**); fast → `dreamina-seedance-2-0-fast-260128` (720p cap); mini → `dreamina-seedance-2-0-mini-260615` (720p cap). Requesting `--resolution 4k` with fast/mini errors out.
+  - **Beta rate limits:** ~2 QPS, max 3 concurrent tasks (the pipeline renders **sequentially** for safety), ~20 free fast calls per month. `seedance_render.mjs` backs off on HTTP 429 (exponential, ~5 retries).
 - `.tmp/` is disposable (gitignored) — outputs don't persist across a cafe-PC reboot; the manifest + this SOP regenerate them.
