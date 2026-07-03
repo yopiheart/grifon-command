@@ -178,6 +178,51 @@ validation before they touch a tuned prompt.
   `polished-ugc` → the most authentic-imperfection model; `cinematic` → Seedance-
   class 4K. Evaluate when the cinematic register comes up.
 
+## Production Content Look — the 3-layer recipe (2026-07-03, APPROVED by Neil)
+
+Validated end-to-end on Zam + Neil (gpt-image-2 edit mode, anchored to their ref
+photos). This is the **owned-content register** — the Iman-Gadzhi-class premium
+talking-head look for Grifon/Zam/Neil content. It sits between `polished-ugc` and
+`cinematic` and is a different job from the ad registers. **All three layers are
+mandatory; each one alone still reads as AI:**
+
+1. **Cinematic environment with real gear in frame** — slat wall, practical lamps,
+   mic boom overlapping the subject's shoulder. Visible production hardware =
+   proof of a real room.
+2. **Subject relit BY the scene** — never "keep face unchanged" (that preserves
+   the source photo's lighting and produces the pasted-on composite tell). Prompt
+   "same identity, but relit": color spill on skin, rim light, catchlights from
+   the practicals, exposure keyed to the room.
+3. **Uniform video-capture rendering** — the layer that kills the "AI face on a
+   nice background" mismatch. Slight video softness (not razor sharp), fine
+   luminance noise across the WHOLE frame including skin, subtle H.264 character,
+   slight motion blur on gesturing hands, video-sensor highlight rolloff. Face
+   and background must share ONE capture quality.
+
+Reference template prompt: the one behind
+`believability-samples/neil-content-gold-podcast-videoframe-APPROVED.png`.
+
+### Hard rules learned 2026-07-03
+
+- **Relight-by-scene rule:** identity language ("keep unchanged") must be scoped
+  to facial geometry/features only — lighting must be explicitly granted to the
+  scene. Teaching pair: `zam-pair-composite-tell-flat.png` (fail) vs
+  `zam-pair-composite-tell-relit.png` (fix).
+- **No chained edits (generation loss):** never edit a generated image of a face
+  to make a variant — the face morphs a little every pass (caught by Neil on the
+  tarpaulin revisions). Every variant regenerates from the ORIGINAL ref photo.
+  Applies to the whole avatar pipeline, including future Veo start frames.
+- **Uniform capture quality:** a photo-crisp face in a cinematic scene reads AI
+  even with perfect relighting. Teaching pair:
+  `neil-pair-capture-mismatch-photo.png` (layers 1–2 only) vs
+  `neil-content-gold-podcast-videoframe-APPROVED.png` (all 3 layers).
+- **Makeup stays mild:** evened tone, defined brows, blush, lip tint — with pores
+  and texture explicitly preserved. Heavy glam + smoothing collapses into the
+  register-3b/4K slop look (`zam-register-3b-cinematic-4k.png`).
+- **Brand-as-light:** DESIGN.md tokens never go on content literally; Grifon Gold
+  enters as the amber accent light (gold podcast wall), and as caption/lower-third
+  color in post. Zam + Neil share the same lighting language = one show family.
+
 ## Next steps
 
 1. Build the **capture schema** (analyze_video.py `believability` block +
