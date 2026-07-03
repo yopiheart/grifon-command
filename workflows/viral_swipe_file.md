@@ -266,3 +266,10 @@ canopy shafts + mist (med). Camera: virtual 3D orbit (med). No humans/VO/lip-syn
 - His stack (Nano Banana images / Kling 2.1 start+end / Magnific upscale / Premiere+Dehancer grade) maps to ours: Codex gpt-image-2 / Seedance 2.0 first+last frame / (upscale TBD) / Neil's edit.
 **Patterns:** **contradicts P3 loudly** ("nobody morphs, ever") — a winning ad built ENTIRELY on morphs; P3 stays valid for UGC/DR register, E8 shows the cinematic register plays by opposite rules (record register on future P3 counts). P5-adjacent (zero dead air) but via music/SFX, no VO — not counted. P7 contradicted in-register (no text at all). P8 partial — closing flash only. **New candidates (cinematic family, count 1 each):** C-MORPH (morph-chain w/ chained start/end frames), C-LOOP (logo-loop circular arc), C-MUSICFIRST (cut track before generating), C-IDWORLD (identity-derived environment theme).
 **Verified (2026-07-03):** `render_audit.mjs` ffmpeg — duration 20.8s, 4 cuts / 5 scenes vs Gemini's "9 shots" (morphs ≠ cuts; ffmpeg trusted); end-card hold 17.52→20.8s ≈ 3.3s (Gemini said ~2s — ffmpeg trusted); creator storyboard tutorial independently confirms the 5-scene structure (hook/build/feature/climax/logo).
+
+**Addendum — first replication run (Nike ZF6, same day):** applying E8 produced per-clip successes but a
+**sequence-level failure** — clips assembled without motion/story bridges read as attachments, not a film
+(Neil retro). What E8's tutorials imply but we under-weighted: Karsten's micro-shots work because each
+begins where the previous clip's energy points (motion at 0s, matching vectors, continuous world), and
+his transitions are FAST. Full doctrine: `cinematic_pipeline.md` → Production doctrine v2. Confirms
+C-MORPH's real meaning is *story-chained* generation, not merely technical frame-chaining.

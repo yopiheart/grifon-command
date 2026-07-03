@@ -27,6 +27,18 @@ to her photo) — so identity is built on her actual pixels, not text-gen.
   taxonomy + identity-lock + Veo talking-avatar pipeline + believability tuning),
   not the mechanism.
 
+## Content-look set (2026-07-03, approved)
+
+- `zam-content-dark-1-eyelevel.png` / `zam-content-dark-2-threequarter.png` —
+  the APPROVED dark-cinematic content look (Iman-style, no gold), built with the
+  full 3-layer recipe + mild makeup (texture preserved). See "Production Content
+  Look" in [../believability_dna.md](../believability_dna.md).
+- `zam-pair-composite-tell-flat.png` vs `zam-pair-composite-tell-relit.png` —
+  teaching pair for the relight-by-scene rule.
+- `zam-register-3b-cinematic-4k.png` — the 4K-clarity slop anti-pattern on her face.
+- Neil's matching set lives alongside (`neil-*`), anchored to `neil-ref-source.jpg`;
+  `neil-content-gold-podcast-videoframe-APPROVED.png` is THE production template.
+
 ## Next steps (planned 2026-06-27)
 
 1. Zam to send **3–5 reference angles** (front / 3-4 / profile / smiling) so the

@@ -59,6 +59,55 @@ A finished ad is the **best seconds of many takes**. Re-render the weak shots (`
 - [ ] Native 4K / 10-bit / no banding; no real faces; no Tagalog speech on Seedance (route those to in-app/Veo).
 - [ ] Continuity held across scenes (same character/product/wardrobe).
 
+## Production doctrine v2 — Nike ZF6 session lessons (2026-07-03, Neil's retro)
+
+The first full ad run (Nike Zoom Fly 6 "Dawn City Road", ~24.5s rough cut) produced clips that each
+passed per-clip QA but read as **disconnected** when assembled. Neil's verdict: S2 (boulevard rip) and
+S5 (logo-lock end card) were the only sequence-perfect scenes. The doctrine below is mandatory for the
+next run — **sequence first, clips second**:
+
+1. **QA the SEQUENCE, not just the clip.** Assemble a rough cut (ffmpeg concat of harvest cuts) and
+   judge the flow BEFORE calling any scene done. A beautiful clip that breaks the motion/story chain is
+   a failed clip.
+2. **Motion at 0s — no wind-ups.** Every clip must open already at full speed/action (like Director AI's
+   avatar speaking on frame 1). Chained-start clips especially: the first 1s is the ONLY second that
+   survives the edit, so a 1s ramp-up = a dead clip. Prompt explicitly: *"already at full speed from the
+   first frame, no acceleration phase."*
+3. **Micro-shots need story bridges, not attachments.** An angle change must be *motivated*: continue the
+   previous clip's motion vector (same direction, same speed read), same world state, camera logic that
+   follows the action. Write the S4-style launch sequence as ONE storyboard whose every clip begins
+   where the previous one's energy points — never as independent clips stitched later.
+4. **Background and product motion must agree.** If the background streaks with speed, the product must
+   read as moving (trail, spray, vibration); a static product on a rushing background reads broken (the
+   S4c macro failure).
+5. **Transitions fast, spec-ad pace.** Reveals/morphs happen FAST — the slow orb unfurl (S3 v2) was weaker
+   than the quick v1 transition. Prefer v1-speed transitions with product locked via the anchored END
+   frame (best of both).
+6. **Angle rules (final form):** free motion = ONE angle per generation · controlled turns = allowed ONLY
+   with start+end frame locks on both anchors · multiple angles = split into separate scenes but
+   story-aligned per rule 3 · never free-rotate an unanchored product.
+7. **Chain the end frame only when the SHOT logic continues.** End-of-N as start-of-N+1 works for
+   continuous action; when cutting to a NEW angle, generate a fresh keyframe that matches the motion
+   state (speed cues baked into the still), not a static composition.
+8. **Vary SFX per clip.** Identical audio directions converge (three clips came back with the same
+   "bubble" SFX). Give each shot a distinct audio line; final sound design happens in the edit anyway.
+9. **Frames vs refs stays exclusive** (see below) — pick per shot: chained keyframes for
+   morph/reveal/turns, multi-angle refs for free motion.
+10. **Intake spec (productization, Neil-approved direction):** require the full angle set from the user
+    (front, back, both sides, sole, top, logo) like Real Estate ad intake; auto-detect + generate missing
+    angles (confirm with user); auto-generate a brand-matched end card from the logo; feed per-scene
+    asset+location+prompt bundles; deliver ffmpeg pre-cut harvests + a rough-cut preview.
+
+### Next-session kickoff (paste-ready)
+
+> Fresh run ng Nike Zoom Fly 6 commercial (o bagong product) sa Cinematic Pipeline. Basahin muna:
+> `workflows/cinematic_pipeline.md` (lalo ang Production doctrine v2) + swipe file entry E8 (+ addendum).
+> Assets: re-scrape ang 8 Nike refs (URL nasa E8/manifest) o bagong product uploads; Codex keyframes
+> regenerate from the doctrine. Storyboard FIRST with sequence-level motion-vector plan (bawat clip
+> nagsisimula kung saan tumutok ang energy ng nauna, motion at 0s), ipa-approve kay Neil ang storyboard
+> stills, saka lang mag-render (720p ladder → 4K). Ang shotlist HTML template + manifest schema ay nasa
+> SOP; ang dating manifest ay `.tmp` (wiped) pero ang prompts/structure ay nasa shotlist section ng E8 docs.
+
 ## Notes / learnings
 - **Frames vs references are MUTUALLY EXCLUSIVE (verified live 2026-07-03).** The API 400s when
   `reference_image` content is mixed with `first_frame`/`last_frame` content. Per shot, pick ONE
