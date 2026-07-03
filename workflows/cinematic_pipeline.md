@@ -70,6 +70,19 @@ passed per-clip QA but read as **disconnected** when assembled. Neil's verdict: 
 S5 (logo-lock end card) were the only sequence-perfect scenes. The doctrine below is mandatory for the
 next run — **sequence first, clips second**:
 
+0. **STORY GATE — story before sequence (v3 rule, 2026-07-03, supersedes everything below).** Before
+   any style prefix, asset, or shotlist: write (a) the **logline** (who wants what, what transforms),
+   (b) the **one-sentence viewer takeaway** a zero-context watcher should be able to say after one
+   viewing, and (c) the **intended audience read**. Neil approves these three lines FIRST. Mine the
+   product's own copy/positioning for the story seed (ZF6's medial side prints "RACE DAY TO EVERYDAY.
+   FLY HIGH, FAST FORWARD" — the brief was on the shoe). Every scene in the shotlist must answer
+   *"what does this beat make the viewer understand or feel?"* — not just *"where does the energy
+   point?"* C-IDWORLD's real meaning: the product's PERSONA dictates the world (Ja = raptor), not its
+   palette. A no-human film works only when the product carries a persona-character; a mass product
+   for everyday humans usually needs the human. **QA counterpart: the NAIVE-VIEWER TEST** (render_qa
+   with a zero-context story-comprehension focus) is mandatory on every assembled cut — if the blind
+   watcher can't state story/message/audience correctly, the film fails regardless of craft grades.
+   The ZF6 v2 run passed every mechanical gate and failed exactly this one.
 1. **QA the SEQUENCE, not just the clip.** Assemble a rough cut (ffmpeg concat of harvest cuts) and
    judge the flow BEFORE calling any scene done. A beautiful clip that breaks the motion/story chain is
    a failed clip.

@@ -969,3 +969,26 @@ looks off. Root cause for a future fix: the recovery mtime-window check in
 `.claude/skills/codex-image/generate.mjs` accepts images produced by an *earlier call in the same
 run window*, so back-to-back invocations can cross-contaminate. Until patched, prefer re-running the
 single failed image over trusting recovery output.
+
+### 2026-07-03 — Story before sequence: doctrine v2 produced a beautifully-connected NOTHING (Nike ZF6 v2)
+**Context:** ZF6 v2 run executed doctrine v2 perfectly — motion at 0s, story bridges, seam sheets,
+harvest cuts, Grade B flow QA. Neil watched the fine cut and asked the one question no QA layer had
+asked: *"Anong kwento? Anong message? Bilang viewer, paano ko to maiintindihan?"* He couldn't answer
+it — and neither could a blind naive-viewer test (Gemini, zero context): story decoded as "a pink
+light trail turns into a portal that spawns a rocket-like Nike shoe"; audience misread as
+"tech-savvy runners" (it's a women's everyday super-trainer); pull rated "moderate — visually cool
+but lacks human relatability."
+**What went wrong:** We replicated Karsten's E8 *grammar* (logo-loop, morph chain, chained frames,
+pacing) and generated the world from the shoe's *colorway* — but E8's C-IDWORLD pattern was never
+about palette: the product's PERSONA dictates the world (Ja = raptor → jungle → wear the shoe,
+become the beast). Karsten could explain his story because the story existed before the shots. All
+10 doctrine-v2 rules are sequence MECHANICS; not one asks what a beat makes the viewer understand.
+Every QA layer (per-clip, motion-at-0s grid, seam sheet, Gemini flow) inherited the same blind spot:
+they verify HOW clips connect, never WHY the film exists.
+**Lesson:** (1) STORY GATE before any shotlist: write the logline, the one-sentence viewer takeaway,
+and the intended audience read — Neil approves these BEFORE the style prefix is written. The product's
+own copy is the first place to look (ZF6's medial side literally prints its positioning: "RACE DAY TO
+EVERYDAY. FLY HIGH, FAST FORWARD" — we never used it). (2) NAIVE-VIEWER TEST is a mandatory QA gate on
+every cut: if a zero-context watcher can't state story/message/audience correctly, the film fails
+regardless of craft grades. (3) A no-human cinematic register only works when the product carries a
+persona-character (E8's raptor); a mass product for everyday humans usually needs the human.
