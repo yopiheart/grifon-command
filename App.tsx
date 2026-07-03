@@ -57,6 +57,7 @@ import {
 } from './services/supabaseClient';
 import { popIntendedPlan, peekIntendedPlan, saveIntendedPlan, startCheckout } from './services/billingService';
 import { grant as grantMarketingConsent, getMarketingConsent } from './services/consentService';
+import { POLICY_VERSION, isKnownPolicyVersion } from './services/consentConstants';
 import { ConsentBanner } from './components/ui/ConsentBanner';
 import { FeedbackWidget } from './components/ui/FeedbackWidget';
 import { getPixelConsent, trackEvent } from './services/analyticsService';
@@ -326,16 +327,29 @@ const App: React.FC = () => {
     return () => window.removeEventListener('popstate', onPop);
   }, []);
 
+  // Meta Pixel: only init (and fire PageView) if the user has already granted
+  // consent on a previous visit. First-time visitors init via ConsentBanner's
+  // Accept. initPixel() is idempotent and a no-op when the pixel id is unset.
+  // Declared ABOVE the route effect so on a direct /pricing load the pixel is
+  // initialized before that effect fires its ViewContent.
+  useEffect(() => {
+    if (getPixelConsent()?.granted) initPixel();
+  }, []);
+
   // SPA virtual pageviews — fire a Meta PageView on every route change so the
   // funnel (landing → /login → /pricing → /app) is visible to the pixel and to
   // URL-based Custom Audiences. initPixel() fires the FIRST PageView on consent;
   // this covers every move after. trackPixel self-guards (no-op until the pixel
   // is initialized post-consent), and route changes sync the URL before this
-  // runs, so each PageView reports the correct path.
+  // runs, so each PageView reports the correct path. ViewContent also fires on
+  // pricing — including a direct first load (the PageView skip stays).
   const firstPageviewRef = useRef(true);
   useEffect(() => {
-    if (firstPageviewRef.current) { firstPageviewRef.current = false; return; }
-    trackPixel('PageView');
+    if (firstPageviewRef.current) { firstPageviewRef.current = false; }
+    else trackPixel('PageView');
+    if (currentRoute === 'pricing') {
+      trackPixel('ViewContent', { content_name: 'pricing_plans', content_category: 'pricing' });
+    }
   }, [currentRoute]);
 
   useEffect(() => {
@@ -350,6 +364,19 @@ const App: React.FC = () => {
         if (typeof sessionStorage !== 'undefined' && sessionStorage.getItem('grifon_oauth_pending')) {
           sessionStorage.removeItem('grifon_oauth_pending');
           setIsBooting(true);
+          // Fire the Lead pixel on a genuine first OAuth sign-in. The email path
+          // has verifyEmailOtp's isNewUser flag; OAuth returns no such signal, so
+          // a just-created account (created_at within 5 min) stands in for
+          // isNewUser. A per-user key blocks a reload from double-firing.
+          // trackPixel self-guards on the consent gate (no-op until pixel init).
+          const u = data.session.user;
+          const createdAt = u.created_at ? Date.parse(u.created_at) : NaN;
+          const isNewOAuthUser = Number.isFinite(createdAt) && Date.now() - createdAt < 5 * 60 * 1000;
+          const leadKey = `grifon_lead_fired:${u.id}`;
+          if (isNewOAuthUser && typeof localStorage !== 'undefined' && !localStorage.getItem(leadKey)) {
+            localStorage.setItem(leadKey, '1');
+            trackPixel('Lead');
+          }
         }
       } else {
         setIsLoadingSession(false);
@@ -370,13 +397,6 @@ const App: React.FC = () => {
     });
 
     return () => { sub.subscription.unsubscribe(); };
-  }, []);
-
-  // Meta Pixel: only init (and fire PageView) if the user has already granted
-  // consent on a previous visit. First-time visitors init via ConsentBanner's
-  // Accept. initPixel() is idempotent and a no-op when the pixel id is unset.
-  useEffect(() => {
-    if (getPixelConsent()?.granted) initPixel();
   }, []);
 
   useEffect(() => {
@@ -402,8 +422,26 @@ const App: React.FC = () => {
       try {
         const { data } = await getSupabase().auth.getSession();
         const meta = data.session?.user?.user_metadata;
-        const optedIn = meta?.marketing_opt_in === true;
-        const signupVersion = meta?.marketing_policy_version;
+        let optedIn = meta?.marketing_opt_in === true;
+        let signupVersion = meta?.marketing_policy_version;
+        // The OAuth path can't write user_metadata before its redirect, so it
+        // stashes the opt-in + policy version in sessionStorage (handleOAuthSignIn).
+        // Fold that in here, then ALWAYS clear the stash so it can't replay on a
+        // later load. Validate against the known-policy allowlist before trusting
+        // it — it rode client storage, unlike the server-set user_metadata.
+        if (typeof sessionStorage !== 'undefined') {
+          const stashed = sessionStorage.getItem('grifon_oauth_marketing_opt_in');
+          if (stashed !== null) {
+            sessionStorage.removeItem('grifon_oauth_marketing_opt_in');
+            try {
+              const parsed = JSON.parse(stashed);
+              if (isKnownPolicyVersion(parsed?.v)) {
+                optedIn = true;
+                signupVersion = parsed.v;
+              }
+            } catch { /* malformed stash → ignore, treated as no opt-in */ }
+          }
+        }
         if (!optedIn) return;
         const current = await getMarketingConsent();
         // Only reconcile when no consent row exists yet (never granted AND never
@@ -629,6 +667,18 @@ const App: React.FC = () => {
       // it, a logged-in user's ordinary refresh would also boot every time.
       if (typeof sessionStorage !== 'undefined') {
         sessionStorage.setItem('grifon_oauth_pending', '1');
+        // A ticked marketing opt-in must survive the OAuth redirect (full page
+        // reload wipes React state). The email path carries it in user_metadata;
+        // OAuth can't write metadata pre-redirect, so stash the intent + the
+        // policy version the user saw. The post-auth reconcile stamps the server
+        // record and clears this key.
+        if (marketingOptIn) {
+          sessionStorage.setItem('grifon_oauth_marketing_opt_in', JSON.stringify({ v: POLICY_VERSION }));
+        } else {
+          // Unticked must also clear: a stale stash from an earlier ticked-then-
+          // cancelled attempt would otherwise grant consent the user revoked.
+          sessionStorage.removeItem('grifon_oauth_marketing_opt_in');
+        }
       }
       await signInWithProvider(provider);
     } catch (err: any) {
@@ -887,7 +937,10 @@ const App: React.FC = () => {
           onNavigateLegal={veilToLegal}
           isAuthenticated={isAuthenticated}
         />
-        <ConsentBanner onConsent={(granted) => { if (granted) initPixel(); }} />
+        <ConsentBanner
+          onConsent={(granted) => { if (granted) initPixel(); }}
+          onNavigatePrivacy={() => veilToLegal('privacy')}
+        />
         <RouteVeil veil={veil} />
       </ErrorBoundary>
     );
@@ -906,7 +959,17 @@ const App: React.FC = () => {
           onNavigateHome={() => runVeilTransition('// GRIFON COMMAND', () => setCurrentRoute('landing'))}
           onNavigateLegal={veilToLegal}
         />
-        <ConsentBanner onConsent={(granted) => { if (granted) initPixel(); }} />
+        <ConsentBanner
+          onConsent={(granted) => {
+            if (granted) {
+              initPixel();
+              // Accept-on-pricing: the ViewContent that the route effect fired
+              // before consent no-oped, so fire it now that the pixel is live.
+              trackPixel('ViewContent', { content_name: 'pricing_plans', content_category: 'pricing' });
+            }
+          }}
+          onNavigatePrivacy={() => veilToLegal('privacy')}
+        />
         <RouteVeil veil={veil} />
       </ErrorBoundary>
     );
@@ -1268,6 +1331,10 @@ const App: React.FC = () => {
           </div>
         )}
       </div>
+      <ConsentBanner
+        onConsent={(granted) => { if (granted) initPixel(); }}
+        onNavigatePrivacy={() => openLegalFromAuth('privacy')}
+      />
       </ErrorBoundary>
     );
   }

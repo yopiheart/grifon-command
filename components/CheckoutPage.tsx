@@ -22,6 +22,8 @@ import {
 } from '../services/checkoutService';
 import { ORDER_BUMP } from '../config/checkout';
 import { PLAN_FEATURES } from '../config/planFeatures';
+import { initPixel, trackPixel } from '../services/metaPixel';
+import { getPixelConsent } from '../services/analyticsService';
 
 interface CheckoutPageProps {
   email: string | null;
@@ -112,6 +114,23 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack, onViewLegal 
     };
   }, [planId, cycle, selectedAddOns]);
 
+  // Fire a single InitiateCheckout when the first intent resolves — the ref guard
+  // keeps the monthly↔annual toggle and add-on swaps (which replace the intent)
+  // from refiring. Consent-guarded init inline: child effects run before App's
+  // returning-consenter initPixel effect, so trackPixel would otherwise no-op.
+  const initiateCheckoutFired = useRef(false);
+  useEffect(() => {
+    if (!intent || initiateCheckoutFired.current) return;
+    initiateCheckoutFired.current = true;
+    if (getPixelConsent()?.granted) initPixel();
+    trackPixel('InitiateCheckout', {
+      value: intent.breakdown.total_centavos / 100,
+      currency: 'PHP',
+      content_name: intent.plan.name,
+      content_category: 'subscription',
+    });
+  }, [intent]);
+
   const handleCardSubmit = async (data: CardFormData) => {
     if (!intent) return;
     if (!email) {
@@ -138,7 +157,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack, onViewLegal 
 
       if (result.status === 'succeeded') {
         clearCheckoutDraft();
-        window.location.href = '/billing/success';
+        window.location.href = `/billing/success?intent=${encodeURIComponent(intent.intent_id)}&amount=${intent.breakdown.total_centavos}&plan=${encodeURIComponent(intent.plan.name)}`;
         return;
       }
 
@@ -169,7 +188,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack, onViewLegal 
       }
       if (result.status === 'succeeded') {
         clearCheckoutDraft();
-        window.location.href = '/billing/success';
+        window.location.href = `/billing/success?intent=${encodeURIComponent(intent.intent_id)}&amount=${intent.breakdown.total_centavos}&plan=${encodeURIComponent(intent.plan.name)}`;
         return;
       }
       setSubmitError(
