@@ -64,6 +64,11 @@ const prompt = flag('--prompt');
 const out = flag('--out');
 const firstFrame = flag('--first-frame');
 const lastFrame = flag('--last-frame');
+// --ref is repeatable: multi-angle product/character reference images
+// (Seedance 2.0 multimodal reference, role "reference_image", max 9).
+const refs = [];
+for (let i = 0; i < args.length; i++) if (args[i] === '--ref' && args[i + 1]) refs.push(args[i + 1]);
+if (refs.length > 9) die('too many --ref images (Seedance 2.0 caps reference_image at 9)');
 const aspect = flag('--aspect', '9:16');
 const duration = flag('--duration', '5');
 const mode = flag('--mode', 'standard');
@@ -124,6 +129,7 @@ function buildBody() {
   const content = [{ type: 'text', text: prompt }];
   if (firstFrame) addImage(content, firstFrame, 'first_frame');
   if (lastFrame) addImage(content, lastFrame, 'last_frame');
+  for (const r of refs) addImage(content, r, 'reference_image');
   // Top-level render params — NOT appended to the prompt text. No seed (ignored on 2.0).
   return { model, content, resolution, ratio: aspect, duration: Number(duration), watermark: false, generate_audio: true };
 }
