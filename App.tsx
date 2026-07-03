@@ -57,6 +57,7 @@ import {
 } from './services/supabaseClient';
 import { popIntendedPlan, peekIntendedPlan, saveIntendedPlan, startCheckout } from './services/billingService';
 import { grant as grantMarketingConsent, getMarketingConsent } from './services/consentService';
+import { POLICY_VERSION, isKnownPolicyVersion } from './services/consentConstants';
 import { ConsentBanner } from './components/ui/ConsentBanner';
 import { FeedbackWidget } from './components/ui/FeedbackWidget';
 import { getPixelConsent, trackEvent } from './services/analyticsService';
@@ -363,6 +364,19 @@ const App: React.FC = () => {
         if (typeof sessionStorage !== 'undefined' && sessionStorage.getItem('grifon_oauth_pending')) {
           sessionStorage.removeItem('grifon_oauth_pending');
           setIsBooting(true);
+          // Fire the Lead pixel on a genuine first OAuth sign-in. The email path
+          // has verifyEmailOtp's isNewUser flag; OAuth returns no such signal, so
+          // a just-created account (created_at within 5 min) stands in for
+          // isNewUser. A per-user key blocks a reload from double-firing.
+          // trackPixel self-guards on the consent gate (no-op until pixel init).
+          const u = data.session.user;
+          const createdAt = u.created_at ? Date.parse(u.created_at) : NaN;
+          const isNewOAuthUser = Number.isFinite(createdAt) && Date.now() - createdAt < 5 * 60 * 1000;
+          const leadKey = `grifon_lead_fired:${u.id}`;
+          if (isNewOAuthUser && typeof localStorage !== 'undefined' && !localStorage.getItem(leadKey)) {
+            localStorage.setItem(leadKey, '1');
+            trackPixel('Lead');
+          }
         }
       } else {
         setIsLoadingSession(false);
@@ -408,8 +422,26 @@ const App: React.FC = () => {
       try {
         const { data } = await getSupabase().auth.getSession();
         const meta = data.session?.user?.user_metadata;
-        const optedIn = meta?.marketing_opt_in === true;
-        const signupVersion = meta?.marketing_policy_version;
+        let optedIn = meta?.marketing_opt_in === true;
+        let signupVersion = meta?.marketing_policy_version;
+        // The OAuth path can't write user_metadata before its redirect, so it
+        // stashes the opt-in + policy version in sessionStorage (handleOAuthSignIn).
+        // Fold that in here, then ALWAYS clear the stash so it can't replay on a
+        // later load. Validate against the known-policy allowlist before trusting
+        // it — it rode client storage, unlike the server-set user_metadata.
+        if (typeof sessionStorage !== 'undefined') {
+          const stashed = sessionStorage.getItem('grifon_oauth_marketing_opt_in');
+          if (stashed !== null) {
+            sessionStorage.removeItem('grifon_oauth_marketing_opt_in');
+            try {
+              const parsed = JSON.parse(stashed);
+              if (isKnownPolicyVersion(parsed?.v)) {
+                optedIn = true;
+                signupVersion = parsed.v;
+              }
+            } catch { /* malformed stash → ignore, treated as no opt-in */ }
+          }
+        }
         if (!optedIn) return;
         const current = await getMarketingConsent();
         // Only reconcile when no consent row exists yet (never granted AND never
@@ -635,6 +667,18 @@ const App: React.FC = () => {
       // it, a logged-in user's ordinary refresh would also boot every time.
       if (typeof sessionStorage !== 'undefined') {
         sessionStorage.setItem('grifon_oauth_pending', '1');
+        // A ticked marketing opt-in must survive the OAuth redirect (full page
+        // reload wipes React state). The email path carries it in user_metadata;
+        // OAuth can't write metadata pre-redirect, so stash the intent + the
+        // policy version the user saw. The post-auth reconcile stamps the server
+        // record and clears this key.
+        if (marketingOptIn) {
+          sessionStorage.setItem('grifon_oauth_marketing_opt_in', JSON.stringify({ v: POLICY_VERSION }));
+        } else {
+          // Unticked must also clear: a stale stash from an earlier ticked-then-
+          // cancelled attempt would otherwise grant consent the user revoked.
+          sessionStorage.removeItem('grifon_oauth_marketing_opt_in');
+        }
       }
       await signInWithProvider(provider);
     } catch (err: any) {
