@@ -955,3 +955,17 @@ was a FILM. **Lesson:** for any multi-clip generation work, assemble and judge t
 cut) as the primary QA artifact — per-clip checks are necessary but not sufficient. Full production
 rules captured in `workflows/cinematic_pipeline.md` → Production doctrine v2. (Also: identical
 audio-direction phrasing across prompts converges to identical SFX — vary it per shot.)
+
+### 2026-07-03 — codex-image cache-recovery can report FALSE SUCCESS on a failed generation
+**Context:** Nike ZF6 v2 fresh-asset run. Two sequential `generate.mjs --edit` calls in one Bash job:
+toe-on front (succeeded), then hero-in-world (Codex reported "Image generation failed with a server
+error"). The wrapper's cache-recovery path then found the *previous* call's cached image, saved it as
+`hero-in-world.png`, printed `✓ saved`, and exited 0 — a byte-identical duplicate of the toe-on file
+masquerading as a different asset.
+**Lesson:** After any multi-image codex-image run, verify outputs are DISTINCT before using them —
+`Get-FileHash` across the batch (or eyeball each Read) catches it in seconds. A `✓ saved` from the
+wrapper is not proof the generation succeeded; grep the log for "generation failed" when anything
+looks off. Root cause for a future fix: the recovery mtime-window check in
+`.claude/skills/codex-image/generate.mjs` accepts images produced by an *earlier call in the same
+run window*, so back-to-back invocations can cross-contaminate. Until patched, prefer re-running the
+single failed image over trusting recovery output.
