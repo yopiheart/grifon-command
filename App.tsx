@@ -326,16 +326,29 @@ const App: React.FC = () => {
     return () => window.removeEventListener('popstate', onPop);
   }, []);
 
+  // Meta Pixel: only init (and fire PageView) if the user has already granted
+  // consent on a previous visit. First-time visitors init via ConsentBanner's
+  // Accept. initPixel() is idempotent and a no-op when the pixel id is unset.
+  // Declared ABOVE the route effect so on a direct /pricing load the pixel is
+  // initialized before that effect fires its ViewContent.
+  useEffect(() => {
+    if (getPixelConsent()?.granted) initPixel();
+  }, []);
+
   // SPA virtual pageviews — fire a Meta PageView on every route change so the
   // funnel (landing → /login → /pricing → /app) is visible to the pixel and to
   // URL-based Custom Audiences. initPixel() fires the FIRST PageView on consent;
   // this covers every move after. trackPixel self-guards (no-op until the pixel
   // is initialized post-consent), and route changes sync the URL before this
-  // runs, so each PageView reports the correct path.
+  // runs, so each PageView reports the correct path. ViewContent also fires on
+  // pricing — including a direct first load (the PageView skip stays).
   const firstPageviewRef = useRef(true);
   useEffect(() => {
-    if (firstPageviewRef.current) { firstPageviewRef.current = false; return; }
-    trackPixel('PageView');
+    if (firstPageviewRef.current) { firstPageviewRef.current = false; }
+    else trackPixel('PageView');
+    if (currentRoute === 'pricing') {
+      trackPixel('ViewContent', { content_name: 'pricing_plans', content_category: 'pricing' });
+    }
   }, [currentRoute]);
 
   useEffect(() => {
@@ -370,13 +383,6 @@ const App: React.FC = () => {
     });
 
     return () => { sub.subscription.unsubscribe(); };
-  }, []);
-
-  // Meta Pixel: only init (and fire PageView) if the user has already granted
-  // consent on a previous visit. First-time visitors init via ConsentBanner's
-  // Accept. initPixel() is idempotent and a no-op when the pixel id is unset.
-  useEffect(() => {
-    if (getPixelConsent()?.granted) initPixel();
   }, []);
 
   useEffect(() => {
@@ -887,7 +893,10 @@ const App: React.FC = () => {
           onNavigateLegal={veilToLegal}
           isAuthenticated={isAuthenticated}
         />
-        <ConsentBanner onConsent={(granted) => { if (granted) initPixel(); }} />
+        <ConsentBanner
+          onConsent={(granted) => { if (granted) initPixel(); }}
+          onNavigatePrivacy={() => veilToLegal('privacy')}
+        />
         <RouteVeil veil={veil} />
       </ErrorBoundary>
     );
@@ -906,7 +915,17 @@ const App: React.FC = () => {
           onNavigateHome={() => runVeilTransition('// GRIFON COMMAND', () => setCurrentRoute('landing'))}
           onNavigateLegal={veilToLegal}
         />
-        <ConsentBanner onConsent={(granted) => { if (granted) initPixel(); }} />
+        <ConsentBanner
+          onConsent={(granted) => {
+            if (granted) {
+              initPixel();
+              // Accept-on-pricing: the ViewContent that the route effect fired
+              // before consent no-oped, so fire it now that the pixel is live.
+              trackPixel('ViewContent', { content_name: 'pricing_plans', content_category: 'pricing' });
+            }
+          }}
+          onNavigatePrivacy={() => veilToLegal('privacy')}
+        />
         <RouteVeil veil={veil} />
       </ErrorBoundary>
     );
@@ -1268,6 +1287,10 @@ const App: React.FC = () => {
           </div>
         )}
       </div>
+      <ConsentBanner
+        onConsent={(granted) => { if (granted) initPixel(); }}
+        onNavigatePrivacy={() => openLegalFromAuth('privacy')}
+      />
       </ErrorBoundary>
     );
   }

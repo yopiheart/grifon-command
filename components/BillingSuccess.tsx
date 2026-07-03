@@ -7,6 +7,8 @@ import { GrifonMark } from './ui/GrifonMark';
 import { GlassPanel } from './ui/GlassPanel';
 import { GoldButton } from './ui/GoldButton';
 import { FOUNDING_OFFER } from '../config/foundingOffer';
+import { initPixel, trackPixel } from '../services/metaPixel';
+import { getPixelConsent } from '../services/analyticsService';
 
 type Props = {
   onContinue: () => void;
@@ -31,6 +33,29 @@ const BillingSuccess: React.FC<Props> = ({ onContinue, email }) => {
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
+    // Read the checkout intent params BEFORE the strip below wipes them, then
+    // fire the browser-side Purchase. The eventId is byte-identical to
+    // api/webhook.ts's `purchase:${intentId}` so Meta dedups this against the
+    // server CAPI Purchase. sessionStorage guards a refresh double-fire; the
+    // query-strip below is a second guard (params gone on reload).
+    const params = new URLSearchParams(window.location.search);
+    const intentId = params.get('intent');
+    if (intentId) {
+      const guardKey = `grifon_purchase_fired:${intentId}`;
+      let alreadyFired = false;
+      try { alreadyFired = sessionStorage.getItem(guardKey) === '1'; } catch {}
+      if (!alreadyFired && getPixelConsent()?.granted) {
+        initPixel(); // idempotent; child effects run before App's init effect
+        const amountCentavos = Number(params.get('amount'));
+        const plan = params.get('plan');
+        trackPixel('Purchase', {
+          ...(Number.isFinite(amountCentavos) && amountCentavos > 0 ? { value: amountCentavos / 100 } : {}),
+          currency: 'PHP',
+          ...(plan ? { content_name: plan } : {}),
+        }, `purchase:${intentId}`);
+        try { sessionStorage.setItem(guardKey, '1'); } catch {}
+      }
+    }
     // Strip query string so refresh doesn't re-enter this screen forever.
     if (window.history.replaceState) {
       window.history.replaceState({}, '', '/billing/success');

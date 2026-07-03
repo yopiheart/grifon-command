@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { CheckCircle2, Loader2, XCircle } from 'lucide-react';
 import { GlassPanel } from './ui/GlassPanel';
 import { fetchStatus } from '../services/checkoutService';
+import { initPixel, trackPixel } from '../services/metaPixel';
+import { getPixelConsent } from '../services/analyticsService';
 
 interface Props {
   onContinue: () => void;
@@ -40,6 +42,18 @@ const Billing3dsReturn: React.FC<Props> = ({ onContinue, onRetry }) => {
           const result = await fetchStatus(intent_id);
           if (cancelled) return;
           if (result.status === 'succeeded') {
+            // The 3DS/e-wallet path never reaches billing_success, so fire the
+            // browser Purchase here. eventId byte-identical to api/webhook.ts's
+            // `purchase:${intentId}` for CAPI dedup; the sessionStorage guard is
+            // load-bearing (the 3DS return URL keeps ?intent= across refreshes).
+            const guardKey = `grifon_purchase_fired:${intent_id}`;
+            let alreadyFired = false;
+            try { alreadyFired = sessionStorage.getItem(guardKey) === '1'; } catch {}
+            if (!alreadyFired && getPixelConsent()?.granted) {
+              initPixel();
+              trackPixel('Purchase', { value: result.amount / 100, currency: 'PHP' }, `purchase:${intent_id}`);
+              try { sessionStorage.setItem(guardKey, '1'); } catch {}
+            }
             setPhase('succeeded');
             return;
           }

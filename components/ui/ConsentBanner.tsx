@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { motion, useReducedMotion } from 'motion/react';
 import { Cookie, X } from 'lucide-react';
 import { GoldButton } from './GoldButton';
+import { EASE, DUR } from './motionTokens';
 import { getPixelConsent, setPixelConsent } from '../../services/analyticsService';
 
 // Minimal, consent-first cookie/analytics notice for the Data-Driven Growth Loop
@@ -8,15 +10,23 @@ import { getPixelConsent, setPixelConsent } from '../../services/analyticsServic
 // tokens only — glass panel, Grifon Gold accent, lucide icon. Self-gating: once a
 // choice (accept or decline) is recorded in localStorage, the banner never shows
 // again on this device.
+//
+// Sanctioned deviation (Neil, 2026-07-03 pixel-funnel plan): resting gold border
+// (#FFCC00/20) + gold glow shadow on this one panel — a deliberate stand-out
+// treatment for the consent ask, mirroring BillingSuccess's celebration border.
+// Real UI panels elsewhere stay glass + blur per DESIGN.md.
 
 interface ConsentBannerProps {
   /** Called with the user's choice. Parent inits the pixel on `true`. */
   onConsent: (granted: boolean) => void;
+  /** When provided, the Privacy link navigates in-SPA instead of a full reload. */
+  onNavigatePrivacy?: () => void;
 }
 
-export const ConsentBanner: React.FC<ConsentBannerProps> = ({ onConsent }) => {
+export const ConsentBanner: React.FC<ConsentBannerProps> = ({ onConsent, onNavigatePrivacy }) => {
   // Only show when no decision has been made yet.
   const [visible, setVisible] = useState(() => getPixelConsent() === null);
+  const reduceMotion = useReducedMotion();
 
   if (!visible) return null;
 
@@ -27,10 +37,13 @@ export const ConsentBanner: React.FC<ConsentBannerProps> = ({ onConsent }) => {
   };
 
   return (
-    <div
+    <motion.div
       role="dialog"
       aria-label="Analytics consent"
-      className="fixed bottom-4 left-4 right-4 z-40 sm:left-auto sm:right-4 sm:w-96 rounded-2xl border border-white/10 bg-zinc-900/80 backdrop-blur-xl p-5"
+      initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: DUR.entrance, delay: DUR.entrance, ease: EASE.expressive }}
+      className="fixed bottom-4 left-4 right-4 z-40 sm:left-auto sm:right-4 sm:w-96 rounded-2xl border border-[#FFCC00]/20 bg-zinc-900/80 backdrop-blur-xl p-5 shadow-[0_0_30px_rgba(255,204,0,0.12)]"
     >
       <button
         onClick={() => decide(false)}
@@ -49,9 +62,15 @@ export const ConsentBanner: React.FC<ConsentBannerProps> = ({ onConsent }) => {
           <p className="mt-1 text-sm font-semibold text-white">Cookies &amp; analytics</p>
           <p className="mt-1 text-xs text-zinc-400">
             We use analytics to understand how Grifon is used and improve it. Your call.{' '}
-            <a href="/privacy" className="text-[#FFCC00] hover:underline">
-              Privacy Policy
-            </a>
+            {onNavigatePrivacy ? (
+              <button type="button" onClick={onNavigatePrivacy} className="text-[#FFCC00] hover:underline align-baseline">
+                Privacy Policy
+              </button>
+            ) : (
+              <a href="/privacy" className="text-[#FFCC00] hover:underline">
+                Privacy Policy
+              </a>
+            )}
             .
           </p>
         </div>
@@ -68,6 +87,6 @@ export const ConsentBanner: React.FC<ConsentBannerProps> = ({ onConsent }) => {
           Accept
         </GoldButton>
       </div>
-    </div>
+    </motion.div>
   );
 };
