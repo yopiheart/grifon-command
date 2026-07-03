@@ -60,6 +60,7 @@ A finished ad is the **best seconds of many takes**. Re-render the weak shots (`
 - [ ] Continuity held across scenes (same character/product/wardrobe).
 
 ## Notes / learnings
+- **First live call (2026-07-03): auth + contract validated, but models need per-account ACTIVATION.** A fresh ARK key returns `404 ModelNotOpen` per model until the Seedance models are activated in the **BytePlus ModelArk Console → Model Management** (activate `dreamina-seedance-2-0-260128` AND `dreamina-seedance-2-0-fast-260128` separately). The error names the exact model id — it's account-side, not an API/key/contract problem.
 - **Verified ModelArk contract (2026-07-03).** The `seedance_render.mjs` port implements this exactly (the old `.py` TODOs are resolved):
   - **Endpoints:** create `POST {base}/contents/generations/tasks`; poll `GET {base}/contents/generations/tasks/{id}` (~every 10s). Base default `https://ark.ap-southeast.bytepluses.com/api/v3`. Headers: `Authorization: Bearer <key>`, `Content-Type: application/json`.
   - **Params are TOP-LEVEL JSON**, not `--flags` appended to the prompt text: `resolution`, `ratio`, `duration`, `watermark:false`, `generate_audio:true`. **Do NOT send `seed`** — unsupported/ignored on Seedance 2.0.
