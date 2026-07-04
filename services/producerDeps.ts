@@ -18,6 +18,7 @@ import {
 } from './geminiService';
 import { consolidateVoices } from './voiceConsolidationService';
 import { renderFinalVideo } from './finalRenderService';
+import { getCachedResearch, putCachedResearch } from './researchCacheStore';
 import {
   saveRunCheckpoint,
   seedScenes,
@@ -128,5 +129,9 @@ export const realProducerDeps: ProducerDeps = {
   pollVideo: (handle, opts) => resumeVideoOperation(handle as Parameters<typeof resumeVideoOperation>[0], opts),
   persist,
   run: runStore,
+  // Research reuse: locks the target market per brand+product so it doesn't drift between ads.
+  // A Recon run (components/MarketResearch.tsx) also seeds this store on the same key.
+  getCachedResearch,
+  putCachedResearch,
   now: () => Date.now(),
 };
