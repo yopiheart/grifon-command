@@ -616,7 +616,9 @@ export const LaunchScreen: React.FC<{
             <span className="flex items-center gap-2">
               <Sparkles className="h-3.5 w-3.5 shrink-0 text-[#FFCC00]/70" />{' '}
               {savedResearch
-                ? `Using your saved research (from ${new Date(savedResearch.savedAt).toLocaleDateString()})`
+                ? savedResearch.report.subject?.trim()
+                  ? `Using your saved research on ${savedResearch.report.subject.trim()} (from ${new Date(savedResearch.savedAt).toLocaleDateString()})`
+                  : `Using your saved research (from ${new Date(savedResearch.savedAt).toLocaleDateString()})`
                 : 'AI researches your market automatically'}
             </span>
             <button

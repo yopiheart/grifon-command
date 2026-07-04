@@ -86,6 +86,33 @@ describe('researchCacheStore', () => {
     expect(got?.bigIdea).toBe('idea-recovered');
   });
 
+  it('survives shape-corrupt entries (null / missing savedAt) without throwing on read or eviction', async () => {
+    // Cross-tab corruption: a persisted map holding a null entry and a shape-broken entry
+    // (no numeric savedAt) alongside 11 valid ones. The eviction sort dereferences
+    // map[k].savedAt — a surviving bad entry would throw AFTER a paid research call.
+    const map: Record<string, unknown> = {
+      'bad::null': null,
+      'bad::shape': { report: { bigIdea: 'orphan' } }, // no savedAt
+    };
+    for (let i = 0; i < 11; i++) {
+      map[`ok-${i}`] = { report: fakeReport(String(i)), savedAt: 1_000 + i };
+    }
+    storage.poison(STORAGE_KEY, JSON.stringify(map));
+
+    // Malformed keys read as null.
+    expect(await getCachedResearch('bad::null')).toBeNull();
+    expect(await getCachedResearch('bad::shape')).toBeNull();
+    expect(getCachedResearchEntry('bad::shape')).toBeNull();
+
+    // A put must not throw despite the corrupt neighbors, and eviction runs cleanly.
+    await expect(putCachedResearch('ok-new', fakeReport('new'))).resolves.toBeUndefined();
+    expect(await getCachedResearch('ok-new')).not.toBeNull();
+
+    // The bad entries never re-enter the cleaned map.
+    expect(await getCachedResearch('bad::null')).toBeNull();
+    expect(await getCachedResearch('bad::shape')).toBeNull();
+  });
+
   it('getCachedResearchEntry exposes savedAt', async () => {
     vi.spyOn(Date, 'now').mockReturnValue(1_700_000_000_000);
     await putCachedResearch('brand::product', fakeReport('x'));

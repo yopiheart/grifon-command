@@ -3,7 +3,7 @@
 // The orchestrator (services/producerOrchestrator.ts) already has the seam:
 // researchCacheKey(brand, product) + optional getCachedResearch/putCachedResearch deps,
 // but services/producerDeps.ts never wired a real store, so reuse never happened. This
-// localStorage-backed store closes that gap: research stays LOCKED per brand+product so the
+// localStorage-backed store closes that gap: research stays locked per brand identity so the
 // target market doesn't drift between ads for the same offer. A fresh run only happens via
 // the intake "Re-research" toggle (forceFreshResearch) or a genuinely new product.
 
@@ -19,15 +19,33 @@ interface CacheEntry {
 
 type CacheMap = Record<string, CacheEntry>;
 
+/** Is this a structurally-valid entry? Guards the eviction sort (map[k].savedAt) and the
+ * LaunchScreen hint against cross-tab corruption — a null / shape-broken entry must not
+ * survive into the map, or `map[k].savedAt` would throw and break the never-throws contract. */
+function isValidEntry(entry: unknown): entry is CacheEntry {
+  return (
+    !!entry &&
+    typeof entry === 'object' &&
+    typeof (entry as CacheEntry).report === 'object' &&
+    (entry as CacheEntry).report !== null &&
+    typeof (entry as CacheEntry).savedAt === 'number'
+  );
+}
+
 /** Read + parse the whole cache map. Never throws — degrades to {} on corrupt/absent JSON
- * or an unavailable localStorage (SSR, private mode, disabled storage). */
+ * or an unavailable localStorage (SSR, private mode, disabled storage). Filters out any
+ * entry that isn't a well-formed { report, savedAt } so downstream reads/eviction are safe. */
 function readMap(): CacheMap {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return {};
     const parsed = JSON.parse(raw) as unknown;
     if (!parsed || typeof parsed !== 'object') return {};
-    return parsed as CacheMap;
+    const clean: CacheMap = {};
+    for (const [key, entry] of Object.entries(parsed as Record<string, unknown>)) {
+      if (isValidEntry(entry)) clean[key] = entry;
+    }
+    return clean;
   } catch {
     return {};
   }
@@ -46,7 +64,9 @@ function writeMap(map: CacheMap): void {
  * (report + savedAt) or null when absent/corrupt. */
 export function getCachedResearchEntry(key: string): { report: MarketResearchReport; savedAt: number } | null {
   const entry = readMap()[key];
-  if (!entry || typeof entry !== 'object' || !entry.report) return null;
+  // readMap already drops malformed entries, but re-assert savedAt is numeric so the hint
+  // can never render 'Invalid Date' from a stale/hand-edited payload.
+  if (!isValidEntry(entry)) return null;
   return { report: entry.report, savedAt: entry.savedAt };
 }
 
