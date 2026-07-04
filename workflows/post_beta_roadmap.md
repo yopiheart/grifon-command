@@ -830,18 +830,44 @@ converting"*. Two-layer split + Layer-1-first sequencing approved same session (
 record); UGC-editor study explicitly Neil-driven via viral-autopsy. **Neil scheduled the PoC for
 the NEXT session (2026-07-05, pre-breakfast call).**
 
-**▶ PASTE-READY KICKOFF (next session):**
-> Read workflows/post_beta_roadmap.md item #18 (Gemini Omni Flash bake-off) — full context is
-> there, including the corrected edit-task capability and the 4-video autopsy findings. Run the
-> PoC: (0) probe whether our GEMINI_API_KEY reaches the Omni Flash edit task (Interactions API /
-> `gemini-omni-flash-preview`; if permission-denied, we test manually via my Higgsfield account
-> instead); (1) pick one rendered b-roll scene + one talking scene from a real project (re-render
-> if .tmp was wiped); (2) edit arm: upload via Files API, apply 2-3 engagement-plan edits
-> (background cleanup, push-in/reframe, relight) conversationally; (3) grade vs the same scenes
-> through today's EDL+FFmpeg pass: identity, lip-sync survival against our ElevenLabs mux, label
-> integrity, artifacts (watch hair edges + fingers-on-product); (4) verdict decides how much of
-> the EDL visual vocabulary migrates to Omni. Constraints hold: critical text stays FFmpeg;
-> plan-first-generate-once (~$0.10/sec per iteration); TUNED files untouched without my sign-off.
+**✅ EDIT-ARM PoC EXECUTED (2026-07-05, ~$1.64: 3 paid generations + 1 free safety block).**
+Tool: `tools/omni_edit_poc.py` (probe / edit / refine subcommands; paid calls gated behind
+`--yes`; probe is zero-cost — an incomplete request that 400s proves access without generating).
+Test clips cut from `baselines/2026-06-10-bean-block-final-baseline.mp4` (only surviving pipeline
+artifact): beans-pour b-roll 4.1s + FIRST-50-LANG talking scene 7.9s. ⚠️ PoC caveat: both inputs
+had FFmpeg captions already burned in — production would edit pre-caption clips.
+
+**Results:**
+- **Step 0:** ACCESS_OK — our `GEMINI_API_KEY` reaches `gemini-omni-flash-preview` via
+  `POST /v1beta/interactions`. No Higgsfield needed. Output is 720p/24fps (down from our
+  1080p/30) — production needs an upscale step.
+- **Test 1, b-roll push-in: PASS.** Real parallax push-in; scene, bean physics, timing, brand
+  wordmark and label art near-identical. But Omni REWROTE the caption layer — invented
+  "BAGONG ROAST ITO" (transcribed from the VO) and retimed/restyled the rest.
+- **Test 2, rack focus (same clip): FAIL.** Focus never racked to the label, and the label
+  artwork was hallucinated (added sun + red flowers). Same clip that Test 1 preserved —
+  label integrity is STOCHASTIC across runs, exactly the determinism trade we flagged.
+  Stateful `refine` (previous_interaction_id) not yet tried on this failure.
+- **Test 3, talking-scene bg swap: REJECTED for talking scenes.** The café environment swap
+  looks great and gestures/shirt/bag/VO are preserved (original ElevenLabs audio intact,
+  transcript verbatim) — but a blind `analyze_video.py` believability grade flipped from
+  **real-human / "perfect lip-sync" (source)** to **likely-ai / mouth-lag / over-smoothed
+  skin / "pasted" bag (Omni output)**, both high confidence. Omni re-renders the person even
+  when told not to. Direct contradiction of the Higgsfield-demo prior ("lip-sync survives
+  edits") on OUR footage. Background chalkboard text also garbled ("COFEE").
+- **Safety filter gotcha:** the prompt phrase "preserve the man's identity … frame-for-frame"
+  was BLOCKED as harmful content (pre-generation, unbilled); neutral phrasing ("keep everything
+  else exactly as filmed") passed. Never use identity-preservation legalese in Omni prompts.
+
+**Verdict (pending Neil eyeball of the actual videos in `.tmp/omni-poc/edits/`):** talking
+scenes stay 100% on the ElevenLabs pipeline — even "background-only" Omni edits degrade
+believability, which is disqualifying. B-roll edit arm is PROMISING (push-in beat the FFmpeg
+zoompan punch-in on parallax realism) but stochastic on label integrity → usable only with
+edits-before-caption-burn ordering, a per-output label/identity eval gate, retry budget, and
+an upscale step. The marquee FFmpeg-impossible move (rack focus) failed its first attempt —
+run 1-2 `refine` iterations before finalizing the Layer-2 scope. Text-stays-FFmpeg constraint
+is now empirically validated from three directions (invented captions, restyled captions,
+garbled background text).
 
 ---
 
