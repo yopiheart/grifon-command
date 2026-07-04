@@ -729,14 +729,18 @@ lang ako."* Evaluation persisted at his request (chose to persist the doc over b
 ### 18. Gemini Omni Flash — b-roll camera-choreography PoC (Layer 2 of the per-scene engagement plan)
 
 > **Context (2026-07-05):** Neil brought the Gemini Omni Flash sources (model card, API docs,
-> prompt guide) and asked whether to apply them to the AI Editor. Verdict (evaluated against the
-> real pipeline): **NO for the editor** — Omni Flash is a video *generation/editing* model
-> (`gemini-omni-flash-preview`, Interactions API, ~$0.10/sec output, 10s max, preview) that
-> **cannot ingest our rendered scenes** (video references cap at 3s and per Google's own docs are
-> "not correctly processed"), is English-only-evaluated (vs our Taglish VO), and would replace the
-> deterministic EDL+FFmpeg render contract with stochastic regeneration. **YES upstream** — as a
-> scene *generator* where camera work must exist in the pixels. ⚠️ Naming: this is Google's Omni,
-> NOT Kling Omni O1 (item #9 / the Session C–G hook arc) — always say "Omni Flash" vs "Kling O1".
+> prompt guide) and asked whether to apply them to the AI Editor. Original verdict said Omni
+> "cannot ingest our rendered scenes" — **CORRECTED same day:** that 3s/broken limit applies to
+> the `reference_to_video` task only. The **`edit` task DOES accept user-uploaded videos via the
+> Files API** (no stated duration cap; blocked in EEA/UK/CH only — PH fine; Higgsfield resells
+> exactly this with 60s uploads). So per-scene conversational editing of our rendered clips is
+> possible TODAY. What still holds: **voice editing unsupported** (any edit that alters the
+> avatar's mouth pixels risks ElevenLabs lip-sync — talking scenes need empirical testing before
+> trust), accurate text rendering is a stated model weakness (critical text stays FFmpeg),
+> preview-status instability, English-only evaluation, ~$0.10/sec output per edit iteration, and
+> the determinism trade (a stochastic edit pass vs the tested EDL+FFmpeg contract). ⚠️ Naming:
+> this is Google's Omni, NOT Kling Omni O1 (item #9 / the Session C–G hook arc) — always say
+> "Omni Flash" vs "Kling O1".
 >
 > **The two-layer architecture (Neil-approved 2026-07-05):** Neil's product idea — an AI that
 > plans, per scene, the editing moves that maximize retention (camera push in/out, rack focus
@@ -753,12 +757,20 @@ lang ako."* Evaluation persisted at his request (chose to persist the doc over b
 >   FFmpeg-executable (→ EDL) and which need generation (→ the video-gen prompt). Layer 1 work
 >   should keep this split in mind so the planner isn't rebuilt twice.
 
-**What:** A contained PoC routing selected **b-roll / product / cinematic scenes** (NEVER talking
-scenes) to Gemini Omni Flash image-to-video: scene still as `<FIRST_FRAME>`, per-scene engagement
-plan driving `[0-3s]`-style timecode camera choreography (push-in, rack focus product→face, orbit,
-angle switch), `<IMAGE_REF_N>` product/character consistency refs, stateful `previous_interaction_id`
-refinement ("same scene, but…") instead of full re-rolls. Mirror the `api/kling/omni-video.ts`
-proxy pattern.
+**What:** A contained PoC with TWO test arms (post-correction, both are testable today):
+**(a) Edit arm — the "compete against FFmpeg" bake-off (Neil's framing, 2026-07-05):** upload
+1–2 REAL rendered scenes (one b-roll, one talking) via the Files API `edit` task and apply the
+per-scene engagement plan conversationally (push-in, rack focus product→face, angle switch,
+motion-graphics flourish). Grade: identity preserved? talking-scene mouth pixels intact enough
+for the ElevenLabs VO mux? label/text uncorrupted? Compare the same scene styled by the current
+EDL+FFmpeg pass. If the edit arm wins, the EDL's VISUAL vocabulary migrates to Omni and FFmpeg
+keeps only the deterministic jobs (VO mux, forced-alignment captions, exact ₱/offer text,
+end-card, concat, music duck) — FFmpeg is never fully kicked, per the constraints below.
+**(b) Generate arm:** scene still as `<FIRST_FRAME>`, timecode camera choreography, stateful
+`previous_interaction_id` refinement instead of full re-rolls. Mirror the
+`api/kling/omni-video.ts` proxy pattern for whichever arm wins.
+Evidence in hand: Neil has 4 Omni-made videos (Higgsfield + an IG creator) to autopsy for what
+edits the model actually executes well — analyze BEFORE burning PoC credits.
 
 **Why it matters:** Real in-pixel camera work is the biggest visible gap between Grifon output and
 human-edited UGC ads; FFmpeg can fake zooms but not focus pulls or angle changes. Conversational
@@ -776,10 +788,11 @@ Layer 1 delivers most of the retention value deterministically and should land f
 - Plan-first, generate-once: the engagement plan is drafted and approved BEFORE the paid call.
 - SynthID watermark is embedded in all Omni output — disclose if a client asks.
 
-**When to resume:** ANY of — (a) Omni Flash leaves preview; (b) video-reference limit rises past
-3s with correct processing (would also unlock scene *editing*, re-evaluate then); (c) non-English
-evaluation ships; PLUS Layer 1's first autopsy-derived vocabulary has landed (so the shared
-planner exists to drive it).
+**When to resume:** the `edit` task works TODAY, so the gate is priority, not capability:
+resume when the launch gate (producer smoke) is closed, OR earlier if Neil green-lights the
+bake-off PoC as a deliberate side-session. Cheap step available anytime: autopsy Neil's 4
+sample videos (no build, no credits). Still worth waiting for before PRODUCTIONIZING (not for
+the PoC): Omni leaving preview + non-English evaluation.
 
 **Where to start:**
 1. Re-read the full evaluation: plan file `sources-https-deepmind-google-models-mod-jolly-hammock.md`
