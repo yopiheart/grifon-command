@@ -157,6 +157,14 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
             isLocalService: formData.isLocalService,
             businessAddress: formData.businessAddress,
         });
+        // Empty/unparseable result (no premise AND no alternatives) would render an
+        // empty gate panel — fall through to research like the catch path below.
+        if (!pc.impliedPremise && pc.alternatives.length === 0) {
+            console.warn('[MarketResearch] Premise Check returned empty/unparseable result, proceeding to research');
+            setGateStatus('done');
+            runResearch(formData);
+            return;
+        }
         setPremiseResult(pc);
         setConfirmedTarget('');
         setConfirmedReason('');
