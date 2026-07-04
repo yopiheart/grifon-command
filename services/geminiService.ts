@@ -309,7 +309,8 @@ const textModel = 'gemini-3.1-flash-lite';
 const fastTextModel = 'gemini-3.1-flash-lite';
 const researchTextModel = 'gemini-3.5-flash';
 const avatarModel = 'gemini-3.1-flash-image-preview'; 
-const sceneImageModel = 'gemini-3.1-flash-image-preview'; 
+const sceneImageModel = 'gemini-3.1-flash-lite-image';
+const thumbnailModel = 'gemini-3.1-flash-image-preview';
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -2035,7 +2036,8 @@ export const generateSceneImage = async (
     await delay(2500);
 
     const sanitizedPrompt = prompt.length > 400 ? prompt.substring(0, 400) : prompt;
-    const imageConfig: any = { aspectRatio, imageSize: imageQuality };
+    // sceneImageModel (gemini-3.1-flash-lite-image) is 1K-only — clamp a '2K' request down to '1K'.
+    const imageConfig: any = { aspectRatio, imageSize: imageQuality === '2K' ? '1K' : imageQuality };
     
     const parts: any[] = [];
 
@@ -2275,7 +2277,7 @@ export const generateThumbnail = async (
     parts.push({ text: prompt });
 
     const response: GenerateContentResponse = await retryWithBackoff(() => proxyGenerateImage({
-        model: sceneImageModel,
+        model: thumbnailModel,
         contents: { parts },
         config: { 
             imageConfig: { aspectRatio, imageSize: imageQuality }

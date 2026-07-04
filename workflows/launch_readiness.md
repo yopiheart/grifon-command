@@ -32,6 +32,16 @@ commanded right hand; HIGH_ANGLE_SELFIE "looks UP" self-contradicts looking-down
 `.tmp/model-eval/` pairs. `.tmp` is defreezer-wiped — if the PC reboots first, re-run
 `node tools/eval_scene_image_models.mjs` (~$0.60) to regenerate the pairs.
 
+**→ Neil PASSED the eyeball gate same session; Phase B SHIPPED.** `sceneImageModel` →
+`gemini-3.1-flash-lite-image` (scenes + Image Editor studio), new `thumbnailModel` const keeps
+thumbnails on `gemini-3.1-flash-image-preview`, `avatarModel` untouched, 1K clamp in
+`generateSceneImage` (lite is 1K-only; thumbnails/avatars keep 2K). Diff by `code-executor`,
+build + 423 tests green, services/CLAUDE.md LOCKED list updated (6 constants, real line numbers).
+**Live in-app smoke was BLOCKED on the auth wall** (no persisted session, known Playwright
+hard-wall — roadmap #15A); Neil chose commit-now: the A/B eval already exercised the exact
+model + tuned prompts live against the API, so **the next real producer/wizard render is the
+live confirmation — eyeball scene-image quality + generation speed on that run.**
+
 ## Status as of 2026-07-05 (FULL PENDINGS REVIEW — launch gate = the producer smoke)
 
 Full June→July pendings review ran this session (all workflow docs + all 12 remote branches audited).
