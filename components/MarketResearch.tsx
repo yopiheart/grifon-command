@@ -422,7 +422,7 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
                             <div className="absolute inset-0 flex items-center justify-center bg-zinc-950/80 backdrop-blur-sm z-10 rounded-xl">
                                 <Loader message="PRESSURE-TESTING YOUR PREMISE..." />
                             </div>
-                        ) : gateStatus === 'ready' && !result ? (
+                        ) : gateStatus === 'ready' ? (
                             <div className="space-y-5">
                                 <div className="flex items-center gap-2 border-b border-white/10 pb-3">
                                     <Target className="w-4 h-4 text-[#FFCC00] shrink-0" />

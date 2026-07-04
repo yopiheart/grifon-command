@@ -1590,6 +1590,9 @@ export const parsePremiseCheckResponse = (raw: string): PremiseCheckResult => {
 };
 
 export const generatePremiseCheck = async (input: PremiseCheckInput): Promise<PremiseCheckResult> => {
+  // The gate is advisory — the caller falls through to research on any failure, so
+  // it must fail fast rather than pin the loading overlay under rate-limiting. Tight
+  // retry budget: 1 retry, 2s base delay, 0 timeout retries (vs the render defaults).
   const response: GenerateContentResponse = await retryWithBackoff(() => proxyGenerateContent({
     model: researchTextModel,
     contents: { parts: [{ text: buildPremiseCheckPrompt(input) }] },
@@ -1597,7 +1600,7 @@ export const generatePremiseCheck = async (input: PremiseCheckInput): Promise<Pr
       tools: [{ googleSearch: {} }],
       safetySettings: SAFETY_SETTINGS,
     },
-  }));
+  }), 1, 2000, 0);
   return parsePremiseCheckResponse(response.text || '{}');
 };
 
