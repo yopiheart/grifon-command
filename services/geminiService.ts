@@ -1,5 +1,5 @@
 import type { GenerateContentResponse } from "@google/genai";
-import { BusinessInfo, Script, Scene, StoryboardResponse, VideoPrompt, MarketResearchInput, MarketResearchReport, OfferOptimizerInput, OfferOptimizerResult, VideoEditInput, OptimizedPromptResponse, CaptionHeadlineInput, DayContent, AdVariant, BatchHeadline, UplinkData, CinematicSpecConfig, VisualTheme, CinematicNarrativeScene, VideoModelType, InfluencerConfig, InfluencerStrategicInput, InfluencerScriptResponse, EditDecisionInput, EditDecisionList, SfxBankId } from '../types';
+import { BusinessInfo, Script, Scene, StoryboardResponse, VideoPrompt, MarketResearchInput, MarketResearchReport, OfferOptimizerInput, OfferOptimizerResult, VideoEditInput, OptimizedPromptResponse, CaptionHeadlineInput, DayContent, AdVariant, BatchHeadline, UplinkData, CinematicSpecConfig, VisualTheme, CinematicNarrativeScene, VideoModelType, InfluencerConfig, InfluencerStrategicInput, InfluencerScriptResponse, EditDecisionInput, EditDecisionList, SfxBankId, PremiseCheckInput, PremiseCheckResult, PremiseAlternative } from '../types';
 import { getSupabase } from './supabaseClient';
 import { startJob, endJob, type JobKind } from './activeJobsService';
 import { saveActiveJob, clearActiveJob } from './activeJobStore';
@@ -1520,6 +1520,88 @@ the nearest valid value. Never emit anything else.
 export const generateOfferOptimization = async (input: OfferOptimizerInput): Promise<OfferOptimizerResult> => {
   await delay(1000);
   return retryWithBackoff(() => proxyCall<OfferOptimizerResult>('/api/gemini/text', { flow: 'offer-optimizer', input }));
+};
+
+// ---------------------------------------------------------------------------
+// Premise Check (assumption gate) — NON-crown-jewel, client-side prompt.
+// Runs BEFORE generateMarketResearch to pressure-test the founder's premise
+// (who the customer really is + why they buy) with googleSearch-grounded
+// alternatives. Rides the GENERIC /api/gemini/text legacy passthrough, NOT the
+// marketmind flow — so it never touches any tuned/crown-jewel prompt. Advisory
+// only: the confirmed premise is appended to productDescription by the caller.
+// googleSearch grounding is incompatible with responseMimeType:json, so (like
+// the marketmind handler) we instruct JSON in the prompt and parse via cleanJson.
+// ---------------------------------------------------------------------------
+const buildPremiseCheckPrompt = (input: PremiseCheckInput): string => `
+You are a skeptical senior direct-response strategist running a 30-second "premise check"
+for a Filipino SMB before they pay for deep market research. Your job is NOT to agree with
+them — it is to catch a WRONG assumption about who the customer really is and why they buy.
+
+PRODUCT / SERVICE: ${input.productName}
+DESCRIPTION (the founder's own words): ${input.productDescription}
+PRICE / CURRENT OFFER: ${input.priceOffer || 'not stated'}
+${input.brandName ? `BRAND: ${input.brandName}` : ''}
+${input.isLocalService ? `LOCAL SERVICE based in: ${input.businessAddress || 'location not stated'}` : ''}
+
+Use web search to ground yourself in how THIS kind of product/niche actually sells in the
+Philippines (real buyer complaints, the words customers use, competitor angles). Do not invent.
+
+Return ONLY a JSON object — no markdown, no commentary — in EXACTLY this shape:
+{
+  "impliedPremise": "1-2 sentences: the customer + the buying reason the founder's description seems to ASSUME",
+  "alternatives": [
+    {
+      "targetRead": "a DIFFERENT plausible 'who it is really for'",
+      "coreReason": "the real reason THAT person buys or hesitates (often emotional, not price)",
+      "rationale": "why this is plausible, grounded in real niche signal"
+    }
+  ],
+  "questions": ["1-2 short laddering questions that force the founder to test their premise"]
+}
+
+Rules:
+- Provide 2 or 3 alternatives, each genuinely different from the implied premise and from each other.
+- At least one alternative MUST challenge the assumption that price / cheapness is the driver.
+- Keep every field tight (max ~30 words). Natural Taglish is fine where it fits the niche.
+- Output JSON only.
+`;
+
+export const parsePremiseCheckResponse = (raw: string): PremiseCheckResult => {
+  let parsed: any = {};
+  try { parsed = JSON.parse(cleanJson(raw)); } catch { parsed = {}; }
+  const alternatives: PremiseAlternative[] = Array.isArray(parsed?.alternatives)
+    ? parsed.alternatives
+        .slice(0, 3)
+        .map((a: any) => ({
+          targetRead: typeof a?.targetRead === 'string' ? a.targetRead : '',
+          coreReason: typeof a?.coreReason === 'string' ? a.coreReason : '',
+          rationale: typeof a?.rationale === 'string' ? a.rationale : '',
+        }))
+        .filter((a: PremiseAlternative) => a.targetRead || a.coreReason)
+    : [];
+  const questions: string[] = Array.isArray(parsed?.questions)
+    ? parsed.questions.filter((q: any) => typeof q === 'string' && q.trim()).slice(0, 2)
+    : [];
+  return {
+    impliedPremise: typeof parsed?.impliedPremise === 'string' ? parsed.impliedPremise : '',
+    alternatives,
+    questions,
+  };
+};
+
+export const generatePremiseCheck = async (input: PremiseCheckInput): Promise<PremiseCheckResult> => {
+  // The gate is advisory — the caller falls through to research on any failure, so
+  // it must fail fast rather than pin the loading overlay under rate-limiting. Tight
+  // retry budget: 1 retry, 2s base delay, 0 timeout retries (vs the render defaults).
+  const response: GenerateContentResponse = await retryWithBackoff(() => proxyGenerateContent({
+    model: researchTextModel,
+    contents: { parts: [{ text: buildPremiseCheckPrompt(input) }] },
+    config: {
+      tools: [{ googleSearch: {} }],
+      safetySettings: SAFETY_SETTINGS,
+    },
+  }), 1, 2000, 0);
+  return parsePremiseCheckResponse(response.text || '{}');
 };
 
 /**

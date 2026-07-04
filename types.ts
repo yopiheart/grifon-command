@@ -303,6 +303,43 @@ export interface MarketResearchInput {
   uploadedImages: string[]; // Array of Base64 strings
 }
 
+/**
+ * Premise Check (assumption gate) — input. A thin subset of MarketResearchInput,
+ * passed to generatePremiseCheck BEFORE the marketmind flow runs. Separate type so
+ * the gate stays decoupled from the (locked) MarketResearchInput contract.
+ */
+export interface PremiseCheckInput {
+  productName: string;
+  productDescription: string;
+  priceOffer: string;
+  brandName?: string;
+  isLocalService?: boolean;
+  businessAddress?: string;
+}
+
+/**
+ * One grounded alternative read of WHO the product is really for and WHY they
+ * buy/hesitate — the echo-breaker. Sourced from niche signal (googleSearch), not
+ * the user's own restated assumption.
+ */
+export interface PremiseAlternative {
+  targetRead: string;   // who it may REALLY be for
+  coreReason: string;   // the real reason they buy or hesitate
+  rationale: string;    // why this is plausible (grounded in market signal)
+}
+
+/**
+ * Output of the Premise Check gate. Surfaced in the Market Research UI so the user
+ * can pick / edit / confirm a sharpened premise before research runs, or Skip.
+ * Purely advisory — never feeds a tuned prompt directly; the confirmed premise is
+ * appended to productDescription client-side.
+ */
+export interface PremiseCheckResult {
+  impliedPremise: string;             // the premise the user's input implies
+  alternatives: PremiseAlternative[]; // 2-3 grounded alternatives
+  questions: string[];                // 1-2 short laddering questions
+}
+
 export interface MarketResearchHook {
   type: 'Pattern Interrupt' | 'Direct Pain' | 'Result Reveal' | 'Question' | 'Before-After';
   visual: string;

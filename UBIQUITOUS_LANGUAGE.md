@@ -45,6 +45,7 @@ Each module has TWO names, both canonical in their own layer: the **Term** below
 | Term | User-facing name (`moduleIdentity.ts` key) | Definition | Aliases to avoid |
 | --- | --- | --- | --- |
 | **Market Research** | **Recon** (`market_research`) | The module that ingests product info and uploads to produce a competitive/audience report. | Research tool |
+| **Premise Check** | — (sub-feature of **Market Research**; no registry entry) | The skippable, default-on assumption gate that runs *before* **Market Research**: it pressure-tests the founder's premise (who the customer really is + why they buy) against `googleSearch`-grounded alternatives, then appends the confirmed premise into the description so research runs on a sharpened input. Advisory only — never feeds a tuned prompt directly, never blocks. The echo-breaker for input risk. | Assumption test, premise gate (when ambiguous) |
 | **Offer Optimizer** | **War Room** (`offer_optimizer`) | The module that rewrites pricing/positioning given market research text. | Pricing tool |
 | **Edit Video** | **Edit Bay** (`edit_video`) | The module that generates an edit plan from a script + scene screenshots. | Video editor |
 | **Image Editor** | **Image Lab** (`image_editor`) | The module that edits/regenerates images from user description and uploads. | Photo editor |
@@ -57,6 +58,16 @@ Each module has TWO names, both canonical in their own layer: the **Term** below
 | **Influencer Forge** | **Influencer Forge** (`influencer_forge`) | The module that creates and runs an **Influencer** persona through an **Odyssey** of daily content. Distinct from the wizard's **Avatar** flow. | Persona tool, creator gen |
 
 Newer registry entries not yet in this glossary (display names shipped on `feat/oneshot-firstcut-recovery`): **Director AI** (`creative_director`), **Concierge** (`concierge_mode`), **Hook Lab** (`hook_lab`), **Swarm** (`batch_fanout`). Run `/ubiquitous-language` to define their domain terms when those modules stabilize.
+
+### Premise Check sub-terms
+
+| Term | Definition | Aliases to avoid |
+| --- | --- | --- |
+| **Implied Premise** | The customer + buying reason the founder's own description assumes; what the **Premise Check** pressure-tests. | Assumption (alone) |
+| **Alternative Read** | One grounded, genuinely different who-it's-really-for + why-they-buy, sourced from niche signal — the echo-breaker unit (`PremiseAlternative`). | Suggestion, option |
+| **Confirmed Premise** | The founder-confirmed target + core reason appended to the product description before research runs. | Final premise |
+
+Code note: the gate's consumed state is `'done'` (it covers BOTH Confirm and Skip); UI language stays **Confirm** / **Skip** — never surface "done"/"skipped" to users.
 
 ## Influencer Forge & Odyssey
 

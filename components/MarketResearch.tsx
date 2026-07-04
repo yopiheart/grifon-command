@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
-import { MarketResearchInput, MarketResearchReport } from '../types';
-import { generateMarketResearch } from '../services/geminiService';
+import { MarketResearchInput, MarketResearchReport, PremiseCheckResult, PremiseAlternative } from '../types';
+import { generateMarketResearch, generatePremiseCheck } from '../services/geminiService';
 import { compressImageForUpload } from '../utils/imageCompression';
 import { generateMarketResearchPdf } from '../utils/marketResearchPdfGenerator';
 import { GlassPanel } from './ui/GlassPanel';
@@ -9,7 +9,7 @@ import { GoldButton } from './ui/GoldButton';
 import { PreviousResearchCard } from './ui/PreviousResearchCard';
 import Loader from './ui/Loader';
 import { toast } from 'sonner';
-import { Download, ChevronLeft, ChevronDown, ChevronUp, UploadCloud, X, ArrowRight } from 'lucide-react';
+import { Download, ChevronLeft, ChevronDown, ChevronUp, ChevronRight, UploadCloud, X, ArrowRight, Target, Check } from 'lucide-react';
 import saveAs from 'file-saver';
 
 interface MarketResearchProps {
@@ -32,6 +32,14 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
   const [result, setResult] = useState<MarketResearchReport | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [showFullReport, setShowFullReport] = useState(false);
+
+  // Premise Check (assumption gate) — runs before MarketMind to pressure-test the
+  // founder's premise. Skippable, default-on. 'idle' → 'loading' → 'ready' → 'done'
+  // ('done' = gate consumed, research proceeding).
+  const [gateStatus, setGateStatus] = useState<'idle' | 'loading' | 'ready' | 'done'>('idle');
+  const [premiseResult, setPremiseResult] = useState<PremiseCheckResult | null>(null);
+  const [confirmedTarget, setConfirmedTarget] = useState('');
+  const [confirmedReason, setConfirmedReason] = useState('');
 
   // Previous-research recall (Roadmap #3): surface last saved MarketMind so users can skip re-typing
   const [previousReport, setPreviousReport] = useState<MarketResearchReport | null>(null);
@@ -92,23 +100,19 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
     }));
   };
 
-  const handleAnalyze = async () => {
-    if (!formData.productName || !formData.productDescription) {
-        setError("Please provide at least a Product Name and Description.");
-        return;
-    }
-    
+  // Run the actual MarketMind research with a (possibly premise-enriched) input.
+  const runResearch = async (input: MarketResearchInput) => {
     setIsAnalyzing(true);
     setError(null);
     setResult(null);
-    
+
     try {
-        const report = await generateMarketResearch(formData);
+        const report = await generateMarketResearch(input);
         setResult(report);
         const savedAtMs = Date.now();
         localStorage.setItem('marketMindReport', JSON.stringify(report));
         localStorage.setItem('marketMindReportSavedAt', savedAtMs.toString());
-        const { uploadedImages: _imgs, ...userInputs } = formData;
+        const { uploadedImages: _imgs, ...userInputs } = input;
         localStorage.setItem('marketMindUserInputs', JSON.stringify(userInputs));
         setPreviousReport(report);
         setPreviousSavedAt(savedAtMs);
@@ -119,6 +123,83 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
     } finally {
         setIsAnalyzing(false);
     }
+  };
+
+  // Append the confirmed premise into productDescription (same enrichment pattern as
+  // the hero-handoff) so the UNCHANGED marketmind flow runs on a sharpened premise.
+  const buildEnrichedInput = (): MarketResearchInput => {
+    const parts: string[] = [];
+    if (confirmedTarget.trim()) parts.push(`Target customer: ${confirmedTarget.trim()}.`);
+    if (confirmedReason.trim()) parts.push(`Core reason they buy or hesitate: ${confirmedReason.trim()}.`);
+    if (parts.length === 0) return formData;
+    return {
+        ...formData,
+        productDescription: `${formData.productDescription}\n\n[Premise Check — confirmed by founder] ${parts.join(' ')}`,
+    };
+  };
+
+  // Primary action: default-on gate. First click pressure-tests the premise; the
+  // gate panel then holds the Confirm / Skip decision. If the gate call fails, fall
+  // straight through to research (non-blocking).
+  const handlePrimaryAction = async () => {
+    if (!formData.productName || !formData.productDescription) {
+        setError("Please provide at least a Product Name and Description.");
+        return;
+    }
+    setError(null);
+    setGateStatus('loading');
+    try {
+        const pc = await generatePremiseCheck({
+            productName: formData.productName,
+            productDescription: formData.productDescription,
+            priceOffer: formData.priceOffer,
+            brandName: formData.brandName,
+            isLocalService: formData.isLocalService,
+            businessAddress: formData.businessAddress,
+        });
+        // Empty/unparseable result (no premise AND no alternatives) would render an
+        // empty gate panel — fall through to research like the catch path below.
+        if (!pc.impliedPremise && pc.alternatives.length === 0) {
+            console.warn('[MarketResearch] Premise Check returned empty/unparseable result, proceeding to research');
+            setGateStatus('done');
+            runResearch(formData);
+            return;
+        }
+        setPremiseResult(pc);
+        setConfirmedTarget('');
+        setConfirmedReason('');
+        setGateStatus('ready');
+    } catch (err) {
+        console.warn('[MarketResearch] Premise Check failed, proceeding to research:', err);
+        setGateStatus('done');
+        runResearch(formData);
+    }
+  };
+
+  const applyAlternative = (alt: PremiseAlternative) => {
+    setConfirmedTarget(alt.targetRead);
+    setConfirmedReason(alt.coreReason);
+  };
+
+  const handleConfirmPremise = () => {
+    const enriched = buildEnrichedInput();
+    setGateStatus('done');
+    runResearch(enriched);
+  };
+
+  const handleSkipPremise = () => {
+    setGateStatus('done');
+    runResearch(formData);
+  };
+
+  // Back/edit affordance: re-open the form so the user can edit inputs and re-run the
+  // premise check. Resets the gate to 'idle' (re-enables the primary ANALYZE button)
+  // and clears the prior premise result + confirmed fields.
+  const handleBackToEdit = () => {
+    setGateStatus('idle');
+    setPremiseResult(null);
+    setConfirmedTarget('');
+    setConfirmedReason('');
   };
 
   const handleDownload = async () => {
@@ -297,12 +378,18 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
                         </div>
                     </div>
 
-                    <GoldButton 
-                        onClick={handleAnalyze} 
-                        disabled={isAnalyzing}
-                        className="w-full py-4 mt-4 rounded-xl tracking-widest whitespace-nowrap"
+                    <GoldButton
+                        onClick={handlePrimaryAction}
+                        disabled={isAnalyzing || gateStatus === 'loading' || gateStatus === 'ready'}
+                        className="w-full py-4 mt-4 rounded-xl tracking-widest"
                     >
-                        {isAnalyzing ? "ACCESSING MARKETMIND..." : "ANALYZE MARKET (LAUNCH MARKETMIND)"}
+                        {isAnalyzing
+                            ? "ACCESSING MARKETMIND..."
+                            : gateStatus === 'loading'
+                            ? "PRESSURE-TESTING PREMISE..."
+                            : gateStatus === 'ready'
+                            ? "REVIEW PREMISE CHECK →"
+                            : "ANALYZE MARKET (LAUNCH MARKETMIND)"}
                     </GoldButton>
                     
                     {error && (
@@ -330,6 +417,97 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
                         {isAnalyzing ? (
                             <div className="absolute inset-0 flex items-center justify-center bg-zinc-950/80 backdrop-blur-sm z-10 rounded-xl">
                                 <Loader message="SIMULATING CUSTOMER RESEARCH..." />
+                            </div>
+                        ) : gateStatus === 'loading' ? (
+                            <div className="absolute inset-0 flex items-center justify-center bg-zinc-950/80 backdrop-blur-sm z-10 rounded-xl">
+                                <Loader message="PRESSURE-TESTING YOUR PREMISE..." />
+                            </div>
+                        ) : gateStatus === 'ready' ? (
+                            <div className="space-y-5">
+                                <div className="flex items-center gap-2 border-b border-white/10 pb-3">
+                                    <Target className="w-4 h-4 text-[#FFCC00] shrink-0" />
+                                    <div>
+                                        <p className="text-[10px] font-mono uppercase tracking-widest text-[#FFCC00]">// PREMISE_CHECK</p>
+                                        <p className="text-xs text-zinc-500 leading-snug">Bago tayo magsunog ng budget — sigurado ka ba sa tunay na customer mo?</p>
+                                    </div>
+                                </div>
+
+                                {premiseResult?.impliedPremise && (
+                                    <div>
+                                        <p className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 mb-1.5">// YOUR IMPLIED PREMISE</p>
+                                        <p className="text-sm text-zinc-300 leading-relaxed italic">{premiseResult.impliedPremise}</p>
+                                    </div>
+                                )}
+
+                                {premiseResult && premiseResult.alternatives.length > 0 && (
+                                    <div className="space-y-2">
+                                        <p className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">// ALTERNATIVE READS — TAP TO USE</p>
+                                        {premiseResult.alternatives.map((alt, i) => (
+                                            <button
+                                                key={i}
+                                                onClick={() => applyAlternative(alt)}
+                                                className="w-full text-left bg-zinc-950 border border-white/10 rounded-xl p-4 hover:border-[#FFCC00] hover:bg-white/5 transition-all"
+                                            >
+                                                <p className="text-sm text-zinc-100 font-bold">{alt.targetRead}</p>
+                                                <p className="text-sm text-zinc-300 mt-1">{alt.coreReason}</p>
+                                                {alt.rationale && <p className="text-xs text-zinc-500 mt-2 leading-relaxed">{alt.rationale}</p>}
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
+
+                                {premiseResult && premiseResult.questions.length > 0 && (
+                                    <div className="bg-[#FFCC00]/5 border border-[#FFCC00]/20 rounded-xl p-4">
+                                        <p className="text-[10px] font-mono uppercase tracking-widest text-[#FFCC00] mb-2">// ASK YOURSELF</p>
+                                        <ul className="space-y-1.5">
+                                            {premiseResult.questions.map((q, i) => (
+                                                <li key={i} className="text-sm text-zinc-300 leading-relaxed flex gap-2"><ChevronRight className="w-3 h-3 shrink-0 mt-1 text-[#FFCC00]" />{q}</li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                )}
+
+                                <div className="space-y-3 border-t border-white/10 pt-4">
+                                    <div className="space-y-2">
+                                        <label className="block text-[10px] text-zinc-400 font-mono uppercase tracking-widest">// CONFIRMED_TARGET_CUSTOMER</label>
+                                        <input
+                                            value={confirmedTarget}
+                                            onChange={(e) => setConfirmedTarget(e.target.value)}
+                                            placeholder="Who is this REALLY for?"
+                                            className="w-full bg-zinc-950 border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] text-sm"
+                                        />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="block text-[10px] text-zinc-400 font-mono uppercase tracking-widest">// CONFIRMED_CORE_REASON</label>
+                                        <input
+                                            value={confirmedReason}
+                                            onChange={(e) => setConfirmedReason(e.target.value)}
+                                            placeholder="The real reason they buy or hesitate"
+                                            className="w-full bg-zinc-950 border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] text-sm"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="space-y-2">
+                                    <GoldButton
+                                        onClick={handleConfirmPremise}
+                                        className="w-full py-4 rounded-xl tracking-widest text-xs flex items-center justify-center gap-2"
+                                    >
+                                        <Check className="w-4 h-4 shrink-0" /> CONFIRM &amp; RUN RESEARCH
+                                    </GoldButton>
+                                    <button
+                                        onClick={handleSkipPremise}
+                                        className="w-full text-[10px] font-mono uppercase tracking-widest text-zinc-500 hover:text-[#FFCC00] transition-colors py-2"
+                                    >
+                                        Skip — research as-is
+                                    </button>
+                                    <button
+                                        onClick={handleBackToEdit}
+                                        className="w-full text-[10px] font-mono uppercase tracking-widest text-zinc-500 hover:text-[#FFCC00] transition-colors py-2"
+                                    >
+                                        ← Edit inputs — re-run the check
+                                    </button>
+                                </div>
                             </div>
                         ) : result ? (
                             <div className="space-y-5">
