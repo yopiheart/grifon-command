@@ -827,7 +827,21 @@ polling, cost guards, quota) is a separate multi-day effort — do not start it 
 editing our ai should create each per scene what would be the editing plan that will help this
 scenes to be more engaging and will make them stay to watch"* + goal *"not just engaging but high
 converting"*. Two-layer split + Layer-1-first sequencing approved same session (AskUserQuestion
-record); UGC-editor study explicitly Neil-driven via viral-autopsy.
+record); UGC-editor study explicitly Neil-driven via viral-autopsy. **Neil scheduled the PoC for
+the NEXT session (2026-07-05, pre-breakfast call).**
+
+**▶ PASTE-READY KICKOFF (next session):**
+> Read workflows/post_beta_roadmap.md item #18 (Gemini Omni Flash bake-off) — full context is
+> there, including the corrected edit-task capability and the 4-video autopsy findings. Run the
+> PoC: (0) probe whether our GEMINI_API_KEY reaches the Omni Flash edit task (Interactions API /
+> `gemini-omni-flash-preview`; if permission-denied, we test manually via my Higgsfield account
+> instead); (1) pick one rendered b-roll scene + one talking scene from a real project (re-render
+> if .tmp was wiped); (2) edit arm: upload via Files API, apply 2-3 engagement-plan edits
+> (background cleanup, push-in/reframe, relight) conversationally; (3) grade vs the same scenes
+> through today's EDL+FFmpeg pass: identity, lip-sync survival against our ElevenLabs mux, label
+> integrity, artifacts (watch hair edges + fingers-on-product); (4) verdict decides how much of
+> the EDL visual vocabulary migrates to Omni. Constraints hold: critical text stays FFmpeg;
+> plan-first-generate-once (~$0.10/sec per iteration); TUNED files untouched without my sign-off.
 
 ---
 
