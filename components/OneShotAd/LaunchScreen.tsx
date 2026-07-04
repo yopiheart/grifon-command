@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ImageUp, Sparkles, Zap, Lock, Wand2, Upload, User, Mic,
   Film, Gauge, Check, Loader2, Package, Wrench, Smartphone, Building2, RefreshCw,
@@ -15,6 +15,8 @@ import { describeBusinessAsset } from '../../services/geminiService';
 import { fetchVoices } from '../../services/voiceService';
 import { compressImageForUpload } from '../../utils/imageCompression';
 import { analyzeImageQuality } from '../../utils/imageQuality';
+import { getCachedResearchEntry } from '../../services/researchCacheStore';
+import { researchCacheKey } from '../../services/producerOrchestrator';
 import type { ProductionInput } from '../../services/oneShotIntake';
 import type { BusinessInfo } from '../../types';
 import {
@@ -335,6 +337,15 @@ export const LaunchScreen: React.FC<{
               : voiceNeeded && !voiceId ? 'Pick a voice'
                 : '';
 
+  // Research-reuse hint: the intake sends productName = brand, so the cache key the
+  // orchestrator writes/reads is keyed on the brand for both parts. If that key already
+  // has research (a prior One-Shot or a Recon run) and the user hasn't forced a fresh run,
+  // surface it so they know the target market stays locked instead of re-drifting.
+  const savedResearch = useMemo(
+    () => (forceFresh ? null : getCachedResearchEntry(researchCacheKey(brandName, brandName))),
+    [brandName, forceFresh],
+  );
+
   const launch = () => {
     if (!ready) return;
     clearOneShotDraft(); // brief is consumed — a fresh One-Shot starts clean
@@ -603,7 +614,12 @@ export const LaunchScreen: React.FC<{
           {/* AI-research reassurance + re-research toggle */}
           <p className={`mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-zinc-500 ${T_LABEL}`}>
             <span className="flex items-center gap-2">
-              <Sparkles className="h-3.5 w-3.5 shrink-0 text-[#FFCC00]/70" /> AI researches your market automatically
+              <Sparkles className="h-3.5 w-3.5 shrink-0 text-[#FFCC00]/70" />{' '}
+              {savedResearch
+                ? savedResearch.report.subject?.trim()
+                  ? `Using your saved research on ${savedResearch.report.subject.trim()} (from ${new Date(savedResearch.savedAt).toLocaleDateString()})`
+                  : `Using your saved research (from ${new Date(savedResearch.savedAt).toLocaleDateString()})`
+                : 'AI researches your market automatically'}
             </span>
             <button
               type="button"

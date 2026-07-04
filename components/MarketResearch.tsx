@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { MarketResearchInput, MarketResearchReport, PremiseCheckResult, PremiseAlternative } from '../types';
 import { generateMarketResearch, generatePremiseCheck } from '../services/geminiService';
+import { putCachedResearch } from '../services/researchCacheStore';
+import { researchCacheKey } from '../services/producerOrchestrator';
 import { compressImageForUpload } from '../utils/imageCompression';
 import { generateMarketResearchPdf } from '../utils/marketResearchPdfGenerator';
 import { GlassPanel } from './ui/GlassPanel';
@@ -114,6 +116,20 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
         localStorage.setItem('marketMindReportSavedAt', savedAtMs.toString());
         const { uploadedImages: _imgs, ...userInputs } = input;
         localStorage.setItem('marketMindUserInputs', JSON.stringify(userInputs));
+        // Seed the producer's research cache so a One-Shot for the same identity reuses this
+        // Recon run (including a premise-sharpened one) instead of re-researching. One-Shot's
+        // intake has a single identity field (brand) and its runtime key is (brand, brand)
+        // (LaunchScreen maps productName = brand), so we must seed the SAME identity shape or
+        // the bridge misses. Recon's closest identity is brandName, falling back to productName.
+        // A later Recon run for the same identity intentionally overwrites — most-recent research
+        // wins, and Re-research is one tap. The store never throws, but wrap defensively so a
+        // failure can't break the success path.
+        try {
+            const identity = (input.brandName || '').trim() || input.productName;
+            void putCachedResearch(researchCacheKey(identity, identity), report);
+        } catch (cacheErr) {
+            console.warn('[MarketResearch] Failed to seed producer research cache:', cacheErr);
+        }
         setPreviousReport(report);
         setPreviousSavedAt(savedAtMs);
         setShowRecallCard(false);
