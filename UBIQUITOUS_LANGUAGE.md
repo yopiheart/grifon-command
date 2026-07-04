@@ -59,6 +59,16 @@ Each module has TWO names, both canonical in their own layer: the **Term** below
 
 Newer registry entries not yet in this glossary (display names shipped on `feat/oneshot-firstcut-recovery`): **Director AI** (`creative_director`), **Concierge** (`concierge_mode`), **Hook Lab** (`hook_lab`), **Swarm** (`batch_fanout`). Run `/ubiquitous-language` to define their domain terms when those modules stabilize.
 
+### Premise Check sub-terms
+
+| Term | Definition | Aliases to avoid |
+| --- | --- | --- |
+| **Implied Premise** | The customer + buying reason the founder's own description assumes; what the **Premise Check** pressure-tests. | Assumption (alone) |
+| **Alternative Read** | One grounded, genuinely different who-it's-really-for + why-they-buy, sourced from niche signal — the echo-breaker unit (`PremiseAlternative`). | Suggestion, option |
+| **Confirmed Premise** | The founder-confirmed target + core reason appended to the product description before research runs. | Final premise |
+
+Code note: the gate's consumed state is `'done'` (it covers BOTH Confirm and Skip); UI language stays **Confirm** / **Skip** — never surface "done"/"skipped" to users.
+
 ## Influencer Forge & Odyssey
 
 | Term | Definition | Aliases to avoid |

@@ -34,9 +34,9 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
   const [showFullReport, setShowFullReport] = useState(false);
 
   // Premise Check (assumption gate) — runs before MarketMind to pressure-test the
-  // founder's premise. Skippable, default-on. 'idle' → 'loading' → 'ready' → 'skipped'
-  // ('skipped' = gate consumed, research proceeding).
-  const [gateStatus, setGateStatus] = useState<'idle' | 'loading' | 'ready' | 'skipped'>('idle');
+  // founder's premise. Skippable, default-on. 'idle' → 'loading' → 'ready' → 'done'
+  // ('done' = gate consumed, research proceeding).
+  const [gateStatus, setGateStatus] = useState<'idle' | 'loading' | 'ready' | 'done'>('idle');
   const [premiseResult, setPremiseResult] = useState<PremiseCheckResult | null>(null);
   const [confirmedTarget, setConfirmedTarget] = useState('');
   const [confirmedReason, setConfirmedReason] = useState('');
@@ -163,7 +163,7 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
         setGateStatus('ready');
     } catch (err) {
         console.warn('[MarketResearch] Premise Check failed, proceeding to research:', err);
-        setGateStatus('skipped');
+        setGateStatus('done');
         runResearch(formData);
     }
   };
@@ -175,13 +175,23 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
 
   const handleConfirmPremise = () => {
     const enriched = buildEnrichedInput();
-    setGateStatus('skipped');
+    setGateStatus('done');
     runResearch(enriched);
   };
 
   const handleSkipPremise = () => {
-    setGateStatus('skipped');
+    setGateStatus('done');
     runResearch(formData);
+  };
+
+  // Back/edit affordance: re-open the form so the user can edit inputs and re-run the
+  // premise check. Resets the gate to 'idle' (re-enables the primary ANALYZE button)
+  // and clears the prior premise result + confirmed fields.
+  const handleBackToEdit = () => {
+    setGateStatus('idle');
+    setPremiseResult(null);
+    setConfirmedTarget('');
+    setConfirmedReason('');
   };
 
   const handleDownload = async () => {
@@ -482,6 +492,12 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
                                         className="w-full text-[10px] font-mono uppercase tracking-widest text-zinc-500 hover:text-[#FFCC00] transition-colors py-2"
                                     >
                                         Skip — research as-is
+                                    </button>
+                                    <button
+                                        onClick={handleBackToEdit}
+                                        className="w-full text-[10px] font-mono uppercase tracking-widest text-zinc-500 hover:text-[#FFCC00] transition-colors py-2"
+                                    >
+                                        ← Edit inputs — re-run the check
                                     </button>
                                 </div>
                             </div>
