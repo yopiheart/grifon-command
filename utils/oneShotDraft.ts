@@ -18,7 +18,7 @@
  * on launch, an explicit Reset, or "Start fresh".
  */
 import type { BusinessInfo } from '../types';
-import type { AutopilotInput } from '../services/oneShotIntake';
+import type { ProductionInput } from '../services/oneShotIntake';
 import type { ServiceArchetype, RealEstateArchetype } from '../components/guidedPhotoSlots';
 
 type ServicePhoto = NonNullable<BusinessInfo['servicePhotos']>[number];
@@ -42,9 +42,9 @@ export interface OneShotDraft {
   ageRange: string;
   ethnicity: string;
   avatarUrl: string;
-  language: AutopilotInput['language'];
-  aspectRatio: AutopilotInput['aspectRatio'];
-  resolution: NonNullable<AutopilotInput['resolution']>;
+  language: ProductionInput['language'];
+  aspectRatio: ProductionInput['aspectRatio'];
+  resolution: NonNullable<ProductionInput['resolution']>;
   voiceId: string;
 }
 

@@ -1,6 +1,7 @@
 ---
 name: retargeting-briefs
 description: Turn the growth loop's own users into retargeting SEGMENTS (checkout-abandoners, power-users-still-free, free-not-converted, detractors, promoters) and write a per-segment creative brief for Neil to build + publish. Use when Neil asks to "segment our users", "who should we retarget", "build a winback for checkout abandoners", "make an upgrade campaign for free users", "retargeting briefs", "build a custom audience", or does a periodic segmentation pass. INGEST-ONLY / ROSTER-EXPORT-ONLY — produces hashed-email rosters for Neil to upload to Meta by hand; never pushes to Meta, never publishes, never spends. NOT for diagnosing PAST ad results (that's growth-debrief) or analyzing an external swipe video (that's viral-autopsy).
+disable-model-invocation: true
 
 ---
 

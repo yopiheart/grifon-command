@@ -27,6 +27,15 @@ every time. This skill makes the rule trigger automatically. Source of truth + h
    ([components/Step3AdScript.tsx](../../../components/Step3AdScript.tsx) ~L49-94) and
    starves Director of the market context that powers hook quality.
 
+## Leading-words self-check (before you click anything)
+
+This skill's steering only took if you can speak its leitmotifs back: **hero-image-FIRST**,
+**Market Research before Director**, **never type brand/offer fields**. Before Step 0, state those
+three in your own reasoning. If you can't — or you catch your trace planning to "just type a brand
+to test quickly" — the rule didn't land; re-read the hard rules above. The trace echoing the
+leitmotif is the cheapest proof you won't repeat the exact failure this skill exists to stop (the
+one Neil had to correct every time).
+
 ## Pre-flight: unmeter local video FIRST (do this BEFORE Step 0)
 
 If this smoke will reach the video stage (RENDER ALL / GENERATE VIDEO / FINAL_RENDER),

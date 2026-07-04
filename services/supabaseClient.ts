@@ -45,6 +45,55 @@ export const signInWithProvider = async (provider: OAuthProvider): Promise<void>
 
 export const signInWithGoogle = (): Promise<void> => signInWithProvider('google');
 
+// ── Passwordless email OTP (the email path) ──────────────────────────────────
+// Sign-in and sign-up are one flow: send a 6-digit code, then verify it.
+// `shouldCreateUser: true` makes Supabase create the account on first verify, so
+// the SAME call serves new and returning users — no separate signup endpoint.
+// Requires the Supabase "Magic Link" email template to emit {{ .Token }} (the
+// code) and (for production deliverability) a custom SMTP sender.
+export const sendEmailOtp = async (
+  email: string,
+  // Same intent-signal contract as the old password signup: carried as
+  // user_metadata so the marketing opt-in survives to the post-auth reconcile,
+  // which server-stamps the record-of-consent via api/consent (consentService).
+  // Never treat user_metadata as proof of consent.
+  marketingOptIn = false
+): Promise<void> => {
+  const supabase = getSupabase();
+  const { error } = await supabase.auth.signInWithOtp({
+    email: email.trim(),
+    options: {
+      shouldCreateUser: true,
+      data: marketingOptIn
+        ? { marketing_opt_in: true, marketing_policy_version: POLICY_VERSION }
+        : { marketing_opt_in: false },
+    },
+  });
+  if (error) throw error;
+};
+
+// Verify the 6-digit code. Returns whether this verify just CREATED the account
+// (new user) so the caller can fire the Lead pixel only on a genuine first
+// signup. Heuristic: a brand-new user's created_at ≈ last_sign_in_at (same
+// moment); a returning user was created long before. 10s window absorbs skew.
+export const verifyEmailOtp = async (
+  email: string,
+  token: string
+): Promise<{ isNewUser: boolean }> => {
+  const supabase = getSupabase();
+  const { data, error } = await supabase.auth.verifyOtp({
+    email: email.trim(),
+    token: token.trim(),
+    type: 'email',
+  });
+  if (error) throw error;
+  const u = data.user;
+  const created = u?.created_at ? new Date(u.created_at).getTime() : 0;
+  const lastSignIn = u?.last_sign_in_at ? new Date(u.last_sign_in_at).getTime() : created;
+  const isNewUser = created > 0 && Math.abs(lastSignIn - created) < 10_000;
+  return { isNewUser };
+};
+
 export const signUpWithPassword = async (
   email: string,
   password: string,

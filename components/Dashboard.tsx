@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { motion } from 'motion/react';
-import { DUR, SPRING } from './ui/motionTokens';
+import { motion, useReducedMotion } from 'motion/react';
+import { DUR, EASE, SPRING, reducedMotion } from './ui/motionTokens';
 import {
   Sparkles, ArrowRight, ChevronRight, Film, Search, Target,
   Flame, Lock, Menu, Bell,
@@ -19,8 +19,14 @@ import { OnboardingNudge } from './ui/OnboardingNudge';
 import { ResumeDraftCard } from './ui/ResumeDraftCard';
 import { SignatureScribble } from './landing/SignatureScribble';
 import { getSession, clearSession, type WizardSessionV1 } from '../services/wizardSessionStore';
-import { MODULE_IDENTITY, getModuleIdentity, hueAlpha } from '../config/moduleIdentity';
-import { DashboardSidebar, type SidebarNavItem } from './dashboard/DashboardSidebar';
+import { MODULE_IDENTITY, getModuleIdentity, hueAlpha, GRIFON_GOLD } from '../config/moduleIdentity';
+import { DashboardSidebar, type SidebarNavGroup } from './dashboard/DashboardSidebar';
+import { SheenSweep } from './ui/SheenSweep';
+import { T_LABEL } from './ui/wizardTokens';
+import {
+  HAIRLINE, CARD_TONAL, FILL_REST, FILL_HOVER, ROW_HOVER, RING_FIELD,
+  GOLD_GLOW_HOVER, entrance, SLATE_BEATS,
+} from './ui/dashboardTokens';
 import { SettingsModal } from './dashboard/SettingsModal';
 import { NotificationsPanel } from './dashboard/NotificationsPanel';
 
@@ -63,15 +69,15 @@ const MORE_MODULES = [
   return { id, name: m.name, icon: m.icon, desc: m.descriptor, hue: m.hue };
 });
 
-// Sidebar rail — the primary modules, full branded names (the in-app world).
-const RAIL_DEFS: { id: string; badge?: 'Beta' }[] = [
-  { id: 'creative_director' },
-  { id: 'market_research' },
-  { id: 'offer_optimizer' },
-  { id: 'caption_headline' },
-  { id: 'generate_video', badge: 'Beta' },
-  { id: 'signal_modulator', badge: 'Beta' },
-  { id: 'edit_video', badge: 'Beta' },
+// Sidebar rail — every user-facing module, organized as studio departments
+// (full branded names — the in-app world). MAIN UNIT is the free daily-driver
+// crew, so the calm top of the rail is preserved; locked-heavy departments
+// sink naturally. intelligence_uplink is internal and stays off every surface.
+const RAIL_GROUPS: { label: string; ids: string[] }[] = [
+  { label: '// Main Unit', ids: ['creative_director', 'market_research', 'offer_optimizer', 'caption_headline'] },
+  { label: '// Production', ids: ['generate_video', 'cinematic_studio', 'concierge_mode', 'influencer_forge', 'image_ads'] },
+  { label: '// Post', ids: ['edit_video', 'signal_modulator', 'image_editor'] },
+  { label: '// Distribution', ids: ['batch_fanout', 'hook_lab', 'organic_calendar'] },
 ];
 
 // Outcome chips under the hero — deep-link straight into a module.
@@ -81,16 +87,26 @@ const HERO_CHIPS = [
   { id: 'offer_optimizer', label: 'Build an offer', icon: Target },
 ];
 
-// Slice 5 — graduated beta modules and the plan tier that unlocks each.
+// Slice 5 — gated modules and the plan tier that unlocks each. Modules absent
+// here are free. The full roster is tiered so every rail row can show its
+// unlock path (Neil-approved ladder, 2026-07-03) — the lock is nav-level; an
+// App.tsx gateModule pass for the newly-tiered six is a follow-up.
 const MODULE_TIER: Record<string, PlanId> = {
   generate_video: 'starter',
+  hook_lab: 'starter',
+  image_ads: 'starter',
+  image_editor: 'starter',
+  organic_calendar: 'starter',
   edit_video: 'pro',
   signal_modulator: 'pro',
+  batch_fanout: 'pro',
   cinematic_studio: 'business',
   concierge_mode: 'business',
+  influencer_forge: 'business',
 };
 
 const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, userEmail, userId, onLogout, onUpgrade }) => {
+  const reduce = useReducedMotion();
   const [isAdmin, setIsAdmin] = useState(false);
   useEffect(() => {
     const adminFlag = localStorage.getItem('grifon_admin');
@@ -204,10 +220,9 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
     onSelectModule(moduleId);
   };
 
-  // Sidebar select handles beta-lock → upgrade.
+  // Sidebar select routes any tier-locked module → upgrade.
   const sidebarSelect = (id: string) => {
-    const isBeta = RAIL_DEFS.find((d) => d.id === id)?.badge === 'Beta';
-    if (isBeta && !moduleUnlocked(id)) { onUpgrade?.(); return; }
+    if (MODULE_TIER[id] && !moduleUnlocked(id)) { onUpgrade?.(); return; }
     handleSelectModule(id);
   };
 
@@ -240,6 +255,12 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
   const firstName = userName.split(' ')[0];
   const hour = new Date().getHours();
   const dayPart = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
+  // Call-sheet line — the studio register, time- and streak-aware.
+  const callSheet = hour < 12
+    ? '// Morning call — your crew is on set'
+    : hour < 18
+      ? `// On the lot${weeklyActiveDays >= 2 ? ` — day ${weeklyActiveDays} this week` : ''}`
+      : "// Night shoot — the crew's still rolling";
 
   // Quota label + low-nudge
   const quotaLabel = quota.loading
@@ -251,15 +272,18 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
         : '';
   const quotaLow = Boolean(computeUpgradeNudge(userPlan, quota.workflows, quota.loading));
 
-  // Sidebar nav items from registry
-  const navItems: SidebarNavItem[] = RAIL_DEFS.map((d) => {
-    const m = getModuleIdentity(d.id);
-    return {
-      id: d.id, label: m.name, icon: m.icon, hue: m.hue,
-      badge: d.badge,
-      locked: d.badge === 'Beta' && !moduleUnlocked(d.id),
-    };
-  });
+  // Sidebar departments from registry
+  const navGroups: SidebarNavGroup[] = RAIL_GROUPS.map((g) => ({
+    label: g.label,
+    items: g.ids.map((id) => {
+      const m = getModuleIdentity(id);
+      return {
+        id, label: m.name, descriptor: m.descriptor, icon: m.icon, hue: m.hue,
+        tier: MODULE_TIER[id],
+        locked: Boolean(MODULE_TIER[id]) && !moduleUnlocked(id),
+      };
+    }),
+  }));
 
   // Command palette
   const paletteItems: CommandItem[] = [
@@ -290,7 +314,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
         mobileOpen={mobileOpen}
         onMobileClose={() => setMobileOpen(false)}
         activeModule={activeModule}
-        navItems={navItems}
+        navGroups={navGroups}
         recent={recentForSidebar}
         onSelect={sidebarSelect}
         onNewAd={() => handleSelectModule('creative_director')}
@@ -304,11 +328,11 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
       />
 
       {/* Mobile top bar */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-40 h-14 px-3 flex items-center justify-between bg-zinc-950/85 backdrop-blur-xl border-b border-white/[0.06]">
-        <button onClick={() => setMobileOpen(true)} aria-label="Menu" className="w-11 h-11 rounded-xl text-zinc-300 hover:text-white hover:bg-white/[0.06] transition-colors flex items-center justify-center">
+      <div className={`lg:hidden fixed top-0 left-0 right-0 z-40 h-14 px-3 flex items-center justify-between bg-zinc-950/85 backdrop-blur-xl border-b ${HAIRLINE}`}>
+        <button onClick={() => setMobileOpen(true)} aria-label="Menu" className={`w-11 h-11 rounded-xl text-zinc-300 hover:text-white ${ROW_HOVER} transition-colors flex items-center justify-center`}>
           <Menu className="w-5 h-5" />
         </button>
-        <button onClick={() => setNotifOpen(true)} aria-label="Notifications" className="relative w-11 h-11 rounded-xl text-zinc-300 hover:text-white hover:bg-white/[0.06] transition-colors flex items-center justify-center">
+        <button onClick={() => setNotifOpen(true)} aria-label="Notifications" className={`relative w-11 h-11 rounded-xl text-zinc-300 hover:text-white ${ROW_HOVER} transition-colors flex items-center justify-center`}>
           <Bell className="w-5 h-5" />
           {(activeJobs.length > 0 || quotaLow) && <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#FFCC00] ring-2 ring-zinc-950 animate-pulse" />}
         </button>
@@ -323,23 +347,25 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
       >
         <div className="w-full max-w-3xl lg:max-w-4xl mx-auto px-4 lg:px-8 flex-1 flex flex-col">
 
-          {/* HERO — the one-shot entry */}
+          {/* HERO — the one-shot entry, revealed as one "first slate" sequence */}
           <div className="flex-1 flex flex-col justify-center min-h-[70vh] py-10">
             <motion.p
-              initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: DUR.entrance }}
+              {...entrance(reduce, SLATE_BEATS.greeting)}
               className="text-center text-2xl sm:text-3xl lg:text-4xl font-normal tracking-tight text-zinc-200 mb-2"
             >
               {dayPart},{' '}
-              {isDesktop ? (
-                <SignatureScribble variant="underline" delay={0.9} strokeWidth={2.5}>
-                  <span className="font-semibold text-white">{firstName}</span>
-                </SignatureScribble>
-              ) : (
+              <SignatureScribble variant="underline" delay={SLATE_BEATS.signature} strokeWidth={2.5} playOnMount>
                 <span className="font-semibold text-white">{firstName}</span>
-              )}.
+              </SignatureScribble>.
+            </motion.p>
+            <motion.p
+              {...entrance(reduce, SLATE_BEATS.callSheet)}
+              className={`text-center ${T_LABEL} text-zinc-600 mb-3`}
+            >
+              {callSheet}
             </motion.p>
             <motion.div
-              initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: DUR.entrance, delay: 0.1 }}
+              {...entrance(reduce, SLATE_BEATS.headline)}
               className="text-center text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.3] pb-1 bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500 mb-7"
             >
               What are we selling today?
@@ -347,10 +373,10 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
 
             {/* Hero input */}
             <motion.div
-              initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: DUR.entrance, delay: 0.18 }}
+              {...entrance(reduce, SLATE_BEATS.heroInput)}
               className="w-full max-w-2xl mx-auto"
             >
-              <div className="bg-zinc-900/70 backdrop-blur-xl rounded-2xl ring-1 ring-white/[0.08] p-3 lg:p-4 flex items-center gap-3 focus-within:ring-[#FFCC00]/40 transition-all">
+              <div className={`${CARD_TONAL} backdrop-blur-xl rounded-2xl ${RING_FIELD} p-3 lg:p-4 flex items-center gap-3 focus-within:ring-[#FFCC00]/40 transition-all`}>
                 <Sparkles className="w-5 h-5 text-[#FFCC00] flex-shrink-0 ml-1" />
                 <input
                   type="text"
@@ -363,7 +389,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                 <button
                   onClick={submitHero}
                   aria-label="Make my ad"
-                  className="w-10 h-10 lg:w-12 lg:h-12 bg-[#FFCC00] rounded-xl flex items-center justify-center flex-shrink-0 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,204,0,0.35)] active:scale-95 transition-all"
+                  className={`w-10 h-10 lg:w-12 lg:h-12 bg-[#FFCC00] rounded-xl flex items-center justify-center flex-shrink-0 hover:scale-105 ${GOLD_GLOW_HOVER} active:scale-95 transition-all`}
                 >
                   <ArrowRight className="w-5 h-5 text-black" />
                 </button>
@@ -371,19 +397,20 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
 
               {/* Outcome chips */}
               <div className="flex flex-wrap items-center justify-center gap-2 mt-4">
-                {HERO_CHIPS.map((chip) => (
-                  <button
+                {HERO_CHIPS.map((chip, i) => (
+                  <motion.button
                     key={chip.id}
+                    {...entrance(reduce, SLATE_BEATS.chips + i * SLATE_BEATS.chipStep)}
                     onClick={() => handleSelectModule(chip.id)}
-                    className="flex items-center gap-1.5 bg-white/[0.04] rounded-full px-3.5 py-2 text-xs font-semibold text-zinc-400 hover:text-white hover:bg-white/[0.08] transition-all"
+                    className={`flex items-center gap-1.5 h-11 ${FILL_REST} rounded-xl px-4 text-xs font-semibold text-zinc-400 hover:text-white ${FILL_HOVER} transition-all`}
                   >
                     <chip.icon className="w-3.5 h-3.5" />
                     {chip.label}
-                  </button>
+                  </motion.button>
                 ))}
               </div>
 
-              <p className="text-center text-[11px] text-zinc-600 mt-4">
+              <p className="text-center text-xs text-zinc-500 mt-4">
                 One prompt → a full video ad. Grifon researches, scripts, and storyboards it for you.
               </p>
 
@@ -428,7 +455,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
 
           {/* EXPLORE TOOLS */}
           <div className="w-full mb-16">
-            <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mb-4">// EXPLORE TOOLS</p>
+            <p className={`${T_LABEL} text-zinc-500 mb-4`}>// EXPLORE TOOLS</p>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
               {exploreTiles.map((tile, i) => {
                 const isMore = !tile.featured && !CORE_MODULES.some((c) => c.id === tile.id);
@@ -439,16 +466,18 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                   <motion.button
                     key={tile.id}
                     initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: DUR.slow, delay: 0.05 + i * 0.04 }}
+                    transition={reducedMotion(reduce, { duration: DUR.slow, delay: 0.05 + i * 0.04, ease: EASE.expressive })}
+                    whileHover="hover"
                     onClick={() => (unlocked ? handleSelectModule(tile.id) : onUpgrade?.())}
                     className={`relative text-left rounded-2xl p-4 group transition-all duration-300 active:scale-[0.98] overflow-hidden ${
                       tile.featured
                         ? 'bg-[#FFCC00]/[0.06] hover:bg-[#FFCC00]/[0.10] hover:shadow-[0_8px_40px_rgba(255,204,0,0.15)] col-span-2 lg:col-span-1'
-                        : 'bg-zinc-900/70 hover:bg-zinc-900 hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)]'
+                        : `${CARD_TONAL} hover:bg-zinc-900`
                     }`}
                   >
+                    {tile.featured && <SheenSweep color={hueAlpha(GRIFON_GOLD, 0.14)} />}
                     {!unlocked && tier && (
-                      <span className="absolute top-3 right-3 flex items-center gap-1 text-[9px] font-black uppercase tracking-wide text-[#FFCC00] bg-[#FFCC00]/10 ring-1 ring-[#FFCC00]/30 rounded-full px-1.5 py-0.5">
+                      <span className={`absolute top-3 right-3 flex items-center gap-1 ${T_LABEL} text-[#FFCC00] bg-[#FFCC00]/10 ring-1 ring-[#FFCC00]/30 rounded-full px-1.5 py-0.5`}>
                         <Lock className="w-2.5 h-2.5 shrink-0" /> {tier}
                       </span>
                     )}
@@ -459,7 +488,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                       <Icon className="w-5 h-5" style={{ color: tile.hue }} />
                     </div>
                     <p className="text-sm font-bold text-white tracking-tight">{tile.name}</p>
-                    <p className="text-[11px] text-zinc-500 mt-1 leading-snug line-clamp-2">{tile.desc}</p>
+                    <p className="text-xs text-zinc-500 mt-1 leading-snug line-clamp-2">{tile.desc}</p>
                     {tile.featured && <ChevronRight className="absolute top-4 right-4 w-4 h-4 text-zinc-600 group-hover:text-[#FFCC00] transition-colors" />}
                   </motion.button>
                 );

@@ -18,21 +18,16 @@ You work for Neil Maglaya (Founder & Agent Operator, Haste Enterprises) and Zam 
 
 ## GRIFON PRICING LADDER — CANONICAL (re-read before any pricing/ad visual that names a tier, feature, or CTA)
 
-**Source of truth:** [`workflows/pricing_unit_economics.md`](../../../workflows/pricing_unit_economics.md) §3 + [`config/planFeatures.ts`](../../../config/planFeatures.ts). These change — **if this summary ever conflicts, the files win.**
+**The pricing ladder, top-ups, and the shared price/CTA guardrails (no VIP tier, CTA by
+temperature, never show price in creatives, don't feature the stripped features) live in one shared
+reference:** [`../_shared/pricing-ladder.md`](../_shared/pricing-ladder.md). Re-read it before any
+visual that names a tier, feature, or CTA — it defers to the true source of truth
+([`workflows/pricing_unit_economics.md`](../../../workflows/pricing_unit_economics.md) §3 +
+[`config/planFeatures.ts`](../../../config/planFeatures.ts)), which win on any conflict.
 
-PlanId = `free | starter | pro | business`. **Autopilot is invite-only — never on a public card.**
-
-| Tier | Price/mo | Finished ads/mo | Role |
-|---|---|---|---|
-| **Free** | ₱0 | 0 (full plan, watermarked) | cold signups |
-| **Starter** | ₱997 | 1 (≤4 scenes, no editor) | trial door + anchor → Pro |
-| **Pro** ⭐ | ₱2,497 | 8 (AI editor, Director mode, caption packs) | the money tier |
-| **Business** | ₱4,997 | 15 + cinematic/4K studio, weekly call | scaling / agencies |
-| **Autopilot** | from ₱29,997 · invite-only | done-for-you | apply-only |
-
-**DO NOT feature on any creative/pricing visual (sold-but-stripped 2026-06-19, not built):** brand profiles · team seats · white-label exports.
-**There is NO "VIP" tier** — never put "VIP" on a lockup, badge, or creative. Use the clean "GRIFON AI" wordmark; tier names (PRO/AUTOPILOT) only on tier-specific creatives.
-**CTA by temperature:** cold → "Try It Free" · warm upsell → "Upgrade to Pro" · Autopilot → "Apply for Autopilot". Never show price in thumbnails/ad creatives (price is fine on landing/pricing pages).
+`PlanId = free | starter | pro | business`. **Autopilot is invite-only — never on a public card.**
+**Creative-specific lockup rule:** use the clean "GRIFON AI" wordmark; put tier names (PRO/AUTOPILOT)
+only on tier-specific creatives.
 
 ## DESIGN SYSTEM — SOURCE OF TRUTH
 

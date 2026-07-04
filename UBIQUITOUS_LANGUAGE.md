@@ -8,13 +8,13 @@ The complete Grifon journey from "I have a product" to "I have a ready-to-post a
 
 | # | Step | Module(s) | What the customer GETS |
 | --- | --- | --- | --- |
-| 1 | **Find the dream customer** | Market Research | A research report identifying who buys, why they buy, and what makes them say yes. |
-| 2 | **Build the offer** | Offer Optimizer | A value-stacked offer (tripwire + core + high-ticket) that makes saying no feel stupid. |
+| 1 | **Find the dream customer** | Market Research (**Recon**) | A research report identifying who buys, why they buy, and what makes them say yes. |
+| 2 | **Build the offer** | Offer Optimizer (**War Room**) | A value-stacked offer (tripwire + core + high-ticket) that makes saying no feel stupid. |
 | 3 | **Direct the ad** | Director AI (the 8-step wizard) | Character, script, storyboard, thumbnail, and per-scene video prompts. |
-| 4 | **Generate the video** | Generate Video | The actual rendered video clips for each storyboard scene. |
+| 4 | **Generate the video** | Generate Video (**Render Bay**) | The actual rendered video clips for each storyboard scene. |
 | 5 | **Lock the character voice** | Signal Modulator | A consistent voiceover per scene so the on-camera character sounds like one person across the entire ad. |
-| 6 | **Edit the final ad** | Edit Video | All scene clips merged, trimmed, and pacing-adjusted into one ready-to-post ad. |
-| 7 | **Write the post copy** | Caption Headline | Caption + headline written like a copywriting expert who knows the dream customer and the offer. |
+| 6 | **Edit the final ad** | Edit Video (**Edit Bay**) | All scene clips merged, trimmed, and pacing-adjusted into one ready-to-post ad. |
+| 7 | **Write the post copy** | Caption Headline (**Broadcast**) | Caption + headline written like a copywriting expert who knows the dream customer and the offer. |
 
 Bryan-outcome of the full chain: *"I started with a product idea. I ended with an ad I can post today."* No agency, no freelancers, no handoffs.
 
@@ -40,20 +40,24 @@ The sections below are the technical-vocabulary deep dives — wizard internals 
 
 ## Dashboard modules (the eleven standalone tools)
 
-| Term | Definition | Aliases to avoid |
-| --- | --- | --- |
-| **Market Research** | The module that ingests product info and uploads to produce a competitive/audience report. | Research tool |
-| **Premise Check** | The skippable, default-on assumption gate that runs *before* **Market Research**: it pressure-tests the founder's premise (who the customer really is + why they buy) against `googleSearch`-grounded alternatives, then appends the confirmed premise into the description so research runs on a sharpened input. Advisory only — never feeds a tuned prompt directly, never blocks. The echo-breaker for input risk. | Assumption test, premise gate (when ambiguous) |
-| **Offer Optimizer** | The module that rewrites pricing/positioning given market research text. | Pricing tool |
-| **Edit Video** | The module that generates an edit plan from a script + scene screenshots. | Video editor |
-| **Image Editor** | The module that edits/regenerates images from user description and uploads. | Photo editor |
-| **Caption Headline** | The module that generates captions and headlines for an existing ad asset. | Copy tool |
-| **Organic Calendar** | The module that produces a multi-day organic-content plan with daily images and captions. | Content planner |
-| **Image Ads Gen** | The module that produces multiple ad image variants from an **Uplink**. | Static ad tool |
-| **Cinematic Spec Studio** | The module that generates a four-image cinematic relay (Metaphor / Anchor / Action / Hero) from an **Uplink** and a **Cinematic Spec Config**. | Cinematic tool |
-| **Generate Video** | The module that runs the final video model with a **Video Gen Config**. | Video gen |
-| **Signal Modulator** | The module that synthesizes a consistent character voice per scene (ElevenLabs-powered) so the on-camera persona sounds like one person across the entire ad — in either **Broadcast** or **Conversion** **Audio Mode**. The module name is engine-internal; user-facing labels should describe the outcome (e.g., "Voice Studio" / "Character Voice Lock"). | Voiceover tool, audio gen |
-| **Influencer Forge** | The module that creates and runs an **Influencer** persona through an **Odyssey** of daily content. Distinct from the wizard's **Avatar** flow. | Persona tool, creator gen |
+Each module has TWO names, both canonical in their own layer: the **Term** below (used in code, types, prompts, and planning) and a branded **user-facing display name** from the registry at `config/moduleIdentity.ts` (used on every UI surface — sidebar rail, tiles, command palette — always paired with a one-line outcome descriptor). Internal `activeModule` keys never change; renaming a display name is a one-line registry edit.
+
+| Term | User-facing name (`moduleIdentity.ts` key) | Definition | Aliases to avoid |
+| --- | --- | --- | --- |
+| **Market Research** | **Recon** (`market_research`) | The module that ingests product info and uploads to produce a competitive/audience report. | Research tool |
+| **Premise Check** | — (sub-feature of **Market Research**; no registry entry) | The skippable, default-on assumption gate that runs *before* **Market Research**: it pressure-tests the founder's premise (who the customer really is + why they buy) against `googleSearch`-grounded alternatives, then appends the confirmed premise into the description so research runs on a sharpened input. Advisory only — never feeds a tuned prompt directly, never blocks. The echo-breaker for input risk. | Assumption test, premise gate (when ambiguous) |
+| **Offer Optimizer** | **War Room** (`offer_optimizer`) | The module that rewrites pricing/positioning given market research text. | Pricing tool |
+| **Edit Video** | **Edit Bay** (`edit_video`) | The module that generates an edit plan from a script + scene screenshots. | Video editor |
+| **Image Editor** | **Image Lab** (`image_editor`) | The module that edits/regenerates images from user description and uploads. | Photo editor |
+| **Caption Headline** | **Broadcast** (`caption_headline`) | The module that generates captions and headlines for an existing ad asset. | Copy tool |
+| **Organic Calendar** | **Campaign Planner** (`organic_calendar`) | The module that produces a multi-day organic-content plan with daily images and captions. | Content planner |
+| **Image Ads Gen** | **Creative Strike** (`image_ads`) | The module that produces multiple ad image variants from an **Uplink**. | Static ad tool |
+| **Cinematic Spec Studio** | **Cinema Command** (`cinematic_studio`) | The module that generates a four-image cinematic relay (Metaphor / Anchor / Action / Hero) from an **Uplink** and a **Cinematic Spec Config**. | Cinematic tool |
+| **Generate Video** | **Render Bay** (`generate_video`) | The module that runs the final video model with a **Video Gen Config**. | Video gen |
+| **Signal Modulator** | **Signal Modulator** (`signal_modulator`) | The module that synthesizes a consistent character voice per scene (ElevenLabs-powered) so the on-camera persona sounds like one person across the entire ad — in either **Broadcast** or **Conversion** **Audio Mode**. The name ships as-is; the registry descriptor carries the outcome ("Lock your character's voiceover"). | Voiceover tool, audio gen |
+| **Influencer Forge** | **Influencer Forge** (`influencer_forge`) | The module that creates and runs an **Influencer** persona through an **Odyssey** of daily content. Distinct from the wizard's **Avatar** flow. | Persona tool, creator gen |
+
+Newer registry entries not yet in this glossary (display names shipped on `feat/oneshot-firstcut-recovery`): **Director AI** (`creative_director`), **Concierge** (`concierge_mode`), **Hook Lab** (`hook_lab`), **Swarm** (`batch_fanout`). Run `/ubiquitous-language` to define their domain terms when those modules stabilize.
 
 ## Influencer Forge & Odyssey
 

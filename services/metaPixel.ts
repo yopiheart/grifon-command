@@ -61,10 +61,23 @@ export const initPixel = (): void => {
   initialized = true;
 };
 
-/** Track a standard Meta event. No-op until initPixel() has run (post-consent). */
-export const trackPixel = (event: string, params?: Record<string, unknown>): void => {
+/**
+ * Track a standard Meta event. No-op until initPixel() has run (post-consent).
+ * When `eventId` is supplied it rides as the fbq `eventID` option so Meta can
+ * dedup this browser event against the server-side CAPI event of the same id
+ * (e.g. Purchase — see api/webhook.ts `purchase:${intentId}`).
+ */
+export const trackPixel = (
+  event: string,
+  params?: Record<string, unknown>,
+  eventId?: string,
+): void => {
   if (!initialized || typeof window === 'undefined' || !window.fbq) return;
-  window.fbq('track', event, params ?? {});
+  if (eventId) {
+    window.fbq('track', event, params ?? {}, { eventID: eventId });
+  } else {
+    window.fbq('track', event, params ?? {});
+  }
 };
 
 export const isPixelReady = (): boolean => initialized;

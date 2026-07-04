@@ -42,6 +42,15 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, it, expect, vi } from 'vitest';
 import { GoogleGenAI } from '@google/genai';
+// Real server-side adscript flow building blocks (TUNED — imported/read, never
+// edited here). The mock below mirrors the api/gemini/text.ts FLOW_REGISTRY
+// 'adscript' handler exactly, so the regression exercises the real prompt.
+import {
+  buildAdScriptPrompt,
+  parseAdScriptResponse,
+  MODEL_TEXT,
+  SAFETY_SETTINGS,
+} from '../../api/_lib/prompts.js';
 
 // --- 1. Load .env manually (no dotenv dep) -------------------------------
 
@@ -103,6 +112,36 @@ const fetchMock = vi.fn(async (url: any, init: any = {}) => {
       throw new Error('script-gen.regression: GEMINI_API_KEY missing from .env');
     }
     const body = JSON.parse(init.body as string);
+
+    // Flow mode — `{ flow, input }`. generateAdScript sends this since the
+    // crown-jewel refactor moved the prompt server-side. Mirror the real
+    // api/gemini/text.ts FLOW_REGISTRY.adscript handler (build → generate →
+    // parse), minus the auth/rate-limit/quota the server does (the test
+    // deliberately bypasses those). Returns the parsed Script directly, which
+    // is exactly what the server returns and what proxyCall hands back.
+    // NOTE: keep this config in sync with FLOW_REGISTRY.adscript in
+    // api/gemini/text.ts. v1 covers adscript only.
+    if (body.flow === 'adscript') {
+      const prompt = buildAdScriptPrompt(body.input, undefined);
+      const response = await ai.models.generateContent({
+        model: MODEL_TEXT,
+        contents: prompt,
+        config: {
+          responseMimeType: 'application/json',
+          safetySettings: SAFETY_SETTINGS,
+          thinkingConfig: { thinkingBudget: 4000 },
+        },
+      } as any);
+      const result = parseAdScriptResponse(response.text || '{}');
+      return { ok: true, status: 200, json: async () => result } as any;
+    }
+    if (body.flow) {
+      throw new Error(
+        `script-gen.regression: flow '${body.flow}' not supported by this mock (v1 covers adscript only)`
+      );
+    }
+
+    // Legacy passthrough mode — client-built `{ model, contents, config }`.
     const result = await ai.models.generateContent({
       model: body.model,
       contents: body.contents,
@@ -271,7 +310,7 @@ describe.skipIf(!SHOULD_RUN)('Baseline — Bukidnon Brew + OFW-wife audience', (
         'BUKIDNON BREW — MrBeast'
       );
     },
-    90_000
+    120_000
   );
 
   it(
@@ -285,7 +324,7 @@ describe.skipIf(!SHOULD_RUN)('Baseline — Bukidnon Brew + OFW-wife audience', (
         'BUKIDNON BREW — TESTIMONIAL'
       );
     },
-    90_000
+    120_000
   );
 });
 
@@ -301,7 +340,7 @@ describe.skipIf(!SHOULD_RUN)('Stress Test — Service Business (Cleaning, BGC)',
         'MALINISPH — MrBeast'
       );
     },
-    90_000
+    120_000
   );
 
   it(
@@ -315,7 +354,7 @@ describe.skipIf(!SHOULD_RUN)('Stress Test — Service Business (Cleaning, BGC)',
         'MALINISPH — TESTIMONIAL'
       );
     },
-    90_000
+    120_000
   );
 });
 
@@ -331,7 +370,7 @@ describe.skipIf(!SHOULD_RUN)('Stress Test — Skincare (Adult Acne)', () => {
         'GLAZE PH — MrBeast'
       );
     },
-    90_000
+    120_000
   );
 
   it(
@@ -345,7 +384,7 @@ describe.skipIf(!SHOULD_RUN)('Stress Test — Skincare (Adult Acne)', () => {
         'GLAZE PH — TESTIMONIAL'
       );
     },
-    90_000
+    120_000
   );
 });
 
@@ -361,7 +400,7 @@ describe.skipIf(!SHOULD_RUN)('Stress Test — Gym/Fitness (Online Coaching)', ()
         'BULKPH COACH — MrBeast'
       );
     },
-    90_000
+    120_000
   );
 
   it(
@@ -375,6 +414,6 @@ describe.skipIf(!SHOULD_RUN)('Stress Test — Gym/Fitness (Online Coaching)', ()
         'BULKPH COACH — TESTIMONIAL'
       );
     },
-    90_000
+    120_000
   );
 });

@@ -83,7 +83,7 @@ export const MODULE_IDENTITY: Record<string, ModuleIdentity> = {
   signal_modulator: {
     key: 'signal_modulator',
     name: 'Signal Modulator',
-    descriptor: "Lock your character's voice",
+    descriptor: "Lock your character's voiceover",
     hue: '#818CF8', // indigo-400
     icon: AudioWaveform,
   },
@@ -104,14 +104,14 @@ export const MODULE_IDENTITY: Record<string, ModuleIdentity> = {
   cinematic_studio: {
     key: 'cinematic_studio',
     name: 'Cinema Command',
-    descriptor: 'Commercial-grade cinematic ads',
+    descriptor: 'Craft commercial-grade cinematic ads',
     hue: '#2DD4BF', // teal-400 (teal ≠ banned cyan)
     icon: Aperture,
   },
   influencer_forge: {
     key: 'influencer_forge',
     name: 'Influencer Forge',
-    descriptor: 'Build a persistent AI creator',
+    descriptor: 'Build your own AI influencer',
     hue: '#FB923C', // orange-400
     icon: Flame,
   },

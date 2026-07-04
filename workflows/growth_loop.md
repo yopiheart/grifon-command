@@ -105,9 +105,15 @@ paid tenure (for CAC/LTV, Item #16).
 ## Phased build (highest impact first — ship as vertical slices)
 
 ### Phase 0 — Give Grifon eyes (foundation; everything else is blind without it)
-- **Meta Pixel + server CAPI.** Client pixel for PageView/ViewContent/Lead/InitiateCheckout;
-  **server CAPI for Purchase by reusing `api/webhook.ts`** (already authoritative on payment; dedup
-  on the existing event-claim pattern). New `api/_lib/metaCapi.ts`. Access token **server-only**.
+- **Meta Pixel + server CAPI.** ✅ **COMPLETE 2026-07-03** (`feat/meta-pixel-funnel`, merged `2e918b2`).
+  Client pixel fires PageView (incl. SPA route changes), ViewContent (pricing), Lead (email OTP
+  **and** first OAuth sign-in), InitiateCheckout (checkout intent resolve), and a browser Purchase
+  on both success paths that dedups against **server CAPI Purchase via `api/webhook.ts`**
+  (`purchase:${intentId}` event id; webhook stays authoritative on legacy hosted checkout).
+  `api/_lib/metaCapi.ts` live; access token **server-only**. Consent-gated end to end: cookie
+  banner on landing/pricing/auth gates the pixel; the marketing opt-in (email metadata or the
+  OAuth sessionStorage stash) gates hashed-email CAPI sharing. Remaining: confirm
+  `VITE_META_PIXEL_ID` + `META_CAPI_ACCESS_TOKEN` in Vercel env.
 - **In-app telemetry.** New Supabase `events` table (user_id, event, module, step, meta jsonb, ts) +
   `services/analyticsService.ts` (mirror `recentWorkService.ts`). RLS like `user_voices`. Answers
   "why visitors don't convert" + "who hit checkout and bailed."

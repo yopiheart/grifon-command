@@ -132,3 +132,67 @@ html { scroll-behavior: smooth; }
   text-transform: none !important;
   letter-spacing: normal !important;
 }
+
+/* ─────────────────────────────────────────────────────────────────────────
+ * One-Shot Ad (Autopilot) — signature motion. The "gold beam" through-line:
+ * aim (launch) → current (render) → spotlight (review). All GPU-only
+ * (transform / opacity / background-position) so a 45-min render never janks.
+ * Respect prefers-reduced-motion below.
+ * Recovered verbatim from Fable 5's commit 91afea9 (deleted
+ * feat/one-shot-ad-autopilot branch) — motion.tsx references these classes.
+ * ───────────────────────────────────────────────────────────────────────── */
+
+/* Charged sweep across the "Make My Ad" button + the Download reward. */
+@keyframes osa-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.osa-shimmer {
+  background-image: linear-gradient(110deg, #FFCC00 38%, #fff6d0 50%, #FFCC00 62%);
+  background-size: 200% 100%;
+  animation: osa-shimmer 2.6s linear infinite;
+}
+
+/* The gold current pulse riding the render-stage spine. */
+@keyframes osa-flow {
+  0% { transform: translateY(-120%); opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translateY(120%); opacity: 0; }
+}
+.osa-flow { animation: osa-flow 2.1s ease-in-out infinite; }
+
+/* A scene tile resolving from skeleton → image (render + reshoot). */
+@keyframes osa-reveal {
+  0% { opacity: 0; transform: scale(0.94); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.osa-reveal { animation: osa-reveal 0.55s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+/* Ambient drifting blurred gold orbs — "the machine is running". */
+@keyframes osa-drift-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(40px, -30px) scale(1.15); }
+}
+@keyframes osa-drift-b {
+  0%, 100% { transform: translate(0, 0) scale(1.05); }
+  50% { transform: translate(-36px, 28px) scale(0.92); }
+}
+.osa-orb-a { animation: osa-drift-a 24s ease-in-out infinite; }
+.osa-orb-b { animation: osa-drift-b 30s ease-in-out infinite; }
+
+/* The one-time light-sweep when the final cut lands. */
+@keyframes osa-land {
+  0% { transform: translateX(-120%); opacity: 0; }
+  35% { opacity: 0.9; }
+  100% { transform: translateX(120%); opacity: 0; }
+}
+.osa-land { animation: osa-land 0.7s ease-out 1 both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .osa-shimmer, .osa-flow, .osa-reveal, .osa-orb-a, .osa-orb-b, .osa-land {
+    animation: none !important;
+  }
+  .osa-shimmer { background-position: 0 0; }
+  .osa-reveal { opacity: 1; transform: none; }
+}

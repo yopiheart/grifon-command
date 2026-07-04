@@ -1,6 +1,7 @@
 ---
 name: viral-autopsy
 description: Run an evidence-bound breakdown of an existing social video or ad (hook anatomy, Edit DNA, storytelling format) via Gemini video analysis, append it to the Swipe File, and optionally remix findings into Grifon-voice hooks/scripts. Use when the user drops a TikTok/YouTube/Instagram/FB-ad link or a video file and wants it analyzed, asks "why does this work" / "what can we steal from this", says "viral autopsy" or "add to swipe file", or wants to know what kind of videos/ads are working so Grifon's output can learn from them. NOT for evaluating Grifon's own generated output (that's gemini-eval) or for auto-discovering trends (this skill analyzes videos the user supplies).
+disable-model-invocation: true
 ---
 
 This is Grifon's answer to sandcastles.ai's research loop: the user supplies a
