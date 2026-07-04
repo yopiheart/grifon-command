@@ -6,6 +6,32 @@ This is the meta-workflow. It doesn't do the work itself — it points to the wo
 
 > **⏭ NEXT SESSION (2026-07-05+): THE LAUNCH TRAIN.** The launch gate is now the **unified One-Shot / First Cut "Producer" flow** — see the paste-ready kickoff in the 2026-07-05 section below. Everything in the older ⏭ pointer further down is historical (its items closed in the 2026-06-16/17 sections).
 
+## Status as of 2026-07-05 late (scene-image model eval — LITE_PASS, swap awaiting Neil's eyeball)
+
+Neil brought the Gemini Omni Flash sources; the session produced (1) roadmap item #18 (Omni
+b-roll PoC parked, two-layer editing architecture — `post_beta_roadmap.md`) and (2) an approved,
+eval-gated plan to move `sceneImageModel` to **`gemini-3.1-flash-lite-image`** (Nano Banana 2
+Lite: ~4s/img, ~25% cheaper, 1K-only) for `generateSceneImage` + `executeStudioCommand`, with
+`generateThumbnail` split to a new `thumbnailModel` const staying on preview and `avatarModel`
+untouched (2K support + identity anchor).
+
+**Phase A eval ran and PASSED.** Harness: `tools/eval_scene_image_models.mjs` (`9330b87`) —
+7 cases × both models, identical TUNED-parity prompts, 14/14 ok → `.tmp/model-eval/` +
+manifest. Fresh-context adversarial critic (gemini-eval separate-critic SOP) verdict:
+**LITE_PASS — zero lite regressions** on person-leak (03/05 clean), product/label fidelity
+(03/04/07), identity lock, camera mandate, FILIPINO_CAST_LOCK. Lite was strictly CLEANER on the
+venue case (preview invented a third person's disembodied hands + a "TIP" jar with pseudo-text
+brochures; lite rendered exactly two Filipinos, tighter place identity) and honored
+HIGH_ANGLE_SELFIE where preview flattened it. Avg latency 4.5s vs 10.7s (2.4× faster).
+Main-loop spot-check of pairs 03 + 06 confirmed the critic's findings first-hand. Lite nits
+(non-blocking): slightly softer microtexture, occasional crowded hand anatomy (01/02/07).
+Shared-baseline notes for the prompt backlog (BOTH models, flag-only, TUNED): 07 left-hand vs
+commanded right hand; HIGH_ANGLE_SELFIE "looks UP" self-contradicts looking-down scene actions.
+
+**Gate:** Phase B (the constant swap + 1K clamp) fires ONLY on Neil's eyeball approval of the
+`.tmp/model-eval/` pairs. `.tmp` is defreezer-wiped — if the PC reboots first, re-run
+`node tools/eval_scene_image_models.mjs` (~$0.60) to regenerate the pairs.
+
 ## Status as of 2026-07-05 (FULL PENDINGS REVIEW — launch gate = the producer smoke)
 
 Full June→July pendings review ran this session (all workflow docs + all 12 remote branches audited).
