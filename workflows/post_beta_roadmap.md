@@ -769,8 +769,22 @@ end-card, concat, music duck) — FFmpeg is never fully kicked, per the constrai
 **(b) Generate arm:** scene still as `<FIRST_FRAME>`, timecode camera choreography, stateful
 `previous_interaction_id` refinement instead of full re-rolls. Mirror the
 `api/kling/omni-video.ts` proxy pattern for whichever arm wins.
-Evidence in hand: Neil has 4 Omni-made videos (Higgsfield + an IG creator) to autopsy for what
-edits the model actually executes well — analyze BEFORE burning PoC credits.
+**Evidence — 4-video capability autopsy DONE (2026-07-05, Gemini 3.5-flash watched each;
+Higgsfield demos ×3 + IG creator):** all four confirmed **uploaded-and-edited real footage**
+(performance/geometry preserved across edits). Findings that shape the PoC:
+- **Lip-sync SURVIVED editing in all 3 talking-head videos** — edits preserve the source mouth
+  performance ("perfectly synced, no artificial lip-sync artifacts"). Talking scenes are back on
+  the candidate list (favorable prior; still verify against our STS+mux on the PoC).
+- **Cleanly executed baked-in ops:** background replacement/cleanup, relighting, object
+  insertion/swap (incl. car swap with lighting integration), dynamic zoom/reframe-to-speech,
+  fisheye/lens emulation, style transfer. **Recurring artifacts:** hair/edge blending on bg
+  swaps, finger warping on close object interactions, texture flicker on fast motion.
+- **Text verdict = our constraint, validated:** baked-in generative text is GARBLED ("dems
+  resenttion est otjer"); every clean caption in the demos was a deterministic overlay added by
+  the platform. Even Higgsfield runs the hybrid architecture we proposed: Omni for pixel edits +
+  a deterministic layer for text/graphics. FFmpeg keeps captions/₱/end-card/concat/VO mux.
+- **PoC step 0:** check whether our `GEMINI_API_KEY` can reach the Omni edit task at all
+  (preview rollout is gated); if not, Higgsfield is the interim playground for manual tests.
 
 **Why it matters:** Real in-pixel camera work is the biggest visible gap between Grifon output and
 human-edited UGC ads; FFmpeg can fake zooms but not focus pulls or angle changes. Conversational
