@@ -726,6 +726,84 @@ lang ako."* Evaluation persisted at his request (chose to persist the doc over b
 
 ---
 
+### 18. Gemini Omni Flash — b-roll camera-choreography PoC (Layer 2 of the per-scene engagement plan)
+
+> **Context (2026-07-05):** Neil brought the Gemini Omni Flash sources (model card, API docs,
+> prompt guide) and asked whether to apply them to the AI Editor. Verdict (evaluated against the
+> real pipeline): **NO for the editor** — Omni Flash is a video *generation/editing* model
+> (`gemini-omni-flash-preview`, Interactions API, ~$0.10/sec output, 10s max, preview) that
+> **cannot ingest our rendered scenes** (video references cap at 3s and per Google's own docs are
+> "not correctly processed"), is English-only-evaluated (vs our Taglish VO), and would replace the
+> deterministic EDL+FFmpeg render contract with stochastic regeneration. **YES upstream** — as a
+> scene *generator* where camera work must exist in the pixels. ⚠️ Naming: this is Google's Omni,
+> NOT Kling Omni O1 (item #9 / the Session C–G hook arc) — always say "Omni Flash" vs "Kling O1".
+>
+> **The two-layer architecture (Neil-approved 2026-07-05):** Neil's product idea — an AI that
+> plans, per scene, the editing moves that maximize retention (camera push in/out, rack focus
+> product→face, angle switches, motion graphics, text) — splits into:
+> - **Layer 1 (FIRST, cheap, deterministic):** expand the EDL brain + FFmpeg vocabulary with
+>   retention moves FFmpeg can execute (digital punch-ins/push-ins, speed ramps, whip-pan
+>   transitions, shake, kinetic caption styles). Which moves = decided by a UGC-editor study via
+>   `/viral-autopsy` → `viral_swipe_file.md` → ≥3-corroboration Gated Proposals (Neil collects the
+>   creator videos). Pairs with item #11 (each proven pattern can become a sellable Edit Style
+>   preset). No Omni, no new cost, no stochastic risk.
+> - **Layer 2 (THIS item, parked):** the moves FFmpeg physically can't do must be baked at
+>   GENERATION time — Omni Flash image-to-video from the scene still.
+> - **Shared brain:** one per-scene "engagement plan" pass decides which moves are
+>   FFmpeg-executable (→ EDL) and which need generation (→ the video-gen prompt). Layer 1 work
+>   should keep this split in mind so the planner isn't rebuilt twice.
+
+**What:** A contained PoC routing selected **b-roll / product / cinematic scenes** (NEVER talking
+scenes) to Gemini Omni Flash image-to-video: scene still as `<FIRST_FRAME>`, per-scene engagement
+plan driving `[0-3s]`-style timecode camera choreography (push-in, rack focus product→face, orbit,
+angle switch), `<IMAGE_REF_N>` product/character consistency refs, stateful `previous_interaction_id`
+refinement ("same scene, but…") instead of full re-rolls. Mirror the `api/kling/omni-video.ts`
+proxy pattern.
+
+**Why it matters:** Real in-pixel camera work is the biggest visible gap between Grifon output and
+human-edited UGC ads; FFmpeg can fake zooms but not focus pulls or angle changes. Conversational
+refinement also fixes the "one bad detail = re-roll the whole scene" UX.
+
+**Why parked:** Preview-model instability on the launch-critical path; per-iteration cost
+(~$0.10/sec ≈ $1/10s/attempt); English-only evaluated; launch gate (producer smoke) comes first;
+Layer 1 delivers most of the retention value deterministically and should land first.
+
+**Hard constraints when built:**
+- Talking scenes stay on the ElevenLabs lip-sync pipeline (Omni voice editing unsupported; its
+  generated audio gets stripped, our VO muxes over in FINAL_RENDER as today).
+- Critical text (offer, price, ₱, captions) stays FFmpeg-burned — the model card lists accurate
+  text rendering as a known weakness; a wrong price in-pixels is a client-facing disaster.
+- Plan-first, generate-once: the engagement plan is drafted and approved BEFORE the paid call.
+- SynthID watermark is embedded in all Omni output — disclose if a client asks.
+
+**When to resume:** ANY of — (a) Omni Flash leaves preview; (b) video-reference limit rises past
+3s with correct processing (would also unlock scene *editing*, re-evaluate then); (c) non-English
+evaluation ships; PLUS Layer 1's first autopsy-derived vocabulary has landed (so the shared
+planner exists to drive it).
+
+**Where to start:**
+1. Re-read the full evaluation: plan file `sources-https-deepmind-google-models-mod-jolly-hammock.md`
+   (2026-07-05) + the three sources (deepmind.google model card, ai.google.dev/gemini-api/docs/omni,
+   the prompt guide).
+2. Proxy: `api/gemini/omni-video.ts` modeled on `api/kling/omni-video.ts` (Interactions API is a
+   different endpoint/body than generateContent — read the docs page fresh; no system instructions,
+   temperature, or negative prompts supported).
+3. PoC scene: one product b-roll (e.g. the Session-F beans→latte substrate) — scene still +
+   "slow push-in, rack focus from steam to label" plan; grade vs the Veo/Kling render of the same
+   scene with `gemini-eval` + Neil eyeball.
+4. Decide routing signal (like `scene.transitionEffect` drove Kling O1 routing in Session E).
+
+**Scope estimate:** PoC ≈ 1 day (proxy + one scene + comparison). Productionizing (routing,
+polling, cost guards, quota) is a separate multi-day effort — do not start it before the PoC verdict.
+
+**Source:** Neil, 2026-07-05 — the Gemini Omni sources evaluation session. Neil's framing: *"before
+editing our ai should create each per scene what would be the editing plan that will help this
+scenes to be more engaging and will make them stay to watch"* + goal *"not just engaging but high
+converting"*. Two-layer split + Layer-1-first sequencing approved same session (AskUserQuestion
+record); UGC-editor study explicitly Neil-driven via viral-autopsy.
+
+---
+
 ## How to add new items
 
 When Neil endorses an idea but says "not now":
