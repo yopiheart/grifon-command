@@ -4,6 +4,98 @@
 
 This is the meta-workflow. It doesn't do the work itself — it points to the workflows that do, and tracks overall progress. **Source of truth = the code + `git log`.** This file summarizes; it does not replace.
 
+> **⏭ NEXT SESSION (2026-07-05+): THE LAUNCH TRAIN.** The launch gate is now the **unified One-Shot / First Cut "Producer" flow** — see the paste-ready kickoff in the 2026-07-05 section below. Everything in the older ⏭ pointer further down is historical (its items closed in the 2026-06-16/17 sections).
+
+## Status as of 2026-07-05 (FULL PENDINGS REVIEW — launch gate = the producer smoke)
+
+Full June→July pendings review ran this session (all workflow docs + all 12 remote branches audited).
+**Direction reality since 2026-06-17:** the product's launch surface is the **One-Shot Producer flow**
+(`feat/oneshot-firstcut-recovery`, PR #41, 407 tests green, opt-in behind `?osaEngine=producer`); the
+8-step wizard is admin/dev-only. The "beta-ready, invite the first user" verdict of 2026-06-17 predates
+this pivot — **the real gate today is finishing the producer live smoke**, which died 2026-07-02 on a
+no-billing Gemini key (every `/api/gemini/text` → 429). Full state:
+[`handoff_oneshot_concierge_unified_flow.md`](handoff_oneshot_concierge_unified_flow.md).
+
+### Priority stack for launch (most → least)
+
+1. **Producer flow smoke + land it** — blocked on the Neil-batch below; then drive the two unreached
+   hard gates (resume mid-run, no-double-spend) + fix the 429-quota UX find (endless "Researching your
+   market…" spinner with no quota-specific error).
+2. **Slice 2 — video rate-limit re-scope** (per-clip → per-ad-launch, `api/gemini/video.ts`). Neil
+   sign-off gate; without it >5-scene ads self-throttle.
+3. **[`oneshot_flow_fixes.md`](oneshot_flow_fixes.md) verify-and-close** — ProducerFlow likely fixed
+   most of the 3 defects (minimize=abandon, no resume, completion dumps into dev wizard). 30-min pass.
+4. **Growth telemetry go-live** — code shipped; remaining = Vercel env vars
+   (`VITE_META_PIXEL_ID`, `META_CAPI_ACCESS_TOKEN`) + apply `supabase/marketing_consent.sql`.
+   Day-one beta funnel data can't be backfilled.
+5. **R2 Phase 5 cleanup** — 554 MB / 320 stale Supabase Storage objects; free tier goes **read-only**
+   past 1 GB. Agent-doable, no gate. [`r2_media_migration.md`](r2_media_migration.md).
+6. **Nightly regression live** — add `GEMINI_API_KEY` as a GitHub Actions secret + get the workflow on
+   `main` (it silently skips until then). [`nightly_regression.md`](nightly_regression.md).
+7. **Branch hygiene** — land `docs/believability-content-look` (the SUPERSET: seedance/cinematic
+   tooling + skills not on main, only 9 behind); push + PR the committed-but-unpushed
+   `drawplan-refactor`; merge the trivial `claude/anthropic-pdf-loop-eval-zidz7n` timeout bump.
+8. **Expert-mode Bucket B decision** (HELD merge) + Slice-0 merge-vs-evolve — gates Concierge, which
+   is Business-tier, not free-beta. Branch is 69 behind main → salvage = cherry-pick (A4 upload gate,
+   Bucket B relight), not merge. Decide soon, build later.
+9. **`claude/privacy-dashboard-bugs-mfk10d`** (passwordless OTP) — real unmerged auth code; conflict-
+   check vs main's newer OAuth funnel work before merge-vs-redo.
+
+Everything else stays parked per `post_beta_roadmap.md`'s own resume triggers — none has fired.
+
+### The Neil-batch (one sitting unblocks four workstreams)
+
+1. Fix the Gemini key billing (enable billing OR swap a billing-enabled key into `.env`) → #1
+2. Apply `supabase/producer_runs.sql` (**re-copy from repo — schema changed 2×**) +
+   `supabase/marketing_consent.sql` in the SQL editor → #1 + #4
+3. Add `GEMINI_API_KEY` as a repo Actions secret → #6
+4. Confirm the two Meta env vars in Vercel → #4
+5. Three GO calls: GATE-STOP paid run re-confirm (~₱20, zero video) · Slice-2 rate-limit sign-off ·
+   Bucket B merge eyeball
+6. Ear-test the two generated music beds (pending since 2026-06-16; regenerate to `.tmp/` if wiped)
+
+### Doc + branch hygiene findings (Session B scope)
+
+- **Stale docs to refresh/archive:** [`this_week_plan.md`](this_week_plan.md) (week of 06-16, all
+  shipped); [`advanced_mode_cleanup.md`](advanced_mode_cleanup.md) (targets the now-admin-only 8-step
+  wizard — mark superseded, fold salvage into
+  [`concierge_director_plan.md`](concierge_director_plan.md));
+  [`handoff_2026-06-08-pr9-merged-launch-pendings.md`](handoff_2026-06-08-pr9-merged-launch-pendings.md)
+  (#1 burn-in looks shipped mid-June, #2 headless-autopilot likely superseded by the producer flow —
+  verify + close).
+- **Branches to delete after believability lands:** `wip/seedance-merge-backup` (strict subset),
+  `claude/seedance-4k-ads-skill-wnwn57` (feeder, fully contained), `fix/hook-endframe-product-only`
+  (already superseded), `claude/video-ads-workflow-fgg2sy` (verify overlap with `e16058e` first).
+- Stray modified `tests/unit/__snapshots__/drawPlan.snapshot.test.ts.snap` in the working tree —
+  stale snapshot, regenerate or discard; don't commit blindly.
+
+### Paste-ready kickoff — Session A (the launch train)
+
+```
+Read workflows/launch_readiness.md (2026-07-05 section) + workflows/handoff_oneshot_concierge_unified_flow.md first. Today = the launch train.
+
+Neil-batch status (tick what I did before this session):
+[ ] Gemini key billing fixed / swapped in .env
+[ ] producer_runs.sql applied (re-copied fresh from repo)
+[ ] marketing_consent.sql applied
+[ ] GEMINI_API_KEY added as GitHub Actions secret
+[ ] Meta pixel env vars confirmed in Vercel
+GO calls: GATE-STOP paid run = GO / NO-GO · Slice-2 rate-limit re-scope = GO / NO-GO
+
+Then, in order:
+1. Fetch feat/oneshot-firstcut-recovery (PR #41). Re-fire the staged producer smoke per the handoff's TEST SPEC on the smoke account (neilmaglaya.business22+smoke@gmail.com). Delegate all browser driving to smoke-tester (foreground). director-smoke pre-flight NOT needed (One-Shot flow, not the 8-step wizard).
+2. Drive the two hard gates: resume mid-run + no-double-spend.
+3. Fix the 429-quota UX find (quota-specific error instead of endless research spinner) — non-tuned UI.
+4. Slice 2 rate-limit re-scope in api/gemini/video.ts with my explicit sign-off on the diff (TUNED-adjacent infra).
+5. If all green: surface the "flip ?osaEngine=producer to default + first invite" decision to me — do NOT flip it yourself.
+
+Rules: code-executor for multi-file edits, verify-changes before reporting done, commit + push early (defreezer). If blocked >30 min on anything, write status here and move to the next item.
+```
+
+**Session B (hygiene sweep, agent-heavy — interleave or follow):** R2 Phase 5 cleanup → land
+believability superset + drawplan PR + timeout bump → delete superseded branches → archive/refresh
+the stale docs above.
+
 > **⏭ NEXT SESSION (2026-06-14+):** (1) **ONE FINAL_RENDER live-verify session** (Neil at the wheel, director-smoke pre-flight, smoke-tester delegation, unmeter first): end-card recap + price-anchor overlays (SHIPPED 2026-06-13 code-side — eyeball band placement at 0.26h, gold recap legibility, ₱ glyph rendering in EVERY preset font, anchor ding timing) + the parked scene-6/5 regen (END-CLEAN ghost-tail kill) + tighter trim pads + Scene Pipeline defaulting to a female Filipino voice for the BEAN BLOCK avatar. (2) ~~Billing-success page live-verify~~ — **CLOSED 2026-06-13: Neil tested the "Founding Creator" share card + native share live and confirmed it works ("its perfect already").** Remaining Neil-gated render backlog: product-aware hook text dodge (vision pass is face-only today); EDL responseSchema; structured `gender` field on `FilipinoLibraryEntry` (replaces the description-regex match — api/_lib/, needs approval gate).
 
 ## Status as of 2026-06-16 (DIRECTION SHIFT — core product first; website/pricing parked)
