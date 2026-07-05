@@ -905,6 +905,16 @@ Prompt vocab that works: "punch-in synced to sentence emphasis", "natural smartp
 "dolly zoom", "spell it exactly as written: …". Never use identity-preservation legalese
 (safety filter). Session total ≈ $2.91 for 6 generations + 1 free block.
 
+**✅ REFINE-CHAIN TEST (same day, ~$0.52).** `previous_interaction_id` works mechanically
+(no re-upload; kept Sample 4's edit skeleton and correctly amplified the punch-ins as asked)
+**BUT each chained pass re-renders from the previous 720p OUTPUT and degrades compounds:**
+Sample 4 (gen 1 from raw) graded real-human/perfect-lip-sync; its refine (gen 2) graded
+**likely-ai with mouth warping at 3.5s**. Photocopy-of-a-photocopy. Rule: **talking scenes
+get ONE generation pass max** — to iterate on a talking scene, re-roll from the RAW SOURCE
+with a merged prompt (full cost), don't chain. Refine chains remain viable for b-roll
+(no face to degrade — still needs the label eval gate per pass). This halves the hoped-for
+refine economics on talking scenes; b-roll iteration still benefits.
+
 ---
 
 ## How to add new items
