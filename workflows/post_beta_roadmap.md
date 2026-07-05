@@ -869,6 +869,42 @@ run 1-2 `refine` iterations before finalizing the Layer-2 scope. Text-stays-FFmp
 is now empirically validated from three directions (invented captions, restyled captions,
 garbled background text).
 
+**✅ ROUND 2 — RAW-INPUT RETENTION-EDITOR PoC (same day, ~$1.27, 3 samples).** Neil's pivot:
+round 1 fed FINISHED renders (captions burned in — confound); round 2 feeds RAW caption-free
+clips, testing Omni as the retention editor (the IG-creator workflow from his screenshots —
+that creator's literal prompt: "Add subtle zoom effects… Cut aggressively between sentences…
+optimized for Shorts and Reels"). Raw source: the LEFT (unedited) half of
+`demos/viral-editor-2-demo-side-by-side.mp4` (Olivia skincare ad) — raw talking 5.05s +
+raw serum-bottle b-roll 3.75s, cropped via ffmpeg. Note: even "raw" Veo scenes carry a faint
+baked-in push — truly locked-off source footage doesn't exist in our pipeline.
+
+- **Sample 4, IG-creator retention edit on RAW TALKING: PASS — the headline result.** Quick
+  punch-in/out reframes synced to sentence emphasis + a speech-matched motion graphic (water
+  droplet timed to the serum line). Blind believability grade: **real-human, perfect lip-sync
+  (high confidence) — same as its raw control.** This overturns round 1's talking-scene
+  rejection: the failure mode is PERSON RE-RENDERING (bg swap/relight), not editing per se.
+  Zoom/cut edits reuse source pixels and keep believability. Caveat: "cut aggressively /
+  remove pauses" did NOT shorten the clip (5.05→5.18s) — Omni does in-place visual editing,
+  not timeline surgery. Pacing trims stay EDL/FFmpeg.
+- **Sample 5, dolly zoom on RAW B-ROLL: camera move executed** (strong continuous push;
+  true vertigo-stretch needs Neil eyeball). Text integrity is SCALE-DEPENDENT: the big
+  "The Ordinary." wordmark stayed perfect, but fine-print label text was hallucinated into
+  gibberish once the zoom magnified past what the 540×960 source resolved.
+- **Sample 6, explicit text render: PASS, letter-perfect.** "SOBRANG SULIT" in clean bold
+  sans-serif + drop shadow + pop-in, exactly as directed. REFINES the text constraint: Omni
+  garbles text it PRESERVES/INVENTS incidentally, but renders EXPLICITLY DIRECTED display
+  text accurately (Google's claim validated). Critical text (₱/price/offer/captions) still
+  FFmpeg — deterministic and exact — but stylistic display words are now an Omni candidate.
+
+**Layer-2 shape after both rounds:** raw scene → Omni engagement pass (speech-synced
+reframes, camera choreography, motion graphics, display text) → FFmpeg deterministic layer
+(pacing cuts, captions, ₱/offer text, VO mux, end-card, concat). Never feed captioned
+renders; never bg-swap/relight talking scenes; expect 720p/24 output (upscale step needed);
+keep the per-output eval gate (label drift is stochastic — Test 2 vs Sample 5 wordmark).
+Prompt vocab that works: "punch-in synced to sentence emphasis", "natural smartphone zoom",
+"dolly zoom", "spell it exactly as written: …". Never use identity-preservation legalese
+(safety filter). Session total ≈ $2.91 for 6 generations + 1 free block.
+
 ---
 
 ## How to add new items
