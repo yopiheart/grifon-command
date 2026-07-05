@@ -915,6 +915,40 @@ with a merged prompt (full cost), don't chain. Refine chains remain viable for b
 (no face to degrade — still needs the label eval gate per pass). This halves the hoped-for
 refine economics on talking scenes; b-roll iteration still benefits.
 
+**✅ NEIL EYEBALL VERDICTS (2026-07-05):** (1) Sample 4 zooms too fast — punch-ins read as a
+"blink" straight to the face, not a felt camera move. Prompt-template fix for the preset:
+ask for eased fast zooms ("smooth fast zoom with visible easing — the viewer should FEEL the
+camera travel in and out; no instant jump-cut reframes"). (2) Dolly zoom: approved — beautiful,
+consistent, nothing broken. Wants CAMERA ANGLE SWITCH tested next. (3) Directed display text:
+approved — animation + drop-shadow readability both good.
+
+**PIPELINE INTEGRATION SHAPE (agreed direction, not yet built):** per scene:
+raw render → engagement plan → [Omni pass if plan calls a generation-class move] → 720p→1080p
+upscale → EDL/FFmpeg deterministic layer. Routing signal on the storyboard scene (pattern:
+`scene.transitionEffect` → Kling O1), e.g. `scene.omniMoves[]`. Gates: Business tier, cost
+guard, label/identity eval + 1 retry, talking scenes reframe-class only + one-pass max.
+**Presets AND storyboard, not either/or:** a preset library of PoC-validated move recipes
+(tuned prompt templates — felt-zoom, dolly zoom, angle switch, display-text pop; pairs with
+item #11 sellable Edit Styles) selected + parameterized per scene by the engagement-plan brain
+from storyboard content. Build order unchanged: proxy `api/gemini/omni-video.ts` + routing is
+a code-executor delegation AFTER Neil merges this branch and green-lights the plan.
+
+**▶ PASTE-READY KICKOFF (next session — the copy-a-video test):**
+> Read workflows/post_beta_roadmap.md item #18 (Omni PoC results + pipeline shape). I have a
+> video I want to copy — this session reverse-engineers it into our first Omni presets.
+> Protocol (Neil's rule, 2026-07-05): (1) I drop the video (file/URL) → run
+> `tools/analyze_video.py` (Gemini watches it → Edit-DNA JSON). (2) MANDATORY before any
+> prompt-writing: summon the smoke-tester subagent (foreground) to visually verify the
+> analysis — extract frame contact sheets + per-moment crops of every text overlay, animation,
+> motion graphic, zoom/angle move, and confirm/correct the Edit-DNA claims frame-by-frame so
+> we fully understand how text/animations/motion graphics are built before copying them.
+> (3) Translate the VERIFIED spec into: FFmpeg-executable moves (→ EDL vocabulary) vs
+> Omni moves (→ preset prompt templates using the validated vocab + the eased-zoom fix).
+> (4) Test the Omni presets on raw clips (re-cut from demos/viral-editor-2-demo-side-by-side.mp4
+> left half via tools/omni_edit_poc.py — .tmp was wiped). Include the pending CAMERA ANGLE
+> SWITCH test. Constraints hold: critical text stays FFmpeg; talking scenes one-pass
+> reframe-only; no identity legalese in prompts; ~$0.10/sec, --yes gate on every paid call.
+
 ---
 
 ## How to add new items
