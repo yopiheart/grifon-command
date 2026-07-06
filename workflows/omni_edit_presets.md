@@ -206,14 +206,11 @@ slots:
   font_ref_image: optional
   aspect_ratio: default 9:16
 prompt_template: |
-  Edit this raw talking-head video into a premium, viral-quality social media
-  reel with high-retention editing, cinematic motion graphics, and modern
-  creator-style visuals. This is an EDIT of the original footage, not a
-  re-creation: reuse the original footage pixels — do not repaint, relight,
-  redraw, or restyle the background, the room, or the speaker. Keep everything
-  exactly as filmed — the same face, hand motion, gestures, wardrobe,
-  lighting, and background objects as the uploaded video. Only add editing
-  layers (text, graphics, reframes) on top of the original image.
+  Transform this raw talking-head video into a premium, viral-quality social
+  media reel with high-retention editing, cinematic motion graphics, and
+  modern creator-style visuals, by adding editing layers — typography, motion
+  graphics, and reframes — on top of the original footage. Keep everything
+  else exactly as filmed, including the room and background.
 
   The spoken content (for context only — do NOT add subtitles or captions;
   they are added later in post): "{{transcript}}"
@@ -221,11 +218,10 @@ prompt_template: |
   Typography is the centerpiece, but only for these exact words, spelled
   exactly as written: {{emphasis_words}}. When the speaker says one of them,
   create a huge cinematic text moment: bold editorial typography, oversized
-  words as design elements, layered compositions where key phrases appear
-  behind the speaker, partially masked by the subject, creating depth and a
-  premium 3D look — kinetic, motion-tracked, with scale animation, shadows,
-  lighting effects, and subtle motion. Do not render any other text anywhere
-  in the frame.
+  words as design elements, layered text compositions with foreground and
+  background typography creating depth and a premium 3D look — kinetic,
+  motion-tracked, with scale animation, shadows, lighting effects, and subtle
+  motion. Do not render any other text anywhere in the frame.
 
   Color style: build the typography and graphic palette around the footage's
   existing colors, with {{brand_primary_hex}} as the primary accent
@@ -237,7 +233,7 @@ prompt_template: |
   zoom must be a smooth fast zoom with visible easing; the viewer should
   FEEL the camera travel in and out; no instant jump-cut reframes. Add
   relevant motion graphics, icons, callouts, and visual metaphors that
-  support the spoken content, layered over the unaltered original footage.
+  support the spoken content, layered over the original footage.
 
   Maintain meaningful visual changes every few seconds to maximize
   retention. The final output should feel like a premium reel edited by a
@@ -257,8 +253,26 @@ validation:
   gate: blind analyze_video.py vs raw control (real-human + lip-sync parity);
         render_audit.mjs vision read on directed text; BACKGROUND-UNCHANGED
         check vs source frames
-  rounds: []
-evidence: ["premium-reel-v1 round 1 2026-07-06 (mechanics proven, bg repaint)"]
+  rounds:
+    - date: 2026-07-06 (round 0 — SAFETY-FILTER BLOCK SAGA, $0 billed)
+      clip: workflows/assets/omni-poc/best-sample-raw-talking.mp4
+      cost_usd: 0.00 (all blocks pre-generation, unbilled)
+      machine_verdict: |
+        5 consecutive "harmful content" blocks across: v2 original, v2 minus
+        face/speaker words, v2 minimal-preservation, v1 EXACT template (which
+        PASSED on the Elena clip same day), v2 with innocuous emphasis word.
+        Meanwhile angle-switch-v1 PASSED on the SAME clip + SAME transcript.
+        Conclusion: the trigger is the premium typography/graphics prompt
+        body × THIS clip (or preview-filter flakiness) — NOT the pixel-lock
+        language, NOT the emphasis words, NOT preservation phrasing alone.
+        GUARDRAIL-6 REFINEMENT: filter blocks are prompt×video interactions;
+        a template that passed on one clip can block on another. Blocks are
+        free — but bisect with a plan, then park.
+      neil_verdict: informed same session
+      status_effect: stays draft — retry later (filter flakiness) and/or on a
+        different clean clip; template kept at the filter-safest variant
+      output: none (never generated)
+evidence: ["premium-reel-v1 round 1 2026-07-06 (mechanics proven, bg repaint)", "round 0 block saga 2026-07-06"]
 cost_estimate_usd_per_run: "6s ~ $0.60"
 ```
 
@@ -614,7 +628,28 @@ validation:
         .mp4, baseline: real-human/high, static medium shot). The #18
         person-re-render believability risk REMAINS the open question.
       output: .tmp/omni-poc/edits/angle-switch-v1-141756.mp4 (wiped on reboot)
-evidence: ["round 1 2026-07-06 CONTAMINATED (this file)", "#18 round 1 person-re-render prior"]
+    - date: 2026-07-06 (round 2 — CLEAN retest)
+      clip: workflows/assets/omni-poc/best-sample-raw-talking.mp4 (5.92s,
+        baseline real-human/high, static shot, no burned text)
+      cost_usd: 0.59
+      machine_verdict: |
+        Believability PARITY: real-human (high confidence) — the #18
+        person-re-render fear did NOT materialize on clean source. Zero
+        invented text (captions: none). BUT the move did NOT execute:
+        analyzer reads "static medium shot", 10-frame strip shows identical
+        framing throughout — no high/low/left/right cuts, micro-reframes at
+        most. Same non-execution as the contaminated round, now uncontaminated.
+      neil_verdict: pending eyeball
+      status_effect: |
+        stays draft. Two consecutive move-non-executions (template phrasing:
+        "cut to a different camera angle at sentence boundaries"). ONE
+        optional retry justified with johnsavage's literal phrasing ("also
+        change camera angles, from high angles and low angles, from left and
+        right") before declaring rejected (move-unsupported). Key positive:
+        editing a clean talking clip holds believability — the risk class is
+        narrower than feared.
+      output: .tmp/omni-poc/edits/angle-switch-v1-145750.mp4 (wiped on reboot)
+evidence: ["round 1 2026-07-06 CONTAMINATED (this file)", "round 2 2026-07-06 clean retest", "#18 round 1 person-re-render prior"]
 cost_estimate_usd_per_run: "5s ~ $0.50"
 ```
 
