@@ -113,6 +113,41 @@ describe('judgeGate', () => {
   });
 });
 
+describe('judgeGate — forbidden/instruction text (Neil eyeball catch 2026-07-06)', () => {
+  it('fails a clip that rendered the brand hex as typography (verbatim run-2 Bukidnon output)', () => {
+    // Omni rendered the color INSTRUCTION as on-screen text, 3x, alongside the
+    // legitimate directed word. The old gate passed this (only checked presence
+    // of directed words); it must now fail with forbidden_text.
+    const r = judgeGate(
+      {
+        renderedText: ['BUKIDNON', '#FFCC00', '#FFCC00', '#FFCC00'],
+        hasCaptions: false,
+        believability: 'real-human',
+      },
+      { directedWords: ['BUKIDNON'], expectPerson: true, forbiddenWords: ['#FFCC00'] }
+    );
+    expect(r.pass).toBe(false);
+    expect(r.reasons).toEqual(['forbidden_text']);
+  });
+
+  it('fails on ANY hex-code render even when not listed in forbiddenWords', () => {
+    const r = judgeGate(
+      { renderedText: ['skin', '#ffcc00'], hasCaptions: false, believability: 'real-human' },
+      { directedWords: ['skin'], expectPerson: true }
+    );
+    expect(r.pass).toBe(false);
+    expect(r.reasons).toContain('forbidden_text');
+  });
+
+  it('still passes a clean render with forbiddenWords declared', () => {
+    const r = judgeGate(
+      { renderedText: ['THIRSTY'], hasCaptions: false, believability: 'real-human' },
+      { directedWords: ['THIRSTY'], expectPerson: true, forbiddenWords: ['#FFCC00'] }
+    );
+    expect(r.pass).toBe(true);
+  });
+});
+
 describe('looksBlocked — safety-filter classification', () => {
   it('matches the EXACT blocked-at-poll payload recorded from the live smoke (2026-07-06)', () => {
     // Verbatim upstream body: HTTP 400 on interactions GET after a

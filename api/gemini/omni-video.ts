@@ -76,7 +76,7 @@ const getAi = (): GoogleGenAI => {
 function deriveGateExpectations(
   preset: OmniPreset,
   slots: Record<string, string>
-): { directedWords: string[]; expectPerson: boolean } {
+): { directedWords: string[]; expectPerson: boolean; forbiddenWords: string[] } {
   let directedWords: string[] = [];
   if (preset.id === 'premium-reel-v2') {
     directedWords = (slots.emphasis_words ?? '')
@@ -90,7 +90,15 @@ function deriveGateExpectations(
     const v = (slots.title_text ?? '').trim();
     directedWords = v ? [v] : [];
   }
-  return { directedWords, expectPerson: preset.target === 'talking' };
+  // Instruction-only slot values must never render as on-screen text. Live
+  // catch (Neil eyeball 2026-07-06, run 2): Omni rendered the literal
+  // "#FFCC00" from the color-accent instruction as typography, 3x on one
+  // scene. The hex-pattern check in judgeGate is the general net; listing the
+  // actual slot values here also catches non-hex phrasings.
+  const forbiddenWords = [slots.brand_primary_hex, slots.brand_secondary_hexes]
+    .map((v) => (v ?? '').trim())
+    .filter(Boolean);
+  return { directedWords, expectPerson: preset.target === 'talking', forbiddenWords };
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -303,8 +311,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Non-fatal: a missing sidecar makes the gate fail open (never blocks paid
     // output). Lives one level deep (${uid}/omni-meta/) — reaped by the cron.
     try {
-      const { directedWords, expectPerson } = deriveGateExpectations(preset, slots);
-      const sidecar = { presetId, directedWords, expectPerson, sceneIdx, finishedAdId };
+      const { directedWords, expectPerson, forbiddenWords } = deriveGateExpectations(preset, slots);
+      const sidecar = { presetId, directedWords, expectPerson, forbiddenWords, sceneIdx, finishedAdId };
       const put = await putMedia(
         `${user.id}/omni-meta/${interactionId}.json`,
         Buffer.from(JSON.stringify(sidecar), 'utf-8'),

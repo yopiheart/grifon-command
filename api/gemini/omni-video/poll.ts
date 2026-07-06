@@ -155,10 +155,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const meta = JSON.parse(sidecarText) as {
         directedWords?: string[];
         expectPerson?: boolean;
+        forbiddenWords?: string[];
       };
       gate = await runOmniGate(buffer, {
         directedWords: Array.isArray(meta.directedWords) ? meta.directedWords : [],
         expectPerson: meta.expectPerson === true,
+        forbiddenWords: Array.isArray(meta.forbiddenWords) ? meta.forbiddenWords : [],
       });
     } else {
       console.warn('[api/gemini/omni-video/poll] gate sidecar missing — failing open');

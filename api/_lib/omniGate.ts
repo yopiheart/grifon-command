@@ -66,7 +66,16 @@ export interface OmniGateExpectations {
   directedWords: string[];
   /** True for talking-scene presets — the person must stay believable. */
   expectPerson: boolean;
+  /**
+   * Instruction-only values (e.g. the brand hex from the color slot) that must
+   * NEVER appear as rendered text. Live catch 2026-07-06: "#FFCC00" rendered
+   * as typography. Optional for sidecar back-compat.
+   */
+  forbiddenWords?: string[];
 }
+
+/** A hex color code rendered on screen is never a legitimate style output. */
+const HEX_CODE_RE = /#[0-9a-f]{6}\b/i;
 
 export interface OmniGateResult {
   pass: boolean;
@@ -126,6 +135,17 @@ export function judgeGate(
   if (missing) reasons.push('missing_directed_text');
 
   if (verdict.hasCaptions === true) reasons.push('invented_captions');
+
+  // Instruction leakage: a hex code (or any listed instruction-only slot value)
+  // rendered as on-screen text fails the clip — the template's "do not render
+  // any other text" was violated in a way we can detect deterministically.
+  const forbidden = (expectations.forbiddenWords ?? [])
+    .map((w) => String(w).toLowerCase().trim())
+    .filter(Boolean);
+  const leaked = haystack.some(
+    (h) => HEX_CODE_RE.test(h) || forbidden.some((f) => h.includes(f))
+  );
+  if (leaked) reasons.push('forbidden_text');
 
   if (expectations.expectPerson && verdict.believability !== 'real-human') {
     reasons.push('believability');
