@@ -56,8 +56,25 @@ class of edit). The believability + label eval gate runs on EVERY output, every 
 > appear here. The ai-editor skill NEVER applies these — each proposal maps the preset
 > onto the concrete code shape (proxy + routing + tier gate) and ends `Status: with Neil`.
 
-*(none yet — product integration is out of scope until Neil merges `feat/omni-edit-poc`
-and green-lights the proxy build)*
+### Proposal 001 — Omni Edit Styles product integration · **Status: APPROVED, in build**
+
+Neil green-lit the proxy build 2026-07-06 via the grilled + premortemed PRD:
+**[omni_edit_styles_plan.md](omni_edit_styles_plan.md)** (all 9 design decisions +
+4 premortem mitigations recorded there — tier gate, billing, fallback ladder, QA
+gate, routing, captions). Maps all 4 `neil_approved` presets onto the code shape:
+
+- **Shape:** 2 hero Edit Styles (`premium_reel`, `vox_explainer`) auto-routed per
+  scene type; `dolly-zoom-v1` on b-roll, `display-text-pop-v1` on mixed. Business
+  tier, 5 omni ads/mo included + ₱499 top-up. Kill switch `OMNI_STYLES_ENABLED`.
+- **Slice 1 LANDED** (branch `feat/omni-edit-styles`, commit `54a3367`, 2026-07-06):
+  `api/_lib/omniPresets.ts` (templates ported VERBATIM, born TUNED),
+  `api/gemini/omni-video.ts` + `api/gemini/omni-video/poll.ts` (Interactions-API
+  proxy, filter-block resilience codes, per-ad hard budget). 21 unit tests; bundle
+  verified clean of prompt content.
+- **Next gates:** Neil-fired live smoke on the committed raw asset (~$0.40–0.60,
+  also measures the Vercel-60s upload-latency question) → Slices 2–4 per the plan.
+- Preset rows flip to `product_shipped` only when the user-facing picker ships
+  (Slice 3) and Neil eyeballs a product-path render.
 
 ### Standing requirement for the future proxy build: filter-block resilience
 
