@@ -46,7 +46,7 @@ class of edit). The believability + label eval gate runs on EVERY output, every 
 | `premium-reel-v2` | Premium Reel (pixel-locked) | talking | **neil_approved** (full gate pass + eyeball 2026-07-06) | 4-6s ≈ $0.40-0.60 | round 1 2026-07-06: believability real-human/high, bg intact, THIRSTY letter-perfect |
 | `angle-switch-v2` | Camera Angle Switch (concrete destinations) | talking | draft — MOVE WORKS per Neil; believability re-run on clean clip pending | 6s ≈ $0.60 | Neil eyeball 2026-07-06 + official prompt guide |
 | `paper-collage-v1` | Paper Collage (johnsavage paper style) | talking | draft | 5s ≈ $0.50/attempt | johnsavage PDF (appendix B) |
-| `vox-explainer-v1` | VOX Editorial Explainer | talking | poc_validated (round 1 full gate pass; grounding-via-API-text CONFIRMED; Neil eyeball pending) | 4s ≈ $0.40 | round 1 2026-07-06: real-human/HIGH, title letter-perfect, graphics grounded from prompt text |
+| `vox-explainer-v1` | VOX Editorial Explainer | talking | **neil_approved** (full gate pass + eyeball 2026-07-06; grounding-via-API-text CONFIRMED) | 4s ≈ $0.40 | round 1 2026-07-06: real-human/HIGH, title letter-perfect, graphics grounded from prompt text |
 | `rack-focus-v0` | Rack Focus | b-roll | rejected | — | #18 round 1: move failed to execute |
 | `talking-bg-swap-v0` | Talking-Scene BG Swap/Relight | talking | rejected | — | #18 round 1 Tests 3-4: degrades believability |
 
@@ -545,7 +545,7 @@ matching the source aesthetic.
 id: vox-explainer-v1
 name: VOX Editorial Explainer
 target: talking
-status: poc_validated   # round 1 full machine-gate pass 2026-07-06; neil_approved awaits eyeball
+status: neil_approved   # round 1 full gate pass + Neil eyeball 2026-07-06
 origin: Google_Omni_VOX_Style_Workflow.pdf (verbatim in Appendix C)
 model: gemini-omni-flash-preview
 max_passes: 1
@@ -635,9 +635,13 @@ validation:
         before/after hydration card. This was the preset's headline open question;
         API-text grounding is confirmed for the future product proxy (the engagement
         brain can feed scene facts as prompt text and get grounded editorial graphics).
-      neil_verdict: "PENDING eyeball — 1080p at .tmp/omni-poc/edits/vox-explainer-v1-162126.1080p.mp4"
-      status_effect: "draft -> poc_validated (machine gate); neil_approved awaits eyeball"
-      output: .tmp/omni-poc/edits/vox-explainer-v1-162126.mp4 + .1080p.mp4
+      neil_verdict: |
+        "BRO! THIS IS INSANE! SUPER ANIMAL!!!!!!!! hahaha love it bro.
+        APPROVED!" (2026-07-06, watched the 1080p upscale)
+      status_effect: "draft -> poc_validated -> NEIL_APPROVED (same day)"
+      output: .tmp/omni-poc/edits/vox-explainer-v1-162126.mp4 + .1080p.mp4;
+        preserved (defreezer-proof): workflows/assets/omni-poc/vox-explainer-v1-approved-sample.mp4
+        (720p) + skincare-raw-talking.mp4 (the raw control)
 evidence: ["Appendix C (johnsavage)", "round 1 2026-07-06 (full gate pass, grounding-via-API-text confirmed)"]
 cost_estimate_usd_per_run: "5s ~ $0.50"
 ```
