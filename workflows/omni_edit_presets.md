@@ -78,8 +78,19 @@ gate, routing, captions). Maps all 4 `neil_approved` presets onto the code shape
   — the Vercel-60s concern is CLOSED for ~5s/1.2MB clips), render ~40s, valid MP4
   output at `.tmp/omni-smoke/premium-reel-v2-proxy-smoke.mp4` (964KB, ftyp OK).
   Guards verified live in `rate_limits`: `gemini:omni` 1, `omni:ad:<adId>` 1,
-  `gemini:omni-poll` 4. Neil eyeball of the render: pending.
-- **Next gates:** Neil eyeballs the smoke render → Slices 2–4 per the plan.
+  `gemini:omni-poll` 4.
+- **Neil eyeball: PASS** (2026-07-06, verbatim): *"Question, sinadya ba tong
+  madaming THIRSTY na word? Design ba to? Okay lang ba to? Overall okay naman
+  sakin, dun lang ako nagtaka sa madaming thirsty kung sinadya by design. If you
+  think this is included as a design and tingin mong okay naman to for ads - its
+  fine."* Ruling recorded: the 5× stacked THIRSTY wall is **semi-intended** — the
+  template's "layered foreground and background type" language invites it (same
+  class as v1's doubled ARAW-ARAW); degree varies per roll (approved lab run
+  rendered it once). Kept unpinned by design: the echo-wall is the style's
+  signature and per-output variance is handled by the Slice-2 preview + 1 user
+  re-roll. Pinning ("render once, at most twice") remains a Neil-gated one-line
+  TUNED edit if ever wanted.
+- **Next gates:** Slices 2–4 per the plan (Slice-2 /goal drafted 2026-07-06).
 - Preset rows flip to `product_shipped` only when the user-facing picker ships
   (Slice 3) and Neil eyeballs a product-path render.
 
