@@ -108,8 +108,26 @@ gate, routing, captions). Maps all 4 `neil_approved` presets onto the code shape
   Total Slice-2 smoke spend ≈ $1.60. Calm-fallback UI note not yet observed
   live (block wouldn't reproduce); verified by pinned classification test +
   ladder unit matrix instead.
-- **Next gates:** Neil eyeballs the two styled smoke renders → Slice 3 (picker
-  + billing) → Slice 4 (telemetry + beta).
+- **Neil eyeball of run-2 renders: TWO REAL CATCHES** (2026-07-06, verbatim):
+  *"Bro merong color code na text ano un bug? Bat may ganun? #FFCC00. Tapos ung
+  2nd video na bukidnon, nag DOBLE ung word na 'NA'… Eh sa video na un maayos
+  ung script walang dobleng word."*
+  1. **Instruction-text leak (REAL GATE GAP, FIXED `d34317c`):** Omni rendered
+     the literal `#FFCC00` from the color-accent slot as typography (3× on
+     Bukidnon, 1× on skincare) — stochastic violation of the no-other-text rule.
+     The gate only checked directed words were PRESENT. Now: any hex-code render
+     fails unconditionally + fire-time slot values travel as `forbiddenWords`
+     in the sidecar → gate fail → auto re-roll. Verbatim run-2 renderedText
+     pinned in `tests/unit/omniGate.test.ts`. **Eyeball catches what frame
+     strips and the machine gate miss — again** (same lesson as angle-switch).
+  2. **Doubled spoken word ("NA") — NOT a product-path defect:** that's Omni's
+     own audio track (Omni can stretch the tail; known lab prior 5.05s→5.18s).
+     Finished ads discard it: ElevenLabs VO muxes over + scene trims to VO end.
+     Heard only because the smoke seed had no voice overlays. RESIDUAL RISK
+     logged: mid-scene video time-warp under a muxed VO = lip desync; covered
+     by the believability gate + Neil eyeball, watch for it in Slice-4 beta.
+- **Next gates:** re-eyeball after a gate-clean render (optional, Neil's call)
+  → Slice 3 (picker + billing) → Slice 4 (telemetry + beta).
 - Preset rows flip to `product_shipped` only when the user-facing picker ships
   (Slice 3) and Neil eyeballs a product-path render.
 
