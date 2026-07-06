@@ -21,6 +21,21 @@ shell command), so this doc is the restore mechanism: paste the command to re-ar
 > surfaces every `/loop` line in this file automatically at session start — keep new
 > re-arm commands on their own line starting with `/loop` so the hook picks them up.
 
+## Tooling: poppler (PDF page renderer) — wiped by defreezer
+
+The johnsavage workflow PDFs in `workflows/assets/johnsavage/` (paper-style + VOX)
+are image-only; reading them (or any screenshot PDF) needs `pdftoppm`, which this PC
+lacks after every reboot (no winget/scoop/choco). Portable re-install, no admin:
+
+```
+curl -sL -o poppler.zip https://github.com/oschwartz10612/poppler-windows/releases/download/v26.02.0-0/Release-26.02.0-0.zip
+unzip -q poppler.zip -d poppler
+poppler/poppler-26.02.0/Library/bin/pdftoppm.exe -png -r 100 <file.pdf> out/pg
+```
+
+Verbatim transcriptions already live in `workflows/omni_edit_presets.md` appendices —
+only re-install if you need to re-read pages visually.
+
 ## Dated: on/after Jul 7, 2026 — Fable 5 promo ends, re-evaluate the model pin
 
 The 50%-of-weekly-limits Fable 5 promo expires **Jul 7, 2026**; after that Fable draws
