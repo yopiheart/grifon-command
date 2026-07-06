@@ -41,8 +41,8 @@ class of edit). The believability + label eval gate runs on EVERY output, every 
 | `felt-zoom-punchin-v1` | Felt Zoom Punch-In | talking | poc_validated | 5s ≈ $0.50 | #18 Sample 4 + Neil easing fix 2026-07-05 |
 | `dolly-zoom-v1` | Dolly Zoom | b-roll | neil_approved | 4s ≈ $0.38 | #18 Sample 5 + Neil verdict 2026-07-05 |
 | `display-text-pop-v1` | Directed Display Text Pop | mixed | neil_approved | 5s ≈ $0.50 | #18 Sample 6 + Neil verdict 2026-07-05 |
-| `angle-switch-v1` | Camera Angle Switch | talking | draft | 5s ≈ $0.50 | Neil's explicit next test 2026-07-05 |
-| `premium-reel-v1` | Premium Reel (johnsavage talking-head) | talking | draft | 5s ≈ $0.50/attempt | johnsavage PDF (appendix A) + #18 Samples 4/6 |
+| `angle-switch-v1` | Camera Angle Switch | talking | **rejected** (round 1, 2026-07-06) | 5s ≈ $0.50 | move didn't execute + likely-ai/high + invented text |
+| `premium-reel-v1` | Premium Reel (johnsavage talking-head) | talking | draft (round 1 gate FAIL — v2 direction noted) | 5s ≈ $0.50/attempt | johnsavage PDF (appendix A) + round 1 2026-07-06 |
 | `paper-collage-v1` | Paper Collage (johnsavage paper style) | talking | draft | 5s ≈ $0.50/attempt | johnsavage PDF (appendix B) |
 | `vox-explainer-v1` | VOX Editorial Explainer | talking | draft | 5s ≈ $0.50/attempt | johnsavage PDF (appendix C) |
 | `rack-focus-v0` | Rack Focus | b-roll | rejected | — | #18 round 1: move failed to execute |
@@ -145,7 +145,26 @@ constraints:
 validation:
   gate: blind analyze_video.py vs raw control (real-human + lip-sync parity);
         render_audit.mjs vision read on any directed text/labels
-  rounds: []
+  rounds:
+    - date: 2026-07-06
+      clip: raw_talking 5.4s (Elena at desk, viral-editor-2 demo left half 4.4-9.8s)
+      control_baseline: real-human, perfect lip-sync (high confidence)
+      cost_usd: 0.54
+      machine_verdict: |
+        GATE FAIL on believability: likely-ai (medium) — "robotic TTS voice,
+        stiff movements, unnatural lip-sync". Background REPAINTED (sticky-note
+        wall not in source) = the person/scene re-render class. BUT the style
+        mechanics all executed: "ARAW-ARAW" letter-perfect in layered white +
+        #FFCC00 gold, speech-matched motion graphics (clock/lamp/work icons),
+        visible push-ins. Analyzer also read word-by-word caption behavior
+        (55% height, 1s swap) — possibly the kinetic moments, possibly invented
+        captions; re-check on v2.
+      neil_verdict: pending eyeball
+      status_effect: stays draft — v2 direction = keep typography/graphics
+        language, ADD hard reuse-source-pixels constraint ("reuse the original
+        footage pixels; do not repaint, relight, or redraw the background or
+        the speaker"), consider emphasis-moment-only edit windows
+      output: .tmp/omni-poc/edits/premium-reel-v1-141939.mp4 (wiped on reboot)
 evidence: [roadmap #18 Sample 4, Sample 6, refine-chain test, Neil eyeball 2026-07-05]
 cost_estimate_usd_per_run: "duration_s x 0.10 (5s test clip ~ $0.50/attempt)"
 ```
@@ -445,7 +464,7 @@ client ads, or the one-pass raw-input path preserves it. Test before trusting.
 id: angle-switch-v1
 name: Camera Angle Switch
 target: talking
-status: draft
+status: rejected
 origin: "Neil eyeball verdict #2, 2026-07-05 ('wants CAMERA ANGLE SWITCH tested next');
   johnsavage premium-reel prompt (contradicts #18 round 1 person-re-render finding)"
 model: gemini-omni-flash-preview
@@ -473,8 +492,29 @@ constraints:
 validation:
   gate: blind analyze_video.py vs raw control - must hold real-human +
         lip-sync parity through the angle cuts; move-executed check
-  rounds: []
-evidence: ["pending — this preset IS the round-1 shakedown test"]
+  rounds:
+    - date: 2026-07-06
+      clip: raw_talking 5.4s (Elena at desk, viral-editor-2 demo left half 4.4-9.8s)
+      control_baseline: real-human, perfect lip-sync (high confidence)
+      cost_usd: 0.54
+      machine_verdict: |
+        DOUBLE FAIL. (1) Move did not execute: continuous push-in, ZERO angle
+        cuts (frame strip + analyzer "static frame"). (2) Believability:
+        likely-ai (HIGH confidence) — "plastic skin texture, stiff posture,
+        lip-sync mismatch at 0:01-0:04". (3) Bonus violation: invented a
+        garbled yellow caption "AUCA-SI ELENA" despite the no-text
+        instruction. Confirms the #18 round-1 person-re-render prior OVER the
+        johnsavage camera-angle claim, on our footage.
+      neil_verdict: pending eyeball
+      status_effect: REJECTED for talking (per the preset's own if-fails rule)
+      output: .tmp/omni-poc/edits/angle-switch-v1-141756.mp4 (wiped on reboot)
+rejection: |
+  2026-07-06 round 1: angle cuts did not execute (got a push-in), believability
+  dropped to likely-ai/high, and Omni invented garbled caption text. Talking
+  angle-switch joins bg-swap in the do-not-retry class until a new model
+  generation passes a bake-and-leap re-test. An angle-switch-on-B-ROLL variant
+  (no face) remains untested and is a legitimate future draft.
+evidence: ["round 1 2026-07-06 (this file)", "#18 round 1 person-re-render prior"]
 cost_estimate_usd_per_run: "5s ~ $0.50"
 ```
 
