@@ -41,8 +41,8 @@ class of edit). The believability + label eval gate runs on EVERY output, every 
 | `felt-zoom-punchin-v1` | Felt Zoom Punch-In | talking | poc_validated | 5s ≈ $0.50 | #18 Sample 4 + Neil easing fix 2026-07-05 |
 | `dolly-zoom-v1` | Dolly Zoom | b-roll | neil_approved | 4s ≈ $0.38 | #18 Sample 5 + Neil verdict 2026-07-05 |
 | `display-text-pop-v1` | Directed Display Text Pop | mixed | neil_approved | 5s ≈ $0.50 | #18 Sample 6 + Neil verdict 2026-07-05 |
-| `angle-switch-v1` | Camera Angle Switch | talking | **rejected** (round 1, 2026-07-06) | 5s ≈ $0.50 | move didn't execute + likely-ai/high + invented text |
-| `premium-reel-v1` | Premium Reel (johnsavage talking-head) | talking | draft (round 1 gate FAIL — v2 direction noted) | 5s ≈ $0.50/attempt | johnsavage PDF (appendix A) + round 1 2026-07-06 |
+| `angle-switch-v1` | Camera Angle Switch | talking | draft (round 1 CONTAMINATED — retest on clean raw) | 6s ≈ $0.60 | Neil caught source contamination 2026-07-06 |
+| `premium-reel-v1` | Premium Reel (johnsavage talking-head) | talking | draft (round 1 mixed on contaminated source — v2 = pixel-lock) | 6s ≈ $0.60/attempt | johnsavage PDF (appendix A) + round 1 2026-07-06 |
 | `paper-collage-v1` | Paper Collage (johnsavage paper style) | talking | draft | 5s ≈ $0.50/attempt | johnsavage PDF (appendix B) |
 | `vox-explainer-v1` | VOX Editorial Explainer | talking | draft | 5s ≈ $0.50/attempt | johnsavage PDF (appendix C) |
 | `rack-focus-v0` | Rack Focus | b-roll | rejected | — | #18 round 1: move failed to execute |
@@ -159,11 +159,23 @@ validation:
         visible push-ins. Analyzer also read word-by-word caption behavior
         (55% height, 1s swap) — possibly the kinetic moments, possibly invented
         captions; re-check on v2.
-      neil_verdict: pending eyeball
-      status_effect: stays draft — v2 direction = keep typography/graphics
-        language, ADD hard reuse-source-pixels constraint ("reuse the original
-        footage pixels; do not repaint, relight, or redraw the background or
-        the speaker"), consider emphasis-moment-only edit windows
+      neil_verdict: |
+        "I love the overlay text design + it understands what the user is
+        explaining — ARAW ARAW SA OPISINA tapos biglang may motion graphics /
+        animation emoji. Perfect. Napansin ko lang: ung ARAW-ARAW overlay sa
+        simula ay dalawa, white at GOLD — sinadya ba?" (2026-07-06)
+        [Answer: semi-intended — the template's "layered compositions with
+        foreground and background typography" language invites the doubled
+        white/gold treatment; it matches the johnsavage aesthetic. Pin to a
+        single instance in v2 if unwanted.]
+      status_effect: |
+        stays draft. NOTE: same contaminated source as angle-switch round 1
+        (burned DERMA-TESTED caption + baked zoom) — the unrequested
+        word-by-word captions were likely SEEDED by the existing caption.
+        v2 on the clean raw asset = keep typography/graphics language, ADD
+        hard reuse-source-pixels constraint ("reuse the original footage
+        pixels; do not repaint, relight, or redraw the background or the
+        speaker"), re-check caption behavior on text-free source.
       output: .tmp/omni-poc/edits/premium-reel-v1-141939.mp4 (wiped on reboot)
 evidence: [roadmap #18 Sample 4, Sample 6, refine-chain test, Neil eyeball 2026-07-05]
 cost_estimate_usd_per_run: "duration_s x 0.10 (5s test clip ~ $0.50/attempt)"
@@ -464,7 +476,7 @@ client ads, or the one-pass raw-input path preserves it. Test before trusting.
 id: angle-switch-v1
 name: Camera Angle Switch
 target: talking
-status: rejected
+status: draft   # round-1 rejection RESCINDED — test was contaminated, see rounds
 origin: "Neil eyeball verdict #2, 2026-07-05 ('wants CAMERA ANGLE SWITCH tested next');
   johnsavage premium-reel prompt (contradicts #18 round 1 person-re-render finding)"
 model: gemini-omni-flash-preview
@@ -505,16 +517,23 @@ validation:
         garbled yellow caption "AUCA-SI ELENA" despite the no-text
         instruction. Confirms the #18 round-1 person-re-render prior OVER the
         johnsavage camera-angle claim, on our footage.
-      neil_verdict: pending eyeball
-      status_effect: REJECTED for talking (per the preset's own if-fails rule)
+      neil_verdict: |
+        "The video we used has an overlay text edited already + a slow zoom-in
+        baked by the Veo prompt — we shouldn't use a video that is already
+        edited with overlay text and camera movement... the AI changed the
+        overlay text from DERMA-TESTED to AUCA SI ELENA." (2026-07-06)
+      status_effect: |
+        ROUND INVALIDATED — Neil caught a source contamination the prep missed:
+        the "raw" demo-left-half clip had a burned DERMA-TESTED caption AND a
+        baked continuous zoom (frame-strip confirmed). This violated guardrail
+        4 (never feed captioned renders); the AUCA-SI ELENA garble is the known
+        caption-REWRITE class, and the baked zoom confounds the move-executed
+        check. Rejection RESCINDED -> back to draft. Retest on the clean
+        committed raw asset (workflows/assets/omni-poc/best-sample-raw-talking
+        .mp4, baseline: real-human/high, static medium shot). The #18
+        person-re-render believability risk REMAINS the open question.
       output: .tmp/omni-poc/edits/angle-switch-v1-141756.mp4 (wiped on reboot)
-rejection: |
-  2026-07-06 round 1: angle cuts did not execute (got a push-in), believability
-  dropped to likely-ai/high, and Omni invented garbled caption text. Talking
-  angle-switch joins bg-swap in the do-not-retry class until a new model
-  generation passes a bake-and-leap re-test. An angle-switch-on-B-ROLL variant
-  (no face) remains untested and is a legitimate future draft.
-evidence: ["round 1 2026-07-06 (this file)", "#18 round 1 person-re-render prior"]
+evidence: ["round 1 2026-07-06 CONTAMINATED (this file)", "#18 round 1 person-re-render prior"]
 cost_estimate_usd_per_run: "5s ~ $0.50"
 ```
 

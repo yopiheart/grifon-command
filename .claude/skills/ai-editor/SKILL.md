@@ -129,10 +129,15 @@ Neil drops a video whose editing style we want to copy (his protocol, 2026-07-05
 The per-preset validation protocol (each numbered round appends to the preset's
 `validation.rounds`):
 
-1. **Raw clips (free):** re-cut the LEFT (unedited) half of
-   `demos/viral-editor-2-demo-side-by-side.mp4` → raw talking ~5.05s + raw b-roll
-   ~3.75s (`.tmp` is wiped every reboot; re-cut each session). Caveat to note in
-   rounds: even "raw" Veo scenes carry a faint baked-in push.
+1. **Raw clips (free):** use the committed clean assets in
+   `workflows/assets/omni-poc/` (e.g. `best-sample-raw-talking.mp4` — Bukidnon
+   Brew, no text, locked-off, baseline real-human/high). **Do NOT re-cut the
+   demos/viral-editor-2 left half — it is NOT raw** (burned captions + baked
+   zoom; contaminated round 1 on 2026-07-06, Neil caught it). **MANDATORY
+   raw-ness check before any paid call:** extract a frame strip
+   (`ffmpeg -vf "fps=8/DUR,scale=180:-2,tile=8x1"`) and visually confirm ZERO
+   burned text and no baked camera movement. Caveat: even "raw" Veo scenes can
+   carry a faint baked-in push — note it in the round.
 2. **Blind baseline (free):** `analyze_video.py` believability grade on the raw
    control BEFORE any edit.
 3. **Paid run:** `--dry-run` → Neil approves → one call under `--budget`. Talking:
