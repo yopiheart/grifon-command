@@ -10,6 +10,62 @@
 > needed for typical scene clips; revisit only if 16:9/1080p sources push
 > upload times past ~40s. Full smoke record: omni_edit_presets.md Proposal 001.
 
+## ⏸ RESUME STATE (2026-07-06 end of session — read this first when resuming)
+
+**Where we are:** Slices 1 + 2 of 4 are BUILT, LIVE-SMOKED, and PUSHED on
+`feat/omni-edit-styles` (12 commits, `54a3367`…`ca7761e`). Neil paused before
+Slice 3. **Nothing is merged to main yet.**
+
+**Done + verified:**
+- Slice 1 — proxy (`api/gemini/omni-video.ts` + poll), `api/_lib/omniPresets.ts`
+  (born TUNED, 4 templates verbatim), budget/rate/kill-switch guards. Live smoke
+  PASSED (fire 13.4s, Vercel-60s concern closed). Neil eyeballed + approved the
+  render (THIRSTY-wall ruling: semi-intended, kept unpinned).
+- Slice 2 — EditVideo "Applying style" stage, QA gate (`api/_lib/omniGate.ts`),
+  fallback ladder, re-roll, styled-URL swap, dev seed hook in App.tsx. Live
+  smoke found + fixed 2 real bugs: (a) blocked-at-poll classification (Google
+  defers safety verdict under background:true), (b) **Neil eyeball catch:**
+  Omni rendered the literal `#FFCC00` slot value as typography → gate now fails
+  any hex render + fire-time `forbiddenWords` (pinned unit tests). The doubled
+  "NA" audio Neil heard = Omni's own track, discarded in real renders (VO mux +
+  trim-to-VO-end). Full record: `omni_edit_presets.md` Proposal 001.
+- 484 unit tests green; ~$2.00 total smoke spend across both slices.
+
+**Open decision for Neil:** optional ~$0.60 gate-clean re-render eyeball before
+closing Slice 2 — or straight to Slice 3.
+
+**Session re-arm (defreezer wiped it):**
+- `.env` needs the usual keys PLUS `OMNI_STYLES_ENABLED=true` (kill switch —
+  without it every omni call 503s) and `MEDIA_STORE=r2`.
+- Smoke account is DURABLE (Supabase cloud): `smoketest-dc@grifon.dev` /
+  `GrifonDcSmoke!2026`, uid `28552c97-6619-43a6-8cb2-21ba18a636c5`, business
+  sub active until 2026-08-05. Login is email+OTP — mint codes via admin
+  `generate_link` (needs a non-browser User-Agent header with the secret key).
+- Smoke-render artifacts in R2 under that uid are cron-reaped after 48h.
+- Dev seed hook for EditVideo smokes: localStorage `grifon_dev_unlock`='1' +
+  `grifon_dev_editor_batch`=<JSON batch> (consumed on load) — no paid scene
+  generation needed to drive the AI Editor.
+
+**Next up — Slice 3 (picker + billing):** style picker in GenerateVideo next to
+the LOOK picker (2 hero styles, brand color swatch, editable chips, captions
+toggle, Business badge/gate), `omni_ads` monthly meter (business: 5) with
+DEFERRED consume + majority-fallback uncharge, `omni_style` top-up AddOn
+(~₱499) end-to-end. Draft a Slice-3 `/goal` first (Plan→Goal pipeline), get
+Neil's approve/edit/skip, delegate to code-executor. Slice-3 slot follow-ups
+flagged in code: `subject_desc` uses scriptLine (thread storyboard desc),
+`brand_primary_hex` defaults #FFCC00 (needs the picker).
+
+**Paste-ready kickoff for next session:**
+
+> Read `CLAUDE.md` and `workflows/omni_edit_styles_plan.md` in full (esp. the
+> RESUME STATE section) — do not /compact, start fresh. We're resuming Omni
+> Edit Styles on branch `feat/omni-edit-styles`. I've restored `.env` (incl.
+> `OMNI_STYLES_ENABLED=true`). Draft the Slice-3 /goal for my approval, then
+> build Slice 3 via code-executor. No tuned-file edits; smoke via the
+> smoke-tester subagent using the dev seed hook + smoke account.
+
+---
+
 ## Context
 
 Four Omni presets are `neil_approved` in `workflows/omni_edit_presets.md` (premium-reel-v2, vox-explainer-v1, dolly-zoom-v1, display-text-pop-v1). The PoC lab (`tools/omni_edit.py`) proved the Gemini Omni Flash edit pass end-to-end: believability holds on clean talking clips, directed text renders letter-perfect, grounding works via API prompt text, and safety-filter blocks are a survivable prompt×video interaction (unbilled, pre-generation). This plan productizes them as **sellable named Edit Styles** (roadmap #11 / #18 Layer 2) inside the existing GenerateVideo → EditVideo pipeline.
