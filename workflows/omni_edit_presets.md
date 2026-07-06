@@ -181,6 +181,87 @@ evidence: [roadmap #18 Sample 4, Sample 6, refine-chain test, Neil eyeball 2026-
 cost_estimate_usd_per_run: "duration_s x 0.10 (5s test clip ~ $0.50/attempt)"
 ```
 
+### premium-reel-v2 — Premium Reel with pixel lock
+
+v1 round 1 (contaminated source) proved the style mechanics (letter-perfect
+directed text, brand-color layered typography, speech-matched motion graphics)
+but Omni repainted the background. v2 keeps v1's language and adds a hard
+**reuse-source-pixels constraint**; also softens "color grading" (a repaint
+invitation). The white/gold doubled word treatment stays (Neil liked the
+design; layered typography is the style's signature).
+
+```yaml
+id: premium-reel-v2
+name: Premium Reel (pixel-locked)
+target: talking
+status: draft
+origin: premium-reel-v1 + round-1 2026-07-06 background-repaint fix
+model: gemini-omni-flash-preview
+max_passes: 1
+slots:
+  transcript: required
+  emphasis_words: required
+  brand_primary_hex: required
+  brand_secondary_hexes: optional
+  font_ref_image: optional
+  aspect_ratio: default 9:16
+prompt_template: |
+  Edit this raw talking-head video into a premium, viral-quality social media
+  reel with high-retention editing, cinematic motion graphics, and modern
+  creator-style visuals. This is an EDIT of the original footage, not a
+  re-creation: reuse the original footage pixels — do not repaint, relight,
+  redraw, or restyle the background, the room, or the speaker. Keep everything
+  exactly as filmed — the same face, hand motion, gestures, wardrobe,
+  lighting, and background objects as the uploaded video. Only add editing
+  layers (text, graphics, reframes) on top of the original image.
+
+  The spoken content (for context only — do NOT add subtitles or captions;
+  they are added later in post): "{{transcript}}"
+
+  Typography is the centerpiece, but only for these exact words, spelled
+  exactly as written: {{emphasis_words}}. When the speaker says one of them,
+  create a huge cinematic text moment: bold editorial typography, oversized
+  words as design elements, layered compositions where key phrases appear
+  behind the speaker, partially masked by the subject, creating depth and a
+  premium 3D look — kinetic, motion-tracked, with scale animation, shadows,
+  lighting effects, and subtle motion. Do not render any other text anywhere
+  in the frame.
+
+  Color style: build the typography and graphic palette around the footage's
+  existing colors, with {{brand_primary_hex}} as the primary accent
+  {{#brand_secondary_hexes}}blending toward {{brand_secondary_hexes}}
+  {{/brand_secondary_hexes}}; bright white with a soft glow for supporting
+  elements. Text colors must feel naturally integrated into the scene.
+
+  Add dynamic punch-ins and reframes synced to sentence emphasis — every
+  zoom must be a smooth fast zoom with visible easing; the viewer should
+  FEEL the camera travel in and out; no instant jump-cut reframes. Add
+  relevant motion graphics, icons, callouts, and visual metaphors that
+  support the spoken content, layered over the unaltered original footage.
+
+  Maintain meaningful visual changes every few seconds to maximize
+  retention. The final output should feel like a premium reel edited by a
+  top-tier content agency. {{#font_ref_image}}Match the typography
+  aesthetic to the attached font style reference.{{/font_ref_image}}
+ffmpeg_layer:
+  before: [dead-air trim]
+  after: [upscale 720p->1080p, word-accurate caption burn, price/offer text,
+          ElevenLabs VO mux over Omni-stripped audio, music bed + ducking,
+          SFX hits, end card, loudness master]
+constraints:
+  - talking target - ONE pass, reframe-class edits only, never bg-swap/relight
+  - iterate via re-roll from raw with merged prompt, never refine
+  - never feed captioned renders (verify with frame strip FIRST)
+  - no identity-preservation legalese anywhere in filled slots
+validation:
+  gate: blind analyze_video.py vs raw control (real-human + lip-sync parity);
+        render_audit.mjs vision read on directed text; BACKGROUND-UNCHANGED
+        check vs source frames
+  rounds: []
+evidence: ["premium-reel-v1 round 1 2026-07-06 (mechanics proven, bg repaint)"]
+cost_estimate_usd_per_run: "6s ~ $0.60"
+```
+
 ### felt-zoom-punchin-v1 — Felt Zoom Punch-In
 
 The IG-creator retention edit from #18 round 2 (Sample 4: real-human, perfect lip-sync,
