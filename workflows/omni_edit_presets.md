@@ -43,7 +43,7 @@ class of edit). The believability + label eval gate runs on EVERY output, every 
 | `display-text-pop-v1` | Directed Display Text Pop | mixed | neil_approved | 5s ≈ $0.50 | #18 Sample 6 + Neil verdict 2026-07-05 |
 | `angle-switch-v1` | Camera Angle Switch | talking | draft (round 1 CONTAMINATED — retest on clean raw) | 6s ≈ $0.60 | Neil caught source contamination 2026-07-06 |
 | `premium-reel-v1` | Premium Reel (johnsavage talking-head) | talking | superseded by v2 | — | johnsavage PDF (appendix A) + round 1 2026-07-06 |
-| `premium-reel-v2` | Premium Reel (pixel-locked) | talking | **poc_validated** (round 1 full gate pass) | 4-6s ≈ $0.40-0.60 | round 1 2026-07-06: believability real-human/high, bg intact, THIRSTY letter-perfect |
+| `premium-reel-v2` | Premium Reel (pixel-locked) | talking | **neil_approved** (full gate pass + eyeball 2026-07-06) | 4-6s ≈ $0.40-0.60 | round 1 2026-07-06: believability real-human/high, bg intact, THIRSTY letter-perfect |
 | `angle-switch-v2` | Camera Angle Switch (concrete destinations) | talking | draft — MOVE WORKS per Neil; believability re-run on clean clip pending | 6s ≈ $0.60 | Neil eyeball 2026-07-06 + official prompt guide |
 | `paper-collage-v1` | Paper Collage (johnsavage paper style) | talking | draft | 5s ≈ $0.50/attempt | johnsavage PDF (appendix B) |
 | `vox-explainer-v1` | VOX Editorial Explainer | talking | draft | 5s ≈ $0.50/attempt | johnsavage PDF (appendix C) |
@@ -217,7 +217,7 @@ design; layered typography is the style's signature).
 id: premium-reel-v2
 name: Premium Reel (pixel-locked)
 target: talking
-status: poc_validated   # round 1 full gate pass 2026-07-06; Neil eyeball pending
+status: neil_approved   # round 1 full gate pass + Neil eyeball 2026-07-06
 origin: premium-reel-v1 + round-1 2026-07-06 background-repaint fix
 model: gemini-omni-flash-preview
 max_passes: 1
@@ -319,9 +319,10 @@ validation:
         word renders. Camera reads near-static; punch-in subtlety is Neil's
         call. Filter theory confirmed: clean subject clip passed first try
         where the drip-bag clip blocked 7x.
-      neil_verdict: pending eyeball (720p .tmp/omni-poc/edits/
-        premium-reel-v2-153603.mp4; 1080p upscale alongside)
-      status_effect: "draft -> poc_validated (first full gate pass)"
+      neil_verdict: |
+        "YEHEY! IT WORKS! I LOVE IT! Super legit ang ganda — approved saken
+        to." (2026-07-06, watched both 720p and free-FFmpeg 1080p upscale)
+      status_effect: "draft -> poc_validated -> NEIL_APPROVED (same day)"
       output: .tmp/omni-poc/edits/premium-reel-v2-153603.mp4 + .1080p.mp4
 evidence: ["premium-reel-v1 round 1 2026-07-06 (mechanics proven, bg repaint)", "round 0 block saga 2026-07-06"]
 cost_estimate_usd_per_run: "6s ~ $0.60"
