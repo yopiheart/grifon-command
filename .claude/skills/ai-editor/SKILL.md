@@ -52,6 +52,13 @@ they're the deterministic layer every Omni preset composes with; Neil decision
    generate-once), (b) `--yes` on the tool, (c) the `--budget` cap. Record actual
    spend in the registry round entry. Session default cap: **$10** (Neil,
    2026-07-06); per-preset round cap ~$3.
+
+   **2b. Approval binds to the exact call.** Neil's approval covers the exact
+   (template, clip, slots) tuple he was shown. ANY substitution — a different
+   clip, template variant, or slot values — is a NEW paid call requiring fresh
+   explicit approval, including "smart" diagnostics/bisections. Inputs Neil
+   has banned stay banned for diagnostics too; if a diagnostic genuinely needs
+   one, ASK first with the reason and cost (agent_lessons 2026-07-06).
 3. **Talking-scene rule.** ONE generation pass max — refine chains warp mouths
    (photocopy-of-a-photocopy, #18 refine-chain test). Reframe-class edits only:
    punch-ins, speech-synced zooms, motion graphics, directed display text. NEVER
