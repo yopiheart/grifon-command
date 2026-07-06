@@ -266,14 +266,18 @@ validation:
         free — but bisect with a plan, then park.
       neil_verdict: informed same session
       status_effect: |
-        stays draft. CASCADE CONFIRMED (angle-switch-v2 round 1a/1b): the
-        Bukidnon UPLOAD is fingerprint-flagged after the block streak; the
-        same prompt passes instantly on a different video. Unblock paths:
-        (a) re-encode the clip (new fingerprint) and retry, (b) a fresh clean
-        clip from Neil, (c) wait out the flag. Template rewritten to concise
-        visual directives (marketing-manipulation vocab — "viral-quality",
-        "high-retention", "maximize retention" — stripped as suspected
-        original trigger of the first block that started the cascade).
+        stays draft. THEORY REVISED 2026-07-06 (2nd pass): a re-encoded copy
+        (crf 20 + 0.04s trim, new byte fingerprint) ALSO blocked -> not a
+        fingerprint flag. Full matrix: since the streak began, EVERY prompt
+        on the Bukidnon clip blocks (incl. angle-v2 which passed on Elena
+        minutes later); every prompt on Elena passes. Best hypothesis: the
+        CLIP CONTENT is a drug false positive — man holding a bag of ground
+        brown substance + audio "libreng drip bag" ("drip bag" + baggie
+        visuals); angle-v1's single 14:57 pass = borderline-filter luck.
+        Re-encoding cannot fix semantics. Unblock path: a different clean
+        raw clip (different subject/audio). Template kept at the
+        concise-directive variant (still preferred: marketing-manipulation
+        vocab stripped).
       output: none (never generated)
 evidence: ["premium-reel-v1 round 1 2026-07-06 (mechanics proven, bg repaint)", "round 0 block saga 2026-07-06"]
 cost_estimate_usd_per_run: "6s ~ $0.60"
@@ -722,8 +726,18 @@ validation:
         CAPABILITY LIMIT, not a prompt problem. Omni edit reuses source
         pixels for people (why believability holds); it reframes in 2D but
         will not synthesize a new 3D viewpoint of a real person.
-      neil_verdict: pending — recommendation is REJECT (capability limit,
-        bake-and-leap re-test on next model gen); Neil decides
+      neil_verdict: |
+        "The last angle switching working already — original camera angle
+        then switch to the side angle then switch back to the original
+        angle. Yes its working now." (2026-07-06) — OVERRULES the frame-strip
+        read (150px thumbnails missed the perspective shift; eyeball wins,
+        that's why the protocol has this step). Also: cuts executed even
+        though the source carried a baked zoom.
+      status_effect: |
+        MOVE EXECUTED confirmed by Neil -> v2 is the working template
+        (concrete destination shots did it). NOT yet poc_validated: the
+        believability-parity check must re-run on a CLEAN clip (this source
+        was contaminated). Next clean run completes the gate.
       output: .tmp/omni-poc/edits/angle-switch-v2-151816.mp4 (wiped on reboot)
 evidence: ["v1 rounds 1-2 (non-execution)", "official prompt guide: concrete destination shots", "round 1b: 2D reframe yes, 3D viewpoint no"]
 cost_estimate_usd_per_run: "6s ~ $0.60"
