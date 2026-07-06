@@ -90,7 +90,26 @@ gate, routing, captions). Maps all 4 `neil_approved` presets onto the code shape
   signature and per-output variance is handled by the Slice-2 preview + 1 user
   re-roll. Pinning ("render once, at most twice") remains a Neil-gated one-line
   TUNED edit if ever wanted.
-- **Next gates:** Slices 2–4 per the plan (Slice-2 /goal drafted 2026-07-06).
+- **Slice 2 LANDED** (2026-07-06, commits `74373cc` + `4de23b9` + `20b25e9`):
+  EditVideo "Applying style" stage, per-output QA gate (`api/_lib/omniGate.ts`,
+  fails OPEN), fallback ladder (1 retry → FFmpeg-only), 1-use re-roll, styled-URL
+  swap into Render Final. Live smoke run 1 caught a REAL bug: with
+  `background:true`, Google defers the safety verdict — a blocked interaction
+  returns HTTP 400 "Request blocked due to safety violations" on GET, which the
+  proxy mapped to 502 and the client polled through (~10 min of spam, Neil
+  STOPPED the run). Fixed both layers; classification pinned to the verbatim
+  live payload in `tests/unit/omniGate.test.ts` (deterministic evidence).
+- **Filter nondeterminism CONFIRMED in the product path:** the Bukidnon clip
+  BLOCKED in run 1 and STYLED CLEAN in run 2 (same clip, same preset, ~40 min
+  apart) — the lab's "borderline-filter luck" reads exactly the same through
+  the proxy. This is why the ladder retries once before falling back. Run-2
+  smoke otherwise fully green: both scenes styled, 18 polls / zero 502s,
+  Render Final payload consumed both styled URLs, re-roll affordance present.
+  Total Slice-2 smoke spend ≈ $1.60. Calm-fallback UI note not yet observed
+  live (block wouldn't reproduce); verified by pinned classification test +
+  ladder unit matrix instead.
+- **Next gates:** Neil eyeballs the two styled smoke renders → Slice 3 (picker
+  + billing) → Slice 4 (telemetry + beta).
 - Preset rows flip to `product_shipped` only when the user-facing picker ships
   (Slice 3) and Neil eyeballs a product-path render.
 
