@@ -100,6 +100,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       /* leave null */
     }
     if (!upstream.ok) {
+      // Blocked-at-poll: with background:true, Google defers the safety verdict —
+      // a blocked interaction returns HTTP 400 "Request blocked due to safety
+      // violations" on GET, not a failed status on an OK response (live smoke
+      // 2026-07-06). Classify it BEFORE the infra-error paths so the client
+      // ladder gets its omni_blocked signal instead of a retryable-looking 502.
+      if (looksBlocked(text)) {
+        return res.status(200).json({ done: true, error: 'omni_blocked' });
+      }
       const isQuota = status === 429 || /resource_exhausted/i.test(text);
       if (isQuota) {
         res.setHeader('Retry-After', '60');

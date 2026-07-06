@@ -299,6 +299,12 @@ async function pollToCompletion(
   interactionId: string
 ): Promise<{ event: LadderEvent; url?: string }> {
   const deadline = Date.now() + SCENE_DEADLINE_MS;
+  // Consecutive hard-error budget: a blocked/broken interaction must not burn
+  // the whole deadline in silence (live smoke 2026-07-06: a blocked-at-poll
+  // interaction 502'd for minutes). Network hiccups reset the count on any
+  // successful response; 429s don't count (genuinely transient).
+  let hardErrors = 0;
+  const MAX_CONSECUTIVE_HARD_ERRORS = 5;
   while (Date.now() < deadline) {
     await sleep(POLL_INTERVAL_MS);
     let res: Response;
@@ -309,16 +315,25 @@ async function pollToCompletion(
         body: JSON.stringify({ interactionId }),
       });
     } catch {
-      continue; // transient — keep polling until the deadline
+      continue; // network hiccup — keep polling until the deadline
     }
-    if (!res.ok) continue; // 429/5xx transient — keep polling
     let j: any = null;
     try {
       j = await res.json();
     } catch {
+      /* leave null */
+    }
+    if (!res.ok) {
+      // Defense in depth: honor a block signal on any status shape.
+      if (j?.error === 'omni_blocked') return { event: 'poll_done_blocked' };
+      if (res.status === 429) continue; // rate-limited — genuinely transient
+      hardErrors += 1;
+      if (hardErrors >= MAX_CONSECUTIVE_HARD_ERRORS) return { event: 'poll_done_failed' };
       continue;
     }
-    if (!j?.done) continue;
+    hardErrors = 0;
+    if (!j) continue;
+    if (!j.done) continue;
     if (j.error === 'omni_blocked') return { event: 'poll_done_blocked' };
     if (j.error) return { event: 'poll_done_failed' };
     if (j.url) {
