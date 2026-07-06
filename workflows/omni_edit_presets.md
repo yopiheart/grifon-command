@@ -46,7 +46,7 @@ class of edit). The believability + label eval gate runs on EVERY output, every 
 | `premium-reel-v2` | Premium Reel (pixel-locked) | talking | **neil_approved** (full gate pass + eyeball 2026-07-06) | 4-6s ≈ $0.40-0.60 | round 1 2026-07-06: believability real-human/high, bg intact, THIRSTY letter-perfect |
 | `angle-switch-v2` | Camera Angle Switch (concrete destinations) | talking | draft — MOVE WORKS per Neil; believability re-run on clean clip pending | 6s ≈ $0.60 | Neil eyeball 2026-07-06 + official prompt guide |
 | `paper-collage-v1` | Paper Collage (johnsavage paper style) | talking | draft | 5s ≈ $0.50/attempt | johnsavage PDF (appendix B) |
-| `vox-explainer-v1` | VOX Editorial Explainer | talking | draft | 5s ≈ $0.50/attempt | johnsavage PDF (appendix C) |
+| `vox-explainer-v1` | VOX Editorial Explainer | talking | poc_validated (round 1 full gate pass; grounding-via-API-text CONFIRMED; Neil eyeball pending) | 4s ≈ $0.40 | round 1 2026-07-06: real-human/HIGH, title letter-perfect, graphics grounded from prompt text |
 | `rack-focus-v0` | Rack Focus | b-roll | rejected | — | #18 round 1: move failed to execute |
 | `talking-bg-swap-v0` | Talking-Scene BG Swap/Relight | talking | rejected | — | #18 round 1 Tests 3-4: degrades believability |
 
@@ -545,7 +545,7 @@ matching the source aesthetic.
 id: vox-explainer-v1
 name: VOX Editorial Explainer
 target: talking
-status: draft
+status: poc_validated   # round 1 full machine-gate pass 2026-07-06; neil_approved awaits eyeball
 origin: Google_Omni_VOX_Style_Workflow.pdf (verbatim in Appendix C)
 model: gemini-omni-flash-preview
 max_passes: 1
@@ -605,8 +605,40 @@ validation:
   gate: blind believability vs raw control (face stays real here, unlike
         paper-collage); title_text letter-perfect vision read; grounding
         sanity check on inserts
-  rounds: []
-evidence: ["Appendix C (johnsavage, untested on our footage)"]
+  rounds:
+    - date: 2026-07-06 (round 1 — GATE PASS, all 5 gates; grounding Q ANSWERED)
+      clip: ".tmp/omni-poc/BEST SAMPLE RAW.mp4 (skincare, 4.0s, 720x1280;
+        raw-verified via frame strip — zero burned text, static framing; blind
+        baseline real-human/HIGH). Chosen over the committed Bukidnon control
+        because that clip's baggie content trips the drug-FP filter (blocked 7x
+        on premium-reel-v2); skincare passes reliably so the round yields signal.
+        NOTE: this passing clip is .tmp-only (not yet committed) — preserve to
+        workflows/assets/omni-poc/ if Neil approves, so the round stays defreezer-proof."
+      slots: "title_text=THIRSTY SKIN; topic_context=skin-hydration brief seeded
+        with checkable facts (stratum corneum / hyaluronic acid+humectant / 1000x /
+        before-after) specifically to test the grounding SOURCE."
+      cost_usd: 0.40
+      machine_verdict: |
+        ALL 5 GATES PASS. Believability: real-human (HIGH) — matches the raw
+        baseline; face unaltered by the restyle (sub-signals lighting/realism
+        softened high->medium from added grain/paper texture; verdict held).
+        Lip-sync perfect. First-second reframe EXECUTED: speaker drops low, title
+        space opens. Editorial pacing: new insert ~every 0.75-1s (exceeds the
+        1.5-2s spec). DIRECTED-TEXT vision read (frame grid): THIRSTY SKIN /
+        HYALURONIC ACID / humectant / stratum corneum / BEFORE / AFTER all
+        letter-perfect. Incidental article-clipping BODY text garbled ("Raresd
+        date a tine skin") — decorative, exactly as the insert-text constraint predicts.
+      grounding_open_question: |
+        RESOLVED — grounding works via API PROMPT TEXT alone (no Flow UI link
+        attachment needed). Every major graphic maps to a topic_context fact:
+        stratum-corneum skin-layer diagram, hyaluronic-acid/humectant callout,
+        before/after hydration card. This was the preset's headline open question;
+        API-text grounding is confirmed for the future product proxy (the engagement
+        brain can feed scene facts as prompt text and get grounded editorial graphics).
+      neil_verdict: "PENDING eyeball — 1080p at .tmp/omni-poc/edits/vox-explainer-v1-162126.1080p.mp4"
+      status_effect: "draft -> poc_validated (machine gate); neil_approved awaits eyeball"
+      output: .tmp/omni-poc/edits/vox-explainer-v1-162126.mp4 + .1080p.mp4
+evidence: ["Appendix C (johnsavage)", "round 1 2026-07-06 (full gate pass, grounding-via-API-text confirmed)"]
 cost_estimate_usd_per_run: "5s ~ $0.50"
 ```
 
