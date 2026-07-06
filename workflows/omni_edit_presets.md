@@ -42,7 +42,9 @@ class of edit). The believability + label eval gate runs on EVERY output, every 
 | `dolly-zoom-v1` | Dolly Zoom | b-roll | neil_approved | 4s ≈ $0.38 | #18 Sample 5 + Neil verdict 2026-07-05 |
 | `display-text-pop-v1` | Directed Display Text Pop | mixed | neil_approved | 5s ≈ $0.50 | #18 Sample 6 + Neil verdict 2026-07-05 |
 | `angle-switch-v1` | Camera Angle Switch | talking | draft (round 1 CONTAMINATED — retest on clean raw) | 6s ≈ $0.60 | Neil caught source contamination 2026-07-06 |
-| `premium-reel-v1` | Premium Reel (johnsavage talking-head) | talking | draft (round 1 mixed on contaminated source — v2 = pixel-lock) | 6s ≈ $0.60/attempt | johnsavage PDF (appendix A) + round 1 2026-07-06 |
+| `premium-reel-v1` | Premium Reel (johnsavage talking-head) | talking | superseded by v2 | — | johnsavage PDF (appendix A) + round 1 2026-07-06 |
+| `premium-reel-v2` | Premium Reel (pixel-locked) | talking | **poc_validated** (round 1 full gate pass) | 4-6s ≈ $0.40-0.60 | round 1 2026-07-06: believability real-human/high, bg intact, THIRSTY letter-perfect |
+| `angle-switch-v2` | Camera Angle Switch (concrete destinations) | talking | draft — MOVE WORKS per Neil; believability re-run on clean clip pending | 6s ≈ $0.60 | Neil eyeball 2026-07-06 + official prompt guide |
 | `paper-collage-v1` | Paper Collage (johnsavage paper style) | talking | draft | 5s ≈ $0.50/attempt | johnsavage PDF (appendix B) |
 | `vox-explainer-v1` | VOX Editorial Explainer | talking | draft | 5s ≈ $0.50/attempt | johnsavage PDF (appendix C) |
 | `rack-focus-v0` | Rack Focus | b-roll | rejected | — | #18 round 1: move failed to execute |
@@ -56,6 +58,27 @@ class of edit). The believability + label eval gate runs on EVERY output, every 
 
 *(none yet — product integration is out of scope until Neil merges `feat/omni-edit-poc`
 and green-lights the proxy build)*
+
+### Standing requirement for the future proxy build: filter-block resilience
+
+Neil's product concern (2026-07-06): user-generated scenes WILL sometimes trip
+Google's safety filter (proven false-positive class: the "drip bag" clip — baggie
+visuals + audio blocked 7×, while clean clips passed the identical prompt). The
+product integration MUST treat the Omni pass as an **enhancement layer that degrades
+gracefully**:
+
+1. **Block ≠ failure.** Blocks are pre-generation and unbilled. On block, the scene
+   automatically falls back to the FFmpeg-only render preset — the user's ad ALWAYS
+   ships; it just skips the Omni moves for that scene. Never surface a scary error.
+2. **Retry ladder:** one retry with the sanitized template variant, then fallback.
+3. **Pre-screen at plan time.** We control generation: scenes come from our own
+   storyboard + Veo/Kling prompts, so the engagement-plan brain can flag filter-risk
+   classes up front (powders/baggies, medical claims, minors, "drip"-type audio
+   homonyms) and route those scenes straight to FFmpeg-only — no wasted round-trip.
+4. **Prompt hygiene is preset-side** (already enforced in templates: no identity
+   legalese, no marketing-manipulation vocab).
+5. **Telemetry:** log block rate per preset × scene-type; a rising rate is a tuned-
+   prompt review trigger, not something users ever see.
 
 ---
 
@@ -194,7 +217,7 @@ design; layered typography is the style's signature).
 id: premium-reel-v2
 name: Premium Reel (pixel-locked)
 target: talking
-status: draft
+status: poc_validated   # round 1 full gate pass 2026-07-06; Neil eyeball pending
 origin: premium-reel-v1 + round-1 2026-07-06 background-repaint fix
 model: gemini-omni-flash-preview
 max_passes: 1
@@ -266,7 +289,8 @@ validation:
         free — but bisect with a plan, then park.
       neil_verdict: informed same session
       status_effect: |
-        stays draft. THEORY REVISED 2026-07-06 (2nd pass): a re-encoded copy
+        superseded by round 1 PASS below on a different clip. THEORY
+        REVISED 2026-07-06 (2nd pass): a re-encoded copy
         (crf 20 + 0.04s trim, new byte fingerprint) ALSO blocked -> not a
         fingerprint flag. Full matrix: since the streak began, EVERY prompt
         on the Bukidnon clip blocks (incl. angle-v2 which passed on Elena
@@ -279,6 +303,26 @@ validation:
         concise-directive variant (still preferred: marketing-manipulation
         vocab stripped).
       output: none (never generated)
+    - date: 2026-07-06 (round 1 — GATE PASS, new clean clip)
+      clip: "BEST SAMPLE RAW.mp4" (Neil's 2nd clip — skincare bottle, 4.0s,
+        720x1280, no burned text, static framing; baseline real-human/medium,
+        transcript "Hindi ka pagod, thirsty lang ang skin mo ngayon.")
+      slots: emphasis_words=THIRSTY, brand_primary_hex=#FFCC00
+      cost_usd: 0.40
+      machine_verdict: |
+        ALL GATES PASS. Believability: real-human (HIGH confidence, perfect
+        lip-sync) — ABOVE the raw baseline's medium. Background INTACT (the
+        pixel-lock language worked — no repaint, same room). Directed text:
+        "THIRSTY" letter-perfect, gold + white layered, pop/scale-punch
+        kinetic build. Speech-matched motion graphics: water-droplet icons
+        on the "thirsty skin" line. No invented captions — only the directed
+        word renders. Camera reads near-static; punch-in subtlety is Neil's
+        call. Filter theory confirmed: clean subject clip passed first try
+        where the drip-bag clip blocked 7x.
+      neil_verdict: pending eyeball (720p .tmp/omni-poc/edits/
+        premium-reel-v2-153603.mp4; 1080p upscale alongside)
+      status_effect: "draft -> poc_validated (first full gate pass)"
+      output: .tmp/omni-poc/edits/premium-reel-v2-153603.mp4 + .1080p.mp4
 evidence: ["premium-reel-v1 round 1 2026-07-06 (mechanics proven, bg repaint)", "round 0 block saga 2026-07-06"]
 cost_estimate_usd_per_run: "6s ~ $0.60"
 ```
