@@ -7,6 +7,7 @@ import { GoogleGenAI, FileState } from '@google/genai';
 import { getUserFromAccessToken } from '../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../_lib/rateLimit.js';
 import { getUserPlan } from '../_lib/userPlan.js';
+import { putMedia } from '../_lib/mediaStore.js';
 import {
   OMNI_PRESETS,
   isApprovedOmniPresetId,
@@ -14,6 +15,7 @@ import {
   OmniMissingSlotsError,
   OMNI_MAX_CLIP_SECONDS,
   OMNI_MAX_CALLS_PER_AD,
+  type OmniPreset,
 } from '../_lib/omniPresets.js';
 
 // api/gemini/omni-video.ts — FIRE endpoint for the Gemini Omni Flash edit pass
@@ -65,6 +67,33 @@ const getAi = (): GoogleGenAI => {
 // A block is NOT a server error — the client runs the fallback ladder.
 const looksBlocked = (raw: string): boolean =>
   /safety|blocked|block_reason|blockreason|harmful|prohibited/i.test(raw);
+
+// Derive the QA-gate expectations from the filled slots, by preset. The poll
+// endpoint reads this sidecar to run api/_lib/omniGate.ts against the output.
+//   premium-reel-v2     → emphasis_words (comma-split, letter-perfect)
+//   display-text-pop-v1 → display_words (whole phrase)
+//   vox-explainer-v1    → title_text (whole phrase)
+//   dolly-zoom-v1       → [] (no directed text; label pixels are frozen)
+// expectPerson tracks the preset's scene target (talking presets carry a face).
+function deriveGateExpectations(
+  preset: OmniPreset,
+  slots: Record<string, string>
+): { directedWords: string[]; expectPerson: boolean } {
+  let directedWords: string[] = [];
+  if (preset.id === 'premium-reel-v2') {
+    directedWords = (slots.emphasis_words ?? '')
+      .split(',')
+      .map((w) => w.trim())
+      .filter(Boolean);
+  } else if (preset.id === 'display-text-pop-v1') {
+    const v = (slots.display_words ?? '').trim();
+    directedWords = v ? [v] : [];
+  } else if (preset.id === 'vox-explainer-v1') {
+    const v = (slots.title_text ?? '').trim();
+    directedWords = v ? [v] : [];
+  }
+  return { directedWords, expectPerson: preset.target === 'talking' };
+}
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
@@ -271,6 +300,26 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
       return res.status(502).json({ error: 'gemini_error', detail: `interaction_${createStatus}` });
     }
+
+    // Write the QA-gate sidecar so poll knows what to check for THIS output.
+    // Non-fatal: a missing sidecar makes the gate fail open (never blocks paid
+    // output). Lives one level deep (${uid}/omni-meta/) — reaped by the cron.
+    try {
+      const { directedWords, expectPerson } = deriveGateExpectations(preset, slots);
+      const sidecar = { presetId, directedWords, expectPerson, sceneIdx, finishedAdId };
+      const put = await putMedia(
+        `${user.id}/omni-meta/${interactionId}.json`,
+        Buffer.from(JSON.stringify(sidecar), 'utf-8'),
+        'application/json',
+        { cacheControl: '3600', upsert: true }
+      );
+      if (put.error) {
+        console.warn('[api/gemini/omni-video] gate sidecar write failed (non-fatal):', put.error);
+      }
+    } catch (err: any) {
+      console.warn('[api/gemini/omni-video] gate sidecar write threw (non-fatal):', err?.message);
+    }
+
     return res.status(202).json({ interactionId });
   }
 

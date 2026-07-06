@@ -84,7 +84,11 @@ interface GenerateVideoProps {
   /** Default path — hands the finished render batch straight to the AI Editor
    * (Final Render), where voice is consolidated once. Skips Signal Modulator's
    * redundant TTS pass (which the editor ignores), avoiding double spend. */
-  onSendToAiEditor?: (batch: SceneBatchEntry[], lockedPresetId?: LockablePresetId) => void;
+  onSendToAiEditor?: (
+    batch: SceneBatchEntry[],
+    lockedPresetId?: LockablePresetId,
+    omniStyle?: 'premium_reel' | 'vox_explainer',
+  ) => void;
 }
 
 const ACTIVE_MODELS: VideoModelType[] = ['Veo_3.1_Fast', 'Veo_3.1_Quality', 'Veo_3.1_Lite', 'Kling_3_0', 'Kling_O1'];

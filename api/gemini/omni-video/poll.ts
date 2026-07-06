@@ -3,8 +3,9 @@ import { z } from 'zod';
 import { randomUUID } from 'node:crypto';
 import { getUserFromAccessToken } from '../../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../../_lib/rateLimit.js';
-import { putMedia, getMediaUrl } from '../../_lib/mediaStore.js';
+import { putMedia, getMediaUrl, downloadMediaText } from '../../_lib/mediaStore.js';
 import { extractPosterFromMp4 } from '../../_lib/videoPoster.js';
+import { runOmniGate, type OmniGateResult } from '../../_lib/omniGate.js';
 
 // api/gemini/omni-video/poll.ts — poll one Omni edit interaction. Mirrors
 // api/gemini/video/poll.ts (putMedia → poster → 24h signed URLs) but reads the
@@ -136,6 +137,31 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(200).json({ done: true, error: 'omni_failed' });
   }
 
+  // QA gate — read the sidecar written at fire time (${uid}/omni-meta/${id}.json)
+  // and run the vision check against the produced clip. Missing sidecar or any
+  // infra hiccup FAILS OPEN (never discards this already-paid output); the
+  // CLIENT decides retry/fallback on a real gate fail. We still upload + sign the
+  // mp4 either way, and return the verdict alongside the url.
+  let gate: OmniGateResult = { pass: true, reasons: ['gate_unavailable'] };
+  try {
+    const sidecarKey = `${user.id}/omni-meta/${interactionId}.json`;
+    const { text: sidecarText } = await downloadMediaText(sidecarKey);
+    if (sidecarText) {
+      const meta = JSON.parse(sidecarText) as {
+        directedWords?: string[];
+        expectPerson?: boolean;
+      };
+      gate = await runOmniGate(buffer, {
+        directedWords: Array.isArray(meta.directedWords) ? meta.directedWords : [],
+        expectPerson: meta.expectPerson === true,
+      });
+    } else {
+      console.warn('[api/gemini/omni-video/poll] gate sidecar missing — failing open');
+    }
+  } catch (err: any) {
+    console.warn('[api/gemini/omni-video/poll] gate step failed (non-fatal, failing open):', err?.message);
+  }
+
   const mimeType = 'video/mp4';
   // Root-level `${uid}/${uuid}.mp4` so api/cron/cleanup-gemini-videos.ts reaps it
   // (it walks each user folder and deletes aged files directly under it).
@@ -177,5 +203,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     url: playSign.url,
     downloadUrl: dlSign.url,
     mimeType,
+    gate,
   });
 }

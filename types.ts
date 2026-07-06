@@ -134,6 +134,14 @@ export interface SceneBatchEntry {
   /* Carried from the storyboard Scene so the Scene Pipeline can shape v3
      delivery by the cinematic-relay role (cinematic scenes only; see deliveryTag). */
   chainRole?: Scene['chainRole'];
+  /* Omni Edit Styles (Slice 2): per-scene result of the "Applying style" pass.
+     'styled' → omniStyledUrl replaces renderedUrl in the final render; 'fallback'
+     → the scene kept the standard FFmpeg-only edit (fallbackReason is a machine
+     code, surfaced calmly as "Scene N used the standard edit"). Absent = the
+     scene never entered the Omni pass. */
+  omniOutcome?: 'styled' | 'fallback';
+  omniStyledUrl?: string;
+  omniFallbackReason?: string;
 }
 
 /**
