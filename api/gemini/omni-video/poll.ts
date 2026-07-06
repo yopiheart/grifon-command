@@ -5,7 +5,7 @@ import { getUserFromAccessToken } from '../../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../../_lib/rateLimit.js';
 import { putMedia, getMediaUrl, downloadMediaText } from '../../_lib/mediaStore.js';
 import { extractPosterFromMp4 } from '../../_lib/videoPoster.js';
-import { runOmniGate, type OmniGateResult } from '../../_lib/omniGate.js';
+import { runOmniGate, looksBlocked, type OmniGateResult } from '../../_lib/omniGate.js';
 
 // api/gemini/omni-video/poll.ts — poll one Omni edit interaction. Mirrors
 // api/gemini/video/poll.ts (putMedia → poster → 24h signed URLs) but reads the
@@ -27,9 +27,6 @@ const SIGNED_URL_TTL_SECONDS = 86400; // 24h
 // Status buckets — mirror tools/omni_edit.py's polling loop.
 const IN_PROGRESS = new Set(['in_progress', 'processing', 'pending', 'queued']);
 const DONE_OK = new Set(['completed', 'succeeded']);
-
-const looksBlocked = (raw: string): boolean =>
-  /safety|blocked|block_reason|blockreason|harmful|prohibited/i.test(raw);
 
 /** Pull video bytes out of the interaction across the two documented shapes. */
 function extractVideoBytes(interaction: any): Buffer | null {

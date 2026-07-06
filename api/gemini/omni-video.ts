@@ -8,6 +8,7 @@ import { getUserFromAccessToken } from '../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../_lib/rateLimit.js';
 import { getUserPlan } from '../_lib/userPlan.js';
 import { putMedia } from '../_lib/mediaStore.js';
+import { looksBlocked } from '../_lib/omniGate.js';
 import {
   OMNI_PRESETS,
   isApprovedOmniPresetId,
@@ -62,11 +63,8 @@ const getAi = (): GoogleGenAI => {
   return _ai;
 };
 
-// Safety-filter classification: Omni blocks are pre-generation, unbilled prompt
-// × video interactions (see workflows/omni_edit_presets.md §filter resilience).
-// A block is NOT a server error — the client runs the fallback ladder.
-const looksBlocked = (raw: string): boolean =>
-  /safety|blocked|block_reason|blockreason|harmful|prohibited/i.test(raw);
+// Safety-filter classification (`looksBlocked`) is shared from omniGate.ts —
+// a block is NOT a server error; the client runs the fallback ladder.
 
 // Derive the QA-gate expectations from the filled slots, by preset. The poll
 // endpoint reads this sidecar to run api/_lib/omniGate.ts against the output.

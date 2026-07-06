@@ -44,6 +44,17 @@ Field rules:
 
 Output the JSON object only. No markdown fences, no commentary.`;
 
+/**
+ * Safety-filter classification shared by the omni fire + poll proxies. Blocks
+ * are pre-generation, unbilled prompt × video interactions (see
+ * workflows/omni_edit_presets.md §filter resilience). With background:true,
+ * Google can defer the verdict to the GET — live-recorded shape (2026-07-06):
+ * HTTP 400 `{"error":{"message":"Request blocked due to safety violations
+ * (harmful content). Please modify your input and retry.","code":""}}`.
+ */
+export const looksBlocked = (raw: string): boolean =>
+  /safety|blocked|block_reason|blockreason|harmful|prohibited/i.test(raw);
+
 export interface OmniGateVerdict {
   renderedText: string[];
   hasCaptions: boolean;
