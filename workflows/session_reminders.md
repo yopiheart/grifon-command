@@ -21,6 +21,25 @@ shell command), so this doc is the restore mechanism: paste the command to re-ar
 > surfaces every `/loop` line in this file automatically at session start — keep new
 > re-arm commands on their own line starting with `/loop` so the hook picks them up.
 
+## Tooling: Python — wiped by defreezer
+
+`tools/*.py` (omni_edit, analyze_video, …) need Python; the defreezer removes it every
+reboot and the silent installer gets blocked (needs a human to click the prompt).
+Either re-run the installer WITH UI (Neil clicks through):
+
+```
+curl -sL -o python-installer.exe https://www.python.org/ftp/python/3.12.8/python-3.12.8-amd64.exe
+./python-installer.exe InstallAllUsers=0 PrependPath=1 Include_test=0 Include_launcher=0
+```
+
+or, zero-prompt portable fallback (works headless):
+
+```
+curl -sL -o pyembed.zip https://www.python.org/ftp/python/3.12.8/python-3.12.8-embed-amd64.zip
+unzip -qo pyembed.zip -d pyembed && sed -i 's/^#import site/import site/' pyembed/python312._pth
+curl -sL -o get-pip.py https://bootstrap.pypa.io/get-pip.py && ./pyembed/python.exe get-pip.py --quiet
+```
+
 ## Tooling: poppler (PDF page renderer) — wiped by defreezer
 
 The johnsavage workflow PDFs in `workflows/assets/johnsavage/` (paper-style + VOX)
