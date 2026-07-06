@@ -71,8 +71,15 @@ gate, routing, captions). Maps all 4 `neil_approved` presets onto the code shape
   `api/gemini/omni-video.ts` + `api/gemini/omni-video/poll.ts` (Interactions-API
   proxy, filter-block resilience codes, per-ad hard budget). 21 unit tests; bundle
   verified clean of prompt content.
-- **Next gates:** Neil-fired live smoke on the committed raw asset (~$0.40–0.60,
-  also measures the Vercel-60s upload-latency question) → Slices 2–4 per the plan.
+- **Live proxy smoke PASSED** (2026-07-06, Neil-approved "Start!", 1 call ≈ $0.40):
+  premium-reel-v2 on the committed skincare raw clip, THROUGH the new proxy
+  end-to-end (business smoke acct `smoketest-dc@grifon.dev` created + business sub;
+  clip signed from storage). Fire leg **13.4s** (download+Files-upload+ACTIVE+create
+  — the Vercel-60s concern is CLOSED for ~5s/1.2MB clips), render ~40s, valid MP4
+  output at `.tmp/omni-smoke/premium-reel-v2-proxy-smoke.mp4` (964KB, ftyp OK).
+  Guards verified live in `rate_limits`: `gemini:omni` 1, `omni:ad:<adId>` 1,
+  `gemini:omni-poll` 4. Neil eyeball of the render: pending.
+- **Next gates:** Neil eyeballs the smoke render → Slices 2–4 per the plan.
 - Preset rows flip to `product_shipped` only when the user-facing picker ships
   (Slice 3) and Neil eyeballs a product-path render.
 

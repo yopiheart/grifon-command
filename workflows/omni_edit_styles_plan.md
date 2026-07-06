@@ -4,11 +4,11 @@
 > (plan-mode session, cafe PC). This repo copy is the durable source of truth — the
 > original lived in `~/.claude/plans/`, which the defreezer wipes.
 > **Build branch:** `feat/omni-edit-styles`. Slice 1 landed 2026-07-06 (commit 54a3367).
-> **Known Slice-1 follow-up (from main-loop review):** the fire endpoint's
-> download → Files-API upload → ACTIVE-wait runs inside one serverless invocation;
-> Vercel's hard ceiling is 60s, so the 5-min ACTIVE deadline only holds in dev. The
-> Neil-gated live smoke must measure real upload+ACTIVE latency; if it approaches
-> ~40s, split upload into its own step/background job before Slice 2 relies on it.
+> **Slice-1 follow-up RESOLVED (live smoke 2026-07-06):** fire leg measured at
+> **13.4s** end-to-end (clip download + Files-API upload + ACTIVE-wait + create)
+> on a 1.2MB/4s clip — comfortably inside Vercel's 60s ceiling. No upload split
+> needed for typical scene clips; revisit only if 16:9/1080p sources push
+> upload times past ~40s. Full smoke record: omni_edit_presets.md Proposal 001.
 
 ## Context
 
