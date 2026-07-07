@@ -12,17 +12,9 @@
     ]
   },
   {
-    "id": "trust-24-7",
-    "layout": "hero",
-    "bg": "hero-24-7.png",
-    "eyebrow": "24/7 kami",
-    "headline": "Kahit madaling-araw, <b>sagot ka namin</b>",
-    "sub": "Barado o overflow emergency? Tawag lang &mdash; 30&ndash;60 min response."
-  },
-  {
     "id": "trust-areas",
     "layout": "hero",
-    "bg": "hero-areas.png",
+    "bg": "hero-areas2.png",
     "eyebrow": "Saan kami pumupunta?",
     "headline": "Serbisyo sa <b>buong Luzon</b>",
     "sub": "Metro Manila &middot; Calabarzon &middot; Central Luzon &mdash; malapit lang kami."
@@ -48,5 +40,45 @@
       "Napkin at diaper",
       "Makapal na tissue"
     ]
+  },
+  {
+    "id": "edu-mabaho",
+    "layout": "hero",
+    "bg": "hero-mabaho.png",
+    "eyebrow": "Bakit kaya?",
+    "headline": "Bakit <b>mabaho</b> ang CR mo?",
+    "sub": "Kadalasan, puno na ang septic tank &mdash; kailangan nang pa-siphon bago lumala."
+  },
+  {
+    "id": "edu-kadalas",
+    "layout": "hero",
+    "bg": "hero-kadalas.png",
+    "eyebrow": "Tandaan",
+    "headline": "Gaano kadalas dapat <b>mag-pa-siphon</b>?",
+    "sub": "Kada 3&ndash;5 taon para sa bahay. Mas madalas kung marami kayo o may negosyo."
+  },
+  {
+    "id": "edu-vs",
+    "layout": "hero",
+    "bg": "hero-vs.png",
+    "eyebrow": "Alam mo ba?",
+    "headline": "Septic tank vs <b>pozo negro</b>",
+    "sub": "Ang septic tank ay saradong sistema &mdash; mas ligtas at malinis kaysa lumang pozo negro."
+  },
+  {
+    "id": "legit-sec",
+    "layout": "hero",
+    "bg": "hero-sec.png",
+    "eyebrow": "Bakit importante?",
+    "headline": "Bakit <b>SEC-registered</b> ang dapat piliin?",
+    "sub": "Legit na kumpanya, may pananagutan &mdash; hindi basta mawawala pagkatapos maningil."
+  },
+  {
+    "id": "trust-nohidden",
+    "layout": "hero",
+    "bg": "hero-nohidden.png",
+    "eyebrow": "Pangako namin",
+    "headline": "Presyo agad. <b>Walang hidden charges.</b>",
+    "sub": "Sasabihin namin ang presyo bago simulan &mdash; walang gulat sa bill."
   }
 ]
