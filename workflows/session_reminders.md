@@ -55,6 +55,19 @@ poppler/poppler-26.02.0/Library/bin/pdftoppm.exe -png -r 100 <file.pdf> out/pg
 Verbatim transcriptions already live in `workflows/omni_edit_presets.md` appendices —
 only re-install if you need to re-read pages visually.
 
+## Omni Edit Styles — .env re-arm (while feat/omni-edit-styles is in flight)
+
+The Omni proxy 503s without its kill-switch flag. When restoring `.env`, include:
+
+```
+OMNI_STYLES_ENABLED=true
+MEDIA_STORE=r2
+```
+
+Resume doc: `workflows/omni_edit_styles_plan.md` → **RESUME STATE** section
+(branch status, smoke account, dev seed hook, Slice-3 kickoff message).
+Delete this section when the feature merges to main and the flag moves to Vercel.
+
 ## Dated: on/after Jul 7, 2026 — Fable 5 promo ends, re-evaluate the model pin
 
 The 50%-of-weekly-limits Fable 5 promo expires **Jul 7, 2026**; after that Fable draws

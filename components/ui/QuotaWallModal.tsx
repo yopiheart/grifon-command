@@ -28,6 +28,7 @@ const SCOPE_LABEL: Record<MeterUnit, string> = {
   captions: 'captions & headlines',
   images: 'AI images',
   video_ads: 'video ads',
+  omni_ads: 'AI style passes',
 };
 
 const TIER_LABEL: Record<Exclude<PlanId, 'free'>, string> = {

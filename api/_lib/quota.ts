@@ -1,6 +1,6 @@
 import { getSupabaseAdmin } from './supabaseAdmin.js';
 import { rateLimitCheck } from './rateLimit.js';
-import { consumeCredit } from './credits.js';
+import { consumeCredit, peekCredits } from './credits.js';
 import type { ServerPlanId } from './userPlan.js';
 
 // Per-tier daily request budgets for ElevenLabs hot paths.
@@ -125,17 +125,19 @@ export const musicGlobalDailyKey = () => `music:global:daily`;
 // drift.
 // ---------------------------------------------------------------------------
 
-export type MeterUnit = 'workflows' | 'reports' | 'captions' | 'images' | 'video_ads';
+export type MeterUnit = 'workflows' | 'reports' | 'captions' | 'images' | 'video_ads' | 'omni_ads';
 
 // NOTE (2026-06-19): `video_ads` is now a FINISHED-AD allowance (one completed
 // one-shot render), not a per-scene clip count. The consume call site moves from
 // per-clip (api/gemini/video.ts) to once-per-finished-job in the render pipeline.
 // `workflows` = ad PLANS (one-shot consultations); Free = 1 complete plan.
+// `omni_ads` = the AI "Applying style" pass (Omni Edit Styles). Business-only
+// (free/starter/pro 0); business 5 is a tunable PRD default.
 export const MONTHLY_LIMITS: Record<ServerPlanId, Record<MeterUnit, number>> = {
-  free:     { workflows: 1,   reports: 1,  captions: 10,  images: 5,   video_ads: 0  },
-  starter:  { workflows: 3,   reports: 2,  captions: 30,  images: 25,  video_ads: 1  },
-  pro:      { workflows: 40,  reports: 15, captions: 300, images: 150, video_ads: 8  },
-  business: { workflows: 100, reports: 40, captions: 500, images: 300, video_ads: 15 },
+  free:     { workflows: 1,   reports: 1,  captions: 10,  images: 5,   video_ads: 0,  omni_ads: 0 },
+  starter:  { workflows: 3,   reports: 2,  captions: 30,  images: 25,  video_ads: 1,  omni_ads: 0 },
+  pro:      { workflows: 40,  reports: 15, captions: 300, images: 150, video_ads: 8,  omni_ads: 0 },
+  business: { workflows: 100, reports: 40, captions: 500, images: 300, video_ads: 15, omni_ads: 5 },
 };
 
 // 31 days — a generous safety expiry. The YYYY-MM stamp is the real reset.
@@ -199,6 +201,109 @@ export async function consumeFinishedAd(
   // Monthly allowance exhausted → fall back to a purchased top-up credit. The
   // RPC fails closed, so on infra error we don't hand out a free render.
   const spentCredit = await consumeCredit(userId, 'video_ad');
+  if (spentCredit) {
+    await rateLimitCheck(jobKey, 1, MONTHLY_WINDOW_SECONDS);
+    return { allowed: true, alreadyCounted: false, fromCredit: true, used: result.used, limit: result.limit, remaining: 0 };
+  }
+
+  return { ...result, alreadyCounted: false };
+}
+
+// ---------------------------------------------------------------------------
+// Omni-ad metering (Omni Edit Styles — Slice 3b). Structural twin of the
+// finished-ad meter above: `omni_ads` is a FINISHED-AD-scoped allowance (one
+// completed "Applying style" pass), metered once per finishedAdId via a limit-1
+// marker so re-rolls of an already-charged ad stay free. Unlike video_ads, the
+// consume is DEFERRED to a completion endpoint (api/gemini/omni-video/consume.ts)
+// because there is no un-consume primitive — we can only charge once we know the
+// pass landed with a non-fallback majority (see api/_lib/omniBilling.ts).
+// ---------------------------------------------------------------------------
+
+// `omniad:${userId}:${finishedAdId}` — limit-1 marker: set once an omni pass has
+// been charged for this ad, so re-rolls of the same ad don't double-charge
+// (mirrors finishedAdJobKey).
+export const omniAdJobKey = (userId: string, finishedAdId: string): string =>
+  `omniad:${userId}:${finishedAdId}`;
+
+export type OmniAllowance = {
+  allowed: boolean;
+  alreadyCharged: boolean;
+  used: number;
+  limit: number;
+  credits: number;
+};
+
+// PEEK ONLY — never increments. The fire path (api/gemini/omni-video.ts) uses
+// this as a wall so a zero-allowance user can't start a paid pass. The actual
+// charge happens later in consumeOmniAd via the consume endpoint. Order mirrors
+// consumeOmniAd's fallback ladder: dev bypass → charged-marker → monthly
+// remaining → purchased top-up credit.
+export async function peekOmniAllowance(
+  userId: string,
+  plan: ServerPlanId,
+  finishedAdId: string,
+): Promise<OmniAllowance> {
+  const status = await peekMonthly('omni_ads', userId, plan);
+
+  // Dev bypass — the same flags consumeMonthly honors for video metering. Set in
+  // LOCAL .env ONLY, never on Vercel.
+  if (
+    process.env.GRIFON_DEV_UNMETERED === 'true' ||
+    process.env.GRIFON_DEV_UNMETERED_VIDEO === 'true'
+  ) {
+    return { allowed: true, alreadyCharged: false, used: status.used, limit: status.limit, credits: 0 };
+  }
+
+  // Already charged this ad? A re-roll of an already-charged ad always passes.
+  const seen = await peekQuota(omniAdJobKey(userId, finishedAdId), 1, MONTHLY_WINDOW_SECONDS);
+  if (seen.used >= 1) {
+    return { allowed: true, alreadyCharged: true, used: status.used, limit: status.limit, credits: 0 };
+  }
+
+  // Monthly allowance left?
+  if (status.remaining > 0) {
+    return { allowed: true, alreadyCharged: false, used: status.used, limit: status.limit, credits: 0 };
+  }
+
+  // Fall back to a purchased top-up credit.
+  const credits = await peekCredits(userId);
+  const omniCredits = credits.omni_style_credits ?? 0;
+  return {
+    allowed: omniCredits > 0,
+    alreadyCharged: false,
+    used: status.used,
+    limit: status.limit,
+    credits: omniCredits,
+  };
+}
+
+// Consumes ONE omni_ads allowance the first time finishedAdId is charged;
+// subsequent re-rolls of the same ad return allowed:true without touching the
+// meter. When the monthly allowance is exhausted, falls back to a purchased
+// omni_style top-up credit. Structural mirror of consumeFinishedAd.
+export async function consumeOmniAd(
+  userId: string,
+  plan: ServerPlanId,
+  finishedAdId: string,
+): Promise<FinishedAdResult> {
+  const jobKey = omniAdJobKey(userId, finishedAdId);
+
+  // Already charged this ad? peek the marker WITHOUT incrementing.
+  const seen = await peekQuota(jobKey, 1, MONTHLY_WINDOW_SECONDS);
+  if (seen.used >= 1) {
+    const status = await peekMonthly('omni_ads', userId, plan);
+    return { allowed: true, alreadyCounted: true, used: status.used, limit: status.limit, remaining: status.remaining };
+  }
+
+  // First charge for this ad → consume one monthly credit.
+  const result = await consumeMonthly('omni_ads', userId, plan);
+  if (result.allowed) {
+    await rateLimitCheck(jobKey, 1, MONTHLY_WINDOW_SECONDS);
+    return { ...result, alreadyCounted: false };
+  }
+
+  // Monthly allowance exhausted → fall back to a purchased omni_style credit.
+  const spentCredit = await consumeCredit(userId, 'omni_style');
   if (spentCredit) {
     await rateLimitCheck(jobKey, 1, MONTHLY_WINDOW_SECONDS);
     return { allowed: true, alreadyCounted: false, fromCredit: true, used: result.used, limit: result.limit, remaining: 0 };

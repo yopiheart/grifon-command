@@ -57,7 +57,8 @@ export type AddOnId =
   | 'onboarding_call'
   | 'video_ad_single'
   | 'video_ad_pack5'
-  | 'video_ad_cinematic';
+  | 'video_ad_cinematic'
+  | 'omni_style_single';
 
 export type AddOnCatalogEntry = {
   id: AddOnId;
@@ -68,6 +69,8 @@ export type AddOnCatalogEntry = {
   videoAdCredits?: number;
   /** True for premium Quality+4K cinematic/spec credits (Business). */
   cinematic?: boolean;
+  /** Omni Edit Style credits — styled finished ads — this add-on grants. */
+  omniStyleCredits?: number;
 };
 
 export const ADD_ON_CATALOG: Record<AddOnId, AddOnCatalogEntry> = {
@@ -98,6 +101,13 @@ export const ADD_ON_CATALOG: Record<AddOnId, AddOnCatalogEntry> = {
     centavos: 120_000, // ₱1,200
     videoAdCredits: 1,
     cinematic: true,
+  },
+  omni_style_single: {
+    id: 'omni_style_single',
+    name: '1 Omni Style Ad',
+    description: 'Apply a premium Omni Edit Style to one more finished ad.',
+    centavos: 49_900, // ₱499 — PRD default, tunable
+    omniStyleCredits: 1,
   },
 };
 

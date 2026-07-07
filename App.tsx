@@ -223,8 +223,46 @@ const App: React.FC = () => {
     finalScript: string;
     offer?: string;
     lockedPresetId?: LockablePresetId;
+    // Omni Edit Style + its picker fields locked at Render All (Slice 3 picker);
+    // hop like lockedPresetId. Absent unless a style was picked / dev-seeded.
+    omniStyle?: 'premium_reel' | 'vox_explainer';
+    omniBrandHex?: string;
+    omniEmphasisWord?: string;
+    omniTitleText?: string;
+    captionsEnabled?: boolean;
   } | null>(null);
   const [cinematicResult, setCinematicResult] = useState<Scene[] | null>(null);
+
+  // Dev-only editorBatch seed: lets smoke tests drive the AI Editor with a
+  // synthetic batch (no paid scene generation). Requires BOTH grifon_dev_unlock
+  // AND a grifon_dev_editor_batch JSON payload; the key is consumed on load so
+  // normal navigation resumes on the next reload. Inert in production use.
+  useEffect(() => {
+    try {
+      if (window.localStorage.getItem('grifon_dev_unlock') !== '1') return;
+      const raw = window.localStorage.getItem('grifon_dev_editor_batch');
+      if (!raw) return;
+      window.localStorage.removeItem('grifon_dev_editor_batch');
+      const seed = JSON.parse(raw);
+      if (!Array.isArray(seed?.sceneBatch)) return;
+      setEditorBatch({
+        sceneBatch: seed.sceneBatch,
+        audioOverlays: seed.audioOverlays ?? [],
+        aspectRatio: seed.aspectRatio ?? '9:16',
+        finalScript: seed.finalScript ?? '',
+        offer: seed.offer,
+        lockedPresetId: seed.lockedPresetId,
+        omniStyle: seed.omniStyle,
+        omniBrandHex: seed.omniBrandHex,
+        omniEmphasisWord: seed.omniEmphasisWord,
+        omniTitleText: seed.omniTitleText,
+        captionsEnabled: seed.captionsEnabled,
+      });
+      setActiveModule('edit_video');
+    } catch {
+      /* malformed seed — ignore */
+    }
+  }, []);
 
   const [userId, setUserId] = useState<string | null>(null);
   const [isLoadingSession, setIsLoadingSession] = useState(true);
@@ -1368,7 +1406,8 @@ const App: React.FC = () => {
           seedPrompts={videoPrompts}
           storyboard={storyboard}
           defaultAspectRatio={aspectRatio ?? '9:16'}
-          onSendToAiEditor={(batch, lockedPresetId) => {
+          heroImageUrl={businessInfo.productImageUrls?.[0] ?? storyboard[0]?.imageUrl}
+          onSendToAiEditor={(batch, lockedPresetId, omniLock) => {
             // Default path — skip Signal Modulator's redundant TTS pass. The AI
             // Editor consolidates voice once (audioOverlays unused, so []).
             setSceneBatch(batch);
@@ -1379,6 +1418,11 @@ const App: React.FC = () => {
               finalScript: finalScript.join(' '),
               offer: clientDetails.offer,
               lockedPresetId,
+              omniStyle: omniLock?.style,
+              omniBrandHex: omniLock?.brandPrimaryHex,
+              omniEmphasisWord: omniLock?.emphasisWord,
+              omniTitleText: omniLock?.titleText,
+              captionsEnabled: omniLock?.captionsEnabled,
             });
             setActiveModule('edit_video');
           }}

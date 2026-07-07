@@ -9,14 +9,14 @@
  * yet consumed (the Commercial/Spec render path sends no cinematic signal to the
  * server) — see api/_lib/credits.ts. Add it here once consumption is wired.
  */
-export type TopUpId = 'video_ad_single' | 'video_ad_pack5';
+export type TopUpId = 'video_ad_single' | 'video_ad_pack5' | 'omni_style_single';
 
 export type TopUpDisplay = {
   id: TopUpId;
   name: string;
   /** Matches ADD_ON_CATALOG[id].centavos / 100. */
   priceLabel: string;
-  /** Matches ADD_ON_CATALOG[id].videoAdCredits. */
+  /** Matches ADD_ON_CATALOG[id].videoAdCredits (or .omniStyleCredits for style top-ups). */
   credits: number;
   blurb: string;
 };
@@ -36,7 +36,14 @@ export const TOPUPS: Record<TopUpId, TopUpDisplay> = {
     credits: 5,
     blurb: 'Five more finished ads at the best per-ad price (₱450/ad).',
   },
+  omni_style_single: {
+    id: 'omni_style_single',
+    name: '1 Omni Style Ad',
+    priceLabel: '₱499',
+    credits: 1,
+    blurb: 'Apply a premium Omni Edit Style to one more finished ad.',
+  },
 };
 
 export const isTopUpId = (value: string | null | undefined): value is TopUpId =>
-  value === 'video_ad_single' || value === 'video_ad_pack5';
+  value === 'video_ad_single' || value === 'video_ad_pack5' || value === 'omni_style_single';

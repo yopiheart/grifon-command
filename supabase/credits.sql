@@ -1,35 +1,42 @@
--- Top-up finished-ad credits (Slice 6b, 2026-06-19).
+-- Top-up finished-ad credits (Slice 6b, 2026-06-19; omni_style added Omni Slice 3b, 2026-07-07).
 -- Apply in the Supabase SQL editor AFTER schema.sql. Idempotent: safe to re-run.
 -- This file is documentation; the app does NOT execute it at runtime. The live
--- migration was applied via Supabase MCP (migration name: topup_credits).
+-- migrations were applied via Supabase MCP (names: topup_credits, omni_style_credits).
 --
 -- Credits are granted by add-on purchases (api/webhook.ts → grant_credits) and
--- consumed when the monthly video_ads allowance is exhausted (api/_lib/quota.ts
+-- consumed when the matching monthly allowance is exhausted (api/_lib/quota.ts
 -- → consume_credit). They live on the subscriptions row because every user has
 -- one (handle_new_user seeds free/active on signup), so a Free user with no paid
 -- plan can still hold purchased credits — that's the standalone ₱499 single-ad door.
 
 alter table public.subscriptions
   add column if not exists video_ad_credits int not null default 0,
-  add column if not exists cinematic_credits int not null default 0;
+  add column if not exists cinematic_credits int not null default 0,
+  add column if not exists omni_style_credits int not null default 0;
 
 -- Additive grant (webhook, service_role only). Upserts so a buyer always has a
 -- row even in the unlikely case the signup trigger never fired for them.
+-- p_omni has DEFAULT 0 so pre-Slice-3b callers that pass three named args keep
+-- resolving; the old 3-arg overload must be DROPPED first (an overload pair
+-- would make 3-arg rpc() calls ambiguous).
+drop function if exists public.grant_credits(uuid, int, int);
 create or replace function public.grant_credits(
   p_user_id uuid,
   p_video int,
-  p_cinematic int
+  p_cinematic int,
+  p_omni int default 0
 ) returns void
 language plpgsql
 security definer
 set search_path = public
 as $$
 begin
-  insert into public.subscriptions (user_id, plan_id, status, video_ad_credits, cinematic_credits)
-  values (p_user_id, 'free', 'active', greatest(p_video, 0), greatest(p_cinematic, 0))
+  insert into public.subscriptions (user_id, plan_id, status, video_ad_credits, cinematic_credits, omni_style_credits)
+  values (p_user_id, 'free', 'active', greatest(p_video, 0), greatest(p_cinematic, 0), greatest(p_omni, 0))
   on conflict (user_id) do update
-    set video_ad_credits  = public.subscriptions.video_ad_credits  + greatest(p_video, 0),
-        cinematic_credits = public.subscriptions.cinematic_credits + greatest(p_cinematic, 0),
+    set video_ad_credits   = public.subscriptions.video_ad_credits   + greatest(p_video, 0),
+        cinematic_credits  = public.subscriptions.cinematic_credits  + greatest(p_cinematic, 0),
+        omni_style_credits = public.subscriptions.omni_style_credits + greatest(p_omni, 0),
         updated_at = now();
 end;
 $$;
@@ -56,6 +63,10 @@ begin
     update public.subscriptions
       set cinematic_credits = cinematic_credits - 1, updated_at = now()
       where user_id = p_user_id and cinematic_credits > 0;
+  elsif p_kind = 'omni_style' then
+    update public.subscriptions
+      set omni_style_credits = omni_style_credits - 1, updated_at = now()
+      where user_id = p_user_id and omni_style_credits > 0;
   else
     return false;
   end if;
@@ -64,7 +75,7 @@ begin
 end;
 $$;
 
-revoke all on function public.grant_credits(uuid, int, int) from public, anon, authenticated;
-grant execute on function public.grant_credits(uuid, int, int) to service_role;
+revoke all on function public.grant_credits(uuid, int, int, int) from public, anon, authenticated;
+grant execute on function public.grant_credits(uuid, int, int, int) to service_role;
 revoke all on function public.consume_credit(uuid, text) from public, anon, authenticated;
 grant execute on function public.consume_credit(uuid, text) to service_role;
