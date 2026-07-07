@@ -165,6 +165,14 @@ const OMNI_STYLE_OPTIONS: { id: 'premium_reel' | 'vox_explainer' | undefined; la
   { id: 'vox_explainer', label: 'VOX EXPLAINER', hint: 'Explainer with a bold title card and clean b-roll motion; captions off by default.' },
 ];
 
+/** Shared command-bar chip recipe (the // LOOK and // STYLE rows + toggles). */
+const COMMAND_CHIP =
+  'text-[10px] font-mono font-bold tracking-widest uppercase rounded-lg border px-3 py-1.5 transition-all whitespace-nowrap';
+const COMMAND_CHIP_ACTIVE = 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]';
+const COMMAND_CHIP_IDLE =
+  'border-white/10 bg-zinc-950 text-zinc-400 hover:border-[#FFCC00]/50 hover:text-zinc-200';
+const COMMAND_CHIP_LOCKED = 'border-white/5 bg-zinc-950 text-zinc-600 cursor-not-allowed';
+
 const GenerateVideo: React.FC<GenerateVideoProps> = ({
   onBack,
   seedPrompts = [],
@@ -1849,11 +1857,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
                   type="button"
                   onClick={() => setLockedPresetId(opt.id)}
                   title={opt.hint}
-                  className={`text-[10px] font-mono font-bold tracking-widest uppercase rounded-lg border px-3 py-1.5 transition-all whitespace-nowrap ${
-                    active
-                      ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]'
-                      : 'border-white/10 bg-zinc-950 text-zinc-400 hover:border-[#FFCC00]/50 hover:text-zinc-200'
-                  }`}
+                  className={`${COMMAND_CHIP} ${active ? COMMAND_CHIP_ACTIVE : COMMAND_CHIP_IDLE}`}
                 >
                   {opt.label}
                 </button>
@@ -1883,11 +1887,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
                       type="button"
                       onClick={() => handleOmniStyleSelect(opt.id)}
                       title={opt.hint}
-                      className={`text-[10px] font-mono font-bold tracking-widest uppercase rounded-lg border px-3 py-1.5 transition-all whitespace-nowrap ${
-                        active
-                          ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]'
-                          : 'border-white/10 bg-zinc-950 text-zinc-400 hover:border-[#FFCC00]/50 hover:text-zinc-200'
-                      }`}
+                      className={`${COMMAND_CHIP} ${active ? COMMAND_CHIP_ACTIVE : COMMAND_CHIP_IDLE}`}
                     >
                       {opt.label}
                     </button>
@@ -1902,7 +1902,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
                     value={brandHex ?? '#FFCC00'}
                     onChange={(e) => setBrandHex(e.target.value)}
                     title="Brand accent color — sampled from your hero image, click to change."
-                    className="h-[30px] w-9 shrink-0 cursor-pointer rounded-lg border border-white/10 bg-zinc-950 p-0.5"
+                    className="h-[30px] w-9 shrink-0 cursor-pointer rounded-xl border border-white/10 bg-zinc-950 p-0.5 [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:rounded-md [&::-webkit-color-swatch]:border-none"
                   />
                   {omniStyle === 'premium_reel' ? (
                     <input
@@ -1914,7 +1914,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
                       }}
                       placeholder="EMPHASIS"
                       title="The word the style pops on-screen."
-                      className="h-[30px] w-28 bg-zinc-950 border border-white/10 rounded-lg px-2 text-[10px] font-mono uppercase tracking-widest text-zinc-200 focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00]"
+                      className="h-[30px] w-28 bg-zinc-950 border border-white/10 rounded-xl px-2 text-xs font-mono text-zinc-200 placeholder:uppercase placeholder:tracking-widest placeholder:text-[10px] focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00]"
                     />
                   ) : (
                     <input
@@ -1926,18 +1926,14 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
                       }}
                       placeholder="TITLE"
                       title="The title-card text for the explainer."
-                      className="h-[30px] w-28 bg-zinc-950 border border-white/10 rounded-lg px-2 text-[10px] font-mono uppercase tracking-widest text-zinc-200 focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00]"
+                      className="h-[30px] w-28 bg-zinc-950 border border-white/10 rounded-xl px-2 text-xs font-mono text-zinc-200 placeholder:uppercase placeholder:tracking-widest placeholder:text-[10px] focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00]"
                     />
                   )}
                   <button
                     type="button"
                     onClick={() => setCaptionsOn((v) => !v)}
                     title="Burn spoken-word subtitles into the styled scenes."
-                    className={`text-[10px] font-mono font-bold tracking-widest uppercase rounded-lg border px-3 py-1.5 transition-all whitespace-nowrap ${
-                      captionsOn
-                        ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]'
-                        : 'border-white/10 bg-zinc-950 text-zinc-400 hover:border-[#FFCC00]/50 hover:text-zinc-200'
-                    }`}
+                    className={`${COMMAND_CHIP} ${captionsOn ? COMMAND_CHIP_ACTIVE : COMMAND_CHIP_IDLE}`}
                   >
                     CAPTIONS {captionsOn ? 'ON' : 'OFF'}
                   </button>
@@ -1950,13 +1946,13 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
             </>
           ) : (
             <>
-              <div className="flex items-center gap-1 flex-wrap opacity-50">
+              <div className="flex items-center gap-1 flex-wrap">
                 {OMNI_STYLE_OPTIONS.map((opt) => (
                   <button
                     key={opt.label}
                     type="button"
                     disabled
-                    className="text-[10px] font-mono font-bold tracking-widest uppercase rounded-lg border border-white/10 bg-zinc-950 text-zinc-500 px-3 py-1.5 cursor-not-allowed whitespace-nowrap"
+                    className={`${COMMAND_CHIP} ${COMMAND_CHIP_LOCKED}`}
                   >
                     {opt.label}
                   </button>
