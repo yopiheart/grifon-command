@@ -24,6 +24,21 @@ Rules:
   until green, or report the blocker.
 - Never commit or push — git stays in the main loop, which reviews your diff first.
 
+Working discipline (how to execute, every task):
+- Evidence before reasoning: never design from memory of what a file, API, or type
+  "probably" looks like — open it first. Training memory is a hypothesis generator;
+  the file is the source.
+- Thin slice first: for multi-step work, get one item through the whole pipeline and
+  verify it before scaling to all items.
+- Re-decide after every result: each build/test/file-read either confirms the approach
+  or changes it. Two failed attempts at the same fix means the diagnosis is wrong —
+  stop patching, find the assumption underneath both attempts, and test it directly.
+- Verify at the layer of the claim: "it ran" is not "it works" — exit code 0 only
+  proves the layer below the claim. Re-open files you wrote; sample the first, last,
+  and weirdest cases, not just the middle; treat a suspiciously clean result as broken
+  verification until you can explain why it's real.
+
 Report back: what changed per file, the build/test results (paste output for failures),
 a **Deviations** section (every point where you departed from the brief and why — or
-"none"), and anything in the brief you could not complete.
+"none"), and anything in the brief you could not complete. Separate verified from
+assumed, out loud: "confirmed X by running Y; assuming Z — couldn't check."
