@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="tl"><head><meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root{--navy:#0E2C5E;--navy2:#0A1F45;--ocean:#1C63AD;--sky:#5AA6E6;--gold:#F5B301;--white:#fff;
+--head:'Anton','Arial Narrow',Impact,sans-serif;--body:'Inter','Helvetica Neue',Arial,sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box}html,body{background:#333}
+#canvas{width:1080px;height:1350px;position:relative;overflow:hidden;font-family:var(--body);background:var(--navy);-webkit-font-smoothing:antialiased}
+.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 45%}
+.scrim{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,31,69,.78) 0%,rgba(10,31,69,.30) 34%,rgba(10,31,69,.34) 60%,var(--navy2) 100%)}
+.logo-chip{position:absolute;top:32px;left:32px;z-index:5;background:#fff;border-radius:14px;padding:6px 10px;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.logo-chip img{height:62px;display:block}
+.legit{position:absolute;top:38px;right:32px;z-index:5;display:flex;align-items:center;gap:10px}
+.legit .t{text-align:right;line-height:1.1}.legit .c{font-weight:900;font-size:15px;color:#fff;text-transform:uppercase}
+.legit .s{font-size:12px;font-weight:700;color:var(--sky);text-transform:uppercase;margin-top:2px}
+.legit img{height:52px;filter:drop-shadow(0 1px 3px rgba(0,0,0,.4))}
+.top{position:absolute;top:190px;left:60px;right:60px;z-index:5;text-align:center}
+.eyebrow{display:inline-block;background:var(--gold);color:var(--navy);font-weight:900;font-size:20px;letter-spacing:2px;text-transform:uppercase;padding:7px 18px;border-radius:6px}
+.top h1{font-family:var(--head);font-weight:400;font-size:82px;line-height:.92;color:#fff;text-transform:uppercase;letter-spacing:.5px;margin-top:18px;text-shadow:0 3px 16px rgba(0,0,0,.5)}
+.top h1 b{color:var(--gold)}
+.top .sub{font-size:27px;font-weight:700;color:#fff;margin-top:20px;line-height:1.34;text-shadow:0 1px 8px rgba(0,0,0,.6)}
+.top .sub b{color:var(--gold)}
+.wave{position:absolute;left:0;bottom:196px;width:100%;height:32px;z-index:6;display:block}
+.contact{position:absolute;bottom:0;left:0;width:100%;z-index:6;padding:24px 44px 28px;text-align:center;background:var(--navy2)}
+.cta{font-family:var(--head);font-size:38px;color:#fff;text-transform:uppercase;letter-spacing:.5px}
+.cta em{color:var(--gold);font-style:normal}
+.nums{margin-top:14px;display:flex;justify-content:center;gap:40px}
+.num{display:flex;align-items:center;gap:11px}.num .ph{width:38px;height:38px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center}
+.num .ph svg{width:21px;height:21px;fill:var(--navy2)}.num .txt{text-align:left}
+.num .lbl{font-size:13px;font-weight:800;color:var(--sky);letter-spacing:1.5px;text-transform:uppercase}
+.num .no{font-size:27px;font-weight:900;color:#fff}
+.areas{margin-top:12px;font-size:16px;font-weight:800;color:var(--gold)}
+</style></head><body>
+<div id="canvas">
+  <img class="bg" src="../out/{{BG}}" alt=""/>
+  <div class="scrim"></div>
+  <div class="logo-chip"><img src="../assets/logo.jpg" alt="Oceanides"/></div>
+  <div class="legit"><div class="t"><div class="c">SEC-Registered</div><div class="s">DENR &middot; BIR</div></div><img src="../assets/badge-bir.png" alt="BIR"/></div>
+  <div class="top"><span class="eyebrow">{{EYEBROW}}</span><h1>{{HEADLINE}}</h1><div class="sub">{{SUB}}</div></div>
+  <svg class="wave" viewBox="0 0 1080 32" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,32 L0,16 C120,-4 240,-4 360,11 C480,26 600,26 720,12 C840,-1 960,-1 1080,14 L1080,32 Z" fill="#1C63AD"/>
+    <path d="M0,32 L0,23 C120,8 240,8 360,20 C480,32 600,32 720,22 C840,11 960,11 1080,24 L1080,32 Z" fill="#0A1F45"/>
+  </svg>
+  <div class="contact">
+    <div class="cta">Tawag na &mdash; <em>libreng check-up</em></div>
+    <div class="nums">
+      <div class="num"><div class="ph"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.24.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.18z"/></svg></div><div class="txt"><div class="lbl">Globe</div><div class="no">0917 671 6383</div></div></div>
+      <div class="num"><div class="ph"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.24.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.18z"/></svg></div><div class="txt"><div class="lbl">Smart</div><div class="no">0939 245 6217</div></div></div>
+    </div>
+    <div class="areas">Metro Manila &middot; Calabarzon &middot; Central Luzon</div>
+  </div>
+</div></body></html>

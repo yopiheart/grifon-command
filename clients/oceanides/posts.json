@@ -1,0 +1,52 @@
+[
+  {
+    "id": "legit-redflags",
+    "layout": "list",
+    "bg": "hero-redflags.png",
+    "eyebrow": "Ingat!",
+    "headline": "3 red flags ng <b>fly-by-night</b> na malabanan",
+    "items": [
+      "Walang permit, hindi SEC-registered",
+      "Ayaw magbigay ng presyo agad",
+      "Personal account lang, walang opisina"
+    ]
+  },
+  {
+    "id": "trust-24-7",
+    "layout": "hero",
+    "bg": "hero-24-7.png",
+    "eyebrow": "24/7 kami",
+    "headline": "Kahit madaling-araw, <b>sagot ka namin</b>",
+    "sub": "Barado o overflow emergency? Tawag lang &mdash; 30&ndash;60 min response."
+  },
+  {
+    "id": "trust-areas",
+    "layout": "hero",
+    "bg": "hero-areas.png",
+    "eyebrow": "Saan kami pumupunta?",
+    "headline": "Serbisyo sa <b>buong Luzon</b>",
+    "sub": "Metro Manila &middot; Calabarzon &middot; Central Luzon &mdash; malapit lang kami."
+  },
+  {
+    "id": "offer-tagulan",
+    "layout": "hero",
+    "bg": "hero-tagulan.png",
+    "eyebrow": "Tag-ulan na!",
+    "headline": "Pa-siphon bago <b>bumaha</b> ang CR",
+    "sub": "Puno na ang tangke + malakas na ulan = overflow at baho. Iwasan ito."
+  },
+  {
+    "id": "edu-donttoss",
+    "layout": "list",
+    "bg": "hero-donttoss.png",
+    "eyebrow": "Huwag!",
+    "headline": "Ang hindi dapat <b>itapon</b> sa inodoro",
+    "items": [
+      "Wet wipes (kahit 'flushable')",
+      "Buhok at cotton buds",
+      "Mantika at grasa",
+      "Napkin at diaper",
+      "Makapal na tissue"
+    ]
+  }
+]
