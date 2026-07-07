@@ -184,10 +184,33 @@ gate, routing, captions). Maps all 4 `neil_approved` presets onto the code shape
      typography there); fallback / never-styled scenes keep their overlays.
   **Eyeball catches what the machine gate misses — third time running** (angle
   switch, hex leak, now the masthead + overlay collision).
-- **Next gates:** Neil eyeballs the remaining Slice-3 artifacts (panel
-  screenshots in `.playwright-mcp/`, MP4s in `.tmp/omni-smoke-s3/` — both
-  defreezer-doomed, view before reboot) → optional gate-clean re-render
-  (still open from Slice 2) → Slice 4 (telemetry + beta rollout).
+- **Verification render (2026-07-07, Neil "go", ≈$0.80 + TTS):** post-fix VOX
+  run with ElevenLabs restored (invoice paid). Results:
+  - **Styled hook is clean:** GLOW UP masthead in brand blue, NO "Vox" wordmark,
+    NO FFmpeg hook overlay stamped on top (both same-day fixes confirmed in
+    output). Scene 2 blocked→retried→fell back (known filter nondeterminism);
+    ladder + calm note behaved.
+  - **Captions toggle PROVEN VISUALLY at last:** real VO (2 tracks persisted),
+    ON render shows karaoke chunks ("morning cup, walang"), OFF render same
+    timestamp shows none; hashes/sizes differ
+    (`verify-captions-ON.mp4` b7f8a37a… vs `verify-captions-OFF.mp4` d821db59…).
+  - **Billing:** verbatim `// 1 Omni ad used · 3 of 5 this month`;
+    consume `{"consumed":true,"fromCredit":false,"used":3,"limit":5}`;
+    rate_limits ledger consistent (counter 3, one omniad: marker per ad).
+  - **Gate caveat:** the vision gate returned `gate_unavailable` (unparseable
+    model response → deliberate fail-open), so the vox-catch wasn't exercised
+    live this run — it's unit-pinned instead. **Slice-4 telemetry must track
+    the gate_unavailable rate**; a high rate quietly disables every gate check.
+  - **New watch item (Neil eyeball queue):** Omni invented a shop-page insert
+    around the product visible in the source clip — including a PRICE
+    ("$49.45") and ADD TO CART. Registry constraint already says insert text is
+    invented/decorative, but an invented PRICE in an ad is a stronger risk
+    class. Watch in Slice-4 beta; possible gate heuristic or tuned-template
+    line ("never invent prices/currency amounts") — Neil-gated.
+- **Next gates:** Neil eyeballs `verify-captions-ON/OFF.mp4` + frames in
+  `.tmp/omni-smoke-s3/` (defreezer-doomed — view before reboot; this render
+  also covers the Slice-2 gate-clean re-render item) → Slice 4 (telemetry +
+  beta rollout).
 - Preset rows flip to `product_shipped` only when the user-facing picker ships
   (Slice 3 — code shipped, pending Neil's eyeball verdict) and Neil eyeballs a
   product-path render.
