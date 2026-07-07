@@ -223,9 +223,13 @@ const App: React.FC = () => {
     finalScript: string;
     offer?: string;
     lockedPresetId?: LockablePresetId;
-    // Omni Edit Style locked at Render All (Slice 3 picker); hops like
-    // lockedPresetId. Absent in Slice 2 unless set via the EditVideo dev selector.
+    // Omni Edit Style + its picker fields locked at Render All (Slice 3 picker);
+    // hop like lockedPresetId. Absent unless a style was picked / dev-seeded.
     omniStyle?: 'premium_reel' | 'vox_explainer';
+    omniBrandHex?: string;
+    omniEmphasisWord?: string;
+    omniTitleText?: string;
+    captionsEnabled?: boolean;
   } | null>(null);
   const [cinematicResult, setCinematicResult] = useState<Scene[] | null>(null);
 
@@ -249,6 +253,10 @@ const App: React.FC = () => {
         offer: seed.offer,
         lockedPresetId: seed.lockedPresetId,
         omniStyle: seed.omniStyle,
+        omniBrandHex: seed.omniBrandHex,
+        omniEmphasisWord: seed.omniEmphasisWord,
+        omniTitleText: seed.omniTitleText,
+        captionsEnabled: seed.captionsEnabled,
       });
       setActiveModule('edit_video');
     } catch {
@@ -1398,7 +1406,8 @@ const App: React.FC = () => {
           seedPrompts={videoPrompts}
           storyboard={storyboard}
           defaultAspectRatio={aspectRatio ?? '9:16'}
-          onSendToAiEditor={(batch, lockedPresetId, omniStyle) => {
+          heroImageUrl={businessInfo.productImageUrls?.[0] ?? storyboard[0]?.imageUrl}
+          onSendToAiEditor={(batch, lockedPresetId, omniLock) => {
             // Default path — skip Signal Modulator's redundant TTS pass. The AI
             // Editor consolidates voice once (audioOverlays unused, so []).
             setSceneBatch(batch);
@@ -1409,7 +1418,11 @@ const App: React.FC = () => {
               finalScript: finalScript.join(' '),
               offer: clientDetails.offer,
               lockedPresetId,
-              omniStyle,
+              omniStyle: omniLock?.style,
+              omniBrandHex: omniLock?.brandPrimaryHex,
+              omniEmphasisWord: omniLock?.emphasisWord,
+              omniTitleText: omniLock?.titleText,
+              captionsEnabled: omniLock?.captionsEnabled,
             });
             setActiveModule('edit_video');
           }}

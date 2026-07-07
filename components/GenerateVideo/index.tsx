@@ -26,6 +26,7 @@ import type {
   VideoLibraryItem,
   SceneBatchEntry,
   LockablePresetId,
+  OmniStyleLock,
 } from '../../types';
 import {
   VIDEO_MODEL_SPECS,
@@ -39,7 +40,9 @@ import {
 } from '../../services/geminiService';
 import { getSupabase } from '../../services/supabaseClient';
 import { useSubscription } from '../../hooks/useSubscription';
-import { SCENE_CAP } from '../../utils/planGate';
+import { SCENE_CAP, omniStylesEligible } from '../../utils/planGate';
+import { pickEmphasisWord } from '../../services/omniStyleService';
+import { dominantHexFromImage } from '../../utils/dominantColor';
 import { listActiveJobs, clearActiveJob } from '../../services/activeJobStore';
 import { ensureNotificationPermission, notify } from '../../services/notificationService';
 import { compressImageForUpload } from '../../utils/imageCompression';
@@ -87,8 +90,12 @@ interface GenerateVideoProps {
   onSendToAiEditor?: (
     batch: SceneBatchEntry[],
     lockedPresetId?: LockablePresetId,
-    omniStyle?: 'premium_reel' | 'vox_explainer',
+    omniLock?: OmniStyleLock,
   ) => void;
+  /** First product image (hero) — the Omni Style picker samples its dominant
+   * color as the default brand swatch. Falls back to the storyboard scene-1
+   * image at the call site. */
+  heroImageUrl?: string;
 }
 
 const ACTIVE_MODELS: VideoModelType[] = ['Veo_3.1_Fast', 'Veo_3.1_Quality', 'Veo_3.1_Lite', 'Kling_3_0', 'Kling_O1'];
@@ -149,6 +156,15 @@ const LOOK_OPTIONS: { id: LockablePresetId | undefined; label: string; hint: str
   { id: 'clean', label: 'CLEAN', hint: 'Sincere testimonial — soft box, gentle dip-to-black fades.' },
 ];
 
+/** Omni Edit Style options (Slice 3 picker). `undefined` = NONE (standard edit,
+ * no AI style pass — default). The two hero styles map to the OmniStyleLock
+ * `style` literal and are auto-routed per scene in the AI Editor. */
+const OMNI_STYLE_OPTIONS: { id: 'premium_reel' | 'vox_explainer' | undefined; label: string; hint: string }[] = [
+  { id: undefined, label: 'NONE', hint: 'Standard edit — no AI style pass (default).' },
+  { id: 'premium_reel', label: 'PREMIUM REEL', hint: 'Cinematic talking-head reel — emphasis-word pop, brand-color accents.' },
+  { id: 'vox_explainer', label: 'VOX EXPLAINER', hint: 'Explainer with a bold title card and clean b-roll motion; captions off by default.' },
+];
+
 const GenerateVideo: React.FC<GenerateVideoProps> = ({
   onBack,
   seedPrompts = [],
@@ -156,6 +172,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
   defaultAspectRatio,
   onSendToSignalModulator,
   onSendToAiEditor,
+  heroImageUrl,
 }) => {
   const hasSeedPrompts = seedPrompts.length > 0;
   const [mode, setMode] = useState<Mode>(hasSeedPrompts ? 'pipeline' : 'one-shot');
@@ -220,6 +237,47 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
   // Pre-render look-lock: undefined → server rotates a look that fits the script
   // style (today's behavior); a picked id locks that edit style for this ad.
   const [lockedPresetId, setLockedPresetId] = useState<LockablePresetId | undefined>(undefined);
+
+  // Omni Edit Style picker (Slice 3). undefined = NONE (no AI style pass).
+  // brandHex is null until sampled from the hero image (or set by the user);
+  // chipsEdited gates whether the emphasis/title override hops with the lock.
+  const [omniStyle, setOmniStyle] = useState<'premium_reel' | 'vox_explainer' | undefined>(undefined);
+  const [brandHex, setBrandHex] = useState<string | null>(null);
+  const [emphasisWord, setEmphasisWord] = useState('');
+  const [titleText, setTitleText] = useState('');
+  const [chipsEdited, setChipsEdited] = useState(false);
+  const [captionsOn, setCaptionsOn] = useState(true);
+  // Business gate (same shape as showAdvanced): dev-unlock opens the picker on
+  // any account; otherwise Business-only. Server proxy is the real wall.
+  const omniStylesUnlocked = devUnlock || omniStylesEligible(plan_id);
+
+  // Prefill the emphasis/title chips from the storyboard script until the user
+  // edits one (chipsEdited latches). pickEmphasisWord is deterministic.
+  const scriptForPrefill = useMemo(
+    () => storyboard.map((s) => s?.scriptLine).filter(Boolean).join(' '),
+    [storyboard]
+  );
+  useEffect(() => {
+    if (chipsEdited) return;
+    const word = pickEmphasisWord(scriptForPrefill);
+    if (word) {
+      setEmphasisWord(word);
+      setTitleText(word);
+    }
+  }, [scriptForPrefill, chipsEdited]);
+
+  // Sample the hero image's dominant color once as the default swatch. Failure
+  // leaves brandHex null → the picker shows #FFCC00 and the service default wins.
+  useEffect(() => {
+    if (!heroImageUrl || brandHex !== null) return;
+    let cancelled = false;
+    dominantHexFromImage(heroImageUrl).then((hex) => {
+      if (!cancelled && hex) setBrandHex(hex);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [heroImageUrl, brandHex]);
 
   const queueAbortRef = useRef<AbortController | null>(null);
   const singleAbortRef = useRef<AbortController | null>(null);
@@ -1678,6 +1736,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
       renderedUrl: sceneResults[i]?.url,
       type: p.type,
       chainRole: storyboard[i]?.chainRole,
+      sceneDescription: storyboard[i]?.sceneDescription,
     }));
 
   const handleSendToSignalFromBar = () => {
@@ -1685,9 +1744,27 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
     onSendToSignalModulator(buildSceneBatch());
   };
 
+  // On style change, reset the captions default per style (VOX off / Premium on).
+  const handleOmniStyleSelect = (id: 'premium_reel' | 'vox_explainer' | undefined) => {
+    setOmniStyle(id);
+    setCaptionsOn(id !== 'vox_explainer');
+  };
+
   const handleSendToAiEditorFromBar = () => {
     if (!onSendToAiEditor) return;
-    onSendToAiEditor(buildSceneBatch(), lockedPresetId);
+    let omniLock: OmniStyleLock | undefined;
+    if (omniStyle) {
+      omniLock = {
+        style: omniStyle,
+        captionsEnabled: captionsOn,
+        // Swatch: pass only when set (sampled or user-picked); absent → service default.
+        ...(brandHex ? { brandPrimaryHex: brandHex } : {}),
+        // Overrides hop only when the user edited a chip (else the service derives).
+        ...(chipsEdited && emphasisWord.trim() ? { emphasisWord: emphasisWord.trim() } : {}),
+        ...(chipsEdited && titleText.trim() ? { titleText: titleText.trim() } : {}),
+      };
+    }
+    onSendToAiEditor(buildSceneBatch(), lockedPresetId, omniLock);
   };
 
   const allRendered = renderedCount === seedPrompts.length && renderedCount > 0;
@@ -1787,6 +1864,109 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
             {LOOK_OPTIONS.find((o) => o.id === lockedPresetId)?.hint}
             <span className="text-zinc-600"> · applied at final render</span>
           </span>
+        </div>
+      )}
+
+      {allRendered && onSendToAiEditor && (
+        <div className="flex items-center gap-2 flex-wrap mt-2.5 pt-2.5 border-t border-white/5">
+          <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 whitespace-nowrap">
+            // STYLE
+          </span>
+          {omniStylesUnlocked ? (
+            <>
+              <div className="flex items-center gap-1 flex-wrap">
+                {OMNI_STYLE_OPTIONS.map((opt) => {
+                  const active = omniStyle === opt.id;
+                  return (
+                    <button
+                      key={opt.label}
+                      type="button"
+                      onClick={() => handleOmniStyleSelect(opt.id)}
+                      title={opt.hint}
+                      className={`text-[10px] font-mono font-bold tracking-widest uppercase rounded-lg border px-3 py-1.5 transition-all whitespace-nowrap ${
+                        active
+                          ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]'
+                          : 'border-white/10 bg-zinc-950 text-zinc-400 hover:border-[#FFCC00]/50 hover:text-zinc-200'
+                      }`}
+                    >
+                      {opt.label}
+                    </button>
+                  );
+                })}
+              </div>
+              {omniStyle && (
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  {/* Brand swatch — hero-sampled default (#FFCC00 until sampled), user-flippable. */}
+                  <input
+                    type="color"
+                    value={brandHex ?? '#FFCC00'}
+                    onChange={(e) => setBrandHex(e.target.value)}
+                    title="Brand accent color — sampled from your hero image, click to change."
+                    className="h-[30px] w-9 shrink-0 cursor-pointer rounded-lg border border-white/10 bg-zinc-950 p-0.5"
+                  />
+                  {omniStyle === 'premium_reel' ? (
+                    <input
+                      type="text"
+                      value={emphasisWord}
+                      onChange={(e) => {
+                        setEmphasisWord(e.target.value);
+                        setChipsEdited(true);
+                      }}
+                      placeholder="EMPHASIS"
+                      title="The word the style pops on-screen."
+                      className="h-[30px] w-28 bg-zinc-950 border border-white/10 rounded-lg px-2 text-[10px] font-mono uppercase tracking-widest text-zinc-200 focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00]"
+                    />
+                  ) : (
+                    <input
+                      type="text"
+                      value={titleText}
+                      onChange={(e) => {
+                        setTitleText(e.target.value);
+                        setChipsEdited(true);
+                      }}
+                      placeholder="TITLE"
+                      title="The title-card text for the explainer."
+                      className="h-[30px] w-28 bg-zinc-950 border border-white/10 rounded-lg px-2 text-[10px] font-mono uppercase tracking-widest text-zinc-200 focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00]"
+                    />
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => setCaptionsOn((v) => !v)}
+                    title="Burn spoken-word subtitles into the styled scenes."
+                    className={`text-[10px] font-mono font-bold tracking-widest uppercase rounded-lg border px-3 py-1.5 transition-all whitespace-nowrap ${
+                      captionsOn
+                        ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]'
+                        : 'border-white/10 bg-zinc-950 text-zinc-400 hover:border-[#FFCC00]/50 hover:text-zinc-200'
+                    }`}
+                  >
+                    CAPTIONS {captionsOn ? 'ON' : 'OFF'}
+                  </button>
+                </div>
+              )}
+              <span className="text-[10px] font-mono text-zinc-500 whitespace-nowrap hidden md:inline">
+                {OMNI_STYLE_OPTIONS.find((o) => o.id === omniStyle)?.hint}
+                <span className="text-zinc-600"> · applied in the AI Editor</span>
+              </span>
+            </>
+          ) : (
+            <>
+              <div className="flex items-center gap-1 flex-wrap opacity-50">
+                {OMNI_STYLE_OPTIONS.map((opt) => (
+                  <button
+                    key={opt.label}
+                    type="button"
+                    disabled
+                    className="text-[10px] font-mono font-bold tracking-widest uppercase rounded-lg border border-white/10 bg-zinc-950 text-zinc-500 px-3 py-1.5 cursor-not-allowed whitespace-nowrap"
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+              <span className="flex items-center gap-1.5 text-[10px] font-mono text-zinc-500 uppercase tracking-widest whitespace-nowrap">
+                <Lock className="w-3 h-3" /> OMNI STYLES · Business
+              </span>
+            </>
+          )}
         </div>
       )}
     </div>

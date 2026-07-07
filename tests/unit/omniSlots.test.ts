@@ -85,6 +85,41 @@ describe('deriveSlots — per preset', () => {
   });
 });
 
+describe('deriveSlots — Slice 3 overrides + sceneDescription', () => {
+  const base = {
+    scriptLine: 'This SALE ends today',
+    allScriptLines: 'This SALE ends today. Grab it before midnight.',
+  };
+
+  it('dolly-zoom-v1: subject_desc prefers sceneDescription over scriptLine', () => {
+    const s = deriveSlots('dolly-zoom-v1', {
+      ...base,
+      sceneDescription: 'a frosted glass of iced coffee on marble',
+    });
+    expect(s.subject_desc).toBe('a frosted glass of iced coffee on marble');
+  });
+
+  it('dolly-zoom-v1: falls back to scriptLine when sceneDescription is absent or blank', () => {
+    expect(deriveSlots('dolly-zoom-v1', base).subject_desc).toBe(base.scriptLine);
+    expect(deriveSlots('dolly-zoom-v1', { ...base, sceneDescription: '   ' }).subject_desc).toBe(base.scriptLine);
+  });
+
+  it('premium-reel-v2: emphasisOverride wins over the derived word', () => {
+    const s = deriveSlots('premium-reel-v2', { ...base, emphasisOverride: 'MIDNIGHT' });
+    expect(s.emphasis_words).toBe('MIDNIGHT');
+  });
+
+  it('vox-explainer-v1: titleOverride wins over the derived word', () => {
+    const s = deriveSlots('vox-explainer-v1', { ...base, titleOverride: 'FLASH DEAL' });
+    expect(s.title_text).toBe('FLASH DEAL');
+  });
+
+  it('ignores empty / whitespace-only overrides (keeps the derived word)', () => {
+    expect(deriveSlots('premium-reel-v2', { ...base, emphasisOverride: '   ' }).emphasis_words).toBe('SALE');
+    expect(deriveSlots('vox-explainer-v1', { ...base, titleOverride: '' }).title_text).toBe('SALE');
+  });
+});
+
 describe('deriveSlots satisfies every preset (fillPromptTemplate does not throw)', () => {
   const ctx = {
     scriptLine: 'Your skin deserves better HYDRATION every single day',

@@ -50,6 +50,12 @@ export const planAtLeast = (current: PlanId, required: PlanId): boolean =>
 export const musicGenEligible = (current: PlanId): boolean =>
   planAtLeast(current, 'pro');
 
+// Omni Edit Styles (the AI "Applying style" pass) are a Business-tier perk.
+// Client gate only — the fire-path proxy (api/gemini/omni-video.ts) is the real
+// wall. Mirrors musicGenEligible.
+export const omniStylesEligible = (current: PlanId): boolean =>
+  planAtLeast(current, 'business');
+
 // Ordered, lowest → highest, for next-tier lookups.
 const PLAN_ORDER: PlanId[] = ['free', 'starter', 'pro', 'business'];
 

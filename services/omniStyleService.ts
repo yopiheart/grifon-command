@@ -94,9 +94,17 @@ export interface OmniSlotContext {
   scriptLine: string;
   allScriptLines: string;
   brandPrimaryHex?: string;
+  /* Storyboard scene description → the dolly-zoom subject_desc slot. */
+  sceneDescription?: string;
+  /* Picker chip overrides (Slice 3) — win over the derived word when non-blank. */
+  emphasisOverride?: string;
+  titleOverride?: string;
 }
 
-const DEFAULT_BRAND_HEX = '#FFCC00'; // TODO(Slice 3): brand color picker.
+// Service default when the picker did not sample/set a swatch. The Slice 3 picker
+// feeds ctx.brandPrimaryHex (hero-image dominant color or the user's pick); this
+// is only the fallback when that is absent.
+const DEFAULT_BRAND_HEX = '#FFCC00';
 
 /**
  * Derive the exact slot map a preset needs from the scene/ad context. Returns
@@ -112,19 +120,19 @@ export function deriveSlots(presetId: OmniPresetId, ctx: OmniSlotContext): Recor
     case 'premium-reel-v2':
       return {
         transcript: ctx.scriptLine,
-        emphasis_words: emphasis,
+        emphasis_words: ctx.emphasisOverride?.trim() || emphasis,
         brand_primary_hex: brandHex,
       };
     case 'vox-explainer-v1':
       return {
         topic_context: ctx.allScriptLines,
-        title_text: emphasis,
+        title_text: ctx.titleOverride?.trim() || emphasis,
       };
     case 'dolly-zoom-v1':
-      // subject_desc: best available until the storyboard sceneDescription is
-      // threaded through the batch (FLAGGED for Slice 3 — see report).
+      // subject_desc: the storyboard scene description (the shot), falling back
+      // to the spoken line when no description is threaded.
       return {
-        subject_desc: ctx.scriptLine,
+        subject_desc: ctx.sceneDescription?.trim() || ctx.scriptLine,
       };
     case 'display-text-pop-v1':
       return {
@@ -238,6 +246,8 @@ export interface ApplyOmniStyleOpts {
   finishedAdId: string;
   aspectRatio: '9:16' | '16:9' | '1:1';
   brandPrimaryHex?: string;
+  /* Picker chip overrides (Slice 3) — threaded into deriveSlots per scene. */
+  slotOverrides?: { emphasisWord?: string; titleText?: string };
 }
 
 const POLL_INTERVAL_MS = 5_000;
@@ -357,6 +367,9 @@ async function runSceneLadder(
     scriptLine: scene.scriptLine,
     allScriptLines,
     brandPrimaryHex: opts.brandPrimaryHex,
+    sceneDescription: scene.sceneDescription,
+    emphasisOverride: opts.slotOverrides?.emphasisWord,
+    titleOverride: opts.slotOverrides?.titleText,
   });
   const token = await getAccessToken();
   const fireBody = {

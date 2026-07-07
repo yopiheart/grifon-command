@@ -39,8 +39,13 @@ export interface EditorBatchPayload {
   /** Look locked at GenerateVideo's Render All; absent → server rotates. */
   lockedPresetId?: LockablePresetId;
   /** Omni Edit Style locked at Render All (Slice 3 picker); drives the
-   *  "Applying style" pass. Absent in Slice 2 unless set via the dev selector. */
+   *  "Applying style" pass. Absent unless set via the picker or the dev selector. */
   omniStyle?: 'premium_reel' | 'vox_explainer';
+  /** Slice 3 picker fields — hop with the style. */
+  omniBrandHex?: string;
+  omniEmphasisWord?: string;
+  omniTitleText?: string;
+  captionsEnabled?: boolean;
 }
 
 interface EditVideoProps {
@@ -119,6 +124,11 @@ const BatchEditMode: React.FC<{
   const [renderError, setRenderError] = useState<string | null>(null);
   // Burn-in: drawtext overlays/captions + SFX + ducked music bed from the EDL.
   const [burnInEnabled, setBurnInEnabled] = useState(true);
+  // Captions (spoken-word subtitles) toggle. Style-defaulted at the picker (VOX
+  // off / Premium on); off omits scriptLine + voiceWords from the request scenes
+  // so no subtitles burn in (hook title / callouts stay). Music length + dead-air
+  // trim are computed pre-omission, so this does not shift timing.
+  const [captionsEnabled, setCaptionsEnabled] = useState(editorBatch.captionsEnabled ?? true);
   // Generative music bed (ElevenLabs Music) — Pro/Business perk, default-on for
   // eligible tiers. Server is authoritative (MUSIC_DAILY); this only governs the
   // toggle + the pre-render compose call. Off / ineligible → tuned static bed.
@@ -169,7 +179,12 @@ const BatchEditMode: React.FC<{
       await applyOmniStyle(
         editorBatch.sceneBatch,
         omniStyle,
-        { finishedAdId, aspectRatio: editorBatch.aspectRatio },
+        {
+          finishedAdId,
+          aspectRatio: editorBatch.aspectRatio,
+          brandPrimaryHex: editorBatch.omniBrandHex,
+          slotOverrides: { emphasisWord: editorBatch.omniEmphasisWord, titleText: editorBatch.omniTitleText },
+        },
         (o) => {
           setOmniResults((prev) => ({ ...prev, [o.sceneIdx]: o }));
           setOmniApplyingScenes((prev) => {
@@ -196,7 +211,12 @@ const BatchEditMode: React.FC<{
       const o = await restyleScene(
         scene,
         omniStyle,
-        { finishedAdId, aspectRatio: editorBatch.aspectRatio },
+        {
+          finishedAdId,
+          aspectRatio: editorBatch.aspectRatio,
+          brandPrimaryHex: editorBatch.omniBrandHex,
+          slotOverrides: { emphasisWord: editorBatch.omniEmphasisWord, titleText: editorBatch.omniTitleText },
+        },
         allScriptLinesJoined
       );
       setOmniResults((prev) => ({ ...prev, [sceneIdx]: o }));
@@ -363,12 +383,20 @@ const BatchEditMode: React.FC<{
           if (composed?.bedUrl) music = { ...music, bedUrl: composed.bedUrl };
         }
       }
+      // Captions OFF: drop scriptLine + measured word timings from the request
+      // scenes so no spoken-word subtitles burn in (hook title / callouts via
+      // overlayText STAY — Neil decision). This happens AFTER the music-length
+      // reduce + targetDurationSec above (both computed from the pre-omission
+      // scenes), so captions-off never shifts music length or dead-air trim.
+      const requestScenes: FinalRenderScene[] = captionsEnabled
+        ? scenes
+        : scenes.map(({ scriptLine, voiceWords, ...rest }) => rest);
       // End-card recap overlay removed 2026-06-16 (Neil): it auto-pulled the
       // wizard offer — which carries the price — and burned it onto the last
       // scene (and covered the presenter's face). No auto-applied recap now; the
       // last scene renders clean, like before the 2026-06-13 feature.
       const result = await renderFinalVideo({
-        scenes,
+        scenes: requestScenes,
         aspectRatio: editorBatch.aspectRatio,
         music,
         preset: buildLockedPreset(editorBatch.lockedPresetId),
@@ -648,6 +676,36 @@ const BatchEditMode: React.FC<{
                   : '// Stitched clips only — edit it yourself'}
               </p>
             </div>
+            {/* Captions (spoken-word subtitles) — only meaningful in Auto mode. */}
+            {burnInEnabled && (
+              <div className="mb-3">
+                <span className="block text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">// CAPTIONS</span>
+                <div className="flex gap-2">
+                  {([
+                    { v: true, label: 'On' },
+                    { v: false, label: 'Off' },
+                  ] as const).map(({ v, label }) => (
+                    <button
+                      key={label}
+                      type="button"
+                      onClick={() => setCaptionsEnabled(v)}
+                      className={`px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wide transition-colors border ${
+                        captionsEnabled === v
+                          ? 'bg-[#FFCC00] text-zinc-950 border-[#FFCC00]'
+                          : 'bg-zinc-950 text-zinc-400 border-white/10 hover:border-[#FFCC00]/50'
+                      }`}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
+                <p className="text-[10px] text-zinc-500 font-mono mt-2">
+                  {captionsEnabled
+                    ? '// Spoken-word subtitles burned in'
+                    : '// No subtitles — hook title & callouts stay'}
+                </p>
+              </div>
+            )}
             {/* Generative music — Pro/Business only. Off / ineligible → tuned static bed. */}
             {musicEligible && burnInEnabled && (
               <button
