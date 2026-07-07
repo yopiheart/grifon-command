@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="tl">
+<head>
+<meta charset="utf-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --navy:#0E2C5E; --navy2:#0A1F45; --ocean:#1C63AD; --sky:#3E8FD0;
+    --gold:#F5B301; --white:#fff;
+    --head:'Anton','Arial Narrow','Impact',sans-serif;
+    --body:'Inter','Helvetica Neue',Arial,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{background:#333;}
+  #canvas{
+    width:1080px;height:1350px;position:relative;overflow:hidden;
+    font-family:var(--body);background:var(--navy);
+    -webkit-font-smoothing:antialiased;
+  }
+  .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 45%;}
+  /* readability scrims */
+  .scrim-top{position:absolute;top:0;left:0;width:100%;height:520px;
+    background:linear-gradient(to bottom, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.72) 40%, rgba(255,255,255,0) 100%);}
+  .scrim-bot{position:absolute;bottom:0;left:0;width:100%;height:430px;
+    background:linear-gradient(to top, var(--navy2) 8%, rgba(10,31,69,0.92) 40%, rgba(10,31,69,0) 100%);}
+
+  /* logo top-left */
+  .logo-chip{position:absolute;top:34px;left:34px;z-index:5;background:#fff;
+    border-radius:14px;padding:6px 10px;box-shadow:0 4px 14px rgba(0,0,0,0.22);}
+  .logo-chip img{height:64px;width:auto;display:block;}
+  /* legit top-right */
+  .legit{position:absolute;top:40px;right:34px;z-index:5;display:flex;align-items:center;gap:10px;}
+  .legit .t{ text-align:right;line-height:1.1;}
+  .legit .t .c{font-weight:900;font-size:15px;color:var(--navy);letter-spacing:.3px;text-transform:uppercase;}
+  .legit .t .s{font-size:12px;font-weight:700;color:var(--ocean);letter-spacing:.4px;text-transform:uppercase;margin-top:2px;}
+  .legit img{height:54px;width:auto;filter:drop-shadow(0 1px 3px rgba(0,0,0,.25));}
+
+  /* headline block over the light sky */
+  .top{position:absolute;top:150px;left:0;width:100%;z-index:5;text-align:center;padding:0 60px;}
+  .eyebrow{display:inline-block;background:var(--gold);color:var(--navy);font-weight:900;
+    font-size:19px;letter-spacing:2px;text-transform:uppercase;padding:6px 16px;border-radius:6px;}
+  .top h1{font-family:var(--head);font-weight:400;font-size:74px;line-height:0.94;color:var(--navy);
+    text-transform:uppercase;letter-spacing:.5px;margin-top:16px;}
+  .top .sub{font-size:23px;font-weight:700;color:var(--navy2);margin-top:14px;line-height:1.3;}
+  .top .sub b{color:var(--ocean);}
+
+  /* bottom contact strip */
+  .wave{position:absolute;left:0;bottom:196px;width:100%;height:34px;z-index:6;display:block;}
+  .contact{position:absolute;bottom:0;left:0;width:100%;z-index:6;padding:26px 44px 30px;text-align:center;}
+  .cta{font-family:var(--head);font-size:40px;color:var(--white);text-transform:uppercase;letter-spacing:.5px;line-height:1;}
+  .cta em{color:var(--gold);font-style:normal;}
+  .nums{margin-top:16px;display:flex;justify-content:center;gap:40px;}
+  .num{display:flex;align-items:center;gap:11px;}
+  .num .ph{width:38px;height:38px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;flex:0 0 auto;}
+  .num .ph svg{width:21px;height:21px;fill:var(--navy2);}
+  .num .lbl{font-size:13px;font-weight:800;color:var(--sky);letter-spacing:1.5px;text-transform:uppercase;line-height:1;}
+  .num .no{font-size:27px;font-weight:900;color:#fff;letter-spacing:.3px;line-height:1.1;}
+  .num .txt{text-align:left;}
+  .areas{margin-top:14px;font-size:16px;font-weight:800;color:var(--gold);letter-spacing:.3px;}
+</style>
+</head>
+<body>
+  <div id="canvas">
+    <img class="bg" src="../out/demo-education-septic.png" alt="" />
+    <div class="scrim-top"></div>
+    <div class="scrim-bot"></div>
+
+    <div class="logo-chip"><img src="../assets/logo.jpg" alt="Oceanides" /></div>
+    <div class="legit">
+      <div class="t"><div class="c">SEC-Registered</div><div class="s">DENR &middot; BIR</div></div>
+      <img src="../assets/badge-bir.png" alt="BIR" />
+    </div>
+
+    <div class="top">
+      <span class="eyebrow">Alam mo ba?</span>
+      <h1>Paano gumagana ang septic tank mo?</h1>
+      <div class="sub">Kaya dapat <b>pa-siphon kada 3&ndash;5 years</b> &mdash; bago pa umapaw at mangamoy.</div>
+    </div>
+
+    <svg class="wave" viewBox="0 0 1080 34" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,34 L0,17 C120,-4 240,-4 360,12 C480,28 600,28 720,13 C840,-1 960,-1 1080,15 L1080,34 Z" fill="#1C63AD"/>
+      <path d="M0,34 L0,25 C120,9 240,9 360,22 C480,35 600,35 720,24 C840,12 960,12 1080,26 L1080,34 Z" fill="#0A1F45"/>
+    </svg>
+
+    <div class="contact">
+      <div class="cta">Tawag na &mdash; <em>free consultation</em></div>
+      <div class="nums">
+        <div class="num">
+          <div class="ph"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.24.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.18z"/></svg></div>
+          <div class="txt"><div class="lbl">Globe</div><div class="no">0917 671 6383</div></div>
+        </div>
+        <div class="num">
+          <div class="ph"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.24.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.18z"/></svg></div>
+          <div class="txt"><div class="lbl">Smart</div><div class="no">0939 245 6217</div></div>
+        </div>
+      </div>
+      <div class="areas">Metro Manila &middot; Calabarzon &middot; Central Luzon</div>
+    </div>
+  </div>
+</body>
+</html>
