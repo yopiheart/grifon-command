@@ -30,13 +30,25 @@ describe('omniPresets — routing table', () => {
     }
   });
 
-  it('routes the two hero styles per the plan', () => {
+  it('routes the two hero styles per the plan (b-roll held from beta route)', () => {
     expect(OMNI_STYLE_ROUTING.premium_reel.talking).toBe('premium-reel-v2');
-    expect(OMNI_STYLE_ROUTING.premium_reel['b-roll']).toBe('dolly-zoom-v1');
+    // b-roll pulled from the route — dolly-zoom read cheap on real footage
+    // (Neil 2026-07-07); b-roll scenes get the clean FFmpeg edit instead.
+    expect(OMNI_STYLE_ROUTING.premium_reel['b-roll']).toBeNull();
     expect(OMNI_STYLE_ROUTING.premium_reel.mixed).toBe('display-text-pop-v1');
     expect(OMNI_STYLE_ROUTING.vox_explainer.talking).toBe('vox-explainer-v1');
-    expect(OMNI_STYLE_ROUTING.vox_explainer['b-roll']).toBe('dolly-zoom-v1');
+    expect(OMNI_STYLE_ROUTING.vox_explainer['b-roll']).toBeNull();
     expect(OMNI_STYLE_ROUTING.vox_explainer.mixed).toBe('display-text-pop-v1');
+  });
+
+  it('does not route any style to dolly-zoom-v1 in the beta (still an approved preset)', () => {
+    for (const style of STYLES) {
+      for (const scene of SCENE_TYPES) {
+        expect(OMNI_STYLE_ROUTING[style][scene]).not.toBe('dolly-zoom-v1');
+      }
+    }
+    // held-not-removed: the preset remains valid so restoring it is one line.
+    expect(isApprovedOmniPresetId('dolly-zoom-v1')).toBe(true);
   });
 
   it('exposes exactly the four approved preset ids', () => {

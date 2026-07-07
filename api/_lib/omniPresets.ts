@@ -210,10 +210,16 @@ export const isApprovedOmniPresetId = (id: string): id is OmniPresetId =>
 export type OmniStyleId = 'premium_reel' | 'vox_explainer';
 
 /**
- * Deterministic style × scene-type → preset routing. `dolly-zoom-v1` runs on
- * b-roll scenes inside both bundles; `display-text-pop-v1` is the internal
- * move where a display word fits (mixed scenes). A `null` cell means "no Omni
- * move — fall back to the FFmpeg-only render for that scene".
+ * Deterministic style × scene-type → preset routing. A `null` cell means "no
+ * Omni move — fall back to the FFmpeg-only render for that scene".
+ *
+ * `b-roll` is HELD from the beta route (Neil eyeball 2026-07-07: the dolly-zoom
+ * move reads cheap/uncommitted on real footage, and the believability gate does
+ * not measure motion quality). b-roll scenes get the clean FFmpeg edit; only the
+ * two talking-scene hero moves ship in the beta. `dolly-zoom-v1` stays an
+ * approved preset so restoring it is a one-line change once the move is re-tuned
+ * + re-validated. `display-text-pop-v1` (mixed) is unreachable in product — no
+ * scene type derives `mixed` (see services/omniStyleService.ts).
  */
 export const OMNI_STYLE_ROUTING: Record<
   OmniStyleId,
@@ -221,12 +227,12 @@ export const OMNI_STYLE_ROUTING: Record<
 > = {
   premium_reel: {
     talking: 'premium-reel-v2',
-    'b-roll': 'dolly-zoom-v1',
+    'b-roll': null, // dolly-zoom-v1 held from beta route (Neil 2026-07-07)
     mixed: 'display-text-pop-v1',
   },
   vox_explainer: {
     talking: 'vox-explainer-v1',
-    'b-roll': 'dolly-zoom-v1',
+    'b-roll': null, // dolly-zoom-v1 held from beta route (Neil 2026-07-07)
     mixed: 'display-text-pop-v1',
   },
 };

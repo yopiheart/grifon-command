@@ -12,15 +12,37 @@
 
 ## ⏸ RESUME STATE (2026-07-07 — read this first when resuming)
 
-**Where we are:** Slices 1 + 2 + 3 are BUILT, LIVE-SMOKED, and
-**NEIL_APPROVED**; **Slice 4 CODE IS BUILT** (goal approved by Neil verbatim
-"APPROVED!" 2026-07-07; built via code-executor, commit `5f02fc1`; step-0
-registry flips in `0664801`). 532 unit tests green (18 new). **Remaining
-before PR to main:** (1) live beta wizard smoke — real pipeline run proving
-`events` rows land + the never-smoked GenerateVideo picker-row visual + Neil
-eyeball (Neil-gated spend); (2) set `OMNI_STYLES_BETA_ALLOWLIST` in Vercel
-BEFORE merge (deleting the var later = public launch); (3) beta launch-gate
-review with Neil (fallback rate >30% = hold public). Nothing merged to main.
+**Where we are:** Slices 1 + 2 + 3 + 4 are BUILT and NEIL-eyeballed. Slice 4
+code `5f02fc1`; step-0 registry flips `0664801`; live smoke + dolly-zoom pull
+2026-07-07. 533 unit tests green. **Remaining before PR to main:** (1) set
+`OMNI_STYLES_BETA_ALLOWLIST` in Vercel BEFORE merge (deleting the var later =
+public launch); (2) beta launch-gate review with Neil (fallback rate >30% =
+hold public). Nothing merged to main.
+
+**Slice-4 LIVE SMOKE PASSED (2026-07-07, ~$0.80, 2 paid renders):**
+- **Positive path:** dev-seeded 2-scene EditVideo run (VOX EXPLAINER),
+  fired once. Scene 0 (talking/vox-explainer-v1) → fallback via the QA gate
+  (`gateReasons:['forbidden_text']` — the Vox-masthead guard firing as
+  designed); Scene 1 (b-roll/dolly-zoom-v1) → styled. Billing charged 1 omni
+  ad (4 of 5 left). **Telemetry verified in the `events` table:** 2×
+  `omni_scene_outcome` (preset × sceneType × outcome + fallbackReason +
+  `gateUnavailable` + `context:'initial'`) + 1× `omni_pass_complete`
+  (styledCount 1 / fallbackCount 1 / charged true), all with a verified
+  `user_id`. **COGS lines emitted** (`tag:'cogs', kind:'video',
+  label:'omni:fire'`, $0.30–0.40 each) in the dev server log.
+- **Allowlist negative case ($0):** set `OMNI_STYLES_BETA_ALLOWLIST` to a
+  non-member email → status probe returned `{available:false,
+  reason:'beta_allowlist'}`; fire calls 503 `{omni_styles_disabled,
+  beta_allowlist}`; both scenes fell back near-instantly (no paid call);
+  `omni_pass_complete` charged:false. Picker-row hide confirmed by the probe.
+  `.env` restored after (allowlist commented out).
+- **dolly-zoom PULLED from the beta route (Neil eyeball):** Neil judged the
+  styled b-roll dolly-zoom move cheap/uncommitted on real footage. Decision =
+  **Option A** — `OMNI_STYLE_ROUTING` b-roll→null for both styles (b-roll gets
+  the clean FFmpeg edit); the beta ships the two talking-scene hero moves only.
+  dolly-zoom-v1 kept as an approved preset (one-line restore after a motion
+  re-tune + re-validation). Registry row reverted product_shipped→neil_approved
+  (HELD). Routing edit was Neil-approved (TUNED-file gate cleared).
 
 **Slice 4 shipped shape:**
 - `omni_scene_outcome` event (preset × sceneType × outcome + fallbackReason,
@@ -126,26 +148,26 @@ pipeline run — fold into the Slice-4 beta wizard smoke).
   `grifon_dev_editor_batch`=<JSON batch> (consumed on load) — no paid scene
   generation needed to drive the AI Editor.
 
-**Next up — Slice-4 live smoke, then PR to main.** The smoke (smoke-tester,
-foreground; Neil-gated spend ≈ one small styled ad): dev-seeded EditVideo run
-or full wizard run → styled pass completes → query `events` for the
-`omni_scene_outcome` / `omni_pass_complete` rows (preset × sceneType dims
-populated) → picker-row visual on an all-rendered GenerateVideo (the one
-never-smoked Slice-3 item) → allowlist negative case (set
-`OMNI_STYLES_BETA_ALLOWLIST` to a non-member locally → STYLE row hides, fire
-503s) → Neil eyeball. Dolly-zoom commit rate + invented-insert sightings are
-NOT machine-detected (would need Neil-gated tuned-gate edits) — beta review
-samples them from the marked events.
+**Next up — PR to main.** All four slices are built + Neil-eyeballed and the
+live smoke passed. Before opening the PR: (1) confirm with Neil the picker-row
+VISUAL on an all-rendered GenerateVideo — the smoke drove EditVideo via the dev
+seed, so the GenerateVideo `// STYLE` row itself is still un-eyeballed on a real
+all-rendered pipeline run (fold into a wizard smoke or accept as low-risk UI);
+(2) **set `OMNI_STYLES_BETA_ALLOWLIST` in Vercel to the beta cohort BEFORE
+merge** — an unset var on prod = feature open to all Business tier; (3) beta
+launch-gate review (fallback rate >30% across real beta ads = hold public
+release). Dolly-zoom is out of the beta route, so b-roll no longer contributes
+to that fallback rate. Pre-existing tickets (EDL `transitionIn:null` 400; Render
+Final 0-track consolidate) stay separate.
 
 **Paste-ready kickoff for next session:**
 
 > Read `CLAUDE.md` and `workflows/omni_edit_styles_plan.md` in full (esp. the
-> RESUME STATE section) — do not /compact, start fresh. Slice 4 of Omni Edit
-> Styles is CODE-BUILT on `feat/omni-edit-styles` (`5f02fc1`). I've restored
-> `.env` (incl. `OMNI_STYLES_ENABLED=true`, `MEDIA_STORE=r2`). Run the Slice-4
-> live beta smoke per RESUME STATE (smoke-tester foreground, ask me before any
-> paid render), then prep the PR to main — remind me to set
-> `OMNI_STYLES_BETA_ALLOWLIST` in Vercel first. No tuned-file edits without
+> RESUME STATE section) — do not /compact, start fresh. All 4 slices of Omni
+> Edit Styles are built + smoked on `feat/omni-edit-styles`; dolly-zoom is
+> pulled from the beta route. I've restored `.env`. Open the PR to main —
+> remind me to set `OMNI_STYLES_BETA_ALLOWLIST` in Vercel to the beta cohort
+> first (unset on prod = open to all Business). No tuned-file edits without
 > asking me.
 
 ---

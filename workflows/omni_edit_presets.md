@@ -39,7 +39,7 @@ class of edit). The believability + label eval gate runs on EVERY output, every 
 | ID | Name | Target | Status | Est. cost/run | Evidence |
 |---|---|---|---|---|---|
 | `felt-zoom-punchin-v1` | Felt Zoom Punch-In | talking | poc_validated | 5s ≈ $0.50 | #18 Sample 4 + Neil easing fix 2026-07-05 |
-| `dolly-zoom-v1` | Dolly Zoom | b-roll | **product_shipped** (2026-07-07 — b-roll route of both hero styles; Slice 3 NEIL_APPROVED. Code: `api/_lib/omniPresets.ts` template + `OMNI_STYLE_ROUTING`) | 4s ≈ $0.38 | #18 Sample 5 + Neil verdict 2026-07-05 |
+| `dolly-zoom-v1` | Dolly Zoom | b-roll | **neil_approved, HELD from beta route** (2026-07-07 — Neil eyeballed a Slice-4 smoke render: move reads cheap/uncommitted on real footage; the believability gate does not measure motion quality. Pulled from `OMNI_STYLE_ROUTING` (b-roll→null); template kept intact for one-line restore after a motion re-tune + re-validation) | 4s ≈ $0.38 | #18 Sample 5 + Neil verdict 2026-07-05; Slice-4 eyeball 2026-07-07 |
 | `display-text-pop-v1` | Directed Display Text Pop | mixed | neil_approved | 5s ≈ $0.50 | #18 Sample 6 + Neil verdict 2026-07-05 |
 | `angle-switch-v1` | Camera Angle Switch | talking | draft (round 1 CONTAMINATED — retest on clean raw) | 6s ≈ $0.60 | Neil caught source contamination 2026-07-06 |
 | `premium-reel-v1` | Premium Reel (johnsavage talking-head) | talking | superseded by v2 | — | johnsavage PDF (appendix A) + round 1 2026-07-06 |
@@ -231,11 +231,14 @@ gate, routing, captions). Maps all 4 `neil_approved` presets onto the code shape
 - **Next gates:** Slice 4 (telemetry + beta rollout) — telemetry includes the
   gate_unavailable rate, invented-price watch, and dolly-zoom commit-rate
   items collected above. **Step 0 DONE 2026-07-07:** premium-reel-v2 /
-  vox-explainer-v1 / dolly-zoom-v1 rows flipped to `product_shipped` (picker
-  shipped + Slice 3 NEIL_APPROVED + product-path renders eyeballed).
-  `display-text-pop-v1` stays `neil_approved` — wired in `OMNI_STYLE_ROUTING`
-  for `mixed` scenes, but no current scene type derives `mixed`
-  (`services/omniStyleService.ts`), so it is unreachable in product.
+  vox-explainer-v1 rows flipped to `product_shipped` (picker shipped + Slice 3
+  NEIL_APPROVED + product-path renders eyeballed). **dolly-zoom-v1 REVERTED to
+  neil_approved + HELD from route** — the Slice-4 smoke put a real dolly-zoom
+  render in front of Neil and he judged the move cheap/uncommitted; b-roll now
+  routes to null (clean FFmpeg edit) for the beta. `display-text-pop-v1` stays
+  `neil_approved` — wired for `mixed` scenes but no current scene type derives
+  `mixed` (`services/omniStyleService.ts`), so it is unreachable in product.
+  Net: the beta ships the two talking-scene hero moves only.
 
 ### Standing requirement for the future proxy build: filter-block resilience
 
