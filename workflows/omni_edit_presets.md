@@ -39,14 +39,14 @@ class of edit). The believability + label eval gate runs on EVERY output, every 
 | ID | Name | Target | Status | Est. cost/run | Evidence |
 |---|---|---|---|---|---|
 | `felt-zoom-punchin-v1` | Felt Zoom Punch-In | talking | poc_validated | 5s ≈ $0.50 | #18 Sample 4 + Neil easing fix 2026-07-05 |
-| `dolly-zoom-v1` | Dolly Zoom | b-roll | neil_approved | 4s ≈ $0.38 | #18 Sample 5 + Neil verdict 2026-07-05 |
+| `dolly-zoom-v1` | Dolly Zoom | b-roll | **product_shipped** (2026-07-07 — b-roll route of both hero styles; Slice 3 NEIL_APPROVED. Code: `api/_lib/omniPresets.ts` template + `OMNI_STYLE_ROUTING`) | 4s ≈ $0.38 | #18 Sample 5 + Neil verdict 2026-07-05 |
 | `display-text-pop-v1` | Directed Display Text Pop | mixed | neil_approved | 5s ≈ $0.50 | #18 Sample 6 + Neil verdict 2026-07-05 |
 | `angle-switch-v1` | Camera Angle Switch | talking | draft (round 1 CONTAMINATED — retest on clean raw) | 6s ≈ $0.60 | Neil caught source contamination 2026-07-06 |
 | `premium-reel-v1` | Premium Reel (johnsavage talking-head) | talking | superseded by v2 | — | johnsavage PDF (appendix A) + round 1 2026-07-06 |
-| `premium-reel-v2` | Premium Reel (pixel-locked) | talking | **neil_approved** (full gate pass + eyeball 2026-07-06) | 4-6s ≈ $0.40-0.60 | round 1 2026-07-06: believability real-human/high, bg intact, THIRSTY letter-perfect |
+| `premium-reel-v2` | Premium Reel (pixel-locked) | talking | **product_shipped** (2026-07-07 — talking route of the PREMIUM REEL hero style; Slice 3 NEIL_APPROVED. Code: `api/_lib/omniPresets.ts` template + `OMNI_STYLE_ROUTING`; picker `components/GenerateVideo/index.tsx`) | 4-6s ≈ $0.40-0.60 | round 1 2026-07-06: believability real-human/high, bg intact, THIRSTY letter-perfect; product-path renders Neil-eyeballed 2026-07-07 |
 | `angle-switch-v2` | Camera Angle Switch (concrete destinations) | talking | draft — MOVE WORKS per Neil; believability re-run on clean clip pending | 6s ≈ $0.60 | Neil eyeball 2026-07-06 + official prompt guide |
 | `paper-collage-v1` | Paper Collage (johnsavage paper style) | talking | draft | 5s ≈ $0.50/attempt | johnsavage PDF (appendix B) |
-| `vox-explainer-v1` | VOX Editorial Explainer | talking | **neil_approved** (full gate pass + eyeball 2026-07-06; grounding-via-API-text CONFIRMED) | 4s ≈ $0.40 | round 1 2026-07-06: real-human/HIGH, title letter-perfect, graphics grounded from prompt text |
+| `vox-explainer-v1` | VOX Editorial Explainer | talking | **product_shipped** (2026-07-07 — talking route of the VOX EXPLAINER hero style; Slice 3 NEIL_APPROVED. Code: `api/_lib/omniPresets.ts` template + `OMNI_STYLE_ROUTING`; picker `components/GenerateVideo/index.tsx`) | 4s ≈ $0.40 | round 1 2026-07-06: real-human/HIGH, title letter-perfect, graphics grounded from prompt text; product-path renders Neil-eyeballed 2026-07-07 |
 | `rack-focus-v0` | Rack Focus | b-roll | rejected | — | #18 round 1: move failed to execute |
 | `talking-bg-swap-v0` | Talking-Scene BG Swap/Relight | talking | rejected | — | #18 round 1 Tests 3-4: degrades believability |
 
@@ -228,13 +228,14 @@ gate, routing, captions). Maps all 4 `neil_approved` presets onto the code shape
   tell this artifact apart from a real desync.
 - **Slice 3 verdict: NEIL_APPROVED** (2026-07-07, verbatim: *"Okay bro goods
   na to. Sige proceed na tayo sa slice 4."*).
-- **Next gates:** Slice 4 (telemetry + beta rollout) — step 0 flips
-  premium-reel-v2 / vox-explainer-v1 / dolly-zoom-v1 rows to
-  `product_shipped`; telemetry includes the gate_unavailable rate,
-  invented-price watch, and dolly-zoom commit-rate items collected above.
-- Preset rows flip to `product_shipped` only when the user-facing picker ships
-  (Slice 3 — code shipped, pending Neil's eyeball verdict) and Neil eyeballs a
-  product-path render.
+- **Next gates:** Slice 4 (telemetry + beta rollout) — telemetry includes the
+  gate_unavailable rate, invented-price watch, and dolly-zoom commit-rate
+  items collected above. **Step 0 DONE 2026-07-07:** premium-reel-v2 /
+  vox-explainer-v1 / dolly-zoom-v1 rows flipped to `product_shipped` (picker
+  shipped + Slice 3 NEIL_APPROVED + product-path renders eyeballed).
+  `display-text-pop-v1` stays `neil_approved` — wired in `OMNI_STYLE_ROUTING`
+  for `mixed` scenes, but no current scene type derives `mixed`
+  (`services/omniStyleService.ts`), so it is unreachable in product.
 
 ### Standing requirement for the future proxy build: filter-block resilience
 
