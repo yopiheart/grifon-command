@@ -14,20 +14,23 @@ import { ADD_ON_CATALOG, type AddOnId } from './paymongo.js';
 
 export type CreditKind = 'video_ad' | 'cinematic' | 'omni_style';
 
-// Splits add-on IDs into {video, cinematic} finished-ad credit grants. Unknown
-// IDs and non-credit add-ons (e.g. onboarding_call) contribute nothing.
+// Splits add-on IDs into {video, cinematic, omni} finished-ad credit grants.
+// Unknown IDs and non-credit add-ons (e.g. onboarding_call) contribute nothing.
 export function creditsForAddOns(
   addOnIds: readonly string[]
-): { video: number; cinematic: number } {
+): { video: number; cinematic: number; omni: number } {
   let video = 0;
   let cinematic = 0;
+  let omni = 0;
   for (const id of addOnIds) {
     const addOn = ADD_ON_CATALOG[id as AddOnId];
-    if (!addOn?.videoAdCredits) continue;
+    if (!addOn) continue;
+    if (addOn.omniStyleCredits) omni += addOn.omniStyleCredits;
+    if (!addOn.videoAdCredits) continue;
     if (addOn.cinematic) cinematic += addOn.videoAdCredits;
     else video += addOn.videoAdCredits;
   }
-  return { video, cinematic };
+  return { video, cinematic, omni };
 }
 
 // Additive grant via RPC. Returns false (and logs) on error so the caller can

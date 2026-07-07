@@ -238,8 +238,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       if (!add_ons) {
         return res.status(200).json({ ignored: 'topup_no_add_ons' });
       }
-      const { video, cinematic } = creditsForAddOns(add_ons);
-      await grantCredits(user_id, video, cinematic);
+      const { video, cinematic, omni } = creditsForAddOns(add_ons);
+      await grantCredits(user_id, video, cinematic, omni);
       await admin
         .from('subscriptions')
         .update({
@@ -255,7 +255,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         // skip value, still fire so the conversion is attributed.
       }
       await firePurchaseCapi(admin, user_id, intent_id, topupCentavos);
-      return res.status(200).json({ ok: true, granted: { video, cinematic } });
+      return res.status(200).json({ ok: true, granted: { video, cinematic, omni } });
     }
 
     // Subscription activation (existing flow).
@@ -285,8 +285,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Grant any video-credit add-ons bought as order bumps alongside the plan
     // (no-op for non-credit bumps like onboarding_call).
     if (add_ons) {
-      const { video, cinematic } = creditsForAddOns(add_ons);
-      await grantCredits(user_id, video, cinematic);
+      const { video, cinematic, omni } = creditsForAddOns(add_ons);
+      await grantCredits(user_id, video, cinematic, omni);
     }
     // Server-authoritative purchase value: plan price (by cycle) + any add-on
     // order bumps. Never trust a client amount.

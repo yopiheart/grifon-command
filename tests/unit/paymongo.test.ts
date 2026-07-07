@@ -6,6 +6,7 @@ import {
   WEBHOOK_MAX_AGE_SECONDS,
   PLAN_CATALOG,
   ADD_ON_CATALOG,
+  isAddOnId,
   sumAddOnCentavos,
 } from '../../api/_lib/paymongo.js';
 
@@ -128,5 +129,21 @@ describe('order-bump add-ons (sumAddOnCentavos)', () => {
   it('throws on any unknown add-on ID so the client cannot inject an amount', () => {
     expect(() => sumAddOnCentavos(['onboarding_call', 'totally_made_up'])).toThrow(/unknown_add_on/);
     expect(() => sumAddOnCentavos(['0; DROP TABLE subscriptions'])).toThrow(/unknown_add_on/);
+  });
+});
+
+describe('omni_style_single top-up add-on', () => {
+  it('is a recognised add-on ID', () => {
+    expect(isAddOnId('omni_style_single')).toBe(true);
+  });
+
+  it('prices at ₱499 (49,900 centavos)', () => {
+    expect(sumAddOnCentavos(['omni_style_single'])).toBe(49_900);
+  });
+
+  it('grants 1 omni style credit and no video-ad credits', () => {
+    const entry = ADD_ON_CATALOG.omni_style_single;
+    expect(entry.omniStyleCredits).toBe(1);
+    expect(entry.videoAdCredits).toBeUndefined();
   });
 });

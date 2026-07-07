@@ -40,6 +40,7 @@ import {
 } from '../../services/geminiService';
 import { getSupabase } from '../../services/supabaseClient';
 import { useSubscription } from '../../hooks/useSubscription';
+import { useQuota } from '../../hooks/useQuota';
 import { SCENE_CAP, omniStylesEligible } from '../../utils/planGate';
 import { pickEmphasisWord } from '../../services/omniStyleService';
 import { dominantHexFromImage } from '../../utils/dominantColor';
@@ -220,6 +221,9 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
   // Per-plan scene cap (the COGS dial) — Render All renders at most this many
   // scenes per finished ad. Free is gated out of this module entirely.
   const { plan_id } = useSubscription();
+  // Omni Edit Style monthly meter + purchased credits — drives the // STYLE
+  // row's "N OF 5 LEFT" chip and the ₱499 buy chip when both hit zero.
+  const quota = useQuota();
   const sceneCap = SCENE_CAP[plan_id];
   // Slice 4 — advanced quality/engine/resolution controls (incl. 4K) are a
   // Business unlock; lower tiers render on the standard auto pipeline. The
@@ -1937,6 +1941,30 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
                   >
                     CAPTIONS {captionsOn ? 'ON' : 'OFF'}
                   </button>
+                  {/* Omni allowance meter — the fire-path 402 is the real wall,
+                      so a 0/0 state offers the ₱499 top-up chip, never a lock. */}
+                  {(() => {
+                    const remaining = quota.omni_ads.remaining;
+                    const credits = quota.credits.omni_style_credits;
+                    if (remaining <= 0 && credits <= 0) {
+                      return (
+                        <button
+                          type="button"
+                          onClick={() => { window.location.href = '/checkout?topup=omni_style_single'; }}
+                          title="Buy one more Omni Style ad — ₱499."
+                          className={`${COMMAND_CHIP} ${COMMAND_CHIP_IDLE}`}
+                        >
+                          // BUY 1 — ₱499
+                        </button>
+                      );
+                    }
+                    return (
+                      <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 whitespace-nowrap">
+                        // {remaining} OF {quota.omni_ads.limit} LEFT THIS MONTH
+                        {credits > 0 && ` · ${credits} CREDIT${credits === 1 ? '' : 'S'}`}
+                      </span>
+                    );
+                  })()}
                 </div>
               )}
               <span className="text-[10px] font-mono text-zinc-500 whitespace-nowrap hidden md:inline">

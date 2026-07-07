@@ -26,22 +26,36 @@ describe('creditsForAddOns', () => {
     expect(creditsForAddOns(['video_ad_single', 'video_ad_pack5'])).toEqual({
       video: 6,
       cinematic: 0,
+      omni: 0,
     });
   });
 
   it('routes the cinematic add-on to the cinematic bucket', () => {
-    expect(creditsForAddOns(['video_ad_cinematic'])).toEqual({ video: 0, cinematic: 1 });
+    expect(creditsForAddOns(['video_ad_cinematic'])).toEqual({ video: 0, cinematic: 1, omni: 0 });
+  });
+
+  it('routes the omni style add-on to the omni bucket', () => {
+    expect(creditsForAddOns(['omni_style_single'])).toEqual({ video: 0, cinematic: 0, omni: 1 });
+  });
+
+  it('sums a mixed cart across every bucket', () => {
+    expect(creditsForAddOns(['video_ad_pack5', 'omni_style_single'])).toEqual({
+      video: 5,
+      cinematic: 0,
+      omni: 1,
+    });
   });
 
   it('ignores non-credit add-ons (onboarding_call) and unknown ids', () => {
     expect(creditsForAddOns(['onboarding_call', 'bogus_id'])).toEqual({
       video: 0,
       cinematic: 0,
+      omni: 0,
     });
   });
 
   it('returns zeros for an empty selection', () => {
-    expect(creditsForAddOns([])).toEqual({ video: 0, cinematic: 0 });
+    expect(creditsForAddOns([])).toEqual({ video: 0, cinematic: 0, omni: 0 });
   });
 });
 

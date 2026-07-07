@@ -160,6 +160,9 @@ const BatchEditMode: React.FC<{
   const [rerolledScenes, setRerolledScenes] = useState<Set<number>>(new Set());
   // Calm one-line billing note surfaced after the deferred consume settles.
   const [omniBillingNote, setOmniBillingNote] = useState<string | null>(null);
+  // True when the pass settled with the allowance exhausted — drives the ₱499
+  // top-up CTA under the billing note (Slice 3c upsell surface).
+  const [omniAllowanceExhausted, setOmniAllowanceExhausted] = useState(false);
 
   // Map a settled consume result (or an allowance short-circuit) to the calm
   // mono billing note. null/dev_unmetered stay silent.
@@ -176,13 +179,15 @@ const BatchEditMode: React.FC<{
 
   // Settle billing for a resolved omni pass. When the allowance ran dry mid-pass
   // the routed scenes short-circuit to fallback with omni_allowance_exhausted —
-  // surface that specific reason (the ₱499 top-up CTA is Slice 3c, not here)
-  // instead of the generic "no charge" note.
+  // surface that specific reason plus the ₱499 top-up CTA (Slice 3c) instead of
+  // the generic "no charge" note.
   const settleOmniBilling = async (outcomes: OmniSceneOutcome[]) => {
     if (outcomes.some((o) => o.fallbackReason === 'omni_allowance_exhausted')) {
       setOmniBillingNote('// Omni allowance used up — styles fell back to the standard edit');
+      setOmniAllowanceExhausted(true);
       return;
     }
+    setOmniAllowanceExhausted(false);
     const consumed = await consumeOmniStyleAd(finishedAdId, outcomes);
     setOmniBillingNote(noteFromConsume(consumed));
   };
@@ -527,6 +532,15 @@ const BatchEditMode: React.FC<{
                 {omniError && <p className="text-[10px] text-red-400 font-mono mt-1">// {omniError}</p>}
                 {omniBillingNote && (
                   <p className="text-[10px] text-zinc-400 font-mono mt-1">{omniBillingNote}</p>
+                )}
+                {omniAllowanceExhausted && (
+                  <button
+                    type="button"
+                    onClick={() => { window.location.href = '/checkout?topup=omni_style_single'; }}
+                    className="mt-2 text-[10px] font-mono font-bold uppercase tracking-widest rounded-xl border border-white/10 bg-zinc-950 px-3 py-1.5 text-zinc-400 transition-all hover:border-[#FFCC00]/50 hover:text-[#FFCC00]"
+                  >
+                    // BUY 1 OMNI STYLE — ₱499
+                  </button>
                 )}
 
                 {/* Per-scene status chips */}

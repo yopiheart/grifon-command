@@ -190,10 +190,10 @@ async function handleTopup(req: VercelRequest, res: VercelResponse, user: Authed
   }
   const addOnIds = parsed.data.add_ons;
   // Only credit-bearing add-ons can be bought standalone. Rejects unknown IDs and
-  // the onboarding_call (which has no videoAdCredits and is a subscription bump).
+  // the onboarding_call (which grants no credits and is a subscription bump).
   for (const id of addOnIds) {
     const addOn = ADD_ON_CATALOG[id as AddOnId];
-    if (!addOn || !addOn.videoAdCredits) {
+    if (!addOn || !(addOn.videoAdCredits || addOn.omniStyleCredits)) {
       return res.status(400).json({ error: 'not_a_topup', detail: id });
     }
   }
