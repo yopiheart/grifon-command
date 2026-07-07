@@ -56,13 +56,18 @@ egress bridge is retired. Remaining = Phase 5 cleanup only (see below), not a bl
    Old Supabase objects TTL'd out at 48h (no backfill).
 3. ✅ **DONE 2026-06-25 (Neil)** — Supabase org downgraded **Pro → free**. Egress bridge retired;
    verified safe first (see Pro-bridge note above).
-4. ⏳ **Phase 5 (deferred cleanup, NOT a blocker — now the priority remnant)** — delete the Supabase
-   upload paths and swap the cleanup cron for an R2 lifecycle rule.
-   ⚠️ **CONCRETE TRIGGER (found 2026-06-25):** Supabase Storage still holds **320 objects / 554 MB**
-   that did NOT TTL out as assumed — likely buckets the gemini-videos cleanup cron doesn't touch.
-   It's under the free 1 GB cap today, but on `free` tier if that 554 MB grows past 1 GB the project
-   goes **read-only** — i.e. this is the seed of the *next* incident. Phase 5 cleanup (lifecycle rule
-   / sweep the stale buckets) is what closes it. Do before storage approaches ~1 GB.
+4. **Phase 5 (deferred cleanup) — STALE-OBJECT SWEEP DONE 2026-07-07.** The Supabase Storage bloat
+   is cleared: **561 MB / 324 objects → 7 MB / 4 objects** (deleted 320 objects older than 7 days,
+   553.7 MB; spared 4 objects newer than 48h). Verified via `storage.objects` before + after.
+   - **Correction to the 2026-06-25 hypothesis:** the stale objects were NOT in "buckets the cron
+     doesn't touch" — all 324 were in `gemini-videos` itself, dating back to 2026-04-27. The hourly
+     cron (`api/cron/cleanup-gemini-videos.ts`) simply wasn't reaping them (root cause not chased —
+     moot now that `MEDIA_STORE=r2` means new media no longer lands here).
+   - **Reusable tool:** [`scripts/cleanup-supabase-storage.ps1`](../scripts/cleanup-supabase-storage.ps1)
+     — dry-run by default, `-Execute` to delete, `-Days N` to tune the age cutoff. Deletes via the
+     Storage API (removes bytes, not just metadata). Re-run if the bucket refills.
+   - **Still open (low priority):** delete the dormant Supabase upload paths in code and/or replace
+     the cron with an R2 lifecycle rule. Not urgent — with R2 live, `gemini-videos` barely grows now.
 
 ---
 
