@@ -64,16 +64,26 @@ main yet.**
     meter chip / `BUY 1 — ₱499` chip at 0/0 (`/checkout?topup=omni_style_single`).
 - 511 unit tests green (484 → 511); Slice-3 spend so far: $0 (no paid renders yet).
 
+**Slice-3 live smokes: machine-PASS (2026-07-07, ≈$2.00)** — charged path,
+re-roll idempotency, exhaustion 402 + ₱499 CTA, credit fallback
+(`fromCredit:true`), checkout page, and the captions toggle (request-diff +
+offline `planScene` proof; visual eyeball deferred to a real multi-scene ad).
+Full verbatim record: `omni_edit_presets.md` Proposal 001, Slice-3 block.
+NOT smoked: the GenerateVideo picker row visual (needs a real all-rendered
+pipeline run — fold into the next full wizard smoke / Slice-4 beta).
+
 **Open for Neil (next session):**
-1. **Slice-3 live smokes** (see the plan's Verification section): picker UI
-   smoke, deferred-consume with metering live (`omni_ads.used` 1 → re-roll
-   still 1 → majority-blocked = no charge), exhaustion + credit path
-   (`fromCredit:true`), captions-toggle eyeball (watch VOX title doubling —
-   follow-up trigger: suppress overlays on styled scenes), top-up checkout at
-   ₱499. All via smoke-tester; Neil eyeballs MP4s.
-2. Still-open Slice-2 item: optional ~$0.60 gate-clean re-render eyeball.
-3. After smokes pass + Neil verdict: Slice 4 (telemetry + beta rollout), then
-   PR to main.
+1. **Eyeball the Slice-3 artifacts** (defreezer-doomed — view before reboot):
+   `.tmp/omni-smoke-s3/` MP4s + styled frames, `.playwright-mcp/` panel/CTA/
+   checkout screenshots. Registry rows flip on your verdict.
+2. **Settle the ElevenLabs invoice** — the sub has a failed payment
+   (`payment_issue`); it blocks ALL voice + music generation everywhere, not
+   just smokes.
+3. Pre-existing bugs found en route (independent tickets): `/api/render/final`
+   400 on EDL `transitionIn: null`; Render Final unlocks after a 0-track voice
+   consolidate attempt.
+4. Still-open Slice-2 item: optional ~$0.60 gate-clean re-render eyeball.
+5. After your verdict: Slice 4 (telemetry + beta rollout), then PR to main.
 
 **Session re-arm (defreezer wiped it):**
 - `.env` needs the usual keys PLUS `OMNI_STYLES_ENABLED=true` (kill switch —

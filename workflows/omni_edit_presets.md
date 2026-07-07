@@ -126,10 +126,50 @@ gate, routing, captions). Maps all 4 `neil_approved` presets onto the code shape
      Heard only because the smoke seed had no voice overlays. RESIDUAL RISK
      logged: mid-scene video time-warp under a muxed VO = lip desync; covered
      by the believability gate + Neil eyeball, watch for it in Slice-4 beta.
-- **Next gates:** re-eyeball after a gate-clean render (optional, Neil's call)
-  → Slice 3 (picker + billing) → Slice 4 (telemetry + beta).
+- **Slice 3 LANDED + billing live-smoked** (2026-07-07, commits `efac36a`…`452f159`;
+  smoke spend ≈ $2.00, runs A/B/C via smoke-tester on the dev proxy, metering LIVE):
+  - **Charged path PASS:** 2-scene VOX pass → verbatim `// 1 Omni ad used · 1 of 5
+    this month`; consume `{"consumed":true,"fromCredit":false,"used":1,"limit":5}`.
+    Charge is per finished ad, not per scene (2 styled scenes = 1 debit).
+  - **Re-roll idempotency PASS:** re-roll after charge → `alreadyCounted:true`,
+    note unchanged; DB showed 3 consume calls but exactly 2 monthly debits with
+    one `omniad:` limit-1 marker per finishedAdId.
+  - **Exhaustion wall PASS:** counter forced to 5/5 + 0 credits → fire returned
+    `402 {"error":"omni_quota_exceeded","reason":"omni_allowance_exhausted","used":5,"limit":5,"credits":0}`
+    BEFORE any paid call; UI showed the calm note + the `// BUY 1 OMNI STYLE — ₱499` ghost CTA.
+  - **Credit fallback PASS:** granted 1 omni_style credit at 5/5 → pass styled,
+    verbatim `// 1 Omni ad used (top-up credit)`, consume
+    `{"consumed":true,"fromCredit":true,"used":5,"limit":5}`, credit column 0
+    after. Checkout page at `/checkout?topup=omni_style_single` rendered
+    `1 Omni Style Ad · ₱499.00` with PayMongo methods (payment not submitted).
+  - **VOX picker slots proven in-render:** the seeded title override rendered
+    letter-perfect as the torn-paper headline ("GLOW UP") with the seeded brand
+    hex; frame extracted from the styled scene (Neil eyeball still pending).
+  - **Captions toggle VERIFIED (request-diff + offline proof, not visually):**
+    ON/OFF request bodies differ exactly by `scriptLine`/`voiceWords`; renders
+    were byte-identical ONLY because the stub EDL blanketed every scene with a
+    full-length overlay (b-roll C1 skip + punchline-holds-to-end) — proven by a
+    throwaway `planScene` spec: chunks DO draw from scriptLine alone (no
+    voiceWords/audio needed), a punchline suppresses all talking chunks, no
+    scriptLine → zero text layers. Visual ON/OFF eyeball deferred to a real
+    multi-scene ad (Slice-4 beta) where the EDL leaves uncovered scenes.
+  - **Environment findings (NOT Slice-3 defects):** (a) **ElevenLabs subscription
+    has a FAILED PAYMENT** — API returns `payment_issue` on TTS; blocks voice
+    consolidate (`elevenlabs_401`) and music compose (502). Neil: settle the
+    ElevenLabs invoice. (b) Pre-existing bug: `/api/render/final` 400s when the
+    EDL draft emits `transitionIn: null` on the hook scene (zod wants object) —
+    nondeterministic, near-silent failure; ticket independent of Slice 3.
+    (c) Pre-existing UX gap: Render Final unlocks after a voice consolidate
+    ATTEMPT even with 0 tracks persisted. (d) The one dev-server "crash" during
+    run A was the orchestrator's own `npm run dev | head -30` pipe kill, not a
+    product bug.
+- **Next gates:** Neil eyeballs the Slice-3 artifacts (panel screenshots in
+  `.playwright-mcp/`, MP4s + styled frames in `.tmp/omni-smoke-s3/` — both
+  defreezer-doomed, view before reboot) → optional gate-clean re-render
+  (still open from Slice 2) → Slice 4 (telemetry + beta rollout).
 - Preset rows flip to `product_shipped` only when the user-facing picker ships
-  (Slice 3) and Neil eyeballs a product-path render.
+  (Slice 3 — code shipped, pending Neil's eyeball verdict) and Neil eyeballs a
+  product-path render.
 
 ### Standing requirement for the future proxy build: filter-block resilience
 
