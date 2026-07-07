@@ -207,10 +207,28 @@ gate, routing, captions). Maps all 4 `neil_approved` presets onto the code shape
     invented/decorative, but an invented PRICE in an ad is a stronger risk
     class. Watch in Slice-4 beta; possible gate heuristic or tuned-template
     line ("never invent prices/currency amounts") — Neil-gated.
-- **Next gates:** Neil eyeballs `verify-captions-ON/OFF.mp4` + frames in
-  `.tmp/omni-smoke-s3/` (defreezer-doomed — view before reboot; this render
-  also covers the Slice-2 gate-clean re-render item) → Slice 4 (telemetry +
-  beta rollout).
+- **Neil eyeball of the verification MP4s — 3 questions, all SEED ARTIFACTS
+  (2026-07-07):** (1) *"bakit may bukidnon na topic dun sa glossier talking
+  avatar?"* → the vox `topic_context` slot is the WHOLE ad script
+  (`allScriptLines`, omniStyleService.ts:128) and the smoke seed glued two
+  unrelated products (skincare + coffee) into one fake "ad" — a real ad's
+  script is one product, so its inserts stay on-topic. Working as designed;
+  the cross-scene grounding is deliberate (richer inserts from the full
+  script). (2) *"parang may zoom na ayaw gumana sa bukidnon clip"* → that's
+  the DOLLY-ZOOM preset (background warps, subject pinned) applied weakly —
+  routed there because the run-A seed mislabeled the talking clip as `b-roll`.
+  In-app the storyboard types scenes, so a talking clip never routes to
+  dolly-zoom. **Watch item anyway: dolly-zoom "weak execution" rate belongs in
+  Slice-4 telemetry** (the believability gate doesn't measure whether the move
+  committed). (3) *"captions hindi tugma sa sinasabe ng avatar"* → the seeded
+  scriptLines ≠ what the borrowed raw clips' speakers actually say; the VO
+  (ElevenLabs, muxed over) + captions match EACH OTHER and the forced-aligned
+  timings — in-app the avatar footage is GENERATED from the same scriptLine,
+  so lips + VO + captions all agree. No fix needed; noted so beta feedback can
+  tell this artifact apart from a real desync.
+- **Next gates:** Slice 4 (telemetry + beta rollout) — includes the
+  gate_unavailable rate, invented-price watch, and dolly-zoom commit-rate
+  telemetry items collected above.
 - Preset rows flip to `product_shipped` only when the user-facing picker ships
   (Slice 3 — code shipped, pending Neil's eyeball verdict) and Neil eyeballs a
   product-path render.
