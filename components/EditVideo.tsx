@@ -30,6 +30,7 @@ import {
   type OmniSceneOutcome,
   type OmniConsumeResult,
 } from '../services/omniStyleService';
+import { trackEvent } from '../services/analyticsService';
 
 export interface EditorBatchPayload {
   sceneBatch: SceneBatchEntry[];
@@ -182,14 +183,35 @@ const BatchEditMode: React.FC<{
   // surface that specific reason plus the ₱499 top-up CTA (Slice 3c) instead of
   // the generic "no charge" note.
   const settleOmniBilling = async (outcomes: OmniSceneOutcome[]) => {
+    const styledCount = outcomes.filter((o) => o.outcome === 'styled').length;
+    const fallbackCount = outcomes.length - styledCount;
+    // Per-ad completion telemetry (Slice 4) — fired once per settle, un-awaited so
+    // it never slows the UI. `charged` is null when the pass short-circuited on an
+    // exhausted allowance (no consume call happened).
+    const emitPassComplete = (result: OmniConsumeResult | null) => {
+      void trackEvent({
+        event: 'omni_pass_complete',
+        module: 'omni_style',
+        meta: {
+          finishedAdId,
+          styleId: omniStyle,
+          styledCount,
+          fallbackCount,
+          charged: result?.consumed ?? null,
+          ...(result?.fromCredit !== undefined ? { fromCredit: result.fromCredit } : {}),
+        },
+      });
+    };
     if (outcomes.some((o) => o.fallbackReason === 'omni_allowance_exhausted')) {
       setOmniBillingNote('// Omni allowance used up — styles fell back to the standard edit');
       setOmniAllowanceExhausted(true);
+      emitPassComplete(null);
       return;
     }
     setOmniAllowanceExhausted(false);
     const consumed = await consumeOmniStyleAd(finishedAdId, outcomes);
     setOmniBillingNote(noteFromConsume(consumed));
+    emitPassComplete(consumed);
   };
 
   const hasRenderedScenes = editorBatch.sceneBatch.some((s) => s.renderedUrl);

@@ -42,7 +42,7 @@ import { getSupabase } from '../../services/supabaseClient';
 import { useSubscription } from '../../hooks/useSubscription';
 import { useQuota } from '../../hooks/useQuota';
 import { SCENE_CAP, omniStylesEligible } from '../../utils/planGate';
-import { pickEmphasisWord } from '../../services/omniStyleService';
+import { pickEmphasisWord, fetchOmniStyleStatus } from '../../services/omniStyleService';
 import { dominantHexFromImage } from '../../utils/dominantColor';
 import { listActiveJobs, clearActiveJob } from '../../services/activeJobStore';
 import { ensureNotificationPermission, notify } from '../../services/notificationService';
@@ -262,6 +262,26 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
   // Business gate (same shape as showAdvanced): dev-unlock opens the picker on
   // any account; otherwise Business-only. Server proxy is the real wall.
   const omniStylesUnlocked = devUnlock || omniStylesEligible(plan_id);
+
+  // Server-side availability probe (Slice 4): kill-switch + beta allowlist. null
+  // while in flight (or never fetched) → treat as available (optimistic, no
+  // layout pop-in); a definitive false hides the STYLE row and blocks the lock.
+  // devUnlock bypasses the probe entirely.
+  const [omniAvailable, setOmniAvailable] = useState<boolean | null>(null);
+  useEffect(() => {
+    if (!omniStylesUnlocked) return;
+    if (devUnlock) {
+      setOmniAvailable(true);
+      return;
+    }
+    let cancelled = false;
+    fetchOmniStyleStatus().then((s) => {
+      if (!cancelled && s) setOmniAvailable(s.available);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [omniStylesUnlocked, devUnlock]);
 
   // Prefill the emphasis/title chips from the storyboard script until the user
   // edits one (chipsEdited latches). pickEmphasisWord is deterministic.
@@ -1765,7 +1785,9 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
   const handleSendToAiEditorFromBar = () => {
     if (!onSendToAiEditor) return;
     let omniLock: OmniStyleLock | undefined;
-    if (omniStyle) {
+    // Skip the lock when the probe definitively says the pass is unavailable — no
+    // doomed pass fires (the fire path would 503 → fallback anyway).
+    if (omniStyle && omniAvailable !== false) {
       omniLock = {
         style: omniStyle,
         captionsEnabled: captionsOn,
@@ -1875,7 +1897,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
         </div>
       )}
 
-      {allRendered && onSendToAiEditor && (
+      {allRendered && onSendToAiEditor && omniAvailable !== false && (
         <div className="flex items-center gap-2 flex-wrap mt-2.5 pt-2.5 border-t border-white/5">
           <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 whitespace-nowrap">
             // STYLE

@@ -10,6 +10,8 @@ import { getUserPlan } from '../_lib/userPlan.js';
 import { peekOmniAllowance } from '../_lib/quota.js';
 import { putMedia } from '../_lib/mediaStore.js';
 import { looksBlocked } from '../_lib/omniGate.js';
+import { isOmniBetaAllowed } from '../_lib/omniBeta.js';
+import { logVideoUsage } from '../_lib/modelCosts.js';
 import {
   OMNI_PRESETS,
   isApprovedOmniPresetId,
@@ -133,6 +135,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const user = await getUserFromAccessToken(token);
   if (!user) return res.status(401).json({ error: 'invalid_token' });
+
+  // 2b. Beta allowlist — scopes the paid pass to the beta cohort while the var is
+  //     set (server-only, no VITE_ prefix). Deleting the var = public launch. The
+  //     client maps this 503 to the same graceful omni_styles_disabled fallback.
+  if (!isOmniBetaAllowed(process.env.OMNI_STYLES_BETA_ALLOWLIST, user)) {
+    return res.status(503).json({ error: 'omni_styles_disabled', reason: 'beta_allowlist' });
+  }
 
   // 3. Body.
   const parsed = Body.safeParse(req.body ?? {});
@@ -353,6 +362,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     } catch (err: any) {
       console.warn('[api/gemini/omni-video] gate sidecar write threw (non-fatal):', err?.message);
     }
+
+    // COGS: the upstream interaction is now billable (blocks/errors above are
+    // unbilled, so no log there). Fire-and-forget — never throws.
+    logVideoUsage('omni:fire', OMNI_MODEL_ID, estimatedDurationSec);
 
     return res.status(202).json({ interactionId });
   }

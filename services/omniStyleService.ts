@@ -1,4 +1,5 @@
 import { getSupabase } from './supabaseClient';
+import { trackEvent } from './analyticsService';
 import { estimateSpokenSec } from '../utils/spokenDuration';
 import {
   OMNI_STYLE_ROUTING,
@@ -250,6 +251,42 @@ export interface ApplyOmniStyleOpts {
   slotOverrides?: { emphasisWord?: string; titleText?: string };
 }
 
+/** Whether this scene ran as part of the initial whole-ad pass or a single-scene
+ *  re-roll — carried into the per-scene outcome telemetry (Slice 4). */
+export type OmniOutcomeContext = 'initial' | 'reroll';
+
+/**
+ * PURE builder for the `omni_scene_outcome` telemetry meta (Slice 4). Extracted
+ * so the four terminal ladder exits share one shape (and it stays unit-testable
+ * without any network). `fallbackReason` is omitted on a styled outcome, and
+ * `gateReasons` is omitted when the poll never surfaced a gate verdict;
+ * `gateUnavailable` is true iff the QA gate failed open ('gate_unavailable').
+ */
+export function buildOmniOutcomeMeta(
+  outcome: OmniSceneOutcome,
+  extra: {
+    presetId: OmniPresetId;
+    sceneType: string;
+    finishedAdId: string;
+    context: OmniOutcomeContext;
+    gateReasons?: string[];
+  }
+): Record<string, unknown> {
+  const gateUnavailable = (extra.gateReasons ?? []).includes('gate_unavailable');
+  return {
+    presetId: extra.presetId,
+    sceneType: extra.sceneType,
+    sceneIdx: outcome.sceneIdx,
+    outcome: outcome.outcome,
+    ...(outcome.outcome === 'fallback' ? { fallbackReason: outcome.fallbackReason } : {}),
+    attemptsUsed: outcome.attemptsUsed,
+    gateUnavailable,
+    ...(extra.gateReasons ? { gateReasons: extra.gateReasons } : {}),
+    finishedAdId: extra.finishedAdId,
+    context: extra.context,
+  };
+}
+
 const POLL_INTERVAL_MS = 5_000;
 const SCENE_DEADLINE_MS = 5 * 60 * 1000; // 5 min per scene
 
@@ -311,7 +348,7 @@ async function fireOmni(
 async function pollToCompletion(
   token: string,
   interactionId: string
-): Promise<{ event: LadderEvent; url?: string }> {
+): Promise<{ event: LadderEvent; url?: string; gateReasons?: string[] }> {
   const deadline = Date.now() + SCENE_DEADLINE_MS;
   // Consecutive hard-error budget: a blocked/broken interaction must not burn
   // the whole deadline in silence (live smoke 2026-07-06: a blocked-at-poll
@@ -352,21 +389,30 @@ async function pollToCompletion(
     if (j.error) return { event: 'poll_done_failed' };
     if (j.url) {
       // Missing gate (fail-open) is treated as a pass — never discard paid output
-      // over eval flakiness.
+      // over eval flakiness. gateReasons surfaces the fail-open marker
+      // ('gate_unavailable') so telemetry can distinguish a clean pass from one
+      // the gate never actually judged.
       const passed = j.gate?.pass !== false;
-      return { event: passed ? 'poll_done_ok_gate_pass' : 'poll_done_ok_gate_fail', url: j.url };
+      const gateReasons = Array.isArray(j.gate?.reasons) ? (j.gate.reasons as string[]) : undefined;
+      return {
+        event: passed ? 'poll_done_ok_gate_pass' : 'poll_done_ok_gate_fail',
+        url: j.url,
+        gateReasons,
+      };
     }
     return { event: 'poll_done_failed' };
   }
   return { event: 'poll_timeout' };
 }
 
-async function runSceneLadder(
+/** Drive one scene's fire→poll→gate ladder to a terminal outcome, surfacing the
+ *  last poll's `gateReasons` so the caller can stamp telemetry. */
+async function runSceneLadderInner(
   scene: SceneBatchEntry,
   presetId: OmniPresetId,
   opts: ApplyOmniStyleOpts,
   allScriptLines: string
-): Promise<OmniSceneOutcome> {
+): Promise<{ outcome: OmniSceneOutcome; gateReasons?: string[] }> {
   const slots = deriveSlots(presetId, {
     scriptLine: scene.scriptLine,
     allScriptLines,
@@ -388,6 +434,7 @@ async function runSceneLadder(
 
   let state = initialLadderState();
   let styledUrl: string | undefined;
+  let gateReasons: string[] | undefined;
 
   // Bounded loop: attemptsUsed caps at 2, so this terminates.
   while (state.status === 'firing' || state.status === 'retrying' || state.status === 'polling') {
@@ -395,38 +442,78 @@ async function runSceneLadder(
       const fired = await fireOmni(token, fireBody);
       if (fired.disabled) {
         return {
-          sceneIdx: scene.sceneIdx,
-          outcome: 'fallback',
-          fallbackReason: 'omni_styles_disabled',
-          attemptsUsed: state.attemptsUsed,
+          outcome: {
+            sceneIdx: scene.sceneIdx,
+            outcome: 'fallback',
+            fallbackReason: 'omni_styles_disabled',
+            attemptsUsed: state.attemptsUsed,
+          },
+          gateReasons,
         };
       }
       if (fired.quotaExceeded) {
         return {
-          sceneIdx: scene.sceneIdx,
-          outcome: 'fallback',
-          fallbackReason: 'omni_allowance_exhausted',
-          attemptsUsed: state.attemptsUsed,
+          outcome: {
+            sceneIdx: scene.sceneIdx,
+            outcome: 'fallback',
+            fallbackReason: 'omni_allowance_exhausted',
+            attemptsUsed: state.attemptsUsed,
+          },
+          gateReasons,
         };
       }
       state = nextLadderStep(state, fired.event);
       if (state.status === 'polling' && fired.interactionId) {
         const polled = await pollToCompletion(token, fired.interactionId);
         if (polled.url) styledUrl = polled.url;
+        if (polled.gateReasons) gateReasons = polled.gateReasons;
         state = nextLadderStep(state, polled.event);
       }
     }
   }
 
   if (state.status === 'styled') {
-    return { sceneIdx: scene.sceneIdx, outcome: 'styled', styledUrl, attemptsUsed: state.attemptsUsed };
+    return {
+      outcome: { sceneIdx: scene.sceneIdx, outcome: 'styled', styledUrl, attemptsUsed: state.attemptsUsed },
+      gateReasons,
+    };
   }
   return {
-    sceneIdx: scene.sceneIdx,
-    outcome: 'fallback',
-    fallbackReason: state.fallbackReason ?? 'unknown',
-    attemptsUsed: state.attemptsUsed,
+    outcome: {
+      sceneIdx: scene.sceneIdx,
+      outcome: 'fallback',
+      fallbackReason: state.fallbackReason ?? 'unknown',
+      attemptsUsed: state.attemptsUsed,
+    },
+    gateReasons,
   };
+}
+
+/**
+ * Run one scene's ladder and emit EXACTLY ONE `omni_scene_outcome` telemetry
+ * event at its terminal exit (styled or any fallback). Telemetry is fired
+ * un-awaited — it must never slow or break the ladder.
+ */
+async function runSceneLadder(
+  scene: SceneBatchEntry,
+  presetId: OmniPresetId,
+  opts: ApplyOmniStyleOpts,
+  allScriptLines: string,
+  context: OmniOutcomeContext
+): Promise<OmniSceneOutcome> {
+  const { outcome, gateReasons } = await runSceneLadderInner(scene, presetId, opts, allScriptLines);
+  void trackEvent({
+    event: 'omni_scene_outcome',
+    module: 'omni_style',
+    meta: buildOmniOutcomeMeta(outcome, {
+      presetId,
+      sceneType: scene.type,
+      finishedAdId: opts.finishedAdId,
+      context,
+      gateReasons,
+    }),
+  });
+  return outcome;
 }
 
 /**
@@ -454,7 +541,7 @@ export async function applyOmniStyle(
     const presetId: OmniPresetId | null = target ? OMNI_STYLE_ROUTING[styleId][target] : null;
     if (!presetId) continue; // no Omni pass for this scene — standard edit
     tasks.push(
-      runSceneLadder(scene, presetId, opts, allScriptLines).then((o) => {
+      runSceneLadder(scene, presetId, opts, allScriptLines, 'initial').then((o) => {
         onOutcome?.(o);
         return o;
       })
@@ -477,9 +564,10 @@ export async function restyleScene(
   const target = mapSceneToOmniTarget(scene.type);
   const presetId: OmniPresetId | null = target ? OMNI_STYLE_ROUTING[styleId][target] : null;
   if (!presetId || !scene.renderedUrl) {
+    // No Omni attempt happened here, so no `omni_scene_outcome` event is emitted.
     return { sceneIdx: scene.sceneIdx, outcome: 'fallback', fallbackReason: 'no_omni_route', attemptsUsed: 0 };
   }
-  return runSceneLadder(scene, presetId, opts, allScriptLines);
+  return runSceneLadder(scene, presetId, opts, allScriptLines, 'reroll');
 }
 
 // ---------------------------------------------------------------------------
@@ -521,6 +609,30 @@ export async function consumeOmniStyleAd(
     });
     if (!res.ok) return null;
     return (await res.json()) as OmniConsumeResult;
+  } catch {
+    return null;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Status probe (Slice 4) — cheap "is the Omni pass available to me" check
+// ---------------------------------------------------------------------------
+
+/**
+ * Ask the server whether the Omni pass is available to this user (kill-switch ON
+ * and inside the beta allowlist). Cheap visibility probe only — the fire path is
+ * the real wall. Returns null on ANY failure so the caller can stay optimistic;
+ * never throws.
+ */
+export async function fetchOmniStyleStatus(): Promise<{ available: boolean; reason?: string } | null> {
+  try {
+    const token = await getAccessToken();
+    const res = await fetch('/api/gemini/omni-video/status', {
+      method: 'GET',
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!res.ok) return null;
+    return (await res.json()) as { available: boolean; reason?: string };
   } catch {
     return null;
   }
