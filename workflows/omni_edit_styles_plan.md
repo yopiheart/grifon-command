@@ -12,11 +12,10 @@
 
 ## ⏸ RESUME STATE (2026-07-07 — read this first when resuming)
 
-**Where we are:** Slices 1 + 2 + **3 (all three sub-slices)** of 4 are BUILT and
-PUSHED on `feat/omni-edit-styles` (17 commits, `54a3367`…`6c47924`). Slices 1–2
-are live-smoked; **Slice 3 is code-complete with 511 unit tests green but its
-live smokes are PENDING** (paid renders + Neil eyeball). **Nothing is merged to
-main yet.**
+**Where we are:** Slices 1 + 2 + 3 of 4 are BUILT, LIVE-SMOKED, and
+**NEIL_APPROVED** on `feat/omni-edit-styles` (`54a3367`…`a19dafe`). 515 unit
+tests green. **Next: Slice 4 (telemetry + beta rollout), then PR to main.
+Nothing is merged to main yet.**
 
 **Done + verified:**
 - Slice 1 — proxy (`api/gemini/omni-video.ts` + poll), `api/_lib/omniPresets.ts`
@@ -64,26 +63,34 @@ main yet.**
     meter chip / `BUY 1 — ₱499` chip at 0/0 (`/checkout?topup=omni_style_single`).
 - 511 unit tests green (484 → 511); Slice-3 spend so far: $0 (no paid renders yet).
 
-**Slice-3 live smokes: machine-PASS (2026-07-07, ≈$2.00)** — charged path,
-re-roll idempotency, exhaustion 402 + ₱499 CTA, credit fallback
-(`fromCredit:true`), checkout page, and the captions toggle (request-diff +
-offline `planScene` proof; visual eyeball deferred to a real multi-scene ad).
-Full verbatim record: `omni_edit_presets.md` Proposal 001, Slice-3 block.
-NOT smoked: the GenerateVideo picker row visual (needs a real all-rendered
-pipeline run — fold into the next full wizard smoke / Slice-4 beta).
+**Slice 3: NEIL_APPROVED (2026-07-07, verbatim: "Okay bro goods na to. Sige
+proceed na tayo sa slice 4.")** — after: machine-PASS smokes (≈$2.00: charged
+path, re-roll idempotency, exhaustion 402 + ₱499 CTA, credit fallback,
+checkout page); his TWO eyeball catches fixed same-day (`855eb0a`: Vox
+masthead → gate forbidden-word; hook overlay stamping the styled title →
+overlays dropped on styled scenes); a verification render (≈$0.80) confirming
+both fixes in output + the captions toggle proven VISUALLY with real VO
+(ElevenLabs invoice was failed → Neil paid it → working); and his 3
+verification-eyeball questions resolved as seed artifacts. Full verbatim
+records: `omni_edit_presets.md` Proposal 001. The verification render also
+closed the Slice-2 gate-clean re-render item. 515 unit tests green.
+NOT smoked: the GenerateVideo picker-row visual (needs a real all-rendered
+pipeline run — fold into the Slice-4 beta wizard smoke).
 
-**Open for Neil (next session):**
-1. **Eyeball the Slice-3 artifacts** (defreezer-doomed — view before reboot):
-   `.tmp/omni-smoke-s3/` MP4s + styled frames, `.playwright-mcp/` panel/CTA/
-   checkout screenshots. Registry rows flip on your verdict.
-2. **Settle the ElevenLabs invoice** — the sub has a failed payment
-   (`payment_issue`); it blocks ALL voice + music generation everywhere, not
-   just smokes.
-3. Pre-existing bugs found en route (independent tickets): `/api/render/final`
-   400 on EDL `transitionIn: null`; Render Final unlocks after a 0-track voice
-   consolidate attempt.
-4. Still-open Slice-2 item: optional ~$0.60 gate-clean re-render eyeball.
-5. After your verdict: Slice 4 (telemetry + beta rollout), then PR to main.
+**Open items (fold into Slice 4):**
+1. Slice-4 telemetry MUST track: `gate_unavailable` rate (fail-open silently
+   disables every gate check), block/gate-fail/fallback rates per preset ×
+   scene type, dolly-zoom commit rate, invented-price/insert-risk sightings.
+2. Registry step 0: flip preset rows (premium-reel-v2, vox-explainer-v1,
+   dolly-zoom-v1) to `product_shipped` with code pointers — picker shipped +
+   Neil verdict in. display-text-pop-v1 stays (not reachable via the current
+   routing table).
+3. Pre-existing bugs (independent tickets, found en route): `/api/render/final`
+   400 on EDL `transitionIn: null` (hook scene, nondeterministic); Render Final
+   unlocks after a 0-track voice consolidate attempt.
+4. Possible tuned-template hardenings (Neil-gated, only if telemetry shows
+   need): vox "never render the word VOX / publisher logos"; "never invent
+   prices or currency amounts" for inserts.
 
 **Session re-arm (defreezer wiped it):**
 - `.env` needs the usual keys PLUS `OMNI_STYLES_ENABLED=true` (kill switch —
@@ -97,20 +104,26 @@ pipeline run — fold into the next full wizard smoke / Slice-4 beta).
   `grifon_dev_editor_batch`=<JSON batch> (consumed on load) — no paid scene
   generation needed to drive the AI Editor.
 
-**Next up — Slice-3 live smokes, then Slice 4 (telemetry + beta rollout).**
-The approved Slice-3 implementation plan (with the full verification script) is
-preserved at the session plan path but summarized in this doc's Verification
-section; the smoke checklist is in "Open for Neil" above.
+**Next up — Slice 4 (telemetry + beta rollout), then PR to main.** Scope per
+this PRD's slice list: block/gate-fail/fallback-rate logging per preset ×
+scene type (PLUS the new items: `gate_unavailable` rate, dolly-zoom commit
+rate, invented-insert sightings), Omni pricing in `api/_lib/modelCosts.ts`
+COGS telemetry, allowlist beta flag, launch-gate metric review with Neil
+(fallback >30% in beta = hold public release). Registry row flips are step 0.
+Neil has loaded $10 Fable extra usage for this session. Plan→Goal pipeline
+applies: draft the Slice-4 `/goal` for Neil's approve/edit/skip BEFORE code
+edits; implementation → code-executor; smokes → smoke-tester (foreground).
 
 **Paste-ready kickoff for next session:**
 
 > Read `CLAUDE.md` and `workflows/omni_edit_styles_plan.md` in full (esp. the
-> RESUME STATE section) — do not /compact, start fresh. We're resuming Omni
-> Edit Styles on branch `feat/omni-edit-styles`. I've restored `.env` (incl.
-> `OMNI_STYLES_ENABLED=true`). Slice 3 is code-complete — run the Slice-3 live
-> smokes via the smoke-tester subagent (dev seed hook + smoke account,
-> metering LIVE so unset GRIFON_DEV_UNMETERED_VIDEO), and queue the MP4s for
-> my eyeball. No tuned-file edits.
+> RESUME STATE section) — do not /compact, start fresh. We're building Slice 4
+> (telemetry + beta rollout) of Omni Edit Styles on branch
+> `feat/omni-edit-styles`. Slice 3 is NEIL_APPROVED. I've restored `.env`
+> (incl. `OMNI_STYLES_ENABLED=true`, `MEDIA_STORE=r2`). Step 0: flip the three
+> shipped preset registry rows to product_shipped. Then plan Slice 4, draft
+> the /goal for my approval, and delegate to code-executor. No tuned-file
+> edits without asking me.
 
 ---
 

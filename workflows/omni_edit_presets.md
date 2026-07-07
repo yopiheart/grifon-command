@@ -226,9 +226,12 @@ gate, routing, captions). Maps all 4 `neil_approved` presets onto the code shape
   timings — in-app the avatar footage is GENERATED from the same scriptLine,
   so lips + VO + captions all agree. No fix needed; noted so beta feedback can
   tell this artifact apart from a real desync.
-- **Next gates:** Slice 4 (telemetry + beta rollout) — includes the
-  gate_unavailable rate, invented-price watch, and dolly-zoom commit-rate
-  telemetry items collected above.
+- **Slice 3 verdict: NEIL_APPROVED** (2026-07-07, verbatim: *"Okay bro goods
+  na to. Sige proceed na tayo sa slice 4."*).
+- **Next gates:** Slice 4 (telemetry + beta rollout) — step 0 flips
+  premium-reel-v2 / vox-explainer-v1 / dolly-zoom-v1 rows to
+  `product_shipped`; telemetry includes the gate_unavailable rate,
+  invented-price watch, and dolly-zoom commit-rate items collected above.
 - Preset rows flip to `product_shipped` only when the user-facing picker ships
   (Slice 3 — code shipped, pending Neil's eyeball verdict) and Neil eyeballs a
   product-path render.
