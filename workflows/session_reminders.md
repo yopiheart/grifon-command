@@ -55,12 +55,15 @@ poppler/poppler-26.02.0/Library/bin/pdftoppm.exe -png -r 100 <file.pdf> out/pg
 Verbatim transcriptions already live in `workflows/omni_edit_presets.md` appendices —
 only re-install if you need to re-read pages visually.
 
-## Dated: on/after Jul 7, 2026 — Fable 5 promo ends, re-evaluate the model pin
+## Dated: revert the main-model pin to Fable when credits refill
 
-The 50%-of-weekly-limits Fable 5 promo expires **Jul 7, 2026**; after that Fable draws
-down at its full (much-faster-than-Opus) rate. On or after that date: check `/usage` with
-Neil and decide **together** whether to keep `"model": "claude-fable-5"` in
-`.claude/settings.json` or re-pin `claude-opus-4-8` — then update the CLAUDE.md
-usage-budget bullet to match. The `code-executor` (Opus 4.8) and `smoke-tester`
-(Sonnet 5) frontmatter pins stay regardless — they save tokens at zero quality cost.
-Delete this section once decided.
+**Decided 2026-07-07** (Neil + Claude — promo ended Jul 7 + Fable credits depleted):
+re-pinned `.claude/settings.json` `"model"` from `claude-fable-5` → `claude-opus-4-8`
+and updated the CLAUDE.md usage-budget bullet to match. The `code-executor` (Opus 4.8)
+and `smoke-tester` (Sonnet 5) frontmatter pins are unchanged.
+
+**Revert trigger:** when the Fable 5 weekly limit resets or credits are topped up
+(confirm via `/usage`), re-pin `"model": "claude-fable-5"` in `.claude/settings.json`
+and restore the CLAUDE.md usage-budget bullet. Until then, `/fable-mode` loads Fable's
+working discipline onto Opus as the quality hedge. Delete this section once Fable is
+restored.
