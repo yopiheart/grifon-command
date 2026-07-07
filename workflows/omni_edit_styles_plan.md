@@ -12,10 +12,32 @@
 
 ## ⏸ RESUME STATE (2026-07-07 — read this first when resuming)
 
-**Where we are:** Slices 1 + 2 + 3 of 4 are BUILT, LIVE-SMOKED, and
-**NEIL_APPROVED** on `feat/omni-edit-styles` (`54a3367`…`a19dafe`). 515 unit
-tests green. **Next: Slice 4 (telemetry + beta rollout), then PR to main.
-Nothing is merged to main yet.**
+**Where we are:** Slices 1 + 2 + 3 are BUILT, LIVE-SMOKED, and
+**NEIL_APPROVED**; **Slice 4 CODE IS BUILT** (goal approved by Neil verbatim
+"APPROVED!" 2026-07-07; built via code-executor, commit `5f02fc1`; step-0
+registry flips in `0664801`). 532 unit tests green (18 new). **Remaining
+before PR to main:** (1) live beta wizard smoke — real pipeline run proving
+`events` rows land + the never-smoked GenerateVideo picker-row visual + Neil
+eyeball (Neil-gated spend); (2) set `OMNI_STYLES_BETA_ALLOWLIST` in Vercel
+BEFORE merge (deleting the var later = public launch); (3) beta launch-gate
+review with Neil (fallback rate >30% = hold public). Nothing merged to main.
+
+**Slice 4 shipped shape:**
+- `omni_scene_outcome` event (preset × sceneType × outcome + fallbackReason,
+  `gate_unavailable` flag, initial/reroll context) fired once per ladder
+  terminal exit from `services/omniStyleService.ts` `runSceneLadder`;
+  `omni_pass_complete` (styled/fallback counts + charged) per settle in
+  EditVideo `settleOmniBilling`. Sink = existing `events` table via
+  `trackEvent` (pipe existed since growth-loop Phase 0, was nearly unused).
+- COGS: `gemini-omni-flash-preview` @ $0.10/s placeholder in
+  `api/_lib/modelCosts.ts` + `logVideoUsage('omni:fire', …)` tag:'cogs' line
+  on the fire success path only (blocks/errors are unbilled).
+- Beta allowlist: `api/_lib/omniBeta.ts` `isOmniBetaAllowed` (comma-separated
+  emails or uids, case-insensitive; unset/empty = public), enforced at the
+  fire path only (poll/consume settle in-flight passes, mirroring the kill
+  switch); GET `api/gemini/omni-video/status.ts` probe; picker hides on a
+  definitive `available:false` and skips the OmniStyleLock. Lower tiers still
+  see the locked upsell chips (probe only runs for unlocked users).
 
 **Done + verified:**
 - Slice 1 — proxy (`api/gemini/omni-video.ts` + poll), `api/_lib/omniPresets.ts`
@@ -104,26 +126,27 @@ pipeline run — fold into the Slice-4 beta wizard smoke).
   `grifon_dev_editor_batch`=<JSON batch> (consumed on load) — no paid scene
   generation needed to drive the AI Editor.
 
-**Next up — Slice 4 (telemetry + beta rollout), then PR to main.** Scope per
-this PRD's slice list: block/gate-fail/fallback-rate logging per preset ×
-scene type (PLUS the new items: `gate_unavailable` rate, dolly-zoom commit
-rate, invented-insert sightings), Omni pricing in `api/_lib/modelCosts.ts`
-COGS telemetry, allowlist beta flag, launch-gate metric review with Neil
-(fallback >30% in beta = hold public release). Registry row flips are step 0.
-Neil has loaded $10 Fable extra usage for this session. Plan→Goal pipeline
-applies: draft the Slice-4 `/goal` for Neil's approve/edit/skip BEFORE code
-edits; implementation → code-executor; smokes → smoke-tester (foreground).
+**Next up — Slice-4 live smoke, then PR to main.** The smoke (smoke-tester,
+foreground; Neil-gated spend ≈ one small styled ad): dev-seeded EditVideo run
+or full wizard run → styled pass completes → query `events` for the
+`omni_scene_outcome` / `omni_pass_complete` rows (preset × sceneType dims
+populated) → picker-row visual on an all-rendered GenerateVideo (the one
+never-smoked Slice-3 item) → allowlist negative case (set
+`OMNI_STYLES_BETA_ALLOWLIST` to a non-member locally → STYLE row hides, fire
+503s) → Neil eyeball. Dolly-zoom commit rate + invented-insert sightings are
+NOT machine-detected (would need Neil-gated tuned-gate edits) — beta review
+samples them from the marked events.
 
 **Paste-ready kickoff for next session:**
 
 > Read `CLAUDE.md` and `workflows/omni_edit_styles_plan.md` in full (esp. the
-> RESUME STATE section) — do not /compact, start fresh. We're building Slice 4
-> (telemetry + beta rollout) of Omni Edit Styles on branch
-> `feat/omni-edit-styles`. Slice 3 is NEIL_APPROVED. I've restored `.env`
-> (incl. `OMNI_STYLES_ENABLED=true`, `MEDIA_STORE=r2`). Step 0: flip the three
-> shipped preset registry rows to product_shipped. Then plan Slice 4, draft
-> the /goal for my approval, and delegate to code-executor. No tuned-file
-> edits without asking me.
+> RESUME STATE section) — do not /compact, start fresh. Slice 4 of Omni Edit
+> Styles is CODE-BUILT on `feat/omni-edit-styles` (`5f02fc1`). I've restored
+> `.env` (incl. `OMNI_STYLES_ENABLED=true`, `MEDIA_STORE=r2`). Run the Slice-4
+> live beta smoke per RESUME STATE (smoke-tester foreground, ask me before any
+> paid render), then prep the PR to main — remind me to set
+> `OMNI_STYLES_BETA_ALLOWLIST` in Vercel first. No tuned-file edits without
+> asking me.
 
 ---
 
