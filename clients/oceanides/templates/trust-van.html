@@ -9,12 +9,12 @@
 #canvas{width:1080px;height:1350px;position:relative;overflow:hidden;font-family:var(--body);background:var(--navy);-webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
 /* PHOTO PANEL */
 .photo{position:relative;height:720px;flex:0 0 720px;overflow:hidden;background:#111}
-.photo img{width:100%;height:100%;object-fit:cover;object-position:center 42%;filter:contrast(1.04) saturate(1.02) brightness(.96)}
-.photo::after{content:"";position:absolute;inset:0;box-shadow:inset 0 -70px 90px rgba(10,31,69,.85), inset 0 40px 70px rgba(10,31,69,.55)}
+.photo img{width:100%;height:100%;object-fit:cover;object-position:center 48%;filter:contrast(1.03) saturate(1.02)}
+.photo::after{content:"";position:absolute;inset:0;box-shadow:inset 0 -95px 110px rgba(10,31,69,.97)}
 .logo-chip{position:absolute;top:26px;left:26px;z-index:6;background:#fff;border-radius:14px;padding:6px 10px;box-shadow:0 4px 14px rgba(0,0,0,.35)}
 .logo-chip img{height:58px;display:block}
 .legit{position:absolute;top:32px;right:26px;z-index:6;display:flex;align-items:center;gap:9px}
-.legit .t{text-align:right;line-height:1.1}.legit .c{font-weight:900;font-size:14px;color:#fff;text-transform:uppercase;text-shadow:0 1px 4px rgba(0,0,0,.6)}
+.legit .t{text-align:right;line-height:1.1}.legit .c{font-weight:900;font-size:14px;color:#fff;text-transform:uppercase;white-space:nowrap;text-shadow:0 1px 4px rgba(0,0,0,.6)}
 .legit .s{font-size:11px;font-weight:700;color:#cfe0f5;text-transform:uppercase;margin-top:2px;text-shadow:0 1px 3px rgba(0,0,0,.6)}
 .legit img{height:48px;filter:drop-shadow(0 1px 4px rgba(0,0,0,.6))}
 /* DIGITAL DECAL BAND on the aluminum side */
@@ -48,7 +48,7 @@
 </style></head><body>
 <div id="canvas">
   <div class="photo">
-    <img src="../assets/van.jpg" alt=""/>
+    <img src="../assets/van-clean.png" alt=""/>
     <div class="logo-chip"><img src="../assets/logo.jpg" alt="Oceanides"/></div>
     <div class="legit"><div class="t"><div class="c">SEC-Registered</div><div class="s">DENR &middot; BIR</div></div><img src="../assets/badge-bir.png" alt="BIR"/></div>
     <div class="decal">
