@@ -10,11 +10,13 @@
 > needed for typical scene clips; revisit only if 16:9/1080p sources push
 > upload times past ~40s. Full smoke record: omni_edit_presets.md Proposal 001.
 
-## ⏸ RESUME STATE (2026-07-06 end of session — read this first when resuming)
+## ⏸ RESUME STATE (2026-07-07 — read this first when resuming)
 
-**Where we are:** Slices 1 + 2 of 4 are BUILT, LIVE-SMOKED, and PUSHED on
-`feat/omni-edit-styles` (12 commits, `54a3367`…`ca7761e`). Neil paused before
-Slice 3. **Nothing is merged to main yet.**
+**Where we are:** Slices 1 + 2 + **3 (all three sub-slices)** of 4 are BUILT and
+PUSHED on `feat/omni-edit-styles` (17 commits, `54a3367`…`6c47924`). Slices 1–2
+are live-smoked; **Slice 3 is code-complete with 511 unit tests green but its
+live smokes are PENDING** (paid renders + Neil eyeball). **Nothing is merged to
+main yet.**
 
 **Done + verified:**
 - Slice 1 — proxy (`api/gemini/omni-video.ts` + poll), `api/_lib/omniPresets.ts`
@@ -29,10 +31,49 @@ Slice 3. **Nothing is merged to main yet.**
   any hex render + fire-time `forbiddenWords` (pinned unit tests). The doubled
   "NA" audio Neil heard = Omni's own track, discarded in real renders (VO mux +
   trim-to-VO-end). Full record: `omni_edit_presets.md` Proposal 001.
-- 484 unit tests green; ~$2.00 total smoke spend across both slices.
+- **Slice 3 (2026-07-07, `/goal`-driven, built via code-executor):**
+  - **3a `efac36a`+`8e99515`** — `// STYLE` picker row in GenerateVideo (2 hero
+    styles, hero-sampled brand swatch via `utils/dominantColor.ts`, EMPHASIS/
+    TITLE chip, CAPTIONS toggle w/ per-style default VOX-off/Premium-on,
+    Business lock) hops an `OmniStyleLock` (types.ts) through App to EditVideo.
+    Slot follow-ups closed: `subject_desc`←storyboard `sceneDescription`,
+    `brand_primary_hex`←picker. Captions-off = client-side scriptLine/voiceWords
+    omission at Render Final (subtitles only, overlayText stays — Neil decision;
+    post music-length math so timing is unchanged; zero tuned-file edits).
+    Brand-check (adversarial critic): BRAND_PASS_WITH_NITS 41/50 after fixes.
+  - **DB migration `omni_style_credits` (LIVE, applied via Supabase MCP)** —
+    `subscriptions.omni_style_credits` column; `grant_credits` regrown as 4-arg
+    (`p_omni default 0`, old 3-arg DROPPED — overload would break 3-named-arg
+    rpc calls); `consume_credit('omni_style')` branch. RPC-smoked on the smoke
+    uid (grant→consume true→consume-on-zero false); advisors: no new findings.
+    Doc mirror updated: `supabase/credits.sql` (`81cf24c`).
+  - **3b `bf337b2`** — `omni_ads` MeterUnit (business 5, tunable) + PLAN_LIMITS/
+    useQuota/QuotaWallModal parity; fire path PEEKS via `peekOmniAllowance`
+    (402 `omni_quota_exceeded` for zero-allowance; re-rolls of a charged ad pass
+    via the `omniad:` marker); DEFERRED consume in new
+    `api/gemini/omni-video/consume.ts` called by EditVideo when the pass
+    settles; strict-majority-fallback = no charge + NO marker (a flipping
+    re-roll can still charge); monthly→`omni_style`-credit cascade in
+    `consumeOmniAd` (mirror of `consumeFinishedAd`). Majority rule is the pure
+    `shouldConsumeOmniAd` in `api/_lib/omniBilling.ts` (tie = charged, per PRD
+    >50% tunable). Accepted beta trust boundary documented in consume.ts.
+  - **3c `6c47924`** — `omni_style_single` AddOn (₱499/49_900c, `omniStyleCredits:1`)
+    in ADD_ON_CATALOG → handleTopup accepts it (purchase UN-gated, Neil
+    decision) → webhook grants the omni bucket (both branches) → consume via 3b.
+    Upsell CTAs: EditVideo allowance-exhausted note + STYLE row `N OF 5 LEFT`
+    meter chip / `BUY 1 — ₱499` chip at 0/0 (`/checkout?topup=omni_style_single`).
+- 511 unit tests green (484 → 511); Slice-3 spend so far: $0 (no paid renders yet).
 
-**Open decision for Neil:** optional ~$0.60 gate-clean re-render eyeball before
-closing Slice 2 — or straight to Slice 3.
+**Open for Neil (next session):**
+1. **Slice-3 live smokes** (see the plan's Verification section): picker UI
+   smoke, deferred-consume with metering live (`omni_ads.used` 1 → re-roll
+   still 1 → majority-blocked = no charge), exhaustion + credit path
+   (`fromCredit:true`), captions-toggle eyeball (watch VOX title doubling —
+   follow-up trigger: suppress overlays on styled scenes), top-up checkout at
+   ₱499. All via smoke-tester; Neil eyeballs MP4s.
+2. Still-open Slice-2 item: optional ~$0.60 gate-clean re-render eyeball.
+3. After smokes pass + Neil verdict: Slice 4 (telemetry + beta rollout), then
+   PR to main.
 
 **Session re-arm (defreezer wiped it):**
 - `.env` needs the usual keys PLUS `OMNI_STYLES_ENABLED=true` (kill switch —
@@ -46,23 +87,20 @@ closing Slice 2 — or straight to Slice 3.
   `grifon_dev_editor_batch`=<JSON batch> (consumed on load) — no paid scene
   generation needed to drive the AI Editor.
 
-**Next up — Slice 3 (picker + billing):** style picker in GenerateVideo next to
-the LOOK picker (2 hero styles, brand color swatch, editable chips, captions
-toggle, Business badge/gate), `omni_ads` monthly meter (business: 5) with
-DEFERRED consume + majority-fallback uncharge, `omni_style` top-up AddOn
-(~₱499) end-to-end. Draft a Slice-3 `/goal` first (Plan→Goal pipeline), get
-Neil's approve/edit/skip, delegate to code-executor. Slice-3 slot follow-ups
-flagged in code: `subject_desc` uses scriptLine (thread storyboard desc),
-`brand_primary_hex` defaults #FFCC00 (needs the picker).
+**Next up — Slice-3 live smokes, then Slice 4 (telemetry + beta rollout).**
+The approved Slice-3 implementation plan (with the full verification script) is
+preserved at the session plan path but summarized in this doc's Verification
+section; the smoke checklist is in "Open for Neil" above.
 
 **Paste-ready kickoff for next session:**
 
 > Read `CLAUDE.md` and `workflows/omni_edit_styles_plan.md` in full (esp. the
 > RESUME STATE section) — do not /compact, start fresh. We're resuming Omni
 > Edit Styles on branch `feat/omni-edit-styles`. I've restored `.env` (incl.
-> `OMNI_STYLES_ENABLED=true`). Draft the Slice-3 /goal for my approval, then
-> build Slice 3 via code-executor. No tuned-file edits; smoke via the
-> smoke-tester subagent using the dev seed hook + smoke account.
+> `OMNI_STYLES_ENABLED=true`). Slice 3 is code-complete — run the Slice-3 live
+> smokes via the smoke-tester subagent (dev seed hook + smoke account,
+> metering LIVE so unset GRIFON_DEV_UNMETERED_VIDEO), and queue the MP4s for
+> my eyeball. No tuned-file edits.
 
 ---
 
