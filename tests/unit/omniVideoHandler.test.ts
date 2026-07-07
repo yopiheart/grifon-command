@@ -17,7 +17,8 @@ vi.mock('../../api/_lib/quota.js', () => ({
   peekOmniAllowance: (...args: unknown[]) => peekOmniAllowanceMock(...args),
 }));
 
-import handler from '../../api/gemini/omni-video.js';
+import handler, { deriveGateExpectations } from '../../api/gemini/omni-video.js';
+import { OMNI_PRESETS } from '../../api/_lib/omniPresets.js';
 
 // Lightweight kill-switch check: the handler returns 503 before any auth /
 // Supabase / Gemini call when OMNI_STYLES_ENABLED is not 'true'. All the _lib
@@ -122,5 +123,27 @@ describe('api/gemini/omni-video — omni-ad allowance wall', () => {
       limit: 5,
       credits: 0,
     });
+  });
+});
+
+describe('deriveGateExpectations — style-brand leak guard', () => {
+  it('vox-explainer-v1 forbids the "vox" style token (Neil eyeball 2026-07-07: literal Vox masthead rendered)', () => {
+    const exp = deriveGateExpectations(OMNI_PRESETS['vox-explainer-v1'], { title_text: 'GLOW UP' });
+    expect(exp.directedWords).toEqual(['GLOW UP']);
+    expect(exp.forbiddenWords).toContain('vox');
+  });
+
+  it('never forbids a token the directed title legitimately contains (brand "Voxel")', () => {
+    const exp = deriveGateExpectations(OMNI_PRESETS['vox-explainer-v1'], { title_text: 'VOXEL PRO' });
+    expect(exp.directedWords).toEqual(['VOXEL PRO']);
+    expect(exp.forbiddenWords).not.toContain('vox');
+  });
+
+  it('other presets do not carry the vox token; slot hexes still forbidden', () => {
+    const exp = deriveGateExpectations(OMNI_PRESETS['premium-reel-v2'], {
+      emphasis_words: 'THIRSTY',
+      brand_primary_hex: '#FFCC00',
+    });
+    expect(exp.forbiddenWords).toEqual(['#FFCC00']);
   });
 });

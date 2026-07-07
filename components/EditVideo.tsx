@@ -426,14 +426,28 @@ const BatchEditMode: React.FC<{
           if (composed?.bedUrl) music = { ...music, bedUrl: composed.bedUrl };
         }
       }
+      // Omni-styled scenes own their typography: drop the FFmpeg overlayText
+      // (hook title / callouts) so it can't stamp over the style's rendered
+      // title. Live catch (Neil eyeball 2026-07-07): the blue/white "DRY SKIN?"
+      // hook overlay landed on top of the VOX torn-paper headline. Fallback /
+      // never-styled scenes keep their overlays — the standard edit needs them.
+      const styledScenes = new Set(
+        Object.values(omniResults)
+          .filter((o) => o.outcome === 'styled')
+          .map((o) => o.sceneIdx)
+      );
+      const overlayScenes: FinalRenderScene[] = scenes.map((s) =>
+        styledScenes.has(s.sceneIdx) ? { ...s, overlayText: undefined } : s
+      );
       // Captions OFF: drop scriptLine + measured word timings from the request
       // scenes so no spoken-word subtitles burn in (hook title / callouts via
-      // overlayText STAY — Neil decision). This happens AFTER the music-length
-      // reduce + targetDurationSec above (both computed from the pre-omission
-      // scenes), so captions-off never shifts music length or dead-air trim.
+      // overlayText STAY on non-styled scenes — Neil decision). This happens
+      // AFTER the music-length reduce + targetDurationSec above (both computed
+      // from the pre-omission scenes), so captions-off never shifts music
+      // length or dead-air trim.
       const requestScenes: FinalRenderScene[] = captionsEnabled
-        ? scenes
-        : scenes.map(({ scriptLine, voiceWords, ...rest }) => rest);
+        ? overlayScenes
+        : overlayScenes.map(({ scriptLine, voiceWords, ...rest }) => rest);
       // End-card recap overlay removed 2026-06-16 (Neil): it auto-pulled the
       // wizard offer — which carries the price — and burned it onto the last
       // scene (and covered the presenter's face). No auto-applied recap now; the

@@ -146,6 +146,18 @@ describe('judgeGate — forbidden/instruction text (Neil eyeball catch 2026-07-0
     );
     expect(r.pass).toBe(true);
   });
+
+  it('fails a vox render that drew the literal "Vox" masthead (Neil eyeball 2026-07-07 — undirected trademark)', () => {
+    // The template says "VOX-inspired / VOX-style" as DIRECTION only; the fire
+    // sidecar now lists 'vox' as forbidden for the vox preset. Matching is
+    // case-insensitive substring, so the title-cased masthead must fail.
+    const r = judgeGate(
+      { renderedText: ['Vox', 'GLOW UP', 'SERUM'], hasCaptions: false, believability: 'real-human' },
+      { directedWords: ['GLOW UP'], expectPerson: true, forbiddenWords: ['vox'] }
+    );
+    expect(r.pass).toBe(false);
+    expect(r.reasons).toEqual(['forbidden_text']);
+  });
 });
 
 describe('looksBlocked — safety-filter classification', () => {

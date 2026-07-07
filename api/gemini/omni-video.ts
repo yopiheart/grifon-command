@@ -74,7 +74,7 @@ const getAi = (): GoogleGenAI => {
 //   vox-explainer-v1    → title_text (whole phrase)
 //   dolly-zoom-v1       → [] (no directed text; label pixels are frozen)
 // expectPerson tracks the preset's scene target (talking presets carry a face).
-function deriveGateExpectations(
+export function deriveGateExpectations(
   preset: OmniPreset,
   slots: Record<string, string>
 ): { directedWords: string[]; expectPerson: boolean; forbiddenWords: string[] } {
@@ -99,7 +99,19 @@ function deriveGateExpectations(
   const forbiddenWords = [slots.brand_primary_hex, slots.brand_secondary_hexes]
     .map((v) => (v ?? '').trim())
     .filter(Boolean);
-  return { directedWords, expectPerson: preset.target === 'talking', forbiddenWords };
+  // Style-brand leak: the template's style descriptor rendered as text. Live
+  // catch (Neil eyeball 2026-07-07, Slice-3 smoke): the vox template says
+  // "VOX-inspired / VOX-style" as DIRECTION only, but Omni drew the literal
+  // Vox masthead above the title — an undirected third-party trademark in a
+  // customer ad. Gate matching is case-insensitive substring, so also guard:
+  // never forbid a token the user's own directed text legitimately contains
+  // (e.g. a brand named "Voxel").
+  if (preset.id === 'vox-explainer-v1') forbiddenWords.push('vox');
+  const directedLower = directedWords.map((w) => w.toLowerCase());
+  const safeForbidden = forbiddenWords.filter(
+    (f) => !directedLower.some((d) => d.includes(f.toLowerCase()))
+  );
+  return { directedWords, expectPerson: preset.target === 'talking', forbiddenWords: safeForbidden };
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
