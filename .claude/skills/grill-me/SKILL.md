@@ -1,8 +1,10 @@
 ---
 name: grill-me
-description: Interview the user relentlessly about a plan or design until reaching shared understanding, resolving each branch of the decision tree. Use when user wants to stress-test a plan, get grilled on their design, or mentions "grill me".
+description: Interview the user relentlessly about a plan or design until reaching shared understanding, resolving each branch of the decision tree. Use when user wants to stress-test a plan, get grilled on their design, mentions "grill me", or asks for a "blind spot pass".
 disable-model-invocation: true
 ---
+
+Opening move — blind-spot pass. Before the first question, judge whether this plan enters territory I haven't worked in (a new domain, an unmapped part of the codebase, an external system we haven't integrated). If it does, sweep that territory first — read the relevant code, docs, and constraints — and surface my likely *unknown unknowns*: the questions I didn't know to ask, assumptions the territory contradicts, and obstacles the plan doesn't mention. Present that list, let me react, then fold it into the interview queue. If the territory is familiar, say so in one line and go straight to the interview.
 
 Interview me relentlessly about every aspect of this plan until we reach a shared understanding. Walk down each branch of the design tree, resolving dependencies between decisions one-by-one. For each question, provide your recommended answer.
 

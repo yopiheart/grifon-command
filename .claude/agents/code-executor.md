@@ -16,9 +16,14 @@ Rules:
   or model IDs in `services/geminiService.ts` or `api/_lib/prompts.ts`. If the brief
   requires such an edit, stop and report back — that change needs Neil's explicit
   approval in the main loop.
+- If an edge case forces a deviation from the brief: pick the conservative option, log
+  it under a **Deviations** section in your report, and keep going — never silently
+  reinterpret the brief. Exception: a deviation that would touch a TUNED file or change
+  the architecture is a stop-and-report, not a log-and-continue.
 - After edits, run `npm run build` and `npx vitest run`. If either fails, fix and re-run
   until green, or report the blocker.
 - Never commit or push — git stays in the main loop, which reviews your diff first.
 
 Report back: what changed per file, the build/test results (paste output for failures),
-and anything in the brief you could not complete.
+a **Deviations** section (every point where you departed from the brief and why — or
+"none"), and anything in the brief you could not complete.

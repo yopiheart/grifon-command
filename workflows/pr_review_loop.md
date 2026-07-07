@@ -64,6 +64,24 @@ no GitHub Action running Claude and no `ANTHROPIC_API_KEY` in CI (deferred — s
 - Optionally, a fix commit for small non-TUNED issues.
 - No merge decision is made by the critic — green CI + Neil's call still gate the merge.
 
+## Gatekeeper summary (opt-in, big merges only)
+
+For large feature-branch merges, Neil can request a **gatekeeper summary** ("gatekeeper
+summary for PR #X"). This is a comprehension aid for the human gate, not a new automated
+gate — it never merges, approves, or blocks anything, and it is NOT part of the default
+loop above. Only produce one when Neil asks.
+
+Build a self-contained HTML report (via the Artifact tool; on a cafe PC without it, a
+markdown file works) with three parts:
+
+1. **Intuition summary** — what changed and *why*, per module/file group, written for a
+   reader on a phone who hasn't seen the diff. Lead with the user-visible behavior change.
+2. **Risk map** — what could break, which flows to watch post-merge, and any TUNED-file
+   or migration touchpoints (flag these the same way as step 3 of the Procedure).
+3. **Self-check quiz** — 3–5 questions at the bottom probing whether the reader could
+   predict the change's behavior (answers hidden behind `<details>` toggles). Neil merges
+   only once the answers hold no surprises.
+
 ## Edge Cases / Learnings
 
 - **Don't let the critic merge or approve.** It is report-only by design. Merge stays a human/green-CI
