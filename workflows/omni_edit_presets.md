@@ -163,8 +163,29 @@ gate, routing, captions). Maps all 4 `neil_approved` presets onto the code shape
     ATTEMPT even with 0 tracks persisted. (d) The one dev-server "crash" during
     run A was the orchestrator's own `npm run dev | head -30` pipe kill, not a
     product bug.
-- **Next gates:** Neil eyeballs the Slice-3 artifacts (panel screenshots in
-  `.playwright-mcp/`, MP4s + styled frames in `.tmp/omni-smoke-s3/` — both
+- **Neil eyeball of the Slice-3 styled frame: TWO REAL CATCHES** (2026-07-07,
+  verbatim): *"Ask ko lang din ano ung vox? sa taas ng glow up? Kasali ba talga
+  un? Tapos ung dry skin na blue at white nag overlap dun sa vox style overlay
+  text title? Bakit ganito? Solve na ba to?"* Both fixed same session
+  (`855eb0a`, 515 tests green):
+  1. **Vox masthead leak (gate gap, FIXED):** the template's "VOX-inspired /
+     VOX-style" is DIRECTION only — Omni drew the literal Vox wordmark above
+     the title, an undirected third-party trademark in a customer ad. Same
+     leak class as the `#FFCC00` catch. `'vox'` now joins the fire-sidecar
+     `forbiddenWords` for vox-explainer-v1 (gate-fail → re-roll → fallback),
+     guarded so a user title legitimately containing "vox" (brand "VOXEL") is
+     never gate-killed. Root-cause template hardening ("never render the word
+     VOX or any publisher logo") is a TUNED edit — Neil-gated, offered as a
+     follow-up if the gate shows high vox-fail rates in Slice-4 telemetry.
+  2. **FFmpeg hook overlay stamped over the styled title (FIXED):** the exact
+     doubling risk flagged in the captions decision ("suppress overlays on
+     styled scenes is a one-line follow-up if it doubles badly") — it doubled.
+     Omni-styled scenes now drop `overlayText` at Render Final (Omni owns the
+     typography there); fallback / never-styled scenes keep their overlays.
+  **Eyeball catches what the machine gate misses — third time running** (angle
+  switch, hex leak, now the masthead + overlay collision).
+- **Next gates:** Neil eyeballs the remaining Slice-3 artifacts (panel
+  screenshots in `.playwright-mcp/`, MP4s in `.tmp/omni-smoke-s3/` — both
   defreezer-doomed, view before reboot) → optional gate-clean re-render
   (still open from Slice 2) → Slice 4 (telemetry + beta rollout).
 - Preset rows flip to `product_shipped` only when the user-facing picker ships
