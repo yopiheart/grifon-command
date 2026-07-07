@@ -39,14 +39,14 @@ class of edit). The believability + label eval gate runs on EVERY output, every 
 | ID | Name | Target | Status | Est. cost/run | Evidence |
 |---|---|---|---|---|---|
 | `felt-zoom-punchin-v1` | Felt Zoom Punch-In | talking | poc_validated | 5s ≈ $0.50 | #18 Sample 4 + Neil easing fix 2026-07-05 |
-| `dolly-zoom-v1` | Dolly Zoom | b-roll | neil_approved | 4s ≈ $0.38 | #18 Sample 5 + Neil verdict 2026-07-05 |
+| `dolly-zoom-v1` | Dolly Zoom | b-roll | **neil_approved, HELD from beta route** (2026-07-07 — Neil eyeballed a Slice-4 smoke render: move reads cheap/uncommitted on real footage; the believability gate does not measure motion quality. Pulled from `OMNI_STYLE_ROUTING` (b-roll→null); template kept intact for one-line restore after a motion re-tune + re-validation) | 4s ≈ $0.38 | #18 Sample 5 + Neil verdict 2026-07-05; Slice-4 eyeball 2026-07-07 |
 | `display-text-pop-v1` | Directed Display Text Pop | mixed | neil_approved | 5s ≈ $0.50 | #18 Sample 6 + Neil verdict 2026-07-05 |
 | `angle-switch-v1` | Camera Angle Switch | talking | draft (round 1 CONTAMINATED — retest on clean raw) | 6s ≈ $0.60 | Neil caught source contamination 2026-07-06 |
 | `premium-reel-v1` | Premium Reel (johnsavage talking-head) | talking | superseded by v2 | — | johnsavage PDF (appendix A) + round 1 2026-07-06 |
-| `premium-reel-v2` | Premium Reel (pixel-locked) | talking | **neil_approved** (full gate pass + eyeball 2026-07-06) | 4-6s ≈ $0.40-0.60 | round 1 2026-07-06: believability real-human/high, bg intact, THIRSTY letter-perfect |
+| `premium-reel-v2` | Premium Reel (pixel-locked) | talking | **product_shipped** (2026-07-07 — talking route of the PREMIUM REEL hero style; Slice 3 NEIL_APPROVED. Code: `api/_lib/omniPresets.ts` template + `OMNI_STYLE_ROUTING`; picker `components/GenerateVideo/index.tsx`) | 4-6s ≈ $0.40-0.60 | round 1 2026-07-06: believability real-human/high, bg intact, THIRSTY letter-perfect; product-path renders Neil-eyeballed 2026-07-07 |
 | `angle-switch-v2` | Camera Angle Switch (concrete destinations) | talking | draft — MOVE WORKS per Neil; believability re-run on clean clip pending | 6s ≈ $0.60 | Neil eyeball 2026-07-06 + official prompt guide |
 | `paper-collage-v1` | Paper Collage (johnsavage paper style) | talking | draft | 5s ≈ $0.50/attempt | johnsavage PDF (appendix B) |
-| `vox-explainer-v1` | VOX Editorial Explainer | talking | **neil_approved** (full gate pass + eyeball 2026-07-06; grounding-via-API-text CONFIRMED) | 4s ≈ $0.40 | round 1 2026-07-06: real-human/HIGH, title letter-perfect, graphics grounded from prompt text |
+| `vox-explainer-v1` | VOX Editorial Explainer | talking | **product_shipped** (2026-07-07 — talking route of the VOX EXPLAINER hero style; Slice 3 NEIL_APPROVED. Code: `api/_lib/omniPresets.ts` template + `OMNI_STYLE_ROUTING`; picker `components/GenerateVideo/index.tsx`) | 4s ≈ $0.40 | round 1 2026-07-06: real-human/HIGH, title letter-perfect, graphics grounded from prompt text; product-path renders Neil-eyeballed 2026-07-07 |
 | `rack-focus-v0` | Rack Focus | b-roll | rejected | — | #18 round 1: move failed to execute |
 | `talking-bg-swap-v0` | Talking-Scene BG Swap/Relight | talking | rejected | — | #18 round 1 Tests 3-4: degrades believability |
 
@@ -56,8 +56,189 @@ class of edit). The believability + label eval gate runs on EVERY output, every 
 > appear here. The ai-editor skill NEVER applies these — each proposal maps the preset
 > onto the concrete code shape (proxy + routing + tier gate) and ends `Status: with Neil`.
 
-*(none yet — product integration is out of scope until Neil merges `feat/omni-edit-poc`
-and green-lights the proxy build)*
+### Proposal 001 — Omni Edit Styles product integration · **Status: APPROVED, in build**
+
+Neil green-lit the proxy build 2026-07-06 via the grilled + premortemed PRD:
+**[omni_edit_styles_plan.md](omni_edit_styles_plan.md)** (all 9 design decisions +
+4 premortem mitigations recorded there — tier gate, billing, fallback ladder, QA
+gate, routing, captions). Maps all 4 `neil_approved` presets onto the code shape:
+
+- **Shape:** 2 hero Edit Styles (`premium_reel`, `vox_explainer`) auto-routed per
+  scene type; `dolly-zoom-v1` on b-roll, `display-text-pop-v1` on mixed. Business
+  tier, 5 omni ads/mo included + ₱499 top-up. Kill switch `OMNI_STYLES_ENABLED`.
+- **Slice 1 LANDED** (branch `feat/omni-edit-styles`, commit `54a3367`, 2026-07-06):
+  `api/_lib/omniPresets.ts` (templates ported VERBATIM, born TUNED),
+  `api/gemini/omni-video.ts` + `api/gemini/omni-video/poll.ts` (Interactions-API
+  proxy, filter-block resilience codes, per-ad hard budget). 21 unit tests; bundle
+  verified clean of prompt content.
+- **Live proxy smoke PASSED** (2026-07-06, Neil-approved "Start!", 1 call ≈ $0.40):
+  premium-reel-v2 on the committed skincare raw clip, THROUGH the new proxy
+  end-to-end (business smoke acct `smoketest-dc@grifon.dev` created + business sub;
+  clip signed from storage). Fire leg **13.4s** (download+Files-upload+ACTIVE+create
+  — the Vercel-60s concern is CLOSED for ~5s/1.2MB clips), render ~40s, valid MP4
+  output at `.tmp/omni-smoke/premium-reel-v2-proxy-smoke.mp4` (964KB, ftyp OK).
+  Guards verified live in `rate_limits`: `gemini:omni` 1, `omni:ad:<adId>` 1,
+  `gemini:omni-poll` 4.
+- **Neil eyeball: PASS** (2026-07-06, verbatim): *"Question, sinadya ba tong
+  madaming THIRSTY na word? Design ba to? Okay lang ba to? Overall okay naman
+  sakin, dun lang ako nagtaka sa madaming thirsty kung sinadya by design. If you
+  think this is included as a design and tingin mong okay naman to for ads - its
+  fine."* Ruling recorded: the 5× stacked THIRSTY wall is **semi-intended** — the
+  template's "layered foreground and background type" language invites it (same
+  class as v1's doubled ARAW-ARAW); degree varies per roll (approved lab run
+  rendered it once). Kept unpinned by design: the echo-wall is the style's
+  signature and per-output variance is handled by the Slice-2 preview + 1 user
+  re-roll. Pinning ("render once, at most twice") remains a Neil-gated one-line
+  TUNED edit if ever wanted.
+- **Slice 2 LANDED** (2026-07-06, commits `74373cc` + `4de23b9` + `20b25e9`):
+  EditVideo "Applying style" stage, per-output QA gate (`api/_lib/omniGate.ts`,
+  fails OPEN), fallback ladder (1 retry → FFmpeg-only), 1-use re-roll, styled-URL
+  swap into Render Final. Live smoke run 1 caught a REAL bug: with
+  `background:true`, Google defers the safety verdict — a blocked interaction
+  returns HTTP 400 "Request blocked due to safety violations" on GET, which the
+  proxy mapped to 502 and the client polled through (~10 min of spam, Neil
+  STOPPED the run). Fixed both layers; classification pinned to the verbatim
+  live payload in `tests/unit/omniGate.test.ts` (deterministic evidence).
+- **Filter nondeterminism CONFIRMED in the product path:** the Bukidnon clip
+  BLOCKED in run 1 and STYLED CLEAN in run 2 (same clip, same preset, ~40 min
+  apart) — the lab's "borderline-filter luck" reads exactly the same through
+  the proxy. This is why the ladder retries once before falling back. Run-2
+  smoke otherwise fully green: both scenes styled, 18 polls / zero 502s,
+  Render Final payload consumed both styled URLs, re-roll affordance present.
+  Total Slice-2 smoke spend ≈ $1.60. Calm-fallback UI note not yet observed
+  live (block wouldn't reproduce); verified by pinned classification test +
+  ladder unit matrix instead.
+- **Neil eyeball of run-2 renders: TWO REAL CATCHES** (2026-07-06, verbatim):
+  *"Bro merong color code na text ano un bug? Bat may ganun? #FFCC00. Tapos ung
+  2nd video na bukidnon, nag DOBLE ung word na 'NA'… Eh sa video na un maayos
+  ung script walang dobleng word."*
+  1. **Instruction-text leak (REAL GATE GAP, FIXED `d34317c`):** Omni rendered
+     the literal `#FFCC00` from the color-accent slot as typography (3× on
+     Bukidnon, 1× on skincare) — stochastic violation of the no-other-text rule.
+     The gate only checked directed words were PRESENT. Now: any hex-code render
+     fails unconditionally + fire-time slot values travel as `forbiddenWords`
+     in the sidecar → gate fail → auto re-roll. Verbatim run-2 renderedText
+     pinned in `tests/unit/omniGate.test.ts`. **Eyeball catches what frame
+     strips and the machine gate miss — again** (same lesson as angle-switch).
+  2. **Doubled spoken word ("NA") — NOT a product-path defect:** that's Omni's
+     own audio track (Omni can stretch the tail; known lab prior 5.05s→5.18s).
+     Finished ads discard it: ElevenLabs VO muxes over + scene trims to VO end.
+     Heard only because the smoke seed had no voice overlays. RESIDUAL RISK
+     logged: mid-scene video time-warp under a muxed VO = lip desync; covered
+     by the believability gate + Neil eyeball, watch for it in Slice-4 beta.
+- **Slice 3 LANDED + billing live-smoked** (2026-07-07, commits `efac36a`…`452f159`;
+  smoke spend ≈ $2.00, runs A/B/C via smoke-tester on the dev proxy, metering LIVE):
+  - **Charged path PASS:** 2-scene VOX pass → verbatim `// 1 Omni ad used · 1 of 5
+    this month`; consume `{"consumed":true,"fromCredit":false,"used":1,"limit":5}`.
+    Charge is per finished ad, not per scene (2 styled scenes = 1 debit).
+  - **Re-roll idempotency PASS:** re-roll after charge → `alreadyCounted:true`,
+    note unchanged; DB showed 3 consume calls but exactly 2 monthly debits with
+    one `omniad:` limit-1 marker per finishedAdId.
+  - **Exhaustion wall PASS:** counter forced to 5/5 + 0 credits → fire returned
+    `402 {"error":"omni_quota_exceeded","reason":"omni_allowance_exhausted","used":5,"limit":5,"credits":0}`
+    BEFORE any paid call; UI showed the calm note + the `// BUY 1 OMNI STYLE — ₱499` ghost CTA.
+  - **Credit fallback PASS:** granted 1 omni_style credit at 5/5 → pass styled,
+    verbatim `// 1 Omni ad used (top-up credit)`, consume
+    `{"consumed":true,"fromCredit":true,"used":5,"limit":5}`, credit column 0
+    after. Checkout page at `/checkout?topup=omni_style_single` rendered
+    `1 Omni Style Ad · ₱499.00` with PayMongo methods (payment not submitted).
+  - **VOX picker slots proven in-render:** the seeded title override rendered
+    letter-perfect as the torn-paper headline ("GLOW UP") with the seeded brand
+    hex; frame extracted from the styled scene (Neil eyeball still pending).
+  - **Captions toggle VERIFIED (request-diff + offline proof, not visually):**
+    ON/OFF request bodies differ exactly by `scriptLine`/`voiceWords`; renders
+    were byte-identical ONLY because the stub EDL blanketed every scene with a
+    full-length overlay (b-roll C1 skip + punchline-holds-to-end) — proven by a
+    throwaway `planScene` spec: chunks DO draw from scriptLine alone (no
+    voiceWords/audio needed), a punchline suppresses all talking chunks, no
+    scriptLine → zero text layers. Visual ON/OFF eyeball deferred to a real
+    multi-scene ad (Slice-4 beta) where the EDL leaves uncovered scenes.
+  - **Environment findings (NOT Slice-3 defects):** (a) **ElevenLabs subscription
+    has a FAILED PAYMENT** — API returns `payment_issue` on TTS; blocks voice
+    consolidate (`elevenlabs_401`) and music compose (502). Neil: settle the
+    ElevenLabs invoice. (b) Pre-existing bug: `/api/render/final` 400s when the
+    EDL draft emits `transitionIn: null` on the hook scene (zod wants object) —
+    nondeterministic, near-silent failure; ticket independent of Slice 3.
+    (c) Pre-existing UX gap: Render Final unlocks after a voice consolidate
+    ATTEMPT even with 0 tracks persisted. (d) The one dev-server "crash" during
+    run A was the orchestrator's own `npm run dev | head -30` pipe kill, not a
+    product bug.
+- **Neil eyeball of the Slice-3 styled frame: TWO REAL CATCHES** (2026-07-07,
+  verbatim): *"Ask ko lang din ano ung vox? sa taas ng glow up? Kasali ba talga
+  un? Tapos ung dry skin na blue at white nag overlap dun sa vox style overlay
+  text title? Bakit ganito? Solve na ba to?"* Both fixed same session
+  (`855eb0a`, 515 tests green):
+  1. **Vox masthead leak (gate gap, FIXED):** the template's "VOX-inspired /
+     VOX-style" is DIRECTION only — Omni drew the literal Vox wordmark above
+     the title, an undirected third-party trademark in a customer ad. Same
+     leak class as the `#FFCC00` catch. `'vox'` now joins the fire-sidecar
+     `forbiddenWords` for vox-explainer-v1 (gate-fail → re-roll → fallback),
+     guarded so a user title legitimately containing "vox" (brand "VOXEL") is
+     never gate-killed. Root-cause template hardening ("never render the word
+     VOX or any publisher logo") is a TUNED edit — Neil-gated, offered as a
+     follow-up if the gate shows high vox-fail rates in Slice-4 telemetry.
+  2. **FFmpeg hook overlay stamped over the styled title (FIXED):** the exact
+     doubling risk flagged in the captions decision ("suppress overlays on
+     styled scenes is a one-line follow-up if it doubles badly") — it doubled.
+     Omni-styled scenes now drop `overlayText` at Render Final (Omni owns the
+     typography there); fallback / never-styled scenes keep their overlays.
+  **Eyeball catches what the machine gate misses — third time running** (angle
+  switch, hex leak, now the masthead + overlay collision).
+- **Verification render (2026-07-07, Neil "go", ≈$0.80 + TTS):** post-fix VOX
+  run with ElevenLabs restored (invoice paid). Results:
+  - **Styled hook is clean:** GLOW UP masthead in brand blue, NO "Vox" wordmark,
+    NO FFmpeg hook overlay stamped on top (both same-day fixes confirmed in
+    output). Scene 2 blocked→retried→fell back (known filter nondeterminism);
+    ladder + calm note behaved.
+  - **Captions toggle PROVEN VISUALLY at last:** real VO (2 tracks persisted),
+    ON render shows karaoke chunks ("morning cup, walang"), OFF render same
+    timestamp shows none; hashes/sizes differ
+    (`verify-captions-ON.mp4` b7f8a37a… vs `verify-captions-OFF.mp4` d821db59…).
+  - **Billing:** verbatim `// 1 Omni ad used · 3 of 5 this month`;
+    consume `{"consumed":true,"fromCredit":false,"used":3,"limit":5}`;
+    rate_limits ledger consistent (counter 3, one omniad: marker per ad).
+  - **Gate caveat:** the vision gate returned `gate_unavailable` (unparseable
+    model response → deliberate fail-open), so the vox-catch wasn't exercised
+    live this run — it's unit-pinned instead. **Slice-4 telemetry must track
+    the gate_unavailable rate**; a high rate quietly disables every gate check.
+  - **New watch item (Neil eyeball queue):** Omni invented a shop-page insert
+    around the product visible in the source clip — including a PRICE
+    ("$49.45") and ADD TO CART. Registry constraint already says insert text is
+    invented/decorative, but an invented PRICE in an ad is a stronger risk
+    class. Watch in Slice-4 beta; possible gate heuristic or tuned-template
+    line ("never invent prices/currency amounts") — Neil-gated.
+- **Neil eyeball of the verification MP4s — 3 questions, all SEED ARTIFACTS
+  (2026-07-07):** (1) *"bakit may bukidnon na topic dun sa glossier talking
+  avatar?"* → the vox `topic_context` slot is the WHOLE ad script
+  (`allScriptLines`, omniStyleService.ts:128) and the smoke seed glued two
+  unrelated products (skincare + coffee) into one fake "ad" — a real ad's
+  script is one product, so its inserts stay on-topic. Working as designed;
+  the cross-scene grounding is deliberate (richer inserts from the full
+  script). (2) *"parang may zoom na ayaw gumana sa bukidnon clip"* → that's
+  the DOLLY-ZOOM preset (background warps, subject pinned) applied weakly —
+  routed there because the run-A seed mislabeled the talking clip as `b-roll`.
+  In-app the storyboard types scenes, so a talking clip never routes to
+  dolly-zoom. **Watch item anyway: dolly-zoom "weak execution" rate belongs in
+  Slice-4 telemetry** (the believability gate doesn't measure whether the move
+  committed). (3) *"captions hindi tugma sa sinasabe ng avatar"* → the seeded
+  scriptLines ≠ what the borrowed raw clips' speakers actually say; the VO
+  (ElevenLabs, muxed over) + captions match EACH OTHER and the forced-aligned
+  timings — in-app the avatar footage is GENERATED from the same scriptLine,
+  so lips + VO + captions all agree. No fix needed; noted so beta feedback can
+  tell this artifact apart from a real desync.
+- **Slice 3 verdict: NEIL_APPROVED** (2026-07-07, verbatim: *"Okay bro goods
+  na to. Sige proceed na tayo sa slice 4."*).
+- **Next gates:** Slice 4 (telemetry + beta rollout) — telemetry includes the
+  gate_unavailable rate, invented-price watch, and dolly-zoom commit-rate
+  items collected above. **Step 0 DONE 2026-07-07:** premium-reel-v2 /
+  vox-explainer-v1 rows flipped to `product_shipped` (picker shipped + Slice 3
+  NEIL_APPROVED + product-path renders eyeballed). **dolly-zoom-v1 REVERTED to
+  neil_approved + HELD from route** — the Slice-4 smoke put a real dolly-zoom
+  render in front of Neil and he judged the move cheap/uncommitted; b-roll now
+  routes to null (clean FFmpeg edit) for the beta. `display-text-pop-v1` stays
+  `neil_approved` — wired for `mixed` scenes but no current scene type derives
+  `mixed` (`services/omniStyleService.ts`), so it is unreachable in product.
+  Net: the beta ships the two talking-scene hero moves only.
 
 ### Standing requirement for the future proxy build: filter-block resilience
 

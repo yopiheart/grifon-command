@@ -33,8 +33,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   // Walk each user folder, reaping aged files. Files live both directly under
   // the user folder (legacy gemini videos: ${uid}/x.mp4) and one level deeper in
-  // the voice/render subfolders (${uid}/audio/x.mp3, ${uid}/final/x.mp4 +
-  // x.status.json). Descend one level so the Phase 1/2 artifacts get reaped too.
+  // the voice/render/omni subfolders (${uid}/audio/x.mp3, ${uid}/final/x.mp4 +
+  // x.status.json, ${uid}/omni-meta/${interactionId}.json). Descend one level so
+  // the Phase 1/2 + Omni-gate sidecar artifacts get reaped too.
   const reapDir = async (prefix: string) => {
     const { data, error } = await admin.storage.from(BUCKET).list(prefix, { limit: LIST_PAGE });
     if (error) throw error;

@@ -55,6 +55,20 @@ poppler/poppler-26.02.0/Library/bin/pdftoppm.exe -png -r 100 <file.pdf> out/pg
 Verbatim transcriptions already live in `workflows/omni_edit_presets.md` appendices —
 only re-install if you need to re-read pages visually.
 
+## Omni Edit Styles — .env re-arm (flag not yet moved to Vercel)
+
+The Omni proxy 503s without its kill-switch flag. When restoring `.env`, include:
+
+```
+OMNI_STYLES_ENABLED=true
+MEDIA_STORE=r2
+```
+
+Resume doc: `workflows/omni_edit_styles_plan.md` → **RESUME STATE** section
+(branch status, smoke account, dev seed hook, kickoff message).
+Delete this section once `OMNI_STYLES_ENABLED` + `OMNI_STYLES_BETA_ALLOWLIST`
+are set in Vercel (the feature merged to main 2026-07-07, PR #47).
+
 ## Dated: revert the main-model pin to Fable when credits refill
 
 **Decided 2026-07-07** (Neil + Claude — promo ended Jul 7 + Fable credits depleted):

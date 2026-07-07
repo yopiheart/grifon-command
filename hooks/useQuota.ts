@@ -2,12 +2,12 @@ import { useCallback, useEffect, useState } from 'react';
 import { getSupabase } from '../services/supabaseClient';
 import type { PlanId } from '../utils/planGate';
 
-export type MeterUnit = 'workflows' | 'reports' | 'captions' | 'images' | 'video_ads';
+export type MeterUnit = 'workflows' | 'reports' | 'captions' | 'images' | 'video_ads' | 'omni_ads';
 
 export type UnitUsage = { used: number; limit: number; remaining: number };
 
 /** Purchased top-up balances (separate from the monthly meter). */
-export type Credits = { video_ad_credits: number; cinematic_credits: number };
+export type Credits = { video_ad_credits: number; cinematic_credits: number; omni_style_credits: number };
 
 export type Quota = Record<MeterUnit, UnitUsage> & {
   plan: PlanId;
@@ -17,7 +17,7 @@ export type Quota = Record<MeterUnit, UnitUsage> & {
 };
 
 const ZERO: UnitUsage = { used: 0, limit: 0, remaining: 0 };
-const ZERO_CREDITS: Credits = { video_ad_credits: 0, cinematic_credits: 0 };
+const ZERO_CREDITS: Credits = { video_ad_credits: 0, cinematic_credits: 0, omni_style_credits: 0 };
 
 const DEFAULT: Omit<Quota, 'refetch'> = {
   plan: 'free',
@@ -26,6 +26,7 @@ const DEFAULT: Omit<Quota, 'refetch'> = {
   captions: ZERO,
   images: ZERO,
   video_ads: ZERO,
+  omni_ads: ZERO,
   credits: ZERO_CREDITS,
   loading: true,
 };
@@ -64,6 +65,7 @@ export const useQuota = (): Quota => {
         captions: data.captions ?? ZERO,
         images: data.images ?? ZERO,
         video_ads: data.video_ads ?? ZERO,
+        omni_ads: data.omni_ads ?? ZERO,
         credits: data.credits ?? ZERO_CREDITS,
         loading: false,
       });

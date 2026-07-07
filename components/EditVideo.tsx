@@ -20,8 +20,17 @@ import { compressImageForUpload } from '../utils/imageCompression';
 import { GlassPanel } from './ui/GlassPanel';
 import { GoldButton } from './ui/GoldButton';
 import Loader from './ui/Loader';
-import { Copy, ChevronLeft, UploadCloud, Image as ImageIcon, Trash2, Download, Scissors, Sparkles, Mic, Clapperboard, CheckSquare, Square } from 'lucide-react';
+import { Copy, ChevronLeft, UploadCloud, Image as ImageIcon, Trash2, Download, Scissors, Sparkles, Mic, Clapperboard, CheckSquare, Square, Loader2, RotateCcw, Minus, Wand2 } from 'lucide-react';
 import saveAs from 'file-saver';
+import {
+  applyOmniStyle,
+  restyleScene,
+  consumeOmniStyleAd,
+  mapSceneToOmniTarget,
+  type OmniSceneOutcome,
+  type OmniConsumeResult,
+} from '../services/omniStyleService';
+import { trackEvent } from '../services/analyticsService';
 
 export interface EditorBatchPayload {
   sceneBatch: SceneBatchEntry[];
@@ -32,6 +41,14 @@ export interface EditorBatchPayload {
   offer?: string;
   /** Look locked at GenerateVideo's Render All; absent → server rotates. */
   lockedPresetId?: LockablePresetId;
+  /** Omni Edit Style locked at Render All (Slice 3 picker); drives the
+   *  "Applying style" pass. Absent unless set via the picker or the dev selector. */
+  omniStyle?: 'premium_reel' | 'vox_explainer';
+  /** Slice 3 picker fields — hop with the style. */
+  omniBrandHex?: string;
+  omniEmphasisWord?: string;
+  omniTitleText?: string;
+  captionsEnabled?: boolean;
 }
 
 interface EditVideoProps {
@@ -110,6 +127,11 @@ const BatchEditMode: React.FC<{
   const [renderError, setRenderError] = useState<string | null>(null);
   // Burn-in: drawtext overlays/captions + SFX + ducked music bed from the EDL.
   const [burnInEnabled, setBurnInEnabled] = useState(true);
+  // Captions (spoken-word subtitles) toggle. Style-defaulted at the picker (VOX
+  // off / Premium on); off omits scriptLine + voiceWords from the request scenes
+  // so no subtitles burn in (hook title / callouts stay). Music length + dead-air
+  // trim are computed pre-omission, so this does not shift timing.
+  const [captionsEnabled, setCaptionsEnabled] = useState(editorBatch.captionsEnabled ?? true);
   // Generative music bed (ElevenLabs Music) — Pro/Business perk, default-on for
   // eligible tiers. Server is authoritative (MUSIC_DAILY); this only governs the
   // toggle + the pre-render compose call. Off / ineligible → tuned static bed.
@@ -119,6 +141,158 @@ const BatchEditMode: React.FC<{
   // Face-clear caption bands per talking scene (MediaPipe, AI-Editor-only).
   // Graceful: empty → the renderer uses its per-type heuristic band.
   const [captionRegions, setCaptionRegions] = useState<Record<number, { yFracTop: number; yFracBottom: number }>>({});
+
+  // ── Omni Edit Styles — the "Applying style" pass (Slice 2) ──────────────
+  // Style source: the locked style hopped from GenerateVideo (editorBatch.omniStyle),
+  // or the dev selector below (Slice-3-replaceable). A stable per-session ad id
+  // keys the server-side per-ad Omni budget.
+  const devUnlocked =
+    typeof window !== 'undefined' && window.localStorage?.getItem('grifon_dev_unlock') === '1';
+  const [omniStyle, setOmniStyle] = useState<'premium_reel' | 'vox_explainer' | null>(
+    editorBatch.omniStyle ?? null
+  );
+  const [finishedAdId] = useState<string>(
+    () => (typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : `omni-${Date.now()}`)
+  );
+  const [omniResults, setOmniResults] = useState<Record<number, OmniSceneOutcome>>({});
+  const [omniApplying, setOmniApplying] = useState(false);
+  const [omniApplyingScenes, setOmniApplyingScenes] = useState<Set<number>>(new Set());
+  const [omniError, setOmniError] = useState<string | null>(null);
+  const [rerolledScenes, setRerolledScenes] = useState<Set<number>>(new Set());
+  // Calm one-line billing note surfaced after the deferred consume settles.
+  const [omniBillingNote, setOmniBillingNote] = useState<string | null>(null);
+  // True when the pass settled with the allowance exhausted — drives the ₱499
+  // top-up CTA under the billing note (Slice 3c upsell surface).
+  const [omniAllowanceExhausted, setOmniAllowanceExhausted] = useState(false);
+
+  // Map a settled consume result (or an allowance short-circuit) to the calm
+  // mono billing note. null/dev_unmetered stay silent.
+  const noteFromConsume = (r: OmniConsumeResult | null): string | null => {
+    if (!r) return null;
+    if (r.consumed) {
+      return r.fromCredit
+        ? '// 1 Omni ad used (top-up credit)'
+        : `// 1 Omni ad used · ${r.used} of ${r.limit} this month`;
+    }
+    if (r.reason === 'majority_fallback') return '// No charge — most scenes kept the standard edit';
+    return null; // dev_unmetered / unknown → silent
+  };
+
+  // Settle billing for a resolved omni pass. When the allowance ran dry mid-pass
+  // the routed scenes short-circuit to fallback with omni_allowance_exhausted —
+  // surface that specific reason plus the ₱499 top-up CTA (Slice 3c) instead of
+  // the generic "no charge" note.
+  const settleOmniBilling = async (outcomes: OmniSceneOutcome[]) => {
+    const styledCount = outcomes.filter((o) => o.outcome === 'styled').length;
+    const fallbackCount = outcomes.length - styledCount;
+    // Per-ad completion telemetry (Slice 4) — fired once per settle, un-awaited so
+    // it never slows the UI. `charged` is null when the pass short-circuited on an
+    // exhausted allowance (no consume call happened).
+    const emitPassComplete = (result: OmniConsumeResult | null) => {
+      void trackEvent({
+        event: 'omni_pass_complete',
+        module: 'omni_style',
+        meta: {
+          finishedAdId,
+          styleId: omniStyle,
+          styledCount,
+          fallbackCount,
+          charged: result?.consumed ?? null,
+          ...(result?.fromCredit !== undefined ? { fromCredit: result.fromCredit } : {}),
+        },
+      });
+    };
+    if (outcomes.some((o) => o.fallbackReason === 'omni_allowance_exhausted')) {
+      setOmniBillingNote('// Omni allowance used up — styles fell back to the standard edit');
+      setOmniAllowanceExhausted(true);
+      emitPassComplete(null);
+      return;
+    }
+    setOmniAllowanceExhausted(false);
+    const consumed = await consumeOmniStyleAd(finishedAdId, outcomes);
+    setOmniBillingNote(noteFromConsume(consumed));
+    emitPassComplete(consumed);
+  };
+
+  const hasRenderedScenes = editorBatch.sceneBatch.some((s) => s.renderedUrl);
+  const allScriptLinesJoined = editorBatch.sceneBatch
+    .map((s) => s.scriptLine)
+    .filter(Boolean)
+    .join(' ');
+
+  const handleApplyStyle = async () => {
+    if (!omniStyle) return;
+    setOmniApplying(true);
+    setOmniError(null);
+    // Mark every routable scene as applying up front (Loader2 chips); each flips
+    // as its ladder resolves via the onOutcome callback.
+    const eligible = new Set(
+      editorBatch.sceneBatch
+        .filter((s) => s.renderedUrl && mapSceneToOmniTarget(s.type))
+        .map((s) => s.sceneIdx)
+    );
+    setOmniApplyingScenes(eligible);
+    try {
+      const outcomes = await applyOmniStyle(
+        editorBatch.sceneBatch,
+        omniStyle,
+        {
+          finishedAdId,
+          aspectRatio: editorBatch.aspectRatio,
+          brandPrimaryHex: editorBatch.omniBrandHex,
+          slotOverrides: { emphasisWord: editorBatch.omniEmphasisWord, titleText: editorBatch.omniTitleText },
+        },
+        (o) => {
+          setOmniResults((prev) => ({ ...prev, [o.sceneIdx]: o }));
+          setOmniApplyingScenes((prev) => {
+            const next = new Set(prev);
+            next.delete(o.sceneIdx);
+            return next;
+          });
+        }
+      );
+      // Deferred consume — settle billing now that every routed scene resolved.
+      await settleOmniBilling(outcomes);
+    } catch (err: any) {
+      setOmniError(err?.message ?? 'OMNI_STYLE_FAILED');
+    } finally {
+      setOmniApplying(false);
+      setOmniApplyingScenes(new Set());
+    }
+  };
+
+  const handleReroll = async (sceneIdx: number) => {
+    const scene = editorBatch.sceneBatch.find((s) => s.sceneIdx === sceneIdx);
+    if (!scene || !omniStyle || rerolledScenes.has(sceneIdx)) return;
+    setRerolledScenes((prev) => new Set(prev).add(sceneIdx)); // one re-roll per scene
+    setOmniApplyingScenes((prev) => new Set(prev).add(sceneIdx));
+    try {
+      const o = await restyleScene(
+        scene,
+        omniStyle,
+        {
+          finishedAdId,
+          aspectRatio: editorBatch.aspectRatio,
+          brandPrimaryHex: editorBatch.omniBrandHex,
+          slotOverrides: { emphasisWord: editorBatch.omniEmphasisWord, titleText: editorBatch.omniTitleText },
+        },
+        allScriptLinesJoined
+      );
+      setOmniResults((prev) => ({ ...prev, [sceneIdx]: o }));
+      // Re-settle billing from the FULL merged tally (all scenes incl. this
+      // re-roll). The server marker makes this idempotent: a re-roll that flips
+      // a fallback-majority into a styled-majority charges at THIS moment.
+      // Accepted asymmetry: a charge followed by a degrading re-roll has no
+      // refund — there is no un-consume primitive.
+      await settleOmniBilling(Object.values({ ...omniResults, [sceneIdx]: o }));
+    } finally {
+      setOmniApplyingScenes((prev) => {
+        const next = new Set(prev);
+        next.delete(sceneIdx);
+        return next;
+      });
+    }
+  };
 
   useEffect(() => {
     let cancelled = false;
@@ -219,9 +393,14 @@ const BatchEditMode: React.FC<{
           // Burn-in: thread this scene's EDL plan (overlays/captions, SFX,
           // transition) into the renderer. Absent EDL → bare stitch for the scene.
           const plan = edl?.scenes.find((e) => e.sceneIdx === s.sceneIdx);
+          // Omni pass: a styled scene renders from its Omni output; every other
+          // scene (fallback or never-styled) keeps its standard renderedUrl.
+          const styled = omniResults[s.sceneIdx];
+          const videoUrl =
+            (styled?.outcome === 'styled' ? styled.styledUrl : undefined) ?? (s.renderedUrl as string);
           return {
             sceneIdx: s.sceneIdx,
-            videoUrl: s.renderedUrl as string,
+            videoUrl,
             audioUrl: voicedOverlays[s.sceneIdx] ?? null,
             keepFullClip: isHook,
             targetDurationSec: isHook || estimate <= 0 ? null : estimate,
@@ -269,12 +448,34 @@ const BatchEditMode: React.FC<{
           if (composed?.bedUrl) music = { ...music, bedUrl: composed.bedUrl };
         }
       }
+      // Omni-styled scenes own their typography: drop the FFmpeg overlayText
+      // (hook title / callouts) so it can't stamp over the style's rendered
+      // title. Live catch (Neil eyeball 2026-07-07): the blue/white "DRY SKIN?"
+      // hook overlay landed on top of the VOX torn-paper headline. Fallback /
+      // never-styled scenes keep their overlays — the standard edit needs them.
+      const styledScenes = new Set(
+        Object.values(omniResults)
+          .filter((o) => o.outcome === 'styled')
+          .map((o) => o.sceneIdx)
+      );
+      const overlayScenes: FinalRenderScene[] = scenes.map((s) =>
+        styledScenes.has(s.sceneIdx) ? { ...s, overlayText: undefined } : s
+      );
+      // Captions OFF: drop scriptLine + measured word timings from the request
+      // scenes so no spoken-word subtitles burn in (hook title / callouts via
+      // overlayText STAY on non-styled scenes — Neil decision). This happens
+      // AFTER the music-length reduce + targetDurationSec above (both computed
+      // from the pre-omission scenes), so captions-off never shifts music
+      // length or dead-air trim.
+      const requestScenes: FinalRenderScene[] = captionsEnabled
+        ? overlayScenes
+        : overlayScenes.map(({ scriptLine, voiceWords, ...rest }) => rest);
       // End-card recap overlay removed 2026-06-16 (Neil): it auto-pulled the
       // wizard offer — which carries the price — and burned it onto the last
       // scene (and covered the presenter's face). No auto-applied recap now; the
       // last scene renders clean, like before the 2026-06-13 feature.
       const result = await renderFinalVideo({
-        scenes,
+        scenes: requestScenes,
         aspectRatio: editorBatch.aspectRatio,
         music,
         preset: buildLockedPreset(editorBatch.lockedPresetId),
@@ -309,6 +510,153 @@ const BatchEditMode: React.FC<{
             </p>
           </div>
         </header>
+
+        {/* ── APPLYING STYLE · Omni Edit Styles (Slice 2) ─────────────────────
+            Shows when a style is locked from GenerateVideo (Slice 3 picker) OR
+            the dev selector below is used. The dev selector is TEMPORARY —
+            Slice 3 replaces it with the picker beside the LOOK control. */}
+        {(omniStyle || devUnlocked) && (
+          <GlassPanel className="p-6 mb-6">
+            <div className="flex items-center gap-2 border-b border-white/10 pb-4 mb-4">
+              <Wand2 className="w-4 h-4 shrink-0 text-[#FFCC00]" />
+              <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest">
+                // APPLYING_STYLE{omniStyle ? ` · ${omniStyle === 'premium_reel' ? 'PREMIUM_REEL' : 'VOX_EXPLAINER'}` : ''}
+              </span>
+            </div>
+
+            {/* Dev-gated style selector — Slice-3-replaceable. */}
+            {devUnlocked && (
+              <div className="flex items-center gap-2 flex-wrap mb-4">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">// DEV_STYLE</span>
+                {([
+                  { id: 'premium_reel', label: 'PREMIUM REEL' },
+                  { id: 'vox_explainer', label: 'VOX EXPLAINER' },
+                  { id: null, label: 'NONE' },
+                ] as const).map((opt) => {
+                  const active = omniStyle === opt.id || (opt.id === null && !omniStyle);
+                  return (
+                    <button
+                      key={opt.label}
+                      type="button"
+                      onClick={() => setOmniStyle(opt.id)}
+                      disabled={omniApplying}
+                      className={`text-[10px] font-mono font-bold tracking-widest uppercase rounded-lg border px-3 py-1.5 transition-all whitespace-nowrap disabled:opacity-40 ${
+                        active
+                          ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]'
+                          : 'border-white/10 bg-zinc-950 text-zinc-400 hover:border-[#FFCC00]/50 hover:text-zinc-200'
+                      }`}
+                    >
+                      {opt.label}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+
+            {omniStyle ? (
+              <>
+                <GoldButton
+                  onClick={handleApplyStyle}
+                  disabled={omniApplying || !hasRenderedScenes}
+                  className="w-full py-4 rounded-xl tracking-widest"
+                >
+                  {omniApplying ? 'APPLYING STYLE…' : 'APPLY STYLE'}
+                </GoldButton>
+                <p className="text-[10px] text-zinc-500 font-mono mt-2">
+                  // Premium styles take ~3–5 minutes. Scenes that can't be styled keep the standard edit.
+                </p>
+                {omniError && <p className="text-[10px] text-red-400 font-mono mt-1">// {omniError}</p>}
+                {omniBillingNote && (
+                  <p className="text-[10px] text-zinc-400 font-mono mt-1">{omniBillingNote}</p>
+                )}
+                {omniAllowanceExhausted && (
+                  <button
+                    type="button"
+                    onClick={() => { window.location.href = '/checkout?topup=omni_style_single'; }}
+                    className="mt-2 text-[10px] font-mono font-bold uppercase tracking-widest rounded-xl border border-white/10 bg-zinc-950 px-3 py-1.5 text-zinc-400 transition-all hover:border-[#FFCC00]/50 hover:text-[#FFCC00]"
+                  >
+                    // BUY 1 OMNI STYLE — ₱499
+                  </button>
+                )}
+
+                {/* Per-scene status chips */}
+                {(Object.keys(omniResults).length > 0 || omniApplyingScenes.size > 0) && (
+                  <div className="mt-4 flex flex-col gap-2">
+                    {editorBatch.sceneBatch
+                      .filter((s) => s.renderedUrl)
+                      .map((s) => {
+                        const routed = !!mapSceneToOmniTarget(s.type);
+                        const res = omniResults[s.sceneIdx];
+                        const applying = omniApplyingScenes.has(s.sceneIdx);
+                        const rerolled = rerolledScenes.has(s.sceneIdx);
+                        return (
+                          <div
+                            key={s.sceneIdx}
+                            className="flex items-center gap-3 p-3 rounded-xl bg-zinc-950 border border-white/5"
+                          >
+                            <span className="text-[10px] font-mono text-[#FFCC00] uppercase tracking-widest w-16 shrink-0">
+                              SCENE_{String(s.sceneIdx + 1).padStart(2, '0')}
+                            </span>
+                            {applying ? (
+                              <span className="flex items-center gap-1.5 text-[10px] font-mono text-zinc-300">
+                                <Loader2 className="w-3.5 h-3.5 animate-spin text-[#FFCC00]" /> APPLYING…
+                              </span>
+                            ) : res?.outcome === 'styled' ? (
+                              <span className="flex items-center gap-1.5 text-[10px] font-mono text-[#FFCC00]">
+                                <Sparkles className="w-3.5 h-3.5" /> STYLED
+                              </span>
+                            ) : res?.outcome === 'fallback' || !routed ? (
+                              <span className="flex items-center gap-1.5 text-[10px] font-mono text-zinc-500">
+                                <Minus className="w-3.5 h-3.5" /> Scene {s.sceneIdx + 1} used the standard edit
+                              </span>
+                            ) : (
+                              <span className="text-[10px] font-mono text-zinc-600">// queued</span>
+                            )}
+                            <div className="flex-1" />
+                            {res?.outcome === 'styled' && res.styledUrl && (
+                              <button
+                                type="button"
+                                onClick={() => handleReroll(s.sceneIdx)}
+                                disabled={rerolled || applying}
+                                title={rerolled ? 'Re-roll used' : 'Re-roll style (1 left)'}
+                                className="flex items-center gap-1 text-[10px] font-mono uppercase tracking-widest text-zinc-400 hover:text-[#FFCC00] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                              >
+                                <RotateCcw className="w-3.5 h-3.5" />
+                              </button>
+                            )}
+                          </div>
+                        );
+                      })}
+                  </div>
+                )}
+
+                {/* Styled previews — swap in the Omni output for eyeballing pre-render. */}
+                {Object.values(omniResults).some((r) => r.outcome === 'styled' && r.styledUrl) && (
+                  <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {editorBatch.sceneBatch
+                      .filter((s) => omniResults[s.sceneIdx]?.outcome === 'styled' && omniResults[s.sceneIdx]?.styledUrl)
+                      .map((s) => (
+                        <div key={s.sceneIdx} className="flex flex-col gap-1">
+                          <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest">
+                            SCENE_{String(s.sceneIdx + 1).padStart(2, '0')} · STYLED
+                          </span>
+                          <video
+                            src={omniResults[s.sceneIdx]!.styledUrl}
+                            controls
+                            className="w-full rounded-xl border border-white/10 bg-zinc-950"
+                          />
+                        </div>
+                      ))}
+                  </div>
+                )}
+              </>
+            ) : (
+              <p className="text-[10px] text-zinc-500 font-mono">
+                // No Edit Style selected — scenes render with the standard edit.
+              </p>
+            )}
+          </GlassPanel>
+        )}
 
         {/* FINAL RENDER — primary pipeline CTA */}
         <GlassPanel className="p-6 mb-6">
@@ -419,6 +767,36 @@ const BatchEditMode: React.FC<{
                   : '// Stitched clips only — edit it yourself'}
               </p>
             </div>
+            {/* Captions (spoken-word subtitles) — only meaningful in Auto mode. */}
+            {burnInEnabled && (
+              <div className="mb-3">
+                <span className="block text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">// CAPTIONS</span>
+                <div className="flex gap-2">
+                  {([
+                    { v: true, label: 'On' },
+                    { v: false, label: 'Off' },
+                  ] as const).map(({ v, label }) => (
+                    <button
+                      key={label}
+                      type="button"
+                      onClick={() => setCaptionsEnabled(v)}
+                      className={`px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wide transition-colors border ${
+                        captionsEnabled === v
+                          ? 'bg-[#FFCC00] text-zinc-950 border-[#FFCC00]'
+                          : 'bg-zinc-950 text-zinc-400 border-white/10 hover:border-[#FFCC00]/50'
+                      }`}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
+                <p className="text-[10px] text-zinc-500 font-mono mt-2">
+                  {captionsEnabled
+                    ? '// Spoken-word subtitles burned in'
+                    : '// No subtitles — hook title & callouts stay'}
+                </p>
+              </div>
+            )}
             {/* Generative music — Pro/Business only. Off / ineligible → tuned static bed. */}
             {musicEligible && burnInEnabled && (
               <button

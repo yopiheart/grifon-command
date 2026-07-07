@@ -8,7 +8,7 @@ import { describe, it, expect } from 'vitest';
 import { MONTHLY_LIMITS, type MeterUnit } from '../../api/_lib/quota.js';
 import { PLAN_LIMITS, type PlanId } from '../../utils/planGate.js';
 
-const UNITS: MeterUnit[] = ['workflows', 'reports', 'captions', 'images', 'video_ads'];
+const UNITS: MeterUnit[] = ['workflows', 'reports', 'captions', 'images', 'video_ads', 'omni_ads'];
 const PLANS: PlanId[] = ['free', 'starter', 'pro', 'business'];
 
 describe('MONTHLY_LIMITS / PLAN_LIMITS parity', () => {

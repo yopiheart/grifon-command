@@ -134,6 +134,17 @@ export interface SceneBatchEntry {
   /* Carried from the storyboard Scene so the Scene Pipeline can shape v3
      delivery by the cinematic-relay role (cinematic scenes only; see deliveryTag). */
   chainRole?: Scene['chainRole'];
+  /* Omni Edit Styles (Slice 2): per-scene result of the "Applying style" pass.
+     'styled' → omniStyledUrl replaces renderedUrl in the final render; 'fallback'
+     → the scene kept the standard FFmpeg-only edit (fallbackReason is a machine
+     code, surfaced calmly as "Scene N used the standard edit"). Absent = the
+     scene never entered the Omni pass. */
+  omniOutcome?: 'styled' | 'fallback';
+  omniStyledUrl?: string;
+  omniFallbackReason?: string;
+  /* Omni Edit Styles (Slice 3): the storyboard scene description, threaded so the
+     dolly-zoom preset's subject_desc slot describes the shot, not the spoken line. */
+  sceneDescription?: string;
 }
 
 /**
@@ -233,6 +244,17 @@ export interface FinalRenderEndCard {
 /** Edit-style preset ids the user can lock pre-render (see api/_lib/renderPresets.ts).
  * Shared across the GenerateVideo → EditVideo → FinalRenderRequest lock hop. */
 export type LockablePresetId = 'classic' | 'impact' | 'hype' | 'clean';
+
+/** Omni Edit Style locked at Render All (Slice 3 picker), hopped GenerateVideo →
+ * App → EditVideo alongside the LockablePresetId. String literals only — no
+ * api/_lib import — so this payload stays free of any tuned prompt text. */
+export interface OmniStyleLock {
+  style: 'premium_reel' | 'vox_explainer';
+  brandPrimaryHex?: string;   // picker swatch; absent → service default #FFCC00
+  emphasisWord?: string;      // only set when the user edited the chip
+  titleText?: string;         // ditto (VOX)
+  captionsEnabled: boolean;   // style default: VOX false / Premium true; user-flippable
+}
 
 export interface FinalRenderRequest {
   scenes: FinalRenderScene[];
