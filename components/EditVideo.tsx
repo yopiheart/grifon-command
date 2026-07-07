@@ -25,8 +25,10 @@ import saveAs from 'file-saver';
 import {
   applyOmniStyle,
   restyleScene,
+  consumeOmniStyleAd,
   mapSceneToOmniTarget,
   type OmniSceneOutcome,
+  type OmniConsumeResult,
 } from '../services/omniStyleService';
 
 export interface EditorBatchPayload {
@@ -156,6 +158,34 @@ const BatchEditMode: React.FC<{
   const [omniApplyingScenes, setOmniApplyingScenes] = useState<Set<number>>(new Set());
   const [omniError, setOmniError] = useState<string | null>(null);
   const [rerolledScenes, setRerolledScenes] = useState<Set<number>>(new Set());
+  // Calm one-line billing note surfaced after the deferred consume settles.
+  const [omniBillingNote, setOmniBillingNote] = useState<string | null>(null);
+
+  // Map a settled consume result (or an allowance short-circuit) to the calm
+  // mono billing note. null/dev_unmetered stay silent.
+  const noteFromConsume = (r: OmniConsumeResult | null): string | null => {
+    if (!r) return null;
+    if (r.consumed) {
+      return r.fromCredit
+        ? '// 1 Omni ad used (top-up credit)'
+        : `// 1 Omni ad used · ${r.used} of ${r.limit} this month`;
+    }
+    if (r.reason === 'majority_fallback') return '// No charge — most scenes kept the standard edit';
+    return null; // dev_unmetered / unknown → silent
+  };
+
+  // Settle billing for a resolved omni pass. When the allowance ran dry mid-pass
+  // the routed scenes short-circuit to fallback with omni_allowance_exhausted —
+  // surface that specific reason (the ₱499 top-up CTA is Slice 3c, not here)
+  // instead of the generic "no charge" note.
+  const settleOmniBilling = async (outcomes: OmniSceneOutcome[]) => {
+    if (outcomes.some((o) => o.fallbackReason === 'omni_allowance_exhausted')) {
+      setOmniBillingNote('// Omni allowance used up — styles fell back to the standard edit');
+      return;
+    }
+    const consumed = await consumeOmniStyleAd(finishedAdId, outcomes);
+    setOmniBillingNote(noteFromConsume(consumed));
+  };
 
   const hasRenderedScenes = editorBatch.sceneBatch.some((s) => s.renderedUrl);
   const allScriptLinesJoined = editorBatch.sceneBatch
@@ -176,7 +206,7 @@ const BatchEditMode: React.FC<{
     );
     setOmniApplyingScenes(eligible);
     try {
-      await applyOmniStyle(
+      const outcomes = await applyOmniStyle(
         editorBatch.sceneBatch,
         omniStyle,
         {
@@ -194,6 +224,8 @@ const BatchEditMode: React.FC<{
           });
         }
       );
+      // Deferred consume — settle billing now that every routed scene resolved.
+      await settleOmniBilling(outcomes);
     } catch (err: any) {
       setOmniError(err?.message ?? 'OMNI_STYLE_FAILED');
     } finally {
@@ -220,6 +252,12 @@ const BatchEditMode: React.FC<{
         allScriptLinesJoined
       );
       setOmniResults((prev) => ({ ...prev, [sceneIdx]: o }));
+      // Re-settle billing from the FULL merged tally (all scenes incl. this
+      // re-roll). The server marker makes this idempotent: a re-roll that flips
+      // a fallback-majority into a styled-majority charges at THIS moment.
+      // Accepted asymmetry: a charge followed by a degrading re-roll has no
+      // refund — there is no un-consume primitive.
+      await settleOmniBilling(Object.values({ ...omniResults, [sceneIdx]: o }));
     } finally {
       setOmniApplyingScenes((prev) => {
         const next = new Set(prev);
@@ -487,6 +525,9 @@ const BatchEditMode: React.FC<{
                   // Premium styles take ~3–5 minutes. Scenes that can't be styled keep the standard edit.
                 </p>
                 {omniError && <p className="text-[10px] text-red-400 font-mono mt-1">// {omniError}</p>}
+                {omniBillingNote && (
+                  <p className="text-[10px] text-zinc-400 font-mono mt-1">{omniBillingNote}</p>
+                )}
 
                 {/* Per-scene status chips */}
                 {(Object.keys(omniResults).length > 0 || omniApplyingScenes.size > 0) && (

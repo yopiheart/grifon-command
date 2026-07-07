@@ -11,14 +11,15 @@ export type PlanLimits = {
   captions: number;
   images: number;
   video_ads: number;
+  omni_ads: number;
   watermark: boolean;
 };
 
 export const PLAN_LIMITS: Record<PlanId, PlanLimits> = {
-  free:     { workflows: 1,   reports: 1,  captions: 10,  images: 5,   video_ads: 0,  watermark: true  },
-  starter:  { workflows: 3,   reports: 2,  captions: 30,  images: 25,  video_ads: 1,  watermark: false },
-  pro:      { workflows: 40,  reports: 15, captions: 300, images: 150, video_ads: 8,  watermark: false },
-  business: { workflows: 100, reports: 40, captions: 500, images: 300, video_ads: 15, watermark: false },
+  free:     { workflows: 1,   reports: 1,  captions: 10,  images: 5,   video_ads: 0,  omni_ads: 0, watermark: true  },
+  starter:  { workflows: 3,   reports: 2,  captions: 30,  images: 25,  video_ads: 1,  omni_ads: 0, watermark: false },
+  pro:      { workflows: 40,  reports: 15, captions: 300, images: 150, video_ads: 8,  omni_ads: 0, watermark: false },
+  business: { workflows: 100, reports: 40, captions: 500, images: 300, video_ads: 15, omni_ads: 5, watermark: false },
 };
 
 // Per-plan scene cap — the COGS dial that bounds finished-ad length (and so the

@@ -275,6 +275,9 @@ interface FireResult {
   event: LadderEvent;
   interactionId?: string;
   disabled?: boolean;
+  /** 402 omni_quota_exceeded — the user's omni-ad allowance is drained; the
+   *  scene short-circuits straight to fallback (mirrors `disabled`). */
+  quotaExceeded?: boolean;
 }
 
 async function fireOmni(
@@ -301,6 +304,7 @@ async function fireOmni(
   if (res.status === 202 && j?.interactionId) return { event: 'fire_ok', interactionId: j.interactionId };
   if (res.status === 200 && j?.error === 'omni_blocked') return { event: 'fire_blocked' };
   if (res.status === 402 && j?.error === 'omni_budget_exhausted') return { event: 'fire_budget_exhausted' };
+  if (res.status === 402 && j?.error === 'omni_quota_exceeded') return { event: 'fire_error', quotaExceeded: true };
   return { event: 'fire_error' };
 }
 
@@ -397,6 +401,14 @@ async function runSceneLadder(
           attemptsUsed: state.attemptsUsed,
         };
       }
+      if (fired.quotaExceeded) {
+        return {
+          sceneIdx: scene.sceneIdx,
+          outcome: 'fallback',
+          fallbackReason: 'omni_allowance_exhausted',
+          attemptsUsed: state.attemptsUsed,
+        };
+      }
       state = nextLadderStep(state, fired.event);
       if (state.status === 'polling' && fired.interactionId) {
         const polled = await pollToCompletion(token, fired.interactionId);
@@ -468,4 +480,48 @@ export async function restyleScene(
     return { sceneIdx: scene.sceneIdx, outcome: 'fallback', fallbackReason: 'no_omni_route', attemptsUsed: 0 };
   }
   return runSceneLadder(scene, presetId, opts, allScriptLines);
+}
+
+// ---------------------------------------------------------------------------
+// Deferred consume (Slice 3b) — settle the omni-ad charge after the pass lands
+// ---------------------------------------------------------------------------
+
+/** Parsed response of the deferred-consume endpoint. */
+export interface OmniConsumeResult {
+  consumed: boolean;
+  reason?: string;
+  alreadyCounted?: boolean;
+  fromCredit?: boolean;
+  used?: number;
+  limit?: number;
+}
+
+/**
+ * Settle the omni-ad billing for a finished ad once its scene ladder resolved.
+ * POSTs the per-scene outcomes to /api/gemini/omni-video/consume; the server
+ * decides (strict-majority-fallback → no charge) and marks the ad idempotently.
+ *
+ * Returns null on ANY failure — including a 402 — because billing settlement
+ * must NEVER block or crash the UI. A dropped consume just means the ad wasn't
+ * charged (accepted beta trust boundary; see the endpoint comment).
+ */
+export async function consumeOmniStyleAd(
+  finishedAdId: string,
+  outcomes: OmniSceneOutcome[]
+): Promise<OmniConsumeResult | null> {
+  try {
+    const token = await getAccessToken();
+    const res = await fetch('/api/gemini/omni-video/consume', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+      body: JSON.stringify({
+        finishedAdId,
+        outcomes: outcomes.map(({ sceneIdx, outcome }) => ({ sceneIdx, outcome })),
+      }),
+    });
+    if (!res.ok) return null;
+    return (await res.json()) as OmniConsumeResult;
+  } catch {
+    return null;
+  }
 }

@@ -31,7 +31,7 @@ const ACTIONS = ['intent', 'topup', 'confirm', 'ewallet', 'status', 'usage'] as 
 type Action = (typeof ACTIONS)[number];
 
 // Units surfaced to the dashboard quota meter + wall.
-const METER_UNITS: MeterUnit[] = ['workflows', 'reports', 'captions', 'images', 'video_ads'];
+const METER_UNITS: MeterUnit[] = ['workflows', 'reports', 'captions', 'images', 'video_ads', 'omni_ads'];
 
 const IntentBody = z.object({
   plan_id: z.enum(['starter', 'pro', 'business']),

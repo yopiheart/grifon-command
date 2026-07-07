@@ -1,4 +1,22 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+
+// Auth / rate-limit / plan / allowance are mocked so the fire-path can be walked
+// past its guards to the omni-ad allowance wall. The kill-switch tests below
+// return 503 before any of these are invoked, so the mocks are inert there.
+const peekOmniAllowanceMock = vi.fn();
+vi.mock('../../api/_lib/supabaseAdmin.js', () => ({
+  getUserFromAccessToken: vi.fn(async () => ({ id: 'u1' })),
+}));
+vi.mock('../../api/_lib/rateLimit.js', () => ({
+  rateLimitCheck: vi.fn(async () => true),
+}));
+vi.mock('../../api/_lib/userPlan.js', () => ({
+  getUserPlan: vi.fn(async () => 'business'),
+}));
+vi.mock('../../api/_lib/quota.js', () => ({
+  peekOmniAllowance: (...args: unknown[]) => peekOmniAllowanceMock(...args),
+}));
+
 import handler from '../../api/gemini/omni-video.js';
 
 // Lightweight kill-switch check: the handler returns 503 before any auth /
@@ -57,5 +75,52 @@ describe('api/gemini/omni-video — kill switch', () => {
     const res = mockRes();
     await handler(mockReq({ method: 'GET' }), res);
     expect(res.statusCode).toBe(405);
+  });
+});
+
+describe('api/gemini/omni-video — omni-ad allowance wall', () => {
+  const prev = process.env.OMNI_STYLES_ENABLED;
+
+  beforeEach(() => {
+    process.env.OMNI_STYLES_ENABLED = 'true';
+    peekOmniAllowanceMock.mockReset();
+  });
+
+  afterEach(() => {
+    if (prev === undefined) delete process.env.OMNI_STYLES_ENABLED;
+    else process.env.OMNI_STYLES_ENABLED = prev;
+  });
+
+  const fireReq = () =>
+    mockReq({
+      headers: { authorization: 'Bearer tok' },
+      body: {
+        presetId: 'premium-reel-v2',
+        slots: { transcript: 'hello world', emphasis_words: 'HELLO', brand_primary_hex: '#FFCC00' },
+        videoUrl: 'https://example.com/scene.mp4',
+        estimatedDurationSec: 4,
+        finishedAdId: 'ad-1',
+        sceneIdx: 0,
+      },
+    });
+
+  it('returns 402 omni_quota_exceeded when the allowance peek denies', async () => {
+    peekOmniAllowanceMock.mockResolvedValue({
+      allowed: false,
+      alreadyCharged: false,
+      used: 5,
+      limit: 5,
+      credits: 0,
+    });
+    const res = mockRes();
+    await handler(fireReq(), res);
+    expect(res.statusCode).toBe(402);
+    expect(res.body).toMatchObject({
+      error: 'omni_quota_exceeded',
+      reason: 'omni_allowance_exhausted',
+      used: 5,
+      limit: 5,
+      credits: 0,
+    });
   });
 });

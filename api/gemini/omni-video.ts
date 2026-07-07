@@ -7,6 +7,7 @@ import { GoogleGenAI, FileState } from '@google/genai';
 import { getUserFromAccessToken } from '../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../_lib/rateLimit.js';
 import { getUserPlan } from '../_lib/userPlan.js';
+import { peekOmniAllowance } from '../_lib/quota.js';
 import { putMedia } from '../_lib/mediaStore.js';
 import { looksBlocked } from '../_lib/omniGate.js';
 import {
@@ -183,10 +184,25 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   // 7. Server plan gate — Business tier only (client gate is nav-level; the
-  //    proxy is the real wall). Monthly omni_ads metering is Slice 3.
+  //    proxy is the real wall).
   const plan = await getUserPlan(user.id);
   if (plan !== 'business') {
     return res.status(402).json({ error: 'quota_exceeded', reason: 'business_required', plan });
+  }
+
+  // 7b. Omni-ad allowance wall (PEEK only — the charge is deferred to the
+  //     completion endpoint api/gemini/omni-video/consume.ts). A zero-allowance
+  //     user can't start the paid pass. Re-rolls of an already-charged ad pass
+  //     via the marker. Dev-unmetered flags bypass inside peekOmniAllowance.
+  const gate = await peekOmniAllowance(user.id, plan, finishedAdId);
+  if (!gate.allowed) {
+    return res.status(402).json({
+      error: 'omni_quota_exceeded',
+      reason: 'omni_allowance_exhausted',
+      used: gate.used,
+      limit: gate.limit,
+      credits: gate.credits,
+    });
   }
 
   // 8. Assemble the prompt (throws OmniMissingSlotsError → 400).
