@@ -33,6 +33,27 @@ You're working inside the **WAT framework** (Workflows, Agents, Tools). This arc
 
 **3. Keep workflows current.** Update workflows when you find better methods or discover constraints. Don't create or overwrite workflows without asking unless explicitly told to.
 
+## Decomposing Build Work: Vertical-Slice Rules
+
+CLAUDE.md already mandates "vertical slices over horizontal layers"; these rules make a slice
+well-formed. Apply them whenever a plan doc breaks work into slices, phases, or a priority stack
+(adapted from Matt Pocock's `to-tickets` skill, evaluated 2026-07-08):
+
+1. **Complete path through every layer.** A slice cuts narrow but whole — types + service call +
+   UI + state through one feature. Never "all types first, then all services."
+2. **Independently verifiable.** Each finished slice is demoable/checkable on its own (build-gate
+   pass, a test, or a smoke) — not "makes sense only once the next slice lands."
+3. **Sized to a single context window.** If a slice can't plausibly be planned, built, and
+   verified inside one session's ~100k-token smart zone, split it. This is the context-hygiene
+   doctrine turned into a decomposition rule.
+4. **Explicit blocking edges.** Every slice states what it's blocked by ("Slice 2 blocked by
+   Slice 0 landing"). Order by dependency, not by convenience.
+5. **Wide refactors use expand–contract.** Add the new path alongside the old, migrate callers,
+   then remove — CI stays green at every intermediate commit (matters here because the defreezer
+   means any session can be the last one before a wipe).
+
+The build-slices list in `concierge_director_plan.md` §10 is the house example of this shape.
+
 ## The Self-Improvement Loop
 
 1. Identify what broke
