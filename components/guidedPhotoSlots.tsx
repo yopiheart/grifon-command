@@ -95,7 +95,8 @@ export const inferServiceArchetype = (text: string): ServiceArchetype => {
   const score = (...words: string[]) => words.reduce((n, w) => n + (t.includes(w) ? 1 : 0), 0);
   const venue = score('spa', 'salon', 'barber', 'gym', 'fitness', 'clinic', 'derma', 'dental',
     'restaurant', 'resto', 'cafe', 'café', 'hotel', 'resort', 'parlor', 'massage', 'hilot',
-    'kainan', 'eatery', 'lounge', 'studio');
+    'kainan', 'eatery', 'lounge', 'studio', 'milk tea', 'milktea', 'bakery', 'panaderia',
+    'karinderya', 'catering', 'food stall', 'foodpark');
   const work = score('clean', 'linis', 'pest', 'peste', 'siphon', 'malaban', 'repair', 'laundr',
     'labada', 'plumb', 'aircon', 'disinfect', 'declog', 'detailing', 'carwash', 'car wash',
     'exterm', 'hauling', 'pickup', 'pick-up', 'moving');
@@ -130,6 +131,7 @@ export const RE_UPLOAD_SLOTS: Record<RealEstateArchetype, UploadSlot[]> = {
     { slot: 'living', label: 'Living area', hint: 'sala / main space', example: '/examples/ex-living.png' },
     { slot: 'kitchen', label: 'Kitchen', hint: 'optional', example: '/examples/ex-kitchen.png' },
     { slot: 'bedroom', label: 'Bedroom', hint: 'optional', example: '/examples/ex-bedroom.png' },
+    { slot: 'bathroom', label: 'Bathroom', hint: 'optional', example: '/examples/ex-bathroom.png' },
     { slot: 'view', label: 'View / balcony', hint: 'optional', example: '/examples/ex-view.png' },
   ],
   // No 'agent' slot — the broker IS the on-camera presenter (set in the Presenter

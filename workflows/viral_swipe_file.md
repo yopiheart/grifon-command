@@ -41,6 +41,30 @@ below are condensed pointers, not replacements).
 - [ ] When Slice 3/4 renderer work lands, re-autopsy our own FINAL_RENDER
   output and compare against baseline entry E0 to measure the gap closed.
 
+## Active Format Evidence Hunt (opened 2026-07-08)
+
+Neil's pre-launch decision (plan `by-the-way-fable-precious-hellman`, approved
+2026-07-08): candidate **scripting formats** are NOT built on guesses — each must
+graduate through this file's standard ≥3-corroboration gate before any
+`scriptType` branch is proposed for the TUNED `api/_lib/prompts.ts`
+(`buildAdScriptPrompt` + `buildStoryboardPrompt` skeleton). Neil collects the
+videos (TikTok/FB; `ad-recon` can mine Meta Ad Library); each goes through
+`/viral-autopsy` for an evidence-bound entry. Hunt priorities:
+
+1. **Walking / authority UGC** (extends **P10**, currently 1/3 — closest to
+   threshold). Wanted: 2+ more real viral examples — credentialed-expert or
+   talking-while-walking UGC in services/practitioner niches. At ≥3 → Gated
+   Proposal for a first-class format branch.
+2. **Before/After transformation** (0 logged). Wanted: 3+ examples —
+   cleaning/derma/fitness/renovation. Product plumbing already exists (the
+   `before`/`after` servicePhotos slots + venue-slot routing), so the eventual
+   proposal is script-formula + storyboard-skeleton only.
+
+Deliberately NOT hunted yet (Neil, 2026-07-08): unboxing/POV promotion (already
+live as Temu sub-types), tutorial/how-to (zero scaffolding, weakest evidence),
+Food/Fashion dedicated verticals (see `post_beta_roadmap.md` #19–20 resume
+triggers). P9 `vsl` stays a separate queued decision (below).
+
 ## Pattern Index
 
 Status: `observed` (counting) → `proposed` (≥3 corroborations, in Gated

@@ -610,8 +610,11 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
               })}
             </div>
             {isAnalyzing && <div className="pt-1"><Loader message="ANALYZING..." size="sm" /></div>}
-            <p className="text-[9px] text-zinc-500 font-mono tracking-tighter">
+            <p className="text-[10px] text-zinc-500 font-mono">
               Tinatatak namin kung saan napupunta ang bawat photo — para tumugma ang ad sa totoong lugar mo. Skip ang ayaw mong ilagay.
+            </p>
+            <p className="text-[10px] text-zinc-500 font-mono">
+              May ibang photo na gusto mong ipalabas? Pwede mong i-swap ang kahit anong scene image later sa storyboard.
             </p>
           </div>
         )}

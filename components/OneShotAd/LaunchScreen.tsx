@@ -80,11 +80,11 @@ const STRATEGIES: { value: Strategy; label: string; desc: string }[] = [
   { value: 'MrBeast', label: 'Hype', desc: 'High-energy, big-promise hook' },
 ];
 
-const VERTICALS: { value: string; label: string; Icon: typeof Package; locked?: boolean }[] = [
-  { value: 'product', label: 'Product', Icon: Package },
-  { value: 'service', label: 'Service', Icon: Wrench },
-  { value: 'real_estate', label: 'Real Estate', Icon: Building2 },
-  { value: 'app', label: 'App', Icon: Smartphone, locked: true },
+const VERTICALS: { value: string; label: string; desc: string; Icon: typeof Package; locked?: boolean }[] = [
+  { value: 'product', label: 'Product', desc: 'Gadgets, fashion, food, beauty', Icon: Package },
+  { value: 'service', label: 'Service', desc: 'Salon, resto, café, gym, clinic', Icon: Wrench },
+  { value: 'real_estate', label: 'Real Estate', desc: 'House, condo, lot — sale or rent', Icon: Building2 },
+  { value: 'app', label: 'App', desc: 'Mobile app / SaaS', Icon: Smartphone, locked: true },
 ];
 
 /** Close a popover/menu when clicking outside its wrapper. Only listens while
@@ -653,7 +653,7 @@ export const LaunchScreen: React.FC<{
               >
                 <div className="w-56 space-y-1.5">
                   <p className={`text-zinc-500 ${T_LABEL}`}>// What are you advertising?</p>
-                  {VERTICALS.map(({ value, label, Icon, locked }) => (
+                  {VERTICALS.map(({ value, label, desc, Icon, locked }) => (
                     <button
                       key={value}
                       type="button"
@@ -667,7 +667,11 @@ export const LaunchScreen: React.FC<{
                             : 'border-white/10 text-zinc-300 hover:border-white/30'
                       }`}
                     >
-                      <Icon className="h-4 w-4 shrink-0" /> {label}
+                      <Icon className="h-4 w-4 shrink-0" />
+                      <span className="flex flex-col items-start text-left">
+                        {label}
+                        <span className={`text-[11px] font-normal leading-snug ${locked ? 'text-zinc-700' : 'text-zinc-500'}`}>{desc}</span>
+                      </span>
                       {locked && <SoonBadge />}
                     </button>
                   ))}

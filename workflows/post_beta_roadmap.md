@@ -951,6 +951,55 @@ a code-executor delegation AFTER Neil merges this branch and green-lights the pl
 
 ---
 
+### 19. New First-Class Scripting Formats (walking UGC · before/after · unboxing/POV promotion · tutorial)
+
+- **What:** Promote evidence-backed formats to first-class `scriptType` values with
+  their own picker cards, script formulas, and storyboard skeletons. Candidates in
+  priority order (Neil, 2026-07-08): walking/authority UGC (swipe-file P10),
+  before/after transformation, unboxing + POV promotion (today they live only as
+  Temu sub-types: ASMR = "Unbox with me", Utility = "POV Problem Solving"),
+  tutorial/how-to (no scaffolding at all).
+- **Why it matters:** Format variety is the moat once users ship their 5th–10th ad —
+  every format today funnels through the same MrBeast/Testimonial/Temu skeletons,
+  and the storyboard Scene-1 start/end-frame semantics are format-conditioned, so
+  variety must be built, not prompted around.
+- **Why parked:** Zero users pre-launch = zero evidence which formats users exhaust
+  first; a new format is a TUNED edit (`buildAdScriptPrompt` + `buildStoryboardPrompt`
+  branches in `api/_lib/prompts.ts`, plus `scriptStyleDetected`/EDL keying) — the
+  ≥3-corroboration gate exists precisely so these branches aren't guessed.
+- **When to resume:** A candidate pattern hits 3/3 in `viral_swipe_file.md`
+  (Active Format Evidence Hunt section) **OR** ≥2 beta users ask for format variety.
+- **Where to start:** `workflows/viral_swipe_file.md` → the graduated pattern's Gated
+  Proposal; touch surface map is in plan `by-the-way-fable-precious-hellman`
+  (types.ts enum → picker cards → 2 TUNED prompt branches → EDL keying).
+- **Scope:** 1 format ≈ one focused session (grill-me → tuned branches → gemini-eval
+  regression). Do ONE format end-to-end before starting a second (vertical slices).
+- **Source:** Neil product-check session 2026-07-08; format hunt priorities his call.
+
+### 20. Food & Fashion Niche Treatment (signaling shipped; dedicated verticals parked)
+
+- **What:** Dedicated Food and Fashion verticals with their own storyboard skeletons
+  (à la Services/RealEstate). The cheap half already shipped 2026-07-08
+  (`feat/niche-coverage-cheap-fixes`): food-venue keywords in `inferServiceArchetype`
+  + food/fashion mentions in the vertical pickers, so those Bryans recognize
+  themselves in the existing flows (food venue → Services `venue`; packaged
+  food/fashion → Product).
+- **Why it matters:** Food + fashion are arguably the two biggest PH SMB ad
+  categories on Facebook — if generic formats underserve them, that's churn in the
+  largest cohorts.
+- **Why parked:** The pipeline already serves both via Product/Services; a dedicated
+  vertical = new TUNED storyboard skeleton + archetype system with zero evidence the
+  generic ones fall short. Evidence-first, same as #19.
+- **When to resume:** ≥3 food or fashion beta users **AND** autopsy/debrief evidence
+  of niche-specific patterns the generic formats miss (e.g. appetite shots /
+  try-on-haul grammar not expressible today).
+- **Where to start:** `workflows/viral_swipe_file.md` (autopsy food/fashion winners
+  first), then mirror the Services vertical pattern (#12) for the build.
+- **Scope:** Comparable to #12/#13 (a full vertical: archetype meta + slots + script
+  formula + storyboard skeleton + regression).
+- **Source:** Neil product-check session 2026-07-08 ("we don't have FOOD & Fashion
+  niche as well").
+
 ## How to add new items
 
 When Neil endorses an idea but says "not now":
