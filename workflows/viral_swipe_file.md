@@ -40,6 +40,12 @@ below are condensed pointers, not replacements).
   preset picker) — see `workflows/post_beta_roadmap.md`.
 - [ ] When Slice 3/4 renderer work lands, re-autopsy our own FINAL_RENDER
   output and compare against baseline entry E0 to measure the gap closed.
+- [ ] **Validator blind spot (found 2026-07-08, Higgsfield batch):** all 6
+  sub-20s format demos failed `analyze_video.py`'s specificity gate solely on
+  `why_it_works >= 3` (twice each; every other field was timestamped and
+  specific). Proposal for Neil: relax to `>= 2` when `duration_s < 20`, in
+  `tools/analyze_video.py`'s validator (plain tool, not tuned — but gate the
+  change since it guards swipe-file quality).
 
 ## Active Format Evidence Hunt (opened 2026-07-08)
 
@@ -64,6 +70,61 @@ Deliberately NOT hunted yet (Neil, 2026-07-08): unboxing/POV promotion (already
 live as Temu sub-types), tutorial/how-to (zero scaffolding, weakest evidence),
 Food/Fashion dedicated verticals (see `post_beta_roadmap.md` #19–20 resume
 triggers). P9 `vsl` stays a separate queued decision (below).
+
+## Competitor Format Intel — Higgsfield UGC format demos (2026-07-08)
+
+**Provenance:** 6 format demos Neil pulled from Higgsfield — the formats they
+productized for users AFTER doing their own "what UGC style keeps going viral
+on TikTok for product/fashion" research. Secondhand market signal: a funded
+competitor's bets on which formats convert.
+
+**Classification rules for this section (stricter than Entries):**
+- These are DEMOS, not proven winners (no views/longevity) → they do **NOT**
+  increment Pattern Index counts. They seed hunt targets only.
+- Provenance is an AI-video vendor → source-authenticity forced to
+  `likely-ai (vendor demo)` and **excluded from believability corroboration**,
+  even though Gemini verdicted all 6 `real-human` (conf med-high). That
+  mismatch is itself a data point: Higgsfield's believability passes our
+  detector (natural micro-expressions, skin texture, hand physics, lip-sync,
+  lived-in backgrounds — see per-demo notes).
+- All 6 hit the analyzer's `GENERIC_OUTPUT` gate on `why_it_works >= 3` even
+  after the one retry — a **validator blind spot for sub-20s demos** (the
+  analyses are timestamped and specific; a 15s stripped demo genuinely has ~2
+  claims). Recorded here by design; see Pending Actions.
+
+| # | Slug | Format family | Product | Dur/shots | Hook (verbatim) | Beats | Reveal | CTA |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| H1 | 4dcc2a50 | **Fashion try-on transformation** | striped set + tights | 15s / 5 (med 2.5s) | "Okay, I had to try this set. Watch this." | Setup → Reveal → Styling escalation → Verdict | in-frame @0s | none |
+| H2 | 5d920c0b | **UGC talking-head demo** (Hook-Demonstrate-CTA) | snack | 13s / 4 (med 3.3s) | "I need to warn you these little guys are dangerously addictive." | Hook → Demo → CTA | in-frame @0s | spoken @10s, holds |
+| H3 | 673f69ef | **ASMR unboxing (mic-check open)** | tech + dock | 15.6s / 1 (!) | "Okay, mic check, one, two. Just listen to the taps." | Hook → Reveal → Demo → CTA | unboxing @3s | spoken @12s ("tell me and I'll do it next") |
+| H4 | 809b9092 | **Haul unbox → try-on → fit-proof** | gym set | 15s / 5 (med 3.2s) | "My gym set just landed, let's open it." | Hook → Unboxing → Try-on → Squat test → Verdict | unboxing @3s | none |
+| H5 | 9f4320b6 | **POV handheld product demo** | phone case | 15.8s / 3 (med 4.8s) | "Wait. Wait, look at this." | Hook → Demo (shake/rustle) → Outro | in-frame @0s | none (3s dead-air outro) |
+| H6 | 9f8bc173 | **Overhead aesthetic ASMR unboxing** | jewelry | 16s / 2 | *(no VO — pure ASMR taps/clicks)* | Hook (taps) → Reveal → Showcase | unboxing @3s | none |
+
+**Shared DNA (6/6):** 13–16s · **ZERO captions** · no/minimal music · 1–5 shots
+· phone-native (tripod-static or handheld-drift) · product visible ≤3s (4/6 at
+0s) · conversational spoken hook ≤2s · `polished-ugc` register (H5 `raw-ugc`) ·
+sensory proof beat (squat test H4, taps H3/H6, shake-rustle H5, styling
+contrast H1) · natural lighting + lived-in backgrounds.
+
+**Contradiction note (demo-class, not pattern-driving):** caption-less across
+the board contradicts P1/P2/P7 (caption churn / text-on-frame-1) — Higgsfield's
+product/fashion UGC bets on spoken hooks + tactile audio instead. Gemini itself
+flagged the missing captions as the top weakness on 5/6 (silent scrollers).
+Plausible synthesis: OUR pipeline can have both (Higgsfield performance grammar
++ Grifon caption system) — that combination is exactly what the hunt should
+test against real winners.
+
+**Hunt implications (updates the Active Format Evidence Hunt above):**
+- H1/H4 (try-on transformation, fit-proof) → strengthens **Priority 2
+  (before/after)**'s fashion flank; real-winner corroboration should include
+  try-on transformations, not just cleaning/derma.
+- H3/H6 (ASMR unboxing) + H5 (POV demo) → competitor-validated versions of the
+  Temu sub-types; when Neil is ready to hunt unboxing/POV promotion, start from
+  these skeletons.
+- H2 (talking-head demo) → nearest to our existing Testimonial; lowest
+  novelty.
+- JSONs: `.tmp/viral-intel/*.json` (disposable — this section stands alone).
 
 ## Pattern Index
 
