@@ -992,7 +992,7 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
   // mechanism (renderer consumes scene.venueSlot to anchor the real photo); only the mapping changes.
   const slotLegend = isRealEstate ? `
         establishing / arrival / exterior shot      -> facade
-        inside a room being toured                  -> living, kitchen, or bedroom (pick the fitting one)
+        inside a room being toured                  -> living, kitchen, bedroom, or bathroom (pick the fitting one)
         the view / balcony / outlook beat           -> view
         amenities (pool / gym / lobby) beat         -> amenities
         the neighborhood / location beat            -> location` : `
