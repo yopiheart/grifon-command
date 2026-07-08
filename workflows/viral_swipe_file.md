@@ -46,6 +46,12 @@ below are condensed pointers, not replacements).
   specific). Proposal for Neil: relax to `>= 2` when `duration_s < 20`, in
   `tools/analyze_video.py`'s validator (plain tool, not tuned — but gate the
   change since it guards swipe-file quality).
+- [ ] **Tool bug (2026-07-08):** `analyze_video.py` crashes at the final
+  `print(json.dumps(...))` on Windows cp1252 consoles when captions contain
+  emoji (UnicodeEncodeError) — the JSON is already saved, only stdout dies, and
+  the wrapper misreads it as FAIL. Fix: wrap stdout in utf-8
+  (`sys.stdout.reconfigure(encoding='utf-8', errors='replace')`) near the top.
+  Plain tool, trivial, next session.
 
 ## Active Format Evidence Hunt (opened 2026-07-08)
 
@@ -125,6 +131,34 @@ test against real winners.
 - H2 (talking-head demo) → nearest to our existing Testimonial; lowest
   novelty.
 - JSONs: `.tmp/viral-intel/*.json` (disposable — this section stands alone).
+
+### NEW batch (2026-07-08 evening) — 7 more Higgsfield demos + 2 One Peak real ads
+
+| # | Slug | Format family | Product | Dur/shots | Hook (verbatim) | Notable |
+| --- | --- | --- | --- | --- | --- | --- |
+| N1 | 02af8f7c | **Hidden-feature hack demo** | blender | 11.4s / 5 | "Nobody uses this blender's secret pro mode." | open-loop secret + visual proof pour |
+| N2 | 0bdf56d9 | **Skincare PAS transformation** | glow toner | 15s / 4 | "Tell me why my skin looks exhausted and textured right now?" | 1-cut 100% luminosity shift @6s |
+| N3 | 17dd9ae4 | **UGC Addiction + payoff stunt** | snack | 11.2s / 7 (med 1.4s) | "Chups Light Pops, I cannot stop." | lights-out glowing-tongue payoff kills mid-dip; fastest cuts of batch |
+| N4 | 3aa69d22 | **Tutorial / hack (3 steps)** | perfume | 15s / 4 | "Your perfume fades by noon? You're skipping one step." | 3 steps in 9s |
+| N5 | 71d459a3 | **Before/After (cleaning)** | glass cleaner | 15.1s / 5 | "Look at this window: dust, fingerprints, and streaks everywhere." | SERVICES-adjacent; spoken CTA holds |
+| N6 | 93e6c743 | **Instant beauty transformation** | highlighter | 10s / 6 (med 1.2s) | "Why do I look so flat today?" | 0.7s hand-to-lens reveal |
+| N7 | e407bdfc | **Before/After (spot-clean)** | extractor | 10s / 7 | "Look at this. Coffee, mud, and hair all mashed into the fabric." | satisfying pull; CTA @0:08 holds |
+| OP1 | one-peak-…863014 | **App tutorial ad (70s, REAL)** | content app | 70s / 14 | "Brainstorming content with ChatGPT is kind of like asking your mom for video ideas." | captions ON, text-on-frame-1, UI walkthrough + social proof |
+| OP2 | one-peak-…935809 | **Kinetic VSL (168s, REAL)** | **Format Finder** | 168s / 28 (med 1.5s) | "Let me describe a person and you tell me if this is you." | **P1/P2/P7/P9-consistent**: 1–3-word captions @0.4s swap, white+gold emphasis, drop shadow; PAS→epiphany→proof→objections→CTA |
+
+One Peak ads are REAL studio ads (same studio as E4/E5) — but Pattern Index
+counts NOT incremented: render_audit ground-truth (Step 3c) not run this
+session. Optional follow-up; P1/P2/P7 are `applied` and P9 already 3/3, so no
+status would change. OP2's product is literally "proven viral formats for
+creators" — the formats-as-product thesis, market-validated.
+
+**GATE WAIVER (Neil, 2026-07-08):** the ≥3-real-winner gate is **waived** for
+the UGC Pro launch build — Higgsfield catalog = competitor-validated TikTok
+research; One Peak = real ads. Full PRD + taxonomy + draft skeletons:
+`workflows/ugc_pro_formats_plan.md`. The Active Format Evidence Hunt above
+CONTINUES for post-launch re-validation with real winners + our own telemetry.
+The P3 hard-cut hook proposal ships as part of the UGC Pro storyboard branch
+(update P3's status when that lands).
 
 ## Pattern Index
 
