@@ -2,10 +2,12 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ImageUp, Sparkles, Zap, Lock, Wand2, Upload, User, Mic,
   Film, Gauge, Check, Loader2, Package, Wrench, Smartphone, Building2, RefreshCw,
-  Settings2, ChevronDown, ChevronLeft, ChevronRight, Play, Square, X, Languages,
-  Maximize2, UploadCloud, Images, ZoomIn, Volume2, VolumeX, RotateCcw, PenLine, AlertTriangle,
+  Settings2, ChevronDown, ChevronLeft, Play, Square, X, Languages,
+  Maximize2, UploadCloud, Images, ZoomIn, Volume2, VolumeX, RotateCcw, PenLine, AlertTriangle, AudioLines,
 } from 'lucide-react';
+import { useReducedMotion } from 'motion/react';
 import { GlassPanel } from '../ui/GlassPanel';
+import { DUR } from '../ui/motionTokens';
 import { useOneShotSfx } from '../../services/uiSoundService';
 import { saveOneShotDraft, loadOneShotDraft, clearOneShotDraft } from '../../utils/oneShotDraft';
 import ImageModal from '../ui/ImageModal';
@@ -19,6 +21,10 @@ import { getCachedResearchEntry } from '../../services/researchCacheStore';
 import { researchCacheKey } from '../../services/producerOrchestrator';
 import type { ProductionInput } from '../../services/oneShotIntake';
 import { deriveScriptType, deriveBusinessType } from './launchDerivation';
+import {
+  RECIPES_BY_ID, visibleRecipes, SAMPLES, ALLOWED_FORMATS,
+  type Recipe, type RecipeId, type RecipeSample,
+} from './recipes';
 import type { BusinessInfo } from '../../types';
 import {
   ARCHETYPE_META, ARCHETYPE_ORDER, ARCHETYPE_UPLOAD_SLOTS, inferServiceArchetype,
@@ -65,54 +71,12 @@ const fileToDataUrl = (file: File): Promise<string> =>
     r.readAsDataURL(file);
   });
 
-// --- Creative taxonomy: two orthogonal axes (unchanged — "format picker stays current") ---
-// FORMAT = video genre; STRATEGY = persuasion angle. Both map onto ProductionInput.scriptType,
-// so there's NO backend change: UGC + Real-talk → Testimonial · UGC + Hype → MrBeast · Product UGC → Temu.
-type Format = 'ugc' | 'product_ugc' | 'ugc_pro' | 'commercial';
-type Strategy = 'Testimonial' | 'MrBeast';
-// UGC Pro sub-format. 'auto' leaves businessInfo.ugcProFormat undefined so the server classifies.
-type UgcProChoice = 'auto' | 'tryon' | 'unboxing' | 'demo' | 'transformation' | 'tutorial';
-
-const FORMATS: { value: Format; label: string; desc: string; locked?: boolean }[] = [
-  { value: 'ugc', label: 'UGC', desc: 'Selfie-style creator talking to camera' },
-  { value: 'product_ugc', label: 'Product UGC', desc: 'Temu-style fast product hype' },
-  { value: 'ugc_pro', label: 'UGC Pro', desc: 'Try-on & before/after creator formats' },
-  { value: 'commercial', label: 'Commercial', desc: 'Cinematic spec ad (Seedance) · English only', locked: true },
-];
-
-const STRATEGIES: { value: Strategy; label: string; desc: string }[] = [
-  { value: 'Testimonial', label: 'Real-talk', desc: 'Honest first-person review' },
-  { value: 'MrBeast', label: 'Hype', desc: 'High-energy, big-promise hook' },
-];
-
-const UGC_PRO_SUBFORMATS: { value: UgcProChoice; label: string; desc: string }[] = [
-  { value: 'auto', label: 'Auto', desc: 'AI picks the format from your brief' },
-  { value: 'tryon', label: 'Try-On', desc: 'Fashion & wearables — worn reveal' },
-  { value: 'transformation', label: 'Before & After', desc: 'Before → after reveal' },
-  { value: 'unboxing', label: 'Unboxing', desc: 'Packaging & tactile reveal' },
-  { value: 'demo', label: 'Demo', desc: 'Show it working — payoff stunt' },
-  { value: 'tutorial', label: 'Tutorial', desc: 'Steps 1-2-3 how-to' },
-];
-
-// Which Format options each vertical exposes. product → all four; service / real_estate →
-// UGC + UGC Pro only ('ugc' stays first so it remains today's default → no existing flow
-// changes); app stays fully locked (no format picker). A ≤1-entry list renders the old
-// locked "Auto" presentation; ≥2 gets a real, enabled picker.
-const ALLOWED_FORMATS: Record<string, Format[]> = {
-  product: ['ugc', 'product_ugc', 'ugc_pro', 'commercial'],
-  service: ['ugc', 'ugc_pro'],
-  real_estate: ['ugc', 'ugc_pro'],
-  app: [],
-};
-
-// Which UGC Pro sub-formats each vertical exposes. product keeps all 5 + Auto; service is
-// Before & After (transformation) + Tutorial + Auto; real_estate is Tutorial ONLY (forced,
-// no Auto). Try-On / Unboxing / Demo stay product-only.
-const SUBFORMATS_BY_VERTICAL: Record<string, UgcProChoice[]> = {
-  product: ['auto', 'tryon', 'transformation', 'unboxing', 'demo', 'tutorial'],
-  service: ['auto', 'transformation', 'tutorial'],
-  real_estate: ['tutorial'],
-};
+// --- Creative taxonomy ---
+// The user picks a named Recipe (see recipes.ts); the four engine axes (format / strategy /
+// UGC-Pro sub-format / ASMR) are DERIVED from it, so there's NO backend change. The Format ▾
+// modal + its FORMATS/STRATEGIES/UGC_PRO_SUBFORMATS tables are gone — the recipe gallery below
+// the composer owns format selection now. ALLOWED_FORMATS (the per-vertical clamp that drives
+// the locked/"Auto" presentation) lives in recipes.ts and is imported above.
 
 const VERTICALS: { value: string; label: string; desc: string; Icon: typeof Package; locked?: boolean }[] = [
   { value: 'product', label: 'Product', desc: 'Gadgets, fashion, food, beauty', Icon: Package },
@@ -152,6 +116,23 @@ function useIsMobile(): boolean {
     return () => mq.removeEventListener('change', onChange);
   }, []);
   return mobile;
+}
+
+/** True when the device has a real hover pointer (desktop mouse) — gates the recipe
+ * card's hover-to-play sample. Touch devices fall back to a poster + Play chip. SSR-safe. */
+function useHoverCapable(): boolean {
+  const [can, setCan] = useState<boolean>(
+    typeof window !== 'undefined' ? window.matchMedia('(hover: hover)').matches : true,
+  );
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const mq = window.matchMedia('(hover: hover)');
+    const onChange = () => setCan(mq.matches);
+    onChange();
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+  return can;
 }
 
 export const LaunchScreen: React.FC<{
@@ -205,12 +186,16 @@ export const LaunchScreen: React.FC<{
 
   // --- Creative axes ------------------------------------------------------
   const [vertical, setVertical] = useState(restored?.vertical ?? 'product');
-  const [format, setFormat] = useState<Format>(restored?.format ?? 'ugc');
-  const [strategy, setStrategy] = useState<Strategy>(restored?.strategy ?? 'Testimonial');
-  // UGC Pro sub-format pick. 'auto' → the server classifies the sub-format from the brief.
-  const [ugcProChoice, setUgcProChoice] = useState<UgcProChoice>(restored?.ugcProChoice ?? 'auto');
+  // The user picks a named Recipe; the four engine axes below are DERIVED from it (never held
+  // as independent state), so launch()/deriveScriptType()/ProductionInput are byte-unchanged.
+  const [recipe, setRecipe] = useState<RecipeId>(restored?.recipe ?? 'real_talk');
+  const activeRecipe = RECIPES_BY_ID[recipe];
+  const format = activeRecipe.format;
+  const strategy = activeRecipe.strategy ?? 'Testimonial';
+  // UGC Pro sub-format. 'auto' → the server classifies the sub-format from the brief.
+  const ugcProChoice = activeRecipe.ugcProFormat ?? 'auto';
   // UGC Pro ASMR flavor — audio-led register, captions + music off. Unboxing only.
-  const [asmrFlag, setAsmrFlag] = useState<boolean>(restored?.asmrFlag ?? false);
+  const asmrFlag = activeRecipe.asmr ?? false;
 
   // --- Presenter — AUTO (AI Director casts from the research persona) or upload.
   // No generation at intake: casting fires AFTER Market Research so it uses the
@@ -280,9 +265,8 @@ export const LaunchScreen: React.FC<{
   };
   useEffect(() => () => stopPreview(), []); // cleanup on unmount
 
-  // --- UI surfaces (niche + settings popovers, format/asset modals) -------
+  // --- UI surfaces (niche + settings popovers, asset modals) --------------
   const [menu, setMenu] = useState<null | 'niche' | 'settings'>(null);
-  const [showFormat, setShowFormat] = useState(false);
   const [assetModal, setAssetModal] = useState<null | 'product' | 'avatar'>(null);
   const [viewImage, setViewImage] = useState<string | null>(null);
   const [confirmReset, setConfirmReset] = useState(false); // two-tap guard on Reset
@@ -291,17 +275,30 @@ export const LaunchScreen: React.FC<{
   // can now pick it). Pure derivation lives in launchDerivation.ts so it's unit-testable.
   const scriptType = deriveScriptType(vertical, format, strategy);
 
-  // Per-vertical Format axis. product → all four; service/real_estate → UGC + UGC Pro
-  // (default stays 'ugc' so no existing flow changes); app → locked "Auto".
+  // Per-vertical recipe gallery + the locked/"Auto" gate. product/service/real_estate expose
+  // ≥2 formats → a real gallery; app exposes none → the locked "Auto" chip + hidden gallery.
   const allowedFormats = ALLOWED_FORMATS[vertical] ?? ['ugc'];
-  const visibleFormats = FORMATS.filter((f) => allowedFormats.includes(f.value));
-  // UGC Pro sub-format chips, filtered per vertical (product → all 5 + Auto; service → Auto +
-  // Before & After + Tutorial; real_estate → Tutorial only, no Auto).
-  const allowedSubformats = SUBFORMATS_BY_VERTICAL[vertical] ?? SUBFORMATS_BY_VERTICAL.product;
-  const visibleSubformats = UGC_PRO_SUBFORMATS.filter((s) => allowedSubformats.includes(s.value));
-  const formatLabel = FORMATS.find((f) => f.value === format)?.label ?? 'UGC';
+  const recipeOptions = useMemo(() => visibleRecipes(vertical), [vertical]);
   const activeVertical = VERTICALS.find((v) => v.value === vertical) ?? VERTICALS[0];
   const formatLocked = allowedFormats.length <= 1; // app keeps the old locked/"Auto" UI
+  // The chip shows the active recipe's label with any per-vertical copy override applied.
+  const activeRecipeLabel = (recipeOptions.find((r) => r.id === recipe) ?? activeRecipe).label;
+
+  // --- Recipe gallery scroll + pulse (Format chip → jump to the strip below the CTA) ------
+  const galleryRef = useRef<HTMLElement>(null);
+  const [pulseId, setPulseId] = useState<RecipeId | null>(null);
+  const pulseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const prefersReducedMotion = useReducedMotion();
+  const hoverCapable = useHoverCapable();
+  const scrollToGallery = () => {
+    if (formatLocked) return;
+    sfx.play('open');
+    galleryRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setPulseId(recipe);
+    if (pulseTimer.current) clearTimeout(pulseTimer.current);
+    pulseTimer.current = setTimeout(() => setPulseId(null), DUR.ambient.pulse * 1000);
+  };
+  useEffect(() => () => { if (pulseTimer.current) clearTimeout(pulseTimer.current); }, []);
 
   // Service/RealEstate use the guided per-slot real-photo upload ("Assets");
   // Product uses a single product-in-hand photo. (One-Shot collects the SAME
@@ -328,15 +325,14 @@ export const LaunchScreen: React.FC<{
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [vertical]);
 
-  // Keep the UGC Pro sub-format valid for the current vertical. Real-estate exposes exactly
-  // one legal sub-format (tutorial), so a stale/Auto pick snaps to the first allowed chip
-  // (force-selecting tutorial). Only touches UGC Pro; valid picks are left as-is (no mount
-  // clobber of a restored, still-valid draft).
+  // Keep the selected recipe valid for the current vertical — covers a restored draft whose
+  // recipe belongs to a different vertical. visibleRecipes already enforces the per-vertical
+  // sub-format clamp (e.g. real_estate → tutorial only), so a stale pick snaps to the first
+  // legal recipe. app exposes none → the pick is left as-is (the locked "Auto" chip shows).
   useEffect(() => {
-    if (format !== 'ugc_pro') return;
-    const allowed = SUBFORMATS_BY_VERTICAL[vertical] ?? SUBFORMATS_BY_VERTICAL.product;
-    if (!allowed.includes(ugcProChoice)) setUgcProChoice(allowed[0]);
-  }, [vertical, format, ugcProChoice]);
+    const vis = visibleRecipes(vertical);
+    if (vis.length && !vis.some((r) => r.id === recipe)) setRecipe(vis[0].id);
+  }, [vertical, recipe]);
 
   // Guided slot upload: the slot dropped into IS the tag. Describe is best-effort
   // (a 401/quota must not block the upload — research re-derives context anyway).
@@ -364,26 +360,27 @@ export const LaunchScreen: React.FC<{
     clearQuality(slot);
   };
 
-  // Switching vertical clamps the Format axis to what the new vertical allows and resets the
-  // UGC Pro sub-format + ASMR flag (mirrors the ASMR reset-on-switch) so a stale pick from a
-  // different vertical never leaks through. Fires only on an actual user switch (not mount),
-  // so a restored draft is untouched.
+  // Switching vertical clamps the selected recipe to what the new vertical exposes (the
+  // derived axes follow the recipe), so a stale pick from a different vertical never leaks
+  // through. Fires only on an actual user switch (not mount), so a restored draft is untouched.
   const chooseVertical = (value: string) => {
     setVertical(value);
-    setUgcProChoice('auto');
-    setAsmrFlag(false);
-    setFormat((f) => ((ALLOWED_FORMATS[value] ?? ['ugc']).includes(f) ? f : 'ugc'));
+    setRecipe((r) => {
+      const vis = visibleRecipes(value);
+      return vis.some((x) => x.id === r) ? r : (vis[0]?.id ?? 'real_talk');
+    });
   };
 
-  // Seedance (Commercial) can't speak a native Filipino accent → Commercial is
-  // English-only, and the two are mutually exclusive.
-  const chooseFormat = (f: Format) => {
-    setFormat(f);
-    if (f === 'commercial') setLanguage('English');
+  // Pick a recipe (the format gallery's only affordance). Commercial (Seedance) can't speak a
+  // native Filipino accent, so selecting it forces English — the two stay mutually exclusive.
+  const chooseRecipe = (id: RecipeId) => {
+    setRecipe(id);
+    if (RECIPES_BY_ID[id].format === 'commercial') setLanguage('English');
+    sfx.play('select');
   };
   const chooseLanguage = (l: ProductionInput['language']) => {
     setLanguage(l);
-    if (l === 'Taglish' && format === 'commercial') setFormat('ugc');
+    if (l === 'Taglish' && format === 'commercial') setRecipe('real_talk');
   };
 
   // AUTO mode is always ready (AI Director casts post-research); UPLOAD needs a photo.
@@ -472,7 +469,7 @@ export const LaunchScreen: React.FC<{
       saveOneShotDraft({
         hero, offer, brandName, price, forceFresh,
         servicePhotos, serviceArchetype, reArchetype, localService, businessAddress,
-        vertical, format, strategy, ugcProChoice, asmrFlag,
+        vertical, recipe, format, strategy, ugcProChoice, asmrFlag,
         presenterMode, gender, ageRange, ethnicity, avatarUrl,
         language, aspectRatio, resolution, voiceId,
       });
@@ -481,7 +478,7 @@ export const LaunchScreen: React.FC<{
   }, [
     dirty, hero, offer, brandName, price, forceFresh,
     servicePhotos, serviceArchetype, reArchetype, localService, businessAddress,
-    vertical, format, strategy, ugcProChoice, asmrFlag,
+    vertical, recipe, format, strategy, ugcProChoice, asmrFlag,
     presenterMode, gender, ageRange, ethnicity, avatarUrl,
     language, aspectRatio, resolution, voiceId,
   ]);
@@ -493,7 +490,7 @@ export const LaunchScreen: React.FC<{
     setHero(''); setOffer(''); setBrandName(''); setPrice(''); setForceFresh(false);
     setServicePhotos([]); setServiceArchetype('venue'); setReArchetype('listing');
     setLocalService(false); setBusinessAddress('');
-    setVertical('product'); setFormat('ugc'); setStrategy('Testimonial'); setUgcProChoice('auto'); setAsmrFlag(false);
+    setVertical('product'); setRecipe('real_talk');
     setPresenterMode('auto'); setGender('Any'); setAgeRange(''); setEthnicity(''); setShowCastHints(false);
     setAvatarUrl('');
     setLanguage('Taglish'); setAspectRatio('9:16'); setResolution('720p');
@@ -575,7 +572,7 @@ export const LaunchScreen: React.FC<{
                   saveOneShotDraft({
                     hero, offer, brandName, price, forceFresh,
                     servicePhotos, serviceArchetype, reArchetype, localService, businessAddress,
-                    vertical, format, strategy, ugcProChoice, asmrFlag,
+                    vertical, recipe, format, strategy, ugcProChoice, asmrFlag,
                     presenterMode, gender, ageRange, ethnicity, avatarUrl,
                     language, aspectRatio, resolution, voiceId,
                   });
@@ -757,23 +754,21 @@ export const LaunchScreen: React.FC<{
               </Popover>
             </div>
 
-            {/* Format — opens the sample picker box */}
+            {/* Format — summary chip; jumps to the recipe gallery below and pulses the active card */}
             <div className="flex flex-col gap-1">
               <label className={`text-zinc-400 ${T_LABEL}`}>// Format</label>
               <button
                 type="button"
                 disabled={formatLocked}
-                onClick={() => { setShowFormat(true); sfx.play('open'); }}
+                onClick={scrollToGallery}
                 className={`inline-flex w-full items-center justify-between gap-2 border px-4 ${CTRL_H} ${R_CTRL} ${T_CTRL} transition-all ${
                   formatLocked
                     ? 'cursor-not-allowed border-white/5 text-zinc-600'
-                    : showFormat
-                      ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]'
-                      : 'border-white/10 text-zinc-300 hover:border-white/30'
+                    : 'border-white/10 text-zinc-300 hover:border-white/30'
                 }`}
-                title={formatLocked ? 'Format is set automatically for this niche' : 'Pick a format'}
+                title={formatLocked ? 'Format is set automatically for this niche' : 'Jump to the format gallery below'}
               >
-                <span className="inline-flex items-center gap-2 truncate"><Film className="h-4 w-4 shrink-0" /> {formatLocked ? 'Auto' : formatLabel}</span>
+                <span className="inline-flex items-center gap-2 truncate"><Film className="h-4 w-4 shrink-0" /> {formatLocked ? 'Auto' : activeRecipeLabel}</span>
                 <ChevronDown className="h-4 w-4 shrink-0 opacity-60" />
               </button>
             </div>
@@ -889,104 +884,30 @@ export const LaunchScreen: React.FC<{
             )}
           </div>
         </GlassPanel>
-      </div>
 
-      {/* ---- Format picker box (Higgsfield-style; per-format sample slots) ---- */}
-      {showFormat && (
-        <Modal title="Pick the format that hits" wide onClose={() => setShowFormat(false)}>
-          <p className="mb-4 text-sm text-zinc-400">Choose the type of video that fits your product and audience.</p>
-          {/* Mobile: horizontal swipe carousel (stays one screen tall, scales to many
-              formats) · Desktop: 3-up grid. */}
-          {isMobile ? (
-            <FormatCarousel formats={visibleFormats} activeValue={format} onChoose={(v) => { chooseFormat(v); sfx.play('select'); }} />
-          ) : (
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-              {visibleFormats.map((f) => (
-                <FormatCard
-                  key={f.value}
-                  f={f}
-                  active={format === f.value}
-                  onChoose={() => { chooseFormat(f.value); sfx.play('select'); }}
+        {/* ---- Recipe gallery — Higgsfield-style merchandising strip BELOW the CTA. Each card
+            is a named preset over the creative axes; picking one loads it into the composer
+            above. Hidden for the locked/"Auto" vertical (app) where there's nothing to pick. ---- */}
+        {recipeOptions.length > 0 && (
+          <section ref={galleryRef} className="mt-8 scroll-mt-6">
+            <p className={`text-zinc-500 ${T_LABEL}`}>// Pick the format that hits</p>
+            <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+              {recipeOptions.map((r) => (
+                <RecipeCard
+                  key={r.id}
+                  recipe={r}
+                  sample={SAMPLES[r.id]}
+                  selected={recipe === r.id}
+                  pulse={pulseId === r.id}
+                  reduceMotion={!!prefersReducedMotion}
+                  hoverCapable={hoverCapable}
+                  onSelect={() => chooseRecipe(r.id)}
                 />
               ))}
             </div>
-          )}
-
-          {/* Strategy + CTA pinned together so BOTH stay visible without scrolling
-              past a tall preview card (UGC adds the Strategy row). */}
-          <div className="sticky bottom-0 -mx-5 -mb-5 mt-5 border-t border-white/10 bg-zinc-900/95 px-5 pb-5 pt-3 backdrop-blur-xl">
-            {format === 'ugc' && (
-              <div className="mb-3">
-                <p className={`mb-1.5 text-zinc-500 ${T_LABEL}`}>// Strategy</p>
-                <div className="flex gap-2">
-                  {STRATEGIES.map((s) => (
-                    <button
-                      key={s.value}
-                      type="button"
-                      onClick={() => { setStrategy(s.value); sfx.play('select'); }}
-                      title={s.desc}
-                      className={`flex-1 border px-3 ${CTRL_H} ${R_CTRL} ${T_VALUE} uppercase transition-all ${
-                        strategy === s.value ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]' : 'border-white/10 text-zinc-300 hover:border-white/30'
-                      }`}
-                    >
-                      {s.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-            {format === 'ugc_pro' && (
-              <div className="mb-3">
-                <p className={`mb-1.5 text-zinc-500 ${T_LABEL}`}>// Sub-format</p>
-                <div className="grid grid-cols-3 gap-2">
-                  {visibleSubformats.map((s) => (
-                    <button
-                      key={s.value}
-                      type="button"
-                      onClick={() => {
-                        setUgcProChoice(s.value);
-                        // ASMR is Unboxing-only — leaving Unboxing drops the flag so it
-                        // never silently rides along on another sub-format.
-                        if (s.value !== 'unboxing') setAsmrFlag(false);
-                        sfx.play('select');
-                      }}
-                      title={s.desc}
-                      className={`flex-1 border px-3 ${CTRL_H} ${R_CTRL} ${T_VALUE} text-center leading-tight uppercase transition-all ${
-                        ugcProChoice === s.value ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]' : 'border-white/10 text-zinc-300 hover:border-white/30'
-                      }`}
-                    >
-                      {s.label}
-                    </button>
-                  ))}
-                </div>
-                {/* ASMR toggle — Unboxing only. Audio-led register: captions + music
-                    default off downstream (the taps ARE the audio). User-flippable. */}
-                {ugcProChoice === 'unboxing' && (
-                  <button
-                    type="button"
-                    aria-pressed={asmrFlag}
-                    onClick={() => { setAsmrFlag((v) => !v); sfx.play('select'); }}
-                    title="Audio-led ASMR — whispered VO, captions & music off by default"
-                    className={`mt-2 flex w-full items-center justify-center gap-2 border px-3 ${CTRL_H} ${R_CTRL} ${T_VALUE} uppercase transition-all ${
-                      asmrFlag ? 'border-[#FFCC00] text-[#FFCC00]' : 'border-white/10 text-zinc-300 hover:border-white/30'
-                    }`}
-                  >
-                    {asmrFlag ? <Volume2 className="h-4 w-4 shrink-0" /> : <VolumeX className="h-4 w-4 shrink-0" />}
-                    ASMR {asmrFlag ? 'On' : 'Off'}
-                  </button>
-                )}
-              </div>
-            )}
-            <button
-              type="button"
-              onClick={() => setShowFormat(false)}
-              className={`flex w-full items-center justify-center gap-2 whitespace-nowrap ${CTRL_H} ${R_CTRL} ${T_CTRL} bg-[#FFCC00] text-black transition-all hover:shadow-[0_0_20px_rgba(255,204,0,0.4)]`}
-            >
-              <Check className="h-4 w-4 shrink-0" /> Use {formatLabel}
-            </button>
-          </div>
-        </Modal>
-      )}
+          </section>
+        )}
+      </div>
 
       {/* ---- Product modal — single product photo (Product vertical) ---- */}
       {assetModal === 'product' && !isGuided && (
@@ -1480,129 +1401,118 @@ const SoonBadge: React.FC = () => (
   </span>
 );
 
-/** One format option card — shared by the desktop grid and the mobile carousel. */
-const FormatCard: React.FC<{
-  f: (typeof FORMATS)[number];
-  active: boolean;
-  onChoose: () => void;
-  className?: string;
-}> = ({ f, active, onChoose, className }) => (
-  <button
-    type="button"
-    disabled={f.locked}
-    onClick={() => { if (!f.locked) onChoose(); }}
-    className={`group relative flex flex-col overflow-hidden border text-left transition-all ${R_PANEL} ${className ?? ''} ${
-      f.locked
-        ? 'cursor-not-allowed border-white/5'
-        : active
-          ? 'border-[#FFCC00] bg-[#FFCC00]/[0.06]'
-          : 'border-white/10 hover:border-white/30'
-    }`}
-  >
-    {/* Sample preview slot — 9:16 to preview the real vertical-video shape, capped
-        on mobile so the modal's CTA stays in view (empty until clips land). */}
-    <div className="relative flex aspect-[9/16] max-h-[36vh] w-full items-center justify-center bg-zinc-950/60 sm:max-h-[58vh]">
-      <div className="flex flex-col items-center gap-1.5 text-zinc-600">
-        <Film className="h-6 w-6" />
-        <span className={T_LABEL}>Sample soon</span>
+/** One recipe card — 9:16, sample video under a scrim, outcome-named copy, badges, and a gold
+ * selected-state. Hover plays the sample loop (desktop); touch / reduced-motion shows the poster
+ * with a Play chip. A recipe absent from SAMPLES falls back to the "Sample soon" placeholder —
+ * SAMPLES is empty until Slice B lands, so every card renders the placeholder today (expected). */
+const RecipeCard: React.FC<{
+  recipe: Recipe;
+  sample?: RecipeSample;
+  selected: boolean;
+  pulse: boolean;
+  reduceMotion: boolean;
+  hoverCapable: boolean;
+  onSelect: () => void;
+}> = ({ recipe, sample, selected, pulse, reduceMotion, hoverCapable, onSelect }) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [tapped, setTapped] = useState(false); // touch/reduced-motion: user tapped Play
+  const locked = !!recipe.locked;
+  const autoplay = hoverCapable && !reduceMotion; // hover-to-play only on hover-capable, motion-OK devices
+
+  return (
+    <button
+      type="button"
+      disabled={locked}
+      onClick={() => { if (!locked) onSelect(); }}
+      aria-pressed={selected}
+      className={`group relative aspect-[9/16] overflow-hidden border text-left transition-all ${R_PANEL} ${
+        pulse && !reduceMotion ? 'animate-pulse' : ''
+      } ${
+        locked
+          ? 'cursor-not-allowed border-white/5'
+          : selected
+            ? 'border-[#FFCC00] shadow-[0_0_20px_rgba(255,204,0,0.4)]'
+            : 'border-white/10 hover:border-white/30 hover:scale-[1.01]'
+      }`}
+    >
+      {/* Media — sample video (hover-play) or the Sample-soon placeholder */}
+      {sample ? (
+        <>
+          {autoplay ? (
+            <video
+              ref={videoRef}
+              src={sample.video}
+              poster={sample.poster}
+              muted
+              loop
+              playsInline
+              preload="none"
+              className="absolute inset-0 h-full w-full object-cover"
+              onMouseEnter={() => { void videoRef.current?.play().catch(() => { /* autoplay refused — poster stays */ }); }}
+              onMouseLeave={() => { const v = videoRef.current; if (v) { v.pause(); v.currentTime = 0; } }}
+            />
+          ) : tapped ? (
+            <video
+              src={sample.video}
+              poster={sample.poster}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+          ) : (
+            <img src={sample.poster} alt="" className="absolute inset-0 h-full w-full object-cover" />
+          )}
+          {/* Touch / reduced-motion: explicit Play chip (span, not a nested button) */}
+          {!autoplay && !tapped && (
+            <span
+              role="button"
+              tabIndex={-1}
+              aria-label="Play preview"
+              onClick={(e) => { e.stopPropagation(); setTapped(true); }}
+              className="absolute left-1/2 top-1/2 flex h-9 w-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-zinc-950/60 text-white backdrop-blur-sm"
+            >
+              <Play className="h-4 w-4" />
+            </span>
+          )}
+        </>
+      ) : (
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 bg-zinc-950/60 text-zinc-600">
+          <Film className="h-6 w-6" />
+          <span className={T_LABEL}>Sample soon</span>
+        </div>
+      )}
+
+      {/* Scrim — keeps the copy legible over the video */}
+      <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-zinc-950 via-zinc-950/70 to-transparent" />
+
+      {/* Copy — outcome-named label + one-line desc */}
+      <div className="absolute inset-x-0 bottom-0 p-3">
+        <span className={`block text-sm font-bold ${selected && !locked ? 'text-[#FFCC00]' : 'text-white'}`}>{recipe.label}</span>
+        <span className="mt-0.5 block text-[11px] leading-snug text-zinc-400">{recipe.desc}</span>
       </div>
-      {active && !f.locked && (
-        <span className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#FFCC00] text-black">
+
+      {/* Badges — top-left: Business lock · ASMR */}
+      <div className="absolute left-2 top-2 flex flex-col items-start gap-1">
+        {locked && (
+          <span className="inline-flex items-center gap-0.5 rounded-full border border-[#FFCC00]/40 bg-zinc-950/80 px-1.5 py-px text-[9px] font-mono uppercase tracking-wide text-[#FFCC00]">
+            <Lock className="h-2.5 w-2.5" /> Biz
+          </span>
+        )}
+        {recipe.asmr && (
+          <span className="inline-flex items-center gap-0.5 rounded-full border border-[#FFCC00]/40 bg-zinc-950/80 px-1.5 py-px text-[9px] font-mono uppercase tracking-wide text-[#FFCC00]">
+            <AudioLines className="h-2.5 w-2.5" /> ASMR
+          </span>
+        )}
+      </div>
+
+      {/* Selected check — top-right, gold glow (the only elevation) */}
+      {selected && !locked && (
+        <span className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#FFCC00] text-black shadow-[0_0_20px_rgba(255,204,0,0.4)]">
           <Check className="h-3 w-3" />
         </span>
       )}
-      {f.locked && <BusinessBadge />}
-    </div>
-    <div className="p-3">
-      <span className={`block ${T_CTRL} ${active && !f.locked ? 'text-[#FFCC00]' : 'text-zinc-200'}`}>{f.label}</span>
-      <span className="mt-0.5 block text-[11px] leading-snug text-zinc-500">{f.desc}</span>
-    </div>
-  </button>
-);
-
-/** Mobile format picker — snap-scrolling row with dot indicators + arrow buttons.
- * Stays one screen tall no matter how many formats land (vs. a deep vertical stack). */
-const FormatCarousel: React.FC<{
-  formats: typeof FORMATS;
-  activeValue: Format;
-  onChoose: (v: Format) => void;
-}> = ({ formats, activeValue, onChoose }) => {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [idx, setIdx] = useState(0);
-
-  const scrollToIdx = (i: number) => {
-    const el = scrollRef.current;
-    if (!el) return;
-    const clamped = Math.max(0, Math.min(formats.length - 1, i));
-    const child = el.children[clamped] as HTMLElement | undefined;
-    child?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-  };
-
-  const onScroll = () => {
-    const el = scrollRef.current;
-    if (!el) return;
-    const center = el.scrollLeft + el.clientWidth / 2;
-    let nearest = 0;
-    let best = Infinity;
-    Array.from(el.children).forEach((c, i) => {
-      const ch = c as HTMLElement;
-      const cc = ch.offsetLeft + ch.clientWidth / 2;
-      const d = Math.abs(cc - center);
-      if (d < best) { best = d; nearest = i; }
-    });
-    setIdx(nearest);
-  };
-
-  return (
-    <div className="relative">
-      <div
-        ref={scrollRef}
-        onScroll={onScroll}
-        className="flex snap-x snap-mandatory gap-3 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-      >
-        {formats.map((f) => (
-          <FormatCard
-            key={f.value}
-            f={f}
-            active={activeValue === f.value}
-            onChoose={() => onChoose(f.value)}
-            className="w-[82%] shrink-0 snap-center"
-          />
-        ))}
-      </div>
-      <div className="mt-3 flex items-center justify-center gap-3">
-        <button
-          type="button"
-          onClick={() => scrollToIdx(idx - 1)}
-          disabled={idx === 0}
-          aria-label="Previous format"
-          className="flex h-8 w-8 items-center justify-center rounded-full border border-white/10 text-zinc-400 transition-all enabled:hover:border-[#FFCC00]/50 enabled:hover:text-[#FFCC00] disabled:cursor-not-allowed disabled:opacity-30"
-        >
-          <ChevronLeft className="h-4 w-4" />
-        </button>
-        <div className="flex items-center gap-1.5">
-          {formats.map((f, i) => (
-            <button
-              key={f.value}
-              type="button"
-              onClick={() => scrollToIdx(i)}
-              aria-label={`Go to ${f.label}`}
-              className="flex items-center justify-center p-2"
-            >
-              <span className={`h-1.5 rounded-full transition-all ${i === idx ? 'w-5 bg-[#FFCC00]' : 'w-1.5 bg-white/20'}`} />
-            </button>
-          ))}
-        </div>
-        <button
-          type="button"
-          onClick={() => scrollToIdx(idx + 1)}
-          disabled={idx === formats.length - 1}
-          aria-label="Next format"
-          className="flex h-8 w-8 items-center justify-center rounded-full border border-white/10 text-zinc-400 transition-all enabled:hover:border-[#FFCC00]/50 enabled:hover:text-[#FFCC00] disabled:cursor-not-allowed disabled:opacity-30"
-        >
-          <ChevronRight className="h-4 w-4" />
-        </button>
-      </div>
-    </div>
+    </button>
   );
 };
