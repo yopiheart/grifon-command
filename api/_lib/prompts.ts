@@ -267,6 +267,22 @@ export const TEMU_CLASSIFIER_PROMPT = (product: string, description: string): st
     Output ONLY one word: ASMR, Reaction, or Utility.
     `;
 
+export const UGCPRO_CLASSIFIER_PROMPT = (product: string, description: string): string => `
+    Analyze this product for a UGC Pro creator-video strategy.
+    Product: "${product}"
+    Description: "${description}"
+
+    Classify into ONE of these 2 formats based on this technical report:
+    1. **TRYON:** Wearables — clothing, fashion sets, activewear, shoes, jewelry, bags,
+       accessories, eyewear. The payoff is seeing it WORN on the body. Focus: "Watch me try this."
+    2. **TRANSFORMATION:** A visible before→after change — skincare, beauty, cleaning products,
+       home/surface care, detailing, repair. The payoff is the INSTANT hard-cut reveal of the
+       changed state. Focus: "Look at the difference."
+
+    If the product is wearable, ALWAYS choose TRYON even if it also changes the look.
+    Output ONLY one word: TRYON or TRANSFORMATION.
+    `;
+
 export const ADSCRIPT_COMMON_RULES = (businessInfo: BusinessInfo, brandName: string, language: 'English' | 'Taglish'): string => `
   **CORE CONSTRAINTS (MANDATORY):**
   - **NO PRICE:** Under no circumstances mention price or offer pricing. Maintain a curiosity gap.
@@ -371,11 +387,13 @@ export interface AdScriptInput {
 
 export const buildAdScriptPrompt = (
   input: AdScriptInput,
-  temuSubType?: 'ASMR' | 'Reaction' | 'Utility'
+  temuSubType?: 'ASMR' | 'Reaction' | 'Utility',
+  ugcProSubType?: 'tryon' | 'transformation'
 ): string => {
   const { businessInfo, brandName, language, offer, chosenAngleBrief } = input;
   const isTestimonial = businessInfo.scriptType === 'Testimonial';
   const isTemu = businessInfo.scriptType === 'Temu';
+  const isUGCPro = businessInfo.scriptType === 'UGCPro';
   // Services (v2): customer-testimonial service ads (first-person customer story),
   // book/inquire CTA (not buy-now), category-auto-adapting across ALL service types
   // (emotional payoff + trust-fear inferred from inputs; no peso amount in the script).
@@ -408,6 +426,94 @@ export const buildAdScriptPrompt = (
       ${subType === 'Utility' ? '- Focus: POV Problem Solving. "TikTok made me buy it".' : ''}
 
       ${DIRECTOR_CRITIQUE_INSTRUCTION}
+      ${USER_CHOSEN_ANGLE_BLOCK}
+      Format: Return valid JSON: { "hook1": [...], "hook2": [...], "body": [...], "strategicAudit": "..." }
+    `;
+  } else if (isUGCPro) {
+    const sub = ugcProSubType ?? 'transformation';
+    return `
+      Role: Viral UGC Creator-Scriptwriter (TikTok/Reels product content).
+      Strategy: UGC Pro — ${sub === 'tryon' ? 'Virtual Try-On (fashion reveal)' : 'Transformation (Before & After)'}.
+      Product: "${businessInfo.product}"
+      Brand: "${brandName}"
+
+      ${COMMON_RULES}
+
+      **VOICE — FIRST-PERSON CREATOR (in-the-moment, never a pitch):**
+      The speaker is a real creator filming themselves RIGHT NOW with the product — casual,
+      conversational, mid-discovery. NOT a company voice, NOT a testimonial looking back.
+      "Ako si [name]" intros are BANNED here — no name, no life story; the moment IS the
+      content. Present tense. React, don't narrate.
+
+      **UGC PACING OVERRIDE (this format only):**
+      - TOTAL script: 10-16 seconds spoken — 4-6 SHORT lines. Fewer, punchier lines beat
+        full coverage.
+      - Body lines may run 4-12 words (the 7-12 rule relaxes DOWN, never up). Fragments are
+        allowed when a real person would speak them ("Obsessed. This is staying on.").
+      - The hook is SPOKEN and conversational, lands inside the first 2 seconds. It must
+        sound like a person talking to camera, NOT ad copy.
+      - ZERO dead air — every line rides into the next hard cut.
+
+      ${sub === 'tryon' ? `
+      **TRY-ON 4-BEAT (product in-hand from second 0; the worn reveal is a HARD CUT):**
+      0. **Hook (<=2s, 5-8 words):** Product in-hand or on-hanger, creator mid-decision.
+         Pattern: commitment + tease — "Okay, I had to try this set. Watch this." /
+         "Grabe, kakadating lang nito. Suot ko na." PROVIDE 2 VARIATIONS — populate
+         hook1 AND hook2.
+      1. **Worn Reveal:** The first line AFTER the hard cut to wearing it — an instant,
+         genuine reaction, 3-8 words. The VISUAL carries the reveal; the line rides it.
+      2. **Styling / Fit-Proof:** ONE proof beat that kills the category's #1 objection —
+         how it moves, fits, stretches, styles ("squat test", "hindi see-through", "kasya
+         sa totoo kong size"). Anchor on the top 1-2 features from the FEATURE FILTER.
+         This is the "why believe" slot.
+      3. **Verdict + Soft CTA:** The keep-it verdict ("Obsessed. This is staying on."
+         register), then ONE soft conversational close driving the tap. Obey the CTA
+         price-leak guard; in Taglish, the TAGLISH ACCENT LOCK.
+      ` : `
+      **TRANSFORMATION 4-BEAT (the BEFORE is the hook — NO product in beat 0):**
+      0. **Hook (<=2s, 5-8 words):** The problem state, shown and named — frustrated,
+         real. Pattern: visual complaint — "Tell me why my skin looks exhausted?" /
+         "Tingnan mo 'tong mantsa. Ang tagal na nito." NO product mention in the hook.
+         PROVIDE 2 VARIATIONS — populate hook1 AND hook2.
+      1. **Application:** The product enters mid-action with a COMPLETE verb construction —
+         "watch this — isang swipe lang" / "dalawang spray lang ng ${brandName}". The
+         product enters WORKING, never posed.
+      2. **Instant Reveal:** The line that rides the hard-cut after-state — short awe,
+         3-8 words. HONESTY RULE: realistic, representative result; never fabricate a
+         guaranteed outcome.
+      3. **Verdict + Soft CTA:** Land the payoff + ONE soft conversational close ("kung
+         ganito rin sa'yo, subukan mo na"). Obey the CTA price-leak guard; in Taglish,
+         the TAGLISH ACCENT LOCK.
+
+      **APPEARANCE-CLAIM GUARDRAIL (Meta policy):** If the transformation is on a PERSON
+      (skin, hair, body), frame the result as glow / fresh / feel — NEVER medical or
+      corrective claims ("removes wrinkles", "cures acne", "whitens in 7 days" — all
+      BANNED). Surfaces, fabrics, and objects may show dramatic before/after freely.
+      `}
+
+      **SOFT CTA GUARD (STRICT — applies to the final beat):**
+      BANNED CTA PHRASES (organic-IG patterns, not for paid ads):
+      - "link sa bio" / "link in bio"  → use "click below" / "tap below" / "click here"
+      - "DM us" / "DM kayo" alone     → use "message us" / "send message"
+      - "i-click" / "I-click" (any 'i-' verb-prefix form like "i-check", "i-share", "i-DM")
+        → use a plain English verb "Click" / "Tap" / "Visit". Veo TTS mis-pronounces the
+        hyphenated 'i-' prefix as a doubled syllable ("Eh eh click").
+      BANNED IN THE CTA (price-leak guard — STRICT):
+      - Any peso amount (₱X, PX, P X), any pricing tier list, any "X for Y" with prices.
+        Even if "${offer}" contains explicit prices, STRIP them — the LP/Messenger reveals
+        the price.
+      OFFER (soft weave): if "${offer}" names a non-price value-add (free shipping, a bonus,
+      a guarantee), weave AT MOST ONE into the close naturally and conversationally — never
+      invent one the offer doesn't state. Scarcity is OPTIONAL in this format (the UGC
+      register beats hard urgency); if used, keep it spoken-casual ("first 50 lang").
+
+      **DIRECTOR_CRITIQUE_PROTOCOL:**
+      Include a field "strategicAudit" in your JSON response.
+      Act as a World-Class Creative Director.
+      1. Explain why those specific 1-2 features were chosen for virality.
+      2. Explain how the short 4-12 word lines and hard-cut beats hold retention in a
+         10-16s UGC demo.
+
       ${USER_CHOSEN_ANGLE_BLOCK}
       Format: Return valid JSON: { "hook1": [...], "hook2": [...], "body": [...], "strategicAudit": "..." }
     `;

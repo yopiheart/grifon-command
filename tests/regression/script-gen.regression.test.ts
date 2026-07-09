@@ -49,7 +49,9 @@ import {
   buildAdScriptPrompt,
   parseAdScriptResponse,
   MODEL_TEXT,
+  MODEL_FAST,
   SAFETY_SETTINGS,
+  UGCPRO_CLASSIFIER_PROMPT,
 } from '../../api/_lib/prompts.js';
 
 // --- 1. Load .env manually (no dotenv dep) -------------------------------
@@ -122,7 +124,26 @@ const fetchMock = vi.fn(async (url: any, init: any = {}) => {
     // NOTE: keep this config in sync with FLOW_REGISTRY.adscript in
     // api/gemini/text.ts. v1 covers adscript only.
     if (body.flow === 'adscript') {
-      const prompt = buildAdScriptPrompt(body.input, undefined);
+      // Mirror the FLOW_REGISTRY.adscript UGCPro sub-format resolution: honor an
+      // explicit tryon/transformation pick, otherwise auto-classify via MODEL_FAST.
+      let ugcProSubType: 'tryon' | 'transformation' | undefined;
+      if (body.input.businessInfo?.scriptType === 'UGCPro') {
+        const picked = body.input.businessInfo.ugcProFormat;
+        if (picked === 'tryon' || picked === 'transformation') {
+          ugcProSubType = picked;
+        } else {
+          const clsResponse = await ai.models.generateContent({
+            model: MODEL_FAST,
+            contents: UGCPRO_CLASSIFIER_PROMPT(
+              body.input.businessInfo.product,
+              body.input.businessInfo.features
+            ),
+          } as any);
+          const clsText = clsResponse.text?.trim().toUpperCase() || '';
+          ugcProSubType = clsText.includes('TRYON') ? 'tryon' : 'transformation';
+        }
+      }
+      const prompt = buildAdScriptPrompt(body.input, undefined, ugcProSubType);
       const response = await ai.models.generateContent({
         model: MODEL_TEXT,
         contents: prompt,
@@ -186,13 +207,14 @@ interface BusinessInfoFixture {
 
 async function runScript(
   fixture: BusinessInfoFixture,
-  scriptType: 'MrBeast' | 'Testimonial',
+  scriptType: 'MrBeast' | 'Testimonial' | 'UGCPro',
   brand: string,
   offer: string,
-  label: string
+  label: string,
+  opts?: { ugcProFormat?: 'tryon' | 'transformation'; minBodyLines?: number }
 ) {
   const result = await generateAdScript(
-    { ...fixture, scriptType } as any,
+    { ...fixture, scriptType, ...(opts?.ugcProFormat ? { ugcProFormat: opts.ugcProFormat } : {}) } as any,
     brand,
     'Taglish',
     offer
@@ -209,7 +231,9 @@ async function runScript(
   expect((result.hook1 as string[]).length).toBeGreaterThan(0);
   expect((result.hook2 as string[]).length).toBeGreaterThan(0);
   expect(Array.isArray(result.body)).toBe(true);
-  expect((result.body as string[]).length).toBeGreaterThanOrEqual(5);
+  // UGC Pro scripts are 10-16s / 4-6 SHORT lines by design (hooks live in
+  // hook1/hook2, so body carries ~3-5 beats) — default 5 fits the 30s+ formulas.
+  expect((result.body as string[]).length).toBeGreaterThanOrEqual(opts?.minBodyLines ?? 5);
   expect(typeof result.strategicAudit).toBe('string');
 
   return result;
@@ -290,6 +314,24 @@ const gymFixture: BusinessInfoFixture = {
     'Customized program kada 2 weeks, hindi cookie-cutter PDF, may video form check',
   features:
     '12-week program · Custom macros · Form check videos · Weekly check-ins · Free supplement guide',
+  productImageUrls: [],
+  brandColors: '',
+};
+
+// UGC Pro fixture — Fashion (seamless activewear set, TRY-ON flagship).
+// Added with Slice 1 of workflows/ugc_pro_formats_plan.md: the plan's
+// regression roster calls for a fashion brand to exercise the try-on grammar.
+const fashionFixture: BusinessInfoFixture = {
+  product: 'Seamless ribbed workout set (sports bra + high-waist leggings), squat-proof',
+  audience:
+    'Filipina gym girls 22-32 na nahihiya sa muffin top at takot sa see-through leggings sa gym',
+  benefit:
+    'Confident mag-workout kahit crowded ang gym, walang hila-hila ng damit, kasya agad sa totoong size',
+  painPoint:
+    'Bago mag-gym, 30 minutes sa harap ng salamin nag-iisip kung see-through ba pag naka-squat',
+  separator: 'Squat-proof tested at hindi see-through, kahit light colors',
+  features:
+    'Seamless ribbed fabric · squat-proof · high-waist tummy support · 12 colors · sizes XS-3XL',
   productImageUrls: [],
   brandColors: '',
 };
@@ -382,6 +424,38 @@ describe.skipIf(!SHOULD_RUN)('Stress Test — Skincare (Adult Acne)', () => {
         'Glaze PH',
         'First 100 buyers get free dermatologist consultation + skincare assessment',
         'GLAZE PH — TESTIMONIAL'
+      );
+    },
+    120_000
+  );
+});
+
+describe.skipIf(!SHOULD_RUN)('UGC Pro — Slice 1 (Try-On + Transformation)', () => {
+  it(
+    'TRY-ON (fashion)',
+    async () => {
+      await runScript(
+        fashionFixture,
+        'UGCPro',
+        'Hiraya Active',
+        'First 50 orders get free shipping',
+        'HIRAYA ACTIVE — UGC PRO TRY-ON',
+        { ugcProFormat: 'tryon', minBodyLines: 3 }
+      );
+    },
+    120_000
+  );
+
+  it(
+    'TRANSFORMATION (skincare — appearance guardrail live)',
+    async () => {
+      await runScript(
+        skincareFixture,
+        'UGCPro',
+        'Glaze PH',
+        'First 100 buyers get free dermatologist consultation + skincare assessment',
+        'GLAZE PH — UGC PRO TRANSFORMATION',
+        { ugcProFormat: 'transformation', minBodyLines: 3 }
       );
     },
     120_000

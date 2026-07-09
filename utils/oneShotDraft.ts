@@ -35,8 +35,10 @@ export interface OneShotDraft {
   localService: boolean;
   businessAddress: string;
   vertical: string;
-  format: 'ugc' | 'product_ugc' | 'commercial';
+  format: 'ugc' | 'product_ugc' | 'ugc_pro' | 'commercial';
   strategy: 'Testimonial' | 'MrBeast';
+  /** UGC Pro sub-format pick. 'auto' → the server classifies the sub-format from the brief. */
+  ugcProChoice?: 'auto' | 'tryon' | 'transformation';
   presenterMode: 'auto' | 'upload';
   gender: 'Any' | 'Male' | 'Female';
   ageRange: string;

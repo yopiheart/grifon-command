@@ -22,7 +22,13 @@ export interface BusinessInfo {
   productImageDescription?: string;
   logoImageUrl?: string;
   brandColors?: string; 
-  scriptType?: 'MrBeast' | 'Testimonial' | 'Temu' | 'Custom' | 'Cinematic' | 'Services' | 'RealEstate';
+  scriptType?: 'MrBeast' | 'Testimonial' | 'Temu' | 'Custom' | 'Cinematic' | 'Services' | 'RealEstate' | 'UGCPro';
+  // UGC Pro sub-format (creator-video strategy). Chosen by the user (picker chips) or auto-classified
+  // server-side from the brief when left undefined. All 5 values are in the type; only 'tryon' +
+  // 'transformation' are implemented in this slice (fashion gap + services bridge).
+  ugcProFormat?: 'tryon' | 'unboxing' | 'demo' | 'transformation' | 'tutorial';
+  // UGC Pro: audio-led ASMR flavor (whispered register, minimal VO). Off by default.
+  asmrFlag?: boolean;
   // Gates the Step 2 script-style picker: 'product' shows MrBeast/Testimonial/Temu (physical-product
   // formulas); 'service' shows the Services style; 'realestate' shows the RealEstate style. Custom
   // shows in all. Defaults from Market Research's isLocalService at prefill; user can override via the

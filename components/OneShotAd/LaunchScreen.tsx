@@ -66,18 +66,27 @@ const fileToDataUrl = (file: File): Promise<string> =>
 // --- Creative taxonomy: two orthogonal axes (unchanged — "format picker stays current") ---
 // FORMAT = video genre; STRATEGY = persuasion angle. Both map onto ProductionInput.scriptType,
 // so there's NO backend change: UGC + Real-talk → Testimonial · UGC + Hype → MrBeast · Product UGC → Temu.
-type Format = 'ugc' | 'product_ugc' | 'commercial';
+type Format = 'ugc' | 'product_ugc' | 'ugc_pro' | 'commercial';
 type Strategy = 'Testimonial' | 'MrBeast';
+// UGC Pro sub-format. 'auto' leaves businessInfo.ugcProFormat undefined so the server classifies.
+type UgcProChoice = 'auto' | 'tryon' | 'transformation';
 
 const FORMATS: { value: Format; label: string; desc: string; locked?: boolean }[] = [
   { value: 'ugc', label: 'UGC', desc: 'Selfie-style creator talking to camera' },
   { value: 'product_ugc', label: 'Product UGC', desc: 'Temu-style fast product hype' },
+  { value: 'ugc_pro', label: 'UGC Pro', desc: 'Try-on & before/after creator formats' },
   { value: 'commercial', label: 'Commercial', desc: 'Cinematic spec ad (Seedance) · English only', locked: true },
 ];
 
 const STRATEGIES: { value: Strategy; label: string; desc: string }[] = [
   { value: 'Testimonial', label: 'Real-talk', desc: 'Honest first-person review' },
   { value: 'MrBeast', label: 'Hype', desc: 'High-energy, big-promise hook' },
+];
+
+const UGC_PRO_SUBFORMATS: { value: UgcProChoice; label: string; desc: string }[] = [
+  { value: 'auto', label: 'Auto', desc: 'AI picks try-on or before/after from your brief' },
+  { value: 'tryon', label: 'Try-On', desc: 'Fashion & wearables — worn reveal' },
+  { value: 'transformation', label: 'Transformation', desc: 'Before → after reveal' },
 ];
 
 const VERTICALS: { value: string; label: string; desc: string; Icon: typeof Package; locked?: boolean }[] = [
@@ -173,6 +182,8 @@ export const LaunchScreen: React.FC<{
   const [vertical, setVertical] = useState(restored?.vertical ?? 'product');
   const [format, setFormat] = useState<Format>(restored?.format ?? 'ugc');
   const [strategy, setStrategy] = useState<Strategy>(restored?.strategy ?? 'Testimonial');
+  // UGC Pro sub-format pick. 'auto' → the server classifies the sub-format from the brief.
+  const [ugcProChoice, setUgcProChoice] = useState<UgcProChoice>(restored?.ugcProChoice ?? 'auto');
 
   // --- Presenter — AUTO (AI Director casts from the research persona) or upload.
   // No generation at intake: casting fires AFTER Market Research so it uses the
@@ -255,7 +266,8 @@ export const LaunchScreen: React.FC<{
     vertical === 'service' ? 'Services'
       : vertical === 'real_estate' ? 'RealEstate'
         : format === 'product_ugc' ? 'Temu'
-          : strategy;
+          : format === 'ugc_pro' ? 'UGCPro'
+            : strategy;
 
   const formatLabel = FORMATS.find((f) => f.value === format)?.label ?? 'UGC';
   const activeVertical = VERTICALS.find((v) => v.value === vertical) ?? VERTICALS[0];
@@ -369,6 +381,9 @@ export const LaunchScreen: React.FC<{
       aspectRatio,
       resolution,
       scriptType,
+      // Explicit UGC Pro sub-format override; 'auto' (or any non-UGC-Pro format) leaves it
+      // undefined so the server classifies the sub-format from the brief.
+      ugcProFormat: format === 'ugc_pro' && ugcProChoice !== 'auto' ? ugcProChoice : undefined,
       servicePhotos: isGuided ? servicePhotos : undefined,
       serviceArchetype: isService ? serviceArchetype : undefined,
       realEstateArchetype: isRealEstate ? reArchetype : undefined,
@@ -394,7 +409,7 @@ export const LaunchScreen: React.FC<{
       saveOneShotDraft({
         hero, offer, brandName, price, forceFresh,
         servicePhotos, serviceArchetype, reArchetype, localService, businessAddress,
-        vertical, format, strategy,
+        vertical, format, strategy, ugcProChoice,
         presenterMode, gender, ageRange, ethnicity, avatarUrl,
         language, aspectRatio, resolution, voiceId,
       });
@@ -403,7 +418,7 @@ export const LaunchScreen: React.FC<{
   }, [
     dirty, hero, offer, brandName, price, forceFresh,
     servicePhotos, serviceArchetype, reArchetype, localService, businessAddress,
-    vertical, format, strategy,
+    vertical, format, strategy, ugcProChoice,
     presenterMode, gender, ageRange, ethnicity, avatarUrl,
     language, aspectRatio, resolution, voiceId,
   ]);
@@ -415,7 +430,7 @@ export const LaunchScreen: React.FC<{
     setHero(''); setOffer(''); setBrandName(''); setPrice(''); setForceFresh(false);
     setServicePhotos([]); setServiceArchetype('venue'); setReArchetype('listing');
     setLocalService(false); setBusinessAddress('');
-    setVertical('product'); setFormat('ugc'); setStrategy('Testimonial');
+    setVertical('product'); setFormat('ugc'); setStrategy('Testimonial'); setUgcProChoice('auto');
     setPresenterMode('auto'); setGender('Any'); setAgeRange(''); setEthnicity(''); setShowCastHints(false);
     setAvatarUrl('');
     setLanguage('Taglish'); setAspectRatio('9:16'); setResolution('720p');
@@ -497,7 +512,7 @@ export const LaunchScreen: React.FC<{
                   saveOneShotDraft({
                     hero, offer, brandName, price, forceFresh,
                     servicePhotos, serviceArchetype, reArchetype, localService, businessAddress,
-                    vertical, format, strategy,
+                    vertical, format, strategy, ugcProChoice,
                     presenterMode, gender, ageRange, ethnicity, avatarUrl,
                     language, aspectRatio, resolution, voiceId,
                   });
@@ -839,7 +854,7 @@ export const LaunchScreen: React.FC<{
           <div className="sticky bottom-0 -mx-5 -mb-5 mt-5 border-t border-white/10 bg-zinc-900/95 px-5 pb-5 pt-3 backdrop-blur-xl">
             {format === 'ugc' && (
               <div className="mb-3">
-                <p className={`mb-1.5 text-zinc-400 ${T_LABEL}`}>// Strategy</p>
+                <p className={`mb-1.5 text-zinc-500 ${T_LABEL}`}>// Strategy</p>
                 <div className="flex gap-2">
                   {STRATEGIES.map((s) => (
                     <button
@@ -849,6 +864,26 @@ export const LaunchScreen: React.FC<{
                       title={s.desc}
                       className={`flex-1 border px-3 ${CTRL_H} ${R_CTRL} ${T_VALUE} uppercase transition-all ${
                         strategy === s.value ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]' : 'border-white/10 text-zinc-300 hover:border-white/30'
+                      }`}
+                    >
+                      {s.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+            {format === 'ugc_pro' && (
+              <div className="mb-3">
+                <p className={`mb-1.5 text-zinc-500 ${T_LABEL}`}>// Sub-format</p>
+                <div className="flex gap-2">
+                  {UGC_PRO_SUBFORMATS.map((s) => (
+                    <button
+                      key={s.value}
+                      type="button"
+                      onClick={() => { setUgcProChoice(s.value); sfx.play('select'); }}
+                      title={s.desc}
+                      className={`flex-1 border px-3 ${CTRL_H} ${R_CTRL} ${T_VALUE} uppercase transition-all ${
+                        ugcProChoice === s.value ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]' : 'border-white/10 text-zinc-300 hover:border-white/30'
                       }`}
                     >
                       {s.label}

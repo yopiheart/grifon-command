@@ -41,6 +41,9 @@ export interface ProductionInput {
   resolution?: '720p' | '1080p';
   /** Script style — derived from the Format × Strategy axes and the chosen vertical. */
   scriptType: NonNullable<BusinessInfo['scriptType']>;
+  /** UGC Pro sub-format when the user picked one explicitly (Try-On / Transformation). Undefined
+   * on the 'Auto' choice so the server classifies the sub-format from the brief. */
+  ugcProFormat?: 'tryon' | 'transformation';
   /** Phase 2: guided per-slot real photos for Service/RealEstate verticals (the slot IS the tag).
    * Feeds the per-scene real-photo router. Empty/absent for Product (which uses heroImageBase64). */
   servicePhotos?: BusinessInfo['servicePhotos'];
@@ -96,6 +99,7 @@ export function mapReportToWizard(
       serviceArchetype: input.serviceArchetype,
       realEstateArchetype: input.realEstateArchetype,
       scriptType: input.scriptType,
+      ugcProFormat: input.ugcProFormat,
       businessType: businessTypeFor(input.scriptType),
       listingPrice: input.scriptType === 'RealEstate' ? input.price : undefined,
     },

@@ -32,6 +32,7 @@ import {
   MARKETMIND_SYSTEM_INSTRUCTION,
   buildMarketMindParts,
   TEMU_CLASSIFIER_PROMPT,
+  UGCPRO_CLASSIFIER_PROMPT,
   buildAdScriptPrompt,
   parseAdScriptResponse,
   type AdScriptInput,
@@ -81,6 +82,30 @@ const classifyTemuProductServerSide = async (
   return 'Reaction';
 };
 
+type UgcProSubType = 'tryon' | 'transformation';
+
+// Pure parse of the UGC Pro classifier's one-word reply. Exported for unit tests.
+// Uppercase-match: 'TRYON' → tryon, 'TRANSFORMATION' → transformation, else default.
+export const parseUgcProClassifierResponse = (text: string): UgcProSubType => {
+  const upper = (text ?? '').toUpperCase();
+  if (upper.includes('TRYON')) return 'tryon';
+  if (upper.includes('TRANSFORMATION')) return 'transformation';
+  return 'transformation';
+};
+
+const classifyUgcProServerSide = async (
+  product: string,
+  description: string,
+  ai: GoogleGenAI
+): Promise<UgcProSubType> => {
+  const response = await ai.models.generateContent({
+    model: MODEL_FAST,
+    contents: UGCPRO_CLASSIFIER_PROMPT(product, description),
+  } as any);
+  logModelUsage('flow:adscript:ugcpro-classify', MODEL_FAST, (response as any).usageMetadata);
+  return parseUgcProClassifierResponse(response.text ?? '');
+};
+
 type FlowHandler = (input: any, ai: GoogleGenAI) => Promise<unknown>;
 
 const FLOW_REGISTRY: Record<string, FlowHandler> = {
@@ -112,7 +137,22 @@ const FLOW_REGISTRY: Record<string, FlowHandler> = {
         ai
       );
     }
-    const prompt = buildAdScriptPrompt(input, temuSubType);
+    let ugcProSubType: UgcProSubType | undefined;
+    if (input.businessInfo.scriptType === 'UGCPro') {
+      const chosen = input.businessInfo.ugcProFormat;
+      // Honor an explicit implemented sub-format; otherwise (undefined or a
+      // not-yet-implemented value like unboxing/demo/tutorial) auto-classify.
+      if (chosen === 'tryon' || chosen === 'transformation') {
+        ugcProSubType = chosen;
+      } else {
+        ugcProSubType = await classifyUgcProServerSide(
+          input.businessInfo.product,
+          input.businessInfo.features,
+          ai
+        );
+      }
+    }
+    const prompt = buildAdScriptPrompt(input, temuSubType, ugcProSubType);
     const response = await ai.models.generateContent({
       model: MODEL_TEXT,
       contents: prompt,

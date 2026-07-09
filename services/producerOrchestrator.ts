@@ -126,6 +126,9 @@ export interface ProductionInput {
   resolution?: '720p' | '1080p';
   /** Script strategy — auto-detected default, override in the Customize drawer. */
   scriptType: NonNullable<BusinessInfo['scriptType']>;
+  /** UGC Pro sub-format when the user picked one explicitly (Try-On / Transformation). Undefined
+   * on the 'Auto' choice so the server classifies the sub-format from the brief. */
+  ugcProFormat?: 'tryon' | 'transformation';
   stabilityMode?: StabilityMode;
   /** Phase 2: guided per-slot real photos for Service/RealEstate verticals (the slot IS the tag).
    * Feeds the per-scene real-photo router. Empty/absent for Product (which uses heroImageBase64). */
