@@ -162,17 +162,33 @@ export const RE_UPLOAD_SLOTS: Record<RealEstateArchetype, UploadSlot[]> = {
 // Only the hero slot carries a reference example (PRODUCT_EXAMPLE); the product-state
 // slots have no curated sample under public/examples/ yet, so their `example` is
 // omitted rather than pointing at a mismatched (e.g. cleaning before/after) asset.
-export const UGCPRO_UPLOAD_SLOTS: Record<'tryon' | 'transformation', UploadSlot[]> = {
+export const UGCPRO_UPLOAD_SLOTS: Record<
+  'tryon' | 'unboxing' | 'demo' | 'transformation' | 'tutorial',
+  UploadSlot[]
+> = {
   tryon: [
     { slot: 'hero', label: 'Product', hint: 'the item, brand visible', example: PRODUCT_EXAMPLE },
     { slot: 'onbody', label: 'Worn', hint: 'on a body — anchors fit & drape' },
     { slot: 'packaging', label: 'Packaging', hint: 'box / label — optional' },
+  ],
+  unboxing: [
+    { slot: 'hero', label: 'Product', hint: 'the item, brand visible', example: PRODUCT_EXAMPLE },
+    { slot: 'packaging', label: 'Packaging', hint: 'box / label — required, it is the co-star' },
+    { slot: 'inuse', label: 'In use', hint: 'placed / worn — optional' },
+  ],
+  demo: [
+    { slot: 'hero', label: 'Product', hint: 'the item, brand visible', example: PRODUCT_EXAMPLE },
+    { slot: 'inuse', label: 'In use', hint: 'show it working — recommended' },
   ],
   transformation: [
     { slot: 'hero', label: 'Product', hint: 'the item, brand visible', example: PRODUCT_EXAMPLE },
     { slot: 'before', label: 'Before', hint: 'the starting state' },
     { slot: 'after', label: 'After', hint: 'the result' },
     { slot: 'inuse', label: 'In use', hint: 'applying it — optional' },
+  ],
+  tutorial: [
+    { slot: 'hero', label: 'Product', hint: 'the item, brand visible', example: PRODUCT_EXAMPLE },
+    { slot: 'inuse', label: 'In use', hint: 'a step in progress — optional' },
   ],
 };
 

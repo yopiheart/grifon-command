@@ -4,7 +4,7 @@ import { BusinessInfo } from '../types';
 import { describeBusinessAsset } from '../services/geminiService';
 import { compressImageForUpload } from '../utils/imageCompression';
 import Loader from './ui/Loader';
-import { AlertTriangle, Building2, Check, ChevronDown, ShoppingBag, Sparkles, Store, UploadCloud, X, ZoomIn } from 'lucide-react';
+import { AlertTriangle, Building2, Check, ChevronDown, ShoppingBag, Sparkles, Store, UploadCloud, Volume2, VolumeX, X, ZoomIn } from 'lucide-react';
 import ImageModal from './ui/ImageModal';
 import { StepShell } from './ui/StepShell';
 import { StepFooter } from './ui/StepFooter';
@@ -462,20 +462,25 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                   <p className="text-sm font-bold text-white font-mono">UGC Pro format</p>
               </div>
               <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mt-1 mb-4">
-                  // Auto lets the AI pick try-on or before/after from your brief.
+                  // Auto lets the AI pick the best format from your brief.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {([
                       { value: undefined, label: 'Auto', sub: 'AI picks from your brief' },
                       { value: 'tryon', label: 'Try-On', sub: 'Fashion & wearables — worn reveal' },
                       { value: 'transformation', label: 'Before & After', sub: 'Before → after reveal' },
+                      { value: 'unboxing', label: 'Unboxing', sub: 'Packaging & tactile reveal' },
+                      { value: 'demo', label: 'Demo', sub: 'Show it working — payoff stunt' },
+                      { value: 'tutorial', label: 'Tutorial', sub: 'Steps 1-2-3 how-to' },
                   ] as const).map((s) => {
                       const active = (formData.ugcProFormat ?? undefined) === s.value;
                       return (
                           <button
                               key={s.label}
                               type="button"
-                              onClick={() => setFormData(prev => ({ ...prev, ugcProFormat: s.value }))}
+                              // ASMR is Unboxing-only — switching away drops the flag so it never
+                              // silently rides along on another sub-format.
+                              onClick={() => setFormData(prev => ({ ...prev, ugcProFormat: s.value, asmrFlag: s.value === 'unboxing' ? prev.asmrFlag : undefined }))}
                               className={`p-4 rounded-xl border text-left transition-all hover:translate-y-[-2px] ${active ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
                           >
                               <div className="flex justify-between items-center mb-1">
@@ -487,6 +492,20 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                       );
                   })}
               </div>
+              {/* ASMR toggle — Unboxing only. Audio-led register: captions + music default
+                  off downstream (the taps ARE the audio). User-flippable. */}
+              {formData.ugcProFormat === 'unboxing' && (
+                  <button
+                      type="button"
+                      aria-pressed={!!formData.asmrFlag}
+                      onClick={() => setFormData(prev => ({ ...prev, asmrFlag: !prev.asmrFlag }))}
+                      title="Audio-led ASMR — whispered VO, captions & music off by default"
+                      className={`mt-3 w-full flex items-center justify-center gap-2 h-11 px-3 rounded-xl border text-xs font-bold font-mono uppercase transition-all ${formData.asmrFlag ? 'border-[#FFCC00] text-[#FFCC00]' : 'bg-zinc-950 border-white/10 text-zinc-300 hover:border-[#FFCC00]'}`}
+                  >
+                      {formData.asmrFlag ? <Volume2 className="w-4 h-4 shrink-0" /> : <VolumeX className="w-4 h-4 shrink-0" />}
+                      ASMR {formData.asmrFlag ? 'On' : 'Off'}
+                  </button>
+              )}
           </div>
       )}
 

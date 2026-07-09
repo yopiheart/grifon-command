@@ -9,8 +9,8 @@ import { UGCPRO_UPLOAD_SLOTS } from '../../components/guidedPhotoSlots.js';
 describe('UGCPRO_UPLOAD_SLOTS — hero-first invariant', () => {
   const keys = Object.keys(UGCPRO_UPLOAD_SLOTS) as (keyof typeof UGCPRO_UPLOAD_SLOTS)[];
 
-  it('ships exactly the two Slice-1 sub-formats', () => {
-    expect(keys.sort()).toEqual(['transformation', 'tryon']);
+  it('ships all five UGC Pro sub-formats', () => {
+    expect(keys.sort()).toEqual(['demo', 'transformation', 'tryon', 'tutorial', 'unboxing']);
   });
 
   it.each(keys)("'%s' has hero as its FIRST slot", (key) => {
@@ -31,5 +31,21 @@ describe('UGCPRO_UPLOAD_SLOTS — hero-first invariant', () => {
     const slots = UGCPRO_UPLOAD_SLOTS.transformation.map((s) => s.slot);
     expect(slots).toContain('before');
     expect(slots).toContain('after');
+  });
+
+  it('unboxing makes packaging the co-star (hint marks it required)', () => {
+    const packaging = UGCPRO_UPLOAD_SLOTS.unboxing.find((s) => s.slot === 'packaging');
+    expect(packaging).toBeDefined();
+    expect(packaging!.hint.toLowerCase()).toContain('required');
+  });
+
+  it('demo anchors the payoff via an in-use slot', () => {
+    const slots = UGCPRO_UPLOAD_SLOTS.demo.map((s) => s.slot);
+    expect(slots).toContain('inuse');
+  });
+
+  it('tutorial keeps a lean hero + optional in-use pair', () => {
+    const slots = UGCPRO_UPLOAD_SLOTS.tutorial.map((s) => s.slot);
+    expect(slots).toEqual(['hero', 'inuse']);
   });
 });

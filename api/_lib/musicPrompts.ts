@@ -1,6 +1,6 @@
 // Canned music briefs for ElevenLabs Music, one per render script-style. These
-// map the SAME three styles the render already keys off (EDL
-// meta.scriptStyleDetected → mrbeast | temu | testimonial) to a text prompt.
+// map the SAME four styles the render already keys off (EDL
+// meta.scriptStyleDetected → mrbeast | temu | testimonial | ugcpro) to a text prompt.
 //
 // TUNABLE COPY — gated behind a listen test, NOT a crown-jewel prompt. These are
 // the first-pass briefs; treat any change as creative copy to be A/B'd against
@@ -44,6 +44,13 @@ export const MUSIC_STYLE_PROMPTS: Record<MusicStyle, string> = {
     'Soft piano or warm pads, gentle pulse, understated and emotional, ~90 BPM. ' +
     'Low and supportive, leaving plenty of headroom for a calm spoken voiceover.' +
     NO_VOCALS,
+  // Light, phone-shot creator feel — UGC Pro (word-pop captions carry the energy).
+  ugcpro:
+    'Light, minimal lo-fi instrumental background music for a casual creator-style ' +
+    'product video. Soft plucks or mellow keys, sparse relaxed percussion, warm and ' +
+    'unobtrusive, ~95 BPM. The feel of a phone-shot TikTok, NOT a produced ad — no ' +
+    'risers, no impacts, no cinematic swells; the spoken voiceover and hard cuts ' +
+    'carry the energy.' + NO_VOCALS,
 };
 
 export const musicPromptFor = (style: MusicStyle): string => MUSIC_STYLE_PROMPTS[style];

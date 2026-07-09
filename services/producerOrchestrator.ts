@@ -126,9 +126,13 @@ export interface ProductionInput {
   resolution?: '720p' | '1080p';
   /** Script strategy — auto-detected default, override in the Customize drawer. */
   scriptType: NonNullable<BusinessInfo['scriptType']>;
-  /** UGC Pro sub-format when the user picked one explicitly (Try-On / Transformation). Undefined
-   * on the 'Auto' choice so the server classifies the sub-format from the brief. */
-  ugcProFormat?: 'tryon' | 'transformation';
+  /** UGC Pro sub-format when the user picked one explicitly (Try-On / Unboxing / Demo /
+   * Transformation / Tutorial). Undefined on the 'Auto' choice so the server classifies the
+   * sub-format from the brief. */
+  ugcProFormat?: 'tryon' | 'unboxing' | 'demo' | 'transformation' | 'tutorial';
+  /** UGC Pro: audio-led ASMR flavor (whispered register, minimal VO, music off). Off by
+   * default; mapReportToWizard copies it onto businessInfo.asmrFlag. */
+  asmrFlag?: boolean;
   stabilityMode?: StabilityMode;
   /** Phase 2: guided per-slot real photos for Service/RealEstate verticals (the slot IS the tag).
    * Feeds the per-scene real-photo router. Empty/absent for Product (which uses heroImageBase64). */
@@ -1146,7 +1150,18 @@ async function runStage(
           };
         });
       if (scenes.length === 0) throw new Error('NO_RENDERED_SCENES');
-      const music = { style: run.edl?.meta.scriptStyleDetected ?? 'mrbeast', enabled: true as const };
+      // Deterministic style override: a UGCPro run always burns the 'ugcpro'
+      // caption/music identity (hype word-pop) — we KNOW the scriptType, so we
+      // don't ask the EDL (which mis-detects UGCPro as testimonial → CLEAN preset,
+      // burying the P1/P2 caption bet). Non-UGCPro keeps the EDL-detected style.
+      const isUgcPro = run.input.scriptType === 'UGCPro';
+      const isAsmr = run.businessInfo?.asmrFlag ?? run.input.asmrFlag ?? false;
+      const music = {
+        style: isUgcPro ? ('ugcpro' as const) : (run.edl?.meta.scriptStyleDetected ?? 'mrbeast'),
+        // ASMR is an audio-led format — the taps/handling ARE the audio; a music
+        // bed buries them. User-flippable downstream; this only seeds the default.
+        enabled: !isAsmr,
+      };
       const req: FinalRenderRequest = {
         scenes,
         aspectRatio: run.input.aspectRatio,

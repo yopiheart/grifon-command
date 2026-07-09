@@ -3,8 +3,9 @@ import { mapReportToWizard, type ProductionInput } from '../../services/oneShotI
 import type { MarketResearchReport } from '../../types.js';
 
 // Intent: an explicit UGC Pro sub-format picked at intake must survive the report→wizard
-// projection into businessInfo.ugcProFormat (the field the server reads), while the
-// 'Auto' path (undefined) stays undefined so the server classifies from the brief.
+// projection into businessInfo.ugcProFormat (the field the server reads to HONOR the pick
+// and SKIP the classifier), while the 'Auto' path (undefined) stays undefined so the server
+// classifies from the brief. Slice 3 widens the honored set from 2 to all 5 sub-formats.
 
 const baseInput = (over: Partial<ProductionInput> = {}): ProductionInput => ({
   brandName: 'Aurora',
@@ -35,8 +36,28 @@ describe('mapReportToWizard — UGC Pro sub-format passthrough', () => {
     expect(businessInfo.ugcProFormat).toBe('transformation');
   });
 
+  it.each(['tryon', 'unboxing', 'demo', 'transformation', 'tutorial'] as const)(
+    "carries each explicit sub-format '%s' through (server then honors + skips classify)",
+    (fmt) => {
+      const { businessInfo } = mapReportToWizard(baseInput({ ugcProFormat: fmt }), report);
+      expect(businessInfo.ugcProFormat).toBe(fmt);
+    },
+  );
+
   it('leaves ugcProFormat undefined on the Auto path (server classifies)', () => {
     const { businessInfo } = mapReportToWizard(baseInput({ ugcProFormat: undefined }), report);
     expect(businessInfo.ugcProFormat).toBeUndefined();
+  });
+});
+
+describe('mapReportToWizard — ASMR flag passthrough', () => {
+  it('carries asmrFlag=true onto businessInfo.asmrFlag', () => {
+    const { businessInfo } = mapReportToWizard(baseInput({ ugcProFormat: 'unboxing', asmrFlag: true }), report);
+    expect(businessInfo.asmrFlag).toBe(true);
+  });
+
+  it('leaves businessInfo.asmrFlag undefined when the flag is absent', () => {
+    const { businessInfo } = mapReportToWizard(baseInput({ ugcProFormat: 'unboxing' }), report);
+    expect(businessInfo.asmrFlag).toBeUndefined();
   });
 });

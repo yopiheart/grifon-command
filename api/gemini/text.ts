@@ -83,13 +83,19 @@ const classifyTemuProductServerSide = async (
   return 'Reaction';
 };
 
-type UgcProSubType = 'tryon' | 'transformation';
+type UgcProSubType = 'tryon' | 'unboxing' | 'demo' | 'transformation' | 'tutorial';
 
 // Pure parse of the UGC Pro classifier's one-word reply. Exported for unit tests.
-// Uppercase-match: 'TRYON' → tryon, 'TRANSFORMATION' → transformation, else default.
+// Uppercase substring-match: each keyword maps to its sub-format; unrecognized
+// replies fall through to the transformation default (the safe generalist arm).
+// None of the five keywords is a substring of another (TRYON / UNBOXING / DEMO /
+// TRANSFORMATION / TUTORIAL), so plain includes() checks can't collide.
 export const parseUgcProClassifierResponse = (text: string): UgcProSubType => {
   const upper = (text ?? '').toUpperCase();
   if (upper.includes('TRYON')) return 'tryon';
+  if (upper.includes('UNBOXING')) return 'unboxing';
+  if (upper.includes('TUTORIAL')) return 'tutorial';
+  if (upper.includes('DEMO')) return 'demo';
   if (upper.includes('TRANSFORMATION')) return 'transformation';
   return 'transformation';
 };
@@ -141,9 +147,15 @@ const FLOW_REGISTRY: Record<string, FlowHandler> = {
     let ugcProSubType: UgcProSubType | undefined;
     if (input.businessInfo.scriptType === 'UGCPro') {
       const chosen = input.businessInfo.ugcProFormat;
-      // Honor an explicit implemented sub-format; otherwise (undefined or a
-      // not-yet-implemented value like unboxing/demo/tutorial) auto-classify.
-      if (chosen === 'tryon' || chosen === 'transformation') {
+      // Honor any of the 5 explicit sub-format picks; only the undefined 'Auto'
+      // path falls through to the server-side classifier.
+      if (
+        chosen === 'tryon' ||
+        chosen === 'unboxing' ||
+        chosen === 'demo' ||
+        chosen === 'transformation' ||
+        chosen === 'tutorial'
+      ) {
         ugcProSubType = chosen;
       } else {
         ugcProSubType = await classifyUgcProServerSide(

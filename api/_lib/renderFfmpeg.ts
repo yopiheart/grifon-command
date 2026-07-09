@@ -631,7 +631,7 @@ async function downloadToFile(url: string, path: string): Promise<void> {
 export async function renderFinalVideo(
   scenes: FinalRenderScene[],
   aspectRatio: string,
-  music?: { style: 'mrbeast' | 'temu' | 'testimonial'; enabled: boolean; bedUrl?: string },
+  music?: { style: 'mrbeast' | 'temu' | 'testimonial' | 'ugcpro'; enabled: boolean; bedUrl?: string },
   preset: RenderPreset = CLASSIC,
   variantSeed: number = 0, // rotates the premium hook palette per render
   endCard?: FinalRenderEndCard // offer recap + price anchor, burned into the last scene

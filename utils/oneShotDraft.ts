@@ -38,7 +38,9 @@ export interface OneShotDraft {
   format: 'ugc' | 'product_ugc' | 'ugc_pro' | 'commercial';
   strategy: 'Testimonial' | 'MrBeast';
   /** UGC Pro sub-format pick. 'auto' → the server classifies the sub-format from the brief. */
-  ugcProChoice?: 'auto' | 'tryon' | 'transformation';
+  ugcProChoice?: 'auto' | 'tryon' | 'unboxing' | 'demo' | 'transformation' | 'tutorial';
+  /** UGC Pro: audio-led ASMR flavor (Unboxing only). Off by default. */
+  asmrFlag?: boolean;
   presenterMode: 'auto' | 'upload';
   gender: 'Any' | 'Male' | 'Female';
   ageRange: string;

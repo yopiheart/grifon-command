@@ -70,7 +70,7 @@ const fileToDataUrl = (file: File): Promise<string> =>
 type Format = 'ugc' | 'product_ugc' | 'ugc_pro' | 'commercial';
 type Strategy = 'Testimonial' | 'MrBeast';
 // UGC Pro sub-format. 'auto' leaves businessInfo.ugcProFormat undefined so the server classifies.
-type UgcProChoice = 'auto' | 'tryon' | 'transformation';
+type UgcProChoice = 'auto' | 'tryon' | 'unboxing' | 'demo' | 'transformation' | 'tutorial';
 
 const FORMATS: { value: Format; label: string; desc: string; locked?: boolean }[] = [
   { value: 'ugc', label: 'UGC', desc: 'Selfie-style creator talking to camera' },
@@ -85,9 +85,12 @@ const STRATEGIES: { value: Strategy; label: string; desc: string }[] = [
 ];
 
 const UGC_PRO_SUBFORMATS: { value: UgcProChoice; label: string; desc: string }[] = [
-  { value: 'auto', label: 'Auto', desc: 'AI picks try-on or before/after from your brief' },
+  { value: 'auto', label: 'Auto', desc: 'AI picks the format from your brief' },
   { value: 'tryon', label: 'Try-On', desc: 'Fashion & wearables — worn reveal' },
   { value: 'transformation', label: 'Before & After', desc: 'Before → after reveal' },
+  { value: 'unboxing', label: 'Unboxing', desc: 'Packaging & tactile reveal' },
+  { value: 'demo', label: 'Demo', desc: 'Show it working — payoff stunt' },
+  { value: 'tutorial', label: 'Tutorial', desc: 'Steps 1-2-3 how-to' },
 ];
 
 const VERTICALS: { value: string; label: string; desc: string; Icon: typeof Package; locked?: boolean }[] = [
@@ -185,6 +188,8 @@ export const LaunchScreen: React.FC<{
   const [strategy, setStrategy] = useState<Strategy>(restored?.strategy ?? 'Testimonial');
   // UGC Pro sub-format pick. 'auto' → the server classifies the sub-format from the brief.
   const [ugcProChoice, setUgcProChoice] = useState<UgcProChoice>(restored?.ugcProChoice ?? 'auto');
+  // UGC Pro ASMR flavor — audio-led register, captions + music off. Unboxing only.
+  const [asmrFlag, setAsmrFlag] = useState<boolean>(restored?.asmrFlag ?? false);
 
   // --- Presenter — AUTO (AI Director casts from the research persona) or upload.
   // No generation at intake: casting fires AFTER Market Research so it uses the
@@ -286,7 +291,7 @@ export const LaunchScreen: React.FC<{
   const isUgcProGuided = vertical === 'product' && format === 'ugc_pro' && ugcProChoice !== 'auto';
   const isGuided = isService || isRealEstate || isUgcProGuided;
   const guidedSlots = isRealEstate ? RE_UPLOAD_SLOTS[reArchetype]
-    : isUgcProGuided ? UGCPRO_UPLOAD_SLOTS[ugcProChoice as 'tryon' | 'transformation']
+    : isUgcProGuided ? UGCPRO_UPLOAD_SLOTS[ugcProChoice as 'tryon' | 'unboxing' | 'demo' | 'transformation' | 'tutorial']
       : ARCHETYPE_UPLOAD_SLOTS[serviceArchetype];
   const guidedArchetypeTabs = isRealEstate
     ? RE_ARCHETYPE_ORDER.map((a) => ({ key: a, ...RE_ARCHETYPE_META[a], active: reArchetype === a, onSelect: () => setReArchetype(a) }))
@@ -392,6 +397,8 @@ export const LaunchScreen: React.FC<{
       // Explicit UGC Pro sub-format override; 'auto' (or any non-UGC-Pro format) leaves it
       // undefined so the server classifies the sub-format from the brief.
       ugcProFormat: format === 'ugc_pro' && ugcProChoice !== 'auto' ? ugcProChoice : undefined,
+      // ASMR is an Unboxing-only flavor; never rides along on another sub-format.
+      asmrFlag: format === 'ugc_pro' && ugcProChoice === 'unboxing' && asmrFlag ? true : undefined,
       servicePhotos: isGuided ? servicePhotos : undefined,
       serviceArchetype: isService ? serviceArchetype : undefined,
       realEstateArchetype: isRealEstate ? reArchetype : undefined,
@@ -417,7 +424,7 @@ export const LaunchScreen: React.FC<{
       saveOneShotDraft({
         hero, offer, brandName, price, forceFresh,
         servicePhotos, serviceArchetype, reArchetype, localService, businessAddress,
-        vertical, format, strategy, ugcProChoice,
+        vertical, format, strategy, ugcProChoice, asmrFlag,
         presenterMode, gender, ageRange, ethnicity, avatarUrl,
         language, aspectRatio, resolution, voiceId,
       });
@@ -426,7 +433,7 @@ export const LaunchScreen: React.FC<{
   }, [
     dirty, hero, offer, brandName, price, forceFresh,
     servicePhotos, serviceArchetype, reArchetype, localService, businessAddress,
-    vertical, format, strategy, ugcProChoice,
+    vertical, format, strategy, ugcProChoice, asmrFlag,
     presenterMode, gender, ageRange, ethnicity, avatarUrl,
     language, aspectRatio, resolution, voiceId,
   ]);
@@ -438,7 +445,7 @@ export const LaunchScreen: React.FC<{
     setHero(''); setOffer(''); setBrandName(''); setPrice(''); setForceFresh(false);
     setServicePhotos([]); setServiceArchetype('venue'); setReArchetype('listing');
     setLocalService(false); setBusinessAddress('');
-    setVertical('product'); setFormat('ugc'); setStrategy('Testimonial'); setUgcProChoice('auto');
+    setVertical('product'); setFormat('ugc'); setStrategy('Testimonial'); setUgcProChoice('auto'); setAsmrFlag(false);
     setPresenterMode('auto'); setGender('Any'); setAgeRange(''); setEthnicity(''); setShowCastHints(false);
     setAvatarUrl('');
     setLanguage('Taglish'); setAspectRatio('9:16'); setResolution('720p');
@@ -520,7 +527,7 @@ export const LaunchScreen: React.FC<{
                   saveOneShotDraft({
                     hero, offer, brandName, price, forceFresh,
                     servicePhotos, serviceArchetype, reArchetype, localService, businessAddress,
-                    vertical, format, strategy, ugcProChoice,
+                    vertical, format, strategy, ugcProChoice, asmrFlag,
                     presenterMode, gender, ageRange, ethnicity, avatarUrl,
                     language, aspectRatio, resolution, voiceId,
                   });
@@ -883,12 +890,18 @@ export const LaunchScreen: React.FC<{
             {format === 'ugc_pro' && (
               <div className="mb-3">
                 <p className={`mb-1.5 text-zinc-500 ${T_LABEL}`}>// Sub-format</p>
-                <div className="flex gap-2">
+                <div className="grid grid-cols-3 gap-2">
                   {UGC_PRO_SUBFORMATS.map((s) => (
                     <button
                       key={s.value}
                       type="button"
-                      onClick={() => { setUgcProChoice(s.value); sfx.play('select'); }}
+                      onClick={() => {
+                        setUgcProChoice(s.value);
+                        // ASMR is Unboxing-only — leaving Unboxing drops the flag so it
+                        // never silently rides along on another sub-format.
+                        if (s.value !== 'unboxing') setAsmrFlag(false);
+                        sfx.play('select');
+                      }}
                       title={s.desc}
                       className={`flex-1 border px-3 ${CTRL_H} ${R_CTRL} ${T_VALUE} text-center leading-tight uppercase transition-all ${
                         ugcProChoice === s.value ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]' : 'border-white/10 text-zinc-300 hover:border-white/30'
@@ -898,6 +911,22 @@ export const LaunchScreen: React.FC<{
                     </button>
                   ))}
                 </div>
+                {/* ASMR toggle — Unboxing only. Audio-led register: captions + music
+                    default off downstream (the taps ARE the audio). User-flippable. */}
+                {ugcProChoice === 'unboxing' && (
+                  <button
+                    type="button"
+                    aria-pressed={asmrFlag}
+                    onClick={() => { setAsmrFlag((v) => !v); sfx.play('select'); }}
+                    title="Audio-led ASMR — whispered VO, captions & music off by default"
+                    className={`mt-2 flex w-full items-center justify-center gap-2 border px-3 ${CTRL_H} ${R_CTRL} ${T_VALUE} uppercase transition-all ${
+                      asmrFlag ? 'border-[#FFCC00] text-[#FFCC00]' : 'border-white/10 text-zinc-300 hover:border-white/30'
+                    }`}
+                  >
+                    {asmrFlag ? <Volume2 className="h-4 w-4 shrink-0" /> : <VolumeX className="h-4 w-4 shrink-0" />}
+                    ASMR {asmrFlag ? 'On' : 'Off'}
+                  </button>
+                )}
               </div>
             )}
             <button

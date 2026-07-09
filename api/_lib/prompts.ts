@@ -272,15 +272,30 @@ export const UGCPRO_CLASSIFIER_PROMPT = (product: string, description: string): 
     Product: "${product}"
     Description: "${description}"
 
-    Classify into ONE of these 2 formats based on this technical report:
+    Classify into ONE of these 5 formats:
     1. **TRYON:** Wearables — clothing, fashion sets, activewear, shoes, jewelry, bags,
        accessories, eyewear. The payoff is seeing it WORN on the body. Focus: "Watch me try this."
-    2. **TRANSFORMATION:** A visible before→after change — skincare, beauty, cleaning products,
-       home/surface care, detailing, repair. The payoff is the INSTANT hard-cut reveal of the
-       changed state. Focus: "Look at the difference."
+    2. **UNBOXING:** The packaging and opening experience is the star — premium/gift
+       packaging, subscription boxes, collectibles, tech with a satisfying unbox. The
+       payoff is the OPENING itself. Focus: "Listen to this. Watch me open it."
+    3. **DEMO:** The product has a function worth WATCHING work — gadgets, appliances,
+       tools, kitchenware, snacks/food with a taste-or-stunt payoff, anything with a
+       hidden feature or "secret mode". Focus: "Watch what this does."
+    4. **TRANSFORMATION:** A visible before→after change — skincare, beauty, cleaning
+       products, home/surface care, detailing, repair. The payoff is the INSTANT
+       hard-cut reveal of the changed state. Focus: "Look at the difference."
+    5. **TUTORIAL:** The METHOD is the content — multi-step routines, layering,
+       recipes, setup/installation, "you're doing it wrong" how-tos. The payoff is the
+       viewer learning the steps. Focus: "Here's how, step by step."
 
-    If the product is wearable, ALWAYS choose TRYON even if it also changes the look.
-    Output ONLY one word: TRYON or TRANSFORMATION.
+    Precedence rules (apply in order):
+    - Wearable → ALWAYS TRYON, even if it also changes the look or has nice packaging.
+    - A visible state-change on a surface, skin, or object → TRANSFORMATION over DEMO.
+    - Choose TUTORIAL only when the multi-step METHOD is the differentiator, not the
+      product's function alone.
+    - Choose UNBOXING only when the packaging/opening is genuinely the strongest asset;
+      a product with a working wow-function defaults to DEMO.
+    Output ONLY one word: TRYON, UNBOXING, DEMO, TRANSFORMATION, or TUTORIAL.
     `;
 
 export const ADSCRIPT_COMMON_RULES = (businessInfo: BusinessInfo, brandName: string, language: 'English' | 'Taglish'): string => `
@@ -388,7 +403,7 @@ export interface AdScriptInput {
 export const buildAdScriptPrompt = (
   input: AdScriptInput,
   temuSubType?: 'ASMR' | 'Reaction' | 'Utility',
-  ugcProSubType?: 'tryon' | 'transformation'
+  ugcProSubType?: 'tryon' | 'unboxing' | 'demo' | 'transformation' | 'tutorial'
 ): string => {
   const { businessInfo, brandName, language, offer, chosenAngleBrief } = input;
   const isTestimonial = businessInfo.scriptType === 'Testimonial';
@@ -431,9 +446,16 @@ export const buildAdScriptPrompt = (
     `;
   } else if (isUGCPro) {
     const sub = ugcProSubType ?? 'transformation';
+    const ugcStrategyLabel: Record<typeof sub, string> = {
+      tryon: 'Virtual Try-On (fashion reveal)',
+      unboxing: 'Unboxing (tactile reveal)',
+      demo: 'Demo / Addiction (watch it work)',
+      transformation: 'Transformation (Before & After)',
+      tutorial: 'Tutorial / Hack (steps 1-2-3)',
+    };
     return `
       Role: Viral UGC Creator-Scriptwriter (TikTok/Reels product content).
-      Strategy: UGC Pro — ${sub === 'tryon' ? 'Virtual Try-On (fashion reveal)' : 'Transformation (Before & After)'}.
+      Strategy: UGC Pro — ${ugcStrategyLabel[sub]}.
       Product: "${businessInfo.product}"
       Brand: "${brandName}"
 
@@ -477,6 +499,60 @@ export const buildAdScriptPrompt = (
         A CTA alone is not a verdict.
       - Do NOT reuse the hook's opening exclamation to open ANY body line. If the hook
         opens on "Grabe," / "Okay," / "Wait," then no body line may open on that word.
+      ` : sub === 'unboxing' ? `
+      **UNBOXING 4-BEAT (the packaging is the co-star; sound is the texture):**
+      0. **Hook (<=2s, 5-8 words):** Sensory invitation, package still sealed, in frame.
+         Pattern: "Okay, mic check… just listen to the taps." / "Kakarating lang nito.
+         Halika, buksan natin." (adapt to the product and audience — do NOT copy these
+         exemplars literally) PROVIDE 2 VARIATIONS — populate hook1 AND hook2.
+      1. **The Open:** The seal gives way — the line rides the SOUND, 3-8 words. Name a
+         real texture (tape rip, foam lift, magnetic click); generic awe ("wow ang
+         ganda") is BANNED in this beat.
+      2. **Tactile Showcase:** ONE close-touch beat — the foam, the wrap, the weight,
+         the finish. Anchor on the top 1-2 features from the FEATURE FILTER. This is
+         the "why premium" slot.
+      3. **Place/Wear + Soft CTA:** Set it where it lives (the desk, the shelf, the
+         wrist), then ONE soft conversational close ("sabihin mo kung gusto mo makita
+         'yong full setup"). Obey the CTA price-leak guard; in Taglish, the TAGLISH
+         ACCENT LOCK.
+      ${businessInfo.asmrFlag ? `
+      **ASMR REGISTER (audio-led — the taps ARE the content):**
+      - HALVE the line count: the hook + at most 2 whisper-register lines + the soft
+        CTA. Long stretches with NO spoken line are CORRECT — the taps, rips, and
+        clicks carry those beats. Do not fill the silence.
+      - Every line is whisper-written: short, breathy, present tense, ZERO exclamation
+        marks. Soft noticing ("ang linis ng gilid nito…"), never hype delivery.
+      - The hook MAY be a pure sound instruction ("…listen.") — 2-4 words allowed,
+        overriding the 5-8 word pattern.
+      ` : ''}
+      ` : sub === 'demo' ? `
+      **DEMO 5-BEAT (bold claim first; the payoff stunt kills the mid-video dip):**
+      0. **Hook (<=2s, 5-8 words):** A bold claim or a secret. Pattern: "Nobody uses
+         this blender's secret pro mode." / "Warning: dangerously addictive 'to."
+         (adapt to the product and audience — do NOT copy these exemplars literally)
+         PROVIDE 2 VARIATIONS — populate hook1 AND hook2.
+      1. **Demo Beat:** The product WORKING on its main job — a real action verb,
+         product in-hand. A posed introduction ("Eto ang [product]...") is BANNED.
+      2. **Escalation:** The hidden feature, the harder test, the "pero teka, may isa
+         pa" beat. Anchor on the top 1-2 features from the FEATURE FILTER.
+      3. **Payoff Stunt:** The sensory or surprise beat the viewer stays for — the
+         extreme close-up, the stress test result, the reaction. Short awe, 3-8 words.
+         HONESTY RULE: realistic, representative; never fabricate a guaranteed outcome.
+      4. **Spoken CTA (holds to the last frame):** ONE soft conversational close. Obey
+         the CTA price-leak guard; in Taglish, the TAGLISH ACCENT LOCK.
+      ` : sub === 'tutorial' ? `
+      **TUTORIAL 5-BEAT (the method IS the content; numbered steps are the retention engine):**
+      0. **Hook (<=2s, 5-8 words):** The pain or question the method solves. Pattern:
+         "Your perfume fades by noon? You're skipping one step." / "Bakit ang bilis
+         maubos ng gas mo? Ito kasi." (adapt to the product and audience — do NOT copy
+         these exemplars literally) PROVIDE 2 VARIATIONS — populate hook1 AND hook2.
+      1-3. **Steps 1-2-3 (ONE line per step, each speakable in <=3s):** Open each line
+         with the step number spoken ("Una," / "Step two —" / "Pangatlo,"), then ONE
+         concrete action with a real verb. No filler — a viewer must be able to DO the
+         step from the line alone. Anchor at least one step on the top 1-2 features
+         from the FEATURE FILTER.
+      4. **Result + Soft CTA:** The outcome in one line, then ONE soft conversational
+         close. Obey the CTA price-leak guard; in Taglish, the TAGLISH ACCENT LOCK.
       ` : `
       **TRANSFORMATION 4-BEAT (the BEFORE is the hook — NO product in beat 0):**
       0. **Hook (<=2s, 5-8 words):** The problem state, shown and named — frustrated,
@@ -1007,7 +1083,11 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
   const isServices = businessInfo.scriptType === 'Services';
   const isRealEstate = businessInfo.scriptType === 'RealEstate';
   const isUGCPro = businessInfo.scriptType === 'UGCPro';
-  const ugcSub = (businessInfo.ugcProFormat === 'tryon' || businessInfo.ugcProFormat === 'transformation') ? businessInfo.ugcProFormat : 'transformation';
+  // Any of the 5 typed UGC Pro formats selects its own storyboard arm; only an
+  // unknown/undefined value degrades to 'transformation' (the safe Before & After default).
+  const ugcSub = (businessInfo.ugcProFormat === 'tryon' || businessInfo.ugcProFormat === 'unboxing'
+    || businessInfo.ugcProFormat === 'demo' || businessInfo.ugcProFormat === 'transformation'
+    || businessInfo.ugcProFormat === 'tutorial') ? businessInfo.ugcProFormat : 'transformation';
 
   const DIRECTOR_CRITIQUE_INSTRUCTION = `
     **DIRECTOR_CRITIQUE_PROTOCOL:**
@@ -1128,6 +1208,53 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
            S4 VERDICT — closer framing on the creator, keep-it verdict + soft CTA.
               referenceImage="avatar".
            An optional 5th scene may split styling and verdict. Never exceed 5.
+        ` : ugcSub === 'unboxing' ? `
+        **STRATEGY: UGC PRO — CONTINUOUS PERFORMANCE (Unboxing)**
+        1. **ONE PERFORMER, ONE PLACE.** Same creator, same surface, every scene. No
+           metaphor scenes, no environment-only B-roll.
+        2. **HARD CUTS ONLY.** Omit \`transitionEffect\` on every scene, including Scene 1.
+        3. **BEATS (4 scenes):**
+           S1 HOOK — the sealed package on the surface, the creator's hands on it
+              (taps / mic-check framing). referenceImage="product" (or "both" if the
+              creator's face is in frame).
+           S2 THE OPEN — hands mid-open, lid or flap lifted, contents just visible.
+              referenceImage="both".
+           S3 TACTILE SHOWCASE — extreme close-up of the texture beat (foam, wrap,
+              finish, click mechanism). referenceImage="product".
+           S4 PLACE/WEAR + CTA — the product where it lives, creator in frame.
+              referenceImage="both".
+           An overhead or locked-off framing variant is allowed — state it in the
+           sceneDescription.
+        ${businessInfo.asmrFlag ? `
+        **ASMR TREATMENT:** Every scene favors EXTREME tactile close-ups and a
+        locked-off or overhead camera. Hands and textures over faces. Describe surfaces
+        and materials concretely in the imagePrompt (matte foam, glossy seal, brushed
+        metal) — texture is the subject.
+        ` : ''}
+        ` : ugcSub === 'demo' ? `
+        **STRATEGY: UGC PRO — CONTINUOUS PERFORMANCE (Demo / Addiction)**
+        1. **ONE PERFORMER, ONE PLACE.** Same creator, same location, every scene. No
+           metaphor scenes, no environment-only B-roll.
+        2. **HARD CUTS ONLY.** Omit \`transitionEffect\` on every scene, including Scene 1.
+        3. **BEATS (5 scenes — the fastest cuts of the family):**
+           S1 HOOK — creator talking to camera, product in-hand. referenceImage="both".
+           S2 DEMO — the product mid-action on its main job. referenceImage="both".
+           S3 ESCALATION — the hidden feature or harder test, in action.
+              referenceImage="both".
+           S4 PAYOFF — the stunt or sensory extreme close-up (the retention beat).
+              referenceImage="product" (or "both" if the payoff is on the creator).
+           S5 CTA — the creator, spoken close. referenceImage="avatar".
+        ` : ugcSub === 'tutorial' ? `
+        **STRATEGY: UGC PRO — CONTINUOUS PERFORMANCE (Tutorial / Hack)**
+        1. **ONE PERFORMER, ONE PLACE.** Same creator, same location, every scene. No
+           metaphor scenes, no environment-only B-roll.
+        2. **HARD CUTS ONLY.** Omit \`transitionEffect\` on every scene, including Scene 1.
+        3. **BEATS (5 scenes — ONE step per scene; the caption system numbers them
+           downstream):**
+           S1 HOOK — the pain or question, creator to camera. referenceImage="avatar".
+           S2–S4 STEPS 1-2-3 — one step per scene, the action mid-performance, product
+              visible where the step uses it. referenceImage="both".
+           S5 RESULT + CTA — the outcome shown, creator closes. referenceImage="both".
         ` : `
         **STRATEGY: UGC PRO — CONTINUOUS PERFORMANCE (Before & After)**
         1. **ONE PERFORMER, ONE PLACE.** Same creator, same location, every scene. No metaphor

@@ -73,10 +73,42 @@ describe('buildStoryboardPrompt — UGCPro branch', () => {
     expect(out).not.toContain('Virtual Try-On');
   });
 
-  it("an unimplemented value ('unboxing') degrades to Before & After, NOT the generic morph strategy", () => {
+  it("ugcProFormat 'unboxing' selects the Unboxing beats", () => {
     const out = buildStoryboardPrompt(storyboardInput(businessInfo({ ugcProFormat: 'unboxing' })));
+    expect(out).toContain('CONTINUOUS PERFORMANCE (Unboxing)');
+    expect(out).not.toContain('Before & After');
+    expect(out).not.toContain('Virtual Try-On');
+  });
+
+  it("ugcProFormat 'demo' selects the Demo / Addiction beats", () => {
+    const out = buildStoryboardPrompt(storyboardInput(businessInfo({ ugcProFormat: 'demo' })));
+    expect(out).toContain('CONTINUOUS PERFORMANCE (Demo / Addiction)');
+    expect(out).not.toContain('Before & After');
+  });
+
+  it("ugcProFormat 'tutorial' selects the Tutorial / Hack beats", () => {
+    const out = buildStoryboardPrompt(storyboardInput(businessInfo({ ugcProFormat: 'tutorial' })));
+    expect(out).toContain('CONTINUOUS PERFORMANCE (Tutorial / Hack)');
+    expect(out).not.toContain('Before & After');
+  });
+
+  it("an unknown value degrades to Before & After, NOT the generic morph strategy", () => {
+    const out = buildStoryboardPrompt(
+      storyboardInput(businessInfo({ ugcProFormat: 'bogus' as BusinessInfo['ugcProFormat'] })),
+    );
     expect(out).toContain('Before & After');
     expect(out).not.toContain('NARRATIVE RETENTION');
+  });
+
+  it('asmrFlag + unboxing appends the ASMR TREATMENT clause; without it, omitted', () => {
+    const withAsmr = buildStoryboardPrompt(
+      storyboardInput(businessInfo({ ugcProFormat: 'unboxing', asmrFlag: true })),
+    );
+    expect(withAsmr).toContain('ASMR TREATMENT');
+    const withoutAsmr = buildStoryboardPrompt(
+      storyboardInput(businessInfo({ ugcProFormat: 'unboxing' })),
+    );
+    expect(withoutAsmr).not.toContain('ASMR TREATMENT');
   });
 
   it('regression: a NON-UGCPro scriptType keeps HOOK ANCHOR RULE + the 3-consecutive ban', () => {

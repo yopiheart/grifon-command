@@ -12,7 +12,7 @@ import type { OverlayStyle, SfxBankId, CameraEffect } from '../../types.js';
 // so a Testimonial never gets the hype treatment (sincerity guard).
 
 export type PresetId = 'classic' | 'impact' | 'hype' | 'clean';
-export type ScriptStyle = 'mrbeast' | 'temu' | 'testimonial';
+export type ScriptStyle = 'mrbeast' | 'temu' | 'testimonial' | 'ugcpro';
 export type ChunkAnim = 'none' | 'pop' | 'word-pop' | 'karaoke';
 export type HookRevealStyle = 'bounce' | 'slam' | 'flip';
 export type HookLayoutStyle = 'wipe' | 'title-stack';
@@ -283,6 +283,9 @@ export const ROTATION: Record<ScriptStyle, PresetId[]> = {
   mrbeast: ['impact', 'hype'],
   temu: ['hype', 'impact'],
   testimonial: ['clean'],
+  // UGC Pro: the hype preset already IS the word-pop + gold caption grammar the
+  // P1/P2 caption bet needs (Slice 3). No dedicated preset.
+  ugcpro: ['hype'],
 };
 
 /** FNV-1a 32-bit — stable across runs/platforms (no Math.random, no Date). */

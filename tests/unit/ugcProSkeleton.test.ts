@@ -54,4 +54,61 @@ describe('buildAdScriptPrompt — UGCPro skeleton selection', () => {
     );
     expect(out).not.toContain('HOOK SEED PROTOCOL');
   });
+
+  it("ugcProSubType 'unboxing' → UNBOXING skeleton only", () => {
+    const out = buildAdScriptPrompt(inputWith(), undefined, 'unboxing');
+    expect(out).toContain('UNBOXING 4-BEAT');
+    expect(out).not.toContain('TRY-ON 4-BEAT');
+    expect(out).not.toContain('TRANSFORMATION 4-BEAT');
+    expect(out).not.toContain('DEMO 5-BEAT');
+    expect(out).not.toContain('TUTORIAL 5-BEAT');
+  });
+
+  it("ugcProSubType 'demo' → DEMO skeleton only", () => {
+    const out = buildAdScriptPrompt(inputWith(), undefined, 'demo');
+    expect(out).toContain('DEMO 5-BEAT');
+    expect(out).not.toContain('UNBOXING 4-BEAT');
+    expect(out).not.toContain('TUTORIAL 5-BEAT');
+    expect(out).not.toContain('TRANSFORMATION 4-BEAT');
+  });
+
+  it("ugcProSubType 'tutorial' → TUTORIAL skeleton only", () => {
+    const out = buildAdScriptPrompt(inputWith(), undefined, 'tutorial');
+    expect(out).toContain('TUTORIAL 5-BEAT');
+    expect(out).not.toContain('DEMO 5-BEAT');
+    expect(out).not.toContain('UNBOXING 4-BEAT');
+    expect(out).not.toContain('TRANSFORMATION 4-BEAT');
+  });
+
+  it('the 5 subtypes each surface their strategy label in the header', () => {
+    expect(buildAdScriptPrompt(inputWith(), undefined, 'tryon')).toContain('Virtual Try-On (fashion reveal)');
+    expect(buildAdScriptPrompt(inputWith(), undefined, 'unboxing')).toContain('Unboxing (tactile reveal)');
+    expect(buildAdScriptPrompt(inputWith(), undefined, 'demo')).toContain('Demo / Addiction (watch it work)');
+    expect(buildAdScriptPrompt(inputWith(), undefined, 'transformation')).toContain('Transformation (Before & After)');
+    expect(buildAdScriptPrompt(inputWith(), undefined, 'tutorial')).toContain('Tutorial / Hack (steps 1-2-3)');
+  });
+});
+
+describe('buildAdScriptPrompt — UGCPro ASMR register (unboxing only)', () => {
+  const asmrInput = (): AdScriptInput => ({
+    ...inputWith(),
+    businessInfo: { ...businessInfo(), asmrFlag: true },
+  });
+
+  it('asmrFlag + unboxing appends the ASMR REGISTER block', () => {
+    const out = buildAdScriptPrompt(asmrInput(), undefined, 'unboxing');
+    expect(out).toContain('UNBOXING 4-BEAT');
+    expect(out).toContain('ASMR REGISTER');
+  });
+
+  it('unboxing WITHOUT asmrFlag omits the ASMR REGISTER block', () => {
+    const out = buildAdScriptPrompt(inputWith(), undefined, 'unboxing');
+    expect(out).not.toContain('ASMR REGISTER');
+  });
+
+  it('asmrFlag does NOT leak ASMR REGISTER into the demo skeleton', () => {
+    const out = buildAdScriptPrompt(asmrInput(), undefined, 'demo');
+    expect(out).toContain('DEMO 5-BEAT');
+    expect(out).not.toContain('ASMR REGISTER');
+  });
 });

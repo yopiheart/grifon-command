@@ -230,6 +230,10 @@ const App: React.FC = () => {
     omniEmphasisWord?: string;
     omniTitleText?: string;
     captionsEnabled?: boolean;
+    // Wizard scriptType + ASMR flavor hop into the AI Editor: scriptType drives the
+    // deterministic UGCPro caption/music identity; asmrFlag seeds captions + music off.
+    scriptType?: BusinessInfo['scriptType'];
+    asmrFlag?: boolean;
   } | null>(null);
   const [cinematicResult, setCinematicResult] = useState<Scene[] | null>(null);
 
@@ -257,6 +261,8 @@ const App: React.FC = () => {
         omniEmphasisWord: seed.omniEmphasisWord,
         omniTitleText: seed.omniTitleText,
         captionsEnabled: seed.captionsEnabled,
+        scriptType: seed.scriptType,
+        asmrFlag: seed.asmrFlag,
       });
       setActiveModule('edit_video');
     } catch {
@@ -1407,6 +1413,7 @@ const App: React.FC = () => {
           storyboard={storyboard}
           defaultAspectRatio={aspectRatio ?? '9:16'}
           heroImageUrl={businessInfo.productImageUrls?.[0] ?? storyboard[0]?.imageUrl}
+          asmrFlag={businessInfo.asmrFlag}
           onSendToAiEditor={(batch, lockedPresetId, omniLock) => {
             // Default path — skip Signal Modulator's redundant TTS pass. The AI
             // Editor consolidates voice once (audioOverlays unused, so []).
@@ -1423,6 +1430,8 @@ const App: React.FC = () => {
               omniEmphasisWord: omniLock?.emphasisWord,
               omniTitleText: omniLock?.titleText,
               captionsEnabled: omniLock?.captionsEnabled,
+              scriptType: businessInfo.scriptType,
+              asmrFlag: businessInfo.asmrFlag,
             });
             setActiveModule('edit_video');
           }}
@@ -1459,6 +1468,8 @@ const App: React.FC = () => {
             aspectRatio: aspectRatio ?? '9:16',
             finalScript: finalScript.join(' '),
             offer: clientDetails.offer,
+            scriptType: businessInfo.scriptType,
+            asmrFlag: businessInfo.asmrFlag,
           });
           setActiveModule('edit_video');
         }}

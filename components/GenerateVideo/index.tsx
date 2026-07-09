@@ -42,6 +42,7 @@ import { getSupabase } from '../../services/supabaseClient';
 import { useSubscription } from '../../hooks/useSubscription';
 import { useQuota } from '../../hooks/useQuota';
 import { SCENE_CAP, omniStylesEligible } from '../../utils/planGate';
+import { seedCaptionsEnabled } from '../../utils/asmrSeeds';
 import { pickEmphasisWord, fetchOmniStyleStatus } from '../../services/omniStyleService';
 import { dominantHexFromImage } from '../../utils/dominantColor';
 import { listActiveJobs, clearActiveJob } from '../../services/activeJobStore';
@@ -97,6 +98,9 @@ interface GenerateVideoProps {
    * color as the default brand swatch. Falls back to the storyboard scene-1
    * image at the call site. */
   heroImageUrl?: string;
+  /** UGC Pro ASMR flavor — audio-led format seeds the captions toggle OFF (the
+   * whisper + taps carry it; subtitles fight the register). User-flippable. */
+  asmrFlag?: boolean;
 }
 
 const ACTIVE_MODELS: VideoModelType[] = ['Veo_3.1_Fast', 'Veo_3.1_Quality', 'Veo_3.1_Lite', 'Kling_3_0', 'Kling_O1'];
@@ -182,6 +186,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
   onSendToSignalModulator,
   onSendToAiEditor,
   heroImageUrl,
+  asmrFlag,
 }) => {
   const hasSeedPrompts = seedPrompts.length > 0;
   const [mode, setMode] = useState<Mode>(hasSeedPrompts ? 'pipeline' : 'one-shot');
@@ -258,7 +263,9 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
   const [emphasisWord, setEmphasisWord] = useState('');
   const [titleText, setTitleText] = useState('');
   const [chipsEdited, setChipsEdited] = useState(false);
-  const [captionsOn, setCaptionsOn] = useState(true);
+  // ASMR runs seed captions OFF (audio-led — subtitles fight the whisper register).
+  // User-flippable via the toggle; picking an Omni style still re-derives per style.
+  const [captionsOn, setCaptionsOn] = useState(seedCaptionsEnabled(undefined, asmrFlag));
   // Business gate (same shape as showAdvanced): dev-unlock opens the picker on
   // any account; otherwise Business-only. Server proxy is the real wall.
   const omniStylesUnlocked = devUnlock || omniStylesEligible(plan_id);

@@ -70,7 +70,7 @@ export interface Script {
      explicit pick or the server-side classifier's choice on the 'Auto' path. Threaded back
      onto businessInfo.ugcProFormat post-generation so the storyboard prompt always agrees
      with the script. Set only for UGCPro runs; undefined otherwise. */
-  ugcProFormatResolved?: 'tryon' | 'transformation';
+  ugcProFormatResolved?: 'tryon' | 'unboxing' | 'demo' | 'transformation' | 'tutorial';
 }
 
 export interface Avatar {
@@ -273,7 +273,7 @@ export interface FinalRenderRequest {
   /** Style-keyed background-music bed (chosen in code from EDL meta.scriptStyleDetected).
    * `bedUrl` (optional) is a generated bed from api/music/compose; when present and
    * reachable it overrides the static `style` bed, else the render falls back to it. */
-  music?: { style: 'mrbeast' | 'temu' | 'testimonial'; enabled: boolean; bedUrl?: string };
+  music?: { style: 'mrbeast' | 'temu' | 'testimonial' | 'ugcpro'; enabled: boolean; bedUrl?: string };
   /** Explicit edit-style override; absent → server rotates deterministically. */
   preset?: { id?: LockablePresetId };
   /** Offer-recap overlay held to the end of the last scene. */
@@ -289,7 +289,7 @@ export interface FinalRenderJob {
  * `videoUrls` are the ad's scene clips — the server derives the per-ad cache seed
  * from them (rotationSeed), identical to the render. */
 export interface MusicComposeRequest {
-  style: 'mrbeast' | 'temu' | 'testimonial';
+  style: 'mrbeast' | 'temu' | 'testimonial' | 'ugcpro';
   videoUrls: string[];
   lengthMs: number;
 }

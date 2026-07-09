@@ -68,7 +68,7 @@ const Body = z.object({
   aspectRatio: z.enum(['9:16', '16:9', '1:1']),
   music: z
     .object({
-      style: z.enum(['mrbeast', 'temu', 'testimonial']),
+      style: z.enum(['mrbeast', 'temu', 'testimonial', 'ugcpro']),
       enabled: z.boolean(),
       // Optional generated bed (from api/music/compose). When present + reachable
       // it overrides the static `style` bed; absent/unreachable → static fallback.
@@ -166,7 +166,7 @@ async function runRender(
   jobId: string,
   scenes: FinalRenderScene[],
   aspectRatio: '9:16' | '16:9' | '1:1',
-  music?: { style: 'mrbeast' | 'temu' | 'testimonial'; enabled: boolean; bedUrl?: string },
+  music?: { style: 'mrbeast' | 'temu' | 'testimonial' | 'ugcpro'; enabled: boolean; bedUrl?: string },
   preset?: RenderPreset,
   variantSeed?: number,
   endCard?: FinalRenderEndCard
