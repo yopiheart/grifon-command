@@ -312,14 +312,14 @@ stale Auto sub-label).
 slice list); teaching Rule 0a `ugcpro` ONLY if gemini-eval shows EDL cut-pacing wrong;
 TTS whisper register (real ASMR read); Step2 duplicate-slot-list fold; static ugcpro bed.
 
-## Paste-ready kickoff (next session)
+## Paste-ready kickoff (next session — Slice 4)
 
-> Read `CLAUDE.md`, `workflows/ugc_pro_formats_plan.md` (in full), and the
-> Competitor Format Intel section of `workflows/viral_swipe_file.md`. We are
-> executing the UGC Pro formats plan — all decisions are locked in the doc
-> (gate waived, 5 sub-formats, one UGCPro scriptType + classifier, services
-> flavors). Start with Slice 1 (TRY-ON + TRANSFORMATION + picker). Draft the
-> /goal per the Plan→Goal pipeline citing the build-gate pass message +
-> gemini-eval. Tuned edits to prompts.ts follow the draft skeletons in the plan
-> doc — show me the final prompt text before applying. Implementation via
-> code-executor.
+> Read `CLAUDE.md` and `workflows/ugc_pro_formats_plan.md` (in full — Slices 1–3
+> are SHIPPED on `feat/niche-coverage-cheap-fixes`, see the Execution Log).
+> Execute **Slice 4: services/RE flavors + regression + docs**, plus the carried
+> items in the Slice-3 log (static ugcpro music bed; Rule 0a only if eval says
+> so). Plan mode first; two-phase execution (structural via code-executor, TUNED
+> shown to me verbatim before applying); draft the /goal per the Plan→Goal
+> pipeline citing the build-gate pass message. NOTE Neil's standing call
+> 2026-07-09: NO smoke/gemini-eval per slice — all evaluation runs as ONE batch
+> after the slices land (deferred-gates lists in the Slice 2 + 3 logs).
