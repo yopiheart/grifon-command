@@ -458,8 +458,9 @@ export const buildAdScriptPrompt = (
       **TRY-ON 4-BEAT (product in-hand from second 0; the worn reveal is a HARD CUT):**
       0. **Hook (<=2s, 5-8 words):** Product in-hand or on-hanger, creator mid-decision.
          Pattern: commitment + tease — "Okay, I had to try this set. Watch this." /
-         "Grabe, kakadating lang nito. Suot ko na." PROVIDE 2 VARIATIONS — populate
-         hook1 AND hook2.
+         "Grabe, kakadating lang nito. Suot ko na." (adapt content to the product and
+         audience — do NOT copy these exemplars literally) PROVIDE 2 VARIATIONS —
+         populate hook1 AND hook2.
       1. **Worn Reveal:** The first line AFTER the hard cut to wearing it — an instant,
          genuine reaction, 3-8 words. The VISUAL carries the reveal; the line rides it.
       2. **Styling / Fit-Proof:** ONE proof beat that kills the category's #1 objection —
@@ -477,7 +478,8 @@ export const buildAdScriptPrompt = (
          PROVIDE 2 VARIATIONS — populate hook1 AND hook2.
       1. **Application:** The product enters mid-action with a COMPLETE verb construction —
          "watch this — isang swipe lang" / "dalawang spray lang ng ${brandName}". The
-         product enters WORKING, never posed.
+         product enters WORKING, never posed. If your line has no verb, REWRITE it —
+         a posed introduction ("Eto ang [product]...") is BANNED in this beat.
       2. **Instant Reveal:** The line that rides the hard-cut after-state — short awe,
          3-8 words. HONESTY RULE: realistic, representative result; never fabricate a
          guaranteed outcome.
@@ -506,13 +508,17 @@ export const buildAdScriptPrompt = (
       a guarantee), weave AT MOST ONE into the close naturally and conversationally — never
       invent one the offer doesn't state. Scarcity is OPTIONAL in this format (the UGC
       register beats hard urgency); if used, keep it spoken-casual ("first 50 lang").
+      CTA CLOSE (HARD RULE): the CTA's FINAL word must be Tagalog. If the brand
+      name or an English noun would otherwise close the sentence, append a Tagalog
+      closer — "ngayon" / "subukan mo na". Never end the CTA on English.
 
       **DIRECTOR_CRITIQUE_PROTOCOL:**
       Include a field "strategicAudit" in your JSON response.
       Act as a World-Class Creative Director.
       1. Explain why those specific 1-2 features were chosen for virality.
       2. Explain how the short 4-12 word lines and hard-cut beats hold retention in a
-         10-16s UGC demo.
+         10-16s UGC demo. Cite the 4-12 UGC range, NOT the 7-12 body rule (this format
+         overrides it).
 
       ${USER_CHOSEN_ANGLE_BLOCK}
       Format: Return valid JSON: { "hook1": [...], "hook2": [...], "body": [...], "strategicAudit": "..." }

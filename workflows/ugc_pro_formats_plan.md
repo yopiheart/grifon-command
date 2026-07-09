@@ -152,8 +152,8 @@ default (renderer), 12–18s default runtime, product/subject in frame ≤3s.
    bathroom line, Neil-gated, precedent set 2026-07-08).
 
 **Build slices (each build-gated + brand-checked + gemini-eval'd; implementation → code-executor):**
-- Slice 1: types + classifier + adscript branch (2 sub-formats first: TRY-ON +
-  TRANSFORMATION — fashion gap + services bridge) + One-Shot picker.
+- Slice 1: ✅ **SHIPPED 2026-07-09** — types + classifier + adscript branch (TRY-ON +
+  TRANSFORMATION) + One-Shot picker, wired end-to-end. See Execution Log below.
 - Slice 2: storyboard branch + hard-cut hook + product-state slots + routing.
 - Slice 3: remaining 3 sub-formats + ASMR flag + caption defaults.
 - Slice 4: services/RE flavors + regression (gemini-eval per sub-format) + docs.
@@ -170,6 +170,47 @@ Competitor Format Intel holds all 15 autopsies; gate waiver logged; P3
 hard-cut proposal ships via this build (update its status when Slice 2 lands);
 One Peak #2 noted as P1/P2/P7/P9-consistent real-ad evidence (counts NOT
 incremented — render_audit ground-truth not run; optional next session).
+
+## Execution Log
+
+### Slice 1 — SHIPPED 2026-07-09 (branch feat/niche-coverage-cheap-fixes, e93b018 + follow-up)
+
+**Built:** `UGCPro` scriptType + `ugcProFormat`/`asmrFlag` types (all 5 values typed);
+`UGCPRO_CLASSIFIER_PROMPT` (TRYON vs TRANSFORMATION only — extend in Slice 3);
+`isUGCPro` adscript branch (TRY-ON + TRANSFORMATION skeletons); One-Shot LaunchScreen
+picker (Auto / Try-On / Transformation chips) wired end-to-end through
+`ProductionInput` (both defs) → `mapReportToWizard` → `businessInfo.ugcProFormat`
+→ server (explicit pick skips classifier; Auto/unimplemented values classify);
+draft persistence for the chip choice; 9 unit tests + 2 skip-gated live regression
+fixtures (new fashion fixture "Hiraya Active" for try-on; skincare fixture reused
+for transformation).
+
+**Verified:** build-gate PASS · 545 tests · client-bundle leak-check 0 hits ·
+brand-check (adversarial critic, 2 passes) BRAND_PASS_WITH_NITS 43/50 ·
+gemini-eval (adversarial critic, 5 rounds) FINAL **GEMINI_PASS_WITH_NITS** on the
+shipping pair (round-3 TRY-ON + round-5 TRANSFORMATION). Zero banned CTA phrases
+across all 8 generated outputs; zero price leaks ever; appearance guardrail held.
+
+**Tuned additions beyond the original draft skeletons (each Neil-gated in-session):**
+SOFT CTA GUARD (banned CTA phrases + price-leak guard + offer soft-weave — Neil
+ruled the weave OPTIONAL, UGC-native + CTA CLOSE HARD RULE: final word Tagalog);
+exemplar anti-copy caveat on TRY-ON beat 0; UGC-adapted DIRECTOR_CRITIQUE (4-12
+range); beat-1 verb reinforcement (posed "Eto ang [product]" ban).
+
+**Carried into Slice 2 (from the eval loop — read before starting):**
+1. **RELIABILITY (the big one):** TRANSFORMATION beat 1 (Application verb) failed
+   4/4 prompt formulations and only passed on a pure re-roll (roll 5/5). Critic's
+   standing recommendation: deterministic post-parse verb check on the beat-1 line
+   (`capHookLine` pattern, prompts.ts ~:708) — Neil-gated, decide in Slice 2.
+2. TRY-ON systematic nits, one-line TUNED fixes next pass: beat-3 keep-it verdict
+   sometimes dropped; "Grabe" hook-echo opened body line 1 in 3/3 rolls (add "do
+   not reuse the hook's opening exclamation in any body line").
+3. Optional guard line (critic round-4): "if the CTA uses a borrowed verb, open on
+   'Tara,' — never open the CTA on the English verb."
+4. Brand nit: "TRANSFORMATION" chip renders lopsided at 375px (no overflow —
+   cosmetic); consider a shorter label. Optional: smoke-tester click-through
+   confirming `ugcProFormat` in the request payload.
+5. Step2BusinessInfo wizard picker card (plan item 6) deferred out of Slice 1.
 
 ## Paste-ready kickoff (next session)
 
