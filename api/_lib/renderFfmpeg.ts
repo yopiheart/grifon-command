@@ -438,6 +438,19 @@ export interface PreparedSfx {
 }
 
 /**
+ * Pure scale→pad→setsar→sharpen prefix for a scene's video chain. Lanczos scaling
+ * + a light unsharp pass lift the 720p source toward a crisp 1080-canvas render.
+ * The unsharp runs BEFORE any camera filter / drawtext so burned-in text is never
+ * sharpened. Kept side-effect-free (no `[0:v]`/fps prefix) so it's unit-testable.
+ */
+export function sceneNormalizeFilter(w: number, h: number): string {
+  return (
+    `scale=${w}:${h}:force_original_aspect_ratio=decrease:flags=lanczos,` +
+    `pad=${w}:${h}:(ow-iw)/2:(oh-ih)/2,setsar=1,unsharp=5:5:0.4:5:5:0.2`
+  );
+}
+
+/**
  * Trim + mux + normalize one scene to `outPath`, burning in overlays (drawtext)
  * and SFX (adelay+amix) on top of the verified trim. With a voice MP3 the video
  * is trimmed to the voice's speech-end; audio-less scenes get a silent track so
@@ -479,9 +492,7 @@ function buildScene(
   const stmts: string[] = [];
   let split = 0;
 
-  let vChain =
-    `[0:v]fps=${FPS},scale=${w}:${h}:force_original_aspect_ratio=decrease,` +
-    `pad=${w}:${h}:(ow-iw)/2:(oh-ih)/2,setsar=1`;
+  let vChain = `[0:v]fps=${FPS},${sceneNormalizeFilter(w, h)}`;
   if (cameraFilter) vChain += `,${cameraFilter}`;
   let k = 0;
   for (const layer of layers) {

@@ -216,7 +216,6 @@ export const LaunchScreen: React.FC<{
   // --- Settings -----------------------------------------------------------
   const [language, setLanguage] = useState<ProductionInput['language']>(restored?.language ?? 'Taglish');
   const [aspectRatio, setAspectRatio] = useState<ProductionInput['aspectRatio']>(restored?.aspectRatio ?? '9:16');
-  const [resolution, setResolution] = useState<NonNullable<ProductionInput['resolution']>>(restored?.resolution ?? '720p');
 
   // --- Voice picker (Filipino library first, then clones; stock fallback) --
   const [voiceId, setVoiceId] = useState<string>(restored?.voiceId ?? STOCK_FALLBACK[0]?.id ?? '');
@@ -434,7 +433,6 @@ export const LaunchScreen: React.FC<{
       voiceId,
       language,
       aspectRatio,
-      resolution,
       scriptType,
       // The chosen vertical's businessType (note real_estate → 'realestate') — WINS over the
       // scriptType-derived fallback so a UGC Pro pick on service/RE routes to the right style.
@@ -471,7 +469,7 @@ export const LaunchScreen: React.FC<{
         servicePhotos, serviceArchetype, reArchetype, localService, businessAddress,
         vertical, recipe, format, strategy, ugcProChoice, asmrFlag,
         presenterMode, gender, ageRange, ethnicity, avatarUrl,
-        language, aspectRatio, resolution, voiceId,
+        language, aspectRatio, voiceId,
       });
     }, 700);
     return () => clearTimeout(t);
@@ -480,7 +478,7 @@ export const LaunchScreen: React.FC<{
     servicePhotos, serviceArchetype, reArchetype, localService, businessAddress,
     vertical, recipe, format, strategy, ugcProChoice, asmrFlag,
     presenterMode, gender, ageRange, ethnicity, avatarUrl,
-    language, aspectRatio, resolution, voiceId,
+    language, aspectRatio, voiceId,
   ]);
 
   // Reset — wipe the whole brief back to defaults + drop the saved draft. Guarded
@@ -493,7 +491,7 @@ export const LaunchScreen: React.FC<{
     setVertical('product'); setRecipe('real_talk');
     setPresenterMode('auto'); setGender('Any'); setAgeRange(''); setEthnicity(''); setShowCastHints(false);
     setAvatarUrl('');
-    setLanguage('Taglish'); setAspectRatio('9:16'); setResolution('720p');
+    setLanguage('Taglish'); setAspectRatio('9:16');
     setVoiceId(voiceOpts[0]?.id ?? STOCK_FALLBACK[0]?.id ?? '');
     clearOneShotDraft();
     setConfirmReset(false);
@@ -515,22 +513,6 @@ export const LaunchScreen: React.FC<{
       <div className="space-y-4">
         <SettingRow label="Aspect" icon={Gauge}>
           <Segmented value={aspectRatio} onChange={(v) => { setAspectRatio(v as ProductionInput['aspectRatio']); sfx.play('select'); }} opts={['9:16', '1:1', '16:9']} />
-        </SettingRow>
-
-        <SettingRow label="Video quality" icon={Gauge}>
-          <div className="flex gap-2">
-            <SegBtn active={resolution === '720p'} onClick={() => { setResolution('720p'); sfx.play('select'); }}>720p</SegBtn>
-            <button
-              type="button"
-              disabled
-              title="1080p unlocks on the Business plan"
-              className={`relative flex-1 cursor-not-allowed border border-white/5 px-2 text-zinc-600 ${CTRL_H} ${R_CTRL} ${T_VALUE} uppercase`}
-            >
-              1080p
-              <BusinessBadge />
-            </button>
-          </div>
-          <p className="mt-1 text-[10px] text-zinc-500">Resolution of the final rendered video.</p>
         </SettingRow>
 
         <SettingRow label="Language" icon={Languages}>
@@ -574,7 +556,7 @@ export const LaunchScreen: React.FC<{
                     servicePhotos, serviceArchetype, reArchetype, localService, businessAddress,
                     vertical, recipe, format, strategy, ugcProChoice, asmrFlag,
                     presenterMode, gender, ageRange, ethnicity, avatarUrl,
-                    language, aspectRatio, resolution, voiceId,
+                    language, aspectRatio, voiceId,
                   });
                   onCloneVoice();
                 }}
@@ -1387,12 +1369,6 @@ const ModeTab: React.FC<{ active: boolean; onClick: () => void; icon: typeof Wan
     <Icon className="h-3.5 w-3.5 shrink-0" />
     {children}
   </button>
-);
-
-const BusinessBadge: React.FC = () => (
-  <span className="absolute -right-1 -top-1.5 inline-flex items-center gap-0.5 rounded-full border border-[#FFCC00]/40 bg-zinc-950 px-1 py-px text-[9px] font-mono uppercase tracking-wide text-[#FFCC00]">
-    <Lock className="h-2 w-2" /> Biz
-  </span>
 );
 
 const SoonBadge: React.FC = () => (

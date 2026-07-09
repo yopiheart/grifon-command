@@ -37,8 +37,6 @@ export interface ProductionInput {
   voiceId: string;
   language: 'English' | 'Taglish';
   aspectRatio: '9:16' | '16:9' | '1:1';
-  /** Render resolution. 720p is the only unlocked tier today; 1080p is Business-gated (UI shows LOCKED). */
-  resolution?: '720p' | '1080p';
   /** Script style — derived from the Format × Strategy axes and the chosen vertical. */
   scriptType: NonNullable<BusinessInfo['scriptType']>;
   /** The chosen vertical's businessType, emitted straight from LaunchScreen's `vertical`

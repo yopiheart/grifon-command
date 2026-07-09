@@ -120,9 +120,10 @@ export interface ProductionInput {
   voiceId: string;
   language: 'English' | 'Taglish';
   aspectRatio: '9:16' | '16:9' | '1:1';
-  /** Render resolution. 720p is the only unlocked tier today; 1080p is gated to
-   * Business (UI shows it LOCKED). Defaults to '720p' when absent so older runs
-   * and the current intake stay valid. Drives engine + duration selection. */
+  /** Render resolution. The intake no longer sends this — the picker was removed and
+   * One-Shot is always '720p' now (quality comes from the final-render lanczos+unsharp
+   * upscale). Retained only for old-checkpoint resume back-compat; defaults to '720p'
+   * when absent, so it's effectively always '720p'. Drives engine + duration selection. */
   resolution?: '720p' | '1080p';
   /** Script strategy — auto-detected default, override in the Customize drawer. */
   scriptType: NonNullable<BusinessInfo['scriptType']>;

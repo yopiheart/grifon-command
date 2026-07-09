@@ -4,6 +4,7 @@ import {
   clampWindow, clampAnchor, escFilterPath,
   safeZone, fitText, wrapTwoLines, stripUnrenderable, evenSplit, chunkCaption,
   planScene, planEndCardLayers, buildTextFilter, buildBoxFilter, WIPE_SLICES, snapSfxAnchor, pickSceneSfx, voiceChunkWindows,
+  sceneNormalizeFilter,
 } from '../../api/_lib/renderFfmpeg.js';
 import type { SfxCandidate } from '../../api/_lib/renderFfmpeg.js';
 import type { FinalRenderScene } from '../../types.js';
@@ -103,6 +104,18 @@ describe('dimsFor', () => {
 
   it('defaults to 9:16 for an unknown ratio', () => {
     expect(dimsFor('weird')).toEqual([1080, 1920]);
+  });
+});
+
+describe('sceneNormalizeFilter (quality upscale prefix)', () => {
+  it('scales with lanczos and adds the light unsharp pass', () => {
+    const f = sceneNormalizeFilter(1080, 1920);
+    expect(f).toContain('flags=lanczos');
+    expect(f).toContain('unsharp=5:5:0.4:5:5:0.2');
+  });
+  it('sharpens AFTER setsar (never before pad/normalize)', () => {
+    const f = sceneNormalizeFilter(1080, 1920);
+    expect(f.indexOf('unsharp=5:5:0.4:5:5:0.2')).toBeGreaterThan(f.indexOf('setsar=1'));
   });
 });
 

@@ -52,7 +52,6 @@ export interface OneShotDraft {
   avatarUrl: string;
   language: ProductionInput['language'];
   aspectRatio: ProductionInput['aspectRatio'];
-  resolution: NonNullable<ProductionInput['resolution']>;
   voiceId: string;
 }
 

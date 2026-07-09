@@ -199,7 +199,6 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
         voiceId: input.voiceId,
         language: input.language,
         aspectRatio: input.aspectRatio,
-        resolution: input.resolution,
         scriptType: input.scriptType,
         servicePhotos: input.servicePhotos,
         serviceArchetype: input.serviceArchetype,
