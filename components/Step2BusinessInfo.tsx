@@ -19,7 +19,17 @@ import {
   buildServiceDescription, PRODUCT_EXAMPLE,
   type ServiceArchetype, type RealEstateArchetype, type ServiceSlot,
 } from "./guidedPhotoSlots";
+import { scriptTypeForBusinessType } from './step2ScriptType';
 
+
+// Which UGC Pro sub-formats each businessType exposes in Advanced Mode (parity with the
+// One-Shot LaunchScreen gating). `undefined` = the 'Auto' chip. product → all 5 + Auto;
+// service → Auto + Before & After + Tutorial; real_estate → Tutorial only (no Auto).
+const UGCPRO_SUBFORMATS_BY_BT: Record<'product' | 'service' | 'realestate', (string | undefined)[]> = {
+  product: [undefined, 'tryon', 'transformation', 'unboxing', 'demo', 'tutorial'],
+  service: [undefined, 'transformation', 'tutorial'],
+  realestate: ['tutorial'],
+};
 
 interface Step2Props {
   data: BusinessInfo;
@@ -51,7 +61,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleScriptTypeSelect = (type: 'MrBeast' | 'Testimonial' | 'Temu' | 'Custom' | 'Services' | 'RealEstate') => {
+  const handleScriptTypeSelect = (type: 'MrBeast' | 'Testimonial' | 'Temu' | 'Custom' | 'Services' | 'RealEstate' | 'UGCPro') => {
     setFormData(prev => ({ ...prev, scriptType: type }));
   };
 
@@ -107,18 +117,19 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
   }, [formData.scriptType, formData.realEstateArchetype, formData.product, formData.productImageDescription, formData.features]);
 
   const selectBusinessType = (bt: 'product' | 'service' | 'realestate') => {
-    setFormData(prev => {
-      const productOk: string[] = ['MrBeast', 'Testimonial', 'Custom'];
-      const serviceOk: string[] = ['Services', 'Custom'];
-      const realEstateOk: string[] = ['RealEstate', 'Custom'];
-      let scriptType = prev.scriptType;
-      // Keep a valid selection for the chosen group (preserve Custom across all).
-      if (bt === 'service' && !serviceOk.includes(scriptType ?? '')) scriptType = 'Services';
-      if (bt === 'realestate' && !realEstateOk.includes(scriptType ?? '')) scriptType = 'RealEstate';
-      if (bt === 'product' && !productOk.includes(scriptType ?? '')) scriptType = 'MrBeast';
-      return { ...prev, businessType: bt, scriptType };
-    });
+    setFormData(prev => ({ ...prev, businessType: bt, scriptType: scriptTypeForBusinessType(bt, prev.scriptType) }));
   };
+
+  // Keep the UGC Pro sub-format valid for the current businessType. Real-estate exposes exactly
+  // one legal chip (Tutorial), so a stale/Auto pick snaps to it (force-selected, no Auto). When
+  // Auto is legal (product/service) an out-of-vertical pick snaps back to Auto. UGC-Pro only.
+  useEffect(() => {
+    if (formData.scriptType !== 'UGCPro') return;
+    const allowed = UGCPRO_SUBFORMATS_BY_BT[businessType];
+    if (allowed.includes(formData.ugcProFormat)) return;
+    const next = allowed.includes(undefined) ? undefined : (allowed[0] as BusinessInfo['ugcProFormat']);
+    setFormData(prev => ({ ...prev, ugcProFormat: next, asmrFlag: next === 'unboxing' ? prev.asmrFlag : undefined }));
+  }, [formData.scriptType, businessType, formData.ugcProFormat]);
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, type: 'product' | 'logo' | 'script') => {
     if (!e.target.files || e.target.files.length === 0) return;
@@ -329,6 +340,22 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
         </div>
         )}
 
+        {businessType === 'product' && (
+        <div
+            onClick={() => handleScriptTypeSelect('UGCPro')}
+            className={`p-6 rounded-xl border cursor-pointer transition-all hover:translate-y-[-2px] ${formData.scriptType === 'UGCPro' ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
+        >
+            <div className="flex justify-between items-center mb-2">
+                <div className="flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-[#FFCC00]"/>
+                    <h4 className="font-bold text-white uppercase font-mono text-xs">UGC Pro</h4>
+                </div>
+                {formData.scriptType === 'UGCPro' && <Check className="w-4 h-4 text-[#FFCC00]" />}
+            </div>
+            <p className="text-[10px] text-zinc-500 font-mono">Try-On, Unboxing, Demo, B&amp;A, Tutorial.</p>
+        </div>
+        )}
+
         {businessType === 'service' && (
         <div
             onClick={() => handleScriptTypeSelect('Services')}
@@ -345,6 +372,22 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
         </div>
         )}
 
+        {businessType === 'service' && (
+        <div
+            onClick={() => handleScriptTypeSelect('UGCPro')}
+            className={`p-6 rounded-xl border cursor-pointer transition-all hover:translate-y-[-2px] ${formData.scriptType === 'UGCPro' ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
+        >
+            <div className="flex justify-between items-center mb-2">
+                <div className="flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-[#FFCC00]"/>
+                    <h4 className="font-bold text-white uppercase font-mono text-xs">UGC Pro</h4>
+                </div>
+                {formData.scriptType === 'UGCPro' && <Check className="w-4 h-4 text-[#FFCC00]" />}
+            </div>
+            <p className="text-[10px] text-zinc-500 font-mono">Before &amp; After or Tutorial. Book, not buy.</p>
+        </div>
+        )}
+
         {businessType === 'realestate' && (
         <div
             onClick={() => handleScriptTypeSelect('RealEstate')}
@@ -358,6 +401,22 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                 {formData.scriptType === 'RealEstate' && <Check className="w-4 h-4 text-[#FFCC00]" />}
             </div>
             <p className="text-[10px] text-zinc-500 font-mono">Walkthrough, Location, Highlights, Inquire.</p>
+        </div>
+        )}
+
+        {businessType === 'realestate' && (
+        <div
+            onClick={() => handleScriptTypeSelect('UGCPro')}
+            className={`p-6 rounded-xl border cursor-pointer transition-all hover:translate-y-[-2px] ${formData.scriptType === 'UGCPro' ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
+        >
+            <div className="flex justify-between items-center mb-2">
+                <div className="flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-[#FFCC00]"/>
+                    <h4 className="font-bold text-white uppercase font-mono text-xs">UGC Pro</h4>
+                </div>
+                {formData.scriptType === 'UGCPro' && <Check className="w-4 h-4 text-[#FFCC00]" />}
+            </div>
+            <p className="text-[10px] text-zinc-500 font-mono">Agent authority tutorial. Inquire.</p>
         </div>
         )}
 
@@ -472,7 +531,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                       { value: 'unboxing', label: 'Unboxing', sub: 'Packaging & tactile reveal' },
                       { value: 'demo', label: 'Demo', sub: 'Show it working — payoff stunt' },
                       { value: 'tutorial', label: 'Tutorial', sub: 'Steps 1-2-3 how-to' },
-                  ] as const).map((s) => {
+                  ] as const).filter((s) => UGCPRO_SUBFORMATS_BY_BT[businessType].includes(s.value)).map((s) => {
                       const active = (formData.ugcProFormat ?? undefined) === s.value;
                       return (
                           <button

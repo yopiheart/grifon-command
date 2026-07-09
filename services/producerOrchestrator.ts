@@ -126,6 +126,10 @@ export interface ProductionInput {
   resolution?: '720p' | '1080p';
   /** Script strategy — auto-detected default, override in the Customize drawer. */
   scriptType: NonNullable<BusinessInfo['scriptType']>;
+  /** The chosen vertical's businessType, emitted straight from LaunchScreen's `vertical`
+   * state. When present it WINS over the scriptType-derived fallback in businessTypeFor,
+   * so a UGC Pro pick on a service/real-estate vertical routes to the right style. */
+  businessType?: 'product' | 'service' | 'realestate';
   /** UGC Pro sub-format when the user picked one explicitly (Try-On / Unboxing / Demo /
    * Transformation / Tutorial). Undefined on the 'Auto' choice so the server classifies the
    * sub-format from the brief. */

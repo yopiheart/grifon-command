@@ -18,6 +18,7 @@ import { analyzeImageQuality } from '../../utils/imageQuality';
 import { getCachedResearchEntry } from '../../services/researchCacheStore';
 import { researchCacheKey } from '../../services/producerOrchestrator';
 import type { ProductionInput } from '../../services/oneShotIntake';
+import { deriveScriptType, deriveBusinessType } from './launchDerivation';
 import type { BusinessInfo } from '../../types';
 import {
   ARCHETYPE_META, ARCHETYPE_ORDER, ARCHETYPE_UPLOAD_SLOTS, inferServiceArchetype,
@@ -92,6 +93,26 @@ const UGC_PRO_SUBFORMATS: { value: UgcProChoice; label: string; desc: string }[]
   { value: 'demo', label: 'Demo', desc: 'Show it working — payoff stunt' },
   { value: 'tutorial', label: 'Tutorial', desc: 'Steps 1-2-3 how-to' },
 ];
+
+// Which Format options each vertical exposes. product → all four; service / real_estate →
+// UGC + UGC Pro only ('ugc' stays first so it remains today's default → no existing flow
+// changes); app stays fully locked (no format picker). A ≤1-entry list renders the old
+// locked "Auto" presentation; ≥2 gets a real, enabled picker.
+const ALLOWED_FORMATS: Record<string, Format[]> = {
+  product: ['ugc', 'product_ugc', 'ugc_pro', 'commercial'],
+  service: ['ugc', 'ugc_pro'],
+  real_estate: ['ugc', 'ugc_pro'],
+  app: [],
+};
+
+// Which UGC Pro sub-formats each vertical exposes. product keeps all 5 + Auto; service is
+// Before & After (transformation) + Tutorial + Auto; real_estate is Tutorial ONLY (forced,
+// no Auto). Try-On / Unboxing / Demo stay product-only.
+const SUBFORMATS_BY_VERTICAL: Record<string, UgcProChoice[]> = {
+  product: ['auto', 'tryon', 'transformation', 'unboxing', 'demo', 'tutorial'],
+  service: ['auto', 'transformation', 'tutorial'],
+  real_estate: ['tutorial'],
+};
 
 const VERTICALS: { value: string; label: string; desc: string; Icon: typeof Package; locked?: boolean }[] = [
   { value: 'product', label: 'Product', desc: 'Gadgets, fashion, food, beauty', Icon: Package },
@@ -266,18 +287,21 @@ export const LaunchScreen: React.FC<{
   const [viewImage, setViewImage] = useState<string | null>(null);
   const [confirmReset, setConfirmReset] = useState(false); // two-tap guard on Reset
 
-  // Vertical takes precedence (Services/RealEstate are their own styles); within
-  // Product, Format × Strategy picks the formula. All map onto the scriptType enum.
-  const scriptType: NonNullable<ProductionInput['scriptType']> =
-    vertical === 'service' ? 'Services'
-      : vertical === 'real_estate' ? 'RealEstate'
-        : format === 'product_ugc' ? 'Temu'
-          : format === 'ugc_pro' ? 'UGCPro'
-            : strategy;
+  // UGC Pro is a cross-vertical FORMAT, checked BEFORE the vertical mapping (service/real-estate
+  // can now pick it). Pure derivation lives in launchDerivation.ts so it's unit-testable.
+  const scriptType = deriveScriptType(vertical, format, strategy);
 
+  // Per-vertical Format axis. product → all four; service/real_estate → UGC + UGC Pro
+  // (default stays 'ugc' so no existing flow changes); app → locked "Auto".
+  const allowedFormats = ALLOWED_FORMATS[vertical] ?? ['ugc'];
+  const visibleFormats = FORMATS.filter((f) => allowedFormats.includes(f.value));
+  // UGC Pro sub-format chips, filtered per vertical (product → all 5 + Auto; service → Auto +
+  // Before & After + Tutorial; real_estate → Tutorial only, no Auto).
+  const allowedSubformats = SUBFORMATS_BY_VERTICAL[vertical] ?? SUBFORMATS_BY_VERTICAL.product;
+  const visibleSubformats = UGC_PRO_SUBFORMATS.filter((s) => allowedSubformats.includes(s.value));
   const formatLabel = FORMATS.find((f) => f.value === format)?.label ?? 'UGC';
   const activeVertical = VERTICALS.find((v) => v.value === vertical) ?? VERTICALS[0];
-  const formatLocked = vertical !== 'product'; // Service/RealEstate drive their own formula
+  const formatLocked = allowedFormats.length <= 1; // app keeps the old locked/"Auto" UI
 
   // Service/RealEstate use the guided per-slot real-photo upload ("Assets");
   // Product uses a single product-in-hand photo. (One-Shot collects the SAME
@@ -304,6 +328,16 @@ export const LaunchScreen: React.FC<{
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [vertical]);
 
+  // Keep the UGC Pro sub-format valid for the current vertical. Real-estate exposes exactly
+  // one legal sub-format (tutorial), so a stale/Auto pick snaps to the first allowed chip
+  // (force-selecting tutorial). Only touches UGC Pro; valid picks are left as-is (no mount
+  // clobber of a restored, still-valid draft).
+  useEffect(() => {
+    if (format !== 'ugc_pro') return;
+    const allowed = SUBFORMATS_BY_VERTICAL[vertical] ?? SUBFORMATS_BY_VERTICAL.product;
+    if (!allowed.includes(ugcProChoice)) setUgcProChoice(allowed[0]);
+  }, [vertical, format, ugcProChoice]);
+
   // Guided slot upload: the slot dropped into IS the tag. Describe is best-effort
   // (a 401/quota must not block the upload — research re-derives context anyway).
   const uploadSlot = async (file: File, slot: ServiceSlot) => {
@@ -328,6 +362,17 @@ export const LaunchScreen: React.FC<{
   const removeSlotPhoto = (slot: ServiceSlot) => {
     setServicePhotos((prev) => prev.filter((p) => p.slot !== slot));
     clearQuality(slot);
+  };
+
+  // Switching vertical clamps the Format axis to what the new vertical allows and resets the
+  // UGC Pro sub-format + ASMR flag (mirrors the ASMR reset-on-switch) so a stale pick from a
+  // different vertical never leaks through. Fires only on an actual user switch (not mount),
+  // so a restored draft is untouched.
+  const chooseVertical = (value: string) => {
+    setVertical(value);
+    setUgcProChoice('auto');
+    setAsmrFlag(false);
+    setFormat((f) => ((ALLOWED_FORMATS[value] ?? ['ugc']).includes(f) ? f : 'ugc'));
   };
 
   // Seedance (Commercial) can't speak a native Filipino accent → Commercial is
@@ -394,6 +439,9 @@ export const LaunchScreen: React.FC<{
       aspectRatio,
       resolution,
       scriptType,
+      // The chosen vertical's businessType (note real_estate → 'realestate') — WINS over the
+      // scriptType-derived fallback so a UGC Pro pick on service/RE routes to the right style.
+      businessType: deriveBusinessType(vertical),
       // Explicit UGC Pro sub-format override; 'auto' (or any non-UGC-Pro format) leaves it
       // undefined so the server classifies the sub-format from the brief.
       ugcProFormat: format === 'ugc_pro' && ugcProChoice !== 'auto' ? ugcProChoice : undefined,
@@ -688,7 +736,7 @@ export const LaunchScreen: React.FC<{
                       key={value}
                       type="button"
                       disabled={locked}
-                      onClick={() => { if (!locked) { setVertical(value); setMenu(null); } }}
+                      onClick={() => { if (!locked) { chooseVertical(value); setMenu(null); } }}
                       className={`relative flex w-full items-center gap-2 border px-3 py-2 ${R_CTRL} ${T_CTRL} transition-all ${
                         locked
                           ? 'cursor-not-allowed border-white/5 text-zinc-600'
@@ -850,10 +898,10 @@ export const LaunchScreen: React.FC<{
           {/* Mobile: horizontal swipe carousel (stays one screen tall, scales to many
               formats) · Desktop: 3-up grid. */}
           {isMobile ? (
-            <FormatCarousel formats={FORMATS} activeValue={format} onChoose={(v) => { chooseFormat(v); sfx.play('select'); }} />
+            <FormatCarousel formats={visibleFormats} activeValue={format} onChoose={(v) => { chooseFormat(v); sfx.play('select'); }} />
           ) : (
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-              {FORMATS.map((f) => (
+              {visibleFormats.map((f) => (
                 <FormatCard
                   key={f.value}
                   f={f}
@@ -891,7 +939,7 @@ export const LaunchScreen: React.FC<{
               <div className="mb-3">
                 <p className={`mb-1.5 text-zinc-500 ${T_LABEL}`}>// Sub-format</p>
                 <div className="grid grid-cols-3 gap-2">
-                  {UGC_PRO_SUBFORMATS.map((s) => (
+                  {visibleSubformats.map((s) => (
                     <button
                       key={s.value}
                       type="button"

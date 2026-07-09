@@ -41,6 +41,10 @@ export interface ProductionInput {
   resolution?: '720p' | '1080p';
   /** Script style — derived from the Format × Strategy axes and the chosen vertical. */
   scriptType: NonNullable<BusinessInfo['scriptType']>;
+  /** The chosen vertical's businessType, emitted straight from LaunchScreen's `vertical`
+   * state. When present it WINS over the scriptType-derived fallback, so a UGC Pro pick on
+   * a service/real-estate vertical routes to the right style instead of always 'product'. */
+  businessType?: 'product' | 'service' | 'realestate';
   /** UGC Pro sub-format when the user picked one explicitly (Try-On / Unboxing / Demo /
    * Transformation / Tutorial). Undefined on the 'Auto' choice so the server classifies the
    * sub-format from the brief. */
@@ -63,10 +67,13 @@ export interface ProductionInput {
   forceFreshResearch?: boolean;
 }
 
-/** scriptType → the Step 2 businessType gate, so Services/RealEstate verticals route to the right style. */
-function businessTypeFor(scriptType: ProductionInput['scriptType']): NonNullable<BusinessInfo['businessType']> {
-  if (scriptType === 'Services') return 'service';
-  if (scriptType === 'RealEstate') return 'realestate';
+/** The vertical's businessType gate, so Services/RealEstate verticals route to the right style.
+ * An explicit `input.businessType` (emitted by LaunchScreen's vertical) WINS; otherwise fall
+ * back to today's scriptType derivation (Services/RealEstate), defaulting to 'product'. */
+function businessTypeFor(input: ProductionInput): NonNullable<BusinessInfo['businessType']> {
+  if (input.businessType) return input.businessType;   // vertical wins when supplied
+  if (input.scriptType === 'Services') return 'service';
+  if (input.scriptType === 'RealEstate') return 'realestate';
   return 'product';
 }
 
@@ -105,7 +112,7 @@ export function mapReportToWizard(
       scriptType: input.scriptType,
       ugcProFormat: input.ugcProFormat,
       asmrFlag: input.asmrFlag,
-      businessType: businessTypeFor(input.scriptType),
+      businessType: businessTypeFor(input),
       listingPrice: input.scriptType === 'RealEstate' ? input.price : undefined,
     },
   };

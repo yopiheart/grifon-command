@@ -103,7 +103,30 @@ export function findAsset(rel: string): string | null {
 }
 
 const sfxPath = (id: string) => findAsset(join('sfx', `${id}.mp3`));
-const musicPath = (style: string) => findAsset(join('music', `${style}.mp3`));
+
+// Static-bed aliases: a style with no own `<style>.mp3` borrows a sibling bed so its render
+// never ships silent. A real `<style>.mp3` dropped into assets/music/ later automatically
+// wins (the direct hit is tried first) with no code change. Data-driven — extend the map,
+// not a special-case if-chain. Today: `ugcpro` has no bed, so it borrows `testimonial.mp3`.
+const MUSIC_BED_ALIAS: Record<string, string> = { ugcpro: 'testimonial' };
+
+/** Resolve the static music bed for a style, honoring a fallback alias when the style has no
+ * own `<style>.mp3`. `resolve` is injected so this is pure/testable without touching the FS. */
+export function resolveMusicBed(style: string, resolve: (rel: string) => string | null): string | null {
+  const direct = resolve(join('music', `${style}.mp3`));
+  if (direct) return direct;
+  const alias = MUSIC_BED_ALIAS[style];
+  if (alias) {
+    const fallback = resolve(join('music', `${alias}.mp3`));
+    if (fallback) {
+      console.log(`[renderFfmpeg] music bed style=${style} → alias '${alias}.mp3' (no ${style}.mp3 present)`);
+      return fallback;
+    }
+  }
+  return null;
+}
+
+const musicPath = (style: string) => resolveMusicBed(style, findAsset);
 const fontPath = () => findAsset(join('fonts', 'Inter-Black.ttf'));
 
 /** Escape a filesystem path for use inside an ffmpeg filtergraph option value
