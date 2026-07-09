@@ -138,6 +138,9 @@ export interface ProductionInput {
   /** UGC Pro: audio-led ASMR flavor (whispered register, minimal VO, music off). Off by
    * default; mapReportToWizard copies it onto businessInfo.asmrFlag. */
   asmrFlag?: boolean;
+  /** Audio identity. Absent/'voiceover' = today's TTS pipeline. 'sfx_only' = NO voiceover:
+   * music leads, SFX + burned overlay text carry the message (the Pure Hype recipe). */
+  audioMode?: 'voiceover' | 'sfx_only';
   stabilityMode?: StabilityMode;
   /** Phase 2: guided per-slot real photos for Service/RealEstate verticals (the slot IS the tag).
    * Feeds the per-scene real-photo router. Empty/absent for Product (which uses heroImageBase64). */
@@ -329,7 +332,13 @@ export function createProductionRun(
     status: 'running',
     mode: opts.mode ?? 'oneshot',
     input,
-    stages: STAGE_ORDER.map((s) => ({ id: s.id, label: s.label, status: (done.has(s.id) ? 'done' : 'pending') as StageStatus, attempts: 0 })),
+    // No-TTS runs (Pure Hype) design the sound instead of recording a voiceover — relabel that stage.
+    stages: STAGE_ORDER.map((s) => ({
+      id: s.id,
+      label: s.id === 'voices' && input.audioMode === 'sfx_only' ? 'Designing the sound' : s.label,
+      status: (done.has(s.id) ? 'done' : 'pending') as StageStatus,
+      attempts: 0,
+    })),
     scenes: opts.prefill?.storyboard ? opts.prefill.storyboard.map((_, i) => ({ sceneIdx: i, status: 'pending' as SceneStatus })) : [],
     ...opts.prefill,
   };
@@ -369,6 +378,9 @@ export function deriveAngleBrief(report: MarketResearchReport): string {
 export function assembleFinalScript(script: Script): string[] {
   return [...(script.hook1 ?? []), ...(script.body ?? [])].filter((l) => l && l.trim());
 }
+
+/** Clamp n into [lo, hi]. Module-local so the no-VO fast-cut pacing math stays inline. */
+const clamp = (n: number, lo: number, hi: number): number => Math.min(hi, Math.max(lo, n));
 
 /** Per-model, per-resolution valid clip durations (inline mirror of VIDEO_MODEL_SPECS). */
 const VALID_DURATIONS: Partial<Record<VideoModelType, Record<'720p' | '1080p', number[]>>> = {
@@ -1089,6 +1101,13 @@ async function runStage(
     }
 
     case 'voices': {
+      // No-TTS runs (Pure Hype): music leads and SFX + overlay text carry the message, so there
+      // is no voiceover to consolidate. Scenes keep no audioUrl → the EDL's audioOverlayAttached:no
+      // is already structurally valid. The stage still ends 'done' (the driver marks it after return).
+      if (run.input.audioMode === 'sfx_only') {
+        await setStage(id, { detail: 'No voiceover — music + SFX ad' });
+        return;
+      }
       const rendered = run.scenes.filter((s) => s.videoUrl);
       if (rendered.length === 0) return;
       const consolidationScenes: ConsolidationScene[] = rendered.map((s) => ({
@@ -1133,6 +1152,8 @@ async function runStage(
     }
 
     case 'final_render': {
+      // No-VO (Pure Hype): no subtitles, no full-clip hook hold, and fast EDL-driven cuts.
+      const sfxOnly = run.input.audioMode === 'sfx_only';
       const scenes: FinalRenderScene[] = run.scenes
         .filter((s) => s.videoUrl)
         .map((s) => {
@@ -1140,16 +1161,25 @@ async function runStage(
           const scriptLine = run.storyboard?.[s.sceneIdx]?.scriptLine ?? '';
           const estimate = estimateSpokenSec(scriptLine);
           const plan = run.edl?.scenes.find((e) => e.sceneIdx === s.sceneIdx);
+          // No-VO pacing: target the EDL keep-segment total, clamped to the fast-cut window
+          // (hook 2–4s, body 1.2–3.5s) → 7 scenes ≈ 15–20s. A missing/empty/zero total falls
+          // back to a punchy constant. Fast-cut window is non-tuned code, adjustable post-autopsy.
+          const keptSec = sfxOnly
+            ? plan?.keepSegments?.reduce((sum, seg) => sum + Math.max(0, seg.endSec - seg.startSec), 0)
+            : undefined;
+          const segSec = keptSec && keptSec > 0 ? keptSec : undefined;
+          const sfxTarget = isHook ? clamp(segSec ?? 3.0, 2.0, 4.0) : clamp(segSec ?? 2.5, 1.2, 3.5);
           return {
             sceneIdx: s.sceneIdx,
             videoUrl: s.videoUrl as string,
             audioUrl: s.audioUrl ?? null,
-            keepFullClip: isHook,
-            targetDurationSec: isHook || estimate <= 0 ? null : estimate,
+            keepFullClip: sfxOnly ? false : isHook,
+            targetDurationSec: sfxOnly ? sfxTarget : (isHook || estimate <= 0 ? null : estimate),
             overlayText: plan?.overlayText,
             sfxCues: plan?.sfxCues,
             transitionIn: plan?.transitionIn,
-            scriptLine,
+            // No-VO kills subtitle captions; EDL overlayText still burns.
+            scriptLine: sfxOnly ? '' : scriptLine,
             sceneType: run.videoPrompts?.[s.sceneIdx]?.type ?? 'b-roll',
             isHook,
           };
@@ -1165,7 +1195,10 @@ async function runStage(
         style: isUgcPro ? ('ugcpro' as const) : (run.edl?.meta.scriptStyleDetected ?? 'mrbeast'),
         // ASMR is an audio-led format — the taps/handling ARE the audio; a music
         // bed buries them. User-flippable downstream; this only seeds the default.
-        enabled: !isAsmr,
+        // No-VO (Pure Hype): music IS the audio → force-enabled + 'lead' role (higher gain,
+        // no VO ducking). This overrides the ASMR disable; ASMR × product_ugc can't co-occur.
+        enabled: sfxOnly ? true : !isAsmr,
+        role: sfxOnly ? ('lead' as const) : undefined,
       };
       const req: FinalRenderRequest = {
         scenes,

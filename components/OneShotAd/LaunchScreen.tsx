@@ -148,7 +148,9 @@ export const LaunchScreen: React.FC<{
   onBack?: () => void;
   /** Open Signal Modulator's Voice Cloning tab to record/clone a custom voice. */
   onCloneVoice?: () => void;
-}> = ({ onLaunch, directorUnlocked, onUpgrade, onSwitchToSteps, onSwitchToExpert, onBack, onCloneVoice }) => {
+  /** True on the producer engine (?osaEngine=producer) — unlocks producer-only recipes (Pure Hype). */
+  producerEngine?: boolean;
+}> = ({ onLaunch, directorUnlocked, onUpgrade, onSwitchToSteps, onSwitchToExpert, onBack, onCloneVoice, producerEngine }) => {
   // Premium cinematic click cues — One-Shot only, ON by default, mutable.
   const sfx = useOneShotSfx();
   const isMobile = useIsMobile();
@@ -196,6 +198,8 @@ export const LaunchScreen: React.FC<{
   const ugcProChoice = activeRecipe.ugcProFormat ?? 'auto';
   // UGC Pro ASMR flavor — audio-led register, captions + music off. Unboxing only.
   const asmrFlag = activeRecipe.asmr ?? false;
+  // No-TTS audio identity (Pure Hype) — music + SFX + overlay text carry the message, no voiceover.
+  const audioMode = activeRecipe?.audioMode;
 
   // --- Presenter — AUTO (AI Director casts from the research persona) or upload.
   // No generation at intake: casting fires AFTER Market Research so it uses the
@@ -277,7 +281,7 @@ export const LaunchScreen: React.FC<{
   // Per-vertical recipe gallery + the locked/"Auto" gate. product/service/real_estate expose
   // ≥2 formats → a real gallery; app exposes none → the locked "Auto" chip + hidden gallery.
   const allowedFormats = ALLOWED_FORMATS[vertical] ?? ['ugc'];
-  const recipeOptions = useMemo(() => visibleRecipes(vertical), [vertical]);
+  const recipeOptions = useMemo(() => visibleRecipes(vertical, { producerEngine }), [vertical, producerEngine]);
   const activeVertical = VERTICALS.find((v) => v.value === vertical) ?? VERTICALS[0];
   const formatLocked = allowedFormats.length <= 1; // app keeps the old locked/"Auto" UI
   // The chip shows the active recipe's label with any per-vertical copy override applied.
@@ -329,9 +333,9 @@ export const LaunchScreen: React.FC<{
   // sub-format clamp (e.g. real_estate → tutorial only), so a stale pick snaps to the first
   // legal recipe. app exposes none → the pick is left as-is (the locked "Auto" chip shows).
   useEffect(() => {
-    const vis = visibleRecipes(vertical);
+    const vis = visibleRecipes(vertical, { producerEngine });
     if (vis.length && !vis.some((r) => r.id === recipe)) setRecipe(vis[0].id);
-  }, [vertical, recipe]);
+  }, [vertical, recipe, producerEngine]);
 
   // Guided slot upload: the slot dropped into IS the tag. Describe is best-effort
   // (a 401/quota must not block the upload — research re-derives context anyway).
@@ -365,7 +369,7 @@ export const LaunchScreen: React.FC<{
   const chooseVertical = (value: string) => {
     setVertical(value);
     setRecipe((r) => {
-      const vis = visibleRecipes(value);
+      const vis = visibleRecipes(value, { producerEngine });
       return vis.some((x) => x.id === r) ? r : (vis[0]?.id ?? 'real_talk');
     });
   };
@@ -385,8 +389,8 @@ export const LaunchScreen: React.FC<{
   // AUTO mode is always ready (AI Director casts post-research); UPLOAD needs a photo.
   const presenterReady = presenterMode === 'auto' || !!avatarUrl;
   // Commercial (Seedance) handles its own audio. Service/RealEstate (formatLocked)
-  // run UGC-style and always need a voice.
-  const voiceNeeded = formatLocked || format !== 'commercial';
+  // run UGC-style and always need a voice. A no-TTS recipe (Pure Hype) never needs one.
+  const voiceNeeded = (formatLocked || format !== 'commercial') && audioMode !== 'sfx_only';
   // Product → one product photo; Service/RealEstate → at least one guided asset.
   const assetReady = isGuided ? servicePhotos.length > 0 : !!hero;
   // RealEstate must have the property location; everything else just needs brand+price.
@@ -442,6 +446,9 @@ export const LaunchScreen: React.FC<{
       ugcProFormat: format === 'ugc_pro' && ugcProChoice !== 'auto' ? ugcProChoice : undefined,
       // ASMR is an Unboxing-only flavor; never rides along on another sub-format.
       asmrFlag: format === 'ugc_pro' && ugcProChoice === 'unboxing' && asmrFlag ? true : undefined,
+      // No-TTS audio identity (Pure Hype only); absent on every voiceover recipe so their
+      // emitted ProductionInput stays byte-identical.
+      audioMode: audioMode === 'sfx_only' ? ('sfx_only' as const) : undefined,
       servicePhotos: isGuided ? servicePhotos : undefined,
       serviceArchetype: isService ? serviceArchetype : undefined,
       realEstateArchetype: isRealEstate ? reArchetype : undefined,
@@ -1467,6 +1474,9 @@ const RecipeCard: React.FC<{
       <div className="absolute inset-x-0 bottom-0 p-3">
         <span className={`block text-sm font-bold ${selected && !locked ? 'text-[#FFCC00]' : 'text-white'}`}>{recipe.label}</span>
         <span className="mt-0.5 block text-[11px] leading-snug text-zinc-400">{recipe.desc}</span>
+        {recipe.audioMode === 'sfx_only' && (
+          <span className="mt-1 block text-[10px] text-zinc-500 font-mono uppercase tracking-widest">No voiceover</span>
+        )}
       </div>
 
       {/* Badges — top-left: Business lock · ASMR */}

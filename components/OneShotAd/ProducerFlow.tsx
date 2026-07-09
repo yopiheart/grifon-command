@@ -203,6 +203,7 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
         businessType: input.businessType,
         ugcProFormat: input.ugcProFormat,
         asmrFlag: input.asmrFlag,
+        audioMode: input.audioMode,
         servicePhotos: input.servicePhotos,
         serviceArchetype: input.serviceArchetype,
         realEstateArchetype: input.realEstateArchetype,
@@ -452,6 +453,7 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
         onSwitchToExpert={onSwitchToExpert}
         onBack={onBack}
         onCloneVoice={onCloneVoice}
+        producerEngine
       />
     </div>
   );

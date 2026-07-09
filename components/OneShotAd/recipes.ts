@@ -16,7 +16,7 @@ import type { OneShotFormat, OneShotStrategy } from './launchDerivation';
 export type UgcProChoice = 'auto' | 'tryon' | 'unboxing' | 'demo' | 'transformation' | 'tutorial';
 
 export type RecipeId =
-  | 'real_talk' | 'hype_drop' | 'rapid_fire' | 'try_on' | 'before_after'
+  | 'real_talk' | 'hype_drop' | 'rapid_fire' | 'pure_hype' | 'try_on' | 'before_after'
   | 'unboxing' | 'unboxing_asmr' | 'demo' | 'tutorial' | 'auto' | 'commercial';
 
 export interface Recipe {
@@ -27,6 +27,10 @@ export interface Recipe {
   strategy?: OneShotStrategy;                     // existing axis (ugc only)
   ugcProFormat?: UgcProChoice;                    // existing axis (ugc_pro only)
   asmr?: boolean;                                 // existing flag (unboxing only)
+  /** No-TTS audio identity — music + SFX + burned overlay text carry the message (no voiceover). */
+  audioMode?: 'sfx_only';
+  /** Producer-engine-only recipe — the legacy one-shot path can't express no-TTS, so it's hidden there. */
+  producerOnly?: boolean;
   locked?: boolean;                               // Business tier (commercial)
   /** Per-vertical copy override — same axes, different words. RE tutorial = "Walkthrough". */
   labelByVertical?: Partial<Record<string, { label: string; desc: string }>>;
@@ -41,6 +45,7 @@ export const RECIPES: Recipe[] = [
   { id: 'real_talk', label: 'Real Talk Review', desc: 'Honest first-person review, straight to camera', format: 'ugc', strategy: 'Testimonial' },
   { id: 'hype_drop', label: 'Hype Drop', desc: 'High-energy, big-promise hook', format: 'ugc', strategy: 'MrBeast' },
   { id: 'rapid_fire', label: 'Rapid Fire', desc: 'Fast, punchy product hype', format: 'product_ugc' },
+  { id: 'pure_hype', label: 'Pure Hype', desc: 'No voiceover — beat drops, SFX, and bold deal text do the selling', format: 'product_ugc', audioMode: 'sfx_only', producerOnly: true },
   { id: 'try_on', label: 'Try-On Reveal', desc: 'Wear it, turn, sell it', format: 'ugc_pro', ugcProFormat: 'tryon' },
   { id: 'before_after', label: 'Before & After', desc: 'Show the transformation', format: 'ugc_pro', ugcProFormat: 'transformation' },
   { id: 'unboxing', label: 'Unboxing', desc: 'Packaging and tactile reveal', format: 'ugc_pro', ugcProFormat: 'unboxing', asmr: false },
@@ -84,10 +89,13 @@ export const SUBFORMATS_BY_VERTICAL: Record<string, UgcProChoice[]> = {
 /** The recipes a vertical exposes, derived from the authoritative Slice-4 clamps (never
  * duplicated). A ugc_pro recipe survives only if its sub-format is legal for the vertical, so
  * real_estate yields real_talk / hype_drop / tutorial(→"Walkthrough") for free, and app → [].
- * Per-vertical copy overrides are applied here so the returned cards read the right words. */
-export const visibleRecipes = (vertical: string): Recipe[] =>
+ * `producerOnly` recipes (no-TTS) are hidden unless `opts.producerEngine` is true — the legacy
+ * one-shot path can't express them. Per-vertical copy overrides are applied here so the returned
+ * cards read the right words. */
+export const visibleRecipes = (vertical: string, opts?: { producerEngine?: boolean }): Recipe[] =>
   RECIPES
     .filter((r) =>
+      (!r.producerOnly || opts?.producerEngine === true) &&
       (ALLOWED_FORMATS[vertical] ?? []).includes(r.format) &&
       (r.format !== 'ugc_pro' || (SUBFORMATS_BY_VERTICAL[vertical] ?? []).includes(r.ugcProFormat!)))
     .map((r) => {

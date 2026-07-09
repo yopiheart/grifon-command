@@ -273,7 +273,13 @@ export interface FinalRenderRequest {
   /** Style-keyed background-music bed (chosen in code from EDL meta.scriptStyleDetected).
    * `bedUrl` (optional) is a generated bed from api/music/compose; when present and
    * reachable it overrides the static `style` bed, else the render falls back to it. */
-  music?: { style: 'mrbeast' | 'temu' | 'testimonial' | 'ugcpro'; enabled: boolean; bedUrl?: string };
+  music?: {
+    style: 'mrbeast' | 'temu' | 'testimonial' | 'ugcpro';
+    enabled: boolean;
+    bedUrl?: string;
+    /** 'bed' (default) = quiet, ducked under VO. 'lead' = music IS the audio (no VO): higher gain, no sidechain ducking. */
+    role?: 'bed' | 'lead';
+  };
   /** Explicit edit-style override; absent → server rotates deterministically. */
   preset?: { id?: LockablePresetId };
   /** Offer-recap overlay held to the end of the last scene. */

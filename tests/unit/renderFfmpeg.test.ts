@@ -4,7 +4,7 @@ import {
   clampWindow, clampAnchor, escFilterPath,
   safeZone, fitText, wrapTwoLines, stripUnrenderable, evenSplit, chunkCaption,
   planScene, planEndCardLayers, buildTextFilter, buildBoxFilter, WIPE_SLICES, snapSfxAnchor, pickSceneSfx, voiceChunkWindows,
-  sceneNormalizeFilter,
+  sceneNormalizeFilter, musicMixPlan,
 } from '../../api/_lib/renderFfmpeg.js';
 import type { SfxCandidate } from '../../api/_lib/renderFfmpeg.js';
 import type { FinalRenderScene } from '../../types.js';
@@ -116,6 +116,18 @@ describe('sceneNormalizeFilter (quality upscale prefix)', () => {
   it('sharpens AFTER setsar (never before pad/normalize)', () => {
     const f = sceneNormalizeFilter(1080, 1920);
     expect(f.indexOf('unsharp=5:5:0.4:5:5:0.2')).toBeGreaterThan(f.indexOf('setsar=1'));
+  });
+});
+
+describe('musicMixPlan (role → gain + ducking)', () => {
+  it('bed (default) plays quiet and ducks under the VO', () => {
+    expect(musicMixPlan('bed')).toEqual({ volume: 0.18, duck: true });
+  });
+  it('lead (no-VO) plays loud and never ducks', () => {
+    expect(musicMixPlan('lead')).toEqual({ volume: 0.85, duck: false });
+  });
+  it('undefined role falls back to the bed plan', () => {
+    expect(musicMixPlan(undefined)).toEqual({ volume: 0.18, duck: true });
   });
 });
 

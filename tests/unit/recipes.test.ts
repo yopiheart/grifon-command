@@ -16,11 +16,13 @@ const emit = (vertical: string, r: Recipe) => {
   const strategy = r.strategy ?? 'Testimonial';
   const ugcProChoice = r.ugcProFormat ?? 'auto';
   const asmr = r.asmr ?? false;
+  const audioMode = r.audioMode;
   return {
     scriptType: deriveScriptType(vertical, format, strategy),
     businessType: deriveBusinessType(vertical),
     ugcProFormat: format === 'ugc_pro' && ugcProChoice !== 'auto' ? ugcProChoice : undefined,
     asmrFlag: format === 'ugc_pro' && ugcProChoice === 'unboxing' && asmr ? true : undefined,
+    audioMode: audioMode === 'sfx_only' ? ('sfx_only' as const) : undefined,
   };
 };
 
@@ -28,17 +30,18 @@ describe('recipe → axis parity (the load-bearing invariant)', () => {
   // The reference table is hand-written from the OLD manual axis flow, NOT read back from the
   // registry — so it catches a registry edit that silently changes the emitted ProductionInput.
   const EXPECTED_PRODUCT: Record<RecipeId, ReturnType<typeof emit>> = {
-    real_talk:     { scriptType: 'Testimonial', businessType: 'product', ugcProFormat: undefined, asmrFlag: undefined },
-    hype_drop:     { scriptType: 'MrBeast',     businessType: 'product', ugcProFormat: undefined, asmrFlag: undefined },
-    rapid_fire:    { scriptType: 'Temu',        businessType: 'product', ugcProFormat: undefined, asmrFlag: undefined },
-    try_on:        { scriptType: 'UGCPro',      businessType: 'product', ugcProFormat: 'tryon', asmrFlag: undefined },
-    before_after:  { scriptType: 'UGCPro',      businessType: 'product', ugcProFormat: 'transformation', asmrFlag: undefined },
-    unboxing:      { scriptType: 'UGCPro',      businessType: 'product', ugcProFormat: 'unboxing', asmrFlag: undefined },
-    unboxing_asmr: { scriptType: 'UGCPro',      businessType: 'product', ugcProFormat: 'unboxing', asmrFlag: true },
-    demo:          { scriptType: 'UGCPro',      businessType: 'product', ugcProFormat: 'demo', asmrFlag: undefined },
-    tutorial:      { scriptType: 'UGCPro',      businessType: 'product', ugcProFormat: 'tutorial', asmrFlag: undefined },
-    auto:          { scriptType: 'UGCPro',      businessType: 'product', ugcProFormat: undefined, asmrFlag: undefined },
-    commercial:    { scriptType: 'Testimonial', businessType: 'product', ugcProFormat: undefined, asmrFlag: undefined },
+    real_talk:     { scriptType: 'Testimonial', businessType: 'product', ugcProFormat: undefined, asmrFlag: undefined, audioMode: undefined },
+    hype_drop:     { scriptType: 'MrBeast',     businessType: 'product', ugcProFormat: undefined, asmrFlag: undefined, audioMode: undefined },
+    rapid_fire:    { scriptType: 'Temu',        businessType: 'product', ugcProFormat: undefined, asmrFlag: undefined, audioMode: undefined },
+    pure_hype:     { scriptType: 'Temu',        businessType: 'product', ugcProFormat: undefined, asmrFlag: undefined, audioMode: 'sfx_only' },
+    try_on:        { scriptType: 'UGCPro',      businessType: 'product', ugcProFormat: 'tryon', asmrFlag: undefined, audioMode: undefined },
+    before_after:  { scriptType: 'UGCPro',      businessType: 'product', ugcProFormat: 'transformation', asmrFlag: undefined, audioMode: undefined },
+    unboxing:      { scriptType: 'UGCPro',      businessType: 'product', ugcProFormat: 'unboxing', asmrFlag: undefined, audioMode: undefined },
+    unboxing_asmr: { scriptType: 'UGCPro',      businessType: 'product', ugcProFormat: 'unboxing', asmrFlag: true, audioMode: undefined },
+    demo:          { scriptType: 'UGCPro',      businessType: 'product', ugcProFormat: 'demo', asmrFlag: undefined, audioMode: undefined },
+    tutorial:      { scriptType: 'UGCPro',      businessType: 'product', ugcProFormat: 'tutorial', asmrFlag: undefined, audioMode: undefined },
+    auto:          { scriptType: 'UGCPro',      businessType: 'product', ugcProFormat: undefined, asmrFlag: undefined, audioMode: undefined },
+    commercial:    { scriptType: 'Testimonial', businessType: 'product', ugcProFormat: undefined, asmrFlag: undefined, audioMode: undefined },
   };
 
   it('every product recipe emits the same axes the manual selection produced', () => {
@@ -77,6 +80,17 @@ describe('visibleRecipes — derived from the authoritative Slice-4 clamps', () 
   it('app exposes no recipes (the locked/"Auto" presentation stays)', () => {
     expect(visibleRecipes('app')).toEqual([]);
   });
+
+  it('producer-only Pure Hype is hidden on the legacy path, shown on the producer engine', () => {
+    expect(visibleRecipes('product').map((r) => r.id)).not.toContain('pure_hype');
+    expect(visibleRecipes('product', { producerEngine: true }).map((r) => r.id)).toContain('pure_hype');
+  });
+
+  it('no non-product vertical ever exposes Pure Hype (even on the producer engine)', () => {
+    for (const v of ['service', 'real_estate', 'app']) {
+      expect(visibleRecipes(v, { producerEngine: true }).map((r) => r.id)).not.toContain('pure_hype');
+    }
+  });
 });
 
 describe('registry invariants', () => {
@@ -93,6 +107,18 @@ describe('registry invariants', () => {
   it('asmr === true only on a recipe whose ugcProFormat === unboxing', () => {
     for (const r of RECIPES) {
       if (r.asmr === true) expect(r.ugcProFormat).toBe('unboxing');
+    }
+  });
+
+  it('every no-TTS recipe (audioMode sfx_only) is producer-engine-only', () => {
+    for (const r of RECIPES) {
+      if (r.audioMode === 'sfx_only') expect(r.producerOnly).toBe(true);
+    }
+  });
+
+  it('ASMR and sfx_only never co-occur (audio identities are mutually exclusive)', () => {
+    for (const r of RECIPES) {
+      if (r.asmr === true) expect(r.audioMode).toBeUndefined();
     }
   });
 });

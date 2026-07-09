@@ -74,6 +74,8 @@ const Body = z.object({
       // it overrides the static `style` bed; absent/unreachable → static fallback.
       // `style` is still required: it drives resolvePreset() and is the fallback.
       bedUrl: z.string().url().optional(),
+      // 'bed' (default) ducks under VO; 'lead' (no-VO Pure Hype) plays music at full gain, no ducking.
+      role: z.enum(['bed', 'lead']).optional(),
     })
     .optional(),
   // Explicit edit-style override (kill switch / future UI picker). Absent →
@@ -166,7 +168,7 @@ async function runRender(
   jobId: string,
   scenes: FinalRenderScene[],
   aspectRatio: '9:16' | '16:9' | '1:1',
-  music?: { style: 'mrbeast' | 'temu' | 'testimonial' | 'ugcpro'; enabled: boolean; bedUrl?: string },
+  music?: { style: 'mrbeast' | 'temu' | 'testimonial' | 'ugcpro'; enabled: boolean; bedUrl?: string; role?: 'bed' | 'lead' },
   preset?: RenderPreset,
   variantSeed?: number,
   endCard?: FinalRenderEndCard

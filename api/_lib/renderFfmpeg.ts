@@ -76,6 +76,7 @@ const SFX_VOLUME = CLASSIC.sfx.volume; // SFX sit under the VO, not over it
 // a moderate fast duck so the bed only breathes in the gaps. Final loudness is
 // pinned by the -14 LUFS master (LOUDNORM) so every ad ships at a consistent level.
 const MUSIC_VOLUME = 0.18;       // bed gain before sidechain ducking
+const MUSIC_VOLUME_LEAD = 0.85;  // no VO to duck under — music IS the audio; LOUDNORM still pins the master
 const MUSIC_FADE_SEC = 0.4;      // afade in/out on the bed
 const MUSIC_DUCK = 'threshold=0.04:ratio=5:attack=5:release=280'; // duck hard+fast under VO
 const LOUDNORM = 'loudnorm=I=-14:TP=-1.5:LRA=11'; // social/Reels target, VO-anchored
@@ -594,25 +595,40 @@ function concatScenes(muxedPaths: string[], outPath: string): void {
 }
 
 /**
- * Final pass: lay a looped, faded music bed UNDER the program audio, ducking it
- * beneath the VO via sidechaincompress (program audio is the sidechain key).
- * Non-critical: returns false (and leaves the concat result untouched) on any
+ * Music mix plan for a given role. 'bed' (default) = quiet gain, ducked under the VO;
+ * 'lead' (no-VO Pure Hype) = music IS the audio → high gain, NO sidechain ducking. Pure +
+ * exported so the role→mix decision is unit-testable without invoking ffmpeg.
+ */
+export function musicMixPlan(role?: 'bed' | 'lead'): { volume: number; duck: boolean } {
+  return role === 'lead'
+    ? { volume: MUSIC_VOLUME_LEAD, duck: false }
+    : { volume: MUSIC_VOLUME, duck: true };
+}
+
+/**
+ * Final pass: lay a looped, faded music bed against the program audio. For a bed (duck:true)
+ * it ducks beneath the VO via sidechaincompress (program audio is the sidechain key); for a
+ * lead track (duck:false, no VO to duck under) the faded music is amixed directly with the
+ * program's SFX. Non-critical: returns false (and leaves the concat result untouched) on any
  * failure rather than throwing, so music never blocks the render.
  */
 function mixMusic(
   concatPath: string,
   musicFile: string,
   totalSec: number | null,
-  outPath: string
+  outPath: string,
+  plan: { volume: number; duck: boolean } = { volume: MUSIC_VOLUME, duck: true }
 ): boolean {
   const fadeOut =
     typeof totalSec === 'number' && totalSec > 2 * MUSIC_FADE_SEC
       ? `,afade=t=out:st=${(totalSec - MUSIC_FADE_SEC).toFixed(3)}:d=${MUSIC_FADE_SEC}`
       : '';
-  const filter =
-    `[1:a]volume=${MUSIC_VOLUME},afade=t=in:st=0:d=${MUSIC_FADE_SEC}${fadeOut}[mus];` +
-    `[mus][0:a]sidechaincompress=${MUSIC_DUCK}[ducked];` +
-    `[0:a][ducked]amix=inputs=2:normalize=0:duration=first[a]`;
+  const filter = plan.duck
+    ? `[1:a]volume=${plan.volume},afade=t=in:st=0:d=${MUSIC_FADE_SEC}${fadeOut}[mus];` +
+      `[mus][0:a]sidechaincompress=${MUSIC_DUCK}[ducked];` +
+      `[0:a][ducked]amix=inputs=2:normalize=0:duration=first[a]`
+    : `[1:a]volume=${plan.volume},afade=t=in:st=0:d=${MUSIC_FADE_SEC}${fadeOut}[mus];` +
+      `[0:a][mus]amix=inputs=2:normalize=0:duration=first[a]`;
   const args = [
     '-y',
     '-i', concatPath,
@@ -665,7 +681,7 @@ async function downloadToFile(url: string, path: string): Promise<void> {
 export async function renderFinalVideo(
   scenes: FinalRenderScene[],
   aspectRatio: string,
-  music?: { style: 'mrbeast' | 'temu' | 'testimonial' | 'ugcpro'; enabled: boolean; bedUrl?: string },
+  music?: { style: 'mrbeast' | 'temu' | 'testimonial' | 'ugcpro'; enabled: boolean; bedUrl?: string; role?: 'bed' | 'lead' },
   preset: RenderPreset = CLASSIC,
   variantSeed: number = 0, // rotates the premium hook palette per render
   endCard?: FinalRenderEndCard // offer recap + price anchor, burned into the last scene
@@ -845,7 +861,7 @@ export async function renderFinalVideo(
       if (!bed) bed = musicPath(music.style);
       if (bed) {
         const musicedPath = join(dir, 'final_music.mp4');
-        if (mixMusic(finalPath, bed, probeDurationSec(finalPath), musicedPath)) {
+        if (mixMusic(finalPath, bed, probeDurationSec(finalPath), musicedPath, musicMixPlan(music.role))) {
           resultPath = musicedPath;
         }
       } else {

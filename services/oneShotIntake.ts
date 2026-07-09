@@ -50,6 +50,9 @@ export interface ProductionInput {
   /** UGC Pro: audio-led ASMR flavor (whispered register, minimal VO). Off by default; carried
    * onto businessInfo.asmrFlag by mapReportToWizard. */
   asmrFlag?: boolean;
+  /** Audio identity. Absent/'voiceover' = today's TTS pipeline. 'sfx_only' = NO voiceover:
+   * music leads, SFX + burned overlay text carry the message (the Pure Hype recipe). */
+  audioMode?: 'voiceover' | 'sfx_only';
   /** Phase 2: guided per-slot real photos for Service/RealEstate verticals (the slot IS the tag).
    * Feeds the per-scene real-photo router. Empty/absent for Product (which uses heroImageBase64). */
   servicePhotos?: BusinessInfo['servicePhotos'];
