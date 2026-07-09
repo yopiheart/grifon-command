@@ -56,7 +56,7 @@ export interface BusinessInfo {
   // router reads these to anchor each scene to the right real photo. RealEstate reuses this field with
   // property-specific slots (facade/living/kitchen/… ) — the venue render mode treats a property as a
   // real place identically to a service venue.
-  servicePhotos?: { url: string; slot: 'exterior' | 'interior' | 'ambiance' | 'staff' | 'before' | 'after' | 'facade' | 'living' | 'kitchen' | 'bedroom' | 'bathroom' | 'view' | 'amenities' | 'location' | 'agent'; description?: string }[];
+  servicePhotos?: { url: string; slot: 'exterior' | 'interior' | 'ambiance' | 'staff' | 'before' | 'after' | 'facade' | 'living' | 'kitchen' | 'bedroom' | 'bathroom' | 'view' | 'amenities' | 'location' | 'agent' | 'hero' | 'onbody' | 'packaging' | 'inuse'; description?: string }[];
   customScriptFile?: string[];
   selectedTheme?: VisualTheme;
 }
@@ -66,6 +66,11 @@ export interface Script {
   hook2: string[];
   body: string[];
   strategicAudit?: string;
+  /* UGC Pro (Slice 2): the sub-format the server resolved for this run — either the user's
+     explicit pick or the server-side classifier's choice on the 'Auto' path. Threaded back
+     onto businessInfo.ugcProFormat post-generation so the storyboard prompt always agrees
+     with the script. Set only for UGCPro runs; undefined otherwise. */
+  ugcProFormatResolved?: 'tryon' | 'transformation';
 }
 
 export interface Avatar {
@@ -92,7 +97,7 @@ export interface Scene {
   /* Phase 2 (Services + RealEstate): which uploaded servicePhotos SLOT best fits this scene. Set by
      the storyboard generator (Services/RealEstate only); the per-scene router anchors the scene to
      that real photo. Omitted when no uploaded slot fits → renderer falls back to representative. */
-  venueSlot?: 'exterior' | 'interior' | 'ambiance' | 'staff' | 'before' | 'after' | 'facade' | 'living' | 'kitchen' | 'bedroom' | 'bathroom' | 'view' | 'amenities' | 'location' | 'agent';
+  venueSlot?: 'exterior' | 'interior' | 'ambiance' | 'staff' | 'before' | 'after' | 'facade' | 'living' | 'kitchen' | 'bedroom' | 'bathroom' | 'view' | 'amenities' | 'location' | 'agent' | 'hero' | 'onbody' | 'packaging' | 'inuse';
   /* chainRole tracks the position in the cinematic relay chain */
   chainRole?: 'Metaphor_A' | 'Anchor_B' | 'Action_C' | 'Hero_D';
   /* Custom B-roll injection */

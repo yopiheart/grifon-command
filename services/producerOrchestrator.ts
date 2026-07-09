@@ -944,6 +944,12 @@ async function runStage(
       await commit((r) => {
         r.script = script;
         r.finalScript = finalScript;
+        // UGC Pro: back-fill the resolved sub-format onto businessInfo so the storyboard
+        // stage (which reads businessInfo.ugcProFormat) is always populated, even on the
+        // 'Auto' path. Nullish — an explicit user pick is never overwritten.
+        if (r.businessInfo && script.ugcProFormatResolved) {
+          r.businessInfo.ugcProFormat = r.businessInfo.ugcProFormat ?? script.ugcProFormatResolved;
+        }
       });
       await setStage(id, { detail: finalScript[0] ? `"${finalScript[0]}"` : 'Hook locked' });
       return;

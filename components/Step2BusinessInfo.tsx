@@ -452,6 +452,44 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
           </div>
       )}
 
+      {/* UGC Pro sub-format picker — parity with the One-Shot LaunchScreen chips.
+          'Auto' leaves ugcProFormat undefined so the server classifies from the brief;
+          Try-On / Before & After write the explicit sub-format. */}
+      {formData.scriptType === 'UGCPro' && (
+          <div className="mt-6 p-6 bg-zinc-900/50 rounded-xl border border-white/10 animate-in fade-in slide-in-from-top-4">
+              <div className="flex items-center gap-3">
+                  <Sparkles className="w-5 h-5 text-[#FFCC00] shrink-0" />
+                  <p className="text-sm font-bold text-white font-mono">UGC Pro format</p>
+              </div>
+              <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mt-1 mb-4">
+                  // Auto lets the AI pick try-on or before/after from your brief.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  {([
+                      { value: undefined, label: 'Auto', sub: 'AI picks from your brief' },
+                      { value: 'tryon', label: 'Try-On', sub: 'Fashion & wearables — worn reveal' },
+                      { value: 'transformation', label: 'Before & After', sub: 'Before → after reveal' },
+                  ] as const).map((s) => {
+                      const active = (formData.ugcProFormat ?? undefined) === s.value;
+                      return (
+                          <button
+                              key={s.label}
+                              type="button"
+                              onClick={() => setFormData(prev => ({ ...prev, ugcProFormat: s.value }))}
+                              className={`p-4 rounded-xl border text-left transition-all hover:translate-y-[-2px] ${active ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
+                          >
+                              <div className="flex justify-between items-center mb-1">
+                                  <span className="text-xs font-bold text-white font-mono uppercase">{s.label}</span>
+                                  {active && <Check className="w-4 h-4 text-[#FFCC00] shrink-0" />}
+                              </div>
+                              <span className="text-[11px] leading-snug text-zinc-500 font-mono">{s.sub}</span>
+                          </button>
+                      );
+                  })}
+              </div>
+          </div>
+      )}
+
       {formData.scriptType === 'Custom' && (
           <div className="mt-6 space-y-4 p-6 bg-zinc-900/50 rounded-xl border border-white/10 animate-in fade-in slide-in-from-top-4">
               <div className="flex flex-col md:flex-row gap-6">

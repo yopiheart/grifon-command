@@ -22,6 +22,7 @@ import type { BusinessInfo } from '../../types';
 import {
   ARCHETYPE_META, ARCHETYPE_ORDER, ARCHETYPE_UPLOAD_SLOTS, inferServiceArchetype,
   RE_ARCHETYPE_META, RE_ARCHETYPE_ORDER, RE_UPLOAD_SLOTS, inferRealEstateArchetype,
+  UGCPRO_UPLOAD_SLOTS,
   BAD_SAMPLE, SampleTile, PRODUCT_EXAMPLE, PRESENTER_EXAMPLE,
   type ServiceArchetype, type RealEstateArchetype, type ServiceSlot,
 } from '../guidedPhotoSlots';
@@ -86,7 +87,7 @@ const STRATEGIES: { value: Strategy; label: string; desc: string }[] = [
 const UGC_PRO_SUBFORMATS: { value: UgcProChoice; label: string; desc: string }[] = [
   { value: 'auto', label: 'Auto', desc: 'AI picks try-on or before/after from your brief' },
   { value: 'tryon', label: 'Try-On', desc: 'Fashion & wearables — worn reveal' },
-  { value: 'transformation', label: 'Transformation', desc: 'Before → after reveal' },
+  { value: 'transformation', label: 'Before & After', desc: 'Before → after reveal' },
 ];
 
 const VERTICALS: { value: string; label: string; desc: string; Icon: typeof Package; locked?: boolean }[] = [
@@ -278,8 +279,15 @@ export const LaunchScreen: React.FC<{
   // inputs as advanced mode, just on one page — Director AI does the rest.)
   const isService = vertical === 'service';
   const isRealEstate = vertical === 'real_estate';
-  const isGuided = isService || isRealEstate;
-  const guidedSlots = isRealEstate ? RE_UPLOAD_SLOTS[reArchetype] : ARCHETYPE_UPLOAD_SLOTS[serviceArchetype];
+  // UGC Pro reuses the SAME guided multi-slot tile UI (product-state photos), but only
+  // once a concrete sub-format is known. On 'auto' the sub-format is undecided at upload
+  // time, so we fall back to the existing single-hero product upload rather than guessing
+  // a slot list (least-surprising — the server classifies from the brief either way).
+  const isUgcProGuided = vertical === 'product' && format === 'ugc_pro' && ugcProChoice !== 'auto';
+  const isGuided = isService || isRealEstate || isUgcProGuided;
+  const guidedSlots = isRealEstate ? RE_UPLOAD_SLOTS[reArchetype]
+    : isUgcProGuided ? UGCPRO_UPLOAD_SLOTS[ugcProChoice as 'tryon' | 'transformation']
+      : ARCHETYPE_UPLOAD_SLOTS[serviceArchetype];
   const guidedArchetypeTabs = isRealEstate
     ? RE_ARCHETYPE_ORDER.map((a) => ({ key: a, ...RE_ARCHETYPE_META[a], active: reArchetype === a, onSelect: () => setReArchetype(a) }))
     : ARCHETYPE_ORDER.map((a) => ({ key: a, ...ARCHETYPE_META[a], active: serviceArchetype === a, onSelect: () => setServiceArchetype(a) }));
@@ -882,7 +890,7 @@ export const LaunchScreen: React.FC<{
                       type="button"
                       onClick={() => { setUgcProChoice(s.value); sfx.play('select'); }}
                       title={s.desc}
-                      className={`flex-1 border px-3 ${CTRL_H} ${R_CTRL} ${T_VALUE} uppercase transition-all ${
+                      className={`flex-1 border px-3 ${CTRL_H} ${R_CTRL} ${T_VALUE} text-center leading-tight uppercase transition-all ${
                         ugcProChoice === s.value ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]' : 'border-white/10 text-zinc-300 hover:border-white/30'
                       }`}
                     >
@@ -923,30 +931,37 @@ export const LaunchScreen: React.FC<{
         </Modal>
       )}
 
-      {/* ---- Assets modal — guided per-slot real photos (Service / RealEstate) ---- */}
+      {/* ---- Assets modal — guided per-slot real photos (Service / RealEstate / UGC Pro) ---- */}
       {assetModal === 'product' && isGuided && (
-        <Modal title={isRealEstate ? 'Property photos' : 'Service photos'} wide onClose={() => setAssetModal(null)}>
+        <Modal title={isRealEstate ? 'Property photos' : isUgcProGuided ? 'Product photos' : 'Service photos'} wide onClose={() => setAssetModal(null)}>
           {/* Clarify the role: these are anchors, not the performer (presenter is separate) */}
           <p className="mb-4 text-[11px] leading-snug text-zinc-400">
-            Real photos of your {isRealEstate ? 'property' : 'business'} — these anchor the AI's scenes so they look like the real place. Your on-camera presenter is set separately.
+            {isUgcProGuided
+              ? "Real photos of your product — these anchor the try-on drape / before→after so the AI doesn't invent them. Your on-camera presenter is set separately."
+              : <>Real photos of your {isRealEstate ? 'property' : 'business'} — these anchor the AI's scenes so they look like the real place. Your on-camera presenter is set separately.</>}
           </p>
-          {/* What does the ad lead with? — archetype picker */}
-          <p className={`mb-1.5 text-zinc-400 ${T_LABEL}`}>// What should the ad lead with?</p>
-          <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
-            {guidedArchetypeTabs.map((a) => (
-              <button
-                key={a.key}
-                type="button"
-                onClick={a.onSelect}
-                className={`border px-3 py-2.5 text-left ${R_CTRL} transition-all ${
-                  a.active ? 'border-[#FFCC00] bg-[#FFCC00]/10' : 'border-white/10 hover:border-white/30'
-                }`}
-              >
-                <span className={`block ${T_CTRL} ${a.active ? 'text-[#FFCC00]' : 'text-zinc-200'}`}>{a.label}</span>
-                <span className="mt-0.5 block text-[11px] leading-snug text-zinc-500">{a.sub}</span>
-              </button>
-            ))}
-          </div>
+          {/* What does the ad lead with? — archetype picker (Service / RealEstate only;
+              UGC Pro is keyed by the sub-format already chosen in the format picker). */}
+          {!isUgcProGuided && (
+            <>
+              <p className={`mb-1.5 text-zinc-400 ${T_LABEL}`}>// What should the ad lead with?</p>
+              <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+                {guidedArchetypeTabs.map((a) => (
+                  <button
+                    key={a.key}
+                    type="button"
+                    onClick={a.onSelect}
+                    className={`border px-3 py-2.5 text-left ${R_CTRL} transition-all ${
+                      a.active ? 'border-[#FFCC00] bg-[#FFCC00]/10' : 'border-white/10 hover:border-white/30'
+                    }`}
+                  >
+                    <span className={`block ${T_CTRL} ${a.active ? 'text-[#FFCC00]' : 'text-zinc-200'}`}>{a.label}</span>
+                    <span className="mt-0.5 block text-[11px] leading-snug text-zinc-500">{a.sub}</span>
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
 
           {/* Guided slots — each shows ITS OWN example (dimmed, tap ⌕ to zoom). The slot you drop into IS the tag. */}
           <p className={`mb-2 mt-4 text-zinc-500 ${T_LABEL}`}>// Tap VIEW SAMPLE on a slot to see the full reference · clear &amp; bright wins ↓</p>

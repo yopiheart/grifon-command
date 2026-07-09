@@ -149,6 +149,33 @@ export const RE_UPLOAD_SLOTS: Record<RealEstateArchetype, UploadSlot[]> = {
   ],
 };
 
+// --- UGC Pro (product) --------------------------------------------------
+// Keyed by SUB-FORMAT (tryon | transformation), not archetype — the One-Shot
+// LaunchScreen picks the list off the chosen UGC Pro sub-format. These are
+// product-STATE photos (worn / before / after / packaging) that anchor the
+// try-on drape or the before→after reveal so the model doesn't hallucinate them.
+//
+// INVARIANT: `hero` MUST be the FIRST element of every list. LaunchScreen derives
+// `heroImageBase64: servicePhotos[0]?.url` from hero-first ordering — reorder and
+// the wrong photo becomes the research/identity anchor. Do not move it.
+//
+// Only the hero slot carries a reference example (PRODUCT_EXAMPLE); the product-state
+// slots have no curated sample under public/examples/ yet, so their `example` is
+// omitted rather than pointing at a mismatched (e.g. cleaning before/after) asset.
+export const UGCPRO_UPLOAD_SLOTS: Record<'tryon' | 'transformation', UploadSlot[]> = {
+  tryon: [
+    { slot: 'hero', label: 'Product', hint: 'the item, brand visible', example: PRODUCT_EXAMPLE },
+    { slot: 'onbody', label: 'Worn', hint: 'on a body — anchors fit & drape' },
+    { slot: 'packaging', label: 'Packaging', hint: 'box / label — optional' },
+  ],
+  transformation: [
+    { slot: 'hero', label: 'Product', hint: 'the item, brand visible', example: PRODUCT_EXAMPLE },
+    { slot: 'before', label: 'Before', hint: 'the starting state' },
+    { slot: 'after', label: 'After', hint: 'the result' },
+    { slot: 'inuse', label: 'In use', hint: 'applying it — optional' },
+  ],
+};
+
 export const inferRealEstateArchetype = (text: string): RealEstateArchetype => {
   const t = (text || '').toLowerCase();
   const score = (...words: string[]) => words.reduce((n, w) => n + (t.includes(w) ? 1 : 0), 0);

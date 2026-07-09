@@ -35,6 +35,7 @@ import {
   UGCPRO_CLASSIFIER_PROMPT,
   buildAdScriptPrompt,
   parseAdScriptResponse,
+  hasApplicationVerb,
   type AdScriptInput,
   buildOfferOptimizerPrompt,
   parseOfferOptimizerResponse,
@@ -153,18 +154,43 @@ const FLOW_REGISTRY: Record<string, FlowHandler> = {
       }
     }
     const prompt = buildAdScriptPrompt(input, temuSubType, ugcProSubType);
-    const response = await ai.models.generateContent({
-      model: MODEL_TEXT,
-      contents: prompt,
-      config: {
-        responseMimeType: 'application/json',
-        safetySettings: SAFETY_SETTINGS,
-        thinkingConfig: { thinkingBudget: 4000 },
-      },
-    } as any);
-    const rawText = response.text || '{}';
-    logModelUsage('flow:adscript', MODEL_TEXT, (response as any).usageMetadata);
-    return parseAdScriptResponse(rawText);
+    // Single-shot generate + parse. Extracted so the transformation verb-reroll
+    // below can re-run the identical call without duplicating config.
+    const generateAndParse = async (flowTag: string) => {
+      const response = await ai.models.generateContent({
+        model: MODEL_TEXT,
+        contents: prompt,
+        config: {
+          responseMimeType: 'application/json',
+          safetySettings: SAFETY_SETTINGS,
+          thinkingConfig: { thinkingBudget: 4000 },
+        },
+      } as any);
+      logModelUsage(flowTag, MODEL_TEXT, (response as any).usageMetadata);
+      return parseAdScriptResponse(response.text || '{}');
+    };
+
+    let script = await generateAndParse('flow:adscript');
+
+    // TRANSFORMATION beat-1 (body[0]) must be a working application line, not a posed
+    // product intro. Prompt instructions alone failed 4/4 in the Slice-1 eval loop, so
+    // detect + re-roll ONCE (Neil's choice: never regex-rewrite the model's line). If
+    // body is empty or body[0] isn't a string, skip — never crash.
+    if (
+      input.businessInfo.scriptType === 'UGCPro' &&
+      ugcProSubType === 'transformation' &&
+      typeof script.body?.[0] === 'string' &&
+      !hasApplicationVerb(script.body[0])
+    ) {
+      script = await generateAndParse('flow:adscript:verb-reroll');
+    }
+
+    // Thread the resolved UGC Pro sub-format back to the client (only for UGCPro runs)
+    // so the storyboard prompt can read businessInfo.ugcProFormat even on the 'Auto'
+    // path. Transport/plumbing only — the prompt text is untouched.
+    return input.businessInfo.scriptType === 'UGCPro'
+      ? { ...script, ugcProFormatResolved: ugcProSubType }
+      : script;
   },
 
   'offer-optimizer': async (input: OfferOptimizerInput, ai) => {

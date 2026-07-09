@@ -470,6 +470,13 @@ export const buildAdScriptPrompt = (
       3. **Verdict + Soft CTA:** The keep-it verdict ("Obsessed. This is staying on."
          register), then ONE soft conversational close driving the tap. Obey the CTA
          price-leak guard; in Taglish, the TAGLISH ACCENT LOCK.
+
+      **TRY-ON LINE HYGIENE (both failed in the Slice-1 eval loop):**
+      - Beat 3's keep-it verdict is MANDATORY — the script does not close without an
+        explicit "I'm keeping this" judgment ("Obsessed." / "Hindi ko na 'to huhubarin.").
+        A CTA alone is not a verdict.
+      - Do NOT reuse the hook's opening exclamation to open ANY body line. If the hook
+        opens on "Grabe," / "Okay," / "Wait," then no body line may open on that word.
       ` : `
       **TRANSFORMATION 4-BEAT (the BEFORE is the hook — NO product in beat 0):**
       0. **Hook (<=2s, 5-8 words):** The problem state, shown and named — frustrated,
@@ -511,6 +518,10 @@ export const buildAdScriptPrompt = (
       CTA CLOSE (HARD RULE): the CTA's FINAL word must be Tagalog. If the brand
       name or an English noun would otherwise close the sentence, append a Tagalog
       closer — "ngayon" / "subukan mo na". Never end the CTA on English.
+      CTA OPEN (borrowed-verb guard): if the CTA uses a borrowed English verb ("Click",
+      "Tap", "Message"), do NOT open the sentence on it — open on "Tara," and let the
+      English verb sit mid-sentence ("Tara, click mo na 'yong link sa baba"). Never open
+      the CTA on the English verb.
 
       **DIRECTOR_CRITIQUE_PROTOCOL:**
       Include a field "strategicAudit" in your JSON response.
@@ -775,6 +786,18 @@ export const parseAdScriptResponse = (rawText: string): Script => {
   };
 };
 
+// TRANSFORMATION beat 1 (body[0]) is the Application line: the product must enter
+// mid-action, with a real verb. Prompt instructions alone don't hold it — 4/4
+// formulations failed the Slice-1 eval loop and it only passed on a re-roll.
+// Enforce deterministically, same escape hatch as capHookLine.
+const APPLICATION_VERBS = /\b(swipe|swipes|spray|sprays|apply|applies|rub|rubs|wipe|wipes|dab|dabs|pump|pumps|pat|pats|smooth|smooths|massage|massages|scrub|scrubs|pour|pours|drop|drops|glide|glides|press|presses|i?punas|punasan|pahid|pahiran|swipe\s+lang|spray\s+lang|lagay|ilagay|patak|kuskos|masahe)\b/i;
+
+const POSED_INTRO = /^\s*(eto|ito|heto|this is|here'?s|meet)\b/i;
+
+/** True when the line reads as a working application, not a posed product intro. */
+export const hasApplicationVerb = (line: string): boolean =>
+  APPLICATION_VERBS.test(line) && !POSED_INTRO.test(line);
+
 // ---------------------------------------------------------------------------
 // Offer Optimizer (generateOfferOptimization) — Hormozi tier prompts
 // ---------------------------------------------------------------------------
@@ -983,6 +1006,8 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
   const isTemu = businessInfo.scriptType === 'Temu';
   const isServices = businessInfo.scriptType === 'Services';
   const isRealEstate = businessInfo.scriptType === 'RealEstate';
+  const isUGCPro = businessInfo.scriptType === 'UGCPro';
+  const ugcSub = (businessInfo.ugcProFormat === 'tryon' || businessInfo.ugcProFormat === 'transformation') ? businessInfo.ugcProFormat : 'transformation';
 
   const DIRECTOR_CRITIQUE_INSTRUCTION = `
     **DIRECTOR_CRITIQUE_PROTOCOL:**
@@ -1086,6 +1111,44 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
           the uploaded photo's tier is the ONLY ground truth.
         - Setting, faces, clothing, signage, props must read authentically Filipino.
         `;
+  } else if (isUGCPro) {
+    strategyInstructions = ugcSub === 'tryon' ? `
+        **STRATEGY: UGC PRO — CONTINUOUS PERFORMANCE (Virtual Try-On)**
+        1. **ONE PERFORMER, ONE PLACE.** Every scene is the SAME creator in the SAME room. Do not
+           change location, time of day, or wardrobe except where the beat demands it (the worn
+           reveal). No metaphor scenes. No environment-only B-roll.
+        2. **HARD CUTS ONLY.** Omit \`transitionEffect\` on every scene, including Scene 1.
+        3. **BEATS (4-5 scenes):**
+           S1 HOOK — product in-hand or on-hanger, creator mid-decision, talking to camera. The
+              garment is NOT yet worn. referenceImage="both".
+           S2 WORN REVEAL — the hard cut. Same creator, same room, now wearing it. The VISUAL
+              carries the reveal. referenceImage="avatar".
+           S3 FIT-PROOF / STYLING — the objection-killing action beat (movement, stretch, drape,
+              a turn). Show the garment doing the thing the buyer doubts. referenceImage="avatar".
+           S4 VERDICT — closer framing on the creator, keep-it verdict + soft CTA.
+              referenceImage="avatar".
+           An optional 5th scene may split styling and verdict. Never exceed 5.
+        ` : `
+        **STRATEGY: UGC PRO — CONTINUOUS PERFORMANCE (Before & After)**
+        1. **ONE PERFORMER, ONE PLACE.** Same creator, same location, every scene. No metaphor
+           scenes, no environment-only B-roll.
+        2. **HARD CUTS ONLY.** Omit \`transitionEffect\` on every scene, including Scene 1.
+        3. **BEATS (4 scenes):**
+           S1 HOOK — the PROBLEM, close-up. The before-state IS the hook. NO product anywhere in
+              this frame. referenceImage="none" (or "avatar" if the problem is on the person).
+           S2 APPLICATION — the product enters mid-action, WORKING, never posed on a surface.
+              referenceImage="both".
+           S3 INSTANT REVEAL — the hard-cut after-state, framed IDENTICALLY to S1 (same angle,
+              same distance, same lighting) so the change is the only variable. referenceImage="none"
+              (or "avatar").
+           S4 VERDICT — the creator, verdict + soft CTA. referenceImage="avatar".
+
+        **APPEARANCE-CLAIM GUARDRAIL (Meta policy — applies to imagePrompt, not just script):**
+        If the transformation is on a PERSON (skin, hair, body), the after-frame shows glow / freshness
+        / ease — never a clinical or corrective depiction. Do NOT render dermatological severity in the
+        before frame (no cystic acne, no open lesions, no medical redness) and do NOT render a
+        "cured" after. Surfaces, fabrics, and objects may show dramatic before/after freely.
+        `;
   } else {
     strategyInstructions = `
         **STRATEGY: NARRATIVE RETENTION RHYTHOR**
@@ -1107,21 +1170,29 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
         inside a room being toured                  -> living, kitchen, bedroom, or bathroom (pick the fitting one)
         the view / balcony / outlook beat           -> view
         amenities (pool / gym / lobby) beat         -> amenities
-        the neighborhood / location beat            -> location` : `
+        the neighborhood / location beat            -> location` : isUGCPro ? `
+        the product held / on its own              -> hero
+        the garment or item WORN on the body       -> onbody
+        the box, wrapper, or packaging             -> packaging
+        the product mid-use / mid-application      -> inuse
+        the problem / before-state                 -> before
+        the result / after-state                   -> after` : `
         establishing / arrival ("dinala ako sa...") -> exterior
         the service happening / inside the place    -> interior
         mood / relief / ambiance beat               -> ambiance
         the practitioner or staff at work           -> staff
         the problem / before-state                  -> before
         the result / after-state                    -> after`;
-  const venueSlotRouting = ((isServices || isRealEstate) && availableServiceSlots.length > 0) ? `
+  const venueSlotRouting = ((isServices || isRealEstate || isUGCPro) && availableServiceSlots.length > 0) ? `
       **VENUE_SLOT_ROUTING (anchor scenes to the user's REAL uploaded photos):**
       The user uploaded real photos tagged by slot. AVAILABLE SLOTS: ${availableServiceSlots.join(', ')}.
-      For each scene that depicts the ${isRealEstate ? 'PROPERTY, a ROOM, the VIEW, AMENITIES, or the LOCATION' : "business's PLACE, RESULT, or STAFF"}, add a "venueSlot" field set to
+      For each scene that depicts the ${isRealEstate ? 'PROPERTY, a ROOM, the VIEW, AMENITIES, or the LOCATION' : isUGCPro ? 'PRODUCT, a product STATE, or the BEFORE/AFTER' : "business's PLACE, RESULT, or STAFF"}, add a "venueSlot" field set to
       the ONE available slot that best fits — chosen ONLY from the list above. Map by meaning:${slotLegend}
       Rules: use a slot ONLY if it is in AVAILABLE SLOTS; if none fits, OMIT "venueSlot" (renderer falls
       back to representative generation). NEVER invent a slot not in the list.${isRealEstate
         ? ' AGENT-IN-PROPERTY: for an Avatar talking scene (referenceImage="avatar") where the agent is in a specific SPACE of the property — INSIDE a room (touring the sala -> living, kitchen -> kitchen, a bedroom -> bedroom) OR OUTSIDE at the building exterior / entrance, INCLUDING the closing / CTA shot at the facade (-> facade) — ALSO set "venueSlot" to that space so the agent is composited into the REAL place, not a lookalike. Only OMIT "venueSlot" on a neutral talking head not tied to any space.'
+        : isUGCPro
+        ? ' For UGC Pro, the creator IS in nearly every scene, so a scene may carry BOTH referenceImage="avatar" AND a venueSlot — set "venueSlot" whenever the scene depicts one of the real uploaded product states above (the worn garment -> onbody, the application -> inuse, the after-reveal -> after). OMIT it only on a pure talking-head with no product state in frame.'
         : ' Avatar talking-head scenes (referenceImage="avatar") OMIT "venueSlot".'}
   ` : '';
 
@@ -1134,13 +1205,18 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
       - **FORBIDDEN:** Do not include instructions daylight 'Show text overlay', 'Text on screen says...', or 'Phone screen showing 50%'.
       - Text belongs in the Audio/Script, NEVER in the image generation prompt."
 
-      **PACING RULE:**
+      ${isUGCPro ? `**PACING RULE (UGC Pro override):**
+      "This format is a CONTINUOUS PERFORMANCE. The 3-consecutive-Avatar-Talking ban is LIFTED —
+      the same creator may appear, talking, in every single scene. That is correct and expected.
+      What is BANNED instead: cutting away to a Visual Metaphor scene, an environment-only
+      establishing shot, or any scene the performer is absent from without a product reason
+      (a close-up of the product in their hands or the before/after surface is fine)."` : `**PACING RULE:**
       "You MAY have up to **2 consecutive** 'Avatar Talking' scenes.
       **YOU MUST NOT HAVE 3 CONSECUTIVE 'AVATAR TALKING' SCENES.**
       If you have 2 Avatars in a row, the 3rd scene **MUST** be a 'Product B-Roll', 'Reaction', or 'Visual Metaphor'.
 
       WRONG: Scene 2 = Avatar Talking / Scene 3 = Avatar Talking / Scene 4 = Avatar Talking — this is 3 consecutive and BANNED. The 4th-scene b-roll does not retroactively legalize three talkers in a row.
-      RIGHT: Scene 2 = Avatar Talking / Scene 3 = Avatar Talking / Scene 4 = Product B-Roll / Scene 5 = Avatar Talking."
+      RIGHT: Scene 2 = Avatar Talking / Scene 3 = Avatar Talking / Scene 4 = Product B-Roll / Scene 5 = Avatar Talking."`}
 
       **STILL_FRAME_RULE:**
       The fields \`imagePrompt\`, \`startFramePrompt\`, and \`endFramePrompt\` are rendered as STILL IMAGES. They MUST be static compositions, NOT motion-verb prose.
@@ -1156,7 +1232,12 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
 
       Motion lives in \`transitionEffect\` (e.g., "Explosion Reveal", "Character Morph") — that field describes the MOTION between two stills. The frame prompts describe two STILL moments. Frames = stills. Transitions = motion.
 
-      ${isServices ? `**HOOK FRAMES (Scene 1, Services) = THE PROBLEM, NO product reveal:** The start and end frames depict the real-world PROBLEM moment (the mess, the worry, the before-state) as an environment / object / situation — authentically Filipino and humble. There is NO product to reveal; do NOT place, "reveal", or invent any gadget, device, branded vehicle, uniform, or imported equipment in the hook. Keep both stills STATIC. The two frames MAY share one named dominant color + silhouette position for a clean transition, but the anchor comes FROM THE PROBLEM SCENE (e.g. an overflowing drain, a cluttered room, a worried face at home), never from a product. **CUSTOMER-COHERENCE:** If the hook depicts a person (the sufferer), render them the SAME gender and approximate age as the Character/customer described in this brief — the hook sufferer IS the same person who later tells the testimonial, so they must not differ in gender.` : `**HOOK END-FRAME = RESOLVED REVEAL (Scene 1 endFramePrompt):** The hook's end frame is the moment AFTER the transition completes — the product is ALREADY fully revealed, sitting still and intact in frame. Describe ONLY that finished state (e.g., "The [product] sitting centered on a clean counter, front label facing camera, sharp focus"). Do NOT narrate the reveal itself (no "disintegrating to reveal", no "pixels forming into"). NO people, faces, hands, or bodies in the hook end frame unless the avatar is explicitly the subject of the reveal.
+      ${isServices ? `**HOOK FRAMES (Scene 1, Services) = THE PROBLEM, NO product reveal:** The start and end frames depict the real-world PROBLEM moment (the mess, the worry, the before-state) as an environment / object / situation — authentically Filipino and humble. There is NO product to reveal; do NOT place, "reveal", or invent any gadget, device, branded vehicle, uniform, or imported equipment in the hook. Keep both stills STATIC. The two frames MAY share one named dominant color + silhouette position for a clean transition, but the anchor comes FROM THE PROBLEM SCENE (e.g. an overflowing drain, a cluttered room, a worried face at home), never from a product. **CUSTOMER-COHERENCE:** If the hook depicts a person (the sufferer), render them the SAME gender and approximate age as the Character/customer described in this brief — the hook sufferer IS the same person who later tells the testimonial, so they must not differ in gender.` : isUGCPro ? `**HOOK FRAMES (Scene 1, UGC Pro) = A HARD CUT, NOT A MORPH:** This format has NO transition
+      into scene 2 — the cut IS the effect. Scene 1 emits a SINGLE \`imagePrompt\` exactly like scenes
+      2+. Do NOT emit \`startFramePrompt\`, \`endFramePrompt\`, or \`transitionEffect\` for Scene 1 or for
+      ANY scene. There is no metaphor still, no anchor color, no silhouette match, no reveal. The
+      hook is the creator, on camera, in the room where the whole ad happens — talking. Keep the
+      still STATIC (STILL_FRAME_RULE applies in full).` : `**HOOK END-FRAME = RESOLVED REVEAL (Scene 1 endFramePrompt):** The hook's end frame is the moment AFTER the transition completes — the product is ALREADY fully revealed, sitting still and intact in frame. Describe ONLY that finished state (e.g., "The [product] sitting centered on a clean counter, front label facing camera, sharp focus"). Do NOT narrate the reveal itself (no "disintegrating to reveal", no "pixels forming into"). NO people, faces, hands, or bodies in the hook end frame unless the avatar is explicitly the subject of the reveal.
 
       **HOOK ANCHOR RULE (Scene 1 startFramePrompt + endFramePrompt):** The two stills MUST share ONE named concrete anchor: the SAME dominant color (named in BOTH prompts) AND the SAME silhouette occupying the SAME position in frame. **The anchor color comes FROM THE PRODUCT.** Derive the shared dominant color from the product's actual uploaded packaging, then design the START frame's subject/setting to carry that color naturally. NEVER recolor, mute, or restyle the product's packaging to match the start frame — the uploaded product photo is ground truth for the end frame. (e.g., product = vibrant orange coffee bag → start = "dark coffee grounds beside a burnt-orange ceramic mug, warm orange light, centered, filling the lower third of frame" → end = "the vibrant orange coffee bag, centered, filling the lower third of frame"). State the anchor color and the silhouette position explicitly in BOTH prompts. A morph between two frames that do not share color + silhouette position forces the video model to interpolate through formless flesh-toned mush — the single worst failure mode for the hook.`}
 
@@ -1248,6 +1329,7 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
       Scene 1's "referenceImage" tag applies to the END frame (the reveal payoff) ONLY — the START frame is always the metaphor/"before" still and never carries a product reference.
       - "product" (or "both" if the avatar is also in the reveal) — the hook's END frame reveals the ACTUAL hero product (the real labeled package materializes, the morph resolves into the real product, the explosion/teleport reveals the real product).
       - "none" — the hook is a pure abstract metaphor (coffee-ring, dumped beans, environment-only) OR the end frame shows only a categorical look-alike, not the actual hero product. The CRITICAL ANTI-PATTERN above applies in full: a generic look-alike stays "none".
+      - (UGC Pro has no Scene 1 end frame — this rule does not apply; classify its single image like a Scene 2+ shot.)
 
       ${venueSlotRouting}
       **OUTPUT SCHEMA (CRITICAL):**
@@ -1263,6 +1345,16 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
         "endFramePrompt": "Static composition of the FINAL FROZEN FRAME — describe the world-state at moment 2 as a still photograph. No motion verbs (see STILL_FRAME_RULE).",
         "transitionEffect": "Name of the VFX that animates between the two stills (the only field where motion lives)."
       }
+
+      - IF SCENE 1 (HOOK) AND the strategy is UGC PRO — same shape as Scene 2+, NO frame pair:
+      {
+        "scriptLine": "...",
+        "sceneDescription": "...",
+        "referenceImage": "both" | "avatar" | "none",
+        "venueSlot": "onbody",   // OPTIONAL — set per VENUE_SLOT_ROUTING; omit when none fits
+        "imagePrompt": "Description of the single image"
+      }
+      NEVER emit "startFramePrompt", "endFramePrompt", or "transitionEffect" in a UGC Pro storyboard.
 
       - IF SCENE 2 onwards:
       {
