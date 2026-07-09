@@ -154,7 +154,8 @@ default (renderer), 12–18s default runtime, product/subject in frame ≤3s.
 **Build slices (each build-gated + brand-checked + gemini-eval'd; implementation → code-executor):**
 - Slice 1: ✅ **SHIPPED 2026-07-09** — types + classifier + adscript branch (TRY-ON +
   TRANSFORMATION) + One-Shot picker, wired end-to-end. See Execution Log below.
-- Slice 2: storyboard branch + hard-cut hook + product-state slots + routing.
+- Slice 2: ✅ **SHIPPED 2026-07-09** — storyboard branch + hard-cut hook + product-state
+  slots + routing, wired end-to-end. See Execution Log below.
 - Slice 3: remaining 3 sub-formats + ASMR flag + caption defaults.
 - Slice 4: services/RE flavors + regression (gemini-eval per sub-format) + docs.
 
@@ -211,6 +212,63 @@ range); beat-1 verb reinforcement (posed "Eto ang [product]" ban).
    cosmetic); consider a shorter label. Optional: smoke-tester click-through
    confirming `ugcProFormat` in the request payload.
 5. Step2BusinessInfo wizard picker card (plan item 6) deferred out of Slice 1.
+
+### Slice 2 — SHIPPED 2026-07-09 (branch feat/niche-coverage-cheap-fixes, 8330741)
+
+**Built (§1–§5 of the approved plan `~/.claude/plans/cuddly-cooking-phoenix.md`):**
+- **§1 Sub-format propagation:** `Script.ugcProFormatResolved`; the `adscript` handler
+  returns it; client back-fills `businessInfo.ugcProFormat` (nullish — an explicit chip
+  pick is NEVER clobbered by the classifier) on all **three** live gen paths
+  (`producerOrchestrator`, `useOneShotGeneration`, `Step3AdScript` via a new optional
+  `setBusinessInfo` prop). Storyboard now always agrees with the script, even on Auto.
+- **§2 TUNED storyboard branch** (`buildStoryboardPrompt`): `isUGCPro` strategy arm with
+  TRY-ON + Before&After beat skeletons + continuous-performance grammar; **hard cuts only**
+  — Scene 1 emits a single `imagePrompt`, no start/end frames, no `transitionEffect` (the
+  P3 hard-cut hook ships here, prompt-only — the renderer already degrades to a still when
+  the frame pair is absent, via `isHookMorph`). Hook block made 3-way (Services/UGCPro/
+  morph); **PACING RULE 3-consecutive-avatar ban LIFTED for UGCPro** (deliberately one
+  performer); OUTPUT SCHEMA gains the frameless Scene-1 shape. Unimplemented sub-formats
+  degrade to Before&After, not the generic morph strategy.
+- **§3 Reliability (the carried big one):** deterministic `hasApplicationVerb` guard
+  (`capHookLine` pattern) + **detect-and-re-roll-ONCE** in `api/gemini/text.ts` when
+  TRANSFORMATION `body[0]` lacks an application verb. Neil's call: re-roll, never
+  regex-rewrite the model's line (matches the roll-5/5 behavior that actually passed).
+- **§4 Product-state slots:** `hero`/`onbody`/`packaging`/`inuse` added to both type
+  unions; `UGCPRO_UPLOAD_SLOTS` (hero-first invariant) + One-Shot guided tiles;
+  `venueSlot` routing + product `slotLegend` opened to UGCPro (one tuned legend line).
+- **§5 Ride-alongs (all 4):** TRY-ON line hygiene (mandatory keep-it verdict; no hook-echo
+  opener) + CTA borrowed-verb guard (both TUNED); Step2 sub-format picker card (parity
+  with One-Shot chips); "Before & After" replaces the lopsided-at-375px "TRANSFORMATION".
+
+**Verified:** build-gate PASS · **565 tests** (+10 new: verb guard, propagation nullish-
+preserve, storyboard branch content/absence assertions, hero-first invariant) · client-
+bundle leak-check **0** for all crown-jewel phrases · brand-check (adversarial critic,
+blind) **BRAND_PASS_WITH_NITS 38/50, 0 CRITICAL** — 3 nits fixed (shrink-0 + w-5/gap-3 on
+the Step2 header icon; tile desc 10px→11px; chip `text-center leading-tight`).
+
+**Both plan landmines handled** (they were the easiest to miss): the hook block was a hard
+`isServices ? … : …` binary that would have fed UGCPro the morph HOOK ANCHOR RULE; and the
+PACING RULE would have forced metaphor B-roll into a format that forbids it.
+
+**Deferred (NOT done — do next session):**
+1. **Live DOM smoke** — auth-gated: app is OTP-only; the documented Gmail-OTP relay was
+   blocked by Claude Code's permission classifier (PII). Re-run once Neil pre-authenticates
+   the smoke session OR approves the Gmail read. Confirms: 3 chips render at 375px, Try-On
+   reveals hero-first `onbody` tile, `ugcProFormat` in the request payload. (Picker→intake
+   wiring is already unit-tested; this is real-DOM confirmation.)
+2. **gemini-eval** on a fresh TRY-ON + Before&After storyboard pair (burns Gemini quota via
+   a seeded gen) — assert hard cuts (no `transitionEffect`), same-avatar/same-location
+   continuity, no banned CTA phrases, no price leaks, Meta health-claim guardrail on
+   TRANSFORMATION. **Needs a Test Spec + Neil GO** (paid; `smoke_test_setup.md` gate).
+3. **Neil eyeballs a rendered TRY-ON output** before Slice 2 is "done-done" (Scene-6 lesson).
+4. Example assets for the new non-hero slots (onbody/packaging/before/after/inuse) — none
+   exist under `public/examples/`; tiles ship without a reference example. Generate via
+   `codex-image` when convenient.
+
+**Carried into Slice 3 (unchanged from the plan's Out-of-Scope):** unboxing/demo/tutorial
+sub-formats, ASMR flag, caption defaults (`renderPresets.ts`), `scriptStyleDetected` EDL
+keying for `ugcpro`, services/RE flavors, and folding `Step2BusinessInfo`'s duplicate slot
+lists into `guidedPhotoSlots.tsx`.
 
 ## Paste-ready kickoff (next session)
 
