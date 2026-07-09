@@ -156,7 +156,8 @@ default (renderer), 12–18s default runtime, product/subject in frame ≤3s.
   TRANSFORMATION) + One-Shot picker, wired end-to-end. See Execution Log below.
 - Slice 2: ✅ **SHIPPED 2026-07-09** — storyboard branch + hard-cut hook + product-state
   slots + routing, wired end-to-end. See Execution Log below.
-- Slice 3: remaining 3 sub-formats + ASMR flag + caption defaults.
+- Slice 3: ✅ **SHIPPED 2026-07-09** — 5-format family complete + ASMR + deterministic
+  caption/music identity. See Execution Log below.
 - Slice 4: services/RE flavors + regression (gemini-eval per sub-format) + docs.
 
 ## Verification
@@ -269,6 +270,47 @@ PACING RULE would have forced metaphor B-roll into a format that forbids it.
 sub-formats, ASMR flag, caption defaults (`renderPresets.ts`), `scriptStyleDetected` EDL
 keying for `ugcpro`, services/RE flavors, and folding `Step2BusinessInfo`'s duplicate slot
 lists into `guidedPhotoSlots.tsx`.
+
+### Slice 3 — SHIPPED 2026-07-09 (branch feat/niche-coverage-cheap-fixes, ea3fe17)
+
+**Built (two-phase: Phase A structural via code-executor, Phase B TUNED Neil-approved x1):**
+- **5-format family complete:** UNBOXING / DEMO / TUTORIAL adscript + storyboard arms
+  (verbatim skeletons per PRD §2/§3/§5); classifier 5-way with precedence rules;
+  honor-explicit widened to all 5 (**closed the bug-in-waiting:** an explicit Unboxing
+  pick was falling to a classifier that could only answer 2 ways).
+- **Deterministic render identity (Neil's call — never ask the EDL what we already
+  know):** `music.style` overridden to `'ugcpro'` when scriptType==='UGCPro' at both
+  live sites; `ROTATION.ugcpro=['hype']` ships the P1/P2 word-pop + gold caption bet;
+  `MUSIC_STYLE_PROMPTS.ugcpro` phone-shot lo-fi brief. TUNED EDL Rule 0a untouched —
+  before this a UGCPro ad detected as `testimonial` → CLEAN preset (no word-pop).
+- **ASMR v1 (prompt-register + defaults, NO TTS changes** — no whisper register exists
+  in the ElevenLabs surface; deliberate scope call): asmrFlag plumbed end-to-end;
+  Unboxing-only toggle (both composers, reset-on-switch, aria-pressed); ASMR REGISTER
+  (adscript) + ASMR TREATMENT (storyboard) gated blocks; captions + music seeded OFF
+  for ASMR runs via `utils/asmrSeeds.ts` (user-flippable — the taps ARE the audio).
+- Picker → 2×3 chip grid (holds at 375px, critic-verified with column math); slots:
+  unboxing = hero+packaging(required)+inuse, demo/tutorial = hero+inuse; hero-first.
+
+**Verified:** build-gate PASS · **608 tests** (+43 this slice) under the default vitest
+pool · client-bundle leak-check **0** across 7 phrases · brand-check (adversarial,
+blind) **BRAND_PASS_WITH_NITS 38/50, 0 CRITICAL** — 4 nits fixed (aria-pressed +
+no-fill toggle style on both surfaces; 44px floor on Step2's toggle; w-4 icon rhythm;
+stale Auto sub-label).
+
+**Known gaps / deferred (add to the Slice-2 deferred list):**
+1. **No static `ugcpro` music bed file** — a non-ASMR UGCPro render without a generated
+   bed degrades to no static music (warn + skip). Supply a bed or rely on the
+   ElevenLabs-generated path.
+2. An executor-reported vitest-threads crash did NOT reproduce under plain
+   `npm run test` in the main environment (608 green, default pool) — no action taken;
+   noted in case CI ever shows it (one-line fix would be `pool:'forks'`).
+3. Live DOM smoke (OTP auth wall — classifier blocked the Gmail relay), gemini-eval per
+   sub-format (Test Spec + Neil GO), Neil eyeballs an unboxing + TRY-ON render.
+4. Example assets for non-hero slots still missing (codex-image when convenient).
+
+**Carried into Slice 4:** services/RE flavors + regression sweep + docs (per original
+slice list); teaching Rule 0a `ugcpro` ONLY if gemini-eval shows EDL cut-pacing wrong;
+TTS whisper register (real ASMR read); Step2 duplicate-slot-list fold; static ugcpro bed.
 
 ## Paste-ready kickoff (next session)
 
