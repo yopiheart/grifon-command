@@ -69,15 +69,25 @@ Resume doc: `workflows/omni_edit_styles_plan.md` → **RESUME STATE** section
 Delete this section once `OMNI_STYLES_ENABLED` + `OMNI_STYLES_BETA_ALLOWLIST`
 are set in Vercel (the feature merged to main 2026-07-07, PR #47).
 
-## Dated: revert the main-model pin to Fable when credits refill
+## Dated: re-pin the main model OFF Fable after Jul 12, 2026
 
-**Decided 2026-07-07** (Neil + Claude — promo ended Jul 7 + Fable credits depleted):
-re-pinned `.claude/settings.json` `"model"` from `claude-fable-5` → `claude-opus-4-8`
-and updated the CLAUDE.md usage-budget bullet to match. The `code-executor` (Opus 4.8)
-and `smoke-tester` (Sonnet 5) frontmatter pins are unchanged.
+**Fixed 2026-07-09.** The main-loop pin in `.claude/settings.json` is back to
+`claude-fable-5`. Fable credits run **through Jul 12, 2026** (Neil, 2026-07-08).
 
-**Revert trigger:** when the Fable 5 weekly limit resets or credits are topped up
-(confirm via `/usage`), re-pin `"model": "claude-fable-5"` in `.claude/settings.json`
-and restore the CLAUDE.md usage-budget bullet. Until then, `/fable-mode` loads Fable's
-working discipline onto Opus as the quality hedge. Delete this section once Fable is
-restored.
+**What went wrong (do not repeat):** on 2026-07-07 the pin was flipped to
+`claude-opus-4-8` on the false belief that the promo had ended and credits were
+depleted. It had not. Neil kept picking Fable in the `/model` UI; the committed
+project pin silently overrode it, and two sessions of "Fable work" — including the
+Slice-4 plan and its tuned prompt drafts — actually ran on Opus 4.8. Nobody noticed
+until Neil cross-checked `/model` against `/context`.
+
+**The rule that would have caught it:** `.claude/settings.json` `"model"` OVERRIDES
+the `/model` picker. The picker's checkmark can show Fable while the session runs
+Opus. **Trust `/context`, not the checkmark.** A model claim in CLAUDE.md is not
+evidence — the pin and the runtime identity are.
+
+**Next trigger (after Jul 12, 2026):** when Fable credits lapse, re-pin
+`"model": "claude-opus-4-8"` in `.claude/settings.json`, update the CLAUDE.md
+usage-budget bullet, and note the date here. Until then `/fable-mode` is unnecessary
+— the main loop IS Fable. The `code-executor` (Opus 4.8) and `smoke-tester`
+(Sonnet 5) frontmatter pins are unchanged and correct.
