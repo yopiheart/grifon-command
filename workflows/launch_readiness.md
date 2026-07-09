@@ -6,6 +6,33 @@ This is the meta-workflow. It doesn't do the work itself — it points to the wo
 
 > **⏭ NEXT SESSION (2026-07-05+): THE LAUNCH TRAIN.** The launch gate is now the **unified One-Shot / First Cut "Producer" flow** — see the paste-ready kickoff in the 2026-07-05 section below. Everything in the older ⏭ pointer further down is historical (its items closed in the 2026-06-16/17 sections).
 
+## Neil's pending — parked 2026-07-09, resume next session
+
+**One-Shot format showcase.** Slice A shipped + pushed (`d8384a1`, branch
+`feat/niche-coverage-cheap-fixes`); full context, protocol and resume triggers live in
+[`oneshot_format_showcase.md`](oneshot_format_showcase.md). Nothing below is started.
+
+1. **Slice B — the sample render batch (Neil fires; ~10 producer runs).** This IS the `gemini-eval`
+   batch already owed from UGC Pro Slices 1–4 — **run it once, not twice.** Needs one hero product
+   whose photos cover every upload slot (`hero`, `onbody`, `packaging`, `before`, `after`, `inuse`);
+   skincare or a wearable gadget covers all ten recipes, most products cover fewer, and a recipe
+   with no footage gets no card. Winners → `public/samples/formats/` + the `SAMPLES` manifest;
+   failures → bugs.
+   **Do not ship Slice A to users before this lands** — the gallery is currently a wall of `Film`
+   icons, which is worse than the modal it replaced. Slice B is the feature; Slice A is the frame.
+2. **Open the PR** for `feat/niche-coverage-cheap-fixes` → `main` (not merged; Neil's call).
+3. **Propose "Recipe" to `UBIQUITOUS_LANGUAGE.md`** before the term leaks out of
+   `components/OneShotAd/` into service or prompt code.
+4. Carried gaps, not blockers: no live-DOM smoke (auth wall, **no dev bypass exists** —
+   `grifon_dev_unlock` gates plan-tier only, not `isAuthenticated`); `RecipeCard`'s hover-play and
+   touch Play-chip paths have **never executed** (dead until `SAMPLES` is populated — Slice B is
+   their first real test); "Recommended" badge specced but unrendered pending research-ranking.
+5. Deferred, with triggers in `oneshot_format_showcase.md`: **Ad Reference / "Steal This Ad"**
+   (approved in direction as a distinct third on-ramp — *not* Concierge; blocked on a cost/abuse
+   read, resume after Slice B) · **research-ranked recipes** (the move Higgsfield structurally
+   cannot copy) · **Library / Projects / Favorites** (blocked on an `App.tsx` shell refactor —
+   `DashboardSidebar` unmounts on module entry; sequence last).
+
 ## Status as of 2026-07-05 late (scene-image model eval — LITE_PASS, swap awaiting Neil's eyeball)
 
 Neil brought the Gemini Omni Flash sources; the session produced (1) roadmap item #18 (Omni
