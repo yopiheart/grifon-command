@@ -52,6 +52,7 @@ import {
   MODEL_FAST,
   SAFETY_SETTINGS,
   UGCPRO_CLASSIFIER_PROMPT,
+  UGCPRO_SERVICE_CLASSIFIER_PROMPT,
 } from '../../api/_lib/prompts.js';
 
 // --- 1. Load .env manually (no dotenv dep) -------------------------------
@@ -124,23 +125,58 @@ const fetchMock = vi.fn(async (url: any, init: any = {}) => {
     // NOTE: keep this config in sync with FLOW_REGISTRY.adscript in
     // api/gemini/text.ts. v1 covers adscript only.
     if (body.flow === 'adscript') {
-      // Mirror the FLOW_REGISTRY.adscript UGCPro sub-format resolution: honor an
-      // explicit tryon/transformation pick, otherwise auto-classify via MODEL_FAST.
-      let ugcProSubType: 'tryon' | 'transformation' | undefined;
+      // Mirror the FLOW_REGISTRY.adscript UGCPro sub-format resolution — the A4
+      // (Slice 4) businessType clamp in resolveUgcProSubType: realestate forces
+      // 'tutorial' with NO classifier call; service honors only its 2 legal picks
+      // (transformation/tutorial) else runs the 2-way SERVICE classifier; product
+      // keeps the 5-way behavior (honor explicit pick, else auto-classify).
+      let ugcProSubType:
+        | 'tryon'
+        | 'unboxing'
+        | 'demo'
+        | 'transformation'
+        | 'tutorial'
+        | undefined;
       if (body.input.businessInfo?.scriptType === 'UGCPro') {
-        const picked = body.input.businessInfo.ugcProFormat;
-        if (picked === 'tryon' || picked === 'transformation') {
+        const bi = body.input.businessInfo;
+        const picked = bi.ugcProFormat;
+        const bt = bi.businessType ?? 'product';
+        if (bt === 'realestate') {
+          ugcProSubType = 'tutorial';
+        } else if (bt === 'service') {
+          if (picked === 'transformation' || picked === 'tutorial') {
+            ugcProSubType = picked;
+          } else {
+            const clsResponse = await ai.models.generateContent({
+              model: MODEL_FAST,
+              contents: UGCPRO_SERVICE_CLASSIFIER_PROMPT(bi.product, bi.features),
+            } as any);
+            const clsText = clsResponse.text?.trim().toUpperCase() || '';
+            ugcProSubType = clsText.includes('TUTORIAL') ? 'tutorial' : 'transformation';
+          }
+        } else if (
+          picked === 'tryon' ||
+          picked === 'unboxing' ||
+          picked === 'demo' ||
+          picked === 'transformation' ||
+          picked === 'tutorial'
+        ) {
           ugcProSubType = picked;
         } else {
           const clsResponse = await ai.models.generateContent({
             model: MODEL_FAST,
-            contents: UGCPRO_CLASSIFIER_PROMPT(
-              body.input.businessInfo.product,
-              body.input.businessInfo.features
-            ),
+            contents: UGCPRO_CLASSIFIER_PROMPT(bi.product, bi.features),
           } as any);
           const clsText = clsResponse.text?.trim().toUpperCase() || '';
-          ugcProSubType = clsText.includes('TRYON') ? 'tryon' : 'transformation';
+          ugcProSubType = clsText.includes('TRYON')
+            ? 'tryon'
+            : clsText.includes('UNBOXING')
+              ? 'unboxing'
+              : clsText.includes('TUTORIAL')
+                ? 'tutorial'
+                : clsText.includes('DEMO')
+                  ? 'demo'
+                  : 'transformation';
         }
       }
       const prompt = buildAdScriptPrompt(body.input, undefined, ugcProSubType);
@@ -211,10 +247,21 @@ async function runScript(
   brand: string,
   offer: string,
   label: string,
-  opts?: { ugcProFormat?: 'tryon' | 'transformation'; minBodyLines?: number }
+  opts?: {
+    ugcProFormat?: 'tryon' | 'unboxing' | 'demo' | 'transformation' | 'tutorial';
+    businessType?: 'product' | 'service' | 'realestate';
+    listingPrice?: string;
+    minBodyLines?: number;
+  }
 ) {
   const result = await generateAdScript(
-    { ...fixture, scriptType, ...(opts?.ugcProFormat ? { ugcProFormat: opts.ugcProFormat } : {}) } as any,
+    {
+      ...fixture,
+      scriptType,
+      ...(opts?.ugcProFormat ? { ugcProFormat: opts.ugcProFormat } : {}),
+      ...(opts?.businessType ? { businessType: opts.businessType } : {}),
+      ...(opts?.listingPrice ? { listingPrice: opts.listingPrice } : {}),
+    } as any,
     brand,
     'Taglish',
     offer
@@ -332,6 +379,44 @@ const fashionFixture: BusinessInfoFixture = {
   separator: 'Squat-proof tested at hindi see-through, kahit light colors',
   features:
     'Seamless ribbed fabric · squat-proof · high-waist tummy support · 12 colors · sizes XS-3XL',
+  productImageUrls: [],
+  brandColors: '',
+};
+
+// UGC Pro fixture — SERVICE Before&After (Slice 4). A sofa/home deep-cleaning
+// business filmed in the operator's OWN voice (first-person operator, not a
+// customer testimonial), boarded as a hard-cut before→after. Exercises the
+// bt='service' transformation skeleton + the BOOK-DON'T-SELL / no-peso CTA guard.
+const sofaCleaningFixture: BusinessInfoFixture = {
+  product: 'On-site sofa & mattress deep-cleaning service (steam + deep-vacuum)',
+  audience:
+    'Metro Manila homeowners na kinikilabutan sa dumi ng sofa na 3 years nang hindi nalilinis',
+  benefit:
+    'Parang bagong sofa ulit sa loob ng isang araw, mala-hotel ang linis, safe para sa mga bata',
+  painPoint:
+    '3 AM, hindi makatulog iniisip kung gaano na kadumi ang matagal nang sofa bago dumating ang bisita',
+  separator: 'Steam muna bago deep-vacuum, same-day at hindi basta-basta na spray lang',
+  features:
+    'Steam clean · deep vacuum · same-day booking · safe sa bata at pets · before/after guarantee',
+  productImageUrls: [],
+  brandColors: '',
+};
+
+// UGC Pro fixture — REAL-ESTATE Tutorial (Slice 4). A condo listing boarded as
+// an agent-authority listicle (first-person agent on-site). listingPrice is set
+// so the LIVE run exercises the PRICE RULE "price-given" AFFORDABILITY REFRAME
+// path (monthly terms may be stated once, exactly as given).
+const condoFixture: BusinessInfoFixture = {
+  product: 'Pre-selling 1-bedroom condo unit near Ortigas CBD, 28sqm',
+  audience:
+    'First-time condo buyers 26-35 na natatakot sa hidden fees at magulong terms ng developer',
+  benefit:
+    'Move-in ready malapit sa trabaho, malinaw ang title at terms, walang gulat na singil',
+  painPoint:
+    '3 AM, hindi makatulog iniisip kung legit ba ang developer at kung kaya ba ng budget ang monthly',
+  separator: 'Malinis na title, transparent na terms, malapit sa MRT at CBD',
+  features:
+    'Clean title · transparent terms · low assoc dues · natural light · near MRT · flood-free',
   productImageUrls: [],
   brandColors: '',
 };
@@ -456,6 +541,47 @@ describe.skipIf(!SHOULD_RUN)('UGC Pro — Slice 1 (Try-On + Transformation)', ()
         'First 100 buyers get free dermatologist consultation + skincare assessment',
         'GLAZE PH — UGC PRO TRANSFORMATION',
         { ugcProFormat: 'transformation', minBodyLines: 3 }
+      );
+    },
+    120_000
+  );
+});
+
+// Slice 4 non-product verticals. Structural assertions only, mirroring the Slice 1
+// UGC Pro fixtures — CTA hygiene (no banned phrases, no peso amount in the service
+// CTA) and the real-estate PRICE RULE handling are audited from the printed console
+// output by the human / CMO reviewer, per this file's content-review convention.
+describe.skipIf(!SHOULD_RUN)('UGC Pro — Slice 4 (Service B&A + Real-Estate Tutorial)', () => {
+  it(
+    'BEFORE & AFTER (service — sofa deep-clean, operator voice + no-peso CTA)',
+    async () => {
+      await runScript(
+        sofaCleaningFixture,
+        'UGCPro',
+        'SofaFresh PH',
+        'Free re-clean if hindi satisfied',
+        'SOFAFRESH PH — UGC PRO SERVICE BEFORE&AFTER',
+        { ugcProFormat: 'transformation', businessType: 'service', minBodyLines: 3 }
+      );
+    },
+    120_000
+  );
+
+  it(
+    'TUTORIAL (real-estate — condo listicle, PRICE RULE live with listingPrice)',
+    async () => {
+      await runScript(
+        condoFixture,
+        'UGCPro',
+        'Amaia Ortigas',
+        'Free viewing schedule + full computation via DM',
+        'AMAIA ORTIGAS — UGC PRO REAL-ESTATE TUTORIAL',
+        {
+          ugcProFormat: 'tutorial',
+          businessType: 'realestate',
+          listingPrice: '25k/month',
+          minBodyLines: 3,
+        }
       );
     },
     120_000

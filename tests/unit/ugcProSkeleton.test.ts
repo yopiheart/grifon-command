@@ -112,3 +112,88 @@ describe('buildAdScriptPrompt — UGCPro ASMR register (unboxing only)', () => {
     expect(out).not.toContain('ASMR REGISTER');
   });
 });
+
+// Slice 4 (B1): non-product verticals reach UGC Pro. `businessInfo.businessType` gates
+// the operator/agent VOICE, the SERVICE/REAL-ESTATE skeleton variants, and the
+// BOOK-DON'T-SELL CTA guard. Legal combos only (service × {transformation, tutorial},
+// realestate × {tutorial}) — the A4 clamp enforces this upstream.
+describe('buildAdScriptPrompt — SERVICE variant (businessType:"service")', () => {
+  const svcInput = (sub: 'transformation' | 'tutorial'): AdScriptInput => ({
+    businessInfo: {
+      product: 'SofaFresh Deep Clean',
+      audience: 'Metro Manila homeowners',
+      benefit: 'A sofa that looks brand new',
+      painPoint: 'Years of stains and dust',
+      separator: 'Steam + deep-vacuum method',
+      features: 'steam clean, deep vacuum, same-day service',
+      scriptType: 'UGCPro',
+      businessType: 'service',
+      ugcProFormat: sub,
+    },
+    brandName: 'SofaFresh',
+    language: 'Taglish',
+    offer: 'Free re-clean if unsatisfied',
+    chosenAngleBrief: '',
+  });
+
+  it('service transformation → operator voice + service skeleton + BOOK-DONT-SELL, never the product creator voice', () => {
+    const out = buildAdScriptPrompt(svcInput('transformation'), undefined, 'transformation');
+    expect(out).toContain('FIRST-PERSON OPERATOR');
+    expect(out).toContain('SERVICE VARIANT');
+    expect(out).toContain("BOOK, DON'T SELL");
+    expect(out).toContain('derma, aesthetic, dental');
+    expect(out).not.toContain('FIRST-PERSON CREATOR');
+  });
+
+  it('service transformation header labels the input as a Service', () => {
+    const out = buildAdScriptPrompt(svcInput('transformation'), undefined, 'transformation');
+    expect(out).toContain('Service: "SofaFresh Deep Clean"');
+  });
+
+  it('service tutorial → authority-builder "ganito namin ginagawa" variant', () => {
+    const out = buildAdScriptPrompt(svcInput('tutorial'), undefined, 'tutorial');
+    expect(out).toContain('ganito namin ginagawa');
+    expect(out).toContain("BOOK, DON'T SELL");
+  });
+});
+
+describe('buildAdScriptPrompt — REAL-ESTATE variant (businessType:"realestate")', () => {
+  const reInput = (listingPrice?: string): AdScriptInput => ({
+    businessInfo: {
+      product: 'Amaia Steps Sucat 2BR',
+      audience: 'First-time condo buyers',
+      benefit: 'Move-in ready near the city',
+      painPoint: 'Confusing terms and hidden fees',
+      separator: 'Clean title, transparent terms',
+      features: 'clean title, natural light, low assoc dues',
+      scriptType: 'UGCPro',
+      businessType: 'realestate',
+      ugcProFormat: 'tutorial',
+      ...(listingPrice ? { listingPrice } : {}),
+    },
+    brandName: 'Amaia',
+    language: 'Taglish',
+    offer: 'Free viewing schedule',
+    chosenAngleBrief: '',
+  });
+
+  it('realestate tutorial → agent voice + agent-authority listicle + Listing header', () => {
+    const out = buildAdScriptPrompt(reInput(), undefined, 'tutorial');
+    expect(out).toContain('FIRST-PERSON AGENT ON-SITE');
+    expect(out).toContain('agent-authority listicle');
+    expect(out).toContain('Listing: "Amaia Steps Sucat 2BR"');
+    expect(out).not.toContain('FIRST-PERSON CREATOR');
+  });
+
+  it('renders the price-GIVEN rule when listingPrice is set', () => {
+    const out = buildAdScriptPrompt(reInput('25k/month'), undefined, 'tutorial');
+    expect(out).toContain('**PRICE RULE:** A price was given');
+    expect(out).not.toContain('**PRICE RULE:** NO price was given');
+  });
+
+  it('renders the NO-price INQUIRY-ONLY rule when listingPrice is absent', () => {
+    const out = buildAdScriptPrompt(reInput(), undefined, 'tutorial');
+    expect(out).toContain('**PRICE RULE:** NO price was given');
+    expect(out).not.toContain('**PRICE RULE:** A price was given');
+  });
+});

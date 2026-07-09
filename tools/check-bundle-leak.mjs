@@ -36,6 +36,9 @@ const CROWN_JEWEL_MARKERS = [
   'APPEARANCE_LOCK_RULE',
   'BAG_ORIENTATION_RULE',
   'VIRAL VFX MENU',
+  'ONE OPERATOR, ONE JOBSITE',
+  'agent-authority listicle',
+  'FIRST-PERSON OPERATOR',
 ];
 
 const DIST = 'dist';

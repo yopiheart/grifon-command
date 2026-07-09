@@ -38,6 +38,16 @@ The sections below are the technical-vocabulary deep dives — wizard internals 
 | **Visual Theme** | A reusable look-and-feel preset (vibe, texture prompt, color palette) applied across **Storyboard** generation. | Style, aesthetic |
 | **AllData** | The bundled wizard state passed downstream — Client Details + Business Info + Script + Avatar + Storyboard + Video Prompts + thumbnail + aspect ratio. | Project, session, payload |
 
+## UGC Pro voices & sub-format gating (Slice 4, 2026-07-09)
+
+| Term | Definition | Aliases to avoid |
+| --- | --- | --- |
+| **UGC Pro** | The creator-video script type (`scriptType: 'UGCPro'`): a continuous performance by ONE person, hard cuts only, 10–16s spoken. Five sub-formats: Try-On, Unboxing, Demo, Before & After (transformation), Tutorial. | UGC (that's the Temu/haul format), creator ad |
+| **Operator voice** | The UGC Pro speaker for a SERVICE business: the operator/practitioner filming their OWN work ("tinatanggal namin 'to sa apat na hakbang"). First-person-plural company speech is CORRECT here — the one place it is. | Company voice, spokesperson |
+| **Customer voice** | The Services (testimonial) script-type speaker: a real CUSTOMER telling their story ("Ako si Elena,"). NEVER the business pitching itself. UGC Pro's Operator voice explicitly overrides this rule for UGC Pro only. | Testimonial voice |
+| **Agent on-site voice** | The UGC Pro speaker for REAL ESTATE: the agent filming at the property, phone-shot, tip-led. Distinct from the RealEstate walkthrough's polished agent tour. | Walkthrough voice |
+| **Sub-format gating** | Which UGC Pro sub-formats each vertical may pick: product = all five; service = Before & After + Tutorial; real estate = Tutorial only (forced). Enforced in both composers and by the server-side classifier clamp. | Format lock |
+
 ## Dashboard modules (the eleven standalone tools)
 
 Each module has TWO names, both canonical in their own layer: the **Term** below (used in code, types, prompts, and planning) and a branded **user-facing display name** from the registry at `config/moduleIdentity.ts` (used on every UI surface — sidebar rail, tiles, command palette — always paired with a one-line outcome descriptor). Internal `activeModule` keys never change; renaming a display name is a one-line registry edit.

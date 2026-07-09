@@ -131,3 +131,45 @@ describe('buildStoryboardPrompt — UGCPro venueSlotRouting', () => {
     expect(out).toContain('For UGC Pro, the creator IS in nearly every scene');
   });
 });
+
+// Slice 4 (B2): the storyboard prompt gains bt-gated non-product UGC Pro arms — the
+// SERVICE before/after + tutorial jobsite boards and the REAL-ESTATE property board —
+// each grafting the PHILIPPINE GROUND-TRUTH REALISM block and its own slot legend.
+describe('buildStoryboardPrompt — non-product UGC Pro arms', () => {
+  it('service transformation → ONE OPERATOR, ONE JOBSITE + PH realism + service routing, no product onbody slot', () => {
+    const bi = businessInfo({
+      businessType: 'service',
+      ugcProFormat: 'transformation',
+      servicePhotos: [{ url: 'https://example.com/before.jpg', slot: 'before' }],
+    });
+    const out = buildStoryboardPrompt(storyboardInput(bi));
+    expect(out).toContain('ONE OPERATOR, ONE JOBSITE');
+    expect(out).toContain('PHILIPPINE GROUND-TRUTH REALISM');
+    expect(out).toContain('JOBSITE, the WORK, or the BEFORE/AFTER');
+    expect(out).not.toContain('-> onbody');
+  });
+
+  it('service tutorial → the Tutorial — SERVICE jobsite board', () => {
+    const bi = businessInfo({ businessType: 'service', ugcProFormat: 'tutorial' });
+    const out = buildStoryboardPrompt(storyboardInput(bi));
+    expect(out).toContain('Tutorial — SERVICE');
+    expect(out).toContain('ONE OPERATOR, ONE JOBSITE');
+  });
+
+  it('realestate → ONE AGENT, ONE PROPERTY + the facade slot legend', () => {
+    const bi = businessInfo({
+      businessType: 'realestate',
+      ugcProFormat: 'tutorial',
+      servicePhotos: [{ url: 'https://example.com/facade.jpg', slot: 'facade' }],
+    });
+    const out = buildStoryboardPrompt(storyboardInput(bi));
+    expect(out).toContain('ONE AGENT, ONE PROPERTY');
+    expect(out).toContain('-> facade');
+  });
+
+  it('regression: the Services scriptType arm still grafts PHILIPPINE GROUND-TRUTH REALISM', () => {
+    const bi = businessInfo({ scriptType: 'Services', ugcProFormat: undefined });
+    const out = buildStoryboardPrompt(storyboardInput(bi));
+    expect(out).toContain('PHILIPPINE GROUND-TRUTH REALISM');
+  });
+});

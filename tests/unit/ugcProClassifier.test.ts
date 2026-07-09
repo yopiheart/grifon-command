@@ -1,6 +1,7 @@
-import { describe, it, expect } from 'vitest';
-import { parseUgcProClassifierResponse } from '../../api/gemini/text.js';
+import { describe, it, expect, vi } from 'vitest';
+import { parseUgcProClassifierResponse, resolveUgcProSubType } from '../../api/gemini/text.js';
 import { UGCPRO_CLASSIFIER_PROMPT } from '../../api/_lib/prompts.js';
+import type { BusinessInfo } from '../../types.js';
 
 // The UGC Pro classifier returns ONE word (TRYON | UNBOXING | DEMO | TRANSFORMATION |
 // TUTORIAL). The parser uppercase-matches the reply and defaults to 'transformation' on
@@ -58,5 +59,101 @@ describe('UGCPRO_CLASSIFIER_PROMPT — the 5-format instruction text', () => {
 
   it('carries the precedence rules that break format ties', () => {
     expect(prompt).toContain('Precedence rules');
+  });
+});
+
+// Slice 4 (A4): resolveUgcProSubType clamps the classifier dispatch by businessType
+// BEFORE any Gemini call. A spy `ai` lets us assert BOTH which classifier fires and
+// whether it fires at all — realestate and honored-explicit picks must never call.
+describe('resolveUgcProSubType — businessType classifier clamp', () => {
+  const spyAi = (reply: string) => {
+    const generateContent = vi.fn(async () => ({ text: reply }));
+    return { ai: { models: { generateContent } } as any, generateContent };
+  };
+
+  const bi = (over: Partial<BusinessInfo> = {}): BusinessInfo => ({
+    product: 'SofaFresh Deep Clean',
+    audience: 'Metro Manila homeowners',
+    benefit: 'A sofa that looks brand new',
+    painPoint: 'Years of stains and dust',
+    separator: 'Steam + deep-vacuum method',
+    features: 'steam clean, deep vacuum, same-day',
+    scriptType: 'UGCPro',
+    ...over,
+  });
+
+  it("realestate → 'tutorial' and NEVER calls the classifier", async () => {
+    const { ai, generateContent } = spyAi('TRANSFORMATION');
+    const sub = await resolveUgcProSubType(bi({ businessType: 'realestate' }), ai);
+    expect(sub).toBe('tutorial');
+    expect(generateContent).not.toHaveBeenCalled();
+  });
+
+  it("realestate ignores an (illegal) explicit product pick and still resolves 'tutorial' with no call", async () => {
+    const { ai, generateContent } = spyAi('TRANSFORMATION');
+    const sub = await resolveUgcProSubType(bi({ businessType: 'realestate', ugcProFormat: 'tryon' }), ai);
+    expect(sub).toBe('tutorial');
+    expect(generateContent).not.toHaveBeenCalled();
+  });
+
+  it("service + explicit 'transformation' is honored with no classifier call", async () => {
+    const { ai, generateContent } = spyAi('TUTORIAL');
+    const sub = await resolveUgcProSubType(bi({ businessType: 'service', ugcProFormat: 'transformation' }), ai);
+    expect(sub).toBe('transformation');
+    expect(generateContent).not.toHaveBeenCalled();
+  });
+
+  it("service + explicit 'tutorial' is honored with no classifier call", async () => {
+    const { ai, generateContent } = spyAi('TRANSFORMATION');
+    const sub = await resolveUgcProSubType(bi({ businessType: 'service', ugcProFormat: 'tutorial' }), ai);
+    expect(sub).toBe('tutorial');
+    expect(generateContent).not.toHaveBeenCalled();
+  });
+
+  it('service + Auto (undefined) runs the 2-way SERVICE classifier prompt', async () => {
+    const { ai, generateContent } = spyAi('TUTORIAL');
+    const sub = await resolveUgcProSubType(bi({ businessType: 'service', ugcProFormat: undefined }), ai);
+    expect(sub).toBe('tutorial');
+    expect(generateContent).toHaveBeenCalledTimes(1);
+    const sent = generateContent.mock.calls[0][0].contents as string;
+    expect(sent).toContain('Output ONLY one word: TRANSFORMATION or TUTORIAL');
+    // must NOT be the 5-way prompt
+    expect(sent).not.toContain('TRYON, UNBOXING, DEMO');
+  });
+
+  it("service + illegal explicit 'tryon' falls to the 2-way SERVICE classifier", async () => {
+    const { ai, generateContent } = spyAi('TRANSFORMATION');
+    const sub = await resolveUgcProSubType(bi({ businessType: 'service', ugcProFormat: 'tryon' }), ai);
+    expect(sub).toBe('transformation');
+    expect(generateContent).toHaveBeenCalledTimes(1);
+    const sent = generateContent.mock.calls[0][0].contents as string;
+    expect(sent).toContain('Output ONLY one word: TRANSFORMATION or TUTORIAL');
+  });
+
+  it('product + explicit pick honors all 5 with no classifier call', async () => {
+    for (const fmt of ['tryon', 'unboxing', 'demo', 'transformation', 'tutorial'] as const) {
+      const { ai, generateContent } = spyAi('DEMO');
+      const sub = await resolveUgcProSubType(bi({ businessType: 'product', ugcProFormat: fmt }), ai);
+      expect(sub).toBe(fmt);
+      expect(generateContent).not.toHaveBeenCalled();
+    }
+  });
+
+  it('product + Auto (undefined) runs the 5-way classifier prompt (unchanged)', async () => {
+    const { ai, generateContent } = spyAi('UNBOXING');
+    const sub = await resolveUgcProSubType(bi({ businessType: 'product', ugcProFormat: undefined }), ai);
+    expect(sub).toBe('unboxing');
+    expect(generateContent).toHaveBeenCalledTimes(1);
+    const sent = generateContent.mock.calls[0][0].contents as string;
+    expect(sent).toContain('Output ONLY one word: TRYON, UNBOXING, DEMO, TRANSFORMATION, or TUTORIAL.');
+  });
+
+  it('undefined businessType behaves as product (5-way on Auto)', async () => {
+    const { ai, generateContent } = spyAi('TRYON');
+    const sub = await resolveUgcProSubType(bi({ businessType: undefined, ugcProFormat: undefined }), ai);
+    expect(sub).toBe('tryon');
+    expect(generateContent).toHaveBeenCalledTimes(1);
+    const sent = generateContent.mock.calls[0][0].contents as string;
+    expect(sent).toContain('Output ONLY one word: TRYON, UNBOXING, DEMO, TRANSFORMATION, or TUTORIAL.');
   });
 });

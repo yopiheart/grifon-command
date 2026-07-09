@@ -158,7 +158,9 @@ default (renderer), 12–18s default runtime, product/subject in frame ≤3s.
   slots + routing, wired end-to-end. See Execution Log below.
 - Slice 3: ✅ **SHIPPED 2026-07-09** — 5-format family complete + ASMR + deterministic
   caption/music identity. See Execution Log below.
-- Slice 4: services/RE flavors + regression (gemini-eval per sub-format) + docs.
+- Slice 4: ✅ **SHIPPED 2026-07-09** — services/RE reach + flavors (operator/agent
+  voice, service B&A + tutorial, RE tutorial) + classifier clamp + regression
+  fixtures + docs. See Execution Log below. gemini-eval deferred to the batch gate.
 
 ## Verification
 Per slice: `npm run build` + `npm run test` + new unit tests (classifier
@@ -312,14 +314,54 @@ stale Auto sub-label).
 slice list); teaching Rule 0a `ugcpro` ONLY if gemini-eval shows EDL cut-pacing wrong;
 TTS whisper register (real ASMR read); Step2 duplicate-slot-list fold; static ugcpro bed.
 
-## Paste-ready kickoff (next session — Slice 4)
+### Slice 4 — SHIPPED 2026-07-09 (branch feat/niche-coverage-cheap-fixes; Phase A 59da67a, Phase B/C this commit)
 
-> Read `CLAUDE.md` and `workflows/ugc_pro_formats_plan.md` (in full — Slices 1–3
-> are SHIPPED on `feat/niche-coverage-cheap-fixes`, see the Execution Log).
-> Execute **Slice 4: services/RE flavors + regression + docs**, plus the carried
-> items in the Slice-3 log (static ugcpro music bed; Rule 0a only if eval says
-> so). Plan mode first; two-phase execution (structural via code-executor, TUNED
-> shown to me verbatim before applying); draft the /goal per the Plan→Goal
-> pipeline citing the build-gate pass message. NOTE Neil's standing call
-> 2026-07-09: NO smoke/gemini-eval per slice — all evaluation runs as ONE batch
-> after the slices land (deferred-gates lists in the Slice 2 + 3 logs).
+**Built (three-phase: A structural via code-executor 59da67a; B TUNED drafted → Neil
+APPROVED verbatim → applied in main loop; C tests via code-executor):**
+- **Phase A (59da67a):** `businessType` as the vertical's own field on `ProductionInput`
+  (both defs); LaunchScreen format axis unlocked for service/RE with per-vertical
+  sub-format chips; Step2 UGC Pro card in all three groups + the `productOk` clobber
+  LIVE BUG fixed; `MUSIC_BED_ALIAS ugcpro → testimonial` (a real ugcpro.mp3 supersedes
+  with no code change). Details in the Phase-A commit message.
+- **Phase B (TUNED, Neil-approved 2026-07-09):** all gated on
+  `bt = businessInfo.businessType ?? 'product'` —
+  - adscript: FIRST-PERSON OPERATOR voice (service — explicitly overrides the Services
+    customer-voice rule for UGC Pro only) + AGENT ON-SITE voice (RE); service B&A
+    skeleton (the WORK is the mechanism, book CTA); service Tutorial ("ganito namin
+    ginagawa" authority-builder); RE Tutorial (agent-authority listicle + the hoisted
+    PRICE RULE — same string, single source now); appearance guardrail extended to
+    derma/aesthetic/dental/clinic results; "BOOK, DON'T SELL" line in the SOFT CTA
+    GUARD for non-product only.
+  - storyboard: service B&A / service Tutorial / RE Tutorial continuous-performance
+    arms; PHILIPPINE GROUND-TRUTH REALISM blocks extracted to consts (byte-identical)
+    and grafted into the non-product arms; slotLegend + venueSlot routing switched to
+    the service/RE legends for non-product runs.
+  - `UGCPRO_SERVICE_CLASSIFIER_PROMPT` (2-way: TRANSFORMATION vs TUTORIAL).
+- **Phase C + A4:** classifier clamp in `api/gemini/text.ts` via exported
+  `resolveUgcProSubType` — realestate → forced `'tutorial'`, NO Gemini call; service →
+  honor explicit transformation/tutorial else the 2-way classifier; product unchanged.
+  +31 unit tests (product-path invariance, clamp with never-invoked mock assertions,
+  prompt-branch substrings, storyboard branches) + 2 skip-gated live regression
+  fixtures (services B&A cleaning, RE tutorial with listingPrice).
+
+**Verified:** build-gate PASS · **664 tests** (+31 this slice) · client-bundle
+leak-check **0** with 3 new marker phrases (`ONE OPERATOR, ONE JOBSITE`,
+`agent-authority listicle`, `FIRST-PERSON OPERATOR`) · **byte-for-byte invariance
+proven by diff**: all 17 pre-edit fixtures (5 product subs × adscript+storyboard,
+ASMR unboxing, Services, RE priced/unpriced) dumped before and after the Phase-B
+edits — zero bytes changed. UBIQUITOUS_LANGUAGE.md gained the Operator/Customer/
+Agent-on-site voice distinction + sub-format gating.
+
+**Deferred to the batch gate (Neil's standing call 2026-07-09 — ONE batch after all
+slices):** gemini-eval per sub-format (now incl. service B&A + RE tutorial), live DOM
+smoke (OTP wall), Neil eyeballs rendered outputs (try-on, unboxing, and now a service
+B&A). Carried (unchanged): EDL Rule 0a `ugcpro` ONLY if eval says so; TTS whisper
+register; Step2 duplicate-slot-list fold; real `ugcpro.mp3` bed; example assets for
+non-hero slots (codex-image).
+
+## Next session: the batch evaluation gate
+
+> All 4 slices are SHIPPED on `feat/niche-coverage-cheap-fixes`. What remains is the
+> deferred batch gate (lists in the Slice 2/3/4 logs): write the Test Spec, get
+> Neil's GO (paid Gemini quota), run gemini-eval per sub-format, live DOM smoke once
+> Neil pre-authenticates, and Neil eyeballs rendered outputs. Then the PR.

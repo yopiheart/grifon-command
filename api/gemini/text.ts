@@ -33,6 +33,7 @@ import {
   buildMarketMindParts,
   TEMU_CLASSIFIER_PROMPT,
   UGCPRO_CLASSIFIER_PROMPT,
+  UGCPRO_SERVICE_CLASSIFIER_PROMPT,
   buildAdScriptPrompt,
   parseAdScriptResponse,
   hasApplicationVerb,
@@ -113,6 +114,57 @@ const classifyUgcProServerSide = async (
   return parseUgcProClassifierResponse(response.text ?? '');
 };
 
+// Slice 4 (A4): services-constrained sibling of the 5-way classifier. A SERVICE
+// business can only answer TRANSFORMATION or TUTORIAL (try-on/unboxing/demo are
+// product-only), so this uses the 2-way service prompt and mirrors the 5-way's
+// default: an unrecognized reply falls through to 'transformation'.
+const classifyUgcProServiceServerSide = async (
+  product: string,
+  description: string,
+  ai: GoogleGenAI
+): Promise<'transformation' | 'tutorial'> => {
+  const response = await ai.models.generateContent({
+    model: MODEL_FAST,
+    contents: UGCPRO_SERVICE_CLASSIFIER_PROMPT(product, description),
+  } as any);
+  logModelUsage('flow:adscript:ugcpro-service-classify', MODEL_FAST, (response as any).usageMetadata);
+  return (response.text ?? '').toUpperCase().includes('TUTORIAL') ? 'tutorial' : 'transformation';
+};
+
+// Slice 4 (A4): resolve the UGC Pro sub-format, clamping the classifier dispatch by
+// businessType BEFORE any Gemini call. Non-product verticals have fewer legal formats
+// than the product 5-way, so they never over-call the classifier:
+//   - realestate → exactly ONE legal answer ('tutorial') → NO Gemini call.
+//   - service    → TWO legal answers; honor an explicit 'transformation'/'tutorial'
+//                  pick, otherwise (Auto or an illegal product-only pick) run the
+//                  2-way service classifier.
+//   - product (or undefined) → EXACTLY the pre-Slice-4 behavior: honor any of the 5
+//                  explicit picks, else the 5-way classifier on the Auto path.
+// Exported for unit tests (the clamp is asserted with a spy `ai`).
+export const resolveUgcProSubType = async (
+  businessInfo: AdScriptInput['businessInfo'],
+  ai: GoogleGenAI
+): Promise<UgcProSubType> => {
+  const chosen = businessInfo.ugcProFormat;
+  const bt = businessInfo.businessType ?? 'product';
+  if (bt === 'realestate') return 'tutorial';
+  if (bt === 'service') {
+    return chosen === 'transformation' || chosen === 'tutorial'
+      ? chosen
+      : classifyUgcProServiceServerSide(businessInfo.product, businessInfo.features, ai);
+  }
+  if (
+    chosen === 'tryon' ||
+    chosen === 'unboxing' ||
+    chosen === 'demo' ||
+    chosen === 'transformation' ||
+    chosen === 'tutorial'
+  ) {
+    return chosen;
+  }
+  return classifyUgcProServerSide(businessInfo.product, businessInfo.features, ai);
+};
+
 type FlowHandler = (input: any, ai: GoogleGenAI) => Promise<unknown>;
 
 const FLOW_REGISTRY: Record<string, FlowHandler> = {
@@ -146,24 +198,10 @@ const FLOW_REGISTRY: Record<string, FlowHandler> = {
     }
     let ugcProSubType: UgcProSubType | undefined;
     if (input.businessInfo.scriptType === 'UGCPro') {
-      const chosen = input.businessInfo.ugcProFormat;
-      // Honor any of the 5 explicit sub-format picks; only the undefined 'Auto'
-      // path falls through to the server-side classifier.
-      if (
-        chosen === 'tryon' ||
-        chosen === 'unboxing' ||
-        chosen === 'demo' ||
-        chosen === 'transformation' ||
-        chosen === 'tutorial'
-      ) {
-        ugcProSubType = chosen;
-      } else {
-        ugcProSubType = await classifyUgcProServerSide(
-          input.businessInfo.product,
-          input.businessInfo.features,
-          ai
-        );
-      }
+      // A4: businessType-clamped dispatch — realestate forces 'tutorial' (no Gemini
+      // call), service honors only its 2 legal picks / else the 2-way classifier,
+      // product keeps the pre-Slice-4 5-way behavior. See resolveUgcProSubType.
+      ugcProSubType = await resolveUgcProSubType(input.businessInfo, ai);
     }
     const prompt = buildAdScriptPrompt(input, temuSubType, ugcProSubType);
     // Single-shot generate + parse. Extracted so the transformation verb-reroll
