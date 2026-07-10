@@ -21,6 +21,20 @@ shell command), so this doc is the restore mechanism: paste the command to re-ar
 > surfaces every `/loop` line in this file automatically at session start — keep new
 > re-arm commands on their own line starting with `/loop` so the hook picks them up.
 
+## Tooling: Codex CLI (codex-image + codex-executor / GPT 5.6 Sol lane) — wiped by defreezer
+
+Both Codex bridge skills (`.claude/skills/codex-image/`, `.claude/skills/codex-executor/`)
+need the Codex CLI installed and logged in. The defreezer wipes `~/.codex/` and the
+global npm install every reboot — re-arm with:
+
+```
+scripts/restore-codex.ps1
+```
+
+(Neil signs in with the ChatGPT account when `codex login` prompts.) If the Sol
+executor lane exits 10/11/12 mid-session, the fallback SOP is: dispatch the same
+brief to the `code-executor` subagent (Opus 4.8) — see the skill's SKILL.md.
+
 ## Tooling: Python — wiped by defreezer
 
 `tools/*.py` (omni_edit, analyze_video, …) need Python; the defreezer removes it every
