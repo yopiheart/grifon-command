@@ -83,15 +83,27 @@ Resume doc: `workflows/omni_edit_styles_plan.md` → **RESUME STATE** section
 Delete this section once `OMNI_STYLES_ENABLED` + `OMNI_STYLES_BETA_ALLOWLIST`
 are set in Vercel (the feature merged to main 2026-07-07, PR #47).
 
-## Dated: revert the main-model pin to Fable when credits refill
+## Dated: Fable sunset — Jul 13, 2026 2:59 PM PHT (2026-07-13T06:59Z)
 
-**Decided 2026-07-07** (Neil + Claude — promo ended Jul 7 + Fable credits depleted):
-re-pinned `.claude/settings.json` `"model"` from `claude-fable-5` → `claude-opus-4-8`
-and updated the CLAUDE.md usage-budget bullet to match. The `code-executor` (Opus 4.8)
-and `smoke-tester` (Sonnet 5) frontmatter pins are unchanged.
+**Decided 2026-07-10** (Neil + Claude — screenshot confirmed Fable 5 is included in
+plan limits until Jul 13 2:59 PM PHT, up to 50% of weekly limits): the main-loop pin
+is back on `claude-fable-5`. The Jul 7 re-pin to Opus was premature (its
+depleted-credits premise turned out stale) and was what auto-switched Neil's sessions
+off Fable. Successor after sunset: **Opus 4.8** (main loop + checker, `/fable-mode`
+as discipline hedge). Executor/smoke pins unchanged.
 
-**Revert trigger:** when the Fable 5 weekly limit resets or credits are topped up
-(confirm via `/usage`), re-pin `"model": "claude-fable-5"` in `.claude/settings.json`
-and restore the CLAUDE.md usage-budget bullet. Until then, `/fable-mode` loads Fable's
-working discipline onto Opus as the quality hedge. Delete this section once Fable is
-restored.
+The handover is automated two ways; the early-exhaustion case is manual:
+
+1. **SessionStart hook** ([.claude/hooks/session-start.sh](../.claude/hooks/session-start.sh)):
+   after the deadline, flips the settings.json pin to `claude-opus-4-8` in the working
+   tree and prints a loud banner (current session may still be on Fable at prepaid API
+   rates — switch/restart, then commit the flip).
+2. **Run-once Routine** (remote, fires 2026-07-13T06:59Z): a fresh session opens a
+   one-line flip PR for Neil to merge, so origin/main is correct at the deadline.
+3. **Manual — Fable allowance hits 100% BEFORE Jul 13** (no hook/Routine can read the
+   usage meter): check `/usage` at session start; if the Fable share (50% of weekly)
+   is exhausted, tell Claude "flip the pin to Opus" — one-line settings.json edit,
+   commit, push. Do NOT keep running Fable on prepaid credits ($10/$50 per M).
+
+**Cleanup after the flip merges:** delete this section, the sunset block in
+session-start.sh, and re-check the CLAUDE.md usage-budget bullet says Opus 4.8.
