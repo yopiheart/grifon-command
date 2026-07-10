@@ -100,6 +100,10 @@ The handover is automated two ways; the early-exhaustion case is manual:
    rates — switch/restart, then commit the flip).
 2. **Run-once Routine** (remote, fires 2026-07-13T06:59Z): a fresh session opens a
    one-line flip PR for Neil to merge, so origin/main is correct at the deadline.
+   **STATUS: NOT YET ARMED** — the create_trigger call needs Neil's interactive
+   approval (blocked 2026-07-10). To arm: in any remote session, say "arm the Fable
+   sunset Routine per session_reminders.md" and approve the prompt. If never armed,
+   mechanism 1 (the hook) still handles the flip on the first post-deadline session.
 3. **Manual — Fable allowance hits 100% BEFORE Jul 13** (no hook/Routine can read the
    usage meter): check `/usage` at session start; if the Fable share (50% of weekly)
    is exhausted, tell Claude "flip the pin to Opus" — one-line settings.json edit,
