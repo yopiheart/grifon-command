@@ -111,6 +111,15 @@ if (!codex) {
 }
 
 const ver = spawnSync(codex.file, [...codex.pre, '--version'], { encoding: 'utf8' });
+if (ver.error?.code === 'ENOENT') {
+  die(
+    'Codex CLI not found on PATH — falling back to the code-executor subagent (Opus 4.8) is the SOP.\n' +
+    '  Install:   npm i -g @openai/codex\n' +
+    '  Then:      codex login\n' +
+    '  Re-arm after a machine wipe with: scripts/restore-codex.ps1',
+    10
+  );
+}
 if (ver.error || ver.status !== 0) {
   die('Codex CLI found but not runnable. Reinstall: npm i -g @openai/codex', 10);
 }
