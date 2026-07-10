@@ -109,5 +109,15 @@ The handover is automated two ways; the early-exhaustion case is manual:
    is exhausted, tell Claude "flip the pin to Opus" — one-line settings.json edit,
    commit, push. Do NOT keep running Fable on prepaid credits ($10/$50 per M).
 
+**Opt back into Fable on paid credits (post-sunset).** If Neil says "balik Fable /
+flip the pin back to Fable, willing ako sa credits": (1) confirm he knows post-sunset
+Fable bills prepaid API credits (~$10 input / $50 output per M tokens) and that
+credits are loaded on the account; (2) re-pin `"model": "claude-fable-5"` in
+`.claude/settings.json`; (3) **in the SAME commit, delete the sunset flip block in
+`.claude/hooks/session-start.sh`** — its condition is "past deadline AND pin == fable
+→ flip to opus", so left alive it re-flips the pin to Opus at every session start
+and silently fights the re-pin; (4) commit + push (PR or direct, per Neil's call at
+the time).
+
 **Cleanup after the flip merges:** delete this section, the sunset block in
 session-start.sh, and re-check the CLAUDE.md usage-budget bullet says Opus 4.8.
