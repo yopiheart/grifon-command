@@ -134,6 +134,24 @@ wrong) · TTS whisper register (run 8) · real `ugcpro.mp3` bed.
    wants to abandon is trapped in a resume loop (Command Center → Director AI → same FILM IT
    page). Workaround: `localStorage.removeItem('osa_producer_active_run')`. Fix (post-batch):
    a "Start over" affordance at the storyboard gate that clears the key + abandons the run.
+6. **Transformation beat-0 hook violation, 2/3 runs (GEMINI_FAIL on the explicit gate run).**
+   Producer `before_after` run with full uploads + presenter=after.png produced hook
+   "Finally, serum na hindi malagkit" — a product hook, violating the tuned "the BEFORE is
+   the hook — NO product in beat 0" rule (`api/_lib/prompts.ts` ~L661). Cascade: storyboard
+   S1 = generic unbranded bottle (S1 has no product reference by design), uploaded
+   `before.png` never consumed, no before→after contrast. Beats 1–3 complied, so wiring is
+   fine — model compliance flake. Steps-engine run DID comply ("Ang dull at pagod ng mukha
+   ko"). **If a 3rd violation appears in the re-run → systematic; route hook-rule
+   strengthening through grill-me (TUNED).**
+7. **S3 after-reveal identity drift (gated TUNED proposal).** Skeleton allows S3
+   referenceImage="none (or avatar)"; when the model picks "none", the after money-shot is a
+   re-imagination of after.png with NO avatar lock → face drift, breaking the same-person
+   proof. Proposal (grill-me → Neil before any edit): for PERSON transformations, S3 MUST
+   use referenceImage="avatar" (+ venueSlot=after). S4 mild drift = per-scene REGENERATE,
+   not a rule change.
+8. **Untested path to add as a free storyboard-stage check:** presenter photo with
+   white/no background — presenter should anchor identity only (environment comes from
+   scene prompts + ONE PERFORMER ONE PLACE + state photos); never actually exercised.
 
 ## 5. Post-batch (agent work, after Neil's eyeball)
 
