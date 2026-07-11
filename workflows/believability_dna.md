@@ -648,7 +648,7 @@ backtest.
 
 1. ~~Veo identity-in-motion gate test~~ **PASS + Neil-CONFIRMED 2026-07-11 —
    GATE CLOSED.** See WEDGE GATE #1 result above.
-2. Style-ref shot-list doc + scheduled shoot date (blocks build).
+2. Style-ref shot-list: DONE 2026-07-11 (style-shoot-shotlist.md, 24 core + 6 stretch). SHOOT itself still owed - wedge builds at >=20 core banked.
 3. Auto-QA rubric spec + backtest vs the brother's 279-set keeps (fold in the
    clean-plate + neutral-pose rules from the gate run).
 4. ~~Q6 decision (Neil)~~ DONE 2026-07-11 — (ii)/(i)/never; see above.
