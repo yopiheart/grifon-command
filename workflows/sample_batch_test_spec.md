@@ -110,6 +110,25 @@ anchor the scenes (no hallucinated product/face). Per-run extras: column 4 above
 that live or die on this batch's evidence: EDL Rule 0a `ugcpro` (only if eval shows cut-pacing
 wrong) · TTS whisper register (run 8) · real `ugcpro.mp3` bed.
 
+## 4b. Early findings (2026-07-11, pre-gate recon runs — storyboard stage, no filming spend)
+
+1. **Steps-engine script, `before_after`-shaped brief:** "para kuminis agad" — instant-effect
+   claim brushing the appearance guardrail (our honest claim is 2 weeks). Watch for it in the
+   gate runs.
+2. **Auto recipe + hero/inuse only (no before/after uploads): B&A structure silently degraded.**
+   Producer storyboard came back **3 scenes** — matches NO UGC Pro skeleton (transformation=4,
+   unboxing=4, demo=5, tutorial=5). No problem-hook (S1 had product in-hand), no instant-reveal
+   beat. The "renderer falls back to representative generation" path did NOT synthesize the
+   missing before-state; the model dropped the beats instead. Confirms the §2 observation point
+   half-way: even before the face-mismatch case, missing state uploads deform the skeleton.
+   → candidate bug: enforce beat count / synthesize representative states when slots are absent.
+3. **Auto-cast avatar faces converge on the same "mean face" per age band** (the recognizable
+   social-media AI face). Mitigation now = custom Presenter upload (the §2 rule). Roadmap
+   candidate (TUNED, Neil-gated): persona-seed diversity in the avatar generation prompt.
+4. Positive signals: slot anchoring works (S1 ≈ uploaded hero, bottle label legible), avatar
+   identity lock holds across scenes, Taglish register natural, producer storyboard gate
+   correctly holds the expensive filming step behind approval.
+
 ## 5. Post-batch (agent work, after Neil's eyeball)
 
 1. Cut the best 2–3s beat per winner →
