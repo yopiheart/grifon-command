@@ -18,9 +18,11 @@ import {
   regenSceneImage,
   applyPreset,
   mapReportToWizard,
+  researchCacheKey,
   type ProductionRun,
   type ProductionInput as OrchInput,
 } from '../../services/producerOrchestrator';
+import { getCachedResearch, putCachedResearch } from '../../services/researchCacheStore';
 import { realProducerDeps } from '../../services/producerDeps';
 import { newRunId, loadRun, type ProductionRunRow, type ProductionSceneRow } from '../../services/producerRunService';
 
@@ -176,16 +178,24 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
     setPhase('researching');
     abortRef.current = new AbortController();
     try {
-      // 1 — Market research (auto).
-      const report = await generateMarketResearch({
-        brandName: input.brandName,
-        productName: input.productName,
-        productDescription: input.productDescription,
-        priceOffer: input.price ? `${input.offer} (${input.price})` : input.offer,
-        isLocalService: input.isLocalService ?? (input.scriptType === 'Services' || input.scriptType === 'RealEstate'),
-        businessAddress: input.businessAddress?.trim() || undefined,
-        uploadedImages: input.heroImageBase64 ? [input.heroImageBase64] : [],
-      });
+      // 1 — Market research (auto). Same cache seam as the orchestrator's market_research
+      // stage (research stays locked per brand identity; "Re-research" forces fresh) —
+      // this path pre-fills the run with doneStages:['market_research'], so the stage's
+      // own cache read never fires and the reuse must happen here.
+      const cacheKey = researchCacheKey(input.brandName, input.productName);
+      let report = input.forceFreshResearch ? null : await getCachedResearch(cacheKey);
+      if (!report) {
+        report = await generateMarketResearch({
+          brandName: input.brandName,
+          productName: input.productName,
+          productDescription: input.productDescription,
+          priceOffer: input.price ? `${input.offer} (${input.price})` : input.offer,
+          isLocalService: input.isLocalService ?? (input.scriptType === 'Services' || input.scriptType === 'RealEstate'),
+          businessAddress: input.businessAddress?.trim() || undefined,
+          uploadedImages: input.heroImageBase64 ? [input.heroImageBase64] : [],
+        });
+        await putCachedResearch(cacheKey, report);
+      }
 
       // 2 — Project onto wizard fields (research is load-bearing context for the script).
       const orchInputBase: OrchInput = {

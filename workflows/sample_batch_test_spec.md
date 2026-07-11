@@ -152,6 +152,29 @@ wrong) · TTS whisper register (run 8) · real `ugcpro.mp3` bed.
 8. **Untested path to add as a free storyboard-stage check:** presenter photo with
    white/no background — presenter should anchor identity only (environment comes from
    scene prompts + ONE PERFORMER ONE PLACE + state photos); never actually exercised.
+9. **Producer research-cache bypass — FIXED in-session.** `ProducerFlow.start()` called
+   `generateMarketResearch` directly and seeded the run `doneStages:['market_research']`,
+   so the orchestrator's cache seam (researchCacheStore) never ran on the UI path — every
+   producer run paid for fresh research while the LaunchScreen "saved research" hint
+   claimed reuse. Fix mirrors the stage's cache logic in `start()` (read unless
+   forceFreshResearch, write on miss). First run per brand still researches (and now
+   caches); subsequent runs are instant.
+10. **Beat-0 violation is SYSTEMATIC — 3/4 runs.** Run 3 hook: "Akala ko trend lang, pero
+    it works" — skeptic/testimonial hook, not the problem-state; `before.png` unused again
+    (S1 frame was product-free this time — partial compliance). Next step: **grill-me on
+    the TRANSFORMATION beat-0 rule strengthening (TUNED, Neil-gated), post-batch.**
+    Otherwise avatar↔presenter consistency was CLEAN on run 3 (the §2 rule works).
+11. **First Cut auto-edits immediately** — AUTO preset applied without asking; **no
+    NONE/raw preset** for users who want the stitched-only cut (Neil's recalled design:
+    first cut = scenes joined, no dead air, no text/SFX/music until the user picks).
+    UX finding + feature ask, post-batch.
+12. **Trailing ~2s dead air in the final render** — end-of-video not trimmed. This is the
+    EDL cut-pacing evidence class the Rule 0a `ugcpro` gate waits on; needs the actual
+    mp4s (all three presets) to diagnose end-trim vs padding source.
+13. **Preset switcher farms multiple deliverables** — AUTO → download, IMPACT → download,
+    CLEAN → download off one filmed run. FFmpeg re-edit only (no new Gemini spend), so
+    likely fine — flag for pricing/abuse review. Omni edit presets absent from product =
+    expected (dev-lab only, gated proposals; roadmap #18 two-layer editing).
 
 ## 5. Post-batch (agent work, after Neil's eyeball)
 
