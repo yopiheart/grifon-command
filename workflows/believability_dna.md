@@ -381,3 +381,59 @@ gpt-image-2 composite vs Meta Muse manual) on 6 cases drawn from this set;
 ≥3 real-human corroborations above enter `viral_swipe_file.md` P11+ as Gated
 Proposals only after the shootout corroborates them. No TUNED file is touched
 by any of this.
+
+## Head-to-head eval: reference-stacked shootout — flash-lite multi-ref vs gpt-image-2 composite vs Meta Muse (2026-07-11)
+
+Protocol: 6 cases from the brother's set (registers spread + hard-identity c04 +
+hard-style c05), same person-swap prompts per lane, seeded blind anonymize,
+judged by (1) Gemini 3.5-flash rubric and (2) an independent blind Claude judge;
+Neil's unblinded product eye concurred. Harness: `tools/shootout_refstack.mjs`;
+raw scores: shootout `tally-combined.json` (regenerable from committed
+shootout-cases.json).
+
+| Lane | Identity (J1/J2 avg) | Style (J1/J2) | Believability (J2) | Blind case wins |
+|---|---|---|---|---|
+| **gpt-image-2 (composite --edit)** | **77 / 88** | 74 / 75 | 74 | **6/6** |
+| gemini-3.1-flash-lite (2-ref) | 62 / 44 | **80 / 89** | **82** | 0/6 |
+| Meta Muse (manual, n=3) | 79 / 70 | 80 / 78 | 73 | 0/6 |
+
+### Findings
+
+1. **Identity binding is the technique's fault line, and it splits the models.**
+   flash-lite renders the most believable UGC *image* (style 89, believability
+   82) but keeps the STYLE ref's face outright in 2-3 of 6 cases (identity 15-38)
+   — with two attached refs, scene-locked generation drags the scene's person
+   along. gpt-image-2 never lost the person (identity ≥82 in 5/6) but
+   consistently over-cleans: brighter, smoother, more composed than a raw
+   source. **For an avatar/presenter pipeline identity is gating → gpt-image-2
+   wins despite the lower raw-style scores.**
+2. **The brother's `(woman in image)` placeholder is not portable.** It works in
+   a single-attachment chat flow; against two refs it binds to the wrong image.
+   All lanes needed the explicit person-swap framing (recreate Image 2's scene;
+   the person MUST be the woman from Image 1; do NOT keep Image 2's face) —
+   committed in the three lane prefixes.
+3. **Meta Muse refused 3/6 cases** ("that's a direct face swap … which I can't
+   do") and generation is slow/manual — dropped from consideration (Neil,
+   2026-07-11). The refusals stand as evidence that consented-likeness flows
+   need provider-policy diligence.
+4. **Slop thesis holds cross-model:** gpt-image-2's losses were all
+   over-production (DSLR sharpness, catalog clothing, beauty-filter skin in
+   dark scenes) — the exact "more production ≠ more real" failure the register
+   ladder predicts. A Surface-A UGC LUT pass is the designed counter.
+
+### Routing implication → Gated Proposal (Business tier, NOT approved yet)
+
+- **Business tier**: presenter/character upload (user's own consented face) →
+  reference-stacked generation on **gpt-image-2** (composite + person-swap
+  framing), Business-only unlock. Auto mode scenes relight the SAME uploaded
+  identity per scene — solves cross-scene consistency that prompt-only cannot.
+- **Creator/Pro: unchanged** (gemini-3.1-flash-lite TUNED pipeline untouched) —
+  the quality gap is the upgrade motive.
+- Before any code: (a) production = paid OpenAI Images API (the $0 Codex bridge
+  is dev-only; per-image cost must be priced into Business margins, latency is
+  seconds-vs-minutes better than the bridge); (b) consent checkbox + likeness
+  ToS language in the presenter-upload flow (Phase-3 consent infra exists);
+  (c) production style-ref library must be Grifon-owned/licensed scenes (the
+  brother's set was pattern-reference only — trust line); (d) OpenAI likeness-
+  policy diligence. Implementation would touch TUNED `services/geminiService.ts`
+  routing — **its own Gated Proposal through the validation loop.**

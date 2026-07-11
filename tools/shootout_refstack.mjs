@@ -463,12 +463,15 @@ function cmdAnonymize(flags) {
   let done = 0;
   for (const c of cases) {
     const present = LANES.filter((lane) => existsSync(laneFileFor(lane, c.id)));
-    if (present.length < 3) {
-      if (!flags.partial) continue;
-      console.log(`[anonymize] ${c.id}: only ${present.length}/3 lanes present — skipping (--partial)`);
+    if (present.length < 3 && !flags.partial) continue;
+    if (present.length < 2) {
+      console.log(`[anonymize] ${c.id}: only ${present.length}/3 lanes present — skipping (need >=2 to compare)`);
       continue;
     }
-    const shuffled = seededShuffle(LANES, rnd);
+    if (present.length < 3) {
+      console.log(`[anonymize] ${c.id}: ${present.length}/3 lanes present — anonymizing as a ${present.length}-way case (--partial)`);
+    }
+    const shuffled = seededShuffle(present, rnd);
     key.cases[c.id] = {};
     shuffled.forEach((lane, i) => {
       const letter = LETTERS[i];
