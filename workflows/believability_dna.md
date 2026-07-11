@@ -648,7 +648,20 @@ backtest.
 
 1. ~~Veo identity-in-motion gate test~~ **PASS + Neil-CONFIRMED 2026-07-11 —
    GATE CLOSED.** See WEDGE GATE #1 result above.
-2. Style-ref shot-list: DONE 2026-07-11 (style-shoot-shotlist.md, 24 core + 6 stretch). SHOOT itself still owed - wedge builds at >=20 core banked.
+2. Style-ref shoot: **PENDING — OUTSOURCED 2026-07-11.** Shot-list done
+   (style-shoot-shotlist.md); Neil chose the creator-gig route (`creator-gig-kit.md`)
+   and is briefing his brother to recruit 2–3 creators (₱1,000/set, ₱3k ceiling,
+   release-before-payment). **Wedge unblocks at ≥10 accepted shots from Creator A's
+   set (bedroom + bathroom + flash).** Also decided: the style library is HIDDEN
+   from users in the UI — look cards with generated preview thumbnails + outcome
+   labels only; refs never exposed (moat + cleanliness). NOT a license to use
+   unowned pixels inside it — the trust line stands.
+
+   **RESUME TRIGGER (next session):** Neil says creator sets are in Drive
+   (`GRIFON-STYLE-LIB/raw-ugc/` + signed releases in `consents/`) → agent runs
+   ingest (EXIF strip, manifest, consent-register check, acceptance checklist
+   §4 of the gig kit) → if ≥10 Creator-A shots accepted, the Gated Proposal goes
+   to Neil for final approve/reject and the wedge build kicks off.
 3. Auto-QA rubric: DONE 2026-07-11 - backtest KILLED the score-floor design (corr 0.41, t011 false-pass at 78); binary-adversarial-verdict gate v1 specced in rubric-backtest.md (fold in the
    clean-plate + neutral-pose rules from the gate run).
 4. ~~Q6 decision (Neil)~~ DONE 2026-07-11 — (ii)/(i)/never; see above.
