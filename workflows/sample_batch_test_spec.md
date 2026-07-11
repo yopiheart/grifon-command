@@ -48,6 +48,14 @@ Consistency chain: `packaging`/`inuse` are edits of `hero`; `onbody`/`after` are
 
 ## 3. Run matrix — 12 runs
 
+> **Priority order (Neil, 2026-07-11): the NEW formats are the gate — fire them first.**
+> Runs 5–10 below (the UGC Pro sub-formats, never rendered) + runs 11–12 (service/RE
+> arms) are the owed eval; start with `before_after`, then `try_on`, `unboxing`,
+> `unboxing_asmr`, `demo`, `tutorial`, then the two non-product runs. Runs 1–4
+> (`real_talk`/`hype_drop`/`rapid_fire`/`pure_hype`) are presets over formats that
+> already shipped — still needed for their sample cards, but NOT gate-blocking; run
+> them last or in a later session.
+
 ### A. The 10 product recipes (sample cards + eval) — Hiraya Glow, slots per recipe's sub-format
 
 | # | Recipe (`recipes.ts`) | Format / sub | Extra eval attention |
