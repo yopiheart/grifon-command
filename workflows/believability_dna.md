@@ -599,7 +599,13 @@ Proposal); (iii) is a hard product refusal, not a settings toggle.
 The Gated Proposal is ready for Neil's approve/reject once deliverables 1–3
 below (motion gate, style-ref shoot, rubric backtest) report back.
 
-### WEDGE GATE #1 result — Veo identity-in-motion (2026-07-11): **PASS** (Neil's eye pending)
+### WEDGE GATE #1 result — Veo identity-in-motion (2026-07-11): **PASS — GATE CLOSED**
+
+**Neil eyeball verdict (2026-07-11, same session): CONFIRMED, emphatic** — "from
+image to video still looks real"; called the reference-stacked raw-ugc register
+the first image-to-video result that reads REAL. All three verdicts (agent
+frames, render_qa watch+listen, Neil's eye) now concur. n=1 caveat stands: the
+rubric backtest (deliverable 3) is what turns one great clip into a QA gate.
 
 Run (Neil-authorized GO, same session): shootout outputs were dead in `.tmp`, so
 the winning-lane still was **regenerated for $0** — c01 composite via
@@ -640,8 +646,8 @@ backtest.
 
 ### Deliverables queue (next sessions)
 
-1. ~~Veo identity-in-motion gate test~~ **PASS 2026-07-11** — see WEDGE GATE #1
-   result above; Neil eyeball/ear of `motion-gate-c01.mp4` still owed.
+1. ~~Veo identity-in-motion gate test~~ **PASS + Neil-CONFIRMED 2026-07-11 —
+   GATE CLOSED.** See WEDGE GATE #1 result above.
 2. Style-ref shot-list doc + scheduled shoot date (blocks build).
 3. Auto-QA rubric spec + backtest vs the brother's 279-set keeps (fold in the
    clean-plate + neutral-pose rules from the gate run).
