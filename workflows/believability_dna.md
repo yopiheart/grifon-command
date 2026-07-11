@@ -287,3 +287,97 @@ Reference template prompt: the one behind
 3. Establish the **avatar baseline + consistency** (identity-lock) before any
    fragment A/B.
 4. Only then: per-fragment **Gated Proposals** through the validation loop.
+
+---
+
+## Reference-Stacked Realism — dual-ref technique (2026-07-11, status: OBSERVED — candidate, NOT approved)
+
+Source: Neil's brother's 279-generation Gemini 3.1 flash-lite-image set, ingested
+2026-07-11 (manifest + full stats: `workflows/believability-refstack/manifest.json`
++ `aggregate.json`; per-triplet analyses regenerable from the manifest via
+`tools/analyze_image_set.py`). One MODEL ref (identity ground truth) + one STYLE
+ref per group (a real UGC selfie whose lighting/skin/pose/camera/background is
+the target) + a short prompt → one generation. **Pins the register with PIXELS
+instead of prompt fragments** — a cross-register lever, not a new ladder rung.
+
+Dataset: 63 style sources × ~4.5 attempts each. 277/279 style refs graded
+`real-human` (corroboration-eligible), 0 `likely-ai`. Register split of outputs:
+149 raw-ugc / 129 polished-ugc / 1 production-content-look — this is a raw-UGC
+realism set through and through.
+
+### Measured (Gemini 3.5-flash grading, evidence-bound, n=279)
+
+| Metric | Avg |
+|---|---|
+| Style replication overall | **74.2%** (best 86%, worst 35%) |
+| — lighting | 72.6% · skin 72.0% · posing 75.4% · camera 75.4% · background 76.4% |
+| Identity consistency vs MODEL ref | **77.3%** (drift concentrates in hair color) |
+
+### The recipe (as observed in PROMPT.docx — the brother's own workflow)
+
+1. **Describe-then-edit:** feed the STYLE ref to Gemini first — *"describe me
+   this (source) image in full detail tapos ibigay mo yung mismong image prompt
+   para ma-recreate ko."*
+2. **Identity-swap the description:** edit the returned prompt so every
+   identity attribute points at the MODEL ref via placeholders — `(woman in
+   image)`, `(same hair in image)` — while keeping the scene language verbatim.
+3. **Generate with both refs attached** (model ref + style ref + edited prompt).
+4. **Iterate ~4-5 attempts per source** and keep the best (the 12-point spread
+   between best and worst attempt of the same source is normal variance).
+
+### What the style ref transfers WITHOUT prompt language (n=279 synthesis)
+
+- Overall color temperature and dominant lighting tone
+- Scene composition, camera position, subject placement
+- Hair color/texture/length carry-over
+
+### What still NEEDS prompt language
+
+- Specific clothing items, fabrics, patterns
+- Complex hand poses and physical interactions
+- Background props/clutter specifics; fine accessories and eyewear
+
+### Prompt-fragment candidates (real-human corroborations; ≥3 = proposal-eligible)
+
+| Fragment / move | n | Avg overall when present (vs 74.2 base) | Read |
+|---|---|---|---|
+| `mirror selfie` | 22 | **78.1** (+4.2) | biggest lift in the set — camera occlusion + domestic bg do believability work for free |
+| `analog film self-portrait` (+ harsh direct flash) | 4 | **81.3** | film grain/flash masks digital artifacts — CONSISTENT with the Archival-DV thesis (break the camera correctly) |
+| `natural skin texture` | 28 | 75.4 (+1.2) | mild but real; contrast with ↓ |
+| anchored pose language (e.g. "both hands framing her cheeks") | 5 | 80.0 | anchoring hands prevents anatomical slop |
+| `8k resolution` | 69 | 74.4 (+0.2) | **no lift** — generic quality words are dead weight |
+| `highly detailed skin texture` | 32 | 74.2 (+0.0) | **no lift** — over-specification confirmed useless, matches the anti-slop thesis |
+
+### AI-tells / anti-pattern catalog (feeds the avoid list)
+
+- **Four-pointed-star watermark ghost** (bottom corner) — the #1 recurring tell
+  across the set; visible in the 86% winner too. Any production use must crop or
+  clean it (Surface A, ffmpeg — zero slop risk).
+- Gibberish/mirrored text on background posters — outputs replicate text overlay
+  POSITIONS from the style ref but corrupt the glyphs.
+- Simplified jewelry/eyewear mechanics (chain links, glasses temple-arm joints).
+- **Over-brightening vs source** — outputs consistently render brighter/cleaner
+  than a genuinely dark style ref (lighting is the weakest dimension at 72.6%);
+  murky low-light needs explicit prompt defense.
+
+### Sample index (`workflows/believability-samples/refstack/`)
+
+- `refstack-model-ref.jpeg` — the MODEL identity ref used across all 279.
+- `refstack-t067-winner-86pct.jpg` — best in set (source 22: dark wink selfie →
+  analog-flash rendition; scene, pose, overlay-text position all carried).
+- `refstack-t216-winner-85pct.jpg`, `refstack-t022-winner-83pct.jpg` — mirror-
+  selfie winners (the top fragment at work).
+- STYLE sources are NOT committed: they are other people's real selfies used as
+  pattern references. They live in the Drive drop / `.tmp/refstack/raw/SOURCE/`.
+  **Trust line:** style refs are register ground truth only — an output must
+  never keep a real third party's identity; identity always comes from a
+  consented MODEL ref.
+
+### Approval-loop status
+
+**NOT approved.** Pending: (1) the 3-model shootout (flash-lite multi-ref vs
+gpt-image-2 composite vs Meta Muse manual) on 6 cases drawn from this set;
+(2) manual A/B on the real avatar pipeline; (3) Neil's eye. Fragments clearing
+≥3 real-human corroborations above enter `viral_swipe_file.md` P11+ as Gated
+Proposals only after the shootout corroborates them. No TUNED file is touched
+by any of this.

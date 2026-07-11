@@ -1,0 +1,5889 @@
+{
+  "generated": "2026-07-11T06:42:31Z",
+  "triplet_count": 279,
+  "register_counts": {
+    "raw-ugc": 149,
+    "polished-ugc": 129,
+    "production-content-look": 1
+  },
+  "style_replication": {
+    "avg_overall_pct": 74.2,
+    "avg_by_dimension": {
+      "lighting": 72.6,
+      "skin_realism": 72.0,
+      "posing": 75.4,
+      "camera_angle": 75.4,
+      "background": 76.4
+    }
+  },
+  "identity": {
+    "avg_score_pct": 77.3
+  },
+  "ai_tell_frequency": {
+    "four-point star watermark artifact": 3,
+    "four-pointed star watermark artifact": 2,
+    "sparkle watermark icon": 2,
+    "four-pointed star watermark/artifact": 2,
+    "gibberish and mirrored text on the background poster": 2,
+    "slightly simplified chain links on the necklace": 2,
+    "geometric watermark artifact": 2,
+    "gibberish text on the background poster": 2,
+    "slightly simplified digital display on the watch face": 2,
+    "slightly inconsistent lace pattern repetition": 2,
+    "the left temple arm of the glasses on her head is missing or fails to connect properly behind the ear.": 1,
+    "slightly simplified structure where the glasses arms meet the frame": 1,
+    "the right temple arm of the glasses on her head blends unnaturally into the hair structure.": 1,
+    "slightly too perfect rendering of the zipper teeth and circular pull ring.": 1,
+    "slightly asymmetric rendering of the zipper pull and top seam": 1,
+    "the sunglasses frame has a slightly soft, merged texture where it meets the hair": 1,
+    "slightly too symmetrical and clean sunglasses frame": 1,
+    "perfectly circular and clean zipper ring": 1,
+    "slightly floating appearance of the teardrop pendant on the chain.": 1,
+    "perfectly repetitive and clean eyelet patterns on the camisole.": 1,
+    "slightly unnatural blending of hair strands near the shoulder": 1,
+    "slightly warped and asymmetrical wireframe geometry on the hanging pendant lights.": 1,
+    "inconsistent eyelet embroidery pattern on the camisole strap and neckline.": 1,
+    "slightly warped geometry on the hanging black pendant light frames.": 1,
+    "slightly unnatural connection point between the necklace chain and the teardrop pendant.": 1,
+    "slightly unnatural blending of fine hair strands": 1,
+    "slightly inconsistent and asymmetrical eyelet patterns on the lace tank top straps.": 1,
+    "overly perfect and repetitive lace eyelet pattern": 1,
+    "slightly unnatural blending of hair strands against the shoulder": 1,
+    "slightly distorted facial features on background patrons": 1,
+    "overly perfect alignment of ceiling wooden slats": 1,
+    "slightly unnatural rendering of background figures": 1,
+    "perfect symmetry and rendering of the ribbed fabric texture": 1,
+    "slightly floating appearance of the gold necklace chain": 1,
+    "slightly elongated and stiff appearance of the fingers on the left hand.": 1,
+    "the plumeria flower lacks natural shadow integration where it meets the hair.": 1,
+    "slightly simplified and smoothed finger anatomy on the resting hand": 1,
+    "slightly unnatural attachment and floating appearance of the plumeria flower behind the ear.": 1,
+    "slightly simplified ring rendering on the finger": 1,
+    "slightly distorted and simplified nested mirror reflections": 1,
+    "slightly imperfect alignment of the phone camera lenses": 1,
+    "slightly simplified and warped ring structure": 1,
+    "slightly unnatural rendering of the fine hair strands overlapping the forehead.": 1,
+    "slightly simplified hand anatomy and smooth skin texture on the fist": 1,
+    "overly smooth hand with lack of detailed knuckle wrinkles": 1,
+    "misplaced hair accessory rendered as an ear stud": 1,
+    "slightly simplified skin texture on the hand compared to the highly detailed face.": 1,
+    "floating silver studs in the hair that do not appear physically attached to any accessory.": 1,
+    "the silver stud appears to float unnaturally on the hair surface.": 1,
+    "the silver stud appears to float unnaturally on the hair surface rather than being clipped to it.": 1,
+    "the heart/ribbon tattoo lines are extremely sharp and lack natural ink spreading in the skin.": 1,
+    "garbled and mirrored text/graphics on the phone case": 1,
+    "garbled, nonsensical text on the phone case stickers": 1,
+    "slightly warped and merged clothes hangers": 1,
+    "garbled text on the phone case stickers ('supctkie')": 1,
+    "slightly warped camera lenses on the phone": 1,
+    "slightly inconsistent necklace chain links": 1,
+    "the fine necklace chain slightly fades and loses definition against the skin.": 1,
+    "slightly distorted details on the background light switch panel.": 1,
+    "garbled, illegible text on the phone case stickers.": 1,
+    "slightly distorted, melted shapes in the background clutter on the dresser.": 1,
+    "garbled, unreadable text branding on the air conditioner unit": 1,
+    "slightly simplified camera lens geometry on the phone": 1,
+    "slightly unnatural finger positioning and simplified nail shapes on the hand holding the phone.": 1,
+    "the reflection of the doorframe and wall behind the subject has overly sharp, sterile lines.": 1,
+    "garbled, unreadable text and simplified vent lines on the air conditioner unit.": 1,
+    "slightly warped phone edges and unnatural finger positioning.": 1,
+    "indistinct text/branding on the ac unit.": 1,
+    "slightly generic/simplified symbols on the ac unit display": 1,
+    "slightly simplified phone camera lens structure inside the flash area": 1,
+    "the fingers holding the phone are slightly too smooth and lack natural joint creases.": 1,
+    "slightly simplified text and panel lines on the air conditioning unit": 1,
+    "the strawberry pendant on the necklace is overly simplified and lacks detail.": 1,
+    "slightly inconsistent bead shapes on the bikini strap": 1,
+    "slightly unnatural symmetry and rendering of the teeth": 1,
+    "imperfect blending of distant palm fronds against the sky": 1,
+    "slightly too-perfect alignment and rendering of the beads on the bikini strap": 1,
+    "slightly irregular bead alignment and spacing on the bikini straps": 1,
+    "slightly floating keychain ring attachment": 1,
+    "unnatural hair blending around the fingers": 1,
+    "slightly warped panel lines on the wooden door": 1,
+    "slightly unnatural finger positioning and length on the hand holding the phone.": 1,
+    "overly perfect, mathematically symmetrical starburst flare": 1,
+    "slightly unnatural rendering of the fingernails and hand joints.": 1,
+    "slightly unnatural blending of hair strands on the left shoulder strap": 1,
+    "slightly unnatural merging of the double necklace chains": 1,
+    "overly clean rendering of the tongue and teeth during the expression.": 1,
+    "slightly floating appearance of the necklace pendant.": 1,
+    "slightly unnatural blending of the necklace chain into the skin": 1,
+    "slightly unnatural rendering of the fine gold necklace chain where it meets the pendant": 1,
+    "slightly unnatural blur transition": 1,
+    "slightly unnatural rendering of the necklace chain links": 1,
+    "slightly unnatural rendering of the letter 'l' on the pendant": 1,
+    "a small white sparkle graphic artifact": 1,
+    "small white four-pointed star graphic artifact": 1,
+    "slightly unnatural blending of hair strands into the pillow fabric": 1,
+    "inconsistent grid pattern on the pillow fabric": 1,
+    "small star watermark icon": 1,
+    "slightly too-perfect rendering of the fine necklace chain under low-light conditions.": 1,
+    "small white diamond-shaped watermark artifact": 1,
+    "slightly warped damask pattern alignment near the seam": 1,
+    "faint four-point star watermark artifact": 1,
+    "slightly inconsistent rendering of the fine necklace chain where it meets the skin": 1,
+    "four-pointed star watermark/logo artifact": 1,
+    "asymmetrical rendering of the damask pattern on the chest": 1,
+    "necklace chain becomes indistinct and fades near the collarbone": 1,
+    "perfect symmetry and lack of micro-shadows on the gold nose bridge of the glasses.": 1,
+    "slightly hyper-detailed and uniform hair strands in the ponytail.": 1,
+    "overly perfect hair strand rendering and separation on the shoulder": 1,
+    "slight asymmetry in the gold metal hinge accents of the glasses": 1,
+    "overly perfect, sharp hair parting line": 1,
+    "slight asymmetry in the gold metal accents on the hinges of the clear glasses.": 1,
+    "slight asymmetry in the gold metal hinges of the glasses": 1,
+    "slight asymmetry in the metal chair loops": 1,
+    "slightly simplified necklace chain links": 1,
+    "slightly inconsistent spacing of the polka dot pattern near the armpit seams.": 1,
+    "slightly unnatural blending of hair strands near the shoulders": 1,
+    "ai generation watermark/sparkle icon": 1,
+    "slightly inconsistent spacing and warping of the polka dots on the left shoulder strap.": 1,
+    "slightly asymmetrical and warped loops on the metal chair frame": 1,
+    "slightly too perfect rendering of the fine necklace chain links.": 1,
+    "slightly unnatural blending of fine hair strands where they meet the shoulders": 1,
+    "slightly simplified and warped geometry on the green headphones": 1,
+    "slightly unnatural hair integration at the center parting line.": 1,
+    "slightly simplified geometry on the background backpack straps.": 1,
+    "slightly floating and simplified strap rendering on the black bag": 1,
+    "slightly unnatural hair parting and root blending": 1,
+    "four-point star watermark/sparkle artifact": 1,
+    "slightly simplified, generic rendering of background toys": 1,
+    "slightly indistinct and simplified geometry on background toys.": 1,
+    "slightly distorted wheels and simplified shapes on the blue toy cars.": 1,
+    "slightly indistinct and merged features on the background plush toys.": 1,
+    "slightly simplified and fused geometry on the background toy car": 1,
+    "slightly unnatural termination of fine hair strands on the left shoulder.": 1,
+    "slightly abstract and ambiguous graphic rendering on the shirt": 1,
+    "slightly indistinct and warped graphic text on the shirt": 1,
+    "gibberish text/graphic on the shirt": 1,
+    "small white star artifact": 1,
+    "illegible, distorted graphic text on the shirt": 1,
+    "incoherent/reversed text on the background poster": 1,
+    "slightly unnatural blending of fine hair strands on the shoulders": 1,
+    "slightly unnatural, wispy hair strands floating at the crown": 1,
+    "slightly unnatural, floating hair strands at the crown": 1,
+    "gibberish and reversed text on the background poster": 1,
+    "slightly unnatural symmetry in the loose hair strands framing the face": 1,
+    "small white star watermark/logo artifact": 1,
+    "slightly simplified star earring shape": 1,
+    "slightly unnatural blending of fine hair strands into the pillow fabric texture": 1,
+    "slightly over-defined, hyper-clean texture on the towel fibers": 1,
+    "unnatural fabric fold transition": 1,
+    "inconsistent gingham pattern alignment on the pillow folds": 1,
+    "slight pattern warping on the checkered fabric": 1,
+    "slightly synthetic rendering of the eyelashes on the closed winking eye.": 1,
+    "inconsistent dot pattern on the tank top fabric": 1,
+    "slightly too perfect, fine hair strands floating unnaturally on top of the head": 1,
+    "slightly unnatural blending of the necklace chain into the skin near the collarbone.": 1,
+    "unusually sharp, isolated floating hair strands": 1,
+    "unnatural starburst lens flare pattern": 1,
+    "small star-shaped watermark artifact": 1,
+    "small white sparkle watermark icon": 1,
+    "slightly unnatural, ultra-fine hair strands floating at the crown": 1,
+    "unnatural blending of hair strands with the background": 1,
+    "slightly unnatural sharpness and alignment where the glasses temple meets the ear": 1,
+    "slightly unnatural rectangular screen reflection in the glasses lens": 1,
+    "slight warping of the glasses frame where it overlaps the winking eye": 1,
+    "slightly distorted blue screen reflection in the right lens": 1,
+    "slightly simplified cuticle and nail texture on the peace sign hand": 1,
+    "slightly warped and asymmetrical window security bars": 1,
+    "slightly unnatural rendering of the window bar geometry": 1,
+    "slightly unnatural rendering of the thumb joint and hand size.": 1,
+    "slightly simplified thumb nail definition": 1,
+    "a small white four-point star watermark icon is visible": 1,
+    "slightly warped geometry in the decorative metal scrollwork of the window bars": 1,
+    "amorphous shapes in the heavily blurred background figures": 1,
+    "double necklace chains merging unnaturally near the collarbone.": 1,
+    "deformed and indistinct background figures.": 1,
+    "overlapping and merging necklaces": 1,
+    "slightly unnatural distortion of background figures": 1,
+    "slightly uniform and overly perfect teeth rendering.": 1,
+    "slightly distorted and overly simplified background figures.": 1,
+    "slightly unnatural blending where the fingers meet the hair strands.": 1,
+    "slightly unnatural blending where the fingers meet the hair strands": 1,
+    "water reflection of the bikini pattern is slightly simplified and lacks complex refraction": 1,
+    "slightly unnatural blending of the thumb cuticle and nail texture": 1,
+    "slightly unnatural blending where the gold rings meet the fingers": 1,
+    "mirrored and slightly garbled text on the background signs": 1,
+    "slightly simplified finger anatomy on the hand clutching the plush toy": 1,
+    "inconsistent lettering on the background alphabet cards (e.g., 'abce' instead of 'abcd').": 1,
+    "slightly simplified rendering of the braces wire and brackets": 1,
+    "slightly simplified rendering of the necklace pendant": 1,
+    "slightly unnatural blending in the background bokeh": 1,
+    "slightly unnatural blending of hair strands into the background foliage": 1,
+    "slight geometric simplification of the railing": 1,
+    "slightly stiff and unnaturally curved fingers holding the necklace": 1,
+    "the texture of the tongue is slightly too smooth and lacks natural papillae detail.": 1,
+    "slightly unnatural transition between the teeth and the tongue texture.": 1,
+    "indistinct, slightly warped engraving on the heart pendant": 1,
+    "slightly unnatural rendering of the fingernails and hand-to-jaw transition": 1,
+    "slightly indistinct and simplified chain links on the necklace.": 1,
+    "four-pointed star watermark icon": 1,
+    "unusual softness and lack of fine skin texture on the knuckles": 1,
+    "four-pointed star graphic artifact": 1,
+    "slightly unnatural blending of hair strands near the raised hand and ear.": 1,
+    "slightly soft blending where the fingers meet the hair behind the ear": 1,
+    "ai generation watermark logo": 1,
+    "slightly simplified finger rendering behind the ear": 1,
+    "slightly unnatural blending of hair strands on the left shoulder into the white t-shirt fabric.": 1,
+    "slightly simplified lace pattern rendering on the camisole": 1,
+    "small white star/sparkle watermark icon": 1,
+    "slightly inconsistent lace pattern symmetry": 1,
+    "slightly simplified rendering of the earring stud": 1,
+    "slightly inconsistent lace pattern repetition on the camisole": 1,
+    "watermark/sparkle artifact": 1,
+    "slightly unnatural blending of hair strands": 1,
+    "small white sparkle graphic artifact": 1,
+    "slightly unnatural blending of hair strands at the crown": 1,
+    "app generation watermark/sparkle icon": 1,
+    "four-pointed star watermark/sparkle icon": 1,
+    "slightly simplified rendering of the heart pendant connection to the chain": 1,
+    "slightly unnatural straightness in the wooden beam texture": 1,
+    "slight asymmetry in the sunglasses frame geometry": 1,
+    "slightly warped frame and lens geometry on the sunglasses": 1,
+    "minor geometric inconsistencies in the chain-link fence pattern": 1,
+    "slightly simplified geometry on the sunglasses frame": 1,
+    "slightly inconsistent geometry in the chain-link fence mesh": 1,
+    "slightly warped geometry on the wooden gazebo structure": 1,
+    "sunglasses frame merges unnaturally with the hair parting": 1,
+    "slightly distorted and simplified human figures": 1,
+    "slightly distorted and simplified human figures in the background.": 1,
+    "asymmetrical frame thickness on the sunglasses perched on her head.": 1,
+    "slightly simplified finger structure on the resting hand": 1,
+    "slightly distorted figures in the distant background gazebo": 1,
+    "distorted background figures": 1,
+    "slight asymmetry in sunglasses frame": 1,
+    "slightly simplified finger anatomy and unnatural blending of the hand with the hair.": 1,
+    "the glasses tucked into the collar have slightly distorted frames and lack realistic physical weight.": 1,
+    "slightly warped and asymmetrical frames on the tucked glasses": 1,
+    "slightly unnatural blending of hair strands around the raised fingers": 1,
+    "slightly warped geometry on the hanging glasses frame": 1,
+    "indistinct blending of fingers in the hair due to simulated motion blur": 1,
+    "slightly simplified and smoothed finger anatomy": 1,
+    "indistinct, slightly warped text on the shirt graphic": 1,
+    "slightly warped logo on the t-shirt": 1,
+    "slightly flat rendering of the tucked glasses": 1,
+    "nonsensical texturing and lack of clear print on the lanyard strap": 1,
+    "slightly unnatural hair strand integration with the background": 1,
+    "perfectly clean, flat lanyard texture lacking physical depth": 1,
+    "slightly unnatural merging of hair strands under the fingers": 1,
+    "slightly unnatural blending of the fingernails and fingertips": 1,
+    "the pink hibiscus flower appears slightly flat and lacks natural depth where it meets the hair.": 1,
+    "the mickey mouse illustrations on the camisole have slightly simplified and inconsistent facial details.": 1,
+    "the mickey mouse graphics on the camisole are slightly distorted and off-model.": 1,
+    "the hibiscus flower lacks realistic shadow depth where it meets the hair.": 1,
+    "the hibiscus flower has an unnaturally clean, flat attachment to the hair without realistic shadow casting.": 1,
+    "slightly warped text on the left side of the lanyard strap": 1,
+    "overly clean, vector-like rendering of the cartoon rabbit graphic": 1,
+    "overly perfect, vector-like cartoon graphic on the shirt": 1,
+    "slightly warped text alignment on the lanyard strap": 1,
+    "slightly warped text alignment on the lanyard": 1,
+    "overly uniform rendering of the background string lights": 1,
+    "unnatural blending of the floorboard lines near the bottom right edge": 1,
+    "simplified wall switch details": 1,
+    "diamond watermark artifact": 1,
+    "warping and inconsistent lines in the wooden floorboards": 1,
+    "slightly floating or misaligned lamp base on the left": 1,
+    "faint necklace chain fading unnaturally into the skin": 1,
+    "slightly unnatural blending of hair strands with the background on the left side.": 1,
+    "slightly soft blending where the hair strands overlap the cheek": 1,
+    "the hanging cord of the pendant light is extremely thin and fades unnaturally into the ceiling.": 1,
+    "slightly too uniform texture on the black wristband": 1,
+    "perfectly clean geometry of the rattan lamp slats": 1,
+    "simplified, slightly generic plastic badge holder": 1,
+    "slightly unnatural blending of the hand on the forehead": 1,
+    "garbled, illegible text on the lanyard strap": 1,
+    "garbled text on the lanyard strap": 1,
+    "faint digital watermark artifact": 1,
+    "slightly simplified and blurry finger joints and nails": 1,
+    "slightly warped door handle geometry": 1,
+    "slightly warped metal links on the watch strap": 1,
+    "slightly simplified background figures": 1,
+    "inconsistent metal link structure on the watch strap": 1,
+    "slightly warped background figures and illegible menu text": 1,
+    "deformed background characters and faces": 1,
+    "slightly simplified and uniform metal watch links": 1,
+    "small white diamond watermark artifact": 1,
+    "garbled, illegible text-like tattoo markings": 1,
+    "incoherent and mirrored text on background menu boards": 1,
+    "slightly warped text on the waistband": 1,
+    "slightly stiff finger positioning on the phone": 1,
+    "slightly distorted mirrored text on the waistband": 1,
+    "slightly simplified text rendering on the waistband": 1,
+    "inconsistent mirrored text on the waistband": 1,
+    "deformed pedestrian legs and floating walk cycle": 1,
+    "overly uniform and slightly unnatural tongue texture": 1,
+    "slightly garbled details and nonsensical patterns on the enamel pin.": 1,
+    "slightly distorted and simplified shapes of background vehicles and pedestrians.": 1,
+    "slightly warped details on the enamel pin": 1,
+    "imperfect rendering of background motorcycle wheels": 1,
+    "slightly simplified and warped details on the cat enamel pin.": 1,
+    "the geometric pattern on the right shoulder strap is slightly asymmetric and inconsistent.": 1,
+    "gibberish text on the uniform patch": 1,
+    "slightly distorted digital numbers on the watch face": 1,
+    "illegible text and symbols on the uniform chest patch": 1,
+    "garbled text and symbols on the school uniform patch": 1,
+    "garbled text and symbols on the uniform chest patch": 1,
+    "garbled text on the digital watch display": 1,
+    "slightly distorted text on the school uniform patch": 1,
+    "floating earbud wire": 1,
+    "generation watermark icon": 1,
+    "awkward earbud wire termination": 1,
+    "mirrored and slightly distorted text on the shirt": 1,
+    "earbud wire pathing is slightly unnatural": 1,
+    "ai generator watermark logo": 1,
+    "slightly distorted, ambiguous shape of the necklace pendant.": 1,
+    "floating appearance of the added nostril piercing.": 1,
+    "unprompted nose piercing merging slightly with the nostril skin": 1,
+    "slightly abstract, floating metallic shelf bracket": 1,
+    "watermark icon": 1,
+    "slightly simplified shelf bracket": 1,
+    "overly perfect symmetry in the glasses frames and lens reflections.": 1,
+    "slightly unnatural symmetry in the lace trim pattern": 1,
+    "slightly too perfect blue-light reflection on the lenses": 1,
+    "hyper-sharp rendering of the necklace chain and pendant": 1,
+    "ai generation watermark icon": 1,
+    "slightly unnatural perfection in the lace trim pattern": 1,
+    "slightly unnatural rendering of individual hair strands blending into the background shadow": 1,
+    "slightly simplified connection where the glasses frame meets the temple on the viewer's right.": 1,
+    "slightly simplified silhouette in the cast shadow compared to the actual hair texture.": 1,
+    "slightly unnatural sharpness and symmetry in the glasses frame reflection.": 1,
+    "slightly unnatural sharpness on the glasses frame edges": 1,
+    "slightly unnatural rendering of the fingers and nails on the peace sign hand.": 1,
+    "the floating heart shapes are perfectly sharp vector graphics that do not match the camera's depth of field or grain.": 1,
+    "slightly unnatural blending of the fingernails and finger joints on the hand": 1,
+    "the heart pendant on the necklace is overly sharp and lacks natural shadow integration.": 1,
+    "slightly blended, painterly transition where the fingers meet the cheek.": 1,
+    "slightly warped text rendering on the timestamp": 1,
+    "the red digital timestamp is slightly too crisp and lacks the organic bleeding typical of authentic film cameras.": 1,
+    "slightly warped grill on the background electric fan": 1,
+    "inconsistent pattern definition on the thin camisole strap": 1,
+    "small sparkle watermark icon": 1,
+    "slight structural asymmetry in the lace pattern": 1,
+    "slightly malformed curtain knot": 1,
+    "slightly warped and asymmetrical fan grille lines": 1,
+    "slightly garbled text on the wall sign": 1,
+    "imperfect finger rendering on the visible hand": 1,
+    "slightly distorted and reversed text on the background sign.": 1,
+    "perfectly clean and symmetrical fan grill lines.": 1,
+    "slightly simplified and smoothed rendering of the fingers on the crossed hand": 1,
+    "slightly unnatural orange rim lighting glow on hair strands": 1,
+    "slightly unnatural finger positioning and flat rendering on the crossed hand": 1,
+    "perfectly clean digital motion blur on the background window": 1,
+    "asymmetry and simplified details in the earring on the viewer's right compared to the left.": 1,
+    "slightly complex and overly clean fabric folds at the central knot.": 1,
+    "slightly merged and irregular geometry in the star-shaped earring clusters.": 1,
+    "asymmetrical earrings; the left ear has a complex star cluster while the right has a simple drop earring.": 1,
+    "slightly warped heart pendant on the necklace.": 1,
+    "slightly unnatural blending of hair flyaways against the background": 1,
+    "overly sharp and perfectly rendered starburst earrings": 1,
+    "slightly unnatural, floating hair flyaways": 1,
+    "slightly unnatural finger joint and nail definition on the hand pressing the cheek.": 1,
+    "a small digital watermark artifact is visible in the bottom right corner.": 1,
+    "slightly unnatural skin blending at the contact point where the finger presses the cheek.": 1,
+    "slightly unnatural skin deformation where the finger presses the cheek.": 1,
+    "slightly unnatural blending where the fingertip meets the cheek skin.": 1,
+    "asymmetrical silver clasp holding the heart pendant.": 1,
+    "lack of realistic skin indentation where the finger presses into the cheek": 1,
+    "slightly too perfect and clean hair parting": 1,
+    "slightly floating necklace chain near the collarbone": 1,
+    "slightly simplified star earring rendering": 1,
+    "slightly indistinct rendering of the fingernails and ring structure on the hand resting on the head.": 1,
+    "slightly smudged star tattoo on the inner wrist": 1,
+    "unnatural sharpness on the star earring compared to the surrounding hair": 1,
+    "the bag strap on the left side floats and merges awkwardly into the wooden headboard.": 1,
+    "slightly simplified and blurred finger details where the hands merge into the hair.": 1,
+    "slightly simplified background details on the hanging clothes": 1,
+    "slightly warped shapes on the hanging clothes and hangers": 1,
+    "slightly indistinct details on the kitchenware": 1,
+    "slightly stiff and elongated rendering of the fingers in the peace sign.": 1,
+    "slightly distorted and simplified geometry on the kitchenware hanging on the rack": 1
+  },
+  "style_ref_realism_verdict": {
+    "real-human": 277,
+    "mixed": 2
+  },
+  "corroboration_note": "real-human style refs: 277 (only these count toward >=3 corroboration); likely-ai: 0; mixed: 2",
+  "prompt_move_lift": {
+    "woman in image": {
+      "count": 203,
+      "avg_overall_present": 74.2,
+      "avg_overall_absent": 74.4
+    },
+    "same hair in image": {
+      "count": 196,
+      "avg_overall_present": 74.4,
+      "avg_overall_absent": 73.9
+    },
+    "8k resolution": {
+      "count": 69,
+      "avg_overall_present": 74.4,
+      "avg_overall_absent": 74.2
+    },
+    "photorealistic": {
+      "count": 42,
+      "avg_overall_present": 74.9,
+      "avg_overall_absent": 74.1
+    },
+    "high-quality": {
+      "count": 39,
+      "avg_overall_present": 75.5,
+      "avg_overall_absent": 74.0
+    },
+    "highly detailed skin texture": {
+      "count": 32,
+      "avg_overall_present": 74.2,
+      "avg_overall_absent": 74.2
+    },
+    "(woman in image)": {
+      "count": 32,
+      "avg_overall_present": 74.2,
+      "avg_overall_absent": 74.2
+    },
+    "(same hair in image)": {
+      "count": 30,
+      "avg_overall_present": 75.1,
+      "avg_overall_absent": 74.1
+    },
+    "natural skin texture": {
+      "count": 28,
+      "avg_overall_present": 75.4,
+      "avg_overall_absent": 74.1
+    },
+    "cinematic lighting": {
+      "count": 26,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.1
+    },
+    "mirror selfie": {
+      "count": 22,
+      "avg_overall_present": 78.1,
+      "avg_overall_absent": 73.9
+    },
+    "beautiful (woman in image)": {
+      "count": 18,
+      "avg_overall_present": 75.8,
+      "avg_overall_absent": 74.1
+    },
+    "realistic": {
+      "count": 17,
+      "avg_overall_present": 69.1,
+      "avg_overall_absent": 74.6
+    },
+    "with (same hair in image)": {
+      "count": 16,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "photorealistic portrait": {
+      "count": 16,
+      "avg_overall_present": 73.5,
+      "avg_overall_absent": 74.3
+    },
+    "natural indoor lighting": {
+      "count": 15,
+      "avg_overall_present": 71.9,
+      "avg_overall_absent": 74.4
+    },
+    "realistic skin texture": {
+      "count": 14,
+      "avg_overall_present": 74.6,
+      "avg_overall_absent": 74.2
+    },
+    "high-resolution": {
+      "count": 14,
+      "avg_overall_present": 73.9,
+      "avg_overall_absent": 74.2
+    },
+    "high detail": {
+      "count": 14,
+      "avg_overall_present": 71.0,
+      "avg_overall_absent": 74.4
+    },
+    "highly detailed": {
+      "count": 13,
+      "avg_overall_present": 76.8,
+      "avg_overall_absent": 74.1
+    },
+    "high-quality photography": {
+      "count": 13,
+      "avg_overall_present": 76.6,
+      "avg_overall_absent": 74.1
+    },
+    "sharp focus on facial features": {
+      "count": 13,
+      "avg_overall_present": 70.8,
+      "avg_overall_absent": 74.4
+    },
+    "natural film grain": {
+      "count": 12,
+      "avg_overall_present": 76.5,
+      "avg_overall_absent": 74.1
+    },
+    "shallow depth of field": {
+      "count": 12,
+      "avg_overall_present": 74.4,
+      "avg_overall_absent": 74.2
+    },
+    "realistic close-up selfie": {
+      "count": 11,
+      "avg_overall_present": 70.5,
+      "avg_overall_absent": 74.4
+    },
+    "candid": {
+      "count": 11,
+      "avg_overall_present": 68.7,
+      "avg_overall_absent": 74.5
+    },
+    "soft natural indoor lighting": {
+      "count": 10,
+      "avg_overall_present": 78.3,
+      "avg_overall_absent": 74.1
+    },
+    "aesthetic selfie style": {
+      "count": 10,
+      "avg_overall_present": 76.1,
+      "avg_overall_absent": 74.2
+    },
+    "8k": {
+      "count": 10,
+      "avg_overall_present": 75.6,
+      "avg_overall_absent": 74.2
+    },
+    "eyes closed": {
+      "count": 10,
+      "avg_overall_present": 75.1,
+      "avg_overall_absent": 74.2
+    },
+    "high resolution": {
+      "count": 10,
+      "avg_overall_present": 73.4,
+      "avg_overall_absent": 74.3
+    },
+    "casual, slightly hazy smartphone selfie": {
+      "count": 10,
+      "avg_overall_present": 73.1,
+      "avg_overall_absent": 74.3
+    },
+    "sharp focus": {
+      "count": 9,
+      "avg_overall_present": 77.3,
+      "avg_overall_absent": 74.1
+    },
+    "medium shot": {
+      "count": 9,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.1
+    },
+    "4k": {
+      "count": 9,
+      "avg_overall_present": 73.6,
+      "avg_overall_absent": 74.3
+    },
+    "winged eyeliner": {
+      "count": 9,
+      "avg_overall_present": 71.2,
+      "avg_overall_absent": 74.3
+    },
+    "soft, natural indoor light": {
+      "count": 9,
+      "avg_overall_present": 70.6,
+      "avg_overall_absent": 74.4
+    },
+    "gray spaghetti-strap tank top with small black polka dots": {
+      "count": 8,
+      "avg_overall_present": 77.2,
+      "avg_overall_absent": 74.1
+    },
+    "cinematic photography style": {
+      "count": 8,
+      "avg_overall_present": 77.2,
+      "avg_overall_absent": 74.1
+    },
+    "realistic portrait": {
+      "count": 7,
+      "avg_overall_present": 78.1,
+      "avg_overall_absent": 74.1
+    },
+    "casual indoor lighting": {
+      "count": 7,
+      "avg_overall_present": 77.9,
+      "avg_overall_absent": 74.1
+    },
+    "light grey heathered sweatpants": {
+      "count": 7,
+      "avg_overall_present": 77.9,
+      "avg_overall_absent": 74.1
+    },
+    "homey atmosphere": {
+      "count": 7,
+      "avg_overall_present": 77.9,
+      "avg_overall_absent": 74.1
+    },
+    "soft frontal lighting": {
+      "count": 7,
+      "avg_overall_present": 77.4,
+      "avg_overall_absent": 74.1
+    },
+    "outdoor residential street at night": {
+      "count": 7,
+      "avg_overall_present": 76.9,
+      "avg_overall_absent": 74.2
+    },
+    "cinematic soft lighting": {
+      "count": 7,
+      "avg_overall_present": 76.9,
+      "avg_overall_absent": 74.2
+    },
+    "low-light photography": {
+      "count": 7,
+      "avg_overall_present": 76.9,
+      "avg_overall_absent": 74.2
+    },
+    "grey spaghetti-strap tank top": {
+      "count": 7,
+      "avg_overall_present": 76.9,
+      "avg_overall_absent": 74.2
+    },
+    "winking at the camera with a playful smirk": {
+      "count": 7,
+      "avg_overall_present": 76.9,
+      "avg_overall_absent": 74.2
+    },
+    "smartphone with a white graphic case": {
+      "count": 7,
+      "avg_overall_present": 76.7,
+      "avg_overall_absent": 74.2
+    },
+    "gold necklace with a small pendant": {
+      "count": 7,
+      "avg_overall_present": 76.7,
+      "avg_overall_absent": 74.2
+    },
+    "pearl earrings": {
+      "count": 7,
+      "avg_overall_present": 76.7,
+      "avg_overall_absent": 74.2
+    },
+    "unfinished, stained wall": {
+      "count": 7,
+      "avg_overall_present": 76.7,
+      "avg_overall_absent": 74.2
+    },
+    "black tube top": {
+      "count": 7,
+      "avg_overall_present": 76.7,
+      "avg_overall_absent": 74.2
+    },
+    "realistic, indoor lighting": {
+      "count": 7,
+      "avg_overall_present": 76.7,
+      "avg_overall_absent": 74.2
+    },
+    "soft, natural light": {
+      "count": 7,
+      "avg_overall_present": 71.1,
+      "avg_overall_absent": 74.3
+    },
+    "chin rests on a clenched right fist": {
+      "count": 7,
+      "avg_overall_present": 71.1,
+      "avg_overall_absent": 74.3
+    },
+    "visible cheek flushing": {
+      "count": 7,
+      "avg_overall_present": 71.1,
+      "avg_overall_absent": 74.3
+    },
+    "high-angle perspective": {
+      "count": 7,
+      "avg_overall_present": 71.1,
+      "avg_overall_absent": 74.3
+    },
+    "plain white wall background": {
+      "count": 7,
+      "avg_overall_present": 71.1,
+      "avg_overall_absent": 74.3
+    },
+    "pouting lips": {
+      "count": 6,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.1
+    },
+    "reddish lipstick": {
+      "count": 6,
+      "avg_overall_present": 77.8,
+      "avg_overall_absent": 74.2
+    },
+    "leopard-print case": {
+      "count": 6,
+      "avg_overall_present": 77.3,
+      "avg_overall_absent": 74.2
+    },
+    "light olive-drab jacket draped off her shoulders": {
+      "count": 6,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "natural outdoor daylight": {
+      "count": 6,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "black spaghetti strap top with a light olive-drab jacket draped off her shoulders": {
+      "count": 6,
+      "avg_overall_present": 75.3,
+      "avg_overall_absent": 74.2
+    },
+    "playful and goofy face, tongue out to the side": {
+      "count": 6,
+      "avg_overall_present": 75.3,
+      "avg_overall_absent": 74.2
+    },
+    "authentic skin texture": {
+      "count": 6,
+      "avg_overall_present": 75.2,
+      "avg_overall_absent": 74.2
+    },
+    "natural makeup": {
+      "count": 6,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "slightly hazy smartphone selfie": {
+      "count": 6,
+      "avg_overall_present": 73.0,
+      "avg_overall_absent": 74.3
+    },
+    "gentle smile": {
+      "count": 6,
+      "avg_overall_present": 71.0,
+      "avg_overall_absent": 74.3
+    },
+    "delicate gold coin necklace": {
+      "count": 6,
+      "avg_overall_present": 69.8,
+      "avg_overall_absent": 74.3
+    },
+    "bright natural daylight": {
+      "count": 6,
+      "avg_overall_present": 69.8,
+      "avg_overall_absent": 74.3
+    },
+    "solid dark brown door and frame directly behind her": {
+      "count": 6,
+      "avg_overall_present": 68.8,
+      "avg_overall_absent": 74.3
+    },
+    "identical distinct clear-framed prescription glasses with gold-metal accents": {
+      "count": 6,
+      "avg_overall_present": 68.8,
+      "avg_overall_absent": 74.3
+    },
+    "loose, low side ponytail that drapes over her left shoulder": {
+      "count": 6,
+      "avg_overall_present": 68.8,
+      "avg_overall_absent": 74.3
+    },
+    "vibrant pink camisole with thin straps": {
+      "count": 6,
+      "avg_overall_present": 62.7,
+      "avg_overall_absent": 74.5
+    },
+    "delicate gold necklace with a circular black pendant": {
+      "count": 6,
+      "avg_overall_present": 62.7,
+      "avg_overall_absent": 74.5
+    },
+    "candid smartphone photo style": {
+      "count": 6,
+      "avg_overall_present": 62.7,
+      "avg_overall_absent": 74.5
+    },
+    "white collared uniform shirt with a chest patch": {
+      "count": 5,
+      "avg_overall_present": 80.0,
+      "avg_overall_absent": 74.1
+    },
+    "brightly lit classroom with a blurred student sitting behind her": {
+      "count": 5,
+      "avg_overall_present": 80.0,
+      "avg_overall_absent": 74.1
+    },
+    "smiling gently with both hands framing her cheeks": {
+      "count": 5,
+      "avg_overall_present": 80.0,
+      "avg_overall_absent": 74.1
+    },
+    "rattan pendant light": {
+      "count": 5,
+      "avg_overall_present": 79.4,
+      "avg_overall_absent": 74.1
+    },
+    "cinematic bokeh": {
+      "count": 5,
+      "avg_overall_present": 79.4,
+      "avg_overall_absent": 74.1
+    },
+    "high-quality photorealistic portrait": {
+      "count": 5,
+      "avg_overall_present": 79.4,
+      "avg_overall_absent": 74.1
+    },
+    "lavender ribbed tank top": {
+      "count": 5,
+      "avg_overall_present": 79.4,
+      "avg_overall_absent": 74.1
+    },
+    "textured gray concrete wall": {
+      "count": 5,
+      "avg_overall_present": 79.4,
+      "avg_overall_absent": 74.1
+    },
+    "white t-shirt with a dark collar": {
+      "count": 5,
+      "avg_overall_present": 79.2,
+      "avg_overall_absent": 74.1
+    },
+    "giving a thumbs-up": {
+      "count": 5,
+      "avg_overall_present": 79.2,
+      "avg_overall_absent": 74.1
+    },
+    "candid photo": {
+      "count": 5,
+      "avg_overall_present": 79.2,
+      "avg_overall_absent": 74.1
+    },
+    "casual, natural lighting": {
+      "count": 5,
+      "avg_overall_present": 79.2,
+      "avg_overall_absent": 74.1
+    },
+    "white window with metal security bars": {
+      "count": 5,
+      "avg_overall_present": 79.2,
+      "avg_overall_absent": 74.1
+    },
+    "textured blue wall": {
+      "count": 5,
+      "avg_overall_present": 79.2,
+      "avg_overall_absent": 74.1
+    },
+    "looking slightly off-camera": {
+      "count": 5,
+      "avg_overall_present": 78.6,
+      "avg_overall_absent": 74.1
+    },
+    "candid, low-light smartphone selfie": {
+      "count": 5,
+      "avg_overall_present": 78.6,
+      "avg_overall_absent": 74.1
+    },
+    "lying down on a green and yellow checkered pillow": {
+      "count": 5,
+      "avg_overall_present": 78.6,
+      "avg_overall_absent": 74.1
+    },
+    "right hand is resting on her forehead": {
+      "count": 5,
+      "avg_overall_present": 78.6,
+      "avg_overall_absent": 74.1
+    },
+    "authentic skin texture with slight grain": {
+      "count": 5,
+      "avg_overall_present": 78.6,
+      "avg_overall_absent": 74.1
+    },
+    "dim indoor lighting": {
+      "count": 5,
+      "avg_overall_present": 78.6,
+      "avg_overall_absent": 74.1
+    },
+    "plain light peach indoor walls and a doorway": {
+      "count": 5,
+      "avg_overall_present": 78.6,
+      "avg_overall_absent": 74.1
+    },
+    "starburst cluster dangle earrings": {
+      "count": 5,
+      "avg_overall_present": 78.4,
+      "avg_overall_absent": 74.2
+    },
+    "loose ponytail with face-framing layers": {
+      "count": 5,
+      "avg_overall_present": 78.4,
+      "avg_overall_absent": 74.2
+    },
+    "pronounced pouted lip expression": {
+      "count": 5,
+      "avg_overall_present": 78.4,
+      "avg_overall_absent": 74.2
+    },
+    "plain, minimalist taupe indoor wall": {
+      "count": 5,
+      "avg_overall_present": 78.4,
+      "avg_overall_absent": 74.2
+    },
+    "textured off-white wall with a hint of a black metal chair frame": {
+      "count": 5,
+      "avg_overall_present": 77.8,
+      "avg_overall_absent": 74.2
+    },
+    "candid-style smartphone selfie": {
+      "count": 5,
+      "avg_overall_present": 77.4,
+      "avg_overall_absent": 74.2
+    },
+    "soft bokeh from distant street lights": {
+      "count": 5,
+      "avg_overall_present": 77.4,
+      "avg_overall_absent": 74.2
+    },
+    "slightly grainy film aesthetic": {
+      "count": 5,
+      "avg_overall_present": 77.4,
+      "avg_overall_absent": 74.2
+    },
+    "throw pillow with a detailed beige and brown floral pattern": {
+      "count": 5,
+      "avg_overall_present": 77.2,
+      "avg_overall_absent": 74.2
+    },
+    "large circular mirror mounted on a plain white wall": {
+      "count": 5,
+      "avg_overall_present": 77.2,
+      "avg_overall_absent": 74.2
+    },
+    "glimpse of a dark wood armrest": {
+      "count": 5,
+      "avg_overall_present": 77.2,
+      "avg_overall_absent": 74.2
+    },
+    "natural, almost makeup-free look": {
+      "count": 5,
+      "avg_overall_present": 77.2,
+      "avg_overall_absent": 74.2
+    },
+    "camera's flash is reflected brightly": {
+      "count": 5,
+      "avg_overall_present": 77.2,
+      "avg_overall_absent": 74.2
+    },
+    "white textured floral lace camisole": {
+      "count": 5,
+      "avg_overall_present": 77.2,
+      "avg_overall_absent": 74.2
+    },
+    "warm, dim indoor lighting": {
+      "count": 5,
+      "avg_overall_present": 77.2,
+      "avg_overall_absent": 74.2
+    },
+    "textured beige wall": {
+      "count": 5,
+      "avg_overall_present": 77.2,
+      "avg_overall_absent": 74.2
+    },
+    "leaning back against cushions": {
+      "count": 5,
+      "avg_overall_present": 77.2,
+      "avg_overall_absent": 74.2
+    },
+    "looking directly into the lens": {
+      "count": 5,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "specific (woman in image)": {
+      "count": 5,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "propped on her stomach and elbows": {
+      "count": 5,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "natural light": {
+      "count": 5,
+      "avg_overall_present": 76.6,
+      "avg_overall_absent": 74.2
+    },
+    "sitting on a concrete path in an outdoor park": {
+      "count": 5,
+      "avg_overall_present": 75.6,
+      "avg_overall_absent": 74.2
+    },
+    "black sunglasses perched on top of her head": {
+      "count": 5,
+      "avg_overall_present": 75.6,
+      "avg_overall_absent": 74.2
+    },
+    "vibrant magenta strapless tube top": {
+      "count": 5,
+      "avg_overall_present": 75.6,
+      "avg_overall_absent": 74.2
+    },
+    "high-angle selfie": {
+      "count": 5,
+      "avg_overall_present": 75.6,
+      "avg_overall_absent": 74.2
+    },
+    "realistic medium close-up shot": {
+      "count": 5,
+      "avg_overall_present": 75.4,
+      "avg_overall_absent": 74.2
+    },
+    "light-wash denim shorts": {
+      "count": 5,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "plain dark gray ribbed knit strapless tube top": {
+      "count": 5,
+      "avg_overall_present": 74.0,
+      "avg_overall_absent": 74.2
+    },
+    "profound sad pout": {
+      "count": 5,
+      "avg_overall_present": 74.0,
+      "avg_overall_absent": 74.2
+    },
+    "black leather choker necklace with a large, faceted, translucent red heart pendant": {
+      "count": 5,
+      "avg_overall_present": 74.0,
+      "avg_overall_absent": 74.2
+    },
+    "clear metal-rimmed rectangular glasses": {
+      "count": 5,
+      "avg_overall_present": 72.6,
+      "avg_overall_absent": 74.3
+    },
+    "black strapless tube top with a pink butterfly outline design": {
+      "count": 5,
+      "avg_overall_present": 72.6,
+      "avg_overall_absent": 74.3
+    },
+    "slight film grain": {
+      "count": 5,
+      "avg_overall_present": 72.6,
+      "avg_overall_absent": 74.3
+    },
+    "soft, natural indoor ambient light": {
+      "count": 5,
+      "avg_overall_present": 71.2,
+      "avg_overall_absent": 74.3
+    },
+    "east or southeast asian descent": {
+      "count": 5,
+      "avg_overall_present": 70.8,
+      "avg_overall_absent": 74.3
+    },
+    "high, overhead perspective": {
+      "count": 5,
+      "avg_overall_present": 70.8,
+      "avg_overall_absent": 74.3
+    },
+    "blue and white grid plaid patterned sheet": {
+      "count": 5,
+      "avg_overall_present": 70.8,
+      "avg_overall_absent": 74.3
+    },
+    "tiny strawberry pendant": {
+      "count": 5,
+      "avg_overall_present": 70.8,
+      "avg_overall_absent": 74.3
+    },
+    "shot on mobile phone camera": {
+      "count": 5,
+      "avg_overall_present": 70.8,
+      "avg_overall_absent": 74.3
+    },
+    "subtle analog film grain": {
+      "count": 5,
+      "avg_overall_present": 70.8,
+      "avg_overall_absent": 74.3
+    },
+    "intense, playful grimace: nose scrunched up, lips contorted": {
+      "count": 5,
+      "avg_overall_present": 70.8,
+      "avg_overall_absent": 74.3
+    },
+    "pink ribbed halter bikini top": {
+      "count": 5,
+      "avg_overall_present": 70.8,
+      "avg_overall_absent": 74.3
+    },
+    "beautiful young (woman in image)": {
+      "count": 5,
+      "avg_overall_present": 70.4,
+      "avg_overall_absent": 74.3
+    },
+    "soft, natural indoor ambient": {
+      "count": 5,
+      "avg_overall_present": 70.2,
+      "avg_overall_absent": 74.3
+    },
+    "sunny tropical resort with lush palm trees and green foliage": {
+      "count": 5,
+      "avg_overall_present": 68.8,
+      "avg_overall_absent": 74.3
+    },
+    "looking directly into the camera with a gentle, slightly closed-mouth smile": {
+      "count": 5,
+      "avg_overall_present": 68.4,
+      "avg_overall_absent": 74.3
+    },
+    "simple, clean plain white crew-neck t-shirt": {
+      "count": 5,
+      "avg_overall_present": 68.4,
+      "avg_overall_absent": 74.3
+    },
+    "high-fidelity, realistic photograph": {
+      "count": 5,
+      "avg_overall_present": 68.0,
+      "avg_overall_absent": 74.3
+    },
+    "resting her head on her right hand": {
+      "count": 5,
+      "avg_overall_present": 67.6,
+      "avg_overall_absent": 74.4
+    },
+    "white tank top": {
+      "count": 5,
+      "avg_overall_present": 67.6,
+      "avg_overall_absent": 74.4
+    },
+    "silver metal watch": {
+      "count": 5,
+      "avg_overall_present": 67.6,
+      "avg_overall_absent": 74.4
+    },
+    "lying on her back on a bed": {
+      "count": 5,
+      "avg_overall_present": 64.6,
+      "avg_overall_absent": 74.4
+    },
+    "pink ribbed knit camisole tank top": {
+      "count": 5,
+      "avg_overall_present": 64.6,
+      "avg_overall_absent": 74.4
+    },
+    "tongue poked out a little to the side": {
+      "count": 5,
+      "avg_overall_present": 64.6,
+      "avg_overall_absent": 74.4
+    },
+    "three-quarter view from her right": {
+      "count": 5,
+      "avg_overall_present": 64.2,
+      "avg_overall_absent": 74.4
+    },
+    "black and white checked damask pattern tank top": {
+      "count": 5,
+      "avg_overall_present": 64.2,
+      "avg_overall_absent": 74.4
+    },
+    "slightly soft focus": {
+      "count": 5,
+      "avg_overall_present": 61.8,
+      "avg_overall_absent": 74.5
+    },
+    "indoor selfie": {
+      "count": 5,
+      "avg_overall_present": 59.6,
+      "avg_overall_absent": 74.5
+    },
+    "washroom with white marble-patterned wall tiles": {
+      "count": 4,
+      "avg_overall_present": 82.5,
+      "avg_overall_absent": 74.1
+    },
+    "light purple smartphone": {
+      "count": 4,
+      "avg_overall_present": 82.5,
+      "avg_overall_absent": 74.1
+    },
+    "harsh direct flash lighting": {
+      "count": 4,
+      "avg_overall_present": 81.2,
+      "avg_overall_absent": 74.1
+    },
+    "right hand is gently resting on her right cheek": {
+      "count": 4,
+      "avg_overall_present": 81.2,
+      "avg_overall_absent": 74.1
+    },
+    "retro aesthetic": {
+      "count": 4,
+      "avg_overall_present": 81.2,
+      "avg_overall_absent": 74.1
+    },
+    "chevron/zig-zag patterned bedspread": {
+      "count": 4,
+      "avg_overall_present": 81.2,
+      "avg_overall_absent": 74.1
+    },
+    "analog film self-portrait": {
+      "count": 4,
+      "avg_overall_present": 81.2,
+      "avg_overall_absent": 74.1
+    },
+    "delicate necklace": {
+      "count": 4,
+      "avg_overall_present": 80.5,
+      "avg_overall_absent": 74.1
+    },
+    "chin resting lightly on the back of her fingers": {
+      "count": 4,
+      "avg_overall_present": 80.2,
+      "avg_overall_absent": 74.1
+    },
+    "white ribbed spaghetti strap tank top": {
+      "count": 4,
+      "avg_overall_present": 80.2,
+      "avg_overall_absent": 74.1
+    },
+    "hands framing her cheeks": {
+      "count": 4,
+      "avg_overall_present": 80.0,
+      "avg_overall_absent": 74.1
+    },
+    "silver digital watch on her wrist": {
+      "count": 4,
+      "avg_overall_present": 80.0,
+      "avg_overall_absent": 74.1
+    },
+    "silver digital watch": {
+      "count": 4,
+      "avg_overall_present": 80.0,
+      "avg_overall_absent": 74.1
+    },
+    "terracotta orange square-neck top": {
+      "count": 4,
+      "avg_overall_present": 79.8,
+      "avg_overall_absent": 74.1
+    },
+    "making a 'v' peace sign": {
+      "count": 4,
+      "avg_overall_present": 79.8,
+      "avg_overall_absent": 74.1
+    },
+    "wide-eyed, intense gaze": {
+      "count": 4,
+      "avg_overall_present": 79.2,
+      "avg_overall_absent": 74.2
+    },
+    "gold chain necklace with a black circular pendant": {
+      "count": 4,
+      "avg_overall_present": 79.2,
+      "avg_overall_absent": 74.2
+    },
+    "black and white ribbed bandeau tube top": {
+      "count": 4,
+      "avg_overall_present": 79.2,
+      "avg_overall_absent": 74.2
+    },
+    "grainy, authentic smartphone camera quality": {
+      "count": 4,
+      "avg_overall_present": 79.2,
+      "avg_overall_absent": 74.2
+    },
+    "minimalist dark brown sleeveless top": {
+      "count": 4,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "fluffy leopard-print keychain": {
+      "count": 4,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "white split-type air conditioner": {
+      "count": 4,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "one hand gracefully touching her hair": {
+      "count": 4,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "starburst camera flash": {
+      "count": 4,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "silver metal cat-eye style prescription glasses": {
+      "count": 4,
+      "avg_overall_present": 78.8,
+      "avg_overall_absent": 74.2
+    },
+    "gray ribbed knitted tank top": {
+      "count": 4,
+      "avg_overall_present": 78.8,
+      "avg_overall_absent": 74.2
+    },
+    "pouted duck face lips": {
+      "count": 4,
+      "avg_overall_present": 78.8,
+      "avg_overall_absent": 74.2
+    },
+    "left arm is crossed": {
+      "count": 4,
+      "avg_overall_present": 78.8,
+      "avg_overall_absent": 74.2
+    },
+    "simple, clean white crew-neck t-shirt": {
+      "count": 4,
+      "avg_overall_present": 78.0,
+      "avg_overall_absent": 74.2
+    },
+    "minimalist off-white wall background": {
+      "count": 4,
+      "avg_overall_present": 78.0,
+      "avg_overall_absent": 74.2
+    },
+    "right hand gently tucked behind her ear": {
+      "count": 4,
+      "avg_overall_present": 78.0,
+      "avg_overall_absent": 74.2
+    },
+    "split of a dark carved wooden door and a plain white indoor wall with a light switch": {
+      "count": 4,
+      "avg_overall_present": 78.0,
+      "avg_overall_absent": 74.2
+    },
+    "casual grey t-shirt with glasses tucked into the neckline": {
+      "count": 4,
+      "avg_overall_present": 78.0,
+      "avg_overall_absent": 74.2
+    },
+    "layered halter top": {
+      "count": 4,
+      "avg_overall_present": 77.5,
+      "avg_overall_absent": 74.2
+    },
+    "candid and intimate": {
+      "count": 4,
+      "avg_overall_present": 77.5,
+      "avg_overall_absent": 74.2
+    },
+    "loose white long-sleeved t-shirt with a black graphic design": {
+      "count": 4,
+      "avg_overall_present": 77.5,
+      "avg_overall_absent": 74.2
+    },
+    "highly realistic": {
+      "count": 4,
+      "avg_overall_present": 77.2,
+      "avg_overall_absent": 74.2
+    },
+    "minimalist abstract face/hand line patterns": {
+      "count": 4,
+      "avg_overall_present": 77.2,
+      "avg_overall_absent": 74.2
+    },
+    "white strapless tube top with a row of black buttons": {
+      "count": 4,
+      "avg_overall_present": 77.2,
+      "avg_overall_absent": 74.2
+    },
+    "grey tiles and dark wall panel": {
+      "count": 4,
+      "avg_overall_present": 77.2,
+      "avg_overall_absent": 74.2
+    },
+    "modern restroom": {
+      "count": 4,
+      "avg_overall_present": 77.2,
+      "avg_overall_absent": 74.2
+    },
+    "soft, natural indoor lighting from the front": {
+      "count": 4,
+      "avg_overall_present": 77.2,
+      "avg_overall_absent": 74.2
+    },
+    "blue and white gingham patterned pillow": {
+      "count": 4,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "head is wrapped in a thick, white terry cloth towel, turban-style": {
+      "count": 4,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "black tank top or bra strap is visible": {
+      "count": 4,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "reclined on a bed, with her right arm bent and hand resting behind her head": {
+      "count": 4,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "soft, natural indoor ambient lighting": {
+      "count": 4,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "green and yellow checkered pillow": {
+      "count": 4,
+      "avg_overall_present": 76.8,
+      "avg_overall_absent": 74.2
+    },
+    "winking one eye with a subtle smirk": {
+      "count": 4,
+      "avg_overall_present": 76.8,
+      "avg_overall_absent": 74.2
+    },
+    "natural, warm, and highlights her features": {
+      "count": 4,
+      "avg_overall_present": 76.5,
+      "avg_overall_absent": 74.2
+    },
+    "detailed beige and brown floral pattern": {
+      "count": 4,
+      "avg_overall_present": 76.5,
+      "avg_overall_absent": 74.2
+    },
+    "sitting in clear ocean water up to her chest": {
+      "count": 4,
+      "avg_overall_present": 76.5,
+      "avg_overall_absent": 74.2
+    },
+    "detailed candid photograph": {
+      "count": 4,
+      "avg_overall_present": 76.5,
+      "avg_overall_absent": 74.2
+    },
+    "realistic selfie": {
+      "count": 4,
+      "avg_overall_present": 76.5,
+      "avg_overall_absent": 74.2
+    },
+    "detailed textures on skin and water": {
+      "count": 4,
+      "avg_overall_present": 76.5,
+      "avg_overall_absent": 74.2
+    },
+    "sunny resort setting with a chain-link fence, green lawn, and palm trees": {
+      "count": 4,
+      "avg_overall_present": 75.5,
+      "avg_overall_absent": 74.2
+    },
+    "sunglasses perched on top of her head": {
+      "count": 4,
+      "avg_overall_present": 75.5,
+      "avg_overall_absent": 74.2
+    },
+    "tongue out to the side": {
+      "count": 4,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "balcony with lush tropical greenery and banana trees": {
+      "count": 4,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "thin, rose gold wire-frame glasses": {
+      "count": 4,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "blurred bright indoor background with people": {
+      "count": 4,
+      "avg_overall_present": 74.8,
+      "avg_overall_absent": 74.2
+    },
+    "natural lighting": {
+      "count": 4,
+      "avg_overall_present": 74.8,
+      "avg_overall_absent": 74.2
+    },
+    "white blazer over a black top": {
+      "count": 4,
+      "avg_overall_present": 74.8,
+      "avg_overall_absent": 74.2
+    },
+    "thin silver necklace": {
+      "count": 4,
+      "avg_overall_present": 74.8,
+      "avg_overall_absent": 74.2
+    },
+    "soft smile": {
+      "count": 4,
+      "avg_overall_present": 74.8,
+      "avg_overall_absent": 74.2
+    },
+    "playful kissy face (pouted lips)": {
+      "count": 4,
+      "avg_overall_present": 74.2,
+      "avg_overall_absent": 74.2
+    },
+    "captured on a smartphone camera": {
+      "count": 4,
+      "avg_overall_present": 74.2,
+      "avg_overall_absent": 74.2
+    },
+    "neutral-to-slightly pursed lips expression": {
+      "count": 4,
+      "avg_overall_present": 74.2,
+      "avg_overall_absent": 74.2
+    },
+    "indoor, slightly cluttered room": {
+      "count": 4,
+      "avg_overall_present": 74.2,
+      "avg_overall_absent": 74.2
+    },
+    "delicate white lace-trimmed camisole": {
+      "count": 4,
+      "avg_overall_present": 74.2,
+      "avg_overall_absent": 74.2
+    },
+    "dewy skin": {
+      "count": 4,
+      "avg_overall_present": 74.2,
+      "avg_overall_absent": 74.2
+    },
+    "natural diffused daylight": {
+      "count": 4,
+      "avg_overall_present": 73.8,
+      "avg_overall_absent": 74.2
+    },
+    "natural indoor light": {
+      "count": 4,
+      "avg_overall_present": 73.8,
+      "avg_overall_absent": 74.2
+    },
+    "white spaghetti strap top": {
+      "count": 4,
+      "avg_overall_present": 73.8,
+      "avg_overall_absent": 74.2
+    },
+    "delicate white eyelet lace camisole": {
+      "count": 4,
+      "avg_overall_present": 73.5,
+      "avg_overall_absent": 74.2
+    },
+    "candid selfie aesthetic": {
+      "count": 4,
+      "avg_overall_present": 73.5,
+      "avg_overall_absent": 74.2
+    },
+    "candid, high-resolution indoor selfie": {
+      "count": 4,
+      "avg_overall_present": 73.2,
+      "avg_overall_absent": 74.2
+    },
+    "giving a clear thumbs-up": {
+      "count": 4,
+      "avg_overall_present": 73.2,
+      "avg_overall_absent": 74.2
+    },
+    "mint green painted wall with a soft, blurred shadow": {
+      "count": 4,
+      "avg_overall_present": 72.8,
+      "avg_overall_absent": 74.3
+    },
+    "right index finger is pressed into her cheek": {
+      "count": 4,
+      "avg_overall_present": 72.2,
+      "avg_overall_absent": 74.3
+    },
+    "sharp, with realistic skin texture and minimal grain": {
+      "count": 4,
+      "avg_overall_present": 71.5,
+      "avg_overall_absent": 74.3
+    },
+    "simple black spaghetti-strap tank top": {
+      "count": 4,
+      "avg_overall_present": 71.5,
+      "avg_overall_absent": 74.3
+    },
+    "detailed, intimate close-up photorealistic portrait selfie": {
+      "count": 4,
+      "avg_overall_present": 71.0,
+      "avg_overall_absent": 74.3
+    },
+    "black bag strap with gold chain links": {
+      "count": 4,
+      "avg_overall_present": 70.8,
+      "avg_overall_absent": 74.3
+    },
+    "sitting on a wooden floor in a cozy bedroom": {
+      "count": 4,
+      "avg_overall_present": 69.8,
+      "avg_overall_absent": 74.3
+    },
+    "grainy film aesthetic": {
+      "count": 4,
+      "avg_overall_present": 69.8,
+      "avg_overall_absent": 74.3
+    },
+    "teal plastic drawer unit and a white paneled door against a lavender-colored wall": {
+      "count": 4,
+      "avg_overall_present": 69.8,
+      "avg_overall_absent": 74.3
+    },
+    "teal plastic drawer unit": {
+      "count": 4,
+      "avg_overall_present": 69.8,
+      "avg_overall_absent": 74.3
+    },
+    "nostalgic 2010s digital camera style": {
+      "count": 4,
+      "avg_overall_present": 69.8,
+      "avg_overall_absent": 74.3
+    },
+    "realistic texture": {
+      "count": 4,
+      "avg_overall_present": 69.8,
+      "avg_overall_absent": 74.3
+    },
+    "close-up selfie": {
+      "count": 4,
+      "avg_overall_present": 69.8,
+      "avg_overall_absent": 74.3
+    },
+    "indoor low-light photography": {
+      "count": 4,
+      "avg_overall_present": 69.8,
+      "avg_overall_absent": 74.3
+    },
+    "light blue spaghetti strap tube top and denim shorts": {
+      "count": 4,
+      "avg_overall_present": 69.8,
+      "avg_overall_absent": 74.3
+    },
+    "soft-focus smartphone selfie": {
+      "count": 4,
+      "avg_overall_present": 68.8,
+      "avg_overall_absent": 74.3
+    },
+    "lying down on a solid teal green surface": {
+      "count": 4,
+      "avg_overall_present": 68.8,
+      "avg_overall_absent": 74.3
+    },
+    "one hand is resting on her forehead": {
+      "count": 4,
+      "avg_overall_present": 68.8,
+      "avg_overall_absent": 74.3
+    },
+    "bold red lipstick": {
+      "count": 4,
+      "avg_overall_present": 68.8,
+      "avg_overall_absent": 74.3
+    },
+    "slight film grain aesthetic": {
+      "count": 4,
+      "avg_overall_present": 68.8,
+      "avg_overall_absent": 74.3
+    },
+    "dreamy indoor lighting": {
+      "count": 4,
+      "avg_overall_present": 68.8,
+      "avg_overall_absent": 74.3
+    },
+    "school uniform consisting of a white collared shirt, a dark vest, and a blue lanyard": {
+      "count": 4,
+      "avg_overall_present": 68.8,
+      "avg_overall_absent": 74.3
+    },
+    "cinematic quality": {
+      "count": 4,
+      "avg_overall_present": 68.8,
+      "avg_overall_absent": 74.3
+    },
+    "loose, low side ponytail": {
+      "count": 4,
+      "avg_overall_present": 68.2,
+      "avg_overall_absent": 74.3
+    },
+    "brightly lit, blurry fast-food restaurant": {
+      "count": 4,
+      "avg_overall_present": 68.2,
+      "avg_overall_absent": 74.3
+    },
+    "minimal grain": {
+      "count": 4,
+      "avg_overall_present": 68.2,
+      "avg_overall_absent": 74.3
+    },
+    "textured, two-piece style top": {
+      "count": 4,
+      "avg_overall_present": 68.0,
+      "avg_overall_absent": 74.3
+    },
+    "identical distinct clear-framed prescription glasses": {
+      "count": 4,
+      "avg_overall_present": 66.8,
+      "avg_overall_absent": 74.3
+    },
+    "authentic film grain": {
+      "count": 4,
+      "avg_overall_present": 64.5,
+      "avg_overall_absent": 74.4
+    },
+    "natural, engaging expression": {
+      "count": 4,
+      "avg_overall_present": 64.0,
+      "avg_overall_absent": 74.4
+    },
+    "playfully sticking her tongue out": {
+      "count": 4,
+      "avg_overall_present": 63.8,
+      "avg_overall_absent": 74.4
+    },
+    "winking with one eye": {
+      "count": 4,
+      "avg_overall_present": 63.8,
+      "avg_overall_absent": 74.4
+    },
+    "plain, slightly textured, light-cream wall": {
+      "count": 4,
+      "avg_overall_present": 62.8,
+      "avg_overall_absent": 74.4
+    },
+    "soft, natural indoor light from the front-right": {
+      "count": 4,
+      "avg_overall_present": 62.8,
+      "avg_overall_absent": 74.4
+    },
+    "backseat of a moving car at dusk": {
+      "count": 4,
+      "avg_overall_present": 62.5,
+      "avg_overall_absent": 74.4
+    },
+    "white corset top with delicate lace trim": {
+      "count": 4,
+      "avg_overall_present": 62.5,
+      "avg_overall_absent": 74.4
+    },
+    "photorealistic 8k": {
+      "count": 4,
+      "avg_overall_present": 62.5,
+      "avg_overall_absent": 74.4
+    },
+    "white beaded choker": {
+      "count": 4,
+      "avg_overall_present": 61.5,
+      "avg_overall_absent": 74.4
+    },
+    "thin rose gold wire-frame glasses": {
+      "count": 4,
+      "avg_overall_present": 61.5,
+      "avg_overall_absent": 74.4
+    },
+    "held back by a white headband": {
+      "count": 4,
+      "avg_overall_present": 61.5,
+      "avg_overall_absent": 74.4
+    },
+    "outdoors at night with a dark, blurred background and faint city lights": {
+      "count": 4,
+      "avg_overall_present": 61.5,
+      "avg_overall_absent": 74.4
+    },
+    "small gold hoop earrings": {
+      "count": 4,
+      "avg_overall_present": 61.5,
+      "avg_overall_absent": 74.4
+    },
+    "winking with one eye and playfully sticking her tongue out": {
+      "count": 4,
+      "avg_overall_present": 61.5,
+      "avg_overall_absent": 74.4
+    },
+    "blue and white floral camisole with black lace trim": {
+      "count": 4,
+      "avg_overall_present": 61.5,
+      "avg_overall_absent": 74.4
+    },
+    "vibrant pink camisole": {
+      "count": 4,
+      "avg_overall_present": 59.5,
+      "avg_overall_absent": 74.4
+    },
+    "realistic and candid indoor selfie": {
+      "count": 4,
+      "avg_overall_present": 58.8,
+      "avg_overall_absent": 74.5
+    },
+    "black waistband with white text": {
+      "count": 3,
+      "avg_overall_present": 83.7,
+      "avg_overall_absent": 74.1
+    },
+    "black sleeveless crop top with an asymmetrical shoulder cutout": {
+      "count": 3,
+      "avg_overall_present": 82.3,
+      "avg_overall_absent": 74.1
+    },
+    "red bull graphic": {
+      "count": 3,
+      "avg_overall_present": 81.7,
+      "avg_overall_absent": 74.1
+    },
+    "black winged eyeliner": {
+      "count": 3,
+      "avg_overall_present": 81.3,
+      "avg_overall_absent": 74.2
+    },
+    "digital timestamp in the bottom-left corner reads '2024.5.4'": {
+      "count": 3,
+      "avg_overall_present": 81.0,
+      "avg_overall_absent": 74.2
+    },
+    "patterned lace curtain background": {
+      "count": 3,
+      "avg_overall_present": 81.0,
+      "avg_overall_absent": 74.2
+    },
+    "holding a phone with a stylish leopard print case and a large fluffy leopard-patterned keychain charm": {
+      "count": 3,
+      "avg_overall_present": 81.0,
+      "avg_overall_absent": 74.2
+    },
+    "bright, cinematic starburst camera flash reflects in the round mirror": {
+      "count": 3,
+      "avg_overall_present": 81.0,
+      "avg_overall_absent": 74.2
+    },
+    "right hand is propped up, with her chin resting lightly on the back of her fingers": {
+      "count": 3,
+      "avg_overall_present": 80.7,
+      "avg_overall_absent": 74.2
+    },
+    "delicate silver chain necklace with a small heart-shaped pendant": {
+      "count": 3,
+      "avg_overall_present": 80.7,
+      "avg_overall_absent": 74.2
+    },
+    "photorealistic film emulation": {
+      "count": 3,
+      "avg_overall_present": 80.7,
+      "avg_overall_absent": 74.2
+    },
+    "plain, light off-white wall with soft, natural indoor window lighting": {
+      "count": 3,
+      "avg_overall_present": 80.7,
+      "avg_overall_absent": 74.2
+    },
+    "playful, skeptical expression, winking one eye with a subtle smirk": {
+      "count": 3,
+      "avg_overall_present": 80.7,
+      "avg_overall_absent": 74.2
+    },
+    "simple white ribbed spaghetti strap tank top": {
+      "count": 3,
+      "avg_overall_present": 80.3,
+      "avg_overall_absent": 74.2
+    },
+    "plain white wall": {
+      "count": 3,
+      "avg_overall_present": 80.0,
+      "avg_overall_absent": 74.2
+    },
+    "genuine, wide smile": {
+      "count": 3,
+      "avg_overall_present": 80.0,
+      "avg_overall_absent": 74.2
+    },
+    "white indoor wall": {
+      "count": 3,
+      "avg_overall_present": 79.3,
+      "avg_overall_absent": 74.2
+    },
+    "highly detailed photo": {
+      "count": 3,
+      "avg_overall_present": 79.3,
+      "avg_overall_absent": 74.2
+    },
+    "sharp reflections": {
+      "count": 3,
+      "avg_overall_present": 79.3,
+      "avg_overall_absent": 74.2
+    },
+    "white lace corset bustier top": {
+      "count": 3,
+      "avg_overall_present": 79.3,
+      "avg_overall_absent": 74.2
+    },
+    "curved wooden slatted bench": {
+      "count": 3,
+      "avg_overall_present": 79.3,
+      "avg_overall_absent": 74.2
+    },
+    "glasses tucked into the neckline": {
+      "count": 3,
+      "avg_overall_present": 79.3,
+      "avg_overall_absent": 74.2
+    },
+    "simple, textured off-white wall with a hint of a black metal chair frame visible behind her": {
+      "count": 3,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "peace sign (v-sign)": {
+      "count": 3,
+      "avg_overall_present": 78.7,
+      "avg_overall_absent": 74.2
+    },
+    "split of a dark carved wooden door": {
+      "count": 3,
+      "avg_overall_present": 78.7,
+      "avg_overall_absent": 74.2
+    },
+    "candid, close-up photo": {
+      "count": 3,
+      "avg_overall_present": 78.7,
+      "avg_overall_absent": 74.2
+    },
+    "realistic candid portrait style": {
+      "count": 3,
+      "avg_overall_present": 78.7,
+      "avg_overall_absent": 74.2
+    },
+    "blush-heavy doll-like makeup with winged eyeliner": {
+      "count": 3,
+      "avg_overall_present": 78.7,
+      "avg_overall_absent": 74.2
+    },
+    "smiling genuinely": {
+      "count": 3,
+      "avg_overall_present": 78.7,
+      "avg_overall_absent": 74.2
+    },
+    "soft, warm front-facing light": {
+      "count": 3,
+      "avg_overall_present": 78.7,
+      "avg_overall_absent": 74.2
+    },
+    "winking expression": {
+      "count": 3,
+      "avg_overall_present": 78.7,
+      "avg_overall_absent": 74.2
+    },
+    "green headphones": {
+      "count": 3,
+      "avg_overall_present": 78.7,
+      "avg_overall_absent": 74.2
+    },
+    "low-key natural lighting": {
+      "count": 3,
+      "avg_overall_present": 78.7,
+      "avg_overall_absent": 74.2
+    },
+    "layered halter top: a twisted and tied brown textured cotton fabric over a patterned green and yellow tie-dye fabric": {
+      "count": 3,
+      "avg_overall_present": 78.7,
+      "avg_overall_absent": 74.2
+    },
+    "light mint-green spaghetti strap top": {
+      "count": 3,
+      "avg_overall_present": 78.7,
+      "avg_overall_absent": 74.2
+    },
+    "soft focus on skin texture": {
+      "count": 3,
+      "avg_overall_present": 78.7,
+      "avg_overall_absent": 74.2
+    },
+    "leaning her cheek on her hand in a casual, relaxed pose": {
+      "count": 3,
+      "avg_overall_present": 78.3,
+      "avg_overall_absent": 74.2
+    },
+    "dark grey oversized t-shirt slightly pulled up": {
+      "count": 3,
+      "avg_overall_present": 78.3,
+      "avg_overall_absent": 74.2
+    },
+    "aesthetic photography style": {
+      "count": 3,
+      "avg_overall_present": 78.3,
+      "avg_overall_absent": 74.2
+    },
+    "leopard print case": {
+      "count": 3,
+      "avg_overall_present": 78.3,
+      "avg_overall_absent": 74.2
+    },
+    "cozy aesthetic cafe with a textured gray concrete wall, a glass pastry display case in the blurred background, and a rattan pendant light": {
+      "count": 3,
+      "avg_overall_present": 78.3,
+      "avg_overall_absent": 74.2
+    },
+    "matching fluffy leopard-print keychain": {
+      "count": 3,
+      "avg_overall_present": 78.3,
+      "avg_overall_absent": 74.2
+    },
+    "broad, almost grimace-like smile": {
+      "count": 3,
+      "avg_overall_present": 78.3,
+      "avg_overall_absent": 74.2
+    },
+    "grid poster with red and blue text": {
+      "count": 3,
+      "avg_overall_present": 78.3,
+      "avg_overall_absent": 74.2
+    },
+    "split-type air conditioner": {
+      "count": 3,
+      "avg_overall_present": 78.3,
+      "avg_overall_absent": 74.2
+    },
+    "detailed skin texture with visible pores": {
+      "count": 3,
+      "avg_overall_present": 78.3,
+      "avg_overall_absent": 74.2
+    },
+    "hyper-realistic, unfiltered selfie": {
+      "count": 3,
+      "avg_overall_present": 78.3,
+      "avg_overall_absent": 74.2
+    },
+    "wooden paneled wall": {
+      "count": 3,
+      "avg_overall_present": 78.3,
+      "avg_overall_absent": 74.2
+    },
+    "smartphone with a leopard-print case": {
+      "count": 3,
+      "avg_overall_present": 78.3,
+      "avg_overall_absent": 74.2
+    },
+    "wearing a lavender ribbed tank top and a black wristband": {
+      "count": 3,
+      "avg_overall_present": 78.3,
+      "avg_overall_absent": 74.2
+    },
+    "solid, slightly textured pink wall with a horizontal wooden beam along the top edge": {
+      "count": 3,
+      "avg_overall_present": 78.0,
+      "avg_overall_absent": 74.2
+    },
+    "natural and neutral": {
+      "count": 3,
+      "avg_overall_present": 78.0,
+      "avg_overall_absent": 74.2
+    },
+    "photorealistic close-up selfie": {
+      "count": 3,
+      "avg_overall_present": 78.0,
+      "avg_overall_absent": 74.2
+    },
+    "sharp focus on her face": {
+      "count": 3,
+      "avg_overall_present": 78.0,
+      "avg_overall_absent": 74.2
+    },
+    "high resolution, realistic skin texture": {
+      "count": 3,
+      "avg_overall_present": 77.7,
+      "avg_overall_absent": 74.2
+    },
+    "long, loose black hair": {
+      "count": 3,
+      "avg_overall_present": 77.7,
+      "avg_overall_absent": 74.2
+    },
+    "holding smartphone with unique black phone case featuring minimalist abstract face/hand line patterns": {
+      "count": 3,
+      "avg_overall_present": 77.7,
+      "avg_overall_absent": 74.2
+    },
+    "topless, with her bare shoulders and upper chest visible": {
+      "count": 3,
+      "avg_overall_present": 77.7,
+      "avg_overall_absent": 74.2
+    },
+    "smartphone selfie": {
+      "count": 3,
+      "avg_overall_present": 77.7,
+      "avg_overall_absent": 74.2
+    },
+    "dark grey oversized t-shirt slightly pulled up to show her midriff": {
+      "count": 3,
+      "avg_overall_present": 77.3,
+      "avg_overall_absent": 74.2
+    },
+    "large circular mirror": {
+      "count": 3,
+      "avg_overall_present": 77.3,
+      "avg_overall_absent": 74.2
+    },
+    "white textured floral lace camisole with thin spaghetti straps": {
+      "count": 3,
+      "avg_overall_present": 77.3,
+      "avg_overall_absent": 74.2
+    },
+    "smartphone with a leopard-print case and a matching fluffy leopard-print keychain": {
+      "count": 3,
+      "avg_overall_present": 77.3,
+      "avg_overall_absent": 74.2
+    },
+    "high-quality, realistic selfie": {
+      "count": 3,
+      "avg_overall_present": 77.3,
+      "avg_overall_absent": 74.2
+    },
+    "warm, golden hour sunlight": {
+      "count": 3,
+      "avg_overall_present": 77.3,
+      "avg_overall_absent": 74.2
+    },
+    "relaxed, happy smile": {
+      "count": 3,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "young (woman in image)": {
+      "count": 3,
+      "avg_overall_present": 76.7,
+      "avg_overall_absent": 74.2
+    },
+    "natural rosy blush": {
+      "count": 3,
+      "avg_overall_present": 76.7,
+      "avg_overall_absent": 74.2
+    },
+    "detailed candid close-up selfie photograph": {
+      "count": 3,
+      "avg_overall_present": 76.3,
+      "avg_overall_absent": 74.2
+    },
+    "raw and unedited look": {
+      "count": 3,
+      "avg_overall_present": 76.3,
+      "avg_overall_absent": 74.2
+    },
+    "glass window reflecting a blue sky": {
+      "count": 3,
+      "avg_overall_present": 76.3,
+      "avg_overall_absent": 74.2
+    },
+    "tan velvet strapless top with a prominent silver circular ring zipper": {
+      "count": 3,
+      "avg_overall_present": 76.3,
+      "avg_overall_absent": 74.2
+    },
+    "natural cinematic lighting": {
+      "count": 3,
+      "avg_overall_present": 76.3,
+      "avg_overall_absent": 74.2
+    },
+    "soft pink makeup, dewy skin": {
+      "count": 3,
+      "avg_overall_present": 76.3,
+      "avg_overall_absent": 74.2
+    },
+    "light brown sunglasses are perched on top of her head": {
+      "count": 3,
+      "avg_overall_present": 76.3,
+      "avg_overall_absent": 74.2
+    },
+    "white split-type air conditioner is visible": {
+      "count": 3,
+      "avg_overall_present": 76.3,
+      "avg_overall_absent": 74.2
+    },
+    "soft, natural daylighting coming from the side": {
+      "count": 3,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "square-framed glasses on top of her head": {
+      "count": 3,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "tan velvet tube top with a prominent silver ring zipper": {
+      "count": 3,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "intricate details on the velvet fabric": {
+      "count": 3,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "playful pouty face": {
+      "count": 3,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "tan velvet tube top with a prominent silver ring zipper in the front": {
+      "count": 3,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "white patterned bikini top with abstract red, black, and blue prints": {
+      "count": 3,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "white brick-textured wall": {
+      "count": 3,
+      "avg_overall_present": 75.7,
+      "avg_overall_absent": 74.2
+    },
+    "high-resolution, candid indoor self-portrait photograph": {
+      "count": 3,
+      "avg_overall_present": 75.7,
+      "avg_overall_absent": 74.2
+    },
+    "dramatically lit by a single focused warm amber spotlight": {
+      "count": 3,
+      "avg_overall_present": 75.7,
+      "avg_overall_absent": 74.2
+    },
+    "solid, slightly textured pink wall": {
+      "count": 3,
+      "avg_overall_present": 75.3,
+      "avg_overall_absent": 74.2
+    },
+    "green lawn and a traditional wooden gazebo": {
+      "count": 3,
+      "avg_overall_present": 74.7,
+      "avg_overall_absent": 74.2
+    },
+    "holds a large cream-colored plush toy under her arm": {
+      "count": 3,
+      "avg_overall_present": 74.3,
+      "avg_overall_absent": 74.2
+    },
+    "vibrant glossy pink lips": {
+      "count": 3,
+      "avg_overall_present": 74.0,
+      "avg_overall_absent": 74.2
+    },
+    "outdoor selfie": {
+      "count": 3,
+      "avg_overall_present": 74.0,
+      "avg_overall_absent": 74.2
+    },
+    "shimmery pink eyeshadow": {
+      "count": 3,
+      "avg_overall_present": 74.0,
+      "avg_overall_absent": 74.2
+    },
+    "candid smartphone photography aesthetic": {
+      "count": 3,
+      "avg_overall_present": 74.0,
+      "avg_overall_absent": 74.2
+    },
+    "pink tongue sticking out and curled slightly": {
+      "count": 3,
+      "avg_overall_present": 73.7,
+      "avg_overall_absent": 74.2
+    },
+    "low-angle shot": {
+      "count": 3,
+      "avg_overall_present": 73.7,
+      "avg_overall_absent": 74.2
+    },
+    "looks slightly to the side": {
+      "count": 3,
+      "avg_overall_present": 73.7,
+      "avg_overall_absent": 74.2
+    },
+    "realistic candid outdoor selfie": {
+      "count": 3,
+      "avg_overall_present": 73.7,
+      "avg_overall_absent": 74.2
+    },
+    "bright, modern minimalist interior with high ceilings and architectural black frame pendant lights": {
+      "count": 3,
+      "avg_overall_present": 73.3,
+      "avg_overall_absent": 74.2
+    },
+    "repeating white text 'flava'": {
+      "count": 3,
+      "avg_overall_present": 73.3,
+      "avg_overall_absent": 74.2
+    },
+    "natural expression": {
+      "count": 3,
+      "avg_overall_present": 73.3,
+      "avg_overall_absent": 74.2
+    },
+    "round, gold-rimmed glasses": {
+      "count": 3,
+      "avg_overall_present": 73.3,
+      "avg_overall_absent": 74.2
+    },
+    "outdoor patio at night": {
+      "count": 3,
+      "avg_overall_present": 73.3,
+      "avg_overall_absent": 74.2
+    },
+    "dark navy button-up shirt with a lanyard": {
+      "count": 3,
+      "avg_overall_present": 73.3,
+      "avg_overall_absent": 74.2
+    },
+    "looks directly at the camera": {
+      "count": 3,
+      "avg_overall_present": 73.3,
+      "avg_overall_absent": 74.2
+    },
+    "a single silver stud in her hair": {
+      "count": 3,
+      "avg_overall_present": 73.3,
+      "avg_overall_absent": 74.2
+    },
+    "cartoon graphic of a white rabbit": {
+      "count": 3,
+      "avg_overall_present": 73.3,
+      "avg_overall_absent": 74.2
+    },
+    "photorealistic style": {
+      "count": 3,
+      "avg_overall_present": 73.0,
+      "avg_overall_absent": 74.2
+    },
+    "dark sunglasses on top of her head": {
+      "count": 3,
+      "avg_overall_present": 73.0,
+      "avg_overall_absent": 74.2
+    },
+    "light-blue, ribbed halter neck crop top": {
+      "count": 3,
+      "avg_overall_present": 73.0,
+      "avg_overall_absent": 74.2
+    },
+    "sitting in a modern café": {
+      "count": 3,
+      "avg_overall_present": 73.0,
+      "avg_overall_absent": 74.2
+    },
+    "soft depth of field": {
+      "count": 3,
+      "avg_overall_present": 73.0,
+      "avg_overall_absent": 74.2
+    },
+    "architectural black frame pendant lights": {
+      "count": 3,
+      "avg_overall_present": 73.0,
+      "avg_overall_absent": 74.2
+    },
+    "patterned shoulder strap": {
+      "count": 3,
+      "avg_overall_present": 72.7,
+      "avg_overall_absent": 74.2
+    },
+    "complex black lanyard with multiple ribbons": {
+      "count": 3,
+      "avg_overall_present": 72.7,
+      "avg_overall_absent": 74.2
+    },
+    "mouth is open, with her pink tongue sticking out": {
+      "count": 3,
+      "avg_overall_present": 72.7,
+      "avg_overall_absent": 74.2
+    },
+    "natural, soft ambient light": {
+      "count": 3,
+      "avg_overall_present": 71.7,
+      "avg_overall_absent": 74.3
+    },
+    "minimalist, plain matte off-white wall": {
+      "count": 3,
+      "avg_overall_present": 71.7,
+      "avg_overall_absent": 74.3
+    },
+    "thin gold necklace with a small teardrop pendant": {
+      "count": 3,
+      "avg_overall_present": 71.7,
+      "avg_overall_absent": 74.3
+    },
+    "candid close-up selfie of the (woman in image)": {
+      "count": 3,
+      "avg_overall_present": 71.7,
+      "avg_overall_absent": 74.3
+    },
+    "natural texture": {
+      "count": 3,
+      "avg_overall_present": 71.3,
+      "avg_overall_absent": 74.3
+    },
+    "(same hair in image), middle-parted": {
+      "count": 3,
+      "avg_overall_present": 71.0,
+      "avg_overall_absent": 74.3
+    },
+    "pink ribbed halter bikini top decorated with pink and white beads and a tiny strawberry pendant": {
+      "count": 3,
+      "avg_overall_present": 70.0,
+      "avg_overall_absent": 74.3
+    },
+    "pink ribbed halter bikini top decorated with pink and white beads": {
+      "count": 3,
+      "avg_overall_present": 69.7,
+      "avg_overall_absent": 74.3
+    },
+    "casual bedroom background": {
+      "count": 3,
+      "avg_overall_present": 69.0,
+      "avg_overall_absent": 74.3
+    },
+    "solid dark brown door": {
+      "count": 3,
+      "avg_overall_present": 68.7,
+      "avg_overall_absent": 74.3
+    },
+    "thin white earbud wires": {
+      "count": 3,
+      "avg_overall_present": 68.7,
+      "avg_overall_absent": 74.3
+    },
+    "dimly lit ambient indoor lighting": {
+      "count": 3,
+      "avg_overall_present": 68.7,
+      "avg_overall_absent": 74.3
+    },
+    "warm lighting": {
+      "count": 3,
+      "avg_overall_present": 68.0,
+      "avg_overall_absent": 74.3
+    },
+    "medium close-up portrait photograph": {
+      "count": 3,
+      "avg_overall_present": 64.3,
+      "avg_overall_absent": 74.3
+    },
+    "small pink hibiscus flower is tucked behind her ear": {
+      "count": 3,
+      "avg_overall_present": 62.0,
+      "avg_overall_absent": 74.4
+    },
+    "striking light grey colored contact lenses": {
+      "count": 3,
+      "avg_overall_present": 62.0,
+      "avg_overall_absent": 74.4
+    },
+    "white camisole with thin pink straps and a mickey mouse cartoon pattern": {
+      "count": 3,
+      "avg_overall_present": 62.0,
+      "avg_overall_absent": 74.4
+    },
+    "gold necklace with a letter \"m\" pendant": {
+      "count": 3,
+      "avg_overall_present": 62.0,
+      "avg_overall_absent": 74.4
+    },
+    "sharp black winged eyeliner": {
+      "count": 3,
+      "avg_overall_present": 62.0,
+      "avg_overall_absent": 74.4
+    },
+    "cinematic soft focus": {
+      "count": 3,
+      "avg_overall_present": 62.0,
+      "avg_overall_absent": 74.4
+    },
+    "minimalist pale lavender background": {
+      "count": 3,
+      "avg_overall_present": 62.0,
+      "avg_overall_absent": 74.4
+    },
+    "mickey mouse cartoon pattern": {
+      "count": 3,
+      "avg_overall_present": 62.0,
+      "avg_overall_absent": 74.4
+    },
+    "natural grain": {
+      "count": 3,
+      "avg_overall_present": 61.3,
+      "avg_overall_absent": 74.4
+    },
+    "simple silver chain necklace": {
+      "count": 3,
+      "avg_overall_present": 61.3,
+      "avg_overall_absent": 74.4
+    },
+    "black sleeveless crop top with an asymmetrical shoulder cutout and a red bull graphic": {
+      "count": 2,
+      "avg_overall_present": 84.0,
+      "avg_overall_absent": 74.2
+    },
+    "artificial red flowers on a wooden shelf": {
+      "count": 2,
+      "avg_overall_present": 83.0,
+      "avg_overall_absent": 74.2
+    },
+    "smiling broadly": {
+      "count": 2,
+      "avg_overall_present": 83.0,
+      "avg_overall_absent": 74.2
+    },
+    "wall-mounted blue electric fan": {
+      "count": 2,
+      "avg_overall_present": 83.0,
+      "avg_overall_absent": 74.2
+    },
+    "wall-mounted blue electric fan with visible wiring": {
+      "count": 2,
+      "avg_overall_present": 83.0,
+      "avg_overall_absent": 74.2
+    },
+    "cluttered philippine-style indoor room with faded mint-green walls": {
+      "count": 2,
+      "avg_overall_present": 83.0,
+      "avg_overall_absent": 74.2
+    },
+    "solid soft lilac-colored crewneck t-shirt": {
+      "count": 2,
+      "avg_overall_present": 83.0,
+      "avg_overall_absent": 74.2
+    },
+    "blue informational poster reflected in the mirror": {
+      "count": 2,
+      "avg_overall_present": 82.0,
+      "avg_overall_absent": 74.2
+    },
+    "high-quality social media aesthetic, raw and unedited look": {
+      "count": 2,
+      "avg_overall_present": 82.0,
+      "avg_overall_absent": 74.2
+    },
+    "smiling gently": {
+      "count": 2,
+      "avg_overall_present": 82.0,
+      "avg_overall_absent": 74.2
+    },
+    "slightly messy domestic indoor setting with hanging clothes and kitchenware": {
+      "count": 2,
+      "avg_overall_present": 82.0,
+      "avg_overall_absent": 74.2
+    },
+    "simple black ribbed tank top": {
+      "count": 2,
+      "avg_overall_present": 81.5,
+      "avg_overall_absent": 74.2
+    },
+    "single white beaded bracelet": {
+      "count": 2,
+      "avg_overall_present": 81.5,
+      "avg_overall_absent": 74.2
+    },
+    "warm terracotta-toned eyeshadow and lipstick": {
+      "count": 2,
+      "avg_overall_present": 81.5,
+      "avg_overall_absent": 74.2
+    },
+    "white collared uniform shirt": {
+      "count": 2,
+      "avg_overall_present": 81.5,
+      "avg_overall_absent": 74.2
+    },
+    "medium-length (same hair in image)": {
+      "count": 2,
+      "avg_overall_present": 81.5,
+      "avg_overall_absent": 74.2
+    },
+    "very large, extremely blurred, out-of-focus portion of a leg in the extreme foreground": {
+      "count": 2,
+      "avg_overall_present": 81.5,
+      "avg_overall_absent": 74.2
+    },
+    "black and white striped shorts": {
+      "count": 2,
+      "avg_overall_present": 81.5,
+      "avg_overall_absent": 74.2
+    },
+    "gentle, serene smile": {
+      "count": 2,
+      "avg_overall_present": 81.5,
+      "avg_overall_absent": 74.2
+    },
+    "cozy aesthetic cafe": {
+      "count": 2,
+      "avg_overall_present": 81.0,
+      "avg_overall_absent": 74.2
+    },
+    "leaning her cheek on her hand": {
+      "count": 2,
+      "avg_overall_present": 81.0,
+      "avg_overall_absent": 74.2
+    },
+    "glass pastry display case": {
+      "count": 2,
+      "avg_overall_present": 81.0,
+      "avg_overall_absent": 74.2
+    },
+    "black wristband": {
+      "count": 2,
+      "avg_overall_present": 81.0,
+      "avg_overall_absent": 74.2
+    },
+    "posing with one hand raised near her head": {
+      "count": 2,
+      "avg_overall_present": 80.5,
+      "avg_overall_absent": 74.2
+    },
+    "subtle film grain": {
+      "count": 2,
+      "avg_overall_present": 80.5,
+      "avg_overall_absent": 74.2
+    },
+    "high-resolution, photorealistic, with natural skin texture and subtle film grain": {
+      "count": 2,
+      "avg_overall_present": 80.0,
+      "avg_overall_absent": 74.2
+    },
+    "soft, natural indoor window lighting": {
+      "count": 2,
+      "avg_overall_present": 80.0,
+      "avg_overall_absent": 74.2
+    },
+    "bright, warm natural daylight": {
+      "count": 2,
+      "avg_overall_present": 79.5,
+      "avg_overall_absent": 74.2
+    },
+    "side ponytail": {
+      "count": 2,
+      "avg_overall_present": 79.5,
+      "avg_overall_absent": 74.2
+    },
+    "candid photo-realistic selfie portrait": {
+      "count": 2,
+      "avg_overall_present": 79.5,
+      "avg_overall_absent": 74.2
+    },
+    "candid, 35mm": {
+      "count": 2,
+      "avg_overall_present": 79.5,
+      "avg_overall_absent": 74.2
+    },
+    "floral patterned fabric bedsheet": {
+      "count": 2,
+      "avg_overall_present": 79.5,
+      "avg_overall_absent": 74.2
+    },
+    "rugged, craggy rock wall feature covered in lush tropical plants": {
+      "count": 2,
+      "avg_overall_present": 79.5,
+      "avg_overall_absent": 74.2
+    },
+    "raised wooden boardwalk and open-air thatched structures are in the background": {
+      "count": 2,
+      "avg_overall_present": 79.5,
+      "avg_overall_absent": 74.2
+    },
+    "seated on a unique curved wooden slatted bench at a beach resort": {
+      "count": 2,
+      "avg_overall_present": 79.5,
+      "avg_overall_absent": 74.2
+    },
+    "camera's flash is reflected": {
+      "count": 2,
+      "avg_overall_present": 79.5,
+      "avg_overall_absent": 74.2
+    },
+    "cluttered indoor environment with a warm-toned wooden cabinet/door and piled personal items": {
+      "count": 2,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "rugged, craggy rock wall": {
+      "count": 2,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "playful, winking expression": {
+      "count": 2,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "grimace-like smile": {
+      "count": 2,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "candid close-up selfie": {
+      "count": 2,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "highly realistic mirror selfie": {
+      "count": 2,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "high-waisted light-wash wide-leg denim jeans": {
+      "count": 2,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "pouting lips and a serious neutral gaze": {
+      "count": 2,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "single white plumeria flower tucked behind her right ear": {
+      "count": 2,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "slightly messy domestic indoor setting": {
+      "count": 2,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "casual, slightly messy room with an unfinished, stained wall": {
+      "count": 2,
+      "avg_overall_present": 78.5,
+      "avg_overall_absent": 74.2
+    },
+    "small, delicate silver heart pendant necklace": {
+      "count": 2,
+      "avg_overall_present": 78.5,
+      "avg_overall_absent": 74.2
+    },
+    "same hair in image updo": {
+      "count": 2,
+      "avg_overall_present": 78.5,
+      "avg_overall_absent": 74.2
+    },
+    "rosy-mauve eyeshadow": {
+      "count": 2,
+      "avg_overall_present": 78.0,
+      "avg_overall_absent": 74.2
+    },
+    "looking directly at the camera with a gentle, natural smile": {
+      "count": 2,
+      "avg_overall_present": 78.0,
+      "avg_overall_absent": 74.2
+    },
+    "clear skin": {
+      "count": 2,
+      "avg_overall_present": 78.0,
+      "avg_overall_absent": 74.2
+    },
+    "defined brows and dark eyes": {
+      "count": 2,
+      "avg_overall_present": 78.0,
+      "avg_overall_absent": 74.2
+    },
+    "vibrant magenta strapless tube top and light-wash denim shorts": {
+      "count": 2,
+      "avg_overall_present": 78.0,
+      "avg_overall_absent": 74.2
+    },
+    "winged eyeliner, and natural makeup": {
+      "count": 2,
+      "avg_overall_present": 78.0,
+      "avg_overall_absent": 74.2
+    },
+    "slightly hazy": {
+      "count": 2,
+      "avg_overall_present": 78.0,
+      "avg_overall_absent": 74.2
+    },
+    "clear blue sky visible through a window": {
+      "count": 2,
+      "avg_overall_present": 77.5,
+      "avg_overall_absent": 74.2
+    },
+    "natural, candid selfie perspective": {
+      "count": 2,
+      "avg_overall_present": 77.5,
+      "avg_overall_absent": 74.2
+    },
+    "vintage-style tan canvas messenger bag with a prominent yellow star patch": {
+      "count": 2,
+      "avg_overall_present": 77.5,
+      "avg_overall_absent": 74.2
+    },
+    "cluttered room with strong overhead lighting": {
+      "count": 2,
+      "avg_overall_present": 77.5,
+      "avg_overall_absent": 74.2
+    },
+    "stylized 'love' and alphabet cards": {
+      "count": 2,
+      "avg_overall_present": 77.5,
+      "avg_overall_absent": 74.2
+    },
+    "shot as a selfie": {
+      "count": 2,
+      "avg_overall_present": 77.5,
+      "avg_overall_absent": 74.2
+    },
+    "a close-up, selfie-style photograph": {
+      "count": 2,
+      "avg_overall_present": 77.5,
+      "avg_overall_absent": 74.2
+    },
+    "plain matte off-white wall": {
+      "count": 2,
+      "avg_overall_present": 77.5,
+      "avg_overall_absent": 74.2
+    },
+    "clothing: a textured, two-piece style top": {
+      "count": 2,
+      "avg_overall_present": 77.5,
+      "avg_overall_absent": 74.2
+    },
+    "messy domestic indoor setting with hanging clothes and kitchenware": {
+      "count": 2,
+      "avg_overall_present": 77.5,
+      "avg_overall_absent": 74.2
+    },
+    "wearing a thin gold necklace": {
+      "count": 2,
+      "avg_overall_present": 77.5,
+      "avg_overall_absent": 74.2
+    },
+    "flows naturally": {
+      "count": 2,
+      "avg_overall_present": 77.5,
+      "avg_overall_absent": 74.2
+    },
+    "shot on a canon eos r5, 35mm lens": {
+      "count": 2,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "white sandy beach with a dense line of palm trees": {
+      "count": 2,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "natural, candid camera perspective": {
+      "count": 2,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "photorealistic, 8k resolution, shallow depth of field, natural skin texture": {
+      "count": 2,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "background is a solid, slightly textured pink wall with a horizontal wooden beam along the top edge": {
+      "count": 2,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "looking directly at the camera with a gentle smile": {
+      "count": 2,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "camera angle is close and slightly high": {
+      "count": 2,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "middle part": {
+      "count": 2,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "thoughtful, contemplative expression, looking off to the side": {
+      "count": 2,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "cinematic depth of field": {
+      "count": 2,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "fluffy leopard-patterned keychain charm": {
+      "count": 2,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "simple lip gloss": {
+      "count": 2,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "background features a sunny resort setting with a chain-link fence, green lawn, and palm trees": {
+      "count": 2,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "simple white room with a rustic wooden door on the left": {
+      "count": 2,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "selfie style": {
+      "count": 2,
+      "avg_overall_present": 76.5,
+      "avg_overall_absent": 74.2
+    },
+    "soft natural daylight, bright indoor setting with a clear blue sky visible through a window in the background": {
+      "count": 2,
+      "avg_overall_present": 76.5,
+      "avg_overall_absent": 74.2
+    },
+    "traditional wooden gazebo": {
+      "count": 2,
+      "avg_overall_present": 76.5,
+      "avg_overall_absent": 74.2
+    },
+    "white eyelet lace camisole": {
+      "count": 2,
+      "avg_overall_present": 76.5,
+      "avg_overall_absent": 74.2
+    },
+    "pink lipstick": {
+      "count": 2,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "black silk camisole under an open, dark olive green cardigan": {
+      "count": 2,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "photorealistic close-up portrait (selfie style)": {
+      "count": 2,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "candid, photorealistic close-up selfie": {
+      "count": 2,
+      "avg_overall_present": 75.5,
+      "avg_overall_absent": 74.2
+    },
+    "soft bokeh from distant street lights in the background": {
+      "count": 2,
+      "avg_overall_present": 75.5,
+      "avg_overall_absent": 74.2
+    },
+    "setting is a balcony with lush tropical greenery and banana trees in a blurred background": {
+      "count": 2,
+      "avg_overall_present": 75.5,
+      "avg_overall_absent": 74.2
+    },
+    "thick, white terry cloth towel, turban-style": {
+      "count": 2,
+      "avg_overall_present": 75.5,
+      "avg_overall_absent": 74.2
+    },
+    "cartoon graphic of a white rabbit with pink inner ears": {
+      "count": 2,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "candid, nighttime medium-close-up selfie photograph": {
+      "count": 2,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "bright, airy modern minimalist interior with large glass windows and clean white walls": {
+      "count": 2,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "background is softly blurred, showing fabric, an electric fan, and storage": {
+      "count": 2,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "(same hair in image)over one shoulder": {
+      "count": 2,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "string lights": {
+      "count": 2,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "soft natural light coming from a window to the left": {
+      "count": 2,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "black and white striped turtleneck shirt": {
+      "count": 2,
+      "avg_overall_present": 74.5,
+      "avg_overall_absent": 74.2
+    },
+    "film grain": {
+      "count": 2,
+      "avg_overall_present": 74.5,
+      "avg_overall_absent": 74.2
+    },
+    "detailed, photorealistic candid close-up photograph": {
+      "count": 2,
+      "avg_overall_present": 74.5,
+      "avg_overall_absent": 74.2
+    },
+    "ensure no watermarks or text are visible": {
+      "count": 2,
+      "avg_overall_present": 74.5,
+      "avg_overall_absent": 74.2
+    },
+    "clear metal-rimmed rectangular glasses with a subtle green anti-reflection coating": {
+      "count": 2,
+      "avg_overall_present": 74.5,
+      "avg_overall_absent": 74.2
+    },
+    "detailed candid": {
+      "count": 2,
+      "avg_overall_present": 74.5,
+      "avg_overall_absent": 74.2
+    },
+    "posing with one hand raised near her head with a slight motion blur": {
+      "count": 2,
+      "avg_overall_present": 74.5,
+      "avg_overall_absent": 74.2
+    },
+    "natural and diffused": {
+      "count": 2,
+      "avg_overall_present": 74.5,
+      "avg_overall_absent": 74.2
+    },
+    "documentary feel": {
+      "count": 2,
+      "avg_overall_present": 74.5,
+      "avg_overall_absent": 74.2
+    },
+    "crown of floating pink and magenta heart shapes": {
+      "count": 2,
+      "avg_overall_present": 74.5,
+      "avg_overall_absent": 74.2
+    },
+    "a close-up selfie": {
+      "count": 2,
+      "avg_overall_present": 74.5,
+      "avg_overall_absent": 74.2
+    },
+    "high-fidelity photograph": {
+      "count": 2,
+      "avg_overall_present": 74.5,
+      "avg_overall_absent": 74.2
+    },
+    "chain-link fence, green lawn, and palm trees": {
+      "count": 2,
+      "avg_overall_present": 74.0,
+      "avg_overall_absent": 74.2
+    },
+    "young (woman in image) in her late teens": {
+      "count": 2,
+      "avg_overall_present": 74.0,
+      "avg_overall_absent": 74.2
+    },
+    "sitting in clear ocean water up to her chest at a beach": {
+      "count": 2,
+      "avg_overall_present": 74.0,
+      "avg_overall_absent": 74.2
+    },
+    "flash is reflected brightly": {
+      "count": 2,
+      "avg_overall_present": 74.0,
+      "avg_overall_absent": 74.2
+    },
+    "white eyelet lace tank top": {
+      "count": 2,
+      "avg_overall_present": 74.0,
+      "avg_overall_absent": 74.2
+    },
+    "clothing hanging on a rack": {
+      "count": 2,
+      "avg_overall_present": 73.5,
+      "avg_overall_absent": 74.2
+    },
+    "looking up at the camera with a gentle smile": {
+      "count": 2,
+      "avg_overall_present": 73.5,
+      "avg_overall_absent": 74.2
+    },
+    "index and middle fingers are resting on her tongue": {
+      "count": 2,
+      "avg_overall_present": 73.5,
+      "avg_overall_absent": 74.2
+    },
+    "distinct black winged eyeliner": {
+      "count": 2,
+      "avg_overall_present": 73.5,
+      "avg_overall_absent": 74.2
+    },
+    "natural gesture": {
+      "count": 2,
+      "avg_overall_present": 73.5,
+      "avg_overall_absent": 74.2
+    },
+    "tongue is protruding, and her index and middle fingers are resting on her tongue": {
+      "count": 2,
+      "avg_overall_present": 73.5,
+      "avg_overall_absent": 74.2
+    },
+    "clear-framed prescription glasses with gold-metal accents": {
+      "count": 2,
+      "avg_overall_present": 73.0,
+      "avg_overall_absent": 74.2
+    },
+    "visible spaghetti strap has a small, colorful pattern": {
+      "count": 2,
+      "avg_overall_present": 73.0,
+      "avg_overall_absent": 74.2
+    },
+    "light-blue, ribbed halter neck crop top and light-wash denim shorts": {
+      "count": 2,
+      "avg_overall_present": 73.0,
+      "avg_overall_absent": 74.2
+    },
+    "thin gold chain with a teardrop-shaped pendant": {
+      "count": 2,
+      "avg_overall_present": 73.0,
+      "avg_overall_absent": 74.2
+    },
+    "plain white crew-neck t-shirt": {
+      "count": 2,
+      "avg_overall_present": 72.0,
+      "avg_overall_absent": 74.2
+    },
+    "mural painting featuring yellow and blue abstract figures": {
+      "count": 2,
+      "avg_overall_present": 72.0,
+      "avg_overall_absent": 74.2
+    },
+    "focusing on a (woman in image) with (same hair in image)": {
+      "count": 2,
+      "avg_overall_present": 72.0,
+      "avg_overall_absent": 74.2
+    },
+    "eyes closed, gentle smile": {
+      "count": 2,
+      "avg_overall_present": 71.0,
+      "avg_overall_absent": 74.3
+    },
+    "natural makeup look with soft pink glossy lips": {
+      "count": 2,
+      "avg_overall_present": 70.5,
+      "avg_overall_absent": 74.3
+    },
+    "motion-blurred into abstract streaks of light": {
+      "count": 2,
+      "avg_overall_present": 70.5,
+      "avg_overall_absent": 74.3
+    },
+    "tan canvas messenger bag with a prominent yellow star patch": {
+      "count": 2,
+      "avg_overall_present": 70.0,
+      "avg_overall_absent": 74.3
+    },
+    "dark reddish-brown (burgundy) hair": {
+      "count": 2,
+      "avg_overall_present": 70.0,
+      "avg_overall_absent": 74.3
+    },
+    "styled naturally": {
+      "count": 2,
+      "avg_overall_present": 70.0,
+      "avg_overall_absent": 74.3
+    },
+    "olive green halter string top": {
+      "count": 2,
+      "avg_overall_present": 70.0,
+      "avg_overall_absent": 74.3
+    },
+    "strong overhead lighting": {
+      "count": 2,
+      "avg_overall_present": 69.0,
+      "avg_overall_absent": 74.3
+    },
+    "holds a large cream-colored plush toy": {
+      "count": 2,
+      "avg_overall_present": 69.0,
+      "avg_overall_absent": 74.3
+    },
+    "thin, delicate gold-chain necklace": {
+      "count": 2,
+      "avg_overall_present": 69.0,
+      "avg_overall_absent": 74.3
+    },
+    "grainy, raw film texture": {
+      "count": 2,
+      "avg_overall_present": 67.0,
+      "avg_overall_absent": 74.3
+    },
+    "tiny strawberry pendant at the center": {
+      "count": 2,
+      "avg_overall_present": 67.0,
+      "avg_overall_absent": 74.3
+    },
+    "high-quality, realistic candid portrait photograph": {
+      "count": 2,
+      "avg_overall_present": 67.0,
+      "avg_overall_absent": 74.3
+    },
+    "tongue poked out a little to the side and one eye squinted or winked": {
+      "count": 2,
+      "avg_overall_present": 66.5,
+      "avg_overall_absent": 74.3
+    },
+    "single silver stud in her hair": {
+      "count": 2,
+      "avg_overall_present": 65.5,
+      "avg_overall_absent": 74.3
+    },
+    "close-up, low-angle selfie": {
+      "count": 2,
+      "avg_overall_present": 65.5,
+      "avg_overall_absent": 74.3
+    },
+    "thin white earbud wires are visible running down her neck": {
+      "count": 2,
+      "avg_overall_present": 65.5,
+      "avg_overall_absent": 74.3
+    },
+    "cluttered indoor closet space": {
+      "count": 2,
+      "avg_overall_present": 64.0,
+      "avg_overall_absent": 74.3
+    },
+    "soft lighting on her face with a realistic reflection on the glasses": {
+      "count": 2,
+      "avg_overall_present": 64.0,
+      "avg_overall_absent": 74.3
+    },
+    "lips are a bold matte red": {
+      "count": 2,
+      "avg_overall_present": 64.0,
+      "avg_overall_absent": 74.3
+    },
+    "sharp, with realistic skin texture": {
+      "count": 2,
+      "avg_overall_present": 63.5,
+      "avg_overall_absent": 74.3
+    },
+    "candid indoor self-portrait photograph": {
+      "count": 2,
+      "avg_overall_present": 62.0,
+      "avg_overall_absent": 74.3
+    },
+    "both of her arms are raised": {
+      "count": 2,
+      "avg_overall_present": 62.0,
+      "avg_overall_absent": 74.3
+    },
+    "high-quality close-up portrait": {
+      "count": 2,
+      "avg_overall_present": 62.0,
+      "avg_overall_absent": 74.3
+    },
+    "realistic photo quality": {
+      "count": 2,
+      "avg_overall_present": 62.0,
+      "avg_overall_absent": 74.3
+    },
+    "realistic reflection on the glasses": {
+      "count": 2,
+      "avg_overall_present": 59.0,
+      "avg_overall_absent": 74.3
+    },
+    "film grain, documentary feel": {
+      "count": 2,
+      "avg_overall_present": 50.5,
+      "avg_overall_absent": 74.4
+    },
+    "detailed candid, high-fidelity photograph": {
+      "count": 2,
+      "avg_overall_present": 50.5,
+      "avg_overall_absent": 74.4
+    },
+    "mirror selfie of a (woman in image)": {
+      "count": 1,
+      "avg_overall_present": 85.0,
+      "avg_overall_absent": 74.2
+    },
+    "black pants with a black belt": {
+      "count": 1,
+      "avg_overall_present": 85.0,
+      "avg_overall_absent": 74.2
+    },
+    "a candid, close-up photo": {
+      "count": 1,
+      "avg_overall_present": 83.0,
+      "avg_overall_absent": 74.2
+    },
+    "smiling genuinely at the camera": {
+      "count": 1,
+      "avg_overall_present": 83.0,
+      "avg_overall_absent": 74.2
+    },
+    "natural skin texture, realistic camera grain": {
+      "count": 1,
+      "avg_overall_present": 83.0,
+      "avg_overall_absent": 74.2
+    },
+    "high-quality, candid-style smartphone selfie": {
+      "count": 1,
+      "avg_overall_present": 83.0,
+      "avg_overall_absent": 74.2
+    },
+    "wearing a terracotta orange square-neck top": {
+      "count": 1,
+      "avg_overall_present": 83.0,
+      "avg_overall_absent": 74.2
+    },
+    "high detail, photorealistic film emulation": {
+      "count": 1,
+      "avg_overall_present": 83.0,
+      "avg_overall_absent": 74.2
+    },
+    "a photorealistic mirror selfie": {
+      "count": 1,
+      "avg_overall_present": 83.0,
+      "avg_overall_absent": 74.2
+    },
+    "small silver hoop earrings": {
+      "count": 1,
+      "avg_overall_present": 83.0,
+      "avg_overall_absent": 74.2
+    },
+    "making a 'v' peace sign with her right hand": {
+      "count": 1,
+      "avg_overall_present": 83.0,
+      "avg_overall_absent": 74.2
+    },
+    "white marble-patterned wall tiles": {
+      "count": 1,
+      "avg_overall_present": 83.0,
+      "avg_overall_absent": 74.2
+    },
+    "realistic camera grain": {
+      "count": 1,
+      "avg_overall_present": 83.0,
+      "avg_overall_absent": 74.2
+    },
+    "wooden dresser with stacked green plastic baskets": {
+      "count": 1,
+      "avg_overall_present": 83.0,
+      "avg_overall_absent": 74.2
+    },
+    "photorealistic mirror selfie": {
+      "count": 1,
+      "avg_overall_present": 83.0,
+      "avg_overall_absent": 74.2
+    },
+    "vintage film characteristics": {
+      "count": 1,
+      "avg_overall_present": 83.0,
+      "avg_overall_absent": 74.2
+    },
+    "highly detailed, photorealistic close-up selfie": {
+      "count": 1,
+      "avg_overall_present": 83.0,
+      "avg_overall_absent": 74.2
+    },
+    "prominent light blue (turquoise) [braces]": {
+      "count": 1,
+      "avg_overall_present": 83.0,
+      "avg_overall_absent": 74.2
+    },
+    "photorealistic, 8k resolution, shallow depth of field": {
+      "count": 1,
+      "avg_overall_present": 82.0,
+      "avg_overall_absent": 74.2
+    },
+    "natural skin tones": {
+      "count": 1,
+      "avg_overall_present": 82.0,
+      "avg_overall_absent": 74.2
+    },
+    "detailed skin texture with visible pores and natural minor blemishes": {
+      "count": 1,
+      "avg_overall_present": 82.0,
+      "avg_overall_absent": 74.2
+    },
+    "candid close-up selfie photograph": {
+      "count": 1,
+      "avg_overall_present": 82.0,
+      "avg_overall_absent": 74.2
+    },
+    "digital timestamp in the bottom-left corner": {
+      "count": 1,
+      "avg_overall_present": 82.0,
+      "avg_overall_absent": 74.2
+    },
+    "extremely blurred, out-of-focus portion of a leg in the extreme foreground": {
+      "count": 1,
+      "avg_overall_present": 82.0,
+      "avg_overall_absent": 74.2
+    },
+    "small beauty mark on her cheek": {
+      "count": 1,
+      "avg_overall_present": 82.0,
+      "avg_overall_absent": 74.2
+    },
+    "wooden paneled wall and a partially visible grid poster": {
+      "count": 1,
+      "avg_overall_present": 82.0,
+      "avg_overall_absent": 74.2
+    },
+    "broad, almost grimace-like smile, showing her upper teeth": {
+      "count": 1,
+      "avg_overall_present": 82.0,
+      "avg_overall_absent": 74.2
+    },
+    "ribbed bandeau tube top": {
+      "count": 1,
+      "avg_overall_present": 82.0,
+      "avg_overall_absent": 74.2
+    },
+    "hyper-realistic, unfiltered selfie photograph": {
+      "count": 1,
+      "avg_overall_present": 82.0,
+      "avg_overall_absent": 74.2
+    },
+    "lace curtain background": {
+      "count": 1,
+      "avg_overall_present": 82.0,
+      "avg_overall_absent": 74.2
+    },
+    "realistic mirror selfie of a (woman in image)": {
+      "count": 1,
+      "avg_overall_present": 81.0,
+      "avg_overall_absent": 74.2
+    },
+    "black t-shirt and a dark lanyard": {
+      "count": 1,
+      "avg_overall_present": 81.0,
+      "avg_overall_absent": 74.2
+    },
+    "textured pink wall with a horizontal wooden beam": {
+      "count": 1,
+      "avg_overall_present": 81.0,
+      "avg_overall_absent": 74.2
+    },
+    "rustic wooden door": {
+      "count": 1,
+      "avg_overall_present": 81.0,
+      "avg_overall_absent": 74.2
+    },
+    "a high-quality, realistic portrait of a": {
+      "count": 1,
+      "avg_overall_present": 81.0,
+      "avg_overall_absent": 74.2
+    },
+    "background is a simple white room with a rustic wooden door on the left": {
+      "count": 1,
+      "avg_overall_present": 81.0,
+      "avg_overall_absent": 74.2
+    },
+    "photorealistic close-up portrait": {
+      "count": 1,
+      "avg_overall_present": 81.0,
+      "avg_overall_absent": 74.2
+    },
+    "leopard-print case and a matching fluffy leopard-print keychain": {
+      "count": 1,
+      "avg_overall_present": 81.0,
+      "avg_overall_absent": 74.2
+    },
+    "index finger is pressed into her cheek": {
+      "count": 1,
+      "avg_overall_present": 81.0,
+      "avg_overall_absent": 74.2
+    },
+    "genuine, wide smile and a joyful expression": {
+      "count": 1,
+      "avg_overall_present": 81.0,
+      "avg_overall_absent": 74.2
+    },
+    "standing in front of a large circular mirror": {
+      "count": 1,
+      "avg_overall_present": 81.0,
+      "avg_overall_absent": 74.2
+    },
+    "dark ribbed knit sleeve": {
+      "count": 1,
+      "avg_overall_present": 81.0,
+      "avg_overall_absent": 74.2
+    },
+    "leopard-patterned keychain charm": {
+      "count": 1,
+      "avg_overall_present": 81.0,
+      "avg_overall_absent": 74.2
+    },
+    "rustic wooden door on the left": {
+      "count": 1,
+      "avg_overall_present": 81.0,
+      "avg_overall_absent": 74.2
+    },
+    "blurred student sitting behind her": {
+      "count": 1,
+      "avg_overall_present": 81.0,
+      "avg_overall_absent": 74.2
+    },
+    "high-quality mirror selfie": {
+      "count": 1,
+      "avg_overall_present": 81.0,
+      "avg_overall_absent": 74.2
+    },
+    "turban-style": {
+      "count": 1,
+      "avg_overall_present": 80.0,
+      "avg_overall_absent": 74.2
+    },
+    "a single white plumeria flower tucked behind her right ear": {
+      "count": 1,
+      "avg_overall_present": 80.0,
+      "avg_overall_absent": 74.2
+    },
+    "highly detailed features": {
+      "count": 1,
+      "avg_overall_present": 80.0,
+      "avg_overall_absent": 74.2
+    },
+    "blurred, out-of-focus portion of a leg in the extreme foreground": {
+      "count": 1,
+      "avg_overall_present": 80.0,
+      "avg_overall_absent": 74.2
+    },
+    "silver necklace with a small, open heart-shaped pendant": {
+      "count": 1,
+      "avg_overall_present": 80.0,
+      "avg_overall_absent": 74.2
+    },
+    "white beaded bracelet": {
+      "count": 1,
+      "avg_overall_present": 80.0,
+      "avg_overall_absent": 74.2
+    },
+    "overhead bulb": {
+      "count": 1,
+      "avg_overall_present": 80.0,
+      "avg_overall_absent": 74.2
+    },
+    "cluttered indoor environment": {
+      "count": 1,
+      "avg_overall_present": 80.0,
+      "avg_overall_absent": 74.2
+    },
+    "indistinct horizontal structure is partially visible in the low-left background": {
+      "count": 1,
+      "avg_overall_present": 80.0,
+      "avg_overall_absent": 74.2
+    },
+    "plain, light brown wall": {
+      "count": 1,
+      "avg_overall_present": 80.0,
+      "avg_overall_absent": 74.2
+    },
+    "prominent rosy-mauve eyeshadow": {
+      "count": 1,
+      "avg_overall_present": 80.0,
+      "avg_overall_absent": 74.2
+    },
+    "a high-quality, realistic portrait of a (woman in image)": {
+      "count": 1,
+      "avg_overall_present": 80.0,
+      "avg_overall_absent": 74.2
+    },
+    "dark navy button-up shirt with a lanyard visible around her neck that has repeating white text 'flava'": {
+      "count": 1,
+      "avg_overall_present": 80.0,
+      "avg_overall_absent": 74.2
+    },
+    "indistinct horizontal structure": {
+      "count": 1,
+      "avg_overall_present": 80.0,
+      "avg_overall_absent": 74.2
+    },
+    "detailed close-up portrait photograph": {
+      "count": 1,
+      "avg_overall_present": 80.0,
+      "avg_overall_absent": 74.2
+    },
+    "same hair in image, middle-parted": {
+      "count": 1,
+      "avg_overall_present": 80.0,
+      "avg_overall_absent": 74.2
+    },
+    "white collared uniform shirt with a chest patch and a silver digital watch on her wrist": {
+      "count": 1,
+      "avg_overall_present": 80.0,
+      "avg_overall_absent": 74.2
+    },
+    "gold chain necklace": {
+      "count": 1,
+      "avg_overall_present": 80.0,
+      "avg_overall_absent": 74.2
+    },
+    "shoulder-length, dark reddish-brown (burgundy) hair": {
+      "count": 1,
+      "avg_overall_present": 80.0,
+      "avg_overall_absent": 74.2
+    },
+    "wearing a white lace corset bustier top with spaghetti straps and high-waisted light-wash wide-leg denim jeans": {
+      "count": 1,
+      "avg_overall_present": 80.0,
+      "avg_overall_absent": 74.2
+    },
+    "green and yellow floral patterned fabric bedsheet": {
+      "count": 1,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "right hand is propped up, with her chin resting lightly": {
+      "count": 1,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "8k resolution, highly detailed": {
+      "count": 1,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "focused warm amber spotlight": {
+      "count": 1,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "photo-realistic selfie portrait": {
+      "count": 1,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "35mm": {
+      "count": 1,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "balcony with lush tropical greenery and banana trees in a blurred background": {
+      "count": 1,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "winking one eye": {
+      "count": 1,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "background: a cluttered indoor closet space with hanging dark coats and jackets": {
+      "count": 1,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "pose: both of her arms are raised, with her right hand resting behind her head": {
+      "count": 1,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "high-quality photography, authentic skin texture, cinematic lighting, 8k resolution": {
+      "count": 1,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "white brick-textured wall behind her": {
+      "count": 1,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "rugged, craggy rock wall feature": {
+      "count": 1,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "peace sign": {
+      "count": 1,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "textured, tan-brown fabric that is twisted and knotted across like a bandeau": {
+      "count": 1,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "wearing a black t-shirt and a dark lanyard": {
+      "count": 1,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "plain, light off-white wall": {
+      "count": 1,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "white lace corset bustier top with spaghetti straps": {
+      "count": 1,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "side ponytail draped over her left shoulder": {
+      "count": 1,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "plumeria flower tucked behind her right ear": {
+      "count": 1,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "smiling and looking right": {
+      "count": 1,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "winking expression (left eye winked, right eye open)": {
+      "count": 1,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "candid, fun, youthful portrait": {
+      "count": 1,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "seated on a unique curved wooden slatted bench": {
+      "count": 1,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "natural skin texture and subtle film grain": {
+      "count": 1,
+      "avg_overall_present": 79.0,
+      "avg_overall_absent": 74.2
+    },
+    "looking directly at the camera with pouting lips": {
+      "count": 1,
+      "avg_overall_present": 78.0,
+      "avg_overall_absent": 74.2
+    },
+    "messy domestic indoor setting": {
+      "count": 1,
+      "avg_overall_present": 78.0,
+      "avg_overall_absent": 74.2
+    },
+    "cluttered indoor environment with a warm-toned wooden cabinet": {
+      "count": 1,
+      "avg_overall_present": 78.0,
+      "avg_overall_absent": 74.2
+    },
+    "wearing a black spaghetti strap top with a light olive-drab jacket draped off her shoulders": {
+      "count": 1,
+      "avg_overall_present": 78.0,
+      "avg_overall_absent": 74.2
+    },
+    "dense line of palm trees": {
+      "count": 1,
+      "avg_overall_present": 78.0,
+      "avg_overall_absent": 74.2
+    },
+    "selfie-style photograph": {
+      "count": 1,
+      "avg_overall_present": 78.0,
+      "avg_overall_absent": 74.2
+    },
+    "making a playful and goofy face, tongue out to the side": {
+      "count": 1,
+      "avg_overall_present": 78.0,
+      "avg_overall_absent": 74.2
+    },
+    "dark grey oversized t-shirt": {
+      "count": 1,
+      "avg_overall_present": 78.0,
+      "avg_overall_absent": 74.2
+    },
+    "looking off to the side": {
+      "count": 1,
+      "avg_overall_present": 78.0,
+      "avg_overall_absent": 74.2
+    },
+    "delicate silver necklace with a small, open heart-shaped pendant": {
+      "count": 1,
+      "avg_overall_present": 78.0,
+      "avg_overall_absent": 74.2
+    },
+    "black metal chair frame": {
+      "count": 1,
+      "avg_overall_present": 78.0,
+      "avg_overall_absent": 74.2
+    },
+    "textured beige wall with darker areas": {
+      "count": 1,
+      "avg_overall_present": 78.0,
+      "avg_overall_absent": 74.2
+    },
+    "white patterned bikini top": {
+      "count": 1,
+      "avg_overall_present": 78.0,
+      "avg_overall_absent": 74.2
+    },
+    "solid teal green surface": {
+      "count": 1,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "plain, light brown background": {
+      "count": 1,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "candid selfie photograph": {
+      "count": 1,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "black metal chair visible behind her": {
+      "count": 1,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "direct, slightly harsh flash lighting": {
+      "count": 1,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "one hand raised near her head with a slight motion blur": {
+      "count": 1,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "black metal chair": {
+      "count": 1,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "looking up at the camera": {
+      "count": 1,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "plain, slightly textured white indoor wall": {
+      "count": 1,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "grey concrete wall on the right": {
+      "count": 1,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "soft shadows": {
+      "count": 1,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "textured off-white wall": {
+      "count": 1,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "school uniform": {
+      "count": 1,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "distinctive starburst cluster dangle earrings": {
+      "count": 1,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "candid photo-realistic selfie": {
+      "count": 1,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "gentle, natural smile": {
+      "count": 1,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "realistic candid outdoor selfie, low-angle shot": {
+      "count": 1,
+      "avg_overall_present": 77.0,
+      "avg_overall_absent": 74.2
+    },
+    "soft, natural indoor lighting": {
+      "count": 1,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "background wall is plain, light brown": {
+      "count": 1,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "background: a cluttered indoor closet space": {
+      "count": 1,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "simple, textured off-white wall with a hint of a black metal chair frame": {
+      "count": 1,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "detailed portrait photo": {
+      "count": 1,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "black circular pendant": {
+      "count": 1,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "softly-blurred, cluttered rustic indoor workshop environment": {
+      "count": 1,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "playful kissy face": {
+      "count": 1,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "high-quality, photorealistic": {
+      "count": 1,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "cluttered room": {
+      "count": 1,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "spaghetti strap has a small, colorful pattern": {
+      "count": 1,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "candid, unfiltered feel": {
+      "count": 1,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "high-resolution, photorealistic close-up selfie": {
+      "count": 1,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "loose white long-sleeved t-shirt": {
+      "count": 1,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "delicate white eyelet lace tank top and a thin gold chain with a teardrop-shaped pendant": {
+      "count": 1,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "lace-trimmed camisole": {
+      "count": 1,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "a small mole is on her cheek": {
+      "count": 1,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "soft, cinematic natural daylight hitting from the side": {
+      "count": 1,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "pose: both of her arms are raised": {
+      "count": 1,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "prominent filter effect shows a crown of floating pink and magenta heart shapes": {
+      "count": 1,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "white strapless tube top": {
+      "count": 1,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "casual, slightly messy room": {
+      "count": 1,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "looking directly at the camera with a wide, joyful, crinkly-eyed smile": {
+      "count": 1,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "warm skin tone, natural glam makeup featuring shimmery pink eyeshadow, and vibrant glossy pink lips": {
+      "count": 1,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "making a peace sign (v-sign) with her hand held near her cheek": {
+      "count": 1,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "smartphone camera": {
+      "count": 1,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "photorealistic, shallow depth of field, 8k resolution, high detail": {
+      "count": 1,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "natural and neutral expression": {
+      "count": 1,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "candid close-up photograph": {
+      "count": 1,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "8k, highly detailed skin texture": {
+      "count": 1,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "updo": {
+      "count": 1,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "black phone case featuring minimalist abstract face/hand line patterns": {
+      "count": 1,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "winged eyeliner and pink lipstick": {
+      "count": 1,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "cluttered rustic indoor workshop": {
+      "count": 1,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "brightly lit classroom": {
+      "count": 1,
+      "avg_overall_present": 76.0,
+      "avg_overall_absent": 74.2
+    },
+    "background is a split of a dark carved wooden door and a plain white indoor wall with a light switch": {
+      "count": 1,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "natural rosy blush on her cheeks": {
+      "count": 1,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "candid, intimate close-up selfie photograph taken from a high vantage point": {
+      "count": 1,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "soft natural daylight": {
+      "count": 1,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "realistic photo quality with natural grain": {
+      "count": 1,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "large mural painting featuring yellow and blue abstract figures": {
+      "count": 1,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "candid, intimate close-up selfie": {
+      "count": 1,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "tongue is protruding": {
+      "count": 1,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "motion blur": {
+      "count": 1,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "low-angle selfie": {
+      "count": 1,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "wearing a casual grey t-shirt with glasses tucked into the neckline": {
+      "count": 1,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "distinctive (same hair in image)": {
+      "count": 1,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "lush tropical greenery": {
+      "count": 1,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "warm skin tone": {
+      "count": 1,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "simple ring on finger": {
+      "count": 1,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "expression is natural and neutral": {
+      "count": 1,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "right arm bent and hand resting behind her head": {
+      "count": 1,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "showing fabric, an electric fan, and storage": {
+      "count": 1,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "sunny tropical resort with lush palm trees": {
+      "count": 1,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "soft natural light": {
+      "count": 1,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "circular mirror": {
+      "count": 1,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "background is a solid, slightly textured pink wall with a horizontal wooden beam": {
+      "count": 1,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "plain, light brown": {
+      "count": 1,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "bright indoor setting with a clear blue sky visible through a window in the background": {
+      "count": 1,
+      "avg_overall_present": 75.0,
+      "avg_overall_absent": 74.2
+    },
+    "heavily motion-blurred into abstract streaks of light": {
+      "count": 1,
+      "avg_overall_present": 74.0,
+      "avg_overall_absent": 74.2
+    },
+    "background is a tree-lined outdoor street with a grey concrete wall": {
+      "count": 1,
+      "avg_overall_present": 74.0,
+      "avg_overall_absent": 74.2
+    },
+    "arms crossed, head turned slightly to her right": {
+      "count": 1,
+      "avg_overall_present": 74.0,
+      "avg_overall_absent": 74.2
+    },
+    "detailed round enamel pin": {
+      "count": 1,
+      "avg_overall_present": 74.0,
+      "avg_overall_absent": 74.2
+    },
+    "bright, modern minimalist interior with high ceilings": {
+      "count": 1,
+      "avg_overall_present": 74.0,
+      "avg_overall_absent": 74.2
+    },
+    "natural makeup, including subtle winged eyeliner": {
+      "count": 1,
+      "avg_overall_present": 74.0,
+      "avg_overall_absent": 74.2
+    },
+    "complex black lanyard": {
+      "count": 1,
+      "avg_overall_present": 74.0,
+      "avg_overall_absent": 74.2
+    },
+    "candid outdoor selfie, low-angle shot": {
+      "count": 1,
+      "avg_overall_present": 74.0,
+      "avg_overall_absent": 74.2
+    },
+    "photorealistic, close-up selfie": {
+      "count": 1,
+      "avg_overall_present": 74.0,
+      "avg_overall_absent": 74.2
+    },
+    "simple, textured off-white wall": {
+      "count": 1,
+      "avg_overall_present": 74.0,
+      "avg_overall_absent": 74.2
+    },
+    "background is a white sandy beach with a dense line of palm trees": {
+      "count": 1,
+      "avg_overall_present": 74.0,
+      "avg_overall_absent": 74.2
+    },
+    "black metal chair frame visible behind her": {
+      "count": 1,
+      "avg_overall_present": 74.0,
+      "avg_overall_absent": 74.2
+    },
+    "the (woman in image)": {
+      "count": 1,
+      "avg_overall_present": 74.0,
+      "avg_overall_absent": 74.2
+    },
+    "delicate white eyelet lace tank top": {
+      "count": 1,
+      "avg_overall_present": 74.0,
+      "avg_overall_absent": 74.2
+    },
+    "natural makeup with glossy lips": {
+      "count": 1,
+      "avg_overall_present": 74.0,
+      "avg_overall_absent": 74.2
+    },
+    "faceted, translucent red heart pendant": {
+      "count": 1,
+      "avg_overall_present": 74.0,
+      "avg_overall_absent": 74.2
+    },
+    "pink tongue sticking out": {
+      "count": 1,
+      "avg_overall_present": 74.0,
+      "avg_overall_absent": 74.2
+    },
+    "city street scenes are heavily motion-blurred": {
+      "count": 1,
+      "avg_overall_present": 74.0,
+      "avg_overall_absent": 74.2
+    },
+    "tree-lined outdoor street with a grey concrete wall on the right": {
+      "count": 1,
+      "avg_overall_present": 74.0,
+      "avg_overall_absent": 74.2
+    },
+    "candid outdoor selfie": {
+      "count": 1,
+      "avg_overall_present": 74.0,
+      "avg_overall_absent": 74.2
+    },
+    "large fluffy leopard-patterned keychain charm": {
+      "count": 1,
+      "avg_overall_present": 73.0,
+      "avg_overall_absent": 74.2
+    },
+    "small mole is on her cheek": {
+      "count": 1,
+      "avg_overall_present": 73.0,
+      "avg_overall_absent": 74.2
+    },
+    "realistic mirror selfie": {
+      "count": 1,
+      "avg_overall_present": 73.0,
+      "avg_overall_absent": 74.2
+    },
+    "candid selfie": {
+      "count": 1,
+      "avg_overall_present": 73.0,
+      "avg_overall_absent": 74.2
+    },
+    "8k resolution, high detail": {
+      "count": 1,
+      "avg_overall_present": 73.0,
+      "avg_overall_absent": 74.2
+    },
+    "capturing the specific expression and hair structure": {
+      "count": 1,
+      "avg_overall_present": 73.0,
+      "avg_overall_absent": 74.2
+    },
+    "cinematic golden glow and deep, defined shadows": {
+      "count": 1,
+      "avg_overall_present": 73.0,
+      "avg_overall_absent": 74.2
+    },
+    "high-fidelity, realistic photograph styled as a candid selfie": {
+      "count": 1,
+      "avg_overall_present": 73.0,
+      "avg_overall_absent": 74.2
+    },
+    "single focused warm amber spotlight hitting her face and the white brick-textured wall behind her": {
+      "count": 1,
+      "avg_overall_present": 73.0,
+      "avg_overall_absent": 74.2
+    },
+    "photorealistic bust portrait": {
+      "count": 1,
+      "avg_overall_present": 73.0,
+      "avg_overall_absent": 74.2
+    },
+    "peace sign (v-sign) with her hand held near her cheek": {
+      "count": 1,
+      "avg_overall_present": 73.0,
+      "avg_overall_absent": 74.2
+    },
+    "high detail, 8k resolution, sharp focus": {
+      "count": 1,
+      "avg_overall_present": 73.0,
+      "avg_overall_absent": 74.2
+    },
+    "rustic indoor workshop environment": {
+      "count": 1,
+      "avg_overall_present": 73.0,
+      "avg_overall_absent": 74.2
+    },
+    "looking with a soft expression towards the right": {
+      "count": 1,
+      "avg_overall_present": 73.0,
+      "avg_overall_absent": 74.2
+    },
+    "wide, joyful, crinkly-eyed smile": {
+      "count": 1,
+      "avg_overall_present": 73.0,
+      "avg_overall_absent": 74.2
+    },
+    "phone with a stylish leopard print case": {
+      "count": 1,
+      "avg_overall_present": 73.0,
+      "avg_overall_absent": 74.2
+    },
+    "starburst camera flash reflects in the round mirror": {
+      "count": 1,
+      "avg_overall_present": 73.0,
+      "avg_overall_absent": 74.2
+    },
+    "lush tropical greenery and banana trees": {
+      "count": 1,
+      "avg_overall_present": 73.0,
+      "avg_overall_absent": 74.2
+    },
+    "light-colored (off-white) wall visible to the far right": {
+      "count": 1,
+      "avg_overall_present": 73.0,
+      "avg_overall_absent": 74.2
+    },
+    "thin gold necklace": {
+      "count": 1,
+      "avg_overall_present": 73.0,
+      "avg_overall_absent": 74.2
+    },
+    "bright indoor background with people": {
+      "count": 1,
+      "avg_overall_present": 72.0,
+      "avg_overall_absent": 74.2
+    },
+    "intense, playful grimace": {
+      "count": 1,
+      "avg_overall_present": 72.0,
+      "avg_overall_absent": 74.2
+    },
+    "teardrop-shaped pendant": {
+      "count": 1,
+      "avg_overall_present": 72.0,
+      "avg_overall_absent": 74.2
+    },
+    "sunny tropical resort": {
+      "count": 1,
+      "avg_overall_present": 72.0,
+      "avg_overall_absent": 74.2
+    },
+    "both of her arms are raised, with her right hand resting behind her head": {
+      "count": 1,
+      "avg_overall_present": 72.0,
+      "avg_overall_absent": 74.2
+    },
+    "bright, airy modern minimalist interior": {
+      "count": 1,
+      "avg_overall_present": 72.0,
+      "avg_overall_absent": 74.2
+    },
+    "high-quality, realistic candid portrait": {
+      "count": 1,
+      "avg_overall_present": 72.0,
+      "avg_overall_absent": 74.2
+    },
+    "plain, mint green painted wall with a soft, blurred shadow": {
+      "count": 1,
+      "avg_overall_present": 72.0,
+      "avg_overall_absent": 74.2
+    },
+    "vintage-style tan canvas messenger bag": {
+      "count": 1,
+      "avg_overall_present": 72.0,
+      "avg_overall_absent": 74.2
+    },
+    "slightly cluttered room": {
+      "count": 1,
+      "avg_overall_present": 72.0,
+      "avg_overall_absent": 74.2
+    },
+    "soft, cinematic natural daylight": {
+      "count": 1,
+      "avg_overall_present": 72.0,
+      "avg_overall_absent": 74.2
+    },
+    "natural daylight from a nearby window": {
+      "count": 1,
+      "avg_overall_present": 71.0,
+      "avg_overall_absent": 74.2
+    },
+    "styled as a candid selfie of a (woman in image)": {
+      "count": 1,
+      "avg_overall_present": 71.0,
+      "avg_overall_absent": 74.2
+    },
+    "her (woman in image) is styled with a middle part": {
+      "count": 1,
+      "avg_overall_present": 71.0,
+      "avg_overall_absent": 74.2
+    },
+    "photorealistic portrait selfie": {
+      "count": 1,
+      "avg_overall_present": 70.0,
+      "avg_overall_absent": 74.2
+    },
+    "background is a plain, slightly textured, light-cream wall": {
+      "count": 1,
+      "avg_overall_present": 70.0,
+      "avg_overall_absent": 74.2
+    },
+    "dark olive green cardigan": {
+      "count": 1,
+      "avg_overall_present": 70.0,
+      "avg_overall_absent": 74.2
+    },
+    "warm, golden-yellow string lights": {
+      "count": 1,
+      "avg_overall_present": 70.0,
+      "avg_overall_absent": 74.2
+    },
+    "lanyard visible around her neck that has repeating white text 'flava'": {
+      "count": 1,
+      "avg_overall_present": 70.0,
+      "avg_overall_absent": 74.2
+    },
+    "(same hair in image) is pulled back": {
+      "count": 1,
+      "avg_overall_present": 70.0,
+      "avg_overall_absent": 74.2
+    },
+    "blurry bedroom setting": {
+      "count": 1,
+      "avg_overall_present": 70.0,
+      "avg_overall_absent": 74.2
+    },
+    "tree-lined outdoor street with a grey concrete wall": {
+      "count": 1,
+      "avg_overall_present": 70.0,
+      "avg_overall_absent": 74.2
+    },
+    "lighting is soft, natural indoor light from the front-right": {
+      "count": 1,
+      "avg_overall_present": 70.0,
+      "avg_overall_absent": 74.2
+    },
+    "middle part on top, pulled back at the sides, and gathered into a loose, low side ponytail": {
+      "count": 1,
+      "avg_overall_present": 69.0,
+      "avg_overall_absent": 74.2
+    },
+    "light blue spaghetti strap tube top": {
+      "count": 1,
+      "avg_overall_present": 69.0,
+      "avg_overall_absent": 74.2
+    },
+    "mint green painted wall": {
+      "count": 1,
+      "avg_overall_present": 68.0,
+      "avg_overall_absent": 74.3
+    },
+    "black spaghetti-strap tank top": {
+      "count": 1,
+      "avg_overall_present": 68.0,
+      "avg_overall_absent": 74.3
+    },
+    "wearing a white ribbed tank top": {
+      "count": 1,
+      "avg_overall_present": 68.0,
+      "avg_overall_absent": 74.3
+    },
+    "intense, playful grimace: nose scrunched up, lips contorted and scrunched together in a deep, complex pout": {
+      "count": 1,
+      "avg_overall_present": 68.0,
+      "avg_overall_absent": 74.3
+    },
+    "white ribbed tank top": {
+      "count": 1,
+      "avg_overall_present": 68.0,
+      "avg_overall_absent": 74.3
+    },
+    "candid indoor self-portrait": {
+      "count": 1,
+      "avg_overall_present": 68.0,
+      "avg_overall_absent": 74.3
+    },
+    "solid dark brown door and frame": {
+      "count": 1,
+      "avg_overall_present": 67.0,
+      "avg_overall_absent": 74.3
+    },
+    "her (same hair in image)": {
+      "count": 1,
+      "avg_overall_present": 66.0,
+      "avg_overall_absent": 74.3
+    },
+    "small pink hibiscus flower": {
+      "count": 1,
+      "avg_overall_present": 66.0,
+      "avg_overall_absent": 74.3
+    },
+    "soft fair complexion": {
+      "count": 1,
+      "avg_overall_present": 66.0,
+      "avg_overall_absent": 74.3
+    },
+    "capturing a (woman in image)": {
+      "count": 1,
+      "avg_overall_present": 66.0,
+      "avg_overall_absent": 74.3
+    },
+    "soft, natural daylighting": {
+      "count": 1,
+      "avg_overall_present": 66.0,
+      "avg_overall_absent": 74.3
+    },
+    "high-quality, close-up selfie": {
+      "count": 1,
+      "avg_overall_present": 65.0,
+      "avg_overall_absent": 74.3
+    },
+    "blurry fast-food restaurant": {
+      "count": 1,
+      "avg_overall_present": 65.0,
+      "avg_overall_absent": 74.3
+    },
+    "softly blurred": {
+      "count": 1,
+      "avg_overall_present": 65.0,
+      "avg_overall_absent": 74.3
+    },
+    "high vantage point, looking down": {
+      "count": 1,
+      "avg_overall_present": 64.0,
+      "avg_overall_absent": 74.3
+    },
+    "high-resolution, realistic photo quality with natural grain": {
+      "count": 1,
+      "avg_overall_present": 64.0,
+      "avg_overall_absent": 74.3
+    },
+    "a realistic and candid indoor selfie of a (woman in image)": {
+      "count": 1,
+      "avg_overall_present": 63.0,
+      "avg_overall_absent": 74.3
+    },
+    "realistic, medium close-up portrait photograph": {
+      "count": 1,
+      "avg_overall_present": 63.0,
+      "avg_overall_absent": 74.3
+    },
+    "high resolution, authentic film grain, natural skin texture": {
+      "count": 1,
+      "avg_overall_present": 63.0,
+      "avg_overall_absent": 74.3
+    },
+    "pink hibiscus flower": {
+      "count": 1,
+      "avg_overall_present": 62.0,
+      "avg_overall_absent": 74.3
+    },
+    "gold necklace with a letter 'm' pendant": {
+      "count": 1,
+      "avg_overall_present": 60.0,
+      "avg_overall_absent": 74.3
+    },
+    "high-resolution, realistic photo quality": {
+      "count": 1,
+      "avg_overall_present": 60.0,
+      "avg_overall_absent": 74.3
+    },
+    "pink ribbed knit camisole": {
+      "count": 1,
+      "avg_overall_present": 60.0,
+      "avg_overall_absent": 74.3
+    },
+    "playful and slightly mischievous expression, with her tongue poked out": {
+      "count": 1,
+      "avg_overall_present": 60.0,
+      "avg_overall_absent": 74.3
+    },
+    "candid, intimate close-up selfie photograph taken from a high vantage point, looking down": {
+      "count": 1,
+      "avg_overall_present": 60.0,
+      "avg_overall_absent": 74.3
+    },
+    "textured, patterned grey-green bedsheet": {
+      "count": 1,
+      "avg_overall_present": 60.0,
+      "avg_overall_absent": 74.3
+    },
+    "pressed into her cheek": {
+      "count": 1,
+      "avg_overall_present": 60.0,
+      "avg_overall_absent": 74.3
+    },
+    "black leather choker necklace": {
+      "count": 1,
+      "avg_overall_present": 60.0,
+      "avg_overall_absent": 74.3
+    },
+    "sharp on her face": {
+      "count": 1,
+      "avg_overall_present": 59.0,
+      "avg_overall_absent": 74.3
+    },
+    "dark and very blurry background": {
+      "count": 1,
+      "avg_overall_present": 59.0,
+      "avg_overall_absent": 74.3
+    },
+    "playful, neutral expression": {
+      "count": 1,
+      "avg_overall_present": 59.0,
+      "avg_overall_absent": 74.3
+    },
+    "mouth is slightly open, her tongue is protruding, and her index and middle fingers are resting on her tongue": {
+      "count": 1,
+      "avg_overall_present": 59.0,
+      "avg_overall_absent": 74.3
+    },
+    "bold matte red lips": {
+      "count": 1,
+      "avg_overall_present": 58.0,
+      "avg_overall_absent": 74.3
+    },
+    "textured, patterned grey-green bedsheet or pillow": {
+      "count": 1,
+      "avg_overall_present": 58.0,
+      "avg_overall_absent": 74.3
+    },
+    "soft indoor lighting": {
+      "count": 1,
+      "avg_overall_present": 58.0,
+      "avg_overall_absent": 74.3
+    },
+    "backseat of a moving car": {
+      "count": 1,
+      "avg_overall_present": 35.0,
+      "avg_overall_absent": 74.4
+    },
+    "motion-blurred into abstract streaks": {
+      "count": 1,
+      "avg_overall_present": 35.0,
+      "avg_overall_absent": 74.4
+    }
+  },
+  "ranked_triplets": [
+    {
+      "id": "t067",
+      "overall_pct": 86
+    },
+    {
+      "id": "t216",
+      "overall_pct": 85
+    },
+    {
+      "id": "t022",
+      "overall_pct": 83
+    },
+    {
+      "id": "t103",
+      "overall_pct": 83
+    },
+    {
+      "id": "t130",
+      "overall_pct": 83
+    },
+    {
+      "id": "t182",
+      "overall_pct": 83
+    },
+    {
+      "id": "t217",
+      "overall_pct": 83
+    },
+    {
+      "id": "t218",
+      "overall_pct": 83
+    },
+    {
+      "id": "t247",
+      "overall_pct": 83
+    },
+    {
+      "id": "t255",
+      "overall_pct": 83
+    },
+    {
+      "id": "t256",
+      "overall_pct": 83
+    },
+    {
+      "id": "t279",
+      "overall_pct": 83
+    },
+    {
+      "id": "t044",
+      "overall_pct": 82
+    },
+    {
+      "id": "t084",
+      "overall_pct": 82
+    },
+    {
+      "id": "t104",
+      "overall_pct": 82
+    },
+    {
+      "id": "t161",
+      "overall_pct": 82
+    },
+    {
+      "id": "t203",
+      "overall_pct": 82
+    },
+    {
+      "id": "t226",
+      "overall_pct": 82
+    },
+    {
+      "id": "t250",
+      "overall_pct": 82
+    },
+    {
+      "id": "t265",
+      "overall_pct": 82
+    },
+    {
+      "id": "t004",
+      "overall_pct": 81
+    },
+    {
+      "id": "t033",
+      "overall_pct": 81
+    },
+    {
+      "id": "t041",
+      "overall_pct": 81
+    },
+    {
+      "id": "t043",
+      "overall_pct": 81
+    },
+    {
+      "id": "t052",
+      "overall_pct": 81
+    },
+    {
+      "id": "t053",
+      "overall_pct": 81
+    },
+    {
+      "id": "t054",
+      "overall_pct": 81
+    },
+    {
+      "id": "t129",
+      "overall_pct": 81
+    },
+    {
+      "id": "t131",
+      "overall_pct": 81
+    },
+    {
+      "id": "t152",
+      "overall_pct": 81
+    },
+    {
+      "id": "t153",
+      "overall_pct": 81
+    },
+    {
+      "id": "t156",
+      "overall_pct": 81
+    },
+    {
+      "id": "t163",
+      "overall_pct": 81
+    },
+    {
+      "id": "t168",
+      "overall_pct": 81
+    },
+    {
+      "id": "t206",
+      "overall_pct": 81
+    },
+    {
+      "id": "t210",
+      "overall_pct": 81
+    },
+    {
+      "id": "t224",
+      "overall_pct": 81
+    },
+    {
+      "id": "t228",
+      "overall_pct": 81
+    },
+    {
+      "id": "t264",
+      "overall_pct": 81
+    },
+    {
+      "id": "t269",
+      "overall_pct": 81
+    },
+    {
+      "id": "t270",
+      "overall_pct": 81
+    },
+    {
+      "id": "t276",
+      "overall_pct": 81
+    },
+    {
+      "id": "t002",
+      "overall_pct": 80
+    },
+    {
+      "id": "t019",
+      "overall_pct": 80
+    },
+    {
+      "id": "t082",
+      "overall_pct": 80
+    },
+    {
+      "id": "t092",
+      "overall_pct": 80
+    },
+    {
+      "id": "t112",
+      "overall_pct": 80
+    },
+    {
+      "id": "t120",
+      "overall_pct": 80
+    },
+    {
+      "id": "t121",
+      "overall_pct": 80
+    },
+    {
+      "id": "t123",
+      "overall_pct": 80
+    },
+    {
+      "id": "t133",
+      "overall_pct": 80
+    },
+    {
+      "id": "t137",
+      "overall_pct": 80
+    },
+    {
+      "id": "t142",
+      "overall_pct": 80
+    },
+    {
+      "id": "t151",
+      "overall_pct": 80
+    },
+    {
+      "id": "t157",
+      "overall_pct": 80
+    },
+    {
+      "id": "t158",
+      "overall_pct": 80
+    },
+    {
+      "id": "t164",
+      "overall_pct": 80
+    },
+    {
+      "id": "t173",
+      "overall_pct": 80
+    },
+    {
+      "id": "t181",
+      "overall_pct": 80
+    },
+    {
+      "id": "t196",
+      "overall_pct": 80
+    },
+    {
+      "id": "t201",
+      "overall_pct": 80
+    },
+    {
+      "id": "t202",
+      "overall_pct": 80
+    },
+    {
+      "id": "t205",
+      "overall_pct": 80
+    },
+    {
+      "id": "t227",
+      "overall_pct": 80
+    },
+    {
+      "id": "t243",
+      "overall_pct": 80
+    },
+    {
+      "id": "t248",
+      "overall_pct": 80
+    },
+    {
+      "id": "t249",
+      "overall_pct": 80
+    },
+    {
+      "id": "t009",
+      "overall_pct": 79
+    },
+    {
+      "id": "t017",
+      "overall_pct": 79
+    },
+    {
+      "id": "t018",
+      "overall_pct": 79
+    },
+    {
+      "id": "t066",
+      "overall_pct": 79
+    },
+    {
+      "id": "t116",
+      "overall_pct": 79
+    },
+    {
+      "id": "t124",
+      "overall_pct": 79
+    },
+    {
+      "id": "t125",
+      "overall_pct": 79
+    },
+    {
+      "id": "t145",
+      "overall_pct": 79
+    },
+    {
+      "id": "t154",
+      "overall_pct": 79
+    },
+    {
+      "id": "t160",
+      "overall_pct": 79
+    },
+    {
+      "id": "t208",
+      "overall_pct": 79
+    },
+    {
+      "id": "t219",
+      "overall_pct": 79
+    },
+    {
+      "id": "t234",
+      "overall_pct": 79
+    },
+    {
+      "id": "t272",
+      "overall_pct": 79
+    },
+    {
+      "id": "t005",
+      "overall_pct": 78
+    },
+    {
+      "id": "t032",
+      "overall_pct": 78
+    },
+    {
+      "id": "t042",
+      "overall_pct": 78
+    },
+    {
+      "id": "t068",
+      "overall_pct": 78
+    },
+    {
+      "id": "t070",
+      "overall_pct": 78
+    },
+    {
+      "id": "t086",
+      "overall_pct": 78
+    },
+    {
+      "id": "t090",
+      "overall_pct": 78
+    },
+    {
+      "id": "t091",
+      "overall_pct": 78
+    },
+    {
+      "id": "t100",
+      "overall_pct": 78
+    },
+    {
+      "id": "t102",
+      "overall_pct": 78
+    },
+    {
+      "id": "t139",
+      "overall_pct": 78
+    },
+    {
+      "id": "t147",
+      "overall_pct": 78
+    },
+    {
+      "id": "t171",
+      "overall_pct": 78
+    },
+    {
+      "id": "t183",
+      "overall_pct": 78
+    },
+    {
+      "id": "t235",
+      "overall_pct": 78
+    },
+    {
+      "id": "t277",
+      "overall_pct": 78
+    },
+    {
+      "id": "t026",
+      "overall_pct": 77
+    },
+    {
+      "id": "t036",
+      "overall_pct": 77
+    },
+    {
+      "id": "t083",
+      "overall_pct": 77
+    },
+    {
+      "id": "t089",
+      "overall_pct": 77
+    },
+    {
+      "id": "t099",
+      "overall_pct": 77
+    },
+    {
+      "id": "t101",
+      "overall_pct": 77
+    },
+    {
+      "id": "t113",
+      "overall_pct": 77
+    },
+    {
+      "id": "t117",
+      "overall_pct": 77
+    },
+    {
+      "id": "t126",
+      "overall_pct": 77
+    },
+    {
+      "id": "t127",
+      "overall_pct": 77
+    },
+    {
+      "id": "t146",
+      "overall_pct": 77
+    },
+    {
+      "id": "t155",
+      "overall_pct": 77
+    },
+    {
+      "id": "t162",
+      "overall_pct": 77
+    },
+    {
+      "id": "t165",
+      "overall_pct": 77
+    },
+    {
+      "id": "t179",
+      "overall_pct": 77
+    },
+    {
+      "id": "t185",
+      "overall_pct": 77
+    },
+    {
+      "id": "t190",
+      "overall_pct": 77
+    },
+    {
+      "id": "t209",
+      "overall_pct": 77
+    },
+    {
+      "id": "t223",
+      "overall_pct": 77
+    },
+    {
+      "id": "t241",
+      "overall_pct": 77
+    },
+    {
+      "id": "t261",
+      "overall_pct": 77
+    },
+    {
+      "id": "t263",
+      "overall_pct": 77
+    },
+    {
+      "id": "t278",
+      "overall_pct": 77
+    },
+    {
+      "id": "t011",
+      "overall_pct": 76
+    },
+    {
+      "id": "t020",
+      "overall_pct": 76
+    },
+    {
+      "id": "t028",
+      "overall_pct": 76
+    },
+    {
+      "id": "t034",
+      "overall_pct": 76
+    },
+    {
+      "id": "t035",
+      "overall_pct": 76
+    },
+    {
+      "id": "t037",
+      "overall_pct": 76
+    },
+    {
+      "id": "t087",
+      "overall_pct": 76
+    },
+    {
+      "id": "t093",
+      "overall_pct": 76
+    },
+    {
+      "id": "t098",
+      "overall_pct": 76
+    },
+    {
+      "id": "t105",
+      "overall_pct": 76
+    },
+    {
+      "id": "t106",
+      "overall_pct": 76
+    },
+    {
+      "id": "t115",
+      "overall_pct": 76
+    },
+    {
+      "id": "t119",
+      "overall_pct": 76
+    },
+    {
+      "id": "t170",
+      "overall_pct": 76
+    },
+    {
+      "id": "t178",
+      "overall_pct": 76
+    },
+    {
+      "id": "t225",
+      "overall_pct": 76
+    },
+    {
+      "id": "t245",
+      "overall_pct": 76
+    },
+    {
+      "id": "t253",
+      "overall_pct": 76
+    },
+    {
+      "id": "t273",
+      "overall_pct": 76
+    },
+    {
+      "id": "t001",
+      "overall_pct": 75
+    },
+    {
+      "id": "t010",
+      "overall_pct": 75
+    },
+    {
+      "id": "t015",
+      "overall_pct": 75
+    },
+    {
+      "id": "t021",
+      "overall_pct": 75
+    },
+    {
+      "id": "t023",
+      "overall_pct": 75
+    },
+    {
+      "id": "t039",
+      "overall_pct": 75
+    },
+    {
+      "id": "t040",
+      "overall_pct": 75
+    },
+    {
+      "id": "t046",
+      "overall_pct": 75
+    },
+    {
+      "id": "t107",
+      "overall_pct": 75
+    },
+    {
+      "id": "t114",
+      "overall_pct": 75
+    },
+    {
+      "id": "t140",
+      "overall_pct": 75
+    },
+    {
+      "id": "t144",
+      "overall_pct": 75
+    },
+    {
+      "id": "t167",
+      "overall_pct": 75
+    },
+    {
+      "id": "t169",
+      "overall_pct": 75
+    },
+    {
+      "id": "t172",
+      "overall_pct": 75
+    },
+    {
+      "id": "t176",
+      "overall_pct": 75
+    },
+    {
+      "id": "t184",
+      "overall_pct": 75
+    },
+    {
+      "id": "t199",
+      "overall_pct": 75
+    },
+    {
+      "id": "t204",
+      "overall_pct": 75
+    },
+    {
+      "id": "t207",
+      "overall_pct": 75
+    },
+    {
+      "id": "t230",
+      "overall_pct": 75
+    },
+    {
+      "id": "t252",
+      "overall_pct": 75
+    },
+    {
+      "id": "t260",
+      "overall_pct": 75
+    },
+    {
+      "id": "t262",
+      "overall_pct": 75
+    },
+    {
+      "id": "t007",
+      "overall_pct": 74
+    },
+    {
+      "id": "t012",
+      "overall_pct": 74
+    },
+    {
+      "id": "t029",
+      "overall_pct": 74
+    },
+    {
+      "id": "t085",
+      "overall_pct": 74
+    },
+    {
+      "id": "t088",
+      "overall_pct": 74
+    },
+    {
+      "id": "t122",
+      "overall_pct": 74
+    },
+    {
+      "id": "t128",
+      "overall_pct": 74
+    },
+    {
+      "id": "t135",
+      "overall_pct": 74
+    },
+    {
+      "id": "t136",
+      "overall_pct": 74
+    },
+    {
+      "id": "t138",
+      "overall_pct": 74
+    },
+    {
+      "id": "t148",
+      "overall_pct": 74
+    },
+    {
+      "id": "t150",
+      "overall_pct": 74
+    },
+    {
+      "id": "t159",
+      "overall_pct": 74
+    },
+    {
+      "id": "t174",
+      "overall_pct": 74
+    },
+    {
+      "id": "t177",
+      "overall_pct": 74
+    },
+    {
+      "id": "t186",
+      "overall_pct": 74
+    },
+    {
+      "id": "t212",
+      "overall_pct": 74
+    },
+    {
+      "id": "t221",
+      "overall_pct": 74
+    },
+    {
+      "id": "t222",
+      "overall_pct": 74
+    },
+    {
+      "id": "t251",
+      "overall_pct": 74
+    },
+    {
+      "id": "t259",
+      "overall_pct": 74
+    },
+    {
+      "id": "t266",
+      "overall_pct": 74
+    },
+    {
+      "id": "t268",
+      "overall_pct": 74
+    },
+    {
+      "id": "t003",
+      "overall_pct": 73
+    },
+    {
+      "id": "t016",
+      "overall_pct": 73
+    },
+    {
+      "id": "t031",
+      "overall_pct": 73
+    },
+    {
+      "id": "t038",
+      "overall_pct": 73
+    },
+    {
+      "id": "t050",
+      "overall_pct": 73
+    },
+    {
+      "id": "t051",
+      "overall_pct": 73
+    },
+    {
+      "id": "t079",
+      "overall_pct": 73
+    },
+    {
+      "id": "t081",
+      "overall_pct": 73
+    },
+    {
+      "id": "t132",
+      "overall_pct": 73
+    },
+    {
+      "id": "t149",
+      "overall_pct": 73
+    },
+    {
+      "id": "t166",
+      "overall_pct": 73
+    },
+    {
+      "id": "t175",
+      "overall_pct": 73
+    },
+    {
+      "id": "t233",
+      "overall_pct": 73
+    },
+    {
+      "id": "t246",
+      "overall_pct": 73
+    },
+    {
+      "id": "t013",
+      "overall_pct": 72
+    },
+    {
+      "id": "t024",
+      "overall_pct": 72
+    },
+    {
+      "id": "t030",
+      "overall_pct": 72
+    },
+    {
+      "id": "t045",
+      "overall_pct": 72
+    },
+    {
+      "id": "t047",
+      "overall_pct": 72
+    },
+    {
+      "id": "t069",
+      "overall_pct": 72
+    },
+    {
+      "id": "t097",
+      "overall_pct": 72
+    },
+    {
+      "id": "t118",
+      "overall_pct": 72
+    },
+    {
+      "id": "t134",
+      "overall_pct": 72
+    },
+    {
+      "id": "t229",
+      "overall_pct": 72
+    },
+    {
+      "id": "t242",
+      "overall_pct": 72
+    },
+    {
+      "id": "t254",
+      "overall_pct": 72
+    },
+    {
+      "id": "t271",
+      "overall_pct": 72
+    },
+    {
+      "id": "t014",
+      "overall_pct": 71
+    },
+    {
+      "id": "t055",
+      "overall_pct": 71
+    },
+    {
+      "id": "t078",
+      "overall_pct": 71
+    },
+    {
+      "id": "t180",
+      "overall_pct": 71
+    },
+    {
+      "id": "t188",
+      "overall_pct": 71
+    },
+    {
+      "id": "t006",
+      "overall_pct": 70
+    },
+    {
+      "id": "t027",
+      "overall_pct": 70
+    },
+    {
+      "id": "t071",
+      "overall_pct": 70
+    },
+    {
+      "id": "t096",
+      "overall_pct": 70
+    },
+    {
+      "id": "t143",
+      "overall_pct": 70
+    },
+    {
+      "id": "t194",
+      "overall_pct": 70
+    },
+    {
+      "id": "t195",
+      "overall_pct": 70
+    },
+    {
+      "id": "t215",
+      "overall_pct": 70
+    },
+    {
+      "id": "t220",
+      "overall_pct": 70
+    },
+    {
+      "id": "t232",
+      "overall_pct": 70
+    },
+    {
+      "id": "t239",
+      "overall_pct": 70
+    },
+    {
+      "id": "t059",
+      "overall_pct": 69
+    },
+    {
+      "id": "t077",
+      "overall_pct": 69
+    },
+    {
+      "id": "t187",
+      "overall_pct": 69
+    },
+    {
+      "id": "t197",
+      "overall_pct": 69
+    },
+    {
+      "id": "t198",
+      "overall_pct": 69
+    },
+    {
+      "id": "t094",
+      "overall_pct": 68
+    },
+    {
+      "id": "t095",
+      "overall_pct": 68
+    },
+    {
+      "id": "t141",
+      "overall_pct": 68
+    },
+    {
+      "id": "t240",
+      "overall_pct": 68
+    },
+    {
+      "id": "t274",
+      "overall_pct": 68
+    },
+    {
+      "id": "t056",
+      "overall_pct": 67
+    },
+    {
+      "id": "t063",
+      "overall_pct": 67
+    },
+    {
+      "id": "t080",
+      "overall_pct": 67
+    },
+    {
+      "id": "t008",
+      "overall_pct": 66
+    },
+    {
+      "id": "t110",
+      "overall_pct": 66
+    },
+    {
+      "id": "t191",
+      "overall_pct": 66
+    },
+    {
+      "id": "t200",
+      "overall_pct": 66
+    },
+    {
+      "id": "t213",
+      "overall_pct": 66
+    },
+    {
+      "id": "t244",
+      "overall_pct": 66
+    },
+    {
+      "id": "t257",
+      "overall_pct": 66
+    },
+    {
+      "id": "t048",
+      "overall_pct": 65
+    },
+    {
+      "id": "t072",
+      "overall_pct": 65
+    },
+    {
+      "id": "t074",
+      "overall_pct": 65
+    },
+    {
+      "id": "t214",
+      "overall_pct": 65
+    },
+    {
+      "id": "t108",
+      "overall_pct": 64
+    },
+    {
+      "id": "t065",
+      "overall_pct": 63
+    },
+    {
+      "id": "t073",
+      "overall_pct": 63
+    },
+    {
+      "id": "t211",
+      "overall_pct": 63
+    },
+    {
+      "id": "t049",
+      "overall_pct": 62
+    },
+    {
+      "id": "t192",
+      "overall_pct": 62
+    },
+    {
+      "id": "t057",
+      "overall_pct": 61
+    },
+    {
+      "id": "t061",
+      "overall_pct": 60
+    },
+    {
+      "id": "t076",
+      "overall_pct": 60
+    },
+    {
+      "id": "t109",
+      "overall_pct": 60
+    },
+    {
+      "id": "t238",
+      "overall_pct": 60
+    },
+    {
+      "id": "t267",
+      "overall_pct": 60
+    },
+    {
+      "id": "t231",
+      "overall_pct": 59
+    },
+    {
+      "id": "t075",
+      "overall_pct": 58
+    },
+    {
+      "id": "t111",
+      "overall_pct": 58
+    },
+    {
+      "id": "t189",
+      "overall_pct": 58
+    },
+    {
+      "id": "t193",
+      "overall_pct": 58
+    },
+    {
+      "id": "t236",
+      "overall_pct": 58
+    },
+    {
+      "id": "t237",
+      "overall_pct": 58
+    },
+    {
+      "id": "t025",
+      "overall_pct": 57
+    },
+    {
+      "id": "t275",
+      "overall_pct": 56
+    },
+    {
+      "id": "t058",
+      "overall_pct": 54
+    },
+    {
+      "id": "t060",
+      "overall_pct": 54
+    },
+    {
+      "id": "t062",
+      "overall_pct": 54
+    },
+    {
+      "id": "t064",
+      "overall_pct": 54
+    },
+    {
+      "id": "t258",
+      "overall_pct": 35
+    }
+  ],
+  "synthesis": {
+    "winning_prompt_moves": [
+      {
+        "move": "mirror selfie",
+        "corroboration_count": 26,
+        "avg_overall_when_present": 78.3,
+        "why": "Introduces realistic camera occlusion, casual domestic backgrounds, and believable lighting, which strongly reinforces the UGC aesthetic."
+      },
+      {
+        "move": "smiling gently with both hands framing her cheeks",
+        "corroboration_count": 5,
+        "avg_overall_when_present": 80.0,
+        "why": "Anchors the subject's hands and facial expression, preventing awkward anatomical anomalies and ensuring a natural, engaging look."
+      },
+      {
+        "move": "analog film self-portrait",
+        "corroboration_count": 4,
+        "avg_overall_when_present": 81.25,
+        "why": "Emulates authentic retro camera characteristics, harsh direct flash, and film grain, which masks digital artifacts and aligns perfectly with raw-ugc expectations."
+      }
+    ],
+    "style_ref_transfers_reliably": [
+      "Basic facial likeness and structure of the subject",
+      "Hair color, texture, and general hair length",
+      "Overall color temperature and dominant lighting tone"
+    ],
+    "needs_prompt_language": [
+      "Specific clothing items, fabrics, and intricate patterns",
+      "Complex hand poses, gestures, and physical interactions",
+      "Detailed background elements, clutter, and specific environmental props",
+      "Fine accessories and eyewear"
+    ],
+    "candidate_fragments": [
+      {
+        "fragment": "natural skin texture",
+        "corroboration_count": 85
+      },
+      {
+        "fragment": "harsh direct flash lighting",
+        "corroboration_count": 4
+      },
+      {
+        "fragment": "candid close-up selfie",
+        "corroboration_count": 8
+      },
+      {
+        "fragment": "soft natural indoor lighting",
+        "corroboration_count": 5
+      }
+    ]
+  }
+}
