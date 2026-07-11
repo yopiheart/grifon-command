@@ -12,12 +12,14 @@ This is the meta-workflow. It doesn't do the work itself — it points to the wo
 `feat/niche-coverage-cheap-fixes`); full context, protocol and resume triggers live in
 [`oneshot_format_showcase.md`](oneshot_format_showcase.md). Nothing below is started.
 
-1. **Slice B — the sample render batch (Neil fires; ~10 producer runs).** This IS the `gemini-eval`
-   batch already owed from UGC Pro Slices 1–4 — **run it once, not twice.** Needs one hero product
-   whose photos cover every upload slot (`hero`, `onbody`, `packaging`, `before`, `after`, `inuse`);
-   skincare or a wearable gadget covers all ten recipes, most products cover fewer, and a recipe
-   with no footage gets no card. Winners → `public/samples/formats/` + the `SAMPLES` manifest;
-   failures → bugs.
+1. **Slice B — the sample render batch (Neil fires; ~12 producer runs).** This IS the `gemini-eval`
+   batch already owed from UGC Pro Slices 1–4 — **run it once, not twice.**
+   **→ 2026-07-11: Test Spec + all assets READY — see [`sample_batch_test_spec.md`](sample_batch_test_spec.md).**
+   Fictional hero product "Hiraya Glow" serum covers every upload slot
+   (`tests/fixtures/sample-batch/`, codex-image, zero Gemini spend); service B&A + RE walkthrough
+   eval-only runs reuse `public/examples/`. What remains is Neil's checklist in the spec: GO on
+   quota, authenticated session, fire runs 1–12, eyeball. Winners → `public/samples/formats/` +
+   the `SAMPLES` manifest; failures → bugs.
    **Do not ship Slice A to users before this lands** — the gallery is currently a wall of `Film`
    icons, which is worse than the modal it replaced. Slice B is the feature; Slice A is the frame.
 2. **Open the PR** for `feat/niche-coverage-cheap-fixes` → `main` (not merged; Neil's call).

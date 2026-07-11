@@ -365,3 +365,10 @@ non-hero slots (codex-image).
 > deferred batch gate (lists in the Slice 2/3/4 logs): write the Test Spec, get
 > Neil's GO (paid Gemini quota), run gemini-eval per sub-format, live DOM smoke once
 > Neil pre-authenticates, and Neil eyeballs rendered outputs. Then the PR.
+>
+> **→ 2026-07-11: Test Spec WRITTEN — [`sample_batch_test_spec.md`](sample_batch_test_spec.md).**
+> It merges this gate with the Slice B sample batch (one spend, two deliverables): locked
+> "Hiraya Glow" brief, 12-run matrix (10 recipes + service B&A + RE walkthrough), per-run
+> eval criteria, and Neil's GO checklist. Product assets committed at
+> `tests/fixtures/sample-batch/` (codex-image — this also discharges the carried
+> "example assets" item for the batch's purposes).
