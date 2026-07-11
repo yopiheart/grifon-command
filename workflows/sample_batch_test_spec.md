@@ -168,9 +168,20 @@ wrong) · TTS whisper register (run 8) · real `ugcpro.mp3` bed.
     NONE/raw preset** for users who want the stitched-only cut (Neil's recalled design:
     first cut = scenes joined, no dead air, no text/SFX/music until the user picks).
     UX finding + feature ask, post-batch.
-12. **Trailing ~2s dead air in the final render** — end-of-video not trimmed. This is the
-    EDL cut-pacing evidence class the Rule 0a `ugcpro` gate waits on; needs the actual
-    mp4s (all three presets) to diagnose end-trim vs padding source.
+12. **Trailing ~2s "dead air" re-diagnosed (Gemini watched all 3 preset renders).**
+    Not literal silence — all three analyses report 0 silences >0.3s (music runs to the
+    end) and CTA `holds_to_final_frame`. The VO ends ~2s early and the final scene HOLDS
+    static to fill the 15s target — reads dead to a human. Fix direction: trim or
+    micro-move (slow push-in) the post-VO tail, not audio-gap detection. Still Rule 0a
+    evidence, reclassified.
+12b. **First filmed render — Gemini analysis verdicts (all 3 presets, run 3).** All
+    three: `real-human` believability at high confidence, `raw-ugc` register, perfect
+    lip-sync note, real skin texture — the core product promise HELD on the producer
+    pipeline + Hiraya Glow assets. Presets DO differentiate (A: water-ripple + white
+    flash + shutter SFX; B: single flash + whoosh; C: water-splash wipe; caption color
+    treatments differ). Gemini independently flagged the missing before/after proof
+    ("Lacks visual before-and-after proof of dark spot reduction") — third corroboration
+    of finding #10. CTA occupies the final ~6s (40% of runtime) — CMO review item.
 13. **Preset switcher farms multiple deliverables** — AUTO → download, IMPACT → download,
     CLEAN → download off one filmed run. FFmpeg re-edit only (no new Gemini spend), so
     likely fine — flag for pricing/abuse review. Omni edit presets absent from product =
