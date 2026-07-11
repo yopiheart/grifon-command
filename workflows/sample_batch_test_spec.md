@@ -186,6 +186,30 @@ wrong) · TTS whisper register (run 8) · real `ugcpro.mp3` bed.
     CLEAN → download off one filmed run. FFmpeg re-edit only (no new Gemini spend), so
     likely fine — flag for pricing/abuse review. Omni edit presets absent from product =
     expected (dev-lab only, gated proposals; roadmap #18 two-layer editing).
+14. **POST-FIX GATE RE-RUN (2026-07-12, Neil live, `before_after` full uploads + Auto):
+    beat-0 fix CONFIRMED + dead-air fix CONFIRMED.** Hook = "Pagod na 'ko sa dry, dull
+    skin." (problem-state, no product — the 797ce08 root-cause fix held on run 1);
+    4-beat skeleton intact; presenter derived from after.png, same face all 4 scenes;
+    Start-over + RAW-default both live. No trailing static hold on the final cut
+    (finding #12 resolved on a real render). Preset switcher AUTO/IMPACT/CLEAN all
+    worked off the one filmed run.
+15. **S1 hallucinated product cutaway (~3s mark) — NEW.** The problem-state scene's
+    FOOTAGE contains an invented serum bottle with gibberish label ("RYA CWYA"-style)
+    around the 3s mark, visible in the RAW cut (stitchedOnly bypasses every FFmpeg
+    layer, so this is generated content, not an edit artifact). Hypothesis: hook VO is
+    ~2s but the clip is 4–6s; the video model fills the tail with a B-roll cutaway it
+    invents, and S1 deliberately has NO product reference to anchor it. Also a
+    heart-shaped visual effect in S1 footage — not any preset effect (none exists),
+    same generated-footage origin; mood-wrong for a problem-state beat. 1st
+    corroboration only — needs Gemini video analysis of the raw file + the run's S1
+    motion prompt before any TUNED proposal (candidates: NO_PRODUCT/no-invented-props
+    rule in the S1 motion prompt, or shorter S1 clip duration).
+16. **Scene 2 transient generation failure** — 502 Bad Gateway from
+    /api/kling/video/poll mid-run; scene flagged, per-scene REGENERATE recovered
+    cleanly (designed path works). Console also spams "[producer] checkpoint
+    superseded (revision conflict) — adopted server revision N" ~20× per run —
+    checkpoint sync works but the log noise obscures real errors; log-hygiene
+    candidate, not a bug.
 
 ## 5. Post-batch (agent work, after Neil's eyeball)
 
