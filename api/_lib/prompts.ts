@@ -662,7 +662,10 @@ export const buildAdScriptPrompt = (
       0. **Hook (<=2s, 5-8 words):** The problem state, shown and named — frustrated,
          real. Pattern: visual complaint — "Tell me why my skin looks exhausted?" /
          "Tingnan mo 'tong mantsa. Ang tagal na nito." NO product mention in the hook.
-         PROVIDE 2 VARIATIONS — populate hook1 AND hook2.
+         ANGLE OVERRIDE GUARD: this beat-0 rule OVERRIDES any angle brief or
+         research-suggested opening line — reframe that angle into the problem state;
+         a product, benefit, or testimonial hook in beat 0 is WRONG even if a brief
+         asked for it. PROVIDE 2 VARIATIONS — populate hook1 AND hook2.
       1. **Application:** The product enters mid-action with a COMPLETE verb construction —
          "watch this — isang swipe lang" / "dalawang spray lang ng ${brandName}". The
          product enters WORKING, never posed. If your line has no verb, REWRITE it —

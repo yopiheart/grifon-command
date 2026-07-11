@@ -366,12 +366,18 @@ export function researchCacheKey(brandName: string, productName: string): string
   return `${brandName.trim().toLowerCase()}::${productName.trim().toLowerCase()}`;
 }
 
-/** A ready-to-brief angle for the script generator, pulled from the research. */
+/** A ready-to-brief angle for the script generator, pulled from the research.
+ * The research line is INSPIRATION, never a dictated opening: "open with: X"
+ * made the model obey X over the format's beat-0 skeleton rule (transformation
+ * runs opened on product/testimonial hooks — spec findings #6/#10, root cause
+ * confirmed 2026-07-12). The skeleton always outranks the angle brief. */
 export function deriveAngleBrief(report: MarketResearchReport): string {
+  const subordinate = (line: string) =>
+    `hook inspiration (the format's beat-0 skeleton rule ALWAYS wins over this line — reframe it to fit the skeleton, never copy it as the opener): "${line}"`;
   const a = report.fbAdLibraryAngles?.[0];
-  if (a) return `${a.format} angle: ${a.angle} — open with: "${a.openingLine}"`;
+  if (a) return `${a.format} angle: ${a.angle} — ${subordinate(a.openingLine)}`;
   const h = report.videoHooks?.[0];
-  return h ? `${h.type}: "${h.spokenLine}"` : report.bigIdea || '';
+  return h ? `${h.type} ${subordinate(h.spokenLine)}` : report.bigIdea || '';
 }
 
 /** Auto-pick hook1 (locked product decision) and concatenate the body. */
