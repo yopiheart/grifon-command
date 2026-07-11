@@ -159,36 +159,37 @@ export const RE_UPLOAD_SLOTS: Record<RealEstateArchetype, UploadSlot[]> = {
 // `heroImageBase64: servicePhotos[0]?.url` from hero-first ordering — reorder and
 // the wrong photo becomes the research/identity anchor. Do not move it.
 //
-// Only the hero slot carries a reference example (PRODUCT_EXAMPLE); the product-state
-// slots have no curated sample under public/examples/ yet, so their `example` is
-// omitted rather than pointing at a mismatched (e.g. cleaning before/after) asset.
+// Every slot carries a reference example. The product-state samples
+// (ex-product-onbody/packaging/before/after/inuse) are the Hiraya Glow serum set
+// generated for the sample batch (workflows/sample_batch_test_spec.md, 2026-07-11) —
+// one consistent product + one consistent face across all five states.
 export const UGCPRO_UPLOAD_SLOTS: Record<
   'tryon' | 'unboxing' | 'demo' | 'transformation' | 'tutorial',
   UploadSlot[]
 > = {
   tryon: [
     { slot: 'hero', label: 'Product', hint: 'the item, brand visible', example: PRODUCT_EXAMPLE },
-    { slot: 'onbody', label: 'Worn', hint: 'on a body — anchors fit & drape' },
-    { slot: 'packaging', label: 'Packaging', hint: 'box / label — optional' },
+    { slot: 'onbody', label: 'Worn', hint: 'on a body — anchors fit & drape', example: '/examples/ex-product-onbody.png' },
+    { slot: 'packaging', label: 'Packaging', hint: 'box / label — optional', example: '/examples/ex-product-packaging.png' },
   ],
   unboxing: [
     { slot: 'hero', label: 'Product', hint: 'the item, brand visible', example: PRODUCT_EXAMPLE },
-    { slot: 'packaging', label: 'Packaging', hint: 'box / label — required, it is the co-star' },
-    { slot: 'inuse', label: 'In use', hint: 'placed / worn — optional' },
+    { slot: 'packaging', label: 'Packaging', hint: 'box / label — required, it is the co-star', example: '/examples/ex-product-packaging.png' },
+    { slot: 'inuse', label: 'In use', hint: 'placed / worn — optional', example: '/examples/ex-product-inuse.png' },
   ],
   demo: [
     { slot: 'hero', label: 'Product', hint: 'the item, brand visible', example: PRODUCT_EXAMPLE },
-    { slot: 'inuse', label: 'In use', hint: 'show it working — recommended' },
+    { slot: 'inuse', label: 'In use', hint: 'show it working — recommended', example: '/examples/ex-product-inuse.png' },
   ],
   transformation: [
     { slot: 'hero', label: 'Product', hint: 'the item, brand visible', example: PRODUCT_EXAMPLE },
-    { slot: 'before', label: 'Before', hint: 'the starting state' },
-    { slot: 'after', label: 'After', hint: 'the result' },
-    { slot: 'inuse', label: 'In use', hint: 'applying it — optional' },
+    { slot: 'before', label: 'Before', hint: 'the starting state', example: '/examples/ex-product-before.png' },
+    { slot: 'after', label: 'After', hint: 'the result', example: '/examples/ex-product-after.png' },
+    { slot: 'inuse', label: 'In use', hint: 'applying it — optional', example: '/examples/ex-product-inuse.png' },
   ],
   tutorial: [
     { slot: 'hero', label: 'Product', hint: 'the item, brand visible', example: PRODUCT_EXAMPLE },
-    { slot: 'inuse', label: 'In use', hint: 'a step in progress — optional' },
+    { slot: 'inuse', label: 'In use', hint: 'a step in progress — optional', example: '/examples/ex-product-inuse.png' },
   ],
 };
 
