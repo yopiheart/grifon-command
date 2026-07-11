@@ -46,6 +46,18 @@ Generated via `codex-image` (gpt-image-2, zero Gemini/Claude spend), committed a
 Consistency chain: `packaging`/`inuse` are edits of `hero`; `onbody`/`after` are edits of
 `before` — same bottle, same face everywhere.
 
+**PRESENTER-COHERENCE RULE (Neil's catch, 2026-07-11).** The storyboard's transformation
+beats put BOTH `referenceImage="avatar"` AND `venueSlot="before"/"after"` on the same scene
+(`api/_lib/prompts.ts` S1/S3) — so if the auto-cast avatar differs from the woman in the
+uploaded person-state photos, one ad renders two different faces. Therefore:
+- Runs using photos WITH her face (`before_after`, `try_on`): **Presenter = SET, upload
+  `after.png`** so avatar lock == the same woman. NOT pure Auto.
+- Runs whose uploads are face-free (`unboxing`, `unboxing_asmr`, `demo`, `tutorial` —
+  hands/product only): **Presenter = Auto**, per the original default-path intent.
+- **Eval observation point:** a real user uploading their own before/after selfies + Auto
+  presenter hits this mismatch. If the batch confirms it renders incoherently, file it as a
+  product bug/roadmap item (derive presenter from uploaded face, or a UI warning).
+
 ## 3. Run matrix — 12 runs
 
 > **Priority order (Neil, 2026-07-11): the NEW formats are the gate — fire them first.**
