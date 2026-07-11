@@ -79,8 +79,46 @@ Omni eyeball sa GenerateVideo + launch-gate review (P6) → "Recipe" glossary (P
 PR-review-loop critic sa buong branch → open PR → **isang merge day: niche-coverage +
 omni docs sabay** (P8).
 
+## RESUME STATE — 2026-07-12 session close (read this first)
+
+**DONE and pushed on this branch (`feat/niche-coverage-cheap-fixes`):**
+- **Phase 0–2 complete.** P1 4-fix batch shipped via Codex/Sol trial run #1 (`8114e63`):
+  start-over at storyboard gate, RAW ('none') first-cut preset (now the DEFAULT), presenter
+  derive-from-after (spec §2; decision was DERIVE with notice+override), preset-failure
+  rollback. P2 beat-0 fix shipped (`797ce08`): root cause was `deriveAngleBrief`'s
+  "open with: X" fighting the transformation skeleton — demoted to "hook inspiration
+  (skeleton ALWAYS wins)" + Neil-approved ANGLE OVERRIDE GUARD sentence in the TUNED
+  transformation-product block. Deterministic beat-0 validator DEFERRED (evidence-bound).
+- **Phase 3 gate run 1 (`before_after`) = PASS, live, all fixes verified** (spec findings
+  #14–16, `d44878a`/`37a5a60`): problem-state hook held, presenter derive worked, dead air
+  gone, Gemini watch confirmed real-human ×4. Raw videos in `tests/fixtures/sample-batch/`.
+- **S1 post-VO tail-fill cutaway = the open bug** (finding #15, 2nd corroboration): hook VO
+  ~2s, clip 4s → model invents a gibberish product B-roll at 2–3s. Fix ladder: per-scene
+  VO-end trim → shorter hook clips → TUNED no-invented-props (grill-me). Need 1 more
+  corroboration from runs 2–8.
+- **Overlay upgrade APPROVED (Neil):** 3 BOLD white/black caption presets — punch / bars /
+  spotlight — artifact rev 2 at
+  https://claude.ai/code/artifact/29b2d79d-350d-40a5-a6da-8bb3ac4ca97d. ENGINE build was
+  dispatched to the Codex lane end-of-session (brief:
+  `.tmp/brief-overlay-styles-engine.md` — regenerate from this plan + artifact if .tmp got
+  wiped); **if its diff is uncommitted or missing, re-dispatch the engine brief first.**
+  UI half (switcher chips + Business "Advanced Editor" teaser, flag-gated OFF, copy =
+  "Your ad. Re-cut like a film studio did it." / CTA "Watch your cinema cuts →", shows to
+  Starter+Pro — there is NO "Creator" tier) goes to `code-executor` AFTER engine lands.
+- **Housekeeping:** Vercel overdue invoice PAID (2026-07-11). `get-smoke-otp.ps1` broken
+  (401 — see session_reminders). ffmpeg = portable re-arm (see session_reminders). Codex
+  trial log has run #1 (`workflows/codex_executor_trial.md`). Fable sunset Jul 13 2:59 PM
+  PHT — next session may boot on Opus 4.8 via the hook; that's expected, use /fable-mode.
+
+**Still open (the remaining close-out):** Phase 3 runs 2–8 (try_on next — set Presenter =
+after.png MANUALLY, derive only fires on before/after pairs) · per-render gemini-eval (P4)
+· sample cards + SAMPLES manifest (P5, ffmpeg re-arm first) · Omni eyeball GenerateVideo +
+launch-gate review (P6) · "Recipe" glossary (P7) · optional free fix: presenter-mismatch
+hint line (Neil undecided) · merge train (P8).
+
 ## Paste-ready kickoff (next session)
 
-> Read CLAUDE.md + workflows/july_close_out_plan.md. Execute the plan: ask me the P1.4
-> design question, then fire Phase 1 (codex-executor batch) and Phase 2 (/grill-me beat-0)
-> — sabay. I'll drive Phase 3 batch runs habang tumatakbo ang iba.
+> Read CLAUDE.md + workflows/july_close_out_plan.md (RESUME STATE section). Check the
+> overlay ENGINE diff landed + committed; if yes, review it and dispatch the UI brief to
+> code-executor. Then I'll drive Phase 3 runs 2–8 (try_on first) while you re-arm ffmpeg
+> and run gemini-eval per render.
