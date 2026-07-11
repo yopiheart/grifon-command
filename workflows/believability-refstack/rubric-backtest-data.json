@@ -1,0 +1,205 @@
+[
+ {
+  "id": "t195",
+  "gemini": 64,
+  "blind": 70,
+  "verdict": "PASS",
+  "note": "rounder cheeks, but brows/nose/smile read as her"
+ },
+ {
+  "id": "t111",
+  "gemini": 65,
+  "blind": 76,
+  "verdict": "PASS",
+  "note": "lips/nose match; foreshortened angle mild drift"
+ },
+ {
+  "id": "t245",
+  "gemini": 65,
+  "blind": 74,
+  "verdict": "PASS",
+  "note": "smile widens midface, geometry still hers"
+ },
+ {
+  "id": "t246",
+  "gemini": 65,
+  "blind": 56,
+  "verdict": "FAIL",
+  "note": "longer narrow face, thinner lips, gummy grin - iba ata"
+ },
+ {
+  "id": "t106",
+  "gemini": 68,
+  "blind": 71,
+  "verdict": "PASS",
+  "note": "grin stretches jaw; chin slightly long"
+ },
+ {
+  "id": "t194",
+  "gemini": 68,
+  "blind": 80,
+  "verdict": "PASS",
+  "note": "nose and full lips match despite glasses"
+ },
+ {
+  "id": "t257",
+  "gemini": 68,
+  "blind": 82,
+  "verdict": "PASS",
+  "note": "profile nose and full lips match cleanly"
+ },
+ {
+  "id": "t045",
+  "gemini": 70,
+  "blind": 84,
+  "verdict": "PASS",
+  "note": "eyes, nose, full lips all match"
+ },
+ {
+  "id": "t238",
+  "gemini": 72,
+  "blind": 82,
+  "verdict": "PASS",
+  "note": "eye spacing, lips, jaw all consistent"
+ },
+ {
+  "id": "t105",
+  "gemini": 74,
+  "blind": 68,
+  "verdict": "PASS",
+  "note": "eyes rounder than her hooded set; lens-distorted but her"
+ },
+ {
+  "id": "t006",
+  "gemini": 75,
+  "blind": 86,
+  "verdict": "PASS",
+  "note": "frontal geometry matches strongly"
+ },
+ {
+  "id": "t270",
+  "gemini": 75,
+  "blind": 66,
+  "verdict": "FAIL",
+  "note": "hooded smaller eyes, elongated midface"
+ },
+ {
+  "id": "t088",
+  "gemini": 76,
+  "blind": 90,
+  "verdict": "PASS",
+  "note": "hooded eyes, lips, jaw all unmistakably her"
+ },
+ {
+  "id": "t185",
+  "gemini": 76,
+  "blind": 77,
+  "verdict": "PASS",
+  "note": "slightly slimmer face, lips match"
+ },
+ {
+  "id": "t011",
+  "gemini": 78,
+  "blind": 65,
+  "verdict": "FAIL",
+  "note": "slimmer sculpted face, pointier chin, older"
+ },
+ {
+  "id": "t092",
+  "gemini": 78,
+  "blind": 84,
+  "verdict": "PASS",
+  "note": "brows/eyes/nose hers despite pursed-lip pose"
+ },
+ {
+  "id": "t151",
+  "gemini": 78,
+  "blind": 82,
+  "verdict": "PASS",
+  "note": "brow/eye/cheek geometry matches, smile hers"
+ },
+ {
+  "id": "t248",
+  "gemini": 78,
+  "blind": 75,
+  "verdict": "PASS",
+  "note": "eyes closed, but nose-lip geometry matches"
+ },
+ {
+  "id": "t147",
+  "gemini": 80,
+  "blind": 86,
+  "verdict": "PASS",
+  "note": "eye shape and nose tip match; clearly her"
+ },
+ {
+  "id": "t018",
+  "gemini": 82,
+  "blind": 72,
+  "verdict": "PASS",
+  "note": "far 3/4 angle, plausible but slimmer"
+ },
+ {
+  "id": "t210",
+  "gemini": 82,
+  "blind": 82,
+  "verdict": "PASS",
+  "note": "eyes, nose tip, lips all match"
+ },
+ {
+  "id": "t009",
+  "gemini": 84,
+  "blind": 89,
+  "verdict": "PASS",
+  "note": "near-reference match: eyes, lips, face width"
+ },
+ {
+  "id": "t121",
+  "gemini": 84,
+  "blind": 68,
+  "verdict": "PASS",
+  "note": "rounder lower face, lips less full"
+ },
+ {
+  "id": "t206",
+  "gemini": 84,
+  "blind": 79,
+  "verdict": "PASS",
+  "note": "profile nose and jawline consistent"
+ },
+ {
+  "id": "t226",
+  "gemini": 84,
+  "blind": 80,
+  "verdict": "PASS",
+  "note": "hands squish cheeks, eyes/liner/nose still hers"
+ },
+ {
+  "id": "t276",
+  "gemini": 84,
+  "blind": 85,
+  "verdict": "PASS",
+  "note": "eyes/nose/smile unmistakably her"
+ },
+ {
+  "id": "t065",
+  "gemini": 85,
+  "blind": 88,
+  "verdict": "PASS",
+  "note": "unmistakably her, all features align"
+ },
+ {
+  "id": "t142",
+  "gemini": 85,
+  "blind": 84,
+  "verdict": "PASS",
+  "note": "neutral bare face matches geometry throughout"
+ },
+ {
+  "id": "t279",
+  "gemini": 86,
+  "blind": 85,
+  "verdict": "PASS",
+  "note": "same as t276, strong match"
+ }
+]
