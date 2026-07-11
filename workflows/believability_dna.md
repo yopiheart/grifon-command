@@ -470,3 +470,127 @@ look"); (4) v1 ships as a deterministic config lookup table (no AI picker);
 measure via the growth loop, iterate. Implementation touches TUNED generation
 paths → remains inside the Business-tier Gated Proposal above; the mapping
 CONTENT is approved, the CODE change is not yet.
+
+## Grill 2 — Business-tier wedge: decisions, research, premortem (2026-07-11, session 2)
+
+Continuation grill on the Gated Proposal above. Q1 (deliverable shape) was
+already answered by the proposal itself; Q2–Q5 resolved below. **Decisions are
+Neil's; the premortem is agent-narrated (Neil: "di ko alam") — Neil owes a
+reaction pass, esp. the NEW Q6 at the bottom.**
+
+### Decisions (Neil, 2026-07-11)
+
+- **Q2 — style-ref library (prereq c): SHOOT YOUR OWN.** Shot-list derived from
+  the winning fragments (mirror selfie, analog direct-flash, domestic clutter,
+  low-light bedroom, cafe), executed as real phone selfies by released faces
+  (Zam, the brother's model, Neil) in real PH settings, ~20–30 per register.
+  User-supplied style refs = deferred add-on behind an "I own this photo"
+  attestation gate. Stock (reads produced) and synthetic refs (slop-copying-
+  slop) are rejected outright.
+- **Q3 — AI-disclosure stance: DISCLOSE-AND-STILL-WIN, as product doctrine.**
+  Watermarks/metadata stay intact; Meta AI-disclosure ticked where required;
+  the moat is *feels real in the scroll*, not undetectable. Fighting detection
+  is off the table (platform-policy violation + risks CLIENT ad accounts).
+  Star-ghost **crop** remains allowed — artifact cleanup, not evasion (SynthID
+  survives it). Doctrine goes into Business-tier UI copy eventually.
+- **Q4 — identity-QA gate: HYBRID, split by pipeline stage.** Presenter
+  *establishment* (one-time canonical look) = variant picker, 3–4 takes, user
+  picks (ownership moment, bounded cost). Per-scene generation = silent auto-QA
+  loop: Gemini-flash rubric grade → identity floor ~75 (from shootout:
+  gpt-image-2 held ≥82 in 5/6) → auto-retry N=2 → deliver best. First-take-only
+  ("user-pays regenerate") rejected — exposes the quality lottery on a tier
+  whose pitch is consistency.
+- **Q5 — v1 scope: ONE-FORMAT WEDGE — Before & After / testimonial.**
+  Reference-stacked S1/S3 is the cure for the sample-batch spec's finding #7
+  (S3 after-reveal identity drift, `feat/niche-coverage-cheap-fixes`); B&A is
+  where identity failure is most catastrophic (same-person proof IS the
+  format) and the eval harness for it already exists. Full-table launch and
+  standalone-photoshoot-module-first both rejected.
+
+### Exit research (agent, 2026-07-11 — prereqs a + d)
+
+- **(a) Pricing:** gpt-image-2 API ≈ **$0.015 (low) / $0.03 (medium) per
+  image** (output tokens $8/1M; developers.openai.com/api/docs/pricing,
+  2026-07-11). Even at medium quality × variant-picker ×4 + N=2 retries ×
+  6 scenes, image spend per ad ≈ **single-digit pesos** — retry economics are
+  NOT a margin threat. High-quality tier unverified; confirm before pricing
+  the Business tier.
+- **(d) Likeness policy:** API docs expose a `moderation` param (`auto`
+  default / `low`) and no categorical real-people ban; ToS requires consent
+  for real-person likeness (which our flow captures). **Existence proof: the
+  6/6 shootout ran this exact person-swap flow through gpt-image-2 today.**
+  Risk grade: MEDIUM — the present flow works; the risk is future tightening
+  or automated flagging at scale (Meta Muse's 3/6 refusals are the cautionary
+  tale). Mitigation: ship behind a feature flag (`GRIFON_REFSTACK_ENABLED`,
+  same pattern as voice cloning / music gen) with graceful degrade to the
+  prompt-only pipeline.
+
+### Premortem — "Oct 2026, the wedge failed catastrophically" (agent-narrated)
+
+1. **It died in MOTION.** The entire evidence base (279 ingest + shootout) is
+   STILLS. The product is video: Veo animates the reference-stacked frame and
+   identity flickers/morphs — "polished fake," worse than prompt-only. The Zam
+   notes already called this the make-or-break. **Mitigation → WEDGE GATE #1:
+   one Veo identity-in-motion test on a reference-stacked frame BEFORE any
+   build. Raw/ungraded per the LUT rule. If motion fails, the wedge pivots to
+   stills surfaces (thumbnails, image ads) — cheaper truth, same technique.**
+2. **The wedge format is the most legally fraught one we could have picked.**
+   A synthetic person *testifying to a transformation that never happened to
+   anyone* = deceptive-practices territory (Meta misleading-content + PH
+   consumer protection + skincare/derma claims), and disclosure doesn't cure a
+   fabricated RESULT — it only cures a synthetic FACE. See Q6 below.
+3. **Provider rug-pull.** OpenAI tightens likeness policy / flags face-swap-
+   shaped traffic at scale; the feature dies mid-campaign for paying clients.
+   Mitigation: the feature flag + graceful degrade above; never market the
+   capability as guaranteed.
+4. **Grader miscalibration.** Auto-QA said 77+, humans saw "ibang tao." The
+   Gemini-flash judge scored flash-lite identity 62 where the blind Claude
+   judge said 44 — the graders DISAGREE at exactly the failure boundary.
+   Mitigation: **backtest the rubric against the brother's own keep/discard
+   picks on the 279 set (we have his keeps — free ground truth) before
+   trusting it in production.** This also bottles the real secret sauce — his
+   eye — into the rubric, instead of losing it when he moves on.
+5. **The photoshoot never happened.** Solo operator + cafe PCs: the Q2a shoot
+   kept slipping, the library stayed empty, the wedge stayed blocked on a
+   weekend of selfies. Mitigation: the shoot is a SCHEDULED deliverable with a
+   date and an owner, not "one weekend soon"; wedge build does not start until
+   ≥20 raw-ugc refs exist.
+6. **Consent theater.** The checkbox existed; users uploaded girlfriends /
+   exes / celebrities anyway. One viral "ginawa akong AI ad nang walang
+   paalam" lands on GRIFON's brand, not the uploader's. Mitigation:
+   abuse-report path + ToS indemnity at v1; likeness-match screening =
+   roadmap.
+7. **Economics** — retired by the pricing research above (image spend is
+   pesos). Watch only the high-quality tier + Veo costs, not stills.
+8. **Nobody came.** Business tier had too few users to justify the months;
+   core launch work stalled meanwhile. Mitigation: the wedge is TIMEBOXED —
+   define the success gate (N Business conversions / M wedge ads run) at
+   build kickoff; expansion of the routing table waits for the gate.
+9. **The thesis had a shelf life.** By Oct, audiences learned the tells /
+   labels bred scroll-blindness; "feels real" stopped converting. Mitigation:
+   the register thesis is MEASURABLE — growth-loop MER per register; if
+   raw-ugc's edge decays, the routing table re-routes. No faith required.
+
+### Q6 — NEW, surfaced by premortem #2 (Neil to answer before build kickoff)
+
+When a Business user runs a B&A ad with a synthetic presenter, **whose
+transformation is being shown?** Options: **(i)** presenter NARRATES a real
+customer's result — user-supplied real before/after photos, synthetic
+presenter never embodies the transformation (claims stay true; cleanest
+legally; but breaks the current S1/S3 same-person skeleton); **(ii)**
+presenter embodies it only when the uploaded before/after ARE real photos of
+the same consented person (the presenter-coherence rule from the sample-batch
+spec, made mandatory); **(iii)** fully synthetic before/after allowed with an
+"AI depiction, results simulated" disclosure. Agent recommendation: **(ii) as
+default, (i) as the escape hatch; (iii) never** — a simulated derma result
+with a disclaimer is still a fabricated health claim in spirit, and it is the
+exact thing regulators screenshot.
+
+### Deliverables queue (next sessions)
+
+1. Veo identity-in-motion gate test (WEDGE GATE #1 — before any build).
+2. Style-ref shot-list doc + scheduled shoot date (blocks build).
+3. Auto-QA rubric spec + backtest vs the brother's 279-set keeps.
+4. Q6 decision (Neil) → then the Gated Proposal goes to approve/reject.
+5. Consent-checkbox placement spec (Phase-3 infra reuse) + ToS likeness copy.
+6. Confirm gpt-image-2 high-quality-tier pricing before Business price is set.
