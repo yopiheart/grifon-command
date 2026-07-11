@@ -36,7 +36,7 @@ Generated via `codex-image` (gpt-image-2, zero Gemini/Claude spend), committed a
 
 | Slot (`guidedPhotoSlots.tsx`) | File | Content |
 |---|---|---|
-| `hero` | `hero.png` | Amber dropper bottle, HIRAYA GLOW label, bathroom counter |
+| `hero` | `hero.png` | Amber dropper bottle, HIRAYA GLOW label, **held in-hand** — the hand anchors the 30ml scale so generation can't inflate the bottle (Neil's call 2026-07-11; same reason the slot's example is `ex-product-handheld.png`) |
 | `packaging` | `packaging.png` | Same bottle + its retail box |
 | `onbody` | `onbody.png` | Same woman applying serum to cheek, bottle in hand |
 | `before` | `before.png` | Filipina mid-20s, bare face, dull/uneven skin |
