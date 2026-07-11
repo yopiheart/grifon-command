@@ -1,0 +1,81 @@
+{
+  "duration_s": 7,
+  "scene_cut_timestamps": [
+    1
+  ],
+  "opening_voiceover_verbatim": "Grabe bes, tatlong linggo ko nang ginagamit ito.",
+  "issues": [
+    {
+      "id": "1",
+      "confirmed": false,
+      "severity": "none",
+      "timestamps": [],
+      "evidence": "",
+      "notes": "The Taglish pronunciation sounds natural and native, with no American accent on Tagalog words."
+    },
+    {
+      "id": "2",
+      "confirmed": true,
+      "severity": "minor",
+      "timestamps": [
+        "00:01"
+      ],
+      "evidence": "Abrupt jump cut/transition between the initial winking pose and the start of the speech.",
+      "notes": "Slightly jarring but typical for raw UGC-style edits."
+    },
+    {
+      "id": "3",
+      "confirmed": false,
+      "severity": "none",
+      "timestamps": [],
+      "evidence": "",
+      "notes": "No dynamic captions are present for the spoken dialogue, only a static overlay at the start."
+    },
+    {
+      "id": "4",
+      "confirmed": false,
+      "severity": "none",
+      "timestamps": [],
+      "evidence": "",
+      "notes": "No physical product is shown in the frame."
+    },
+    {
+      "id": "5",
+      "confirmed": false,
+      "severity": "none",
+      "timestamps": [],
+      "evidence": "",
+      "notes": "Pronunciation is natural and clear."
+    },
+    {
+      "id": "6",
+      "confirmed": false,
+      "severity": "none",
+      "timestamps": [],
+      "evidence": "",
+      "notes": "The static text overlay is safely positioned at the top and does not obstruct the face."
+    },
+    {
+      "id": "7",
+      "confirmed": false,
+      "severity": "none",
+      "timestamps": [],
+      "evidence": "",
+      "notes": "No significant pauses or dead air detected."
+    },
+    {
+      "id": "8",
+      "confirmed": false,
+      "severity": "none",
+      "timestamps": [],
+      "evidence": "",
+      "notes": "The avatar's identity, skin texture, lighting, and jewelry remain highly stable and realistic throughout."
+    }
+  ],
+  "overall_grade": "B",
+  "top_3_fixes_by_impact": [
+    "Smooth out the transition at the 1-second mark to make the jump cut less abrupt.",
+    "Add dynamic captions for the spoken Taglish dialogue to improve viewer engagement.",
+    "Visually introduce or overlay the product being referred to in the speech."
+  ]
+}

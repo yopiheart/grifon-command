@@ -599,11 +599,52 @@ Proposal); (iii) is a hard product refusal, not a settings toggle.
 The Gated Proposal is ready for Neil's approve/reject once deliverables 1–3
 below (motion gate, style-ref shoot, rubric backtest) report back.
 
+### WEDGE GATE #1 result — Veo identity-in-motion (2026-07-11): **PASS** (Neil's eye pending)
+
+Run (Neil-authorized GO, same session): shootout outputs were dead in `.tmp`, so
+the winning-lane still was **regenerated for $0** — c01 composite via
+`tools/shootout_refstack.mjs composite` → codex gpt-image-2 (`c01-01.png`,
+identity match to MODEL confirmed by agent eyeball) — then animated ONCE on
+**`veo-3.1-fast-generate-preview`** (the production preset tier) with a talking
+raw-ugc Taglish beat, image-to-video, raw/ungraded per the LUT rule. 8s @
+720x1280 24fps with **native audio**, rendered in 50s. Harness:
+`tools/veo_motion_gate.mjs` (committed).
+
+Verdicts, builder≠grader:
+- **Agent frame audit** (0.2/1.5/3/4.5/6/7.5s): same person end-to-end — brows,
+  lips, earring, heart-pendant necklace all stable; natural blink + genuine
+  smile; NO morph/flicker in sampled frames. Mild face-rounding/softening at
+  ~6s (Veo beauty-bias, consistent with the known over-cleaning drift) — within
+  the "casual viewer won't clock it" band.
+- **`render_qa.mjs` (gemini-3.5-flash watch+listen):** "identity, skin texture,
+  lighting, and jewelry remain highly stable and realistic throughout"; Taglish
+  VO natural/native accent; lip-sync natural; overall B. Only real defect: an
+  abrupt pose-jump at ~1s (wink pose → speech onset).
+  Report: `workflows/believability-refstack/motion-gate-qa.json`.
+
+Evidence committed: `believability-samples/refstack/motion-gate-c01-input.png`
+(the animated still) + `motion-gate-c01.mp4` (the raw clip — Neil: watch WITH
+sound; lip-sync + voice register are ear checks).
+
+New SOP notes from the run: (1) **CLEAN PLATE RULE** — stills fed to Veo must
+carry NO baked caption overlay (the c01 caption was baked in; Veo faded it out
+mid-clip; captions are Surface-A, burned post-render). (2) The ~1s pose-jump
+argues for animating from a NEUTRAL-pose take, not an expression-peak take —
+fold into the auto-QA/variant-picker spec. (3) Veo native audio nailed the
+Taglish register unprompted — the voice half of the avatar pipeline needs less
+defense than feared at this register.
+
+**Gate consequence: the wedge build is UNBLOCKED on motion** once Neil's
+eye/ear confirms. Remaining blockers: style-ref shoot (≥20 refs) + rubric
+backtest.
+
 ### Deliverables queue (next sessions)
 
-1. Veo identity-in-motion gate test (WEDGE GATE #1 — before any build).
+1. ~~Veo identity-in-motion gate test~~ **PASS 2026-07-11** — see WEDGE GATE #1
+   result above; Neil eyeball/ear of `motion-gate-c01.mp4` still owed.
 2. Style-ref shot-list doc + scheduled shoot date (blocks build).
-3. Auto-QA rubric spec + backtest vs the brother's 279-set keeps.
+3. Auto-QA rubric spec + backtest vs the brother's 279-set keeps (fold in the
+   clean-plate + neutral-pose rules from the gate run).
 4. ~~Q6 decision (Neil)~~ DONE 2026-07-11 — (ii)/(i)/never; see above.
 5. Consent-checkbox placement spec (Phase-3 infra reuse) + ToS likeness copy.
 6. Confirm gpt-image-2 high-quality-tier pricing before Business price is set.
