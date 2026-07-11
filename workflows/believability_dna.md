@@ -437,3 +437,36 @@ shootout-cases.json).
   brother's set was pattern-reference only — trust line); (d) OpenAI likeness-
   policy diligence. Implementation would touch TUNED `services/geminiService.ts`
   routing — **its own Gated Proposal through the validation loop.**
+
+## Register auto-routing per format/niche (2026-07-11 — mapping APPROVED by Neil; implementation GATED)
+
+Neil's product direction after the formula battle (random-Filipina 3v3, all on
+gpt-image-2): **per-register formula routing** — the winner depends on the rung.
+Neil's eyeball verdicts: raw-ugc → reference-stacked (new formula) wins ("the
+brother's formula, 100% realistic"); polished-ugc → text-fragment (old formula)
+wins; cinematic → the original register-3 fragment wins. Pattern: **the lower
+the register on the realism ladder, the more reference-stacking matters** — raw
+realism is pixels, not adjectives; produced looks are describable in text.
+
+**Gemini register test (same identity ref + style refs, flash-lite): NEGATIVE —
+identity did not hold (Neil eyeball, 2026-07-11).** Consistent with the shootout
+identity collapse. Creator/Pro (gemini-3.1-flash-lite TUNED pipeline) stays
+untouched; auto-routing is Business-tier / gpt-image-2 only.
+
+### Format → register defaults (APPROVED by Neil 2026-07-11 — conversion logic, not aesthetics)
+
+| Format / niche | Default register | Formula | Principle |
+|---|---|---|---|
+| Before & After, testimonial, UGC review (products) | raw-ugc | reference-stacked | Social Proof — must read as a real customer, not an ad |
+| Food (casual) | raw-ugc | reference-stacked | authenticity = crave |
+| Fashion/beauty creator-style, coaching, e-com lifestyle | polished-ugc | text fragment | Liking — aspirational-but-attainable creator look |
+| Real estate | **split by scene role:** presenter = polished-ugc, property b-roll = cinematic | mixed | person = trust; property = dream outcome |
+| High-ticket offer/authority | cinematic (dark) + bright-DV lifestyle proof | text fragment | the approved dark-authority / bright-relatable pairing |
+
+Rules riding with the mapping: (1) routing unit is **scene role**, not just
+niche; (2) **default, never lock** — one-tap override; (3) no register jargon in
+UI — outcome labels ("Totoong-customer look" / "Creator look" / "Premium TV
+look"); (4) v1 ships as a deterministic config lookup table (no AI picker);
+measure via the growth loop, iterate. Implementation touches TUNED generation
+paths → remains inside the Business-tier Gated Proposal above; the mapping
+CONTENT is approved, the CODE change is not yet.

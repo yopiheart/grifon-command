@@ -47,6 +47,30 @@
       "style_ref": ".tmp/refstack/shootout-refs/c06-style.jpeg",
       "prompt": "A high-quality, realistic selfie of the woman from Reference Image 1 (the PERSON) winking at the camera with a playful smirk. She has her exact hair from Reference Image 1, and is wearing winged eyeliner and pink lipstick. She is wearing a grey spaghetti-strap tank top. The setting is an outdoor residential street at night, with soft bokeh from distant street lights in the background. Natural skin texture, low-light photography, cinematic soft lighting, 8k resolution, highly detailed",
       "notes": "night residential street, wink (dark outdoor)"
+    },
+    {
+      "id": "g01",
+      "triplet": "battle",
+      "model_ref": ".tmp/refstack/battle/identity-ref.png",
+      "style_ref": ".tmp/refstack/shootout-refs/c01-style.jpeg",
+      "prompt": "A candid, low-light smartphone selfie of the woman from Reference Image 1 (the PERSON) lying down on the checkered pillow, playful expression. Authentic skin texture with slight grain, dim indoor lighting, raw and unedited look.",
+      "notes": "gemini register test: raw-ugc"
+    },
+    {
+      "id": "g02",
+      "triplet": "battle",
+      "model_ref": ".tmp/refstack/battle/identity-ref.png",
+      "style_ref": ".tmp/refstack/shootout-refs/c03-style.jpg",
+      "prompt": "A high-quality photorealistic portrait of the woman from Reference Image 1 (the PERSON) leaning her cheek on her hand in the cozy cafe, gentle expression, soft natural indoor lighting.",
+      "notes": "gemini register test: polished-ugc"
+    },
+    {
+      "id": "g03",
+      "triplet": "battle",
+      "model_ref": ".tmp/refstack/battle/identity-ref.png",
+      "style_ref": "workflows/believability-samples/register-3-cinematic.png",
+      "prompt": "A premium cinematic portrait of the woman from Reference Image 1 (the PERSON) in the studio-lit setting, graded color, shallow depth of field, polished commercial look.",
+      "notes": "gemini register test: cinematic"
     }
   ]
 }
