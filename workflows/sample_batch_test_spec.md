@@ -128,6 +128,12 @@ wrong) · TTS whisper register (run 8) · real `ugcpro.mp3` bed.
 4. Positive signals: slot anchoring works (S1 ≈ uploaded hero, bottle label legible), avatar
    identity lock holds across scenes, Taglish register natural, producer storyboard gate
    correctly holds the expensive filming step behind approval.
+5. **No escape from the storyboard gate (UX bug).** `ProducerFlow` resumes any non-done run
+   from `osa_producer_active_run` on every mount, and the only key-clearing affordances are
+   the error branch and post-run "Make another" — a user at the approve-scenes screen who
+   wants to abandon is trapped in a resume loop (Command Center → Director AI → same FILM IT
+   page). Workaround: `localStorage.removeItem('osa_producer_active_run')`. Fix (post-batch):
+   a "Start over" affordance at the storyboard gate that clears the key + abandons the run.
 
 ## 5. Post-batch (agent work, after Neil's eyeball)
 
