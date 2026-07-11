@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ChevronLeft, AlertTriangle, RotateCw, Loader2 } from 'lucide-react';
 import type { Avatar, LockablePresetId } from '../../types';
 import { generateMarketResearch, generateAvatarImage } from '../../services/geminiService';
-import type { ProductionInput as IntakeInput } from '../../services/oneShotIntake';
+import { resolvePersonStatePresenter, type ProductionInput as IntakeInput } from '../../services/oneShotIntake';
 import { LaunchScreen } from './LaunchScreen';
 import { RunningScreen } from './RunningScreen.fable5';
 import { StoryboardGateScreen } from './StoryboardGateScreen';
@@ -226,7 +226,7 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
       // 3 — Lock the presenter at intake (the orchestrator threads a fixed avatar). Auto
       // mode casts from the research persona + optional hints; an uploaded photo is used
       // as-is. Storyboard/scene stages depend on avatar.description + .ethnicity + .url.
-      let avatar: Avatar = input.avatar;
+      let avatar: Avatar = resolvePersonStatePresenter(input).avatar;
       if (!avatar?.url) {
         const castAr: '9:16' | '16:9' = input.aspectRatio === '16:9' ? '16:9' : '9:16';
         const ethnicity = input.castHints?.ethnicity?.trim() || 'Filipino';
@@ -252,6 +252,8 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
         userId,
         { runId, mode: 'oneshot', prefill: { report, clientDetails, businessInfo }, doneStages: ['market_research'] }
       );
+      // First Cut starts as the unstyled assembly; the user opts into an edit preset.
+      fresh.presetId = 'none';
       setRun(fresh);
       setPhase('launch'); // phase derives from run.status now
       await runProduction(fresh, cb(fresh), realProducerDeps);
@@ -357,7 +359,7 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
       return (
         <div className="relative">
           {BackBar}
-          <StoryboardGateScreen run={run} regenerating={reshooting} onRegenScene={handleRegenImage} onApprove={handleApprove} />
+          <StoryboardGateScreen run={run} regenerating={reshooting} onRegenScene={handleRegenImage} onApprove={handleApprove} onStartOver={handleMakeAnother} />
         </div>
       );
     }

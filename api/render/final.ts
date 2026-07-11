@@ -80,7 +80,7 @@ const Body = z.object({
     .optional(),
   // Explicit edit-style override (kill switch / future UI picker). Absent →
   // deterministic rotation keyed by script style + scene-URL hash.
-  preset: z.object({ id: z.enum(['classic', 'impact', 'hype', 'clean']).optional() }).optional(),
+  preset: z.object({ id: z.enum(['none', 'classic', 'impact', 'hype', 'clean']).optional() }).optional(),
   // Offer-recap overlay burned into the LAST scene, held to its end. (Price
   // anchor removed 2026-06-13 — stale clients still sending priceAnchorText
   // are fine: z.object strips unknown keys.)

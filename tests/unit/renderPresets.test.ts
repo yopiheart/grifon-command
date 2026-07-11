@@ -3,13 +3,17 @@ import { existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
-  PRESETS, CLASSIC, ROTATION, fnv1a, rotationSeed, resolvePreset,
+  PRESETS, CLASSIC, NONE, ROTATION, fnv1a, rotationSeed, resolvePreset,
 } from '../../api/_lib/renderPresets.js';
 import type { PresetId } from '../../api/_lib/renderPresets.js';
 
 const ASSETS = join(dirname(fileURLToPath(import.meta.url)), '..', '..', 'api', '_lib', 'assets');
 
 describe('preset definitions', () => {
+  it('Raw resolves to the stitched-only pipeline', () => {
+    expect(resolvePreset('mrbeast', 'none', 'seed')).toBe(NONE);
+    expect(NONE.stitchedOnly).toBe(true);
+  });
   it('every preset references a font file that is actually bundled', () => {
     for (const p of Object.values(PRESETS)) {
       expect(existsSync(join(ASSETS, p.caption.fontFile)), `${p.id}: ${p.caption.fontFile}`).toBe(true);

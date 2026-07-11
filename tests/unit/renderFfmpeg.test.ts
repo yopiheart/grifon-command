@@ -141,6 +141,11 @@ describe('chooseTrim', () => {
     expect(plan.padAudio).toBe(false);
   });
 
+  it('removes a 15s final-scene tail when VO ends at 13s', () => {
+    const plan = chooseTrim({ audioUrl: 'voice.mp3' }, 15, 13.3);
+    expect(plan.trimSec).toBeLessThanOrEqual(13.5);
+  });
+
   it('never lets the VO-end trim overrun the clip (capped to probe)', () => {
     expect(chooseTrim({ audioUrl: 'x' }, PROBE, 99).trimSec).toBeCloseTo(PROBE, 3);
   });

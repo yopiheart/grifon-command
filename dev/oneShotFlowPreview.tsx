@@ -76,6 +76,7 @@ const App = () => {
       ) : tab === 'gate' ? (
         <StoryboardGateScreen
           run={makePreviewRun('gate')}
+          onStartOver={() => window.alert('start over (mock)')}
           regenerating={reshooting}
           onRegenScene={(i) => {
             setReshooting(i);

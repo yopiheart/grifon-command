@@ -205,6 +205,7 @@ export const LaunchScreen: React.FC<{
   // No generation at intake: casting fires AFTER Market Research so it uses the
   // full target-market formula (the gender/age/ethnicity below are optional hints).
   const [presenterMode, setPresenterMode] = useState<'auto' | 'upload'>(restored?.presenterMode ?? 'auto');
+  const [presenterDerivedNoticeDismissed, setPresenterDerivedNoticeDismissed] = useState(false);
   // Casting hints are BLANK by default so an untouched AUTO = AI Director casts
   // purely from the research persona (the formula at full strength). Power users
   // can pin a look under "Advanced".
@@ -388,6 +389,9 @@ export const LaunchScreen: React.FC<{
 
   // AUTO mode is always ready (AI Director casts post-research); UPLOAD needs a photo.
   const presenterReady = presenterMode === 'auto' || !!avatarUrl;
+  const presenterDerivedFromAfter = presenterMode === 'auto'
+    && servicePhotos.some((photo) => photo.slot === 'before' && photo.url)
+    && servicePhotos.some((photo) => photo.slot === 'after' && photo.url);
   // Commercial (Seedance) handles its own audio. Service/RealEstate (formatLocked)
   // run UGC-style and always need a voice. A no-TTS recipe (Pure Hype) never needs one.
   const voiceNeeded = (formatLocked || format !== 'commercial') && audioMode !== 'sfx_only';
@@ -821,6 +825,18 @@ export const LaunchScreen: React.FC<{
               onClick={() => setAssetModal('avatar')}
             />
           </div>
+          {presenterDerivedFromAfter && !presenterDerivedNoticeDismissed && (
+            <div className="mt-2 flex items-start gap-2 rounded-xl border border-[#FFCC00]/20 bg-[#FFCC00]/5 px-3 py-2 text-[11px] text-zinc-400">
+              <User className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#FFCC00]" />
+              <p className="flex-1">
+                Using your 'After' photo as the presenter so faces match.{' '}
+                <button type="button" onClick={() => setAssetModal('avatar')} className="text-[#FFCC00] hover:underline">Change presenter</button>
+              </p>
+              <button type="button" aria-label="Dismiss presenter notice" onClick={() => setPresenterDerivedNoticeDismissed(true)} className="text-zinc-600 hover:text-white">
+                <X className="h-3.5 w-3.5" />
+              </button>
+            </div>
+          )}
 
           {/* ---- GENERATE --------------------------------------------------- */}
           <div className="mt-6 max-md:sticky max-md:bottom-3 max-md:z-30">

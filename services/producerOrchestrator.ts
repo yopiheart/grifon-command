@@ -524,6 +524,7 @@ export async function approveStoryboard(run: ProductionRun, cb: ProducerCallback
  * Returns the run parked back at the First Cut gate.
  */
 export async function applyPreset(run: ProductionRun, presetId: LockablePresetId | null, cb: ProducerCallbacks, deps: ProducerDeps): Promise<ProductionRun> {
+  const previousPresetId = run.presetId;
   const commit = async (mut: (r: ProductionRun) => void) => {
     mut(run);
     run.updatedAt = deps.now();
@@ -549,12 +550,14 @@ export async function applyPreset(run: ProductionRun, presetId: LockablePresetId
       r.status = 'review';
       r.gate = 'first_cut';
       r.busy = undefined;
+      r.error = undefined;
     });
   } catch (e: any) {
     await commit((r) => {
       r.status = 'review';
       r.gate = 'first_cut';
       r.busy = undefined;
+      r.presetId = previousPresetId;
       r.error = `preset: ${e?.message ?? 'failed'}`;
     });
   }

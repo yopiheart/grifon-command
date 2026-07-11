@@ -722,7 +722,7 @@ export async function renderFinalVideo(
     // cut gets the film-burn when the preset asks for it AND scene 0 is a hook.
     const transitions = planTransitions(
       ordered.length, preset.transition,
-      preset.hook.burnTransition && !!ordered[0]?.isHook
+      !preset.stitchedOnly && preset.hook.burnTransition && !!ordered[0]?.isHook
     );
     // SFX restraint state, threaded across scenes (whole-ad timeline).
     const placedSec: number[] = [];
@@ -761,12 +761,12 @@ export async function renderFinalVideo(
       });
 
       // Compile the draw plan first — emphasis SFX are derived from its layers.
-      const layers = planScene(scene, trimSec, dims, preset, variantSeed);
+      const layers = preset.stitchedOnly ? [] : planScene(scene, trimSec, dims, preset, variantSeed);
       // End card rides the last scene — kept in a separate list so it joins the
       // SFX/draw pipeline but never the caption-chunk camera punches. Skipped when
       // the last scene IS the hook (1-scene ad): the hook title owns that band.
       let endCardLayers: DrawLayer[] = [];
-      if (isLastScene && endCard && !scene.isHook) {
+      if (!preset.stitchedOnly && isLastScene && endCard && !scene.isHook) {
         endCardLayers = planEndCardLayers(endCard, trimSec, dims, preset, [
           scene.overlayText?.[0]?.text,
           scene.scriptLine,
@@ -780,7 +780,7 @@ export async function renderFinalVideo(
       //  - transition cues (whoosh/swish) snapped to the cut,
       //  - emphasis sounds frame-locked to each strategic overlay's appearance.
       const cands: SfxCandidate[] = [];
-      for (const cue of scene.sfxCues ?? []) {
+      for (const cue of preset.stitchedOnly ? [] : (scene.sfxCues ?? [])) {
         const snapped = snapSfxAnchor(cue.sfxId, i, !!scene.isHook);
         if (snapped !== null) cands.push({ sfxId: cue.sfxId, globalSec: elapsed + snapped, transition: true });
       }
@@ -815,7 +815,7 @@ export async function renderFinalVideo(
       const punchTimes = layers
         .filter((l): l is TextLayer => l.kind === 'text' && !endCardLayers.includes(l) && l.anim !== 'slideup' && l.anim !== 'fade')
         .map((l) => l.startSec);
-      const camFilter = buildCameraFilter(
+      const camFilter = preset.stitchedOnly ? '' : buildCameraFilter(
         effectiveCameraEffect(scene.cameraEffect, i, preset.camera),
         trimSec ?? probeSec, dims, preset.camera, punchTimes
       );
@@ -825,7 +825,7 @@ export async function renderFinalVideo(
       buildScene(
         videoPath, audioPath, trimSec, dims, outPath, padAudio,
         dir, scene.sceneIdx, layers, sfx, fontName,
-        buildTransitionFilters(transitions[i], preset.transition, trimSec),
+        preset.stitchedOnly ? '' : buildTransitionFilters(transitions[i], preset.transition, trimSec),
         camFilter, preset, hookFontName, sweepName
       );
       console.log(
@@ -847,7 +847,7 @@ export async function renderFinalVideo(
     //   2. tuned static bed (musicPath(style)),
     //   3. bare stitch (no music).
     let resultPath = finalPath;
-    if (music?.enabled) {
+    if (music?.enabled && !preset.stitchedOnly) {
       let bed: string | null = null;
       if (music.bedUrl) {
         try {

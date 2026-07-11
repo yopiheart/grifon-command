@@ -11,7 +11,7 @@ import type { OverlayStyle, SfxBankId, CameraEffect } from '../../types.js';
 // identically while successive ads rotate looks. Pools are keyed by script style
 // so a Testimonial never gets the hype treatment (sincerity guard).
 
-export type PresetId = 'classic' | 'impact' | 'hype' | 'clean';
+export type PresetId = 'none' | 'classic' | 'impact' | 'hype' | 'clean';
 export type ScriptStyle = 'mrbeast' | 'temu' | 'testimonial' | 'ugcpro';
 export type ChunkAnim = 'none' | 'pop' | 'word-pop' | 'karaoke';
 export type HookRevealStyle = 'bounce' | 'slam' | 'flip';
@@ -98,6 +98,8 @@ export interface RenderPreset {
   transition: TransitionStyle;
   camera: CameraStyle;
   sfx: SfxPalette;
+  /** Concatenate trimmed scenes with VO only; bypass every editorial layer. */
+  stitchedOnly?: boolean;
 }
 
 /** Today's shipped look, lifted verbatim — renderFfmpeg derives its style
@@ -245,6 +247,13 @@ export const CLEAN: RenderPreset = {
   },
 };
 
+/** Raw First Cut. Inherited values are unused by the stitched-only renderer path. */
+export const NONE: RenderPreset = {
+  ...CLASSIC,
+  id: 'none',
+  stitchedOnly: true,
+};
+
 /** Premium hook fill: vertical metallic gradient pair [top, bottom] per word
  * class (Neil 2026-06-10: "5 BEST" gold→dark-gold, "FREE" white→steel). One
  * palette per render, rotated by seed so consecutive ads don't match. */
@@ -267,6 +276,7 @@ export function pickHookPalette(variantSeed: number): HookPalette {
 }
 
 export const PRESETS: Record<PresetId, RenderPreset> = {
+  none: NONE,
   classic: CLASSIC,
   impact: IMPACT,
   hype: HYPE,

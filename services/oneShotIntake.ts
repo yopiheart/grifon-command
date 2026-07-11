@@ -68,6 +68,30 @@ export interface ProductionInput {
   forceFreshResearch?: boolean;
 }
 
+export interface PresenterResolution {
+  avatar: Avatar;
+  derivedFromAfter: boolean;
+}
+
+/** Keep a person-state transformation on one face when Presenter is still Auto. */
+export function resolvePersonStatePresenter(input: Pick<ProductionInput, 'avatar' | 'servicePhotos'>): PresenterResolution {
+  if (input.avatar?.url) return { avatar: input.avatar, derivedFromAfter: false };
+  const photos = input.servicePhotos ?? [];
+  const hasBefore = photos.some((photo) => photo.slot === 'before' && photo.url);
+  const after = photos.find((photo) => photo.slot === 'after' && photo.url);
+  if (!hasBefore || !after) return { avatar: input.avatar, derivedFromAfter: false };
+  return {
+    avatar: {
+      prompt: '',
+      url: after.url,
+      description: after.description?.trim() || "The person in the user's After photo",
+      ethnicity: input.avatar?.ethnicity ?? '',
+      gender: input.avatar?.gender ?? 'Any',
+    },
+    derivedFromAfter: true,
+  };
+}
+
 /** The vertical's businessType gate, so Services/RealEstate verticals route to the right style.
  * An explicit `input.businessType` (emitted by LaunchScreen's vertical) WINS; otherwise fall
  * back to today's scriptType derivation (Services/RealEstate), defaulting to 'product'. */

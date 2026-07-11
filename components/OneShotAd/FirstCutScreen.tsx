@@ -8,6 +8,7 @@ import type { LockablePresetId } from '../../types';
 /** First Cut edit-preset switcher (Decision 8). AUTO = server rotation (free, all tiers);
  * IMPACT/CLEAN lock a look (Pro+). null = AUTO. */
 const PRESETS: { id: LockablePresetId | null; label: string; pro: boolean }[] = [
+  { id: 'none', label: 'RAW', pro: false },
   { id: null, label: 'AUTO', pro: false },
   { id: 'impact', label: 'IMPACT', pro: true },
   { id: 'clean', label: 'CLEAN', pro: true },
@@ -76,6 +77,13 @@ export const FirstCutScreen: React.FC<{
             {freeTakesLeft > 0 ? `${freeTakesLeft} free take${freeTakesLeft > 1 ? 's' : ''} left` : 'extra takes use 1 credit'}
           </span>
         </div>
+
+        {run.error?.startsWith('preset:') && (
+          <div role="alert" className="mt-3 flex items-start gap-2 rounded-xl border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-xs text-amber-200">
+            <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
+            <span>Couldn&apos;t apply that edit style. Your previous cut is still selected. Try again.</span>
+          </div>
+        )}
 
         {/* Scene film-strip */}
         <div className="mt-4 flex snap-x gap-3 overflow-x-auto pb-2">
