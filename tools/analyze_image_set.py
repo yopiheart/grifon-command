@@ -187,6 +187,16 @@ def _strip_fence(text: str) -> str:
     return text.strip()
 
 
+class ModelCallError(Exception):
+    """A Gemini call failed after retries (API error or unparseable JSON)."""
+
+    def __init__(self, label: str, cause, raw_text=None):
+        super().__init__(f"{label}: {cause}")
+        self.label = label
+        self.cause = cause
+        self.raw_text = raw_text
+
+
 class Gemini:
     """Lazily-initialised google-genai client with an image-part helper."""
 
@@ -206,7 +216,8 @@ class Gemini:
 
     def json_call(self, contents: list, label: str, temperature: float = 0.2) -> dict:
         last_err = None
-        for attempt in range(2):
+        last_raw = None
+        for attempt in range(3):
             try:
                 response = self.client.models.generate_content(
                     model=self.model,
@@ -214,20 +225,26 @@ class Gemini:
                     config={"response_mime_type": "application/json", "temperature": temperature},
                 )
                 text = _strip_fence(response.text or "")
+                last_raw = text
                 return json.loads(text)
             except json.JSONDecodeError as exc:
-                fail(2, "BAD_MODEL_JSON", f"{label}: {exc}")
+                # malformed JSON (unescaped quote, truncation) is model
+                # nondeterminism, not a hard failure — retry a touch warmer
+                last_err = exc
+                temperature = min(temperature + 0.1, 0.5)
+                print(f"  [retry] {label}: bad JSON from model ({exc})", file=sys.stderr)
+                time.sleep(2)
             except Exception as exc:  # noqa: BLE001 — SDK raises varied types
                 last_err = exc
                 msg = str(exc)
                 retryable = any(c in msg for c in ("429", "500", "502", "503", "504")) \
                     or "RESOURCE_EXHAUSTED" in msg or "UNAVAILABLE" in msg
-                if attempt == 0 and retryable:
+                if attempt < 2 and retryable:
                     print(f"  [retry] {label}: {msg[:120]}", file=sys.stderr)
                     time.sleep(6)
                     continue
                 break
-        fail(2, "API_FAILED", f"{label}: {last_err}")
+        raise ModelCallError(label, last_err, last_raw)
 
 
 # ---------------------------------------------------------------------------
@@ -381,7 +398,17 @@ def cmd_analyze(args) -> None:
         output = resolve_image(raw_dir, t["output"])
         print(f"[analyze] {tid}", file=sys.stderr)
         contents = build_analysis_contents(gem, model_ref, style_ref, output, t.get("prompt", ""), False)
-        analysis = gem.json_call(contents, tid)
+        try:
+            analysis = gem.json_call(contents, tid)
+        except ModelCallError as exc:
+            processed += 1
+            any_failed = True
+            failures.append(f"{tid}: model call failed ({exc.cause})")
+            print(f"  [error] {tid}: {exc.cause}", file=sys.stderr)
+            if exc.raw_text:
+                (out_dir / f"{tid}.raw.txt").write_text(exc.raw_text, encoding="utf-8")
+            time.sleep(1.0)
+            continue
         processed += 1
 
         problems = validate_specificity(analysis, judge_mode=False)
@@ -445,7 +472,10 @@ def _run_judge(args, out_dir: Path) -> None:
     cand_stem = Path(args.candidate).stem
     print(f"[judge] case={args.case} candidate={cand_stem}", file=sys.stderr)
     contents = build_analysis_contents(gem, model_ref, style_ref, candidate, "", True)
-    analysis = gem.json_call(contents, f"judge-{args.case}-{cand_stem}")
+    try:
+        analysis = gem.json_call(contents, f"judge-{args.case}-{cand_stem}")
+    except ModelCallError as exc:
+        fail(2, "API_FAILED", str(exc))
     problems = validate_specificity(analysis, judge_mode=True)
     record = {
         "meta": {
@@ -630,7 +660,10 @@ def _synthesize(per_triplet: list, model: str) -> dict:
         "Only count real-human style-ref triplets toward corroboration_count.\n\n"
         "DATA:\n" + json.dumps(summaries, ensure_ascii=False)
     )
-    return gem.json_call([prompt], "synthesize", temperature=0.3)
+    try:
+        return gem.json_call([prompt], "synthesize", temperature=0.3)
+    except ModelCallError as exc:
+        fail(2, "API_FAILED", str(exc))
 
 
 # ---------------------------------------------------------------------------
