@@ -571,7 +571,7 @@ reaction pass, esp. the NEW Q6 at the bottom.**
    the register thesis is MEASURABLE — growth-loop MER per register; if
    raw-ugc's edge decays, the routing table re-routes. No faith required.
 
-### Q6 — NEW, surfaced by premortem #2 (Neil to answer before build kickoff)
+### Q6 — B&A truth rule (DECIDED by Neil, 2026-07-11)
 
 When a Business user runs a B&A ad with a synthetic presenter, **whose
 transformation is being shown?** Options: **(i)** presenter NARRATES a real
@@ -586,11 +586,24 @@ default, (i) as the escape hatch; (iii) never** — a simulated derma result
 with a disclaimer is still a fabricated health claim in spirit, and it is the
 exact thing regulators screenshot.
 
+**DECISION (Neil, 2026-07-11): (ii) default, (i) escape hatch, (iii) never.**
+Implications for the wedge build: (ii) promotes the sample-batch spec's
+presenter-coherence rule from eval guidance to a MANDATORY product gate — the
+B&A flow must verify the uploaded before/after and the presenter are the same
+consented person before reference-stacked S1/S3 runs; (i) needs a narrator-mode
+storyboard variant (presenter never embodies the transformation → the S1/S3
+same-person skeleton gets a sibling, its own TUNED touch inside the Gated
+Proposal); (iii) is a hard product refusal, not a settings toggle.
+
+**GRILL 2 COMPLETE (2026-07-11).** All questions resolved, premortem folded.
+The Gated Proposal is ready for Neil's approve/reject once deliverables 1–3
+below (motion gate, style-ref shoot, rubric backtest) report back.
+
 ### Deliverables queue (next sessions)
 
 1. Veo identity-in-motion gate test (WEDGE GATE #1 — before any build).
 2. Style-ref shot-list doc + scheduled shoot date (blocks build).
 3. Auto-QA rubric spec + backtest vs the brother's 279-set keeps.
-4. Q6 decision (Neil) → then the Gated Proposal goes to approve/reject.
+4. ~~Q6 decision (Neil)~~ DONE 2026-07-11 — (ii)/(i)/never; see above.
 5. Consent-checkbox placement spec (Phase-3 infra reuse) + ToS likeness copy.
 6. Confirm gpt-image-2 high-quality-tier pricing before Business price is set.
