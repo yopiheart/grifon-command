@@ -193,17 +193,28 @@ wrong) · TTS whisper register (run 8) · real `ugcpro.mp3` bed.
     Start-over + RAW-default both live. No trailing static hold on the final cut
     (finding #12 resolved on a real render). Preset switcher AUTO/IMPACT/CLEAN all
     worked off the one filmed run.
-15. **S1 hallucinated product cutaway (~3s mark) — NEW.** The problem-state scene's
-    FOOTAGE contains an invented serum bottle with gibberish label ("RYA CWYA"-style)
-    around the 3s mark, visible in the RAW cut (stitchedOnly bypasses every FFmpeg
-    layer, so this is generated content, not an edit artifact). Hypothesis: hook VO is
-    ~2s but the clip is 4–6s; the video model fills the tail with a B-roll cutaway it
-    invents, and S1 deliberately has NO product reference to anchor it. Also a
-    heart-shaped visual effect in S1 footage — not any preset effect (none exists),
-    same generated-footage origin; mood-wrong for a problem-state beat. 1st
-    corroboration only — needs Gemini video analysis of the raw file + the run's S1
-    motion prompt before any TUNED proposal (candidates: NO_PRODUCT/no-invented-props
-    rule in the S1 motion prompt, or shorter S1 clip duration).
+15. **S1 hallucinated product cutaway (~3s mark) — CONFIRMED by Gemini watch
+    (2026-07-12, `tools/analyze_video.mjs` on the complete RAW).** Gemini timeline:
+    hook VO 0–2s (problem state, compliant), then "quick cut to a close-up of the
+    product bottle on the sink" at 2.0–3.0s — INSIDE scene 1's clip, exactly the
+    post-VO tail-fill hypothesis (VO ~2s, clip 4s; the video model invents a B-roll
+    cutaway to fill, and with no product reference on S1 the label comes out gibberish
+    — Neil's frame shows "RYA CWYA"-style text; Gemini generously mis-read it as the
+    real bottle, which is itself evidence it LOOKS like a product insert). Fix
+    candidates, cheapest first: (a) tighten per-scene VO-end trim so S1's tail is cut
+    (chooseTrim already trims the FINAL scene; S1's internal tail survived), (b)
+    request shorter clips for hook scenes, (c) TUNED no-invented-props rule in the S1
+    motion prompt (grill-me gate). 2nd corroboration; 1 more before the TUNED route.
+    **The "heart" effect — RESOLVED, reframe:** Gemini identifies it as "a digital
+    dry-skin texture overlay on her cheek" in the 0–2s hook and grades it a hook
+    STRENGTH ("instantly visualizes the problem", high confidence) — generated-footage
+    visualization, mood-appropriate, not a defect. No action.
+    **Also from the watch:** dead air 0 silences >0.3s, "dead_air_notes: None"
+    (finding #12 fix re-confirmed); believability real-human/high (4th corroboration);
+    listed weakness = "complete lack of on-screen captions" on the RAW cut — by
+    design, and exactly the gap the approved bold-overlay presets close. NOTE: RAW
+    carries continuous soft music despite stitchedOnly — that music is INSIDE the
+    generated scene audio (native model audio), not our bed; expected, not a leak.
 16. **Scene 2 transient generation failure** — 502 Bad Gateway from
     /api/kling/video/poll mid-run; scene flagged, per-scene REGENERATE recovered
     cleanly (designed path works). Console also spams "[producer] checkpoint
