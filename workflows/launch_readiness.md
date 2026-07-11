@@ -4,7 +4,13 @@
 
 This is the meta-workflow. It doesn't do the work itself — it points to the workflows that do, and tracks overall progress. **Source of truth = the code + `git log`.** This file summarizes; it does not replace.
 
-> **⏭ NEXT SESSION (2026-07-05+): THE LAUNCH TRAIN.** The launch gate is now the **unified One-Shot / First Cut "Producer" flow** — see the paste-ready kickoff in the 2026-07-05 section below. Everything in the older ⏭ pointer further down is historical (its items closed in the 2026-06-16/17 sections).
+> **⏭ NEXT SESSION (2026-07-11+): THE JULY CLOSE-OUT.** Single resume doc =
+> [`july_close_out_plan.md`](july_close_out_plan.md) — full July pending inventory, the
+> phased one-session sequence (code-fix batch ∥ grill-me beat-0 → batch runs → grade/cut →
+> merge train), and the paste-ready kickoff. **Note: the producer flow ran end-to-end live
+> today (research→film→First Cut, real-human believability ×3) — the 2026-07-05 launch-gate
+> smoke below is effectively PASSED; remaining gate work is inside the close-out plan.**
+> The 2026-07-09 parked list below is folded into that plan.
 
 ## Neil's pending — parked 2026-07-09, resume next session
 
