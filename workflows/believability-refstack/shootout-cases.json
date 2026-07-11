@@ -1,0 +1,52 @@
+{
+  "cases": [
+    {
+      "id": "c01",
+      "triplet": "t067",
+      "model_ref": ".tmp/refstack/shootout-refs/model.jpeg",
+      "style_ref": ".tmp/refstack/shootout-refs/c01-style.jpeg",
+      "prompt": "A candid, low-light smartphone selfie of the woman from Reference Image 1 (the PERSON) lying down on a green and yellow checkered pillow. She has a playful, skeptical expression, winking one eye with a subtle smirk. her exact hair from Reference Image 1, authentic skin texture with slight grain, dim indoor lighting. High-quality social media aesthetic, raw and unedited look.",
+      "notes": "best-in-set 86%; dark low-light lying-down selfie (hard lighting)"
+    },
+    {
+      "id": "c02",
+      "triplet": "t216",
+      "model_ref": ".tmp/refstack/shootout-refs/model.jpeg",
+      "style_ref": ".tmp/refstack/shootout-refs/c02-style.jpg",
+      "prompt": "A photorealistic mirror selfie of the woman from Reference Image 1 (the PERSON) with her exact hair from Reference Image 1, smiling gently. She is wearing a black sleeveless crop top with an asymmetrical shoulder cutout and a red bull graphic on the front, plus a black waistband with white text. She wears black pants with a black belt. She is holding a light purple smartphone in front of her. The background is a washroom with white marble-patterned wall tiles and a blue informational poster reflected in the mirror behind her",
+      "notes": "mirror-selfie winner 85% (top fragment)"
+    },
+    {
+      "id": "c03",
+      "triplet": "t203",
+      "model_ref": ".tmp/refstack/shootout-refs/model.jpeg",
+      "style_ref": ".tmp/refstack/shootout-refs/c03-style.jpg",
+      "prompt": "A high-quality photorealistic portrait of the woman from Reference Image 1 (the PERSON) with her exact hair from Reference Image 1. She is leaning her cheek on her hand in a casual, relaxed pose, looking directly at the camera with a gentle expression. She is wearing a lavender ribbed tank top and a black wristband. The setting is a cozy aesthetic cafe with a textured gray concrete wall, a glass pastry display case in the blurred background, and a rattan pendant light. Soft natural indoor lighting, cinematic bokeh, 8k resolution, highly detailed skin texture",
+      "notes": "polished-ugc 82%; cafe scene w/ neon sign + pastry case"
+    },
+    {
+      "id": "c04",
+      "triplet": "t018",
+      "model_ref": ".tmp/refstack/shootout-refs/model.jpeg",
+      "style_ref": ".tmp/refstack/shootout-refs/c04-style.jpg",
+      "prompt": "Highly detailed photo of the young woman from Reference Image 1 (the PERSON) her exact hair from Reference Image 1 smiling and looking right, seated on a unique curved wooden slatted bench at a beach resort. Wearing a white lace corset bustier top with spaghetti straps and high-waisted light-wash wide-leg denim jeans. A single white plumeria flower tucked behind her right ear. Positioned against a rugged, craggy rock wall feature covered in lush tropical plants. Raised wooden boardwalk and open-air thatched structures are in the background under bright, warm natural daylight. Candid, 35mm.",
+      "notes": "HARD IDENTITY: three-quarter angle looking away, outdoor"
+    },
+    {
+      "id": "c05",
+      "triplet": "t276",
+      "model_ref": ".tmp/refstack/shootout-refs/model.jpeg",
+      "style_ref": ".tmp/refstack/shootout-refs/c05-style.jpg",
+      "prompt": "A candid, close-up photo of the woman from Reference Image 1 (the PERSON) with her exact hair from Reference Image 1, wearing a terracotta orange square-neck top, smiling genuinely at the camera and making a 'V' peace sign with her right hand in a slightly messy domestic indoor setting with hanging clothes and kitchenware.",
+      "notes": "HARD STYLE: cluttered domestic bg + teeth smile"
+    },
+    {
+      "id": "c06",
+      "triplet": "t121",
+      "model_ref": ".tmp/refstack/shootout-refs/model.jpeg",
+      "style_ref": ".tmp/refstack/shootout-refs/c06-style.jpeg",
+      "prompt": "A high-quality, realistic selfie of the woman from Reference Image 1 (the PERSON) winking at the camera with a playful smirk. She has her exact hair from Reference Image 1, and is wearing winged eyeliner and pink lipstick. She is wearing a grey spaghetti-strap tank top. The setting is an outdoor residential street at night, with soft bokeh from distant street lights in the background. Natural skin texture, low-light photography, cinematic soft lighting, 8k resolution, highly detailed",
+      "notes": "night residential street, wink (dark outdoor)"
+    }
+  ]
+}

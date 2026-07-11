@@ -70,19 +70,25 @@ const SAFETY_SETTINGS = [
 
 // The two reference-role framings. Two-image (gemini/muse) vs single-panel (codex).
 const TWO_REF_PREFIX =
-  'Reference Image 1 = the PERSON — preserve this exact identity. ' +
-  'Reference Image 2 = the STYLE — replicate its lighting, skin rendering, posing, ' +
-  'camera angle, and background. ';
+  'Reference Image 1 = the PERSON. Reference Image 2 = the SCENE/STYLE. ' +
+  'Recreate the scene of Reference Image 2 — its lighting, skin rendering, posing, ' +
+  'camera angle, background, and any text overlays — but the person in the output ' +
+  'MUST be the woman from Reference Image 1: her exact face, facial geometry, and ' +
+  'hair. Do NOT keep the face of the person shown in Reference Image 2; she is ' +
+  'replaced by the woman from Reference Image 1. ';
 const PANEL_PREFIX =
   'The input image is a two-panel reference sheet. LEFT panel = the PERSON ' +
-  '(identity ground truth — preserve this exact face and identity). RIGHT panel = ' +
-  'the STYLE (replicate its lighting, skin rendering, posing, camera angle, and ' +
-  'background). Generate ONE single new photograph — do NOT reproduce the two-panel ' +
-  'layout. ';
+  '(identity ground truth). RIGHT panel = the SCENE/STYLE. Recreate the right ' +
+  'panel\'s scene — lighting, skin rendering, posing, camera angle, background, ' +
+  'any text overlays — but the person in the output MUST be the woman from the ' +
+  'LEFT panel: her exact face, facial geometry, and hair. Do NOT keep the face of ' +
+  'the person in the right panel; she is replaced. Generate ONE single new ' +
+  'photograph — do NOT reproduce the two-panel layout. ';
 const MUSE_PREFIX =
-  'First image = the person (preserve this exact identity). ' +
-  'Second image = the style (replicate its lighting, skin rendering, posing, ' +
-  'camera angle, and background). ';
+  'First image = the person. Second image = the scene/style. Recreate the second ' +
+  'image\'s scene (lighting, skin, pose, camera angle, background, text overlays) ' +
+  'but the person MUST be the woman from the first image — her exact face and ' +
+  'hair. Do not keep the face of the person in the second image. ';
 
 const die = (msg, code = 1) => { console.error(`[shootout] ${msg}`); process.exit(code); };
 const ensureDir = (d) => mkdirSync(d, { recursive: true });
