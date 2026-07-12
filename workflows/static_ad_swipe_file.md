@@ -19,6 +19,17 @@ entry links its image on the line under the heading (`![E<NN>](../assets/ad-swip
 get a duplicate — attach its image to the existing entry via
 `--ingest-only --entry E<n>` (no new entry, no Pattern bump).
 
+**RESUME (next session, Opus 4.8 per Neil 2026-07-12):** stash ingest paused after
+E50 (Grüns / IM8+Giannis / Cursor / Kylie done). Remaining in `Downloads\AD FILES`
+(⚠ dies on reboot — re-download from Meta Ad Library if wiped): Meta for
+Business (12), Google Gemini App (8), Julie Balsamo (4), Meta (3), The Dodo (3),
+Sorav Jain (2), + 4 singles + loose root-level images flagged by the IM8 batch.
+Run them as one misc `/static-autopsy` batch (delegate to a subagent, ~10-concept
+cap). Then review the ≥3-crossed patterns for Gated Proposals: S4, S7, S14, S16,
+S21, S24 crossed this session (S20 crossed but single-brand); S27 wealth-contrast
+price anchor and S30 geo-localized master creative are the strongest Grifon ports
+pending corroboration.
+
 **Cafe-PC rule:** commit every update immediately
 (`swipe(static): add <slug>`). Uncommitted work dies with the reboot.
 
