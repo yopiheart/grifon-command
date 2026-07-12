@@ -15,5 +15,6 @@ Conventions:
 ## Index
 
 - `analyze_video.py` — Viral Autopsy: Gemini watches a social video, returns Edit-DNA JSON (driven by `.claude/skills/viral-autopsy/`). Needs Python restored.
+- `analyze_ad_image.mjs` — Static Ad Autopsy: Gemini vision decodes a still image ad (layout, verbatim copy, visual DNA, persuasion levers) into specificity-gated JSON + ingests a compressed copy to `assets/ad-swipe/` (driven by `.claude/skills/static-autopsy/`). `node tools/analyze_ad_image.mjs <image-or-folder> --brand "Name" [--entry E18 | --start-entry 18] [--ingest-only]`.
 - `render_qa.mjs` — FINAL_RENDER QA: Gemini watches one of OUR rendered ads, returns a defect report (accent, caption lag, slop, overlay placement, dead air). `node tools/render_qa.mjs <path-or-url> [--focus "..."]`.
 - `check-bundle-leak.mjs` — Crown-jewel bundle-leak guard: greps the built `dist/` for the 5 server-side prompts (patterns mirror `services/CLAUDE.md`) and exits non-zero if any leaked into the client bundle. Run after `npm run build`; wired into CI (`npm run check:bundle-leak`).

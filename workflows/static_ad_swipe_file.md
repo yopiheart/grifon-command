@@ -10,6 +10,15 @@ Maintained by `grifon-creative-director` (visual DNA) + `grifon-cmo` (offer/leve
 logic) when Neil drops a static ad to learn from. Feeds the
 `grifon-ad-strategist` playbook (warm-retarget upsell angle).
 
+**Ingest loop:** the **`static-autopsy`** skill drives it —
+`tools/analyze_ad_image.mjs` has Gemini vision decode the ad and commits a
+compressed copy of the source to `assets/ad-swipe/E<NN>-<brand-slug>.jpg`
+(≤1080px / ~≤300KB JPEG), so the reference survives the cafe-PC defreezer. Each
+entry links its image on the line under the heading (`![E<NN>](../assets/ad-swipe/E<NN>-<brand-slug>.jpg)`, relative from `workflows/`).
+**Backfill rule (E1–E17):** a re-encountered ad that already has an entry does NOT
+get a duplicate — attach its image to the existing entry via
+`--ingest-only --entry E<n>` (no new entry, no Pattern bump).
+
 **Cafe-PC rule:** commit every update immediately
 (`swipe(static): add <slug>`). Uncommitted work dies with the reboot.
 
@@ -224,7 +233,9 @@ More ratios also = more inventory for Andromeda to retrieve against. Logged to t
 
 ## Entries
 
-Append newest at the top.
+Append newest at the top. Each entry's second line is its committed image
+(`![E<NN>](../assets/ad-swipe/E<NN>-<brand-slug>.jpg)`) — E1–E17 backfill their
+image link as they're re-encountered via `--ingest-only`.
 
 ### 2026-06-20 — E6 Grüns "We NEVER do this!" (IG, DTC supplement / greens gummies)
 **Levers:** pattern-interrupt curiosity hook (S12) + discount roundel ("61% OFF + FREE GIFTS") + scarcity bar ("ENDING SOON") + product pouch hero + gummy-bear mascot (S13) on flat green (S14).
