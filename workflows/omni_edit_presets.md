@@ -47,6 +47,7 @@ class of edit). The believability + label eval gate runs on EVERY output, every 
 | `angle-switch-v2` | Camera Angle Switch (concrete destinations) | talking | draft — MOVE WORKS per Neil; believability re-run on clean clip pending | 6s ≈ $0.60 | Neil eyeball 2026-07-06 + official prompt guide |
 | `paper-collage-v1` | Paper Collage (johnsavage paper style) | talking | draft | 5s ≈ $0.50/attempt | johnsavage PDF (appendix B) |
 | `vox-explainer-v1` | VOX Editorial Explainer | talking | **product_shipped** (2026-07-07 — talking route of the VOX EXPLAINER hero style; Slice 3 NEIL_APPROVED. Code: `api/_lib/omniPresets.ts` template + `OMNI_STYLE_ROUTING`; picker `components/GenerateVideo/index.tsx`) | 4s ≈ $0.40 | round 1 2026-07-06: real-human/HIGH, title letter-perfect, graphics grounded from prompt text; product-path renders Neil-eyeballed 2026-07-07 |
+| `creator-ui-pop-v1` | Creator UI Pop-Up Card (Jatho-class) | talking | draft | 5s ≈ $0.50 | Jatho tutorial summary 2026-07-12 (secondhand — NOT swipe-file evidence; needs real reels via Mode B) |
 | `rack-focus-v0` | Rack Focus | b-roll | rejected | — | #18 round 1: move failed to execute |
 | `talking-bg-swap-v0` | Talking-Scene BG Swap/Relight | talking | rejected | — | #18 round 1 Tests 3-4: degrades believability |
 
@@ -1003,6 +1004,104 @@ validation:
       output: .tmp/omni-poc/edits/angle-switch-v2-151816.mp4 (wiped on reboot)
 evidence: ["v1 rounds 1-2 (non-execution)", "official prompt guide: concrete destination shots", "round 1b: 2D reframe yes, 3D viewpoint no"]
 cost_estimate_usd_per_run: "6s ~ $0.60"
+```
+
+### creator-ui-pop-v1 — Creator UI Pop-Up Card (Jatho-class)
+
+Distilled from a Devin Jatho editing-style tutorial SUMMARY Neil dropped 2026-07-12
+(Premiere/AE manual workflow). **Intake caveat: secondhand source.** A tutorial
+*about* a style is testimony, not evidence — this entry counts ZERO swipe-file
+corroborations and seeds no Pattern Index rows. Corroboration path: drop actual
+Devin Jatho reels through `/viral-autopsy` or ai-editor Mode B (frame-verified).
+
+Why it exists anyway: the sleek UI pop-up card is the one visual device the current
+lineup lacks (premium-reel = typography+icons; vox = editorial paper inserts;
+display-text-pop = bare display words). The tutorial's AE effect-stack specifics
+(Deep Glow 0.2, Light Sweep screen-blend, 4-color gradients, Shatter 15/2/0.5,
+track mattes) are NOT executable here — they survive only as the aesthetic
+*description* below. Everything already-covered by the brief (1-word caption churn
+→ P1 shipped; outline+shadow → P2; silence pruning → dead-air trim; J-cuts → moot,
+VO muxes continuously over cuts) was deliberately NOT duplicated into this preset.
+
+**Highest-risk preset in the lineup for invented text:** UI cards invite incidental
+commerce text — the invented "$49.45 / ADD TO CART" watch item, the `#FFCC00` hex
+leak, and the vox masthead leak are all this class. Constraints below are the point.
+
+```yaml
+id: creator-ui-pop-v1
+name: Creator UI Pop-Up Card (Jatho-class)
+target: talking
+status: draft
+origin: |
+  Devin Jatho tutorial summary (secondhand knowledge-transfer doc, Neil
+  2026-07-12) — NOT swipe-file evidence; no corroborations counted. Evidence
+  intake requires real Jatho reels via /viral-autopsy or Mode B. Talking-scene
+  rules + pixel-lock language inherited verbatim from premium-reel-v2 (round-1
+  validated). Directed-text discipline inherited from display-text-pop-v1.
+model: gemini-omni-flash-preview
+max_passes: 1
+slots:
+  transcript: required          # verbatim spoken words — anti-garble context only
+  card_words: required          # exact-spelling text ON the card; the ONLY card text
+  card_moment: required         # when/where the card pops (e.g. "as the speaker says X")
+  card_icon_desc: optional      # e.g. "a small pixel-art coffee cup icon"
+  brand_primary_hex: required   # accent; travels as forbiddenWords at fire time
+  shatter_word: optional        # exact-spelling word for the glass-shatter hook moment
+  aspect_ratio: default 9:16
+prompt_template: |
+  Edit this talking-head video by adding a modern UI pop-up card as a layer
+  over the original footage. Keep everything else exactly as filmed,
+  including the room and background.
+
+  The card: a sleek rounded-corner glassy panel in dark neutral tones with a
+  subtle gradient, a crisp thin light edge along its perimeter, a soft glow,
+  and a deep soft cast shadow falling down-right as if lit from the top
+  left{{#card_icon_desc}}, plus {{card_icon_desc}} inside the card
+  {{/card_icon_desc}}. The card pops in {{card_moment}} with a fast
+  scale-in that eases smoothly to rest — the motion must feel snappy then
+  settled, never linear.
+
+  Text on the card: render only these exact words, spelled exactly as
+  written: {{card_words}}. Do not render any other text anywhere in the
+  frame — no numbers, no prices, no currency amounts, no interface labels,
+  no logos. Do not add subtitles or captions.
+
+  {{#shatter_word}}Hook moment: when the speaker says "{{shatter_word}}",
+  show that word — spelled exactly as written — in bold editorial
+  typography, then break it apart like shattering glass, the fragments
+  floating and drifting with a subtle glow, synced to a quick camera
+  punch-in that bounces and settles with visible easing.{{/shatter_word}}
+
+  Accent color: use {{brand_primary_hex}} sparingly on the card's edge
+  light and glow, integrated naturally into the footage's existing palette.
+
+  The spoken content (for timing context only): "{{transcript}}"
+ffmpeg_layer:
+  before: [dead-air trim]
+  after: [upscale 720p->1080p, word-accurate caption burn, price/offer text,
+          ElevenLabs VO mux over Omni-stripped audio, music bed + ducking,
+          SFX hits, end card, loudness master]
+constraints:
+  - talking target - ONE pass, reframe-class edits only, never bg-swap/relight
+  - iterate via re-roll from raw with merged prompt, never refine
+  - never feed captioned renders (verify with frame strip FIRST)
+  - ALL card text is directed exact-spelling; slot values (incl.
+    brand_primary_hex) travel as forbiddenWords in the gate sidecar
+  - invented commerce text (prices, currency, ADD TO CART-class labels) is an
+    unconditional gate FAIL — this preset's card surface is the highest-risk
+    invite for that class
+  - critical/factual text (PHP prices, offers, captions, end-card) stays
+    FFmpeg - deterministic and exact
+validation:
+  gate: blind analyze_video.py vs raw control (real-human + lip-sync parity);
+        render_audit.mjs vision read - card_words + shatter_word
+        letter-perfect, zero undirected text, zero invented prices;
+        BACKGROUND-UNCHANGED check vs source frames; move-executed check
+        (card pop AND shatter both actually happen - "no visible failure"
+        is not "move happened")
+  rounds: []   # $0 so far; first paid round queues BEHIND Slice-4 beta work
+evidence: ["Jatho tutorial summary 2026-07-12 (secondhand - see origin caveat)"]
+cost_estimate_usd_per_run: "5s ~ $0.50/attempt"
 ```
 
 ### rack-focus-v0 — Rack Focus (REJECTED)
