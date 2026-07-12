@@ -1056,8 +1056,8 @@ prompt_template: |
   The card: a sleek rounded-corner glassy panel in dark neutral tones with a
   subtle gradient, a crisp thin light edge along its perimeter, a soft glow,
   and a deep soft cast shadow falling down-right as if lit from the top
-  left{{#card_icon_desc}}, plus {{card_icon_desc}} inside the card
-  {{/card_icon_desc}}. The card pops in {{card_moment}} with a fast
+  left{{#card_icon_desc}}, plus {{card_icon_desc}} inside the
+  card{{/card_icon_desc}}. The card pops in {{card_moment}} with a fast
   scale-in that eases smoothly to rest — the motion must feel snappy then
   settled, never linear.
 
