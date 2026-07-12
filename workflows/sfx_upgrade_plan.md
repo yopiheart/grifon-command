@@ -120,7 +120,22 @@ alternative: our pipeline already strips Omni/Veo audio and muxes ElevenLabs VO
   trigger/negation/URL/register cases; a lab calibration render Neil
   ear-approves; P13 marked `applied` in the swipe file.
 
-## Resume trigger
+## Resume trigger — SLICE 0 ARMED (2026-07-12)
 
-Next session on this: check prerequisites → if tier OK, ask Neil for the
-Slice-0 budget cap and run the library session in the lab.
+Neil approved the Slice-0 budget cap 2026-07-12 ("Alright. Lets add it next
+session to proceed with slice 0"): **stay within the 150 included
+generations/mo; hard stop at 200 total (~$2 max overage).** Prerequisite 1
+cleared same day (Starter includes SFX; API scope enabled). Remaining
+pre-flight inside Slice 0 itself: (a) run early in the billing cycle + watch
+the shared TTS credit meter; (b) one-line confirm SFX commercial license on
+Starter before any sample ships in a client ad.
+
+**Paste-ready kickoff for the next session:**
+
+> Open workflows/sfx_upgrade_plan.md — Slice 0 is armed (cap: 150 included
+> gens, hard stop 200). Run the library generation session in the lab per the
+> shopping list in omni_edit_presets.md: generate 4–6 variants per cue class
+> via the ElevenLabs sound-generation API, run the transient-at-zero QA
+> (onset ≤10ms) on every sample, then give me the survivors organized by
+> class for ear-testing WITH the music bed on. Commit approved samples +
+> session log.
