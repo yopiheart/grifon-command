@@ -1,0 +1,381 @@
+<title>Grifon — Ad Creative Samples</title>
+<style>
+  :root{
+    --ground:#09090B; --panel:rgba(24,24,27,.82); --panel-solid:#18181B;
+    --line:rgba(255,255,255,.10); --line-2:rgba(255,255,255,.06);
+    --gold:#FFCC00; --gold-dim:#B28F00; --gold-deep:#7A6200;
+    --w:#FFFFFF; --z3:#D4D4D8; --z4:#A1A1AA; --z5:#71717A;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,Roboto,sans-serif;
+    --mono:"SF Mono","JetBrains Mono",ui-monospace,"Cascadia Code",monospace;
+    --serif:Georgia,"Times New Roman",serif;
+    --maxw:430px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--ground);color:var(--z3);font-family:var(--sans);
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  body{padding:0 0 72px}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 18px}
+  .acc{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--gold);letter-spacing:.01em}
+  .label{font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--z5)}
+
+  /* Masthead */
+  .masthead{padding:40px 18px 22px;max-width:var(--maxw);margin:0 auto}
+  .masthead .kicker{color:var(--gold-dim)}
+  .masthead h1{font-size:26px;line-height:1.12;font-weight:800;color:var(--w);
+    margin:10px 0 8px;letter-spacing:-.02em;text-wrap:balance}
+  .masthead p{font-size:13.5px;line-height:1.5;color:var(--z4);margin:0;max-width:38ch}
+  .rule{height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin:20px 0 0}
+
+  /* Section head */
+  .sect{padding-top:34px}
+  .sect-head{display:flex;align-items:baseline;gap:10px;margin-bottom:4px}
+  .sect-head .n{font-family:var(--mono);font-size:11px;color:var(--gold);letter-spacing:.14em}
+  .sect-head h2{font-size:19px;font-weight:800;color:var(--w);letter-spacing:-.01em;margin:0}
+  .sect-sub{font-size:12.5px;line-height:1.5;color:var(--z4);margin:6px 0 20px}
+  .sect-sub b{color:var(--z3);font-weight:600}
+
+  /* Creative block */
+  .creative{margin:0 0 30px}
+  figure{margin:0}
+
+  /* The ad frame — 4:5 feed */
+  .ad{position:relative;width:100%;aspect-ratio:4/5;border-radius:18px;overflow:hidden;
+    border:1px solid var(--line);background:var(--ground);
+    box-shadow:0 1px 0 rgba(255,255,255,.04),0 24px 48px -24px rgba(0,0,0,.9)}
+  .ad__pad{position:absolute;inset:0;display:flex;flex-direction:column;padding:22px;z-index:2}
+  .spot{position:absolute;inset:0;pointer-events:none}
+  .ad img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 22%;z-index:0}
+  .ad .scrim{position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(9,9,11,.94) 20%,rgba(9,9,11,.2) 52%,transparent 72%)}
+  .plates{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+  .plates figure{margin:0}
+  .plates img{width:100%;border-radius:12px;border:1px solid var(--line);display:block}
+  .plates .pc{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--z5);margin-top:6px;text-align:center}
+
+  /* shared ad type */
+  .hook{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--gold);line-height:1.5}
+  .hl{font-size:23px;line-height:1.12;font-weight:800;color:var(--w);letter-spacing:-.02em;text-wrap:balance}
+  .hl.sm{font-size:20px}
+  .hl.lg{font-size:27px}
+  .sub{font-size:13px;line-height:1.45;color:var(--z3)}
+  .cta{align-self:flex-start;display:inline-flex;align-items:center;gap:7px;
+    background:var(--gold);color:#0A0A0A;font-weight:800;font-size:13px;
+    padding:11px 18px;border-radius:999px;box-shadow:0 0 22px rgba(255,204,0,.38)}
+  .cta.ghost{background:transparent;color:var(--w);border:1px solid var(--line);box-shadow:none}
+  .cta svg{width:14px;height:14px}
+  .brandmark{display:flex;align-items:center;gap:7px;font-weight:800;color:var(--w);font-size:12.5px;letter-spacing:.02em}
+  .dot{width:16px;height:16px;border-radius:5px;background:var(--gold);
+    display:grid;place-items:center;color:#0A0A0A;font-size:10px;font-weight:900}
+  .spacer{flex:1}
+
+  /* Founder photo placeholder */
+  .photo{position:absolute;inset:0}
+  .photo .silh{position:absolute;left:50%;bottom:0;transform:translateX(-50%);
+    width:78%;height:82%;border-radius:120px 120px 0 0;
+    background:radial-gradient(120% 90% at 50% 15%,rgba(255,204,0,.16),rgba(255,204,0,.03) 45%,transparent 62%),
+      linear-gradient(180deg,#2a2a2e,#161618 70%,#0f0f11)}
+  .photo .rim{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:78%;height:82%;
+    border-radius:120px 120px 0 0;border:1px solid rgba(255,204,0,.28);
+    border-bottom:none;mask:linear-gradient(180deg,#000,transparent 78%)}
+  .photo .tag{position:absolute;left:50%;top:16%;transform:translateX(-50%);
+    font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;color:var(--z5);
+    text-transform:uppercase;text-align:center;white-space:nowrap}
+
+  /* Grifon UI mock */
+  .glass{background:var(--panel);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    border:1px solid var(--line);border-radius:14px;padding:12px}
+  .field{display:flex;align-items:center;gap:8px;background:#0d0d0f;border:1px solid var(--line);
+    border-radius:11px;padding:10px 12px;font-size:12.5px;color:var(--z3)}
+  .field .cur{width:1.5px;height:15px;background:var(--gold);animation:blink 1.1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  @media (prefers-reduced-motion:reduce){.field .cur{animation:none}}
+  .genbtn{margin-top:9px;width:100%;background:var(--gold);color:#0A0A0A;font-weight:800;font-size:12px;
+    border-radius:9px;padding:9px;text-align:center;box-shadow:0 0 18px rgba(255,204,0,.3)}
+  .arrow{display:grid;place-items:center;color:var(--gold);font-size:16px;margin:8px 0 6px}
+  .out{display:flex;gap:7px}
+  .frame{flex:1;aspect-ratio:9/13;border-radius:8px;border:1px solid var(--line);
+    background:linear-gradient(160deg,#202024,#101012);position:relative;overflow:hidden}
+  .frame::after{content:"";position:absolute;left:8px;right:8px;bottom:8px;height:4px;border-radius:2px;
+    background:rgba(255,204,0,.5)}
+  .frame .pn{position:absolute;top:6px;left:7px;font-family:var(--mono);font-size:8px;color:var(--z5)}
+  .chiprow{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{font-family:var(--mono);font-size:10px;letter-spacing:.08em;padding:5px 10px;border-radius:999px;
+    border:1px solid var(--line);color:var(--z4)}
+  .chip.on{background:rgba(255,204,0,.12);border-color:rgba(255,204,0,.5);color:var(--gold)}
+
+  /* black-canvas tableau */
+  .tab-hl{font-size:30px;line-height:1.02;font-weight:900;color:var(--w);letter-spacing:-.03em;text-transform:uppercase}
+
+  /* three-step timeline */
+  .steps{display:flex;align-items:stretch;gap:8px}
+  .step{flex:1;text-align:center}
+  .step .cap{font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--z5);text-transform:uppercase;margin-bottom:6px}
+  .step .box{aspect-ratio:1/1;border-radius:10px;border:1px solid var(--line);display:grid;place-items:center;
+    background:#141416;color:var(--z4);font-size:11px;font-weight:700;padding:6px;line-height:1.2}
+  .step.done .box{border-color:rgba(255,204,0,.5);background:rgba(255,204,0,.09);color:var(--gold)}
+  .arw{align-self:center;color:var(--z5);font-size:13px}
+
+  /* annotation strip */
+  figcaption{display:flex;gap:11px;padding:12px 2px 0;align-items:flex-start}
+  .rank{flex:0 0 auto;width:26px;height:26px;border-radius:8px;background:rgba(255,204,0,.1);
+    border:1px solid rgba(255,204,0,.4);color:var(--gold);font-weight:800;font-size:12px;
+    display:grid;place-items:center;font-family:var(--mono)}
+  .meta{flex:1;min-width:0}
+  .meta .pat{font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--gold-dim);text-transform:uppercase;line-height:1.5}
+  .meta .why{font-size:12px;line-height:1.5;color:var(--z4);margin:3px 0 0}
+  .meta .why b{color:var(--z3);font-weight:600}
+
+  footer{max-width:var(--maxw);margin:28px auto 0;padding:22px 18px 0;border-top:1px solid var(--line-2)}
+  footer .label{margin-bottom:10px}
+  footer ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px}
+  footer li{font-size:12.5px;line-height:1.5;color:var(--z4);padding-left:16px;position:relative}
+  footer li::before{content:"→";position:absolute;left:0;color:var(--gold-dim)}
+  footer li b{color:var(--z3);font-weight:600}
+  .note{font-size:11px;color:var(--z5);line-height:1.5;margin-top:16px}
+</style>
+
+<header class="masthead">
+  <div class="label kicker">Creative Director · sample set</div>
+  <h1>Six ad creatives, <span class="acc">two voices</span>.</h1>
+  <p>Three for the Zam Grifon founder page, three for the Grifon AI product page — each built off a decoded pattern in the Static Ad Swipe File. Ranked by conversion probability. No price shown (brand rule); copy is headline-level for review.</p>
+  <div class="rule"></div>
+</header>
+
+<div class="wrap">
+
+  <!-- ============ ZAM GRIFON ============ -->
+  <section class="sect">
+    <div class="sect-head"><span class="n">A</span><h2>Zam Grifon — founder page</h2></div>
+    <p class="sect-sub"><b>Voice:</b> premium Taglish, Sabri Suby direct-response. <b>Proof unit:</b> the founder himself (S2). Goal: authority + warm traffic to Grifon AI.</p>
+
+    <!-- Z1 -->
+    <div class="creative">
+      <figure>
+        <div class="ad">
+          <div class="spot photo">
+            <div class="silh"></div><div class="rim"></div>
+            <div class="tag">[ photo slot — Zam, gold rim-light on zinc-950 ]</div>
+          </div>
+          <div class="ad__pad">
+            <div class="brandmark"><span class="dot">Z</span> Zam Grifon</div>
+            <div class="spacer"></div>
+            <div class="hook">Para sa negosyanteng puyat gumagawa ng ads —</div>
+            <div class="hl" style="margin:9px 0 10px">Buong gabi para sa <span class="acc">isang</span> ad. Alam ko 'yan — dati akong ganyan.</div>
+            <a class="cta">Alamin ang system <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </div>
+        <figcaption>
+          <span class="rank">1</span>
+          <div class="meta">
+            <div class="pat">S2 authority-portrait × S8 audience callout</div>
+            <p class="why"><b>Why it converts:</b> the founder's face is the proof, and "puyat gumagawa ng ads" names the exact buyer so they self-identify in the first second. Strongest founder-page opener.</p>
+          </div>
+        </figcaption>
+      </figure>
+    </div>
+
+    <!-- Z2 -->
+    <div class="creative">
+      <figure>
+        <div class="ad">
+          <div class="spot" style="background:radial-gradient(130% 80% at 50% 0%,rgba(255,204,0,.10),transparent 55%)"></div>
+          <div class="ad__pad">
+            <div class="brandmark"><span class="dot">Z</span> Zam Grifon</div>
+            <div class="spacer"></div>
+            <div class="hl lg">Bakit ka magbabayad ng <span class="acc">₱30K</span> sa agency na 3 araw bago mag-reply?</div>
+            <p class="sub" style="margin:12px 0 14px">Gawin mo mismo — mas mabilis, ikaw ang may kontrol. Ipapakita ko kung paano.</p>
+            <a class="cta ghost">Panoorin kung paano<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </div>
+        <figcaption>
+          <span class="rank">2</span>
+          <div class="meta">
+            <div class="pat">S24 format-enemy × S27 cost-contrast</div>
+            <p class="why"><b>Why it converts:</b> villainizes the <b>ritual</b> (the slow, pricey agency retainer) not a competitor brand — the ₱30K is the enemy's cost, never Grifon's. Text-forward, no photo dependency.</p>
+          </div>
+        </figcaption>
+      </figure>
+    </div>
+
+    <!-- Z3 -->
+    <div class="creative">
+      <figure>
+        <div class="ad">
+          <div class="spot" style="background:radial-gradient(120% 70% at 50% 100%,rgba(255,204,0,.08),transparent 55%)"></div>
+          <div class="ad__pad">
+            <div class="brandmark"><span class="dot">Z</span> Zam Grifon</div>
+            <div class="spacer"></div>
+            <div class="hl sm" style="margin-bottom:16px">Dati, 3 araw bago mag-live ang isang campaign. Ngayon, <span class="acc">bago mag-lunch.</span></div>
+            <div class="steps" style="margin-bottom:16px">
+              <div class="step"><div class="cap">Idea</div><div class="box">Napkin brief</div></div>
+              <div class="arw">→</div>
+              <div class="step"><div class="cap">Grifon</div><div class="box">Script + board</div></div>
+              <div class="arw">→</div>
+              <div class="step done"><div class="cap">Live</div><div class="box">Ad na!</div></div>
+            </div>
+            <a class="cta ghost">Follow — behind the scenes<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </div>
+        <figcaption>
+          <span class="rank">3</span>
+          <div class="meta">
+            <div class="pat">S28 process-timeline (real artifacts)</div>
+            <p class="why"><b>Why it converts:</b> IDEA → GRIFON → LIVE is an honest process strip (real stages, no fake body-claims) — sells the speed transformation as the founder's own story. Best for page-growth / follows.</p>
+          </div>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ GRIFON AI ============ -->
+  <section class="sect">
+    <div class="sect-head"><span class="n">B</span><h2>Grifon AI — product page</h2></div>
+    <p class="sect-sub"><b>Voice:</b> cinematic gold/black, light Taglish hooks + clean CTAs. <b>Proof unit:</b> the real interface (GP-5). Goal: cold → free signup.</p>
+
+    <!-- G1 -->
+    <div class="creative">
+      <figure>
+        <div class="ad">
+          <div class="spot" style="background:radial-gradient(90% 60% at 50% 22%,rgba(255,204,0,.13),transparent 60%)"></div>
+          <div class="ad__pad">
+            <div class="hook" style="text-align:center">Ang unang all-in-one AI marketing sa PH</div>
+            <div class="hl sm" style="text-align:center;margin:8px 0 14px">I-type ang negosyo mo. Kunin ang <span class="acc">buong ad.</span></div>
+            <div class="glass">
+              <div class="label" style="margin-bottom:7px">Director AI · brief</div>
+              <div class="field">Milk tea shop sa Cebu, bagong ube flavor<span class="cur"></span></div>
+              <div class="genbtn">Gumawa ng ad ▸</div>
+              <div class="arrow">↓</div>
+              <div class="out">
+                <div class="frame"><span class="pn">script</span></div>
+                <div class="frame"><span class="pn">storyboard</span></div>
+                <div class="frame"><span class="pn">visual</span></div>
+              </div>
+            </div>
+            <div class="spacer"></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-top:14px">
+              <div class="brandmark"><span class="dot">G</span> GRIFON AI</div>
+              <a class="cta">Simulan nang libre</a>
+            </div>
+          </div>
+        </div>
+        <figcaption>
+          <span class="rank">1</span>
+          <div class="meta">
+            <div class="pat">GP-5 product-UI-as-hero × S20 · S32 prompt→outcome</div>
+            <p class="why"><b>Why it converts:</b> the real composer <b>is</b> the ad — one honest input ("milk tea shop… ube flavor") visibly becomes script + storyboard + visual. Shows the outcome, never claims it. Highest-fidelity product proof.</p>
+          </div>
+        </figcaption>
+      </figure>
+    </div>
+
+    <!-- G2 -->
+    <div class="creative">
+      <figure>
+        <div class="ad" style="background:#050506">
+          <div class="ad__pad">
+            <div class="spacer"></div>
+            <div class="tab-hl">Para sa ads<br>na talagang <span class="acc" style="text-transform:none">benta.</span></div>
+            <div class="glass" style="margin:18px 0 0">
+              <div class="field">Gumawa ng video ad para sa coffee shop ko<span class="cur"></span></div>
+              <div class="arrow">↓</div>
+              <div class="out">
+                <div class="frame"><span class="pn">01 hook</span></div>
+                <div class="frame"><span class="pn">02 offer</span></div>
+                <div class="frame"><span class="pn">03 cta</span></div>
+              </div>
+            </div>
+            <div class="spacer"></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-top:16px">
+              <div class="brandmark"><span class="dot">G</span> GRIFON AI</div>
+              <a class="cta ghost">Try it free</a>
+            </div>
+          </div>
+        </div>
+        <figcaption>
+          <span class="rank">2</span>
+          <div class="meta">
+            <div class="pat">S32 prompt→outcome tableau (Gemini "FOR __ GOALS" DNA)</div>
+            <p class="why"><b>Why it converts:</b> near-black canvas + a single bold thesis + the prompt-pill flowing into a 3-beat storyboard. Cheapest to template and infinitely swappable — the pill text is the only variable.</p>
+          </div>
+        </figcaption>
+      </figure>
+    </div>
+
+    <!-- G3 -->
+    <div class="creative">
+      <figure>
+        <div class="ad">
+          <div class="spot" style="background:radial-gradient(90% 55% at 50% 20%,rgba(255,204,0,.11),transparent 60%)"></div>
+          <div class="ad__pad">
+            <div class="hook" style="text-align:center">Gawa para sa Pinoy na negosyante</div>
+            <div class="hl sm" style="text-align:center;margin:8px 0 14px">Isang ad. English, Taglish, o <span class="acc">Bisaya.</span></div>
+            <div class="glass">
+              <div class="label" style="margin-bottom:9px">Caption &amp; Headline · language</div>
+              <div class="chiprow" style="margin-bottom:11px">
+                <span class="chip">English</span>
+                <span class="chip on">Taglish</span>
+                <span class="chip">Bisaya</span>
+              </div>
+              <div class="field" style="display:block;line-height:1.45">"Sawa ka nang mag-DIY ng ads? Grifon na — mabilis, mura, mabenta."</div>
+            </div>
+            <div class="spacer"></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-top:14px">
+              <div class="brandmark"><span class="dot">G</span> GRIFON AI</div>
+              <a class="cta">Simulan nang libre</a>
+            </div>
+          </div>
+        </div>
+        <figcaption>
+          <span class="rank">3</span>
+          <div class="meta">
+            <div class="pat">S30 geo-localized master × S8 audience callout</div>
+            <p class="why"><b>Why it converts:</b> one master creative, language is the only variable (EN / Taglish / Bisaya) — Grifon's near-free edge via <b>captureToPng</b>. Speaks the market's own tongue; strongest local-relevance hook.</p>
+          </div>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ ZAM — PHOTO VERSIONS ============ -->
+  <section class="sect">
+    <div class="sect-head"><span class="n">A+</span><h2>Zam — photo version (concept 1)</h2></div>
+    <p class="sect-sub">Real photographic plates via <b>codex-image</b> (gpt-image-2). <b>Stand-in founder — not Zam's real likeness;</b> swap in his actual shot. Plates are text-free; the Z1 headline composites on top (captureToPng) — shown composed below.</p>
+    <div class="creative">
+      <figure>
+        <div class="ad">
+          <img class="bg" src="zam-portrait-1.png" alt="Zam authority-portrait plate">
+          <div class="scrim"></div>
+          <div class="ad__pad">
+            <div class="brandmark"><span class="dot">Z</span> Zam Grifon</div>
+            <div class="spacer"></div>
+            <div class="hook">Para sa negosyanteng puyat gumagawa ng ads —</div>
+            <div class="hl" style="margin:9px 0 10px">Buong gabi para sa <span class="acc">isang</span> ad. Dati akong ganyan.</div>
+            <a class="cta">Alamin ang system <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </div>
+        <figcaption>
+          <span class="rank">✓</span>
+          <div class="meta">
+            <div class="pat">Photo version · Z1 (S2 authority-portrait)</div>
+            <p class="why"><b>Composed:</b> real gold-rim-light plate + the Z1 Taglish headline on a bottom scrim. This is the shippable look once Zam's real photo drops in.</p>
+          </div>
+        </figcaption>
+      </figure>
+    </div>
+    <div class="plates">
+      <figure><img src="zam-portrait-1.png" alt="plate 1 arms crossed"><div class="pc">plate 1 · arms crossed</div></figure>
+      <figure><img src="zam-portrait-2.png" alt="plate 2 seated"><div class="pc">plate 2 · seated, hands clasped</div></figure>
+    </div>
+  </section>
+
+  <footer>
+    <div class="label">Want these taken further?</div>
+    <ul>
+      <li><b>Photographic versions</b> — I can render the Zam portrait creatives as real shots via <b>codex-image</b> (these mockups become the exact layout spec).</li>
+      <li><b>Production code</b> — the Grifon AI three ship as real React/Tailwind components off the live design tokens for the Image Ads Gen library.</li>
+      <li><b>Full captions</b> — hand off to <b>grifon-cmo</b> for the primary-text + hook variations under each creative.</li>
+    </ul>
+    <p class="note">Skipped concepts: a tier-compare card (needs pricing on-creative — banned) and a fake-testimonial hero (trust line). All copy here is headline-level, Taglish per Zam/ads voice; no Grifon price shown per brand rule.</p>
+  </footer>
+
+</div>
