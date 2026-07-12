@@ -36,33 +36,36 @@ Proposal) → `applied` (shipped as an Image Ads Gen template or CMO playbook).
 | ID | Pattern | Corroborations | Status |
 | --- | --- | --- | --- |
 | S1 | **Risk-reversal headline / guarantee** — the promise IS the guarantee ("kick-off in 5 days OR all your money back"; "TRY RISK-FREE"; "30-day money-back"). Removes the buy-risk at the headline, not the fine print. | 9 (E1, E2, E3; E11, E26-var Grüns; E12, E17, E32, E33-var IM8) | proposed |
-| S2 | **Authority portrait hero** — founder cut-out, confident pose, gold rim-light on black; the *person* is the proof when there's no physical product. | 4 (E1–E4) | observed |
+| S2 | **Authority portrait hero** — founder cut-out, confident pose, gold rim-light on black; the *person* is the proof when there's no physical product. | **8 across 2 brands — crossed the cross-brand bar 2026-07-12** (E1–E4 Gadzhi; E46, E47, E49, E50 Kylie — the founder IS the celebrity, works even WITH a physical product) | observed |
 | S3 | **Ticket / tier comparison** — Free (dull, glass) vs paid (gold, glowing) cards side by side; anchoring makes the upgrade obvious. | 2 (E3, E2-partial) | observed |
 | S4 | **Offer-stack checklist** — gold/green ✅ list of what they GET (calls, templates, bonuses) + guarantee tag. Reciprocity + commitment. | **3 across 2 brands — crossed ≥3 2026-07-12** (E2, E3; E40 IM8 itemized free-kit) | observed |
 | S5 | **Gold-on-black SaaS palette** — `#FFCC00`-class gold + near-black, glassy cards, gold lozenge "VIP/PRO" badge, gold gradient CTA bar. (Already Grifon's palette.) | 4 (E1–E4) | observed |
 | S6 | **CTA-bar color A/B test** — same creative shipped with gold / green / blue "Learn more" bars across the set; they're testing button color, not just creative. | 3 (E1 gold, E2 green, E4 blue) | observed |
 | S7 | **Fake-DM / manufactured interaction / manufactured scarcity** — "pre-approved," blurred meeting invite, "selecting a few people," staged AMA-sticker Q&A dressed as organic. **ANTI-PATTERN for Grifon** — recorded so we copy the *layout* (cohort offer, AMA-reply format) but never the fabrication. | 3 (E4, E1-urgency; E19 Grüns fake-AMA) | observed (do-not-replicate) |
-| S8 | **Hyper-specific audience callout** — name the exact buyer in the hook ("If you own a *[niche]* doing *[revenue]*"; "on GLP-1"; "Women 40+"; "Postpartum…"). Self-identification + specificity (Sabri Suby dream-buyer). ONE template → N variants off a swapped variable. | **10 across 3 brands** (E5 service; E8/E11, E19, E20, E25, E26 Grüns; E13, E37 IM8) | **proposed — strongest pattern, drives GP-2** |
+| S8 | **Hyper-specific audience callout** — name the exact buyer in the hook ("If you own a *[niche]* doing *[revenue]*"; "on GLP-1"; "Women 40+"; "Postpartum…"). Self-identification + specificity (Sabri Suby dream-buyer). ONE template → N variants off a swapped variable. | **11 across 4 brands** (E5 service; E8/E11, E19, E20, E25, E26 Grüns; E13, E37 IM8; E43 Cursor — tool-stack variant, cross-niche) | **proposed — strongest pattern, drives GP-2** |
 | S9 | **Anti-design text-only pattern interrupt** — flat solid bg, centered white sans, zero imagery/logo/CTA button; reads as a personal note, not an ad. **Contradicts S5 + Grifon's cinematic brand** — adopt the copy mechanic; test the bare visual only as a deliberate experiment. | 2 across 2 brands (E5; E24 Grüns) | observed (brand-conflict) |
 | S10 | **Value-first lead magnet (TOF)** — gives a free asset ("Scaling Roadmap", "FREE Starter Kit") to a cold dream-buyer. Top-of-funnel; the opposite end from the E1–E4 bottom-funnel upsell. | **3 across 2 brands — crossed ≥3 2026-07-12** (E5; E12, E40 IM8) | observed |
-| S11 | **Trend-hijack** — ride a live cultural wave so the ad feels like the moment, not a pitch (GLP-1 / Ozempic). Grifon's wave is **"AI"**. | 8 (E7, E8, E10, E29 Grüns; E14, E16, E37 IM8; E18 Cursor) | observed |
+| S11 | **Trend-hijack** — ride a live cultural wave so the ad feels like the moment, not a pitch (GLP-1 / Ozempic). Grifon's wave is **"AI"**. | 9 (E7, E8, E10, E29 Grüns; E14, E16, E37 IM8; E18, E45 Cursor — E45 turns an external model release into the whole ad) | observed |
 | S12 | **Pattern-interrupt hook** — curiosity/novelty/apology/gross-out that doesn't read as an ad ("We NEVER do this", "WE'RE SO SORRY", "RABBIT POOPS?", "We're back."). | 4 (E6, E7, E21, E24 — all Grüns; single-brand-heavy) | observed |
 | S13 | **Mascot / recall device** — a repeated motif (gummy bear) carries instant brand ID; E23 upgrades it from motif to *actor* (mascot golfing in the buyer's world). Grifon's mark + gold light-sweep is the under-used equivalent. | 2 (E6–E11; E23 mascot-as-actor — one brand) | observed |
-| S14 | **Full-canvas color A/B** — test the *whole background* color (green/yellow/blue/beige), not just the CTA. Extends S6. | **3 across 2 brands — crossed ≥3 2026-07-12** (E6–E11, E21 Grüns; E31 cream/dark-red colorways IM8) | observed |
+| S14 | **Full-canvas color A/B** — test the *whole background* color (green/yellow/blue/beige), not just the CTA. Extends S6. | **4 across 3 brands — now cross-NICHE** (E6–E11, E21 Grüns; E31 cream/dark-red colorways IM8; E44 Cursor black-blue/cream-orange/forest-green colorways — first SaaS sighting) | observed |
 | S15 | **Stat-stack proof** — numerals as proof, stacked ("21 vitamins. 20 cal. 1 net carb."; "60+ ingredients"). | 10 across 2 brands (E8, E10, E23, E26 Grüns; E14, E31, E33, E34, E37, E38 IM8) | observed |
-| S16 | **Borrowed authority** — social proof by association (celebrity / sports partnership: Inter Miami CF; Lisa Rinna campaign). Grifon = client logos / testimonials / "trusted by N PH businesses." | **8 across 2 brands — crossed ≥3 2026-07-12, IM8-heavy** (E15, E32–E36, E40 IM8; E22 Grüns × Lisa Rinna) | observed |
+| S16 | **Borrowed authority** — social proof by association (celebrity / sports partnership: Inter Miami CF; Lisa Rinna campaign). Grifon = client logos / testimonials / "trusted by N PH businesses." | **13 across 3 brands — cross-niche confirmed 2026-07-12** (E15, E32–E36, E40 IM8; E22 Grüns × Lisa Rinna; E46–E50 Kylie — founder-as-celebrity, no borrowing needed; E50 adds the institutional AWARD-BADGE variant) | observed |
 | S17 | **"Imagine…" future-pace + objection-handling** — paint the after-state, defuse the fear ("Imagine your GLP-1 journey, without the side effects"). | 1 (E16 IM8) | observed |
-| S18 | **Style axis: premium-editorial vs flat-graphic** — IM8 (crimson, serif, lifestyle photography, restraint) vs Grüns (loud color-block, mascot, discount). **Grifon = the premium lane** (cinematic gold/black). | brand-level (Grüns flat E6–E11; IM8 premium E12–E17, E31–E36, E38–E40; axis-crossers: E9 Grüns-goes-premium, E37 IM8-goes-flat — register follows SEGMENT, not brand dogma) | observed |
-| S19 | **Placement / multi-ratio + safe-zone** — ship one creative as 4:5 (feed) + 1:1 + 9:16 (stories/reels), keeping text in the 9:16 central ~60% safe band; more ratios = more Andromeda inventory. See the Placement strategy section. | cross-set observation (+E18; +E31–E40 — IM8 ships every creative as a 9:16 + 1:1/4:5 pair) | observed |
-| S20 | **Product-UI-as-hero** — the actual product interface (a real screen/control, not a screenshot collage) is the ad's hero image; the feature demo IS the creative. Honest proof — fits the trust line. Grifon analog: One-Shot composer / wizard UI as the hero. | 1 (E18 Cursor) | observed |
+| S18 | **Style axis: premium-editorial vs flat-graphic** — IM8 (crimson, serif, lifestyle photography, restraint) vs Grüns (loud color-block, mascot, discount). **Grifon = the premium lane** (cinematic gold/black). | brand-level (Grüns flat E6–E11; IM8 premium E12–E17, E31–E36, E38–E40; axis-crossers: E9 Grüns-goes-premium, E37 IM8-goes-flat — register follows SEGMENT, not brand dogma; Cursor E18/E41–E45 and Kylie E46–E50 both live all-premium — 4th and 5th brand in the premium lane) | observed |
+| S19 | **Placement / multi-ratio + safe-zone** — ship one creative as 4:5 (feed) + 1:1 + 9:16 (stories/reels), keeping text in the 9:16 central ~60% safe band; more ratios = more Andromeda inventory. See the Placement strategy section. | cross-set observation (+E18; +E31–E40 — IM8 ships every creative as a 9:16 + 1:1/4:5 pair; +E41–E45 Cursor and +E46–E50 Kylie do the same — now standard practice across every brand in the file) | observed |
+| S20 | **Product-UI-as-hero** — the actual product interface (a real screen/control, not a screenshot collage) is the ad's hero image; the feature demo IS the creative. Honest proof — fits the trust line. Grifon analog: One-Shot composer / wizard UI as the hero. | **5 — crossed ≥3 2026-07-12 but ONE brand** (E18, E41, E42, E43, E45 Cursor — below the independent-brand bar; E44's abstracted-UI block is the stylized cousin, not counted) | observed |
 | S21 | **Native-format camouflage** — the ad dresses as organic platform UI (IG story AMA sticker, Close-Friends badge, caption cards, handle overlay) to bypass banner blindness. Slides into S7 the moment the interaction is faked — Grifon version uses REAL community questions only. | **5 across 2 brands — crossed ≥3 2026-07-12** (E19, E27 Grüns; E34, E35, E39 IM8 — IM8's variant is the HONEST kind: real verified handle + real credential line) | observed |
 | S22 | **Category-king flex** — publicly acknowledge copycats/doubters to frame the brand as the original ("we see you, copycats."; "We hereby accept your apology."). Late-stage play — only works once you ARE the category leader. | 1 (E22 + variants, Grüns) | observed |
 | S23 | **Real-scarcity nostalgia drop** — limited-edition collab with a legacy childhood brand (Grüns × Popsicle Firecracker), run as a full campaign system (flavor graphic + UGC + meme + text-only sellout apology). Scarcity is REAL (sold out, no restock) — passes the trust line. | 1 (E27 campaign, Grüns) | observed |
-| S24 | **Format-enemy positioning** — villainize the incumbent *format/ritual*, not a competitor brand ("STOP CHOKING DOWN GRASS IN A GLASS. Measure. Blend. Gag. Scrub."; "STOP PUNISHING YOURSELF WITH POWDERS."). Grifon's enemy: the ₱30K agency retainer / DIY all-nighter. | **6 across 2 brands — crossed ≥3 2026-07-12** (E28, E29-var Grüns; E31, E34, E38, E39 IM8 — IM8's enemy is "supplement clutter": pill bottles, powders, decision fatigue) | observed |
+| S24 | **Format-enemy positioning** — villainize the incumbent *format/ritual*, not a competitor brand ("STOP CHOKING DOWN GRASS IN A GLASS. Measure. Blend. Gag. Scrub."; "STOP PUNISHING YOURSELF WITH POWDERS."). Grifon's enemy: the ₱30K agency retainer / DIY all-nighter. | **7 across 3 brands — now cross-NICHE** (E28, E29-var Grüns; E31, E34, E38, E39 IM8 — IM8's enemy is "supplement clutter": pill bottles, powders, decision fatigue; E42 Cursor — "Review demos, not diffs." villainizes the diff-review ritual in 4 words) | observed |
 | S25 | **Uncanny meme creative** — toys/dolls/hand-drawn doodles ARE the whole ad (Barbie split-meme, marker-doodle pack shot). Feed-native, cheap, honest (nobody mistakes a doll for a fake testimonial). | 2 (E29, E30 Grüns) | observed |
 | S26 | **Taboo/crude register** — bodily-function, profanity, and anatomical hooks matched per segment ("RABBIT POOPS?", "DON'T GHOST YOUR BALLS.", "F*CK YOU, HAIR LOSS"). Strong scroll-stop, brand-safety risk; off Grifon's premium register — the *mechanic* (name the unspoken pain bluntly) ports, the words don't. | 3 (E20, E21, E30 — one brand, below the independent-brand bar) | observed |
 | S27 | **Wealth-contrast price anchor** — someone who could afford anything *chose* the cheap-per-day option ("GIANNIS COULD AFFORD ANYTHING. HE CHOSE A $2.61/DAY DRINK."). Collapses "premium = expensive" and reframes price as a daily cost. Grifon: "Agencies charge ₱30K/mo. Grifon is ₱XX/day." | 1 (E35) | observed |
 | S28 | **Illustrated transformation timeline** — staged before→during→after strip with NAMED stages or months (BEFORE→RITUAL→RESET; JULY→AUGUST→SEPTEMBER); process-framing beats binary before/after. ⚠️ Implied body-claims are a trust gray zone (E37 flagged implausible) — Grifon ports it with REAL artifacts only (BRIEF→GRIFON→LAUNCHED). | 2 (E31-var, E37 — one brand) | observed |
+| S29 | **Founder-signature endorsement stack** — first-person quote + "xo," + handwritten signature turns the ad into a personal recommendation, not corporate copy; the sign-off substitutes for a CTA. Honest when the endorsement is real (it's her brand). Extends E24's signed-note device ("— Grüns") from announcement to product ad. Grifon analog: real client quote + signature, or "— Neil/Zam" signed notes. | 2 (E47, E48 + their FR/IT campaign beats — one brand) | observed |
+| S30 | **Geo-localized master creative** — ONE master creative shipped with translated copy per market (EN/FR/IT observed), photography and layout identical; the language is the variable, not the design. The placement analog of S14's color A/B. Grifon analog: EN/Taglish/Bisaya swaps on one template — near-free variants via `captureToPng`. | 2 campaign systems (E47 EN/IT still-life beats; E48 EN/FR/IT lip-essentials wave — one brand) | observed |
+| S31 | **Texture-macro sensory hero** — a macro shot of the product's physical texture (the squeeze, the drip, the swatch) is the focal proof; it SHOWS the sensory promise instead of claiming it. Physical-product-native; Grifon's analog is the crisp UI-detail close-up (pairs with S20). | 1 (E48; E49-beat trio-spout shades) | observed |
 
 ## Gated Proposals
 
@@ -245,6 +248,120 @@ More ratios also = more inventory for Andromeda to retrieve against. Logged to t
 Append newest at the top. Each entry's second line is its committed image
 (`![E<NN>](../assets/ad-swipe/E<NN>-<brand-slug>.jpg)`) — E1–E17 backfill their
 image link as they're re-encountered via `--ingest-only`.
+
+### 2026-07-12 — E50 Kylie Skin "LIP BUTTER" × SELF award seal (fb-ad-library, DTC beauty / cosmetics)
+![E50](../assets/ad-swipe/E50-kylie-cosmetics.jpg)
+**Why swiped:** AD FILES stash batch 2026-07-12 — Meta Ad Library pull; Downloads folder dies on reboot so ingest now. · **Format:** 4:5 (+9:16 crop variants), authority-portrait product-in-use.
+**Layout:** light-gray studio; "KYLIE SKIN kylie jenner" logo top-left; black-and-white "SELF HEALTHY BEAUTY AWARDS 2024 WINNER" seal top-right; Kylie center applying the pale-pink LipButter tube to her lips; giant white caps "LIP BUTTER" across the bottom third over her taupe tank.
+**Copy (verbatim):** "LIP BUTTER" — no CTA.
+**Visual DNA:** `#D9D9D9` bg, `#F3D3D3` product pink, `#9E8575` taupe, white caps; premium-editorial (S18).
+**Levers:** borrowed authority DOUBLED — celebrity founder using the product (S16/S2) + an institutional third-party award seal in the opposite corner (S16's new register: fame + independent validation in one frame).
+**Weaknesses / trust flags:** no CTA, no benefit line — pure brand play a cold audience can't act on; the award is real, nothing fabricated.
+**So What for Grifon:** the corner award-seal is the most portable honest-proof unit in the batch — Grifon's analog is a REAL badge (press logo, "PayMongo-verified", "trusted by N PH businesses") in the same top-corner slot of GP-4 creatives.
+**Patterns:** corroborates S16 (award-badge variant), S2, S18, S19; new candidate none; contradicts none.
+
+### 2026-07-12 — E49 Kylie Cosmetics "SKIN TINT BLURRING ELIXIR" hands-framed portrait (fb-ad-library, DTC beauty / cosmetics)
+![E49](../assets/ad-swipe/E49-kylie-cosmetics.jpg)
+**Why swiped:** AD FILES stash batch 2026-07-12 — Meta Ad Library pull; Downloads folder dies on reboot so ingest now. · **Format:** 9:16 (+4:5 crop), authority-portrait.
+**Layout:** off-white studio; "KYLIE COSMETICS / KYLIE JENNER" logo top-center; Kylie's face dead-center, both hands fanned symmetrically to frame her chin, the egg-shaped pink bottle held directly beneath it; bold white caps product name across the chest in the bottom third.
+**Copy (verbatim):** "SKIN TINT BLURRING ELIXIR" — no CTA.
+**Visual DNA:** `#FAF6F0` bg, `#FCE4D8` product pink, white caps on skin tones; symmetrical, high negative space; premium-editorial (S18).
+**Levers:** founder-as-model authority (S2/S16 — her *own* complexion is the product claim) + symmetric hands-frame composition that funnels the eye face → product → product name.
+**Campaign beat (folder Kylie Cosmetics_2087290775545988):** shade-trio still — three identical bottles, three spout drips (fair / tan / deep), bilingual EN/FR label, same headline — the shade RANGE as proof (inclusivity as a visual argument). Skipped as a separate entry; same campaign.
+**Weaknesses / trust flags:** no CTA, no USP beyond name + face; none fabricated.
+**So What for Grifon:** "human frames the product" is a ready GP-4/avatar-hero recipe; the trio beat's variant-range-as-proof ports as "3 output styles from one brief" in a single frame.
+**Patterns:** corroborates S2, S16, S18, S19; new candidate: shade-range-as-proof (watch); contradicts none.
+
+### 2026-07-12 — E48 Kylie Cosmetics "WATERMELON LIP BUTTER" macro squeeze (fb-ad-library, DTC beauty / cosmetics)
+![E48](../assets/ad-swipe/E48-kylie-cosmetics.jpg)
+**Why swiped:** AD FILES stash batch 2026-07-12 — Meta Ad Library pull; Downloads folder dies on reboot so ingest now. · **Format:** 4:5-class feed (+9:16 variant), product-hero split.
+**Layout:** vertical split — left half is a macro shot of the dusty-pink tube upside down, a thick glossy ribbon of product squeezing from the clear applicator and pooling at the bottom edge; right half is clean white space with "new!", the dusty-rose caps headline, a quote, and "xo," + handwritten Kylie Jenner signature.
+**Copy (verbatim):** "new! WATERMELON LIP BUTTER" — ""it's super hydrating and perfect for everyday." — xo, [signature]" — tube label bilingual "hydrate and protect / hydrate et protège".
+**Visual DNA:** `#FAF9FA` bg, `#D06A7D` product pink, `#A77989` dusty-rose headline; premium-editorial (S18).
+**Levers:** texture-macro sensory hero (the squeeze IS the hydration claim — show, don't say) + founder-quote + signature endorsement stack (reads as a friend's tip, not ad copy).
+**Campaign beats (2 folders, same lip-essentials wave, localized):** FR "nouveauté ! LES ESSENTIELS LÈVRES HYDRATANTS" (coconut-water lip stain submerged among water bubbles, French quote + same signature) and IT "novità! ESSENZIALI LABBRA IDRATANTI" (Kylie under a water stream holding the stain; her IT quote says "le mie due nuove formule" — the campaign covers both new lip products). One master system, three languages.
+**Weaknesses / trust flags:** no CTA; endorsement is real (her brand) — none fabricated.
+**So What for Grifon:** the stash's first physical-product sensory play — Grifon's port is the crisp UI-detail macro (a storyboard card mid-render) as texture. The EN/FR/IT wave is the bigger steal: one master creative, per-market language swap — near-free EN/Taglish variants via `captureToPng`.
+**Patterns:** corroborates S16, S18; new candidates S29 (signature stack), S30 (geo-localized master), S31 (texture-macro hero); contradicts none.
+
+### 2026-07-12 — E47 Kylie Cosmetics "PLUMP PREP, BRIGHT FINISH" founder-quote portrait (fb-ad-library, DTC beauty / cosmetics)
+![E47](../assets/ad-swipe/E47-kylie-cosmetics.jpg)
+**Why swiped:** AD FILES stash batch 2026-07-12 — Meta Ad Library pull; Downloads folder dies on reboot so ingest now. · **Format:** 9:16 (+1:1 variant), authority-portrait.
+**Layout:** asymmetric split — left column text stack ("new!", dusty-rose caps headline, first-person quote, "xo," + handwritten signature); right two-thirds a close-up of Kylie looking to camera, holding the open white compact directly over her right eye.
+**Copy (verbatim):** "new! PLUMP PREP, BRIGHT FINISH" — ""i'm obsessed with my new complexion essentials for a hydrated, smooth finish." — xo, [signature]"
+**Visual DNA:** `#F6F5F5` bg, `#A37A82` dusty-rose headline, `#E2C4B5` skin/product tones; premium-editorial (S18).
+**Levers:** founder-portrait authority (S2/S16) + product-as-monocle framing (compact held over the eye fuses face and product into one focal point) + S29 quote-signature stack.
+**Campaign beats (2 folders, same Complexion Essentials launch):** EN "new! COMPLEXION ESSENTIALS" product still-life (brush + compact + Supple Glaze bottles with mirror reflections, benefit body copy) and its Italian twin "novità! MUST-HAVE PER IL VISO" — pixel-identical layout and photography, copy translated (S30 caught red-handed). Skipped as separate entries; same campaign.
+**Weaknesses / trust flags:** brand name never spelled out beyond the signature; none fabricated.
+**So What for Grifon:** the launch architecture is the steal — every launch ships a founder-portrait creative + a product still-life creative, each localized per market. Grifon: one avatar-hero + one UI-shot per feature launch, EN + Taglish. Honest version of the quote device: real client quote + real signature.
+**Patterns:** corroborates S2, S16, S18, S19; new candidates S29, S30; contradicts none.
+
+### 2026-07-12 — E46 Kylie Cosmetics "cosmic kylie jenner intense" monochrome red (fb-ad-library, DTC beauty / cosmetics)
+![E46](../assets/ad-swipe/E46-kylie-cosmetics.jpg)
+**Why swiped:** AD FILES stash batch 2026-07-12 — Meta Ad Library pull; Downloads folder dies on reboot so ingest now. First beauty/physical-product DTC brand in the file. · **Format:** 9:16 (+1:1 variant), authority-portrait fragrance launch.
+**Layout:** solid vibrant-red canvas edge to edge; top-center chrome-silver lowercase "cosmic" over "kylie jenner" and "intense" with a small "new!"; Kylie centered below in a high-gloss red latex bodysuit, cradling an oversized glossy red sculpture of the perfume bottle.
+**Copy (verbatim):** "new! cosmic kylie jenner intense" — no CTA.
+**Visual DNA:** `#d61c16` monochrome red (background + wardrobe + prop are ONE color), chrome/silver metallic type, white gloss highlights; high-fashion premium-editorial (S18).
+**Levers:** total-saturation monochrome scroll-stop (one color, total commitment — the saturation IS the pattern interrupt) + founder-authority portrait (S2's first cross-brand corroboration) + oversized-prop product silhouette for instant shape recall.
+**Weaknesses / trust flags:** zero benefit copy, no CTA — pure brand-equity play; none fabricated.
+**So What for Grifon:** proof the S2 authority-portrait engine transfers to beauty unchanged — and that the supplement playbook (S8 callouts, S15 stat-stacks) is NOT how Kylie sells: she runs zero stats, pure authority + sensory. The monochrome treatment is the premium sibling of S14's colorway A/B — Grifon's version: an all-gold-everything hero frame for a flagship launch.
+**Patterns:** corroborates S2 (cross-brand now), S16, S18, S19; new candidate: monochrome total-saturation (watch under S14); contradicts S15's stat-stack orthodoxy (a winner with zero numbers).
+
+### 2026-07-12 — E45 Cursor "Introducing Grok 4.5" (fb-ad-library, SaaS dev tool / AI code editor)
+![E45](../assets/ad-swipe/E45-cursor.jpg)
+**Why swiped:** AD FILES stash batch 2026-07-12 — Meta Ad Library pull; Downloads folder dies on reboot so ingest now. · **Format:** 9:16 (+1:1 variant), minimal announcement.
+**Layout:** near-black canvas; white Cursor logo top-center; centered two-line headline — "Introducing" in muted gray over "Grok 4.5" in white; the REAL prompt-bar UI pill centered below ("+ Send follow-up · Grok 4.5 ∨ · send button"); faint concentric circles radiate from bottom center.
+**Copy (verbatim):** "Introducing Grok 4.5" — in-UI "Send follow-up".
+**Visual DNA:** `#12100c` bg, white + `#8e8a84` muted text, `#221e1a` UI pill; dark-minimal premium (S18).
+**Levers:** external-model-release trend-hijack (S11 — the ad IS the news; xAI's launch becomes Cursor's creative) + product-UI-as-hero (S20 — the model selector showing "Grok 4.5" proves it's live, not promised).
+**Weaknesses / trust flags:** reads as an announcement, not an actionable ad; nothing fabricated — the integration is real.
+**So What for Grifon:** Cursor turns every frontier-model release into a zero-copy ad: headline = the news, visual = the real picker proving it shipped. Grifon analog: "Kling 3 / [new Gemini] now inside Grifon" with the actual model-picker UI as hero. Announcement-as-ad pairs with E36's partnership-news play.
+**Patterns:** corroborates S11, S20, S18, S19; new candidate none; contradicts none.
+
+### 2026-07-12 — E44 Cursor "Meet Composer 2.5." — 3 colorways (fb-ad-library, SaaS dev tool / AI code editor)
+![E44](../assets/ad-swipe/E44-cursor.jpg)
+**Why swiped:** AD FILES stash batch 2026-07-12 — Meta Ad Library pull; Downloads folder dies on reboot so ingest now. · **Format:** 9:16 (+1:1 variants), abstract product-hero; ONE concept across 3 stash folders.
+**Layout:** dark canvas; logo top-left; left-aligned "Meet Composer 2.5." in white over "Frontier coding at lightning speed." in gray; lower half dominated by a large flat electric-blue block filled with thin horizontal white dashes — a code editor abstracted to iconography.
+**Copy (verbatim):** "Meet Composer 2.5." — "Frontier coding at lightning speed."
+**Visual DNA:** `#120F0D` bg + `#2B66FF` block + white (primary); colorway variants from sibling folders: cream canvas + orange/gray converging speed-lines (folder 1897…), dark-green canvas + white/teal lines (folder 4482…) — three canvases, one concept.
+**Levers:** own-model launch news ("Meet X." framing) + abstracted-UI iconography (code as a clean dash-field — honest as long as it stays schematic, not a fake screenshot) + full-canvas colorway A/B (S14's first SaaS sighting).
+**Weaknesses / trust flags:** abstraction may read as decoration to non-devs; no CTA; none fabricated.
+**So What for Grifon:** S14 goes cross-niche — the whole-canvas color test is the cheapest variant lever for Grifon's own image ads (Andromeda inventory too, S19). And when the real UI is too dense for an ad, ship the iconic simplification instead of a squint-test screenshot.
+**Patterns:** corroborates S14 (cross-niche now), S18, S19; new candidate: abstracted-UI iconography (watch under S20); contradicts none.
+
+### 2026-07-12 — E43 Cursor "Assign Cursor to your Linear issues." (fb-ad-library, SaaS dev tool / AI code editor)
+![E43](../assets/ad-swipe/E43-cursor.jpg)
+**Why swiped:** AD FILES stash batch 2026-07-12 — Meta Ad Library pull; Downloads folder dies on reboot so ingest now. · **Format:** 9:16 (+1:1 variant), product-UI hero.
+**Layout:** warm beige canvas; logo top-left; bold two-line headline; center white rounded card replicating a REAL Linear issue — "CORE-4 · Accessibility audit & updates", body text, Activity feed ("Andrea created this issue", "**Cursor agent connected**", "Examining issue CORE-4" in terminal type); bottom third pure negative space.
+**Copy (verbatim):** "Assign Cursor to your Linear issues." — no CTA.
+**Visual DNA:** `#F2EFE9` beige, `#1A1A1A` text, white card; premium-editorial restraint (S18).
+**Levers:** tool-stack audience callout (S8 with the buyer's STACK as the variable instead of niche/demographic — only Linear users self-identify, the integration IS the targeting) + product-UI-as-hero (S20 — the agent status line is the feature demo).
+**Weaknesses / trust flags:** meaningless to non-Linear users (by design); no CTA; mock issue content is plausibly realistic — none fabricated.
+**So What for Grifon:** the S8 spin for SaaS: swap "[PH niche] doing [revenue]" for "[tool] users" — "Grifon posts straight to your Meta Ads Manager." Integration ads double as audience filters; cheapest qualified-reach play in the batch. GP-2 variable family.
+**Patterns:** corroborates S8 (cross-niche, tool-stack variant), S20, S18, S19; new candidate none; contradicts none.
+
+### 2026-07-12 — E42 Cursor "Review demos, not diffs." + mobile-agent wave (fb-ad-library, SaaS dev tool / AI code editor)
+![E42](../assets/ad-swipe/E42-cursor.jpg)
+**Why swiped:** AD FILES stash batch 2026-07-12 — Meta Ad Library pull; Downloads folder dies on reboot so ingest now. · **Format:** 9:16 (+1:1 variant), product-UI hero.
+**Layout:** warm beige canvas; logo top-left; bold two-line left-aligned headline; prompt pill center ("add pagination to the table, verify that it works"); "Walkthrough ∨" label over a demo-player card ("Table pagination" — browser mockup with an orange-headed data table + video progress bar).
+**Copy (verbatim):** "Review demos, not diffs." — prompt "add pagination to the table, verify that it works" — no CTA.
+**Visual DNA:** `#F3F0EA` beige, `#121212` text, Cursor-orange accent (~`#E05B35`; Gemini read `#D35400` — my eyeball puts it at the brand orange), white cards; premium-editorial (S18).
+**Levers:** format-enemy positioning (S24 ported to SaaS in four words — the enemy is the diff-review ritual, not a competitor) + product-UI-as-hero (S20 — the walkthrough player IS the promise: watch the demo, skip the code).
+**Campaign beats (2 folders, same mobile-agent wave, skipped as separate entries):** "Watch your agent's work" (dark 9:16, iPhone showing the agent's finished walkthrough + its written verification note) and "Ship on the go" (dark teal, iPhone with "Ready to Merge · All Required Checks Passed · Squash & Merge" — shipping from your phone). Both S20 heroes.
+**Weaknesses / trust flags:** no CTA; the prompt/demo content is realistic — none fabricated.
+**So What for Grifon:** the tightest S24 port in the file: "Review ads, not briefs." / "Approve storyboards, not email threads." Three-to-four-word enemy-naming + the actual product screen as proof — headline mechanic AND visual recipe in one ad. GP-1/GP-2 copy rotation.
+**Patterns:** corroborates S24 (cross-niche now), S20, S18, S19; new candidate none; contradicts none.
+
+### 2026-07-12 — E41 Cursor "Point and draw to fix" (fb-ad-library, SaaS dev tool / AI code editor)
+![E41](../assets/ad-swipe/E41-cursor.jpg)
+**Why swiped:** AD FILES stash batch 2026-07-12 — Meta Ad Library pull; Downloads folder dies on reboot so ingest now. · **Format:** 9:16 (+1:1 variant), product-UI hero.
+**Layout:** light warm-gray canvas with faint blueprint gridlines; logo top-center; bold centered headline; centered iPhone mockup of the annotate flow — red scribble crossing out a "Typo", numbered badges 1/2 pinned to UI elements, live input "Use the actual App Icon here" over an active iOS keyboard.
+**Copy (verbatim):** "Point and draw to fix" — no CTA.
+**Visual DNA:** `#EBEAE6` bg, black phone frame/text, `#FF3B30` annotation red, `#007AFF` iOS blue; premium-minimal (S18).
+**Levers:** product-UI-as-hero (S20 — the feature demo IS the creative) + five-word action headline (verb-verb-outcome, zero jargon). *Corrected a Gemini misread: it filed the iOS-markup look under S21 camouflage — this is a straight feature demo of Cursor's annotate flow, not an ad dressed as organic UI; no S21 count.*
+**Weaknesses / trust flags:** no CTA; assumes the viewer recognizes the annotate workflow; none fabricated.
+**So What for Grifon:** the demo payload is the steal — the annotation says a REAL thing ("Use the actual App Icon here"), which is what makes the demo credible. Grifon hero screenshots must carry real campaign content, never lorem-ipsum. Direct S20 port for a One-Shot composer hero.
+**Patterns:** corroborates S20, S18, S19; new candidate none; contradicts none.
 
 ### 2026-07-12 — E40 IM8 "What's Included In Your FREE I·M·8 Kit*" (fb-ad-library, premium DTC supplement)
 ![E40](../assets/ad-swipe/E40-im8-health.jpg)
@@ -507,6 +624,7 @@ image link as they're re-encountered via `--ingest-only`.
 **Visual DNA:** `#E05B35` orange accent (active selection) on grays (`#EAEAEA` card, `#2B2B2B` shadow, white text); SF-Pro/Inter-class type, mixed case, medium weight; symmetrical centered composition, generous negative space; premium-editorial register (S18 premium lane).
 **Levers:** model-optionality promise ("Choose the best model for every task.") + name-dropping recognizable model families (Opus, GPT, Sonnet, Codex) to ride the AI wave. *Corrected a Gemini misread: it flagged the version numbers as "speculative/future-pacing" — they're real current models; the lever is optionality + trend-riding, not future-pacing.*
 **Weaknesses / trust flags:** no on-creative CTA; too abstract for non-technical buyers. Trust flags: none.
+**Variant (stash 2026-07-12, folder Cursor_2084029272486793):** the same creative on a flat near-black canvas (no 3D-cube texture) — a dark colorway A/B of this concept (S14-class); E18's stored image stands, variant not re-ingested.
 **So What for Grifon:** the product's real UI as the ad's hero is the honest-proof version of a product shot — Grifon can run its own One-Shot composer / wizard UI as the hero of an image ad (fits the trust line: show the actual product). Premium-editorial gray+accent also shows S18's premium lane works with a non-gold accent — Grifon keeps gold.
 **Patterns:** corroborates S11 (AI trend-riding via model names), S19 (9:16 safe-band discipline); new candidate: **S20 product-UI-as-hero**; contradicts: none.
 
