@@ -47,7 +47,7 @@ class of edit). The believability + label eval gate runs on EVERY output, every 
 | `angle-switch-v2` | Camera Angle Switch (concrete destinations) | talking | draft — MOVE WORKS per Neil; believability re-run on clean clip pending | 6s ≈ $0.60 | Neil eyeball 2026-07-06 + official prompt guide |
 | `paper-collage-v1` | Paper Collage (johnsavage paper style) | talking | draft | 5s ≈ $0.50/attempt | johnsavage PDF (appendix B) |
 | `vox-explainer-v1` | VOX Editorial Explainer | talking | **product_shipped** (2026-07-07 — talking route of the VOX EXPLAINER hero style; Slice 3 NEIL_APPROVED. Code: `api/_lib/omniPresets.ts` template + `OMNI_STYLE_ROUTING`; picker `components/GenerateVideo/index.tsx`) | 4s ≈ $0.40 | round 1 2026-07-06: real-human/HIGH, title letter-perfect, graphics grounded from prompt text; product-path renders Neil-eyeballed 2026-07-07 |
-| `creator-ui-pop-v1` | Creator UI Pop-Up Card (Jatho-class) | talking | draft | 5s ≈ $0.50 | Jatho tutorial summary 2026-07-12 (secondhand — NOT swipe-file evidence; needs real reels via Mode B) |
+| `creator-ui-pop-v1` | Creator UI Pop-Up Card (Jatho-class) | talking | draft (round 1 2026-07-12: GATE FAIL on hex leak; card mechanics + believability + bg-lock all passed — round-2 fix candidate recorded) | 5s ≈ $0.50 | Jatho tutorial summary 2026-07-12 (secondhand — NOT swipe-file evidence; needs real reels via Mode B); round 1 2026-07-12 |
 | `rack-focus-v0` | Rack Focus | b-roll | rejected | — | #18 round 1: move failed to execute |
 | `talking-bg-swap-v0` | Talking-Scene BG Swap/Relight | talking | rejected | — | #18 round 1 Tests 3-4: degrades believability |
 
@@ -78,8 +78,8 @@ cdninstagram/fbcdn — network-policy denial, verified). Run on the cafe PC:
 | 6 | https://www.instagram.com/reel/DHnbKjUJ89o/ | queued |
 | 7 | https://www.instagram.com/reel/DChxOtHPDQQ/ | queued |
 
-Also pending on the PC: **creator-ui-pop-v1 round 1** (see its "Round 1 PENDING"
-note — ready command recorded there).
+~~Also pending on the PC: **creator-ui-pop-v1 round 1**~~ — DONE 2026-07-12
+(gate FAIL on hex leak; see its `validation.rounds`).
 
 ## Gated Proposals
 
@@ -1057,30 +1057,11 @@ VO muxes continuously over cuts) was deliberately NOT duplicated into this prese
 commerce text — the invented "$49.45 / ADD TO CART" watch item, the `#FFCC00` hex
 leak, and the vox masthead leak are all this class. Constraints below are the point.
 
-**Round 1 PENDING (prepped 2026-07-12 remote session — Neil: "later when I get back
-to PC"; the remote sandbox has no GEMINI_API_KEY, so the paid leg fires from the
-cafe PC).** Free legs done:
-
-- Raw-ness check PASS: `workflows/assets/omni-poc/skincare-raw-talking.mp4`
-  (720×1280/24, 4.0s) frame strip — zero burned text, zero baked camera move.
-- Blind baseline: real-human/HIGH already on record for this exact committed
-  asset (vox-explainer-v1 round 1) — stands as the control.
-- Dry-run shown to Neil; est. $0.40. **Approval-pending tuple (guardrail 2b:
-  ANY slot change = new approval):** card-only round, NO shatter_word (one
-  variable per round; shatter hook = round 2). Ready command:
-
-  ```
-  python tools/omni_edit.py preset creator-ui-pop-v1 workflows/assets/omni-poc/skincare-raw-talking.mp4 --slot transcript="Hindi ka pagod, thirsty lang ang skin mo ngayon." --slot card_words="THIRSTY SKIN" --slot card_moment='as the speaker says "thirsty"' --slot card_icon_desc="a small pixel-art water droplet icon" --slot brand_primary_hex="#FFCC00" --yes --budget 2
-  ```
-
-- Eval gate for the output (run all, then append the round entry below +
-  commit): blind believability vs the raw control (`analyze_video.py`);
-  `render_audit.mjs` vision read — "THIRSTY SKIN" letter-perfect, ZERO other
-  text, **explicit hex-leak check** (the literal `#FFCC00` in the prompt is the
-  known instruction-text-leak class and the lab has no forbiddenWords sidecar);
-  zero invented prices/commerce labels; background-unchanged vs source frames;
-  move-executed check (card pop actually happens — frame strip is not enough,
-  eyeball the motion).
+**Round 1 FIRED 2026-07-12 (cafe PC, Neil approved the recorded tuple verbatim).**
+Result: **GATE FAIL on the hex leak — every other gate passed.** Full evidence in
+`validation.rounds` below. The card-only round (NO shatter_word) fired exactly as
+prepped; the predicted instruction-text-leak class materialized: the literal
+`#FFCC00` from the accent-color slot rendered as yellow typography on the card.
 
 ```yaml
 id: creator-ui-pop-v1
@@ -1154,8 +1135,54 @@ validation:
         BACKGROUND-UNCHANGED check vs source frames; move-executed check
         (card pop AND shatter both actually happen - "no visible failure"
         is not "move happened")
-  rounds: []   # $0 so far; first paid round queues BEHIND Slice-4 beta work
-evidence: ["Jatho tutorial summary 2026-07-12 (secondhand - see origin caveat)"]
+  rounds:
+    - date: 2026-07-12 (round 1 — GATE FAIL on hex leak; all other gates PASS)
+      clip: "workflows/assets/omni-poc/skincare-raw-talking.mp4 (4.0s, 720x1280;
+        raw-verified via frame strip in the 2026-07-12 remote prep; control
+        baseline real-human/HIGH on record from vox-explainer-v1 round 1)"
+      slots: 'transcript="Hindi ka pagod, thirsty lang ang skin mo ngayon.";
+        card_words=THIRSTY SKIN; card_moment=as the speaker says "thirsty";
+        card_icon_desc=a small pixel-art water droplet icon;
+        brand_primary_hex=#FFCC00 (card-only round, NO shatter_word)'
+      cost_usd: 0.40
+      machine_verdict: |
+        HEX LEAK CONFIRMED (unconditional FAIL per the invented-text
+        constraint): the literal "#FFCC00" renders as yellow type at the
+        card's top-left from ~2.25s to end — absent at 1.25s, so it fades in
+        as the card settles. Caught by render_audit.mjs vision read AND
+        human-eyeballed on extracted frames t2.25/t3.75 (not a vision-read
+        hallucination). Exactly the instruction-text-leak class the pending
+        note flagged (the lab has no forbiddenWords sidecar).
+        EVERYTHING ELSE PASSED: "THIRSTY SKIN" letter-perfect on a glassy
+        rounded card with the pixel-art droplet icon, exactly as directed;
+        ZERO other text — no invented prices/commerce labels, no subtitles/
+        captions; background INTACT (source-vs-output frame match at 2.25s
+        and 3.75s — same room, the bottle leaving frame late is source
+        behavior); move EXECUTED (card mid scale-in at 1.25s — smaller,
+        tilted, rising — settled by 2.25s; pop timed to "thirsty" ~1s in).
+        Blind believability (neutral-filename copy): real-human verdict HELD,
+        confidence medium vs the control's high (same softening pattern as
+        vox round 1 — verdict class is the gate); lip-sync perfect.
+        Tool note: analyze_video.py exited 3 (GENERIC_OUTPUT — why_it_works
+        needs >=3 entries and a bare 4s clip yields 1); the believability
+        block was still produced and is what the gate reads. Expect this
+        exit on short lab clips; it is not an analysis failure.
+      neil_verdict: pending eyeball (720p + 1080p upscale ready in
+        .tmp/omni-poc/edits/)
+      status_effect: |
+        stays draft. Round 2 candidate fix (Neil-gated, new approval + full
+        cost, re-roll from raw — never refine): describe the accent in words
+        in the filled slot (e.g. "warm golden yellow, Grifon Gold") instead
+        of passing a raw hex string into the visible prompt, and/or add a
+        template line "never render a color code or hex value as text".
+        Keep the round card-only again (one variable per round); the
+        shatter_word hook moves to round 3. If the wordy-color variant
+        passes, the product-path lesson transfers: the proxy's
+        forbiddenWords sidecar already guards this class, but the template
+        should stop inviting it.
+      output: .tmp/omni-poc/edits/creator-ui-pop-v1-155754.mp4 (720p, 936KB)
+        + .1080p.mp4 (2.2MB) — defreezer-wiped; regenerate to re-view
+evidence: ["Jatho tutorial summary 2026-07-12 (secondhand - see origin caveat)", "round 1 2026-07-12 (hex-leak gate FAIL; card mechanics + believability + bg-lock all proven)"]
 cost_estimate_usd_per_run: "5s ~ $0.50/attempt"
 ```
 
