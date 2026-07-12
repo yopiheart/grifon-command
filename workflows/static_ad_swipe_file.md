@@ -45,7 +45,7 @@ Proposal) → `applied` (shipped as an Image Ads Gen template or CMO playbook).
 | S8 | **Hyper-specific audience callout** — name the exact buyer in the hook ("If you own a *[niche]* doing *[revenue]*"; "on GLP-1"; "Women 40+"; "Postpartum…"). Self-identification + specificity (Sabri Suby dream-buyer). ONE template → N variants off a swapped variable. | **5 across 3 brands** (E5 service; E8/E11 Grüns; E13 IM8) | **proposed — strongest pattern, drives GP-2** |
 | S9 | **Anti-design text-only pattern interrupt** — flat solid bg, centered white sans, zero imagery/logo/CTA button; reads as a personal note, not an ad. **Contradicts S5 + Grifon's cinematic brand** — adopt the copy mechanic; test the bare visual only as a deliberate experiment. | 1 (E5) | observed (brand-conflict) |
 | S10 | **Value-first lead magnet (TOF)** — gives a free asset ("Scaling Roadmap", "FREE Starter Kit") to a cold dream-buyer. Top-of-funnel; the opposite end from the E1–E4 bottom-funnel upsell. | 2 (E5; E12 IM8) | observed |
-| S11 | **Trend-hijack** — ride a live cultural wave so the ad feels like the moment, not a pitch (GLP-1 / Ozempic). Grifon's wave is **"AI"**. | 5 (E7, E8, E10 Grüns; E14, E16 IM8) | observed |
+| S11 | **Trend-hijack** — ride a live cultural wave so the ad feels like the moment, not a pitch (GLP-1 / Ozempic). Grifon's wave is **"AI"**. | 6 (E7, E8, E10 Grüns; E14, E16 IM8; E18 Cursor) | observed |
 | S12 | **Pattern-interrupt hook** — curiosity/novelty/fake-apology that doesn't read as an ad ("We NEVER do this", "WE'RE SO SORRY"). | 2 (E6, E7 Grüns) | observed |
 | S13 | **Mascot / recall device** — a repeated motif (gummy bear) carries instant brand ID. Grifon's mark + gold light-sweep is the under-used equivalent. | 1 (E6–E11 Grüns, one brand) | observed |
 | S14 | **Full-canvas color A/B** — test the *whole background* color (green/yellow/blue/beige), not just the CTA. Extends S6. | 1 (E6–E11 Grüns, one brand) | observed |
@@ -53,7 +53,8 @@ Proposal) → `applied` (shipped as an Image Ads Gen template or CMO playbook).
 | S16 | **Borrowed authority** — social proof by association (celebrity / sports partnership: Inter Miami CF). Grifon = client logos / testimonials / "trusted by N PH businesses." | 1 (E15 IM8) | observed |
 | S17 | **"Imagine…" future-pace + objection-handling** — paint the after-state, defuse the fear ("Imagine your GLP-1 journey, without the side effects"). | 1 (E16 IM8) | observed |
 | S18 | **Style axis: premium-editorial vs flat-graphic** — IM8 (crimson, serif, lifestyle photography, restraint) vs Grüns (loud color-block, mascot, discount). **Grifon = the premium lane** (cinematic gold/black). | brand-level (Grüns flat E6–E11; IM8 premium E12–E17) | observed |
-| S19 | **Placement / multi-ratio + safe-zone** — ship one creative as 4:5 (feed) + 1:1 + 9:16 (stories/reels), keeping text in the 9:16 central ~60% safe band; more ratios = more Andromeda inventory. See the Placement strategy section. | cross-set observation | observed |
+| S19 | **Placement / multi-ratio + safe-zone** — ship one creative as 4:5 (feed) + 1:1 + 9:16 (stories/reels), keeping text in the 9:16 central ~60% safe band; more ratios = more Andromeda inventory. See the Placement strategy section. | cross-set observation (+E18) | observed |
+| S20 | **Product-UI-as-hero** — the actual product interface (a real screen/control, not a screenshot collage) is the ad's hero image; the feature demo IS the creative. Honest proof — fits the trust line. Grifon analog: One-Shot composer / wizard UI as the hero. | 1 (E18 Cursor) | observed |
 
 ## Gated Proposals
 
@@ -236,6 +237,17 @@ More ratios also = more inventory for Andromeda to retrieve against. Logged to t
 Append newest at the top. Each entry's second line is its committed image
 (`![E<NN>](../assets/ad-swipe/E<NN>-<brand-slug>.jpg)`) — E1–E17 backfill their
 image link as they're re-encountered via `--ingest-only`.
+
+### 2026-07-12 — E18 Cursor "Choose the best model for every task." (fb-ad-library, SaaS dev tool)
+![E18](../assets/ad-swipe/E18-cursor.jpg)
+**Why swiped:** first tool-ingested entry (static-autopsy pipeline verification) + Cursor is a top-tier SaaS advertiser in Grifon's own category register. · **Format:** 9:16 story, product-hero/feature-showcase.
+**Layout:** dark-gray abstract 3D geometric background; white Cursor logo top-center; centered white sans-serif headline below it; a floating light-gray dropdown-menu UI card dead-center listing five AI models with "Composer 2.5" highlighted in orange + checkmark. All text inside the 9:16 central safe band.
+**Copy (verbatim):** "Choose the best model for every task." — no CTA on-creative (relies on the platform button).
+**Visual DNA:** `#E05B35` orange accent (active selection) on grays (`#EAEAEA` card, `#2B2B2B` shadow, white text); SF-Pro/Inter-class type, mixed case, medium weight; symmetrical centered composition, generous negative space; premium-editorial register (S18 premium lane).
+**Levers:** model-optionality promise ("Choose the best model for every task.") + name-dropping recognizable model families (Opus, GPT, Sonnet, Codex) to ride the AI wave. *Corrected a Gemini misread: it flagged the version numbers as "speculative/future-pacing" — they're real current models; the lever is optionality + trend-riding, not future-pacing.*
+**Weaknesses / trust flags:** no on-creative CTA; too abstract for non-technical buyers. Trust flags: none.
+**So What for Grifon:** the product's real UI as the ad's hero is the honest-proof version of a product shot — Grifon can run its own One-Shot composer / wizard UI as the hero of an image ad (fits the trust line: show the actual product). Premium-editorial gray+accent also shows S18's premium lane works with a non-gold accent — Grifon keeps gold.
+**Patterns:** corroborates S11 (AI trend-riding via model names), S19 (9:16 safe-band discipline); new candidate: **S20 product-UI-as-hero**; contradicts: none.
 
 ### 2026-06-20 — E6 Grüns "We NEVER do this!" (IG, DTC supplement / greens gummies)
 **Levers:** pattern-interrupt curiosity hook (S12) + discount roundel ("61% OFF + FREE GIFTS") + scarcity bar ("ENDING SOON") + product pouch hero + gummy-bear mascot (S13) on flat green (S14).
