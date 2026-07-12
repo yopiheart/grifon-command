@@ -47,7 +47,7 @@ class of edit). The believability + label eval gate runs on EVERY output, every 
 | `angle-switch-v2` | Camera Angle Switch (concrete destinations) | talking | draft — MOVE WORKS per Neil; believability re-run on clean clip pending | 6s ≈ $0.60 | Neil eyeball 2026-07-06 + official prompt guide |
 | `paper-collage-v1` | Paper Collage (johnsavage paper style) | talking | draft | 5s ≈ $0.50/attempt | johnsavage PDF (appendix B) |
 | `vox-explainer-v1` | VOX Editorial Explainer | talking | **product_shipped** (2026-07-07 — talking route of the VOX EXPLAINER hero style; Slice 3 NEIL_APPROVED. Code: `api/_lib/omniPresets.ts` template + `OMNI_STYLE_ROUTING`; picker `components/GenerateVideo/index.tsx`) | 4s ≈ $0.40 | round 1 2026-07-06: real-human/HIGH, title letter-perfect, graphics grounded from prompt text; product-path renders Neil-eyeballed 2026-07-07 |
-| `creator-ui-pop-v1` | Creator UI Pop-Up Card (Jatho-class) | talking | draft (round 1 2026-07-12: GATE FAIL on hex leak; card mechanics + believability + bg-lock all passed — round-2 fix candidate recorded) | 5s ≈ $0.50 | Jatho tutorial summary 2026-07-12 (secondhand — NOT swipe-file evidence; needs real reels via Mode B); round 1 2026-07-12 |
+| `creator-ui-pop-v1` | Creator UI Pop-Up Card (Jatho-class) | talking | draft (round 1 2026-07-12: GATE FAIL on hex leak; card mechanics + believability + bg-lock all passed — round-2 fix candidate recorded) | 5s ≈ $0.50 | **UPGRADED 2026-07-12: firsthand evidence** — swipe-file P11 (UI pop-up card, 5 corroborations E8–E12) incl. E9, an actual Devin Jatho reel; original secondhand tutorial-summary caveat closed; round 1 2026-07-12 |
 | `rack-focus-v0` | Rack Focus | b-roll | rejected | — | #18 round 1: move failed to execute |
 | `talking-bg-swap-v0` | Talking-Scene BG Swap/Relight | talking | rejected | — | #18 round 1 Tests 3-4: degrades believability |
 
@@ -88,6 +88,27 @@ by shortcode).
 
 ~~Also pending on the PC: **creator-ui-pop-v1 round 1**~~ — DONE 2026-07-12
 (gate FAIL on hex leak; see its `validation.rounds`).
+
+## SFX bank — shopping list (2026-07-12, from the E8–E14 reel batch)
+
+The bank (`api/_lib/assets/sfx/`: boom, ding, drop, glitch, pop, riser, snap,
+sparkle, swish, whoosh) covers the generic hits. The reels also use **diegetic /
+contextual** hits we don't have — pattern P13 (SFX-per-entrance discipline,
+7/7 corroborated) says every graphic entrance carries one, and content mentions
+get a matching real-world sound. To acquire (royalty-free or ElevenLabs
+sound-generation — see the custom-SFX grill with Neil):
+
+| Sample | Trigger context (evidence) | Priority |
+|---|---|---|
+| notification pop (iOS-style tri-tone/pop) | UI card pop-ins (E11 synced one per card; E9 push-notification card) | HIGH — pairs with `creator-ui-pop-v1` |
+| cash-register cha-ching | money/price mentions in script (E12 @3.5s) | HIGH — Grifon ads are offer-heavy |
+| keyboard typing | profile/bio/doc mockups, typewriter reveals (E9 @24s, E12 Google-Doc) | MED |
+| camera shutter | photo/viewfinder motifs, freeze frames (E10 @1s) | MED |
+| paper rustle | doc/article inserts (E12 @20s) — same gap `paper-collage-v1` already flagged | MED |
+| money/bill rustle | wealth mentions (E13 @0.5s) | LOW (cha-ching covers most) |
+
+Adding FILES to `api/_lib/assets/` is a product change → goes through the normal
+gated path once sourced; the list itself is just the record of what to source.
 
 ## Gated Proposals
 
@@ -1190,7 +1211,7 @@ validation:
         should stop inviting it.
       output: .tmp/omni-poc/edits/creator-ui-pop-v1-155754.mp4 (720p, 936KB)
         + .1080p.mp4 (2.2MB) — defreezer-wiped; regenerate to re-view
-evidence: ["Jatho tutorial summary 2026-07-12 (secondhand - see origin caveat)", "round 1 2026-07-12 (hex-leak gate FAIL; card mechanics + believability + bg-lock all proven)"]
+evidence: ["Jatho tutorial summary 2026-07-12 (secondhand - see origin caveat)", "round 1 2026-07-12 (hex-leak gate FAIL; card mechanics + believability + bg-lock all proven)", "FIRSTHAND upgrade 2026-07-12: swipe-file P11 (UI pop-up card device, 5 corroborations E8-E12; E9 = actual Devin Jatho reel with iOS push-notification card + profile mockups) - the exact corroboration path the origin caveat named, now satisfied"]
 cost_estimate_usd_per_run: "5s ~ $0.50/attempt"
 ```
 
