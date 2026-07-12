@@ -85,12 +85,19 @@ alternative: our pipeline already strips Omni/Veo audio and muxes ElevenLabs VO
 
 ## Prerequisites (before Slice 0)
 
-1. **ElevenLabs tier check (BLOCKED on Neil):** our scoped API key lacks
-   `user_read` (verified 2026-07-12 — subscription endpoint returns
-   missing_permissions), so tier/cost/licensing for sound-generation must be
-   checked in the ElevenLabs dashboard, or the key granted the
-   sound-generation scope. **Fallback if tier-blocked or pricey:** CC0/royalty-
-   free packs for the same shopping list — the design is source-agnostic.
+1. **ElevenLabs tier check — CLEARED 2026-07-12 (Neil, dashboard screenshot):**
+   Starter plan ($6/mo) includes **Sound Effects: 150 generations/mo included,
+   $0.04/generation beyond** (Creator 605 gens / same $0.04, for reference).
+   Neil enabled the sound-effects scope on the API key same day. Library
+   session fits comfortably inside ONE month's included allowance (~60–100
+   generations for the full shopping list at 4–6 variants/class; re-roll
+   headroom to ~150 still $0). Two cautions carried into Slice 0:
+   (a) the SAME account powers customer VO (TTS) — run the session early in a
+   billing cycle and watch the meter so SFX never starves production TTS;
+   (b) Starter's card lists "Commercial License for Speech and Music" — one-
+   line confirm that sound-effects output is commercial-licensed on Starter
+   before any generated sample ships in a client ad (fallback unchanged: CC0
+   packs).
 2. **Shopping list** (what to generate/source): see "SFX bank — shopping list"
    in [omni_edit_presets.md](omni_edit_presets.md) — notification pop +
    cha-ching HIGH; typing, shutter, paper rustle MED; plus 4–6 variants of
