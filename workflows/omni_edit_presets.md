@@ -68,15 +68,23 @@ cdninstagram/fbcdn — network-policy denial, verified). Run on the cafe PC:
 4. Neil picks which 1–2 new drafts earn a paid validation round (round costs
    ~$0.40–0.60, queued behind Slice-4 beta work).
 
-| # | Reel | Status |
+**Intake DONE 2026-07-12 (cafe PC):** all 7 downloaded (yt-dlp), Edit-DNA'd
+(`analyze_video.py`), and frame-verified by the smoke-tester subagent (117 tool
+uses; corrected several DNA claims — notably reel 6's missed B&W CGI body-scan
+insert and reel 4's fake-"Hormozi" mock accounts). All 7 verdict `real-human`.
+Triage delivered to Neil same session — **no drafts written; awaiting his pick.**
+Artifacts in `.tmp/reels-intake/` (defreezer-disposable; reels re-downloadable
+by shortcode).
+
+| # | Reel | Status (2026-07-12 triage) |
 |---|---|---|
-| 1 | https://www.instagram.com/reel/DaNydEQN5Dc/ | queued |
-| 2 | https://www.instagram.com/reel/DHgVUG3x5YV/ | queued |
-| 3 | https://www.instagram.com/reel/DE7d5gzxAXk/ | queued |
-| 4 | https://www.instagram.com/reel/DPCEQYdjbPz/ | queued |
-| 5 | https://www.instagram.com/reel/DJ8xn1XMR56/ | queued |
-| 6 | https://www.instagram.com/reel/DHnbKjUJ89o/ | queued |
-| 7 | https://www.instagram.com/reel/DChxOtHPDQQ/ | queued |
+| 1 | https://www.instagram.com/reel/DaNydEQN5Dc/ | analyzed — talking-head UGC (TAM framework); maps to existing: P1/P2 captions (sentence-case white variant), felt-zoom punch-ins, P6 proof graphics (phone mockups, retention chart, X/check kinetic checklist); FFmpeg-class: glitch transition, B&W segment |
+| 2 | https://www.instagram.com/reel/DHgVUG3x5YV/ | analyzed — **an actual Devin Jatho reel**: firsthand evidence for `creator-ui-pop-v1` (iOS push-notification card 94.5s, IG profile mockups, YouTube card, article screenshot); also P1/P2 (ALL-CAPS, green+purple accents), P6, P7 |
+| 3 | https://www.instagram.com/reel/DE7d5gzxAXk/ | analyzed — talking-head listicle; UI-card class (profile-grid mockup, REASON 1/2/3 pill list, speech bubble); NEW-device candidate: camera-viewfinder REC-HUD frame motif (opens+closes the reel); captions = P2 gradient-emphasis variant |
+| 4 | https://www.instagram.com/reel/DPCEQYdjbPz/ | analyzed — UI-card class (comments panel, DM mockups incl. bad-pitch/blocked counter-example); FFmpeg-class: diagonal-wipe split screen; CAUTION: impersonation device (mock "hormozi" account + Acquisition.com-merch lookalike) — do NOT copy |
+| 5 | https://www.instagram.com/reel/DJ8xn1XMR56/ | analyzed — podcast 2-cam clip; UI-card class (YouTube nav-bar animation, Reddit-post card, Google-Doc typewriter reveal) + pixel-art icon badges (matches creator-ui-pop's icon language); real multi-cam hard cuts (what angle-switch-v2 fakes) |
+| 6 | https://www.instagram.com/reel/DHnbKjUJ89o/ | analyzed — kinetic type + emoji covered by premium-reel-v2; B&W CGI body-scan metaphor insert = GENERATION class (storyboard/Veo b-roll, not an Omni edit move); FFmpeg-class: light-leak/bokeh overlay; pattern candidate: caption-only "Comment X" CTA |
+| 7 | https://www.instagram.com/reel/DChxOtHPDQQ/ | analyzed — 7 PHYSICAL filmed transitions (lens cover, whip pan, clone, comment-grab prop) = capture-time technique, not post/preset material; P3 whip-pan corroboration; FFmpeg-class: numbered "NUMBER N / NAME" yellow-label system |
 
 ~~Also pending on the PC: **creator-ui-pop-v1 round 1**~~ — DONE 2026-07-12
 (gate FAIL on hex leak; see its `validation.rounds`).
