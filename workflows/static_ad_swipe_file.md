@@ -35,32 +35,34 @@ Proposal) → `applied` (shipped as an Image Ads Gen template or CMO playbook).
 
 | ID | Pattern | Corroborations | Status |
 | --- | --- | --- | --- |
-| S1 | **Risk-reversal headline / guarantee** — the promise IS the guarantee ("kick-off in 5 days OR all your money back"; "TRY RISK-FREE"; "30-day money-back"). Removes the buy-risk at the headline, not the fine print. | 7 (E1, E2, E3; E11, E26-var Grüns; E12, E17 IM8) | proposed |
+| S1 | **Risk-reversal headline / guarantee** — the promise IS the guarantee ("kick-off in 5 days OR all your money back"; "TRY RISK-FREE"; "30-day money-back"). Removes the buy-risk at the headline, not the fine print. | 9 (E1, E2, E3; E11, E26-var Grüns; E12, E17, E32, E33-var IM8) | proposed |
 | S2 | **Authority portrait hero** — founder cut-out, confident pose, gold rim-light on black; the *person* is the proof when there's no physical product. | 4 (E1–E4) | observed |
 | S3 | **Ticket / tier comparison** — Free (dull, glass) vs paid (gold, glowing) cards side by side; anchoring makes the upgrade obvious. | 2 (E3, E2-partial) | observed |
-| S4 | **Offer-stack checklist** — gold/green ✅ list of what they GET (calls, templates, bonuses) + guarantee tag. Reciprocity + commitment. | 2 (E2, E3) | observed |
+| S4 | **Offer-stack checklist** — gold/green ✅ list of what they GET (calls, templates, bonuses) + guarantee tag. Reciprocity + commitment. | **3 across 2 brands — crossed ≥3 2026-07-12** (E2, E3; E40 IM8 itemized free-kit) | observed |
 | S5 | **Gold-on-black SaaS palette** — `#FFCC00`-class gold + near-black, glassy cards, gold lozenge "VIP/PRO" badge, gold gradient CTA bar. (Already Grifon's palette.) | 4 (E1–E4) | observed |
 | S6 | **CTA-bar color A/B test** — same creative shipped with gold / green / blue "Learn more" bars across the set; they're testing button color, not just creative. | 3 (E1 gold, E2 green, E4 blue) | observed |
 | S7 | **Fake-DM / manufactured interaction / manufactured scarcity** — "pre-approved," blurred meeting invite, "selecting a few people," staged AMA-sticker Q&A dressed as organic. **ANTI-PATTERN for Grifon** — recorded so we copy the *layout* (cohort offer, AMA-reply format) but never the fabrication. | 3 (E4, E1-urgency; E19 Grüns fake-AMA) | observed (do-not-replicate) |
-| S8 | **Hyper-specific audience callout** — name the exact buyer in the hook ("If you own a *[niche]* doing *[revenue]*"; "on GLP-1"; "Women 40+"; "Postpartum…"). Self-identification + specificity (Sabri Suby dream-buyer). ONE template → N variants off a swapped variable. | **9 across 3 brands** (E5 service; E8/E11, E19, E20, E25, E26 Grüns; E13 IM8) | **proposed — strongest pattern, drives GP-2** |
+| S8 | **Hyper-specific audience callout** — name the exact buyer in the hook ("If you own a *[niche]* doing *[revenue]*"; "on GLP-1"; "Women 40+"; "Postpartum…"). Self-identification + specificity (Sabri Suby dream-buyer). ONE template → N variants off a swapped variable. | **10 across 3 brands** (E5 service; E8/E11, E19, E20, E25, E26 Grüns; E13, E37 IM8) | **proposed — strongest pattern, drives GP-2** |
 | S9 | **Anti-design text-only pattern interrupt** — flat solid bg, centered white sans, zero imagery/logo/CTA button; reads as a personal note, not an ad. **Contradicts S5 + Grifon's cinematic brand** — adopt the copy mechanic; test the bare visual only as a deliberate experiment. | 2 across 2 brands (E5; E24 Grüns) | observed (brand-conflict) |
-| S10 | **Value-first lead magnet (TOF)** — gives a free asset ("Scaling Roadmap", "FREE Starter Kit") to a cold dream-buyer. Top-of-funnel; the opposite end from the E1–E4 bottom-funnel upsell. | 2 (E5; E12 IM8) | observed |
-| S11 | **Trend-hijack** — ride a live cultural wave so the ad feels like the moment, not a pitch (GLP-1 / Ozempic). Grifon's wave is **"AI"**. | 7 (E7, E8, E10, E29 Grüns; E14, E16 IM8; E18 Cursor) | observed |
+| S10 | **Value-first lead magnet (TOF)** — gives a free asset ("Scaling Roadmap", "FREE Starter Kit") to a cold dream-buyer. Top-of-funnel; the opposite end from the E1–E4 bottom-funnel upsell. | **3 across 2 brands — crossed ≥3 2026-07-12** (E5; E12, E40 IM8) | observed |
+| S11 | **Trend-hijack** — ride a live cultural wave so the ad feels like the moment, not a pitch (GLP-1 / Ozempic). Grifon's wave is **"AI"**. | 8 (E7, E8, E10, E29 Grüns; E14, E16, E37 IM8; E18 Cursor) | observed |
 | S12 | **Pattern-interrupt hook** — curiosity/novelty/apology/gross-out that doesn't read as an ad ("We NEVER do this", "WE'RE SO SORRY", "RABBIT POOPS?", "We're back."). | 4 (E6, E7, E21, E24 — all Grüns; single-brand-heavy) | observed |
 | S13 | **Mascot / recall device** — a repeated motif (gummy bear) carries instant brand ID; E23 upgrades it from motif to *actor* (mascot golfing in the buyer's world). Grifon's mark + gold light-sweep is the under-used equivalent. | 2 (E6–E11; E23 mascot-as-actor — one brand) | observed |
-| S14 | **Full-canvas color A/B** — test the *whole background* color (green/yellow/blue/beige), not just the CTA. Extends S6. | 2 (E6–E11; E21 dark-green/white re-skin — one brand) | observed |
-| S15 | **Stat-stack proof** — numerals as proof, stacked ("21 vitamins. 20 cal. 1 net carb."; "60+ ingredients"). | 5 (E8, E10, E23, E26 Grüns; E14 IM8) | observed |
-| S16 | **Borrowed authority** — social proof by association (celebrity / sports partnership: Inter Miami CF; Lisa Rinna campaign). Grifon = client logos / testimonials / "trusted by N PH businesses." | 2 across 2 brands (E15 IM8; E22 Grüns × Lisa Rinna) | observed |
+| S14 | **Full-canvas color A/B** — test the *whole background* color (green/yellow/blue/beige), not just the CTA. Extends S6. | **3 across 2 brands — crossed ≥3 2026-07-12** (E6–E11, E21 Grüns; E31 cream/dark-red colorways IM8) | observed |
+| S15 | **Stat-stack proof** — numerals as proof, stacked ("21 vitamins. 20 cal. 1 net carb."; "60+ ingredients"). | 10 across 2 brands (E8, E10, E23, E26 Grüns; E14, E31, E33, E34, E37, E38 IM8) | observed |
+| S16 | **Borrowed authority** — social proof by association (celebrity / sports partnership: Inter Miami CF; Lisa Rinna campaign). Grifon = client logos / testimonials / "trusted by N PH businesses." | **8 across 2 brands — crossed ≥3 2026-07-12, IM8-heavy** (E15, E32–E36, E40 IM8; E22 Grüns × Lisa Rinna) | observed |
 | S17 | **"Imagine…" future-pace + objection-handling** — paint the after-state, defuse the fear ("Imagine your GLP-1 journey, without the side effects"). | 1 (E16 IM8) | observed |
-| S18 | **Style axis: premium-editorial vs flat-graphic** — IM8 (crimson, serif, lifestyle photography, restraint) vs Grüns (loud color-block, mascot, discount). **Grifon = the premium lane** (cinematic gold/black). | brand-level (Grüns flat E6–E11; IM8 premium E12–E17) | observed |
-| S19 | **Placement / multi-ratio + safe-zone** — ship one creative as 4:5 (feed) + 1:1 + 9:16 (stories/reels), keeping text in the 9:16 central ~60% safe band; more ratios = more Andromeda inventory. See the Placement strategy section. | cross-set observation (+E18) | observed |
+| S18 | **Style axis: premium-editorial vs flat-graphic** — IM8 (crimson, serif, lifestyle photography, restraint) vs Grüns (loud color-block, mascot, discount). **Grifon = the premium lane** (cinematic gold/black). | brand-level (Grüns flat E6–E11; IM8 premium E12–E17, E31–E36, E38–E40; axis-crossers: E9 Grüns-goes-premium, E37 IM8-goes-flat — register follows SEGMENT, not brand dogma) | observed |
+| S19 | **Placement / multi-ratio + safe-zone** — ship one creative as 4:5 (feed) + 1:1 + 9:16 (stories/reels), keeping text in the 9:16 central ~60% safe band; more ratios = more Andromeda inventory. See the Placement strategy section. | cross-set observation (+E18; +E31–E40 — IM8 ships every creative as a 9:16 + 1:1/4:5 pair) | observed |
 | S20 | **Product-UI-as-hero** — the actual product interface (a real screen/control, not a screenshot collage) is the ad's hero image; the feature demo IS the creative. Honest proof — fits the trust line. Grifon analog: One-Shot composer / wizard UI as the hero. | 1 (E18 Cursor) | observed |
-| S21 | **Native-format camouflage** — the ad dresses as organic platform UI (IG story AMA sticker, Close-Friends badge, caption cards, handle overlay) to bypass banner blindness. Slides into S7 the moment the interaction is faked — Grifon version uses REAL community questions only. | 2 (E19, E27 Grüns) | observed |
+| S21 | **Native-format camouflage** — the ad dresses as organic platform UI (IG story AMA sticker, Close-Friends badge, caption cards, handle overlay) to bypass banner blindness. Slides into S7 the moment the interaction is faked — Grifon version uses REAL community questions only. | **5 across 2 brands — crossed ≥3 2026-07-12** (E19, E27 Grüns; E34, E35, E39 IM8 — IM8's variant is the HONEST kind: real verified handle + real credential line) | observed |
 | S22 | **Category-king flex** — publicly acknowledge copycats/doubters to frame the brand as the original ("we see you, copycats."; "We hereby accept your apology."). Late-stage play — only works once you ARE the category leader. | 1 (E22 + variants, Grüns) | observed |
 | S23 | **Real-scarcity nostalgia drop** — limited-edition collab with a legacy childhood brand (Grüns × Popsicle Firecracker), run as a full campaign system (flavor graphic + UGC + meme + text-only sellout apology). Scarcity is REAL (sold out, no restock) — passes the trust line. | 1 (E27 campaign, Grüns) | observed |
-| S24 | **Format-enemy positioning** — villainize the incumbent *format/ritual*, not a competitor brand ("STOP CHOKING DOWN GRASS IN A GLASS. Measure. Blend. Gag. Scrub."; "STOP PUNISHING YOURSELF WITH POWDERS."). Grifon's enemy: the ₱30K agency retainer / DIY all-nighter. | 2 (E28; E29-var Grüns) | observed |
+| S24 | **Format-enemy positioning** — villainize the incumbent *format/ritual*, not a competitor brand ("STOP CHOKING DOWN GRASS IN A GLASS. Measure. Blend. Gag. Scrub."; "STOP PUNISHING YOURSELF WITH POWDERS."). Grifon's enemy: the ₱30K agency retainer / DIY all-nighter. | **6 across 2 brands — crossed ≥3 2026-07-12** (E28, E29-var Grüns; E31, E34, E38, E39 IM8 — IM8's enemy is "supplement clutter": pill bottles, powders, decision fatigue) | observed |
 | S25 | **Uncanny meme creative** — toys/dolls/hand-drawn doodles ARE the whole ad (Barbie split-meme, marker-doodle pack shot). Feed-native, cheap, honest (nobody mistakes a doll for a fake testimonial). | 2 (E29, E30 Grüns) | observed |
 | S26 | **Taboo/crude register** — bodily-function, profanity, and anatomical hooks matched per segment ("RABBIT POOPS?", "DON'T GHOST YOUR BALLS.", "F*CK YOU, HAIR LOSS"). Strong scroll-stop, brand-safety risk; off Grifon's premium register — the *mechanic* (name the unspoken pain bluntly) ports, the words don't. | 3 (E20, E21, E30 — one brand, below the independent-brand bar) | observed |
+| S27 | **Wealth-contrast price anchor** — someone who could afford anything *chose* the cheap-per-day option ("GIANNIS COULD AFFORD ANYTHING. HE CHOSE A $2.61/DAY DRINK."). Collapses "premium = expensive" and reframes price as a daily cost. Grifon: "Agencies charge ₱30K/mo. Grifon is ₱XX/day." | 1 (E35) | observed |
+| S28 | **Illustrated transformation timeline** — staged before→during→after strip with NAMED stages or months (BEFORE→RITUAL→RESET; JULY→AUGUST→SEPTEMBER); process-framing beats binary before/after. ⚠️ Implied body-claims are a trust gray zone (E37 flagged implausible) — Grifon ports it with REAL artifacts only (BRIEF→GRIFON→LAUNCHED). | 2 (E31-var, E37 — one brand) | observed |
 
 ## Gated Proposals
 
@@ -243,6 +245,122 @@ More ratios also = more inventory for Andromeda to retrieve against. Logged to t
 Append newest at the top. Each entry's second line is its committed image
 (`![E<NN>](../assets/ad-swipe/E<NN>-<brand-slug>.jpg)`) — E1–E17 backfill their
 image link as they're re-encountered via `--ingest-only`.
+
+### 2026-07-12 — E40 IM8 "What's Included In Your FREE I·M·8 Kit*" (fb-ad-library, premium DTC supplement)
+![E40](../assets/ad-swipe/E40-im8-health.jpg)
+**Why swiped:** AD FILES stash batch 2026-07-12 — Meta Ad Library pull; Downloads folder dies on reboot so ingest now. · **Format:** 9:16 (+1:1 variant), offer-stack breakdown.
+**Layout:** deep-teal macro-bubbles bg; serif headline center; red "FREE (WORTH US$54)" lozenge + tiny "*Only with subscription"; horizontal lineup of 5 kit items each labeled FREE (David Beckham welcome stack / signature red cup / forever jar / 5x bonus travel sachets / scoop); red CTA bar bottom.
+**Copy (verbatim):** "What's Included In Your FREE I·M·8™ Kit*" — CTA "GET YOUR FREE KIT NOW!"
+**Visual DNA:** `#002B24` teal bg, `#C8102E` red accent, `#D4AF37` gold scoop, white text; serif + engraving-style item labels; premium-editorial (S18 premium lane).
+**Levers:** value-first lead magnet (S10, the "what's inside" spec sheet of E12's free-kit offer) + itemized offer-stack with per-item FREE tags (S4 — first non-Gadzhi corroboration) + borrowed authority baked into the offer itself ("DAVID BECKHAM WELCOME STACK", S16).
+**Weaknesses / trust flags:** the FREE is conditional on subscription, disclosed only in tiny low-contrast print — micro-disclaimer anchoring skirts the trust line. Grifon version states the condition in readable type.
+**So What for Grifon:** the E12→E40 pair shows the free-kit offer run as TWO creatives — aspiration (gift box) then specification (itemized contents + $ value). "What's inside your Free plan" itemization ports directly to the Free→Starter ladder. GP-1 #3 / GP-4.
+**Patterns:** corroborates S10, S4 (cross-brand now), S16, S18; new candidate none; contradicts none.
+
+### 2026-07-12 — E39 IM8 "You've Been Burned by Joint Supplements Before." (fb-ad-library, premium DTC supplement)
+![E39](../assets/ad-swipe/E39-im8-health.jpg)
+**Why swiped:** AD FILES stash batch 2026-07-12 — Meta Ad Library pull; Downloads folder dies on reboot so ingest now. · **Format:** 9:16 (+1:1 variant), lifestyle + post-card.
+**Layout:** top ~55% sunlit photo of weathered hands gripping a knee (pain made visible, no face); bottom blush card styled as a social post — "IM8 Health ✓ *All-in-one clinical-grade daily supplement*" profile header, bold headline, body, dark-crimson CTA pill.
+**Copy (verbatim):** "You've Been Burned by Joint Supplements Before. Here's Why This Is a Different Category." — "Not another glucosamine. Not another collagen powder. A fundamentally different mechanism." — CTA "SEE THE DIFFERENCE →"
+**Visual DNA:** `#F9EAE9` blush card, `#4E0510` crimson CTA, warm skin-tone photography; premium-editorial (S18).
+**Levers:** skepticism-first hook (validate the buyer's past failures BEFORE pitching — the jaded-buyer opener) + category-exit positioning ("not another X, not another Y" villainizes the incumbent ingredients, S24) + verified-post header camouflage (S21, the honest kind — it's their real handle). *Added S21 myself; Gemini's JSON missed the post-header device.*
+**Weaknesses / trust flags:** never shows the product or names the mechanism — pure curiosity gap; none fabricated.
+**Segment note (2nd creative, same joint segment):** "Daily MSM + CoQ10 — joints intact. 1,500mg MSM + 100mg CoQ10 in one daily ritual" (folder 2090…) — dose-stat proof (S15) + x-ray runner visual. Two registers on one segment, the E25/E26 per-segment-system play again.
+**So What for Grifon:** Bryan HAS been burned ("just another AI tool that lies") — "You've been burned by AI marketing tools before. Here's why this is a different category." is a near-verbatim port. The skeptic-first opener belongs in the CMO hook rotation. GP-4.
+**Patterns:** corroborates S24, S21, S18, S15 (dose-stat variant); new candidate: skepticism-first hook (watch); contradicts none.
+
+### 2026-07-12 — E38 IM8 "One Daily Ritual" — IM8 vs Old Routine (fb-ad-library, premium DTC supplement)
+![E38](../assets/ad-swipe/E38-im8-health.jpg)
+**Why swiped:** AD FILES stash batch 2026-07-12 — Meta Ad Library pull; Downloads folder dies on reboot so ingest now. · **Format:** 9:16 (+1:1 variant), old-way/new-way split.
+**Layout:** serif headline + subhead top; canvas splits cream (left, IM8 red box) vs loud orange (right, pile of black pill bottles + powder scoop) with a "VS" seal; four benefit chips per side (90 Ingredients / NSF Certified for Sport / Third-party tested / Built for consistency VS Pill bottles / Powders / Decision fatigue / More steps); crimson CTA pill bottom.
+**Copy (verbatim):** "One Daily Ritual" — "Premium nutrition for today and tomorrow" — "IM8 vs Old Routine" — CTA "SHOP THE RITUAL"
+**Visual DNA:** `#F6F3EB` cream vs `#F35A22` orange split, `#9E0B14` crimson, `#2C1A11` chips; serif headline + sans chips; premium side literally styled premium, enemy side loud (S18 axis used INSIDE one ad).
+**Levers:** format-enemy positioning (the enemy is the multi-bottle ritual — "Decision fatigue. More steps.", S24) + stat chip ("90 Ingredients", S15) + certification proof (NSF, third-party). *Corrected a Gemini misread: its `tier-compare` format guess suggests S3 — this is old-way-vs-new-way, not a pricing-tier compare (same misread it made on E28).*
+**Weaknesses / trust flags:** none noted.
+**So What for Grifon:** the cleanest us-vs-them template in the file — "One Dashboard" vs "Old Routine: 5 freelancers / 3 tools / brief ping-pong / invoice chaos." Also steal the trick of styling YOUR side premium and the enemy side loud. GP-3/GP-1.
+**Patterns:** corroborates S24 (cross-brand now), S15, S18; new candidate: visual-friction comparison (clutter vs one box); contradicts none.
+
+### 2026-07-12 — E37 IM8 "ON A GLP-1? KEEP NUTRITION SIMPLE." (fb-ad-library, premium DTC supplement)
+![E37](../assets/ad-swipe/E37-im8-health.jpg)
+**Why swiped:** AD FILES stash batch 2026-07-12 — Meta Ad Library pull; Downloads folder dies on reboot so ingest now. · **Format:** 9:16 (+1:1 variant), flat-graphic timeline.
+**Layout:** sage-green flat canvas with ghosted watermark text; two-line condensed headline top; illustrated 3-stage male transformation center over a JULY→AUGUST→SEPTEMBER arrow timeline; bottle + glass of red drink bottom with "GET UP TO 30% OFF" scalloped roundel.
+**Copy (verbatim):** "ON A GLP-1? KEEP NUTRITION SIMPLE." — "90 ingredients in one daily drink for energy, digestion, and routine consistency." — roundel "GET UP TO 30% OFF"
+**Visual DNA:** `#D1D9C4` sage bg, `#5C060E` dark-red type, `#A61C2E` product, blue timeline accent; Impact/DIN condensed caps — **IM8 goes flat-graphic (S18 flat lane) for this segment**, mirroring E9 where Grüns went premium: both brands cross the style axis per segment.
+**Levers:** audience callout ("ON A GLP-1?", S8) + GLP-1 trend-hijack (S11) + stat proof ("90 ingredients", S15) + discount roundel (Grüns-style component in an IM8 ad).
+**Weaknesses / trust flags:** the July→September obese-to-shredded illustration implies a biologically implausible 2-month transformation — even drawn, it's an implied-claim gray zone. Grifon never implies fake timelines.
+**So What for Grifon:** the axis-crossing is the strategic steal: match REGISTER to segment, not to brand dogma — loud flat for deal-seeker segments, premium for status segments. GP-3.
+**Patterns:** corroborates S8, S11, S15, S18 (axis crossover); new candidate S28 (illustrated transformation timeline, with E31 variants); contradicts none.
+
+### 2026-07-12 — E36 IM8 "IT'S OFFICIAL. THE SQUAD'S DRINK IS IM8." — Inter Miami announcement system (fb-ad-library, premium DTC supplement)
+![E36](../assets/ad-swipe/E36-im8-health.jpg)
+**Why swiped:** AD FILES stash batch 2026-07-12 — Meta Ad Library pull; Downloads folder dies on reboot so ingest now. · **Format:** 9:16 (+1:1 variant), lifestyle announcement.
+**Layout:** goalpost/pitch scene; IM8 × Inter Miami co-crest lockup top; caps headline; partnership subhead; pink CTA pill; open red kit box bottom (products + a David Beckham card visible) draped with the pink Inter Miami jersey.
+**Copy (verbatim):** "IT'S OFFICIAL. THE SQUAD'S DRINK IS IM8." — "IM8 is now the official supplement partner of Inter Miami CF. From training day to match day." — CTA "TRY THE SQUAD'S DRINK →"
+**Visual DNA:** `#4C7031` pitch green, `#5B0612` crimson, `#F4B5C8` Miami-pink CTA (the partner's color IS the CTA color), white caps; premium-editorial (S18).
+**Levers:** borrowed authority as NEWS (announcement hook makes the partnership itself the creative, S16). This is E15's concept expanded into a full campaign BEAT — near-match noted, different ad.
+**Campaign beats (3 more folders, same announcement wave):** "NOW POWERING INTER MIAMI CF — AND SUNDAY FC." (products on red box, "Replaces the cabinet — now in the group chat."); "INTER MIAMI CF CHOSE IM8. HERE'S WHY →" (five-player squad photo incl. Messi on flat pink — the roster as the whole creative); "WHAT FUELS GIANNIS NOW FUELS THE ENTIRE INTER MIAMI ROSTER." (celebration photo — chains one endorsement into the next).
+**Weaknesses / trust flags:** none — the partnership is real.
+**So What for Grifon:** an announcement WAVE, not one ad — official-lockup + "it's official" + "here's why" + endorser-chaining, each a separate beat. Grifon analog: "It's official: [known PH brand] runs its ads on Grifon." Adopt the partner-color CTA trick. GP-4.
+**Patterns:** corroborates S16, S18, S19 (every beat ships 9:16 + 1:1); new candidate none; contradicts none.
+
+### 2026-07-12 — E35 IM8 × Giannis "GIANNIS COULD AFFORD ANYTHING. HE CHOSE A $2.61/DAY DRINK." (fb-ad-library, premium DTC supplement)
+![E35](../assets/ad-swipe/E35-im8-health.jpg)
+**Why swiped:** AD FILES stash batch 2026-07-12 — Meta Ad Library pull; Downloads folder dies on reboot so ingest now. · **Format:** 9:16 (+ court-floor product layout variant, same headline), authority-portrait.
+**Layout:** black canvas; caps headline top; white "REAL VALUE. REAL RESULTS. →" pill; "Giannis Antetokounmpo ✓ *NBA Champion, 2x MVP*" attribution card; bottom = Giannis drinking from the crimson IM8 bottle (variant: avatar chip + bottle beside basketball on court floor).
+**Copy (verbatim):** "GIANNIS COULD AFFORD ANYTHING. HE CHOSE A $2.61/DAY DRINK." — "REAL VALUE. REAL RESULTS. →"
+**Visual DNA:** `#000000` bg, white condensed caps (Bebas/DIN class), `#9E1B32` bottle, `#1DA1F2` verified badge; premium-editorial (S18).
+**Levers:** wealth-contrast price anchor (a billionaire's *choice* at $2.61/day collapses the "premium = expensive" objection — the strongest single copy idea in the batch) + borrowed authority (S16) + verified-handle attribution card mimicking platform UI (S21 — honest: real partner, real credential).
+**Weaknesses / trust flags:** none — price math and endorsement are real.
+**So What for Grifon:** "Agencies charge ₱30,000/month. Grifon is ₱XX/day." — anchor against the daily-cost reframe, endorser optional. The credential-line format ("NBA Champion, 2x MVP") ports to client proof ("₱2M in tracked sales"). GP-1 #4 / GP-4.
+**Patterns:** corroborates S16, S18, S21; new candidate S27 (wealth-contrast price anchor); contradicts none.
+
+### 2026-07-12 — E34 IM8 × Giannis "90 INGREDIENTS. ONE DAILY DRINK. THAT'S GIANNIS'S STANDARD." (fb-ad-library, premium DTC supplement)
+![E34](../assets/ad-swipe/E34-im8-health.jpg)
+**Why swiped:** AD FILES stash batch 2026-07-12 — Meta Ad Library pull; Downloads folder dies on reboot so ingest now. · **Format:** 9:16 (+bleachers-photo colorway, same headline), product-hero.
+**Layout:** dark court-side scene; white card upper-left with caps headline + "replaces 16+ separate products. Clinical doses. No fillers."; "Giannis Antetokounmpo ✓ *NBA Champion, 2x MVP*" attribution card; crimson bottle beside a basketball on hardwood.
+**Copy (verbatim):** "90 INGREDIENTS. ONE DAILY DRINK. THAT'S GIANNIS'S STANDARD." — "Daily Ultimate Essentials Pro replaces 16+ separate products. Clinical doses. No fillers." — no on-creative CTA.
+**Visual DNA:** `#7A1C1C` crimson, white card on `#111111` bg, basketball orange accent; condensed caps; premium-editorial (S18).
+**Levers:** stat-stack proof (90 ingredients / 16+ products / clinical doses, S15) + borrowed authority framed as the athlete's STANDARD (his rigor, not just his face — S16) + consolidation enemy ("replaces 16+ separate products", S24).
+**Campaign beats (3 more folders, same Giannis wave):** "82 GAMES. ZERO DAYS OFF FROM NUTRITION." (consistency stat); "MOST SUPPLEMENTS UNDERDOSE. GIANNIS'S DOESN'T." (category-critique, S24); "WOULD A PROFESSIONAL ATHLETE TAKE SOMETHING THAT ISN'T TESTED?" (rhetorical question + NSF certification proof). Every beat carries the same verified attribution card (S21).
+**Weaknesses / trust flags:** no on-creative CTA on several beats; nothing fabricated.
+**So What for Grifon:** "X's standard" reframes endorsement as due diligence — "would a CFO approve a tool that can't show receipts?" rhetorical-question beat ports directly. Pair with E36: IM8 chains one athlete wave into the next (Giannis → Inter Miami roster). GP-4.
+**Patterns:** corroborates S15, S16, S18, S21, S24 (underdose beat); new candidate none; contradicts none.
+
+### 2026-07-12 — E33 IM8 "IF IT DIDN'T WORK, THE SQUAD WOULDN'T TAKE IT." (fb-ad-library, premium DTC supplement)
+![E33](../assets/ad-swipe/E33-im8-health.jpg)
+**Why swiped:** AD FILES stash batch 2026-07-12 — Meta Ad Library pull; Downloads folder dies on reboot so ingest now. · **Format:** 9:16 (+1:1 variant), product-hero on crest.
+**Layout:** black-and-gold Inter Miami crest floor; co-crest lockup top; three-line caps headline; two-line logic subhead; pink CTA pill; scattered flat-lay of octagonal travel tin + bottle + sachets below.
+**Copy (verbatim):** "IF IT DIDN'T WORK, THE SQUAD WOULDN'T TAKE IT." — "Inter Miami CF runs on it daily. World-class athletes have access to anything — they chose this drink." — CTA "TRY THE SQUAD'S DRINK →"
+**Visual DNA:** `#1A1A1A` bg + muted-gold crest, `#A62B38` crimson products, `#F9B2C4` pink CTA; premium-editorial (S18).
+**Levers:** skeptic-flip syllogism (states the doubter's test and lets the endorsement pass it — "access to anything — they chose this") — the reasoned version of S16, aimed at buyers who distrust paid endorsements.
+**Campaign beats (2 more folders, same proof wave):** "Inter Miami's New Drink. **95% Felt More Energy.**" (survey-stat lead + "Try it for up to 90 days, money-back" + "MSM 1,500mg · CoQ10 100mg" — S15 + S1); "The Drink Behind the 90 That Matters Most." (career-length wordplay + "co-founded by Beckham, Clinically Proven").
+**Weaknesses / trust flags:** "95% Felt More Energy" cites no source/sample on-creative — usable only with the real study behind it.
+**So What for Grifon:** write the skeptic's own logic INTO the ad: "If it made generic ads, [brand] wouldn't run it. They can hire anyone — they use Grifon." Argument-as-headline beats badge-as-headline for jaded buyers. GP-4.
+**Patterns:** corroborates S16, S18, S15 + S1 (95%/money-back beat); new candidate: skeptic-flip syllogism (watch, pairs with E39's skepticism-first hook); contradicts none.
+
+### 2026-07-12 — E32 IM8 "The Drink Inter Miami CF Trusts. Now Yours To Try." (fb-ad-library, premium DTC supplement)
+![E32](../assets/ad-swipe/E32-im8-health.jpg)
+**Why swiped:** AD FILES stash batch 2026-07-12 — Meta Ad Library pull; Downloads folder dies on reboot so ingest now. · **Format:** 9:16 (+1:1 variant), product-hero on crest.
+**Layout:** black-and-gold crest floor; overhead shot of crimson bottle + octagonal tin ("The best choose the best" lid); two-line headline lower third — line 2 underlined; trial subhead; pink CTA pill.
+**Copy (verbatim):** "The Drink Inter Miami CF Trusts. Now Yours To Try." — "Up To 90 Days To Decide. Up To 30% Off If You Stay." — CTA "START THE LONG GAME →"
+**Visual DNA:** `#1A1A1A` bg + muted-gold crest, `#C83239` products, `#F9C2D1` pink CTA, white text; premium-editorial (S18).
+**Levers:** "theirs → now yours" accessibility bridge (elite proof, then hands the buyer the same object: "Now Yours To Try" / "Available To You." / "— Now Yours.") + 90-day risk-reversal trial (S1) + retention-framed discount ("30% Off **If You Stay**" — the discount rewards commitment, not desperation).
+**Campaign beats (4 more folders, same offer wave):** "Tried by the World's Best. Try It Yourself." (sachet flat-lay, "START YOUR 90 DAYS →"); "Inter Miami's Premium Daily Ritual — Now Yours." (Beckham kit box + jersey, "100+ ingredients in one drink replaces 26 separate supplements"); "Trusted By Inter Miami CF. Available To You." ("ONE DRINK, WHOLE HOUSE →"); "The Squad's Daily Drink. Up to 30% Off." (stadium storefront, subscription discount).
+**Weaknesses / trust flags:** none — trial and discount terms are stated plainly.
+**So What for Grifon:** the full BOF wave to E36's TOF announcement — same campaign, offer layer. Port: "The ad engine [brand] trusts. Now yours to try. 14 days to decide. 20% off if you stay." The if-you-stay framing is the single best discount line in the file. GP-1 #1 / GP-4.
+**Patterns:** corroborates S16, S1, S18, S19; new candidate: "theirs→now-yours" bridge + retention-framed discount (watch under S16/S1); contradicts none.
+
+### 2026-07-12 — E31 IM8 "The bloat dissolving" (fb-ad-library, premium DTC supplement)
+![E31](../assets/ad-swipe/E31-im8-health.jpg)
+**Why swiped:** AD FILES stash batch 2026-07-12 — Meta Ad Library pull; Downloads folder dies on reboot so ingest now. · **Format:** 9:16 + 1:1, product-hero with transformation strip.
+**Layout:** cream canvas; logo top; serif headline + subhead; left = photo 3-stage male torso progression over a slate arrow banner BEFORE → RITUAL → RESET; right = large crimson shaker bottle; crimson CTA pill; crimson footer bar "★★★★★ 4.8/5 REVIEWS | 24M+ SERVINGS".
+**Copy (verbatim):** "The bloat dissolving" — "Gut support without the supplement clutter." — CTA "GET IM8 HEALTH TODAY"
+**Visual DNA:** `#F9EFEA` cream bg, `#801818` crimson, `#FFC72C` gold stars, slate accents; Playfair-class serif + sans; premium-editorial (S18 premium lane).
+**Levers:** 3-stage transformation TIMELINE (BEFORE→RITUAL→RESET names the product as the middle step — process, not miracle) + anti-clutter positioning ("without the supplement clutter", S24) + review-scale footer (4.8/5 | 24M+ servings, S15).
+**Weaknesses / trust flags:** transformation imagery (even staged/illustrated) implies a body-change claim — gray zone; keep Grifon transformations to real artifacts (before/after AD, not body).
+**Variants (same headline, 2 more folders):** dark-red ILLUSTRATED version, chip row "😴 DEEPER SLEEP ✅ ALL-DAY ENERGY ✨ SHARPER FOCUS", stages HEAVY→BALANCED→READY; and a dark spotlight photo version ("A simpler morning ritual for digestion support.") — cream vs dark-red full-canvas A/B = S14 caught cross-brand.
+**So What for Grifon:** the named-stages strip ports honestly: BRIEF → GRIFON → LAUNCHED with real screenshots at each stage. The E27-style insight repeats: one concept, three renders (photo-light / illustrated-dark / photo-dark). GP-4.
+**Patterns:** corroborates S14 (cross-brand now), S15, S18, S24; new candidate S28 (illustrated transformation timeline, with E37); contradicts none.
 
 ### 2026-07-12 — E30 Grüns "F*CK YOU, HAIR LOSS" (fb-ad-library, DTC supplement / greens gummies)
 ![E30](../assets/ad-swipe/E30-gruns.jpg)
