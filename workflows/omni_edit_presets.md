@@ -1027,6 +1027,31 @@ VO muxes continuously over cuts) was deliberately NOT duplicated into this prese
 commerce text — the invented "$49.45 / ADD TO CART" watch item, the `#FFCC00` hex
 leak, and the vox masthead leak are all this class. Constraints below are the point.
 
+**Round 1 PENDING (prepped 2026-07-12 remote session — Neil: "later when I get back
+to PC"; the remote sandbox has no GEMINI_API_KEY, so the paid leg fires from the
+cafe PC).** Free legs done:
+
+- Raw-ness check PASS: `workflows/assets/omni-poc/skincare-raw-talking.mp4`
+  (720×1280/24, 4.0s) frame strip — zero burned text, zero baked camera move.
+- Blind baseline: real-human/HIGH already on record for this exact committed
+  asset (vox-explainer-v1 round 1) — stands as the control.
+- Dry-run shown to Neil; est. $0.40. **Approval-pending tuple (guardrail 2b:
+  ANY slot change = new approval):** card-only round, NO shatter_word (one
+  variable per round; shatter hook = round 2). Ready command:
+
+  ```
+  python tools/omni_edit.py preset creator-ui-pop-v1 workflows/assets/omni-poc/skincare-raw-talking.mp4 --slot transcript="Hindi ka pagod, thirsty lang ang skin mo ngayon." --slot card_words="THIRSTY SKIN" --slot card_moment='as the speaker says "thirsty"' --slot card_icon_desc="a small pixel-art water droplet icon" --slot brand_primary_hex="#FFCC00" --yes --budget 2
+  ```
+
+- Eval gate for the output (run all, then append the round entry below +
+  commit): blind believability vs the raw control (`analyze_video.py`);
+  `render_audit.mjs` vision read — "THIRSTY SKIN" letter-perfect, ZERO other
+  text, **explicit hex-leak check** (the literal `#FFCC00` in the prompt is the
+  known instruction-text-leak class and the lab has no forbiddenWords sidecar);
+  zero invented prices/commerce labels; background-unchanged vs source frames;
+  move-executed check (card pop actually happens — frame strip is not enough,
+  eyeball the motion).
+
 ```yaml
 id: creator-ui-pop-v1
 name: Creator UI Pop-Up Card (Jatho-class)
