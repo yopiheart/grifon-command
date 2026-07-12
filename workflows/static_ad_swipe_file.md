@@ -19,16 +19,24 @@ entry links its image on the line under the heading (`![E<NN>](../assets/ad-swip
 get a duplicate — attach its image to the existing entry via
 `--ingest-only --entry E<n>` (no new entry, no Pattern bump).
 
-**RESUME (next session, Opus 4.8 per Neil 2026-07-12):** stash ingest paused after
-E50 (Grüns / IM8+Giannis / Cursor / Kylie done). Remaining in `Downloads\AD FILES`
-(⚠ dies on reboot — re-download from Meta Ad Library if wiped): Meta for
-Business (12), Google Gemini App (8), Julie Balsamo (4), Meta (3), The Dodo (3),
-Sorav Jain (2), + 4 singles + loose root-level images flagged by the IM8 batch.
-Run them as one misc `/static-autopsy` batch (delegate to a subagent, ~10-concept
-cap). Then review the ≥3-crossed patterns for Gated Proposals: S4, S7, S14, S16,
-S21, S24 crossed this session (S20 crossed but single-brand); S27 wealth-contrast
-price anchor and S30 geo-localized master creative are the strongest Grifon ports
-pending corroboration.
+**RESUME (next session, Opus 4.8 per Neil 2026-07-12):** batch **E51–E81 DONE** —
+breadth-first ingest of 8 high-relevance SaaS / AI / fintech / marketing brands
+(OpenAI, Meta for Business, Google Gemini, Alex Hormozi, Sabri Suby, Stripe, Wise,
+Meta), 3–4 distinct concepts each, via 8 parallel `/static-autopsy` subagents.
+**Headline outcome: S20 Product-UI-as-hero crossed the independent-brand bar (20 across
+7 brands) → drafted GP-5** (Product-UI-as-Hero / Prompt-to-Outcome family, + new S32
+prompt-to-outcome tableau, S33 gamified card). Also newly cross-brand: **S30
+geo-localized (6 brands — strongest Grifon port: EN/Taglish/Bisaya)**, S15 stat-stack (7),
+S16 borrowed authority (6), S8 audience callout (7). Next E-number = **E82**.
+Remaining in `Downloads\AD FILES` (⚠ dies on reboot — re-download from Meta Ad Library
+if wiped), all **lower Grifon relevance / off-niche** — ingest only if more breadth is
+wanted: Julie Balsamo nutrition (15), The Dodo (7), Rich Casual Creative (5),
+olliebearman (3), Sorav Jain (2), Aarohi (2) + singles (Fenty, hiessence, NEW MOON,
+Ovie, GEL BALL, rheagoenka). Deeper tails of the already-ingested brands exist too but
+are single-brand depth (low marginal value). **Next action is Neil's:** review GP-5
+(and the thickened GP-1/GP-2) for approval — no tuned-prompt edits without his sign-off.
+**Tool note:** the specificity gate mislabelled 3 honest native-surface product mockups
+as S7 (E60, E72, +1) — consider relaxing the gate's S7/why_it_works heuristic.
 
 **Cafe-PC rule:** commit every update immediately
 (`swipe(static): add <slug>`). Uncommitted work dies with the reboot.
@@ -47,36 +55,38 @@ Proposal) → `applied` (shipped as an Image Ads Gen template or CMO playbook).
 | ID | Pattern | Corroborations | Status |
 | --- | --- | --- | --- |
 | S1 | **Risk-reversal headline / guarantee** — the promise IS the guarantee ("kick-off in 5 days OR all your money back"; "TRY RISK-FREE"; "30-day money-back"). Removes the buy-risk at the headline, not the fine print. | 9 (E1, E2, E3; E11, E26-var Grüns; E12, E17, E32, E33-var IM8) | proposed |
-| S2 | **Authority portrait hero** — founder cut-out, confident pose, gold rim-light on black; the *person* is the proof when there's no physical product. | **8 across 2 brands — crossed the cross-brand bar 2026-07-12** (E1–E4 Gadzhi; E46, E47, E49, E50 Kylie — the founder IS the celebrity, works even WITH a physical product) | observed |
+| S2 | **Authority portrait hero** — founder cut-out, confident pose, gold rim-light on black; the *person* is the proof when there's no physical product. | **15 across 4 brands — hardening 2026-07-12** (E1–E4 Gadzhi; E46, E47, E49, E50 Kylie; E67, E69, E70 Sabri Suby; E63–E66 Hormozi — founder-as-proof is niche-agnostic: fitness-guru, agency-founder, celebrity all work) | observed |
 | S3 | **Ticket / tier comparison** — Free (dull, glass) vs paid (gold, glowing) cards side by side; anchoring makes the upgrade obvious. | 2 (E3, E2-partial) | observed |
-| S4 | **Offer-stack checklist** — gold/green ✅ list of what they GET (calls, templates, bonuses) + guarantee tag. Reciprocity + commitment. | **3 across 2 brands — crossed ≥3 2026-07-12** (E2, E3; E40 IM8 itemized free-kit) | observed |
-| S5 | **Gold-on-black SaaS palette** — `#FFCC00`-class gold + near-black, glassy cards, gold lozenge "VIP/PRO" badge, gold gradient CTA bar. (Already Grifon's palette.) | 4 (E1–E4) | observed |
+| S4 | **Offer-stack checklist** — gold/green ✅ list of what they GET (calls, templates, bonuses) + guarantee tag. Reciprocity + commitment. | **6 across 5 brands — cross-niche 2026-07-12** (E2, E3 Gadzhi; E40 IM8; E63 Hormozi value-stack; E54 OpenAI numbered 1–8 task list; E57 Meta for Business checklist) | observed |
+| S5 | **Gold-on-black SaaS palette** — `#FFCC00`-class gold + near-black, glassy cards, gold lozenge "VIP/PRO" badge, gold gradient CTA bar. (Already Grifon's palette.) | 5 across 2 brands (E1–E4 Gadzhi; E63 Hormozi gold-on-black value-stack; E65-var Hormozi gold-on-near-black) | observed |
 | S6 | **CTA-bar color A/B test** — same creative shipped with gold / green / blue "Learn more" bars across the set; they're testing button color, not just creative. | 3 (E1 gold, E2 green, E4 blue) | observed |
 | S7 | **Fake-DM / manufactured interaction / manufactured scarcity** — "pre-approved," blurred meeting invite, "selecting a few people," staged AMA-sticker Q&A dressed as organic. **ANTI-PATTERN for Grifon** — recorded so we copy the *layout* (cohort offer, AMA-reply format) but never the fabrication. | 3 (E4, E1-urgency; E19 Grüns fake-AMA) | observed (do-not-replicate) |
-| S8 | **Hyper-specific audience callout** — name the exact buyer in the hook ("If you own a *[niche]* doing *[revenue]*"; "on GLP-1"; "Women 40+"; "Postpartum…"). Self-identification + specificity (Sabri Suby dream-buyer). ONE template → N variants off a swapped variable. | **11 across 4 brands** (E5 service; E8/E11, E19, E20, E25, E26 Grüns; E13, E37 IM8; E43 Cursor — tool-stack variant, cross-niche) | **proposed — strongest pattern, drives GP-2** |
-| S9 | **Anti-design text-only pattern interrupt** — flat solid bg, centered white sans, zero imagery/logo/CTA button; reads as a personal note, not an ad. **Contradicts S5 + Grifon's cinematic brand** — adopt the copy mechanic; test the bare visual only as a deliberate experiment. | 2 across 2 brands (E5; E24 Grüns) | observed (brand-conflict) |
-| S10 | **Value-first lead magnet (TOF)** — gives a free asset ("Scaling Roadmap", "FREE Starter Kit") to a cold dream-buyer. Top-of-funnel; the opposite end from the E1–E4 bottom-funnel upsell. | **3 across 2 brands — crossed ≥3 2026-07-12** (E5; E12, E40 IM8) | observed |
-| S11 | **Trend-hijack** — ride a live cultural wave so the ad feels like the moment, not a pitch (GLP-1 / Ozempic). Grifon's wave is **"AI"**. | 9 (E7, E8, E10, E29 Grüns; E14, E16, E37 IM8; E18, E45 Cursor — E45 turns an external model release into the whole ad) | observed |
-| S12 | **Pattern-interrupt hook** — curiosity/novelty/apology/gross-out that doesn't read as an ad ("We NEVER do this", "WE'RE SO SORRY", "RABBIT POOPS?", "We're back."). | 4 (E6, E7, E21, E24 — all Grüns; single-brand-heavy) | observed |
-| S13 | **Mascot / recall device** — a repeated motif (gummy bear) carries instant brand ID; E23 upgrades it from motif to *actor* (mascot golfing in the buyer's world). Grifon's mark + gold light-sweep is the under-used equivalent. | 2 (E6–E11; E23 mascot-as-actor — one brand) | observed |
-| S14 | **Full-canvas color A/B** — test the *whole background* color (green/yellow/blue/beige), not just the CTA. Extends S6. | **4 across 3 brands — now cross-NICHE** (E6–E11, E21 Grüns; E31 cream/dark-red colorways IM8; E44 Cursor black-blue/cream-orange/forest-green colorways — first SaaS sighting) | observed |
-| S15 | **Stat-stack proof** — numerals as proof, stacked ("21 vitamins. 20 cal. 1 net carb."; "60+ ingredients"). | 10 across 2 brands (E8, E10, E23, E26 Grüns; E14, E31, E33, E34, E37, E38 IM8) | observed |
-| S16 | **Borrowed authority** — social proof by association (celebrity / sports partnership: Inter Miami CF; Lisa Rinna campaign). Grifon = client logos / testimonials / "trusted by N PH businesses." | **13 across 3 brands — cross-niche confirmed 2026-07-12** (E15, E32–E36, E40 IM8; E22 Grüns × Lisa Rinna; E46–E50 Kylie — founder-as-celebrity, no borrowing needed; E50 adds the institutional AWARD-BADGE variant) | observed |
+| S8 | **Hyper-specific audience callout** — name the exact buyer in the hook ("If you own a *[niche]* doing *[revenue]*"; "on GLP-1"; "Women 40+"; "Postpartum…"). Self-identification + specificity (Sabri Suby dream-buyer). ONE template → N variants off a swapped variable. | **16 across 7 brands** (E5 service; E8/E11, E19, E20, E25, E26 Grüns; E13, E37 IM8; E43 Cursor; E67 Sabri "16 hrs/day"; E65/E66 Hormozi "$1M+"/"$10M"; E76/E77 Wise "Clients overseas?") | **proposed — strongest pattern, drives GP-2** |
+| S9 | **Anti-design text-only pattern interrupt** — flat solid bg, centered white sans, zero imagery/logo/CTA button; reads as a personal note, not an ad. **Contradicts S5 + Grifon's cinematic brand** — adopt the copy mechanic; test the bare visual only as a deliberate experiment. | **7 across 5 brands — crossed ≥3 2026-07-12** (E5 service; E24 Grüns; E51 OpenAI testimonial; E79–E81 Meta security PSAs; E57 Meta for Business notebook flat-lay) | observed (brand-conflict) |
+| S10 | **Value-first lead magnet (TOF)** — gives a free asset ("Scaling Roadmap", "FREE Starter Kit") to a cold dream-buyer. Top-of-funnel; the opposite end from the E1–E4 bottom-funnel upsell. | **5 across 4 brands — cross-niche 2026-07-12** (E5 service; E12, E40 IM8; E73 Stripe "READ OUR GUIDE" pricing guide; E57 Meta for Business "3 hacks") | observed |
+| S11 | **Trend-hijack** — ride a live cultural wave so the ad feels like the moment, not a pitch (GLP-1 / Ozempic). Grifon's wave is **"AI"**. | **15 across 6 brands — the AI category itself now in-file 2026-07-12** (E7, E8, E10, E29 Grüns; E14, E16, E37 IM8; E18, E45 Cursor; E59–E62 Google Gemini — AI product riding the live World-Cup wave; E65 Hormozi "generic AI vs your custom AI"; E57 Meta for Business "the AI behind Advantage+") | observed |
+| S12 | **Pattern-interrupt hook** — curiosity/novelty/apology/gross-out that doesn't read as an ad ("We NEVER do this", "WE'RE SO SORRY", "RABBIT POOPS?", "We're back."). | **9 across 5 brands — crossed ≥3 2026-07-12** (E6, E7, E21, E24 Grüns; E65 Hormozi trading-card, E66 Hormozi broken-chain metaphor; E69 Sabri Memoji; E80 Meta color-noun; E62 Gemini banana-jacket character) | observed |
+| S13 | **Mascot / recall device** — a repeated motif (gummy bear) carries instant brand ID; E23 upgrades it from motif to *actor* (mascot golfing in the buyer's world). Grifon's mark + gold light-sweep is the under-used equivalent. | 5 across 4 brands (E6–E11, E23 Grüns; E69 Sabri Memoji; E62 Gemini character; E79/E80 Meta logo-lockup recall) | observed |
+| S14 | **Full-canvas color A/B** — test the *whole background* color (green/yellow/blue/beige), not just the CTA. Extends S6. | **6 across 5 brands — now cross-NICHE** (E6–E11, E21 Grüns; E31 IM8; E44 Cursor; E75/E77 Wise full-canvas forest/lime; E64 Hormozi flat purple canvas) | observed |
+| S15 | **Stat-stack proof** — numerals as proof, stacked ("21 vitamins. 20 cal. 1 net carb."; "60+ ingredients"). | **16 across 7 brands — crossed the independent-brand bar 2026-07-12** (E8, E10, E23, E26 Grüns; E14, E31, E33, E34, E37, E38 IM8; E63 Hormozi non-round stack; E68 Sabri "3,227 reviews"; E71 Stripe "75%"; E77 Wise "74% instant"; E53/E54 OpenAI) | observed |
+| S16 | **Borrowed authority** — social proof by association (celebrity / sports partnership: Inter Miami CF; Lisa Rinna campaign). Grifon = client logos / testimonials / "trusted by N PH businesses." | **18 across 6 brands — cross-niche confirmed 2026-07-12** (E15, E32–E36, E40 IM8; E22 Grüns; E46–E50 Kylie; E68/E70 Sabri (Google + Forbes borrowed); E71 Stripe co-brand lockup; E81 Meta govt-agency; E56 Meta for Business verified-badge; E51/E53 OpenAI named founder) | observed |
 | S17 | **"Imagine…" future-pace + objection-handling** — paint the after-state, defuse the fear ("Imagine your GLP-1 journey, without the side effects"). | 1 (E16 IM8) | observed |
-| S18 | **Style axis: premium-editorial vs flat-graphic** — IM8 (crimson, serif, lifestyle photography, restraint) vs Grüns (loud color-block, mascot, discount). **Grifon = the premium lane** (cinematic gold/black). | brand-level (Grüns flat E6–E11; IM8 premium E12–E17, E31–E36, E38–E40; axis-crossers: E9 Grüns-goes-premium, E37 IM8-goes-flat — register follows SEGMENT, not brand dogma; Cursor E18/E41–E45 and Kylie E46–E50 both live all-premium — 4th and 5th brand in the premium lane) | observed |
-| S19 | **Placement / multi-ratio + safe-zone** — ship one creative as 4:5 (feed) + 1:1 + 9:16 (stories/reels), keeping text in the 9:16 central ~60% safe band; more ratios = more Andromeda inventory. See the Placement strategy section. | cross-set observation (+E18; +E31–E40 — IM8 ships every creative as a 9:16 + 1:1/4:5 pair; +E41–E45 Cursor and +E46–E50 Kylie do the same — now standard practice across every brand in the file) | observed |
-| S20 | **Product-UI-as-hero** — the actual product interface (a real screen/control, not a screenshot collage) is the ad's hero image; the feature demo IS the creative. Honest proof — fits the trust line. Grifon analog: One-Shot composer / wizard UI as the hero. | **5 — crossed ≥3 2026-07-12 but ONE brand** (E18, E41, E42, E43, E45 Cursor — below the independent-brand bar; E44's abstracted-UI block is the stylized cousin, not counted) | observed |
-| S21 | **Native-format camouflage** — the ad dresses as organic platform UI (IG story AMA sticker, Close-Friends badge, caption cards, handle overlay) to bypass banner blindness. Slides into S7 the moment the interaction is faked — Grifon version uses REAL community questions only. | **5 across 2 brands — crossed ≥3 2026-07-12** (E19, E27 Grüns; E34, E35, E39 IM8 — IM8's variant is the HONEST kind: real verified handle + real credential line) | observed |
-| S22 | **Category-king flex** — publicly acknowledge copycats/doubters to frame the brand as the original ("we see you, copycats."; "We hereby accept your apology."). Late-stage play — only works once you ARE the category leader. | 1 (E22 + variants, Grüns) | observed |
+| S18 | **Style axis: premium-editorial vs flat-graphic** — IM8 (crimson, serif, lifestyle photography, restraint) vs Grüns (loud color-block, mascot, discount). **Grifon = the premium lane** (cinematic gold/black). | brand-level (Grüns flat; IM8 premium; Cursor + Kylie all-premium; +Stripe all-premium fluid-gradient benchmark; +OpenAI runs the axis WITHIN one campaign — E51 minimal-anti-design ↔ E53 premium-editorial, identical Sebastian Korts testimonial copy; +Wise spans both poles — E75/E77 flat-graphic ↔ E78 premium-photo) | observed |
+| S19 | **Placement / multi-ratio + safe-zone** — ship one creative as 4:5 (feed) + 1:1 + 9:16 (stories/reels), keeping text in the 9:16 central ~60% safe band; more ratios = more Andromeda inventory. See the Placement strategy section. | cross-set observation (now standard across every brand; +Wise E75–E78 and +Google Gemini E59–E62 both ship 1:1 + 9:16 master pairs; +Meta E79/E81 localized 1:1 + 9:16 — multi-ratio + safe-zone is universal practice) | observed |
+| S20 | **Product-UI-as-hero** — the actual product interface (a real screen/control, not a screenshot collage) is the ad's hero image; the feature demo IS the creative. Honest proof — fits the trust line. Grifon analog: One-Shot composer / wizard UI as the hero. | **20 across 7 brands — CROSSED the independent-brand bar 2026-07-12** (E18, E41–E43, E45 Cursor; E68 Sabri fake-SERP; E76–E78 Wise; E59–E62 Google Gemini; E52–E54 OpenAI; E71/E72 Stripe; E55/E58 Meta for Business — honest "show the real interface" proof, fits the trust line) | **proposed — drives GP-5** |
+| S21 | **Native-format camouflage** — the ad dresses as organic platform UI (IG story AMA sticker, Close-Friends badge, caption cards, handle overlay) to bypass banner blindness. Slides into S7 the moment the interaction is faked — Grifon version uses REAL community questions only. | **11 across 5 brands — crossed the independent-brand bar 2026-07-12** (E19, E27 Grüns; E34, E35, E39 IM8; E67/E68/E70 Sabri (NEWS badge / Google SERP / Forbes card — the DECEPTIVE kind, layout-only); E52 OpenAI in-app moment; E55/E56 Meta for Business native chrome) | observed |
+| S22 | **Category-king flex** — publicly acknowledge copycats/doubters to frame the brand as the original ("we see you, copycats."; "We hereby accept your apology."). Late-stage play — only works once you ARE the category leader. | 3 across 3 brands (E22 Grüns; E68 Sabri multi-retailer dominance + E70 "fastest-growing agency"; E71 Stripe category-king by association) | observed |
 | S23 | **Real-scarcity nostalgia drop** — limited-edition collab with a legacy childhood brand (Grüns × Popsicle Firecracker), run as a full campaign system (flavor graphic + UGC + meme + text-only sellout apology). Scarcity is REAL (sold out, no restock) — passes the trust line. | 1 (E27 campaign, Grüns) | observed |
-| S24 | **Format-enemy positioning** — villainize the incumbent *format/ritual*, not a competitor brand ("STOP CHOKING DOWN GRASS IN A GLASS. Measure. Blend. Gag. Scrub."; "STOP PUNISHING YOURSELF WITH POWDERS."). Grifon's enemy: the ₱30K agency retainer / DIY all-nighter. | **7 across 3 brands — now cross-NICHE** (E28, E29-var Grüns; E31, E34, E38, E39 IM8 — IM8's enemy is "supplement clutter": pill bottles, powders, decision fatigue; E42 Cursor — "Review demos, not diffs." villainizes the diff-review ritual in 4 words) | observed |
-| S25 | **Uncanny meme creative** — toys/dolls/hand-drawn doodles ARE the whole ad (Barbie split-meme, marker-doodle pack shot). Feed-native, cheap, honest (nobody mistakes a doll for a fake testimonial). | 2 (E29, E30 Grüns) | observed |
+| S24 | **Format-enemy positioning** — villainize the incumbent *format/ritual*, not a competitor brand ("STOP CHOKING DOWN GRASS IN A GLASS. Measure. Blend. Gag. Scrub."; "STOP PUNISHING YOURSELF WITH POWDERS."). Grifon's enemy: the ₱30K agency retainer / DIY all-nighter. | **9 across 4 brands — now cross-NICHE** (E28, E29-var Grüns; E31, E34, E38, E39 IM8; E42 Cursor; E75 Wise "skip the airport queue" + E78 "STOP SPENDING LIKE A TOURIST" — enemy = the FX/exchange ritual) | observed |
+| S25 | **Uncanny meme creative** — toys/dolls/hand-drawn doodles ARE the whole ad (Barbie split-meme, marker-doodle pack shot). Feed-native, cheap, honest (nobody mistakes a doll for a fake testimonial). | 3 across 2 brands (E29, E30 Grüns; E69 Sabri Memoji-as-hero) | observed |
 | S26 | **Taboo/crude register** — bodily-function, profanity, and anatomical hooks matched per segment ("RABBIT POOPS?", "DON'T GHOST YOUR BALLS.", "F*CK YOU, HAIR LOSS"). Strong scroll-stop, brand-safety risk; off Grifon's premium register — the *mechanic* (name the unspoken pain bluntly) ports, the words don't. | 3 (E20, E21, E30 — one brand, below the independent-brand bar) | observed |
-| S27 | **Wealth-contrast price anchor** — someone who could afford anything *chose* the cheap-per-day option ("GIANNIS COULD AFFORD ANYTHING. HE CHOSE A $2.61/DAY DRINK."). Collapses "premium = expensive" and reframes price as a daily cost. Grifon: "Agencies charge ₱30K/mo. Grifon is ₱XX/day." | 1 (E35) | observed |
+| S27 | **Wealth-contrast price anchor** — someone who could afford anything *chose* the cheap-per-day option ("GIANNIS COULD AFFORD ANYTHING. HE CHOSE A $2.61/DAY DRINK."). Collapses "premium = expensive" and reframes price as a daily cost. Grifon: "Agencies charge ₱30K/mo. Grifon is ₱XX/day." | 2 across 2 brands (E35 IM8 "Giannis $2.61/day"; E70 Sabri "$50 & a laptop → $74M Shark") | observed |
 | S28 | **Illustrated transformation timeline** — staged before→during→after strip with NAMED stages or months (BEFORE→RITUAL→RESET; JULY→AUGUST→SEPTEMBER); process-framing beats binary before/after. ⚠️ Implied body-claims are a trust gray zone (E37 flagged implausible) — Grifon ports it with REAL artifacts only (BRIEF→GRIFON→LAUNCHED). | 2 (E31-var, E37 — one brand) | observed |
 | S29 | **Founder-signature endorsement stack** — first-person quote + "xo," + handwritten signature turns the ad into a personal recommendation, not corporate copy; the sign-off substitutes for a CTA. Honest when the endorsement is real (it's her brand). Extends E24's signed-note device ("— Grüns") from announcement to product ad. Grifon analog: real client quote + signature, or "— Neil/Zam" signed notes. | 2 (E47, E48 + their FR/IT campaign beats — one brand) | observed |
-| S30 | **Geo-localized master creative** — ONE master creative shipped with translated copy per market (EN/FR/IT observed), photography and layout identical; the language is the variable, not the design. The placement analog of S14's color A/B. Grifon analog: EN/Taglish/Bisaya swaps on one template — near-free variants via `captureToPng`. | 2 campaign systems (E47 EN/IT still-life beats; E48 EN/FR/IT lip-essentials wave — one brand) | observed |
-| S31 | **Texture-macro sensory hero** — a macro shot of the product's physical texture (the squeeze, the drip, the swatch) is the focal proof; it SHOWS the sensory promise instead of claiming it. Physical-product-native; Grifon's analog is the crisp UI-detail close-up (pairs with S20). | 1 (E48; E49-beat trio-spout shades) | observed |
+| S30 | **Geo-localized master creative** — ONE master creative shipped with translated copy per market (EN/FR/IT observed), photography and layout identical; the language is the variable, not the design. The placement analog of S14's color A/B. Grifon analog: EN/Taglish/Bisaya swaps on one template — near-free variants via `captureToPng`. | **6 across 6 brands — crossed the independent-brand bar 2026-07-12** (E47/E48 Kylie; E52 OpenAI Hindi; E62 Gemini Arabic; E74 Stripe French Atlas; E77 Wise per-market proof-pill; E79/E81 Meta Hindi — language is the only variable; strongest Grifon port: EN/Taglish/Bisaya, near-free via `captureToPng`) | observed |
+| S31 | **Texture-macro sensory hero** — a macro shot of the product's physical texture (the squeeze, the drip, the swatch) is the focal proof; it SHOWS the sensory promise instead of claiming it. Physical-product-native; Grifon's analog is the crisp UI-detail close-up (pairs with S20). | 2 across 2 brands (E48 Kylie squeeze; E78 Wise breakfast-table sensory flat-lay) | observed |
+| S32 | **Prompt-to-outcome tableau** — the AI-native specialization of S20: show the exact INPUT prompt + its RENDERED output together as the creative (prompt pill → result card / notification / generated asset). Honest, and it teaches the user what to type. Grifon analog: One-Shot brief → the generated ad, shown side by side. | 4 across 2 brands (E59, E60, E61 Google Gemini; E52 OpenAI chat-pill) | observed |
+| S33 | **Gamified character / trading card** — frame the founder / the product / a feature as a collectible RPG card (level badge, stars, stat-bars, gem). High-novelty scroll-stopper; pairs with Grifon's avatar tooling. | 1 (E65 Hormozi) | observed |
 
 ## Gated Proposals
 
@@ -213,6 +223,57 @@ in — highest brand fit.
   (text-free background + branded overlay) — build GP-1 and GP-4 reuse the same
   composite path.
 
+### GP-5 — "Product-UI-as-Hero / Prompt-to-Outcome" family for Image Ads Gen
+
+**Why:** **S20 crossed the independent-brand bar hard on 2026-07-12 — 20 corroborations
+across 7 brands** (Cursor, Sabri Suby, Wise, Google Gemini, OpenAI, Stripe, Meta for
+Business), plus the AI-native specialization **S32 prompt-to-outcome tableau** (Gemini +
+OpenAI). Every current template (GP-1..GP-4) treats the hero as a *person*, a *product
+shot*, or *text* — none show **the software doing the thing**. For a tool whose
+deliverable IS the creative, the most-corroborated winning pattern in the file is: make
+the actual interface / the prompt→output the hero. It is also the **most trust-safe**
+family — it shows real proof, so it can never drift into an S7 fabrication.
+
+**Funnel slot:** consideration → conversion (warm + mid-funnel); the "how it actually
+works / here's the real output" proof creative. Pairs with GP-1's offer copy.
+
+**Proposed templates** (each = CMO angle + CD visual recipe):
+
+**1. `Prompt→Outcome`** *(from E59 "FOR TIMELY GOALS", E52 OpenAI chat-pill, S32)* —
+- **CMO angle:** sell the concrete prompt + its result, not "AI-powered." Headline slot
+  "FOR [BENEFIT] GOALS" or a first-person prompt; show the exact input a real buyer would
+  type. `hookLogic` = specificity + product-demo. Guardrail: the shown output must be a
+  real capability, and don't imply one-shot instant when it's multi-step (E60 caution).
+- **CD recipe:** near-black canvas; a white Grifon prompt-pill (the real composer input)
+  → its rendered result (a generated ad card / a notification) directly below; Grifon
+  lockup at base. Localizable (S30) — the pill text is the only variable.
+
+**2. `Feature-in-Native-Surface`** *(from E72 Stripe Payment-Link-in-chat, E55 IG feed
+mockup, E58 glassmorphic lead-form)* —
+- **CMO angle:** drop Grifon's own output inside the surface where it lives (a feed
+  mockup, a chat, an inbox), one arrow/label to the payoff. `hookLogic` = context +
+  product-UI-as-hero. Guardrail: it must be Grifon's OWN interface/output — never a faked
+  third-party DM or testimonial (that is the S7 line, and S21's deceptive cousin).
+- **CD recipe:** `captureToPng` composites the generated ad into a native IG/feed card
+  (real like/comment chrome), or a chat bubble carrying a Grifon-made asset; hand-drawn
+  arrow → the CTA; premium gold/black frame.
+
+**3. `Glassmorphic Output Card`** *(from E53 OpenAI "Growth Roadmap" card, E58)* —
+- **CMO angle:** pair a real named-customer quote (or the benefit headline) with a
+  frosted UI card that SHOWS the deliverable (a roadmap, a generated storyboard, a
+  numbered task list). `hookLogic` = social proof + tangible-output. Guardrail: the card
+  must depict a real Grifon output; quote must be a real customer.
+- **CD recipe:** premium lifestyle photo base (`generateSceneImage`) → frosted
+  semi-transparent card overlay (`captureToPng`) holding a crisp Grifon UI detail; gold
+  `#FFCC00` accents; Grifon corner motif. Shares GP-1/GP-4's text-free-bg + overlay path.
+
+**Note:** GP-5 reuses the GP-1/GP-4 composite path (text-free background + branded
+overlay); the new asset is a **library of real Grifon UI/output plates** to composite.
+Editing `generateAdCreatives` touches the **TUNED** `services/geminiService.ts` — Neil
+approves, then surgical edit + vitest + verify. **Strong sibling:** S30 geo-localized
+master creative (6 brands) — every GP-5 template should ship EN/Taglish/Bisaya variants
+off one master, near-free via `captureToPng` (fold into the build, not a separate GP).
+
 ## Cross-Vertical Pattern Map
 
 These patterns are **not** about supplements or coaching — they're portable
@@ -259,6 +320,355 @@ More ratios also = more inventory for Andromeda to retrieve against. Logged to t
 Append newest at the top. Each entry's second line is its committed image
 (`![E<NN>](../assets/ad-swipe/E<NN>-<brand-slug>.jpg)`) — E1–E17 backfill their
 image link as they're re-encountered via `--ingest-only`.
+
+> **Batch 2026-07-12 (E51–E81) — high-relevance SaaS / AI / fintech / marketing brands.**
+> Breadth-first ingest (8 independent brands, best 3–4 distinct concepts each) from the
+> AD FILES Meta Ad Library stash. Headline outcome: **S20 Product-UI-as-hero crossed to
+> 7 independent brands** (Cursor, Sabri Suby, Wise, Google Gemini, OpenAI, Stripe, Meta
+> for Business) → drives new **GP-5**. Also notable: the tool's specificity gate
+> mislabelled 3 honest native-surface product mockups as **S7 (fake-DM/manufactured)** —
+> E60, E72 rejected on eyeball review; NONE count toward S7 (tool-gate note below).
+
+### 2026-07-12 — E81 Meta "अपने स्थानीय साइबर अपराध जागरूकता संसाधन यहाँ देखें" (fb-ad-library, big-tech / consumer + Meta AI)
+![E81](../assets/ad-swipe/E81-meta.jpg)
+**Why swiped:** Meta-served scam-prevention ad that borrows an entire government agency's authority (India's I4C) instead of its own — a distinct trust lever from E79/E80's product-security angle. · **Format:** 9:16, text-only-callout w/ logo
+**Layout:** top→bottom, centered symmetric: 2-line Hindi headline → boxed official I4C logo (mid) → report instructions + bold helpline `1930` + `cybercrime.gov.in` + `#ScamSeBacho` → blue pill CTA. Focal point = centered I4C logo + the "1930" number.
+**Copy (verbatim):** "अपने स्थानीय साइबर अपराध जागरूकता संसाधन यहाँ देखें" (See your local cybercrime-awareness resource) — "साइबर फ्रॉड की रिपोर्ट करें: 1930 पर कॉल करें या cybercrime.gov.in पर जाएं #ScamSeBacho" — CTA "और जानने के लिए क्लिक करें".
+**Visual DNA:** full multi-hue pastel gradient bg (peach→lavender→sky→mint; tool logged one slice `#EBF3FC`) · CTA FB-blue `#0066DA` · text `#1C1E21`; I4C multicolor monogram in a white card. Noto Sans Devanagari + Arial. Register: flat-graphic / anti-design.
+**Levers:** borrowed authority ("Indian Cyber Crime Coordination Centre" logo + gov domain) · direct-utility helpline ("1930 पर कॉल करें") · localized campaign hashtag (#ScamSeBacho).
+**Weaknesses / trust flags:** no Meta/WhatsApp branding — a user can't tell Meta served it (only the govt logo). Legit borrowed authority (real agency/helpline), not a fabricated badge; note the brand-attribution gap. `brand_visible` (re: Meta) = false. Low-persuasion PSA (tripped GENERIC_OUTPUT twice — accurate for a thin-persuasion notice; content eyeball-verified).
+**So What for Grifon:** borrowed-authority via a recognized third-party institution + a single memorable action token (number/hashtag). CMO playbook note; not a GP family.
+**Patterns:** corroborates S16 (third-party govt-agency authority), S30 (Hindi geo-local, local `1930` token), S9 (anti-design ground); new candidate none; contradicts none.
+
+### 2026-07-12 — E80 Meta "Review linked devices on WhatsApp" (fb-ad-library, big-tech / consumer + Meta AI)
+![E80](../assets/ad-swipe/E80-meta.jpg)
+**Why swiped:** WhatsApp's cream two-tone security-awareness template — a distinct visual system from the blue Meta passkey family (color-coded headline + brand-recall logo lockup). · **Format:** 9:16, text-only-callout
+**Layout:** top→bottom, left-aligned stack: two-color 3-line headline (top third) → two body paragraphs (center) → green WhatsApp phone-glyph + wordmark lockup (bottom). Focal point = the green-highlighted "linked devices".
+**Copy (verbatim):** "Review **linked devices** on WhatsApp" — "Check Settings > Linked devices regularly and log out of any devices you don't recognise." + "Enable notifications from WhatsApp on your phone to be alerted about new linked devices." — no CTA (logo lockup only).
+**Visual DNA:** warm cream ground (~`#F5EFE6`; tool `#FAF5EF`) · WhatsApp green `#25D366` accent (highlights the key noun + logo) · text `#111111`. Grotesque, bold headline vs regular body. Register: minimal / anti-design (mimics a native OS security notice).
+**Levers:** security reassurance ("log out of any devices you don't recognise") · frictionless utility with explicit nav path ("Check Settings > Linked devices") · color-block attention (key noun in green against black).
+**Weaknesses / trust flags:** no CTA button — relies on self-navigation; very plain, easy to scroll past. None fabricated.
+**So What for Grifon:** the transferable idea = two-tone color-coded headline (accent color carries the key noun) on a warm off-white ground — a legible alternative to gold-on-black for a "utility-notice" register. CMO/CD note; not a GP family.
+**Patterns:** corroborates S9 (anti-design, flat ground, reads as a note), S13 (WhatsApp logo lockup as recall anchor); color-coded-noun headline touches S12 (pattern-interrupt via color); new candidate none; contradicts none.
+
+### 2026-07-12 — E79 Meta "पासकी बनाएं / अपने खाते को सुरक्षित रखने के लिए" (fb-ad-library, big-tech / consumer + Meta AI)
+![E79](../assets/ad-swipe/E79-meta.jpg)
+**Why swiped:** Meta's global "create a passkey" security master-creative, fully localized to Hindi — clean anti-design account-security template (also ships 9:16). · **Format:** 1:1, text-only-callout
+**Layout:** top→bottom, left-aligned: blue outline checkmark icon → bold 3-line Devanagari headline → 5-line body block → blue pill CTA bottom-left; generous right-side negative space. Focal point = the bold headline.
+**Copy (verbatim):** "पासकी बनाएं / अपने / खाते को सुरक्षित रखने के लिए" (Create a passkey to keep your account secure) — body "एक ही फिंगरप्रिंट, चेहरे या पिन के साथ साइन इन करने के लिए…" — CTA "और जानने के लिए क्लिक करें".
+**Visual DNA:** multi-hue pastel gradient (peach→lavender→sky→mint; tool slice `#DCEEFC`) · CTA + icon FB-blue `#0062D2` · text `#1C1E21`. Noto Sans Devanagari, bold→regular. Register: minimal / anti-design.
+**Levers:** friction reduction ("एक ही फिंगरप्रिंट, चेहरे या पिन" — one fingerprint, face, or PIN) · security reassurance · leverages an existing habit ("जिसका आप पहले से ही…उपयोग करते हैं").
+**Weaknesses / trust flags:** no Meta/Facebook wordmark anywhere (`brand_visible: false`) — relies on the blue check + FB-blue palette for implicit recall; text-heavy, no face/device. Low-persuasion PSA (tripped GENERIC_OUTPUT twice — accurate; eyeball-verified). None fabricated.
+**So What for Grifon:** value = the localized-master-creative pattern (one fixed layout + icon + CTA style, only the language swaps). CMO note for PH/Taglish geo-variants; not a new GP family.
+**Patterns:** corroborates S30 (geo-localized master creative, Hindi copy), S9 (anti-design text-only); loosely S13 (checkmark as brand-recall stand-in); new candidate none; contradicts none.
+
+### 2026-07-12 — E78 Wise "STOP SPENDING LIKE A TOURIST" (fb-ad-library, fintech / cross-border transfer)
+![E78](../assets/ad-swipe/E78-wise.jpg)
+**Why swiped:** The premium-photography pole of Wise's style axis — a warm texture-macro sensory hero (grapefruit, coffee, table) framing a live product-UI phone. Deliberate S18 contrast against the flat-graphic entries. · **Format:** 9:16 (+1:1 sibling), lifestyle
+**Layout:** top→bottom — top-down breakfast-table flat-lay (kettle, plated tomatoes+knife, sliced grapefruit) → Wise logo + bold white headline centered upper-half → hand holding phone (Wise app balances) center, green card left, coffee mug right → body over a warm knit base → text CTA. Focal point = the phone screen. `safe_zone_ok_9x16: true`.
+**Copy (verbatim):** "STOP SPENDING LIKE A TOURIST" / "Keep dollars, pounds, euro and more with the Wise account." / "It's the smart way to spend in other currencies without inflated exchange rates or hidden fees." / on-screen "Total balance 588,809.28 PHP", "US dollar 8,100.00 USD", "Client payment 200 USD" — CTA "Learn more at wise.com".
+**Visual DNA:** warm earthy browns `#3D261C` shadow/table · white black-weight uppercase headline+body · brand green `#9FE870` (the true Wise token; the photographed card reads lighting-shifted ~`#25C974`). Heavy uppercase display. Register: premium-editorial photography.
+**Levers:** S31 texture-macro sensory hero (grapefruit/coffee/fabric = tactile, lived-in) · S20 product-UI-as-hero (real multi-currency balances make utility tangible) · S12/S24 pattern-interrupt callout ("STOP SPENDING LIKE A TOURIST" villainizes the tourist-FX ritual).
+**Weaknesses / trust flags:** none deceptive. Phone balances are a standard product mockup; on-screen UI small at feed size.
+**So What for Grifon:** establishes the "premium-photo" pole for a style-axis A/B (S18) vs Wise's flat-graphic ads; sensory-flat-lay + centered product-UI is a reusable lifestyle layout. Same "villainize the old way" hook as E75, photographic register.
+**Patterns:** corroborates S31 (texture-macro sensory hero — 2nd brand after Kylie), S20 (product-UI-as-hero), S24/S12 (format-enemy / pattern-interrupt), S18 (premium end of the axis — direct contrast to E75); new candidate none; contradicts none.
+
+### 2026-07-12 — E77 Wise "INTERNATIONAL PAYMENTS, NO DELAYS" (fb-ad-library, fintech / cross-border transfer)
+![E77](../assets/ad-swipe/E77-wise.jpg)
+**Why swiped:** A geo-localized master creative whose single variable is a swappable transaction pill (flag + currency + amount + use-case), letting Wise localize per market from one layout. · **Format:** 1:1 (+9:16 sibling)
+**Layout:** top→bottom — 3-line bold white headline over a faint tone-on-tone world map → two-line then two-line white subhead → central white pill "🇮🇳 18,000 INR — Student loan" → Wise logo bottom-left, lime CTA pill bottom-right → tiny disclaimer. Focal point = headline + the transaction pill. `safe_zone_ok_9x16: true`.
+**Copy (verbatim):** "INTERNATIONAL PAYMENTS, NO DELAYS" / "Your transfer's travelling the globe, but it shouldn't feel like it." / "Wise gets your money where it needs to go in seconds." / pill "18,000 INR Student loan" / disclaimer "In Q3 2025, 74% of transfers were instant (under 20 seconds)…" — CTA "Be smart. Get Wise." (lime pill).
+**Visual DNA:** forest bg `#163300` + faint map · lime CTA `#9FE870` · white headline/pill · black pill accent. Bold uppercase headline → regular body. Register: flat-graphic.
+**Levers:** S30 geo-localized master creative (flag + "18,000 INR" + "Student loan" = per-market swap slot) · S8 audience (localizes to Indian tuition-payers) · S15 stat-stack ("74% of transfers were instant").
+**Weaknesses / trust flags:** the "18,000 INR Student loan" pill is a simulated example transaction (illustrative, disclosed by context); the "74% instant" figure is **brand-stated** with its own hedge — treat as claim, not independently verified. Map graphic near-invisible on dim screens.
+**So What for Grifon:** directly feeds a Grifon S30 geo-localized template — one master layout with a variable "proof pill" (flag/currency/amount/use-case) swapped per market; high-leverage for localized Image Ads Gen variants.
+**Patterns:** corroborates S30 (geo-localized master creative), S15 (stat-stack), S8 (segment callout), S14 (full-canvas brand color); new candidate — "micro-transaction preview pill" (simulated flag+currency+amount+category chip to make a digital service feel concrete); contradicts none.
+
+### 2026-07-12 — E76 Wise "GET PAID ACROSS BORDERS" (fb-ad-library, fintech / cross-border transfer)
+![E76](../assets/ad-swipe/E76-wise.jpg)
+**Why swiped:** Audience-callout headline fused with product-UI card overlay on a real lifestyle photo — the cleanest S8+S20 combo in the set. · **Format:** 4:5 (+9:16 sibling), lifestyle
+**Layout:** top→bottom — Wise logo top-left → huge two-line lime headline → three-line lime subhead → bottom-half photo of a woman in orange blazer on a laptop, with three stacked white UI cards (Project deposit/AU · Services/EU · Project earnings/US) cascading lower-right, biggest reading "$1,500". Focal point = the "$1,500" card. CTA rotated vertically on the right margin.
+**Copy (verbatim):** "GET PAID ACROSS BORDERS" / "Clients overseas? Ditch the hidden exchange fees and keep more of what you make with Wise." — CTA "Learn more at wise.com" (vertical text).
+**Visual DNA:** forest bg `#14320A` · lime headline `#9FE870` · white UI cards · orange-jacket accent `#D97443` (the one warm note tying photo to canvas). Bold uppercase → regular body. Register: premium-editorial photo + flat UI cards.
+**Levers:** S8 hyper-specific audience callout ("Clients overseas?" targets freelancers with overseas clients) · S20 product-UI-as-hero (stacked multi-currency cards demo the flow without copy) · concrete-number proof ("$1,500").
+**Weaknesses / trust flags:** the "$1,500 / Project earnings" cards are a simulated UI mockup (standard product illustration, not a real receipt). Vertical CTA easy to miss; photo generic, leans on the card overlay.
+**So What for Grifon:** high-value Image Ads Gen layout — "UI-card-cascade over lifestyle photo" (flags + concrete amount = instant multi-currency story). CMO: niche-callout opener ("Clients overseas?") as a scroll-qualifier for freelancer segments.
+**Patterns:** corroborates S8 (audience callout), S20 (product-UI-as-hero), S15 (concrete-stat proof); new candidate — "stacked multi-currency UI cards to visualize a global payment flow"; contradicts none.
+
+### 2026-07-12 — E75 Wise "SET UP WISE BEFORE YOU TOUCHDOWN" (fb-ad-library, fintech / cross-border transfer)
+![E75](../assets/ad-swipe/E75-wise.jpg)
+**Why swiped:** Full-canvas flat-graphic color-block with split-flap airport-board typography that *becomes* the travel context — pure bold-fintech house style. · **Format:** 1:1 (+9:16 sibling), product-hero
+**Layout:** top→bottom — three-line lime headline set inside dark split-flap "board" slats (top ~45%) → two lime Wise cards floating at opposing diagonal angles (center) → benefit copy + outlined pill CTA bottom-right → Wise logo bottom-left → fine-print disclaimer. Focal point = the headline board + the two cards.
+**Copy (verbatim):** "SET UP WISE BEFORE YOU TOUCHDOWN" / "Skip the queue for cash at the airport." / "Register for a Wise account before you take off and you can spend in the local currency the second you land." — CTA "Be smart. Get Wise." (outlined pill, dark fill `#142F16` / lime outline).
+**Visual DNA:** forest-green bg `#142F16` · lime brand accent `#9FE870` (cards) · white secondary text. Heavy black uppercase display (Wise Sans-style) → regular body. Register: flat-graphic, high-polish (3D card renders).
+**Levers:** S24 format-enemy — "Skip the queue for cash at the airport." villainizes the airport-exchange ritual · future-pace convenience ("spend in the local currency the second you land.") · contextual-metaphor styling (split-flap board mimics the travel environment).
+**Weaknesses / trust flags:** none deceptive. Outlined pill CTA fills dark and low-contrasts; fine print near-illegible on the dark canvas.
+**So What for Grifon:** Image Ads Gen candidate — "context-mimicry typography" (style the headline as an object native to the use-case) layered on S14 full-canvas brand color. CMO hook: villainize the ritual the product replaces.
+**Patterns:** corroborates S24 (queue-as-enemy — 4th brand), S18 (polished flat-graphic axis), S14/S20 (full-canvas color + product-as-hero cards); new candidate — "contextual-metaphor / environment-mimicry typography"; contradicts none.
+
+### 2026-07-12 — E74 Stripe "Créez votre société aux États-Unis en quelques clics" (fb-ad-library, B2B SaaS / fintech payments)
+![E74](../assets/ad-swipe/E74-stripe.jpg)
+**Why swiped:** Fully localized (French) master creative for Stripe Atlas — same brand system, translated headline + native CTA + region-agnostic gradient. · **Format:** 1:1, text-only-callout
+**Layout:** symmetric horizontal split: top half = diagonal purple/orange/yellow light-streak gradient; bottom half = clean white with black `stripe` wordmark → left-aligned 3-line black headline → "Se lancer" text-link CTA bottom-left.
+**Copy (verbatim):** "Créez votre société aux États-Unis en quelques clics" (Create your company in the US in a few clicks) — CTA "Se lancer" (Get started).
+**Visual DNA:** signature Stripe gradient `#635BFF` purple + `#FF9E00` orange (top) · white bg (bottom) · text `#0A2540`. Soehne/Helvetica bold headline → medium CTA. No imagery (gradient only). Register: premium-editorial.
+**Levers:** S30 geo-localized master creative (French copy for French-speaking founders incorporating in the US) · frictionless promise ("en quelques clics") · institutional-trust aesthetic via the signature brand gradient.
+**Weaknesses / trust flags:** none. No social proof / pricing on-canvas; abstract gradient doesn't explain "incorporation" to cold audiences.
+**So What for Grifon:** CMO/localization playbook — one master layout, swap headline + CTA per language while keeping the brand gradient constant (maps to Taglish variants). The gradient-top / white-bottom split is a clean, product-free template.
+**Patterns:** corroborates S30 (geo-localized master creative — French Atlas variant), S18 (premium style axis); new candidate — tool proposed "abstract brand-gradient split"; **folded into S18** (layout variant of the premium axis, not a distinct lever), not a new S-ID; contradicts none.
+
+### 2026-07-12 — E73 Stripe "How to build an effective pricing strategy" (fb-ad-library, B2B SaaS / fintech payments)
+![E73](../assets/ad-swipe/E73-stripe.jpg)
+**Why swiped:** Text-only, full-bleed editorial lead magnet — top-of-funnel value bait in Stripe's premium fluid-gradient aesthetic, zero product shown. · **Format:** 1:1, text-only-callout
+**Layout:** `stripe` wordmark upper-left → large 3-line white headline centered-left → letter-spaced "READ OUR GUIDE" CTA bottom-left. Full-bleed abstract pink fluid gradient with thin white accent lines. Heavy negative space.
+**Copy (verbatim):** "How to build an effective pricing strategy" — CTA "READ OUR GUIDE".
+**Visual DNA:** coral-pink fluid-gradient bg `#E35185` · white text. Helvetica/Soehne, mixed-case headline + all-caps tracked CTA. No imagery. Register: premium-editorial, asymmetric, heavy negative space.
+**Levers:** S10 value-first lead magnet (TOF — "READ OUR GUIDE") · premium style axis (abstract gradient + clean type command authority with no product) · pain-point targeting (pricing strategy = core B2B SaaS anxiety).
+**Weaknesses / trust flags:** none. No visual of the guide itself, which can lower perceived value of the download.
+**So What for Grifon:** CMO + Image Ads Gen "Lead-Magnet / Editorial" template — brand wordmark + how-to headline naming a known pain + low-friction "read the guide" CTA on a full-bleed brand gradient. Cheap to produce (no product render), reusable for Grifon TOF offers.
+**Patterns:** corroborates S10 (value-first lead magnet — clean SaaS instance), S18 (premium-editorial axis, Stripe's signature gradient); leans S9-adjacent (text-only but too designed to be true anti-design); new candidate none; contradicts none.
+
+### 2026-07-12 — E72 Stripe "Create a link. Sell anywhere." (fb-ad-library, B2B SaaS / fintech payments)
+![E72](../assets/ad-swipe/E72-stripe.jpg)
+**Why swiped:** Purest product-UI-as-hero play in the set — the actual feature (a Stripe Payment Link shared in a chat) IS the creative, no stat or testimonial needed. · **Format:** 1:1, product-hero
+**Layout:** centered vertical stack: white `stripe` wordmark (top-center) → bold 2-line white headline → smartphone mockup showing a "Chat" thread with a Payment Link preview card (powdur product image, "Buy Now", real-looking URL). Heavy negative space; purple/blue gradient.
+**Copy (verbatim):** "Create a link. Sell anywhere." — in-card CTA "Buy Now" + `https://buy.stripe.com/aF8fUK`.
+**Visual DNA:** purple/blue gradient `#8F00FF`→`#0029FF` · white text/logo · chat-bubble accent `#8CE0FF`. Bold rounded headline vs regular UI text. Register: premium-editorial, heavy negative space.
+**Levers:** S20 product-UI-as-hero (Payment Link preview card with concrete URL `https://buy.stripe.com/aF8fUK`) · value-prop headline clarity ("Create a link. Sell anywhere.") · specific URL makes the abstract feature tangible.
+**Weaknesses / trust flags:** mockup is a stylized vector illustration, not a real screenshot — reads slightly less authentic. **Tool auto-tagged S7 (fake-DM/manufactured, ANTI) — REJECTED on eyeball review:** this is a legitimate product-demo mockup of a chat, not a manufactured testimonial or deceptive social proof. Does NOT count toward S7.
+**So What for Grifon:** strong template for Image Ads Gen "Feature-in-Context" — center the product's actual output inside a native surface (chat/DM/inbox) as the hero. Exactly Grifon's S18/S20 lane (product screen = hero) → feeds GP-5.
+**Patterns:** corroborates S20 (product UI as the primary creative), S18 (premium chromatic-gradient axis); new candidate none; contradicts the S7 auto-tag (no manufactured social proof).
+
+### 2026-07-12 — E71 Stripe "Carousell cuts false positives by 75% with Stripe" (fb-ad-library, B2B SaaS / fintech payments)
+![E71](../assets/ad-swipe/E71-stripe.jpg)
+**Why swiped:** Co-branded customer case study that fuses a hard stat with the client's live product UI as proof — the premium B2B "logo + number" template. · **Format:** 1:1, product-hero
+**Layout:** top→bottom: `stripe × carousell` co-brand lockup (top-left) → bold navy 2-line headline → white pill "Learn more →" CTA → bottom-half first-person lifestyle photo of hands holding a phone running the Carousell app. Focal point = "cuts false positives by 75%".
+**Copy (verbatim):** "Carousell cuts false positives by 75% with Stripe" — CTA "Learn more" (→).
+**Visual DNA:** white bg · navy text `#0A2540` · Stripe purple `#635BFF` (arrow only — the CTA pill FILL is white with navy text) · Carousell-red accent `#FF2636`. Soehne/Helvetica, bold→regular. Register: premium-editorial, asymmetric white/photo split.
+**Levers:** S15 stat-stack proof ("cuts false positives by 75%" is the hero) · S16 borrowed authority ("stripe × carousell" co-branding) · S20 contextual product-UI grounds the abstract benefit.
+**Weaknesses / trust flags:** phone-screen UI too small to read; the "75%" stat has no on-canvas source/attribution (typical case-study convention, not a fabrication).
+**So What for Grifon:** CMO + Image Ads Gen "Customer Proof" template — co-brand lockup + one quantified outcome headline + client-app-in-hand photo (swap Carousell for a Grifon customer + their result).
+**Patterns:** corroborates S15 (stat-stack — the 75% is the hero), S16 (borrowed authority via co-brand lockup), S20 (client app UI as proof); flexes S22 (category-king by association); new candidate none; contradicts none.
+
+### 2026-07-12 — E70 Sabri Suby "Meet the $74 million Shark behind Australia's fastest-growing ad agency" (fb-ad-library, B2B / direct-response marketing agency)
+![E70](../assets/ad-swipe/E70-sabri-suby.jpg)
+**Why swiped:** A mock Forbes article card floated over a collage of real readers — borrowed authority + underdog wealth-contrast + social proof stacked in one frame. · **Format:** 1:1, native editorial mockup
+**Layout:** top→bottom — navy Forbes header bar (hamburger + wordmark) → bold black headline → centered studio portrait of Suby in a leather chair on warm beige → editorial caption → behind the white card, a full-bleed collage of dozens holding the red "Sell Like Crazy" book. Focal point = the Suby portrait inside the card.
+**Copy (verbatim):** "Meet the $74 million Shark behind Australia's fastest-growing ad agency" / "Sabri Suby launched King Kong in 2014 with $50 and a laptop. Today, it's one of the country's fastest-growing companies…" — no CTA.
+**Visual DNA:** Forbes header `#182430` · white card · headline `#121212` · portrait beige `#D5BCA8` · collage book red `#D12B2C`. Helvetica/Arial bold → regular; Forbes Georgia-style wordmark. Register: premium-editorial.
+**Levers:** S16 borrowed authority (Forbes logo + mobile-article layout) · S21 native-format camouflage (disguised as a Forbes screenshot) · S2 authority-portrait (confident seated founder) · S22 category-king flex ("Australia's fastest-growing ad agency") · S27 wealth-contrast anchor ("$50 and a laptop" vs "$74 million Shark") · reader collage = mass social proof.
+**Weaknesses / trust flags:** **manufactured editorial endorsement — Forbes branding used as ad layout; savvy users may flag as sponsored.** We lift the underdog-to-empire structure, NEVER fake a real publication's endorsement Grifon can't stand behind. No on-image CTA.
+**So What for Grifon:** the "underdog-to-empire" money-contrast (tiny start → huge now) is a high-leverage CMO founder-story angle; template gated with a hard trust caveat (no fake-publication endorsements).
+**Patterns:** corroborates S16 (Forbes-borrowed authority), S21 (editorial camouflage), S2 (founder portrait), S22 (category-king), S27 (wealth-contrast anchor — 2nd brand after E35); new candidate — "underdog-to-empire narrative contrast"; contradicts none.
+
+### 2026-07-12 — E69 Sabri Suby "SELL LIKE CRAZY" (Memoji) (fb-ad-library, B2B / direct-response marketing agency)
+![E69](../assets/ad-swipe/E69-sabri-suby.jpg)
+**Why swiped:** An oversized 3D Memoji of the founder holding his own book — uncanny pattern-interrupt that keeps brand recall while looking nothing like a B2B ad. · **Format:** 1:1, avatar-portrait hybrid
+**Layout:** huge stylized Memoji face fills left+center foreground, smiling → bright red "SELL LIKE CRAZY" book angled on a diagonal in the right foreground → rustic brick wall behind with a wooden shelf (two more copies, a dark bottle, a mounted katana). Focal point = the avatar's face + the red cover.
+**Copy (verbatim):** "THE #1 INTERNATIONAL BESTSELLER" / "SELL LIKE CRAZY" / "HOW TO GET AS MANY CLIENTS / CUSTOMERS AND S…" (lower cover text cropped in-source) — no CTA.
+**Visual DNA:** cover red `#E31B23` · white cover text · avatar tee/katana `#1A1A1A` · avatar skin `#C68B67` · shelf wood `#8C5A3C`. Impact/Arial Black caps on cover. Register: raw-ugc (avatar over real photo).
+**Levers:** S25 uncanny meme (non-human 3D avatar disrupts the feed) · S12 pattern-interrupt (oversized Memoji head is abnormal for B2B) · S13 mascot/recall (the Memoji is a recurring Sabri/King Kong recall device) · S2 authority-portrait (founder likeness + own bestseller as proof).
+**Weaknesses / trust flags:** none fabricated. Craft flags: lower cover value-prop is cropped; cartoon avatar may dent perceived professionalism for high-ticket corporate buyers.
+**So What for Grifon:** cheapest-to-produce pattern-interrupt in the set — an "avatar-as-founder" treatment (platform-native 3D avatar replacing a real headshot) is a portable scroll-stopper and a natural fit for Grifon's avatar tooling.
+**Patterns:** corroborates S25 (uncanny), S12 (pattern-interrupt), S13 (mascot/recall), S2 (founder authority); new candidate — "avatar-as-founder" (stylized platform-native avatar replaces real photography while holding brand identity); contradicts none.
+
+### 2026-07-12 — E68 Sabri Suby "Sell Like Crazy: How to Get As Many Client…" (fb-ad-library, B2B / direct-response marketing agency)
+![E68](../assets/ad-swipe/E68-sabri-suby.jpg)
+**Why swiped:** A fabricated Google SERP is the entire creative — search-UI-as-hero proving category dominance via multi-retailer availability + review volume. · **Format:** 1:1, simulated-UI screenshot
+**Layout:** top→bottom — Google logo + search bar ("sell like crazy") → knowledge-panel header "Book by Sabri Suby" → a 4-card Shopping carousel of red book covers with prices/retailers → organic Amazon snippet with stars at the base. Focal point = the row of bright red book covers.
+**Copy (verbatim):** query "sell like crazy" · "Sell Like Crazy: How to Get As Many Client…" · retailer stack "$23.09 Amazon AU / $19.95 Officeworks / $14.99 Used eBay.com.au / $27.35 Booktopia" · "Rating: 4.5 · 3,227 reviews · $11.99" — no CTA.
+**Visual DNA:** white ground · product-hero red covers `#D12421` · link-blue `#1A0DAB` · Google blue `#4285F4`. Roboto/Arial UI, mixed case. Register: minimal-anti-design (pixel-honest UI mimicry).
+**Levers:** S20 product-UI-as-hero (the SERP itself is the creative; red covers the focal mass) · S21 native-format camouflage (mimics an organic search page) · S16 borrowed authority (Google + Amazon + Officeworks + Booktopia) · S15 stat-stack ("3,227 reviews · 4.5" + four price points) · S22 category-king flex (listed everywhere = mainstream demand).
+**Weaknesses / trust flags:** curated/staged results cherry-picking positive listings + high review counts; savvy users may feel manipulated once they clock it's a screenshot. No buy-CTA.
+**So What for Grifon:** template candidate — a "SERP-simulation" layout that renders any Grifon-client product as a search-results page (multi-retailer + review stack). Note as a gated Image Ads Gen proposal (needs ≥3-ad corroboration before promoting); pairs with CMO proof-stacking.
+**Patterns:** corroborates S20 (UI-as-hero — this is S20's 2nd independent brand), S21 (search-page camouflage), S16 (platform-borrowed trust), S15 (review/stat stack), S22 (multi-retailer dominance); new candidate — "SERP-simulation creative"; contradicts none.
+
+### 2026-07-12 — E67 Sabri Suby "I WAS WORKING 16-HOURS PER DAY, 6 DAYS PER WEEK. BUT STILL STRUGGLED TO GET CLIENTS." (fb-ad-library, B2B / direct-response marketing agency)
+![E67](../assets/ad-swipe/E67-sabri-suby.jpg)
+**Why swiped:** Dream-buyer pain quote weaponized as fake editorial "NEWS" — Sabri's signature hyper-specific audience callout in native-camouflage dressing. · **Format:** 4:5, authority-portrait / manufactured-news
+**Layout:** top→bottom — dominant warm-lit portrait of Suby (black tee, direct gaze) fills left/center; circular inset top-right shows him tuxedo'd beside a partner (the "after"); red `NEWS` badge under his chin; heavy white condensed quote block owns the lower third. Focal point = the red NEWS badge + quote below it.
+**Copy (verbatim):** "I WAS WORKING 16-HOURS PER DAY, 6 DAYS PER WEEK. BUT STILL STRUGGLED TO GET CLIENTS." / badge "NEWS" — no on-image CTA (relies on the caption).
+**Visual DNA:** news badge `#FF0000` · white text · tee/shadow `#0B0C10` · warm skin/rim `#D4A373`. Condensed black caps (Bebas/Impact feel). Register: native-format-camouflage.
+**Levers:** S8 hyper-specific audience callout ("16-HOURS PER DAY, 6 DAYS PER WEEK… struggled to get clients" quantifies the dream-buyer's exact pain) · S21 native-format camouflage (red "NEWS" badge mimics IG gossip/news accounts) · S2 authority-portrait · wealth-contrast via inset (leans S27/S28).
+**Weaknesses / trust flags:** **manufactured news format — fake "NEWS" badge frames a personal quote as editorial reporting**; can read as clickbait to skeptical B2B. Copy the pain-quote layout; never fake a news outlet. No brand logo/CTA on-image.
+**So What for Grifon:** the S8 pain-quote-as-headline over a founder portrait is a directly portable Image Ads Gen headline pattern for Bryan/Olivia SMB avatars (Taglish "16 oras kada araw pero walang client" energy). Feeds CMO playbook.
+**Patterns:** corroborates S8 (quantified dream-buyer pain), S21 (NEWS-badge camouflage — 3rd brand), S2 (founder hero); new candidate — "contrast-inset storytelling" (main struggle portrait + small high-status circular inset = before/after without a split-screen); contradicts none.
+
+### 2026-07-12 — E66 Alex Hormozi "It's time for a new network." (fb-ad-library, B2B / business-education & offers)
+![E66](../assets/ad-swipe/E66-alex-hormozi.jpg)
+**Why swiped:** Conceptual visual-metaphor hook — a rusted, crumbling chain link literalizes "your weak network," instant comprehension before a word is read. · **Format:** 1:1, conceptual-metaphor / authority-portrait
+**Layout:** heavy black chain hangs down the vertical center-axis, its middle link rusted and shattering with debris mid-air → Hormozi cutout in the bottom-right quadrant, serious gaze, ACQUISITION.COM cap → dark-blue banner across the bottom fifth holds the hook, "scaling you past $10M" in gold. Focal point = the broken rusted link. Asymmetrical balance.
+**Copy (verbatim):** "If your current network isn't scaling you past $10M, it's time for a new one." ("scaling you past $10M" in gold) — no on-canvas CTA.
+**Visual DNA:** navy bg `#121930` · gold accent text `#FBC02D` · white primary · rust metaphor accent `#8D5B4C`; thin purple rounded frame. Bold Montserrat-ish, mixed case. Register: premium-editorial photo-manipulation + photographic cutout.
+**Levers:** conceptual metaphor (broken chain = weak link in your network) · S8 hyper-specific revenue filter ("past $10M") · S2 authority-portrait trust anchor · gold color-highlight steering the eye to the qualifying number.
+**Weaknesses / trust flags:** none; no on-image CTA; leans on Hormozi recognition for the portrait's authority weight.
+**So What for Grifon:** CD playbook — "literal metaphor + one-line hook + bottom banner" is a reusable Image Ads Gen concept-frame (visualize the customer's problem object, not the product). Lower direct SaaS-template value than E63/E65; keep as a creative-recipe reference.
+**Patterns:** corroborates S8 ("$10M" revenue callout), S2 (founder anchor), S12-adjacent (metaphor as pattern-interrupt); new candidate — "conceptual metaphor hook" (a physical object literalizing a business problem); contradicts none.
+
+### 2026-07-12 — E65 Alex Hormozi "Your custom AI is here." (fb-ad-library, B2B / business-education & offers)
+![E65](../assets/ad-swipe/E65-alex-hormozi.jpg)
+**Why swiped:** Rare, high-novelty pattern-interrupt — the founder rendered as a collectible RPG/trading card, hijacking the "AI" trend in a B2B feed. · **Format:** 1:1, gamified-card / authority-portrait
+**Layout:** centered 3-line headline (yellow-highlighted middle line) → single gold-bordered trading card dead-center: Hormozi portrait inside, level "1" badge top-left, gold growth-chart hex top-right, 5 gold stars bottom-left, purple gem center, 3 purple stat-bars bottom-right. Symmetrical single-focus. Focal point = the card.
+**Copy (verbatim):** "Tired of generic AI for complex $1M+ business challenges? Your custom AI is here." ("complex $1M+ business challenges" and "custom AI" in yellow) — no on-canvas CTA.
+**Visual DNA:** navy bg `#121124` · gold card border `#DFB76C` · purple gem+bars `#7B3FE4` · white text. Bold sans, mixed case. Register: premium-editorial with game-UI ornamentation.
+**Levers:** trading-card pattern-interrupt (level/stars/stat-bars = scroll-stopper) · S11 AI trend-hijack ("generic AI" vs "your custom AI") · S8 hyper-specific audience callout ("$1M+ business challenges" = lead-filter) · S2 authority-portrait as the card's hero.
+**Weaknesses / trust flags:** none; no on-image CTA to route the next step; gamified skin may alienate ultra-conservative enterprise buyers.
+**So What for Grifon:** strongest single new-template candidate of the batch — a "Gamified Character Card" layout for Image Ads Gen (frame a founder / the Grifon app / a feature as a collectible card with level, stars, stat bars). Pairs with Grifon's S11 AI-trend angle. Worth a GP-family proposal if it recurs ≥3×.
+**Patterns:** corroborates S12 (pattern-interrupt hook), S11 (AI trend-hijack — Grifon's core axis), S8 ("$1M+" audience callout), S2 (founder as hero); new candidate — "gamified character/trading card" layout; contradicts none.
+
+### 2026-07-12 — E64 Alex Hormozi "BUILD THE OFFER THAT FEELS LIKE A NO-BRAINER" (fb-ad-library, B2B / business-education & offers)
+![E64](../assets/ad-swipe/E64-alex-hormozi.jpg)
+**Why swiped:** Clean authority-portrait event ad — muscular founder as living proof + a date-stamped in-person workshop hook. · **Format:** 4:5, authority-portrait / event
+**Layout:** white pill event-badge ("LIVE IN-PERSON WORKSHOP · LAS VEGAS · SEP 25-26") → black-weight headline upper-third with "NO-BRAINER" in yellow → 3-line body → filled yellow "LEARN MORE" pill (center) → large Hormozi cutout fills the bottom half against a purple gradient, ACQUISITION.COM on cap + tank. Focal point = his direct gaze.
+**Copy (verbatim):** "BUILD THE OFFER THAT FEELS LIKE A NO-BRAINER" / "Join our 2-day Offer Workshop and we'll show you how to build a Grand Slam Offer so strong that people would be crazy to turn it down." — CTA "LEARN MORE" (yellow pill `#F7D139`).
+**Visual DNA:** purple gradient `#5A2D82`→`#8A3FFC` · yellow `#F7D139` CTA+accent · white text. Montserrat-ish black weight, all-caps headline. Register: flat-graphic. Branded apparel doubles as logo placement.
+**Levers:** S2 authority-portrait (branded apparel = walking logo) · event scarcity/specificity (fixed city + dates) · "no-brainer / crazy to turn it down" ease-of-outcome trigger · high-contrast yellow-on-purple CTA pop.
+**Weaknesses / trust flags:** none; relies on pre-existing Hormozi recognition (cold audiences may not connect the physique to business education). One campaign cluster with the Vegas-workshop big-type variants; E64 is the cleanest authority-portrait representative.
+**So What for Grifon:** CMO/CD playbook — the date-stamped event-badge + single filled CTA on a flat-color canvas is a reusable Image Ads Gen layout for any Grifon live/webinar push. Founder-as-proof only ports if Grifon anchors on a recognizable face.
+**Patterns:** corroborates S2 (founder cutout as sole anchor), S14/S6-adjacent (full-color flat canvas + single high-contrast CTA); new candidate — "branded-apparel-as-logo placement"; contradicts none.
+
+### 2026-07-12 — E63 Alex Hormozi "Everything inside Vantage." (fb-ad-library, B2B / business-education & offers)
+![E63](../assets/ad-swipe/E63-alex-hormozi.jpg)
+**Why swiped:** Textbook Hormozi value-stack — enumerates every offer component + a hard price, in a premium gold-on-black frame. Directly reinforces GP-1. · **Format:** 1:1, authority-portrait / offer-stack
+**Layout:** outlined "Join Vantage Premium" ghost-badge top-right → left-half black brush-stroke block holds the white+gold value copy → hand-drawn gold icon cluster (briefcase/$1M+ room/playbook/strategy-call) bottom-left → founder cutout dominates the right half with hand-drawn gold mountain, arrows, and an upward bar-chart. Focal point = Hormozi's portrait; copy reads first on the left.
+**Copy (verbatim):** "Everything inside Vantage. About $667 a month, billed annually. Starting with an AI no competitor can build, trained on 50,000+ hours of real consulting… Then the 12 playbooks behind a $250M portfolio, the 8 workshops from Alex, Leila, and Sharran, and a verified $1M+ room. Plus a business strategy call to find your #1 constraint." — CTA "Join Vantage Premium" (outlined gold pill).
+**Visual DNA:** bg `#121212` · gold accent `#D59F4E` · white text; hand-drawn gold "chalkboard" doodles over premium photo. Bold-to-regular sans, mixed case. Register: premium-editorial.
+**Levers:** S4 offer-stack enumeration ("12 playbooks… 8 workshops… verified $1M+ room… strategy call") · S15 stat-stack proof (all non-round: "50,000+ hours", "$250M portfolio", "$667 a month") · S2 authority-portrait · price-upfront value-anchor + lead-filter.
+**Weaknesses / trust flags:** none — every number is a checkable claim, no manufactured scarcity/DMs. Minor: no filled CTA button (only a ghost badge).
+**So What for Grifon:** strong signal for the GP-1 SaaS Offer/Upsell "value-stack" family — enumerated deliverables + one hard price + gold-on-black premium skin. CMO: the "non-round specific number" stacking ports directly to Grifon's plan-ladder copy.
+**Patterns:** corroborates S4 (offer components enumerated — 3rd brand), S15 (dense stat-stack), S5 (gold-on-black premium palette — 2nd brand after Gadzhi), S2 (founder hero); new candidate — "hand-drawn chalk/doodle overlay on premium photography"; contradicts none.
+
+### 2026-07-12 — E62 Google Gemini App "غيّر قصة شعري لقصة شعر النجوم" (fb-ad-library, AI / consumer AI assistant)
+![E62](../assets/ad-swipe/E62-google-gemini-app.jpg)
+**Why swiped:** The geo-localized (Arabic) master-creative variant — swaps the flat template for a scroll-stopping character (banana-print-jacket blonde man pointing at camera) + a real phone mockup showing the in-app prompt + result. · **Format:** 4:5, product-hero
+**Layout:** symmetric, deep DOF — Google Gemini logo top-center over Arabic subhead → hero character in bright yellow banana jacket pointing at viewer, holding a ball → photorealistic phone mockup lower-half ("Gemini 3 Fast", white prompt card with the Arabic prompt + a small "before" portrait). Focal point = the pointing man in yellow.
+**Copy (verbatim):** "Google Gemini" / "حمّل التطبيق مجاناً" (Download the app for free) / "غيّر قصة شعري لقصة شعر النجوم" (Change my hairstyle to a star's hairstyle) / "Gemini 3 Fast" — CTA "حمّل التطبيق مجاناً" (text CTA).
+**Visual DNA:** hero-accent yellow `#F4C430` · white card · stadium grass `#4CAF50` · icon accent `#4285F4` · text `#1A1A1A`. Google Sans Arabic, bold→regular. Register: premium-editorial composite. Yellow-on-green = instant contrast.
+**Levers:** S20 product-UI-as-hero (the phone mockup with the prompt) · S11 trend-hijack (stadium + ball tap regional football fervor) · cost-reversal "download free" removes friction · scroll-stopping color contrast · character/recall device.
+**Weaknesses / trust flags:** none fabricated. The generated character reads slightly uncanny, which can undercut "realistic photo editing" credibility.
+**So What for Grifon:** two adds beyond E59–E61 — (1) geo-localized master creative (one template, localized language + regional trend); (2) a memorable character/mascot as the pattern-interrupt over a flat UI card. CMO: pair "free" cost-reversal with a bold hero character when the flat template needs more stopping power.
+**Patterns:** corroborates S20, S11, S30 (Arabic localization of the same campaign), S13 (banana-jacket character), mild S1 (free-download cost-reversal); new candidate none; contradicts none.
+
+### 2026-07-12 — E61 Google Gemini App "KNOW THE HISTORY FEEL THE DRAMA" (fb-ad-library, AI / consumer AI assistant)
+![E61](../assets/ad-swipe/E61-google-gemini-app.jpg)
+**Why swiped:** The text-utility (information, not image-gen) variant of the same campaign — a glassmorphic prompt card with a live blue cursor over a cinematic sports photo. Sells a "get answers" use case without any generated visual payoff. · **Format:** 1:1, product-hero
+**Layout:** low-angle cleat-striking-ball action photo fills the frame → bold white "KNOW THE HISTORY / FEEL THE DRAMA" across the top third → large translucent dark glass card center-bottom holding the prompt with a blinking blue cursor (focal point) → Google Gemini lockup inside the card base.
+**Copy (verbatim):** "KNOW THE HISTORY" / "FEEL THE DRAMA" / "Break down the history and key rivalries of the U.S. Soccer National Team|" (trailing cursor) — no CTA.
+**Visual DNA:** white primary text · translucent card `#1E2E24` · cursor accent `#4285F4` · grass green `#557C16`. Heavy black headline (Impact-like) → regular prompt sans. Register: premium-editorial. Real sports photo (no gen).
+**Levers:** S20 product-UI-as-hero (glass card + blue cursor simulates the live Gemini input) · S11 trend-hijack (USMNT history/rivalries to catch fans) · the live-typing cursor mimics an active session and pulls the eye to the value prop.
+**Weaknesses / trust flags:** no CTA button.
+**So What for Grifon:** confirms the transferable device — a translucent prompt card + blinking cursor over a relevant editorial photo = "the app is thinking about YOUR topic." Cheap to template (stock/brand photo + prompt overlay), no gen required.
+**Patterns:** corroborates S20 and S11 (same campaign DNA as E59/E60 — multi-execution consistency is itself the signal); new candidate none (rolls into E59's "prompt-to-outcome" candidate); contradicts none.
+
+### 2026-07-12 — E60 Google Gemini App "GET IN THE GAME" (fb-ad-library, AI / consumer AI assistant)
+![E60](../assets/ad-swipe/E60-google-gemini-app.jpg)
+**Why swiped:** Personalization / self-insertion lever ("of ME doing a bicycle kick") and a physical-digital bridge (AI output shown as a real trading card held in a hand) that makes software output feel tangible and collectible. · **Format:** 1:1, product-hero
+**Layout:** asymmetric — real hand holds a holographic foil trading card angled center-right (focal point) → grey prompt bubble top-left → massive stacked white "GET IN THE GAME" bottom-left → Google Gemini lockup bottom-center.
+**Copy (verbatim):** "GET IN THE GAME" / "Create a soccer trading card of me doing a bicycle kick" / "Catarina L." · "Position: ELITE STRIKER" · "Achievements: MATCH MVP" · "MVP" badge — no CTA.
+**Visual DNA:** white text · dark card ground `#1E252B` · USA-jersey red stripe `#E21C34` · logo accent `#4285F4`. Heavy bold headline vs clean sans prompt bubble. Register: clean-tech-meets-physical-nostalgia. Imagery: AI-generated card composited into a real hand.
+**Levers:** S20 product-UI-as-hero (prompt bubble demos how to interact) · personalization/self-insertion ("of me") · nostalgia (foil border + MVP badge borrow physical-card culture).
+**Weaknesses / trust flags:** mild — staged prompt bubble implies one-shot real-time generation of a polished card that in practice is multi-step. **Tool auto-tagged S7 (fake-DM/manufactured, ANTI) — REJECTED on eyeball review:** authentic first-party product UI demoing the app's own capability, not a deceptive manufactured DM/social-proof. Does NOT count toward S7. Possible viewer confusion: does Gemini print physical cards? (No.)
+**So What for Grifon:** the personalization angle is transferable — Grifon could show "put the CLIENT's product/face into [aspirational scene]" as the demoed prompt; the physical-object-in-hand bridge makes generated assets feel premium.
+**Patterns:** corroborates S20 (generated output as hero), S11 (soccer-trend hijack by an AI product); new candidate — "physical-digital bridge" (AI-generated asset shown as a held physical object); contradicts the S7 auto-tag (legit product demo, not manufactured ANTI).
+
+### 2026-07-12 — E59 Google Gemini App "FOR TIMELY GOALS" (fb-ad-library, AI / consumer AI assistant)
+![E59](../assets/ad-swipe/E59-google-gemini-app.jpg)
+**Why swiped:** Cleanest example of the "FOR ___ GOALS" black-canvas template — turns an abstract AI capability (agentic calendar automation) into a single legible prompt→outcome tableau. · **Format:** 1:1, product-hero
+**Layout:** giant condensed white headline "FOR TIMELY GOALS" on pure black → dark-grey Google Calendar notification card ("U.S. Men's Soccer Match") overlapping → white Gemini prompt pill (focal point) → centered Google Gemini lockup at base.
+**Copy (verbatim):** "FOR TIMELY GOALS" / "Block my calendar for all USMNT matches" / "U.S. Men's Soccer Match" — no CTA.
+**Visual DNA:** bg `#000000` · headline + prompt-pill white · notification card `#202124` · logo accent `#4285F4`. Heavy condensed sans + Google Sans, high weight contrast. Register: minimal / anti-design.
+**Levers:** S20 product-UI-as-hero (simulated Gemini prompt box + the resulting Calendar notification are the primary visuals) · S11 trend-hijack ("USMNT matches" makes the utility feel timely) · actionable prompt-education (shows the exact phrase to type) + ecosystem trust-transfer (borrows Google Calendar's recognizability).
+**Weaknesses / trust flags:** no explicit CTA button; relies on the viewer decoding "USMNT."
+**So What for Grifon:** the "FOR ___ GOALS" black-canvas + app-UI-card is a directly clonable Image Ads Gen template — headline slot "FOR [BENEFIT] GOALS" + a prompt-pill showing Grifon's own exact input. CMO: sell the concrete prompt + its outcome, not the abstract "AI-powered" claim → feeds GP-5.
+**Patterns:** corroborates S20 (product UI is the hero), S11 (AI product hijacking a live sports trend — mirrors Grifon's own "AI" lane); new candidate — "prompt-to-outcome visualization" (prompt pill visually connected to its rendered result); contradicts none.
+
+### 2026-07-12 — E58 Meta for Business "Capture leads fast." (fb-ad-library, B2B / social-ads platform)
+![E58](../assets/ad-swipe/E58-meta-for-business.jpg)
+**Why swiped:** Product-UI-as-hero done as a glassmorphic lead-form overlay on a lifestyle shot, with a vertical-specific mock brand ("Suburban Realty") to make the abstract feature concrete for a named niche. · **Format:** 1:1, product-hero
+**Layout:** woman in dark-teal blazer on a phone, left; glassmorphic Instant-Form card overlaid right (house icon → mock brand → Email/Full Name fields → blue Submit). Headline split "Capture" (top-left) / "leads fast." (bottom-center). Meta logo bottom-right.
+**Copy (verbatim):** "Capture leads fast." / form "Suburban Realty" — "Start your home ownership journey with us." / "Email" / "Full Name" — CTA "Submit" (pill `#007FFF`).
+**Visual DNA:** white headline + UI borders · Submit `#007FFF` · teal blazer `#0A3C46` · warm door-glow bg `#D97D24`. Bold-to-regular sans, mixed case. Register: premium-editorial with glassmorphic UI overlay.
+**Levers:** S20 product-UI-as-hero (glassmorphic lead form showing Email/Full Name/Submit) · value-first benefit headline ("Capture leads fast." states the advertiser's exact goal) · vertical-specific mock ("Suburban Realty" makes it relevant to real-estate advertisers).
+**Weaknesses / trust flags:** none. Minor: the subject's head slightly interrupts the split headline.
+**So What for Grifon:** Image Ads Gen template — "float a glassmorphic product-UI card over a lifestyle subject, headline states the literal outcome, mock brand names the niche"; swap the form for Grifon's own UI and localize the mock brand per vertical → feeds GP-5.
+**Patterns:** corroborates S20 (Instant Forms UI rendered as the creative); new candidate none; contradicts none.
+
+### 2026-07-12 — E57 Meta for Business "3 hacks to guide the AI behind Advantage+ creative:" (fb-ad-library, B2B / social-ads platform)
+![E57](../assets/ad-swipe/E57-meta-for-business.jpg)
+**Why swiped:** Analog pattern-interrupt — a physical spiral-notebook flat-lay used to explain an AI feature, with a listicle number hook + actionable checklist. Anti-design in a feed of gradients. · **Format:** 9:16, flat-lay / anti-design
+**Layout:** top-down flat-lay of a white spiral notebook on brown wood; yellow sticky note peeking left, blue pen along the right. Big black "3" top-left, headline, then three checkmark items. Meta logo bottom on the wood. Focal point = the large "3".
+**Copy (verbatim):** "3 hacks to guide the AI behind Advantage+ creative:" / "Choose only the AI-generated images you want to use." / "Make small edits in each image to fit your preference." / "Use the **Tailor variations to personas** feature to personalise ad text." — no CTA.
+**Visual DNA:** notebook page white · text `#1C2B33` · blue pen `#0084FF` · wood `#8B5A2B` · yellow sticky `#F4D03F`. Black-to-regular sans, mixed case. Register: minimal / anti-design.
+**Levers:** S10 value-first education ("provides '3 hacks'" — give-before-ask TOF) · S11 AI trend-hijack ("the AI behind Advantage+") · analog pattern-interrupt (physical notebook explaining a digital tool) · S4 actionable checklist (checkmark = step-by-step recipe) · low-friction listicle hook (big "3").
+**Weaknesses / trust flags:** none. No on-creative CTA — relies on platform click-through.
+**So What for Grifon:** strong TOF format — "N hacks to guide the AI behind [Grifon feature]" as a notebook/flat-lay lead magnet — value-first, AI-native, cheap to template. The analog-object-for-digital-concept device is the fresh part.
+**Patterns:** corroborates S10 (value-first lead magnet), S4 (offer-stack checklist), S9 (anti-design text-only interrupt), S11 (trend-hijack "AI"), S12 (pattern-interrupt); new candidate — "analog-digital juxtaposition" (physical tactile objects to explain a technical digital concept); contradicts none.
+
+### 2026-07-12 — E56 Meta for Business "Expanding our strategy with the reach objective…" (fb-ad-library, B2B / social-ads platform)
+![E56](../assets/ad-swipe/E56-meta-for-business.jpg)
+**Why swiped:** Feature-specific testimonial: the quote names the exact product feature ("reach objective") instead of generic praise, and borrows platform-native authority via a verified checkmark. · **Format:** 9:16, lifestyle / testimonial
+**Layout:** top ~45% = bold white quote on solid blue (`#1877F2`), then a small circular author avatar with blue verified badge + name/title. Bottom ~55% = warm beach photo of two women laughing. Meta logo bottom-center. Focal point = the white quote.
+**Copy (verbatim):** "Expanding our strategy with the reach objective allowed us to engage a wider audience and deliver even better results for our business." — Lily Vano Senior, Social Media Strategist — no CTA on-creative.
+**Visual DNA:** Facebook-blue bg `#1877F2` · white text · warm beach accent `#D9A05B`. Bold-to-regular sans, mixed case. Register: premium-editorial, aspirational.
+**Levers:** feature-specific social proof ("highlights 'the reach objective' rather than generic success") · native authority cue (blue verified checkmark) · aspirational-lifestyle emotional payoff (beach = the "better results").
+**Weaknesses / trust flags:** mild — "Lily Vano Senior, Social Media Strategist" is an **unverifiable persona (no company named); the verified badge is a design element, not proof.** Steal the *structure* (name the feature in the quote), not the implied endorsement. No CTA.
+**So What for Grifon:** CMO testimonial rule — the quote must name the specific mechanism the customer used ("the [feature] let us [specific outcome]"), not "great results." Directly portable to real Grifon customer quotes.
+**Patterns:** corroborates S16 (verified-badge credibility cue), S2 (named strategist persona), S21 (native verified-badge UI); new candidate none; contradicts none.
+
+### 2026-07-12 — E55 Meta for Business "Drive sales directly to your online store." (fb-ad-library, B2B / social-ads platform)
+![E55](../assets/ad-swipe/E55-meta-for-business.jpg)
+**Why swiped:** Split-screen "text-panel + stacked native mockups" layout that shows an SMB advertiser the exact end-result of an ad goal, with a hand-drawn arrow doing the visual pointing. · **Format:** 9:16, product-hero
+**Layout:** left half = white headline on solid black (`#000000`) with a hand-drawn arrow; right half = vertical stack of 3 colorful Instagram ad mockups each with a green "Shop now" CTA bar. Focal point = the middle mockup's "Shop now" button the arrow points at. Meta/Instagram branding bottom-left.
+**Copy (verbatim):** "Drive sales directly to your online store." / "Try the **make a purchase** ad goal." — CTA "Shop now" (green bar `#009B74`/`#88D41E`).
+**Visual DNA:** left bg `#000000` · white primary text · coral gradient on "online store." `#FF4E50` · green CTA bars. Bold-to-regular sans, mixed case. Register: premium-editorial, high-contrast color-blocking.
+**Levers:** S20 product-UI-as-hero (Instagram feed mockups with "Shop now" buttons) · S21 native-format camouflage (native like/comment icons + CTA bars) · directional cueing (hand-drawn arrow from copy → the CTA).
+**Weaknesses / trust flags:** none. Minor: split-screen divides attention between copy and mockups.
+**So What for Grifon:** port the "show the actual generated ad inside a native feed mockup, with an arrow to the CTA" device to sell Grifon's own output — a demo-the-result frame that suits a tool whose deliverable IS the ad → feeds GP-5.
+**Patterns:** corroborates S20 (real IG interface mockups as the primary creative), S21 (native chrome to camouflage the mockup); new candidate none; contradicts none.
+
+### 2026-07-12 — E54 OpenAI "All your tasks done in one place" (fb-ad-library, AI / consumer + enterprise AI assistant)
+![E54](../assets/ad-swipe/E54-openai.jpg)
+**Why swiped:** Pure product-UI collage — a flat-white board of three overlapping ChatGPT Business interface cards (task list, performance chart, team-share modal) that argues "one place for everything" by simply showing everything at once. · **Format:** 4:5, product-UI-as-hero
+**Layout:** centered ChatGPT Business lockup → centered bold headline "All your tasks done in one place" → three overlapping pastel-bordered UI cards: left "Campaign ideas" numbered 1–8 list + "+12 more ideas…" (focal), top-right "Campaign performance" bar chart, bottom-right "Share drafts with your team" access modal ending in a black "Copy link" pill.
+**Copy (verbatim):** "All your tasks done in one place" — card list "1. Product-first launch message … 8. Product reveal countdown / +12 more ideas…"; in-mockup CTA "Copy link".
+**Visual DNA:** off-white bg `#F9F9F9` · black text · chart green `#82C99B` · peach `#FF9E79` + lavender + pink card-border gradients. Soehne/Helvetica medium-bold. Register: flat-graphic / clean product-UI (Gemini mis-tagged "premium-editorial" — corrected).
+**Levers:** S20 product-UI-as-hero (stylized interface mockups carry the entire ad) · S4 offer/capability-stack (numbered 1–8 list + "+12 more ideas…" signals high-volume output) · enterprise-collaboration proof ("Share drafts with your team" modal shows multi-user).
+**Weaknesses / trust flags:** no headline-level clickable CTA (only the in-mockup "Copy link"). None fabricated — the chart and roster names are illustrative UI, not claimed real customers.
+**So What for Grifon:** Image Ads Gen "flat-white product-UI collage" — 2–3 overlapping interface cards on negative space with a benefit headline; pastel gradient card borders add life without imagery → feeds GP-5, and corroborates the GP-1 offer-stack family.
+**Patterns:** corroborates S20 (relies entirely on stylized product UI), S4 (offer/task-stack checklist — the numbered 1–8 list), S15 ("+12 more ideas…" volume proof); new candidate none; contradicts none.
+
+### 2026-07-12 — E53 OpenAI "With ChatGPT Business, we can now create things we were never able to before." (fb-ad-library, AI / consumer + enterprise AI assistant)
+![E53](../assets/ad-swipe/E53-openai.jpg)
+**Why swiped:** The SAME Sebastian Korts testimonial as E51, re-skinned into a premium-editorial 4:5 — warm wood paneling, a motion-blurred exec, and a glassmorphic "Growth Roadmap" UI card. Proof of a deliberate register A/B on identical social-proof copy. · **Format:** 4:5, authority-portrait + product-UI
+**Layout:** ChatGPT Business logo top-right → oversized white quote mark → 4-line white testimonial (focal, left) → "Sebastian Korts | Founder, Steuerrecht.com" attribution → glassmorphic UI card bottom ("Growth Roadmap" + Word/Docs tiles + faded Step 1–3 strategy text); motion-blurred businessman anchors the right third.
+**Copy (verbatim):** "With ChatGPT Business, we can now create things we were never able to before." — "Sebastian Korts | Founder, Steuerrecht.com"; UI card "Growth Roadmap" / "Step 1: Reallocate team capacity to support Q3 growth…" — no CTA.
+**Visual DNA:** warm wood bg `#A17E5A` · white text+UI borders · suit near-black charcoal (Gemini mis-read `#1B365D` navy — corrected); glassmorphic frosted UI card. Soehne/Helvetica, medium-bold. Register: premium-editorial.
+**Levers:** S16/S2 borrowed authority / social proof (named founder + company) · S20 product-UI-as-hero ("Growth Roadmap" card visualizes concrete AI output) · premium styling elevates perceived value.
+**Weaknesses / trust flags:** motion blur may read too abstract; bottom UI step-text intentionally cut off (implies "more inside"). None fabricated — real attributed founder; Word/Docs icons imply plausible integrations, not a fabricated claim.
+**So What for Grifon:** Image Ads Gen "premium-editorial testimonial + glassmorphic output card" — pair a named-customer quote with a frosted UI card that SHOWS the AI deliverable. Corroborates the GP-1 SaaS Offer/Upsell family and, with E51, gives a shippable S18 register A/B → feeds GP-5.
+**Patterns:** corroborates S16/S2 (named founder authority), S20 (mock UI showing the product generating business docs), S18 (premium-editorial pole — the E51↔E53 pair IS the axis), S15 (Step 1/2/3 stat-stack); new candidate — "glassmorphic UI-over-lifestyle overlay"; contradicts none.
+
+### 2026-07-12 — E52 OpenAI "आज ChatGPT Business आज़माएं" (fb-ad-library, AI / consumer + enterprise AI assistant)
+![E52](../assets/ad-swipe/E52-openai.jpg)
+**Why swiped:** Native chat-bubble interrupt — the actual ChatGPT input pill is composited onto a real Indian SMB owner mid-thought, whole ad localized in Hindi. The product UI IS the ad. *(Tripped the GENERIC_OUTPUT gate on a why_it_works count heuristic — kept as the most distinct OpenAI concept; treat as slightly lower confidence.)* · **Format:** 1:1, product-UI-as-hero (lifestyle base)
+**Layout:** bearded man in a warm-lit vintage workshop holding a phone, mid-expression → white ChatGPT-style input pill overlaid across his chest (with + and ↑ icons) containing the Hindi prompt (focal point) → bold white Hindi CTA line at the bottom.
+**Copy (verbatim):** prompt "सोशल मीडिया पर फॉलोअर्स बढ़ाने के लिए मैं क्या कर सकता हूँ?" ("What can I do to increase my social-media followers?") — CTA "आज ChatGPT Business आज़माएं" ("Try ChatGPT Business today").
+**Visual DNA:** white input-pill + CTA text · black pill text/icons · warm brown jacket `#C28E58` + shadow `#1A110B`. Noto Sans Devanagari. Register: native-lifestyle / polished-UGC (Gemini mis-tagged "premium-editorial" — corrected).
+**Levers:** S20 product-UI-as-hero (white pill mimics the real ChatGPT mobile input bar) · S30 geo-localized master creative (prompt + CTA fully in Hindi) · high-intent relatable query (follower-growth pain point).
+**Weaknesses / trust flags:** no distinct clickable button shape (text-only CTA may soften CTR); relies on the "ChatGPT" wordmark alone. None fabricated — the chat bubble is a genuine product-UI representation, not a fake DM.
+**So What for Grifon:** "native chat-bubble interrupt" — composite a Grifon prompt pill onto a real-person lifestyle plate + one localized CTA line. Strong master-creative template (one base, many localized captions) → feeds GP-5, pairs with S30.
+**Patterns:** corroborates S20 (real ChatGPT input bar as the central hook), S30 (Hindi-localized master creative), S21 (native-format camouflage — mimics an in-app moment); new candidate none; contradicts none.
+
+### 2026-07-12 — E51 OpenAI "Mit ChatGPT Business können wir heute Dinge umsetzen, die bisher für uns nicht möglich waren." (fb-ad-library, AI / consumer + enterprise AI assistant)
+![E51](../assets/ad-swipe/E51-openai.jpg)
+**Why swiped:** Enterprise brand runs a pure text-only anti-design testimonial as a scroll-stopper — proof that a big AI player leans on editorial minimalism, not spectacle. · **Format:** 9:16 story, text-only-callout
+**Layout:** top→bottom — oversized black quotation mark → bold 4-line German testimonial (focal point) → tiny author attribution → ChatGPT Business logo lockup bottom-left; extreme off-white negative space.
+**Copy (verbatim):** "Mit ChatGPT Business können wir heute Dinge umsetzen, die bisher für uns nicht möglich waren." — "Sebastian Korts / Gründer, Steuerrecht.com"; no CTA button.
+**Visual DNA:** bg `#F9F9F9` · text+logo `#000000` (2-color only). Söhne-style grotesk, bold quote vs light metadata. Register: minimal-anti-design.
+**Levers:** social proof / testimonial (named founder) · authority bias ("Gründer, Steuerrecht.com") · aspirational outcome hook ("…die bisher für uns nicht möglich waren" = promises net-new capability).
+**Weaknesses / trust flags:** no CTA / next step; extreme plainness risks being scrolled past. None fabricated — testimonial attributed to a real named founder + company.
+**So What for Grifon:** CMO playbook — a 2-color, image-free testimonial card is a cheap, high-trust B2B format Grifon SMBs can run without design budget. Weak Image Ads Gen template alone (needs the premium sibling E53); together they run the S18 register axis.
+**Patterns:** corroborates S9 (flat solid bg, editorial weight of the quote), S2/S16 (borrowed authority of a niche-domain founder); new candidate — "localized minimalist testimonial template" (same quote re-skinned per region — see E53 pair); contradicts none.
 
 ### 2026-07-12 — E50 Kylie Skin "LIP BUTTER" × SELF award seal (fb-ad-library, DTC beauty / cosmetics)
 ![E50](../assets/ad-swipe/E50-kylie-cosmetics.jpg)
