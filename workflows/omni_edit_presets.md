@@ -51,6 +51,36 @@ class of edit). The believability + label eval gate runs on EVERY output, every 
 | `rack-focus-v0` | Rack Focus | b-roll | rejected | — | #18 round 1: move failed to execute |
 | `talking-bg-swap-v0` | Talking-Scene BG Swap/Relight | talking | rejected | — | #18 round 1 Tests 3-4: degrades believability |
 
+## Intake queue — copy-a-video candidates (Mode B pending)
+
+Neil dropped 7 IG reels (2026-07-12, mobile session) asking how many presets they
+yield. **Remote sandbox could NOT download them** (proxy 403 on instagram.com AND
+cdninstagram/fbcdn — network-policy denial, verified). Run on the cafe PC:
+
+1. Download each (yt-dlp works on public reels from an unproxied machine).
+2. Per video: `tools/analyze_video.py` Edit-DNA → **mandatory smoke-tester frame
+   verification** (ai-editor Mode B step 2) → split moves FFmpeg-class (→ swipe
+   file corroborations via viral-autopsy conventions) vs Omni-class (→ `draft`
+   preset here, built from validated vocab + guardrails 3–6).
+3. Triage BEFORE drafting: check what's already covered (premium-reel-v2,
+   vox-explainer-v1, display-text-pop-v1, shipped caption engine, P1–P10) —
+   expect several reels to map to existing work, not new presets.
+4. Neil picks which 1–2 new drafts earn a paid validation round (round costs
+   ~$0.40–0.60, queued behind Slice-4 beta work).
+
+| # | Reel | Status |
+|---|---|---|
+| 1 | https://www.instagram.com/reel/DaNydEQN5Dc/ | queued |
+| 2 | https://www.instagram.com/reel/DHgVUG3x5YV/ | queued |
+| 3 | https://www.instagram.com/reel/DE7d5gzxAXk/ | queued |
+| 4 | https://www.instagram.com/reel/DPCEQYdjbPz/ | queued |
+| 5 | https://www.instagram.com/reel/DJ8xn1XMR56/ | queued |
+| 6 | https://www.instagram.com/reel/DHnbKjUJ89o/ | queued |
+| 7 | https://www.instagram.com/reel/DChxOtHPDQQ/ | queued |
+
+Also pending on the PC: **creator-ui-pop-v1 round 1** (see its "Round 1 PENDING"
+note — ready command recorded there).
+
 ## Gated Proposals
 
 > Only presets at `neil_approved` with the product-integration prerequisites met may
