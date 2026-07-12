@@ -48,18 +48,22 @@ Proposals or applied discussion) → `applied` (shipped in Grifon).
 
 | ID | Pattern | Corroborations | Status |
 | --- | --- | --- | --- |
-| P1 | Caption churn is the engine of perceived pace, not cut rate — 1–3 word chunks swap every 0.4–0.6s while shots hold 4–7s | 6 (+E7) | applied — drives Slice 4 word-pop/chunk sizing |
-| P2 | Caption treatment: outline+shadow, never a background box; gold/yellow or white; emphasis via solo-word card or two-tone | 5 | applied — renderPresets caption styles |
-| P3 | Nobody morphs, ever — product reveals are hard cuts, title-card slams, or in-hand-from-frame-1; whip-pan blur masks big changes | 7 (+E6,E7) | proposed — hook blob fix (TUNED, gated; see edit_style_research §6) |
-| P4 | Always be zooming: 3–6%/s push on every static shot, alternating direction; punch-ins reserved for pivots/CTA | 4 | applied — preset camera defaults; **contradicted by E3 (stunt UGC) + E6 (authority talking-head)** — static wins when subject/credibility carries it |
-| P5 | Zero dead air: VO fills ≥99% of timeline; at most ONE deliberate ≤0.5s pause right before the payoff | 7 (+E6,E7) | observed |
-| P6 | Proof is graphic, not spoken — pills, chips, dashboards, numerals popped on screen | 4 (+E7) | observed; E6 contradicts (data spoken, not popped); E7 confirms (stat + nutrient word-cards) |
-| P7 | Text on frame 1 — hook caption already on screen when the video starts | 6 (+E6,E7) | applied — hook text delay → 0 (Slice 3) |
-| P8 | Strobe/flash bookends (1–3 frames) open and close short-form edits — cheap scroll-stop + clean out | 2 | observed (below threshold) |
+| P1 | Caption churn is the engine of perceived pace, not cut rate — 1–3 word chunks swap every 0.4–0.6s while shots hold 4–7s | 11 (+E8–E12) | applied — drives Slice 4 word-pop/chunk sizing |
+| P2 | Caption treatment: outline+shadow, never a background box; gold/yellow or white; emphasis via solo-word card or two-tone | 8 (+E9–E11) | applied — renderPresets caption styles. Variance from 2026-07-12 batch: `plain` (no outline) treatment in 4/7 reels; accent color is brand-variable (green/purple/red-pink/yellow), never a box anywhere (core rule held 7/7); E14 is a 25%-height lowercase outlier |
+| P3 | Nobody morphs, ever — product reveals are hard cuts, title-card slams, or in-hand-from-frame-1; whip-pan blur masks big changes | 8 (+E6,E7,E14) | proposed — hook blob fix (TUNED, gated; see edit_style_research §6) |
+| P4 | Always be zooming: 3–6%/s push on every static shot, alternating direction; punch-ins reserved for pivots/CTA | 4 | applied — preset camera defaults; **contradicted by E3 (stunt UGC) + E6 (authority talking-head) + the whole 2026-07-12 creator batch (E8–E13: static camera, 10–15% punch-ins on emphasis/cuts ONLY, no continuous drift)** — static + emphasis-punch wins when subject/credibility carries it |
+| P5 | Zero dead air: VO fills ≥99% of timeline; at most ONE deliberate ≤0.5s pause right before the payoff | 14 (+E8–E14) | observed |
+| P6 | Proof is graphic, not spoken — pills, chips, dashboards, numerals popped on screen | 7 (+E8,E9,E12) | observed; E6 contradicts (data spoken, not popped); E7 confirms (stat + nutrient word-cards); E8/E9/E12 confirm (phone mockups, retention chart, follower count-up ticker, article/YouTube screenshots) |
+| P7 | Text on frame 1 — hook caption already on screen when the video starts | 8 (+E8,E14) | applied — hook text delay → 0 (Slice 3) |
+| P8 | Strobe/flash bookends (1–3 frames) open and close short-form edits — cheap scroll-stop + clean out | 3 (+E13) | **proposed — threshold reached 2026-07-12 (E13 flash overlay @0.4s); proposal pending Neil** |
+| P11 | **UI pop-up card device**: notification/DM/comment/profile-mockup cards pop in as motion-graphic proof or callout, SFX-synced, over talking-head footage | 5 (E8–E12) | **proposed — feeds `creator-ui-pop-v1`** (omni_edit_presets.md); E9 is an ACTUAL Devin Jatho reel, upgrading that preset's secondhand-origin caveat to firsthand evidence |
+| P12 | **Glitch/datamosh transition** on emphasis pivots (with glitch-whoosh SFX) | 3 (E8–E10) | **proposed — threshold reached 2026-07-12**; FFmpeg-class (filter + existing `glitch.mp3`); pending Neil |
+| P13 | **SFX-per-entrance discipline**: EVERY graphic entrance/transition carries a synced hit (whoosh/pop/ding); diegetic hits on content mentions (cash-register on money, paper rustle on docs, shutter on camera motifs); music = low-key steady beat, never competing | 7 (E8–E14) | **proposed — threshold reached 2026-07-12**; E14 runs 11 hits in 51s (one per transition), E11 syncs notification pops to UI cards; ties to the SFX shopping list (omni_edit_presets.md) + Neil's per-ad custom SFX idea (grill in progress) |
+| P14 | **Caption-only CTA**: "Comment "X" for the [asset]" as a silent caption overlay holding to final frame — never spoken in VO | 1 (E13) | observed (new candidate) |
 | P9 | **VSL grammar — KERNEL (preset candidate `vsl`)**: white 1–3 word word-pop captions churning sub-0.5s, **solo word-cards for key numbers/nutrients**, whip-pan/match cuts, title-card product slam, post-zoom (from generation), zero dead air, text-on-frame-1. *Variable (studio/length-specific, do not bake):* 5–6s vs ~2.4s shots, reveal 40–45% vs ~62%, the single pre-payoff pause, ExtraBold-Italic vs ALL-CAPS. | 3 (E4, E5, **E7**) | **proposed** (Neil accepted E7 as #3, 2026-06-26 — kernel cross-confirmed across 2 studios + long-form & short formats) → see Gated Proposals |
 | P10 | **Authority/practitioner talking-head UGC**: credentialed expert (scrubs/title-card on frame 1) → problem → solution → CTA; plain white sentence-case captions, hard cuts, *static* camera, ingredient/data points spoken in VO not popped | 1 (E6) | observed (new candidate) |
 
-### P11+ — Believability family (capture live 2026-06-26; see `believability_dna.md`)
+### P15+ — Believability family (capture live 2026-06-26; see `believability_dna.md`; renumbered from "P11+" 2026-07-12 when edit-grammar rows P11–P14 claimed the range — family unchanged, still zero rows)
 
 What makes a *human subject* read as real and trustworthy (vs "AI slop") —
 performance, voice delivery, lighting, camera/lens, image realism, lip-sync — plus
@@ -72,9 +76,9 @@ the Edit-DNA patterns above (P1–P10) because each cue is **surface-tagged**:
 
 **Gating rules for this family** (stricter than P1–P10): a candidate corroborates
 **only** from `real-human` (`source_realism_verdict`) sources — `likely-ai` winners
-are excluded and instead feed the **AI-tells / avoid** catalog below. Real P11,
-P12… rows are created the first time a `real-human` autopsy surfaces a recurring
-believability cue (same lifecycle as P1–P10); Surface B/C rows can reach
+are excluded and instead feed the **AI-tells / avoid** catalog below. Real P15,
+P16… rows are created the first time a `real-human` autopsy surfaces a recurring
+believability cue (same lifecycle as P1–P14); Surface B/C rows can reach
 `proposed` only via `believability_dna.md`'s validation loop, never a bare ≥3.
 
 *(No rows yet — seeded empty on purpose; the first `real-human` autopsy populates them.)*
@@ -224,3 +228,81 @@ after E6 (authority-UGC) missed. · **File:** `.tmp/viral-intel/im8-glp1-1019504
 - `grifon-cmo`: the "3 stages / Stage 3 is where it costs you" agitation + GLP-1 audience-naming is a reusable hook structure.
 **Patterns:** corroborates **P1** (sub-0.5s caption churn), **P3** (title-card/hard-cut reveal, no morph), **P5** (zero dead air), **P6** (graphic proof + word-cards), **P7** (text on frame 1); **P9 kernel** — hits the *distinctive* P9 elements (1–3w word-pop captions, **solo word-cards for numbers**, whip-pans, title-card product slam, post-zoom) but diverges on the E4/E5-specific specs (shots ~2.4s not 5–6s; reveal ~62% not 40–45%; no pre-payoff pause; ALL-CAPS not Italic).
 **Verified (2026-06-26):** `render_audit.mjs` — duration 62.0 vs ffmpeg 62.21s; shots 24 vs ffmpeg ~20; median 2.0 vs ~2.4s; caption swap 0.4s confirmed (new caption nearly every 0.5s frame); solo word-cards + title-card slam confirmed off frames; transcript matched verbatim. Reads trustworthy.
+
+### 2026-07-12 — E8–E14 batch: Neil's 7 IG reels (ai-editor Mode B intake)
+
+**Why autopsied:** Neil dropped 7 reels 2026-07-12 asking what presets they yield.
+Full Mode B: yt-dlp download → `analyze_video.py` Edit-DNA → **mandatory
+smoke-tester frame verification** (117 tool uses; several DNA claims corrected —
+corrections noted per entry). All 7 `source_realism_verdict: real-human`. Triage
+in `omni_edit_presets.md` intake queue; preset decisions pending Neil's pick.
+Files were `.tmp/reels-intake/` (disposable; re-downloadable by shortcode).
+
+### 2026-07-12 — E8 "TAM / why your videos get 200 views" (instagram DaNydEQN5Dc, creator-economy talking-head)
+47.2s, 5 shots; static + 10–15% punch-ins @14/@40.5; **plain white sentence-case**
+1–3w captions ~0.3s swap (DNA's "white and green, lowercase" corrected on frames —
+no green on captions, sentence case); glitch/datamosh @14.5 + B&W quote segment
+@40.5; proof graphics: dual phone mockups @1.0 ("200"/"273" views), retention
+chart @16.5, ✕/✓ kinetic checklist @24.5–31 (missed by DNA, caught on frames);
+swoosh/pop/whoosh hits synced to entrances; 0 silences.
+**Patterns:** P1, P5, P6, P7, P11 (phone-mockup cards), P12, P13; P4 contradiction (static + emphasis-punch only).
+
+### 2026-07-12 — E9 "Optimize your Instagram profile" (instagram DHgVUG3x5YV, **an actual Devin Jatho reel**)
+95.8s, 17 shots; ALL-CAPS pop captions, white + green AND purple accents (DNA's
+"green only" corrected); UI cards throughout: IG profile mockups with **follower
+count-up ticker** @7–8 ("98.9K"), Medium article screen @51, YouTube video-card
+mockup @84 ("Devin Jatho / Content Guru"), **iOS push-notification card @94.5**
+(missed by DNA); glitch @2, slide @8; whoosh + keyboard-typing SFX; 0 silences.
+**FIRSTHAND JATHO EVIDENCE for `creator-ui-pop-v1`** — the exact corroboration
+path its origin caveat named.
+**Patterns:** P1, P2, P5, P6, P11, P12, P13.
+
+### 2026-07-12 — E10 "Should you ever record 3 takes" (instagram DE7d5gzxAXk, creator-economy listicle)
+56.9s, 24 shots; **camera-viewfinder REC-HUD frame device** (REC dot + battery)
+opens AND closes the reel — new-device candidate, no existing preset covers it;
+ALL-CAPS white + red/purple gradient, outline+shadow; profile-grid mockup @9–11.5
+(DNA's "589K" corrected: actual counts 202K + 339K/61.3K); "REASON 1/2/3"
+pill-list reveal @16 + memoji speech bubble @26 (both missed by DNA); camera-shutter
++ glitch-whoosh SFX; glitch @12; 0 silences.
+**Patterns:** P1, P2, P5, P6, P11, P12, P13.
+
+### 2026-07-12 — E11 "Editors ↔ business owners" (instagram DPCEQYdjbPz, matchmaking CTA reel)
+32.8s, 10 shots; diagonal-wipe split screens @0.5/@2.5; comments-panel overlay
+@15–17.5 (flag-reply mechanic) + DM mockups @25.5–28.5 incl. a **bad-pitch /
+"You've been blocked" counter-example** (missed by DNA); notification-pop SFX
+synced to each card; mixed-case white+yellow outline+shadow captions.
+**CAUTION — impersonation device:** the "Hormozi" figure is a lookalike actor in
+Acquisition.com merch and the "hormozi" commenter is a mock unverified account
+(DNA's "Alex Hormozi / 3 recognizable creators" claims corrected on frames). Card
+mechanics count as corroboration; the device itself must NOT be copied into
+customer ads.
+**Patterns:** P1, P2, P5, P11, P13.
+
+### 2026-07-12 — E12 "17yo making $1M/mo" (instagram DJ8xn1XMR56, podcast 2-cam clip)
+34.3s, 8 shots; **real multi-cam**: hard cut speaker→interviewer @6.0 on a
+sentence boundary (what `angle-switch-v2` fakes — validates its design); pixel-art
+platform-icon badges @2.5; YouTube nav-bar UI animation @8–9 (missed by DNA);
+Minecraft-Short mockup with verbatim Reddit clickbait card @9.5; **Google-Doc
+typewriter reveal** @20.5 ("Crayo AI"); diegetic SFX: cash-register @3.5 on the
+money line, paper rustle @20; ALL-CAPS white+pink captions.
+**Patterns:** P1, P2, P5, P6, P11, P13.
+
+### 2026-07-12 — E13 "Fitness will make you rich" (instagram DHnbKjUJ89o, interview clip, register: cinematic)
+16.6s, 5 shots; kinetic type + 💰 emoji @2.0; **B&W CGI body-scanner insert
+@5.5–7.0** — DNA's single biggest miss of the batch, caught only on frames
+(generation-class metaphor b-roll, NOT an edit move → routes to storyboard/Veo in
+product, not an Omni preset); light-leak/bokeh overlay @8.5; **flash overlay @0.4
+→ P8's third corroboration, threshold reached**; caption-only CTA @15–16
+("Comment "file" for the project file", green highlight, holds to end, never
+spoken — new P14); whoosh + money-rustle SFX.
+**Patterns:** P5, P8, P13, P14.
+
+### 2026-07-12 — E14 "7 best transitions" (instagram DChxOtHPDQQ, transitions listicle)
+50.8s, 25 shots; **all 7 transitions are PHYSICAL capture-time techniques** (match-cut
+outfit change, whip pans ×2, jump-cut outfit changes, spin, lens cover ×2, comment
+grab, clone effect) — filming technique, not post/preset material; recurring
+numbered "NUMBER N / [NAME]" yellow-label system (FFmpeg-class device); the hook's
+comment-reply card @0.5 is reused as a physical prop @38.5 ("comment grab");
+**11 SFX hits in 51s — one per transition** (P13's strongest single datapoint);
+lowercase small captions @25% height (P2 outlier); 0 silences.
+**Patterns:** P3 (whip-pan masking), P5, P7, P13; P1 partial.
