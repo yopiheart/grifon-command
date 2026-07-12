@@ -63,7 +63,7 @@ const buildPrompt = (patternIndex, ctx) => `You are a meticulous static-ad rever
 Context supplied by the operator: brand="${ctx.brand}"${ctx.niche ? `, niche="${ctx.niche}"` : ''}${ctx.source ? `, source="${ctx.source}"` : ''}.
 
 ${patternIndex ? `Known persuasion patterns from the swipe file (match against these; use the exact S-IDs, do NOT invent IDs):\n${patternIndex}\n` : 'No pattern index was available; leave pattern_matches empty and propose new_pattern_candidates instead.\n'}
-Be SPECIFIC or the analysis is rejected: quote on-image text verbatim, give real #hex palette values, and walk the layout with positional words (top/left/center/below/…). Vague output is worse than none.
+Be SPECIFIC or the analysis is rejected: quote on-image text verbatim, give real #hex palette values, and walk the layout with positional words (top/left/center/below/…). Vague output is worse than none. Minimums enforced by a validator: >=2 levers each with evidence, >=3 why_it_works entries whose evidence contains a verbatim quote, a #hex value, or a number (even for minimal ads — mine the design itself: proportions, contrast ratios, element counts, exact wording), and >=2 palette entries with real #hex values.
 
 Return ONLY JSON (no fences, no prose):
 {
@@ -388,10 +388,11 @@ async function main() {
     }
   } catch (e) {
     console.error(`API_FAILURE: ${e && (e.message || e)}`);
-    process.exit(2);
+    process.exitCode = 2; // not process.exit(): sharp's libuv threadpool must drain or Windows asserts in async.c
+    return;
   }
 
-  process.exit(anyGeneric ? 3 : 0);
+  process.exitCode = anyGeneric ? 3 : 0;
 }
 
 main();
