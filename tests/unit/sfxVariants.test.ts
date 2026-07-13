@@ -12,8 +12,10 @@ import type { SfxBankId } from '../../types.js';
 const ASSETS = join(dirname(fileURLToPath(import.meta.url)), '..', '..', 'api', '_lib', 'assets');
 const SFX_DIR = join(ASSETS, 'sfx');
 
-// The full SfxBankId union, hardcoded as an independent source of truth (not
-// derived from the pools) so the legacy-static lock catches a deleted <class>.mp3.
+// The legacy SfxBankId classes (pre-Slice-2 classes that ship WITH a static
+// <class>.mp3), hardcoded as an independent source of truth (not derived from the
+// pools) so the legacy-static lock catches a deleted <class>.mp3. The Slice 2
+// diegetic classes are deliberately absent here — they ship variant-only.
 const ALL_SFX_IDS: SfxBankId[] = [
   'whoosh', 'glitch', 'pop', 'ding', 'riser', 'drop', 'snap', 'swish', 'boom', 'sparkle',
 ];
@@ -78,7 +80,7 @@ describe('pickSfxVariant — rotation across ads', () => {
 });
 
 describe('pickSfxVariant — class independence', () => {
-  it('one seed lands on >= 2 distinct pool indices across the 9 pooled classes', () => {
+  it('one seed lands on >= 2 distinct pool indices across the pooled classes', () => {
     const seed = seedFor(['https://x/single-ad.mp4']);
     const indices = new Set<number>();
     for (const classId of POOLED_IDS) {
@@ -173,6 +175,42 @@ describe('resolveSfxFile — seam / CLASSIC byte-identity', () => {
       process.env.SFX_V2_ENABLED = 'true';
       const seed = seedFor(['https://x/seam.mp4']);
       expect(base(resolveSfxFile('snap', 'impact', seed))).toBe('snap.mp3');
+    } finally {
+      restore();
+    }
+  });
+});
+
+describe('diegetic classes (Slice 2) — variant-only, no legacy static', () => {
+  const prev = process.env.SFX_V2_ENABLED;
+  const restore = () => {
+    if (prev === undefined) delete process.env.SFX_V2_ENABLED;
+    else process.env.SFX_V2_ENABLED = prev;
+  };
+  const base = (p: string | null) => (p ? basename(p.split(/[\\/]/).join(sep)) : null);
+  // Independent literal — the 5 diegetic classes, not derived from the pools.
+  const DIEGETIC_IDS: SfxBankId[] = ['chaching', 'notification', 'paper', 'shutter', 'typing'];
+
+  it('flag "true" + impact → a <class>-vN.mp3 variant for every diegetic class', () => {
+    try {
+      process.env.SFX_V2_ENABLED = 'true';
+      const seed = seedFor(['https://x/diegetic.mp4']);
+      for (const id of DIEGETIC_IDS) {
+        expect(base(resolveSfxFile(id, 'impact', seed)), `class=${id}`)
+          .toMatch(new RegExp(`^${id}-v\\d+\\.mp3$`));
+      }
+    } finally {
+      restore();
+    }
+  });
+
+  it('flag unset → null for every diegetic class (no legacy static fallback)', () => {
+    try {
+      delete process.env.SFX_V2_ENABLED;
+      const seed = seedFor(['https://x/diegetic.mp4']);
+      for (const id of DIEGETIC_IDS) {
+        expect(resolveSfxFile(id, 'impact', seed), `class=${id}`).toBeNull();
+      }
     } finally {
       restore();
     }

@@ -12,6 +12,7 @@ import {
   type RenderPreset,
   type PresetId,
 } from './renderPresets.js';
+import { planDiegeticCues, admitDiegeticCue, DIEGETIC_MIN_GAP } from './sfxTriggers.js';
 // Pure draw-planning + filtergraph-string engine, extracted into drawPlan.ts so
 // the final-render path here and a future preview endpoint share one source of
 // truth. Imported for the I/O layer's own use; re-exported below so existing
@@ -436,6 +437,9 @@ export function chooseTrim(
 export interface PreparedSfx {
   path: string;
   anchorSec: number;
+  /** Per-cue mix gain; every pre-Slice-2 path passes exactly SFX_VOLUME (CLASSIC
+   * byte-identity + zero drift for non-diegetic cues under the flag). */
+  gain: number;
 }
 
 /**
@@ -546,7 +550,7 @@ function buildScene(
     const sfxLabels: string[] = [];
     sfx.forEach((s, k) => {
       const ms = Math.round(s.anchorSec * 1000);
-      aChain += `;[${2 + k}:a]adelay=${ms}|${ms},volume=${SFX_VOLUME}[sfx${k}]`;
+      aChain += `;[${2 + k}:a]adelay=${ms}|${ms},volume=${s.gain}[sfx${k}]`;
       sfxLabels.push(`[sfx${k}]`);
     });
     aChain += `;[abase]${sfxLabels.join('')}amix=inputs=${1 + sfx.length}:normalize=0:dropout_transition=0[a]`;
@@ -702,6 +706,12 @@ export async function renderFinalVideo(
     const placedSec: number[] = [];
     let whooshUsed = 0;
     const soundUse: Partial<Record<SfxBankId, number>> = {};
+    let diegeticPlaced = 0;
+    const diegeticUse: Partial<Record<SfxBankId, number>> = {};
+    // Diegetic cue times live in their OWN list: pickSceneSfx must never see
+    // them, or a diegetic cue near a scene boundary would suppress the next
+    // scene's P13 whoosh/entrance hit — the reverse of the plan's precedence.
+    const diegeticSec: number[] = [];
     let elapsed = 0; // cumulative timeline position = current scene's start
 
     for (let i = 0; i < ordered.length; i++) {
@@ -777,10 +787,38 @@ export async function renderFinalVideo(
         const anchor = clampAnchor(c.globalSec - elapsed, trimSec);
         if (!p) { console.warn(`[renderFfmpeg] sfx missing: ${c.sfxId}`); continue; }
         if (anchor === null) continue;
-        sfx.push({ path: p, anchorSec: anchor });
+        sfx.push({ path: p, anchorSec: anchor, gain: SFX_VOLUME });
         placedSec.push(c.globalSec);
         if (c.transition) whooshUsed++;
         else soundUse[c.sfxId] = (soundUse[c.sfxId] ?? 0) + 1;
+      }
+
+      // Diegetic keyword layer (Slice 2, workflows/sfx_upgrade_plan.md): flag-gated
+      // (whole layer dead when SFX_V2_ENABLED is off / preset classic), measured-
+      // alignment-only, and placed AFTER the entrance/transition pass so it defers
+      // to the proven P13 hits on any collision — never the reverse. ≤1 cue/scene
+      // by construction in planDiegeticCues; whole-ad caps live in admitDiegeticCue.
+      if (sfxVariantsEnabled(preset.id)) {
+        for (const cue of planDiegeticCues(scene, preset.id)) {
+          // Scene-end headroom: a cue this close to the cut would collide with
+          // the NEXT scene's transition whoosh (which diegetic must defer to).
+          // trimSec is null on keepFullClip — fall back to the probed duration;
+          // if both are unknown the clampAnchor path is the only bound we have.
+          const sceneEndSec = trimSec ?? probeSec;
+          if (sceneEndSec !== null && cue.anchorSec > sceneEndSec - DIEGETIC_MIN_GAP) continue;
+          const cueGlobal = elapsed + cue.anchorSec;
+          if (!admitDiegeticCue(cueGlobal, cue.sfxId, [...placedSec, ...diegeticSec], diegeticPlaced, diegeticUse)) continue;
+          const p = resolveSfxFile(cue.sfxId, preset.id, variantSeed);
+          const anchor = clampAnchor(cue.anchorSec, trimSec);
+          if (!p) { console.warn(`[renderFfmpeg] diegetic sfx missing: ${cue.sfxId}`); continue; }
+          if (anchor === null) continue;
+          sfx.push({ path: p, anchorSec: anchor, gain: cue.gain });
+          diegeticSec.push(cueGlobal);
+          diegeticPlaced++;
+          diegeticUse[cue.sfxId] = (diegeticUse[cue.sfxId] ?? 0) + 1;
+          console.log('[renderFfmpeg:diegetic]', { sceneIdx: scene.sceneIdx, sfxId: cue.sfxId, anchor, trigger: cue.trigger });
+          break; // max 1 diegetic cue per scene
+        }
       }
 
       // Camera move: EDL hint (or preset default), punches at caption-chunk
