@@ -1,0 +1,50 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><style>
+  :root{--gold:#FFCC00;--w:#FFF;--z3:#D4D4D8;--z4:#A1A1AA;--z5:#71717A;
+    --line:rgba(255,255,255,.12);--panel:rgba(24,24,27,.86);
+    --sans:"Segoe UI",-apple-system,system-ui,Roboto,sans-serif;
+    --mono:"Cascadia Code","JetBrains Mono",ui-monospace,monospace;
+    --serif:Georgia,"Times New Roman",serif}
+  *{box-sizing:border-box;margin:0}
+  html,body{width:1080px;height:1350px;overflow:hidden;background:#050506;font-family:var(--sans);-webkit-font-smoothing:antialiased}
+  .ad{position:relative;width:1080px;height:1350px;background:#050506;overflow:hidden}
+  .pad{position:absolute;inset:0;display:flex;flex-direction:column;padding:64px;justify-content:center}
+  .tab-hl{font-size:104px;line-height:1.02;font-weight:900;color:var(--w);letter-spacing:-.03em;text-transform:uppercase}
+  .acc{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--gold);text-transform:none}
+  .glass{background:var(--panel);border:1px solid var(--line);border-radius:28px;padding:32px;margin:52px 0 0;box-shadow:0 30px 80px -30px rgba(0,0,0,.9)}
+  .field{display:flex;align-items:center;gap:14px;background:#0d0d0f;border:1px solid var(--line);border-radius:20px;padding:26px 28px;font-size:29px;color:var(--z3)}
+  .cur{width:3px;height:34px;background:var(--gold)}
+  .arrow{display:grid;place-items:center;color:var(--gold);font-size:38px;margin:20px 0 16px;font-weight:700}
+  .out{display:flex;gap:16px}
+  .frame{flex:1;aspect-ratio:9/13;border-radius:16px;border:1px solid var(--line);position:relative;overflow:hidden;background:#101012}
+  .frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
+  .frame.f1 img{object-position:50% 0%}
+  .frame.f2 img{object-position:50% 50%}
+  .frame.f3 img{object-position:50% 100%}
+  .frame .dk{position:absolute;inset:0;z-index:2;background:linear-gradient(to bottom,rgba(5,5,6,.6),transparent 42%)}
+  .frame .pn{position:absolute;top:12px;left:14px;font-family:var(--mono);font-size:16px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);z-index:3;text-shadow:0 1px 6px rgba(0,0,0,.9)}
+  .foot{display:flex;align-items:center;justify-content:space-between;margin-top:56px}
+  .brandmark{display:flex;align-items:center;gap:15px;font-weight:800;color:var(--w);font-size:29px;letter-spacing:.03em}
+  .dot{width:42px;height:42px;border-radius:12px;background:var(--gold);display:grid;place-items:center;color:#0A0A0A;font-size:23px;font-weight:900;box-shadow:0 0 22px rgba(255,204,0,.35)}
+  .cta{display:inline-flex;align-items:center;gap:14px;background:transparent;color:var(--w);border:2px solid var(--line);font-weight:800;font-size:29px;padding:20px 40px;border-radius:999px}
+  .cta svg{width:28px;height:28px;color:var(--gold)}
+</style></head><body>
+<div class="ad">
+  <div class="pad">
+    <div class="tab-hl">Para sa ads<br>na talagang <span class="acc">benta.</span></div>
+    <div class="glass">
+      <div class="field">Gumawa ng video ad para sa milk tea shop ko<span class="cur"></span></div>
+      <div class="arrow">&#8595;</div>
+      <div class="out">
+        <div class="frame f1"><img src="ube-frame.png" alt=""><div class="dk"></div><span class="pn">01 hook</span></div>
+        <div class="frame f2"><img src="ube-frame.png" alt=""><div class="dk"></div><span class="pn">02 offer</span></div>
+        <div class="frame f3"><img src="ube-frame.png" alt=""><div class="dk"></div><span class="pn">03 cta</span></div>
+      </div>
+    </div>
+    <div class="foot">
+      <div class="brandmark"><span class="dot">G</span> GRIFON AI</div>
+      <a class="cta">Try it free <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </div>
+</div>
+</body></html>

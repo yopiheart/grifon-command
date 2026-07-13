@@ -1,0 +1,31 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><style>
+  :root{--gold:#FFCC00;--ground:#09090B;--w:#FFF;--z3:#D4D4D8;--z4:#A1A1AA;--line:rgba(255,255,255,.12);
+    --sans:"Segoe UI",-apple-system,system-ui,Roboto,sans-serif;
+    --mono:"Cascadia Code","JetBrains Mono",ui-monospace,monospace;
+    --serif:Georgia,"Times New Roman",serif}
+  *{box-sizing:border-box;margin:0}
+  html,body{width:1080px;height:1350px;overflow:hidden;background:var(--ground);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+  .ad{position:relative;width:1080px;height:1350px;background:var(--ground);overflow:hidden}
+  .spot{position:absolute;inset:0;background:radial-gradient(130% 80% at 50% 0%,rgba(255,204,0,.12),transparent 55%)}
+  .pad{position:absolute;inset:0;display:flex;flex-direction:column;padding:56px 64px 64px}
+  .brandmark{display:flex;align-items:center;gap:16px;font-weight:800;color:var(--w);font-size:30px;letter-spacing:.02em}
+  .dot{width:44px;height:44px;border-radius:12px;background:var(--gold);display:grid;place-items:center;color:#0A0A0A;font-size:24px;font-weight:900;box-shadow:0 0 24px rgba(255,204,0,.35)}
+  .spacer{flex:1}
+  .hl{font-size:88px;line-height:1.08;font-weight:800;color:var(--w);letter-spacing:-.025em;max-width:19ch}
+  .acc{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--gold)}
+  .sub{font-size:36px;line-height:1.45;color:var(--z3);margin:38px 0 46px;max-width:34ch}
+  .cta{align-self:flex-start;display:inline-flex;align-items:center;gap:16px;background:transparent;color:var(--w);border:2px solid var(--line);font-weight:800;font-size:32px;padding:24px 44px;border-radius:999px}
+  .cta svg{width:32px;height:32px;color:var(--gold)}
+</style></head><body>
+<div class="ad">
+  <div class="spot"></div>
+  <div class="pad">
+    <div class="brandmark"><span class="dot">Z</span> Zam Grifon</div>
+    <div class="spacer"></div>
+    <div class="hl">Bakit ka magbabayad ng <span class="acc">&#8369;30K</span> sa agency na 3 araw bago mag&#8209;reply?</div>
+    <p class="sub">Gawin mo mismo — mas mabilis, ikaw ang may kontrol. Ipapakita ko kung paano.</p>
+    <a class="cta">Panoorin kung paano <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
+</div>
+</body></html>

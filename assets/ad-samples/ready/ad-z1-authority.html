@@ -1,0 +1,33 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><style>
+  :root{--gold:#FFCC00;--ground:#09090B;--w:#FFF;--z3:#D4D4D8;--z4:#A1A1AA;
+    --sans:"Segoe UI",-apple-system,system-ui,Roboto,sans-serif;
+    --mono:"Cascadia Code","JetBrains Mono",ui-monospace,monospace;
+    --serif:Georgia,"Times New Roman",serif}
+  *{box-sizing:border-box;margin:0}
+  html,body{width:1080px;height:1350px;overflow:hidden;background:var(--ground);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+  .ad{position:relative;width:1080px;height:1350px;background:var(--ground);overflow:hidden}
+  img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 18%}
+  .scrim{position:absolute;inset:0;background:linear-gradient(to top,rgba(9,9,11,.96) 18%,rgba(9,9,11,.55) 40%,rgba(9,9,11,.08) 60%,transparent 75%)}
+  .pad{position:absolute;inset:0;display:flex;flex-direction:column;padding:56px 60px 64px}
+  .brandmark{display:flex;align-items:center;gap:16px;font-weight:800;color:var(--w);font-size:30px;letter-spacing:.02em;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+  .dot{width:44px;height:44px;border-radius:12px;background:var(--gold);display:grid;place-items:center;color:#0A0A0A;font-size:24px;font-weight:900;box-shadow:0 0 24px rgba(255,204,0,.35)}
+  .spacer{flex:1}
+  .hook{font-family:var(--mono);font-size:26px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);line-height:1.5;text-shadow:0 2px 10px rgba(0,0,0,.7)}
+  .hl{font-size:66px;line-height:1.1;font-weight:800;color:var(--w);letter-spacing:-.02em;margin:20px 0 34px;max-width:22ch;text-shadow:0 3px 18px rgba(0,0,0,.65)}
+  .acc{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--gold)}
+  .cta{align-self:flex-start;display:inline-flex;align-items:center;gap:16px;background:var(--gold);color:#0A0A0A;font-weight:800;font-size:32px;padding:26px 44px;border-radius:999px;box-shadow:0 0 44px rgba(255,204,0,.45)}
+  .cta svg{width:32px;height:32px}
+</style></head><body>
+<div class="ad">
+  <img class="bg" src="zam-real-plate.png" alt="">
+  <div class="scrim"></div>
+  <div class="pad">
+    <div class="brandmark"><span class="dot">Z</span> Zam Grifon</div>
+    <div class="spacer"></div>
+    <div class="hook">Para sa negosyanteng puyat gumagawa ng ads —</div>
+    <div class="hl">Buong gabi para sa <span class="acc">isang</span> ad. Alam ko 'yan — dati akong ganyan.</div>
+    <a class="cta">Alamin ang system <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
+</div>
+</body></html>
