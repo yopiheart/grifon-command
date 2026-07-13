@@ -1576,6 +1576,7 @@ const App: React.FC = () => {
           setAspectRatio={setAspectRatio}
           directorUnlocked={directorUnlocked}
           presetUnlocked={presetUnlocked}
+          isBusinessTier={plan_id === 'business'}
           onBack={() => setActiveModule(null)}
           onUpgrade={() => { setActiveModule(null); goToLegal('pricing'); }}
           onSwitchToSteps={() => { setDirectorMode('steps'); setCurrentStep(1); }}

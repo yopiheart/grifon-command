@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Download, RefreshCw, Wand2, Plus, CheckCircle2, AlertTriangle, Lock } from 'lucide-react';
+import { Download, RefreshCw, Wand2, Plus, CheckCircle2, AlertTriangle, Lock, Film, ArrowRight } from 'lucide-react';
 import { GlassPanel } from '../ui/GlassPanel';
+import { GoldButton } from '../ui/GoldButton';
 import { ShimmerButton, SceneReveal } from './motion';
 import type { ProductionRun } from '../../services/producerOrchestrator';
 import type { LockablePresetId } from '../../types';
@@ -12,6 +13,21 @@ const PRESETS: { id: LockablePresetId | null; label: string; pro: boolean }[] = 
   { id: null, label: 'AUTO', pro: false },
   { id: 'impact', label: 'IMPACT', pro: true },
   { id: 'clean', label: 'CLEAN', pro: true },
+  { id: 'punch', label: 'PUNCH', pro: true },
+  { id: 'bars', label: 'BARS', pro: true },
+  { id: 'spotlight', label: 'SPOTLIGHT', pro: true },
+];
+
+/** Roadmap #18 — Business "Advanced Editor" cinema-cuts teaser. Ships OFF: when
+ * false, zero DOM. The real re-cut surface doesn't exist yet, so day one the CTA
+ * opens pricing. Flip to true to preview the locked upsell for Starter/Pro. */
+const ADVANCED_EDITOR_TEASER_ENABLED = false;
+
+/** Blurred 9:16 placeholders for the teaser — CSS gradient fills only, no assets. */
+const CINEMA_CUT_THUMBS: { label: string; gradient: string }[] = [
+  { label: 'Film Burn', gradient: 'from-orange-500/60 via-red-600/40 to-zinc-950' },
+  { label: 'Archival', gradient: 'from-amber-200/40 via-yellow-800/30 to-zinc-950' },
+  { label: 'Editorial', gradient: 'from-blue-500/40 via-purple-600/30 to-zinc-950' },
 ];
 
 /** Free "takes" (manual re-rolls of a scene that already worked) per ad before
@@ -30,7 +46,9 @@ export const FirstCutScreen: React.FC<{
   onUpgrade?: () => void;
   /** True while a preset re-render is assembling. */
   presetBusy?: boolean;
-}> = ({ run, reshooting, onReshoot, onMakeAnother, onChoosePreset, proUnlocked = false, onUpgrade, presetBusy = false }) => {
+  /** True when the user is already on Business — hides the "Advanced Editor" upsell teaser. */
+  isBusinessTier?: boolean;
+}> = ({ run, reshooting, onReshoot, onMakeAnother, onChoosePreset, proUnlocked = false, onUpgrade, presetBusy = false, isBusinessTier = false }) => {
   const activePreset = run.presetId ?? null;
   const flagged = run.scenes.filter((s) => s.status === 'flagged').length;
   // Per-run take allowance, lifted into the run (persisted) so free takes survive remount AND
@@ -151,7 +169,7 @@ export const FirstCutScreen: React.FC<{
         {/* Edit-style switcher (Decision 8) — AUTO free/all-tiers; IMPACT/CLEAN Pro+. */}
         {onChoosePreset && (
           <div className="mt-6">
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               {PRESETS.map((p) => {
                 const active = activePreset === p.id;
                 const locked = p.pro && !proUnlocked;
@@ -184,6 +202,48 @@ export const FirstCutScreen: React.FC<{
               </p>
             )}
           </div>
+        )}
+
+        {/* Business "Advanced Editor" cinema-cuts teaser (roadmap #18). Flag-gated OFF →
+            zero DOM. Shown to Starter/Pro only; Business gets the real surface later.
+            Day one the CTA opens pricing (reuses onUpgrade). */}
+        {ADVANCED_EDITOR_TEASER_ENABLED && !isBusinessTier && (
+          <GlassPanel className="mt-6 border border-[#FFCC00]/20 bg-[#FFCC00]/[0.06] p-6">
+            <div className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-[#FFCC00]/30 bg-[#FFCC00]/10 px-2.5 py-1 text-[10px] font-mono uppercase tracking-widest text-[#FFCC00]">
+              <Lock className="h-3 w-3" /> Business
+            </div>
+            <p className="mb-1 text-[10px] font-mono uppercase tracking-widest text-zinc-500">// Advanced Editor</p>
+            <h2 className="mb-2 text-xl font-black uppercase tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500">
+              Your ad. Re-cut like a film studio did it.
+            </h2>
+            <p className="mb-4 max-w-prose text-sm leading-relaxed text-zinc-400">
+              Those blurred takes? They&apos;re your scenes — the ad you just made, already re-cut in three cinema styles. Film burn. Archival tape. Editorial color. They&apos;re waiting on the other side of Business.
+            </p>
+
+            {/* Three blurred 9:16 cinema-style placeholders (CSS gradients only). */}
+            <div className="mb-5 grid max-w-sm grid-cols-3 gap-3">
+              {CINEMA_CUT_THUMBS.map((t) => (
+                <div key={t.label} className="relative overflow-hidden rounded-xl border border-white/10">
+                  <div className={`aspect-[9/16] bg-gradient-to-b ${t.gradient} blur-[3px]`} />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <Film className="h-4 w-4 text-white/40" />
+                  </div>
+                  <div className="absolute inset-x-0 bottom-0 bg-zinc-950/60 px-1.5 py-1 text-center text-[10px] font-mono uppercase tracking-wide text-zinc-300">
+                    {t.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <GoldButton onClick={onUpgrade} className="w-full sm:w-auto">
+              <span className="inline-flex items-center gap-2">
+                Watch your cinema cuts <ArrowRight className="h-4 w-4 shrink-0" />
+              </span>
+            </GoldButton>
+            <p className="mt-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+              included in Business · your cut stays untouched
+            </p>
+          </GlassPanel>
         )}
 
         {/* Actions */}

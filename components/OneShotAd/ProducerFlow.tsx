@@ -114,6 +114,8 @@ interface Props {
   directorUnlocked: boolean;
   /** Pro+ unlock for the First Cut edit presets (IMPACT/CLEAN). */
   presetUnlocked: boolean;
+  /** True when the user is already on Business — hides the First Cut "Advanced Editor" teaser. */
+  isBusinessTier: boolean;
   onBack: () => void;
   onUpgrade: () => void;
   onSwitchToSteps: () => void;
@@ -121,7 +123,7 @@ interface Props {
   onCloneVoice: () => void;
 }
 
-const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocked, onBack, onUpgrade, onSwitchToSteps, onSwitchToExpert, onCloneVoice }) => {
+const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocked, isBusinessTier, onBack, onUpgrade, onSwitchToSteps, onSwitchToExpert, onCloneVoice }) => {
   const [run, setRun] = useState<ProductionRun | null>(null);
   const [phase, setPhase] = useState<'launch' | 'researching' | 'error' | 'resuming'>('resuming');
   const [errMsg, setErrMsg] = useState('');
@@ -382,6 +384,7 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
             proUnlocked={presetUnlocked}
             onUpgrade={onUpgrade}
             presetBusy={presetBusyProp}
+            isBusinessTier={isBusinessTier}
           />
           {/* NPS fires the whole time First Cut is up (value delivered), not on the make-another
               click that unmounts the widget in the same batch. FeedbackWidget self-gates frequency. */}
