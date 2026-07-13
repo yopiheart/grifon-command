@@ -273,7 +273,11 @@ export function pickHookPalette(variantSeed: number): HookPalette {
  * legacy static <class>.mp3, which MUST remain (CLASSIC + flag-off path).
  * ≥4 variants per class = the cross-customer fingerprint minimum; snap is
  * deliberately ABSENT (2 survivors — legacy static until CC0 variants land,
- * Neil 2026-07-13). chaching/notification/paper/shutter/typing are Slice 2. */
+ * Neil 2026-07-13). The 5 diegetic classes (Slice 2) —
+ * chaching/notification/paper/shutter/typing — are variant-only: NO legacy
+ * static <class>.mp3 exists for them; they fire only via the sfxTriggers.ts
+ * table under the flag, and chaching v3-v6 are machine-contested pending the
+ * ear-gate prune. */
 export const SFX_VARIANT_POOLS: Partial<Record<SfxBankId, readonly number[]>> = {
   boom:    [1, 2, 3, 4, 5, 6],
   pop:     [1, 2, 3, 4, 5, 6],
@@ -284,6 +288,11 @@ export const SFX_VARIANT_POOLS: Partial<Record<SfxBankId, readonly number[]>> = 
   riser:   [1, 2, 3, 4],
   swish:   [1, 2, 3, 4],
   whoosh:  [1, 2, 3, 5],
+  chaching:     [1, 2, 3, 4, 5, 6],
+  notification: [1, 2, 3, 4, 5, 6],
+  paper:        [1, 2, 3, 4],
+  shutter:      [1, 2, 3, 4],
+  typing:       [1, 2, 3, 4],
 };
 
 /** Deterministic per-(ad, cue-class) variant pick. Returns the bare asset
