@@ -149,7 +149,18 @@ parallel session (2026-07-13) ang nag-set nito TAPOS nag-fire ng preview deploy 
 Ready na (ear-gate build). Note sa future checks: Sensitive type ang var kaya `vercel env
 pull` ay laging blank para dito — hindi ibig sabihin walang laman; ang env ls timestamp +
 deploy behavior ang totoong signal. Lahat ng preview deploys pagkatapos ng set (kasama ang
-`feat/niche-coverage-cheap-fixes` builds ngayong araw) ay may flag nang baked in. 2–3 batch runs dapat
+`feat/niche-coverage-cheap-fixes` builds ngayong araw) ay may flag nang baked in.
+
+**⚠ DALAWANG PREVIEW bukas (hanggang sa merge train):**
+- **SFX ear-gate** = main's preview `grifon-command-ac7l0k32z-neilmaglayabusiness22-2085s-projects.vercel.app`
+  (built from `cc68ede`, may SFX Slices 1+2, WALANG overlay engine) — impact/hype re-cuts +
+  listening dito. Agent can tail `[renderFfmpeg:diegetic]` runtime logs during the session
+  (definitive answer din sa ₱/% aligner question). Pass → flip P13 to `applied` sa
+  viral_swipe_file.md + log Slice 2 acceptance sa sfx_upgrade_plan.md (on main); dud
+  variants = data-only prune. Prod stays flag-off until Neil flips.
+- **Batch runs 2–8 + overlay presets** = branch preview ng `feat/niche-coverage-cheap-fixes`
+  (may punch/bars/spotlight, WALANG SFX v2 code pa). Merge train (Day 3–4) collapses this
+  into one surface. 2–3 batch runs dapat
 may literal `₱499` / `50% off` / `sale` sa script; re-cut winners on impact/hype sa
 preview (FFmpeg-side lang, ₱0 extra Gemini) → same batch closes the SFX combined ear-gate
 (sfx_upgrade_plan.md on main). Watch for S1 tail-fill 3rd corroboration → fix ladder
