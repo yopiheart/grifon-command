@@ -144,7 +144,12 @@ repurchase rate, API-cost-per-active-user.
 
 **Day 2–3 = THE batch (the only spend).** Runs 2–8, `try_on` first (Presenter =
 `after.png` MANUAL — derive only fires on before/after pairs). **Ear-gate fold-in (cost
-dedup):** Neil sets `SFX_V2_ENABLED='true'` sa Vercel PREVIEW muna; 2–3 batch runs dapat
+dedup):** `SFX_V2_ENABLED='true'` is SET sa Vercel PREVIEW at CONFIRMED ACTIVE — ang
+parallel session (2026-07-13) ang nag-set nito TAPOS nag-fire ng preview deploy ng main na
+Ready na (ear-gate build). Note sa future checks: Sensitive type ang var kaya `vercel env
+pull` ay laging blank para dito — hindi ibig sabihin walang laman; ang env ls timestamp +
+deploy behavior ang totoong signal. Lahat ng preview deploys pagkatapos ng set (kasama ang
+`feat/niche-coverage-cheap-fixes` builds ngayong araw) ay may flag nang baked in. 2–3 batch runs dapat
 may literal `₱499` / `50% off` / `sale` sa script; re-cut winners on impact/hype sa
 preview (FFmpeg-side lang, ₱0 extra Gemini) → same batch closes the SFX combined ear-gate
 (sfx_upgrade_plan.md on main). Watch for S1 tail-fill 3rd corroboration → fix ladder
