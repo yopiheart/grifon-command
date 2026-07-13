@@ -77,6 +77,16 @@ For a real PR/diff, a multi-component change, or any check that gates "is this U
 - **Emoji / image / icon alignment.** Icons are lucide SVG with `shrink-0`, `w-4 h-4 + gap-2` (normal text) or `w-5 h-5 + gap-3` (bold/uppercase), optically centered to the FIRST text line when text can wrap (`items-start` + a 1–2px nudge is correct, not a hack). No raw emoji as a UI icon element (emoji inside a toast/copy STRING is OK). Any `<img>`/avatar: explicit width/height, `object-contain`/`object-cover` as appropriate, no squash/stretch, and it must not jump or overflow at 375px.
 - **Verdict impact:** a surface that breaks at 375px (overflow, illegible text, invisible state, truncated CTA) is a **CRITICAL** flag, not a nit — it fails the gate even if every color token is on-brand.
 
+**Layout & pattern slop — Zone 1 marketing surfaces ONLY** *(added 2026-07-13, distilled from leonxlnx/taste-skill's production-tested "AI tells" — applies to LandingPage.tsx, components/landing/*, GrifonPricingPage.tsx, legal pages; do NOT apply to wizard/dashboard/product chrome)*
+
+These are mechanical counts, not taste judgments — flag on the count, not on vibes:
+- **Eyebrow restraint:** max 1 small-caps micro-label (`uppercase tracking-*` eyebrow above a headline) per 3 sections. Every section wearing a mono-caps eyebrow is the #1 AI-slop tell. (The `subLabel` token is fine where DESIGN.md mandates it — this rule counts *section eyebrows*, not control-panel meta labels.)
+- **Layout-family repetition:** max 2 consecutive image+text zig-zag (alternating split) sections; a third in a row is a flag. Across the full page, no single layout family (split, 3-card row, bento, centered-stack, marquee) should carry the majority of sections.
+- **Hero discipline:** hero fits the initial viewport at 1280x900; headline ≤ 2 lines at desktop; hero text stack ≤ 4 elements (eyebrow, headline, subtext, CTA row). Subtext that runs past ~4 lines is a flag.
+- **CTA intent dedup:** one page = one primary intent label. "Start Free" + "Get Started" + "Try Grifon" coexisting = flag; unify the label (copy wording itself is grifon-cmo's call — brand-check only flags the duplication).
+- **Forbidden decorative tells** (any occurrence is a flag): scroll cues ("↓ scroll", "Scroll to explore"); section-numbering eyebrows (001, 02, PHASE 1); version labels in the hero (BETA, v0.9, INVITE-ONLY) unless the launch brief demands one; pills/labels overlaid on top of photos; "Quietly used by…"-style coy social-proof headers (Grifon states proof plainly with REAL numbers); bento grids with empty filler cells (N items = N cells).
+- **No fake-div screenshots:** a product "screenshot" mocked out of styled divs inside marketing chrome is a flag — use a real screenshot/render or an explicitly labeled placeholder slot (see the asset policy in [design_polish_backlog.md](../../../workflows/design_polish_backlog.md)). Demo-mockup *frames* (browser chrome) remain allowed per the elevation exception above; it's fake *content* inside them that fails.
+
 **Smell tests**
 - Inline class blob that re-implements an existing primitive instead of importing GlassPanel/GoldButton — call this out as "use the primitive" even if classes are technically correct.
 - New legacy-style accent (pink/cyan border) introduced on a touched component — DESIGN.md mandates purging these on any component you touch.
@@ -125,7 +135,7 @@ CRITICAL = breaks the brand register (black canvas, non-gold accent, missing pri
 - **Build/type-check/smoke** — that's `verify-changes`.
 - **Copy quality / voice / hooks / CTAs** — that's `grifon-cmo`.
 - **Gemini output quality** (storyboards, scripts, generated images) — separate future skill (`gemini-eval`); manual eyeballing for now.
-- **Layout density / information architecture** — judgment call, not a brand-rule violation.
+- **Layout density / information architecture** — judgment call, not a brand-rule violation. Exception: the mechanical "Layout & pattern slop" counts above ARE in scope on Zone 1 marketing surfaces — they're countable rules, not taste calls.
 - **Legacy untouched components** — only check what the current change touches. Don't expand scope (`surgical-edit` rule).
 
 ## When this skill is the wrong tool
