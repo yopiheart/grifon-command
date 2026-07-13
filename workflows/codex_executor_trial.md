@@ -1,6 +1,6 @@
 # Codex-Executor (GPT 5.6 Sol lane) — Trial Gate
 
-**Status: OPEN — 1 of 3–5 trial tasks logged. The Sol lane is NOT the default executor until this gate closes with an ADOPT decision.**
+**Status: OPEN — 2 of 3–5 trial tasks logged. The Sol lane is NOT the default executor until this gate closes with an ADOPT decision.**
 
 ## Why this gate exists
 
@@ -26,7 +26,7 @@ Either way: record the decision + date below, update the CLAUDE.md model-allocat
 | # | Date | Brief (path/slug) | Diff size (files/±lines) | Wall-clock | Self-review used? | Build/tests | Main-loop review findings | Verdict vs code-executor baseline |
 |---|------|-------------------|--------------------------|-----------|-------------------|-------------|---------------------------|-----------------------------------|
 | 1 | 2026-07-11 | `.tmp/brief-p1-close-out-batch.md` (P1 close-out 4-fix batch: start-over at storyboard gate, RAW preset, VO-tail check, presenter derive) | 14 files + 1 new test, ~+100/−17 | ~9 min | Yes — its self-review caught + fixed a real extra bug (failed preset apply left stale presetId/no error; now rolls back + surfaces inline error) | Green first attempt (build ✓, 690 tests ✓, bundle-leak ✓). Local vitest EPERM'd in Codex's sandbox; the wrapper's own verify pass covered it | (1) Fix 3 shipped as a pin-test only — Codex found `chooseTrim` already trims the VO tail and added a regression test, but finding #12's real renders showed the tail persisting → needs real-render verification, escalate to push-in if it recurs. (2) `resolvePersonStatePresenter` wired into the producer path only; the one-shot steps path doesn't call it — follow-up. (3) Went slightly beyond acceptance: RAW is now the DEFAULT first cut (`fresh.presetId='none'`) — matches Neil's recalled design (finding #11) but is a behavior change to confirm. No dead handlers, no unwired UI, DESIGN tokens respected, guarded files untouched | On par or better — honest skip-reporting, useful self-review catch, zero Claude quota |
-| 2 | | | | | | | | |
+| 2 | 2026-07-13 | `.tmp/brief-overlay-styles-engine.md` (punch/bars/spotlight caption presets — engine half, additive registry + 2 new anim branches) | 8 files, +1519/−248 (snapshot-dominated; code ~±130) | ~15 min | Yes (`--self-review`) | Green first attempt (wrapper build ✓ + tests ✓; main-loop re-run: build ✓, 696 tests ✓, 0 fail) | ZERO blocking findings. Additive discipline held exactly (PresetId/ChunkAnim unions + 3 spread-from-IMPACT consts; existing consts/ROTATION untouched — byte-invariance vs HEAD snapshots verified manually). Smart reuse: punch = styling-only on the existing word-pop branch; bars reuses `WordTiming` as per-line timing. Tests pin every specced behavior (0.18s stagger, alternation, invert pulse, VO gating). Notes, non-blocking: (1) bars branch hardcodes black/white in the filter, bypassing preset fillColor/boxAlpha — fine, spec is fixed monochrome; (2) hook titles inherit IMPACT's gold highlight — caption doctrine only, flagged for Neil's first-render eyeball; (3) review-burden note: giant mid-file snapshot insertions made git diff LOOK like existing snapshots changed — needed a manual strip-and-compare to prove invariance | On par or better — followed a TUNED-adjacent additive brief to the letter, left diff uncommitted as instructed |
 | 3 | | | | | | | | |
 
 ## Decision
