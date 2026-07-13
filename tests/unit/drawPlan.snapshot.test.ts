@@ -7,7 +7,9 @@ import {
   planTransitions, buildTransitionFilters, buildTextFilter, buildBoxFilter,
   type SfxCandidate, type TextLayer,
 } from '../../api/_lib/renderFfmpeg.js';
-import { CLASSIC, IMPACT, HYPE, CLEAN } from '../../api/_lib/renderPresets.js';
+import {
+  CLASSIC, IMPACT, HYPE, CLEAN, PUNCH, BARS, SPOTLIGHT,
+} from '../../api/_lib/renderPresets.js';
 import type { FinalRenderScene, VoiceWord } from '../../types.js';
 
 // ---------------------------------------------------------------------------
@@ -29,7 +31,7 @@ const PORTRAIT: [number, number] = [1080, 1920];
 const LANDSCAPE: [number, number] = [1920, 1080];
 const SQUARE: [number, number] = [1080, 1080];
 
-const PRESETS = { CLASSIC, IMPACT, HYPE, CLEAN } as const;
+const PRESETS = { CLASSIC, IMPACT, HYPE, CLEAN, PUNCH, BARS, SPOTLIGHT } as const;
 
 const vw = (text: string, start: number, end: number): VoiceWord =>
   ({ text, start, end } as VoiceWord);

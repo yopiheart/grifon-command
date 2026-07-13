@@ -254,7 +254,7 @@ export interface FinalRenderEndCard {
 
 /** Edit-style preset ids the user can lock pre-render (see api/_lib/renderPresets.ts).
  * Shared across the GenerateVideo → EditVideo → FinalRenderRequest lock hop. */
-export type LockablePresetId = 'none' | 'classic' | 'impact' | 'hype' | 'clean';
+export type LockablePresetId = 'none' | 'classic' | 'impact' | 'hype' | 'clean' | 'punch' | 'bars' | 'spotlight';
 
 /** Omni Edit Style locked at Render All (Slice 3 picker), hopped GenerateVideo →
  * App → EditVideo alongside the LockablePresetId. String literals only — no

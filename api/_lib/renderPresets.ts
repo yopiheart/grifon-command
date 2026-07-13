@@ -11,9 +11,9 @@ import type { OverlayStyle, SfxBankId, CameraEffect } from '../../types.js';
 // identically while successive ads rotate looks. Pools are keyed by script style
 // so a Testimonial never gets the hype treatment (sincerity guard).
 
-export type PresetId = 'none' | 'classic' | 'impact' | 'hype' | 'clean';
+export type PresetId = 'none' | 'classic' | 'impact' | 'hype' | 'clean' | 'punch' | 'bars' | 'spotlight';
 export type ScriptStyle = 'mrbeast' | 'temu' | 'testimonial' | 'ugcpro';
-export type ChunkAnim = 'none' | 'pop' | 'word-pop' | 'karaoke';
+export type ChunkAnim = 'none' | 'pop' | 'word-pop' | 'karaoke' | 'bars' | 'karaoke-invert';
 export type HookRevealStyle = 'bounce' | 'slam' | 'flip';
 export type HookLayoutStyle = 'wipe' | 'title-stack';
 export type TransitionKind = 'none' | 'flash' | 'dip' | 'whip' | 'burn';
@@ -254,6 +254,42 @@ export const NONE: RenderPreset = {
   stitchedOnly: true,
 };
 
+/** White heavy-caps word pops with a hard black contour and drop shadow. */
+export const PUNCH: RenderPreset = {
+  ...IMPACT,
+  id: 'punch',
+  caption: {
+    ...IMPACT.caption,
+    highlightColor: 'white',
+    chunkAnim: 'word-pop',
+  },
+};
+
+/** Alternating black/white per-line bars with a staggered slide-slam. */
+export const BARS: RenderPreset = {
+  ...IMPACT,
+  id: 'bars',
+  caption: {
+    ...IMPACT.caption,
+    highlightColor: 'white',
+    boxAlpha: 1,
+    borderWFrac: 0,
+    shadow: null,
+    chunkAnim: 'bars',
+  },
+};
+
+/** White outlined caps with a VO-timed black-on-white active-word invert. */
+export const SPOTLIGHT: RenderPreset = {
+  ...IMPACT,
+  id: 'spotlight',
+  caption: {
+    ...IMPACT.caption,
+    highlightColor: 'white',
+    chunkAnim: 'karaoke-invert',
+  },
+};
+
 /** Premium hook fill: vertical metallic gradient pair [top, bottom] per word
  * class (Neil 2026-06-10: "5 BEST" gold→dark-gold, "FREE" white→steel). One
  * palette per render, rotated by seed so consecutive ads don't match. */
@@ -281,6 +317,9 @@ export const PRESETS: Record<PresetId, RenderPreset> = {
   impact: IMPACT,
   hype: HYPE,
   clean: CLEAN,
+  punch: PUNCH,
+  bars: BARS,
+  spotlight: SPOTLIGHT,
 };
 
 /** Rotation pools per script style. Testimonial deliberately excludes the

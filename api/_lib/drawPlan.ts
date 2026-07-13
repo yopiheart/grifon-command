@@ -449,9 +449,9 @@ export interface TextLayer {
   yBase: number;       // resolved top y in px
   startSec: number;
   endSec: number;
-  anim: 'slideup' | 'fade' | 'pop' | 'word-pop' | 'karaoke' | 'none';
+  anim: 'slideup' | 'fade' | 'pop' | 'word-pop' | 'karaoke' | 'bars' | 'karaoke-invert' | 'none';
   emphasisSfx?: SfxBankId; // a sound to fire ON this text's appearance (startSec)
-  /** Word-level timing/position for 'word-pop' / 'karaoke' (single-line chunks). */
+  /** Word/line timing and position for word-level or per-line animations. */
   words?: WordTiming[];
   /** Which bundled font renders this layer (hook title may differ from captions). */
   font?: 'caption' | 'hook';
@@ -594,7 +594,9 @@ export function planScene(
   if (cap) {
     // Word-level presets read best as small fast chunks (1–3 words swapped on VO
     // cadence — research §3.1); classic keeps the shipped 3–4-word pacing.
-    const wordLevel = preset.caption.chunkAnim === 'word-pop' || preset.caption.chunkAnim === 'karaoke';
+    const wordLevel = preset.caption.chunkAnim === 'word-pop'
+      || preset.caption.chunkAnim === 'karaoke'
+      || preset.caption.chunkAnim === 'karaoke-invert';
     const wordsPer = preset.caption.chunkAnim === 'none' ? 3.5 : 2.5;
     const minChunk = preset.caption.chunkAnim === 'none' ? MIN_CHUNK_SEC : 0.5;
     // Captions pace across the FULL speech window — the same layout an
@@ -632,7 +634,23 @@ export function planScene(
         // Talking scenes: chunks under the callout are sacrificed so the subtitle
         // resumes after it clears (b-roll already dropped the whole line above).
         if (startSec < overlayClearSec) return;
-        if (wordLevel && lines.length === 1) {
+        if (preset.caption.chunkAnim === 'bars') {
+          const lineH = Math.round(fontsize * 1.15);
+          const lineGap = Math.round(fontsize * 0.12);
+          layers.push({
+            kind: 'text', text: lines.join('\n'), fontsize, color: preset.caption.fillColor,
+            boxAlpha: preset.caption.boxAlpha,
+            xExpr: '(w-text_w)/2', yBase: cy,
+            anim: 'bars', startSec, endSec,
+            words: lines.map((line, lineIdx) => ({
+              word: line,
+              start: +Math.min(endSec - 0.1, startSec + lineIdx * 0.18).toFixed(3),
+              end: endSec,
+              xPx: Math.round((w - estWidth(line, fontsize, adv)) / 2),
+              yPx: cy + lineIdx * (lineH + lineGap),
+            })),
+          });
+        } else if (wordLevel && lines.length === 1) {
           layers.push({
             kind: 'text', text: c, fontsize, color: preset.caption.fillColor,
             boxAlpha: preset.caption.boxAlpha,

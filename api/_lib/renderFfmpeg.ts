@@ -139,16 +139,19 @@ export function escFilterPath(p: string): string {
 
 
 /**
- * Per-word drawtext filters for a word-level caption layer. Words use OUTLINE
- * (never per-word boxes — they'd render as fragmented tiles; matches the CapCut
- * look anyway). `wordTextNames[j]` is word j's bare textfile name; `baseTextName`
- * is the whole-chunk file (karaoke only).
+ * Per-word/per-line drawtext filters. Standard word captions use OUTLINE, never
+ * all-word boxes (fragmented tiles); bars entries are whole lines, and spotlight
+ * intentionally boxes only the active word. `wordTextNames[j]` is entry j's bare
+ * textfile name; `baseTextName` is the whole-chunk file (karaoke modes only).
  *
  *  - word-pop: words accumulate — each pops on at its start (alpha snap + 14px
  *    settle) and stays until the chunk ends.
  *  - karaoke: the whole chunk renders in fillColor (numeric x so the highlight
  *    offsets share its origin) and a highlightColor copy of each word sits on
  *    top only during that word's window — an L→R sweep.
+ *  - bars: each entry is a whole caption line on an alternating solid bar.
+ *  - karaoke-invert: the whole chunk stays visible while the spoken word pulses
+ *    as black text on a white box.
  */
 export function buildWordFilters(
   l: TextLayer,
@@ -181,6 +184,40 @@ export function buildWordFilters(
       parts.push(
         `drawtext=fontfile=${fontName}:textfile=${wordTextNames[j]}:fontsize=${l.fontsize}:` +
         `fontcolor=${preset.caption.highlightColor}:${deco}:` +
+        `x=${wd.xPx}:y=${wd.yPx ?? l.yBase}:enable='between(t,${wd.start},${wd.end})'`
+      );
+    }
+    return parts.join(',');
+  }
+
+  if (l.anim === 'bars') {
+    for (let j = 0; j < words.length; j++) {
+      const wd = words[j];
+      const p = `min(1,max(0,(t-${wd.start})/0.28))`;
+      const ease = `(1-${FLIP_C3}*pow(1-${p},3)+${FLIP_C1}*pow(1-${p},2))`;
+      const light = j % 2 === 1;
+      parts.push(
+        `drawtext=fontfile=${fontName}:textfile=${wordTextNames[j]}:fontsize=${l.fontsize}:` +
+        `fontcolor=${light ? 'black' : 'white'}:box=1:boxcolor=${light ? 'white' : 'black'}@1:` +
+        `boxborderw=${Math.round(l.fontsize * 0.18)}:` +
+        `x='(w-text_w)/2-140*(1-${ease})':y=${wd.yPx ?? l.yBase}:` +
+        `alpha='min(min(1,max(0,(t-${wd.start})/0.05)),max(0,(${l.endSec}-t)/0.18))':` +
+        `enable='between(t,${wd.start},${l.endSec})'`
+      );
+    }
+    return parts.join(',');
+  }
+
+  if (l.anim === 'karaoke-invert' && baseTextName) {
+    parts.push(buildTextFilter({ ...l, anim: 'none', words: undefined, boxAlpha: 0 }, fontName, baseTextName, preset));
+    for (let j = 0; j < words.length; j++) {
+      const wd = words[j];
+      const wordDur = Math.max(0.001, +(wd.end - wd.start).toFixed(3));
+      const pulse = `1+0.06*sin(PI*min(1,max(0,(t-${wd.start})/${wordDur})))`;
+      parts.push(
+        `drawtext=fontfile=${fontName}:textfile=${wordTextNames[j]}:` +
+        `fontsize='max(8,${l.fontsize}*(${pulse}))':fontcolor=black:` +
+        `box=1:boxcolor=white@1:boxborderw=${Math.round(l.fontsize * 0.16)}:` +
         `x=${wd.xPx}:y=${wd.yPx ?? l.yBase}:enable='between(t,${wd.start},${wd.end})'`
       );
     }
@@ -501,14 +538,17 @@ function buildScene(
       vChain += `,${buildBoxFilter(layer)}`;
     } else if (fontName) {
       const layerFont = layer.font === 'hook' && hookFontName ? hookFontName : fontName;
-      if (layer.words?.length && (layer.anim === 'word-pop' || layer.anim === 'karaoke')) {
+      if (layer.words?.length && (
+        layer.anim === 'word-pop' || layer.anim === 'karaoke'
+        || layer.anim === 'bars' || layer.anim === 'karaoke-invert'
+      )) {
         const wordNames = layer.words.map((wd, j) => {
           const n = `ov_${sceneIdx}_${k}_w${j}.txt`;
           writeFileSync(join(dir, n), wd.word, 'utf8');
           return n;
         });
         let baseName: string | null = null;
-        if (layer.anim === 'karaoke') {
+        if (layer.anim === 'karaoke' || layer.anim === 'karaoke-invert') {
           baseName = `ov_${sceneIdx}_${k}_base.txt`;
           writeFileSync(join(dir, baseName), layer.text, 'utf8');
         }
