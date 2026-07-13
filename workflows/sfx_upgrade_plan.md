@@ -233,13 +233,49 @@ Slice 1 follow-through, then Slice 2:
 3. **snap backlog:** source 2+ CC0 finger snaps (transient-at-zero QA) →
    add snap pool entry — data-only, no code.
 
-## Resume trigger — SLICE 2 (diegetic keyword layer) NOT started
+## Status — Slice 2 MERGED to main (2026-07-13, PR #57, squash `8408184`)
 
-Slice 2 = trigger table as data (word + cue class + allowed presets + gain);
-placement anchored to caption chunks; caps enforced (max 1/scene, 2-3/ad);
-precision-over-recall triggers + negation windows + register gate +
-storyboard-aware allowlist (see Premortem FM1/FM2 mitigations above). Needs
-the 5 held-back bank classes (chaching, notification, paper, shutter, typing)
-added to `SfxBankId` + pools. TUNED diff → code-executor, same gating as
-Slice 1. Kickoff: *"Open workflows/sfx_upgrade_plan.md — Slice 1 merged
-(PR #56), plan the Slice 2 diegetic keyword layer."*
+Diegetic keyword layer shipped as designed + three Neil scope decisions
+(2026-07-13): **chaching LIVE, notification/typing/shutter/paper DORMANT**
+(structurally blocked by a `requiredVisual` allowlist — the shipped EDL carries
+no UI-card/freeze/typing/paper signal; going live later is data-only), trigger
+list = premortem exact (`₱`+digits, `% off` unit, standalone `sale`/`libre`),
+**hook scenes excluded.**
+
+New pure module [api/_lib/sfxTriggers.ts](../api/_lib/sfxTriggers.ts): trigger
+table + matcher (whole-token, negation window N=3 content-tokens
+sentence-bounded, URL rejection, register gate impact/hype only), cues fire
+ONLY on measured ElevenLabs voiceWords (autopilot path inert) anchored at the
+matched word's start + `CALIBRATION_OFFSET_SEC` (ships 0 — the FM2 tuning
+seam). Caps: 1/scene by construction, 3/ad, 2/class, 0.6s gap. All 5 classes
+in `SfxBankId` + pools (24 new mp3s, no legacy statics — EDL-unreachable by
+design). Flag-gated by `SFX_V2_ENABLED`; CLASSIC frozen; drawPlan untouched
+(zero snapshot churn). Fresh-context critic (pr_review_loop) caught one real
+spec hole, fixed pre-merge in `4a35cd6`: diegetic times now live in their own
+list so `pickSceneSfx` can never be gap-suppressed by a diegetic cue across a
+scene boundary (P13 precedence holds both directions) + scene-end headroom
+guard + punctuation-proof negation window. 579 unit tests green.
+
+**Neither slice is live yet — `SFX_V2_ENABLED` is unset in prod.** One
+combined ear-gate now covers both slices:
+
+1. **Ear-gate (Neil):** `SFX_V2_ENABLED='true'` in a Vercel PREVIEW env;
+   render 2-3 real ads on impact/hype whose scripts LITERALLY contain
+   `₱499`, `50% off`, and `sale` lines — this also live-tests the one
+   unverified assumption (does the aligner keep `₱`/`%` in word tokens? a
+   silent miss = precision-safe, but then the peso/percent triggers need the
+   scriptLine-join follow-up). Listen for: (a) rotation variants — extra
+   attention to machine-contested ding-v3/v4, riser-v2, swish-v2, glitch-v4,
+   whoosh-v5; (b) chaching semantic fit + FAMILY curation (v3-v6 contested:
+   mechanical register vs bell chime — prune to the family that reads
+   "cha-ching" first listen, data-only, keep ≥4 if possible); (c) timing —
+   consistently late/early → tune `CALIBRATION_OFFSET_SEC` (one constant).
+2. **On ear-approval:** mark **P13 `applied`** in
+   [viral_swipe_file.md](viral_swipe_file.md); log Slice 2 acceptance here;
+   flip `SFX_V2_ENABLED='true'` in prod.
+3. **snap backlog (unchanged):** source 2+ CC0 finger snaps
+   (transient-at-zero QA) → add snap pool entry — data-only.
+
+Resume kickoff if a session dies before the ear-gate: *"Open
+workflows/sfx_upgrade_plan.md — Slices 1+2 merged (PRs #56/#57), run the
+combined ear-gate."*
