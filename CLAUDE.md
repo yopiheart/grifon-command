@@ -40,6 +40,7 @@ Server-side (no prefix, read by `api/*` handlers in dev and on Vercel):
 - `GEMINI_API_KEY` — required by [api/gemini/text.ts](api/gemini/text.ts) and [api/gemini/image.ts](api/gemini/image.ts). Without it the proxy throws `GEMINI_NOT_CONFIGURED`.
 - `ELEVEN_LABS_API_KEY` — required by [api/elevenlabs/text-to-speech.ts](api/elevenlabs/text-to-speech.ts), [api/elevenlabs/speech-to-speech.ts](api/elevenlabs/speech-to-speech.ts), [api/elevenlabs/voices.ts](api/elevenlabs/voices.ts). Without it the proxy throws `ELEVEN_LABS_NOT_CONFIGURED`.
 - `GRIFON_VOICE_CLONING_ENABLED` — `'true'` opens the voice-cloning POST/DELETE branches in [api/elevenlabs/voices.ts](api/elevenlabs/voices.ts). Anything else returns 503 on POST. Stays off until ElevenLabs is on Starter+.
+- `SFX_V2_ENABLED` — `'true'` enables seeded per-ad SFX variant rotation in the final render ([api/_lib/renderFfmpeg.ts](api/_lib/renderFfmpeg.ts)); anything else = legacy static bank. CLASSIC never rotates regardless of the flag.
 - `SUPABASE_SERVICE_ROLE_KEY` — used by [api/_lib/supabaseAdmin.ts](api/_lib/supabaseAdmin.ts) for token verification and rate-limit RPCs.
 
 ## Working Environment

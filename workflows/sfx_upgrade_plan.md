@@ -207,3 +207,15 @@ output byte-identical; build-gate + unit tests green.
 > with the acceptance criteria from the plan, and walk me through the plan
 > before dispatch. Approved samples move from the lab into
 > api/_lib/assets/sfx/ as part of this slice.
+
+### Status — Slice 1 IMPLEMENTED (2026-07-13, branch `feat/sfx-v2-variant-rotation`)
+
+42-variant flat bank copied into `api/_lib/assets/sfx/` (boom/pop/sparkle ×6,
+ding/drop/glitch/riser/swish ×4, whoosh ×4 = v1,v2,v3,v5) beside the 10 legacy
+static `<class>.mp3`. `SFX_VARIANT_POOLS` + `pickSfxVariant` + `sfxVariantsEnabled`
+appended to `renderPresets.ts`; `resolveSfxFile` seam added to `renderFfmpeg.ts`
+(single pick-site swap at the former line 752). Kill switch `SFX_V2_ENABLED`
+defaults OFF (strict `=== 'true'` opt-in, read at call time). snap stays static
+per Neil (2 survivors — awaiting CC0 variants). CLASSIC frozen (never rotates
+regardless of the flag). New suite `tests/unit/sfxVariants.test.ts`. Pending
+main-loop review + Neil merge.
