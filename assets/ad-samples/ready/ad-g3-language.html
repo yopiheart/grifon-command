@@ -1,45 +1,58 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><style>
+<html><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@600&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<style>
   :root{--gold:#FFCC00;--ground:#09090B;--w:#FFF;--z3:#D4D4D8;--z4:#A1A1AA;--z5:#71717A;
     --line:rgba(255,255,255,.12);--panel:rgba(24,24,27,.86);
-    --sans:"Segoe UI",-apple-system,system-ui,Roboto,sans-serif;
-    --mono:"Cascadia Code","JetBrains Mono",ui-monospace,monospace;
-    --serif:Georgia,"Times New Roman",serif}
+    --sans:'Inter','Segoe UI',system-ui,sans-serif;
+    --mono:'JetBrains Mono','Cascadia Code',monospace;
+    --serif:'Instrument Serif',Georgia,serif}
   *{box-sizing:border-box;margin:0}
   html,body{width:1080px;height:1350px;overflow:hidden;background:var(--ground);font-family:var(--sans);-webkit-font-smoothing:antialiased}
   .ad{position:relative;width:1080px;height:1350px;background:var(--ground);overflow:hidden}
   .spot{position:absolute;inset:0;background:radial-gradient(90% 55% at 50% 18%,rgba(255,204,0,.12),transparent 60%)}
   .pad{position:absolute;inset:0;display:flex;flex-direction:column;padding:72px 64px 60px}
-  .hook{font-family:var(--mono);font-size:25px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);text-align:center;line-height:1.5}
-  .hl{font-size:72px;line-height:1.1;font-weight:800;color:var(--w);letter-spacing:-.02em;text-align:center;margin:20px auto 56px;max-width:16ch}
-  .acc{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--gold)}
+  .hook{font-family:var(--mono);font-weight:600;font-size:24px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);text-align:center;line-height:1.5}
+  .hl{font-weight:700;font-size:76px;line-height:1.1;color:var(--w);letter-spacing:-.025em;text-align:center;margin:20px auto 52px;max-width:15ch}
+  .acc{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--gold);letter-spacing:0}
   .glass{background:var(--panel);border:1px solid var(--line);border-radius:28px;padding:36px;box-shadow:0 30px 80px -30px rgba(0,0,0,.9)}
-  .label{font-family:var(--mono);font-size:20px;letter-spacing:.2em;text-transform:uppercase;color:var(--z5);margin-bottom:22px}
+  .label{font-family:var(--mono);font-weight:600;font-size:19px;letter-spacing:.15em;text-transform:uppercase;color:var(--z5);margin-bottom:22px}
   .chiprow{display:flex;gap:14px;margin-bottom:26px}
-  .chip{font-family:var(--mono);font-size:23px;letter-spacing:.08em;padding:14px 28px;border-radius:999px;border:1px solid var(--line);color:var(--z4)}
+  .chip{font-family:var(--mono);font-weight:600;font-size:23px;letter-spacing:.08em;padding:16px 32px;border-radius:999px;border:1px solid var(--line);color:var(--z4)}
   .chip.on{background:rgba(255,204,0,.13);border-color:rgba(255,204,0,.55);color:var(--gold);box-shadow:0 0 22px rgba(255,204,0,.18)}
-  .field{background:#0d0d0f;border:1px solid var(--line);border-radius:20px;padding:30px 32px;font-size:31px;line-height:1.5;color:var(--z3)}
+  .field{background:#0d0d0f;border:1px solid var(--line);border-radius:20px;padding:30px 32px;font-size:31px;line-height:1.5;color:var(--w)}
+  .field.dim{color:var(--z5);margin-top:18px}
+  .fl{font-family:var(--mono);font-weight:600;font-size:16px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+  .field.dim .fl{color:var(--z5)}
   .foot{display:flex;align-items:center;justify-content:space-between;margin-top:auto}
-  .brandmark{display:flex;align-items:center;gap:15px;font-weight:800;color:var(--w);font-size:29px;letter-spacing:.03em}
-  .dot{width:42px;height:42px;border-radius:12px;background:var(--gold);display:grid;place-items:center;color:#0A0A0A;font-size:23px;font-weight:900;box-shadow:0 0 22px rgba(255,204,0,.35)}
-  .cta{display:inline-flex;align-items:center;background:var(--gold);color:#0A0A0A;font-weight:800;font-size:29px;padding:22px 40px;border-radius:999px;box-shadow:0 0 40px rgba(255,204,0,.42)}
+  .lockup{display:flex;align-items:center;gap:16px}
+  .lockup img{height:48px;width:auto}
+  .lockup span{font-weight:700;color:var(--w);font-size:28px;letter-spacing:.02em}
+  .cta{display:inline-flex;align-items:center;background:var(--gold);color:#0A0A0A;font-weight:900;font-size:24px;text-transform:uppercase;letter-spacing:.12em;padding:24px 42px;border-radius:999px;box-shadow:0 0 40px rgba(255,204,0,.42)}
 </style></head><body>
 <div class="ad">
   <div class="spot"></div>
   <div class="pad">
     <div class="hook">Gawa para sa Pinoy na negosyante</div>
-    <div class="hl">Isang ad. English, Taglish, o <span class="acc">Bisaya.</span></div>
+    <div class="hl">Isang ad. English o <span class="acc">Taglish.</span></div>
     <div class="glass">
       <div class="label">Caption &amp; Headline &middot; language</div>
       <div class="chiprow">
         <span class="chip">English</span>
         <span class="chip on">Taglish</span>
-        <span class="chip">Bisaya</span>
       </div>
-      <div class="field">"Sawa ka nang mag-DIY ng ads? Grifon na — mabilis, mura, mabenta."</div>
+      <div class="field">
+        <div class="fl">Taglish</div>
+        Sawa ka na sa DIY ads? Grifon na. Mabilis, mura, at bumebenta.
+      </div>
+      <div class="field dim">
+        <div class="fl">English</div>
+        Tired of DIY ads? Switch to Grifon. Fast, affordable, and it sells.
+      </div>
     </div>
     <div class="foot">
-      <div class="brandmark"><span class="dot">G</span> GRIFON AI</div>
+      <div class="lockup"><img src="logo.png" alt=""><span>GRIFON AI</span></div>
       <a class="cta">Simulan nang libre</a>
     </div>
   </div>

@@ -1,16 +1,19 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><style>
-  :root{--gold:#FFCC00;--w:#FFF;--z3:#D4D4D8;--z4:#A1A1AA;--z5:#71717A;
+<html><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@600&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<style>
+  :root{--gold:#FFCC00;--ground:#09090B;--w:#FFF;--z3:#D4D4D8;--z5:#71717A;
     --line:rgba(255,255,255,.12);--panel:rgba(24,24,27,.86);
-    --sans:"Segoe UI",-apple-system,system-ui,Roboto,sans-serif;
-    --mono:"Cascadia Code","JetBrains Mono",ui-monospace,monospace;
-    --serif:Georgia,"Times New Roman",serif}
+    --sans:'Inter','Segoe UI',system-ui,sans-serif;
+    --mono:'JetBrains Mono','Cascadia Code',monospace;
+    --serif:'Instrument Serif',Georgia,serif}
   *{box-sizing:border-box;margin:0}
-  html,body{width:1080px;height:1350px;overflow:hidden;background:#050506;font-family:var(--sans);-webkit-font-smoothing:antialiased}
-  .ad{position:relative;width:1080px;height:1350px;background:#050506;overflow:hidden}
+  html,body{width:1080px;height:1350px;overflow:hidden;background:var(--ground);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+  .ad{position:relative;width:1080px;height:1350px;background:var(--ground);overflow:hidden}
   .pad{position:absolute;inset:0;display:flex;flex-direction:column;padding:64px;justify-content:center}
-  .tab-hl{font-size:104px;line-height:1.02;font-weight:900;color:var(--w);letter-spacing:-.03em;text-transform:uppercase}
-  .acc{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--gold);text-transform:none}
+  .tab-hl{font-weight:700;font-size:100px;line-height:1.04;color:var(--w);letter-spacing:-.025em;text-transform:uppercase}
+  .acc{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--gold);text-transform:none;letter-spacing:0}
   .glass{background:var(--panel);border:1px solid var(--line);border-radius:28px;padding:32px;margin:52px 0 0;box-shadow:0 30px 80px -30px rgba(0,0,0,.9)}
   .field{display:flex;align-items:center;gap:14px;background:#0d0d0f;border:1px solid var(--line);border-radius:20px;padding:26px 28px;font-size:29px;color:var(--z3)}
   .cur{width:3px;height:34px;background:var(--gold)}
@@ -21,17 +24,18 @@
   .frame.f1 img{object-position:50% 0%}
   .frame.f2 img{object-position:50% 50%}
   .frame.f3 img{object-position:50% 100%}
-  .frame .dk{position:absolute;inset:0;z-index:2;background:linear-gradient(to bottom,rgba(5,5,6,.6),transparent 42%)}
-  .frame .pn{position:absolute;top:12px;left:14px;font-family:var(--mono);font-size:16px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);z-index:3;text-shadow:0 1px 6px rgba(0,0,0,.9)}
+  .frame .dk{position:absolute;inset:0;z-index:2;background:linear-gradient(to bottom,rgba(9,9,11,.6),transparent 42%)}
+  .frame .pn{position:absolute;top:12px;left:14px;font-family:var(--mono);font-weight:600;font-size:15px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);z-index:3;text-shadow:0 1px 6px rgba(0,0,0,.9)}
   .foot{display:flex;align-items:center;justify-content:space-between;margin-top:56px}
-  .brandmark{display:flex;align-items:center;gap:15px;font-weight:800;color:var(--w);font-size:29px;letter-spacing:.03em}
-  .dot{width:42px;height:42px;border-radius:12px;background:var(--gold);display:grid;place-items:center;color:#0A0A0A;font-size:23px;font-weight:900;box-shadow:0 0 22px rgba(255,204,0,.35)}
-  .cta{display:inline-flex;align-items:center;gap:14px;background:transparent;color:var(--w);border:2px solid var(--line);font-weight:800;font-size:29px;padding:20px 40px;border-radius:999px}
+  .lockup{display:flex;align-items:center;gap:16px}
+  .lockup img{height:48px;width:auto}
+  .lockup span{font-weight:700;color:var(--w);font-size:28px;letter-spacing:.02em}
+  .cta{display:inline-flex;align-items:center;gap:14px;background:transparent;color:var(--w);border:2px solid var(--line);font-weight:900;font-size:24px;text-transform:uppercase;letter-spacing:.12em;padding:22px 42px;border-radius:999px}
   .cta svg{width:28px;height:28px;color:var(--gold)}
 </style></head><body>
 <div class="ad">
   <div class="pad">
-    <div class="tab-hl">Para sa ads<br>na talagang <span class="acc">benta.</span></div>
+    <div class="tab-hl">Para sa ads na talagang <span class="acc">bumebenta.</span></div>
     <div class="glass">
       <div class="field">Gumawa ng video ad para sa milk tea shop ko<span class="cur"></span></div>
       <div class="arrow">&#8595;</div>
@@ -42,7 +46,7 @@
       </div>
     </div>
     <div class="foot">
-      <div class="brandmark"><span class="dot">G</span> GRIFON AI</div>
+      <div class="lockup"><img src="logo.png" alt=""><span>GRIFON AI</span></div>
       <a class="cta">Try it free <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
   </div>
