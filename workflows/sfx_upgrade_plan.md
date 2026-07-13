@@ -120,22 +120,42 @@ alternative: our pipeline already strips Omni/Veo audio and muxes ElevenLabs VO
   trigger/negation/URL/register cases; a lab calibration render Neil
   ear-approves; P13 marked `applied` in the swipe file.
 
-## Resume trigger — SLICE 0 ARMED (2026-07-12)
+## Slice 0 session log — RUN 2026-07-13, awaiting Neil ear-test
 
-Neil approved the Slice-0 budget cap 2026-07-12 ("Alright. Lets add it next
-session to proceed with slice 0"): **stay within the 150 included
-generations/mo; hard stop at 200 total (~$2 max overage).** Prerequisite 1
-cleared same day (Starter includes SFX; API scope enabled). Remaining
-pre-flight inside Slice 0 itself: (a) run early in the billing cycle + watch
-the shared TTS credit meter; (b) one-line confirm SFX commercial license on
-Starter before any sample ships in a client ad.
+Generation session executed per the armed kickoff (Neil approval 2026-07-12).
+Tool: [tools/sfx_library_session.mjs](../tools/sfx_library_session.mjs) (Node +
+repo `ffmpeg-static` — cafe PC had no Python/ffmpeg; same defreezer reasoning
+as render_qa.mjs). Lab output: [assets/sfx-lab/](../assets/sfx-lab/) — see its
+README for the ear-test procedure.
 
-**Paste-ready kickoff for the next session:**
+- **Spend: 81 generations of 150 included** (hard stop 200 never approached).
+  76 planned (15 classes × 4–6 variants; money-rustle skipped, LOW) + 5
+  re-rolls of near-silent duds. The scoped API key lacks `user_read`, so the
+  dashboard meter could NOT be read programmatically — counter lives in
+  `assets/sfx-lab/session-state.json`; **Neil: eyeball the ElevenLabs
+  dashboard to confirm ~81 SFX gens + healthy TTS credit before month-end.**
+- **QA (transient-at-zero, ≤10ms decoded onset): 74/76 slots passed** —
+  53 clean, 21 auto-trimmed (sample-accurate `atrim`; the first `-ss`-based
+  trim missed by 13–30ms due to MP3 frame granularity — fixed in-tool).
+  2 rejected: snap-v1/v2 generated near-silence (max −40…−55 dBFS) even after
+  a boosted re-roll — ElevenLabs quirk with "finger snap" + tight/bright
+  modifiers. snap still has 4 survivors = rotation minimum met.
+- **Pre-flight (b) CLEARED:** ElevenLabs paid plans (Starter+) include a
+  commercial license for generated SFX used inside your own projects/ads;
+  only resale as a standalone sample library is prohibited (help-center +
+  pricing pages, checked 2026-07-13). Samples ship only muxed inside rendered
+  Grifon ads — licensed use.
+- **19 audition mixes** in `assets/sfx-lab/audition/`: every class over the
+  mrbeast bed; tonal classes (ding, sparkle, notification, chaching) ALSO over
+  the testimonial bed (music-bed-clash constraint). Variants at t=1s,3s,5s…
 
-> Open workflows/sfx_upgrade_plan.md — Slice 0 is armed (cap: 150 included
-> gens, hard stop 200). Run the library generation session in the lab per the
-> shopping list in omni_edit_presets.md: generate 4–6 variants per cue class
-> via the ElevenLabs sound-generation API, run the transient-at-zero QA
-> (onset ≤10ms) on every sample, then give me the survivors organized by
-> class for ear-testing WITH the music bed on. Commit approved samples +
-> session log.
+**Slice 0 acceptance remaining:** Neil ear-test → verdict per class ("in/out"
+per variant, target ≥4 in per class) recorded here → approved set is the
+input to Slice 1 (variant rotation, TUNED diff via code-executor).
+
+**Paste-ready kickoff for the ear-test session:**
+
+> Open workflows/sfx_upgrade_plan.md Slice-0 session log. I've listened to the
+> audition mixes in assets/sfx-lab/audition/. Verdicts: [class: variants
+> in/out…]. Record them in the log, prune the bank to the approved set, and
+> line up Slice 1.

@@ -110,6 +110,12 @@ sound-generation — see the custom-SFX grill with Neil):
 Adding FILES to `api/_lib/assets/` is a product change → goes through the normal
 gated path once sourced; the list itself is just the record of what to source.
 
+**SOURCED 2026-07-13 (lab, pending ear-test):** the full list (minus LOW
+money-rustle) + 4–6 variants of every existing generic class was generated via
+ElevenLabs sound-generation and QA'd into `assets/sfx-lab/` — see the Slice-0
+session log in [sfx_upgrade_plan.md](sfx_upgrade_plan.md). Nothing enters
+`api/_lib/assets/sfx/` until Neil's ear-test verdict + the Slice-1 gated diff.
+
 ## Gated Proposals
 
 > Only presets at `neil_approved` with the product-integration prerequisites met may
