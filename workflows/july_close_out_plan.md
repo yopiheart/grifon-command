@@ -116,9 +116,45 @@ after.png MANUALLY, derive only fires on before/after pairs) · per-render gemin
 launch-gate review (P6) · "Recipe" glossary (P7) · optional free fix: presenter-mismatch
 hint line (Neil undecided) · merge train (P8).
 
+## RESUME STATE — 2026-07-13 session (launch-week Day 1 DONE)
+
+**Launch week decided (Neil, 2026-07-13): target = launch bago mag-Sunday Jul 19.** Full
+week plan: Day 1 engine/teaser → Day 2–3 batch → Day 3–4 merge train → Day 4–5 IM8 offer
++ website copy/VSL (gamit ang batch sample cards, walang re-render) → Day 5–6 launch.
+Cut from scope: Concierge test (PoC-only, Business-tier, not on the launch path). Parked
+post-launch with triggers: ChatGPT-image tier (gated on refstack shoot), sales
+teleprompter, voice assistant, OPEX dashboard. Metrics answer sa Neil's question: 30/90-day
+access ≠ MRR — track trailing-30d revenue run-rate, active paid accesses per tier,
+repurchase rate, API-cost-per-active-user.
+
+**Overlay upgrade SHIPPED on this branch (both halves):**
+- `d74ee61` ENGINE: punch/bars/spotlight additive presets (the 2026-07-12 in-flight Codex
+  diff never landed — re-dispatched from a regenerated brief, Codex trial run #2, zero
+  blocking findings, byte-invariance vs existing snapshots verified). NOT in rotation
+  pools — explicit-id only via the switcher.
+- `f8edf63` UI: 3 pro-locked switcher chips + Business "Advanced Editor" teaser,
+  `ADVANCED_EDITOR_TEASER_ENABLED=false` sa FirstCutScreen.tsx (zero DOM). Brand-checked
+  (37/50, 0 critical, nits fixed). Flag-flip note: teaser CTA = 2nd solid-gold sa
+  Download-Ad fold — revisit hierarchy when enabling.
+- Eyeball note sa first render: hook titles still carry IMPACT's gold highlight (white/
+  black doctrine = captions only, deliberate); sabihin kung gusto ring i-monochrome.
+- ffmpeg re-armed portable (`.tmp/ffmpeg/`, command sa session_reminders). Codex login
+  survived. Fable sunset EXTENDED to Jul 20 2:59 PM PHT (Anthropic email 2026-07-13) —
+  TUNED work window is the whole launch week.
+
+**Day 2–3 = THE batch (the only spend).** Runs 2–8, `try_on` first (Presenter =
+`after.png` MANUAL — derive only fires on before/after pairs). **Ear-gate fold-in (cost
+dedup):** Neil sets `SFX_V2_ENABLED='true'` sa Vercel PREVIEW muna; 2–3 batch runs dapat
+may literal `₱499` / `50% off` / `sale` sa script; re-cut winners on impact/hype sa
+preview (FFmpeg-side lang, ₱0 extra Gemini) → same batch closes the SFX combined ear-gate
+(sfx_upgrade_plan.md on main). Watch for S1 tail-fill 3rd corroboration → fix ladder
+(per-scene VO-end trim muna, TUNED last, grill-me gated) habang Fable pa.
+
 ## Paste-ready kickoff (next session)
 
-> Read CLAUDE.md + workflows/july_close_out_plan.md (RESUME STATE section). Check the
-> overlay ENGINE diff landed + committed; if yes, review it and dispatch the UI brief to
-> code-executor. Then I'll drive Phase 3 runs 2–8 (try_on first) while you re-arm ffmpeg
-> and run gemini-eval per render.
+> Read CLAUDE.md + workflows/july_close_out_plan.md (RESUME STATE 2026-07-13). Launch
+> week Day 2: I'll drive Phase 3 runs 2–8 (try_on first, presenter = after.png manual,
+> literal ₱499/50% off/sale sa scripts ng 2–3 runs). You: gemini-eval fresh-context critic
+> per render, watch for the S1 tail-fill 3rd corroboration, then sample cards (ffmpeg
+> re-arm command sa session_reminders) + SAMPLES manifest + build/tests. Ear-gate = re-cut
+> winners on impact/hype sa Vercel preview with SFX_V2_ENABLED=true.
