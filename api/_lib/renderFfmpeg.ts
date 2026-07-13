@@ -7,7 +7,10 @@ import ffmpegPath from 'ffmpeg-static';
 import type { FinalRenderScene, FinalRenderEndCard, SfxBankId } from '../../types.js';
 import {
   CLASSIC,
+  pickSfxVariant,
+  sfxVariantsEnabled,
   type RenderPreset,
+  type PresetId,
 } from './renderPresets.js';
 // Pure draw-planning + filtergraph-string engine, extracted into drawPlan.ts so
 // the final-render path here and a future preview endpoint share one source of
@@ -105,6 +108,27 @@ export function findAsset(rel: string): string | null {
 const sfxPath = (id: string) => findAsset(join('sfx', `${id}.mp3`));
 const musicPath = (style: string) => findAsset(join('music', `${style}.mp3`));
 const fontPath = () => findAsset(join('fonts', 'Inter-Black.ttf'));
+
+/** SFX_V2 (Slice 1): class → seeded variant file, degrading to the legacy
+ * static sample when the flag is off, the preset is CLASSIC, the class has no
+ * pool (snap), or the variant file is missing on disk. Exported for the seam
+ * tests — this function's return value IS the only byte that can differ
+ * between flag states upstream of ffmpeg. */
+export function resolveSfxFile(
+  sfxId: SfxBankId,
+  presetId: PresetId,
+  variantSeed: number
+): string | null {
+  if (sfxVariantsEnabled(presetId)) {
+    const variant = pickSfxVariant(sfxId, variantSeed);
+    if (variant) {
+      const p = sfxPath(variant);
+      if (p) return p;
+      console.warn(`[renderFfmpeg] sfx variant missing, static fallback: ${variant}`);
+    }
+  }
+  return sfxPath(sfxId);
+}
 
 /** Escape a filesystem path for use inside an ffmpeg filtergraph option value
  * (forward-slash the separators, escape the Windows drive colon). spawnSync
@@ -749,7 +773,7 @@ export async function renderFinalVideo(
       // Restraint: keep it tasteful (no stacking, capped whooshes, emphasis wins).
       const sfx: PreparedSfx[] = [];
       for (const c of pickSceneSfx(cands, placedSec, whooshUsed, preset.sfx.maxWhoosh, MIN_SFX_GAP, soundUse)) {
-        const p = sfxPath(c.sfxId);
+        const p = resolveSfxFile(c.sfxId, preset.id, variantSeed);
         const anchor = clampAnchor(c.globalSec - elapsed, trimSec);
         if (!p) { console.warn(`[renderFfmpeg] sfx missing: ${c.sfxId}`); continue; }
         if (anchor === null) continue;

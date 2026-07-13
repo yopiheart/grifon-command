@@ -9,7 +9,8 @@ Run via `npm run test` (one-shot) or `npm run test:watch` (watch mode). vitest i
   [`unit/geminiService.proxy.test.ts`](unit/geminiService.proxy.test.ts)); render pipeline
   ([`unit/renderFfmpeg.test.ts`](unit/renderFfmpeg.test.ts),
   [`unit/edit-decision-list.test.ts`](unit/edit-decision-list.test.ts),
-  [`unit/drawPlan.snapshot.test.ts`](unit/drawPlan.snapshot.test.ts), captions/transitions/presets);
+  [`unit/drawPlan.snapshot.test.ts`](unit/drawPlan.snapshot.test.ts),
+  [`unit/sfxVariants.test.ts`](unit/sfxVariants.test.ts), captions/transitions/presets);
   billing + quota + rate-limit ([`unit/paymongo.test.ts`](unit/paymongo.test.ts),
   [`unit/rateLimit.test.ts`](unit/rateLimit.test.ts), `quota.*`, `credits`, `modelCosts`,
   `omniBilling`); the `omni*` One-Shot cluster (~11 files); voice/timing (`voiceSelect`,
