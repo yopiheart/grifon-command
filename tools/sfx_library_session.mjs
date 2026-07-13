@@ -57,7 +57,11 @@ const PROMPT_INFLUENCE = 0.45;
 const SUFFIX =
   ' Single one-shot sound effect only. No background noise, no music, no room tone, ' +
   'clean studio quality. The sound starts INSTANTLY — the transient hits at the very ' +
-  'first millisecond, with absolutely no silence or fade-in before it.';
+  'first millisecond, with no silence or fade-in before it. Warm smooth high end — ' +
+  'no shrill, piercing, or harsh high frequencies.';
+  // anti-shrill clause added 2026-07-13 after round-1 harshness triage: 9 of 76
+  // first-roll samples came back piercing (metrics + Gemini ear pass concurred).
+  // NB: the API caps prompt text at 450 chars — keep base+mod+suffix under that.
 
 // Variant modifiers keep the pool sonically diverse (rotation must not sound
 // like the same file 6 times). Order is stable: v1..v6.
@@ -76,11 +80,17 @@ const MODS = [
 // money-rustle (LOW, "cha-ching covers most") is deliberately skipped — headroom.
 // tonal: true => audition against BOTH beds (music-bed-clash constraint).
 const CLASSES = [
-  { id: 'whoosh',       n: 6, dur: 0.8, tonal: false, base: 'A short airy whoosh, a fast clean transition swipe' },
+  // whoosh base reworded 3x 2026-07-13: "airy whoosh/swipe" gave bubbles,
+  // "whoosh of air rushing past" gave pops/thuds — now pure wind language.
+  // If this roll also fails, STOP: fill whoosh from CC0 packs (plan fallback).
+  { id: 'whoosh',       n: 6, dur: 1.0, tonal: false, base: 'A gust of wind blowing past the microphone, fast wind sweep, pure air movement sound' },
   { id: 'boom',         n: 6, dur: 1.2, tonal: false, base: 'A deep cinematic impact boom, a heavy sub hit' },
   { id: 'pop',          n: 6, dur: 0.5, tonal: false, base: 'A quick soft bubble pop, a small UI pop' },
-  { id: 'ding',         n: 6, dur: 1.0, tonal: true,  base: 'A bright short single-note bell ding, a clean notification chime' },
-  { id: 'snap',         n: 6, dur: 0.5, tonal: false, base: 'A tight dry finger snap' },
+  // ding capped at 4 (2026-07-13): v5/v6 re-rolls came back piercing twice —
+  // bright bells trend shrill; 4 clean survivors (v1-v4) meet rotation minimum
+  { id: 'ding',         n: 4, dur: 1.0, tonal: true,  base: 'A bright short single-note bell ding, a clean notification chime' },
+  // snap base reworded 2026-07-13 after silent duds (v1-v3 round 1) + harsh/dull (v5/v6)
+  { id: 'snap',         n: 6, dur: 0.5, tonal: false, base: 'A crisp finger snap, fingers clicking once, natural sounding and clearly audible' },
   { id: 'sparkle',      n: 6, dur: 1.2, tonal: true,  base: 'A magical shimmering sparkle chime, glittery and short' },
   { id: 'drop',         n: 4, dur: 1.0, tonal: false, base: 'A punchy short bass drop hit' },
   { id: 'glitch',       n: 4, dur: 0.6, tonal: false, base: 'A short digital glitch stutter hit, electronic malfunction' },

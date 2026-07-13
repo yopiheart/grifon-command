@@ -62,10 +62,10 @@
     {
       "file": "chaching-v2.mp3",
       "class": "chaching",
-      "rawOnsetMs": 0.07,
+      "rawOnsetMs": 0,
       "durMs": 1200,
       "verdict": "PASS",
-      "bankOnsetMs": 0.07
+      "bankOnsetMs": 0
     },
     {
       "file": "chaching-v3.mp3",
@@ -86,18 +86,18 @@
     {
       "file": "chaching-v5.mp3",
       "class": "chaching",
-      "rawOnsetMs": 0,
+      "rawOnsetMs": 0.14,
       "durMs": 1200,
       "verdict": "PASS",
-      "bankOnsetMs": 0
+      "bankOnsetMs": 0.14
     },
     {
       "file": "chaching-v6.mp3",
       "class": "chaching",
-      "rawOnsetMs": 3.47,
+      "rawOnsetMs": 0.05,
       "durMs": 1200,
       "verdict": "PASS",
-      "bankOnsetMs": 3.47
+      "bankOnsetMs": 0.05
     },
     {
       "file": "ding-v1.mp3",
@@ -130,22 +130,6 @@
       "durMs": 1000,
       "verdict": "PASS",
       "bankOnsetMs": 0
-    },
-    {
-      "file": "ding-v5.mp3",
-      "class": "ding",
-      "rawOnsetMs": 0,
-      "durMs": 1000,
-      "verdict": "PASS",
-      "bankOnsetMs": 0
-    },
-    {
-      "file": "ding-v6.mp3",
-      "class": "ding",
-      "rawOnsetMs": 0.02,
-      "durMs": 1000,
-      "verdict": "PASS",
-      "bankOnsetMs": 0.02
     },
     {
       "file": "drop-v1.mp3",
@@ -182,18 +166,18 @@
     {
       "file": "glitch-v1.mp3",
       "class": "glitch",
-      "rawOnsetMs": 0.07,
+      "rawOnsetMs": 0,
       "durMs": 600,
       "verdict": "PASS",
-      "bankOnsetMs": 0.07
+      "bankOnsetMs": 0
     },
     {
       "file": "glitch-v2.mp3",
       "class": "glitch",
-      "rawOnsetMs": 0.36,
+      "rawOnsetMs": 0,
       "durMs": 600,
       "verdict": "PASS",
-      "bankOnsetMs": 0.36
+      "bankOnsetMs": 0
     },
     {
       "file": "glitch-v3.mp3",
@@ -270,9 +254,9 @@
     {
       "file": "paper-v2.mp3",
       "class": "paper",
-      "rawOnsetMs": 172,
+      "rawOnsetMs": 100.95,
       "durMs": 800,
-      "trimmedFromMs": 172,
+      "trimmedFromMs": 100.95,
       "bankOnsetMs": 2.99,
       "verdict": "PASS-trimmed"
     },
@@ -346,19 +330,20 @@
     {
       "file": "riser-v1.mp3",
       "class": "riser",
-      "rawOnsetMs": 899.39,
+      "rawOnsetMs": 48.25,
       "durMs": 1480,
-      "trimmedFromMs": 899.39,
-      "bankOnsetMs": 2.99,
+      "trimmedFromMs": 48.25,
+      "bankOnsetMs": 7.57,
       "verdict": "PASS-trimmed"
     },
     {
       "file": "riser-v2.mp3",
       "class": "riser",
-      "rawOnsetMs": 0,
+      "rawOnsetMs": 108.21,
       "durMs": 1480,
-      "verdict": "PASS",
-      "bankOnsetMs": 0
+      "trimmedFromMs": 108.21,
+      "bankOnsetMs": 0.02,
+      "verdict": "PASS-trimmed"
     },
     {
       "file": "riser-v3.mp3",
@@ -397,18 +382,19 @@
     {
       "file": "shutter-v3.mp3",
       "class": "shutter",
-      "rawOnsetMs": 0.02,
+      "rawOnsetMs": 5.65,
       "durMs": 480,
       "verdict": "PASS",
-      "bankOnsetMs": 0.02
+      "bankOnsetMs": 5.65
     },
     {
       "file": "shutter-v4.mp3",
       "class": "shutter",
-      "rawOnsetMs": 0.07,
+      "rawOnsetMs": 14.63,
       "durMs": 480,
-      "verdict": "PASS",
-      "bankOnsetMs": 0.07
+      "trimmedFromMs": 14.63,
+      "bankOnsetMs": 2.99,
+      "verdict": "PASS-trimmed"
     },
     {
       "file": "snap-v1.mp3",
@@ -445,20 +431,16 @@
     {
       "file": "snap-v5.mp3",
       "class": "snap",
-      "rawOnsetMs": 21.68,
+      "rawOnsetMs": null,
       "durMs": 480,
-      "trimmedFromMs": 21.68,
-      "bankOnsetMs": 2.99,
-      "verdict": "PASS-trimmed"
+      "verdict": "REJECT-silent"
     },
     {
       "file": "snap-v6.mp3",
       "class": "snap",
-      "rawOnsetMs": 183.17,
+      "rawOnsetMs": null,
       "durMs": 480,
-      "trimmedFromMs": 183.17,
-      "bankOnsetMs": 3.02,
-      "verdict": "PASS-trimmed"
+      "verdict": "REJECT-silent"
     },
     {
       "file": "sparkle-v1.mp3",
@@ -529,9 +511,9 @@
     {
       "file": "swish-v3.mp3",
       "class": "swish",
-      "rawOnsetMs": 112.95,
+      "rawOnsetMs": 67.23,
       "durMs": 600,
-      "trimmedFromMs": 112.95,
+      "trimmedFromMs": 67.23,
       "bankOnsetMs": 2.99,
       "verdict": "PASS-trimmed"
     },
@@ -556,19 +538,19 @@
     {
       "file": "typing-v2.mp3",
       "class": "typing",
-      "rawOnsetMs": 31.22,
+      "rawOnsetMs": 136.42,
       "durMs": 1480,
-      "trimmedFromMs": 31.22,
+      "trimmedFromMs": 136.42,
       "bankOnsetMs": 2.99,
       "verdict": "PASS-trimmed"
     },
     {
       "file": "typing-v3.mp3",
       "class": "typing",
-      "rawOnsetMs": 22.65,
+      "rawOnsetMs": 12.93,
       "durMs": 1480,
-      "trimmedFromMs": 22.65,
-      "bankOnsetMs": 2.99,
+      "trimmedFromMs": 12.93,
+      "bankOnsetMs": 2.7,
       "verdict": "PASS-trimmed"
     },
     {
@@ -582,35 +564,27 @@
     {
       "file": "whoosh-v1.mp3",
       "class": "whoosh",
-      "rawOnsetMs": 133.08,
+      "rawOnsetMs": 13.17,
       "durMs": 800,
-      "trimmedFromMs": 133.08,
-      "bankOnsetMs": 2.99,
+      "trimmedFromMs": 13.17,
+      "bankOnsetMs": 3.02,
       "verdict": "PASS-trimmed"
     },
     {
       "file": "whoosh-v2.mp3",
       "class": "whoosh",
-      "rawOnsetMs": 0.54,
-      "durMs": 800,
+      "rawOnsetMs": 0,
+      "durMs": 1000,
       "verdict": "PASS",
-      "bankOnsetMs": 0.54
+      "bankOnsetMs": 0
     },
     {
       "file": "whoosh-v3.mp3",
       "class": "whoosh",
-      "rawOnsetMs": 1.02,
-      "durMs": 800,
+      "rawOnsetMs": 0.91,
+      "durMs": 1000,
       "verdict": "PASS",
-      "bankOnsetMs": 1.02
-    },
-    {
-      "file": "whoosh-v4.mp3",
-      "class": "whoosh",
-      "rawOnsetMs": 4.49,
-      "durMs": 800,
-      "verdict": "PASS",
-      "bankOnsetMs": 4.49
+      "bankOnsetMs": 0.91
     },
     {
       "file": "whoosh-v5.mp3",
@@ -619,21 +593,12 @@
       "durMs": 800,
       "verdict": "PASS",
       "bankOnsetMs": 0
-    },
-    {
-      "file": "whoosh-v6.mp3",
-      "class": "whoosh",
-      "rawOnsetMs": 56.55,
-      "durMs": 800,
-      "trimmedFromMs": 56.55,
-      "bankOnsetMs": 2.99,
-      "verdict": "PASS-trimmed"
     }
   ],
   "summary": {
-    "pass": 53,
-    "trimmed": 21,
-    "rejected": 2,
-    "total": 76
+    "pass": 48,
+    "trimmed": 20,
+    "rejected": 4,
+    "total": 72
   }
 }

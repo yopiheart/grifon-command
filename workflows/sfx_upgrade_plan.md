@@ -149,6 +149,36 @@ README for the ear-test procedure.
   mrbeast bed; tonal classes (ding, sparkle, notification, chaching) ALSO over
   the testimonial bed (music-bed-clash constraint). Variants at t=1s,3s,5s…
 
+### Round 2–3 (same day): harshness triage after Neil's "masakit sa tenga"
+
+Neil flagged piercing samples in the round-1 auditions. Built the machine
+ear-test: [tools/sfx_harshness_check.mjs](../tools/sfx_harshness_check.mjs) —
+deterministic ffmpeg metrics (max level, clipping, >4kHz / >7kHz energy
+ratios) + a Gemini audio pass per class, **majority-voted over 3 runs**
+(single-run Gemini ear verdicts flip-flop badly on identical files — same
+stochastic-judgment problem gemini-eval exists for; only corroborated
+verdicts are actionable, and by round 3 the votes hit their noise floor, so
+machine pruning STOPPED there by design).
+
+- **Pruned 31 total** (in `rejected/`, paid artifacts kept): 9 piercing
+  round-1 samples (all generated BEFORE the anti-shrill prompt suffix —
+  the suffix fixed the failure mode), 13 majority-confirmed round-2 drops,
+  wrong-sound whooshes across three prompt rewordings, and misc dull/quiet.
+- **Final spend: 108 of 150 included generations.** Final bank: **68 samples**,
+  every class ≥4 variants except snap.
+- **Generator quirks learned** (recorded in the tool): 450-char prompt cap;
+  "finger snap" → near-silence 5× across 3 phrasings; "whoosh" phrasing →
+  bubbles/pops 9 of 12 rolls; bright bell dings trend piercing (ding capped
+  at its 4 clean survivors).
+- **CC0 fallback list (plan's designated fallback): snap** (2 survivors,
+  below the 4-variant rotation minimum) — source 2+ CC0 finger snaps before
+  Slice 1, or ship snap with 2 variants + CLASSIC's static sample.
+- **Contested samples** — machine votes churned on these; Neil should listen
+  with extra attention: ding-v3, ding-v4, riser-v2, swish-v2, glitch-v4,
+  snap-v4, whoosh-v5, and chaching-v3/v4/v5/v6 (the chaching question is
+  curation, not quality: mechanical register foley vs. bell-chime "money
+  sound" — pick the family that reads "cha-ching" on first listen).
+
 **Slice 0 acceptance remaining:** Neil ear-test → verdict per class ("in/out"
 per variant, target ≥4 in per class) recorded here → approved set is the
 input to Slice 1 (variant rotation, TUNED diff via code-executor).

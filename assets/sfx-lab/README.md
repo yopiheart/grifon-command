@@ -17,9 +17,18 @@ via the Slice 1 gated TUNED diff. `api/_lib/assets/` is untouched by Slice 0.
   t = 1s, 3s, 5s… over the real music bed at render-ish levels (bed 0.25,
   SFX 0.9). Tonal classes (ding, sparkle, notification, chaching) get BOTH
   beds — mrbeast AND testimonial — per the music-bed-clash constraint.
+- `rejected/` — pruned samples (piercing / wrong-sound / silent), kept as the
+  paid-artifact audit trail; `-r2`/`-r3` suffix = which round pruned them
 - `qa-report.json` — per-sample onset measurements + verdicts
 - `session-state.json` — generation spend counter (never re-spends on a file
   that exists in `raw/`)
+
+**Harshness triage** (round 2–3, after Neil flagged piercing samples): every
+bank survivor also passed [tools/sfx_harshness_check.mjs](../../tools/sfx_harshness_check.mjs)
+(ffmpeg HF-energy/clipping metrics + 3-vote Gemini ear pass). Machine-contested
+samples needing Neil's focused listen: **ding-v3, ding-v4, riser-v2, swish-v2,
+glitch-v4, snap-v4, whoosh-v5, chaching-v3/v4/v5/v6**. snap is on the CC0
+fallback list (2 survivors — ElevenLabs can't do finger snaps).
 
 ## Ear-test procedure (Neil)
 
