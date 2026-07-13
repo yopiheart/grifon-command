@@ -111,6 +111,12 @@ describe('planDiegeticCues — negation', () => {
     expect(planDiegeticCues(sceneFrom('sale na hindi biro'), IMPACT)).toHaveLength(1);
   });
 
+  it('14b. punctuation-only tokens do not consume window slots → still suppressed', () => {
+    // Three punct tokens between negator and trigger; a raw-slot window would
+    // let this false-fire on an explicitly negated money line (FM1).
+    expect(planDiegeticCues(sceneFromTokens(['walang', '—', '…', ',', 'sale']), IMPACT)).toEqual([]);
+  });
+
   it('14. a "."-terminated token bounds the scan → fires', () => {
     const cues = planDiegeticCues(
       sceneFromTokens(['Hindi', 'ako', 'sigurado.', 'Sale', 'na']),

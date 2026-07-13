@@ -80,7 +80,7 @@ describe('pickSfxVariant — rotation across ads', () => {
 });
 
 describe('pickSfxVariant — class independence', () => {
-  it('one seed lands on >= 2 distinct pool indices across the 9 pooled classes', () => {
+  it('one seed lands on >= 2 distinct pool indices across the pooled classes', () => {
     const seed = seedFor(['https://x/single-ad.mp4']);
     const indices = new Set<number>();
     for (const classId of POOLED_IDS) {

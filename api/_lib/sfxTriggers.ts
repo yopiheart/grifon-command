@@ -17,7 +17,8 @@ export const DIEGETIC_MAX_PER_CLASS = 2;
 /** Min gap (sec) vs ANY already-placed SFX; stricter than renderFfmpeg's
  * MIN_SFX_GAP (0.4) so a diegetic cue never crowds a proven P13 hit. */
 export const DIEGETIC_MIN_GAP = 0.6;
-/** Preceding tokens scanned for a negator, sentence-bounded. */
+/** Preceding CONTENT tokens scanned for a negator, sentence-bounded
+ * (punctuation-only tokens don't consume a slot — see isNegated). */
 export const NEGATION_WINDOW = 3;
 /** Tagalog + English negators that suppress a match in the N-window. */
 export const NEGATORS: ReadonlySet<string> = new Set([
@@ -89,18 +90,23 @@ export function isUrlToken(raw: string): boolean {
   return URL_RE.test(raw);
 }
 
-/** Scan indices matchIdx-1 down to matchIdx-NEGATION_WINDOW (floor 0): stop early
- * (return false) at a sentence boundary — a RAW token ending in `.`, `!`, or `?`
- * (best-effort — the aligner may strip punctuation, in which case the N-window
- * alone bounds the scan); return true if any scanned token's normToken is a
- * negator. */
+/** Scan back from matchIdx-1 over up to NEGATION_WINDOW CONTENT tokens: stop
+ * early (return false) at a sentence boundary — a RAW token ending in `.`, `!`,
+ * or `?` (best-effort — the aligner may strip punctuation, in which case the
+ * N-window alone bounds the scan); return true if any scanned token's normToken
+ * is a negator. Punctuation-only tokens (normToken '') never consume a window
+ * slot — otherwise a stray `—` `…` `,` stream would push a real negator out of
+ * the window and false-fire on a negated money line (FM1's dangerous direction). */
 export function isNegated(rawTokens: readonly string[], matchIdx: number): boolean {
-  const floor = Math.max(0, matchIdx - NEGATION_WINDOW);
-  for (let j = matchIdx - 1; j >= floor; j--) {
+  let scanned = 0;
+  for (let j = matchIdx - 1; j >= 0 && scanned < NEGATION_WINDOW; j--) {
     const raw = rawTokens[j];
     if (raw === undefined) continue;
     if (/[.!?]$/.test(raw)) return false;
-    if (NEGATORS.has(normToken(raw))) return true;
+    const norm = normToken(raw);
+    if (norm === '') continue;
+    if (NEGATORS.has(norm)) return true;
+    scanned++;
   }
   return false;
 }
