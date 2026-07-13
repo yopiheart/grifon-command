@@ -179,13 +179,31 @@ machine pruning STOPPED there by design).
   curation, not quality: mechanical register foley vs. bell-chime "money
   sound" — pick the family that reads "cha-ching" on first listen).
 
-**Slice 0 acceptance remaining:** Neil ear-test → verdict per class ("in/out"
-per variant, target ≥4 in per class) recorded here → approved set is the
-input to Slice 1 (variant rotation, TUNED diff via code-executor).
+**Slice 0 acceptance: COMPLETE 2026-07-13.** Neil verdict (verbatim): *"Okay
+na yan bro, tiwala naman ako sayo"* — wholesale approval of the 68-sample
+bank — plus one explicit class verdict: *"Chaching audition testimonial okay
+saken"* (chaching over the testimonial bed = the harder tonal-clash test).
+The machine-contested list (README) was accepted unresolved on trust; if any
+variant sounds off in a real render, prune it then — rotation degrades
+gracefully. snap stays on the CC0 fallback list (2 variants).
 
-**Paste-ready kickoff for the ear-test session:**
+## Resume trigger — SLICE 1 ARMED (2026-07-13, Neil: "Slice 1 green-light")
 
-> Open workflows/sfx_upgrade_plan.md Slice-0 session log. I've listened to the
-> audition mixes in assets/sfx-lab/audition/. Verdicts: [class: variants
-> in/out…]. Record them in the log, prune the bank to the approved set, and
-> line up Slice 1.
+Slice 1 = variant rotation: `SfxPalette` maps cue class → variant pool from
+the approved 68-sample bank; seeded pick per ad (adId hash, ≥4 variants/class
+where available); kill switch `SFX_V2_ENABLED` (off = legacy static palette);
+**CLASSIC byte-identical, untouched.** TUNED diff (`api/_lib/renderPresets.ts`
++ `renderFfmpeg.ts`) → implementation MUST go to `code-executor` (Opus 4.8)
+with a full brief; main loop plans + reviews. Acceptance (from Slices
+section): two same-preset ads produce different variant sequences; CLASSIC
+output byte-identical; build-gate + unit tests green.
+
+**Paste-ready kickoff for the next session:**
+
+> Open workflows/sfx_upgrade_plan.md — Slice 1 is armed (Slice 0 complete,
+> bank approved at assets/sfx-lab/bank/, 68 samples). Plan the variant-
+> rotation TUNED diff (SfxPalette variant pools + seeded per-ad pick + kill
+> switch SFX_V2_ENABLED, CLASSIC untouched), draft the code-executor brief
+> with the acceptance criteria from the plan, and walk me through the plan
+> before dispatch. Approved samples move from the lab into
+> api/_lib/assets/sfx/ as part of this slice.
