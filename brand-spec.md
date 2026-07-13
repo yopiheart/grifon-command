@@ -15,6 +15,8 @@ This file is the **frozen asset inventory**. [DESIGN.md](DESIGN.md) is the syste
 
 **Anti-patterns:** never redraw the logo inline as SVG; never recolor; never apply gradients or filters to it.
 
+**Ad-creative lockup (canonical, per Neil 2026-07-13):** ONE lockup on every ad creative — [public/logo-badge.png](public/logo-badge.png) (gold-ring griffin badge, circle-cropped) + **GRIFON** in Inter Black *italic* (`font-black italic tracking-tight`), exactly matching the site header ([components/dashboard/DashboardSidebar.tsx](components/dashboard/DashboardSidebar.tsx)). This applies to BOTH the Grifon AI page and the Zam Grifon personal page — no "Zam Grifon" or "GRIFON AI" text lockups inside creatives (the FB page chrome already names the page; identical mark everywhere compounds S13 recall). Reference implementations: `assets/ad-samples/ready/*.html`.
+
 ---
 
 ## Product screenshots
