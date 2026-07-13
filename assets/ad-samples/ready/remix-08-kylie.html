@@ -1,0 +1,36 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@600&family=Instrument+Serif:ital@1&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root{--gold:#FFCC00;--ground:#09090B;--w:#FFF;--z3:#D4D4D8;--z4:#A1A1AA;--z5:#71717A;
+    --line:rgba(255,255,255,.12);--panel:rgba(24,24,27,.86);
+    --sans:'Inter','Segoe UI',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;
+    --serif:'Instrument Serif',Georgia,serif;--script:'Caveat',cursive}
+  *{box-sizing:border-box;margin:0}
+  html,body{width:1080px;height:1350px;overflow:hidden;background:var(--ground);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+  .ad{position:relative;width:1080px;height:1350px;background:var(--ground);overflow:hidden}
+  img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 14%;opacity:.92}
+  .scrim{position:absolute;inset:0;background:linear-gradient(to top,rgba(9,9,11,.97) 30%,rgba(9,9,11,.6) 52%,rgba(9,9,11,.1) 70%,transparent 82%)}
+  .pad{position:absolute;inset:0;display:flex;flex-direction:column;padding:56px 60px 64px}
+  .lockup{display:flex;align-items:center;gap:18px}
+  .lockup img{height:52px;width:auto;filter:drop-shadow(0 2px 10px rgba(0,0,0,.6))}
+  .lockup span{font-weight:600;color:var(--w);font-size:30px;letter-spacing:-.01em;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+  .spacer{flex:1}
+  .quote{font-family:var(--serif);font-style:italic;font-weight:400;font-size:58px;line-height:1.28;color:var(--w);max-width:24ch;text-shadow:0 3px 18px rgba(0,0,0,.65)}
+  .quote .g{color:var(--gold)}
+  .sig{font-family:var(--script);font-weight:600;font-size:74px;color:var(--gold);margin:34px 0 6px;transform:rotate(-2deg);transform-origin:left}
+  .role{font-family:var(--mono);font-weight:600;font-size:20px;letter-spacing:.15em;text-transform:uppercase;color:var(--z4)}
+</style></head><body>
+<div class="ad">
+  <img class="bg" src="zam-real-plate.png" alt="">
+  <div class="scrim"></div>
+  <div class="pad">
+    <div class="lockup"><img src="logo.png" alt=""><span>Zam Grifon</span></div>
+    <div class="spacer"></div>
+    <div class="quote">Ginawa namin ang Grifon para sa negosyanteng walang oras. Isang brief, <span class="g">buong ad.</span> Subukan mo, libre ang simula.</div>
+    <div class="sig">Zam</div>
+    <div class="role">Head of Customer Success &middot; Grifon AI</div>
+  </div>
+</div>
+</body></html>

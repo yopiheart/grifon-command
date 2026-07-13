@@ -1,0 +1,37 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@600&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<style>
+  :root{--gold:#FFCC00;--ground:#09090B;--w:#FFF;--z3:#D4D4D8;--z4:#A1A1AA;--line:rgba(255,255,255,.12);
+    --sans:'Inter','Segoe UI',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;--serif:'Instrument Serif',Georgia,serif}
+  *{box-sizing:border-box;margin:0}
+  html,body{width:1080px;height:1350px;overflow:hidden;background:var(--ground);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+  .ad{position:relative;width:1080px;height:1350px;background:var(--ground);overflow:hidden}
+  .spot{position:absolute;inset:0;background:radial-gradient(120% 75% at 15% 10%,rgba(255,204,0,.13),transparent 55%)}
+  .pad{position:absolute;inset:0;display:flex;flex-direction:column;padding:64px}
+  .lockup{display:flex;align-items:center;gap:18px}
+  .lockup img{height:52px;width:auto}
+  .lockup span{font-weight:600;color:var(--w);font-size:30px;letter-spacing:-.01em}
+  .gap1{flex:0.7}.gap2{flex:1}
+  .callout{font-family:var(--mono);font-weight:600;font-size:26px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);line-height:1.6;margin-bottom:26px}
+  .hl{font-weight:700;font-size:76px;line-height:1.12;color:var(--w);letter-spacing:-.025em;max-width:20ch}
+  .hl .g{color:var(--gold)}
+  .acc{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--gold)}
+  .sub{font-size:34px;line-height:1.5;color:var(--z3);margin-top:34px;max-width:32ch}
+  .cta{align-self:flex-start;display:inline-flex;align-items:center;gap:16px;background:var(--gold);color:#0A0A0A;font-weight:900;font-size:26px;text-transform:uppercase;letter-spacing:.12em;padding:28px 48px;border-radius:999px;box-shadow:0 0 44px rgba(255,204,0,.45)}
+  .cta svg{width:30px;height:30px}
+</style></head><body>
+<div class="ad">
+  <div class="spot"></div>
+  <div class="pad">
+    <div class="lockup"><img src="logo.png" alt=""><span>Zam Grifon</span></div>
+    <div class="gap1"></div>
+    <div class="callout">Ikaw ba 'to?</div>
+    <div class="hl">May negosyo ka sa PH. Ikaw ang cashier, ang inventory, ang delivery. Tapos pag-uwi, <span class="acc">ikaw pa rin ang gagawa ng ads.</span></div>
+    <p class="sub">Hindi na dapat. May paraan na para gawin lahat yan habang nagpapahinga ka.</p>
+    <div class="gap2"></div>
+    <a class="cta">Ito ang paraan <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
+</div>
+</body></html>

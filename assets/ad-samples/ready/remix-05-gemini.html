@@ -1,0 +1,39 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@600&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<style>
+  :root{--gold:#FFCC00;--ground:#09090B;--w:#FFF;--z3:#D4D4D8;--z5:#71717A;
+    --sans:'Inter','Segoe UI',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;--serif:'Instrument Serif',Georgia,serif}
+  *{box-sizing:border-box;margin:0}
+  html,body{width:1080px;height:1350px;overflow:hidden;background:var(--ground);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+  .ad{position:relative;width:1080px;height:1350px;background:var(--ground);overflow:hidden}
+  .sweep{position:absolute;inset:0;background:
+    radial-gradient(75% 48% at 50% 42%,rgba(255,204,0,.22),rgba(255,204,0,.05) 55%,transparent 70%)}
+  .beam{position:absolute;left:50%;top:0;width:2px;height:42%;transform:translateX(-50%);
+    background:linear-gradient(to bottom,transparent,rgba(255,204,0,.6))}
+  .pad{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;text-align:center;padding:72px 64px 60px}
+  .mark{margin-top:120px;height:340px;filter:drop-shadow(0 0 60px rgba(255,204,0,.35))}
+  .hl{font-weight:700;font-size:72px;line-height:1.1;color:var(--w);letter-spacing:-.025em;margin:70px 0 18px;max-width:16ch}
+  .acc{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--gold)}
+  .sub{font-size:32px;line-height:1.5;color:var(--z3);max-width:30ch}
+  .foot{display:flex;align-items:center;justify-content:space-between;margin-top:auto;width:100%}
+  .lockup{display:flex;align-items:center;gap:16px}
+  .lockup img{height:48px;width:auto}
+  .lockup span{font-weight:700;color:var(--w);font-size:28px;letter-spacing:.02em}
+  .cta{display:inline-flex;align-items:center;background:var(--gold);color:#0A0A0A;font-weight:900;font-size:24px;text-transform:uppercase;letter-spacing:.12em;padding:24px 42px;border-radius:999px;box-shadow:0 0 40px rgba(255,204,0,.42)}
+</style></head><body>
+<div class="ad">
+  <div class="sweep"></div>
+  <div class="beam"></div>
+  <div class="pad">
+    <img class="mark" src="logo.png" alt="">
+    <div class="hl">Ang bagong <span class="acc">marketing team</span> mo.</div>
+    <p class="sub">Hindi hired. Hindi outsourced. Isang AI na gumagawa ng buong ad mo.</p>
+    <div class="foot">
+      <div class="lockup"><img src="logo.png" alt=""><span>GRIFON AI</span></div>
+      <a class="cta">Simulan nang libre</a>
+    </div>
+  </div>
+</div>
+</body></html>

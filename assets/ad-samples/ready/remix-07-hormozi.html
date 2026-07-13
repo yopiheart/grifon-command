@@ -1,0 +1,63 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@600&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<style>
+  :root{--gold:#FFCC00;--ground:#09090B;--w:#FFF;--z3:#D4D4D8;--z4:#A1A1AA;--z5:#71717A;
+    --line:rgba(255,255,255,.12);
+    --sans:'Inter','Segoe UI',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;--serif:'Instrument Serif',Georgia,serif}
+  *{box-sizing:border-box;margin:0}
+  html,body{width:1080px;height:1350px;overflow:hidden;background:var(--ground);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+  .ad{position:relative;width:1080px;height:1350px;background:var(--ground);overflow:hidden}
+  .spot{position:absolute;inset:0;background:radial-gradient(95% 60% at 50% 40%,rgba(255,204,0,.12),transparent 62%)}
+  .pad{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;padding:56px 64px 60px}
+  .hook{font-family:var(--mono);font-weight:600;font-size:24px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);text-align:center;line-height:1.5;margin-bottom:34px}
+  .card{width:620px;border-radius:34px;padding:22px;position:relative;
+    background:linear-gradient(160deg,rgba(255,204,0,.85),rgba(178,143,0,.9) 45%,rgba(122,98,0,.95));
+    box-shadow:0 0 70px rgba(255,204,0,.28), 0 40px 90px -30px rgba(0,0,0,.9)}
+  .card-inner{background:#0d0d0f;border-radius:24px;overflow:hidden;border:1px solid rgba(255,204,0,.35)}
+  .card-top{display:flex;align-items:center;justify-content:space-between;padding:20px 26px}
+  .cname{font-weight:900;font-size:30px;color:var(--gold);text-transform:uppercase;letter-spacing:.06em}
+  .lvl{font-family:var(--mono);font-weight:600;font-size:18px;letter-spacing:.12em;color:#0A0A0A;background:var(--gold);border-radius:999px;padding:8px 18px}
+  .photo{position:relative;height:520px;overflow:hidden}
+  .photo img{width:100%;height:100%;object-fit:cover;object-position:50% 12%}
+  .photo::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,#0d0d0f 4%,transparent 45%)}
+  .ctitle{font-family:var(--mono);font-weight:600;font-size:17px;letter-spacing:.15em;text-transform:uppercase;color:var(--z5);padding:6px 26px 2px}
+  .stats{padding:8px 26px 24px;display:flex;flex-direction:column;gap:14px}
+  .stat{display:flex;align-items:center;gap:16px}
+  .sl{font-family:var(--mono);font-weight:600;font-size:19px;letter-spacing:.1em;text-transform:uppercase;color:var(--z4);width:150px}
+  .bar{flex:1;height:14px;border-radius:7px;background:rgba(255,255,255,.08);overflow:hidden}
+  .fill{height:100%;border-radius:7px;background:linear-gradient(90deg,var(--gold),#ffe066)}
+  .f1{width:96%}.f2{width:92%}.f3{width:98%}
+  .hl{font-weight:700;font-size:52px;line-height:1.14;color:var(--w);letter-spacing:-.025em;text-align:center;margin:44px auto 0;max-width:20ch}
+  .acc{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--gold)}
+  .foot{display:flex;align-items:center;justify-content:space-between;margin-top:auto;width:100%}
+  .lockup{display:flex;align-items:center;gap:16px}
+  .lockup img{height:48px;width:auto}
+  .lockup span{font-weight:600;color:var(--w);font-size:28px;letter-spacing:-.01em}
+  .cta{display:inline-flex;align-items:center;background:transparent;color:var(--w);border:2px solid var(--line);font-weight:900;font-size:24px;text-transform:uppercase;letter-spacing:.12em;padding:22px 42px;border-radius:999px}
+</style></head><body>
+<div class="ad">
+  <div class="spot"></div>
+  <div class="pad">
+    <div class="hook">Kilalanin ang kalaban ng &#8369;30K retainer</div>
+    <div class="card">
+      <div class="card-inner">
+        <div class="card-top"><span class="cname">Zam Grifon</span><span class="lvl">FOUNDER</span></div>
+        <div class="photo"><img src="zam-real-plate.png" alt=""></div>
+        <div class="ctitle">Abilities</div>
+        <div class="stats">
+          <div class="stat"><span class="sl">Bilis</span><div class="bar"><div class="fill f1"></div></div></div>
+          <div class="stat"><span class="sl">Tipid</span><div class="bar"><div class="fill f2"></div></div></div>
+          <div class="stat"><span class="sl">Benta</span><div class="bar"><div class="fill f3"></div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="hl">Hindi mo kailangan ng agency. Kailangan mo ng <span class="acc">sistema.</span></div>
+    <div class="foot">
+      <div class="lockup"><img src="logo.png" alt=""><span>Zam Grifon</span></div>
+      <a class="cta">Follow para sa system</a>
+    </div>
+  </div>
+</div>
+</body></html>
