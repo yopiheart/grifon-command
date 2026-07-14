@@ -63,14 +63,6 @@ const STOCK_FALLBACK: VoiceOpt[] = RECOMMENDED_VOICES.map((v) => ({
   sub: `${v.vibe} (stock)`,
 }));
 
-const fileToDataUrl = (file: File): Promise<string> =>
-  new Promise((resolve, reject) => {
-    const r = new FileReader();
-    r.onload = () => resolve(r.result as string);
-    r.onerror = () => reject(new Error('read failed'));
-    r.readAsDataURL(file);
-  });
-
 // --- Creative taxonomy ---
 // The user picks a named Recipe (see recipes.ts); the four engine axes (format / strategy /
 // UGC-Pro sub-format / ASMR) are DERIVED from it, so there's NO backend change. The Format ▾
@@ -926,7 +918,7 @@ export const LaunchScreen: React.FC<{
           <UploadDropzone
             thumb={hero}
             hint="A plain phone shot is fine — just hold the product so the brand name and whole product are clear."
-            onFile={async (f) => { const d = await fileToDataUrl(f); setHero(d); checkQuality('hero', d); }}
+            onFile={async (f) => { try { const c = await compressImageForUpload(f); setHero(c.dataUrl); checkQuality('hero', c.dataUrl); } catch { setAssetErr('Could not read that image — try another.'); } }}
             onClear={() => { setHero(''); clearQuality('hero'); }}
             onView={hero ? () => setViewImage(hero) : undefined}
           />
@@ -1108,7 +1100,7 @@ export const LaunchScreen: React.FC<{
               <UploadDropzone
                 thumb={avatarUrl}
                 hint="Frame the presenter head-to-chest with the face clearly visible (your real agent / practitioner / yourself). Avoid full-body shots — the face gets too small to match across scenes."
-                onFile={async (f) => { const d = await fileToDataUrl(f); setAvatarUrl(d); setAvatarErr(''); checkQuality('avatar', d); }}
+                onFile={async (f) => { try { const c = await compressImageForUpload(f); setAvatarUrl(c.dataUrl); setAvatarErr(''); checkQuality('avatar', c.dataUrl); } catch { setAvatarErr('Could not read that image — try another.'); } }}
                 onClear={() => { setAvatarUrl(''); clearQuality('avatar'); }}
                 onView={avatarUrl ? () => setViewImage(avatarUrl) : undefined}
               />

@@ -221,6 +221,24 @@ wrong) · TTS whisper register (run 8) · real `ugcpro.mp3` bed.
     superseded (revision conflict) — adopted server revision N" ~20× per run —
     checkpoint sync works but the log noise obscures real errors; log-hygiene
     candidate, not a bug.
+17. **P0 — manual Presenter upload kills the run at FILM (2026-07-14, try_on gate run).**
+    `LaunchScreen`'s Presenter dropzone (and the non-guided "Product photo" modal) read
+    files RAW via `fileToDataUrl` — no `compressImageForUpload` like the guided slots —
+    so `after.png` (2.6MB PNG → ~3.5MB base64) rode `run.input` into the CREATE
+    checkpoint and 413'd against `api/producer/run.ts`'s 2mb cap on every retry
+    ("revision stays 0 → retries WITH input"). Run row never created → video stage's
+    `seedScenes`/`advance` → 404 `run_not_found` → PRODUCTION PAUSED at FILM. Zero film
+    spend lost (died pre-render). **Real-user P0:** any custom-presenter upload from a
+    normal 3–10MB phone photo hits this. Why run 1 passed: Auto presenter (derive path),
+    no raw upload. FIX (same session): compress both raw call sites + `slimCheckpointInput`
+    transport guard in `producerRunService.ts` (mirror of `slimCheckpointArtifacts`).
+    Storyboard-stage observations from the dead run (evidence still counts): instant-claim
+    guardrail brush corroboration **#2** — S2 "ang bilis nitong mag-brighten" + S3 "kintab
+    agad" vs the honest 2-week claim (finding #6 ladder: 3rd → grill-me TUNED route); offer
+    (₱499/free shipping/ends Sunday) never surfaced in any of the 4 script lines — this
+    try_on run does NOT count toward the literal-price SFX ear-gate runs; try_on-on-skincare
+    itself rendered correctly as an application reveal (onbody anchor honored, no
+    hallucinated apparel, identity lock held across 4 scenes).
 
 ## 5. Post-batch (agent work, after Neil's eyeball)
 
