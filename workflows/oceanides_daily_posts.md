@@ -92,13 +92,20 @@ Cafe-PC prereq after defreezer wipe: `npx playwright install chromium`.
   `van-clean.png`, `CREW 1.png`/`CREW 2.png`/`CREW 3.png` (crew style, B&W-graded)
 - Logo: `assets/logo.jpg` · badges: `badge-bir.png`
 
-## Deliverable access (decision log 2026-07-14)
+## Deliverable access (decision log 2026-07-14, Neil approved public mirror)
 
-- **Current:** GitHub PR (mobile image previews) + merged archive in-repo.
-- Google Drive connector: not yet authorized on claude.ai; likely read-only even when
-  authorized — no agent upload path today.
-- Optional upgrade (Neil's call, not done): separate PUBLIC repo + GitHub Pages hosted
-  gallery for the posting team (exposes client content publicly).
+- **Poster/VA link (no account needed):** https://yopiheart.github.io/oceanides-posts/
+  — public GitHub Pages mirror (repo `yopiheart/oceanides-posts`, images + captions ONLY,
+  never code/research/templates). Per-day page: branch sections, download button per image,
+  copyable caption box. Publish command (run after the day's batch lands on main):
+  `node clients/oceanides/publish-public.mjs --date YYYY-MM-DD`
+- **Review gate stays private:** routine PR sa grifon-command (Neil merges sa phone).
+- **Automation gap (follow-up):** the cloud routine's credentials only reach grifon-command,
+  so the public publish is a one-command manual step (or run in any agent session) after
+  merge. Full auto = GitHub Action on grifon-command (push to main touching out/daily-*)
+  mirroring via a PAT secret (`MIRROR_TOKEN`, repo scope sa oceanides-posts) — needs Neil
+  to mint the PAT; guide him when requested.
+- Google Drive connector: read-only — no agent upload path; Drive stays manual-only (ZIPs).
 
 ## Resume triggers
 
