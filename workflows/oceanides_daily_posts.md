@@ -16,13 +16,27 @@ cloud — survives the cafe-PC defreezer, no local re-arm needed).
 
 ## The anti-spam rotation (Andromeda-aligned creative diversification)
 
-Driven by `clients/oceanides/build-tb2-cities.mjs` + `tb2-variants.json`, deterministic by date:
+Driven by `clients/oceanides/build-tb2-cities.mjs` + `tb2-variants.json`, deterministic by date
+(anchored to 2026-07-14 = day 20648):
 
-- **6 styles** in 3 pairs: (news-graphic + niche-callout), (format-enemy + premium), (minimal + UGC)
-- **Pair rotation:** city *i* gets pair `(i + dayNumber % 3) % 3` — each page cycles all 6 styles across 3 days; neighboring cities look different on the same day
-- **Copy rotation:** 3 headline variants per style, `variant = floor(dayNumber/3) % 3`
-- **Net effect: an exact creative repeats on a given page only every 9 days**
+- **8 styles** in 4 pairs: (news-graphic + niche-callout), (format-enemy + premium),
+  (minimal + UGC), (checklist + crew). First of the pair = **1-MORNING** post, second = **2-AFTERNOON**.
+- **Pair rotation:** city *i* gets pair `(i + (d−anchor) % 4) % 4` — adjacent days always differ per page
+- **Copy rotation:** 3 variants per style, `variant = floor((d−anchor)/4) % 3`
+- **Plate rotation** (`_plates` in the JSON): news-graphic cycles 3 hero photos (tank/banyo/manhole),
+  premium cycles 3 truck shots (studio / barangay-street / night-service-in-action)
+- **Net effect: an exact creative repeats on a given page only every 12 days**
 - All city names/labels localized per branch; contact numbers + logo + CALL NOW + libreng inspection baked into every image (theft-proofing)
+
+**Output structure (posting-VA-ready):** `out/daily-<date>/OCEANIDES-<CITY>-BRANCH/1-MORNING--<style>.png`
++ `2-AFTERNOON--<style>.png` — share the branch folder; the filename says what to post and when.
+
+**Believability notes (2026-07-14):** crew photos are mixed-quality/upscaled → the crew style
+neutralizes it with a uniform B&W grade + navy tint + film grain (never use them as glossy
+full-bleed portraits). UGC before/after: `_photoSets` pairs photos BY VARIANT — v0 = the real
+job photos (only variant allowed to say "actual na trabaho"); v1/v2 = AI-recreated pairs
+(after = codex `--edit` of the before, so it's visibly the same tank) whose copy is educational
+framing only. Never reshuffle photo↔copy pairing.
 
 ## Volume rules (max per day)
 
@@ -59,11 +73,15 @@ Cafe-PC prereq after defreezer wipe: `npx playwright install chromium`.
 - Line lengths are fitted to fixed font sizes — keep new variants within the max chars
   of the variant they replace (see _readme in the JSON).
 
-## Assets
+## Assets (ALL must be committed — the cloud routine clones the repo)
 
-- AI plates (gpt-image-2 via codex-image, reused daily): `assets/tb2-hero-tank.png`,
-  `assets/tb2-doodle-bottle.png` (canvas gold must match plate bg `#FAB811`)
-- Real photos: `assets/before-1.jpg`, `after-1.jpg`, `van-clean.png`
+- AI plates (gpt-image-2 via codex-image, reused daily): `tb2-hero-tank/banyo/manhole.png`
+  (news-graphic), `tb2-truck-street/action.png` (premium; edits of the real van photo),
+  `tb2-doodle-bottle.png` (format-enemy; canvas gold must match plate bg `#FAB811`)
+- AI before/after pairs (ugc v1/v2, educational copy only): `tb2-ba2-before/after.png`,
+  `tb2-ba3-before/after.png`
+- Real photos: `before-1.jpg` + `after-1.jpg` (ugc v0 — "actual" claims allowed),
+  `van-clean.png`, `CREW 1.png`/`CREW 2.png`/`CREW 3.png` (crew style, B&W-graded)
 - Logo: `assets/logo.jpg` · badges: `badge-bir.png`
 
 ## Deliverable access (decision log 2026-07-14)

@@ -1,5 +1,17 @@
 {
   "_readme": "Copy variant pools per style. v0 = original 2026-07-14 batch. HTML allowed. May contain {{CITY}}/{{SHORT}} (substituted after variant insertion). TAGLISH RULE: native-ear check required (linkers -ng/na, verb aspect) — see agent_lessons.md 2026-07-14. Line lengths are fitted to each template's font size — keep new variants within the same max chars per line.",
+  "_plates": {
+    "newsgraphic": ["tb2-hero-tank.png", "tb2-hero-banyo.png", "tb2-hero-manhole.png"],
+    "premium": ["van-clean.png", "tb2-truck-street.png", "tb2-truck-action.png"]
+  },
+  "_photoSets_readme": "ugc photo pairs are indexed BY VARIANT, not by day — v0 uses the REAL job photos and is the only variant allowed to claim 'actual na trabaho'; v1/v2 use AI-recreated pairs so their copy is educational framing ONLY (never claim the photo is our job). TRUST LINE — do not reshuffle.",
+  "_photoSets": {
+    "ugc": [
+      { "PHOTO_BEFORE": "before-1.jpg", "PHOTO_AFTER": "after-1.jpg" },
+      { "PHOTO_BEFORE": "tb2-ba2-before.png", "PHOTO_AFTER": "tb2-ba2-after.png" },
+      { "PHOTO_BEFORE": "tb2-ba3-before.png", "PHOTO_AFTER": "tb2-ba3-after.png" }
+    ]
+  },
   "newsgraphic": [
     {
       "HEADLINE": "ITO PALA ANG NANGYAYARI<br/>SA POSO NEGRO NA<br/><span class=\"g\">5+ TAONG 'DI NASIPSIP</span>",
@@ -67,18 +79,49 @@
       "META": "Libreng inspection sa {{CITY}} &middot; Tawag lang."
     }
   ],
+  "checklist": [
+    {
+      "HEADLINE": "ANO'NG KASAMA<br/>SA SERBISYO?",
+      "ITEMS": "<div class=\"row\"><div class=\"ck\">&#10003;</div><div class=\"tx\">Todo-sipsip ng poso negro<small>Hindi hati-hati &mdash; ubos talaga ang laman</small></div></div><div class=\"row\"><div class=\"ck\">&#10003;</div><div class=\"tx\">High-pressure flush ng linya<small>Para hindi agad bumalik ang bara</small></div></div><div class=\"row\"><div class=\"ck\">&#10003;</div><div class=\"tx\">Libreng inspection bago magsimula<small>Walang bayad ang pagpapatingin</small></div></div><div class=\"row\"><div class=\"ck\">&#10003;</div><div class=\"tx\">Presyo bago umandar<small>Walang hidden charges, walang gulat sa dulo</small></div></div>",
+      "FOOT": "<b>24/7</b> &middot; 30&ndash;60 min response sa {{CITY}}"
+    },
+    {
+      "HEADLINE": "BAGO KAYO MAG-BOOK,<br/>ALAMIN ITO:",
+      "ITEMS": "<div class=\"row\"><div class=\"ck\">&#10003;</div><div class=\"tx\">Ang tamang sipsip, inuubos ang laman<small>Hindi kalahati lang para tawagin kayong muli</small></div></div><div class=\"row\"><div class=\"ck\">&#10003;</div><div class=\"tx\">Ang tamang flush, hanggang linya<small>Sa ugat ng bara, hindi sa ibabaw lang</small></div></div><div class=\"row\"><div class=\"ck\">&#10003;</div><div class=\"tx\">Ang tamang presyo, sinasabi BAGO magsimula<small>Walang dagdag na singil sa dulo</small></div></div><div class=\"row\"><div class=\"ck\">&#10003;</div><div class=\"tx\">Ang tamang crew, uniformed at may pananagutan<small>SEC-registered na kompanya, hindi freelancer</small></div></div>",
+      "FOOT": "'Yan ang standard namin sa {{CITY}}. <b>Libreng inspection</b> &mdash; tawag lang."
+    },
+    {
+      "HEADLINE": "GANITO KAMI<br/>MAGTRABAHO:",
+      "ITEMS": "<div class=\"row\"><div class=\"ck\">1</div><div class=\"tx\">Libreng inspection<small>Titingnan muna kung ano talaga ang problema</small></div></div><div class=\"row\"><div class=\"ck\">2</div><div class=\"tx\">Todo-sipsip<small>Uubusin ang laman ng poso negro</small></div></div><div class=\"row\"><div class=\"ck\">3</div><div class=\"tx\">High-pressure flush<small>Lilinisin ang linya para 'di bumalik ang bara</small></div></div><div class=\"row\"><div class=\"ck\">4</div><div class=\"tx\">Final check at linis<small>Aalis kami nang malinis ang paligid</small></div></div>",
+      "FOOT": "Ganyan kada trabaho sa {{CITY}} &mdash; <b>walang shortcut.</b>"
+    }
+  ],
+  "crew": [
+    {
+      "HEADLINE": "Kilalanin ang team na papasok sa bahay n'yo.",
+      "SUB": "Uniformed, sanay, at may respeto sa bahay &mdash; 'yan ang crew ng Oceanides sa {{CITY}}. <b>Libreng inspection</b> &mdash; tawag lang."
+    },
+    {
+      "HEADLINE": "Hindi kami random na <em>'kuya sa kanto.'</em>",
+      "SUB": "SEC-registered na kompanya na may totoong team at pananagutan. Ito ang crew na papasok sa bahay n'yo sa {{CITY}}."
+    },
+    {
+      "HEADLINE": "May mukha ang serbisyong ito.",
+      "SUB": "Same team, same standards sa bawat trabaho sa {{CITY}}. <b>Libreng inspection</b> &mdash; tawag lang."
+    }
+  ],
   "ugc": [
     {
       "HEADLINE": "Actual na trabaho ng crew namin ngayong linggo.",
       "SUB": "Ganito kalinis pagka-alis namin. <b>Libreng inspection</b> &mdash; tawag lang."
     },
     {
-      "HEADLINE": "Before at after &mdash; isang umaga lang ang trabaho.",
-      "SUB": "Todo-sipsip + high-pressure flush, tapos linis. <b>Libreng inspection</b> &mdash; tawag lang."
+      "HEADLINE": "Ganito ang itsura ng puno vs bagong-sipsip na poso negro.",
+      "SUB": "Kapag kamukha ng kaliwa ang sa inyo, 'wag nang hintaying umapaw. <b>Libreng inspection</b> &mdash; tawag lang."
     },
     {
-      "HEADLINE": "Ganito ang pinagkaiba kapag pro ang gumawa.",
-      "SUB": "Same tank, same day. <b>Libreng inspection</b> &mdash; tawag lang."
+      "HEADLINE": "Alam mo ba kung gaano na kapuno ang poso negro n'yo?",
+      "SUB": "Kapag 5+ taon nang 'di nasisipsip, ganito na kadalasan ang itsura. <b>Libreng inspection</b> &mdash; tawag lang."
     }
   ]
 }
