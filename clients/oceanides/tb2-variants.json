@@ -1,0 +1,84 @@
+{
+  "_readme": "Copy variant pools per style. v0 = original 2026-07-14 batch. HTML allowed. May contain {{CITY}}/{{SHORT}} (substituted after variant insertion). TAGLISH RULE: native-ear check required (linkers -ng/na, verb aspect) — see agent_lessons.md 2026-07-14. Line lengths are fitted to each template's font size — keep new variants within the same max chars per line.",
+  "newsgraphic": [
+    {
+      "HEADLINE": "ITO PALA ANG NANGYAYARI<br/>SA POSO NEGRO NA<br/><span class=\"g\">5+ TAONG 'DI NASIPSIP</span>",
+      "KICKER": "<b>Libreng inspection</b> &middot; Basahin ang caption"
+    },
+    {
+      "HEADLINE": "GANITO PALA SA LOOB<br/>NG POSO NEGRO NA<br/><span class=\"g\">MUNTIK NANG UMAPAW</span>",
+      "KICKER": "<b>Libreng inspection</b> &middot; Tawag lang"
+    },
+    {
+      "HEADLINE": "BAGO UMAPAW, MAY<br/>3 SENYALES NA<br/><span class=\"g\">BINABALEWALA NG LAHAT</span>",
+      "KICKER": "<b>Nasa caption ang 3 senyales</b> &middot; Libreng inspection"
+    }
+  ],
+  "nichecallout": [
+    {
+      "HEADLINE": "MABAGAL ANG FLUSH?<br/>MAY AMOY SA BANYO?<br/><span class=\"g\">'WAG HINTAYING<br/>UMAPAW.</span>",
+      "SUB": "<b>Libreng inspection.</b> May team kami sa {{SHORT}} ngayong araw."
+    },
+    {
+      "HEADLINE": "BUMUBULA ANG<br/>DRAINAGE SA LABAS?<br/><span class=\"g\">SENYALES 'YAN NG<br/>PUNONG POSO NEGRO.</span>",
+      "SUB": "<b>Libreng inspection.</b> 30&ndash;60 minutes, nasa {{SHORT}} na ang team namin."
+    },
+    {
+      "HEADLINE": "KAILAN N'YO HULING<br/>PINASIPSIP ANG<br/><span class=\"g\">POSO NEGRO?<br/>DAPAT KADA 3&ndash;5 TAON.</span>",
+      "SUB": "<b>Libreng inspection.</b> Walang bayad, walang pilitan &mdash; check lang kung kailangan na."
+    }
+  ],
+  "formatenemy": [
+    {
+      "HEADLINE": "TIGILAN NA<br/>ANG SOSA.",
+      "SUB": "Pantanggal-amoy lang 'yan &mdash; hindi solusyon. Babalik at babalik ang bara."
+    },
+    {
+      "HEADLINE": "PLUNGER NA<br/>NAMAN?",
+      "SUB": "Kung kada linggo kang nagpa-plunger, hindi na bara 'yan &mdash; puno na ang poso negro n'yo."
+    },
+    {
+      "HEADLINE": "AMOY LANG<br/>BA TALAGA?",
+      "SUB": "Kapag inaamoy n'yo na sa loob ng bahay, puno na 'yan. 'Wag nang hintaying umapaw."
+    }
+  ],
+  "premium": [
+    {
+      "HEADLINE": "Ang serbisyong pinagkakatiwalaan ng mga pamilya sa <em>{{CITY}}.</em>"
+    },
+    {
+      "HEADLINE": "Propesyonal na serbisyo, malinis na trabaho &mdash; para sa mga tahanan sa <em>{{CITY}}.</em>"
+    },
+    {
+      "HEADLINE": "Walang hidden charges. Walang shortcut. 'Yan ang pangako namin sa <em>{{CITY}}.</em>"
+    }
+  ],
+  "minimal": [
+    {
+      "HEADLINE": "Barado?<br/>May tao kami sa {{CITY}} ngayon.",
+      "META": "Libreng inspection &middot; 24/7 &middot; Tawag lang."
+    },
+    {
+      "HEADLINE": "Umaapaw na?<br/>30&ndash;60 minutes, nand'yan na kami.",
+      "META": "24/7 sa buong {{CITY}} &middot; Libreng inspection."
+    },
+    {
+      "HEADLINE": "Mabaho ang banyo?<br/>Hindi 'yan normal.",
+      "META": "Libreng inspection sa {{CITY}} &middot; Tawag lang."
+    }
+  ],
+  "ugc": [
+    {
+      "HEADLINE": "Actual na trabaho ng crew namin ngayong linggo.",
+      "SUB": "Ganito kalinis pagka-alis namin. <b>Libreng inspection</b> &mdash; tawag lang."
+    },
+    {
+      "HEADLINE": "Before at after &mdash; isang umaga lang ang trabaho.",
+      "SUB": "Todo-sipsip + high-pressure flush, tapos linis. <b>Libreng inspection</b> &mdash; tawag lang."
+    },
+    {
+      "HEADLINE": "Ganito ang pinagkaiba kapag pro ang gumawa.",
+      "SUB": "Same tank, same day. <b>Libreng inspection</b> &mdash; tawag lang."
+    }
+  ]
+}

@@ -1,16 +1,61 @@
 // Oceanides — daily city batch renderer for Test Batch 2 templates.
-// For each city, fills {{CITY}}/{{SHORT}} into 2 rotating styles, renders each
-// via render.mjs, verifies the PNGs, and emits a dark review gallery.
+// For each city, fills variant copy + {{CITY}}/{{SHORT}} into 2 daily-rotating
+// styles, renders each via render.mjs, verifies the PNGs, and emits a dark
+// review gallery.
+//
+// Daily rotation (deterministic per calendar day):
+//   d          = day number = floor(Date.parse(date+'T00:00:00Z') / 86400000)
+//   style pair = STYLE_PAIRS[(i + (d % 3)) % 3]  for city index i (0..14)
+//   variantIdx = floor(d / 3) % 3  (same variant slot for every style that day)
+//
+// Usage: node build-tb2-cities.mjs [--date YYYY-MM-DD]   (default = today, Asia/Manila)
 // Idempotent: safe to re-run; overwrites existing PNGs and cleans up gen files.
-import { readFileSync, writeFileSync, mkdirSync, existsSync, statSync, rmSync, readdirSync, unlinkSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync, statSync, readdirSync, unlinkSync } from 'node:fs';
 import { spawn } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const DATE = '2026-07-14';
-const OUT_DIR = path.join('out', `daily-${DATE}`);
 const TEMPLATES = 'templates';
+
+// --- Date resolution ---------------------------------------------------------
+function todayManila() {
+  // en-CA formats as YYYY-MM-DD; Asia/Manila is UTC+8 with no DST.
+  return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Manila' }).format(new Date());
+}
+
+function parseArgs(argv) {
+  let date = null;
+  for (let i = 0; i < argv.length; i++) {
+    if (argv[i] === '--date') {
+      date = argv[i + 1];
+      i++;
+    } else if (argv[i].startsWith('--date=')) {
+      date = argv[i].slice('--date='.length);
+    }
+  }
+  return { date };
+}
+
+const { date: dateArg } = parseArgs(process.argv.slice(2));
+const DATE = dateArg || todayManila();
+if (!/^\d{4}-\d{2}-\d{2}$/.test(DATE)) {
+  console.error(`Invalid --date "${DATE}". Expected YYYY-MM-DD.`);
+  process.exit(1);
+}
+
+const DAY_NUMBER = Math.floor(Date.parse(`${DATE}T00:00:00Z`) / 86400000);
+if (!Number.isFinite(DAY_NUMBER)) {
+  console.error(`Could not compute day number for date "${DATE}".`);
+  process.exit(1);
+}
+// Phase-anchored to 2026-07-14 (day 20648, the launch batch = offset 0), so every
+// day's styles differ from the previous day's on every page.
+const EPOCH_ANCHOR = 20648;
+const PAIR_OFFSET = (((DAY_NUMBER - EPOCH_ANCHOR) % 3) + 3) % 3;
+const VARIANT_IDX = ((Math.floor((DAY_NUMBER - EPOCH_ANCHOR) / 3) % 3) + 3) % 3;
+
+const OUT_DIR = path.join('out', `daily-${DATE}`);
 
 // 15 cities, in this exact order (index i = 0..14).
 const CITIES = [
@@ -31,13 +76,21 @@ const CITIES = [
   { name: 'Angeles',           slug: 'angeles',            short: 'Angeles' },
 ];
 
-// Each city gets exactly 2 styles, rotated by index % 3.
+// Daily-rotating style pairs. City index i gets STYLE_PAIRS[(i + d%3) % 3].
+const STYLE_PAIRS = [
+  ['newsgraphic', 'nichecallout'],
+  ['formatenemy', 'premium'],
+  ['minimal', 'ugc'],
+];
+
 function stylesFor(i) {
-  const mod = i % 3;
-  if (mod === 0) return ['newsgraphic', 'nichecallout'];
-  if (mod === 1) return ['formatenemy', 'premium'];
-  return ['minimal', 'ugc'];
+  return STYLE_PAIRS[(i + PAIR_OFFSET) % 3];
 }
+
+// Variant copy pools per style (arrays of 3). Keys are token names.
+const VARIANTS = JSON.parse(
+  readFileSync(path.join(__dirname, 'tb2-variants.json'), 'utf8')
+);
 
 // Long-city font overrides (only when city name > 12 chars).
 const LONG_OVERRIDES = {
@@ -69,6 +122,10 @@ function runRender(htmlPath, outPath) {
 async function main() {
   mkdirSync(path.join(__dirname, OUT_DIR), { recursive: true });
 
+  console.log(`Oceanides daily batch — ${DATE}`);
+  console.log(`  day number d = ${DAY_NUMBER}`);
+  console.log(`  pair offset d%3 = ${PAIR_OFFSET} · variant = v${VARIANT_IDX}`);
+
   // Build the full job list.
   const jobs = [];
   CITIES.forEach((city, i) => {
@@ -79,12 +136,22 @@ async function main() {
 
   console.log(`Building ${jobs.length} renders (${CITIES.length} cities x 2 styles)...`);
 
-  const genFiles = [];
-
   // 1) Generate the filled HTML files.
+  //    Order: variant tokens FIRST (their values may contain {{CITY}}/{{SHORT}}),
+  //    then {{CITY}}/{{SHORT}}.
   for (const { city, style } of jobs) {
     const tplPath = path.join(__dirname, TEMPLATES, `tb2-${style}.html`);
     let html = readFileSync(tplPath, 'utf8');
+
+    const pool = VARIANTS[style];
+    if (!Array.isArray(pool) || !pool[VARIANT_IDX]) {
+      throw new Error(`No variant[${VARIANT_IDX}] for style "${style}" in tb2-variants.json`);
+    }
+    const variant = pool[VARIANT_IDX];
+    for (const [token, value] of Object.entries(variant)) {
+      html = replaceAll(html, `{{${token}}}`, value);
+    }
+
     html = replaceAll(html, '{{CITY}}', city.name);
     html = replaceAll(html, '{{SHORT}}', city.short);
 
@@ -92,9 +159,16 @@ async function main() {
       html = html.replace('</head>', `${LONG_OVERRIDES[style]}</head>`);
     }
 
+    // Residual-token guard: no {{ may survive substitution.
+    const residual = html.match(/\{\{[^}]*\}\}/);
+    if (residual) {
+      throw new Error(
+        `Residual token ${residual[0]} in ${city.slug}--${style} (style "${style}", variant v${VARIANT_IDX}). Aborting before render.`
+      );
+    }
+
     const genRel = path.join(TEMPLATES, `_gen-tb2-${city.slug}-${style}.html`);
     writeFileSync(path.join(__dirname, genRel), html, 'utf8');
-    genFiles.push(genRel);
   }
 
   // 2) Render each (up to 3 concurrent).
@@ -181,7 +255,8 @@ function writeGallery() {
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#101418;color:#e8eaed;font-family:'Segoe UI',Arial,sans-serif;padding:36px}
-h1{font-size:26px;margin-bottom:24px}
+h1{font-size:26px;margin-bottom:6px}
+.subtitle{font-size:14px;color:#9aa0a6;margin-bottom:24px}
 h2{font-size:19px;margin:28px 0 14px;color:#F5B301}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
 .card{background:#171c22;border:1px solid #2a3138;border-radius:14px;overflow:hidden}
@@ -190,6 +265,7 @@ h2{font-size:19px;margin:28px 0 14px;color:#F5B301}
 .meta .s{color:#9aa0a6;font-size:13px;text-transform:capitalize}
 </style></head><body>
 <h1>Oceanides &mdash; Daily Posts ${DATE} (15 cities &times; 2)</h1>
+<div class="subtitle">pair offset d%3 = ${PAIR_OFFSET} &middot; variant = v${VARIANT_IDX}</div>
 ${sections}
 </body></html>
 `;
