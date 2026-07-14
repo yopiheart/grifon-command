@@ -1,127 +1,196 @@
 {
-  "_readme": "Copy variant pools per style. v0 = original 2026-07-14 batch. HTML allowed. May contain {{CITY}}/{{SHORT}} (substituted after variant insertion). TAGLISH RULE: native-ear check required (linkers -ng/na, verb aspect) — see agent_lessons.md 2026-07-14. Line lengths are fitted to each template's font size — keep new variants within the same max chars per line.",
+  "_readme": "Copy variant pools per style. v0 = original 2026-07-14 batch. HTML allowed in visual tokens; CAPTION is plain text (FB caption hook/body — script appends the standard authority/contact/hashtag footer). May contain {{CITY}}/{{SHORT}} (substituted after variant insertion). TAGLISH RULE: native-ear check required (linkers -ng/na, verb aspect) — see agent_lessons.md 2026-07-14. Line lengths are fitted to each template's font size — keep new variants within the same max chars per line.",
   "_plates": {
     "newsgraphic": ["tb2-hero-tank.png", "tb2-hero-banyo.png", "tb2-hero-manhole.png"],
     "premium": ["van-clean.png", "tb2-truck-street.png", "tb2-truck-action.png"]
   },
-  "_photoSets_readme": "ugc photo pairs are indexed BY VARIANT, not by day — v0 uses the REAL job photos and is the only variant allowed to claim 'actual na trabaho'; v1/v2 use AI-recreated pairs so their copy is educational framing ONLY (never claim the photo is our job). TRUST LINE — do not reshuffle.",
+  "_photoSets_readme": "photo/portrait tokens indexed BY VARIANT, not by day. ugc: v0 uses the REAL job photos and is the only variant allowed to claim 'actual na trabaho'; v1/v2 use AI-recreated pairs so their copy is educational framing ONLY (never claim the photo is our job). kyliequote: variant = crew member (v0 Rodel/CREW 3, v1 Junel/CREW 2, v2 Kambal/CREW 1). TRUST LINE — do not reshuffle.",
   "_photoSets": {
     "ugc": [
       { "PHOTO_BEFORE": "before-1.jpg", "PHOTO_AFTER": "after-1.jpg" },
       { "PHOTO_BEFORE": "tb2-ba2-before.png", "PHOTO_AFTER": "tb2-ba2-after.png" },
       { "PHOTO_BEFORE": "tb2-ba3-before.png", "PHOTO_AFTER": "tb2-ba3-after.png" }
+    ],
+    "kyliequote": [
+      { "PORTRAIT": "CREW 3.png" },
+      { "PORTRAIT": "CREW 2.png" },
+      { "PORTRAIT": "CREW 1.png" }
     ]
   },
   "newsgraphic": [
     {
       "HEADLINE": "ITO PALA ANG NANGYAYARI<br/>SA POSO NEGRO NA<br/><span class=\"g\">5+ TAONG 'DI NASIPSIP</span>",
-      "KICKER": "<b>Libreng inspection</b> &middot; Basahin ang caption"
+      "KICKER": "<b>Libreng inspection</b> &middot; Basahin ang caption",
+      "CAPTION": "Ito pala ang nangyayari sa loob ng poso negro kapag 5+ taon nang 'di nasisipsip. 😳\n\nDumidikit at tumitigas ang laman sa ilalim — kaya kahit 'di pa umaapaw, unti-unti nang bumabara ang linya. Kapag umabot na sa banyo ang amoy, malapit na 'yan."
     },
     {
       "HEADLINE": "GANITO PALA SA LOOB<br/>NG POSO NEGRO NA<br/><span class=\"g\">MUNTIK NANG UMAPAW</span>",
-      "KICKER": "<b>Libreng inspection</b> &middot; Tawag lang"
+      "KICKER": "<b>Libreng inspection</b> &middot; Tawag lang",
+      "CAPTION": "Ganito kalapit umapaw ang poso negro kapag matagal nang puno. 😬\n\n'Wag hintaying tumapon bago kumilos — mas mabaho, mas magastos, at mas matagal ayusin kapag inabot na ng ganyan."
     },
     {
       "HEADLINE": "BAGO UMAPAW, MAY<br/>3 SENYALES NA<br/><span class=\"g\">BINABALEWALA NG LAHAT</span>",
-      "KICKER": "<b>Nasa caption ang 3 senyales</b> &middot; Libreng inspection"
+      "KICKER": "<b>Nasa caption ang 3 senyales</b> &middot; Libreng inspection",
+      "CAPTION": "Bago umapaw ang poso negro, may 3 senyales na madalas binabalewala:\n\n1️⃣ Mabagal ang flush kahit walang bara sa inodoro\n2️⃣ May amoy na umaakyat sa banyo o sa labas ng bahay\n3️⃣ Bumubula o umaapaw ang drainage / floor drain\n\nMay isa ka man lang diyan — patingin na. Libre lang."
     }
   ],
   "nichecallout": [
     {
       "HEADLINE": "MABAGAL ANG FLUSH?<br/>MAY AMOY SA BANYO?<br/><span class=\"g\">'WAG HINTAYING<br/>UMAPAW.</span>",
-      "SUB": "<b>Libreng inspection.</b> May team kami sa {{SHORT}} ngayong araw."
+      "SUB": "<b>Libreng inspection.</b> May team kami sa {{SHORT}} ngayong araw.",
+      "CAPTION": "Mabagal ang flush? May amoy sa banyo?\n\nHindi 'yan aayusin ng pabango o sosa — senyales 'yan na puno na ang poso negro n'yo. 'Wag hintaying umapaw bago tumawag."
     },
     {
       "HEADLINE": "BUMUBULA ANG<br/>DRAINAGE SA LABAS?<br/><span class=\"g\">SENYALES 'YAN NG<br/>PUNONG POSO NEGRO.</span>",
-      "SUB": "<b>Libreng inspection.</b> 30&ndash;60 minutes, nasa {{SHORT}} na ang team namin."
+      "SUB": "<b>Libreng inspection.</b> 30&ndash;60 minutes, nasa {{SHORT}} na ang team namin.",
+      "CAPTION": "Kapag bumubula ang drainage sa labas ng bahay, madalas hindi 'yan simpleng bara — puno na ang poso negro at wala nang mapuntahan ang tubig.\n\nMas maaga mong ipa-check, mas mura ang solusyon."
     },
     {
       "HEADLINE": "KAILAN N'YO HULING<br/>PINASIPSIP ANG<br/><span class=\"g\">POSO NEGRO?<br/>DAPAT KADA 3&ndash;5 TAON.</span>",
-      "SUB": "<b>Libreng inspection.</b> Walang bayad, walang pilitan &mdash; check lang kung kailangan na."
+      "SUB": "<b>Libreng inspection.</b> Walang bayad, walang pilitan &mdash; check lang kung kailangan na.",
+      "CAPTION": "Kailan n'yo huling pinasipsip ang poso negro?\n\nKung hindi n'yo na maalala, malamang lagpas na sa dapat. Ang tamang interval: kada 3–5 taon — mas madalas kung maraming nakatira. Walang bayad ang pagpapa-check, walang pilitan."
     }
   ],
   "formatenemy": [
     {
       "HEADLINE": "TIGILAN NA<br/>ANG SOSA.",
-      "SUB": "Pantanggal-amoy lang 'yan &mdash; hindi solusyon. Babalik at babalik ang bara."
+      "SUB": "Pantanggal-amoy lang 'yan &mdash; hindi solusyon. Babalik at babalik ang bara.",
+      "CAPTION": "Ang sosa, pantanggal-amoy lang 'yan — hindi solusyon. 😅\n\nKapag puno na ang poso negro, walang kemikal na makakaubos n'yan. Babalik at babalik ang bara hangga't hindi nasisipsip ang laman."
     },
     {
       "HEADLINE": "PLUNGER NA<br/>NAMAN?",
-      "SUB": "Kung kada linggo kang nagpa-plunger, hindi na bara 'yan &mdash; puno na ang poso negro n'yo."
+      "SUB": "Kung kada linggo kang nagpa-plunger, hindi na bara 'yan &mdash; puno na ang poso negro n'yo.",
+      "CAPTION": "Kung kada linggo kang nagpa-plunger, hindi na bara 'yan — puno na ang poso negro n'yo.\n\nAng plunger, panandaliang ginhawa. Ang todo-sipsip, tanggal sa ugat ang problema."
     },
     {
       "HEADLINE": "AMOY LANG<br/>BA TALAGA?",
-      "SUB": "Kapag inaamoy n'yo na sa loob ng bahay, puno na 'yan. 'Wag nang hintaying umapaw."
+      "SUB": "Kapag inaamoy n'yo na sa loob ng bahay, puno na 'yan. 'Wag nang hintaying umapaw.",
+      "CAPTION": "Kapag naaamoy n'yo na sa loob ng bahay, hindi na 'yan 'amoy lang.'\n\nPuno na ang poso negro at hinahanap na ng gas ang labasan. 'Wag nang hintaying umapaw bago kumilos."
     }
   ],
   "premium": [
     {
-      "HEADLINE": "Ang serbisyong pinagkakatiwalaan ng mga pamilya sa <em>{{CITY}}.</em>"
+      "HEADLINE": "Ang serbisyong pinagkakatiwalaan ng mga pamilya sa <em>{{CITY}}.</em>",
+      "CAPTION": "Sa poso negro at plumbing, ang pinakamahal ay ang serbisyong inuulit dahil mali ang una.\n\nKaya sa Oceanides: tamang proseso, tamang gamit, walang shortcut — sa unang punta pa lang."
     },
     {
-      "HEADLINE": "Propesyonal na serbisyo, malinis na trabaho &mdash; para sa mga tahanan sa <em>{{CITY}}.</em>"
+      "HEADLINE": "Propesyonal na serbisyo, malinis na trabaho &mdash; para sa mga tahanan sa <em>{{CITY}}.</em>",
+      "CAPTION": "Propesyonal na serbisyo, malinis na trabaho — mula pagdating hanggang pag-alis.\n\n'Yan ang standard ng bawat team namin, sa bawat bahay na pinapasok namin."
     },
     {
-      "HEADLINE": "Walang hidden charges. Walang shortcut. 'Yan ang pangako namin sa <em>{{CITY}}.</em>"
+      "HEADLINE": "Walang hidden charges. Walang shortcut. 'Yan ang pangako namin sa <em>{{CITY}}.</em>",
+      "CAPTION": "Walang hidden charges. Walang shortcut.\n\nSinasabi namin ang presyo BAGO magsimula — at 'yun din ang babayaran mo pagkatapos. Simple lang."
     }
   ],
   "minimal": [
     {
       "HEADLINE": "Barado?<br/>May tao kami sa {{CITY}} ngayon.",
-      "META": "Libreng inspection &middot; 24/7 &middot; Tawag lang."
+      "META": "Libreng inspection &middot; 24/7 &middot; Tawag lang.",
+      "CAPTION": "Barado? May tao kami sa {{CITY}} ngayon.\n\nTawag lang — 24/7 kami."
     },
     {
       "HEADLINE": "Umaapaw na?<br/>30&ndash;60 minutes, nand'yan na kami.",
-      "META": "24/7 sa buong {{CITY}} &middot; Libreng inspection."
+      "META": "24/7 sa buong {{CITY}} &middot; Libreng inspection.",
+      "CAPTION": "Umaapaw na? 30–60 minutes, nand'yan na kami.\n\nMay team kaming nakabase malapit sa inyo — 24/7, kahit gabi, kahit weekend."
     },
     {
       "HEADLINE": "Mabaho ang banyo?<br/>Hindi 'yan normal.",
-      "META": "Libreng inspection sa {{CITY}} &middot; Tawag lang."
+      "META": "Libreng inspection sa {{CITY}} &middot; Tawag lang.",
+      "CAPTION": "Mabaho ang banyo? Hindi 'yan normal.\n\nSenyales 'yan ng puno o baradong linya. Patingin na bago lumala — libre lang."
     }
   ],
   "checklist": [
     {
       "HEADLINE": "ANO'NG KASAMA<br/>SA SERBISYO?",
       "ITEMS": "<div class=\"row\"><div class=\"ck\">&#10003;</div><div class=\"tx\">Todo-sipsip ng poso negro<small>Hindi hati-hati &mdash; ubos talaga ang laman</small></div></div><div class=\"row\"><div class=\"ck\">&#10003;</div><div class=\"tx\">High-pressure flush ng linya<small>Para hindi agad bumalik ang bara</small></div></div><div class=\"row\"><div class=\"ck\">&#10003;</div><div class=\"tx\">Libreng inspection bago magsimula<small>Walang bayad ang pagpapatingin</small></div></div><div class=\"row\"><div class=\"ck\">&#10003;</div><div class=\"tx\">Presyo bago umandar<small>Walang hidden charges, walang gulat sa dulo</small></div></div>",
-      "FOOT": "<b>24/7</b> &middot; 30&ndash;60 min response sa {{CITY}}"
+      "FOOT": "<b>24/7</b> &middot; 30&ndash;60 min response sa {{CITY}}",
+      "CAPTION": "Para malinaw: ito ang kasama sa bawat serbisyo namin —\n\n✔️ Todo-sipsip ng poso negro (hindi hati-hati)\n✔️ High-pressure flush ng linya\n✔️ Libreng inspection bago magsimula\n✔️ Presyo bago umandar — walang gulat sa dulo"
     },
     {
       "HEADLINE": "BAGO KAYO MAG-BOOK,<br/>ALAMIN ITO:",
       "ITEMS": "<div class=\"row\"><div class=\"ck\">&#10003;</div><div class=\"tx\">Ang tamang sipsip, inuubos ang laman<small>Hindi kalahati lang para tawagin kayong muli</small></div></div><div class=\"row\"><div class=\"ck\">&#10003;</div><div class=\"tx\">Ang tamang flush, hanggang linya<small>Sa ugat ng bara, hindi sa ibabaw lang</small></div></div><div class=\"row\"><div class=\"ck\">&#10003;</div><div class=\"tx\">Ang tamang presyo, sinasabi BAGO magsimula<small>Walang dagdag na singil sa dulo</small></div></div><div class=\"row\"><div class=\"ck\">&#10003;</div><div class=\"tx\">Ang tamang crew, uniformed at may pananagutan<small>SEC-registered na kompanya, hindi freelancer</small></div></div>",
-      "FOOT": "'Yan ang standard namin sa {{CITY}}. <b>Libreng inspection</b> &mdash; tawag lang."
+      "FOOT": "'Yan ang standard namin sa {{CITY}}. <b>Libreng inspection</b> &mdash; tawag lang.",
+      "CAPTION": "Hindi lahat ng sipsip-serbisyo ay pareho.\n\nAlamin ang standard bago mag-book — para hindi ka na tumawag ulit pagkalipas ng dalawang linggo. Nasa image ang 4 na dapat hanapin."
     },
     {
       "HEADLINE": "GANITO KAMI<br/>MAGTRABAHO:",
       "ITEMS": "<div class=\"row\"><div class=\"ck\">1</div><div class=\"tx\">Libreng inspection<small>Titingnan muna kung ano talaga ang problema</small></div></div><div class=\"row\"><div class=\"ck\">2</div><div class=\"tx\">Todo-sipsip<small>Uubusin ang laman ng poso negro</small></div></div><div class=\"row\"><div class=\"ck\">3</div><div class=\"tx\">High-pressure flush<small>Lilinisin ang linya para 'di bumalik ang bara</small></div></div><div class=\"row\"><div class=\"ck\">4</div><div class=\"tx\">Final check at linis<small>Aalis kami nang malinis ang paligid</small></div></div>",
-      "FOOT": "Ganyan kada trabaho sa {{CITY}} &mdash; <b>walang shortcut.</b>"
+      "FOOT": "Ganyan kada trabaho sa {{CITY}} &mdash; <b>walang shortcut.</b>",
+      "CAPTION": "Ganito kami magtrabaho, step by step:\n\n1️⃣ Libreng inspection — alamin muna ang totoong problema\n2️⃣ Todo-sipsip — ubusin ang laman\n3️⃣ High-pressure flush — linisin ang linya\n4️⃣ Final check at linis bago umalis\n\nWalang shortcut."
     }
   ],
   "crew": [
     {
       "HEADLINE": "Kilalanin ang team na papasok sa bahay n'yo.",
-      "SUB": "Uniformed, sanay, at may respeto sa bahay &mdash; 'yan ang crew ng Oceanides sa {{CITY}}. <b>Libreng inspection</b> &mdash; tawag lang."
+      "SUB": "Uniformed, sanay, at may respeto sa bahay &mdash; 'yan ang crew ng Oceanides sa {{CITY}}. <b>Libreng inspection</b> &mdash; tawag lang.",
+      "CAPTION": "Kilalanin ang team na papasok sa bahay n'yo: sina Kambal (driver / response), Junel (manual cleaning), at Rodel (siphoning expert). 👷\n\nUniformed, sanay, at may respeto sa bahay — 'yan ang crew ng Oceanides."
     },
     {
       "HEADLINE": "Hindi kami random na <em>'kuya sa kanto.'</em>",
-      "SUB": "SEC-registered na kompanya na may totoong team at pananagutan. Ito ang crew na papasok sa bahay n'yo sa {{CITY}}."
+      "SUB": "SEC-registered na kompanya na may totoong team at pananagutan. Ito ang crew na papasok sa bahay n'yo sa {{CITY}}.",
+      "CAPTION": "Hindi kami random na 'kuya sa kanto.'\n\nSEC-registered na kompanya na may totoong team, totoong pangalan, at pananagutan sa bawat trabaho — sina Kambal, Junel, at Rodel ang papasok sa bahay n'yo."
     },
     {
       "HEADLINE": "May mukha ang serbisyong ito.",
-      "SUB": "Same team, same standards sa bawat trabaho sa {{CITY}}. <b>Libreng inspection</b> &mdash; tawag lang."
+      "SUB": "Same team, same standards sa bawat trabaho sa {{CITY}}. <b>Libreng inspection</b> &mdash; tawag lang.",
+      "CAPTION": "May mukha ang serbisyong ito — sina Kambal, Junel, at Rodel.\n\nSame team, same standards, kada trabaho. Kaya kilala kami ng mga suki namin."
     }
   ],
   "ugc": [
     {
       "HEADLINE": "Actual na trabaho ng crew namin ngayong linggo.",
-      "SUB": "Ganito kalinis pagka-alis namin. <b>Libreng inspection</b> &mdash; tawag lang."
+      "SUB": "Ganito kalinis pagka-alis namin. <b>Libreng inspection</b> &mdash; tawag lang.",
+      "CAPTION": "Actual na trabaho ng crew namin ngayong linggo — ganito kalinis pagka-alis. 💪\n\nTodo-sipsip, hindi hati-hati. Pati paligid, nilinis bago umalis."
     },
     {
       "HEADLINE": "Ganito ang itsura ng puno vs bagong-sipsip na poso negro.",
-      "SUB": "Kapag kamukha ng kaliwa ang sa inyo, 'wag nang hintaying umapaw. <b>Libreng inspection</b> &mdash; tawag lang."
+      "SUB": "Kapag kamukha ng kaliwa ang sa inyo, 'wag nang hintaying umapaw. <b>Libreng inspection</b> &mdash; tawag lang.",
+      "CAPTION": "Ganito ang itsura ng punong poso negro kumpara sa bagong-sipsip.\n\nKapag kamukha ng kaliwa ang sa inyo, 'wag nang hintaying umapaw — mas magastos at mas mabaho 'pag inabot pa n'yan."
     },
     {
       "HEADLINE": "Alam mo ba kung gaano na kapuno ang poso negro n'yo?",
-      "SUB": "Kapag 5+ taon nang 'di nasisipsip, ganito na kadalasan ang itsura. <b>Libreng inspection</b> &mdash; tawag lang."
+      "SUB": "Kapag 5+ taon nang 'di nasisipsip, ganito na kadalasan ang itsura. <b>Libreng inspection</b> &mdash; tawag lang.",
+      "CAPTION": "Alam mo ba kung gaano na kapuno ang poso negro n'yo?\n\nKapag 5+ taon nang 'di nasisipsip, ganito na kadalasan ang itsura sa loob. Libre naming i-check — tawag lang."
+    }
+  ],
+  "kyliequote": [
+    {
+      "QUOTE": "Pag-check ko pa lang, alam ko na kung ano ang kailangan. Hindi kami nanghuhula.",
+      "NAME": "Rodel",
+      "ROLE": "Siphoning Expert",
+      "CAPTION": "\"Pag-check ko pa lang, alam ko na kung ano ang kailangan. Hindi kami nanghuhula — tinitingnan namin nang maayos.\"\n\n— si Rodel, siphoning expert ng Team Oceanides. Siya ang unang titingin sa poso negro n'yo, at libre ang pagpapatingin."
+    },
+    {
+      "QUOTE": "Hindi ako aalis hangga't hindi malinis ang trabaho &mdash; pati ang paligid.",
+      "NAME": "Junel",
+      "ROLE": "Manual Cleaning Specialist",
+      "CAPTION": "\"Hindi ako aalis hangga't hindi malinis ang trabaho — pati ang paligid, iiwan naming maayos.\"\n\n— si Junel, manual cleaning specialist ng Team Oceanides. Ganyan ka-simple ang standard namin."
+    },
+    {
+      "QUOTE": "Kapag tumawag kayo, ako ang unang darating &mdash; 30&ndash;60 minutes, nasa gate n'yo na kami.",
+      "NAME": "Kambal",
+      "ROLE": "Driver &middot; Response Team",
+      "CAPTION": "\"Kapag tumawag kayo, ako ang unang darating — 30–60 minutes, nasa gate n'yo na kami.\"\n\n— si Kambal, driver at response team ng Oceanides. 24/7 kami, kahit gabi, kahit weekend."
+    }
+  ],
+  "senyales": [
+    {
+      "HEADLINE": "3 SENYALES NA<br/><span class=\"g\">PUNO NA ANG POSO NEGRO</span>",
+      "ITEMS": "<div class=\"row\"><div class=\"n\">1</div><div class=\"tx\">Mabagal ang flush<small>Kahit walang bara sa inodoro &mdash; ang linya mismo ang puno</small></div></div><div class=\"row\"><div class=\"n\">2</div><div class=\"tx\">May amoy sa banyo o sa labas<small>Umaakyat ang gas kapag wala nang espasyo sa tangke</small></div></div><div class=\"row\"><div class=\"n\">3</div><div class=\"tx\">Bumubula o umaapaw ang drainage<small>Wala nang mapuntahan ang tubig &mdash; malapit nang tumapon</small></div></div>",
+      "FOOT": "May isa ka man lang diyan &mdash; <b>libreng inspection</b>, tawag lang.",
+      "CAPTION": "3 senyales na puno na ang poso negro — 'wag balewalain:\n\n1️⃣ Mabagal ang flush\n2️⃣ May amoy sa banyo o sa labas\n3️⃣ Bumubula o umaapaw ang drainage\n\nAng maagang sipsip, mas mura kaysa sa emergency na umapaw na."
+    },
+    {
+      "HEADLINE": "3 BAGAY NA 'WAG GAWIN<br/><span class=\"g\">KAPAG BARADO</span>",
+      "ITEMS": "<div class=\"row\"><div class=\"n\">1</div><div class=\"tx\">'Wag magbuhos ng sosa<small>Pantanggal-amoy lang &mdash; babalik ang bara, masisira pa ang tubo</small></div></div><div class=\"row\"><div class=\"n\">2</div><div class=\"tx\">'Wag maghintay ng ilang linggo<small>Lalala at mas magastos kapag inabot na ng umapaw</small></div></div><div class=\"row\"><div class=\"n\">3</div><div class=\"tx\">'Wag magpa-kalahating sipsip<small>Kapag hindi ubos ang laman, bumabalik agad ang problema</small></div></div>",
+      "FOOT": "Ang tama: <b>libreng inspection</b> muna, tapos tamang serbisyo &mdash; isang beses lang.",
+      "CAPTION": "Kapag barado o mabaho, ito ang 3 bagay na 'WAG gawin:\n\n1️⃣ Magbuhos ng sosa (babalik lang ang bara)\n2️⃣ Maghintay ng ilang linggo (lalala at mas magastos)\n3️⃣ Magpa-kalahating sipsip (bumabalik agad ang problema)\n\nMas tipid ang tamang proseso sa una pa lang."
+    },
+    {
+      "HEADLINE": "GAANO KADALAS DAPAT<br/><span class=\"g\">MAGPASIPSIP?</span>",
+      "ITEMS": "<div class=\"row\"><div class=\"n\">1</div><div class=\"tx\">Regular na bahay<small>Kada 3&ndash;5 taon ang tamang interval</small></div></div><div class=\"row\"><div class=\"n\">2</div><div class=\"tx\">Maraming nakatira o may negosyo<small>Kada 1&ndash;2 taon &mdash; mas mabilis mapuno ang tangke</small></div></div><div class=\"row\"><div class=\"n\">3</div><div class=\"tx\">May senyales na<small>Amoy, mabagal na flush, bumubulang drainage &mdash; ngayon na</small></div></div>",
+      "FOOT": "Hindi sigurado kung kailangan na? <b>Libreng inspection</b> &mdash; tawag lang.",
+      "CAPTION": "Gaano kadalas dapat magpasipsip ng poso negro?\n\n🏠 Regular na bahay: kada 3–5 taon\n🏘️ Maraming nakatira o may negosyo: kada 1–2 taon\n⚠️ May senyales na (amoy, mabagal na flush): ngayon na\n\nHindi sigurado? Libre naming i-check."
     }
   ]
 }

@@ -1,0 +1,51 @@
+<!doctype html>
+<!-- TB2 #10 — "3 Senyales" educational listicle (S15 stat-stack). Ocean-blue canvas para distinct sa checklist. Tokens: {{CITY}} {{HEADLINE}} {{ITEMS}} {{FOOT}} -->
+<html lang="tl"><head><meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root{--navy:#0E2C5E;--navy2:#0A1F45;--ocean:#1C63AD;--sky:#5AA6E6;--gold:#F5B301;
+--head:'Anton','Arial Narrow',Impact,sans-serif;--body:'Inter','Helvetica Neue',Arial,sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box}html,body{background:#333}
+#canvas{width:1080px;height:1350px;position:relative;overflow:hidden;font-family:var(--body);background:linear-gradient(168deg,#1C63AD 0%,#14498a 55%,#0E2C5E 100%);-webkit-font-smoothing:antialiased}
+.logo-chip{position:absolute;top:34px;left:34px;z-index:5;background:#fff;border-radius:12px;padding:5px 9px;box-shadow:0 4px 14px rgba(0,0,0,.3)}
+.logo-chip img{height:54px;display:block}
+.legit{position:absolute;top:40px;right:34px;z-index:5;display:flex;align-items:center;gap:10px}
+.legit .t{text-align:right;line-height:1.1}.legit .c{font-weight:900;font-size:14px;color:#fff;text-transform:uppercase}
+.legit .s{font-size:11px;font-weight:700;color:#BFE0FF;text-transform:uppercase;margin-top:2px}
+.legit img{height:46px;filter:drop-shadow(0 1px 3px rgba(0,0,0,.4))}
+.branch{position:absolute;top:158px;left:0;right:0;z-index:5;text-align:center;font-size:16px;font-weight:800;letter-spacing:5px;text-transform:uppercase;color:var(--gold)}
+h1{position:absolute;top:198px;left:70px;right:70px;z-index:5;font-family:var(--head);font-weight:400;font-size:78px;line-height:1.0;color:#fff;text-transform:uppercase;text-align:center;letter-spacing:.5px}
+h1 .g{color:var(--gold)}
+.list{position:absolute;top:426px;left:80px;right:80px;z-index:5}
+.row{display:flex;align-items:flex-start;gap:26px;padding:30px 0;border-bottom:1px solid rgba(255,255,255,.18)}
+.row:last-child{border-bottom:none}
+.n{flex:0 0 auto;width:64px;height:64px;border-radius:50%;background:var(--gold);color:var(--navy2);display:flex;align-items:center;justify-content:center;font-family:var(--head);font-size:36px}
+.tx{font-size:31px;font-weight:800;color:#fff;line-height:1.2;padding-top:6px}
+.tx small{display:block;font-size:20px;font-weight:600;color:#CFE4FA;margin-top:7px;line-height:1.35}
+.foot{position:absolute;left:80px;right:80px;bottom:238px;z-index:5;text-align:center;font-size:24px;font-weight:700;color:#fff}
+.foot b{color:var(--gold)}
+.contact{position:absolute;bottom:0;left:0;width:100%;z-index:6;padding:26px 44px 30px;text-align:center;background:var(--navy2)}
+.cta{font-family:var(--head);font-size:40px;color:#fff;text-transform:uppercase;letter-spacing:1px}
+.cta em{color:var(--gold);font-style:normal}
+.nums{margin-top:14px;display:flex;justify-content:center;gap:44px}
+.num{display:flex;align-items:center;gap:11px}.num .ph{width:38px;height:38px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center}
+.num .ph svg{width:21px;height:21px;fill:var(--navy2)}.num .txt{text-align:left}
+.num .lbl{font-size:13px;font-weight:800;color:var(--sky);letter-spacing:1.5px;text-transform:uppercase}
+.num .no{font-size:27px;font-weight:900;color:#fff}
+</style></head><body>
+<div id="canvas">
+  <div class="logo-chip"><img src="../assets/logo.jpg" alt="Oceanides"/></div>
+  <div class="legit"><div class="t"><div class="c">SEC-Registered</div><div class="s">DENR &middot; BIR</div></div><img src="../assets/badge-bir.png" alt="BIR"/></div>
+  <div class="branch">Oceanides &middot; {{CITY}} Branch</div>
+  <h1>{{HEADLINE}}</h1>
+  <div class="list">{{ITEMS}}</div>
+  <div class="foot">{{FOOT}}</div>
+  <div class="contact">
+    <div class="cta">Call Now &mdash; <em>libreng inspection</em></div>
+    <div class="nums">
+      <div class="num"><div class="ph"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.24.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.18z"/></svg></div><div class="txt"><div class="lbl">Globe</div><div class="no">0917-671-6383</div></div></div>
+      <div class="num"><div class="ph"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.24.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.18z"/></svg></div><div class="txt"><div class="lbl">Smart</div><div class="no">0939-245-6217</div></div></div>
+    </div>
+  </div>
+</div></body></html>

@@ -1,0 +1,44 @@
+<!doctype html>
+<!-- TB2 #9 — Kylie-style staff quote (S29 signature endorsement, S18 premium light). Tokens: {{CITY}} {{QUOTE}} {{NAME}} {{ROLE}} {{PORTRAIT}} -->
+<html lang="tl"><head><meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@400;600;700;800;900&family=Caveat:wght@600&family=Anton&display=swap" rel="stylesheet"/>
+<style>
+:root{--navy:#0E2C5E;--navy2:#0A1F45;--sky:#5AA6E6;--gold:#F5B301;--golddk:#B8860B;--paper:#F4F1EA;
+--serif:'Playfair Display',Georgia,serif;--body:'Inter','Helvetica Neue',Arial,sans-serif;--sig:'Caveat',cursive;--head:'Anton',sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box}html,body{background:#333}
+#canvas{width:1080px;height:1350px;position:relative;overflow:hidden;font-family:var(--body);background:var(--paper);-webkit-font-smoothing:antialiased}
+.logo-chip{position:absolute;top:34px;left:34px;z-index:5;background:#fff;border:1px solid rgba(14,44,94,.12);border-radius:12px;padding:5px 9px;box-shadow:0 4px 14px rgba(14,44,94,.08)}
+.logo-chip img{height:54px;display:block}
+.branch{position:absolute;top:44px;right:34px;z-index:5;background:var(--navy);color:#fff;font-weight:900;font-size:16px;letter-spacing:2.5px;text-transform:uppercase;padding:9px 18px;border-radius:999px}
+.qmark{position:absolute;top:150px;left:64px;z-index:4;font-family:var(--serif);font-size:220px;line-height:1;color:var(--gold);opacity:.9}
+.quote{position:absolute;top:320px;left:70px;width:500px;z-index:5;font-family:var(--serif);font-weight:500;font-size:44px;line-height:1.32;color:var(--navy)}
+.sig{position:absolute;top:868px;left:70px;z-index:5;font-family:var(--sig);font-weight:600;font-size:64px;color:var(--navy);transform:rotate(-2deg)}
+.role{position:absolute;top:948px;left:70px;width:500px;z-index:5;font-size:15px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--golddk)}
+.portrait{position:absolute;top:196px;right:64px;width:400px;height:560px;z-index:4;border-radius:26px;overflow:hidden;border:3px solid rgba(245,179,1,.9);box-shadow:0 28px 64px rgba(14,44,94,.22)}
+.portrait img{width:100%;height:100%;object-fit:cover;object-position:center 20%;filter:grayscale(1) contrast(1.08) brightness(.99)}
+.portrait .tint{position:absolute;inset:0;background:rgba(14,44,94,.16);mix-blend-mode:multiply}
+.portrait .grain{position:absolute;inset:0;opacity:.55;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix type='saturate' values='0'/></filter><rect width='140' height='140' filter='url(%23n)' opacity='0.5'/></svg>")}
+.ptag{position:absolute;top:772px;right:64px;width:400px;z-index:5;text-align:center;font-size:14px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--navy);opacity:.75}
+.free{position:absolute;left:70px;right:70px;bottom:236px;z-index:5;font-size:23px;font-weight:700;color:var(--navy)}
+.free b{color:var(--golddk)}
+.contact{position:absolute;bottom:0;left:0;width:100%;z-index:6;padding:26px 44px 30px;text-align:center;background:var(--navy2)}
+.cta{font-family:var(--head);font-size:38px;color:var(--gold);text-transform:uppercase;letter-spacing:1.5px}
+.numsline{margin-top:12px;font-size:26px;font-weight:800;color:#fff;letter-spacing:.5px}
+.numsline span{color:var(--sky);font-size:16px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}
+</style></head><body>
+<div id="canvas">
+  <div class="logo-chip"><img src="../assets/logo.jpg" alt="Oceanides"/></div>
+  <div class="branch">{{CITY}}</div>
+  <div class="qmark">&ldquo;</div>
+  <div class="quote">{{QUOTE}}</div>
+  <div class="sig">&mdash; {{NAME}}</div>
+  <div class="role">{{ROLE}} &middot; Team Oceanides {{CITY}}</div>
+  <div class="portrait"><img src="../assets/{{PORTRAIT}}" alt=""/><div class="tint"></div><div class="grain"></div></div>
+  <div class="ptag">{{NAME}} &middot; Oceanides Crew</div>
+  <div class="free"><b>Libreng inspection</b> sa buong {{CITY}} &mdash; tawag lang.</div>
+  <div class="contact">
+    <div class="cta">Call Now</div>
+    <div class="numsline"><span>Globe</span> 0917-671-6383 &nbsp;&nbsp;&middot;&nbsp;&nbsp; <span>Smart</span> 0939-245-6217</div>
+  </div>
+</div></body></html>

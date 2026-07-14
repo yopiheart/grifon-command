@@ -22,7 +22,7 @@
 // Idempotent: safe to re-run; overwrites existing PNGs and cleans up gen files.
 import {
   readFileSync, writeFileSync, mkdirSync, existsSync, statSync,
-  readdirSync, unlinkSync, openSync, readSync, closeSync,
+  readdirSync, unlinkSync, rmSync, openSync, readSync, closeSync,
 } from 'node:fs';
 import { spawn } from 'node:child_process';
 import path from 'node:path';
@@ -66,8 +66,9 @@ if (!Number.isFinite(DAY_NUMBER)) {
 // day's styles differ from the previous day's on every page.
 const EPOCH_ANCHOR = 20648;
 const DELTA = DAY_NUMBER - EPOCH_ANCHOR;
-const PAIR_OFFSET = ((DELTA % 4) + 4) % 4;
-const VARIANT_IDX = ((Math.floor(DELTA / 4) % 3) + 3) % 3;
+const PAIRS_N = 5; // must equal STYLE_PAIRS.length below
+const PAIR_OFFSET = ((DELTA % PAIRS_N) + PAIRS_N) % PAIRS_N;
+const VARIANT_IDX = ((Math.floor(DELTA / PAIRS_N) % 3) + 3) % 3;
 
 const OUT_DIR = path.join('out', `daily-${DATE}`);
 
@@ -97,10 +98,27 @@ const STYLE_PAIRS = [
   ['formatenemy', 'premium'],
   ['minimal', 'ugc'],
   ['checklist', 'crew'],
+  ['kyliequote', 'senyales'],
 ];
 
 function stylesFor(i) {
-  return STYLE_PAIRS[(i + PAIR_OFFSET) % 4];
+  return STYLE_PAIRS[(i + PAIR_OFFSET) % STYLE_PAIRS.length];
+}
+
+// FB caption footer appended to every variant CAPTION (authority + CTA + SEO tags).
+function captionFooter(city) {
+  const cityTag = city.name.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^A-Za-z0-9]/g, '');
+  return [
+    '✅ SEC-Registered · DENR · BIR',
+    `✅ 24/7 · 30–60 min response sa ${city.name}`,
+    '✅ Walang hidden charges — presyo bago umandar',
+    '',
+    '📞 LIBRENG INSPECTION — CALL NOW:',
+    'Globe 0917-671-6383 · Smart 0939-245-6217',
+    `Oceanides · ${city.name} Branch`,
+    '',
+    `#PosoNegro #Malabanan #MalabananServices #SipsipPosoNegro #SepticTank #SepticTankCleaning #Barado #TanggalBara #Declogging #Plumbing #${cityTag} #Oceanides`,
+  ].join('\n');
 }
 
 // Variant copy pools per style (arrays of 3) + _plates map. Keys are token names.
@@ -205,6 +223,9 @@ function runRender(htmlPath, outPath) {
 
 async function main() {
   const outAbs = path.join(__dirname, OUT_DIR);
+  // Full wipe of the date's output first: rotation/copy changes rename files, and
+  // stale strays would fail the recursive count. Idempotent — everything regenerates.
+  rmSync(outAbs, { recursive: true, force: true });
   mkdirSync(outAbs, { recursive: true });
 
   console.log(`Oceanides daily batch — ${DATE}`);
@@ -282,11 +303,23 @@ async function main() {
     }
 
     writeFileSync(path.join(__dirname, job.genRel), html, 'utf8');
+
+    // Compose the FB caption (.txt beside the .png): variant CAPTION + footer.
+    let cap = variant.CAPTION || '';
+    cap = replaceAll(cap, '{{CITY}}', city.name);
+    cap = replaceAll(cap, '{{SHORT}}', city.short);
+    if (/\{\{[^}]*\}\}/.test(cap)) {
+      throw new Error(`Residual token in CAPTION for ${city.slug}--${style} (v${VARIANT_IDX}).`);
+    }
+    job.caption = `${cap.trim()}\n\n${captionFooter(city)}\n`;
   }
 
-  // 2) Render each (up to 3 concurrent). Ensure each branch folder exists first.
+  // 2) Render each (up to 3 concurrent). Ensure each branch folder exists first,
+  //    and drop the caption .txt beside where the PNG will land.
   for (const job of jobs) {
     mkdirSync(path.join(__dirname, path.dirname(job.outRel)), { recursive: true });
+    job.capRel = job.outRel.replace(/\.png$/i, '.txt');
+    writeFileSync(path.join(__dirname, job.capRel), job.caption, 'utf8');
   }
 
   const CONCURRENCY = 3;
@@ -330,6 +363,15 @@ async function main() {
   if (foundPngs.length !== jobs.length) {
     failed = true;
     console.error(`Expected ${jobs.length} PNGs recursively under ${OUT_DIR}, found ${foundPngs.length}.`);
+  }
+
+  // Captions: every PNG must have a non-empty .txt beside it.
+  for (const job of jobs) {
+    const capAbs = path.join(__dirname, job.capRel);
+    if (!existsSync(capAbs) || statSync(capAbs).size < 100) {
+      failed = true;
+      console.error(`Caption missing/too small: ${job.capRel}`);
+    }
   }
   // No flat top-level PNGs may remain.
   const strayFlat = readdirSync(outAbs).filter(
@@ -389,7 +431,8 @@ function writeGallery(jobs) {
     const cards = cityJobs.map((job) => {
       const src = job.outRel.replace(/\\/g, '/');
       const caption = `${job.prefix.replace('-', ' · ')} · ${job.style}`;
-      return `    <div class="card"><img src="${src}"/><div class="meta"><div class="s">${caption}</div></div></div>`;
+      const capText = (job.caption || '').replace(/&/g, '&amp;').replace(/</g, '&lt;');
+      return `    <div class="card"><img src="${src}"/><div class="meta"><div class="s">${caption}</div><details><summary>caption</summary><pre>${capText}</pre></details></div></div>`;
     }).join('\n');
     return `  <h2>OCEANIDES ${city.name} BRANCH</h2>\n  <div class="grid">\n${cards}\n  </div>`;
   }).join('\n');
@@ -412,6 +455,9 @@ h2{font-size:19px;margin:28px 0 14px;color:#F5B301;text-transform:uppercase;lett
 .card img{width:100%;display:block}
 .meta{padding:10px 14px 14px}
 .meta .s{color:#9aa0a6;font-size:13px;text-transform:capitalize}
+.meta details{margin-top:8px}
+.meta summary{color:#F5B301;font-size:12px;cursor:pointer;text-transform:uppercase;letter-spacing:1px}
+.meta pre{white-space:pre-wrap;color:#c6cbd2;font-size:12px;font-family:inherit;margin-top:8px;line-height:1.5}
 </style></head><body>
 <h1>Oceanides &mdash; Daily Posts ${DATE} (15 branches &times; 2)</h1>
 <div class="subtitle">pair offset (d&minus;ANCHOR)%4 = ${PAIR_OFFSET} &middot; variant = v${VARIANT_IDX} &middot; plates: ${platesNote}</div>

@@ -19,17 +19,25 @@ cloud — survives the cafe-PC defreezer, no local re-arm needed).
 Driven by `clients/oceanides/build-tb2-cities.mjs` + `tb2-variants.json`, deterministic by date
 (anchored to 2026-07-14 = day 20648):
 
-- **8 styles** in 4 pairs: (news-graphic + niche-callout), (format-enemy + premium),
-  (minimal + UGC), (checklist + crew). First of the pair = **1-MORNING** post, second = **2-AFTERNOON**.
-- **Pair rotation:** city *i* gets pair `(i + (d−anchor) % 4) % 4` — adjacent days always differ per page
-- **Copy rotation:** 3 variants per style, `variant = floor((d−anchor)/4) % 3`
+- **10 styles** in 5 pairs: (news-graphic + niche-callout), (format-enemy + premium),
+  (minimal + UGC), (checklist + crew), (kylie-quote + senyales). First of the pair = **1-MORNING**
+  post, second = **2-AFTERNOON**.
+- **Pair rotation:** city *i* gets pair `(i + (d−anchor) % 5) % 5` — adjacent days always differ per page
+- **Copy rotation:** 3 variants per style, `variant = floor((d−anchor)/5) % 3`
 - **Plate rotation** (`_plates` in the JSON): news-graphic cycles 3 hero photos (tank/banyo/manhole),
   premium cycles 3 truck shots (studio / barangay-street / night-service-in-action)
-- **Net effect: an exact creative repeats on a given page only every 12 days**
+- **Kylie-quote crew roster** (S29): variant = crew member — v0 Rodel (Siphoning Expert),
+  v1 Junel (Manual Cleaning), v2 Kambal (Driver/Response). Quotes are work-standard statements
+  in the employee's voice (with the client's consent), never customer testimonials.
+- **Net effect: an exact creative repeats on a given page only every 15 days**
 - All city names/labels localized per branch; contact numbers + logo + CALL NOW + libreng inspection baked into every image (theft-proofing)
 
 **Output structure (posting-VA-ready):** `out/daily-<date>/OCEANIDES-<CITY>-BRANCH/1-MORNING--<style>.png`
 + `2-AFTERNOON--<style>.png` — share the branch folder; the filename says what to post and when.
+**Captions:** every PNG has a matching `.txt` beside it — variant hook/body + standard footer
+(authority ✅ block, CALL NOW + numbers, SEO hashtags incl. #Malabanan + city tag). VA copies
+the whole file as the FB caption. Caption hooks live in `tb2-variants.json` (`CAPTION` key);
+the footer + hashtags are in `captionFooter()` in the build script.
 
 **Believability notes (2026-07-14):** crew photos are mixed-quality/upscaled → the crew style
 neutralizes it with a uniform B&W grade + navy tint + film grain (never use them as glossy
