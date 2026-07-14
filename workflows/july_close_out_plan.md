@@ -166,11 +166,66 @@ preview (FFmpeg-side lang, ₱0 extra Gemini) → same batch closes the SFX comb
 (sfx_upgrade_plan.md on main). Watch for S1 tail-fill 3rd corroboration → fix ladder
 (per-scene VO-end trim muna, TUNED last, grill-me gated) habang Fable pa.
 
-## Paste-ready kickoff (next session)
+## RESUME STATE — 2026-07-14 session close (Day 2: 2 P0 bugs caught, batch paused on 1 GO)
 
-> Read CLAUDE.md + workflows/july_close_out_plan.md (RESUME STATE 2026-07-13). Launch
-> week Day 2: I'll drive Phase 3 runs 2–8 (try_on first, presenter = after.png manual,
-> literal ₱499/50% off/sale sa scripts ng 2–3 runs). You: gemini-eval fresh-context critic
-> per render, watch for the S1 tail-fill 3rd corroboration, then sample cards (ffmpeg
-> re-arm command sa session_reminders) + SAMPLES manifest + build/tests. Ear-gate = re-cut
-> winners on impact/hype sa Vercel preview with SFX_V2_ENABLED=true.
+**Shipped on this branch (all pushed):**
+- **P0 #17 FIXED (`aa7a24c`):** manual Presenter/hero uploads read files RAW →
+  multi-MB base64 in the CREATE checkpoint → 413 vs api/producer/run's 2mb cap →
+  run row never created → FILM died `run_not_found`. Fix: `compressImageForUpload`
+  sa both call sites + `slimCheckpointInput` transport guard (sibling ng
+  `slimCheckpointArtifacts`) + unit test. 701 tests green, bundle-leak 0.
+  Real-user P0 — any custom-presenter phone photo would've hit this.
+- **Findings #17 + #18 logged** sa `sample_batch_test_spec.md` (`b19a135`).
+- **Day-2 branch preview (may 413 fix): `grifon-command-m1m8opu16-…vercel.app`.**
+  Old two-preview map URLs superseded: batch = m1m8opu16 (o kung ano ang pinakabagong
+  branch deploy — kunin via GitHub deployments API, walang gh CLI), ear-gate = main's
+  ac7l0k32z pa rin.
+
+**⛔ THE BLOCKER — P0 #18, R2 CORS (kailangan ng Neil GO, wala nang ibang nakaharang):**
+`grifon-media` R2 bucket has NO CORS policy → EDL stage's browser fetch ng audio
+overlays (geminiService ~L1440, presigned R2 URLs post-migration) ay namamatay →
+**LAHAT ng producer runs mamamatay sa "CUTTING THE EDIT", pati sa PROD pag-launch.**
+Fix = one-time bucket CORS, GET/HEAD only (signed URLs stay the auth; uploads are
+server-side kaya walang PUT). Options presented, Neil left before deciding:
+**A (reco)** `AllowedOrigins:*` via S3 API gamit ang R2 keys sa .env (agent runs it,
+needs explicit GO — permission gate blocked the unprompted attempt, correctly) ·
+**B** `https://*.vercel.app` + prod domain · **C** Neil manually: Cloudflare dash →
+R2 → grifon-media → Settings → CORS → paste
+`[{"AllowedOrigins":["*"],"AllowedMethods":["GET","HEAD"],"AllowedHeaders":["*"],"ExposeHeaders":["Content-Length","Content-Type","ETag"],"MaxAgeSeconds":3600}]`.
+**Pag set na: Neil presses RETRY sa m1m8opu16 tab — try_on run 2's film spend is
+BANKED server-side, resumes at EDL, walang re-film.** (Kung nawala ang tab/origin
+state: bagong run na lang, mura na ulit dahil cached research + the fix.)
+
+**try_on run 2 storyboard verdict bago namatay:** pasado structurally (application
+reveal, onbody anchor honored, identity lock ×4, S1 hallucination fixed by one
+per-scene REGENERATE). **Instant-claim ladder TRIGGERED — corroboration #3** ("Literal
+na instant glow ang binigay") → claims-guardrail strengthening dapat dumaan sa
+**grill-me (TUNED route)**, Fable window hanggang Jul 20. Offer/₱499 absent sa script
+ulit (2nd corroboration) — kaya ang literal-price ear-gate runs ay nakasalalay sa
+UGC+HYPE / Product UGC runs o sa pure_hype (deal-text-by-design).
+
+**Ear-gate correction sa Day-2 plan:** producer resume ay localStorage-bound (walang
+cross-origin/runId resume) → branch-preview runs HINDI mare-re-cut sa main preview.
+Ear-gate = 1 dedicated run SA main preview mismo (`ac7l0k32z`): **walang recipe
+gallery doon (branch-only ang recipes.ts)** — gamitin ang old picker: Format=UGC +
+Strategy=HYPE (≈hype_drop) o Product UGC (≈rapid_fire). **Presenter=AUTO LANG** (ang
+413 fix ay wala sa main). Captions-gate bago mag-FILM: dapat may literal ₱499/50%
+off/sale, else regenerate. Pagkatapos: First Cut → IMPACT re-cut → HYPE re-cut
+(₱0 FFmpeg) habang tine-tail ng agent ang `[renderFfmpeg:diegetic]` (Vercel MCP
+re-authed na sa tamang scope 2026-07-14 — claude.ai-side, survives defreezer).
+
+**Session infra notes:** Vercel MCP scope fixed (list/logs verified working). Branch
+preview URLs kinukuha via GitHub deployments API gamit ang git credential-manager
+token (pattern: deployments?sha=<head> → statuses → environment_url). ffmpeg
+re-armed portable this session (wiped na naman bukas — re-arm ulit). Main's
+lockfile-drift stash (`stash@{0}` on main) = disposable noise.
+
+## Paste-ready kickoff (Day 3)
+
+> Read CLAUDE.md + workflows/july_close_out_plan.md (RESUME STATE 2026-07-14). Una:
+> R2 CORS GO — pinili ko ang Option ___ (A/B/C). Pag set at verified, ita-Retry/
+> re-run ko ang try_on sa latest branch preview; ikaw: gemini-eval critic per render,
+> sample cards pipeline, at i-queue ang grill-me para sa instant-claim TUNED fix
+> (ladder triggered, corrob #3). Tapos ear-gate run sa main preview (UGC+HYPE, AUTO
+> presenter, captions-gate) — tail mo ang diegetic logs sa re-cuts. Runs 3–8 sunod
+> per the matrix.
