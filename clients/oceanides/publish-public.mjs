@@ -17,7 +17,13 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const REPO_URL = 'https://github.com/yopiheart/oceanides-posts.git';
+// Auth: in CI, MIRROR_TOKEN (a fine-grained PAT w/ Contents:write on oceanides-posts)
+// is embedded in the remote URL. On the cafe PC no token is set → plain URL + the git
+// credential helper. GitHub Actions masks the secret in logs.
+const MIRROR_TOKEN = process.env.MIRROR_TOKEN || '';
+const REPO_URL = MIRROR_TOKEN
+  ? `https://x-access-token:${MIRROR_TOKEN}@github.com/yopiheart/oceanides-posts.git`
+  : 'https://github.com/yopiheart/oceanides-posts.git';
 const MIRROR = path.resolve(__dirname, '..', '..', '..', 'oceanides-posts-mirror');
 
 function todayManila() {

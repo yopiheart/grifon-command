@@ -108,24 +108,24 @@ SOP: [nightly_regression.md](nightly_regression.md); spec:
   `ANTHROPIC_API_KEY` + a security review) → Bake-and-Leap inverse verdict (still
   parked). Manual harness anytime: `RUN_REGRESSION=1 npx vitest run tests/regression/...`.
 
-## Tier 3b — Oceanides daily-content loop · ✅ live, automatic (cloud routine)
+## Tier 3b — Oceanides daily-content loop · ✅ live, automatic (GitHub Action, full-auto)
 
-Armed 2026-07-14. A claude.ai cloud Routine (`oceanides-daily-posts`,
-trig_01GtbZRGJMmfwmTmrY7vqB98, Sonnet 5) renders the 30-image Oceanides daily
-batch at 06:00 PHT (`cron 0 22 * * *` UTC) and opens a PR for Neil to review on
-mobile. Cloud-side, so it survives the defreezer. Full SOP:
+Armed 2026-07-14 as a cloud routine; **converted to a full-auto GitHub Action same day**
+(Neil chose no-review — deterministic pre-approved content). `.github/workflows/oceanides-daily.yml`
+renders the 30-image + caption batch at 06:00 PHT (`cron 0 22 * * *` UTC) and publishes
+straight to the public mirror (`yopiheart/oceanides-posts` →
+https://yopiheart.github.io/oceanides-posts/). No PR, no merge. Full SOP:
 [oceanides_daily_posts.md](oceanides_daily_posts.md).
 
-- Arm: nothing — lives at https://claude.ai/code/routines
-- Verifier: `build-tb2-cities.mjs` self-checks (30 PNGs, 2160×2700, >100 KB,
-  zero residual `{{tokens}}`) + Neil's eyeball on the PR's Files-changed images.
-- Human-review door: PR merge — the routine never commits to `main`.
-- Idempotency: no-ops if the day's folder is on `main` or the
-  `content/daily-<date>` branch exists (manual runs and the routine can't collide).
-- Kill switch: disable/delete at https://claude.ai/code/routines
-- Copy guardrail: variants live ONLY in `clients/oceanides/tb2-variants.json`,
-  native-ear Taglish check required (agent_lessons.md 2026-07-14); the routine
-  is forbidden from editing templates/variants/scripts.
+- Arm: nothing — scheduled workflow on `main`; manual re-run via Actions → Run workflow (`date` input).
+- Verifier: `build-tb2-cities.mjs` self-checks (30 PNGs, 2160×2700, >100 KB, 30 captions,
+  zero residual `{{tokens}}`) — the job FAILS rather than publishing a bad batch. No human gate.
+- Auth: `MIRROR_TOKEN` repo secret (fine-grained PAT, Contents:write on the public mirror only).
+- Kill switch: disable the workflow in the repo Actions tab.
+- Copy guardrail: variants live ONLY in `clients/oceanides/tb2-variants.json`, native-ear
+  Taglish check required (agent_lessons.md 2026-07-14). To change what posts, edit the pools —
+  the rolling 15-day cycle means edits reach every page within the cycle.
+- Superseded: cloud routine `oceanides-daily-posts` (trig_01GtbZRGJMmfwmTmrY7vqB98) — DISABLED.
 
 ## Tier 4 — Meta loop (self-improvement) · ✅ live, by habit
 

@@ -3,16 +3,32 @@
 **Status:** LIVE since 2026-07-15 (routine `oceanides-daily-posts`, trig_01GtbZRGJMmfwmTmrY7vqB98)
 **Owner:** Neil (merge gate) · agent (copy variants, QA) · cloud routine (render + PR)
 
-## What it is
+## What it is (FULL AUTO — no review, Neil approved 2026-07-14)
 
-Every day at **6:00 AM Asia/Manila** a cloud routine renders **30 Facebook post images**
-(15 city branch pages × 2 posts) for Oceanides and opens a **PR** titled
-`Oceanides daily posts <date> (30 images)`. Neil reviews the images in the PR's
-**Files changed** tab (GitHub mobile renders them) and merges. Merged images live at
-`clients/oceanides/out/daily-<date>/` + a per-day review board `gallery-daily-<date>.html`.
+Every day at **6:00 AM Asia/Manila** a **GitHub Action**
+([.github/workflows/oceanides-daily.yml](../.github/workflows/oceanides-daily.yml)) renders
+**30 Facebook post images** (15 city branch pages × 2 posts) + captions and publishes them
+**straight to the public mirror** — no PR, no merge. Neil does nothing.
 
-Manage/disable the routine: https://claude.ai/code/routines (it runs in Anthropic's
-cloud — survives the cafe-PC defreezer, no local re-arm needed).
+- **Poster/VA link:** https://yopiheart.github.io/oceanides-posts/ (pick the date → per-branch,
+  download button + copyable caption per post; no account needed).
+- **Why no review gate:** content is deterministic — pre-approved templates + fixed variant
+  pools rotating by date, nothing net-new generated per day — and the render self-verifies
+  (30 PNGs, 2160×2700, >100 KB, zero residual tokens, 30 captions), failing the job rather than
+  publishing garbage.
+- **Source vs output split:** this private repo holds the source of truth (templates, script,
+  `tb2-variants.json`, assets). Only rendered **images + captions** reach the public mirror
+  ([publish-public.mjs](../clients/oceanides/publish-public.mjs) copies images/captions ONLY).
+- **Auth:** the Action pushes to the mirror with the `MIRROR_TOKEN` repo secret (fine-grained
+  PAT, Contents:write on `oceanides-posts` only). GitHub masks it in logs.
+- **Manual controls:** re-run any date via the Action's **Run workflow** button (`date` input),
+  or locally `node build-tb2-cities.mjs --date <d> && node publish-public.mjs --date <d>`.
+  Kill switch: disable the workflow in the repo's Actions tab.
+
+**Superseded:** the old cloud routine (`oceanides-daily-posts`, opened PRs for review) is
+disabled at https://claude.ai/code/routines — the Action replaces it. New days no longer commit
+images into this private repo (the mirror is the archive); `daily-2026-07-14/-15` remain as
+historical committed batches.
 
 ## The anti-spam rotation (Andromeda-aligned creative diversification)
 
