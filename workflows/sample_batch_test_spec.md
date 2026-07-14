@@ -239,6 +239,26 @@ wrong) · TTS whisper register (run 8) · real `ugcpro.mp3` bed.
     try_on run does NOT count toward the literal-price SFX ear-gate runs; try_on-on-skincare
     itself rendered correctly as an application reveal (onbody anchor honored, no
     hallucinated apparel, identity lock held across 4 scenes).
+18. **P0 — R2 CORS blocks the EDL stage on ALL producer runs post-R2-migration
+    (2026-07-14, try_on run 2 on the fixed preview).** The 413 fix held (FILM completed,
+    scenes persisted), then "CUTTING THE EDIT" died with `edl: Failed to fetch`:
+    `generateEditDecisionList` fetches each scene's audio overlay IN THE BROWSER
+    (`services/geminiService.ts` ~L1440 — written for blob: URLs) but post-migration
+    `audioUrl` is an R2 presigned URL, and the `grifon-media` bucket has NO CORS policy →
+    browser fetch hard-fails from any vercel.app origin. Scene VIDEOS are unaffected
+    (fileData URIs, fetched server-side by Gemini). Run 1 (2026-07-12) predates the R2
+    cutover for this path — why it passed. Fix = one-time bucket CORS (GET/HEAD; presigned
+    URLs remain the auth — uploads are all server-side so no PUT needed); run is rescuable
+    via RETRY after (film spend banked). Pending Neil's GO (shared-infra change).
+    **Storyboard observations, same run:** instant-claim corroboration **#3** — S2
+    "Literal na instant glow ang binigay" (after run 1 "para kuminis agad" + run 2a "ang
+    bilis nitong mag-brighten"/"kintab agad") → **the finding #6 ladder is now TRIGGERED:
+    systematic, route claims-guardrail strengthening through grill-me (TUNED), Fable
+    window open until Jul 20.** Also: S1 first-gen hallucinated hand/product physics
+    (dropper dispensing at the face while the bottle sat in the same palm) — one
+    per-scene REGENERATE fixed it (designed path works, 2nd data point after #16);
+    offer/price absent from the script again (2nd corroboration for the
+    offer-never-surfaced observation).
 
 ## 5. Post-batch (agent work, after Neil's eyeball)
 
