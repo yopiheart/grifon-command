@@ -1,0 +1,55 @@
+<!doctype html>
+<!-- TB2 #3 — Grüns-style loud flat-graphic, format-enemy (S24 + S14). City variable: QUEZON CITY -->
+<html lang="tl"><head><meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root{--navy:#0E2C5E;--navy2:#0A1F45;--sky:#5AA6E6;--gold:#F5B301;--red:#D7263D;--green:#1B8A3C;
+--head:'Anton','Arial Narrow',Impact,sans-serif;--body:'Inter','Helvetica Neue',Arial,sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box}html,body{background:#333}
+#canvas{width:1080px;height:1350px;position:relative;overflow:hidden;font-family:var(--body);background:#FAB811;-webkit-font-smoothing:antialiased}
+.logo-chip{position:absolute;top:34px;left:34px;z-index:5;background:#fff;border-radius:12px;padding:5px 9px;box-shadow:0 5px 16px rgba(10,31,69,.25)}
+.logo-chip img{height:54px;display:block}
+.branch{position:absolute;top:44px;right:34px;z-index:5;background:var(--navy);color:#fff;font-weight:900;font-size:17px;letter-spacing:2.5px;text-transform:uppercase;padding:9px 18px;border-radius:999px}
+.doodle{position:absolute;top:180px;right:-20px;width:560px;height:560px;object-fit:contain;z-index:2;-webkit-mask-image:radial-gradient(ellipse 60% 60% at 50% 50%,#000 52%,transparent 76%);mask-image:radial-gradient(ellipse 60% 60% at 50% 50%,#000 52%,transparent 76%)}
+h1{position:absolute;top:190px;left:56px;z-index:4;font-family:var(--head);font-weight:400;font-size:150px;line-height:.94;color:var(--navy);text-transform:uppercase;letter-spacing:0}
+.sub{position:absolute;top:548px;left:58px;width:540px;z-index:4;font-size:33px;font-weight:800;color:var(--navy);line-height:1.32}
+.chips{position:absolute;left:56px;right:56px;bottom:300px;z-index:4;display:flex;gap:22px}
+.chip{flex:1;border-radius:20px;padding:26px 28px;display:flex;align-items:center;gap:18px}
+.chip .mk{font-size:46px;font-weight:900;line-height:1}
+.chip .tx{font-size:25px;font-weight:900;text-transform:uppercase;line-height:1.2;letter-spacing:.3px}
+.chip.no{background:#fff;box-shadow:0 8px 22px rgba(10,31,69,.15)}
+.chip.no .mk{color:var(--red)}.chip.no .tx{color:var(--navy)}
+.chip.no .tx small{display:block;font-size:16px;font-weight:800;color:var(--red);letter-spacing:1px;margin-top:4px}
+.chip.yes{background:var(--navy)}
+.chip.yes .mk{color:#3ED36B}.chip.yes .tx{color:#fff}
+.chip.yes .tx small{display:block;font-size:16px;font-weight:800;color:var(--gold);letter-spacing:1px;margin-top:4px}
+.contact{position:absolute;bottom:0;left:0;width:100%;z-index:6;padding:26px 44px 30px;text-align:center;background:var(--navy2)}
+.cta{font-family:var(--head);font-size:40px;color:#fff;text-transform:uppercase;letter-spacing:1px}
+.cta em{color:var(--gold);font-style:normal}
+.nums{margin-top:14px;display:flex;justify-content:center;gap:44px}
+.num{display:flex;align-items:center;gap:11px}.num .ph{width:38px;height:38px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center}
+.num .ph svg{width:21px;height:21px;fill:var(--navy2)}.num .txt{text-align:left}
+.num .lbl{font-size:13px;font-weight:800;color:var(--sky);letter-spacing:1.5px;text-transform:uppercase}
+.num .no2{font-size:27px;font-weight:900;color:#fff}
+.areas{margin-top:12px;font-size:16px;font-weight:800;color:var(--gold);letter-spacing:1px;text-transform:uppercase}
+</style></head><body>
+<div id="canvas">
+  <img class="doodle" src="../assets/tb2-doodle-bottle.png" alt=""/>
+  <div class="logo-chip"><img src="../assets/logo.jpg" alt="Oceanides"/></div>
+  <div class="branch">Quezon City</div>
+  <h1>TIGILAN NA<br/>ANG SOSA.</h1>
+  <div class="sub">Pantanggal-amoy lang 'yan &mdash; hindi solusyon. Babalik at babalik ang bara.</div>
+  <div class="chips">
+    <div class="chip no"><div class="mk">&#10007;</div><div class="tx">Sosa &amp; liquid declogger<small>Balik ang bara sa 2 linggo</small></div></div>
+    <div class="chip yes"><div class="mk">&#10003;</div><div class="tx">Todo-sipsip + high-pressure flush<small>Tanggal sa ugat ang problema</small></div></div>
+  </div>
+  <div class="contact">
+    <div class="cta">Call Now &mdash; <em>libreng inspection</em></div>
+    <div class="nums">
+      <div class="num"><div class="ph"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.24.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.18z"/></svg></div><div class="txt"><div class="lbl">Globe</div><div class="no2">0917-671-6383</div></div></div>
+      <div class="num"><div class="ph"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.24.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.18z"/></svg></div><div class="txt"><div class="lbl">Smart</div><div class="no2">0939-245-6217</div></div></div>
+    </div>
+    <div class="areas">Oceanides &middot; Quezon City Branch</div>
+  </div>
+</div></body></html>

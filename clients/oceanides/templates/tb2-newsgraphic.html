@@ -1,0 +1,48 @@
+<!doctype html>
+<!-- TB2 #1 — chatgptricks news-graphic style. City variable: QUEZON CITY -->
+<html lang="tl"><head><meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root{--navy:#0E2C5E;--navy2:#0A1F45;--ink:#050B16;--sky:#5AA6E6;--gold:#F5B301;
+--head:'Anton','Arial Narrow',Impact,sans-serif;--body:'Inter','Helvetica Neue',Arial,sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box}html,body{background:#333}
+#canvas{width:1080px;height:1350px;position:relative;overflow:hidden;font-family:var(--body);background:var(--ink);-webkit-font-smoothing:antialiased}
+.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 38%}
+.scrim{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(5,11,22,.55) 0%,rgba(5,11,22,.05) 26%,rgba(5,11,22,.14) 46%,rgba(5,11,22,.9) 72%,var(--ink) 88%)}
+.logo-chip{position:absolute;top:34px;left:34px;z-index:5;background:#fff;border-radius:12px;padding:5px 9px;box-shadow:0 4px 14px rgba(0,0,0,.4)}
+.logo-chip img{height:54px;display:block}
+.branch{position:absolute;top:44px;right:34px;z-index:5;background:var(--gold);color:var(--ink);font-weight:900;font-size:17px;letter-spacing:2.5px;text-transform:uppercase;padding:9px 18px;border-radius:999px}
+.stack{position:absolute;left:50px;right:50px;bottom:118px;z-index:5;text-align:center}
+.divider{display:flex;align-items:center;justify-content:center;gap:18px;margin-bottom:26px}
+.divider .line{height:1px;width:150px;background:rgba(255,255,255,.35)}
+.divider .mark{width:58px;height:58px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.5)}
+.divider .mark img{width:44px;height:44px;object-fit:contain;border-radius:50%}
+h1{font-family:var(--head);font-weight:400;font-size:88px;line-height:.96;color:#fff;text-transform:uppercase;letter-spacing:1px;text-shadow:0 4px 22px rgba(0,0,0,.65)}
+h1 .g{color:var(--gold)}
+.kicker{margin-top:24px;font-size:19px;font-weight:800;letter-spacing:5px;text-transform:uppercase;color:rgba(255,255,255,.75)}
+.kicker b{color:var(--gold)}
+.contact{position:absolute;bottom:0;left:0;width:100%;z-index:6;height:92px;background:var(--navy2);display:flex;align-items:center;justify-content:center;gap:26px}
+.contact .cta{font-family:var(--head);font-size:30px;color:var(--gold);text-transform:uppercase;letter-spacing:1px}
+.contact .sep{width:1px;height:40px;background:rgba(255,255,255,.2)}
+.contact .num{font-size:23px;font-weight:900;color:#fff}
+.contact .num span{font-size:14px;font-weight:800;color:var(--sky);letter-spacing:1.5px;text-transform:uppercase;display:block}
+</style></head><body>
+<div id="canvas">
+  <img class="bg" src="../assets/tb2-hero-tank.png" alt=""/>
+  <div class="scrim"></div>
+  <div class="logo-chip"><img src="../assets/logo.jpg" alt="Oceanides"/></div>
+  <div class="branch">Quezon City</div>
+  <div class="stack">
+    <div class="divider"><div class="line"></div><div class="mark"><img src="../assets/logo.jpg" alt=""/></div><div class="line"></div></div>
+    <h1>ITO PALA ANG NANGYAYARI<br/>SA POSO NEGRO KAPAG<br/><span class="g">5+ TAON 'DI NASIPSIP</span></h1>
+    <div class="kicker"><b>Libreng inspection</b> &middot; Basahin ang caption</div>
+  </div>
+  <div class="contact">
+    <div class="cta">Call Now</div>
+    <div class="sep"></div>
+    <div class="num"><span>Globe</span>0917-671-6383</div>
+    <div class="sep"></div>
+    <div class="num"><span>Smart</span>0939-245-6217</div>
+  </div>
+</div></body></html>
