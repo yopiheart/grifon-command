@@ -1,0 +1,80 @@
+<!doctype html>
+<!-- GRIFON quote poster (n.labs photo-poster structure): lowercase sans lead-in -> giant serif quote w/ oversized quotation marks -> boxed caption -> wordmark. Dark Zam portrait as-is (no AI photo edits on real people); quote in Grifon Gold on dark instead of n.labs red-on-white. -->
+<html lang="tl">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: #333; }
+  #canvas {
+    position: relative; width: 1080px; height: 1350px; overflow: hidden;
+    background: #09090B; font-family: 'Inter', sans-serif;
+  }
+  .photo {
+    position: absolute; inset: 0;
+    background: url("../../ad-samples/zam-portrait-1.png") center 18% / cover no-repeat;
+  }
+  /* bottom scrim so the type zone reads clean over the jacket */
+  .scrim {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 62%;
+    background: linear-gradient(to bottom, rgba(9,9,11,0) 0%, rgba(9,9,11,.55) 42%, rgba(9,9,11,.92) 100%);
+  }
+  .grain {
+    position: absolute; inset: 0; z-index: 9; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.12; mix-blend-mode: screen;
+  }
+  .block { position: absolute; left: 50px; right: 50px; bottom: 200px; text-align: center; z-index: 5; }
+  .leadin {
+    font-weight: 600; font-size: 46px; color: #FFFFFF; letter-spacing: .01em;
+    text-shadow: 0 2px 18px rgba(0,0,0,.6);
+  }
+  .quote {
+    margin-top: 8px;
+    font-family: 'Instrument Serif', Georgia, serif; font-weight: 400;
+    font-size: 168px; line-height: 1.0; color: #FFCC00;
+    text-shadow: 0 0 70px rgba(255,204,0,.30), 0 4px 24px rgba(0,0,0,.55);
+    white-space: nowrap;
+  }
+  .quote .mark { color: #FFFFFF; font-size: .8em; vertical-align: .12em; }
+  .caption {
+    display: inline-block; margin-top: 34px;
+    border: 2px solid rgba(255,255,255,.9); border-radius: 10px;
+    padding: 16px 34px;
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: 37px; color: #FFFFFF; letter-spacing: .02em;
+    background: rgba(9,9,11,.35);
+  }
+  .caption b { color: #FFCC00; font-style: normal; }
+  .lockup { position: absolute; bottom: 66px; left: 0; right: 0; text-align: center; z-index: 5; }
+  .word {
+    font-weight: 900; font-size: 40px; letter-spacing: .08em;
+    text-transform: uppercase; color: #FFFFFF;
+  }
+  .word span { color: #FFCC00; }
+  .tag {
+    margin-top: 4px; font-family: 'JetBrains Mono', monospace; font-size: 13px;
+    letter-spacing: .3em; text-transform: uppercase; color: #A1A1AA;
+  }
+</style>
+</head>
+<body>
+<div id="canvas">
+  <div class="photo"></div>
+  <div class="scrim"></div>
+  <div class="block">
+    <div class="leadin">buong aura ni Zam is</div>
+    <div class="quote"><span class="mark">&ldquo;</span>Gawa muna.<span class="mark">&rdquo;</span></div>
+    <div class="caption">Ang Grifon Method: <b>10 minuto</b>, may ad ka na</div>
+  </div>
+  <div class="lockup">
+    <div class="word">Grifon <span>AI</span></div>
+    <div class="tag">the ai marketing platform</div>
+  </div>
+  <div class="grain"></div>
+</div>
+</body>
+</html>
