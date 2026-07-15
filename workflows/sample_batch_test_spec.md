@@ -311,6 +311,18 @@ wrong) · TTS whisper register (run 8) · real `ugcpro.mp3` bed.
     prod unaffected (single domain); (b) **feature ask (Neil)**: tap-to-expand/lightbox
     on scene thumbnails during assembly + at the storyboard gate — approval is currently
     asked off tiny thumbs; client-only, post-batch.
+22. **Design flaw — failed Kling submits still consume rate-limit slots (2026-07-15,
+    try_on run 3 FILM).** The 5/hr per-user pool (VIDEO_LIMIT=5, window 3600s, shared
+    across api/kling/video + omni-video) was pre-drained by the 4 KLING_NOT_CONFIGURED
+    502s from the dead run (~09:46 UTC / 5:46 PM PHT) because rateLimitCheck runs BEFORE
+    Kling auth/config — submits that never reached upstream ate 4/5 slots. Run 3's
+    submits then 429'd mid-run (2 scenes filmed, 2 FLAGGED). Recovery path: window
+    rolls → FIX SCENE per flagged scene (~6:50 PM PHT). Two punch-list candidates
+    (api/_lib TUNED — Neil-gated, grill bundle): (a) don't count (or refund) a slot when
+    the submit fails before reaching Kling; (b) the 5/hr pool predates the producer's
+    4–5-scene batch reality — one run ≈ the whole hourly budget, so any failure+retry
+    within the hour hits the wall by construction. Also: 429s never reached Kling —
+    zero wallet impact; video_ads metering unaffected (once per finishedAdId).
 
 ## 5. Post-batch (agent work, after Neil's eyeball)
 
