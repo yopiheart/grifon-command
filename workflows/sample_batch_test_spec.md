@@ -269,6 +269,16 @@ wrong) · TTS whisper register (run 8) · real `ugcpro.mp3` bed.
     per-scene REGENERATE fixed it (designed path works, 2nd data point after #16);
     offer/price absent from the script again (2nd corroboration for the
     offer-never-surfaced observation).
+19. **try_on run 2 RE-RUN storyboard (2026-07-15, post-CORS-fix, presenter=after.png
+    manual):** 5 scenes, identity lock ×5 — first run where a MANUAL presenter photo
+    survived to storyboard (the 413 fix at work); uniform after-state glow across all
+    scenes is the §2 rule working as designed, CMO-passed for tryon (reveal format, no
+    before-beat owed). **Instant-claim corroboration #4:** S3 "Vitamin C nito,
+    nagbibigay ng instant bright look" (grill-me route already triggered at #3 — this
+    strengthens the case, no new action). **Offer-absent corroboration #3:** ₱499 in
+    no beat; S5 CTA surfaces "free shipping ngayon" (CTA price ban is by design, so
+    the only legal slots for ₱499 are mid-beats) → literal-price ear-gate runs must
+    come from pure_hype / UGC+HYPE, not ugc_pro. Neil verdict: FILM.
 
 ## 5. Post-batch (agent work, after Neil's eyeball)
 
