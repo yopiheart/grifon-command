@@ -322,6 +322,24 @@ async function main() {
     writeFileSync(path.join(__dirname, job.capRel), job.caption, 'utf8');
   }
 
+  // Per-branch group-share line (crew/VA real-account shares — see the Distribution
+  // doctrine in workflows/oceanides_daily_posts.md). Rotates (DELTA + i) % pool so the
+  // same line lands on at most 5 of 15 branches per day (identical text across many
+  // personal accounts is itself a spam signal).
+  if (Array.isArray(VARIANTS._groupShare) && VARIANTS._groupShare.length) {
+    const pool = VARIANTS._groupShare;
+    CITIES.forEach((city, i) => {
+      const folder = `OCEANIDES-${city.slug.toUpperCase()}-BRANCH`;
+      let share = pool[(((DELTA + i) % pool.length) + pool.length) % pool.length];
+      share = replaceAll(share, '{{CITY}}', city.name);
+      share = replaceAll(share, '{{SHORT}}', city.short);
+      if (/\{\{[^}]*\}\}/.test(share)) {
+        throw new Error(`Residual token in _groupShare line for ${city.slug}.`);
+      }
+      writeFileSync(path.join(__dirname, OUT_DIR, folder, 'SHARE-SA-GROUPS.txt'), `${share}\n`, 'utf8');
+    });
+  }
+
   const CONCURRENCY = 3;
   let done = 0;
   const queue = jobs.slice();

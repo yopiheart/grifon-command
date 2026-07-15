@@ -70,7 +70,15 @@ const sections = branches.map((b) => {
         <textarea readonly rows="8">${esc(cap)}</textarea>
       </div>`;
   }).join('\n');
-  return `  <h2>${esc(b.replace(/-/g, ' '))}</h2>\n  <div class="grid">\n${cards}\n  </div>`;
+  const shareP = path.join(destDay, b, 'SHARE-SA-GROUPS.txt');
+  const share = existsSync(shareP) ? readFileSync(shareP, 'utf8').trim() : '';
+  const shareBlock = share
+    ? `  <div class="share">
+    <div class="caplbl">PANG-SHARE SA LOCAL GROUPS — gamitin ang SARILI at TOTOONG account mo (hindi ang page caption), max 1 group post kada araw:</div>
+    <textarea readonly rows="4">${esc(share)}</textarea>
+  </div>\n`
+    : '';
+  return `  <h2>${esc(b.replace(/-/g, ' '))}</h2>\n${shareBlock}  <div class="grid">\n${cards}\n  </div>`;
 }).join('\n');
 
 const dayHtml = `<!doctype html>
@@ -88,10 +96,11 @@ h2{font-size:16px;margin:26px 0 12px;color:#F5B301;letter-spacing:1px}
 .slot{font-size:13px;font-weight:700;color:#BFD5F2;margin-bottom:8px;letter-spacing:.5px}
 .dl{display:block;text-align:center;background:#F5B301;color:#0E1522;font-weight:800;font-size:14px;border-radius:9px;padding:10px;margin:10px 0;text-decoration:none}
 .caplbl{font-size:11px;color:#9aa0a6;letter-spacing:1px;margin-bottom:6px}
+.share{background:#161d2b;border:1px solid #3a4a2a;border-radius:14px;padding:12px;margin-bottom:14px}
 textarea{width:100%;background:#0E1522;color:#cdd4dd;border:1px solid #2a3448;border-radius:9px;padding:10px;font-size:13px;line-height:1.5;font-family:inherit}
 </style></head><body>
 <h1>Oceanides — Posts para sa ${DATE}</h1>
-<div class="note">Bawat branch page: i-post ang 🌅 UMAGA image sa umaga at 🌇 HAPON image sa hapon. I-download ang image, tapos kopyahin ang buong caption sa text box.</div>
+<div class="note">Bawat branch page: i-post ang 🌅 UMAGA image sa umaga at 🌇 HAPON image sa hapon. I-download ang image, tapos kopyahin ang buong caption sa text box. Kung ishe-share sa personal account o local group: gamitin ang PANG-SHARE caption ng branch, hindi ang page caption.</div>
 ${sections}
 </body></html>
 `;

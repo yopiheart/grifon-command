@@ -72,6 +72,31 @@ is the sweet spot. Scale by adding **cities/pages** (edit the CITIES table in
 Cities (15): QC, Manila, Caloocan, Makati, Pasig, Taguig, Parañaque, Valenzuela ·
 Antipolo, Bacoor, Dasmariñas, Calamba · Malolos, San Jose del Monte, Angeles.
 
+## Distribution doctrine (multi-account) — decided 2026-07-15, Neil approved
+
+Neil asked whether to copy the **troll-farm mechanic** (many accounts all posting). Ruling —
+copy the *scale*, never the *fakeness*:
+
+- **Branded branch Pages ARE the sanctioned multi-account mechanic.** 15 openly-labeled
+  Pages × 2/day = 30 honest placements. Scale by adding cities to `CITIES`, never
+  posts-per-page (see Volume rules above).
+- **Real-account advocacy is allowed:** crew (Rodel/Junel/Kambal) and VAs may share branch
+  posts from their **own real profiles** to timelines and local buy/sell groups **where
+  group rules allow service posts** — real identity, affiliation stated ("taga-Oceanides
+  ako"), **max ~1 group share per person per day**, and never the corporate page caption
+  verbatim (identical text across many personal accounts is itself a spam signal). Use the
+  per-branch **PANG-SHARE SA GROUPS** line on the mirror — 3 Neil-approved first-person
+  variants in `tb2-variants.json` `_groupShare`, rotated `(DELTA + cityIdx) % 3` so at most
+  5 of 15 branches carry the same line per day; rendered as `SHARE-SA-GROUPS.txt` per
+  branch folder and as a share box per branch on the mirror page.
+- **NEVER — this is Coordinated Inauthentic Behavior (CIB):** fake/bought/rented profiles,
+  sockpuppet "satisfied customers," fake reviews, engagement pods, many accounts operated
+  from one device, undisclosed paid posters posing as independent locals. Meta clusters
+  accounts by device/IP/behavior and a CIB takedown removes **everything linked** — all
+  branch Pages, the Business Manager, and future ad accounts. The Philippines is a priority
+  enforcement region for exactly this. One sweep would erase the page equity this whole
+  system compounds daily.
+
 ## Manual run / fallback (kung nag-fail ang routine)
 
 ```bash

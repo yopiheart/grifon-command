@@ -5,6 +5,12 @@
     "premium": ["van-clean.png", "tb2-truck-street.png", "tb2-truck-action.png"]
   },
   "_photoSets_readme": "photo/portrait tokens indexed BY VARIANT, not by day. ugc: v0 uses the REAL job photos and is the only variant allowed to claim 'actual na trabaho'; v1/v2 use AI-recreated pairs so their copy is educational framing ONLY (never claim the photo is our job). kyliequote: variant = crew member (v0 Rodel/CREW 3, v1 Junel/CREW 2, v2 Kambal/CREW 1). TRUST LINE — do not reshuffle.",
+  "_groupShare_readme": "First-person group-share lines (Neil-approved 2026-07-15) for crew/VA REAL-account shares to local FB groups — never the corporate page caption verbatim. Rotation: city i on day DELTA gets line (DELTA + i) % 3, so max 5 of 15 branches carry the same line per day. Affiliation must stay disclosed ('taga-Oceanides ako') in every variant — CIB hard line, see workflows/oceanides_daily_posts.md Distribution doctrine.",
+  "_groupShare": [
+    "Sa mga taga-{{CITY}} — taga-Oceanides ako. Kung mabagal na ang flush o may amoy na sa banyo n'yo, libre lang magpa-inspection, walang pilitan. PM or comment lang. 🙂",
+    "Crew ako ng Oceanides dito sa {{CITY}}. Paalala lang: dapat nasisipsip ang poso negro kada 3–5 taon. Kung 'di n'yo na maalala kung kailan huli, baka lagpas na — libre ang pagpapa-check.",
+    "Taga-Oceanides po ako — kung may kakilala kayo diyan sa {{CITY}} na umaapaw na ang poso negro, i-share n'yo lang 'to. 24/7 kami at libre ang inspection, walang pilitan."
+  ],
   "_photoSets": {
     "ugc": [
       { "PHOTO_BEFORE": "before-1.jpg", "PHOTO_AFTER": "after-1.jpg" },
