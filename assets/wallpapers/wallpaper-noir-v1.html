@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Grifon Noir Wallpaper v1 — Ship One Real Thing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: #09090B; }
+  #canvas {
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 1400px 900px at 50% 40%, #131316 0%, #09090B 58%, #070708 100%);
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  /* faint gold atmosphere behind the headline */
+  .glow {
+    position: absolute;
+    left: 50%; top: 42%;
+    width: 1100px; height: 620px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(ellipse at center, rgba(255,204,0,0.055) 0%, rgba(255,204,0,0.018) 45%, transparent 70%);
+    pointer-events: none;
+  }
+  /* Kallaway film grain */
+  .grain {
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.075;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+  }
+  .stack {
+    position: relative;
+    text-align: center;
+    /* weighted slightly above center — taskbar zone stays quiet */
+    transform: translateY(-46px);
+  }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 21px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: #FFCC00;
+    opacity: 0.85;
+    margin-bottom: 42px;
+  }
+  .line-sans {
+    font-weight: 900;
+    font-size: 128px;
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    text-transform: uppercase;
+    background: linear-gradient(to bottom, #F4F4F5 0%, #71717A 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .line-serif {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 158px;
+    line-height: 1.0;
+    color: #FFCC00;
+    margin-top: 6px;
+    text-shadow: 0 0 60px rgba(255,204,0,0.22);
+  }
+  .rule {
+    width: 84px; height: 1px;
+    background: linear-gradient(to right, transparent, rgba(255,204,0,0.75), transparent);
+    margin: 58px auto 0;
+  }
+  .ritual {
+    margin-top: 34px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 19px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: #71717A;
+  }
+  .ritual b { color: #A1A1AA; font-weight: 400; }
+  .ritual .sep { color: rgba(255,204,0,0.65); padding: 0 10px; }
+  .sig {
+    position: absolute;
+    left: 50%; bottom: 88px;
+    transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    color: #52525B;
+  }
+</style>
+</head>
+<body>
+<div id="canvas">
+  <div class="glow"></div>
+  <div class="stack">
+    <div class="eyebrow">// today's step</div>
+    <div class="line-sans">Ship one</div>
+    <div class="line-serif">real thing.</div>
+    <div class="rule"></div>
+    <div class="ritual"><b>build</b><span class="sep">&#8594;</span><b>verify</b><span class="sep">&#8594;</span><b>commit</b><span class="sep">&#8594;</span><b>push</b></div>
+  </div>
+  <div class="sig">grifon command</div>
+  <div class="grain"></div>
+</div>
+</body>
+</html>

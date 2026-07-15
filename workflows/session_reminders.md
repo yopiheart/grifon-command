@@ -35,6 +35,15 @@ scripts/restore-codex.ps1
 executor lane exits 10/11/12 mid-session, the fallback SOP is: dispatch the same
 brief to the `code-executor` subagent (Opus 4.8) — see the skill's SKILL.md.
 
+## Desktop wallpaper (Grifon Noir) — wiped by defreezer
+
+The defreezer resets the Windows wallpaper every reboot. Re-arm (v1 = "Ship one real
+thing."; picker gallery at [assets/wallpapers/gallery.html](../assets/wallpapers/gallery.html)):
+
+```
+powershell -ExecutionPolicy Bypass -File scripts\set-wallpaper.ps1 -Variant v1
+```
+
 ## Tooling: Python — wiped by defreezer
 
 `tools/*.py` (omni_edit, analyze_video, …) need Python; the defreezer removes it every
