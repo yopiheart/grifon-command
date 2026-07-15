@@ -74,6 +74,10 @@ Antipolo, Bacoor, Dasmariñas, Calamba · Malolos, San Jose del Monte, Angeles.
 
 ## Distribution doctrine (multi-account) — decided 2026-07-15, Neil approved
 
+> Operational arm: [oceanides_referrer_program.md](oceanides_referrer_program.md) — the
+> find/recruit/operate SOP for real-account referrers (pay-per-completed-job, never
+> pay-per-share).
+
 Neil asked whether to copy the **troll-farm mechanic** (many accounts all posting). Ruling —
 copy the *scale*, never the *fakeness*:
 
