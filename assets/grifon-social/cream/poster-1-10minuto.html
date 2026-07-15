@@ -1,0 +1,58 @@
+<!doctype html>
+<!-- GRIFON cream editorial poster (n.labs style) — giant stacked type on proof-band cream, accent words in brand-yellow-dark (#B28F00; pure gold is ~invisible on cream per DESIGN.md) -->
+<html lang="tl">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: #333; }
+  #canvas {
+    position: relative; width: 1080px; height: 1350px; overflow: hidden;
+    background: #F2F1EA;
+    font-family: 'Inter', sans-serif;
+  }
+  /* faint paper grain (multiply so it darkens, print feel) */
+  .grain {
+    position: absolute; inset: 0; z-index: 9; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.06; mix-blend-mode: multiply;
+  }
+  .stack {
+    position: absolute; top: 150px; left: 92px; right: 60px;
+    font-weight: 900; font-size: 128px; line-height: 1.06;
+    letter-spacing: -0.015em; text-transform: uppercase;
+    color: #18181B;
+  }
+  .stack .accent { color: #B28F00; }
+  .lockup { position: absolute; bottom: 84px; left: 0; right: 0; text-align: center; }
+  .word {
+    font-weight: 900; font-size: 44px; letter-spacing: .06em;
+    text-transform: uppercase; color: #18181B;
+  }
+  .tag {
+    margin-top: 6px; font-weight: 700; font-size: 15px;
+    letter-spacing: .12em; color: #71717A;
+  }
+</style>
+</head>
+<body>
+<div id="canvas">
+  <div class="stack">
+    YUNG AD NA<br>
+    <span class="accent">3 ORAS</span> MONG<br>
+    GINAGAWA?<br>
+    KAYA NA YAN<br>
+    NG AI SA<br>
+    <span class="accent">10 MINUTO.</span>
+  </div>
+  <div class="lockup">
+    <div class="word">grifon ai</div>
+    <div class="tag">the ai marketing platform</div>
+  </div>
+  <div class="grain"></div>
+</div>
+</body>
+</html>
