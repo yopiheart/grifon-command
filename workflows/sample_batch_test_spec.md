@@ -296,6 +296,21 @@ wrong) · TTS whisper register (run 8) · real `ugcpro.mp3` bed.
     Open Qs folded in: the 3–4s FILM-IT pause = checkpoint PUT + quota consume +
     serverless cold starts before the first submit returns (no spinner in that gap —
     UX-polish candidate, not a bug).
+21. **try_on run 3 (2026-07-15, branch alias, post-Kling-fix) storyboard = PASS after
+    one fix, 4-beat exact skeleton.** CMO+CD pass: skeptic-test hook, onbody application
+    match, identity lock ×4, compliant CTA w/ free-shipping surfaced. **Instant-claim
+    corroboration #5:** S2 "ang ganda AGAD ng effect sa skin". **Hand/product-physics
+    hallucination corroboration #2 (Neil's catch, zoomed):** S2 first-gen pressed the
+    whole dropper assembly against the cheek with a detached serum drop under the eye —
+    same class as run 2's S1 (dropper dispensing at face, bottle in palm). Recovery =
+    per-scene REGENERATE (3rd clean recovery for the designed path). **Ladder: at
+    corroboration #3, physics guardrail in the storyboard imagePrompt goes to grill-me
+    (TUNED) — bundle with the instant-claim grill.** Notes: (a) research cache is localStorage
+    (origin-scoped) — every preview-URL hop re-spent one research call; STANDARDIZE ON
+    THE BRANCH-ALIAS URL (`grifon-command-git-b252dd-…vercel.app`) for all batch runs,
+    prod unaffected (single domain); (b) **feature ask (Neil)**: tap-to-expand/lightbox
+    on scene thumbnails during assembly + at the storyboard gate — approval is currently
+    asked off tiny thumbs; client-only, post-batch.
 
 ## 5. Post-batch (agent work, after Neil's eyeball)
 
