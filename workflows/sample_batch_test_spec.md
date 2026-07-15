@@ -373,6 +373,19 @@ wrong) · TTS whisper register (run 8) · real `ugcpro.mp3` bed.
     Until fixed: RAW downloads fine; preset chips dead on current branch previews —
     NOTE: if the cache-bust theory is right, PROD's next deploy (merge train) could
     hit the same wall — **preset render smoke is now a launch-gate item.**
+    **RESOLVED 2026-07-16 (~00:25 PHT):** temp probe route (api/debug/ffmpeg-probe,
+    token-guarded, DELETE before merge) proved the deployed linux binary was **ffmpeg
+    7.0.2-static johnvansickle WITHOUT drawtext** (ffmpeg 7 needs libharfbuzz for
+    drawtext; the static build omits it) while the win32 asset of the SAME
+    ffmpeg-static@5.3.0 is gyan 6.1.1 WITH drawtext — per-platform feature drift
+    inside one package version. Presets worked Jul 11/13 off an older cached binary;
+    today's lockfile-restore commit busted Vercel's build cache and pulled the broken
+    7.0.2 asset. **Fix `39c27d4`: pin ffmpeg-static@5.2.0** (linux asset = ffmpeg
+    6.0-static, drawtext present) — burn-in harness 2/2 + 705 tests green locally,
+    post-deploy probe confirms `drawtext:true` + full filter set. npm-11 lockfile
+    churn guard applied during the pin (optional @types/react entry re-restored).
+    Launch-gate item STAYS: preset-render smoke after every prod deploy (binary is
+    downloaded at build time — this class can recur on any cache bust/version bump).
 
 ## 5. Post-batch (agent work, after Neil's eyeball)
 
