@@ -404,9 +404,12 @@ export function pickSceneDuration(type: VideoPrompt['type'], model: VideoModelTy
   return valid.includes(target) ? target : valid.find((d) => d >= target) ?? valid[0];
 }
 
-/** Scene-type-aware model routing (resolution-aware talking-engine step-up). */
-function routeModel(type: VideoPrompt['type'], fallback: VideoModelType, sceneIdx?: number, resolution: '720p' | '1080p' = '720p'): VideoModelType {
-  if (sceneIdx === 0 && type === 'b-roll') return 'Kling_O1';
+/** Scene-type-aware model routing (resolution-aware talking-engine step-up).
+ * Scene-0 b-roll used to step up to Kling_O1 for a "hook morph", format-blind — with a
+ * single start frame O1 degrades to camera-motion/warp and person-held product hooks
+ * crystallize mid-shot (sample_batch_test_spec.md finding #23, Neil GO'd removal
+ * 2026-07-15). Hooks now route like any b-roll; O1 stays available to GenerateVideo. */
+export function routeModel(type: VideoPrompt['type'], fallback: VideoModelType, _sceneIdx?: number, resolution: '720p' | '1080p' = '720p'): VideoModelType {
   if (type === 'talking') return resolution === '1080p' ? 'Veo_3.1_Fast' : 'Veo_3.1_Lite';
   if (type === 'b-roll') return 'Kling_3_0';
   if (type === 'cinematic') return 'Kling_3_0';
