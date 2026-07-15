@@ -279,6 +279,23 @@ wrong) · TTS whisper register (run 8) · real `ugcpro.mp3` bed.
     no beat; S5 CTA surfaces "free shipping ngayon" (CTA price ban is by design, so
     the only legal slots for ₱499 are mid-beats) → literal-price ear-gate runs must
     come from pure_hype / UGC+HYPE, not ugc_pro. Neil verdict: FILM.
+20. **P0 — Kling keys were NEVER in Vercel env (2026-07-15, try_on run 2 FILM).**
+    4/5 scenes died 502 at submit; runtime logs: `KLING_NOT_CONFIGURED: set
+    KLING_ACCESS_KEY and KLING_SECRET_KEY`. Keys lived only in local `.env` (dev always
+    worked); `vercel env ls` showed NO Kling entries in any environment — **prod launch
+    would have shipped with every Kling-routed scene broken** (hook-scene morphs route
+    to kling-video-o1, others to kling-v3; the lone success was the Veo-routed scene,
+    4s vs Kling's 5s submits). NOT the Omni edit feature — `api/kling/omni-video` is
+    the Kling O1 *generation* model for hook scenes; the gated edit feature is
+    `api/gemini/omni-video/*`, untouched. Fix (Neil GO'd): both keys added to Vercel
+    Preview+Production as Sensitive (piped from .env), branch redeployed (`ee32914`)
+    to bake them in. **Prod note: keys land on prod's NEXT deploy — the merge train
+    covers it; verify at launch gate.** Billing check: video_ads metered once per
+    finishedAdId (limit-1 marker `vidjob:*`), so the 4 failed submits consumed ZERO
+    extra credits and never reached Kling's wallet; per-scene FIX SCENE stays free.
+    Open Qs folded in: the 3–4s FILM-IT pause = checkpoint PUT + quota consume +
+    serverless cold starts before the first submit returns (no spinner in that gap —
+    UX-polish candidate, not a bug).
 
 ## 5. Post-batch (agent work, after Neil's eyeball)
 
