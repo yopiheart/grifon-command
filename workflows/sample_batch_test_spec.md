@@ -353,11 +353,26 @@ wrong) · TTS whisper register (run 8) · real `ugcpro.mp3` bed.
     is getting mangled before spawnSync. RAW/none preset unaffected (stitchedOnly skips
     transitions). IMPACT rendered fine on Jul 13 — suspect the burn path first fires on
     multi-scene hook ads or regressed with the overlay-engine commit (`d74ee61`).
-    **Repro plan (next session):** local ffmpeg (re-arm portable) + the exact logged
-    graph; check `ffmpeg -filters | grep gblur` on ffmpeg-static's build; then fix at
-    the real layer (swap to `boxblur` if missing, or fix arg assembly). api/_lib is
-    TUNED — diff needs Neil GO. Until fixed: RAW downloads fine; avoid preset chips on
-    producer runs from this branch preview.
+    **NARROWED (same night, Neil tested ALL chips — impact/clean/punch/bars/spotlight
+    all fail, rollback banner works as designed):** every failure has the same shape —
+    **scene 0 (hook, layers=0, NO drawtext) builds fine in ~12s; scene 1 (first
+    captioned scene) dies at graph parse.** Two different truncated tails confirm two
+    different graphs failing identically (burn-head chain AND a drawtext/shadowcolor
+    chain). ffmpeg does not name the missing filter (it echoes the graph +
+    "Filter not found"), so by elimination the caption `drawtext` chain is the prime
+    suspect. Ruled out: version drift (all lockfiles pin ffmpeg-static@5.3.0,
+    integrity-locked) and the filter set per se (local 5.3.0 win32 binary = ffmpeg
+    6.1.1 gyan essentials, HAS drawtext/gblur/zoompan/amix). Remaining suspects: the
+    5.3.0 LINUX release asset lacking a filter the win asset has, or a build-cache
+    bust today (lockfile-restore commit dc05043) swapping the cached binary for a
+    fresh postinstall download. **Decisive next-session test:** run `-filters` on the
+    DEPLOYED binary (one-off probe) or diff `ffmpeg -version` banner via a temp log in
+    the render handler (api/_lib TUNED — needs Neil GO), then fix at the real layer.
+    Presets worked Jul 11/13 on older deployments of THIS branch — environment
+    regression, not graph regression (overlay engine verified byte-invariant).
+    Until fixed: RAW downloads fine; preset chips dead on current branch previews —
+    NOTE: if the cache-bust theory is right, PROD's next deploy (merge train) could
+    hit the same wall — **preset render smoke is now a launch-gate item.**
 
 ## 5. Post-batch (agent work, after Neil's eyeball)
 
