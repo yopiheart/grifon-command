@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- GRIFON quote poster (n.labs photo-poster structure): lowercase sans lead-in -> giant serif quote w/ oversized quotation marks -> boxed caption -> wordmark. Dark Zam portrait as-is (no AI photo edits on real people); quote in Grifon Gold on dark instead of n.labs red-on-white. -->
+<!-- GRIFON quote poster v2 — Kumar/n.labs structure on CREAM (Neil 2026-07-15): real-Zam plate (codex-image edit anchored to workflows/believability-samples/zam-ref-source.jpg, the believability pipeline anchor), backlit dark sweater on #F2F1EA, high-contrast type over the dark sweater zone. -->
 <html lang="tl">
 <head>
 <meta charset="utf-8">
@@ -11,60 +11,57 @@
   html, body { background: #333; }
   #canvas {
     position: relative; width: 1080px; height: 1350px; overflow: hidden;
-    background: #09090B; font-family: 'Inter', sans-serif;
+    background: #F2F1EA; font-family: 'Inter', sans-serif;
   }
   .photo {
     position: absolute; inset: 0;
-    background: url("../../ad-samples/zam-portrait-1.png") center 18% / cover no-repeat;
-  }
-  /* bottom scrim so the type zone reads clean over the jacket */
-  .scrim {
-    position: absolute; left: 0; right: 0; bottom: 0; height: 62%;
-    background: linear-gradient(to bottom, rgba(9,9,11,0) 0%, rgba(9,9,11,.55) 42%, rgba(9,9,11,.92) 100%);
+    background: url("plates/zam-fy-pose.png") center 22% / cover no-repeat;
   }
   .grain {
     position: absolute; inset: 0; z-index: 9; pointer-events: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    opacity: 0.12; mix-blend-mode: screen;
+    opacity: 0.05; mix-blend-mode: multiply;
   }
-  .block { position: absolute; left: 50px; right: 50px; bottom: 200px; text-align: center; z-index: 5; }
+  .block { position: absolute; left: 40px; right: 40px; bottom: 148px; text-align: center; z-index: 5; }
   .leadin {
-    font-weight: 600; font-size: 46px; color: #FFFFFF; letter-spacing: .01em;
-    text-shadow: 0 2px 18px rgba(0,0,0,.6);
+    font-weight: 700; font-size: 52px; color: #FFFFFF; letter-spacing: .005em;
+    text-shadow: 0 2px 8px rgba(0,0,0,.65), 0 2px 26px rgba(0,0,0,.5);
   }
   .quote {
-    margin-top: 8px;
+    margin-top: 2px;
     font-family: 'Instrument Serif', Georgia, serif; font-weight: 400;
-    font-size: 168px; line-height: 1.0; color: #FFCC00;
-    text-shadow: 0 0 70px rgba(255,204,0,.30), 0 4px 24px rgba(0,0,0,.55);
-    white-space: nowrap;
+    font-size: 190px; line-height: 1.0; color: #FFCC00;
+    text-shadow: 0 3px 10px rgba(0,0,0,.4), 0 0 60px rgba(255,204,0,.25);
+    white-space: nowrap; letter-spacing: -0.01em;
   }
-  .quote .mark { color: #FFFFFF; font-size: .8em; vertical-align: .12em; }
+  .quote .mark { color: #FFFFFF; font-size: .72em; vertical-align: .16em; }
   .caption {
-    display: inline-block; margin-top: 34px;
-    border: 2px solid rgba(255,255,255,.9); border-radius: 10px;
-    padding: 16px 34px;
+    display: inline-block; margin-top: 30px;
+    border: 2.5px solid rgba(255,255,255,.95); border-radius: 10px;
+    padding: 15px 32px;
     font-family: 'Instrument Serif', Georgia, serif;
-    font-size: 37px; color: #FFFFFF; letter-spacing: .02em;
-    background: rgba(9,9,11,.35);
+    font-size: 39px; color: #FFFFFF; letter-spacing: .02em;
+    text-shadow: 0 2px 8px rgba(0,0,0,.4);
+    background: rgba(9,9,11,.28);
   }
   .caption b { color: #FFCC00; font-style: normal; }
-  .lockup { position: absolute; bottom: 66px; left: 0; right: 0; text-align: center; z-index: 5; }
+  .lockup { position: absolute; bottom: 58px; left: 0; right: 0; text-align: center; z-index: 5; }
   .word {
-    font-weight: 900; font-size: 40px; letter-spacing: .08em;
+    font-weight: 900; font-size: 42px; letter-spacing: .08em;
     text-transform: uppercase; color: #FFFFFF;
+    text-shadow: 0 2px 10px rgba(0,0,0,.45);
   }
   .word span { color: #FFCC00; }
   .tag {
     margin-top: 4px; font-family: 'JetBrains Mono', monospace; font-size: 13px;
-    letter-spacing: .3em; text-transform: uppercase; color: #A1A1AA;
+    letter-spacing: .3em; text-transform: uppercase; color: rgba(255,255,255,.75);
+    text-shadow: 0 1px 6px rgba(0,0,0,.4);
   }
 </style>
 </head>
 <body>
 <div id="canvas">
   <div class="photo"></div>
-  <div class="scrim"></div>
   <div class="block">
     <div class="leadin">buong aura ni Zam is</div>
     <div class="quote"><span class="mark">&ldquo;</span>Gawa muna.<span class="mark">&rdquo;</span></div>
