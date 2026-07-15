@@ -220,6 +220,17 @@ token (pattern: deployments?sha=<head> → statuses → environment_url). ffmpeg
 re-armed portable this session (wiped na naman bukas — re-arm ulit). Main's
 lockfile-drift stash (`stash@{0}` on main) = disposable noise.
 
+## RESUME STATE — 2026-07-15 (Day 3, in session)
+
+**⛔→✅ P0 #18 R2 CORS RESOLVED.** Neil GO'd Option A → .env R2 token is object-scoped
+(PutBucketCors 403; needs Admin R&W token) → fell back to Option C (dash paste).
+Correction: bucket HAD a policy (grifon.ai/www/localhost, GET only) — the gap was
+preview origins + HEAD. Now `*` GET/HEAD, verified: preflight 204 + presigned GET with
+vercel Origin → 206, ACAO `*`. Nothing blocks the batch. Latest branch preview =
+`grifon-command-ijn54f9t3-…vercel.app` (supersedes m1m8opu16). Grill-me evidence pack
+for the instant-claim TUNED fix ready at `.tmp/grill-instant-claim-evidence.md`
+(regenerate from spec findings #4b.1/#17/#18 if wiped).
+
 ## Paste-ready kickoff (Day 3)
 
 > Read CLAUDE.md + workflows/july_close_out_plan.md (RESUME STATE 2026-07-14). Una:

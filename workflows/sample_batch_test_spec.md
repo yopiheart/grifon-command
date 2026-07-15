@@ -250,6 +250,16 @@ wrong) · TTS whisper register (run 8) · real `ugcpro.mp3` bed.
     cutover for this path — why it passed. Fix = one-time bucket CORS (GET/HEAD; presigned
     URLs remain the auth — uploads are all server-side so no PUT needed); run is rescuable
     via RETRY after (film spend banked). Pending Neil's GO (shared-infra change).
+    **RESOLVED 2026-07-15 (Day 3):** Neil GO'd Option A; the .env R2 token turned out
+    object-scoped (PutBucketCors → 403 AccessDenied; bucket config needs an Admin
+    Read & Write token), so applied via Option C — Neil pasted the policy in the
+    Cloudflare dash. **Diagnosis correction:** the bucket DID have a prior CORS policy
+    (`grifon.ai` + `www.grifon.ai` + `localhost:5173`, GET only) — the real gap was
+    Vercel *preview* origins (+ HEAD), i.e. prod on grifon.ai would likely have passed;
+    every preview run could not. New policy: `AllowedOrigins:*`, GET/HEAD, headers `*`,
+    max-age 3600 (signed URLs remain the auth). Verified end-to-end from the agent:
+    preflight OPTIONS → 204 + `Access-Control-Allow-Origin: *`; real presigned GET with
+    a vercel.app Origin → 206 + ACAO `*`.
     **Storyboard observations, same run:** instant-claim corroboration **#3** — S2
     "Literal na instant glow ang binigay" (after run 1 "para kuminis agad" + run 2a "ang
     bilis nitong mag-brighten"/"kintab agad") → **the finding #6 ladder is now TRIGGERED:
