@@ -444,3 +444,17 @@ wrong) · TTS whisper register (run 8) · real `ugcpro.mp3` bed.
     2026-07-16 screenshot):** command center → back into an active/done run hits
     ProducerFlow.fromRow rehydration with no branded loading state. Fix: GlassPanel
     skeleton + copy ("Binabalik ang cut mo…") on the resume path (UI, components/).
+32. **EXPERIMENT RESULTS — audio lane (2026-07-16, ~01:20):**
+    (a) **Tail item = NO BUG, dropped from the bundle.** The S4 voice mp3 (pulled from
+    R2) is 6.09s with real speech to ~4.74s — the razor trim (4.80) is near-perfect,
+    ~0.06s hold. The critic's "~3s dead air" was an anchoring artifact (pass B was
+    asked to confirm/refute pass A's timestamps — it confirmed a wrong one). Eval SOP
+    correction: corroboration passes must NOT see the first pass's timestamps.
+    (b) **Hook VO (#26) evidence upgraded to DEFINITIVE:** spectrogram of the punch
+    cut's hook = pure music texture, ZERO speech harmonics (raw = clear syllable
+    bursts). Exonerated by exact local repro on the raw cut: mixMusic duck graph
+    (t0 -14.0 preserved) AND loudnorm master (-13.9) — both innocent; ffmpeg
+    auto-splits input streams so the [0:a] double-use is legal. Remaining suspect:
+    per-scene mux for isHook+keepFullClip under a non-stitchedOnly preset. Next:
+    RUN_BURNIN-style harness repro with tone-voice on the hook, AFTER the in-flight
+    executor bundle lands (same files — avoid the race).
