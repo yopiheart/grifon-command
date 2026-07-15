@@ -323,6 +323,26 @@ wrong) · TTS whisper register (run 8) · real `ugcpro.mp3` bed.
     4–5-scene batch reality — one run ≈ the whole hourly budget, so any failure+retry
     within the hour hits the wall by construction. Also: 429s never reached Kling —
     zero wallet impact; video_ads metering unaffected (once per finishedAdId).
+23. **try_on run 3 First Cut = EVAL FAIL, no sample card (2026-07-15, fresh-context
+    2-pass critic: gemini-3.1-flash-lite + gemini-2.5-flash corroboration, 15s RAW).**
+    Dominant cause **CONFIRMS Neil's live observation**: S1 hook 0:01–0:03 is a full
+    Kling-O1 morph artifact — face/hair/bottle "melt into jagged translucent crystalline
+    form", dissolving into S2 (both passes, high confidence). Root: `routeModel()` in
+    producerOrchestrator.ts:409 routes sceneIdx===0 + b-roll to Kling_O1 FORMAT-BLIND —
+    with a single start frame O1 degrades to camera-motion/warp; person-held hook shots
+    misfire. Secondary fails: S2 application physics (finger glides, zero skin
+    displacement — onbody anchor FAIL), S4 post-VO dead air ~3s (VO ends ~0:12, clip
+    holds to 0:15) + S2 ~1s tail → **post-VO tail/dead-air ladder: 3rd corroboration —
+    original P1 fix #3 (EDL tail trim / push-in) never shipped in the 8114e63 batch;
+    now evidence-complete.** Passes: audio (clean Taglish VO, no gibberish), product
+    fidelity (label legible ×3, no hallucinated products; pass-B refuted pass-A's blur
+    claim), identity lock (pass-B: same woman ×4, refuted pass-A drift), zero burned
+    text, CTA compliant. Instant-claim verbatim: S2 "ang ganda agad ng effect sa skin"
+    (= corrob #5 confirmed on RENDER, not just storyboard). Lighting continuity noted:
+    S2 reads natural-bathroom vs studio-lit S1/S3/S4. **Fix candidates:** (A) one-line —
+    drop the scene-0 O1 special case (hooks route like any b-roll → Kling_3_0);
+    (B) plumb format into routeModel, keep O1 for hype-morph formats only. Run's value:
+    full pipeline E2E proof (Kling env + CORS + EDL) + the O1 format-fit bug nailed.
 
 ## 5. Post-batch (agent work, after Neil's eyeball)
 
