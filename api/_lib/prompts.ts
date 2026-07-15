@@ -423,6 +423,9 @@ export interface AdScriptInput {
   contrarianTruth?: string;
 }
 
+// TUNED-edit trail (2026-07-16, Neil-approved via grill-me bundle — sample_batch_test_spec.md
+// findings #4b.1–#32): APPEARANCE-CLAIM GUARDRAIL added to the tryon block (it had none) and
+// the SPEED RULE sentence appended to both existing guardrails. Beat labels unchanged.
 export const buildAdScriptPrompt = (
   input: AdScriptInput,
   temuSubType?: 'ASMR' | 'Reaction' | 'Utility',
@@ -546,6 +549,14 @@ export const buildAdScriptPrompt = (
         A CTA alone is not a verdict.
       - Do NOT reuse the hook's opening exclamation to open ANY body line. If the hook
         opens on "Grabe," / "Okay," / "Wait," then no body line may open on that word.
+
+      **APPEARANCE-CLAIM GUARDRAIL (Meta policy):** If the product is worn or applied ON A
+      PERSON — skincare, cosmetics, haircare, shapewear, jewelry against skin — frame results
+      as glow / fresh / feel / fit / confidence, NEVER medical or corrective claims. SPEED
+      RULE: never claim a result speed the brief does not state — "agad", "instant",
+      "overnight", "right away" and equivalents are BANNED unless the input explicitly makes
+      that claim. The hard cut to the worn/after state is a VISUAL convention, not a license
+      for a spoken instant-effect claim.
       ` : sub === 'unboxing' ? `
       **UNBOXING 4-BEAT (the packaging is the co-star; sound is the texture):**
       0. **Hook (<=2s, 5-8 words):** Sensory invitation, package still sealed, in frame.
@@ -657,6 +668,9 @@ export const buildAdScriptPrompt = (
       glow / fresh / feel / confidence, NEVER medical or corrective claims ("removes
       wrinkles", "cures acne", "whitens in 7 days" — all BANNED). Surfaces, spaces,
       fabrics, and objects may show dramatic before/after freely.
+      SPEED RULE: never claim a result speed the brief does not state — "agad", "instant",
+      "overnight", "right away" and equivalents are BANNED unless the input explicitly makes
+      that claim; the hard-cut reveal is a visual convention, not a spoken-claim license.
       ` : `
       **TRANSFORMATION 4-BEAT (the BEFORE is the hook — NO product in beat 0):**
       0. **Hook (<=2s, 5-8 words):** The problem state, shown and named — frustrated,
@@ -681,6 +695,9 @@ export const buildAdScriptPrompt = (
       (skin, hair, body), frame the result as glow / fresh / feel — NEVER medical or
       corrective claims ("removes wrinkles", "cures acne", "whitens in 7 days" — all
       BANNED). Surfaces, fabrics, and objects may show dramatic before/after freely.
+      SPEED RULE: never claim a result speed the brief does not state — "agad", "instant",
+      "overnight", "right away" and equivalents are BANNED unless the input explicitly makes
+      that claim; the hard-cut reveal is a visual convention, not a spoken-claim license.
       `)}
 
       **SOFT CTA GUARD (STRICT — applies to the final beat):**

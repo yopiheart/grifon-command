@@ -25,23 +25,22 @@ export interface RenderJob {
 
 /**
  * Session B auto-routing: pick the right engine for a scene's type.
- * - hook (scene 0, b-roll) → Kling O1 Omni (Session D — drama-focused morph)
- * - talking                → Veo (handles speaking avatars best, native audio path on Vertex)
- * - b-roll                 → Kling 3.0 (cleaner motion-from-still, native image_tail morph)
- * - cinematic              → Kling 3.0 (best transitions / VFX morphs)
+ * - talking   → Veo (handles speaking avatars best, native audio path on Vertex)
+ * - b-roll    → Kling 3.0 (cleaner motion-from-still, native image_tail morph) —
+ *               hooks (scene 0) route here too; with a single start frame Kling_O1
+ *               degrades to a warp pass and person-held hooks crystallize mid-shot
+ *               (producer finding #23). Kling_O1 stays a MANUAL pick in the
+ *               GenerateVideo model picker.
+ * - cinematic → Kling 3.0 (best transitions / VFX morphs)
  *
  * Per-scene override (Session C) still wins; this is the default for new jobs.
  * The `fallback` parameter preserves the user's global model picker as the
- * answer when the scene's type isn't one of the known three. `sceneIdx`
- * lets the hook scene (always scene 0 by wizard convention) route to Omni
- * while regular b-roll stays on V3.
+ * answer when the scene's type isn't one of the known three.
  */
 export const autoRouteModelForType = (
   type: VideoPrompt['type'],
-  fallback: VideoModelType,
-  sceneIdx?: number
+  fallback: VideoModelType
 ): VideoModelType => {
-  if (sceneIdx === 0 && type === 'b-roll') return 'Kling_O1';
   if (type === 'talking') return 'Veo_3.1_Lite';
   if (type === 'b-roll') return 'Kling_3_0';
   if (type === 'cinematic') return 'Kling_3_0';

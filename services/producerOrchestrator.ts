@@ -204,6 +204,9 @@ export interface ProductionRun {
   edl?: EditDecisionList;
   finalVideoUrl?: string;
   finalDownloadUrl?: string;
+  /** Signed URL of the producer's generated thumbnail (cover frame), surfaced on
+   * First Cut for download. Absent when the run produced no thumbnail artifact. */
+  thumbnailUrl?: string;
   error?: string;
   /** Monotonic checkpoint revision (optimistic-concurrency guard). Tracked in memory, sent on
    * every checkpoint, bumped on success; on a stale-write conflict the client adopts the

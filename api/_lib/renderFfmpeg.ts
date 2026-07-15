@@ -178,7 +178,17 @@ export function buildWordFilters(
   const parts: string[] = [];
 
   if (l.anim === 'karaoke' && baseTextName) {
-    parts.push(buildTextFilter({ ...l, anim: 'none', words: undefined, boxAlpha: 0 }, fontName, baseTextName, preset));
+    // Same two-source defect class as karaoke-invert (spec finding #27): the base
+    // used to be ONE kerned drawtext while highlights sit at ESTIMATED wd.xPx, so
+    // the highlight drifted off its word. Base is now per-word at the same xPx.
+    for (let j = 0; j < words.length; j++) {
+      const wd = words[j];
+      parts.push(
+        `drawtext=fontfile=${fontName}:textfile=${wordTextNames[j]}:fontsize=${l.fontsize}:` +
+        `fontcolor=${l.color}${deco ? `:${deco}` : ''}:` +
+        `x=${wd.xPx}:y=${wd.yPx ?? l.yBase}:enable='between(t,${l.startSec},${l.endSec})'`
+      );
+    }
     for (let j = 0; j < words.length; j++) {
       const wd = words[j];
       parts.push(
@@ -209,7 +219,19 @@ export function buildWordFilters(
   }
 
   if (l.anim === 'karaoke-invert' && baseTextName) {
-    parts.push(buildTextFilter({ ...l, anim: 'none', words: undefined, boxAlpha: 0 }, fontName, baseTextName, preset));
+    // Base phrase rendered PER-WORD at the SAME estimated x positions the invert
+    // box uses (single x-source). The base used to be ONE drawtext (real
+    // kerning) while the box was positioned from per-word width ESTIMATES, so the
+    // box drifted off the word and overlapped the phrase (spec finding #27).
+    // Per-word base and box now share wd.xPx and cannot disagree by construction.
+    for (let j = 0; j < words.length; j++) {
+      const wd = words[j];
+      parts.push(
+        `drawtext=fontfile=${fontName}:textfile=${wordTextNames[j]}:fontsize=${l.fontsize}:` +
+        `fontcolor=${l.color}${deco ? `:${deco}` : ''}:` +
+        `x=${wd.xPx}:y=${wd.yPx ?? l.yBase}:enable='between(t,${l.startSec},${l.endSec})'`
+      );
+    }
     for (let j = 0; j < words.length; j++) {
       const wd = words[j];
       const wordDur = Math.max(0.001, +(wd.end - wd.start).toFixed(3));
@@ -404,6 +426,26 @@ function ffmpeg(args: string[], cwd?: string): { status: number; stderr: string 
   if (!ffmpegPath) throw new RenderError('FFMPEG_NOT_AVAILABLE: ffmpeg-static path is null');
   const r = spawnSync(ffmpegPath, ['-hide_banner', ...args], { maxBuffer: 1 << 27, cwd });
   return { status: r.status ?? -1, stderr: r.stderr ? r.stderr.toString('utf8') : (r.error?.message ?? '') };
+}
+
+// One-time (per process) ffmpeg capability probe. A deployed ffmpeg missing the
+// `drawtext` filter renders RAW clips fine but silently drops every caption /
+// overlay preset — surface it loudly at the first render instead of shipping
+// text-less ads (spec finding #24). Never throws: RAW renders must still work.
+let _ffmpegCapChecked = false;
+function checkFfmpegCapabilities(): void {
+  if (_ffmpegCapChecked) return;
+  _ffmpegCapChecked = true;
+  if (!ffmpegPath) return;
+  try {
+    const r = spawnSync(ffmpegPath, ['-hide_banner', '-filters'], { maxBuffer: 1 << 24 });
+    const out = `${r.stdout?.toString('utf8') ?? ''}${r.stderr?.toString('utf8') ?? ''}`;
+    if (!/\bdrawtext\b/.test(out)) {
+      console.error('[renderFfmpeg] FATAL-CLASS: deployed ffmpeg lacks drawtext — caption presets will fail (see spec finding #24)');
+    }
+  } catch {
+    /* probe failure is non-fatal — never block a RAW render */
+  }
 }
 
 /** Probe a media file's duration (seconds) by reading ffmpeg's Duration line. */
@@ -727,6 +769,7 @@ export async function renderFinalVideo(
   endCard?: FinalRenderEndCard // offer recap + price anchor, burned into the last scene
 ): Promise<{ buffer: Buffer; sizeBytes: number }> {
   if (!scenes.length) throw new RenderError('no_scenes');
+  checkFfmpegCapabilities(); // once per process: warn loudly if drawtext is missing
   const tTotal = Date.now();
   const dims = dimsFor(aspectRatio);
   const dir = mkdtempSync(join(tmpdir(), 'grifon-render-'));

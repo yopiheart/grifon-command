@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Download, RefreshCw, Wand2, Plus, CheckCircle2, AlertTriangle, Lock, Film, ArrowRight } from 'lucide-react';
+import { Download, RefreshCw, Wand2, Plus, CheckCircle2, AlertTriangle, Lock, Film, ArrowRight, Image as ImageIcon, ImageDown } from 'lucide-react';
 import { GlassPanel } from '../ui/GlassPanel';
 import { GoldButton } from '../ui/GoldButton';
 import { ShimmerButton, SceneReveal } from './motion';
@@ -166,6 +166,23 @@ export const FirstCutScreen: React.FC<{
           })}
         </div>
 
+        {/* Thumbnail surface (finding #30) — the producer's cover frame, read from run
+            state the same way scenes are. Nothing renders when the run has no thumbnail. */}
+        {run.thumbnailUrl && (
+          <div className="mt-4 flex items-center gap-3">
+            <div className="relative w-20 shrink-0 overflow-hidden rounded-xl border border-white/10">
+              <img src={run.thumbnailUrl} alt="Ad thumbnail" className="aspect-[9/16] w-full bg-zinc-950 object-cover" />
+              <div className="absolute left-1 top-1 flex items-center gap-1 rounded bg-black/70 px-1.5 py-0.5 text-[9px] font-mono text-zinc-300">
+                <ImageIcon className="h-3 w-3" />
+              </div>
+            </div>
+            <div className="min-w-0">
+              <p className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">// Thumbnail</p>
+              <p className="text-xs text-zinc-400">Your scroll-stopping cover frame — download it below.</p>
+            </div>
+          </div>
+        )}
+
         {/* Edit-style switcher (Decision 8) — AUTO free/all-tiers; IMPACT/CLEAN Pro+. */}
         {onChoosePreset && (
           <div className="mt-6">
@@ -257,6 +274,15 @@ export const FirstCutScreen: React.FC<{
               </ShimmerButton>
             </a>
           </div>
+          {run.thumbnailUrl && (
+            <a
+              href={run.thumbnailUrl}
+              download
+              className="flex items-center justify-center gap-2 rounded-full border border-white/10 bg-zinc-950 px-6 py-4 text-sm font-mono uppercase tracking-widest text-zinc-300 hover:border-[#FFCC00] hover:text-white sm:w-auto"
+            >
+              <ImageDown className="h-4 w-4" /> Download Thumbnail
+            </a>
+          )}
           <button
             onClick={onMakeAnother}
             className="flex items-center justify-center gap-2 rounded-full border border-white/10 bg-zinc-950 px-6 py-4 text-sm font-mono uppercase tracking-widest text-zinc-300 hover:border-[#FFCC00] hover:text-white sm:w-48"

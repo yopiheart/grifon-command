@@ -468,6 +468,29 @@ export type DrawLayer = TextLayer | BoxLayer;
 
 const normText = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
 
+/**
+ * Hook title fallback source: when the EDL carries no hook overlay, derive the
+ * title from the FIRST SENTENCE of the spoken line — split on `.`/`!`/`?`,
+ * keeping a terminal `?` or `!` (a full stop is dropped), capped at the first 7
+ * words. Pure; the caller still runs stripUnrenderable, mirroring the overlay
+ * path. The terminal mark is only kept when the sentence actually fit inside the
+ * 7-word cap (a truncated sentence never reached its punctuation).
+ */
+function hookFallbackText(scriptLine: string | undefined): string {
+  if (!scriptLine) return '';
+  // Strip leading terminators/whitespace ("... Hiraya Glow ba talaga?") so an
+  // ellipsis opener can't make the first-sentence capture come back empty.
+  const trimmed = scriptLine.trim().replace(/^[.!?\s…]+/, '');
+  if (!trimmed) return '';
+  const m = /^([^.!?]*)([.!?])?/.exec(trimmed);
+  const body = (m?.[1] ?? trimmed).trim();
+  const term = m?.[2] === '?' || m?.[2] === '!' ? m[2] : '';
+  const words = body.split(/\s+/).filter(Boolean);
+  if (!words.length) return '';
+  const capped = words.slice(0, 7).join(' ');
+  return capped + (words.length <= 7 ? term : '');
+}
+
 /** Y (top of text) for a scene's caption/overlay band, region-aware + safe-clamped.
  * Face-avoidance (captionRegion) clamps the band in EVERY preset (premortem guard). */
 function captionY(
@@ -509,7 +532,12 @@ export function planScene(
   const overlaySfx = preset.sfx.overlayMap;
 
   if (scene.isHook) {
-    const text = overlay?.text ? stripUnrenderable(overlay.text) : '';
+    // Title source: the EDL hook overlay when present, else the first sentence of
+    // the spoken line (7-word cap). Only when BOTH are empty does the hook plan
+    // no title layer.
+    const text = overlay?.text
+      ? stripUnrenderable(overlay.text)
+      : stripUnrenderable(hookFallbackText(scene.scriptLine));
     if (!text) return layers;
     const hookAdv = preset.hook.advRatio;
     const { fontsize, lines } = fitText(text, sz.usableW, Math.round(h * preset.hook.sizeFrac), hookAdv);

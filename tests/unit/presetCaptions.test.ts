@@ -203,5 +203,17 @@ describe('spotlight caption preset', () => {
     expect(wordFilter).toContain('fontcolor=black:box=1:boxcolor=white@1');
     expect(wordFilter).toContain('1+0.06*sin');
     expect(wordFilter).toContain(`enable='between(t,${chunks[0].words![0].start},${chunks[0].words![0].end})'`);
+
+    // Item 5 (finding #27): the base phrase and the invert box now share ONE x
+    // source (per-word estimated positions) — the base is no longer a single
+    // kerned drawtext the estimate-positioned box could drift off of. So word 0's
+    // estimated x must appear TWICE: once for the always-on base word, once for
+    // its pulsing invert box. Every word's base x must match its box x.
+    const w0 = chunks[0].words![0];
+    const needle0 = `x=${w0.xPx}:`;
+    expect(wordFilter.split(needle0).length - 1).toBeGreaterThanOrEqual(2);
+    for (const wd of chunks[0].words!) {
+      expect(wordFilter.split(`x=${wd.xPx}:`).length - 1).toBeGreaterThanOrEqual(2);
+    }
   });
 });

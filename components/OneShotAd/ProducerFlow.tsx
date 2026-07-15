@@ -101,6 +101,7 @@ function fromRow(row: ProductionRunRow, scenes: ProductionSceneRow[]): Productio
     edl: art.edl,
     finalVideoUrl: art.finalVideoUrl,
     finalDownloadUrl: art.finalDownloadUrl,
+    thumbnailUrl: art.thumbnailUrl,
     error: row.error ?? undefined,
     // Carry the server revision so the resumed run's next checkpoint guards on the fresh value
     // (optimistic concurrency) instead of racing from 0.
@@ -343,10 +344,23 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
   }
 
   if (phase === 'resuming') {
+    // Branded rehydration state (finding #31) — the resume path used to flash a bare
+    // black screen + spinner. GlassPanel + gold spinner + reassuring copy instead.
     return (
-      <div className="relative min-h-screen bg-zinc-950">
+      <div className="relative min-h-screen bg-zinc-950 px-4 py-10 text-white">
         {BackBar}
-        <div className="flex min-h-screen items-center justify-center"><Loader2 className="h-6 w-6 animate-spin text-[#FFCC00]" /></div>
+        <div className="mx-auto flex min-h-[70vh] max-w-lg flex-col items-center justify-center">
+          <GlassPanel className="w-full p-8 text-center">
+            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full border border-[#FFCC00]/30 bg-[#FFCC00]/10">
+              <Loader2 className="h-6 w-6 animate-spin text-[#FFCC00]" />
+            </div>
+            <p className="mb-1 text-[10px] font-mono uppercase tracking-widest text-zinc-500">// Resuming</p>
+            <h1 className="mb-2 text-2xl font-black uppercase tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500">
+              Binabalik ang cut mo…
+            </h1>
+            <p className="text-sm text-zinc-400">Loading your ad — seconds lang ito.</p>
+          </GlassPanel>
+        </div>
       </div>
     );
   }

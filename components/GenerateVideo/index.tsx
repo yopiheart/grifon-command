@@ -336,7 +336,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
     setConfig((prev) => ({
       ...prev,
       prompt: seed.prompt,
-      model: autoRouteModelForType(seed.type, prev.model, activeIdx),
+      model: autoRouteModelForType(seed.type, prev.model),
     }));
     const sceneImage = storyboard[activeIdx]?.imageUrl ?? storyboard[activeIdx]?.manualUploadUrl;
     if (sceneImage) {
@@ -830,9 +830,9 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
           // Session B — auto-route this scene's engine from its type.
           // talking → Veo (avatars), b-roll/cinematic → Kling (morph). The
           // user's global picker becomes the fallback if the type isn't one
-          // of the known three. Session D — scene 0 b-roll (the hook)
-          // routes to Kling O1 Omni via the sceneIdx-aware branch.
-          const sceneModel = autoRouteModelForType(p.type, config.model, i);
+          // of the known three. Scene-0 b-roll hooks route like any b-roll
+          // (Kling_3_0); Kling_O1 stays a manual pick (producer finding #23).
+          const sceneModel = autoRouteModelForType(p.type, config.model);
           // Phase 6 — auto-compute per-scene duration from scriptLine.
           // RENDER ALL previously inherited the single config.duration value
           // (whatever scene was last viewed), forcing every clip to one length.
@@ -1395,7 +1395,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
     const sceneIdx = previewItem.sceneIdx;
     const scenePrompt = sceneIdx !== undefined ? seedPrompts[sceneIdx] : undefined;
     const sceneModel = scenePrompt
-      ? autoRouteModelForType(scenePrompt.type, config.model, sceneIdx)
+      ? autoRouteModelForType(scenePrompt.type, config.model)
       : config.model;
     setConfig((p) => ({ ...p, prompt: previewItem.prompt, model: sceneModel }));
     setCanvasView('edit');
@@ -1762,7 +1762,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
           elapsed={elapsed}
           onSelect={setActiveIdx}
           renderedSceneIdxs={renderedSceneIdxs}
-          perSceneModels={seedPrompts.map((p, i) => autoRouteModelForType(p.type, config.model, i))}
+          perSceneModels={seedPrompts.map((p) => autoRouteModelForType(p.type, config.model))}
         />
       </div>
     </GlassPanel>
