@@ -404,3 +404,26 @@ wrong) · TTS whisper register (run 8) · real `ugcpro.mp3` bed.
 2. Log in at the app so the browser session is authenticated (OTP wall, no dev bypass).
 3. Fire runs 1–12 per the matrix, uploading the mapped assets each time.
 4. Eyeball priority renders: try-on (5), unboxing ASMR (8), service B&A (11).
+25. **P1 — hook goes BLANK (no title, no captions) on every caption preset when the EDL
+    omits scene-0 overlayText (2026-07-16, punch/spotlight cuts, try_on run 3).**
+    drawPlan.ts:511-513: for isHook scenes the ONLY text source is `overlayText[0].text`
+    — absent → `return []` (log-proof: scene=0 layers=0 on all preset jobs, while
+    scenes 1-3 get 4/1/1). The tryon EDL emitted no hook overlay; Jul-13's run did —
+    why hook titles "worked" before. Fix candidate (TUNED, grill item 5): fallback
+    `overlay?.text ?? scene.scriptLine` (title-rules-truncated) so hooks are never
+    naked. RAW unaffected (stitchedOnly plans no layers by design).
+26. **P1 — hook VO missing/inaudible on preset cuts; RAW hook VO is fine (2026-07-16,
+    Neil's ears + measurements).** Voice mp3 IS downloaded per job (identical
+    detectedSec=2.59) and [1:a] is the mux base, so suspicion falls on the concat/music
+    stage (ugcpro→testimonial.mp3 alias bed): envelope INVERTS (RAW t0=-14dB speech
+    burst; PUNCH t0=-18.5 quiet, t1=-15 music ramp) and speech-band 300-3400Hz over
+    the hook is LOWER on punch (-19.8) than raw (-17.7) despite added music energy —
+    VO absent or fully buried at the mix. Needs one code pass over music gain/ducking
+    for scene-0 (renderFfmpeg concat stage, TUNED — grill item 6).
+27. **P2 — SPOTLIGHT karaoke-invert active-word box MISALIGNED, overlaps the base
+    phrase (2026-07-16, Neil's preset-switch test).** Frame-proof at ~4.5s: base
+    "Grabe, ang" outlined + white invert box drawn over "a[ng]" at wrong x — reads as
+    double captions. NOT cross-preset contamination: the punch cut at the same
+    timestamp is clean (pure word-pop, no box) — Neil's switch flow was a valid test
+    and preset state does NOT leak between renders. Likely estWidth() estimate vs
+    drawtext kerning drift on the per-word x (drawPlan, TUNED — grill item 7).
