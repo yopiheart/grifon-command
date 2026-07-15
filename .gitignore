@@ -58,3 +58,4 @@ public/mediapipe/wasm/
 # websiteinspodesigns/ stay trackable without `git add -f`.
 /*.webm
 /*.mp4
+.env*
