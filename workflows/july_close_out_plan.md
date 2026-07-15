@@ -240,3 +240,30 @@ for the instant-claim TUNED fix ready at `.tmp/grill-instant-claim-evidence.md`
 > (ladder triggered, corrob #3). Tapos ear-gate run sa main preview (UGC+HYPE, AUTO
 > presenter, captions-gate) — tail mo ang diegetic logs sa re-cuts. Runs 3–8 sunod
 > per the matrix.
+
+## RESUME STATE — 2026-07-16 ~02:00 session close (Day 3/4: the bug-massacre night)
+
+**SHIPPED on branch (all pushed, HEAD `f9c50fb`):** R2 CORS fixed+verified (P0 #18) ·
+main CI unbroken (lockfile revert `689dd84`, lesson logged) · Kling keys added to Vercel
+Preview+Prod (P0 #20, launch save) · O1 hook-morph routing removed producer (`65e69de`)
+AND GenerateVideo · ffmpeg-static pinned 5.2.0 (P1 #24 — 7.0.2 linux asset had NO
+drawtext; probe-verified fixed; preset smoke = permanent launch-gate item) · grill-me
+TUNED bundle (instant-claim guardrails tryon+speed-rule ×2, Kling 12/hr + config-first,
+hook-title fallback, single-x-source captions karaoke+invert, ffmpeg self-check,
+thumbnail UI surface [dormant — no producer writer yet, Neil cost call pending],
+resume loading state) — 8-angle review pass applied, 716 tests green, byte-invariance
+proven. Spec findings #19–#33 lahat committed.
+
+**Batch status:** try_on run 3 = eval data (S1 O1 morph, FAILED sample-card gate —
+pre-routing-fix). Fresh runs needed: try_on re-run + unboxing → tutorial (AUTO
+presenter sa face-free). Kling pool now 12/hr. Instant-claim fix LIVE sa next scripts.
+
+**Hook-VO (#26):** deployed punch cut had NO hook VO (spectrogram-definitive) pero
+UNREPRODUCIBLE sa post-bundle tree (440Hz probe present lahat ng preset configs) at
+mix+loudnorm exonerated — WATCH on next deployed preset render only.
+
+**MERGE TRAIN: PR is OPEN, CI running — MERGE IS NEIL'S FIRST ACT TOMORROW** kung
+green: (1) PR CI ✓, (2) after merge: prod deploy bakes Kling keys — VERIFY, (3) prod
+preset-render smoke (PUNCH sa isang test run), (4) SFX_V2/OMNI env decisions sa prod
+flags (hiwalay sa merge). Ear-gate run sa main preview + sample cards + gemini-eval
+critics = after merge (isang surface na lang).
