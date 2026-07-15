@@ -1,0 +1,56 @@
+<!doctype html>
+<!-- TB2 #11 — noir editorial (Kallaway-style trial 2026-07-15: film grain + type-led serif/gold accent on near-black navy; S18 premium lane, S16 authority). PREVIEW-ONLY until Neil gates it into STYLE_PAIRS + tb2-variants.json. City variable: {{CITY}} -->
+<html lang="tl"><head><meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@400;600;700;800;900&family=Anton&display=swap" rel="stylesheet"/>
+<style>
+:root{--navy:#0E2C5E;--navy2:#0A1F45;--noir:#0A0C12;--sky:#5AA6E6;--gold:#F5B301;
+--serif:'Playfair Display',Georgia,serif;--body:'Inter','Helvetica Neue',Arial,sans-serif;--head:'Anton',sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box}html,body{background:#333}
+#canvas{width:1080px;height:1350px;position:relative;overflow:hidden;font-family:var(--body);background:radial-gradient(ellipse 900px 700px at 50% 38%,#10141F 0%,var(--noir) 60%,#080A0F 100%);-webkit-font-smoothing:antialiased}
+.glow{position:absolute;inset:0;background:radial-gradient(ellipse 700px 420px at 50% 40%,rgba(245,179,1,.055) 0%,rgba(245,179,1,0) 65%)}
+.grain{position:absolute;inset:0;z-index:9;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:.08;mix-blend-mode:overlay;pointer-events:none}
+.logo-chip{position:absolute;top:38px;left:38px;z-index:5;background:#fff;border-radius:12px;padding:5px 9px;box-shadow:0 4px 14px rgba(0,0,0,.4)}
+.logo-chip img{height:54px;display:block}
+.legit{position:absolute;top:44px;right:38px;z-index:5;display:flex;align-items:center;gap:10px}
+.legit .t{text-align:right;line-height:1.1}.legit .c{font-weight:900;font-size:14px;color:#fff;text-transform:uppercase;letter-spacing:.5px}
+.legit .s{font-size:11px;font-weight:700;color:var(--sky);text-transform:uppercase;margin-top:2px}
+.legit img{height:46px;filter:drop-shadow(0 1px 3px rgba(0,0,0,.5))}
+.branch{position:absolute;top:210px;left:0;right:0;z-index:5;text-align:center;font-size:16px;font-weight:800;letter-spacing:6px;text-transform:uppercase;color:var(--gold);opacity:.9}
+h1{position:absolute;top:290px;left:70px;right:70px;z-index:5;font-family:var(--serif);font-weight:500;font-size:88px;line-height:1.14;color:#fff;text-align:center;letter-spacing:.2px}
+h1 em{color:var(--gold);font-style:italic;text-shadow:0 0 44px rgba(245,179,1,.28)}
+.rule{position:absolute;top:680px;left:50%;transform:translateX(-50%);width:74px;height:1px;background:linear-gradient(to right,rgba(245,179,1,0),var(--gold),rgba(245,179,1,0));z-index:5}
+.sub{position:absolute;top:726px;left:110px;right:110px;z-index:5;text-align:center;font-size:25px;font-weight:600;line-height:1.55;color:rgba(255,255,255,.82)}
+.sub b{color:var(--gold);font-weight:800}
+.stats{position:absolute;left:60px;right:60px;bottom:214px;z-index:5;display:flex;justify-content:center;align-items:center;gap:26px}
+.stat{font-size:16px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.92);white-space:nowrap}
+.stat b{color:var(--gold)}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--gold);opacity:.8}
+.contact{position:absolute;bottom:0;left:0;width:100%;z-index:6;padding:30px 44px 34px;text-align:center;background:rgba(4,6,10,.78);border-top:1px solid rgba(245,179,1,.28)}
+.cta{font-family:var(--head);font-size:36px;color:var(--gold);text-transform:uppercase;letter-spacing:1.5px}
+.numsline{margin-top:12px;font-size:26px;font-weight:800;color:#fff;letter-spacing:.5px}
+.numsline span{color:var(--sky);font-size:16px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}
+.free{margin-top:10px;font-size:16px;font-weight:700;color:rgba(255,255,255,.75);letter-spacing:1px;text-transform:uppercase}
+.free b{color:var(--gold)}
+</style></head><body>
+<div id="canvas">
+  <div class="glow"></div>
+  <div class="logo-chip"><img src="../assets/logo.jpg" alt="Oceanides"/></div>
+  <div class="legit"><div class="t"><div class="c">SEC-Registered</div><div class="s">DENR &middot; BIR</div></div><img src="../assets/badge-bir.png" alt="BIR"/></div>
+  <div class="branch">Oceanides &middot; {{CITY}} Branch</div>
+  <h1>{{HEADLINE}}</h1>
+  <div class="rule"></div>
+  <div class="sub">{{SUBLINE}}</div>
+  <div class="stats">
+    <div class="stat"><b>24/7</b> Serbisyo</div><div class="dot"></div>
+    <div class="stat"><b>30&ndash;60 min</b> response</div><div class="dot"></div>
+    <div class="stat"><b>SEC</b>-Registered</div><div class="dot"></div>
+    <div class="stat"><b>Walang</b> hidden charges</div>
+  </div>
+  <div class="contact">
+    <div class="cta">Call Now</div>
+    <div class="numsline"><span>Globe</span> 0917-671-6383 &nbsp;&nbsp;&middot;&nbsp;&nbsp; <span>Smart</span> 0939-245-6217</div>
+    <div class="free"><b>Libreng inspection</b> para sa {{CITY}}</div>
+  </div>
+  <div class="grain"></div>
+</div></body></html>
