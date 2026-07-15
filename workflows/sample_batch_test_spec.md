@@ -343,6 +343,21 @@ wrong) · TTS whisper register (run 8) · real `ugcpro.mp3` bed.
     drop the scene-0 O1 special case (hooks route like any b-roll → Kling_3_0);
     (B) plumb format into routeModel, keep O1 for hype-morph formats only. Run's value:
     full pipeline E2E proof (Kling env + CORS + EDL) + the O1 format-fit bug nailed.
+24. **P1 — preset (IMPACT-family) final render fails `scene_build_failed: … 'filter_complex':
+    Filter not found` (2026-07-15 ~23:49 PHT, branch preview, Neil clicked a preset chip
+    after the RAW download).** Runtime log shows the failing chain is the HOOK BURN
+    light-leak (eq brightness/gamma steps + `gblur=sigma=6`, from
+    `buildTransitionFilters`/hook `burnTransition` in api/_lib/drawPlan.ts:889-916) — the
+    error echo starts at `blur=sigma=6` (leading `g` absent) + "Error parsing global
+    options", so EITHER the Vercel `ffmpeg-static` binary lacks `gblur` OR the graph arg
+    is getting mangled before spawnSync. RAW/none preset unaffected (stitchedOnly skips
+    transitions). IMPACT rendered fine on Jul 13 — suspect the burn path first fires on
+    multi-scene hook ads or regressed with the overlay-engine commit (`d74ee61`).
+    **Repro plan (next session):** local ffmpeg (re-arm portable) + the exact logged
+    graph; check `ffmpeg -filters | grep gblur` on ffmpeg-static's build; then fix at
+    the real layer (swap to `boxblur` if missing, or fix arg assembly). api/_lib is
+    TUNED — diff needs Neil GO. Until fixed: RAW downloads fine; avoid preset chips on
+    producer runs from this branch preview.
 
 ## 5. Post-batch (agent work, after Neil's eyeball)
 
