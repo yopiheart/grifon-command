@@ -427,3 +427,20 @@ wrong) · TTS whisper register (run 8) · real `ugcpro.mp3` bed.
     timestamp is clean (pure word-pop, no box) — Neil's switch flow was a valid test
     and preset state does NOT leak between renders. Likely estWidth() estimate vs
     drawtext kerning drift on the per-word x (drawPlan, TUNED — grill item 7).
+28. **WATCHLIST — caption timing vs VO (Neil's premortem, 2026-07-16):** "hindi timing
+    dun sa script ung paglabas ng text" — chunk timings are estimate-driven; no logged
+    finding yet with timestamps. Eval critics on runs 4–8: grade caption-to-VO sync
+    explicitly (flag lines appearing >300ms off their spoken word).
+29. **FEATURE ASK — "All generations" library (Neil, 2026-07-16, Higgsfield ref):**
+    users who don't download at First Cut have no way back to their rendered videos.
+    Producer runs persist server-side (producer_runs/scenes + R2 finals) so the DATA
+    exists — missing is the user-facing gallery (list + replay + re-download; respects
+    R2 lifecycle). Roadmap: post-launch scope decision pending Neil.
+30. **P2 — thumbnail generated but UNSURFACED in producer flow (2026-07-16):** the
+    orchestrator runs a `thumbnail` stage ("Polishing the final cut") — paid output —
+    but FirstCutScreen renders no thumbnail preview/download. Users can't get the
+    thumbnail they paid compute for. Fix: surface + download button on First Cut (UI).
+31. **P2 — resume-to-First-Cut shows a bare black screen w/ tiny spinner (Neil,
+    2026-07-16 screenshot):** command center → back into an active/done run hits
+    ProducerFlow.fromRow rehydration with no branded loading state. Fix: GlassPanel
+    skeleton + copy ("Binabalik ang cut mo…") on the resume path (UI, components/).
