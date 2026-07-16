@@ -169,7 +169,7 @@ framing with the table edge cutting the bottom of the frame, natural indoor
 grain, authentic UGC feel, no HDR, no cinematic grading, no studio lighting,
 no beauty filter.
 
-VERDICT:
+VERDICT: ✅ PASS w/ notes (Neil, 2026-07-16, gpt-image-2). Social physics + table story (bitten pastry, condensation, coffee ring) fully real. Notes: the two faces read sisters-alike (multi-subject AI tendency) and the gesturing hand's fingers are slightly splayed — watch both on any multi-person prompt.
 
 ---
 
