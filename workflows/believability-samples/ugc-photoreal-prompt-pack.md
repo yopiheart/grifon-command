@@ -271,6 +271,24 @@ VERDICT: ✅ PASS — World Cup grade (Neil, 2026-07-16, gpt-image-2). High-angl
 
 ---
 
+## Bonus test — identity anchor + scaffold combo (2026-07-16)
+
+One identity-anchored generation (Zam night-market flash, codex-image `--edit`
+on `zam-approved-scene-reference.png` only, single anchor) to test whether the
+raw-ugc scaffold survives with an identity reference active.
+
+VERDICT: ⚠️ BORDERLINE (Neil, 2026-07-16). "Parang hindi si Zam" — identity
+drift (squint-laugh expression hides the eyes vs the neutral reference), hair
+reads different, skin too clean; gut-level AI feel on direct viewing. Diagnosed
+causes: (1) **single anchor** — the 98% ChatGPT flow passes BOTH
+`zam-face-reference.jpg` (primary) + the scene ref; we had only the scene ref;
+(2) **expression pushed too far from the reference** (blueprint's documented
+identity-drift mode — keep expression within range of the anchor);
+(3) flash register didn't bite → skin under-textured. NOT parity with the
+ChatGPT dual-anchor flow yet — scaffold-alone results (the 10 above) remain
+the validated finding. Fix recipe for the rerun: dual anchor + milder
+expression + explicit skin-texture/flash language.
+
 ## Scaffold self-check (all 10 prompts)
 
 Every prompt above contains: ✔ smartphone-capture device opening ✔ candid/UGC
