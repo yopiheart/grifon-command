@@ -241,6 +241,38 @@ for the instant-claim TUNED fix ready at `.tmp/grill-instant-claim-evidence.md`
 > presenter, captions-gate) — tail mo ang diegetic logs sa re-cuts. Runs 3–8 sunod
 > per the matrix.
 
+## RESUME STATE — 2026-07-16 evening session close (Day 4: MERGED + prod live, v2 assets ready)
+
+**DONE this session (all on main, pushed):**
+- **PR #58 MERGED → prod deploy READY** sa grifon.ai (commit `8a36dfc`, Kling keys +
+  ffmpeg 5.2.0 pin + buong grill bundle baked). Hindi ito one-click: nag-CONFLICT sa main
+  (7 files) dahil sa #61 + believability merges kagabi. Resolutions worth knowing:
+  - `api/gemini/text.ts`: pinagsama ang UGCPro dispatch + verb-reroll (branch) at ang
+    hook-starvation retry #59 (main) — order: generate → hook-retry → verb-reroll →
+    `ugcProFormatResolved`. Regression-test mock mirrored. Build ✓ 766 tests ✓ CI ✓.
+  - **Swipe-file ID collision resolved by renumber:** TEMU batch (Jul 9) at creator batch
+    (Jul 12) parehong kumuha ng P12–P14/E8+ sa parallel branches. TEMU → **P15–P17 /
+    E15–E18**; creator keeps P11–P14/E8–E14 (naka-cite na sa sfx/omni docs); believability
+    family → **P18+**. `temu_respec_brief.md` refs updated. **NEIL: review this call.**
+- **Hiraya Glow v2 asset set** (`tests/fixtures/sample-batch-v2/`, commit `9092250`) —
+  raw-UGC realism scaffold via codex-image/gpt-image-2 (formula is gpt-image-2-ONLY).
+  Chain: after=edit(before); packaging/inuse=edits(hero); onbody=dual-anchor(after+hero).
+  Agent triage: all 6 coherent. **PENDING NEIL GRADE.** Neil question sa `inuse.png`
+  (patak sa likod ng kamay — sinadyang swatch gesture; v1 was drop-only): regenerate kung
+  ayaw. `generate-zam-images.zip` stays UNTRACKED by standing decision (real-person
+  identity anchors — Neil pushes it himself or re-drops from ChatGPT side).
+
+**TOMORROW — first acts (prod na lahat, walang preview):**
+1. Neil logs in sa app.grifon.ai, fires **`try_on`** run = the launch-gate run.
+   Fill-out: Hiraya Glow brief verbatim (spec §1) + v2 slots + **Presenter = SET,
+   upload v2 `after.png`**. Engine `?osaEngine=producer`.
+2. **Gate A** Kling scenes film (agent tails prod runtime logs) · **Gate B** PUNCH preset
+   renders sa First Cut (drawtext check) · **Gate C** hook VO present sa unang ~2.6s
+   (#26 watch — spectrogram kung duda).
+3. Pass → **`unboxing`** run (Presenter = **AUTO**, face-free uploads), tapos runs per
+   matrix. Agent: gemini-eval critic per render (fresh-context, walang first-pass
+   timestamps sa corroboration passes — spec §32a) + sample cards sa winners.
+
 ## RESUME STATE — 2026-07-16 ~02:00 session close (Day 3/4: the bug-massacre night)
 
 **SHIPPED on branch (all pushed, HEAD `f9c50fb`):** R2 CORS fixed+verified (P0 #18) ·
