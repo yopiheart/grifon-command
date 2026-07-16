@@ -98,7 +98,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
         <ReceiptsRail onEnterApp={onEnterApp} />
       </div>
 
-      <Modules />
+      <Modules onEnterApp={onEnterApp} />
 
       <StackReplace />
 

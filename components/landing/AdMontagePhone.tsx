@@ -9,6 +9,7 @@ import { Building2, UtensilsCrossed, ShoppingBag, Play } from 'lucide-react';
 const FRAMES = [
   {
     label: 'REAL ESTATE',
+    chip: 'Real Estate',
     icon: Building2,
     hook: 'YOUR DREAM CONDO.',
     hookAccent: 'Closer than you think.',
@@ -18,6 +19,7 @@ const FRAMES = [
   },
   {
     label: 'F&B',
+    chip: 'Food & Beverage',
     icon: UtensilsCrossed,
     hook: 'LUTONG BAHAY.',
     hookAccent: 'Delivered in 30.',
@@ -27,6 +29,7 @@ const FRAMES = [
   },
   {
     label: 'E-COMMERCE',
+    chip: 'Online Store',
     icon: ShoppingBag,
     hook: 'BIG SALE.',
     hookAccent: 'Ends tonight.',
@@ -46,6 +49,9 @@ const CYCLE_MS = 2800;
 export const AdMontagePhone: React.FC<{ className?: string }> = ({ className = '' }) => {
   const reduceMotion = useReducedMotion();
   const [index, setIndex] = useState(0);
+  // Once the visitor taps a category chip they take control — auto-cycle stops
+  // permanently for the session (the phone becomes a category selector).
+  const [userControlled, setUserControlled] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Subtle parallax drift as the hero scrolls by (transform-only).
@@ -56,10 +62,10 @@ export const AdMontagePhone: React.FC<{ className?: string }> = ({ className = '
   const y = useTransform(scrollYProgress, [0, 1], [20, -20]);
 
   useEffect(() => {
-    if (reduceMotion) return;
+    if (reduceMotion || userControlled) return;
     const id = setInterval(() => setIndex((i) => (i + 1) % FRAMES.length), CYCLE_MS);
     return () => clearInterval(id);
-  }, [reduceMotion]);
+  }, [reduceMotion, userControlled]);
 
   const frame = FRAMES[index];
   const Icon = frame.icon;
@@ -133,8 +139,35 @@ export const AdMontagePhone: React.FC<{ className?: string }> = ({ className = '
         </div>
       </div>
 
+      {/* Category selector — tapping a chip jumps the phone to that vertical and
+          hands control to the visitor (auto-cycle stops). Discrete jumps, so
+          they work identically under reduced motion. ≥40px touch targets. */}
+      <div className="mt-9 flex flex-wrap items-center justify-center gap-2">
+        {FRAMES.map((f, i) => {
+          const active = i === index;
+          return (
+            <button
+              key={f.chip}
+              type="button"
+              onClick={() => {
+                setUserControlled(true);
+                setIndex(i);
+              }}
+              aria-pressed={active}
+              className={`inline-flex min-h-[40px] items-center rounded-full border bg-zinc-900/60 px-4 text-xs font-semibold backdrop-blur transition-colors ${
+                active
+                  ? 'border-[#FFCC00]/60 text-[#FFCC00]'
+                  : 'border-white/15 text-zinc-400 hover:text-white'
+              }`}
+            >
+              {f.chip}
+            </button>
+          );
+        })}
+      </div>
+
       {/* Output caption */}
-      <div className="mt-12 text-center text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+      <div className="mt-8 text-center text-[10px] font-mono uppercase tracking-widest text-zinc-500">
         // OUTPUT: COMPLETE VIDEO AD — SCRIPTED, DESIGNED, EXPORTED
       </div>
     </motion.div>

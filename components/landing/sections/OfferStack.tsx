@@ -5,6 +5,7 @@ import { ArrowRight } from 'lucide-react';
 import { GlassPanel } from '../../ui/GlassPanel';
 import { GoldButton } from '../../ui/GoldButton';
 import { SignatureScribble } from '../SignatureScribble';
+import { CTA_REASSURANCE } from '../microcopy';
 import { PRO_VALUE_STACK, PRO_VALUE_TOTAL, PRO_PRICE_LABEL, FOUNDING_NOTE } from '../../../config/valueStack';
 
 interface OfferStackProps {
@@ -18,7 +19,14 @@ interface OfferStackProps {
  * moment: a gold signature strike draws across each value on scroll.
  */
 export const OfferStack: React.FC<OfferStackProps> = ({ onNavigatePricing, sectionRef }) => (
-  <section ref={sectionRef} className="py-16 md:py-32 px-4 sm:px-6 lg:px-8 relative z-10">
+  <section ref={sectionRef} className="py-16 md:py-32 px-4 sm:px-6 lg:px-8 relative z-10 overflow-hidden">
+    {/* The page's one mid-body color climax: a single STATIC radial gold glow
+        behind the offer panel (Vertus pattern). No animation, no large-area
+        blur filter — GPU-cheap. Dimmed on mobile so gold stays an action signal. */}
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 -z-10 opacity-50 md:opacity-100 bg-[radial-gradient(ellipse_at_center,rgba(255,204,0,0.10),transparent_65%)]"
+    />
     <div className="max-w-4xl mx-auto">
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
@@ -76,6 +84,9 @@ export const OfferStack: React.FC<OfferStackProps> = ({ onNavigatePricing, secti
           </GoldButton>
           <p className="text-[10px] font-mono text-zinc-500 mt-6 tracking-widest uppercase">
             // 7-DAY MONEY-BACK — KEEP THE PLAN • SECURE CHECKOUT
+          </p>
+          <p className="text-[10px] font-mono text-zinc-500 mt-2 tracking-widest uppercase">
+            {CTA_REASSURANCE}
           </p>
         </GlassPanel>
       </motion.div>

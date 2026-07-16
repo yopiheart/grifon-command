@@ -56,6 +56,7 @@ import {
   verifyEmailOtp,
 } from './services/supabaseClient';
 import { popIntendedPlan, peekIntendedPlan, saveIntendedPlan, startCheckout } from './services/billingService';
+import { popIntendedModule } from './services/moduleIntentService';
 import { grant as grantMarketingConsent, getMarketingConsent } from './services/consentService';
 import { POLICY_VERSION, isKnownPolicyVersion } from './services/consentConstants';
 import { ConsentBanner } from './components/ui/ConsentBanner';
@@ -121,6 +122,11 @@ const ROUTE_PATHS: Record<Route, string> = {
   refund: '/refund',
   support: '/support',
 };
+
+// Landing task-specific CTAs deep-link into these modules via moduleIntentService.
+// Allowlist so a stale/tampered sessionStorage value can never route to an
+// unexpected activeModule. Ids match the strings the activeModule switch uses.
+const INTENT_MODULE_IDS = new Set(['market_research', 'offer_optimizer', 'caption_headline', 'image_ads']);
 
 const App: React.FC = () => {
   const [currentRoute, setCurrentRoute] = useState<Route>(detectInitialRoute);
@@ -442,6 +448,16 @@ const App: React.FC = () => {
 
     return () => { sub.subscription.unsubscribe(); };
   }, []);
+
+  // Intent-preserving module deep-link (landing task-specific CTAs). Runs BEFORE
+  // the billing resume so a pending plan checkout always wins: if a plan intent
+  // is still queued we bail and let the checkout effect below navigate away.
+  useEffect(() => {
+    if (!isAuthenticated) return;
+    if (peekIntendedPlan()) return;
+    const mod = popIntendedModule();
+    if (mod && INTENT_MODULE_IDS.has(mod)) setActiveModule(mod);
+  }, [isAuthenticated]);
 
   useEffect(() => {
     if (!isAuthenticated) return;

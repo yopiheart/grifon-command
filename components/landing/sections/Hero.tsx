@@ -1,10 +1,11 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { DUR, EASE } from '../../ui/motionTokens';
-import { Star } from 'lucide-react';
+import { Star, ArrowDown } from 'lucide-react';
 import { GoldButton } from '../../ui/GoldButton';
 import { AdMontagePhone } from '../AdMontagePhone';
 import { SignatureScribble } from '../SignatureScribble';
+import { CTA_REASSURANCE } from '../microcopy';
 
 interface HeroProps {
   onEnterApp: () => void;
@@ -67,9 +68,20 @@ export const Hero: React.FC<HeroProps> = ({ onEnterApp, heroSentinelRef }) => (
         </motion.p>
 
         <motion.div variants={lineReveal} className="mt-9">
-          <GoldButton glossy onClick={onEnterApp} className="w-full sm:w-auto text-sm md:text-base px-10 py-4">
-            CREATE MY FIRST AD — FREE
-          </GoldButton>
+          {/* Primary (gold) + demoted glass-ghost secondary (GitHub pairing).
+              Stacks on mobile so the ghost never crowds the fold. */}
+          <div className="flex flex-col sm:flex-row items-center gap-3 justify-center lg:justify-start">
+            <GoldButton glossy onClick={onEnterApp} className="w-full sm:w-auto text-sm md:text-base px-10 py-4">
+              CREATE MY FIRST AD — FREE
+            </GoldButton>
+            <a
+              href="#reviews"
+              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur px-6 py-3 text-sm font-semibold text-zinc-300 hover:text-white hover:border-white/30 transition"
+            >
+              SEE A COMPLETE CAMPAIGN
+              <ArrowDown className="w-4 h-4" />
+            </a>
+          </div>
           {/* Click-trigger trust row: one last "why believe" at the decision pixel.
               Claims mirror the proof band — nothing new is asserted here. */}
           <div className="mt-4 flex flex-wrap items-center justify-center lg:justify-start gap-x-2 gap-y-1 text-[11px] font-mono uppercase tracking-widest text-zinc-500">
@@ -80,7 +92,7 @@ export const Hero: React.FC<HeroProps> = ({ onEnterApp, heroSentinelRef }) => (
             </span>
             <span>early Filipino business owners</span>
             <span className="text-zinc-700">·</span>
-            <span>No credit card needed</span>
+            <span>{CTA_REASSURANCE}</span>
           </div>
         </motion.div>
       </motion.div>

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
 import { EASE, DUR } from '../ui/motionTokens';
 import { playTick } from '../../services/uiSoundService';
+import { CTA_REASSURANCE_COMPACT } from './microcopy';
 
 interface PinnedCtaPillProps {
   onEnterApp: () => void;
@@ -74,7 +75,7 @@ export const PinnedCtaPill: React.FC<PinnedCtaPillProps> = ({
             </span>
             {/* Real risk-reversal microcopy — the pill's own "why now" (no fake urgency). */}
             <span className="text-[9px] font-mono uppercase tracking-widest text-black/60 leading-tight">
-              ₱0 today · no card
+              {CTA_REASSURANCE_COMPACT}
             </span>
           </motion.button>
         )}

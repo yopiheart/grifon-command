@@ -24,7 +24,7 @@ const TOOLS = [
  * it never leaks the engine stack or reads as "just a wrapper."
  */
 export const StackReplace: React.FC = () => (
-  <section className="py-16 md:py-28 px-4 sm:px-6 lg:px-8 relative z-10">
+  <section className="py-12 md:py-16 px-4 sm:px-6 lg:px-8 relative z-10">
     <div className="max-w-6xl mx-auto">
       <motion.div
         initial={{ opacity: 0, y: 30 }}

@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { DUR } from '../../ui/motionTokens';
 import { Film, Search, Target, Type, ImageIcon } from 'lucide-react';
 import { DirectorDemo, ResearchDemo, OfferDemo, CaptionDemo, ImageDemo } from '../InclusionDemos';
+import { setIntendedModule } from '../../../services/moduleIntentService';
 
 /**
  * Director AI's signature frame: a camera viewfinder — breathing gold corner
@@ -23,15 +24,23 @@ const ViewfinderFrame: React.FC<{ children: React.ReactNode }> = ({ children }) 
   </div>
 );
 
+// Each secondary module gets a task-specific ghost CTA that stashes module
+// intent (moduleIntentService, mirroring billing's popIntendedPlan) and routes
+// through signup; App.tsx pops the intent post-auth to land the user in-module.
+// `moduleId` values are the exact activeModule strings App.tsx switches on.
 const SECONDARY_MODULES = [
-  { title: 'Market Research', label: 'Intelligence', desc: 'Know your market, competitors, and dream buyer before you spend a single peso on ads.', icon: Search, Demo: ResearchDemo },
-  { title: 'Offer Optimizer', label: 'Conversion', desc: 'Build an offer people feel stupid saying no to — using real pricing psychology.', icon: Target, Demo: OfferDemo },
-  { title: 'Caption & Headline', label: 'Copywriting', desc: 'Scroll-stopping hooks and captions for every platform, generated in seconds.', icon: Type, Demo: CaptionDemo },
-  { title: 'Image Studio', label: 'Visuals', desc: 'Studio-grade ad images — product shots, lifestyle, anything — walang photographer.', icon: ImageIcon, Demo: ImageDemo },
+  { title: 'Market Research', label: 'Intelligence', desc: 'Know your market, competitors, and dream buyer before you spend a single peso on ads.', icon: Search, Demo: ResearchDemo, moduleId: 'market_research', cta: 'Research my market' },
+  { title: 'Offer Optimizer', label: 'Conversion', desc: 'Build an offer people feel stupid saying no to — using real pricing psychology.', icon: Target, Demo: OfferDemo, moduleId: 'offer_optimizer', cta: 'Fix my offer' },
+  { title: 'Caption & Headline', label: 'Copywriting', desc: 'Scroll-stopping hooks and captions for every platform, generated in seconds.', icon: Type, Demo: CaptionDemo, moduleId: 'caption_headline', cta: 'Write my captions' },
+  { title: 'Image Studio', label: 'Visuals', desc: 'Studio-grade ad images — product shots, lifestyle, anything — walang photographer.', icon: ImageIcon, Demo: ImageDemo, moduleId: 'image_ads', cta: 'Make my image ads' },
 ];
 
+interface ModulesProps {
+  onEnterApp: () => void;
+}
+
 /** What You Get: Director AI as the full-width feature row, the other four working modules in a grid. */
-export const Modules: React.FC = () => (
+export const Modules: React.FC<ModulesProps> = ({ onEnterApp }) => (
   <section id="what-you-get" className="scroll-mt-28 py-16 md:py-32 px-4 sm:px-6 lg:px-8 relative z-10">
     <div className="max-w-7xl mx-auto">
       <motion.div
@@ -94,6 +103,17 @@ export const Modules: React.FC = () => (
             </div>
             <h3 className="mt-2 text-lg font-bold text-white">{module.title}</h3>
             <p className="mt-2 text-sm text-zinc-400 leading-relaxed">{module.desc}</p>
+            {/* Ghost text-CTA — subordinate to the page's gold CTAs (no fill). */}
+            <button
+              onClick={() => {
+                setIntendedModule(module.moduleId);
+                onEnterApp();
+              }}
+              className="mt-4 inline-flex items-center gap-1.5 text-zinc-300 hover:text-[#FFCC00] text-sm font-semibold transition-colors"
+            >
+              {module.cta}
+              <span aria-hidden="true">→</span>
+            </button>
           </motion.div>
         ))}
       </div>
