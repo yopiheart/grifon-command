@@ -174,6 +174,22 @@ register (after the 2026-06-26 Codex 3-register test). One more `real-human`-
 grade corroboration completes the ≥3 gate for the Gated Proposal below.
 Companion test pack: [believability-samples/ugc-photoreal-prompt-pack.md](believability-samples/ugc-photoreal-prompt-pack.md).
 
+**2026-07-16 test-pack run (evidence toward #3):** all 10 Grifon-scene
+transplant prompts generated on gpt-image-2 (codex-image, 1024×1536 → 864×1536
+9:16 crop) and graded by Neil against his World Cup results — **8 PASS at
+World Cup grade, 2 PASS w/ notes, 0 fail.** The scaffold transfers to Grifon's
+surfaces (avatars, testimonials, storyboard frames, ad heroes, organic) without
+losing realism — including the hard cases: flash physics (#3, #8), mirror
+reflection (#7), motion/follow-shot (#5), two-subject (#6). Per-prompt verdicts
+in the test pack file. Observed failure modes to carry into any fragment work:
+(a) multi-subject prompts trend look-alike faces + occasional splayed fingers;
+(b) hyper-local PH layouts need explicit description — the model's jeepney
+prior produced forward-facing bus seats (#9); (c) "text softly blurred" can
+render as a smeary censored-looking patch when zoomed (#10). Caveat unchanged:
+this is gpt-image-2, not the production Gemini stack — the Gated Proposal
+still requires the baseline-vs-fragment A/B on the real pipeline before any
+tuned-prompt change.
+
 ### The 8-block anatomy (subject changes, scaffold never does)
 
 All 19 prompts stack the same blocks in roughly this order:
