@@ -1,0 +1,11 @@
+interface:
+  display_name: Zam Image Director
+  short_description: Create consistent, realistic Zam UGC photos
+  default_prompt: Use $generate-zam-images to create Zam in a realistic scene I describe.
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

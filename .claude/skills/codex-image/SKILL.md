@@ -26,7 +26,7 @@ node .claude/skills/codex-image/generate.mjs --prompt "<what to draw>" --out <pa
 - `--prompt` (required) — the image description, or an edit instruction when `--edit` is set.
 - `--out` (required) — where to save the PNG.
 - `--size` — `1024x1024` (default), `1024x1536` (portrait), `1536x1024` (landscape).
-- `--edit <input>` — edit mode: pass an existing image for Codex to modify.
+- `--edit <input>` — edit mode: pass an existing image for Codex to modify. Repeatable (`--edit a.png --edit b.png`) for multi-reference composition — e.g. an identity anchor + a body/scene anchor, per the `generate-zam-images` dual-anchor pattern (codex `-i` is variadic).
 
 **Safety:** the wrapper always runs Codex in its workspace-write sandbox (`--full-auto`) and refuses output paths outside the repo. It never disables Codex's sandbox or approval gates — so keep `--out` inside the repo (e.g. `.tmp/hero.png`).
 
