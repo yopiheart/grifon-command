@@ -1,0 +1,39 @@
+<!doctype html>
+<!-- TB2 #5 — OpenAI-style minimal anti-design (S9 / E51 two-color). City variable: QUEZON CITY -->
+<html lang="tl"><head><meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root{--paper:#F9F9F9;--ink:#111111;--body:'Inter','Helvetica Neue',Arial,sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box}html,body{background:#333}
+#canvas{width:1080px;height:1350px;position:relative;overflow:hidden;font-family:var(--body);background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased}
+.top{position:absolute;top:96px;left:0;right:0;text-align:center}
+.top img{width:74px;height:74px;object-fit:contain;border-radius:50%}
+.brand{margin-top:20px;font-size:17px;font-weight:800;letter-spacing:6px;text-transform:uppercase}
+.brand span{opacity:.55}
+.mid{position:absolute;top:50%;left:110px;right:110px;transform:translateY(-56%);text-align:center}
+h1{font-size:78px;font-weight:800;line-height:1.16;letter-spacing:-1.5px}
+.meta{margin-top:44px;font-size:26px;font-weight:500;opacity:.62;letter-spacing:.2px}
+.bottom{position:absolute;bottom:88px;left:0;right:0;text-align:center}
+.cta{font-size:22px;font-weight:900;letter-spacing:5px;text-transform:uppercase}
+.nums{margin-top:18px;font-size:31px;font-weight:800;letter-spacing:.3px}
+.nums span{font-size:17px;font-weight:700;opacity:.5;letter-spacing:2px;text-transform:uppercase}
+.hair{margin:26px auto 0;width:44px;height:2px;background:var(--ink);opacity:.25}
+.free{margin-top:22px;font-size:17px;font-weight:600;opacity:.55;letter-spacing:.5px}
+</style></head><body>
+<div id="canvas">
+  <div class="top">
+    <img src="../assets/logo.jpg" alt="Oceanides"/>
+    <div class="brand">Oceanides <span>&middot; {{CITY}}</span></div>
+  </div>
+  <div class="mid">
+    <h1>{{HEADLINE}}</h1>
+    <div class="meta">{{META}}</div>
+  </div>
+  <div class="bottom">
+    <div class="cta">Call Now</div>
+    <div class="nums"><span>Globe</span> 0917-671-6383 &nbsp;&nbsp;<span>Smart</span> 0939-245-6217</div>
+    <div class="hair"></div>
+    <div class="free">Libreng inspection sa buong {{CITY}} &mdash; tawag lang, punta agad kami.</div>
+  </div>
+</div></body></html>

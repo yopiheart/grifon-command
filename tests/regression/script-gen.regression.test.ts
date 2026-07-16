@@ -122,6 +122,9 @@ const fetchMock = vi.fn(async (url: any, init: any = {}) => {
     // parse), minus the auth/rate-limit/quota the server does (the test
     // deliberately bypasses those). Returns the parsed Script directly, which
     // is exactly what the server returns and what proxyCall hands back.
+    // Also mirrors the server-side hook-starvation retry (issue #59): regenerate
+    // once when hook1/hook2 come back empty, falling back to the first result if
+    // the regeneration throws.
     // NOTE: keep this config in sync with FLOW_REGISTRY.adscript in
     // api/gemini/text.ts. v1 covers adscript only.
     if (body.flow === 'adscript') {
@@ -180,16 +183,22 @@ const fetchMock = vi.fn(async (url: any, init: any = {}) => {
         }
       }
       const prompt = buildAdScriptPrompt(body.input, undefined, ugcProSubType);
-      const response = await ai.models.generateContent({
-        model: MODEL_TEXT,
-        contents: prompt,
-        config: {
-          responseMimeType: 'application/json',
-          safetySettings: SAFETY_SETTINGS,
-          thinkingConfig: { thinkingBudget: 4000 },
-        },
-      } as any);
-      const result = parseAdScriptResponse(response.text || '{}');
+      const generate = async () => {
+        const response = await ai.models.generateContent({
+          model: MODEL_TEXT,
+          contents: prompt,
+          config: {
+            responseMimeType: 'application/json',
+            safetySettings: SAFETY_SETTINGS,
+            thinkingConfig: { thinkingBudget: 4000 },
+          },
+        } as any);
+        return parseAdScriptResponse(response.text || '{}');
+      };
+      let result = await generate();
+      if (!(result?.hook1?.length && result?.hook2?.length)) {
+        result = await generate().catch(() => result);
+      }
       return { ok: true, status: 200, json: async () => result } as any;
     }
     if (body.flow) {

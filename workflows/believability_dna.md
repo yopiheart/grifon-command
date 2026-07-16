@@ -160,6 +160,125 @@ like an ad" extreme).
 is proven, the exact register *fragments* still need the real A/B-on-Veo
 validation before they touch a tuned prompt.
 
+## Still-image raw-ugc scaffold (decoded 2026-07-16, World Cup pack)
+
+**Provenance:** "This is AI — World Cup Edition" prompt pack (iklipseworld.com,
+19 prompts). Neil generated from it and verified the outputs read as **real
+phone captures** ("Zam's 98% avatar") — on stills, prompt-only, **zero
+reference image**. This is a fully-worked field implementation of the
+`raw-ugc` register for **still images** (our `avatarModel` / scene-image
+surface), extending the register work beyond Veo video.
+
+**Corroboration status:** counts as corroboration **#2** for the raw-ugc
+register (after the 2026-06-26 Codex 3-register test). One more `real-human`-
+grade corroboration completes the ≥3 gate for the Gated Proposal below.
+Companion test pack: [believability-samples/ugc-photoreal-prompt-pack.md](believability-samples/ugc-photoreal-prompt-pack.md).
+
+**2026-07-16 test-pack run (evidence toward #3):** all 10 Grifon-scene
+transplant prompts generated on gpt-image-2 (codex-image, 1024×1536 → 864×1536
+9:16 crop) and graded by Neil against his World Cup results — **8 PASS at
+World Cup grade, 2 PASS w/ notes, 0 fail.** The scaffold transfers to Grifon's
+surfaces (avatars, testimonials, storyboard frames, ad heroes, organic) without
+losing realism — including the hard cases: flash physics (#3, #8), mirror
+reflection (#7), motion/follow-shot (#5), two-subject (#6). Per-prompt verdicts
+in the test pack file. Observed failure modes to carry into any fragment work:
+(a) multi-subject prompts trend look-alike faces + occasional splayed fingers;
+(b) hyper-local PH layouts need explicit description — the model's jeepney
+prior produced forward-facing bus seats (#9); (c) "text softly blurred" can
+render as a smeary censored-looking patch when zoomed (#10). Caveat unchanged:
+this is gpt-image-2, not the production Gemini stack — the Gated Proposal
+still requires the baseline-vs-fragment A/B on the real pipeline before any
+tuned-prompt change.
+
+### The 8-block anatomy (subject changes, scaffold never does)
+
+All 19 prompts stack the same blocks in roughly this order:
+
+1. **Capture-device framing first** — "Ultra-realistic **vertical smartphone**
+   photo / selfie / flash photo / mirror selfie." The image is described as
+   *an artifact of a device*, not a scene. Shot-type variants observed:
+   arm's-length front-cam selfie, friend-following-behind, high-overhead
+   selfie, shot-from-below crowd shot, mirror selfie with phone covering a
+   frame edge, seated candid, side-profile not-posing.
+2. **Named social context** — "UGC," "candid photo taken by a friend,"
+   "social-media-ready," "**not a studio fashion shoot**." Tells the model
+   which *distribution* of photos to sample from.
+3. **Camera physics & optics** — mild wide-angle distortion, extended selfie
+   arm visible/cropped at frame edge, sharp subject vs softly blurred
+   background, direct flash + darker noisy background, slight motion blur on
+   moving objects, "natural low-light grain."
+4. **Skin & fabric micro-texture** — realistic pores, visible hair strands,
+   natural shine on face/shoulders, "not overly retouched," fabric folds /
+   wrinkles / knot tension, condensation on a cup.
+5. **Deliberate *authored* imperfection** — "slightly imperfect face paint,"
+   "messy bun with loose strands," "imperfect real-life framing," "a small
+   piece of litter on one seat," "another fan's legs partially visible at the
+   frame edge." Imperfections are *specified*, not left to chance. This is
+   the core trick — and the prompt-level form of our own "preserve
+   imperfection" principle above.
+6. **Dense environmental storytelling** — 5–10 concrete props with spatial
+   placement (seat-row numbers painted on stairs, LED route sign, wayfinding
+   "sections 117–118"), background people present but "softly blurred."
+7. **Lighting named by physical source** — "real night stadium floodlights,"
+   "phone flash mixed with ambient night lights," "overhead fluorescent train
+   lights," "hotel lamp + window daylight." Never abstract ("moody," "soft").
+8. **The anti-AI ban tail** — "no HDR, no sepia, no artificial cinematic
+   grading, no studio lighting, no beauty filter, no over-polished." Kills
+   the default AI sheen.
+
+**Craft constants:** vertical 9:16; ONE continuous ~250–350-word paragraph;
+adult subjects; emotion always specified; hands always occupied (cup, flag,
+phone, food); in-image text constrained ("no clearly readable text" /
+"without warped text" — same philosophy as our `NO_TEXT_CONSTRAINT`).
+
+### Why no reference image is needed (and its limit)
+
+Realism comes from describing the **capture context** (device, optics, social
+situation, authored flaws), not from copying a real photo — so identity comes
+free *per image*. The limit: **cross-generation identity consistency remains
+unsolved** (the Step-zero caveat above — the Codex test produced 3 different
+people). For a recurring persona (Zam, Influencer Forge) the scaffold and the
+IDENTITY_LOCK reference-image path **combine**: reference image pins *who*,
+scaffold pins *how real it feels*. For one-off testimonial/social-proof
+stills, scaffold alone suffices — that's the edge over reference-image-only
+formulas.
+
+### Recorded tension: `generateAvatarImage` pushes the opposite direction
+
+The live wizard avatar prompt (`services/geminiService.ts` ~1733–1757, TUNED)
+specifies a "Professional Retouch Layer" and "Commercial Beauty Lighting
+(diffused, soft, high-key)" and forbids imperfection — i.e. it *actively
+removes* the trust signals this scaffold (and this whole doc) says to keep.
+Do NOT "fix" it in place: it may be intentional for the aspirational-UGC
+wizard look. The resolution is a **separate selectable register** (below),
+A/B'd against it, with the winner decided at proposal review.
+
+### Gated Proposal (DRAFT — do not apply; unlocks per validation loop)
+
+- **New constant `REALISM_INSTRUCTION_RAW_UGC`** alongside the existing style
+  constants (`services/geminiService.ts` ~833–870, TUNED). Fixed curated
+  fragment distilled from blocks 1–4 + 8 ONLY — blocks 5–7 (authored
+  imperfection, environment, lighting source) are **per-scene content** the
+  scene/avatar prompt builders supply, not fragment material. Draft fragment:
+
+  > "Ultra-realistic vertical smartphone photo, candid UGC style, as if
+  > taken by a real person on their phone — not a studio shoot, not an ad.
+  > Mild wide-angle phone distortion, sharp subject, slightly softer
+  > background, natural low-light grain where dim. Realistic skin: visible
+  > pores, natural shine, stray hair strands, not retouched. Real fabric
+  > folds and wrinkles. Imperfect real-life framing. No HDR, no cinematic
+  > grading, no studio lighting, no beauty filter, no over-polishing."
+
+- **Wiring points (documented, not edited):** register switch in
+  `generateSceneImage` (~line 2184 — currently binary
+  `REALISM_INSTRUCTION_CINEMATIC` vs `REALISM_INSTRUCTION_UGC`); append-point
+  in `generateAvatarImage` (~1749) and `generateInfluencerAvatar` (~1855) as
+  an opt-in **third register**, never a silent replacement.
+- **Unlock condition:** 3rd `real-human` corroboration + manual A/B on the
+  real Gemini pipeline (baseline vs with-fragment, `render_qa.mjs` + Neil's
+  eye) per the validation loop above. Business-tier register selection rides
+  the Concierge plan later — no product-tier work in this proposal.
+
 ## Model notes (2026-06-26 observations — eval, don't assume)
 
 - **gpt-image-2 (Codex) realism appears notably better than Gemini 3.1 Flash

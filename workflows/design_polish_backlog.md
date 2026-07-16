@@ -88,6 +88,21 @@ Wizard steps to audit (8 items, [Step1ClientDetails.tsx](../components/Step1Clie
 
 **How to resume:** Per module, read the file → identify the output reveal section (usually after a `generate*` async call) → apply Zone 3 treatments (gradient h2 on result section, gold ambient blur halo behind output, gold-bordered glass panel for "this is yours" emphasis, label-caps "// YOUR OUTPUT" type subhead). Don't add drama to inputs/forms — those stay Zone 2.
 
+**Per-module audit skeleton** *(adopted 2026-07-13, structure borrowed from leonxlnx/taste-skill's redesign-skill — its Scan→Diagnose→Fix sequence and categories only; all aesthetic answers come from DESIGN.md + the three-zones framework, never from taste-skill)*:
+
+*Scan* — read the module, classify each region into Zone 2 (inputs/chrome) vs Zone 3 (output reveal) before touching anything.
+
+*Diagnose* — walk 7 categories, noting `file:line` per finding:
+1. **Typography** — gradient direction, weight ladder (400/600/700, no 500), mono sub-labels, legibility floor (≥12px for actionable text).
+2. **Color & surfaces** — canvas `bg-zinc-950`, gold-only accent, glass-not-shadow elevation, suspect off-palette hexes (the `#10B981` / `bg-red-500` class of finding).
+3. **Layout & spacing** — token heights (`CTRL_H` floor), radius tiers, 8/16/24/32 spacing steps, no ad-hoc paddings that fight `wizardTokens`.
+4. **Interactivity & states** — hover/focus/disabled visible, loading + empty + error states exist, tap targets ≥44px, `motionTokens` (never inline timing).
+5. **Content & labels** — UBIQUITOUS_LANGUAGE.md terms, no engine names leaking to UI, "Grifon" not "Grifon AI".
+6. **Components** — inline class blobs that should be GlassPanel/GoldButton/TextField primitives; legacy accents to purge on touch.
+7. **Code quality** — hardcoded values that have a token, dead classes, missing `shrink-0` on flex icons, hidden native inputs.
+
+*Fix* — Zone 3 treatments on reveals, primitive swaps, token conformance — in that order; then run `brand-check` (fresh-critic mode) on the diff before calling the module done.
+
 ### P2 · Per-route OG card variant for `/pricing`
 
 **Status:** Optional polish.
@@ -123,6 +138,11 @@ Wizard steps to audit (8 items, [Step1ClientDetails.tsx](../components/Step1Clie
 **Status:** Content gap, not design system.
 
 **Why deferred:** Need real generated assets to show.
+
+**Asset policy** *(adopted 2026-07-13 from leonxlnx/taste-skill's image strategy — governs these slots and any future marketing visual)*:
+1. **Real asset first** — an actual generated ad still / real module screenshot (the `codex-image` skill or a Playwright screenshot of the live module are the in-house generation lanes).
+2. **If no real asset yet:** an explicitly *labeled* placeholder slot (e.g. dashed border + "AD STILL — pending campaign render" mono caption) so the gap is honest and trackable.
+3. **Never:** a fake screenshot mocked out of styled divs, or a generic lucide icon standing in for content. Fake-div product shots are now a brand-check flag ("Layout & pattern slop" section). The hero must carry a real visual asset before paid traffic.
 
 Two specific spots:
 1. **"MADE BY AI" carousel cards** ([LandingPage.tsx:165-200](../components/LandingPage.tsx)) — three cards have empty centers with generic lucide icons (Building2, UtensilsCrossed, ShoppingBag) instead of real 9:16 ad still frames from generated campaigns.

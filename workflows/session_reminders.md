@@ -21,6 +21,29 @@ shell command), so this doc is the restore mechanism: paste the command to re-ar
 > surfaces every `/loop` line in this file automatically at session start — keep new
 > re-arm commands on their own line starting with `/loop` so the hook picks them up.
 
+## Tooling: Codex CLI (codex-image + codex-executor / GPT 5.6 Sol lane) — wiped by defreezer
+
+Both Codex bridge skills (`.claude/skills/codex-image/`, `.claude/skills/codex-executor/`)
+need the Codex CLI installed and logged in. The defreezer wipes `~/.codex/` and the
+global npm install every reboot — re-arm with:
+
+```
+scripts/restore-codex.ps1
+```
+
+(Neil signs in with the ChatGPT account when `codex login` prompts.) If the Sol
+executor lane exits 10/11/12 mid-session, the fallback SOP is: dispatch the same
+brief to the `code-executor` subagent (Opus 4.8) — see the skill's SKILL.md.
+
+## Desktop wallpaper (Grifon Noir) — wiped by defreezer
+
+The defreezer resets the Windows wallpaper every reboot. Re-arm (v1 = "Ship one real
+thing."; picker gallery at [assets/wallpapers/gallery.html](../assets/wallpapers/gallery.html)):
+
+```
+powershell -ExecutionPolicy Bypass -File scripts\set-wallpaper.ps1 -Variant v1
+```
+
 ## Tooling: Python — wiped by defreezer
 
 `tools/*.py` (omni_edit, analyze_video, …) need Python; the defreezer removes it every
@@ -91,25 +114,47 @@ Resume doc: `workflows/omni_edit_styles_plan.md` → **RESUME STATE** section
 Delete this section once `OMNI_STYLES_ENABLED` + `OMNI_STYLES_BETA_ALLOWLIST`
 are set in Vercel (the feature merged to main 2026-07-07, PR #47).
 
-## Dated: re-pin the main model OFF Fable after Jul 12, 2026
+## Dated: Fable sunset — Jul 20, 2026 2:59 PM PHT (2026-07-20T06:59Z) — EXTENDED
 
-**Fixed 2026-07-09.** The main-loop pin in `.claude/settings.json` is back to
-`claude-fable-5`. Fable credits run **through Jul 12, 2026** (Neil, 2026-07-08).
+**EXTENDED 2026-07-13** (Anthropic email: "Fable 5 access and increased Claude Code
+rate limits are extended through Sunday, July 19" — 11:59 PM PT = Jul 20, 2:59 PM
+PHT; starting Jul 20 all Fable 5 usage runs on usage credits. Neil-confirmed same
+day): hook deadline re-dated `202607130659 → 202607200659`. This session started
+before the old deadline fired, so the pin never flipped and stays `claude-fable-5`.
 
-**What went wrong (do not repeat):** on 2026-07-07 the pin was flipped to
-`claude-opus-4-8` on the false belief that the promo had ended and credits were
-depleted. It had not. Neil kept picking Fable in the `/model` UI; the committed
-project pin silently overrode it, and two sessions of "Fable work" — including the
-Slice-4 plan and its tuned prompt drafts — actually ran on Opus 4.8. Nobody noticed
-until Neil cross-checked `/model` against `/context`.
+**Decided 2026-07-10** (Neil + Claude — screenshot confirmed Fable 5 is included in
+plan limits until the sunset, up to 50% of weekly limits): the main-loop pin
+is back on `claude-fable-5`. The Jul 7 re-pin to Opus was premature (its
+depleted-credits premise turned out stale) and was what auto-switched Neil's sessions
+off Fable. Successor after sunset: **Opus 4.8** (main loop + checker, `/fable-mode`
+as discipline hedge). Executor/smoke pins unchanged.
 
-**The rule that would have caught it:** `.claude/settings.json` `"model"` OVERRIDES
-the `/model` picker. The picker's checkmark can show Fable while the session runs
-Opus. **Trust `/context`, not the checkmark.** A model claim in CLAUDE.md is not
-evidence — the pin and the runtime identity are.
+The handover is automated two ways; the early-exhaustion case is manual:
 
-**Next trigger (after Jul 12, 2026):** when Fable credits lapse, re-pin
-`"model": "claude-opus-4-8"` in `.claude/settings.json`, update the CLAUDE.md
-usage-budget bullet, and note the date here. Until then `/fable-mode` is unnecessary
-— the main loop IS Fable. The `code-executor` (Opus 4.8) and `smoke-tester`
-(Sonnet 5) frontmatter pins are unchanged and correct.
+1. **SessionStart hook** ([.claude/hooks/session-start.sh](../.claude/hooks/session-start.sh)):
+   after the deadline, flips the settings.json pin to `claude-opus-4-8` in the working
+   tree and prints a loud banner (current session may still be on Fable at prepaid API
+   rates — switch/restart, then commit the flip).
+2. **Run-once Routine** (remote, fires 2026-07-20T06:59Z): a fresh session opens a
+   one-line flip PR for Neil to merge, so origin/main is correct at the deadline.
+   **STATUS: NOT YET ARMED** — the create_trigger call needs Neil's interactive
+   approval (blocked 2026-07-10). To arm: in any remote session, say "arm the Fable
+   sunset Routine per session_reminders.md" and approve the prompt. If never armed,
+   mechanism 1 (the hook) still handles the flip on the first post-deadline session.
+3. **Manual — Fable allowance hits 100% BEFORE Jul 19** (no hook/Routine can read the
+   usage meter): check `/usage` at session start; if the Fable share (50% of weekly)
+   is exhausted, tell Claude "flip the pin to Opus" — one-line settings.json edit,
+   commit, push. Do NOT keep running Fable on prepaid credits ($10/$50 per M).
+
+**Opt back into Fable on paid credits (post-sunset).** If Neil says "balik Fable /
+flip the pin back to Fable, willing ako sa credits": (1) confirm he knows post-sunset
+Fable bills prepaid API credits (~$10 input / $50 output per M tokens) and that
+credits are loaded on the account; (2) re-pin `"model": "claude-fable-5"` in
+`.claude/settings.json`; (3) **in the SAME commit, delete the sunset flip block in
+`.claude/hooks/session-start.sh`** — its condition is "past deadline AND pin == fable
+→ flip to opus", so left alive it re-flips the pin to Opus at every session start
+and silently fights the re-pin; (4) commit + push (PR or direct, per Neil's call at
+the time).
+
+**Cleanup after the flip merges:** delete this section, the sunset block in
+session-start.sh, and re-check the CLAUDE.md usage-budget bullet says Opus 4.8.

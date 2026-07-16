@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Grifon Noir Wallpapers — Picker</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #09090B; color: #e8eaed; font-family: 'Segoe UI', Arial, sans-serif; padding: 40px; }
+  h1 { color: #FFCC00; font-size: 22px; margin-bottom: 6px; }
+  .note { color: #9aa0a6; font-size: 13px; margin-bottom: 28px; }
+  .note code { color: #d4d4d8; background: #18181b; padding: 2px 6px; border-radius: 4px; }
+  .grid { display: grid; grid-template-columns: 1fr; gap: 28px; max-width: 1100px; }
+  .card { background: #101014; border: 1px solid #26262b; border-radius: 14px; overflow: hidden; }
+  .card img { width: 100%; display: block; }
+  .meta { padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; }
+  .meta b { color: #fff; font-size: 14px; }
+  .meta span { color: #9aa0a6; font-size: 12px; }
+  .meta a { color: #FFCC00; font-size: 12px; text-decoration: none; margin-left: 14px; }
+  .meta a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+  <h1>Grifon Noir Wallpapers</h1>
+  <div class="note">
+    Pick one, then run: <code>powershell -ExecutionPolicy Bypass -File scripts\set-wallpaper.ps1 -Variant v1</code>
+    (or v2/v3) from the repo root. Re-run after every defreezer reboot — it's on the session re-arm checklist.
+  </div>
+  <div class="grid">
+    <div class="card">
+      <img src="wallpaper-noir-v1-1920x1080.png" alt="v1">
+      <div class="meta">
+        <b>v1 — "Ship one real thing."</b>
+        <span>daily ritual, centered
+          <a href="wallpaper-noir-v1-3840x2160.png">4K</a>
+          <a href="wallpaper-noir-v1-1920x1080.png">1080p</a>
+        </span>
+      </div>
+    </div>
+    <div class="card">
+      <img src="wallpaper-noir-v2-1920x1080.png" alt="v2">
+      <div class="meta">
+        <b>v2 — "While they scroll, you ship."</b>
+        <span>right-weighted, icons stay left
+          <a href="wallpaper-noir-v2-3840x2160.png">4K</a>
+          <a href="wallpaper-noir-v2-1920x1080.png">1080p</a>
+        </span>
+      </div>
+    </div>
+    <div class="card">
+      <img src="wallpaper-noir-v3-1920x1080.png" alt="v3">
+      <div class="meta">
+        <b>v3 — "GRIFON — command the machine."</b>
+        <span>wordmark, most minimal
+          <a href="wallpaper-noir-v3-3840x2160.png">4K</a>
+          <a href="wallpaper-noir-v3-1920x1080.png">1080p</a>
+        </span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -167,7 +167,7 @@ export const resolveUgcProSubType = async (
 
 type FlowHandler = (input: any, ai: GoogleGenAI) => Promise<unknown>;
 
-const FLOW_REGISTRY: Record<string, FlowHandler> = {
+export const FLOW_REGISTRY: Record<string, FlowHandler> = {
   marketmind: async (input: MarketResearchInput, ai) => {
     const parts = buildMarketMindParts(input);
     // TEMPORARY (per Neil 2026-05-09): downgraded from MODEL_RESEARCH (3.1 Pro)
@@ -204,8 +204,9 @@ const FLOW_REGISTRY: Record<string, FlowHandler> = {
       ugcProSubType = await resolveUgcProSubType(input.businessInfo, ai);
     }
     const prompt = buildAdScriptPrompt(input, temuSubType, ugcProSubType);
-    // Single-shot generate + parse. Extracted so the transformation verb-reroll
-    // below can re-run the identical call without duplicating config.
+    // Single-shot generate + parse. Extracted so the hook-starvation retry and the
+    // transformation verb-reroll below can re-run the identical call without
+    // duplicating config.
     const generateAndParse = async (flowTag: string) => {
       const response = await ai.models.generateContent({
         model: MODEL_TEXT,
@@ -221,6 +222,20 @@ const FLOW_REGISTRY: Record<string, FlowHandler> = {
     };
 
     let script = await generateAndParse('flow:adscript');
+
+    // Hook starvation (issue #59): Gemini stochastically returns empty hook
+    // arrays, TESTIMONIAL-heavy. Regenerate once INSIDE this already-metered
+    // request (one workflow unit — see the one-generation-one-workflow rule at
+    // the consumeMonthly block). If the regeneration itself fails, keep the
+    // first parsed result rather than discarding it.
+    if (!(script?.hook1?.length && script?.hook2?.length)) {
+      console.warn('[adscript] empty hook1/hook2 — regenerating once (hook starvation, #59)');
+      try {
+        script = await generateAndParse('flow:adscript:hook-retry');
+      } catch {
+        // keep the first parsed result
+      }
+    }
 
     // TRANSFORMATION beat-1 (body[0]) must be a working application line, not a posed
     // product intro. Prompt instructions alone failed 4/4 in the Slice-1 eval loop, so

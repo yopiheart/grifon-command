@@ -1,0 +1,69 @@
+<!doctype html>
+<!-- GRIFON noir carousel — Slide 1 HOOK COVER (Kallaway structure: eyebrow + sans/serif split headline + curiosity sub + swipe cue) -->
+<html lang="tl">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: #333; }
+  #canvas {
+    position: relative; width: 1080px; height: 1350px; overflow: hidden;
+    background: radial-gradient(ellipse 900px 750px at 50% 40%, #131316 0%, #09090B 58%, #070708 100%);
+    font-family: 'Inter', sans-serif;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .glow {
+    position: absolute; left: 50%; top: 44%; width: 860px; height: 560px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(ellipse at center, rgba(255,204,0,0.06) 0%, rgba(255,204,0,0.02) 45%, transparent 70%);
+  }
+  .grain {
+    position: absolute; inset: 0; z-index: 9; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.15; mix-blend-mode: screen;
+  }
+  .stack { position: relative; text-align: center; transform: translateY(-30px); padding: 0 70px; }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace; font-size: 20px;
+    letter-spacing: 0.32em; text-transform: uppercase; color: #FFCC00; opacity: .85;
+    margin-bottom: 54px;
+  }
+  .line-sans {
+    font-weight: 900; font-size: 116px; line-height: 1.02; letter-spacing: -0.025em;
+    text-transform: uppercase;
+    background: linear-gradient(to bottom, #F4F4F5 0%, #71717A 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .line-serif {
+    font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-weight: 400;
+    font-size: 136px; line-height: 1.0; color: #FFCC00; margin-top: 10px;
+    text-shadow: 0 0 55px rgba(255,204,0,0.25);
+  }
+  .sub {
+    margin-top: 74px; font-size: 33px; font-weight: 600; line-height: 1.5; color: #F4F4F5;
+  }
+  .sub .swipe { color: #FFCC00; font-weight: 700; white-space: nowrap; }
+  .sig {
+    position: absolute; left: 50%; bottom: 64px; transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace; font-size: 14px;
+    letter-spacing: 0.42em; text-transform: uppercase; color: #52525B;
+  }
+</style>
+</head>
+<body>
+<div id="canvas">
+  <div class="glow"></div>
+  <div class="stack">
+    <div class="eyebrow">// grifon ai &middot; ad school</div>
+    <div class="line-sans">Hook muna,</div>
+    <div class="line-serif">bago ang benta.</div>
+    <div class="sub">Yung 4 na hook types na ginagamit ng ads<br>na hindi sini-skip ng tao. <span class="swipe">Swipe &#8594;</span></div>
+  </div>
+  <div class="sig">grifon</div>
+  <div class="grain"></div>
+</div>
+</body>
+</html>

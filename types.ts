@@ -547,7 +547,16 @@ export type SfxBankId =
   | 'snap'
   | 'swish'
   | 'boom'
-  | 'sparkle';
+  | 'sparkle'
+  // Diegetic classes (Slice 2, workflows/sfx_upgrade_plan.md) — variant-only (no
+  // legacy static mp3) and EDL-unreachable by design (api/render/final.ts z.enum
+  // and geminiService SFX_BANK deliberately stay at the 10 legacy classes; diegetic
+  // cues originate only from the server-side trigger table in api/_lib/sfxTriggers.ts).
+  | 'chaching'
+  | 'notification'
+  | 'paper'
+  | 'shutter'
+  | 'typing';
 
 export type TransitionType = 'cut' | 'flash' | 'whip' | 'zoom' | 'particles';
 

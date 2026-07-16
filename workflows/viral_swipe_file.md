@@ -167,21 +167,25 @@ Proposals or applied discussion) → `applied` (shipped in Grifon).
 
 | ID | Pattern | Corroborations | Status |
 | --- | --- | --- | --- |
-| P1 | Caption churn is the engine of perceived pace, not cut rate — 1–3 word chunks swap every 0.4–0.6s while shots hold 4–7s | 6 (+E7); **contradicted ×4 (E8–E11)** — TEMU product drops have ZERO caption churn; pace is the 1–2s cut rate | applied — drives Slice 4 word-pop/chunk sizing; **niche-scoped: does NOT hold for no-avatar product drops** |
-| P2 | Caption treatment: outline+shadow, never a background box; gold/yellow or white; emphasis via solo-word card or two-tone | 5 | applied — renderPresets caption styles |
-| P3 | Nobody morphs, ever — product reveals are hard cuts, title-card slams, or in-hand-from-frame-1; whip-pan blur masks big changes | 11 (+E8,E9,E10,E11 — all hard cuts, product in-frame @0s) | proposed — hook blob fix (TUNED, gated; see edit_style_research §6) |
-| P4 | Always be zooming: 3–6%/s push on every static shot, alternating direction; punch-ins reserved for pivots/CTA | 4 | applied — preset camera defaults; **contradicted by E3 (stunt UGC) + E6 (authority talking-head)** — static wins when subject/credibility carries it |
-| P5 | Zero dead air: VO fills ≥99% of timeline; at most ONE deliberate ≤0.5s pause right before the payoff | 8 (+E11; E8–E10 n/a — no VO exists to fill) | observed |
-| P6 | Proof is graphic, not spoken — pills, chips, dashboards, numerals popped on screen | 4 (+E7) | observed; E6 contradicts (data spoken, not popped); E7 confirms (stat + nutrient word-cards) |
-| P7 | Text on frame 1 — hook caption already on screen when the video starts | 9 (+E8,E9,E10; E11 watermark-only = flagged, not counted) | applied — hook text delay → 0 (Slice 3) |
-| P8 | Strobe/flash bookends (1–3 frames) open and close short-form edits — cheap scroll-stop + clean out | 2 | observed (below threshold) |
+| P1 | Caption churn is the engine of perceived pace, not cut rate — 1–3 word chunks swap every 0.4–0.6s while shots hold 4–7s | 11 (+E8–E12); **contradicted ×4 (E15–E18 TEMU)** — TEMU product drops have ZERO caption churn; pace is the 1–2s cut rate | applied — drives Slice 4 word-pop/chunk sizing; **niche-scoped: does NOT hold for no-avatar product drops** |
+| P2 | Caption treatment: outline+shadow, never a background box; gold/yellow or white; emphasis via solo-word card or two-tone | 8 (+E9–E11) | applied — renderPresets caption styles. Variance from 2026-07-12 batch: `plain` (no outline) treatment in 4/7 reels; accent color is brand-variable (green/purple/red-pink/yellow), never a box anywhere (core rule held 7/7); E14 is a 25%-height lowercase outlier |
+| P3 | Nobody morphs, ever — product reveals are hard cuts, title-card slams, or in-hand-from-frame-1; whip-pan blur masks big changes | 12 (+E14; +E15–E18 TEMU — all hard cuts, product in-frame @0s) | proposed — hook blob fix (TUNED, gated; see edit_style_research §6) |
+| P4 | Always be zooming: 3–6%/s push on every static shot, alternating direction; punch-ins reserved for pivots/CTA | 4 | applied — preset camera defaults; **contradicted by E3 (stunt UGC) + E6 (authority talking-head) + the whole 2026-07-12 creator batch (E8–E13: static camera, 10–15% punch-ins on emphasis/cuts ONLY, no continuous drift)** — static + emphasis-punch wins when subject/credibility carries it |
+| P5 | Zero dead air: VO fills ≥99% of timeline; at most ONE deliberate ≤0.5s pause right before the payoff | 15 (+E8–E14; +E18; E15–E17 n/a — no VO exists to fill) | observed |
+| P6 | Proof is graphic, not spoken — pills, chips, dashboards, numerals popped on screen | 7 (+E8,E9,E12) | observed; E6 contradicts (data spoken, not popped); E7 confirms (stat + nutrient word-cards); E8/E9/E12 confirm (phone mockups, retention chart, follower count-up ticker, article/YouTube screenshots) |
+| P7 | Text on frame 1 — hook caption already on screen when the video starts | 11 (+E8,E14; +E15–E17 TEMU; E18 watermark-only = flagged, not counted) | applied — hook text delay → 0 (Slice 3) |
+| P8 | Strobe/flash bookends (1–3 frames) open and close short-form edits — cheap scroll-stop + clean out | 3 (+E13) | **proposed — threshold reached 2026-07-12 (E13 flash overlay @0.4s); proposal pending Neil** |
+| P11 | **UI pop-up card device**: notification/DM/comment/profile-mockup cards pop in as motion-graphic proof or callout, SFX-synced, over talking-head footage | 5 (E8–E12) | **proposed — feeds `creator-ui-pop-v1`** (omni_edit_presets.md); E9 is an ACTUAL Devin Jatho reel, upgrading that preset's secondhand-origin caveat to firsthand evidence |
+| P12 | **Glitch/datamosh transition** on emphasis pivots (with glitch-whoosh SFX) | 3 (E8–E10) | **proposed — threshold reached 2026-07-12**; FFmpeg-class (filter + existing `glitch.mp3`); pending Neil |
+| P13 | **SFX-per-entrance discipline**: EVERY graphic entrance/transition carries a synced hit (whoosh/pop/ding); diegetic hits on content mentions (cash-register on money, paper rustle on docs, shutter on camera motifs); music = low-key steady beat, never competing | 7 (E8–E14) | **proposed — threshold reached 2026-07-12**; E14 runs 11 hits in 51s (one per transition), E11 syncs notification pops to UI cards; ties to the SFX shopping list (omni_edit_presets.md) + Neil's per-ad custom SFX idea (grill in progress) |
+| P14 | **Caption-only CTA**: "Comment "X" for the [asset]" as a silent caption overlay holding to final frame — never spoken in VO | 1 (E13) | observed (new candidate) |
 | P9 | **VSL grammar — KERNEL (preset candidate `vsl`)**: white 1–3 word word-pop captions churning sub-0.5s, **solo word-cards for key numbers/nutrients**, whip-pan/match cuts, title-card product slam, post-zoom (from generation), zero dead air, text-on-frame-1. *Variable (studio/length-specific, do not bake):* 5–6s vs ~2.4s shots, reveal 40–45% vs ~62%, the single pre-payoff pause, ExtraBold-Italic vs ALL-CAPS. | 3 (E4, E5, **E7**) | **proposed** (Neil accepted E7 as #3, 2026-06-26 — kernel cross-confirmed across 2 studios + long-form & short formats) → see Gated Proposals |
 | P10 | **Authority/practitioner talking-head UGC**: credentialed expert (scrubs/title-card on frame 1) → problem → solution → CTA; plain white sentence-case captions, hard cuts, *static* camera, ingredient/data points spoken in VO not popped | 1 (E6) | observed (new candidate) |
-| P12 | **TEMU product-drop grammar**: NO humans (hands only), product in-frame @0s, static title-card/POV text on frame 1, hard cuts at 1–2s median, 16–27s total, music-led energy, **zero caption churn**, proof beat mid-video, weak/no held CTA | 4 (E8, E9, E10, E11) | **proposed** → see Gated Proposals (feeds the TEMU One-Shot Slice 3 re-spec) |
-| P13 | **No-VO music-led drop (Format B)**: zero voiceover, upbeat bed carries ALL energy at lead volume, ONE static product-name/POV overlay does the verbal work, pace from cut rate alone | 3 (E8, E9, E10) | **proposed** → see Gated Proposals (validates the shipped Pure Hype `sfx_only` recipe; overlay copy register = title card, NOT churning deal text) |
-| P14 | **AI-TTS-over-real-b-roll is winner-viable**: synthetic VO over real hands-on footage wins anyway — believability lives in the footage, not the voice (Format A thesis) | 1 (E11) | observed (new candidate — needs 2 more VO-led product-drop winners) |
+| P15 | **TEMU product-drop grammar**: NO humans (hands only), product in-frame @0s, static title-card/POV text on frame 1, hard cuts at 1–2s median, 16–27s total, music-led energy, **zero caption churn**, proof beat mid-video, weak/no held CTA | 4 (E15, E16, E17, E18) | **proposed** → see Gated Proposals (feeds the TEMU One-Shot Slice 3 re-spec). *Renumbered P12→P15 at the 2026-07-16 merge — the 2026-07-09 TEMU batch and the 2026-07-12 creator batch both claimed P12–P14 on parallel branches; creator batch keeps them (already cited by sfx_upgrade_plan/omni_edit_presets)* |
+| P16 | **No-VO music-led drop (Format B)**: zero voiceover, upbeat bed carries ALL energy at lead volume, ONE static product-name/POV overlay does the verbal work, pace from cut rate alone | 3 (E15, E16, E17) | **proposed** → see Gated Proposals (validates the shipped Pure Hype `sfx_only` recipe; overlay copy register = title card, NOT churning deal text). *Renumbered P13→P16 (same 2026-07-16 merge note as P15)* |
+| P17 | **AI-TTS-over-real-b-roll is winner-viable**: synthetic VO over real hands-on footage wins anyway — believability lives in the footage, not the voice (Format A thesis) | 1 (E18) | observed (new candidate — needs 2 more VO-led product-drop winners). *Renumbered P14→P17 (same 2026-07-16 merge note as P15)* |
 
-### P11+ — Believability family (capture live 2026-06-26; see `believability_dna.md`)
+### P18+ — Believability family (capture live 2026-06-26; see `believability_dna.md`; renumbered from "P11+" 2026-07-12 when edit-grammar rows P11–P14 claimed the range, then from "P15+" 2026-07-16 when the TEMU rows renumbered to P15–P17 at the branch merge — family unchanged, still zero rows)
 
 What makes a *human subject* read as real and trustworthy (vs "AI slop") —
 performance, voice delivery, lighting, camera/lens, image realism, lip-sync — plus
@@ -196,8 +200,9 @@ the Edit-DNA patterns above (P1–P10) because each cue is **surface-tagged**:
 **only** from `real-human` (`source_realism_verdict`) sources — `likely-ai` winners
 are excluded and instead feed the **AI-tells / avoid** catalog below. Believability
 rows are created the first time a `real-human` autopsy surfaces a recurring
-believability cue (same lifecycle as P1–P10) — **number them P15+ (P12–P14 were
-claimed by the 2026-07-09 TEMU Edit-DNA batch)**; Surface B/C rows can reach
+believability cue (same lifecycle as P1–P17) — **number them P18+ (P11–P14 were
+claimed by the 2026-07-12 creator batch, P15–P17 by the 2026-07-09 TEMU batch at
+the 2026-07-16 renumber)**; Surface B/C rows can reach
 `proposed` only via `believability_dna.md`'s validation loop, never a bare ≥3.
 
 *(No rows yet — seeded empty on purpose; the first `real-human` autopsy populates them.)*
@@ -240,22 +245,22 @@ corroborations may appear here. The viral-autopsy skill never applies these.*
   `verify-changes`, never as an autopsy side effect.
   Status: with Neil.
 
-- **P12 + P13 → TEMU One-Shot prompt re-spec (TUNED — `api/_lib/prompts.ts` adscript + storyboard Temu branches).**
-  Evidence: P12 at 4/4 (E8–E11), P13 at 3/3 (E8–E10) — Neil's own most-recent-viral batch,
+- **P15 + P16 → TEMU One-Shot prompt re-spec (TUNED — `api/_lib/prompts.ts` adscript + storyboard Temu branches).** *(IDs renumbered from P12+P13 / E8–E11 at the 2026-07-16 merge — see the E15 entry note.)*
+  Evidence: P15 at 4/4 (E15–E18), P16 at 3/3 (E15–E17) — Neil's own most-recent-viral batch,
   every timing figure ffmpeg-verified via `render_audit.mjs`. This IS the evidence gate for
   **Slice 3** of the approved TEMU plan (`~/.claude/plans/tsaka-bro-ung-temu-streamed-mochi.md`);
   plumbing (audioMode axis + Pure Hype recipe + fast-cut EDL targets) already shipped as
   Slices 1–2 (commits d103cd0/6c792ed/6f037db). Proposed prompt-facing implications, for Neil:
   - Storyboard Temu branch: zero humans incl. the current "Avatar reaction" scene (hands
     allowed; non-talking avatar b-roll ONLY for worn/on-body products per Neil's Format A rule
-    — note: none of E8–E11 needed one); product in-frame @0s; 7–10 scenes at 1–2s cuts,
+    — note: none of E15–E18 needed one); product in-frame @0s; 7–10 scenes at 1–2s cuts,
     **16–20s total** (evidence range 16–18s no-VO, 27s VO demo); one proof/stress-test beat.
   - Overlay copy register: ONE static product-name/POV title card on frame 1 (1–8 words),
-    NOT churning deal text; optional deals card near the close (E11 @21s) — maps to the
+    NOT churning deal text; optional deals card near the close (E18 @21s) — maps to the
     existing end-card mechanism.
-  - Format A (VO) script register: benefit-per-cut spec-rattle like E11's transcript;
-    TTS voice is fine (P14) — no talking human ever.
-  - E8–E10 had NO SFX hits (music only); E11 used 4 action-synced hits → keep SFX
+  - Format A (VO) script register: benefit-per-cut spec-rattle like E18's transcript;
+    TTS voice is fine (P17) — no talking human ever.
+  - E15–E17 had NO SFX hits (music only); E18 used 4 action-synced hits → keep SFX
     optional/action-synced for Format B, not the default whoosh-on-overlay map.
   Status: with Neil (drafts to be produced under the Slice 3 gate — this proposal is the
   autopsy+evidence half; the `grifon-cmo` conversion pass is the other half).
@@ -269,9 +274,9 @@ what to avoid in *ours*. Populated as `likely-ai` `source_realism_verdict`s accr
 each entry cites the autopsy + the specific tell (skin/hands/teeth/eye artifact,
 lip-sync drift, impossible lighting, plastic over-clean texture).*
 
-- **2026-07-09 · E11 (verdict `mixed`) — synthetic TTS cadence.** The one AI element in an
+- **2026-07-09 · E18 (verdict `mixed`; renumbered from E11 2026-07-16) — synthetic TTS cadence.** The one AI element in an
   otherwise real-footage TEMU winner: "slightly robotic cadence and pronunciation throughout"
-  + a mispronunciation @22s ("flexible"→"flat"). Tell, not a killer — the ad wins anyway (P14).
+  + a mispronunciation @22s ("flexible"→"flat"). Tell, not a killer — the ad wins anyway (P17).
   Avoid-lesson for OUR Format A: phonetic-normalize product/spec words (we already have
   `phoneticNormalizer.ts`) and keep VO lines short/benefit-per-cut so cadence flaws can't
   accumulate. Footage realism is what carried it — never pair TTS with synthetic-looking b-roll.
@@ -373,7 +378,12 @@ after E6 (authority-UGC) missed. · **File:** `.tmp/viral-intel/im8-glp1-1019504
 **Patterns:** corroborates **P1** (sub-0.5s caption churn), **P3** (title-card/hard-cut reveal, no morph), **P5** (zero dead air), **P6** (graphic proof + word-cards), **P7** (text on frame 1); **P9 kernel** — hits the *distinctive* P9 elements (1–3w word-pop captions, **solo word-cards for numbers**, whip-pans, title-card product slam, post-zoom) but diverges on the E4/E5-specific specs (shots ~2.4s not 5–6s; reveal ~62% not 40–45%; no pre-payoff pause; ALL-CAPS not Italic).
 **Verified (2026-06-26):** `render_audit.mjs` — duration 62.0 vs ffmpeg 62.21s; shots 24 vs ffmpeg ~20; median 2.0 vs ~2.4s; caption swap 0.4s confirmed (new caption nearly every 0.5s frame); solo word-cards + title-card slam confirmed off frames; transcript matched verbatim. Reads trustworthy.
 
-### 2026-07-09 — E8 TEMU bottle-carrier bag drop (tiktok/savetik, TEMU e-comm product drops)
+### 2026-07-09 — E15 TEMU bottle-carrier bag drop (tiktok/savetik, TEMU e-comm product drops)
+
+*(Batch renumbered E8–E11 → E15–E18 and P12–P14 → P15–P17 at the 2026-07-16 branch
+merge: this TEMU batch and the 2026-07-12 creator batch claimed the same IDs on
+parallel branches; the creator batch keeps E8–E14/P11–P14 because sfx_upgrade_plan
+and omni_edit_presets already cite them.)*
 **Why autopsied:** Neil-picked batch of TEMU's most recent virals (4 videos) — evidence base for the TEMU One-Shot recipe re-spec (Format A/B, plan `tsaka-bro-ung-temu-streamed-mochi`). File: `.tmp/viral-intel/savetik-1783598750.json` (disposable).
 **Format:** feature showcase, **16.0s, 8 shots (ffmpeg; median 1.3s)** — **NO VO** (music-led).
 
@@ -385,10 +395,10 @@ after E6 (authority-UGC) missed. · **File:** `.tmp/viral-intel/im8-glp1-1019504
 **Why it works:** product-in-use @0s (high); 5-item packing density in 9s window (high); POV hook line does ALL the verbal work — music carries energy (high).
 **Weaknesses:** no CTA anywhere; identification rides entirely on the one text line.
 **So What for Grifon:** direct Format B (Pure Hype/`sfx_only`) corroboration — no VO, BGM-led, ONE static hook overlay from frame 1 (NOT churning deal text). → target: storyboard/adscript TEMU re-spec (TUNED, gated — Slice 3) + overlay copy register.
-**Patterns:** corroborates P3, P7; **contradicts P1** (zero caption churn — pace is cut-rate + in-frame action); new candidates → P12, P13.
+**Patterns:** corroborates P3, P7; **contradicts P1** (zero caption churn — pace is cut-rate + in-frame action); new candidates → P15, P16.
 **Verified (2026-07-09):** `render_audit.mjs` — ffmpeg 15.98s / 8 scenes / median 1.30s (Gemini overcounted 13 → trust ffmpeg); frame-OCR confirms single persistent POV caption from 0.25s; "No voiceover present" confirmed.
 
-### 2026-07-09 — E9 TEMU foldable storage cabinet drop (tiktok/savetik, TEMU e-comm product drops)
+### 2026-07-09 — E16 TEMU foldable storage cabinet drop (tiktok/savetik, TEMU e-comm product drops)
 **Why autopsied:** same Neil batch. File: `.tmp/viral-intel/savetik-1783598899.json` (disposable). *Specificity note: passed on quantified fields; 3rd why-claim was qualitative (excluded below).*
 **Format:** product demo (assembly→styling), **17.7s, 14 shots (ffmpeg; median 1.07s)** — **NO VO** (music-led).
 
@@ -400,10 +410,10 @@ after E6 (authority-UGC) missed. · **File:** `.tmp/viral-intel/im8-glp1-1019504
 **Why it works:** instant value demo — flat-pack to assembled in <3s (high); feature density across 14 cuts in 17.7s (high).
 **Weaknesses:** no CTA; vocal music bed would fight a VO if one were added (none is).
 **So What for Grifon:** Format B corroboration #2 — and the overlay is a **product-name title card**, not price text. Assembly-speed-as-hook maps to our Scale/In-Use beats. → Slice 3 re-spec evidence.
-**Patterns:** corroborates P3, P7; contradicts P1 (no churn); P12, P13.
+**Patterns:** corroborates P3, P7; contradicts P1 (no churn); P15, P16.
 **Verified (2026-07-09):** `render_audit.mjs` — ffmpeg 17.69s / 14 scenes / median 1.07s (Gemini undercounted 10 → trust ffmpeg); title card on frame 1 confirmed via OCR @0.25–1.75s; no VO confirmed.
 
-### 2026-07-09 — E10 TEMU mirror shoe organizer drop (tiktok/savetik, TEMU e-comm product drops)
+### 2026-07-09 — E17 TEMU mirror shoe organizer drop (tiktok/savetik, TEMU e-comm product drops)
 **Why autopsied:** same Neil batch. File: `.tmp/viral-intel/savetik-1783599010.json` (disposable).
 **Format:** product showcase, **17.8s, 11 shots (ffmpeg; median 1.93s)** — **NO VO** (music-led).
 
@@ -415,10 +425,10 @@ after E6 (authority-UGC) missed. · **File:** `.tmp/viral-intel/im8-glp1-1019504
 **Why it works:** curiosity-gap title on a novel product @0s (high); 5 compartments revealed inside 10s (medium); utility contrast (mirror = furniture that hides storage) (medium).
 **Weaknesses:** no CTA; slowest cut rate of the batch (still <2s median).
 **So What for Grifon:** Format B corroboration #3 — **crosses the ≥3 gate**. Novel-product curiosity hook + reveal-per-cut structure = our Hook/Variety beats. → Slice 3 re-spec evidence.
-**Patterns:** corroborates P3, P7; contradicts P1 (no churn); P12, P13 (both now at 3+).
+**Patterns:** corroborates P3, P7; contradicts P1 (no churn); P15, P16 (both now at 3+).
 **Verified (2026-07-09):** `render_audit.mjs` — ffmpeg 17.75s / 11 scenes / median 1.93s (Gemini overcounted 15 → trust ffmpeg); ALL-CAPS title card @0.25s confirmed via OCR; no VO confirmed.
 
-### 2026-07-09 — E11 TEMU 9-in-1 tablet stand/dock demo (tiktok/savetik, TEMU e-comm product drops)
+### 2026-07-09 — E18 TEMU 9-in-1 tablet stand/dock demo (tiktok/savetik, TEMU e-comm product drops)
 **Why autopsied:** same Neil batch — the one WITH a voiceover. File: `.tmp/viral-intel/savetik-1783599232.json` (disposable).
 **Format:** feature-showcase demo, **26.8s, 23 shots (ffmpeg; median ~1.1s)** — **AI TTS VO**, hands-only.
 
@@ -430,5 +440,83 @@ after E6 (authority-UGC) missed. · **File:** `.tmp/viral-intel/im8-glp1-1019504
 **Why it works:** product in use within 0.5s (high); two durability proofs inside a 3s window (high); 23 cuts/26.8s keeps momentum (medium).
 **Weaknesses:** TTS mispronunciation @22s ("flexible"→"flat", minor); no held end-CTA; zero captions locks out muted viewers.
 **So What for Grifon:** direct **Format A** (TTS, zero talking avatar) corroboration — TEMU ships synthetic VO over real hands-on b-roll and it WINS; believability lives in the footage, not the voice. Proof-beat grammar (stress test) → storyboard Proof beat. Gemini's first read said "no CTA" — ffmpeg/OCR found the @21s deals card; trust the audit. → Slice 3 re-spec evidence (1 corroboration; needs 2 more VO-led TEMU winners before Format A prompt specifics graduate).
-**Patterns:** corroborates P3, P5, P7 (watermark-as-frame-1-text is a weak read — flag, not full count); contradicts P1 (zero captions); P12; new candidate P14 (AI-TTS-over-real-b-roll acceptable).
+**Patterns:** corroborates P3, P5, P7 (watermark-as-frame-1-text is a weak read — flag, not full count); contradicts P1 (zero captions); P15; new candidate P17 (AI-TTS-over-real-b-roll acceptable).
 **Verified (2026-07-09):** `render_audit.mjs` — ffmpeg 26.75s / 23 scenes vs Gemini 26 (within tolerance); transcript verbatim match; TTS confirmed; deals card OCR @21.25s.
+
+### 2026-07-12 — E8–E14 batch: Neil's 7 IG reels (ai-editor Mode B intake)
+
+**Why autopsied:** Neil dropped 7 reels 2026-07-12 asking what presets they yield.
+Full Mode B: yt-dlp download → `analyze_video.py` Edit-DNA → **mandatory
+smoke-tester frame verification** (117 tool uses; several DNA claims corrected —
+corrections noted per entry). All 7 `source_realism_verdict: real-human`. Triage
+in `omni_edit_presets.md` intake queue; preset decisions pending Neil's pick.
+Files were `.tmp/reels-intake/` (disposable; re-downloadable by shortcode).
+
+### 2026-07-12 — E8 "TAM / why your videos get 200 views" (instagram DaNydEQN5Dc, creator-economy talking-head)
+47.2s, 5 shots; static + 10–15% punch-ins @14/@40.5; **plain white sentence-case**
+1–3w captions ~0.3s swap (DNA's "white and green, lowercase" corrected on frames —
+no green on captions, sentence case); glitch/datamosh @14.5 + B&W quote segment
+@40.5; proof graphics: dual phone mockups @1.0 ("200"/"273" views), retention
+chart @16.5, ✕/✓ kinetic checklist @24.5–31 (missed by DNA, caught on frames);
+swoosh/pop/whoosh hits synced to entrances; 0 silences.
+**Patterns:** P1, P5, P6, P7, P11 (phone-mockup cards), P12, P13; P4 contradiction (static + emphasis-punch only).
+
+### 2026-07-12 — E9 "Optimize your Instagram profile" (instagram DHgVUG3x5YV, **an actual Devin Jatho reel**)
+95.8s, 17 shots; ALL-CAPS pop captions, white + green AND purple accents (DNA's
+"green only" corrected); UI cards throughout: IG profile mockups with **follower
+count-up ticker** @7–8 ("98.9K"), Medium article screen @51, YouTube video-card
+mockup @84 ("Devin Jatho / Content Guru"), **iOS push-notification card @94.5**
+(missed by DNA); glitch @2, slide @8; whoosh + keyboard-typing SFX; 0 silences.
+**FIRSTHAND JATHO EVIDENCE for `creator-ui-pop-v1`** — the exact corroboration
+path its origin caveat named.
+**Patterns:** P1, P2, P5, P6, P11, P12, P13.
+
+### 2026-07-12 — E10 "Should you ever record 3 takes" (instagram DE7d5gzxAXk, creator-economy listicle)
+56.9s, 24 shots; **camera-viewfinder REC-HUD frame device** (REC dot + battery)
+opens AND closes the reel — new-device candidate, no existing preset covers it;
+ALL-CAPS white + red/purple gradient, outline+shadow; profile-grid mockup @9–11.5
+(DNA's "589K" corrected: actual counts 202K + 339K/61.3K); "REASON 1/2/3"
+pill-list reveal @16 + memoji speech bubble @26 (both missed by DNA); camera-shutter
++ glitch-whoosh SFX; glitch @12; 0 silences.
+**Patterns:** P1, P2, P5, P6, P11, P12, P13.
+
+### 2026-07-12 — E11 "Editors ↔ business owners" (instagram DPCEQYdjbPz, matchmaking CTA reel)
+32.8s, 10 shots; diagonal-wipe split screens @0.5/@2.5; comments-panel overlay
+@15–17.5 (flag-reply mechanic) + DM mockups @25.5–28.5 incl. a **bad-pitch /
+"You've been blocked" counter-example** (missed by DNA); notification-pop SFX
+synced to each card; mixed-case white+yellow outline+shadow captions.
+**CAUTION — impersonation device:** the "Hormozi" figure is a lookalike actor in
+Acquisition.com merch and the "hormozi" commenter is a mock unverified account
+(DNA's "Alex Hormozi / 3 recognizable creators" claims corrected on frames). Card
+mechanics count as corroboration; the device itself must NOT be copied into
+customer ads.
+**Patterns:** P1, P2, P5, P11, P13.
+
+### 2026-07-12 — E12 "17yo making $1M/mo" (instagram DJ8xn1XMR56, podcast 2-cam clip)
+34.3s, 8 shots; **real multi-cam**: hard cut speaker→interviewer @6.0 on a
+sentence boundary (what `angle-switch-v2` fakes — validates its design); pixel-art
+platform-icon badges @2.5; YouTube nav-bar UI animation @8–9 (missed by DNA);
+Minecraft-Short mockup with verbatim Reddit clickbait card @9.5; **Google-Doc
+typewriter reveal** @20.5 ("Crayo AI"); diegetic SFX: cash-register @3.5 on the
+money line, paper rustle @20; ALL-CAPS white+pink captions.
+**Patterns:** P1, P2, P5, P6, P11, P13.
+
+### 2026-07-12 — E13 "Fitness will make you rich" (instagram DHnbKjUJ89o, interview clip, register: cinematic)
+16.6s, 5 shots; kinetic type + 💰 emoji @2.0; **B&W CGI body-scanner insert
+@5.5–7.0** — DNA's single biggest miss of the batch, caught only on frames
+(generation-class metaphor b-roll, NOT an edit move → routes to storyboard/Veo in
+product, not an Omni preset); light-leak/bokeh overlay @8.5; **flash overlay @0.4
+→ P8's third corroboration, threshold reached**; caption-only CTA @15–16
+("Comment "file" for the project file", green highlight, holds to end, never
+spoken — new P14); whoosh + money-rustle SFX.
+**Patterns:** P5, P8, P13, P14.
+
+### 2026-07-12 — E14 "7 best transitions" (instagram DChxOtHPDQQ, transitions listicle)
+50.8s, 25 shots; **all 7 transitions are PHYSICAL capture-time techniques** (match-cut
+outfit change, whip pans ×2, jump-cut outfit changes, spin, lens cover ×2, comment
+grab, clone effect) — filming technique, not post/preset material; recurring
+numbered "NUMBER N / [NAME]" yellow-label system (FFmpeg-class device); the hook's
+comment-reply card @0.5 is reused as a physical prop @38.5 ("comment grab");
+**11 SFX hits in 51s — one per transition** (P13's strongest single datapoint);
+lowercase small captions @25% height (P2 outlier); 0 silences.
+**Patterns:** P3 (whip-pan masking), P5, P7, P13; P1 partial.

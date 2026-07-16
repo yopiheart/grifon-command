@@ -47,8 +47,74 @@ class of edit). The believability + label eval gate runs on EVERY output, every 
 | `angle-switch-v2` | Camera Angle Switch (concrete destinations) | talking | draft — MOVE WORKS per Neil; believability re-run on clean clip pending | 6s ≈ $0.60 | Neil eyeball 2026-07-06 + official prompt guide |
 | `paper-collage-v1` | Paper Collage (johnsavage paper style) | talking | draft | 5s ≈ $0.50/attempt | johnsavage PDF (appendix B) |
 | `vox-explainer-v1` | VOX Editorial Explainer | talking | **product_shipped** (2026-07-07 — talking route of the VOX EXPLAINER hero style; Slice 3 NEIL_APPROVED. Code: `api/_lib/omniPresets.ts` template + `OMNI_STYLE_ROUTING`; picker `components/GenerateVideo/index.tsx`) | 4s ≈ $0.40 | round 1 2026-07-06: real-human/HIGH, title letter-perfect, graphics grounded from prompt text; product-path renders Neil-eyeballed 2026-07-07 |
+| `creator-ui-pop-v1` | Creator UI Pop-Up Card (Jatho-class) | talking | draft (round 1 2026-07-12: GATE FAIL on hex leak; card mechanics + believability + bg-lock all passed — round-2 fix candidate recorded) | 5s ≈ $0.50 | **UPGRADED 2026-07-12: firsthand evidence** — swipe-file P11 (UI pop-up card, 5 corroborations E8–E12) incl. E9, an actual Devin Jatho reel; original secondhand tutorial-summary caveat closed; round 1 2026-07-12 |
 | `rack-focus-v0` | Rack Focus | b-roll | rejected | — | #18 round 1: move failed to execute |
 | `talking-bg-swap-v0` | Talking-Scene BG Swap/Relight | talking | rejected | — | #18 round 1 Tests 3-4: degrades believability |
+
+## Intake queue — copy-a-video candidates (Mode B pending)
+
+Neil dropped 7 IG reels (2026-07-12, mobile session) asking how many presets they
+yield. **Remote sandbox could NOT download them** (proxy 403 on instagram.com AND
+cdninstagram/fbcdn — network-policy denial, verified). Run on the cafe PC:
+
+1. Download each (yt-dlp works on public reels from an unproxied machine).
+2. Per video: `tools/analyze_video.py` Edit-DNA → **mandatory smoke-tester frame
+   verification** (ai-editor Mode B step 2) → split moves FFmpeg-class (→ swipe
+   file corroborations via viral-autopsy conventions) vs Omni-class (→ `draft`
+   preset here, built from validated vocab + guardrails 3–6).
+3. Triage BEFORE drafting: check what's already covered (premium-reel-v2,
+   vox-explainer-v1, display-text-pop-v1, shipped caption engine, P1–P10) —
+   expect several reels to map to existing work, not new presets.
+4. Neil picks which 1–2 new drafts earn a paid validation round (round costs
+   ~$0.40–0.60, queued behind Slice-4 beta work).
+
+**Intake DONE 2026-07-12 (cafe PC):** all 7 downloaded (yt-dlp), Edit-DNA'd
+(`analyze_video.py`), and frame-verified by the smoke-tester subagent (117 tool
+uses; corrected several DNA claims — notably reel 6's missed B&W CGI body-scan
+insert and reel 4's fake-"Hormozi" mock accounts). All 7 verdict `real-human`.
+Triage delivered to Neil same session — **no drafts written; awaiting his pick.**
+Artifacts in `.tmp/reels-intake/` (defreezer-disposable; reels re-downloadable
+by shortcode).
+
+| # | Reel | Status (2026-07-12 triage) |
+|---|---|---|
+| 1 | https://www.instagram.com/reel/DaNydEQN5Dc/ | analyzed — talking-head UGC (TAM framework); maps to existing: P1/P2 captions (sentence-case white variant), felt-zoom punch-ins, P6 proof graphics (phone mockups, retention chart, X/check kinetic checklist); FFmpeg-class: glitch transition, B&W segment |
+| 2 | https://www.instagram.com/reel/DHgVUG3x5YV/ | analyzed — **an actual Devin Jatho reel**: firsthand evidence for `creator-ui-pop-v1` (iOS push-notification card 94.5s, IG profile mockups, YouTube card, article screenshot); also P1/P2 (ALL-CAPS, green+purple accents), P6, P7 |
+| 3 | https://www.instagram.com/reel/DE7d5gzxAXk/ | analyzed — talking-head listicle; UI-card class (profile-grid mockup, REASON 1/2/3 pill list, speech bubble); NEW-device candidate: camera-viewfinder REC-HUD frame motif (opens+closes the reel); captions = P2 gradient-emphasis variant |
+| 4 | https://www.instagram.com/reel/DPCEQYdjbPz/ | analyzed — UI-card class (comments panel, DM mockups incl. bad-pitch/blocked counter-example); FFmpeg-class: diagonal-wipe split screen; CAUTION: impersonation device (mock "hormozi" account + Acquisition.com-merch lookalike) — do NOT copy |
+| 5 | https://www.instagram.com/reel/DJ8xn1XMR56/ | analyzed — podcast 2-cam clip; UI-card class (YouTube nav-bar animation, Reddit-post card, Google-Doc typewriter reveal) + pixel-art icon badges (matches creator-ui-pop's icon language); real multi-cam hard cuts (what angle-switch-v2 fakes) |
+| 6 | https://www.instagram.com/reel/DHnbKjUJ89o/ | analyzed — kinetic type + emoji covered by premium-reel-v2; B&W CGI body-scan metaphor insert = GENERATION class (storyboard/Veo b-roll, not an Omni edit move); FFmpeg-class: light-leak/bokeh overlay; pattern candidate: caption-only "Comment X" CTA |
+| 7 | https://www.instagram.com/reel/DChxOtHPDQQ/ | analyzed — 7 PHYSICAL filmed transitions (lens cover, whip pan, clone, comment-grab prop) = capture-time technique, not post/preset material; P3 whip-pan corroboration; FFmpeg-class: numbered "NUMBER N / NAME" yellow-label system |
+
+~~Also pending on the PC: **creator-ui-pop-v1 round 1**~~ — DONE 2026-07-12
+(gate FAIL on hex leak; see its `validation.rounds`).
+
+## SFX bank — shopping list (2026-07-12, from the E8–E14 reel batch)
+
+The bank (`api/_lib/assets/sfx/`: boom, ding, drop, glitch, pop, riser, snap,
+sparkle, swish, whoosh) covers the generic hits. The reels also use **diegetic /
+contextual** hits we don't have — pattern P13 (SFX-per-entrance discipline,
+7/7 corroborated) says every graphic entrance carries one, and content mentions
+get a matching real-world sound. To acquire (royalty-free or ElevenLabs
+sound-generation — see the custom-SFX grill with Neil):
+
+| Sample | Trigger context (evidence) | Priority |
+|---|---|---|
+| notification pop (iOS-style tri-tone/pop) | UI card pop-ins (E11 synced one per card; E9 push-notification card) | HIGH — pairs with `creator-ui-pop-v1` |
+| cash-register cha-ching | money/price mentions in script (E12 @3.5s) | HIGH — Grifon ads are offer-heavy |
+| keyboard typing | profile/bio/doc mockups, typewriter reveals (E9 @24s, E12 Google-Doc) | MED |
+| camera shutter | photo/viewfinder motifs, freeze frames (E10 @1s) | MED |
+| paper rustle | doc/article inserts (E12 @20s) — same gap `paper-collage-v1` already flagged | MED |
+| money/bill rustle | wealth mentions (E13 @0.5s) | LOW (cha-ching covers most) |
+
+Adding FILES to `api/_lib/assets/` is a product change → goes through the normal
+gated path once sourced; the list itself is just the record of what to source.
+
+**SOURCED 2026-07-13 (lab, pending ear-test):** the full list (minus LOW
+money-rustle) + 4–6 variants of every existing generic class was generated via
+ElevenLabs sound-generation and QA'd into `assets/sfx-lab/` — see the Slice-0
+session log in [sfx_upgrade_plan.md](sfx_upgrade_plan.md). Nothing enters
+`api/_lib/assets/sfx/` until Neil's ear-test verdict + the Slice-1 gated diff.
 
 ## Gated Proposals
 
@@ -1003,6 +1069,156 @@ validation:
       output: .tmp/omni-poc/edits/angle-switch-v2-151816.mp4 (wiped on reboot)
 evidence: ["v1 rounds 1-2 (non-execution)", "official prompt guide: concrete destination shots", "round 1b: 2D reframe yes, 3D viewpoint no"]
 cost_estimate_usd_per_run: "6s ~ $0.60"
+```
+
+### creator-ui-pop-v1 — Creator UI Pop-Up Card (Jatho-class)
+
+Distilled from a Devin Jatho editing-style tutorial SUMMARY Neil dropped 2026-07-12
+(Premiere/AE manual workflow). **Intake caveat: secondhand source.** A tutorial
+*about* a style is testimony, not evidence — this entry counts ZERO swipe-file
+corroborations and seeds no Pattern Index rows. Corroboration path: drop actual
+Devin Jatho reels through `/viral-autopsy` or ai-editor Mode B (frame-verified).
+
+Why it exists anyway: the sleek UI pop-up card is the one visual device the current
+lineup lacks (premium-reel = typography+icons; vox = editorial paper inserts;
+display-text-pop = bare display words). The tutorial's AE effect-stack specifics
+(Deep Glow 0.2, Light Sweep screen-blend, 4-color gradients, Shatter 15/2/0.5,
+track mattes) are NOT executable here — they survive only as the aesthetic
+*description* below. Everything already-covered by the brief (1-word caption churn
+→ P1 shipped; outline+shadow → P2; silence pruning → dead-air trim; J-cuts → moot,
+VO muxes continuously over cuts) was deliberately NOT duplicated into this preset.
+
+**Highest-risk preset in the lineup for invented text:** UI cards invite incidental
+commerce text — the invented "$49.45 / ADD TO CART" watch item, the `#FFCC00` hex
+leak, and the vox masthead leak are all this class. Constraints below are the point.
+
+**Round 1 FIRED 2026-07-12 (cafe PC, Neil approved the recorded tuple verbatim).**
+Result: **GATE FAIL on the hex leak — every other gate passed.** Full evidence in
+`validation.rounds` below. The card-only round (NO shatter_word) fired exactly as
+prepped; the predicted instruction-text-leak class materialized: the literal
+`#FFCC00` from the accent-color slot rendered as yellow typography on the card.
+
+```yaml
+id: creator-ui-pop-v1
+name: Creator UI Pop-Up Card (Jatho-class)
+target: talking
+status: draft
+origin: |
+  Devin Jatho tutorial summary (secondhand knowledge-transfer doc, Neil
+  2026-07-12) — NOT swipe-file evidence; no corroborations counted. Evidence
+  intake requires real Jatho reels via /viral-autopsy or Mode B. Talking-scene
+  rules + pixel-lock language inherited verbatim from premium-reel-v2 (round-1
+  validated). Directed-text discipline inherited from display-text-pop-v1.
+model: gemini-omni-flash-preview
+max_passes: 1
+slots:
+  transcript: required          # verbatim spoken words — anti-garble context only
+  card_words: required          # exact-spelling text ON the card; the ONLY card text
+  card_moment: required         # when/where the card pops (e.g. "as the speaker says X")
+  card_icon_desc: optional      # e.g. "a small pixel-art coffee cup icon"
+  brand_primary_hex: required   # accent; travels as forbiddenWords at fire time
+  shatter_word: optional        # exact-spelling word for the glass-shatter hook moment
+  aspect_ratio: default 9:16
+prompt_template: |
+  Edit this talking-head video by adding a modern UI pop-up card as a layer
+  over the original footage. Keep everything else exactly as filmed,
+  including the room and background.
+
+  The card: a sleek rounded-corner glassy panel in dark neutral tones with a
+  subtle gradient, a crisp thin light edge along its perimeter, a soft glow,
+  and a deep soft cast shadow falling down-right as if lit from the top
+  left{{#card_icon_desc}}, plus {{card_icon_desc}} inside the
+  card{{/card_icon_desc}}. The card pops in {{card_moment}} with a fast
+  scale-in that eases smoothly to rest — the motion must feel snappy then
+  settled, never linear.
+
+  Text on the card: render only these exact words, spelled exactly as
+  written: {{card_words}}. Do not render any other text anywhere in the
+  frame — no numbers, no prices, no currency amounts, no interface labels,
+  no logos. Do not add subtitles or captions.
+
+  {{#shatter_word}}Hook moment: when the speaker says "{{shatter_word}}",
+  show that word — spelled exactly as written — in bold editorial
+  typography, then break it apart like shattering glass, the fragments
+  floating and drifting with a subtle glow, synced to a quick camera
+  punch-in that bounces and settles with visible easing.{{/shatter_word}}
+
+  Accent color: use {{brand_primary_hex}} sparingly on the card's edge
+  light and glow, integrated naturally into the footage's existing palette.
+
+  The spoken content (for timing context only): "{{transcript}}"
+ffmpeg_layer:
+  before: [dead-air trim]
+  after: [upscale 720p->1080p, word-accurate caption burn, price/offer text,
+          ElevenLabs VO mux over Omni-stripped audio, music bed + ducking,
+          SFX hits, end card, loudness master]
+constraints:
+  - talking target - ONE pass, reframe-class edits only, never bg-swap/relight
+  - iterate via re-roll from raw with merged prompt, never refine
+  - never feed captioned renders (verify with frame strip FIRST)
+  - ALL card text is directed exact-spelling; slot values (incl.
+    brand_primary_hex) travel as forbiddenWords in the gate sidecar
+  - invented commerce text (prices, currency, ADD TO CART-class labels) is an
+    unconditional gate FAIL — this preset's card surface is the highest-risk
+    invite for that class
+  - critical/factual text (PHP prices, offers, captions, end-card) stays
+    FFmpeg - deterministic and exact
+validation:
+  gate: blind analyze_video.py vs raw control (real-human + lip-sync parity);
+        render_audit.mjs vision read - card_words + shatter_word
+        letter-perfect, zero undirected text, zero invented prices;
+        BACKGROUND-UNCHANGED check vs source frames; move-executed check
+        (card pop AND shatter both actually happen - "no visible failure"
+        is not "move happened")
+  rounds:
+    - date: 2026-07-12 (round 1 — GATE FAIL on hex leak; all other gates PASS)
+      clip: "workflows/assets/omni-poc/skincare-raw-talking.mp4 (4.0s, 720x1280;
+        raw-verified via frame strip in the 2026-07-12 remote prep; control
+        baseline real-human/HIGH on record from vox-explainer-v1 round 1)"
+      slots: 'transcript="Hindi ka pagod, thirsty lang ang skin mo ngayon.";
+        card_words=THIRSTY SKIN; card_moment=as the speaker says "thirsty";
+        card_icon_desc=a small pixel-art water droplet icon;
+        brand_primary_hex=#FFCC00 (card-only round, NO shatter_word)'
+      cost_usd: 0.40
+      machine_verdict: |
+        HEX LEAK CONFIRMED (unconditional FAIL per the invented-text
+        constraint): the literal "#FFCC00" renders as yellow type at the
+        card's top-left from ~2.25s to end — absent at 1.25s, so it fades in
+        as the card settles. Caught by render_audit.mjs vision read AND
+        human-eyeballed on extracted frames t2.25/t3.75 (not a vision-read
+        hallucination). Exactly the instruction-text-leak class the pending
+        note flagged (the lab has no forbiddenWords sidecar).
+        EVERYTHING ELSE PASSED: "THIRSTY SKIN" letter-perfect on a glassy
+        rounded card with the pixel-art droplet icon, exactly as directed;
+        ZERO other text — no invented prices/commerce labels, no subtitles/
+        captions; background INTACT (source-vs-output frame match at 2.25s
+        and 3.75s — same room, the bottle leaving frame late is source
+        behavior); move EXECUTED (card mid scale-in at 1.25s — smaller,
+        tilted, rising — settled by 2.25s; pop timed to "thirsty" ~1s in).
+        Blind believability (neutral-filename copy): real-human verdict HELD,
+        confidence medium vs the control's high (same softening pattern as
+        vox round 1 — verdict class is the gate); lip-sync perfect.
+        Tool note: analyze_video.py exited 3 (GENERIC_OUTPUT — why_it_works
+        needs >=3 entries and a bare 4s clip yields 1); the believability
+        block was still produced and is what the gate reads. Expect this
+        exit on short lab clips; it is not an analysis failure.
+      neil_verdict: pending eyeball (720p + 1080p upscale ready in
+        .tmp/omni-poc/edits/)
+      status_effect: |
+        stays draft. Round 2 candidate fix (Neil-gated, new approval + full
+        cost, re-roll from raw — never refine): describe the accent in words
+        in the filled slot (e.g. "warm golden yellow, Grifon Gold") instead
+        of passing a raw hex string into the visible prompt, and/or add a
+        template line "never render a color code or hex value as text".
+        Keep the round card-only again (one variable per round); the
+        shatter_word hook moves to round 3. If the wordy-color variant
+        passes, the product-path lesson transfers: the proxy's
+        forbiddenWords sidecar already guards this class, but the template
+        should stop inviting it.
+      output: .tmp/omni-poc/edits/creator-ui-pop-v1-155754.mp4 (720p, 936KB)
+        + .1080p.mp4 (2.2MB) — defreezer-wiped; regenerate to re-view
+evidence: ["Jatho tutorial summary 2026-07-12 (secondhand - see origin caveat)", "round 1 2026-07-12 (hex-leak gate FAIL; card mechanics + believability + bg-lock all proven)", "FIRSTHAND upgrade 2026-07-12: swipe-file P11 (UI pop-up card device, 5 corroborations E8-E12; E9 = actual Devin Jatho reel with iOS push-notification card + profile mockups) - the exact corroboration path the origin caveat named, now satisfied"]
+cost_estimate_usd_per_run: "5s ~ $0.50/attempt"
 ```
 
 ### rack-focus-v0 — Rack Focus (REJECTED)

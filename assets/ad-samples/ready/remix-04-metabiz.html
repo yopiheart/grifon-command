@@ -1,0 +1,61 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@600&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<style>
+  :root{--gold:#FFCC00;--ground:#09090B;--w:#FFF;--z3:#D4D4D8;--z4:#A1A1AA;--z5:#71717A;
+    --line:rgba(255,255,255,.12);--panel:rgba(24,24,27,.86);
+    --sans:'Inter','Segoe UI',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;--serif:'Instrument Serif',Georgia,serif}
+  *{box-sizing:border-box;margin:0}
+  html,body{width:1080px;height:1350px;overflow:hidden;background:var(--ground);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+  .ad{position:relative;width:1080px;height:1350px;background:var(--ground);overflow:hidden}
+  .spot{position:absolute;inset:0;background:radial-gradient(90% 55% at 50% 15%,rgba(255,204,0,.11),transparent 60%)}
+  .pad{position:absolute;inset:0;display:flex;flex-direction:column;padding:72px 64px 60px}
+  .hook{font-family:var(--mono);font-weight:600;font-size:24px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);text-align:center;line-height:1.5}
+  .hl{font-weight:700;font-size:68px;line-height:1.1;color:var(--w);letter-spacing:-.025em;text-align:center;margin:18px auto 52px;max-width:17ch}
+  .acc{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--gold)}
+  .mid{margin:auto 0}
+  .glass{background:var(--panel);border:1px solid var(--line);border-radius:28px;padding:20px 36px;box-shadow:0 30px 80px -30px rgba(0,0,0,.9)}
+  .row{display:flex;align-items:flex-start;gap:24px;padding:38px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+  .row:last-child{border-bottom:none}
+  .check{flex:0 0 auto;width:44px;height:44px;border-radius:12px;background:rgba(255,204,0,.13);border:1px solid rgba(255,204,0,.5);display:grid;place-items:center;margin-top:4px}
+  .check svg{width:26px;height:26px;color:var(--gold)}
+  .tip{font-size:33px;font-weight:600;color:var(--z3);line-height:1.35}
+  .tip small{display:block;font-size:23px;font-weight:400;color:var(--z5);margin-top:6px;line-height:1.45}
+  .note{font-family:var(--mono);font-weight:600;font-size:19px;letter-spacing:.15em;text-transform:uppercase;color:var(--z5);text-align:center;margin-top:30px}
+  .note b{color:var(--gold)}
+  .foot{display:flex;align-items:center;justify-content:space-between;margin-top:auto}
+  .lockup{display:flex;align-items:center;gap:16px}
+  .lockup .gm{width:56px;height:56px;border-radius:50%;border:2px solid var(--gold);display:inline-flex;align-items:center;justify-content:center;background:transparent}.lockup .gm img{height:74%;width:auto}
+  .lockup span{font-weight:700;color:var(--w);font-size:28px;letter-spacing:.02em}
+  .cta{display:inline-flex;align-items:center;background:var(--gold);color:#0A0A0A;font-weight:900;font-size:24px;text-transform:uppercase;letter-spacing:.12em;padding:24px 42px;border-radius:999px;box-shadow:0 0 40px rgba(255,204,0,.42)}
+</style></head><body>
+<div class="ad">
+  <div class="spot"></div>
+  <div class="pad">
+    <div class="hook">Libreng tip bago ka mag-boost</div>
+    <div class="hl">3 dapat handa bago ang unang <span class="acc">video ad</span> mo</div>
+    <div class="mid">
+    <div class="glass">
+      <div class="row">
+        <span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5 11-11"/></svg></span>
+        <div class="tip">Malinaw na offer <small>Isang produkto, isang promise. Hindi lahat sabay-sabay.</small></div>
+      </div>
+      <div class="row">
+        <span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5 11-11"/></svg></span>
+        <div class="tip">Hook sa unang 3 segundo <small>Dito nadedesisyunan kung titigil ang scroll.</small></div>
+      </div>
+      <div class="row">
+        <span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5 11-11"/></svg></span>
+        <div class="tip">2 to 3 versions <small>Hindi mo alam alin ang papatok. I-test, huwag hulaan.</small></div>
+      </div>
+    </div>
+    <div class="note">Kaya 'to lahat ng Grifon <b>sa isang brief</b></div>
+    </div>
+    <div class="foot">
+      <div class="lockup"><span class="gm"><img src="logo.png" alt=""></span><span style="font-weight:900;font-style:italic;letter-spacing:-.03em">GRIFON</span></div>
+      <a class="cta">Simulan nang libre</a>
+    </div>
+  </div>
+</div>
+</body></html>

@@ -1,0 +1,77 @@
+<!doctype html>
+<!-- GRIFON quote poster v2 — Kumar/n.labs structure on CREAM (Neil 2026-07-15): real-Zam plate (codex-image edit anchored to workflows/believability-samples/zam-ref-source.jpg, the believability pipeline anchor), backlit dark sweater on #F2F1EA, high-contrast type over the dark sweater zone. -->
+<html lang="tl">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: #333; }
+  #canvas {
+    position: relative; width: 1080px; height: 1350px; overflow: hidden;
+    background: #F2F1EA; font-family: 'Inter', sans-serif;
+  }
+  .photo {
+    position: absolute; inset: 0;
+    background: url("plates/zam-fy-pose.png") center 85% / cover no-repeat;
+  }
+  .grain {
+    position: absolute; inset: 0; z-index: 9; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.05; mix-blend-mode: multiply;
+  }
+  .block { position: absolute; left: 40px; right: 40px; bottom: 148px; text-align: center; z-index: 5; }
+  .leadin {
+    font-weight: 700; font-size: 52px; color: #FFFFFF; letter-spacing: .005em;
+    text-shadow: 0 2px 8px rgba(0,0,0,.65), 0 2px 26px rgba(0,0,0,.5);
+  }
+  .quote {
+    margin-top: 2px;
+    font-family: 'Instrument Serif', Georgia, serif; font-weight: 400;
+    font-size: 190px; line-height: 1.0; color: #FFCC00;
+    text-shadow: 0 3px 10px rgba(0,0,0,.4), 0 0 60px rgba(255,204,0,.25);
+    white-space: nowrap; letter-spacing: -0.01em;
+  }
+  .quote .mark { color: #FFFFFF; font-size: .72em; vertical-align: .16em; }
+  .caption {
+    display: inline-block; margin-top: 30px;
+    border: 2.5px solid rgba(255,255,255,.95); border-radius: 10px;
+    padding: 15px 32px;
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: 39px; color: #FFFFFF; letter-spacing: .02em;
+    text-shadow: 0 2px 8px rgba(0,0,0,.4);
+    background: rgba(9,9,11,.28);
+  }
+  .caption b { color: #FFCC00; font-style: normal; }
+  .lockup { position: absolute; bottom: 58px; left: 0; right: 0; text-align: center; z-index: 5; }
+  .word {
+    font-weight: 900; font-size: 42px; letter-spacing: .08em;
+    text-transform: uppercase; color: #FFFFFF;
+    text-shadow: 0 2px 10px rgba(0,0,0,.45);
+  }
+  .word span { color: #FFCC00; }
+  .tag {
+    margin-top: 4px; font-family: 'JetBrains Mono', monospace; font-size: 13px;
+    letter-spacing: .3em; text-transform: uppercase; color: rgba(255,255,255,.75);
+    text-shadow: 0 1px 6px rgba(0,0,0,.4);
+  }
+</style>
+</head>
+<body>
+<div id="canvas">
+  <div class="photo"></div>
+  <div class="block">
+    <div class="leadin">buong aura ni Zam is</div>
+    <div class="quote"><span class="mark">&ldquo;</span>Gawa muna.<span class="mark">&rdquo;</span></div>
+    <div class="caption">Ang Grifon Method: <b>10 minuto</b>, may ad ka na</div>
+  </div>
+  <div class="lockup">
+    <div class="word">Grifon <span>AI</span></div>
+    <div class="tag">the ai marketing platform</div>
+  </div>
+  <div class="grain"></div>
+</div>
+</body>
+</html>

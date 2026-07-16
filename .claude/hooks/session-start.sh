@@ -10,6 +10,26 @@
 
 set -uo pipefail
 
+# --- FABLE SUNSET FLIP (added 2026-07-10, Neil-approved; delete this block after the flip merges) ---
+# EXTENDED 2026-07-13 (Anthropic email, Neil-confirmed): Fable 5 is included in plan
+# limits until Sunday 2026-07-19 11:59 PM PT = 2026-07-20 06:59 UTC (2:59 PM PHT);
+# after that it bills prepaid API credits ($10/$50 per M tokens), so the pin must not
+# stay on claude-fable-5. Hooks cannot switch the CURRENT session's model — this flips
+# the pin in the working tree (takes effect next session) and shouts about this one.
+# The early-exhaustion case (Fable allowance at 100% before Jul 19) is NOT detectable
+# here — that lever is manual via /usage (see workflows/session_reminders.md).
+# GRIFON_NOW_UTC (YYYYMMDDHHMM) is a test seam; leave unset in real runs.
+now_utc="${GRIFON_NOW_UTC:-$(date -u +%Y%m%d%H%M)}"
+if [ "$now_utc" -ge 202607200659 ] 2>/dev/null && grep -q '"model": "claude-fable-5"' .claude/settings.json 2>/dev/null; then
+  sed -i 's/"model": "claude-fable-5"/"model": "claude-opus-4-8"/' .claude/settings.json
+  echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+  echo "!! FABLE SUNSET PASSED (Jul 20 2:59 PM PHT): settings.json pin flipped to claude-opus-4-8 (working tree)."
+  echo "!! 1) THIS session may still be RUNNING Fable 5 on prepaid API credits (\$10/\$50 per M) — switch model or restart NOW."
+  echo "!! 2) Commit + push the settings.json flip so every machine picks it up."
+  echo "!! 3) Then delete the 'Fable sunset' section in workflows/session_reminders.md and this hook block."
+  echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+fi
+
 echo "SESSION RE-ARM CHECKLIST (session state does not survive reboots or /clear — see workflows/session_reminders.md):"
 
 # Surface every /loop re-arm command documented in session_reminders.md, so

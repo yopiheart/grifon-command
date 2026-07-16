@@ -1,0 +1,40 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@600&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<style>
+  :root{--gold:#FFCC00;--ground:#09090B;--w:#FFF;--z3:#D4D4D8;--line:rgba(255,255,255,.12);
+    --sans:'Inter','Segoe UI',system-ui,sans-serif;
+    --mono:'JetBrains Mono','Cascadia Code',monospace;
+    --serif:'Instrument Serif',Georgia,serif}
+  *{box-sizing:border-box;margin:0}
+  html,body{width:1080px;height:1350px;overflow:hidden;background:var(--ground);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+  .ad{position:relative;width:1080px;height:1350px;background:var(--ground);overflow:hidden}
+  .spot{position:absolute;inset:0;background:radial-gradient(130% 80% at 50% 0%,rgba(255,204,0,.12),transparent 55%)}
+  .pad{position:absolute;inset:0;display:flex;flex-direction:column;padding:56px 64px 64px}
+  .lockup{display:flex;align-items:center;gap:18px}
+  .lockup .gm{width:56px;height:56px;border-radius:50%;border:2px solid var(--gold);display:inline-flex;align-items:center;justify-content:center;background:transparent}.lockup .gm img{height:74%;width:auto}
+  .lockup span{font-weight:600;color:var(--w);font-size:30px;letter-spacing:-.01em}
+  .gap1{flex:0.75}.gap2{flex:1}
+  .hook{font-family:var(--mono);font-weight:600;font-size:25px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);line-height:1.5;margin-bottom:22px}
+  .hl{font-weight:700;font-size:88px;line-height:1.08;color:var(--w);letter-spacing:-.025em;max-width:19ch}
+  .acc{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--gold);letter-spacing:0}
+  .sub{font-size:36px;line-height:1.45;color:var(--z3);margin:38px 0 0;max-width:34ch}
+  .cta{align-self:flex-start;display:inline-flex;align-items:center;gap:16px;background:transparent;color:var(--w);border:2px solid var(--line);
+    font-weight:900;font-size:26px;text-transform:uppercase;letter-spacing:.12em;
+    padding:26px 46px;border-radius:999px}
+  .cta svg{width:30px;height:30px;color:var(--gold)}
+</style></head><body>
+<div class="ad">
+  <div class="spot"></div>
+  <div class="pad">
+    <div class="lockup"><span class="gm"><img src="logo.png" alt=""></span><span style="font-weight:900;font-style:italic;letter-spacing:-.03em">GRIFON</span></div>
+    <div class="gap1"></div>
+    <div class="hook">Totoong usapan lang</div>
+    <div class="hl">Bakit ka magbabayad ng <span class="acc">&#8369;30K</span> sa agency na 3 araw bago mag&#8209;reply?</div>
+    <p class="sub">Gawin mo mismo. Mas mabilis, ikaw ang may kontrol. Ipapakita ko kung paano.</p>
+    <div class="gap2"></div>
+    <a class="cta">Panoorin kung paano <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
+</div>
+</body></html>

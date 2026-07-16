@@ -311,6 +311,52 @@ export function pickHookPalette(variantSeed: number): HookPalette {
   return HOOK_PALETTES[Math.abs(variantSeed) % HOOK_PALETTES.length];
 }
 
+/** Seeded SFX variant pools (Slice 1, workflows/sfx_upgrade_plan.md). Keys are
+ * the 10 shipped SfxBankId classes; values are LAB variant numbers surviving
+ * Slice 0 QA (gaps preserved — whoosh-v4 was rejected, so its slot never
+ * existed here). Files live flat at assets/sfx/<class>-vN.mp3 beside the
+ * legacy static <class>.mp3, which MUST remain (CLASSIC + flag-off path).
+ * ≥4 variants per class = the cross-customer fingerprint minimum; snap is
+ * deliberately ABSENT (2 survivors — legacy static until CC0 variants land,
+ * Neil 2026-07-13). The 5 diegetic classes (Slice 2) —
+ * chaching/notification/paper/shutter/typing — are variant-only: NO legacy
+ * static <class>.mp3 exists for them; they fire only via the sfxTriggers.ts
+ * table under the flag, and chaching v3-v6 are machine-contested pending the
+ * ear-gate prune. */
+export const SFX_VARIANT_POOLS: Partial<Record<SfxBankId, readonly number[]>> = {
+  boom:    [1, 2, 3, 4, 5, 6],
+  pop:     [1, 2, 3, 4, 5, 6],
+  sparkle: [1, 2, 3, 4, 5, 6],
+  ding:    [1, 2, 3, 4],
+  drop:    [1, 2, 3, 4],
+  glitch:  [1, 2, 3, 4],
+  riser:   [1, 2, 3, 4],
+  swish:   [1, 2, 3, 4],
+  whoosh:  [1, 2, 3, 5],
+  chaching:     [1, 2, 3, 4, 5, 6],
+  notification: [1, 2, 3, 4, 5, 6],
+  paper:        [1, 2, 3, 4],
+  shutter:      [1, 2, 3, 4],
+  typing:       [1, 2, 3, 4],
+};
+
+/** Deterministic per-(ad, cue-class) variant pick. Returns the bare asset
+ * basename (no .mp3) or null when the class has no pool (→ legacy static).
+ * Hashing sfxId INTO the pick decorrelates classes from each other and from
+ * pickHookPalette (which uses the raw seed). fnv1a is uint32 — no abs. */
+export function pickSfxVariant(sfxId: SfxBankId, variantSeed: number): string | null {
+  const pool = SFX_VARIANT_POOLS[sfxId];
+  if (!pool || pool.length === 0) return null;
+  return `${sfxId}-v${pool[fnv1a(`${sfxId}:${variantSeed}`) % pool.length]}`;
+}
+
+/** SFX_V2 kill switch (strict opt-in, OMNI_STYLES_ENABLED pattern) + the
+ * CLASSIC freeze: classic never rotates regardless of the flag. Reads
+ * process.env at CALL time so tests can toggle per-case. */
+export function sfxVariantsEnabled(presetId: PresetId): boolean {
+  return process.env.SFX_V2_ENABLED === 'true' && presetId !== 'classic';
+}
+
 export const PRESETS: Record<PresetId, RenderPreset> = {
   none: NONE,
   classic: CLASSIC,

@@ -1,0 +1,69 @@
+name: Oceanides daily posts
+
+# Full-auto (Neil approved 2026-07-14, no review): render the day's 30 Oceanides
+# FB posts + captions and publish them straight to the PUBLIC mirror
+# (yopiheart/oceanides-posts → https://yopiheart.github.io/oceanides-posts/).
+# Content is deterministic (pre-approved templates + fixed variant pools rotating by
+# date) and the render self-verifies, so no PR / merge gate. Replaces the old cloud
+# routine. Source of truth (templates/script/variants) stays in this private repo;
+# only images + captions reach the public mirror.
+
+on:
+  schedule:
+    - cron: '0 22 * * *'   # 22:00 UTC = 06:00 Asia/Manila (UTC+8, no DST)
+  workflow_dispatch:
+    inputs:
+      date:
+        description: 'Override date (YYYY-MM-DD, Asia/Manila). Blank = today.'
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+
+concurrency:
+  group: oceanides-daily
+  cancel-in-progress: false
+
+jobs:
+  render-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Resolve date (Asia/Manila)
+        id: d
+        env:
+          IN_DATE: ${{ github.event.inputs.date }}
+        run: |
+          if [ -n "$IN_DATE" ]; then
+            echo "$IN_DATE" | grep -qE '^[0-9]{4}-[0-9]{2}-[0-9]{2}$' || { echo "Bad --date '$IN_DATE'"; exit 1; }
+            D="$IN_DATE"
+          else
+            D="$(TZ=Asia/Manila date +%Y-%m-%d)"
+          fi
+          echo "date=$D" >> "$GITHUB_OUTPUT"
+          echo "Rendering for $D"
+
+      - name: Render batch (self-verifies; fails the job on any bad render)
+        working-directory: clients/oceanides
+        run: node build-tb2-cities.mjs --date "${{ steps.d.outputs.date }}"
+
+      - name: Publish to public mirror
+        working-directory: clients/oceanides
+        env:
+          MIRROR_TOKEN: ${{ secrets.MIRROR_TOKEN }}
+        run: node publish-public.mjs --date "${{ steps.d.outputs.date }}"

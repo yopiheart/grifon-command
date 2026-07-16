@@ -1,0 +1,48 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@600&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<style>
+  :root{--gold:#FFCC00;--ground:#09090B;--w:#FFF;--z3:#D4D4D8;--z4:#A1A1AA;--z5:#71717A;
+    --line:rgba(255,255,255,.12);--panel:rgba(24,24,27,.86);
+    --sans:'Inter','Segoe UI',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;--serif:'Instrument Serif',Georgia,serif}
+  *{box-sizing:border-box;margin:0}
+  html,body{width:1080px;height:1350px;overflow:hidden;background:var(--ground);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+  .ad{position:relative;width:1080px;height:1350px;background:var(--ground);overflow:hidden}
+  .spot{position:absolute;inset:0;background:radial-gradient(110% 65% at 50% 0%,rgba(255,204,0,.1),transparent 55%)}
+  .pad{position:absolute;inset:0;display:flex;flex-direction:column;padding:64px}
+  .hook{font-family:var(--mono);font-weight:600;font-size:24px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);line-height:1.5}
+  .hl{font-weight:700;font-size:64px;line-height:1.1;color:var(--w);letter-spacing:-.025em;margin:18px 0 44px;max-width:18ch}
+  .acc{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--gold)}
+  .list{display:flex;flex-direction:column;gap:0}
+  .row{display:flex;align-items:center;gap:26px;padding:26px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+  .row:last-child{border-bottom:none}
+  .num{font-family:var(--mono);font-weight:600;font-size:26px;color:var(--gold);width:52px;font-variant-numeric:tabular-nums}
+  .item{font-size:37px;font-weight:600;color:var(--z3)}
+  .item small{display:block;font-size:23px;font-weight:400;color:var(--z5);margin-top:4px}
+  .foot{display:flex;align-items:center;justify-content:space-between;margin-top:auto}
+  .lockup{display:flex;align-items:center;gap:16px}
+  .lockup .gm{width:56px;height:56px;border-radius:50%;border:2px solid var(--gold);display:inline-flex;align-items:center;justify-content:center;background:transparent}.lockup .gm img{height:74%;width:auto}
+  .lockup span{font-weight:700;color:var(--w);font-size:28px;letter-spacing:.02em}
+  .cta{display:inline-flex;align-items:center;background:var(--gold);color:#0A0A0A;font-weight:900;font-size:24px;text-transform:uppercase;letter-spacing:.12em;padding:24px 42px;border-radius:999px;box-shadow:0 0 40px rgba(255,204,0,.42)}
+</style></head><body>
+<div class="ad">
+  <div class="spot"></div>
+  <div class="pad">
+    <div class="hook">Isang brief, gabi-gabi kang makakatulog</div>
+    <div class="hl">Ginagawa ng Grifon <span class="acc">para sa'yo:</span></div>
+    <div class="list">
+      <div class="row"><span class="num">01</span><div class="item">Market research <small>Sino ang buyer mo at ano ang gusto niya</small></div></div>
+      <div class="row"><span class="num">02</span><div class="item">Script <small>Hook, offer, CTA sa wika ng market mo</small></div></div>
+      <div class="row"><span class="num">03</span><div class="item">Storyboard <small>Scene-by-scene, ready i-render</small></div></div>
+      <div class="row"><span class="num">04</span><div class="item">Visuals <small>Product shots at ad images</small></div></div>
+      <div class="row"><span class="num">05</span><div class="item">Captions at headlines <small>English o Taglish</small></div></div>
+      <div class="row"><span class="num">06</span><div class="item">Buong video ad <small>Mula brief hanggang render</small></div></div>
+    </div>
+    <div class="foot">
+      <div class="lockup"><span class="gm"><img src="logo.png" alt=""></span><span style="font-weight:900;font-style:italic;letter-spacing:-.03em">GRIFON</span></div>
+      <a class="cta">Simulan nang libre</a>
+    </div>
+  </div>
+</div>
+</body></html>

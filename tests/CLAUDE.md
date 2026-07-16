@@ -2,14 +2,29 @@
 
 Run via `npm run test` (one-shot) or `npm run test:watch` (watch mode). vitest is the unit/integration runner (no Jest, no Cypress). Browser e2e lives separately in [`e2e/`](e2e/) and runs on **Playwright** via `npm run test:e2e` — vitest is configured to ignore `tests/e2e/**`.
 
-## Current Coverage
+## Current Coverage (refreshed 2026-07-08)
 
-- [`unit/paymongo.test.ts`](unit/paymongo.test.ts) — webhook signature verification + plan catalog invariants
-- [`unit/rateLimit.test.ts`](unit/rateLimit.test.ts) — rate-limit RPC mocking + fail-open behavior
-
+- **`unit/`** — 46 test files. Major clusters: Gemini schemas + proxy
+  ([`unit/geminiService.schemas.test.ts`](unit/geminiService.schemas.test.ts),
+  [`unit/geminiService.proxy.test.ts`](unit/geminiService.proxy.test.ts)); render pipeline
+  ([`unit/renderFfmpeg.test.ts`](unit/renderFfmpeg.test.ts),
+  [`unit/edit-decision-list.test.ts`](unit/edit-decision-list.test.ts),
+  [`unit/drawPlan.snapshot.test.ts`](unit/drawPlan.snapshot.test.ts),
+  [`unit/sfxVariants.test.ts`](unit/sfxVariants.test.ts), captions/transitions/presets);
+  billing + quota + rate-limit ([`unit/paymongo.test.ts`](unit/paymongo.test.ts),
+  [`unit/rateLimit.test.ts`](unit/rateLimit.test.ts), `quota.*`, `credits`, `modelCosts`,
+  `omniBilling`); the `omni*` One-Shot cluster (~11 files); voice/timing (`voiceSelect`,
+  `sceneVoiceRoute`, `spokenDuration`); telemetry (`metaPixel`, `omniTelemetry`).
+- **`integration/`** — 3 real-ffmpeg render harnesses (`burnin-render`, `demo-rerender`,
+  `restitch-real`), gated behind `RUN_BURNIN`.
+- **`regression/`** — [`regression/script-gen.regression.test.ts`](regression/script-gen.regression.test.ts),
+  the live-Gemini nightly regression, gated `RUN_REGRESSION=1`.
 - [`e2e/boot.spec.ts`](e2e/boot.spec.ts) — Playwright boot/render smoke: boots the app against dummy Supabase env and asserts the public pre-auth routes (`/`, `/pricing`, `/terms`, `/privacy`) mount and render without the ErrorBoundary crash fallback. Zero quota — never reaches auth or Gemini.
 
-**Coverage gap:** zero tests on [`../services/geminiService.ts`](../services/geminiService.ts), zero tests on components, and the e2e is boot-only (no wizard walk yet — that's Move 2 scope B, deferred). Schema tests for the four schema-fragile flows (`generateStoryboard`, `generateAdScript`, `generateInfluencerStoryboard`, `generateCinematicNarrative`) are the highest-leverage next addition — see [`../workflows/launch_readiness.md`](../workflows/launch_readiness.md).
+**Coverage gap:** components remain untested and the e2e is boot-only (no wizard walk). The bigger
+proven gap is not unit coverage at all — per `agent_lessons.md`, the dominant escaped-defect class
+is "CI green, broken live" (renders, audio mixes, console config), which only live smokes catch.
+Don't let this list drift again: when a new cluster lands, update the line here in the same PR.
 
 ## Patterns
 
@@ -25,6 +40,17 @@ Tests written *after* the implementation just confirm the implementation's choic
 - **Schema flows:** assert the JSON shape matches the declared TypeScript type, regardless of which prompt produced it.
 - **Invariants:** encode the rule itself (e.g., "no motion verbs in framePrompt", "no brand names in product scenes when reference shows plain bag", "Identity Lock fields preserved across scene image prompts").
 - **State machines:** assert all valid transitions and reject invalid ones (e.g., `OdysseyDay.status` LOCKED → PENDING → SYNTHESIZED).
+
+Two additional rules (adapted from Matt Pocock's `tdd` skill, evaluated 2026-07-08):
+
+- **No tautological tests.** Expected values must come from an **independent source of truth** — a
+  known-good literal, a worked example, the spec — never computed by re-running the same logic the
+  test exercises (a test that derives its expectation from the implementation always passes and
+  catches nothing).
+- **Test at seams.** A **seam** is the pre-agreed public boundary where behavior is observable —
+  here that's the `/api/gemini/*` proxy boundary, an exported function's return shape, or the
+  rendered file. Mock at seams, assert at seams; don't couple tests to internal collaborators, so
+  the implementation can change entirely while the tests survive.
 
 ## Adding a Test
 

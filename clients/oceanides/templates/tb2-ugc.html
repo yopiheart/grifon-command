@@ -1,0 +1,48 @@
+<!doctype html>
+<!-- TB2 #6 — UGC-style, crew's own voice, real job photos (S21 honest version). City variable: QUEZON CITY -->
+<html lang="tl"><head><meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root{--navy:#0E2C5E;--navy2:#0A1F45;--gold:#F5B301;--ink:#050505;--gray:#65676B;--card:#F0F2F5;
+--body:'Inter','Helvetica Neue',Arial,sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box}html,body{background:#333}
+#canvas{width:1080px;height:1350px;position:relative;overflow:hidden;font-family:var(--body);background:#fff;-webkit-font-smoothing:antialiased}
+.head{position:absolute;top:44px;left:52px;right:52px}
+h1{font-size:47px;font-weight:800;color:var(--ink);line-height:1.22;letter-spacing:-.5px}
+.sub{margin-top:16px;font-size:29px;font-weight:400;color:var(--gray);line-height:1.4}
+.sub b{color:var(--navy);font-weight:800}
+.photos{position:absolute;top:322px;left:52px;right:52px;display:flex;gap:18px}
+.shot{position:relative;flex:1;height:760px;border-radius:16px;overflow:hidden}
+.shot img{width:100%;height:100%;object-fit:cover}
+.shot.before img{height:130%;margin-top:-200px}
+.shot.after img{object-position:center 45%}
+.tag{position:absolute;top:18px;left:18px;background:rgba(5,11,22,.82);color:#fff;font-size:19px;font-weight:900;letter-spacing:2.5px;text-transform:uppercase;padding:9px 18px;border-radius:999px}
+.tag.gold{background:var(--gold);color:var(--navy2)}
+.bar{position:absolute;left:52px;right:52px;bottom:52px;background:var(--card);border-radius:18px;padding:26px 30px;display:flex;align-items:center;gap:20px}
+.bar .lg{width:66px;height:66px;border-radius:50%;object-fit:contain;background:#fff;flex:0 0 auto;border:1px solid rgba(0,0,0,.06)}
+.bar .who{flex:1;min-width:0}
+.bar .nm{font-size:25px;font-weight:800;color:var(--ink)}
+.bar .ct{margin-top:5px;font-size:21px;font-weight:600;color:var(--gray)}
+.bar .ct b{color:var(--navy);font-weight:800}
+.callbtn{flex:0 0 auto;background:var(--navy);color:#fff;font-size:24px;font-weight:900;letter-spacing:1px;text-transform:uppercase;padding:20px 34px;border-radius:12px;display:flex;align-items:center;gap:12px}
+.callbtn svg{width:24px;height:24px;fill:var(--gold)}
+</style></head><body>
+<div id="canvas">
+  <div class="head">
+    <h1>{{HEADLINE}}</h1>
+    <div class="sub">{{SUB}}</div>
+  </div>
+  <div class="photos">
+    <div class="shot before"><img src="../assets/{{PHOTO_BEFORE}}" alt=""/><div class="tag">Before</div></div>
+    <div class="shot after"><img src="../assets/{{PHOTO_AFTER}}" alt=""/><div class="tag gold">After</div></div>
+  </div>
+  <div class="bar">
+    <img class="lg" src="../assets/logo.jpg" alt="Oceanides"/>
+    <div class="who">
+      <div class="nm">Oceanides &middot; {{CITY}} Branch</div>
+      <div class="ct"><b>Globe</b> 0917-671-6383 &nbsp;&middot;&nbsp; <b>Smart</b> 0939-245-6217</div>
+    </div>
+    <div class="callbtn"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.24.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.18z"/></svg>Call Now</div>
+  </div>
+</div></body></html>

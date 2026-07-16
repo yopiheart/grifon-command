@@ -378,6 +378,29 @@ optional "advanced"). Remaining:
   and/or make auto-cast the Concierge default. **Ties into the pending auto-cast vs upload test.**
 - **Business-tier pricing** line (no new per-run opex now that the Claude brain is deferred).
 
+## Tracking pilot: GitHub Issues as the initiative map (decided 2026-07-08)
+
+When this work resumes, pilot **GitHub Issues** as the cross-session tracker for THIS initiative
+only (adapted from Matt Pocock's `wayfinder` skill — evaluation in the 2026-07-08 skills-v1.1
+session). Why: Issues survive the defreezer exactly like the repo does, remote sessions already
+have GitHub MCP, the nightly regression already files Issues, and issues-as-external-memory
+attacks the `agent_lessons.md` 2026-06-27 failure (stale planning doc said "not built" 3×) —
+an Issue closed with a decision can't silently drift the way a doc section can.
+
+Shape:
+- **One map issue** (label `concierge:map`): Destination (the §10 verdict line) / Decisions so
+  far (one line per closed child) / Not yet specified / Out of scope. The map is an index —
+  detail lives in the child issues.
+- **One child issue per open decision** above (Slice-0 merge-vs-evolve, uploaded-presenter
+  image model, Business-tier pricing) and per build slice, with "Blocked by" stated in the body
+  (slices 1–4 blocked by Slice 0).
+- **One ticket per session**, resolved via the matching skill (`grill-me` for decisions, the
+  Plan→Goal pipeline for slices); post the outcome, close, update the map's Decisions-so-far.
+
+Deliberate adaptations: no claim-by-assignment ceremony (single operator), and
+`launch_readiness.md` stays the global scoreboard — it *links* to the map issue rather than
+duplicating it. This doc remains the source of truth for design; Issues track *state*.
+
 ## Verification (when built)
 
 Dev-unlock + `GRIFON_DEV_UNMETERED=true`(+`_VIDEO`) + test acct `smoketest-dc@grifon.dev` /

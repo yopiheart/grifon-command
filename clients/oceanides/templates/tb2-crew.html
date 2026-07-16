@@ -1,0 +1,66 @@
+<!doctype html>
+<!-- TB2 #8 — Crew trust post (S16 authority w/ real team). Believability: uniform B&W grade + film grain masks mixed photo quality. Tokens: {{CITY}} {{SHORT}} {{HEADLINE}} {{SUB}} -->
+<html lang="tl"><head><meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@400;600;700;800;900&family=Anton&display=swap" rel="stylesheet"/>
+<style>
+:root{--navy:#0E2C5E;--navy2:#0A1F45;--sky:#5AA6E6;--gold:#F5B301;
+--serif:'Playfair Display',Georgia,serif;--body:'Inter','Helvetica Neue',Arial,sans-serif;--head:'Anton',sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box}html,body{background:#333}
+#canvas{width:1080px;height:1350px;position:relative;overflow:hidden;font-family:var(--body);background:var(--navy2);-webkit-font-smoothing:antialiased}
+.glow{position:absolute;inset:0;background:radial-gradient(ellipse 820px 520px at 50% 40%,rgba(28,99,173,.32) 0%,rgba(10,31,69,0) 65%)}
+.logo-chip{position:absolute;top:38px;left:38px;z-index:5;background:#fff;border-radius:12px;padding:5px 9px;box-shadow:0 4px 14px rgba(0,0,0,.3)}
+.logo-chip img{height:54px;display:block}
+.legit{position:absolute;top:44px;right:38px;z-index:5;display:flex;align-items:center;gap:10px}
+.legit .t{text-align:right;line-height:1.1}.legit .c{font-weight:900;font-size:14px;color:#fff;text-transform:uppercase;letter-spacing:.5px}
+.legit .s{font-size:11px;font-weight:700;color:var(--sky);text-transform:uppercase;margin-top:2px}
+.legit img{height:46px;filter:drop-shadow(0 1px 3px rgba(0,0,0,.4))}
+.branch{position:absolute;top:160px;left:0;right:0;z-index:5;text-align:center;font-size:16px;font-weight:800;letter-spacing:6px;text-transform:uppercase;color:var(--gold)}
+h1{position:absolute;top:206px;left:90px;right:90px;z-index:5;font-family:var(--serif);font-weight:500;font-size:58px;line-height:1.18;color:#fff;text-align:center;letter-spacing:.2px}
+h1 em{color:var(--gold);font-style:italic}
+.rule{position:absolute;top:470px;left:50%;transform:translateX(-50%);width:74px;height:2px;background:var(--gold);z-index:5}
+.faces{position:absolute;top:506px;left:0;right:0;z-index:5;display:flex;justify-content:center;gap:44px}
+.member{width:250px;text-align:center}
+.fname{margin-top:18px;font-size:24px;font-weight:800;color:#fff}
+.frole{margin-top:4px;font-size:14px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--sky)}
+.face{position:relative;width:250px;height:250px;border-radius:50%;overflow:hidden;border:3px solid rgba(245,179,1,.85);box-shadow:0 18px 44px rgba(0,0,0,.45)}
+.face img{width:100%;height:100%;object-fit:cover;object-position:center 28%;filter:grayscale(1) contrast(1.08) brightness(.98)}
+.face .tint{position:absolute;inset:0;background:rgba(14,44,94,.22);mix-blend-mode:multiply}
+.face .grain{position:absolute;inset:0;opacity:.6;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix type='saturate' values='0'/></filter><rect width='140' height='140' filter='url(%23n)' opacity='0.5'/></svg>")}
+.sub{position:absolute;top:906px;left:130px;right:130px;z-index:5;text-align:center;font-size:26px;font-weight:600;color:rgba(255,255,255,.92);line-height:1.45}
+.sub b{color:var(--gold);font-weight:800}
+.stats{position:absolute;left:60px;right:60px;bottom:222px;z-index:5;display:flex;justify-content:center;align-items:center;gap:26px}
+.stat{font-size:15px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.9);white-space:nowrap}
+.stat b{color:var(--gold)}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--gold);opacity:.8}
+.contact{position:absolute;bottom:0;left:0;width:100%;z-index:6;padding:30px 44px 34px;text-align:center;background:rgba(5,15,36,.72);border-top:1px solid rgba(245,179,1,.28)}
+.cta{font-family:var(--head);font-size:36px;color:var(--gold);text-transform:uppercase;letter-spacing:1.5px}
+.numsline{margin-top:12px;font-size:26px;font-weight:800;color:#fff;letter-spacing:.5px}
+.numsline span{color:var(--sky);font-size:16px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}
+.free{margin-top:10px;font-size:16px;font-weight:700;color:rgba(255,255,255,.75);letter-spacing:1px;text-transform:uppercase}
+.free b{color:var(--gold)}
+</style></head><body>
+<div id="canvas">
+  <div class="glow"></div>
+  <div class="logo-chip"><img src="../assets/logo.jpg" alt="Oceanides"/></div>
+  <div class="legit"><div class="t"><div class="c">SEC-Registered</div><div class="s">DENR &middot; BIR</div></div><img src="../assets/badge-bir.png" alt="BIR"/></div>
+  <div class="branch">Oceanides &middot; {{CITY}} Branch</div>
+  <h1>{{HEADLINE}}</h1>
+  <div class="rule"></div>
+  <div class="faces">
+    <div class="member"><div class="face"><img src="../assets/CREW 1.png" alt=""/><div class="tint"></div><div class="grain"></div></div><div class="fname">Kambal</div><div class="frole">Driver &middot; Response</div></div>
+    <div class="member"><div class="face"><img src="../assets/CREW 2.png" alt=""/><div class="tint"></div><div class="grain"></div></div><div class="fname">Junel</div><div class="frole">Manual Cleaning</div></div>
+    <div class="member"><div class="face"><img src="../assets/CREW 3.png" alt=""/><div class="tint"></div><div class="grain"></div></div><div class="fname">Rodel</div><div class="frole">Siphoning Expert</div></div>
+  </div>
+  <div class="sub">{{SUB}}</div>
+  <div class="stats">
+    <div class="stat"><b>Uniformed</b> crew</div><div class="dot"></div>
+    <div class="stat"><b>SEC</b>-Registered</div><div class="dot"></div>
+    <div class="stat"><b>24/7</b> &middot; 30&ndash;60 min response</div>
+  </div>
+  <div class="contact">
+    <div class="cta">Call Now</div>
+    <div class="numsline"><span>Globe</span> 0917-671-6383 &nbsp;&nbsp;&middot;&nbsp;&nbsp; <span>Smart</span> 0939-245-6217</div>
+    <div class="free"><b>Libreng inspection</b> para sa {{CITY}}</div>
+  </div>
+</div></body></html>
