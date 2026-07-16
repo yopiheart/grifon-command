@@ -83,7 +83,7 @@ const classifyTemuProductServerSide = async (
 
 type FlowHandler = (input: any, ai: GoogleGenAI) => Promise<unknown>;
 
-const FLOW_REGISTRY: Record<string, FlowHandler> = {
+export const FLOW_REGISTRY: Record<string, FlowHandler> = {
   marketmind: async (input: MarketResearchInput, ai) => {
     const parts = buildMarketMindParts(input);
     // TEMPORARY (per Neil 2026-05-09): downgraded from MODEL_RESEARCH (3.1 Pro)
@@ -113,18 +113,33 @@ const FLOW_REGISTRY: Record<string, FlowHandler> = {
       );
     }
     const prompt = buildAdScriptPrompt(input, temuSubType);
-    const response = await ai.models.generateContent({
-      model: MODEL_TEXT,
-      contents: prompt,
-      config: {
-        responseMimeType: 'application/json',
-        safetySettings: SAFETY_SETTINGS,
-        thinkingConfig: { thinkingBudget: 4000 },
-      },
-    } as any);
-    const rawText = response.text || '{}';
-    logModelUsage('flow:adscript', MODEL_TEXT, (response as any).usageMetadata);
-    return parseAdScriptResponse(rawText);
+    const generate = async () => {
+      const response = await ai.models.generateContent({
+        model: MODEL_TEXT,
+        contents: prompt,
+        config: {
+          responseMimeType: 'application/json',
+          safetySettings: SAFETY_SETTINGS,
+          thinkingConfig: { thinkingBudget: 4000 },
+        },
+      } as any);
+      const rawText = response.text || '{}';
+      logModelUsage('flow:adscript', MODEL_TEXT, (response as any).usageMetadata);
+      return parseAdScriptResponse(rawText);
+    };
+    const script = await generate();
+    if (script?.hook1?.length && script?.hook2?.length) return script;
+    // Hook starvation (issue #59): Gemini stochastically returns empty hook
+    // arrays, TESTIMONIAL-heavy. Regenerate once INSIDE this already-metered
+    // request (one workflow unit — see the one-generation-one-workflow rule at
+    // the consumeMonthly block). If the regeneration itself fails, return the
+    // first parsed result rather than discarding it.
+    console.warn('[adscript] empty hook1/hook2 — regenerating once (hook starvation, #59)');
+    try {
+      return await generate();
+    } catch {
+      return script;
+    }
   },
 
   'offer-optimizer': async (input: OfferOptimizerInput, ai) => {
