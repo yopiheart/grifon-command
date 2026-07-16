@@ -66,6 +66,25 @@ Half-baked ideas don't go here — they go in conversation and either die or get
 
 > **Primitive mapping (2026-05-15):** Trigger is `pg_cron` (or Vercel Cron); the per-Day verification inside `api/odyssey/tick.ts` is conceptually a [`/goal`](https://code.claude.com/docs/en/goal) condition — "Day N is published, verified by Supabase row marked posted, with no scene exceeding budget cap." `/goal` itself is a session-scoped Claude Code primitive and won't run inside the cron handler; the framework here is design vocabulary for how the handler should express its success/failure contract. When you unpark this, see the "Goal-driven execution" section in `CLAUDE.md`.
 
+> **Design checklist from the 2026-07-16 brief evaluation (see evaluation record below):** when this
+> unparkes, the OpenAI "Three Pillars" agent-loop frame maps 1:1 onto the build — **triggers** =
+> pg_cron hitting `api/odyssey/tick.ts`; **persistent context** = the Odyssey schedule/state rows in
+> Supabase (idempotent by `(odyssey_id, day_number)`); **delegation** = the per-day tick handler doing
+> the work while the user stays outer-loop (Pause / Resume / Skip Day). This item IS the brief's
+> "agent-loop-as-product" idea (Paul Salt's Chief-of-Staff pattern, productized for end users) — the
+> brief validates the tier, but does NOT change the resume trigger: unprompted beta demand first.
+>
+> **Brief evaluation record (2026-07-16):** *The Golden Age of AI Engineering* (Embiricos / Huet /
+> Steinberger, OpenAI Dev Day) evaluated against the codebase — verdict: **~85% already absorbed**
+> (outer/inner loop = Plan→Goal + build-gate; delegation = per-role model allocation + fresh-critic;
+> triggers = `loops.md` Tiers 0–5; value-maxing = the 2026-07-01 allocation decision). Rejected as
+> conflicts: server-side compaction (keep the `/clear` doctrine), default parallel fan-out (Max-5x
+> quality-first budget, same call as the 2026-06-17 Kun Chen verdict), fully-unattended intermediate
+> steps (TUNED-file + PoC cost checkpoints stay), and any re-inflation of the deferred AUTO-mode
+> Director brain (`concierge_director_plan.md` §10 rescope stands). Net-new output: this design
+> checklist + a product-shape note in `concierge_director_plan.md` §4. No new parked item, no code.
+> Do not re-evaluate this brief.
+
 **What:** Turn Influencer Forge from on-demand-per-day into a true autopilot. User configures one Odyssey, sets `startDate` + `cadence` (daily / 3× weekly / weekly), then walks away. Content drops on schedule for 30 days without them logging in.
 
 **Why it matters:** This is the **Autopilot tier** in your existing Free → Creator → Pro → Business → Autopilot pricing ladder — currently a tier name with no feature behind it. It's the single largest revenue lever on the post-beta roadmap. Once 10–20 paying Autopilot customers exist at ₱29K–49K/mo each, that's ₱500K+ MRR from one feature.
