@@ -99,7 +99,7 @@ grainy background, mild wide-angle distortion, slightly imperfect framing
 tilted a few degrees, authentic UGC testimonial feel, no HDR, no cinematic
 grading, no studio lighting, no beauty filter, not retouched.
 
-VERDICT:
+VERDICT: ✅ PASS — World Cup grade (Neil, 2026-07-16, gpt-image-2). Strongest of the batch: real flash physics (hard shine, grainy dark room, wall shadow), genuinely unretouched skin w/ visible blemishes, stray hairs over shirt, all props landed, label unreadable.
 
 ### 4. Customer outside a food stall — friend-took-this photo (golden hour)
 
