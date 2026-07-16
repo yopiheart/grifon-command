@@ -1019,6 +1019,39 @@ a code-executor delegation AFTER Neil merges this branch and green-lights the pl
 - **Source:** Neil product-check session 2026-07-08 ("we don't have FOOD & Fashion
   niche as well").
 
+### 21. Last30Days community-pulse skill — gated trial (blocked in remote sandbox, resume on cafe PC)
+
+- **What:** Trial [mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill)
+  (MIT, ~52k stars, installs as a Claude Code plugin) as a dev-side data source: 30-day,
+  engagement-ranked community pulse from Reddit/X/YouTube/TikTok/HN. Fit identified
+  2026-07-16: (a) upstream trend radar for ad-recon → viral-autopsy → Swipe File (feeds
+  Bridge #1 candidates; ≥3-corroboration gates unchanged); (b) TikTok/community intel for
+  `grifon-ad-strategist` + `grifon-cmo` — the current blind spot (Motion MCP is Meta-only).
+  NOT for the product/MarketMind (tatawagin-ka truth; server-side rebuild + opex — separate
+  decision later, only if the dev-side data proves out).
+- **Why parked:** The 2026-07-16 remote-session trial was **blocked three ways, honestly**:
+  (1) sandbox permission classifier denied executing the cloned third-party code (correct
+  caution — it ships cookie-harvesting machinery, and the session holds repo + MCP creds);
+  (2) built-in WebSearch cannot reach reddit.com (Reddit blocks Anthropic's crawler — the
+  brief's platform-walling thesis, demonstrated live); (3) firecrawl (which can reach Reddit)
+  needed an interactive approval with Neil away. Verdict so far: **fit is real, value unproven —
+  no data seen yet.**
+- **When to resume:** Next cafe-PC session (or any session with Neil present to approve
+  firecrawl as the interim keyless-value probe).
+- **Where to start (paste-ready cafe-PC kickoff):** install via
+  `/plugin marketplace add mvanhorn/last30days-skill`. **House rules for the trial:**
+  NO cookie mode on the rented PC (skip browser-cookie extraction; keyless sources +
+  optional ScrapeCreators key in `.env` only — 10k free calls, third-party SPOF, log spend);
+  run output through a subagent or straight to a file (5–14 min runs, big outputs — context
+  hygiene); trial topic: `/last30days AI video ad generators` (doubles as competitor/objection
+  intel for CMO). **Judge test:** did it produce an autopsy candidate or CMO hook we wouldn't
+  have found by hand? Adopt → add `scripts/restore-last30days.ps1` (idempotent, per
+  `restore-codex.ps1` pattern) + a line here; else park permanently.
+- **Scope:** ~30 min trial on the cafe PC. Adoption plumbing (restore script + skill-integration
+  notes in `ad-recon`/`viral-autopsy`) ≈ 1 hour more.
+- **Source:** Neil, 2026-07-16 — NotebookLM brief *"LLM Can't Search TikTok or Reddit"* +
+  "okay bro g!!" endorsing the gated trial. Repo verified real same session (WebFetch).
+
 ## How to add new items
 
 When Neil endorses an idea but says "not now":
