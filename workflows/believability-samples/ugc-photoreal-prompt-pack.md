@@ -244,7 +244,7 @@ through the window opening, mild wide-angle distortion, imperfect candid
 framing, natural grain in shadowed areas, authentic UGC commute-photo feel,
 no HDR, no cinematic grading, no studio lighting, no beauty filter.
 
-VERDICT:
+VERDICT: ✅ PASS w/ notes (Neil, 2026-07-16, gpt-image-2). Subject + motion blur + breeze-blown hair are World Cup grade. Culture miss: passengers face FORWARD (bus/UV-Express layout) instead of a jeepney's inward benches — PH viewers may clock it. Lesson: hyper-local props need explicit layout description (e.g. "two long inward-facing bench seats"), the model's jeepney prior is weak.
 
 ### 10. Shop opening day — high-overhead selfie with crowd
 
