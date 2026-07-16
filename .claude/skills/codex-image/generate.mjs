@@ -14,7 +14,8 @@
 //   --prompt <text>   (required) what to draw / how to edit
 //   --out <path>      (required) where to save the PNG
 //   --size <WxH>      optional, default 1024x1024 (e.g. 1024x1536, 1536x1024)
-//   --edit <path>     optional input image → edit mode (passed to codex via -i)
+//   --edit <path>     optional input image → edit mode (passed to codex via -i);
+//                     repeatable — pass it twice for e.g. identity + scene anchors
 //
 // Safety: this always runs Codex in its workspace-write sandbox (--full-auto)
 // and refuses output paths outside the repo. It never disables Codex's sandbox
@@ -32,7 +33,7 @@ function parseArgs(argv) {
     if (a === '--prompt') out.prompt = argv[++i];
     else if (a === '--out') out.out = argv[++i];
     else if (a === '--size') out.size = argv[++i];
-    else if (a === '--edit') out.edit = argv[++i];
+    else if (a === '--edit') (out.edit ??= []).push(argv[++i]); // repeatable — codex `-i` is variadic
   }
   return out;
 }
@@ -113,7 +114,9 @@ const instruction =
   `$imagegen Generate an image and save it to the exact absolute path "${outAbs}". ` +
   `Size ${size}. Do NOT write code, do NOT edit project files, do NOT explain — ` +
   `only produce and save the image. ` +
-  (args.edit ? `Edit the provided input image per: ${args.prompt}` : `Image: ${args.prompt}`);
+  (args.edit
+    ? `Edit/compose using the ${args.edit.length > 1 ? `${args.edit.length} provided input images` : 'provided input image'} per: ${args.prompt}`
+    : `Image: ${args.prompt}`);
 
 // --full-auto runs Codex in its workspace-write sandbox (writes confined to the
 // repo, network restricted) without interactive prompts — appropriate for a
@@ -124,9 +127,9 @@ const instruction =
 // the instruction as another image → Codex finds no prompt and reads stdin
 // ("No prompt provided via stdin"). Prompt first, then the image flag.
 const codexArgs = [...codex.pre, 'exec', '--full-auto', instruction];
-if (args.edit) codexArgs.push('-i', path.resolve(args.edit));
+if (args.edit) codexArgs.push('-i', ...args.edit.map((e) => path.resolve(e)));
 
-console.error(`[codex-image] ${path.basename(codex.file)} exec --full-auto "<instruction>"${args.edit ? ` -i ${path.resolve(args.edit)}` : ''}`);
+console.error(`[codex-image] ${path.basename(codex.file)} exec --full-auto "<instruction>"${args.edit ? ` -i ${args.edit.map((e) => path.resolve(e)).join(' ')}` : ''}`);
 const startMs = Date.now();
 const run = spawnSync(codex.file, codexArgs, { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
 const log = (run.stdout || '') + (run.stderr || '');
