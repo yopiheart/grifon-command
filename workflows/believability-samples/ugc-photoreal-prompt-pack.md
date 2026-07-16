@@ -289,6 +289,23 @@ ChatGPT dual-anchor flow yet — scaffold-alone results (the 10 above) remain
 the validated finding. Fix recipe for the rerun: dual anchor + milder
 expression + explicit skin-texture/flash language.
 
+**99%-real reference standard (Neil's ChatGPT winners, studied 2026-07-16):**
+"celebrating victory in fan zone" + "Zam's playful Philippines football
+selfie" — Neil grades both 99% real. Comparative findings vs our BORDERLINE:
+(1) **eyes-open rule** — in both winners the identity-carrying upper face
+(eyes, brows, nose bridge) matches the reference exactly; expressiveness
+lives in the MOUTH only (close-lipped smile / tongue-out). Our squint-laugh
+closed the eyes → likeness collapsed. Prompt expressions as mouth-level,
+never eye-scrunching. (2) **hair-silhouette lock** — her layered bob (or its
+messy half-up variant) is constant in every winner; ours drifted longer/
+fuller. Name the hairstyle explicitly. (3) **authored imperfection persists
+at 99%** (wrapper litter on a seat, rough cheek paint, seat-row numbers) —
+scaffold DNA compatible with identity lock. (4) **flash not required** —
+both winners are ambient-light; the realism carrier is texture + context,
+so identity (not lighting) was our true failure. Winner files (local-only,
+defreezer-ephemeral; originals live on Neil's ChatGPT side):
+`.tmp/zam-bonus/`.
+
 ## Scaffold self-check (all 10 prompts)
 
 Every prompt above contains: ✔ smartphone-capture device opening ✔ candid/UGC
