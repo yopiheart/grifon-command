@@ -59,7 +59,38 @@ motion via DUR/EASE tokens only, all reduced-motion gated; no GENERATE/ANALYZE/I
 CTA copy (GoldButton toast matcher); Tailwind is CDN + inline config — dynamic class names
 must be full literals; no new deps; no fabricated social proof.
 
-## 5. Status
+## 5. Login recon addendum (2026-07-16, same session)
+
+Neil asked what the reference sites teach us about the login screen. Live recon of
+github.com/login (+signup — Cloudflare-blocked), ChatCut's auth, account.apple.com/sign-in,
+Vertus's "Join Now" (turns out to be a lead-gen modal, not real auth), vs our `/login`.
+
+**Verdict: our passwordless OTP gateway already matches or beats all four references.**
+We share ChatCut's passwordless two-step pattern but add reassurance chips + value-reminder
+heading; GitHub still leads with a password form; Apple's trust paragraph is heavier than our
+chips; Vertus has no real auth. Grifon had the boldest, clearest primary CTA of the set.
+
+**Gaps worth taking (not yet implemented — Neil to greenlight):**
+1. **Validation UX — the one real weakness.** Typing an invalid email and blurring produces
+   nothing (no inline error, no gating); errors only at submit. Apple pattern: primary button
+   `disabled` until the field is plausibly valid + on-blur format check. Small App.tsx change.
+2. **OTP auto-verify** — auto-submit when the 6th digit lands (input already strips non-digits,
+   `autoComplete="one-time-code"`). Cuts one tap from every login forever. Mind the
+   agent_lessons 2026-06-30 OTP-length coupling (6 digits hardcoded ~5 places + Supabase dashboard).
+3. **Opt-in box visual weight** — the gold-bordered Members-only-deals card is the heaviest
+   element between field and CTA; references keep that path empty. Can demote container styling
+   (thinner border/smaller) WITHOUT touching the consent mechanics — must stay unchecked,
+   affirmative, informed, Privacy-linked (consent_capture_plan.md constraints).
+4. **GitHub OAuth button audience fit** — dev-tool convention; our audience is SMB owners.
+   Consider flagging it off (`OAUTH_PROVIDERS`) → one decision fewer (Google + email covers PH).
+5. Already-queued carry-forwards unchanged: OAuth avatar/display-name on dashboard header;
+   passkey upsell (deferred on OAuth telemetry — GitHub ships "Sign in with a passkey" today).
+
+Constraints any login change must respect: marketing opt-in stash-and-reconcile for OAuth
+(`grifon_oauth_marketing_opt_in`), `?plan=` intent resume, module-intent deep-link, and the
+federated-OAuth-neutral-surface + no-hand-transcribed-brand-SVG rules (agent_lessons 460-466).
+
+## 6. Status
 
 - Branch: `feat/landing-last-dance`
 - Build: delegated to `code-executor` (Opus 4.8) — UI-heavy lane per codex-executor trial rules;
