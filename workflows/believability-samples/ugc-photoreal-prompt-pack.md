@@ -327,6 +327,32 @@ standard).
   anchor, not more prose. One scene = one strong anchor set; don't stack a
   hard identity + a hard location in the same test.
 
+## Gemini-lane transfer test (2026-07-16) — ❌ scaffold does NOT transfer
+
+First run of the scaffold outside gpt-image-2: prompts 1, 3, 5, 7 verbatim on
+`gemini-3.1-flash-lite-image` (the app's `sceneImageModel`), A/B'd against the
+current tuned Director AI formula on the same model, prompt-only, via
+[`tools/eval_realism_formula.mjs`](../../tools/eval_realism_formula.mjs)
+(outputs: `.tmp/realism-formula-eval/`, disposable).
+
+**VERDICT: ❌ FAIL, all 4 pairs (Neil, 2026-07-16)** — "panget lahat"; the
+current tuned formula remains better on Gemini. The scaffold's World Cup grade
+is **gpt-image-2-only** — magkaibang model, magkaibang prompting. Do NOT
+transplant these prompts (or a scaffold-ized `REALISM_INSTRUCTION`) into
+`geminiService.ts`; any future Gemini-lane realism push must be derived from
+Gemini-graded winners, not from this pack. No change proposal — the tuned
+formula stays as-is.
+
+Secondary observation from the run (independent of the verdict): on Gemini the
+scaffold's ban tail did not prevent **real brand marks** (Surf sachets,
+Coca-Cola chiller in the sari-sari case) — any future Gemini scaffold variant
+needs the app's NO-LOGOS constraint merged in.
+
+Agent calibration note: the agent pre-read scored the scaffold 4/4 wins
+(context density, flash physics) before Neil graded — direct-viewing AI-feel
+overruled it. Neil's eyeball is the only valid believability grader; agent
+pre-reads are triage, never verdicts.
+
 ## Scaffold self-check (all 10 prompts)
 
 Every prompt above contains: ✔ smartphone-capture device opening ✔ candid/UGC
