@@ -32,8 +32,11 @@ import {
   MARKETMIND_SYSTEM_INSTRUCTION,
   buildMarketMindParts,
   TEMU_CLASSIFIER_PROMPT,
+  UGCPRO_CLASSIFIER_PROMPT,
+  UGCPRO_SERVICE_CLASSIFIER_PROMPT,
   buildAdScriptPrompt,
   parseAdScriptResponse,
+  hasApplicationVerb,
   type AdScriptInput,
   buildOfferOptimizerPrompt,
   parseOfferOptimizerResponse,
@@ -81,6 +84,87 @@ const classifyTemuProductServerSide = async (
   return 'Reaction';
 };
 
+type UgcProSubType = 'tryon' | 'unboxing' | 'demo' | 'transformation' | 'tutorial';
+
+// Pure parse of the UGC Pro classifier's one-word reply. Exported for unit tests.
+// Uppercase substring-match: each keyword maps to its sub-format; unrecognized
+// replies fall through to the transformation default (the safe generalist arm).
+// None of the five keywords is a substring of another (TRYON / UNBOXING / DEMO /
+// TRANSFORMATION / TUTORIAL), so plain includes() checks can't collide.
+export const parseUgcProClassifierResponse = (text: string): UgcProSubType => {
+  const upper = (text ?? '').toUpperCase();
+  if (upper.includes('TRYON')) return 'tryon';
+  if (upper.includes('UNBOXING')) return 'unboxing';
+  if (upper.includes('TUTORIAL')) return 'tutorial';
+  if (upper.includes('DEMO')) return 'demo';
+  if (upper.includes('TRANSFORMATION')) return 'transformation';
+  return 'transformation';
+};
+
+const classifyUgcProServerSide = async (
+  product: string,
+  description: string,
+  ai: GoogleGenAI
+): Promise<UgcProSubType> => {
+  const response = await ai.models.generateContent({
+    model: MODEL_FAST,
+    contents: UGCPRO_CLASSIFIER_PROMPT(product, description),
+  } as any);
+  logModelUsage('flow:adscript:ugcpro-classify', MODEL_FAST, (response as any).usageMetadata);
+  return parseUgcProClassifierResponse(response.text ?? '');
+};
+
+// Slice 4 (A4): services-constrained sibling of the 5-way classifier. A SERVICE
+// business can only answer TRANSFORMATION or TUTORIAL (try-on/unboxing/demo are
+// product-only), so this uses the 2-way service prompt and mirrors the 5-way's
+// default: an unrecognized reply falls through to 'transformation'.
+const classifyUgcProServiceServerSide = async (
+  product: string,
+  description: string,
+  ai: GoogleGenAI
+): Promise<'transformation' | 'tutorial'> => {
+  const response = await ai.models.generateContent({
+    model: MODEL_FAST,
+    contents: UGCPRO_SERVICE_CLASSIFIER_PROMPT(product, description),
+  } as any);
+  logModelUsage('flow:adscript:ugcpro-service-classify', MODEL_FAST, (response as any).usageMetadata);
+  return (response.text ?? '').toUpperCase().includes('TUTORIAL') ? 'tutorial' : 'transformation';
+};
+
+// Slice 4 (A4): resolve the UGC Pro sub-format, clamping the classifier dispatch by
+// businessType BEFORE any Gemini call. Non-product verticals have fewer legal formats
+// than the product 5-way, so they never over-call the classifier:
+//   - realestate → exactly ONE legal answer ('tutorial') → NO Gemini call.
+//   - service    → TWO legal answers; honor an explicit 'transformation'/'tutorial'
+//                  pick, otherwise (Auto or an illegal product-only pick) run the
+//                  2-way service classifier.
+//   - product (or undefined) → EXACTLY the pre-Slice-4 behavior: honor any of the 5
+//                  explicit picks, else the 5-way classifier on the Auto path.
+// Exported for unit tests (the clamp is asserted with a spy `ai`).
+export const resolveUgcProSubType = async (
+  businessInfo: AdScriptInput['businessInfo'],
+  ai: GoogleGenAI
+): Promise<UgcProSubType> => {
+  const chosen = businessInfo.ugcProFormat;
+  const bt = businessInfo.businessType ?? 'product';
+  if (bt === 'realestate') return 'tutorial';
+  if (bt === 'service') {
+    return chosen === 'transformation' || chosen === 'tutorial'
+      ? chosen
+      : classifyUgcProServiceServerSide(businessInfo.product, businessInfo.features, ai);
+  }
+  if (
+    chosen === 'tryon' ||
+    chosen === 'unboxing' ||
+    chosen === 'demo' ||
+    chosen === 'transformation' ||
+    chosen === 'tutorial'
+  ) {
+    return chosen;
+  }
+  return classifyUgcProServerSide(businessInfo.product, businessInfo.features, ai);
+};
+
 type FlowHandler = (input: any, ai: GoogleGenAI) => Promise<unknown>;
 
 export const FLOW_REGISTRY: Record<string, FlowHandler> = {
@@ -112,8 +196,18 @@ export const FLOW_REGISTRY: Record<string, FlowHandler> = {
         ai
       );
     }
-    const prompt = buildAdScriptPrompt(input, temuSubType);
-    const generate = async () => {
+    let ugcProSubType: UgcProSubType | undefined;
+    if (input.businessInfo.scriptType === 'UGCPro') {
+      // A4: businessType-clamped dispatch — realestate forces 'tutorial' (no Gemini
+      // call), service honors only its 2 legal picks / else the 2-way classifier,
+      // product keeps the pre-Slice-4 5-way behavior. See resolveUgcProSubType.
+      ugcProSubType = await resolveUgcProSubType(input.businessInfo, ai);
+    }
+    const prompt = buildAdScriptPrompt(input, temuSubType, ugcProSubType);
+    // Single-shot generate + parse. Extracted so the hook-starvation retry and the
+    // transformation verb-reroll below can re-run the identical call without
+    // duplicating config.
+    const generateAndParse = async (flowTag: string) => {
       const response = await ai.models.generateContent({
         model: MODEL_TEXT,
         contents: prompt,
@@ -123,23 +217,45 @@ export const FLOW_REGISTRY: Record<string, FlowHandler> = {
           thinkingConfig: { thinkingBudget: 4000 },
         },
       } as any);
-      const rawText = response.text || '{}';
-      logModelUsage('flow:adscript', MODEL_TEXT, (response as any).usageMetadata);
-      return parseAdScriptResponse(rawText);
+      logModelUsage(flowTag, MODEL_TEXT, (response as any).usageMetadata);
+      return parseAdScriptResponse(response.text || '{}');
     };
-    const script = await generate();
-    if (script?.hook1?.length && script?.hook2?.length) return script;
+
+    let script = await generateAndParse('flow:adscript');
+
     // Hook starvation (issue #59): Gemini stochastically returns empty hook
     // arrays, TESTIMONIAL-heavy. Regenerate once INSIDE this already-metered
     // request (one workflow unit — see the one-generation-one-workflow rule at
-    // the consumeMonthly block). If the regeneration itself fails, return the
+    // the consumeMonthly block). If the regeneration itself fails, keep the
     // first parsed result rather than discarding it.
-    console.warn('[adscript] empty hook1/hook2 — regenerating once (hook starvation, #59)');
-    try {
-      return await generate();
-    } catch {
-      return script;
+    if (!(script?.hook1?.length && script?.hook2?.length)) {
+      console.warn('[adscript] empty hook1/hook2 — regenerating once (hook starvation, #59)');
+      try {
+        script = await generateAndParse('flow:adscript:hook-retry');
+      } catch {
+        // keep the first parsed result
+      }
     }
+
+    // TRANSFORMATION beat-1 (body[0]) must be a working application line, not a posed
+    // product intro. Prompt instructions alone failed 4/4 in the Slice-1 eval loop, so
+    // detect + re-roll ONCE (Neil's choice: never regex-rewrite the model's line). If
+    // body is empty or body[0] isn't a string, skip — never crash.
+    if (
+      input.businessInfo.scriptType === 'UGCPro' &&
+      ugcProSubType === 'transformation' &&
+      typeof script.body?.[0] === 'string' &&
+      !hasApplicationVerb(script.body[0])
+    ) {
+      script = await generateAndParse('flow:adscript:verb-reroll');
+    }
+
+    // Thread the resolved UGC Pro sub-format back to the client (only for UGCPro runs)
+    // so the storyboard prompt can read businessInfo.ugcProFormat even on the 'Auto'
+    // path. Transport/plumbing only — the prompt text is untouched.
+    return input.businessInfo.scriptType === 'UGCPro'
+      ? { ...script, ugcProFormatResolved: ugcProSubType }
+      : script;
   },
 
   'offer-optimizer': async (input: OfferOptimizerInput, ai) => {

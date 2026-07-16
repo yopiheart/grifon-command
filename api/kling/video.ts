@@ -21,7 +21,7 @@ const Body = z.object({
   finishedAdId: z.string().optional(),
 });
 
-const VIDEO_LIMIT = 5;
+export const VIDEO_LIMIT = 12;
 const VIDEO_WINDOW_SECONDS = 3600;
 
 // Kling-specific error codes worth distinguishing client-side.
@@ -46,10 +46,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(400).json({ error: 'invalid_body', issues: parsed.error.issues });
   }
 
+  // Config/credential check BEFORE the rate-limit slot is consumed: a missing
+  // KLING_* env is our misconfiguration, so it must 502 without burning the
+  // caller's hourly budget. Auth still runs first; only this check moved ahead
+  // of rateLimitCheck (message/shape unchanged).
+  let jwt: string;
+  try {
+    jwt = getKlingAccessToken();
+  } catch (err: any) {
+    console.error('[api/kling/video] auth error:', err?.message);
+    return res.status(502).json({ error: 'kling_error', detail: err?.message ?? 'auth_failed' });
+  }
+
   // Dev-only unmetered bypass (Neil 2026-06-10): GRIFON_DEV_UNMETERED_VIDEO='true'
-  // in LOCAL .env skips the hourly video rate-limit so a 6-scene smoke test renders
-  // back-to-back instead of dying at scene 6 (limit is 5/hr). Pairs with the same
-  // flag's monthly-quota bypass in quota.ts. NEVER set on Vercel — prod stays limited.
+  // in LOCAL .env skips the hourly video rate-limit so a long smoke test renders
+  // back-to-back instead of tripping the shared pool (12/hr since 2026-07-16, Neil GO,
+  // spec finding #22). Pairs with the same flag's monthly-quota bypass in quota.ts.
+  // NEVER set on Vercel — prod stays limited.
   const devUnmetered = process.env.GRIFON_DEV_UNMETERED_VIDEO === 'true';
   const allowed = devUnmetered || await rateLimitCheck(
     `kling:video:${user.id}`,
@@ -94,14 +107,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     requestId,
     finishedAdId,
   });
-
-  let jwt: string;
-  try {
-    jwt = getKlingAccessToken();
-  } catch (err: any) {
-    console.error('[api/kling/video] auth error:', err?.message);
-    return res.status(502).json({ error: 'kling_error', detail: err?.message ?? 'auth_failed' });
-  }
 
   const submitToKling = async (token: string) => {
     const upstream = await fetch(`${KLING_API_BASE}/v1/videos/image2video`, {

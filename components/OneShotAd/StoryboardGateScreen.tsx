@@ -1,5 +1,5 @@
 import React from 'react';
-import { RefreshCw, Clapperboard, CheckCircle2, AlertTriangle, Film } from 'lucide-react';
+import { RefreshCw, Clapperboard, CheckCircle2, AlertTriangle, Film, RotateCcw } from 'lucide-react';
 import { GlassPanel } from '../ui/GlassPanel';
 import { ShimmerButton, SceneReveal } from './motion';
 import type { ProductionRun } from '../../services/producerOrchestrator';
@@ -19,7 +19,8 @@ export const StoryboardGateScreen: React.FC<{
   regenerating: number | null;
   onRegenScene: (sceneIdx: number) => void;
   onApprove: () => void;
-}> = ({ run, regenerating, onRegenScene, onApprove }) => {
+  onStartOver: () => void;
+}> = ({ run, regenerating, onRegenScene, onApprove, onStartOver }) => {
   const flagged = run.scenes.filter((s) => s.status === 'flagged').length;
   const anyBusy = regenerating !== null;
   // Can't film until every scene has an image and none is still flagged.
@@ -107,6 +108,9 @@ export const StoryboardGateScreen: React.FC<{
           <p className="mt-2 flex items-center justify-center gap-1.5 text-[10px] font-mono uppercase tracking-widest text-zinc-500">
             <Film className="h-3 w-3" /> Approving starts the video render
           </p>
+          <button type="button" onClick={onStartOver} className="mx-auto mt-4 flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500 transition-colors hover:border-white/25 hover:text-white">
+            <RotateCcw className="h-3.5 w-3.5" /> Start over
+          </button>
         </div>
       </div>
     </div>

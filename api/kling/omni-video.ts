@@ -32,7 +32,7 @@ const Body = z.object({
   finishedAdId: z.string().optional(),
 });
 
-const VIDEO_LIMIT = 5;
+export const VIDEO_LIMIT = 12;
 const VIDEO_WINDOW_SECONDS = 3600;
 
 // HTTP 429 + envelope code 1102 = Kling account balance exhausted (NOT a rate
@@ -56,6 +56,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const parsed = Body.safeParse(req.body ?? {});
   if (!parsed.success) {
     return res.status(400).json({ error: 'invalid_body', issues: parsed.error.issues });
+  }
+
+  // Config/credential check BEFORE the rate-limit slot is consumed: a missing
+  // KLING_* env is our misconfiguration, so it must 502 without burning the
+  // caller's hourly budget. Auth still runs first; only this check moved ahead
+  // of rateLimitCheck (message/shape unchanged).
+  let jwt: string;
+  try {
+    jwt = getKlingAccessToken();
+  } catch (err: any) {
+    console.error('[api/kling/omni-video] auth error:', err?.message);
+    return res.status(502).json({ error: 'kling_error', detail: err?.message ?? 'auth_failed' });
   }
 
   // SHARED with /api/kling/video — Kling balance is one wallet, the hourly
@@ -108,14 +120,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     requestId,
     finishedAdId,
   });
-
-  let jwt: string;
-  try {
-    jwt = getKlingAccessToken();
-  } catch (err: any) {
-    console.error('[api/kling/omni-video] auth error:', err?.message);
-    return res.status(502).json({ error: 'kling_error', detail: err?.message ?? 'auth_failed' });
-  }
 
   const submitToKling = async (token: string) => {
     const upstream = await fetch(`${KLING_API_BASE}/v1/videos/omni-video`, {

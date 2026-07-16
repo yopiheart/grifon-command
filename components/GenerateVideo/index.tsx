@@ -42,6 +42,7 @@ import { getSupabase } from '../../services/supabaseClient';
 import { useSubscription } from '../../hooks/useSubscription';
 import { useQuota } from '../../hooks/useQuota';
 import { SCENE_CAP, omniStylesEligible } from '../../utils/planGate';
+import { seedCaptionsEnabled } from '../../utils/asmrSeeds';
 import { pickEmphasisWord, fetchOmniStyleStatus } from '../../services/omniStyleService';
 import { dominantHexFromImage } from '../../utils/dominantColor';
 import { listActiveJobs, clearActiveJob } from '../../services/activeJobStore';
@@ -97,6 +98,9 @@ interface GenerateVideoProps {
    * color as the default brand swatch. Falls back to the storyboard scene-1
    * image at the call site. */
   heroImageUrl?: string;
+  /** UGC Pro ASMR flavor — audio-led format seeds the captions toggle OFF (the
+   * whisper + taps carry it; subtitles fight the register). User-flippable. */
+  asmrFlag?: boolean;
 }
 
 const ACTIVE_MODELS: VideoModelType[] = ['Veo_3.1_Fast', 'Veo_3.1_Quality', 'Veo_3.1_Lite', 'Kling_3_0', 'Kling_O1'];
@@ -182,6 +186,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
   onSendToSignalModulator,
   onSendToAiEditor,
   heroImageUrl,
+  asmrFlag,
 }) => {
   const hasSeedPrompts = seedPrompts.length > 0;
   const [mode, setMode] = useState<Mode>(hasSeedPrompts ? 'pipeline' : 'one-shot');
@@ -258,7 +263,9 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
   const [emphasisWord, setEmphasisWord] = useState('');
   const [titleText, setTitleText] = useState('');
   const [chipsEdited, setChipsEdited] = useState(false);
-  const [captionsOn, setCaptionsOn] = useState(true);
+  // ASMR runs seed captions OFF (audio-led — subtitles fight the whisper register).
+  // User-flippable via the toggle; picking an Omni style still re-derives per style.
+  const [captionsOn, setCaptionsOn] = useState(seedCaptionsEnabled(undefined, asmrFlag));
   // Business gate (same shape as showAdvanced): dev-unlock opens the picker on
   // any account; otherwise Business-only. Server proxy is the real wall.
   const omniStylesUnlocked = devUnlock || omniStylesEligible(plan_id);
@@ -329,7 +336,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
     setConfig((prev) => ({
       ...prev,
       prompt: seed.prompt,
-      model: autoRouteModelForType(seed.type, prev.model, activeIdx),
+      model: autoRouteModelForType(seed.type, prev.model),
     }));
     const sceneImage = storyboard[activeIdx]?.imageUrl ?? storyboard[activeIdx]?.manualUploadUrl;
     if (sceneImage) {
@@ -823,9 +830,9 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
           // Session B — auto-route this scene's engine from its type.
           // talking → Veo (avatars), b-roll/cinematic → Kling (morph). The
           // user's global picker becomes the fallback if the type isn't one
-          // of the known three. Session D — scene 0 b-roll (the hook)
-          // routes to Kling O1 Omni via the sceneIdx-aware branch.
-          const sceneModel = autoRouteModelForType(p.type, config.model, i);
+          // of the known three. Scene-0 b-roll hooks route like any b-roll
+          // (Kling_3_0); Kling_O1 stays a manual pick (producer finding #23).
+          const sceneModel = autoRouteModelForType(p.type, config.model);
           // Phase 6 — auto-compute per-scene duration from scriptLine.
           // RENDER ALL previously inherited the single config.duration value
           // (whatever scene was last viewed), forcing every clip to one length.
@@ -1388,7 +1395,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
     const sceneIdx = previewItem.sceneIdx;
     const scenePrompt = sceneIdx !== undefined ? seedPrompts[sceneIdx] : undefined;
     const sceneModel = scenePrompt
-      ? autoRouteModelForType(scenePrompt.type, config.model, sceneIdx)
+      ? autoRouteModelForType(scenePrompt.type, config.model)
       : config.model;
     setConfig((p) => ({ ...p, prompt: previewItem.prompt, model: sceneModel }));
     setCanvasView('edit');
@@ -1755,7 +1762,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
           elapsed={elapsed}
           onSelect={setActiveIdx}
           renderedSceneIdxs={renderedSceneIdxs}
-          perSceneModels={seedPrompts.map((p, i) => autoRouteModelForType(p.type, config.model, i))}
+          perSceneModels={seedPrompts.map((p) => autoRouteModelForType(p.type, config.model))}
         />
       </div>
     </GlassPanel>

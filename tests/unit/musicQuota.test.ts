@@ -8,7 +8,7 @@ import { musicBedKey } from '../../api/_lib/renderJob.js';
 import { MUSIC_STYLE_PROMPTS, type MusicStyle } from '../../api/_lib/musicPrompts.js';
 
 const PLANS: PlanId[] = ['free', 'starter', 'pro', 'business'];
-const STYLES: MusicStyle[] = ['mrbeast', 'temu', 'testimonial'];
+const STYLES: MusicStyle[] = ['mrbeast', 'temu', 'testimonial', 'ugcpro'];
 
 describe('generative-music quota + gating', () => {
   it('free/starter can NEVER generate music (MUSIC_DAILY = 0); pro/business can', () => {
@@ -49,8 +49,15 @@ describe('music bed cache key (per-ad)', () => {
 });
 
 describe('canned music prompts', () => {
-  it('covers exactly the three render styles', () => {
+  it('covers exactly the four render styles (incl. ugcpro)', () => {
     expect(Object.keys(MUSIC_STYLE_PROMPTS).sort()).toEqual([...STYLES].sort());
+  });
+
+  it('the ugcpro brief is its own phone-shot creator bed, no longer the testimonial clone', () => {
+    expect(MUSIC_STYLE_PROMPTS.ugcpro).toContain('phone-shot');
+    expect(MUSIC_STYLE_PROMPTS.ugcpro).not.toBe(MUSIC_STYLE_PROMPTS.testimonial);
+    // The shared NO_VOCALS tail closes every brief — assert ugcpro ends on it.
+    expect(MUSIC_STYLE_PROMPTS.ugcpro.endsWith('to the last.')).toBe(true);
   });
 
   it('every prompt enforces the mix-discipline invariant: instrumental + VO headroom', () => {

@@ -22,7 +22,13 @@ export interface BusinessInfo {
   productImageDescription?: string;
   logoImageUrl?: string;
   brandColors?: string; 
-  scriptType?: 'MrBeast' | 'Testimonial' | 'Temu' | 'Custom' | 'Cinematic' | 'Services' | 'RealEstate';
+  scriptType?: 'MrBeast' | 'Testimonial' | 'Temu' | 'Custom' | 'Cinematic' | 'Services' | 'RealEstate' | 'UGCPro';
+  // UGC Pro sub-format (creator-video strategy). Chosen by the user (picker chips) or auto-classified
+  // server-side from the brief when left undefined. All 5 values are in the type; only 'tryon' +
+  // 'transformation' are implemented in this slice (fashion gap + services bridge).
+  ugcProFormat?: 'tryon' | 'unboxing' | 'demo' | 'transformation' | 'tutorial';
+  // UGC Pro: audio-led ASMR flavor (whispered register, minimal VO). Off by default.
+  asmrFlag?: boolean;
   // Gates the Step 2 script-style picker: 'product' shows MrBeast/Testimonial/Temu (physical-product
   // formulas); 'service' shows the Services style; 'realestate' shows the RealEstate style. Custom
   // shows in all. Defaults from Market Research's isLocalService at prefill; user can override via the
@@ -50,7 +56,7 @@ export interface BusinessInfo {
   // router reads these to anchor each scene to the right real photo. RealEstate reuses this field with
   // property-specific slots (facade/living/kitchen/… ) — the venue render mode treats a property as a
   // real place identically to a service venue.
-  servicePhotos?: { url: string; slot: 'exterior' | 'interior' | 'ambiance' | 'staff' | 'before' | 'after' | 'facade' | 'living' | 'kitchen' | 'bedroom' | 'bathroom' | 'view' | 'amenities' | 'location' | 'agent'; description?: string }[];
+  servicePhotos?: { url: string; slot: 'exterior' | 'interior' | 'ambiance' | 'staff' | 'before' | 'after' | 'facade' | 'living' | 'kitchen' | 'bedroom' | 'bathroom' | 'view' | 'amenities' | 'location' | 'agent' | 'hero' | 'onbody' | 'packaging' | 'inuse'; description?: string }[];
   customScriptFile?: string[];
   selectedTheme?: VisualTheme;
 }
@@ -60,6 +66,11 @@ export interface Script {
   hook2: string[];
   body: string[];
   strategicAudit?: string;
+  /* UGC Pro (Slice 2): the sub-format the server resolved for this run — either the user's
+     explicit pick or the server-side classifier's choice on the 'Auto' path. Threaded back
+     onto businessInfo.ugcProFormat post-generation so the storyboard prompt always agrees
+     with the script. Set only for UGCPro runs; undefined otherwise. */
+  ugcProFormatResolved?: 'tryon' | 'unboxing' | 'demo' | 'transformation' | 'tutorial';
 }
 
 export interface Avatar {
@@ -86,7 +97,7 @@ export interface Scene {
   /* Phase 2 (Services + RealEstate): which uploaded servicePhotos SLOT best fits this scene. Set by
      the storyboard generator (Services/RealEstate only); the per-scene router anchors the scene to
      that real photo. Omitted when no uploaded slot fits → renderer falls back to representative. */
-  venueSlot?: 'exterior' | 'interior' | 'ambiance' | 'staff' | 'before' | 'after' | 'facade' | 'living' | 'kitchen' | 'bedroom' | 'bathroom' | 'view' | 'amenities' | 'location' | 'agent';
+  venueSlot?: 'exterior' | 'interior' | 'ambiance' | 'staff' | 'before' | 'after' | 'facade' | 'living' | 'kitchen' | 'bedroom' | 'bathroom' | 'view' | 'amenities' | 'location' | 'agent' | 'hero' | 'onbody' | 'packaging' | 'inuse';
   /* chainRole tracks the position in the cinematic relay chain */
   chainRole?: 'Metaphor_A' | 'Anchor_B' | 'Action_C' | 'Hero_D';
   /* Custom B-roll injection */
@@ -243,7 +254,7 @@ export interface FinalRenderEndCard {
 
 /** Edit-style preset ids the user can lock pre-render (see api/_lib/renderPresets.ts).
  * Shared across the GenerateVideo → EditVideo → FinalRenderRequest lock hop. */
-export type LockablePresetId = 'classic' | 'impact' | 'hype' | 'clean';
+export type LockablePresetId = 'none' | 'classic' | 'impact' | 'hype' | 'clean' | 'punch' | 'bars' | 'spotlight';
 
 /** Omni Edit Style locked at Render All (Slice 3 picker), hopped GenerateVideo →
  * App → EditVideo alongside the LockablePresetId. String literals only — no
@@ -262,7 +273,13 @@ export interface FinalRenderRequest {
   /** Style-keyed background-music bed (chosen in code from EDL meta.scriptStyleDetected).
    * `bedUrl` (optional) is a generated bed from api/music/compose; when present and
    * reachable it overrides the static `style` bed, else the render falls back to it. */
-  music?: { style: 'mrbeast' | 'temu' | 'testimonial'; enabled: boolean; bedUrl?: string };
+  music?: {
+    style: 'mrbeast' | 'temu' | 'testimonial' | 'ugcpro';
+    enabled: boolean;
+    bedUrl?: string;
+    /** 'bed' (default) = quiet, ducked under VO. 'lead' = music IS the audio (no VO): higher gain, no sidechain ducking. */
+    role?: 'bed' | 'lead';
+  };
   /** Explicit edit-style override; absent → server rotates deterministically. */
   preset?: { id?: LockablePresetId };
   /** Offer-recap overlay held to the end of the last scene. */
@@ -278,7 +295,7 @@ export interface FinalRenderJob {
  * `videoUrls` are the ad's scene clips — the server derives the per-ad cache seed
  * from them (rotationSeed), identical to the render. */
 export interface MusicComposeRequest {
-  style: 'mrbeast' | 'temu' | 'testimonial';
+  style: 'mrbeast' | 'temu' | 'testimonial' | 'ugcpro';
   videoUrls: string[];
   lengthMs: number;
 }

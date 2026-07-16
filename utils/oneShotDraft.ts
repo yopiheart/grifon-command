@@ -20,6 +20,7 @@
 import type { BusinessInfo } from '../types';
 import type { ProductionInput } from '../services/oneShotIntake';
 import type { ServiceArchetype, RealEstateArchetype } from '../components/guidedPhotoSlots';
+import type { RecipeId } from '../components/OneShotAd/recipes';
 
 type ServicePhoto = NonNullable<BusinessInfo['servicePhotos']>[number];
 
@@ -35,8 +36,15 @@ export interface OneShotDraft {
   localService: boolean;
   businessAddress: string;
   vertical: string;
-  format: 'ugc' | 'product_ugc' | 'commercial';
+  format: 'ugc' | 'product_ugc' | 'ugc_pro' | 'commercial';
   strategy: 'Testimonial' | 'MrBeast';
+  /** The named recipe the composer showed — a preset over format/strategy/ugcProChoice/asmr.
+   * The four axis fields above are still saved (derived) so older readers stay valid. */
+  recipe?: RecipeId;
+  /** UGC Pro sub-format pick. 'auto' → the server classifies the sub-format from the brief. */
+  ugcProChoice?: 'auto' | 'tryon' | 'unboxing' | 'demo' | 'transformation' | 'tutorial';
+  /** UGC Pro: audio-led ASMR flavor (Unboxing only). Off by default. */
+  asmrFlag?: boolean;
   presenterMode: 'auto' | 'upload';
   gender: 'Any' | 'Male' | 'Female';
   ageRange: string;
@@ -44,7 +52,6 @@ export interface OneShotDraft {
   avatarUrl: string;
   language: ProductionInput['language'];
   aspectRatio: ProductionInput['aspectRatio'];
-  resolution: NonNullable<ProductionInput['resolution']>;
   voiceId: string;
 }
 

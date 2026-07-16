@@ -267,6 +267,60 @@ export const TEMU_CLASSIFIER_PROMPT = (product: string, description: string): st
     Output ONLY one word: ASMR, Reaction, or Utility.
     `;
 
+export const UGCPRO_CLASSIFIER_PROMPT = (product: string, description: string): string => `
+    Analyze this product for a UGC Pro creator-video strategy.
+    Product: "${product}"
+    Description: "${description}"
+
+    Classify into ONE of these 5 formats:
+    1. **TRYON:** Wearables — clothing, fashion sets, activewear, shoes, jewelry, bags,
+       accessories, eyewear. The payoff is seeing it WORN on the body. Focus: "Watch me try this."
+    2. **UNBOXING:** The packaging and opening experience is the star — premium/gift
+       packaging, subscription boxes, collectibles, tech with a satisfying unbox. The
+       payoff is the OPENING itself. Focus: "Listen to this. Watch me open it."
+    3. **DEMO:** The product has a function worth WATCHING work — gadgets, appliances,
+       tools, kitchenware, snacks/food with a taste-or-stunt payoff, anything with a
+       hidden feature or "secret mode". Focus: "Watch what this does."
+    4. **TRANSFORMATION:** A visible before→after change — skincare, beauty, cleaning
+       products, home/surface care, detailing, repair. The payoff is the INSTANT
+       hard-cut reveal of the changed state. Focus: "Look at the difference."
+    5. **TUTORIAL:** The METHOD is the content — multi-step routines, layering,
+       recipes, setup/installation, "you're doing it wrong" how-tos. The payoff is the
+       viewer learning the steps. Focus: "Here's how, step by step."
+
+    Precedence rules (apply in order):
+    - Wearable → ALWAYS TRYON, even if it also changes the look or has nice packaging.
+    - A visible state-change on a surface, skin, or object → TRANSFORMATION over DEMO.
+    - Choose TUTORIAL only when the multi-step METHOD is the differentiator, not the
+      product's function alone.
+    - Choose UNBOXING only when the packaging/opening is genuinely the strongest asset;
+      a product with a working wow-function defaults to DEMO.
+    Output ONLY one word: TRYON, UNBOXING, DEMO, TRANSFORMATION, or TUTORIAL.
+    `;
+
+// Slice 4 (B3): services-constrained sibling of the 5-way classifier above. A SERVICE
+// business can only answer TRANSFORMATION or TUTORIAL (Try-On/Unboxing/Demo are
+// product-only). Consumed by the A4 clamp in api/gemini/text.ts on the Auto path.
+export const UGCPRO_SERVICE_CLASSIFIER_PROMPT = (service: string, description: string): string => `
+    Analyze this SERVICE business for a UGC Pro creator-video strategy.
+    Service: "${service}"
+    Description: "${description}"
+
+    Classify into ONE of these 2 formats:
+    1. **TRANSFORMATION:** The service produces a visible before→after change on a
+       surface, space, object, or person — cleaning, pest control, detailing,
+       repair, landscaping, salon/derma results. The payoff is the INSTANT
+       hard-cut reveal of the changed state. Focus: "Look at the difference."
+    2. **TUTORIAL:** The multi-step METHOD is the content — "how we do X in N
+       steps" authority-builders, process walkthroughs, expert tips. The payoff is
+       the viewer trusting the expertise. Focus: "Here's how we do it, step by step."
+
+    Precedence rule: a visible before→after on a surface, space, or person →
+    ALWAYS TRANSFORMATION, even if the work has steps. Choose TUTORIAL only when
+    the method or expertise itself is the differentiator, not the visible result.
+    Output ONLY one word: TRANSFORMATION or TUTORIAL.
+    `;
+
 export const ADSCRIPT_COMMON_RULES = (businessInfo: BusinessInfo, brandName: string, language: 'English' | 'Taglish'): string => `
   **CORE CONSTRAINTS (MANDATORY):**
   - **NO PRICE:** Under no circumstances mention price or offer pricing. Maintain a curiosity gap.
@@ -369,13 +423,18 @@ export interface AdScriptInput {
   contrarianTruth?: string;
 }
 
+// TUNED-edit trail (2026-07-16, Neil-approved via grill-me bundle — sample_batch_test_spec.md
+// findings #4b.1–#32): APPEARANCE-CLAIM GUARDRAIL added to the tryon block (it had none) and
+// the SPEED RULE sentence appended to both existing guardrails. Beat labels unchanged.
 export const buildAdScriptPrompt = (
   input: AdScriptInput,
-  temuSubType?: 'ASMR' | 'Reaction' | 'Utility'
+  temuSubType?: 'ASMR' | 'Reaction' | 'Utility',
+  ugcProSubType?: 'tryon' | 'unboxing' | 'demo' | 'transformation' | 'tutorial'
 ): string => {
   const { businessInfo, brandName, language, offer, chosenAngleBrief } = input;
   const isTestimonial = businessInfo.scriptType === 'Testimonial';
   const isTemu = businessInfo.scriptType === 'Temu';
+  const isUGCPro = businessInfo.scriptType === 'UGCPro';
   // Services (v2): customer-testimonial service ads (first-person customer story),
   // book/inquire CTA (not buy-now), category-auto-adapting across ALL service types
   // (emotional payoff + trust-fear inferred from inputs; no peso amount in the script).
@@ -391,6 +450,12 @@ export const buildAdScriptPrompt = (
   const DIRECTOR_CRITIQUE_INSTRUCTION = ADSCRIPT_DIRECTOR_CRITIQUE_INSTRUCTION;
   const USER_CHOSEN_ANGLE_BLOCK = ADSCRIPT_USER_CHOSEN_ANGLE_BLOCK(chosenAngleBrief);
   const HOOK_SEED_PROTOCOL = ADSCRIPT_HOOK_SEED_PROTOCOL(input.contrarianTruth);
+  // Hoisted from the RealEstate arm (Slice 4): the UGC Pro real-estate tutorial renders
+  // the SAME price rule. Pure string compute; content byte-identical to the original.
+  const priceGiven = !!(businessInfo.listingPrice && businessInfo.listingPrice.trim());
+  const PRICE_RULE = priceGiven
+    ? `A price was given: "${businessInfo.listingPrice!.trim()}". AFFORDABILITY REFRAME (PH first-time buyers think in monthly + downpayment, NOT lump sum): if the value reads as monthly/DP terms (e.g. "25k/month", "50k DP"), LEAD with that, stated once EXACTLY as given. If it is ONLY a large lump sum (e.g. "₱4.2M"), do NOT make that scary sticker the headline — fold it in once softly, OR (better) withhold it and drive the DM ("PM kita ng full computation") to protect curiosity and qualify the lead. NEVER invent, round, convert, or fabricate monthly/financing/DP terms the user did not actually provide.`
+    : `NO price was given — INQUIRY-ONLY. NEVER invent or imply a peso figure. Drive to "message/DM for the price, computation & viewing".`;
 
   if (isTemu) {
     const subType = temuSubType ?? 'Reaction';
@@ -408,6 +473,268 @@ export const buildAdScriptPrompt = (
       ${subType === 'Utility' ? '- Focus: POV Problem Solving. "TikTok made me buy it".' : ''}
 
       ${DIRECTOR_CRITIQUE_INSTRUCTION}
+      ${USER_CHOSEN_ANGLE_BLOCK}
+      Format: Return valid JSON: { "hook1": [...], "hook2": [...], "body": [...], "strategicAudit": "..." }
+    `;
+  } else if (isUGCPro) {
+    const sub = ugcProSubType ?? 'transformation';
+    // Slice 4: non-product verticals reach UGC Pro. `bt` gates every divergence
+    // below; the product path emits byte-for-byte what it did before Slice 4
+    // (guarded by the product-path invariance test). Legal non-product combos are
+    // enforced upstream (pickers + A4 clamp): service × {transformation, tutorial},
+    // realestate × {tutorial}.
+    const bt = businessInfo.businessType ?? 'product';
+    const ugcStrategyLabel: Record<typeof sub, string> = {
+      tryon: 'Virtual Try-On (fashion reveal)',
+      unboxing: 'Unboxing (tactile reveal)',
+      demo: 'Demo / Addiction (watch it work)',
+      transformation: 'Transformation (Before & After)',
+      tutorial: 'Tutorial / Hack (steps 1-2-3)',
+    };
+    return `
+      Role: Viral UGC Creator-Scriptwriter (TikTok/Reels ${bt === 'service' ? 'service' : bt === 'realestate' ? 'real-estate' : 'product'} content).
+      Strategy: UGC Pro — ${ugcStrategyLabel[sub]}.
+      ${bt === 'service' ? 'Service' : bt === 'realestate' ? 'Listing' : 'Product'}: "${businessInfo.product}"
+      Brand: "${brandName}"
+
+      ${COMMON_RULES}
+
+      ${bt === 'service' ? `**VOICE — FIRST-PERSON OPERATOR (the business films its OWN work; this overrides the
+      Services customer-voice rule for UGC Pro only):**
+      The speaker is the operator/practitioner filming themselves ON THE JOB, mid-work —
+      casual, hands busy, talking to camera like a vlog, never a pitch. NOT a customer
+      testimonial, NOT a faceless company announcer. "Ako si [name]" intros are BANNED —
+      no name, no life story; the work IS the content. First-person-plural operator speech
+      is CORRECT here ("tinatanggal namin 'to sa apat na hakbang", "ganito kami maglinis")
+      — this is the ONE format where the business speaks as itself, because the viewer is
+      watching them actually do the work. Present tense. Show, then say.` : bt === 'realestate' ? `**VOICE — FIRST-PERSON AGENT ON-SITE (phone-shot, walking the property):**
+      The speaker is the agent/broker filming themselves AT the property right now —
+      walking, pointing, phone-in-hand energy. NOT a customer, NOT a polished announcer.
+      "Ako si [name]" intros are BANNED — no name-tag; open on the place or the tip, never
+      a self-introduction. A kasama showing you around, present tense.` : `**VOICE — FIRST-PERSON CREATOR (in-the-moment, never a pitch):**
+      The speaker is a real creator filming themselves RIGHT NOW with the product — casual,
+      conversational, mid-discovery. NOT a company voice, NOT a testimonial looking back.
+      "Ako si [name]" intros are BANNED here — no name, no life story; the moment IS the
+      content. Present tense. React, don't narrate.`}
+
+      **UGC PACING OVERRIDE (this format only):**
+      - TOTAL script: 10-16 seconds spoken — 4-6 SHORT lines. Fewer, punchier lines beat
+        full coverage.
+      - Body lines may run 4-12 words (the 7-12 rule relaxes DOWN, never up). Fragments are
+        allowed when a real person would speak them ("Obsessed. This is staying on.").
+      - The hook is SPOKEN and conversational, lands inside the first 2 seconds. It must
+        sound like a person talking to camera, NOT ad copy.
+      - ZERO dead air — every line rides into the next hard cut.
+
+      ${sub === 'tryon' ? `
+      **TRY-ON 4-BEAT (product in-hand from second 0; the worn reveal is a HARD CUT):**
+      0. **Hook (<=2s, 5-8 words):** Product in-hand or on-hanger, creator mid-decision.
+         Pattern: commitment + tease — "Okay, I had to try this set. Watch this." /
+         "Grabe, kakadating lang nito. Suot ko na." (adapt content to the product and
+         audience — do NOT copy these exemplars literally) PROVIDE 2 VARIATIONS —
+         populate hook1 AND hook2.
+      1. **Worn Reveal:** The first line AFTER the hard cut to wearing it — an instant,
+         genuine reaction, 3-8 words. The VISUAL carries the reveal; the line rides it.
+      2. **Styling / Fit-Proof:** ONE proof beat that kills the category's #1 objection —
+         how it moves, fits, stretches, styles ("squat test", "hindi see-through", "kasya
+         sa totoo kong size"). Anchor on the top 1-2 features from the FEATURE FILTER.
+         This is the "why believe" slot.
+      3. **Verdict + Soft CTA:** The keep-it verdict ("Obsessed. This is staying on."
+         register), then ONE soft conversational close driving the tap. Obey the CTA
+         price-leak guard; in Taglish, the TAGLISH ACCENT LOCK.
+
+      **TRY-ON LINE HYGIENE (both failed in the Slice-1 eval loop):**
+      - Beat 3's keep-it verdict is MANDATORY — the script does not close without an
+        explicit "I'm keeping this" judgment ("Obsessed." / "Hindi ko na 'to huhubarin.").
+        A CTA alone is not a verdict.
+      - Do NOT reuse the hook's opening exclamation to open ANY body line. If the hook
+        opens on "Grabe," / "Okay," / "Wait," then no body line may open on that word.
+
+      **APPEARANCE-CLAIM GUARDRAIL (Meta policy):** If the product is worn or applied ON A
+      PERSON — skincare, cosmetics, haircare, shapewear, jewelry against skin — frame results
+      as glow / fresh / feel / fit / confidence, NEVER medical or corrective claims. SPEED
+      RULE: never claim a result speed the brief does not state — "agad", "instant",
+      "overnight", "right away" and equivalents are BANNED unless the input explicitly makes
+      that claim. The hard cut to the worn/after state is a VISUAL convention, not a license
+      for a spoken instant-effect claim.
+      ` : sub === 'unboxing' ? `
+      **UNBOXING 4-BEAT (the packaging is the co-star; sound is the texture):**
+      0. **Hook (<=2s, 5-8 words):** Sensory invitation, package still sealed, in frame.
+         Pattern: "Okay, mic check… just listen to the taps." / "Kakarating lang nito.
+         Halika, buksan natin." (adapt to the product and audience — do NOT copy these
+         exemplars literally) PROVIDE 2 VARIATIONS — populate hook1 AND hook2.
+      1. **The Open:** The seal gives way — the line rides the SOUND, 3-8 words. Name a
+         real texture (tape rip, foam lift, magnetic click); generic awe ("wow ang
+         ganda") is BANNED in this beat.
+      2. **Tactile Showcase:** ONE close-touch beat — the foam, the wrap, the weight,
+         the finish. Anchor on the top 1-2 features from the FEATURE FILTER. This is
+         the "why premium" slot.
+      3. **Place/Wear + Soft CTA:** Set it where it lives (the desk, the shelf, the
+         wrist), then ONE soft conversational close ("sabihin mo kung gusto mo makita
+         'yong full setup"). Obey the CTA price-leak guard; in Taglish, the TAGLISH
+         ACCENT LOCK.
+      ${businessInfo.asmrFlag ? `
+      **ASMR REGISTER (audio-led — the taps ARE the content):**
+      - HALVE the line count: the hook + at most 2 whisper-register lines + the soft
+        CTA. Long stretches with NO spoken line are CORRECT — the taps, rips, and
+        clicks carry those beats. Do not fill the silence.
+      - Every line is whisper-written: short, breathy, present tense, ZERO exclamation
+        marks. Soft noticing ("ang linis ng gilid nito…"), never hype delivery.
+      - The hook MAY be a pure sound instruction ("…listen.") — 2-4 words allowed,
+        overriding the 5-8 word pattern.
+      ` : ''}
+      ` : sub === 'demo' ? `
+      **DEMO 5-BEAT (bold claim first; the payoff stunt kills the mid-video dip):**
+      0. **Hook (<=2s, 5-8 words):** A bold claim or a secret. Pattern: "Nobody uses
+         this blender's secret pro mode." / "Warning: dangerously addictive 'to."
+         (adapt to the product and audience — do NOT copy these exemplars literally)
+         PROVIDE 2 VARIATIONS — populate hook1 AND hook2.
+      1. **Demo Beat:** The product WORKING on its main job — a real action verb,
+         product in-hand. A posed introduction ("Eto ang [product]...") is BANNED.
+      2. **Escalation:** The hidden feature, the harder test, the "pero teka, may isa
+         pa" beat. Anchor on the top 1-2 features from the FEATURE FILTER.
+      3. **Payoff Stunt:** The sensory or surprise beat the viewer stays for — the
+         extreme close-up, the stress test result, the reaction. Short awe, 3-8 words.
+         HONESTY RULE: realistic, representative; never fabricate a guaranteed outcome.
+      4. **Spoken CTA (holds to the last frame):** ONE soft conversational close. Obey
+         the CTA price-leak guard; in Taglish, the TAGLISH ACCENT LOCK.
+      ` : sub === 'tutorial' ? (bt === 'service' ? `
+      **TUTORIAL 5-BEAT — SERVICE VARIANT (authority-builder: "ganito namin ginagawa"):**
+      0. **Hook (<=2s, 5-8 words):** The pain or myth the method fixes, spoken to camera.
+         Pattern: "Bakit bumabalik ang ipis pagkatapos mag-spray? Ganito kasi." / "Mali
+         ang paglilinis mo ng aircon." (adapt to the service and audience — do NOT copy
+         these exemplars literally) PROVIDE 2 VARIATIONS — populate hook1 AND hook2.
+      1-3. **Steps 1-2-3 (ONE line per step, each speakable in <=3s):** Open each line
+         with the step number spoken ("Una," / "Step two —" / "Pangatlo,"), then ONE
+         concrete action from the ACTUAL work with a real verb. The steps demonstrate
+         mastery — the viewer should think "alam nila 'to", not necessarily DIY it.
+         Anchor at least one step on the top 1-2 features from the FEATURE FILTER.
+      4. **Result + Book CTA:** The finished work in one line, then ONE soft
+         conversational close driving BOOK / MESSAGE / INQUIRE. Obey the CTA price-leak
+         guard; in Taglish, the TAGLISH ACCENT LOCK.
+      ` : bt === 'realestate' ? `
+      **TUTORIAL 5-BEAT — REAL-ESTATE VARIANT (agent-authority listicle):**
+      0. **Hook (<=2s, 5-8 words):** The question or mistake the tips solve. Pattern:
+         "Bibili ka ng condo? Check mo muna 'to." / "Tatlong bagay bago ka mag-
+         downpayment." (adapt to the listing and audience — do NOT copy these exemplars
+         literally) PROVIDE 2 VARIATIONS — populate hook1 AND hook2.
+      1-3. **Tips 1-2-3 (ONE line per tip, each speakable in <=3s):** Open each line with
+         the number spoken ("Una," / "Pangalawa," / "Pangatlo,"), then ONE concrete,
+         checkable thing (clean title, transparent terms, developer track record, natural
+         light, flood history, assoc dues). Ground at least one tip in THIS listing's
+         real features from "${businessInfo.features}" — the property is the running
+         example, never a prop. HONESTY RULE: do NOT fabricate a license number, award,
+         or accreditation the user never provided.
+      4. **Takeaway + Inquiry CTA:** The takeaway in one line, then ONE soft close
+         driving MESSAGE / VIEWING — an info-first keyword DM is the preferred pattern
+         ("Message mo ako ng 'CHECKLIST'"). Obey the CTA price-leak guard; in Taglish,
+         the TAGLISH ACCENT LOCK.
+
+      **PRICE RULE:** ${PRICE_RULE}
+      ` : `
+      **TUTORIAL 5-BEAT (the method IS the content; numbered steps are the retention engine):**
+      0. **Hook (<=2s, 5-8 words):** The pain or question the method solves. Pattern:
+         "Your perfume fades by noon? You're skipping one step." / "Bakit ang bilis
+         maubos ng gas mo? Ito kasi." (adapt to the product and audience — do NOT copy
+         these exemplars literally) PROVIDE 2 VARIATIONS — populate hook1 AND hook2.
+      1-3. **Steps 1-2-3 (ONE line per step, each speakable in <=3s):** Open each line
+         with the step number spoken ("Una," / "Step two —" / "Pangatlo,"), then ONE
+         concrete action with a real verb. No filler — a viewer must be able to DO the
+         step from the line alone. Anchor at least one step on the top 1-2 features
+         from the FEATURE FILTER.
+      4. **Result + Soft CTA:** The outcome in one line, then ONE soft conversational
+         close. Obey the CTA price-leak guard; in Taglish, the TAGLISH ACCENT LOCK.
+      `) : (bt === 'service' ? `
+      **TRANSFORMATION 4-BEAT — SERVICE VARIANT (the WORK is the mechanism; there is no
+      held product):**
+      0. **Hook (<=2s, 5-8 words):** The problem state, shown and named — the client's
+         mess/damage/before, real and specific. Pattern: "Tingnan mo 'tong sofa. Grabe
+         'to." / "Three years walang linis itong aircon." NO brand mention in the hook.
+         (adapt to the service and audience — do NOT copy these exemplars literally)
+         PROVIDE 2 VARIATIONS — populate hook1 AND hook2.
+      1. **The Work:** The operator's hands + tool mid-action with a COMPLETE verb
+         construction — "steam muna namin, tapos deep vacuum" — the METHOD entering,
+         never a posed crew shot. If your line has no verb, REWRITE it — a posed
+         introduction ("Kami ang [brand]...") is BANNED in this beat.
+      2. **Instant Reveal:** The line that rides the hard-cut after-state — short awe,
+         3-8 words ("Ayan. Parang bago ulit."). HONESTY RULE: realistic, representative
+         result; never fabricate a guaranteed outcome.
+      3. **Verdict + Book CTA:** Land the payoff + ONE soft conversational close driving
+         BOOK / MESSAGE / INQUIRE. Obey the CTA price-leak guard; in Taglish, the
+         TAGLISH ACCENT LOCK.
+
+      **APPEARANCE-CLAIM GUARDRAIL (Meta policy):** If the transformation is on a PERSON —
+      including derma, aesthetic, dental, salon, and clinic results — frame the result as
+      glow / fresh / feel / confidence, NEVER medical or corrective claims ("removes
+      wrinkles", "cures acne", "whitens in 7 days" — all BANNED). Surfaces, spaces,
+      fabrics, and objects may show dramatic before/after freely.
+      SPEED RULE: never claim a result speed the brief does not state — "agad", "instant",
+      "overnight", "right away" and equivalents are BANNED unless the input explicitly makes
+      that claim; the hard-cut reveal is a visual convention, not a spoken-claim license.
+      ` : `
+      **TRANSFORMATION 4-BEAT (the BEFORE is the hook — NO product in beat 0):**
+      0. **Hook (<=2s, 5-8 words):** The problem state, shown and named — frustrated,
+         real. Pattern: visual complaint — "Tell me why my skin looks exhausted?" /
+         "Tingnan mo 'tong mantsa. Ang tagal na nito." NO product mention in the hook.
+         ANGLE OVERRIDE GUARD: this beat-0 rule OVERRIDES any angle brief or
+         research-suggested opening line — reframe that angle into the problem state;
+         a product, benefit, or testimonial hook in beat 0 is WRONG even if a brief
+         asked for it. PROVIDE 2 VARIATIONS — populate hook1 AND hook2.
+      1. **Application:** The product enters mid-action with a COMPLETE verb construction —
+         "watch this — isang swipe lang" / "dalawang spray lang ng ${brandName}". The
+         product enters WORKING, never posed. If your line has no verb, REWRITE it —
+         a posed introduction ("Eto ang [product]...") is BANNED in this beat.
+      2. **Instant Reveal:** The line that rides the hard-cut after-state — short awe,
+         3-8 words. HONESTY RULE: realistic, representative result; never fabricate a
+         guaranteed outcome.
+      3. **Verdict + Soft CTA:** Land the payoff + ONE soft conversational close ("kung
+         ganito rin sa'yo, subukan mo na"). Obey the CTA price-leak guard; in Taglish,
+         the TAGLISH ACCENT LOCK.
+
+      **APPEARANCE-CLAIM GUARDRAIL (Meta policy):** If the transformation is on a PERSON
+      (skin, hair, body), frame the result as glow / fresh / feel — NEVER medical or
+      corrective claims ("removes wrinkles", "cures acne", "whitens in 7 days" — all
+      BANNED). Surfaces, fabrics, and objects may show dramatic before/after freely.
+      SPEED RULE: never claim a result speed the brief does not state — "agad", "instant",
+      "overnight", "right away" and equivalents are BANNED unless the input explicitly makes
+      that claim; the hard-cut reveal is a visual convention, not a spoken-claim license.
+      `)}
+
+      **SOFT CTA GUARD (STRICT — applies to the final beat):**
+      BANNED CTA PHRASES (organic-IG patterns, not for paid ads):
+      - "link sa bio" / "link in bio"  → use "click below" / "tap below" / "click here"
+      - "DM us" / "DM kayo" alone     → use "message us" / "send message"
+      - "i-click" / "I-click" (any 'i-' verb-prefix form like "i-check", "i-share", "i-DM")
+        → use a plain English verb "Click" / "Tap" / "Visit". Veo TTS mis-pronounces the
+        hyphenated 'i-' prefix as a doubled syllable ("Eh eh click").
+      BANNED IN THE CTA (price-leak guard — STRICT):
+      - Any peso amount (₱X, PX, P X), any pricing tier list, any "X for Y" with prices.
+        Even if "${offer}" contains explicit prices, STRIP them — the LP/Messenger reveals
+        the price.
+      OFFER (soft weave): if "${offer}" names a non-price value-add (free shipping, a bonus,
+      a guarantee), weave AT MOST ONE into the close naturally and conversationally — never
+      invent one the offer doesn't state. Scarcity is OPTIONAL in this format (the UGC
+      register beats hard urgency); if used, keep it spoken-casual ("first 50 lang").
+      CTA CLOSE (HARD RULE): the CTA's FINAL word must be Tagalog. If the brand
+      name or an English noun would otherwise close the sentence, append a Tagalog
+      closer — "ngayon" / "subukan mo na". Never end the CTA on English.
+      CTA OPEN (borrowed-verb guard): if the CTA uses a borrowed English verb ("Click",
+      "Tap", "Message"), do NOT open the sentence on it — open on "Tara," and let the
+      English verb sit mid-sentence ("Tara, click mo na 'yong link sa baba"). Never open
+      the CTA on the English verb.${bt !== 'product' ? `
+      BOOK, DON'T SELL (service/real-estate only): the CTA drives BOOK / MESSAGE /
+      INQUIRE / viewing — "buy now", "add to cart", "order now", and product-scarcity
+      ("only 3 left") are BANNED. NO peso amount ever, and no invented free-consult/
+      inspection offer the "${offer}" does not state.` : ''}
+
+      **DIRECTOR_CRITIQUE_PROTOCOL:**
+      Include a field "strategicAudit" in your JSON response.
+      Act as a World-Class Creative Director.
+      1. Explain why those specific 1-2 features were chosen for virality.
+      2. Explain how the short 4-12 word lines and hard-cut beats hold retention in a
+         10-16s UGC demo. Cite the 4-12 UGC range, NOT the 7-12 body rule (this format
+         overrides it).
+
       ${USER_CHOSEN_ANGLE_BLOCK}
       Format: Return valid JSON: { "hook1": [...], "hook2": [...], "body": [...], "strategicAudit": "..." }
     `;
@@ -463,10 +790,6 @@ export const buildAdScriptPrompt = (
       Format: Return valid JSON: { "hook1": [...], "hook2": [...], "body": [...], "strategicAudit": "..." }
     `;
   } else if (isRealEstate) {
-    const priceGiven = !!(businessInfo.listingPrice && businessInfo.listingPrice.trim());
-    const PRICE_RULE = priceGiven
-      ? `A price was given: "${businessInfo.listingPrice!.trim()}". AFFORDABILITY REFRAME (PH first-time buyers think in monthly + downpayment, NOT lump sum): if the value reads as monthly/DP terms (e.g. "25k/month", "50k DP"), LEAD with that, stated once EXACTLY as given. If it is ONLY a large lump sum (e.g. "₱4.2M"), do NOT make that scary sticker the headline — fold it in once softly, OR (better) withhold it and drive the DM ("PM kita ng full computation") to protect curiosity and qualify the lead. NEVER invent, round, convert, or fabricate monthly/financing/DP terms the user did not actually provide.`
-      : `NO price was given — INQUIRY-ONLY. NEVER invent or imply a peso figure. Drive to "message/DM for the price, computation & viewing".`;
     return `
       Role: Senior Direct Response Copywriter for Filipino REAL ESTATE sellers.
       Strategy: Agent-Led Property Walkthrough — the agent/seller TOURS the property and drives an
@@ -662,6 +985,18 @@ export const parseAdScriptResponse = (rawText: string): Script => {
     strategicAudit: json.strategicAudit || '',
   };
 };
+
+// TRANSFORMATION beat 1 (body[0]) is the Application line: the product must enter
+// mid-action, with a real verb. Prompt instructions alone don't hold it — 4/4
+// formulations failed the Slice-1 eval loop and it only passed on a re-roll.
+// Enforce deterministically, same escape hatch as capHookLine.
+const APPLICATION_VERBS = /\b(swipe|swipes|spray|sprays|apply|applies|rub|rubs|wipe|wipes|dab|dabs|pump|pumps|pat|pats|smooth|smooths|massage|massages|scrub|scrubs|pour|pours|drop|drops|glide|glides|press|presses|i?punas|punasan|pahid|pahiran|swipe\s+lang|spray\s+lang|lagay|ilagay|patak|kuskos|masahe)\b/i;
+
+const POSED_INTRO = /^\s*(eto|ito|heto|this is|here'?s|meet)\b/i;
+
+/** True when the line reads as a working application, not a posed product intro. */
+export const hasApplicationVerb = (line: string): boolean =>
+  APPLICATION_VERBS.test(line) && !POSED_INTRO.test(line);
 
 // ---------------------------------------------------------------------------
 // Offer Optimizer (generateOfferOptimization) — Hormozi tier prompts
@@ -871,6 +1206,15 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
   const isTemu = businessInfo.scriptType === 'Temu';
   const isServices = businessInfo.scriptType === 'Services';
   const isRealEstate = businessInfo.scriptType === 'RealEstate';
+  const isUGCPro = businessInfo.scriptType === 'UGCPro';
+  // Slice 4: non-product verticals reach UGC Pro. `bt` gates the non-product arms
+  // below; the product path emits byte-for-byte what it did before Slice 4.
+  const bt = businessInfo.businessType ?? 'product';
+  // Any of the 5 typed UGC Pro formats selects its own storyboard arm; only an
+  // unknown/undefined value degrades to 'transformation' (the safe Before & After default).
+  const ugcSub = (businessInfo.ugcProFormat === 'tryon' || businessInfo.ugcProFormat === 'unboxing'
+    || businessInfo.ugcProFormat === 'demo' || businessInfo.ugcProFormat === 'transformation'
+    || businessInfo.ugcProFormat === 'tutorial') ? businessInfo.ugcProFormat : 'transformation';
 
   const DIRECTOR_CRITIQUE_INSTRUCTION = `
     **DIRECTOR_CRITIQUE_PROTOCOL:**
@@ -879,6 +1223,38 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
     Explain WHY this specific storyboard sequence and visual framing is strategically superior for conversion.
     Explain why specific B-Roll choices were made over talking heads.
     `;
+
+  // Slice 4: extracted VERBATIM from the Services and RealEstate arms below so the
+  // non-product UGC Pro arms can graft the same blocks. Content unchanged — TUNED.
+  const PH_REALISM_SERVICES = `**PHILIPPINE GROUND-TRUTH REALISM (mandatory, ALL archetypes):**
+        - This is a Philippine SMB. Depict the service as it really appears in the Philippines —
+          true-to-life and true-to-THEIR-TIER. NOT a Western, luxury, or idealized version.
+        - Treat the uploaded photo description ("${productDesc}") as VISUAL GROUND TRUTH; match the
+          actual vibe, tier, and look the photos show. VENUE-LED → render a venue that resembles
+          THEIR place's real style/level (do NOT upgrade a modest spa into a 5-star resort).
+          WORK-LED → render plain crew / plain vehicle as shown (never a shiny branded truck or uniform).
+        - FORBIDDEN: inventing interiors / equipment / vehicles / signage grander or different from
+          what the photos/description evidence. When unsure: VENUE-LED → still show the venue, kept
+          simple and true-to-tier; WORK-LED → favor the customer/problem/relief over a guessed gear shot.
+        - FORBIDDEN AESTHETIC WORDS (in every scene's imagePrompt / startFramePrompt / endFramePrompt):
+          never write "high-end", "luxury", "luxurious", "premium", "upscale", "elegant", "5-star",
+          "resort", "boutique-hotel", "modern minimalist", or "sleek" for a VENUE-LED scene. Even when
+          the brief, differentiator, benefit, or offer uses aspirational / "luxury" language, IGNORE it
+          for the VISUALS — the uploaded photo's tier is the ONLY ground truth. Render the venue at its
+          real, modest, true-to-tier level (warm, simple, lived-in, authentically Filipino).
+        - Setting, faces, clothing, vehicles, signage, props must read authentically Filipino.`;
+  const PH_REALISM_RE = `**PHILIPPINE GROUND-TRUTH REALISM (mandatory):**
+        - This is a Philippine property. Treat the uploaded photo description ("${productDesc}") as
+          VISUAL GROUND TRUTH; render the property true-to-its-real-TIER. A modest unit stays modest —
+          do NOT upgrade a townhouse into a luxury penthouse.
+        - FORBIDDEN: inventing rooms / views / amenities / finishes grander or different from what the
+          photos/description evidence.
+        - FORBIDDEN AESTHETIC WORDS (in every scene's imagePrompt / startFramePrompt / endFramePrompt):
+          never write "high-end", "luxury", "luxurious", "premium", "upscale", "5-star", "resort",
+          "modern minimalist", or "sleek" unless the uploaded photo's tier actually evidences it. Even
+          when the brief/differentiator/benefit uses aspirational language, IGNORE it for the VISUALS —
+          the uploaded photo's tier is the ONLY ground truth.
+        - Setting, faces, clothing, signage, props must read authentically Filipino.`;
 
   let strategyInstructions = '';
   if (isTemu) {
@@ -923,23 +1299,7 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
         - **PRACTITIONER-LED** (advisor, coach, tutor, agency): the PERSON is the draw. Lean on the
           customer + the outcome; minimal b-roll.
 
-        **PHILIPPINE GROUND-TRUTH REALISM (mandatory, ALL archetypes):**
-        - This is a Philippine SMB. Depict the service as it really appears in the Philippines —
-          true-to-life and true-to-THEIR-TIER. NOT a Western, luxury, or idealized version.
-        - Treat the uploaded photo description ("${productDesc}") as VISUAL GROUND TRUTH; match the
-          actual vibe, tier, and look the photos show. VENUE-LED → render a venue that resembles
-          THEIR place's real style/level (do NOT upgrade a modest spa into a 5-star resort).
-          WORK-LED → render plain crew / plain vehicle as shown (never a shiny branded truck or uniform).
-        - FORBIDDEN: inventing interiors / equipment / vehicles / signage grander or different from
-          what the photos/description evidence. When unsure: VENUE-LED → still show the venue, kept
-          simple and true-to-tier; WORK-LED → favor the customer/problem/relief over a guessed gear shot.
-        - FORBIDDEN AESTHETIC WORDS (in every scene's imagePrompt / startFramePrompt / endFramePrompt):
-          never write "high-end", "luxury", "luxurious", "premium", "upscale", "elegant", "5-star",
-          "resort", "boutique-hotel", "modern minimalist", or "sleek" for a VENUE-LED scene. Even when
-          the brief, differentiator, benefit, or offer uses aspirational / "luxury" language, IGNORE it
-          for the VISUALS — the uploaded photo's tier is the ONLY ground truth. Render the venue at its
-          real, modest, true-to-tier level (warm, simple, lived-in, authentically Filipino).
-        - Setting, faces, clothing, vehicles, signage, props must read authentically Filipino.
+        ${PH_REALISM_SERVICES}
         `;
   } else if (isRealEstate) {
     strategyInstructions = `
@@ -961,18 +1321,150 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
         - **DEVELOPER** (pre-selling): the PROJECT is the draw — model unit, amenities, location/site,
           render/turnover.
 
-        **PHILIPPINE GROUND-TRUTH REALISM (mandatory):**
-        - This is a Philippine property. Treat the uploaded photo description ("${productDesc}") as
-          VISUAL GROUND TRUTH; render the property true-to-its-real-TIER. A modest unit stays modest —
-          do NOT upgrade a townhouse into a luxury penthouse.
-        - FORBIDDEN: inventing rooms / views / amenities / finishes grander or different from what the
-          photos/description evidence.
-        - FORBIDDEN AESTHETIC WORDS (in every scene's imagePrompt / startFramePrompt / endFramePrompt):
-          never write "high-end", "luxury", "luxurious", "premium", "upscale", "5-star", "resort",
-          "modern minimalist", or "sleek" unless the uploaded photo's tier actually evidences it. Even
-          when the brief/differentiator/benefit uses aspirational language, IGNORE it for the VISUALS —
-          the uploaded photo's tier is the ONLY ground truth.
-        - Setting, faces, clothing, signage, props must read authentically Filipino.
+        ${PH_REALISM_RE}
+        `;
+  } else if (isUGCPro) {
+    strategyInstructions = bt === 'realestate' ? `
+        **STRATEGY: UGC PRO — CONTINUOUS PERFORMANCE (Tutorial — REAL ESTATE)**
+        1. **ONE AGENT, ONE PROPERTY.** Same agent, same property, every scene. No metaphor
+           scenes, no stock-footage skylines, no environment-only B-roll.
+        2. **HARD CUTS ONLY.** Omit \`transitionEffect\` on every scene, including Scene 1.
+        3. **BEATS (5 scenes — ONE tip per scene; the caption system numbers them
+           downstream):**
+           S1 HOOK — the agent to camera at the property (facade or doorway).
+              venueSlot="facade" if uploaded. referenceImage="avatar".
+           S2–S4 TIPS 1-2-3 — one tip per scene, the agent INSIDE the space the tip
+              references (title talk in the sala, light check at the window, dues talk at
+              the amenities). Set venueSlot to the matching uploaded room.
+              referenceImage="avatar".
+           S5 TAKEAWAY + CTA — the agent closes with the message/viewing invite.
+              venueSlot="facade" if it fits. referenceImage="avatar".
+
+        ${PH_REALISM_RE}
+        ` : (bt === 'service' && ugcSub === 'tutorial') ? `
+        **STRATEGY: UGC PRO — CONTINUOUS PERFORMANCE (Tutorial — SERVICE)**
+        1. **ONE OPERATOR, ONE JOBSITE.** Same operator, same job location, every scene.
+           No metaphor scenes, no environment-only B-roll, no gear glamour.
+        2. **HARD CUTS ONLY.** Omit \`transitionEffect\` on every scene, including Scene 1.
+        3. **BEATS (5 scenes — ONE step per scene; the caption system numbers them
+           downstream):**
+           S1 HOOK — the operator to camera at the jobsite. referenceImage="avatar".
+           S2–S4 STEPS 1-2-3 — one step per scene, the REAL work mid-performance, tools in
+              honest use. venueSlot="staff" or "interior" where the uploads fit.
+              referenceImage="avatar" (or "none" if the step is hands-only).
+           S5 RESULT + CTA — the finished work shown, operator closes with the book invite.
+              venueSlot="after" if uploaded. referenceImage="avatar".
+
+        ${PH_REALISM_SERVICES}
+        ` : bt === 'service' ? `
+        **STRATEGY: UGC PRO — CONTINUOUS PERFORMANCE (Before & After — SERVICE)**
+        1. **ONE OPERATOR, ONE JOBSITE.** Every scene is the SAME operator at the SAME job
+           location. No metaphor scenes, no environment-only B-roll, no branded-truck or
+           gear-glamour shots.
+        2. **HARD CUTS ONLY.** Omit \`transitionEffect\` on every scene, including Scene 1.
+        3. **BEATS (4 scenes):**
+           S1 HOOK — the PROBLEM, close-up (the stained sofa, the clogged drain, the
+              damaged surface). The before-state IS the hook. NO operator, NO gear in
+              this frame. venueSlot="before" if uploaded. referenceImage="none".
+           S2 THE WORK — the operator's hands + tool mid-action on the problem. Honest
+              working posture, NOT a posed crew shot. referenceImage="avatar" (or "none"
+              if the beat is hands-only).
+           S3 INSTANT REVEAL — the hard-cut after-state, framed IDENTICALLY to S1 (same
+              angle, same distance, same lighting) so the change is the only variable.
+              venueSlot="after" if uploaded. referenceImage="none".
+           S4 VERDICT — the operator to camera, verdict + book CTA. referenceImage="avatar".
+
+        **APPEARANCE-CLAIM GUARDRAIL (Meta policy — applies to imagePrompt, not just script):**
+        If the transformation is on a PERSON (skin, hair, body — derma/salon/clinic services
+        included), the after-frame shows glow / freshness / ease — never a clinical or
+        corrective depiction. Do NOT render dermatological severity in the before frame and
+        do NOT render a "cured" after. Surfaces, spaces, fabrics, and objects may show
+        dramatic before/after freely.
+
+        ${PH_REALISM_SERVICES}
+        ` : ugcSub === 'tryon' ? `
+        **STRATEGY: UGC PRO — CONTINUOUS PERFORMANCE (Virtual Try-On)**
+        1. **ONE PERFORMER, ONE PLACE.** Every scene is the SAME creator in the SAME room. Do not
+           change location, time of day, or wardrobe except where the beat demands it (the worn
+           reveal). No metaphor scenes. No environment-only B-roll.
+        2. **HARD CUTS ONLY.** Omit \`transitionEffect\` on every scene, including Scene 1.
+        3. **BEATS (4-5 scenes):**
+           S1 HOOK — product in-hand or on-hanger, creator mid-decision, talking to camera. The
+              garment is NOT yet worn. referenceImage="both".
+           S2 WORN REVEAL — the hard cut. Same creator, same room, now wearing it. The VISUAL
+              carries the reveal. referenceImage="avatar".
+           S3 FIT-PROOF / STYLING — the objection-killing action beat (movement, stretch, drape,
+              a turn). Show the garment doing the thing the buyer doubts. referenceImage="avatar".
+           S4 VERDICT — closer framing on the creator, keep-it verdict + soft CTA.
+              referenceImage="avatar".
+           An optional 5th scene may split styling and verdict. Never exceed 5.
+        ` : ugcSub === 'unboxing' ? `
+        **STRATEGY: UGC PRO — CONTINUOUS PERFORMANCE (Unboxing)**
+        1. **ONE PERFORMER, ONE PLACE.** Same creator, same surface, every scene. No
+           metaphor scenes, no environment-only B-roll.
+        2. **HARD CUTS ONLY.** Omit \`transitionEffect\` on every scene, including Scene 1.
+        3. **BEATS (4 scenes):**
+           S1 HOOK — the sealed package on the surface, the creator's hands on it
+              (taps / mic-check framing). referenceImage="product" (or "both" if the
+              creator's face is in frame).
+           S2 THE OPEN — hands mid-open, lid or flap lifted, contents just visible.
+              referenceImage="both".
+           S3 TACTILE SHOWCASE — extreme close-up of the texture beat (foam, wrap,
+              finish, click mechanism). referenceImage="product".
+           S4 PLACE/WEAR + CTA — the product where it lives, creator in frame.
+              referenceImage="both".
+           An overhead or locked-off framing variant is allowed — state it in the
+           sceneDescription.
+        ${businessInfo.asmrFlag ? `
+        **ASMR TREATMENT:** Every scene favors EXTREME tactile close-ups and a
+        locked-off or overhead camera. Hands and textures over faces. Describe surfaces
+        and materials concretely in the imagePrompt (matte foam, glossy seal, brushed
+        metal) — texture is the subject.
+        ` : ''}
+        ` : ugcSub === 'demo' ? `
+        **STRATEGY: UGC PRO — CONTINUOUS PERFORMANCE (Demo / Addiction)**
+        1. **ONE PERFORMER, ONE PLACE.** Same creator, same location, every scene. No
+           metaphor scenes, no environment-only B-roll.
+        2. **HARD CUTS ONLY.** Omit \`transitionEffect\` on every scene, including Scene 1.
+        3. **BEATS (5 scenes — the fastest cuts of the family):**
+           S1 HOOK — creator talking to camera, product in-hand. referenceImage="both".
+           S2 DEMO — the product mid-action on its main job. referenceImage="both".
+           S3 ESCALATION — the hidden feature or harder test, in action.
+              referenceImage="both".
+           S4 PAYOFF — the stunt or sensory extreme close-up (the retention beat).
+              referenceImage="product" (or "both" if the payoff is on the creator).
+           S5 CTA — the creator, spoken close. referenceImage="avatar".
+        ` : ugcSub === 'tutorial' ? `
+        **STRATEGY: UGC PRO — CONTINUOUS PERFORMANCE (Tutorial / Hack)**
+        1. **ONE PERFORMER, ONE PLACE.** Same creator, same location, every scene. No
+           metaphor scenes, no environment-only B-roll.
+        2. **HARD CUTS ONLY.** Omit \`transitionEffect\` on every scene, including Scene 1.
+        3. **BEATS (5 scenes — ONE step per scene; the caption system numbers them
+           downstream):**
+           S1 HOOK — the pain or question, creator to camera. referenceImage="avatar".
+           S2–S4 STEPS 1-2-3 — one step per scene, the action mid-performance, product
+              visible where the step uses it. referenceImage="both".
+           S5 RESULT + CTA — the outcome shown, creator closes. referenceImage="both".
+        ` : `
+        **STRATEGY: UGC PRO — CONTINUOUS PERFORMANCE (Before & After)**
+        1. **ONE PERFORMER, ONE PLACE.** Same creator, same location, every scene. No metaphor
+           scenes, no environment-only B-roll.
+        2. **HARD CUTS ONLY.** Omit \`transitionEffect\` on every scene, including Scene 1.
+        3. **BEATS (4 scenes):**
+           S1 HOOK — the PROBLEM, close-up. The before-state IS the hook. NO product anywhere in
+              this frame. referenceImage="none" (or "avatar" if the problem is on the person).
+           S2 APPLICATION — the product enters mid-action, WORKING, never posed on a surface.
+              referenceImage="both".
+           S3 INSTANT REVEAL — the hard-cut after-state, framed IDENTICALLY to S1 (same angle,
+              same distance, same lighting) so the change is the only variable. referenceImage="none"
+              (or "avatar").
+           S4 VERDICT — the creator, verdict + soft CTA. referenceImage="avatar".
+
+        **APPEARANCE-CLAIM GUARDRAIL (Meta policy — applies to imagePrompt, not just script):**
+        If the transformation is on a PERSON (skin, hair, body), the after-frame shows glow / freshness
+        / ease — never a clinical or corrective depiction. Do NOT render dermatological severity in the
+        before frame (no cystic acne, no open lesions, no medical redness) and do NOT render a
+        "cured" after. Surfaces, fabrics, and objects may show dramatic before/after freely.
         `;
   } else {
     strategyInstructions = `
@@ -990,26 +1482,36 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
   const availableServiceSlots = (businessInfo.servicePhotos || []).map(p => p.slot);
   // Slot→meaning legend differs by style: Services venues vs RealEstate property rooms. Same routing
   // mechanism (renderer consumes scene.venueSlot to anchor the real photo); only the mapping changes.
-  const slotLegend = isRealEstate ? `
+  const slotLegend = (isRealEstate || (isUGCPro && bt === 'realestate')) ? `
         establishing / arrival / exterior shot      -> facade
-        inside a room being toured                  -> living, kitchen, or bedroom (pick the fitting one)
+        inside a room being toured                  -> living, kitchen, bedroom, or bathroom (pick the fitting one)
         the view / balcony / outlook beat           -> view
         amenities (pool / gym / lobby) beat         -> amenities
-        the neighborhood / location beat            -> location` : `
+        the neighborhood / location beat            -> location` : (isUGCPro && bt === 'product') ? `
+        the product held / on its own              -> hero
+        the garment or item WORN on the body       -> onbody
+        the box, wrapper, or packaging             -> packaging
+        the product mid-use / mid-application      -> inuse
+        the problem / before-state                 -> before
+        the result / after-state                   -> after` : `
         establishing / arrival ("dinala ako sa...") -> exterior
         the service happening / inside the place    -> interior
         mood / relief / ambiance beat               -> ambiance
         the practitioner or staff at work           -> staff
         the problem / before-state                  -> before
         the result / after-state                    -> after`;
-  const venueSlotRouting = ((isServices || isRealEstate) && availableServiceSlots.length > 0) ? `
+  const venueSlotRouting = ((isServices || isRealEstate || isUGCPro) && availableServiceSlots.length > 0) ? `
       **VENUE_SLOT_ROUTING (anchor scenes to the user's REAL uploaded photos):**
       The user uploaded real photos tagged by slot. AVAILABLE SLOTS: ${availableServiceSlots.join(', ')}.
-      For each scene that depicts the ${isRealEstate ? 'PROPERTY, a ROOM, the VIEW, AMENITIES, or the LOCATION' : "business's PLACE, RESULT, or STAFF"}, add a "venueSlot" field set to
+      For each scene that depicts the ${(isRealEstate || (isUGCPro && bt === 'realestate')) ? 'PROPERTY, a ROOM, the VIEW, AMENITIES, or the LOCATION' : (isUGCPro && bt === 'service') ? 'JOBSITE, the WORK, or the BEFORE/AFTER' : isUGCPro ? 'PRODUCT, a product STATE, or the BEFORE/AFTER' : "business's PLACE, RESULT, or STAFF"}, add a "venueSlot" field set to
       the ONE available slot that best fits — chosen ONLY from the list above. Map by meaning:${slotLegend}
       Rules: use a slot ONLY if it is in AVAILABLE SLOTS; if none fits, OMIT "venueSlot" (renderer falls
       back to representative generation). NEVER invent a slot not in the list.${isRealEstate
         ? ' AGENT-IN-PROPERTY: for an Avatar talking scene (referenceImage="avatar") where the agent is in a specific SPACE of the property — INSIDE a room (touring the sala -> living, kitchen -> kitchen, a bedroom -> bedroom) OR OUTSIDE at the building exterior / entrance, INCLUDING the closing / CTA shot at the facade (-> facade) — ALSO set "venueSlot" to that space so the agent is composited into the REAL place, not a lookalike. Only OMIT "venueSlot" on a neutral talking head not tied to any space.'
+        : (isUGCPro && bt !== 'product')
+        ? ' For UGC Pro, the operator/agent IS in nearly every scene, so a scene may carry BOTH referenceImage="avatar" AND a venueSlot — set "venueSlot" whenever the scene depicts a real uploaded place or state (the problem -> before, the finished work -> after, a toured room -> its room slot). OMIT it only on a neutral talking-head not tied to any place or state.'
+        : isUGCPro
+        ? ' For UGC Pro, the creator IS in nearly every scene, so a scene may carry BOTH referenceImage="avatar" AND a venueSlot — set "venueSlot" whenever the scene depicts one of the real uploaded product states above (the worn garment -> onbody, the application -> inuse, the after-reveal -> after). OMIT it only on a pure talking-head with no product state in frame.'
         : ' Avatar talking-head scenes (referenceImage="avatar") OMIT "venueSlot".'}
   ` : '';
 
@@ -1022,13 +1524,18 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
       - **FORBIDDEN:** Do not include instructions daylight 'Show text overlay', 'Text on screen says...', or 'Phone screen showing 50%'.
       - Text belongs in the Audio/Script, NEVER in the image generation prompt."
 
-      **PACING RULE:**
+      ${isUGCPro ? `**PACING RULE (UGC Pro override):**
+      "This format is a CONTINUOUS PERFORMANCE. The 3-consecutive-Avatar-Talking ban is LIFTED —
+      the same creator may appear, talking, in every single scene. That is correct and expected.
+      What is BANNED instead: cutting away to a Visual Metaphor scene, an environment-only
+      establishing shot, or any scene the performer is absent from without a product reason
+      (a close-up of the product in their hands or the before/after surface is fine)."` : `**PACING RULE:**
       "You MAY have up to **2 consecutive** 'Avatar Talking' scenes.
       **YOU MUST NOT HAVE 3 CONSECUTIVE 'AVATAR TALKING' SCENES.**
       If you have 2 Avatars in a row, the 3rd scene **MUST** be a 'Product B-Roll', 'Reaction', or 'Visual Metaphor'.
 
       WRONG: Scene 2 = Avatar Talking / Scene 3 = Avatar Talking / Scene 4 = Avatar Talking — this is 3 consecutive and BANNED. The 4th-scene b-roll does not retroactively legalize three talkers in a row.
-      RIGHT: Scene 2 = Avatar Talking / Scene 3 = Avatar Talking / Scene 4 = Product B-Roll / Scene 5 = Avatar Talking."
+      RIGHT: Scene 2 = Avatar Talking / Scene 3 = Avatar Talking / Scene 4 = Product B-Roll / Scene 5 = Avatar Talking."`}
 
       **STILL_FRAME_RULE:**
       The fields \`imagePrompt\`, \`startFramePrompt\`, and \`endFramePrompt\` are rendered as STILL IMAGES. They MUST be static compositions, NOT motion-verb prose.
@@ -1044,7 +1551,12 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
 
       Motion lives in \`transitionEffect\` (e.g., "Explosion Reveal", "Character Morph") — that field describes the MOTION between two stills. The frame prompts describe two STILL moments. Frames = stills. Transitions = motion.
 
-      ${isServices ? `**HOOK FRAMES (Scene 1, Services) = THE PROBLEM, NO product reveal:** The start and end frames depict the real-world PROBLEM moment (the mess, the worry, the before-state) as an environment / object / situation — authentically Filipino and humble. There is NO product to reveal; do NOT place, "reveal", or invent any gadget, device, branded vehicle, uniform, or imported equipment in the hook. Keep both stills STATIC. The two frames MAY share one named dominant color + silhouette position for a clean transition, but the anchor comes FROM THE PROBLEM SCENE (e.g. an overflowing drain, a cluttered room, a worried face at home), never from a product. **CUSTOMER-COHERENCE:** If the hook depicts a person (the sufferer), render them the SAME gender and approximate age as the Character/customer described in this brief — the hook sufferer IS the same person who later tells the testimonial, so they must not differ in gender.` : `**HOOK END-FRAME = RESOLVED REVEAL (Scene 1 endFramePrompt):** The hook's end frame is the moment AFTER the transition completes — the product is ALREADY fully revealed, sitting still and intact in frame. Describe ONLY that finished state (e.g., "The [product] sitting centered on a clean counter, front label facing camera, sharp focus"). Do NOT narrate the reveal itself (no "disintegrating to reveal", no "pixels forming into"). NO people, faces, hands, or bodies in the hook end frame unless the avatar is explicitly the subject of the reveal.
+      ${isServices ? `**HOOK FRAMES (Scene 1, Services) = THE PROBLEM, NO product reveal:** The start and end frames depict the real-world PROBLEM moment (the mess, the worry, the before-state) as an environment / object / situation — authentically Filipino and humble. There is NO product to reveal; do NOT place, "reveal", or invent any gadget, device, branded vehicle, uniform, or imported equipment in the hook. Keep both stills STATIC. The two frames MAY share one named dominant color + silhouette position for a clean transition, but the anchor comes FROM THE PROBLEM SCENE (e.g. an overflowing drain, a cluttered room, a worried face at home), never from a product. **CUSTOMER-COHERENCE:** If the hook depicts a person (the sufferer), render them the SAME gender and approximate age as the Character/customer described in this brief — the hook sufferer IS the same person who later tells the testimonial, so they must not differ in gender.` : isUGCPro ? `**HOOK FRAMES (Scene 1, UGC Pro) = A HARD CUT, NOT A MORPH:** This format has NO transition
+      into scene 2 — the cut IS the effect. Scene 1 emits a SINGLE \`imagePrompt\` exactly like scenes
+      2+. Do NOT emit \`startFramePrompt\`, \`endFramePrompt\`, or \`transitionEffect\` for Scene 1 or for
+      ANY scene. There is no metaphor still, no anchor color, no silhouette match, no reveal. The
+      hook is the creator, on camera, in the room where the whole ad happens — talking. Keep the
+      still STATIC (STILL_FRAME_RULE applies in full).` : `**HOOK END-FRAME = RESOLVED REVEAL (Scene 1 endFramePrompt):** The hook's end frame is the moment AFTER the transition completes — the product is ALREADY fully revealed, sitting still and intact in frame. Describe ONLY that finished state (e.g., "The [product] sitting centered on a clean counter, front label facing camera, sharp focus"). Do NOT narrate the reveal itself (no "disintegrating to reveal", no "pixels forming into"). NO people, faces, hands, or bodies in the hook end frame unless the avatar is explicitly the subject of the reveal.
 
       **HOOK ANCHOR RULE (Scene 1 startFramePrompt + endFramePrompt):** The two stills MUST share ONE named concrete anchor: the SAME dominant color (named in BOTH prompts) AND the SAME silhouette occupying the SAME position in frame. **The anchor color comes FROM THE PRODUCT.** Derive the shared dominant color from the product's actual uploaded packaging, then design the START frame's subject/setting to carry that color naturally. NEVER recolor, mute, or restyle the product's packaging to match the start frame — the uploaded product photo is ground truth for the end frame. (e.g., product = vibrant orange coffee bag → start = "dark coffee grounds beside a burnt-orange ceramic mug, warm orange light, centered, filling the lower third of frame" → end = "the vibrant orange coffee bag, centered, filling the lower third of frame"). State the anchor color and the silhouette position explicitly in BOTH prompts. A morph between two frames that do not share color + silhouette position forces the video model to interpolate through formless flesh-toned mush — the single worst failure mode for the hook.`}
 
@@ -1136,6 +1648,7 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
       Scene 1's "referenceImage" tag applies to the END frame (the reveal payoff) ONLY — the START frame is always the metaphor/"before" still and never carries a product reference.
       - "product" (or "both" if the avatar is also in the reveal) — the hook's END frame reveals the ACTUAL hero product (the real labeled package materializes, the morph resolves into the real product, the explosion/teleport reveals the real product).
       - "none" — the hook is a pure abstract metaphor (coffee-ring, dumped beans, environment-only) OR the end frame shows only a categorical look-alike, not the actual hero product. The CRITICAL ANTI-PATTERN above applies in full: a generic look-alike stays "none".
+      - (UGC Pro has no Scene 1 end frame — this rule does not apply; classify its single image like a Scene 2+ shot.)
 
       ${venueSlotRouting}
       **OUTPUT SCHEMA (CRITICAL):**
@@ -1151,6 +1664,16 @@ export const buildStoryboardPrompt = (payload: StoryboardFlowInput): string => {
         "endFramePrompt": "Static composition of the FINAL FROZEN FRAME — describe the world-state at moment 2 as a still photograph. No motion verbs (see STILL_FRAME_RULE).",
         "transitionEffect": "Name of the VFX that animates between the two stills (the only field where motion lives)."
       }
+
+      - IF SCENE 1 (HOOK) AND the strategy is UGC PRO — same shape as Scene 2+, NO frame pair:
+      {
+        "scriptLine": "...",
+        "sceneDescription": "...",
+        "referenceImage": "both" | "avatar" | "none",
+        "venueSlot": "onbody",   // OPTIONAL — set per VENUE_SLOT_ROUTING; omit when none fits
+        "imagePrompt": "Description of the single image"
+      }
+      NEVER emit "startFramePrompt", "endFramePrompt", or "transitionEffect" in a UGC Pro storyboard.
 
       - IF SCENE 2 onwards:
       {

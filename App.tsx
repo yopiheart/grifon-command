@@ -230,6 +230,10 @@ const App: React.FC = () => {
     omniEmphasisWord?: string;
     omniTitleText?: string;
     captionsEnabled?: boolean;
+    // Wizard scriptType + ASMR flavor hop into the AI Editor: scriptType drives the
+    // deterministic UGCPro caption/music identity; asmrFlag seeds captions + music off.
+    scriptType?: BusinessInfo['scriptType'];
+    asmrFlag?: boolean;
   } | null>(null);
   const [cinematicResult, setCinematicResult] = useState<Scene[] | null>(null);
 
@@ -257,6 +261,8 @@ const App: React.FC = () => {
         omniEmphasisWord: seed.omniEmphasisWord,
         omniTitleText: seed.omniTitleText,
         captionsEnabled: seed.captionsEnabled,
+        scriptType: seed.scriptType,
+        asmrFlag: seed.asmrFlag,
       });
       setActiveModule('edit_video');
     } catch {
@@ -1407,6 +1413,7 @@ const App: React.FC = () => {
           storyboard={storyboard}
           defaultAspectRatio={aspectRatio ?? '9:16'}
           heroImageUrl={businessInfo.productImageUrls?.[0] ?? storyboard[0]?.imageUrl}
+          asmrFlag={businessInfo.asmrFlag}
           onSendToAiEditor={(batch, lockedPresetId, omniLock) => {
             // Default path — skip Signal Modulator's redundant TTS pass. The AI
             // Editor consolidates voice once (audioOverlays unused, so []).
@@ -1423,6 +1430,8 @@ const App: React.FC = () => {
               omniEmphasisWord: omniLock?.emphasisWord,
               omniTitleText: omniLock?.titleText,
               captionsEnabled: omniLock?.captionsEnabled,
+              scriptType: businessInfo.scriptType,
+              asmrFlag: businessInfo.asmrFlag,
             });
             setActiveModule('edit_video');
           }}
@@ -1459,6 +1468,8 @@ const App: React.FC = () => {
             aspectRatio: aspectRatio ?? '9:16',
             finalScript: finalScript.join(' '),
             offer: clientDetails.offer,
+            scriptType: businessInfo.scriptType,
+            asmrFlag: businessInfo.asmrFlag,
           });
           setActiveModule('edit_video');
         }}
@@ -1565,6 +1576,7 @@ const App: React.FC = () => {
           setAspectRatio={setAspectRatio}
           directorUnlocked={directorUnlocked}
           presetUnlocked={presetUnlocked}
+          isBusinessTier={plan_id === 'business'}
           onBack={() => setActiveModule(null)}
           onUpgrade={() => { setActiveModule(null); goToLegal('pricing'); }}
           onSwitchToSteps={() => { setDirectorMode('steps'); setCurrentStep(1); }}
@@ -1690,7 +1702,7 @@ const App: React.FC = () => {
                   prefilledFrom={prefillSource}
                 />}
                 {currentStep === 2 && <Step2BusinessInfo data={businessInfo} setData={setBusinessInfo} onNext={() => setCurrentStep(3)} onBack={() => setCurrentStep(1)} aspectRatio={aspectRatio} setAspectRatio={setAspectRatio} />}
-                {currentStep === 3 && <Step3AdScript businessInfo={businessInfo} script={script} setScript={setScript} setFinalScript={setFinalScript} language={language} setLanguage={setLanguage} onNext={() => setCurrentStep(4)} onBack={() => setCurrentStep(2)} brandName={clientDetails.brandName} offer={clientDetails.offer} directorAngleBrief={directorAngleBrief} setDirectorAngleBrief={setDirectorAngleBrief} />}
+                {currentStep === 3 && <Step3AdScript businessInfo={businessInfo} setBusinessInfo={setBusinessInfo} script={script} setScript={setScript} setFinalScript={setFinalScript} language={language} setLanguage={setLanguage} onNext={() => setCurrentStep(4)} onBack={() => setCurrentStep(2)} brandName={clientDetails.brandName} offer={clientDetails.offer} directorAngleBrief={directorAngleBrief} setDirectorAngleBrief={setDirectorAngleBrief} />}
                 {currentStep === 4 && <Step4Avatar businessInfo={businessInfo} avatar={avatar} setAvatar={setAvatar} onNext={() => setCurrentStep(5)} onBack={() => setCurrentStep(3)} aspectRatio={aspectRatio} />}
                 {currentStep === 5 && <Step5Storyboard script={finalScript} avatar={avatar} businessInfo={businessInfo} storyboard={storyboard} setStoryboard={setStoryboard} onNext={() => setCurrentStep(6)} onBack={() => setCurrentStep(4)} aspectRatio={aspectRatio} language={language} />}
                 {currentStep === 6 && <Step6Thumbnail script={finalScript} avatar={avatar} businessInfo={businessInfo} aspectRatio={aspectRatio} thumbnailUrl={thumbnailUrl} setThumbnailUrl={setThumbnailUrl} onNext={() => setCurrentStep(7)} onBack={() => setCurrentStep(5)} />}

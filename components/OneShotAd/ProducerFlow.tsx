@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ChevronLeft, AlertTriangle, RotateCw, Loader2 } from 'lucide-react';
 import type { Avatar, LockablePresetId } from '../../types';
 import { generateMarketResearch, generateAvatarImage } from '../../services/geminiService';
-import type { ProductionInput as IntakeInput } from '../../services/oneShotIntake';
+import { resolvePersonStatePresenter, type ProductionInput as IntakeInput } from '../../services/oneShotIntake';
 import { LaunchScreen } from './LaunchScreen';
 import { RunningScreen } from './RunningScreen.fable5';
 import { StoryboardGateScreen } from './StoryboardGateScreen';
@@ -18,9 +18,11 @@ import {
   regenSceneImage,
   applyPreset,
   mapReportToWizard,
+  researchCacheKey,
   type ProductionRun,
   type ProductionInput as OrchInput,
 } from '../../services/producerOrchestrator';
+import { getCachedResearch, putCachedResearch } from '../../services/researchCacheStore';
 import { realProducerDeps } from '../../services/producerDeps';
 import { newRunId, loadRun, type ProductionRunRow, type ProductionSceneRow } from '../../services/producerRunService';
 
@@ -99,6 +101,7 @@ function fromRow(row: ProductionRunRow, scenes: ProductionSceneRow[]): Productio
     edl: art.edl,
     finalVideoUrl: art.finalVideoUrl,
     finalDownloadUrl: art.finalDownloadUrl,
+    thumbnailUrl: art.thumbnailUrl,
     error: row.error ?? undefined,
     // Carry the server revision so the resumed run's next checkpoint guards on the fresh value
     // (optimistic concurrency) instead of racing from 0.
@@ -112,6 +115,8 @@ interface Props {
   directorUnlocked: boolean;
   /** Pro+ unlock for the First Cut edit presets (IMPACT/CLEAN). */
   presetUnlocked: boolean;
+  /** True when the user is already on Business — hides the First Cut "Advanced Editor" teaser. */
+  isBusinessTier: boolean;
   onBack: () => void;
   onUpgrade: () => void;
   onSwitchToSteps: () => void;
@@ -119,7 +124,7 @@ interface Props {
   onCloneVoice: () => void;
 }
 
-const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocked, onBack, onUpgrade, onSwitchToSteps, onSwitchToExpert, onCloneVoice }) => {
+const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocked, isBusinessTier, onBack, onUpgrade, onSwitchToSteps, onSwitchToExpert, onCloneVoice }) => {
   const [run, setRun] = useState<ProductionRun | null>(null);
   const [phase, setPhase] = useState<'launch' | 'researching' | 'error' | 'resuming'>('resuming');
   const [errMsg, setErrMsg] = useState('');
@@ -176,16 +181,24 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
     setPhase('researching');
     abortRef.current = new AbortController();
     try {
-      // 1 — Market research (auto).
-      const report = await generateMarketResearch({
-        brandName: input.brandName,
-        productName: input.productName,
-        productDescription: input.productDescription,
-        priceOffer: input.price ? `${input.offer} (${input.price})` : input.offer,
-        isLocalService: input.isLocalService ?? (input.scriptType === 'Services' || input.scriptType === 'RealEstate'),
-        businessAddress: input.businessAddress?.trim() || undefined,
-        uploadedImages: input.heroImageBase64 ? [input.heroImageBase64] : [],
-      });
+      // 1 — Market research (auto). Same cache seam as the orchestrator's market_research
+      // stage (research stays locked per brand identity; "Re-research" forces fresh) —
+      // this path pre-fills the run with doneStages:['market_research'], so the stage's
+      // own cache read never fires and the reuse must happen here.
+      const cacheKey = researchCacheKey(input.brandName, input.productName);
+      let report = input.forceFreshResearch ? null : await getCachedResearch(cacheKey);
+      if (!report) {
+        report = await generateMarketResearch({
+          brandName: input.brandName,
+          productName: input.productName,
+          productDescription: input.productDescription,
+          priceOffer: input.price ? `${input.offer} (${input.price})` : input.offer,
+          isLocalService: input.isLocalService ?? (input.scriptType === 'Services' || input.scriptType === 'RealEstate'),
+          businessAddress: input.businessAddress?.trim() || undefined,
+          uploadedImages: input.heroImageBase64 ? [input.heroImageBase64] : [],
+        });
+        await putCachedResearch(cacheKey, report);
+      }
 
       // 2 — Project onto wizard fields (research is load-bearing context for the script).
       const orchInputBase: OrchInput = {
@@ -199,8 +212,11 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
         voiceId: input.voiceId,
         language: input.language,
         aspectRatio: input.aspectRatio,
-        resolution: input.resolution,
         scriptType: input.scriptType,
+        businessType: input.businessType,
+        ugcProFormat: input.ugcProFormat,
+        asmrFlag: input.asmrFlag,
+        audioMode: input.audioMode,
         servicePhotos: input.servicePhotos,
         serviceArchetype: input.serviceArchetype,
         realEstateArchetype: input.realEstateArchetype,
@@ -213,7 +229,7 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
       // 3 — Lock the presenter at intake (the orchestrator threads a fixed avatar). Auto
       // mode casts from the research persona + optional hints; an uploaded photo is used
       // as-is. Storyboard/scene stages depend on avatar.description + .ethnicity + .url.
-      let avatar: Avatar = input.avatar;
+      let avatar: Avatar = resolvePersonStatePresenter(input).avatar;
       if (!avatar?.url) {
         const castAr: '9:16' | '16:9' = input.aspectRatio === '16:9' ? '16:9' : '9:16';
         const ethnicity = input.castHints?.ethnicity?.trim() || 'Filipino';
@@ -239,6 +255,8 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
         userId,
         { runId, mode: 'oneshot', prefill: { report, clientDetails, businessInfo }, doneStages: ['market_research'] }
       );
+      // First Cut starts as the unstyled assembly; the user opts into an edit preset.
+      fresh.presetId = 'none';
       setRun(fresh);
       setPhase('launch'); // phase derives from run.status now
       await runProduction(fresh, cb(fresh), realProducerDeps);
@@ -326,10 +344,23 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
   }
 
   if (phase === 'resuming') {
+    // Branded rehydration state (finding #31) — the resume path used to flash a bare
+    // black screen + spinner. GlassPanel + gold spinner + reassuring copy instead.
     return (
-      <div className="relative min-h-screen bg-zinc-950">
+      <div className="relative min-h-screen bg-zinc-950 px-4 py-10 text-white">
         {BackBar}
-        <div className="flex min-h-screen items-center justify-center"><Loader2 className="h-6 w-6 animate-spin text-[#FFCC00]" /></div>
+        <div className="mx-auto flex min-h-[70vh] max-w-lg flex-col items-center justify-center">
+          <GlassPanel className="w-full p-8 text-center">
+            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full border border-[#FFCC00]/30 bg-[#FFCC00]/10">
+              <Loader2 className="h-6 w-6 animate-spin text-[#FFCC00]" />
+            </div>
+            <p className="mb-1 text-[10px] font-mono uppercase tracking-widest text-zinc-500">// Resuming</p>
+            <h1 className="mb-2 text-2xl font-black uppercase tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500">
+              Binabalik ang cut mo…
+            </h1>
+            <p className="text-sm text-zinc-400">Loading your ad — seconds lang ito.</p>
+          </GlassPanel>
+        </div>
       </div>
     );
   }
@@ -344,7 +375,7 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
       return (
         <div className="relative">
           {BackBar}
-          <StoryboardGateScreen run={run} regenerating={reshooting} onRegenScene={handleRegenImage} onApprove={handleApprove} />
+          <StoryboardGateScreen run={run} regenerating={reshooting} onRegenScene={handleRegenImage} onApprove={handleApprove} onStartOver={handleMakeAnother} />
         </div>
       );
     }
@@ -367,6 +398,7 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
             proUnlocked={presetUnlocked}
             onUpgrade={onUpgrade}
             presetBusy={presetBusyProp}
+            isBusinessTier={isBusinessTier}
           />
           {/* NPS fires the whole time First Cut is up (value delivered), not on the make-another
               click that unmounts the widget in the same batch. FeedbackWidget self-gates frequency. */}
@@ -450,6 +482,7 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
         onSwitchToExpert={onSwitchToExpert}
         onBack={onBack}
         onCloneVoice={onCloneVoice}
+        producerEngine
       />
     </div>
   );

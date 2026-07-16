@@ -449,9 +449,9 @@ export interface TextLayer {
   yBase: number;       // resolved top y in px
   startSec: number;
   endSec: number;
-  anim: 'slideup' | 'fade' | 'pop' | 'word-pop' | 'karaoke' | 'none';
+  anim: 'slideup' | 'fade' | 'pop' | 'word-pop' | 'karaoke' | 'bars' | 'karaoke-invert' | 'none';
   emphasisSfx?: SfxBankId; // a sound to fire ON this text's appearance (startSec)
-  /** Word-level timing/position for 'word-pop' / 'karaoke' (single-line chunks). */
+  /** Word/line timing and position for word-level or per-line animations. */
   words?: WordTiming[];
   /** Which bundled font renders this layer (hook title may differ from captions). */
   font?: 'caption' | 'hook';
@@ -467,6 +467,29 @@ export interface BoxLayer {
 export type DrawLayer = TextLayer | BoxLayer;
 
 const normText = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+/**
+ * Hook title fallback source: when the EDL carries no hook overlay, derive the
+ * title from the FIRST SENTENCE of the spoken line — split on `.`/`!`/`?`,
+ * keeping a terminal `?` or `!` (a full stop is dropped), capped at the first 7
+ * words. Pure; the caller still runs stripUnrenderable, mirroring the overlay
+ * path. The terminal mark is only kept when the sentence actually fit inside the
+ * 7-word cap (a truncated sentence never reached its punctuation).
+ */
+function hookFallbackText(scriptLine: string | undefined): string {
+  if (!scriptLine) return '';
+  // Strip leading terminators/whitespace ("... Hiraya Glow ba talaga?") so an
+  // ellipsis opener can't make the first-sentence capture come back empty.
+  const trimmed = scriptLine.trim().replace(/^[.!?\s…]+/, '');
+  if (!trimmed) return '';
+  const m = /^([^.!?]*)([.!?])?/.exec(trimmed);
+  const body = (m?.[1] ?? trimmed).trim();
+  const term = m?.[2] === '?' || m?.[2] === '!' ? m[2] : '';
+  const words = body.split(/\s+/).filter(Boolean);
+  if (!words.length) return '';
+  const capped = words.slice(0, 7).join(' ');
+  return capped + (words.length <= 7 ? term : '');
+}
 
 /** Y (top of text) for a scene's caption/overlay band, region-aware + safe-clamped.
  * Face-avoidance (captionRegion) clamps the band in EVERY preset (premortem guard). */
@@ -509,7 +532,12 @@ export function planScene(
   const overlaySfx = preset.sfx.overlayMap;
 
   if (scene.isHook) {
-    const text = overlay?.text ? stripUnrenderable(overlay.text) : '';
+    // Title source: the EDL hook overlay when present, else the first sentence of
+    // the spoken line (7-word cap). Only when BOTH are empty does the hook plan
+    // no title layer.
+    const text = overlay?.text
+      ? stripUnrenderable(overlay.text)
+      : stripUnrenderable(hookFallbackText(scene.scriptLine));
     if (!text) return layers;
     const hookAdv = preset.hook.advRatio;
     const { fontsize, lines } = fitText(text, sz.usableW, Math.round(h * preset.hook.sizeFrac), hookAdv);
@@ -594,7 +622,9 @@ export function planScene(
   if (cap) {
     // Word-level presets read best as small fast chunks (1–3 words swapped on VO
     // cadence — research §3.1); classic keeps the shipped 3–4-word pacing.
-    const wordLevel = preset.caption.chunkAnim === 'word-pop' || preset.caption.chunkAnim === 'karaoke';
+    const wordLevel = preset.caption.chunkAnim === 'word-pop'
+      || preset.caption.chunkAnim === 'karaoke'
+      || preset.caption.chunkAnim === 'karaoke-invert';
     const wordsPer = preset.caption.chunkAnim === 'none' ? 3.5 : 2.5;
     const minChunk = preset.caption.chunkAnim === 'none' ? MIN_CHUNK_SEC : 0.5;
     // Captions pace across the FULL speech window — the same layout an
@@ -632,7 +662,23 @@ export function planScene(
         // Talking scenes: chunks under the callout are sacrificed so the subtitle
         // resumes after it clears (b-roll already dropped the whole line above).
         if (startSec < overlayClearSec) return;
-        if (wordLevel && lines.length === 1) {
+        if (preset.caption.chunkAnim === 'bars') {
+          const lineH = Math.round(fontsize * 1.15);
+          const lineGap = Math.round(fontsize * 0.12);
+          layers.push({
+            kind: 'text', text: lines.join('\n'), fontsize, color: preset.caption.fillColor,
+            boxAlpha: preset.caption.boxAlpha,
+            xExpr: '(w-text_w)/2', yBase: cy,
+            anim: 'bars', startSec, endSec,
+            words: lines.map((line, lineIdx) => ({
+              word: line,
+              start: +Math.min(endSec - 0.1, startSec + lineIdx * 0.18).toFixed(3),
+              end: endSec,
+              xPx: Math.round((w - estWidth(line, fontsize, adv)) / 2),
+              yPx: cy + lineIdx * (lineH + lineGap),
+            })),
+          });
+        } else if (wordLevel && lines.length === 1) {
           layers.push({
             kind: 'text', text: c, fontsize, color: preset.caption.fillColor,
             boxAlpha: preset.caption.boxAlpha,

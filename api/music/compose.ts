@@ -22,7 +22,7 @@ import {
 // api/elevenlabs/* proxy shape (auth → rate-limit → quota → upstream).
 
 const Body = z.object({
-  style: z.enum(['mrbeast', 'temu', 'testimonial']),
+  style: z.enum(['mrbeast', 'temu', 'testimonial', 'ugcpro']),
   // Scene video URLs — the seed is derived server-side (rotationSeed), identical
   // to api/render/final, so the cache key matches the ad's render identity.
   videoUrls: z.array(z.string().url()).min(1).max(12),

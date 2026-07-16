@@ -15,6 +15,10 @@ import { SegButton } from './ui/SegButton';
 
 interface Step3Props {
   businessInfo: BusinessInfo;
+  /* UGC Pro (Slice 2): lets this step back-fill the server-resolved sub-format onto
+     businessInfo.ugcProFormat after script generation, so the wizard storyboard (which
+     reads that field) always agrees with the script — even on the 'Auto' path. */
+  setBusinessInfo?: (updater: (prev: BusinessInfo) => BusinessInfo) => void;
   script: Script | null;
   setScript: (script: Script | null) => void;
   setFinalScript: (script: string[]) => void;
@@ -35,7 +39,7 @@ type AngleOption =
 
 const HEADLINE_LEVERS = ['PAIN', 'DREAM', 'CURIOSITY', 'SOCIAL_PROOF', 'CONTRARIAN'] as const;
 
-const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, script, setScript, setFinalScript, language: propLanguage, setLanguage: setAppLanguage, onNext, onBack, brandName, offer, directorAngleBrief, setDirectorAngleBrief }) => {
+const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, setBusinessInfo, script, setScript, setFinalScript, language: propLanguage, setLanguage: setAppLanguage, onNext, onBack, brandName, offer, directorAngleBrief, setDirectorAngleBrief }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [generatedScript, setGeneratedScript] = useState<Script | null>(script);
@@ -171,6 +175,12 @@ const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, script, setScript, 
       setGeneratedScript(newScript);
       setStrategicAudit(newScript.strategicAudit || '');
       setScript(newScript);
+      // UGC Pro: back-fill the resolved sub-format so the wizard storyboard (which reads
+      // businessInfo.ugcProFormat) is populated even on the 'Auto' path. Nullish — an
+      // explicit user pick is never overwritten.
+      if (businessInfo.scriptType === 'UGCPro' && newScript.ugcProFormatResolved) {
+        setBusinessInfo?.(prev => ({ ...prev, ugcProFormat: prev.ugcProFormat ?? newScript.ugcProFormatResolved }));
+      }
       setAppLanguage(localLanguage);
       setSelectedHook(null);
       setStep3Mode('review');

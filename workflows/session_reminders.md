@@ -63,6 +63,28 @@ unzip -qo pyembed.zip -d pyembed && sed -i 's/^#import site/import site/' pyembe
 curl -sL -o get-pip.py https://bootstrap.pypa.io/get-pip.py && ./pyembed/python.exe get-pip.py --quiet
 ```
 
+## Tooling: ffmpeg (sample-card cutting, render verification) — wiped by defreezer
+
+No winget/scoop/choco on this PC (confirmed again 2026-07-12). Portable re-arm, no admin:
+
+```
+curl -sL -o .tmp/ffmpeg.zip "https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.zip"
+unzip -qo .tmp/ffmpeg.zip -d .tmp/ffmpeg
+.tmp/ffmpeg/ffmpeg-*-essentials_build/bin/ffmpeg.exe -version
+```
+
+Call it by full path (it is NOT on PATH). Needed for `sample_batch_test_spec.md` §5
+(sample-card cutting) and any local render poking.
+
+## Broken: scripts/get-smoke-otp.ps1 — generate_link 401 (found 2026-07-12)
+
+The sb_secret service key still works for admin reads (`/auth/v1/admin/users` → 200) but
+`/auth/v1/admin/generate_link` now returns 401 for BOTH smoke accounts — likely a Supabase
+GoTrue policy change, NOT a stale key. Agent-driven browser smokes that need OTP login are
+blocked on this until fixed. Workaround (fine when Neil drives): sign in as
+`neilmaglaya.business22+smoke@gmail.com` — the app's real OTP email lands in Neil's Gmail
+inbox (`+smoke` is an alias). Fix the script when smoke automation is next needed.
+
 ## Tooling: poppler (PDF page renderer) — wiped by defreezer
 
 The johnsavage workflow PDFs in `workflows/assets/johnsavage/` (paper-style + VOX)

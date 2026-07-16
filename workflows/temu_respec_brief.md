@@ -79,3 +79,37 @@ Target sub-segment of Bryan: e-com sellers on Shopee/Lazada/TikTok Shop. Single 
 2. **Beta launches with MrBeast + TESTIMONIAL only.** 5–10 hand-picked Filipino owners. Frame TEMU as v1.1 first-access for beta cohort.
 3. **Week 1 of beta — TEMU re-spec ship.** ~1.5–2 days grilled engineering against this brief. Drop to beta users with reciprocity framing.
 4. **Week 2 of beta — measure.** Which formula gets more wizard completions? Which produces ads beta users actually run? Answers whether TEMU should be the default for the e-com sub-segment of Bryan.
+
+---
+
+## CMO strategy read — 2026-07-09 (Slice 3 gate, evidence: swipe-file E15–E18 / P15–P17; IDs renumbered from E8–E11 / P12–P14 at the 2026-07-16 merge)
+
+*The grifon-cmo half of the Slice 3 evidence gate (the autopsy half is the P15+P16 Gated
+Proposal in `viral_swipe_file.md`). Feeds the tuned-prompt drafts; changes nothing by itself.*
+
+**Why the format converts:** (1) zero consumption cost — no face, no language barrier,
+product @0s, 1–2s cuts that re-earn attention (Suby: consumption precedes conversion);
+(2) the product IS the hook — novelty + impulse price acts as built-in risk reversal;
+(3) visual value stacking — one feature/use per cut (E16 flat-pack→assembled in <3s; E18
+two durability proofs in a 3s window = show-don't-tell Authority); (4) believability lives
+in real hands/lived-in spaces, not the voice — AI TTS wins anyway (P17), which is exactly
+Grifon's answer to Bryan's "AI garbage" objection: spend realism budget on b-roll, not VO.
+
+**Overlay register (direction):** ONE static title card on frame 1 (product name or Taglish
+POV line, 1–8 words) — NOT churning deal text (4/4 evidence). Text identifies; footage
+persuades. Price/deal copy only on the closing card — matches our existing end-card
+mechanism and the no-price-in-scripts rule. Product names stay English inside Taglish lines.
+
+**Format A — Rapid Fire (TTS VO), the "spec-rattle stack"** — for products that need
+EXPLAINING: spoken imperative hook + product @0s → durability/material proof beat →
+benefit-per-cut (VO names it, footage shows it) → versatility → held end-card CTA.
+Template: E18. **Format B — Pure Hype (no VO), the "show-don't-tell impulse loop"** — for
+visually self-evident products: title card + product @0s → fast transformation beat (<3s)
+→ reveal-per-cut variety → aspirational context beat → end-card. Templates: E15–E17.
+Targeting rule: benefit must be SAID → A; benefit is SEEN → B (the existing Temu sub-type
+classifier's Utility/Reaction axis approximates this — candidate for later auto-routing).
+
+**Our deliberate divergence from the reference:** TEMU drops ship weak/no CTA (3/4 none) —
+they can afford it at app scale; our SMBs can't. Both formats keep the HELD end-card CTA
+as default. Also: E15–E17 used zero SFX hits (music only) — Format B SFX should be
+action-synced and sparse, not the default whoosh-per-overlay map.

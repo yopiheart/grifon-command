@@ -68,17 +68,19 @@ const Body = z.object({
   aspectRatio: z.enum(['9:16', '16:9', '1:1']),
   music: z
     .object({
-      style: z.enum(['mrbeast', 'temu', 'testimonial']),
+      style: z.enum(['mrbeast', 'temu', 'testimonial', 'ugcpro']),
       enabled: z.boolean(),
       // Optional generated bed (from api/music/compose). When present + reachable
       // it overrides the static `style` bed; absent/unreachable → static fallback.
       // `style` is still required: it drives resolvePreset() and is the fallback.
       bedUrl: z.string().url().optional(),
+      // 'bed' (default) ducks under VO; 'lead' (no-VO Pure Hype) plays music at full gain, no ducking.
+      role: z.enum(['bed', 'lead']).optional(),
     })
     .optional(),
   // Explicit edit-style override (kill switch / future UI picker). Absent →
   // deterministic rotation keyed by script style + scene-URL hash.
-  preset: z.object({ id: z.enum(['classic', 'impact', 'hype', 'clean']).optional() }).optional(),
+  preset: z.object({ id: z.enum(['none', 'classic', 'impact', 'hype', 'clean', 'punch', 'bars', 'spotlight']).optional() }).optional(),
   // Offer-recap overlay burned into the LAST scene, held to its end. (Price
   // anchor removed 2026-06-13 — stale clients still sending priceAnchorText
   // are fine: z.object strips unknown keys.)
@@ -166,7 +168,7 @@ async function runRender(
   jobId: string,
   scenes: FinalRenderScene[],
   aspectRatio: '9:16' | '16:9' | '1:1',
-  music?: { style: 'mrbeast' | 'temu' | 'testimonial'; enabled: boolean; bedUrl?: string },
+  music?: { style: 'mrbeast' | 'temu' | 'testimonial' | 'ugcpro'; enabled: boolean; bedUrl?: string; role?: 'bed' | 'lead' },
   preset?: RenderPreset,
   variantSeed?: number,
   endCard?: FinalRenderEndCard

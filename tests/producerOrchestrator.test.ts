@@ -785,3 +785,48 @@ describe('scene-image persistence (checkpoint-size fix)', () => {
     expect(spies.submitVideo).toHaveBeenCalled();
   });
 });
+
+// --- 12. No-VO (Pure Hype / audioMode: 'sfx_only') --------------------------
+// Music leads, SFX + burned overlay text carry the message: the voices stage skips
+// consolidation, the final render burns no subtitles, holds no full-clip hook, cuts fast
+// off the EDL keep-segments, and asks for the music as the LEAD track (not a ducked bed).
+
+describe("no-VO path (audioMode: 'sfx_only')", () => {
+  async function runSfxOnlyToFirstCut() {
+    const harness = makeFakeDeps();
+    const run = createProductionRun(makeInput({ audioMode: 'sfx_only' }), 'u1');
+    const callbacks = cb();
+    await runProduction(run, callbacks, harness.deps);
+    await approveStoryboard(run, callbacks, harness.deps);
+    return { ...harness, run };
+  }
+
+  it('skips voiceover consolidation but the (relabeled) voices stage still completes', async () => {
+    const { spies, run } = await runSfxOnlyToFirstCut();
+    expect(spies.consolidateVoices).not.toHaveBeenCalled();
+    const voices = run.stages.find((s) => s.id === 'voices');
+    expect(voices?.status).toBe('done');
+    expect(voices?.label).toBe('Designing the sound');
+  });
+
+  it('renders music as the LEAD track, no subtitles, hook not held full, fast cuts', async () => {
+    const { spies } = await runSfxOnlyToFirstCut();
+    expect(spies.renderFinalVideo).toHaveBeenCalledTimes(1);
+    const req = (spies.renderFinalVideo.mock.calls as any[])[0][0];
+    expect(req.music.role).toBe('lead');
+    expect(req.music.enabled).toBe(true);
+    for (const sc of req.scenes) {
+      expect(sc.scriptLine).toBe('');
+      expect(sc.targetDurationSec).toBeGreaterThanOrEqual(1.2);
+      expect(sc.targetDurationSec).toBeLessThanOrEqual(4.0);
+    }
+    expect(req.scenes.find((s: any) => s.isHook).keepFullClip).toBe(false);
+  });
+
+  it('regression: a default voiceover run consolidates voices and sends no music.role', async () => {
+    const { spies } = await runToFirstCut();
+    expect(spies.consolidateVoices).toHaveBeenCalled();
+    const req = (spies.renderFinalVideo.mock.calls as any[])[0][0];
+    expect(req.music.role).toBeUndefined();
+  });
+});

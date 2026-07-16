@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import {
   VideoEditInput, EditDecisionList, SceneBatchEntry, EditTargetPlatform,
   ConsolidationScene, FinalRenderScene, FinalRenderResult, VoiceLibrary, StabilityMode,
-  VoiceWord, FinalRenderRequest, LockablePresetId,
+  VoiceWord, FinalRenderRequest, LockablePresetId, BusinessInfo,
 } from '../types';
 import { generateVideoEditPlan, generateEditDecisionList } from '../services/geminiService';
 import { fetchVoices } from '../services/voiceService';
@@ -31,6 +31,7 @@ import {
   type OmniConsumeResult,
 } from '../services/omniStyleService';
 import { trackEvent } from '../services/analyticsService';
+import { seedCaptionsEnabled } from '../utils/asmrSeeds';
 
 export interface EditorBatchPayload {
   sceneBatch: SceneBatchEntry[];
@@ -49,6 +50,13 @@ export interface EditorBatchPayload {
   omniEmphasisWord?: string;
   omniTitleText?: string;
   captionsEnabled?: boolean;
+  /** Wizard scriptType — a UGCPro run gets the deterministic 'ugcpro' caption/music
+   *  identity (hype word-pop). The EDL mis-detects UGCPro as testimonial → CLEAN
+   *  preset otherwise, burying the caption bet. */
+  scriptType?: BusinessInfo['scriptType'];
+  /** UGC Pro ASMR flavor — audio-led format seeds captions + music OFF by default
+   *  (the taps ARE the audio). Both stay user-flippable. */
+  asmrFlag?: boolean;
 }
 
 interface EditVideoProps {
@@ -131,7 +139,12 @@ const BatchEditMode: React.FC<{
   // off / Premium on); off omits scriptLine + voiceWords from the request scenes
   // so no subtitles burn in (hook title / callouts stay). Music length + dead-air
   // trim are computed pre-omission, so this does not shift timing.
-  const [captionsEnabled, setCaptionsEnabled] = useState(editorBatch.captionsEnabled ?? true);
+  // ASMR runs seed captions OFF (audio-led — the whisper + taps carry it, subtitles
+  // fight the register). An explicit picker value (editorBatch.captionsEnabled) still
+  // wins; only the unset default flips on ASMR. User-flippable via the toggle below.
+  const [captionsEnabled, setCaptionsEnabled] = useState(
+    seedCaptionsEnabled(editorBatch.captionsEnabled, editorBatch.asmrFlag)
+  );
   // Generative music bed (ElevenLabs Music) — Pro/Business perk, default-on for
   // eligible tiers. Server is authoritative (MUSIC_DAILY); this only governs the
   // toggle + the pre-render compose call. Off / ineligible → tuned static bed.
@@ -428,8 +441,12 @@ const BatchEditMode: React.FC<{
       // falls back to the tuned static bed.
       let music: FinalRenderRequest['music'];
       if (burnInEnabled) {
-        const style = edl?.meta.scriptStyleDetected ?? 'mrbeast';
-        music = { style, enabled: true };
+        // Deterministic override: a UGCPro run always burns the 'ugcpro' caption/music
+        // identity (hype word-pop) — we KNOW the scriptType, so we don't ask the EDL
+        // (which mis-detects UGCPro as testimonial → CLEAN preset). Non-UGCPro keeps the
+        // EDL-detected style. ASMR is audio-led — the taps ARE the audio; a bed buries them.
+        const style = editorBatch.scriptType === 'UGCPro' ? 'ugcpro' : (edl?.meta.scriptStyleDetected ?? 'mrbeast');
+        music = { style, enabled: editorBatch.asmrFlag ? false : true };
         if (musicGenOn && musicEligible) {
           const lengthMs = Math.max(
             8000,

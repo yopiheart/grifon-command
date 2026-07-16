@@ -42,6 +42,8 @@ interface OneShotAdProps {
   directorUnlocked: boolean;
   /** Pro+ unlock for the First Cut edit presets (IMPACT/CLEAN). Free/Starter get the upsell. */
   presetUnlocked: boolean;
+  /** True when the user is already on Business — hides the First Cut "Advanced Editor" teaser. */
+  isBusinessTier: boolean;
   onBack: () => void;
   /** Route to pricing when a locked user reaches for Director mode. */
   onUpgrade: () => void;
@@ -63,6 +65,7 @@ const OneShotAd: React.FC<OneShotAdProps> = ({
   setAspectRatio,
   directorUnlocked,
   presetUnlocked,
+  isBusinessTier,
   onBack,
   onUpgrade,
   onSwitchToSteps,
@@ -78,6 +81,7 @@ const OneShotAd: React.FC<OneShotAdProps> = ({
         userId={userId}
         directorUnlocked={directorUnlocked}
         presetUnlocked={presetUnlocked}
+        isBusinessTier={isBusinessTier}
         onBack={onBack}
         onUpgrade={onUpgrade}
         onSwitchToSteps={onSwitchToSteps}

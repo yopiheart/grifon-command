@@ -37,10 +37,22 @@ export interface ProductionInput {
   voiceId: string;
   language: 'English' | 'Taglish';
   aspectRatio: '9:16' | '16:9' | '1:1';
-  /** Render resolution. 720p is the only unlocked tier today; 1080p is Business-gated (UI shows LOCKED). */
-  resolution?: '720p' | '1080p';
   /** Script style — derived from the Format × Strategy axes and the chosen vertical. */
   scriptType: NonNullable<BusinessInfo['scriptType']>;
+  /** The chosen vertical's businessType, emitted straight from LaunchScreen's `vertical`
+   * state. When present it WINS over the scriptType-derived fallback, so a UGC Pro pick on
+   * a service/real-estate vertical routes to the right style instead of always 'product'. */
+  businessType?: 'product' | 'service' | 'realestate';
+  /** UGC Pro sub-format when the user picked one explicitly (Try-On / Unboxing / Demo /
+   * Transformation / Tutorial). Undefined on the 'Auto' choice so the server classifies the
+   * sub-format from the brief. */
+  ugcProFormat?: 'tryon' | 'unboxing' | 'demo' | 'transformation' | 'tutorial';
+  /** UGC Pro: audio-led ASMR flavor (whispered register, minimal VO). Off by default; carried
+   * onto businessInfo.asmrFlag by mapReportToWizard. */
+  asmrFlag?: boolean;
+  /** Audio identity. Absent/'voiceover' = today's TTS pipeline. 'sfx_only' = NO voiceover:
+   * music leads, SFX + burned overlay text carry the message (the Pure Hype recipe). */
+  audioMode?: 'voiceover' | 'sfx_only';
   /** Phase 2: guided per-slot real photos for Service/RealEstate verticals (the slot IS the tag).
    * Feeds the per-scene real-photo router. Empty/absent for Product (which uses heroImageBase64). */
   servicePhotos?: BusinessInfo['servicePhotos'];
@@ -56,10 +68,37 @@ export interface ProductionInput {
   forceFreshResearch?: boolean;
 }
 
-/** scriptType → the Step 2 businessType gate, so Services/RealEstate verticals route to the right style. */
-function businessTypeFor(scriptType: ProductionInput['scriptType']): NonNullable<BusinessInfo['businessType']> {
-  if (scriptType === 'Services') return 'service';
-  if (scriptType === 'RealEstate') return 'realestate';
+export interface PresenterResolution {
+  avatar: Avatar;
+  derivedFromAfter: boolean;
+}
+
+/** Keep a person-state transformation on one face when Presenter is still Auto. */
+export function resolvePersonStatePresenter(input: Pick<ProductionInput, 'avatar' | 'servicePhotos'>): PresenterResolution {
+  if (input.avatar?.url) return { avatar: input.avatar, derivedFromAfter: false };
+  const photos = input.servicePhotos ?? [];
+  const hasBefore = photos.some((photo) => photo.slot === 'before' && photo.url);
+  const after = photos.find((photo) => photo.slot === 'after' && photo.url);
+  if (!hasBefore || !after) return { avatar: input.avatar, derivedFromAfter: false };
+  return {
+    avatar: {
+      prompt: '',
+      url: after.url,
+      description: after.description?.trim() || "The person in the user's After photo",
+      ethnicity: input.avatar?.ethnicity ?? '',
+      gender: input.avatar?.gender ?? 'Any',
+    },
+    derivedFromAfter: true,
+  };
+}
+
+/** The vertical's businessType gate, so Services/RealEstate verticals route to the right style.
+ * An explicit `input.businessType` (emitted by LaunchScreen's vertical) WINS; otherwise fall
+ * back to today's scriptType derivation (Services/RealEstate), defaulting to 'product'. */
+function businessTypeFor(input: ProductionInput): NonNullable<BusinessInfo['businessType']> {
+  if (input.businessType) return input.businessType;   // vertical wins when supplied
+  if (input.scriptType === 'Services') return 'service';
+  if (input.scriptType === 'RealEstate') return 'realestate';
   return 'product';
 }
 
@@ -96,7 +135,9 @@ export function mapReportToWizard(
       serviceArchetype: input.serviceArchetype,
       realEstateArchetype: input.realEstateArchetype,
       scriptType: input.scriptType,
-      businessType: businessTypeFor(input.scriptType),
+      ugcProFormat: input.ugcProFormat,
+      asmrFlag: input.asmrFlag,
+      businessType: businessTypeFor(input),
       listingPrice: input.scriptType === 'RealEstate' ? input.price : undefined,
     },
   };

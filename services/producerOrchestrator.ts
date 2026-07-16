@@ -120,12 +120,27 @@ export interface ProductionInput {
   voiceId: string;
   language: 'English' | 'Taglish';
   aspectRatio: '9:16' | '16:9' | '1:1';
-  /** Render resolution. 720p is the only unlocked tier today; 1080p is gated to
-   * Business (UI shows it LOCKED). Defaults to '720p' when absent so older runs
-   * and the current intake stay valid. Drives engine + duration selection. */
+  /** Render resolution. The intake no longer sends this — the picker was removed and
+   * One-Shot is always '720p' now (quality comes from the final-render lanczos+unsharp
+   * upscale). Retained only for old-checkpoint resume back-compat; defaults to '720p'
+   * when absent, so it's effectively always '720p'. Drives engine + duration selection. */
   resolution?: '720p' | '1080p';
   /** Script strategy — auto-detected default, override in the Customize drawer. */
   scriptType: NonNullable<BusinessInfo['scriptType']>;
+  /** The chosen vertical's businessType, emitted straight from LaunchScreen's `vertical`
+   * state. When present it WINS over the scriptType-derived fallback in businessTypeFor,
+   * so a UGC Pro pick on a service/real-estate vertical routes to the right style. */
+  businessType?: 'product' | 'service' | 'realestate';
+  /** UGC Pro sub-format when the user picked one explicitly (Try-On / Unboxing / Demo /
+   * Transformation / Tutorial). Undefined on the 'Auto' choice so the server classifies the
+   * sub-format from the brief. */
+  ugcProFormat?: 'tryon' | 'unboxing' | 'demo' | 'transformation' | 'tutorial';
+  /** UGC Pro: audio-led ASMR flavor (whispered register, minimal VO, music off). Off by
+   * default; mapReportToWizard copies it onto businessInfo.asmrFlag. */
+  asmrFlag?: boolean;
+  /** Audio identity. Absent/'voiceover' = today's TTS pipeline. 'sfx_only' = NO voiceover:
+   * music leads, SFX + burned overlay text carry the message (the Pure Hype recipe). */
+  audioMode?: 'voiceover' | 'sfx_only';
   stabilityMode?: StabilityMode;
   /** Phase 2: guided per-slot real photos for Service/RealEstate verticals (the slot IS the tag).
    * Feeds the per-scene real-photo router. Empty/absent for Product (which uses heroImageBase64). */
@@ -189,6 +204,9 @@ export interface ProductionRun {
   edl?: EditDecisionList;
   finalVideoUrl?: string;
   finalDownloadUrl?: string;
+  /** Signed URL of the producer's generated thumbnail (cover frame), surfaced on
+   * First Cut for download. Absent when the run produced no thumbnail artifact. */
+  thumbnailUrl?: string;
   error?: string;
   /** Monotonic checkpoint revision (optimistic-concurrency guard). Tracked in memory, sent on
    * every checkpoint, bumped on success; on a stale-write conflict the client adopts the
@@ -317,7 +335,13 @@ export function createProductionRun(
     status: 'running',
     mode: opts.mode ?? 'oneshot',
     input,
-    stages: STAGE_ORDER.map((s) => ({ id: s.id, label: s.label, status: (done.has(s.id) ? 'done' : 'pending') as StageStatus, attempts: 0 })),
+    // No-TTS runs (Pure Hype) design the sound instead of recording a voiceover — relabel that stage.
+    stages: STAGE_ORDER.map((s) => ({
+      id: s.id,
+      label: s.id === 'voices' && input.audioMode === 'sfx_only' ? 'Designing the sound' : s.label,
+      status: (done.has(s.id) ? 'done' : 'pending') as StageStatus,
+      attempts: 0,
+    })),
     scenes: opts.prefill?.storyboard ? opts.prefill.storyboard.map((_, i) => ({ sceneIdx: i, status: 'pending' as SceneStatus })) : [],
     ...opts.prefill,
   };
@@ -345,18 +369,27 @@ export function researchCacheKey(brandName: string, productName: string): string
   return `${brandName.trim().toLowerCase()}::${productName.trim().toLowerCase()}`;
 }
 
-/** A ready-to-brief angle for the script generator, pulled from the research. */
+/** A ready-to-brief angle for the script generator, pulled from the research.
+ * The research line is INSPIRATION, never a dictated opening: "open with: X"
+ * made the model obey X over the format's beat-0 skeleton rule (transformation
+ * runs opened on product/testimonial hooks — spec findings #6/#10, root cause
+ * confirmed 2026-07-12). The skeleton always outranks the angle brief. */
 export function deriveAngleBrief(report: MarketResearchReport): string {
+  const subordinate = (line: string) =>
+    `hook inspiration (the format's beat-0 skeleton rule ALWAYS wins over this line — reframe it to fit the skeleton, never copy it as the opener): "${line}"`;
   const a = report.fbAdLibraryAngles?.[0];
-  if (a) return `${a.format} angle: ${a.angle} — open with: "${a.openingLine}"`;
+  if (a) return `${a.format} angle: ${a.angle} — ${subordinate(a.openingLine)}`;
   const h = report.videoHooks?.[0];
-  return h ? `${h.type}: "${h.spokenLine}"` : report.bigIdea || '';
+  return h ? `${h.type} ${subordinate(h.spokenLine)}` : report.bigIdea || '';
 }
 
 /** Auto-pick hook1 (locked product decision) and concatenate the body. */
 export function assembleFinalScript(script: Script): string[] {
   return [...(script.hook1 ?? []), ...(script.body ?? [])].filter((l) => l && l.trim());
 }
+
+/** Clamp n into [lo, hi]. Module-local so the no-VO fast-cut pacing math stays inline. */
+const clamp = (n: number, lo: number, hi: number): number => Math.min(hi, Math.max(lo, n));
 
 /** Per-model, per-resolution valid clip durations (inline mirror of VIDEO_MODEL_SPECS). */
 const VALID_DURATIONS: Partial<Record<VideoModelType, Record<'720p' | '1080p', number[]>>> = {
@@ -374,9 +407,12 @@ export function pickSceneDuration(type: VideoPrompt['type'], model: VideoModelTy
   return valid.includes(target) ? target : valid.find((d) => d >= target) ?? valid[0];
 }
 
-/** Scene-type-aware model routing (resolution-aware talking-engine step-up). */
-function routeModel(type: VideoPrompt['type'], fallback: VideoModelType, sceneIdx?: number, resolution: '720p' | '1080p' = '720p'): VideoModelType {
-  if (sceneIdx === 0 && type === 'b-roll') return 'Kling_O1';
+/** Scene-type-aware model routing (resolution-aware talking-engine step-up).
+ * Scene-0 b-roll used to step up to Kling_O1 for a "hook morph", format-blind — with a
+ * single start frame O1 degrades to camera-motion/warp and person-held product hooks
+ * crystallize mid-shot (sample_batch_test_spec.md finding #23, Neil GO'd removal
+ * 2026-07-15). Hooks now route like any b-roll; O1 stays available to GenerateVideo. */
+export function routeModel(type: VideoPrompt['type'], fallback: VideoModelType, _sceneIdx?: number, resolution: '720p' | '1080p' = '720p'): VideoModelType {
   if (type === 'talking') return resolution === '1080p' ? 'Veo_3.1_Fast' : 'Veo_3.1_Lite';
   if (type === 'b-roll') return 'Kling_3_0';
   if (type === 'cinematic') return 'Kling_3_0';
@@ -500,6 +536,7 @@ export async function approveStoryboard(run: ProductionRun, cb: ProducerCallback
  * Returns the run parked back at the First Cut gate.
  */
 export async function applyPreset(run: ProductionRun, presetId: LockablePresetId | null, cb: ProducerCallbacks, deps: ProducerDeps): Promise<ProductionRun> {
+  const previousPresetId = run.presetId;
   const commit = async (mut: (r: ProductionRun) => void) => {
     mut(run);
     run.updatedAt = deps.now();
@@ -525,12 +562,14 @@ export async function applyPreset(run: ProductionRun, presetId: LockablePresetId
       r.status = 'review';
       r.gate = 'first_cut';
       r.busy = undefined;
+      r.error = undefined;
     });
   } catch (e: any) {
     await commit((r) => {
       r.status = 'review';
       r.gate = 'first_cut';
       r.busy = undefined;
+      r.presetId = previousPresetId;
       r.error = `preset: ${e?.message ?? 'failed'}`;
     });
   }
@@ -941,6 +980,12 @@ async function runStage(
       await commit((r) => {
         r.script = script;
         r.finalScript = finalScript;
+        // UGC Pro: back-fill the resolved sub-format onto businessInfo so the storyboard
+        // stage (which reads businessInfo.ugcProFormat) is always populated, even on the
+        // 'Auto' path. Nullish — an explicit user pick is never overwritten.
+        if (r.businessInfo && script.ugcProFormatResolved) {
+          r.businessInfo.ugcProFormat = r.businessInfo.ugcProFormat ?? script.ugcProFormatResolved;
+        }
       });
       await setStage(id, { detail: finalScript[0] ? `"${finalScript[0]}"` : 'Hook locked' });
       return;
@@ -1071,6 +1116,13 @@ async function runStage(
     }
 
     case 'voices': {
+      // No-TTS runs (Pure Hype): music leads and SFX + overlay text carry the message, so there
+      // is no voiceover to consolidate. Scenes keep no audioUrl → the EDL's audioOverlayAttached:no
+      // is already structurally valid. The stage still ends 'done' (the driver marks it after return).
+      if (run.input.audioMode === 'sfx_only') {
+        await setStage(id, { detail: 'No voiceover — music + SFX ad' });
+        return;
+      }
       const rendered = run.scenes.filter((s) => s.videoUrl);
       if (rendered.length === 0) return;
       const consolidationScenes: ConsolidationScene[] = rendered.map((s) => ({
@@ -1115,6 +1167,8 @@ async function runStage(
     }
 
     case 'final_render': {
+      // No-VO (Pure Hype): no subtitles, no full-clip hook hold, and fast EDL-driven cuts.
+      const sfxOnly = run.input.audioMode === 'sfx_only';
       const scenes: FinalRenderScene[] = run.scenes
         .filter((s) => s.videoUrl)
         .map((s) => {
@@ -1122,22 +1176,45 @@ async function runStage(
           const scriptLine = run.storyboard?.[s.sceneIdx]?.scriptLine ?? '';
           const estimate = estimateSpokenSec(scriptLine);
           const plan = run.edl?.scenes.find((e) => e.sceneIdx === s.sceneIdx);
+          // No-VO pacing: target the EDL keep-segment total, clamped to the fast-cut window
+          // (hook 2–4s, body 1.2–3.5s) → 7 scenes ≈ 15–20s. A missing/empty/zero total falls
+          // back to a punchy constant. Fast-cut window is non-tuned code, adjustable post-autopsy.
+          const keptSec = sfxOnly
+            ? plan?.keepSegments?.reduce((sum, seg) => sum + Math.max(0, seg.endSec - seg.startSec), 0)
+            : undefined;
+          const segSec = keptSec && keptSec > 0 ? keptSec : undefined;
+          const sfxTarget = isHook ? clamp(segSec ?? 3.0, 2.0, 4.0) : clamp(segSec ?? 2.5, 1.2, 3.5);
           return {
             sceneIdx: s.sceneIdx,
             videoUrl: s.videoUrl as string,
             audioUrl: s.audioUrl ?? null,
-            keepFullClip: isHook,
-            targetDurationSec: isHook || estimate <= 0 ? null : estimate,
+            keepFullClip: sfxOnly ? false : isHook,
+            targetDurationSec: sfxOnly ? sfxTarget : (isHook || estimate <= 0 ? null : estimate),
             overlayText: plan?.overlayText,
             sfxCues: plan?.sfxCues,
             transitionIn: plan?.transitionIn,
-            scriptLine,
+            // No-VO kills subtitle captions; EDL overlayText still burns.
+            scriptLine: sfxOnly ? '' : scriptLine,
             sceneType: run.videoPrompts?.[s.sceneIdx]?.type ?? 'b-roll',
             isHook,
           };
         });
       if (scenes.length === 0) throw new Error('NO_RENDERED_SCENES');
-      const music = { style: run.edl?.meta.scriptStyleDetected ?? 'mrbeast', enabled: true as const };
+      // Deterministic style override: a UGCPro run always burns the 'ugcpro'
+      // caption/music identity (hype word-pop) — we KNOW the scriptType, so we
+      // don't ask the EDL (which mis-detects UGCPro as testimonial → CLEAN preset,
+      // burying the P1/P2 caption bet). Non-UGCPro keeps the EDL-detected style.
+      const isUgcPro = run.input.scriptType === 'UGCPro';
+      const isAsmr = run.businessInfo?.asmrFlag ?? run.input.asmrFlag ?? false;
+      const music = {
+        style: isUgcPro ? ('ugcpro' as const) : (run.edl?.meta.scriptStyleDetected ?? 'mrbeast'),
+        // ASMR is an audio-led format — the taps/handling ARE the audio; a music
+        // bed buries them. User-flippable downstream; this only seeds the default.
+        // No-VO (Pure Hype): music IS the audio → force-enabled + 'lead' role (higher gain,
+        // no VO ducking). This overrides the ASMR disable; ASMR × product_ugc can't co-occur.
+        enabled: sfxOnly ? true : !isAsmr,
+        role: sfxOnly ? ('lead' as const) : undefined,
+      };
       const req: FinalRenderRequest = {
         scenes,
         aspectRatio: run.input.aspectRatio,

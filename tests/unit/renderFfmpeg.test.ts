@@ -4,6 +4,7 @@ import {
   clampWindow, clampAnchor, escFilterPath,
   safeZone, fitText, wrapTwoLines, stripUnrenderable, evenSplit, chunkCaption,
   planScene, planEndCardLayers, buildTextFilter, buildBoxFilter, WIPE_SLICES, snapSfxAnchor, pickSceneSfx, voiceChunkWindows,
+  sceneNormalizeFilter, musicMixPlan,
 } from '../../api/_lib/renderFfmpeg.js';
 import type { SfxCandidate } from '../../api/_lib/renderFfmpeg.js';
 import type { FinalRenderScene } from '../../types.js';
@@ -106,6 +107,30 @@ describe('dimsFor', () => {
   });
 });
 
+describe('sceneNormalizeFilter (quality upscale prefix)', () => {
+  it('scales with lanczos and adds the light unsharp pass', () => {
+    const f = sceneNormalizeFilter(1080, 1920);
+    expect(f).toContain('flags=lanczos');
+    expect(f).toContain('unsharp=5:5:0.4:5:5:0.2');
+  });
+  it('sharpens AFTER setsar (never before pad/normalize)', () => {
+    const f = sceneNormalizeFilter(1080, 1920);
+    expect(f.indexOf('unsharp=5:5:0.4:5:5:0.2')).toBeGreaterThan(f.indexOf('setsar=1'));
+  });
+});
+
+describe('musicMixPlan (role → gain + ducking)', () => {
+  it('bed (default) plays quiet and ducks under the VO', () => {
+    expect(musicMixPlan('bed')).toEqual({ volume: 0.18, duck: true });
+  });
+  it('lead (no-VO) plays loud and never ducks', () => {
+    expect(musicMixPlan('lead')).toEqual({ volume: 0.85, duck: false });
+  });
+  it('undefined role falls back to the bed plan', () => {
+    expect(musicMixPlan(undefined)).toEqual({ volume: 0.18, duck: true });
+  });
+});
+
 describe('chooseTrim', () => {
   const PROBE = 6.0; // full clip length
 
@@ -114,6 +139,11 @@ describe('chooseTrim', () => {
     const plan = chooseTrim({ audioUrl: 'x' }, PROBE, 3.4);
     expect(plan.trimSec).toBeCloseTo(3.4, 3);
     expect(plan.padAudio).toBe(false);
+  });
+
+  it('removes a 15s final-scene tail when VO ends at 13s', () => {
+    const plan = chooseTrim({ audioUrl: 'voice.mp3' }, 15, 13.3);
+    expect(plan.trimSec).toBeLessThanOrEqual(13.5);
   });
 
   it('never lets the VO-end trim overrun the clip (capped to probe)', () => {

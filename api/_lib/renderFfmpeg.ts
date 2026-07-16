@@ -80,6 +80,7 @@ const SFX_VOLUME = CLASSIC.sfx.volume; // SFX sit under the VO, not over it
 // a moderate fast duck so the bed only breathes in the gaps. Final loudness is
 // pinned by the -14 LUFS master (LOUDNORM) so every ad ships at a consistent level.
 const MUSIC_VOLUME = 0.18;       // bed gain before sidechain ducking
+const MUSIC_VOLUME_LEAD = 0.85;  // no VO to duck under — music IS the audio; LOUDNORM still pins the master
 const MUSIC_FADE_SEC = 0.4;      // afade in/out on the bed
 const MUSIC_DUCK = 'threshold=0.04:ratio=5:attack=5:release=280'; // duck hard+fast under VO
 const LOUDNORM = 'loudnorm=I=-14:TP=-1.5:LRA=11'; // social/Reels target, VO-anchored
@@ -107,7 +108,30 @@ export function findAsset(rel: string): string | null {
 }
 
 const sfxPath = (id: string) => findAsset(join('sfx', `${id}.mp3`));
-const musicPath = (style: string) => findAsset(join('music', `${style}.mp3`));
+
+// Static-bed aliases: a style with no own `<style>.mp3` borrows a sibling bed so its render
+// never ships silent. A real `<style>.mp3` dropped into assets/music/ later automatically
+// wins (the direct hit is tried first) with no code change. Data-driven — extend the map,
+// not a special-case if-chain. Today: `ugcpro` has no bed, so it borrows `testimonial.mp3`.
+const MUSIC_BED_ALIAS: Record<string, string> = { ugcpro: 'testimonial' };
+
+/** Resolve the static music bed for a style, honoring a fallback alias when the style has no
+ * own `<style>.mp3`. `resolve` is injected so this is pure/testable without touching the FS. */
+export function resolveMusicBed(style: string, resolve: (rel: string) => string | null): string | null {
+  const direct = resolve(join('music', `${style}.mp3`));
+  if (direct) return direct;
+  const alias = MUSIC_BED_ALIAS[style];
+  if (alias) {
+    const fallback = resolve(join('music', `${alias}.mp3`));
+    if (fallback) {
+      console.log(`[renderFfmpeg] music bed style=${style} → alias '${alias}.mp3' (no ${style}.mp3 present)`);
+      return fallback;
+    }
+  }
+  return null;
+}
+
+const musicPath = (style: string) => resolveMusicBed(style, findAsset);
 const fontPath = () => findAsset(join('fonts', 'Inter-Black.ttf'));
 
 /** SFX_V2 (Slice 1): class → seeded variant file, degrading to the legacy
@@ -140,16 +164,19 @@ export function escFilterPath(p: string): string {
 
 
 /**
- * Per-word drawtext filters for a word-level caption layer. Words use OUTLINE
- * (never per-word boxes — they'd render as fragmented tiles; matches the CapCut
- * look anyway). `wordTextNames[j]` is word j's bare textfile name; `baseTextName`
- * is the whole-chunk file (karaoke only).
+ * Per-word/per-line drawtext filters. Standard word captions use OUTLINE, never
+ * all-word boxes (fragmented tiles); bars entries are whole lines, and spotlight
+ * intentionally boxes only the active word. `wordTextNames[j]` is entry j's bare
+ * textfile name; `baseTextName` is the whole-chunk file (karaoke modes only).
  *
  *  - word-pop: words accumulate — each pops on at its start (alpha snap + 14px
  *    settle) and stays until the chunk ends.
  *  - karaoke: the whole chunk renders in fillColor (numeric x so the highlight
  *    offsets share its origin) and a highlightColor copy of each word sits on
  *    top only during that word's window — an L→R sweep.
+ *  - bars: each entry is a whole caption line on an alternating solid bar.
+ *  - karaoke-invert: the whole chunk stays visible while the spoken word pulses
+ *    as black text on a white box.
  */
 export function buildWordFilters(
   l: TextLayer,
@@ -176,12 +203,68 @@ export function buildWordFilters(
   const parts: string[] = [];
 
   if (l.anim === 'karaoke' && baseTextName) {
-    parts.push(buildTextFilter({ ...l, anim: 'none', words: undefined, boxAlpha: 0 }, fontName, baseTextName, preset));
+    // Same two-source defect class as karaoke-invert (spec finding #27): the base
+    // used to be ONE kerned drawtext while highlights sit at ESTIMATED wd.xPx, so
+    // the highlight drifted off its word. Base is now per-word at the same xPx.
+    for (let j = 0; j < words.length; j++) {
+      const wd = words[j];
+      parts.push(
+        `drawtext=fontfile=${fontName}:textfile=${wordTextNames[j]}:fontsize=${l.fontsize}:` +
+        `fontcolor=${l.color}${deco ? `:${deco}` : ''}:` +
+        `x=${wd.xPx}:y=${wd.yPx ?? l.yBase}:enable='between(t,${l.startSec},${l.endSec})'`
+      );
+    }
     for (let j = 0; j < words.length; j++) {
       const wd = words[j];
       parts.push(
         `drawtext=fontfile=${fontName}:textfile=${wordTextNames[j]}:fontsize=${l.fontsize}:` +
         `fontcolor=${preset.caption.highlightColor}:${deco}:` +
+        `x=${wd.xPx}:y=${wd.yPx ?? l.yBase}:enable='between(t,${wd.start},${wd.end})'`
+      );
+    }
+    return parts.join(',');
+  }
+
+  if (l.anim === 'bars') {
+    for (let j = 0; j < words.length; j++) {
+      const wd = words[j];
+      const p = `min(1,max(0,(t-${wd.start})/0.28))`;
+      const ease = `(1-${FLIP_C3}*pow(1-${p},3)+${FLIP_C1}*pow(1-${p},2))`;
+      const light = j % 2 === 1;
+      parts.push(
+        `drawtext=fontfile=${fontName}:textfile=${wordTextNames[j]}:fontsize=${l.fontsize}:` +
+        `fontcolor=${light ? 'black' : 'white'}:box=1:boxcolor=${light ? 'white' : 'black'}@1:` +
+        `boxborderw=${Math.round(l.fontsize * 0.18)}:` +
+        `x='(w-text_w)/2-140*(1-${ease})':y=${wd.yPx ?? l.yBase}:` +
+        `alpha='min(min(1,max(0,(t-${wd.start})/0.05)),max(0,(${l.endSec}-t)/0.18))':` +
+        `enable='between(t,${wd.start},${l.endSec})'`
+      );
+    }
+    return parts.join(',');
+  }
+
+  if (l.anim === 'karaoke-invert' && baseTextName) {
+    // Base phrase rendered PER-WORD at the SAME estimated x positions the invert
+    // box uses (single x-source). The base used to be ONE drawtext (real
+    // kerning) while the box was positioned from per-word width ESTIMATES, so the
+    // box drifted off the word and overlapped the phrase (spec finding #27).
+    // Per-word base and box now share wd.xPx and cannot disagree by construction.
+    for (let j = 0; j < words.length; j++) {
+      const wd = words[j];
+      parts.push(
+        `drawtext=fontfile=${fontName}:textfile=${wordTextNames[j]}:fontsize=${l.fontsize}:` +
+        `fontcolor=${l.color}${deco ? `:${deco}` : ''}:` +
+        `x=${wd.xPx}:y=${wd.yPx ?? l.yBase}:enable='between(t,${l.startSec},${l.endSec})'`
+      );
+    }
+    for (let j = 0; j < words.length; j++) {
+      const wd = words[j];
+      const wordDur = Math.max(0.001, +(wd.end - wd.start).toFixed(3));
+      const pulse = `1+0.06*sin(PI*min(1,max(0,(t-${wd.start})/${wordDur})))`;
+      parts.push(
+        `drawtext=fontfile=${fontName}:textfile=${wordTextNames[j]}:` +
+        `fontsize='max(8,${l.fontsize}*(${pulse}))':fontcolor=black:` +
+        `box=1:boxcolor=white@1:boxborderw=${Math.round(l.fontsize * 0.16)}:` +
         `x=${wd.xPx}:y=${wd.yPx ?? l.yBase}:enable='between(t,${wd.start},${wd.end})'`
       );
     }
@@ -370,6 +453,26 @@ function ffmpeg(args: string[], cwd?: string): { status: number; stderr: string 
   return { status: r.status ?? -1, stderr: r.stderr ? r.stderr.toString('utf8') : (r.error?.message ?? '') };
 }
 
+// One-time (per process) ffmpeg capability probe. A deployed ffmpeg missing the
+// `drawtext` filter renders RAW clips fine but silently drops every caption /
+// overlay preset — surface it loudly at the first render instead of shipping
+// text-less ads (spec finding #24). Never throws: RAW renders must still work.
+let _ffmpegCapChecked = false;
+function checkFfmpegCapabilities(): void {
+  if (_ffmpegCapChecked) return;
+  _ffmpegCapChecked = true;
+  if (!ffmpegPath) return;
+  try {
+    const r = spawnSync(ffmpegPath, ['-hide_banner', '-filters'], { maxBuffer: 1 << 24 });
+    const out = `${r.stdout?.toString('utf8') ?? ''}${r.stderr?.toString('utf8') ?? ''}`;
+    if (!/\bdrawtext\b/.test(out)) {
+      console.error('[renderFfmpeg] FATAL-CLASS: deployed ffmpeg lacks drawtext — caption presets will fail (see spec finding #24)');
+    }
+  } catch {
+    /* probe failure is non-fatal — never block a RAW render */
+  }
+}
+
 /** Probe a media file's duration (seconds) by reading ffmpeg's Duration line. */
 export function probeDurationSec(path: string): number | null {
   // `ffmpeg -i <file>` with no output exits non-zero but prints Duration to stderr.
@@ -443,6 +546,19 @@ export interface PreparedSfx {
 }
 
 /**
+ * Pure scale→pad→setsar→sharpen prefix for a scene's video chain. Lanczos scaling
+ * + a light unsharp pass lift the 720p source toward a crisp 1080-canvas render.
+ * The unsharp runs BEFORE any camera filter / drawtext so burned-in text is never
+ * sharpened. Kept side-effect-free (no `[0:v]`/fps prefix) so it's unit-testable.
+ */
+export function sceneNormalizeFilter(w: number, h: number): string {
+  return (
+    `scale=${w}:${h}:force_original_aspect_ratio=decrease:flags=lanczos,` +
+    `pad=${w}:${h}:(ow-iw)/2:(oh-ih)/2,setsar=1,unsharp=5:5:0.4:5:5:0.2`
+  );
+}
+
+/**
  * Trim + mux + normalize one scene to `outPath`, burning in overlays (drawtext)
  * and SFX (adelay+amix) on top of the verified trim. With a voice MP3 the video
  * is trimmed to the voice's speech-end; audio-less scenes get a silent track so
@@ -484,9 +600,7 @@ function buildScene(
   const stmts: string[] = [];
   let split = 0;
 
-  let vChain =
-    `[0:v]fps=${FPS},scale=${w}:${h}:force_original_aspect_ratio=decrease,` +
-    `pad=${w}:${h}:(ow-iw)/2:(oh-ih)/2,setsar=1`;
+  let vChain = `[0:v]fps=${FPS},${sceneNormalizeFilter(w, h)}`;
   if (cameraFilter) vChain += `,${cameraFilter}`;
   let k = 0;
   for (const layer of layers) {
@@ -494,14 +608,17 @@ function buildScene(
       vChain += `,${buildBoxFilter(layer)}`;
     } else if (fontName) {
       const layerFont = layer.font === 'hook' && hookFontName ? hookFontName : fontName;
-      if (layer.words?.length && (layer.anim === 'word-pop' || layer.anim === 'karaoke')) {
+      if (layer.words?.length && (
+        layer.anim === 'word-pop' || layer.anim === 'karaoke'
+        || layer.anim === 'bars' || layer.anim === 'karaoke-invert'
+      )) {
         const wordNames = layer.words.map((wd, j) => {
           const n = `ov_${sceneIdx}_${k}_w${j}.txt`;
           writeFileSync(join(dir, n), wd.word, 'utf8');
           return n;
         });
         let baseName: string | null = null;
-        if (layer.anim === 'karaoke') {
+        if (layer.anim === 'karaoke' || layer.anim === 'karaoke-invert') {
           baseName = `ov_${sceneIdx}_${k}_base.txt`;
           writeFileSync(join(dir, baseName), layer.text, 'utf8');
         }
@@ -588,25 +705,40 @@ function concatScenes(muxedPaths: string[], outPath: string): void {
 }
 
 /**
- * Final pass: lay a looped, faded music bed UNDER the program audio, ducking it
- * beneath the VO via sidechaincompress (program audio is the sidechain key).
- * Non-critical: returns false (and leaves the concat result untouched) on any
+ * Music mix plan for a given role. 'bed' (default) = quiet gain, ducked under the VO;
+ * 'lead' (no-VO Pure Hype) = music IS the audio → high gain, NO sidechain ducking. Pure +
+ * exported so the role→mix decision is unit-testable without invoking ffmpeg.
+ */
+export function musicMixPlan(role?: 'bed' | 'lead'): { volume: number; duck: boolean } {
+  return role === 'lead'
+    ? { volume: MUSIC_VOLUME_LEAD, duck: false }
+    : { volume: MUSIC_VOLUME, duck: true };
+}
+
+/**
+ * Final pass: lay a looped, faded music bed against the program audio. For a bed (duck:true)
+ * it ducks beneath the VO via sidechaincompress (program audio is the sidechain key); for a
+ * lead track (duck:false, no VO to duck under) the faded music is amixed directly with the
+ * program's SFX. Non-critical: returns false (and leaves the concat result untouched) on any
  * failure rather than throwing, so music never blocks the render.
  */
 function mixMusic(
   concatPath: string,
   musicFile: string,
   totalSec: number | null,
-  outPath: string
+  outPath: string,
+  plan: { volume: number; duck: boolean } = { volume: MUSIC_VOLUME, duck: true }
 ): boolean {
   const fadeOut =
     typeof totalSec === 'number' && totalSec > 2 * MUSIC_FADE_SEC
       ? `,afade=t=out:st=${(totalSec - MUSIC_FADE_SEC).toFixed(3)}:d=${MUSIC_FADE_SEC}`
       : '';
-  const filter =
-    `[1:a]volume=${MUSIC_VOLUME},afade=t=in:st=0:d=${MUSIC_FADE_SEC}${fadeOut}[mus];` +
-    `[mus][0:a]sidechaincompress=${MUSIC_DUCK}[ducked];` +
-    `[0:a][ducked]amix=inputs=2:normalize=0:duration=first[a]`;
+  const filter = plan.duck
+    ? `[1:a]volume=${plan.volume},afade=t=in:st=0:d=${MUSIC_FADE_SEC}${fadeOut}[mus];` +
+      `[mus][0:a]sidechaincompress=${MUSIC_DUCK}[ducked];` +
+      `[0:a][ducked]amix=inputs=2:normalize=0:duration=first[a]`
+    : `[1:a]volume=${plan.volume},afade=t=in:st=0:d=${MUSIC_FADE_SEC}${fadeOut}[mus];` +
+      `[0:a][mus]amix=inputs=2:normalize=0:duration=first[a]`;
   const args = [
     '-y',
     '-i', concatPath,
@@ -659,12 +791,13 @@ async function downloadToFile(url: string, path: string): Promise<void> {
 export async function renderFinalVideo(
   scenes: FinalRenderScene[],
   aspectRatio: string,
-  music?: { style: 'mrbeast' | 'temu' | 'testimonial'; enabled: boolean; bedUrl?: string },
+  music?: { style: 'mrbeast' | 'temu' | 'testimonial' | 'ugcpro'; enabled: boolean; bedUrl?: string; role?: 'bed' | 'lead' },
   preset: RenderPreset = CLASSIC,
   variantSeed: number = 0, // rotates the premium hook palette per render
   endCard?: FinalRenderEndCard // offer recap + price anchor, burned into the last scene
 ): Promise<{ buffer: Buffer; sizeBytes: number }> {
   if (!scenes.length) throw new RenderError('no_scenes');
+  checkFfmpegCapabilities(); // once per process: warn loudly if drawtext is missing
   const tTotal = Date.now();
   const dims = dimsFor(aspectRatio);
   const dir = mkdtempSync(join(tmpdir(), 'grifon-render-'));
@@ -700,7 +833,7 @@ export async function renderFinalVideo(
     // cut gets the film-burn when the preset asks for it AND scene 0 is a hook.
     const transitions = planTransitions(
       ordered.length, preset.transition,
-      preset.hook.burnTransition && !!ordered[0]?.isHook
+      !preset.stitchedOnly && preset.hook.burnTransition && !!ordered[0]?.isHook
     );
     // SFX restraint state, threaded across scenes (whole-ad timeline).
     const placedSec: number[] = [];
@@ -745,12 +878,12 @@ export async function renderFinalVideo(
       });
 
       // Compile the draw plan first — emphasis SFX are derived from its layers.
-      const layers = planScene(scene, trimSec, dims, preset, variantSeed);
+      const layers = preset.stitchedOnly ? [] : planScene(scene, trimSec, dims, preset, variantSeed);
       // End card rides the last scene — kept in a separate list so it joins the
       // SFX/draw pipeline but never the caption-chunk camera punches. Skipped when
       // the last scene IS the hook (1-scene ad): the hook title owns that band.
       let endCardLayers: DrawLayer[] = [];
-      if (isLastScene && endCard && !scene.isHook) {
+      if (!preset.stitchedOnly && isLastScene && endCard && !scene.isHook) {
         endCardLayers = planEndCardLayers(endCard, trimSec, dims, preset, [
           scene.overlayText?.[0]?.text,
           scene.scriptLine,
@@ -764,7 +897,7 @@ export async function renderFinalVideo(
       //  - transition cues (whoosh/swish) snapped to the cut,
       //  - emphasis sounds frame-locked to each strategic overlay's appearance.
       const cands: SfxCandidate[] = [];
-      for (const cue of scene.sfxCues ?? []) {
+      for (const cue of preset.stitchedOnly ? [] : (scene.sfxCues ?? [])) {
         const snapped = snapSfxAnchor(cue.sfxId, i, !!scene.isHook);
         if (snapped !== null) cands.push({ sfxId: cue.sfxId, globalSec: elapsed + snapped, transition: true });
       }
@@ -827,7 +960,7 @@ export async function renderFinalVideo(
       const punchTimes = layers
         .filter((l): l is TextLayer => l.kind === 'text' && !endCardLayers.includes(l) && l.anim !== 'slideup' && l.anim !== 'fade')
         .map((l) => l.startSec);
-      const camFilter = buildCameraFilter(
+      const camFilter = preset.stitchedOnly ? '' : buildCameraFilter(
         effectiveCameraEffect(scene.cameraEffect, i, preset.camera),
         trimSec ?? probeSec, dims, preset.camera, punchTimes
       );
@@ -837,7 +970,7 @@ export async function renderFinalVideo(
       buildScene(
         videoPath, audioPath, trimSec, dims, outPath, padAudio,
         dir, scene.sceneIdx, layers, sfx, fontName,
-        buildTransitionFilters(transitions[i], preset.transition, trimSec),
+        preset.stitchedOnly ? '' : buildTransitionFilters(transitions[i], preset.transition, trimSec),
         camFilter, preset, hookFontName, sweepName
       );
       console.log(
@@ -859,7 +992,7 @@ export async function renderFinalVideo(
     //   2. tuned static bed (musicPath(style)),
     //   3. bare stitch (no music).
     let resultPath = finalPath;
-    if (music?.enabled) {
+    if (music?.enabled && !preset.stitchedOnly) {
       let bed: string | null = null;
       if (music.bedUrl) {
         try {
@@ -873,7 +1006,7 @@ export async function renderFinalVideo(
       if (!bed) bed = musicPath(music.style);
       if (bed) {
         const musicedPath = join(dir, 'final_music.mp4');
-        if (mixMusic(finalPath, bed, probeDurationSec(finalPath), musicedPath)) {
+        if (mixMusic(finalPath, bed, probeDurationSec(finalPath), musicedPath, musicMixPlan(music.role))) {
           resultPath = musicedPath;
         }
       } else {

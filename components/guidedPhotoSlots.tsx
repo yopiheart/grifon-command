@@ -95,7 +95,8 @@ export const inferServiceArchetype = (text: string): ServiceArchetype => {
   const score = (...words: string[]) => words.reduce((n, w) => n + (t.includes(w) ? 1 : 0), 0);
   const venue = score('spa', 'salon', 'barber', 'gym', 'fitness', 'clinic', 'derma', 'dental',
     'restaurant', 'resto', 'cafe', 'café', 'hotel', 'resort', 'parlor', 'massage', 'hilot',
-    'kainan', 'eatery', 'lounge', 'studio');
+    'kainan', 'eatery', 'lounge', 'studio', 'milk tea', 'milktea', 'bakery', 'panaderia',
+    'karinderya', 'catering', 'food stall', 'foodpark');
   const work = score('clean', 'linis', 'pest', 'peste', 'siphon', 'malaban', 'repair', 'laundr',
     'labada', 'plumb', 'aircon', 'disinfect', 'declog', 'detailing', 'carwash', 'car wash',
     'exterm', 'hauling', 'pickup', 'pick-up', 'moving');
@@ -130,6 +131,7 @@ export const RE_UPLOAD_SLOTS: Record<RealEstateArchetype, UploadSlot[]> = {
     { slot: 'living', label: 'Living area', hint: 'sala / main space', example: '/examples/ex-living.png' },
     { slot: 'kitchen', label: 'Kitchen', hint: 'optional', example: '/examples/ex-kitchen.png' },
     { slot: 'bedroom', label: 'Bedroom', hint: 'optional', example: '/examples/ex-bedroom.png' },
+    { slot: 'bathroom', label: 'Bathroom', hint: 'optional', example: '/examples/ex-bathroom.png' },
     { slot: 'view', label: 'View / balcony', hint: 'optional', example: '/examples/ex-view.png' },
   ],
   // No 'agent' slot — the broker IS the on-camera presenter (set in the Presenter
@@ -144,6 +146,50 @@ export const RE_UPLOAD_SLOTS: Record<RealEstateArchetype, UploadSlot[]> = {
     { slot: 'living', label: 'Model unit', hint: 'showroom interior', example: '/examples/ex-living.png' },
     { slot: 'amenities', label: 'Amenities', hint: 'pool / gym / lobby', example: '/examples/ex-amenities.png' },
     { slot: 'location', label: 'Location', hint: 'neighborhood / map area', example: '/examples/ex-location.png' },
+  ],
+};
+
+// --- UGC Pro (product) --------------------------------------------------
+// Keyed by SUB-FORMAT (tryon | transformation), not archetype — the One-Shot
+// LaunchScreen picks the list off the chosen UGC Pro sub-format. These are
+// product-STATE photos (worn / before / after / packaging) that anchor the
+// try-on drape or the before→after reveal so the model doesn't hallucinate them.
+//
+// INVARIANT: `hero` MUST be the FIRST element of every list. LaunchScreen derives
+// `heroImageBase64: servicePhotos[0]?.url` from hero-first ordering — reorder and
+// the wrong photo becomes the research/identity anchor. Do not move it.
+//
+// Every slot carries a reference example. The product-state samples
+// (ex-product-onbody/packaging/before/after/inuse) are the Hiraya Glow serum set
+// generated for the sample batch (workflows/sample_batch_test_spec.md, 2026-07-11) —
+// one consistent product + one consistent face across all five states.
+export const UGCPRO_UPLOAD_SLOTS: Record<
+  'tryon' | 'unboxing' | 'demo' | 'transformation' | 'tutorial',
+  UploadSlot[]
+> = {
+  tryon: [
+    { slot: 'hero', label: 'Product', hint: 'the item, brand visible', example: PRODUCT_EXAMPLE },
+    { slot: 'onbody', label: 'Worn', hint: 'on a body — anchors fit & drape', example: '/examples/ex-product-onbody.png' },
+    { slot: 'packaging', label: 'Packaging', hint: 'box / label — optional', example: '/examples/ex-product-packaging.png' },
+  ],
+  unboxing: [
+    { slot: 'hero', label: 'Product', hint: 'the item, brand visible', example: PRODUCT_EXAMPLE },
+    { slot: 'packaging', label: 'Packaging', hint: 'box / label — required, it is the co-star', example: '/examples/ex-product-packaging.png' },
+    { slot: 'inuse', label: 'In use', hint: 'placed / worn — optional', example: '/examples/ex-product-inuse.png' },
+  ],
+  demo: [
+    { slot: 'hero', label: 'Product', hint: 'the item, brand visible', example: PRODUCT_EXAMPLE },
+    { slot: 'inuse', label: 'In use', hint: 'show it working — recommended', example: '/examples/ex-product-inuse.png' },
+  ],
+  transformation: [
+    { slot: 'hero', label: 'Product', hint: 'the item, brand visible', example: PRODUCT_EXAMPLE },
+    { slot: 'before', label: 'Before', hint: 'the starting state', example: '/examples/ex-product-before.png' },
+    { slot: 'after', label: 'After', hint: 'the result', example: '/examples/ex-product-after.png' },
+    { slot: 'inuse', label: 'In use', hint: 'applying it — optional', example: '/examples/ex-product-inuse.png' },
+  ],
+  tutorial: [
+    { slot: 'hero', label: 'Product', hint: 'the item, brand visible', example: PRODUCT_EXAMPLE },
+    { slot: 'inuse', label: 'In use', hint: 'a step in progress — optional', example: '/examples/ex-product-inuse.png' },
   ],
 };
 

@@ -147,13 +147,20 @@ describe('buildWordFilters', () => {
     expect(f).toContain('y=694');
   });
 
-  it('karaoke: base chunk + per-word highlight windows', () => {
+  it('karaoke: per-word base at the SAME x as its highlight (single x-source, finding #27)', () => {
     const f = buildWordFilters(
       { ...layer, anim: 'karaoke' }, 'font.ttf', ['w0.txt', 'w1.txt'], HYPE, 'base.txt'
     );
-    expect(f).toContain('textfile=base.txt');
+    // Base is now per-word (no single kerned base.txt draw) so the highlight can
+    // never drift off its word — base and highlight share wd.xPx by construction.
+    expect(f).not.toContain('textfile=base.txt');
+    expect(f.split('drawtext=').length - 1).toBe(4);     // 2 base + 2 highlight
+    expect(f.split('x=300:').length - 1).toBe(2);        // GRABE base + highlight, same x
+    expect(f.split('x=540:').length - 1).toBe(2);        // ANG base + highlight, same x
     expect(f).toContain(`fontcolor=${HYPE.caption.highlightColor}`);
+    expect(f).toContain(`fontcolor=${layer.color}`);     // base words keep the base color
     expect(f).toContain("enable='between(t,1,1.6)'");    // highlight leaves with its word
     expect(f).toContain("enable='between(t,1.6,2)'");
+    expect(f).toContain("enable='between(t,1,2)'");      // base words hold the chunk window
   });
 });

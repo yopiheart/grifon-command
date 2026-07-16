@@ -138,14 +138,44 @@ export const slimCheckpointArtifacts = (artifacts: Record<string, unknown>): Rec
   return out;
 };
 
+/**
+ * Strip oversized base64 data-URL images out of a checkpoint's `input` (pure — deep-walks a
+ * COPY, never mutates the caller's run state). On the create checkpoint, `input` carries the
+ * uploaded product/presenter photos; when a call site read a file RAW, a 2.6MB PNG became a
+ * ~3.5MB data-URL and the whole POST 413'd against api/producer/run's 2mb bodyParser cap — so
+ * the run row was never created and the video stage died on `run_not_found` (2026-07-14 try_on
+ * gate run). Guided uploads compress to well under 700KB, so dropping only strings that both
+ * start with 'data:' AND exceed 700_000 chars degrades nothing on the live run — at most it
+ * costs a cross-device resume of that one oversized image. This is the transport-boundary
+ * guard for `input`, the sibling of slimCheckpointArtifacts.
+ */
+export const slimCheckpointInput = (input: Record<string, unknown>): Record<string, unknown> => {
+  const MAX_DATA_URL = 700_000; // ≈700KB — above anything compressImageForUpload emits, below the 2mb cap
+  const walk = (value: unknown): unknown => {
+    if (Array.isArray(value)) return value.map(walk);
+    if (value && typeof value === 'object') {
+      const copy: Record<string, unknown> = {};
+      for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
+        if (typeof v === 'string' && v.startsWith('data:') && v.length > MAX_DATA_URL) continue; // drop oversized upload
+        copy[k] = walk(v);
+      }
+      return copy;
+    }
+    return value;
+  };
+  return walk(input) as Record<string, unknown>;
+};
+
 /** Upsert the run header after a stage transition (persist-after-every-transition), guarded by
  * the optimistic-concurrency revision so a stale tab can't regress a fresher checkpoint.
- * Artifacts are slimmed at this choke-point — see slimCheckpointArtifacts. */
+ * Artifacts and input are slimmed at this choke-point — see slimCheckpointArtifacts /
+ * slimCheckpointInput. */
 export const saveRunCheckpoint = (runId: string, patch: RunCheckpoint): Promise<CheckpointResult> =>
   post('/api/producer/run', {
     runId,
     ...patch,
     ...(patch.artifacts ? { artifacts: slimCheckpointArtifacts(patch.artifacts) } : {}),
+    ...(patch.input ? { input: slimCheckpointInput(patch.input) } : {}),
   }).then((d) => ({
     changed: d?.changed !== false,
     revision: typeof d?.revision === 'number' ? d.revision : undefined,

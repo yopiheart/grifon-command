@@ -113,6 +113,13 @@ export const useOneShotGeneration = (): UseOneShotGeneration => {
       // 1 — Script (critical)
       patch('script', 'running');
       const script = await generateAdScript(businessInfo, clientDetails.brandName, language, clientDetails.offer, '', '');
+      // UGC Pro: back-fill the resolved sub-format so the downstream storyboard (which reads
+      // businessInfo.ugcProFormat) is populated even on the 'Auto' path. Nullish — an explicit
+      // user pick is never overwritten. businessInfo is the same object the storyboard call
+      // below consumes, so the mutation is visible where it matters.
+      if (businessInfo.scriptType === 'UGCPro' && script.ugcProFormatResolved) {
+        businessInfo.ugcProFormat = businessInfo.ugcProFormat ?? script.ugcProFormatResolved;
+      }
       // Default to hook1 + body (mirrors Step3's default selection).
       const finalScript = [...script.hook1, ...script.body];
       sinks.setScript(script);
