@@ -302,9 +302,30 @@ fuller. Name the hairstyle explicitly. (3) **authored imperfection persists
 at 99%** (wrapper litter on a seat, rough cheek paint, seat-row numbers) —
 scaffold DNA compatible with identity lock. (4) **flash not required** —
 both winners are ambient-light; the realism carrier is texture + context,
-so identity (not lighting) was our true failure. Winner files (local-only,
-defreezer-ephemeral; originals live on Neil's ChatGPT side):
-`.tmp/zam-bonus/`.
+so identity (not lighting) was our true failure. Winner files committed:
+[zam-99-fan-zone.png](zam-99-fan-zone.png) +
+[zam-99-football-selfie.png](zam-99-football-selfie.png) (canonical grading
+standard).
+
+**Rerun results (2026-07-16, dual anchor + eyes-open rule, Neil-fired):**
+
+- **A v2 — night market: ✅ PASS at 99% level (Neil).** The fix recipe is
+  VALIDATED in the codex-image lane: dual anchor (face ref primary + scene
+  ref) + expression clamped to mouth-only/eyes-open + named hair silhouette
+  = winner-grade identity. Agent notes: expression over-clamped to near-
+  deadpan (aim "soft smile," not "neutral"); "direct hard flash" still
+  rendered ambient-dominant — harmless per the flash-not-the-carrier finding.
+- **B — jeepney: ❌ FAIL (Neil).** Three failure modes: (1) identity drift —
+  hindi si Zam (fuller cheeks despite dual anchor); (2) **skin went pale /
+  unrealistic** — the warm-brown tone from the refs didn't hold under the
+  soft window-daylight render; state the skin tone explicitly ("warm brown
+  Filipina skin tone exactly as in the references"), pale-drift is a new
+  named failure mode; (3) jeepney details still wrong even with the bench
+  layout fixed by explicit description (bench fix itself WORKED — passengers
+  inward-facing — but the ornate interior reads off/foreign). Lesson:
+  weak-prior locations likely need a real interior photo as a third scene
+  anchor, not more prose. One scene = one strong anchor set; don't stack a
+  hard identity + a hard location in the same test.
 
 ## Scaffold self-check (all 10 prompts)
 
