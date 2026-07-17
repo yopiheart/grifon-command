@@ -180,6 +180,15 @@ optimizes the storyboard + editing.**
 
 Concierge sits **between** One-Shot (full auto) and Expert (full manual).
 
+> **External validation (2026-07-16, OpenAI "Golden Age of AI Engineering" brief evaluation — record
+> in `post_beta_roadmap.md` item #2):** OpenAI's stated optimal product shape for human-AI
+> collaboration is exactly this spectrum — a **chat/auto entity** for hands-off requests plus a
+> **hands-on collaborative UI** to inspect and steer when the user wants the weeds. Mapping: One-Shot
+> ≈ the auto entity today; **Concierge = the hands-on collaborative UI** (Script Studio + per-scene
+> `ShotIntent` sequence picker + advanced-override drawer); the deferred AUTO mode ≈ the chat-first
+> future. Vocabulary/positioning support only — changes nothing in the §10 rescope or build order,
+> and does NOT unpark the AUTO Director brain.
+
 **The one capability Expert has that Concierge-as-described lacks:** granular
 **per-scene override** (edit hook text inline, upload a custom image to Scene 3,
 regenerate one scene).

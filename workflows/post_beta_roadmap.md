@@ -66,6 +66,25 @@ Half-baked ideas don't go here — they go in conversation and either die or get
 
 > **Primitive mapping (2026-05-15):** Trigger is `pg_cron` (or Vercel Cron); the per-Day verification inside `api/odyssey/tick.ts` is conceptually a [`/goal`](https://code.claude.com/docs/en/goal) condition — "Day N is published, verified by Supabase row marked posted, with no scene exceeding budget cap." `/goal` itself is a session-scoped Claude Code primitive and won't run inside the cron handler; the framework here is design vocabulary for how the handler should express its success/failure contract. When you unpark this, see the "Goal-driven execution" section in `CLAUDE.md`.
 
+> **Design checklist from the 2026-07-16 brief evaluation (see evaluation record below):** when this
+> unparkes, the OpenAI "Three Pillars" agent-loop frame maps 1:1 onto the build — **triggers** =
+> pg_cron hitting `api/odyssey/tick.ts`; **persistent context** = the Odyssey schedule/state rows in
+> Supabase (idempotent by `(odyssey_id, day_number)`); **delegation** = the per-day tick handler doing
+> the work while the user stays outer-loop (Pause / Resume / Skip Day). This item IS the brief's
+> "agent-loop-as-product" idea (Paul Salt's Chief-of-Staff pattern, productized for end users) — the
+> brief validates the tier, but does NOT change the resume trigger: unprompted beta demand first.
+>
+> **Brief evaluation record (2026-07-16):** *The Golden Age of AI Engineering* (Embiricos / Huet /
+> Steinberger, OpenAI Dev Day) evaluated against the codebase — verdict: **~85% already absorbed**
+> (outer/inner loop = Plan→Goal + build-gate; delegation = per-role model allocation + fresh-critic;
+> triggers = `loops.md` Tiers 0–5; value-maxing = the 2026-07-01 allocation decision). Rejected as
+> conflicts: server-side compaction (keep the `/clear` doctrine), default parallel fan-out (Max-5x
+> quality-first budget, same call as the 2026-06-17 Kun Chen verdict), fully-unattended intermediate
+> steps (TUNED-file + PoC cost checkpoints stay), and any re-inflation of the deferred AUTO-mode
+> Director brain (`concierge_director_plan.md` §10 rescope stands). Net-new output: this design
+> checklist + a product-shape note in `concierge_director_plan.md` §4. No new parked item, no code.
+> Do not re-evaluate this brief.
+
 **What:** Turn Influencer Forge from on-demand-per-day into a true autopilot. User configures one Odyssey, sets `startDate` + `cadence` (daily / 3× weekly / weekly), then walks away. Content drops on schedule for 30 days without them logging in.
 
 **Why it matters:** This is the **Autopilot tier** in your existing Free → Creator → Pro → Business → Autopilot pricing ladder — currently a tier name with no feature behind it. It's the single largest revenue lever on the post-beta roadmap. Once 10–20 paying Autopilot customers exist at ₱29K–49K/mo each, that's ₱500K+ MRR from one feature.
@@ -999,6 +1018,39 @@ a code-executor delegation AFTER Neil merges this branch and green-lights the pl
   formula + storyboard skeleton + regression).
 - **Source:** Neil product-check session 2026-07-08 ("we don't have FOOD & Fashion
   niche as well").
+
+### 21. Last30Days community-pulse skill — gated trial (blocked in remote sandbox, resume on cafe PC)
+
+- **What:** Trial [mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill)
+  (MIT, ~52k stars, installs as a Claude Code plugin) as a dev-side data source: 30-day,
+  engagement-ranked community pulse from Reddit/X/YouTube/TikTok/HN. Fit identified
+  2026-07-16: (a) upstream trend radar for ad-recon → viral-autopsy → Swipe File (feeds
+  Bridge #1 candidates; ≥3-corroboration gates unchanged); (b) TikTok/community intel for
+  `grifon-ad-strategist` + `grifon-cmo` — the current blind spot (Motion MCP is Meta-only).
+  NOT for the product/MarketMind (tatawagin-ka truth; server-side rebuild + opex — separate
+  decision later, only if the dev-side data proves out).
+- **Why parked:** The 2026-07-16 remote-session trial was **blocked three ways, honestly**:
+  (1) sandbox permission classifier denied executing the cloned third-party code (correct
+  caution — it ships cookie-harvesting machinery, and the session holds repo + MCP creds);
+  (2) built-in WebSearch cannot reach reddit.com (Reddit blocks Anthropic's crawler — the
+  brief's platform-walling thesis, demonstrated live); (3) firecrawl (which can reach Reddit)
+  needed an interactive approval with Neil away. Verdict so far: **fit is real, value unproven —
+  no data seen yet.**
+- **When to resume:** Next cafe-PC session (or any session with Neil present to approve
+  firecrawl as the interim keyless-value probe).
+- **Where to start (paste-ready cafe-PC kickoff):** install via
+  `/plugin marketplace add mvanhorn/last30days-skill`. **House rules for the trial:**
+  NO cookie mode on the rented PC (skip browser-cookie extraction; keyless sources +
+  optional ScrapeCreators key in `.env` only — 10k free calls, third-party SPOF, log spend);
+  run output through a subagent or straight to a file (5–14 min runs, big outputs — context
+  hygiene); trial topic: `/last30days AI video ad generators` (doubles as competitor/objection
+  intel for CMO). **Judge test:** did it produce an autopsy candidate or CMO hook we wouldn't
+  have found by hand? Adopt → add `scripts/restore-last30days.ps1` (idempotent, per
+  `restore-codex.ps1` pattern) + a line here; else park permanently.
+- **Scope:** ~30 min trial on the cafe PC. Adoption plumbing (restore script + skill-integration
+  notes in `ad-recon`/`viral-autopsy`) ≈ 1 hour more.
+- **Source:** Neil, 2026-07-16 — NotebookLM brief *"LLM Can't Search TikTok or Reddit"* +
+  "okay bro g!!" endorsing the gated trial. Repo verified real same session (WebFetch).
 
 ## How to add new items
 
