@@ -123,6 +123,16 @@ After every approved plan (`ExitPlanMode` accepted) that involves code changes t
 
 This gives Neil a two-gate workflow: approve the plan, then approve the goal that executes it. Both gates are user-controlled — the agent never fires `/goal` on its own.
 
+## Artifact Reporting
+
+Claude Artifacts — private claude.ai-hosted pages published from sessions via the Artifact tool — are the preferred delivery format for review/eval/debrief outputs (decided with Neil 2026-07-18). They survive the defreezer and are phone-readable, unlike `.tmp/` outputs or raw repo markdown. Workflow layer only — NOT a product feature; nothing in the app codebase integrates with Artifacts.
+
+- **Offer an artifact** when the output is: an eyeball-gate review (eval image pairs, Slice-B grading), a session/launch dashboard, a growth-debrief or ledger report, a swipe-file gallery, a UI mockup before dispatching `code-executor`, or PR-review findings. Quick answers stay in chat.
+- **Reuse URLs — don't mint new ones.** Redeploy the same file path in-session, or from a fresh session pass the registered URL as the Artifact tool's `url` param (`action: "list"` rediscovers them). Registry:
+  - **Launch Readiness dashboard** — `https://claude.ai/code/artifact/8821822a-06e0-484d-ba94-2e83d565e1a0` — refresh from `workflows/launch_readiness.md` after each major session.
+- **Design is automatic** — the harness auto-loads design guidance; artifacts for Grifon internal tooling follow DESIGN.md's visual world (zinc-950 canvas, Grifon Gold `#FFCC00`, glass panels, `// LABEL` terminal styling). Neil never needs to specify styling unless he wants a specific look — his words then win.
+- Constraints: strict CSP (self-contained pages; embed images as data URIs), snapshot-only unless runtime capabilities are enabled (check the `artifact-capabilities` skill first), and never put secrets/keys/tokens in an artifact that might be shared.
+
 ## Architecture
 
 **Routing** — `App.tsx` manages all routes as a single `Route` type (`landing | pricing | app | billing_success | terms | privacy | refund | support`). There is no React Router; path detection is manual via `window.location.pathname` in `detectInitialRoute()`.
