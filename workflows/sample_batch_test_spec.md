@@ -397,6 +397,13 @@ lock held across all 4, v2 realism scaffold visibly carried into the frames.
    should read as one look. Mitigated in-run via per-scene REGENERATE; log corroboration if
    other runs show a per-scene grade drift pattern (candidate: color/grade consistency rule,
    TUNED, gated).
+   **CORROBORATED same run:** S1 regen came back neutral (fixed), but the S2 regen rolled
+   mildly warm — the drift is **stochastic per-scene, per-roll**, not scene-1-specific.
+   No shared grade anchor exists across scene generations; consistency is currently luck.
+   2/3 toward the gated consistency-rule proposal.
+   **S2 regen side-note:** bottle dropped out of frame, dropper-only application remained —
+   accepted as MORE realistic (natural serum gesture, physically plausible; brand identity
+   still anchored by S1/S4 labeled bottle). Not a hallucination instance.
 2. **S2 product hallucination: floating dropper** — dropper hovering mid-air at face level
    while the avatar holds the bottle; physically impossible frame. THE eval focus of this run
    ("no product hallucination") — first live hit. Mitigated via REGENERATE; corroborate
