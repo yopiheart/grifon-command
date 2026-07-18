@@ -148,3 +148,35 @@ sub-agent reviews the head diff (builder ≠ reviewer), posts ranked findings as
 PR comment, and flags — never auto-applies — anything touching the TUNED files
 (`services/geminiService.ts`, `api/_lib/prompts.ts`). Report-only; merge stays
 gated by Tier 0b CI + Neil.
+
+## Tier 6 — Account-level cloud Routines · ✅ live (server-side, defreezer-proof)
+
+Cloud Routines are scheduled triggers on the Claude account, managed from remote
+sessions via the Claude_Code_Remote MCP (`list_triggers` / `create_trigger` /
+`update_trigger` / `delete_trigger`). They live server-side — the only loop layer
+the defreezer cannot touch. **Ground rule: a Routine without a named READER (a
+human or downstream consumer that acts on its output) is quota burn.** Every new
+Routine must be registered here with schedule, reader, and kill switch.
+
+Registry (audited 2026-07-18 via `list_triggers`):
+
+| Routine | Schedule | Status | Reader | Kill switch |
+|---|---|---|---|---|
+| **GRIFON Daily Prod Health Watch** (`trig_019v1jD9L7MMTdrHPXYAc9tE`) | daily ~08:00 PHT | ✅ enabled | ⚠ **NONE** — Neil confirmed 2026-07-18 he never reads the run-log digest | `update_trigger enabled:false` or `delete_trigger` |
+| **oceanides-daily-posts** (`trig_01GtbZRGJMmfwmTmrY7vqB98`) | daily 06:00 PHT | ⏸ disabled — superseded 2026-07-14 by the Tier 3b GitHub Action | n/a (Action publishes to the public mirror) | already off; `delete_trigger` to purge |
+| **Supabase Pro→free downgrade reminder** (`trig_014SAzGWHPRYhxcHo7Vt7HE8`) | one-shot | ✔ fired 2026-06-24, self-ended | Neil (Gmail draft) | none needed |
+
+- **Reader problem, pending Neil's call (2026-07-18):** the Health Watch digest
+  goes unread, so it burns ~1 cloud session/day for nothing. Options: (a)
+  recreate as a fresh-session Routine with push/email completion notifications
+  so findings reach Neil's phone (`update_trigger` cannot change a prompt —
+  recreate required); (b) downshift to weekly; (c) disable and run the same
+  check on demand in-session (~4 tool calls: Vercel deployments + Supabase
+  security/performance advisors).
+- 2026-07-18 manual spot check (this audit): Vercel 20/20 recent deployments
+  READY (latest prod = `ead765a`); Supabase — 3 security WARNs
+  (`handle_new_user` SECURITY DEFINER callable by `anon` + `authenticated`;
+  leaked-password protection off) + 5 `auth_rls_initplan` perf WARNs
+  (per-row `auth.uid()` re-eval; trivial `(select auth.uid())` rewrite).
+  No criticals. RLS-no-policy INFOs on the telemetry tables are expected —
+  they're written via service role; no-policy = deny-all for clients.
