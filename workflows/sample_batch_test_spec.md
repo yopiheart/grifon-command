@@ -404,10 +404,20 @@ lock held across all 4, v2 realism scaffold visibly carried into the frames.
    **S2 regen side-note:** bottle dropped out of frame, dropper-only application remained —
    accepted as MORE realistic (natural serum gesture, physically plausible; brand identity
    still anchored by S1/S4 labeled bottle). Not a hallucination instance.
-2. **S2 product hallucination: floating dropper** — dropper hovering mid-air at face level
-   while the avatar holds the bottle; physically impossible frame. THE eval focus of this run
-   ("no product hallucination") — first live hit. Mitigated via REGENERATE; corroborate
-   across runs before any prompt proposal.
+2. **S2 product hallucination: floating dropper — RECURRING, 2/3 rolls.** Dropper hovering
+   mid-air at face level while the avatar holds the bottle; physically impossible frame. THE
+   eval focus of this run ("no product hallucination") — and it reproduced on re-roll (roll 1
+   ✗ floating dropper · roll 2 ✓ clean dropper-only application · roll 3 ✗ floating dropper
+   again). Hypothesis: the S2 scene prompt (apply-with-dropper action + product reference
+   anchor) invites the model to render TWO product instances — held bottle + detached
+   dropper. Strong scene-level corroboration; candidate prompt proposal (TUNED, gated):
+   application scenes should demand the dropper be HELD or the bottle out-of-frame, never
+   both instances. Roll 3 also drifted the bottle look (whiter/larger label vs the amber
+   hero) — watch product fidelity on further rolls.
+2b. **UX gap: REGENERATE has no keep-previous/undo.** Roll 3 (bad) silently destroyed roll 2
+   (the clean approved-quality frame) — a user one bad roll away from losing a good scene
+   with no recovery except more paid rolls. Post-batch fix candidate: version history or
+   accept/reject preview on regenerate (pairs with 4b #5's storyboard-gate escape fix).
 3. **Taglish naturalness, S4 script line:** "Bet ko na, kaya click mo na para free shipping
    ngayon." Neil: "Bet ko na" is off — natural register is "Bet ko 'to" / "Bet na bet ko";
    CTA is missing a linker ("para **makakuha ka ng** free shipping" / "para **sa** free
