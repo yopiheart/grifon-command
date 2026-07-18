@@ -158,24 +158,28 @@ the defreezer cannot touch. **Ground rule: a Routine without a named READER (a
 human or downstream consumer that acts on its output) is quota burn.** Every new
 Routine must be registered here with schedule, reader, and kill switch.
 
-Registry (audited 2026-07-18 via `list_triggers`):
+Registry (audited 2026-07-18 via `list_triggers`; v2 rewire landed later the
+same day via the in-session `RemoteTrigger` tool):
 
 | Routine | Schedule | Status | Reader | Kill switch |
 |---|---|---|---|---|
-| **GRIFON Daily Prod Health Watch** (`trig_019v1jD9L7MMTdrHPXYAc9tE`) | daily ~08:00 PHT | ✅ enabled | ⚠ **NONE** — Neil confirmed 2026-07-18 he never reads the run-log digest | `update_trigger enabled:false` or `delete_trigger` |
+| **GRIFON Daily Prod Health Watch v2** (`trig_01EwWDbLuXyegg39L61XwVbS`) | daily 08:00 PHT (`0 0 * * *` UTC) | ✅ enabled — created 2026-07-18; Vercel + Supabase connectors CONFIRMED attached in the trigger record | Neil via completion push notification (quiet-when-clear prompt); run log on claude.ai Routines | `RemoteTrigger update enabled:false` (any session with the tool) or `delete_trigger` (remote session) |
+| **GRIFON Daily Prod Health Watch** (v1, `trig_019v1jD9L7MMTdrHPXYAc9tE`) | daily ~08:00 PHT | ⏸ disabled 2026-07-18 — superseded by v2; ⚠ **DELETION PENDING** (needs a remote session: `delete_trigger` — the in-session `RemoteTrigger` tool has no delete action) | none (the original reader problem) | already off; `delete_trigger` to purge |
 | **oceanides-daily-posts** (`trig_01GtbZRGJMmfwmTmrY7vqB98`) | daily 06:00 PHT | ⏸ disabled — superseded 2026-07-14 by the Tier 3b GitHub Action | n/a (Action publishes to the public mirror) | already off; `delete_trigger` to purge |
 | **Supabase Pro→free downgrade reminder** (`trig_014SAzGWHPRYhxcHo7Vt7HE8`) | one-shot | ✔ fired 2026-06-24, self-ended | Neil (Gmail draft) | none needed |
 
-- **Reader problem — Neil chose (a) push-alerting rewire, 2026-07-18.** First
-  recreate attempt from a remote session FAILED and was deleted: triggers
-  created via the session MCP (`create_trigger`) could not pass the Vercel +
-  Supabase connectors through, so fired sessions would run blind (the tool
-  warned explicitly). **Pending manual step (Neil, ~2 min): create the v2
-  Routine from the claude.ai Routines UI** — schedule daily 08:00 PHT, push
-  notifications ON, Vercel + Supabase connectors attached, prompt = the
-  paste-ready block below. Then delete the old
-  `trig_019v1jD9L7MMTdrHPXYAc9tE` (it stays ENABLED as the stopgap until v2
-  exists). On-demand fallback anytime: ask a session to run the check
+- **Reader problem — Neil chose (a) push-alerting rewire, 2026-07-18 — ✅ v2
+  LIVE same day.** The earlier "connector limit" turned out to be a limit of
+  the remote-session MCP wrapper (`create_trigger`) only, NOT the triggers
+  API: a cafe-PC session's `RemoteTrigger` tool (direct `/v1/code/triggers`
+  HTTP API) created v2 WITH `mcp_connections` (Vercel + Supabase connector
+  UUIDs copied from v1) — no Routines-UI manual step needed after all. v2
+  runs Sonnet 5, sources the repo, prompt = the paste-ready block below
+  (verbatim = deployed). Test run fired 2026-07-18 ~11:38 UTC (session
+  `cse_01MjA4MXKXkoxWrZv8DQzJwP`) — **Neil to confirm the push notification
+  arrived + the run log headline reads `[GRIFON Health] …`, not "Vercel
+  unreachable".** Remaining cleanup: delete v1 from a remote session (row
+  above). On-demand fallback anytime: ask a session to run the check
   (~4 tool calls — Vercel deployments + Supabase security/performance advisors).
 
   <details><summary>Paste-ready v2 prompt (Health Watch, baseline-aware, quiet-when-clear)</summary>
