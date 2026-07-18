@@ -418,6 +418,24 @@ lock held across all 4, v2 realism scaffold visibly carried into the frames.
    (the clean approved-quality frame) — a user one bad roll away from losing a good scene
    with no recovery except more paid rolls. Post-batch fix candidate: version history or
    accept/reject preview on regenerate (pairs with 4b #5's storyboard-gate escape fix).
+2c. **S2 roll 4 (accepted, warm cast tolerated): brand label GONE from the bottle** —
+   product fidelity drift confirmed as its own failure mode on this scene (roll 3 whiter
+   label → roll 4 unbranded). S2's apply-action framing seems to weaken the product anchor
+   overall (both hallucinated extra instances AND lost label fidelity across rolls).
+3c. **FILMING BLOCKED — Kling API balance exhausted (prod, 12:45 PHT).** 4× `POST
+   /api/kling/video → 402`, all AFTER `[grifon:kling:submit]` logged → passed our plan
+   metering, submitted upstream, Kling returned 429 + code 1102 → our
+   `kling_balance_exhausted` 402 (api/kling/video.ts:165). All 4 scenes FLAGGED. NOT an app
+   bug; the Kling developer account needs a top-up. Launch-gate run paused here; resume =
+   top up → reload (checkpoint persists) → retry flagged scenes.
+3d. **UX gap (real-user-facing): `kling_balance_exhausted` surfaces only as "FLAGGED"** —
+   no top-up/balance message, no distinct error state in the producer filming screen. Even
+   the founder couldn't tell why filming failed without DevTools + server logs. The 402
+   contract was designed to raise a top-up CTA ("so the UI shows a top-up CTA instead of
+   looping" — api/kling/omni-video.ts:39) but ProducerFlow does not render it. Post-batch
+   fix candidate, HIGH priority (a paying user hitting this sees silent failure).
+   Console "checkpoint superseded (revision conflict)" warnings during the same window =
+   benign checkpoint sync noise, unrelated.
 3. **Taglish naturalness, S4 script line:** "Bet ko na, kaya click mo na para free shipping
    ngayon." Neil: "Bet ko na" is off — natural register is "Bet ko 'to" / "Bet na bet ko";
    CTA is missing a linker ("para **makakuha ka ng** free shipping" / "para **sa** free
