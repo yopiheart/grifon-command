@@ -176,10 +176,18 @@ same day via the in-session `RemoteTrigger` tool):
   UUIDs copied from v1) — no Routines-UI manual step needed after all. v2
   runs Sonnet 5, sources the repo, prompt = the paste-ready block below
   (verbatim = deployed). Test run fired 2026-07-18 ~11:38 UTC (session
-  `cse_01MjA4MXKXkoxWrZv8DQzJwP`) — **Neil to confirm the push notification
-  arrived + the run log headline reads `[GRIFON Health] …`, not "Vercel
-  unreachable".** Remaining cleanup: delete v1 from a remote session (row
-  above). On-demand fallback anytime: ask a session to run the check
+  `cse_01MjA4MXKXkoxWrZv8DQzJwP`) — ✅ **VERIFIED by Neil same day**: headline
+  `[GRIFON Health] 0 critical / 0 new warnings / all clear — baseline only`,
+  real Vercel data (20/20 READY, prod `dpl_BWG57cQ3hBDJtAkxyTwQnnsbm7oL`) +
+  both Supabase advisors, baseline matched exactly with zero false alarms —
+  connector pass-through to fired sessions works. **Still unconfirmed: the
+  push notification reaching Neil's phone** (none arrived for the test run;
+  needs the Claude mobile app installed + notifications allowed — the
+  2026-07-19 08:00 PHT scheduled run is the real test; if it stays silent
+  with correct app setup, fallback rewire = add the Gmail connector and email
+  on CRITICAL, per the downgrade-reminder pattern). Remaining cleanup: delete
+  v1 from a remote session (row above). On-demand fallback anytime: ask a
+  session to run the check
   (~4 tool calls — Vercel deployments + Supabase security/performance advisors).
 
   <details><summary>Paste-ready v2 prompt (Health Watch, baseline-aware, quiet-when-clear)</summary>
