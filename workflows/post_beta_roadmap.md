@@ -1089,6 +1089,8 @@ a code-executor delegation AFTER Neil merges this branch and green-lights the pl
 - **Scope:** ~1 hour total (30 min purge + 30 min spot-check).
 - **Source:** Neil, 2026-07-18 — NotebookLM brief *Don't Ship Skills Without Evals*
   (Philipp Schmid, DeepMind) + "Okay G! surprise me" endorsing move #1 execution.
+  Session report artifact (before/after chart + verdict):
+  <https://claude.ai/code/artifact/0db89255-01ec-461b-a6fd-6ec100eddbe7>
 
 ## How to add new items
 
