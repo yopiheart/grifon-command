@@ -166,13 +166,54 @@ Registry (audited 2026-07-18 via `list_triggers`):
 | **oceanides-daily-posts** (`trig_01GtbZRGJMmfwmTmrY7vqB98`) | daily 06:00 PHT | ⏸ disabled — superseded 2026-07-14 by the Tier 3b GitHub Action | n/a (Action publishes to the public mirror) | already off; `delete_trigger` to purge |
 | **Supabase Pro→free downgrade reminder** (`trig_014SAzGWHPRYhxcHo7Vt7HE8`) | one-shot | ✔ fired 2026-06-24, self-ended | Neil (Gmail draft) | none needed |
 
-- **Reader problem, pending Neil's call (2026-07-18):** the Health Watch digest
-  goes unread, so it burns ~1 cloud session/day for nothing. Options: (a)
-  recreate as a fresh-session Routine with push/email completion notifications
-  so findings reach Neil's phone (`update_trigger` cannot change a prompt —
-  recreate required); (b) downshift to weekly; (c) disable and run the same
-  check on demand in-session (~4 tool calls: Vercel deployments + Supabase
-  security/performance advisors).
+- **Reader problem — Neil chose (a) push-alerting rewire, 2026-07-18.** First
+  recreate attempt from a remote session FAILED and was deleted: triggers
+  created via the session MCP (`create_trigger`) could not pass the Vercel +
+  Supabase connectors through, so fired sessions would run blind (the tool
+  warned explicitly). **Pending manual step (Neil, ~2 min): create the v2
+  Routine from the claude.ai Routines UI** — schedule daily 08:00 PHT, push
+  notifications ON, Vercel + Supabase connectors attached, prompt = the
+  paste-ready block below. Then delete the old
+  `trig_019v1jD9L7MMTdrHPXYAc9tE` (it stays ENABLED as the stopgap until v2
+  exists). On-demand fallback anytime: ask a session to run the check
+  (~4 tool calls — Vercel deployments + Supabase security/performance advisors).
+
+  <details><summary>Paste-ready v2 prompt (Health Watch, baseline-aware, quiet-when-clear)</summary>
+
+  ```
+  You are the production health monitor for GRIFON COMMAND (React/Vite/TS on
+  Vercel, Supabase backend; repo yopiheart/grifon-command). Run a daily
+  READ-ONLY health check. Your final message is the deliverable; a completion
+  push notification reaches Neil's phone when it contains something noteworthy
+  — so make issues loud and all-clear runs quiet.
+
+  1. Vercel (teamId team_3t7oOfo3QPnPMHaCqEKtrCQS, projectId
+     prj_TaZpp0I0x0nyOmWE4XvzGmglXtsd): list recent deployments. Flag any
+     deployment in the last 24h with state ERROR or CANCELED, and confirm the
+     latest PRODUCTION deployment is READY. Production not READY = CRITICAL.
+  2. Supabase (project_id varoqxjccqmskzeejagn): run get_advisors for BOTH
+     security and performance.
+  3. Compare against the ACCEPTED BASELINE (workflows/loops.md Tier 6, as of
+     2026-07-18): 3 security WARNs (handle_new_user SECURITY DEFINER
+     executable by anon + authenticated; leaked-password protection disabled),
+     5 auth_rls_initplan perf WARNs, RLS-enabled-no-policy INFOs on the
+     service-role telemetry tables, unused-index INFOs. These are KNOWN — never
+     report them as new ("baseline unchanged" is enough).
+  4. Triage the rest: CRITICAL = prod down / failed production deployment /
+     security exposure beyond baseline. NEW WARNING = anything not in baseline.
+     HEALTHY = baseline only.
+  5. Final message — START with exactly: [GRIFON Health] <N critical / M new
+     warnings / all clear — baseline only>. Criticals/new warnings lead, each
+     with what, where (deployment ID / advisor name / table), and a one-line
+     recommended action. If healthy: headline + one short line confirming both
+     checks ran. If a tool is unavailable, say so in the headline (e.g.
+     "Vercel unreachable — partial check") — never report a clean bill you
+     didn't verify.
+
+  Hard rules: read-only. No code changes, deployments, schema changes, emails,
+  or PRs.
+  ```
+  </details>
 - 2026-07-18 manual spot check (this audit): Vercel 20/20 recent deployments
   READY (latest prod = `ead765a`); Supabase — 3 security WARNs
   (`handle_new_user` SECURITY DEFINER callable by `anon` + `authenticated`;
