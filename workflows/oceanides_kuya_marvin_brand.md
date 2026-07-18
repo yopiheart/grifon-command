@@ -65,7 +65,8 @@ Personal brand para sa Oceanides: **"Kuya Marvin ng Oceanides"** — si Marvin B
 
 - Itong SOP — living doc: gate results, checkpoint verdicts, learnings.
 - `clients/oceanides/kuya-marvin/script-pool.json` — seed pool (10 education hooks). ✅ 2026-07-18
-- `clients/oceanides/kuya-marvin/refs/` — reference selfies (pag may consent na). _(pending)_
+- `clients/oceanides/kuya-marvin/refs/` — 4 reference selfies (front-neutral, 2× three-quarter, front-smiling; 3072×4096, iisang session). ✅ 2026-07-18 — verbal consent given (Marvin present with Neil); written consent pending signature.
+- `clients/oceanides/kuya-marvin/consent-agreement-template.docx` — 1-page likeness/AI consent (fill-ins: company legal name, compensation, post-termination content choice). ✅ 2026-07-18 — emailed to Marvin via Gmail draft; awaiting signed copy.
 - Accounts (TikTok + FB Page) — PAGKATAPOS lang pumasa ang Gate 1. _(pending)_
 
 ## Resume triggers
