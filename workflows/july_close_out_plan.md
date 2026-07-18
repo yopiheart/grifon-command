@@ -299,3 +299,37 @@ green: (1) PR CI ✓, (2) after merge: prod deploy bakes Kling keys — VERIFY, 
 preset-render smoke (PUNCH sa isang test run), (4) SFX_V2/OMNI env decisions sa prod
 flags (hiwalay sa merge). Ear-gate run sa main preview + sample cards + gemini-eval
 critics = after merge (isang surface na lang).
+
+## RESUME STATE — 2026-07-18 session close (Day 5: launch-gate run BLOCKED on Kling credits)
+
+**The try_on launch-gate run FIRED on prod** (`grifon.ai/app?osaEngine=producer`, Hiraya
+Glow v2 assets, Presenter = SET `after.png`) and got all the way through research →
+storyboard gate → FILM IT before dying at filming. Full findings: spec §4c
+(`sample_batch_test_spec.md`).
+
+**Storyboard-stage findings (all logged §4c, Neil's eyeball):** S1 warm-cast grade drift
+(regen fixed it, then S2's regen rolled warm → drift is stochastic per-roll, 2/3
+corroboration) · S2 floating-dropper hallucination RECURRING 2/3 rolls + brand label lost
+on the accepted roll (apply-action framing weakens the product anchor) · REGENERATE has no
+undo (a bad roll destroyed a clean one) · S4 Taglish naturalness "Bet ko na" (1/3) ·
+S1 instant-reveal beat-0 watch.
+
+**The block: Kling API balance exhausted — CONFIRMED in the Kling console.** 3 trial
+resource packs, **0 in effect**: 2× Depleted (100/100 pts), 1× **Expired at 44.8%**
+(~55 pts lost to expiry — the run died on credits that had already lapsed, not on burn).
+Server behaved correctly (4× 402 `kling_balance_exhausted` post-submit,
+api/kling/video.ts:165); the producer UI did NOT — scenes just said "FLAGGED", no top-up
+CTA (§4c 3d, HIGH-priority UX fix candidate).
+
+**TOMORROW (2026-07-19) — first acts:**
+1. **Neil: buy/renew a Kling resource pack** (trial packs are gone; "Contact us for
+   purchase" / API Purchase in the console). Budget for the full matrix: ~50+ scenes
+   across the 12 runs, not just the 4-scene retry.
+2. Reload the producer tab — run checkpoint (`osa_producer_active_run`,
+   finishedAdId `apr_deb422f2-2ada-4fec-806d-e5cdf885e0cc`) persists; retry the 4 flagged
+   scenes. If the checkpoint went stale/unrecoverable, re-fire try_on fresh (storyboard
+   regen cost only; brief + uploads per spec §1/§2).
+3. Agent: tail prod runtime logs during filming (**Gate A**) → **Gate B** PUNCH preset
+   drawtext on First Cut → **Gate C** hook VO in first ~2.6s (spectrogram if in doubt).
+4. Pass → `unboxing` run (Presenter = AUTO, face-free) → rest of the matrix per spec §3
+   priority order.
