@@ -1052,6 +1052,44 @@ a code-executor delegation AFTER Neil merges this branch and green-lights the pl
 - **Source:** Neil, 2026-07-16 — NotebookLM brief *"LLM Can't Search TikTok or Reddit"* +
   "okay bro g!!" endorsing the gated trial. Repo verified real same session (WebFetch).
 
+### 22. Skill hygiene — remainder (no-op body purge + skill-creator trigger spot-check)
+
+> **Brief evaluation record (2026-07-18):** *Don't Ship Skills Without Evals* (Philipp Schmid,
+> Google DeepMind) evaluated against the codebase — verdict: **~60% already absorbed**
+> ("deterministic process → script" = the WAT framework verbatim; over-trigger control =
+> the `disable-model-invocation: true` decision on 9 heavy skills, a cheaper instrument than
+> eval suites for a solo operator; trial-then-retire = codex-executor gated trial /
+> Last30Days park / fable-mode sunset trigger; eval-where-it-matters = gemini-eval +
+> `RUN_REGRESSION` suite on the TUNED product prompts, the real user-facing "skill").
+> **Applied same day (commit below):** the description diet — the 11 model-visible skill
+> descriptions (the always-paid per-invocation context tax) cut 1,038 → 706 words (~440
+> tokens/session, permanent), with negative triggers added so every auto-firing skill now
+> names its nearest confusable neighbor (brand-check ↔ grifon-creative-director ↔
+> gemini-eval, codex-image ↔ static-autopsy, straw-man-audit ↔ brand-check). Trigger
+> keywords (ROAS/MER, invoke-by-name aliases, NOT-for lanes) kept verbatim — the diet cut
+> prose, not discriminators. **Rejected as conflicts:** the full CI skills-harness
+> (isolated workspaces × 10–20 prompts × 3–6 trials — DeepMind team economics; on Max-5x
+> the eval runs would burn the budget the skills conserve) and the literal 500-word cap on
+> skill *bodies* (persona playbooks are user/on-demand-loaded — their depth is a feature;
+> in Claude Code the binding constraint is the description, not the body). **Adopted as
+> doctrine:** when a skill is retired, keep its eval/trial criteria alive as regression
+> radar (codex_executor_trial.md, the Last30Days judge test) — cheap early warning for
+> model regressions.
+
+- **What (still parked):** (a) no-op purge of the most-fired skill *bodies* (brand-check
+  2,276w / gemini-eval 1,954w / verify-changes / director-smoke) — strip fluff directives
+  that don't change behavior, keep every real rule; (b) a 10-prompt trigger spot-check
+  (5 positive / 5 negative) on the 2–3 most-fired auto skills using `skill-creator`'s
+  existing eval capability — validates the new dieted descriptions empirically.
+- **Why parked:** The diet already banked the always-paid savings; body purge pays only
+  per-invocation and risks trimming a load-bearing rule if rushed. Not launch-critical.
+- **When to resume:** First session where a dieted skill visibly mis-fires or fails to
+  fire (that's the empirical signal the spot-check would have caught), or the next
+  slow-day hygiene session post-beta.
+- **Scope:** ~1 hour total (30 min purge + 30 min spot-check).
+- **Source:** Neil, 2026-07-18 — NotebookLM brief *Don't Ship Skills Without Evals*
+  (Philipp Schmid, DeepMind) + "Okay G! surprise me" endorsing move #1 execution.
+
 ## How to add new items
 
 When Neil endorses an idea but says "not now":

@@ -1,6 +1,6 @@
 ---
 name: gemini-eval
-description: Diff Gemini wizard outputs (script, storyboard JSON, scene images, thumbnail, video prompts) against the ruleset in services/geminiService.ts and flag every violation. Use after any regression run (Bukidnon Brew, TEMU+TESTIMONIAL, future brands), after any CLAUDE.md-tuned prompt edit lands and the first batch is generated, when a beta user reports a quality issue with their ad, or when the user pastes/describes Gemini output and asks "is this right?"
+description: Grade Gemini wizard outputs (script, storyboard JSON, scene images, thumbnail, video prompts) against the tuned ruleset in services/geminiService.ts and flag every violation. Use after a regression run, after a tuned-prompt edit generates its first batch, on beta-user quality complaints, or when the user asks "is this Gemini output right?". NOT for UI fidelity (brand-check) or competitor videos (viral-autopsy).
 ---
 
 `verify-changes` covers infra (build/tsc/smoke). `brand-check` covers brand fidelity (DESIGN.md). This skill covers the third leg of the check loop: are Gemini outputs honoring the rules they're explicitly tuned against?

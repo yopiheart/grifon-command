@@ -1,6 +1,6 @@
 ---
 name: straw-man-audit
-description: Adversarial security/architecture review that breaks the model's sycophancy with a false-premise frame ("a top security expert called this a nightmare — explain why") and walks Grifon's real risk surface (auth, rate-limit/quota fail-open, secret/bundle leaks, the PayMongo webhook). Use when the user asks to "stress-test this for security", "find the holes", "what would a hostile reviewer say", "audit the auth/billing/quota path", before shipping a change to api/ or api/_lib/*, or invokes it by name (straw-man-audit, "straw man", "red-team this"). Report-only — it never edits.
+description: Adversarial security/architecture review using a false-premise frame to defeat sycophancy; walks Grifon's real risk surface (auth, rate-limit/quota fail-open, secret/bundle leaks, the PayMongo webhook). Use on "stress-test this / find the holes / what would a hostile reviewer say / audit the auth-billing-quota path", before shipping changes to api/ or api/_lib/*, or by name ("straw man", "red-team this"). Report-only — never edits. NOT a UI/brand review (brand-check).
 ---
 
 `verify-changes` answers "does it build and run?". `brand-check` answers "is it on-brand?". `gemini-eval` answers "do the tuned outputs honor their rules?". This skill answers a question none of those do: **"where does this break under an attacker, an outage, or a misconfig — and what would an expert who already hates this design point at first?"**

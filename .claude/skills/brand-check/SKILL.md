@@ -1,6 +1,6 @@
 ---
 name: brand-check
-description: Diff proposed UI work against DESIGN.md and flag every brand mismatch. Use whenever the user asks to "review against brand guidelines", pastes a UI mock/screenshot/PR diff for fidelity check, or after any edit to components/*.tsx (and landing/pricing/marketing pages) before declaring the task done.
+description: Diff proposed UI work against DESIGN.md and flag every brand mismatch. Use on "review against brand guidelines", on a UI mock/screenshot/PR diff needing a fidelity check, or after any edit to components/*.tsx or marketing pages, before declaring done. NOT for designing new UI (grifon-creative-director) or grading Gemini output (gemini-eval).
 ---
 
 The check loop is where Boris Churnney's 2-3x quality multiplier lives. `verify-changes` covers build + smoke; this skill covers brand fidelity. Run it BEFORE declaring a UI task complete.

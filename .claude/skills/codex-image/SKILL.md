@@ -1,6 +1,6 @@
 ---
 name: codex-image
-description: Generate or edit real images from inside Claude Code by bridging to the OpenAI Codex CLI's built-in image generator (gpt-image-2). Billed against the user's ChatGPT plan via `codex login` — no OPENAI_API_KEY, no per-image API charges. Use whenever the task needs to CREATE or EDIT an actual image asset — a hero/product shot, ad creative, logo, mockup, icon, banner, placeholder art, or a Batch Creative Gen hero plate — or when the user says "generate/make/draw an image", "create a picture", or references the Codex image skill. ONLY works where the Codex CLI is installed and logged in (a local machine), NOT in the locked web sandbox.
+description: Generate or edit real image assets (hero/product shots, ad creatives, logos, mockups, icons, banners, Batch Creative Gen plates) via the Codex CLI's built-in gpt-image-2 bridge, billed to the ChatGPT plan. Use whenever the task must CREATE or EDIT an actual image, or the user says "generate/make/draw an image". Requires Codex CLI installed + logged in (local machine only, not the web sandbox). NOT for analyzing existing ad images (static-autopsy).
 ---
 
 This skill is a **bridge**: Claude Code has no native image generation, but the OpenAI **Codex CLI** ships a built-in one (`gpt-image-2`, triggered with `$imagegen`). This skill shells out to Codex to produce a real image file, billed to the user's **ChatGPT subscription** — no API key.

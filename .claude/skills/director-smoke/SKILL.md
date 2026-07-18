@@ -1,6 +1,6 @@
 ---
 name: director-smoke
-description: MANDATORY pre-flight for driving the Director AI wizard (the 8-step ad-creation flow) end-to-end as a smoke/manual test. Use BEFORE entering Director AI or filling ANY wizard field — whenever the task is to drive/test/smoke the wizard, render a full ad for testing, reach the AI Editor / FINAL_RENDER / Signal Modulator via a real wizard run, or "generate an N-scene ad" to exercise downstream pipelines. Enforces hero-image-FIRST, Market Research before Director, and NEVER manually typing brand/offer inputs. If you are about to click "Start with Director" for a test, this skill applies.
+description: MANDATORY pre-flight before driving the Director AI wizard (the 8-step ad-creation flow) as a smoke/manual test — load BEFORE entering Director AI or filling ANY wizard field, including "generate an N-scene ad" runs meant to exercise AI Editor / FINAL_RENDER / Signal Modulator. Enforces hero-image-FIRST, Market Research before Director, and never hand-typing brand/offer fields. About to click "Start with Director" for a test? This applies.
 ---
 
 # Director AI smoke pre-flight (hero-FIRST)
