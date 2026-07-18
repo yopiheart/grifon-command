@@ -387,6 +387,31 @@ wrong) · TTS whisper register (run 8) · real `ugcpro.mp3` bed.
     Launch-gate item STAYS: preset-render smoke after every prod deploy (binary is
     downloaded at build time — this class can recur on any cache bust/version bump).
 
+## 4c. try_on LAUNCH-GATE run findings (2026-07-18, storyboard stage, Neil's eyeball — pre-filming)
+
+Run: `try_on`, v2 assets (`tests/fixtures/sample-batch-v2/`), Presenter = SET (`after.png`),
+prod (`grifon.ai/app?osaEngine=producer`). Storyboard came back 4 scenes, avatar identity
+lock held across all 4, v2 realism scaffold visibly carried into the frames.
+
+1. **S1 color-grade mismatch (warm/orange cast) vs S2–S4's neutral bathroom grade.** One ad
+   should read as one look. Mitigated in-run via per-scene REGENERATE; log corroboration if
+   other runs show a per-scene grade drift pattern (candidate: color/grade consistency rule,
+   TUNED, gated).
+2. **S2 product hallucination: floating dropper** — dropper hovering mid-air at face level
+   while the avatar holds the bottle; physically impossible frame. THE eval focus of this run
+   ("no product hallucination") — first live hit. Mitigated via REGENERATE; corroborate
+   across runs before any prompt proposal.
+3. **Taglish naturalness, S4 script line:** "Bet ko na, kaya click mo na para free shipping
+   ngayon." Neil: "Bet ko na" is off — natural register is "Bet ko 'to" / "Bet na bet ko";
+   CTA is missing a linker ("para **makakuha ka ng** free shipping" / "para **sa** free
+   shipping"). First corroboration point (1/3) toward a Taglish-naturalness pass on the
+   script prompt (TUNED, ≥3 gate). Accepted for this run — image regen doesn't re-roll the
+   line and Gates A/B/C don't depend on it.
+4. **tryon instant-claim guardrail watch:** S1 = product in-hand + "Skeptical ako, pero look
+   at this glow" — instant-reveal shape in beat 0, no problem-hook beat. Echoes the
+   transformation beat-0 pattern (4b #6/#10, systematic there). Watch whether the tryon
+   guardrail from the grill bundle held or this counts as a violation instance.
+
 ## 5. Post-batch (agent work, after Neil's eyeball)
 
 1. Cut the best 2–3s beat per winner →
