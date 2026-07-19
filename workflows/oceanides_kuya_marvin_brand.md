@@ -26,7 +26,13 @@ Personal brand para sa Oceanides: **"Kuya Marvin ng Oceanides"** — si Marvin B
 4. **GO:** pasado sa motion → unlock ang Lane A (talking avatar). Finishing lang pagkatapos: captions + UGC LUT + fast cuts (believability_dna sequencing rule — LUT is step 3, not step 1).
    **NO-GO:** hindi pasado → **fallback format, buhay pa rin ang brand:** totoong jobsite footage + ElevenLabs Taglish VO ("boses ni Kuya Marvin") + identity-locked stills — walang talking avatar. Si Marvin ay nasa field araw-araw; 30-sec phone clips ng tangke/trabaho ang raw material — hindi siya kailangang magsalita sa camera.
 
-**Gate 1 result:** _(pending)_
+**Gate 1 result:** _(pending — in progress)_
+
+**Gate 1 progress log:**
+
+- **2026-07-19 — identity-lock v1 (5 raw-ugc stills, face-refs only): PARTIAL FAIL kay Neil.** lock-1 (yard selfie) at lock-5 (smiling close) okay; lock-2/3/4 "parang kinabit ang ulo" — pasted-face look. **Root cause:** face-only reference set → ini-imbento ng model ang katawan, tapos idinidikit ang sharp na mukha (mismatch sa light/texture/sharpness). Chest-up frames lang ang ligtas sa face-only refs.
+- **2026-07-19 — GPT 5.6 Sol skill reviewed + adapted.** Si Neil nag-open ng pasted-face issue kay GPT 5.6 Sol (2026-07-18 gabi); ang gawa nitong `generate-marvin-oceanides-images` skill (zip archived sa `clients/oceanides/kuya-marvin/`) ay na-review at na-adapt sa **`.claude/skills/marvin-avatar/`** — ito na ang MANDATORY recipe sa bawat Marvin still. Core fix: `marvin-ref-5-body-master.jpg` (bagong ref, totoong katawan ni Marvin — kasama ang totoong forearm tattoo + wrist watch) na kasama sa BAWAT generation + integration block (face no sharper than body, tuloy-tuloy na jaw–neck–collar). Adaptation deltas vs Sol: tinanggal ang "Malabanan" (hard rule), positional na ang tattoo/watch phrasing (mirror-confusion risk sa left/right), selfie framing pinayagan sa chest-up plates lang, at naka-park na open question ang #38B6FF wardrobe accent (SOP: navy + gold).
+- **2026-07-19 — identity-lock v2 regen (body-master recipe):** lock-2b + lock-3b pasado sa agent triage (integrated na, consistent tattoo/watch); lock-4b unang roll REJECTED sa QA gate (tattoo sa dalawang braso — dapat isa lang), retried with targeted correction. **Neil eyeball pending sa buong v2 set; ang Veo motion test ay naka-HOLD hanggang pumasa ang stills.** Prompts preserved sa `identity-lock/manifest.json` (v1) + `manifest-v2.json`.
 
 ## HARD GATE 2 — Booking attribution (Day 1, hindi Day 30)
 
@@ -65,7 +71,8 @@ Personal brand para sa Oceanides: **"Kuya Marvin ng Oceanides"** — si Marvin B
 
 - Itong SOP — living doc: gate results, checkpoint verdicts, learnings.
 - `clients/oceanides/kuya-marvin/script-pool.json` — seed pool (10 education hooks). ✅ 2026-07-18
-- `clients/oceanides/kuya-marvin/refs/` — 4 reference selfies (front-neutral, 2× three-quarter, front-smiling; 3072×4096, iisang session). ✅ 2026-07-18 — verbal consent given (Marvin present with Neil); written consent pending signature.
+- `clients/oceanides/kuya-marvin/refs/` — 4 reference selfies (front-neutral, 2× three-quarter, front-smiling; 3072×4096, iisang session). ✅ 2026-07-18 — verbal consent given (Marvin present with Neil); written consent pending signature. **+ `marvin-ref-5-body-master.jpg`** ✅ 2026-07-19 — full-body reference (galing sa GPT 5.6 Sol skill assets); mandatory anchor sa bawat generation per `.claude/skills/marvin-avatar/`.
+- `.claude/skills/marvin-avatar/` — ang identity-lock generation skill (adapted mula kay GPT 5.6 Sol). ✅ 2026-07-19. `identity-lock/manifest*.json` ang reproducible prompt sets.
 - `clients/oceanides/kuya-marvin/consent-agreement-template.docx` — 1-page likeness/AI consent (fill-ins: company legal name, compensation, post-termination content choice). ✅ 2026-07-18 — emailed to Marvin via Gmail draft; awaiting signed copy.
 - Accounts (TikTok + FB Page) — PAGKATAPOS lang pumasa ang Gate 1. _(pending)_
 
