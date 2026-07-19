@@ -96,6 +96,13 @@ Personal brand para sa Oceanides: **"Kuya Marvin ng Oceanides"** — si Marvin B
 - `clients/oceanides/kuya-marvin/consent-agreement-template.docx` — 1-page likeness/AI consent (fill-ins: company legal name, compensation, post-termination content choice). ✅ 2026-07-18 — emailed to Marvin via Gmail draft; awaiting signed copy.
 - Accounts (TikTok + FB Page) — PAGKATAPOS lang pumasa ang Gate 1. _(pending)_
 
+## RESUME STATE (2026-07-19 session end)
+
+- **Gate 1 ebidensya KUMPLETO** (stills 100% Marvin-confirmed + 3 approved talking takes) — **pormal na GO/NO-GO ni Neil PENDING** (hindi pa binibigkas; itanong sa pagbabalik). GO = account creation + profile assets + unang 2-week batch.
+- **Seedream 5.0 test NAKAHANDA, hindi pa pinaputok:** Neil signed up sa BytePlus ModelArk console (may fal.ai account din, walang credits — itabi). Next: Neil mag-activate ng models + i-check ang "Trial" free quota + gumawa ng API key → palitan ang `ARK_API_KEY=PASTE_KEY_HERE` sa `.env` (line ~48; may `FAL_KEY=` placeholder din, backup lane) → `node clients/oceanides/kuya-marvin/test-rigs/seedream-ark-test.mjs --manifest clients/oceanides/kuya-marvin/test-rigs/seedream-ark-manifest.json` → Neil eyeball vs codex 100% / nano 90%. Kung walang trial: Starter $6.99 (300 Pro images). Research verdict na dala: likeness evidence NEGATIVE (talo sa nano sa reviews), pero 2K/4K + 10-14 refs ang posibleng panalo — mababa ang expectation, mura ang test.
+- **Test rigs preserved sa [`clients/oceanides/kuya-marvin/test-rigs/`](../clients/oceanides/kuya-marvin/test-rigs/)** (galing .tmp bago ang defreezer): `veo-motion-test.mjs` (Veo lite/quality talking test, expression lock + Taglish line), `nano-marvin-test.mjs` (+ `nano-prompt-C.txt` — ang approved minimal formula), `seedream-ark-test.mjs` + manifests (ModelArk primary, fal fallback). Lahat tumatakbo mula repo root, `.env` keys.
+- Cafe-PC re-arm sa pagbabalik: `scripts/restore-codex.ps1` (codex-image lane) + repo-local git identity (`git config user.name/user.email`).
+
 ## Resume triggers
 
 - Marvin selfies + consent dumating → identity-lock set → Veo motion test → GO/NO-GO kay Neil.
