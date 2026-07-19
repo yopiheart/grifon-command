@@ -5,9 +5,9 @@ description: Generate identity-consistent, believable images of Marvin (Kuya Mar
 
 # Marvin Avatar — identity-locked image generation
 
-## ⚠️ GENERATION LANE (decided w/ Neil 2026-07-19): GPT 5.6 Sol generates, Claude QAs
+## GENERATION LANE (final, Neil 2026-07-19): Claude codex lane VALIDATED — taste recipe ang susi
 
-**Ang PRIMARY generator ng Marvin stills ay si GPT 5.6 Sol sa ChatGPT flow ni Neil** (Sol's own skill + interactive iteration) — HINDI ang codex-image bridge sa ibaba. Head-to-head 2026-07-19: Sol 8/8 approved; Claude codex-exec lane 1/7 (lock-3b lang). Ang Claude lane sa file na ito ay para sa (a) QA/triage ng bawat still laban sa body master + hard gates, (b) emergency fallback kapag walang access si Neil kay Sol. Builder ≠ reviewer — kailanman hindi si Sol ang nagre-review ng sarili niyang output.
+**Ang codex-image lane sa file na ito ang primary generator ng Marvin stills**, gamit ang buong taste recipe sa ibaba. History ng araw na ito: ang unang Claude rolls (v1–v3, 1/7 approved) ay tinalo ni GPT 5.6 Sol (8/8) — pero pagkatapos ma-decode ang approved taste profile mula sa 8 winners ni Sol, ang taste-match rolls (`marvin-taste-1/2/3`) ay **3/3 APPROVED ni Neil at hinusgahang LAMANG kay Sol**: "kay GPT parang PALE ang skin; sa Claude may konting saturation ang kulay ng skin kaya mas realistic." Ang winning delta ay ang explicit na **"warm tan Filipino skin tone exactly as in the references"** sa bawat prompt (ang pale-drift ay dokumentadong failure mode mula 2026-07-16 Zam reruns — si Sol walang proteksyon doon). Si Sol ang alternate lane kapag gusto ni Neil ng interactive iteration sa ChatGPT. QA/triage ay Claude pa rin palagi (builder ≠ reviewer sa Sol lane; sa Claude lane, si Neil ang final grader gaya ng dati).
 
 **Canonical taste standard:** [clients/oceanides/kuya-marvin/Approved images from gpt 5.6/](../../../clients/oceanides/kuya-marvin/Approved%20images%20from%20gpt%205.6/) — 8 Neil-approved frames. Bawat bagong still ay ginagrade LABAN DITO, hindi sa ibang AI generation. Ang taste profile na lumalabas sa 8:
 
