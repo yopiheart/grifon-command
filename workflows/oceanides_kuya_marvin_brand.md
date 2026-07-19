@@ -42,7 +42,9 @@ Personal brand para sa Oceanides: **"Kuya Marvin ng Oceanides"** — si Marvin B
   - **test-2 (lite + expression lock):** ✅ **"legit okay na"** kay Neil; minor mouth morph, tinanggap bilang kilalang weakness ng kasalukuyang video models. render_qa B-.
   - **test-3 (quality + expression lock):** ❌ kay Neil KAHIT render_qa clean sweep — "masyadong malinis" (believability failure sa raw-ugc register!), nagbago ang reaction, lumaki ang bibig, hindi rin nasolve ang mouth morph. **Isa pang patunay: machine QA ay triage lang; ang mata ni Neil ang batas.**
   - **📌 PRODUCTION MODEL VERDICT: `veo-3.1-lite-generate-preview`** ang Lane A model (lumabas na mas believable ANG mas mura — raw beats polished). Native 1080×1920 ang lite output — walang kailangang upscale.
-  - **test-4 (lite, high-angle, taste-1 plate):** angle-comparison roll — _(pending Neil verdict)_
+  - **test-4 (lite, high-angle, taste-1 plate):** ❌ kay Neil — sa mid-distance framing, halata pa rin ang AI. render_qa: bumalik ang expression breaks (ang smiling plate ay lumalaban sa expression lock — **rule: neutral plates para sa talking videos; smiling plates ay stills lang**).
+  - **test-5 (lite, CLOSE-UP, taste-5 plate): ✅✅ APPROVED — pati ni MARVIN at ZAM mismo ("looks real").** Expression held constant buong 8s, stable ang facial structure, minor mouth softness lang (tinanggap na model weakness). Raw = native 1080×1920; may 2160-upscale comparison din (FFmpeg lanczos).
+  - **📌 CAMERA-DISTANCE RULE (Neil, 2026-07-19): ang AI feel/slop ay lumalabas lang kapag MALAYO ang camera** (taste-1/2/3 na framing) — sa close-up (register-1 na lapit, mukha ang pumupuno sa frame), nawawala ang AI tell dahil sa mukha napupunta ang buong detail budget ng model. **Lane A production framing: CLOSE-UP arm's-length selfie, neutral plate, lite model, expression lock.**
 
 ## HARD GATE 2 — Booking attribution (Day 1, hindi Day 30)
 

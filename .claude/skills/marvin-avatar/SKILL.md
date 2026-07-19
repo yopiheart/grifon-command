@@ -65,6 +65,10 @@ Warning signs: face sharper/larger than body, squared shoulders, shirt stretched
 
 **Never** fix a large head by enlarging the body, or a small body by shrinking the head. **Agent QA is triage only — Neil's eyeball is the only valid believability verdict** (agent_lessons / prompt-pack calibration note).
 
+## Camera-distance rule (Neil + Marvin + Zam, 2026-07-19)
+
+**Ang AI slop ay nahahalata lang kapag malayo ang camera.** Sa mid/far framing (chest-up mula sa braso, full-body, high-angle na kita ang katawan) ang mukha ay maliit sa pixels → doon lumalabas ang AI feel sa motion. Sa **CLOSE-UP (register-1 na lapit: mukha ang pumupuno sa frame, tuktok ng ulo hanggang upper chest)** nawawala ang tell — "looks real" verdict pati kina Marvin at Zam (marvin-veo-test-5). **Lane A production recipe: close-up arm's-length selfie plate + NEUTRAL expression + `veo-3.1-lite-generate-preview` (mas believable kaysa quality — raw beats polished) + expression lock.** Mid/far framing: stills lang, hindi tina-talking-video.
+
 ## Motion corollary (Veo talking tests/plates) — EXPRESSION LOCK
 
 Ang eyes-open/mouth-only rule ng stills ay mas mahigpit sa MOTION: bawat expression change habang nagsasalita (brow raise, pagkunot ng noo, squint, mas malapad na ngiti) ay nagti-trigger ng mid-video identity morph (napatunayan sa marvin-veo-test-1, 2026-07-19 — ang prompted na "slight brow raise" ang nagpabago ng mukha kay Neil eyeball). Sa bawat Veo prompt: **"expression stays CONSTANT and calm for the entire video, identical to the input image in every frame; only mouth, jaw, and lips move plus natural blinks and slight head sway; NO eyebrow/forehead/squint/expression changes of any kind."** Ang emotional color ay dinadala ng BOSES at ng script, hindi ng mukha.
