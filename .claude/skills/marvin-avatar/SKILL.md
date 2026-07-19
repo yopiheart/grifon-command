@@ -65,6 +65,15 @@ Warning signs: face sharper/larger than body, squared shoulders, shirt stretched
 
 **Never** fix a large head by enlarging the body, or a small body by shrinking the head. **Agent QA is triage only — Neil's eyeball is the only valid believability verdict** (agent_lessons / prompt-pack calibration note).
 
+## Dalawang-lane verdict (FINAL, Neil 2026-07-19)
+
+| Lane | Likeness | Resolution | Role |
+|---|---|---|---|
+| **gpt-image-2 (codex bridge, itong skill)** | **100%** (kinumpirma ni Marvin mismo) | 1024×1536 max | **PLATE FACTORY** — lahat ng video plates + walking/field shots |
+| **nano banana 2** (`gemini-3.1-flash-image-preview`, minimal "arm-C" prompting — maikling direktang utos, HINDI mahabang scaffold) | ~90% stills / ~87% sa video | 2K (1536×2752) | Detail-rich STILLS lang (approved: nano-C, C1, C2); bantayan ang invented text/logos sa background, dobleng tattoo, at object-logic errors (hal. phone na kita sa sariling selfie) |
+
+Dahil 1K lang ang codex plates, ang malayong framing ay nagpapalitaw ng morph sa video — kaya ang **CONTENT RULE: laging malapit ang camera kay Marvin.** Iwasan din ang kamay-sa-mukha na poses sa talking plates (fina-freeze ng Veo → statue tell, test-7). Approved video takes bilang reference ng production look: veo-test-2, -4, -5 sa `motion-test/`.
+
 ## Camera-distance rule (Neil + Marvin + Zam, 2026-07-19)
 
 **Ang AI slop ay nahahalata lang kapag malayo ang camera.** Sa mid/far framing (chest-up mula sa braso, full-body, high-angle na kita ang katawan) ang mukha ay maliit sa pixels → doon lumalabas ang AI feel sa motion. Sa **CLOSE-UP (register-1 na lapit: mukha ang pumupuno sa frame, tuktok ng ulo hanggang upper chest)** nawawala ang tell — "looks real" verdict pati kina Marvin at Zam (marvin-veo-test-5). **Lane A production recipe: close-up arm's-length selfie plate + NEUTRAL expression + `veo-3.1-lite-generate-preview` (mas believable kaysa quality — raw beats polished) + expression lock.** Mid/far framing: stills lang, hindi tina-talking-video.

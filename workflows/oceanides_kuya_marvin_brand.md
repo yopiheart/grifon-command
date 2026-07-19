@@ -46,6 +46,14 @@ Personal brand para sa Oceanides: **"Kuya Marvin ng Oceanides"** — si Marvin B
   - **test-5 (lite, CLOSE-UP, taste-5 plate): ✅✅ APPROVED — pati ni MARVIN at ZAM mismo ("looks real").** Expression held constant buong 8s, stable ang facial structure, minor mouth softness lang (tinanggap na model weakness). Raw = native 1080×1920; may 2160-upscale comparison din (FFmpeg lanczos).
   - **📌 CAMERA-DISTANCE RULE (Neil, 2026-07-19): ang AI feel/slop ay lumalabas lang kapag MALAYO ang camera** (taste-1/2/3 na framing) — sa close-up (register-1 na lapit, mukha ang pumupuno sa frame), nawawala ang AI tell dahil sa mukha napupunta ang buong detail budget ng model. **Lane A production framing: CLOSE-UP arm's-length selfie, neutral plate, lite model, expression lock.**
 
+**FINAL LESSONS-LEARNED (Neil, 2026-07-19 — pagkatapos ng buong image+motion campaign):**
+
+- **gpt-image-2 (codex lane): 100% si Marvin** — kinumpirma ni Marvin mismo ("nagulat na nakopya sya literal"). Kaso 1024×1536 lang ang max — ang mababang plate resolution + malayong camera ang nagpapalitaw ng morph sa bibig/mukha sa video. Sa close-up plates (taste-4/5) → video, kinumpirma ni Marvin at ni Neil: **100%, hindi halatang AI.** Kailangan lang constant ang facial reaction (expression lock) para sa character consistency.
+- **nano banana 2 (Gemini lane): ~90% si Marvin sa stills** (2K ang lakas — mas detalyadong mukha), pero **bumababa sa ~87% kapag ginawang video.** Approved bilang IMAHE ang nano-C/C1/C2; ang C3 (walking) ay conditional pass — panalo pa rin ang codex sa walking angle.
+- **OVERALL WINNER: gpt-image-2 ang plate factory** (character consistency + realism). Wishlist: kung magka-2K ang gpt-image-2, subukan ulit ang layuan.
+- **CONTENT RULE: iwasan ang malalayong camera angle kay Marvin sa lahat ng content** — para walang morph, walang AI slop, preserved ang 100% realism.
+- **✅ APPROVED VIDEO TAKES (Neil): `marvin-veo-test-2` (low-angle), `marvin-veo-test-4-highangle-lite` (raw o upscaled — pareho okay), `marvin-veo-test-5-closeup-lite` (raw o upscaled — pareho okay).** Lahat ng hindi approved na video tests + identity-lock experiments ay binura per Neil.
+
 ## HARD GATE 2 — Booking attribution (Day 1, hindi Day 30)
 
 - **Dispatcher script dagdag:** "Saan n'yo po kami nakita?" (kasama ng existing "May nag-refer po ba?"). I-log sa referrer tracking sheet — dagdag na Source column: `Referrer / Kuya Marvin / Branch page / Iba`.
