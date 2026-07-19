@@ -65,6 +65,10 @@ Warning signs: face sharper/larger than body, squared shoulders, shirt stretched
 
 **Never** fix a large head by enlarging the body, or a small body by shrinking the head. **Agent QA is triage only — Neil's eyeball is the only valid believability verdict** (agent_lessons / prompt-pack calibration note).
 
+## Motion corollary (Veo talking tests/plates) — EXPRESSION LOCK
+
+Ang eyes-open/mouth-only rule ng stills ay mas mahigpit sa MOTION: bawat expression change habang nagsasalita (brow raise, pagkunot ng noo, squint, mas malapad na ngiti) ay nagti-trigger ng mid-video identity morph (napatunayan sa marvin-veo-test-1, 2026-07-19 — ang prompted na "slight brow raise" ang nagpabago ng mukha kay Neil eyeball). Sa bawat Veo prompt: **"expression stays CONSTANT and calm for the entire video, identical to the input image in every frame; only mouth, jaw, and lips move plus natural blinks and slight head sway; NO eyebrow/forehead/squint/expression changes of any kind."** Ang emotional color ay dinadala ng BOSES at ng script, hindi ng mukha.
+
 ## Invocation
 
 ```bash
