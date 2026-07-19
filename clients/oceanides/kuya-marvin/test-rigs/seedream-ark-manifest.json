@@ -1,0 +1,74 @@
+[
+  {
+    "model": "dola-seedream-5-0-pro-260628",
+    "size": "1584x2816",
+    "out": "clients/oceanides/kuya-marvin/identity-lock/marvin-seedream-ark-pro-1-closeup.png",
+    "refs": [
+      "clients/oceanides/kuya-marvin/refs/marvin-ref-5-body-master.jpg",
+      "clients/oceanides/kuya-marvin/refs/marvin-ref-1-front-neutral.jpg",
+      "clients/oceanides/kuya-marvin/refs/marvin-ref-2-three-quarter.jpg",
+      "clients/oceanides/kuya-marvin/refs/marvin-ref-3-three-quarter-b.jpg"
+    ],
+    "prompt": "Keep this exact man's face, identity, and warm tan Filipino skin tone from the reference photos — the same real person, not a lookalike. A realistic casual smartphone front-camera close-up selfie, vertical: his face fills the frame from just above his head to his upper chest, direct eye contact, calm neutral expression, mouth closed. He wears a plain navy blue crew-neck shirt. Behind him, softly out of focus, the blue tank of a septic vacuum truck under a flat overcast sky. Natural matte skin with visible pores, flat overcast daylight, slight phone grain, no beauty filter, no studio lighting, no text, no watermark, no logos."
+  },
+  {
+    "model": "dola-seedream-5-0-pro-260628",
+    "size": "1584x2816",
+    "out": "clients/oceanides/kuya-marvin/identity-lock/marvin-seedream-ark-pro-2-lowangle.png",
+    "refs": [
+      "clients/oceanides/kuya-marvin/refs/marvin-ref-5-body-master.jpg",
+      "clients/oceanides/kuya-marvin/refs/marvin-ref-1-front-neutral.jpg",
+      "clients/oceanides/kuya-marvin/refs/marvin-ref-2-three-quarter.jpg",
+      "clients/oceanides/kuya-marvin/refs/marvin-ref-3-three-quarter-b.jpg"
+    ],
+    "prompt": "Keep this exact man's face, identity, warm tan Filipino skin tone, forearm tattoo, and silver watch from the reference photos — the same real person, not a lookalike. A realistic casual smartphone low-angle selfie, vertical: phone held at upper-chest height angled slightly up at his face, his tattooed selfie arm entering the bottom edge, chest-up framing, looking down into the lens calmly, mouth closed. Plain navy blue crew-neck shirt. Behind and above him the tall blue tank of a septic vacuum truck rises into a flat overcast sky, a quiet concrete street at one side. Natural matte skin with visible pores, flat overcast daylight, slight phone grain, no beauty filter, no studio lighting, no text, no watermark, no logos."
+  },
+  {
+    "model": "dola-seedream-5-0-pro-260628",
+    "size": "1584x2816",
+    "out": "clients/oceanides/kuya-marvin/identity-lock/marvin-seedream-ark-pro-3-walking.png",
+    "refs": [
+      "clients/oceanides/kuya-marvin/refs/marvin-ref-5-body-master.jpg",
+      "clients/oceanides/kuya-marvin/refs/marvin-ref-1-front-neutral.jpg",
+      "clients/oceanides/kuya-marvin/refs/marvin-ref-2-three-quarter.jpg",
+      "clients/oceanides/kuya-marvin/refs/marvin-ref-3-three-quarter-b.jpg"
+    ],
+    "prompt": "Keep this exact man's face, identity, warm tan Filipino skin tone, normal body build, forearm tattoo, and silver watch from the reference photos — the same real person with the same head-to-body proportions, not a lookalike, not more muscular. A realistic smartphone photo taken by a coworker from about four meters away at chest height, vertical: the man whole body head to feet, side three-quarter angle, mid-stride walking on the concrete pavement beside a long blue septic vacuum truck parked on a quiet Filipino street, phone in his swinging hand, face visible at three-quarter, calm expression. Plain navy blue crew-neck shirt, dark work pants, dark work shoes. The truck is plain blue with no text or markings. Flat overcast sky, natural grain, ordinary phone processing, no beauty filter, no portrait-mode blur, no text, no watermark, no logos."
+  },
+  {
+    "model": "seedream-5-0-260128",
+    "size": "3040x5504",
+    "out": "clients/oceanides/kuya-marvin/identity-lock/marvin-seedream-ark-lite-1-closeup.png",
+    "refs": [
+      "clients/oceanides/kuya-marvin/refs/marvin-ref-5-body-master.jpg",
+      "clients/oceanides/kuya-marvin/refs/marvin-ref-1-front-neutral.jpg",
+      "clients/oceanides/kuya-marvin/refs/marvin-ref-2-three-quarter.jpg",
+      "clients/oceanides/kuya-marvin/refs/marvin-ref-3-three-quarter-b.jpg"
+    ],
+    "prompt": "Keep this exact man's face, identity, and warm tan Filipino skin tone from the reference photos — the same real person, not a lookalike. A realistic casual smartphone front-camera close-up selfie, vertical: his face fills the frame from just above his head to his upper chest, direct eye contact, calm neutral expression, mouth closed. He wears a plain navy blue crew-neck shirt. Behind him, softly out of focus, the blue tank of a septic vacuum truck under a flat overcast sky. Natural matte skin with visible pores, flat overcast daylight, slight phone grain, no beauty filter, no studio lighting, no text, no watermark, no logos."
+  },
+  {
+    "model": "seedream-5-0-260128",
+    "size": "3040x5504",
+    "out": "clients/oceanides/kuya-marvin/identity-lock/marvin-seedream-ark-lite-2-lowangle.png",
+    "refs": [
+      "clients/oceanides/kuya-marvin/refs/marvin-ref-5-body-master.jpg",
+      "clients/oceanides/kuya-marvin/refs/marvin-ref-1-front-neutral.jpg",
+      "clients/oceanides/kuya-marvin/refs/marvin-ref-2-three-quarter.jpg",
+      "clients/oceanides/kuya-marvin/refs/marvin-ref-3-three-quarter-b.jpg"
+    ],
+    "prompt": "Keep this exact man's face, identity, warm tan Filipino skin tone, forearm tattoo, and silver watch from the reference photos — the same real person, not a lookalike. A realistic casual smartphone low-angle selfie, vertical: phone held at upper-chest height angled slightly up at his face, his tattooed selfie arm entering the bottom edge, chest-up framing, looking down into the lens calmly, mouth closed. Plain navy blue crew-neck shirt. Behind and above him the tall blue tank of a septic vacuum truck rises into a flat overcast sky, a quiet concrete street at one side. Natural matte skin with visible pores, flat overcast daylight, slight phone grain, no beauty filter, no studio lighting, no text, no watermark, no logos."
+  },
+  {
+    "model": "seedream-5-0-260128",
+    "size": "3040x5504",
+    "out": "clients/oceanides/kuya-marvin/identity-lock/marvin-seedream-ark-lite-3-walking.png",
+    "refs": [
+      "clients/oceanides/kuya-marvin/refs/marvin-ref-5-body-master.jpg",
+      "clients/oceanides/kuya-marvin/refs/marvin-ref-1-front-neutral.jpg",
+      "clients/oceanides/kuya-marvin/refs/marvin-ref-2-three-quarter.jpg",
+      "clients/oceanides/kuya-marvin/refs/marvin-ref-3-three-quarter-b.jpg"
+    ],
+    "prompt": "Keep this exact man's face, identity, warm tan Filipino skin tone, normal body build, forearm tattoo, and silver watch from the reference photos — the same real person with the same head-to-body proportions, not a lookalike, not more muscular. A realistic smartphone photo taken by a coworker from about four meters away at chest height, vertical: the man whole body head to feet, side three-quarter angle, mid-stride walking on the concrete pavement beside a long blue septic vacuum truck parked on a quiet Filipino street, phone in his swinging hand, face visible at three-quarter, calm expression. Plain navy blue crew-neck shirt, dark work pants, dark work shoes. The truck is plain blue with no text or markings. Flat overcast sky, natural grain, ordinary phone processing, no beauty filter, no portrait-mode blur, no text, no watermark, no logos."
+  }
+]
