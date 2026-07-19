@@ -5,6 +5,19 @@ description: Generate identity-consistent, believable images of Marvin (Kuya Mar
 
 # Marvin Avatar — identity-locked image generation
 
+## ⚠️ GENERATION LANE (decided w/ Neil 2026-07-19): GPT 5.6 Sol generates, Claude QAs
+
+**Ang PRIMARY generator ng Marvin stills ay si GPT 5.6 Sol sa ChatGPT flow ni Neil** (Sol's own skill + interactive iteration) — HINDI ang codex-image bridge sa ibaba. Head-to-head 2026-07-19: Sol 8/8 approved; Claude codex-exec lane 1/7 (lock-3b lang). Ang Claude lane sa file na ito ay para sa (a) QA/triage ng bawat still laban sa body master + hard gates, (b) emergency fallback kapag walang access si Neil kay Sol. Builder ≠ reviewer — kailanman hindi si Sol ang nagre-review ng sarili niyang output.
+
+**Canonical taste standard:** [clients/oceanides/kuya-marvin/Approved images from gpt 5.6/](../../../clients/oceanides/kuya-marvin/Approved%20images%20from%20gpt%205.6/) — 8 Neil-approved frames. Bawat bagong still ay ginagrade LABAN DITO, hindi sa ibang AI generation. Ang taste profile na lumalabas sa 8:
+
+- **Flat overcast / open-shade light lang** — NEVER golden hour, sun patches, o dramatic side-light (ito ang nagpapa-"edited/photoshop" look; ito ang bumagsak sa Claude v2/v3 rolls).
+- Simple scene: Marvin + totoong asul na vacuum truck / kalsada / bahay — hindi prop-dense authored clutter.
+- Matte, natural na skin; mukha kailanman hindi mas sharp o mas maliwanag sa katawan.
+- Selfie framing OK (approved kahit full selfie-arm sa frame); relaxed standing poses, phone sa kamay.
+- Wardrobe: navy activewear tee na may maliit na light-blue (#38B6FF) accent — APPROVED look; may totoong "OCEANIDES MALABANAN" uniform shirt din (real company branding — allowed sa IMAHE; ang "never Malabanan" hard rule ay para sa COPY/scripts).
+- Tattoo sa isang forearm + silver watch, exactly per body master; tooth gap kita sa smile.
+
 Create believable phone-camera photos of Marvin for the Kuya Marvin ng Oceanides personal brand ([workflows/oceanides_kuya_marvin_brand.md](../../../workflows/oceanides_kuya_marvin_brand.md)). Identity, current body proportions, and natural face-body integration are HARDER requirements than polish. Raw-ugc register only — never cinematic (SOP Gate 1 rule).
 
 **Root cause this skill exists:** face-only reference sets make the model INVENT the body → head reads pasted-on ("mukhang kinabit," Neil 2026-07-19, lock-2/3/4). The fix is the body-master anchor + integration block below (diagnosed by GPT 5.6 Sol, validated against our believability system).
