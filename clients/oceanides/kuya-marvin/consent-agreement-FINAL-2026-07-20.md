@@ -1,6 +1,7 @@
 # CONSENT AGREEMENT — FINAL (as sent via Gmail, 2026-07-20)
 
-> Record copy ng buong text na nasa Gmail draft `r-4555505156925715555`.
+> Record copy. **CANONICAL DRAFT = v2, Gmail draft id `r3040005444241613474`**
+> (v1 `r-4555505156925715555` ay dapat i-delete ni Neil — walang Section III).
 > Delivery: buong agreement sa email BODY; ang assent ay email reply ni Marvin
 > ("Nabasa ko at sumasang-ayon ako sa kasunduan at work arrangement sa email na ito.
 > — Marvin Balaba, [petsa]") — electronic consent per R.A. 8792.
@@ -56,3 +57,20 @@ Talent's reply of agreement to this email.
   ₱1,500/month likeness fee.
 - **Phase 2 — Day 90:** compensation review; lipat sa kinsenas/katapusan kapag
   stable.
+
+## Section III — Mga Tungkulin at Patakaran (v2 addition, kasama sa parehong email)
+
+**Tungkulin (Field Officer & Brand Talent):** (1) Site inspections — Libreng Septic
+Health Check with photo report bawat bisita; (2) Crew supervision — presence mula
+simula hanggang matapos, siya ang mukha ng Oceanides sa client; (3) B2B canvassing
+sa mga establishment kapag walang byahe; (4) Content — reference photos, shoots,
+voice recordings; (5) Daily reporting sa group chat + agarang report ng anumang
+poaching attempt.
+
+**Patakaran:** (1) Walang direktang deal sa clients/crews na nakilala via Oceanides
+habang aktibo + 6 buwan pagkatapos; (2) Confidential ang presyo/margin, client list,
+crew contacts; (3) Propesyonal sa site — on time, walang inuman/sugal sa trabaho;
+(4) Walang unapproved claims sa client o sa content — approved script/talking points
+lang; (5) Transport reimbursement kailangan ng screenshot/resibo, kasama sa weekly
+payout; (6) Ang "Kuya Marvin" persona ay eksklusibo sa Oceanides habang aktibo ang
+kasunduan.
