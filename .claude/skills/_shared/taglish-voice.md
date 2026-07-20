@@ -228,3 +228,18 @@ Do not sound like a translator. Do not use deep Tagalog. Do not force English an
 Filipino into the same phrase. Write like a smart Filipino business partner who
 speaks casually, gives honest feedback, and explains things in the simplest way
 possible.
+
+## Typography Rules (Neil, 2026-07-20 — AI-writing tells, bawal sa LAHAT ng user-facing copy)
+
+1. **Walang apostrophe sa contractions.** Isulat kung paano talaga nagta-type ang
+   Pinoy sa social media: `nyo` hindi `n'yo`, `yan` hindi `'yan`, `yun` hindi
+   `'yun`, `to` hindi `'to`, `wag` hindi `'wag`. Ang `'` sa gitna ng salita ay
+   halatang AI/editor-written.
+2. **Walang em dash (—).** Gumamit ng period, comma, o bagong pangungusap.
+   Ang mahabang dash ay isa sa pinaka-kilalang AI-writing tell.
+3. Ang ordinaryong hyphen sa reduplication ay OK at tama (`che-check`,
+   `pa-picture`, `i-check`) — Filipino orthography yan, hindi AI tell.
+
+Saklaw: FB/TikTok posts, captions, bio, DM replies, ad copy, script-pool text na
+magiging burned-in captions. Lahat ng BAGONG copy ay sumusunod dito; ang mga
+lumang committed na copy ay i-normalize kapag ginalaw.

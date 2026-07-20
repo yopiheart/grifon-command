@@ -1033,3 +1033,12 @@ role-routing, not a downgrade — verification stays on the smartest model.
 **Rule:** Think in Taglish, huwag mag-translate ng English → Tagalog. English sa business/tech terms (marketing, offer, script, content, atbp). Bawal ang deep words (samakatuwid, nararapat, upang, "ito ay", "sa pamamagitan ng", "ang iyong"). Maikli at parang sinasabi ang sentences. Ang register ay naka-scale sa surface: casual chat = relaxed; ads = punchy; business docs/legal = cleaner Taglish pero natural pa rin (ang consent agreement at katulad na legal text ay nasa "Reports/Business Documents" mode ng guide — hindi sinasalin sa slang).
 **Boundary:** Agent-authored text lang ang sakop. Ang TUNED prompts (`services/geminiService.ts`, `api/_lib/prompts.ts`) ay gumagawa rin ng Taglish scripts pero HINDI ito lisensya para galawin sila — anumang voice-guide-driven change doon ay dadaan sa normal gated proposal + gemini-eval, hindi direct edit.
 **Watch-for:** Ang mga lumang committed Taglish (prompts sa test rigs, wizard copy, docs) ay hindi bina-bulk-rewrite; i-apply ang voice sa bagong sinusulat at sa binabago lang — bulk rewrite = scope creep at gagalaw pa ang mga TUNED na bagay.
+
+## 2026-07-20 — AI-writing tells sa Taglish copy: walang `'` sa contractions, walang em dash
+
+Feedback ni Neil sa Kuya Marvin seed posts: ang `n'yo` / `'yan` style apostrophes at ang
+em dash (—) ay halatang AI-written sa mata ng Pinoy na mambabasa. Rule na ito ngayon
+(detalye sa `.claude/skills/_shared/taglish-voice.md` Typography Rules): isulat na `nyo`,
+`yan`, `yun`, `to`, `wag`; palitan ang bawat — ng period o comma. Saklaw ang lahat ng
+user-facing written copy (posts, captions, bio, DMs, ads, burned-in caption sources).
+Regular hyphen sa reduplication (`che-check`, `i-check`) ay hindi kasama, tama yan.
