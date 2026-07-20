@@ -44,7 +44,36 @@ certificate — ang B2B/compliance segment ay hindi masusulot.
 **Breakeven framing:** kapag alam na ang nut, ang tanong ay "ilang certified load ang
 katumbas nito?" — hindi "ilang residential load."
 
-## Strategy decisions (2026-07-20 CMO session — pending/approved per Neil)
+## Strategy decisions (2026-07-20 CMO session — APPROVED per Neil)
 
-_Tingnan ang session log; ang mga detalye ng offer architecture ay idaragdag dito
-kapag inaprubahan ni Neil._
+**Core repositioning: compliance business, hindi siphoning business.** Ang marketing
+firepower ay nakatutok sa B2B/DENR-certified segment (un-poachable, ₱9–12k/load);
+ang residential ay lead-gen papunta sa lusong, hindi ang produkto.
+
+**Pricing: HINDI itinaas ang sticker.** Residential stays ₱4,000 (warranty valid
+only through Oceanides — direct-sa-crew = walang resibo/habol/legal na tapunan).
+Certified: ₱12k floor, tawad ay sinasagot ng tier ("₱15k one-time; ₱12k/load kapag
+annual maintenance contract"), hindi ng discount.
+
+**Offer ladder (ascension):**
+1. HOOK — "Libreng Septic Health Check ni Kuya Marvin" (photo report; reciprocity +
+   authority; lehitimong dahilan ng site presence niya = anti-poach cover)
+2. CORE — ₱4,000 siphoning w/ 30-day warranty (Oceanides-only validity)
+3. UPSELL — lusong ₱15–50k, ibinebenta ng Health Check report evidence
+4. FLAGSHIP — "DENR Compliance Package": certified siphoning + docs + cert +
+   scheduled annual/semi-annual service, per-contract pricing, 50% downpayment
+   bago ang unang byahe. Dito nakatutok ang ads + Kuya Marvin B2B content.
+5. RETENTION — booking database + 2–3 yr residential reminders / B2B compliance cycle
+
+**Crew anti-poach (carrot + stick):** maintenance contracts = predictable byahe para
+sa crews; isang sulot = tanggal sa buong pipeline habambuhay.
+
+**Marvin comp (phased para sa runway; detalye sa
+[oceanides_kuya_marvin_brand.md](oceanides_kuya_marvin_brand.md) + final agreement):**
+Phase 0 ₱500/working day + incentives from day 1, weekly GCash; Phase 1 (₱30k gross
+collected o unang B2B downpayment) base ₱15k/month + ₱1,500 likeness fee; Day-90
+review. Day-14 checkpoint ay DELIVERABLES (pages live, content, canvassing, booked
+Health Checks) — hindi revenue; ang revenue checkpoint ay Day 45–60.
+
+**Offer Optimizer module:** gagamitin para i-value-stack ang DENR Compliance Package
+at Health Check hook (packaging layer, pagkatapos ng economics decisions dito).
