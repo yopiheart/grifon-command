@@ -33,6 +33,35 @@ You're working inside the **WAT framework** (Workflows, Agents, Tools). This arc
 
 **3. Keep workflows current.** Update workflows when you find better methods or discover constraints. Don't create or overwrite workflows without asking unless explicitly told to.
 
+## Third-Party Skill/Tool Vetting (pre-install scan gate)
+
+Before installing any THIRD-PARTY skill package, SKILL.md, or agent-facing tool (a community
+skill, an external zip like the marvin-avatar source, anything from `npx skills add ...`), scan
+it with **SkillSpector** (nvidia/skillspector — adopted 2026-07-20, see the agent_lessons.md
+decision log of that date):
+
+```powershell
+.\scripts\restore-python.ps1   # on-demand only — never in SessionStart
+python -m pip install "skillspector @ git+https://github.com/NVIDIA/skillspector.git@<pinned SHA — see agent_lessons 2026-07-20>"
+skillspector scan <target> --no-llm --format json --output .tmp/skillspector-<name>.json
+```
+
+Rules:
+- **Static-only (`--no-llm`), Claude judges the JSON inline.** The tool's LLM stage stays off
+  (no extra keys/quota); the main loop reads the report and filters false positives itself —
+  same "review stays in the Claude main loop" doctrine as PR review.
+- **HIGH/CRITICAL or DO_NOT_INSTALL → stop and show Neil the findings verbatim.** Advisory,
+  not auto-blocking — Neil stays the approver, exactly as today.
+- **Calibrate for false positives:** regex can't see negation ("Never bypass safety gates"
+  scores as a jailbreak) and flags subprocess/env access regardless of intent. Judge findings
+  in context; a high score on a capability-heavy but legitimate skill is expected.
+- **Scope honestly:** this covers skill packages only — NOT the npm/CLI supply chain pulled by
+  `restore-*.ps1`, unpinned runtime pip deps in `tools/`, or untrusted runtime content
+  (videos/images). It also cannot inspect images or binaries inside a package.
+- **No restore script, no CI, no MCP mode** until the gate has fired on ≥3 real adoption
+  events (same corroboration bar as code-review-graph). If it fires ~never, retire this
+  section.
+
 ## Decomposing Build Work: Vertical-Slice Rules
 
 CLAUDE.md already mandates "vertical slices over horizontal layers"; these rules make a slice
