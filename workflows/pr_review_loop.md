@@ -20,6 +20,11 @@ no GitHub Action running Claude and no `ANTHROPIC_API_KEY` in CI (deferred — s
 ## Tools
 
 - `mcp__github__pull_request_read` (method `get_diff`) — the diff to review.
+- `code-review-graph` CLI (pip, pinned `2.3.7` + `tree-sitter-language-pack==0.13.0`) — blast-radius
+  scoping for the critic (Procedure step 3). CLI only — do NOT register its MCP server (30 tools of
+  passive context load; violates the context-hygiene doctrine). Validated against Grep ground truth
+  2026-07-20 (3/3 known-answer tests, incl. the `generateVideo` vs `generateVideoPrompts` prefix
+  trap from [gemini_proxy_slice.md](gemini_proxy_slice.md)).
 - `Agent` tool with `subagent_type: general-purpose` — the fresh critic.
 - `mcp__github__add_issue_comment` — post the findings summary. (The `code-review` skill with
   `--comment` is the in-session alternative.)
@@ -29,13 +34,28 @@ no GitHub Action running Claude and no `ANTHROPIC_API_KEY` in CI (deferred — s
 ## Procedure
 
 1. **Fetch the diff.** `pull_request_read` → `get_diff` for the PR head. If the diff is empty or
-   huge (>~1500 changed lines), note that in the comment and review the highest-risk files first.
+   huge (>~1500 changed lines), note that in the comment and let step 3's blast-radius output set
+   the review order.
 2. **Locate the originating spec.** Find what this change was *supposed* to build: the
    `workflows/*.md` plan doc it executes, the PR body/description, the kickoff message, or the
    approved plan file. Pass it to the critic verbatim (the spec is not your build rationale — it
    predates the build, so it doesn't reintroduce self-grading bias). If no spec exists, say
    "no spec located" in the posted comment and skip the spec axis.
-3. **Spawn a fresh critic — builder ≠ reviewer.** Use the `Agent` tool, `subagent_type:
+3. **Compute the blast radius (graph, not Grep).** Give the critic a structural map of what the
+   diff can break, so scoping is mechanical instead of guesswork:
+   ```bash
+   code-review-graph build   # fresh graph first — a stale graph is the stale-diff trap in disguise (~10s)
+   code-review-graph impact --files <changed files...> --depth 1
+   code-review-graph query callers_of "<abs path>::<fn>"   # per changed exported function, as needed
+   ```
+   Hand the critic the impact output (affected files/functions, with `importers_of` results for
+   test coverage) alongside the diff. **Always `--depth 1`** — depth 2 explodes through `App.tsx`
+   (validated: 3 files at depth 1 → 229 at depth 2 for the same change). On a huge diff
+   (>~1500 lines), the impact list *replaces* the old "highest-risk files first" heuristic as the
+   review order. If the CLI is missing (fresh sandbox / post-defreezer), `pip install
+   code-review-graph tree-sitter-language-pack==0.13.0` and rebuild; if that fails, fall back to
+   the old heuristic and say so in the posted comment.
+4. **Spawn a fresh critic — builder ≠ reviewer.** Use the `Agent` tool, `subagent_type:
    general-purpose`, **blind to your build rationale** (don't paste your own justifications — that
    re-introduces the self-grading bias). Mirror the handoff shape already used in
    [../.claude/skills/brand-check/SKILL.md](../.claude/skills/brand-check/SKILL.md),
@@ -70,17 +90,17 @@ no GitHub Action running Claude and no `ANTHROPIC_API_KEY` in CI (deferred — s
 
    The critic is **report-only** — it does NOT edit. It returns findings ranked Critical / Major /
    Minor with `file:line` references, Standards and Spec findings under separate headings.
-4. **Apply the TUNED carve-out.** Tag any finding whose fix would touch tuned content —
+5. **Apply the TUNED carve-out.** Tag any finding whose fix would touch tuned content —
    `services/geminiService.ts` (prompts, schemas, model IDs, safety rules), `api/_lib/prompts.ts`
    (crown-jewel prompts), or `api/_lib/` signatures/RPC names — as **"⚠️ REQUIRES NEIL — do not
    auto-apply."** Escalate; never auto-fix or auto-approve tuned diffs (`CLAUDE.md` TUNED-file
    guardrail; `agent_lessons.md` 2026-05-09). This list is intentionally **broader** than the
    `CLAUDE.md` `/goal` guardrail (which scopes to prompt/schema content only) — it mirrors the
    fuller `services/CLAUDE.md` Hard Rules.
-5. **Post the findings** as a single PR comment via `add_issue_comment`: Standards and Spec
+6. **Post the findings** as a single PR comment via `add_issue_comment`: Standards and Spec
    sections kept separate, grouped by severity within each, each finding with `file:line` and a
    one-line fix suggestion, TUNED items clearly flagged.
-6. **Act within the babysit rules** (the PR-babysit loop — [loops.md](loops.md) Tier 5):
+7. **Act within the babysit rules** (the PR-babysit loop — [loops.md](loops.md) Tier 5):
    - Apply only **small, clearly-correct, non-TUNED** fixes, then push.
    - Anything ambiguous, architectural, or TUNED → comment + ask Neil.
    - Re-run this whole loop on each significant new push to the PR.
@@ -104,7 +124,7 @@ markdown file works) with three parts:
 1. **Intuition summary** — what changed and *why*, per module/file group, written for a
    reader on a phone who hasn't seen the diff. Lead with the user-visible behavior change.
 2. **Risk map** — what could break, which flows to watch post-merge, and any TUNED-file
-   or migration touchpoints (flag these the same way as step 4 of the Procedure).
+   or migration touchpoints (flag these the same way as step 5 of the Procedure).
 3. **Self-check quiz** — 3–5 questions at the bottom probing whether the reader could
    predict the change's behavior (answers hidden behind `<details>` toggles). Neil merges
    only once the answers hold no surprises.
@@ -121,3 +141,10 @@ markdown file works) with three parts:
 - **Full-auto is deferred.** A GitHub Action that runs Claude on every PR open (no human in the
   loop) needs an `ANTHROPIC_API_KEY` secret in CI. Adding a CI secret is a security-surface change —
   route it through `straw-man-audit` first, and get Neil's explicit go.
+- **Blast-radius step is a gated trial (adopted 2026-07-20).** Run it on the next 2–3 PRs and
+  compare critic quality/scoping with prior reviews (same ≥3-corroboration bar as the Swipe File)
+  before writing `scripts/restore-code-review-graph.ps1` or considering the tool's no-LLM GitHub
+  Action / filtered MCP server (ranked moves #2–4 in the 2026-07-20 evaluation). Known caveats from
+  validation: file-level `tests_for` returns 0 — use `importers_of` and filter `tests/` paths;
+  JSX/prop-flow edges are invisible to the call graph, so treat the impact list as a floor, not a
+  ceiling; React wiring still needs the critic's own read of the diff.
