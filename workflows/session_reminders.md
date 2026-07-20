@@ -114,47 +114,12 @@ Resume doc: `workflows/omni_edit_styles_plan.md` → **RESUME STATE** section
 Delete this section once `OMNI_STYLES_ENABLED` + `OMNI_STYLES_BETA_ALLOWLIST`
 are set in Vercel (the feature merged to main 2026-07-07, PR #47).
 
-## Dated: Fable sunset — Jul 20, 2026 2:59 PM PHT (2026-07-20T06:59Z) — EXTENDED
+## RESOLVED 2026-07-20: Fable sunset cancelled — Fable 5 permanent on Max plans
 
-**EXTENDED 2026-07-13** (Anthropic email: "Fable 5 access and increased Claude Code
-rate limits are extended through Sunday, July 19" — 11:59 PM PT = Jul 20, 2:59 PM
-PHT; starting Jul 20 all Fable 5 usage runs on usage credits. Neil-confirmed same
-day): hook deadline re-dated `202607130659 → 202607200659`. This session started
-before the old deadline fired, so the pin never flipped and stays `claude-fable-5`.
-
-**Decided 2026-07-10** (Neil + Claude — screenshot confirmed Fable 5 is included in
-plan limits until the sunset, up to 50% of weekly limits): the main-loop pin
-is back on `claude-fable-5`. The Jul 7 re-pin to Opus was premature (its
-depleted-credits premise turned out stale) and was what auto-switched Neil's sessions
-off Fable. Successor after sunset: **Opus 4.8** (main loop + checker, `/fable-mode`
-as discipline hedge). Executor/smoke pins unchanged.
-
-The handover is automated two ways; the early-exhaustion case is manual:
-
-1. **SessionStart hook** ([.claude/hooks/session-start.sh](../.claude/hooks/session-start.sh)):
-   after the deadline, flips the settings.json pin to `claude-opus-4-8` in the working
-   tree and prints a loud banner (current session may still be on Fable at prepaid API
-   rates — switch/restart, then commit the flip).
-2. **Run-once Routine** (remote, fires 2026-07-20T06:59Z): a fresh session opens a
-   one-line flip PR for Neil to merge, so origin/main is correct at the deadline.
-   **STATUS: NOT YET ARMED** — the create_trigger call needs Neil's interactive
-   approval (blocked 2026-07-10). To arm: in any remote session, say "arm the Fable
-   sunset Routine per session_reminders.md" and approve the prompt. If never armed,
-   mechanism 1 (the hook) still handles the flip on the first post-deadline session.
-3. **Manual — Fable allowance hits 100% BEFORE Jul 19** (no hook/Routine can read the
-   usage meter): check `/usage` at session start; if the Fable share (50% of weekly)
-   is exhausted, tell Claude "flip the pin to Opus" — one-line settings.json edit,
-   commit, push. Do NOT keep running Fable on prepaid credits ($10/$50 per M).
-
-**Opt back into Fable on paid credits (post-sunset).** If Neil says "balik Fable /
-flip the pin back to Fable, willing ako sa credits": (1) confirm he knows post-sunset
-Fable bills prepaid API credits (~$10 input / $50 output per M tokens) and that
-credits are loaded on the account; (2) re-pin `"model": "claude-fable-5"` in
-`.claude/settings.json`; (3) **in the SAME commit, delete the sunset flip block in
-`.claude/hooks/session-start.sh`** — its condition is "past deadline AND pin == fable
-→ flip to opus", so left alive it re-flips the pin to Opus at every session start
-and silently fights the re-pin; (4) commit + push (PR or direct, per Neil's call at
-the time).
-
-**Cleanup after the flip merges:** delete this section, the sunset block in
-session-start.sh, and re-check the CLAUDE.md usage-budget bullet says Opus 4.8.
+Anthropic announcement (@claudeai, 2026-07-18): "Beginning July 20, Claude Fable 5
+will be included in all Max and Team Premium plans, at 50% of limits." The staged
+rollout / sunset cycle is over. The sunset flip block in `session-start.sh` and the
+never-armed flip-PR Routine plan were removed 2026-07-20; the pin stays
+`claude-fable-5` indefinitely. If the Fable allowance hits 100% mid-week, run the
+rest of the week on Opus 4.8 via `/model` (no pin flip — the allowance resets
+weekly). Delete this note after a few sessions confirm the new steady state.
