@@ -33,12 +33,32 @@ export const SnapRail: React.FC<SnapRailProps> = ({
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(false);
+  // In-flight paddle destination (card index). Rapid taps chain from this, not
+  // from the interpolated scrollLeft — rounding a mid-animation position still
+  // rounds to the starting index and under-advances.
+  const pendingIndex = useRef<number | null>(null);
+
+  const cardStep = (el: HTMLDivElement) => {
+    const first = el.firstElementChild as HTMLElement | null;
+    const second = first?.nextElementSibling as HTMLElement | null;
+    // Distance between two cards = card width + gap; fall back to clientWidth.
+    return first && second
+      ? second.offsetLeft - first.offsetLeft
+      : first?.offsetWidth ?? el.clientWidth * 0.85;
+  };
 
   const update = useCallback(() => {
     const el = scrollRef.current;
     if (!el) return;
     setCanPrev(el.scrollLeft > 4);
     setCanNext(el.scrollLeft < el.scrollWidth - el.clientWidth - 4);
+    // Once the smooth scroll settles on the pending target, release it.
+    if (pendingIndex.current !== null) {
+      const step = cardStep(el);
+      if (step > 0 && Math.abs(el.scrollLeft - pendingIndex.current * step) < 2) {
+        pendingIndex.current = null;
+      }
+    }
   }, []);
 
   useEffect(() => {
@@ -47,20 +67,22 @@ export const SnapRail: React.FC<SnapRailProps> = ({
     return () => window.removeEventListener('resize', update);
   }, [update]);
 
+  // Manual drag/wheel takes over — a stale pending target must not hijack the
+  // next paddle tap.
+  const clearPending = () => {
+    pendingIndex.current = null;
+  };
+
   const paddle = (dir: 1 | -1) => {
     const el = scrollRef.current;
     if (!el) return;
-    const first = el.firstElementChild as HTMLElement | null;
-    const second = first?.nextElementSibling as HTMLElement | null;
-    // Distance between two cards = card width + gap; fall back to clientWidth.
-    const step =
-      first && second
-        ? second.offsetLeft - first.offsetLeft
-        : first?.offsetWidth ?? el.clientWidth * 0.85;
-    // Index-based target so rapid taps advance a full card each — scrollBy from a
-    // mid-animation interpolated position under-advances (browser clamps at the ends).
-    const target = (Math.round(el.scrollLeft / step) + dir) * step;
-    el.scrollTo({ left: target, behavior: reduce ? 'auto' : 'smooth' });
+    const step = cardStep(el);
+    if (step <= 0) return;
+    const maxIndex = el.children.length - 1;
+    const base = pendingIndex.current ?? Math.round(el.scrollLeft / step);
+    const next = Math.min(Math.max(base + dir, 0), maxIndex);
+    pendingIndex.current = next;
+    el.scrollTo({ left: next * step, behavior: reduce ? 'auto' : 'smooth' });
   };
 
   return (
@@ -70,6 +92,8 @@ export const SnapRail: React.FC<SnapRailProps> = ({
         <div
           ref={scrollRef}
           onScroll={update}
+          onPointerDown={clearPending}
+          onWheel={clearPending}
           className={`snaprail-scroll flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth px-4 pb-4 ${desktopClassName} ${className}`}
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
         >
