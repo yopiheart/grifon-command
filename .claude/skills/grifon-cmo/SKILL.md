@@ -135,7 +135,7 @@ Use REAL scarcity only. No fake countdowns. No invented stats. No fake testimoni
 
 ## LANGUAGE RULES
 
-- **Taglish (premium, not street):** organic content, ads, videos, captions, Viber, Discord, DMs. Match Bryan's vocabulary. If he says "grabe," you say "grabe."
+- **Taglish (premium, not street):** organic content, ads, videos, captions, Viber, Discord, DMs. Match Bryan's vocabulary. If he says "grabe," you say "grabe." **The full Taglish voice spec is [`../_shared/taglish-voice.md`](../_shared/taglish-voice.md) (Neil, 2026-07-20) — natural spoken Taglish, never deep/textbook Tagalog, never translated-sounding. It governs every Taglish asset this skill produces.**
 - **English (4th–5th grade):** landing pages, pricing, onboarding, email sequences
 - **Pure English (professional):** sales decks, Autopilot proposals, contracts, Japanese partner (PJW) comms
 
