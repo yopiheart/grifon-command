@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="tl"><head><meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root{--navy:#0E2C5E;--navy2:#0A1F45;--ocean:#1C63AD;--sky:#5AA6E6;--gold:#F5B301;--white:#fff;
+--head:'Anton','Arial Narrow',Impact,sans-serif;--body:'Inter','Helvetica Neue',Arial,sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box}html,body{background:#333}
+/* FB cover all-device canvas: 820x462 CSS (@2x -> 1640x924).
+   Desktop crop ~820x312 middle strip; mobile crop ~640x360 middle column.
+   Text block kept inside x<=760 -> visible on both. */
+#canvas{width:820px;height:462px;position:relative;overflow:hidden;font-family:var(--body);background:var(--navy2);-webkit-font-smoothing:antialiased}
+.photo{position:absolute;inset:0;overflow:hidden}
+.photo img{position:absolute;width:117%;height:117%;left:-140px;top:-30px;object-fit:cover;object-position:left 38%}
+/* right-side navy scrim for text legibility */
+.scrim{position:absolute;inset:0;background:linear-gradient(90deg, rgba(10,31,69,0) 42%, rgba(10,31,69,.62) 60%, rgba(10,31,69,.96) 76%)}
+.block{position:absolute;top:50%;transform:translateY(-50%);right:24px;width:300px;text-align:right;z-index:5}
+.eyebrow{display:inline-block;background:var(--gold);color:var(--navy2);font-weight:900;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:4px 9px;border-radius:4px;white-space:nowrap}
+h1{font-family:var(--head);font-weight:400;font-size:44px;line-height:.95;color:#fff;text-transform:uppercase;letter-spacing:.5px;margin-top:10px}
+h1 b{color:var(--gold);font-weight:400}
+.sub{font-size:14.5px;font-weight:700;color:#dfe8f5;margin-top:10px;line-height:1.35}
+.sub b{color:#fff}
+.nums{margin-top:14px;display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+.num{display:flex;align-items:center;gap:8px}
+.num .ph{width:26px;height:26px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.num .ph svg{width:14px;height:14px;fill:var(--navy2)}
+.num .no{font-size:19px;font-weight:900;color:#fff;letter-spacing:.3px}
+.num .lbl{font-size:11px;font-weight:800;color:var(--sky);letter-spacing:1.2px;text-transform:uppercase;margin-right:2px}
+.attrib{margin-top:12px;font-family:var(--head);font-size:19px;color:var(--gold);text-transform:uppercase;letter-spacing:.6px;line-height:1.1}
+</style></head><body>
+<div id="canvas">
+  <div class="photo"><img src="../kuya-marvin/profile-assets/cover-3-van-standing.png" alt=""/></div>
+  <div class="scrim"></div>
+  <div class="block">
+    <span class="eyebrow">SEC-Rehistrado &bull; May DENR Papeles</span>
+    <h1><b>Libreng</b> Septic<br/>Health Check</h1>
+    <div class="sub">Sasabihin namin ang presyo <b>bago</b> magsimula.<br/>Walang pilitan, walang gulat.</div>
+    <div class="nums">
+      <div class="num"><span class="lbl">Globe</span><span class="ph"><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.7 3.9 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.2 2.2z"/></svg></span><span class="no">0917-671-6383</span></div>
+      <div class="num"><span class="lbl">Smart</span><span class="ph"><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.7 3.9 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.2 2.2z"/></svg></span><span class="no">0939-245-6217</span></div>
+    </div>
+    <div class="attrib">"Sabihin n'yo: kay<br/>Kuya Marvin kayo."</div>
+  </div>
+</div>
+</body></html>
