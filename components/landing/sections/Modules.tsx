@@ -4,6 +4,7 @@ import { DUR } from '../../ui/motionTokens';
 import { Film, Search, Target, Type, ImageIcon } from 'lucide-react';
 import { DirectorDemo, ResearchDemo, OfferDemo, CaptionDemo, ImageDemo } from '../InclusionDemos';
 import { setIntendedModule } from '../../../services/moduleIntentService';
+import { SnapRail } from '../SnapRail';
 
 /**
  * Director AI's signature frame: a camera viewfinder — breathing gold corner
@@ -85,37 +86,43 @@ export const Modules: React.FC<ModulesProps> = ({ onEnterApp }) => (
         </ViewfinderFrame>
       </motion.div>
 
-      {/* Remaining working modules */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-        {SECONDARY_MODULES.map((module, idx) => (
-          <motion.div
-            key={module.title}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: DUR.slow, delay: idx * 0.08 }}
-            className="h-full bg-zinc-900/40 backdrop-blur-2xl border border-white/10 rounded-3xl p-6 md:p-7"
-          >
-            <module.Demo />
-            <div className="mt-5 flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500">
-              <module.icon className="w-3.5 h-3.5 text-[#FFCC00]" />
-              {module.label}
-            </div>
-            <h3 className="mt-2 text-lg font-bold text-white">{module.title}</h3>
-            <p className="mt-2 text-sm text-zinc-400 leading-relaxed">{module.desc}</p>
-            {/* Ghost text-CTA — subordinate to the page's gold CTAs (no fill). */}
-            <button
-              onClick={() => {
-                setIntendedModule(module.moduleId);
-                onEnterApp();
-              }}
-              className="mt-4 inline-flex items-center gap-1.5 text-zinc-300 hover:text-[#FFCC00] text-sm font-semibold transition-colors"
+      {/* Remaining working modules — swipe rail on mobile, 2-col grid on md+.
+          Bleed wrapper cancels the section's px so mobile cards aren't double-padded. */}
+      <div className="-mx-4 sm:-mx-6 md:mx-0">
+        <SnapRail
+          label="modules"
+          desktopClassName="md:grid md:grid-cols-2 md:gap-6 md:overflow-visible md:px-0 md:pb-0"
+        >
+          {SECONDARY_MODULES.map((module, idx) => (
+            <motion.div
+              key={module.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: DUR.slow, delay: idx * 0.08 }}
+              className="snap-center flex-shrink-0 w-[85vw] max-w-[360px] md:w-auto md:max-w-none h-full bg-zinc-900/40 backdrop-blur-2xl border border-white/10 rounded-3xl p-6 md:p-7"
             >
-              {module.cta}
-              <span aria-hidden="true">→</span>
-            </button>
-          </motion.div>
-        ))}
+              <module.Demo />
+              <div className="mt-5 flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+                <module.icon className="w-3.5 h-3.5 text-[#FFCC00]" />
+                {module.label}
+              </div>
+              <h3 className="mt-2 text-lg font-bold text-white">{module.title}</h3>
+              <p className="mt-2 text-sm text-zinc-400 leading-relaxed">{module.desc}</p>
+              {/* Ghost text-CTA — subordinate to the page's gold CTAs (no fill). */}
+              <button
+                onClick={() => {
+                  setIntendedModule(module.moduleId);
+                  onEnterApp();
+                }}
+                className="mt-4 inline-flex items-center gap-1.5 text-zinc-300 hover:text-[#FFCC00] text-sm font-semibold transition-colors"
+              >
+                {module.cta}
+                <span aria-hidden="true">→</span>
+              </button>
+            </motion.div>
+          ))}
+        </SnapRail>
       </div>
     </div>
   </section>

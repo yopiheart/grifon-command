@@ -5,6 +5,7 @@ import { ShieldCheck, Check as CheckIcon, X as XIcon, Lock as LockIcon, Star as 
 import { toast } from "sonner";
 import { AnimatedBorder } from "./ui/AnimatedBorder";
 import { SiteHeader, type SiteNavLink } from "./ui/SiteHeader";
+import { SegButton } from "./ui/SegButton";
 import { UrgencyBar } from "./ui/UrgencyBar";
 import { Marquee } from "./landing/Marquee";
 import { SignatureScribble } from "./landing/SignatureScribble";
@@ -53,6 +54,17 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
   const [activeCardIndex, setActiveCardIndex] = useState(2); // Default to Pro
   const [isCheckingOut, setIsCheckingOut] = useState<PlanId | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  // Sticky billing bar must clear the sticky UrgencyBar + SiteHeader group above it;
+  // measure that group's height so the offset stays correct across breakpoints.
+  const stickyHeaderRef = useRef<HTMLDivElement>(null);
+  const [headerH, setHeaderH] = useState(0);
+
+  useEffect(() => {
+    const measure = () => setHeaderH(stickyHeaderRef.current?.offsetHeight ?? 0);
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, []);
 
   const PLAN_IDS: Array<'free' | PlanId> = ['free', 'starter', 'pro', 'business'];
 
@@ -144,7 +156,10 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
       minHeight: "100vh",
       background: "#09090b",
       color: "#fff",
-      overflowX: "hidden",
+      // "clip" contains x-overflow WITHOUT creating a scroll container ("hidden"
+      // forces overflow-y:auto, which silently kills every sticky descendant —
+      // header group and billing bar). Matches LandingPage's overflow-x-clip.
+      overflowX: "clip",
       position: "relative",
     }}>
       <style>{`
@@ -249,7 +264,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
       <div style={{ position: "relative", zIndex: 1 }}>
 
       {/* STICKY TOP — founding urgency bar + nav */}
-      <div className="sticky top-0 z-50">
+      <div ref={stickyHeaderRef} className="sticky top-0 z-50">
         <UrgencyBar />
         <SiteHeader onEnterApp={onEnterApp} navLinks={navLinks} onLogoClick={onNavigateHome} showLogin={false} />
       </div>
@@ -323,49 +338,29 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
           </div>
         </div>
 
-        {/* ===== BILLING TOGGLE ===== */}
-        <div style={{ 
-          display: "flex", justifyContent: "center", alignItems: "center", 
-          gap: 12, marginBottom: 48, padding: "0 20px",
-        }}>
-          <div style={{
-            display: "flex",
-            background: "rgba(255,255,255,0.05)",
-            border: "1px solid rgba(255,255,255,0.1)",
-            borderRadius: 12, padding: 4,
-          }}>
-            {["monthly", "annual"].map(b => (
-              <button key={b} onClick={() => setBilling(b)} style={{
-                padding: "10px 24px",
-                borderRadius: 10,
-                border: "none",
-                background: billing === b ? "#FFCC00" : "transparent",
-                color: billing === b ? "#000" : "#71717a",
-                fontWeight: 700,
-                fontSize: 13,
-                cursor: "pointer",
-                transition: "all 0.2s",
-                textTransform: "uppercase",
-                letterSpacing: "0.05em",
-              }}>
-                {b === "monthly" ? "Monthly" : "Annual"}
-              </button>
-            ))}
+        {/* ===== BILLING TOGGLE — sticky frosted bar (clears the header group) ===== */}
+        <div
+          className="sticky z-30 mb-6 py-3 px-5 backdrop-blur-xl bg-zinc-950/70"
+          style={{ top: headerH }}
+        >
+          <div className="relative flex items-center justify-center gap-3">
+            <SegButton
+              variant="marketing"
+              value={billing}
+              onChange={setBilling}
+              options={[
+                { value: "monthly", label: "Monthly" },
+                { value: "annual", label: "Annual" },
+              ]}
+            />
+            {billing === "annual" && (
+              <span className="font-mono text-[11px] font-bold tracking-[0.1em] rounded-full px-2.5 py-1 bg-[#FFCC00]/10 text-[#FFCC00] border border-[#FFCC00]/25">
+                2 MONTHS FREE
+              </span>
+            )}
           </div>
-          {billing === "annual" && (
-            <span className="font-mono" style={{
-              background: "rgba(255,204,0,0.1)",
-              color: "#FFCC00",
-              border: "1px solid rgba(255,204,0,0.25)",
-              fontSize: 11,
-              fontWeight: 700,
-              padding: "4px 10px",
-              borderRadius: 999,
-              letterSpacing: "0.1em",
-            }}>
-              2 MONTHS FREE
-            </span>
-          )}
+          {/* Scroll-edge dissolve — content fades out under the bar instead of a hard border. */}
+          <div className="pointer-events-none absolute inset-x-0 top-full h-6 bg-gradient-to-b from-zinc-950/70 to-transparent" />
         </div>
 
         {/* ===== PRICING CARDS ===== */}

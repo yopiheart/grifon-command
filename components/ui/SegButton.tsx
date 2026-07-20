@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useId } from 'react';
+import { motion, useReducedMotion } from 'motion/react';
 import { CTRL_H, R_CTRL, T_VALUE } from './wizardTokens';
+import { SPRING, reducedMotion } from './motionTokens';
 
 // ===========================================================================
 // Pill + SegButton — the wizard's toggle controls, on the h-11 floor.
@@ -46,12 +48,51 @@ export function SegButton<T extends string>({
   onChange,
   options,
   className = '',
+  variant = 'wizard',
 }: {
   value: T;
   onChange: (v: T) => void;
   options: ReadonlyArray<Opt<T>>;
   className?: string;
+  /** 'wizard' (default, in-app h-11 Pills) or 'marketing' (rounded-full pill group
+   *  with a sliding gold thumb — landing/pricing surfaces). */
+  variant?: 'wizard' | 'marketing';
 }) {
+  const reduce = useReducedMotion();
+  const thumbId = useId();
+
+  if (variant === 'marketing') {
+    return (
+      <div className={`relative inline-flex gap-0 p-1 rounded-full bg-white/5 border border-white/10 ${className}`}>
+        {options.map((o) => {
+          const opt = typeof o === 'string' ? { value: o, label: o as React.ReactNode } : o;
+          const active = value === opt.value;
+          return (
+            <button
+              key={opt.value}
+              type="button"
+              disabled={'disabled' in opt ? opt.disabled : undefined}
+              title={'title' in opt ? opt.title : undefined}
+              onClick={() => onChange(opt.value)}
+              className={`relative overflow-visible isolate rounded-full px-6 py-2.5 text-[13px] font-bold uppercase tracking-wider transition-colors ${
+                active ? 'text-black' : 'text-zinc-500 hover:text-white'
+              }`}
+            >
+              {active && (
+                <motion.span
+                  layoutId={thumbId}
+                  transition={reducedMotion(reduce, SPRING.snappy)}
+                  className="absolute inset-0 rounded-full bg-[#FFCC00] -z-[1]"
+                />
+              )}
+              <span className="relative z-10">{opt.label}</span>
+            </button>
+          );
+        })}
+      </div>
+    );
+  }
+
   return (
     <div className={`flex gap-2 ${className}`}>
       {options.map((o) => {
