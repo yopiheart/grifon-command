@@ -49,8 +49,10 @@ supersedes the scattered "Reusable smoke setup" notes in `expert_manual_mode.md`
    **Probe the key directly (not via the app) to be sure:**
    ```bash
    KEY=$(grep '^GEMINI_API_KEY=' .env | cut -d= -f2-)
+   # probe against the app's CURRENT textModel (services/geminiService.ts) — gemini-2.0-flash
+   # 404s since ~2026-07 (retired); a 404 here means STALE MODEL, not a dead key:
    curl -s -o /dev/null -w "%{http_code}\n" -X POST \
-     "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=$KEY" \
+     "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=$KEY" \
      -H "Content-Type: application/json" -d '{"contents":[{"parts":[{"text":"hi"}]}]}'
    ```
    `200` = good to spend. `429` with `free_tier_requests, limit: 0` = billing off → escalate to
