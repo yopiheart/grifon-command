@@ -96,7 +96,29 @@ Personal brand para sa Oceanides: **"Kuya Marvin ng Oceanides"** — si Marvin B
 - `clients/oceanides/kuya-marvin/consent-agreement-template.docx` — 1-page likeness/AI consent (fill-ins: company legal name, compensation, post-termination content choice). ✅ 2026-07-18 — emailed to Marvin via Gmail draft; awaiting signed copy.
 - Accounts (TikTok + FB Page) — PAGKATAPOS lang pumasa ang Gate 1. _(pending)_
 
-## RESUME STATE (2026-07-20 session end — MALAKING ARAW: consent EXECUTED, Gate 1 GO)
+## RESUME STATE (2026-07-20 GABI session end — PAGES LIVE, unang FB posts NA-POST na)
+
+**Tapos ngayong session (huwag nang ulitin):**
+
+- ✅ **FB Page LIVE at may laman: `facebook.com/kuyamarvin.oceanides`** — name/bio/specialties/credentials set (CMO fill-ins), profile pic = `profile-4-fullteeth-van.png`, cover = `cover-3-with-text.png` (Anton navy+gold overlay: Libreng Health Check + numbers + attribution line). **3 seed posts NA-POST na ni Neil** (pinned trust + 5-senyales + libreng health check; drafts na sumunod sa bagong typography rules). Botcake comment moderation naka-set (phone-number hide ON = anti-sulot; "kanal/canal" TINANGGAL sa keywords — customer language yun, hindi insult).
+- ✅ **TikTok account created na rin** (setup details i-verify next session).
+- ✅ **Consent/follow-up/tracker lahat verified tapos**; insurance = usapan next month.
+- ✅ **Comp FINAL:** commission-only tiered (res tig-₱250 / certified tig-₱1,000 / lusong tig-5%) + ₱5k residential ANCHOR (tawad room hanggang ₱4–4.5k, 30-day watch clause). Nasa business-model doc.
+- ✅ **Schwartz adopted:** `awareness` tags sa script-pool, Awareness Ladder sa grifon-cmo skill, **B2B "Compliance-Pressured Paolo" avatar** sa market-research doc (RA 9275 grounding).
+- ✅ **Offer Optimizer run tapos** (2 tracks) — output + CMO triage sa `clients/oceanides/offer-optimizer-denr-2026-07-20.md`. **3 PENDING RULINGS ni Neil:** (1) Run B ₱9.5k ay below ₱12k floor → i-restore floor; (2) inimbentong penalty-payment guarantees → tanggapin ba ang liability?; (3) paid ₱497 tripwire vs LIBRENG Health Check → reco: manatiling libre.
+- ✅ **Typography rules (PERMANENT):** walang `'` sa contractions (nyo/yan/yun/to/wag) + walang em dash sa lahat ng user-facing copy — nasa `_shared/taglish-voice.md` + agent_lessons; script-pool normalized na.
+- ✅ **Post images:** `post2-inspection(-4x5)`, `post3-selfie-jobsite(-4x5)` (v1 = pick ni Neil; may maliit na tattoo mark sa watch arm — kilala ni Neil ang trade-off; `-v2` = clean-arm alt), `post3-selfie-gate(-4x5)` extra asset. LESSON: bawat generation roll may SARILING filename — huwag mag-overwrite (muntik mawala ang v1; na-recover sa codex cache, na ephemeral sa defreezer).
+
+**NEXT SESSION, dito magsimula:**
+
+1. **Page launch follow-through (i-verify kung nagawa na ni Neil):** Call Now action button; Messenger greeting + auto-reply (may "Saan nyo po kami nakita?" attribution question); referrer GC invite wave (pagkatapos lang buo ang page).
+2. **TikTok profile setup:** profile pic (pwede `post3-selfie-gate` para hindi identical sa FB, o `profile-4`), bio, handle `@kuyamarvin.oceanides`.
+3. **UNANG 2-WEEK LANE A BATCH (ang malaking piraso):** 4 talking videos mula script-pool (2/week; balansehin ang awareness tags) — close-up neutral plate, `veo-3.1-lite-generate-preview`, expression lock, AI label bago i-publish. + 1 Lane B brief kay Marvin (totoong jobsite clips, 30-sec phone shots).
+4. **Neil rulings** sa 3 Offer Optimizer items (itaas) → tapos i-final ang DENR package copy.
+5. **Ads budget/month** ang huling unknown → i-final ang breakeven sa business-model doc.
+6. **Phase 0 Day 1 ni Marvin** — schedule + unang canvassing/content day coordination.
+
+Legacy state (2026-07-20 umaga — consent EXECUTED, Gate 1 GO):
 
 **Verification pass 2026-07-20 (bagong session, kinumpirma ni Neil):**
 
