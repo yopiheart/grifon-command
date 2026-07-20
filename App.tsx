@@ -56,6 +56,7 @@ import {
   verifyEmailOtp,
 } from './services/supabaseClient';
 import { popIntendedPlan, peekIntendedPlan, saveIntendedPlan, startCheckout } from './services/billingService';
+import { popIntendedModule } from './services/moduleIntentService';
 import { grant as grantMarketingConsent, getMarketingConsent } from './services/consentService';
 import { POLICY_VERSION, isKnownPolicyVersion } from './services/consentConstants';
 import { ConsentBanner } from './components/ui/ConsentBanner';
@@ -122,6 +123,16 @@ const ROUTE_PATHS: Record<Route, string> = {
   support: '/support',
 };
 
+// Landing task-specific CTAs deep-link into these modules via moduleIntentService.
+// Allowlist so a stale/tampered sessionStorage value can never route to an
+// unexpected activeModule. Ids match the strings the activeModule switch uses.
+const INTENT_MODULE_IDS = new Set(['market_research', 'offer_optimizer', 'caption_headline', 'image_ads']);
+
+// Plausible-email gate for the signup field: enables the CONTINUE button and
+// drives the on-blur format hint. Intentionally loose (not RFC-perfect) — just
+// enough to catch typos before we burn an OTP send. Submit-time guards stay.
+const isPlausibleEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
+
 const App: React.FC = () => {
   const [currentRoute, setCurrentRoute] = useState<Route>(detectInitialRoute);
   // When a legal page is opened from checkout OR the auth gateway, remember the
@@ -151,6 +162,9 @@ const App: React.FC = () => {
         </PlanGate>
       );
   const [authEmail, setAuthEmail] = useState('');
+  // Set true once the email field is blurred, so the format hint only shows
+  // after the user has left the field (not while mid-type).
+  const [emailTouched, setEmailTouched] = useState(false);
   // Passwordless email OTP: the 6-digit code the user types from their email.
   const [authCode, setAuthCode] = useState('');
   // Retargeting/marketing consent opt-in on the signup form. Unchecked by
@@ -442,6 +456,16 @@ const App: React.FC = () => {
 
     return () => { sub.subscription.unsubscribe(); };
   }, []);
+
+  // Intent-preserving module deep-link (landing task-specific CTAs). Runs BEFORE
+  // the billing resume so a pending plan checkout always wins: if a plan intent
+  // is still queued we bail and let the checkout effect below navigate away.
+  useEffect(() => {
+    if (!isAuthenticated) return;
+    if (peekIntendedPlan()) return;
+    const mod = popIntendedModule();
+    if (mod && INTENT_MODULE_IDS.has(mod)) setActiveModule(mod);
+  }, [isAuthenticated]);
 
   useEffect(() => {
     if (!isAuthenticated) return;
@@ -736,11 +760,15 @@ const App: React.FC = () => {
   // isAuthenticated + drives the boot). Fire the Lead pixel only on a genuine
   // first signup — trackPixel self-guards against the consent gate (no-ops until
   // the pixel was initialized via consent).
-  const handleVerifyOtp = async (e: React.FormEvent) => {
-    e.preventDefault();
+  // Callable core of the OTP verify (no event arg) so both the form submit and
+  // the auto-verify-on-6th-digit path can drive it. Pass the code explicitly
+  // (codeArg) from the onChange handler — React state is async, so reading
+  // authCode there would be one keystroke stale. Falls back to authCode for the
+  // manual button submit.
+  const verifyOtpCode = async (codeArg?: string) => {
     setAuthError('');
     setAuthNotice('');
-    const code = authCode.trim();
+    const code = (codeArg ?? authCode).trim();
     if (code.length < 6) {
       setAuthError('Enter the 6-digit code from your email.');
       return;
@@ -756,6 +784,11 @@ const App: React.FC = () => {
     } finally {
       setIsSigningIn(false);
     }
+  };
+
+  const handleVerifyOtp = (e: React.FormEvent) => {
+    e.preventDefault();
+    verifyOtpCode();
   };
 
   const handleResendOtp = async () => {
@@ -1235,21 +1268,33 @@ const App: React.FC = () => {
                       <span className="flex items-center gap-1"><Check className="w-3 h-3 shrink-0 text-[#FFCC00]" strokeWidth={2.5} /> No credit card</span>
                       <span className="flex items-center gap-1"><Check className="w-3 h-3 shrink-0 text-[#FFCC00]" strokeWidth={2.5} /> Cancel anytime</span>
                     </div>
-                    <Input
-                      id="signup-email"
-                      type="email"
-                      label="EMAIL"
-                      placeholder="your@email.com"
-                      value={authEmail}
-                      onChange={(e) => setAuthEmail(e.target.value)}
-                      required
-                    />
+                    <div>
+                      <Input
+                        id="signup-email"
+                        type="email"
+                        label="EMAIL"
+                        placeholder="your@email.com"
+                        value={authEmail}
+                        onChange={(e) => setAuthEmail(e.target.value)}
+                        onBlur={() => setEmailTouched(true)}
+                        required
+                      />
+                      {/* Field-level format hint — only after blur, only for a
+                          non-empty invalid value. Clears the instant the email
+                          parses. Distinct from the big authError box below. */}
+                      {emailTouched && authEmail.trim() !== '' && !isPlausibleEmail(authEmail) && (
+                        <p className="text-red-400/90 text-[10px] font-mono tracking-widest uppercase mt-1.5">
+                          // CHECK YOUR EMAIL — e.g. juan@business.com
+                        </p>
+                      )}
+                    </div>
                     {/* Affirmative, unchecked-by-default retargeting opt-in. Optional — does
-                        not gate signup. Drives api/consent (see consentService). Wrapped in a
-                        gold-tinted "perk" card for PROMINENCE (lifts the tick rate) — only the
-                        styling is loud; the box stays UNCHECKED by default, so the consent is
-                        still a deliberate, compliant action (no pre-tick). */}
-                    <label htmlFor="signup-marketing" className="group flex items-start gap-3 cursor-pointer select-none text-left rounded-xl border border-[#FFCC00]/30 bg-[#FFCC00]/[0.06] p-3 hover:border-[#FFCC00]/60 hover:bg-[#FFCC00]/[0.09] transition-colors">
+                        not gate signup. Drives api/consent (see consentService). The CONTAINER
+                        is deliberately quiet now (neutral hairline, no gold glow) so it reads as
+                        an optional extra between the field and the CTA, not a required step. The
+                        consent mechanics are unchanged: the box stays UNCHECKED by default, so
+                        ticking it is still a deliberate, compliant action (no pre-tick). */}
+                    <label htmlFor="signup-marketing" className="group flex items-start gap-3 cursor-pointer select-none text-left rounded-xl border border-white/10 bg-white/[0.02] p-2.5 hover:border-white/20 transition-colors">
                       <span className="relative flex items-center justify-center mt-0.5 shrink-0">
                         <input
                           id="signup-marketing"
@@ -1282,7 +1327,7 @@ const App: React.FC = () => {
                     {authNotice && (
                       <p className="text-[#FFCC00] text-sm font-mono text-center border border-yellow-900/40 bg-yellow-900/10 p-2 rounded-xl">{authNotice}</p>
                     )}
-                    <GoldButton type="submit" className="w-full justify-center py-3 md:py-4" disabled={isSigningIn}>
+                    <GoldButton type="submit" className="w-full justify-center py-3 md:py-4 disabled:opacity-40" disabled={isSigningIn || !isPlausibleEmail(authEmail)}>
                       {isSigningIn ? 'SENDING CODE...' : 'CONTINUE WITH EMAIL'}
                     </GoldButton>
                     {/* Passive Terms/Privacy acknowledgment (Claude/Cursor pattern). Distinct
@@ -1318,7 +1363,18 @@ const App: React.FC = () => {
                       label="VERIFICATION CODE"
                       placeholder="123456"
                       value={authCode}
-                      onChange={(e) => setAuthCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                      onChange={(e) => {
+                        const cleaned = e.target.value.replace(/\D/g, '').slice(0, 6);
+                        // Fire auto-verify only on the transition INTO a full
+                        // 6-digit code (prev < 6), never on every keystroke once
+                        // complete, and never while a verify is already inflight.
+                        const wasIncomplete = authCode.length < 6;
+                        setAuthCode(cleaned);
+                        if (cleaned.length === 6 && wasIncomplete && !isSigningIn) {
+                          // Pass the cleaned value directly — setAuthCode is async.
+                          verifyOtpCode(cleaned);
+                        }
+                      }}
                       maxLength={6}
                       required
                     />
