@@ -96,7 +96,17 @@ Personal brand para sa Oceanides: **"Kuya Marvin ng Oceanides"** — si Marvin B
 - `clients/oceanides/kuya-marvin/consent-agreement-template.docx` — 1-page likeness/AI consent (fill-ins: company legal name, compensation, post-termination content choice). ✅ 2026-07-18 — emailed to Marvin via Gmail draft; awaiting signed copy.
 - Accounts (TikTok + FB Page) — PAGKATAPOS lang pumasa ang Gate 1. _(pending)_
 
-## RESUME STATE (2026-07-19 session end)
+## RESUME STATE (2026-07-20 session end — MALAKING ARAW: consent EXECUTED, Gate 1 GO)
+
+**Next session, dito magsimula:**
+
+1. **Neil manual steps na baka tapos na (i-verify lang):** (a) tracker v2 uploaded sa Drive → Save as Google Sheets → shared kay Marvin (source: `clients/oceanides/kuya-marvin/tracker/kuya-marvin-tracker.xlsx`, regenerable via `build-tracker.mjs` — kailangan ng exceljs install); (b) follow-up email na-send na kay Marvin galing OCEANIDES account (draft "[COPY-PASTE MO ITO]" sa personal Gmail ni Neil — schedule Lun-Sab/Linggo off, group-chat attendance, commission-on-collection, cash rule, ₱300 load, insurance) + "Noted" reply ni Marvin; (c) accident insurance ni Marvin (~₱1-2k/yr) — binili na ba?
+2. **Gate 1 GO execution:** Neil gumawa ng TikTok + FB Page → tapos profile assets via gpt-image-2/marvin-avatar lane → unang 2-week batch mula script pool. Day 1 ni Marvin = Phase 0 launch sprint (₱500/day, Day-14 deliverables checkpoint).
+3. **Breakeven math** — hinihintay pa ang 3 numbers ni Neil (sweldo ni Zam, draw niya, ads budget/month) → i-fill ang `workflows/oceanides_business_model.md` nut section.
+4. **Offer Optimizer run** sa DENR Compliance Package (approved offer ladder sa business-model doc) — B2B ang priority ng ads/content.
+5. Loose end: may DELETED files sa working tree na hindi galing sa agent (`websiteinspodesigns/` — 4 files); Neil hindi pa nakumpirma kung sinadya. Huwag i-commit hangga't hindi malinaw.
+
+Legacy state (2026-07-19):
 
 - **GATE 1 = GO (pormal, Neil 2026-07-20).** Next execution: account creation (TikTok + FB Page) + profile assets (gpt-image-2 lane per marvin-avatar skill) + unang 2-week batch mula sa script pool.
 - **Consent status KOREKSYON (2026-07-20):** ang "emailed via Gmail draft ✅ 2026-07-18" ay HINDI pala tumuloy — walang sent email o draft sa Gmail (hinanap 2026-07-20). Hindi pa hawak ni Marvin ang agreement. Desisyon ni Neil: **email-reply consent ang path** (walang print/pirma) — valid ito bilang electronic consent sa PH (RA 8792 E-Commerce Act). **FINALIZED 2026-07-20:** buong agreement + work arrangement ay nasa BODY ng Gmail draft (id `r-4555505156925715555`, subject "Kasunduan — Kuya Marvin ng Oceanides") — mas malakas na evidence kaysa attachment dahil ang terms at ang assent reply ay nasa iisang thread. Fills: company = Oceanides Plumbing Siphoning & Pest Management Services OPC; likeness fee ₱1,500/month simula Phase 1, hiwalay sa field-work pay; post-termination = remain published (may Section 3 objection right pa rin). Kopya ng buong final text: [`clients/oceanides/kuya-marvin/consent-agreement-FINAL-2026-07-20.md`](../clients/oceanides/kuya-marvin/consent-agreement-FINAL-2026-07-20.md). **Walkthrough artifact (screen-share kay Marvin, Oceanides navy+gold):** `https://claude.ai/code/artifact/1d1745d8-ac19-424a-82a9-5b01efc9c40a` — i-update via Artifact tool `url` param, huwag mag-mint ng bago. **Si Neil na lang:** palitan ang recipient (placeholder = sarili niyang email) ng totoong email ni Marvin → i-walk through in person → send → hintayin ang reply-to-agree bago ang unang live post.
