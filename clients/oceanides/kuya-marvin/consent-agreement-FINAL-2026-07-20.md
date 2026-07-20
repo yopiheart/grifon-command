@@ -1,7 +1,11 @@
 # CONSENT AGREEMENT — FINAL (as sent via Gmail, 2026-07-20)
 
-> Record copy. **CANONICAL DRAFT = v2, Gmail draft id `r3040005444241613474`**
-> (v1 `r-4555505156925715555` ay dapat i-delete ni Neil — walang Section III).
+> Record copy. **CANONICAL DRAFT = v3, Gmail draft id `r-4633034824256023912`**
+> — natural-Taglish voice pass per `.claude/skills/_shared/taglish-voice.md`
+> (legal clauses I.1–7 ay nanatiling clean English; Taglish sections lang ang
+> nilinis). I-delete ni Neil ang v1 `r-4555505156925715555` at v2
+> `r3040005444241613474`. Ang substance (fills, phases, rules) ay IDENTICAL sa
+> nakadokumento dito — wording register lang ang nagbago.
 > Delivery: buong agreement sa email BODY; ang assent ay email reply ni Marvin
 > ("Nabasa ko at sumasang-ayon ako sa kasunduan at work arrangement sa email na ito.
 > — Marvin Balaba, [petsa]") — electronic consent per R.A. 8792.
