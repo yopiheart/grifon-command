@@ -32,3 +32,5 @@ Either way: record the decision + date below, update the CLAUDE.md model-allocat
 ## Decision
 
 _(pending — fill after ≥3 logged tasks)_
+
+**When closing this gate, also action the parked `openai/codex-plugin-cc` decision** (see agent_lessons.md 2026-07-20, HOLD entry): ADOPT → open a second gated trial (plugin as transport under `execute.mjs` + `/codex:adversarial-review` as advisory-only cross-model lens on Claude-built diffs, pending Neil's doctrine-carve-out sign-off; Stop-hook gate and `/codex:transfer` stay rejected). DROP → plugin is moot, never revisit.
