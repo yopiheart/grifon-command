@@ -120,6 +120,22 @@ Anthropic announcement (@claudeai, 2026-07-18): "Beginning July 20, Claude Fable
 will be included in all Max and Team Premium plans, at 50% of limits." The staged
 rollout / sunset cycle is over. The sunset flip block in `session-start.sh` and the
 never-armed flip-PR Routine plan were removed 2026-07-20; the pin stays
-`claude-fable-5` indefinitely. If the Fable allowance hits 100% mid-week, run the
-rest of the week on Opus 4.8 via `/model` (no pin flip — the allowance resets
-weekly). Delete this note after a few sessions confirm the new steady state.
+`claude-fable-5` indefinitely.
+
+Details from the support article
+(https://support.claude.com/en/articles/15424964-claude-fable-5-on-your-plan):
+
+- The 50% is NOT extra allowance — all models draw from the same weekly pool;
+  Fable may consume up to half of it.
+- **Credits trap:** when the Fable share is exhausted, Fable can CONTINUE on
+  pay-as-you-go credits — it does not hard-stop. If `/usage` shows the Fable share
+  at 100%, actively `/model` to Opus 4.8 for the rest of the week (allowance
+  resets weekly; no pin flip needed). Do not keep running Fable on credits
+  unnoticed.
+- Claude Code needs v2.1.170+ for Fable.
+- Transition note (2026-07-20): the old promo window expired 2:59 PM PHT the same
+  day the new included-at-50% terms took effect; Neil hit a transient model-switch
+  block around the cutover and had to re-select `/model claude-fable-5` manually.
+  One-time event, no action needed.
+
+Delete this note after a few sessions confirm the new steady state.
