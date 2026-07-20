@@ -1,5 +1,17 @@
 # CONSENT AGREEMENT — FINAL (as sent via Gmail, 2026-07-20)
 
+## ✅ EXECUTED — 2026-07-20, 3:31 PM
+
+**Naipadala** 3:30 PM (thread subject: "Agreement - Oceanides Contract", mula sa
+Oceanides account). **Tinanggap ni Dan Marvin Balaba** 3:31 PM, email reply verbatim:
+
+> "Nabasa ko at sumasang-ayon ako sa kasunduan, work arrangement, at mga tungkulin
+> at patakaran sa email na ito. — Marvin Balaba, July 20, 2026"
+
+Effective date = 2026-07-20. Ang Gmail thread ang legal na ebidensya (R.A. 8792) —
+**huwag i-delete; i-archive at i-label.** Consent blocker sa live posting: CLEARED.
+Talent's full legal name per email account: **Dan Marvin Balaba**.
+
 > Record copy. **CANONICAL DRAFT = v3, Gmail draft id `r-4633034824256023912`**
 > — natural-Taglish voice pass per `.claude/skills/_shared/taglish-voice.md`
 > (legal clauses I.1–7 ay nanatiling clean English; Taglish sections lang ang
