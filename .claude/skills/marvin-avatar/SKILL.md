@@ -12,11 +12,11 @@ description: Generate identity-consistent, believable images of Marvin (Kuya Mar
 **Canonical taste standard:** [clients/oceanides/kuya-marvin/Approved images from gpt 5.6/](../../../clients/oceanides/kuya-marvin/Approved%20images%20from%20gpt%205.6/) — 8 Neil-approved frames. Bawat bagong still ay ginagrade LABAN DITO, hindi sa ibang AI generation. Ang taste profile na lumalabas sa 8:
 
 - **Flat overcast / open-shade light lang** — NEVER golden hour, sun patches, o dramatic side-light (ito ang nagpapa-"edited/photoshop" look; ito ang bumagsak sa Claude v2/v3 rolls).
-- Simple scene: Marvin + totoong asul na vacuum truck / kalsada / bahay — hindi prop-dense authored clutter.
+- Simple scene: Marvin + company vehicle / kalsada / bahay — hindi prop-dense authored clutter. **VEHICLE RULE (Neil, 2026-07-20): ang totoong sasakyan ng Oceanides ay white cab + silver aluminum CLOSED VAN (ref: `clients/oceanides/assets/Aluminum-C-VAN-6-Wheeler-Truck-14-m.jpg` — ipasa bilang PANGATLONG `--edit` ref na may explicit input-role line, "do NOT turn it into a tanker"). Ang asul na vacuum tanker sa mga lumang approved frames ay RETIRED sa Marvin content — walang ganoong truck ang Oceanides, believability/truth risk.**
 - Matte, natural na skin; mukha kailanman hindi mas sharp o mas maliwanag sa katawan.
 - Selfie framing OK (approved kahit full selfie-arm sa frame); relaxed standing poses, phone sa kamay.
 - Wardrobe: navy activewear tee na may maliit na light-blue (#38B6FF) accent — APPROVED look; may totoong "OCEANIDES MALABANAN" uniform shirt din (real company branding — allowed sa IMAHE; ang "never Malabanan" hard rule ay para sa COPY/scripts).
-- Tattoo sa isang forearm + silver watch, exactly per body master; tooth gap kita sa smile.
+- Tattoo sa isang forearm + silver watch, exactly per body master. **TEETH RULE (Neil, 2026-07-20): COMPLETE, even teeth sa bawat smiling render — HUWAG i-reproduce ang tooth gap ng reference.** Ilagay sa prompt bilang explicit override sa face-ref input-role line ("render his smile with COMPLETE, even, natural teeth; do NOT reproduce the gap").
 
 Create believable phone-camera photos of Marvin for the Kuya Marvin ng Oceanides personal brand ([workflows/oceanides_kuya_marvin_brand.md](../../../workflows/oceanides_kuya_marvin_brand.md)). Identity, current body proportions, and natural face-body integration are HARDER requirements than polish. Raw-ugc register only — never cinematic (SOP Gate 1 rule).
 
@@ -29,9 +29,9 @@ All under [clients/oceanides/kuya-marvin/refs/](../../../clients/oceanides/kuya-
 - `marvin-ref-5-body-master.jpg` — **mandatory in every generation.** Source of truth for body, head-to-body ratio, neck, shoulders, torso, arms, forearm tattoo, wrist watch.
 - `marvin-ref-1-front-neutral.jpg` — front face, neutral/mild expression.
 - `marvin-ref-2-three-quarter.jpg` / `marvin-ref-3-three-quarter-b.jpg` — three-quarter face angle.
-- `marvin-ref-4-front-smiling.jpg` — teeth-visible smile (note: his real smile has a small upper-front tooth gap — it is identity-carrying; keep it).
+- `marvin-ref-4-front-smiling.jpg` — teeth-visible smile. (Ang totoong ngiti niya ay may maliit na upper-front tooth gap, pero per Neil 2026-07-20: **complete teeth sa lahat ng render** — see TEETH RULE sa taste profile.)
 
-**Exactly 2 refs per generation:** body master + the ONE face ref matching the requested angle/expression. Never chain an AI output as a reference; if a result drifts, restart from the originals with ONE targeted correction (see the retry blocks in Sol's original prompt-template.md inside the archived zip).
+**2 identity refs per generation:** body master + the ONE face ref matching the requested angle/expression. (**Exception:** ang vehicle ref ay pwedeng PANGATLONG `--edit` kapag kasama ang company van sa eksena — scene ref ito, hindi identity ref; laging may sariling input-role line.) Never chain an AI output as a reference; if a result drifts, restart from the originals with ONE targeted correction (see the retry blocks in Sol's original prompt-template.md inside the archived zip).
 
 ## Two modes
 

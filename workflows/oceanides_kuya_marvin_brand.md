@@ -98,13 +98,20 @@ Personal brand para sa Oceanides: **"Kuya Marvin ng Oceanides"** — si Marvin B
 
 ## RESUME STATE (2026-07-20 session end — MALAKING ARAW: consent EXECUTED, Gate 1 GO)
 
-**Next session, dito magsimula:**
+**Verification pass 2026-07-20 (bagong session, kinumpirma ni Neil):**
 
-1. **Neil manual steps na baka tapos na (i-verify lang):** (a) tracker v2 uploaded sa Drive → Save as Google Sheets → shared kay Marvin (source: `clients/oceanides/kuya-marvin/tracker/kuya-marvin-tracker.xlsx`, regenerable via `build-tracker.mjs` — kailangan ng exceljs install); (b) follow-up email na-send na kay Marvin galing OCEANIDES account (draft "[COPY-PASTE MO ITO]" sa personal Gmail ni Neil — schedule Lun-Sab/Linggo off, group-chat attendance, commission-on-collection, cash rule, ₱300 load, insurance) + "Noted" reply ni Marvin; (c) accident insurance ni Marvin (~₱1-2k/yr) — binili na ba?
-2. **Gate 1 GO execution:** Neil gumawa ng TikTok + FB Page → tapos profile assets via gpt-image-2/marvin-avatar lane → unang 2-week batch mula script pool. Day 1 ni Marvin = Phase 0 launch sprint (₱500/day, Day-14 deliverables checkpoint).
-3. **Breakeven math** — hinihintay pa ang 3 numbers ni Neil (sweldo ni Zam, draw niya, ads budget/month) → i-fill ang `workflows/oceanides_business_model.md` nut section.
+1. ✅ **Tracker v2 shared na** — uploaded sa Drive as Google Sheets, shared kay Marvin.
+2. ✅ **Follow-up email SENT + "Noted, agree ako dito" na si Marvin** (via OCEANIDES account thread "Agreement - Oceanides Contract"). Kumpleto na ang documented work arrangement: consent + comp + schedule/attendance/commission rules — lahat may assent reply.
+3. ⏸️ **Accident insurance DEFERRED** — pag-uusapan next month (hindi blocker sa launch, pero nasa follow-up email ang pangako, kaya dapat matupad bago mag-heavy field phase).
+4. ✅ **`websiteinspodesigns/` loose end RESOLVED** — sinadya ni Neil; removal committed (`3c5ae16`).
+5. 🧹 **Gmail cleanup para kay Neil:** 3 STALE drafts pa sa personal Gmail (2× "Kasunduan" 06:11/06:47 + 1× "[COPY-PASTE MO ITO]" 07:49) — tapos na ang mission ng lahat (consent + follow-up ay na-execute sa Oceanides account thread); pwede nang burahin. Ang lumang SOP note na nakaturo sa draft id `r-4555505156925715555` ay obsolete na — ang actual na na-send ay ang v3 text sa Oceanides thread.
+
+**Natitirang next steps:**
+
+1. **Gate 1 GO execution:** Neil gumawa ng TikTok + FB Page → profile assets via gpt-image-2/marvin-avatar lane (IN PROGRESS this session) → unang 2-week batch mula script pool. Day 1 ni Marvin = Phase 0 launch sprint (₱500/day, Day-14 deliverables checkpoint).
+2. **Neil/Zam comp model** — 2026-07-20 proposal ni Neil: commission-only (₱5k/load standard, ₱500 bawat isa kada load, walang salary). Assessment + counter-structure sa `workflows/oceanides_business_model.md` — PENDING Neil decision.
+3. **Breakeven math** — kapag desidido na ang comp model; ads budget/month ang natitirang unknown.
 4. **Offer Optimizer run** sa DENR Compliance Package (approved offer ladder sa business-model doc) — B2B ang priority ng ads/content.
-5. Loose end: may DELETED files sa working tree na hindi galing sa agent (`websiteinspodesigns/` — 4 files); Neil hindi pa nakumpirma kung sinadya. Huwag i-commit hangga't hindi malinaw.
 
 Legacy state (2026-07-19):
 

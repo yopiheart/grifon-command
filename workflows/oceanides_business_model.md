@@ -33,16 +33,51 @@ para mag-septic check at bantayan ang crew sa lokasyon. Structural na sagot (hin
 bantay): poaching risk is inversely proportional sa pangangailangan ng client sa
 certificate — ang B2B/compliance segment ay hindi masusulot.
 
-## Fixed monthly nut (fill in — kailangan sa breakeven math)
+## Fixed monthly nut (kailangan sa breakeven math)
 
 - Marvin (base + incentives): _see comp structure sa brand doc / consent agreement_
-- Zam salary: _₱?_
-- Neil draw: _₱?_
-- Ads budget: _₱?/month_
+  — Phase 0 ≈ ₱12–15k/mo (₱500 × ~24 days + transport); Phase 1 ≈ ₱16.5k + incentives
+- Zam: **₱0 fixed** — commission-only (proposal sa ibaba, PENDING final structure)
+- Neil draw: **₱0 fixed** — commission-only (same)
+- Ads budget: _₱?/month_ ← **huling unknown**
 - API/tooling (content + ads gen): _₱?/month_
 
 **Breakeven framing:** kapag alam na ang nut, ang tanong ay "ilang certified load ang
-katumbas nito?" — hindi "ilang residential load."
+katumbas nito?" — hindi "ilang residential load." Sa commission-only model, ang nut ay
+halos si Marvin + ads lang → **~2 certified loads/month ang tumatabon kay Marvin**
+(net per certified load ≈ ₱7–10k pagkatapos ng Marvin ₱250 + owner overrides).
+
+## Neil/Zam comp — commission-only proposal (2026-07-20, PENDING Neil decision)
+
+**Proposal ni Neil:** itaas ang residential ₱4,000 → ₱5,000/load standard; sa bawat
+byahe, tig-₱500 si Neil at Zam (₱1,000 total kada load); walang salary/draw — puro
+commission na sila.
+
+**Agent assessment:**
+
+- ✅ **ENDORSED ang core instinct** — commission-only para kay Neil+Zam ay tama para
+  sa runway: zero fixed nut, sahod lumalabas lang kapag may kita. Ito ang tamang
+  startup posture.
+- ❌ **HINDI endorsed ang funding source (₱5k residential sticker):**
+  1. Kontra sa same-day approved decision ("Pricing: HINDI itinaas ang sticker").
+  2. Ang math ay zero-sum: sa ₱5k, gross ₱2,000–2,500 − ₱1,000 override = ₱1,000–1,500
+     sa company — EKSAKTONG pareho ng ₱4k ngayon. Ang taas-presyo ay pambayad lang sa
+     override; walang napupunta sa company.
+  3. **Pinapalakas ang sulot problem:** lumalaki ang gap vs direct-sa-crew (~₱2.5–3k)
+     mula ~₱1–1.5k papuntang ~₱2–2.5k — mas malakas ang tukso ng client na dumiretso.
+     Ang residential ay ang price-shopping, poachable segment.
+  4. **Incentive misalignment:** ang flat ₱500/truckload ay nagbabayad sa VOLUME ng
+     byahe (residential-heavy) — pero ang approved strategy ay "compliance business":
+     ang pera ay nasa B2B certified + lusong. Ang comp ang dapat tumuro doon.
+- **Counter-structure (commission-only pa rin, pero naka-tier kung nasaan ang margin):**
+  | Product | Override (Neil + Zam, tig-) | Naiiwan sa company |
+  |---|---|---|
+  | Residential ₱4,000 (unchanged) | ₱250 each | ₱500–1,000/load |
+  | Certified B2B load | ₱1,000 each | ₱7,000–10,000/load |
+  | Lusong | 5% each (mirror ng kay Marvin) | ~60% pa rin |
+  Sample: isang 5-load B2B contract = ₱5,000 kay Neil at ₱5,000 kay Zam; 20 residential
+  loads = tig-₱5,000 din — pero 1 contract vs 20 byahe ang effort. Ang B2B ang
+  binabayaran nang malaki, kaya doon din tututok ang atensyon nila.
 
 ## Strategy decisions (2026-07-20 CMO session — APPROVED per Neil)
 
