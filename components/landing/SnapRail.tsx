@@ -47,24 +47,30 @@ export const SnapRail: React.FC<SnapRailProps> = ({
       : first?.offsetWidth ?? el.clientWidth * 0.85;
   };
 
+  const settleTimer = useRef<number | undefined>(undefined);
+
   const update = useCallback(() => {
     const el = scrollRef.current;
     if (!el) return;
     setCanPrev(el.scrollLeft > 4);
     setCanNext(el.scrollLeft < el.scrollWidth - el.clientWidth - 4);
-    // Once the smooth scroll settles on the pending target, release it.
-    if (pendingIndex.current !== null) {
-      const step = cardStep(el);
-      if (step > 0 && Math.abs(el.scrollLeft - pendingIndex.current * step) < 2) {
-        pendingIndex.current = null;
-      }
-    }
+    // Release the pending paddle target once scrolling goes quiet. A
+    // position-match release is too narrow — a clamped last-card target or a
+    // programmatic move never lands on pending*step and would leave a stale
+    // target for the next tap to chain from.
+    window.clearTimeout(settleTimer.current);
+    settleTimer.current = window.setTimeout(() => {
+      pendingIndex.current = null;
+    }, 150);
   }, []);
 
   useEffect(() => {
     update();
     window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
+    return () => {
+      window.removeEventListener('resize', update);
+      window.clearTimeout(settleTimer.current);
+    };
   }, [update]);
 
   // Manual drag/wheel takes over — a stale pending target must not hijack the
