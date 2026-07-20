@@ -71,6 +71,32 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
     return () => ro.disconnect();
   }, []);
 
+  // Billing bar frost fires only while the bar is actually pinned under the
+  // header group (rAF-throttled, same pattern as SiteHeader's scroll-edge).
+  const billingBarRef = useRef<HTMLDivElement>(null);
+  const [barStuck, setBarStuck] = useState(false);
+
+  useEffect(() => {
+    let raf = 0;
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        const bar = billingBarRef.current;
+        const headerEl = stickyHeaderRef.current;
+        if (!bar) return;
+        const headerBottom = headerEl ? headerEl.getBoundingClientRect().bottom : 0;
+        setBarStuck(bar.getBoundingClientRect().top <= headerBottom + 1);
+      });
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
+
   const PLAN_IDS: Array<'free' | PlanId> = ['free', 'starter', 'pro', 'business'];
 
   const handleCtaClick = async (index: number) => {
@@ -343,9 +369,15 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
           </div>
         </div>
 
-        {/* ===== BILLING TOGGLE — sticky frosted bar (clears the header group) ===== */}
+        {/* ===== BILLING TOGGLE — sticky bar; frost only while PINNED (Apple
+            scroll-edge doctrine: the treatment exists only when content is
+            actually beneath the bar — at rest the tint reads as a stray dark
+            band across the page) ===== */}
         <div
-          className="sticky z-30 mb-6 py-3 px-5 backdrop-blur-xl bg-zinc-950/70"
+          ref={billingBarRef}
+          className={`sticky z-30 mb-6 py-3 px-5 transition-[background-color,backdrop-filter] duration-300 ${
+            barStuck ? "backdrop-blur-xl bg-zinc-950/70" : "backdrop-blur-none bg-transparent"
+          }`}
           style={{ top: headerH }}
         >
           <div className="relative flex flex-wrap items-center justify-center gap-3">
@@ -365,7 +397,11 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
             )}
           </div>
           {/* Scroll-edge dissolve — content fades out under the bar instead of a hard border. */}
-          <div className="pointer-events-none absolute inset-x-0 top-full h-6 bg-gradient-to-b from-zinc-950/70 to-transparent" />
+          <div
+            className={`pointer-events-none absolute inset-x-0 top-full h-6 bg-gradient-to-b from-zinc-950/70 to-transparent transition-opacity duration-300 ${
+              barStuck ? "opacity-100" : "opacity-0"
+            }`}
+          />
         </div>
 
         {/* ===== PRICING CARDS ===== */}
