@@ -100,7 +100,7 @@ export const Modules: React.FC<ModulesProps> = ({ onEnterApp }) => (
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: DUR.slow, delay: idx * 0.08 }}
-              className="snap-center flex-shrink-0 w-[85vw] max-w-[360px] md:w-auto md:max-w-none h-full bg-zinc-900/40 backdrop-blur-2xl border border-white/10 rounded-3xl p-6 md:p-7"
+              className="snap-center flex-shrink-0 w-[85vw] max-w-[360px] md:w-auto md:max-w-none flex flex-col bg-zinc-900/40 backdrop-blur-2xl border border-white/10 rounded-3xl p-6 md:p-7"
             >
               <module.Demo />
               <div className="mt-5 flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500">
@@ -109,13 +109,15 @@ export const Modules: React.FC<ModulesProps> = ({ onEnterApp }) => (
               </div>
               <h3 className="mt-2 text-lg font-bold text-white">{module.title}</h3>
               <p className="mt-2 text-sm text-zinc-400 leading-relaxed">{module.desc}</p>
-              {/* Ghost text-CTA — subordinate to the page's gold CTAs (no fill). */}
+              {/* Ghost text-CTA — subordinate to the page's gold CTAs (no fill).
+                  mt-auto pins it to the card bottom so CTAs align across the
+                  equal-height rail cards despite varying copy length. */}
               <button
                 onClick={() => {
                   setIntendedModule(module.moduleId);
                   onEnterApp();
                 }}
-                className="mt-4 inline-flex items-center gap-1.5 text-zinc-300 hover:text-[#FFCC00] text-sm font-semibold transition-colors"
+                className="mt-auto pt-4 inline-flex items-center gap-1.5 text-zinc-300 hover:text-[#FFCC00] text-sm font-semibold transition-colors self-start"
               >
                 {module.cta}
                 <span aria-hidden="true">→</span>
