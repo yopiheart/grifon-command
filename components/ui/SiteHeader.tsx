@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { DUR, EASE } from './motionTokens';
@@ -83,6 +83,28 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
   activeHref,
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  // Scroll-edge treatment: quiet + transparent at the very top, frosted hairline
+  // once content scrolls beneath the (parent-pinned) header. rAF-throttled.
+  // Lazy init so a scroll-restored reload starts frosted instead of flashing
+  // transparent for a frame (SPA — window is always available here).
+  const [scrolled, setScrolled] = useState(() => window.scrollY > 8);
+
+  useEffect(() => {
+    let raf = 0;
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        setScrolled(window.scrollY > 8);
+      });
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
 
   const handleLogo = () => {
     if (onLogoClick) onLogoClick();
@@ -132,7 +154,13 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
   );
 
   return (
-    <header className="backdrop-blur-xl bg-zinc-950/80 border-b border-white/10">
+    <header
+      className={`transition-[background-color,border-color,backdrop-filter] duration-300 ${
+        scrolled
+          ? 'backdrop-blur-xl bg-zinc-950/80 border-b border-white/10'
+          : 'backdrop-blur-none bg-transparent border-b border-transparent'
+      }`}
+    >
       <div className="relative flex items-center px-4 sm:px-6 lg:px-8 py-3 max-w-7xl mx-auto">
         {/* Left: logo */}
         <div className="flex-1 flex justify-start min-w-0">{Logo}</div>
