@@ -60,10 +60,15 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
   const [headerH, setHeaderH] = useState(0);
 
   useEffect(() => {
-    const measure = () => setHeaderH(stickyHeaderRef.current?.offsetHeight ?? 0);
+    const el = stickyHeaderRef.current;
+    if (!el) return;
+    const measure = () => setHeaderH(el.offsetHeight);
     measure();
-    window.addEventListener('resize', measure);
-    return () => window.removeEventListener('resize', measure);
+    // ResizeObserver, not window resize: the group's height also changes without a
+    // viewport change (UrgencyBar flipping to its expired band, late webfont load).
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
   }, []);
 
   const PLAN_IDS: Array<'free' | PlanId> = ['free', 'starter', 'pro', 'business'];
@@ -343,7 +348,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
           className="sticky z-30 mb-6 py-3 px-5 backdrop-blur-xl bg-zinc-950/70"
           style={{ top: headerH }}
         >
-          <div className="relative flex items-center justify-center gap-3">
+          <div className="relative flex flex-wrap items-center justify-center gap-3">
             <SegButton
               variant="marketing"
               value={billing}

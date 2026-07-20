@@ -57,7 +57,10 @@ export const SnapRail: React.FC<SnapRailProps> = ({
       first && second
         ? second.offsetLeft - first.offsetLeft
         : first?.offsetWidth ?? el.clientWidth * 0.85;
-    el.scrollBy({ left: dir * step, behavior: reduce ? 'auto' : 'smooth' });
+    // Index-based target so rapid taps advance a full card each — scrollBy from a
+    // mid-animation interpolated position under-advances (browser clamps at the ends).
+    const target = (Math.round(el.scrollLeft / step) + dir) * step;
+    el.scrollTo({ left: target, behavior: reduce ? 'auto' : 'smooth' });
   };
 
   return (

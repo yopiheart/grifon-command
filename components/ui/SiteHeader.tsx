@@ -85,7 +85,9 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
   const [menuOpen, setMenuOpen] = useState(false);
   // Scroll-edge treatment: quiet + transparent at the very top, frosted hairline
   // once content scrolls beneath the (parent-pinned) header. rAF-throttled.
-  const [scrolled, setScrolled] = useState(false);
+  // Lazy init so a scroll-restored reload starts frosted instead of flashing
+  // transparent for a frame (SPA — window is always available here).
+  const [scrolled, setScrolled] = useState(() => window.scrollY > 8);
 
   useEffect(() => {
     let raf = 0;

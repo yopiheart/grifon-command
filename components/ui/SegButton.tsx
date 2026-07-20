@@ -71,6 +71,7 @@ export function SegButton<T extends string>({
             <button
               key={opt.value}
               type="button"
+              aria-pressed={active}
               disabled={'disabled' in opt ? opt.disabled : undefined}
               title={'title' in opt ? opt.title : undefined}
               onClick={() => onChange(opt.value)}
