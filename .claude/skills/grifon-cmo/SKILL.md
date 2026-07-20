@@ -108,6 +108,31 @@ Scarcity. Urgency. Authority. Social Proof. Reciprocity. Commitment. Liking.
 
 Use REAL scarcity only. No fake countdowns. No invented stats. No fake testimonials. Trust is the core asset.
 
+## AWARENESS LADDER (Schwartz's 5 Levels — adopted 2026-07-20, Neil-approved)
+
+Eugene Schwartz, *Breakthrough Advertising* (1966). Every asset targets ONE stage —
+name it in your reasoning like a Cialdini principle:
+
+1. **Unaware** — lead with story/symptom they recognize; never the brand, never the product.
+2. **Problem Aware** — name the pain sharper than they can; agitate, then bridge.
+3. **Solution Aware** — differentiate the mechanism; kill the category objection (scam-fear, "AI garbage").
+4. **Product Aware** — proof, process transparency, offer stack, objection handling.
+5. **Most Aware** — the deal: CTA, urgency, terms. Shortest copy.
+
+Rules of use:
+- **The hook must match the viewer's stage, not ours.** Product-speak at an Unaware
+  audience is the #1 mismatch (e.g. "certified siphoning kami" to someone who doesn't
+  know DENR liability exists — lead with the fine/risk instead).
+- **Tag assets** (`awareness` field in script pools, ledger entries) so winners
+  correlate by stage. Batch mix: never ship a week of content all on one stage.
+- **Emergency-purchase caveat (Oceanides):** emergency buyers teleport Unaware →
+  desperate-Problem-Aware overnight; low-stage content is a RECALL play, not a
+  converter. It must never become the excuse for vanity metrics — attributed
+  calls/bookings stay the scoreboard (Gate 2).
+- **Companion lens: market sophistication** (same book). In claim-exhausted markets
+  (malabanan "mura! mabilis!"), don't shout louder — switch to a new mechanism or
+  identity claim (SEC/DENR papers, Kuya Marvin himself).
+
 ## HOOK RULES (first 3 seconds decide everything)
 
 - Pattern interrupt opens every ad, video, DM, and email

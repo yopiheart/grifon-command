@@ -37,8 +37,8 @@ certificate — ang B2B/compliance segment ay hindi masusulot.
 
 - Marvin (base + incentives): _see comp structure sa brand doc / consent agreement_
   — Phase 0 ≈ ₱12–15k/mo (₱500 × ~24 days + transport); Phase 1 ≈ ₱16.5k + incentives
-- Zam: **₱0 fixed** — commission-only (proposal sa ibaba, PENDING final structure)
-- Neil draw: **₱0 fixed** — commission-only (same)
+- Zam: **₱0 fixed** — commission-only, tiered (✅ APPROVED sa ibaba)
+- Neil draw: **₱0 fixed** — commission-only, tiered (same)
 - Ads budget: _₱?/month_ ← **huling unknown**
 - API/tooling (content + ads gen): _₱?/month_
 
@@ -47,11 +47,15 @@ katumbas nito?" — hindi "ilang residential load." Sa commission-only model, an
 halos si Marvin + ads lang → **~2 certified loads/month ang tumatabon kay Marvin**
 (net per certified load ≈ ₱7–10k pagkatapos ng Marvin ₱250 + owner overrides).
 
-## Neil/Zam comp — commission-only proposal (2026-07-20, PENDING Neil decision)
+## Neil/Zam comp — commission-only, tiered (✅ APPROVED Neil 2026-07-20)
 
-**Proposal ni Neil:** itaas ang residential ₱4,000 → ₱5,000/load standard; sa bawat
-byahe, tig-₱500 si Neil at Zam (₱1,000 total kada load); walang salary/draw — puro
-commission na sila.
+**Final na desisyon:** commission-only si Neil at Zam (walang salary/draw), naka-tier
+kung nasaan ang margin — **residential tig-₱250 / certified B2B load tig-₱1,000 /
+lusong tig-5%.** Kasabay nito ang ₱5,000 residential ANCHOR pricing (may tawad room
+hanggang ₱4,000–4,500 — see Pricing sa taas), kaya kahit matawaran, buo pa rin ang
+company margin pagkatapos ng overrides.
+
+Orihinal na proposal (superseded): flat tig-₱500 kada byahe sakay ng ₱5k hard sticker.
 
 **Agent assessment:**
 
@@ -85,10 +89,15 @@ commission na sila.
 firepower ay nakatutok sa B2B/DENR-certified segment (un-poachable, ₱9–12k/load);
 ang residential ay lead-gen papunta sa lusong, hindi ang produkto.
 
-**Pricing: HINDI itinaas ang sticker.** Residential stays ₱4,000 (warranty valid
-only through Oceanides — direct-sa-crew = walang resibo/habol/legal na tapunan).
-Certified: ₱12k floor, tawad ay sinasagot ng tier ("₱15k one-time; ₱12k/load kapag
-annual maintenance contract"), hindi ng discount.
+**Pricing (AMENDED 2026-07-20, Neil final):** Residential sticker **₱5,000/load bilang
+ANCHOR** — inaasahang tatawad ang customer, kaya may planned na room pababa hanggang
+**₱4,000–4,500 ang totoong closing price** (warranty valid only through Oceanides —
+direct-sa-crew = walang resibo/habol/legal na tapunan). Ang anchor-then-concede ay
+nagpapanatili ng ~₱4k+ effective price habang nabibigyan ang customer ng "panalo sa
+tawad" — pero BANTAYAN sa unang 30 days: kung ang ₱5k opening ay nagpapataas ng
+drop-offs sa tawag (hindi na nakikipag-tawad, nagba-bye agad), balik sa ₱4k straight
+price. Certified: ₱12k floor, tawad ay sinasagot ng tier ("₱15k one-time; ₱12k/load
+kapag annual maintenance contract"), hindi ng discount.
 
 **Offer ladder (ascension):**
 1. HOOK — "Libreng Septic Health Check ni Kuya Marvin" (photo report; reciprocity +

@@ -3,6 +3,7 @@
     "Kuya Marvin ng Oceanides — talking-script seed pool (Lane A: AI-avatar education/offer).",
     "SOP + hard gates: workflows/oceanides_kuya_marvin_brand.md. Ito LANG ang lugar ng scripts — huwag mag-fork ng copy sa ibang file.",
     "Rules: (1) hook = named pain o curiosity gap, never brand name ang unang linya; (2) native-ear Taglish check bawat edit (linkers -ng/na, verb aspect, contractions); (3) NEVER 'Malabanan'; (4) walang presyo sa script — 'presyo agad bago magsimula' ang linya, hindi numero; (5) CTA block ay FIXED — huwag i-reword per video (ito ang attribution key); (6) AI-avatar delivery = education/offer lang, never i-claim na nasa actual na jobsite ang avatar footage.",
+    "awareness field (Schwartz 5 levels, adopted 2026-07-20): ang stage ng VIEWER kapag tumama ang hook — unaware | problem_aware | solution_aware | product_aware | most_aware. Gamit: batch mix balancing (huwag puro isang stage sa iisang linggo) + ledger correlation. Ang emergency segment ay tumatalon Unaware→Problem-Aware overnight, kaya ang unaware/problem_aware scripts ay RECALL play (hindi inaasahang mag-convert agad) — attributed calls pa rin ang scoreboard, hindi views (Gate 2).",
     "Delivery notes: 30-60 sec per video, raw-ugc register (phone selfie feel), maikling shots, captions burned-in pagkatapos ng raw QA.",
     "Persona voice: Kuya Marvin — kalmado, derecho, walang bola; parang kapitbahay na marunong. Hindi announcer, hindi hard-sell."
   ],
@@ -11,6 +12,7 @@
     {
       "id": "KM-001",
       "pillar": "EDUCATION",
+      "awareness": "unaware",
       "hook": "May limang senyales na malapit nang umapaw ang poso negro n'yo — at 'yung pang-lima, laging na-mimiss.",
       "body": "Una, mabagal ang flush. Pangalawa, may amoy sa banyo kahit nilinis n'yo na. Pangatlo, bumubula ang drainage sa labas. Pang-apat, may tunog na parang lumalagok ang lababo. At ang pang-lima — mas luntian at mas mabilis tumubo ang damo sa ibabaw ng tangke. Kapag dalawa na diyan ang napansin n'yo, huwag nang hintayin ang umapaw.",
       "notes": "Flagship education hook — same content family ng senyales style sa daily posts, pero conversational delivery."
@@ -18,6 +20,7 @@
     {
       "id": "KM-002",
       "pillar": "TRUST",
+      "awareness": "solution_aware",
       "hook": "Bakit ba takot tayong tumawag ng pasipsip? Kasi baka gulatin tayo sa presyo pagkatapos maghukay.",
       "body": "Totoo 'yan, at tama lang na mag-ingat kayo. Kaya ganito ang ginagawa namin sa Oceanides: pupunta ako o ang team namin, chine-check muna namin ang tangke — libre 'yun — tapos sasabihin namin ang presyo BAGO kami magsimula. Walang dagdag pagkatapos, walang gulat. Kapag hindi kayo pumayag sa presyo, aalis kami nang maayos. Ganun kasimple.",
       "notes": "Direktang tumitira sa #1 objection (hidden charges). Ito ang pinaka-Marvin na script — siya talaga ang gumagawa nito sa totoong buhay."
@@ -25,6 +28,7 @@
     {
       "id": "KM-003",
       "pillar": "EDUCATION",
+      "awareness": "problem_aware",
       "hook": "Huwag n'yong buhusan ng muriatic acid ang baradong inodoro. Seryoso ako.",
       "body": "Alam ko, 'yan ang unang payo ng kapitbahay. Pero kapag puno na ang poso negro, walang magagawa ang acid — lulubog lang 'yan sa tangke na puno na. Masisira pa ang tubo n'yo, at delikado ang singaw niyan sa loob ng banyo. Kapag paulit-ulit na ang bara kahit nag-plunger na kayo, hindi na 'yan bara sa inodoro — puno na ang tangke sa ilalim.",
       "notes": "Contrarian/pattern-interrupt hook vs ang DIY villain sa market research."
@@ -32,6 +36,7 @@
     {
       "id": "KM-004",
       "pillar": "TRUST",
+      "awareness": "solution_aware",
       "hook": "Paano n'yo makikilala ang fly-by-night na pasipsip? Heto ang tatlong red flags.",
       "body": "Una — personal na Facebook account lang, walang page, walang permit na maipakita. Pangalawa — ayaw magbigay ng presyo bago magsimula; 'bahala na po pag nahukay' ang sagot. Pangatlo — walang uniporme, walang pangalan ang trak. Ang lehitimong kumpanya, rehistrado sa SEC, may DENR at BIR papeles, at hindi natatakot sabihin ang presyo nang maaga. Humingi kayo ng ganyan bago kayo pumayag — kahit hindi kami ang tawagin n'yo.",
       "notes": "Authority + reciprocity — pinoprotektahan ang viewer kahit hindi sila kumuha satin. Pinakamalakas na trust builder ng pool."
@@ -39,6 +44,7 @@
     {
       "id": "KM-005",
       "pillar": "EDUCATION",
+      "awareness": "unaware",
       "hook": "Nililinis n'yo nang nililinis ang banyo pero bumabalik pa rin ang amoy? Hindi 'yan sa banyo galing.",
       "body": "Kapag ganyan, kadalasan puno na ang poso negro at ang amoy ay umaakyat sa tubo. Kahit anong Lysol at Domex pa ang gamitin n'yo, babalik at babalik 'yan kasi nasa ilalim ang problema, hindi sa inidoro. Ang tanda: mas malakas ang amoy tuwing umuulan o tuwing maraming gumagamit ng tubig sa bahay.",
       "notes": "Named pain hook — pinaka-relatable sa mga misis; Helen-facing."
@@ -46,6 +52,7 @@
     {
       "id": "KM-006",
       "pillar": "OFFER",
+      "awareness": "product_aware",
       "hook": "Ano ba talaga ang nangyayari kapag tumawag kayo sa amin? Ikukuwento ko, para walang sorpresa.",
       "body": "Pagtawag n'yo, itatanong namin kung ano ang napapansin n'yo sa bahay. Tapos pupunta kami — madalas ako mismo — para i-check ang tangke. Libre 'yun at walang pilitan. Kapag kailangan talagang sipsipin, sasabihin namin ang presyo bago kami kumilos. Kapag hindi pa kailangan, sasabihin din namin — umuwi kami, walang bayad. May resibo, may uniporme, rehistradong kumpanya. 'Yun lang.",
       "notes": "Process transparency = Commitment/Consistency foot-in-the-door. Offer video na hindi mukhang offer."
@@ -53,6 +60,7 @@
     {
       "id": "KM-007",
       "pillar": "EDUCATION",
+      "awareness": "unaware",
       "hook": "Gaano ba kadalas dapat magpasipsip ng poso negro? Hindi 'to kada may bara lang.",
       "body": "Ang tamang sagot: kada tatlo hanggang limang taon, depende sa laki ng tangke at dami ng tao sa bahay. Ang problema, karamihan sa atin, naaalala lang ang poso negro kapag umaapaw na — doon na nagiging emergency at mas magastos. Kapag alam n'yong lampas limang taon na mula nung huling sipsip, magpa-check na kayo bago pa mag-abala.",
       "notes": "Maintenance education — nagbubukas ng 30% preventive segment, hindi lang emergency."
@@ -60,6 +68,7 @@
     {
       "id": "KM-008",
       "pillar": "URGENCY",
+      "awareness": "problem_aware",
       "hook": "Bago pa lumakas ang ulan — ito ang isang bagay na chine-check ko sa sarili kong bahay.",
       "body": "Tuwing tag-ulan, tumataas ang tubig sa lupa, at ang poso negrong kalahati na ang laman, biglang aapaw kapag inabot ng bagyo. Kaya bago mag-Hulyo hanggang Oktubre, i-check n'yo: mabagal ba ang flush? May amoy ba pagkatapos umulan? Kapag oo, magpa-inspect na habang maganda pa ang panahon — mas mahirap at mas magulo kapag baha na ang kasabay.",
       "notes": "Real seasonal urgency (walang fake countdown). I-schedule May-Sept."
@@ -67,6 +76,7 @@
     {
       "id": "KM-009",
       "pillar": "TRUST",
+      "awareness": "product_aware",
       "hook": "May nagtanong sa amin: 'Boss, may hidden charges ba kayo?' Heto ang totoong sagot.",
       "body": "Wala, at ganito namin sinisiguro 'yun: nakasulat ang presyo bago kami magsimula, at pareho tayong pipirma. Kapag may nakita kaming dagdag na problema habang naghuhukay — halimbawa sirang tubo — titigil kami, ipapakita namin sa inyo, at kayo ang magdedesisyon kung ipapagawa. Hindi kami kikilos nang hindi n'yo alam. Ang bayad n'yo, 'yung napag-usapan. Tapos.",
       "notes": "Q&A format mula sa totoong dispatcher calls — palitan ang tanong kada bagong variant, galing sa totoong tawag lang (no fake proof rule)."
@@ -74,6 +84,7 @@
     {
       "id": "KM-010",
       "pillar": "EDUCATION",
+      "awareness": "problem_aware",
       "hook": "Bumubula ang kanal sa labas ng bahay n'yo kapag nag-flush kayo? Pakinggan n'yo 'to.",
       "body": "'Yan ang senyales na hindi na tumatanggap ang poso negro — puno na siya kaya ang tubig, bumabalik at lumalabas sa pinakamababang daanan, kadalasan sa kanal o sa drainage ng ligoan. Kapag inabot n'yo pa 'yan ng ilang linggo, sa loob na ng bahay ang susunod na lalabasan. Hindi 'to nawawala mag-isa — sipsip talaga ang solusyon.",
       "notes": "Visceral named pain; pares na pares sa real proof clips ng Lane B kapag may footage na."

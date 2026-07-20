@@ -108,10 +108,10 @@ Personal brand para sa Oceanides: **"Kuya Marvin ng Oceanides"** — si Marvin B
 
 **Natitirang next steps:**
 
-1. **Gate 1 GO execution:** Neil gumawa ng TikTok + FB Page → profile assets via gpt-image-2/marvin-avatar lane (IN PROGRESS this session) → unang 2-week batch mula script pool. Day 1 ni Marvin = Phase 0 launch sprint (₱500/day, Day-14 deliverables checkpoint).
-2. **Neil/Zam comp model** — 2026-07-20 proposal ni Neil: commission-only (₱5k/load standard, ₱500 bawat isa kada load, walang salary). Assessment + counter-structure sa `workflows/oceanides_business_model.md` — PENDING Neil decision.
-3. **Breakeven math** — kapag desidido na ang comp model; ads budget/month ang natitirang unknown.
-4. **Offer Optimizer run** sa DENR Compliance Package (approved offer ladder sa business-model doc) — B2B ang priority ng ads/content.
+1. **Gate 1 GO execution:** Neil gumawa ng TikTok + FB Page → **✅ profile assets APPROVED (Neil 2026-07-20 gabi): `profile-4-fullteeth-van.png` (profile pic, TikTok+FB) + `cover-3-van-standing.png` (FB cover) sa `clients/oceanides/kuya-marvin/profile-assets/`** (complete-teeth + real-aluminum-van batch; unapproved deleted). Susunod: text-overlay version ng cover (Anton, navy+gold: "LIBRENG SEPTIC HEALTH CHECK" + numbers + "Sabihin n'yo: kay Kuya Marvin kayo") → unang 2-week batch mula script pool. Day 1 ni Marvin = Phase 0 launch sprint (₱500/day, Day-14 deliverables checkpoint).
+2. ✅ **Neil/Zam comp RESOLVED (2026-07-20):** commission-only tiered (res ₱250 / certified ₱1,000 / lusong 5% — tig-ganoon), ₱5k residential ANCHOR na may tawad room hanggang ₱4–4.5k. Detalye sa `workflows/oceanides_business_model.md`.
+3. **Breakeven math** — ads budget/month na lang ang natitirang unknown.
+4. **Schwartz adoption GO (2026-07-20):** ✅ `awareness` tags sa script-pool.json; ✅ Awareness Ladder section sa grifon-cmo skill; NEXT: **B2B compliance-buyer avatar research** (CMO stack, same method as Henry/Helen) → **Offer Optimizer run** sa DENR Compliance Package na may 2 message tracks (Unaware=liability education / Solution-Product Aware=package comparison).
 
 Legacy state (2026-07-19):
 

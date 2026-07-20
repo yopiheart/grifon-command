@@ -13,9 +13,40 @@
 - **Villain:** Ang fly-by-night na malabanan (personal FB account, walang permit) + ang DIY-Muriatic-acid na hindi umuubra.
 - **Emergency vs maintenance:** 70% emergency (barado/overflow, mabilis magdesisyon), 30% preventive (pa-siphon kada 3–5 taon).
 
-## 2. Secondary avatar — "Property Manager / SME Paolo"
+## 2. PRIORITY avatar (B2B) — "Compliance-Pressured Paolo" (expanded 2026-07-20)
 
-- Carinderia, apartment/boarding house, subdivision, contractor. **Mas malaking ticket + recurring.** Mas mahaba ang desisyon, may decision-maker. Content: reliability, receipts/legit, service contract.
+*Na-upgrade mula sa dating 2-linyang "SME Paolo" nang gawing B2B-compliance-first ang
+strategy (2026-07-20 repositioning). Ito na ang avatar ng ads + Kuya Marvin B2B content.*
+
+- **Sino:** may-ari o admin ng establisyimento sa MM na may septic/wastewater exposure —
+  restaurant/food business, apartment/boarding house, office o condo building admin,
+  property manager, school/clinic admin, warehouse. Sa SME: ang owner mismo ang
+  nagdedesisyon; sa buildings: admin/PM na may sign-off ng owner. Mas mahabang cycle,
+  kailangan ng quotation, OR/invoice, kontrata.
+- **Bleeding neck (compliance, hindi baradong lababo):** *"May permit renewal / DENR
+  inspection kami, at walang PAPELES ang huling pasipsip namin."* Sa ilalim ng **RA 9275
+  (Clean Water Act)**, kailangan ng establisyimento ng discharge permit (DENR-EMB, o
+  LLDA sa Laguna Lake area), at ang paglabag ay may multa na **hanggang ₱200,000 KADA
+  ARAW ng violation** (statutory ceiling, Sec. 28); ang operating-without-permit ay
+  may lumalabas na ~₱23.5k initial assessment sa EMB practice. *(Exact current fine
+  schedules: i-verify sa DENR-EMB/PAB bago gamitin ang specific na numero sa ad copy —
+  ang "hanggang ₱200k/day per RA 9275" ay ligtas dahil nasa batas mismo.)*
+- **3AM thought:** *"Kapag na-inspect kami, o na-trace ang illegal na tapunan ng
+  pinasipsip namin — sino ang mananagot? Ako."*
+- **#1 objection:** "May suki na kaming pasipsip, mas mura" — pero walang resibo,
+  walang manifest, walang legal na tapunan = ang "tipid" mismo ang liability.
+- **Villain:** ang cheap crew na walang papeles — at ang kalimutang tangke na
+  nagpapasara ng resto sa mismong lunch rush.
+- **Ano ang binibili (framing):** HINDI siphoning — **ang PAPEL**: DENR-compliant
+  service + documentation + cert + naka-schedule na annual/semi-annual na serbisyo
+  (walang iisipin kada renewal). Ang Libreng Septic Health Check + photo report ni
+  Kuya Marvin ang foot-in-the-door — dokumentong pwede nilang i-file.
+- **Awareness stage (Schwartz):** karamihan **Unaware** sa liability exposure — ang
+  tamang lead ay ang risk/fine education, HINDI "certified siphoning kami." Ang
+  Solution/Product Aware track (comparison vs suki/fly-by-night) ay pang-follow-up
+  at pang-canvass conversation.
+- **Channel:** FB (page + owner groups) at ang canvassing ni Marvin mismo (ang
+  canvass visits sa Phase 0 ang B2B na direct channel — dala ang Health Check offer).
 
 ---
 
@@ -58,6 +89,8 @@
 5. **TRUST** → 24/7, areas, walang hidden charges. *Liking + Guarantee.*
 
 ## 5. Open (para sa susunod)
+- **DENR-EMB fine schedule verification** — bago maglagay ng specific na multa sa ad
+  copy (ang statutory "hanggang ₱200k/day" lang ang gamitin hangga't hindi verified).
 - **Real testimonials** — kailangan bago gumawa ng review posts (no fake proof).
 - **Target-market validation** — kumpirmahin kay client: aling barangay/segment ang pinaka-maraming tawag (para i-sharpen ang niche callout + ad targeting).
 - **Ad targeting** (kung mag-ads): homeowners 28–55, MM/Cavite/Bulacan, interests: home improvement, real estate, may-ari ng bahay.
