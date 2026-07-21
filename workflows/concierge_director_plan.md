@@ -429,3 +429,14 @@ dead-air-trimmed MP4. Build-gate pass + brand-check + **Neil eyeballs the render
 > is the Business-tier consistency lane gated on a raw multi-angle ref set** (onboarding SOP
 > candidate). Validated motion recipe: Veo 3.1 Lite + close-up + expression lock + locked
 > camera hand.
+
+> **MONETIZATION / CHANNEL DECISION (2026-07-21, Neil + CMO pass, post-PoC-V4):**
+> Arcads/Higgsfield-style **MCP + credits is a validated model but demand-triggered, NOT
+> calendar-triggered** — build trigger: a paying Business/Autopilot client asks unprompted to
+> connect Grifon to their own Claude. Until then, NO MCP build. **Autopilot is sellable NOW as
+> white-glove (Option C — the 2026-07-21 PoC session IS the delivery run), needs no new product**;
+> Oceanides/Kuya Marvin is the de-facto Autopilot client #1 / case study. Top-up pricing for any
+> future MCP lane must be margin-positive per video vs `pricing_unit_economics.md` (scalers are
+> the most COGS-expensive users — the Arcads per-video-after-limit lesson). Shared prerequisite
+> for Concierge brain AND future MCP: the callable tool layer over `api/*` (§2). Launch
+> readiness → beta remains the gate for everything.
