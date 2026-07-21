@@ -133,3 +133,42 @@ The v1 scratchpad scripts died with the reboot; the v2 harnesses live in
   line cleanly, and does identity hold in motion?
 - Demo beats 3–5 (real Grifon screenshots), Phase 6 CaptionHeadline,
   gemini-eval grade.
+
+---
+
+# V3 — BGC walking scene + the STEADY-FACE RULE (2026-07-21, same session)
+
+## NEW RULE (Neil, verbatim intent): steady face while talking
+
+Neil's diagnosis after eyeballing V2 motion: **multiple changing facial
+emotions/reactions during speech are a major red flag that destroys character
+consistency** — the face drifts identity with every expression shift. The V2
+Veo prompt itself caused this (it choreographed "half-smile builds → eyebrow
+raise → head tilt" micro-expressions).
+
+**Rule for ALL future Zam (and any avatar) talking renders:**
+- ONE locked facial state for the entire clip — no smile changes, no eyebrow
+  raises, no head tilts, no reaction beats. Only the mouth moves (speech) +
+  natural blinks.
+- ALL expressiveness lives in the body: hand gestures, walking rhythm, posture.
+- Bake it into the Veo prompt explicitly as a CRITICAL FACIAL DISCIPLINE block
+  + negative tail ("face warping, identity change, changing facial features").
+
+NOTE: the TUNED OPTION B video-prompt rules in `services/geminiService.ts`
+say "Performance & Micro-expressions: Describe facial tension, eye movement,
+and mouth shapes" — per this rule that guidance is now suspect for identity
+consistency, but it is a TUNED file: flagged here as a gated-proposal
+candidate, NOT edited.
+
+## The walking test (closes "can Zam hold identity in motion outdoors")
+
+- Plate: `scene-walk-bgc-zam.png` (PASSED Neil) — World Cup dual-anchor,
+  BGC sidewalk selfie-vlog framing, extended right arm in frame, free left
+  hand mid-gesture, steady neutral-warm expression baked at plate level.
+- Veo: `scene-walk-bgc-veo.mp4` — same hook line as V2 (apples-to-apples),
+  walking sway smooth, CRITICAL FACIAL DISCIPLINE block in prompt, 6s/9:16/720p.
+- Final: `scene-walk-bgc-final.mp4` — STS to Zam voice + `-c:v copy` mux.
+- Scripts: `scripts/render-walk-bgc.mjs`, `scripts/sts-walk-bgc.mjs`.
+
+Pending: Neil ear/eyeball verdict on the walking clip (face steadiness +
+identity hold + Taglish pronunciation).
