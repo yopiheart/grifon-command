@@ -228,3 +228,26 @@ marvin-walk-bgc.png/.mp4 · scene-walk-bgc-veo-take2 + final-take2 (laughed/AI t
 evidence) · autocast-gemini(.png/-v2.png/-veo.mp4) · autocast-worldcup(.png/-veo.mp4) ·
 scripts: render-walk-bgc-take2 / render-marvin-walk / gen-gemini-autocast-v2 /
 render-autocast-pair.
+
+## V4 FINAL VERDICT (Neil, 2026-07-21) — the auto-cast vs upload answer
+
+Neil eyeball sa autocast A/B videos: **"Mas maganda at mukhang realistic pa ung AI
+generated auto mode vs sa upload reference presenter"** — BOTH lanes (gpt-image-2
+World Cup AND gemini flash-lite tuned formula) ay mukhang real sa motion pag
+auto-cast. Marvin (raw-ref-anchored) realistic pa rin pero talo ng automode sa
+head-to-head. Zam (makinis na single ref) ang pinaka-mahina.
+
+**Motion-believability hierarchy (evidence-based):**
+1. AUTO-CAST (no reference) — pinaka-believable; the model animates a face it
+   invented, walang identity debt.
+2. Reference-anchored + RAW multi-angle refs (Marvin) — realistic pa rin; ang
+   presyo ng consistency ay maliit KUNG raw ang refs.
+3. Reference-anchored + polished/preset ref (Zam) — AI-looking sa motion; ang
+   kinis ng source ang bumibitbit.
+
+**PRODUCT ANSWER sa §10 open decision (auto-cast vs upload):** auto-cast ang
+tamang default ng Concierge/One-Shot (validates the existing One-Shot AUTO
+default). Presenter-upload ay Business-tier lane para sa personal brands, na may
+REQUIREMENT: Marvin-grade raw ref set (body master + 3-4 face angles, real phone
+photos, walang filter) — onboarding SOP candidate. Reference = bayad na
+believability; gamitin lang pag kailangan ng cross-scene/brand consistency.

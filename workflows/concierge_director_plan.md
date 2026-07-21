@@ -419,3 +419,13 @@ sequence → generate → 1:1 holds → Render All → pick preset at end → Ed
 dead-air-trimmed MP4. Build-gate pass + brand-check + **Neil eyeballs the renders himself**
 (Scene-6 lesson — don't trust the subagent's prose verdict). **No tuned edits anywhere;** any
 `geminiService.ts` / `prompts.ts` / `renderPresets.ts` change = escalate to Neil.
+
+> **§10 OPEN-DECISION UPDATE (2026-07-21, PoC V4 — see `concierge_poc_findings.md`):**
+> The pending **auto-cast vs upload test RAN and is ANSWERED.** Neil verdict: auto-cast
+> (no reference) is MORE believable in motion than reference-anchored, on BOTH gpt-image-2
+> and the tuned gemini flash-lite lane; raw-multi-ref anchoring (Marvin-grade) is the only
+> acceptable upload path, polished single-ref (old Zam ref) is a believability trap.
+> Product direction: **auto-cast stays/becomes the default presenter lane; presenter upload
+> is the Business-tier consistency lane gated on a raw multi-angle ref set** (onboarding SOP
+> candidate). Validated motion recipe: Veo 3.1 Lite + close-up + expression lock + locked
+> camera hand.
