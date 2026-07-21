@@ -82,3 +82,54 @@ poll → download. Scripts: `scratchpad/render-scene1.mjs`, `sts-scene1.mjs`.
 - Codex CLI logged in (ChatGPT) for `codex-image`.
 - **Ad Library scrape:** see the corrected `ad-recon` SKILL procedure (refresh-bug
   + ALL/ALL flow) — committed on branch `docs/ad-recon-adlib-refresh-bug`.
+
+---
+
+# V2 — Scene-1 re-render with the REAL Taglish hook (2026-07-21)
+
+Session resume: closed **gap #1** from the list above. The generic-words clip is
+superseded — Scene 1 now speaks the real hook.
+
+## What shipped
+
+- **Hook locked (Neil, Checkpoint B):** Option A meta-reveal —
+  *"Buong ad na to, ginawa ng AI. Pati yung mukha ko."* (CMO pass: proof-by-
+  demonstration, Cialdini Social Proof, works on Unaware cold traffic; drafted
+  under the Taglish voice spec + typography rules.)
+- **New plate via the World Cup formula** (`scene1-zam-v2.png`, PASSED Neil
+  eyeball): dual anchor (`zam-face-reference.jpg` primary +
+  `zam-approved-scene-reference.png`), eyes-open rule, hair-silhouette lock,
+  explicit warm-brown skin tone, raw-ugc register, strong-prior location
+  (bedroom creator corner). Anchors restored from Neil's committed
+  `generate-zam-images.zip` (extracted to the skill's `assets/`, still
+  NOT committed individually per the identity-data rule).
+- **Gemini comparison** (`scene1-zam-gemini.png`): exact TUNED Director AI
+  scene payload (IDENTITY_LOCK + MEDIUM_FRONTAL + Aspirational-UGC + NO_TEXT,
+  `gemini-3.1-flash-lite-image`, single avatar ref) replicated via direct SDK
+  call — zero tuned-file edits. Verdict (Neil): **"Mas okay talaga ung World
+  Cup"** — consistent with the 2026-07-16 shootout + register mapping (tuned
+  Gemini formula targets *aspirational/polished* UGC by design; World Cup
+  targets *raw* believability).
+- **Veo 3.1 Fast re-render** (`scene1-v2-veo.mp4`): plate as start frame, hook
+  baked as quoted dialogue per the tuned OPTION B pattern (frame-0
+  mid-syllable, 35mm gentle push-in, stable background), 6s / 9:16 / 720p,
+  ~40s render.
+- **STS + mux** (`scene1-v2-final.mp4`): ElevenLabs Voice Changer
+  (`eleven_multilingual_sts_v2`, natural settings, Zam voiceId
+  `7zOl6q4ddocCWzFMrbcr`) on the Veo clip, muxed `-c:v copy` — lip-sync
+  preserved.
+
+## Scripts now committed (defreezer lesson applied)
+
+The v1 scratchpad scripts died with the reboot; the v2 harnesses live in
+[`concierge_poc/scripts/`](concierge_poc/scripts/): `render-scene1-v2.mjs`
+(direct Veo submit+poll), `sts-scene1-v2.mjs` (STS + ffmpeg-static mux),
+`gen-gemini-scene1.mjs` (tuned-formula comparison harness). All read keys from
+`.env`; direct `@google/genai` SDK calls (equivalent to the pure proxies).
+
+## Remaining gaps (unchanged from v1 list)
+
+- Neil ear/eyeball on `scene1-v2-final.mp4`: did Veo pronounce the Taglish
+  line cleanly, and does identity hold in motion?
+- Demo beats 3–5 (real Grifon screenshots), Phase 6 CaptionHeadline,
+  gemini-eval grade.
