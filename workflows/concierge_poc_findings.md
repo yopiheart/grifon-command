@@ -172,3 +172,59 @@ candidate, NOT edited.
 
 Pending: Neil ear/eyeball verdict on the walking clip (face steadiness +
 identity hold + Taglish pronunciation).
+
+---
+
+# V4 — Motion-believability battery: Zam vs Marvin vs auto-cast (2026-07-21, same session)
+
+## Verdicts na pumasok (Neil eyeball/ear, the only valid grader)
+
+- **Zam STS voice + lip-sync: WORKING at accurate** (desk V2 + walking takes).
+- **Zam in motion: mukhang AI** kahit take-2 hardened prompt (tumawa pa rin sa take 1;
+  take 2 AI-looking). Pero yung plate STILL ay "realistically siya talaga."
+- **Marvin walking clip (Veo 3.1 LITE + close-up + expression lock): 100% REALISTIC
+  sa image AT video** — "ultra real kahit gawing content hindi mahahalatang AI."
+
+## ROOT CAUSE (Neil diagnosis, corroborated ng repo history): IMAGE SOURCE REFERENCE QUALITY
+
+Si Marvin: 5 RAW phone-photo refs (body master + 4 face angles). Si Zam: iisang
+makinis/"studio selfie" na face ref — ang kinis/preset ng source ay BINIBITBIT ng
+model papunta sa motion. **LESSON: ang identity source refs ay dapat Marvin-grade —
+raw phone photos, multiple camera angles, walang filter/preset.** Ito rin mismo ang
+naka-pending na next step sa ZAM-AVATAR-NOTES.md since 2026-06-27 ("Zam to send 3–5
+reference angles") — hindi pa nangyayari; ngayon may motion-believability na dahilan,
+hindi lang drift-tightening.
+
+## Validated motion recipe (mula sa Marvin lane, gumana sa BGC test)
+
+**Veo 3.1 LITE** (`veo-3.1-lite-generate-preview`, raw beats polished) + **CLOSE-UP
+framing** (mukha pumupuno sa frame, top-of-head→upper chest — ang malayong framing ang
+nagpapalitaw ng AI slop sa motion) + **EXPRESSION LOCK** (skill wording) + **HAND RULE**
+(camera hand LOCKED, free hand lang ang gumagalaw) + flat overcast light.
+
+## Auto-cast head-to-head (Test A vs Test B — full-AI UGC, walang character consistency)
+
+Setup: parehong "20s Filipina office employee sa BGC, walking selfie, left hand
+gestures, emotions ALLOWED", parehong Veo 3.1 Lite ang motion lane, same line.
+
+- **Test A — tuned Director AI formula sa `gemini-3.1-flash-lite-image` (NO ref):**
+  `autocast-gemini-v2.png` → `autocast-gemini-veo.mp4`. Neil sa plate: "ang gara."
+  - **v1 FAILURE:** tuned HIGH_ANGLE_SELFIE angle lang → THIRD-PERSON shot na kita ang
+    phone (object-logic bug) + masyadong malayo. **FIX na nag-work:** explicit
+    first-person block ("this image IS the front camera view; phone NEVER visible;
+    fill frame top-of-head→chest"). GATED-PROPOSAL CANDIDATE para sa
+    AVATAR_CAMERA_ANGLES/tuned formula — HINDI ginalaw ang tuned file.
+  - Observation: nakalusot ang readable na "Mind Museum" signage sa background kahit
+    may NO_TEXT_CONSTRAINT (Gemini-lane text-leak, dating na-obserbahan sa scaffold test).
+- **Test B — World Cup scaffold sa gpt-image-2, TEXT-ONLY (NO ref):**
+  `autocast-worldcup.png` → `autocast-worldcup-veo.mp4`. Scaffold DNA buo: sweat
+  shine, gusot na polo, nakabaliktad na ID lanyard, delivery rider, kalat sa planter.
+- Pending: Neil video verdicts sa dalawang autocast clips (alin ang di halatang AI
+  sa motion, ano ang limitations ng full-AI vs reference-anchored).
+
+## Assets/scripts dito sa commit na ito
+
+marvin-walk-bgc.png/.mp4 · scene-walk-bgc-veo-take2 + final-take2 (laughed/AI takes,
+evidence) · autocast-gemini(.png/-v2.png/-veo.mp4) · autocast-worldcup(.png/-veo.mp4) ·
+scripts: render-walk-bgc-take2 / render-marvin-walk / gen-gemini-autocast-v2 /
+render-autocast-pair.
