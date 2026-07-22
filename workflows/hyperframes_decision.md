@@ -72,10 +72,32 @@ Node 24 fine; low RAM fine at 2 workers.
 composition HTML. Full-res lanes staged for eyeball at `.tmp/hyperframes-bakeoff/`
 (disposable; re-render via the committed composition if wiped).
 
-**NEXT: Neil eyeball** — zoom-easing feel + type integration are his call, not
-machine-gradeable. Verdict to record here verbatim, then per-move ownership verdicts go
-into `omni_edit_presets.md` (Omni keeps generative-pixel work only, per the verdict table
-above). Move 1 (launch video) unlocks only after this verdict.
+**NEIL EYEBALL: PASS (2026-07-22).** Verbatim: *"Wow ang galing bro :) sakto ung timing
+and premium feel din tapos libre? Perfect to lalo sa mga content/ads ng grifon and
+oceanides :) Yes masasabi kong kaya nyang mag compete dun sa omni premium reel na
+typography. Ang wala lang ung parang emoji or graphics na lumalabas sa pisngi nung babae
+na nag dedefine ng sinasabe sa script. Anyways di naman ganun ka big deal."*
+
+**Round 1 outcome:** Hyperframes lane VALIDATED for workflow-layer deterministic
+typography (competes with premium-reel-v2's signature at $0). Noted gap: speech-matched
+face-adjacent illustrative graphics (the circled-icon device in Omni's version) — absent
+from round 1's treatment but fully buildable deterministically (icon pop-ins at
+silencedetect/transcript-timed positions); queued as a round-2 iteration, not a lane
+limitation.
+
+**Per-move ownership after round 1 (workflow layer ONLY — the product's shipped
+`OMNI_STYLE_ROUTING` presets are untouched; Hyperframes never enters the product
+runtime, see verdict table):**
+- Kinetic display typography (directed words, layered type) → **Hyperframes** ($0,
+  letter-perfect, iterable)
+- Punch-ins / camera-feel zooms on locked-off footage → **Hyperframes or FFmpeg** (both
+  deterministic; Hyperframes easier to art-direct)
+- Speech-matched illustrative icons/graphics → **Hyperframes** (pending round-2 demo)
+- Generative-pixel work (restyle, relight, subject-aware motion, paper-collage) →
+  **Omni keeps** — must earn every paid second
+- Critical text (prices, ₱, offers, captions, end cards) → **FFmpeg, unchanged**
+
+Move 1 (launch video) is UNLOCKED.
 
 ## Resume trigger
 

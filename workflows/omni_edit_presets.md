@@ -18,6 +18,15 @@ in `api/_lib/renderPresets.ts`, TUNED). Those are the deterministic layer every 
 preset composes with, and the free/Pro-tier styles. Retirement/demotion only via a
 future bake-off with evidence (Neil decision 2026-07-06).
 
+**2026-07-22 — Hyperframes bake-off (workflow layer only):** the HeyGen Hyperframes
+HTML→MP4 lane beat premium-reel-v2's *typography class* on the same skincare clip at $0
+(Neil eyeball PASS; see `hyperframes_decision.md` Move 2 round 1 + per-move ownership
+tally). Consequence for THIS registry: for Neil's own marketing videos, deterministic
+display typography / punch-ins route to the Hyperframes lane first; **Omni presets are
+reserved for generative-pixel moves** (restyle, relight, subject-aware motion). The
+PRODUCT-side shipped presets (`premium-reel-v2`, `vox-explainer-v1` in
+`OMNI_STYLE_ROUTING`) are NOT affected — Hyperframes never enters the product runtime.
+
 ## Lifecycle
 
 `draft` → `poc_validated` → `neil_approved` → `product_shipped` (or `rejected`)
