@@ -50,9 +50,10 @@ Attribution key preserved: "Sabihin nyo, kay Kuya Marvin kayo" (Gate 2) — bini
 
 ## Production checklist
 
-1. ⬜ Neil approves v2 plan + script
-2. ⬜ Bagong plate set (same-jobsite): S1 eye-level, S3 low-angle, S4 high-angle, S5 eye-level (pwedeng i-reuse ang S1), + S2 work-shot start frame (hands-only) — via marvin-avatar recipe
-3. ⬜ Neil approves plates
+1. ✅ Neil approves v2 plan + script (2026-07-22)
+2. ✅ Plate set generated + agent triage passed (2026-07-22): `plates/s1-eyelevel-van.png`, `s2-hands-tankcover.png` (v1 clean-arms) + `s2-hands-tankcover-v2-tattoo.png` (tattoo continuity — NEIL PICKS ONE), `s3-lowangle-gate.png`, `s4-highangle-driveway.png`, `s5-eyelevel-vanclose.png`. End card: `endcard-1080x1920.png` (galing sa `clients/oceanides/templates/kuya-marvin-endcard.html`). KM-002-AD nasa script-pool.json `ads` section na.
+   - Triage flags para kay Neil: (a) S4 tattoo sa selfie arm — i-verify kung tamang braso; (b) S2 v1 walang tattoo / v2 may tattoo sa kanang-frame na braso — piliin ang tugma sa totoong braso ni Marvin; (c) backgrounds magkakapareho ang mundo (beige fence + black gate + van) pero hindi pixel-identical — jump-cut raw-ugc register ang nagtatago nito.
+3. ⬜ Neil approves plates + end card ← **DITO TAYO**
 4. ⬜ Veo renders (cost estimate muna bago mag-fire) + agent QA + Neil eyeball
 5. ⬜ Voice pass: S2 TTS + S1/S3/S4/S5 STS sa clone; isang clip muna bago lahat
 6. ⬜ Edit: hard cuts, trim dead air, burned-in captions, end card, SFX subtle

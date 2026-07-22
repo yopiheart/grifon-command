@@ -8,6 +8,29 @@
     "Persona voice: Kuya Marvin, kalmado, derecho, walang bola; parang kapitbahay na marunong. Hindi announcer, hindi hard-sell."
   ],
   "_cta": "Kung ganyan na sa bahay nyo, LIBRE ang inspection, walang pilitan, at sasabihin namin ang presyo bago kami magsimula. Tawag lang: Globe 0917-671-6383 o Smart 0939-245-6217. Sabihin nyo, kay Kuya Marvin kayo.",
+  "_ads_readme": [
+    "PAID AD scripts — hiwalay na format sa Lane A organic sa taas. Formula source: api/_lib/prompts.ts (UGC Pro structures, hook 5-8 words pattern interrupt, body 7-12 words/line Slide pacing, TAGLISH ACCENT LOCK, CTA walang peso/walang buy-now). Production: workflows/oceanides_kuya_marvin_brand.md + ads/<id>/shot-plan.md.",
+    "Attribution key sa bawat ad: sinasabi + nakasulat sa end card: Sabihin nyo, kay Kuya Marvin kayo."
+  ],
+  "ads": [
+    {
+      "id": "KM-002-AD",
+      "derivedFrom": "KM-002",
+      "format": "ugc-pro-tutorial-service-5beat",
+      "awareness": "solution_aware",
+      "status": "plan approved (Neil 2026-07-22); plates sa eyeball gate",
+      "hook1": "Takot ka tumawag ng pasipsip? Tama ka.",
+      "hook2": "Nagulat ka na ba sa presyo ng pasipsip?",
+      "scenes": [
+        { "s": 1, "beat": "HOOK", "line": "(hook1 o hook2)", "visual": "talking close-up, eye-level, jobsite gate + van hint" },
+        { "s": 2, "beat": "STEP 1", "line": "Una, chine-check muna namin ang tangke nyo. Libre yun.", "visual": "hands-only work insert (tank cover), VO ng voice clone" },
+        { "s": 3, "beat": "STEP 2", "line": "Pangalawa, sasabihin namin ang presyo bago kami magsimula. Walang dagdag.", "visual": "talking close-up, slight low angle" },
+        { "s": 4, "beat": "STEP 3", "line": "Pangatlo, kapag hindi kayo payag sa presyo, aalis kami nang maayos.", "visual": "talking close-up, slight high angle" },
+        { "s": 5, "beat": "RESULT + CTA", "line": "Ganun kasimple. Libreng inspection, i-message nyo lang kami. Sabihin nyo, kay Kuya Marvin kayo.", "visual": "talking close-up eye-level sa tabi ng van, tapos end card na may numbers" }
+      ],
+      "notes": "Numbers hindi binibigkas; nasa end card + caption. Trim sa edit target ~30s."
+    }
+  ],
   "scripts": [
     {
       "id": "KM-001",

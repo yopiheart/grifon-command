@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="tl"><head><meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root{--navy:#0E2C5E;--navy2:#0A1F45;--ocean:#1C63AD;--sky:#5AA6E6;--gold:#F5B301;--white:#fff;
+--head:'Anton','Arial Narrow',Impact,sans-serif;--body:'Inter','Helvetica Neue',Arial,sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box}html,body{background:#333}
+/* Video end card 9:16 — 540x960 CSS (@2x -> 1080x1920).
+   Safe margins generous: FB/TikTok UI chrome eats edges. */
+#canvas{width:540px;height:960px;position:relative;overflow:hidden;font-family:var(--body);
+background:radial-gradient(120% 90% at 50% 0%, var(--navy) 0%, var(--navy2) 58%, #071630 100%);
+-webkit-font-smoothing:antialiased;display:flex;align-items:center;justify-content:center}
+.wave{position:absolute;left:0;right:0;bottom:0;height:180px;opacity:.16}
+.block{position:relative;z-index:5;width:440px;text-align:center}
+.eyebrow{display:inline-block;background:var(--gold);color:var(--navy2);font-weight:900;font-size:13px;letter-spacing:1.4px;text-transform:uppercase;padding:6px 14px;border-radius:5px;white-space:nowrap}
+h1{font-family:var(--head);font-weight:400;font-size:64px;line-height:.96;color:#fff;text-transform:uppercase;letter-spacing:.5px;margin-top:22px}
+h1 b{color:var(--gold);font-weight:400}
+.sub{font-size:19px;font-weight:700;color:#dfe8f5;margin-top:18px;line-height:1.4}
+.sub b{color:#fff}
+.nums{margin-top:30px;display:flex;flex-direction:column;gap:12px;align-items:center}
+.num{display:flex;align-items:center;gap:12px}
+.num .ph{width:38px;height:38px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.num .ph svg{width:20px;height:20px;fill:var(--navy2)}
+.num .no{font-size:30px;font-weight:900;color:#fff;letter-spacing:.4px}
+.num .lbl{font-size:14px;font-weight:800;color:var(--sky);letter-spacing:1.4px;text-transform:uppercase;width:58px;text-align:right}
+.attrib{margin-top:34px;font-family:var(--head);font-size:33px;color:var(--gold);text-transform:uppercase;letter-spacing:.6px;line-height:1.12}
+.foot{margin-top:26px;font-size:12px;font-weight:800;color:#8fb3dd;letter-spacing:2.2px;text-transform:uppercase}
+</style></head><body>
+<div id="canvas">
+  <svg class="wave" viewBox="0 0 540 180" preserveAspectRatio="none"><path d="M0 90 C 90 30, 180 150, 270 90 S 450 30, 540 90 L 540 180 L 0 180 Z" fill="#5AA6E6"/></svg>
+  <div class="block">
+    <span class="eyebrow">SEC-Rehistrado &bull; May DENR Papeles</span>
+    <h1><b>Libreng</b> Septic<br/>Health Check</h1>
+    <div class="sub">Sasabihin namin ang presyo <b>bago</b> magsimula.<br/>Walang pilitan, walang gulat.</div>
+    <div class="nums">
+      <div class="num"><span class="lbl">Globe</span><span class="ph"><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.7 3.9 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.2 2.2z"/></svg></span><span class="no">0917-671-6383</span></div>
+      <div class="num"><span class="lbl">Smart</span><span class="ph"><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.7 3.9 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.2 2.2z"/></svg></span><span class="no">0939-245-6217</span></div>
+    </div>
+    <div class="attrib">"Sabihin nyo: kay<br/>Kuya Marvin kayo."</div>
+    <div class="foot">Oceanides &bull; Kuya Marvin</div>
+  </div>
+</div>
+</body></html>
