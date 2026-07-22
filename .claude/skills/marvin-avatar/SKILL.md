@@ -94,3 +94,7 @@ node .claude/skills/codex-image/generate.mjs \
 ```
 
 Batches: parallel runner pattern (spawn generate.mjs concurrently — see identity-lock/manifest*.json for reproducible prompt sets). Content-angle ideas for batches: Sol's content-angles.md in the archived zip (12 field scenes + 50/30/20 education/proof/founder mix, 4:5 for feed stills).
+
+## Plate aspect → Veo letterbox (production lesson, 2026-07-23)
+
+Ang gpt-image-2 plates ay 2:3 (1024×1536 max) pero 9:16 ang Veo output frame — **nile-letterbox ni Veo ang 2:3 input (~150px black bars taas-baba ng bawat talking clip).** Sa edit, tanggalin via center-crop sa 9:16 bago i-deliver: `crop=908:1614:86:153,scale=1080:1920` (close-up framing = ligtas ang side crop). Sa mga susunod na batch, pwede ring i-pre-crop ang plate sa 9:16 (864×1536) bago ipasa kay Veo para tumugma agad — pero tandaan na nawawalan ng gilid ang eksena, kaya ilagay ang mahalagang background elements (van, gate) malapit sa gitna ng plate.
