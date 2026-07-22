@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,900;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: #000;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+      }
+
+      /* camera rig — the punch-in scales this wrapper, not the video directly */
+      #camera {
+        position: absolute;
+        inset: 0;
+        transform-origin: 50% 42%; /* travel toward the face, not dead center */
+        will-change: transform;
+      }
+
+      /* layered editorial type — premium-reel-v2 signature: white echo behind, gold hero in front */
+      #word-stack {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 78%;
+        text-align: center;
+        pointer-events: none;
+      }
+      .word {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        white-space: nowrap;
+        font-family: "Inter", sans-serif;
+        font-weight: 900;
+        font-style: italic;
+        letter-spacing: 0.01em;
+        will-change: transform, opacity;
+      }
+      #word-echo {
+        font-size: 240px;
+        color: rgba(255, 255, 255, 0.2);
+        filter: blur(7px);
+        text-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+      }
+      #word-hero {
+        font-size: 176px;
+        color: #ffcc00;
+        -webkit-text-stroke: 3px rgba(20, 14, 0, 0.85);
+        paint-order: stroke fill;
+        text-shadow:
+          0 0 26px rgba(255, 255, 255, 0.45),
+          0 12px 28px rgba(0, 0, 0, 0.65),
+          0 4px 0 rgba(120, 85, 0, 0.95),
+          0 0 2px rgba(0, 0, 0, 0.9);
+      }
+
+      /* water droplets — soft white glow, brand-neutral supporting elements */
+      .droplet {
+        position: absolute;
+        width: 34px;
+        height: 34px;
+        border-radius: 50% 50% 50% 0;
+        background: radial-gradient(
+          circle at 35% 35%,
+          rgba(255, 255, 255, 0.95),
+          rgba(255, 255, 255, 0.35) 70%
+        );
+        filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.65));
+        will-change: transform, opacity;
+      }
+      #drop-1 { left: 22%; top: -140px; }
+      #drop-2 { left: 74%; top: -180px; width: 26px; height: 26px; }
+      #drop-3 { left: 62%; top: 90px; width: 20px; height: 20px; }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="4"
+      data-width="1080"
+      data-height="1920"
+    >
+      <div id="camera">
+        <video
+          id="a-roll"
+          class="clip"
+          src="skincare-raw-talking.mp4"
+          muted
+          playsinline
+          data-start="0"
+          data-duration="4"
+          data-track-index="3"
+          style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover"
+        ></video>
+      </div>
+      <audio
+        id="a-roll-audio"
+        src="skincare-raw-talking.mp4"
+        data-start="0"
+        data-duration="4"
+        data-track-index="2"
+        data-volume="1"
+      ></audio>
+
+      <div
+        id="word-stack"
+        class="clip"
+        data-start="1.2"
+        data-duration="2.2"
+        data-track-index="1"
+      >
+        <div id="word-echo" class="word">THIRSTY</div>
+        <div id="word-hero" class="word">THIRSTY</div>
+        <div id="drop-1" class="droplet"></div>
+        <div id="drop-2" class="droplet"></div>
+        <div id="drop-3" class="droplet"></div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      /* ---- camera: felt zoom, visible easing — never an instant reframe ---- */
+      // gentle anticipation push while she sets up the line
+      tl.fromTo("#camera", { scale: 1.0 }, { scale: 1.02, duration: 1.2, ease: "power1.inOut" }, 0);
+      // punch-in ON "thirsty" (1.20s) — the viewer should FEEL the travel
+      tl.to("#camera", { scale: 1.09, duration: 0.5, ease: "power2.out" }, 1.2);
+      // hold, then ease back out so the end frame breathes
+      tl.to("#camera", { scale: 1.04, duration: 0.7, ease: "power2.inOut" }, 3.1);
+
+      /* ---- layered type: pop/scale-punch build, then clean exit ---- */
+      tl.fromTo(
+        "#word-hero",
+        { xPercent: -50, yPercent: -50, scale: 0.3, rotation: -6, opacity: 0 },
+        { xPercent: -50, yPercent: -50, scale: 1, rotation: -3, opacity: 1, duration: 0.45, ease: "back.out(1.6)" },
+        1.2
+      );
+      tl.fromTo(
+        "#word-echo",
+        { xPercent: -50, yPercent: -58, scale: 0.5, opacity: 0 },
+        { xPercent: -50, yPercent: -58, scale: 1, opacity: 1, duration: 0.55, ease: "back.out(1.2)" },
+        1.26
+      );
+      // subtle living drift while on screen (premium feel: never frozen)
+      tl.to("#word-hero", { scale: 1.06, y: -10, duration: 1.4, ease: "sine.inOut" }, 1.7);
+      tl.to("#word-echo", { scale: 1.1, y: -22, duration: 1.25, ease: "sine.inOut" }, 1.85);
+      // exit before she lifts the bottle back up
+      tl.to(
+        ["#word-hero", "#word-echo"],
+        { scale: 0.85, opacity: 0, duration: 0.28, ease: "power2.in" },
+        3.12
+      );
+
+      /* ---- droplets: pop in around the word, drift down, fade ---- */
+      tl.fromTo(
+        "#drop-1",
+        { rotation: -45, scale: 0, opacity: 0 },
+        { rotation: -45, scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2)" },
+        1.35
+      );
+      tl.fromTo(
+        "#drop-2",
+        { rotation: -45, scale: 0, opacity: 0 },
+        { rotation: -45, scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2)" },
+        1.5
+      );
+      tl.fromTo(
+        "#drop-3",
+        { rotation: -45, scale: 0, opacity: 0 },
+        { rotation: -45, scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2)" },
+        1.62
+      );
+      tl.to("#drop-1", { y: 60, opacity: 0, duration: 1.1, ease: "power1.in" }, 1.9);
+      tl.to("#drop-2", { y: 80, opacity: 0, duration: 1.1, ease: "power1.in" }, 2.0);
+      tl.to("#drop-3", { y: 50, opacity: 0, duration: 0.9, ease: "power1.in" }, 2.1);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

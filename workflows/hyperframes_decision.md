@@ -32,6 +32,55 @@ Swipe-file evidence backing the workflow fit: **S20 Product-UI-as-hero** (20 cor
 - **One design system:** any motion kit consumes DESIGN.md tokens (Grifon Gold `#FFCC00`, zinc-950, Inter Black). `components/ui/motionTokens.ts` stays app-UI-only per its own guardrail.
 - **Roadmap note:** if the parked "Remotion Lambda final-render executor" (post_beta_roadmap §10) ever revives, Hyperframes supersedes Remotion as the candidate (plain HTML > framework-specific React for LLM authoring).
 
+## Move 2 — bake-off round 1 (2026-07-22, PENDING NEIL EYEBALL)
+
+**Setup:** Same 4.0s skincare raw clip (`workflows/assets/omni-poc/skincare-raw-talking.mp4`,
+the clip premium-reel-v2's approved round used). Lane A = committed Omni approved sample.
+Lane B = Hyperframes v0.7.68 local render (Chrome headless + FFmpeg, cafe PC, 1 GB free RAM,
+2 workers). Lane C = raw control. **Omni spend this round: $0.00** (Lane A reused the
+committed approved sample). Eval-gate Gemini calls: 1× analyze_video + 2× render_audit
+(cents). Hyperframes iterations: 3 renders × ~37s each, $0.
+
+**Lane B treatment (deterministic translation of the premium-reel-v2 signature):** layered
+gold `#FFCC00` THIRSTY (Inter 900 italic, dark stroke + shadow per swipe P2 outline-not-box),
+blurred white echo layer behind, pop at 1.20s (silencedetect-timed to the spoken word),
+felt punch-in 1.02→1.09 power2.out with visible easing, 3 water-droplet glow accents,
+exit at 3.12s. Composition: `workflows/assets/hyperframes-bakeoff/composition-index.html`.
+
+**Machine gates (Lane B): ALL PASS.**
+- Blind believability (`analyze_video.py`, analyzer not told what the file is):
+  `real-human`, "perfect lip-sync" — parity with raw baseline (by construction; footage
+  pixels untouched). Note: the autopsy-schema validator exited non-zero on unrelated
+  sections (4s clip vs viral-autopsy schema strictness); the believability block is clean.
+- Text integrity (`render_audit.mjs`): first render FAILED — the oversized echo layer's
+  trailing ghost "Y" read as "THIRSTYY" at 1.75s. Fixed with one CSS line (blur the echo
+  into a glow), re-rendered in 37s, re-audit clean: single letter-perfect THIRSTY,
+  `covers_face: false`, no band/box. **This is the lane thesis in one incident: a text
+  defect that would have been a $0.40 stochastic Omni re-roll was a deterministic
+  1-line/37-second fix.**
+- Hyperframes' own `check` gate caught 4 real authoring errors pre-render (GSAP/CSS
+  transform conflict, nested-timed-media freeze, track overlap) — the contrast pass runs
+  with the echo layer as a documented decorative exception (hero word passes 3:1).
+
+**Practical numbers:** render = 96 frames @1080×1920/24fps in ~37s local; setup from
+zero (Chrome shell + FFmpeg full build + scaffold) ≈ 10 min on the cafe PC. Friction
+confirmed: whisper-cpp not installed (timed the word via FFmpeg silencedetect instead);
+Node 24 fine; low RAM fine at 2 workers.
+
+**Evidence (committed):** `workflows/assets/hyperframes-bakeoff/` — 720p sample of Lane B,
+3-lane comparison sheet (RAW / OMNI / HYPERFRAMES × 0.3s/1.5s/2.2s/3.0s), and the
+composition HTML. Full-res lanes staged for eyeball at `.tmp/hyperframes-bakeoff/`
+(disposable; re-render via the committed composition if wiped).
+
+**NEXT: Neil eyeball** — zoom-easing feel + type integration are his call, not
+machine-gradeable. Verdict to record here verbatim, then per-move ownership verdicts go
+into `omni_edit_presets.md` (Omni keeps generative-pixel work only, per the verdict table
+above). Move 1 (launch video) unlocks only after this verdict.
+
 ## Resume trigger
 
-Next session on this: invoke `/ai-editor`, re-read this file, start Move 1 (or Move 2 if a suitable talking clip + Omni budget are on hand). Install is `npx hyperframes init` in a scratch dir — do NOT add it to the product `package.json`.
+Next session on this: invoke `/ai-editor`, re-read this file. If Move 2 round 1 above is
+still PENDING NEIL EYEBALL, present `.tmp/hyperframes-bakeoff/` (or re-render from the
+committed composition) and record his verdict. After a passing verdict: Move 1 (launch
+video). Install is `npx hyperframes init` in a scratch dir — do NOT add it to the product
+`package.json`.
