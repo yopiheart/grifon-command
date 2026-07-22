@@ -142,6 +142,30 @@ same message green-lit Move 1 (launch video) + the defreezer restore script
   (temu/testimonial beds available), VO pass (ElevenLabs) — all cheap deterministic
   edits.
 
+**NEIL EYEBALL Move 1: APPROVED at v3 (2026-07-22).** Verbatim: *"Ayos! Approved na
+sakin to bro. Pwedeng eto na ung mag silbing reference in the future na pwedeng
+pagkopyahan at icucustomize nalang dipende sa ad na gusto kong iapply."* Iteration
+history: v1 (website-screenshot middle) → CMO+CD consult, Neil picked Option A → v2
+(S32 prompt-to-outcome + phone-frame real ads) → Neil flagged the remaining 3-step
+screenshot → v3 (native DESCRIBE/BUILD/LAUNCH beat, zero website pixels).
+
+## THE TEMPLATE (Neil-designated, 2026-07-22)
+
+`workflows/assets/grifon-launch-video/composition-index.html` is the **reference
+composition** — copy it into a fresh `npx hyperframes init` scaffold and customize per
+ad. Its reusable vocabulary: hook slam (3-line stagger), pain cards, S32 typed-prompt
+tableau, phone-frame video slots (`media/skincare-ad.mp4` / `media/vox-ad.mp4` —
+FILE-SWAPPABLE per campaign; add frames as more generated samples exist), native
+3-step beat, offer slam, CTA block. FFmpeg finishing (music + loudnorm) stays outside
+the composition. **Publish blocker on the current samples: Glossier bottle visible —
+swap in Grifon-generated ads before running as a real ad.**
+
+**Pipeline wiring (Neil-approved same date):** viral-autopsy decoded patterns and
+ai-editor jobs may now route to the Hyperframes lane — Mode B's move-split becomes
+three-way: FFmpeg-executable / **Hyperframes-executable (deterministic browser
+graphics: kinetic type, UI cards, charts, count-ups, transparent overlays)** /
+Omni-class (generative pixels only). See the ai-editor SKILL.md Hyperframes section.
+
 ## Resume trigger
 
 Next session on this: invoke `/ai-editor`, re-read this file. If Move 2 round 1 above is

@@ -33,6 +33,30 @@ FFmpeg **render presets** (`classic/impact/hype/clean` — TUNED, and NOT retire
 they're the deterministic layer every Omni preset composes with; Neil decision
 2026-07-06).
 
+## The Hyperframes lane (validated 2026-07-22 — third leg beside Omni + FFmpeg)
+
+HeyGen **Hyperframes** (HTML/CSS/GSAP → deterministic MP4 via headless Chrome; local,
+$0, no safety filter) is the WORKFLOW-LAYER lane for **deterministic browser
+graphics**: kinetic display typography, UI pop-up cards, charts/count-ups, transparent
+overlays, phone-frame video-in-video, full motion-graphics ads. It beat
+premium-reel-v2's typography class at $0 (Neil eyeball PASS) and produced the approved
+Grifon launch video. Full verdict, per-move ownership table, and guardrails:
+[workflows/hyperframes_decision.md](../../../workflows/hyperframes_decision.md).
+
+- **Routing:** deterministic typography / graphics / camera-feel moves → Hyperframes
+  FIRST. Omni only for generative pixels (restyle, relight, subject-aware motion).
+  Critical text can render in HTML (it's deterministic) but still gate with
+  `tools/render_audit.mjs` letter-perfect checks. FFmpeg keeps audio, mux, loudness.
+- **Reference template (Neil-designated):**
+  `workflows/assets/grifon-launch-video/composition-index.html` — copy into a fresh
+  `npx hyperframes init` scaffold and customize per ad; phone-frame sample videos are
+  file-swappable slots.
+- **Re-arm after defreezer:** `scripts/restore-hyperframes.ps1`. Never add
+  hyperframes to the product `package.json` — this lane never enters the product
+  runtime.
+- **Mode B split is three-way** (see step 3 below): FFmpeg-executable /
+  Hyperframes-executable / Omni-class.
+
 ## Premortem (what kills this skill if unguarded)
 
 1. **Budget bleed** — stochastic retries silently eating $0.10/sec ("just one more
@@ -125,10 +149,14 @@ Neil drops a video whose editing style we want to copy (his protocol, 2026-07-05
    (foreground) to visually verify the analysis — frame contact sheets + per-moment
    crops of every text overlay, animation, motion graphic, zoom/angle move;
    confirm/correct the Edit-DNA claims frame-by-frame.
-3. Split the VERIFIED moves: FFmpeg-executable (→ EDL vocabulary; corroborations go
-   to [workflows/viral_swipe_file.md](../../../workflows/viral_swipe_file.md) via
-   viral-autopsy conventions) vs Omni-class (→ new `draft` preset in the registry,
-   built from validated vocab + the constraints in guardrails 3-6).
+3. Split the VERIFIED moves THREE ways: FFmpeg-executable (→ EDL vocabulary;
+   corroborations go to
+   [workflows/viral_swipe_file.md](../../../workflows/viral_swipe_file.md) via
+   viral-autopsy conventions), **Hyperframes-executable** (deterministic browser
+   graphics — kinetic type, UI cards, charts, overlays → build on the reference
+   template per the Hyperframes-lane section above; $0, no paid gate needed), and
+   Omni-class (generative pixels only → new `draft` preset in the registry, built
+   from validated vocab + the constraints in guardrails 3-6).
 4. Validate the draft via Mode C.
 
 ### Mode C — validate / promote a preset
