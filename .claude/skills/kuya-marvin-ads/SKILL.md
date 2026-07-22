@@ -48,20 +48,74 @@ compositions, generator). Sister skills: `marvin-avatar` (plates), `ai-editor` (
 ## PACING & ENERGY (Neil feedback, 2026-07-23 — apply sa bawat susunod na ad)
 
 - **Bakit mabagal si Marvin sa pilot:** ini-stretch ni Veo ang dialogue para punuin ang
-  8s clip. Ang 7-12 word line sa 8s ≈ 1.4 words/sec (natural Taglish ≈ 2.5 wps).
-- **Fix 1 — word budget:** sa 8s clip, **16-20 words ang linya** (hindi 7-12; ang 7-12/line
-  ay app rule para sa VARIABLE duration na hindi natin magagamit — lite@1080p ay 8s lang).
-  Puwedeng 2 pinagdugtong na formula-lines sa isang clip.
-- **Fix 2 — delivery direction sa Veo prompt:** palitan ang "calm and direct" ng
-  "speaks with warm, upbeat, confident energy at a brisk natural pace — parang excited
-  kuya na may sasabihing importante, never announcer-hype" + panatilihin ang EXPRESSION
-  LOCK (ang emosyon ay DALA NG BOSES, hindi ng mukha — hindi nasisira ang identity).
-- **Fix 3 — STS stability:** `natural` (0.50/0.75) sa halip na `robust` para hindi
-  flat ang prosody. Robust = pinaka-consistent timbre pero pinapatay ang energy.
-- **Fix 4 — edit speedup:** 1.05–1.12x global (setpts + atempo) kapag kulang pa rin
-  ang bilis; MrBeast-standard trick, invisible sa viewer.
-- **Tone guardrail (CMO):** mabilis OO, pero kuya-next-door confidence pa rin ang tono —
-  hindi MrBeast shout. Ang believability ang differentiator vs malabanan swarm.
+  8s clip, AT walang frame-0 discipline ang prompt (may pre-speech beat + resolve tail).
+- **PRIMARY FIX — ang Director AI Option B formula mismo** (`services/geminiService.ts`
+  ~L2394, ang app's tuned talking-scene video prompt — HUWAG mag-imbento, ito na ang solved):
+  - **FRAME 0 RULE:** "The avatar is ALREADY mid-syllable when the clip opens — mouth in
+    motion, first word actively forming, eyes engaged with the lens. NO establishing pose,
+    NO pre-speech beat, NO settling in. The clip ends on the next breath, NOT a post-speech
+    resolve-state with closed mouth."
+  - **Dialogue in quotes FIRST** sa prompt; ONE gentle camera move na nagsisimula sa unang
+    pantig (slow push-in), walang handheld/rack focus; **END-CLEAN RULE** (walang fade/
+    ghost sa huling segundo — ang cut ay sa editor).
+  - Marvin delta: panatilihin ang EXPRESSION LOCK (mas mahigpit kaysa app "micro-expressions"
+    — identity ang batas natin; ang emosyon ay DALA NG BOSES).
+- **Fix 2 — word budget:** 16-20 words kada 8s clip (2 formula-lines pinagdugtong OK) para
+  hindi na kailangan mag-stretch ni Veo.
+- **Fix 3 — delivery direction:** "warm, upbeat, confident energy at a brisk natural pace,
+  parang excited kuya na may sasabihing importante, never announcer-hype".
+- **Fix 4 — STS stability:** `natural` (0.50) sa halip na `robust` para buhay ang prosody.
+- **Fix 5 — edit speedup:** 1.05–1.12x (setpts+atempo) kapag kulang pa rin.
+- **Tone guardrail (CMO):** mabilis OO, pero kuya-next-door confidence — hindi MrBeast
+  shout. Ang believability ang differentiator vs malabanan swarm.
+
+## FACE-SAFE TEXT ZONES (Neil, 2026-07-23)
+
+Walang overlay text o caption na tatakip sa mukha ni Marvin — kailanman. Bago i-final
+ang overlay/caption positions sa isang scene: i-frame-strip ang clip, tingnan kung saan
+ang mukha sa buong duration (gumagalaw ang ulo), at ilagay ang text sa malinaw na safe
+zone (default: captions y≈1267–1560 sa ilalim ng chest line ng close-up; hook stack sa
+taas y≈170–540 kapag ang mukha ay nasa gitna/baba). Kapag close-up na halos puno ang
+frame ang mukha, ILIPAT ang text kung saan readable — ang readability ng viewer ang
+panalo, hindi ang template position. Idagdag sa VERIFIER: face-occlusion check sa
+frame strips (`covers_face: false` ang standard, same sa render_audit).
+
+## PRE-IMAGE QUALITY GATE (CMO + CD verify, bago ang plates)
+
+Pagkatapos ng script + shot plan/storyboard at BAGO mag-generate ng kahit isang plate:
+i-load ang `grifon-cmo` (offer/hook/awareness/tone check) at `grifon-creative-director`
+(visual grammar, consistency locks, safe zones, format) para i-verify ang plano. Mas
+mura ang paper fix kaysa regenerated plates/clips. Tapos Neil approval, saka plates.
+
+## CAMERA ANGLES (expansion, gated)
+
+- Proven: eye-level / slight-low / slight-high close-up (KM-002).
+- **Side-angle talking = pwedeng subukan** gamit ang app FACE_TO_CAMERA rule: side BODY
+  angle OK basta nakaharap sa camera ang mukha — BOTH eyes + mouth clearly visible
+  (kailangan ng lip-sync). Full side profile na nakatalikod ang mukha = BANNED sa talking.
+  Gate: ISANG test clip muna + Neil eyeball bago isama sa batch (camera-distance rule
+  pa rin: close-up lagi).
+
+## B-ROLL MOTION LANE — Kling 3.0 Omni (gated experiment)
+
+Ang hands-only/work/truck b-roll (walang mukha = walang identity risk) ay pwedeng
+pagalawin via **Kling O1 (`kling-video-o1`)** sa halip na still+push-in:
+- **Lakas ng Omni:** multi-shot continuity (hanggang 6 camera cuts mula sa ISANG start
+  image, stable ang environment) + **dual-frame interpolation** (start frame + end frame
+  = kontrolado ang motion path).
+- **Prompt grammar = ang app's tuned Kling formulas** (`geminiService.ts` ~L2376-2392):
+  - Regular b-roll: buksan sa camera physics prose ("slow macro push-in" / "smooth slow
+    lateral tracking"), walang handheld/jitter, negative tail ("Avoid low quality...
+    morphing, melting... final second holds the shot clean").
+  - Start→End frame morph (2 plates + transition, MrBeast/testimonial pattern): anchor
+    transformation grammar — pangalanan ang shared anchor (kulay + silhouette), decisive
+    physics verbs ("compresses into", "crystallizes into"), NEVER slow blend o amorphous
+    intermediate; isalin ang transition effect sa anchor-bridge prose (Omni CANNOT do
+    instant cuts — huwag isulat ang "snap/teleport/hard cut").
+- **Talking scenes ay VEO PA RIN** (app routing: talking→Veo; Kling ang b-roll/cinematic).
+- Gate: unang Omni b-roll test = 1 clip (5s std, Kling balance ni Neil) + eyeball bago
+  maging regular lane. Ang mukha ni Marvin ay HINDI dadaan sa Kling hangga't walang
+  hiwalay na identity test na pasado.
 
 ## VERIFIER (machine QA gates bago kay Neil)
 
