@@ -99,6 +99,22 @@
       }
       .caret { display: inline-block; width: 18px; height: 52px; background: #ffcc00; margin-left: 8px; will-change: opacity; }
 
+      /* native 3-step beat (no website pixels) */
+      .step-row {
+        display: flex; align-items: center; gap: 30px;
+        margin: 26px 0;
+        will-change: transform, opacity;
+      }
+      .step-num {
+        font-family: "JetBrains Mono", monospace; font-size: 40px; font-weight: 600;
+        color: #ffcc00; letter-spacing: 0.1em;
+      }
+      .step-word { font-size: 96px; font-weight: 900; letter-spacing: -0.01em; }
+      .step-arrow {
+        font-size: 60px; color: #ffcc00; margin: -6px 0;
+        will-change: transform, opacity;
+      }
+
       /* phone frames playing real ads */
       .phone-video {
         position: absolute; left: 50%; top: 50%;
@@ -194,10 +210,13 @@
         <div class="chip" id="chip-vidB" style="left: 50%; top: 208px;">REAL ADS. REAL BUSINESSES.</div>
       </div>
 
-      <!-- S3b · 3-step UI flash 11.5–12.5 -->
-      <div id="s3b" class="shot-wrap clip" data-start="11.5" data-duration="1" data-track-index="5">
-        <div class="shot-card" id="card-b"><img id="img-b" src="media/scroll-019.png" /></div>
-        <div class="chip" id="chip-b" style="left: 88px; bottom: 578px;">DESCRIBE &#8594; BUILD &#8594; LAUNCH</div>
+      <!-- S3b · native 3-step beat 11.5–12.5 -->
+      <div id="s3b" class="center-stage clip" data-start="11.5" data-duration="1" data-track-index="5">
+        <div class="step-row" id="step-1"><span class="step-num">01</span><span class="step-word">DESCRIBE</span></div>
+        <div class="step-arrow" id="arrow-1">&#8595;</div>
+        <div class="step-row" id="step-2"><span class="step-num">02</span><span class="step-word gold">BUILD</span></div>
+        <div class="step-arrow" id="arrow-2">&#8595;</div>
+        <div class="step-row" id="step-3"><span class="step-num">03</span><span class="step-word">LAUNCH</span></div>
       </div>
 
       <!-- S4 · OFFER 12.5–16.5 -->
@@ -283,10 +302,12 @@
       tl.set("#chromeB", { opacity: 0 }, 11.49);
       tl.set("#vidB", { opacity: 0 }, 11.49);
 
-      /* S3b steps UI flash (11.5–12.5) */
-      tl.fromTo("#card-b", { y: 110, rotation: -2, opacity: 0 }, { y: 0, rotation: 1, opacity: 1, duration: 0.3, ease: "back.out(1.4)" }, 11.54);
-      tl.fromTo("#img-b", { x: -160 }, { x: -300, duration: 0.9, ease: "sine.inOut" }, 11.56);
-      tl.fromTo("#chip-b", { scale: 0, rotation: 8, opacity: 0 }, { scale: 1, rotation: 3, opacity: 1, duration: 0.26, ease: "back.out(2.2)" }, 11.75);
+      /* S3b native 3-step beat (11.5–12.5): rapid-fire pops */
+      tl.fromTo("#step-1", { x: -90, opacity: 0 }, { x: 0, opacity: 1, duration: 0.22, ease: "back.out(1.8)" }, 11.52);
+      tl.fromTo("#arrow-1", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.16, ease: "back.out(2.5)" }, 11.7);
+      tl.fromTo("#step-2", { x: 90, opacity: 0 }, { x: 0, opacity: 1, duration: 0.22, ease: "back.out(1.8)" }, 11.8);
+      tl.fromTo("#arrow-2", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.16, ease: "back.out(2.5)" }, 11.98);
+      tl.fromTo("#step-3", { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.26, ease: "back.out(2)" }, 12.06);
       tl.to("#s3b", { opacity: 0, duration: 0.18, ease: "power2.in" }, 12.3);
       tl.set("#s3b", { opacity: 0 }, 12.49);
 
