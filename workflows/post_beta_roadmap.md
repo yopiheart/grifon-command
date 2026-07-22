@@ -1120,6 +1120,17 @@ a code-executor delegation AFTER Neil merges this branch and green-lights the pl
 - **Scope estimate:** Multi-day (new provider + async pipeline + viewer UI). Not before beta.
 - **Source:** Neil, 2026-07-21 — img2threejs knowledge-transfer brief evaluation ("surprise
   me brother!"); skill adopted same session, product lane parked here.
+- **Update 2026-07-22 (Griffin Emblem eyeball gate):** Neil FAILED the proof run for
+  brand-mark use — a stylized near-match of a known logo reads as a bootleg of the brand
+  ("kung hindi parehas… ano nalang mararamdaman ng viewers"). Standing rule: **procedural
+  `img2threejs-lab` output must never ship as a brand mark or any asset viewers already
+  know from 2D** — stylized-acceptable subjects only. Pixel-faithful 3D (brand marks,
+  recognizable products) requires this hosted-API lane. Quick provider snapshot from that
+  session: Meshy free tier = 100 credits/mo (~5 image-to-3D runs, CC BY 4.0, no card;
+  Pro $20/mo), strongest textures/PBR from the source image; Tripo = fastest + cleanest
+  geometry. A $0 free-tier bake-off on `public/griffin-emblem.png` is the natural first
+  step if Neil wants the 3D emblem itself (internal marketing use — does NOT require
+  unparking the product feature).
 
 ### 24. Gemini 3.6-era capability runway (Batch API · whole-video autopsy · context caching)
 

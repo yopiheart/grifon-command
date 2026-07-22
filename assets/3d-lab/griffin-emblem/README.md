@@ -34,7 +34,21 @@ node shoot.js "front=http://localhost:8471/index.html?spin=0&view=front"
 
 ## Status
 
-Awaiting Neil's eyeball gate on the Artifact. Decision: go/no-go on a landing-hero
-integration plan (lazy-loaded, landing-route-only, CSS fallback, `check:bundle-leak`,
-`brand-check`) — see roadmap discussion in the 2026-07-21 session. **three.js is NOT
-in the app bundle; nothing in the product imports this.**
+**Eyeball gate: FAIL for brand-mark use (Neil, 2026-07-22).** Verdict: for a *brand
+mark*, "almost the same" reads as a bootleg of your own logo — viewers who know the
+emblem feel the mismatch. The stylized-contract output is therefore unusable as the
+Grifon emblem; no landing-hero integration plan proceeds from this asset.
+
+Implications (recorded in `workflows/post_beta_roadmap.md` item #23):
+
+- The procedural `img2threejs-lab` lane stays adopted, but **re-scoped to assets
+  where stylized is acceptable** (generic props, client-flex product mockups where
+  the client approves the stylized look, turntable b-roll experiments). It is the
+  wrong tool for pixel-faithful brand marks — by design it never reads the image's
+  pixels (no textures, no scan), only rebuilds procedurally.
+- If a match-the-pixels 3D emblem is still wanted, the lane is a **hosted
+  image-to-3D service** (Meshy/Tripo class, real mesh + PBR textures from the
+  actual image) — evaluate on the free tier first before any spend.
+- Files here are kept as the pipeline proof/ledger, not as a shippable asset.
+
+**three.js is NOT in the app bundle; nothing in the product imports this.**
