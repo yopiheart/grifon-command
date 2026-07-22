@@ -1042,3 +1042,9 @@ em dash (—) ay halatang AI-written sa mata ng Pinoy na mambabasa. Rule na ito 
 `yan`, `yun`, `to`, `wag`; palitan ang bawat — ng period o comma. Saklaw ang lahat ng
 user-facing written copy (posts, captions, bio, DMs, ads, burned-in caption sources).
 Regular hyphen sa reduplication (`che-check`, `i-check`) ay hindi kasama, tama yan.
+
+## 2026-07-22 — Ad production outside the app STILL uses the app's tuned formula
+
+**What happened:** Sa KM-002 pilot ad ni Kuya Marvin, ginawa ang shot plan mula sa organic script pool + SOP memory lang — hindi binasa ang tuned adscript/storyboard rules sa `api/_lib/prompts.ts`. Nahuli ni Neil ("Pa-verify nga ako ulit, wala akong tiwala"): lumabag ang plan sa hook word count (5-8 words), body line count (7-12 words / 3-5s Slide pacing), pattern-interrupt hook, work-beat structure, at ONE-OPERATOR-ONE-JOBSITE consistency. Ang plates ay tatlong magkaibang lugar.
+
+**Rule:** Kapag PAID AD / ad creative ang ginagawa — kahit agency lane, kahit hindi dadaan sa app — ang crown-jewel formula sa `api/_lib/prompts.ts` (adscript structures, COMMON_RULES word counts, TAGLISH ACCENT LOCK, storyboard PACING/APPEARANCE_LOCK/one-jobsite) ang production grammar. Ang `script-pool.json` ay para sa Lane A ORGANIC lang (30-60s education). Bago mag-present ng production plan, i-verify ang bawat structural claim LABAN SA TUNED FILES, hindi sa memorya. Ang formula ay nasa repo mismo — walang dahilan hulaan.

@@ -1,54 +1,64 @@
-# KM-002 Pilot Ad — Shot Plan ("Gulatin sa presyo")
+# KM-002 Pilot Ad — Shot Plan v2 (aligned sa tuned ad formula)
 
-**Status:** DRAFT 2026-07-22 — plates in progress, hinihintay ang eyeball ni Neil per gate.
-**Canonical script:** `clients/oceanides/kuya-marvin/script-pool.json` → **KM-002** (TRUST / solution_aware). Ito ay production breakdown LANG — kapag may script edit, sa pool muna bago dito.
-**Recipe (lahat Gate-1 proven):** gpt-image-2 close-up plates (marvin-avatar skill) → `veo-3.1-lite-generate-preview` 1080×1920 (8s hard sa 1080p) + EXPRESSION LOCK → ElevenLabs STS sa Marvin voice clone (`jL41fXY8JXGEarmJ5g3f`) → edit (captions, stitch, AI label) via ai-editor.
+**Status:** DRAFT v2 2026-07-22 — PENDING NEIL APPROVAL. (v1 scrapped: ginawa mula sa organic Lane A pool nang hindi binabasa ang tuned adscript/storyboard rules; kinorek ni Neil. Lesson sa agent_lessons.md.)
+**Formula source (batas):** `api/_lib/prompts.ts` — UGC PRO CONTINUOUS PERFORMANCE (Tutorial — SERVICE) + COMMON_RULES word counts + TAGLISH ACCENT LOCK + APPEARANCE_LOCK + ONE OPERATOR ONE JOBSITE.
+**Renderer:** Marvin agency lane (Gate-1 proven): gpt-image-2 plates → Veo 3.1 Lite 1080×1920 8s + expression lock → ElevenLabs clone (`jL41fXY8JXGEarmJ5g3f`) → ai-editor finishing.
 
-## Format
+## Bakit UGC Pro Tutorial ang format (hindi ibang variant)
 
-- 9:16 vertical, 1080×1920, kabuuang ~52s
-- Raw-ugc register: phone-selfie feel, jump cuts sa pagitan ng clips, burned-in captions
-- Camera-distance rule: LAHAT ng talking clips ay CLOSE-UP (mukha pumupuno sa frame, ulo hanggang upper chest)
-- Disclosure: Meta AI label ON bago i-publish
+- **Services Testimonial 6-beat** = CUSTOMER ang nagsasalita ("Ako si...") — hindi fit; si Marvin ay operator.
+- **Transformation 4-beat** = kailangan ng before/after — pero ang "Proof ay laging totoo" rule: bawal i-present ang AI visuals bilang totoong trabaho. Naka-park hanggang may Lane B real footage.
+- **UGC Pro Tutorial (Service)** = "ganito namin ginagawa" authority-builder, operator-to-camera, continuous performance — LIFTED ang 3-consecutive-talking ban (tamang-tama sa raw-ugc close-up register ni Marvin), at ang "b-roll" ay ang TOTOONG work beats (hands-only allowed), hindi environment-only.
 
-## Segments (6)
+## Tuned rules na sinusunod ng v2 (ang checklist ni Neil)
 
-| # | Piraso | Linya (mula KM-002, verbatim) | Visual | Plate |
+| Rule (mula prompts.ts) | Application dito |
+|---|---|
+| Hook: ≤2s, **5–8 words TOTAL**, pattern interrupt, 2 variations | ✅ hooks sa ibaba |
+| Body lines: **7–12 words**, 3–5s bawat isa (Sabri Suby Slide) | ✅ bawat scene line |
+| OPENING ACCENT TRIGGER: Tagalog word sa unang 2 salita | ✅ "Takot ka..." |
+| TAGLISH ACCENT LOCK: ~70/30 Tagalog-dominant; CTA opens+closes sa Tagalog | ✅ |
+| Steps open with spoken number ("Una," "Pangalawa," "Pangatlo,") | ✅ S2–S4 |
+| CTA: BOOK/MESSAGE/INQUIRE lang, walang peso amount, walang "buy now" | ✅ numbers sa end card, hindi binibigkas |
+| ONE OPERATOR, ONE JOBSITE — same location bawat scene | ✅ iisang jobsite (gate/driveway na may van) |
+| HARD CUTS ONLY, walang transition effects | ✅ |
+| APPEARANCE_LOCK: consistent wardrobe/props — sa atin: navy tee + light-blue accent, white cab + silver aluminum van (via vehicle ref), walang imbentong gear/logo | ✅ locked sa plates |
+| Scene variety sa framing/pose (hindi identical na kuha bawat scene) | ✅ varied angles WITHIN close-up (camera-distance rule ni Marvin ang ceiling: talking = laging close-up; hands-only work shots = malayang framing, walang mukha = walang identity risk) |
+| PH ground-truth realism | ✅ ordinaryong PH bahay/kalsada |
+
+## Script (KM-002-AD — derived sa KM-002; idadagdag sa script-pool.json `ads` section pag-apruba)
+
+Typography rules applied (walang apostrophe sa contractions, walang em dash).
+
+| Scene | Beat | Linya | Words | Visual |
 |---|---|---|---|---|
-| 1 | HOOK (8s) | "Bakit ba takot tayong tumawag ng pasipsip? Kasi baka gulatin tayo sa presyo pagkatapos maghukay." | Talking close-up | A (van) |
-| 2 | 8s | "Totoo yan, at tama lang na mag-ingat kayo. Kaya ganito ang ginagawa namin sa Oceanides:" | Talking close-up | A (van) |
-| 3 | 8s | "Pupunta ako o ang team namin, chine-check muna namin ang tangke, libre yun." | Talking close-up | B (gate) |
-| 4 | 8s | "Tapos sasabihin namin ang presyo BAGO kami magsimula. Walang dagdag pagkatapos, walang gulat." | Talking close-up | B (gate) |
-| 5 | 8s | "Kapag hindi kayo pumayag sa presyo, aalis kami nang maayos. Ganun kasimple." | Talking close-up | C (street) |
-| 6 | CTA (~12s) | FIXED CTA block mula sa pool `_cta` — VERBATIM, huwag i-reword (attribution key): "Kung ganyan na sa bahay nyo, LIBRE ang inspection, walang pilitan, at sasabihin namin ang presyo bago kami magsimula. Tawag lang: Globe 0917-671-6383 o Smart 0939-245-6217. Sabihin nyo, kay Kuya Marvin kayo." | END CARD (navy + gold #F5B301, Anton): numbers malaki + "Sabihin nyo: kay Kuya Marvin kayo" — VO ng Marvin clone (direct TTS), hindi talking avatar | — |
+| S1 | HOOK | hook1: **"Takot ka tumawag ng pasipsip? Tama ka."** · hook2: "Nagulat ka na ba sa presyo ng pasipsip?" | 7 / 8 | Talking close-up, eye-level selfie, jobsite gate + van hint sa likod |
+| S2 | STEP 1 | "Una, chine-check muna namin ang tangke nyo. Libre yun." | 10 | **Hands-only work insert** (gloved hands sa tank cover/inspection) + VO ng clone (TTS, walang lip-sync na kailangan) |
+| S3 | STEP 2 | "Pangalawa, sasabihin namin ang presyo bago kami magsimula. Walang dagdag." | 11 | Talking close-up, slight low-angle, ibang spot sa same jobsite |
+| S4 | STEP 3 | "Pangatlo, kapag hindi kayo payag sa presyo, aalis kami nang maayos." | 11 | Talking close-up, slight high-angle selfie |
+| S5 | RESULT + CTA | "Ganun kasimple. Libreng inspection, i-message nyo lang kami. Sabihin nyo, kay Kuya Marvin kayo." | 15 (CTA beat) | Talking close-up eye-level → END CARD overlay: numbers (Globe 0917-671-6383 / Smart 0939-245-6217) + "Sabihin nyo: kay Kuya Marvin kayo", navy + gold Anton |
+| — | — | Kabuuang binibigkas ≈ 20–25s; render 5×8s tapos trim sa edit → target ~30s final | | |
 
-**Bakit end card ang CTA:** ang buong FIXED CTA ay ~14s — hindi kasya sa 8s Veo clip nang hindi rine-reword (bawal i-reword). Mas malakas din ang numbers na nakasulat nang malaki para sa direct response.
+Attribution key preserved: "Sabihin nyo, kay Kuya Marvin kayo" (Gate 2) — binibigkas + nakasulat sa end card + sa caption.
 
-## Audio lane
+## Consistency reference set (para hindi naliligaw ang kwento — lahat ng scene, iisang mundo)
 
-1. Veo native audio ang nagsasalita ng linya per clip (Taglish, proven sa motion tests)
-2. ElevenLabs **STS** per clip → boses ng totoong Marvin clone, preserved ang timing/lip-sync
-3. Segment 6: ElevenLabs **TTS** ng FIXED CTA sa clone → patong sa end card
-4. Phonetic normalization ng numbers sa TTS pass (zero-nine-one-seven... style) kung kailangan — test muna
+- **Marvin:** body master + front-neutral refs, navy tee + light-blue collar accent, LAHAT ng scene
+- **Sasakyan:** white cab + silver aluminum closed van (`assets/Aluminum-C-VAN-6-Wheeler-Truck-14-m.jpg` bilang 3rd edit ref) — kapag kita
+- **Lugar:** IISANG jobsite: residential gate/driveway, beige fence, overcast — lahat ng plates same location, iba lang ang angle/pose
+- **Tools (S2):** ordinaryong gloves + concrete tank cover/putol na hose, walang branded/imported gear, walang exposed sewage
 
-## Plates (3, close-up neutral — kailangan NEUTRAL para sa expression lock)
+## Production checklist
 
-| Plate | Eksena | Refs |
-|---|---|---|
-| A `plate-A-van` | Selfie sa tabi ng white cab + silver aluminum closed van (blurred sa likod ng balikat) | body master + front-neutral + **vehicle ref** (3rd edit, "do NOT turn into tanker") |
-| B `plate-B-gate` | Selfie sa harap ng ordinaryong PH house fence/steel gate | body master + front-neutral |
-| C `plate-C-street` | Selfie sa residential street, bahay/pader malabo sa likod | body master + front-neutral |
+1. ⬜ Neil approves v2 plan + script
+2. ⬜ Bagong plate set (same-jobsite): S1 eye-level, S3 low-angle, S4 high-angle, S5 eye-level (pwedeng i-reuse ang S1), + S2 work-shot start frame (hands-only) — via marvin-avatar recipe
+3. ⬜ Neil approves plates
+4. ⬜ Veo renders (cost estimate muna bago mag-fire) + agent QA + Neil eyeball
+5. ⬜ Voice pass: S2 TTS + S1/S3/S4/S5 STS sa clone; isang clip muna bago lahat
+6. ⬜ Edit: hard cuts, trim dead air, burned-in captions, end card, SFX subtle
+7. ⬜ AI label + publish (organic sa page muna, tapos ito rin ang unang ₱500/day ad creative)
+8. ⬜ Log sa `workflows/ad_performance_ledger.md` paglabas ng numbers
 
-Specs: 1024×1536, flat overcast light, navy tee + light-blue accent, warm-tan skin clause, integration block, ban tail — buong recipe sa `.claude/skills/marvin-avatar/`.
+## Note sa v1 plates (committed na)
 
-## Eyeball gates (si Neil ang batas sa bawat isa)
-
-1. ⬜ Shot plan approved
-2. ⬜ Plates approved (bago ang anumang Veo spend)
-3. ⬜ Veo clips approved (render → QA triage ng agent → Neil)
-4. ⬜ STS voice pass approved (kapag first time, isang clip muna bago lahat)
-5. ⬜ Final edit approved (captions + end card + AI label) → publish bilang organic sa FB page + ito rin ang unang ad creative sa ₱500/day
-
-## Batch note
-
-Kapag pasado ang pilot: KM-001, KM-008, KM-005 ang susunod (same recipe, mas mabilis na) — tapos ang unang 2-week Lane A batch.
+`plate-A-van`, `plate-B-gate-v2`, `plate-C-street-v3` — tatlong MAGKAIBANG lugar, kaya hindi pwede sa ad na to (one-jobsite rule). HINDI sila sayang: valid silang Lane A ORGANIC plates (bawat organic video ay sarili niyang lugar). Ang ad plates ay bagong same-location set.
