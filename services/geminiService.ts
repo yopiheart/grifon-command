@@ -1896,41 +1896,6 @@ export const generateInfluencerAvatar = async (config: InfluencerConfig): Promis
 };
 
 /**
- * @deprecated Use the structured `MarketResearchReport` returned by `generateMarketResearch` directly.
- * This re-parses a legacy markdown-string MarketMind report into structured fields via a second
- * Gemini call. Kept only as a fallback for users with pre-upgrade reports cached in localStorage.
- * Remove after 2 weeks of stable runs (target: 2026-05-23).
- */
-export const parseMarketResearchFile = async (text: string): Promise<InfluencerStrategicInput> => {
-  const prompt = `
-    Analyze this market research text and autonomously extract the core strategic inputs for a direct response script.
-    
-    RESEARCH TEXT:
-    "${text}"
-    
-    Map the findings into these keys:
-    - subject: The main niche/topic.
-    - offer: The transformation or product being sold.
-    - dreamCustomer: Detailed avatar profile.
-    - bleedingNeck: The #1 urgent daily frustration.
-    - deepFear: The underlying emotional anxiety.
-    - magicGenie: The instant result they wish for.
-    - rawEvidence: Proof points or data mentioned.
-    - contrarianTruth: A surprising or unique angle that attacks the status quo.
-
-    Return ONLY a valid JSON object matching the InfluencerStrategicInput schema.
-  `;
-  const response: GenerateContentResponse = await retryWithBackoff(() => proxyGenerateContent({
-    model: fastTextModel,
-    contents: prompt,
-    config: {
-      responseMimeType: "application/json"
-    }
-  }));
-  return JSON.parse(cleanJson(response.text || "{}"));
-};
-
-/**
  * FIXED: Canonical definition for generateInfluencerScript.
  * Refactored to force CCC Structure.
  */

@@ -43,7 +43,7 @@ Migrated flows:
 **Implication for editing:** for these 5 flows, prompt edits go to
 `api/_lib/prompts.ts`, NOT this file. The client wrappers here are now thin
 4-10 line dispatchers. Smaller flows (avatar, thumbnail, classifier helpers,
-parseMarketResearchFile, etc.) still build their prompts client-side and use
+etc.) still build their prompts client-side and use
 [`../api/gemini/text.ts`](../api/gemini/text.ts) — those will migrate in a
 follow-up session.
 

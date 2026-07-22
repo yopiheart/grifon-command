@@ -9,7 +9,7 @@
 - **Slice 0 — COGS housekeeping: ✅ SHIPPED 2026-07-22** (`feat/gemini36-slice0-cogs`, commit `48b4f2f`). Billing-grade text rates in `api/_lib/modelCosts.ts` (old table was ~4x understated on 3.5-flash), `thoughtsTokenCount` billed at output rate + logged, `LegacyBody.model` allowlist in `api/gemini/text.ts` (4 pinned models). 782 tests green.
 - **Slice 1 — research-tier A/B eval: ✅ RAN 2026-07-22.** Harness: `tests/regression/research-tier.ab.test.ts` (gated `RUN_AB=1`; imports the real tuned prompts via the script-gen mock pattern — zero prompt duplication; swaps model + maps `thinkingBudget:4000` → `thinkingLevel:'medium'` at the fetch-intercept layer; uploads fixture MP4s to the Files API for the EDL multimodal parts). Results below.
 - **Slice 2 — the flip: ✅ SHIPPED 2026-07-22 — Option B (flip + premise pin), Neil-approved; premiseCheckModel constant added; EDL thinkingConfig migrated to thinkingLevel:'medium'.** `api/_lib/prompts.ts` MODEL_RESEARCH deliberately stays untouched (exported but unused by live handlers; TUNED file, zero-touch preferred). Options + recommendation below.
-- **Slice 3 — `parseMarketResearchFile` on 3.5-flash-lite: ⏸ NEXT — unblocked now Slice 2 landed.**
+- **Slice 3 — parseMarketResearchFile on 3.5-flash-lite: ✅ CLOSED 2026-07-22 (premise retired)** — target turned out to be @deprecated dead code (legacy localStorage re-parse, removal target 2026-05-23); function + fallback DELETED instead (Neil-approved). The 3.5-flash-lite extraction lane is parked until a live extraction workload ships (e.g. Concierge document intake) — see post_beta_roadmap.md #24.
 
 ## Slice 1 results (2026-07-22, Bukidnon Brew fixtures, video parts included)
 

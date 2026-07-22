@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { InfluencerConfig, InfluencerStrategicInput, Scene, InfluencerScriptResponse, OdysseyState } from '../types';
-import { generateInfluencerAvatar, generateInfluencerScript, generateInfluencerStoryboard, parseMarketResearchFile, generateVideoPrompts, generateSceneImage, generateThumbnail } from '../services/geminiService';
+import { generateInfluencerAvatar, generateInfluencerScript, generateInfluencerStoryboard, generateVideoPrompts, generateSceneImage, generateThumbnail } from '../services/geminiService';
 import { compressImageForUpload } from '../utils/imageCompression';
 import { GoldButton } from './ui/GoldButton';
 import Loader from './ui/Loader';
@@ -141,7 +141,6 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
 
   const [isLoading, setIsLoading] = useState(false);
   const [loadingScenes, setLoadingScenes] = useState<number[]>([]);
-  const [isExtracting, setIsExtracting] = useState(false);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
   const [result, setResult] = useState<{ url: string; description: string } | null>(null);
   const [scriptResult, setScriptResult] = useState<InfluencerScriptResponse | null>(null);
@@ -222,19 +221,10 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
         return;
       }
     } catch {
-      // Falls through to legacy path
+      // Falls through to the legacy error below.
     }
 
-    // Legacy path: pre-upgrade reports stored as raw markdown string. Re-parse via Gemini.
-    setIsExtracting(true);
-    parseMarketResearchFile(savedReport).then(data => {
-      setStrategicInput(prev => ({ ...prev, ...data }));
-      setIsExtracting(false);
-      setSuccessMsg("MARKET_INTELLIGENCE_INJECTED");
-    }).catch(() => {
-      setError("MARKETMIND_SYNC_FAILED");
-      setIsExtracting(false);
-    });
+    setError("LEGACY_REPORT_FORMAT: Pre-2026-05 report detected. Re-run MarketMind to refresh.");
   };
 
   const injectOfferStack = () => {
@@ -825,7 +815,6 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
                 <div className="space-y-4 pt-4 border-t border-white/10">
                     <div className="flex justify-between items-center mb-2">
                         <label className="text-[10px] font-black text-brand-yellow uppercase tracking-widest">DEEP_INTEL_MATRIX</label>
-                        {isExtracting && <span className="text-[8px] text-brand-yellow animate-pulse font-mono uppercase">SYNCING_DATA...</span>}
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
