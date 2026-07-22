@@ -115,6 +115,33 @@ Cost: $0; ~3 minutes wall-clock from request to rendered output. Evidence:
 same message green-lit Move 1 (launch video) + the defreezer restore script
 (`scripts/restore-hyperframes.ps1`).
 
+## Move 1 — Grifon launch video v1 (2026-07-22, PENDING NEIL EYEBALL)
+
+**Built same session, $0, ~1 hr wall-clock including site capture.** 20s · 9:16 ·
+1080×1920/24fps · music-led (no VO — TEMU-grammar P16, validated pattern).
+
+- **Structure:** Hook "GASTOS KA ₱30K/MO SA AGENCY?" (P7 frame-1 text) → pain cards
+  (3 DAYS / ₱5,000-per-video, both site-canonical claims) → "MEET GRIFON." → 3 live-site
+  screenshot cards with pans + gold chips (S20 Product-UI-as-hero; captured from
+  grifon.ai via `hyperframes capture` — 17 shots, 10 sections) → offer "₱997/MO · 30
+  MINUTES. Not 3 days. · FIRST AD — FREE" → CTA (griffin emblem + GRIFON.AI + site's own
+  button copy "CREATE MY FIRST AD — FREE").
+- **Design:** DESIGN.md world — zinc-950, Grifon Gold #FFCC00, Inter 900 + Instrument
+  Serif italic accents (matches the live site), JetBrains Mono `// chips`.
+- **Audio:** repo bed `api/_lib/assets/music/mrbeast.mp3`, FFmpeg finishing (fades +
+  loudnorm −14 LUFS) — division of labor per the verdict table.
+- **Gates:** `check` clean (1st pass); text audit letter-perfect on ALL prices/CTA
+  (₱30K/MO, ₱5,000, ₱997/MO, GRIFON.AI, CREATE MY FIRST AD — FREE). Iterations: 2
+  (v1 portrait cards were wrong for landscape screenshots → v2 landscape cards +
+  price-size fix; ~50s per re-render, 1 worker on low RAM).
+- **Evidence (committed):** `workflows/assets/grifon-launch-video/` — 720p sample,
+  composition HTML, the 3 site screenshots it needs, scene strip. Full-res master:
+  `.tmp/hyperframes-bakeoff/GRIFON-LAUNCH-v1.mp4` (re-render via composition if wiped;
+  emblem/logo referenced from `public/`).
+- **Iteration hooks for Neil:** copy/wording, scene lengths, music choice
+  (temu/testimonial beds available), VO pass (ElevenLabs) — all cheap deterministic
+  edits.
+
 ## Resume trigger
 
 Next session on this: invoke `/ai-editor`, re-read this file. If Move 2 round 1 above is

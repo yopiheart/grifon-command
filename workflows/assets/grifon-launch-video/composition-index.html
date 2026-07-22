@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        margin: 0; width: 1080px; height: 1920px; overflow: hidden;
+        background: #09090b; /* zinc-950 */
+      }
+      body { font-family: "Inter", sans-serif; color: #fafafa; }
+
+      .center-stage {
+        position: absolute; inset: 0;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        text-align: center;
+      }
+      .mono-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 30px; letter-spacing: 0.22em; color: #a1a1aa;
+      }
+      .gold { color: #ffcc00; }
+      .serif-accent { font-family: "Instrument Serif", serif; font-style: italic; }
+
+      /* ambient gold glow that lives the whole video */
+      #glow {
+        position: absolute; left: 50%; top: 38%;
+        width: 1400px; height: 1400px;
+        background: radial-gradient(circle, rgba(255, 204, 0, 0.10) 0%, rgba(255, 204, 0, 0) 62%);
+        will-change: transform, opacity;
+      }
+
+      /* S1 hook */
+      #s1 .l1 { font-size: 92px; font-weight: 900; letter-spacing: -0.01em; will-change: transform, opacity; }
+      #s1 .l2 { font-size: 220px; font-weight: 900; letter-spacing: -0.03em; line-height: 1; margin: 12px 0; will-change: transform, opacity; }
+      #s1 .l3 { font-size: 92px; font-weight: 900; will-change: transform, opacity; }
+
+      /* S2 pain cards */
+      #s2 .head { font-size: 76px; font-weight: 900; margin-bottom: 70px; will-change: transform, opacity; }
+      .pain-card {
+        width: 760px; margin: 22px auto; padding: 44px 30px;
+        background: rgba(24, 24, 27, 0.92);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 24px;
+        font-size: 58px; font-weight: 700;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+        will-change: transform, opacity;
+      }
+      .pain-card .sub { font-family: "JetBrains Mono", monospace; font-size: 30px; color: #a1a1aa; margin-top: 10px; }
+
+      /* S3 UI hero */
+      .shot-wrap { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+      .shot-card {
+        width: 960px; height: 640px; border-radius: 28px; overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        box-shadow: 0 40px 110px rgba(0, 0, 0, 0.7), 0 0 70px rgba(255, 204, 0, 0.12);
+        background: #18181b;
+        will-change: transform, opacity;
+      }
+      .shot-card img { height: 118%; width: auto; display: block; will-change: transform; }
+      .chip {
+        position: absolute;
+        font-family: "JetBrains Mono", monospace; font-size: 34px; font-weight: 600;
+        letter-spacing: 0.08em;
+        background: #ffcc00; color: #09090b;
+        padding: 20px 34px; border-radius: 999px;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+        will-change: transform, opacity;
+      }
+      .meet { font-size: 120px; font-weight: 900; letter-spacing: -0.02em; will-change: transform, opacity; }
+      .meet-sub { font-size: 54px; margin-top: 18px; color: #d4d4d8; will-change: transform, opacity; }
+
+      /* S4 offer */
+      #s4 .from { margin-bottom: 26px; will-change: transform, opacity; }
+      #s4 .price { font-size: 182px; font-weight: 900; letter-spacing: -0.04em; line-height: 1; will-change: transform, opacity; }
+      #s4 .tagline { font-size: 66px; font-weight: 900; margin-top: 40px; will-change: transform, opacity; }
+      #s4 .free-chip {
+        display: inline-block; margin-top: 56px;
+        font-family: "JetBrains Mono", monospace; font-size: 40px; font-weight: 600;
+        border: 2px solid #ffcc00; color: #ffcc00;
+        padding: 24px 46px; border-radius: 999px;
+        will-change: transform, opacity;
+      }
+
+      /* S5 CTA */
+      #s5 img.emblem { width: 340px; will-change: transform, opacity; filter: drop-shadow(0 20px 50px rgba(255, 204, 0, 0.25)); }
+      #s5 .brand { font-size: 128px; font-weight: 900; letter-spacing: -0.02em; margin-top: 30px; will-change: transform, opacity; }
+      #s5 .btn {
+        margin-top: 60px; display: inline-block;
+        background: #ffcc00; color: #09090b;
+        font-size: 46px; font-weight: 900; letter-spacing: 0.02em;
+        padding: 34px 64px; border-radius: 18px;
+        box-shadow: 0 20px 60px rgba(255, 204, 0, 0.35);
+        will-change: transform, opacity;
+      }
+      #s5 .built { margin-top: 56px; will-change: transform, opacity; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="20" data-width="1080" data-height="1920">
+      <div id="glow"></div>
+
+      <!-- S1 · HOOK 0–2.6 -->
+      <div id="s1" class="center-stage clip" data-start="0" data-duration="2.6" data-track-index="1">
+        <div class="l1">GASTOS KA</div>
+        <div class="l2 gold">&#8369;30K/MO</div>
+        <div class="l3">SA AGENCY?</div>
+      </div>
+
+      <!-- S2 · PAIN 2.6–5.2 -->
+      <div id="s2" class="center-stage clip" data-start="2.6" data-duration="2.6" data-track-index="2">
+        <div class="head">PARA SA ISANG <span class="serif-accent gold">video ad?</span></div>
+        <div class="pain-card" id="pain-a">3 DAYS ang hintay<div class="sub">// TYPICAL AGENCY TURNAROUND</div></div>
+        <div class="pain-card" id="pain-b">&#8369;5,000 / video<div class="sub">// FREELANCER RATE</div></div>
+      </div>
+
+      <!-- S3 · MEET 5.2–6.6 -->
+      <div id="s3-meet" class="center-stage clip" data-start="5.2" data-duration="1.4" data-track-index="3">
+        <div class="meet">MEET <span class="gold">GRIFON.</span></div>
+        <div class="meet-sub">Buong ad campaign. <span class="serif-accent gold">Isang AI.</span></div>
+      </div>
+
+      <!-- S3a · hero screenshot 6.6–9.0 -->
+      <div id="s3a" class="shot-wrap clip" data-start="6.6" data-duration="2.4" data-track-index="4">
+        <div class="shot-card" id="card-a"><img id="img-a" src="media/scroll-000.png" /></div>
+        <div class="chip" id="chip-a" style="left: 76px; top: 588px;">30 MINUTES &#9889;</div>
+      </div>
+
+      <!-- S3b · 3-step screenshot 9.0–11.0 -->
+      <div id="s3b" class="shot-wrap clip" data-start="9" data-duration="2" data-track-index="5">
+        <div class="shot-card" id="card-b"><img id="img-b" src="media/scroll-019.png" /></div>
+        <div class="chip" id="chip-b" style="left: 88px; bottom: 578px;">DESCRIBE &#8594; BUILD &#8594; LAUNCH</div>
+      </div>
+
+      <!-- S3c · sample ads screenshot 11.0–12.5 -->
+      <div id="s3c" class="shot-wrap clip" data-start="11" data-duration="1.5" data-track-index="6">
+        <div class="shot-card" id="card-c"><img id="img-c" src="media/scroll-013.png" /></div>
+        <div class="chip" id="chip-c" style="right: 76px; top: 600px;">REAL ADS. REAL BUSINESSES.</div>
+      </div>
+
+      <!-- S4 · OFFER 12.5–16.5 -->
+      <div id="s4" class="center-stage clip" data-start="12.5" data-duration="4" data-track-index="7">
+        <div class="mono-label from">// SIMULA SA</div>
+        <div class="price gold">&#8369;997/MO</div>
+        <div class="tagline">30 MINUTES. <span class="serif-accent gold">Not 3 days.</span></div>
+        <div class="free-chip" id="free-chip">FIRST AD &#8212; FREE</div>
+      </div>
+
+      <!-- S5 · CTA 16.5–20 -->
+      <div id="s5" class="center-stage clip" data-start="16.5" data-duration="3.5" data-track-index="8">
+        <img class="emblem" id="emblem" src="media/griffin-emblem.png" />
+        <div class="brand">GRIFON<span class="gold">.AI</span></div>
+        <div class="btn" id="cta-btn">CREATE MY FIRST AD &#8212; FREE</div>
+        <div class="mono-label built">BUILT FOR FILIPINO BUSINESSES</div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      /* ambient glow: slow breathing all video */
+      tl.fromTo("#glow", { xPercent: -50, yPercent: -50, scale: 0.9, opacity: 0.7 },
+        { xPercent: -50, yPercent: -50, scale: 1.15, opacity: 1, duration: 10, ease: "sine.inOut" }, 0);
+      tl.to("#glow", { scale: 0.95, duration: 10, ease: "sine.inOut" }, 10);
+
+      /* S1 hook: three-line slam, stagger */
+      tl.fromTo("#s1 .l1", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.32, ease: "power3.out" }, 0.05);
+      tl.fromTo("#s1 .l2", { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.42, ease: "back.out(1.8)" }, 0.28);
+      tl.fromTo("#s1 .l3", { y: -50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.32, ease: "power3.out" }, 0.55);
+      tl.to("#s1 .l2", { scale: 1.05, duration: 1.2, ease: "sine.inOut" }, 1.0);
+      tl.to("#s1", { opacity: 0, scale: 0.96, duration: 0.22, ease: "power2.in" }, 2.35);
+      tl.set("#s1", { opacity: 0 }, 2.59);
+
+      /* S2 pain: head then cards slam alternate */
+      tl.fromTo("#s2 .head", { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power3.out" }, 2.66);
+      tl.fromTo("#pain-a", { x: -120, rotation: -4, opacity: 0 }, { x: 0, rotation: -1.5, opacity: 1, duration: 0.34, ease: "back.out(1.5)" }, 3.0);
+      tl.fromTo("#pain-b", { x: 120, rotation: 4, opacity: 0 }, { x: 0, rotation: 1.5, opacity: 1, duration: 0.34, ease: "back.out(1.5)" }, 3.35);
+      tl.to("#s2", { opacity: 0, y: -40, duration: 0.24, ease: "power2.in" }, 4.94);
+      tl.set("#s2", { opacity: 0 }, 5.19);
+
+      /* S3 meet beat */
+      tl.fromTo("#s3-meet .meet", { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.38, ease: "back.out(1.7)" }, 5.26);
+      tl.fromTo("#s3-meet .meet-sub", { y: 36, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power3.out" }, 5.55);
+      tl.to("#s3-meet", { opacity: 0, scale: 1.05, duration: 0.22, ease: "power2.in" }, 6.36);
+      tl.set("#s3-meet", { opacity: 0 }, 6.59);
+
+      /* S3a hero shot: card in, image slow pan up, chip pop */
+      tl.fromTo("#card-a", { y: 120, rotation: 2.5, opacity: 0 }, { y: 0, rotation: -1.2, opacity: 1, duration: 0.4, ease: "back.out(1.4)" }, 6.66);
+      tl.fromTo("#img-a", { x: 0 }, { x: -280, duration: 2.2, ease: "sine.inOut" }, 6.7);
+      tl.fromTo("#chip-a", { scale: 0, rotation: -12, opacity: 0 }, { scale: 1, rotation: -4, opacity: 1, duration: 0.3, ease: "back.out(2.2)" }, 7.1);
+      tl.to("#s3a", { opacity: 0, duration: 0.2, ease: "power2.in" }, 8.78);
+      tl.set("#s3a", { opacity: 0 }, 8.99);
+
+      /* S3b steps shot */
+      tl.fromTo("#card-b", { y: 120, rotation: -2.5, opacity: 0 }, { y: 0, rotation: 1.2, opacity: 1, duration: 0.4, ease: "back.out(1.4)" }, 9.06);
+      tl.fromTo("#img-b", { x: -120 }, { x: -340, duration: 1.8, ease: "sine.inOut" }, 9.1);
+      tl.fromTo("#chip-b", { scale: 0, rotation: 10, opacity: 0 }, { scale: 1, rotation: 3, opacity: 1, duration: 0.3, ease: "back.out(2.2)" }, 9.5);
+      tl.to("#s3b", { opacity: 0, duration: 0.2, ease: "power2.in" }, 10.78);
+      tl.set("#s3b", { opacity: 0 }, 10.99);
+
+      /* S3c samples shot */
+      tl.fromTo("#card-c", { scale: 1.12, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.36, ease: "power3.out" }, 11.06);
+      tl.fromTo("#img-c", { x: -60 }, { x: -260, duration: 1.3, ease: "sine.inOut" }, 11.1);
+      tl.fromTo("#chip-c", { scale: 0, rotation: -10, opacity: 0 }, { scale: 1, rotation: -3, opacity: 1, duration: 0.28, ease: "back.out(2.2)" }, 11.4);
+      tl.to("#s3c", { opacity: 0, scale: 0.97, duration: 0.2, ease: "power2.in" }, 12.28);
+      tl.set("#s3c", { opacity: 0 }, 12.49);
+
+      /* S4 offer: label, price slam, tagline, chip */
+      tl.fromTo("#s4 .from", { opacity: 0 }, { opacity: 1, duration: 0.25 }, 12.56);
+      tl.fromTo("#s4 .price", { scale: 0.35, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.45, ease: "back.out(1.6)" }, 12.75);
+      tl.fromTo("#s4 .tagline", { y: 46, opacity: 0 }, { y: 0, opacity: 1, duration: 0.32, ease: "power3.out" }, 13.2);
+      tl.fromTo("#free-chip", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.32, ease: "back.out(2)" }, 13.6);
+      tl.to("#s4 .price", { scale: 1.04, duration: 1.6, ease: "sine.inOut" }, 13.9);
+      tl.to("#s4", { opacity: 0, y: -40, duration: 0.24, ease: "power2.in" }, 16.24);
+      tl.set("#s4", { opacity: 0 }, 16.49);
+
+      /* S5 CTA: emblem, brand, button, footer */
+      tl.fromTo("#emblem", { scale: 0.5, opacity: 0, rotation: -8 }, { scale: 1, opacity: 1, rotation: 0, duration: 0.45, ease: "back.out(1.6)" }, 16.56);
+      tl.fromTo("#s5 .brand", { y: 46, opacity: 0 }, { y: 0, opacity: 1, duration: 0.34, ease: "power3.out" }, 16.9);
+      tl.fromTo("#cta-btn", { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.36, ease: "back.out(1.9)" }, 17.3);
+      tl.fromTo("#s5 .built", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 17.7);
+      tl.to("#cta-btn", { scale: 1.05, duration: 0.5, ease: "sine.inOut" }, 18.4);
+      tl.to("#cta-btn", { scale: 1.0, duration: 0.5, ease: "sine.inOut" }, 18.9);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
