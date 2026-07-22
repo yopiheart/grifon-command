@@ -1092,6 +1092,35 @@ a code-executor delegation AFTER Neil merges this branch and green-lights the pl
   Session report artifact (before/after chart + verdict):
   <https://claude.ai/code/artifact/0db89255-01ec-461b-a6fd-6ec100eddbe7>
 
+---
+
+### 23. Product-facing image-to-3D viewer (hosted-API lane only)
+
+> **Brief evaluation record (2026-07-21):** *From Pictures of Objects to 3D Three.js in
+> MINUTES* (img2threejs, github.com/hoainho/img2threejs) evaluated against the codebase —
+> verdict: the repo is an **agent-native authoring pipeline** (staged passes + agent-vision
+> gates), not a runtime library or API, so it CANNOT power a user-facing feature (each
+> conversion is a multi-stage agent session — violates the `concierge_director_plan.md` §2
+> architecture truth). **Adopted instead as the internal foundry skill**
+> `.claude/skills/img2threejs-lab/` (landing centerpiece prototypes, client-flex interactive
+> artifacts, turntable b-roll). This parked item is the *product-facing* remainder only.
+
+- **What:** "Upload your product photo → interactive 3D viewer" as an app feature, via a
+  **hosted image-to-3D API** (Tripo/Meshy class — real mesh generation behind an `api/*`
+  proxy, async fire-then-poll like Kling), NOT img2threejs.
+- **Why it matters:** E-commerce differentiation — 2D product photos become rotatable 3D
+  product visualizers without a 3D artist; a possible Business-tier "commercial-grade" line.
+- **Why parked:** (1) No demand signal — Grifon ships video ads, not web embeds; no beta
+  user has asked. (2) New paid provider + new render pipeline while `launch_readiness.md`
+  P0s are open. (3) three.js in the app bundle needs its own plan (`check:bundle-leak`).
+- **When to resume:** ≥2 beta/paying users ask for interactive product embeds, OR a client
+  deal hinges on it. Prototype the *look* first with `img2threejs-lab` (zero product code).
+- **Where to start:** Provider eval (Tripo vs Meshy: PH pricing, glTF output, API shape) →
+  grill-me spec → proxy handler on the Kling async pattern → lazy-loaded viewer module.
+- **Scope estimate:** Multi-day (new provider + async pipeline + viewer UI). Not before beta.
+- **Source:** Neil, 2026-07-21 — img2threejs knowledge-transfer brief evaluation ("surprise
+  me brother!"); skill adopted same session, product lane parked here.
+
 ## How to add new items
 
 When Neil endorses an idea but says "not now":
