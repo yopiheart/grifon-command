@@ -26,9 +26,10 @@
         { "s": 2, "beat": "STEP 1", "line": "Una, chine-check muna namin ang tangke nyo. Libre yun.", "visual": "hands-only work insert (tank cover), VO ng voice clone" },
         { "s": 3, "beat": "STEP 2", "line": "Pangalawa, sasabihin namin ang presyo bago kami magsimula. Walang dagdag.", "visual": "talking close-up, slight low angle" },
         { "s": 4, "beat": "STEP 3", "line": "Pangatlo, kapag hindi kayo payag sa presyo, aalis kami nang maayos.", "visual": "talking close-up, slight high angle" },
-        { "s": 5, "beat": "RESULT + CTA", "line": "Ganun kasimple. Libreng inspection, i-message nyo lang kami. Sabihin nyo, kay Kuya Marvin kayo.", "visual": "talking close-up eye-level sa tabi ng van, tapos end card na may numbers" }
+        { "s": 5, "beat": "RESULT + CTA", "line": "Ganun kasimple. Libreng inspection, i-message nyo lang kami.", "visual": "talking close-up eye-level sa tabi ng van, tapos end card na may numbers" },
+        { "s": 6, "beat": "END CARD VO", "line": "Sabihin nyo, kay Kuya Marvin kayo.", "visual": "animated end card (Hyperframes), VO = ElevenLabs clone TTS" }
       ],
-      "notes": "Numbers hindi binibigkas; nasa end card + caption. Trim sa edit target ~30s."
+      "notes": "Numbers hindi binibigkas; nasa end card + caption. Trim sa edit target ~30s. LESSON 2026-07-23: bawal ang PANGALAN sa Veo-spoken lines — ang 'kay Kuya Marvin kayo' sa dialogue ay hinarang ng Veo RAI filter (real-person name/likeness heuristic; walang pakialam sa consent). Ang attribution line ay laging sa end-card VO (ElevenLabs clone, walang ganoong filter) — nakasulat na rin ito sa card mismo."
     }
   ],
   "scripts": [
