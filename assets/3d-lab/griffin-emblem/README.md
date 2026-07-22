@@ -11,6 +11,17 @@
 > = quota-blocked (needs free login); fake-3D PNG parallax (PROTO 02) = Neil FAIL
 > ("parang sticker"). Rebuild: `npm i three@0.179.0 esbuild`, bundle
 > `hunyuan/viewer/main.ts`, inline into `shell.html` with the GLB as base64.
+>
+> **Session close (2026-07-22, Neil):** PROTO 03 approved as-is — "WOW AMAZING" — and
+> parked here. Known deltas accepted for now: eyes drift from source (Hunyuan repaint),
+> dual-tone rim lighting (yellow key / amber rims) kept, Meshy's visibly-superior version
+> stays undownloaded in Neil's Meshy account (free tier, PUBLIC CC BY 4.0 — do not ship
+> as brand asset without resolving license). **Resume triggers:** landing-hero integration
+> greenlit → decide the $10 Meshy-Pro-month play (private license + 4K + API/meshy-3d-agent
+> + batch other assets, cancel before renewal) vs free Hunyuan re-rolls + viewer eye-glow.
+> Pipeline for ANY future image→3D asset: Neil's free HF account → `tencent/Hunyuan3D-2.1`
+> → Gen Textured Shape → max Target Face Number → glb + Include Texture → Transform →
+> Download → stage via `hunyuan/viewer/`.
 
 **Artifact (eyeball gate):** <https://claude.ai/code/artifact/0368f361-92fb-4e4b-9a9a-552bdec4f18f>
 Session: 2026-07-21 · Skill: [`.claude/skills/img2threejs-lab/`](../../../.claude/skills/img2threejs-lab/SKILL.md) · Upstream pipeline: img2threejs v1.2.0
