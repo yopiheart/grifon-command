@@ -74,6 +74,31 @@
           0 0 2px rgba(0, 0, 0, 0.9);
       }
 
+      /* speech-matched icon badges — circled, face-adjacent, glued to the camera rig */
+      .badge {
+        position: absolute;
+        width: 128px;
+        height: 128px;
+        border-radius: 50%;
+        border: 5px solid rgba(255, 255, 255, 0.92);
+        background: rgba(10, 10, 10, 0.28);
+        box-shadow:
+          0 8px 22px rgba(0, 0, 0, 0.4),
+          0 0 18px rgba(255, 255, 255, 0.35) inset;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        will-change: transform, opacity;
+      }
+      .badge svg {
+        width: 64px;
+        height: 64px;
+        filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5));
+      }
+      #badge-pagod { left: 14%; top: 26%; }
+      #badge-thirsty { left: 71%; top: 23%; }
+      #badge-skin { left: 12%; top: 20%; }
+
       /* water droplets — soft white glow, brand-neutral supporting elements */
       .droplet {
         position: absolute;
@@ -114,6 +139,43 @@
           data-track-index="3"
           style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover"
         ></video>
+
+        <!-- speech-matched badges live inside #camera so they travel with the punch-in -->
+        <div id="badge-pagod" class="badge clip" data-start="0.5" data-duration="0.7" data-track-index="4">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path
+              d="M20.4 14.2A8.6 8.6 0 0 1 9.8 3.6a8.6 8.6 0 1 0 10.6 10.6Z"
+              fill="#fff"
+              stroke="rgba(255,255,255,0.4)"
+              stroke-width="0.5"
+            />
+          </svg>
+        </div>
+        <div id="badge-thirsty" class="badge clip" data-start="1.35" data-duration="1.55" data-track-index="5">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path
+              d="M12 2.5c3.4 4.4 6.5 7.9 6.5 11.5a6.5 6.5 0 1 1-13 0c0-3.6 3.1-7.1 6.5-11.5Z"
+              fill="#fff"
+            />
+            <path
+              d="M9.3 14.5a3 3 0 0 0 2.2 3.3"
+              stroke="rgba(120,180,255,0.9)"
+              stroke-width="1.6"
+              stroke-linecap="round"
+            />
+          </svg>
+        </div>
+        <div id="badge-skin" class="badge clip" data-start="2.25" data-duration="0.95" data-track-index="6">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path
+              d="M12 2l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2L12 2Z"
+              fill="#ffcc00"
+              stroke="rgba(255,255,255,0.85)"
+              stroke-width="0.8"
+            />
+            <path d="M19 3l.9 2.6L22.5 6.5l-2.6.9L19 10l-.9-2.6L15.5 6.5l2.6-.9L19 3Z" fill="#fff" />
+          </svg>
+        </div>
       </div>
       <audio
         id="a-roll-audio"
@@ -196,6 +258,40 @@
       tl.to("#drop-1", { y: 60, opacity: 0, duration: 1.1, ease: "power1.in" }, 1.9);
       tl.to("#drop-2", { y: 80, opacity: 0, duration: 1.1, ease: "power1.in" }, 2.0);
       tl.to("#drop-3", { y: 50, opacity: 0, duration: 0.9, ease: "power1.in" }, 2.1);
+
+      /* ---- speech-matched badges: pop on the word, wiggle alive, pop out ---- */
+      // "pagod" ≈ 0.55s — moon
+      tl.fromTo(
+        "#badge-pagod",
+        { scale: 0, rotation: -20, opacity: 0 },
+        { scale: 1, rotation: 0, opacity: 1, duration: 0.28, ease: "back.out(2.2)" },
+        0.52
+      );
+      tl.to("#badge-pagod", { rotation: 7, duration: 0.4, ease: "sine.inOut" }, 0.82);
+      tl.to("#badge-pagod", { scale: 0.6, opacity: 0, duration: 0.15, ease: "power2.in" }, 1.0);
+      tl.set("#badge-pagod", { opacity: 0 }, 1.17);
+
+      // "thirsty" ≈ 1.35s — droplet (arrives just after the hero word pops)
+      tl.fromTo(
+        "#badge-thirsty",
+        { scale: 0, rotation: 18, opacity: 0 },
+        { scale: 1, rotation: 0, opacity: 1, duration: 0.3, ease: "back.out(2.2)" },
+        1.38
+      );
+      tl.to("#badge-thirsty", { y: -12, rotation: -6, duration: 0.9, ease: "sine.inOut" }, 1.75);
+      tl.to("#badge-thirsty", { scale: 0.6, opacity: 0, duration: 0.2, ease: "power2.in" }, 2.68);
+      tl.set("#badge-thirsty", { opacity: 0 }, 2.89);
+
+      // "skin mo" ≈ 2.3s — gold sparkle
+      tl.fromTo(
+        "#badge-skin",
+        { scale: 0, rotation: -25, opacity: 0 },
+        { scale: 1, rotation: 0, opacity: 1, duration: 0.28, ease: "back.out(2.2)" },
+        2.28
+      );
+      tl.to("#badge-skin", { rotation: 10, scale: 1.08, duration: 0.38, ease: "sine.inOut" }, 2.6);
+      tl.to("#badge-skin", { scale: 0.6, opacity: 0, duration: 0.18, ease: "power2.in" }, 3.0);
+      tl.set("#badge-skin", { opacity: 0 }, 3.19);
 
       window.__timelines["main"] = tl;
     </script>

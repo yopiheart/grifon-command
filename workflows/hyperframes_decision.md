@@ -99,6 +99,18 @@ runtime, see verdict table):**
 
 Move 1 (launch video) is UNLOCKED.
 
+**Round 2 (2026-07-22, same session) — speech-matched icon badges, PENDING NEIL EYEBALL.**
+Closed the gap Neil flagged in round 1: circled icon badges pop face-adjacent, timed to
+the script — moon on "pagod" (0.52s), water droplet on "thirsty" (1.38s), gold sparkle on
+"skin mo" (2.28s). Pure SVG iconography (no letterforms, by design — text-gate safe),
+badges live inside the camera rig so they travel with the punch-in. Hyperframes `check`
+caught 1 error + 1 warning pre-render (exit fades need `tl.set` hard kills at clip
+boundaries for seek determinism; tween overlap) — both fixed in one pass. Text gate:
+PASS (single letter-perfect THIRSTY, icons not misread as text, `covers_face: false`).
+Cost: $0; ~3 minutes wall-clock from request to rendered output. Evidence:
+`lane-b-round2-720p-sample.mp4` + `round2-badges-strip.jpg` in
+`workflows/assets/hyperframes-bakeoff/`; full-res at `.tmp/hyperframes-bakeoff/`.
+
 ## Resume trigger
 
 Next session on this: invoke `/ai-editor`, re-read this file. If Move 2 round 1 above is
