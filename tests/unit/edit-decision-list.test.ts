@@ -311,7 +311,7 @@ describe('generateEditDecisionList (Phase 1 half (b) — real Gemini call)', () 
     });
 
     const body = captureLastFetchBody();
-    expect(body.model).toBe('gemini-3.5-flash');
+    expect(body.model).toBe('gemini-3.6-flash');
     expect(Array.isArray(body.contents.parts)).toBe(true);
     const parts = body.contents.parts;
 

@@ -422,8 +422,9 @@ describe('generateCinematicNarrative schema', () => {
 
     const body = captureLastFetchBody();
     // Tuned model ID asserted verbatim so an unintended model change fails loudly;
-    // an intended re-tune updates this expectation alongside it.
-    expect(body.model).toBe('gemini-3.5-flash');
+    // an intended re-tune updates this expectation alongside it. Flipped to
+    // gemini-3.6-flash in the Slice-2 research-tier flip (Neil-approved 2026-07-22).
+    expect(body.model).toBe('gemini-3.6-flash');
 
     const promptDump = JSON.stringify(body);
     expect(promptDump).toContain('STORY RELAY');

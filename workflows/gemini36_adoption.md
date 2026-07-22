@@ -8,8 +8,8 @@
 
 - **Slice 0 — COGS housekeeping: ✅ SHIPPED 2026-07-22** (`feat/gemini36-slice0-cogs`, commit `48b4f2f`). Billing-grade text rates in `api/_lib/modelCosts.ts` (old table was ~4x understated on 3.5-flash), `thoughtsTokenCount` billed at output rate + logged, `LegacyBody.model` allowlist in `api/gemini/text.ts` (4 pinned models). 782 tests green.
 - **Slice 1 — research-tier A/B eval: ✅ RAN 2026-07-22.** Harness: `tests/regression/research-tier.ab.test.ts` (gated `RUN_AB=1`; imports the real tuned prompts via the script-gen mock pattern — zero prompt duplication; swaps model + maps `thinkingBudget:4000` → `thinkingLevel:'medium'` at the fetch-intercept layer; uploads fixture MP4s to the Files API for the EDL multimodal parts). Results below.
-- **Slice 2 — the flip: ⏸ AWAITING NEIL** (LOCKED-line change, `services/geminiService.ts:310`). Options + recommendation below.
-- **Slice 3 — `parseMarketResearchFile` on 3.5-flash-lite: ⏸ parked until Slice 2 lands.**
+- **Slice 2 — the flip: ✅ SHIPPED 2026-07-22 — Option B (flip + premise pin), Neil-approved; premiseCheckModel constant added; EDL thinkingConfig migrated to thinkingLevel:'medium'.** `api/_lib/prompts.ts` MODEL_RESEARCH deliberately stays untouched (exported but unused by live handlers; TUNED file, zero-touch preferred). Options + recommendation below.
+- **Slice 3 — `parseMarketResearchFile` on 3.5-flash-lite: ⏸ NEXT — unblocked now Slice 2 landed.**
 
 ## Slice 1 results (2026-07-22, Bukidnon Brew fixtures, video parts included)
 
@@ -26,13 +26,13 @@ Totals: **B is ~25% cheaper per full research pass** (thinking tokens included, 
 
 ### Slice 2 options (Neil's call — LOCKED lines)
 
-- **B (recommended): flip + premise pin.** `researchTextModel → 'gemini-3.6-flash'`; new `premiseCheckModel = 'gemini-3.5-flash'` used only at the premise call site; EDL call site migrates `thinkingConfig` to `{ thinkingLevel: 'medium' }` (validated live). Premise migrates later behind a parser-hardening grill-me.
+- **DECIDED — B (recommended): flip + premise pin.** `researchTextModel → 'gemini-3.6-flash'`; new `premiseCheckModel = 'gemini-3.5-flash'` used only at the premise call site; EDL call site migrates `thinkingConfig` to `{ thinkingLevel: 'medium' }` (validated live). Premise migrates later behind a parser-hardening grill-me.
 - **A: flip all 6**, accept ~17% premise empty-rate (fails soft). Not recommended.
 - **C: hold.** Forfeits the cost/latency/compliance gains.
 
 ## Baseline defects surfaced by the eval critic (exist in prod TODAY, both models — not 3.6 regressions)
 
-1. **P0 UI crash:** `VisualTheme.colorPalette` — tuned prompt asks for a *list*, `types.ts:11` says `string`, `Step3AdScript.tsx:322` calls `.split(',')` on the returned array → TypeError in the Cinematic theme picker. Fix = call-site coercion (`join(',')` in the mapper at `geminiService.ts:~2830`); code fix, NOT a prompt edit.
+1. **P0 UI crash:** `VisualTheme.colorPalette` — tuned prompt asks for a *list*, `types.ts:11` says `string`, `Step3AdScript.tsx:322` calls `.split(',')` on the returned array → TypeError in the Cinematic theme picker. Fix = call-site coercion (`join(',')` in the mapper at `geminiService.ts:~2830`); code fix, NOT a prompt edit. — ✅ FIXED 2026-07-22 (coercion in the generateCinematicThemes mapper, same branch).
 2. **Prod 3.5-flash misplaces `globalSfxPicks` into `meta`** → SFX-picks panel (`EditVideo.tsx:1047`) renders empty today.
 3. **EDL prompt gap:** `sfxCues` empty every scene on both models (prompt demands them per formula rules); `meta.hookStrategy` / `meta.formulaApplied` consumed by EditVideo but never named in the prompt. TUNED territory → grill-me before any edit.
 4. **`analyzeProductSignature` is a dead flow** — defined + tuned, zero production call sites. Wire or delete.

@@ -307,7 +307,8 @@ const proxyPollVideoOperation = async (
 
 const textModel = 'gemini-3.1-flash-lite';
 const fastTextModel = 'gemini-3.1-flash-lite';
-const researchTextModel = 'gemini-3.5-flash';
+const researchTextModel = 'gemini-3.6-flash';
+const premiseCheckModel = 'gemini-3.5-flash'; // premise check stays pinned: googleSearch-grounding + JSON-in-prompt flaked 1/6 on 3.6 (see workflows/gemini36_adoption.md)
 const avatarModel = 'gemini-3.1-flash-image-preview'; 
 const sceneImageModel = 'gemini-3.1-flash-lite-image';
 const thumbnailModel = 'gemini-3.1-flash-image-preview';
@@ -1449,8 +1450,8 @@ the nearest valid value. Never emit anything else.
     config: {
       responseMimeType: 'application/json',
       safetySettings: SAFETY_SETTINGS,
-      thinkingConfig: { thinkingBudget: 4000 },
-    },
+      thinkingConfig: { thinkingLevel: 'medium' },
+    } as any,
   }));
 
   const raw = response.text || '{}';
@@ -1595,7 +1596,7 @@ export const generatePremiseCheck = async (input: PremiseCheckInput): Promise<Pr
   // it must fail fast rather than pin the loading overlay under rate-limiting. Tight
   // retry budget: 1 retry, 2s base delay, 0 timeout retries (vs the render defaults).
   const response: GenerateContentResponse = await retryWithBackoff(() => proxyGenerateContent({
-    model: researchTextModel,
+    model: premiseCheckModel,
     contents: { parts: [{ text: buildPremiseCheckPrompt(input) }] },
     config: {
       tools: [{ googleSearch: {} }],
@@ -2827,7 +2828,14 @@ export const generateCinematicThemes = async (productName: string): Promise<Visu
   }));
 
   const themes = JSON.parse(cleanJson(response.text || "[]"));
-  return themes.map((t: any, i: number) => ({ ...t, id: `theme-${i}` }));
+  return themes.map((t: any, i: number) => ({
+    ...t,
+    id: `theme-${i}`,
+    // The tuned prompt asks for a list of colors; VisualTheme.colorPalette is typed
+    // string and Step3AdScript.tsx .split(',')s it. Coerce array → CSV to avoid a
+    // live TypeError when the model returns an array.
+    colorPalette: Array.isArray(t.colorPalette) ? t.colorPalette.join(', ') : String(t.colorPalette ?? ''),
+  }));
 };
 
 export const generateDaisyChainScenes = async (

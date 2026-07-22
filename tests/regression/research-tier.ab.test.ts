@@ -1,11 +1,13 @@
 // A/B eval harness for the "research tier" Gemini calls.
 //
 // Grifon routes six non-crown-jewel flows through researchTextModel
-// (gemini-3.5-flash today). This harness replays all six against BOTH the
-// current arm (A = gemini-3.5-flash) and a candidate arm (B = gemini-3.6-flash)
-// using identical, fixed inputs, then writes a side-by-side report a human /
-// LLM grader can review. It does NOT decide a winner — asserts are structural
-// only (each arm either errored or produced parseable output of the right shape).
+// (gemini-3.6-flash after the Slice-2 flip; the premise-check flow stays pinned
+// to gemini-3.5-flash via premiseCheckModel). This harness replays all six against
+// BOTH a 3.5-flash arm (A) and a 3.6-flash arm (B) using identical, fixed inputs,
+// then writes a side-by-side report a human / LLM grader can review. It does NOT
+// decide a winner — asserts are structural only (each arm either errored or
+// produced parseable output of the right shape). The interceptor treats both
+// research-tier model IDs as swappable, so arm forcing keeps working post-flip.
 //
 // Skipped by default — opt in with `RUN_AB=1`. This keeps `npm test` from
 // burning Gemini quota (12 live calls per run).
@@ -108,19 +110,31 @@ const fetchMock = vi.fn(async (url: any, init: any = {}) => {
     }
     const body = JSON.parse(init.body as string);
 
-    // A/B swap. All six target flows send the legacy passthrough shape
-    // `{ model, contents, config }` on researchTextModel (gemini-3.5-flash).
+    // A/B swap. The target flows send the legacy passthrough shape
+    // `{ model, contents, config }` on a research-tier model. After the Slice-2
+    // flip, production routes those flows through gemini-3.6-flash, while the
+    // premise-check flow stays pinned to gemini-3.5-flash (premiseCheckModel) —
+    // both are swappable so arm forcing keeps re-testing every flow on either arm.
     let effModel: string = body.model;
     let config: any = body.config;
-    if (body.model === 'gemini-3.5-flash' && currentTargetModel) {
+    if (
+      (body.model === 'gemini-3.5-flash' || body.model === 'gemini-3.6-flash') &&
+      currentTargetModel
+    ) {
       effModel = currentTargetModel;
       // Google deprecated thinking_budget on the newer models; the approved
-      // mapping is thinkingLevel:'medium'. Only the EDL flow sets a budget.
+      // mapping is thinkingLevel:'medium'. Map symmetrically so either arm gets a
+      // config the effective target accepts. Only the EDL flow sets thinking.
       if (
         currentTargetModel === 'gemini-3.6-flash' &&
         config?.thinkingConfig?.thinkingBudget != null
       ) {
         config = { ...config, thinkingConfig: { thinkingLevel: 'medium' } };
+      } else if (
+        currentTargetModel === 'gemini-3.5-flash' &&
+        config?.thinkingConfig?.thinkingLevel != null
+      ) {
+        config = { ...config, thinkingConfig: { thinkingBudget: 4000 } };
       }
     }
 
