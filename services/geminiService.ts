@@ -1410,6 +1410,11 @@ the nearest valid value. Never emit anything else.
 - meta.scriptStyleDetected MUST be set per Rule 0a.
 - meta.totalDurationSec = sum of all keepSegments durations + all
   transitionIn.durationSec values across scenes.
+- meta.hookStrategy: one short sentence (max 120 chars) naming the hook
+  edit choice and why (e.g. "Cold-open on the product reveal to force a
+  curiosity gap in the first second.").
+- meta.formulaApplied: the formulas actually applied in this edit, as an
+  array drawn ONLY from: "mrbeast", "sabri-suby", "cialdini".
 - No fields outside the EditDecisionList schema.
 - formulaCheck.rulesApplied lists rules from THIS prompt that you honored
   (e.g. "Hook in first 3s with dynamic camera", "4th-grade overlays",
@@ -1481,12 +1486,21 @@ the nearest valid value. Never emit anything else.
     }));
   }
 
+  // Closed SFX vocabulary — mirrors the legacy SfxBankId zod enum in
+  // api/render/final.ts. A hallucinated sfxId (cue OR globalSfxPick) would 400
+  // the whole FINAL_RENDER at zod, so normalize + drop anything outside the bank.
+  const SFX_BANK_IDS = ['whoosh', 'glitch', 'pop', 'ding', 'riser', 'drop', 'snap', 'swish', 'boom', 'sparkle'];
+
   // Mechanical coercion to the render contract (api/render/final.ts zod schema):
   // overlayText single-object → 1-element array, text clamped to the 120-char cap,
-  // sfx cues without a numeric anchorSec dropped (decorative — never fail a render
-  // over them), keepSegments always an array.
+  // sfx cues without a numeric anchorSec (or an out-of-bank sfxId) dropped
+  // (decorative — never fail a render over them), keepSegments always an array.
   parsed.scenes = parsed.scenes.map((scene: any) => ({
     ...scene,
+    // zod's .optional() accepts a missing key but rejects null — a "transitionIn":
+    // null (observed 3.6 emission variance, 2026-07-22) would 400 the FINAL_RENDER.
+    // undefined serializes away in the request body.
+    transitionIn: scene.transitionIn ?? undefined,
     keepSegments: Array.isArray(scene.keepSegments) ? scene.keepSegments : [],
     overlayText: scene.overlayText == null
       ? undefined
@@ -1494,7 +1508,9 @@ the nearest valid value. Never emit anything else.
           .filter((o: any) => o && typeof o.text === 'string')
           .map((o: any) => ({ ...o, text: o.text.slice(0, 120) })),
     sfxCues: Array.isArray(scene.sfxCues)
-      ? scene.sfxCues.filter((c: any) => c && typeof c.anchorSec === 'number')
+      ? scene.sfxCues
+          .map((c: any) => (c && typeof c.sfxId === 'string' ? { ...c, sfxId: c.sfxId.toLowerCase().trim() } : c))
+          .filter((c: any) => c && typeof c.anchorSec === 'number' && SFX_BANK_IDS.includes(c.sfxId))
       : undefined,
   }));
 
@@ -1503,6 +1519,22 @@ the nearest valid value. Never emit anything else.
     aspectRatio: input.aspectRatio,
     targetPlatform: input.targetPlatform,
   };
+  // hookStrategy / formulaApplied are the new meta fields (2026-07-22). The model
+  // sometimes emits formulaApplied at the top level instead of under meta (3.6
+  // slot drift), so lift it in when meta lacks it, then filter to the closed
+  // formula vocabulary. hookStrategy is coerced to a trimmed, length-capped string.
+  const FORMULA_SET = ['mrbeast', 'sabri-suby', 'cialdini'];
+  if (!Array.isArray(parsed.meta.formulaApplied) && Array.isArray((parsed as any).formulaApplied)) {
+    parsed.meta.formulaApplied = (parsed as any).formulaApplied;
+  }
+  parsed.meta.formulaApplied = Array.isArray(parsed.meta.formulaApplied)
+    ? parsed.meta.formulaApplied
+        .map((f: any) => (typeof f === 'string' ? f.toLowerCase().trim() : f))
+        .filter((f: any) => FORMULA_SET.includes(f))
+    : [];
+  parsed.meta.hookStrategy = typeof parsed.meta.hookStrategy === 'string'
+    ? parsed.meta.hookStrategy.trim().slice(0, 160)
+    : '';
   // Remaining top-level fields the UI reads unconditionally — same drift class
   // (a draft without formulaCheck crashed the module on .rulesApplied,
   // 2026-06-10 retest). Default every one of them.
@@ -1510,7 +1542,11 @@ the nearest valid value. Never emit anything else.
     rulesApplied: Array.isArray(parsed.formulaCheck?.rulesApplied) ? parsed.formulaCheck.rulesApplied : [],
     weaknessesFlagged: Array.isArray(parsed.formulaCheck?.weaknessesFlagged) ? parsed.formulaCheck.weaknessesFlagged : [],
   };
-  if (!Array.isArray(parsed.globalSfxPicks)) parsed.globalSfxPicks = [];
+  parsed.globalSfxPicks = Array.isArray(parsed.globalSfxPicks)
+    ? parsed.globalSfxPicks
+        .map((s: any) => (typeof s === 'string' ? s.toLowerCase().trim() : s))
+        .filter((s: any) => SFX_BANK_IDS.includes(s))
+    : [];
   return parsed;
 };
 

@@ -329,3 +329,144 @@ describe('generateEditDecisionList (Phase 1 half (b) — real Gemini call)', () 
     expect(parts[4].inlineData).toEqual({ mimeType: 'audio/mpeg', data: btoa('blob:for-scene-0') });
   });
 });
+
+// Post-parse coercion belt (2026-07-22): the EDL call has no responseSchema, so
+// the model drifts. These tests exercise the defensive belt directly — meta
+// hookStrategy/formulaApplied normalization + SFX-bank enum filtering — using
+// raw EDL fixtures that inject the exact drift each rule guards against.
+describe('generateEditDecisionList — meta / SFX coercion belt', () => {
+  const singleInput = {
+    sceneBatch: [
+      { sceneIdx: 0, scriptLine: 'Hook.', renderedUrl: 'https://example.com/x0.mp4', type: 'talking' as const },
+    ],
+    audioOverlays: [{ sceneIdx: 0, audioUrl: 'blob:x-0' }],
+    aspectRatio: '9:16' as const,
+    targetPlatform: 'tiktok' as const,
+  };
+
+  // Minimal, valid raw EDL for one scene; `overrides` inject drift onto meta,
+  // scenes, globalSfxPicks, or a stray top-level formulaApplied.
+  const rawEdl = (overrides: {
+    meta?: Record<string, unknown>;
+    scenes?: unknown[];
+    globalSfxPicks?: unknown;
+    topLevelFormulaApplied?: unknown;
+  } = {}) => ({
+    meta: {
+      totalDurationSec: 4,
+      aspectRatio: '9:16',
+      targetPlatform: 'tiktok',
+      hookStrategy: 'Base hook.',
+      formulaApplied: ['mrbeast'],
+      scriptStyleDetected: 'mrbeast',
+      ...(overrides.meta ?? {}),
+    },
+    scenes: overrides.scenes ?? [
+      {
+        sceneIdx: 0,
+        sourceVideoUrl: 'https://example.com/x0.mp4',
+        sourceAudioUrl: 'blob:x-0',
+        keepSegments: [{ startSec: 0, endSec: 4 }],
+        voiceOffsetSec: 0,
+        notes: 'Lever: none — curiosity loop only.',
+      },
+    ],
+    globalSfxPicks: overrides.globalSfxPicks ?? [],
+    formulaCheck: { rulesApplied: ['Hook in first 3s'], weaknessesFlagged: [] },
+    ...(overrides.topLevelFormulaApplied !== undefined
+      ? { formulaApplied: overrides.topLevelFormulaApplied }
+      : {}),
+  });
+
+  const runBelt = async (edl: unknown) => {
+    mockFetchRouting(edl);
+    return generateEditDecisionList({ ...singleInput, finalScript: 'Hook.' });
+  };
+
+  it('lifts a top-level formulaApplied array into meta (3.6 slot drift)', async () => {
+    const result = await runBelt(
+      rawEdl({ meta: { formulaApplied: undefined }, topLevelFormulaApplied: ['mrbeast', 'cialdini'] })
+    );
+    expect(result.meta.formulaApplied).toEqual(['mrbeast', 'cialdini']);
+  });
+
+  it('filters invalid formula names out of meta.formulaApplied; valid (case-normalized) survive', async () => {
+    const result = await runBelt(rawEdl({ meta: { formulaApplied: ['mrbeast', 'bogus', 'SABRI-SUBY'] } }));
+    expect(result.meta.formulaApplied).toEqual(['mrbeast', 'sabri-suby']);
+  });
+
+  it('clamps meta.hookStrategy to 160 chars and keeps it a string', async () => {
+    const result = await runBelt(rawEdl({ meta: { hookStrategy: 'x'.repeat(200) } }));
+    expect(typeof result.meta.hookStrategy).toBe('string');
+    expect(result.meta.hookStrategy.length).toBe(160);
+  });
+
+  it('coerces a non-string meta.hookStrategy to an empty string', async () => {
+    const result = await runBelt(rawEdl({ meta: { hookStrategy: 42 } }));
+    expect(result.meta.hookStrategy).toBe('');
+  });
+
+  it("normalizes a capitalized sfxId ('Whoosh' → 'whoosh') and keeps the cue", async () => {
+    const result = await runBelt(
+      rawEdl({
+        scenes: [
+          {
+            sceneIdx: 0,
+            sourceVideoUrl: 'https://example.com/x0.mp4',
+            sourceAudioUrl: 'blob:x-0',
+            keepSegments: [{ startSec: 0, endSec: 4 }],
+            voiceOffsetSec: 0,
+            sfxCues: [{ sfxId: 'Whoosh', anchorSec: 0, reason: 'Hook opener.' }],
+            notes: 'Lever: none — curiosity loop only.',
+          },
+        ],
+      })
+    );
+    expect(result.scenes[0].sfxCues).toEqual([{ sfxId: 'whoosh', anchorSec: 0, reason: 'Hook opener.' }]);
+  });
+
+  it("drops a hallucinated sfxId ('explosion') that is outside the render bank", async () => {
+    const result = await runBelt(
+      rawEdl({
+        scenes: [
+          {
+            sceneIdx: 0,
+            sourceVideoUrl: 'https://example.com/x0.mp4',
+            sourceAudioUrl: 'blob:x-0',
+            keepSegments: [{ startSec: 0, endSec: 4 }],
+            voiceOffsetSec: 0,
+            sfxCues: [{ sfxId: 'explosion', anchorSec: 0, reason: 'Big boom.' }],
+            notes: 'Lever: none — curiosity loop only.',
+          },
+        ],
+      })
+    );
+    expect(result.scenes[0].sfxCues).toEqual([]);
+  });
+
+  it('filters invalid globalSfxPicks ids and normalizes case', async () => {
+    const result = await runBelt(rawEdl({ globalSfxPicks: ['whoosh', 'explosion', 'Ding'] }));
+    expect(result.globalSfxPicks).toEqual(['whoosh', 'ding']);
+  });
+
+  it('strips a "transitionIn": null to undefined (zod .optional() rejects null → FINAL_RENDER 400)', async () => {
+    const result = await runBelt(
+      rawEdl({
+        scenes: [
+          {
+            sceneIdx: 0,
+            sourceVideoUrl: 'https://example.com/x0.mp4',
+            sourceAudioUrl: 'blob:x-0',
+            keepSegments: [{ startSec: 0, endSec: 4 }],
+            voiceOffsetSec: 0,
+            transitionIn: null,
+            notes: 'Lever: none — curiosity loop only.',
+          },
+        ],
+      })
+    );
+    expect(result.scenes[0].transitionIn).toBeUndefined();
+    // The render payload must not carry the key at all once serialized.
+    expect(JSON.parse(JSON.stringify(result.scenes[0]))).not.toHaveProperty('transitionIn');
+  });
+});
