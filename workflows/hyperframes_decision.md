@@ -111,6 +111,10 @@ Cost: $0; ~3 minutes wall-clock from request to rendered output. Evidence:
 `lane-b-round2-720p-sample.mp4` + `round2-badges-strip.jpg` in
 `workflows/assets/hyperframes-bakeoff/`; full-res at `.tmp/hyperframes-bakeoff/`.
 
+**NEIL EYEBALL round 2: PASS (2026-07-22).** Verbatim: *"Alright, okay na yan bro."* —
+same message green-lit Move 1 (launch video) + the defreezer restore script
+(`scripts/restore-hyperframes.ps1`).
+
 ## Resume trigger
 
 Next session on this: invoke `/ai-editor`, re-read this file. If Move 2 round 1 above is
