@@ -1,5 +1,17 @@
 # 3D Lab — Griffin Emblem (img2threejs-lab proof run #1)
 
+> **SUPERSEDED 2026-07-22 — see [`hunyuan/`](hunyuan/) for the current lane.** After the
+> eyeball-gate FAIL below, the real-mesh route won: Neil generated a textured GLB from
+> `public/griffin-emblem.png` via the FREE `tencent/Hunyuan3D-2.1` HF Space (free HF
+> account, "Gen Textured Shape", max face count, glb + Include Texture, then Transform →
+> Download). Staged in our own Three.js viewer ([`hunyuan/viewer/`](hunyuan/viewer/) —
+> 360° orbit, gold-rim rig at reduced intensities, auto-turntable) and published to
+> <https://claude.ai/code/artifact/6a41cee3-7144-44a3-8e20-cc4251326136> (PROTO 03).
+> Route notes: Meshy free tier = generate yes / export PRO-walled; anonymous HF ZeroGPU
+> = quota-blocked (needs free login); fake-3D PNG parallax (PROTO 02) = Neil FAIL
+> ("parang sticker"). Rebuild: `npm i three@0.179.0 esbuild`, bundle
+> `hunyuan/viewer/main.ts`, inline into `shell.html` with the GLB as base64.
+
 **Artifact (eyeball gate):** <https://claude.ai/code/artifact/0368f361-92fb-4e4b-9a9a-552bdec4f18f>
 Session: 2026-07-21 · Skill: [`.claude/skills/img2threejs-lab/`](../../../.claude/skills/img2threejs-lab/SKILL.md) · Upstream pipeline: img2threejs v1.2.0
 

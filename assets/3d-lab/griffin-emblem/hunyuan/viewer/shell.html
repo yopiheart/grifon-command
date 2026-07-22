@@ -1,0 +1,26 @@
+<title>Griffin Hero — 3D Prototype</title>
+<style>
+  html,body{height:100%;}
+  body{margin:0;background:#09090b;overflow:hidden;font-family:"Segoe UI",system-ui,sans-serif;}
+  #stage{position:fixed;inset:0;cursor:grab;}
+  #stage:active{cursor:grabbing;}
+  #stage canvas{display:block;}
+  .hud{position:fixed;font-family:ui-monospace,Consolas,monospace;font-size:11px;
+       letter-spacing:.14em;color:#52525b;pointer-events:none;z-index:2;}
+  .hud.tl{top:20px;left:24px;}
+  .hud.br{bottom:20px;right:24px;text-align:right;}
+  .hud .g{color:#FFCC00;}
+  #loading{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+           color:#a1a1aa;font-family:ui-monospace,Consolas,monospace;font-size:12px;
+           letter-spacing:.18em;z-index:3;background:#09090b;}
+  .wordmark{position:fixed;left:0;right:0;bottom:26px;text-align:center;pointer-events:none;z-index:2;}
+  .wordmark .name{font-size:clamp(18px,2.6vw,26px);font-weight:600;letter-spacing:.42em;
+                  text-indent:.42em;color:#e4e4e7;}
+</style>
+<div id="loading">// LOADING GRIFFIN &mdash; REAL 3D MESH&hellip;</div>
+<div id="stage"></div>
+<div class="hud tl">// 3D-LAB &middot; PROTO <span class="g">03</span> &middot; REAL MESH</div>
+<div class="hud br">DRAG TO ROTATE &middot; SCROLL/PINCH TO ZOOM &middot; DBL-CLICK: SPIN <span class="g">ON/OFF</span></div>
+<div class="wordmark"><div class="name">GRIFON</div></div>
+<script>window.GLB_B64="__GLB_B64__";</script>
+<script>__BUNDLE__</script>
