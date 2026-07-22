@@ -78,6 +78,45 @@
       .meet { font-size: 120px; font-weight: 900; letter-spacing: -0.02em; will-change: transform, opacity; }
       .meet-sub { font-size: 54px; margin-top: 18px; color: #d4d4d8; will-change: transform, opacity; }
 
+      /* S32 prompt-to-outcome tableau */
+      .prompt-card {
+        width: 950px; padding: 52px 44px;
+        background: rgba(24, 24, 27, 0.94);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 24px; text-align: left;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+        will-change: transform, opacity;
+      }
+      .prompt-label {
+        font-family: "JetBrains Mono", monospace; font-size: 28px;
+        letter-spacing: 0.2em; color: #a1a1aa; margin-bottom: 26px;
+      }
+      .type-row { display: flex; align-items: center; }
+      .type-line {
+        font-family: "JetBrains Mono", monospace; font-size: 40px; font-weight: 600;
+        color: #fafafa; white-space: nowrap;
+        will-change: clip-path;
+      }
+      .caret { display: inline-block; width: 18px; height: 52px; background: #ffcc00; margin-left: 8px; will-change: opacity; }
+
+      /* phone frames playing real ads */
+      .phone-video {
+        position: absolute; left: 50%; top: 50%;
+        width: 460px; height: 818px;
+        border-radius: 46px; object-fit: cover;
+        will-change: transform, opacity;
+      }
+      .phone-chrome-box {
+        position: absolute; left: 50%; top: 50%;
+        width: 476px; height: 834px;
+        border-radius: 54px;
+        border: 8px solid #27272a;
+        box-shadow: 0 40px 110px rgba(0, 0, 0, 0.75), 0 0 70px rgba(255, 204, 0, 0.14);
+        will-change: transform, opacity;
+      }
+      .phone-wrap { position: absolute; inset: 0; pointer-events: none; }
+      .phone-wrap .chip { z-index: 2; }
+
       /* S4 offer */
       #s4 .from { margin-bottom: 26px; will-change: transform, opacity; }
       #s4 .price { font-size: 182px; font-weight: 900; letter-spacing: -0.04em; line-height: 1; will-change: transform, opacity; }
@@ -122,28 +161,43 @@
         <div class="pain-card" id="pain-b">&#8369;5,000 / video<div class="sub">// FREELANCER RATE</div></div>
       </div>
 
-      <!-- S3 · MEET 5.2–6.6 -->
-      <div id="s3-meet" class="center-stage clip" data-start="5.2" data-duration="1.4" data-track-index="3">
+      <!-- S3 · MEET 5.2–6.4 -->
+      <div id="s3-meet" class="center-stage clip" data-start="5.2" data-duration="1.2" data-track-index="3">
         <div class="meet">MEET <span class="gold">GRIFON.</span></div>
         <div class="meet-sub">Buong ad campaign. <span class="serif-accent gold">Isang AI.</span></div>
       </div>
 
-      <!-- S3a · hero screenshot 6.6–9.0 -->
-      <div id="s3a" class="shot-wrap clip" data-start="6.6" data-duration="2.4" data-track-index="4">
-        <div class="shot-card" id="card-a"><img id="img-a" src="media/scroll-000.png" /></div>
-        <div class="chip" id="chip-a" style="left: 76px; top: 588px;">30 MINUTES &#9889;</div>
+      <!-- S3a · S32 prompt tableau 6.4–8.0 -->
+      <div id="s3a" class="center-stage clip" data-start="6.4" data-duration="1.6" data-track-index="4">
+        <div class="prompt-card" id="prompt-card">
+          <div class="prompt-label">// DESCRIBE YOUR BUSINESS</div>
+          <div class="type-row">
+            <div class="type-line" id="type-line">&gt; skincare brand, face mist, TikTok ad</div>
+            <div class="caret" id="caret"></div>
+          </div>
+        </div>
       </div>
 
-      <!-- S3b · 3-step screenshot 9.0–11.0 -->
-      <div id="s3b" class="shot-wrap clip" data-start="9" data-duration="2" data-track-index="5">
+      <!-- phone A · THIRSTY ad plays 8.0–9.7 (video must not nest in a timed wrapper) -->
+      <video id="vidA" class="phone-video clip" src="media/skincare-ad.mp4" muted playsinline
+        data-start="8" data-duration="1.7" data-track-index="9"></video>
+      <div id="chromeA" class="phone-wrap clip" data-start="8" data-duration="1.7" data-track-index="10">
+        <div class="phone-chrome-box" id="chromeA-box"></div>
+        <div class="chip" id="chip-vidA" style="left: 50%; top: 208px;">// MADE WITH GRIFON</div>
+      </div>
+
+      <!-- phone B · VOX ad plays 9.7–11.5 -->
+      <video id="vidB" class="phone-video clip" src="media/vox-ad.mp4" muted playsinline
+        data-start="9.7" data-duration="1.8" data-track-index="11"></video>
+      <div id="chromeB" class="phone-wrap clip" data-start="9.7" data-duration="1.8" data-track-index="12">
+        <div class="phone-chrome-box" id="chromeB-box"></div>
+        <div class="chip" id="chip-vidB" style="left: 50%; top: 208px;">REAL ADS. REAL BUSINESSES.</div>
+      </div>
+
+      <!-- S3b · 3-step UI flash 11.5–12.5 -->
+      <div id="s3b" class="shot-wrap clip" data-start="11.5" data-duration="1" data-track-index="5">
         <div class="shot-card" id="card-b"><img id="img-b" src="media/scroll-019.png" /></div>
         <div class="chip" id="chip-b" style="left: 88px; bottom: 578px;">DESCRIBE &#8594; BUILD &#8594; LAUNCH</div>
-      </div>
-
-      <!-- S3c · sample ads screenshot 11.0–12.5 -->
-      <div id="s3c" class="shot-wrap clip" data-start="11" data-duration="1.5" data-track-index="6">
-        <div class="shot-card" id="card-c"><img id="img-c" src="media/scroll-013.png" /></div>
-        <div class="chip" id="chip-c" style="right: 76px; top: 600px;">REAL ADS. REAL BUSINESSES.</div>
       </div>
 
       <!-- S4 · OFFER 12.5–16.5 -->
@@ -187,32 +241,54 @@
       tl.to("#s2", { opacity: 0, y: -40, duration: 0.24, ease: "power2.in" }, 4.94);
       tl.set("#s2", { opacity: 0 }, 5.19);
 
-      /* S3 meet beat */
-      tl.fromTo("#s3-meet .meet", { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.38, ease: "back.out(1.7)" }, 5.26);
-      tl.fromTo("#s3-meet .meet-sub", { y: 36, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power3.out" }, 5.55);
-      tl.to("#s3-meet", { opacity: 0, scale: 1.05, duration: 0.22, ease: "power2.in" }, 6.36);
-      tl.set("#s3-meet", { opacity: 0 }, 6.59);
+      /* S3 meet beat (5.2–6.4) */
+      tl.fromTo("#s3-meet .meet", { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.36, ease: "back.out(1.7)" }, 5.26);
+      tl.fromTo("#s3-meet .meet-sub", { y: 36, opacity: 0 }, { y: 0, opacity: 1, duration: 0.28, ease: "power3.out" }, 5.52);
+      tl.to("#s3-meet", { opacity: 0, scale: 1.05, duration: 0.2, ease: "power2.in" }, 6.16);
+      tl.set("#s3-meet", { opacity: 0 }, 6.39);
 
-      /* S3a hero shot: card in, image slow pan up, chip pop */
-      tl.fromTo("#card-a", { y: 120, rotation: 2.5, opacity: 0 }, { y: 0, rotation: -1.2, opacity: 1, duration: 0.4, ease: "back.out(1.4)" }, 6.66);
-      tl.fromTo("#img-a", { x: 0 }, { x: -280, duration: 2.2, ease: "sine.inOut" }, 6.7);
-      tl.fromTo("#chip-a", { scale: 0, rotation: -12, opacity: 0 }, { scale: 1, rotation: -4, opacity: 1, duration: 0.3, ease: "back.out(2.2)" }, 7.1);
-      tl.to("#s3a", { opacity: 0, duration: 0.2, ease: "power2.in" }, 8.78);
-      tl.set("#s3a", { opacity: 0 }, 8.99);
+      /* S3a prompt tableau (6.4–8.0): card in, mono line types out, caret blinks */
+      tl.fromTo("#prompt-card", { y: 90, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power3.out" }, 6.46);
+      tl.fromTo(
+        "#type-line",
+        { clipPath: "inset(0 100% 0 0)" },
+        { clipPath: "inset(0 0% 0 0)", duration: 1.0, ease: "steps(38)" },
+        6.72
+      );
+      tl.fromTo("#caret", { opacity: 1 }, { opacity: 0, duration: 0.36, ease: "steps(1)", repeat: 3, yoyo: true }, 6.5);
+      tl.to("#s3a", { opacity: 0, y: -60, duration: 0.2, ease: "power2.in" }, 7.78);
+      tl.set("#s3a", { opacity: 0 }, 7.99);
 
-      /* S3b steps shot */
-      tl.fromTo("#card-b", { y: 120, rotation: -2.5, opacity: 0 }, { y: 0, rotation: 1.2, opacity: 1, duration: 0.4, ease: "back.out(1.4)" }, 9.06);
-      tl.fromTo("#img-b", { x: -120 }, { x: -340, duration: 1.8, ease: "sine.inOut" }, 9.1);
-      tl.fromTo("#chip-b", { scale: 0, rotation: 10, opacity: 0 }, { scale: 1, rotation: 3, opacity: 1, duration: 0.3, ease: "back.out(2.2)" }, 9.5);
-      tl.to("#s3b", { opacity: 0, duration: 0.2, ease: "power2.in" }, 10.78);
-      tl.set("#s3b", { opacity: 0 }, 10.99);
+      /* phone A (8.0–9.7): THIRSTY ad — the OUTPUT of the typed prompt */
+      tl.fromTo("#vidA", { xPercent: -50, yPercent: -50, scale: 0.55, opacity: 0 },
+        { xPercent: -50, yPercent: -50, scale: 1, opacity: 1, duration: 0.34, ease: "back.out(1.5)" }, 8.02);
+      tl.fromTo("#chromeA-box", { xPercent: -50, yPercent: -50, scale: 0.55, opacity: 0 },
+        { xPercent: -50, yPercent: -50, scale: 1, opacity: 1, duration: 0.34, ease: "back.out(1.5)" }, 8.02);
+      tl.fromTo("#chip-vidA", { xPercent: -50, scale: 0, rotation: -8, opacity: 0 },
+        { xPercent: -50, scale: 1, rotation: -3, opacity: 1, duration: 0.26, ease: "back.out(2.2)" }, 8.34);
+      tl.to("#chromeA", { opacity: 0, duration: 0.16, ease: "power2.in" }, 9.52);
+      tl.to("#vidA", { opacity: 0, duration: 0.16, ease: "power2.in" }, 9.52);
+      tl.set("#chromeA", { opacity: 0 }, 9.69);
+      tl.set("#vidA", { opacity: 0 }, 9.69);
 
-      /* S3c samples shot */
-      tl.fromTo("#card-c", { scale: 1.12, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.36, ease: "power3.out" }, 11.06);
-      tl.fromTo("#img-c", { x: -60 }, { x: -260, duration: 1.3, ease: "sine.inOut" }, 11.1);
-      tl.fromTo("#chip-c", { scale: 0, rotation: -10, opacity: 0 }, { scale: 1, rotation: -3, opacity: 1, duration: 0.28, ease: "back.out(2.2)" }, 11.4);
-      tl.to("#s3c", { opacity: 0, scale: 0.97, duration: 0.2, ease: "power2.in" }, 12.28);
-      tl.set("#s3c", { opacity: 0 }, 12.49);
+      /* phone B (9.7–11.5): VOX ad quick-cut */
+      tl.fromTo("#vidB", { xPercent: -50, yPercent: -50, scale: 1.18, opacity: 0 },
+        { xPercent: -50, yPercent: -50, scale: 1, opacity: 1, duration: 0.28, ease: "power3.out" }, 9.72);
+      tl.fromTo("#chromeB-box", { xPercent: -50, yPercent: -50, scale: 1.18, opacity: 0 },
+        { xPercent: -50, yPercent: -50, scale: 1, opacity: 1, duration: 0.28, ease: "power3.out" }, 9.72);
+      tl.fromTo("#chip-vidB", { xPercent: -50, scale: 0, rotation: 8, opacity: 0 },
+        { xPercent: -50, scale: 1, rotation: 3, opacity: 1, duration: 0.26, ease: "back.out(2.2)" }, 10.0);
+      tl.to("#chromeB", { opacity: 0, duration: 0.16, ease: "power2.in" }, 11.32);
+      tl.to("#vidB", { opacity: 0, duration: 0.16, ease: "power2.in" }, 11.32);
+      tl.set("#chromeB", { opacity: 0 }, 11.49);
+      tl.set("#vidB", { opacity: 0 }, 11.49);
+
+      /* S3b steps UI flash (11.5–12.5) */
+      tl.fromTo("#card-b", { y: 110, rotation: -2, opacity: 0 }, { y: 0, rotation: 1, opacity: 1, duration: 0.3, ease: "back.out(1.4)" }, 11.54);
+      tl.fromTo("#img-b", { x: -160 }, { x: -300, duration: 0.9, ease: "sine.inOut" }, 11.56);
+      tl.fromTo("#chip-b", { scale: 0, rotation: 8, opacity: 0 }, { scale: 1, rotation: 3, opacity: 1, duration: 0.26, ease: "back.out(2.2)" }, 11.75);
+      tl.to("#s3b", { opacity: 0, duration: 0.18, ease: "power2.in" }, 12.3);
+      tl.set("#s3b", { opacity: 0 }, 12.49);
 
       /* S4 offer: label, price slam, tagline, chip */
       tl.fromTo("#s4 .from", { opacity: 0 }, { opacity: 1, duration: 0.25 }, 12.56);
