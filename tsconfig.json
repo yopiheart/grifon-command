@@ -21,5 +21,5 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules", "dist", "tests", "components/OneShotAd/_fable5-recovered"]
+  "exclude": ["node_modules", "dist", "tests", "assets", "components/OneShotAd/_fable5-recovered"]
 }
