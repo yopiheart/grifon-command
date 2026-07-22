@@ -1121,6 +1121,44 @@ a code-executor delegation AFTER Neil merges this branch and green-lights the pl
 - **Source:** Neil, 2026-07-21 — img2threejs knowledge-transfer brief evaluation ("surprise
   me brother!"); skill adopted same session, product lane parked here.
 
+### 24. Gemini 3.6-era capability runway (Batch API · whole-video autopsy · context caching)
+
+> **Brief evaluation record (2026-07-22):** Google's Gemini 3.6 Flash / 3.5 Flash-Lite GA
+> drop evaluated against the codebase (jointly with GPT 5.6 Sol, read-only Codex
+> brainstorm; plan file `gemini 3.6 adoption`). Verdict: **adopt surgically** — Slice 0
+> (billing-grade `modelCosts.ts` + thoughts-token telemetry + legacy model allowlist)
+> SHIPPED same session; research-tier → 3.6-flash and the 3.5-flash-lite extraction pilot
+> are eval-gated slices in flight (Neil-gated LOCKED-line flips). The release does NOT
+> touch image/video gen — workhorse creative tier stays on 3.1-flash-lite (price UP +67%
+> output on 3.5-lite; schema-valid-but-creatively-wrong drift risk on locked Taglish
+> prompts). This parked item is the *second-order capability* remainder only.
+
+- **What:** Three deferred levers the new models unlock: (a) **Batch/Flex API at ~half
+  price** for non-interactive workloads — nightly regression runs (#1), batch headlines,
+  calendar gen, offline audits; (b) **whole-video understanding** via 3.6's long-context
+  accuracy jump (91.8% vs 77.3% @128k) — upgrade `tools/analyze_video.py` / viral-autopsy
+  synthesis to single-pass full-video analysis (needs Files API path, not the 55s
+  synchronous proxy); (c) **context caching** for repeatedly-queried brand dossiers /
+  swipe-library corpora.
+- **Why it matters:** (a) halves the Gemini bill on every batch job; (b) deeper autopsy
+  evidence per video = better Pattern Index entries; (c) margin on any future
+  Concierge/Director flow that re-reads the same brand context per session.
+- **Why parked:** All three are optimizations with no current bottleneck: nightly
+  regression v1 is deterministic-invariants-only, viral-autopsy works chunked today, and
+  no flow re-queries a large corpus yet. Slices 1–3 of the adoption plan (eval + flips)
+  come first — no point batching on models we haven't validated.
+- **When to resume:** (a) when nightly regression expands past adscript (item #1
+  increment 2) or a recurring batch job shows up in the cogs logs; (b) when a
+  viral-autopsy entry is blocked by chunking artifacts, or Concierge needs full-video
+  input; (c) when any flow sends the same >32k-token context ≥3× per session.
+- **Where to start:** (a) point the regression workflow's vitest calls at the Batch API
+  surface; (b) add a Files-API upload path to `tools/analyze_video.py`; (c) measure
+  candidate corpora sizes from cogs logs before writing any caching code.
+- **Scope estimate:** Each lever is 0.5–1 day independently; no ordering dependency
+  between them.
+- **Source:** Neil, 2026-07-22 — "most powerful model" brief evaluation; Slice 0 shipped
+  same session, capability runway parked here per the approved plan.
+
 ## How to add new items
 
 When Neil endorses an idea but says "not now":

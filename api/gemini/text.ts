@@ -312,8 +312,17 @@ const FlowBody = z.object({
   input: z.unknown(),
 });
 
-const LegacyBody = z.object({
-  model: z.string().min(1),
+// Pin the legacy forwarder to Grifon's approved text models. Without this an
+// authenticated client could request arbitrary/expensive models. 3.6-flash and
+// 3.5-flash-lite are pre-approved for upcoming model-adoption slices. A model
+// outside this set fails safeParse and takes the existing invalid_body 400 path.
+export const LegacyBody = z.object({
+  model: z.enum([
+    'gemini-3.1-flash-lite',
+    'gemini-3.5-flash',
+    'gemini-3.6-flash',
+    'gemini-3.5-flash-lite',
+  ]),
   contents: z.unknown(),
   config: z.unknown().optional(),
 });

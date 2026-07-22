@@ -41,6 +41,90 @@ describe('modelCosts — text cost estimation', () => {
   });
 });
 
+describe('modelCosts — billing-grade text rates (verified 2026-07-22)', () => {
+  // Expected USD figures are computed independently from the published Google
+  // pricing (USD per 1M tokens, standard tier): 1M input + 1M output tokens makes
+  // the total simply (inputRate + outputRate). These literals are the source of
+  // truth — if MODEL_PRICES drifts from Google's page, these assertions fail.
+  const ONE_M = { promptTokenCount: 1_000_000, candidatesTokenCount: 1_000_000 };
+
+  it('gemini-3.1-flash-lite: 0.25 in + 1.50 out', () => {
+    expect(estimateTextCostUsd('gemini-3.1-flash-lite', ONE_M)).toBeCloseTo(1.75, 10);
+  });
+
+  it('gemini-3.5-flash: 1.50 in + 9.00 out', () => {
+    expect(estimateTextCostUsd('gemini-3.5-flash', ONE_M)).toBeCloseTo(10.5, 10);
+  });
+
+  it('gemini-3.6-flash: 1.50 in + 7.50 out', () => {
+    expect(estimateTextCostUsd('gemini-3.6-flash', ONE_M)).toBeCloseTo(9.0, 10);
+  });
+
+  it('gemini-3.5-flash-lite: 0.30 in + 2.50 out', () => {
+    expect(estimateTextCostUsd('gemini-3.5-flash-lite', ONE_M)).toBeCloseTo(2.8, 10);
+  });
+
+  it('unknown model falls back to the default (matches 3.1-flash-lite rates)', () => {
+    expect(estimateTextCostUsd('gemini-3.0-ultra', ONE_M)).toBeCloseTo(1.75, 10);
+    expect(estimateTextCostUsd('gemini-3.0-ultra', ONE_M)).toBe(
+      estimateTextCostUsd('gemini-3.1-flash-lite', ONE_M)
+    );
+  });
+});
+
+describe('modelCosts — thinking (thoughts) tokens billed at the output rate', () => {
+  // Google bills thinking tokens at the output rate. On gemini-3.5-flash the
+  // output rate is $9.00/1M, so 500k candidate + 500k thought tokens = 1M output
+  // tokens = $9.00 — double the $4.50 of the candidate tokens alone.
+  it('adds thoughtsTokenCount into the output bucket', () => {
+    const withoutThoughts = estimateTextCostUsd('gemini-3.5-flash', {
+      promptTokenCount: 0,
+      candidatesTokenCount: 500_000,
+    });
+    const withThoughts = estimateTextCostUsd('gemini-3.5-flash', {
+      promptTokenCount: 0,
+      candidatesTokenCount: 500_000,
+      thoughtsTokenCount: 500_000,
+    });
+    expect(withoutThoughts).toBeCloseTo(4.5, 10);
+    expect(withThoughts).toBeCloseTo(9.0, 10);
+  });
+
+  it('treats a missing thoughtsTokenCount as 0', () => {
+    const cost = estimateTextCostUsd('gemini-3.1-flash-lite', {
+      promptTokenCount: 1_000_000,
+      candidatesTokenCount: 1_000_000,
+    });
+    expect(cost).toBeCloseTo(1.75, 10);
+  });
+
+  it('logModelUsage emits thoughtsTokens in the cogs line', () => {
+    const spy = vi.spyOn(console, 'log').mockImplementation(() => {});
+    logModelUsage('legacy', 'gemini-3.5-flash', {
+      promptTokenCount: 100,
+      candidatesTokenCount: 200,
+      thoughtsTokenCount: 50,
+      totalTokenCount: 350,
+    });
+    const payload = JSON.parse(spy.mock.calls[0][0] as string);
+    expect(payload).toMatchObject({
+      tag: 'cogs',
+      kind: 'text',
+      thoughtsTokens: 50,
+      outputTokens: 200,
+    });
+    spy.mockRestore();
+  });
+
+  it('logModelUsage reports thoughtsTokens as null when usage is absent', () => {
+    const spy = vi.spyOn(console, 'log').mockImplementation(() => {});
+    logModelUsage('legacy', 'gemini-3.1-flash-lite', undefined);
+    const payload = JSON.parse(spy.mock.calls[0][0] as string);
+    expect(payload.thoughtsTokens).toBeNull();
+    spy.mockRestore();
+  });
+});
+
 describe('modelCosts — the routing decision invariant', () => {
   // The core finding driving the cost-routing decision: a single image generation
   // costs far more than a typical structural text call on the cheapest tier. This
