@@ -96,7 +96,18 @@ Personal brand para sa Oceanides: **"Kuya Marvin ng Oceanides"** — si Marvin B
 - `clients/oceanides/kuya-marvin/consent-agreement-template.docx` — 1-page likeness/AI consent (fill-ins: company legal name, compensation, post-termination content choice). ✅ 2026-07-18 — emailed to Marvin via Gmail draft; awaiting signed copy.
 - Accounts (TikTok + FB Page) — PAGKATAPOS lang pumasa ang Gate 1. _(pending)_
 
-## RESUME STATE (2026-07-20 GABI session end — PAGES LIVE, unang FB posts NA-POST na)
+## RESUME STATE (2026-07-22 — LANE A BATCH IN PROGRESS)
+
+**Neil updates ngayong session (2026-07-22):**
+
+- ✅ **Call Now button naka-set na** sa FB page (item 1 partial done).
+- ⏸️ **Messenger greeting + auto-reply DEFERRED** ("huli na to") — balikan pagkatapos ng unang batch.
+- ⏸️ **Resharers (branch pages) + referrer/affiliate wave DEFERRED** — wag munang isipin per Neil; focus sa content + ads.
+- ✅ **Ads budget FINAL: ₱500/day (~₱15k/month), Metro Manila target geo.** Breakeven math kumpleto na sa `oceanides_business_model.md` (nut ₱27–30k/mo ≈ 3–4 certified loads o 20–30 residential).
+- ✅ **MARVIN VOICE CLONED** — ElevenLabs voice ID `jL41fXY8JXGEarmJ5g3f` (details sa `clients/oceanides/kuya-marvin/voice-sample-script.md`). Bagong audio lane: Veo native audio → ElevenLabs STS sa clone, o direct TTS — ang final VO ay totoong boses ni Marvin.
+- ▶️ **GO sa Lane A unang 2-week batch** (4 talking videos mula script-pool) + Marvin ADS production (Kling balance funded na; lane decision sa ibaba).
+
+Legacy state (2026-07-20 GABI session end — PAGES LIVE, unang FB posts NA-POST na):
 
 **Tapos ngayong session (huwag nang ulitin):**
 

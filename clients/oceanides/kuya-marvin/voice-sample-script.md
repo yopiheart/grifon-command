@@ -18,9 +18,16 @@ Typography rules applied: walang apostrophe sa contractions (nyo/yan/wag), walan
 
 ## Status
 
-- [ ] Script sent kay Marvin (Neil)
-- [ ] Recording received
-- [ ] Quality check (malinis ba, walang background noise, natural ang tono)
-- [ ] Voice clone / reference set sa audio pipeline
+- [x] Script sent kay Marvin (Neil)
+- [x] Recording received
+- [x] Quality check (malinis ba, walang background noise, natural ang tono)
+- [x] Voice clone / reference set sa audio pipeline — **✅ DONE 2026-07-22**
+
+**ElevenLabs voice ID (Kuya Marvin clone): `jL41fXY8JXGEarmJ5g3f`**
+
+Gamit: ads/content audio lane — ElevenLabs STS/TTS sa voice ID na ito para ang
+final VO ay boses ni Marvin (Veo native audio → STS pass, o direct TTS ng script).
+Hindi ito secret (kailangan pa rin ng ELEVEN_LABS_API_KEY para magamit), pero ang
+paggamit ay saklaw ng executed consent (voice likeness clause).
 
 Note: covered ng executed consent agreement ang voice likeness (see consent-agreement-FINAL-2026-07-20.md). GRIFON_VOICE_CLONING_ENABLED ay naka-off pa sa app side hanggang ElevenLabs Starter+; ang paggamit dito ay sa ads production lane muna.

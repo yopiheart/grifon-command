@@ -39,13 +39,20 @@ certificate — ang B2B/compliance segment ay hindi masusulot.
   — Phase 0 ≈ ₱12–15k/mo (₱500 × ~24 days + transport); Phase 1 ≈ ₱16.5k + incentives
 - Zam: **₱0 fixed** — commission-only, tiered (✅ APPROVED sa ibaba)
 - Neil draw: **₱0 fixed** — commission-only, tiered (same)
-- Ads budget: _₱?/month_ ← **huling unknown**
+- Ads budget: **₱500/day ≈ ₱15k/month** (✅ FINAL Neil 2026-07-22 — Metro Manila lang
+  ang target geo muna, kaya sapat ang ₱500/day floor; taasan lang kapag may attributed
+  bookings na ang creative)
 - API/tooling (content + ads gen): _₱?/month_
 
 **Breakeven framing:** kapag alam na ang nut, ang tanong ay "ilang certified load ang
 katumbas nito?" — hindi "ilang residential load." Sa commission-only model, ang nut ay
 halos si Marvin + ads lang → **~2 certified loads/month ang tumatabon kay Marvin**
 (net per certified load ≈ ₱7–10k pagkatapos ng Marvin ₱250 + owner overrides).
+
+**Breakeven math (2026-07-22, kumpleto na ang nut):** Phase 0 nut ≈ ₱12–15k (Marvin)
++ ₱15k (ads) = **₱27–30k/month**. Katumbas: **~3–4 certified B2B loads/month** (net
+₱7–10k each), O **~20–30 residential loads/month** (margin ₱1,000–1,500 each), o
+kombinasyon. Sanity check: 1 certified load/linggo = tabon na ang buong nut.
 
 ## Neil/Zam comp — commission-only, tiered (✅ APPROVED Neil 2026-07-20)
 
