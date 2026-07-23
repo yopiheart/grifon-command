@@ -14,7 +14,12 @@ Run via `npm run test` (one-shot) or `npm run test:watch` (watch mode). vitest i
   billing + quota + rate-limit ([`unit/paymongo.test.ts`](unit/paymongo.test.ts),
   [`unit/rateLimit.test.ts`](unit/rateLimit.test.ts), `quota.*`, `credits`, `modelCosts`,
   `omniBilling`); the `omni*` One-Shot cluster (~11 files); voice/timing (`voiceSelect`,
-  `sceneVoiceRoute`, `spokenDuration`); telemetry (`metaPixel`, `omniTelemetry`).
+  `sceneVoiceRoute`, `spokenDuration`); telemetry (`metaPixel`, `omniTelemetry`);
+  producer checkpoint concurrency
+  ([`unit/producerCheckpointConcurrency.test.ts`](unit/producerCheckpointConcurrency.test.ts) —
+  the P3 parallel stage pairs against the REAL `producerDeps.persist` + a fake
+  `saveRunCheckpoint` that reproduces `api/producer/run.ts`'s optimistic-revision
+  semantics exactly; mocks only the transport, asserts at the checkpoint seam).
 - **`integration/`** — 3 real-ffmpeg render harnesses (`burnin-render`, `demo-rerender`,
   `restitch-real`), gated behind `RUN_BURNIN`.
 - **`regression/`** — [`regression/script-gen.regression.test.ts`](regression/script-gen.regression.test.ts),

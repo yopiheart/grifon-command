@@ -27,6 +27,31 @@ Four stacked branches, pushed, **no PRs, nothing merged, nothing deployed by us,
 ### 1. P3 concurrency test (BEFORE canary; test-only — no production code changes unless it finds a real defect, and then report+propose first, don't implement)
 The one reasoned-but-untested P3 risk: concurrent checkpoint commits vs the real revision guard. Write a deterministic test in `tests/producerOrchestrator.test.ts` (or sibling) whose mock `persist` faithfully reproduces the REAL guard semantics — study `api/producer/run.ts` (optimistic `revision` check → `{ok, changed:false, current}` on stale) and `services/producerDeps.ts:78-94` (client adopts server revision on conflict). Simulate: delayed + out-of-order commits from both pair sites (scene_images∥video_prompts, video∥thumbnail) and a slow commit landing after `approveStoryboard` on a shallow-spread copy (`{...run}` — mirror `ProducerFlow`). Prove: (a) newest state never overwritten by stale state after conflict-adopt + re-commit; (b) no `onUpdate` ever re-delivers `status:'review'/gate:'storyboard'` post-approval; (c) final checkpoint contains videoPrompts + all imageUrls + thumbnailUrl.
 
+**STATUS 2026-07-23 (Opus session): DONE.** `tests/unit/producerCheckpointConcurrency.test.ts`
+(8 tests). Harness fidelity: uses the **real** `producerDeps.persist` (real `toCheckpoint`, real
+conflict-adopt branch) and fakes **only** `saveRunCheckpoint`, reproducing `api/producer/run.ts`'s
+POST exactly (insert@rev0; `UPDATE … WHERE revision = known` → increment; 0 rows →
+`{changed:false, current}`). Request bodies are deep-snapshotted synchronously at call time and
+land after a scripted number of microtask ticks — deterministic, no timers, reorderable.
+Invariants (a)/(b)/(c) all hold. Mutation-checked: neutering the server revision guard fails 4
+tests; neutering the client conflict-adopt branch fails 1 (the forked shallow-copy case — the only
+place adoption is load-bearing, since both racers share one `run` object and the *winner* already
+writes the fresh revision). Suite 922 passed / 22 skipped; build + bundle-leak clean.
+
+**Defect found (P3-introduced, NOT fixed — proposal only, per the test-only mandate):**
+`toCheckpoint` in [../services/producerDeps.ts](../services/producerDeps.ts) omits `thumbnailUrl`
+from `artifacts`, but the resume path
+([../components/OneShotAd/ProducerFlow.tsx](../components/OneShotAd/ProducerFlow.tsx),
+`thumbnailUrl: art.thumbnailUrl`) reads it back. Before P3 the thumbnail was not a producer
+artifact; P3 promoted it to a node. Consequence: the cover frame is lost on any reload /
+cross-device resume, and `normalizeStages` (which marks the thumbnail stage done only
+`if (run.thumbnailUrl)`) re-runs the node — one extra paid image (~$0.04) per resume, plus First
+Cut silently hiding the cover download. **Proposed one-line fix:** add
+`thumbnailUrl: run.thumbnailUrl,` to the `artifacts` object in `toCheckpoint`, and flip the
+`KNOWN GAP` test's assertion to `toBe('thumb://cover.png')` in the same commit. Not a
+double-spend or data-corruption risk; safe to defer, but it fires on every P3 resume. Needs Neil's
+go-ahead (touches `services/`, live-on-merge with P3).
+
 ### 2. Verify Vercel preview for `feat/loop-arch-p4-image-gate`
 Unverifiable from the cafe PC (no gh/vercel CLI, Vercel MCP unauthenticated). Check the Vercel dashboard → Deployments, or authorize the Vercel connector. Do NOT deploy or change env vars.
 
