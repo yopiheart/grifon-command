@@ -1062,3 +1062,27 @@ Regular hyphen sa reduplication (`che-check`, `i-check`) ay hindi kasama, tama y
 **What went wrong:** That no-agents line was written by GPT 5.6 Sol when drafting the handoff prompt — it was never Neil's policy. Neil caught it and reverted it ("put it back from where it was"). The session ran with builder = reviewer on api/-touching code, exactly what the delegation split exists to prevent.
 
 **Lesson:** Session kickoff/handoff prompts are often drafted by another model (Sol writes many of them). When such a prompt contradicts a CLAUDE.md **hard rule** (delegation, TUNED files, model allocation), treat the repo rule as authoritative and ask Neil ONE question up front — "your handoff says X but CLAUDE.md says Y; which wins?" — instead of silently obeying the prompt and flagging later. Repo policy is Neil's durable voice; a pasted prompt is one session's artifact.
+
+## 2026-07-24 — Fable credits burned on routine execution: the agent must FLAG the model, not just notice it
+
+**What happened:** Mid-session Neil ran `/model claude-fable-5` (context: an earlier habit from when
+Fable was the standing pin). The agent noticed the switch and said nothing. The ENTIRE rest of the
+night then ran the main loop on Fable — the F2 bisect execution, executor dispatches and diff
+reviews, CI babysitting, lock-file fix, and the PR #70 merge — all routine-execution work that the
+2026-07-23 Fable-reservation policy explicitly assigns to Opus. The fresh-context PR critic
+(`general-purpose` subagent, no model pin in its definition) also silently INHERITED Fable. Neil
+caught it at the end: "pati sa pag-merge... sunog na sunog na credits ko."
+
+**Rules (both directions):**
+1. **The moment the session model becomes Fable** (a `/model claude-fable-5` local-command line in
+   the transcript, or a system line naming the model as Fable) **and the work at hand is not a
+   blueprint or a scoped high-risk review, say so IMMEDIATELY and ask Neil to run
+   `/model claude-opus-4-8` before continuing.** One sentence is enough: "Fable ang session ngayon
+   pero routine execution ito — balik muna tayo sa Opus?" Do not silently keep working. The agent
+   cannot switch the model itself; the flag is the whole job. (New sessions self-heal — the
+   `.claude/settings.json` pin is `claude-opus-4-8` — so this rule is about MID-SESSION overrides.)
+2. **Never let a review/critic subagent inherit the session model blindly.** When spawning
+   `general-purpose` (or any unpinned agent type) from a session that may be on Fable, pass an
+   explicit `model` param (normally `opus`; `sonnet` for browser/smoke work). Pinned agents
+   (`code-executor` = opus, `smoke-tester` = sonnet) are already safe.
+
