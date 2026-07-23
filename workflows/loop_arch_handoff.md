@@ -138,9 +138,17 @@ conflict-adopt worked under a conflict storm (rev → 54); error state parked cl
   `redirectTo: window.location.origin` correctly). Workaround used: email-OTP login (no
   redirect). Permanent option: add `https://grifon-command-*-<team>.vercel.app/**` to Supabase
   Auth → Redirect URLs.
-- **F4 — deployed build ids drift from working tree:** runId prefix `apr_` (not `osa_`) and a
-  different localStorage active-run key on the deployed commit — session tooling should read the
-  DB, not localStorage.
+- **F4 — CORRECTED (the original claim was wrong):** the `apr_` runId prefix is NOT drift —
+  `newRunId` in services/producerRunService.ts:94 emits `apr_${uuid}` by design (the `osa_` form
+  is only createProductionRun's internal default, which ProducerFlow overrides). Why Neil's
+  console `localStorage.getItem('osa_producer_active_run')` returned null mid-run remains
+  unexplained (possibly timing or console context) — regardless, the durable lesson stands:
+  session tooling should read the DB (producer_runs by user, newest first), not localStorage.
+  **F2 FIX SHIPPED 2026-07-23** (same session): `generateEditDecisionList` now throws
+  `EDL_EMPTY_RESPONSE: … (finishReason: X, blockReason: Y)` on an empty model reply instead of
+  masking it as EDL_MALFORMED, and console-warns the full promptFeedback. Next live Retry of the
+  canary run will reveal the real zero-output cause. 4 new seam tests in
+  tests/unit/edit-decision-list.test.ts.
 - **F5 (minor):** the RunningScreen console shows a Tailwind-CDN production warning; duplicate
   `node_done{thumbnail}` events under F1's dual driver (emit is per-driver, dedupe not needed
   once F1 is fixed).

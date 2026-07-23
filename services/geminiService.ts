@@ -1468,7 +1468,28 @@ the nearest valid value. Never emit anything else.
     } as any,
   }));
 
-  const raw = response.text || '{}';
+  // Empty-response guard: an empty/whitespace-only model reply is a TRANSPORT
+  // failure (block, MAX_TOKENS, etc.), not a malformed draft. The old
+  // `response.text || '{}'` fallback silently coerced it to '{}' and then
+  // misdiagnosed it as EDL_MALFORMED (2026-07-23 canary: 4/4 live runs returned
+  // zero output tokens — inputTokens === totalTokens, outputTokens null — and
+  // the mask hid the real cause). Surface promptFeedback/finishReason so the
+  // next live retry has billing-grade evidence. Transport concern, not creative.
+  if (!response.text || !response.text.trim()) {
+    const finishReason = response.candidates?.[0]?.finishReason;
+    const blockReason = (response as any).promptFeedback?.blockReason;
+    console.warn(
+      '[edl] empty model response',
+      'finishReason:', finishReason ?? 'none',
+      'blockReason:', blockReason ?? 'none',
+      'promptFeedback:', JSON.stringify((response as any).promptFeedback ?? null),
+    );
+    throw new Error(
+      `EDL_EMPTY_RESPONSE: model returned no text (finishReason: ${finishReason ?? 'none'}, blockReason: ${blockReason ?? 'none'}) — retry the edit.`,
+    );
+  }
+
+  const raw = response.text;
   const parsed = JSON.parse(cleanJson(raw)) as EditDecisionList;
 
   // Shape guarantee: this call has responseMimeType json but NO responseSchema,
@@ -1477,6 +1498,10 @@ the nearest valid value. Never emit anything else.
   // OBJECT + sfxCues missing anchorSec got zod-rejected by /api/render/final as
   // FINAL_RENDER_START_FAILED 400). Throwing here surfaces the module's normal
   // error state instead of a component crash. Transport concern, not creative.
+  // EDL_MALFORMED now means ONLY "parsed JSON has the wrong shape" — an empty
+  // model response is thrown separately above as EDL_EMPTY_RESPONSE, carrying
+  // promptFeedback/finishReason (2026-07-23 canary: 4/4 zero-output-token
+  // responses were masked by the old `|| '{}'` fallback).
   if (!Array.isArray(parsed.scenes) || parsed.scenes.length === 0) {
     throw new Error('EDL_MALFORMED: model returned no scenes array — re-draft the EDL.');
   }

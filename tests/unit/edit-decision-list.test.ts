@@ -470,3 +470,56 @@ describe('generateEditDecisionList — meta / SFX coercion belt', () => {
     expect(JSON.parse(JSON.stringify(result.scenes[0]))).not.toHaveProperty('transitionIn');
   });
 });
+
+// 2026-07-23 canary F2: a live production run failed 4/4 EDL generations with
+// ZERO output tokens (inputTokens === totalTokens, outputTokens null). The old
+// `response.text || '{}'` fallback silently coerced the empty reply to '{}' and
+// misdiagnosed it as EDL_MALFORMED, discarding the promptFeedback/finishReason
+// the proxy already returned. An empty model response is a TRANSPORT error
+// (block, MAX_TOKENS), distinct from a parsed-but-wrong-shape draft.
+describe('EDL_EMPTY_RESPONSE — empty model output is a transport error, not a malformed draft', () => {
+  const singleInput = {
+    sceneBatch: [
+      { sceneIdx: 0, scriptLine: 'Hook.', renderedUrl: 'https://example.com/x0.mp4', type: 'talking' as const },
+    ],
+    audioOverlays: [{ sceneIdx: 0, audioUrl: 'blob:x-0' }],
+    aspectRatio: '9:16' as const,
+    targetPlatform: 'tiktok' as const,
+  };
+
+  // Route the fetch mock to return a raw Gemini envelope (not okGemini's
+  // JSON.stringify wrapper) so `.text` and sibling fields — promptFeedback /
+  // candidates — land on the parsed response exactly as the proxy delivers them.
+  const mockRawEnvelope = (envelope: Record<string, unknown>) => {
+    fetchMock.mockImplementation(async (url: any) =>
+      typeof url === 'string' && url.startsWith('blob:')
+        ? blobResponse(url)
+        : { ok: true, status: 200, json: async () => envelope }
+    );
+  };
+
+  const run = () => generateEditDecisionList({ ...singleInput, finalScript: 'Hook.' });
+
+  it('throws EDL_EMPTY_RESPONSE with the blockReason when promptFeedback blocks the reply', async () => {
+    mockRawEnvelope({ text: '', promptFeedback: { blockReason: 'PROHIBITED_CONTENT' } });
+    await expect(run()).rejects.toThrow(/EDL_EMPTY_RESPONSE/);
+    await expect(run()).rejects.toThrow(/PROHIBITED_CONTENT/);
+  });
+
+  it('throws EDL_EMPTY_RESPONSE with the finishReason when the candidate hits MAX_TOKENS', async () => {
+    mockRawEnvelope({ text: '', candidates: [{ finishReason: 'MAX_TOKENS' }] });
+    await expect(run()).rejects.toThrow(/EDL_EMPTY_RESPONSE/);
+    await expect(run()).rejects.toThrow(/MAX_TOKENS/);
+  });
+
+  it('throws EDL_EMPTY_RESPONSE for a whitespace-only reply', async () => {
+    mockRawEnvelope({ text: '  \n ' });
+    await expect(run()).rejects.toThrow(/EDL_EMPTY_RESPONSE/);
+  });
+
+  it('still throws EDL_MALFORMED (not EDL_EMPTY_RESPONSE) when JSON parses but has no scenes array', async () => {
+    mockRawEnvelope({ text: '{"meta":{}}' });
+    await expect(run()).rejects.toThrow(/EDL_MALFORMED/);
+    await expect(run()).rejects.not.toThrow(/EDL_EMPTY_RESPONSE/);
+  });
+});
