@@ -23,6 +23,10 @@ export interface ProductionRunRow {
   stages: unknown[];
   artifacts: Record<string, unknown>;
   error: string | null;
+  /** Cover frame (base64 data URL), written out-of-band via 'record_thumbnail' — kept OUT of
+   * `artifacts` for the same reason scene images are (multi-MB jsonb → statement timeouts).
+   * Optional: absent until supabase/producer_runs.sql has been re-run. */
+  thumbnail_url?: string | null;
   /** Monotonic optimistic-concurrency guard (see api/producer/run.ts checkpoint). */
   revision: number;
   created_at: string;
@@ -230,6 +234,11 @@ export const recordScene = (runId: string, sceneIdx: number, jobHandle: Record<s
  * storyboard images from these rows. */
 export const recordSceneImage = (runId: string, sceneIdx: number, imageUrl: string, endFrameUrl?: string): Promise<SceneWriteResult> =>
   post('/api/producer/advance', { action: 'record_image', runId, sceneIdx, imageUrl, endFrameUrl: endFrameUrl ?? null }).then(toWriteResult);
+
+/** Persist the run's cover frame on its own run-header column (never in the checkpoint jsonb).
+ * Best-effort at the call site: a failure here costs the cover frame on resume, nothing else. */
+export const recordThumbnail = (runId: string, thumbnailUrl: string): Promise<SceneWriteResult> =>
+  post('/api/producer/advance', { action: 'record_thumbnail', runId, thumbnailUrl }).then(toWriteResult);
 
 /** Mark a scene done with its rendered urls (rendering → done). */
 export const completeScene = (runId: string, sceneIdx: number, videoUrl: string, audioUrl?: string): Promise<SceneWriteResult> =>

@@ -28,6 +28,22 @@ create table if not exists public.producer_runs (
 create index if not exists producer_runs_user_id_idx on public.producer_runs(user_id);
 create index if not exists producer_runs_status_idx   on public.producer_runs(status);
 
+-- P2 observability spine (loop-arch). `engine` distinguishes the producer runtime from
+-- legacy engines for A/B telemetry; `cost_usd` is the denormalized per-run generation
+-- spend, written from the run_cogs view when a run reaches 'done' (api/producer/run.ts).
+-- Idempotent adds for tables created before P2.
+alter table public.producer_runs add column if not exists engine text default 'producer';
+alter table public.producer_runs add column if not exists cost_usd numeric not null default 0;
+
+-- P3 follow-up (loop-arch): the producer's cover frame. generateThumbnail returns a base64
+-- DATA URL, so it gets its OWN small column written once via api/producer/advance.ts
+-- 'record_thumbnail' — the run-header rule (images never in the artifacts jsonb) applies here
+-- exactly as it does to producer_scenes.image_url. Before this column existed the cover frame
+-- was simply lost on resume (First Cut hid the preview + download). Degrades safely: if this
+-- alter has not been applied, the write 500s, the orchestrator swallows it (best-effort) and
+-- the run behaves exactly as it did before — nothing else depends on it.
+alter table public.producer_runs add column if not exists thumbnail_url text;
+
 -- ── Per-scene job queue ───────────────────────────────────────────────────────
 -- One row per (run, scene). A relational child table (not a jsonb array on the run)
 -- is deliberate: it makes the atomic claim below a single-row UPDATE, which is what
@@ -51,6 +67,16 @@ create table if not exists public.producer_scenes (
 
 -- Idempotent upgrade for tables created before end_frame_url existed (2026-07-03).
 alter table public.producer_scenes add column if not exists end_frame_url text;
+
+-- P4 image gate (loop-arch): the AI still-gate verdict {pass, flags, compositionNotes?}
+-- per scene, for OFFLINE precision measurement before the gate is ever given reroll
+-- authority (plan §3.6/§3.8 — flag-only, fail-open this phase). FORWARD-PREP: the
+-- orchestrator currently persists the verdict inside the run checkpoint's artifacts.scenes
+-- jsonb (each ProductionSceneState carries gateVerdict), because the server-side per-scene
+-- write path (api/producer/advance.ts 'record_image') carries only urls and is out of P4's
+-- file scope. A dedicated per-scene verdict row lands with the advance.ts action-union touch
+-- in a later slice; this column is added now so that migration is a no-op.
+alter table public.producer_scenes add column if not exists gate_verdict jsonb;
 
 create index if not exists producer_scenes_run_idx on public.producer_scenes(run_id);
 

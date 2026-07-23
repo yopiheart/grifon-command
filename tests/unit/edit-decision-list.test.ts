@@ -470,3 +470,169 @@ describe('generateEditDecisionList — meta / SFX coercion belt', () => {
     expect(JSON.parse(JSON.stringify(result.scenes[0]))).not.toHaveProperty('transitionIn');
   });
 });
+
+// 2026-07-23 canary F2: a live production run failed 4/4 EDL generations with
+// ZERO output tokens (inputTokens === totalTokens, outputTokens null). The old
+// `response.text || '{}'` fallback silently coerced the empty reply to '{}' and
+// misdiagnosed it as EDL_MALFORMED, discarding the promptFeedback/finishReason
+// the proxy already returned. An empty model response is a TRANSPORT error
+// (block, MAX_TOKENS), distinct from a parsed-but-wrong-shape draft.
+describe('EDL_EMPTY_RESPONSE — empty model output is a transport error, not a malformed draft', () => {
+  const singleInput = {
+    sceneBatch: [
+      { sceneIdx: 0, scriptLine: 'Hook.', renderedUrl: 'https://example.com/x0.mp4', type: 'talking' as const },
+    ],
+    audioOverlays: [{ sceneIdx: 0, audioUrl: 'blob:x-0' }],
+    aspectRatio: '9:16' as const,
+    targetPlatform: 'tiktok' as const,
+  };
+
+  // Route the fetch mock to return a raw Gemini envelope (not okGemini's
+  // JSON.stringify wrapper) so `.text` and sibling fields — promptFeedback /
+  // candidates — land on the parsed response exactly as the proxy delivers them.
+  const mockRawEnvelope = (envelope: Record<string, unknown>) => {
+    fetchMock.mockImplementation(async (url: any) =>
+      typeof url === 'string' && url.startsWith('blob:')
+        ? blobResponse(url)
+        : { ok: true, status: 200, json: async () => envelope }
+    );
+  };
+
+  const run = () => generateEditDecisionList({ ...singleInput, finalScript: 'Hook.' });
+
+  it('throws EDL_EMPTY_RESPONSE with the blockReason when promptFeedback blocks the reply', async () => {
+    mockRawEnvelope({ text: '', promptFeedback: { blockReason: 'PROHIBITED_CONTENT' } });
+    await expect(run()).rejects.toThrow(/EDL_EMPTY_RESPONSE/);
+    await expect(run()).rejects.toThrow(/PROHIBITED_CONTENT/);
+  });
+
+  it('throws EDL_EMPTY_RESPONSE with the finishReason when the candidate hits MAX_TOKENS', async () => {
+    mockRawEnvelope({ text: '', candidates: [{ finishReason: 'MAX_TOKENS' }] });
+    await expect(run()).rejects.toThrow(/EDL_EMPTY_RESPONSE/);
+    await expect(run()).rejects.toThrow(/MAX_TOKENS/);
+  });
+
+  it('throws EDL_EMPTY_RESPONSE for a whitespace-only reply', async () => {
+    mockRawEnvelope({ text: '  \n ' });
+    await expect(run()).rejects.toThrow(/EDL_EMPTY_RESPONSE/);
+  });
+
+  it('still throws EDL_MALFORMED (not EDL_EMPTY_RESPONSE) when JSON parses but has no scenes array', async () => {
+    mockRawEnvelope({ text: '{"meta":{}}' });
+    await expect(run()).rejects.toThrow(/EDL_MALFORMED/);
+    await expect(run()).rejects.not.toThrow(/EDL_EMPTY_RESPONSE/);
+  });
+});
+
+// 2026-07-24 F2 bisect: Gemini deterministically blocks EDL requests whose prompt
+// text carries a first-person testimonial ad script (promptFeedback.blockReason =
+// PROHIBITED_CONTENT, zero output tokens) under its fabricated-testimonial policy.
+// The block fires on the script-as-ad TEXT, not the attached media. The degrade
+// lane re-issues the SAME tuned skeleton ONCE with the script fields replaced by
+// neutral stubs (media unchanged) so the model reads the spoken lines from the
+// attached voice audio. These tests assert at the proxy seam: the retry's outbound
+// prompt no longer carries the script, the media parts are byte-for-byte reused,
+// and a non-block empty does NOT trigger the (paid) retry.
+describe('EDL degrade lane — script-stub retry on prompt block', () => {
+  const markerInput = {
+    sceneBatch: [
+      { sceneIdx: 0, scriptLine: 'Ako si Elena TEST-MARKER', renderedUrl: 'https://example.com/m0.mp4', type: 'talking' as const },
+      { sceneIdx: 1, scriptLine: 'Dati blemished, ngayon smooth TEST-MARKER', renderedUrl: 'https://example.com/m1.mp4', type: 'talking' as const },
+    ],
+    audioOverlays: [
+      { sceneIdx: 0, audioUrl: 'blob:mk-0' },
+      { sceneIdx: 1, audioUrl: 'blob:mk-1' },
+    ],
+    aspectRatio: '9:16' as const,
+    targetPlatform: 'tiktok' as const,
+  };
+  const markerScript = 'Ako si Elena TEST-MARKER. Dati blemished, ngayon smooth TEST-MARKER.';
+
+  const runMarker = () =>
+    generateEditDecisionList({ ...markerInput, finalScript: markerScript });
+
+  // Only the /api/gemini/* proxy calls carry a request body (blob: fetches don't).
+  // Filter on that to count model attempts independent of the media-fetch traffic.
+  const geminiProxyCalls = () =>
+    fetchMock.mock.calls.filter((c: any) => {
+      const url = c[0];
+      return typeof url === 'string' && !url.startsWith('blob:');
+    });
+
+  const bodyOf = (call: any): any => JSON.parse(call[1].body);
+
+  const emptyBlockedEnvelope = { text: '', promptFeedback: { blockReason: 'PROHIBITED_CONTENT' } };
+
+  it('blocked → stubbed retry succeeds: reuses media, drops the script, parses the EDL', async () => {
+    // 1st gemini call blocked-empty; 2nd returns a valid EDL. blob: fetches always
+    // resolve to a Blob shape. Track only which gemini attempt we're on.
+    let geminiAttempt = 0;
+    fetchMock.mockImplementation(async (url: any) => {
+      if (typeof url === 'string' && url.startsWith('blob:')) return blobResponse(url);
+      geminiAttempt += 1;
+      if (geminiAttempt === 1) {
+        return { ok: true, status: 200, json: async () => emptyBlockedEnvelope };
+      }
+      return okGemini(cannedEdl(markerInput));
+    });
+
+    const result = await runMarker();
+
+    // Resolves with a well-shaped, parsed EDL.
+    assertEdlShape(result, 2);
+
+    // Exactly two model attempts (no more, no fewer).
+    const calls = geminiProxyCalls();
+    expect(calls.length).toBe(2);
+
+    const firstBody = bodyOf(calls[0]);
+    const secondBody = bodyOf(calls[1]);
+
+    // Attempt 1 carries the real script line(s).
+    expect(firstBody.contents.parts[0].text).toContain('Ako si Elena TEST-MARKER');
+
+    // Attempt 2's prompt is scrubbed of the marker and carries the stub line.
+    expect(secondBody.contents.parts[0].text).not.toContain('TEST-MARKER');
+    expect(secondBody.contents.parts[0].text).toContain('(see attached scene 1 audio for the spoken line)');
+    expect(secondBody.contents.parts[0].text).toContain('(see attached scene 2 audio for the spoken line)');
+
+    // Media parts (everything after the text prompt) are reused byte-for-byte and
+    // in the same order across both attempts — only the prompt text changed.
+    expect(secondBody.contents.parts.slice(1)).toEqual(firstBody.contents.parts.slice(1));
+  });
+
+  it('double block: both attempts empty+blocked → throws EDL_EMPTY_RESPONSE with the degraded-retry marker, no third call', async () => {
+    fetchMock.mockImplementation(async (url: any) =>
+      typeof url === 'string' && url.startsWith('blob:')
+        ? blobResponse(url)
+        : { ok: true, status: 200, json: async () => emptyBlockedEnvelope }
+    );
+
+    await expect(runMarker()).rejects.toThrow(/EDL_EMPTY_RESPONSE/);
+    // Exactly two model attempts — the degrade lane runs once, then gives up.
+    expect(geminiProxyCalls().length).toBe(2);
+  });
+
+  it('double block: the thrown message carries the "(degraded retry also blocked)" suffix', async () => {
+    fetchMock.mockImplementation(async (url: any) =>
+      typeof url === 'string' && url.startsWith('blob:')
+        ? blobResponse(url)
+        : { ok: true, status: 200, json: async () => emptyBlockedEnvelope }
+    );
+    await expect(runMarker()).rejects.toThrow(/\(degraded retry also blocked\)/);
+  });
+
+  it('empty WITHOUT a blockReason (MAX_TOKENS) does NOT fire the degrade lane — one call, no wasted spend', async () => {
+    fetchMock.mockImplementation(async (url: any) =>
+      typeof url === 'string' && url.startsWith('blob:')
+        ? blobResponse(url)
+        : { ok: true, status: 200, json: async () => ({ text: '', candidates: [{ finishReason: 'MAX_TOKENS' }] }) }
+    );
+
+    await expect(runMarker()).rejects.toThrow(/EDL_EMPTY_RESPONSE/);
+    // Degrade lane must NOT fire on a non-block empty: exactly one model attempt.
+    expect(geminiProxyCalls().length).toBe(1);
+    // And no degraded-retry marker, since the stub path never ran.
+    await expect(runMarker()).rejects.not.toThrow(/degraded retry also blocked/);
+  });
+});

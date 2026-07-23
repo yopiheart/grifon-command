@@ -407,7 +407,8 @@ const EOF_EPS = 0.25;
  * If the last silence region ends well before EOF (speech resumes after it), or
  * there are no silence regions, speech runs to the end → trim to the full
  * duration. Returns null only when duration is unknown and no trailing silence
- * was detected (caller falls back to -shortest / full clip).
+ * was detected (caller falls back to the full clip; -shortest bounds only that
+ * rare probe-failure path — see the buildScene note on why it silences voice).
  */
 export function parseTrimSec(
   stderr: string,
@@ -676,13 +677,23 @@ function buildScene(
   }
 
   const tArgs = trimSec !== null ? ['-t', trimSec.toFixed(3)] : [];
+  // `-shortest` SILENCES the mixed voice (2026-07-24 LUNARIA First Cut, reproduced
+  // locally): x264's encoder delay makes video packets reach the muxer late, so the
+  // shortest-logic closes the audio stream after its first packets — the output gets
+  // a ~4kb/s empty AAC track (silence + boundary clicks) even though the voice MP3
+  // is loud and the [1:a] chain is correct. `-t trimSec` already bounds the output on
+  // every real path (chooseTrim only returns null trimSec when the video probe itself
+  // failed), so -shortest is redundant there and harmful. It is kept ONLY on that
+  // rare probe-failure path, where it remains the sole duration bound for apad.
   const args = [
     ...inputs,
     ...tArgs,
     '-filter_complex', `${vGraph};${aChain}`,
     '-map', '[v]', '-map', aOut,
     '-c:v', 'libx264', '-preset', PRESET, '-crf', CRF,
-    '-c:a', 'aac', '-ar', '48000', '-ac', '2', '-shortest', outPath,
+    '-c:a', 'aac', '-ar', '48000', '-ac', '2',
+    ...(trimSec !== null ? [] : ['-shortest']),
+    outPath,
   ];
 
   const { status, stderr } = ffmpeg(args, dir);
@@ -796,7 +807,8 @@ export async function renderFinalVideo(
   music?: { style: 'mrbeast' | 'temu' | 'testimonial' | 'ugcpro'; enabled: boolean; bedUrl?: string; role?: 'bed' | 'lead' },
   preset: RenderPreset = CLASSIC,
   variantSeed: number = 0, // rotates the premium hook palette per render
-  endCard?: FinalRenderEndCard // offer recap + price anchor, burned into the last scene
+  endCard?: FinalRenderEndCard, // offer recap + price anchor, burned into the last scene
+  onStep?: (label: string) => void // P1 heartbeat: called at pipeline boundaries so the caller can bump the render sidecar's updatedAt (watchdog liveness)
 ): Promise<{ buffer: Buffer; sizeBytes: number }> {
   if (!scenes.length) throw new RenderError('no_scenes');
   checkFfmpegCapabilities(); // once per process: warn loudly if drawtext is missing
@@ -861,6 +873,7 @@ export async function renderFinalVideo(
         await downloadToFile(scene.audioUrl, audioPath);
       }
       const dlMs = Date.now() - tScene;
+      onStep?.(`download ${i + 1}/${ordered.length}`);
 
       const probeSec = probeDurationSec(videoPath);
       // Measure the actual VO speech-end for every voiced scene — this is now the
@@ -979,6 +992,7 @@ export async function renderFinalVideo(
         `[renderFfmpeg] scene=${i} dl=${dlMs}ms build=${Date.now() - tBuild}ms ` +
         `trim=${trimSec?.toFixed(2) ?? 'full'} layers=${layers.length} sfx=${sfx.length}`
       );
+      onStep?.(`scene ${i + 1}/${ordered.length}`);
       muxed.push(outPath);
       elapsed += trimSec ?? probeSec ?? 0; // advance the timeline by this scene's length
     }
@@ -987,6 +1001,7 @@ export async function renderFinalVideo(
     const tConcat = Date.now();
     concatScenes(muxed, finalPath);
     const concatMs = Date.now() - tConcat;
+    onStep?.('concat');
 
     // Optional final pass: ducked background-music bed across the whole program.
     // Bed source priority (each step degrades gracefully to the next):
@@ -1019,6 +1034,7 @@ export async function renderFinalVideo(
     // Final master: pin loudness to -14 LUFS (+ faststart for instant streaming).
     const masteredPath = join(dir, 'final_master.mp4');
     if (masterAudio(resultPath, masteredPath)) resultPath = masteredPath;
+    onStep?.('audio master');
 
     const buffer = readFileSync(resultPath);
     console.log(

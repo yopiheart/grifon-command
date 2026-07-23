@@ -19,6 +19,7 @@ import {
   type ProductionStageId,
   type VideoJobHandle,
 } from '../services/producerOrchestrator.js';
+import { gateDepsFor } from '../services/producerDeps.js';
 import type { MarketResearchReport, Script, Scene, VideoPrompt } from '../types.js';
 
 // ---------------------------------------------------------------------------
@@ -202,6 +203,7 @@ function makeFakeDeps(over: Partial<ProducerDeps> = {}, storeSeed: Record<number
     generateStoryboard: vi.fn(async () => ({ scenes: STORYBOARD_SCENES.map((s) => ({ ...s })), strategicAudit: '' })),
     generateVideoPrompts: vi.fn(async () => VIDEO_PROMPTS.map((v) => ({ ...v }))),
     generateSceneImage: vi.fn(async (prompt: string) => `img://${prompt}`),
+    generateThumbnail: vi.fn(async () => 'thumb://cover.png'),
     generateEditDecisionList: vi.fn(async () => ({
       meta: { totalDurationSec: 10, aspectRatio: '9:16', targetPlatform: 'tiktok', hookStrategy: 'h', formulaApplied: [], scriptStyleDetected: 'testimonial' },
       scenes: [
@@ -350,6 +352,66 @@ describe('runProduction — happy path (parks at both gates, one submit per scen
 function store2Count(deps: ProducerDeps, method: keyof ProducerRunStore): number {
   return (deps.run[method] as unknown as { mock: { calls: unknown[] } }).mock.calls.length;
 }
+
+// --- 1b. Concurrent double-approve (F1) -----------------------------------
+
+describe('approveStoryboard — concurrent double-approve fires exactly one driver', () => {
+  it('a dual-click firing two approveStoryboard calls on the same run still submits each scene once', async () => {
+    const { deps, spies, rows } = makeFakeDeps();
+    const run = createProductionRun(makeInput(), 'u1');
+
+    // Park at the storyboard gate — no spend yet.
+    const gated = await runProduction(run, cb(), deps);
+    expect(gated.gate).toBe('storyboard');
+    expect(spies.submitVideo).not.toHaveBeenCalled();
+
+    // Dual-click: BOTH handlers share the one `run` reference (mirrors ProducerFlow). Fire the
+    // second before awaiting the first so the concurrency backstop — not sequential idempotency —
+    // is what stops the second driver.
+    const [a, b] = await Promise.all([
+      approveStoryboard(run, cb(), deps),
+      approveStoryboard(run, cb(), deps),
+    ]);
+
+    // Exactly one driver ran: one submit per scene (NOT double), and one batch voice pass —
+    // the reported harm was a DOUBLED ElevenLabs burn from the second driver re-running the stage.
+    expect(spies.submitVideo).toHaveBeenCalledTimes(2);
+    expect(spies.consolidateVoices).toHaveBeenCalledTimes(1);
+    expect(store2Count(deps, 'completeScene')).toBe(2);
+    expect(rows.get(0)?.status).toBe('done');
+    expect(rows.get(1)?.status).toBe('done');
+
+    // Both callers observe the same finished run (same object reference — the early-return
+    // second call returns the run the first driver drove to First Cut).
+    expect(a.gate).toBe('first_cut');
+    expect(b.gate).toBe('first_cut');
+    expect(a.finalVideoUrl).toBe('final.mp4');
+  });
+
+  it('a failed persist un-wedges the guard: the run reverts to the parked gate and a later approve succeeds', async () => {
+    // PR #70 critic Axis1 #4: without the revert, a thrown persist leaves storyboardApproved
+    // true on the in-memory run, so every later Approve early-returns — gate dead until reload.
+    const { deps, spies, rows } = makeFakeDeps();
+    const run = createProductionRun(makeInput(), 'u1');
+    await runProduction(run, cb(), deps);
+
+    spies.persist.mockRejectedValueOnce(new Error('NETWORK_DOWN'));
+    await expect(approveStoryboard(run, cb(), deps)).rejects.toThrow('NETWORK_DOWN');
+
+    // Reverted to the parked-gate state — NOT wedged mid-approval.
+    expect(run.storyboardApproved).toBeFalsy();
+    expect(run.status).toBe('review');
+    expect(run.gate).toBe('storyboard');
+    expect(spies.submitVideo).not.toHaveBeenCalled(); // no driver started on the failed approve
+
+    // The user taps Approve again once the network is back — this one must go through.
+    const out = await approveStoryboard(run, cb(), deps);
+    expect(out.gate).toBe('first_cut');
+    expect(spies.submitVideo).toHaveBeenCalledTimes(2);
+    expect(rows.get(0)?.status).toBe('done');
+    expect(rows.get(1)?.status).toBe('done');
+  });
+});
 
 // --- 2. Resume skips completed stages -------------------------------------
 
@@ -828,5 +890,489 @@ describe("no-VO path (audioMode: 'sfx_only')", () => {
     expect(spies.consolidateVoices).toHaveBeenCalled();
     const req = (spies.renderFinalVideo.mock.calls as any[])[0][0];
     expect(req.music.role).toBeUndefined();
+  });
+});
+
+// --- 13. P3: video_prompts split into its own stage --------------------------
+// generateVideoPrompts moved out of the storyboard stage into a dedicated video_prompts
+// node so it can run parallel to scene_images. Failure DEGRADES (done-with-warning) and the
+// video stage keeps its `vp?.prompt ?? scene.imagePrompt` fallback — never run-fatal.
+
+const flush = () => new Promise((r) => setTimeout(r, 0));
+
+describe('P3 — video_prompts as its own stage', () => {
+  it('runs as its own stage (called once) and lands before the gate', async () => {
+    const { deps, spies } = makeFakeDeps();
+    const run = createProductionRun(makeInput(), 'u1');
+    await runProduction(run, cb(), deps);
+    expect(spies.generateVideoPrompts).toHaveBeenCalledTimes(1);
+    expect(run.videoPrompts?.length).toBe(2);
+    expect(run.stages.find((s) => s.id === 'video_prompts')?.status).toBe('done');
+  });
+
+  it('resume with video_prompts already done skips it (no re-gen)', async () => {
+    const { deps, spies } = makeFakeDeps();
+    const run = createProductionRun(makeInput(), 'u1', {
+      doneStages: ['market_research', 'script', 'storyboard', 'scene_images', 'video_prompts'],
+      prefill: {
+        report: REPORT,
+        script: SCRIPT,
+        finalScript: assembleFinalScript(SCRIPT),
+        ...mapReportToWizard(makeInput(), REPORT),
+        storyboard: STORYBOARD_SCENES.map((s, i) => ({ ...s, imageUrl: `img://IMG${i}` })),
+        videoPrompts: VIDEO_PROMPTS.map((v) => ({ ...v })),
+      },
+    });
+    await runProduction(run, cb(), deps);
+    expect(spies.generateVideoPrompts).not.toHaveBeenCalled(); // done → skipped
+    expect(run.gate).toBe('storyboard'); // parks (not approved)
+  });
+
+  it('video_prompts failure DEGRADES: scene_images still completes, video falls back to imagePrompt, run finishes', async () => {
+    const vpFail = vi.fn(async () => {
+      throw new Error('vp 500');
+    });
+    const { deps, spies } = makeFakeDeps({ generateVideoPrompts: vpFail as any });
+    const run = createProductionRun(makeInput(), 'u1');
+    const callbacks = cb();
+
+    await runProduction(run, callbacks, deps);
+    // scene_images completed despite the PARALLEL video_prompts failure (independence).
+    expect(spies.generateSceneImage).toHaveBeenCalledTimes(2);
+    const vpStage = run.stages.find((s) => s.id === 'video_prompts');
+    expect(vpStage?.status).toBe('done'); // done-with-warning, NOT failed
+    expect(vpStage?.error).toContain('degraded');
+    expect(run.videoPrompts).toBeUndefined(); // never committed → downstream falls back
+    expect(run.status).toBe('review');
+    expect(run.gate).toBe('storyboard'); // degrade never errors the run
+
+    const out = await approveStoryboard(run, callbacks, deps);
+    expect(out.gate).toBe('first_cut');
+    // video stage used the imagePrompt fallback (vp?.prompt ?? scene.imagePrompt).
+    const submittedPrompts = (spies.submitVideo.mock.calls as any[]).map((c) => c[0].prompt).sort();
+    expect(submittedPrompts).toEqual(['IMG0', 'IMG1']);
+  });
+});
+
+// --- 14. P3: scene_images ∥ video_prompts (the parallel pair) -----------------
+
+describe('P3 — parallel pair (scene_images ∥ video_prompts)', () => {
+  it('runs BOTH node bodies when both pending', async () => {
+    const { deps, spies } = makeFakeDeps();
+    const run = createProductionRun(makeInput(), 'u1');
+    await runProduction(run, cb(), deps);
+    expect(spies.generateSceneImage).toHaveBeenCalledTimes(2); // scene_images body ran
+    expect(spies.generateVideoPrompts).toHaveBeenCalledTimes(1); // video_prompts body ran
+    expect(run.stages.find((s) => s.id === 'scene_images')?.status).toBe('done');
+    expect(run.stages.find((s) => s.id === 'video_prompts')?.status).toBe('done');
+  });
+
+  it('commits each stage status independently (scene_images done while video_prompts still running)', async () => {
+    let releaseVP!: () => void;
+    const vpGate = new Promise<void>((res) => {
+      releaseVP = res;
+    });
+    const slowVP = vi.fn(async () => {
+      await vpGate;
+      return VIDEO_PROMPTS.map((v) => ({ ...v }));
+    });
+    const { deps } = makeFakeDeps({ generateVideoPrompts: slowVP as any });
+    const run = createProductionRun(makeInput(), 'u1');
+    const snaps: { si?: string; vp?: string }[] = [];
+    const callbacks = cb({
+      onUpdate: (r) =>
+        snaps.push({
+          si: r.stages.find((s) => s.id === 'scene_images')?.status,
+          vp: r.stages.find((s) => s.id === 'video_prompts')?.status,
+        }),
+    });
+    const p = runProduction(run, callbacks, deps);
+    // Immediate image mocks let scene_images finish while video_prompts is still gated open.
+    await flush();
+    const independent = snaps.some((x) => x.si === 'done' && x.vp === 'running');
+    releaseVP();
+    await p;
+    expect(independent).toBe(true);
+    expect(run.stages.find((s) => s.id === 'scene_images')?.status).toBe('done');
+    expect(run.stages.find((s) => s.id === 'video_prompts')?.status).toBe('done');
+  });
+
+  it('a per-scene image failure does NOT cancel video_prompts (it still completes)', async () => {
+    const imageMock = vi.fn(async (prompt: string) => {
+      if (prompt === 'IMG0') throw new Error('img 502');
+      return `img://${prompt}`;
+    });
+    const { deps, spies } = makeFakeDeps({ generateSceneImage: imageMock as any });
+    const run = createProductionRun(makeInput(), 'u1');
+    await runProduction(run, cb(), deps);
+    expect(spies.generateVideoPrompts).toHaveBeenCalledTimes(1);
+    expect(run.videoPrompts?.length).toBe(2);
+    expect(run.stages.find((s) => s.id === 'video_prompts')?.status).toBe('done');
+    expect(run.scenes.find((s) => s.sceneIdx === 0)?.status).toBe('flagged'); // the failed scene
+    expect(run.scenes.find((s) => s.sceneIdx === 1)?.imageUrl).toBe('img://IMG1'); // the survivor
+  });
+});
+
+// --- 15. P3: scene image fan-out is pooled(3) --------------------------------
+
+describe('P3 — pooled(3) scene images', () => {
+  it('processes all scenes; one failure flags only that scene, the rest complete', async () => {
+    const THREE: Scene[] = [
+      { scriptLine: 'L0', sceneDescription: 'd0', imagePrompt: 'IMG0', referenceImage: 'avatar' },
+      { scriptLine: 'L1', sceneDescription: 'd1', imagePrompt: 'IMG1', referenceImage: 'avatar' },
+      { scriptLine: 'L2', sceneDescription: 'd2', imagePrompt: 'IMG2', referenceImage: 'avatar' },
+    ];
+    const imageMock = vi.fn(async (prompt: string) => {
+      if (prompt === 'IMG1') throw new Error('img 502');
+      return `img://${prompt}`;
+    });
+    const { deps } = makeFakeDeps({
+      generateStoryboard: vi.fn(async () => ({ scenes: THREE.map((s) => ({ ...s })), strategicAudit: '' })) as any,
+      generateVideoPrompts: vi.fn(async () => THREE.map((s, i) => ({ scriptLine: s.scriptLine, type: 'b-roll', prompt: `P${i}` }))) as any,
+      generateSceneImage: imageMock as any,
+    });
+    const run = createProductionRun(makeInput(), 'u1');
+    await runProduction(run, cb(), deps);
+
+    expect(run.scenes.find((s) => s.sceneIdx === 0)?.imageUrl).toBe('img://IMG0');
+    expect(run.scenes.find((s) => s.sceneIdx === 2)?.imageUrl).toBe('img://IMG2');
+    expect(run.scenes.find((s) => s.sceneIdx === 1)?.status).toBe('flagged');
+    expect(run.scenes.find((s) => s.sceneIdx === 1)?.flaggedReason).toContain('image');
+    // IMG1 retried MAX_STAGE_ATTEMPTS (2) before flagging; the pool stayed alive for the rest.
+    expect(imageMock.mock.calls.filter((c) => c[0] === 'IMG1')).toHaveLength(2);
+    expect(run.gate).toBe('storyboard');
+  });
+});
+
+// --- 16. P3: old-checkpoint normalization (resume-safety) --------------------
+
+describe('P3 — old-checkpoint normalization', () => {
+  it('a run whose stages array predates video_prompts/thumbnail resumes without crashing and gains the entries', async () => {
+    const { deps, spies } = makeFakeDeps();
+    // A run checkpointed on OLD code: storyboard+scene_images done (old storyboard produced the
+    // videoPrompts inline), parked at the gate — and its stages array lacks the two new entries.
+    const run = createProductionRun(makeInput(), 'u1', {
+      doneStages: ['market_research', 'script', 'storyboard', 'scene_images'],
+      prefill: {
+        report: REPORT,
+        script: SCRIPT,
+        finalScript: assembleFinalScript(SCRIPT),
+        ...mapReportToWizard(makeInput(), REPORT),
+        storyboard: STORYBOARD_SCENES.map((s, i) => ({ ...s, imageUrl: `img://IMG${i}` })),
+        videoPrompts: VIDEO_PROMPTS.map((v) => ({ ...v })), // already produced on old code
+      },
+    });
+    // Strip the new stage entries to simulate the pre-split checkpoint shape.
+    run.stages = run.stages.filter((s) => s.id !== 'video_prompts' && s.id !== 'thumbnail');
+    expect(run.stages.map((s) => s.id)).not.toContain('video_prompts');
+
+    const out = await runProduction(run, cb(), deps); // must not throw on the stages.find(...)! lookups
+
+    // Normalized: the two entries now exist, in STAGE_ORDER position.
+    const ids = out.stages.map((s) => s.id);
+    expect(ids).toContain('video_prompts');
+    expect(ids).toContain('thumbnail');
+    // video_prompts inferred DONE from the already-present artifact → not re-generated.
+    expect(out.stages.find((s) => s.id === 'video_prompts')?.status).toBe('done');
+    expect(spies.generateVideoPrompts).not.toHaveBeenCalled();
+    // Resumes cleanly and re-parks at the storyboard gate.
+    expect(out.status).toBe('review');
+    expect(out.gate).toBe('storyboard');
+  });
+});
+
+// --- 17. P3: thumbnail runs PARALLEL to video (no detached task, no gate-park race) ----
+// Redesign: thumbnail moved AFTER video in STAGE_ORDER and co-executes with it via runStagePair.
+// It is NOT fired at the storyboard-gate park — so the detached-task identity-split race
+// (driver closes over run F, ProducerFlow approves on shallow-spread G ≠ F) cannot occur.
+
+describe('P3 — thumbnail ∥ video (redesign)', () => {
+  it('does NOT fire the thumbnail at the storyboard-gate park', async () => {
+    const { deps, spies } = makeFakeDeps();
+    const run = createProductionRun(makeInput(), 'u1');
+    await runProduction(run, cb(), deps); // park at the storyboard gate
+    expect(run.gate).toBe('storyboard');
+    expect(spies.generateThumbnail).not.toHaveBeenCalled(); // thumbnail runs during filming, not the gate
+    expect(run.thumbnailUrl).toBeUndefined();
+  });
+
+  it('shallow-spread approval identity split: no post-approval bounce, thumbnail generated exactly ONCE', async () => {
+    // Regression for the reviewer's M1/M2. ProducerFlow hands the driver shallow spreads
+    // (onUpdate → setRun({...u})) and approves on the React-state spread (a DIFFERENT object
+    // than the driver first closed over). With the detached task deleted, no stale onUpdate can
+    // bounce the UI back to the gate, and the thumbnail is generated once (no F/G double-fire).
+    const { deps, spies } = makeFakeDeps();
+    const run = createProductionRun(makeInput(), 'u1');
+
+    // Pass 1 → storyboard gate.
+    const gated = await runProduction(run, cb(), deps);
+    expect(gated.gate).toBe('storyboard');
+    expect(spies.generateThumbnail).not.toHaveBeenCalled();
+
+    // Pass 2 → approve on a SHALLOW SPREAD (mirrors ProducerFlow's setRun({...u}) → approve).
+    const spread = { ...run };
+    const seen: string[] = [];
+    const callbacks = cb({ onUpdate: (r) => seen.push(`${r.status}:${r.gate ?? ''}`) });
+    const out = await approveStoryboard(spread, callbacks, deps);
+
+    // Never re-parks at the storyboard gate after approval (no stale-object bounce).
+    expect(seen.some((s) => s === 'review:storyboard')).toBe(false);
+    expect(out.gate).toBe('first_cut');
+    // Cover frame generated EXACTLY once across the whole run.
+    expect(spies.generateThumbnail).toHaveBeenCalledTimes(1);
+    expect(out.thumbnailUrl).toBe('thumb://cover.png');
+    expect(out.stages.find((s) => s.id === 'thumbnail')?.status).toBe('done');
+  });
+
+  it('runs concurrently with the video stage (overlap observed)', async () => {
+    let releaseVideo!: () => void;
+    const videoGate = new Promise<void>((res) => {
+      releaseVideo = res;
+    });
+    // Gate the video poll so the video stage stays 'running' while the (immediate) thumbnail lands.
+    const slowPoll = vi.fn(async (handle: VideoJobHandle) => {
+      await videoGate;
+      return { url: `vid://${handle.sceneIdx}`, downloadUrl: 'd', mimeType: 'video/mp4' };
+    });
+    const { deps } = makeFakeDeps({ pollVideo: slowPoll as any });
+    const run = videoStageRun(1); // approved, past the gate; video + thumbnail both pending
+    const snaps: { v?: string; t?: string }[] = [];
+    const callbacks = cb({
+      onUpdate: (r) =>
+        snaps.push({
+          v: r.stages.find((s) => s.id === 'video')?.status,
+          t: r.stages.find((s) => s.id === 'thumbnail')?.status,
+        }),
+    });
+    const p = runProduction(run, callbacks, deps);
+    await flush();
+    const overlap = snaps.some((x) => x.v === 'running' && x.t === 'done'); // thumbnail done while video runs
+    releaseVideo();
+    const out = await p;
+    expect(overlap).toBe(true);
+    expect(out.stages.find((s) => s.id === 'thumbnail')?.status).toBe('done');
+    expect(out.thumbnailUrl).toBe('thumb://cover.png');
+    expect(out.gate).toBe('first_cut');
+  });
+
+  it('thumbnail failure during the pair DEGRADES; video is unaffected; run reaches first_cut', async () => {
+    const thumbFail = vi.fn(async () => {
+      throw new Error('thumb 500');
+    });
+    const { deps } = makeFakeDeps({ generateThumbnail: thumbFail as any });
+    const run = videoStageRun(1);
+
+    const out = await runProduction(run, cb(), deps);
+
+    const tStage = out.stages.find((s) => s.id === 'thumbnail');
+    expect(tStage?.status).toBe('done'); // done-with-warning, not failed
+    expect(tStage?.error).toContain('degraded');
+    expect(out.thumbnailUrl).toBeUndefined();
+    expect(out.scenes[0].videoUrl).toBe('vid://0'); // video unaffected by the thumbnail failure
+    expect(out.status).toBe('review');
+    expect(out.gate).toBe('first_cut'); // run completes
+  });
+
+  it('resume order A — mid-video (video + thumbnail both pending): the pair finishes both', async () => {
+    const { deps, spies } = makeFakeDeps();
+    const run = videoStageRun(1); // video + thumbnail pending
+    const out = await runProduction(run, cb(), deps);
+    expect(spies.generateThumbnail).toHaveBeenCalledTimes(1);
+    expect(out.stages.find((s) => s.id === 'video')?.status).toBe('done');
+    expect(out.stages.find((s) => s.id === 'thumbnail')?.status).toBe('done');
+    expect(out.thumbnailUrl).toBe('thumb://cover.png');
+    expect(out.gate).toBe('first_cut');
+  });
+
+  it('resume order B — video already done, thumbnail pending: the pair finalizes just the thumbnail', async () => {
+    const { deps, spies } = makeFakeDeps();
+    const run = videoStageRun(1);
+    // Simulate a resume where the video stage completed but the cover never landed.
+    run.stages.find((s) => s.id === 'video')!.status = 'done';
+    run.scenes[0].status = 'done';
+    run.scenes[0].videoUrl = 'vid://0';
+
+    const out = await runProduction(run, cb(), deps);
+
+    expect(spies.submitVideo).not.toHaveBeenCalled(); // video not re-run
+    expect(spies.generateThumbnail).toHaveBeenCalledTimes(1); // thumbnail finalized
+    expect(out.thumbnailUrl).toBe('thumb://cover.png');
+    expect(out.stages.find((s) => s.id === 'thumbnail')?.status).toBe('done');
+    expect(out.gate).toBe('first_cut');
+  });
+});
+
+// --- 18. P3: abort mid image-pool ------------------------------------------
+
+describe('P3 — abort mid image-pool', () => {
+  it('signal aborted while pooled(3) workers are in flight → stage boundary throws ABORTED, run returns without parking at the gate', async () => {
+    const controller = new AbortController();
+    // First image call aborts the signal and throws; the remaining pooled workers then bail at
+    // their own aborted-check, and the stage boundary re-throws ABORTED.
+    const imageMock = vi.fn(async () => {
+      controller.abort();
+      throw new Error('ABORTED');
+    });
+    const { deps } = makeFakeDeps({ generateSceneImage: imageMock as any });
+    const run = createProductionRun(makeInput(), 'u1');
+
+    const out = await runProduction(run, cb({ signal: controller.signal }), deps);
+
+    expect(out.status).toBe('running'); // bailed at the stage boundary
+    expect(out.status).not.toBe('review');
+    expect(out.gate).not.toBe('storyboard'); // did NOT park at the gate
+    expect(out.error).toBeUndefined(); // abort is not an error
+  });
+});
+
+// --- 19. P4: deterministic still check drives the ONE bounded reroll ----------
+// After a scene image lands, the injected checkSceneImage (decode/dims/min-res) runs.
+// On failure the orchestrator rerolls the image exactly once; still failing → hard-flag
+// for Gate-1 triage (blocks approval, needs a regen). Absent dep → pre-P4 behavior.
+
+describe('P4 — deterministic image check + one reroll', () => {
+  const passCheck = { ok: true as const, width: 720, height: 1280 };
+
+  it('rerolls a failing still ONCE, then hard-flags it if still failing (rest complete)', async () => {
+    const checkMock = vi.fn(async (url: string) =>
+      url.includes('IMG0') ? { ok: false, reason: 'too_small' as const, width: 100, height: 100 } : passCheck
+    );
+    const imageMock = vi.fn(async (prompt: string) => `img://${prompt}`);
+    const { deps } = makeFakeDeps({ checkSceneImage: checkMock as any, generateSceneImage: imageMock as any });
+    const run = createProductionRun(makeInput(), 'u1');
+
+    await runProduction(run, cb(), deps);
+
+    const sc0 = run.scenes.find((s) => s.sceneIdx === 0)!;
+    expect(sc0.status).toBe('flagged'); // deterministic fail → hard flag (blocks approval)
+    expect(sc0.flaggedReason).toContain('image_check');
+    expect(sc0.imageUrl).toBeUndefined(); // a still that fails the gate is never committed
+    // IMG0 was generated twice: initial (via withRetry) + exactly one reroll.
+    expect(imageMock.mock.calls.filter((c) => c[0] === 'IMG0')).toHaveLength(2);
+    // The healthy scene is unaffected and the run still parks at the gate.
+    expect(run.scenes.find((s) => s.sceneIdx === 1)?.imageUrl).toBe('img://IMG1');
+    expect(run.gate).toBe('storyboard');
+  });
+
+  it('keeps the rerolled image when the reroll PASSES the check (no flag)', async () => {
+    let img0Checks = 0;
+    const checkMock = vi.fn(async (url: string) => {
+      if (url.includes('IMG0')) {
+        img0Checks++;
+        return img0Checks === 1 ? { ok: false, reason: 'aspect_mismatch' as const, width: 1, height: 1 } : passCheck;
+      }
+      return passCheck;
+    });
+    const { deps } = makeFakeDeps({ checkSceneImage: checkMock as any });
+    const run = createProductionRun(makeInput(), 'u1');
+
+    await runProduction(run, cb(), deps);
+
+    const sc0 = run.scenes.find((s) => s.sceneIdx === 0)!;
+    expect(sc0.status).not.toBe('flagged');
+    expect(sc0.imageUrl).toBe('img://IMG0'); // the passing reroll is committed
+    expect(run.gate).toBe('storyboard');
+  });
+
+  it('skips the check entirely when the dep is absent (pre-P4 behavior)', async () => {
+    const { deps } = makeFakeDeps();
+    const run = createProductionRun(makeInput(), 'u1');
+    await runProduction(run, cb(), deps);
+    expect(run.scenes.every((s) => s.status !== 'flagged')).toBe(true);
+    expect(run.scenes.every((s) => s.gateVerdict === undefined)).toBe(true);
+  });
+});
+
+// --- 20. P4: AI image gate (FLAG-ONLY, fail-open) -----------------------------
+// The gate perceives identity/label and stores a verdict. A failing verdict annotates
+// flaggedReason + stores gateVerdict (→ Gate-1 chip) but NEVER discards the image or
+// changes status (never blocks approval). Any gate error is swallowed (fail-open).
+
+describe('P4 — AI image gate', () => {
+  it('a failing verdict flags SOFT: keeps the image, sets gateVerdict + flaggedReason, does not block', async () => {
+    const gateMock = vi.fn(async () => ({ observations: null, verdict: { pass: false, flags: ['identity_drift'] } }));
+    const { deps } = makeFakeDeps({ imageGateCheck: gateMock as any });
+    const run = createProductionRun(makeInput(), 'u1');
+
+    await runProduction(run, cb(), deps);
+
+    const sc0 = run.scenes.find((s) => s.sceneIdx === 0)!;
+    expect(sc0.imageUrl).toBe('img://IMG0'); // image KEPT (flag-only)
+    expect(sc0.status).not.toBe('flagged'); // never blocks approval
+    expect(sc0.gateVerdict).toEqual({ pass: false, flags: ['identity_drift'] });
+    // Soft verdict lives ONLY in gateVerdict — flaggedReason stays reserved for hard flags.
+    expect(sc0.flaggedReason).toBeUndefined();
+    expect(run.gate).toBe('storyboard');
+  });
+
+  it('a gate 503 (kill switch off) is swallowed by fail-open: scene unflagged, no verdict, run healthy', async () => {
+    // Mirrors the live path: imageGateService throws on the 503 → the orchestrator's gate
+    // try/catch swallows it. Proves shipping-dark is safe end-to-end.
+    const gateMock = vi.fn(async () => {
+      throw new Error('IMAGE_GATE_503: image_gate_disabled');
+    });
+    const { deps } = makeFakeDeps({ imageGateCheck: gateMock as any });
+    const run = createProductionRun(makeInput(), 'u1');
+
+    await runProduction(run, cb(), deps);
+
+    expect(run.scenes.every((s) => s.status !== 'flagged')).toBe(true);
+    expect(run.scenes.every((s) => s.gateVerdict === undefined)).toBe(true);
+    expect(run.status).toBe('review');
+    expect(run.gate).toBe('storyboard');
+  });
+
+  it('gates identity scenes with the avatar reference and product scenes with the expected label', async () => {
+    const gateMock = vi.fn(async () => ({ observations: null, verdict: { pass: true, flags: [] } }));
+    const { deps } = makeFakeDeps({ imageGateCheck: gateMock as any });
+    const run = createProductionRun(makeInput(), 'u1');
+
+    await runProduction(run, cb(), deps);
+
+    const scene0Call = (gateMock.mock.calls as any[]).find((c) => c[0].imageBase64 === 'img://IMG0')![0];
+    const scene1Call = (gateMock.mock.calls as any[]).find((c) => c[0].imageBase64 === 'img://IMG1')![0];
+    // Scene 0 (referenceImage 'avatar') → identity: avatar ref, no label.
+    expect(scene0Call.referenceImageBase64).toBe('avatar.png');
+    expect(scene0Call.expectedLabelText).toBeUndefined();
+    expect(scene0Call.referenceMode).toBe('avatar');
+    // Scene 1 (referenceImage 'product') → label: product name, no ref.
+    expect(scene1Call.referenceImageBase64).toBeUndefined();
+    expect(scene1Call.expectedLabelText).toBe('Bukidnon Brew');
+    // A passing verdict is still stored for offline precision measurement.
+    expect(run.scenes.find((s) => s.sceneIdx === 0)?.gateVerdict).toEqual({ pass: true, flags: [] });
+  });
+
+  it('swallows a gate error (fail-open): scene stays unflagged, no gateVerdict, run unblocked', async () => {
+    const gateMock = vi.fn(async () => {
+      throw new Error('gate 500');
+    });
+    const { deps } = makeFakeDeps({ imageGateCheck: gateMock as any });
+    const run = createProductionRun(makeInput(), 'u1');
+
+    await runProduction(run, cb(), deps);
+
+    expect(run.scenes.every((s) => s.status !== 'flagged')).toBe(true);
+    expect(run.scenes.every((s) => s.gateVerdict === undefined)).toBe(true);
+    expect(run.gate).toBe('storyboard');
+  });
+});
+
+// --- 21. P4: kill-switch dep wiring (ships DARK) ------------------------------
+// gateDepsFor is the pure gate behind VITE_IMAGE_GATE_ENABLED. Flag off/absent → both
+// deps undefined → the orchestrator runs pre-P4 (proven by the dep-absent tests above).
+
+describe('P4 — gateDepsFor kill switch', () => {
+  it("wires BOTH deps only when the flag is exactly 'true'", () => {
+    const on = gateDepsFor('true');
+    expect(typeof on.checkSceneImage).toBe('function');
+    expect(typeof on.imageGateCheck).toBe('function');
+  });
+
+  it('leaves BOTH deps undefined when the flag is off / absent / any other value', () => {
+    for (const off of [undefined, '', 'false', 'TRUE', '1']) {
+      const d = gateDepsFor(off);
+      expect(d.checkSceneImage).toBeUndefined();
+      expect(d.imageGateCheck).toBeUndefined();
+    }
   });
 });

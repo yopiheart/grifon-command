@@ -8,8 +8,10 @@ import type { ProductionRun, ProductionStageId } from '../../services/producerOr
 // to-do list, and it blurs the exact pipeline shape.
 const PHASES: { label: string; stages: ProductionStageId[] }[] = [
   { label: 'Researching your market', stages: ['market_research'] },
-  { label: 'Directing your shoot', stages: ['script', 'storyboard', 'scene_images'] },
-  { label: 'Filming your scenes', stages: ['video', 'voices'] },
+  // 'storyboard' no longer plans the shots — that's the split-out video_prompts node, which runs
+  // parallel to scene_images. The cover-frame (thumbnail) runs parallel to the video stage.
+  { label: 'Directing your shoot', stages: ['script', 'storyboard', 'scene_images', 'video_prompts'] },
+  { label: 'Filming your scenes', stages: ['video', 'thumbnail', 'voices'] },
   { label: 'Polishing the final cut', stages: ['edl', 'final_render'] },
 ];
 

@@ -23,8 +23,15 @@ const EventBody = z.object({
   session_id: z.string().max(200).optional(),
   module: z.string().max(120).optional(),
   step: z.string().max(120).optional(),
+  // Producer run correlator (P2 observability). Permissive here so a malformed value
+  // is STRIPPED (see RUN_ID_RE below) rather than 400-ing the whole telemetry write.
+  run_id: z.string().max(200).optional(),
   meta: z.record(z.string(), z.unknown()).optional(),
 });
+
+// Same safe charset as api/_lib/requestId.ts. A run_id that doesn't match is dropped to
+// null (not rejected) so a bad correlator never fails an otherwise-valid event insert.
+const RUN_ID_RE = /^[A-Za-z0-9_-]{1,64}$/;
 
 // Hard ceiling on the serialized meta payload — defense-in-depth behind the body
 // limit, and independent of how the host parses the body.
@@ -56,11 +63,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!parsed.success) {
     return res.status(400).json({ error: 'invalid_body', issues: parsed.error.issues });
   }
-  const { event, session_id, module, step, meta } = parsed.data;
+  const { event, session_id, module, step, meta, run_id } = parsed.data;
 
   if (meta && JSON.stringify(meta).length > MAX_META_BYTES) {
     return res.status(400).json({ error: 'meta_too_large' });
   }
+
+  // Sanitize the run correlator — a garbage value is stripped to null, never rejected.
+  const runId = run_id && RUN_ID_RE.test(run_id) ? run_id : null;
 
   // Rate-limit BEFORE the write — closes the anon-write spam vector. Key on an
   // UN-FORGEABLE identifier only: the verified user id, else the request IP.
@@ -84,6 +94,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     module: module ?? null,
     step: step ?? null,
     meta: meta ?? {},
+    run_id: runId,
   });
   if (error) {
     // Don't leak internal schema/constraint text to an (often anonymous) caller.

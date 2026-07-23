@@ -67,6 +67,9 @@ export type TrackPayload = {
   event: string;
   module?: string;
   step?: string;
+  /** Producer run correlator (P2 observability). When set, /api/events persists it on
+   * the events.run_id column so node lifecycle rows join to a producer_runs row. */
+  run_id?: string;
   meta?: Record<string, unknown>;
 };
 
@@ -100,6 +103,7 @@ export const trackEvent = async (payload: TrackPayload): Promise<void> => {
         session_id: getSessionId(),
         ...(payload.module ? { module: payload.module } : {}),
         ...(payload.step ? { step: payload.step } : {}),
+        ...(payload.run_id ? { run_id: payload.run_id } : {}),
         ...(payload.meta ? { meta: payload.meta } : {}),
       }),
       keepalive: true,

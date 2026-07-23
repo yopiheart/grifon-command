@@ -1,5 +1,5 @@
 import React from 'react';
-import { RefreshCw, Clapperboard, CheckCircle2, AlertTriangle, Film, RotateCcw } from 'lucide-react';
+import { RefreshCw, Clapperboard, CheckCircle2, AlertTriangle, Film, RotateCcw, Loader2 } from 'lucide-react';
 import { GlassPanel } from '../ui/GlassPanel';
 import { ShimmerButton, SceneReveal } from './motion';
 import type { ProductionRun } from '../../services/producerOrchestrator';
@@ -13,6 +13,13 @@ import type { ProductionRun } from '../../services/producerOrchestrator';
  * gate === 'storyboard'. Approving calls onApprove → approveStoryboard() continues into
  * the video fan-out. A flagged/regenerating image never reaches the render.
  */
+
+/** Map an image-gate flag to a short amber chip label (P4). FLAG-ONLY: these pre-triage
+ * the human's eye — they never block approval (only a hard `flagged` status does that). */
+const GATE_FLAG_LABELS: Record<string, string> = {
+  identity_drift: 'IDENTITY?',
+  garbled_label: 'LABEL?',
+};
 export const StoryboardGateScreen: React.FC<{
   run: ProductionRun;
   /** Scene index currently regenerating, or null. */
@@ -20,7 +27,10 @@ export const StoryboardGateScreen: React.FC<{
   onRegenScene: (sceneIdx: number) => void;
   onApprove: () => void;
   onStartOver: () => void;
-}> = ({ run, regenerating, onRegenScene, onApprove, onStartOver }) => {
+  /** True once the user has approved and the render is starting — disables the button + shows a spinner
+   *  so a user who gets no instant feedback can't double-fire the approval (F1, live canary). */
+  approving?: boolean;
+}> = ({ run, regenerating, onRegenScene, onApprove, onStartOver, approving = false }) => {
   const flagged = run.scenes.filter((s) => s.status === 'flagged').length;
   const anyBusy = regenerating !== null;
   // Can't film until every scene has an image and none is still flagged.
@@ -60,6 +70,9 @@ export const StoryboardGateScreen: React.FC<{
             const isFlagged = sc.status === 'flagged';
             const scriptLine = run.storyboard?.[sc.sceneIdx]?.scriptLine ?? '';
             const endFrameUrl = run.storyboard?.[sc.sceneIdx]?.endFrameImageUrl;
+            // P4: gate verdict chips (identity/label) — surfaced only when the AI gate flagged
+            // this still. Additive pre-triage; approval stays driven by `status` alone.
+            const gateFlags = sc.gateVerdict && !sc.gateVerdict.pass ? sc.gateVerdict.flags : [];
             return (
               <GlassPanel
                 key={sc.sceneIdx}
@@ -79,6 +92,18 @@ export const StoryboardGateScreen: React.FC<{
                 <div className="absolute left-1.5 top-1.5 rounded bg-black/70 px-1.5 py-0.5 text-[9px] font-mono text-zinc-300">
                   {sc.sceneIdx + 1}
                 </div>
+                {gateFlags.length > 0 && (
+                  <div className="absolute right-1.5 top-1.5 flex flex-wrap justify-end gap-1">
+                    {gateFlags.map((f) => (
+                      <span
+                        key={f}
+                        className="rounded bg-amber-500/20 px-1.5 py-0.5 text-[8px] font-mono uppercase tracking-wide text-amber-300 ring-1 ring-amber-500/40"
+                      >
+                        {GATE_FLAG_LABELS[f] ?? f}
+                      </span>
+                    ))}
+                  </div>
+                )}
                 {scriptLine && (
                   <div className="absolute inset-x-0 bottom-9 line-clamp-2 bg-gradient-to-t from-black/85 to-transparent px-2 pb-1 pt-4 text-[10px] leading-tight text-zinc-200">
                     {scriptLine}
@@ -100,9 +125,13 @@ export const StoryboardGateScreen: React.FC<{
 
         {/* Approve gate */}
         <div className="mt-8">
-          <ShimmerButton disabled={!allReady || anyBusy} onClick={onApprove}>
+          <ShimmerButton disabled={!allReady || anyBusy || approving} onClick={onApprove}>
             <span className="inline-flex items-center justify-center gap-2">
-              <Clapperboard className="h-4 w-4" /> Looks good — Film it
+              {approving ? (
+                <><Loader2 className="h-4 w-4 animate-spin" /> Starting the render…</>
+              ) : (
+                <><Clapperboard className="h-4 w-4" /> Looks good — Film it</>
+              )}
             </span>
           </ShimmerButton>
           <p className="mt-2 flex items-center justify-center gap-1.5 text-[10px] font-mono uppercase tracking-widest text-zinc-500">

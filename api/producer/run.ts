@@ -157,6 +157,26 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         .maybeSingle();
       return res.status(200).json({ ok: true, changed: false, current: current ?? null });
     }
+
+    // P2 cost roll-up: when a run reaches 'done', denormalize its total COGS from the
+    // run_cogs view onto producer_runs.cost_usd (single query + update). Best-effort and
+    // non-fatal — a telemetry hiccup must never fail the checkpoint; the run_cogs view is
+    // the source of truth regardless. cost_usd does not touch the revision guard.
+    if (patch.status === 'done') {
+      try {
+        const { data: cogs } = await admin
+          .from('run_cogs')
+          .select('est_usd')
+          .eq('run_id', runId)
+          .maybeSingle();
+        if (cogs && cogs.est_usd != null) {
+          await admin.from('producer_runs').update({ cost_usd: cogs.est_usd }).eq('run_id', runId);
+        }
+      } catch (e: any) {
+        console.warn('[producer/run] cost_usd roll-up skipped:', e?.message ?? 'unknown');
+      }
+    }
+
     return res.status(200).json({ ok: true, changed: true, revision: known + 1, current: updated });
   }
 
