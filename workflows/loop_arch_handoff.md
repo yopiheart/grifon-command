@@ -100,7 +100,45 @@ Problem: gate checks currently consume the customer's monthly `images` meter (~2
 - Approve canary cost estimate (below).
 - Pick the P4 metering redesign option → then implement → then live smoke `checkSceneImage` vs real `sceneImageModel` output → only then flip `IMAGE_GATE_ENABLED` + `VITE_IMAGE_GATE_ENABLED`.
 - Apply `supabase/producer_runs.sql` re-run (adds `gate_verdict` column; idempotent).
-- Approve the scoped **Fable review** of the two high-risk slices (`api/gemini/text.ts` flow ladder; `api/gemini/image.ts` gate mode) — not yet run.
+- ~~Approve the scoped **Fable review** of the two high-risk slices~~ — **RUN 2026-07-23** (Fable 5,
+  Neil-approved via `/model` + explicit scope confirm). Verdict: **both slices structurally sound —
+  no blocker for merging dark**; the fail-direction doctrine (credits closed / gates open) is
+  applied consistently, the ladder returns results byte-unchanged on valid output, the judge's
+  conservative direction is right for a flag-only phase. Ranked findings (report-only, none fixed):
+  1. **MEDIUM · fix before flag-ON** — gate mode accepts a client-supplied `model`
+     (`GateBody.gateCheck.model: z.string().optional()` → `runImageGate` uses it verbatim). Second
+     unallowlisted model entry point on `image.ts` (the generate path's missing allowlist was
+     already a Part-2 finding). The shipped client never sends it → dropping the field (or pinning
+     to `IMAGE_GATE_MODEL`) costs nothing. Unreachable today (flag OFF).
+  2. **MEDIUM** — a handler **throw** (unparseable JSON → `JSON.parse` throw at
+     `api/_lib/prompts.ts:995`) bypasses the regen ladder entirely → 502 with no repair attempt.
+     The ladder only heals parseable-but-schema-wrong output, so the P1 target class "malformed
+     output → 502, no repair loop" survives in its parse-throw form. Knock-on: the producer stage
+     retry that follows is a NEW request, so adscript burns a second `workflows` meter unit where
+     an in-request regen would be free. Fix shape: try/catch the first handler call inside
+     `runFlowWithSchema`, regen once on throw (same budget), rethrow on the second. Transport-layer,
+     not TUNED. `flowRegenLadder.test.ts` has no throw-path case — add one with the fix.
+  3. **LOW/MEDIUM** — adscript worst case exceeds the blueprint budget: plan §3.3 says "≤4 model
+     calls total"; the ladder regen re-invokes the whole handler (classifier + gen + hook-retry +
+     verb-reroll) → up to ~8 calls, and the double-pass elapsed time (2× thinking gens) risks the
+     55s client abort → stage retry → double `workflows` metering. Rare (needs schema-miss after
+     the in-flow regens). Accept, or thread resolved classifier results into the regen.
+  4. **LOW** — identity gate silently no-ops on resumed runs: `run.input.avatar.url` can be
+     dropped by `slimCheckpointInput` (>700KB) or be a remote URL → no usable reference →
+     `personMatchesReference: null` → never flags. Correct fail-open direction, but it will
+     depress measured gate coverage — account for it in the `gate_verdict` precision analysis.
+  5. **LOW** — gate + generate share `gemini:image:${user.id}` @15/min; a gated 6-scene pooled run
+     makes ~12–14 calls, so under load the gate 429s and silently skips (coverage gap only).
+
+  **Metering verdict (queue item 4): Option A, with one amendment.** The per-run key
+  `imgate:ad:${runId}` cannot be the primary bound — runId arrives via client-controlled surface
+  (`x-run-id` / request field), so an abuser rotates runIds for fresh budgets. Primary bound must
+  be **per-user daily** (`imgate:user:${userId}`, e.g. 48/day ≈ two gated 12-scene runs +
+  headroom), with per-`${runId}:${sceneIdx}` idempotency (limit 1) kept as-designed — worst case a
+  client burns its own budget. Keep auth + burst RL + COGS logging; NOT dev-bypassed. Note
+  `rate_limit_check` fails open to a per-instance memory backstop — acceptable at gate-call prices.
+  Option B (internal monthly meter) rejected: month-granular (a burst exhausts it → gate silently
+  off for weeks → biased telemetry), no per-scene idempotency. Fold finding 1 into the same slice.
 
 ### 6. Parked
 P5 (flip Producer engine to default, retire `useOneShotGeneration.ts`) — gated on 2–4 weeks of P2/P4 telemetry post-merge. P6 (video believability flag, server-held manual-lane job state) — data-gated, see plan.
