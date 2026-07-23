@@ -229,6 +229,24 @@ conflict-adopt worked under a conflict storm (rev → 54); error state parked cl
 - **F5 (minor):** the RunningScreen console shows a Tailwind-CDN production warning; duplicate
   `node_done{thumbnail}` events under F1's dual driver (emit is per-driver, dedupe not needed
   once F1 is fixed).
+- **F6 — SILENT FINAL RENDER (HIGH, pre-existing on main, found + FIXED 2026-07-24 `8ab6226`).**
+  The LUNARIA First Cut shipped with no audio at all: a ~4kb/s empty AAC track, silent except
+  20ms clicks at exact scene boundaries. Diagnosis chain (all evidence-first): voice MP3s on R2
+  loud (-26dB, and the renderer USED them for trim timing — `detectedSec` matched Elena's line
+  lengths); EDL carried all 9 sourceAudioUrls; the render request builder passes audioUrl; the
+  Vercel logs showed `layers=0 sfx=0` (stitchedOnly preset `none` — captions/SFX absence is by
+  design at First Cut) yet VO should mix via `[1:a]`. Reproduced locally with the exact
+  buildScene args + real scene media → **`-shortest` is the silencer**: x264 encoder delay makes
+  video packets reach the muxer late, so shortest-logic closes the audio stream after its first
+  packets. Same inputs minus `-shortest` → voiced (-28dB). NOT a branch regression — identical
+  on `main` since the Phase-2 render executor → **every voiced producer First Cut was likely
+  silent** (matches agent_lessons' "audio mixes" escaped-defect class; old finals unverifiable,
+  presigned URLs expired). Fix: `-t trimSec` bounds every real path; `-shortest` kept only on
+  the rare probe-failure (null trimSec) path where it is apad's sole bound. Verified locally:
+  normal + apad/hook + 2-scene concat all voiced and duration-exact. ElevenLabs note: the retry
+  regenerated NO voices (last gen 5h prior) — reuse worked, zero re-spend, the loss was purely
+  in the final mux. **Remaining: re-deploy preview → Neil re-assembles First Cut (preset tap =
+  re-render only, no re-spend) before the media presigned URLs expire 2026-07-24T16:00Z.**
 
 ### 3 (original). Canary (ONLY after Neil approves the cost estimate below)
 One end-to-end Producer run (6 scenes, 9:16, gate flags OFF) against the P4 preview. It live-exercises: flow schema ladder, watchdog, run telemetry rows (verify `run_cogs` + `cost_usd` against real Postgres), P3 parallelism. Wizard-driving rules: load `.claude/skills/director-smoke/` first; delegate browser work to `smoke-tester`.
