@@ -123,6 +123,16 @@ conflict-adopt worked under a conflict storm (rev → 54); error state parked cl
   idempotent only sequentially, not concurrently. Fix shape: disable+spinner on first click AND
   a concurrency guard in approveStoryboard. The claims layer is why this cost credits, not
   dollars — but it burned real ElevenLabs credits and doubled run telemetry.
+  **F1 FIX SHIPPED 2026-07-24** (commit `3907838` on `feat/loop-arch-p4-image-gate`).
+  Defense-in-depth, exactly the fix shape above: (1) `ProducerFlow.handleApprove` now guards
+  on a synchronous `approvingRef` (setState can't stop a same-tick second click) + `approving`
+  state; (2) `StoryboardGateScreen` disables the button + shows a `Loader2` spinner "Starting
+  the render…" on first click — the actual no-feedback cause; (3) `approveStoryboard` sets
+  `storyboardApproved` + emits `gate_approve` BEFORE the first `await` with an early-return, so
+  a concurrent second caller bails (no second driver, no second event) even past the UI guard.
+  New concurrent-double-approve test in `tests/producerOrchestrator.test.ts`; the
+  `consolidateVoices===1` assertion is the discriminating catch (guard removed → fires 2×,
+  reproducing the double burn). Suite 940/22, build + bundle-leak clean.
 - **F2 — EDL fails deterministically with ZERO output tokens (HIGH, blocks this run).**
   4/4 EDL calls: `inputTokens 4767 = totalTokens, outputTokens null` — the model produced NO
   text; `const raw = response.text || '{}'` (services/geminiService.ts:1471) silently converts
