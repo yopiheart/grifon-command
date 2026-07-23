@@ -13,8 +13,8 @@ Four stacked branches, pushed, **no PRs, nothing merged, nothing deployed by us,
 | P3 parallelism | `feat/loop-arch-p3-parallelism` · `6a8e358` | YES |
 | P4 image gate | `feat/loop-arch-p4-image-gate` · `cc44d6a` (+ this handoff commit) | NO — dark behind `IMAGE_GATE_ENABLED` + `VITE_IMAGE_GATE_ENABLED`, both unset/OFF |
 
-- Suite: 914 passed / 22 skipped. Build + bundle-leak clean at every phase tip.
-- DB: P2 SQL **applied by Neil**. P4's `producer_scenes.gate_verdict` line **NOT applied** (added after his apply; app works without it).
+- Suite: 914 passed / 22 skipped. Build + bundle-leak clean at every phase tip. (935/22 as of the 2026-07-23 Opus/Fable session — concurrency tests, thumbnail slice, metering slice.)
+- DB: P2 SQL **applied by Neil**. ~~P4's `gate_verdict` NOT applied~~ → **APPLIED 2026-07-23** (Neil re-ran `producer_runs.sql`; adds `producer_scenes.gate_verdict` + `producer_runs.thumbnail_url` — Neil-reported after the info_schema verify query).
 - All verification was **unit-test + mocked**; no live-provider, no preview, no prod evidence exists. P1's only smoke = local dev server 401 probes.
 - Every phase passed an adversarial critic (Opus post-policy). Full audit answers: see the read-only status Q&A at the end of the 2026-07-23 session transcript.
 
@@ -86,8 +86,18 @@ the impact and the fix:*
 The `KNOWN GAP` test in `tests/unit/producerCheckpointConcurrency.test.ts` pins the current
 behavior so this can't silently change; flip it in the same commit as whatever fix lands.
 
-### 2. Verify Vercel preview for `feat/loop-arch-p4-image-gate`
-Unverifiable from the cafe PC (no gh/vercel CLI, Vercel MCP unauthenticated). Check the Vercel dashboard → Deployments, or authorize the Vercel connector. Do NOT deploy or change env vars.
+### 2. Verify Vercel preview for `feat/loop-arch-p4-image-gate` — **VERIFIED REACHABLE 2026-07-23, but SSO-walled**
+Neil supplied `https://grifon-command-aislzgfu2-neilmaglayabusiness22-2085s-projects.vercel.app`.
+Unauthenticated probe: `GET /` → 302 to Vercel SSO; `POST /api/gemini/image` → **Vercel's** 401
+(`_vercel_sso_nonce` cookie, no `x-request-id` header) — i.e. **Vercel Deployment Protection is ON
+for previews**; requests never reach our handlers. Deployment exists and responds; the running
+commit could not be confirmed from outside (deployment-hash URL + wall). Consequence for the
+canary: the smoke browser must get past the wall first. Two options (Neil picks):
+(A) log into vercel.com once inside the smoke-tester's Playwright browser window — zero settings
+changes, dies with the session; or (B) Vercel → Settings → Deployment Protection → "Protection
+Bypass for Automation" secret (protection stays on for humans; automation appends
+`?x-vercel-protection-bypass=<secret>&x-vercel-set-bypass-cookie=true` once). Do NOT simply
+disable protection.
 
 ### 3. Canary (ONLY after Neil approves the cost estimate below)
 One end-to-end Producer run (6 scenes, 9:16, gate flags OFF) against the P4 preview. It live-exercises: flow schema ladder, watchdog, run telemetry rows (verify `run_cogs` + `cost_usd` against real Postgres), P3 parallelism. Wizard-driving rules: load `.claude/skills/director-smoke/` first; delegate browser work to `smoke-tester`.
