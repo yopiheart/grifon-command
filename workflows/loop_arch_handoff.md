@@ -252,6 +252,33 @@ conflict-adopt worked under a conflict storm (rev → 54); error state parked cl
   voice + captions + SFX all present. Server render path verified end-to-end on real media.
   Merge-story note: F6 was pre-existing on `main`, so this branch now FIXES a latent
   production bug rather than adding risk.
+- **F7 — hook overlay title kerning (LOW, cosmetic, NEW 2026-07-24, Neil eyeball on the
+  spotlight First Cut):** the premium hook title words render MAGKAKADIKIT — "HUWAG" and
+  "NANG" overlap/collide (screenshot: "HUWACNANG"). Suspect: the word-pop/premium hook
+  word-layer x-advance math in the drawtext plan (`planScene`/`buildWordFilters` region,
+  api/_lib/renderFfmpeg.ts) under-measures glyph widths for bold uppercase + punctuation.
+  Not merge-blocking; fix in the burn-in layer.
+- **NEIL PRODUCT FEEDBACK BATCH (2026-07-24, "log muna, later ang build") — overlay-text
+  quality on the First Cut presets:**
+  1. **Per-scene hero-word title overlays** — today only the hook gets a big title; Neil
+     wants EVERY scene to surface its most important word/topic as a large designed title,
+     TIMED to the moment it's spoken (the auto-caption timing is already "perfect" per Neil —
+     reuse that timing source).
+  2. **Non-hook overlay text is generic** — plain black/white, no design language; wants
+     styled treatment.
+  3. **Entrance/exit animations on all overlay text** — in/out motion, not static burns.
+  4. **The HTML-overlay idea ("hyperframes")** — Neil proposes switching overlay-text
+     rendering to the HTML→video approach for premium quality, and asks whether each edit
+     style (RAW/AUTO/IMPACT/CLEAN/PUNCH/BARS/SPOTLIGHT) would map to its own HTML template
+     family. ⚠ NOTE: `workflows/hyperframes_decision.md` (2026-07-22, Claude + GPT 5.6 Sol)
+     verdicted **product renderer = NO — FFmpeg stays frozen**; the pilot lane is Neil's OWN
+     marketing via ai-editor only. Adopting HTML overlays in the product renderer would
+     REVERSE that decision → needs its own session: re-open the decision doc, weigh cost
+     (per-render compute, latency, a browser in the render path) vs the drawtext upgrade
+     path (fix F7 + preset design polish inside FFmpeg first). Do NOT start this casually.
+  5. **Thumbnail provenance (answered):** the producer cover frame = the SAME tuned
+     MrBeast-formula `generateThumbnail` the Director wizard uses; only diff is the producer
+     passes no `brandColors` (`[]`) — consider threading brand colors in as a small polish.
 
 ### 3 (original). Canary (ONLY after Neil approves the cost estimate below)
 One end-to-end Producer run (6 scenes, 9:16, gate flags OFF) against the P4 preview. It live-exercises: flow schema ladder, watchdog, run telemetry rows (verify `run_cogs` + `cost_usd` against real Postgres), P3 parallelism. Wizard-driving rules: load `.claude/skills/director-smoke/` first; delegate browser work to `smoke-tester`.
