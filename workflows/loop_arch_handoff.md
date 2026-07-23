@@ -207,9 +207,20 @@ conflict-adopt worked under a conflict storm (rev → 54); error state parked cl
   interpolation renames), media parts built once and reused across attempts, one stubbed retry
   on empty-with-blockReason, no retry on non-block empties, `(degraded retry also blocked)`
   marker on double block. 4 new proxy-seam tests. Suite 944/22, build + bundle-leak clean.
-  **Remaining to close F2 live:** deploy the branch tip to a preview → Retry the LUNARIA run
-  (Neil-driven, SSO wall) → expect the degrade lane to console-warn, produce the EDL from
-  audio, and finish the ad. Mind the media-URL expiry note below.
+  **F2 CLOSED LIVE 2026-07-24 (~20:02 UTC 07-23): the degrade lane finished the LUNARIA ad
+  on its first real firing.** Retry on preview `kw2i9gd5j` (commit `9c1f7bb`): attempt 1
+  blocked as always (cogs 4767in/0out) → console warn `[edl] prompt blocked (PROHIBITED_CONTENT)
+  — retrying with script-stubbed prompt` → `node_done{edl}` 19:59:12 → `node_done{final_render}`
+  20:02:28 → `gate_park` (First Cut) 20:02:33. Zero video re-spend. Note: EDL attempts rode
+  through several `Proxy timeout (504)` transport retries (the EDL call flirts with the Vercel
+  60s ceiling; server-side completions of timed-out calls also log duplicate 4767/0 cogs rows —
+  known telemetry artifact, not double-billing of video).
+  **Resume gotcha found en route (new, minor):** the run resume key `osa_producer_active_run`
+  + the `osa_engine` flag live in localStorage, which is per-ORIGIN — deployment-pinned preview
+  URLs change per deploy, so cross-deployment resume silently no-ops (user sees the launch
+  screen, no Retry). Workaround used: set both keys via console on the new origin + open
+  `/app?osaEngine=producer`. Durable fix candidate (bundle with P5): resume by DB lookup
+  (producer_runs by user, newest active) instead of localStorage — the F4 lesson, now bitten twice.
   **LUNARIA unblock timing:** the run's media URLs in `artifacts.scenes` are presigned R2 URLs
   that EXPIRE 2026-07-24T16:00Z (~midnight PH). After that, an EDL retry needs re-signed URLs —
   check whether any server path re-signs on resume before assuming Retry works.
