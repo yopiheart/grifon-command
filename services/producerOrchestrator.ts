@@ -80,6 +80,8 @@ export type ProductionStageId =
   | 'script'
   | 'storyboard'
   | 'scene_images'
+  | 'video_prompts'
+  | 'thumbnail'
   | 'video'
   | 'voices'
   | 'edl'
@@ -256,6 +258,18 @@ export interface ProducerDeps {
     referenceImageMode?: 'avatar' | 'product' | 'both' | 'none' | 'venue' | 'avatar_venue'
   ) => Promise<string>;
   generateVideoPrompts: (storyboard: Scene[], businessInfo: BusinessInfo) => Promise<VideoPrompt[]>;
+  /** Cover-frame (MrBeast-style thumbnail). Best-effort node — thin wrapper over
+   * geminiService.generateThumbnail. Optional so mock/legacy dep bundles that omit it
+   * simply skip the thumbnail node (it degrades to "no cover frame", never fatal). */
+  generateThumbnail?: (
+    script: string[],
+    avatarDescription: string,
+    businessInfo: BusinessInfo,
+    aspectRatio: '9:16' | '16:9',
+    avatarUrl: string,
+    imageQuality: '1K' | '2K',
+    brandColors?: string[]
+  ) => Promise<string>;
   generateEditDecisionList: (input: EditDecisionInput) => Promise<EditDecisionList>;
   consolidateVoices: (scenes: ConsolidationScene[], voiceId: string, stabilityMode?: StabilityMode) => Promise<ConsolidationResult[]>;
   renderFinalVideo: (req: FinalRenderRequest, onProgress?: (s: 'processing') => void) => Promise<FinalRenderResult>;
@@ -305,7 +319,9 @@ const STAGE_ORDER: { id: ProductionStageId; label: string }[] = [
   { id: 'script', label: 'Writing your hook' },
   { id: 'storyboard', label: 'Designing your scenes' },
   { id: 'scene_images', label: 'Building your visuals' },
+  { id: 'video_prompts', label: 'Planning your shots' },
   { id: 'video', label: 'Filming your scenes' },
+  { id: 'thumbnail', label: 'Designing your cover' },
   { id: 'voices', label: 'Recording the voiceover' },
   { id: 'edl', label: 'Cutting the edit' },
   { id: 'final_render', label: 'Final cut' },
@@ -318,6 +334,10 @@ const MAX_STAGE_ATTEMPTS = 2;
 /** Fan-out concurrency cap. K=5 matches the current per-user hourly video budget until
  * the provider-console concurrency is confirmed + the rate-limit is re-scoped (slice 2). */
 const FANOUT_CONCURRENCY = 5;
+/** Scene-image fan-out cap (P3). K=3 keeps the burst under the 15/60s image rate limit;
+ * the image call path's own retryWithBackoff absorbs the occasional 429 without a second
+ * retry loop layered here. */
+const SCENE_IMAGE_CONCURRENCY = 3;
 
 /**
  * Create a fresh run. `opts.mode` selects One-Shot vs Concierge; `opts.prefill` seeds
@@ -476,6 +496,99 @@ async function pooled<T>(items: T[], limit: number, worker: (item: T) => Promise
   await Promise.all(runners);
 }
 
+/** Resume-safety (P3): a run checkpointed on OLD code has a `stages` array that predates the
+ * video_prompts / thumbnail split. Rebuild it against the CURRENT STAGE_ORDER, preserving every
+ * existing entry's status and inferring done-ness for a freshly-added stage from artifacts
+ * already on the run (so a resume never redoes completed work, and never crashes on the
+ * `stages.find(...)!` lookups the driver assumes are total). No-op for a current-shape run. */
+function normalizeStages(run: ProductionRun): void {
+  const byId = new Map(run.stages.map((s) => [s.id, s]));
+  if (STAGE_ORDER.every(({ id }) => byId.has(id))) return; // already current — nothing to do
+  run.stages = STAGE_ORDER.map(({ id, label }) => {
+    const existing = byId.get(id);
+    if (existing) return existing;
+    let status: StageStatus = 'pending';
+    if (id === 'video_prompts' && (run.videoPrompts?.length ?? 0) > 0) status = 'done';
+    if (id === 'thumbnail' && run.thumbnailUrl) status = 'done';
+    const relabel = id === 'voices' && run.input.audioMode === 'sfx_only' ? 'Designing the sound' : label;
+    return { id, label: relabel, status, attempts: 0 };
+  });
+}
+
+/** Run ONE stage's node lifecycle: setStage(running)+node_start → runStage → setStage(done)+
+ * node_done. On non-abort failure: `degrade` marks the stage done-with-warning (status stays
+ * 'done', the reason lands in `error`) and emits node_fail{degraded} WITHOUT rethrowing — the
+ * caller keeps going. Non-degrade re-throws after marking the stage failed (run-fatal, matching
+ * the sequential loop). ABORTED always propagates. */
+async function runNode(
+  id: ProductionStageId,
+  run: ProductionRun,
+  deps: ProducerDeps,
+  cb: ProducerCallbacks,
+  setStage: (id: ProductionStageId, patch: Partial<ProductionStageState>) => Promise<void>,
+  opts: { degrade?: boolean } = {}
+): Promise<void> {
+  const stage = run.stages.find((s) => s.id === id)!;
+  await setStage(id, { status: 'running', error: undefined });
+  emitRunEvent('node_start', run.runId, { node: id, attempt: stage.attempts });
+  try {
+    await runStage(id, run, deps, cb, setStage);
+    await setStage(id, { status: 'done' });
+    emitRunEvent('node_done', run.runId, { node: id });
+  } catch (e: any) {
+    if (e?.message === 'ABORTED') throw e;
+    if (opts.degrade) {
+      // done-with-warning: the run continues; downstream uses its existing fallback.
+      await setStage(id, { status: 'done', error: `degraded: ${e?.message ?? 'failed'}` });
+      emitRunEvent('node_fail', run.runId, { node: id, degraded: true, error: e?.message ?? 'failed' });
+      return;
+    }
+    await setStage(id, { status: 'failed', error: e?.message ?? 'STAGE_FAILED' });
+    emitRunEvent('node_fail', run.runId, { node: id, error: e?.message ?? 'failed' });
+    throw e;
+  }
+}
+
+/** P3 parallelism: run a `primary` stage ∥ a `secondary` stage whose bodies share a dependency
+ * but not each other. Both pending bodies run concurrently, each committing its own status.
+ * `allSettled` (not `all`) so one failing NEVER cancels the other. The secondary always runs
+ * with DEGRADE semantics (never run-fatal); only the primary can reject run-fatally (or either
+ * with ABORTED), which is re-thrown AFTER both settle so the caller can error/return the run.
+ * On a resumed run where one is already done, only the other runs (single-element task list).
+ * Sites: scene_images ∥ video_prompts (both need the storyboard) and video ∥ thumbnail (both
+ * need the approved scene images; thumbnail is ~20s vs video's minutes, so zero added wall time). */
+async function runStagePair(
+  run: ProductionRun,
+  deps: ProducerDeps,
+  cb: ProducerCallbacks,
+  setStage: (id: ProductionStageId, patch: Partial<ProductionStageState>) => Promise<void>,
+  primary: ProductionStageId,
+  secondary: ProductionStageId
+): Promise<void> {
+  const p = run.stages.find((s) => s.id === primary)!;
+  const s = run.stages.find((st) => st.id === secondary)!;
+  const tasks: Promise<void>[] = [];
+  if (p.status !== 'done') tasks.push(runNode(primary, run, deps, cb, setStage));
+  if (s.status !== 'done') tasks.push(runNode(secondary, run, deps, cb, setStage, { degrade: true }));
+  const settled = await Promise.allSettled(tasks);
+  const rejected = settled.find((r) => r.status === 'rejected') as PromiseRejectedResult | undefined;
+  if (rejected) throw rejected.reason;
+}
+
+/** Build + run the cover-frame generation for a run. Returns the thumbnail url, or undefined
+ * when the dep is absent or the run lacks the inputs (a legitimate skip — not an error). A real
+ * generation failure THROWS after retry so the caller's degrade wrapper (runNode {degrade}) marks
+ * the stage done-with-warning; ABORTED propagates unchanged. */
+async function generateThumbnailFor(run: ProductionRun, deps: ProducerDeps): Promise<string | undefined> {
+  if (!deps.generateThumbnail || !run.businessInfo || !run.finalScript?.length) return undefined;
+  // generateThumbnail only accepts 9:16 | 16:9; 1:1 runs fall back to 9:16 (best-effort cover).
+  const ar: '9:16' | '16:9' = run.input.aspectRatio === '16:9' ? '16:9' : '9:16';
+  return withRetry(
+    () => deps.generateThumbnail!(run.finalScript!, run.input.avatar.description, run.businessInfo!, ar, run.input.avatar.url, '1K', []),
+    MAX_STAGE_ATTEMPTS
+  );
+}
+
 // ---------------------------------------------------------------------------
 // Driver
 // ---------------------------------------------------------------------------
@@ -515,6 +628,11 @@ async function runProductionInner(initial: ProductionRun, cb: ProducerCallbacks,
       if (st) Object.assign(st, patch);
     });
 
+  // Resume-safety: reconcile an old-shape checkpoint (pre video_prompts/thumbnail split) with
+  // the current STAGE_ORDER so the `stages.find(...)!` lookups below are total and no completed
+  // work is redone.
+  normalizeStages(run);
+
   for (const { id } of STAGE_ORDER) {
     if (cb.signal.aborted) return run;
 
@@ -526,6 +644,75 @@ async function runProductionInner(initial: ProductionRun, cb: ProducerCallbacks,
       });
       emitRunEvent('gate_park', run.runId, { node: 'storyboard', gate: 'storyboard' });
       return run;
+    }
+
+    // ── PARALLEL: scene_images ∥ video_prompts (both depend only on the storyboard) ──
+    // Co-executed when the loop first reaches scene_images; video_prompts is skipped below
+    // (already done) once the pair settles. A resumed run where one is done runs only the other.
+    if (id === 'scene_images') {
+      try {
+        await runStagePair(run, deps, cb, setStage, 'scene_images', 'video_prompts');
+      } catch (e: any) {
+        if (e?.message === 'ABORTED') return run;
+        const failed = run.stages.find((s) => s.status === 'failed')?.id ?? 'scene_images';
+        await commit((r) => {
+          r.status = 'error';
+          r.error = `${failed}: ${e?.message ?? 'failed'}`;
+        });
+        return run;
+      }
+      if (cb.signal.aborted) return run;
+      continue;
+    }
+
+    // ── video_prompts: normally finished by the pair above. Defensive standalone path (e.g. a
+    // normalized old checkpoint reaching here pending) always DEGRADES — never run-fatal. ──
+    if (id === 'video_prompts') {
+      const st = run.stages.find((s) => s.id === 'video_prompts')!;
+      if (st.status !== 'done') {
+        try {
+          await runNode('video_prompts', run, deps, cb, setStage, { degrade: true });
+        } catch (e: any) {
+          if (e?.message === 'ABORTED') return run;
+        }
+      }
+      continue;
+    }
+
+    // ── PARALLEL: video ∥ thumbnail (both need the approved scene images; thumbnail ~20s vs
+    // video's minutes → zero added wall time). Runs INSIDE the active-run window so the
+    // thumbnail's COGS carries x-run-id. video is run-fatal; thumbnail DEGRADES. The gate park
+    // above already returned for an unapproved run, so we only reach here post-approval. The
+    // thumbnail iteration below is skipped once this pair marks it done. ──
+    if (id === 'video') {
+      try {
+        await runStagePair(run, deps, cb, setStage, 'video', 'thumbnail');
+      } catch (e: any) {
+        if (e?.message === 'ABORTED') return run;
+        const failed = run.stages.find((s) => s.status === 'failed')?.id ?? 'video';
+        await commit((r) => {
+          r.status = 'error';
+          r.error = `${failed}: ${e?.message ?? 'failed'}`;
+        });
+        return run;
+      }
+      if (cb.signal.aborted) return run;
+      continue;
+    }
+
+    // ── thumbnail: normally finished by the video pair above. Defensive standalone path (a
+    // resume that reaches here with the cover still pending) always DEGRADES — best-effort,
+    // never run-fatal (First Cut simply hides the download if it's absent). ──
+    if (id === 'thumbnail') {
+      const st = run.stages.find((s) => s.id === 'thumbnail')!;
+      if (st.status !== 'done') {
+        try {
+          await runNode('thumbnail', run, deps, cb, setStage, { degrade: true });
+        } catch (e: any) {
+          if (e?.message === 'ABORTED') return run;
+        }
+      }
+      continue;
     }
 
     const stage = run.stages.find((s) => s.id === id)!;
@@ -1039,86 +1226,127 @@ async function runStage(
     }
 
     case 'storyboard': {
+      // video_prompts split out into its own stage (P3) so it can run PARALLEL to scene_images.
       const sb: StoryboardResponse = await withRetry(
         () => deps.generateStoryboard(run.finalScript!, run.input.avatar.description, run.businessInfo!, run.input.avatar.ethnicity, run.input.language),
         MAX_STAGE_ATTEMPTS,
         bump
       );
-      const videoPrompts = await withRetry(() => deps.generateVideoPrompts(sb.scenes, run.businessInfo!), MAX_STAGE_ATTEMPTS, bump);
       await commit((r) => {
         r.storyboard = sb.scenes;
-        r.videoPrompts = videoPrompts;
         r.scenes = sb.scenes.map((_, i) => ({ sceneIdx: i, status: 'pending' as SceneStatus }));
       });
       await setStage(id, { detail: `${sb.scenes.length} scenes` });
       return;
     }
 
+    case 'video_prompts': {
+      // Split from storyboard (P3); runs in parallel with scene_images. DEGRADE-on-failure: the
+      // driver's degrade path marks this done-with-warning and the video stage keeps its existing
+      // `vp?.prompt ?? scene.imagePrompt` fallback, so a failure here never kills the run.
+      const storyboard = run.storyboard ?? [];
+      const videoPrompts = await withRetry(() => deps.generateVideoPrompts(storyboard, run.businessInfo!), MAX_STAGE_ATTEMPTS, bump);
+      await commit((r) => {
+        r.videoPrompts = videoPrompts;
+      });
+      await setStage(id, { detail: `${videoPrompts.length} shot prompts` });
+      return;
+    }
+
+    case 'thumbnail': {
+      // Best-effort cover frame — runs PARALLEL to the video stage via runStagePair (or the
+      // driver's defensive branch on resume), always under {degrade}. Already generated (a prior
+      // resume) → skip. A real generation failure throws → the degrade wrapper marks the stage
+      // done-with-warning; an absent dep/inputs returns undefined → done-with-absent-thumbnail.
+      if (run.thumbnailUrl) return;
+      const url = await generateThumbnailFor(run, deps);
+      if (url) {
+        await commit((r) => {
+          r.thumbnailUrl = url;
+        });
+      }
+      await setStage(id, { detail: url ? 'Cover frame ready' : 'No cover frame' });
+      return;
+    }
+
     case 'scene_images': {
       const scenes = run.storyboard ?? [];
-      for (let i = 0; i < scenes.length; i++) {
-        if (cb.signal.aborted) throw new Error('ABORTED');
-        const scene = scenes[i];
-        const needsMain = !run.scenes.find((s) => s.sceneIdx === i)?.imageUrl; // resume: keep done images
-        const needsEnd = !!scene.endFramePrompt && !scene.endFrameImageUrl;
-        if (!needsMain && !needsEnd) continue;
-        const prompt = scene.imagePrompt || scene.startFramePrompt || scene.sceneDescription;
-        const mode = scene.referenceImage ?? 'avatar';
-        // Hook morph (start+end frame): the START frame is the "before" metaphor and must stay
-        // product-free; the hero reference belongs on the END frame (reveal). Mirrors
-        // utils/sceneRender.ts so the two surfaces don't drift.
-        const isHookMorph = !!scene.startFramePrompt && !!scene.endFramePrompt;
-        try {
-          if (needsMain) {
-            const url = await withRetry(
-              () =>
-                deps.generateSceneImage(
-                  prompt,
-                  run.input.aspectRatio === '1:1' ? '1:1' : run.input.aspectRatio,
-                  '1K',
-                  { avatarUrl: run.input.avatar.url, productUrl: isHookMorph ? undefined : run.input.heroImageBase64 },
-                  run.input.avatar.ethnicity,
-                  [],
-                  run.input.scriptType,
-                  run.input.productDescription,
-                  run.input.productName,
-                  0,
-                  mode
-                ),
-              MAX_STAGE_ATTEMPTS,
-              bump
-            );
-            await commit((r) => {
-              if (r.storyboard) r.storyboard[i].imageUrl = url;
-              const sc = r.scenes.find((s) => s.sceneIdx === i);
-              if (sc) sc.imageUrl = url;
-            });
-          }
-          if (needsEnd) {
-            const endUrl = await renderEndFrame(run, scene, i, deps);
-            await commit((r) => {
-              if (r.storyboard) r.storyboard[i].endFrameImageUrl = endUrl;
-            });
-          }
-          // Durable image persistence: the scene's OWN small row ('record_image'), never the fat
-          // checkpoint jsonb (slimmed at the transport boundary). Best-effort — a miss only means
-          // a coarser resume for this scene, never a lost render.
-          if (scene.imageUrl) {
-            try {
-              await deps.run.recordSceneImage(run.runId, i, scene.imageUrl, scene.endFrameImageUrl);
-            } catch { /* best-effort */ }
-          }
-        } catch (e: any) {
-          if (e?.message === 'ABORTED') throw e;
-          await commit((r) => {
-            const sc = r.scenes.find((s) => s.sceneIdx === i);
-            if (sc) {
-              sc.status = 'flagged';
-              sc.flaggedReason = `image: ${e?.message ?? 'failed'}`;
+      // P3: fan out the per-scene image generation with pooled(K=3) instead of the sequential
+      // loop. Every per-scene semantic is preserved — resume-skip of done images, hook-morph
+      // start/end frame handling, reference-image plumbing, per-scene failure → flagScene (pool
+      // stays alive), and an independent commit of each imageUrl as it lands (so the gate screen
+      // fills in progressively). The image call path's own retryWithBackoff absorbs the 15/60s
+      // rate-limit 429s — no extra retry loop is layered on top of the existing per-scene one.
+      await pooled(
+        scenes.map((_, i) => i),
+        SCENE_IMAGE_CONCURRENCY,
+        async (i) => {
+          if (cb.signal.aborted) throw new Error('ABORTED');
+          const scene = scenes[i];
+          const needsMain = !run.scenes.find((s) => s.sceneIdx === i)?.imageUrl; // resume: keep done images
+          const needsEnd = !!scene.endFramePrompt && !scene.endFrameImageUrl;
+          if (!needsMain && !needsEnd) return;
+          const prompt = scene.imagePrompt || scene.startFramePrompt || scene.sceneDescription;
+          const mode = scene.referenceImage ?? 'avatar';
+          // Hook morph (start+end frame): the START frame is the "before" metaphor and must stay
+          // product-free; the hero reference belongs on the END frame (reveal). Mirrors
+          // utils/sceneRender.ts so the two surfaces don't drift.
+          const isHookMorph = !!scene.startFramePrompt && !!scene.endFramePrompt;
+          try {
+            if (needsMain) {
+              const url = await withRetry(
+                () =>
+                  deps.generateSceneImage(
+                    prompt,
+                    run.input.aspectRatio === '1:1' ? '1:1' : run.input.aspectRatio,
+                    '1K',
+                    { avatarUrl: run.input.avatar.url, productUrl: isHookMorph ? undefined : run.input.heroImageBase64 },
+                    run.input.avatar.ethnicity,
+                    [],
+                    run.input.scriptType,
+                    run.input.productDescription,
+                    run.input.productName,
+                    0,
+                    mode
+                  ),
+                MAX_STAGE_ATTEMPTS,
+                bump
+              );
+              await commit((r) => {
+                if (r.storyboard) r.storyboard[i].imageUrl = url;
+                const sc = r.scenes.find((s) => s.sceneIdx === i);
+                if (sc) sc.imageUrl = url;
+              });
             }
-          });
+            if (needsEnd) {
+              const endUrl = await renderEndFrame(run, scene, i, deps);
+              await commit((r) => {
+                if (r.storyboard) r.storyboard[i].endFrameImageUrl = endUrl;
+              });
+            }
+            // Durable image persistence: the scene's OWN small row ('record_image'), never the fat
+            // checkpoint jsonb (slimmed at the transport boundary). Best-effort — a miss only means
+            // a coarser resume for this scene, never a lost render.
+            if (scene.imageUrl) {
+              try {
+                await deps.run.recordSceneImage(run.runId, i, scene.imageUrl, scene.endFrameImageUrl);
+              } catch { /* best-effort */ }
+            }
+          } catch (e: any) {
+            if (e?.message === 'ABORTED') throw e;
+            await commit((r) => {
+              const sc = r.scenes.find((s) => s.sceneIdx === i);
+              if (sc) {
+                sc.status = 'flagged';
+                sc.flaggedReason = `image: ${e?.message ?? 'failed'}`;
+              }
+            });
+          }
         }
-      }
+      );
+      // pooled() swallows a worker's throw to keep the pool alive; surface an in-flight abort at
+      // the stage boundary so the driver stops before the gate instead of parking mid-abort.
+      if (cb.signal.aborted) throw new Error('ABORTED');
       return;
     }
 

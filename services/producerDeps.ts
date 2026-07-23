@@ -12,6 +12,7 @@ import {
   generateStoryboard,
   generateSceneImage,
   generateVideoPrompts,
+  generateThumbnail,
   generateEditDecisionList,
   submitVideo,
   resumeVideoOperation,
@@ -119,6 +120,9 @@ export const realProducerDeps: ProducerDeps = {
   generateStoryboard,
   generateSceneImage,
   generateVideoPrompts,
+  // P3: thumbnail is a producer node (generated during the Gate-1 park). Thin pass-through of
+  // the tuned geminiService export — the orchestrator owns the best-effort/degrade policy.
+  generateThumbnail,
   generateEditDecisionList,
   consolidateVoices,
   renderFinalVideo,
