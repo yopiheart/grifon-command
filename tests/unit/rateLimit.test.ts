@@ -30,10 +30,31 @@ describe('rateLimitCheck', () => {
     expect(allowed).toBe(false);
   });
 
-  it('fails OPEN: returns true when the RPC errors (infra issue should not lock paying users out)', async () => {
+  it('fails OPEN within the backstop cap: returns true when the RPC errors (infra issue should not lock paying users out)', async () => {
     rpcMock.mockResolvedValueOnce({ data: null, error: { message: 'connection refused' } });
     const allowed = await rateLimitCheck('checkout:user-3', 10, 60);
     expect(allowed).toBe(true);
+  });
+
+  it('backstop (audit #3): on repeated RPC errors, allows up to `limit` per instance then blocks', async () => {
+    // Every call errors → each falls through to the in-memory per-instance ceiling.
+    rpcMock.mockResolvedValue({ data: null, error: { message: 'supabase down' } });
+    const key = 'gemini:video:backstop-user'; // unique key: memoryHits is module-level
+    const results: boolean[] = [];
+    for (let i = 0; i < 5; i++) {
+      results.push(await rateLimitCheck(key, 3, 60));
+    }
+    // First 3 allowed (within the coarse cap), then blocked — not wide-open.
+    expect(results).toEqual([true, true, true, false, false]);
+  });
+
+  it('backstop is Supabase-independent: never blocks while the RPC is healthy', async () => {
+    // A healthy RPC path must not consume/observe the in-memory backstop.
+    rpcMock.mockResolvedValue({ data: true, error: null });
+    const key = 'gemini:text:healthy-user';
+    for (let i = 0; i < 10; i++) {
+      expect(await rateLimitCheck(key, 2, 60)).toBe(true);
+    }
   });
 
   it('treats a non-true RPC response (e.g. null) as rate-limited', async () => {
