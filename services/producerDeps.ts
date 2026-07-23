@@ -128,10 +128,10 @@ const runStore: ProducerRunStore = {
  * undefined → the orchestrator runs exactly pre-P4 (no check, no gate, no reroll).
  *
  * Pure (takes the flag value as an arg) so it's unit-testable without touching
- * import.meta.env. Stays off until (1) the owner decides whether gate calls draw down the
- * monthly images meter (they currently do — a gated 12-scene run can exhaust a Starter
- * plan's 25 images/month) and (2) a live smoke proves checkSceneImage passes real
- * sceneImageModel output (thresholds so far validated only against synthetic headers).
+ * import.meta.env. Stays off until (1) RESOLVED 2026-07-23: gate calls ride an internal
+ * per-user daily budget (api/gemini/image.ts gate mode), not the monthly images meter — and
+ * (2) a live smoke proves checkSceneImage passes real sceneImageModel output (thresholds so
+ * far validated only against synthetic headers), the only remaining flag-ON condition.
  */
 export function gateDepsFor(
   flagValue: string | undefined

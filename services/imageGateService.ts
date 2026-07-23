@@ -2,8 +2,8 @@
 //
 // Posts a still to the EXISTING /api/gemini/image handler in its opt-in gate mode
 // (body `{ gateCheck: {...} }`) so the gate rides the image endpoint's auth +
-// rate-limit + images-quota metering like any other image call (a cheap vision
-// call, billed as one — no unmetered path). The server extracts observations and
+// burst rate limit + an INTERNAL per-user daily gate budget (COGS-tracked), never
+// the customer images meter (a cheap vision call). The server extracts observations and
 // computes the verdict; this client never sees the prompt/judge (it MUST NOT
 // import api/_lib/imageGate.ts — that would leak the eval prompt into the bundle).
 //
@@ -46,6 +46,8 @@ export interface ImageGateCheckParams {
   expectedLabelText?: string;
   /** The scene's reference-image mode (drives the server-side judge). */
   referenceMode: string;
+  /** Per-scene idempotency key for the server's internal gate budget. */
+  sceneIdx?: number;
 }
 
 /**

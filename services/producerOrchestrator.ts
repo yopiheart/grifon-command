@@ -282,6 +282,7 @@ export interface ProducerDeps {
     referenceImageBase64?: string;
     expectedLabelText?: string;
     referenceMode: string;
+    sceneIdx?: number;
   }) => Promise<ImageGateResult>;
   /** Cover-frame (MrBeast-style thumbnail). Best-effort node — thin wrapper over
    * geminiService.generateThumbnail. Optional so mock/legacy dep bundles that omit it
@@ -1405,6 +1406,7 @@ async function runStage(
                       referenceImageBase64: wantIdentity ? run.input.avatar.url : undefined,
                       expectedLabelText: wantLabel ? run.input.productName : undefined,
                       referenceMode: mode,
+                      sceneIdx: i,
                     });
                     await commit((r) => {
                       const sc = r.scenes.find((s) => s.sceneIdx === i);

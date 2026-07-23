@@ -7,7 +7,7 @@ import { getUserPlan } from '../_lib/userPlan.js';
 import { consumeMonthly } from '../_lib/quota.js';
 import { logImageUsage } from '../_lib/modelCosts.js';
 import { getRequestId, getRunId } from '../_lib/requestId.js';
-import { gateImage } from '../_lib/imageGate.js';
+import { gateImage, IMAGE_GATE_MODEL } from '../_lib/imageGate.js';
 
 const Body = z.object({
   model: z.string().min(1),
@@ -24,7 +24,13 @@ const GateBody = z.object({
     referenceImageBase64: z.string().optional(),
     expectedLabelText: z.string().optional(),
     referenceMode: z.string().default('none'),
-    model: z.string().optional(),
+    // Per-scene idempotency key for the internal gate budget (transport/budget
+    // metadata — NOT passed into gateImage, which is pure gate input).
+    sceneIdx: z.number().int().min(0).max(23).optional(),
+    // NOTE: the `model` field was REMOVED (2026-07-23 review finding) — an
+    // authenticated client could otherwise route gate calls to arbitrary Gemini
+    // models. The shipped client never sends it; zod's non-strict parse silently
+    // strips any legacy sender. The IMAGE_GATE_MODEL env override is unaffected.
   }),
 });
 
@@ -59,10 +65,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!user) return res.status(401).json({ error: 'invalid_token' });
 
   // ── Gate mode (P4) ──────────────────────────────────────────────────────────
-  // A cheap vision QA pass on a generated still. Rides the SAME auth → rate-limit
-  // → images-quota metering as a generate (it IS an image call), then returns
-  // { observations, verdict } with the verdict computed server-side. Flag-only +
-  // fail-open: gateImage never throws — infra failure yields verdict.pass:true.
+  // A cheap vision QA pass on a generated still. Rides the SAME auth → burst
+  // rate-limit as a generate, then returns { observations, verdict } with the
+  // verdict computed server-side. Flag-only + fail-open: gateImage never throws —
+  // infra failure yields verdict.pass:true.
   if (req.body && typeof req.body === 'object' && 'gateCheck' in (req.body as Record<string, unknown>)) {
     const gate = GateBody.safeParse(req.body ?? {});
     if (!gate.success) {
@@ -71,13 +77,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // Kill switch — ships DARK (mirrors SFX_V2_ENABLED / OMNI_STYLES_ENABLED). Both the server
     // flag IMAGE_GATE_ENABLED (unprefixed, .env) and the client flag VITE_IMAGE_GATE_ENABLED
-    // (bundled, services/producerDeps.ts) must be 'true' to activate the gate. Stays OFF until
-    // (1) the owner decides whether gate calls should draw down the monthly images meter (they
-    // currently do — a gated 12-scene run can exhaust a Starter plan's 25 images/month) and
-    // (2) a live smoke proves checkSceneImage passes real sceneImageModel output (thresholds are
-    // so far only validated against synthetic headers). A disabled gate burns ZERO rate-limit/
-    // quota — this returns BEFORE both meters. The client fail-open catch turns the 503 into a
-    // silent skip.
+    // (bundled, services/producerDeps.ts) must be 'true' to activate the gate. A disabled gate
+    // burns ZERO rate-limit/budget — this returns BEFORE all meters. The client fail-open catch
+    // turns the 503 into a silent skip.
+    //
+    // Metering decision — RESOLVED (2026-07-23, owner-approved): gate checks NO LONGER draw down
+    // the customer 'images' meter (a gated 12-scene run ≈ a Starter plan's whole 25 images/month).
+    // They ride an INTERNAL COGS budget instead: a per-user 48/day cap via rate_limit_check (not
+    // dev-bypassed, fails open to the in-memory backstop, acceptable at ~$0.002/call) + a
+    // per-(runId,sceneIdx) limit of 2/24h as idempotency. Remaining flag-ON condition: the live
+    // smoke of checkSceneImage against real sceneImageModel output (thresholds so far validated
+    // only against synthetic headers).
     if (process.env.IMAGE_GATE_ENABLED !== 'true') {
       return res.status(503).json({ error: 'image_gate_disabled' });
     }
@@ -88,21 +98,33 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(429).json({ error: 'rate_limited', scope: 'image', retry_after_seconds: IMAGE_WINDOW_SECONDS });
     }
 
-    const gatePlan = await getUserPlan(user.id);
-    const gateQuota = await consumeMonthly('images', user.id, gatePlan);
-    if (!gateQuota.allowed) {
-      return res.status(402).json({
-        error: 'quota_exceeded',
-        scope: 'images',
-        used: gateQuota.used,
-        limit: gateQuota.limit,
-        remaining: 0,
-        plan: gatePlan,
-      });
+    // PRIMARY bound: internal per-user daily gate budget (COGS, not the customer meter). This is
+    // the real ceiling on how many gate calls one user can burn per day.
+    const budgetOk = await rateLimitCheck(`imgate:user:${user.id}`, 48, 86400);
+    if (!budgetOk) {
+      res.setHeader('Retry-After', '3600');
+      return res.status(429).json({ error: 'image_gate_budget', retry_after_seconds: 3600 });
     }
 
-    const result = await gateImage(gate.data.gateCheck);
-    logImageUsage('image_gate', gate.data.gateCheck.model ?? 'gemini-image-gate', 1, runId);
+    // SECONDARY (idempotency only): cap re-checks of the same (run, scene) pair. runId is
+    // CLIENT-CONTROLLED, so this key only lets a client burn its OWN daily budget faster — the
+    // per-user key above is the real ceiling.
+    if (runId && typeof gate.data.gateCheck.sceneIdx === 'number') {
+      const sceneOk = await rateLimitCheck(`imgate:${runId}:${gate.data.gateCheck.sceneIdx}`, 2, 86400);
+      if (!sceneOk) {
+        res.setHeader('Retry-After', '3600');
+        return res.status(429).json({ error: 'image_gate_scene_repeat', retry_after_seconds: 3600 });
+      }
+    }
+
+    // sceneIdx is transport/budget metadata, not gate input — do NOT pass it into gateImage.
+    const result = await gateImage({
+      imageBase64: gate.data.gateCheck.imageBase64,
+      referenceImageBase64: gate.data.gateCheck.referenceImageBase64,
+      expectedLabelText: gate.data.gateCheck.expectedLabelText,
+      referenceMode: gate.data.gateCheck.referenceMode,
+    });
+    logImageUsage('image_gate', IMAGE_GATE_MODEL, 1, runId);
     return res.status(200).json(result);
   }
 

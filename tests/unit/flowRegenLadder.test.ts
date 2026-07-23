@@ -25,6 +25,10 @@ const validOffer = {
 const unusableOffer = { analysis: 'a', tripwire: tier, coreOffer: tier }; // missing highTicket + directorPayload
 
 const okText = (payload: unknown) => ({ text: JSON.stringify(payload) });
+// Unparseable model text → JSON.parse throws a SyntaxError inside the flow parser
+// (parseOfferOptimizerResponse). Independent of the schema — this is the parse-throw
+// path the ladder must now absorb rather than 502.
+const badText = () => ({ text: 'not json at all' });
 const makeAi = (generateContent: any) => ({ models: { generateContent } }) as any;
 
 beforeEach(() => {
@@ -66,5 +70,51 @@ describe('runFlowWithSchema — coerce→regen-once ladder', () => {
       expect(out.issues[0]).toHaveProperty('message');
     }
     expect(generateContent).toHaveBeenCalledTimes(2);
+  });
+});
+
+describe('runFlowWithSchema — parse-throw absorbed by the same 2-invocation budget', () => {
+  it('SyntaxError once then valid -> ok:true, exactly 2 handler calls', async () => {
+    const generateContent = vi
+      .fn()
+      .mockResolvedValueOnce(badText())
+      .mockResolvedValueOnce(okText(validOffer));
+    const out = await runFlowWithSchema('offer-optimizer', offerInput, makeAi(generateContent));
+    expect(out.ok).toBe(true);
+    if (out.ok) expect(out.result).toEqual(validOffer);
+    expect(generateContent).toHaveBeenCalledTimes(2);
+  });
+
+  it('SyntaxError twice -> rejects, exactly 2 handler calls', async () => {
+    const generateContent = vi
+      .fn()
+      .mockResolvedValueOnce(badText())
+      .mockResolvedValueOnce(badText());
+    await expect(
+      runFlowWithSchema('offer-optimizer', offerInput, makeAi(generateContent))
+    ).rejects.toThrow();
+    expect(generateContent).toHaveBeenCalledTimes(2);
+  });
+
+  it('SyntaxError then schema-invalid -> ok:false with issues, exactly 2 calls (no third)', async () => {
+    const generateContent = vi
+      .fn()
+      .mockResolvedValueOnce(badText())
+      .mockResolvedValueOnce(okText(unusableOffer));
+    const out = await runFlowWithSchema('offer-optimizer', offerInput, makeAi(generateContent));
+    expect(out.ok).toBe(false);
+    if (!out.ok) {
+      expect(Array.isArray(out.issues)).toBe(true);
+      expect(out.issues.length).toBeGreaterThan(0);
+    }
+    expect(generateContent).toHaveBeenCalledTimes(2);
+  });
+
+  it('non-SyntaxError on the first call -> rejects immediately, exactly 1 call (no burn-doubling regen)', async () => {
+    const generateContent = vi.fn().mockRejectedValueOnce(new Error('RESOURCE_EXHAUSTED'));
+    await expect(
+      runFlowWithSchema('offer-optimizer', offerInput, makeAi(generateContent))
+    ).rejects.toThrow('RESOURCE_EXHAUSTED');
+    expect(generateContent).toHaveBeenCalledTimes(1);
   });
 });

@@ -356,15 +356,34 @@ export const runFlowWithSchema = async (
   const handlerFn = FLOW_REGISTRY[flow];
   const schema = FLOW_OUTPUT_SCHEMAS[flow];
 
-  let result = await handlerFn(input, ai, runId);
+  // The regen ladder now also absorbs a parse-throw (unparseable JSON from Gemini →
+  // JSON.parse throw inside the flow parser), which used to bypass the ladder and 502.
+  // Budget is unchanged: max 2 handler invocations total. A SyntaxError on the FIRST
+  // call spends the regen (the second is the final one); any OTHER first-call error
+  // (Gemini 429/503 quota/infra) propagates immediately — never a burn-doubling regen.
+  let regenUsed = false;
+  let result: unknown;
+  try {
+    result = await handlerFn(input, ai, runId);
+  } catch (err) {
+    if (!(err instanceof SyntaxError)) throw err;
+    console.warn(`[flow:${flow}] output parse-threw (unparseable JSON) — regenerating once (verbatim)`);
+    regenUsed = true;
+    // Final invocation — any throw here propagates (502 path, budget spent).
+    result = await handlerFn(input, ai, runId);
+  }
   let check = schema.safeParse(result);
   if (check.success) return { ok: true, result };
 
-  // ONE verbatim regeneration — resend the exact same request.
-  console.warn(`[flow:${flow}] output failed schema — regenerating once (verbatim)`);
-  result = await handlerFn(input, ai, runId);
-  check = schema.safeParse(result);
-  if (check.success) return { ok: true, result };
+  // If the regen was already spent absorbing a parse-throw, don't invoke a third time —
+  // return the structured 422 on the second call's schema miss.
+  if (!regenUsed) {
+    // ONE verbatim regeneration — resend the exact same request.
+    console.warn(`[flow:${flow}] output failed schema — regenerating once (verbatim)`);
+    result = await handlerFn(input, ai, runId);
+    check = schema.safeParse(result);
+    if (check.success) return { ok: true, result };
+  }
 
   return {
     ok: false,

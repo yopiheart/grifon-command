@@ -92,7 +92,21 @@ Unverifiable from the cafe PC (no gh/vercel CLI, Vercel MCP unauthenticated). Ch
 ### 3. Canary (ONLY after Neil approves the cost estimate below)
 One end-to-end Producer run (6 scenes, 9:16, gate flags OFF) against the P4 preview. It live-exercises: flow schema ladder, watchdog, run telemetry rows (verify `run_cogs` + `cost_usd` against real Postgres), P3 parallelism. Wizard-driving rules: load `.claude/skills/director-smoke/` first; delegate browser work to `smoke-tester`.
 
-### 4. P4 metering redesign (design ready, build only after Neil picks)
+### 4. P4 metering redesign — **BUILT 2026-07-23** (Neil approved Option A as amended by the Fable review; implemented by `code-executor`, reviewed by the Fable main loop)
+Shipped shape: gate mode keeps auth + the burst RL, **no longer touches the customer `images`
+meter** (no `getUserPlan`/`consumeMonthly` in gate mode). Primary bound = per-user daily budget
+`imgate:user:${userId}` @ 48/24h via `rate_limit_check` (not dev-bypassed; fails open to the
+in-memory backstop — acceptable at ~$0.002/call). Secondary = per-`imgate:${runId}:${sceneIdx}`
+@ 2/24h idempotency (runId is client-controlled → can only burn the caller's own daily budget).
+Review findings folded in: client-supplied `model` field REMOVED from `GateBody` (finding 1);
+`runFlowWithSchema` now absorbs a first-call `SyntaxError` inside the same 2-invocation budget,
+non-SyntaxError errors still propagate immediately (finding 2). `sceneIdx` threaded client →
+orchestrator → GateBody. New handler test harness `tests/unit/imageGateHandler.test.ts` (7 cases,
+first api/producer-style endpoint harness for image.ts) + 4 parse-throw ladder cases. Flag-ON
+conditions remaining: live smoke of `checkSceneImage` vs real `sceneImageModel` output — then flip
+`IMAGE_GATE_ENABLED` + `VITE_IMAGE_GATE_ENABLED`.
+
+### ~~4 (original design note)~~ (superseded by the build above)
 Problem: gate checks currently consume the customer's monthly `images` meter (~2× burn; one gated 12-scene run ≈ a Starter plan's whole 25/mo). Constraints: authenticated, rate-limited, idempotent per scene, tracked as internal COGS, **no public unmetered endpoint**. Recommended shape (mirrors the Omni per-ad budget pattern in `api/gemini/omni-video.ts`): keep auth + the burst rate limit, REPLACE `consumeMonthly('images',…)` in gate mode with a **hard per-run gate budget** via the existing `rate_limit_check` RPC — key `imgate:ad:${runId}` (fall back to `imgate:user:${userId}` daily when no runId), limit = 2× MAX_SCENES (24) per 24h, NOT dev-bypassed — plus a per-scene idempotency key `imgate:${runId}:${sceneIdx}` (limit 1) so retries can't re-bill. COGS keeps logging `image_gate` with runId (internal cost tracking). Result: no customer-quota drawdown, still bounded, still authenticated, abuse capped at pennies/run. Alternative (simpler, weaker): keep metering but on a new internal `image_gate` meter with generous limits mirrored in `quota.ts` MONTHLY_LIMITS + parity test.
 
 ### 5. Open Neil decisions (blockers per item)
