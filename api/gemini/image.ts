@@ -7,11 +7,25 @@ import { getUserPlan } from '../_lib/userPlan.js';
 import { consumeMonthly } from '../_lib/quota.js';
 import { logImageUsage } from '../_lib/modelCosts.js';
 import { getRequestId, getRunId } from '../_lib/requestId.js';
+import { gateImage } from '../_lib/imageGate.js';
 
 const Body = z.object({
   model: z.string().min(1),
   contents: z.unknown(),
   config: z.unknown().optional(),
+});
+
+// Opt-in gate mode (P4): discriminated by the top-level `gateCheck` key. When
+// present the handler runs the vision QA gate on a still instead of generating;
+// when ABSENT the generate path below is byte-identical to pre-P4.
+const GateBody = z.object({
+  gateCheck: z.object({
+    imageBase64: z.string().min(1),
+    referenceImageBase64: z.string().optional(),
+    expectedLabelText: z.string().optional(),
+    referenceMode: z.string().default('none'),
+    model: z.string().optional(),
+  }),
 });
 
 const IMAGE_LIMIT = 15;
@@ -43,6 +57,54 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const user = await getUserFromAccessToken(token);
   if (!user) return res.status(401).json({ error: 'invalid_token' });
+
+  // ── Gate mode (P4) ──────────────────────────────────────────────────────────
+  // A cheap vision QA pass on a generated still. Rides the SAME auth → rate-limit
+  // → images-quota metering as a generate (it IS an image call), then returns
+  // { observations, verdict } with the verdict computed server-side. Flag-only +
+  // fail-open: gateImage never throws — infra failure yields verdict.pass:true.
+  if (req.body && typeof req.body === 'object' && 'gateCheck' in (req.body as Record<string, unknown>)) {
+    const gate = GateBody.safeParse(req.body ?? {});
+    if (!gate.success) {
+      return res.status(400).json({ error: 'invalid_body', issues: gate.error.issues });
+    }
+
+    // Kill switch — ships DARK (mirrors SFX_V2_ENABLED / OMNI_STYLES_ENABLED). Both the server
+    // flag IMAGE_GATE_ENABLED (unprefixed, .env) and the client flag VITE_IMAGE_GATE_ENABLED
+    // (bundled, services/producerDeps.ts) must be 'true' to activate the gate. Stays OFF until
+    // (1) the owner decides whether gate calls should draw down the monthly images meter (they
+    // currently do — a gated 12-scene run can exhaust a Starter plan's 25 images/month) and
+    // (2) a live smoke proves checkSceneImage passes real sceneImageModel output (thresholds are
+    // so far only validated against synthetic headers). A disabled gate burns ZERO rate-limit/
+    // quota — this returns BEFORE both meters. The client fail-open catch turns the 503 into a
+    // silent skip.
+    if (process.env.IMAGE_GATE_ENABLED !== 'true') {
+      return res.status(503).json({ error: 'image_gate_disabled' });
+    }
+
+    const gateAllowed = await rateLimitCheck(`gemini:image:${user.id}`, IMAGE_LIMIT, IMAGE_WINDOW_SECONDS);
+    if (!gateAllowed) {
+      res.setHeader('Retry-After', String(IMAGE_WINDOW_SECONDS));
+      return res.status(429).json({ error: 'rate_limited', scope: 'image', retry_after_seconds: IMAGE_WINDOW_SECONDS });
+    }
+
+    const gatePlan = await getUserPlan(user.id);
+    const gateQuota = await consumeMonthly('images', user.id, gatePlan);
+    if (!gateQuota.allowed) {
+      return res.status(402).json({
+        error: 'quota_exceeded',
+        scope: 'images',
+        used: gateQuota.used,
+        limit: gateQuota.limit,
+        remaining: 0,
+        plan: gatePlan,
+      });
+    }
+
+    const result = await gateImage(gate.data.gateCheck);
+    logImageUsage('image_gate', gate.data.gateCheck.model ?? 'gemini-image-gate', 1, runId);
+    return res.status(200).json(result);
+  }
 
   const parsed = Body.safeParse(req.body ?? {});
   if (!parsed.success) {

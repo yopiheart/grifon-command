@@ -49,6 +49,12 @@ import type {
   VideoModelType,
 } from '../types';
 import type { RenderJob } from '../components/GenerateVideo/RenderAllRunner';
+// P4 image gate: deterministic still checks (utils, free) + the AI gate result shape.
+// Type-only imports — both are erased at runtime so the orchestrator stays decoupled
+// (the concrete functions are injected via deps; imageGateService never enters the
+// server bundle and its verdict prompt never enters this client module).
+import type { ImageCheckResult, ExpectedAspect } from '../utils/imageChecks';
+import type { ImageGateResult } from './imageGateService';
 
 /** Config for a single scene's video submit — the shape submitVideo (geminiService) expects. */
 export interface VideoSubmitConfig {
@@ -110,6 +116,12 @@ export interface ProductionSceneState {
   audioUrl?: string;
   /** Why this scene needs a reshoot (image/video/voice failure). */
   flaggedReason?: string;
+  /** P4: the AI image-gate verdict for this scene's still (identity/label perception).
+   * FLAG-ONLY this phase — a failing verdict annotates flaggedReason + surfaces a Gate-1
+   * chip but never discards the image or blocks approval. Persisted via the run
+   * checkpoint's artifacts.scenes jsonb so gate precision can be measured offline before
+   * the gate is ever given reroll authority. Absent when the scene wasn't gated. */
+  gateVerdict?: ImageGateResult['verdict'];
 }
 
 /** Everything the intake form collects (3 hero inputs + Customize-drawer defaults). */
@@ -258,6 +270,19 @@ export interface ProducerDeps {
     referenceImageMode?: 'avatar' | 'product' | 'both' | 'none' | 'venue' | 'avatar_venue'
   ) => Promise<string>;
   generateVideoPrompts: (storyboard: Scene[], businessInfo: BusinessInfo) => Promise<VideoPrompt[]>;
+  /** P4 deterministic still check (decode/dims/min-res) — the ONLY automated reroll driver
+   * this phase. Optional + injected: absent (e.g. in unit tests) → the check is skipped
+   * entirely and scene-image behavior is byte-identical to pre-P4. */
+  checkSceneImage?: (imageUrl: string, expectedAspect: ExpectedAspect) => Promise<ImageCheckResult>;
+  /** P4 AI still gate (identity/label perception → server-side verdict). Best-effort +
+   * FLAG-ONLY: absent, error, or timeout → skipped silently (fail-open). Never discards
+   * an image, never blocks the run. */
+  imageGateCheck?: (params: {
+    imageBase64: string;
+    referenceImageBase64?: string;
+    expectedLabelText?: string;
+    referenceMode: string;
+  }) => Promise<ImageGateResult>;
   /** Cover-frame (MrBeast-style thumbnail). Best-effort node — thin wrapper over
    * geminiService.generateThumbnail. Optional so mock/legacy dep bundles that omit it
    * simply skip the thumbnail node (it degrades to "no cover frame", never fatal). */
@@ -448,7 +473,7 @@ export function routeModel(type: VideoPrompt['type'], fallback: VideoModelType, 
  * analytics transport (P2). Fire-and-forget and fully best-effort: a telemetry failure
  * must never block or fail a stage. */
 const emitRunEvent = (
-  event: 'node_start' | 'node_done' | 'node_fail' | 'gate_park' | 'gate_approve',
+  event: 'node_start' | 'node_done' | 'node_fail' | 'check_fail' | 'gate_park' | 'gate_approve',
   runId: string,
   meta: Record<string, unknown>
 ): void => {
@@ -1292,31 +1317,98 @@ async function runStage(
           // product-free; the hero reference belongs on the END frame (reveal). Mirrors
           // utils/sceneRender.ts so the two surfaces don't drift.
           const isHookMorph = !!scene.startFramePrompt && !!scene.endFramePrompt;
+          const imgAspect = (run.input.aspectRatio === '1:1' ? '1:1' : run.input.aspectRatio) as '9:16' | '16:9' | '1:1';
+          const genMainImage = (variationIndex: number) =>
+            deps.generateSceneImage(
+              prompt,
+              imgAspect,
+              '1K',
+              { avatarUrl: run.input.avatar.url, productUrl: isHookMorph ? undefined : run.input.heroImageBase64 },
+              run.input.avatar.ethnicity,
+              [],
+              run.input.scriptType,
+              run.input.productDescription,
+              run.input.productName,
+              variationIndex,
+              mode
+            );
           try {
             if (needsMain) {
-              const url = await withRetry(
-                () =>
-                  deps.generateSceneImage(
-                    prompt,
-                    run.input.aspectRatio === '1:1' ? '1:1' : run.input.aspectRatio,
-                    '1K',
-                    { avatarUrl: run.input.avatar.url, productUrl: isHookMorph ? undefined : run.input.heroImageBase64 },
-                    run.input.avatar.ethnicity,
-                    [],
-                    run.input.scriptType,
-                    run.input.productDescription,
-                    run.input.productName,
-                    0,
-                    mode
-                  ),
-                MAX_STAGE_ATTEMPTS,
-                bump
-              );
+              let url = await withRetry(() => genMainImage(0), MAX_STAGE_ATTEMPTS, bump);
+
+              // P4 (a) DETERMINISTIC still check (decode/dims/min-res) — the only automated
+              // reroll this phase. On failure: ONE fresh reroll (single call, ≤3 gens/scene
+              // total with the withRetry budget above); still failing → flag for Gate-1 triage
+              // and STOP (skip end frame + AI gate + record for this scene). Skipped entirely
+              // when the dep is absent (unit tests) → pre-P4 behavior.
+              if (deps.checkSceneImage) {
+                const check = await deps.checkSceneImage(url, run.input.aspectRatio);
+                if (!check.ok) {
+                  emitRunEvent('check_fail', run.runId, { node: 'scene_images', sceneIdx: i, kind: 'deterministic', reason: check.reason });
+                  let recovered = false;
+                  try {
+                    const reUrl = await genMainImage(1); // one extra attempt total
+                    const reCheck = await deps.checkSceneImage(reUrl, run.input.aspectRatio);
+                    if (reCheck.ok) {
+                      url = reUrl;
+                      recovered = true;
+                    } else {
+                      emitRunEvent('check_fail', run.runId, { node: 'scene_images', sceneIdx: i, kind: 'deterministic', reason: reCheck.reason, reroll: true });
+                    }
+                  } catch (e: any) {
+                    if (e?.message === 'ABORTED') throw e;
+                  }
+                  if (!recovered) {
+                    try { await deps.run.flagScene(run.runId, i, `image_check: ${check.reason}`); } catch { /* best-effort */ }
+                    await commit((r) => {
+                      const sc = r.scenes.find((s) => s.sceneIdx === i);
+                      if (sc) { sc.status = 'flagged'; sc.flaggedReason = `image_check: ${check.reason}`; }
+                    });
+                    return; // hard-flagged: never render/gate/record a still that fails the deterministic gate
+                  }
+                }
+              }
+
               await commit((r) => {
                 if (r.storyboard) r.storyboard[i].imageUrl = url;
                 const sc = r.scenes.find((s) => s.sceneIdx === i);
                 if (sc) sc.imageUrl = url;
               });
+
+              // P4 (b) AI IMAGE GATE — best-effort, FLAG-ONLY, fails open. Only scenes whose
+              // reference mode implies the locked avatar (identity) or that carry the product
+              // (label) are gated; thumbnail/end-frames are not gated this phase. A failing
+              // verdict annotates flaggedReason + stores gateVerdict (→ Gate-1 chip) but NEVER
+              // changes status (so it can't block approval) or discards the image. Any dep
+              // error/timeout is swallowed (fail-open).
+              if (deps.imageGateCheck) {
+                // Widen to string so the brief's full identity set (incl. 'avatar_venue', which
+                // Scene.referenceImage can't currently emit) stays future-proof if the type grows.
+                const gateMode: string = mode;
+                const wantIdentity = gateMode === 'avatar' || gateMode === 'both' || gateMode === 'avatar_venue';
+                const wantLabel = gateMode === 'product' || gateMode === 'both';
+                if (wantIdentity || wantLabel) {
+                  try {
+                    const gateRes = await deps.imageGateCheck({
+                      imageBase64: url,
+                      referenceImageBase64: wantIdentity ? run.input.avatar.url : undefined,
+                      expectedLabelText: wantLabel ? run.input.productName : undefined,
+                      referenceMode: mode,
+                    });
+                    await commit((r) => {
+                      const sc = r.scenes.find((s) => s.sceneIdx === i);
+                      if (sc) sc.gateVerdict = gateRes.verdict;
+                    });
+                    // FLAG-ONLY: a failing verdict lives ONLY in gateVerdict (the Gate-1 chip keys
+                    // off gateVerdict.pass). flaggedReason is reserved for HARD flags (image_check /
+                    // render failures) that set status='flagged' and block approval — a soft gate
+                    // verdict never touches status or flaggedReason.
+                    if (!gateRes.verdict.pass) {
+                      emitRunEvent('check_fail', run.runId, { node: 'scene_images', sceneIdx: i, kind: 'gate', flags: gateRes.verdict.flags });
+                    }
+                  } catch { /* best-effort — the gate never blocks or flags on infra error */ }
+                }
+              }
             }
             if (needsEnd) {
               const endUrl = await renderEndFrame(run, scene, i, deps);

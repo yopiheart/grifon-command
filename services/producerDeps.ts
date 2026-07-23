@@ -20,6 +20,11 @@ import {
 import { consolidateVoices } from './voiceConsolidationService';
 import { renderFinalVideo } from './finalRenderService';
 import { getCachedResearch, putCachedResearch } from './researchCacheStore';
+// P4 image gate: the deterministic still check (free, client-side) + the thin AI-gate
+// client caller (rides /api/gemini/image gate mode). Both injected so the orchestrator
+// stays test-decoupled; absent in unit tests → pre-P4 behavior.
+import { checkSceneImage } from '../utils/imageChecks';
+import { imageGateCheck } from './imageGateService';
 import {
   saveRunCheckpoint,
   seedScenes,
@@ -113,6 +118,27 @@ const runStore: ProducerRunStore = {
   requeueScene,
 };
 
+/**
+ * P4 image-gate kill switch — ships DARK (mirrors SFX_V2_ENABLED / OMNI_STYLES_ENABLED).
+ * Wires the deterministic still check + AI still gate ONLY when VITE_IMAGE_GATE_ENABLED
+ * (client, bundled) is exactly 'true'; the server also requires IMAGE_GATE_ENABLED
+ * (unprefixed, .env) — BOTH must be 'true' to activate. Flag absent/off → both deps
+ * undefined → the orchestrator runs exactly pre-P4 (no check, no gate, no reroll).
+ *
+ * Pure (takes the flag value as an arg) so it's unit-testable without touching
+ * import.meta.env. Stays off until (1) the owner decides whether gate calls draw down the
+ * monthly images meter (they currently do — a gated 12-scene run can exhaust a Starter
+ * plan's 25 images/month) and (2) a live smoke proves checkSceneImage passes real
+ * sceneImageModel output (thresholds so far validated only against synthetic headers).
+ */
+export function gateDepsFor(
+  flagValue: string | undefined
+): Pick<ProducerDeps, 'checkSceneImage' | 'imageGateCheck'> {
+  return flagValue === 'true'
+    ? { checkSceneImage, imageGateCheck }
+    : { checkSceneImage: undefined, imageGateCheck: undefined };
+}
+
 /** The app's default deps. `now` stays injectable via the spread for tests. */
 export const realProducerDeps: ProducerDeps = {
   generateMarketResearch,
@@ -120,6 +146,9 @@ export const realProducerDeps: ProducerDeps = {
   generateStoryboard,
   generateSceneImage,
   generateVideoPrompts,
+  // P4: deterministic still check + AI still gate, wired ONLY behind VITE_IMAGE_GATE_ENABLED
+  // (both undefined when off → pre-P4 behavior). See gateDepsFor above.
+  ...gateDepsFor(((import.meta as any).env || {}).VITE_IMAGE_GATE_ENABLED as string | undefined),
   // P3: thumbnail is a producer node (generated during the Gate-1 park). Thin pass-through of
   // the tuned geminiService export — the orchestrator owns the best-effort/degrade policy.
   generateThumbnail,

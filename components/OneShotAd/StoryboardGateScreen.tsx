@@ -13,6 +13,13 @@ import type { ProductionRun } from '../../services/producerOrchestrator';
  * gate === 'storyboard'. Approving calls onApprove → approveStoryboard() continues into
  * the video fan-out. A flagged/regenerating image never reaches the render.
  */
+
+/** Map an image-gate flag to a short amber chip label (P4). FLAG-ONLY: these pre-triage
+ * the human's eye — they never block approval (only a hard `flagged` status does that). */
+const GATE_FLAG_LABELS: Record<string, string> = {
+  identity_drift: 'IDENTITY?',
+  garbled_label: 'LABEL?',
+};
 export const StoryboardGateScreen: React.FC<{
   run: ProductionRun;
   /** Scene index currently regenerating, or null. */
@@ -60,6 +67,9 @@ export const StoryboardGateScreen: React.FC<{
             const isFlagged = sc.status === 'flagged';
             const scriptLine = run.storyboard?.[sc.sceneIdx]?.scriptLine ?? '';
             const endFrameUrl = run.storyboard?.[sc.sceneIdx]?.endFrameImageUrl;
+            // P4: gate verdict chips (identity/label) — surfaced only when the AI gate flagged
+            // this still. Additive pre-triage; approval stays driven by `status` alone.
+            const gateFlags = sc.gateVerdict && !sc.gateVerdict.pass ? sc.gateVerdict.flags : [];
             return (
               <GlassPanel
                 key={sc.sceneIdx}
@@ -79,6 +89,18 @@ export const StoryboardGateScreen: React.FC<{
                 <div className="absolute left-1.5 top-1.5 rounded bg-black/70 px-1.5 py-0.5 text-[9px] font-mono text-zinc-300">
                   {sc.sceneIdx + 1}
                 </div>
+                {gateFlags.length > 0 && (
+                  <div className="absolute right-1.5 top-1.5 flex flex-wrap justify-end gap-1">
+                    {gateFlags.map((f) => (
+                      <span
+                        key={f}
+                        className="rounded bg-amber-500/20 px-1.5 py-0.5 text-[8px] font-mono uppercase tracking-wide text-amber-300 ring-1 ring-amber-500/40"
+                      >
+                        {GATE_FLAG_LABELS[f] ?? f}
+                      </span>
+                    ))}
+                  </div>
+                )}
                 {scriptLine && (
                   <div className="absolute inset-x-0 bottom-9 line-clamp-2 bg-gradient-to-t from-black/85 to-transparent px-2 pb-1 pt-4 text-[10px] leading-tight text-zinc-200">
                     {scriptLine}

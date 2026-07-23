@@ -59,6 +59,16 @@ create table if not exists public.producer_scenes (
 -- Idempotent upgrade for tables created before end_frame_url existed (2026-07-03).
 alter table public.producer_scenes add column if not exists end_frame_url text;
 
+-- P4 image gate (loop-arch): the AI still-gate verdict {pass, flags, compositionNotes?}
+-- per scene, for OFFLINE precision measurement before the gate is ever given reroll
+-- authority (plan §3.6/§3.8 — flag-only, fail-open this phase). FORWARD-PREP: the
+-- orchestrator currently persists the verdict inside the run checkpoint's artifacts.scenes
+-- jsonb (each ProductionSceneState carries gateVerdict), because the server-side per-scene
+-- write path (api/producer/advance.ts 'record_image') carries only urls and is out of P4's
+-- file scope. A dedicated per-scene verdict row lands with the advance.ts action-union touch
+-- in a later slice; this column is added now so that migration is a no-op.
+alter table public.producer_scenes add column if not exists gate_verdict jsonb;
+
 create index if not exists producer_scenes_run_idx on public.producer_scenes(run_id);
 
 -- Service-role-only, like public.rate_limits / public.events (NOT user-owned): all

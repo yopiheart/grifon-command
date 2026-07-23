@@ -1,0 +1,276 @@
+import { GoogleGenAI } from '@google/genai';
+
+// ============================================================================
+// api/_lib/imageGate.ts — the per-still QA gate for producer scene images.
+//
+// A faithful clone of api/_lib/omniGate.ts (video → still): EVAL INFRASTRUCTURE,
+// not generation content. It does NOT shape any user-facing output — it only
+// WATCHES a generated scene still and reports what it sees so the deterministic
+// judge can flag identity drift / a garbled product label BEFORE the still
+// poisons the ~$0.50–1.00 video render it seeds (plan §3.6, Phase P4).
+//
+// Design intent (owner decisions, ranked by harm):
+//   1. identity drift — a reference-bearing scene must show the locked avatar.
+//   2. garbled/illegible product label — a product scene's label must read.
+//   3. composition — OBSERVED and recorded, but LOG-ONLY this phase (never flags).
+//
+// FLAG-ONLY + FAILS OPEN BY DESIGN: any gate INFRA failure (API error,
+// unparseable JSON) returns pass:true (reason 'gate_unavailable') so eval
+// flakiness never discards a paid still. The AI here EXTRACTS FACTS ONLY; the
+// pure {@link judgeImageGate} owns every keep-vs-flag decision deterministically.
+//
+// **Main-loop review requested on IMAGE_GATE_PROMPT wording** — kept standalone,
+// exactly like OMNI_GATE_PROMPT, so it can be reviewed on its own.
+// ============================================================================
+
+/** Vision-capable Gemini flash model reused for the still gate (same convention
+ *  as OMNI_GATE_MODEL). Overridable for eval tuning; never invents a new id. */
+export const IMAGE_GATE_MODEL = process.env.IMAGE_GATE_MODEL || 'gemini-3.5-flash';
+
+// ----------------------------------------------------------------------------
+// IMAGE_GATE_PROMPT — EVAL infra. Main-loop review requested on this wording.
+// Observations only — the model reports FACTS, never a pass/fail opinion.
+// ----------------------------------------------------------------------------
+export const IMAGE_GATE_PROMPT = `You are a strict image QA inspector. Look at the attached generated scene still and report only what is actually visible in it.
+
+Return STRICT JSON and nothing else, in exactly this shape:
+{
+  "personPresent": boolean,
+  "personMatchesReference": boolean | null,
+  "productLabelText": string | null,
+  "labelLegible": boolean | null,
+  "compositionNotes": string
+}
+
+Field rules:
+- "personPresent": true if a human person is visible in the scene still, false if not.
+- "personMatchesReference": if a REFERENCE person image was provided, answer true when the person in the scene still is clearly the same individual as the reference (same face, build, look), false when they are clearly a different person or an AI-warped re-render. If NO reference image was provided, answer null.
+- "productLabelText": if a product with readable label/brand typography is visible, transcribe that text VERBATIM exactly as shown. If no product text is visible, answer null.
+- "labelLegible": if a product label is present, answer true when its text is crisp and readable, false when it is warped, smeared, garbled, or gibberish. If no product label is present, answer null.
+- "compositionNotes": one short phrase describing framing/composition (e.g. "centered medium shot, product held at chest"). Keep it under 15 words.
+
+Output the JSON object only. No markdown fences, no commentary.`;
+
+/** Reference modes that imply the locked avatar/person must appear in the scene. */
+const IDENTITY_MODES = new Set(['avatar', 'both', 'avatar_venue']);
+
+export interface ImageGateObservations {
+  personPresent: boolean;
+  /** null when no reference image was supplied to the gate. */
+  personMatchesReference: boolean | null;
+  /** Verbatim product label text read off the still, or null when none visible. */
+  productLabelText: string | null;
+  labelLegible: boolean | null;
+  compositionNotes: string;
+}
+
+export interface ImageGateVerdict {
+  pass: boolean;
+  /** Machine flags: 'identity_drift' | 'garbled_label'. Composition is never flagged. */
+  flags: string[];
+  /** Log-only composition observation (recorded, never gates this phase). */
+  compositionNotes?: string;
+  /** Set to 'gate_unavailable' on the fail-open path. */
+  reason?: string;
+}
+
+/** The full gate result the handler returns: raw observations + the pure verdict.
+ *  observations is null on the fail-open path. */
+export interface ImageGateResult {
+  observations: ImageGateObservations | null;
+  verdict: ImageGateVerdict;
+}
+
+export interface ImageGateExpectations {
+  /** The scene's reference-image mode — drives whether identity is expected. */
+  referenceMode: string;
+  /** The product name/label the still is expected to render, when applicable. */
+  expectedLabelText?: string;
+}
+
+/**
+ * Tolerant extraction of the observations from a raw model response. Strips
+ * markdown fences and grabs the first balanced-looking `{...}` object, coercing
+ * every field defensively so a malformed type never over-flags. Returns null
+ * when nothing parseable is found (caller fails open).
+ */
+export function parseImageGateResponse(raw: string): ImageGateObservations | null {
+  if (!raw) return null;
+  let s = raw.replace(/```[a-zA-Z]*\n?/g, '').replace(/```/g, '').trim();
+  const start = s.indexOf('{');
+  const end = s.lastIndexOf('}');
+  if (start === -1 || end === -1 || end <= start) return null;
+  s = s.slice(start, end + 1);
+  try {
+    const obj = JSON.parse(s);
+    if (!obj || typeof obj !== 'object') return null;
+    const label =
+      typeof obj.productLabelText === 'string' && obj.productLabelText.trim()
+        ? obj.productLabelText.trim()
+        : null;
+    return {
+      personPresent: obj.personPresent === true,
+      personMatchesReference:
+        typeof obj.personMatchesReference === 'boolean' ? obj.personMatchesReference : null,
+      productLabelText: label,
+      labelLegible: typeof obj.labelLegible === 'boolean' ? obj.labelLegible : null,
+      compositionNotes: typeof obj.compositionNotes === 'string' ? obj.compositionNotes : '',
+    };
+  } catch {
+    return null;
+  }
+}
+
+/** Normalize label text for comparison — lowercase, alphanumerics only. */
+const normLabel = (s: string): string => s.toLowerCase().replace(/[^a-z0-9]+/g, '');
+
+/** Classic Levenshtein distance (small strings only — product labels). */
+function levenshtein(a: string, b: string): number {
+  if (a === b) return 0;
+  if (!a.length) return b.length;
+  if (!b.length) return a.length;
+  const prev = new Array(b.length + 1);
+  const curr = new Array(b.length + 1);
+  for (let j = 0; j <= b.length; j++) prev[j] = j;
+  for (let i = 1; i <= a.length; i++) {
+    curr[0] = i;
+    for (let j = 1; j <= b.length; j++) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      curr[j] = Math.min(prev[j] + 1, curr[j - 1] + 1, prev[j - 1] + cost);
+    }
+    for (let j = 0; j <= b.length; j++) prev[j] = curr[j];
+  }
+  return prev[b.length];
+}
+
+/**
+ * PURE gate policy. Given parsed observations and the scene's expectations,
+ * decide pass/fail with machine flags. Ranked by harm (owner decision):
+ *   - 'identity_drift' : a reference-bearing scene shows no person, or a person
+ *     that clearly is NOT the locked avatar.
+ *   - 'garbled_label'  : an expected product label is illegible, or the read
+ *     text is CLEARLY garbled vs the expected name (conservative — near-matches
+ *     never flag; a null read never flags on mismatch alone).
+ *   - composition      : recorded in `compositionNotes`, NEVER flagged this phase.
+ * Fully deterministic + network-free so it is unit-testable in isolation.
+ */
+export function judgeImageGate(
+  observations: ImageGateObservations,
+  expectations: ImageGateExpectations
+): ImageGateVerdict {
+  const flags: string[] = [];
+
+  // ── Identity (rank 1) ──────────────────────────────────────────────────────
+  if (IDENTITY_MODES.has(expectations.referenceMode)) {
+    if (observations.personPresent === false) {
+      flags.push('identity_drift');
+    } else if (observations.personMatchesReference === false) {
+      // null (unverifiable) never flags — conservative.
+      flags.push('identity_drift');
+    }
+  }
+
+  // ── Product label (rank 2) ─────────────────────────────────────────────────
+  const expected = normLabel(expectations.expectedLabelText ?? '');
+  if (expected) {
+    let garbled = false;
+    if (observations.labelLegible === false) {
+      garbled = true;
+    } else if (observations.productLabelText) {
+      // Only judge garble when the model actually READ label text; a null read
+      // means the product simply wasn't framed — not a garble, never flags.
+      const read = normLabel(observations.productLabelText);
+      if (read && !expected.includes(read) && !read.includes(expected)) {
+        const sim = 1 - levenshtein(read, expected) / Math.max(read.length, expected.length);
+        if (sim < 0.5) garbled = true; // CLEAR garble only — near-matches pass.
+      }
+    }
+    if (garbled) flags.push('garbled_label');
+  }
+
+  return {
+    pass: flags.length === 0,
+    flags,
+    compositionNotes: observations.compositionNotes || undefined,
+  };
+}
+
+let _ai: GoogleGenAI | null = null;
+const getAi = (): GoogleGenAI => {
+  if (_ai) return _ai;
+  const key = process.env.GEMINI_API_KEY;
+  if (!key) throw new Error('GEMINI_NOT_CONFIGURED: set GEMINI_API_KEY (server-side, no VITE_ prefix).');
+  _ai = new GoogleGenAI({ apiKey: key });
+  return _ai;
+};
+
+/** Split a data URL (or bare base64) into its mime type + base64 payload. */
+function splitImageData(s: string): { mimeType: string; data: string } {
+  const m = /^data:([^;]+);base64,(.*)$/s.exec(s);
+  if (m) return { mimeType: m[1], data: m[2] };
+  return { mimeType: 'image/png', data: s };
+}
+
+export interface RunImageGateParams {
+  imageBase64: string;
+  referenceImageBase64?: string;
+  expectedLabelText?: string;
+  referenceMode: string;
+  model?: string;
+}
+
+/**
+ * Make the vision call and return parsed OBSERVATIONS. Throws a typed infra
+ * error on an API failure or an unparseable response — the caller ({@link gateImage})
+ * turns any throw into a fail-open pass. EXTRACTS FACTS ONLY (no judgment here).
+ */
+export async function runImageGate(params: RunImageGateParams): Promise<ImageGateObservations> {
+  const ai = getAi();
+  const parts: any[] = [];
+  if (params.referenceImageBase64) {
+    const ref = splitImageData(params.referenceImageBase64);
+    parts.push({ text: 'REFERENCE PERSON (the avatar the scene should match):' });
+    parts.push({ inlineData: { mimeType: ref.mimeType, data: ref.data } });
+    parts.push({ text: 'GENERATED SCENE STILL (report on THIS image):' });
+  }
+  const still = splitImageData(params.imageBase64);
+  parts.push({ inlineData: { mimeType: still.mimeType, data: still.data } });
+  // Append the expected-label context so productLabelText has a target to read against.
+  const labelHint = params.expectedLabelText
+    ? `\n\nContext: the product in this scene is "${params.expectedLabelText}" — read any product label text verbatim.`
+    : '';
+  parts.push({ text: IMAGE_GATE_PROMPT + labelHint });
+
+  const resp = await ai.models.generateContent({
+    model: params.model || IMAGE_GATE_MODEL,
+    contents: [{ role: 'user', parts }],
+    config: { responseMimeType: 'application/json' },
+  });
+  const raw = (resp as any)?.text ?? '';
+  const observations = parseImageGateResponse(raw);
+  if (!observations) throw new Error('IMAGE_GATE_UNPARSEABLE');
+  return observations;
+}
+
+/**
+ * Run the still gate end-to-end: vision extract → pure judge, FAILING OPEN on
+ * any infra/parse error (mirrors runOmniGate's doctrine exactly). Returns the
+ * raw observations alongside the verdict so the handler can log both, and the
+ * offline precision analysis can be run from producer_scenes.gate_verdict
+ * BEFORE the gate is ever allowed reroll authority.
+ */
+export async function gateImage(params: RunImageGateParams): Promise<ImageGateResult> {
+  try {
+    const observations = await runImageGate(params);
+    return {
+      observations,
+      verdict: judgeImageGate(observations, {
+        referenceMode: params.referenceMode,
+        expectedLabelText: params.expectedLabelText,
+      }),
+    };
+  } catch (err: any) {
+    console.warn('[api/_lib/imageGate] gate infra failure — failing open:', err?.message);
+    return { observations: null, verdict: { pass: true, flags: [], reason: 'gate_unavailable' } };
+  }
+}
