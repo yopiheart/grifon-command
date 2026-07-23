@@ -387,6 +387,30 @@ describe('approveStoryboard — concurrent double-approve fires exactly one driv
     expect(b.gate).toBe('first_cut');
     expect(a.finalVideoUrl).toBe('final.mp4');
   });
+
+  it('a failed persist un-wedges the guard: the run reverts to the parked gate and a later approve succeeds', async () => {
+    // PR #70 critic Axis1 #4: without the revert, a thrown persist leaves storyboardApproved
+    // true on the in-memory run, so every later Approve early-returns — gate dead until reload.
+    const { deps, spies, rows } = makeFakeDeps();
+    const run = createProductionRun(makeInput(), 'u1');
+    await runProduction(run, cb(), deps);
+
+    spies.persist.mockRejectedValueOnce(new Error('NETWORK_DOWN'));
+    await expect(approveStoryboard(run, cb(), deps)).rejects.toThrow('NETWORK_DOWN');
+
+    // Reverted to the parked-gate state — NOT wedged mid-approval.
+    expect(run.storyboardApproved).toBeFalsy();
+    expect(run.status).toBe('review');
+    expect(run.gate).toBe('storyboard');
+    expect(spies.submitVideo).not.toHaveBeenCalled(); // no driver started on the failed approve
+
+    // The user taps Approve again once the network is back — this one must go through.
+    const out = await approveStoryboard(run, cb(), deps);
+    expect(out.gate).toBe('first_cut');
+    expect(spies.submitVideo).toHaveBeenCalledTimes(2);
+    expect(rows.get(0)?.status).toBe('done');
+    expect(rows.get(1)?.status).toBe('done');
+  });
 });
 
 // --- 2. Resume skips completed stages -------------------------------------

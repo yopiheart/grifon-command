@@ -794,7 +794,17 @@ export async function approveStoryboard(run: ProductionRun, cb: ProducerCallback
   run.status = 'running';
   run.gate = undefined;
   run.updatedAt = deps.now();
-  await deps.persist(run);
+  try {
+    await deps.persist(run);
+  } catch (e) {
+    // Un-wedge (PR #70 critic, Axis1 #4): a failed persist must not leave the sync guard
+    // set on the in-memory run, or every later Approve early-returns and the gate is dead
+    // until reload. Revert to the parked-gate state and rethrow so the UI can retry.
+    run.storyboardApproved = false;
+    run.status = 'review';
+    run.gate = 'storyboard';
+    throw e;
+  }
   cb.onUpdate(run);
   return runProduction(run, cb, deps);
 }
@@ -896,6 +906,9 @@ export async function regenSceneImage(run: ProductionRun, sceneIdx: number, cb: 
       s.imageUrl = imageUrl;
       s.status = 'pending'; // image ready, video not started — back to gate-ready
       s.flaggedReason = undefined;
+      // A verdict describes the image it judged — a fresh image must not wear the old
+      // IDENTITY?/LABEL? chip (PR #70 critic, Axis1 #1). Re-gating the regen is flag-ON work.
+      s.gateVerdict = undefined;
     });
     if (scene.endFramePrompt) {
       const endUrl = await renderEndFrame(run, scene, sceneIdx, deps);
@@ -982,7 +995,9 @@ export async function reshootScene(run: ProductionRun, sceneIdx: number, cb: Pro
     );
     await commit((r) => {
       if (r.storyboard) r.storyboard[sceneIdx].imageUrl = imageUrl;
-      r.scenes.find((x) => x.sceneIdx === sceneIdx)!.imageUrl = imageUrl;
+      const s = r.scenes.find((x) => x.sceneIdx === sceneIdx)!;
+      s.imageUrl = imageUrl;
+      s.gateVerdict = undefined; // fresh image — stale verdict must not ride along (PR #70 critic)
     });
     if (scene.endFramePrompt) {
       const endUrl = await renderEndFrame(run, scene, sceneIdx, deps);
