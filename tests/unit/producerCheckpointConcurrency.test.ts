@@ -359,10 +359,15 @@ describe('P3 pair — video ∥ thumbnail through the First Cut park', () => {
     // toCheckpoint (services/producerDeps.ts) does not include thumbnailUrl in
     // `artifacts`, while the resume path (components/OneShotAd/ProducerFlow.tsx,
     // `thumbnailUrl: art.thumbnailUrl`) reads it back. P3 promoted thumbnail to a
-    // producer node, so the cover frame is now lost on any reload/cross-device
-    // resume and normalizeStages re-runs the node (one extra paid image).
-    // Reported, NOT fixed, per the handoff's test-only mandate — flip this
-    // assertion to `toBe('thumb://cover.png')` in the same commit as the fix.
+    // producer node, so the cover frame is lost on reload / cross-device resume
+    // and First Cut hides the cover preview + download.
+    //
+    // The naive fix (`thumbnailUrl: run.thumbnailUrl` in artifacts) is WRONG:
+    // generateThumbnail returns a base64 DATA URL (geminiService.ts:2311), so it
+    // would push MBs into the run-header jsonb on every later checkpoint — the
+    // exact thing api/producer/advance.ts:21-24 says record_image exists to
+    // prevent. See workflows/loop_arch_handoff.md for the correct fix shape.
+    // Flip this assertion in the same commit as whatever fix lands.
     const { deps } = makeDeps();
     const { cb } = makeCallbacks();
     const run = createProductionRun(makeInput(), 'u1');
@@ -371,6 +376,57 @@ describe('P3 pair — video ∥ thumbnail through the First Cut park', () => {
 
     expect(done.thumbnailUrl).toBe('thumb://cover.png');
     expect(artifacts().thumbnailUrl).toBeUndefined();
+  });
+
+  it('the gap costs NO re-spend: a resumed run does not re-run the thumbnail node', async () => {
+    // Bounds the gap above. `stages` IS checkpointed, so a current-shape resume
+    // carries thumbnail:'done'; normalizeStages early-returns (it only infers
+    // done-ness for stages MISSING from an old-shape checkpoint) and the driver's
+    // thumbnail branch skips on status. Asserted behaviourally, not by reading
+    // the guard — the resumed run gets FRESH spies and must not touch them.
+    const first = makeDeps();
+    const { cb } = makeCallbacks();
+    const run = createProductionRun(makeInput(), 'u1');
+    await runProduction(run, cb, first.deps);
+    await approveStoryboard(run, cb, first.deps);
+    expect(first.spies.generateThumbnail).toHaveBeenCalledTimes(1);
+
+    // The persisted checkpoint already marks the node done — that is what makes
+    // the missing artifact free.
+    const persistedStages = server.row!.body.stages as { id: string; status: string }[];
+    expect(persistedStages.find((s) => s.id === 'thumbnail')?.status).toBe('done');
+
+    // Rebuild the run the way ProducerFlow's rowToRun does: artifacts + stages +
+    // server revision, and thumbnailUrl read back from artifacts (i.e. LOST).
+    const art = artifacts();
+    const second = makeDeps();
+    const resumed = {
+      ...createProductionRun(makeInput(), 'u1', { runId: run.runId }),
+      status: server.row!.body.status,
+      stages: persistedStages,
+      storyboardApproved: art.storyboardApproved,
+      gate: art.gate ?? undefined,
+      report: art.report,
+      script: art.script,
+      finalScript: art.finalScript,
+      businessInfo: art.businessInfo,
+      clientDetails: art.clientDetails,
+      storyboard: art.storyboard,
+      videoPrompts: art.videoPrompts,
+      scenes: art.scenes,
+      edl: art.edl,
+      finalVideoUrl: art.finalVideoUrl,
+      thumbnailUrl: art.thumbnailUrl, // undefined — the gap
+      revision: server.row!.revision,
+    } as unknown as ProductionRun;
+    expect(resumed.thumbnailUrl).toBeUndefined();
+
+    const out = await runProduction(resumed, makeCallbacks().cb, second.deps);
+
+    expect(second.spies.generateThumbnail).not.toHaveBeenCalled(); // no re-spend
+    expect(second.spies.generateSceneImage).not.toHaveBeenCalled();
+    expect(second.spies.submitVideo).not.toHaveBeenCalled();
+    expect(out.gate).toBe('first_cut');
   });
 });
 

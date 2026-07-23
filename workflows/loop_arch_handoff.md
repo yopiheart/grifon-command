@@ -38,19 +38,45 @@ tests; neutering the client conflict-adopt branch fails 1 (the forked shallow-co
 place adoption is load-bearing, since both racers share one `run` object and the *winner* already
 writes the fresh revision). Suite 922 passed / 22 skipped; build + bundle-leak clean.
 
-**Defect found (P3-introduced, NOT fixed — proposal only, per the test-only mandate):**
+**Gap found (P3-introduced, NOT fixed — and the one-line fix is WRONG; do not ship it):**
 `toCheckpoint` in [../services/producerDeps.ts](../services/producerDeps.ts) omits `thumbnailUrl`
 from `artifacts`, but the resume path
 ([../components/OneShotAd/ProducerFlow.tsx](../components/OneShotAd/ProducerFlow.tsx),
 `thumbnailUrl: art.thumbnailUrl`) reads it back. Before P3 the thumbnail was not a producer
-artifact; P3 promoted it to a node. Consequence: the cover frame is lost on any reload /
-cross-device resume, and `normalizeStages` (which marks the thumbnail stage done only
-`if (run.thumbnailUrl)`) re-runs the node — one extra paid image (~$0.04) per resume, plus First
-Cut silently hiding the cover download. **Proposed one-line fix:** add
-`thumbnailUrl: run.thumbnailUrl,` to the `artifacts` object in `toCheckpoint`, and flip the
-`KNOWN GAP` test's assertion to `toBe('thumb://cover.png')` in the same commit. Not a
-double-spend or data-corruption risk; safe to defer, but it fires on every P3 resume. Needs Neil's
-go-ahead (touches `services/`, live-on-merge with P3).
+artifact; P3 promoted it to a node.
+
+*Corrected 2026-07-23 after checking the code — an earlier revision of this entry overstated both
+the impact and the fix:*
+
+- **No re-spend.** `stages` IS checkpointed, so a current-shape resume already carries
+  `thumbnail: done`; `normalizeStages` early-returns
+  ([producerOrchestrator.ts:531](../services/producerOrchestrator.ts)) and the driver skips the
+  node. The `if (id === 'thumbnail' && run.thumbnailUrl)` inference only fires for OLD-shape
+  (pre-P3) checkpoints, where `thumbnailUrl` is absent anyway.
+- **Real impact is cosmetic:** after a reload / cross-device resume, `run.thumbnailUrl` is
+  undefined, so First Cut hides the cover-frame preview + download link
+  ([FirstCutScreen.tsx:171,277](../components/OneShotAd/FirstCutScreen.tsx)). No lost spend, no
+  corruption, no stuck run.
+- **The naive one-liner is harmful.** `generateThumbnail`
+  ([geminiService.ts:2311](../services/geminiService.ts)) returns a **base64 data URL**, not a
+  signed URL (the type comment at producerOrchestrator.ts:226 is inaccurate — worth correcting).
+  Adding `thumbnailUrl: run.thumbnailUrl` to `artifacts` would push MBs into the run-header jsonb
+  on every checkpoint after the thumbnail node — exactly what
+  [api/producer/advance.ts:21-24](../api/producer/advance.ts) says `record_image` exists to
+  prevent ("keeps multi-MB images OUT of the run-header checkpoint jsonb, whose oversized writes
+  hit Postgres statement timeouts", 2026-07-02 SIGLA smoke). It would trade a hidden download
+  button for 413s / stalled checkpoints.
+- **Correct fix shape (needs Neil — schema + endpoint, NOT a one-liner):** give the thumbnail its
+  own small durable write, mirroring `record_image`'s dedicated per-scene row — e.g. a
+  `producer_runs.thumbnail_url` column (idempotent `alter table … add column if not exists`) plus
+  a `record_thumbnail` action on `api/producer/advance.ts` (which already has the 4mb bodyParser
+  for exactly this class of payload), with the resume path reading the column instead of
+  `artifacts`. Roughly the size of a P4-style slice. Given the impact is one hidden download
+  affordance on resume, **deferring is defensible** — recommend bundling it with P5 rather than
+  opening a phase for it.
+
+The `KNOWN GAP` test in `tests/unit/producerCheckpointConcurrency.test.ts` pins the current
+behavior so this can't silently change; flip it in the same commit as whatever fix lands.
 
 ### 2. Verify Vercel preview for `feat/loop-arch-p4-image-gate`
 Unverifiable from the cafe PC (no gh/vercel CLI, Vercel MCP unauthenticated). Check the Vercel dashboard → Deployments, or authorize the Vercel connector. Do NOT deploy or change env vars.
