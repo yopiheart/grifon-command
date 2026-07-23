@@ -245,8 +245,13 @@ conflict-adopt worked under a conflict storm (rev → 54); error state parked cl
   the rare probe-failure (null trimSec) path where it is apad's sole bound. Verified locally:
   normal + apad/hook + 2-scene concat all voiced and duration-exact. ElevenLabs note: the retry
   regenerated NO voices (last gen 5h prior) — reuse worked, zero re-spend, the loss was purely
-  in the final mux. **Remaining: re-deploy preview → Neil re-assembles First Cut (preset tap =
-  re-render only, no re-spend) before the media presigned URLs expire 2026-07-24T16:00Z.**
+  in the final mux.
+  **F6 CLOSED LIVE 2026-07-24 (~20:48 UTC 07-23):** Neil re-assembled on the fixed deployment
+  (`bt1fk8kks`, commit `1d6ede9`) with the `spotlight` preset → new final `b2226101…mp4`
+  measured BEFORE listening: audio 131kb/s (was 4kb/s), mean −18.2dB (was −58), peak −1.2dB —
+  voice + captions + SFX all present. Server render path verified end-to-end on real media.
+  Merge-story note: F6 was pre-existing on `main`, so this branch now FIXES a latent
+  production bug rather than adding risk.
 
 ### 3 (original). Canary (ONLY after Neil approves the cost estimate below)
 One end-to-end Producer run (6 scenes, 9:16, gate flags OFF) against the P4 preview. It live-exercises: flow schema ladder, watchdog, run telemetry rows (verify `run_cogs` + `cost_usd` against real Postgres), P3 parallelism. Wizard-driving rules: load `.claude/skills/director-smoke/` first; delegate browser work to `smoke-tester`.
