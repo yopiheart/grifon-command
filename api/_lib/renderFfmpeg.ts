@@ -407,7 +407,8 @@ const EOF_EPS = 0.25;
  * If the last silence region ends well before EOF (speech resumes after it), or
  * there are no silence regions, speech runs to the end → trim to the full
  * duration. Returns null only when duration is unknown and no trailing silence
- * was detected (caller falls back to -shortest / full clip).
+ * was detected (caller falls back to the full clip; -shortest bounds only that
+ * rare probe-failure path — see the buildScene note on why it silences voice).
  */
 export function parseTrimSec(
   stderr: string,
@@ -676,13 +677,23 @@ function buildScene(
   }
 
   const tArgs = trimSec !== null ? ['-t', trimSec.toFixed(3)] : [];
+  // `-shortest` SILENCES the mixed voice (2026-07-24 LUNARIA First Cut, reproduced
+  // locally): x264's encoder delay makes video packets reach the muxer late, so the
+  // shortest-logic closes the audio stream after its first packets — the output gets
+  // a ~4kb/s empty AAC track (silence + boundary clicks) even though the voice MP3
+  // is loud and the [1:a] chain is correct. `-t trimSec` already bounds the output on
+  // every real path (chooseTrim only returns null trimSec when the video probe itself
+  // failed), so -shortest is redundant there and harmful. It is kept ONLY on that
+  // rare probe-failure path, where it remains the sole duration bound for apad.
   const args = [
     ...inputs,
     ...tArgs,
     '-filter_complex', `${vGraph};${aChain}`,
     '-map', '[v]', '-map', aOut,
     '-c:v', 'libx264', '-preset', PRESET, '-crf', CRF,
-    '-c:a', 'aac', '-ar', '48000', '-ac', '2', '-shortest', outPath,
+    '-c:a', 'aac', '-ar', '48000', '-ac', '2',
+    ...(trimSec !== null ? [] : ['-shortest']),
+    outPath,
   ];
 
   const { status, stderr } = ffmpeg(args, dir);
