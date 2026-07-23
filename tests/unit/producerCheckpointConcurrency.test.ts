@@ -162,6 +162,10 @@ const makeInput = (over: Partial<ProductionInput> = {}): ProductionInput =>
     ...over,
   }) as ProductionInput;
 
+/** Stands in for the `producer_runs.thumbnail_url` column (written out-of-band via
+ * 'record_thumbnail', deliberately NOT part of the revision-guarded checkpoint). */
+const thumbnailColumn = { value: null as string | null };
+
 /** In-memory scene queue mirroring api/producer/advance.ts's guarded transitions. */
 function makeFakeStore() {
   const rows = new Map<number, { status: string; jobHandle: VideoJobHandle | null; videoUrl: string | null; audioUrl: string | null }>();
@@ -188,6 +192,10 @@ function makeFakeStore() {
       return { changed: false };
     }),
     recordSceneImage: vi.fn(async () => ({ changed: true })),
+    recordThumbnail: vi.fn(async (_r: string, url: string) => {
+      thumbnailColumn.value = url; // stands in for producer_runs.thumbnail_url
+      return { changed: true };
+    }),
     completeScene: vi.fn(async (_r: string, i: number, videoUrl: string, audioUrl?: string) => {
       const s = rows.get(i);
       if (s && (s.status === 'submitting' || s.status === 'rendering')) {
@@ -262,6 +270,7 @@ const artifacts = () => (server.row?.body.artifacts ?? {}) as Record<string, any
 
 beforeEach(() => {
   server.reset();
+  thumbnailColumn.value = null;
   seq = 0;
 });
 
@@ -355,32 +364,52 @@ describe('P3 pair — video ∥ thumbnail through the First Cut park', () => {
     expect(art.gate).toBe('first_cut');
   });
 
-  it('KNOWN GAP (P3): run.thumbnailUrl is produced but never checkpointed', async () => {
-    // toCheckpoint (services/producerDeps.ts) does not include thumbnailUrl in
-    // `artifacts`, while the resume path (components/OneShotAd/ProducerFlow.tsx,
-    // `thumbnailUrl: art.thumbnailUrl`) reads it back. P3 promoted thumbnail to a
-    // producer node, so the cover frame is lost on reload / cross-device resume
-    // and First Cut hides the cover preview + download.
-    //
-    // The naive fix (`thumbnailUrl: run.thumbnailUrl` in artifacts) is WRONG:
-    // generateThumbnail returns a base64 DATA URL (geminiService.ts:2311), so it
-    // would push MBs into the run-header jsonb on every later checkpoint — the
-    // exact thing api/producer/advance.ts:21-24 says record_image exists to
-    // prevent. See workflows/loop_arch_handoff.md for the correct fix shape.
-    // Flip this assertion in the same commit as whatever fix lands.
-    const { deps } = makeDeps();
+  it('the cover frame is durable via its own column, and stays OUT of the checkpoint jsonb', async () => {
+    // The cover frame must survive resume, but generateThumbnail returns a base64
+    // DATA URL (geminiService.ts:2311) — so it rides producer_runs.thumbnail_url via
+    // 'record_thumbnail', never `artifacts`. Putting it in artifacts would push MBs
+    // into the run-header jsonb on every later checkpoint, exactly what
+    // api/producer/advance.ts:21-24 says record_image exists to prevent.
+    const { deps, store } = makeDeps();
     const { cb } = makeCallbacks();
     const run = createProductionRun(makeInput(), 'u1');
     await runProduction(run, cb, deps);
     const done = await approveStoryboard(run, cb, deps);
 
     expect(done.thumbnailUrl).toBe('thumb://cover.png');
+    // durable…
+    expect(store.recordThumbnail).toHaveBeenCalledTimes(1);
+    expect(thumbnailColumn.value).toBe('thumb://cover.png');
+    // …and NOT in the revision-guarded checkpoint, at any point in the run's history.
     expect(artifacts().thumbnailUrl).toBeUndefined();
+    for (const w of server.applied) expect(w.artifacts.thumbnailUrl).toBeUndefined();
   });
 
-  it('the gap costs NO re-spend: a resumed run does not re-run the thumbnail node', async () => {
-    // Bounds the gap above. `stages` IS checkpointed, so a current-shape resume
-    // carries thumbnail:'done'; normalizeStages early-returns (it only infers
+  it('a failing record_thumbnail is best-effort — it never breaks the run', async () => {
+    // The column may not exist yet (supabase/producer_runs.sql not re-run), which
+    // surfaces as a 500 from the advance endpoint. That must cost the cover frame on
+    // resume and nothing else.
+    const { store } = makeFakeStore();
+    (store.recordThumbnail as any) = vi.fn(async () => {
+      throw new Error('write_failed');
+    });
+    const { deps } = makeDeps({ run: store });
+    const { cb } = makeCallbacks();
+    const run = createProductionRun(makeInput(), 'u1');
+    await runProduction(run, cb, deps);
+    const done = await approveStoryboard(run, cb, deps);
+
+    expect(done.gate).toBe('first_cut'); // run completed normally
+    expect(done.status).toBe('review');
+    expect(done.thumbnailUrl).toBe('thumb://cover.png'); // in memory this session
+    expect(thumbnailColumn.value).toBeNull(); // just not durable
+  });
+
+  it('a resumed run restores the cover frame from the column and re-spends nothing', async () => {
+    // Two properties in one resume: (1) thumbnailUrl comes back from
+    // producer_runs.thumbnail_url, which is the whole point of the slice;
+    // (2) no node re-runs — `stages` IS checkpointed, so a current-shape resume
+    // carries thumbnail:'done', normalizeStages early-returns (it only infers
     // done-ness for stages MISSING from an old-shape checkpoint) and the driver's
     // thumbnail branch skips on status. Asserted behaviourally, not by reading
     // the guard — the resumed run gets FRESH spies and must not touch them.
@@ -416,10 +445,11 @@ describe('P3 pair — video ∥ thumbnail through the First Cut park', () => {
       scenes: art.scenes,
       edl: art.edl,
       finalVideoUrl: art.finalVideoUrl,
-      thumbnailUrl: art.thumbnailUrl, // undefined — the gap
+      // Mirrors ProducerFlow's `row.thumbnail_url ?? art.thumbnailUrl`.
+      thumbnailUrl: thumbnailColumn.value ?? art.thumbnailUrl,
       revision: server.row!.revision,
     } as unknown as ProductionRun;
-    expect(resumed.thumbnailUrl).toBeUndefined();
+    expect(resumed.thumbnailUrl).toBe('thumb://cover.png'); // restored — was lost before the slice
 
     const out = await runProduction(resumed, makeCallbacks().cb, second.deps);
 

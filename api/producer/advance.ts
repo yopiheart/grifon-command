@@ -28,6 +28,7 @@ const Body = z.discriminatedUnion('action', [
   z.object({ action: z.literal('claim'), runId: z.string().min(8).max(200), sceneIdx: z.number().int().min(0).max(23) }),
   z.object({ action: z.literal('record'), runId: z.string().min(8).max(200), sceneIdx: z.number().int().min(0).max(23), jobHandle: z.record(z.string(), z.unknown()) }),
   z.object({ action: z.literal('record_image'), runId: z.string().min(8).max(200), sceneIdx: z.number().int().min(0).max(23), imageUrl: z.string().max(3_000_000), endFrameUrl: z.string().max(3_000_000).nullable().optional() }),
+  z.object({ action: z.literal('record_thumbnail'), runId: z.string().min(8).max(200), thumbnailUrl: z.string().max(3_000_000) }),
   z.object({ action: z.literal('complete'), runId: z.string().min(8).max(200), sceneIdx: z.number().int().min(0).max(23), videoUrl: z.string().max(4000), audioUrl: z.string().max(4000).optional() }),
   z.object({ action: z.literal('flag'), runId: z.string().min(8).max(200), sceneIdx: z.number().int().min(0).max(23), reason: z.string().max(500).optional() }),
   z.object({ action: z.literal('requeue'), runId: z.string().min(8).max(200), sceneIdx: z.number().int().min(0).max(23) }),
@@ -143,6 +144,25 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         );
       if (error) {
         console.error('[producer/advance] record_image failed:', error.message);
+        return res.status(500).json({ error: 'write_failed' });
+      }
+      return res.status(200).json({ ok: true, changed: true });
+    }
+
+    case 'record_thumbnail': {
+      // The producer's cover frame, on its OWN column for the same reason record_image exists:
+      // generateThumbnail returns a base64 DATA URL, and multi-MB payloads in the run-header
+      // artifacts jsonb hit statement timeouts + the 2mb parser cap. Deliberately does NOT touch
+      // `revision` — this is an out-of-band artifact write, not a checkpoint, so it can never
+      // interfere with the optimistic-concurrency guard in api/producer/run.ts.
+      const { error } = await admin
+        .from('producer_runs')
+        .update({ thumbnail_url: body.thumbnailUrl, updated_at: nowIso })
+        .eq('run_id', body.runId);
+      if (error) {
+        // Includes the "column does not exist" case when producer_runs.sql has not been
+        // re-run yet — the caller treats this as best-effort, so the run is unaffected.
+        console.error('[producer/advance] record_thumbnail failed:', error.message);
         return res.status(500).json({ error: 'write_failed' });
       }
       return res.status(200).json({ ok: true, changed: true });

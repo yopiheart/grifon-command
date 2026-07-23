@@ -66,7 +66,15 @@ the impact and the fix:*
   prevent ("keeps multi-MB images OUT of the run-header checkpoint jsonb, whose oversized writes
   hit Postgres statement timeouts", 2026-07-02 SIGLA smoke). It would trade a hidden download
   button for 413s / stalled checkpoints.
-- **Correct fix shape (needs Neil — schema + endpoint, NOT a one-liner):** give the thumbnail its
+- **SHIPPED 2026-07-23** (Neil said GO after the correction). Implemented as described below:
+  `producer_runs.thumbnail_url` column + `record_thumbnail` action on `api/producer/advance.ts` +
+  `recordThumbnail` on the run store (OPTIONAL on `ProducerRunStore`, best-effort at the call
+  site) + `ProducerFlow` resume reads `row.thumbnail_url ?? art.thumbnailUrl`. Nothing enters the
+  artifacts jsonb — asserted by a test over the run's whole write history.
+  **⚠ ACTION FOR NEIL: re-run `supabase/producer_runs.sql`** (idempotent) to add the column. Until
+  then the write 500s, is swallowed best-effort, and behavior is exactly as it was — safe to merge
+  before applying.
+- **Correct fix shape (as implemented — schema + endpoint, NOT a one-liner):** give the thumbnail its
   own small durable write, mirroring `record_image`'s dedicated per-scene row — e.g. a
   `producer_runs.thumbnail_url` column (idempotent `alter table … add column if not exists`) plus
   a `record_thumbnail` action on `api/producer/advance.ts` (which already has the 4mb bodyParser

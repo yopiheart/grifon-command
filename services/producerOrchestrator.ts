@@ -325,6 +325,10 @@ export interface ProducerRunStore {
   /** Persist a scene's image(s) on its own row (written once per scene). Keeps multi-MB base64
    * out of the run-header checkpoint; resume rehydrates storyboard images from these rows. */
   recordSceneImage: (runId: string, sceneIdx: number, imageUrl: string, endFrameUrl?: string) => Promise<{ changed: boolean }>;
+  /** Persist the run's cover frame on its own run-header column, same rationale as
+   * recordSceneImage. OPTIONAL: absent in tests and on any deps built before this existed, in
+   * which case the thumbnail simply isn't durable across resume (the pre-existing behavior). */
+  recordThumbnail?: (runId: string, thumbnailUrl: string) => Promise<{ changed: boolean }>;
   completeScene: (runId: string, sceneIdx: number, videoUrl: string, audioUrl?: string) => Promise<{ changed: boolean }>;
   flagScene: (runId: string, sceneIdx: number, reason?: string) => Promise<{ changed: boolean }>;
   requeueScene: (runId: string, sceneIdx: number) => Promise<{ changed: boolean }>;
@@ -1289,6 +1293,13 @@ async function runStage(
         await commit((r) => {
           r.thumbnailUrl = url;
         });
+        // Durable cover-frame persistence: the run's OWN small column ('record_thumbnail'),
+        // never the checkpoint artifacts jsonb — generateThumbnail returns a base64 data URL.
+        // Best-effort, exactly like recordSceneImage: losing this costs the cover frame on a
+        // resume (First Cut hides the download), never the run.
+        try {
+          await deps.run.recordThumbnail?.(run.runId, url);
+        } catch { /* best-effort */ }
       }
       await setStage(id, { detail: url ? 'Cover frame ready' : 'No cover frame' });
       return;

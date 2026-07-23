@@ -35,6 +35,15 @@ create index if not exists producer_runs_status_idx   on public.producer_runs(st
 alter table public.producer_runs add column if not exists engine text default 'producer';
 alter table public.producer_runs add column if not exists cost_usd numeric not null default 0;
 
+-- P3 follow-up (loop-arch): the producer's cover frame. generateThumbnail returns a base64
+-- DATA URL, so it gets its OWN small column written once via api/producer/advance.ts
+-- 'record_thumbnail' — the run-header rule (images never in the artifacts jsonb) applies here
+-- exactly as it does to producer_scenes.image_url. Before this column existed the cover frame
+-- was simply lost on resume (First Cut hid the preview + download). Degrades safely: if this
+-- alter has not been applied, the write 500s, the orchestrator swallows it (best-effort) and
+-- the run behaves exactly as it did before — nothing else depends on it.
+alter table public.producer_runs add column if not exists thumbnail_url text;
+
 -- ── Per-scene job queue ───────────────────────────────────────────────────────
 -- One row per (run, scene). A relational child table (not a jsonb array on the run)
 -- is deliberate: it makes the atomic claim below a single-row UPDATE, which is what

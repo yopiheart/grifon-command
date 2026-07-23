@@ -101,7 +101,10 @@ function fromRow(row: ProductionRunRow, scenes: ProductionSceneRow[]): Productio
     edl: art.edl,
     finalVideoUrl: art.finalVideoUrl,
     finalDownloadUrl: art.finalDownloadUrl,
-    thumbnailUrl: art.thumbnailUrl,
+    // Cover frame lives on its own run-header column (written via 'record_thumbnail'), NOT in
+    // artifacts — it is a base64 data URL and would bloat every later checkpoint. The artifacts
+    // fallback covers runs checkpointed before that column existed (it will simply be absent).
+    thumbnailUrl: row.thumbnail_url ?? (art.thumbnailUrl as string | undefined),
     error: row.error ?? undefined,
     // Carry the server revision so the resumed run's next checkpoint guards on the fresh value
     // (optimistic concurrency) instead of racing from 0.
