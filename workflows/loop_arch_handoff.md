@@ -99,7 +99,53 @@ Bypass for Automation" secret (protection stays on for humans; automation append
 `?x-vercel-protection-bypass=<secret>&x-vercel-set-bypass-cookie=true` once). Do NOT simply
 disable protection.
 
-### 3. Canary (ONLY after Neil approves the cost estimate below)
+### 3. Canary — **RUN 2026-07-23** (Neil-approved, $15 cap; Neil drove the browser, agent watched DB telemetry)
+
+**Run:** `apr_48736802-d4be-4317-b900-39869f915da8` on the P4 preview (SSO note below), LUNARIA
+serum (codex-image hero `.tmp/canary-hero-lunaria.png`), Real Talk Review, 9:16, **9 scenes**
+(no scene-count control in intake; script dictated 9 — original 6-scene estimate obsolete).
+**Spend: $5.41 run_cogs** (9 video submits: mixed kling-v3 $0.50 + veo-3.1-lite $0.60 ✓ routing
+mix live) + ElevenLabs credits ×2 (see F1). Launch→Gate-1 in **2m19s**.
+
+**Architecture evidence (all live, real Postgres):** P2 telemetry spine complete
+(node_start/done/fail, gate_park/approve, 27 cogs events, run_cogs view correct); P3 parallelism
+live (scene_images ∥ video_prompts overlapped; video ∥ thumbnail); **claims held under a REAL
+dual-driver race — exactly 9 video submits for 9 scenes, zero double-spend**; revision guard +
+conflict-adopt worked under a conflict storm (rev → 54); error state parked cleanly + resumable.
+
+**Findings (ranked):**
+- **F1 — Approve button: no in-flight guard + no first-click feedback (HIGH, product bug).**
+  `gate_approve` fired 2× → TWO concurrent `runProduction` drivers from approval on → every
+  batch stage double-ran (video×2 starts, thumbnail×2, voices×2 → **double ElevenLabs burn**,
+  edl×2). Root cause per Neil (he's seen it "matagal na"): first Approve click gives NO
+  immediate visual response, so users naturally click again; `handleApprove`
+  (components/OneShotAd/ProducerFlow.tsx) has no busy guard, and `approveStoryboard` is
+  idempotent only sequentially, not concurrently. Fix shape: disable+spinner on first click AND
+  a concurrency guard in approveStoryboard. The claims layer is why this cost credits, not
+  dollars — but it burned real ElevenLabs credits and doubled run telemetry.
+- **F2 — EDL fails deterministically with ZERO output tokens (HIGH, blocks this run).**
+  4/4 EDL calls: `inputTokens 4767 = totalTokens, outputTokens null` — the model produced NO
+  text; `const raw = response.text || '{}'` (services/geminiService.ts:1471) silently converts
+  empty output into `{}` → misdiagnosed as `EDL_MALFORMED`. The legacy handler RETURNS
+  `promptFeedback` (block reason) but the client discards it. Fix shape (transport, fair game):
+  when `response.text` is empty, log/surface `promptFeedback` + `finishReason` and throw a
+  DISTINCT retryable transport error; investigate why this run's payload (9-scene prompt +
+  audio inlineData parts) zero-outputs on `gemini-3.6-flash` (the 2026-07-18 run passed EDL on
+  the same model). Run left in `status=error`, fully resumable — one Retry after the fix
+  finishes the ad, no re-spend.
+- **F3 — Preview OAuth redirect bounces to prod.** Google login on a vercel.app preview lands on
+  grifon.ai (preview origin not in Supabase redirect allowlist; app sends
+  `redirectTo: window.location.origin` correctly). Workaround used: email-OTP login (no
+  redirect). Permanent option: add `https://grifon-command-*-<team>.vercel.app/**` to Supabase
+  Auth → Redirect URLs.
+- **F4 — deployed build ids drift from working tree:** runId prefix `apr_` (not `osa_`) and a
+  different localStorage active-run key on the deployed commit — session tooling should read the
+  DB, not localStorage.
+- **F5 (minor):** the RunningScreen console shows a Tailwind-CDN production warning; duplicate
+  `node_done{thumbnail}` events under F1's dual driver (emit is per-driver, dedupe not needed
+  once F1 is fixed).
+
+### 3 (original). Canary (ONLY after Neil approves the cost estimate below)
 One end-to-end Producer run (6 scenes, 9:16, gate flags OFF) against the P4 preview. It live-exercises: flow schema ladder, watchdog, run telemetry rows (verify `run_cogs` + `cost_usd` against real Postgres), P3 parallelism. Wizard-driving rules: load `.claude/skills/director-smoke/` first; delegate browser work to `smoke-tester`.
 
 ### 4. P4 metering redesign — **BUILT 2026-07-23** (Neil approved Option A as amended by the Fable review; implemented by `code-executor`, reviewed by the Fable main loop)
