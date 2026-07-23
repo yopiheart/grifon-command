@@ -34,8 +34,15 @@ const SfxCueSchema = z.object({
 
 const SceneSchema = z.object({
   sceneIdx: z.number().int().nonnegative(),
-  videoUrl: z.string().url(),
-  audioUrl: z.string().url().nullish(),
+  videoUrl: z
+    .string()
+    .url()
+    .refine((u) => u.startsWith('https://'), 'videoUrl must be an https URL'),
+  audioUrl: z
+    .string()
+    .url()
+    .refine((u) => u.startsWith('https://'), 'audioUrl must be an https URL')
+    .nullish(),
   targetDurationSec: z.number().positive().nullish(),
   keepFullClip: z.boolean().optional(),
   fallbackDurationSec: z.number().positive().optional(),
@@ -73,7 +80,11 @@ const Body = z.object({
       // Optional generated bed (from api/music/compose). When present + reachable
       // it overrides the static `style` bed; absent/unreachable → static fallback.
       // `style` is still required: it drives resolvePreset() and is the fallback.
-      bedUrl: z.string().url().optional(),
+      bedUrl: z
+        .string()
+        .url()
+        .refine((u) => u.startsWith('https://'), 'bedUrl must be an https URL')
+        .optional(),
       // 'bed' (default) ducks under VO; 'lead' (no-VO Pure Hype) plays music at full gain, no ducking.
       role: z.enum(['bed', 'lead']).optional(),
     })

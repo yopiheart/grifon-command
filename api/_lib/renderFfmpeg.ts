@@ -5,6 +5,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import ffmpegPath from 'ffmpeg-static';
 import type { FinalRenderScene, FinalRenderEndCard, SfxBankId } from '../../types.js';
+import { assertSafeMediaUrl } from './ssrfGuard.js';
 import {
   CLASSIC,
   pickSfxVariant,
@@ -777,6 +778,7 @@ function masterAudio(inPath: string, outPath: string): boolean {
 }
 
 async function downloadToFile(url: string, path: string): Promise<void> {
+  assertSafeMediaUrl(url);
   const r = await fetch(url);
   if (!r.ok) throw new RenderError(`download_failed_${r.status}`);
   const buf = Buffer.from(await r.arrayBuffer());

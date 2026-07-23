@@ -12,6 +12,7 @@ import { putMedia } from '../_lib/mediaStore.js';
 import { looksBlocked } from '../_lib/omniGate.js';
 import { isOmniBetaAllowed } from '../_lib/omniBeta.js';
 import { logVideoUsage } from '../_lib/modelCosts.js';
+import { assertSafeMediaUrl } from '../_lib/ssrfGuard.js';
 import {
   OMNI_PRESETS,
   isApprovedOmniPresetId,
@@ -259,6 +260,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   let tmpDir: string | null = null;
   let videoUri: string;
   try {
+    assertSafeMediaUrl(videoUrl);
     const dl = await fetch(videoUrl);
     if (!dl.ok) {
       console.error('[api/gemini/omni-video] scene clip download failed:', dl.status);
