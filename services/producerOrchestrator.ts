@@ -21,6 +21,11 @@ import { estimateSpokenSec } from '../utils/spokenDuration';
 // businessType / listingPrice so the venue router resolves). oneShotIntake is a pure,
 // types-only module — importing it at runtime pulls no heavy Gemini/voice chain.
 import { mapReportToWizard } from './oneShotIntake';
+// P2 observability spine: stamp the active run id onto proxy calls (so server COGS/node
+// events join to the run) and post node-lifecycle events through the existing analytics
+// sink. Both are light, browser-safe modules; telemetry here is always best-effort.
+import { setActiveRunId } from './runTelemetry';
+import { trackEvent } from './analyticsService';
 import type {
   Avatar,
   BusinessInfo,
@@ -419,6 +424,21 @@ export function routeModel(type: VideoPrompt['type'], fallback: VideoModelType, 
   return fallback;
 }
 
+/** Post a producer-run lifecycle event to the shared /api/events sink via the existing
+ * analytics transport (P2). Fire-and-forget and fully best-effort: a telemetry failure
+ * must never block or fail a stage. */
+const emitRunEvent = (
+  event: 'node_start' | 'node_done' | 'node_fail' | 'gate_park' | 'gate_approve',
+  runId: string,
+  meta: Record<string, unknown>
+): void => {
+  try {
+    void trackEvent({ event, run_id: runId, meta });
+  } catch {
+    /* best-effort — telemetry never breaks the run */
+  }
+};
+
 async function withRetry<T>(fn: () => Promise<T>, attempts: number, onAttempt?: (n: number) => void): Promise<T> {
   let lastErr: unknown;
   for (let n = 1; n <= attempts; n++) {
@@ -468,6 +488,19 @@ async function pooled<T>(items: T[], limit: number, worker: (item: T) => Promise
  * On a resumed run already at a gate, it re-parks idempotently.
  */
 export async function runProduction(initial: ProductionRun, cb: ProducerCallbacks, deps: ProducerDeps): Promise<ProductionRun> {
+  // Run starts (or resumes): stamp the active run id so every proxy call made below
+  // carries x-run-id for server-side COGS/node attribution. try/finally (not inline
+  // clears) so a throw-through from an injected dep or UI callback can never leave a
+  // stale run id on the module singleton polluting later unrelated calls' telemetry.
+  setActiveRunId(initial.runId);
+  try {
+    return await runProductionInner(initial, cb, deps);
+  } finally {
+    setActiveRunId(null);
+  }
+}
+
+async function runProductionInner(initial: ProductionRun, cb: ProducerCallbacks, deps: ProducerDeps): Promise<ProductionRun> {
   let run = initial;
 
   const commit = async (mut: (r: ProductionRun) => void) => {
@@ -491,6 +524,7 @@ export async function runProduction(initial: ProductionRun, cb: ProducerCallback
         r.status = 'review';
         r.gate = 'storyboard';
       });
+      emitRunEvent('gate_park', run.runId, { node: 'storyboard', gate: 'storyboard' });
       return run;
     }
 
@@ -498,12 +532,15 @@ export async function runProduction(initial: ProductionRun, cb: ProducerCallback
     if (stage.status === 'done') continue; // resume: skip completed stages
 
     await setStage(id, { status: 'running', error: undefined });
+    emitRunEvent('node_start', run.runId, { node: id, attempt: stage.attempts });
     try {
       await runStage(id, run, deps, cb, setStage);
       await setStage(id, { status: 'done' });
+      emitRunEvent('node_done', run.runId, { node: id });
     } catch (e: any) {
       if (e?.message === 'ABORTED') return run;
       await setStage(id, { status: 'failed', error: e?.message ?? 'STAGE_FAILED' });
+      emitRunEvent('node_fail', run.runId, { node: id, error: e?.message ?? 'failed' });
       await commit((r) => {
         r.status = 'error';
         r.error = `${id}: ${e?.message ?? 'failed'}`;
@@ -517,6 +554,7 @@ export async function runProduction(initial: ProductionRun, cb: ProducerCallback
     r.status = 'review';
     r.gate = 'first_cut';
   });
+  emitRunEvent('gate_park', run.runId, { gate: 'first_cut' });
   return run;
 }
 
@@ -525,6 +563,10 @@ export async function runProduction(initial: ProductionRun, cb: ProducerCallback
  * gate screen after the user verifies/regenerates the scene images. Idempotent.
  */
 export async function approveStoryboard(run: ProductionRun, cb: ProducerCallbacks, deps: ProducerDeps): Promise<ProductionRun> {
+  // Resume from the storyboard gate. No setActiveRunId here — the pre-loop work below
+  // makes no proxied AI calls, and runProduction's try/finally owns the id lifecycle
+  // (a set here without its own finally could leak if persist/onUpdate threw).
+  emitRunEvent('gate_approve', run.runId, { gate: 'storyboard' });
   run.storyboardApproved = true;
   run.status = 'running';
   run.gate = undefined;

@@ -6,7 +6,7 @@ import { rateLimitCheck } from '../_lib/rateLimit.js';
 import { getUserPlan } from '../_lib/userPlan.js';
 import { consumeMonthly } from '../_lib/quota.js';
 import { logImageUsage } from '../_lib/modelCosts.js';
-import { getRequestId } from '../_lib/requestId.js';
+import { getRequestId, getRunId } from '../_lib/requestId.js';
 
 const Body = z.object({
   model: z.string().min(1),
@@ -29,6 +29,8 @@ const getAi = (): GoogleGenAI => {
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const rid = getRequestId(req);
   res.setHeader('x-request-id', rid);
+  // P2: producer run correlator — undefined for non-run traffic (gates COGS run-event mirroring).
+  const runId = getRunId(req);
 
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
@@ -81,7 +83,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const ai = getAi();
     const response = await ai.models.generateContent(parsed.data as any);
-    logImageUsage('image', parsed.data.model, 1);
+    logImageUsage('image', parsed.data.model, 1, runId);
 
     return res.status(200).json({
       candidates: response.candidates ?? [],

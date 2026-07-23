@@ -5,6 +5,8 @@ import { getUserFromAccessToken } from '../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../_lib/rateLimit.js';
 import { getUserPlan } from '../_lib/userPlan.js';
 import { meterVideoRequest } from '../_lib/quota.js';
+import { logVideoUsage } from '../_lib/modelCosts.js';
+import { getRunId } from '../_lib/requestId.js';
 
 const Body = z.object({
   model: z.string().min(1),
@@ -103,6 +105,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       finishedAdId,
     });
     const operation = await ai.models.generateVideos(veoParams as any);
+    // COGS: the render is now billable. Fire-and-forget — never throws. When a producer
+    // run supplied x-run-id, the estimate is also mirrored to public.events ('cogs' row)
+    // so per-run cost rolls up (run_cogs view / producer_runs.cost_usd).
+    logVideoUsage('gemini:video:submit', veoParams.model, Number(cfg.durationSeconds) || 0, getRunId(req));
     return res.status(200).json({ operation });
   } catch (err: any) {
     const msg = err?.message ?? 'unknown';

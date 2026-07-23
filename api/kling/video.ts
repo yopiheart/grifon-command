@@ -5,6 +5,8 @@ import { rateLimitCheck } from '../_lib/rateLimit.js';
 import { getUserPlan } from '../_lib/userPlan.js';
 import { meterVideoRequest } from '../_lib/quota.js';
 import { getKlingAccessToken, invalidateKlingAccessToken, KLING_API_BASE } from '../_lib/klingAuth.js';
+import { logVideoUsage } from '../_lib/modelCosts.js';
+import { getRunId } from '../_lib/requestId.js';
 
 const Body = z.object({
   model_name: z.string().min(1),
@@ -148,6 +150,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Success: HTTP 200 + Kling envelope code 0.
   if (upstreamStatus === 200 && upstreamJson?.code === 0 && upstreamJson?.data) {
     const data = upstreamJson.data;
+    // COGS: the render is now billable. Fire-and-forget — never throws. When a producer
+    // run supplied x-run-id, the estimate is mirrored to public.events for per-run roll-up.
+    logVideoUsage('kling:video:submit', klingBody.model_name, Number(klingBody.duration) || 0, getRunId(req));
     return res.status(200).json({
       operation: {
         task_id: data.task_id,

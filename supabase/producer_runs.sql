@@ -28,6 +28,13 @@ create table if not exists public.producer_runs (
 create index if not exists producer_runs_user_id_idx on public.producer_runs(user_id);
 create index if not exists producer_runs_status_idx   on public.producer_runs(status);
 
+-- P2 observability spine (loop-arch). `engine` distinguishes the producer runtime from
+-- legacy engines for A/B telemetry; `cost_usd` is the denormalized per-run generation
+-- spend, written from the run_cogs view when a run reaches 'done' (api/producer/run.ts).
+-- Idempotent adds for tables created before P2.
+alter table public.producer_runs add column if not exists engine text default 'producer';
+alter table public.producer_runs add column if not exists cost_usd numeric not null default 0;
+
 -- ── Per-scene job queue ───────────────────────────────────────────────────────
 -- One row per (run, scene). A relational child table (not a jsonb array on the run)
 -- is deliberate: it makes the atomic claim below a single-row UPDATE, which is what

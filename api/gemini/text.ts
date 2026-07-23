@@ -54,7 +54,7 @@ import {
 } from '../_lib/prompts.js';
 import type { MarketResearchInput, OfferOptimizerInput } from '../../types.js';
 import { logModelUsage } from '../_lib/modelCosts.js';
-import { getRequestId } from '../_lib/requestId.js';
+import { getRequestId, getRunId } from '../_lib/requestId.js';
 
 const TEXT_LIMIT = 30;
 const TEXT_WINDOW_SECONDS = 60;
@@ -77,13 +77,14 @@ type TemuSubType = 'ASMR' | 'Reaction' | 'Utility';
 const classifyTemuProductServerSide = async (
   product: string,
   description: string,
-  ai: GoogleGenAI
+  ai: GoogleGenAI,
+  runId?: string
 ): Promise<TemuSubType> => {
   const response = await ai.models.generateContent({
     model: MODEL_FAST,
     contents: TEMU_CLASSIFIER_PROMPT(product, description),
   } as any);
-  logModelUsage('flow:adscript:temu-classify', MODEL_FAST, (response as any).usageMetadata);
+  logModelUsage('flow:adscript:temu-classify', MODEL_FAST, (response as any).usageMetadata, runId);
   const text = response.text?.trim().toUpperCase() || 'REACTION';
   if (text.includes('ASMR')) return 'ASMR';
   if (text.includes('UTILITY')) return 'Utility';
@@ -110,13 +111,14 @@ export const parseUgcProClassifierResponse = (text: string): UgcProSubType => {
 const classifyUgcProServerSide = async (
   product: string,
   description: string,
-  ai: GoogleGenAI
+  ai: GoogleGenAI,
+  runId?: string
 ): Promise<UgcProSubType> => {
   const response = await ai.models.generateContent({
     model: MODEL_FAST,
     contents: UGCPRO_CLASSIFIER_PROMPT(product, description),
   } as any);
-  logModelUsage('flow:adscript:ugcpro-classify', MODEL_FAST, (response as any).usageMetadata);
+  logModelUsage('flow:adscript:ugcpro-classify', MODEL_FAST, (response as any).usageMetadata, runId);
   return parseUgcProClassifierResponse(response.text ?? '');
 };
 
@@ -127,13 +129,14 @@ const classifyUgcProServerSide = async (
 const classifyUgcProServiceServerSide = async (
   product: string,
   description: string,
-  ai: GoogleGenAI
+  ai: GoogleGenAI,
+  runId?: string
 ): Promise<'transformation' | 'tutorial'> => {
   const response = await ai.models.generateContent({
     model: MODEL_FAST,
     contents: UGCPRO_SERVICE_CLASSIFIER_PROMPT(product, description),
   } as any);
-  logModelUsage('flow:adscript:ugcpro-service-classify', MODEL_FAST, (response as any).usageMetadata);
+  logModelUsage('flow:adscript:ugcpro-service-classify', MODEL_FAST, (response as any).usageMetadata, runId);
   return (response.text ?? '').toUpperCase().includes('TUTORIAL') ? 'tutorial' : 'transformation';
 };
 
@@ -149,7 +152,8 @@ const classifyUgcProServiceServerSide = async (
 // Exported for unit tests (the clamp is asserted with a spy `ai`).
 export const resolveUgcProSubType = async (
   businessInfo: AdScriptInput['businessInfo'],
-  ai: GoogleGenAI
+  ai: GoogleGenAI,
+  runId?: string
 ): Promise<UgcProSubType> => {
   const chosen = businessInfo.ugcProFormat;
   const bt = businessInfo.businessType ?? 'product';
@@ -157,7 +161,7 @@ export const resolveUgcProSubType = async (
   if (bt === 'service') {
     return chosen === 'transformation' || chosen === 'tutorial'
       ? chosen
-      : classifyUgcProServiceServerSide(businessInfo.product, businessInfo.features, ai);
+      : classifyUgcProServiceServerSide(businessInfo.product, businessInfo.features, ai, runId);
   }
   if (
     chosen === 'tryon' ||
@@ -168,13 +172,13 @@ export const resolveUgcProSubType = async (
   ) {
     return chosen;
   }
-  return classifyUgcProServerSide(businessInfo.product, businessInfo.features, ai);
+  return classifyUgcProServerSide(businessInfo.product, businessInfo.features, ai, runId);
 };
 
-type FlowHandler = (input: any, ai: GoogleGenAI) => Promise<unknown>;
+type FlowHandler = (input: any, ai: GoogleGenAI, runId?: string) => Promise<unknown>;
 
 export const FLOW_REGISTRY: Record<string, FlowHandler> = {
-  marketmind: async (input: MarketResearchInput, ai) => {
+  marketmind: async (input: MarketResearchInput, ai, runId?: string) => {
     const parts = buildMarketMindParts(input);
     // TEMPORARY (per Neil 2026-05-09): downgraded from MODEL_RESEARCH (3.1 Pro)
     // to Flash Lite to control API cost during early ramp. REVERT when budget
@@ -189,17 +193,18 @@ export const FLOW_REGISTRY: Record<string, FlowHandler> = {
       },
     } as any);
     const rawText = response.text || '{}';
-    logModelUsage('flow:marketmind', MODEL_TEXT, (response as any).usageMetadata);
+    logModelUsage('flow:marketmind', MODEL_TEXT, (response as any).usageMetadata, runId);
     return JSON.parse(cleanJson(rawText));
   },
 
-  adscript: async (input: AdScriptInput, ai) => {
+  adscript: async (input: AdScriptInput, ai, runId?: string) => {
     let temuSubType: TemuSubType | undefined;
     if (input.businessInfo.scriptType === 'Temu') {
       temuSubType = await classifyTemuProductServerSide(
         input.businessInfo.product,
         input.businessInfo.features,
-        ai
+        ai,
+        runId
       );
     }
     let ugcProSubType: UgcProSubType | undefined;
@@ -207,7 +212,7 @@ export const FLOW_REGISTRY: Record<string, FlowHandler> = {
       // A4: businessType-clamped dispatch — realestate forces 'tutorial' (no Gemini
       // call), service honors only its 2 legal picks / else the 2-way classifier,
       // product keeps the pre-Slice-4 5-way behavior. See resolveUgcProSubType.
-      ugcProSubType = await resolveUgcProSubType(input.businessInfo, ai);
+      ugcProSubType = await resolveUgcProSubType(input.businessInfo, ai, runId);
     }
     const prompt = buildAdScriptPrompt(input, temuSubType, ugcProSubType);
     // Single-shot generate + parse. Extracted so the hook-starvation retry and the
@@ -223,7 +228,7 @@ export const FLOW_REGISTRY: Record<string, FlowHandler> = {
           thinkingConfig: { thinkingBudget: 4000 },
         },
       } as any);
-      logModelUsage(flowTag, MODEL_TEXT, (response as any).usageMetadata);
+      logModelUsage(flowTag, MODEL_TEXT, (response as any).usageMetadata, runId);
       return parseAdScriptResponse(response.text || '{}');
     };
 
@@ -264,7 +269,7 @@ export const FLOW_REGISTRY: Record<string, FlowHandler> = {
       : script;
   },
 
-  'offer-optimizer': async (input: OfferOptimizerInput, ai) => {
+  'offer-optimizer': async (input: OfferOptimizerInput, ai, runId?: string) => {
     const prompt = buildOfferOptimizerPrompt(input);
     const response = await ai.models.generateContent({
       model: MODEL_TEXT,
@@ -275,11 +280,11 @@ export const FLOW_REGISTRY: Record<string, FlowHandler> = {
       },
     } as any);
     const rawText = response.text || '{}';
-    logModelUsage('flow:offer-optimizer', MODEL_TEXT, (response as any).usageMetadata);
+    logModelUsage('flow:offer-optimizer', MODEL_TEXT, (response as any).usageMetadata, runId);
     return parseOfferOptimizerResponse(rawText);
   },
 
-  'influencer-script': async (input: InfluencerScriptFlowInput, ai) => {
+  'influencer-script': async (input: InfluencerScriptFlowInput, ai, runId?: string) => {
     const prompt = buildInfluencerScriptPrompt(input);
     const response = await ai.models.generateContent({
       model: MODEL_TEXT,
@@ -290,11 +295,11 @@ export const FLOW_REGISTRY: Record<string, FlowHandler> = {
         thinkingConfig: { thinkingBudget: 4000 },
       },
     } as any);
-    logModelUsage('flow:influencer-script', MODEL_TEXT, (response as any).usageMetadata);
+    logModelUsage('flow:influencer-script', MODEL_TEXT, (response as any).usageMetadata, runId);
     return parseInfluencerScriptResponse(response.text || '{}');
   },
 
-  storyboard: async (input: StoryboardFlowInput, ai) => {
+  storyboard: async (input: StoryboardFlowInput, ai, runId?: string) => {
     const prompt = buildStoryboardPrompt(input);
     const response = await ai.models.generateContent({
       model: MODEL_FAST,
@@ -304,7 +309,7 @@ export const FLOW_REGISTRY: Record<string, FlowHandler> = {
         safetySettings: SAFETY_SETTINGS,
       },
     } as any);
-    logModelUsage('flow:storyboard', MODEL_FAST, (response as any).usageMetadata);
+    logModelUsage('flow:storyboard', MODEL_FAST, (response as any).usageMetadata, runId);
     return parseStoryboardResponse(response.text || '{}');
   },
 };
@@ -345,18 +350,19 @@ export type FlowLadderResult =
 export const runFlowWithSchema = async (
   flow: FlowName,
   input: unknown,
-  ai: GoogleGenAI
+  ai: GoogleGenAI,
+  runId?: string
 ): Promise<FlowLadderResult> => {
   const handlerFn = FLOW_REGISTRY[flow];
   const schema = FLOW_OUTPUT_SCHEMAS[flow];
 
-  let result = await handlerFn(input, ai);
+  let result = await handlerFn(input, ai, runId);
   let check = schema.safeParse(result);
   if (check.success) return { ok: true, result };
 
   // ONE verbatim regeneration — resend the exact same request.
   console.warn(`[flow:${flow}] output failed schema — regenerating once (verbatim)`);
-  result = await handlerFn(input, ai);
+  result = await handlerFn(input, ai, runId);
   check = schema.safeParse(result);
   if (check.success) return { ok: true, result };
 
@@ -397,6 +403,9 @@ export const LegacyBody = z.object({
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const rid = getRequestId(req);
   res.setHeader('x-request-id', rid);
+  // P2: producer run correlator — undefined for non-run traffic, so COGS run-event
+  // mirroring stays gated to producer runs (getRunId returns undefined without x-run-id).
+  const runId = getRunId(req);
 
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
@@ -474,7 +483,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       if (!handlerFn) {
         return res.status(400).json({ error: 'unknown_flow', flow: parsed.data.flow });
       }
-      const ladder = await runFlowWithSchema(parsed.data.flow, parsed.data.input, ai);
+      const ladder = await runFlowWithSchema(parsed.data.flow, parsed.data.input, ai, runId);
       if (!ladder.ok) {
         return res.status(422).json({
           error: 'flow_output_invalid',
@@ -491,7 +500,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(400).json({ error: 'invalid_body', issues: parsed.error.issues });
     }
     const response = await ai.models.generateContent(parsed.data as any);
-    logModelUsage('legacy', parsed.data.model, (response as any).usageMetadata);
+    logModelUsage('legacy', parsed.data.model, (response as any).usageMetadata, runId);
     return res.status(200).json({
       text: response.text ?? '',
       candidates: response.candidates ?? [],

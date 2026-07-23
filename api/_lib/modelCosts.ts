@@ -12,6 +12,9 @@
 // The RELATIVE ratios that drive the routing decision (text << image << video)
 // hold regardless of the exact cents.
 
+import { getSupabaseAdmin } from './supabaseAdmin.js';
+import { logRunEvent } from './runEvents.js';
+
 export interface UsageMetadata {
   promptTokenCount?: number;
   candidatesTokenCount?: number;
@@ -63,58 +66,76 @@ export function estimateVideoCostUsd(model: string, seconds = 0): number {
   return perSecond * seconds;
 }
 
+// Mirror a COGS console line into public.events as a per-run 'cogs' row (P2). Only
+// fires when a producer runId is present (telemetry is naturally gated to producer
+// runs — see api/_lib/requestId.ts getRunId). Fully best-effort: getSupabaseAdmin()
+// can throw when unconfigured and logRunEvent never rejects, so a wrap here means COGS
+// event mirroring can NEVER break or slow the generation request. `payload` is the
+// exact object the console log carried, minus the `tag` field (the events `event`
+// column already records 'cogs').
+function fireCogsRunEvent(runId: string, payload: Record<string, unknown>): void {
+  try {
+    const { tag, ...meta } = payload;
+    void logRunEvent(getSupabaseAdmin(), { runId, event: 'cogs', meta });
+  } catch {
+    /* never throw from telemetry */
+  }
+}
+
 // Structured one-line log for beta-traffic COGS monitoring. Fire-and-forget:
-// logging must NEVER break a generation request, so everything is wrapped.
-export function logModelUsage(label: string, model: string, usage?: UsageMetadata): void {
+// logging must NEVER break a generation request, so everything is wrapped. When a
+// producer `runId` is present the same payload is ALSO mirrored to public.events as a
+// 'cogs' row so per-run cost rolls up (run_cogs view); console behavior is unchanged.
+export function logModelUsage(label: string, model: string, usage?: UsageMetadata, runId?: string): void {
+  const payload = {
+    tag: 'cogs',
+    kind: 'text',
+    label,
+    model,
+    inputTokens: usage?.promptTokenCount ?? null,
+    outputTokens: usage?.candidatesTokenCount ?? null,
+    thoughtsTokens: usage?.thoughtsTokenCount ?? null,
+    totalTokens: usage?.totalTokenCount ?? null,
+    estUsd: Number(estimateTextCostUsd(model, usage).toFixed(6)),
+  };
   try {
-    console.log(
-      JSON.stringify({
-        tag: 'cogs',
-        kind: 'text',
-        label,
-        model,
-        inputTokens: usage?.promptTokenCount ?? null,
-        outputTokens: usage?.candidatesTokenCount ?? null,
-        thoughtsTokens: usage?.thoughtsTokenCount ?? null,
-        totalTokens: usage?.totalTokenCount ?? null,
-        estUsd: Number(estimateTextCostUsd(model, usage).toFixed(6)),
-      })
-    );
+    console.log(JSON.stringify(payload));
   } catch {
     /* never throw from telemetry */
   }
+  if (runId) fireCogsRunEvent(runId, payload);
 }
 
-export function logImageUsage(label: string, model: string, images = 1): void {
+export function logImageUsage(label: string, model: string, images = 1, runId?: string): void {
+  const payload = {
+    tag: 'cogs',
+    kind: 'image',
+    label,
+    model,
+    images,
+    estUsd: Number(estimateImageCostUsd(model, images).toFixed(6)),
+  };
   try {
-    console.log(
-      JSON.stringify({
-        tag: 'cogs',
-        kind: 'image',
-        label,
-        model,
-        images,
-        estUsd: Number(estimateImageCostUsd(model, images).toFixed(6)),
-      })
-    );
+    console.log(JSON.stringify(payload));
   } catch {
     /* never throw from telemetry */
   }
+  if (runId) fireCogsRunEvent(runId, payload);
 }
 
-export function logVideoUsage(label: string, model: string, seconds = 0): void {
+export function logVideoUsage(label: string, model: string, seconds = 0, runId?: string): void {
+  const payload = {
+    tag: 'cogs',
+    kind: 'video',
+    label,
+    model,
+    seconds,
+    estUsd: Number(estimateVideoCostUsd(model, seconds).toFixed(6)),
+  };
   try {
-    console.log(
-      JSON.stringify({
-        tag: 'cogs',
-        kind: 'video',
-        label,
-        model,
-        seconds,
-        estUsd: Number(estimateVideoCostUsd(model, seconds).toFixed(6)),
-      })
-    );
+    console.log(JSON.stringify(payload));
   } catch {
     /* never throw from telemetry */
   }
+  if (runId) fireCogsRunEvent(runId, payload);
 }

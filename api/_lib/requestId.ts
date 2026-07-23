@@ -19,3 +19,17 @@ export function getRequestId(req: VercelRequest): string {
   if (typeof candidate === 'string' && RID_RE.test(candidate)) return candidate;
   return randomUUID();
 }
+
+/**
+ * Resolve the producer run id for this call (P2 observability). Reads `x-run-id`
+ * and returns it only when it matches the safe charset (/^[A-Za-z0-9_-]{1,64}$/);
+ * otherwise `undefined`. Unlike getRequestId this never mints an id — a run id only
+ * exists when the client is inside a producer run, so absence/garbage → undefined
+ * (COGS/run telemetry is naturally gated to runs that supply the header).
+ */
+export function getRunId(req: VercelRequest): string | undefined {
+  const raw = req.headers['x-run-id'];
+  const candidate = Array.isArray(raw) ? raw[0] : raw;
+  if (typeof candidate === 'string' && RID_RE.test(candidate)) return candidate;
+  return undefined;
+}

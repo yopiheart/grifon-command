@@ -1,6 +1,7 @@
 import type { GenerateContentResponse } from "@google/genai";
 import { BusinessInfo, Script, Scene, StoryboardResponse, VideoPrompt, MarketResearchInput, MarketResearchReport, OfferOptimizerInput, OfferOptimizerResult, VideoEditInput, OptimizedPromptResponse, CaptionHeadlineInput, DayContent, AdVariant, BatchHeadline, UplinkData, CinematicSpecConfig, VisualTheme, CinematicNarrativeScene, VideoModelType, InfluencerConfig, InfluencerStrategicInput, InfluencerScriptResponse, EditDecisionInput, EditDecisionList, SfxBankId, PremiseCheckInput, PremiseCheckResult, PremiseAlternative } from '../types';
 import { getSupabase } from './supabaseClient';
+import { getActiveRunId } from './runTelemetry';
 import { startJob, endJob, type JobKind } from './activeJobsService';
 import { saveActiveJob, clearActiveJob } from './activeJobStore';
 import { triggerQuotaWall } from './quotaWallStore';
@@ -68,12 +69,20 @@ const proxyFetch = async (endpoint: string, params: any, token: string): Promise
   // PROXY_TIMEOUT instead of an opaque 504 from the platform.
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 55000);
+  // P2 observability: stamp a fresh per-call trace id, and — during a producer run —
+  // the active run id, so the server can join per-call COGS/node events to the run.
+  const requestId =
+    globalThis.crypto?.randomUUID?.() ??
+    `req-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+  const activeRunId = getActiveRunId();
   try {
     return await fetch(endpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
+        'x-request-id': requestId,
+        ...(activeRunId ? { 'x-run-id': activeRunId } : {}),
       },
       body: JSON.stringify(params),
       signal: controller.signal,
