@@ -428,6 +428,11 @@ async function withRetry<T>(fn: () => Promise<T>, attempts: number, onAttempt?: 
     } catch (e) {
       lastErr = e;
       if ((e as Error)?.message === 'ABORTED') throw e;
+      // Jittered backoff BETWEEN attempts (not after the final failure): give a
+      // transient upstream blip time to clear instead of hot-looping the retry.
+      if (n < attempts) {
+        await new Promise((r) => setTimeout(r, 2000 + Math.random() * 2000));
+      }
     }
   }
   throw lastErr;
@@ -1222,8 +1227,15 @@ async function runStage(
         // AUTO (Decision 8) = omit preset so the server rotates; IMPACT/CLEAN lock it.
         preset: run.presetId ? { id: run.presetId } : undefined,
       };
-      const result = await withRetry(() => deps.renderFinalVideo(req), MAX_STAGE_ATTEMPTS, bump);
-      if (result.status === 'failed' || !result.url) throw new Error(result.error ?? 'RENDER_FAILED');
+      // Failed-status renders (incl. the poll watchdog's 'watchdog_stalled') must
+      // throw INSIDE withRetry so the stage actually re-fires once — the render
+      // service resolves (not throws) on a failed sidecar, and a throw out here
+      // would skip the retry the watchdog design counts on (plan §3.10).
+      const result = await withRetry(async () => {
+        const r = await deps.renderFinalVideo(req);
+        if (r.status === 'failed' || !r.url) throw new Error(r.error ?? 'RENDER_FAILED');
+        return r;
+      }, MAX_STAGE_ATTEMPTS, bump);
       await commit((r) => {
         r.finalVideoUrl = result.url;
         r.finalDownloadUrl = result.downloadUrl ?? result.url;

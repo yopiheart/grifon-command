@@ -796,7 +796,8 @@ export async function renderFinalVideo(
   music?: { style: 'mrbeast' | 'temu' | 'testimonial' | 'ugcpro'; enabled: boolean; bedUrl?: string; role?: 'bed' | 'lead' },
   preset: RenderPreset = CLASSIC,
   variantSeed: number = 0, // rotates the premium hook palette per render
-  endCard?: FinalRenderEndCard // offer recap + price anchor, burned into the last scene
+  endCard?: FinalRenderEndCard, // offer recap + price anchor, burned into the last scene
+  onStep?: (label: string) => void // P1 heartbeat: called at pipeline boundaries so the caller can bump the render sidecar's updatedAt (watchdog liveness)
 ): Promise<{ buffer: Buffer; sizeBytes: number }> {
   if (!scenes.length) throw new RenderError('no_scenes');
   checkFfmpegCapabilities(); // once per process: warn loudly if drawtext is missing
@@ -861,6 +862,7 @@ export async function renderFinalVideo(
         await downloadToFile(scene.audioUrl, audioPath);
       }
       const dlMs = Date.now() - tScene;
+      onStep?.(`download ${i + 1}/${ordered.length}`);
 
       const probeSec = probeDurationSec(videoPath);
       // Measure the actual VO speech-end for every voiced scene — this is now the
@@ -979,6 +981,7 @@ export async function renderFinalVideo(
         `[renderFfmpeg] scene=${i} dl=${dlMs}ms build=${Date.now() - tBuild}ms ` +
         `trim=${trimSec?.toFixed(2) ?? 'full'} layers=${layers.length} sfx=${sfx.length}`
       );
+      onStep?.(`scene ${i + 1}/${ordered.length}`);
       muxed.push(outPath);
       elapsed += trimSec ?? probeSec ?? 0; // advance the timeline by this scene's length
     }
@@ -987,6 +990,7 @@ export async function renderFinalVideo(
     const tConcat = Date.now();
     concatScenes(muxed, finalPath);
     const concatMs = Date.now() - tConcat;
+    onStep?.('concat');
 
     // Optional final pass: ducked background-music bed across the whole program.
     // Bed source priority (each step degrades gracefully to the next):
@@ -1019,6 +1023,7 @@ export async function renderFinalVideo(
     // Final master: pin loudness to -14 LUFS (+ faststart for instant streaming).
     const masteredPath = join(dir, 'final_master.mp4');
     if (masterAudio(resultPath, masteredPath)) resultPath = masteredPath;
+    onStep?.('audio master');
 
     const buffer = readFileSync(resultPath);
     console.log(

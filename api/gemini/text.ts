@@ -46,9 +46,15 @@ import {
   buildStoryboardPrompt,
   parseStoryboardResponse,
   type StoryboardFlowInput,
+  MarketResearchOutputSchema,
+  AdScriptOutputSchema,
+  OfferOptimizerOutputSchema,
+  InfluencerScriptOutputSchema,
+  StoryboardOutputSchema,
 } from '../_lib/prompts.js';
 import type { MarketResearchInput, OfferOptimizerInput } from '../../types.js';
 import { logModelUsage } from '../_lib/modelCosts.js';
+import { getRequestId } from '../_lib/requestId.js';
 
 const TEXT_LIMIT = 30;
 const TEXT_WINDOW_SECONDS = 60;
@@ -304,6 +310,67 @@ export const FLOW_REGISTRY: Record<string, FlowHandler> = {
 };
 
 // ---------------------------------------------------------------------------
+// Flow-output schema ladder (P1: truth at the boundaries)
+// ---------------------------------------------------------------------------
+//
+// Each flow's parsed output is checked against a permissive zod schema describing
+// what downstream ACTUALLY consumes (defined next to each parser in _lib/prompts.ts).
+// On a schema miss we resend the EXACT same request ONCE (verbatim — no repair
+// hint appended to the tuned prompt), then re-check. Second miss → the handler
+// returns a structured 422 instead of shipping unusable JSON downstream (the old
+// 502 path only fired on a JSON.parse throw, never on structurally-wrong output).
+//
+// The regen is one re-invocation of the flow handler — "the exact same request"
+// (same flow + same input). For adscript this keeps the existing hook-starvation +
+// verb regens intact and runs the schema check AFTER them.
+
+type FlowName = 'marketmind' | 'adscript' | 'offer-optimizer' | 'influencer-script' | 'storyboard';
+
+const FLOW_OUTPUT_SCHEMAS: Record<FlowName, z.ZodTypeAny> = {
+  marketmind: MarketResearchOutputSchema,
+  adscript: AdScriptOutputSchema,
+  'offer-optimizer': OfferOptimizerOutputSchema,
+  'influencer-script': InfluencerScriptOutputSchema,
+  storyboard: StoryboardOutputSchema,
+};
+
+export type FlowLadderResult =
+  | { ok: true; result: unknown }
+  | { ok: false; issues: { path: (string | number)[]; message: string }[] };
+
+// Run a flow through the coerce→regen-once ladder. The parsed handler output is
+// returned UNCHANGED on success (schema is a gate, not a transformer — byte-identical
+// behavior on today's valid outputs). Exported so the ladder is unit-testable at the
+// flow-dispatch seam (mock ai.models.generateContent), no HTTP plumbing required.
+export const runFlowWithSchema = async (
+  flow: FlowName,
+  input: unknown,
+  ai: GoogleGenAI
+): Promise<FlowLadderResult> => {
+  const handlerFn = FLOW_REGISTRY[flow];
+  const schema = FLOW_OUTPUT_SCHEMAS[flow];
+
+  let result = await handlerFn(input, ai);
+  let check = schema.safeParse(result);
+  if (check.success) return { ok: true, result };
+
+  // ONE verbatim regeneration — resend the exact same request.
+  console.warn(`[flow:${flow}] output failed schema — regenerating once (verbatim)`);
+  result = await handlerFn(input, ai);
+  check = schema.safeParse(result);
+  if (check.success) return { ok: true, result };
+
+  return {
+    ok: false,
+    issues: check.error.issues.map((i) => ({
+      // zod paths can carry symbols; coerce to a JSON-serializable form for the 422 body.
+      path: i.path.map((p) => (typeof p === 'symbol' ? String(p) : p)),
+      message: i.message,
+    })),
+  };
+};
+
+// ---------------------------------------------------------------------------
 // Body schemas — discriminated by presence of `flow` field
 // ---------------------------------------------------------------------------
 
@@ -328,6 +395,9 @@ export const LegacyBody = z.object({
 });
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  const rid = getRequestId(req);
+  res.setHeader('x-request-id', rid);
+
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return res.status(405).json({ error: 'method_not_allowed' });
@@ -404,8 +474,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       if (!handlerFn) {
         return res.status(400).json({ error: 'unknown_flow', flow: parsed.data.flow });
       }
-      const result = await handlerFn(parsed.data.input, ai);
-      return res.status(200).json(result);
+      const ladder = await runFlowWithSchema(parsed.data.flow, parsed.data.input, ai);
+      if (!ladder.ok) {
+        return res.status(422).json({
+          error: 'flow_output_invalid',
+          flow: parsed.data.flow,
+          issues: ladder.issues,
+        });
+      }
+      return res.status(200).json(ladder.result);
     }
 
     // Legacy passthrough mode — client-built prompt.
@@ -450,7 +527,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(503).json({ error: 'gemini_unavailable', detail: msg });
     }
 
-    console.error('[api/gemini/text] error:', msg);
+    console.error('[api/gemini/text] error:', { rid, msg });
     return res.status(502).json({ error: 'gemini_error', detail: msg });
   }
 }

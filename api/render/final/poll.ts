@@ -1,7 +1,8 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { getUserFromAccessToken } from '../../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../../_lib/rateLimit.js';
-import { statusKey, readSidecar } from '../../_lib/renderJob.js';
+import { statusKey, readSidecar, writeSidecar, isRenderStalled } from '../../_lib/renderJob.js';
+import { getRequestId } from '../../_lib/requestId.js';
 import type { FinalRenderResult } from '../../../types.js';
 
 // Final-render executor — POLL half. Reads the status sidecar written by
@@ -12,6 +13,8 @@ const POLL_LIMIT = 60;
 const POLL_WINDOW_SECONDS = 60;
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  res.setHeader('x-request-id', getRequestId(req));
+
   if (req.method !== 'GET') {
     res.setHeader('Allow', 'GET');
     return res.status(405).json({ error: 'method_not_allowed' });
@@ -54,6 +57,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   if (sidecar.status === 'failed') {
     const result: FinalRenderResult = { done: true, status: 'failed', error: sidecar.error ?? 'render_failed' };
+    return res.status(200).json(result);
+  }
+
+  // Watchdog: a 'processing' job whose heartbeat went stale (>120s) or that blew the
+  // absolute age backstop (>330s) is dead — the runner crashed or Vercel killed it.
+  // Convert the sidecar to 'failed:watchdog_stalled' so the client stops polling and
+  // the orchestrator's existing withRetry can re-fire. Legacy timestamp-less sidecars
+  // fall through to 'processing' unchanged.
+  if (isRenderStalled(sidecar)) {
+    await writeSidecar(statusKey(user.id, jobId), {
+      status: 'failed',
+      error: 'watchdog_stalled',
+      updatedAt: new Date().toISOString(),
+    }).catch(() => {});
+    const result: FinalRenderResult = { done: true, status: 'failed', error: 'watchdog_stalled' };
     return res.status(200).json(result);
   }
 

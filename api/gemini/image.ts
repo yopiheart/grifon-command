@@ -6,6 +6,7 @@ import { rateLimitCheck } from '../_lib/rateLimit.js';
 import { getUserPlan } from '../_lib/userPlan.js';
 import { consumeMonthly } from '../_lib/quota.js';
 import { logImageUsage } from '../_lib/modelCosts.js';
+import { getRequestId } from '../_lib/requestId.js';
 
 const Body = z.object({
   model: z.string().min(1),
@@ -26,6 +27,9 @@ const getAi = (): GoogleGenAI => {
 };
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  const rid = getRequestId(req);
+  res.setHeader('x-request-id', rid);
+
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return res.status(405).json({ error: 'method_not_allowed' });
@@ -116,7 +120,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(503).json({ error: 'gemini_unavailable', detail: msg });
     }
 
-    console.error('[api/gemini/image] error:', msg);
+    console.error('[api/gemini/image] error:', { rid, msg });
     return res.status(502).json({ error: 'gemini_error', detail: msg });
   }
 }

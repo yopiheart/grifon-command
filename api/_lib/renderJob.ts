@@ -22,10 +22,46 @@ export interface RenderSidecar {
   downloadUrl?: string;
   error?: string;
   updatedAt: string;
+  // Heartbeat/watchdog (P1). `startedAt` is stamped once on the initial 'processing'
+  // sidecar; `step` names the last pipeline boundary runRender reached. Both are
+  // additive + optional — legacy sidecars (written before this field existed) simply
+  // lack them, and every existing reader keys off `status` only. `updatedAt` is
+  // re-stamped by the render heartbeat so a live job stays fresh past the watchdog.
+  startedAt?: string;
+  step?: string;
   // Attribution id (= jobId) for the Data-Driven Growth Loop. Surfaced to the
   // user so they can name the Meta ad "grifon-<creativeId>"; meta_insights_pull.py
   // parses it back out to join ad_performance to the creative that made the ad.
   creativeId?: string;
+}
+
+// Poll-side render watchdog (P1, render_pipeline §3.10). A render runs via
+// `waitUntil`; a crash or Vercel timeout leaves the sidecar 'processing' forever
+// until the 48h cron reaps it, with the client polling the whole time. This is the
+// deterministic staleness predicate the poll handler uses to convert a dead job into
+// a 'failed:watchdog_stalled' sidecar. Poll-driven = no new cron, no new function.
+export const WATCHDOG_STALE_MS = 120_000; // heartbeat gap while processing → stalled
+export const WATCHDOG_MAX_AGE_MS = 330_000; // absolute backstop on total job age
+
+/**
+ * Pure staleness decision. Returns true ONLY for a 'processing' sidecar that either
+ * (a) has an `updatedAt` more than 120s old (heartbeat stopped), or (b) has any
+ * available timestamp showing total job age > 330s (absolute backstop). A legacy
+ * 'processing' sidecar with NEITHER timestamp is never killed here (returns false) —
+ * we don't guess; the 48h cron still reaps it. done/failed sidecars are never touched.
+ */
+export function isRenderStalled(sidecar: RenderSidecar, now: number = Date.now()): boolean {
+  if (sidecar.status !== 'processing') return false;
+  const updatedMs = sidecar.updatedAt ? Date.parse(sidecar.updatedAt) : NaN;
+  if (Number.isFinite(updatedMs) && now - updatedMs > WATCHDOG_STALE_MS) return true;
+  const startedMs = sidecar.startedAt ? Date.parse(sidecar.startedAt) : NaN;
+  const ageAnchor = Number.isFinite(startedMs)
+    ? startedMs
+    : Number.isFinite(updatedMs)
+      ? updatedMs
+      : NaN;
+  if (Number.isFinite(ageAnchor) && now - ageAnchor > WATCHDOG_MAX_AGE_MS) return true;
+  return false;
 }
 
 export async function writeSidecar(key: string, body: RenderSidecar): Promise<void> {

@@ -10,6 +10,8 @@
 //   - Builders (buildXxxPrompt) are pure: input → string. No side effects, no I/O.
 //   - Keep server-only. Do NOT import this from any file under services/, components/, or App.tsx.
 
+import { z } from 'zod';
+
 // types.ts is a pure type-export file at the project root. We rely on
 // `import type` so the import line is erased at compile time — nothing
 // flows into the runtime bundle. The `.js` extension is required by
@@ -249,6 +251,19 @@ export const buildMarketMindParts = (input: MarketResearchInput): any[] => {
   parts.push({ text: promptText });
   return parts;
 };
+
+// Flow-output validation (P1). Permissive zod schema: rejects UNUSABLE marketmind
+// output (nothing to render), NOT stylistic variation. `narrativeReport` is the
+// human-read markdown the UI shows; a missing/empty one is unusable. Everything
+// else downstream reads (structured MarketResearchReport fields) passes through
+// unchecked so a partial-but-usable report is never rejected. Consumed by the
+// coerce→regen-once ladder in api/gemini/text.ts.
+export const MarketResearchOutputSchema = z
+  .object({
+    subject: z.string(),
+    narrativeReport: z.string().min(1),
+  })
+  .passthrough();
 
 // ---------------------------------------------------------------------------
 // Director AI / generateAdScript
@@ -986,6 +1001,19 @@ export const parseAdScriptResponse = (rawText: string): Script => {
   };
 };
 
+// Flow-output validation (P1). Validates the PARSED Script (post parseAdScriptResponse
+// + its capHookArray coercion). The load-bearing fields downstream consumes are the
+// two hook menus and the body beats — an empty hook1/hook2 or empty body is unusable.
+// strategicAudit / ugcProFormatResolved pass through untouched. Runs in the ladder
+// AFTER the adscript flow's existing hook-starvation + verb regens.
+export const AdScriptOutputSchema = z
+  .object({
+    hook1: z.array(z.string()).min(1),
+    hook2: z.array(z.string()).min(1),
+    body: z.array(z.unknown()).min(1),
+  })
+  .passthrough();
+
 // TRANSFORMATION beat 1 (body[0]) is the Application line: the product must enter
 // mid-action, with a real verb. Prompt instructions alone don't hold it — 4/4
 // formulations failed the Slice-1 eval loop and it only passed on a re-roll.
@@ -1098,6 +1126,22 @@ export const parseOfferOptimizerResponse = (rawText: string): OfferOptimizerResu
   return JSON.parse(cleanJson(rawText)) as OfferOptimizerResult;
 };
 
+// Flow-output validation (P1). Downstream (App.tsx Director auto-prefill) reads the
+// three offer tiers + directorPayload; a report missing any of them is unusable.
+// Nested fields (valueStack, hormoziLogic, conversionAssets, analysis) pass through
+// so a stylistically-thin-but-present tier is never rejected.
+const OfferTierShape = z
+  .object({ name: z.string(), actualPrice: z.string() })
+  .passthrough();
+export const OfferOptimizerOutputSchema = z
+  .object({
+    tripwire: OfferTierShape,
+    coreOffer: OfferTierShape,
+    highTicket: OfferTierShape,
+    directorPayload: z.object({ offer: z.string() }).passthrough(),
+  })
+  .passthrough();
+
 // ---------------------------------------------------------------------------
 // Influencer Forge (generateInfluencerScript) — CCC framework
 // ---------------------------------------------------------------------------
@@ -1185,6 +1229,15 @@ Return valid JSON: { "hook": "...", "body": ["line1", "line2", ...], "strategicA
 export const parseInfluencerScriptResponse = (rawText: string): InfluencerScriptResponse => {
   return JSON.parse(cleanJson(rawText || '{}')) as InfluencerScriptResponse;
 };
+
+// Flow-output validation (P1). A usable influencer script needs a spoken hook and at
+// least one body line; strategicAudit / daySummary pass through.
+export const InfluencerScriptOutputSchema = z
+  .object({
+    hook: z.string().min(1),
+    body: z.array(z.unknown()).min(1),
+  })
+  .passthrough();
 
 // ---------------------------------------------------------------------------
 // Wizard Storyboard (generateStoryboard) — Cinematic relay + STILL_FRAME_RULE +
@@ -1697,3 +1750,21 @@ export const parseStoryboardResponse = (rawText: string): StoryboardResponse => 
     strategicAudit: result.strategicAudit || '',
   };
 };
+
+// Flow-output validation (P1). Validates the PARSED StoryboardResponse. A usable
+// storyboard has at least one scene and every scene carries its two required text
+// fields (scriptLine + sceneDescription — the render/image pipeline keys captions +
+// prompts off them). Prompt fields (imagePrompt / startFramePrompt / endFramePrompt /
+// referenceImage / venueSlot …) pass through since a scene legitimately carries
+// EITHER a single imagePrompt OR the start/end frame pair. Deviation from the plan's
+// "3–12" band: only the 0-scene (unusable) result is rejected — no floor of 3, and
+// no ceiling, so any currently-valid short or long storyboard passes byte-identical.
+// (Scene-count caps are the render endpoint's contract, enforced by its own zod.)
+const StoryboardSceneShape = z
+  .object({ scriptLine: z.string(), sceneDescription: z.string() })
+  .passthrough();
+export const StoryboardOutputSchema = z
+  .object({
+    scenes: z.array(StoryboardSceneShape).min(1),
+  })
+  .passthrough();

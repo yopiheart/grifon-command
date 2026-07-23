@@ -7,6 +7,7 @@ import { putMedia, getMediaUrl } from '../_lib/mediaStore.js';
 import { renderFinalVideo } from '../_lib/renderFfmpeg.js';
 import { resolvePreset, rotationSeed, fnv1a, type RenderPreset } from '../_lib/renderPresets.js';
 import { statusKey, finalKey, writeSidecar } from '../_lib/renderJob.js';
+import { getRequestId } from '../_lib/requestId.js';
 import type { FinalRenderScene, FinalRenderEndCard } from '../../types.js';
 
 // Final-render executor — FIRE half (Phase 2 of render_pipeline_voice_10.md).
@@ -107,6 +108,9 @@ const RENDER_WINDOW_SECONDS = 600; // 6 renders / 10 min (renders are expensive)
 const SIGNED_URL_TTL_SECONDS = 86_400; // 24h
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  const rid = getRequestId(req);
+  res.setHeader('x-request-id', rid);
+
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return res.status(405).json({ error: 'method_not_allowed' });
@@ -154,20 +158,24 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const jobId = randomUUID();
 
-  // Write 'processing' BEFORE returning so the first poll never 404s.
+  // Write 'processing' BEFORE returning so the first poll never 404s. Stamp
+  // startedAt (age backstop anchor) + updatedAt (heartbeat freshness) so the
+  // poll-side watchdog has both timestamps from the very first poll.
+  const startedAt = new Date().toISOString();
   await writeSidecar(statusKey(user.id, jobId), {
     status: 'processing',
-    updatedAt: new Date().toISOString(),
+    startedAt,
+    updatedAt: startedAt,
   });
 
-  const work = runRender(user.id, jobId, scenes as FinalRenderScene[], aspectRatio, music, preset, variantSeed, endCard).catch(() => {});
+  const work = runRender(user.id, jobId, rid, startedAt, scenes as FinalRenderScene[], aspectRatio, music, preset, variantSeed, endCard).catch(() => {});
 
   if (process.env.VERCEL) {
     try {
       const { waitUntil } = await import('@vercel/functions');
       waitUntil(work);
     } catch (err) {
-      console.error('[api/render/final] waitUntil unavailable:', err);
+      console.error('[api/render/final] waitUntil unavailable:', { rid, err });
     }
   }
 
@@ -177,6 +185,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 async function runRender(
   userId: string,
   jobId: string,
+  rid: string,
+  startedAt: string,
   scenes: FinalRenderScene[],
   aspectRatio: '9:16' | '16:9' | '1:1',
   music?: { style: 'mrbeast' | 'temu' | 'testimonial' | 'ugcpro'; enabled: boolean; bedUrl?: string; role?: 'bed' | 'lead' },
@@ -185,8 +195,30 @@ async function runRender(
   endCard?: FinalRenderEndCard
 ): Promise<void> {
   const sKey = statusKey(userId, jobId);
+  // Heartbeat: re-stamp the sidecar's updatedAt at pipeline boundaries so a live
+  // render stays fresh past the 120s watchdog. Throttled to ≤1 write per ~15s
+  // (cheaper than a write per step) and fire-and-forget — a heartbeat write must
+  // never block or fail the render. startedAt is preserved so the age backstop keeps
+  // its anchor across rewrites.
+  let lastBeat = 0;
+  // Terminal-write guard: a slow in-flight heartbeat PUT landing AFTER the 'done'
+  // write would revert the sidecar to 'processing' and the watchdog would then
+  // falsely fail a successful render. Track the last beat's promise and await it
+  // before any terminal write so the terminal state always lands last.
+  let lastBeatWrite: Promise<void> = Promise.resolve();
+  const onStep = (label: string) => {
+    const now = Date.now();
+    if (now - lastBeat < 15_000) return;
+    lastBeat = now;
+    lastBeatWrite = writeSidecar(sKey, {
+      status: 'processing',
+      startedAt,
+      updatedAt: new Date().toISOString(),
+      step: label,
+    }).catch(() => {});
+  };
   try {
-    const { buffer } = await renderFinalVideo(scenes, aspectRatio, music, preset, variantSeed, endCard);
+    const { buffer } = await renderFinalVideo(scenes, aspectRatio, music, preset, variantSeed, endCard, onStep);
 
     const fKey = finalKey(userId, jobId);
     const upload = await putMedia(fKey, buffer, 'video/mp4', { cacheControl: '3600', upsert: true });
@@ -200,6 +232,7 @@ async function runRender(
       throw new Error(`sign_failed: ${playSign.error ?? dlSign.error ?? 'unknown'}`);
     }
 
+    await lastBeatWrite;
     await writeSidecar(sKey, {
       status: 'done',
       url: playSign.url,
@@ -209,7 +242,8 @@ async function runRender(
     });
   } catch (err: any) {
     const msg = err?.message ?? 'render_failed';
-    console.error(`[api/render/final] job ${jobId} failed:`, msg);
+    console.error(`[api/render/final] job ${jobId} failed:`, { rid, msg });
+    await lastBeatWrite;
     await writeSidecar(sKey, {
       status: 'failed',
       error: msg,
