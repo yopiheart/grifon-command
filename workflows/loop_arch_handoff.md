@@ -201,10 +201,15 @@ conflict-adopt worked under a conflict storm (rev → 54); error state parked cl
   ("(see attached scene N audio for the spoken line)") and attach media as usual → **PASSES,
   and the model correctly detects testimonial style and writes a coherent, content-aware EDL
   by reading the script from the attached voice audio** (usage 9585in; output was probe-capped).
-  Proposed implementation (Neil sign-off required — changes what the model sees, TUNED-adjacent):
-  in `generateEditDecisionList`, catch EDL_EMPTY_RESPONSE-with-blockReason at the call site and
-  retry ONCE with the stubbed script fields (transport-level substitution; the tuned prompt
-  string itself is untouched). Primary path stays byte-identical for unblocked runs.
+  ~~Proposed implementation (Neil sign-off required)~~ → **APPROVED by Neil + SHIPPED
+  2026-07-24** (commit `c5ae567`, implemented by `code-executor`, reviewed by the main loop):
+  `buildPromptText(eff)` parameterization (TUNED template byte-identical, only `input.*`→`eff.*`
+  interpolation renames), media parts built once and reused across attempts, one stubbed retry
+  on empty-with-blockReason, no retry on non-block empties, `(degraded retry also blocked)`
+  marker on double block. 4 new proxy-seam tests. Suite 944/22, build + bundle-leak clean.
+  **Remaining to close F2 live:** deploy the branch tip to a preview → Retry the LUNARIA run
+  (Neil-driven, SSO wall) → expect the degrade lane to console-warn, produce the EDL from
+  audio, and finish the ad. Mind the media-URL expiry note below.
   **LUNARIA unblock timing:** the run's media URLs in `artifacts.scenes` are presigned R2 URLs
   that EXPIRE 2026-07-24T16:00Z (~midnight PH). After that, an EDL retry needs re-signed URLs —
   check whether any server path re-signs on resume before assuming Retry works.
