@@ -133,6 +133,8 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
   const [errMsg, setErrMsg] = useState('');
   const [reshooting, setReshooting] = useState<number | null>(null);
   const [presetBusy, setPresetBusy] = useState(false);
+  const [approving, setApproving] = useState(false);
+  const approvingRef = useRef(false);
   const abortRef = useRef<AbortController>(new AbortController());
   // Guards the resume auto-run so React 18 StrictMode's mount→cleanup→mount cycle can't
   // double-drive (or abort) a resumed run.
@@ -270,8 +272,15 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
   };
 
   const handleApprove = async () => {
-    if (!run) return;
-    await approveStoryboard(run, cb(run), realProducerDeps);
+    if (!run || approvingRef.current) return;
+    approvingRef.current = true;
+    setApproving(true);
+    try {
+      await approveStoryboard(run, cb(run), realProducerDeps);
+    } finally {
+      approvingRef.current = false;
+      setApproving(false);
+    }
   };
 
   // Storyboard gate: image-ONLY regen (cheap — the cost gate hasn't fired yet).
@@ -378,7 +387,7 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
       return (
         <div className="relative">
           {BackBar}
-          <StoryboardGateScreen run={run} regenerating={reshooting} onRegenScene={handleRegenImage} onApprove={handleApprove} onStartOver={handleMakeAnother} />
+          <StoryboardGateScreen run={run} regenerating={reshooting} onRegenScene={handleRegenImage} onApprove={handleApprove} onStartOver={handleMakeAnother} approving={approving} />
         </div>
       );
     }

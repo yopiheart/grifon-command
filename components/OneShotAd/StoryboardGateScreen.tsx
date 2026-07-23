@@ -1,5 +1,5 @@
 import React from 'react';
-import { RefreshCw, Clapperboard, CheckCircle2, AlertTriangle, Film, RotateCcw } from 'lucide-react';
+import { RefreshCw, Clapperboard, CheckCircle2, AlertTriangle, Film, RotateCcw, Loader2 } from 'lucide-react';
 import { GlassPanel } from '../ui/GlassPanel';
 import { ShimmerButton, SceneReveal } from './motion';
 import type { ProductionRun } from '../../services/producerOrchestrator';
@@ -27,7 +27,10 @@ export const StoryboardGateScreen: React.FC<{
   onRegenScene: (sceneIdx: number) => void;
   onApprove: () => void;
   onStartOver: () => void;
-}> = ({ run, regenerating, onRegenScene, onApprove, onStartOver }) => {
+  /** True once the user has approved and the render is starting — disables the button + shows a spinner
+   *  so a user who gets no instant feedback can't double-fire the approval (F1, live canary). */
+  approving?: boolean;
+}> = ({ run, regenerating, onRegenScene, onApprove, onStartOver, approving = false }) => {
   const flagged = run.scenes.filter((s) => s.status === 'flagged').length;
   const anyBusy = regenerating !== null;
   // Can't film until every scene has an image and none is still flagged.
@@ -122,9 +125,13 @@ export const StoryboardGateScreen: React.FC<{
 
         {/* Approve gate */}
         <div className="mt-8">
-          <ShimmerButton disabled={!allReady || anyBusy} onClick={onApprove}>
+          <ShimmerButton disabled={!allReady || anyBusy || approving} onClick={onApprove}>
             <span className="inline-flex items-center justify-center gap-2">
-              <Clapperboard className="h-4 w-4" /> Looks good — Film it
+              {approving ? (
+                <><Loader2 className="h-4 w-4 animate-spin" /> Starting the render…</>
+              ) : (
+                <><Clapperboard className="h-4 w-4" /> Looks good — Film it</>
+              )}
             </span>
           </ShimmerButton>
           <p className="mt-2 flex items-center justify-center gap-1.5 text-[10px] font-mono uppercase tracking-widest text-zinc-500">

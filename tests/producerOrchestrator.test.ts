@@ -353,6 +353,42 @@ function store2Count(deps: ProducerDeps, method: keyof ProducerRunStore): number
   return (deps.run[method] as unknown as { mock: { calls: unknown[] } }).mock.calls.length;
 }
 
+// --- 1b. Concurrent double-approve (F1) -----------------------------------
+
+describe('approveStoryboard — concurrent double-approve fires exactly one driver', () => {
+  it('a dual-click firing two approveStoryboard calls on the same run still submits each scene once', async () => {
+    const { deps, spies, rows } = makeFakeDeps();
+    const run = createProductionRun(makeInput(), 'u1');
+
+    // Park at the storyboard gate — no spend yet.
+    const gated = await runProduction(run, cb(), deps);
+    expect(gated.gate).toBe('storyboard');
+    expect(spies.submitVideo).not.toHaveBeenCalled();
+
+    // Dual-click: BOTH handlers share the one `run` reference (mirrors ProducerFlow). Fire the
+    // second before awaiting the first so the concurrency backstop — not sequential idempotency —
+    // is what stops the second driver.
+    const [a, b] = await Promise.all([
+      approveStoryboard(run, cb(), deps),
+      approveStoryboard(run, cb(), deps),
+    ]);
+
+    // Exactly one driver ran: one submit per scene (NOT double), and one batch voice pass —
+    // the reported harm was a DOUBLED ElevenLabs burn from the second driver re-running the stage.
+    expect(spies.submitVideo).toHaveBeenCalledTimes(2);
+    expect(spies.consolidateVoices).toHaveBeenCalledTimes(1);
+    expect(store2Count(deps, 'completeScene')).toBe(2);
+    expect(rows.get(0)?.status).toBe('done');
+    expect(rows.get(1)?.status).toBe('done');
+
+    // Both callers observe the same finished run (same object reference — the early-return
+    // second call returns the run the first driver drove to First Cut).
+    expect(a.gate).toBe('first_cut');
+    expect(b.gate).toBe('first_cut');
+    expect(a.finalVideoUrl).toBe('final.mp4');
+  });
+});
+
 // --- 2. Resume skips completed stages -------------------------------------
 
 describe('runProduction — resume skips completed stages', () => {

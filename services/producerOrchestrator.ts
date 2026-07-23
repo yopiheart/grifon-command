@@ -780,11 +780,17 @@ async function runProductionInner(initial: ProductionRun, cb: ProducerCallbacks,
  * gate screen after the user verifies/regenerates the scene images. Idempotent.
  */
 export async function approveStoryboard(run: ProductionRun, cb: ProducerCallbacks, deps: ProducerDeps): Promise<ProductionRun> {
+  // Concurrency backstop (F1, live canary): a double-approve fired TWO runProduction drivers →
+  // every batch stage double-ran (double ElevenLabs burn, doubled telemetry). The UI now guards
+  // the button, but make the orchestrator idempotent under concurrency too. JS runs synchronously
+  // up to the first await, so setting storyboardApproved + emitting the event BEFORE any await means
+  // a second concurrent call sees the flag here and bails — no second driver, no second event.
+  if (run.storyboardApproved) return run;
+  run.storyboardApproved = true;
+  emitRunEvent('gate_approve', run.runId, { gate: 'storyboard' });
   // Resume from the storyboard gate. No setActiveRunId here — the pre-loop work below
   // makes no proxied AI calls, and runProduction's try/finally owns the id lifecycle
   // (a set here without its own finally could leak if persist/onUpdate threw).
-  emitRunEvent('gate_approve', run.runId, { gate: 'storyboard' });
-  run.storyboardApproved = true;
   run.status = 'running';
   run.gate = undefined;
   run.updatedAt = deps.now();
