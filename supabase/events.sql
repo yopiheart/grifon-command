@@ -33,6 +33,13 @@ create index if not exists events_run_id_idx on public.events(run_id);
 -- Per-run COGS roll-up. Sums the estimated USD carried on each 'cogs' event's meta so a
 -- run's total generation spend is one query (and gets denormalized onto
 -- producer_runs.cost_usd when a run reaches 'done' — see api/producer/run.ts).
+--
+-- ⚠ PARTIAL / ESTIMATED (Neil, 2026-07-23): this view currently EXCLUDES ElevenLabs
+-- voice spend, FFmpeg render compute, and post-run reshoots/regenerations (their proxy
+-- calls carry no x-run-id once the run is parked); Veo/Kling rows are SUBMIT-TIME
+-- ESTIMATES, so a render that later fails still shows its full estimated cost. Treat
+-- est_usd as a lower-bound generation estimate for observability and trend analysis —
+-- do NOT use it for final pricing or margin decisions.
 create or replace view public.run_cogs as
   select run_id,
          sum((meta->>'estUsd')::numeric) as est_usd,
