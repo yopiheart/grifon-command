@@ -146,9 +146,27 @@ conflict-adopt worked under a conflict storm (rev → 54); error state parked cl
   session tooling should read the DB (producer_runs by user, newest first), not localStorage.
   **F2 FIX SHIPPED 2026-07-23** (same session): `generateEditDecisionList` now throws
   `EDL_EMPTY_RESPONSE: … (finishReason: X, blockReason: Y)` on an empty model reply instead of
-  masking it as EDL_MALFORMED, and console-warns the full promptFeedback. Next live Retry of the
-  canary run will reveal the real zero-output cause. 4 new seam tests in
+  masking it as EDL_MALFORMED, and console-warns the full promptFeedback. 4 new seam tests in
   tests/unit/edit-decision-list.test.ts.
+  **F2 ROOT CAUSE CONFIRMED (2026-07-24 live retry on the fixed preview):**
+  `blockReason: PROHIBITED_CONTENT`, `finishReason: none` — **Gemini blocks the EDL request at
+  the PROMPT level** (zero generation), deterministically (5/5 across two days), for THIS run's
+  payload. PROHIBITED_CONTENT is a NON-CONFIGURABLE safety category — SAFETY_SETTINGS cannot
+  override it. The 2026-07-18 run (different content) passed the same code+model, so the trigger
+  is this run's MEDIA/content mix (9 scene videos of a woman applying serum to her face + 9
+  voice clips + script), not the tuned prompt text per se. Suspected: skincare
+  face/skin-application imagery reading as a sensitive category. NOT a code bug; Retry is
+  useless for this run until the input changes.
+  **Next-step options (Neil picks):**
+  (a) media-bisect experiment (~$0.05): call the same endpoint with subsets (videos-only /
+  audio-only / text-only EDL input) to prove which part trips the block;
+  (b) build a degrade lane: on EDL_EMPTY_RESPONSE with a blockReason, retry the EDL WITHOUT the
+  media parts (script+metadata only — the prompt text already carries the script); slightly
+  blinder edit, but un-blocks runs like this one. Touches the parts-assembly (transport) but
+  changes what the model sees — Neil sign-off required;
+  (c) park the LUNARIA run (assets safe forever) and treat this as a known content-class
+  limitation, monitored via the events telemetry (`check_fail`-style occurrences of
+  EDL_EMPTY_RESPONSE are now observable per-run).
 - **F5 (minor):** the RunningScreen console shows a Tailwind-CDN production warning; duplicate
   `node_done{thumbnail}` events under F1's dual driver (emit is per-driver, dedupe not needed
   once F1 is fixed).
