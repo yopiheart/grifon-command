@@ -10,6 +10,7 @@ import { T_LABEL, R_CTRL } from '../ui/wizardTokens';
 import {
   HAIRLINE, ROW_HOVER, ACTIVE_ROW, GOLD_CTA_GRADIENT,
 } from '../ui/dashboardTokens';
+import { MAT_CHROME, MAT_VEIL, rim } from '../ui/materialTokens';
 
 export interface SidebarNavItem {
   id: string;
@@ -260,7 +261,11 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = (props) => {
         initial={false}
         animate={{ width: collapsed ? 76 : 268 }}
         transition={SPRING.standard}
-        className={`hidden lg:flex fixed left-0 top-0 bottom-0 z-50 bg-zinc-950/90 backdrop-blur-xl border-r ${HAIRLINE} overflow-hidden`}
+        // CHROME — the rail floats the full height of the app over the SmokeAura
+        // field, so there is genuinely something behind it to refract. This is
+        // the textbook case for the tier.
+        style={rim(2)}
+        className={`hidden lg:flex fixed left-0 top-0 bottom-0 z-50 ${MAT_CHROME} border-r ${HAIRLINE} overflow-hidden`}
       >
         <SidebarBody {...bodyProps} expanded={!collapsed} />
       </motion.aside>
@@ -272,12 +277,13 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = (props) => {
             <motion.div
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               onClick={props.onMobileClose}
-              className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm lg:hidden"
+              className={`fixed inset-0 z-[60] ${MAT_VEIL} lg:hidden`}
             />
             <motion.aside
               initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }}
               transition={SPRING.standard}
-              className={`fixed left-0 top-0 bottom-0 z-[61] w-[86vw] max-w-[320px] bg-zinc-950/95 backdrop-blur-xl border-r ${HAIRLINE} lg:hidden`}
+              style={rim(2)}
+              className={`fixed left-0 top-0 bottom-0 z-[61] w-[86vw] max-w-[320px] ${MAT_CHROME} border-r ${HAIRLINE} lg:hidden`}
             >
               <SidebarBody {...bodyProps} expanded mobile />
             </motion.aside>

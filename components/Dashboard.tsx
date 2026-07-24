@@ -27,6 +27,7 @@ import {
   HAIRLINE, CARD_TONAL, FILL_REST, FILL_HOVER, ROW_HOVER, RING_FIELD,
   GOLD_GLOW_HOVER, entrance, SLATE_BEATS,
 } from './ui/dashboardTokens';
+import { MAT_CHROME, SCROLL_EDGE } from './ui/materialTokens';
 import { SettingsModal } from './dashboard/SettingsModal';
 import { NotificationsPanel } from './dashboard/NotificationsPanel';
 
@@ -328,7 +329,9 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
       />
 
       {/* Mobile top bar */}
-      <div className={`lg:hidden fixed top-0 left-0 right-0 z-40 h-14 px-3 flex items-center justify-between bg-zinc-950/85 backdrop-blur-xl border-b ${HAIRLINE}`}>
+      {/* CHROME + scroll edge — the slate scrolls under this bar, so content
+          grades out beneath it instead of colliding with the icons. */}
+      <div className={`lg:hidden fixed top-0 left-0 right-0 z-40 h-14 px-3 flex items-center justify-between ${MAT_CHROME} ${SCROLL_EDGE} border-b ${HAIRLINE}`}>
         <button onClick={() => setMobileOpen(true)} aria-label="Menu" className={`w-11 h-11 rounded-xl text-zinc-300 hover:text-white ${ROW_HOVER} transition-colors flex items-center justify-center`}>
           <Menu className="w-5 h-5" />
         </button>
@@ -376,7 +379,11 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
               {...entrance(reduce, SLATE_BEATS.heroInput)}
               className="w-full max-w-2xl mx-auto"
             >
-              <div className={`${CARD_TONAL} backdrop-blur-xl rounded-2xl ${RING_FIELD} p-3 lg:p-4 flex items-center gap-3 focus-within:ring-[#FFCC00]/40 transition-all`}>
+              {/* Deliberately NOT chrome: the hero input sits in the flow of the
+                  slate, it doesn't float over anything. Its backdrop-filter was
+                  blurring a near-black field for nothing, so it's gone — the ring
+                  and tonal fill carry the field treatment. */}
+              <div className={`${CARD_TONAL} rounded-2xl ${RING_FIELD} p-3 lg:p-4 flex items-center gap-3 focus-within:ring-[#FFCC00]/40 transition-all`}>
                 <Sparkles className="w-5 h-5 text-[#FFCC00] flex-shrink-0 ml-1" />
                 <input
                   type="text"

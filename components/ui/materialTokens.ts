@@ -1,3 +1,5 @@
+import type React from 'react';
+
 // ===========================================================================
 // MATERIAL TOKEN SYSTEM — which surfaces are allowed to float.
 //
@@ -38,6 +40,17 @@
  * Aurora field, the ad reel, scrolling content) or use PLATE instead.
  */
 export const MAT_CHROME = 'mat-chrome';
+
+/**
+ * Per-surface rim width for CHROME, as an inline style. The default 4px band
+ * reads as lensing on a bar or a card; on a tall, narrow surface like the
+ * dashboard rail the same band runs the full height and starts reading as a
+ * second border instead, so those go thinner.
+ *
+ *   <aside className={MAT_CHROME} style={rim(2)}>
+ */
+export const rim = (px: number): React.CSSProperties =>
+  ({ ['--mat-rim' as string]: `${px}px` }) as React.CSSProperties;
 
 /**
  * PLATE — content at rest. Tonal fill, inset top hairline, no backdrop-filter.

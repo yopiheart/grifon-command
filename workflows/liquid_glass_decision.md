@@ -100,7 +100,25 @@ Moves **01 · 02 · 03 · 04 · 05** are in the app. Move **06** (concentric rad
 
 **On the 105 → ~17 target:** the source-literal count moved 105 → 104, because the reduction happened *inside* a shared primitive. The metric that matters is rendered blurred surfaces, and that's down by 64 in one edit. The remaining literals are the un-swept surfaces — modules, modals, dashboard chrome — for slice 2.
 
-### Slice 2 (not started)
-Sweep the remaining `backdrop-blur` literals onto tiers: modals + quota wall → SLAB, module chrome → CHROME/PLATE per the picking rule, dashboard rail → CHROME. Then move 06's concentric radii on whatever gets touched.
+### Slice 2 — SHIPPED (dashboard + loading), 2026-07-24
+
+**Dashboard chrome**
+- `DashboardSidebar` desktop rail → CHROME. Earns it: `SmokeAura` is a fixed full-screen field rendered behind it, so there is real content to refract.
+- Mobile drawer → CHROME, its scrim → VEIL.
+- Dashboard mobile top bar → CHROME + scroll edge (the slate scrolls under it).
+- Hero input → **deliberately not chrome**. It sits in the flow of the slate and floats over nothing; its `backdrop-blur-xl` was blurring a near-black field, so it's simply gone. Ring + tonal fill carry the treatment.
+
+**Loading**
+- `Loader` → the **lens ring**: a conic sweep masked to an annulus with a bright leading head and a falloff tail (`.lens-ring`), replacing the border-with-one-transparent-side spinner. Speaks the same specular vocabulary as CHROME. The message no longer pulses — animating the one honest string made it harder to read.
+- `BootScreen` → CHROME (it floats over the same `GatewayReel` as the sign-in card), plus a gold light source that travels **behind** the pane. Because the panel's backdrop filter samples it, the glass brightens and its rim lenses as the light passes: the indicator is the surface reacting, not a widget bolted on. Hidden entirely under reduced motion.
+
+**Rim retune (applies to every CHROME surface).** The 7px / `brightness(1.28)` rim read as a hard second border on the tall dashboard rail. Now `--mat-rim: 4px` / `brightness(1.16)` / `saturate(210%)`, with the width exposed per-surface via `rim(px)` from materialTokens — both rails use `rim(2)`.
+
+**Verified in Chromium** (1600×1000 and 390×844): dashboard collapsed rail, expanded rail, scrolled module grid, mobile drawer, landing header at the new rim. Build clean, 1005 tests, design:lint silent.
+
+**Not verified:** `BootScreen` — it only renders during a real OAuth return and the local `sessionStorage` flag didn't reproduce it; it shares the CHROME tier with the verified gateway card, but its travelling-light beat has not been seen. The lens ring was confirmed as a static specimen page, not inside a live module run.
+
+### Slice 3 (not started)
+Remaining `backdrop-blur` literals → tiers: modals + quota wall → SLAB, module chrome per the picking rule. Then move 06's concentric radii on whatever gets touched.
 
 **Kill switch:** revert `GlassPanel.tsx` to `bg-zinc-900/80 backdrop-blur-xl …` and the app returns to v1 look; the tier CSS becomes dead but harmless. Full revert = this commit.

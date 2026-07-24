@@ -43,9 +43,29 @@ export const BootScreen: React.FC<BootScreenProps> = ({ userEmail }) => {
       initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={reducedMotion(reduce, SPRING.pop)}
-      className="z-20 w-full max-w-md"
+      className="relative z-20 w-full max-w-md"
     >
-      <GlassPanel className="p-10">
+      {/* The loading beat, told in the material's own physics: a light source
+          crossing BEHIND the pane. Because the panel is CHROME, its backdrop
+          filter samples this — the glass brightens and its rim lenses as the
+          light passes, so the indicator is the surface reacting rather than a
+          widget bolted onto it. Sibling before the panel so it paints first;
+          decorative only, and it stops dead under reduced motion. */}
+      {!reduce && (
+        <motion.span
+          aria-hidden
+          className="pointer-events-none absolute top-1/2 left-0 h-48 w-48 -translate-y-1/2 rounded-full"
+          style={{
+            background: 'radial-gradient(circle, rgba(255,204,0,0.55), transparent 70%)',
+            filter: 'blur(30px)',
+          }}
+          animate={{ x: ['-60%', '320%'] }}
+          transition={{ duration: DUR.ambient.pulse, repeat: Infinity, ease: EASE.inOut }}
+        />
+      )}
+      {/* CHROME — this panel floats over the gateway reel, same as the sign-in
+          card it replaces during boot. */}
+      <GlassPanel tier="chrome" className="relative p-10 rounded-3xl">
         {/* Clapperboard — top stick snaps shut on entrance. */}
         <div className="mx-auto mb-8 w-44">
           <div className="relative h-12 w-full">
