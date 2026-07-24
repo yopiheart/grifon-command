@@ -5,6 +5,7 @@ import { DUR, EASE } from './motionTokens';
 import { Menu, X, Volume2, VolumeX } from 'lucide-react';
 import { useUiSound } from '../../services/uiSoundService';
 import { GrifonMark } from './GrifonMark';
+import { MAT_CHROME, SCROLL_EDGE } from './materialTokens';
 
 export interface SiteNavLink {
   label: string;
@@ -154,10 +155,13 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
   );
 
   return (
+    // CHROME tier once scrolled — the header is the canonical floating
+    // functional layer, and past the fold there's real content beneath it to
+    // refract. At rest it stays fully transparent so the hero leads.
     <header
-      className={`transition-[background-color,border-color,backdrop-filter] duration-300 ${
+      className={`relative transition-[background-color,border-color,backdrop-filter] duration-300 ${
         scrolled
-          ? 'backdrop-blur-xl bg-zinc-950/80 border-b border-white/10'
+          ? `${MAT_CHROME} ${SCROLL_EDGE} border-b border-white/10`
           : 'backdrop-blur-none bg-transparent border-b border-transparent'
       }`}
     >

@@ -76,8 +76,31 @@ Nothing in DESIGN.md's colour law changes — gold stays the sole action colour,
 
 ---
 
-## Status
+## Status — SHIPPED (slice 1), 2026-07-24
 
-Evaluation + spec + prototype complete. **No app code changed** — moves 01–06 touch `components/ui/`, `index.css` and ~90 call sites, so they need a plan + `/goal` gate before implementation (CLAUDE.md → Plan → Goal pipeline), and the non-trivial slices belong with `code-executor`.
+Moves **01 · 02 · 03 · 04 · 05** are in the app. Move **06** (concentric radii) has its helper but no call sites yet.
 
-**Kill switch:** none needed — nothing is wired into the app. Deleting `assets/design/grifon-glass-v2.html` and this file reverts the entire initiative.
+**New files**
+- `components/ui/materialTokens.ts` — the fourth token sibling (after wizard/dashboard/motion). Tier constants, `MaterialTier`, `concentricRadius()`.
+- `components/ui/LiquidGlass.tsx` — the CHROME primitive (counterpart to GlassPanel), with `tier`, `scrollEdge`, `as`.
+- `components/ui/GatewayReel.tsx` — abstract gold/zinc ad plates drifting behind the auth glass. Move 02.
+
+**Changed**
+- `index.css` — the four tier bodies in `@layer components` (native cascade layer: Tailwind here is the **Play CDN**, whose output is unlayered, so a caller's one-off utility still wins), `.scroll-edge`, `.mat-chrome-mobile`, the `gateway-reel` keyframe, and the **`prefers-reduced-transparency` + `prefers-contrast: more` guards** (move 04 — the one genuine defect).
+- `components/ui/GlassPanel.tsx` — default flipped to PLATE, `tier` escape hatch. **64 of its 65 call sites lost their backdrop-filter**; the auth gateway is the one that kept it.
+- `components/ui/SiteHeader.tsx` — CHROME + scroll edge once scrolled; fully transparent at rest so the hero still leads.
+- `components/ui/StepFooter.tsx` — CHROME below `md` only, where it actually detaches and floats.
+- `components/ui/CommandPalette.tsx` — panel → CHROME, scrim → VEIL.
+- `App.tsx` — gateway gets the reel behind it and `tier="chrome"` in front. The one panel that genuinely floats over live content.
+- `DESIGN.md` — "Elevation & Depth" rewritten as the tier system; `glassPanel`/`liquidGlass` component entries updated.
+
+**Verified:** `npm run build` clean · `npm test` 1005 passed / 26 skipped · `npm run design:lint` 0 errors, 0 warnings · tier CSS + both a11y guards confirmed present in the built bundle.
+
+**Not verified:** no browser pass. Visual confirmation of the rim lens, the gateway reel and the scroll edge still needs a `smoke-tester` run on `/`, `/pricing`, the gateway and the dashboard.
+
+**On the 105 → ~17 target:** the source-literal count moved 105 → 104, because the reduction happened *inside* a shared primitive. The metric that matters is rendered blurred surfaces, and that's down by 64 in one edit. The remaining literals are the un-swept surfaces — modules, modals, dashboard chrome — for slice 2.
+
+### Slice 2 (not started)
+Sweep the remaining `backdrop-blur` literals onto tiers: modals + quota wall → SLAB, module chrome → CHROME/PLATE per the picking rule, dashboard rail → CHROME. Then move 06's concentric radii on whatever gets touched.
+
+**Kill switch:** revert `GlassPanel.tsx` to `bg-zinc-900/80 backdrop-blur-xl …` and the app returns to v1 look; the tier CSS becomes dead but harmless. Full revert = this commit.

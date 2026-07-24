@@ -17,6 +17,7 @@ import Step6Thumbnail from './components/Step6Thumbnail';
 import Step6VideoPrompts from './components/Step6VideoPrompts';
 import Step7FinalOutput from './components/Step7FinalOutput';
 import { GlassPanel } from './components/ui/GlassPanel';
+import { GatewayReel } from './components/ui/GatewayReel';
 import { GoldButton } from './components/ui/GoldButton';
 import { GrifonMark } from './components/ui/GrifonMark';
 import { BootScreen } from './components/ui/BootScreen';
@@ -1134,6 +1135,10 @@ const App: React.FC = () => {
       <div className="min-h-screen bg-zinc-950 font-sans flex flex-col items-center justify-center p-4 relative overflow-hidden">
         {/* Cinematic backdrop — CSS-only HUD gradient (no image weight). */}
         <div className="absolute inset-0 pointer-events-none z-0">
+          {/* Ad reel — the thing the gateway glass refracts. Sits at the very
+              back so every layer below still reads over it. Without content
+              behind it, glass on zinc-950 is optically a no-op. */}
+          <GatewayReel className="opacity-[0.42]" />
           {/* Primary gold glow — top-right, stationary */}
           <div
             className="absolute inset-0"
@@ -1195,7 +1200,9 @@ const App: React.FC = () => {
               </p>
             </div>
 
-            <GlassPanel className="relative w-full max-w-md p-4 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            {/* CHROME — the one panel in the app that genuinely floats over live
+                content (the reel behind it), so it's the one that earns real glass. */}
+            <GlassPanel tier="chrome" className="relative w-full max-w-md p-4 md:p-8 rounded-3xl animate-in fade-in slide-in-from-bottom-4 duration-500">
                 {/* Terminal-frame hairlines — gold HUD corners */}
                 <span aria-hidden="true" className="pointer-events-none absolute top-0 left-0 w-3 h-px bg-[#FFCC00]/60" />
                 <span aria-hidden="true" className="pointer-events-none absolute top-0 left-0 w-px h-3 bg-[#FFCC00]/60" />
