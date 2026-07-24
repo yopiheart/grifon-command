@@ -82,6 +82,88 @@ without an eyeball.
 (`$env:VERCEL_TOKEN`, or `$env:VERCEL_TOKEN_FILE` pointing OFF this machine) and skips the
 interactive browser login the defreezer wipes.
 
+## GPT 5.6 Sol architecture consult — RUN 2026-07-24 (Neil-requested; Codex CLI `exec --sandbox read-only`, brief-only, NOT a diff review per trial rules)
+
+Sol was given the six architecture facts + six questions (brief preserved in the session
+scratchpad; trivially re-derivable from this doc). Verbatim-condensed verdicts, with the main
+loop's calibration notes in brackets:
+
+1. **x-run-id attribution: acceptable for COGS diagnostics, NOT decision-grade alone (Med).**
+   Real residuals Sol named: (a) SAME-OWNER misbinding — a stale tab/replay can attach events to
+   another run the same user owns; invisible to the anomaly view, corrupts per-run comparisons;
+   (b) orphan run_ids vanish through the inner join; (c) **'cogs' rows must be server-derived —
+   and today `api/events.ts` would accept a client POST with `event='cogs'` + fake `estUsd`,
+   which `run_cogs` would sum into the caller's own runs.** Sol's cheap enforce: composite FK
+   `events(run_id,user_id) → producer_runs` (DB-side, zero hot-path cost; NULLs exempt legacy).
+   [Main-loop read: the client-forgeable-'cogs' vector is the sharpest item — self-poisoning
+   only, but it breaks "cost is server-derived" in principle; a reserved-event-name blocklist in
+   api/events.ts is a one-liner. FK is a good candidate but interacts with fire-and-forget
+   swallow semantics — dropped rows vs forged rows; needs a deliberate choice.]
+2. **Gate flag-only phase: right call; verdict events alone can NEVER justify reroll authority
+   (High before authority).** His bar: ≥1,000 eligible scenes + ≥200 declared failures per family,
+   human audit of ≥500 sampled passes (2 blinded reviewers), fail-precision ≥95% w/ CI lower
+   bound >90%, shadow-reroll validation (≥80% of rerolls must fix the cited defect), version-
+   stamped cohorts (model/prompt change = new cohort). Sharpest point: **treat "label unreadable"
+   / "label missing" / "label crisp but factually WRONG" as separate outcomes — a legibility
+   verdict passes beautifully rendered counterfeit text.** [Calibration: the METHODOLOGY is
+   right; the Ns are enterprise-scale — at Grifon's pre-launch volume, adopt the structure
+   (human-labeled sample, precision floor w/ CI, outcome classes, shadow rerolls, cohort
+   stamping) with a first checkpoint at ~100–200 gated scenes, then re-widen.]
+3. **spawnSync watchdog: keep spawnSync, but 120s stale should not have TERMINAL authority
+   (Med).** One canary ≠ tail evidence; concat can legitimately cross 120s under CPU throttling
+   and still beat the 300s ceiling; completed concatMs logs are survivorship-biased (killed runs
+   don't log). His shape: phase-aware lease before concat + track `watchdog_stale_then_success`.
+   [Main-loop read: legit — the current watchdog CAN false-kill mid-concat and the orchestrator
+   refires → duplicate compute. Cheap first step: emit a `stale_then_success` telemetry event
+   when a `done` write lands on a sidecar already marked `failed:watchdog_stalled` (detection
+   before machinery), + a phase-aware threshold for the known-long concat step.]
+4. **704px margin: ship a systemic-dimension guard (Med, easy).** A tier miss is a CAPABILITY
+   failure, not stochastic — identical rerolls buy the same undersized image. Log dimension +
+   margin per image keyed by model/config, warn <5% margin, circuit-break after consecutive
+   below-floor outputs, suppress identical rerolls on open circuit. Don't block P5 on the 64px
+   itself. [Agree; margin logging is a small slice. Today's blast radius is bounded — reroll is
+   once-per-scene, so a systemic miss wastes ≤N rerolls per run, not a storm.]
+5. **Hyperframes: keep product-renderer NO; make the pilot a formal decision experiment.**
+   Reopen trigger: ≥2 roadmap-COMMITTED features needing responsive layout + independently timed
+   elements, or the next overlay tranche estimated ≥2 engineer-weeks / >2× the browser effort. A
+   single kerning bug or an uncommitted wishlist is NOT enough. Pilot bar: same typed scene spec
+   as product (never user HTML), ≥500 renders >99.5% completion, p99 <~270s, cost within 25%,
+   blind visual preference. **His preferred first experiment: browser-rendered OVERLAY LAYERS
+   composited by FFmpeg, which stays the canonical concat/mux/encode path.** [Fully aligned with
+   hyperframes_decision.md; the overlay-layer hybrid is the right first experiment if the
+   trigger ever fires.]
+6. **Two HIGHs + two controls beyond our reviews:**
+   - **Provider crash consistency (High):** the dual-driver test proves mutual exclusion, NOT
+     exactly-once provider submission — crash between provider-accept and jobHandle record =
+     ambiguous job, possible duplicate on requeue. Honest state is "ambiguous" without provider
+     idempotency keys/lookup. [True in principle; window is narrow and per-event cost ~$0.50–0.60.
+     Logged as accepted risk at current scale; revisit at volume.]
+   - **P5 experiment validity (High):** an opt-in cohort is selected + motivated — fine for
+     stability discovery, cannot justify a default flip; wants staged user-level rollout with
+     holdback + predefined rollback thresholds, sample counts not calendar weeks. [Right for a
+     scaled product; Grifon pre-launch has no cohort either way. Folded into P5 criteria: if a
+     real user base exists by flip time, stage it; if it's still founder-traffic, the window is a
+     stability+cost gate, not an A/B.]
+   - **Liveness (High if browser-resident — it is):** claims/revision guards give safety, not
+     progress; tab closure/mobile background/lost connectivity must not strand a run. [Known —
+     this is exactly the F4/resume-by-DB-lookup lesson, already a P5 bundle candidate; Sol
+     independently converged on it, which raises its priority.]
+   - **Reproducibility + final acceptance (Med):** snapshot build SHA/prompt bundle/model route/
+     flags/storyboard hash per run; and **validate the final artifact before `done` — duration,
+     resolution, AUDIO STREAM presence, frame decode.** [The audio-stream check would have
+     caught F6 (the silent-render bug we actually shipped) — the strongest single item in the
+     whole consult. Small slice: ffprobe the final before the `done` sidecar write.]
+
+   Sol's own concern order: provider crash ambiguity > P5 validity > liveness > gate
+   counterfactuals > run-ID integrity > watchdog semantics > dimension margin. "Hyperframes is
+   not presently a top operational risk."
+
+**Main-loop shortlist derived from the consult (small, high-value, NOT started — Neil's call):**
+(1) `api/events.ts` reserved-name blocklist so a client can't POST `event='cogs'` (one-liner +
+test); (2) ffprobe final-acceptance check before the `done` sidecar write (F6-class guard);
+(3) `stale_then_success` telemetry + phase-aware concat threshold; (4) per-image dimension-margin
+logging. None block tomorrow's flag-ON test.
+
 ## ⚠ SUPERSEDED 2026-07-24 — merged, applied, smoked (Neil: "merge, SQL apply, live smoke — G")
 
 The standing orders below were lifted by Neil on 2026-07-24. Current state:
