@@ -37,6 +37,19 @@ const GateBody = z.object({
 const IMAGE_LIMIT = 15;
 const IMAGE_WINDOW_SECONDS = 60;
 
+// Gate burst limit — DELIBERATELY its own bucket, not the generate bucket.
+// Sharing `gemini:image:${user.id}` made the gate and the generation it judges
+// compete for one 15/60s allowance: a gated N-scene run fires 2N calls (N generate
+// + N gate) at pooled(K=3), so a 9-scene run needs ~18/min and overruns the cap.
+// Two bad outcomes from that, both silent: the gate 429s on the LATER scenes (so
+// gate-precision data is biased toward early scenes, exactly the measurement
+// flag-ON exists to take), and — worse — gate calls can starve the GENERATE calls
+// they follow, degrading the actual run. Sized strictly above the 15/60s generate
+// ceiling so the gate can never be the bottleneck or the thief. Cost is NOT bounded
+// here: the per-user 48/day budget below remains the real ceiling (~$0.002/call).
+const GATE_BURST_LIMIT = 20;
+const GATE_BURST_WINDOW_SECONDS = 60;
+
 let _ai: GoogleGenAI | null = null;
 const getAi = (): GoogleGenAI => {
   if (_ai) return _ai;
@@ -92,10 +105,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(503).json({ error: 'image_gate_disabled' });
     }
 
-    const gateAllowed = await rateLimitCheck(`gemini:image:${user.id}`, IMAGE_LIMIT, IMAGE_WINDOW_SECONDS);
+    // Burst limit on its OWN key (see GATE_BURST_LIMIT) — the gate must never consume
+    // the generate allowance for the images it is judging.
+    const gateAllowed = await rateLimitCheck(`imgate:burst:${user.id}`, GATE_BURST_LIMIT, GATE_BURST_WINDOW_SECONDS);
     if (!gateAllowed) {
-      res.setHeader('Retry-After', String(IMAGE_WINDOW_SECONDS));
-      return res.status(429).json({ error: 'rate_limited', scope: 'image', retry_after_seconds: IMAGE_WINDOW_SECONDS });
+      res.setHeader('Retry-After', String(GATE_BURST_WINDOW_SECONDS));
+      return res.status(429).json({ error: 'rate_limited', scope: 'image_gate', retry_after_seconds: GATE_BURST_WINDOW_SECONDS });
     }
 
     // PRIMARY bound: internal per-user daily gate budget (COGS, not the customer meter). This is

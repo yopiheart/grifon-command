@@ -113,10 +113,10 @@ describe('api/gemini/image — gate mode metering', () => {
     expect(getUserPlanMock).not.toHaveBeenCalled();
     // Burst limit + per-user daily budget + per-scene idempotency, in that order.
     const keys = rateLimitCheckMock.mock.calls.map((c) => c[0]);
-    expect(rateLimitCheckMock).toHaveBeenCalledWith('gemini:image:u1', 15, 60);
+    expect(rateLimitCheckMock).toHaveBeenCalledWith('imgate:burst:u1', 20, 60);
     expect(rateLimitCheckMock).toHaveBeenCalledWith('imgate:user:u1', 48, 86400);
     expect(rateLimitCheckMock).toHaveBeenCalledWith('imgate:run_abc:3', 2, 86400);
-    expect(keys).toEqual(['gemini:image:u1', 'imgate:user:u1', 'imgate:run_abc:3']);
+    expect(keys).toEqual(['imgate:burst:u1', 'imgate:user:u1', 'imgate:run_abc:3']);
     // The COGS row carries the client-supplied runId AND the verified user id (x-run-id is
     // not ownership-checked, so attribution is what makes a forged run id filterable).
     expect(logImageUsageMock).toHaveBeenCalledWith('image_gate', 'gate-model-test', 1, 'run_abc', 'u1');
@@ -157,7 +157,36 @@ describe('api/gemini/image — gate mode metering', () => {
     const imgateKeys = rateLimitCheckMock.mock.calls
       .map((c) => c[0] as string)
       .filter((k) => k.startsWith('imgate:'));
-    expect(imgateKeys).toEqual(['imgate:user:u1']);
+    expect(imgateKeys).toEqual(['imgate:burst:u1', 'imgate:user:u1']);
+  });
+
+  // REGRESSION GUARD. The gate used to share `gemini:image:${user.id}` with generation,
+  // so a gated N-scene run spent 2N calls against ONE 15/60s allowance: the gate 429'd on
+  // the later scenes (biasing gate-precision data toward early scenes) and could starve
+  // the generate calls it follows. The separation is the fix — if anyone re-points the
+  // gate at the generate bucket, this fails.
+  it('8) flag ON, the gate NEVER touches the generate bucket', async () => {
+    process.env.IMAGE_GATE_ENABLED = 'true';
+    const res = mockRes();
+    await handler(gateReq({ headers: { authorization: 'Bearer t', 'x-run-id': 'run_abc' } }), res);
+    expect(res.statusCode).toBe(200);
+    const keys = rateLimitCheckMock.mock.calls.map((c) => c[0] as string);
+    expect(keys).not.toContain('gemini:image:u1');
+    expect(keys.every((k) => k.startsWith('imgate:'))).toBe(true);
+  });
+
+  it('9) flag ON, gate burst denied → 429 scoped image_gate; gate NOT called, budget untouched', async () => {
+    process.env.IMAGE_GATE_ENABLED = 'true';
+    rateLimitCheckMock.mockImplementation(async (key: string) => key !== 'imgate:burst:u1');
+    const res = mockRes();
+    await handler(gateReq({ headers: { authorization: 'Bearer t', 'x-run-id': 'run_abc' } }), res);
+    expect(res.statusCode).toBe(429);
+    // Scope is 'image_gate', not 'image' — a gate 429 must be distinguishable from a
+    // generate 429 in logs, since only one of them means lost gate coverage.
+    expect(res.body).toMatchObject({ error: 'rate_limited', scope: 'image_gate' });
+    expect(gateImageMock).not.toHaveBeenCalled();
+    // Burst is checked FIRST, so the daily budget is never spent on a throttled call.
+    expect(rateLimitCheckMock.mock.calls.map((c) => c[0])).toEqual(['imgate:burst:u1']);
   });
 
   it('6) flag ON, legacy model field is stripped before gateImage', async () => {
