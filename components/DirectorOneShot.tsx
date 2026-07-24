@@ -30,17 +30,17 @@ interface DirectorOneShotProps {
 }
 
 const STAGE_ICON: Record<OneShotStage['status'], React.ReactNode> = {
-  pending: <Circle className="w-4 h-4 text-zinc-600" />,
+  pending: <Circle className="w-4 h-4 text-on-surface-sublabel" />,
   running: <Loader2 className="w-4 h-4 text-[#FFCC00] animate-spin" />,
   done: <Check className="w-4 h-4 text-[#FFCC00]" />,
   error: <X className="w-4 h-4 text-red-400" />,
-  skipped: <Circle className="w-4 h-4 text-zinc-700" />,
+  skipped: <Circle className="w-4 h-4 text-on-surface-sublabel" />,
 };
 
 const BriefRow: React.FC<{ label: string; value?: string }> = ({ label, value }) => (
   <div className="flex flex-col gap-0.5">
-    <span className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest">{label}</span>
-    <span className={`text-sm ${value ? 'text-zinc-200' : 'text-zinc-600 italic'}`}>{value || 'Not set'}</span>
+    <span className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest">{label}</span>
+    <span className={`text-sm ${value ? 'text-zinc-200' : 'text-on-surface-sublabel italic'}`}>{value || 'Not set'}</span>
   </div>
 );
 
@@ -89,7 +89,7 @@ const DirectorOneShot: React.FC<DirectorOneShotProps> = ({
           <h2 className="text-xl font-black text-white uppercase tracking-tight">
             {oneShot.error ? 'Generation hit a snag' : oneShot.done ? 'Your ad plan is ready' : 'Building your ad…'}
           </h2>
-          <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mt-1">
+          <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest mt-1">
             {clientDetails.brandName} {clientDetails.offer ? `· ${clientDetails.offer}` : ''}
           </p>
         </div>
@@ -99,11 +99,11 @@ const DirectorOneShot: React.FC<DirectorOneShotProps> = ({
             {oneShot.stages.map(stage => (
               <li key={stage.id} className="flex items-center gap-3">
                 <span className="shrink-0">{STAGE_ICON[stage.status]}</span>
-                <span className={`text-sm flex-1 ${stage.status === 'pending' || stage.status === 'skipped' ? 'text-zinc-500' : 'text-zinc-200'}`}>
+                <span className={`text-sm flex-1 ${stage.status === 'pending' || stage.status === 'skipped' ? 'text-on-surface-sublabel' : 'text-zinc-200'}`}>
                   {stage.label}
                 </span>
                 {stage.detail && (
-                  <span className={`text-[10px] font-mono uppercase tracking-widest ${stage.status === 'error' ? 'text-red-400' : 'text-zinc-500'}`}>
+                  <span className={`text-[10px] font-mono uppercase tracking-widest ${stage.status === 'error' ? 'text-red-400' : 'text-on-surface-sublabel'}`}>
                     {stage.detail}
                   </span>
                 )}
@@ -160,7 +160,7 @@ const DirectorOneShot: React.FC<DirectorOneShotProps> = ({
 
       <GlassPanel className="p-5 space-y-4">
         <div className="flex items-center justify-between">
-          <span className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest">// YOUR_BRIEF</span>
+          <span className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest">// YOUR_BRIEF</span>
           {directorUnlocked && (
             <button onClick={onSwitchToSteps} className="text-[10px] text-[#FFCC00] font-mono uppercase tracking-widest hover:underline">
               Edit
@@ -189,14 +189,14 @@ const DirectorOneShot: React.FC<DirectorOneShotProps> = ({
 
       <div className="flex flex-col sm:flex-row gap-6">
         <div className="space-y-2">
-          <span className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest">// FORMAT</span>
+          <span className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest">// FORMAT</span>
           <div className="flex gap-2">
             <Toggle active={ratio === '9:16'} onClick={() => setAspectRatio('9:16')}>9:16</Toggle>
             <Toggle active={ratio === '16:9'} onClick={() => setAspectRatio('16:9')}>16:9</Toggle>
           </div>
         </div>
         <div className="space-y-2">
-          <span className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest">// LANGUAGE</span>
+          <span className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest">// LANGUAGE</span>
           <div className="flex gap-2">
             <Toggle active={lang === 'Taglish'} onClick={() => setLang('Taglish')}>Taglish</Toggle>
             <Toggle active={lang === 'English'} onClick={() => setLang('English')}>English</Toggle>

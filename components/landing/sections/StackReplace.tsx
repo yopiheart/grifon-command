@@ -33,7 +33,7 @@ export const StackReplace: React.FC = () => (
         transition={{ duration: DUR.entrance }}
         className="text-center mb-12 md:mb-16"
       >
-        <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-zinc-500 mb-4">// REPLACES YOUR WHOLE AI STACK</p>
+        <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-on-surface-sublabel mb-4">// REPLACES YOUR WHOLE AI STACK</p>
         <h2 className="text-3xl md:text-5xl font-bold uppercase tracking-tight leading-tight max-w-3xl mx-auto bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
           SIX AI TOOLS + YOUR VIDEO EDITOR.{' '}
           <span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">Or one Grifon.</span>
@@ -55,7 +55,7 @@ export const StackReplace: React.FC = () => (
           >
             <tool.icon className="w-7 h-7 text-[#FFCC00]" />
             <div className="text-sm md:text-base font-bold text-white leading-tight">{tool.cap}</div>
-            <div className="mt-auto flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+            <div className="mt-auto flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">
               <span className="line-through decoration-zinc-600">{tool.solo}</span>
               <span className="text-[#FFCC00]">included</span>
             </div>
@@ -83,7 +83,7 @@ export const StackReplace: React.FC = () => (
           </p>
         </div>
         <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest sm:flex-col sm:items-end sm:gap-1">
-          <span className="text-zinc-500 line-through decoration-zinc-600">a freelance editor</span>
+          <span className="text-on-surface-sublabel line-through decoration-zinc-600">a freelance editor</span>
           <span className="text-[#FFCC00]">included</span>
         </div>
       </motion.div>
@@ -101,7 +101,7 @@ export const StackReplace: React.FC = () => (
           {' '}(<span className="font-mono">~₱7,000</span>) — plus a freelance editor every video — replaced by{' '}
           <span className="font-bold text-[#FFCC00]">one app at ₱2,497/mo.</span>
         </p>
-        <p className="text-[10px] font-mono uppercase tracking-widest text-zinc-600">
+        <p className="text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">
           // typical standalone prices per tool category
         </p>
       </motion.div>

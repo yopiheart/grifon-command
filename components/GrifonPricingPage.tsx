@@ -14,7 +14,7 @@ import { PLAN_FEATURES } from "../config/planFeatures";
 import { PRO_VALUE_STACK, PRO_VALUE_TOTAL, FOUNDING_NOTE } from "../config/valueStack";
 
 const Check = () => <CheckIcon size={16} strokeWidth={2.5} className="text-[#FFCC00]" />;
-const X = () => <XIcon size={14} strokeWidth={1.5} className="text-zinc-600" />;
+const X = () => <XIcon size={14} strokeWidth={1.5} className="text-on-surface-sublabel" />;
 const Lock = () => <LockIcon size={14} strokeWidth={1.2} className="text-[#FFCC00]" />;
 const Star = () => <StarIcon size={14} strokeWidth={0} fill="#FFCC00" className="text-[#FFCC00]" />;
 
@@ -842,7 +842,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
                     </p>
                     <div>
                       <div className="text-white font-bold text-base">{testimonial.name}</div>
-                      <div className="text-zinc-500 text-sm">{testimonial.biz}</div>
+                      <div className="text-on-surface-sublabel text-sm">{testimonial.biz}</div>
                     </div>
                   </div>
                 </div>

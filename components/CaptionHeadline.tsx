@@ -152,7 +152,7 @@ const CaptionHeadline: React.FC<CaptionHeadlineProps> = ({ onBack }) => {
       <div className="w-full max-w-6xl mx-auto">
         <header className="flex flex-col items-start gap-4 mb-8 w-full border-b border-white/10 pb-6 relative">
           <div className="flex items-center justify-between w-full">
-            <button onClick={onBack} className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-zinc-500 hover:text-white uppercase tracking-widest transition-colors">
+            <button onClick={onBack} className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-on-surface-sublabel hover:text-white uppercase tracking-widest transition-colors">
               <ChevronLeft className="w-4 h-4" /> <span className="hidden md:inline">COMMAND CENTER</span><span className="md:hidden">BACK</span>
             </button>
           </div>
@@ -160,7 +160,7 @@ const CaptionHeadline: React.FC<CaptionHeadlineProps> = ({ onBack }) => {
             <h1 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight break-words whitespace-normal leading-tight">
                 Broadcast
             </h1>
-            <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mt-2">
+            <p className="text-[10px] text-on-surface-sublabel font-mono tracking-widest uppercase mt-2">
                 // CAPTIONS & HEADLINES THAT STOP THE SCROLL
             </p>
           </div>
@@ -184,7 +184,7 @@ const CaptionHeadline: React.FC<CaptionHeadlineProps> = ({ onBack }) => {
                                     <div key={idx} className="relative aspect-square border border-white/10 rounded-lg overflow-hidden bg-zinc-950 group">
                                         {file.startsWith('data:video') ? (
                                             <div className="w-full h-full flex items-center justify-center bg-zinc-900">
-                                                <Video className="w-6 h-6 text-zinc-500" />
+                                                <Video className="w-6 h-6 text-on-surface-sublabel" />
                                             </div>
                                         ) : (
                                             <img src={file} className="w-full h-full object-cover opacity-80" alt="thumbnail" />
@@ -201,9 +201,9 @@ const CaptionHeadline: React.FC<CaptionHeadlineProps> = ({ onBack }) => {
                         )}
 
                         <label className={`bg-zinc-950/50 border-2 border-dashed border-white/10 hover:border-[#FFCC00] hover:bg-zinc-800/80 text-zinc-400 p-6 rounded-xl flex flex-col items-center justify-center cursor-pointer transition-all min-h-[100px] ${formData.adFiles.length > 0 ? 'border-[#FFCC00]/50' : ''}`}>
-                            <ImageIcon className="w-6 h-6 mb-2 text-zinc-500" />
+                            <ImageIcon className="w-6 h-6 mb-2 text-on-surface-sublabel" />
                             <span className="font-mono text-[10px] uppercase tracking-widest">[CLICK TO UPLOAD ASSETS]</span>
-                            <p className="text-[9px] text-zinc-600 font-mono italic mt-2">AI will sync its vision sensors to these visuals.</p>
+                            <p className="text-[9px] text-on-surface-sublabel font-mono italic mt-2">AI will sync its vision sensors to these visuals.</p>
                             <input ref={fileInputRef} type="file" multiple accept="image/*,video/*" onChange={handleFileChange} className="hidden" />
                         </label>
                     </div>
@@ -246,12 +246,12 @@ const CaptionHeadline: React.FC<CaptionHeadlineProps> = ({ onBack }) => {
                                     <option value="English">English</option>
                                     <option value="Taglish">Taglish</option>
                                 </select>
-                                <ChevronDown className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none" />
+                                <ChevronDown className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-sublabel pointer-events-none" />
                             </div>
                         </div>
                         <div className="flex flex-col justify-end">
                              <div className="p-4 bg-zinc-950 border border-white/10 rounded-xl flex flex-col justify-center h-[54px]">
-                                <p className="text-[9px] text-zinc-500 font-mono tracking-tighter uppercase leading-none mb-1">SESSION_TYPE</p>
+                                <p className="text-[9px] text-on-surface-sublabel font-mono tracking-tighter uppercase leading-none mb-1">SESSION_TYPE</p>
                                 <p className="text-[10px] text-[#FFCC00] font-black uppercase font-mono">{formData.adFileType}_ANALYSIS_PROTOCOL</p>
                              </div>
                         </div>
@@ -293,7 +293,7 @@ const CaptionHeadline: React.FC<CaptionHeadlineProps> = ({ onBack }) => {
                                 {renderVariations()}
                             </div>
                         ) : (
-                            <div className="flex flex-col items-center justify-center h-full text-zinc-500">
+                            <div className="flex flex-col items-center justify-center h-full text-on-surface-sublabel">
                                 <p className="font-mono text-center mb-2 tracking-[0.5em] text-[10px] uppercase">// SYSTEM_STANDBY</p>
                                 <p className="text-sm text-center max-w-xs">
                                     Awaiting visual and strategic data injection to generate ad artifacts.

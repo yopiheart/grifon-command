@@ -78,7 +78,7 @@ export const RecentActivityToast: React.FC = () => {
               <p className="text-sm text-white leading-snug">
                 <span className="font-semibold">{item.name}</span> {item.action}
               </p>
-              <p className="mt-0.5 flex items-center gap-1 text-[11px] text-zinc-500">
+              <p className="mt-0.5 flex items-center gap-1 text-[11px] text-on-surface-sublabel">
                 <MapPin className="h-3 w-3 shrink-0" />
                 {item.city} · {minsAgo} mins ago
               </p>
@@ -87,7 +87,7 @@ export const RecentActivityToast: React.FC = () => {
             <button
               onClick={() => setDismissed(true)}
               aria-label="Dismiss"
-              className="shrink-0 -mr-1 p-1 rounded-full text-zinc-500 hover:text-white transition-colors"
+              className="shrink-0 -mr-1 p-1 rounded-full text-on-surface-sublabel hover:text-white transition-colors"
             >
               <X className="h-3.5 w-3.5" />
             </button>

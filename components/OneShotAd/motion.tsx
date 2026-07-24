@@ -66,7 +66,7 @@ export const SpineNode: React.FC<{
             ? 'border-[#FFCC00] bg-[#FFCC00] text-black'
             : state === 'active'
             ? 'border-[#FFCC00] bg-zinc-950 text-[#FFCC00] shadow-[0_0_16px_rgba(255,204,0,0.5)]'
-            : 'border-white/15 bg-zinc-950 text-zinc-600'
+            : 'border-white/15 bg-zinc-950 text-on-surface-sublabel'
         }`}
       >
         {state === 'done' ? (

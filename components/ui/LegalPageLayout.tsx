@@ -43,7 +43,7 @@ const LegalPageLayout: React.FC<Props> = ({ title, effectiveDate, onBack, backLa
         <h1 className="text-3xl md:text-4xl font-black uppercase tracking-tight mb-3">
           {title}
         </h1>
-        <p className="text-xs font-mono text-zinc-500 mb-10">
+        <p className="text-xs font-mono text-on-surface-sublabel mb-10">
           Effective date: {effectiveDate}
         </p>
 
@@ -51,7 +51,7 @@ const LegalPageLayout: React.FC<Props> = ({ title, effectiveDate, onBack, backLa
           {children}
         </div>
 
-        <footer className="mt-16 pt-8 border-t border-white/5 text-xs text-zinc-500 font-mono">
+        <footer className="mt-16 pt-8 border-t border-white/5 text-xs text-on-surface-sublabel font-mono">
           <p>© 2026 Haste Enterprises — Grifon.AI</p>
           <p className="mt-1">Questions? Contact <a href="mailto:grifon.ai@gmail.com" className="text-[#FFCC00] hover:underline">grifon.ai@gmail.com</a></p>
         </footer>

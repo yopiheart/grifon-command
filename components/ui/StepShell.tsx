@@ -29,7 +29,7 @@ export const StepShell: React.FC<{
     <div className="mb-8 flex items-start justify-between gap-4 border-b border-white/10 pb-6">
       <div className="min-w-0">
         {sublabel && (
-          <p className="mb-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500">// {sublabel}</p>
+          <p className="mb-2 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">// {sublabel}</p>
         )}
         <h2 className="text-2xl font-black uppercase tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500">
           {title}

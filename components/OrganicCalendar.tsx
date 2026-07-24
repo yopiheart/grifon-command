@@ -137,7 +137,7 @@ const OrganicCalendar: React.FC<OrganicCalendarProps> = ({ businessInfo, avatar,
             <div className="flex items-center justify-between w-full">
                 <button 
                     onClick={() => setUplinkData(null)} 
-                    className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-zinc-500 hover:text-white uppercase tracking-widest transition-colors"
+                    className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-on-surface-sublabel hover:text-white uppercase tracking-widest transition-colors"
                 >
                     <ChevronLeft className="w-4 h-4" /> <span className="hidden md:inline">COMMAND CENTER</span><span className="md:hidden">BACK</span>
                 </button>
@@ -161,7 +161,7 @@ const OrganicCalendar: React.FC<OrganicCalendarProps> = ({ businessInfo, avatar,
                 <h1 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight break-words whitespace-normal leading-tight">
                     Campaign Planner
                 </h1>
-                <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mt-2">
+                <p className="text-[10px] text-on-surface-sublabel font-mono tracking-widest uppercase mt-2">
                     // PLAN & SCHEDULE YOUR CONTENT
                 </p>
             </div>
@@ -179,7 +179,7 @@ const OrganicCalendar: React.FC<OrganicCalendarProps> = ({ businessInfo, avatar,
                                 <img src={day.imageUrl} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90" />
                             ) : (
                                 <div className="w-full h-full flex flex-col items-center justify-center opacity-20 p-8 text-center">
-                                    <ImageIcon className="w-12 h-12 mb-4 text-zinc-500" />
+                                    <ImageIcon className="w-12 h-12 mb-4 text-on-surface-sublabel" />
                                     <p className="text-[10px] uppercase font-mono tracking-widest text-zinc-400">Awaiting Visual Input</p>
                                 </div>
                             )}
@@ -203,10 +203,10 @@ const OrganicCalendar: React.FC<OrganicCalendarProps> = ({ businessInfo, avatar,
                             
                             <div className="mt-auto flex flex-col gap-4">
                               <div className="pt-4 border-t border-white/10 space-y-2">
-                                  <p className="text-[9px] text-zinc-500 uppercase tracking-widest font-mono">
+                                  <p className="text-[9px] text-on-surface-sublabel uppercase tracking-widest font-mono">
                                       // VIBE: <span className="text-zinc-300">{day.emotionVibe}</span>
                                   </p>
-                                  <p className="text-[9px] text-zinc-500 uppercase tracking-widest font-mono">
+                                  <p className="text-[9px] text-on-surface-sublabel uppercase tracking-widest font-mono">
                                       // PLACEMENT: <span className="text-[#FFCC00]">{day.productPlacement}</span>
                                   </p>
                               </div>

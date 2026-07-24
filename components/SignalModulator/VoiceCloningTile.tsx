@@ -116,7 +116,7 @@ const VoiceCloningTile: React.FC<VoiceCloningTileProps> = ({ library, onLibraryR
       type="button"
       onClick={() => { setTab(id); setAudio(null); setAudioLabel(null); }}
       disabled={quotaFull}
-      className={`flex items-center gap-2 px-4 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all disabled:opacity-50 disabled:cursor-not-allowed ${tab === id ? 'bg-[#FFCC00] text-black' : 'text-zinc-500 hover:text-white'}`}
+      className={`flex items-center gap-2 px-4 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all disabled:opacity-50 disabled:cursor-not-allowed ${tab === id ? 'bg-[#FFCC00] text-black' : 'text-on-surface-sublabel hover:text-white'}`}
     >
       <Icon className="w-3.5 h-3.5" /> {label}
     </button>
@@ -126,10 +126,10 @@ const VoiceCloningTile: React.FC<VoiceCloningTileProps> = ({ library, onLibraryR
     <div className="flex flex-col gap-6">
       {library.myVoices.length === 0 ? (
         <div className="flex items-center justify-between px-4 py-3 rounded-xl bg-zinc-900/50 border border-white/5">
-          <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">
+          <span className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest">
             // MY_VOICES — YOUR_CLONED_VOICES_APPEAR_HERE
           </span>
-          <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">
+          <span className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest">
             {library.quotaUsed} / {library.quotaMax} SLOTS
           </span>
         </div>
@@ -137,7 +137,7 @@ const VoiceCloningTile: React.FC<VoiceCloningTileProps> = ({ library, onLibraryR
         <GlassPanel className="p-6">
           <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-4">
             <h3 className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest">// MY_VOICES</h3>
-            <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">
+            <span className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest">
               {library.quotaUsed} / {library.quotaMax} SLOTS
             </span>
           </div>
@@ -150,14 +150,14 @@ const VoiceCloningTile: React.FC<VoiceCloningTileProps> = ({ library, onLibraryR
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-white truncate">{v.name}</p>
                   {v.description && (
-                    <p className="text-[10px] text-zinc-500 truncate">{v.description}</p>
+                    <p className="text-[10px] text-on-surface-sublabel truncate">{v.description}</p>
                   )}
                 </div>
                 <button
                   type="button"
                   onClick={() => onDelete(v.voice_id, v.name)}
                   disabled={isDeleting === v.voice_id}
-                  className="p-2 rounded-lg border border-white/10 hover:border-red-500/40 hover:text-red-400 text-zinc-500 transition-colors disabled:opacity-50"
+                  className="p-2 rounded-lg border border-white/10 hover:border-red-500/40 hover:text-red-400 text-on-surface-sublabel transition-colors disabled:opacity-50"
                   aria-label={`Delete ${v.name}`}
                 >
                   <Trash2 className="w-4 h-4" />
@@ -172,7 +172,7 @@ const VoiceCloningTile: React.FC<VoiceCloningTileProps> = ({ library, onLibraryR
         {isLoading && (
           <div className="absolute inset-0 z-50 bg-zinc-950/80 backdrop-blur-sm flex flex-col items-center justify-center rounded-2xl">
             <Loader message="CLONING VOICE PROFILE..." />
-            <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mt-4">
+            <p className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest mt-4">
               // TYPICALLY_10_TO_30_SECONDS
             </p>
           </div>
@@ -191,7 +191,7 @@ const VoiceCloningTile: React.FC<VoiceCloningTileProps> = ({ library, onLibraryR
         <div className="grid lg:grid-cols-2 gap-8">
           <div className="space-y-4">
             <div>
-              <label className="block text-[10px] font-mono text-zinc-500 uppercase mb-2">VOICE_NAME *</label>
+              <label className="block text-[10px] font-mono text-on-surface-sublabel uppercase mb-2">VOICE_NAME *</label>
               <input
                 type="text"
                 value={voiceName}
@@ -203,7 +203,7 @@ const VoiceCloningTile: React.FC<VoiceCloningTileProps> = ({ library, onLibraryR
             </div>
 
             <div>
-              <label className="block text-[10px] font-mono text-zinc-500 uppercase mb-2">DESCRIPTION (OPTIONAL)</label>
+              <label className="block text-[10px] font-mono text-on-surface-sublabel uppercase mb-2">DESCRIPTION (OPTIONAL)</label>
               <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value.slice(0, 500))}
@@ -243,7 +243,7 @@ const VoiceCloningTile: React.FC<VoiceCloningTileProps> = ({ library, onLibraryR
 
           <div className="space-y-4">
             <div>
-              <label className="block text-[10px] font-mono text-zinc-500 uppercase mb-2">VOICE_SAMPLE *</label>
+              <label className="block text-[10px] font-mono text-on-surface-sublabel uppercase mb-2">VOICE_SAMPLE *</label>
               <div className="flex justify-center mb-4">
                 <div className="bg-zinc-900 border border-white/10 p-1 rounded-xl flex gap-1">
                   {tabBtn('upload', 'UPLOAD', UploadCloud)}
@@ -268,12 +268,12 @@ const VoiceCloningTile: React.FC<VoiceCloningTileProps> = ({ library, onLibraryR
                       </>
                     ) : (
                       <>
-                        <UploadCloud className="w-10 h-10 text-zinc-600" />
+                        <UploadCloud className="w-10 h-10 text-on-surface-sublabel" />
                         <div className="text-center">
                           <p className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-1">
                             // UPLOAD_VOICE_SAMPLE
                           </p>
-                          <p className="text-[10px] text-zinc-500 uppercase">
+                          <p className="text-[10px] text-on-surface-sublabel uppercase">
                             MP3 · WAV · M4A — Max 10MB
                           </p>
                         </div>

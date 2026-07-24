@@ -61,7 +61,7 @@ export const ActiveJobsPanel: React.FC<ActiveJobsPanelProps> = ({ jobs, delay = 
                 <div className="flex-1 min-w-0">
                   <div className="text-sm font-semibold text-white truncate">{job.label}</div>
                   {job.detail && (
-                    <div className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mt-0.5 truncate">
+                    <div className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest mt-0.5 truncate">
                       {job.detail}
                     </div>
                   )}
@@ -75,7 +75,7 @@ export const ActiveJobsPanel: React.FC<ActiveJobsPanelProps> = ({ jobs, delay = 
                     </div>
                   )}
                 </div>
-                <Loader2 className="w-3.5 h-3.5 text-zinc-600 animate-spin flex-shrink-0" />
+                <Loader2 className="w-3.5 h-3.5 text-on-surface-sublabel animate-spin flex-shrink-0" />
               </motion.div>
             );
           })}

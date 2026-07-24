@@ -592,7 +592,7 @@ export const LaunchScreen: React.FC<{
               <button
                 type="button"
                 onClick={onBack}
-                className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500 transition-colors hover:text-white md:text-xs"
+                className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel transition-colors hover:text-white md:text-xs"
               >
                 <ChevronLeft className="h-4 w-4 shrink-0" /> <span className="hidden md:inline">Command Center</span><span className="md:hidden">Back</span>
               </button>
@@ -634,7 +634,7 @@ export const LaunchScreen: React.FC<{
             <h1 className={`uppercase text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 ${T_DISPLAY}`}>
               Turn any product into a video ad
             </h1>
-            <p className={`text-zinc-500 ${T_LABEL}`}>// One shot · No grind</p>
+            <p className={`text-on-surface-sublabel ${T_LABEL}`}>// One shot · No grind</p>
           </div>
         </header>
 
@@ -665,14 +665,14 @@ export const LaunchScreen: React.FC<{
             <div className="mt-3 space-y-2">
               <label className="flex cursor-pointer items-center gap-2 text-xs text-zinc-300">
                 <input type="checkbox" checked={localService} onChange={(e) => setLocalService(e.target.checked)} className="h-4 w-4 shrink-0 accent-[#FFCC00]" />
-                Is this a local service? <span className="text-zinc-500">— adds local market research</span>
+                Is this a local service? <span className="text-on-surface-sublabel">— adds local market research</span>
               </label>
               {localService && <MiniInput placeholder="Business address" value={businessAddress} onChange={setBusinessAddress} />}
             </div>
           )}
 
           {/* AI-research reassurance + re-research toggle */}
-          <p className={`mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-zinc-500 ${T_LABEL}`}>
+          <p className={`mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-on-surface-sublabel ${T_LABEL}`}>
             <span className="flex items-center gap-2">
               <Sparkles className="h-3.5 w-3.5 shrink-0 text-[#FFCC00]/70" />{' '}
               {savedResearch
@@ -685,7 +685,7 @@ export const LaunchScreen: React.FC<{
               type="button"
               onClick={() => setForceFresh((f) => !f)}
               className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 transition-all ${
-                forceFresh ? 'border-[#FFCC00]/40 text-[#FFCC00]' : 'border-white/10 text-zinc-500 hover:border-[#FFCC00]/40 hover:text-[#FFCC00]'
+                forceFresh ? 'border-[#FFCC00]/40 text-[#FFCC00]' : 'border-white/10 text-on-surface-sublabel hover:border-[#FFCC00]/40 hover:text-[#FFCC00]'
               }`}
             >
               <RefreshCw className="h-2.5 w-2.5 shrink-0" /> {forceFresh ? 'Fresh research' : 'Re-research'}
@@ -712,7 +712,7 @@ export const LaunchScreen: React.FC<{
                 }
               >
                 <div className="w-56 space-y-1.5">
-                  <p className={`text-zinc-500 ${T_LABEL}`}>// What are you advertising?</p>
+                  <p className={`text-on-surface-sublabel ${T_LABEL}`}>// What are you advertising?</p>
                   {VERTICALS.map(({ value, label, desc, Icon, locked }) => (
                     <button
                       key={value}
@@ -721,7 +721,7 @@ export const LaunchScreen: React.FC<{
                       onClick={() => { if (!locked) { chooseVertical(value); setMenu(null); } }}
                       className={`relative flex w-full items-center gap-2 border px-3 py-2 ${R_CTRL} ${T_CTRL} transition-all ${
                         locked
-                          ? 'cursor-not-allowed border-white/5 text-zinc-600'
+                          ? 'cursor-not-allowed border-white/5 text-on-surface-sublabel'
                           : vertical === value
                             ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]'
                             : 'border-white/10 text-zinc-300 hover:border-white/30'
@@ -730,7 +730,7 @@ export const LaunchScreen: React.FC<{
                       <Icon className="h-4 w-4 shrink-0" />
                       <span className="flex flex-col items-start text-left">
                         {label}
-                        <span className={`text-[11px] font-normal leading-snug ${locked ? 'text-zinc-700' : 'text-zinc-500'}`}>{desc}</span>
+                        <span className={`text-[11px] font-normal leading-snug ${locked ? 'text-on-surface-sublabel' : 'text-on-surface-sublabel'}`}>{desc}</span>
                       </span>
                       {locked && <SoonBadge />}
                     </button>
@@ -748,7 +748,7 @@ export const LaunchScreen: React.FC<{
                 onClick={scrollToGallery}
                 className={`inline-flex w-full items-center justify-between gap-2 border px-4 ${CTRL_H} ${R_CTRL} ${T_CTRL} transition-all ${
                   formatLocked
-                    ? 'cursor-not-allowed border-white/5 text-zinc-600'
+                    ? 'cursor-not-allowed border-white/5 text-on-surface-sublabel'
                     : 'border-white/10 text-zinc-300 hover:border-white/30'
                 }`}
                 title={formatLocked ? 'Format is set automatically for this niche' : 'Jump to the format gallery below'}
@@ -824,7 +824,7 @@ export const LaunchScreen: React.FC<{
                 Using your 'After' photo as the presenter so faces match.{' '}
                 <button type="button" onClick={() => setAssetModal('avatar')} className="text-[#FFCC00] hover:underline">Change presenter</button>
               </p>
-              <button type="button" aria-label="Dismiss presenter notice" onClick={() => setPresenterDerivedNoticeDismissed(true)} className="text-zinc-600 hover:text-white">
+              <button type="button" aria-label="Dismiss presenter notice" onClick={() => setPresenterDerivedNoticeDismissed(true)} className="text-on-surface-sublabel hover:text-white">
                 <X className="h-3.5 w-3.5" />
               </button>
             </div>
@@ -839,7 +839,7 @@ export const LaunchScreen: React.FC<{
               className={`relative flex w-full items-center justify-center gap-2 ${R_CTRL} h-12 font-mono text-sm font-bold uppercase tracking-widest transition-all active:scale-[0.99] ${
                 ready
                   ? 'bg-[#FFCC00] text-black shadow-[0_0_24px_rgba(255,204,0,0.4)] hover:shadow-[0_0_40px_rgba(255,204,0,0.6)]'
-                  : 'cursor-not-allowed bg-zinc-800 text-zinc-500'
+                  : 'cursor-not-allowed bg-zinc-800 text-on-surface-sublabel'
               }`}
             >
               <Zap className="h-4 w-4 shrink-0" /> Make My Ad
@@ -887,7 +887,7 @@ export const LaunchScreen: React.FC<{
             above. Hidden for the locked/"Auto" vertical (app) where there's nothing to pick. ---- */}
         {recipeOptions.length > 0 && (
           <section ref={galleryRef} className="mt-8 scroll-mt-6">
-            <p className={`text-zinc-500 ${T_LABEL}`}>// Pick the format that hits</p>
+            <p className={`text-on-surface-sublabel ${T_LABEL}`}>// Pick the format that hits</p>
             <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
               {recipeOptions.map((r) => (
                 <RecipeCard
@@ -910,7 +910,7 @@ export const LaunchScreen: React.FC<{
       {assetModal === 'product' && !isGuided && (
         <Modal title="Product photo" onClose={() => setAssetModal(null)}>
           {/* Reference guide — handheld, brand + whole product visible (phone shot is fine) */}
-          <p className={`mb-2 text-zinc-500 ${T_LABEL}`}>// Aim for this — product in hand, brand visible · tap <ZoomIn className="inline h-3 w-3 align-text-bottom" /> to zoom ↓</p>
+          <p className={`mb-2 text-on-surface-sublabel ${T_LABEL}`}>// Aim for this — product in hand, brand visible · tap <ZoomIn className="inline h-3 w-3 align-text-bottom" /> to zoom ↓</p>
           <div className="mx-auto mb-3 grid max-w-[260px] grid-cols-2 gap-3">
             <SampleTile src={PRODUCT_EXAMPLE} caption="In hand · brand clear" good onZoom={setViewImage} />
             <SampleTile src={BAD_SAMPLE.src} caption="Dark & blurry" good={false} onZoom={setViewImage} />
@@ -951,7 +951,7 @@ export const LaunchScreen: React.FC<{
                     }`}
                   >
                     <span className={`block ${T_CTRL} ${a.active ? 'text-[#FFCC00]' : 'text-zinc-200'}`}>{a.label}</span>
-                    <span className="mt-0.5 block text-[11px] leading-snug text-zinc-500">{a.sub}</span>
+                    <span className="mt-0.5 block text-[11px] leading-snug text-on-surface-sublabel">{a.sub}</span>
                   </button>
                 ))}
               </div>
@@ -959,7 +959,7 @@ export const LaunchScreen: React.FC<{
           )}
 
           {/* Guided slots — each shows ITS OWN example (dimmed, tap ⌕ to zoom). The slot you drop into IS the tag. */}
-          <p className={`mb-2 mt-4 text-zinc-500 ${T_LABEL}`}>// Tap VIEW SAMPLE on a slot to see the full reference · clear &amp; bright wins ↓</p>
+          <p className={`mb-2 mt-4 text-on-surface-sublabel ${T_LABEL}`}>// Tap VIEW SAMPLE on a slot to see the full reference · clear &amp; bright wins ↓</p>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             {guidedSlots.map(({ slot, label, hint, example }) => {
               const existing = servicePhotos.find((p) => p.slot === slot);
@@ -1010,7 +1010,7 @@ export const LaunchScreen: React.FC<{
                     <input type="file" accept="image/*" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) void uploadSlot(f, slot); e.target.value = ''; }} />
                   </label>
                   <p className="mt-1 text-center text-[9px] font-mono font-bold uppercase leading-tight text-white">{label}</p>
-                  <p className="text-center text-[8px] font-mono leading-tight text-zinc-500">{hint}</p>
+                  <p className="text-center text-[8px] font-mono leading-tight text-on-surface-sublabel">{hint}</p>
                   <QualityNudge warnings={existing ? quality[slot] : undefined} className="mt-1" />
                 </div>
               );
@@ -1048,7 +1048,7 @@ export const LaunchScreen: React.FC<{
                   Grifon's AI Director picks the perfect spokesperson for your market — cast from your live market research, not a generic stock face.
                   {isRealEstate ? ' For real estate it dresses them as a trustworthy local agent.' : isService ? ' For services it casts the right practitioner.' : ''}
                 </p>
-                <p className="mt-2 text-[11px] leading-snug text-zinc-500">
+                <p className="mt-2 text-[11px] leading-snug text-on-surface-sublabel">
                   You'll meet them in your finished ad — you can swap or upload your own anytime after.
                 </p>
               </div>
@@ -1075,7 +1075,7 @@ export const LaunchScreen: React.FC<{
                       <MiniInput placeholder="e.g. Filipino" value={ethnicity} onChange={setEthnicity} />
                       <MiniInput placeholder="e.g. 25-34" value={ageRange} onChange={setAgeRange} />
                     </div>
-                    <p className="text-[11px] leading-snug text-zinc-500">Leave blank to let AI Director cast from your market research.</p>
+                    <p className="text-[11px] leading-snug text-on-surface-sublabel">Leave blank to let AI Director cast from your market research.</p>
                   </div>
                 )}
               </div>
@@ -1092,7 +1092,7 @@ export const LaunchScreen: React.FC<{
             <div className="space-y-3">
               {/* Guide — the framing/clarity the AI reads best: head-to-chest, face fills frame, good light.
                   Full-body sources make the face too small to identity-lock (smoke Finding 2b). */}
-              <p className={`text-zinc-500 ${T_LABEL}`}>// Aim for this — head-to-chest, face fills frame ↓</p>
+              <p className={`text-on-surface-sublabel ${T_LABEL}`}>// Aim for this — head-to-chest, face fills frame ↓</p>
               <div className="mx-auto grid max-w-[260px] grid-cols-2 gap-3">
                 <SampleTile src={PRESENTER_EXAMPLE} caption="Head-to-chest · clear" good onZoom={setViewImage} />
                 <SampleTile src={BAD_SAMPLE.src} caption={BAD_SAMPLE.caption} good={false} onZoom={setViewImage} />
@@ -1111,7 +1111,7 @@ export const LaunchScreen: React.FC<{
                 onClick={() => { sfx.play('select'); setAssetModal(null); }}
                 disabled={!avatarUrl}
                 className={`flex w-full items-center justify-center gap-2 whitespace-nowrap ${CTRL_H} ${R_CTRL} ${T_CTRL} transition-all ${
-                  avatarUrl ? 'bg-[#FFCC00] text-black hover:shadow-[0_0_20px_rgba(255,204,0,0.4)]' : 'cursor-not-allowed bg-zinc-800 text-zinc-500'
+                  avatarUrl ? 'bg-[#FFCC00] text-black hover:shadow-[0_0_20px_rgba(255,204,0,0.4)]' : 'cursor-not-allowed bg-zinc-800 text-on-surface-sublabel'
                 }`}
               >
                 <Check className="h-4 w-4 shrink-0" /> Use this presenter
@@ -1160,7 +1160,7 @@ const Popover: React.FC<{
         onClick={() => (open ? onClose() : onOpen())}
         className={`inline-flex w-full items-center gap-2 border px-4 ${CTRL_H} ${R_CTRL} ${T_CTRL} transition-all ${fullWidth ? 'justify-between' : 'justify-center md:w-auto'} ${
           disabled
-            ? 'cursor-not-allowed border-white/5 text-zinc-600'
+            ? 'cursor-not-allowed border-white/5 text-on-surface-sublabel'
             : open
               ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]'
               : 'border-white/10 text-zinc-300 hover:border-white/30'
@@ -1225,7 +1225,7 @@ const VoiceRow: React.FC<{
           instead of truncating the gender off the end of one line. */}
       <span className="min-w-0 flex-1">
         <span className={`block truncate text-xs font-medium ${selected ? 'text-[#FFCC00]' : 'text-zinc-200'}`}>{opt.name}</span>
-        {opt.sub && <span className={`block truncate text-[10px] font-mono ${selected ? 'text-[#FFCC00]/70' : 'text-zinc-500'}`}>{opt.sub}</span>}
+        {opt.sub && <span className={`block truncate text-[10px] font-mono ${selected ? 'text-[#FFCC00]/70' : 'text-on-surface-sublabel'}`}>{opt.sub}</span>}
       </span>
     </button>
     <button
@@ -1236,7 +1236,7 @@ const VoiceRow: React.FC<{
       aria-label={opt.preview ? 'Play 3-second voice preview' : 'No preview available'}
       className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border transition-all ${
         !opt.preview
-          ? 'cursor-not-allowed border-white/5 text-zinc-600'
+          ? 'cursor-not-allowed border-white/5 text-on-surface-sublabel'
           : playing
             ? 'border-[#FFCC00] bg-[#FFCC00] text-black'
             : 'border-[#FFCC00]/40 text-[#FFCC00] hover:bg-[#FFCC00]/10'
@@ -1279,12 +1279,12 @@ const AssetTile: React.FC<{
         ) : thumb ? (
           <img src={thumb} alt={label} className="h-full w-full object-cover" />
         ) : (
-          <div className="flex h-full w-full items-center justify-center"><Icon className="h-5 w-5 text-zinc-600 group-hover:text-[#FFCC00]" /></div>
+          <div className="flex h-full w-full items-center justify-center"><Icon className="h-5 w-5 text-on-surface-sublabel group-hover:text-[#FFCC00]" /></div>
         )}
       </div>
       <div className="min-w-0">
         <span className={`block text-zinc-200 ${T_CTRL}`}>{label}</span>
-        <span className={`mt-0.5 block text-zinc-500 ${T_LABEL}`}>{sub}</span>
+        <span className={`mt-0.5 block text-on-surface-sublabel ${T_LABEL}`}>{sub}</span>
       </div>
       {filled && !busy && (
         <span className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#FFCC00] text-black">
@@ -1305,7 +1305,7 @@ const Modal: React.FC<{ title: string; onClose: () => void; children: React.Reac
     >
       <div className="mb-4 flex items-center justify-between">
         <h3 className={`text-zinc-100 ${T_CTRL}`}>{title}</h3>
-        <button type="button" onClick={onClose} aria-label="Close" className="shrink-0 text-zinc-500 hover:text-white">
+        <button type="button" onClick={onClose} aria-label="Close" className="shrink-0 text-on-surface-sublabel hover:text-white">
           <X className="h-5 w-5" />
         </button>
       </div>
@@ -1349,7 +1349,7 @@ const UploadDropzone: React.FC<{
         {thumb ? (
           <img src={thumb} alt="Upload" className="h-full w-full object-cover" />
         ) : (
-          <div className="flex flex-col items-center gap-2 text-zinc-500">
+          <div className="flex flex-col items-center gap-2 text-on-surface-sublabel">
             <ImageUp className="h-8 w-8 group-hover:text-[#FFCC00]" />
             <span className={T_LABEL}>Tap to upload · one photo</span>
           </div>
@@ -1387,7 +1387,7 @@ const ModeTab: React.FC<{ active: boolean; onClick: () => void; icon: typeof Wan
 );
 
 const SoonBadge: React.FC = () => (
-  <span className="absolute -right-1 -top-1.5 rounded-full border border-white/15 bg-zinc-950 px-1 py-px text-[9px] font-mono uppercase tracking-wide text-zinc-500">
+  <span className="absolute -right-1 -top-1.5 rounded-full border border-white/15 bg-zinc-950 px-1 py-px text-[9px] font-mono uppercase tracking-wide text-on-surface-sublabel">
     Soon
   </span>
 );
@@ -1469,7 +1469,7 @@ const RecipeCard: React.FC<{
           )}
         </>
       ) : (
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 bg-zinc-950/60 text-zinc-600">
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 bg-zinc-950/60 text-on-surface-sublabel">
           <Film className="h-6 w-6" />
           <span className={T_LABEL}>Sample soon</span>
         </div>
@@ -1483,7 +1483,7 @@ const RecipeCard: React.FC<{
         <span className={`block text-sm font-bold ${selected && !locked ? 'text-[#FFCC00]' : 'text-white'}`}>{recipe.label}</span>
         <span className="mt-0.5 block text-[11px] leading-snug text-zinc-400">{recipe.desc}</span>
         {recipe.audioMode === 'sfx_only' && (
-          <span className="mt-1 block text-[10px] text-zinc-500 font-mono uppercase tracking-widest">No voiceover</span>
+          <span className="mt-1 block text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest">No voiceover</span>
         )}
       </div>
 

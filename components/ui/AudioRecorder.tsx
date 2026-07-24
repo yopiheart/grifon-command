@@ -179,13 +179,13 @@ export const AudioRecorder: React.FC<AudioRecorderProps> = ({
         <span className={`text-2xl font-mono font-bold ${state === 'recording' ? 'text-[#FFCC00]' : 'text-zinc-400'}`}>
           {formatTime(elapsed)}
         </span>
-        <span className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest">
+        <span className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest">
           / {formatTime(maxDurationSec)}
         </span>
       </div>
 
       {state === 'recording' && minDurationSec > 0 && (
-        <p className={`text-[10px] font-mono uppercase tracking-widest ${belowMin ? 'text-zinc-500' : 'text-[#FFCC00]'}`}>
+        <p className={`text-[10px] font-mono uppercase tracking-widest ${belowMin ? 'text-on-surface-sublabel' : 'text-[#FFCC00]'}`}>
           {belowMin
             ? `// MIN_${formatTime(minDurationSec)}_REQUIRED`
             : '// READY_TO_STOP'}

@@ -1194,7 +1194,7 @@ const App: React.FC = () => {
                 <span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">30 minutes</span>{' '}
                 AWAY.
               </h2>
-              <p className="auth-compact-hide text-[9px] md:text-[10px] font-mono text-zinc-500 tracking-[0.3em] uppercase flex items-center justify-center gap-2">
+              <p className="auth-compact-hide text-[9px] md:text-[10px] font-mono text-on-surface-sublabel tracking-[0.3em] uppercase flex items-center justify-center gap-2">
                 <span className="w-1.5 h-1.5 shrink-0 rounded-full bg-[#FFCC00] animate-pulse shadow-[0_0_6px_rgba(255,204,0,0.8)]" aria-hidden="true" />
                 // FREE PLAN — NO CREDIT CARD NEEDED
               </p>
@@ -1261,7 +1261,7 @@ const App: React.FC = () => {
                     )}
                     <div className="flex items-center gap-3 mb-4 md:mb-6">
                       <div className="flex-1 border-t border-white/10"></div>
-                      <span className="text-[10px] font-mono text-zinc-500 tracking-widest uppercase">OR CONTINUE WITH EMAIL</span>
+                      <span className="text-[10px] font-mono text-on-surface-sublabel tracking-widest uppercase">OR CONTINUE WITH EMAIL</span>
                       <div className="flex-1 border-t border-white/10"></div>
                     </div>
                   </>
@@ -1341,7 +1341,7 @@ const App: React.FC = () => {
                         from the opt-in above: this is generic legal acknowledgment, fine to
                         carry by the continue action — NOT the Meta data-sharing consent, which
                         stays the explicit unchecked box. font-sans keeps it out of the mono law. */}
-                    <p className="text-center text-[11px] text-zinc-500 leading-snug normal-case font-sans">
+                    <p className="text-center text-[11px] text-on-surface-sublabel leading-snug normal-case font-sans">
                       By continuing, you agree to our{' '}
                       <button type="button" onClick={() => openLegalFromAuth('terms')} className="font-sans underline text-zinc-400 hover:text-[#FFCC00] transition-colors">Terms of Service</button>{' '}
                       and{' '}
@@ -1406,7 +1406,7 @@ const App: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => { setAuthMode('email'); setAuthCode(''); setAuthError(''); setAuthNotice(''); }}
-                        className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest hover:text-[#FFCC00] transition-colors"
+                        className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest hover:text-[#FFCC00] transition-colors"
                       >
                         // CHANGE_EMAIL
                       </button>
@@ -1427,12 +1427,12 @@ const App: React.FC = () => {
                   {/* Terms + Privacy live in the passive line above the button now, so the
                       footer carries only what's unique here: Refund + Support. All return
                       to the auth form (openLegalFromAuth) so reading them costs no entries. */}
-                  <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[10px] font-mono text-zinc-500 uppercase tracking-widest">
+                  <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest">
                     <button type="button" onClick={() => openLegalFromAuth('refund')} className="hover:text-[#FFCC00] transition-colors">REFUND</button>
-                    <span className="text-zinc-700">·</span>
+                    <span className="text-on-surface-sublabel">·</span>
                     <button type="button" onClick={() => openLegalFromAuth('support')} className="hover:text-[#FFCC00] transition-colors">SUPPORT</button>
                   </div>
-                  <p className="hidden md:block text-[10px] font-mono text-zinc-600 tracking-[0.4em] uppercase">// SESSION_ENCRYPTED</p>
+                  <p className="hidden md:block text-[10px] font-mono text-on-surface-sublabel tracking-[0.4em] uppercase">// SESSION_ENCRYPTED</p>
                 </div>
             </GlassPanel>
           </div>
@@ -1656,7 +1656,7 @@ const App: React.FC = () => {
         <div className="w-full max-w-6xl mx-auto">
             <header className="flex flex-col items-start gap-4 mb-8 w-full border-b border-white/10 pb-4">
               <div className="flex items-center justify-between w-full">
-                 <button onClick={() => setActiveModule(null)} className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-zinc-500 hover:text-white uppercase tracking-widest transition-colors">
+                 <button onClick={() => setActiveModule(null)} className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-on-surface-sublabel hover:text-white uppercase tracking-widest transition-colors">
                   <ChevronLeft className="w-4 h-4" /> <span className="hidden md:inline">COMMAND CENTER</span><span className="md:hidden">BACK</span>
                 </button>
               </div>
@@ -1664,7 +1664,7 @@ const App: React.FC = () => {
                 <h1 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-zinc-100 to-zinc-500 uppercase tracking-tight">
                   Director AI
                 </h1>
-                <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase">
+                <p className="text-[10px] text-on-surface-sublabel font-mono tracking-widest uppercase">
                   // AUTOMATED VIDEO WORKFLOW
                 </p>
               </div>
@@ -1684,7 +1684,7 @@ const App: React.FC = () => {
                 <div className="flex items-center gap-3 w-full md:w-auto shrink-0">
                   <button
                     onClick={() => setDirectorNudgeDismissed(true)}
-                    className="text-zinc-500 hover:text-white text-xs font-medium transition-colors"
+                    className="text-on-surface-sublabel hover:text-white text-xs font-medium transition-colors"
                   >
                     Skip for now
                   </button>
@@ -1713,14 +1713,14 @@ const App: React.FC = () => {
             <main className="bg-zinc-900/80 backdrop-blur-xl p-6 sm:p-10 border border-white/10 rounded-2xl shadow-2xl relative overflow-hidden">
             {isLoadingSession ? (
               <div className="flex items-center justify-center h-64">
-                <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest animate-pulse">// LOADING_SESSION...</p>
+                <p className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest animate-pulse">// LOADING_SESSION...</p>
               </div>
             ) : (
             <>
             {directorMode === 'steps' && !showResumePill && (
               <button
                 onClick={() => setDirectorMode('oneshot')}
-                className="mb-6 flex items-center gap-2 text-[10px] font-mono text-zinc-500 hover:text-[#FFCC00] uppercase tracking-widest transition-colors"
+                className="mb-6 flex items-center gap-2 text-[10px] font-mono text-on-surface-sublabel hover:text-[#FFCC00] uppercase tracking-widest transition-colors"
               >
                 <Sparkles className="w-3.5 h-3.5" /> Back to one-shot
               </button>
@@ -1742,7 +1742,7 @@ const App: React.FC = () => {
                 <div className="flex items-center gap-3 w-full md:w-auto shrink-0">
                   <button
                     onClick={declineSession}
-                    className="text-zinc-500 hover:text-white text-xs font-medium transition-colors"
+                    className="text-on-surface-sublabel hover:text-white text-xs font-medium transition-colors"
                   >
                     START_FRESH
                   </button>

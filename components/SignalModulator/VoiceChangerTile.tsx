@@ -148,7 +148,7 @@ const VoiceChangerTile: React.FC<VoiceChangerTileProps> = ({ library, history, o
     <button
       type="button"
       onClick={() => { setTab(id); setSourceFile(null); setSourceLabel(null); }}
-      className={`flex items-center gap-2 px-4 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all ${tab === id ? 'bg-[#FFCC00] text-black' : 'text-zinc-500 hover:text-white'}`}
+      className={`flex items-center gap-2 px-4 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all ${tab === id ? 'bg-[#FFCC00] text-black' : 'text-on-surface-sublabel hover:text-white'}`}
     >
       <Icon className="w-3.5 h-3.5" /> {label}
     </button>
@@ -161,7 +161,7 @@ const VoiceChangerTile: React.FC<VoiceChangerTileProps> = ({ library, history, o
           {isLoading && (
             <div className="absolute inset-0 z-50 bg-zinc-950/80 backdrop-blur-sm flex flex-col items-center justify-center">
               <Loader message="CONVERTING SIGNAL..." />
-              <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mt-4">
+              <p className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest mt-4">
                 // TYPICALLY_5_TO_15_SECONDS
               </p>
             </div>
@@ -197,12 +197,12 @@ const VoiceChangerTile: React.FC<VoiceChangerTileProps> = ({ library, history, o
                   </>
                 ) : (
                   <>
-                    <UploadCloud className="w-12 h-12 text-zinc-600" />
+                    <UploadCloud className="w-12 h-12 text-on-surface-sublabel" />
                     <div className="text-center">
                       <p className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-2">
                         // INJECT_AUDIO_SOURCE
                       </p>
-                      <p className="text-[10px] text-zinc-500 uppercase">
+                      <p className="text-[10px] text-on-surface-sublabel uppercase">
                         MP3 · WAV · M4A · MP4 · MOV — Max 50MB
                       </p>
                     </div>
@@ -216,7 +216,7 @@ const VoiceChangerTile: React.FC<VoiceChangerTileProps> = ({ library, history, o
           {tab === 'record' && (
             <div className="flex-1 flex flex-col items-center justify-center">
               <AudioRecorder maxDurationSec={60} onComplete={onRecorded} onCleared={() => { setSourceFile(null); setSourceLabel(null); }} />
-              <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mt-4 text-center">
+              <p className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest mt-4 text-center">
                 // RECORD_YOURSELF_READING_THE_SCRIPT — UP_TO_60_SECONDS
               </p>
             </div>
@@ -231,7 +231,7 @@ const VoiceChangerTile: React.FC<VoiceChangerTileProps> = ({ library, history, o
                     <Activity className="w-4 h-4 text-[#FFCC00] animate-pulse" />
                   </div>
                   <audio src={audioUrl} controls controlsList="nodownload noplaybackrate" className="w-full filter invert opacity-80 h-10" />
-                  <p className="text-[9px] font-mono text-zinc-600 uppercase tracking-widest mt-3">
+                  <p className="text-[9px] font-mono text-on-surface-sublabel uppercase tracking-widest mt-3">
                     // LOGGED_TO_SESSION — DEPLOY_AUDIO_TO_KEEP_AFTER_REFRESH
                   </p>
                 </div>
@@ -251,7 +251,7 @@ const VoiceChangerTile: React.FC<VoiceChangerTileProps> = ({ library, history, o
                     >
                       <RefreshCw className="w-3.5 h-3.5" />
                       REGENERATE
-                      <span className={`text-[9px] font-mono ${regensLeft > 0 ? 'text-[#FFCC00]' : 'text-zinc-600'}`}>
+                      <span className={`text-[9px] font-mono ${regensLeft > 0 ? 'text-[#FFCC00]' : 'text-on-surface-sublabel'}`}>
                         · {regensLeft}_LEFT
                       </span>
                     </button>
@@ -270,12 +270,12 @@ const VoiceChangerTile: React.FC<VoiceChangerTileProps> = ({ library, history, o
           </h3>
 
           <div>
-            <label className="block text-[10px] font-mono text-zinc-500 uppercase mb-2">VOICE_DNA_PROFILE</label>
+            <label className="block text-[10px] font-mono text-on-surface-sublabel uppercase mb-2">VOICE_DNA_PROFILE</label>
             <VoicePicker library={library} value={voiceId} onChange={setVoiceId} />
           </div>
 
           <div>
-            <label className="block text-[10px] font-mono text-zinc-500 uppercase mb-2">VOICE_MODE</label>
+            <label className="block text-[10px] font-mono text-on-surface-sublabel uppercase mb-2">VOICE_MODE</label>
             <div className="relative">
               <select
                 value={stabilityMode}
@@ -286,12 +286,12 @@ const VoiceChangerTile: React.FC<VoiceChangerTileProps> = ({ library, history, o
                 <option value="natural">NATURAL (DEFAULT)</option>
                 <option value="robust">ROBUST</option>
               </select>
-              <ChevronDown className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none" />
+              <ChevronDown className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-sublabel pointer-events-none" />
             </div>
-            <p className="text-[10px] text-zinc-500 mt-2 leading-relaxed">{STABILITY_LABELS[stabilityMode]}</p>
+            <p className="text-[10px] text-on-surface-sublabel mt-2 leading-relaxed">{STABILITY_LABELS[stabilityMode]}</p>
           </div>
 
-          <div className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest pt-4 border-t border-white/10">
+          <div className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest pt-4 border-t border-white/10">
             // MODEL: MULTILINGUAL_STS_V2
           </div>
         </GlassPanel>

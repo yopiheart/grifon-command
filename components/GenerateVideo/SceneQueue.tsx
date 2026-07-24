@@ -129,7 +129,7 @@ export const SceneQueue: React.FC<SceneQueueProps> = ({
             {thumb ? (
               <img src={thumb} alt={`Scene ${i + 1} thumbnail`} className="w-full h-full object-cover" />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-zinc-700 text-[9px] font-mono uppercase tracking-widest">
+              <div className="w-full h-full flex items-center justify-center text-on-surface-sublabel text-[9px] font-mono uppercase tracking-widest">
                 NO THUMB
               </div>
             )}
@@ -146,7 +146,7 @@ export const SceneQueue: React.FC<SceneQueueProps> = ({
             <div className="text-[9px] text-zinc-400 line-clamp-2 font-mono leading-snug">
               {p.scriptLine || p.prompt.slice(0, 60)}
             </div>
-            <div className="text-[7px] text-zinc-600 uppercase tracking-widest font-mono pt-1">
+            <div className="text-[7px] text-on-surface-sublabel uppercase tracking-widest font-mono pt-1">
               {statusLabel(sceneStatus)}
             </div>
           </div>

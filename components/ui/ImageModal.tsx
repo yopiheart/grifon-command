@@ -130,7 +130,7 @@ const ImageModal: React.FC<ImageModalProps> = ({ imageUrl, onClose, filename }) 
           />
         </div>
         <div className="mt-4 flex-shrink-0 flex items-center gap-4">
-          <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest">
+          <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest">
             {zoomed ? '// DRAG_TO_PAN · CLICK_TO_ZOOM_OUT' : '// CLICK_IMAGE_TO_ZOOM_IN'}
           </p>
           <Button onClick={handleDownload}>

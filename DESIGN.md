@@ -9,7 +9,7 @@ colors:
   on-surface: "#FFFFFF"
   on-surface-muted: "#D4D4D8"
   on-surface-dim: "#A1A1AA"
-  on-surface-sublabel: "#71717A"
+  on-surface-sublabel: "#82828B"
   proof-band: "#F2F1EA"
 typography:
   headline-display:
@@ -98,7 +98,24 @@ A minimal palette: a single gold accent against neutral ink gradients on deep OL
 - **Primary (`#FFCC00`, "Grifon Gold"):** The sole driver of interaction — active states, selected toggles, main CTAs, focus rings, hover borders. Why gold instead of blue: signals premium + energetic action rather than corporate trust.
 - **Surface (`#09090B`, zinc-950):** The canvas. **Never use pure `#000000`** — pure black reads flat, zinc-950 retains atmosphere so glass effects can land.
 - **Surface-elevated (`#18181B`, zinc-900) at 80% opacity:** Glass panel base. Always paired with `backdrop-blur-xl`.
-- **On-surface ladder (white → zinc-500):** A four-step text hierarchy — `on-surface` for active text, `on-surface-muted` for body, `on-surface-dim` for passive, `on-surface-sublabel` for meta.
+- **On-surface ladder:** A four-step text hierarchy — `on-surface` for active text, `on-surface-muted` for body, `on-surface-dim` for passive, `on-surface-sublabel` for meta. **Every step clears 4.5:1 on `surface`.** See the contrast floor below.
+
+### Contrast floor (measured, non-negotiable)
+
+Apple's HIG sets the accessibility minimum at **4.5:1 for text up to 17pt** and Dark Mode asks you to *"strive for a contrast ratio of 7:1, especially in small text."* Grifon's ladder was audited against `surface` (`#09090B`) and three steps failed:
+
+| Role | Hex | vs `surface` | Verdict |
+|---|---|---|---|
+| `on-surface` | `#FFFFFF` | 19.90:1 | pass |
+| `on-surface-muted` | `#D4D4D8` | 13.46:1 | pass |
+| `on-surface-dim` | `#A1A1AA` | 7.76:1 | pass (clears 7:1) |
+| `on-surface-sublabel` | **`#82828B`** | **5.22:1** | pass — *was `#71717A` at 4.12:1* ✗ |
+| ~~`zinc-600`~~ | `#52525B` | 2.57:1 | **banned as text** |
+| ~~`zinc-700`~~ | `#3F3F46` | 1.91:1 | **banned as text** |
+
+- **Never use `text-zinc-500`, `text-zinc-600` or `text-zinc-700` on a dark surface.** They fail. Use `text-on-surface-sublabel` — that role exists precisely so the dimmest step is still legible. This matters most for the `//` mono meta-labels, which are 10px: the smallest type in the app was also the lowest-contrast.
+- `zinc-500/600/700` remain fine for **borders, fills and backgrounds** — the floor governs text and icons only.
+- **Light-band exception.** Inside the `proof-band` (`#F2F1EA`) the ladder inverts: a *brighter* grey is worse there (`#82828B` scores only 3.36:1 on the band). The band keeps the dark zinc ladder DESIGN.md already prescribes — `text-zinc-900` / `text-zinc-600` / `text-zinc-500`. The sweep deliberately excludes [CreamBand](components/landing/CreamBand.tsx) and [ReceiptsRail](components/landing/sections/ReceiptsRail.tsx).
 - **Borders:** Subtle borders are `white` at 10% alpha (Tailwind `border-white/10`). Alpha-on-color is an *effect*, not a color role, so it isn't a token — apply it directly in component CSS.
 - **Proof-band (`#F2F1EA`):** Warm off-white reserved EXCLUSIVELY for the marketing light band exception below. Never an in-app surface.
 

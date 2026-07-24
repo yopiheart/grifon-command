@@ -67,10 +67,10 @@ export const NotificationsPanel: React.FC<NotificationsPanelProps> = ({
               {isEmpty && (
                 <div className="flex flex-col items-center justify-center text-center py-10 px-4">
                   <div className="w-12 h-12 rounded-full bg-zinc-950 ring-1 ring-white/[0.06] flex items-center justify-center mb-3">
-                    <BellOff className="w-5 h-5 text-zinc-600" />
+                    <BellOff className="w-5 h-5 text-on-surface-sublabel" />
                   </div>
                   <p className="text-sm font-semibold text-zinc-300">You're all caught up</p>
-                  <p className="text-xs text-zinc-500 mt-1">Render updates land here while you work.</p>
+                  <p className="text-xs text-on-surface-sublabel mt-1">Render updates land here while you work.</p>
                 </div>
               )}
 
@@ -101,7 +101,7 @@ export const NotificationsPanel: React.FC<NotificationsPanelProps> = ({
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="text-sm font-semibold text-white truncate">{job.label}</div>
-                      <div className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mt-0.5 truncate">
+                      <div className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest mt-0.5 truncate">
                         {job.detail || 'In progress'}
                       </div>
                     </div>

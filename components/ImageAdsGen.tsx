@@ -147,7 +147,7 @@ const ImageAdsGen: React.FC<ImageAdsGenProps> = ({ businessInfo, avatar, clientD
     <div className="min-h-screen bg-[#050505] p-8 text-white font-mono flex flex-col">
         <header className="flex flex-col items-start gap-4 mb-8 w-full border-b border-white/10 pb-8">
             <div className="flex items-center justify-between w-full">
-                <button onClick={() => setUplinkData(null)} className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-zinc-500 hover:text-white uppercase tracking-widest transition-colors"><ChevronLeft className="w-4 h-4" /> <span className="hidden md:inline">COMMAND CENTER</span><span className="md:hidden">BACK</span></button>
+                <button onClick={() => setUplinkData(null)} className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-on-surface-sublabel hover:text-white uppercase tracking-widest transition-colors"><ChevronLeft className="w-4 h-4" /> <span className="hidden md:inline">COMMAND CENTER</span><span className="md:hidden">BACK</span></button>
                 <div className="flex gap-2 md:gap-4">
                   <button onClick={() => fetchVariants(uplinkData)} className="px-3 py-2 md:px-6 md:py-2 rounded-full border border-[#FFCC00]/40 text-[#FFCC00] hover:border-[#FFCC00] transition-all flex items-center gap-2 text-[10px] md:text-xs font-bold uppercase tracking-widest">
                       <RefreshCw className="w-4 h-4 md:mr-2" /> <span className="hidden md:inline">RE-AUDIT STRATEGY</span>
@@ -159,7 +159,7 @@ const ImageAdsGen: React.FC<ImageAdsGenProps> = ({ businessInfo, avatar, clientD
             </div>
             <div>
                 <h1 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight break-words whitespace-normal leading-tight">Creative Strike <span className="text-[#FFCC00]">/ PRO</span></h1>
-                <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mt-2">
+                <p className="text-[10px] text-on-surface-sublabel font-mono tracking-widest uppercase mt-2">
                   // STATIC_IMAGE_GENERATION
                 </p>
             </div>

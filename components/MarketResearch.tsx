@@ -241,7 +241,7 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
       <div className="w-full max-w-6xl mx-auto">
         <header className="flex flex-col items-start gap-4 mb-8 w-full border-b border-white/10 pb-6 relative">
           <div className="flex items-center justify-between w-full">
-            <button onClick={onBack} className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-zinc-500 hover:text-white uppercase tracking-widest transition-colors">
+            <button onClick={onBack} className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-on-surface-sublabel hover:text-white uppercase tracking-widest transition-colors">
               <ChevronLeft className="w-4 h-4" /> <span className="hidden md:inline">COMMAND CENTER</span><span className="md:hidden">BACK</span>
             </button>
           </div>
@@ -249,7 +249,7 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
             <h1 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight break-words whitespace-normal leading-tight">
                 Recon
             </h1>
-            <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mt-2">
+            <p className="text-[10px] text-on-surface-sublabel font-mono tracking-widest uppercase mt-2">
                 // DEEP_DIVE CUSTOMER ANALYSIS
             </p>
           </div>
@@ -444,20 +444,20 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
                                     <Target className="w-4 h-4 text-[#FFCC00] shrink-0" />
                                     <div>
                                         <p className="text-[10px] font-mono uppercase tracking-widest text-[#FFCC00]">// PREMISE_CHECK</p>
-                                        <p className="text-xs text-zinc-500 leading-snug">Bago tayo magsunog ng budget — sigurado ka ba sa tunay na customer mo?</p>
+                                        <p className="text-xs text-on-surface-sublabel leading-snug">Bago tayo magsunog ng budget — sigurado ka ba sa tunay na customer mo?</p>
                                     </div>
                                 </div>
 
                                 {premiseResult?.impliedPremise && (
                                     <div>
-                                        <p className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 mb-1.5">// YOUR IMPLIED PREMISE</p>
+                                        <p className="text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel mb-1.5">// YOUR IMPLIED PREMISE</p>
                                         <p className="text-sm text-zinc-300 leading-relaxed italic">{premiseResult.impliedPremise}</p>
                                     </div>
                                 )}
 
                                 {premiseResult && premiseResult.alternatives.length > 0 && (
                                     <div className="space-y-2">
-                                        <p className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">// ALTERNATIVE READS — TAP TO USE</p>
+                                        <p className="text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">// ALTERNATIVE READS — TAP TO USE</p>
                                         {premiseResult.alternatives.map((alt, i) => (
                                             <button
                                                 key={i}
@@ -466,7 +466,7 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
                                             >
                                                 <p className="text-sm text-zinc-100 font-bold">{alt.targetRead}</p>
                                                 <p className="text-sm text-zinc-300 mt-1">{alt.coreReason}</p>
-                                                {alt.rationale && <p className="text-xs text-zinc-500 mt-2 leading-relaxed">{alt.rationale}</p>}
+                                                {alt.rationale && <p className="text-xs text-on-surface-sublabel mt-2 leading-relaxed">{alt.rationale}</p>}
                                             </button>
                                         ))}
                                     </div>
@@ -513,13 +513,13 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
                                     </GoldButton>
                                     <button
                                         onClick={handleSkipPremise}
-                                        className="w-full text-[10px] font-mono uppercase tracking-widest text-zinc-500 hover:text-[#FFCC00] transition-colors py-2"
+                                        className="w-full text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel hover:text-[#FFCC00] transition-colors py-2"
                                     >
                                         Skip — research as-is
                                     </button>
                                     <button
                                         onClick={handleBackToEdit}
-                                        className="w-full text-[10px] font-mono uppercase tracking-widest text-zinc-500 hover:text-[#FFCC00] transition-colors py-2"
+                                        className="w-full text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel hover:text-[#FFCC00] transition-colors py-2"
                                     >
                                         ← Edit inputs — re-run the check
                                     </button>
@@ -535,7 +535,7 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
                                         </div>
 
                                         <div>
-                                            <p className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 mb-1.5">// WINNING AVATAR</p>
+                                            <p className="text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel mb-1.5">// WINNING AVATAR</p>
                                             <p className="text-sm text-zinc-200 leading-relaxed">{result.winningAvatar}</p>
                                         </div>
 
@@ -570,7 +570,7 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
                                             </GoldButton>
                                             <button
                                                 onClick={() => onNavigate('offer_optimizer')}
-                                                className="w-full text-[10px] font-mono uppercase tracking-widest text-zinc-500 hover:text-[#FFCC00] transition-colors flex items-center justify-center gap-1.5 py-1"
+                                                className="w-full text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel hover:text-[#FFCC00] transition-colors flex items-center justify-center gap-1.5 py-1"
                                             >
                                                 Or build stronger offer first <ArrowRight className="w-3 h-3" />
                                             </button>
@@ -581,7 +581,7 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
                                 <div className="border-t border-white/10 pt-4">
                                     <button
                                         onClick={() => setShowFullReport(v => !v)}
-                                        className="w-full flex items-center justify-between text-[10px] font-mono uppercase tracking-widest text-zinc-500 hover:text-[#FFCC00] hover:bg-white/5 transition-all py-2 px-3 -mx-3 rounded-md"
+                                        className="w-full flex items-center justify-between text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel hover:text-[#FFCC00] hover:bg-white/5 transition-all py-2 px-3 -mx-3 rounded-md"
                                     >
                                         <span>{showFullReport ? 'COLLAPSE FULL REPORT' : 'VIEW FULL REPORT'}</span>
                                         {showFullReport ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
@@ -594,7 +594,7 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
                                 </div>
                             </div>
                         ) : (
-                            <div className="flex flex-col items-center justify-center h-full text-zinc-500">
+                            <div className="flex flex-col items-center justify-center h-full text-on-surface-sublabel">
                                 <p className="font-mono text-center mb-2 text-[10px] uppercase tracking-widest">// SYSTEM_STANDBY</p>
                                 <p className="text-sm text-center max-w-sm">
                                     Initiate analysis to generate your Avatar Profile, Bleeding Neck, Big Idea, 5 A/B-ready Headlines, 5 Typed Video Hooks, Competitor Matrix, and 3 ready-to-film FB Ad Concepts.

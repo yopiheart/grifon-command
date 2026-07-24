@@ -41,7 +41,7 @@ export const PreviousResearchCard: React.FC<PreviousResearchCardProps> = ({
       {onDismiss && (
         <button
           onClick={onDismiss}
-          className="absolute top-2 right-2 text-zinc-500 hover:text-white transition-colors"
+          className="absolute top-2 right-2 text-on-surface-sublabel hover:text-white transition-colors"
           aria-label="Dismiss"
         >
           <X className="w-4 h-4" />
@@ -54,7 +54,7 @@ export const PreviousResearchCard: React.FC<PreviousResearchCardProps> = ({
             // {label}
           </p>
           <p className="text-sm text-white font-bold truncate mt-0.5">{subject}</p>
-          <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-tighter mt-0.5">
+          <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-tighter mt-0.5">
             Saved {formatRelativeTime(savedAtMs)} — skip re-typing, reuse it
           </p>
         </div>

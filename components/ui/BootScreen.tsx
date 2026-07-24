@@ -82,7 +82,7 @@ export const BootScreen: React.FC<BootScreenProps> = ({ userEmail }) => {
               className="absolute inset-x-0 top-0 z-10 h-4 w-full rounded-sm"
             />
             <div className="absolute inset-x-0 bottom-0 top-4 flex items-center justify-center rounded-b-md border border-white/10 bg-zinc-950">
-              <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-zinc-500">
+              <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-on-surface-sublabel">
                 SCENE 01 · TAKE 1
               </span>
             </div>
@@ -116,7 +116,7 @@ export const BootScreen: React.FC<BootScreenProps> = ({ userEmail }) => {
           )}
         </div>
 
-        <div className="mt-6 flex items-center justify-center gap-2 font-mono text-[10px] uppercase tracking-[0.4em] text-zinc-600">
+        <div className="mt-6 flex items-center justify-center gap-2 font-mono text-[10px] uppercase tracking-[0.4em] text-on-surface-sublabel">
           <Clapperboard className="h-3.5 w-3.5 shrink-0 text-[#FFCC00]/70" />
           Grifon Studio
         </div>

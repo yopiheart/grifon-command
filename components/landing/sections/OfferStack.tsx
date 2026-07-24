@@ -54,7 +54,7 @@ export const OfferStack: React.FC<OfferStackProps> = ({ onNavigatePricing, secti
               >
                 <span className="text-zinc-400">{entry.item}</span>
                 <SignatureScribble variant="strike" delay={0.4 + idx * 0.12} strokeWidth={2.5}>
-                  <span className="font-mono text-zinc-500">{entry.value}</span>
+                  <span className="font-mono text-on-surface-sublabel">{entry.value}</span>
                 </SignatureScribble>
               </motion.div>
             ))}
@@ -82,10 +82,10 @@ export const OfferStack: React.FC<OfferStackProps> = ({ onNavigatePricing, secti
               <ArrowRight className="w-5 h-5 shrink-0" />
             </span>
           </GoldButton>
-          <p className="text-[10px] font-mono text-zinc-500 mt-6 tracking-widest uppercase">
+          <p className="text-[10px] font-mono text-on-surface-sublabel mt-6 tracking-widest uppercase">
             // 7-DAY MONEY-BACK — KEEP THE PLAN • SECURE CHECKOUT
           </p>
-          <p className="text-[10px] font-mono text-zinc-500 mt-2 tracking-widest uppercase">
+          <p className="text-[10px] font-mono text-on-surface-sublabel mt-2 tracking-widest uppercase">
             {CTA_REASSURANCE}
           </p>
         </GlassPanel>

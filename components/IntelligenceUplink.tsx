@@ -126,7 +126,7 @@ const IntelligenceUplink: React.FC<IntelligenceUplinkProps> = ({ onComplete, onB
         {/* HUD HEADER */}
         <header className="flex flex-col items-start gap-4 mb-8 w-full border-b border-white/10 pb-6 relative">
           <div className="flex items-center justify-between w-full">
-            <button onClick={onBack} className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-zinc-500 hover:text-white uppercase tracking-widest transition-colors">
+            <button onClick={onBack} className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-on-surface-sublabel hover:text-white uppercase tracking-widest transition-colors">
               <ChevronLeft className="w-4 h-4" /> <span className="hidden md:inline">COMMAND CENTER</span><span className="md:hidden">BACK</span>
             </button>
             <button 
@@ -140,7 +140,7 @@ const IntelligenceUplink: React.FC<IntelligenceUplinkProps> = ({ onComplete, onB
             <h1 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight break-words whitespace-normal leading-tight">
               {mode === 'ADS' ? 'AD GENERATOR UPLINK' : 'ORGANIC PRO UPLINK'}
             </h1>
-            <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mt-2">
+            <p className="text-[10px] text-on-surface-sublabel font-mono tracking-widest uppercase mt-2">
               // UPLOAD STRATEGIC DATA FOR TARGETING ALGORITHMS
             </p>
           </div>
@@ -203,10 +203,10 @@ const IntelligenceUplink: React.FC<IntelligenceUplinkProps> = ({ onComplete, onB
                   </div>
                 ) : (
                   <div className="relative z-10 flex flex-col items-center gap-3">
-                    <Icon className="w-8 h-8 md:w-12 md:h-12 text-zinc-500 group-hover:text-[#FFCC00] transition-colors" />
+                    <Icon className="w-8 h-8 md:w-12 md:h-12 text-on-surface-sublabel group-hover:text-[#FFCC00] transition-colors" />
                     <div className="space-y-1">
                       <p className="text-[10px] font-bold font-mono text-zinc-400 group-hover:text-[#FFCC00] uppercase tracking-widest">{zone.label}</p>
-                      <p className="text-[8px] font-mono text-zinc-600 uppercase tracking-tighter">[ INJECT_SOURCE_DATA ]</p>
+                      <p className="text-[8px] font-mono text-on-surface-sublabel uppercase tracking-tighter">[ INJECT_SOURCE_DATA ]</p>
                     </div>
                   </div>
                 )}
@@ -219,13 +219,13 @@ const IntelligenceUplink: React.FC<IntelligenceUplinkProps> = ({ onComplete, onB
         <GlassPanel className="p-6 md:p-8 flex flex-col gap-8">
           <div className="flex flex-wrap gap-x-12 gap-y-6 items-start">
             <div className="space-y-2">
-              <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">CREATIVE_FAMILY</p>
+              <p className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest">CREATIVE_FAMILY</p>
               <div className="flex gap-2 bg-zinc-950 p-1 rounded-xl border border-white/10">
                 {[{ id: 'product', label: 'PRODUCT' }, { id: 'saas-offer', label: 'SAAS-UPSELL' }, { id: 'callout', label: 'NICHE CALLOUT' }].map(fam => (
                   <button
                     key={fam.id}
                     onClick={() => setFormData({...formData, family: fam.id as any})}
-                    className={`text-[10px] px-4 py-2 rounded-lg font-bold font-mono transition-all ${(formData.family ?? 'product') === fam.id ? 'bg-[#FFCC00] text-black' : 'text-zinc-500 hover:text-white'}`}
+                    className={`text-[10px] px-4 py-2 rounded-lg font-bold font-mono transition-all ${(formData.family ?? 'product') === fam.id ? 'bg-[#FFCC00] text-black' : 'text-on-surface-sublabel hover:text-white'}`}
                   >
                     {fam.label}
                   </button>
@@ -238,7 +238,7 @@ const IntelligenceUplink: React.FC<IntelligenceUplinkProps> = ({ onComplete, onB
                 Only the text-composited families consume it. */}
             {(formData.family === 'saas-offer' || formData.family === 'callout') && (
               <div className="space-y-2 w-full">
-                <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">STYLE_PRESET</p>
+                <p className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest">STYLE_PRESET</p>
                 <div className="flex flex-wrap gap-2">
                   <button
                     onClick={() => setFormData({ ...formData, stylePreset: undefined })}
@@ -268,7 +268,7 @@ const IntelligenceUplink: React.FC<IntelligenceUplinkProps> = ({ onComplete, onB
                       <button
                         key={vibe}
                         onClick={() => setFormData({ ...formData, brandVibe: vibe })}
-                        className={`text-[10px] px-4 py-2 rounded-lg font-bold font-mono transition-all ${(formData.brandVibe ?? 'Bold') === vibe ? 'bg-[#FFCC00] text-black' : 'text-zinc-500 hover:text-white'}`}
+                        className={`text-[10px] px-4 py-2 rounded-lg font-bold font-mono transition-all ${(formData.brandVibe ?? 'Bold') === vibe ? 'bg-[#FFCC00] text-black' : 'text-on-surface-sublabel hover:text-white'}`}
                       >
                         {vibe.toUpperCase()}
                       </button>
@@ -278,13 +278,13 @@ const IntelligenceUplink: React.FC<IntelligenceUplinkProps> = ({ onComplete, onB
               </div>
             )}
             <div className="space-y-2">
-              <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">ASPECT_RATIO</p>
+              <p className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest">ASPECT_RATIO</p>
               <div className="flex gap-2 bg-zinc-950 p-1 rounded-xl border border-white/10">
                 {['9:16', '4:5', '1:1', '16:9'].map(r => (
                   <button 
                     key={r} 
                     onClick={() => setFormData({...formData, aspectRatio: r as any})}
-                    className={`text-[10px] px-4 py-2 rounded-lg font-bold font-mono transition-all ${formData.aspectRatio === r ? 'bg-[#FFCC00] text-black' : 'text-zinc-500 hover:text-white'}`}
+                    className={`text-[10px] px-4 py-2 rounded-lg font-bold font-mono transition-all ${formData.aspectRatio === r ? 'bg-[#FFCC00] text-black' : 'text-on-surface-sublabel hover:text-white'}`}
                   >
                     {r}
                   </button>
@@ -292,13 +292,13 @@ const IntelligenceUplink: React.FC<IntelligenceUplinkProps> = ({ onComplete, onB
               </div>
             </div>
             <div className="space-y-2">
-              <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">RESOLUTION</p>
+              <p className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest">RESOLUTION</p>
               <div className="flex gap-2 bg-zinc-950 p-1 rounded-xl border border-white/10">
                 {['1K', '2K'].map(res => (
                   <button 
                     key={res} 
                     onClick={() => setFormData({...formData, resolution: res as any})}
-                    className={`text-[10px] px-6 py-2 rounded-lg font-bold font-mono transition-all ${formData.resolution === res ? 'bg-[#FFCC00] text-black' : 'text-zinc-500 hover:text-white'}`}
+                    className={`text-[10px] px-6 py-2 rounded-lg font-bold font-mono transition-all ${formData.resolution === res ? 'bg-[#FFCC00] text-black' : 'text-on-surface-sublabel hover:text-white'}`}
                   >
                     {res}
                   </button>
@@ -306,13 +306,13 @@ const IntelligenceUplink: React.FC<IntelligenceUplinkProps> = ({ onComplete, onB
               </div>
             </div>
             <div className="space-y-2">
-              <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">LOCALIZATION</p>
+              <p className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest">LOCALIZATION</p>
               <div className="flex gap-2 bg-zinc-950 p-1 rounded-xl border border-white/10">
                 {['ENGLISH', 'TAGLISH'].map(lang => (
                   <button 
                     key={lang} 
                     onClick={() => setFormData({...formData, language: lang as any})}
-                    className={`text-[10px] px-6 py-2 rounded-lg font-bold font-mono transition-all ${formData.language === lang ? 'bg-[#FFCC00] text-black' : 'text-zinc-500 hover:text-white'}`}
+                    className={`text-[10px] px-6 py-2 rounded-lg font-bold font-mono transition-all ${formData.language === lang ? 'bg-[#FFCC00] text-black' : 'text-on-surface-sublabel hover:text-white'}`}
                   >
                     {lang}
                   </button>
@@ -326,12 +326,12 @@ const IntelligenceUplink: React.FC<IntelligenceUplinkProps> = ({ onComplete, onB
             <div className="flex items-center gap-4">
                <button 
                 onClick={() => setFormData({...formData, brandIdentityName: '', targetDemographic: '', primaryBenefit: '', marketPainPoint: ''})}
-                className="text-[10px] font-mono text-zinc-500 uppercase hover:text-red-500 transition-colors px-3 py-1 border border-transparent hover:border-red-900/40 rounded-lg"
+                className="text-[10px] font-mono text-on-surface-sublabel uppercase hover:text-red-500 transition-colors px-3 py-1 border border-transparent hover:border-red-900/40 rounded-lg"
                >
                  [ RESET_UPLINK ]
                </button>
                <div className="h-6 w-px bg-white/10 hidden md:block"></div>
-               <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">
+               <p className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest">
                   // DATA_INTEGRITY: <span className={`${integrity === 100 ? 'text-[#FFCC00]' : 'text-[#FFCC00]'}`}>[ {integrity}% ]</span>
                </p>
             </div>

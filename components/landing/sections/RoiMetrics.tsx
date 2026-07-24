@@ -23,7 +23,7 @@ export const RoiMetrics: React.FC = () => (
         viewport={{ once: true }}
         transition={{ duration: DUR.entrance }}
       >
-        <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-[0.25em] text-center mb-2">// PROOF</p>
+        <p className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-[0.25em] text-center mb-2">// PROOF</p>
         <h2 className="text-2xl md:text-4xl font-bold text-center mb-10 md:mb-16 uppercase tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
           THE NUMBERS DON'T{' '}
           <span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">lie.</span>

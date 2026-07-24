@@ -385,7 +385,7 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
     <header className="flex flex-col items-start gap-4 mb-8 w-full border-b border-white/10 pb-6 relative z-20 shrink-0">
         <div className="flex items-center justify-between w-full">
             <div className="flex items-center gap-4">
-                <button onClick={onBack} className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-zinc-500 hover:text-white uppercase tracking-widest transition-colors">
+                <button onClick={onBack} className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-on-surface-sublabel hover:text-white uppercase tracking-widest transition-colors">
                     <ChevronLeft className="w-4 h-4" /> <span className="hidden md:inline">COMMAND CENTER</span><span className="md:hidden">BACK</span>
                 </button>
                 {viewMode !== 'PERSONA' && (
@@ -409,7 +409,7 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
           <h1 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight break-words whitespace-normal leading-tight">
               Influencer Forge
           </h1>
-          <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mt-2">
+          <p className="text-[10px] text-on-surface-sublabel font-mono tracking-widest uppercase mt-2">
               // DIGITAL_PERSONA_SYNTHESIS
           </p>
         </div>
@@ -1021,7 +1021,7 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
                      <select value={config.ethnicity} onChange={(e) => setConfig({...config, ethnicity: e.target.value as any})} className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-all text-[10px] md:text-xs font-black uppercase appearance-none truncate pr-10">
                         {ETHNICITIES.map(e => <option key={e} value={e}>{e.toUpperCase()}</option>)}
                      </select>
-                     <ChevronDown className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none" />
+                     <ChevronDown className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-sublabel pointer-events-none" />
                    </div>
                 </div>
 
@@ -1037,7 +1037,7 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
                         <option value="TAGLISH">TAGLISH // VIRAL</option>
                         <option value="FILIPINO">FILIPINO // NATIVE</option>
                      </select>
-                     <ChevronDown className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none" />
+                     <ChevronDown className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-sublabel pointer-events-none" />
                    </div>
                 </div>
 
@@ -1082,7 +1082,7 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
                       <select value={config.wardrobe} onChange={(e) => setConfig({...config, wardrobe: e.target.value as any})} className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-all text-[10px] md:text-xs font-black uppercase appearance-none truncate pr-10">
                           {WARDROBES.map(w => <option key={w} value={w}>{w}</option>)}
                       </select>
-                      <ChevronDown className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none" />
+                      <ChevronDown className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-sublabel pointer-events-none" />
                     </div>
                 </div>
 
@@ -1127,14 +1127,14 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
                          <select value={config.camera} onChange={(e) => setConfig({...config, camera: e.target.value as any})} className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-all text-[9px] md:text-xs font-black uppercase appearance-none truncate pr-10">
                               {CAMERAS.map(c => <option key={c} value={c}>{c.replace(/_/g, ' ')}</option>)}
                           </select>
-                          <ChevronDown className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none" />
+                          <ChevronDown className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-sublabel pointer-events-none" />
                        </div>
                         {config.camera !== 'IPHONE_15_PRO' && (
                             <div className="relative">
                              <select value={config.lens} onChange={(e) => setConfig({...config, lens: e.target.value as any})} className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-all text-[9px] md:text-xs font-black uppercase appearance-none truncate pr-10">
                                   {LENSES.map(l => <option key={l} value={l}>{l.replace(/_/g, ' ')}</option>)}
                               </select>
-                              <ChevronDown className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none" />
+                              <ChevronDown className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-sublabel pointer-events-none" />
                            </div>
                         )}
                    </div>

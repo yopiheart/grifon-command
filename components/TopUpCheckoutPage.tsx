@@ -162,7 +162,7 @@ const TopUpCheckoutPage: React.FC<TopUpCheckoutPageProps> = ({ email, onBack, on
           <GoldButton onClick={onBack} className="w-full justify-center py-3" glossy>
             Back to my ads
           </GoldButton>
-          {email && <p className="text-[10px] text-zinc-600 mt-4">Receipt sent to {email}</p>}
+          {email && <p className="text-[10px] text-on-surface-sublabel mt-4">Receipt sent to {email}</p>}
         </GlassPanel>
       </div>
     );
@@ -219,7 +219,7 @@ const TopUpCheckoutPage: React.FC<TopUpCheckoutPageProps> = ({ email, onBack, on
           <GrifonMark className="h-9 w-9" />
           <span className="text-white font-black italic text-lg tracking-tight">GRIFON</span>
         </div>
-        <p className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.25em] text-zinc-500">
+        <p className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.25em] text-on-surface-sublabel">
           <Lock className="w-3.5 h-3.5 shrink-0 text-[#FFCC00]" />
           Secure checkout
         </p>
@@ -228,10 +228,10 @@ const TopUpCheckoutPage: React.FC<TopUpCheckoutPageProps> = ({ email, onBack, on
       <div className="relative max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
         {/* Compact top-up summary — no plan, no cycle, no inclusions. */}
         <GlassPanel className="lg:sticky lg:top-8 self-start">
-          <button onClick={onBack} className="text-zinc-500 hover:text-white transition-colors mb-6 text-sm">
+          <button onClick={onBack} className="text-on-surface-sublabel hover:text-white transition-colors mb-6 text-sm">
             ← Back to my ads
           </button>
-          <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">One-time top-up</p>
+          <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest mb-2">One-time top-up</p>
           <h1 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Film className="w-5 h-5 text-[#FFCC00] shrink-0" /> {display.name}
           </h1>
@@ -257,19 +257,19 @@ const TopUpCheckoutPage: React.FC<TopUpCheckoutPageProps> = ({ email, onBack, on
               {(breakdown.total_centavos / 100).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </span>
           </div>
-          <p className="mt-2 text-right text-[10px] font-mono uppercase tracking-widest text-zinc-600">
+          <p className="mt-2 text-right text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">
             // One-time payment · 12% VAT included
           </p>
         </GlassPanel>
 
         <GlassPanel>
-          <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">Contact information</p>
+          <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest mb-2">Contact information</p>
           <div className="bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 mb-6">
             <p className="text-zinc-300 text-sm">{email ?? 'Not signed in'}</p>
-            <p className="text-[10px] text-zinc-500 mt-1">Receipt will be sent here</p>
+            <p className="text-[10px] text-on-surface-sublabel mt-1">Receipt will be sent here</p>
           </div>
 
-          <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-3">Payment method</p>
+          <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest mb-3">Payment method</p>
           <div className="mb-6">
             <PaymentMethodTabs active={activeMethod} onChange={setActiveMethod} />
           </div>

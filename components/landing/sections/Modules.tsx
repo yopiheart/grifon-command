@@ -51,7 +51,7 @@ export const Modules: React.FC<ModulesProps> = ({ onEnterApp }) => (
         transition={{ duration: DUR.entrance }}
         className="text-center mb-12 md:mb-16"
       >
-        <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-[0.25em] mb-4">// WHAT YOU GET</p>
+        <p className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-[0.25em] mb-4">// WHAT YOU GET</p>
         <h2 className="text-3xl md:text-5xl font-bold uppercase tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
           <span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">Everything</span>{' '}
           YOU NEED. NOTHING YOU DON'T.
@@ -72,7 +72,7 @@ export const Modules: React.FC<ModulesProps> = ({ onEnterApp }) => (
         <ViewfinderFrame>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             <div>
-              <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+              <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">
                 <Film className="w-3.5 h-3.5 text-[#FFCC00]" />
                 Video Ads
               </div>
@@ -103,7 +103,7 @@ export const Modules: React.FC<ModulesProps> = ({ onEnterApp }) => (
               className="snap-center flex-shrink-0 w-[85vw] max-w-[360px] md:w-auto md:max-w-none flex flex-col bg-zinc-900/40 backdrop-blur-2xl border border-white/10 rounded-3xl p-6 md:p-7"
             >
               <module.Demo />
-              <div className="mt-5 flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+              <div className="mt-5 flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">
                 <module.icon className="w-3.5 h-3.5 text-[#FFCC00]" />
                 {module.label}
               </div>

@@ -193,7 +193,7 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
     <div className={`relative group ${isLoading ? 'scanner-active' : ''}`}>
         <div
             onClick={src && !isLoading ? onClick : undefined}
-            className={`${size === 'small' ? 'w-24 h-40' : 'w-28 h-48'} bg-zinc-950/50 backdrop-blur-md border border-white/10 flex items-center justify-center text-zinc-500 text-xs text-center relative overflow-hidden group hover:border-[#FFCC00] transition-all rounded-xl ${src && !isLoading ? 'cursor-pointer shadow-2xl' : 'cursor-default'}`}
+            className={`${size === 'small' ? 'w-24 h-40' : 'w-28 h-48'} bg-zinc-950/50 backdrop-blur-md border border-white/10 flex items-center justify-center text-on-surface-sublabel text-xs text-center relative overflow-hidden group hover:border-[#FFCC00] transition-all rounded-xl ${src && !isLoading ? 'cursor-pointer shadow-2xl' : 'cursor-default'}`}
         >
             {src && !isLoading ? (
                 <>
@@ -233,7 +233,7 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
           <h2 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight">
             Visual Chain Relay
           </h2>
-          <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mt-2">
+          <p className="text-[10px] text-on-surface-sublabel font-mono tracking-widest uppercase mt-2">
             // The Anchor image (Reference B) remains constant while the AI synthesizes Metaphor A, Action C, and Hero D.
           </p>
         </div>
@@ -306,7 +306,7 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
 
   return (
     <StepShell sublabel="STEP 5 · STORYBOARD" title="Storyboard Synthesis">
-      <p className="-mt-4 mb-6 text-[11px] font-mono leading-relaxed text-zinc-500">
+      <p className="-mt-4 mb-6 text-[11px] font-mono leading-relaxed text-on-surface-sublabel">
         Visual artifacts generated based on your strategic ad script.
       </p>
       <input
@@ -386,7 +386,7 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
       {loadingStoryboard && (
         <div className="space-y-6">
           <div className="flex items-center gap-3">
-            <span className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase">// MAPPING_SCENES</span>
+            <span className="text-[10px] text-on-surface-sublabel font-mono tracking-widest uppercase">// MAPPING_SCENES</span>
             <div className="relative h-[2px] flex-1 bg-white/5 overflow-hidden rounded-full">
               <div className="absolute inset-y-0 left-0 w-1/3 bg-[#FFCC00] shadow-[0_0_8px_#FFCC00] animate-[storyboard-progress_2s_ease-in-out_infinite]" />
             </div>
@@ -481,7 +481,7 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
                             {scene.sceneDescription}
                         </p>
                         {(scene.imagePrompt || scene.startFramePrompt) && (
-                            <p className="text-[11px] text-zinc-500 font-mono leading-relaxed italic border-t border-white/5 pt-2">
+                            <p className="text-[11px] text-on-surface-sublabel font-mono leading-relaxed italic border-t border-white/5 pt-2">
                                 <span className="text-zinc-300 not-italic font-bold tracking-widest mr-2">[VISUAL_PROMPT]</span>
                                 {scene.startFramePrompt
                                     ? `${scene.startFramePrompt}${scene.endFramePrompt ? `  →  ${scene.endFramePrompt}` : ''}`

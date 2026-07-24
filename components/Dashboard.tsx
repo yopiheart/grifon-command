@@ -363,7 +363,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
             </motion.p>
             <motion.p
               {...entrance(reduce, SLATE_BEATS.callSheet)}
-              className={`text-center ${T_LABEL} text-zinc-600 mb-3`}
+              className={`text-center ${T_LABEL} text-on-surface-sublabel mb-3`}
             >
               {callSheet}
             </motion.p>
@@ -391,7 +391,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                   onChange={(e) => setHeroInput(e.target.value)}
                   onKeyDown={(e) => { if (e.key === 'Enter') submitHero(); }}
                   placeholder={`Tell me about your business — e.g. ${HERO_PROMPTS[promptIndex]}`}
-                  className="bg-transparent text-white text-sm lg:text-base flex-1 min-w-0 outline-none placeholder:text-zinc-600"
+                  className="bg-transparent text-white text-sm lg:text-base flex-1 min-w-0 outline-none placeholder:text-on-surface-sublabel"
                 />
                 <button
                   onClick={submitHero}
@@ -417,12 +417,12 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                 ))}
               </div>
 
-              <p className="text-center text-xs text-zinc-500 mt-4">
+              <p className="text-center text-xs text-on-surface-sublabel mt-4">
                 One prompt → a full video ad. Grifon researches, scripts, and storyboards it for you.
               </p>
 
               {!quota.loading && quota.workflows.used > 0 && (
-                <p className="text-center text-xs text-zinc-500 mt-3">
+                <p className="text-center text-xs text-on-surface-sublabel mt-3">
                   You've shipped <span className="text-[#FFCC00] font-semibold">{quota.workflows.used}</span>{' '}
                   workflow{quota.workflows.used === 1 ? '' : 's'} this month. Tuloy lang.
                   {weeklyActiveDays >= 2 && (
@@ -462,7 +462,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
 
           {/* EXPLORE TOOLS */}
           <div className="w-full mb-16">
-            <p className={`${T_LABEL} text-zinc-500 mb-4`}>// EXPLORE TOOLS</p>
+            <p className={`${T_LABEL} text-on-surface-sublabel mb-4`}>// EXPLORE TOOLS</p>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
               {exploreTiles.map((tile, i) => {
                 const isMore = !tile.featured && !CORE_MODULES.some((c) => c.id === tile.id);
@@ -495,8 +495,8 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                       <Icon className="w-5 h-5" style={{ color: tile.hue }} />
                     </div>
                     <p className="text-sm font-bold text-white tracking-tight">{tile.name}</p>
-                    <p className="text-xs text-zinc-500 mt-1 leading-snug line-clamp-2">{tile.desc}</p>
-                    {tile.featured && <ChevronRight className="absolute top-4 right-4 w-4 h-4 text-zinc-600 group-hover:text-[#FFCC00] transition-colors" />}
+                    <p className="text-xs text-on-surface-sublabel mt-1 leading-snug line-clamp-2">{tile.desc}</p>
+                    {tile.featured && <ChevronRight className="absolute top-4 right-4 w-4 h-4 text-on-surface-sublabel group-hover:text-[#FFCC00] transition-colors" />}
                   </motion.button>
                 );
               })}

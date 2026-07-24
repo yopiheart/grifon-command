@@ -123,19 +123,19 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ open, onClose, i
                 value={query}
                 onChange={e => { setQuery(e.target.value); setActiveIdx(0); }}
                 placeholder="Search for any tool…"
-                className="bg-transparent text-white text-sm flex-1 min-w-0 outline-none placeholder:text-zinc-600"
+                className="bg-transparent text-white text-sm flex-1 min-w-0 outline-none placeholder:text-on-surface-sublabel"
               />
-              <kbd className="hidden sm:inline-flex items-center px-1.5 py-0.5 text-[10px] font-mono text-zinc-500 bg-zinc-800/80 rounded">
+              <kbd className="hidden sm:inline-flex items-center px-1.5 py-0.5 text-[10px] font-mono text-on-surface-sublabel bg-zinc-800/80 rounded">
                 ESC
               </kbd>
-              <button onClick={onClose} className="sm:hidden text-zinc-500 hover:text-white">
+              <button onClick={onClose} className="sm:hidden text-on-surface-sublabel hover:text-white">
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             <div className="max-h-[62vh] overflow-y-auto px-3 pb-3">
               {results.length === 0 && (
-                <div className="px-4 py-10 text-center text-xs font-mono text-zinc-500 uppercase tracking-widest">
+                <div className="px-4 py-10 text-center text-xs font-mono text-on-surface-sublabel uppercase tracking-widest">
                   // No matches
                 </div>
               )}
@@ -187,7 +187,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ open, onClose, i
                         <div className="flex-1 min-w-0">
                           <div className="text-sm font-medium text-white truncate">{item.name}</div>
                           {item.desc && (
-                            <div className="text-xs text-zinc-500 truncate">{item.desc}</div>
+                            <div className="text-xs text-on-surface-sublabel truncate">{item.desc}</div>
                           )}
                         </div>
                       </button>
@@ -197,7 +197,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ open, onClose, i
               )}
             </div>
 
-            <div className="hidden sm:flex items-center justify-between px-5 py-2.5 text-[10px] font-mono text-zinc-500 uppercase tracking-widest">
+            <div className="hidden sm:flex items-center justify-between px-5 py-2.5 text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest">
               <span>↑ ↓ navigate · ⏎ select · esc close</span>
               <span>{results.length} {results.length === 1 ? 'result' : 'results'}</span>
             </div>

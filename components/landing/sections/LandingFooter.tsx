@@ -34,7 +34,7 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onEnterApp, onNavi
   <>
     {/* Mobile Login Link */}
     <div className="md:hidden text-center py-6">
-      <p className="text-sm text-zinc-500">
+      <p className="text-sm text-on-surface-sublabel">
         Already have an account? <span onClick={onEnterApp} className="text-[#FFCC00] hover:underline cursor-pointer">Log in</span>
       </p>
     </div>
@@ -51,7 +51,7 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onEnterApp, onNavi
           />
 
           {/* Trust row */}
-          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 border-b border-white/5 px-6 py-8 text-[11px] font-mono uppercase tracking-widest text-zinc-500">
+          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 border-b border-white/5 px-6 py-8 text-[11px] font-mono uppercase tracking-widest text-on-surface-sublabel">
             <span className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-[#FFCC00]" /> 7-Day Money-Back Guarantee</span>
             <span className="flex items-center gap-2"><Lock className="w-4 h-4 text-[#FFCC00]" /> Secure Checkout · PayMongo</span>
             <span className="flex items-center gap-2"><Sparkles className="w-4 h-4 text-[#FFCC00]" /> Built for Filipino Businesses</span>

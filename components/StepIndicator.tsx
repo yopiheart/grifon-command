@@ -40,13 +40,13 @@ const StepIndicator: React.FC<StepIndicatorProps> = ({ currentStep, totalSteps, 
                       ? 'bg-[#FFCC00] border-transparent text-black shadow-[0_0_15px_rgba(255,204,0,0.5)] scale-110' 
                       : isCompleted 
                         ? 'bg-zinc-800 border-[#FFCC00] text-white' 
-                        : 'bg-zinc-950 border-white/10 text-zinc-600'
+                        : 'bg-zinc-950 border-white/10 text-on-surface-sublabel'
                     }
                   `}
                 >
                   {isCompleted ? <Check className="w-5 h-5" /> : stepNumber}
                 </div>
-                <p className={`mt-3 text-[10px] font-mono uppercase tracking-widest transition-all duration-300 ${isActive ? 'text-[#FFCC00] font-bold' : 'text-zinc-500'}`}>
+                <p className={`mt-3 text-[10px] font-mono uppercase tracking-widest transition-all duration-300 ${isActive ? 'text-[#FFCC00] font-bold' : 'text-on-surface-sublabel'}`}>
                   {name}
                 </p>
               </div>

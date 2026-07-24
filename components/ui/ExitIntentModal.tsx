@@ -109,7 +109,7 @@ export const ExitIntentModal: React.FC<ExitIntentModalProps> = ({ triggered, onD
                 />
               )}
             </div>
-            <p className="mt-2 text-center text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+            <p className="mt-2 text-center text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">
               Real Grifon ad · 0 edits
             </p>
 
@@ -124,7 +124,7 @@ export const ExitIntentModal: React.FC<ExitIntentModalProps> = ({ triggered, onD
             </button>
 
             {/* Slate row */}
-            <div className="flex items-center justify-between px-6 pt-5 text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+            <div className="flex items-center justify-between px-6 pt-5 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">
               <span>Scene 01 · Take 1</span>
               <span className="flex items-center gap-1.5">
                 <Clapperboard className="h-3.5 w-3.5 shrink-0" /> Grifon Studio
@@ -163,7 +163,7 @@ export const ExitIntentModal: React.FC<ExitIntentModalProps> = ({ triggered, onD
               </GoldButton>
             </div>
 
-            <p className="px-6 mt-3 mb-6 text-center text-[11px] font-mono uppercase tracking-wider text-zinc-500">
+            <p className="px-6 mt-3 mb-6 text-center text-[11px] font-mono uppercase tracking-wider text-on-surface-sublabel">
               Walang card · Cancel anytime
             </p>
           </motion.div>

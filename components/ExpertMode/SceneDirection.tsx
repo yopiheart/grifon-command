@@ -65,10 +65,10 @@ const SceneCard: React.FC<{
       <div className="flex flex-col gap-3">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <p className="mb-1 text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+            <p className="mb-1 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">
               {index + 1}. {beat?.label ?? `Scene ${index + 1}`}
             </p>
-            <p className="text-sm text-zinc-200">{scriptLine || <span className="text-zinc-600">—</span>}</p>
+            <p className="text-sm text-zinc-200">{scriptLine || <span className="text-on-surface-sublabel">—</span>}</p>
           </div>
         </div>
 
@@ -102,7 +102,7 @@ const SceneCard: React.FC<{
         <button
           type="button"
           onClick={() => setOpen((o) => !o)}
-          className="flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest text-zinc-500 transition-colors hover:text-[#FFCC00]"
+          className="flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel transition-colors hover:text-[#FFCC00]"
         >
           <ChevronDown className={`h-3 w-3 shrink-0 transition-transform ${open ? 'rotate-180' : ''}`} />
           Direct this scene (optional)
@@ -137,7 +137,7 @@ const SceneCard: React.FC<{
                   <ImageUp className="h-3.5 w-3.5 shrink-0" /> Anchor your own photo
                 </button>
               )}
-              <span className="text-xs text-zinc-500">If AI can't nail it, use your exact photo for this scene.</span>
+              <span className="text-xs text-on-surface-sublabel">If AI can't nail it, use your exact photo for this scene.</span>
               <input
                 ref={fileRef}
                 type="file"

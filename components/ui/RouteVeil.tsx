@@ -56,7 +56,7 @@ export const RouteVeil: React.FC<{ veil: VeilState | null }> = ({ veil }) => (
             transition={{ duration: DUR.slow, delay: 0.22, ease: EASE.inOut }}
             className="h-px w-28 origin-left bg-gradient-to-r from-[#FFCC00] to-[#FFCC00]/30"
           />
-          <p className="text-[10px] font-mono text-zinc-500 tracking-[0.35em] uppercase">{veil.label}</p>
+          <p className="text-[10px] font-mono text-on-surface-sublabel tracking-[0.35em] uppercase">{veil.label}</p>
         </motion.div>
       </motion.div>
     )}

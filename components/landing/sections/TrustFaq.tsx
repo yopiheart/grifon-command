@@ -47,7 +47,7 @@ export const TrustFaq: React.FC = () => (
           <details key={idx} className="group bg-zinc-900/50 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden [&_summary::-webkit-details-marker]:hidden">
             <summary className="flex items-center justify-between p-6 cursor-pointer font-bold uppercase tracking-wide hover:bg-white/5 transition-colors">
               {faq.q}
-              <ChevronDown className="w-5 h-5 shrink-0 ml-4 text-zinc-500 group-open:rotate-180 transition-transform" />
+              <ChevronDown className="w-5 h-5 shrink-0 ml-4 text-on-surface-sublabel group-open:rotate-180 transition-transform" />
             </summary>
             <div className="p-6 pt-0 text-zinc-400 border-t border-white/5">
               {faq.a}
@@ -67,7 +67,7 @@ export const TrustFaq: React.FC = () => (
             guarantee box so the two don't read as twins. The pulsing dot carries the life. */}
         <GlassPanel className="inline-flex flex-col items-center gap-4 p-6 md:p-8">
           {/* Live presence indicator — functional status semaphore, not a brand accent */}
-          <span className="flex items-center gap-2 text-[10px] text-zinc-500 font-mono uppercase tracking-widest">
+          <span className="flex items-center gap-2 text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />

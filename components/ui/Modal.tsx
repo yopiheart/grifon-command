@@ -22,7 +22,7 @@ export const Modal: React.FC<{
     >
       <div className="mb-4 flex items-center justify-between">
         <h3 className={`text-zinc-100 ${T_CTRL}`}>{title}</h3>
-        <button type="button" onClick={onClose} aria-label="Close" className="shrink-0 text-zinc-500 hover:text-white">
+        <button type="button" onClick={onClose} aria-label="Close" className="shrink-0 text-on-surface-sublabel hover:text-white">
           <X className="h-5 w-5" />
         </button>
       </div>

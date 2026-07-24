@@ -14,7 +14,7 @@ const Card: React.FC<CardProps> = ({ title, description, children }) => {
         <h2 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight">
           {title}
         </h2>
-        <p className="text-zinc-500 mt-3 font-mono text-[10px] uppercase tracking-widest">
+        <p className="text-on-surface-sublabel mt-3 font-mono text-[10px] uppercase tracking-widest">
           // {description}
         </p>
       </div>

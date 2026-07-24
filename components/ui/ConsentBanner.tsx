@@ -48,7 +48,7 @@ export const ConsentBanner: React.FC<ConsentBannerProps> = ({ onConsent, onNavig
       <button
         onClick={() => decide(false)}
         aria-label="Decline analytics"
-        className="absolute top-2 right-2 p-2 text-zinc-500 hover:text-white transition-colors"
+        className="absolute top-2 right-2 p-2 text-on-surface-sublabel hover:text-white transition-colors"
       >
         <X className="w-4 h-4" />
       </button>

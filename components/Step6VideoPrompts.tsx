@@ -115,7 +115,7 @@ const Step6VideoPrompts: React.FC<Step6Props> = ({ storyboard, videoPrompts, set
 
   return (
     <StepShell sublabel="STEP 7 · VIDEO PROMPTS" title="Create Video Prompts" panelClassName="max-w-6xl mx-auto">
-      <p className="-mt-4 mb-6 text-[11px] font-mono leading-relaxed text-zinc-500">
+      <p className="-mt-4 mb-6 text-[11px] font-mono leading-relaxed text-on-surface-sublabel">
         The AI has generated video prompts for each line, deciding between a talking avatar, B-roll, or cinematic relay.
       </p>
 

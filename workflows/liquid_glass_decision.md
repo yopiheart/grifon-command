@@ -118,6 +118,46 @@ Moves **01 · 02 · 03 · 04 · 05** are in the app. Move **06** (concentric rad
 
 **Not verified:** `BootScreen` — it only renders during a real OAuth return and the local `sessionStorage` flag didn't reproduce it; it shares the CHROME tier with the verified gateway card, but its travelling-light beat has not been seen. The lens ring was confirmed as a static specimen page, not inside a live module run.
 
+---
+
+## Full HIG review, 2026-07-24 — the finding the Liquid Glass pages missed
+
+Reviewed the wider Human Interface Guidelines (Color, Typography, Layout, Motion, Dark Mode, Accessibility, Loading) rather than just the two Liquid Glass pages. Most of it confirmed decisions Grifon had already made. Four things did not.
+
+### 1. The contrast floor — SHIPPED (a real WCAG failure, not a taste call)
+
+HIG Accessibility: *"Minimum contrast ratio: 4.5:1 for text up to 17 pts."* Dark Mode: *"strive for a contrast ratio of 7:1, especially in small text."* Measured against `surface` (`#09090B`):
+
+| Token | Hex | Ratio | |
+|---|---|---|---|
+| `text-zinc-500` (the `on-surface-sublabel` value) | `#71717A` | **4.12:1** | ✗ — **575 uses** |
+| `text-zinc-600` | `#52525B` | **2.57:1** | ✗ |
+| `text-zinc-700` | `#3F3F46` | **1.91:1** | ✗ |
+
+The smallest type in the app — the 10px `//` mono meta-labels — was also the lowest-contrast. Fixed by moving `on-surface-sublabel` to **`#82828B` (5.22:1)** and sweeping all 575 sub-floor text greys onto that semantic role, which also pulls the codebase toward DESIGN.md's own "reference roles, not hex literals" rule. The ladder is now 19.9 / 13.5 / 7.8 / 5.2 — four distinct steps, every one passing.
+
+**Carve-out:** the `proof-band` (`#F2F1EA`) inverts — `#82828B` scores only 3.36:1 there, *worse* than what it replaced. `CreamBand.tsx` and `ReceiptsRail.tsx` (8 occurrences) are excluded and keep the band's dark zinc ladder.
+
+### 2. Monochrome rails — OPEN, needs Neil
+
+HIG Color: *"Avoid using similar colors in control labels if your app has a colorful background. Prefer a monochromatic appearance for toolbars and tab bars, or choose an accent color with sufficient visual differentiation."*
+
+The dashboard rail now carries 15 module identity hues on a CHROME surface floating over a gold aura field — exactly the case that rule addresses. But per-module identity hues are a documented, deliberate Grifon decision (DESIGN.md → Per-module identity). **Not changed unilaterally.** The options are: keep as-is (identity wins), monochrome the rail and keep hues only on module headers/tiles, or desaturate hues ~40% on the rail only. Neil's call.
+
+### 3. Colour placement across layers — partly addressed
+
+HIG Color: *"Be aware of the placement of color in the content layer… avoid overlap of similar colors in the content layer and controls."* This is precisely the gateway bug already fixed with the dimming layer. The same pattern is still live but milder on the dashboard: a gold `New Ad` CTA on a glass rail over a gold `SmokeAura`. Watch it; not currently failing.
+
+### 4. Loading that blocks — OPEN, product call
+
+HIG Motion: *"Let people cancel motion. Avoid making people wait for an animation to complete before they can do anything."* HIG Loading: *"Show something as soon as possible… Let people do other things while they wait."*
+
+`BootScreen` enforces an artificial minimum hold (`MIN_MS - elapsed` in App.tsx) — it literally makes people wait for an animation after the session is ready. That is the film-leader beat working as designed, and it is also the thing the HIG names. Flagged, not removed: it's a brand decision, not a bug.
+
+**Confirmed, no action needed:** weight ladder (400/600/700, no light weights) already matches *"avoid light font weights"*; the 44px control floor matches the 44pt minimum; "differentiate controls from content" is the inversion thesis restated; "apply color sparingly to the Liquid Glass material" is already how gold is used.
+
+---
+
 ### Slice 3 (not started)
 Remaining `backdrop-blur` literals → tiers: modals + quota wall → SLAB, module chrome per the picking rule. Then move 06's concentric radii on whatever gets touched.
 

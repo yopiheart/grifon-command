@@ -50,7 +50,7 @@ export const ResumeDraftCard: React.FC<ResumeDraftCardProps> = ({
       <button
         onClick={onDiscard}
         aria-label="Discard draft"
-        className="absolute top-3 right-3 text-zinc-600 hover:text-white transition-colors z-10 p-1 -m-1"
+        className="absolute top-3 right-3 text-on-surface-sublabel hover:text-white transition-colors z-10 p-1 -m-1"
       >
         <X className="w-3.5 h-3.5" />
       </button>
@@ -64,10 +64,10 @@ export const ResumeDraftCard: React.FC<ResumeDraftCardProps> = ({
             // RESUME DRAFT
           </div>
           <div className="text-sm font-bold text-white truncate">Director</div>
-          <div className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest truncate">
+          <div className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest truncate">
             {subtitle}
           </div>
-          <div className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest truncate">
+          <div className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest truncate">
             saved {formatRelative(savedAt)}
           </div>
         </div>

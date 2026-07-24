@@ -33,7 +33,7 @@ const CARDS = [
 export const ProofGallery: React.FC = () => (
   <section className="py-16 md:py-28 border-b border-white/5 relative z-10 overflow-hidden">
     <div className="max-w-7xl mx-auto px-4 text-center mb-12 md:mb-20">
-      <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-zinc-500 mb-4">// THE RECEIPTS</p>
+      <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-on-surface-sublabel mb-4">// THE RECEIPTS</p>
       <h2 className="text-3xl md:text-5xl font-bold uppercase tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500 max-w-4xl mx-auto">
         THESE ADS WERE MADE WITH GRIFON.{' '}
         <span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">Real businesses</span>{' '}
@@ -96,7 +96,7 @@ export const ProofGallery: React.FC = () => (
                 {/* Editorial caption */}
                 <div className="mt-4 px-1">
                   <h3 className="text-base font-bold text-white">{card.title}</h3>
-                  <p className="mt-1 text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+                  <p className="mt-1 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">
                     // MADE WITH <span className="text-[#FFCC00]">GRIFON</span>
                   </p>
                 </div>
@@ -120,7 +120,7 @@ export const ProofGallery: React.FC = () => (
       </div>
     </div>
 
-    <div className="text-sm text-zinc-500 text-center mt-10 md:mt-16 max-w-lg mx-auto px-4">
+    <div className="text-sm text-on-surface-sublabel text-center mt-10 md:mt-16 max-w-lg mx-auto px-4">
       Every ad above was scripted, designed, and exported inside Grifon. Zero freelancers. Zero agencies.
     </div>
   </section>

@@ -84,7 +84,7 @@ const SidebarBody: React.FC<SidebarBodyProps> = ({
         {expanded && <span className="font-sans font-black text-xl tracking-tighter text-white italic">GRIFON</span>}
       </button>
       {expanded && !mobile && (
-        <button onClick={onToggleCollapsed} aria-label="Hide sidebar" className={`w-11 h-11 ${R_CTRL} text-zinc-500 hover:text-white ${ROW_HOVER} transition-colors flex items-center justify-center`}>
+        <button onClick={onToggleCollapsed} aria-label="Hide sidebar" className={`w-11 h-11 ${R_CTRL} text-on-surface-sublabel hover:text-white ${ROW_HOVER} transition-colors flex items-center justify-center`}>
           <PanelLeftClose className="w-4 h-4" />
         </button>
       )}
@@ -97,7 +97,7 @@ const SidebarBody: React.FC<SidebarBodyProps> = ({
 
     {/* Expand affordance when collapsed */}
     {!expanded && !mobile && (
-      <button onClick={onToggleCollapsed} aria-label="Expand sidebar" className={`mx-auto mb-2 w-11 h-11 ${R_CTRL} text-zinc-500 hover:text-white ${ROW_HOVER} transition-colors flex items-center justify-center`}>
+      <button onClick={onToggleCollapsed} aria-label="Expand sidebar" className={`mx-auto mb-2 w-11 h-11 ${R_CTRL} text-on-surface-sublabel hover:text-white ${ROW_HOVER} transition-colors flex items-center justify-center`}>
         <PanelLeft className="w-4 h-4" />
       </button>
     )}
@@ -124,7 +124,7 @@ const SidebarBody: React.FC<SidebarBodyProps> = ({
         {expanded && (
           <>
             <span className="text-sm flex-1 text-left">Search</span>
-            <kbd className={`${T_LABEL} text-zinc-500 bg-zinc-800/80 rounded px-1.5 py-0.5`}>⌘K</kbd>
+            <kbd className={`${T_LABEL} text-on-surface-sublabel bg-zinc-800/80 rounded px-1.5 py-0.5`}>⌘K</kbd>
           </>
         )}
       </button>
@@ -135,7 +135,7 @@ const SidebarBody: React.FC<SidebarBodyProps> = ({
       {navGroups.map((group, gi) => (
         <div key={group.label}>
           {expanded ? (
-            <p className={`${T_LABEL} text-zinc-600 px-2 mb-1.5 ${gi === 0 ? 'mt-1' : 'mt-4'}`}>{group.label}</p>
+            <p className={`${T_LABEL} text-on-surface-sublabel px-2 mb-1.5 ${gi === 0 ? 'mt-1' : 'mt-4'}`}>{group.label}</p>
           ) : (
             gi > 0 && <div aria-hidden className={`mx-auto my-2 w-6 border-t ${HAIRLINE}`} />
           )}
@@ -187,7 +187,7 @@ const SidebarBody: React.FC<SidebarBodyProps> = ({
       {/* Recent / History */}
       {expanded && recent.length > 0 && (
         <div className="mt-4">
-          <p className={`${T_LABEL} text-zinc-600 px-2 mb-1.5 flex items-center gap-1.5`}>
+          <p className={`${T_LABEL} text-on-surface-sublabel px-2 mb-1.5 flex items-center gap-1.5`}>
             <History className="w-3 h-3" /> Recent
           </p>
           {recent.slice(0, 6).map((r) => {
@@ -230,14 +230,14 @@ const SidebarBody: React.FC<SidebarBodyProps> = ({
           <>
             <span className="flex-1 min-w-0 text-left">
               <span className="block text-sm font-semibold text-white truncate">{userName}</span>
-              <span className="block text-xs text-zinc-500 truncate">{quotaLabel}</span>
+              <span className="block text-xs text-on-surface-sublabel truncate">{quotaLabel}</span>
             </span>
-            <Settings className="w-4 h-4 text-zinc-500 shrink-0" />
+            <Settings className="w-4 h-4 text-on-surface-sublabel shrink-0" />
           </>
         )}
       </button>
       {expanded && userEmail && (
-        <p className="px-3 pb-1 text-xs text-zinc-600 truncate">{userEmail}</p>
+        <p className="px-3 pb-1 text-xs text-on-surface-sublabel truncate">{userEmail}</p>
       )}
     </div>
   </div>

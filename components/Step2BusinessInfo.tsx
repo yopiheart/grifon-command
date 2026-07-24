@@ -323,7 +323,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                 <h4 className="font-bold text-white uppercase font-mono text-xs">Viral / MrBeast</h4>
                 {formData.scriptType === 'MrBeast' && <Check className="w-4 h-4 text-[#FFCC00]" />}
             </div>
-            <p className="text-[10px] text-zinc-500 font-mono">Hook, Identity, Struggles, Results, CTA.</p>
+            <p className="text-[10px] text-on-surface-sublabel font-mono">Hook, Identity, Struggles, Results, CTA.</p>
         </div>
         )}
 
@@ -336,7 +336,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                 <h4 className="font-bold text-white uppercase font-mono text-xs">Testimonial</h4>
                 {formData.scriptType === 'Testimonial' && <Check className="w-4 h-4 text-[#FFCC00]" />}
             </div>
-            <p className="text-[10px] text-zinc-500 font-mono">Intro, Pain Story, Transformation, Proof.</p>
+            <p className="text-[10px] text-on-surface-sublabel font-mono">Intro, Pain Story, Transformation, Proof.</p>
         </div>
         )}
 
@@ -352,7 +352,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                 </div>
                 {formData.scriptType === 'UGCPro' && <Check className="w-4 h-4 text-[#FFCC00]" />}
             </div>
-            <p className="text-[10px] text-zinc-500 font-mono">Try-On, Unboxing, Demo, B&amp;A, Tutorial.</p>
+            <p className="text-[10px] text-on-surface-sublabel font-mono">Try-On, Unboxing, Demo, B&amp;A, Tutorial.</p>
         </div>
         )}
 
@@ -368,7 +368,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                 </div>
                 {formData.scriptType === 'Services' && <Check className="w-4 h-4 text-[#FFCC00]" />}
             </div>
-            <p className="text-[10px] text-zinc-500 font-mono">Trust, Service-in-Action, Proof, Book Now.</p>
+            <p className="text-[10px] text-on-surface-sublabel font-mono">Trust, Service-in-Action, Proof, Book Now.</p>
         </div>
         )}
 
@@ -384,7 +384,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                 </div>
                 {formData.scriptType === 'UGCPro' && <Check className="w-4 h-4 text-[#FFCC00]" />}
             </div>
-            <p className="text-[10px] text-zinc-500 font-mono">Before &amp; After or Tutorial. Book, not buy.</p>
+            <p className="text-[10px] text-on-surface-sublabel font-mono">Before &amp; After or Tutorial. Book, not buy.</p>
         </div>
         )}
 
@@ -400,7 +400,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                 </div>
                 {formData.scriptType === 'RealEstate' && <Check className="w-4 h-4 text-[#FFCC00]" />}
             </div>
-            <p className="text-[10px] text-zinc-500 font-mono">Walkthrough, Location, Highlights, Inquire.</p>
+            <p className="text-[10px] text-on-surface-sublabel font-mono">Walkthrough, Location, Highlights, Inquire.</p>
         </div>
         )}
 
@@ -416,7 +416,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                 </div>
                 {formData.scriptType === 'UGCPro' && <Check className="w-4 h-4 text-[#FFCC00]" />}
             </div>
-            <p className="text-[10px] text-zinc-500 font-mono">Agent authority tutorial. Inquire.</p>
+            <p className="text-[10px] text-on-surface-sublabel font-mono">Agent authority tutorial. Inquire.</p>
         </div>
         )}
 
@@ -431,11 +431,11 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
             </div>
             <div className="flex justify-between items-center mb-2">
                 <div className="flex items-center gap-2">
-                    <ShoppingBag className="w-4 h-4 text-zinc-500"/>
+                    <ShoppingBag className="w-4 h-4 text-on-surface-sublabel"/>
                     <h4 className="font-bold text-zinc-400 uppercase font-mono text-xs">Temu / Haul</h4>
                 </div>
             </div>
-            <p className="text-[10px] text-zinc-500 font-mono">High-energy Unboxing. Gadgets, Toys, Decor.</p>
+            <p className="text-[10px] text-on-surface-sublabel font-mono">High-energy Unboxing. Gadgets, Toys, Decor.</p>
         </div>
         )}
 
@@ -453,7 +453,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                 </div>
                 {formData.scriptType === 'Custom' && <Check className="w-4 h-4 text-[#FFCC00]" />}
             </div>
-            <p className="text-[10px] text-zinc-500 font-mono">Provide your own script via .txt or manual input.</p>
+            <p className="text-[10px] text-on-surface-sublabel font-mono">Provide your own script via .txt or manual input.</p>
         </div>
       </div>
 
@@ -468,7 +468,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                       Your ad will lead with — <span className="text-[#FFCC00]">{guidedLead}</span>
                   </p>
               </div>
-              <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mt-1 mb-4">
+              <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest mt-1 mb-4">
                   // We picked this from your description. Not quite? Tap another.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -483,7 +483,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                               <span className="text-xs font-bold text-white font-mono uppercase">{a.label}</span>
                               {a.active && <Check className="w-4 h-4 text-[#FFCC00] shrink-0" />}
                           </div>
-                          <span className="text-[10px] text-zinc-500 font-mono">{a.sub}</span>
+                          <span className="text-[10px] text-on-surface-sublabel font-mono">{a.sub}</span>
                       </button>
                   ))}
               </div>
@@ -503,7 +503,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                           onChange={handleChange}
                           placeholder="e.g., ₱4.2M  ·  25k/month  ·  leave blank for inquiry-only"
                       />
-                      <p className="text-[9px] text-zinc-500 font-mono tracking-tighter">
+                      <p className="text-[9px] text-on-surface-sublabel font-mono tracking-tighter">
                           Iwanang blangko kung gusto mong &quot;DM for price&quot; lang — hindi ipapakita ang halaga.
                       </p>
                   </div>
@@ -520,7 +520,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                   <Sparkles className="w-5 h-5 text-[#FFCC00] shrink-0" />
                   <p className="text-sm font-bold text-white font-mono">UGC Pro format</p>
               </div>
-              <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mt-1 mb-4">
+              <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest mt-1 mb-4">
                   // Auto lets the AI pick the best format from your brief.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -546,7 +546,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                                   <span className="text-xs font-bold text-white font-mono uppercase">{s.label}</span>
                                   {active && <Check className="w-4 h-4 text-[#FFCC00] shrink-0" />}
                               </div>
-                              <span className="text-[11px] leading-snug text-zinc-500 font-mono">{s.sub}</span>
+                              <span className="text-[11px] leading-snug text-on-surface-sublabel font-mono">{s.sub}</span>
                           </button>
                       );
                   })}
@@ -583,7 +583,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                       />
                   </div>
                   <label className="w-full md:w-64 flex flex-col items-center justify-center border-2 border-dashed border-white/10 rounded-xl bg-zinc-950/50 p-6 cursor-pointer hover:border-[#FFCC00] hover:bg-zinc-800/80 transition-all">
-                      <UploadCloud className="w-6 h-6 text-zinc-500 mb-4" />
+                      <UploadCloud className="w-6 h-6 text-on-surface-sublabel mb-4" />
                       <p className="text-[10px] font-mono text-zinc-400 uppercase mb-4 text-center">OR UPLOAD .TXT FILE</p>
                       <input
                           type="file"
@@ -614,7 +614,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
           <div className="space-y-4">
             {hasImages && (
                 <>
-                    <p className="mb-1 text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+                    <p className="mb-1 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">
                         // Photo 1 (HERO) anchors all scene visuals — remove + re-upload to reorder
                     </p>
                     <div className="grid grid-cols-5 gap-2 mb-2">
@@ -670,7 +670,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                     onChange={(e) => handleFileUpload(e, 'product')}
                 />
               </label>
-              <p className="mt-1 text-center text-[10px] font-mono uppercase tracking-tighter text-zinc-500">Product in hand · brand visible</p>
+              <p className="mt-1 text-center text-[10px] font-mono uppercase tracking-tighter text-on-surface-sublabel">Product in hand · brand visible</p>
               <p className="mt-1 text-center text-[10px] font-mono uppercase tracking-tighter text-[#FFCC00]/80">Hero anchors size + appearance for every scene.</p>
             </div>
           </div>
@@ -678,7 +678,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
           /* Phase 2: archetype-driven guided slots. The slot you drop into IS the tag, so each
              scene can later be anchored to the right real photo (per-scene routing, Slice 5). */
           <div className="space-y-2">
-            <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase">
+            <p className="text-[10px] text-on-surface-sublabel font-mono tracking-widest uppercase">
               // Upload your REAL photos — tagged per slot ↓
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -720,16 +720,16 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                       <input type="file" accept="image/*" className="hidden" onChange={(e) => handleSlotUpload(e, slot)} />
                     </label>
                     <p className="text-[9px] font-bold text-white font-mono uppercase mt-1 text-center leading-tight">{label}</p>
-                    <p className="text-[8px] text-zinc-500 font-mono text-center leading-tight">{hint}</p>
+                    <p className="text-[8px] text-on-surface-sublabel font-mono text-center leading-tight">{hint}</p>
                   </div>
                 );
               })}
             </div>
             {isAnalyzing && <div className="pt-1"><Loader message="ANALYZING..." size="sm" /></div>}
-            <p className="text-[10px] text-zinc-500 font-mono">
+            <p className="text-[10px] text-on-surface-sublabel font-mono">
               Tinatatak namin kung saan napupunta ang bawat photo — para tumugma ang ad sa totoong lugar mo. Skip ang ayaw mong ilagay.
             </p>
-            <p className="text-[10px] text-zinc-500 font-mono">
+            <p className="text-[10px] text-on-surface-sublabel font-mono">
               May ibang photo na gusto mong ipalabas? Pwede mong i-swap ang kahit anong scene image later sa storyboard.
             </p>
           </div>
@@ -751,7 +751,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
   return (
     <>
     <StepShell sublabel="STEP 2 · BUSINESS INFO" title="Seed AI With Business Information">
-      <p className="-mt-4 mb-6 text-[11px] font-mono leading-relaxed text-zinc-500">
+      <p className="-mt-4 mb-6 text-[11px] font-mono leading-relaxed text-on-surface-sublabel">
         Provide detailed information to help the AI understand the product, its value, and the target audience.
       </p>
 
@@ -784,7 +784,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
               fullWidth
               trigger={
                 <>
-                  <span className={`flex-1 truncate text-left ${formData.brandColors ? 'text-zinc-200' : 'text-zinc-500'}`}>
+                  <span className={`flex-1 truncate text-left ${formData.brandColors ? 'text-zinc-200' : 'text-on-surface-sublabel'}`}>
                     {formData.brandColors || 'Add hex palette'}
                   </span>
                   <ChevronDown className="h-4 w-4 shrink-0 opacity-60" />
@@ -799,7 +799,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                   onChange={handleChange}
                   placeholder="#FFFFFF, #000000, #FF0000"
                 />
-                <p className="mt-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500">// Used to color-match generated visuals</p>
+                <p className="mt-2 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">// Used to color-match generated visuals</p>
               </div>
             </Popover>
           </div>

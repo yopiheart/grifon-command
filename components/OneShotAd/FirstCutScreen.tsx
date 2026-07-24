@@ -60,7 +60,7 @@ export const FirstCutScreen: React.FC<{
   return (
     <div className="relative min-h-screen overflow-hidden bg-zinc-950 px-4 py-10 text-white">
       <div className="relative mx-auto w-full max-w-3xl">
-        <p className="mb-1 text-[10px] font-mono uppercase tracking-widest text-zinc-500">// REVIEW · RESHOOT · SHIP</p>
+        <p className="mb-1 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">// REVIEW · RESHOOT · SHIP</p>
         <h1 className="mb-6 text-3xl font-black uppercase tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500">
           Your First Cut
         </h1>
@@ -71,7 +71,7 @@ export const FirstCutScreen: React.FC<{
           {run.finalVideoUrl ? (
             <video src={run.finalVideoUrl} controls autoPlay loop className="aspect-[9/16] max-h-[60vh] w-full rounded-xl bg-zinc-950 object-contain" />
           ) : (
-            <div className="flex aspect-[9/16] max-h-[60vh] w-full items-center justify-center rounded-xl bg-zinc-950 text-xs font-mono text-zinc-500">
+            <div className="flex aspect-[9/16] max-h-[60vh] w-full items-center justify-center rounded-xl bg-zinc-950 text-xs font-mono text-on-surface-sublabel">
               assembling final cut…
             </div>
           )}
@@ -90,8 +90,8 @@ export const FirstCutScreen: React.FC<{
               <span className="text-zinc-300">{flagged} scene{flagged > 1 ? 's' : ''} ready for your call — fix below (free).</span>
             </>
           )}
-          <span className="text-zinc-500">·</span>
-          <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-500">
+          <span className="text-on-surface-sublabel">·</span>
+          <span className="font-mono text-[10px] uppercase tracking-widest text-on-surface-sublabel">
             {freeTakesLeft > 0 ? `${freeTakesLeft} free take${freeTakesLeft > 1 ? 's' : ''} left` : 'extra takes use 1 credit'}
           </span>
         </div>
@@ -177,7 +177,7 @@ export const FirstCutScreen: React.FC<{
               </div>
             </div>
             <div className="min-w-0">
-              <p className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">// Thumbnail</p>
+              <p className="text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">// Thumbnail</p>
               <p className="text-xs text-zinc-400">Your scroll-stopping cover frame — download it below.</p>
             </div>
           </div>
@@ -213,7 +213,7 @@ export const FirstCutScreen: React.FC<{
             </div>
             {/* Quiet Pro nudge — the "you're not locked in" raw-export lever (Decision 4). */}
             {!proUnlocked && (
-              <p className="mt-2 text-[10px] leading-relaxed text-zinc-500">
+              <p className="mt-2 text-[10px] leading-relaxed text-on-surface-sublabel">
                 May sariling editor? <span className="text-zinc-400">Kunin mo yung clean scene clips + voiceover + captions — i-edit mo sa paraan mo.</span>{' '}
                 <button onClick={onUpgrade} className="font-mono uppercase tracking-widest text-[#FFCC00] hover:underline">[PRO]</button>
               </p>
@@ -229,7 +229,7 @@ export const FirstCutScreen: React.FC<{
             <div className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-[#FFCC00]/30 bg-[#FFCC00]/10 px-2.5 py-1 text-[10px] font-mono uppercase tracking-widest text-[#FFCC00]">
               <Lock className="h-3 w-3" /> Business
             </div>
-            <p className="mb-1 text-[10px] font-mono uppercase tracking-widest text-zinc-500">// Advanced Editor</p>
+            <p className="mb-1 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">// Advanced Editor</p>
             <h2 className="mb-2 text-xl font-black uppercase tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500">
               Your ad. Re-cut like a film studio did it.
             </h2>
@@ -257,7 +257,7 @@ export const FirstCutScreen: React.FC<{
                 Watch your cinema cuts <ArrowRight className="h-4 w-4 shrink-0" />
               </span>
             </GoldButton>
-            <p className="mt-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+            <p className="mt-2 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">
               included in Business · your cut stays untouched
             </p>
           </GlassPanel>

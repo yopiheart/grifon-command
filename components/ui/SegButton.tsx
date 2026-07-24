@@ -31,7 +31,7 @@ export const Pill: React.FC<{
     title={title}
     className={`flex-1 border px-3 ${CTRL_H} ${R_CTRL} ${T_VALUE} uppercase transition-all ${
       disabled
-        ? 'cursor-not-allowed border-white/5 text-zinc-600'
+        ? 'cursor-not-allowed border-white/5 text-on-surface-sublabel'
         : active
           ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]'
           : 'border-white/10 text-zinc-400 hover:border-white/30 hover:text-white'
@@ -76,7 +76,7 @@ export function SegButton<T extends string>({
               title={'title' in opt ? opt.title : undefined}
               onClick={() => onChange(opt.value)}
               className={`relative overflow-visible isolate rounded-full px-6 py-2.5 text-[13px] font-bold uppercase tracking-wider transition-colors ${
-                active ? 'text-black' : 'text-zinc-500 hover:text-white'
+                active ? 'text-black' : 'text-on-surface-sublabel hover:text-white'
               }`}
             >
               {active && (

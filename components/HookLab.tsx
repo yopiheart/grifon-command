@@ -18,7 +18,7 @@ interface HookLabProps {
 
 type FrameState = { url?: string; busy?: boolean };
 
-const labelCaps = 'text-[10px] text-zinc-500 font-mono uppercase tracking-widest';
+const labelCaps = 'text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest';
 
 // Build a short context string from whatever the wizard already knows — keeps the
 // hooks sharp without making the user retype what Market Research / Director captured.
@@ -117,7 +117,7 @@ const HookLab: React.FC<HookLabProps> = ({ businessInfo, onBack }) => {
             onChange={(e) => setProduct(e.target.value)}
             rows={2}
             placeholder="e.g. milk tea shop in Cebu, buy-1-take-1 promo"
-            className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-zinc-600 outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-colors resize-none"
+            className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-on-surface-sublabel outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] transition-colors resize-none"
           />
           <div className="flex flex-col sm:flex-row sm:items-center gap-3 mt-4">
             <div className="flex items-center gap-2">
@@ -174,7 +174,7 @@ const HookLab: React.FC<HookLabProps> = ({ businessInfo, onBack }) => {
                         !frame.busy ? (
                           <button
                             onClick={() => handleRenderFrame(v)}
-                            className="w-full h-full flex flex-col items-center justify-center gap-2 text-zinc-500 hover:text-[#FFCC00] transition-colors"
+                            className="w-full h-full flex flex-col items-center justify-center gap-2 text-on-surface-sublabel hover:text-[#FFCC00] transition-colors"
                           >
                             <Aperture className="w-7 h-7 shrink-0" />
                             <span className="text-[10px] font-mono uppercase tracking-widest">Render Frame</span>
@@ -195,7 +195,7 @@ const HookLab: React.FC<HookLabProps> = ({ businessInfo, onBack }) => {
                   {/* Domain chrome (kept with the caller, per GeneratedFrameTile's contract) */}
                   <div className={`mt-3 rounded-xl border p-3 transition-colors ${isUsed ? 'border-[#FFCC00]/40 bg-[#FFCC00]/5' : 'border-white/10 bg-zinc-900/40'}`}>
                     <p className="text-sm font-semibold text-white leading-snug">{v.hookLine}</p>
-                    {v.surrealConcept && <p className="text-xs text-zinc-500 mt-1 leading-snug">{v.surrealConcept}</p>}
+                    {v.surrealConcept && <p className="text-xs text-on-surface-sublabel mt-1 leading-snug">{v.surrealConcept}</p>}
                     <button
                       onClick={() => handleUseThis(v)}
                       className="mt-2 inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-zinc-400 hover:text-[#FFCC00] transition-colors"
@@ -210,7 +210,7 @@ const HookLab: React.FC<HookLabProps> = ({ businessInfo, onBack }) => {
         )}
 
         {variants.length === 0 && !generating && (
-          <p className="text-center text-sm text-zinc-600 mt-12">
+          <p className="text-center text-sm text-on-surface-sublabel mt-12">
             Describe your product and generate surreal hooks na sasalo sa scroll.
           </p>
         )}

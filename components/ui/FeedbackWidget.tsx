@@ -91,7 +91,7 @@ export const FeedbackWidget: React.FC<FeedbackWidgetProps> = ({ active, module }
               <button
                 onClick={handleDismiss}
                 aria-label="Dismiss feedback"
-                className="absolute top-2 right-2 p-2 text-zinc-500 hover:text-white transition-colors"
+                className="absolute top-2 right-2 p-2 text-on-surface-sublabel hover:text-white transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -119,7 +119,7 @@ export const FeedbackWidget: React.FC<FeedbackWidgetProps> = ({ active, module }
                     </Pill>
                   ))}
                 </div>
-                <div className="mt-1 flex justify-between text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+                <div className="mt-1 flex justify-between text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">
                   <span>not likely</span>
                   <span>very likely</span>
                 </div>

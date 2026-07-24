@@ -97,7 +97,7 @@ export const QuotaWallModal: React.FC<QuotaWallModalProps> = ({
   };
   const topupRow = showTopup ? (
     <div className="px-6 mt-4">
-      <div className="mb-2 flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+      <div className="mb-2 flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">
         <span className="h-px flex-1 bg-white/10" /> or top up now <span className="h-px flex-1 bg-white/10" />
       </div>
       <div className="grid grid-cols-2 gap-2">
@@ -155,7 +155,7 @@ export const QuotaWallModal: React.FC<QuotaWallModalProps> = ({
             </button>
 
             {/* Sub-label */}
-            <div className="flex items-center gap-1.5 px-6 pt-6 text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+            <div className="flex items-center gap-1.5 px-6 pt-6 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">
               <Crown className="h-3.5 w-3.5 shrink-0 text-[#FFCC00]" /> Monthly limit reached
             </div>
 
@@ -205,7 +205,7 @@ export const QuotaWallModal: React.FC<QuotaWallModalProps> = ({
                 <button
                   type="button"
                   onClick={onDismiss}
-                  className="w-full px-6 py-2 mt-3 mb-6 text-center text-xs font-mono uppercase tracking-wider text-zinc-500 hover:text-zinc-300 transition-colors"
+                  className="w-full px-6 py-2 mt-3 mb-6 text-center text-xs font-mono uppercase tracking-wider text-on-surface-sublabel hover:text-zinc-300 transition-colors"
                 >
                   Maybe later
                 </button>

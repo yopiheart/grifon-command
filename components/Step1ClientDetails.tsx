@@ -90,7 +90,7 @@ const Step1ClientDetails: React.FC<Step1Props> = ({ data, setData, onNext, prefi
 
   return (
     <StepShell sublabel="STEP 1 · CLIENT DETAILS" title="Collect Client Details">
-      <p className="-mt-4 mb-6 text-[11px] font-mono leading-relaxed text-zinc-500">
+      <p className="-mt-4 mb-6 text-[11px] font-mono leading-relaxed text-on-surface-sublabel">
         Start by providing some basic information about the client and their offerings.
       </p>
 

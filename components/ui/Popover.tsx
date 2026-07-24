@@ -46,7 +46,7 @@ export const Popover: React.FC<{
         onClick={() => (open ? onClose() : onOpen())}
         className={`inline-flex w-full items-center gap-2 border px-4 ${CTRL_H} ${R_CTRL} ${T_CTRL} transition-all ${fullWidth ? 'justify-between' : 'justify-center md:w-auto'} ${
           disabled
-            ? 'cursor-not-allowed border-white/5 text-zinc-600'
+            ? 'cursor-not-allowed border-white/5 text-on-surface-sublabel'
             : open
               ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]'
               : 'border-white/10 text-zinc-300 hover:border-white/30'

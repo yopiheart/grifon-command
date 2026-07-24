@@ -25,7 +25,7 @@ export const OnboardingNudge: React.FC<OnboardingNudgeProps> = ({ onStart, onDis
 
       <button
         onClick={onDismiss}
-        className="absolute top-3 right-3 text-zinc-500 hover:text-white transition-colors z-10"
+        className="absolute top-3 right-3 text-on-surface-sublabel hover:text-white transition-colors z-10"
         aria-label="Dismiss"
       >
         <X className="w-4 h-4" />
@@ -53,7 +53,7 @@ export const OnboardingNudge: React.FC<OnboardingNudgeProps> = ({ onStart, onDis
               <Sparkles className="w-3.5 h-3.5" />
               Start with Director
             </button>
-            <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest hidden sm:flex items-center gap-1">
+            <span className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest hidden sm:flex items-center gap-1">
               <ArrowDown className="w-3 h-3" />
               or scroll
             </span>

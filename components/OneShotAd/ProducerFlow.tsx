@@ -341,7 +341,7 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
   };
 
   const BackBar = (
-    <button onClick={onBack} className="absolute left-4 top-4 z-20 flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500 hover:text-white">
+    <button onClick={onBack} className="absolute left-4 top-4 z-20 flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel hover:text-white">
       <ChevronLeft className="h-4 w-4" /> Command Center
     </button>
   );
@@ -366,7 +366,7 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
             <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full border border-[#FFCC00]/30 bg-[#FFCC00]/10">
               <Loader2 className="h-6 w-6 animate-spin text-[#FFCC00]" />
             </div>
-            <p className="mb-1 text-[10px] font-mono uppercase tracking-widest text-zinc-500">// Resuming</p>
+            <p className="mb-1 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">// Resuming</p>
             <h1 className="mb-2 text-2xl font-black uppercase tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500">
               Binabalik ang cut mo…
             </h1>
@@ -439,7 +439,7 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
             <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full border border-red-500/40 bg-red-500/10">
               <AlertTriangle className="h-6 w-6 text-red-400" />
             </div>
-            <p className="mb-1 text-[10px] font-mono uppercase tracking-widest text-zinc-500">// Production paused</p>
+            <p className="mb-1 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">// Production paused</p>
             <h1 className="mb-3 text-2xl font-black uppercase tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500">
               {failedStage?.label ?? 'A step hit a snag'}
             </h1>

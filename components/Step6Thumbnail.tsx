@@ -75,7 +75,7 @@ const Step6Thumbnail: React.FC<Step6ThumbnailProps> = ({ script, avatar, busines
 
   return (
     <StepShell sublabel="STEP 6 · VIRAL THUMBNAIL" title="Generate Viral Thumbnail">
-      <p className="-mt-4 mb-6 text-[11px] font-mono leading-relaxed text-zinc-500">
+      <p className="-mt-4 mb-6 text-[11px] font-mono leading-relaxed text-on-surface-sublabel">
         Create a MrBeast-style thumbnail to maximize clicks. This visual is crucial for grabbing attention.
       </p>
 
@@ -115,7 +115,7 @@ const Step6Thumbnail: React.FC<Step6ThumbnailProps> = ({ script, avatar, busines
 
         {!thumbnailUrl && !loading && (
           <div className={`text-center p-12 flex flex-col items-center justify-center h-full bg-zinc-950/50 border-2 border-dashed rounded-xl w-full transition-colors ${triedNext ? 'border-red-500/60' : 'border-white/10'}`}>
-              <p className={`mb-6 font-mono text-[10px] tracking-widest uppercase ${triedNext ? 'text-red-400' : 'text-zinc-500'}`}>[THUMBNAIL_PLACEHOLDER_AREA]</p>
+              <p className={`mb-6 font-mono text-[10px] tracking-widest uppercase ${triedNext ? 'text-red-400' : 'text-on-surface-sublabel'}`}>[THUMBNAIL_PLACEHOLDER_AREA]</p>
               <GoldButton onClick={handleGenerate} disabled={!aspectRatio} className="rounded-full px-12">
                   SYNTHESIZE THUMBNAIL
               </GoldButton>

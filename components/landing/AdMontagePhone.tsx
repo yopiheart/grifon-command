@@ -93,7 +93,7 @@ export const AdMontagePhone: React.FC<{ className?: string }> = ({ className = '
                 <span className="px-2.5 py-1 bg-zinc-950/60 rounded-full border border-white/10 text-[8px] font-mono text-zinc-300 tracking-widest">
                   {frame.label}
                 </span>
-                <span className="text-[8px] font-mono text-zinc-500 tracking-widest">AD · 0:15</span>
+                <span className="text-[8px] font-mono text-on-surface-sublabel tracking-widest">AD · 0:15</span>
               </div>
 
               {/* Creative */}
@@ -167,7 +167,7 @@ export const AdMontagePhone: React.FC<{ className?: string }> = ({ className = '
       </div>
 
       {/* Output caption */}
-      <div className="mt-8 text-center text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+      <div className="mt-8 text-center text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">
         // OUTPUT: COMPLETE VIDEO AD — SCRIPTED, DESIGNED, EXPORTED
       </div>
     </motion.div>

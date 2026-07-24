@@ -64,7 +64,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
             {this.props.resetLabel ?? 'RETURN'}
           </GoldButton>
           <div className="mt-6 border-t border-white/10 pt-4 text-center">
-            <p className="text-[10px] font-mono text-zinc-500 tracking-widest uppercase">
+            <p className="text-[10px] font-mono text-on-surface-sublabel tracking-widest uppercase">
               FAULT_LOGGED // STATE_PRESERVED
             </p>
           </div>

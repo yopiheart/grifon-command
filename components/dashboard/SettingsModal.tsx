@@ -26,7 +26,7 @@ const PLAN_LABEL: Record<string, string> = {
 
 const Section: React.FC<{ icon: React.ReactNode; title: string; children: React.ReactNode }> = ({ icon, title, children }) => (
   <div className="space-y-2">
-    <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500 px-1">
+    <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel px-1">
       <span className="text-zinc-400">{icon}</span>
       {title}
     </div>
@@ -44,7 +44,7 @@ const Row: React.FC<{ label: string; sub?: string; right?: React.ReactNode; onCl
   >
     <div className="flex-1 min-w-0">
       <div className={`text-sm font-semibold ${danger ? 'text-red-400' : 'text-white'}`}>{label}</div>
-      {sub && <div className="text-xs text-zinc-500 mt-0.5 truncate">{sub}</div>}
+      {sub && <div className="text-xs text-on-surface-sublabel mt-0.5 truncate">{sub}</div>}
     </div>
     {right}
   </button>
@@ -140,7 +140,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                 </div>
                 <div className="min-w-0">
                   <div className="text-sm font-semibold text-white truncate">{userName}</div>
-                  <div className="text-xs text-zinc-500 truncate">{userEmail}</div>
+                  <div className="text-xs text-on-surface-sublabel truncate">{userEmail}</div>
                 </div>
               </div>
 
@@ -164,16 +164,16 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               </Section>
 
               <Section icon={<LifeBuoy className="w-3.5 h-3.5" />} title="Help & legal">
-                <Row label="Help & support" onClick={() => { window.location.href = '/support'; }} right={<ArrowRight className="w-4 h-4 text-zinc-500" />} />
-                <Row label="Terms of service" onClick={() => { window.location.href = '/terms'; }} right={<ArrowRight className="w-4 h-4 text-zinc-500" />} />
-                <Row label="Privacy policy" onClick={() => { window.location.href = '/privacy'; }} right={<ArrowRight className="w-4 h-4 text-zinc-500" />} />
+                <Row label="Help & support" onClick={() => { window.location.href = '/support'; }} right={<ArrowRight className="w-4 h-4 text-on-surface-sublabel" />} />
+                <Row label="Terms of service" onClick={() => { window.location.href = '/terms'; }} right={<ArrowRight className="w-4 h-4 text-on-surface-sublabel" />} />
+                <Row label="Privacy policy" onClick={() => { window.location.href = '/privacy'; }} right={<ArrowRight className="w-4 h-4 text-on-surface-sublabel" />} />
               </Section>
 
               <Section icon={<Shield className="w-3.5 h-3.5" />} title="Account">
                 <Row label="Sign out" danger onClick={onLogout} right={<LogOut className="w-4 h-4 text-red-400" />} />
               </Section>
 
-              <p className="text-center text-[10px] font-mono uppercase tracking-widest text-zinc-600 pt-2">
+              <p className="text-center text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel pt-2">
                 GRIFON COMMAND © 2026
               </p>
             </div>

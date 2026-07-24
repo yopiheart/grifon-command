@@ -94,7 +94,7 @@ const GeneratedFrameTile: React.FC<GeneratedFrameTileProps> = ({
         <div className="w-full h-full flex flex-col items-center justify-center gap-3">
           <Loader message="" size="sm" />
           {loadingMessage && (
-            <p className="text-[10px] font-mono text-zinc-500 tracking-widest uppercase">{loadingMessage}</p>
+            <p className="text-[10px] font-mono text-on-surface-sublabel tracking-widest uppercase">{loadingMessage}</p>
           )}
         </div>
       )}

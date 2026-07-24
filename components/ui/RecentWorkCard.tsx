@@ -60,12 +60,12 @@ export const RecentWorkCard: React.FC<RecentWorkCardProps> = ({ items, onResume,
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
           <Clock className="w-3.5 h-3.5 text-[#FFCC00]" />
-          <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">
+          <span className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest">
             // RECENTLY OPENED
           </span>
         </div>
         {items.length > TOP_N && (
-          <span className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest">
+          <span className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest">
             +{items.length - TOP_N} more
           </span>
         )}
@@ -73,7 +73,7 @@ export const RecentWorkCard: React.FC<RecentWorkCardProps> = ({ items, onResume,
 
       {top.length === 0 ? (
         <div className="py-4 text-center">
-          <p className="text-xs text-zinc-500">Open a module above para magsimula.</p>
+          <p className="text-xs text-on-surface-sublabel">Open a module above para magsimula.</p>
         </div>
       ) : (
         <div className="space-y-1.5">
@@ -91,11 +91,11 @@ export const RecentWorkCard: React.FC<RecentWorkCardProps> = ({ items, onResume,
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="text-sm font-semibold text-white truncate leading-tight">{item.title}</div>
-                  <div className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mt-0.5">
+                  <div className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest mt-0.5">
                     {isVisit ? formatRelative(item.ts) : `${KIND_LABEL[item.kind]} · ${formatRelative(item.ts)}`}
                   </div>
                 </div>
-                <ArrowRight className="w-4 h-4 text-zinc-700 group-hover:text-[#FFCC00] group-hover:translate-x-0.5 transition-all flex-shrink-0" />
+                <ArrowRight className="w-4 h-4 text-on-surface-sublabel group-hover:text-[#FFCC00] group-hover:translate-x-0.5 transition-all flex-shrink-0" />
               </button>
             );
           })}

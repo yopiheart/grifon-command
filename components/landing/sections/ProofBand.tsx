@@ -47,13 +47,13 @@ export const ProofBand: React.FC = () => (
         transition={{ duration: DUR.entrance }}
         className="text-center mb-12 md:mb-16"
       >
-        <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-zinc-500 mb-4">// HOW IT WORKS</p>
+        <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-on-surface-sublabel mb-4">// HOW IT WORKS</p>
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-tight leading-tight max-w-4xl mx-auto text-zinc-900">
           ONE SHOT.{' '}
           <span className="font-serif italic normal-case tracking-normal text-[#B28F00]">30 minutes.</span>{' '}
           A COMPLETE AD.
         </h2>
-        <p className="mt-5 text-base md:text-lg text-zinc-600 max-w-2xl mx-auto">
+        <p className="mt-5 text-base md:text-lg text-on-surface-sublabel max-w-2xl mx-auto">
           No timeline. No freelancers. You describe it once — Grifon builds the whole thing.
         </p>
       </motion.div>
@@ -71,7 +71,7 @@ export const ProofBand: React.FC = () => (
             <div className="font-serif italic text-6xl leading-none text-zinc-900/10 mb-4 select-none">{step.num}</div>
             <step.icon className="w-9 h-9 text-[#B28F00] mb-4" />
             <h3 className="text-lg font-bold text-zinc-900 mb-2">{step.title}</h3>
-            <p className="text-sm text-zinc-600 leading-relaxed flex-1">{step.desc}</p>
+            <p className="text-sm text-on-surface-sublabel leading-relaxed flex-1">{step.desc}</p>
           </motion.div>
         ))}
       </div>
@@ -84,7 +84,7 @@ export const ProofBand: React.FC = () => (
         transition={{ duration: DUR.slow, delay: 0.2 }}
         className="mt-8 flex items-center justify-center"
       >
-        <div className="inline-flex items-center gap-3 rounded-full border border-zinc-900/10 bg-white/70 px-5 py-3 text-sm text-zinc-700">
+        <div className="inline-flex items-center gap-3 rounded-full border border-zinc-900/10 bg-white/70 px-5 py-3 text-sm text-on-surface-sublabel">
           <SlidersHorizontal className="w-4 h-4 shrink-0 text-[#B28F00]" />
           <span>
             Want to direct every scene yourself?{' '}
