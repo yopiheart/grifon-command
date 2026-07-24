@@ -74,6 +74,30 @@ Warning signs: face sharper/larger than body, squared shoulders, shirt stretched
 
 Dahil 1K lang ang codex plates, ang malayong framing ay nagpapalitaw ng morph sa video — kaya ang **CONTENT RULE: laging malapit ang camera kay Marvin.** Iwasan din ang kamay-sa-mukha na poses sa talking plates (fina-freeze ng Veo → statue tell, test-7). Approved video takes bilang reference ng production look: veo-test-2, -4, -5 sa `motion-test/`.
 
+## FACE-TO-CAMERA plate rule (Neil, 2026-07-25 — KM-003 lesson)
+
+**Sa TALKING plates, ang ULO/MUKHA ay laging FULLY FRONTAL sa lens** — both eyes
++ mouth buong kita — kahit anong angle ng katawan. Ang three-quarter face refs
+(ref-2/ref-3) ay para sa STILLS/content shots lang, HINDI sa talking plates:
+kulang ang face data sa 3/4 view → morph risk pag pinaandar sa Veo. Ang "angle
+variety" ng talking scenes ay galing sa: (a) katawan/balikat na naka-angle
+habang nakaharap ang ulo (see Neil's sample selfies 2026-07-25 — body turned,
+face dead-on), (b) camera height (slight-low/slight-high), (c) backdrop. Prompt
+phrasing: "his HEAD and FACE turned fully toward the camera, both eyes and
+mouth fully visible; torso and shoulders angled slightly away from the lens."
+
+## Wardrobe + location variation rule (Neil, 2026-07-25)
+
+**Huwag inuulit ang parehong damit at lugar sa bawat ad** — nagmumukhang AI/
+studio kapag laging navy tee sa laging kaparehong jobsite. Ang batas:
+- **SA LOOB ng iisang ad: SAME damit + same jobsite** (continuity — iisang
+  "shooting day").
+- **ACROSS ads/batches: mag-rotate** — ibang kulay/klase ng believable workwear
+  (plain tees na iba-ibang kulay, polo-shirt, atbp. — walang readable text/logo
+  maliban sa approved uniform), ibang bahay/kalsada/gate bawat bagong ad.
+- Identity anchors HINDI nagbabago kailanman: tattoo, relo, mukha, katawan.
+- KM-003 = navy tee + jobsite A. Ang susunod na ad ay ibang outfit + ibang lugar.
+
 ## Camera-distance rule (Neil + Marvin + Zam, 2026-07-19)
 
 **Ang AI slop ay nahahalata lang kapag malayo ang camera.** Sa mid/far framing (chest-up mula sa braso, full-body, high-angle na kita ang katawan) ang mukha ay maliit sa pixels → doon lumalabas ang AI feel sa motion. Sa **CLOSE-UP (register-1 na lapit: mukha ang pumupuno sa frame, tuktok ng ulo hanggang upper chest)** nawawala ang tell — "looks real" verdict pati kina Marvin at Zam (marvin-veo-test-5). **Lane A production recipe: close-up arm's-length selfie plate + NEUTRAL expression + `veo-3.1-lite-generate-preview` (mas believable kaysa quality — raw beats polished) + expression lock.** Mid/far framing: stills lang, hindi tina-talking-video.
