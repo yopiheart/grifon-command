@@ -478,7 +478,7 @@ export function routeModel(type: VideoPrompt['type'], fallback: VideoModelType, 
  * analytics transport (P2). Fire-and-forget and fully best-effort: a telemetry failure
  * must never block or fail a stage. */
 const emitRunEvent = (
-  event: 'node_start' | 'node_done' | 'node_fail' | 'check_fail' | 'gate_park' | 'gate_approve',
+  event: 'node_start' | 'node_done' | 'node_fail' | 'check_fail' | 'check_skip' | 'gate_park' | 'gate_approve',
   runId: string,
   meta: Record<string, unknown>
 ): void => {
@@ -487,6 +487,44 @@ const emitRunEvent = (
   } catch {
     /* best-effort — telemetry never breaks the run */
   }
+};
+
+/** Max chars of a swallowed gate error kept on a 'check_skip' row — enough to tell two
+ *  infra failures apart, small enough that telemetry never carries a payload. */
+const SKIP_DETAIL_MAX = 200;
+
+/** Classify a swallowed image-gate error into a SHORT STABLE reason + a truncated raw
+ * detail, so a skipped gate is countable in the flag-ON precision window instead of
+ * silently indistinguishable from a clean pass. Sources of the reasons:
+ *   - 'rate_limited'    : IMAGE_GATE_429 — gate + generate calls share the one
+ *                         `gemini:image:${user.id}` bucket (api/gemini/image.ts), so a
+ *                         parallel pooled run can 429 the gate; also the internal daily
+ *                         gate budget / per-scene repeat cap (both 429, see `detail`).
+ *   - 'aborted'         : the 55s client abort in services/imageGateService.ts (DOMException
+ *                         'AbortError'), or a run-level ABORTED.
+ *   - 'unauthenticated' : NOT_AUTHENTICATED — no Supabase session on the gate call.
+ *   - 'other'           : anything else (e.g. IMAGE_GATE_503 image_gate_disabled).
+ * Defensive by construction: an unknown value's `.message`/`.name` are read inside a try,
+ * so an exotic thrown object can never escape the caller's fail-open catch. */
+const classifyGateSkip = (err: unknown): { reason: string; detail?: string } => {
+  let message = '';
+  let name = '';
+  try {
+    const e = err as { message?: unknown; name?: unknown } | null | undefined;
+    if (typeof e?.message === 'string') message = e.message;
+    if (typeof e?.name === 'string') name = e.name;
+  } catch {
+    /* exotic getter — leave both empty and classify as 'other' */
+  }
+  const reason =
+    name === 'AbortError' || /abort/i.test(message)
+      ? 'aborted'
+      : /^NOT_AUTHENTICATED/.test(message)
+      ? 'unauthenticated'
+      : /^IMAGE_GATE_429\b/.test(message)
+      ? 'rate_limited'
+      : 'other';
+  return { reason, ...(message ? { detail: message.slice(0, SKIP_DETAIL_MAX) } : {}) };
 };
 
 async function withRetry<T>(fn: () => Promise<T>, attempts: number, onAttempt?: (n: number) => void): Promise<T> {
@@ -1421,6 +1459,19 @@ async function runStage(
                 const wantIdentity = gateMode === 'avatar' || gateMode === 'both' || gateMode === 'avatar_venue';
                 const wantLabel = gateMode === 'product' || gateMode === 'both';
                 if (wantIdentity || wantLabel) {
+                  // SKIP 2 — the identity half of the check silently no-ops when the avatar
+                  // reference isn't an inline image: the gate returns personMatchesReference:null
+                  // (identity NEVER checked) yet pass:true, indistinguishable from a real pass.
+                  // Happens after a reload/cross-device resume — slimCheckpointInput drops any
+                  // oversized `data:` string from the checkpointed input. Only a data URL is
+                  // usable: the gate feeds it to inlineData (api/_lib/imageGate.ts splitImageData),
+                  // so a remote URL would be sent as bogus base64. VISIBILITY ONLY — the gate call
+                  // below still fires exactly as before (the label half is still worth running,
+                  // and changing call volume would move COGS).
+                  const identityRefUsable = typeof run.input.avatar?.url === 'string' && run.input.avatar.url.startsWith('data:');
+                  if (wantIdentity && !identityRefUsable) {
+                    emitRunEvent('check_skip', run.runId, { node: 'scene_images', sceneIdx: i, kind: 'gate', reason: 'no_identity_reference' });
+                  }
                   try {
                     const gateRes = await deps.imageGateCheck({
                       imageBase64: url,
@@ -1440,7 +1491,14 @@ async function runStage(
                     if (!gateRes.verdict.pass) {
                       emitRunEvent('check_fail', run.runId, { node: 'scene_images', sceneIdx: i, kind: 'gate', flags: gateRes.verdict.flags });
                     }
-                  } catch { /* best-effort — the gate never blocks or flags on infra error */ }
+                  } catch (gateErr) {
+                    // SKIP 1 — the gate never ran (429 on the shared image bucket, 55s abort,
+                    // 503 kill switch…). Still fully swallowed: no flag, no block, no status
+                    // change. The event only makes the non-run COUNTABLE, so flag-ON precision
+                    // isn't computed over runs where the gate was silently absent.
+                    const { reason, detail } = classifyGateSkip(gateErr);
+                    emitRunEvent('check_skip', run.runId, { node: 'scene_images', sceneIdx: i, kind: 'gate', reason, ...(detail ? { detail } : {}) });
+                  }
                 }
               }
             }

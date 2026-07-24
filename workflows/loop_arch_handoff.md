@@ -433,8 +433,41 @@ re-exploration). **Verdict: branch structurally sound, no blocker, merge-safe.**
    emitting a skip-reason event at both silent-skip sites is small, non-TUNED, executor-sized.
    The substantive fixes (reference rehydration; separate gate RL bucket) stay deferred.
    **Flag-ON conditions are therefore now: (a) live smoke of `checkSceneImage` vs real
-   `sceneImageModel` output (pre-existing), + (b) gate-skip visibility events (new, pending Neil's
-   GO → Opus/executor slice).**
+   `sceneImageModel` output (pre-existing), + (b) gate-skip visibility events — Neil GO'd
+   2026-07-24, BUILT below.**
+
+**Gate-skip visibility + forgery detector — BUILT 2026-07-24** (Neil GO; `code-executor` on Opus
+4.8, reviewed in the Opus main loop). Closes flag-ON condition (b). New `check_skip` event in the
+`RunEventName` vocabulary — deliberately NOT folded into `check_fail`, because a fail means the
+check RAN and flagged, while a skip means it never ran; merging them would corrupt the flag-rate
+metric flag-ON exists to measure. No DB migration needed (`events.event` is plain `text`;
+`api/events.ts` validates `z.string()`, no enum — verified). Emitted at both silent-skip sites in
+`services/producerOrchestrator.ts`: (1) the swallowed `imageGateCheck` catch, with a bounded
+classifier → `rate_limited` (IMAGE_GATE_429, incl. the shared `gemini:image` bucket + the internal
+daily/per-scene gate budgets) / `aborted` (55s client abort) / `unauthenticated` / `other`, plus the
+raw message truncated to 200 chars; (2) `reason:'no_identity_reference'` when `run.input.avatar.url`
+is missing or not a `data:` URL — confirmed against `imageGate.ts` `splitImageData` that a remote
+URL is NOT usable (it would ship as bogus base64), so the predicate is right. **Gate call volume and
+fail-open behavior are byte-identical — pinned by an explicit `toHaveBeenCalledTimes` assertion so a
+later "optimization" can't quietly drop the call.** Also added `public.run_attribution_anomalies`
+(`supabase/events.sql`): the read-side ALARM for the forged-`x-run-id` design — any row means a
+caller attached telemetry to a run they don't own. Expected empty; check it during the P4/P5 window.
+
+> **⚠ TWO ANALYSIS FOOTGUNS — read before computing gate precision.** (i) **A scene can emit TWO
+> `check_skip` rows** (`no_identity_reference` fires before the call; a 429 then fires from the
+> catch). Any coverage query must count DISTINCT `(run_id, sceneIdx)` or filter by `reason` — a raw
+> `count(*)` over-reports the gap. (ii) **`check_skip{no_identity_reference}` coexists with a
+> recorded `gateVerdict{pass:true}`** — that combination means "label was checked, identity was
+> NOT", not a clean pass. Precision analysis must exclude the identity dimension for those scenes
+> or it will credit the gate with identity passes it never performed. Both are intended behavior,
+> not defects — but a naive query over this data reads them wrong.
+
+**Verification (re-run independently in the main loop):** build green; `npx vitest run` **962 passed
+/ 22 skipped** (was 956/22, delta +6 = exactly the tests added); `npm run check:bundle-leak` clean
+(0 markers). No TUNED prompt/schema/model-ID and no rate-limit RPC contract touched.
+**⚠ ACTION FOR NEIL: the `supabase/events.sql` re-run now also creates `run_attribution_anomalies`,
+which JOINS `producer_runs` — apply `producer_runs.sql` first on a fresh project (already applied on
+Neil's).**
 
 **Fast-follow 3 — the 3 documented deferrals: re-verified still accurate, still ACCEPTED (no code
 change).** Fable-review findings 3/4/5 confirmed present in the code as described: (3) adscript

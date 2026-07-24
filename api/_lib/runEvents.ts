@@ -10,12 +10,19 @@
 
 import type { SupabaseClient } from '@supabase/supabase-js';
 
-/** The producer-run event vocabulary (plan §3.11). */
+/** The producer-run event vocabulary (plan §3.11).
+ *
+ * 'check_skip' is DELIBERATELY distinct from 'check_fail': a fail means the check RAN
+ * and flagged something; a skip means the check never ran at all (infra error, missing
+ * reference). Folding skips into 'check_fail' would corrupt the very flag-rate metric
+ * the flag-ON window exists to measure — "no flags because the images were good" must
+ * stay distinguishable from "no flags because the gate never ran". */
 export type RunEventName =
   | 'node_start'
   | 'node_done'
   | 'node_fail'
   | 'check_fail'
+  | 'check_skip'
   | 'gate_park'
   | 'gate_approve'
   | 'watchdog_kill'

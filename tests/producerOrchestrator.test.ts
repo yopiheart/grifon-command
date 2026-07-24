@@ -1,4 +1,14 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+
+// Run events leave the orchestrator through services/analyticsService.trackEvent. Under the
+// node test env that call already no-ops (isBrowser() is false), so replacing it costs no
+// fidelity and turns the emitted event stream into an assertable seam — section 22 reads it.
+const { trackEventMock } = vi.hoisted(() => ({ trackEventMock: vi.fn(async () => {}) }));
+vi.mock('../services/analyticsService.js', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../services/analyticsService.js')>();
+  return { ...actual, trackEvent: trackEventMock };
+});
+
 import {
   createProductionRun,
   runProduction,
@@ -1374,5 +1384,134 @@ describe('P4 — gateDepsFor kill switch', () => {
       expect(d.checkSceneImage).toBeUndefined();
       expect(d.imageGateCheck).toBeUndefined();
     }
+  });
+});
+
+// --- 22. P4: gate-skip visibility ('check_skip') ------------------------------
+// The gate exists to produce a gate_verdict dataset so its PRECISION can be measured
+// before it is ever given reroll authority. Two paths make it silently NOT run — a
+// swallowed infra error, and an identity check that no-ops because the avatar reference
+// isn't an inline image — and both used to be invisible, so "no flags because the images
+// were good" was indistinguishable from "no flags because the gate never ran". These
+// assert the skip is now COUNTABLE, and that making it countable changed nothing else:
+// same fail-open, same gate CALL VOLUME.
+
+/** An avatar reference the gate can actually use (survives to an inlineData part). */
+const identityAvatar = () => ({ url: 'data:image/png;base64,QVZBVEFS', description: 'a Filipino host', ethnicity: 'Filipino', prompt: '' });
+
+/** The run events of one name, in emission order. */
+const emitted = (name: string) =>
+  (trackEventMock.mock.calls as any[]).map((c) => c[0]).filter((p) => p?.event === name);
+
+describe("P4 — gate-skip visibility ('check_skip')", () => {
+  beforeEach(() => {
+    trackEventMock.mockClear();
+  });
+
+  it('a 429 on the gate call emits ONE check_skip (rate_limited) and leaves fail-open untouched', async () => {
+    // Gate and generate calls share the one `gemini:image:${user.id}` bucket, so a parallel
+    // pooled run can 429 the gate. Only scene 0 429s — scene 1 proves the skip is per-scene.
+    const gateMock = vi.fn(async (p: any) => {
+      if (p.imageBase64 === 'img://IMG0') throw new Error('IMAGE_GATE_429: rate_limited');
+      return { observations: null, verdict: { pass: true, flags: [] } };
+    });
+    const { deps } = makeFakeDeps({ imageGateCheck: gateMock as any });
+    const run = createProductionRun(makeInput({ avatar: identityAvatar() }), 'u1');
+
+    await runProduction(run, cb(), deps);
+
+    const skips = emitted('check_skip');
+    expect(skips).toHaveLength(1);
+    expect(skips[0].run_id).toBe(run.runId);
+    expect(skips[0].meta).toMatchObject({ node: 'scene_images', sceneIdx: 0, kind: 'gate', reason: 'rate_limited' });
+    expect(String(skips[0].meta.detail)).toContain('IMAGE_GATE_429');
+
+    // Fail-open UNCHANGED: image kept, scene never flagged, no verdict invented, run parks.
+    const sc0 = run.scenes.find((s) => s.sceneIdx === 0)!;
+    expect(sc0.imageUrl).toBe('img://IMG0');
+    expect(sc0.status).not.toBe('flagged');
+    expect(sc0.gateVerdict).toBeUndefined();
+    expect(emitted('check_fail')).toHaveLength(0); // a skip is NOT a flag
+    expect(run.status).toBe('review');
+    expect(run.gate).toBe('storyboard');
+  });
+
+  it('classifies the other swallowed shapes: abort, unauthenticated, everything else', async () => {
+    const cases: [unknown, string][] = [
+      [Object.assign(new Error('The operation was aborted.'), { name: 'AbortError' }), 'aborted'],
+      [new Error('NOT_AUTHENTICATED'), 'unauthenticated'],
+      [new Error('IMAGE_GATE_503: image_gate_disabled'), 'other'],
+      ['a bare string, not an Error', 'other'], // defensive: reading .message must never throw
+    ];
+    for (const [thrown, reason] of cases) {
+      trackEventMock.mockClear();
+      const gateMock = vi.fn(async () => {
+        throw thrown;
+      });
+      const { deps } = makeFakeDeps({ imageGateCheck: gateMock as any });
+      const run = createProductionRun(makeInput({ avatar: identityAvatar() }), 'u1');
+
+      await runProduction(run, cb(), deps);
+
+      expect(emitted('check_skip').map((s) => s.meta.reason)).toEqual([reason, reason]); // both gated scenes
+      expect(run.gate).toBe('storyboard'); // still fails open on every shape
+    }
+  });
+
+  it('an unusable identity reference emits check_skip{no_identity_reference} AND still calls the gate', async () => {
+    // 'avatar.png' is not a data: URL — the post-resume shape slimCheckpointInput leaves
+    // behind. The gate would return personMatchesReference:null with pass:true, i.e. identity
+    // never actually checked.
+    const gateMock = vi.fn(async () => ({ observations: null, verdict: { pass: true, flags: [] } }));
+    const { deps } = makeFakeDeps({ imageGateCheck: gateMock as any });
+    const run = createProductionRun(makeInput(), 'u1'); // scene 0 = 'avatar', scene 1 = 'product'
+
+    await runProduction(run, cb(), deps);
+
+    const skips = emitted('check_skip');
+    expect(skips).toHaveLength(1); // identity scene only — the product scene wants no reference
+    expect(skips[0].meta).toMatchObject({ node: 'scene_images', sceneIdx: 0, kind: 'gate', reason: 'no_identity_reference' });
+
+    // GUARD — do NOT "optimize" this call away: the label half of the check is still worth
+    // running, and dropping the call would change gate COGS and the metering budget.
+    expect(gateMock).toHaveBeenCalledTimes(2);
+    expect((gateMock.mock.calls as any[]).map((c) => c[0].imageBase64).sort()).toEqual(['img://IMG0', 'img://IMG1']);
+    expect(run.scenes.find((s) => s.sceneIdx === 0)?.gateVerdict).toEqual({ pass: true, flags: [] });
+  });
+
+  it('an EMPTY avatar url skips identity the same way (still one gate call for that scene)', async () => {
+    const gateMock = vi.fn(async () => ({ observations: null, verdict: { pass: true, flags: [] } }));
+    const { deps } = makeFakeDeps({ imageGateCheck: gateMock as any });
+    const run = createProductionRun(makeInput({ avatar: { url: '', description: '', ethnicity: '', prompt: '' } }), 'u1');
+
+    await runProduction(run, cb(), deps);
+
+    expect(emitted('check_skip').map((s) => s.meta.reason)).toEqual(['no_identity_reference']);
+    expect(gateMock).toHaveBeenCalledTimes(2);
+  });
+
+  it('negative control: a passing gate with a usable reference emits NEITHER check_skip NOR check_fail', async () => {
+    const gateMock = vi.fn(async () => ({ observations: null, verdict: { pass: true, flags: [] } }));
+    const { deps } = makeFakeDeps({ imageGateCheck: gateMock as any });
+    const run = createProductionRun(makeInput({ avatar: identityAvatar() }), 'u1');
+
+    await runProduction(run, cb(), deps);
+
+    expect(emitted('check_skip')).toHaveLength(0);
+    expect(emitted('check_fail')).toHaveLength(0);
+    expect(gateMock).toHaveBeenCalledTimes(2);
+    expect(run.gate).toBe('storyboard');
+  });
+
+  it('a FAILING verdict still emits check_fail only — a real flag is never recorded as a skip', async () => {
+    const gateMock = vi.fn(async () => ({ observations: null, verdict: { pass: false, flags: ['identity_drift'] } }));
+    const { deps } = makeFakeDeps({ imageGateCheck: gateMock as any });
+    const run = createProductionRun(makeInput({ avatar: identityAvatar() }), 'u1');
+
+    await runProduction(run, cb(), deps);
+
+    expect(emitted('check_skip')).toHaveLength(0);
+    expect(emitted('check_fail')).toHaveLength(2);
+    expect(emitted('check_fail')[0].meta).toMatchObject({ kind: 'gate', flags: ['identity_drift'] });
   });
 });

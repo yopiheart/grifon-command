@@ -62,6 +62,39 @@ create or replace view public.run_cogs as
    where event = 'cogs' and run_id is not null
    group by run_id, user_id;
 
+-- Forged-x-run-id DETECTOR (2026-07-24). The write side deliberately does NOT
+-- ownership-check the client-supplied x-run-id (a DB round-trip per generation call would
+-- slow the request path); run_cogs above only makes a forged row FILTERABLE by scoping the
+-- roll-up to (run_id, user_id). This view is the read-side alarm that says one happened.
+--
+-- ANY row here means a caller attached telemetry to a run they do NOT own — i.e. a forged
+-- x-run-id. EXPECTED TO BE EMPTY. Check it during the P4/P5 telemetry window (and any time
+-- run_cogs totals look wrong): a non-empty result is a security/attribution signal, not a
+-- data-quality nit.
+--
+-- Legacy rows written before 2026-07-24 carry user_id = null (the verified caller wasn't
+-- recorded yet). They are UNATTRIBUTABLE, not anomalous, so `e.user_id is not null` excludes
+-- them — otherwise every historical row would look like a forgery.
+--
+-- COLUMN ORDER IS DELIBERATE (same reason as run_cogs): `create or replace view` may only
+-- APPEND columns, so any future field goes on the END and this file stays re-runnable in
+-- place — no `drop view`. Joins public.producer_runs, so apply producer_runs.sql first on a
+-- fresh project (or simply re-run this file afterwards).
+create or replace view public.run_attribution_anomalies as
+  select e.run_id,
+         r.user_id as run_owner,
+         e.user_id as event_user,
+         count(*)  as row_count,
+         sum(case when e.event = 'cogs' then (e.meta->>'estUsd')::numeric else 0 end) as est_usd,
+         min(e.ts) as first_seen,
+         max(e.ts) as last_seen
+    from public.events e
+    join public.producer_runs r on r.run_id = e.run_id
+   where e.run_id is not null
+     and e.user_id is not null
+     and e.user_id <> r.user_id
+   group by e.run_id, r.user_id, e.user_id;
+
 -- Service-role-only, like public.rate_limits (NOT user-owned like user_voices).
 -- Rationale: this is a server-written telemetry sink. Writes go through an api/*
 -- proxy on the service role (consistent with this app's "all writes via api/"
