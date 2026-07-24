@@ -63,3 +63,7 @@ public/mediapipe/wasm/
 # code-review-graph local SQLite index — rebuildable in ~10s (`code-review-graph build`),
 # wiped by the cafe-PC defreezer anyway. Never commit; see workflows/pr_review_loop.md.
 .code-review-graph/
+
+# Vercel CLI auth tokens — NEVER commit (restore-vercel.ps1 also refuses in-repo token files)
+.vercel-token
+vercel-token.txt
