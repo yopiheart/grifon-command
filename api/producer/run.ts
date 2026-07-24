@@ -162,12 +162,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // run_cogs view onto producer_runs.cost_usd (single query + update). Best-effort and
     // non-fatal — a telemetry hiccup must never fail the checkpoint; the run_cogs view is
     // the source of truth regardless. cost_usd does not touch the revision guard.
+    //
+    // OWNER-SCOPED: run_cogs groups by (run_id, user_id) because x-run-id is client-supplied
+    // and unverified — another user pointing x-run-id at this run would otherwise merge their
+    // spend into it. user.id is the verified caller and, past the ownership guard above, the
+    // run's owner; the .eq('user_id') is also what keeps this single-row for maybeSingle().
+    // LEGACY DATA: 'cogs' rows written before user_id was threaded (pre-2026-07-24) carry
+    // user_id = null, match no owner, and roll up to 0 — expected for historical runs, NOT a
+    // regression.
     if (patch.status === 'done') {
       try {
         const { data: cogs } = await admin
           .from('run_cogs')
           .select('est_usd')
           .eq('run_id', runId)
+          .eq('user_id', user.id)
           .maybeSingle();
         if (cogs && cogs.est_usd != null) {
           await admin.from('producer_runs').update({ cost_usd: cogs.est_usd }).eq('run_id', runId);

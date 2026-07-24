@@ -107,8 +107,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const operation = await ai.models.generateVideos(veoParams as any);
     // COGS: the render is now billable. Fire-and-forget — never throws. When a producer
     // run supplied x-run-id, the estimate is also mirrored to public.events ('cogs' row)
-    // so per-run cost rolls up (run_cogs view / producer_runs.cost_usd).
-    logVideoUsage('gemini:video:submit', veoParams.model, Number(cfg.durationSeconds) || 0, getRunId(req));
+    // so per-run cost rolls up (run_cogs view / producer_runs.cost_usd). x-run-id is
+    // client-controlled, so the row also carries the VERIFIED user.id for attribution.
+    logVideoUsage('gemini:video:submit', veoParams.model, Number(cfg.durationSeconds) || 0, getRunId(req), user.id);
     return res.status(200).json({ operation });
   } catch (err: any) {
     const msg = err?.message ?? 'unknown';

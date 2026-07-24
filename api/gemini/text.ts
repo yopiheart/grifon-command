@@ -78,13 +78,14 @@ const classifyTemuProductServerSide = async (
   product: string,
   description: string,
   ai: GoogleGenAI,
-  runId?: string
+  runId?: string,
+  userId?: string | null
 ): Promise<TemuSubType> => {
   const response = await ai.models.generateContent({
     model: MODEL_FAST,
     contents: TEMU_CLASSIFIER_PROMPT(product, description),
   } as any);
-  logModelUsage('flow:adscript:temu-classify', MODEL_FAST, (response as any).usageMetadata, runId);
+  logModelUsage('flow:adscript:temu-classify', MODEL_FAST, (response as any).usageMetadata, runId, userId);
   const text = response.text?.trim().toUpperCase() || 'REACTION';
   if (text.includes('ASMR')) return 'ASMR';
   if (text.includes('UTILITY')) return 'Utility';
@@ -112,13 +113,14 @@ const classifyUgcProServerSide = async (
   product: string,
   description: string,
   ai: GoogleGenAI,
-  runId?: string
+  runId?: string,
+  userId?: string | null
 ): Promise<UgcProSubType> => {
   const response = await ai.models.generateContent({
     model: MODEL_FAST,
     contents: UGCPRO_CLASSIFIER_PROMPT(product, description),
   } as any);
-  logModelUsage('flow:adscript:ugcpro-classify', MODEL_FAST, (response as any).usageMetadata, runId);
+  logModelUsage('flow:adscript:ugcpro-classify', MODEL_FAST, (response as any).usageMetadata, runId, userId);
   return parseUgcProClassifierResponse(response.text ?? '');
 };
 
@@ -130,13 +132,14 @@ const classifyUgcProServiceServerSide = async (
   product: string,
   description: string,
   ai: GoogleGenAI,
-  runId?: string
+  runId?: string,
+  userId?: string | null
 ): Promise<'transformation' | 'tutorial'> => {
   const response = await ai.models.generateContent({
     model: MODEL_FAST,
     contents: UGCPRO_SERVICE_CLASSIFIER_PROMPT(product, description),
   } as any);
-  logModelUsage('flow:adscript:ugcpro-service-classify', MODEL_FAST, (response as any).usageMetadata, runId);
+  logModelUsage('flow:adscript:ugcpro-service-classify', MODEL_FAST, (response as any).usageMetadata, runId, userId);
   return (response.text ?? '').toUpperCase().includes('TUTORIAL') ? 'tutorial' : 'transformation';
 };
 
@@ -153,7 +156,8 @@ const classifyUgcProServiceServerSide = async (
 export const resolveUgcProSubType = async (
   businessInfo: AdScriptInput['businessInfo'],
   ai: GoogleGenAI,
-  runId?: string
+  runId?: string,
+  userId?: string | null
 ): Promise<UgcProSubType> => {
   const chosen = businessInfo.ugcProFormat;
   const bt = businessInfo.businessType ?? 'product';
@@ -161,7 +165,7 @@ export const resolveUgcProSubType = async (
   if (bt === 'service') {
     return chosen === 'transformation' || chosen === 'tutorial'
       ? chosen
-      : classifyUgcProServiceServerSide(businessInfo.product, businessInfo.features, ai, runId);
+      : classifyUgcProServiceServerSide(businessInfo.product, businessInfo.features, ai, runId, userId);
   }
   if (
     chosen === 'tryon' ||
@@ -172,13 +176,16 @@ export const resolveUgcProSubType = async (
   ) {
     return chosen;
   }
-  return classifyUgcProServerSide(businessInfo.product, businessInfo.features, ai, runId);
+  return classifyUgcProServerSide(businessInfo.product, businessInfo.features, ai, runId, userId);
 };
 
-type FlowHandler = (input: any, ai: GoogleGenAI, runId?: string) => Promise<unknown>;
+// `userId` is the VERIFIED caller (getUserFromAccessToken in the handler below) and rides
+// alongside runId purely so each COGS row is attributable — x-run-id is client-controlled
+// and unverified, so run_cogs scopes its roll-up by (run_id, user_id).
+type FlowHandler = (input: any, ai: GoogleGenAI, runId?: string, userId?: string | null) => Promise<unknown>;
 
 export const FLOW_REGISTRY: Record<string, FlowHandler> = {
-  marketmind: async (input: MarketResearchInput, ai, runId?: string) => {
+  marketmind: async (input: MarketResearchInput, ai, runId?: string, userId?: string | null) => {
     const parts = buildMarketMindParts(input);
     // TEMPORARY (per Neil 2026-05-09): downgraded from MODEL_RESEARCH (3.1 Pro)
     // to Flash Lite to control API cost during early ramp. REVERT when budget
@@ -193,18 +200,19 @@ export const FLOW_REGISTRY: Record<string, FlowHandler> = {
       },
     } as any);
     const rawText = response.text || '{}';
-    logModelUsage('flow:marketmind', MODEL_TEXT, (response as any).usageMetadata, runId);
+    logModelUsage('flow:marketmind', MODEL_TEXT, (response as any).usageMetadata, runId, userId);
     return JSON.parse(cleanJson(rawText));
   },
 
-  adscript: async (input: AdScriptInput, ai, runId?: string) => {
+  adscript: async (input: AdScriptInput, ai, runId?: string, userId?: string | null) => {
     let temuSubType: TemuSubType | undefined;
     if (input.businessInfo.scriptType === 'Temu') {
       temuSubType = await classifyTemuProductServerSide(
         input.businessInfo.product,
         input.businessInfo.features,
         ai,
-        runId
+        runId,
+        userId
       );
     }
     let ugcProSubType: UgcProSubType | undefined;
@@ -212,7 +220,7 @@ export const FLOW_REGISTRY: Record<string, FlowHandler> = {
       // A4: businessType-clamped dispatch — realestate forces 'tutorial' (no Gemini
       // call), service honors only its 2 legal picks / else the 2-way classifier,
       // product keeps the pre-Slice-4 5-way behavior. See resolveUgcProSubType.
-      ugcProSubType = await resolveUgcProSubType(input.businessInfo, ai, runId);
+      ugcProSubType = await resolveUgcProSubType(input.businessInfo, ai, runId, userId);
     }
     const prompt = buildAdScriptPrompt(input, temuSubType, ugcProSubType);
     // Single-shot generate + parse. Extracted so the hook-starvation retry and the
@@ -228,7 +236,7 @@ export const FLOW_REGISTRY: Record<string, FlowHandler> = {
           thinkingConfig: { thinkingBudget: 4000 },
         },
       } as any);
-      logModelUsage(flowTag, MODEL_TEXT, (response as any).usageMetadata, runId);
+      logModelUsage(flowTag, MODEL_TEXT, (response as any).usageMetadata, runId, userId);
       return parseAdScriptResponse(response.text || '{}');
     };
 
@@ -269,7 +277,7 @@ export const FLOW_REGISTRY: Record<string, FlowHandler> = {
       : script;
   },
 
-  'offer-optimizer': async (input: OfferOptimizerInput, ai, runId?: string) => {
+  'offer-optimizer': async (input: OfferOptimizerInput, ai, runId?: string, userId?: string | null) => {
     const prompt = buildOfferOptimizerPrompt(input);
     const response = await ai.models.generateContent({
       model: MODEL_TEXT,
@@ -280,11 +288,11 @@ export const FLOW_REGISTRY: Record<string, FlowHandler> = {
       },
     } as any);
     const rawText = response.text || '{}';
-    logModelUsage('flow:offer-optimizer', MODEL_TEXT, (response as any).usageMetadata, runId);
+    logModelUsage('flow:offer-optimizer', MODEL_TEXT, (response as any).usageMetadata, runId, userId);
     return parseOfferOptimizerResponse(rawText);
   },
 
-  'influencer-script': async (input: InfluencerScriptFlowInput, ai, runId?: string) => {
+  'influencer-script': async (input: InfluencerScriptFlowInput, ai, runId?: string, userId?: string | null) => {
     const prompt = buildInfluencerScriptPrompt(input);
     const response = await ai.models.generateContent({
       model: MODEL_TEXT,
@@ -295,11 +303,11 @@ export const FLOW_REGISTRY: Record<string, FlowHandler> = {
         thinkingConfig: { thinkingBudget: 4000 },
       },
     } as any);
-    logModelUsage('flow:influencer-script', MODEL_TEXT, (response as any).usageMetadata, runId);
+    logModelUsage('flow:influencer-script', MODEL_TEXT, (response as any).usageMetadata, runId, userId);
     return parseInfluencerScriptResponse(response.text || '{}');
   },
 
-  storyboard: async (input: StoryboardFlowInput, ai, runId?: string) => {
+  storyboard: async (input: StoryboardFlowInput, ai, runId?: string, userId?: string | null) => {
     const prompt = buildStoryboardPrompt(input);
     const response = await ai.models.generateContent({
       model: MODEL_FAST,
@@ -309,7 +317,7 @@ export const FLOW_REGISTRY: Record<string, FlowHandler> = {
         safetySettings: SAFETY_SETTINGS,
       },
     } as any);
-    logModelUsage('flow:storyboard', MODEL_FAST, (response as any).usageMetadata, runId);
+    logModelUsage('flow:storyboard', MODEL_FAST, (response as any).usageMetadata, runId, userId);
     return parseStoryboardResponse(response.text || '{}');
   },
 };
@@ -351,7 +359,8 @@ export const runFlowWithSchema = async (
   flow: FlowName,
   input: unknown,
   ai: GoogleGenAI,
-  runId?: string
+  runId?: string,
+  userId?: string | null
 ): Promise<FlowLadderResult> => {
   const handlerFn = FLOW_REGISTRY[flow];
   const schema = FLOW_OUTPUT_SCHEMAS[flow];
@@ -364,13 +373,13 @@ export const runFlowWithSchema = async (
   let regenUsed = false;
   let result: unknown;
   try {
-    result = await handlerFn(input, ai, runId);
+    result = await handlerFn(input, ai, runId, userId);
   } catch (err) {
     if (!(err instanceof SyntaxError)) throw err;
     console.warn(`[flow:${flow}] output parse-threw (unparseable JSON) — regenerating once (verbatim)`);
     regenUsed = true;
     // Final invocation — any throw here propagates (502 path, budget spent).
-    result = await handlerFn(input, ai, runId);
+    result = await handlerFn(input, ai, runId, userId);
   }
   let check = schema.safeParse(result);
   if (check.success) return { ok: true, result };
@@ -380,7 +389,7 @@ export const runFlowWithSchema = async (
   if (!regenUsed) {
     // ONE verbatim regeneration — resend the exact same request.
     console.warn(`[flow:${flow}] output failed schema — regenerating once (verbatim)`);
-    result = await handlerFn(input, ai, runId);
+    result = await handlerFn(input, ai, runId, userId);
     check = schema.safeParse(result);
     if (check.success) return { ok: true, result };
   }
@@ -502,7 +511,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       if (!handlerFn) {
         return res.status(400).json({ error: 'unknown_flow', flow: parsed.data.flow });
       }
-      const ladder = await runFlowWithSchema(parsed.data.flow, parsed.data.input, ai, runId);
+      // user.id is the VERIFIED caller — x-run-id (runId) is client-supplied and unverified,
+      // so every COGS row this flow emits carries both (run_cogs scopes by run_id + user_id).
+      const ladder = await runFlowWithSchema(parsed.data.flow, parsed.data.input, ai, runId, user.id);
       if (!ladder.ok) {
         return res.status(422).json({
           error: 'flow_output_invalid',
@@ -519,7 +530,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(400).json({ error: 'invalid_body', issues: parsed.error.issues });
     }
     const response = await ai.models.generateContent(parsed.data as any);
-    logModelUsage('legacy', parsed.data.model, (response as any).usageMetadata, runId);
+    logModelUsage('legacy', parsed.data.model, (response as any).usageMetadata, runId, user.id);
     return res.status(200).json({
       text: response.text ?? '',
       candidates: response.candidates ?? [],

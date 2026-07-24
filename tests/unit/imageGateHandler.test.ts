@@ -117,7 +117,9 @@ describe('api/gemini/image — gate mode metering', () => {
     expect(rateLimitCheckMock).toHaveBeenCalledWith('imgate:user:u1', 48, 86400);
     expect(rateLimitCheckMock).toHaveBeenCalledWith('imgate:run_abc:3', 2, 86400);
     expect(keys).toEqual(['gemini:image:u1', 'imgate:user:u1', 'imgate:run_abc:3']);
-    expect(logImageUsageMock).toHaveBeenCalledWith('image_gate', 'gate-model-test', 1, 'run_abc');
+    // The COGS row carries the client-supplied runId AND the verified user id (x-run-id is
+    // not ownership-checked, so attribution is what makes a forged run id filterable).
+    expect(logImageUsageMock).toHaveBeenCalledWith('image_gate', 'gate-model-test', 1, 'run_abc', 'u1');
   });
 
   it('3) flag ON, per-user daily budget denied → 429 image_gate_budget; gate NOT called', async () => {

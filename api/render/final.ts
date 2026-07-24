@@ -220,10 +220,17 @@ async function runRender(
   try {
     const { buffer } = await renderFinalVideo(scenes, aspectRatio, music, preset, variantSeed, endCard, onStep);
 
+    // The upload/sign tail runs AFTER ffmpeg is done but BEFORE the terminal write — a
+    // multi-MB putMedia plus two signing calls. Unbeaten, that window could exceed the 120s
+    // watchdog and let a poll fail a render that is actually succeeding. Both beats write
+    // status:'processing', which is safe: the `await lastBeatWrite` below guarantees the
+    // terminal state lands last.
+    onStep('upload');
     const fKey = finalKey(userId, jobId);
     const upload = await putMedia(fKey, buffer, 'video/mp4', { cacheControl: '3600', upsert: true });
     if (upload.error) throw new Error(`upload_failed: ${upload.error}`);
 
+    onStep('sign');
     const playSign = await getMediaUrl(fKey, SIGNED_URL_TTL_SECONDS);
     // Stamp the jobId into the download filename so the creative carries its
     // attribution id on disk (grifon-<jobId>.mp4) — the Growth Loop join key.

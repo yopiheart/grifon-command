@@ -40,13 +40,60 @@ create index if not exists events_run_id_idx on public.events(run_id);
 -- ESTIMATES, so a render that later fails still shows its full estimated cost. Treat
 -- est_usd as a lower-bound generation estimate for observability and trend analysis —
 -- do NOT use it for final pricing or margin decisions.
+--
+-- ⚠ ATTRIBUTION (2026-07-24): rows are attributed per (run_id, user_id). x-run-id is
+-- client-supplied and NOT ownership-checked at write time (a DB round-trip per generation
+-- call would slow the request path), so a run's TRUE cost is the row whose user_id matches
+-- the run's OWNER (producer_runs.user_id). Any additional row on the same run_id belongs to
+-- a DIFFERENT caller — that is a forged x-run-id and must NOT be summed into the run's cost.
+-- Pre-2026-07-24 'cogs' rows carry user_id = null (unattributable legacy data) and therefore
+-- match no owner.
+-- COLUMN ORDER IS DELIBERATE: user_id is LAST. `create or replace view` may only APPEND
+-- columns, so putting user_id at the end lets this file stay re-runnable in place — no
+-- `drop view`, which would also discard any GRANTs the view has accumulated and briefly
+-- break its one reader (api/producer/run.ts). Readers select by NAME, so order is
+-- immaterial to them.
 create or replace view public.run_cogs as
   select run_id,
          sum((meta->>'estUsd')::numeric) as est_usd,
-         count(*)                        as calls
+         count(*)                        as calls,
+         user_id
     from public.events
    where event = 'cogs' and run_id is not null
-   group by run_id;
+   group by run_id, user_id;
+
+-- Forged-x-run-id DETECTOR (2026-07-24). The write side deliberately does NOT
+-- ownership-check the client-supplied x-run-id (a DB round-trip per generation call would
+-- slow the request path); run_cogs above only makes a forged row FILTERABLE by scoping the
+-- roll-up to (run_id, user_id). This view is the read-side alarm that says one happened.
+--
+-- ANY row here means a caller attached telemetry to a run they do NOT own — i.e. a forged
+-- x-run-id. EXPECTED TO BE EMPTY. Check it during the P4/P5 telemetry window (and any time
+-- run_cogs totals look wrong): a non-empty result is a security/attribution signal, not a
+-- data-quality nit.
+--
+-- Legacy rows written before 2026-07-24 carry user_id = null (the verified caller wasn't
+-- recorded yet). They are UNATTRIBUTABLE, not anomalous, so `e.user_id is not null` excludes
+-- them — otherwise every historical row would look like a forgery.
+--
+-- COLUMN ORDER IS DELIBERATE (same reason as run_cogs): `create or replace view` may only
+-- APPEND columns, so any future field goes on the END and this file stays re-runnable in
+-- place — no `drop view`. Joins public.producer_runs, so apply producer_runs.sql first on a
+-- fresh project (or simply re-run this file afterwards).
+create or replace view public.run_attribution_anomalies as
+  select e.run_id,
+         r.user_id as run_owner,
+         e.user_id as event_user,
+         count(*)  as row_count,
+         sum(case when e.event = 'cogs' then (e.meta->>'estUsd')::numeric else 0 end) as est_usd,
+         min(e.ts) as first_seen,
+         max(e.ts) as last_seen
+    from public.events e
+    join public.producer_runs r on r.run_id = e.run_id
+   where e.run_id is not null
+     and e.user_id is not null
+     and e.user_id <> r.user_id
+   group by e.run_id, r.user_id, e.user_id;
 
 -- Service-role-only, like public.rate_limits (NOT user-owned like user_voices).
 -- Rationale: this is a server-written telemetry sink. Writes go through an api/*

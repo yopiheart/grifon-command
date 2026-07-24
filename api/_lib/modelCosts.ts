@@ -73,10 +73,20 @@ export function estimateVideoCostUsd(model: string, seconds = 0): number {
 // event mirroring can NEVER break or slow the generation request. `payload` is the
 // exact object the console log carried, minus the `tag` field (the events `event`
 // column already records 'cogs').
-function fireCogsRunEvent(runId: string, payload: Record<string, unknown>): void {
+//
+// `userId` is the caller's ALREADY-VERIFIED user id (from getUserFromAccessToken /
+// verifySupabaseToken in the same handler) — never a body/header field. runId comes off
+// the client-controlled x-run-id header and is NOT ownership-checked (a DB round-trip
+// per generation call would slow the request path), so the row's user_id is what makes
+// a forged run id detectable and filterable downstream (run_cogs groups by both).
+function fireCogsRunEvent(
+  runId: string,
+  payload: Record<string, unknown>,
+  userId?: string | null
+): void {
   try {
     const { tag, ...meta } = payload;
-    void logRunEvent(getSupabaseAdmin(), { runId, event: 'cogs', meta });
+    void logRunEvent(getSupabaseAdmin(), { userId, runId, event: 'cogs', meta });
   } catch {
     /* never throw from telemetry */
   }
@@ -86,7 +96,14 @@ function fireCogsRunEvent(runId: string, payload: Record<string, unknown>): void
 // logging must NEVER break a generation request, so everything is wrapped. When a
 // producer `runId` is present the same payload is ALSO mirrored to public.events as a
 // 'cogs' row so per-run cost rolls up (run_cogs view); console behavior is unchanged.
-export function logModelUsage(label: string, model: string, usage?: UsageMetadata, runId?: string): void {
+// `userId` (optional, trailing) attributes that row to the verified caller.
+export function logModelUsage(
+  label: string,
+  model: string,
+  usage?: UsageMetadata,
+  runId?: string,
+  userId?: string | null
+): void {
   const payload = {
     tag: 'cogs',
     kind: 'text',
@@ -103,10 +120,16 @@ export function logModelUsage(label: string, model: string, usage?: UsageMetadat
   } catch {
     /* never throw from telemetry */
   }
-  if (runId) fireCogsRunEvent(runId, payload);
+  if (runId) fireCogsRunEvent(runId, payload, userId);
 }
 
-export function logImageUsage(label: string, model: string, images = 1, runId?: string): void {
+export function logImageUsage(
+  label: string,
+  model: string,
+  images = 1,
+  runId?: string,
+  userId?: string | null
+): void {
   const payload = {
     tag: 'cogs',
     kind: 'image',
@@ -120,10 +143,16 @@ export function logImageUsage(label: string, model: string, images = 1, runId?: 
   } catch {
     /* never throw from telemetry */
   }
-  if (runId) fireCogsRunEvent(runId, payload);
+  if (runId) fireCogsRunEvent(runId, payload, userId);
 }
 
-export function logVideoUsage(label: string, model: string, seconds = 0, runId?: string): void {
+export function logVideoUsage(
+  label: string,
+  model: string,
+  seconds = 0,
+  runId?: string,
+  userId?: string | null
+): void {
   const payload = {
     tag: 'cogs',
     kind: 'video',
@@ -137,5 +166,5 @@ export function logVideoUsage(label: string, model: string, seconds = 0, runId?:
   } catch {
     /* never throw from telemetry */
   }
-  if (runId) fireCogsRunEvent(runId, payload);
+  if (runId) fireCogsRunEvent(runId, payload, userId);
 }

@@ -124,7 +124,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       expectedLabelText: gate.data.gateCheck.expectedLabelText,
       referenceMode: gate.data.gateCheck.referenceMode,
     });
-    logImageUsage('image_gate', IMAGE_GATE_MODEL, 1, runId);
+    // runId is client-controlled and unverified; user.id is the verified caller, so the
+    // cogs row stays attributable even if x-run-id was forged (run_cogs groups by both).
+    logImageUsage('image_gate', IMAGE_GATE_MODEL, 1, runId, user.id);
     return res.status(200).json(result);
   }
 
@@ -167,7 +169,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const ai = getAi();
     const response = await ai.models.generateContent(parsed.data as any);
-    logImageUsage('image', parsed.data.model, 1, runId);
+    logImageUsage('image', parsed.data.model, 1, runId, user.id);
 
     return res.status(200).json({
       candidates: response.candidates ?? [],

@@ -96,3 +96,54 @@ describe('modelCosts — runId threads a cogs run-event', () => {
     expect(logRunEventMock).not.toHaveBeenCalled();
   });
 });
+
+// Attribution (2026-07-24): x-run-id is client-supplied and NOT ownership-checked, so a
+// caller can point it at someone else's run. The defense is the row's user_id — the
+// VERIFIED caller — which the roll-up filters on (run_cogs groups by run_id + user_id).
+// These assert the id reaches the sink; they never re-derive it from the implementation.
+describe('modelCosts — verified userId rides with the cogs run-event', () => {
+  it('logModelUsage threads the verified userId into the run-event payload', () => {
+    logModelUsage(
+      'flow:adscript',
+      'gemini-3.1-flash-lite',
+      { promptTokenCount: 10, candidatesTokenCount: 20 },
+      'apr_run123',
+      'user-owner-1'
+    );
+    expect(logRunEventMock).toHaveBeenCalledTimes(1);
+    const [, arg] = logRunEventMock.mock.calls[0] as any[];
+    expect(arg).toMatchObject({ userId: 'user-owner-1', runId: 'apr_run123', event: 'cogs' });
+  });
+
+  it('logImageUsage threads the verified userId', () => {
+    logImageUsage('image', 'gemini-3.1-flash-image-preview', 1, 'apr_run123', 'user-owner-1');
+    const [, arg] = logRunEventMock.mock.calls[0] as any[];
+    expect(arg).toMatchObject({ userId: 'user-owner-1', runId: 'apr_run123', event: 'cogs' });
+  });
+
+  it('logVideoUsage threads the verified userId', () => {
+    logVideoUsage('gemini:video:submit', 'Veo_3.1_Lite', 6, 'apr_run123', 'user-owner-1');
+    const [, arg] = logRunEventMock.mock.calls[0] as any[];
+    expect(arg).toMatchObject({ userId: 'user-owner-1', runId: 'apr_run123', event: 'cogs' });
+  });
+
+  it('the userId is never taken from the payload — a different run id keeps its own owner', () => {
+    logModelUsage('legacy', 'gemini-3.1-flash-lite', { promptTokenCount: 1 }, 'apr_victim', 'user-attacker');
+    const [, arg] = logRunEventMock.mock.calls[0] as any[];
+    // The forged run id is still recorded (it is what the client sent) but the row is
+    // stamped with the ATTACKER's verified id, so the victim's owner-scoped roll-up
+    // excludes it instead of silently absorbing the spend.
+    expect(arg.runId).toBe('apr_victim');
+    expect(arg.userId).toBe('user-attacker');
+  });
+
+  it('omitting the userId still mirrors the event (best-effort contract, no throw)', () => {
+    expect(() =>
+      logModelUsage('legacy', 'gemini-3.1-flash-lite', { promptTokenCount: 1 }, 'apr_run123')
+    ).not.toThrow();
+    expect(logRunEventMock).toHaveBeenCalledTimes(1);
+    const [, arg] = logRunEventMock.mock.calls[0] as any[];
+    expect(arg).toMatchObject({ runId: 'apr_run123', event: 'cogs' });
+    expect(arg.userId).toBeUndefined();
+  });
+});

@@ -345,6 +345,142 @@ Problem: gate checks currently consume the customer's monthly `images` meter (~2
   Option B (internal monthly meter) rejected: month-granular (a burst exhausts it → gate silently
   off for weeks → biased telemetry), no per-scene idempotency. Fold finding 1 into the same slice.
 
+### 7. Fast-follows before P4 flag-ON / P5 — **BUILT 2026-07-24** (branch `feat/loop-arch-fastfollow-telemetry`, implemented by `code-executor` on Opus 4.8, reviewed in the Opus main loop under `/fable-mode`)
+
+**Slice A — forgeable-COGS hole + x-run-id ownership (closed).** `fireCogsRunEvent` passed NO
+userId, so every `cogs` row landed `user_id = null`; combined with `getRunId` accepting any
+client-supplied `x-run-id`, an authenticated user could point `x-run-id` at ANOTHER user's run and
+silently merge their spend into that run's `run_cogs` roll-up → `producer_runs.cost_usd`. Since P5
+is gated on 2–4 weeks of exactly this telemetry, the hole corrupts the decision the telemetry
+exists to inform. **Fix (attribution, not a hot-path ownership lookup):** the three `logModelUsage` /
+`logImageUsage` / `logVideoUsage` helpers take a trailing optional `userId`, threaded from the
+already-verified `user.id` at all 13 COGS call sites (`gemini/image.ts` ×2, `gemini/video.ts`,
+`kling/video.ts`, `gemini/text.ts` ×9 incl. the classifier chain + `runFlowWithSchema`);
+`run_cogs` now groups by `(run_id, user_id)`; `api/producer/run.ts` scopes the roll-up with
+`.eq('user_id', user.id)` — sound because the roll-up sits on the UPDATE path, past the 403
+ownership guard at `run.ts:105-107` (the INSERT path returns at :132). **Deliberate design call:**
+`x-run-id` is still NOT ownership-checked at write time — a DB round-trip per generation call would
+violate "telemetry must never slow the request path". Forged rows are now *detectable and
+filterable* instead of silently merged. **⚠ ACTION FOR NEIL: re-run `supabase/events.sql`** (still
+idempotent — `user_id` is deliberately the LAST view column so `create or replace view` can append
+it in place; an earlier draft used `drop view`, rejected in review because a DROP discards any
+accumulated GRANTs and briefly breaks the reader). **Legacy data:** pre-2026-07-24 `cogs` rows carry
+`user_id = null`, match no owner, and roll up to 0 — expected, not a regression.
+
+**Slice B — watchdog heartbeat coverage (improved, with a named architectural limit).** Beats only
+fired *inside* `renderFinalVideo`; two windows had none: (a) between `concat` and `audio master`
+sat the music-bed mix AND `masterAudio` — two full-program passes; (b) the whole upload/sign tail in
+`final.ts` (multi-MB `putMedia` + two `getMediaUrl`) before the terminal write. Either exceeding
+`WATCHDOG_STALE_MS` (120s) lets a poll mark a *succeeding* render `failed:watchdog_stalled`, the
+client stops polling, and `withRetry` re-fires a whole render. Not hypothetical — the canary's
+final_render stage ran ~196s wall. Added `onStep` beats before the bed mix, before `masterAudio`,
+before `putMedia`, and before signing. Thresholds deliberately NOT raised.
+
+> **⚠ FINDING (pre-existing, NOT introduced by this slice, NOT fixed — for the Fable review):**
+> every ffmpeg invocation in `renderFfmpeg.ts` is **`spawnSync`** (line 1 import, dispatcher at
+> :454), so a pass blocks the Node event loop for its full duration. A heartbeat's `writeSidecar`
+> is async, so a beat queued immediately before a blocking pass **cannot flush until that pass
+> ends** — the ffmpeg-side beats therefore act as pass-*boundary* flushes, not as pre-pass
+> freshness. Net effect is still a strict improvement (more flush points ⇒ smaller max gap), and
+> the `final.ts` upload/sign beats are unaffected (those are `await`ed async ops, event loop free).
+> But it means **no heartbeat can refresh the sidecar *during* a single long pass**: the watchdog's
+> effective resolution is "one ffmpeg pass," and any single pass exceeding 120s still false-kills a
+> healthy render regardless of beat placement. Plausible at the 12-scene end. Options if it bites:
+> async `spawn` in the render path (large, risky, TUNED-adjacent), or a beat-emitting ffmpeg
+> progress reader. Reasoned from the code, NOT measured in production.
+
+**Verification (re-run independently in the main loop, not taken from the executor's report):**
+`npm run build` green; `npx vitest run` **956 passed / 22 skipped** (baseline 945/22, delta +11 =
+exactly the 11 tests added). Bundle-leak clean. New tests: `tests/unit/runEventsUserId.test.ts`,
+`tests/unit/renderTailHeartbeat.test.ts` (storage-seam, manual clock, negative-control verified by
+the executor: removing the two beats fails it), plus 5 cases in `modelCostsRunId.test.ts`. No
+prompt text, system instruction, response schema, model ID, or rate-limit RPC contract touched.
+Also caught in review: the working tree's `package-lock.json` had reverted commit `33b20f9`'s
+`@types/react` CI-sync entry (a stray `npm install`); restored to HEAD rather than committed.
+
+**FABLE REVIEW OF THIS BRANCH — RUN 2026-07-24** (Fable 5, Neil-triggered via `/model` mid-session;
+scoped to `git diff main...feat/loop-arch-fastfollow-telemetry` + the 3 posed questions; no repo
+re-exploration). **Verdict: branch structurally sound, no blocker, merge-safe.** Per question:
+
+1. **x-run-id: attribution-without-verification STANDS for flag-ON.** Write-time ownership check
+   rejected — a DB round-trip per generation call taxes every legitimate request to defend an
+   already-filterable, read-side-scoped, RLS-deny-read, rate-limit-bounded telemetry sink. Two
+   same-family residuals, both LOW, documented not fixed: (a) `api/events.ts` lets any caller
+   attach a well-formed `run_id` to NODE events too — legit producer node events always carry the
+   authed owner's user_id, so the discipline is: any per-run fail-rate analysis must scope by
+   `(run_id, user_id)` exactly like `run_cogs`, never `run_id` alone; (b) `imgate:${runId}:${sceneIdx}`
+   lets someone who KNOWS a victim's runId burn that pair's 2/24h idempotency budget → victim's
+   gate check 429s → silent coverage skip (fail-open, pennies) — runIds are unguessable `apr_`
+   UUIDs, so treat them as capability tokens (don't print them in shared logs/screenshots).
+   **Optional P5-window adder (one query, zero hot-path cost):** a forgery DETECTOR — flag events
+   rows where `events.user_id ≠ producer_runs.user_id` for the same run_id; turns "filterable"
+   into "alarmed" during exactly the window the telemetry gates P5.
+2. **spawnSync heartbeat limit: async-spawn refactor NOT justified.** Sharpened by two facts read
+   this review: `concatScenes` is a FULL x264 re-encode of the whole program (the true longest
+   single pass — scales with total program length), while `mixMusic`/`masterAudio` are `-c:v copy`
+   (audio-only, fast) — so the only pass that could plausibly cross the 120s stale threshold at
+   12 scenes is concat. But `api/render/final.ts` has `maxDuration: 300` (vercel.json), and
+   `WATCHDOG_MAX_AGE_MS = 330s` sits correctly just above it: at the scale where concat would
+   threaten 120s, the TOTAL render is already flirting with the 300s platform kill — the binding
+   constraint neither beats nor async-spawn can move. Calibration is correct; leave thresholds
+   alone. **Watch item instead of code:** `concatMs` + per-scene ms are already console-logged —
+   during the P4/P5 window, if any real run shows concat >90s or total wall >270s, escalate to a
+   chunked/off-serverless render design (P6 territory), not to watchdog tuning.
+3. **The 3 deferrals: all stand as deferrals, with ONE upgraded to a flag-ON precondition** — see
+   below. #4/#5's silent skips bias the very `gate_verdict` precision analysis flag-ON exists to
+   run ("no flags because images are good" is indistinguishable from "no flags because the gate
+   never ran"). The `check_fail` event name already exists in the RunEventName vocabulary, so
+   emitting a skip-reason event at both silent-skip sites is small, non-TUNED, executor-sized.
+   The substantive fixes (reference rehydration; separate gate RL bucket) stay deferred.
+   **Flag-ON conditions are therefore now: (a) live smoke of `checkSceneImage` vs real
+   `sceneImageModel` output (pre-existing), + (b) gate-skip visibility events — Neil GO'd
+   2026-07-24, BUILT below.**
+
+**Gate-skip visibility + forgery detector — BUILT 2026-07-24** (Neil GO; `code-executor` on Opus
+4.8, reviewed in the Opus main loop). Closes flag-ON condition (b). New `check_skip` event in the
+`RunEventName` vocabulary — deliberately NOT folded into `check_fail`, because a fail means the
+check RAN and flagged, while a skip means it never ran; merging them would corrupt the flag-rate
+metric flag-ON exists to measure. No DB migration needed (`events.event` is plain `text`;
+`api/events.ts` validates `z.string()`, no enum — verified). Emitted at both silent-skip sites in
+`services/producerOrchestrator.ts`: (1) the swallowed `imageGateCheck` catch, with a bounded
+classifier → `rate_limited` (IMAGE_GATE_429, incl. the shared `gemini:image` bucket + the internal
+daily/per-scene gate budgets) / `aborted` (55s client abort) / `unauthenticated` / `other`, plus the
+raw message truncated to 200 chars; (2) `reason:'no_identity_reference'` when `run.input.avatar.url`
+is missing or not a `data:` URL — confirmed against `imageGate.ts` `splitImageData` that a remote
+URL is NOT usable (it would ship as bogus base64), so the predicate is right. **Gate call volume and
+fail-open behavior are byte-identical — pinned by an explicit `toHaveBeenCalledTimes` assertion so a
+later "optimization" can't quietly drop the call.** Also added `public.run_attribution_anomalies`
+(`supabase/events.sql`): the read-side ALARM for the forged-`x-run-id` design — any row means a
+caller attached telemetry to a run they don't own. Expected empty; check it during the P4/P5 window.
+
+> **⚠ TWO ANALYSIS FOOTGUNS — read before computing gate precision.** (i) **A scene can emit TWO
+> `check_skip` rows** (`no_identity_reference` fires before the call; a 429 then fires from the
+> catch). Any coverage query must count DISTINCT `(run_id, sceneIdx)` or filter by `reason` — a raw
+> `count(*)` over-reports the gap. (ii) **`check_skip{no_identity_reference}` coexists with a
+> recorded `gateVerdict{pass:true}`** — that combination means "label was checked, identity was
+> NOT", not a clean pass. Precision analysis must exclude the identity dimension for those scenes
+> or it will credit the gate with identity passes it never performed. Both are intended behavior,
+> not defects — but a naive query over this data reads them wrong.
+
+**Verification (re-run independently in the main loop):** build green; `npx vitest run` **962 passed
+/ 22 skipped** (was 956/22, delta +6 = exactly the tests added); `npm run check:bundle-leak` clean
+(0 markers). No TUNED prompt/schema/model-ID and no rate-limit RPC contract touched.
+**⚠ ACTION FOR NEIL: the `supabase/events.sql` re-run now also creates `run_attribution_anomalies`,
+which JOINS `producer_runs` — apply `producer_runs.sql` first on a fresh project (already applied on
+Neil's).**
+
+**Fast-follow 3 — the 3 documented deferrals: re-verified still accurate, still ACCEPTED (no code
+change).** Fable-review findings 3/4/5 confirmed present in the code as described: (3) adscript
+worst case ~8 model calls vs the blueprint's ≤4 — `runFlowWithSchema` re-invokes the whole handler
+(`text.ts:367-383`); (4) identity gate no-ops on resumed runs — `slimCheckpointInput`
+(`producerRunService.ts:156-171`) drops `data:` URLs >700KB, so `run.input.avatar.url` can vanish →
+`personMatchesReference: null`; (5) gate + generate share `gemini:image:${user.id}`
+(`image.ts:95` and `:136`), so a gated pooled run can 429 the gate. **Standing recommendation for
+flag-ON:** #4 and #5 both depress gate *coverage* SILENTLY, which biases the very `gate_verdict`
+precision analysis that decides whether the gate is worth keeping — before flag-ON, the gate should
+emit a skip/`check_fail` reason so coverage gaps are visible in telemetry rather than invisible.
+Not built (it is a scope change beyond the fast-follows); flagged for Neil's call.
+
 ### 6. Parked
 P5 (flip Producer engine to default, retire `useOneShotGeneration.ts`) — gated on 2–4 weeks of P2/P4 telemetry post-merge. P6 (video believability flag, server-held manual-lane job state) — data-gated, see plan.
 
