@@ -306,6 +306,13 @@ section{padding:clamp(56px,8vw,110px) 0;}
 .meter__track{flex:1;height:3px;background:rgba(255,255,255,.09);border-radius:2px;overflow:hidden;}
 .meter__fill{height:100%;background:var(--gold);border-radius:2px;}
 .meter__fill--dim{background:var(--fg-400);}
+.shipped{
+  display:inline-flex;align-items:center;gap:7px;margin-bottom:10px;
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold);background:rgba(255,204,0,.08);border:1px solid rgba(255,204,0,.26);
+  padding:4px 10px;border-radius:var(--r-pill);
+}
+.shipped--pending{color:var(--fg-300);background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.12);}
 
 /* ══ SPEC TIERS ═══════════════════════════════════════════════════════ */
 .tiers{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
@@ -412,7 +419,7 @@ footer{padding:60px 0 80px;text-align:center;}
         <a class="nav__link" href="#no">Where it doesn't fit</a>
         <a class="nav__link" href="#surfaces">Surfaces</a>
       </div>
-      <span class="nav__tag">Verdict: Yes — inverted</span>
+      <span class="nav__tag">Shipped — moves 01–05</span>
     </div>
   </nav>
 
@@ -539,7 +546,7 @@ footer{padding:60px 0 80px;text-align:center;}
         <div class="move move--top">
           <div class="move__rank tnum">01</div>
           <div>
-            <h3>Invert the layers — glass goes to chrome, content goes tonal</h3>
+            <span class="shipped">✓ Shipped — GlassPanel now PLATE</span><h3>Invert the layers — glass goes to chrome, content goes tonal</h3>
             <p>Demote <code class="mono-note">GlassPanel</code> to a <strong style="color:var(--fg-100)">PLATE</strong>: tonal fill, no backdrop-filter, hairline top-light. Promote the true chrome — <code class="mono-note">SiteHeader</code>, <code class="mono-note">DashboardSidebar</code>, <code class="mono-note">StepFooter</code>, <code class="mono-note">CommandPalette</code>, <code class="mono-note">PinnedCtaPill</code>, toolbars — to <strong style="color:var(--gold)">CHROME</strong>. One primitive swap, ~90 fewer compositing layers, and the hierarchy finally reads: what floats is what you can operate.</p>
           </div>
           <div class="move__meta">
@@ -553,7 +560,7 @@ footer{padding:60px 0 80px;text-align:center;}
         <div class="move move--top">
           <div class="move__rank tnum">02</div>
           <div>
-            <h3>Put something behind the glass</h3>
+            <span class="shipped">✓ Shipped — GatewayReel</span><h3>Put something behind the glass</h3>
             <p>The chrome layer needs content passing beneath it to mean anything. Extend the app's own generated frames, the ad montage, and the <code class="mono-note">Aurora</code> field under the floating bars instead of stopping at their edge — Apple calls this the background extension effect. This is the single move that takes Grifon from "dark SaaS with blur" to "cinema glass," and it costs almost nothing because the footage already exists.</p>
           </div>
           <div class="move__meta">
@@ -567,7 +574,7 @@ footer{padding:60px 0 80px;text-align:center;}
         <div class="move">
           <div class="move__rank tnum">03</div>
           <div>
-            <h3>Upgrade the material itself — edge lensing + specular rim</h3>
+            <span class="shipped">✓ Shipped — .mat-chrome</span><h3>Upgrade the material itself — edge lensing + specular rim</h3>
             <p>Today's glass is <code class="mono-note">blur + 80% tint + 1px white border</code>. Real glass refracts hardest at the bevel: a masked rim band with its own heavier blur and saturation, a bright inset top-light, a dimmer bottom-light, and a specular that travels on hover. Pure CSS, no assets, no library. That's the difference between "frosted div" and "machined pane" — compare the two states in the stage above.</p>
           </div>
           <div class="move__meta">
@@ -581,7 +588,7 @@ footer{padding:60px 0 80px;text-align:center;}
         <div class="move">
           <div class="move__rank tnum">04</div>
           <div>
-            <h3>Ship the accessibility guards you're missing</h3>
+            <span class="shipped">✓ Shipped — both guards live</span><h3>Ship the accessibility guards you're missing</h3>
             <p>Add <code class="mono-note">prefers-reduced-transparency</code> and <code class="mono-note">prefers-contrast: more</code> fallbacks beside the existing reduced-motion blocks in <code class="mono-note">index.css</code>: glass collapses to a solid tonal fill, rim band off, contrast ring on. Apple treats this as non-optional — and it's the one item here that's a genuine defect rather than a taste call. Smallest diff on the list.</p>
           </div>
           <div class="move__meta">
@@ -595,7 +602,7 @@ footer{padding:60px 0 80px;text-align:center;}
         <div class="move">
           <div class="move__rank tnum">05</div>
           <div>
-            <h3>Scroll edge effect under every sticky bar</h3>
+            <span class="shipped">✓ Shipped — SiteHeader</span><h3>Scroll edge effect under every sticky bar</h3>
             <p>Content currently slides under the pricing sticky nav and dashboard top bar with only a blur to protect it, so labels collide with whatever passes beneath. Apple's fix is a graded fade at the bar's edge that dims and blurs the incoming content — a masked gradient, ~15 lines. Legibility stops depending on what happens to be scrolling.</p>
           </div>
           <div class="move__meta">
@@ -609,7 +616,7 @@ footer{padding:60px 0 80px;text-align:center;}
         <div class="move">
           <div class="move__rank tnum">06</div>
           <div>
-            <h3>Make radii concentric, not merely consistent</h3>
+            <span class="shipped shipped--pending">Helper only — no call sites yet</span><h3>Make radii concentric, not merely consistent</h3>
             <p>You already have three tiers and a 44px control floor in <code class="mono-note">wizardTokens.ts</code> — ahead of most teams. The missing rule is nesting: an inner radius should equal the outer radius minus the padding between them, so curves stay parallel instead of drifting. A 16px panel with 12px padding wants a 4px inner corner, not another <code class="mono-note">rounded-xl</code>. Invisible individually; the whole app tightens at once.</p>
           </div>
           <div class="move__meta">
@@ -817,16 +824,16 @@ footer{padding:60px 0 80px;text-align:center;}
     <div class="band">
       <div class="close mat-chrome">
         <p class="eyebrow">// Bottom line</p>
-        <h2 class="display display--lg">Worth it — as a <span class="serif-gold">demotion</span>, not an addition.</h2>
+        <h2 class="display display--lg">It was worth it — as a <span class="serif-gold">demotion</span>, not an addition.</h2>
         <p class="lede" style="margin-top:20px">
           Apple's material is a hierarchy argument wearing a visual-effect costume. Take the argument, leave the costume.
           Grifon's identity — zinc-950 canvas, one gold accent, cinematic type — survives all six moves untouched.
           What changes is that glass becomes rare enough to mean something.
         </p>
         <div class="close__k">
-          <div class="kv"><div class="kv__k">Do first</div><div class="kv__v">Moves 01 + 04. One primitive swap and one CSS block — a single session, and the accessibility hole closes.</div></div>
-          <div class="kv"><div class="kv__k">Do next</div><div class="kv__v">Moves 02 + 03 together. Footage behind the chrome plus the upgraded material is where the "2050" lands.</div></div>
-          <div class="kv"><div class="kv__k">Defer</div><div class="kv__v">Moves 05 + 06. Real polish, invisible until the first four ship. Fold into whatever surface you touch next.</div></div>
+          <div class="kv"><div class="kv__k">Shipped</div><div class="kv__v">Moves 01–05, on <code class="mono-note">claude/grifon-liquid-glass-eval-kv0ktv</code>. Build clean, 1005 tests pass, design:lint silent.</div></div>
+          <div class="kv"><div class="kv__k">Still open</div><div class="kv__v">Slice 2 — sweep the remaining blur literals onto tiers (modals → Slab, dashboard rail → Chrome), then move 06's radii.</div></div>
+          <div class="kv"><div class="kv__k">Unverified</div><div class="kv__v">No browser pass yet. The rim lens, the gateway reel and the scroll edge want a smoke-tester run before this is called done.</div></div>
         </div>
       </div>
     </div>
