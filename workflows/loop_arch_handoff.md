@@ -18,6 +18,70 @@ Four stacked branches, pushed, **no PRs, nothing merged, nothing deployed by us,
 - All verification was **unit-test + mocked**; no live-provider, no preview, no prod evidence exists. P1's only smoke = local dev server 401 probes.
 - Every phase passed an adversarial critic (Opus post-policy). Full audit answers: see the read-only status Q&A at the end of the 2026-07-23 session transcript.
 
+## ▶ TOMORROW'S RUNBOOK (2026-07-25) — everything below this heading is DONE; this is all that's left
+
+Written 2026-07-24 end-of-session. Assumes a fresh cafe PC (defreezer wiped everything except
+this repo). Read this section only — the rest is history.
+
+**Use this URL — the branch ALIAS, not a deployment-hash URL:**
+`https://grifon-command-git-a97edd-neilmaglayabusiness22-2085s-projects.vercel.app`
+It is stable across redeploys of `preview/image-gate-test`, so `localStorage` (the run-resume key
+`osa_producer_active_run` + `osa_engine`) survives a rebuild. A deployment-pinned URL changes per
+deploy and silently breaks resume — that has bitten twice (F4, and again during the F2 retry).
+Previews are SSO-walled: log into Vercel in the same browser first.
+
+1. Open `<alias>/app?osaEngine=producer` — the query param selects the Producer engine and
+   persists to localStorage.
+2. Load `.claude/skills/director-smoke/` BEFORE touching any wizard field (hero-image FIRST,
+   Market Research before Director, never hand-type brand/offer). Delegate browser work to the
+   `smoke-tester` subagent, foreground.
+3. Run one ad to First Cut. Expect ~$5 and ~9 scenes.
+4. Then, in the Supabase SQL editor (project `varoqxjccqmskzeejagn`):
+
+```sql
+-- A. Did the gate actually run?  (the whole point)
+select scene_idx, gate_verdict from producer_scenes
+ where run_id = '<new run_id>' order by scene_idx;
+
+-- B. Where did it NOT run, and why?  (new visibility, 2026-07-24)
+select meta->>'reason' as reason, count(distinct (run_id, meta->>'sceneIdx')) as scenes
+  from events where event = 'check_skip' and run_id = '<new run_id>' group by 1;
+
+-- C. Cost attribution + forgery alarm (both should look boring)
+select * from run_cogs where run_id = '<new run_id>';
+select * from run_attribution_anomalies;   -- MUST be empty
+```
+
+**How to read it:**
+- `gate_verdict` populated on identity/product scenes → **gate is live; flip Production next.**
+- All `null` AND zero `check_skip` rows → the client flag never reached the bundle. Most likely
+  the Vercel "Sensitive" marking on `VITE_IMAGE_GATE_ENABLED` blocks build-time injection —
+  un-mark it (the value is public by construction anyway; it is literally in `dist/assets/*.js`)
+  and redeploy the preview branch.
+- `check_skip{rate_limited}` on many scenes → should NOT happen any more (fixed 2026-07-24, gate
+  now has its own `imgate:burst` bucket at 20/60s). If it does, the fix regressed.
+- `check_skip{no_identity_reference}` → identity was NOT checked on that scene even though the
+  verdict may say `pass:true`. Expected on resumed runs; on a fresh run it means the avatar
+  reference isn't a `data:` URL.
+- ⚠ Counting gotcha: one scene can emit TWO `check_skip` rows, so count DISTINCT
+  `(run_id, sceneIdx)` — query B already does.
+
+**Also eyeball on this run (free, same render):** the hook title. F7 (`HUWAG NANG` printing as
+`HUWACNANG`) was fixed 2026-07-24 with real font metrics. Check (a) words no longer fuse, and
+(b) whether the title now sits too close to the frame edges — correctly-spaced words need more
+room and `fitText` still sizes from the OLD estimate, so the IMPACT sample measures 921px against
+an 864px safe zone (29px outside the 10% side margin, still 79px inside the 1080px frame; nothing
+clips). If it looks tight, the follow-up is making `fitText` metrics-aware — deliberately NOT done
+without an eyeball.
+
+**Then flip Production:** add `IMAGE_GATE_ENABLED` + `VITE_IMAGE_GATE_ENABLED` = `true` to the
+**Production** scope (they are currently Preview-only) and redeploy. Delete the throwaway branch
+`preview/image-gate-test` once done.
+
+**Vercel ops are now agent-runnable:** `scripts/restore-vercel.ps1` takes a token
+(`$env:VERCEL_TOKEN`, or `$env:VERCEL_TOKEN_FILE` pointing OFF this machine) and skips the
+interactive browser login the defreezer wipes.
+
 ## ⚠ SUPERSEDED 2026-07-24 — merged, applied, smoked (Neil: "merge, SQL apply, live smoke — G")
 
 The standing orders below were lifted by Neil on 2026-07-24. Current state:
