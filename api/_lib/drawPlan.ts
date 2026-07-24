@@ -1,9 +1,11 @@
 // Pure draw-planning + filtergraph-string-building engine, extracted verbatim
-// from api/_lib/renderFfmpeg.ts (structural-only refactor). Contains NO I/O
-// (no spawnSync, no node:fs) — every function here is a pure computation over
-// scenes/presets, so both the existing final-render path AND a future preview
-// endpoint can call one shared source of truth. Output must be byte-identical
-// to the original; renderFfmpeg.ts re-exports these symbols for back-compat.
+// from api/_lib/renderFfmpeg.ts (structural-only refactor). No render I/O (no
+// spawnSync, no temp files) — every function here is a synchronous, deterministic
+// computation over scenes/presets, so both the existing final-render path AND a
+// future preview endpoint can call one shared source of truth. The one read is
+// fontMetrics' cached lookup of a bundled TTF's own glyph widths (hookTitleLayout,
+// F7); it degrades to the old estimate rather than throwing. Output must be
+// byte-identical to the original; renderFfmpeg.ts re-exports these for back-compat.
 
 import type { FinalRenderScene, FinalRenderEndCard, SfxBankId, CameraEffect, VoiceWord } from '../../types.js';
 import {
@@ -11,6 +13,7 @@ import {
   type RenderPreset, type HookRevealStyle, type TransitionStyle, type CameraStyle,
   type HookPalette,
 } from './renderPresets.js';
+import { textWidthPx } from './fontMetrics.js';
 
 // Transition-class SFX land on a CUT, not mid-scene. The renderer knows the exact
 // cut (a scene boundary), so these snap to it deterministically — the text EDL's
@@ -228,8 +231,11 @@ export function isPowerWord(word: string): boolean {
 /**
  * Title-stack hook layout (reference-grade hook, Neil 2026-06-10): every word
  * pops sequentially with an elastic overshoot, lines stacked and centered,
- * power words in the highlight color. Pure: returns word timings with absolute
- * x/y. Guarantees at least one highlighted word (falls back to the first).
+ * power words in the highlight color. Synchronous + deterministic: returns word
+ * timings with absolute x/y. Guarantees at least one highlighted word (falls
+ * back to the first). `fontFile` is the preset's hook font (e.g.
+ * 'fonts/Montserrat-ExtraBold.ttf'); omit it and word widths fall back to the
+ * estimate, which is what every pre-F7 caller got.
  */
 export function hookTitleLayout(
   lines: string[],
@@ -238,17 +244,23 @@ export function hookTitleLayout(
   frameW: number,
   yTop: number,
   startSec: number,
-  cadenceSec: number
+  cadenceSec: number,
+  fontFile?: string
 ): WordTiming[] {
   const lineH = Math.round(fontsize * 1.18);
-  // Explicit inter-word gap + uppercase-aware advance. estWidth is length×advRatio,
-  // but the extrabold hook fonts' UPPERCASE glyphs really advance ~0.1em/char wider
-  // than the preset ratio — a 4-letter caps word overruns its estimate by ~0.4em,
-  // swallowing the space-char advance entirely, so adjacent words rendered fused
-  // ("LUMA LANG" read as "LUMALANG", 2026-06-10 final-render review).
+  // Explicit inter-word gap + REAL per-glyph advance. estWidth is length×advRatio —
+  // a flat per-character average that can't see that W/M are wide and I/T/L narrow,
+  // so the same ratio ran "HUWAG" 0.63em NARROW (more than the whole gap → the next
+  // word printed fused onto it, F7 "HUWACNANG") while running "SULIT" 0.47em WIDE.
+  // The uppercase bump below was the hand-tuned patch for that error and can only
+  // trade one word's collision for another's over-spacing, so real metrics replace
+  // it whenever the font is known; it survives verbatim as the fallback for callers
+  // that pass no font (and for a glyph the font doesn't cover). With honest widths
+  // the gap is now plain padding rather than error absorption, so it is unchanged.
   const gap = Math.round(fontsize * 0.34);
   const wAdv = (wd: string) =>
-    estWidth(wd, fontsize, advRatio + (/[A-Z]/.test(wd) && wd === wd.toUpperCase() ? 0.10 : 0));
+    (fontFile ? textWidthPx(fontFile, wd, fontsize) : null)
+    ?? estWidth(wd, fontsize, advRatio + (/[A-Z]/.test(wd) && wd === wd.toUpperCase() ? 0.10 : 0));
   const out: WordTiming[] = [];
   let idx = 0;
   for (let li = 0; li < lines.length; li++) {
@@ -546,7 +558,9 @@ export function planScene(
     if (preset.hook.layout === 'title-stack') {
       // Reference-grade hook: word-by-word elastic pop, gold/white two-tone,
       // no box (websites5 grammar; Neil 2026-06-10 redesign).
-      const words = hookTitleLayout(lines, fontsize, hookAdv, w, yTop, 0.05, preset.hook.wordCadenceSec);
+      const words = hookTitleLayout(
+        lines, fontsize, hookAdv, w, yTop, 0.05, preset.hook.wordCadenceSec, preset.hook.fontFile
+      );
       words.forEach((wd) => { wd.end = end; }); // every word persists to scene end
       layers.push({
         kind: 'text', text: lines.join('\n'), fontsize, color: preset.hook.textColor, boxAlpha: 0,
