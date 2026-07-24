@@ -59,9 +59,16 @@ real-time/streaming (the brief itself flags that gap).
   doctrine unchanged.
 - **Jockey output = hypothesis, not ground truth** — same status as Gemini's
   read; no Jockey-sourced claim touches TUNED files except via Gated Proposals.
-- **Economics unmeasured** — the brief gives no cost benchmarks. Measure
-  free-tier limits (minutes, stores, retention) in the pilot BEFORE any habit
-  forms; if ingestion costs real money per video, M1 becomes opt-in per video.
+- **Economics measured 2026-07-24** (twelvelabs.io/pricing + docs v1.3) —
+  cheap. Free tier: 600 min indexing, 100 videos/index, no card, **but indexes
+  expire 90 days after creation** → free tier is pilot-only, never the durable
+  vault. Developer plan (pay-as-you-go): Marengo indexing $0.042/min (~$0.03
+  one-time per 45s ad), search $4/1k queries, Pegasus analyze $0.0292/min
+  input, storage $0.0015/min/mo (~$0.11/mo for a 100-video corpus). Full
+  swipe-corpus index ≈ $3 one-time. Model roles via Jockey MCP: `jockey_search`
+  → **Marengo 3.0** (embeddings, ≤4h/4GB per video), `jockey_query` →
+  **Pegasus 1.5** (generation, ≤2h/2GB) — no direct model plumbing needed;
+  standalone Embed API not needed at workflow layer.
 - **Degrade gracefully when the connector is absent** (headless/cron): skip
   ingest, log a Pending Action.
 
