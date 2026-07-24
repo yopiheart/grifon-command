@@ -53,6 +53,13 @@ below are condensed pointers, not replacements).
   (`sys.stdout.reconfigure(encoding='utf-8', errors='replace')`) near the top.
   Plain tool, trivial, next session.
 
+- [ ] **TwelveLabs vault pilot (decided 2026-07-24 — see
+  `workflows/twelvelabs_decision.md`).** Verdict: YES-narrow — Jockey knowledge
+  store as a defreezer-proof video vault + corpus-query assist under this file's
+  existing gates. Pilot runbook + pass gate live in the decision doc; blocked on
+  Neil re-authing the Jockey connector. M1/M2 skill edits happen ONLY on pilot
+  PASS. Never a dependency: entries must still stand alone without the store.
+
 ## Active Format Evidence Hunt (opened 2026-07-08)
 
 Neil's pre-launch decision (plan `by-the-way-fable-precious-hellman`, approved

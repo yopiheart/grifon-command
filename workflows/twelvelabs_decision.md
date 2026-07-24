@@ -1,0 +1,86 @@
+# TwelveLabs "Video Memory" Decision (2026-07-24)
+
+Verdict on the James Le / TwelveLabs "Video Has No Memory" brief (sources: the
+shared summary + twelvelabs.io), evaluated against Grifon with Neil. Pattern
+sibling of [hyperframes_decision.md](hyperframes_decision.md) — open this before
+any TwelveLabs work.
+
+**Neil's scoping answers (2026-07-24):** TwelveLabs account = free/trial only ·
+scope = **workflow layer ONLY** (Hyperframes precedent — never product runtime) ·
+first corpus = **Swipe File videos**. The **Jockey by TwelveLabs MCP connector**
+is already attached via claude.ai (needs re-auth per session — interactive only,
+absent in headless/cron runs).
+
+## Verdict — YES, but narrowly
+
+Adopt TwelveLabs as a **corpus-memory layer under the existing Swipe File loop**
+— an accelerator, not a replacement for anything. ~⅔ of the brief is philosophy
+Grifon already implements by hand; the missing ⅓ — durable, queryable memory
+over the *videos themselves* — is a real gap that also neutralizes a cafe-PC
+constraint: autopsied MP4s die in `.tmp/` + defreezer, only markdown survives,
+so cross-video questions ("of all winners, which show product in ≤3s?") mean
+re-downloading and re-watching everything. A Jockey knowledge store = a video
+vault that survives the wipe (cloud-side) — "ingest once, reason many times."
+
+## What the brief validates (already built — do NOT rebuild)
+
+| Brief concept | Grifon equivalent |
+| --- | --- |
+| Tier 1 moments / "ground every claim" | Timestamped entries + specificity gate (`viral-autopsy` Step 3) |
+| Tier 4–5 relationships / corpus context | Pattern Index + ≥3-corroboration gate + Gated Proposals (`viral_swipe_file.md`) |
+| "Store primitives, not answers" | Edit-DNA JSON (shots, captions, believability block) |
+| Video Worker Harness (envelope/contract/eval) | ai-editor budget caps + dry-run gates + eval-gate-per-output |
+| "Don't trust model timing" | `tools/render_audit.mjs` deterministic ffmpeg + OCR |
+
+## Ranked moves
+
+1. **M1 — Swipe File video vault (pilot first).** Optional ingest step in
+   viral-autopsy (after Step 2): `jockey_add_media` → `grifon-swipe-file` store;
+   asset/item ID recorded in the entry. Backfill re-downloadable winners.
+2. **M2 — Corpus-query assist for the Pattern Index.** On a new
+   `PATTERN_CANDIDATE`, `jockey_search`/`jockey_query` the store for
+   corroborating moments — hits are *candidates for Neil to confirm*, they NEVER
+   auto-increment counts (render_audit Step 3c chain stays mandatory).
+3. **M3 — ai-editor Mode B reference-moment retrieval** (cheap once M1 exists).
+4. **M4 — CMO/CD/ads-strategist:** no direct integration — they consume the
+   Swipe File, not raw video; the ledger is MER-driven, join stays via autopsy.
+5. **M5 (parked) — Oceanides/Kuya Marvin footage store**, only if M1–M2 prove out.
+
+**NOT doing:** product integration (4th AI provider — violates scope decision +
+architecture truth, `concierge_director_plan.md` §2); replacing
+`analyze_video.py` (tuned believability autopsy; Pegasus isn't a drop-in);
+replacing `render_audit.mjs` (deterministic > model, always); anything
+real-time/streaming (the brief itself flags that gap).
+
+## Hard guardrails
+
+- **Entries must still stand alone without the store** — free-tier stores can
+  vanish; the vault is an accelerator, never a dependency. `.tmp` disposability
+  doctrine unchanged.
+- **Jockey output = hypothesis, not ground truth** — same status as Gemini's
+  read; no Jockey-sourced claim touches TUNED files except via Gated Proposals.
+- **Economics unmeasured** — the brief gives no cost benchmarks. Measure
+  free-tier limits (minutes, stores, retention) in the pilot BEFORE any habit
+  forms; if ingestion costs real money per video, M1 becomes opt-in per video.
+- **Degrade gracefully when the connector is absent** (headless/cron): skip
+  ingest, log a Pending Action.
+
+## Pilot runbook (~30 min, no product code)
+
+1. Neil re-auths the Jockey connector (claude.ai connector settings).
+2. Live smoke: `jockey_list_knowledge_stores` → create `grifon-swipe-file` →
+   ingest 1–2 re-downloadable Swipe File winners → `jockey_query` a known fact
+   from their entries (e.g. E7's kinetic-VSL beats) → timestamps must match the
+   verified entry (±1s vs render_audit numbers). That match IS the pass gate.
+3. Record free-tier limits + PASS/FAIL here + close the Pending Action in
+   `viral_swipe_file.md`. On PASS → edit the two skill files per M1/M2
+   (docs-only, main loop, commit same session).
+4. **Kill switch:** limits too tight or answers vague → log FAIL here and walk
+   away. The philosophy is already implemented in markdown; the vault is a
+   nice-to-have, not a foundation.
+
+## Status
+
+- [ ] Pilot not yet run (blocked on connector re-auth). Verdict + runbook
+      captured 2026-07-24; full eval discussion in session
+      `259477d0` (plan `sources-might-give-you-ancient-dove`, defreezer-mortal).
