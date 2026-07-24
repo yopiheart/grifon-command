@@ -131,6 +131,23 @@ A mismatch (Gemini said `raw-ugc`, frames look studio-graded) → correct the
 register before it feeds a Believability pattern count, exactly as you'd correct a
 miscounted cut.
 
+### Step 3d — Vault ingest (optional accelerator — skip freely if the connector is absent)
+
+If the Jockey by TwelveLabs MCP connector is authed (pilot PASSED 2026-07-25 —
+see `workflows/twelvelabs_decision.md`), ingest the MP4 into the
+`grifon-swipe-file` knowledge store so the *video itself* survives the
+defreezer and joins the queryable corpus:
+
+- Prefer a **direct public URL** as `jockey_add_media`'s `source` (e.g. the
+  signed fbcdn URL from `yt-dlp --get-url`) — server-side fetch, no upload.
+- Record the returned `ksi_…` item id in the entry's **File:** line.
+- Corpus queries (`jockey_search`/`jockey_query`) may **surface corroboration
+  candidates** for the Pattern Index — they are leads for Neil + Step 3c
+  verification, they NEVER auto-increment counts, and Jockey output carries the
+  same hypothesis-grade status as Gemini's read.
+- The vault is an accelerator, never a dependency: the entry must stand alone
+  without it (free-tier indexes expire ~90 days from creation).
+
 ### Step 4 — Write the Swipe File entry
 
 Append to `workflows/viral_swipe_file.md` under **Entries** using the entry

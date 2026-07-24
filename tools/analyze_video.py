@@ -35,6 +35,12 @@ import sys
 import time
 from pathlib import Path
 
+# Windows cp1252 consoles crash on emoji in captions at the final stdout dump
+# (the JSON is already saved by then, so the wrapper misread it as FAIL).
+# Documented 2026-07-08 (viral_swipe_file.md Pending Actions); fixed 2026-07-25.
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_OUT_DIR = REPO_ROOT / ".tmp" / "viral-intel"
 DEFAULT_MODEL = "gemini-3.5-flash"

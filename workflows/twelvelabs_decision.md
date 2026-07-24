@@ -88,6 +88,24 @@ real-time/streaming (the brief itself flags that gap).
 
 ## Status
 
-- [ ] Pilot not yet run (blocked on connector re-auth). Verdict + runbook
-      captured 2026-07-24; full eval discussion in session
-      `259477d0` (plan `sources-might-give-you-ancient-dove`, defreezer-mortal).
+- [x] **Pilot RUN + PASSED 2026-07-25** (same night — Neil re-authed the
+      connector and supplied OP2 as the live specimen). Store:
+      `grifon-swipe-file` = `ks_019f94e4-8be3-70a1-98cb-bab72db8056e`; first
+      item OP2 (`ksi_019f94f0-e46d-7b60-b2d4-4d4d3826d58b`, 168s One Peak
+      kinetic VSL, still ACTIVE 129d). Indexing took ~8 min for 168s/53MB.
+      **Query-back grade:** hook verbatim @0:00 ✅ exact; product naming
+      ("Format Finder") @0:46 vs 47s ✅ ±1s; CTA @2:29 = 149s ✅ exact;
+      proof-metrics question ⚠️ grabbed the hook's pain metrics (1,000/500/200
+      @8–11s, themselves correctly timestamped) instead of the success proofs
+      (17M/400k @82s/95s) — grounding contract held on every timestamp given,
+      one interpretation miss. Confirms the standing guardrail: grounded ≠
+      infallible; Jockey output stays hypothesis-grade. Bonus: on
+      CTA-holds-to-end, Jockey's read (ending is a P.S. joke, not a held CTA)
+      was *more* accurate than Gemini's `holds_to_final_frame: true`.
+- [x] M1 (ingest step) + M2 (corpus-query assist) added to
+      `.claude/skills/viral-autopsy/SKILL.md` per the approved plan.
+- [ ] **Graduation decision due before ~2026-10-22** (free-tier index 90-day
+      expiry): if the vault has earned its keep, move to Developer plan
+      (~$3 one-time full-corpus re-index + ~$0.11/mo) and backfill winners.
+      Ingestion lesson: yt-dlp's native `facebook:ads` extractor + the signed
+      fbcdn direct URL feed `jockey_add_media` server-side — no manual upload.

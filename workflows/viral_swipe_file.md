@@ -46,19 +46,18 @@ below are condensed pointers, not replacements).
   specific). Proposal for Neil: relax to `>= 2` when `duration_s < 20`, in
   `tools/analyze_video.py`'s validator (plain tool, not tuned — but gate the
   change since it guards swipe-file quality).
-- [ ] **Tool bug (2026-07-08):** `analyze_video.py` crashes at the final
-  `print(json.dumps(...))` on Windows cp1252 consoles when captions contain
-  emoji (UnicodeEncodeError) — the JSON is already saved, only stdout dies, and
-  the wrapper misreads it as FAIL. Fix: wrap stdout in utf-8
-  (`sys.stdout.reconfigure(encoding='utf-8', errors='replace')`) near the top.
-  Plain tool, trivial, next session.
+- [x] **Tool bug (2026-07-08) — FIXED 2026-07-25:** `analyze_video.py` cp1252
+  stdout crash on emoji captions; `sys.stdout.reconfigure(encoding='utf-8',
+  errors='replace')` added near the top. (Bug reproduced one last time on the
+  OP2 re-autopsy — 👀 in the hook caption — JSON was safe, as documented.)
 
-- [ ] **TwelveLabs vault pilot (decided 2026-07-24 — see
-  `workflows/twelvelabs_decision.md`).** Verdict: YES-narrow — Jockey knowledge
-  store as a defreezer-proof video vault + corpus-query assist under this file's
-  existing gates. Pilot runbook + pass gate live in the decision doc; blocked on
-  Neil re-authing the Jockey connector. M1/M2 skill edits happen ONLY on pilot
-  PASS. Never a dependency: entries must still stand alone without the store.
+- [x] **TwelveLabs vault pilot — PASSED 2026-07-25** (see
+  `workflows/twelvelabs_decision.md` for the graded query-back). Store
+  `grifon-swipe-file` (`ks_019f94e4-8be3-70a1-98cb-bab72db8056e`) live with OP2
+  as first resident; M1/M2 now in the viral-autopsy skill. Standing rules:
+  vault is an accelerator never a dependency; Jockey output = hypothesis;
+  free-tier indexes expire ~90d from creation (this one ~2026-10-22) — decide
+  Developer-plan graduation before then if the vault has proven value.
 
 ## Active Format Evidence Hunt (opened 2026-07-08)
 
@@ -151,13 +150,26 @@ test against real winners.
 | N6 | 93e6c743 | **Instant beauty transformation** | highlighter | 10s / 6 (med 1.2s) | "Why do I look so flat today?" | 0.7s hand-to-lens reveal |
 | N7 | e407bdfc | **Before/After (spot-clean)** | extractor | 10s / 7 | "Look at this. Coffee, mud, and hair all mashed into the fabric." | satisfying pull; CTA @0:08 holds |
 | OP1 | one-peak-…863014 | **App tutorial ad (70s, REAL)** | content app | 70s / 14 | "Brainstorming content with ChatGPT is kind of like asking your mom for video ideas." | captions ON, text-on-frame-1, UI walkthrough + social proof |
-| OP2 | one-peak-…935809 | **Kinetic VSL (168s, REAL)** | **Format Finder** | 168s / 28 (med 1.5s) | "Let me describe a person and you tell me if this is you." | **P1/P2/P7/P9-consistent**: 1–3-word captions @0.4s swap, white+gold emphasis, drop shadow; PAS→epiphany→proof→objections→CTA |
+| OP2 | one-peak-…935809 | **Kinetic VSL (168s, REAL)** | **Format Finder** | 168s / **25 (med ~5.5s — ffmpeg-verified 2026-07-25; 2026-07-08 "28/med 1.5s" was a soft-read error)** | "Let me describe a person and you tell me if this is you." | **P1/P2/P7/P9-consistent**: 1–3-word captions @0.4s swap, white+gold emphasis, drop shadow; PAS→epiphany→proof→objections→CTA; **29.4s single walking take @11.3–40.7s — captions+motion carry pace, strongest P1 evidence yet** |
 
-One Peak ads are REAL studio ads (same studio as E4/E5) — but Pattern Index
-counts NOT incremented: render_audit ground-truth (Step 3c) not run this
-session. Optional follow-up; P1/P2/P7 are `applied` and P9 already 3/3, so no
-status would change. OP2's product is literally "proven viral formats for
-creators" — the formats-as-product thesis, market-validated.
+One Peak ads are REAL studio ads (same studio as E4/E5). ~~Pattern Index counts
+NOT incremented: render_audit ground-truth (Step 3c) not run~~ **OP2
+ground-truthed 2026-07-25** (re-downloaded from Ad Library id 779064774935809 —
+still ACTIVE at **129 days** per the fbcdn `efg` `asset_age_days`; yt-dlp now has
+a native `facebook:ads` extractor, no fbcdn ladder needed). ffmpeg: 167.68s,
+24 cuts → 25 shots med ~5.5s — the 2026-07-08 soft read ("28 shots med 1.5s")
+was WRONG; corrected in the table. Net effect: OP2 now *cleanly* corroborates
+P1's shot-hold clause (5.5s shots + 0.4s caption churn — including a 29.4s
+single walking take carried entirely by captions/motion) and aligns OP2 with
+E4/E5's ~5.5s medians, making the P9 kernel more coherent, not less. Fresh
+believability read: real-human / high, polished-ugc. Full JSON:
+`.tmp/viral-intel/op2-redownload.json` (disposable). **Vault:** ingested to
+Jockey `grifon-swipe-file` (`ksi_019f94f0-e46d-7b60-b2d4-4d4d3826d58b`, asset
+`6a6391937686853dfec0cd41`); pilot query-back PASSED (hook @0:00, product
+naming @0:46, CTA @2:29 all ±1s vs verified entry — see
+`twelvelabs_decision.md`). OP1 remains soft-read-only. OP2's product is
+literally "proven viral formats for creators" — the formats-as-product thesis,
+market-validated.
 
 **GATE WAIVER (Neil, 2026-07-08):** the ≥3-real-winner gate is **waived** for
 the UGC Pro launch build — Higgsfield catalog = competitor-validated TikTok
