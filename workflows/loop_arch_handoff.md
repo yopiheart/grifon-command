@@ -398,6 +398,44 @@ prompt text, system instruction, response schema, model ID, or rate-limit RPC co
 Also caught in review: the working tree's `package-lock.json` had reverted commit `33b20f9`'s
 `@types/react` CI-sync entry (a stray `npm install`); restored to HEAD rather than committed.
 
+**FABLE REVIEW OF THIS BRANCH — RUN 2026-07-24** (Fable 5, Neil-triggered via `/model` mid-session;
+scoped to `git diff main...feat/loop-arch-fastfollow-telemetry` + the 3 posed questions; no repo
+re-exploration). **Verdict: branch structurally sound, no blocker, merge-safe.** Per question:
+
+1. **x-run-id: attribution-without-verification STANDS for flag-ON.** Write-time ownership check
+   rejected — a DB round-trip per generation call taxes every legitimate request to defend an
+   already-filterable, read-side-scoped, RLS-deny-read, rate-limit-bounded telemetry sink. Two
+   same-family residuals, both LOW, documented not fixed: (a) `api/events.ts` lets any caller
+   attach a well-formed `run_id` to NODE events too — legit producer node events always carry the
+   authed owner's user_id, so the discipline is: any per-run fail-rate analysis must scope by
+   `(run_id, user_id)` exactly like `run_cogs`, never `run_id` alone; (b) `imgate:${runId}:${sceneIdx}`
+   lets someone who KNOWS a victim's runId burn that pair's 2/24h idempotency budget → victim's
+   gate check 429s → silent coverage skip (fail-open, pennies) — runIds are unguessable `apr_`
+   UUIDs, so treat them as capability tokens (don't print them in shared logs/screenshots).
+   **Optional P5-window adder (one query, zero hot-path cost):** a forgery DETECTOR — flag events
+   rows where `events.user_id ≠ producer_runs.user_id` for the same run_id; turns "filterable"
+   into "alarmed" during exactly the window the telemetry gates P5.
+2. **spawnSync heartbeat limit: async-spawn refactor NOT justified.** Sharpened by two facts read
+   this review: `concatScenes` is a FULL x264 re-encode of the whole program (the true longest
+   single pass — scales with total program length), while `mixMusic`/`masterAudio` are `-c:v copy`
+   (audio-only, fast) — so the only pass that could plausibly cross the 120s stale threshold at
+   12 scenes is concat. But `api/render/final.ts` has `maxDuration: 300` (vercel.json), and
+   `WATCHDOG_MAX_AGE_MS = 330s` sits correctly just above it: at the scale where concat would
+   threaten 120s, the TOTAL render is already flirting with the 300s platform kill — the binding
+   constraint neither beats nor async-spawn can move. Calibration is correct; leave thresholds
+   alone. **Watch item instead of code:** `concatMs` + per-scene ms are already console-logged —
+   during the P4/P5 window, if any real run shows concat >90s or total wall >270s, escalate to a
+   chunked/off-serverless render design (P6 territory), not to watchdog tuning.
+3. **The 3 deferrals: all stand as deferrals, with ONE upgraded to a flag-ON precondition** — see
+   below. #4/#5's silent skips bias the very `gate_verdict` precision analysis flag-ON exists to
+   run ("no flags because images are good" is indistinguishable from "no flags because the gate
+   never ran"). The `check_fail` event name already exists in the RunEventName vocabulary, so
+   emitting a skip-reason event at both silent-skip sites is small, non-TUNED, executor-sized.
+   The substantive fixes (reference rehydration; separate gate RL bucket) stay deferred.
+   **Flag-ON conditions are therefore now: (a) live smoke of `checkSceneImage` vs real
+   `sceneImageModel` output (pre-existing), + (b) gate-skip visibility events (new, pending Neil's
+   GO → Opus/executor slice).**
+
 **Fast-follow 3 — the 3 documented deferrals: re-verified still accurate, still ACCEPTED (no code
 change).** Fable-review findings 3/4/5 confirmed present in the code as described: (3) adscript
 worst case ~8 model calls vs the blueprint's ≤4 — `runFlowWithSchema` re-invokes the whole handler
