@@ -90,11 +90,21 @@ mura ang paper fix kaysa regenerated plates/clips. Tapos Neil approval, saka pla
 ## CAMERA ANGLES (expansion, gated)
 
 - Proven: eye-level / slight-low / slight-high close-up (KM-002).
-- **Side-angle talking = pwedeng subukan** gamit ang app FACE_TO_CAMERA rule: side BODY
-  angle OK basta nakaharap sa camera ang mukha — BOTH eyes + mouth clearly visible
-  (kailangan ng lip-sync). Full side profile na nakatalikod ang mukha = BANNED sa talking.
-  Gate: ISANG test clip muna + Neil eyeball bago isama sa batch (camera-distance rule
-  pa rin: close-up lagi).
+- **Side-angle talking, dalawang legal na lane (Neil 2026-07-25 — pinalitan ang
+  lumang "profile BANNED" na basehan):**
+  1. **Body-angled, face-to-camera:** katawan naka-angle, ulo fully frontal —
+     FACE-TO-CAMERA rule sa `marvin-avatar`. Default variety lane.
+  2. **TRUE PROFILE STAY-POSE:** half-face / 90° profile plates PWEDE sa
+     talking bilang variety — ang morph trigger ay ang PAG-IKOT ng ulo, hindi
+     ang profile mismo. Veo prompt DAPAT may pose lock: *"He stays in this
+     exact side-profile orientation for the ENTIRE clip and NEVER turns toward
+     the camera; head orientation identical to the input image in every frame;
+     only the visible side of his mouth and jaw moves as he speaks, plus
+     natural blinks; expression constant."* Lip-sync sa visible side ng bibig
+     lang; framed/tripod look ang framing (hindi selfie).
+  - Gate pa rin: ISANG test clip muna + Neil eyeball bago isama sa batch
+    (camera-distance rule pa rin: close-up lagi). Profile identity ay mas
+    mahirap i-triage — Neil eyeball ang tanging valid verdict.
 
 ## B-ROLL MOTION LANE — Kling 3.0 Omni (gated experiment)
 
@@ -166,6 +176,11 @@ i-route ang paggawa:
 
 Ang CD (grifon-creative-director) ang tumitingin kung ang na-design na b-roll ay
 pasok sa script line, brand, at niche ng gagamitan — hindi generic stock feel.
+
+**Anonymous-hands default (Neil, 2026-07-25):** kapag ang b-roll ay kuwento ng
+CUSTOMER/viewer (hal. "nagbubuhos KA ng timba"), hindi kailangang si Marvin ang
+kamay — walang tattoo/watch anchors, generic Pinoy hands. Ang Marvin anchors ay
+para LANG sa b-roll kung saan si Marvin mismo ang binabanggit o nagde-demo.
 
 ## VERIFIER (machine QA gates bago kay Neil)
 
