@@ -152,7 +152,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const data = upstreamJson.data;
     // COGS: the render is now billable. Fire-and-forget — never throws. When a producer
     // run supplied x-run-id, the estimate is mirrored to public.events for per-run roll-up.
-    logVideoUsage('kling:video:submit', klingBody.model_name, Number(klingBody.duration) || 0, getRunId(req));
+    // x-run-id is client-controlled, so the row also carries the VERIFIED user.id.
+    logVideoUsage('kling:video:submit', klingBody.model_name, Number(klingBody.duration) || 0, getRunId(req), user.id);
     return res.status(200).json({
       operation: {
         task_id: data.task_id,

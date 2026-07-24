@@ -40,13 +40,27 @@ create index if not exists events_run_id_idx on public.events(run_id);
 -- ESTIMATES, so a render that later fails still shows its full estimated cost. Treat
 -- est_usd as a lower-bound generation estimate for observability and trend analysis —
 -- do NOT use it for final pricing or margin decisions.
+--
+-- ⚠ ATTRIBUTION (2026-07-24): rows are attributed per (run_id, user_id). x-run-id is
+-- client-supplied and NOT ownership-checked at write time (a DB round-trip per generation
+-- call would slow the request path), so a run's TRUE cost is the row whose user_id matches
+-- the run's OWNER (producer_runs.user_id). Any additional row on the same run_id belongs to
+-- a DIFFERENT caller — that is a forged x-run-id and must NOT be summed into the run's cost.
+-- Pre-2026-07-24 'cogs' rows carry user_id = null (unattributable legacy data) and therefore
+-- match no owner.
+-- COLUMN ORDER IS DELIBERATE: user_id is LAST. `create or replace view` may only APPEND
+-- columns, so putting user_id at the end lets this file stay re-runnable in place — no
+-- `drop view`, which would also discard any GRANTs the view has accumulated and briefly
+-- break its one reader (api/producer/run.ts). Readers select by NAME, so order is
+-- immaterial to them.
 create or replace view public.run_cogs as
   select run_id,
          sum((meta->>'estUsd')::numeric) as est_usd,
-         count(*)                        as calls
+         count(*)                        as calls,
+         user_id
     from public.events
    where event = 'cogs' and run_id is not null
-   group by run_id;
+   group by run_id, user_id;
 
 -- Service-role-only, like public.rate_limits (NOT user-owned like user_voices).
 -- Rationale: this is a server-written telemetry sink. Writes go through an api/*

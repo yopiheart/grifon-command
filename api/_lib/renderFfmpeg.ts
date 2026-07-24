@@ -1023,6 +1023,10 @@ export async function renderFinalVideo(
       if (!bed) bed = musicPath(music.style);
       if (bed) {
         const musicedPath = join(dir, 'final_music.mp4');
+        // Beat BEFORE the bed mix: concat→here covers only the bed download, and the mix
+        // itself is a full-program pass. Without this, download + mix + master could share
+        // one gap and stall a healthy render past the 120s watchdog (renderJob.ts).
+        onStep?.('music bed');
         if (mixMusic(finalPath, bed, probeDurationSec(finalPath), musicedPath, musicMixPlan(music.role))) {
           resultPath = musicedPath;
         }
@@ -1033,6 +1037,9 @@ export async function renderFinalVideo(
 
     // Final master: pin loudness to -14 LUFS (+ faststart for instant streaming).
     const masteredPath = join(dir, 'final_master.mp4');
+    // Beat BEFORE the master pass closes the bed mix's gap, so no single heartbeat gap
+    // spans two full-program ffmpeg passes.
+    onStep?.('master');
     if (masterAudio(resultPath, masteredPath)) resultPath = masteredPath;
     onStep?.('audio master');
 
