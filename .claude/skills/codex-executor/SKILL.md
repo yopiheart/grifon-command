@@ -5,15 +5,15 @@ description: Delegate a mechanical, spec-tight implementation brief to GPT 5.6 S
 
 This skill is the **GPT 5.6 Sol executor lane** (decided 2026-07-10): a bridge that hands a full implementation brief to the OpenAI Codex CLI, then enforces Grifon's guardrails post-hoc. Same bridge pattern as `codex-image`; billed to the ChatGPT plan via `codex login`, so execution tokens don't draw on the Claude Max 5x pool at all.
 
-**⚠ GATED TRIAL** until `workflows/codex_executor_trial.md` records 3–5 reviewed tasks and an adopt/drop decision. Until then, using this lane requires Neil's per-task OK.
+**ADOPTED 2026-07-24** — the trial gate closed 3/3 green (`workflows/codex_executor_trial.md`); this lane is the **default** executor for mechanical, spec-tight briefs, no per-task OK needed. Adoption caveat: the trial baseline was Opus 4.8 — `code-executor` now runs Opus 5, so keep logging anything a `code-executor` run wouldn't have shipped; if the balance flips, reopen the gate.
 
 ## Lane routing (who executes what)
 
 | Brief | Executor |
 |---|---|
 | Mechanical, spec-tight: api/ handlers, type plumbing, refactors with acceptance criteria, test writing | **This skill** (Sol via Codex) |
-| UI-heavy, DESIGN.md surfaces, ambiguous briefs, anything near TUNED files | `code-executor` subagent (Opus 4.8) |
-| Fallback when this skill exits 10/11/12 | `code-executor` subagent (Opus 4.8), same brief |
+| UI-heavy, DESIGN.md surfaces, ambiguous briefs, anything near TUNED files | `code-executor` subagent (Opus 5) |
+| Fallback when this skill exits 10/11/12 | `code-executor` subagent (Opus 5), same brief |
 | Checking / reviewing ANY diff | Claude main loop — **never Sol** (builder ≠ reviewer, see `workflows/pr_review_loop.md`) |
 
 ## Prerequisites (one-time per machine)
@@ -49,13 +49,13 @@ node .claude/skills/codex-executor/execute.mjs --brief .tmp/brief-<slug>.md [--m
 | 2 | TUNED-file guardrail tripped | Review remaining diff; tuned patch → Neil |
 | 3 | Build or tests failed | Re-brief Codex with the failure, or fall back to `code-executor` |
 | 10 / 11 | Codex missing / not logged in | Re-arm (`scripts/restore-codex.ps1`) or fall back to `code-executor` |
-| 12 | **Sol quota / plan limit hit** | **Automatic-fallback SOP: dispatch the SAME brief to `code-executor` (Opus 4.8). No re-planning needed.** |
+| 12 | **Sol quota / plan limit hit** | **Automatic-fallback SOP: dispatch the SAME brief to `code-executor` (Opus 5). No re-planning needed.** |
 
 There is no harness-level auto-switch (hooks can't change models); this exit-code contract IS the fallback mechanism — deterministic at the dispatch layer.
 
-## After every trial-phase run
+## After every run (post-adoption logging)
 
-Log the task in `workflows/codex_executor_trial.md`: brief, diff size, wall-clock, review findings (esp. anything a `code-executor` run wouldn't have shipped). The trial gate decides whether this lane becomes the default for mechanical briefs.
+Keep logging notable runs in `workflows/codex_executor_trial.md` — especially any review finding a `code-executor` (Opus 5) run wouldn't have shipped. The gate is closed but reopenable: Opus 5 raised the executor baseline the trial was scored against.
 
 ## Scope
 

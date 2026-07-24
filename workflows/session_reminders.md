@@ -33,7 +33,7 @@ scripts/restore-codex.ps1
 
 (Neil signs in with the ChatGPT account when `codex login` prompts.) If the Sol
 executor lane exits 10/11/12 mid-session, the fallback SOP is: dispatch the same
-brief to the `code-executor` subagent (Opus 4.8) — see the skill's SKILL.md.
+brief to the `code-executor` subagent (Opus 5) — see the skill's SKILL.md.
 
 ## Desktop wallpaper (Grifon Noir) — wiped by defreezer
 
@@ -129,9 +129,9 @@ Details from the support article
   Fable may consume up to half of it.
 - **Credits trap:** when the Fable share is exhausted, Fable can CONTINUE on
   pay-as-you-go credits — it does not hard-stop. If `/usage` shows the Fable share
-  at 100%, actively `/model` to Opus 4.8 for the rest of the week (allowance
-  resets weekly; no pin flip needed). Do not keep running Fable on credits
-  unnoticed.
+  at 100%, actively `/model` to **Opus 5** for the rest of the week (allowance
+  resets weekly; no pin flip needed; was Opus 4.8 until the Opus 5 release
+  2026-07-24). Do not keep running Fable on credits unnoticed.
 - Claude Code needs v2.1.170+ for Fable.
 - Transition note (2026-07-20): the old promo window expired 2:59 PM PHT the same
   day the new included-at-50% terms took effect; Neil hit a transient model-switch
