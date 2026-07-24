@@ -18,7 +18,57 @@ Four stacked branches, pushed, **no PRs, nothing merged, nothing deployed by us,
 - All verification was **unit-test + mocked**; no live-provider, no preview, no prod evidence exists. P1's only smoke = local dev server 401 probes.
 - Every phase passed an adversarial critic (Opus post-policy). Full audit answers: see the read-only status Q&A at the end of the 2026-07-23 session transcript.
 
-## Standing orders from Neil (2026-07-23, verbatim constraints)
+## ⚠ SUPERSEDED 2026-07-24 — merged, applied, smoked (Neil: "merge, SQL apply, live smoke — G")
+
+The standing orders below were lifted by Neil on 2026-07-24. Current state:
+
+- **MERGED to `main`** — merge commit `b7a545d` (`feat/loop-arch-fastfollow-telemetry`, `--no-ff`,
+  local merge; `gh` needs an interactive login the session couldn't run). Build + suite re-verified
+  ON THE MERGED TREE, not just the branch: **962 passed / 22 skipped**, bundle-leak clean. P1–P4 +
+  all fast-follows are now on `main`. **P4 remains DARK** — `gateDepsFor`
+  ([../services/producerDeps.ts](../services/producerDeps.ts)) returns both deps `undefined` unless
+  `VITE_IMAGE_GATE_ENABLED === 'true'`, so merging did NOT activate `checkSceneImage` or the AI gate.
+- **SQL APPLIED to production** (project `varoqxjccqmskzeejagn` "GRIFON AI", via Supabase MCP —
+  `execute_sql`, matching the repo's hand-applied convention rather than adding migration records).
+  Verified against `information_schema` AFTER applying, not assumed: `run_cogs` now carries
+  `user_id` at ordinal 4 (the append-in-place worked — the live view really was
+  `(run_id, est_usd, calls)`, confirming the no-DROP decision), and `run_attribution_anomalies`
+  exists with all 7 columns. **Live counts at apply time: 0 anomalies, 30 legacy `cogs` events, 0
+  attributed rows, 1 `run_cogs` group row** — exactly the predicted legacy behavior (pre-2026-07-24
+  rows carry `user_id = null`, collapse into one null group, and roll up to 0).
+- **LIVE SMOKE PASSED — the last P4 flag-ON condition is now MET.** New gated regression
+  [../tests/regression/scene-image-check.regression.test.ts](../tests/regression/scene-image-check.regression.test.ts)
+  (skipped by default; opt in with `RUN_IMAGE_GATE_SMOKE=1`, mirroring `RUN_REGRESSION`). It calls
+  the REAL `generateSceneImage` (real tuned prompt + real `imageConfig`) and the REAL
+  `checkSceneImage`; only the `/api/gemini/image` hop is stubbed, and that handler is a pure
+  pass-through (`ai.models.generateContent(parsed.data)`), so the request reaching Gemini is
+  production-identical. Measured on `gemini-3.1-flash-lite-image` @ `imageSize:'1K'` (~$0.12/run):
+
+  | aspect | returned | ratio vs target | drift | short side | verdict |
+  |---|---|---|---|---|---|
+  | 9:16 | 768×1376 | 0.5581 vs 0.5625 | −0.78% | 768 | ok |
+  | 16:9 | 1376×768 | 1.7917 vs 1.7778 | +0.78% | 768 | ok |
+  | 1:1  | 1024×1024 | 1.0000 vs 1.0000 | 0.00% | 1024 | ok |
+
+  > **Margins — the number to actually watch is the SHORT SIDE, not the aspect.** Aspect drift uses
+  > 0.78% of a ±2% budget (~39%), comfortable. But the short side clears `MIN_SHORT_SIDE = 704` by
+  > only **64px (9%)** on both 16:9 and 9:16 — that is the whole safety margin. `checkSceneImage`
+  > HARD-FLAGS and drives the only automated reroll in P4, so if Google ever re-tiers what `1K`
+  > returns (or a future aspect lands on a smaller tier), EVERY scene hard-flags and rerolls. Re-run
+  > this smoke after any `sceneImageModel` change and before re-enabling the flag. Thresholds were
+  > NOT adjusted — they now have empirical backing and adjusting them without cause would spend the
+  > margin the check exists to enforce.
+  >
+  > Tail case checked and CLOSED BY CONSTRUCTION: `generateSceneImage` accepts `4:5`/`3:4`, which
+  > are absent from `ExpectedAspect` and would make `ASPECT_RATIO[...]` undefined → NaN comparison →
+  > `aspect_mismatch` on every scene. Not reachable: `ProductionInput.aspectRatio`
+  > (producerOrchestrator.ts:141) is typed to exactly the same three values.
+
+**Remaining to flip P4 ON (Neil's call, Neil's dashboard):** set `IMAGE_GATE_ENABLED` (server) +
+`VITE_IMAGE_GATE_ENABLED` (client) to `'true'` in Vercel env. Both conditions that gated this are
+now discharged — metering redesign (2026-07-23) and this live smoke (2026-07-24).
+
+## Standing orders from Neil (2026-07-23, verbatim constraints — SUPERSEDED, see above)
 
 **Do not merge or enable anything. Do not trigger the paid canary until Neil approves the cost estimate. Keep P4 disabled.** Model policy: Opus main loop (pin now `claude-opus-4-8`); Fable only with Neil's per-invocation approval, scoped, blueprint/high-risk-review only.
 
