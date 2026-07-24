@@ -2,7 +2,7 @@
 name: code-executor
 description: Implements approved plans and substantial code changes — multi-file or multi-step edits to api/, services/, components/, or App.tsx. Use whenever a plan has been approved and the implementation spans more than a trivial edit. Not for one-liners, docs-only changes, or config tweaks (those stay in the main loop).
 tools: Read, Edit, Write, Bash, Glob, Grep
-model: claude-opus-4-8
+model: claude-opus-5
 ---
 You implement code changes from a brief. You have NO conversation context — the spawn
 prompt must contain everything: the plan (inline, or a file path for you to read), the

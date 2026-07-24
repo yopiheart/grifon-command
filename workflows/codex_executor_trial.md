@@ -1,6 +1,6 @@
 # Codex-Executor (GPT 5.6 Sol lane) — Trial Gate
 
-**Status: OPEN — 3 of 3–5 trial tasks logged (minimum bar reached; ADOPT/DROP decision is Neil's — see Decision section). The Sol lane is NOT the default executor until this gate closes with an ADOPT decision.**
+**Status: CLOSED — ADOPTED (Neil, 2026-07-24). The Sol lane is now the default executor for mechanical, spec-tight briefs. See Decision section.**
 
 ## Why this gate exists
 
@@ -33,6 +33,15 @@ Either way: record the decision + date below, update the CLAUDE.md model-allocat
 
 ## Decision
 
-_(pending — fill after ≥3 logged tasks)_
+**ADOPT — Neil, 2026-07-24.** All three ADOPT criteria met across the 3 logged tasks:
+no findings a `code-executor` run wouldn't also have produced; build + tests green on
+first attempt every time; zero TUNED-file guardrail trips. The CLAUDE.md
+model-allocation bullet is updated (Sol = default lane for mechanical briefs).
+
+**Caveat recorded at adoption:** the trial's "on par or better" verdicts were measured
+against the **Opus 4.8** `code-executor` baseline. Opus 5 (released the same day as
+this decision, now the `code-executor` model) raises that bar at identical cost —
+watch the next few Sol runs against the new baseline; if the review-burden balance
+flips, reopen this gate rather than silently reverting.
 
 **When closing this gate, also action the parked `openai/codex-plugin-cc` decision** (see agent_lessons.md 2026-07-20, HOLD entry): ADOPT → open a second gated trial (plugin as transport under `execute.mjs` + `/codex:adversarial-review` as advisory-only cross-model lens on Claude-built diffs, pending Neil's doctrine-carve-out sign-off; Stop-hook gate and `/codex:transfer` stay rejected). DROP → plugin is moot, never revisit.
