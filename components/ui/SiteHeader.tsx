@@ -5,7 +5,7 @@ import { DUR, EASE } from './motionTokens';
 import { Menu, X, Volume2, VolumeX } from 'lucide-react';
 import { useUiSound } from '../../services/uiSoundService';
 import { GrifonMark } from './GrifonMark';
-import { MAT_CHROME, SCROLL_EDGE } from './materialTokens';
+import { MAT_CHROME, MAT_SLAB, SCROLL_EDGE } from './materialTokens';
 
 export interface SiteNavLink {
   label: string;
@@ -222,7 +222,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: DUR.fast }}
-            className="fixed inset-0 z-[60] bg-zinc-950/95 backdrop-blur-xl md:hidden flex flex-col"
+            className={`fixed inset-0 z-[60] ${MAT_SLAB} md:hidden flex flex-col`}
           >
             <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
               {Logo}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { X } from 'lucide-react';
 import { R_MODAL, T_CTRL } from './wizardTokens';
+import { MAT_SLAB, MAT_VEIL } from './materialTokens';
 
 // ===========================================================================
 // Modal — centered glass shell (rounded-3xl), backdrop-click closes, scrolls
@@ -15,9 +16,11 @@ export const Modal: React.FC<{
   children: React.ReactNode;
   wide?: boolean;
 }> = ({ title, onClose, children, wide }) => (
-  <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/70 p-4 backdrop-blur-sm sm:items-center" onClick={onClose}>
+  // SLAB behind a VEIL. A modal has taken the screen, so it stops being
+  // translucent — Apple's own rule for a sheet at full height.
+  <div className={`fixed inset-0 z-50 flex items-end justify-center p-4 sm:items-center ${MAT_VEIL}`} onClick={onClose}>
     <div
-      className={`max-h-[90vh] w-full overflow-y-auto border border-white/10 bg-zinc-900/80 p-5 backdrop-blur-xl ${R_MODAL} ${wide ? 'max-w-2xl' : 'max-w-md'}`}
+      className={`max-h-[90vh] w-full overflow-y-auto border border-white/10 p-5 ${MAT_SLAB} ${R_MODAL} ${wide ? 'max-w-2xl' : 'max-w-md'}`}
       onClick={(e) => e.stopPropagation()}
     >
       <div className="mb-4 flex items-center justify-between">

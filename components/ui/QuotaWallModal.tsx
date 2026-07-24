@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { DUR, SPRING } from './motionTokens';
 import { Check, Crown, Sparkles, X } from 'lucide-react';
+import { MAT_VEIL } from './materialTokens';
 import { GoldButton } from './GoldButton';
 import { PLAN_FEATURES } from '../../config/planFeatures';
 import type { PlanId } from '../../utils/planGate';
@@ -134,7 +135,7 @@ export const QuotaWallModal: React.FC<QuotaWallModalProps> = ({
           role="dialog"
           aria-modal="true"
           aria-label="Monthly limit reached — upgrade"
-          className="fixed inset-0 z-[80] flex items-center justify-center p-4 bg-zinc-950/80 backdrop-blur-sm"
+          className={`fixed inset-0 z-[80] flex items-center justify-center p-4 ${MAT_VEIL}`}
         >
           <motion.div
             initial={reduce ? { opacity: 0 } : { opacity: 0, y: 24, scale: 0.96 }}

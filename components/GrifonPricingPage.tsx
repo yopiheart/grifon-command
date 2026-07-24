@@ -12,6 +12,7 @@ import { SignatureScribble } from "./landing/SignatureScribble";
 import { startCheckout, type PlanId, type BillingCycle } from "../services/billingService";
 import { PLAN_FEATURES } from "../config/planFeatures";
 import { PRO_VALUE_STACK, PRO_VALUE_TOTAL, FOUNDING_NOTE } from "../config/valueStack";
+import { MAT_CHROME, SCROLL_EDGE } from './ui/materialTokens';
 
 const Check = () => <CheckIcon size={16} strokeWidth={2.5} className="text-[#FFCC00]" />;
 const X = () => <XIcon size={14} strokeWidth={1.5} className="text-on-surface-sublabel" />;
@@ -375,8 +376,11 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
             band across the page) ===== */}
         <div
           ref={billingBarRef}
-          className={`sticky z-30 mb-6 py-3 px-5 transition-[background-color,backdrop-filter] duration-300 ${
-            barStuck ? "backdrop-blur-xl bg-zinc-950/70" : "backdrop-blur-none bg-transparent"
+          // CHROME once stuck — the plan cards scroll under this switcher, so
+          // it's a floating control surface, and the scroll edge keeps the
+          // labels off whatever passes beneath.
+          className={`sticky z-30 mb-6 py-3 px-5 rounded-2xl transition-[background-color,backdrop-filter] duration-300 ${
+            barStuck ? `${MAT_CHROME} ${SCROLL_EDGE}` : "backdrop-blur-none bg-transparent"
           }`}
           style={{ top: headerH }}
         >

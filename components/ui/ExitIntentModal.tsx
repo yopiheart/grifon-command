@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { Clapperboard, X } from 'lucide-react';
+import { MAT_VEIL } from './materialTokens';
 import { GoldButton } from './GoldButton';
 import { DUR, SPRING } from './motionTokens';
 import { FOUNDING_OFFER, seatsRemaining } from '../../config/foundingOffer';
@@ -60,7 +61,7 @@ export const ExitIntentModal: React.FC<ExitIntentModalProps> = ({ triggered, onD
           role="dialog"
           aria-modal="true"
           aria-label="One more take — start free"
-          className="fixed inset-0 z-[80] flex items-center justify-center p-4 bg-zinc-950/80 backdrop-blur-sm"
+          className={`fixed inset-0 z-[80] flex items-center justify-center p-4 ${MAT_VEIL}`}
         >
           <motion.div
             initial={reduce ? { opacity: 0 } : { opacity: 0, y: 24, scale: 0.96 }}
