@@ -64,9 +64,25 @@ The standing orders below were lifted by Neil on 2026-07-24. Current state:
   > `aspect_mismatch` on every scene. Not reachable: `ProductionInput.aspectRatio`
   > (producerOrchestrator.ts:141) is typed to exactly the same three values.
 
-**Remaining to flip P4 ON (Neil's call, Neil's dashboard):** set `IMAGE_GATE_ENABLED` (server) +
-`VITE_IMAGE_GATE_ENABLED` (client) to `'true'` in Vercel env. Both conditions that gated this are
-now discharged — metering redesign (2026-07-23) and this live smoke (2026-07-24).
+**Remaining to flip P4 ON:** both gating conditions are discharged (metering redesign 2026-07-23;
+live smoke 2026-07-24). Env vars ADDED by Neil 2026-07-24 — but see the scope trap below.
+
+> **⚠ ENV SCOPE TRAP (hit 2026-07-24, cost a wasted redeploy — read before testing).** Neil added
+> `IMAGE_GATE_ENABLED` + `VITE_IMAGE_GATE_ENABLED` scoped to **Preview**, then redeployed
+> **Production** (three redeploys of `48ca455`, all `target: "production"` per the Vercel API).
+> A Production deployment does NOT receive Preview-scoped env vars, so the gate stayed fully dark
+> and the redeploys changed nothing. Failure mode is SILENT and easy to misread: a Producer run on
+> prod would show no `gate_verdict` and no `check_skip`, looking exactly like a broken gate rather
+> than an unset flag. **The env scope must match the deployment target.** Since the branch merged,
+> every push to `main` builds Production — a Preview build now needs a non-main branch push (or
+> `vercel deploy` without `--prod`). Branch `preview/image-gate-test` was pushed from `main` for
+> exactly this. Note previews are SSO-walled (Deployment Protection ON), so browser-login first.
+>
+> Also worth knowing: the `VITE_` half being build-time was CONFIRMED empirically, not assumed —
+> a local build with the flag on puts `VITE_IMAGE_GATE_ENABLED:`true`` literally in
+> `dist/assets/index-*.js`. That also means the value is PUBLIC by construction, so marking it
+> "Sensitive" in Vercel buys nothing (it was left marked Sensitive; whether that blocks build-time
+> injection was NOT verified — if a preview build shows the gate still dark, un-mark it and retest).
 
 ## Standing orders from Neil (2026-07-23, verbatim constraints — SUPERSEDED, see above)
 
