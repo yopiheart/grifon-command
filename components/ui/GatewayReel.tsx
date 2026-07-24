@@ -29,8 +29,9 @@ const FACES = [
 ];
 
 // Fixed, hand-shuffled order — a random one would re-roll on every render and
-// make the reel flicker between mounts.
-const SEQUENCE = [0, 1, 2, 3, 4, 5, 2, 5, 0, 4, 1, 3, 5, 0, 3, 1, 2, 4, 3, 4, 1, 0, 5, 2];
+// make the reel flicker between mounts. Weighted ~1:2 gold-to-dark: at an even
+// split the gold plates read as a wash rather than as separate frames.
+const SEQUENCE = [0, 1, 3, 5, 2, 1, 5, 3, 4, 5, 1, 3, 0, 3, 5, 1, 2, 5, 3, 1, 4, 3, 5, 1];
 
 export const GatewayReel: React.FC<{ className?: string }> = ({ className = '' }) => (
   <div
@@ -49,6 +50,18 @@ export const GatewayReel: React.FC<{ className?: string }> = ({ className = '' }
         />
       ))}
     </div>
+    {/* Dimming layer. Apple's rule for glass over bright content: drop a dark
+        scrim behind the pane, ~35%. Without it the gold plates blow straight
+        through the gateway's saturate(190%) and the form stops being legible —
+        strongest right behind the card, lighter at the edges so the reel still
+        reads as content rather than as a vignette. */}
+    <div
+      className="absolute inset-0"
+      style={{
+        background:
+          'radial-gradient(ellipse 62% 58% at 50% 50%, rgba(7,7,8,0.86) 0%, rgba(7,7,8,0.62) 45%, rgba(7,7,8,0.35) 100%)',
+      }}
+    />
   </div>
 );
 

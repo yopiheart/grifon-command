@@ -255,6 +255,9 @@ html { scroll-behavior: smooth; }
     background-size: 280% 100%;
     background-position: 130% 0;
     pointer-events: none;
+    /* Behind content, above the pane's own background — same trick as the rim
+       band. Without this the specular hazes every child of the surface. */
+    z-index: -1;
     transition: background-position 1.1s cubic-bezier(0.22, 1, 0.36, 1);
   }
   .mat-chrome:hover::after { background-position: -30% 0; }
