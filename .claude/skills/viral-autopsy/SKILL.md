@@ -131,6 +131,27 @@ A mismatch (Gemini said `raw-ugc`, frames look studio-graded) → correct the
 register before it feeds a Believability pattern count, exactly as you'd correct a
 miscounted cut.
 
+### Step 3b2 — Camera-angle map + b-roll inventory (Neil, 2026-07-25 — REQUIRED
+kapag ang autopsy ay pang-recreation/adaptation, hindi lang pattern-counting)
+
+Ang layunin ng recreation autopsy ay makopya hanggang ANGLE GRAMMAR — hindi
+sapat ang "handheld selfie style" na isang linya. Mula sa render_audit frames
+(o sariling frame-strip), itala per beat/scene:
+
+1. **Camera-angle map:** framing (close-up/chest-up/wide) · camera height
+   (eye/slight-low/slight-high) · lens feel (selfie-arm vs framed) · motion
+   (locked/drift/walk) · saan nag-iiba ang angle at BAKIT (beat pivot? reveal?).
+2. **B-roll inventory:** bawat non-talking shot — ano ito (kamay? produkto? UI?
+   text card? lugar?), kailan pumapasok (timestamp + kasabay na linya), at ano
+   ang trabaho niya sa beat (proof? micro-scene? pattern interrupt?).
+3. **Recreation routing suggestion:** i-tag bawat b-roll item sa lane nito per
+   ang B-ROLL ROUTING table sa `kuya-marvin-ads` (image / HTML-Hyperframes /
+   image+HTML combo / gated generative motion) — para pagdating sa production,
+   deretso na ang design brief kay CD at walang paid-gen na hindi kailangan.
+
+Ilagay ang buod sa entry (bagong optional row sa entry table o sa So-What) at
+ang detalyadong map sa recreation brief ng ad na gagawa (hal. km-XXX-brief.md).
+
 ### Step 3d — Vault ingest (optional accelerator — skip freely if the connector is absent)
 
 If the Jockey by TwelveLabs MCP connector is authed (pilot PASSED 2026-07-25 —

@@ -117,6 +117,56 @@ pagalawin via **Kling O1 (`kling-video-o1`)** sa halip na still+push-in:
   maging regular lane. Ang mukha ni Marvin ay HINDI dadaan sa Kling hangga't walang
   hiwalay na identity test na pasado.
 
+## COHERENCE QA (Neil, 2026-07-25 — script ↔ storyboard ↔ edit dapat magkakumplemento)
+
+**North star ng bawat check: scroll-stop → curiosity → panoorin hanggang DULO.**
+Hindi sapat na "tama" ang bawat piraso — dapat nag-uusap sila para sa retention.
+
+**Stage 1 — PAPER QA (pagkatapos ng script + storyboard, BAGO ang plates):**
+Bawat scene, sagutin:
+1. **Line ↔ visual:** ang sinasabi ba ay pinapalakas ng nakikita? (hal. timba
+   micro-scene VO = timba footage, hindi generic na tank shot)
+2. **Line ↔ text layer:** ang overlay/word-card ba ay kumukumplemento (hindi
+   inuulit verbatim, hindi kumokontra, hindi tumatakip sa mukha)?
+3. **Angle ↔ beat intent:** tama ba ang camera angle sa emosyon ng beat (hal.
+   slight-low = awtoridad sa epiphany; eye-level = kapwa-tao sa hook)?
+4. **Open loop bawat beat:** may tanong bang iniiwan ang beat na sinasagot ng
+   susunod? Kung sarado ang loop bago ang CTA, may exit point ang viewer — ayusin.
+5. **Beat escalation:** may bago bang stimulus bawat 2-4s (cut, card, punch-in,
+   SFX, location)? Puwang na walang bagong stimulus ≥4s = flag.
+
+**Stage 2 — EDIT QA (sa assembled cut, dagdag sa VERIFIER sa ibaba):**
+6. **Text timing:** bawat overlay/card lumalabas sa loob ng ±0.2s ng kaukulang
+   salita sa speech map; animation duration hindi lumalagpas sa beat window.
+7. **Music ↔ beat:** may audio event (SFX hit, music swell/drop, silence break)
+   sa bawat beat transition; flash transitions may kasabay na whoosh/pop.
+8. **SFX puwesto:** SFX sa transition/reveal/slam LANG — hindi random; walang
+   SFX na tumatakip sa unang salita ng linya.
+9. **Dead-air + pace:** VERIFIER dead-air scan PLUS: walang beat na lumalagpas
+   sa storyboard target duration nang >15% (kung lumagpas, trim o speedup).
+10. **Watch-to-end test (agent watch):** panoorin ang buong cut via
+    render_audit/frame-strip at itanong: saan ako titigil mag-scroll? Bawat
+    sagot na hindi "hindi ako titigil" = findings para kay Neil.
+
+Ang Stage 1 ay gate bago ang PRE-IMAGE QUALITY GATE; ang Stage 2 ay kasama ng
+VERIFIER run. Parehong machine-triage lang — si Neil pa rin ang final na mata.
+
+## B-ROLL ROUTING (Neil, 2026-07-25 — galing sa inspiration, pero tamang lane ang recreation)
+
+Kapag may b-roll ang inspiration ad na gusto nating i-recreate, itala muna sa
+autopsy KUNG ANO ito per beat (see viral-autopsy camera/b-roll capture), tapos
+i-route ang paggawa:
+
+| Klase ng b-roll sa inspiration | Recreation lane | Gastos |
+|---|---|---|
+| UGC/live-action feel (kamay, produkto, lugar, aksyon) | **codex-image still** (CD nagdi-design pasok sa script + brand/niche) + FFmpeg motion (push-in/punch-in) | ~$0 |
+| Motion graphics: text animation, UI cards, charts, count-ups, logo pops | **Hyperframes HTML** — HUWAG mag-generate ng image/video kung kaya ng HTML; deterministic pa | $0 |
+| Combo (image na kailangang gumalaw lampas sa push-in, image-in-graphic, phone-frame) | **codex-image still + Hyperframes composite** (image slot sa HTML composition) | ~$0 |
+| Totoong generative motion lang ang kaya (physics, morph, subject motion) | Kling O1 / Omni — GATED, huling opsyon, Neil approval + budget cap | $$ |
+
+Ang CD (grifon-creative-director) ang tumitingin kung ang na-design na b-roll ay
+pasok sa script line, brand, at niche ng gagamitan — hindi generic stock feel.
+
 ## VERIFIER (machine QA gates bago kay Neil)
 
 Bawat assembled cut, bago i-present:
