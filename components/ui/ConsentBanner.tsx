@@ -48,7 +48,7 @@ export const ConsentBanner: React.FC<ConsentBannerProps> = ({ onConsent, onNavig
       <button
         onClick={() => decide(false)}
         aria-label="Decline analytics"
-        className="absolute top-2 right-2 p-2 text-on-surface-sublabel hover:text-white transition-colors"
+        className="absolute top-1 right-1 flex h-11 w-11 items-center justify-center text-on-surface-sublabel hover:text-white transition-colors"
       >
         <X className="w-4 h-4" />
       </button>
@@ -79,11 +79,11 @@ export const ConsentBanner: React.FC<ConsentBannerProps> = ({ onConsent, onNavig
       <div className="mt-4 flex gap-3">
         <button
           onClick={() => decide(false)}
-          className="flex-1 rounded-full border border-white/10 bg-zinc-950 py-3 text-xs font-bold uppercase text-zinc-400 hover:text-white hover:border-[#FFCC00] transition-all"
+          className="flex-1 min-h-11 rounded-full border border-white/10 bg-zinc-950 py-3 text-xs font-bold uppercase text-zinc-400 hover:text-white hover:border-[#FFCC00] transition-all"
         >
           Decline
         </button>
-        <GoldButton onClick={() => decide(true)} className="flex-1">
+        <GoldButton onClick={() => decide(true)} className="flex-1 min-h-11">
           Accept
         </GoldButton>
       </div>

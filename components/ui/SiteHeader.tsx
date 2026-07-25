@@ -40,7 +40,7 @@ const SoundToggle: React.FC<{ className?: string; withLabel?: boolean }> = ({
       aria-pressed={enabled}
       aria-label={enabled ? 'Mute interface sounds' : 'Enable interface sounds'}
       title={enabled ? 'Sound on' : 'Sound off'}
-      className={`flex items-center gap-2 text-zinc-400 hover:text-[#FFCC00] transition-colors cursor-pointer ${className}`}
+      className={`flex h-11 min-w-11 items-center justify-center gap-2 text-zinc-400 hover:text-[#FFCC00] transition-colors cursor-pointer ${className}`}
     >
       {enabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
       {withLabel && (
@@ -197,14 +197,14 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
         <div className="flex md:hidden flex-1 justify-end items-center gap-2.5">
           <button
             onClick={onEnterApp}
-            className="bg-transparent border border-[#FFCC00] text-[#FFCC00] text-[10px] font-black uppercase tracking-widest px-3.5 py-1.5 rounded-full hover:bg-[#FFCC00]/10 transition-all"
+            className="flex h-11 items-center bg-transparent border border-[#FFCC00] text-[#FFCC00] text-[10px] font-black uppercase tracking-widest px-3.5 rounded-full hover:bg-[#FFCC00]/10 transition-all"
           >
             {ctaLabel}
           </button>
           <button
             onClick={() => setMenuOpen(true)}
             aria-label="Open menu"
-            className="p-1.5 rounded-lg text-zinc-300 hover:text-white hover:bg-white/10 transition-all"
+            className="flex h-11 w-11 items-center justify-center rounded-lg text-zinc-300 hover:text-white hover:bg-white/10 transition-all"
           >
             <Menu className="w-5 h-5" />
           </button>

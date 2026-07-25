@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { EASE, DUR } from './ui/motionTokens';
-import { ArrowLeft, Aperture, Sparkles, RefreshCw, Check, Copy } from 'lucide-react';
+import { ArrowLeft, Sparkles, RefreshCw, Check, Copy } from 'lucide-react';
+import { getModuleIdentity } from '../config/moduleIdentity';
+
+// The module's own icon, from the registry — this header used to hardcode
+// Aperture, which belonged to Cinema Command.
+const HookLabIcon = getModuleIdentity('hook_lab').icon;
 import { toast } from 'sonner';
 import { GlassPanel } from './ui/GlassPanel';
 import { GoldButton } from './ui/GoldButton';
@@ -102,7 +107,7 @@ const HookLab: React.FC<HookLabProps> = ({ businessInfo, onBack }) => {
         </button>
 
         <div className="flex items-center gap-3 mb-2">
-          <Aperture className="w-6 h-6 text-[#FFCC00] shrink-0" />
+          <HookLabIcon className="w-6 h-6 text-[#FFCC00] shrink-0" />
           <h1 className="text-3xl lg:text-4xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
             Hook Lab
           </h1>
@@ -176,7 +181,7 @@ const HookLab: React.FC<HookLabProps> = ({ businessInfo, onBack }) => {
                             onClick={() => handleRenderFrame(v)}
                             className="w-full h-full flex flex-col items-center justify-center gap-2 text-on-surface-sublabel hover:text-[#FFCC00] transition-colors"
                           >
-                            <Aperture className="w-7 h-7 shrink-0" />
+                            <HookLabIcon className="w-7 h-7 shrink-0" />
                             <span className="text-[10px] font-mono uppercase tracking-widest">Render Frame</span>
                           </button>
                         ) : undefined

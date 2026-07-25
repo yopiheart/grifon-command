@@ -158,6 +158,41 @@ HIG Motion: *"Let people cancel motion. Avoid making people wait for an animatio
 
 ---
 
+---
+
+## Icon + layout audit, 2026-07-25
+
+### Icons — SHIPPED
+
+Rendered every module icon at rail size (20px) **with the colour removed**. That is the real test: if two silhouettes collide in greyscale, the hue is carrying the meaning, not the icon.
+
+- **Three concentric-circle glyphs** — Radar (Recon), Target (War Room), Aperture (Cinema Command). Radar and Target were near-indistinguishable at 20px. Replaced with **Binoculars / Swords / Projector**; one circle kept, all three now separable without colour. This matters more since the HIG Color finding above may push the rail monochrome — at which point the icon must stand alone.
+- **The registry was not actually the single source of truth.** Three surfaces kept private icon maps, and they had drifted badly: `RecentWorkCard` showed Director AI as a *film strip* and Render Bay as a *clapperboard* — **the two modules were wearing each other's icons** depending on which screen you were on. `HookLab`'s own header wore Aperture, which belonged to Cinema Command. All three now read `getModuleIdentity()`; the rule is documented in the registry docblock.
+- Remaining, not changed: **level of detail is inconsistent** (Clapperboard/FlaskConical are dense, Zap/Flame are three strokes) against HIG's *"consistent size, level of detail, stroke thickness"*, and the set mixes physical studio objects with abstract concepts. Cosmetic, needs a design call.
+
+### Layout — measured across 3 pages × 2 widths
+
+Measured in Chromium, not eyeballed.
+
+**Passes outright:** zero horizontal overflow on all six combos, and **zero mobile lines over 75ch** on all three pages. The dashboard is the cleanest layout in the app — 2 distinct container widths where landing has 7.
+
+| Finding | Before | After | Status |
+|---|---|---|---|
+| Tap targets <44px, landing mobile | 17 | **10** | fixed the icon buttons + near-misses |
+| Tap targets <44px, pricing mobile | 12 | **5** | " |
+| Widest desktop line | **127ch** | 105ch | worst one capped at 68ch |
+| Distinct container max-widths, landing | 7 | 7 | **open** |
+| Distinct section paddings, landing desktop | 7 | 7 | **open** |
+
+Fixed: mobile menu button (32→44), sound toggle (16→44), consent dismiss (32→44), carousel arrows (36→44), header mobile CTA (29→44), consent Accept/Decline (42→44), pricing billing switcher (40→44).
+
+**Still open, needs Neil — these change composition, not just size:**
+
+1. **Legal text links are 16–17px tall** (Terms, Privacy, Refund, Support in the footers). Wide enough to hit, too short vertically. Fixing means giving the footer link rows real height, which changes the footer's look.
+2. **Landing uses 7 different container max-widths** (1280 / 1152 / 896 / 512 / 360 / 280 / 180) and pricing uses 6 (340 / 1280 / 600 / 900 / 1440 / 700). Section edges therefore don't align down the page — against HIG Layout's *"Align components with one another."* Consolidating to 2–3 is a real restructure.
+3. **No vertical rhythm.** Landing desktop runs 80/96 · 112/112 · 128/128 · 64/64 · 80/80 · 128/128 · 96/96 — seven values, one asymmetric. Pricing uses 60px paddings, which are off the 4px scale entirely.
+4. **6 remaining desktop lines over 75ch** (worst 105ch on landing, 87ch on pricing, 112ch on the dashboard hero subcopy).
+
 ### Slice 3 (not started)
 Remaining `backdrop-blur` literals → tiers: modals + quota wall → SLAB, module chrome per the picking rule. Then move 06's concentric radii on whatever gets touched.
 

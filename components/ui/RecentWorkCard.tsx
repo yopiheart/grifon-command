@@ -1,23 +1,16 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { DUR } from './motionTokens';
-import { Clock, ArrowRight, Film, Search, Target, Type, Image as ImageIcon, Video, User, Clapperboard, Wand2, Calendar, Scissors, Mic } from 'lucide-react';
+import { Clock, ArrowRight, Film } from 'lucide-react';
 import type { RecentItem, RecentWorkKind } from '../../services/recentWorkService';
+import { MODULE_IDENTITY } from '../../config/moduleIdentity';
 
-const MODULE_ICON: Record<string, React.ComponentType<{ className?: string }>> = {
-  creative_director: Film,
-  market_research: Search,
-  offer_optimizer: Target,
-  caption_headline: Type,
-  image_editor: ImageIcon,
-  cinematic_studio: Video,
-  influencer_forge: User,
-  generate_video: Clapperboard,
-  image_ads: Wand2,
-  organic_calendar: Calendar,
-  edit_video: Scissors,
-  signal_modulator: Mic,
-};
+// Icons come from the module registry — this file used to keep its own map,
+// which had drifted badly: Director AI showed a film strip here and a
+// clapperboard in the rail, Render Bay showed exactly the opposite. One
+// module, one icon, everywhere.
+const iconFor = (moduleId: string): React.ComponentType<{ className?: string }> =>
+  MODULE_IDENTITY[moduleId]?.icon ?? Film;
 
 const KIND_LABEL: Record<RecentWorkKind, string> = {
   visit: 'Opened',
@@ -78,7 +71,7 @@ export const RecentWorkCard: React.FC<RecentWorkCardProps> = ({ items, onResume,
       ) : (
         <div className="space-y-1.5">
           {top.map(item => {
-            const Icon = MODULE_ICON[item.moduleId] ?? Clock;
+            const Icon = iconFor(item.moduleId);
             const isVisit = item.kind === 'visit';
             return (
               <button

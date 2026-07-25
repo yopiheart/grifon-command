@@ -2,8 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { DUR, EASE, SPRING, reducedMotion } from './ui/motionTokens';
 import {
-  Sparkles, ArrowRight, ChevronRight, Film, Search, Target,
-  Flame, Lock, Menu, Bell,
+  Sparkles, ArrowRight, ChevronRight, Flame, Lock, Menu, Bell,
 } from 'lucide-react';
 import { useSubscription } from '../hooks/useSubscription';
 import { planAtLeast, type PlanId } from '../utils/planGate';
@@ -82,11 +81,13 @@ const RAIL_GROUPS: { label: string; ids: string[] }[] = [
 ];
 
 // Outcome chips under the hero — deep-link straight into a module.
+// Icons come from the registry so a chip can never disagree with the rail row
+// it deep-links to.
 const HERO_CHIPS = [
-  { id: 'creative_director', label: 'Make a video ad', icon: Film },
-  { id: 'market_research', label: 'Research my market', icon: Search },
-  { id: 'offer_optimizer', label: 'Build an offer', icon: Target },
-];
+  { id: 'creative_director', label: 'Make a video ad' },
+  { id: 'market_research', label: 'Research my market' },
+  { id: 'offer_optimizer', label: 'Build an offer' },
+].map((c) => ({ ...c, icon: getModuleIdentity(c.id).icon }));
 
 // Slice 5 — gated modules and the plan tier that unlocks each. Modules absent
 // here are free. The full roster is tiered so every rail row can show its

@@ -78,7 +78,7 @@ export const StackReplace: React.FC = () => (
         </div>
         <div className="flex-1">
           <div className="text-lg md:text-xl font-bold text-white">AI Video Editor — built for Filipino content</div>
-          <p className="mt-1 text-sm text-zinc-300">
+          <p className="max-w-[68ch] mt-1 text-sm text-zinc-300">
             Auto-captions, cuts, music, and retention effects that keep viewers watching — Taglish-ready, no timeline, no skills. Stop paying a freelance editor every single video.
           </p>
         </div>

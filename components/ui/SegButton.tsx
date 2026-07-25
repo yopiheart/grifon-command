@@ -75,7 +75,7 @@ export function SegButton<T extends string>({
               disabled={'disabled' in opt ? opt.disabled : undefined}
               title={'title' in opt ? opt.title : undefined}
               onClick={() => onChange(opt.value)}
-              className={`relative overflow-visible isolate rounded-full px-6 py-2.5 text-[13px] font-bold uppercase tracking-wider transition-colors ${
+              className={`relative overflow-visible isolate inline-flex min-h-11 items-center rounded-full px-6 py-2.5 text-[13px] font-bold uppercase tracking-wider transition-colors ${
                 active ? 'text-black' : 'text-on-surface-sublabel hover:text-white'
               }`}
             >

@@ -1,6 +1,6 @@
 import {
-  Clapperboard, Radar, Target, Megaphone, Film, AudioWaveform,
-  Scissors, FlaskConical, Aperture, Flame, Zap, Wand2, LayoutGrid,
+  Clapperboard, Binoculars, Swords, Megaphone, Film, AudioWaveform,
+  Scissors, FlaskConical, Projector, Flame, Zap, Wand2, LayoutGrid,
   Satellite, Layers, SlidersHorizontal, type LucideIcon,
 } from 'lucide-react';
 
@@ -17,6 +17,19 @@ import {
  *     button, focus ring, and nav active state. Never tint those with the hue.
  *   - Hues are applied via INLINE STYLE (hex + alpha), never dynamic Tailwind
  *     classes, which the purge step would strip.
+ *
+ * ICON RULE — silhouettes must survive with the colour removed. Audited
+ * 2026-07-25 at rail size (20px) in greyscale: Radar (Recon), Target (War
+ * Room) and Aperture (Cinema Command) were three concentric-circle glyphs,
+ * and Radar/Target were near-indistinguishable — the hue was carrying the
+ * meaning, not the icon. Replaced with Binoculars / Swords / Projector.
+ * Before adding a module, render its icon beside the others in greyscale.
+ *
+ * THIS REGISTRY IS THE ONLY PLACE AN ICON IS CHOSEN. Surfaces read it via
+ * getModuleIdentity(); none of them may keep a private icon map. Three did
+ * (RecentWorkCard, Dashboard's hero chips, HookLab's own header) and had
+ * drifted so far that Director AI and Render Bay showed each other's icons
+ * depending on the screen.
  *
  * Keys are the internal `activeModule` ids from App.tsx — renaming here changes
  * every surface that reads the registry. Internal keys never change.
@@ -57,14 +70,14 @@ export const MODULE_IDENTITY: Record<string, ModuleIdentity> = {
     name: 'Recon',
     descriptor: 'Find your dream customers',
     hue: '#60A5FA', // blue-400
-    icon: Radar,
+    icon: Binoculars,
   },
   offer_optimizer: {
     key: 'offer_optimizer',
     name: 'War Room',
     descriptor: "Build an offer they can't refuse",
     hue: '#F87171', // red-400
-    icon: Target,
+    icon: Swords,
   },
   caption_headline: {
     key: 'caption_headline',
@@ -106,7 +119,7 @@ export const MODULE_IDENTITY: Record<string, ModuleIdentity> = {
     name: 'Cinema Command',
     descriptor: 'Craft commercial-grade cinematic ads',
     hue: '#2DD4BF', // teal-400 (teal ≠ banned cyan)
-    icon: Aperture,
+    icon: Projector,
   },
   influencer_forge: {
     key: 'influencer_forge',
@@ -159,7 +172,7 @@ export const getModuleIdentity = (key: string): ModuleIdentity =>
     name: key,
     descriptor: '',
     hue: GRIFON_GOLD,
-    icon: Aperture,
+    icon: LayoutGrid,
   };
 
 /**
