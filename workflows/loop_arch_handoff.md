@@ -18,7 +18,48 @@ Four stacked branches, pushed, **no PRs, nothing merged, nothing deployed by us,
 - All verification was **unit-test + mocked**; no live-provider, no preview, no prod evidence exists. P1's only smoke = local dev server 401 probes.
 - Every phase passed an adversarial critic (Opus post-policy). Full audit answers: see the read-only status Q&A at the end of the 2026-07-23 session transcript.
 
-## ▶ TOMORROW'S RUNBOOK (2026-07-25) — everything below this heading is DONE; this is all that's left
+## ✅ FLAG-ON RUN EXECUTED 2026-07-25 — the gate is LIVE. Read this before the runbook below.
+
+Run `apr_b3979138-7743-45c8-91cd-a1b747fb6181`, HIRAYA GLOW (the committed
+`tests/fixtures/sample-batch/hero.png` hero), Real Talk Review, 9:16, 9 scenes, parked at the
+storyboard gate (NOT approved — no video spend). **Cost $0.73**, not the estimated $5: the $5 is
+the video render, and the gate only touches scene images, so the remaining spend would have added
+zero gate evidence. Both flags were confirmed ON *before* spending, via three free browser probes
+(client flag read out of the deployed bundle; server flag via the pre-meter 503 branch; then a
+canvas-generated PNG to prove the vision call really runs) — that pre-flight is worth repeating.
+
+**Verdict: the gate works.** 7 of 9 scenes returned real judged verdicts (`reason: null`,
+`pass: true`, no flags); 2 failed open. Corroborated by COGS: 8 `gemini-3.5-flash` calls, which is
+`IMAGE_GATE_MODEL` ([../api/_lib/imageGate.ts](../api/_lib/imageGate.ts) :28).
+
+**⚠ The runbook's success criteria below are WRONG — do not trust them.** Query A reads
+`producer_scenes.gate_verdict`, which came back all-null and looked like total failure. It is not:
+nothing in the codebase writes that column (see P2). Query B cannot see a fail-open either, because
+`gate_unavailable` is a server-side 200, not a client throw, so it emits no `check_skip`. The
+verdicts actually live in `producer_runs.artifacts->'scenes'->…->'gateVerdict'` — read them there:
+
+```sql
+select (s->>'sceneIdx')::int, s->'gateVerdict'->>'pass', s->'gateVerdict'->>'reason'
+  from producer_runs r, jsonb_array_elements(r.artifacts->'scenes') s
+ where r.run_id = '<run_id>' order by 1;
+```
+
+### Punch list from the run (P1 SHIPPED; P2-P6 open)
+
+| # | Finding | Where | Status |
+|---|---|---|---|
+| P1 | **Camera rotation never rotated** — a constant `variationIndex` pinned all 9 scenes to `AVATAR_CAMERA_ANGLES[0]`, so the 4-angle rotation contributed nothing. Neil caught it by eye (5 near-identical frontal shots). | `producerOrchestrator.ts` | **FIXED `4f662a3`** |
+| P2 | **`producer_scenes.gate_verdict` is never written by anything.** Column exists, documented as the source for the offline precision analysis — but the verdict only ever reaches the run-header checkpoint jsonb. **This throws away the dataset the whole flag-only phase exists to build.** Fix before flipping Production. | `producerOrchestrator` + `api/producer/advance.ts` | OPEN |
+| P3 | **A server-side fail-open is invisible.** 2/9 scenes returned `gate_unavailable` with no `check_skip`/`check_fail`, so the "gate didn't really run" rate is uncountable — exactly the metric contamination the check_skip/check_fail split was designed to prevent. | `producerOrchestrator` | OPEN |
+| P4 | Regenerate at Gate-1 has **no cap** (unlimited paid image calls — a COGS hole) and `text-zinc-400` on `bg-zinc-900` reads as disabled (missed by the `a149525` contrast sweep). | `StoryboardGateScreen.tsx` | OPEN |
+| P5 ⚠ | Hook-morph puts the product on the END frame **by design** (`prompts.ts` "HOOK END-FRAME = RESOLVED REVEAL"). Right for Hype Drop; wrong for Real Talk Review, whose script has its own reveal beat — the reveal gets spent twice and lands neither time. Rule is format-blind; should be conditional on `scriptType`. | **TUNED** `api/_lib/prompts.ts` | GATED — Neil |
+| P6 ⚠ | The script generator emits **unverifiable scarcity** ("limited stock" on a product with no inventory signal) and a **therapeutic claim** ("nag-heal talaga" on a cosmetic — PH FDA). Systemic, not one ad. | **TUNED** prompts | GATED — Neil |
+
+Also worth knowing: the gate passed 7/7 with zero flags, so **there is still no evidence it CAN
+flag** — a gate that never fires is indistinguishable from one that isn't judging. P2 is what turns
+that from a guess into a measurement.
+
+## ▶ RUNBOOK (written 2026-07-24 for 2026-07-25) — superseded in part by the section above
 
 Written 2026-07-24 end-of-session. Assumes a fresh cafe PC (defreezer wiped everything except
 this repo). Read this section only — the rest is history.
