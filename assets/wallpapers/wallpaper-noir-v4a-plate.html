@@ -1,0 +1,246 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Grifon Noir Wallpaper v4a — Command Plate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  /* ═══════════════════════════════════════════════════════════════════
+     v4a — COMMAND PLATE.  Noir ground + real liquid glass.
+
+     Three fixes over v1–v3, all of them measured rather than tasted:
+
+     1. THE GROUND IS LIT.  v1–v3 sat on a near-flat #09090B, which gave the
+        grain no luminance to vary — that is why the texture never read. The
+        softbox is high-RIGHT so Windows' top-left icon field stays clean.
+     2. GRAIN BLENDS SOFT-LIGHT, NOT SCREEN.  v3 used `screen`, which only
+        ever lightens, so it milked the blacks into haze instead of graining
+        them. soft-light moves both directions, which is what film does. Also
+        coarsened 0.85 -> 0.62 so it survives at 1920px.
+     3. THE BLOOM IS A LIGHT, NOT A TEXT-SHADOW.  v3's `0 0 50px rgba(gold,.2)`
+        traced the glyph outlines in dull khaki — the olive smear under
+        "command the machine." Replaced by a real radial behind the line plus
+        a TIGHT bright shadow. Wide+dim = smudge; tight+bright = bloom.
+
+     The glass earns its place here: it has a lit, grained field behind it to
+     refract. That was exactly the argument against putting it on the app
+     canvas, where there was nothing behind it but flat black.
+     ═══════════════════════════════════════════════════════════════════ */
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: #070708; }
+
+  #canvas {
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    font-family: 'Inter', -apple-system, sans-serif;
+    /* Softbox high-right, falling to true black at the left and corners. */
+    background:
+      radial-gradient(ellipse 1500px 1000px at 68% 28%,
+        rgba(255, 204, 0, 0.052) 0%, rgba(255, 204, 0, 0.013) 32%, transparent 64%),
+      radial-gradient(ellipse 1750px 1250px at 68% 28%,
+        #191920 0%, #101014 36%, #0A0A0C 72%, #070708 100%);
+  }
+
+  /* ── Depth layer 1: the wordmark as an edge-lit ghost, bleeding off the
+        right edge. Felt, not read. This is the depth v1–v3 had none of. ── */
+  /* Cropped deliberately: the wordmark exits the right edge mid-"O" so the
+     eye completes it. The first pass cut it mid-"N", which read as an
+     accident rather than a crop. */
+  .ghost {
+    position: absolute;
+    right: -286px;
+    bottom: -104px;
+    font-size: 428px;
+    font-weight: 900;
+    line-height: 0.8;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    background: linear-gradient(to bottom,
+      rgba(255,255,255,0.085) 0%, rgba(255,255,255,0.020) 52%, transparent 82%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  /* ── The gold pool that the glass will refract, and that the serif line
+        sits inside. A real light source — not a text-shadow. ── */
+  .pool {
+    position: absolute;
+    left: 52%;
+    top: 44%;
+    width: 1180px;
+    height: 700px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(ellipse at center,
+      rgba(255, 204, 0, 0.085) 0%, rgba(255, 190, 0, 0.028) 38%, transparent 68%);
+    pointer-events: none;
+  }
+
+  /* ── LIQUID GLASS PLATE ─────────────────────────────────────────────
+     Body = specular tint over a dark floor. The floor is what keeps this
+     dark glass; without it the pane goes pale wherever the light pools. ── */
+  .plate {
+    position: absolute;
+    right: 148px;
+    top: 50%;
+    transform: translateY(-50%);
+    /* 916px left the right third of the pane empty on the short lines.
+       832 tracks the longest line ("WHILE THEY") instead of the widest guess. */
+    width: 832px;
+    padding: 62px 70px 56px;
+    border-radius: 30px;
+    isolation: isolate;
+    background:
+      linear-gradient(158deg,
+        rgba(255,255,255,0.078) 0%,
+        rgba(255,255,255,0.020) 44%,
+        rgba(255,255,255,0.048) 100%),
+      rgba(11, 11, 13, 0.52);
+    backdrop-filter: blur(30px) saturate(190%);
+    -webkit-backdrop-filter: blur(30px) saturate(190%);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.17),
+      inset 0 -1px 0 rgba(255,255,255,0.055),
+      0 44px 96px -22px rgba(0,0,0,0.72);
+  }
+
+  /* Rim lens — a 1.5px band that picks up gold where the light pools and
+     goes neutral silver where it doesn't. Real material behaviour. */
+  .plate::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.5px;
+    pointer-events: none;
+    background: linear-gradient(146deg,
+      rgba(255,255,255,0.44) 0%,
+      rgba(255,204,0,0.30) 34%,
+      rgba(255,255,255,0.05) 60%,
+      rgba(255,255,255,0.28) 100%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+  }
+
+  /* Travelling specular — a single soft highlight crossing the pane. */
+  .plate::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; top: 0;
+    height: 58%;
+    border-radius: 30px 30px 0 0;
+    pointer-events: none;
+    background: linear-gradient(172deg,
+      rgba(255,255,255,0.055) 0%, transparent 78%);
+  }
+
+  .eyebrow {
+    position: relative; z-index: 1;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: #FFCC00;
+    margin-bottom: 34px;
+  }
+
+  .line-sans {
+    position: relative; z-index: 1;
+    font-weight: 900;
+    font-size: 112px;
+    line-height: 0.94;
+    letter-spacing: -0.022em;
+    text-transform: uppercase;
+    background: linear-gradient(to bottom, #F7F7F8 0%, #6E6E77 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .line-serif {
+    position: relative; z-index: 1;
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 108px;
+    line-height: 1.0;
+    color: #FFCC00;
+    margin-top: 12px;
+    /* TIGHT + BRIGHT. v3's 50px/0.2 traced the glyphs in khaki. */
+    text-shadow: 0 0 18px rgba(255, 204, 0, 0.40);
+  }
+
+  .footrow {
+    position: relative; z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    margin-top: 46px;
+  }
+  .footrow .bar {
+    height: 1px;
+    width: 96px;
+    background: linear-gradient(to right, rgba(255,204,0,0.85), rgba(255,204,0,0));
+  }
+  .footrow .sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #82828B;
+  }
+
+  /* ── Grain, masked to the light. Grain lives in the light, never in the
+        shadow — unmasked grain is the tell that it's an overlay. ── */
+  .grain {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.62' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 240px 240px;
+    opacity: 0.15;
+    mix-blend-mode: soft-light;
+    -webkit-mask-image: radial-gradient(ellipse 1650px 1200px at 68% 28%, #000 0%, rgba(0,0,0,0.5) 44%, transparent 78%);
+    mask-image: radial-gradient(ellipse 1650px 1200px at 68% 28%, #000 0%, rgba(0,0,0,0.5) 44%, transparent 78%);
+  }
+
+  /* Vignette — pulls the corners down so the plate reads as the subject. */
+  .vig {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse 1400px 980px at 60% 40%,
+      transparent 0%, transparent 52%, rgba(5,5,6,0.55) 100%);
+  }
+</style>
+</head>
+<body>
+<div id="canvas">
+  <div class="pool"></div>
+  <div class="ghost">Grifon</div>
+
+  <div class="plate">
+    <div class="eyebrow">// Grifon Command</div>
+    <div class="line-sans">While they scroll,</div>
+    <div class="line-serif">you ship.</div>
+    <div class="footrow">
+      <span class="bar"></span>
+      <span class="sub">One module at a time</span>
+    </div>
+  </div>
+
+  <div class="vig"></div>
+  <div class="grain"></div>
+</div>
+</body>
+</html>

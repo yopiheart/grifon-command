@@ -24,7 +24,13 @@ const SCALES = [
   { dsf: 1, tag: '1920x1080' },
 ];
 
-const browser = await chromium.launch();
+// Cafe PC has the browser Playwright expects, so launch() just works there.
+// The Claude-Code-on-web sandbox ships a pre-installed Chromium whose build
+// number rarely matches the npm package's, and `playwright install` is blocked
+// by egress policy — so allow an explicit binary override instead of failing.
+//   PW_CHROMIUM_PATH=/opt/pw-browsers/chromium-1194/chrome-linux/chrome
+const executablePath = process.env.PW_CHROMIUM_PATH || undefined;
+const browser = await chromium.launch(executablePath ? { executablePath } : {});
 try {
   for (const file of variants) {
     const base = file.replace(/\.html$/, '');
