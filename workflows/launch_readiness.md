@@ -4,7 +4,28 @@
 
 This is the meta-workflow. It doesn't do the work itself — it points to the workflows that do, and tracks overall progress. **Source of truth = the code + `git log`.** This file summarizes; it does not replace.
 
-> **⏭ NEXT SESSION (2026-07-11+): THE JULY CLOSE-OUT.** Single resume doc =
+> **⏭ CURRENT (2026-07-25). This file is two weeks stale below this block — the live
+> resume doc is [`loop_arch_handoff.md`](loop_arch_handoff.md), specifically its
+> "TOMORROW'S RUNBOOK" section.** State as of tonight:
+>
+> - **Loop-arch P1–P4 are MERGED to `main`** (`b7a545d`, 2026-07-24) — boundaries + watchdog,
+>   observability, parallelism, image gate. Suite 1017 passed / 26 skipped, build green.
+> - **P4 was dark on Production; both flags verified ON for the Preview deployment
+>   2026-07-25** via two free browser probes (client flag read out of the bundle; server flag
+>   via the pre-meter 503 branch). A third probe with a real canvas PNG confirmed the vision
+>   call actually runs — `observations` non-null, so the gate cannot silently no-op.
+> - **In flight:** the flag-ON Producer run (~$5, HIRAYA GLOW hero from
+>   `tests/fixtures/sample-batch/hero.png`). Pass = `gate_verdict` populated on identity/
+>   product scenes → then flip Production scope and delete `preview/image-gate-test`.
+> - **Shipped tonight:** the `api/events.ts` reserved-name guard (`cogs`/`watchdog_kill` can
+>   no longer be client-forged into `run_cogs`) — item 1 of the 4-item Sol consult shortlist.
+> - **Open, not started:** shortlist items 2–4 (ffprobe final-artifact acceptance — the F6
+>   guard; `stale_then_success` watchdog telemetry; per-image dimension-margin logging). All
+>   three touch TUNED/frozen render code and need Neil's go.
+> - Unrelated and still parked: KM-003 Veo clips (~$4, needs a hook1/hook2 pick), Slice B
+>   sample batch, TwelveLabs M1 vault.
+>
+> **⏭ PREVIOUS (2026-07-11+): THE JULY CLOSE-OUT.** Single resume doc =
 > [`july_close_out_plan.md`](july_close_out_plan.md) — full July pending inventory, the
 > phased one-session sequence (code-fix batch ∥ grill-me beat-0 → batch runs → grade/cut →
 > merge train), and the paste-ready kickoff. **Note: the producer flow ran end-to-end live
