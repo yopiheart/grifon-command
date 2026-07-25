@@ -162,7 +162,12 @@ describe('gateImage — fail-open wrapper (mirrors omniGate doctrine)', () => {
     delete process.env.GEMINI_API_KEY; // getAi throws GEMINI_NOT_CONFIGURED → runImageGate throws → gateImage fails open
     try {
       const result = await gateImage({ imageBase64: 'data:image/png;base64,AAAA', referenceMode: 'avatar' });
-      expect(result).toEqual({ observations: null, verdict: { pass: true, flags: [], reason: 'gate_unavailable' } });
+      // The fail-open CONTRACT is unchanged — still pass:true, no flags, same reason.
+      expect(result.observations).toBeNull();
+      expect(result.verdict).toMatchObject({ pass: true, flags: [], reason: 'gate_unavailable' });
+      // …and it now says WHY. Two live runs failed open on 22% then 37.5% of scenes with every
+      // non-run looking identical; this field is what makes that rate explainable.
+      expect(result.verdict.detail).toContain('GEMINI_NOT_CONFIGURED');
     } finally {
       if (prev !== undefined) process.env.GEMINI_API_KEY = prev;
     }

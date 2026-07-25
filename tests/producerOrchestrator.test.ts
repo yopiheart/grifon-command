@@ -1629,10 +1629,29 @@ describe("P4 — gate-skip visibility ('check_skip')", () => {
     const skips = emitted('check_skip');
     expect(skips).toHaveLength(1); // scene 1's real verdict must NOT be counted as a skip
     expect(skips[0].meta).toMatchObject({ node: 'scene_images', sceneIdx: 0, kind: 'gate', reason: 'gate_unavailable' });
+    expect(skips[0].meta.detail).toBeUndefined(); // absent when the server sent none
     // A fail-open is not a flag, and the image is kept exactly as before.
     expect(emitted('check_fail')).toHaveLength(0);
     expect(run.scenes.find((s) => s.sceneIdx === 0)?.imageUrl).toBe('img://IMG0');
     expect(run.gate).toBe('storyboard');
+  });
+
+  it('forwards the server’s fail-open CAUSE, so the rate can be explained and not just counted', async () => {
+    // Two live runs failed open on 22% then 37.5% of scenes with every non-run looking identical.
+    // The cause now rides the verdict; without it the gate's reliability is unfixable by
+    // inspection — IMAGE_GATE_EMPTY (no text: safety stop, unread SDK shape) and
+    // IMAGE_GATE_UNPARSEABLE (spoke, but not JSON) have opposite fixes.
+    const gateMock = vi.fn(async () => ({
+      observations: null,
+      verdict: { pass: true, flags: [], reason: 'gate_unavailable', detail: 'IMAGE_GATE_EMPTY: finish=SAFETY' },
+    }));
+    const { deps } = makeFakeDeps({ imageGateCheck: gateMock as any });
+    const run = createProductionRun(makeInput({ avatar: identityAvatar() }), 'u1');
+
+    await runProduction(run, cb(), deps);
+
+    expect(emitted('check_skip').map((s) => s.meta.detail))
+      .toEqual(['IMAGE_GATE_EMPTY: finish=SAFETY', 'IMAGE_GATE_EMPTY: finish=SAFETY']);
   });
 });
 

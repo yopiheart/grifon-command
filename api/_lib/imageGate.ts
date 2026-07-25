@@ -72,6 +72,10 @@ export interface ImageGateVerdict {
   compositionNotes?: string;
   /** Set to 'gate_unavailable' on the fail-open path. */
   reason?: string;
+  /** WHY the fail-open happened, short and safe to log (never the image, never a key).
+   *  Exists because 'gate_unavailable' alone made every non-run look identical, so a 22% and a
+   *  37.5% fail-open rate across two live runs could not be explained, only counted. */
+  detail?: string;
 }
 
 /** The full gate result the handler returns: raw observations + the pure verdict.
@@ -248,7 +252,20 @@ export async function runImageGate(params: RunImageGateParams): Promise<ImageGat
   });
   const raw = (resp as any)?.text ?? '';
   const observations = parseImageGateResponse(raw);
-  if (!observations) throw new Error('IMAGE_GATE_UNPARSEABLE');
+  if (!observations) {
+    // Distinguish the two failures — they have OPPOSITE fixes and were indistinguishable while
+    // both collapsed into one 'gate_unavailable'. EMPTY means the model returned no text at all
+    // (safety block, a stop before any output, an SDK shape we are not reading); UNPARSEABLE means
+    // it spoke but not in JSON, which is a prompt/schema problem. The 2026-07-25 runs failed open
+    // on 22% then 37.5% of scenes with no way to tell which — this is what makes that answerable.
+    // finishReason is the single most diagnostic field for the empty case, so it rides along.
+    const finish = (resp as any)?.candidates?.[0]?.finishReason ?? 'unknown';
+    throw new Error(
+      raw.trim()
+        ? `IMAGE_GATE_UNPARSEABLE: finish=${finish} head=${raw.trim().slice(0, 60)}`
+        : `IMAGE_GATE_EMPTY: finish=${finish}`,
+    );
+  }
   return observations;
 }
 
@@ -270,7 +287,10 @@ export async function gateImage(params: RunImageGateParams): Promise<ImageGateRe
       }),
     };
   } catch (err: any) {
-    console.warn('[api/_lib/imageGate] gate infra failure — failing open:', err?.message);
-    return { observations: null, verdict: { pass: true, flags: [], reason: 'gate_unavailable' } };
+    // Truncated hard: this string lands in client telemetry, so it carries the cause and nothing
+    // else — no image bytes, no key material, no unbounded model prose.
+    const detail = String(err?.message ?? 'unknown').slice(0, 120);
+    console.warn('[api/_lib/imageGate] gate infra failure — failing open:', detail);
+    return { observations: null, verdict: { pass: true, flags: [], reason: 'gate_unavailable', detail } };
   }
 }

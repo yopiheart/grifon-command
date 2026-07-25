@@ -1616,7 +1616,11 @@ async function runStage(
                     // split exists to prevent (see RunEventName in api/_lib/runEvents.ts). Emitted
                     // as check_skip, not check_fail, because the check genuinely never ran.
                     if (gateRes.verdict.reason === 'gate_unavailable') {
-                      emitRunEvent('check_skip', run.runId, { node: 'scene_images', sceneIdx: i, kind: 'gate', reason: 'gate_unavailable' });
+                      const detail = (gateRes.verdict as { detail?: string }).detail;
+                      emitRunEvent('check_skip', run.runId, {
+                        node: 'scene_images', sceneIdx: i, kind: 'gate', reason: 'gate_unavailable',
+                        ...(detail ? { detail } : {}),
+                      });
                     }
                     // FLAG-ONLY: a failing verdict lives ONLY in gateVerdict (the Gate-1 chip keys
                     // off gateVerdict.pass). flaggedReason is reserved for HARD flags (image_check /
