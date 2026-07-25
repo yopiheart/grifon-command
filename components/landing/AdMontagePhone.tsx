@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform } from 'motion/react';
 import { EASE, DUR } from '../ui/motionTokens';
 import { Building2, UtensilsCrossed, ShoppingBag, Play } from 'lucide-react';
+import { MAT_PLATE } from '../ui/materialTokens';
 
 // Sample creative only (what a Grifon ad LOOKS like) — illustrative, not real
 // campaign data. No performance metrics asserted; the badge states only that the
@@ -73,7 +74,7 @@ export const AdMontagePhone: React.FC<{ className?: string }> = ({ className = '
   return (
     <motion.div ref={containerRef} style={reduceMotion ? undefined : { y }} className={className}>
       {/* Phone bezel */}
-      <div className="relative mx-auto w-[240px] sm:w-[270px] lg:w-[300px] aspect-[9/19] rounded-[2.75rem] border border-white/15 bg-zinc-900 p-2 shadow-[0_30px_60px_rgba(0,0,0,0.8)]">
+      <div className={`relative mx-auto w-[240px] sm:w-[270px] lg:w-[300px] aspect-[9/19] rounded-[2.75rem] border border-white/15 ${MAT_PLATE} p-2 shadow-[0_30px_60px_rgba(0,0,0,0.8)]`}>
         {/* Notch */}
         <div className="absolute top-3.5 left-1/2 -translate-x-1/2 w-20 h-4 bg-zinc-950 rounded-full z-20 border border-white/10" />
 

@@ -8,7 +8,7 @@ import { RefreshCw, Image as ImageIcon, Download, ChevronLeft, Plus } from 'luci
 import IntelligenceUplink from './IntelligenceUplink';
 import JSZip from 'jszip';
 import saveAs from 'file-saver';
-import { MAT_CHROME } from './ui/materialTokens';
+import { MAT_CHROME, MAT_PLATE } from './ui/materialTokens';
 
 interface OrganicCalendarProps {
   businessInfo: BusinessInfo;
@@ -145,7 +145,7 @@ const OrganicCalendar: React.FC<OrganicCalendarProps> = ({ businessInfo, avatar,
                 <div className="flex gap-2 md:gap-4">
                     <button 
                         onClick={() => fetchCalendar(uplinkData)} 
-                        className="flex items-center gap-2 px-3 py-2 md:px-6 md:py-3 bg-zinc-900 border border-white/10 hover:border-[#FFCC00] text-zinc-300 hover:text-[#FFCC00] rounded-xl font-mono text-[10px] md:text-xs uppercase tracking-widest transition-all"
+                        className={`flex items-center gap-2 px-3 py-2 md:px-6 md:py-3 ${MAT_PLATE} border border-white/10 hover:border-[#FFCC00] text-zinc-300 hover:text-[#FFCC00] rounded-xl font-mono text-[10px] md:text-xs uppercase tracking-widest transition-all`}
                     >
                         <RefreshCw className="w-4 h-4" /> <span className="hidden md:inline">REGENERATE STRATEGY</span>
                     </button>

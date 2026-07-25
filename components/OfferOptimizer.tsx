@@ -9,7 +9,7 @@ import { PreviousResearchCard } from './ui/PreviousResearchCard';
 import Loader from './ui/Loader';
 import { Copy, ChevronLeft, ChevronDown, ChevronUp, UploadCloud, AlarmClock, ShieldCheck, ArrowRight, Download, Brain, FileSearch } from 'lucide-react';
 import saveAs from 'file-saver';
-import { MAT_VEIL } from './ui/materialTokens';
+import { MAT_VEIL, MAT_PLATE_INSET } from './ui/materialTokens';
 
 interface OfferOptimizerProps {
   onBack: () => void;
@@ -354,7 +354,7 @@ const OfferOptimizer: React.FC<OfferOptimizerProps> = ({ onBack, onNavigate }) =
 
               {inputType === 'upload' && (
                 <div className="space-y-2">
-                  <label htmlFor="file-upload" className="bg-zinc-950/50 border-2 border-dashed border-white/10 hover:border-[#FFCC00] hover:bg-zinc-800/80 text-zinc-400 p-4 rounded-xl flex items-center justify-center cursor-pointer transition-all w-full gap-2">
+                  <label htmlFor="file-upload" className={`${MAT_PLATE_INSET} border-2 border-dashed border-white/10 hover:border-[#FFCC00] hover:bg-zinc-800/80 text-zinc-400 p-4 rounded-xl flex items-center justify-center cursor-pointer transition-all w-full gap-2`}>
                     <UploadCloud className="w-5 h-5" /> UPLOAD .TXT / .MD FILE
                   </label>
                   <input

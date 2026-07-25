@@ -13,6 +13,7 @@ import { StepFooter } from './ui/StepFooter';
 import { RefreshCw, Search, Copy, Sparkles, AlertTriangle } from 'lucide-react';
 import JSZip from 'jszip';
 import saveAs from 'file-saver';
+import { MAT_PLATE, MAT_PLATE_INSET } from './ui/materialTokens';
 
 interface Step5Props {
   script: string[];
@@ -283,7 +284,7 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
           )}
 
           {storyboardData.length > 0 && !loadingImages && (
-            <div className="p-6 border border-[#FFCC00]/20 bg-zinc-950/50 rounded-xl max-w-xl text-center">
+            <div className={`p-6 border border-[#FFCC00]/20 ${MAT_PLATE_INSET} rounded-xl max-w-xl text-center`}>
               <p className="text-xs text-[#FFCC00] font-mono font-bold mb-2 uppercase tracking-widest">[ ENGINE_REPORT ]</p>
               <p className="text-[11px] text-zinc-400 font-mono italic">"Daisy chain relay complete. Anchor identity locked at 98.4% variance. Clips are ready for cinematic frame interpolation."</p>
               <div className="flex gap-4 justify-center mt-6">
@@ -394,7 +395,7 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
             {[0, 1, 2, 3, 4, 5].map(i => (
-              <div key={i} className="flex flex-col gap-4 p-5 bg-zinc-950/50 rounded-xl border border-white/10 relative overflow-hidden">
+              <div key={i} className={`flex flex-col gap-4 p-5 ${MAT_PLATE_INSET} rounded-xl border border-white/10 relative overflow-hidden`}>
                 <div className="absolute inset-0 -translate-x-full animate-[storyboard-shimmer_2s_ease-in-out_infinite] bg-gradient-to-r from-transparent via-white/5 to-transparent pointer-events-none" />
                 <div className="flex items-center gap-3">
                   <span className="bg-[#FFCC00]/5 text-[#FFCC00]/40 text-[10px] font-black px-3 py-1 rounded-full border border-[#FFCC00]/10 font-mono tracking-tighter">SCENE_0{i + 1}</span>
@@ -404,7 +405,7 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
                   <div className="w-28 h-48 bg-zinc-900/50 border border-white/5 rounded-xl" />
                 </div>
                 <div className="h-5 bg-white/5 rounded w-3/4" />
-                <div className="p-3 bg-zinc-900/50 border border-white/5 rounded-xl space-y-2">
+                <div className={`p-3 ${MAT_PLATE} border border-white/5 rounded-xl space-y-2`}>
                   <div className="h-3 bg-white/5 rounded w-full" />
                   <div className="h-3 bg-white/5 rounded w-5/6" />
                 </div>
@@ -419,7 +420,7 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
       {!loadingStoryboard && storyboardData.length > 0 && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 max-h-[58vh] overflow-y-auto pr-1 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             {storyboardData.map((scene, index) => (
-                <div key={index} className="flex flex-col gap-4 p-5 bg-zinc-950/50 rounded-xl border border-white/10 hover:border-[#FFCC00]/40 transition-all group relative overflow-hidden">
+                <div key={index} className={`flex flex-col gap-4 p-5 ${MAT_PLATE_INSET} rounded-xl border border-white/10 hover:border-[#FFCC00]/40 transition-all group relative overflow-hidden`}>
                     <div className="absolute -right-20 -top-20 w-40 h-40 bg-[#FFCC00]/5 blur-[80px] rounded-full group-hover:bg-[#FFCC00]/10 transition-colors" />
 
                     <div className="flex items-center gap-3">
@@ -475,7 +476,7 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
                     </div>
 
                     <p className="text-base font-bold text-white leading-tight">"{scene.scriptLine}"</p>
-                    <div className="p-3 bg-zinc-900 border border-white/10 rounded-xl space-y-2">
+                    <div className={`p-3 ${MAT_PLATE} border border-white/10 rounded-xl space-y-2`}>
                         <p className="text-[11px] text-zinc-400 font-mono leading-relaxed italic">
                             <span className="text-[#FFCC00] not-italic font-bold tracking-widest mr-2">[NARRATIVE]</span>
                             {scene.sceneDescription}

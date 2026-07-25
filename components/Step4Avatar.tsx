@@ -12,6 +12,7 @@ import { TitledCard } from './ui/TitledCard';
 import { FieldLabel } from './ui/FieldLabel';
 import { TextField } from './ui/TextField';
 import { SegButton } from './ui/SegButton';
+import { MAT_PLATE, MAT_PLATE_INSET } from './ui/materialTokens';
 
 interface Step4Props {
   businessInfo: BusinessInfo;
@@ -195,7 +196,7 @@ const Step4Avatar: React.FC<Step4Props> = ({ businessInfo, avatar, setAvatar, on
             <button
               onClick={handleUploadClick}
               disabled={loading}
-              className="flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-zinc-900 px-6 py-3 text-xs font-bold uppercase tracking-widest text-zinc-400 transition-colors hover:border-[#FFCC00] hover:text-[#FFCC00]"
+              className={`flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 ${MAT_PLATE} px-6 py-3 text-xs font-bold uppercase tracking-widest text-zinc-400 transition-colors hover:border-[#FFCC00] hover:text-[#FFCC00]`}
             >
               <Upload className="h-4 w-4 shrink-0" /> Upload Biometric Source
             </button>
@@ -229,7 +230,7 @@ const Step4Avatar: React.FC<Step4Props> = ({ businessInfo, avatar, setAvatar, on
         )}
 
         {!generatedAvatar && !loading && (
-            <div className={`text-center p-8 flex items-center justify-center h-full border-2 border-dashed rounded-xl bg-zinc-950/50 w-full transition-colors ${triedNext ? 'border-red-500/60' : 'border-white/10'}`}>
+            <div className={`text-center p-8 flex items-center justify-center h-full border-2 border-dashed rounded-xl ${MAT_PLATE_INSET} w-full transition-colors ${triedNext ? 'border-red-500/60' : 'border-white/10'}`}>
                 <p className={`font-mono text-[10px] tracking-widest uppercase ${triedNext ? 'text-red-400' : 'text-on-surface-sublabel'}`}>[AVATAR_PREVIEW_AREA]</p>
             </div>
         )}

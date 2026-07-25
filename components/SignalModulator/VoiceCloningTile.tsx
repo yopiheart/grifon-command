@@ -6,7 +6,7 @@ import Loader from '../ui/Loader';
 import AudioRecorder from '../ui/AudioRecorder';
 import { cloneVoice, deleteVoice } from '../../services/voiceService';
 import type { VoiceLibrary } from '../../types';
-import { MAT_VEIL } from '../ui/materialTokens';
+import { MAT_VEIL, MAT_PLATE } from '../ui/materialTokens';
 
 const MAX_FILE_BYTES = 10 * 1024 * 1024;
 const MIN_DURATION_SEC = 30;
@@ -126,7 +126,7 @@ const VoiceCloningTile: React.FC<VoiceCloningTileProps> = ({ library, onLibraryR
   return (
     <div className="flex flex-col gap-6">
       {library.myVoices.length === 0 ? (
-        <div className="flex items-center justify-between px-4 py-3 rounded-xl bg-zinc-900/50 border border-white/5">
+        <div className={`flex items-center justify-between px-4 py-3 rounded-xl ${MAT_PLATE} border border-white/5`}>
           <span className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest">
             // MY_VOICES — YOUR_CLONED_VOICES_APPEAR_HERE
           </span>
@@ -246,7 +246,7 @@ const VoiceCloningTile: React.FC<VoiceCloningTileProps> = ({ library, onLibraryR
             <div>
               <label className="block text-[10px] font-mono text-on-surface-sublabel uppercase mb-2">VOICE_SAMPLE *</label>
               <div className="flex justify-center mb-4">
-                <div className="bg-zinc-900 border border-white/10 p-1 rounded-xl flex gap-1">
+                <div className={`${MAT_PLATE} border border-white/10 p-1 rounded-xl flex gap-1`}>
                   {tabBtn('upload', 'UPLOAD', UploadCloud)}
                   {tabBtn('record', 'RECORD', Mic)}
                 </div>

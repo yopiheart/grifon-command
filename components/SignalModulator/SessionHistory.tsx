@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { X, Play, Pause, Undo2, MessageSquare, Mic, Trash2, Download } from 'lucide-react';
 import type { HistoryTake } from '../../types';
 import { formatRelativeTime, HISTORY_CAP, downloadAudio } from './utils';
+import { MAT_PLATE } from '../ui/materialTokens';
 
 interface SessionHistoryProps {
   open: boolean;
@@ -95,7 +96,7 @@ const SessionHistory: React.FC<SessionHistoryProps> = ({ open, takes, onClose, o
             return (
               <div
                 key={take.id}
-                className="bg-zinc-900/50 border border-white/5 rounded-xl p-3 hover:border-white/10 transition-colors"
+                className={`${MAT_PLATE} border border-white/5 rounded-xl p-3 hover:border-white/10 transition-colors`}
               >
                 <div className="flex items-start gap-3">
                   <button

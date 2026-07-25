@@ -6,6 +6,7 @@ import { GoldButton } from './ui/GoldButton';
 import { UploadCloud, Image as ImageIcon, Camera, ChevronLeft } from 'lucide-react';
 import { compressImageForUpload } from '../utils/imageCompression';
 import { AD_STYLE_PRESETS } from '../utils/adTheme';
+import { MAT_PLATE_INSET } from './ui/materialTokens';
 
 interface IntelligenceUplinkProps {
   onComplete: (data: UplinkData) => void;
@@ -188,7 +189,7 @@ const IntelligenceUplink: React.FC<IntelligenceUplinkProps> = ({ onComplete, onB
               <GlassPanel 
                 key={zone.id}
                 onClick={() => zone.ref.current?.click()}
-                className="aspect-square relative group cursor-pointer hover:border-[#FFCC00] transition-all flex flex-col items-center justify-center p-4 text-center overflow-hidden bg-zinc-950/50 border-2 border-dashed border-white/10 rounded-xl hover:bg-zinc-800/80"
+                className={`aspect-square relative group cursor-pointer hover:border-[#FFCC00] transition-all flex flex-col items-center justify-center p-4 text-center overflow-hidden ${MAT_PLATE_INSET} border-2 border-dashed border-white/10 rounded-xl hover:bg-zinc-800/80`}
               >
                 <input type="file" ref={zone.ref} hidden multiple={zone.multiple} onChange={(e) => handleFileUpload(e, zone.id as any)} accept="image/*" />
                 

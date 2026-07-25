@@ -9,7 +9,7 @@ import GeneratedFrameTile from './ui/GeneratedFrameTile';
 import { RefreshCcw, UploadCloud, Video, ChevronLeft, ChevronDown, Settings2, Image as ImageIcon, MonitorPlay, Download, Edit2 } from 'lucide-react';
 import saveAs from 'file-saver';
 import Step6VideoPrompts from './Step6VideoPrompts';
-import { MAT_CHROME } from './ui/materialTokens';
+import { MAT_CHROME, MAT_PLATE, MAT_PLATE_INSET } from './ui/materialTokens';
 
 const GrifonLogo = ({ className = "h-8 w-auto" }: { className?: string }) => (
   <img src="/logo.png" alt="GRIFON Logo" className={`object-contain ${className}`} />
@@ -334,7 +334,7 @@ const CinematicSpecStudio: React.FC<CinematicSpecStudioProps> = ({
                  </div>
                  <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4 overflow-y-auto pr-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                     {narrative.map((scene, i) => (
-                      <div key={i} className="p-5 bg-zinc-900/80 border border-white/10 rounded-2xl">
+                      <div key={i} className={`p-5 ${MAT_PLATE} border border-white/10 rounded-2xl`}>
                          <div className="flex justify-between items-center mb-3">
                             <span className="text-[10px] font-mono font-bold text-zinc-400 uppercase">{scene.phase}</span>
                             <span className="text-[10px] font-mono font-bold text-[#FFCC00] uppercase">{scene.emotion}</span>
@@ -401,7 +401,7 @@ const CinematicSpecStudio: React.FC<CinematicSpecStudioProps> = ({
                     <label className="block text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest">{slot.label}</label>
                     <div 
                       onClick={() => slot.ref.current?.click()}
-                      className={`bg-zinc-950/50 border-2 border-dashed border-white/10 rounded-xl hover:border-[#FFCC00] hover:bg-zinc-800/80 transition-all cursor-pointer flex flex-col items-center justify-center p-6 min-h-[100px] ${slot.data ? 'border-[#FFCC00]/40 bg-[#FFCC00]/5 overflow-hidden p-0' : ''}`}
+                      className={`${MAT_PLATE_INSET} border-2 border-dashed border-white/10 rounded-xl hover:border-[#FFCC00] hover:bg-zinc-800/80 transition-all cursor-pointer flex flex-col items-center justify-center p-6 min-h-[100px] ${slot.data ? 'border-[#FFCC00]/40 bg-[#FFCC00]/5 overflow-hidden p-0' : ''}`}
                     >
                       {slot.data ? <img src={slot.data} className="w-full h-full object-cover" /> : <UploadCloud className="w-6 h-6 text-on-surface-sublabel" />}
                       <input type="file" hidden ref={slot.ref} onChange={(e) => handleFileUpload(e, slot.id as any)} accept="image/*" />

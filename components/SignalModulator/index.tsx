@@ -11,6 +11,7 @@ import VoiceCloningTile from './VoiceCloningTile';
 import ScenePipelineTile from './ScenePipelineTile';
 import SessionHistory from './SessionHistory';
 import { useSessionHistory } from './useSessionHistory';
+import { MAT_PLATE } from '../ui/materialTokens';
 
 type Tile = 'tts' | 'vc' | 'clone' | 'scene-pipeline';
 
@@ -143,7 +144,7 @@ const SignalModulator: React.FC<SignalModulatorProps> = ({ onBack, globalScript 
       </header>
 
       <div className="flex justify-center mb-8">
-        <div className="bg-zinc-900 border border-white/10 p-1 rounded-xl flex gap-1 flex-wrap">
+        <div className={`${MAT_PLATE} border border-white/10 p-1 rounded-xl flex gap-1 flex-wrap`}>
           {sceneBatch.length > 0 && tabBtn('scene-pipeline', 'SCENE PIPELINE', Layers)}
           {tabBtn('tts', 'TEXT-TO-SPEECH', MessageSquare)}
           {tabBtn('vc', 'VOICE CHANGER', Mic)}

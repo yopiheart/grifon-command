@@ -8,7 +8,7 @@ import { GoldButton } from './ui/GoldButton';
 import Loader from './ui/Loader';
 import { Copy, ChevronLeft, ChevronDown, Video, Image as ImageIcon, Trash2 } from 'lucide-react';
 import saveAs from 'file-saver';
-import { MAT_VEIL } from './ui/materialTokens';
+import { MAT_VEIL, MAT_PLATE, MAT_PLATE_INSET } from './ui/materialTokens';
 
 interface CaptionHeadlineProps {
   onBack: () => void;
@@ -131,7 +131,7 @@ const CaptionHeadline: React.FC<CaptionHeadlineProps> = ({ onBack }) => {
         const score = scoreMatch ? scoreMatch[1] : null;
 
         return (
-            <div key={i} className="mb-8 p-6 bg-zinc-900/50 border border-white/10 rounded-2xl relative group">
+            <div key={i} className={`mb-8 p-6 ${MAT_PLATE} border border-white/10 rounded-2xl relative group`}>
                 {score && (
                     <div className="absolute top-4 right-4 flex items-center gap-1.5 bg-[#FFCC00]/10 border border-[#FFCC00]/30 px-3 py-1 rounded-full shadow-lg">
                         <div className="w-2 h-2 bg-[#FFCC00] rounded-full animate-pulse"></div>
@@ -201,7 +201,7 @@ const CaptionHeadline: React.FC<CaptionHeadlineProps> = ({ onBack }) => {
                             </div>
                         )}
 
-                        <label className={`bg-zinc-950/50 border-2 border-dashed border-white/10 hover:border-[#FFCC00] hover:bg-zinc-800/80 text-zinc-400 p-6 rounded-xl flex flex-col items-center justify-center cursor-pointer transition-all min-h-[100px] ${formData.adFiles.length > 0 ? 'border-[#FFCC00]/50' : ''}`}>
+                        <label className={`${MAT_PLATE_INSET} border-2 border-dashed border-white/10 hover:border-[#FFCC00] hover:bg-zinc-800/80 text-zinc-400 p-6 rounded-xl flex flex-col items-center justify-center cursor-pointer transition-all min-h-[100px] ${formData.adFiles.length > 0 ? 'border-[#FFCC00]/50' : ''}`}>
                             <ImageIcon className="w-6 h-6 mb-2 text-on-surface-sublabel" />
                             <span className="font-mono text-[10px] uppercase tracking-widest">[CLICK TO UPLOAD ASSETS]</span>
                             <p className="text-[9px] text-on-surface-sublabel font-mono italic mt-2">AI will sync its vision sensors to these visuals.</p>

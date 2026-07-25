@@ -4,6 +4,7 @@ import { DUR } from './motionTokens';
 import { Clock, ArrowRight, Film } from 'lucide-react';
 import type { RecentItem, RecentWorkKind } from '../../services/recentWorkService';
 import { MODULE_IDENTITY } from '../../config/moduleIdentity';
+import { MAT_PLATE } from './materialTokens';
 
 // Icons come from the module registry — this file used to keep its own map,
 // which had drifted badly: Director AI showed a film strip here and a
@@ -48,7 +49,7 @@ export const RecentWorkCard: React.FC<RecentWorkCardProps> = ({ items, onResume,
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: DUR.slow, delay }}
-      className="bg-zinc-900/70 rounded-2xl p-4 lg:p-5"
+      className={`${MAT_PLATE} rounded-2xl p-4 lg:p-5`}
     >
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">

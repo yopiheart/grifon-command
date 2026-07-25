@@ -20,6 +20,7 @@ import {
   type ServiceArchetype, type RealEstateArchetype, type ServiceSlot,
 } from "./guidedPhotoSlots";
 import { scriptTypeForBusinessType } from './step2ScriptType';
+import { MAT_PLATE, MAT_PLATE_INSET } from './ui/materialTokens';
 
 
 // Which UGC Pro sub-formats each businessType exposes in Advanced Mode (parity with the
@@ -317,7 +318,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
         {businessType === 'product' && (
         <div
             onClick={() => handleScriptTypeSelect('MrBeast')}
-            className={`p-6 rounded-xl border cursor-pointer transition-all hover:translate-y-[-2px] ${formData.scriptType === 'MrBeast' ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
+            className={`p-6 rounded-xl border cursor-pointer transition-all hover:translate-y-[-2px] ${formData.scriptType === 'MrBeast' ? '${MAT_PLATE} border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
         >
             <div className="flex justify-between items-center mb-2">
                 <h4 className="font-bold text-white uppercase font-mono text-xs">Viral / MrBeast</h4>
@@ -330,7 +331,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
         {businessType === 'product' && (
         <div
             onClick={() => handleScriptTypeSelect('Testimonial')}
-            className={`p-6 rounded-xl border cursor-pointer transition-all hover:translate-y-[-2px] ${formData.scriptType === 'Testimonial' ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
+            className={`p-6 rounded-xl border cursor-pointer transition-all hover:translate-y-[-2px] ${formData.scriptType === 'Testimonial' ? '${MAT_PLATE} border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
         >
             <div className="flex justify-between items-center mb-2">
                 <h4 className="font-bold text-white uppercase font-mono text-xs">Testimonial</h4>
@@ -343,7 +344,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
         {businessType === 'product' && (
         <div
             onClick={() => handleScriptTypeSelect('UGCPro')}
-            className={`p-6 rounded-xl border cursor-pointer transition-all hover:translate-y-[-2px] ${formData.scriptType === 'UGCPro' ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
+            className={`p-6 rounded-xl border cursor-pointer transition-all hover:translate-y-[-2px] ${formData.scriptType === 'UGCPro' ? '${MAT_PLATE} border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
         >
             <div className="flex justify-between items-center mb-2">
                 <div className="flex items-center gap-2">
@@ -359,7 +360,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
         {businessType === 'service' && (
         <div
             onClick={() => handleScriptTypeSelect('Services')}
-            className={`p-6 rounded-xl border cursor-pointer transition-all hover:translate-y-[-2px] ${formData.scriptType === 'Services' ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
+            className={`p-6 rounded-xl border cursor-pointer transition-all hover:translate-y-[-2px] ${formData.scriptType === 'Services' ? '${MAT_PLATE} border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
         >
             <div className="flex justify-between items-center mb-2">
                 <div className="flex items-center gap-2">
@@ -375,7 +376,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
         {businessType === 'service' && (
         <div
             onClick={() => handleScriptTypeSelect('UGCPro')}
-            className={`p-6 rounded-xl border cursor-pointer transition-all hover:translate-y-[-2px] ${formData.scriptType === 'UGCPro' ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
+            className={`p-6 rounded-xl border cursor-pointer transition-all hover:translate-y-[-2px] ${formData.scriptType === 'UGCPro' ? '${MAT_PLATE} border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
         >
             <div className="flex justify-between items-center mb-2">
                 <div className="flex items-center gap-2">
@@ -391,7 +392,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
         {businessType === 'realestate' && (
         <div
             onClick={() => handleScriptTypeSelect('RealEstate')}
-            className={`p-6 rounded-xl border cursor-pointer transition-all hover:translate-y-[-2px] ${formData.scriptType === 'RealEstate' ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
+            className={`p-6 rounded-xl border cursor-pointer transition-all hover:translate-y-[-2px] ${formData.scriptType === 'RealEstate' ? '${MAT_PLATE} border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
         >
             <div className="flex justify-between items-center mb-2">
                 <div className="flex items-center gap-2">
@@ -407,7 +408,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
         {businessType === 'realestate' && (
         <div
             onClick={() => handleScriptTypeSelect('UGCPro')}
-            className={`p-6 rounded-xl border cursor-pointer transition-all hover:translate-y-[-2px] ${formData.scriptType === 'UGCPro' ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
+            className={`p-6 rounded-xl border cursor-pointer transition-all hover:translate-y-[-2px] ${formData.scriptType === 'UGCPro' ? '${MAT_PLATE} border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
         >
             <div className="flex justify-between items-center mb-2">
                 <div className="flex items-center gap-2">
@@ -441,7 +442,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
 
         <div
             onClick={() => handleScriptTypeSelect('Custom')}
-            className={`p-6 rounded-xl border-dashed border cursor-pointer transition-all hover:translate-y-[-2px] relative ${formData.scriptType === 'Custom' ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
+            className={`p-6 rounded-xl border-dashed border cursor-pointer transition-all hover:translate-y-[-2px] relative ${formData.scriptType === 'Custom' ? '${MAT_PLATE} border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
         >
             <div className="absolute top-2 right-2 text-[8px] font-mono text-[#FFCC00]/60 uppercase tracking-tighter select-none">
               [ MANUAL_OVERRIDE ]
@@ -458,7 +459,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
       </div>
 
       {isGuided && (
-          <div className="mt-6 p-6 bg-zinc-900/50 rounded-xl border border-white/10 animate-in fade-in slide-in-from-top-4">
+          <div className={`mt-6 p-6 ${MAT_PLATE} rounded-xl border border-white/10 animate-in fade-in slide-in-from-top-4`}>
               {/* Statement-with-✓, not a question: we picked the lead from the description; user can override.
                   Internal values venue|work|practitioner (Services) or listing|agent|developer (RealEstate);
                   labels are Bryan-facing outcomes. */}
@@ -477,7 +478,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                           key={a.key}
                           type="button"
                           onClick={a.onSelect}
-                          className={`p-4 rounded-xl border text-left transition-all hover:translate-y-[-2px] ${a.active ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
+                          className={`p-4 rounded-xl border text-left transition-all hover:translate-y-[-2px] ${a.active ? '${MAT_PLATE} border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
                       >
                           <div className="flex justify-between items-center mb-1">
                               <span className="text-xs font-bold text-white font-mono uppercase">{a.label}</span>
@@ -515,7 +516,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
           'Auto' leaves ugcProFormat undefined so the server classifies from the brief;
           Try-On / Before & After write the explicit sub-format. */}
       {formData.scriptType === 'UGCPro' && (
-          <div className="mt-6 p-6 bg-zinc-900/50 rounded-xl border border-white/10 animate-in fade-in slide-in-from-top-4">
+          <div className={`mt-6 p-6 ${MAT_PLATE} rounded-xl border border-white/10 animate-in fade-in slide-in-from-top-4`}>
               <div className="flex items-center gap-3">
                   <Sparkles className="w-5 h-5 text-[#FFCC00] shrink-0" />
                   <p className="text-sm font-bold text-white font-mono">UGC Pro format</p>
@@ -540,7 +541,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                               // ASMR is Unboxing-only — switching away drops the flag so it never
                               // silently rides along on another sub-format.
                               onClick={() => setFormData(prev => ({ ...prev, ugcProFormat: s.value, asmrFlag: s.value === 'unboxing' ? prev.asmrFlag : undefined }))}
-                              className={`p-4 rounded-xl border text-left transition-all hover:translate-y-[-2px] ${active ? 'bg-zinc-900 border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
+                              className={`p-4 rounded-xl border text-left transition-all hover:translate-y-[-2px] ${active ? '${MAT_PLATE} border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'bg-zinc-950 border-white/10 hover:border-[#FFCC00]'}`}
                           >
                               <div className="flex justify-between items-center mb-1">
                                   <span className="text-xs font-bold text-white font-mono uppercase">{s.label}</span>
@@ -569,7 +570,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
       )}
 
       {formData.scriptType === 'Custom' && (
-          <div className="mt-6 space-y-4 p-6 bg-zinc-900/50 rounded-xl border border-white/10 animate-in fade-in slide-in-from-top-4">
+          <div className={`mt-6 space-y-4 p-6 ${MAT_PLATE} rounded-xl border border-white/10 animate-in fade-in slide-in-from-top-4`}>
               <div className="flex flex-col md:flex-row gap-6">
                   <div className="flex-1 space-y-2">
                       <TextArea
@@ -582,7 +583,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                           rows={8}
                       />
                   </div>
-                  <label className="w-full md:w-64 flex flex-col items-center justify-center border-2 border-dashed border-white/10 rounded-xl bg-zinc-950/50 p-6 cursor-pointer hover:border-[#FFCC00] hover:bg-zinc-800/80 transition-all">
+                  <label className={`w-full md:w-64 flex flex-col items-center justify-center border-2 border-dashed border-white/10 rounded-xl ${MAT_PLATE_INSET} p-6 cursor-pointer hover:border-[#FFCC00] hover:bg-zinc-800/80 transition-all`}>
                       <UploadCloud className="w-6 h-6 text-on-surface-sublabel mb-4" />
                       <p className="text-[10px] font-mono text-zinc-400 uppercase mb-4 text-center">OR UPLOAD .TXT FILE</p>
                       <input
@@ -591,7 +592,7 @@ const Step2BusinessInfo: React.FC<Step2Props> = ({ data, setData, onNext, onBack
                           className="hidden"
                           onChange={(e) => handleFileUpload(e, 'script')}
                       />
-                      <span className="inline-block py-2 px-4 bg-zinc-900 border border-white/10 text-zinc-400 rounded-xl text-xs font-bold hover:border-[#FFCC00] hover:text-[#FFCC00] transition-colors">
+                      <span className={`inline-block py-2 px-4 ${MAT_PLATE} border border-white/10 text-zinc-400 rounded-xl text-xs font-bold hover:border-[#FFCC00] hover:text-[#FFCC00] transition-colors`}>
                           SELECT FILE
                       </span>
                       {formData.customScriptFile && formData.customScriptFile.length > 0 && (

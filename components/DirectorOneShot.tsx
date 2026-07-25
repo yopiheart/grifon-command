@@ -4,6 +4,7 @@ import type { ClientDetails, BusinessInfo } from '../types';
 import { GlassPanel } from './ui/GlassPanel';
 import { GoldButton } from './ui/GoldButton';
 import { useOneShotGeneration, type OneShotSinks, type OneShotStage } from '../hooks/useOneShotGeneration';
+import { MAT_PLATE } from './ui/materialTokens';
 
 /**
  * One-shot Director surface — the DEFAULT view of the Director AI module.
@@ -113,7 +114,7 @@ const DirectorOneShot: React.FC<DirectorOneShotProps> = ({
         </GlassPanel>
 
         {oneShot.error && (
-          <div className="bg-zinc-900 border border-red-500/30 rounded-xl p-4 flex items-start gap-3">
+          <div className={`${MAT_PLATE} border border-red-500/30 rounded-xl p-4 flex items-start gap-3`}>
             <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
             <p className="text-xs text-zinc-300">{oneShot.error}</p>
           </div>
@@ -176,7 +177,7 @@ const DirectorOneShot: React.FC<DirectorOneShotProps> = ({
       </GlassPanel>
 
       {!ready && (
-        <div className="bg-zinc-900 border border-[#FFCC00]/30 rounded-xl p-4 flex items-start gap-3">
+        <div className={`${MAT_PLATE} border border-[#FFCC00]/30 rounded-xl p-4 flex items-start gap-3`}>
           <AlertTriangle className="w-5 h-5 text-[#FFCC00] mt-0.5 shrink-0" />
           <div>
             <h3 className="text-sm font-bold text-white mb-1">Finish your brief first</h3>

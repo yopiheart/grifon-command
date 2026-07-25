@@ -6,6 +6,7 @@ import { DirectorDemo, ResearchDemo, OfferDemo, CaptionDemo, ImageDemo } from '.
 import { setIntendedModule } from '../../../services/moduleIntentService';
 import { SnapRail } from '../SnapRail';
 import { BAND_HERO, MEASURE } from '../../ui/layoutTokens';
+import { MAT_PLATE } from '../../ui/materialTokens';
 
 /**
  * Director AI's signature frame: a camera viewfinder — breathing gold corner
@@ -13,7 +14,7 @@ import { BAND_HERO, MEASURE } from '../../ui/layoutTokens';
  * AnimatedBorder (TrustFaq) so the two hero treatments never read as twins.
  */
 const ViewfinderFrame: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <div className="relative rounded-3xl border border-white/10 bg-zinc-900/40 p-6 md:p-10">
+  <div className={`relative rounded-3xl border border-white/10 ${MAT_PLATE} p-6 md:p-10`}>
     <span aria-hidden="true" className="finder-corner pointer-events-none absolute left-3 top-3 h-6 w-6 rounded-tl-lg border-l-2 border-t-2 border-[#FFCC00]" />
     <span aria-hidden="true" className="finder-corner pointer-events-none absolute right-3 top-3 h-6 w-6 rounded-tr-lg border-r-2 border-t-2 border-[#FFCC00]" style={{ animationDelay: '0.8s' }} />
     <span aria-hidden="true" className="finder-corner pointer-events-none absolute bottom-3 left-3 h-6 w-6 rounded-bl-lg border-b-2 border-l-2 border-[#FFCC00]" style={{ animationDelay: '1.6s' }} />
@@ -101,7 +102,7 @@ export const Modules: React.FC<ModulesProps> = ({ onEnterApp }) => (
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: DUR.slow, delay: idx * 0.08 }}
-              className="snap-center flex-shrink-0 w-[85vw] max-w-[360px] md:w-auto md:max-w-none flex flex-col bg-zinc-900/40 border border-white/10 rounded-3xl p-6 md:p-7"
+              className={`snap-center flex-shrink-0 w-[85vw] max-w-[360px] md:w-auto md:max-w-none flex flex-col ${MAT_PLATE} border border-white/10 rounded-3xl p-6 md:p-7`}
             >
               <module.Demo />
               <div className="mt-5 flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">

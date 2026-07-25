@@ -223,9 +223,16 @@ html { scroll-behavior: smooth; }
     --mat-rim: 4px;
     position: relative;
     isolation: isolate;
-    background: linear-gradient(146deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.025) 42%, rgba(255,255,255,0.07) 100%);
-    -webkit-backdrop-filter: blur(28px) saturate(190%) brightness(1.10);
-    backdrop-filter: blur(28px) saturate(190%) brightness(1.10);
+    /* Two layers: the specular tint, over a DARK FLOOR. The floor is what keeps
+       this dark glass when it crosses the one light surface in the app — the
+       #F2F1EA proof band. Without it the pane inverts over that band and every
+       white label on it disappears. Apple's glass adapts because the OS is
+       adaptive; Grifon is committed dark, so its glass stays dark glass. */
+    background:
+      linear-gradient(146deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.025) 42%, rgba(255,255,255,0.07) 100%),
+      rgba(11, 11, 13, 0.74);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    backdrop-filter: blur(28px) saturate(180%);
     box-shadow:
       inset 0 1px 0 rgba(255,255,255,0.42),
       inset 1px 0 0 rgba(255,255,255,0.11),
@@ -241,6 +248,7 @@ html { scroll-behavior: smooth; }
     inset: 0;
     border-radius: inherit;
     padding: var(--mat-rim);
+    background: rgba(255, 255, 255, 0.06);
     -webkit-backdrop-filter: blur(4px) saturate(210%) brightness(1.16);
     backdrop-filter: blur(4px) saturate(210%) brightness(1.16);
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
@@ -347,9 +355,16 @@ html { scroll-behavior: smooth; }
   .mat-chrome-mobile {
     position: relative;
     isolation: isolate;
-    background: linear-gradient(146deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.025) 42%, rgba(255,255,255,0.07) 100%);
-    -webkit-backdrop-filter: blur(28px) saturate(190%) brightness(1.10);
-    backdrop-filter: blur(28px) saturate(190%) brightness(1.10);
+    /* Two layers: the specular tint, over a DARK FLOOR. The floor is what keeps
+       this dark glass when it crosses the one light surface in the app — the
+       #F2F1EA proof band. Without it the pane inverts over that band and every
+       white label on it disappears. Apple's glass adapts because the OS is
+       adaptive; Grifon is committed dark, so its glass stays dark glass. */
+    background:
+      linear-gradient(146deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.025) 42%, rgba(255,255,255,0.07) 100%),
+      rgba(11, 11, 13, 0.74);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    backdrop-filter: blur(28px) saturate(180%);
     box-shadow:
       inset 0 1px 0 rgba(255,255,255,0.42),
       inset 1px 0 0 rgba(255,255,255,0.11),
@@ -362,6 +377,7 @@ html { scroll-behavior: smooth; }
     inset: 0;
     border-radius: inherit;
     padding: 7px;
+    background: rgba(255, 255, 255, 0.06);
     -webkit-backdrop-filter: blur(4px) saturate(240%) brightness(1.28);
     backdrop-filter: blur(4px) saturate(240%) brightness(1.28);
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
@@ -450,4 +466,25 @@ html { scroll-behavior: smooth; }
    that sits inside a floating surface. */
 .scroll-contain {
   overscroll-behavior: contain;
+}
+
+/* ── PLATE_INSET — a well *inside* a plate: a field shell, a preview frame, a
+   result slot. The distinction from PLATE is where the light comes from. A
+   PLATE is raised, so it catches a highlight on its TOP edge; an INSET is
+   recessed, so its top edge falls into shadow. That one inversion is what
+   makes a nested surface read as carved out rather than stacked on.
+
+   Found by slice 5: the 61 de-glassed content surfaces were using FOURTEEN
+   different background values for what is really three roles — card, well,
+   and chip-on-an-image. */
+@layer components {
+  .mat-plate-inset {
+    background: rgba(9, 9, 11, 0.72);
+    box-shadow:
+      inset 0 1px 2px rgba(0, 0, 0, 0.55),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+  }
+}
+@media (prefers-contrast: more) {
+  .mat-plate-inset { background: #0C0C0E !important; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.4) !important; }
 }

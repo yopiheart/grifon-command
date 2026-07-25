@@ -6,6 +6,7 @@ import Loader from './ui/Loader';
 import { AlertTriangle, Camera, User, Copy, Sparkles, RefreshCw } from 'lucide-react';
 import { StepShell } from './ui/StepShell';
 import { StepFooter } from './ui/StepFooter';
+import { MAT_PLATE } from './ui/materialTokens';
 
 interface Step6Props {
   storyboard: Scene[];
@@ -143,7 +144,7 @@ const Step6VideoPrompts: React.FC<Step6Props> = ({ storyboard, videoPrompts, set
                 const displayLine = storyboard[index]?.scriptLine || p.scriptLine;
 
                 return (
-                <div key={index} className="p-6 bg-zinc-900/50 rounded-2xl border border-white/10 hover:border-[#FFCC00]/50 transition-colors">
+                <div key={index} className={`p-6 ${MAT_PLATE} rounded-2xl border border-white/10 hover:border-[#FFCC00]/50 transition-colors`}>
                     <h4 className="text-[#FFCC00] font-bold mb-2 text-[10px] uppercase tracking-widest font-mono">// Scene {index + 1}</h4>
                     <p className="font-semibold text-white text-lg">"{displayLine}"</p>
                     <div className="flex items-start mt-6 space-x-4">

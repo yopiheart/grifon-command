@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { MessageCircle, X } from 'lucide-react';
 import { CONTACT } from '../../config/contact';
 import { playTick } from '../../services/uiSoundService';
+import { MAT_PLATE } from './materialTokens';
 
 /**
  * Floating "chat with us" bubble (bottom-left). Opens Messenger in a new tab —
@@ -35,7 +36,7 @@ export const MessengerFloat: React.FC<MessengerFloatProps> = ({ side = 'left' })
 
       {showTip && (
         <div
-          className={`relative mb-1 max-w-[200px] rounded-2xl bg-zinc-900/90 border border-white/10 px-3.5 py-2.5 ${
+          className={`relative mb-1 max-w-[200px] rounded-2xl ${MAT_PLATE} border border-white/10 px-3.5 py-2.5 ${
             side === 'right' ? 'rounded-br-sm' : 'rounded-bl-sm'
           }`}
         >

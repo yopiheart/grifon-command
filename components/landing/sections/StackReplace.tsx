@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { DUR } from '../../ui/motionTokens';
 import { PenLine, AudioLines, Clapperboard, ImageIcon, BarChart3, Target, Scissors } from 'lucide-react';
 import { BAND_TIGHT, SHELL, MEASURE } from '../../ui/layoutTokens';
+import { MAT_PLATE } from '../../ui/materialTokens';
 
 // The software-consolidation anchor (distinct from the deliverable value stack):
 // one subscription replaces a whole rack of separate AI tools. Framed by
@@ -52,7 +53,7 @@ export const StackReplace: React.FC = () => (
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: DUR.slow, delay: idx * 0.07 }}
-            className="flex flex-col gap-3 rounded-2xl border border-white/10 bg-zinc-900/40 p-5 md:p-6"
+            className={`flex flex-col gap-3 rounded-2xl border border-white/10 ${MAT_PLATE} p-5 md:p-6`}
           >
             <tool.icon className="w-7 h-7 text-[#FFCC00]" />
             <div className="text-sm md:text-base font-bold text-white leading-tight">{tool.cap}</div>

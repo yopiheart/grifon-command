@@ -32,7 +32,7 @@ import {
 } from '../services/omniStyleService';
 import { trackEvent } from '../services/analyticsService';
 import { seedCaptionsEnabled } from '../utils/asmrSeeds';
-import { MAT_VEIL } from './ui/materialTokens';
+import { MAT_VEIL, MAT_PLATE_INSET } from './ui/materialTokens';
 
 export interface EditorBatchPayload {
   sceneBatch: SceneBatchEntry[];
@@ -1208,7 +1208,7 @@ const EditVideo: React.FC<EditVideoProps> = ({ onBack, editorBatch, avatarGender
 
                         {scriptSource === 'upload' ? (
                             <div className="space-y-2">
-                                <label className="bg-zinc-950/50 border-2 border-dashed border-white/10 hover:border-[#FFCC00] hover:bg-zinc-800/80 text-zinc-400 p-4 rounded-xl flex items-center justify-center cursor-pointer transition-all">
+                                <label className={`${MAT_PLATE_INSET} border-2 border-dashed border-white/10 hover:border-[#FFCC00] hover:bg-zinc-800/80 text-zinc-400 p-4 rounded-xl flex items-center justify-center cursor-pointer transition-all`}>
                                     <UploadCloud className="w-5 h-5 mr-2" />
                                     <span className="font-mono text-sm uppercase tracking-widest">Upload .TXT Script</span>
                                     <input 
@@ -1259,7 +1259,7 @@ const EditVideo: React.FC<EditVideoProps> = ({ onBack, editorBatch, avatarGender
                              </div>
                         )}
 
-                        <label className="bg-zinc-950/50 border-2 border-dashed border-white/10 hover:border-[#FFCC00] hover:bg-zinc-800/80 text-zinc-400 p-6 rounded-xl flex flex-col items-center justify-center cursor-pointer transition-all min-h-[100px]">
+                        <label className={`${MAT_PLATE_INSET} border-2 border-dashed border-white/10 hover:border-[#FFCC00] hover:bg-zinc-800/80 text-zinc-400 p-6 rounded-xl flex flex-col items-center justify-center cursor-pointer transition-all min-h-[100px]`}>
                             <ImageIcon className="w-6 h-6 mb-2 text-on-surface-sublabel" />
                             <span className="font-mono text-[10px] uppercase tracking-widest">[CLICK TO UPLOAD KEYFRAMES]</span>
                             <input 

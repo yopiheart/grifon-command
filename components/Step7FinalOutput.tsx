@@ -9,6 +9,7 @@ import JSZip from 'jszip';
 import saveAs from 'file-saver';
 import { useSubscription } from '../hooks/useSubscription';
 import { watermarkImage } from '../utils/watermark';
+import { MAT_PLATE_INSET } from './ui/materialTokens';
 
 interface Step7Props {
   allData: AllData;
@@ -29,7 +30,7 @@ const CopyableContent: React.FC<{ title: string; content: string }> = ({ title, 
   };
 
   return (
-    <div className="relative p-6 bg-zinc-950/50 rounded-xl border border-white/10">
+    <div className={`relative p-6 ${MAT_PLATE_INSET} rounded-xl border border-white/10`}>
       <div className="flex items-center justify-between mb-4">
         <h4 className="font-bold text-[10px] text-[#FFCC00] uppercase tracking-widest font-mono">// {title}</h4>
         <button
@@ -57,7 +58,7 @@ const ImageAssetPanel: React.FC<{ title: string; src: string; aspectRatio: '9:16
     link.click();
   };
   return (
-    <div className="p-6 bg-zinc-950/50 rounded-xl border border-white/10 flex flex-col items-center gap-6">
+    <div className={`p-6 ${MAT_PLATE_INSET} rounded-xl border border-white/10 flex flex-col items-center gap-6`}>
       <div className="flex items-center justify-between w-full">
         <h4 className="font-bold text-[10px] text-[#FFCC00] uppercase tracking-widest font-mono">// {title}</h4>
         <button

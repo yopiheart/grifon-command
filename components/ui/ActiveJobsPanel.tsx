@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Loader2, Film, Search, Image as ImageIcon, Layers, Activity } from 'lucide-react';
 import { DUR, EASE } from './motionTokens';
 import type { ActiveJob, JobKind } from '../../services/activeJobsService';
+import { MAT_PLATE } from './materialTokens';
 
 const KIND_ICON: Record<JobKind, React.ComponentType<{ className?: string }>> = {
   video: Film,
@@ -25,7 +26,7 @@ export const ActiveJobsPanel: React.FC<ActiveJobsPanelProps> = ({ jobs, delay = 
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: DUR.slow, delay }}
-      className="bg-zinc-900/70 rounded-2xl p-5 lg:p-6 relative overflow-hidden"
+      className={`${MAT_PLATE} rounded-2xl p-5 lg:p-6 relative overflow-hidden`}
     >
       <motion.div
         animate={{ opacity: [0.4, 0.8, 0.4] }}

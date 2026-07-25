@@ -233,7 +233,29 @@ The 93 remaining raw `backdrop-blur` literals across 30 module files are gone. *
 
 **Verified:** build clean, 1005 tests, design:lint silent, and Recon opened in Chromium with no page errors — panels render tonal, `//` labels legible at the new contrast floor.
 
-### Slice 5 (not started)
-Formally move the 61 de-glassed content surfaces onto `MAT_PLATE` rather than leaving their ad-hoc `bg-zinc-9xx/xx`. Then move 06's concentric radii on whatever gets touched next.
+### Slice 5 — SHIPPED 2026-07-25
+
+**The finding:** the 61 de-glassed surfaces were using **fourteen** different background values, and they were not one role. They were three:
+
+| Role | Was | Now |
+|---|---|---|
+| A card on the canvas | `bg-zinc-900` at 7 different alphas | **`MAT_PLATE`** — 54 sites |
+| A well *inside* a card | `bg-zinc-950/50\|60` | **`MAT_PLATE_INSET`** — 18 sites (new tier) |
+| A chip on top of an image | `bg-zinc-950/80`, `bg-black/70` | left alone — a different role, and the fill is doing real work over a picture |
+
+**PLATE_INSET is the tier that was missing.** The distinction from PLATE is *where the light comes from*: a PLATE is raised and catches a highlight on its top edge; an INSET is recessed, so its top edge falls into shadow. That one inversion is what makes a nested surface read as carved out rather than stacked on. Forcing all 61 onto a single PLATE would have flattened a real hierarchy.
+
+### The regression this slice caused — and the fix
+
+Moving the header and the consent card to CHROME broke them **over the light proof band** (`#F2F1EA`). CHROME had no dark floor, so on the one light surface in the app the material inverted: the pane went pale and every white label on it — the GRIFON wordmark, the nav, "Cookies & analytics" — disappeared. Caught by scrolling to that band in Chromium; the dark-backdrop screenshots had hidden it completely.
+
+**Fix:** `.mat-chrome` now composites its specular tint over a **dark floor** (`rgba(11,11,13,0.74)`), and the rim band carries its own tint so it can't read as a bright frame. `brightness()` is gone from the filter — over a light backdrop it was making the problem worse.
+
+The principle worth keeping: **Apple's glass adapts because the OS is adaptive. Grifon is committed dark, so its glass must stay dark glass no matter what passes beneath it.** Any future CHROME surface inherits this automatically.
+
+**Verified in Chromium:** War Room (PLATE card + INSET wells reading correctly), the dashboard, and the header over *both* a dark backdrop and the light band. Build clean, 1005 tests, design:lint silent.
+
+### Still open
+Move 06's concentric radii on whatever gets touched next. Plus the four standing decisions: mono rail vs identity hues, 16px legal links, BootScreen's artificial hold, and the 6 desktop lines still near the top of the reading band.
 
 **Kill switch:** revert `GlassPanel.tsx` to `bg-zinc-900/80 backdrop-blur-xl …` and the app returns to v1 look; the tier CSS becomes dead but harmless. Full revert = this commit.

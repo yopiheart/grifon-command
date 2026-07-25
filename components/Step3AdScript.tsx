@@ -12,6 +12,7 @@ import { TitledCard } from './ui/TitledCard';
 import { FieldLabel } from './ui/FieldLabel';
 import { TextArea } from './ui/TextField';
 import { SegButton } from './ui/SegButton';
+import { MAT_PLATE, MAT_PLATE_INSET } from './ui/materialTokens';
 
 interface Step3Props {
   businessInfo: BusinessInfo;
@@ -280,7 +281,7 @@ const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, setBusinessInfo, sc
   }> = ({ title, lines, onChange, onClick, isSelected }) => (
     <div
       onClick={onClick}
-      className={`p-6 bg-zinc-950/50 border transition-all duration-200 cursor-pointer rounded-xl ${isSelected ? 'border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'border-white/10 hover:border-[#FFCC00]'}`}
+      className={`p-6 ${MAT_PLATE_INSET} border transition-all duration-200 cursor-pointer rounded-xl ${isSelected ? 'border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'border-white/10 hover:border-[#FFCC00]'}`}
     >
       <div className="flex justify-between items-center mb-4 pb-2 border-b border-white/10">
         <h4 className="font-bold text-[10px] uppercase text-[#FFCC00] tracking-widest font-mono">{title}</h4>
@@ -317,7 +318,7 @@ const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, setBusinessInfo, sc
               <div 
                 key={theme.id}
                 onClick={() => handleThemeSelect(theme)}
-                className={`p-8 bg-zinc-950/50 rounded-[2rem] border transition-all duration-300 cursor-pointer flex flex-col h-full relative overflow-hidden group ${selectedThemeId === theme.id ? 'border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)] scale-[1.02]' : 'border-white/10 hover:border-white/20'}`}
+                className={`p-8 ${MAT_PLATE_INSET} rounded-[2rem] border transition-all duration-300 cursor-pointer flex flex-col h-full relative overflow-hidden group ${selectedThemeId === theme.id ? 'border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)] scale-[1.02]' : 'border-white/10 hover:border-white/20'}`}
               >
                 <div className={`absolute -right-8 -top-8 w-24 h-24 blur-2xl rounded-full transition-opacity ${selectedThemeId === theme.id ? 'opacity-40' : 'opacity-10'}`} style={{ backgroundColor: theme.colorPalette.split(',')[0] }}></div>
                 
@@ -490,7 +491,7 @@ const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, setBusinessInfo, sc
           )}
           {/* AI STRATEGY ADVICE BUBBLE */}
           {strategicAudit && (
-            <div className="p-8 bg-zinc-900 border border-white/10 relative overflow-hidden group rounded-2xl">
+            <div className={`p-8 ${MAT_PLATE} border border-white/10 relative overflow-hidden group rounded-2xl`}>
                 <div className="absolute top-0 left-0 bg-[#FFCC00] text-black text-[10px] font-black px-4 py-1.5 font-mono tracking-widest uppercase z-10 shadow-lg">
                     [ DIRECTOR_CRITIQUE ]
                 </div>

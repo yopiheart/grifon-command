@@ -72,6 +72,7 @@ import { quotaWallStore } from './services/quotaWallStore';
 import { useSubscription } from './hooks/useSubscription';
 import { nextTier, planAtLeast, type PlanId } from './utils/planGate';
 import { getSession, setSession, clearSession, type WizardSessionV1 } from './services/wizardSessionStore';
+import { MAT_PLATE } from './components/ui/materialTokens';
 
 const TOTAL_STEPS = 8;
 
@@ -1219,7 +1220,7 @@ const App: React.FC = () => {
                         type="button"
                         onClick={() => handleOAuthSignIn('google')}
                         disabled={isSigningIn}
-                        className="w-full flex items-center justify-center gap-3 py-3 md:py-4 px-6 bg-zinc-950 border border-white/15 hover:border-[#FFCC00]/50 hover:bg-zinc-900 text-white font-medium text-sm rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed mb-2.5 md:mb-3"
+                        className={`w-full flex items-center justify-center gap-3 py-3 md:py-4 px-6 bg-zinc-950 border border-white/15 hover:border-[#FFCC00]/50 hover:${MAT_PLATE} text-white font-medium text-sm rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed mb-2.5 md:mb-3`}
                       >
                         <svg className="w-5 h-5 shrink-0" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                           <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8c-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4C12.955 4 4 12.955 4 24s8.955 20 20 20s20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/>
@@ -1237,7 +1238,7 @@ const App: React.FC = () => {
                             type="button"
                             onClick={() => handleOAuthSignIn('github')}
                             disabled={isSigningIn}
-                            className={`flex items-center justify-center gap-2.5 py-3 px-4 bg-zinc-950 border border-white/15 hover:border-[#FFCC00]/50 hover:bg-zinc-900 text-white font-medium text-sm rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${!OAUTH_PROVIDERS.apple ? 'col-span-2' : ''}`}
+                            className={`flex items-center justify-center gap-2.5 py-3 px-4 bg-zinc-950 border border-white/15 hover:border-[#FFCC00]/50 hover:${MAT_PLATE} text-white font-medium text-sm rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${!OAUTH_PROVIDERS.apple ? 'col-span-2' : ''}`}
                           >
                             {/* Canonical GitHub octicon (mark-github) — lucide dropped brand icons */}
                             <svg className="w-5 h-5 shrink-0" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1251,7 +1252,7 @@ const App: React.FC = () => {
                             type="button"
                             onClick={() => handleOAuthSignIn('apple')}
                             disabled={isSigningIn}
-                            className={`flex items-center justify-center gap-2.5 py-3 px-4 bg-zinc-950 border border-white/15 hover:border-[#FFCC00]/50 hover:bg-zinc-900 text-white font-medium text-sm rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${!OAUTH_PROVIDERS.github ? 'col-span-2' : ''}`}
+                            className={`flex items-center justify-center gap-2.5 py-3 px-4 bg-zinc-950 border border-white/15 hover:border-[#FFCC00]/50 hover:${MAT_PLATE} text-white font-medium text-sm rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${!OAUTH_PROVIDERS.github ? 'col-span-2' : ''}`}
                           >
                             <Apple className="w-5 h-5 shrink-0" aria-hidden="true" />
                             Apple
@@ -1671,7 +1672,7 @@ const App: React.FC = () => {
             </header>
 
             {showNudge && (
-              <div className="bg-zinc-900 border border-[#FFCC00]/30 rounded-xl p-4 mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <div className={`${MAT_PLATE} border border-[#FFCC00]/30 rounded-xl p-4 mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4`}>
                 <div className="flex items-start gap-3">
                   <div className="mt-1">
                     <Lightbulb className="w-5 h-5 text-[#FFCC00]" />
@@ -1699,7 +1700,7 @@ const App: React.FC = () => {
             )}
 
             {showLoadedConfirmation && (
-              <div className="bg-zinc-900 border border-[#FFCC00]/30 rounded-xl p-4 mb-6 flex items-start gap-3">
+              <div className={`${MAT_PLATE} border border-[#FFCC00]/30 rounded-xl p-4 mb-6 flex items-start gap-3`}>
                 <Lightbulb className="w-5 h-5 text-[#FFCC00] mt-0.5 shrink-0" />
                 <div>
                   <h3 className="text-sm font-bold text-white mb-1">// MARKETMIND_LOADED</h3>
@@ -1710,7 +1711,7 @@ const App: React.FC = () => {
               </div>
             )}
 
-            <main className="bg-zinc-900/80 p-6 sm:p-10 border border-white/10 rounded-2xl shadow-2xl relative overflow-hidden">
+            <main className={`${MAT_PLATE} p-6 sm:p-10 border border-white/10 rounded-2xl shadow-2xl relative overflow-hidden`}>
             {isLoadingSession ? (
               <div className="flex items-center justify-center h-64">
                 <p className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest animate-pulse">// LOADING_SESSION...</p>
@@ -1726,7 +1727,7 @@ const App: React.FC = () => {
               </button>
             )}
             {showResumePill && pendingSession && (
-              <div className="bg-zinc-900 border border-[#FFCC00]/30 rounded-xl p-4 mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <div className={`${MAT_PLATE} border border-[#FFCC00]/30 rounded-xl p-4 mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4`}>
                 <div className="flex items-start gap-3">
                   <div className="mt-1">
                     <RotateCw className="w-5 h-5 text-[#FFCC00]" />

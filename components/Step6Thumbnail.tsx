@@ -7,6 +7,7 @@ import ImageModal from './ui/ImageModal';
 import { RefreshCw, AlertTriangle } from 'lucide-react';
 import { StepShell } from './ui/StepShell';
 import { StepFooter } from './ui/StepFooter';
+import { MAT_PLATE_INSET } from './ui/materialTokens';
 
 interface Step6ThumbnailProps {
   script: string[];
@@ -114,7 +115,7 @@ const Step6Thumbnail: React.FC<Step6ThumbnailProps> = ({ script, avatar, busines
         )}
 
         {!thumbnailUrl && !loading && (
-          <div className={`text-center p-12 flex flex-col items-center justify-center h-full bg-zinc-950/50 border-2 border-dashed rounded-xl w-full transition-colors ${triedNext ? 'border-red-500/60' : 'border-white/10'}`}>
+          <div className={`text-center p-12 flex flex-col items-center justify-center h-full ${MAT_PLATE_INSET} border-2 border-dashed rounded-xl w-full transition-colors ${triedNext ? 'border-red-500/60' : 'border-white/10'}`}>
               <p className={`mb-6 font-mono text-[10px] tracking-widest uppercase ${triedNext ? 'text-red-400' : 'text-on-surface-sublabel'}`}>[THUMBNAIL_PLACEHOLDER_AREA]</p>
               <GoldButton onClick={handleGenerate} disabled={!aspectRatio} className="rounded-full px-12">
                   SYNTHESIZE THUMBNAIL

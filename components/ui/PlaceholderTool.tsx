@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { RefreshCw } from 'lucide-react';
+import { MAT_PLATE } from './materialTokens';
 
 interface PlaceholderToolProps {
   moduleName: string;
@@ -19,7 +20,7 @@ const PlaceholderTool: React.FC<PlaceholderToolProps> = ({ moduleName, onBack })
           SYSTEM OFFLINE
         </h1>
         
-        <div className="bg-zinc-900 border border-white/10 p-6 rounded-xl">
+        <div className={`${MAT_PLATE} border border-white/10 p-6 rounded-xl`}>
             <p className="text-[#FFCC00] font-mono text-sm mb-2">MODULE: {moduleName ? moduleName.replace('_', ' ').toUpperCase() : 'UNKNOWN'}</p>
             <p className="text-zinc-400 font-mono text-xs">
                 This tactical module is currently under development by Engineering. 

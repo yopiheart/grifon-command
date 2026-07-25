@@ -10,7 +10,7 @@ import VoicePicker from './VoicePicker';
 import { RECOMMENDED_VOICE_IDS } from './pinoyReady';
 import { STABILITY_LABELS, downloadAudio } from './utils';
 import type { SessionHistoryApi } from './useSessionHistory';
-import { MAT_VEIL } from '../ui/materialTokens';
+import { MAT_VEIL, MAT_PLATE } from '../ui/materialTokens';
 
 const MAX_FILE_BYTES = 50 * 1024 * 1024;
 const ACCEPT_MIMES = 'audio/mpeg,audio/wav,audio/x-m4a,audio/mp4,video/mp4,video/quicktime';
@@ -169,7 +169,7 @@ const VoiceChangerTile: React.FC<VoiceChangerTileProps> = ({ library, history, o
           )}
 
           <div className="flex justify-center mb-6">
-            <div className="bg-zinc-900 border border-white/10 p-1 rounded-xl flex gap-1">
+            <div className={`${MAT_PLATE} border border-white/10 p-1 rounded-xl flex gap-1`}>
               {tabBtn('upload', 'UPLOAD', UploadCloud)}
               {tabBtn('record', 'RECORD', Mic)}
             </div>

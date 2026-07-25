@@ -6,7 +6,7 @@ import { GoldButton } from './ui/GoldButton';
 import Loader from './ui/Loader';
 import { Sparkles, UploadCloud, Camera, RefreshCw, Check, Trash2, Image as ImageIcon, Activity, ChevronLeft, ChevronDown } from 'lucide-react';
 import saveAs from 'file-saver';
-import { MAT_CHROME, MAT_VEIL } from './ui/materialTokens';
+import { MAT_CHROME, MAT_VEIL, MAT_PLATE } from './ui/materialTokens';
 
 interface InfluencerForgeProps {
   onBack: () => void;
@@ -994,7 +994,7 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
            )}
         </div>
 
-        <aside className="w-full lg:w-96 flex flex-col shrink-0 h-full bg-zinc-900/80 border border-white/10 rounded-2xl p-6 gap-6 overflow-y-auto custom-scrollbar">
+        <aside className={`w-full lg:w-96 flex flex-col shrink-0 h-full ${MAT_PLATE} border border-white/10 rounded-2xl p-6 gap-6 overflow-y-auto custom-scrollbar`}>
           <div className="flex-1 flex flex-col pr-2 relative">
             <TacticalFolderHeader id="BIOMETRIC_DNA" label="🧬 BIOMETRIC_DNA" isOpen={openFolder === 'BIOMETRIC_DNA'} />
             <div className={`overflow-hidden transition-all duration-500 ease-in-out ${openFolder === 'BIOMETRIC_DNA' ? 'max-h-[1000px] p-8 pb-6 space-y-8' : 'max-h-0 opacity-0'}`}>

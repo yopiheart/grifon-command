@@ -13,7 +13,7 @@ import Loader from './ui/Loader';
 import { toast } from 'sonner';
 import { Download, ChevronLeft, ChevronDown, ChevronUp, ChevronRight, UploadCloud, X, ArrowRight, Target, Check } from 'lucide-react';
 import saveAs from 'file-saver';
-import { MAT_VEIL } from './ui/materialTokens';
+import { MAT_VEIL, MAT_PLATE_INSET } from './ui/materialTokens';
 
 interface MarketResearchProps {
   onBack: () => void;
@@ -339,7 +339,7 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
                         />
                     </div>
 
-                    <div className="p-6 bg-zinc-950/50 border border-white/10 rounded-xl">
+                    <div className={`p-6 ${MAT_PLATE_INSET} border border-white/10 rounded-xl`}>
                         <div className="flex items-center gap-3 mb-4">
                             <input 
                                 type="checkbox"

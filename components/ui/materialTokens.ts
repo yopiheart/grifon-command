@@ -59,6 +59,18 @@ export const rim = (px: number): React.CSSProperties =>
 export const MAT_PLATE = 'mat-plate';
 
 /**
+ * PLATE_INSET — a well *inside* a PLATE: a field shell, a preview frame, a
+ * result slot. The difference from PLATE is where the light comes from. A
+ * PLATE is raised and catches a highlight on its top edge; an INSET is
+ * recessed, so its top edge falls into shadow. That inversion is what makes a
+ * nested surface read as carved out rather than stacked on.
+ *
+ * Reach for it when the surface sits ON another surface. If it sits on the
+ * canvas, it's a PLATE.
+ */
+export const MAT_PLATE_INSET = 'mat-plate-inset';
+
+/**
  * CHROME, but only below `md` — for surfaces that are chrome at one breakpoint
  * and content at another (the wizard StepFooter detaches and floats over the
  * form on mobile, but is an in-flow rule at the bottom of the panel on desktop).
@@ -93,11 +105,12 @@ export const MAT_VEIL = 'mat-veil';
 export const SCROLL_EDGE = 'scroll-edge';
 
 /** Every tier, for `tier`-prop components. */
-export type MaterialTier = 'chrome' | 'plate' | 'slab' | 'veil';
+export type MaterialTier = 'chrome' | 'plate' | 'plate-inset' | 'slab' | 'veil';
 
 export const MATERIAL: Record<MaterialTier, string> = {
   chrome: MAT_CHROME,
   plate: MAT_PLATE,
+  'plate-inset': MAT_PLATE_INSET,
   slab: MAT_SLAB,
   veil: MAT_VEIL,
 };

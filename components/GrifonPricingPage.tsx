@@ -12,7 +12,7 @@ import { SignatureScribble } from "./landing/SignatureScribble";
 import { startCheckout, type PlanId, type BillingCycle } from "../services/billingService";
 import { PLAN_FEATURES } from "../config/planFeatures";
 import { PRO_VALUE_STACK, PRO_VALUE_TOTAL, FOUNDING_NOTE } from "../config/valueStack";
-import { MAT_CHROME, SCROLL_EDGE } from './ui/materialTokens';
+import { MAT_CHROME, SCROLL_EDGE, MAT_PLATE } from './ui/materialTokens';
 import { PX } from './ui/layoutTokens';
 
 const Check = () => <CheckIcon size={16} strokeWidth={2.5} className="text-[#FFCC00]" />;
@@ -834,7 +834,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
               {testimonials.map((testimonial, idx) => (
                 <div 
                   key={idx} 
-                  className="bg-zinc-900/80 border border-white/10 rounded-3xl p-8 flex flex-col h-full"
+                  className={`${MAT_PLATE} border border-white/10 rounded-3xl p-8 flex flex-col h-full`}
                 >
                   <div className="px-2 flex-1 flex flex-col">
                     <div className="flex gap-1 mb-4">

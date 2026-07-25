@@ -198,7 +198,7 @@ const HookLab: React.FC<HookLabProps> = ({ businessInfo, onBack }) => {
                   </motion.div>
 
                   {/* Domain chrome (kept with the caller, per GeneratedFrameTile's contract) */}
-                  <div className={`mt-3 rounded-xl border p-3 transition-colors ${isUsed ? 'border-[#FFCC00]/40 bg-[#FFCC00]/5' : 'border-white/10 bg-zinc-900/40'}`}>
+                  <div className={`mt-3 rounded-xl border p-3 transition-colors ${isUsed ? 'border-[#FFCC00]/40 bg-[#FFCC00]/5' : 'border-white/10 ${MAT_PLATE}'}`}>
                     <p className="text-sm font-semibold text-white leading-snug">{v.hookLine}</p>
                     {v.surrealConcept && <p className="text-xs text-on-surface-sublabel mt-1 leading-snug">{v.surrealConcept}</p>}
                     <button

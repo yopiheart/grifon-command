@@ -2,6 +2,7 @@ import React from 'react';
 import { Minimize2, RefreshCw } from 'lucide-react';
 import { DriftOrbs, SceneReveal, SpineNode } from './motion';
 import type { ProductionRun, ProductionStageId } from '../../services/producerOrchestrator';
+import { MAT_PLATE } from '../ui/materialTokens';
 
 // Display-only grouping: the orchestrator keeps its 8 stages (resume needs them),
 // but the user sees 4 friendly film-crew PHASES — momentum reads better than a long
@@ -52,7 +53,7 @@ export const RunningScreen: React.FC<{ run: ProductionRun; onMinimize: () => voi
         </div>
 
         {/* ETA + honest "keep this tab open" framing (the build is client-side — it pauses if the tab closes). */}
-        <div className="mb-8 rounded-2xl border border-white/10 bg-zinc-900/60 p-4">
+        <div className={`mb-8 rounded-2xl border border-white/10 ${MAT_PLATE} p-4`}>
           <div className="flex items-center justify-between text-xs">
             <span className="font-mono uppercase tracking-widest text-zinc-400">
               Rendering in HD · {doneCount}/{total} phases

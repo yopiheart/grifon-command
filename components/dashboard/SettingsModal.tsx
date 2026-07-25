@@ -6,7 +6,7 @@ import {
 import { SPRING } from '../ui/motionTokens';
 import type { PlanId } from '../../utils/planGate';
 import { grant as grantConsent, withdraw as withdrawConsent, getMarketingConsent } from '../../services/consentService';
-import { MAT_VEIL } from '../ui/materialTokens';
+import { MAT_VEIL, MAT_PLATE_INSET } from '../ui/materialTokens';
 
 interface SettingsModalProps {
   open: boolean;
@@ -135,7 +135,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
 
             <div className="overflow-y-auto px-5 py-5 space-y-6 custom-scrollbar">
               {/* Profile card */}
-              <div className="flex items-center gap-3 bg-zinc-950/60 rounded-2xl ring-1 ring-white/[0.06] p-4">
+              <div className={`flex items-center gap-3 ${MAT_PLATE_INSET} rounded-2xl ring-1 ring-white/[0.06] p-4`}>
                 <div className="w-12 h-12 rounded-full bg-zinc-800 ring-1 ring-white/10 flex items-center justify-center shrink-0">
                   <User className="w-5 h-5 text-zinc-400" />
                 </div>

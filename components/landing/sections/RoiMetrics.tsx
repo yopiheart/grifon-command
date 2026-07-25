@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { DUR } from '../../ui/motionTokens';
 import { SignatureScribble } from '../SignatureScribble';
 import { BAND_TIGHT } from '../../ui/layoutTokens';
+import { MAT_PLATE } from '../../ui/materialTokens';
 
 // All four are defensible: ~30-min build (product speed), ₱997 vs agency (real
 // pricing), 20+ businesses helped (real 2025 client count), 5 modules (matches
@@ -17,7 +18,7 @@ const METRICS = [
 
 export const RoiMetrics: React.FC = () => (
   <section className={`${BAND_TIGHT} px-4 sm:px-6 lg:px-8 relative z-10`}>
-    <div className="max-w-7xl mx-auto bg-zinc-900/30 border border-white/5 rounded-3xl sm:rounded-[40px] p-8 sm:p-12 md:p-16">
+    <div className={`max-w-7xl mx-auto ${MAT_PLATE} border border-white/5 rounded-3xl sm:rounded-[40px] p-8 sm:p-12 md:p-16`}>
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
