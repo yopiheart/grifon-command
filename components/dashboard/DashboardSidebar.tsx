@@ -131,7 +131,7 @@ const SidebarBody: React.FC<SidebarBodyProps> = ({
     </div>
 
     {/* Departments */}
-    <nav className="px-2.5 mt-3 overflow-y-auto custom-scrollbar flex-1 min-h-0">
+    <nav className="px-2.5 mt-3 overflow-y-auto scroll-contain custom-scrollbar flex-1 min-h-0">
       {navGroups.map((group, gi) => (
         <div key={group.label}>
           {expanded ? (

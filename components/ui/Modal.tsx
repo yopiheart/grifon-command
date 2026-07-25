@@ -20,7 +20,7 @@ export const Modal: React.FC<{
   // translucent — Apple's own rule for a sheet at full height.
   <div className={`fixed inset-0 z-50 flex items-end justify-center p-4 sm:items-center ${MAT_VEIL}`} onClick={onClose}>
     <div
-      className={`max-h-[90vh] w-full overflow-y-auto border border-white/10 p-5 ${MAT_SLAB} ${R_MODAL} ${wide ? 'max-w-2xl' : 'max-w-md'}`}
+      className={`max-h-[90vh] w-full overflow-y-auto scroll-contain border border-white/10 p-5 ${MAT_SLAB} ${R_MODAL} ${wide ? 'max-w-2xl' : 'max-w-md'}`}
       onClick={(e) => e.stopPropagation()}
     >
       <div className="mb-4 flex items-center justify-between">

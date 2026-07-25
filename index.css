@@ -420,3 +420,34 @@ html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce){
   .lens-ring{ animation: none; }
 }
+
+/* ── Reduced motion, part 2: Tailwind's own infinite animations.
+   The audit found 76 uses of animate-pulse / animate-spin across the app and
+   not one of them stopped under prefers-reduced-motion — the motion/react
+   components honour useReducedMotion and the hand-written keyframes above are
+   all guarded, but the utility classes ran regardless. For someone with
+   vestibular sensitivity a perpetually pulsing dot is exactly the thing the
+   setting exists to stop.
+
+   animate-spin is kept ALIVE but slowed, not killed: it's the loading
+   indicator, and a frozen spinner reads as a hung app. HIG asks to reduce
+   motion, not to remove the signal that work is happening. */
+@media (prefers-reduced-motion: reduce) {
+  .animate-pulse,
+  .animate-bounce,
+  .animate-ping {
+    animation: none !important;
+  }
+  .animate-spin,
+  .lens-ring {
+    animation-duration: 3s !important;
+  }
+}
+
+/* ── Scroll containment. 31 scroll areas, zero overscroll guards: reaching the
+   end of a drawer, palette or modal list chained the scroll to the page behind
+   it, which on a phone reads as the sheet "leaking". Compose on any scroll area
+   that sits inside a floating surface. */
+.scroll-contain {
+  overscroll-behavior: contain;
+}

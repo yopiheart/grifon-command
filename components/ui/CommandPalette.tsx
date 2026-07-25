@@ -133,7 +133,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ open, onClose, i
               </button>
             </div>
 
-            <div className="max-h-[62vh] overflow-y-auto px-3 pb-3">
+            <div className="max-h-[62vh] overflow-y-auto scroll-contain px-3 pb-3">
               {results.length === 0 && (
                 <div className="px-4 py-10 text-center text-xs font-mono text-on-surface-sublabel uppercase tracking-widest">
                   // No matches
