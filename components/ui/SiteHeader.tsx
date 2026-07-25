@@ -162,7 +162,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
       className={`relative transition-[background-color,border-color,backdrop-filter] duration-300 ${
         scrolled
           ? `${MAT_CHROME} ${SCROLL_EDGE} border-b border-white/10`
-          : 'backdrop-blur-none bg-transparent border-b border-transparent'
+          : ' bg-transparent border-b border-transparent'
       }`}
     >
       <div className="relative flex items-center px-4 sm:px-6 lg:px-8 py-3 max-w-7xl mx-auto">

@@ -13,6 +13,7 @@ import Loader from './ui/Loader';
 import { toast } from 'sonner';
 import { Download, ChevronLeft, ChevronDown, ChevronUp, ChevronRight, UploadCloud, X, ArrowRight, Target, Check } from 'lucide-react';
 import saveAs from 'file-saver';
+import { MAT_VEIL } from './ui/materialTokens';
 
 interface MarketResearchProps {
   onBack: () => void;
@@ -431,11 +432,11 @@ const MarketResearch: React.FC<MarketResearchProps> = ({ onBack, onNavigate }) =
 
                     <div className="flex-grow bg-zinc-950 border border-white/10 rounded-xl p-6 relative">
                         {isAnalyzing ? (
-                            <div className="absolute inset-0 flex items-center justify-center bg-zinc-950/80 backdrop-blur-sm z-10 rounded-xl">
+                            <div className={`absolute inset-0 flex items-center justify-center ${MAT_VEIL} z-10 rounded-xl`}>
                                 <Loader message="SIMULATING CUSTOMER RESEARCH..." />
                             </div>
                         ) : gateStatus === 'loading' ? (
-                            <div className="absolute inset-0 flex items-center justify-center bg-zinc-950/80 backdrop-blur-sm z-10 rounded-xl">
+                            <div className={`absolute inset-0 flex items-center justify-center ${MAT_VEIL} z-10 rounded-xl`}>
                                 <Loader message="PRESSURE-TESTING YOUR PREMISE..." />
                             </div>
                         ) : gateStatus === 'ready' ? (

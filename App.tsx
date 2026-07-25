@@ -1710,7 +1710,7 @@ const App: React.FC = () => {
               </div>
             )}
 
-            <main className="bg-zinc-900/80 backdrop-blur-xl p-6 sm:p-10 border border-white/10 rounded-2xl shadow-2xl relative overflow-hidden">
+            <main className="bg-zinc-900/80 p-6 sm:p-10 border border-white/10 rounded-2xl shadow-2xl relative overflow-hidden">
             {isLoadingSession ? (
               <div className="flex items-center justify-center h-64">
                 <p className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest animate-pulse">// LOADING_SESSION...</p>

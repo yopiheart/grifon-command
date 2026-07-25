@@ -26,6 +26,7 @@ import {
   type Recipe, type RecipeId, type RecipeSample,
 } from './recipes';
 import type { BusinessInfo } from '../../types';
+import { MAT_VEIL } from '../ui/materialTokens';
 import {
   ARCHETYPE_META, ARCHETYPE_ORDER, ARCHETYPE_UPLOAD_SLOTS, inferServiceArchetype,
   RE_ARCHETYPE_META, RE_ARCHETYPE_ORDER, RE_UPLOAD_SLOTS, inferRealEstateArchetype,
@@ -1169,7 +1170,7 @@ const Popover: React.FC<{
         {trigger}
       </button>
       {open && !disabled && (
-        <div className={`absolute z-40 mt-2 max-h-[70vh] overflow-y-auto border border-white/10 bg-zinc-900/90 p-3 backdrop-blur-xl ${R_PANEL} ${align === 'right' ? 'right-0' : 'left-0'} max-md:left-0 max-md:right-0`}>
+        <div className={`absolute z-40 mt-2 max-h-[70vh] overflow-y-auto border border-white/10 bg-zinc-900/90 p-3 ${R_PANEL} ${align === 'right' ? 'right-0' : 'left-0'} max-md:left-0 max-md:right-0`}>
           {children}
         </div>
       )}
@@ -1298,9 +1299,9 @@ const AssetTile: React.FC<{
 /** Centered modal shell (rounded-3xl). Backdrop click closes. `wide` for the
  * format picker; scrolls inside on short viewports. */
 const Modal: React.FC<{ title: string; onClose: () => void; children: React.ReactNode; wide?: boolean }> = ({ title, onClose, children, wide }) => (
-  <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/70 p-4 backdrop-blur-sm sm:items-center" onClick={onClose}>
+  <div className={`fixed inset-0 z-50 flex items-end justify-center bg-black/70 p-4 ${MAT_VEIL} sm:items-center`} onClick={onClose}>
     <div
-      className={`max-h-[90vh] w-full overflow-y-auto border border-white/10 bg-zinc-900/80 p-5 backdrop-blur-xl ${R_MODAL} ${wide ? 'max-w-2xl' : 'max-w-md'}`}
+      className={`max-h-[90vh] w-full overflow-y-auto border border-white/10 bg-zinc-900/80 p-5 ${R_MODAL} ${wide ? 'max-w-2xl' : 'max-w-md'}`}
       onClick={(e) => e.stopPropagation()}
     >
       <div className="mb-4 flex items-center justify-between">
@@ -1462,7 +1463,7 @@ const RecipeCard: React.FC<{
               tabIndex={-1}
               aria-label="Play preview"
               onClick={(e) => { e.stopPropagation(); setTapped(true); }}
-              className="absolute left-1/2 top-1/2 flex h-9 w-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-zinc-950/60 text-white backdrop-blur-sm"
+              className="absolute left-1/2 top-1/2 flex h-9 w-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-zinc-950/60 text-white"
             >
               <Play className="h-4 w-4" />
             </span>

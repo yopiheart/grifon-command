@@ -8,6 +8,7 @@ import { GoldButton } from './ui/GoldButton';
 import Loader from './ui/Loader';
 import { Copy, ChevronLeft, ChevronDown, Video, Image as ImageIcon, Trash2 } from 'lucide-react';
 import saveAs from 'file-saver';
+import { MAT_VEIL } from './ui/materialTokens';
 
 interface CaptionHeadlineProps {
   onBack: () => void;
@@ -285,7 +286,7 @@ const CaptionHeadline: React.FC<CaptionHeadlineProps> = ({ onBack }) => {
                     
                     <div className="flex-grow bg-zinc-950 border border-white/10 p-6 overflow-y-auto custom-scrollbar relative rounded-xl">
                         {isGenerating ? (
-                            <div className="absolute inset-0 flex items-center justify-center bg-zinc-950/80 backdrop-blur-sm z-10 rounded-xl">
+                            <div className={`absolute inset-0 flex items-center justify-center ${MAT_VEIL} z-10 rounded-xl`}>
                                 <Loader message="SYNTHESIZING PSYCHOLOGICAL TRIGGERS..." />
                             </div>
                         ) : result ? (

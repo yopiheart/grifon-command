@@ -76,7 +76,7 @@ export const Hero: React.FC<HeroProps> = ({ onEnterApp, heroSentinelRef }) => (
             </GoldButton>
             <a
               href="#reviews"
-              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur px-6 py-3 text-sm font-semibold text-zinc-300 hover:text-white hover:border-white/30 transition"
+              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-zinc-300 hover:text-white hover:border-white/30 transition"
             >
               SEE A COMPLETE CAMPAIGN
               <ArrowDown className="w-4 h-4" />

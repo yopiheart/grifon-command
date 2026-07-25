@@ -143,7 +143,7 @@ export const QuotaWallModal: React.FC<QuotaWallModalProps> = ({
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: 16, scale: 0.98 }}
             transition={SPRING.pop}
             onClick={(e) => e.stopPropagation()}
-            className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/80 backdrop-blur-xl shadow-[0_0_60px_-12px_rgba(255,204,0,0.35)]"
+            className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/80 shadow-[0_0_60px_-12px_rgba(255,204,0,0.35)]"
           >
             {/* Dismiss */}
             <button

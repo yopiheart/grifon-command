@@ -60,6 +60,7 @@ import {
   type QueueEvent,
 } from './RenderAllRunner';
 import { formatRelativeTime } from './utils';
+import { MAT_CHROME, MAT_VEIL } from '../ui/materialTokens';
 
 type Mode = 'pipeline' | 'one-shot';
 type CanvasView = 'edit' | 'preview';
@@ -1421,7 +1422,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
               <VideoIcon className="w-16 h-16" />
             </div>
           )}
-          <div className="absolute inset-0 bg-zinc-950/60 backdrop-blur-[2px] flex flex-col items-center justify-center gap-3">
+          <div className={`absolute inset-0 ${MAT_VEIL} flex flex-col items-center justify-center gap-3`}>
             <Loader2 className="w-12 h-12 text-[#FFCC00] animate-spin" />
             <div className="text-[10px] text-[#FFCC00] font-black uppercase tracking-widest font-mono">
               RENDERING {activeElapsed > 0 ? `· ${activeElapsed}s` : ''}
@@ -1602,7 +1603,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
       >
         {variantCount > 1 && (
           <div
-            className="absolute top-1.5 right-1.5 z-10 text-[8px] font-black bg-[#FFCC00]/20 text-[#FFCC00] px-1.5 py-0.5 rounded-full backdrop-blur-sm border border-[#FFCC00]/40"
+            className="absolute top-1.5 right-1.5 z-10 text-[8px] font-black bg-[#FFCC00]/20 text-[#FFCC00] px-1.5 py-0.5 rounded-full border border-[#FFCC00]/40"
             title={`${variantCount} renders of this scene/prompt`}
           >
             {variantCount}×
@@ -1812,7 +1813,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
 
   /* ─── STICKY PIPELINE COMMAND BAR ─── */
   const PipelineCommandBar = (
-    <div className="sticky top-0 z-30 -mx-4 sm:-mx-6 md:-mx-8 px-4 sm:px-6 md:px-8 py-3 mb-5 bg-zinc-950/95 backdrop-blur-xl border-b border-white/10">
+    <div className={`sticky top-0 z-30 -mx-4 sm:-mx-6 md:-mx-8 px-4 sm:px-6 md:px-8 py-3 mb-5 ${MAT_CHROME} border-b border-white/10`}>
       <div className="flex items-center gap-2 flex-wrap">
         <span className="text-[10px] font-mono uppercase tracking-widest text-[#FFCC00] border border-[#FFCC00]/30 bg-[#FFCC00]/5 rounded px-2 py-1 whitespace-nowrap">
           // PIPELINE · {renderedCount}/{seedPrompts.length} RENDERED

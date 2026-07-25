@@ -198,7 +198,7 @@ const OneShotAd: React.FC<OneShotAdProps> = ({
     return (
       <div className="relative min-h-screen bg-zinc-950 px-4 py-10 text-white">
         {BackBar}
-        <div className="mx-auto mt-16 max-w-md rounded-2xl border border-white/10 bg-zinc-900/70 p-6 backdrop-blur-xl">
+        <div className="mx-auto mt-16 max-w-md rounded-2xl border border-white/10 bg-zinc-900/70 p-6">
           <div className="mb-3 flex items-center gap-2 text-[#FFCC00]">
             <Sparkles className="h-4 w-4 shrink-0" />
             <span className="text-[10px] font-mono uppercase tracking-widest">// Unfinished ad</span>

@@ -24,7 +24,7 @@ export const TrustFaq: React.FC = () => (
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
       >
-        <AnimatedBorder intense containerClassName="h-full w-full" className="p-8 md:p-12 text-center bg-zinc-900/80 backdrop-blur-xl relative overflow-hidden">
+        <AnimatedBorder intense containerClassName="h-full w-full" className="p-8 md:p-12 text-center bg-zinc-900/80 relative overflow-hidden">
           <ShieldCheck className="w-12 h-12 text-[#FFCC00] mb-4 mx-auto" />
           <h2 className="text-3xl md:text-5xl font-bold uppercase tracking-tight mb-4 text-[#FFCC00]">
             7-DAY MONEY-BACK GUARANTEE
@@ -45,7 +45,7 @@ export const TrustFaq: React.FC = () => (
       >
         <h3 className="text-2xl font-bold uppercase tracking-tight mb-8 text-center">FREQUENTLY ASKED QUESTIONS</h3>
         {FAQS.map((faq, idx) => (
-          <details key={idx} className="group bg-zinc-900/50 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden [&_summary::-webkit-details-marker]:hidden">
+          <details key={idx} className="group bg-zinc-900/50 border border-white/10 rounded-xl overflow-hidden [&_summary::-webkit-details-marker]:hidden">
             <summary className="flex items-center justify-between p-6 cursor-pointer font-bold uppercase tracking-wide hover:bg-white/5 transition-colors">
               {faq.q}
               <ChevronDown className="w-5 h-5 shrink-0 ml-4 text-on-surface-sublabel group-open:rotate-180 transition-transform" />

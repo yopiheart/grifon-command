@@ -9,6 +9,7 @@ import GeneratedFrameTile from './ui/GeneratedFrameTile';
 import { RefreshCcw, UploadCloud, Video, ChevronLeft, ChevronDown, Settings2, Image as ImageIcon, MonitorPlay, Download, Edit2 } from 'lucide-react';
 import saveAs from 'file-saver';
 import Step6VideoPrompts from './Step6VideoPrompts';
+import { MAT_CHROME } from './ui/materialTokens';
 
 const GrifonLogo = ({ className = "h-8 w-auto" }: { className?: string }) => (
   <img src="/logo.png" alt="GRIFON Logo" className={`object-contain ${className}`} />
@@ -333,7 +334,7 @@ const CinematicSpecStudio: React.FC<CinematicSpecStudioProps> = ({
                  </div>
                  <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4 overflow-y-auto pr-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                     {narrative.map((scene, i) => (
-                      <div key={i} className="p-5 bg-zinc-900/80 border border-white/10 rounded-2xl backdrop-blur-xl">
+                      <div key={i} className="p-5 bg-zinc-900/80 border border-white/10 rounded-2xl">
                          <div className="flex justify-between items-center mb-3">
                             <span className="text-[10px] font-mono font-bold text-zinc-400 uppercase">{scene.phase}</span>
                             <span className="text-[10px] font-mono font-bold text-[#FFCC00] uppercase">{scene.emotion}</span>
@@ -416,14 +417,14 @@ const CinematicSpecStudio: React.FC<CinematicSpecStudioProps> = ({
       {/* PRESETS */}
       <div className="fixed bottom-28 left-1/2 -translate-x-1/2 flex items-center gap-2 overflow-x-auto w-full hide-scrollbar pb-2 snap-x z-40 px-4">
         {['THE_ELEMENTAL', 'THE_SPEEDSTER', 'THE_LUXURY', 'THE_FRESH'].map(p => (
-          <button key={p} onClick={() => handlePreset(p)} className="shrink-0 whitespace-nowrap text-[10px] font-bold text-zinc-400 hover:text-black hover:bg-[#FFCC00] bg-zinc-900/80 backdrop-blur-md border border-white/10 px-4 py-2 rounded-full transition-all uppercase shadow-lg">
+          <button key={p} onClick={() => handlePreset(p)} className="shrink-0 whitespace-nowrap text-[10px] font-bold text-zinc-400 hover:text-black hover:bg-[#FFCC00] bg-zinc-900/80 border border-white/10 px-4 py-2 rounded-full transition-all uppercase shadow-lg">
             {p.replace('_', ' ')}
           </button>
         ))}
       </div>
 
       {/* COMMAND CENTER FOOTER */}
-      <footer className="fixed bottom-8 left-1/2 -translate-x-1/2 w-[95%] max-w-6xl bg-zinc-900/90 backdrop-blur-2xl border border-white/10 rounded-full p-2 flex items-center gap-2 shadow-2xl z-50">
+      <footer className={`fixed bottom-8 left-1/2 -translate-x-1/2 w-[95%] max-w-6xl ${MAT_CHROME} border border-white/10 rounded-full p-2 flex items-center gap-2 shadow-2xl z-50`}>
         <div className="flex-1 w-full min-w-[50%] relative">
           <input 
             type="text"

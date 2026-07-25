@@ -7,6 +7,7 @@ import Loader from './ui/Loader';
 import { Trash2, RefreshCw, Copy, Check, Sparkles, Image as ImageIcon, ChevronLeft, Wand2, Layers } from 'lucide-react';
 import saveAs from 'file-saver';
 import GeneratedFrameTile from './ui/GeneratedFrameTile';
+import { MAT_CHROME } from './ui/materialTokens';
 
 interface ImageEditorProps {
   onBack: () => void;
@@ -48,11 +49,11 @@ const TikTokOverlay: React.FC = () => (
             </div>
             <div className="flex flex-col items-center gap-6 pb-4">
                 <div className="flex flex-col items-center gap-1">
-                    <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center"><Sparkles className="w-5 h-5 text-white" /></div>
+                    <div className="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center"><Sparkles className="w-5 h-5 text-white" /></div>
                     <span className="text-white text-[10px] font-bold">128K</span>
                 </div>
                 <div className="flex flex-col items-center gap-1">
-                    <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center"><Check className="w-5 h-5 text-white" /></div>
+                    <div className="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center"><Check className="w-5 h-5 text-white" /></div>
                     <span className="text-white text-[10px] font-bold">1.2K</span>
                 </div>
             </div>
@@ -302,7 +303,7 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ onBack, ethnicity = 'Global' 
                         <div className="w-48 h-48 md:w-64 md:h-64 bg-zinc-900 border border-white/10 p-2 shadow-2xl relative overflow-hidden rounded-2xl">
                             <img src={img} className="w-full h-full object-cover transition-all group-hover:scale-105 duration-500 rounded-xl opacity-90" />
                             <div className="absolute top-4 left-4 bg-[#FFCC00] text-[9px] font-black px-3 py-1 text-black uppercase rounded-full shadow-lg tracking-widest">ASSET 0{i+1}</div>
-                            <button onClick={() => removeImage(i)} className="absolute top-4 right-4 bg-red-600/80 backdrop-blur-md p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600 shadow-xl"><Trash2 className="w-4 h-4 text-white"/></button>
+                            <button onClick={() => removeImage(i)} className="absolute top-4 right-4 bg-red-600/80 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600 shadow-xl"><Trash2 className="w-4 h-4 text-white"/></button>
                         </div>
                     </div>
                 ))}
@@ -316,20 +317,20 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ onBack, ethnicity = 'Global' 
                     {showTikTokPreview && <TikTokOverlay />}
 
                     {refineCount > 0 && (
-                        <div className="absolute top-6 left-6 bg-zinc-900/80 backdrop-blur-xl border border-[#FFCC00]/30 px-3 py-1.5 rounded-full text-[9px] font-mono tracking-widest uppercase text-[#FFCC00] shadow-xl">
+                        <div className="absolute top-6 left-6 bg-zinc-900/80 border border-[#FFCC00]/30 px-3 py-1.5 rounded-full text-[9px] font-mono tracking-widest uppercase text-[#FFCC00] shadow-xl">
                             MOLD PASS 0{refineCount}
                         </div>
                     )}
 
                     <div className="absolute top-6 right-6 flex flex-col md:flex-row gap-3">
-                        <button onClick={handleRefine} title="Continue molding this result" className="px-4 py-2 rounded-full text-[9px] md:text-[10px] font-mono tracking-widest uppercase transition-all shadow-xl backdrop-blur-xl border bg-[#FFCC00] text-black border-[#FFCC00] hover:shadow-[0_0_20px_rgba(255,204,0,0.4)] flex items-center gap-2">
+                        <button onClick={handleRefine} title="Continue molding this result" className="px-4 py-2 rounded-full text-[9px] md:text-[10px] font-mono tracking-widest uppercase transition-all shadow-xl border bg-[#FFCC00] text-black border-[#FFCC00] hover:shadow-[0_0_20px_rgba(255,204,0,0.4)] flex items-center gap-2">
                             <Wand2 className="w-3.5 h-3.5" /> REFINE
                         </button>
-                        <button onClick={() => setShowTikTokPreview(!showTikTokPreview)} className={`px-4 py-2 rounded-full text-[9px] md:text-[10px] font-mono tracking-widest uppercase transition-all shadow-xl backdrop-blur-xl border ${showTikTokPreview ? 'bg-white text-black border-white' : 'bg-zinc-900/80 border-white/20 text-white hover:bg-white/10'}`}>
+                        <button onClick={() => setShowTikTokPreview(!showTikTokPreview)} className={`px-4 py-2 rounded-full text-[9px] md:text-[10px] font-mono tracking-widest uppercase transition-all shadow-xl border ${showTikTokPreview ? 'bg-white text-black border-white' : 'bg-zinc-900/80 border-white/20 text-white hover:bg-white/10'}`}>
                             {showTikTokPreview ? 'HIDE PREVIEW' : 'AD PREVIEW'}
                         </button>
                         <div className="flex gap-2">
-                            <button onClick={handleReset} title="Start over from scratch" className="bg-zinc-900/80 backdrop-blur-xl border border-white/20 p-3 text-zinc-300 rounded-full hover:text-[#FFCC00] transition-colors shadow-xl"><RefreshCw className="w-4 h-4"/></button>
+                            <button onClick={handleReset} title="Start over from scratch" className="bg-zinc-900/80 border border-white/20 p-3 text-zinc-300 rounded-full hover:text-[#FFCC00] transition-colors shadow-xl"><RefreshCw className="w-4 h-4"/></button>
                             <button onClick={() => saveAs(finalImage, 'studio-core-render.png')} className="bg-[#FFCC00] p-3 text-black rounded-full hover:shadow-[0_0_20px_rgba(255,204,0,0.4)] transition-all shadow-xl"><Copy className="w-4 h-4"/></button>
                         </div>
                     </div>
@@ -419,7 +420,7 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ onBack, ethnicity = 'Global' 
 
             {/* Floating Interaction Pill */}
             <div className={`
-                bg-zinc-950/80 backdrop-blur-xl border border-white/10 p-2 md:p-3 flex flex-col rounded-3xl shadow-[0_40px_100px_rgba(0,0,0,0.9)] transition-all group
+                bg-zinc-950/80 border border-white/10 p-2 md:p-3 flex flex-col rounded-3xl shadow-[0_40px_100px_rgba(0,0,0,0.9)] transition-all group
                 ${studioState !== 'idle' ? 'opacity-20 pointer-events-none' : 'opacity-100'}
             `}>
                 {/* Internal Top: Aspect Ratio (Always visible in pill for mobile logic) */}
@@ -429,7 +430,7 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ onBack, ethnicity = 'Global' 
                             key={r} 
                             onClick={() => setAspectRatio(r as any)}
                             className={`
-                                text-[8px] md:text-[10px] px-4 md:px-6 py-1.5 md:py-2.5 font-mono uppercase tracking-widest transition-all rounded-full border border-transparent backdrop-blur-[10px]
+                                text-[8px] md:text-[10px] px-4 md:px-6 py-1.5 md:py-2.5 font-mono uppercase tracking-widest transition-all rounded-full border border-transparent-[10px]
                                 ${aspectRatio === r 
                                     ? 'bg-[#FFCC00] text-black shadow-[0_0_10px_#FFCC00] scale-105 z-10 border-[#FFCC00]' 
                                     : 'text-on-surface-sublabel hover:text-white hover:bg-white/10 hover:border-white/10'}
@@ -487,7 +488,7 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ onBack, ethnicity = 'Global' 
       </footer>
 
       {error && (
-        <div className="fixed top-24 left-1/2 -translate-x-1/2 z-50 bg-red-900/20 backdrop-blur-xl border border-red-500/50 p-4 rounded-xl animate-in fade-in slide-in-from-top-4 shadow-2xl">
+        <div className={`fixed top-24 left-1/2 -translate-x-1/2 z-50 ${MAT_CHROME} border border-red-500/50 p-4 rounded-xl animate-in fade-in slide-in-from-top-4 shadow-2xl`}>
             <p className="text-red-500 font-mono text-[10px] uppercase tracking-widest">{error}</p>
         </div>
       )}

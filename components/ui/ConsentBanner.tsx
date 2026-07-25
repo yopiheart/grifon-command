@@ -4,6 +4,7 @@ import { Cookie, X } from 'lucide-react';
 import { GoldButton } from './GoldButton';
 import { EASE, DUR } from './motionTokens';
 import { getPixelConsent, setPixelConsent } from '../../services/analyticsService';
+import { MAT_CHROME } from './materialTokens';
 
 // Minimal, consent-first cookie/analytics notice for the Data-Driven Growth Loop
 // (Phase 0). The Meta Pixel does NOT fire until the user accepts here. DESIGN.md
@@ -43,7 +44,7 @@ export const ConsentBanner: React.FC<ConsentBannerProps> = ({ onConsent, onNavig
       initial={reduceMotion ? false : { opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: DUR.entrance, delay: DUR.entrance, ease: EASE.expressive }}
-      className="fixed bottom-4 left-4 right-4 z-40 sm:left-auto sm:right-4 sm:w-96 rounded-2xl border border-[#FFCC00]/20 bg-zinc-900/80 backdrop-blur-xl p-5 shadow-[0_0_30px_rgba(255,204,0,0.12)]"
+      className={`fixed bottom-4 left-4 right-4 z-40 sm:left-auto sm:right-4 sm:w-96 rounded-2xl border border-[#FFCC00]/20 ${MAT_CHROME} p-5 shadow-[0_0_30px_rgba(255,204,0,0.12)]`}
     >
       <button
         onClick={() => decide(false)}

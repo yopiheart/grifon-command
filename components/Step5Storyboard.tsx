@@ -193,7 +193,7 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
     <div className={`relative group ${isLoading ? 'scanner-active' : ''}`}>
         <div
             onClick={src && !isLoading ? onClick : undefined}
-            className={`${size === 'small' ? 'w-24 h-40' : 'w-28 h-48'} bg-zinc-950/50 backdrop-blur-md border border-white/10 flex items-center justify-center text-on-surface-sublabel text-xs text-center relative overflow-hidden group hover:border-[#FFCC00] transition-all rounded-xl ${src && !isLoading ? 'cursor-pointer shadow-2xl' : 'cursor-default'}`}
+            className={`${size === 'small' ? 'w-24 h-40' : 'w-28 h-48'} bg-zinc-950/50 border border-white/10 flex items-center justify-center text-on-surface-sublabel text-xs text-center relative overflow-hidden group hover:border-[#FFCC00] transition-all rounded-xl ${src && !isLoading ? 'cursor-pointer shadow-2xl' : 'cursor-default'}`}
         >
             {src && !isLoading ? (
                 <>
@@ -283,7 +283,7 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
           )}
 
           {storyboardData.length > 0 && !loadingImages && (
-            <div className="p-6 border border-[#FFCC00]/20 bg-zinc-950/50 backdrop-blur-md rounded-xl max-w-xl text-center">
+            <div className="p-6 border border-[#FFCC00]/20 bg-zinc-950/50 rounded-xl max-w-xl text-center">
               <p className="text-xs text-[#FFCC00] font-mono font-bold mb-2 uppercase tracking-widest">[ ENGINE_REPORT ]</p>
               <p className="text-[11px] text-zinc-400 font-mono italic">"Daisy chain relay complete. Anchor identity locked at 98.4% variance. Clips are ready for cinematic frame interpolation."</p>
               <div className="flex gap-4 justify-center mt-6">
@@ -330,7 +330,7 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
 
       {/* AI STRATEGY ADVICE BUBBLE */}
       {!loadingStoryboard && strategicAudit && (
-        <div className="mb-8 bg-zinc-900 border border-white/10 backdrop-blur-md rounded-2xl overflow-hidden">
+        <div className="mb-8 bg-zinc-900 border border-white/10 rounded-2xl overflow-hidden">
             <button
                 onClick={() => setCritiqueExpanded(prev => !prev)}
                 className="w-full flex items-center justify-between gap-4 px-5 py-3 text-left hover:bg-white/5 transition-colors"
@@ -373,7 +373,7 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
              const synthesized = storyboardData.filter(s => s.imageUrl || s.manualUploadUrl).length;
              const total = storyboardData.length;
              return (
-                 <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-zinc-900/80 backdrop-blur-xl border border-[#FFCC00]/30 shadow-[0_0_12px_rgba(255,204,0,0.2)]">
+                 <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-zinc-900/80 border border-[#FFCC00]/30 shadow-[0_0_12px_rgba(255,204,0,0.2)]">
                      <span className="text-[10px] font-mono uppercase tracking-widest text-[#FFCC00]">[ {synthesized}/{total} SYNTHESIZED ]</span>
                      <div className="relative h-[2px] w-24 bg-white/5 overflow-hidden rounded-full">
                          <div className="absolute inset-y-0 left-0 bg-[#FFCC00] shadow-[0_0_8px_#FFCC00] transition-[width] duration-300" style={{ width: `${(synthesized / total) * 100}%` }} />
@@ -394,7 +394,7 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
             {[0, 1, 2, 3, 4, 5].map(i => (
-              <div key={i} className="flex flex-col gap-4 p-5 bg-zinc-950/50 backdrop-blur-md rounded-xl border border-white/10 relative overflow-hidden">
+              <div key={i} className="flex flex-col gap-4 p-5 bg-zinc-950/50 rounded-xl border border-white/10 relative overflow-hidden">
                 <div className="absolute inset-0 -translate-x-full animate-[storyboard-shimmer_2s_ease-in-out_infinite] bg-gradient-to-r from-transparent via-white/5 to-transparent pointer-events-none" />
                 <div className="flex items-center gap-3">
                   <span className="bg-[#FFCC00]/5 text-[#FFCC00]/40 text-[10px] font-black px-3 py-1 rounded-full border border-[#FFCC00]/10 font-mono tracking-tighter">SCENE_0{i + 1}</span>
@@ -413,13 +413,13 @@ const Step5Storyboard: React.FC<Step5Props> = ({ script, avatar, businessInfo, s
           </div>
         </div>
       )}
-      {error && <p className="text-red-500 text-center mb-4 p-4 backdrop-blur-md rounded-xl font-mono text-sm border border-red-900/20 bg-red-900/10">{error}</p>}
+      {error && <p className="text-red-500 text-center mb-4 p-4 rounded-xl font-mono text-sm border border-red-900/20 bg-red-900/10">{error}</p>}
       {modalImageUrl && <ImageModal imageUrl={modalImageUrl} onClose={() => setModalImageUrl(null)} filename={modalImageFilename} />}
       
       {!loadingStoryboard && storyboardData.length > 0 && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 max-h-[58vh] overflow-y-auto pr-1 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             {storyboardData.map((scene, index) => (
-                <div key={index} className="flex flex-col gap-4 p-5 bg-zinc-950/50 backdrop-blur-md rounded-xl border border-white/10 hover:border-[#FFCC00]/40 transition-all group relative overflow-hidden">
+                <div key={index} className="flex flex-col gap-4 p-5 bg-zinc-950/50 rounded-xl border border-white/10 hover:border-[#FFCC00]/40 transition-all group relative overflow-hidden">
                     <div className="absolute -right-20 -top-20 w-40 h-40 bg-[#FFCC00]/5 blur-[80px] rounded-full group-hover:bg-[#FFCC00]/10 transition-colors" />
 
                     <div className="flex items-center gap-3">

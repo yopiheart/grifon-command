@@ -381,7 +381,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
           // it's a floating control surface, and the scroll edge keeps the
           // labels off whatever passes beneath.
           className={`sticky z-30 mb-6 py-3 px-5 rounded-2xl transition-[background-color,backdrop-filter] duration-300 ${
-            barStuck ? `${MAT_CHROME} ${SCROLL_EDGE}` : "backdrop-blur-none bg-transparent"
+            barStuck ? `${MAT_CHROME} ${SCROLL_EDGE}` : " bg-transparent"
           }`}
           style={{ top: headerH }}
         >
@@ -820,7 +820,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
         />
 
         {/* ===== SOCIAL PROOF ===== */}
-        <section className="py-12 md:py-24 border-b border-white/5 bg-transparent backdrop-blur-sm relative z-10">
+        <section className="py-12 md:py-24 border-b border-white/5 bg-transparent relative z-10">
           <div className="max-w-7xl mx-auto px-4">
             <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#FFCC00] text-center mb-2">
               // WHAT EARLY USERS ARE SAYING
@@ -834,7 +834,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
               {testimonials.map((testimonial, idx) => (
                 <div 
                   key={idx} 
-                  className="bg-zinc-900/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 flex flex-col h-full"
+                  className="bg-zinc-900/80 border border-white/10 rounded-3xl p-8 flex flex-col h-full"
                 >
                   <div className="px-2 flex-1 flex flex-col">
                     <div className="flex gap-1 mb-4">
@@ -858,7 +858,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
 
         {/* ===== GUARANTEE ===== */}
         <section style={{ maxWidth: PX.MEASURE }} className="mx-auto mb-20 px-5 text-center">
-          <AnimatedBorder intense containerClassName="h-full w-full" className="p-10 md:p-12 text-center bg-zinc-900/80 backdrop-blur-xl relative overflow-hidden">
+          <AnimatedBorder intense containerClassName="h-full w-full" className="p-10 md:p-12 text-center bg-zinc-900/80 relative overflow-hidden">
             <ShieldCheck className="w-12 h-12 text-[#FFCC00] mx-auto mb-4" />
             <h3 className="text-2xl md:text-3xl font-bold uppercase tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
               7-Day Money-Back Guarantee

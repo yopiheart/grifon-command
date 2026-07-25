@@ -17,7 +17,7 @@ const METRICS = [
 
 export const RoiMetrics: React.FC = () => (
   <section className={`${BAND_TIGHT} px-4 sm:px-6 lg:px-8 relative z-10`}>
-    <div className="max-w-7xl mx-auto bg-zinc-900/30 backdrop-blur-xl border border-white/5 rounded-3xl sm:rounded-[40px] p-8 sm:p-12 md:p-16">
+    <div className="max-w-7xl mx-auto bg-zinc-900/30 border border-white/5 rounded-3xl sm:rounded-[40px] p-8 sm:p-12 md:p-16">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}

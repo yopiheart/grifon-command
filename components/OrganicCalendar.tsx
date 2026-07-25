@@ -8,6 +8,7 @@ import { RefreshCw, Image as ImageIcon, Download, ChevronLeft, Plus } from 'luci
 import IntelligenceUplink from './IntelligenceUplink';
 import JSZip from 'jszip';
 import saveAs from 'file-saver';
+import { MAT_CHROME } from './ui/materialTokens';
 
 interface OrganicCalendarProps {
   businessInfo: BusinessInfo;
@@ -223,7 +224,7 @@ const OrganicCalendar: React.FC<OrganicCalendarProps> = ({ businessInfo, avatar,
             </div>
 
             {calendar.length > 0 && !loading && (
-              <div className="fixed bottom-10 left-1/2 -translate-x-1/2 flex gap-4 bg-zinc-950/90 backdrop-blur-xl p-4 rounded-2xl border border-white/10 shadow-2xl z-50 animate-in slide-in-from-bottom-10">
+              <div className={`fixed bottom-10 left-1/2 -translate-x-1/2 flex gap-4 ${MAT_CHROME} p-4 rounded-2xl border border-white/10 shadow-2xl z-50 animate-in slide-in-from-bottom-10`}>
                 <button 
                     onClick={handleSynthesizeAll} 
                     className="px-8 py-3 text-xs border border-white/10 hover:border-[#FFCC00] text-zinc-300 hover:text-[#FFCC00] rounded-xl flex items-center gap-2 transition-all font-mono uppercase tracking-widest"

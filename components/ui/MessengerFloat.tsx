@@ -35,7 +35,7 @@ export const MessengerFloat: React.FC<MessengerFloatProps> = ({ side = 'left' })
 
       {showTip && (
         <div
-          className={`relative mb-1 max-w-[200px] rounded-2xl bg-zinc-900/90 backdrop-blur-xl border border-white/10 px-3.5 py-2.5 ${
+          className={`relative mb-1 max-w-[200px] rounded-2xl bg-zinc-900/90 border border-white/10 px-3.5 py-2.5 ${
             side === 'right' ? 'rounded-br-sm' : 'rounded-bl-sm'
           }`}
         >

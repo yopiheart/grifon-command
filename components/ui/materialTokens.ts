@@ -72,7 +72,17 @@ export const MAT_CHROME_MOBILE = 'mat-chrome-mobile';
 /** SLAB — modals, quota walls, checkout. Fully opaque: it has the screen. */
 export const MAT_SLAB = 'mat-slab';
 
-/** VEIL — scrims behind a SLAB, route wipes. Light blur, heavy dim, no text. */
+/**
+ * VEIL — suppresses what's behind it. Scrims behind a SLAB, route wipes, and
+ * the loading/lock overlays that sit on a generated frame. Light blur, heavy
+ * dim.
+ *
+ * This is the one tier where a backdrop-filter is always justified: a VEIL is
+ * only ever placed over something worth obscuring — an image, a video frame, a
+ * populated panel — so unlike CHROME it never has to prove it earned the pass.
+ * It may carry a brief status line (a loader label, "Locked — upgrade to Pro"),
+ * but never the surface's actual content.
+ */
 export const MAT_VEIL = 'mat-veil';
 
 /**

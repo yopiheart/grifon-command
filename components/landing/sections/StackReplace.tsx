@@ -52,7 +52,7 @@ export const StackReplace: React.FC = () => (
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: DUR.slow, delay: idx * 0.07 }}
-            className="flex flex-col gap-3 rounded-2xl border border-white/10 bg-zinc-900/40 backdrop-blur-sm p-5 md:p-6"
+            className="flex flex-col gap-3 rounded-2xl border border-white/10 bg-zinc-900/40 p-5 md:p-6"
           >
             <tool.icon className="w-7 h-7 text-[#FFCC00]" />
             <div className="text-sm md:text-base font-bold text-white leading-tight">{tool.cap}</div>
@@ -72,7 +72,7 @@ export const StackReplace: React.FC = () => (
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: DUR.slow, delay: 0.1 }}
-        className="mt-4 flex flex-col gap-4 rounded-2xl border border-[#FFCC00]/30 bg-gradient-to-br from-[#FFCC00]/10 to-zinc-900/40 backdrop-blur-sm p-6 md:p-7 sm:flex-row sm:items-center"
+        className="mt-4 flex flex-col gap-4 rounded-2xl border border-[#FFCC00]/30 bg-gradient-to-br from-[#FFCC00]/10 to-zinc-900/40 p-6 md:p-7 sm:flex-row sm:items-center"
       >
         <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-[#FFCC00]/30 bg-[#FFCC00]/15">
           <Scissors className="w-6 h-6 text-[#FFCC00]" />

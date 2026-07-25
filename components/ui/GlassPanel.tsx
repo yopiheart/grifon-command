@@ -13,7 +13,7 @@ import { MATERIAL, type MaterialTier } from './materialTokens';
 //
 // Default is now PLATE: tonal fill, inset top hairline, no backdrop-filter.
 // The API is unchanged — existing call sites keep working, and a caller's own
-// `bg-*` / `backdrop-blur-*` utility still wins over the tier (the tiers are
+// `bg-*` / `-*` utility still wins over the tier (the tiers are
 // declared in @layer components on purpose).
 //
 // Need a surface that genuinely FLOATS above content (nav, rail, command bar,

@@ -32,6 +32,7 @@ import {
 } from '../services/omniStyleService';
 import { trackEvent } from '../services/analyticsService';
 import { seedCaptionsEnabled } from '../utils/asmrSeeds';
+import { MAT_VEIL } from './ui/materialTokens';
 
 export interface EditorBatchPayload {
   sceneBatch: SceneBatchEntry[];
@@ -1317,7 +1318,7 @@ const EditVideo: React.FC<EditVideoProps> = ({ onBack, editorBatch, avatarGender
                     
                     <div className="flex-grow bg-zinc-950 border border-white/10 rounded-xl p-6 overflow-y-auto custom-scrollbar relative">
                         {isAnalyzing ? (
-                            <div className="absolute inset-0 flex items-center justify-center bg-zinc-950/80 backdrop-blur-sm z-10 rounded-xl">
+                            <div className={`absolute inset-0 flex items-center justify-center ${MAT_VEIL} z-10 rounded-xl`}>
                                 <Loader message="WATCHING & STRATEGIZING..." />
                             </div>
                         ) : result ? (

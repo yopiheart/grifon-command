@@ -43,7 +43,7 @@ export const ResumeDraftCard: React.FC<ResumeDraftCardProps> = ({
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: DUR.slow, delay }}
-      className="bg-[#FFCC00]/[0.06] backdrop-blur-xl rounded-2xl p-4 lg:p-5 relative overflow-hidden hover:bg-[#FFCC00]/[0.10] hover:shadow-[0_8px_40px_rgba(255,204,0,0.15)] transition-all duration-500 ease-out"
+      className="bg-[#FFCC00]/[0.06] rounded-2xl p-4 lg:p-5 relative overflow-hidden hover:bg-[#FFCC00]/[0.10] hover:shadow-[0_8px_40px_rgba(255,204,0,0.15)] transition-all duration-500 ease-out"
     >
       <div className="absolute inset-0 bg-gradient-to-br from-[#FFCC00]/5 to-transparent pointer-events-none" />
 

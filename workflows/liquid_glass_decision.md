@@ -218,7 +218,22 @@ Two things worth recording:
 3. **No vertical rhythm.** Landing desktop runs 80/96 · 112/112 · 128/128 · 64/64 · 80/80 · 128/128 · 96/96 — seven values, one asymmetric. Pricing uses 60px paddings, which are off the 4px scale entirely.
 4. **6 remaining desktop lines over 75ch** (worst 105ch on landing, 87ch on pricing, 112ch on the dashboard hero subcopy).
 
-### Slice 3 (not started)
-Remaining `backdrop-blur` literals → tiers: modals + quota wall → SLAB, module chrome per the picking rule. Then move 06's concentric radii on whatever gets touched.
+### Slice 4 — module sweep, SHIPPED 2026-07-25
+
+The 93 remaining raw `backdrop-blur` literals across 30 module files are gone. **1 left**, and it's a `lg:backdrop-blur-none` modifier that legitimately *disables* the effect at a breakpoint.
+
+| Category | Count | Disposition |
+|---|---|---|
+| Content-layer surfaces (module cards, panels, tiles) | **61** | filter **stripped**. Nothing was behind them but `zinc-950`, so this is 61 GPU compositing passes bought back for no visual change. Their tonal `bg-*` stays; they are de-glassed, not yet formally on the PLATE token. |
+| Floating action bars, sticky headers, toasts | **11** | → CHROME |
+| Overlays sitting on a generated frame, scrims, lock states | **20** | → VEIL |
+| Modal backdrops | **1** | → VEIL |
+
+**The judgement call worth recording:** an overlay on `absolute inset-0` over an image is the one place a blur was always doing real work — there is a picture behind it to obscure. Those kept their filter and got named VEIL rather than stripped. The `VEIL` docblock was amended to say so, and to allow a scrim to carry a brief status line (a loader label, a lock message) but never the surface's real content.
+
+**Verified:** build clean, 1005 tests, design:lint silent, and Recon opened in Chromium with no page errors — panels render tonal, `//` labels legible at the new contrast floor.
+
+### Slice 5 (not started)
+Formally move the 61 de-glassed content surfaces onto `MAT_PLATE` rather than leaving their ad-hoc `bg-zinc-9xx/xx`. Then move 06's concentric radii on whatever gets touched next.
 
 **Kill switch:** revert `GlassPanel.tsx` to `bg-zinc-900/80 backdrop-blur-xl …` and the app returns to v1 look; the tier CSS becomes dead but harmless. Full revert = this commit.

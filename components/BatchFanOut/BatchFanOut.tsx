@@ -11,6 +11,7 @@ import IntelligenceUplink from '../IntelligenceUplink';
 import { ChevronLeft, Download, Sparkles, RefreshCw, Image as ImageIcon, LayoutGrid, Zap } from 'lucide-react';
 import JSZip from 'jszip';
 import saveAs from 'file-saver';
+import { MAT_CHROME } from '../ui/materialTokens';
 
 interface BatchFanOutProps {
   businessInfo: BusinessInfo;
@@ -249,7 +250,7 @@ const BatchFanOut: React.FC<BatchFanOutProps> = ({ businessInfo, avatar, clientD
 
       {/* --- Done action bar --- */}
       {phase === 'done' && (
-        <div className="fixed bottom-10 left-1/2 -translate-x-1/2 flex flex-wrap justify-center gap-4 bg-zinc-950/80 backdrop-blur-2xl p-4 rounded-full border border-white/10 z-50">
+        <div className={`fixed bottom-10 left-1/2 -translate-x-1/2 flex flex-wrap justify-center gap-4 ${MAT_CHROME} p-4 rounded-full border border-white/10 z-50`}>
           <button onClick={() => runBatch(heroMode, count, heroUrl || undefined)} className="rounded-full px-6 py-3 text-xs border border-[#FFCC00] text-[#FFCC00] hover:bg-[#FFCC00] hover:text-black flex items-center gap-2 font-bold uppercase tracking-widest transition-all">
             <RefreshCw className="w-4 h-4 shrink-0" /> NEW ANGLES
           </button>

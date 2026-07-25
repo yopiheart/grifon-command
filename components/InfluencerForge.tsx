@@ -6,6 +6,7 @@ import { GoldButton } from './ui/GoldButton';
 import Loader from './ui/Loader';
 import { Sparkles, UploadCloud, Camera, RefreshCw, Check, Trash2, Image as ImageIcon, Activity, ChevronLeft, ChevronDown } from 'lucide-react';
 import saveAs from 'file-saver';
+import { MAT_CHROME, MAT_VEIL } from './ui/materialTokens';
 
 interface InfluencerForgeProps {
   onBack: () => void;
@@ -453,7 +454,7 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
                     ))}
                 </div>
             </div>
-            <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex gap-4 bg-zinc-950/80 backdrop-blur-2xl p-4 rounded-full border border-white/10 shadow-2xl">
+            <div className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex gap-4 ${MAT_CHROME} p-4 rounded-full border border-white/10 shadow-2xl`}>
                 <GoldButton onClick={onCompleteMission} className="rounded-full px-12 py-3 text-xs bg-[#FFCC00] text-black shadow-[0_0_15px_rgba(255,204,0,0.5)] font-black uppercase tracking-widest">
                     COMPLETE_DAILY_MISSION
                 </GoldButton>
@@ -468,7 +469,7 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
         {UnifiedTerminalHeader}
         <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar pb-20 flex flex-col items-center justify-center relative">
            {isLoading && (
-              <div className="absolute inset-0 z-[100] bg-zinc-950/90 backdrop-blur-md flex items-center justify-center">
+              <div className={`absolute inset-0 z-[100] ${MAT_VEIL} flex items-center justify-center`}>
                   <Loader message="RENDERING_THUMBNAIL_V2..." />
               </div>
            )}
@@ -526,7 +527,7 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
                 <div key={i} className="glass-morphism border border-white/10 rounded-3xl hover:border-[#FFCC00]/40 transition-all flex flex-col group overflow-hidden bg-zinc-950/40 relative">
                    
                    {loadingScenes.includes(i) && (
-                      <div className="absolute inset-0 z-30 bg-zinc-950/60 backdrop-blur-sm flex flex-col items-center justify-center gap-4">
+                      <div className={`absolute inset-0 z-30 ${MAT_VEIL} flex flex-col items-center justify-center gap-4`}>
                          <div className="w-12 h-12 border-4 border-[#FFCC00]/20 border-t-[#FFCC00] rounded-full animate-spin"></div>
                          <p className="text-[8px] font-black uppercase tracking-widest text-[#FFCC00] animate-pulse">SYNTHESIZING...</p>
                       </div>
@@ -562,7 +563,7 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
                       <div className="absolute top-3 left-3 flex flex-col gap-1 z-10 pointer-events-none">
                          <span className="bg-zinc-950/80 text-[#FFCC00] text-[7px] px-2 py-0.5 rounded font-black tracking-tighter uppercase border border-[#FFCC00]/20">SCENE_0{i+1}</span>
                          <span className="bg-brand-yellow text-black text-[6px] px-2 py-0.5 rounded font-black uppercase tracking-tighter">{SCENE_LABELS[i] || '[ CONTENT ]'}</span>
-                         {i === 0 && <span className="bg-white/10 backdrop-blur-md text-white text-[5px] px-2 py-0.5 rounded font-black uppercase tracking-tighter border border-white/10">[ DUAL_FRAME_HOOK ]</span>}
+                         {i === 0 && <span className="bg-white/10 text-white text-[5px] px-2 py-0.5 rounded font-black uppercase tracking-tighter border border-white/10">[ DUAL_FRAME_HOOK ]</span>}
                       </div>
                    </div>
                    
@@ -576,7 +577,7 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
               ))}
            </div>
         </div>
-        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex gap-4 bg-zinc-950/80 backdrop-blur-2xl p-4 rounded-full border border-white/10 shadow-2xl">
+        <div className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex gap-4 ${MAT_CHROME} p-4 rounded-full border border-white/10 shadow-2xl`}>
           <GoldButton onClick={onGenerateThumbnail} disabled={isLoading} className="rounded-full px-10 py-3 text-xs font-black uppercase bg-brand-yellow text-black shadow-neon-yellow">GENERATE_THUMBNAIL</GoldButton>
           <GoldButton 
             onClick={onGeneratePrompts} 
@@ -596,7 +597,7 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
         {UnifiedTerminalHeader}
         <div className="flex-1 flex flex-col lg:flex-row gap-8 overflow-hidden relative">
           {isLoading && (
-            <div className="absolute inset-0 z-[100] bg-zinc-950/90 backdrop-blur-md flex items-center justify-center rounded-[3rem]">
+            <div className={`absolute inset-0 z-[100] ${MAT_VEIL} flex items-center justify-center rounded-[3rem]`}>
                 <Loader message="MODULATING_SIGNAL..." />
             </div>
           )}
@@ -650,7 +651,7 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
         {UnifiedTerminalHeader}
         <div className="flex-1 grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-10 gap-4 overflow-y-auto pr-2 custom-scrollbar p-1 relative">
           {isLoading && (
-            <div className="absolute inset-0 z-[100] bg-zinc-950/90 backdrop-blur-md flex items-center justify-center rounded-[3rem]">
+            <div className={`absolute inset-0 z-[100] ${MAT_VEIL} flex items-center justify-center rounded-[3rem]`}>
                 <Loader message="QUERYING_MISSION_MAP..." />
             </div>
           )}
@@ -708,7 +709,7 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
         {UnifiedTerminalHeader}
         <div className="flex-1 flex flex-col lg:grid lg:grid-cols-2 gap-8 overflow-hidden relative">
           {isLoading && (
-            <div className="absolute inset-0 z-[100] bg-zinc-950/90 backdrop-blur-md flex items-center justify-center rounded-[3rem]">
+            <div className={`absolute inset-0 z-[100] ${MAT_VEIL} flex items-center justify-center rounded-[3rem]`}>
                 <Loader message="OPTIMIZING_STRATEGIC_UPLINK..." />
             </div>
           )}
@@ -722,7 +723,7 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
                             <button 
                                 onClick={onForge}
                                 disabled={isLoading}
-                                className={`bg-zinc-950/60 backdrop-blur-xl border border-white/20 px-6 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition-all text-white flex items-center gap-2 ${isLoading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-white/10'}`}
+                                className={`bg-zinc-950/60 border border-white/20 px-6 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition-all text-white flex items-center gap-2 ${isLoading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-white/10'}`}
                             >
                                 <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} /> [ REGENERATE_DNA ]
                             </button>
@@ -904,7 +905,7 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
       <div className="flex-1 flex flex-col lg:flex-row gap-8 overflow-hidden relative z-10">
         <div className="flex-1 flex flex-col items-center justify-center bg-zinc-950/50 rounded-2xl relative overflow-hidden">
            {isLoading ? (
-             <div className="absolute inset-0 z-[100] flex items-center justify-center bg-zinc-950/80 backdrop-blur-md rounded-[3rem]">
+             <div className={`absolute inset-0 z-[100] flex items-center justify-center ${MAT_VEIL} rounded-[3rem]`}>
                 <Loader message="SEQUENCING_DNA_STREAM..." />
              </div>
            ) : config.uploadedPhoto && config.sourceType === 'UPLOAD' && !result ? (
@@ -958,7 +959,7 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
                        <span className="text-[8px] font-black uppercase tracking-widest">[ IDENTITY_LOCKED ]</span>
                     </div>
 
-                    <div className="absolute bottom-10 flex gap-4 bg-zinc-950/60 backdrop-blur-xl border border-white/10 px-8 py-3 rounded-full z-30 shadow-2xl">
+                    <div className="absolute bottom-10 flex gap-4 bg-zinc-950/60 border border-white/10 px-8 py-3 rounded-full z-30 shadow-2xl">
                         <button 
                             onClick={onForge}
                             disabled={isLoading}
@@ -993,7 +994,7 @@ const InfluencerForge: React.FC<InfluencerForgeProps> = ({ onBack, ethnicity: gl
            )}
         </div>
 
-        <aside className="w-full lg:w-96 flex flex-col shrink-0 h-full bg-zinc-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6 gap-6 overflow-y-auto custom-scrollbar">
+        <aside className="w-full lg:w-96 flex flex-col shrink-0 h-full bg-zinc-900/80 border border-white/10 rounded-2xl p-6 gap-6 overflow-y-auto custom-scrollbar">
           <div className="flex-1 flex flex-col pr-2 relative">
             <TacticalFolderHeader id="BIOMETRIC_DNA" label="🧬 BIOMETRIC_DNA" isOpen={openFolder === 'BIOMETRIC_DNA'} />
             <div className={`overflow-hidden transition-all duration-500 ease-in-out ${openFolder === 'BIOMETRIC_DNA' ? 'max-h-[1000px] p-8 pb-6 space-y-8' : 'max-h-0 opacity-0'}`}>

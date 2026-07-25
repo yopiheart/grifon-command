@@ -62,7 +62,7 @@ export const RecentActivityToast: React.FC = () => {
             animate={reduce ? { opacity: 1 } : { opacity: 1, scale: 1 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
             transition={{ duration: DUR.base, ease: EASE.out }}
-            className="pointer-events-auto flex items-center gap-3 w-full sm:max-w-[300px] mx-auto rounded-2xl border border-white/10 bg-zinc-900/90 backdrop-blur-xl px-4 py-3"
+            className="pointer-events-auto flex items-center gap-3 w-full sm:max-w-[300px] mx-auto rounded-2xl border border-white/10 bg-zinc-900/90 px-4 py-3"
           >
             {/* Gold initials avatar with a verified check badge */}
             <div className="relative shrink-0">

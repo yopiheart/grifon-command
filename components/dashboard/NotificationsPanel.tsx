@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Loader2, Film, Search, Image as ImageIcon, Layers, Activity, Zap, BellOff, ArrowRight, X } from 'lucide-react';
 import { SPRING } from '../ui/motionTokens';
 import type { ActiveJob, JobKind } from '../../services/activeJobsService';
+import { MAT_CHROME, MAT_VEIL } from '../ui/materialTokens';
 
 const KIND_ICON: Record<JobKind, React.ComponentType<{ className?: string }>> = {
   video: Film,
@@ -45,16 +46,16 @@ export const NotificationsPanel: React.FC<NotificationsPanelProps> = ({
           <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 z-[75] bg-black/40 backdrop-blur-sm lg:bg-transparent lg:backdrop-blur-none"
+            className={`fixed inset-0 z-[75] ${MAT_VEIL} lg:bg-transparent lg:backdrop-blur-none`}
           />
           <motion.div
             initial={{ opacity: 0, y: 16, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.98 }}
             transition={SPRING.standard}
-            className="fixed z-[76] bg-zinc-900/95 backdrop-blur-xl ring-1 ring-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden
+            className={`fixed z-[76] ${MAT_CHROME} ring-1 ring-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden
               left-3 right-3 bottom-3 rounded-3xl
-              lg:left-24 lg:right-auto lg:bottom-6 lg:w-80 lg:rounded-2xl"
+              lg:left-24 lg:right-auto lg:bottom-6 lg:w-80 lg:rounded-2xl`}
           >
             <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06]">
               <span className="text-sm font-bold text-white tracking-tight">Notifications</span>

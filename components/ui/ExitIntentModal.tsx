@@ -69,7 +69,7 @@ export const ExitIntentModal: React.FC<ExitIntentModalProps> = ({ triggered, onD
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: 16, scale: 0.98 }}
             transition={SPRING.pop}
             onClick={(e) => e.stopPropagation()}
-            className="relative w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl border border-white/10 bg-zinc-900/90 backdrop-blur-xl shadow-[0_0_60px_-12px_rgba(255,204,0,0.35)]"
+            className="relative w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl border border-white/10 bg-zinc-900/90 shadow-[0_0_60px_-12px_rgba(255,204,0,0.35)]"
           >
             {/* Clapper sticks — snap shut on entrance. */}
             <motion.div

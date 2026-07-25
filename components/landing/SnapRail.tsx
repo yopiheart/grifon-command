@@ -117,7 +117,7 @@ export const SnapRail: React.FC<SnapRailProps> = ({
           onClick={() => paddle(-1)}
           disabled={!canPrev}
           aria-label={`Previous ${label}`}
-          className="h-11 w-11 rounded-full border border-white/10 bg-zinc-900/60 backdrop-blur-xl flex items-center justify-center text-zinc-400 transition-all hover:text-[#FFCC00] hover:border-[#FFCC00]/40 disabled:opacity-30 disabled:cursor-default disabled:hover:text-zinc-400 disabled:hover:border-white/10"
+          className="h-11 w-11 rounded-full border border-white/10 bg-zinc-900/60 flex items-center justify-center text-zinc-400 transition-all hover:text-[#FFCC00] hover:border-[#FFCC00]/40 disabled:opacity-30 disabled:cursor-default disabled:hover:text-zinc-400 disabled:hover:border-white/10"
         >
           <ChevronLeft className="w-4 h-4" />
         </button>
@@ -126,7 +126,7 @@ export const SnapRail: React.FC<SnapRailProps> = ({
           onClick={() => paddle(1)}
           disabled={!canNext}
           aria-label={`Next ${label}`}
-          className="h-11 w-11 rounded-full border border-white/10 bg-zinc-900/60 backdrop-blur-xl flex items-center justify-center text-zinc-400 transition-all hover:text-[#FFCC00] hover:border-[#FFCC00]/40 disabled:opacity-30 disabled:cursor-default disabled:hover:text-zinc-400 disabled:hover:border-white/10"
+          className="h-11 w-11 rounded-full border border-white/10 bg-zinc-900/60 flex items-center justify-center text-zinc-400 transition-all hover:text-[#FFCC00] hover:border-[#FFCC00]/40 disabled:opacity-30 disabled:cursor-default disabled:hover:text-zinc-400 disabled:hover:border-white/10"
         >
           <ChevronRight className="w-4 h-4" />
         </button>

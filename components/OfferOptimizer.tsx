@@ -9,6 +9,7 @@ import { PreviousResearchCard } from './ui/PreviousResearchCard';
 import Loader from './ui/Loader';
 import { Copy, ChevronLeft, ChevronDown, ChevronUp, UploadCloud, AlarmClock, ShieldCheck, ArrowRight, Download, Brain, FileSearch } from 'lucide-react';
 import saveAs from 'file-saver';
+import { MAT_VEIL } from './ui/materialTokens';
 
 interface OfferOptimizerProps {
   onBack: () => void;
@@ -536,7 +537,7 @@ const OfferOptimizer: React.FC<OfferOptimizerProps> = ({ onBack, onNavigate }) =
 
               <div className="flex-grow bg-zinc-950 border border-white/10 rounded-xl p-4 md:p-6 relative">
                 {isAnalyzing ? (
-                  <div className="absolute inset-0 flex items-center justify-center bg-zinc-950/80 backdrop-blur-sm z-10 rounded-xl">
+                  <div className={`absolute inset-0 flex items-center justify-center ${MAT_VEIL} z-10 rounded-xl`}>
                     <Loader message="APPLYING VIRAL PSYCHOLOGY..." />
                   </div>
                 ) : result ? (

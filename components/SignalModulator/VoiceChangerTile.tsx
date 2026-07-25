@@ -10,6 +10,7 @@ import VoicePicker from './VoicePicker';
 import { RECOMMENDED_VOICE_IDS } from './pinoyReady';
 import { STABILITY_LABELS, downloadAudio } from './utils';
 import type { SessionHistoryApi } from './useSessionHistory';
+import { MAT_VEIL } from '../ui/materialTokens';
 
 const MAX_FILE_BYTES = 50 * 1024 * 1024;
 const ACCEPT_MIMES = 'audio/mpeg,audio/wav,audio/x-m4a,audio/mp4,video/mp4,video/quicktime';
@@ -159,7 +160,7 @@ const VoiceChangerTile: React.FC<VoiceChangerTileProps> = ({ library, history, o
       <div className="flex-1 flex flex-col gap-6">
         <GlassPanel className="flex-1 p-8 relative flex flex-col overflow-hidden min-h-[480px]">
           {isLoading && (
-            <div className="absolute inset-0 z-50 bg-zinc-950/80 backdrop-blur-sm flex flex-col items-center justify-center">
+            <div className={`absolute inset-0 z-50 ${MAT_VEIL} flex flex-col items-center justify-center`}>
               <Loader message="CONVERTING SIGNAL..." />
               <p className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest mt-4">
                 // TYPICALLY_5_TO_15_SECONDS

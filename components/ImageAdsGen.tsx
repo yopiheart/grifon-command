@@ -11,6 +11,7 @@ import { captureToPng } from '../utils/captureToPng';
 import { resolveAdTheme } from '../utils/adTheme';
 import JSZip from 'jszip';
 import saveAs from 'file-saver';
+import { MAT_CHROME } from './ui/materialTokens';
 
 interface ImageAdsGenProps {
   businessInfo: BusinessInfo;
@@ -261,7 +262,7 @@ const ImageAdsGen: React.FC<ImageAdsGenProps> = ({ businessInfo, avatar, clientD
         )}
 
         {variants.length > 0 && !loading && (
-          <div className="fixed bottom-10 left-1/2 -translate-x-1/2 flex gap-4 bg-zinc-950/80 backdrop-blur-2xl p-4 rounded-full border border-white/10 shadow-2xl z-50 animate-in slide-in-from-bottom-10">
+          <div className={`fixed bottom-10 left-1/2 -translate-x-1/2 flex gap-4 ${MAT_CHROME} p-4 rounded-full border border-white/10 shadow-2xl z-50 animate-in slide-in-from-bottom-10`}>
             <button onClick={() => fetchVariants(uplinkData)} className="rounded-full px-8 py-3 text-xs border border-[#FFCC00] text-[#FFCC00] hover:bg-[#FFCC00] hover:text-black flex items-center gap-2 font-bold uppercase tracking-widest transition-all">
               <RefreshCw className="w-4 h-4" /> REGENERATE ALL
             </button>

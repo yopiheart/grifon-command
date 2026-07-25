@@ -6,6 +6,7 @@ import Loader from '../ui/Loader';
 import AudioRecorder from '../ui/AudioRecorder';
 import { cloneVoice, deleteVoice } from '../../services/voiceService';
 import type { VoiceLibrary } from '../../types';
+import { MAT_VEIL } from '../ui/materialTokens';
 
 const MAX_FILE_BYTES = 10 * 1024 * 1024;
 const MIN_DURATION_SEC = 30;
@@ -170,7 +171,7 @@ const VoiceCloningTile: React.FC<VoiceCloningTileProps> = ({ library, onLibraryR
 
       <GlassPanel className="p-6 relative">
         {isLoading && (
-          <div className="absolute inset-0 z-50 bg-zinc-950/80 backdrop-blur-sm flex flex-col items-center justify-center rounded-2xl">
+          <div className={`absolute inset-0 z-50 ${MAT_VEIL} flex flex-col items-center justify-center rounded-2xl`}>
             <Loader message="CLONING VOICE PROFILE..." />
             <p className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest mt-4">
               // TYPICALLY_10_TO_30_SECONDS

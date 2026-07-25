@@ -9,6 +9,7 @@ import VoicePicker from './VoicePicker';
 import { RECOMMENDED_VOICE_IDS } from './pinoyReady';
 import { STABILITY_LABELS, TTS_TAGS, downloadAudio } from './utils';
 import type { SessionHistoryApi } from './useSessionHistory';
+import { MAT_VEIL } from '../ui/materialTokens';
 
 const MAX_CHARS = 10000;
 
@@ -148,7 +149,7 @@ const TextToSpeechTile: React.FC<TextToSpeechTileProps> = ({ library, globalScri
       <div className="flex-1 flex flex-col gap-6">
         <GlassPanel className="flex-1 p-8 relative flex flex-col overflow-hidden min-h-[480px]">
           {isLoading && (
-            <div className="absolute inset-0 z-50 bg-zinc-950/80 backdrop-blur-sm flex flex-col items-center justify-center">
+            <div className={`absolute inset-0 z-50 ${MAT_VEIL} flex flex-col items-center justify-center`}>
               <Loader message="SYNTHESIZING SIGNAL..." />
               <p className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest mt-4">
                 // TYPICALLY_5_TO_15_SECONDS
