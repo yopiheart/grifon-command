@@ -5,6 +5,7 @@ import { Film, Search, Target, Type, ImageIcon } from 'lucide-react';
 import { DirectorDemo, ResearchDemo, OfferDemo, CaptionDemo, ImageDemo } from '../InclusionDemos';
 import { setIntendedModule } from '../../../services/moduleIntentService';
 import { SnapRail } from '../SnapRail';
+import { BAND_HERO, MEASURE } from '../../ui/layoutTokens';
 
 /**
  * Director AI's signature frame: a camera viewfinder — breathing gold corner
@@ -42,7 +43,7 @@ interface ModulesProps {
 
 /** What You Get: Director AI as the full-width feature row, the other four working modules in a grid. */
 export const Modules: React.FC<ModulesProps> = ({ onEnterApp }) => (
-  <section id="what-you-get" className="scroll-mt-28 py-16 md:py-32 px-4 sm:px-6 lg:px-8 relative z-10">
+  <section id="what-you-get" className={`scroll-mt-28 ${BAND_HERO} px-4 sm:px-6 lg:px-8 relative z-10`}>
     <div className="max-w-7xl mx-auto">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -56,7 +57,7 @@ export const Modules: React.FC<ModulesProps> = ({ onEnterApp }) => (
           <span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">Everything</span>{' '}
           YOU NEED. NOTHING YOU DON'T.
         </h2>
-        <p className="text-zinc-400 max-w-2xl mx-auto text-base mt-4">
+        <p className={`text-zinc-400 ${MEASURE} text-base mt-4`}>
           Five battle-tested AI modules. Each one replaces a freelancer, an agency, or 6 hours of your time. Hindi lang sinasabi — ipinapakita.
         </p>
       </motion.div>

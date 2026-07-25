@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { DUR } from '../../ui/motionTokens';
 import { PenLine, AudioLines, Clapperboard, ImageIcon, BarChart3, Target, Scissors } from 'lucide-react';
+import { BAND_TIGHT, SHELL, MEASURE } from '../../ui/layoutTokens';
 
 // The software-consolidation anchor (distinct from the deliverable value stack):
 // one subscription replaces a whole rack of separate AI tools. Framed by
@@ -24,8 +25,8 @@ const TOOLS = [
  * it never leaks the engine stack or reads as "just a wrapper."
  */
 export const StackReplace: React.FC = () => (
-  <section className="py-12 md:py-16 px-4 sm:px-6 lg:px-8 relative z-10">
-    <div className="max-w-6xl mx-auto">
+  <section className={`${BAND_TIGHT} px-4 sm:px-6 lg:px-8 relative z-10`}>
+    <div className={SHELL}>
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -38,7 +39,7 @@ export const StackReplace: React.FC = () => (
           SIX AI TOOLS + YOUR VIDEO EDITOR.{' '}
           <span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">Or one Grifon.</span>
         </h2>
-        <p className="mt-5 text-base md:text-lg text-zinc-400 max-w-2xl mx-auto">
+        <p className={`mt-5 text-base md:text-lg text-zinc-400 ${MEASURE}`}>
           No more juggling a separate tool — or a freelancer — for every step. All of it, built for Filipino businesses, in one app.
         </p>
       </motion.div>
@@ -96,7 +97,7 @@ export const StackReplace: React.FC = () => (
         transition={{ duration: DUR.slow, delay: 0.2 }}
         className="mt-10 flex flex-col items-center gap-1.5 text-center"
       >
-        <p className="text-base md:text-lg text-zinc-300">
+        <p className="max-w-[68ch] mx-auto text-base md:text-lg text-zinc-300">
           That's <span className="font-bold text-white">$120+/mo</span> of AI tools
           {' '}(<span className="font-mono">~₱7,000</span>) — plus a freelance editor every video — replaced by{' '}
           <span className="font-bold text-[#FFCC00]">one app at ₱2,497/mo.</span>

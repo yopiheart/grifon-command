@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { DUR, EASE } from '../../ui/motionTokens';
 import { Building2, UtensilsCrossed, ShoppingBag, Play, ChevronRight } from 'lucide-react';
+import { BAND, SHELL } from '../../ui/layoutTokens';
 
 // Hooks/CTAs are illustrative sample creative (what a Grifon ad LOOKS like) —
 // not real campaigns, so no ROAS/time claims. WS2 replaces these mockups with
@@ -31,7 +32,7 @@ const CARDS = [
  * text hint, is the swipe affordance), brighter card surface, real ad content.
  */
 export const ProofGallery: React.FC = () => (
-  <section className="py-16 md:py-28 border-b border-white/5 relative z-10 overflow-hidden">
+  <section className={`${BAND} border-b border-white/5 relative z-10 overflow-hidden`}>
     <div className="max-w-7xl mx-auto px-4 text-center mb-12 md:mb-20">
       <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-on-surface-sublabel mb-4">// THE RECEIPTS</p>
       <h2 className="text-3xl md:text-5xl font-bold uppercase tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500 max-w-4xl mx-auto">
@@ -41,7 +42,7 @@ export const ProofGallery: React.FC = () => (
       </h2>
     </div>
 
-    <div className="max-w-6xl mx-auto relative">
+    <div className={`${SHELL} relative`}>
       <style>{`.proof-scroll::-webkit-scrollbar { display: none; }`}</style>
       <div
         className="proof-scroll flex gap-4 lg:gap-10 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none scroll-smooth px-4 pb-6 md:justify-center md:items-start"

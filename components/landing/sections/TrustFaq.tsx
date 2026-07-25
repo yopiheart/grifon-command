@@ -5,6 +5,7 @@ import { AnimatedBorder } from '../../ui/AnimatedBorder';
 import { GlassPanel } from '../../ui/GlassPanel';
 import { CONTACT } from '../../../config/contact';
 import { MessengerIcon } from '../SocialIcons';
+import { BAND, MEASURE } from '../../ui/layoutTokens';
 
 const FAQS = [
   { q: 'DO I NEED ANY TECHNICAL SKILLS?', a: 'No. If you can type what you sell, Grifon does the rest. No design skills. No copywriting experience. No video editing.' },
@@ -15,7 +16,7 @@ const FAQS = [
 
 /** Guarantee + FAQ + Messenger support CTA with a live presence indicator. */
 export const TrustFaq: React.FC = () => (
-  <section className="py-12 md:py-24 px-4 sm:px-6 lg:px-8 relative z-10">
+  <section className={`${BAND} px-4 sm:px-6 lg:px-8 relative z-10`}>
     <div className="max-w-4xl mx-auto space-y-16">
       {/* The Guarantee */}
       <motion.div
@@ -28,7 +29,7 @@ export const TrustFaq: React.FC = () => (
           <h2 className="text-3xl md:text-5xl font-bold uppercase tracking-tight mb-4 text-[#FFCC00]">
             7-DAY MONEY-BACK GUARANTEE
           </h2>
-          <p className="text-zinc-300 md:text-lg max-w-2xl mx-auto">
+          <p className={`text-zinc-300 md:text-lg ${MEASURE}`}>
             Subscribe to any paid plan and generate your first ad. If it's not something you'd actually run, get a full refund within 7 days — and keep the ad plan either way. No questions. No hoops.
           </p>
         </AnimatedBorder>

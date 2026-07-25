@@ -7,6 +7,7 @@ import { GoldButton } from '../../ui/GoldButton';
 import { SignatureScribble } from '../SignatureScribble';
 import { CTA_REASSURANCE } from '../microcopy';
 import { PRO_VALUE_STACK, PRO_VALUE_TOTAL, PRO_PRICE_LABEL, FOUNDING_NOTE } from '../../../config/valueStack';
+import { BAND_HERO } from '../../ui/layoutTokens';
 
 interface OfferStackProps {
   onNavigatePricing: () => void;
@@ -19,7 +20,7 @@ interface OfferStackProps {
  * moment: a gold signature strike draws across each value on scroll.
  */
 export const OfferStack: React.FC<OfferStackProps> = ({ onNavigatePricing, sectionRef }) => (
-  <section ref={sectionRef} className="py-16 md:py-32 px-4 sm:px-6 lg:px-8 relative z-10 overflow-hidden">
+  <section ref={sectionRef} className={`${BAND_HERO} px-4 sm:px-6 lg:px-8 relative z-10 overflow-hidden`}>
     {/* The page's one mid-body color climax: a single STATIC radial gold glow
         behind the offer panel (Vertus pattern). No animation, no large-area
         blur filter — GPU-cheap. Dimmed on mobile so gold stays an action signal. */}

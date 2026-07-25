@@ -186,6 +186,31 @@ Measured in Chromium, not eyeballed.
 
 Fixed: mobile menu button (32→44), sound toggle (16→44), consent dismiss (32→44), carousel arrows (36→44), header mobile CTA (29→44), consent Accept/Decline (42→44), pricing billing switcher (40→44).
 
+### Container + rhythm scales — SHIPPED
+
+`components/ui/layoutTokens.ts` — the fifth token sibling. Two scales, three steps each.
+
+| | Steps | |
+|---|---|---|
+| **Containers** | `SHELL` 1280 · `COLUMN` 896 · `MEASURE` 68ch | plus `GUTTER`, and `PX` for the inline-style holdouts |
+| **Rhythm** | `BAND_HERO` 80/128 · `BAND` 64/96 · `BAND_TIGHT` 48/64 | symmetric, 4:3:2 on desktop |
+
+Measured before → after, 1440px:
+
+| | Landing before | Landing after | Pricing before | Pricing after |
+|---|---|---|---|---|
+| Page container widths ≥400px | 7 | **2** (1280, 896) | 6 | **3** (1280, 896, 68ch) |
+| Section paddings | 7, two asymmetric | **4, one asymmetric** (the hero, deliberate) | 3, two asymmetric | **2, symmetric** |
+| Section left edges | — | **all 0** | 4 distinct | **3** |
+| Widest paragraph | 127ch | ~69ch | 87ch | ~69ch |
+
+Two things worth recording:
+
+- **`MEASURE` is in `ch`, not px.** The first pass used 640px and the pricing FAQ answers still measured over the band, because their type is smaller than the body — a pixel cap is only the right measure at one font size.
+- **Widening the containers made line length worse before it got better.** Snapping `max-w-6xl` up to `SHELL` gave the prose more room to run, and the over-75ch count went 7 → 10 before the `MEASURE` caps brought it back. Container scale and reading measure have to move together.
+
+**Measurement caveat:** the audit's "ch" is an approximation (`width ÷ 0.5em`), which overestimates real `ch` for Inter by ~18%. The remaining flags reported at 76–81ch are ~65–69 real ch — inside the 45–75 band, not defects. The 127ch and 105ch outliers were real and are fixed.
+
 **Still open, needs Neil — these change composition, not just size:**
 
 1. **Legal text links are 16–17px tall** (Terms, Privacy, Refund, Support in the footers). Wide enough to hit, too short vertically. Fixing means giving the footer link rows real height, which changes the footer's look.

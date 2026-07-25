@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { DUR } from '../../ui/motionTokens';
 import { MessageSquare, Sparkles, Rocket, SlidersHorizontal } from 'lucide-react';
 import { CreamBand } from '../CreamBand';
+import { BAND, MEASURE } from '../../ui/layoutTokens';
 
 // One-shot is the signature motion: one description in, a complete ad out.
 // Beat 2 stays honest to the Free tripwire — the full ad is generated and free
@@ -39,7 +40,7 @@ const STEPS = [
 export const ProofBand: React.FC = () => (
   <CreamBand>
     {/* How it works */}
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 md:pt-28 pb-16 md:pb-28">
+    <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 md:${BAND} md:pb-28`}>
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -53,7 +54,7 @@ export const ProofBand: React.FC = () => (
           <span className="font-serif italic normal-case tracking-normal text-[#B28F00]">30 minutes.</span>{' '}
           A COMPLETE AD.
         </h2>
-        <p className="mt-5 text-base md:text-lg text-on-surface-sublabel max-w-2xl mx-auto">
+        <p className={`mt-5 text-base md:text-lg text-on-surface-sublabel ${MEASURE}`}>
           No timeline. No freelancers. You describe it once — Grifon builds the whole thing.
         </p>
       </motion.div>

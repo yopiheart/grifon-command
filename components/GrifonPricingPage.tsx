@@ -13,6 +13,7 @@ import { startCheckout, type PlanId, type BillingCycle } from "../services/billi
 import { PLAN_FEATURES } from "../config/planFeatures";
 import { PRO_VALUE_STACK, PRO_VALUE_TOTAL, FOUNDING_NOTE } from "../config/valueStack";
 import { MAT_CHROME, SCROLL_EDGE } from './ui/materialTokens';
+import { PX } from './ui/layoutTokens';
 
 const Check = () => <CheckIcon size={16} strokeWidth={2.5} className="text-[#FFCC00]" />;
 const X = () => <XIcon size={14} strokeWidth={1.5} className="text-on-surface-sublabel" />;
@@ -303,9 +304,9 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
 
         {/* ===== HERO SECTION ===== */}
         <section className="grid-bg" style={{ 
-          padding: "80px 20px 60px", 
+          padding: "80px 20px", 
           textAlign: "center",
-          maxWidth: 900, margin: "0 auto",
+          maxWidth: PX.COLUMN, margin: "0 auto",
         }}>
           <div className={loaded ? "fade-up" : ""} style={{ animationDelay: "0.1s" }}>
           </div>
@@ -331,7 +332,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
             animationDelay: "0.3s",
             fontSize: "clamp(15px, 2.5vw, 19px)", 
             color: "#a1a1aa", 
-            maxWidth: 560, 
+            maxWidth: PX.MEASURE, 
             margin: "0 auto 32px",
             lineHeight: 1.6,
           }}>
@@ -614,7 +615,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
 
         {/* ===== VALUE STACK SECTION (Pro) ===== */}
         <section style={{
-          maxWidth: 700,
+          maxWidth: PX.MEASURE,
           margin: "0 auto 80px",
           padding: "0 20px",
         }}>
@@ -727,7 +728,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
 
         {/* ===== COMPARISON: OLD WAY vs GRIFON ===== */}
         <section style={{
-          maxWidth: 800,
+          maxWidth: PX.COLUMN,
           margin: "0 auto 80px",
           padding: "0 20px",
         }}>
@@ -856,7 +857,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
         </section>
 
         {/* ===== GUARANTEE ===== */}
-        <section className="max-w-[600px] mx-auto mb-20 px-5 text-center">
+        <section style={{ maxWidth: PX.MEASURE }} className="mx-auto mb-20 px-5 text-center">
           <AnimatedBorder intense containerClassName="h-full w-full" className="p-10 md:p-12 text-center bg-zinc-900/80 backdrop-blur-xl relative overflow-hidden">
             <ShieldCheck className="w-12 h-12 text-[#FFCC00] mx-auto mb-4" />
             <h3 className="text-2xl md:text-3xl font-bold uppercase tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
@@ -872,7 +873,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
 
         {/* ===== FAQ ===== */}
         <section style={{
-          maxWidth: 650, margin: "0 auto 80px",
+          maxWidth: PX.MEASURE, margin: "0 auto 80px",
           padding: "0 20px",
         }}>
           <h2 className="bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500" style={{
@@ -934,8 +935,8 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
         {/* ===== FINAL CTA ===== */}
         <section style={{
           textAlign: "center",
-          padding: "60px 20px 80px",
-          maxWidth: 600,
+          padding: "80px 20px",
+          maxWidth: PX.MEASURE,
           margin: "0 auto",
         }}>
           <h2 className="bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500" style={{
