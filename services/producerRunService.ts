@@ -232,8 +232,20 @@ export const recordScene = (runId: string, sceneIdx: number, jobHandle: Record<s
 /** Persist a scene's image(s) on its own row (upsert; image columns only). Written once per
  * scene so the multi-MB base64 stays out of the run-header checkpoint — resume rehydrates
  * storyboard images from these rows. */
-export const recordSceneImage = (runId: string, sceneIdx: number, imageUrl: string, endFrameUrl?: string): Promise<SceneWriteResult> =>
-  post('/api/producer/advance', { action: 'record_image', runId, sceneIdx, imageUrl, endFrameUrl: endFrameUrl ?? null }).then(toWriteResult);
+export const recordSceneImage = (
+  runId: string,
+  sceneIdx: number,
+  imageUrl: string,
+  endFrameUrl?: string,
+  /** P4 gate verdict for THIS still. Three-state, mirrored in api/producer/advance.ts:
+   *  omit = leave the stored verdict alone (flag-off path), null = clear it (a fresh image
+   *  must not inherit the previous one's judgment), object = store it. */
+  gateVerdict?: Record<string, unknown> | null,
+): Promise<SceneWriteResult> =>
+  post('/api/producer/advance', {
+    action: 'record_image', runId, sceneIdx, imageUrl, endFrameUrl: endFrameUrl ?? null,
+    ...(gateVerdict !== undefined ? { gateVerdict } : {}),
+  }).then(toWriteResult);
 
 /** Persist the run's cover frame on its own run-header column (never in the checkpoint jsonb).
  * Best-effort at the call site: a failure here costs the cover frame on resume, nothing else. */

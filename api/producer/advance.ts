@@ -27,7 +27,9 @@ const Body = z.discriminatedUnion('action', [
   z.object({ action: z.literal('seed'), runId: z.string().min(8).max(200), sceneCount: z.number().int().min(1).max(24) }),
   z.object({ action: z.literal('claim'), runId: z.string().min(8).max(200), sceneIdx: z.number().int().min(0).max(23) }),
   z.object({ action: z.literal('record'), runId: z.string().min(8).max(200), sceneIdx: z.number().int().min(0).max(23), jobHandle: z.record(z.string(), z.unknown()) }),
-  z.object({ action: z.literal('record_image'), runId: z.string().min(8).max(200), sceneIdx: z.number().int().min(0).max(23), imageUrl: z.string().max(3_000_000), endFrameUrl: z.string().max(3_000_000).nullable().optional() }),
+  // gateVerdict is THREE-STATE and the distinction is load-bearing (see the case body):
+  // absent = leave the stored verdict alone, null = clear it, object = store it.
+  z.object({ action: z.literal('record_image'), runId: z.string().min(8).max(200), sceneIdx: z.number().int().min(0).max(23), imageUrl: z.string().max(3_000_000), endFrameUrl: z.string().max(3_000_000).nullable().optional(), gateVerdict: z.record(z.string(), z.unknown()).nullable().optional() }),
   z.object({ action: z.literal('record_thumbnail'), runId: z.string().min(8).max(200), thumbnailUrl: z.string().max(3_000_000) }),
   z.object({ action: z.literal('complete'), runId: z.string().min(8).max(200), sceneIdx: z.number().int().min(0).max(23), videoUrl: z.string().max(4000), audioUrl: z.string().max(4000).optional() }),
   z.object({ action: z.literal('flag'), runId: z.string().min(8).max(200), sceneIdx: z.number().int().min(0).max(23), reason: z.string().max(500).optional() }),
@@ -136,12 +138,27 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       // parser cap, leaving stale checkpoints that made resume re-buy images — 2026-07-02).
       // UPSERT because images generate BEFORE the video-stage 'seed'; on conflict only the image
       // columns update (status/attempts/handle untouched), so this can never reset an in-flight scene.
+      //
+      // gate_verdict rides ALONG on this write (2026-07-25) rather than getting its own action:
+      // the orchestrator already calls record_image AFTER the gate has judged the still, so the
+      // verdict is in hand and a second round-trip would buy nothing. Until this existed NOTHING
+      // wrote the column — the verdict only reached the run-header checkpoint jsonb, so the
+      // per-scene precision dataset the flag-only phase exists to build was discarded every run.
+      //
+      // The three states matter. Supabase writes only the keys present in the object, so OMITTING
+      // gateVerdict preserves whatever is stored (the flag-off path sends nothing and must not
+      // stomp a verdict). Sending null CLEARS it — required by the regen/reshoot paths, which
+      // produce a NEW image: leaving the old verdict there would attribute a judgment to a still
+      // it never judged, which is worse than no data at all.
+      const imageRow: Record<string, unknown> = {
+        run_id: body.runId, scene_idx: body.sceneIdx,
+        image_url: body.imageUrl, end_frame_url: body.endFrameUrl ?? null,
+        updated_at: nowIso,
+      };
+      if (body.gateVerdict !== undefined) imageRow.gate_verdict = body.gateVerdict;
       const { error } = await admin
         .from('producer_scenes')
-        .upsert(
-          { run_id: body.runId, scene_idx: body.sceneIdx, image_url: body.imageUrl, end_frame_url: body.endFrameUrl ?? null, updated_at: nowIso },
-          { onConflict: 'run_id,scene_idx' }
-        );
+        .upsert(imageRow, { onConflict: 'run_id,scene_idx' });
       if (error) {
         console.error('[producer/advance] record_image failed:', error.message);
         return res.status(500).json({ error: 'write_failed' });

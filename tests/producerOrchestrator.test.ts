@@ -114,6 +114,8 @@ interface FakeSceneRow {
   flaggedReason: string | null;
   /** Simulated ">10min untouched" — the requeue guard's stale-escape precondition. */
   stale: boolean;
+  /** Mirrors producer_scenes.gate_verdict. Starts null, exactly like the real column. */
+  gateVerdict: Record<string, unknown> | null;
 }
 
 const freshRow = (over: Partial<FakeSceneRow> = {}): FakeSceneRow => ({
@@ -123,6 +125,7 @@ const freshRow = (over: Partial<FakeSceneRow> = {}): FakeSceneRow => ({
   audioUrl: null,
   flaggedReason: null,
   stale: false,
+  gateVerdict: null,
   ...over,
 });
 
@@ -161,8 +164,16 @@ function makeFakeStore(seed: Record<number, Partial<FakeSceneRow>> = {}) {
     }),
     // Image persistence rides its own upsert (row may not exist pre-seed) and touches ONLY
     // the image columns — mirrors advance.ts 'record_image'.
-    recordSceneImage: vi.fn(async (_runId: string, i: number, _imageUrl: string, _endFrameUrl?: string) => {
+    recordSceneImage: vi.fn(async (
+      _runId: string, i: number, _imageUrl: string, _endFrameUrl?: string,
+      gateVerdict?: Record<string, unknown> | null,
+    ) => {
       if (!rows.has(i)) rows.set(i, freshRow());
+      // Reproduce advance.ts 'record_image' three-state semantics EXACTLY: Supabase writes only
+      // the keys present in the upsert object, so an ABSENT gateVerdict leaves the stored value
+      // untouched while an explicit null clears it. Collapsing these in the fake would hide the
+      // one bug this distinction exists to prevent (a verdict outliving the still it judged).
+      if (gateVerdict !== undefined) rows.get(i)!.gateVerdict = gateVerdict;
       return { changed: true };
     }),
     completeScene: vi.fn(async (_runId: string, i: number, videoUrl: string, audioUrl?: string) => {
@@ -891,8 +902,10 @@ describe('scene-image persistence (checkpoint-size fix)', () => {
     await runProduction(run, cb(), deps);
 
     expect(store.recordSceneImage).toHaveBeenCalledTimes(2);
-    expect(store.recordSceneImage).toHaveBeenCalledWith(run.runId, 0, 'img://START0', 'img://END0 Bukidnon Brew bottle reveal');
-    expect(store.recordSceneImage).toHaveBeenCalledWith(run.runId, 1, 'img://IMG1', undefined);
+    // 5th arg = the gate verdict. These deps have no imageGateCheck (gate OFF), so it is
+    // undefined — which the handler treats as "leave the stored column alone", NOT as a clear.
+    expect(store.recordSceneImage).toHaveBeenCalledWith(run.runId, 0, 'img://START0', 'img://END0 Bukidnon Brew bottle reveal', undefined);
+    expect(store.recordSceneImage).toHaveBeenCalledWith(run.runId, 1, 'img://IMG1', undefined, undefined);
   });
 
   it('a failed image-row write never breaks the stage (best-effort, coarser resume only)', async () => {
@@ -914,13 +927,15 @@ describe('scene-image persistence (checkpoint-size fix)', () => {
     await runProduction(run, callbacks, deps);
     (store.recordSceneImage as any).mockClear();
 
+    // Both paths produce a NEW image, so both pass an explicit null to CLEAR any stored verdict —
+    // never undefined, which would leave the previous still's judgment attached to this one.
     await regenSceneImage(run, 0, callbacks, deps);
-    expect(store.recordSceneImage).toHaveBeenCalledWith(run.runId, 0, 'img://START0', 'img://END0 Bukidnon Brew bottle reveal');
+    expect(store.recordSceneImage).toHaveBeenCalledWith(run.runId, 0, 'img://START0', 'img://END0 Bukidnon Brew bottle reveal', null);
 
     await approveStoryboard(run, callbacks, deps);
     (store.recordSceneImage as any).mockClear();
     await reshootScene(run, 1, callbacks, deps);
-    expect(store.recordSceneImage).toHaveBeenCalledWith(run.runId, 1, 'img://IMG1', undefined);
+    expect(store.recordSceneImage).toHaveBeenCalledWith(run.runId, 1, 'img://IMG1', undefined, null);
     expect(spies.submitVideo).toHaveBeenCalled();
   });
 });
@@ -1580,5 +1595,85 @@ describe("P4 — gate-skip visibility ('check_skip')", () => {
     expect(emitted('check_skip')).toHaveLength(0);
     expect(emitted('check_fail')).toHaveLength(2);
     expect(emitted('check_fail')[0].meta).toMatchObject({ kind: 'gate', flags: ['identity_drift'] });
+  });
+
+  it('a SERVER-side fail-open emits check_skip{gate_unavailable} — the third silent non-run', async () => {
+    // The gap the 2026-07-25 flag-ON run exposed: api/_lib/imageGate.ts swallows its own
+    // vision/parse errors and answers 200 with {pass:true, reason:'gate_unavailable'}. Nothing
+    // throws, so the catch above never fires — 2 of 9 scenes silently never ran and produced
+    // ZERO skip rows. Distinct from the 429 case, which throws client-side.
+    const gateMock = vi.fn(async (p: any) =>
+      p.imageBase64 === 'img://IMG0'
+        ? { observations: null, verdict: { pass: true, flags: [], reason: 'gate_unavailable' } }
+        : { observations: null, verdict: { pass: true, flags: [] } },
+    );
+    const { deps } = makeFakeDeps({ imageGateCheck: gateMock as any });
+    const run = createProductionRun(makeInput({ avatar: identityAvatar() }), 'u1');
+
+    await runProduction(run, cb(), deps);
+
+    const skips = emitted('check_skip');
+    expect(skips).toHaveLength(1); // scene 1's real verdict must NOT be counted as a skip
+    expect(skips[0].meta).toMatchObject({ node: 'scene_images', sceneIdx: 0, kind: 'gate', reason: 'gate_unavailable' });
+    // A fail-open is not a flag, and the image is kept exactly as before.
+    expect(emitted('check_fail')).toHaveLength(0);
+    expect(run.scenes.find((s) => s.sceneIdx === 0)?.imageUrl).toBe('img://IMG0');
+    expect(run.gate).toBe('storyboard');
+  });
+});
+
+// --- 23. P4: the verdict must reach the DURABLE per-scene row ------------------
+// The flag-only phase exists to accumulate a per-scene verdict dataset so the gate's PRECISION
+// can be measured before it is ever granted reroll authority. Until 2026-07-25 nothing wrote
+// producer_scenes.gate_verdict at all: the verdict reached only the run-header checkpoint jsonb,
+// which is overwritten on every transition, so the dataset was discarded every run. These assert
+// at the transport seam (recordSceneImage's arguments) — the durable write, not the checkpoint.
+
+describe('P4 — gate verdict persistence', () => {
+  it('persists each scene’s verdict on the durable row, not just the checkpoint', async () => {
+    const gateMock = vi.fn(async (p: any) => ({
+      observations: null,
+      verdict: p.imageBase64 === 'img://IMG0' ? { pass: false, flags: ['identity_drift'] } : { pass: true, flags: [] },
+    }));
+    const { deps, rows } = makeFakeDeps({ imageGateCheck: gateMock as any });
+    const run = createProductionRun(makeInput({ avatar: identityAvatar() }), 'u1');
+
+    await runProduction(run, cb(), deps);
+
+    // The FAILING verdict is the one the precision analysis is actually about — it must survive
+    // on the row, which outlives the checkpoint jsonb the verdict used to live in alone.
+    expect(rows.get(0)!.gateVerdict).toEqual({ pass: false, flags: ['identity_drift'] });
+    expect(rows.get(1)!.gateVerdict).toEqual({ pass: true, flags: [] });
+  });
+
+  it('leaves an EXISTING stored verdict alone when the gate is OFF', async () => {
+    // Flag-off deps (gateDepsFor returns both undefined). Seed a verdict from a notional earlier
+    // flag-on run: sending null here would erase it. Absent must mean "leave it alone".
+    const priorVerdict = { pass: false, flags: ['label_unreadable'] };
+    const { deps, rows } = makeFakeDeps(
+      { imageGateCheck: undefined, checkSceneImage: undefined },
+      { 0: { gateVerdict: priorVerdict }, 1: { gateVerdict: priorVerdict } },
+    );
+    const run = createProductionRun(makeInput({ avatar: identityAvatar() }), 'u1');
+
+    await runProduction(run, cb(), deps);
+
+    expect(rows.get(0)!.gateVerdict).toEqual(priorVerdict);
+    expect(rows.get(1)!.gateVerdict).toEqual(priorVerdict);
+  });
+
+  it('a regenerated scene CLEARS the stored verdict rather than inheriting it', async () => {
+    // regenSceneImage already drops the in-memory verdict ("a fresh image must not wear the old
+    // chip"). The durable row has to follow, or the dataset keeps a judgment attached to a still
+    // it never judged — worse than having no row at all.
+    const { deps, rows } = makeFakeDeps({ imageGateCheck: vi.fn(async () => ({ observations: null, verdict: { pass: true, flags: [] } })) as any });
+    const run = createProductionRun(makeInput({ avatar: identityAvatar() }), 'u1');
+    await runProduction(run, cb(), deps);
+    expect(rows.get(0)!.gateVerdict).toEqual({ pass: true, flags: [] }); // precondition
+
+    await regenSceneImage(run, 0, cb(), deps);
+
+    expect(rows.get(0)!.gateVerdict).toBeNull(); // cleared, not inherited
+    expect(run.scenes.find((s) => s.sceneIdx === 0)?.gateVerdict).toBeUndefined();
   });
 });

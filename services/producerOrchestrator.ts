@@ -325,7 +325,7 @@ export interface ProducerRunStore {
   recordScene: (runId: string, sceneIdx: number, jobHandle: VideoJobHandle) => Promise<{ changed: boolean }>;
   /** Persist a scene's image(s) on its own row (written once per scene). Keeps multi-MB base64
    * out of the run-header checkpoint; resume rehydrates storyboard images from these rows. */
-  recordSceneImage: (runId: string, sceneIdx: number, imageUrl: string, endFrameUrl?: string) => Promise<{ changed: boolean }>;
+  recordSceneImage: (runId: string, sceneIdx: number, imageUrl: string, endFrameUrl?: string, gateVerdict?: Record<string, unknown> | null) => Promise<{ changed: boolean }>;
   /** Persist the run's cover frame on its own run-header column, same rationale as
    * recordSceneImage. OPTIONAL: absent in tests and on any deps built before this existed, in
    * which case the thumbnail simply isn't durable across resume (the pre-existing behavior). */
@@ -955,8 +955,12 @@ export async function regenSceneImage(run: ProductionRun, sceneIdx: number, cb: 
       });
     }
     // Refresh the scene's durable image row (best-effort — see the scene_images stage).
+    // Explicit null CLEARS the stored gate verdict, matching the `s.gateVerdict = undefined`
+    // above: this is a brand-new image, and a verdict that outlived the still it judged would
+    // both show a wrong chip and poison the precision dataset with a mis-attributed label.
+    // Re-gating a regen is flag-ON work; until then "no verdict" is the honest state.
     try {
-      await deps.run.recordSceneImage(run.runId, sceneIdx, imageUrl, scene.endFrameImageUrl);
+      await deps.run.recordSceneImage(run.runId, sceneIdx, imageUrl, scene.endFrameImageUrl, null);
     } catch { /* best-effort */ }
   } catch (e: any) {
     await commit((r) => {
@@ -1044,8 +1048,12 @@ export async function reshootScene(run: ProductionRun, sceneIdx: number, cb: Pro
       });
     }
     // Refresh the scene's durable image row (best-effort — see the scene_images stage).
+    // Explicit null CLEARS the stored gate verdict, matching the `s.gateVerdict = undefined`
+    // above: this is a brand-new image, and a verdict that outlived the still it judged would
+    // both show a wrong chip and poison the precision dataset with a mis-attributed label.
+    // Re-gating a regen is flag-ON work; until then "no verdict" is the honest state.
     try {
-      await deps.run.recordSceneImage(run.runId, sceneIdx, imageUrl, scene.endFrameImageUrl);
+      await deps.run.recordSceneImage(run.runId, sceneIdx, imageUrl, scene.endFrameImageUrl, null);
     } catch { /* best-effort */ }
 
     // 2. Video (claimed → exactly-once)
@@ -1495,6 +1503,17 @@ async function runStage(
                       const sc = r.scenes.find((s) => s.sceneIdx === i);
                       if (sc) sc.gateVerdict = gateRes.verdict;
                     });
+                    // SKIP 3 — the SERVER failed the gate open. api/_lib/imageGate.ts swallows any
+                    // vision/parse error and returns 200 with {pass:true, reason:'gate_unavailable'},
+                    // so it never throws and the catch below never sees it. Without this the
+                    // non-run was invisible: the 2026-07-25 flag-ON run had 2 of 9 scenes fail open
+                    // with ZERO check_skip rows, making the "gate didn't actually run" rate
+                    // uncountable — precisely the metric contamination the check_skip/check_fail
+                    // split exists to prevent (see RunEventName in api/_lib/runEvents.ts). Emitted
+                    // as check_skip, not check_fail, because the check genuinely never ran.
+                    if (gateRes.verdict.reason === 'gate_unavailable') {
+                      emitRunEvent('check_skip', run.runId, { node: 'scene_images', sceneIdx: i, kind: 'gate', reason: 'gate_unavailable' });
+                    }
                     // FLAG-ONLY: a failing verdict lives ONLY in gateVerdict (the Gate-1 chip keys
                     // off gateVerdict.pass). flaggedReason is reserved for HARD flags (image_check /
                     // render failures) that set status='flagged' and block approval — a soft gate
@@ -1522,9 +1541,20 @@ async function runStage(
             // Durable image persistence: the scene's OWN small row ('record_image'), never the fat
             // checkpoint jsonb (slimmed at the transport boundary). Best-effort — a miss only means
             // a coarser resume for this scene, never a lost render.
+            //
+            // The gate verdict rides along on this same write. It is read back off the run (the
+            // gate's commit above set it there, not on `scene`) and is deliberately DURABLE: the
+            // checkpoint jsonb it also lives in is overwritten on every transition, so before this
+            // the per-scene verdict dataset — the entire product of the flag-only phase — was lost
+            // each run. `undefined` (gate off / never reached) omits the field so the stored value
+            // is left untouched, rather than being stomped to null.
             if (scene.imageUrl) {
               try {
-                await deps.run.recordSceneImage(run.runId, i, scene.imageUrl, scene.endFrameImageUrl);
+                const verdict = run.scenes.find((s) => s.sceneIdx === i)?.gateVerdict;
+                await deps.run.recordSceneImage(
+                  run.runId, i, scene.imageUrl, scene.endFrameImageUrl,
+                  verdict ? (verdict as unknown as Record<string, unknown>) : undefined,
+                );
               } catch { /* best-effort */ }
             }
           } catch (e: any) {
