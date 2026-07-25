@@ -694,6 +694,73 @@ function makeMorphDeps(over: Partial<ProducerDeps> = {}) {
   });
 }
 
+describe('camera framing rotation across scenes', () => {
+  // AVATAR_CAMERA_ANGLES (services/geminiService.ts) holds 4 framings and is selected by
+  // `variationIndex % 4`. Its stated purpose, verbatim from that file: "so consecutive scenes
+  // get different framings". The orchestrator's ONLY job is to feed it the scene index — it
+  // used to pass a constant 0, which pinned all 9 scenes of a real run to one framing and made
+  // the rotation contribute nothing (Neil's eyeball on the HIRAYA GLOW run, 2026-07-25).
+  // Asserted on the variationIndex ARGUMENT (the seam), not on any rendered pixel.
+  const CAMERA_ANGLE_COUNT = 4; // = AVATAR_CAMERA_ANGLES.length
+  const FIVE: Scene[] = Array.from({ length: 5 }, (_, i) => ({
+    scriptLine: `Line ${i}`,
+    sceneDescription: `d${i}`,
+    imagePrompt: `IMG${i}`,
+    referenceImage: 'avatar' as const,
+  }));
+  const fiveSceneStoryboard = () =>
+    vi.fn(async () => ({ scenes: FIVE.map((s) => ({ ...s })), strategicAudit: '' })) as any;
+  /** variationIndex per main-image prompt, keyed by prompt so the pooled fan-out's
+   *  nondeterministic completion order can't affect the assertion. */
+  const framingByPrompt = (spy: { mock: { calls: unknown[][] } }) => {
+    const m = new Map<string, number[]>();
+    for (const c of spy.mock.calls as any[]) {
+      const prompt = String(c[0]);
+      m.set(prompt, [...(m.get(prompt) ?? []), (c[9] as number) % CAMERA_ANGLE_COUNT]);
+    }
+    return m;
+  };
+
+  it('gives consecutive scenes DIFFERENT framings, and wraps once the set is exhausted', async () => {
+    const { deps, spies } = makeFakeDeps({ generateStoryboard: fiveSceneStoryboard() });
+    const run = createProductionRun(makeInput(), 'u1');
+
+    await runProduction(run, cb(), deps); // parks at the storyboard gate
+
+    const framings = framingByPrompt(spies.generateSceneImage);
+    const buckets = FIVE.map((_, i) => framings.get(`IMG${i}`)![0]);
+
+    // Scenes 0-3 must each land on a DIFFERENT framing — the entire point of the rotation.
+    // Under the old constant this was [0,0,0,0] and the set size was 1.
+    expect(new Set(buckets.slice(0, 4)).size).toBe(CAMERA_ANGLE_COUNT);
+    // Scene 4 wraps back onto scene 0's framing: proves a ROTATION, not merely distinct values.
+    expect(buckets[4]).toBe(buckets[0]);
+  });
+
+  it('a still that fails the deterministic check rerolls onto a DIFFERENT framing', async () => {
+    // The reroll is the only other reason this index varies: an identical framing would buy a
+    // near-identical image from the model and waste the one extra generation the budget allows.
+    const failedOnce = new Set<string>();
+    const { deps, spies } = makeFakeDeps({
+      generateStoryboard: fiveSceneStoryboard(),
+      checkSceneImage: vi.fn(async (url: string) => {
+        if (url === 'img://IMG0' && !failedOnce.has(url)) {
+          failedOnce.add(url);
+          return { ok: false, reason: 'min_short_side' };
+        }
+        return { ok: true };
+      }) as any,
+    });
+    const run = createProductionRun(makeInput(), 'u1');
+
+    await runProduction(run, cb(), deps);
+
+    const attempts = framingByPrompt(spies.generateSceneImage).get('IMG0')!;
+    expect(attempts).toHaveLength(2); // first attempt + one reroll
+    expect(attempts[1]).not.toBe(attempts[0]);
+  });
+});
+
 describe('end-frame (hook morph) generation', () => {
   it('scene_images renders BOTH keyframes for a morph scene: product-free start, hero-anchored reveal end', async () => {
     const { deps, spies } = makeMorphDeps();

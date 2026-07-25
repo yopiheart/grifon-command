@@ -1405,7 +1405,15 @@ async function runStage(
             );
           try {
             if (needsMain) {
-              let url = await withRetry(() => genMainImage(0), MAX_STAGE_ATTEMPTS, bump);
+              // variationIndex = the SCENE INDEX, so the 4-angle camera rotation in
+              // geminiService (AVATAR_CAMERA_ANGLES, picked by `variationIndex % 4`) actually
+              // rotates — its whole stated purpose is "consecutive scenes get different
+              // framings". Passing a constant 0 pinned every scene to INTIMATE_CLOSE_UP and the
+              // rotation contributed nothing, leaving runs of near-identical eye-level frontal
+              // shots (Neil's eyeball, 2026-07-25, HIRAYA GLOW run). utils/sceneRender.ts (the
+              // wizard path) always passed `index` here, and renderEndFrame below already
+              // threads `sceneIdx + 100` — so the constant was an oversight, not a choice.
+              let url = await withRetry(() => genMainImage(i), MAX_STAGE_ATTEMPTS, bump);
 
               // P4 (a) DETERMINISTIC still check (decode/dims/min-res) — the only automated
               // reroll this phase. On failure: ONE fresh reroll (single call, ≤3 gens/scene
@@ -1418,7 +1426,10 @@ async function runStage(
                   emitRunEvent('check_fail', run.runId, { node: 'scene_images', sceneIdx: i, kind: 'deterministic', reason: check.reason });
                   let recovered = false;
                   try {
-                    const reUrl = await genMainImage(1); // one extra attempt total
+                    // i + 1 (not a constant 1): still the NEXT framing in the rotation, so the
+                    // reroll is visibly different from the attempt that just failed the check —
+                    // which is the only reason this call varies the index at all.
+                    const reUrl = await genMainImage(i + 1); // one extra attempt total
                     const reCheck = await deps.checkSceneImage(reUrl, run.input.aspectRatio);
                     if (reCheck.ok) {
                       url = reUrl;
