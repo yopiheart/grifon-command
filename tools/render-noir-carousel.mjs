@@ -18,7 +18,13 @@ if (slides.length === 0) {
   process.exit(1);
 }
 
-const browser = await chromium.launch();
+// Same sandbox escape hatch as tools/render-wallpaper.mjs: the web sandbox's
+// pre-installed Chromium build number rarely matches the npm package's and
+// `playwright install` is blocked by egress policy. Unset on the cafe PC, so
+// behaviour there is unchanged.
+//   PW_CHROMIUM_PATH=/opt/pw-browsers/chromium-1194/chrome-linux/chrome
+const executablePath = process.env.PW_CHROMIUM_PATH || undefined;
+const browser = await chromium.launch(executablePath ? { executablePath } : {});
 try {
   for (const file of slides) {
     const page = await browser.newPage({

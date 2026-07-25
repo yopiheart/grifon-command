@@ -1,5 +1,6 @@
 <!doctype html>
-<!-- GRIFON noir carousel — Slide 1 HOOK COVER (Kallaway structure: eyebrow + sans/serif split headline + curiosity sub + swipe cue) -->
+<!-- GRIFON noir carousel — Slide 1 HOOK COVER (Kallaway structure: eyebrow + sans/serif split headline + curiosity sub + swipe cue)
+     v4 sweep 2026-07-25: lit ground, soft-light masked grain, tight gold bloom, one glass element. -->
 <html lang="tl">
 <head>
 <meta charset="utf-8">
@@ -9,23 +10,46 @@
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { background: #333; }
+
+  /* ── GROUND ──────────────────────────────────────────────────────────
+     Lit first, so the grain has luminance to vary. The old ground topped
+     out at #131316 over a flat field; the grain had nothing to sit in. ── */
   #canvas {
     position: relative; width: 1080px; height: 1350px; overflow: hidden;
-    background: radial-gradient(ellipse 900px 750px at 50% 40%, #131316 0%, #09090B 58%, #070708 100%);
+    background:
+      radial-gradient(ellipse 840px 640px at 50% 33%,
+        rgba(255,204,0,0.052) 0%, rgba(255,204,0,0.014) 32%, transparent 64%),
+      radial-gradient(ellipse 1040px 940px at 50% 33%,
+        #191920 0%, #101014 36%, #0A0A0C 72%, #070708 100%);
     font-family: 'Inter', sans-serif;
     display: flex; align-items: center; justify-content: center;
   }
+
+  /* The gold pool the serif line sits INSIDE — a real light source, which is
+     what lets the text-shadow below stay tight instead of doing the glowing
+     by itself (a wide dim shadow traces the glyphs in khaki). */
   .glow {
-    position: absolute; left: 50%; top: 44%; width: 860px; height: 560px;
+    position: absolute; left: 50%; top: 43%; width: 900px; height: 600px;
     transform: translate(-50%, -50%);
-    background: radial-gradient(ellipse at center, rgba(255,204,0,0.06) 0%, rgba(255,204,0,0.02) 45%, transparent 70%);
+    background: radial-gradient(ellipse at center,
+      rgba(255,204,0,0.085) 0%, rgba(255,190,0,0.026) 40%, transparent 70%);
   }
+
+  /* ── GRAIN ───────────────────────────────────────────────────────────
+     soft-light, not screen. screen only ever LIGHTENS, so at 0.15 it milked
+     the blacks into haze instead of graining them. Coarsened 0.85 -> 0.62
+     and tiled at 150px so the dot size survives the @2x render, then masked
+     to the light — grain lives in the light, never in the shadow. ── */
   .grain {
     position: absolute; inset: 0; z-index: 9; pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    opacity: 0.15; mix-blend-mode: screen;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.62' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 150px 150px;
+    opacity: 0.16; mix-blend-mode: soft-light;
+    -webkit-mask-image: radial-gradient(ellipse 990px 890px at 50% 33%, #000 0%, rgba(0,0,0,0.5) 44%, transparent 78%);
+    mask-image: radial-gradient(ellipse 990px 890px at 50% 33%, #000 0%, rgba(0,0,0,0.5) 44%, transparent 78%);
   }
-  .stack { position: relative; text-align: center; transform: translateY(-30px); padding: 0 70px; }
+
+  .stack { position: relative; text-align: center; transform: translateY(-46px); padding: 0 70px; }
   .eyebrow {
     font-family: 'JetBrains Mono', monospace; font-size: 20px;
     letter-spacing: 0.32em; text-transform: uppercase; color: #FFCC00; opacity: .85;
@@ -34,22 +58,59 @@
   .line-sans {
     font-weight: 900; font-size: 116px; line-height: 1.02; letter-spacing: -0.025em;
     text-transform: uppercase;
-    background: linear-gradient(to bottom, #F4F4F5 0%, #71717A 100%);
+    background: linear-gradient(to bottom, #F7F7F8 0%, #6E6E77 100%);
     -webkit-background-clip: text; background-clip: text; color: transparent;
   }
   .line-serif {
     font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-weight: 400;
     font-size: 136px; line-height: 1.0; color: #FFCC00; margin-top: 10px;
-    text-shadow: 0 0 55px rgba(255,204,0,0.25);
+    /* TIGHT + BRIGHT. Was 0 0 55px / 0.25 — wide and dim, which renders a
+       blurred copy of the GLYPHS and reads as an olive smear. */
+    text-shadow: 0 0 20px rgba(255,204,0,0.28);
   }
   .sub {
-    margin-top: 74px; font-size: 33px; font-weight: 600; line-height: 1.5; color: #F4F4F5;
+    margin-top: 70px; font-size: 33px; font-weight: 600; line-height: 1.5; color: #F4F4F5;
   }
-  .sub .swipe { color: #FFCC00; font-weight: 700; white-space: nowrap; }
+
+  /* ── THE ONE GLASS ELEMENT ───────────────────────────────────────────
+     Apple's "sparingly" rule survives onto a static creative: glass belongs
+     to the thing that should feel operable. On a carousel cover that is the
+     swipe affordance and nothing else — glassing the headline would dilute
+     the hook, which is the only job this slide has. ── */
+  .swipe-chip {
+    position: relative; display: inline-flex; align-items: center; gap: 16px;
+    margin-top: 62px; padding: 22px 44px; border-radius: 999px;
+    isolation: isolate;
+    font-weight: 700; font-size: 30px; color: #FFCC00;
+    background:
+      linear-gradient(158deg,
+        rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.035) 46%, rgba(255,255,255,0.085) 100%),
+      rgba(11,11,13,0.44);
+    backdrop-filter: blur(24px) saturate(185%);
+    -webkit-backdrop-filter: blur(24px) saturate(185%);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.20),
+      inset 0 -1px 0 rgba(255,255,255,0.06),
+      0 24px 54px -18px rgba(0,0,0,0.7);
+  }
+  /* Rim lens — gold where the light pools, neutral silver where it doesn't. */
+  .swipe-chip::before {
+    content: ''; position: absolute; inset: 0; border-radius: inherit;
+    padding: 1.5px; pointer-events: none;
+    background: linear-gradient(146deg,
+      rgba(255,255,255,0.46) 0%, rgba(255,204,0,0.34) 34%,
+      rgba(255,255,255,0.05) 62%, rgba(255,255,255,0.26) 100%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+  }
+  .swipe-chip .arrow { font-size: 34px; line-height: 1; }
+
   .sig {
     position: absolute; left: 50%; bottom: 64px; transform: translateX(-50%);
     font-family: 'JetBrains Mono', monospace; font-size: 14px;
-    letter-spacing: 0.42em; text-transform: uppercase; color: #52525B;
+    letter-spacing: 0.42em; text-transform: uppercase; color: #82828B;
   }
 </style>
 </head>
@@ -60,7 +121,8 @@
     <div class="eyebrow">// grifon ai &middot; ad school</div>
     <div class="line-sans">Hook muna,</div>
     <div class="line-serif">bago ang benta.</div>
-    <div class="sub">Yung 4 na hook types na ginagamit ng ads<br>na hindi sini-skip ng tao. <span class="swipe">Swipe &#8594;</span></div>
+    <div class="sub">Yung 4 na hook types na ginagamit ng ads<br>na hindi sini-skip ng tao.</div>
+    <div class="swipe-chip">Swipe <span class="arrow">&#8594;</span></div>
   </div>
   <div class="sig">grifon</div>
   <div class="grain"></div>

@@ -1,5 +1,6 @@
 <!doctype html>
-<!-- GRIFON noir carousel — Slide 2 NUMBERED LIST (Kallaway structure: big gold numerals + serif item names + sans one-liners + hairline separators) -->
+<!-- GRIFON noir carousel — Slide 2 NUMBERED LIST (Kallaway structure: big gold numerals + serif item names + sans one-liners + hairline separators)
+     v4 sweep 2026-07-25: lit ground, soft-light masked grain, tight numeral bloom, the list on one glass plate. -->
 <html lang="tl">
 <head>
 <meta charset="utf-8">
@@ -9,46 +10,102 @@
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { background: #333; }
+
+  /* ── GROUND — lit, so the grain registers. See slide 1 for the rationale. ── */
   #canvas {
     position: relative; width: 1080px; height: 1350px; overflow: hidden;
-    background: radial-gradient(ellipse 900px 750px at 50% 36%, #121215 0%, #09090B 58%, #070708 100%);
+    background:
+      radial-gradient(ellipse 860px 660px at 50% 30%,
+        rgba(255,204,0,0.050) 0%, rgba(255,204,0,0.013) 32%, transparent 64%),
+      radial-gradient(ellipse 1060px 960px at 50% 30%,
+        #191920 0%, #101014 36%, #0A0A0C 72%, #070708 100%);
     font-family: 'Inter', sans-serif;
   }
+
+  /* ── GRAIN — soft-light (was screen, which only lightens), coarser, masked. ── */
   .grain {
     position: absolute; inset: 0; z-index: 9; pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    opacity: 0.15; mix-blend-mode: screen;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.62' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 150px 150px;
+    opacity: 0.16; mix-blend-mode: soft-light;
+    -webkit-mask-image: radial-gradient(ellipse 1010px 910px at 50% 30%, #000 0%, rgba(0,0,0,0.5) 44%, transparent 78%);
+    mask-image: radial-gradient(ellipse 1010px 910px at 50% 30%, #000 0%, rgba(0,0,0,0.5) 44%, transparent 78%);
   }
+
   .head {
-    position: absolute; top: 96px; left: 0; right: 0; text-align: center;
+    position: absolute; top: 88px; left: 0; right: 0; text-align: center;
     font-family: 'JetBrains Mono', monospace; font-size: 19px;
     letter-spacing: 0.32em; text-transform: uppercase; color: #FFCC00; opacity: .85;
   }
-  .list { position: absolute; top: 190px; left: 96px; right: 96px; }
-  .item { display: flex; align-items: flex-start; gap: 38px; padding: 52px 0; }
-  .item + .item { border-top: 1px solid rgba(255,255,255,0.07); }
+
+  /* ── THE ONE GLASS ELEMENT ───────────────────────────────────────────
+     The whole list on a single plate rather than four glass rows. Four
+     would be exactly the "overusing this material in multiple custom
+     controls" failure Apple names, and it would compete with the gold
+     numerals, which are the actual hierarchy on this slide. One plate reads
+     as a single object holding a list — which is what it is. ── */
+  .plate {
+    position: absolute; top: 168px; left: 64px; right: 64px; bottom: 156px;
+    padding: 26px 52px; border-radius: 34px; isolation: isolate;
+    background:
+      linear-gradient(158deg,
+        rgba(255,255,255,0.072) 0%, rgba(255,255,255,0.018) 44%, rgba(255,255,255,0.044) 100%),
+      rgba(11,11,13,0.50);
+    backdrop-filter: blur(30px) saturate(190%);
+    -webkit-backdrop-filter: blur(30px) saturate(190%);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.16),
+      inset 0 -1px 0 rgba(255,255,255,0.05),
+      0 44px 96px -24px rgba(0,0,0,0.72);
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .plate::before {
+    content: ''; position: absolute; inset: 0; border-radius: inherit;
+    padding: 1.5px; pointer-events: none;
+    background: linear-gradient(146deg,
+      rgba(255,255,255,0.42) 0%, rgba(255,204,0,0.28) 34%,
+      rgba(255,255,255,0.05) 62%, rgba(255,255,255,0.24) 100%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+  }
+  /* Specular across the top third — the light falling on the pane. */
+  .plate::after {
+    content: ''; position: absolute; left: 0; right: 0; top: 0; height: 54%;
+    border-radius: 34px 34px 0 0; pointer-events: none;
+    background: linear-gradient(172deg, rgba(255,255,255,0.052) 0%, transparent 78%);
+  }
+
+  .item {
+    position: relative; z-index: 1;
+    display: flex; align-items: flex-start; gap: 34px; padding: 40px 0;
+  }
+  .item + .item { border-top: 1px solid rgba(255,255,255,0.075); }
   .num {
     font-weight: 900; font-size: 84px; line-height: .95; color: #FFCC00;
-    letter-spacing: -0.02em; min-width: 128px;
-    text-shadow: 0 0 34px rgba(255,204,0,0.22);
+    letter-spacing: -0.02em; min-width: 124px;
+    /* Tight + bright, matching the serif treatment on the other slides. */
+    text-shadow: 0 0 16px rgba(255,204,0,0.26);
   }
   .body { padding-top: 4px; }
   .name {
     font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-weight: 400;
     font-size: 56px; line-height: 1.05; color: #FFFFFF;
   }
-  .desc { margin-top: 14px; font-size: 28px; font-weight: 600; line-height: 1.5; color: #E4E4E7; }
+  .desc { margin-top: 12px; font-size: 27px; font-weight: 600; line-height: 1.5; color: #E4E4E7; }
+
   .sig {
     position: absolute; left: 50%; bottom: 64px; transform: translateX(-50%);
     font-family: 'JetBrains Mono', monospace; font-size: 14px;
-    letter-spacing: 0.42em; text-transform: uppercase; color: #52525B;
+    letter-spacing: 0.42em; text-transform: uppercase; color: #82828B;
   }
 </style>
 </head>
 <body>
 <div id="canvas">
   <div class="head">// ang 4 hook types</div>
-  <div class="list">
+  <div class="plate">
     <div class="item">
       <div class="num">01</div>
       <div class="body">
