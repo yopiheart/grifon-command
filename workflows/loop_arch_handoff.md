@@ -30,6 +30,32 @@ It is stable across redeploys of `preview/image-gate-test`, so `localStorage` (t
 deploy and silently breaks resume — that has bitten twice (F4, and again during the F2 retry).
 Previews are SSO-walled: log into Vercel in the same browser first.
 
+> **⚠ STALE-PREVIEW TRAP (hit 2026-07-25, caught by Neil's eyeball BEFORE the spend — read this).**
+> `preview/image-gate-test` was cut 2026-07-24 and does **not** follow `main`. By the next evening
+> `main` was **41 commits ahead** (PRs #71–#75: the whole Liquid Glass design system **and** the
+> Tailwind Play CDN → PostCSS build change), so the preview was still serving the pre-glass UI.
+> Neil spotted it by comparing the preview's login page against grifon.ai's. Nothing in the DB
+> would have revealed this — the gate telemetry would have looked perfectly fine while validating
+> a bundle that no longer ships.
+>
+> **Before every paid run on this branch, check the direction that actually matters:**
+> ```bash
+> git log --oneline origin/preview/image-gate-test..origin/main   # main ahead of preview — MUST be empty
+> ```
+> Note the argument order. The three-dot form (`origin/main...origin/preview/…`) is what produced
+> the wrong "zero-diff, it's current" reading — three-dot diffs against the merge base and is blind
+> to how far `main` has moved.
+>
+> **To refresh:** `git checkout -B preview/image-gate-test origin/main`, then
+> `git commit --allow-empty -m "chore(preview): rebuild on current main"`, then
+> `git push --force-with-lease origin preview/image-gate-test`. The empty commit is required — it
+> gives the branch a unique SHA so Vercel builds a new Preview instead of deduping against the
+> Production deployment of the same commit. Force-push is safe **only** because this branch's sole
+> commit is that empty rebuild marker; verify with the command above that it carries no real work.
+> Done 2026-07-25 → `63c9c2e`. Before spending, confirm `api/` and `services/` are unchanged
+> (`git diff --name-only origin/preview/image-gate-test origin/main -- api/ services/`) so the
+> rebuild is picking up UI only and the gate logic under test is the same code.
+
 1. Open `<alias>/app?osaEngine=producer` — the query param selects the Producer engine and
    persists to localStorage.
 2. Load `.claude/skills/director-smoke/` BEFORE touching any wizard field (hero-image FIRST,
