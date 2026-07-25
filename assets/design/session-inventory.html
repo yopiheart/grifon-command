@@ -101,12 +101,12 @@ footer{padding:48px 0 70px;text-align:center}
       <div class="why__c">
         <div class="why__n">// Reason 1 — mechanical</div>
         <div class="why__h">Nothing is on production yet.</div>
-        <p class="why__b">All 13 commits sit on a branch. <strong style="color:var(--fg-100)">PR #72 is open, not merged</strong> — so your live site is still running the old design, exactly as before. The only place any of this exists is the preview URL.</p>
+        <p class="why__b">All 15 commits sit on a branch. <strong style="color:var(--fg-100)">PR #72 is open, not merged</strong> — so your live site is still running the old design, exactly as before. The only place any of this exists is the preview URL.</p>
       </div>
       <div class="why__c why__c--mine">
         <div class="why__n">// Reason 2 — my fault</div>
-        <div class="why__h">I held four things back after you approved.</div>
-        <p class="why__b">You said go, surprise me, gawin mo na — repeatedly. I still parked four items as "your call" because each touches a decision already written into DESIGN.md. I should have said that far more loudly instead of burying it at the bottom of long replies.</p>
+        <div class="why__h">I had held six things back. Not any more.</div>
+        <p class="why__b">You said go, surprise me, gawin mo na — repeatedly. I still parked six items as "your call" and buried that at the bottom of long replies. <strong style="color:var(--gold)">All six are now shipped.</strong> Nothing is waiting on you except the merge.</p>
       </div>
     </div>
   </div>
@@ -133,7 +133,7 @@ footer{padding:48px 0 70px;text-align:center}
 <section>
   <div class="band">
     <p class="eyebrow">// Shipped — in PR #72, on the branch</p>
-    <h2 class="display d-lg">28 changes went in</h2>
+    <h2 class="display d-lg">34 changes went in</h2>
 
     <div class="grp">
       <div class="grp__h"><span class="grp__t">// The material system</span><span class="grp__n">the spine of everything else</span></div>
@@ -192,9 +192,9 @@ footer{padding:48px 0 70px;text-align:center}
 <section>
   <div class="band stack g24">
     <div>
-      <p class="eyebrow" style="color:var(--stop)">// Not done — I parked these on you</p>
-      <h2 class="display d-lg">Six things I did <span class="serif-gold">not</span> change</h2>
-      <p class="lede" style="margin-top:14px">Each one contradicts something already written into <code>DESIGN.md</code> or your brand decisions. That's why I held them — but you approved repeatedly and I kept them buried at the bottom of long replies instead of putting them in front of you. That part was wrong.</p>
+      <p class="eyebrow">// Was parked — now shipped</p>
+      <h2 class="display d-lg">The six, <span class="serif-gold">all done</span></h2>
+      <p class="lede" style="margin-top:14px">Each one contradicted something already written into <code>DESIGN.md</code>, which is why I held them. You asked for all of them, so all of them are in.</p>
     </div>
 
     <div class="open">
@@ -202,37 +202,37 @@ footer{padding:48px 0 70px;text-align:center}
         <div class="open__n">01</div>
         <div class="open__h">Monochrome rail vs 15 identity hues</div>
         <p class="open__b">Apple prefers monochromatic toolbars over colourful backgrounds. Your rail now has 15 module hues on glass over a gold field. But per-module hues are a documented Grifon decision — this is identity, not a defect.</p>
-        <p class="open__q">Keep the hues, go monochrome, or desaturate them ~40% on the rail only?</p>
+        <p class="open__q">✓ Shipped — rail icons at saturate(.45), full strength on hover and on tiles.</p>
       </div>
       <div class="open__c">
         <div class="open__n">02</div>
         <div class="open__h">Legal links are 16–17px tall</div>
         <p class="open__b">Terms, Privacy, Refund, Support in the footers. Wide enough to hit, too short vertically. Fixing means giving those rows real height, which changes how the footer looks.</p>
-        <p class="open__q">Want me to restructure the footer rows?</p>
+        <p class="open__q">✓ Shipped — landing + pricing footers and the gateway legal row all at 44px.</p>
       </div>
       <div class="open__c">
         <div class="open__n">03</div>
         <div class="open__h">Boot screen makes you wait</div>
         <p class="open__b">It enforces a minimum hold after the session is already ready. Apple's rule is: don't make people wait for an animation. But that hold <em>is</em> your film-leader beat working as designed — it's brand, not bug.</p>
-        <p class="open__q">Keep the beat, or let it dismiss the moment the session is ready?</p>
+        <p class="open__q">✓ Shipped — 1400ms hold cut to 240ms. The beat stays, the waiting doesn't.</p>
       </div>
       <div class="open__c">
         <div class="open__n">04</div>
         <div class="open__h">Pricing section edges still don't align</div>
         <p class="open__b">Landing sections all start at x=0 now. Pricing doesn't — each section centres at its own width, so the left edges land at three different places. Fixing it means restructuring a 1000-line file built with inline styles.</p>
-        <p class="open__q">Worth the refactor, or leave pricing as-is?</p>
+        <p class="open__q">✓ Shipped — every section box spans the shell; three edges became one.</p>
       </div>
       <div class="open__c">
         <div class="open__n">05</div>
         <div class="open__h">Concentric radii — helper only</div>
         <p class="open__b">The rule is: a nested corner equals the outer radius minus the padding, so curves stay parallel. I wrote <code>concentricRadius()</code> but never applied it anywhere. It's a real polish pass across many components.</p>
-        <p class="open__q">Want me to sweep it?</p>
+        <p class="open__q">✓ Audited — 8 correct, 13 drifting, but 11 wanted a 0px corner. Fixed the 2 real ones.</p>
       </div>
       <div class="open__c">
         <div class="open__n">06</div>
         <div class="open__h">Six desktop lines near the top of the band</div>
         <p class="open__b">Around 69 real characters — inside the 45–75 readable range, just at its upper edge. I fixed the two genuine outliers (127ch and 105ch) and left these, because tightening them is taste, not a defect.</p>
-        <p class="open__q">Leave them, or cap everything at 65ch?</p>
+        <p class="open__q">✓ Shipped — 0 lines over 75ch on landing and pricing, both widths.</p>
       </div>
     </div>
   </div>
@@ -246,13 +246,13 @@ footer{padding:48px 0 70px;text-align:center}
       <p class="eyebrow">// Straight answer</p>
       <h2 class="display d-lg">Approve the merge and it goes live.</h2>
       <p class="lede" style="margin-top:18px">Everything in the shipped list is finished, tested and green on CI — it's just sitting behind an unmerged PR. Merge #72 and your production site becomes what the preview shows.</p>
-      <p class="lede" style="margin-top:14px">The six open items are a separate question. Tell me which ones you want and I'll do them; there's nothing technically hard left in any of them. <span class="serif-gold" style="font-size:1.06em">The only thing that was blocking them was me asking instead of telling you clearly.</span></p>
+      <p class="lede" style="margin-top:14px">The six are done too — 15 commits now. And one more thing worth knowing: the dashboard needs a login, and the preview lives on a different domain from production, so your session doesn't carry over. <span class="serif-gold" style="font-size:1.06em">Merging is the only way you see all of it in one place.</span></p>
     </div>
   </div>
 </section>
 
 <footer>
-  <p class="sig">// Grifon Command · PR #72 · 13 commits · 118 files · 1005 tests green</p>
+  <p class="sig">// Grifon Command · PR #72 · 15 commits · 1005 tests green · CI all green</p>
 </footer>
 
 </div>
