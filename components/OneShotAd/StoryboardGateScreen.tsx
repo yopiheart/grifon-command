@@ -105,7 +105,12 @@ export const StoryboardGateScreen: React.FC<{
                   </div>
                 )}
                 {scriptLine && (
-                  <div className="absolute inset-x-0 bottom-9 line-clamp-2 bg-gradient-to-t from-black/85 to-transparent px-2 pb-1 pt-4 text-[10px] leading-tight text-zinc-200">
+                  // pointer-events-none: this caption is DECORATION and must never eat a click.
+                  // It sits directly above the Regenerate button, so any overlap — a padding
+                  // change, a longer line, a narrower tile — silently makes that button dead.
+                  // The 2026-07-25 GlassPanel padding regression did exactly that; this is the
+                  // guard that keeps the next layout change from doing it again.
+                  <div className="pointer-events-none absolute inset-x-0 bottom-9 line-clamp-2 bg-gradient-to-t from-black/85 to-transparent px-2 pb-1 pt-4 text-[10px] leading-tight text-zinc-200">
                     {scriptLine}
                   </div>
                 )}
