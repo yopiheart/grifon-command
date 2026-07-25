@@ -10,6 +10,7 @@ import { T_LABEL, R_CTRL } from '../ui/wizardTokens';
 import {
   HAIRLINE, ROW_HOVER, ACTIVE_ROW, GOLD_CTA_GRADIENT,
 } from '../ui/dashboardTokens';
+import { MAT_CHROME, MAT_VEIL, rim } from '../ui/materialTokens';
 
 export interface SidebarNavItem {
   id: string;
@@ -83,7 +84,7 @@ const SidebarBody: React.FC<SidebarBodyProps> = ({
         {expanded && <span className="font-sans font-black text-xl tracking-tighter text-white italic">GRIFON</span>}
       </button>
       {expanded && !mobile && (
-        <button onClick={onToggleCollapsed} aria-label="Hide sidebar" className={`w-11 h-11 ${R_CTRL} text-zinc-500 hover:text-white ${ROW_HOVER} transition-colors flex items-center justify-center`}>
+        <button onClick={onToggleCollapsed} aria-label="Hide sidebar" className={`w-11 h-11 ${R_CTRL} text-on-surface-sublabel hover:text-white ${ROW_HOVER} transition-colors flex items-center justify-center`}>
           <PanelLeftClose className="w-4 h-4" />
         </button>
       )}
@@ -96,7 +97,7 @@ const SidebarBody: React.FC<SidebarBodyProps> = ({
 
     {/* Expand affordance when collapsed */}
     {!expanded && !mobile && (
-      <button onClick={onToggleCollapsed} aria-label="Expand sidebar" className={`mx-auto mb-2 w-11 h-11 ${R_CTRL} text-zinc-500 hover:text-white ${ROW_HOVER} transition-colors flex items-center justify-center`}>
+      <button onClick={onToggleCollapsed} aria-label="Expand sidebar" className={`mx-auto mb-2 w-11 h-11 ${R_CTRL} text-on-surface-sublabel hover:text-white ${ROW_HOVER} transition-colors flex items-center justify-center`}>
         <PanelLeft className="w-4 h-4" />
       </button>
     )}
@@ -123,18 +124,18 @@ const SidebarBody: React.FC<SidebarBodyProps> = ({
         {expanded && (
           <>
             <span className="text-sm flex-1 text-left">Search</span>
-            <kbd className={`${T_LABEL} text-zinc-500 bg-zinc-800/80 rounded px-1.5 py-0.5`}>⌘K</kbd>
+            <kbd className={`${T_LABEL} text-on-surface-sublabel bg-zinc-800/80 rounded px-1.5 py-0.5`}>⌘K</kbd>
           </>
         )}
       </button>
     </div>
 
     {/* Departments */}
-    <nav className="px-2.5 mt-3 overflow-y-auto custom-scrollbar flex-1 min-h-0">
+    <nav className="px-2.5 mt-3 overflow-y-auto scroll-contain custom-scrollbar flex-1 min-h-0">
       {navGroups.map((group, gi) => (
         <div key={group.label}>
           {expanded ? (
-            <p className={`${T_LABEL} text-zinc-600 px-2 mb-1.5 ${gi === 0 ? 'mt-1' : 'mt-4'}`}>{group.label}</p>
+            <p className={`${T_LABEL} text-on-surface-sublabel px-2 mb-1.5 ${gi === 0 ? 'mt-1' : 'mt-4'}`}>{group.label}</p>
           ) : (
             gi > 0 && <div aria-hidden className={`mx-auto my-2 w-6 border-t ${HAIRLINE}`} />
           )}
@@ -158,7 +159,10 @@ const SidebarBody: React.FC<SidebarBodyProps> = ({
                   {/* Locked rows dim icon + label only — the lock badge and tier word
                       (the unlock path) stay at full opacity for the legibility gate. */}
                   <span className="relative shrink-0">
-                    <Icon className={`w-5 h-5 ${item.locked ? 'opacity-45 group-hover:opacity-80 transition-opacity' : ''}`} style={{ color: item.hue }} />
+                    <Icon
+                      className={`w-5 h-5 rail-hue ${item.locked ? 'opacity-45 group-hover:opacity-80 transition-opacity' : ''}`}
+                      style={{ color: item.hue }}
+                    />
                     {/* Lock stays legible even in the icon-only rail. */}
                     {!expanded && item.locked && (
                       <span className="absolute -bottom-1 -right-1 bg-zinc-950 rounded-full p-px">
@@ -186,7 +190,7 @@ const SidebarBody: React.FC<SidebarBodyProps> = ({
       {/* Recent / History */}
       {expanded && recent.length > 0 && (
         <div className="mt-4">
-          <p className={`${T_LABEL} text-zinc-600 px-2 mb-1.5 flex items-center gap-1.5`}>
+          <p className={`${T_LABEL} text-on-surface-sublabel px-2 mb-1.5 flex items-center gap-1.5`}>
             <History className="w-3 h-3" /> Recent
           </p>
           {recent.slice(0, 6).map((r) => {
@@ -229,14 +233,14 @@ const SidebarBody: React.FC<SidebarBodyProps> = ({
           <>
             <span className="flex-1 min-w-0 text-left">
               <span className="block text-sm font-semibold text-white truncate">{userName}</span>
-              <span className="block text-xs text-zinc-500 truncate">{quotaLabel}</span>
+              <span className="block text-xs text-on-surface-sublabel truncate">{quotaLabel}</span>
             </span>
-            <Settings className="w-4 h-4 text-zinc-500 shrink-0" />
+            <Settings className="w-4 h-4 text-on-surface-sublabel shrink-0" />
           </>
         )}
       </button>
       {expanded && userEmail && (
-        <p className="px-3 pb-1 text-xs text-zinc-600 truncate">{userEmail}</p>
+        <p className="px-3 pb-1 text-xs text-on-surface-sublabel truncate">{userEmail}</p>
       )}
     </div>
   </div>
@@ -260,7 +264,11 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = (props) => {
         initial={false}
         animate={{ width: collapsed ? 76 : 268 }}
         transition={SPRING.standard}
-        className={`hidden lg:flex fixed left-0 top-0 bottom-0 z-50 bg-zinc-950/90 backdrop-blur-xl border-r ${HAIRLINE} overflow-hidden`}
+        // CHROME — the rail floats the full height of the app over the SmokeAura
+        // field, so there is genuinely something behind it to refract. This is
+        // the textbook case for the tier.
+        style={rim(2)}
+        className={`hidden lg:flex fixed left-0 top-0 bottom-0 z-50 ${MAT_CHROME} border-r ${HAIRLINE} overflow-hidden`}
       >
         <SidebarBody {...bodyProps} expanded={!collapsed} />
       </motion.aside>
@@ -272,12 +280,13 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = (props) => {
             <motion.div
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               onClick={props.onMobileClose}
-              className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm lg:hidden"
+              className={`fixed inset-0 z-[60] ${MAT_VEIL} lg:hidden`}
             />
             <motion.aside
               initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }}
               transition={SPRING.standard}
-              className={`fixed left-0 top-0 bottom-0 z-[61] w-[86vw] max-w-[320px] bg-zinc-950/95 backdrop-blur-xl border-r ${HAIRLINE} lg:hidden`}
+              style={rim(2)}
+              className={`fixed left-0 top-0 bottom-0 z-[61] w-[86vw] max-w-[320px] ${MAT_CHROME} border-r ${HAIRLINE} lg:hidden`}
             >
               <SidebarBody {...bodyProps} expanded mobile />
             </motion.aside>

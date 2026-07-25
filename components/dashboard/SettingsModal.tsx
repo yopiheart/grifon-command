@@ -6,6 +6,7 @@ import {
 import { SPRING } from '../ui/motionTokens';
 import type { PlanId } from '../../utils/planGate';
 import { grant as grantConsent, withdraw as withdrawConsent, getMarketingConsent } from '../../services/consentService';
+import { MAT_VEIL, MAT_PLATE_INSET } from '../ui/materialTokens';
 
 interface SettingsModalProps {
   open: boolean;
@@ -26,7 +27,7 @@ const PLAN_LABEL: Record<string, string> = {
 
 const Section: React.FC<{ icon: React.ReactNode; title: string; children: React.ReactNode }> = ({ icon, title, children }) => (
   <div className="space-y-2">
-    <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500 px-1">
+    <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel px-1">
       <span className="text-zinc-400">{icon}</span>
       {title}
     </div>
@@ -44,7 +45,7 @@ const Row: React.FC<{ label: string; sub?: string; right?: React.ReactNode; onCl
   >
     <div className="flex-1 min-w-0">
       <div className={`text-sm font-semibold ${danger ? 'text-red-400' : 'text-white'}`}>{label}</div>
-      {sub && <div className="text-xs text-zinc-500 mt-0.5 truncate">{sub}</div>}
+      {sub && <div className="text-xs text-on-surface-sublabel mt-0.5 truncate">{sub}</div>}
     </div>
     {right}
   </button>
@@ -116,14 +117,14 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            className={`absolute inset-0 ${MAT_VEIL}`}
           />
           <motion.div
             initial={{ opacity: 0, scale: 0.97, y: 16 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.97, y: 16 }}
             transition={SPRING.standard}
-            className="relative w-full sm:max-w-lg h-full sm:h-auto sm:max-h-[85vh] bg-zinc-900/90 backdrop-blur-xl sm:rounded-3xl ring-1 ring-white/10 shadow-[0_0_60px_rgba(0,0,0,0.6)] flex flex-col overflow-hidden"
+            className="relative w-full sm:max-w-lg h-full sm:h-auto sm:max-h-[85vh] bg-zinc-900/90 sm:rounded-3xl ring-1 ring-white/10 shadow-[0_0_60px_rgba(0,0,0,0.6)] flex flex-col overflow-hidden"
           >
             <div className="flex items-center justify-between px-5 py-4 border-b border-white/[0.06] shrink-0">
               <span className="text-lg font-bold text-white tracking-tight">Settings</span>
@@ -134,13 +135,13 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
 
             <div className="overflow-y-auto px-5 py-5 space-y-6 custom-scrollbar">
               {/* Profile card */}
-              <div className="flex items-center gap-3 bg-zinc-950/60 rounded-2xl ring-1 ring-white/[0.06] p-4">
+              <div className={`flex items-center gap-3 ${MAT_PLATE_INSET} rounded-2xl ring-1 ring-white/[0.06] p-4`}>
                 <div className="w-12 h-12 rounded-full bg-zinc-800 ring-1 ring-white/10 flex items-center justify-center shrink-0">
                   <User className="w-5 h-5 text-zinc-400" />
                 </div>
                 <div className="min-w-0">
                   <div className="text-sm font-semibold text-white truncate">{userName}</div>
-                  <div className="text-xs text-zinc-500 truncate">{userEmail}</div>
+                  <div className="text-xs text-on-surface-sublabel truncate">{userEmail}</div>
                 </div>
               </div>
 
@@ -164,16 +165,16 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               </Section>
 
               <Section icon={<LifeBuoy className="w-3.5 h-3.5" />} title="Help & legal">
-                <Row label="Help & support" onClick={() => { window.location.href = '/support'; }} right={<ArrowRight className="w-4 h-4 text-zinc-500" />} />
-                <Row label="Terms of service" onClick={() => { window.location.href = '/terms'; }} right={<ArrowRight className="w-4 h-4 text-zinc-500" />} />
-                <Row label="Privacy policy" onClick={() => { window.location.href = '/privacy'; }} right={<ArrowRight className="w-4 h-4 text-zinc-500" />} />
+                <Row label="Help & support" onClick={() => { window.location.href = '/support'; }} right={<ArrowRight className="w-4 h-4 text-on-surface-sublabel" />} />
+                <Row label="Terms of service" onClick={() => { window.location.href = '/terms'; }} right={<ArrowRight className="w-4 h-4 text-on-surface-sublabel" />} />
+                <Row label="Privacy policy" onClick={() => { window.location.href = '/privacy'; }} right={<ArrowRight className="w-4 h-4 text-on-surface-sublabel" />} />
               </Section>
 
               <Section icon={<Shield className="w-3.5 h-3.5" />} title="Account">
                 <Row label="Sign out" danger onClick={onLogout} right={<LogOut className="w-4 h-4 text-red-400" />} />
               </Section>
 
-              <p className="text-center text-[10px] font-mono uppercase tracking-widest text-zinc-600 pt-2">
+              <p className="text-center text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel pt-2">
                 GRIFON COMMAND © 2026
               </p>
             </div>

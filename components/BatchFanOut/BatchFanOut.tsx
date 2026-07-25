@@ -11,6 +11,7 @@ import IntelligenceUplink from '../IntelligenceUplink';
 import { ChevronLeft, Download, Sparkles, RefreshCw, Image as ImageIcon, LayoutGrid, Zap } from 'lucide-react';
 import JSZip from 'jszip';
 import saveAs from 'file-saver';
+import { MAT_CHROME } from '../ui/materialTokens';
 
 interface BatchFanOutProps {
   businessInfo: BusinessInfo;
@@ -154,7 +155,7 @@ const BatchFanOut: React.FC<BatchFanOutProps> = ({ businessInfo, avatar, clientD
     <div className="min-h-screen bg-zinc-950 p-8 text-white font-mono flex flex-col">
       <header className="flex flex-col items-start gap-4 mb-8 w-full border-b border-white/10 pb-8">
         <div className="flex items-center justify-between w-full">
-          <button onClick={() => setUplinkData(null)} className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-zinc-500 hover:text-white uppercase tracking-widest transition-colors">
+          <button onClick={() => setUplinkData(null)} className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-on-surface-sublabel hover:text-white uppercase tracking-widest transition-colors">
             <ChevronLeft className="w-4 h-4" /> <span className="hidden md:inline">COMMAND CENTER</span><span className="md:hidden">BACK</span>
           </button>
           {phase === 'done' && (
@@ -167,7 +168,7 @@ const BatchFanOut: React.FC<BatchFanOutProps> = ({ businessInfo, avatar, clientD
           <h1 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight leading-tight flex items-center gap-3">
             <LayoutGrid className="w-8 h-8 text-[#FFCC00]" /> Batch_Creative <span className="text-[#FFCC00]">/ FAN-OUT</span>
           </h1>
-          <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mt-2">
+          <p className="text-[10px] text-on-surface-sublabel font-mono tracking-widest uppercase mt-2">
             // ONE_HERO_IMAGE → {count}_BRANDED_CREATIVES · ~$0 MARGINAL
           </p>
         </div>
@@ -180,7 +181,7 @@ const BatchFanOut: React.FC<BatchFanOutProps> = ({ businessInfo, avatar, clientD
         <GlassPanel className="max-w-2xl mx-auto w-full p-8 rounded-3xl mb-12">
           <p className="text-[10px] text-[#FFCC00] uppercase tracking-widest mb-6 font-bold">// CONFIGURE_BATCH</p>
 
-          <label className="text-[10px] text-zinc-500 uppercase tracking-widest">Batch Size</label>
+          <label className="text-[10px] text-on-surface-sublabel uppercase tracking-widest">Batch Size</label>
           <div className="flex gap-3 mt-2 mb-8">
             {COUNTS.map((c) => (
               <button
@@ -195,14 +196,14 @@ const BatchFanOut: React.FC<BatchFanOutProps> = ({ businessInfo, avatar, clientD
             ))}
           </div>
 
-          <label className="text-[10px] text-zinc-500 uppercase tracking-widest">Hero Source</label>
+          <label className="text-[10px] text-on-surface-sublabel uppercase tracking-widest">Hero Source</label>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2 mb-8">
             <button
               onClick={() => setHeroMode('ai')}
               className={`p-4 rounded-xl text-left border transition-all ${heroMode === 'ai' ? 'border-[#FFCC00] bg-[#FFCC00]/5' : 'border-white/10 bg-zinc-950 hover:border-white/30'}`}
             >
               <div className="flex items-center gap-2 text-sm font-bold"><Sparkles className="w-4 h-4 shrink-0 text-[#FFCC00]" /> AI Hero</div>
-              <p className="text-xs text-zinc-500 mt-1 normal-case">Generate a fresh hero plate (1 image credit).</p>
+              <p className="text-xs text-on-surface-sublabel mt-1 normal-case">Generate a fresh hero plate (1 image credit).</p>
             </button>
             <button
               onClick={() => setHeroMode('upload')}
@@ -210,7 +211,7 @@ const BatchFanOut: React.FC<BatchFanOutProps> = ({ businessInfo, avatar, clientD
               className={`p-4 rounded-xl text-left border transition-all disabled:opacity-30 disabled:cursor-not-allowed ${heroMode === 'upload' ? 'border-[#FFCC00] bg-[#FFCC00]/5' : 'border-white/10 bg-zinc-950 hover:border-white/30'}`}
             >
               <div className="flex items-center gap-2 text-sm font-bold"><ImageIcon className="w-4 h-4 shrink-0 text-[#FFCC00]" /> My Photo</div>
-              <p className="text-xs text-zinc-500 mt-1 normal-case">{productAsset ? 'Use your product photo — truly $0.' : 'No product image uploaded.'}</p>
+              <p className="text-xs text-on-surface-sublabel mt-1 normal-case">{productAsset ? 'Use your product photo — truly $0.' : 'No product image uploaded.'}</p>
             </button>
           </div>
 
@@ -249,7 +250,7 @@ const BatchFanOut: React.FC<BatchFanOutProps> = ({ businessInfo, avatar, clientD
 
       {/* --- Done action bar --- */}
       {phase === 'done' && (
-        <div className="fixed bottom-10 left-1/2 -translate-x-1/2 flex flex-wrap justify-center gap-4 bg-zinc-950/80 backdrop-blur-2xl p-4 rounded-full border border-white/10 z-50">
+        <div className={`fixed bottom-10 left-1/2 -translate-x-1/2 flex flex-wrap justify-center gap-4 ${MAT_CHROME} p-4 rounded-full border border-white/10 z-50`}>
           <button onClick={() => runBatch(heroMode, count, heroUrl || undefined)} className="rounded-full px-6 py-3 text-xs border border-[#FFCC00] text-[#FFCC00] hover:bg-[#FFCC00] hover:text-black flex items-center gap-2 font-bold uppercase tracking-widest transition-all">
             <RefreshCw className="w-4 h-4 shrink-0" /> NEW ANGLES
           </button>

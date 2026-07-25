@@ -9,6 +9,7 @@ import { PreviousResearchCard } from './ui/PreviousResearchCard';
 import Loader from './ui/Loader';
 import { Copy, ChevronLeft, ChevronDown, ChevronUp, UploadCloud, AlarmClock, ShieldCheck, ArrowRight, Download, Brain, FileSearch } from 'lucide-react';
 import saveAs from 'file-saver';
+import { MAT_VEIL, MAT_PLATE_INSET } from './ui/materialTokens';
 
 interface OfferOptimizerProps {
   onBack: () => void;
@@ -65,7 +66,7 @@ const TierCard: React.FC<{ label: string; subtitle: string; tier: OfferTier }> =
     <div className="bg-zinc-950 border border-white/10 rounded-xl p-5 flex flex-col gap-4">
       <div className="flex items-start justify-between gap-3 border-b border-white/10 pb-3">
         <div>
-          <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest">{subtitle}</p>
+          <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest">{subtitle}</p>
           <p className="text-[10px] text-[#FFCC00] font-mono uppercase tracking-widest mt-1">{label}</p>
           <h3 className="text-xl md:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight leading-tight mt-1 break-words">
             {tier.name}
@@ -83,7 +84,7 @@ const TierCard: React.FC<{ label: string; subtitle: string; tier: OfferTier }> =
       <p className="text-sm text-zinc-300 leading-relaxed">{tier.pitch}</p>
 
       <div className="space-y-2">
-        <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest">// VALUE_STACK</p>
+        <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest">// VALUE_STACK</p>
         <ul className="space-y-1">
           {tier.valueStack.map((v, idx) => (
             <li key={idx} className="flex items-center justify-between gap-3 text-xs font-mono border-b border-white/5 pb-1 last:border-b-0">
@@ -96,11 +97,11 @@ const TierCard: React.FC<{ label: string; subtitle: string; tier: OfferTier }> =
 
       <div className="flex items-baseline justify-between gap-3 border-t border-white/10 pt-3">
         <div>
-          <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest">Total Value</p>
-          <p className="text-sm font-mono text-zinc-500 line-through">{tier.totalValue}</p>
+          <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest">Total Value</p>
+          <p className="text-sm font-mono text-on-surface-sublabel line-through">{tier.totalValue}</p>
         </div>
         <div className="text-right">
-          <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest">Your Price</p>
+          <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest">Your Price</p>
           <p className="text-2xl font-black text-[#FFCC00] tracking-tight">{tier.actualPrice}</p>
         </div>
       </div>
@@ -289,7 +290,7 @@ const OfferOptimizer: React.FC<OfferOptimizerProps> = ({ onBack, onNavigate }) =
       <div className="w-full max-w-6xl mx-auto">
         <header className="flex flex-col items-start gap-4 mb-8 w-full border-b border-white/10 pb-6 relative">
           <div className="flex items-center justify-between w-full">
-            <button onClick={onBack} className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-zinc-500 hover:text-white uppercase tracking-widest transition-colors">
+            <button onClick={onBack} className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-on-surface-sublabel hover:text-white uppercase tracking-widest transition-colors">
               <ChevronLeft className="w-4 h-4" /> <span className="hidden md:inline">COMMAND CENTER</span><span className="md:hidden">BACK</span>
             </button>
           </div>
@@ -297,7 +298,7 @@ const OfferOptimizer: React.FC<OfferOptimizerProps> = ({ onBack, onNavigate }) =
             <h1 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight break-words whitespace-normal leading-tight">
               War Room
             </h1>
-            <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mt-2">
+            <p className="text-[10px] text-on-surface-sublabel font-mono tracking-widest uppercase mt-2">
               // BUILD AN OFFER THEY CAN'T REFUSE
             </p>
           </div>
@@ -332,19 +333,19 @@ const OfferOptimizer: React.FC<OfferOptimizerProps> = ({ onBack, onNavigate }) =
               {/* Context Source Tabs */}
               <div className="flex flex-wrap gap-4 mb-4">
                 <button
-                  className={`pb-2 text-[10px] font-mono tracking-widest uppercase transition-colors ${inputType === 'upload' ? 'text-[#FFCC00] border-b-2 border-[#FFCC00]' : 'text-zinc-500 hover:text-zinc-300'}`}
+                  className={`pb-2 text-[10px] font-mono tracking-widest uppercase transition-colors ${inputType === 'upload' ? 'text-[#FFCC00] border-b-2 border-[#FFCC00]' : 'text-on-surface-sublabel hover:text-zinc-300'}`}
                   onClick={() => switchInputType('upload')}
                 >
                   Upload File
                 </button>
                 <button
-                  className={`pb-2 text-[10px] font-mono tracking-widest uppercase transition-colors ${inputType === 'paste' ? 'text-[#FFCC00] border-b-2 border-[#FFCC00]' : 'text-zinc-500 hover:text-zinc-300'}`}
+                  className={`pb-2 text-[10px] font-mono tracking-widest uppercase transition-colors ${inputType === 'paste' ? 'text-[#FFCC00] border-b-2 border-[#FFCC00]' : 'text-on-surface-sublabel hover:text-zinc-300'}`}
                   onClick={() => switchInputType('paste')}
                 >
                   Paste Text
                 </button>
                 <button
-                  className={`pb-2 text-[10px] font-mono tracking-widest uppercase transition-colors ${inputType === 'marketmind' ? 'text-[#FFCC00] border-b-2 border-[#FFCC00]' : 'text-zinc-500 hover:text-zinc-300'}`}
+                  className={`pb-2 text-[10px] font-mono tracking-widest uppercase transition-colors ${inputType === 'marketmind' ? 'text-[#FFCC00] border-b-2 border-[#FFCC00]' : 'text-on-surface-sublabel hover:text-zinc-300'}`}
                   onClick={() => switchInputType('marketmind')}
                 >
                   Use MarketMind Run
@@ -353,7 +354,7 @@ const OfferOptimizer: React.FC<OfferOptimizerProps> = ({ onBack, onNavigate }) =
 
               {inputType === 'upload' && (
                 <div className="space-y-2">
-                  <label htmlFor="file-upload" className="bg-zinc-950/50 border-2 border-dashed border-white/10 hover:border-[#FFCC00] hover:bg-zinc-800/80 text-zinc-400 p-4 rounded-xl flex items-center justify-center cursor-pointer transition-all w-full gap-2">
+                  <label htmlFor="file-upload" className={`${MAT_PLATE_INSET} border-2 border-dashed border-white/10 hover:border-[#FFCC00] hover:bg-zinc-800/80 text-zinc-400 p-4 rounded-xl flex items-center justify-center cursor-pointer transition-all w-full gap-2`}>
                     <UploadCloud className="w-5 h-5" /> UPLOAD .TXT / .MD FILE
                   </label>
                   <input
@@ -394,15 +395,15 @@ const OfferOptimizer: React.FC<OfferOptimizerProps> = ({ onBack, onNavigate }) =
                       </div>
                       <div className="space-y-2 text-xs font-mono">
                         <div>
-                          <p className="text-[10px] text-zinc-500 uppercase tracking-widest">// AVATAR</p>
+                          <p className="text-[10px] text-on-surface-sublabel uppercase tracking-widest">// AVATAR</p>
                           <p className="text-zinc-200 mt-0.5">{marketMindReport.winningAvatar || '—'}</p>
                         </div>
                         <div>
-                          <p className="text-[10px] text-zinc-500 uppercase tracking-widest">// SUBJECT</p>
+                          <p className="text-[10px] text-on-surface-sublabel uppercase tracking-widest">// SUBJECT</p>
                           <p className="text-zinc-200 mt-0.5">{marketMindReport.subject || '—'}</p>
                         </div>
                         <div>
-                          <p className="text-[10px] text-zinc-500 uppercase tracking-widest">// BIG_IDEA</p>
+                          <p className="text-[10px] text-on-surface-sublabel uppercase tracking-widest">// BIG_IDEA</p>
                           <p className="text-zinc-300 mt-0.5 leading-relaxed">
                             {marketMindReport.bigIdea && marketMindReport.bigIdea.length > 140
                               ? `${marketMindReport.bigIdea.slice(0, 140)}…`
@@ -426,7 +427,7 @@ const OfferOptimizer: React.FC<OfferOptimizerProps> = ({ onBack, onNavigate }) =
                     </div>
                   ) : (
                     <div className="bg-zinc-950 border border-white/10 rounded-xl p-6 space-y-3 text-center">
-                      <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest">// NO_MARKETMIND_REPORT_FOUND</p>
+                      <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest">// NO_MARKETMIND_REPORT_FOUND</p>
                       <p className="text-sm text-zinc-300">
                         Run Market Research first to import the report into your offer build.
                       </p>
@@ -485,7 +486,7 @@ const OfferOptimizer: React.FC<OfferOptimizerProps> = ({ onBack, onNavigate }) =
                       <option value="English">English</option>
                       <option value="Taglish">Taglish</option>
                     </select>
-                    <ChevronDown className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none" />
+                    <ChevronDown className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-sublabel pointer-events-none" />
                   </div>
                 </div>
               </div>
@@ -536,7 +537,7 @@ const OfferOptimizer: React.FC<OfferOptimizerProps> = ({ onBack, onNavigate }) =
 
               <div className="flex-grow bg-zinc-950 border border-white/10 rounded-xl p-4 md:p-6 relative">
                 {isAnalyzing ? (
-                  <div className="absolute inset-0 flex items-center justify-center bg-zinc-950/80 backdrop-blur-sm z-10 rounded-xl">
+                  <div className={`absolute inset-0 flex items-center justify-center ${MAT_VEIL} z-10 rounded-xl`}>
                     <Loader message="APPLYING VIRAL PSYCHOLOGY..." />
                   </div>
                 ) : result ? (
@@ -579,7 +580,7 @@ const OfferOptimizer: React.FC<OfferOptimizerProps> = ({ onBack, onNavigate }) =
                     <div className="border-t border-white/10 pt-4">
                       <button
                         onClick={() => setShowFullReport(v => !v)}
-                        className="w-full flex items-center justify-between text-[10px] font-mono uppercase tracking-widest text-zinc-500 hover:text-[#FFCC00] hover:bg-white/5 transition-all py-2 px-3 -mx-3 rounded-md"
+                        className="w-full flex items-center justify-between text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel hover:text-[#FFCC00] hover:bg-white/5 transition-all py-2 px-3 -mx-3 rounded-md"
                       >
                         <span>{showFullReport ? 'COLLAPSE FULL ANALYSIS' : 'VIEW FULL ANALYSIS'}</span>
                         {showFullReport ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
@@ -588,7 +589,7 @@ const OfferOptimizer: React.FC<OfferOptimizerProps> = ({ onBack, onNavigate }) =
                       {showFullReport && (
                         <div className="space-y-5 mt-4">
                           <div className="bg-zinc-900/50 border border-white/10 rounded-lg p-4">
-                            <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">// PRICING_ANALYSIS</p>
+                            <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest mb-2">// PRICING_ANALYSIS</p>
                             <p className="text-sm text-zinc-300 leading-relaxed">{result.analysis}</p>
                           </div>
 
@@ -597,18 +598,18 @@ const OfferOptimizer: React.FC<OfferOptimizerProps> = ({ onBack, onNavigate }) =
                           <TierCard label={TIER_LABELS.highTicket} subtitle={TIER_SUBTITLES.highTicket} tier={result.highTicket} />
 
                           <div className="bg-zinc-900/50 border border-white/10 rounded-lg p-4 space-y-2">
-                            <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">// CONVERSION_ASSETS</p>
+                            <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest mb-2">// CONVERSION_ASSETS</p>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2 text-xs font-mono">
-                              <p><span className="text-zinc-500">Brand:</span> <span className="text-zinc-300">{result.conversionAssets.brandName}</span></p>
-                              <p><span className="text-zinc-500">Target:</span> <span className="text-zinc-300">{result.conversionAssets.target}</span></p>
-                              <p><span className="text-zinc-500">Benefit:</span> <span className="text-zinc-300">{result.conversionAssets.mainBenefit}</span></p>
-                              <p><span className="text-zinc-500">Problem:</span> <span className="text-zinc-300">{result.conversionAssets.mainProblem}</span></p>
-                              <p><span className="text-zinc-500">Pain:</span> <span className="text-zinc-300">{result.conversionAssets.mainPainPoint}</span></p>
-                              <p><span className="text-zinc-500">Mechanism:</span> <span className="text-zinc-300">{result.conversionAssets.mainDifferentiator}</span></p>
+                              <p><span className="text-on-surface-sublabel">Brand:</span> <span className="text-zinc-300">{result.conversionAssets.brandName}</span></p>
+                              <p><span className="text-on-surface-sublabel">Target:</span> <span className="text-zinc-300">{result.conversionAssets.target}</span></p>
+                              <p><span className="text-on-surface-sublabel">Benefit:</span> <span className="text-zinc-300">{result.conversionAssets.mainBenefit}</span></p>
+                              <p><span className="text-on-surface-sublabel">Problem:</span> <span className="text-zinc-300">{result.conversionAssets.mainProblem}</span></p>
+                              <p><span className="text-on-surface-sublabel">Pain:</span> <span className="text-zinc-300">{result.conversionAssets.mainPainPoint}</span></p>
+                              <p><span className="text-on-surface-sublabel">Mechanism:</span> <span className="text-zinc-300">{result.conversionAssets.mainDifferentiator}</span></p>
                             </div>
                             {result.conversionAssets.mainFeatures?.length > 0 && (
                               <div className="text-xs font-mono pt-2 border-t border-white/5">
-                                <p className="text-zinc-500 mb-1">Features:</p>
+                                <p className="text-on-surface-sublabel mb-1">Features:</p>
                                 <ul className="text-zinc-300 list-disc list-inside space-y-0.5">
                                   {result.conversionAssets.mainFeatures.map((f, idx) => <li key={idx}>{f}</li>)}
                                 </ul>
@@ -616,7 +617,7 @@ const OfferOptimizer: React.FC<OfferOptimizerProps> = ({ onBack, onNavigate }) =
                             )}
                             {result.conversionAssets.brandPalette?.length > 0 && (
                               <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-white/5">
-                                <span className="text-zinc-500 text-xs font-mono">Palette:</span>
+                                <span className="text-on-surface-sublabel text-xs font-mono">Palette:</span>
                                 {result.conversionAssets.brandPalette.map((hex, idx) => (
                                   <span key={idx} className="inline-flex items-center gap-1.5 text-[10px] font-mono text-zinc-300">
                                     <span className="w-3 h-3 rounded-sm border border-white/20" style={{ backgroundColor: hex }} />
@@ -631,7 +632,7 @@ const OfferOptimizer: React.FC<OfferOptimizerProps> = ({ onBack, onNavigate }) =
                     </div>
                   </div>
                 ) : (
-                  <div className="flex flex-col items-center justify-center h-full text-zinc-500">
+                  <div className="flex flex-col items-center justify-center h-full text-on-surface-sublabel">
                     <p className="font-mono text-center mb-2 text-[10px] uppercase tracking-widest">// SYSTEM_STANDBY</p>
                     <p className="text-sm text-center max-w-xs">
                       Input your product details and market research to generate high-converting offer stacks.

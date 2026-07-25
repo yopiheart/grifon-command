@@ -60,6 +60,7 @@ import {
   type QueueEvent,
 } from './RenderAllRunner';
 import { formatRelativeTime } from './utils';
+import { MAT_CHROME, MAT_VEIL } from '../ui/materialTokens';
 
 type Mode = 'pipeline' | 'one-shot';
 type CanvasView = 'edit' | 'preview';
@@ -176,7 +177,7 @@ const COMMAND_CHIP =
 const COMMAND_CHIP_ACTIVE = 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]';
 const COMMAND_CHIP_IDLE =
   'border-white/10 bg-zinc-950 text-zinc-400 hover:border-[#FFCC00]/50 hover:text-zinc-200';
-const COMMAND_CHIP_LOCKED = 'border-white/5 bg-zinc-950 text-zinc-600 cursor-not-allowed';
+const COMMAND_CHIP_LOCKED = 'border-white/5 bg-zinc-950 text-on-surface-sublabel cursor-not-allowed';
 
 const GenerateVideo: React.FC<GenerateVideoProps> = ({
   onBack,
@@ -967,7 +968,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
     toast('CANCELLED');
   };
 
-  const labelCaps = 'text-[10px] text-zinc-500 font-mono uppercase tracking-widest';
+  const labelCaps = 'text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest';
   const ghostBtn =
     'bg-zinc-950 border border-white/10 text-zinc-400 hover:text-white hover:border-[#FFCC00] transition-all rounded-xl';
 
@@ -977,7 +978,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
       <div className="flex items-center justify-between w-full gap-3">
         <button
           onClick={onBack}
-          className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-zinc-500 hover:text-white uppercase tracking-widest transition-colors"
+          className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-on-surface-sublabel hover:text-white uppercase tracking-widest transition-colors"
         >
           <ChevronLeft className="w-4 h-4" />
           <span className="hidden md:inline">COMMAND CENTER</span>
@@ -988,7 +989,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
             <button
               onClick={() => setMode('pipeline')}
               className={`px-3 py-1.5 text-[9px] font-black uppercase tracking-widest rounded-lg transition-all ${
-                mode === 'pipeline' ? 'bg-[#FFCC00] text-black' : 'text-zinc-500 hover:text-white'
+                mode === 'pipeline' ? 'bg-[#FFCC00] text-black' : 'text-on-surface-sublabel hover:text-white'
               }`}
             >
               Pipeline
@@ -996,7 +997,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
             <button
               onClick={() => setMode('one-shot')}
               className={`px-3 py-1.5 text-[9px] font-black uppercase tracking-widest rounded-lg transition-all ${
-                mode === 'one-shot' ? 'bg-[#FFCC00] text-black' : 'text-zinc-500 hover:text-white'
+                mode === 'one-shot' ? 'bg-[#FFCC00] text-black' : 'text-on-surface-sublabel hover:text-white'
               }`}
             >
               One-Shot
@@ -1031,7 +1032,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
           </span>
           <span className="text-[10px] text-zinc-400 truncate">{specs.tagline}</span>
         </div>
-        <ChevronDown className={`w-4 h-4 text-zinc-500 transition-transform ${modelPickerOpen ? 'rotate-180' : ''}`} />
+        <ChevronDown className={`w-4 h-4 text-on-surface-sublabel transition-transform ${modelPickerOpen ? 'rotate-180' : ''}`} />
       </button>
       {modelPickerOpen && (
         <div className="absolute z-50 top-full mt-2 left-0 right-0 bg-zinc-950 border border-white/10 rounded-2xl p-2 shadow-[0_0_30px_rgba(0,0,0,0.6)] max-h-[420px] overflow-y-auto custom-scrollbar">
@@ -1052,7 +1053,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
                 <div className="text-[10px] font-black text-white uppercase tracking-widest">
                   {modelLabel(m)}
                 </div>
-                <div className="text-[10px] text-zinc-500 font-mono mt-0.5">{ms.tagline}</div>
+                <div className="text-[10px] text-on-surface-sublabel font-mono mt-0.5">{ms.tagline}</div>
               </button>
             );
           })}
@@ -1074,7 +1075,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
                     BETA
                   </span>
                 </div>
-                <div className="text-[10px] text-zinc-600 font-mono mt-0.5">{ms.tagline}</div>
+                <div className="text-[10px] text-on-surface-sublabel font-mono mt-0.5">{ms.tagline}</div>
               </button>
             );
           })}
@@ -1093,7 +1094,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
         <span className="text-zinc-300">
           {config.aspectRatio} · {config.duration}s · {config.resolution}
         </span>
-        <ChevronDown className={`w-3.5 h-3.5 text-zinc-500 transition-transform ${settingsOpen ? 'rotate-180' : ''}`} />
+        <ChevronDown className={`w-3.5 h-3.5 text-on-surface-sublabel transition-transform ${settingsOpen ? 'rotate-180' : ''}`} />
       </button>
       {settingsOpen && (
         <div className="absolute z-50 top-full mt-2 left-0 right-0 bg-zinc-950 border border-white/10 rounded-2xl p-4 space-y-4 shadow-[0_0_30px_rgba(0,0,0,0.6)]">
@@ -1107,7 +1108,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
                   className={`px-3 py-1.5 rounded-lg text-[10px] font-black border transition-all ${
                     config.aspectRatio === r
                       ? 'border-[#FFCC00] text-[#FFCC00] bg-[#FFCC00]/10'
-                      : 'border-white/10 text-zinc-500 hover:text-white'
+                      : 'border-white/10 text-on-surface-sublabel hover:text-white'
                   }`}
                 >
                   {r}
@@ -1123,7 +1124,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
                 where users believed they were configuring each scene
                 independently but config.duration only stored one value. */}
             {storyboard?.[activeIdx]?.scriptLine ? (
-              <div className="mt-2 text-[10px] text-zinc-500 font-mono leading-snug">
+              <div className="mt-2 text-[10px] text-on-surface-sublabel font-mono leading-snug">
                 // AI AUTO-DURATION · {suggestedDuration ?? config.duration}s for this scene · per-scene at render
               </div>
             ) : (
@@ -1154,10 +1155,10 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
                     }
                     className={`px-3 py-1.5 rounded-lg text-[10px] font-black border transition-all flex items-center gap-1.5 ${
                       !isAllowed
-                        ? 'border-white/5 text-zinc-700 cursor-not-allowed'
+                        ? 'border-white/5 text-on-surface-sublabel cursor-not-allowed'
                         : isActive
                         ? 'border-[#FFCC00] text-[#FFCC00] bg-[#FFCC00]/10'
-                        : 'border-white/10 text-zinc-500 hover:text-white'
+                        : 'border-white/10 text-on-surface-sublabel hover:text-white'
                     }`}
                   >
                     {d}s
@@ -1179,7 +1180,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
               if (!words) return null;
               const overridden = !!manualDurationByScene[activeIdx];
               return (
-                <div className="mt-2 text-[9px] text-zinc-500 font-mono leading-snug">
+                <div className="mt-2 text-[9px] text-on-surface-sublabel font-mono leading-snug">
                   {overridden ? (
                     <>// Manual override · Smart pick was {suggestedDuration}s for {words}-word script</>
                   ) : (
@@ -1213,7 +1214,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
                   className={`px-3 py-1.5 rounded-lg text-[10px] font-black border transition-all ${
                     config.resolution === res
                       ? 'border-[#FFCC00] text-[#FFCC00] bg-[#FFCC00]/10'
-                      : 'border-white/10 text-zinc-500 hover:text-white'
+                      : 'border-white/10 text-on-surface-sublabel hover:text-white'
                   }`}
                 >
                   {res}
@@ -1260,7 +1261,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
             </button>
           </>
         ) : (
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 text-zinc-600">
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 text-on-surface-sublabel">
             <UploadCloud className="w-5 h-5" />
             <span className="text-[8px] uppercase tracking-widest font-mono">{hint}</span>
           </div>
@@ -1286,7 +1287,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
               <span className="text-[9px] font-black text-[#FFCC00] uppercase tracking-widest">Standard quality</span>
               <span className="text-[10px] text-zinc-400 truncate">Auto-tuned for you · {config.aspectRatio}</span>
             </div>
-            <span className="flex items-center gap-1.5 text-[9px] font-mono text-zinc-500 uppercase tracking-widest whitespace-nowrap">
+            <span className="flex items-center gap-1.5 text-[9px] font-mono text-on-surface-sublabel uppercase tracking-widest whitespace-nowrap">
               <Lock className="w-3 h-3" /> 4K · Business
             </span>
           </div>
@@ -1417,16 +1418,16 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
               className="w-full h-full object-cover opacity-50"
             />
           ) : (
-            <div className="absolute inset-0 flex items-center justify-center text-zinc-700">
+            <div className="absolute inset-0 flex items-center justify-center text-on-surface-sublabel">
               <VideoIcon className="w-16 h-16" />
             </div>
           )}
-          <div className="absolute inset-0 bg-zinc-950/60 backdrop-blur-[2px] flex flex-col items-center justify-center gap-3">
+          <div className={`absolute inset-0 ${MAT_VEIL} flex flex-col items-center justify-center gap-3`}>
             <Loader2 className="w-12 h-12 text-[#FFCC00] animate-spin" />
             <div className="text-[10px] text-[#FFCC00] font-black uppercase tracking-widest font-mono">
               RENDERING {activeElapsed > 0 ? `· ${activeElapsed}s` : ''}
             </div>
-            <div className="text-[9px] text-zinc-500 font-mono">
+            <div className="text-[9px] text-on-surface-sublabel font-mono">
               {mode === 'pipeline'
                 ? `SCENE ${String(activeIdx + 1).padStart(2, '0')} · ${modelLabel(config.model)}`
                 : modelLabel(config.model)}
@@ -1455,12 +1456,12 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
                 </span>
               )}
               {previewItem.model && (
-                <span className="text-zinc-500">
+                <span className="text-on-surface-sublabel">
                   · {modelLabel(previewItem.model)}
                 </span>
               )}
               {previewItem.createdAt && (
-                <span className="text-zinc-600">
+                <span className="text-on-surface-sublabel">
                   · {formatRelativeTime(previewItem.createdAt)}
                 </span>
               )}
@@ -1495,7 +1496,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
           </div>
         </>
       ) : (
-        <div className="w-full aspect-video rounded-xl border border-white/10 bg-zinc-950 flex flex-col items-center justify-center gap-2 text-zinc-600">
+        <div className="w-full aspect-video rounded-xl border border-white/10 bg-zinc-950 flex flex-col items-center justify-center gap-2 text-on-surface-sublabel">
           <VideoIcon className="w-12 h-12 opacity-50" />
           <div className="text-[10px] font-mono uppercase tracking-widest">
             Generate a clip to preview it here.
@@ -1513,7 +1514,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
         <button
           onClick={() => setCanvasView('edit')}
           className={`flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-lg transition-all ${
-            canvasView === 'edit' ? 'bg-[#FFCC00] text-black' : 'text-zinc-500 hover:text-white'
+            canvasView === 'edit' ? 'bg-[#FFCC00] text-black' : 'text-on-surface-sublabel hover:text-white'
           }`}
         >
           <Pencil className="w-3 h-3" /> Edit
@@ -1525,8 +1526,8 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
             canvasView === 'preview'
               ? 'bg-[#FFCC00] text-black'
               : canPreview
-              ? 'text-zinc-500 hover:text-white'
-              : 'text-zinc-700 cursor-not-allowed'
+              ? 'text-on-surface-sublabel hover:text-white'
+              : 'text-on-surface-sublabel cursor-not-allowed'
           }`}
         >
           <Eye className="w-3 h-3" /> Preview
@@ -1602,7 +1603,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
       >
         {variantCount > 1 && (
           <div
-            className="absolute top-1.5 right-1.5 z-10 text-[8px] font-black bg-[#FFCC00]/20 text-[#FFCC00] px-1.5 py-0.5 rounded-full backdrop-blur-sm border border-[#FFCC00]/40"
+            className="absolute top-1.5 right-1.5 z-10 text-[8px] font-black bg-[#FFCC00]/20 text-[#FFCC00] px-1.5 py-0.5 rounded-full border border-[#FFCC00]/40"
             title={`${variantCount} renders of this scene/prompt`}
           >
             {variantCount}×
@@ -1622,7 +1623,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-zinc-900 to-zinc-950">
-              <VideoIcon className="w-7 h-7 text-zinc-700" />
+              <VideoIcon className="w-7 h-7 text-on-surface-sublabel" />
             </div>
           )}
           <div className="absolute inset-0 flex items-center justify-center bg-zinc-950/30 opacity-0 hover:opacity-100 transition-opacity">
@@ -1640,7 +1641,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
             >
               {sceneLabel}
             </div>
-            <div className="text-[8px] text-zinc-600 font-mono">
+            <div className="text-[8px] text-on-surface-sublabel font-mono">
               {formatRelativeTime(item.createdAt)}
             </div>
           </div>
@@ -1707,7 +1708,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
           {hasSeedPrompts ? (
             <>
               {renderedCount}
-              <span className="text-zinc-500">/{seedPrompts.length}</span>
+              <span className="text-on-surface-sublabel">/{seedPrompts.length}</span>
             </>
           ) : (
             <span>{deduplicatedLibrary.length}</span>
@@ -1729,13 +1730,13 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
             ))}
           </div>
         ) : deduplicatedLibrary.length === 0 ? (
-          <div className="text-center py-10 text-zinc-600 text-[10px] font-mono uppercase tracking-widest leading-relaxed">
+          <div className="text-center py-10 text-on-surface-sublabel text-[10px] font-mono uppercase tracking-widest leading-relaxed">
             <VideoIcon className="w-8 h-8 mx-auto mb-3 opacity-50" />
             Your renders show up here.
             <br />
             They stay for 24 hours.
             <br />
-            <span className="text-zinc-700 normal-case tracking-normal">
+            <span className="text-on-surface-sublabel normal-case tracking-normal">
               {hasSeedPrompts ? 'Click RENDER ALL to start.' : 'Generate a clip to begin.'}
             </span>
           </div>
@@ -1812,13 +1813,13 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
 
   /* ─── STICKY PIPELINE COMMAND BAR ─── */
   const PipelineCommandBar = (
-    <div className="sticky top-0 z-30 -mx-4 sm:-mx-6 md:-mx-8 px-4 sm:px-6 md:px-8 py-3 mb-5 bg-zinc-950/95 backdrop-blur-xl border-b border-white/10">
+    <div className={`sticky top-0 z-30 -mx-4 sm:-mx-6 md:-mx-8 px-4 sm:px-6 md:px-8 py-3 mb-5 ${MAT_CHROME} border-b border-white/10`}>
       <div className="flex items-center gap-2 flex-wrap">
         <span className="text-[10px] font-mono uppercase tracking-widest text-[#FFCC00] border border-[#FFCC00]/30 bg-[#FFCC00]/5 rounded px-2 py-1 whitespace-nowrap">
           // PIPELINE · {renderedCount}/{seedPrompts.length} RENDERED
         </span>
 
-        <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 border border-white/10 bg-zinc-950 rounded px-2 py-1 whitespace-nowrap hidden sm:inline-flex items-center">
+        <span className="text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel border border-white/10 bg-zinc-950 rounded px-2 py-1 whitespace-nowrap hidden sm:inline-flex items-center">
           {specs ? modelLabel(config.model) : config.model} · {config.aspectRatio} · {config.resolution} · {config.duration}s
         </span>
 
@@ -1878,7 +1879,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
 
       {allRendered && onSendToAiEditor && (
         <div className="flex items-center gap-2 flex-wrap mt-2.5 pt-2.5 border-t border-white/5">
-          <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 whitespace-nowrap">
+          <span className="text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel whitespace-nowrap">
             // LOOK
           </span>
           <div className="flex items-center gap-1 flex-wrap">
@@ -1897,16 +1898,16 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
               );
             })}
           </div>
-          <span className="text-[10px] font-mono text-zinc-500 whitespace-nowrap hidden md:inline">
+          <span className="text-[10px] font-mono text-on-surface-sublabel whitespace-nowrap hidden md:inline">
             {LOOK_OPTIONS.find((o) => o.id === lockedPresetId)?.hint}
-            <span className="text-zinc-600"> · applied at final render</span>
+            <span className="text-on-surface-sublabel"> · applied at final render</span>
           </span>
         </div>
       )}
 
       {allRendered && onSendToAiEditor && omniAvailable !== false && (
         <div className="flex items-center gap-2 flex-wrap mt-2.5 pt-2.5 border-t border-white/5">
-          <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 whitespace-nowrap">
+          <span className="text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel whitespace-nowrap">
             // STYLE
           </span>
           {omniStylesUnlocked ? (
@@ -1988,7 +1989,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
                       );
                     }
                     return (
-                      <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 whitespace-nowrap">
+                      <span className="text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel whitespace-nowrap">
                         // {remaining} OF {quota.omni_ads.limit} LEFT THIS MONTH
                         {credits > 0 && ` · ${credits} CREDIT${credits === 1 ? '' : 'S'}`}
                       </span>
@@ -1996,9 +1997,9 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
                   })()}
                 </div>
               )}
-              <span className="text-[10px] font-mono text-zinc-500 whitespace-nowrap hidden md:inline">
+              <span className="text-[10px] font-mono text-on-surface-sublabel whitespace-nowrap hidden md:inline">
                 {OMNI_STYLE_OPTIONS.find((o) => o.id === omniStyle)?.hint}
-                <span className="text-zinc-600"> · applied in the AI Editor</span>
+                <span className="text-on-surface-sublabel"> · applied in the AI Editor</span>
               </span>
             </>
           ) : (
@@ -2015,7 +2016,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
                   </button>
                 ))}
               </div>
-              <span className="flex items-center gap-1.5 text-[10px] font-mono text-zinc-500 uppercase tracking-widest whitespace-nowrap">
+              <span className="flex items-center gap-1.5 text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest whitespace-nowrap">
                 <Lock className="w-3 h-3" /> OMNI STYLES · Business
               </span>
             </>
@@ -2088,7 +2089,7 @@ const GenerateVideo: React.FC<GenerateVideoProps> = ({
                 </button>
                 <button
                   onClick={() => handleDialogAction('cancel')}
-                  className="w-full py-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500 hover:text-white transition-colors"
+                  className="w-full py-2 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel hover:text-white transition-colors"
                 >
                   Cancel
                 </button>

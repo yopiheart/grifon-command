@@ -11,6 +11,7 @@ import VoiceCloningTile from './VoiceCloningTile';
 import ScenePipelineTile from './ScenePipelineTile';
 import SessionHistory from './SessionHistory';
 import { useSessionHistory } from './useSessionHistory';
+import { MAT_PLATE } from '../ui/materialTokens';
 
 type Tile = 'tts' | 'vc' | 'clone' | 'scene-pipeline';
 
@@ -83,7 +84,7 @@ const SignalModulator: React.FC<SignalModulatorProps> = ({ onBack, globalScript 
     <button
       type="button"
       onClick={() => setActiveTile(id)}
-      className={`flex items-center gap-2 px-6 py-2.5 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all ${activeTile === id ? 'bg-[#FFCC00] text-black' : 'text-zinc-500 hover:text-white'}`}
+      className={`flex items-center gap-2 px-6 py-2.5 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all ${activeTile === id ? 'bg-[#FFCC00] text-black' : 'text-on-surface-sublabel hover:text-white'}`}
     >
       <Icon className="w-3.5 h-3.5" /> {label}
     </button>
@@ -95,7 +96,7 @@ const SignalModulator: React.FC<SignalModulatorProps> = ({ onBack, globalScript 
         <div className="flex items-center justify-between w-full">
           <button
             onClick={onBack}
-            className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-zinc-500 hover:text-white uppercase tracking-widest transition-colors"
+            className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-on-surface-sublabel hover:text-white uppercase tracking-widest transition-colors"
           >
             <ChevronLeft className="w-4 h-4" />{' '}
             <span className="hidden md:inline">COMMAND CENTER</span>
@@ -130,7 +131,7 @@ const SignalModulator: React.FC<SignalModulatorProps> = ({ onBack, globalScript 
                 </span>
               )}
             </button>
-            <div className="hidden md:flex items-center gap-4 text-[10px] text-zinc-500 font-mono tracking-widest uppercase">
+            <div className="hidden md:flex items-center gap-4 text-[10px] text-on-surface-sublabel font-mono tracking-widest uppercase">
               // FREQUENCY LOCKED
             </div>
           </div>
@@ -143,7 +144,7 @@ const SignalModulator: React.FC<SignalModulatorProps> = ({ onBack, globalScript 
       </header>
 
       <div className="flex justify-center mb-8">
-        <div className="bg-zinc-900 border border-white/10 p-1 rounded-xl flex gap-1 flex-wrap">
+        <div className={`${MAT_PLATE} border border-white/10 p-1 rounded-xl flex gap-1 flex-wrap`}>
           {sceneBatch.length > 0 && tabBtn('scene-pipeline', 'SCENE PIPELINE', Layers)}
           {tabBtn('tts', 'TEXT-TO-SPEECH', MessageSquare)}
           {tabBtn('vc', 'VOICE CHANGER', Mic)}
@@ -185,7 +186,7 @@ const SignalModulator: React.FC<SignalModulatorProps> = ({ onBack, globalScript 
       )}
 
       {librarLoading && (
-        <p className="text-center text-[10px] font-mono text-zinc-600 uppercase tracking-widest mt-4">
+        <p className="text-center text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest mt-4">
           // LOADING_VOICE_LIBRARY
         </p>
       )}

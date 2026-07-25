@@ -2,6 +2,7 @@ import React from 'react';
 import { Minimize2, RefreshCw } from 'lucide-react';
 import { DriftOrbs, SceneReveal, SpineNode } from './motion';
 import type { ProductionRun, ProductionStageId } from '../../services/producerOrchestrator';
+import { MAT_PLATE } from '../ui/materialTokens';
 
 // Display-only grouping: the orchestrator keeps its 8 stages (resume needs them),
 // but the user sees 4 friendly film-crew PHASES — momentum reads better than a long
@@ -52,14 +53,14 @@ export const RunningScreen: React.FC<{ run: ProductionRun; onMinimize: () => voi
         </div>
 
         {/* ETA + honest "keep this tab open" framing (the build is client-side — it pauses if the tab closes). */}
-        <div className="mb-8 rounded-2xl border border-white/10 bg-zinc-900/60 p-4">
+        <div className={`mb-8 rounded-2xl border border-white/10 ${MAT_PLATE} p-4`}>
           <div className="flex items-center justify-between text-xs">
             <span className="font-mono uppercase tracking-widest text-zinc-400">
               Rendering in HD · {doneCount}/{total} phases
             </span>
-            <span className="font-mono text-zinc-500">~15–45 min</span>
+            <span className="font-mono text-on-surface-sublabel">~15–45 min</span>
           </div>
-          <p className="mt-1 text-[11px] text-zinc-500">Keep this tab open — your AI crew is filming live. Minimize is fine, just don’t close it.</p>
+          <p className="mt-1 text-[11px] text-on-surface-sublabel">Keep this tab open — your AI crew is filming live. Minimize is fine, just don’t close it.</p>
         </div>
 
         <div className="grid gap-8 md:grid-cols-[1fr_1.1fr]">
@@ -67,7 +68,7 @@ export const RunningScreen: React.FC<{ run: ProductionRun; onMinimize: () => voi
           <div>
             {phases.map((phase, i) => (
               <SpineNode key={phase.label} state={phase.state} last={i === phases.length - 1}>
-                <p className={`text-sm font-semibold ${phase.state === 'pending' ? 'text-zinc-500' : 'text-white'}`}>
+                <p className={`text-sm font-semibold ${phase.state === 'pending' ? 'text-on-surface-sublabel' : 'text-white'}`}>
                   {phase.label}
                   {phase.state === 'active' && <span className="ml-1 text-[#FFCC00]">…</span>}
                 </p>
@@ -79,8 +80,8 @@ export const RunningScreen: React.FC<{ run: ProductionRun; onMinimize: () => voi
 
           {/* Progressive scene gallery */}
           <div>
-            <p className="mb-1 text-[10px] font-mono uppercase tracking-widest text-zinc-500">// Your scenes, assembling</p>
-            <p className="mb-3 text-[11px] text-zinc-500">Your scenes appear here as they’re shot.</p>
+            <p className="mb-1 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">// Your scenes, assembling</p>
+            <p className="mb-3 text-[11px] text-on-surface-sublabel">Your scenes appear here as they’re shot.</p>
             {run.scenes.length === 0 ? (
               <div className="grid grid-cols-3 gap-2">
                 {Array.from({ length: 6 }).map((_, i) => (

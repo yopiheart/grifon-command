@@ -10,7 +10,7 @@ interface CreamBandProps {
  * Fully opaque proof-band surface so the fixed flashlight div and body grid
  * behind it never bleed through. Max ONE per marketing page — never in-app.
  * Inside: text-zinc-900 headings / text-zinc-600 body, solid white cards
- * (border-zinc-900/10), gold stays the sole accent, no glass/backdrop-blur.
+ * (border-zinc-900/10), gold stays the sole accent, no glass/.
  */
 export const CreamBand: React.FC<CreamBandProps> = ({ children, className = '' }) => (
   <section className={`relative z-10 bg-[#F2F1EA] text-zinc-900 ${className}`}>

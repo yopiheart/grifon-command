@@ -71,7 +71,7 @@ const OneShotAd: React.FC<{ onBack: () => void; userId: string | null }> = ({ on
   const BackBar = (
     <button
       onClick={onBack}
-      className="absolute left-4 top-4 z-20 flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500 hover:text-white"
+      className="absolute left-4 top-4 z-20 flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel hover:text-white"
     >
       <ChevronLeft className="h-4 w-4" /> Command Center
     </button>

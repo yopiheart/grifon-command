@@ -12,6 +12,7 @@ import { TitledCard } from './ui/TitledCard';
 import { FieldLabel } from './ui/FieldLabel';
 import { TextField } from './ui/TextField';
 import { SegButton } from './ui/SegButton';
+import { MAT_PLATE, MAT_PLATE_INSET } from './ui/materialTokens';
 
 interface Step4Props {
   businessInfo: BusinessInfo;
@@ -126,7 +127,7 @@ const Step4Avatar: React.FC<Step4Props> = ({ businessInfo, avatar, setAvatar, on
 
   return (
     <StepShell sublabel="STEP 4 · MARKETING AVATAR" title="Create Marketing Avatar">
-      <p className="-mt-4 mb-6 text-[11px] font-mono leading-relaxed text-zinc-500">
+      <p className="-mt-4 mb-6 text-[11px] font-mono leading-relaxed text-on-surface-sublabel">
         Generate or upload an avatar that represents your target audience.
       </p>
 
@@ -151,7 +152,7 @@ const Step4Avatar: React.FC<Step4Props> = ({ businessInfo, avatar, setAvatar, on
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
         <TitledCard title="Option 1 · Generate with AI">
           <div className="space-y-5">
-            <p className="text-xs text-zinc-500 font-mono">Define the avatar for your target audience.</p>
+            <p className="text-xs text-on-surface-sublabel font-mono">Define the avatar for your target audience.</p>
             <div>
               <FieldLabel className="mb-2" marker={false}>Gender</FieldLabel>
               <SegButton
@@ -191,11 +192,11 @@ const Step4Avatar: React.FC<Step4Props> = ({ businessInfo, avatar, setAvatar, on
 
         <TitledCard title="Option 2 · Upload Your Own" className="h-full">
           <div className="flex h-full flex-col items-center justify-center space-y-4 text-center">
-            <p className="text-xs text-zinc-500 font-mono">Use your own photo or a pre-generated character.</p>
+            <p className="text-xs text-on-surface-sublabel font-mono">Use your own photo or a pre-generated character.</p>
             <button
               onClick={handleUploadClick}
               disabled={loading}
-              className="flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-zinc-900 px-6 py-3 text-xs font-bold uppercase tracking-widest text-zinc-400 transition-colors hover:border-[#FFCC00] hover:text-[#FFCC00]"
+              className={`flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 ${MAT_PLATE} px-6 py-3 text-xs font-bold uppercase tracking-widest text-zinc-400 transition-colors hover:border-[#FFCC00] hover:text-[#FFCC00]`}
             >
               <Upload className="h-4 w-4 shrink-0" /> Upload Biometric Source
             </button>
@@ -229,8 +230,8 @@ const Step4Avatar: React.FC<Step4Props> = ({ businessInfo, avatar, setAvatar, on
         )}
 
         {!generatedAvatar && !loading && (
-            <div className={`text-center p-8 flex items-center justify-center h-full border-2 border-dashed rounded-xl bg-zinc-950/50 w-full transition-colors ${triedNext ? 'border-red-500/60' : 'border-white/10'}`}>
-                <p className={`font-mono text-[10px] tracking-widest uppercase ${triedNext ? 'text-red-400' : 'text-zinc-500'}`}>[AVATAR_PREVIEW_AREA]</p>
+            <div className={`text-center p-8 flex items-center justify-center h-full border-2 border-dashed rounded-xl ${MAT_PLATE_INSET} w-full transition-colors ${triedNext ? 'border-red-500/60' : 'border-white/10'}`}>
+                <p className={`font-mono text-[10px] tracking-widest uppercase ${triedNext ? 'text-red-400' : 'text-on-surface-sublabel'}`}>[AVATAR_PREVIEW_AREA]</p>
             </div>
         )}
       </div>

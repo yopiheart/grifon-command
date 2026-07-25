@@ -9,6 +9,7 @@ import VoicePicker from './VoicePicker';
 import { RECOMMENDED_VOICE_IDS } from './pinoyReady';
 import { STABILITY_LABELS, TTS_TAGS, downloadAudio } from './utils';
 import type { SessionHistoryApi } from './useSessionHistory';
+import { MAT_VEIL } from '../ui/materialTokens';
 
 const MAX_CHARS = 10000;
 
@@ -148,9 +149,9 @@ const TextToSpeechTile: React.FC<TextToSpeechTileProps> = ({ library, globalScri
       <div className="flex-1 flex flex-col gap-6">
         <GlassPanel className="flex-1 p-8 relative flex flex-col overflow-hidden min-h-[480px]">
           {isLoading && (
-            <div className="absolute inset-0 z-50 bg-zinc-950/80 backdrop-blur-sm flex flex-col items-center justify-center">
+            <div className={`absolute inset-0 z-50 ${MAT_VEIL} flex flex-col items-center justify-center`}>
               <Loader message="SYNTHESIZING SIGNAL..." />
-              <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mt-4">
+              <p className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest mt-4">
                 // TYPICALLY_5_TO_15_SECONDS
               </p>
             </div>
@@ -182,7 +183,7 @@ const TextToSpeechTile: React.FC<TextToSpeechTileProps> = ({ library, globalScri
                   {tag}
                 </button>
               ))}
-              <span className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest self-center ml-2">
+              <span className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest self-center ml-2">
                 // INLINE_DELIVERY_TAGS
               </span>
             </div>
@@ -196,7 +197,7 @@ const TextToSpeechTile: React.FC<TextToSpeechTileProps> = ({ library, globalScri
             />
 
             <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-widest">
-              <span className="text-zinc-500">
+              <span className="text-on-surface-sublabel">
                 {charCount.toLocaleString()} / {MAX_CHARS.toLocaleString()}
               </span>
               <div className="flex-1 mx-4 h-0.5 bg-zinc-900 rounded-full overflow-hidden">
@@ -205,7 +206,7 @@ const TextToSpeechTile: React.FC<TextToSpeechTileProps> = ({ library, globalScri
                   style={{ width: `${Math.min(100, charPct)}%` }}
                 />
               </div>
-              <span className={charPct > 90 ? 'text-[#FFCC00]' : 'text-zinc-500'}>
+              <span className={charPct > 90 ? 'text-[#FFCC00]' : 'text-on-surface-sublabel'}>
                 {Math.floor(charPct)}%
               </span>
             </div>
@@ -220,7 +221,7 @@ const TextToSpeechTile: React.FC<TextToSpeechTileProps> = ({ library, globalScri
                     <Activity className="w-4 h-4 text-[#FFCC00] animate-pulse" />
                   </div>
                   <audio src={audioUrl} controls controlsList="nodownload noplaybackrate" className="w-full filter invert opacity-80 h-10" />
-                  <p className="text-[9px] font-mono text-zinc-600 uppercase tracking-widest mt-3">
+                  <p className="text-[9px] font-mono text-on-surface-sublabel uppercase tracking-widest mt-3">
                     // LOGGED_TO_SESSION — DEPLOY_AUDIO_TO_KEEP_AFTER_REFRESH
                   </p>
                 </div>
@@ -240,7 +241,7 @@ const TextToSpeechTile: React.FC<TextToSpeechTileProps> = ({ library, globalScri
                     >
                       <RefreshCw className="w-3.5 h-3.5" />
                       REGENERATE
-                      <span className={`text-[9px] font-mono ${regensLeft > 0 ? 'text-[#FFCC00]' : 'text-zinc-600'}`}>
+                      <span className={`text-[9px] font-mono ${regensLeft > 0 ? 'text-[#FFCC00]' : 'text-on-surface-sublabel'}`}>
                         · {regensLeft}_LEFT
                       </span>
                     </button>
@@ -259,12 +260,12 @@ const TextToSpeechTile: React.FC<TextToSpeechTileProps> = ({ library, globalScri
           </h3>
 
           <div>
-            <label className="block text-[10px] font-mono text-zinc-500 uppercase mb-2">VOICE_DNA_PROFILE</label>
+            <label className="block text-[10px] font-mono text-on-surface-sublabel uppercase mb-2">VOICE_DNA_PROFILE</label>
             <VoicePicker library={library} value={voiceId} onChange={setVoiceId} />
           </div>
 
           <div>
-            <label className="block text-[10px] font-mono text-zinc-500 uppercase mb-2">VOICE_MODE</label>
+            <label className="block text-[10px] font-mono text-on-surface-sublabel uppercase mb-2">VOICE_MODE</label>
             <div className="relative">
               <select
                 value={stabilityMode}
@@ -275,12 +276,12 @@ const TextToSpeechTile: React.FC<TextToSpeechTileProps> = ({ library, globalScri
                 <option value="natural">NATURAL (DEFAULT)</option>
                 <option value="robust">ROBUST</option>
               </select>
-              <ChevronDown className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none" />
+              <ChevronDown className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-sublabel pointer-events-none" />
             </div>
-            <p className="text-[10px] text-zinc-500 mt-2 leading-relaxed">{STABILITY_LABELS[stabilityMode]}</p>
+            <p className="text-[10px] text-on-surface-sublabel mt-2 leading-relaxed">{STABILITY_LABELS[stabilityMode]}</p>
           </div>
 
-          <div className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest pt-4 border-t border-white/10">
+          <div className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest pt-4 border-t border-white/10">
             // MODEL: ELEVEN_V3 (LATEST)
           </div>
         </GlassPanel>

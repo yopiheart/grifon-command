@@ -31,7 +31,7 @@ export const DirectorDemo: React.FC = () => {
                   : { duration: DUR.ambient.breathe, repeat: Infinity, delay: i * 0.35, ease: EASE.inOut }
               }
             >
-              <span className="absolute top-1 left-1 text-[7px] font-mono text-zinc-600">0{i + 1}</span>
+              <span className="absolute top-1 left-1 text-[7px] font-mono text-on-surface-sublabel">0{i + 1}</span>
               {i === 2 && (
                 <span className="w-5 h-5 rounded-full bg-[#FFCC00] flex items-center justify-center shadow-[0_0_10px_rgba(255,204,0,0.5)]">
                   <Play className="w-2.5 h-2.5 text-black ml-0.5" fill="currentColor" />
@@ -113,7 +113,7 @@ export const OfferDemo: React.FC = () => {
           </motion.div>
         ))}
         <div className="mt-1 flex items-baseline gap-2">
-          <span className="text-[10px] text-zinc-500 line-through font-mono">₱30,000</span>
+          <span className="text-[10px] text-on-surface-sublabel line-through font-mono">₱30,000</span>
           <span className="text-[#FFCC00] font-bold font-mono text-sm">₱997</span>
         </div>
       </div>
@@ -140,7 +140,7 @@ export const CaptionDemo: React.FC = () => {
   return (
     <div className={DEMO_BOX}>
       <div className="absolute inset-0 p-4 flex flex-col justify-center">
-        <span className="text-[8px] font-mono uppercase tracking-widest text-zinc-600 mb-2">
+        <span className="text-[8px] font-mono uppercase tracking-widest text-on-surface-sublabel mb-2">
           // Headline
         </span>
         <div className="min-h-[2.5rem] flex items-start">

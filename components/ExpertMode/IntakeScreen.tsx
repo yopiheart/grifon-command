@@ -51,7 +51,7 @@ const UploadTile: React.FC<{
           <img src={example} alt="" className="h-full w-full object-cover opacity-25" />
         ) : null}
         {!url && (
-          <span className="absolute inset-0 flex flex-col items-center justify-center gap-1 text-zinc-500">
+          <span className="absolute inset-0 flex flex-col items-center justify-center gap-1 text-on-surface-sublabel">
             {busy ? <Loader2 className="h-5 w-5 animate-spin" /> : <ImageUp className="h-5 w-5" />}
           </span>
         )}
@@ -71,10 +71,10 @@ const UploadTile: React.FC<{
       <div className="flex items-center justify-between gap-2">
         <div className="min-w-0">
           <p className="truncate text-[10px] font-mono uppercase tracking-widest text-zinc-400">{label}</p>
-          {hint && <p className="truncate text-[10px] text-zinc-500">{hint}</p>}
+          {hint && <p className="truncate text-[10px] text-on-surface-sublabel">{hint}</p>}
         </div>
         {url && onClear && (
-          <button type="button" onClick={onClear} className="shrink-0 text-zinc-500 hover:text-white">
+          <button type="button" onClick={onClear} className="shrink-0 text-on-surface-sublabel hover:text-white">
             <X className="h-3.5 w-3.5" />
           </button>
         )}
@@ -332,7 +332,7 @@ export const IntakeScreen: React.FC<{
 
         <TitledCard title="SETTINGS" bodyClassName="grid gap-4 sm:grid-cols-3">
           <div>
-            <p className="mb-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500">Aspect</p>
+            <p className="mb-2 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">Aspect</p>
             <SegButton<ExpertIntake['aspectRatio']>
               value={intake.aspectRatio}
               onChange={(v) => setIntake((s) => ({ ...s, aspectRatio: v }))}
@@ -340,7 +340,7 @@ export const IntakeScreen: React.FC<{
             />
           </div>
           <div>
-            <p className="mb-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500">Language</p>
+            <p className="mb-2 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">Language</p>
             <SegButton<ExpertIntake['language']>
               value={intake.language}
               onChange={(v) => setIntake((s) => ({ ...s, language: v }))}
@@ -348,7 +348,7 @@ export const IntakeScreen: React.FC<{
             />
           </div>
           <div>
-            <p className="mb-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500">Voice</p>
+            <p className="mb-2 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">Voice</p>
             <select
               value={intake.voiceId ?? ''}
               onChange={(e) => setIntake((s) => ({ ...s, voiceId: e.target.value }))}

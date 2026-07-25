@@ -43,14 +43,14 @@ export const ResumeDraftCard: React.FC<ResumeDraftCardProps> = ({
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: DUR.slow, delay }}
-      className="bg-[#FFCC00]/[0.06] backdrop-blur-xl rounded-2xl p-4 lg:p-5 relative overflow-hidden hover:bg-[#FFCC00]/[0.10] hover:shadow-[0_8px_40px_rgba(255,204,0,0.15)] transition-all duration-500 ease-out"
+      className="bg-[#FFCC00]/[0.06] rounded-2xl p-4 lg:p-5 relative overflow-hidden hover:bg-[#FFCC00]/[0.10] hover:shadow-[0_8px_40px_rgba(255,204,0,0.15)] transition-all duration-500 ease-out"
     >
       <div className="absolute inset-0 bg-gradient-to-br from-[#FFCC00]/5 to-transparent pointer-events-none" />
 
       <button
         onClick={onDiscard}
         aria-label="Discard draft"
-        className="absolute top-3 right-3 text-zinc-600 hover:text-white transition-colors z-10 p-1 -m-1"
+        className="absolute top-3 right-3 text-on-surface-sublabel hover:text-white transition-colors z-10 p-1 -m-1"
       >
         <X className="w-3.5 h-3.5" />
       </button>
@@ -64,10 +64,10 @@ export const ResumeDraftCard: React.FC<ResumeDraftCardProps> = ({
             // RESUME DRAFT
           </div>
           <div className="text-sm font-bold text-white truncate">Director</div>
-          <div className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest truncate">
+          <div className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest truncate">
             {subtitle}
           </div>
-          <div className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest truncate">
+          <div className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest truncate">
             saved {formatRelative(savedAt)}
           </div>
         </div>

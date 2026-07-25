@@ -196,3 +196,329 @@ html { scroll-behavior: smooth; }
   .osa-shimmer { background-position: 0 0; }
   .osa-reveal { opacity: 1; transform: none; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   MATERIAL SYSTEM — four tiers, one of them is glass.
+   Spec + rationale: workflows/liquid_glass_decision.md
+   Token wrappers: components/ui/materialTokens.ts (import those, not these)
+
+   Apple's Liquid Glass is a HIERARCHY rule: the material belongs to the
+   functional layer (nav + controls floating above content) and explicitly
+   NOT to the content layer. These four tiers encode that rule so the
+   choice stops being "how much blur looks nice."
+
+   Declared in @layer components so a caller's Tailwind utility (a one-off
+   `bg-*` or `backdrop-blur-*`) still wins — these are defaults, not locks.
+   ═══════════════════════════════════════════════════════════════════════ */
+@layer components {
+
+  /* ── CHROME — floats above content, operable. The only tier that refracts.
+     Nav bars, rails, command surfaces, sticky footers, the auth gateway.
+     Three optical layers: body (blur + saturate), rim lens (::before), and
+     a travelling specular (::after). ───────────────────────────────────── */
+  .mat-chrome {
+    /* Rim width. Tall or narrow surfaces (the dashboard rail) should dial this
+       down — at a fixed 7px the band stops reading as lensing and starts
+       reading as a second border. Override per-surface with --mat-rim. */
+    --mat-rim: 4px;
+    position: relative;
+    isolation: isolate;
+    /* Two layers: the specular tint, over a DARK FLOOR. The floor is what keeps
+       this dark glass when it crosses the one light surface in the app — the
+       #F2F1EA proof band. Without it the pane inverts over that band and every
+       white label on it disappears. Apple's glass adapts because the OS is
+       adaptive; Grifon is committed dark, so its glass stays dark glass. */
+    background:
+      linear-gradient(146deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.025) 42%, rgba(255,255,255,0.07) 100%),
+      rgba(11, 11, 13, 0.74);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    backdrop-filter: blur(28px) saturate(180%);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.42),
+      inset 1px 0 0 rgba(255,255,255,0.11),
+      inset -1px 0 0 rgba(255,255,255,0.11),
+      inset 0 -1px 0 rgba(255,255,255,0.07),
+      0 28px 70px -24px rgba(0,0,0,0.85);
+  }
+  /* Edge lensing — real glass refracts hardest at the bevel, so the rim band
+     gets its own heavier blur/saturation than the pane's centre. */
+  .mat-chrome::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: var(--mat-rim);
+    background: rgba(255, 255, 255, 0.06);
+    -webkit-backdrop-filter: blur(4px) saturate(210%) brightness(1.16);
+    backdrop-filter: blur(4px) saturate(210%) brightness(1.16);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+    pointer-events: none;
+    z-index: -1;
+  }
+  /* Specular travel — a light source crossing the pane on hover. */
+  .mat-chrome::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.13) 46%, rgba(255,204,0,0.09) 52%, transparent 66%);
+    background-size: 280% 100%;
+    background-position: 130% 0;
+    pointer-events: none;
+    /* Behind content, above the pane's own background — same trick as the rim
+       band. Without this the specular hazes every child of the surface. */
+    z-index: -1;
+    transition: background-position 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .mat-chrome:hover::after { background-position: -30% 0; }
+
+  /* ── PLATE — the content layer at rest. Forms, module cards, data displays:
+     everything GlassPanel holds. Tonal fill + top hairline light, and NO
+     backdrop-filter — this is the tier that buys back ~90 compositing passes. */
+  .mat-plate {
+    background: linear-gradient(180deg, rgba(28,28,32,0.94), rgba(20,20,24,0.94));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 1px 0 rgba(0,0,0,0.40);
+  }
+
+  /* ── SLAB — demands a decision. Modals, quota walls, checkout. Opaque on
+     purpose (Apple: a sheet at full height stops being translucent). */
+  .mat-slab {
+    background: linear-gradient(180deg, #1D1D21, #141417);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 40px 90px -20px rgba(0,0,0,0.90);
+  }
+
+  /* ── VEIL — suppresses. Scrims behind Slabs, route wipes. Never holds text. */
+  .mat-veil {
+    background: rgba(7,7,8,0.72);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+
+  /* ── Scroll edge effect — content sliding under a floating bar gets graded
+     out instead of colliding with its labels. Put on the bar itself. */
+  .scroll-edge::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    height: 30px;
+    -webkit-backdrop-filter: blur(7px);
+    backdrop-filter: blur(7px);
+    -webkit-mask-image: linear-gradient(to bottom, #000, transparent);
+    mask-image: linear-gradient(to bottom, #000, transparent);
+    pointer-events: none;
+  }
+}
+
+/* ── Accessibility guards. Apple treats these as non-optional; the codebase
+   had ten prefers-reduced-motion blocks and zero of these. Glass collapses
+   to a solid tonal fill, rim + specular off, contrast ring on. ─────────── */
+@media (prefers-reduced-transparency: reduce) {
+  .mat-chrome, .mat-veil, .scroll-edge::after {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+  .mat-chrome { background: #1A1A1E !important; }
+  .mat-veil { background: rgba(7,7,8,0.95) !important; }
+  .mat-chrome::before, .mat-chrome::after { display: none !important; }
+}
+@media (prefers-contrast: more) {
+  .mat-chrome {
+    background: #1A1A1E !important;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.50) !important;
+  }
+  .mat-chrome::before { display: none !important; }
+  .mat-plate { background: #17171A !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mat-chrome::after { transition: none !important; }
+  .mat-chrome:hover::after { background-position: 130% 0 !important; }
+}
+
+/* ── Gateway reel — the product's own output drifting behind the auth glass.
+   Refraction needs something worth bending; glass over flat zinc-950 is
+   optically a no-op. GPU-cheap: one transform loop on one element. */
+@keyframes gateway-reel { from { transform: rotate(-8deg) translateY(0); } to { transform: rotate(-8deg) translateY(-33.4%); } }
+.gateway-reel { animation: gateway-reel 46s linear infinite; will-change: transform; }
+@media (prefers-reduced-motion: reduce) { .gateway-reel { animation: none; } }
+
+/* Mobile-only CHROME. Some surfaces are chrome only at one breakpoint — the
+   wizard StepFooter detaches and floats over the form below `md`, but is an
+   in-flow rule at the bottom of the panel above it. Tailwind here is the Play
+   CDN, which only generates variants for classes it knows, so `max-md:` can't
+   be stacked on a custom class — this is the explicit form. No specular: the
+   trigger is hover, and this tier only exists on touch. */
+@media (max-width: 767px) {
+  .mat-chrome-mobile {
+    position: relative;
+    isolation: isolate;
+    /* Two layers: the specular tint, over a DARK FLOOR. The floor is what keeps
+       this dark glass when it crosses the one light surface in the app — the
+       #F2F1EA proof band. Without it the pane inverts over that band and every
+       white label on it disappears. Apple's glass adapts because the OS is
+       adaptive; Grifon is committed dark, so its glass stays dark glass. */
+    background:
+      linear-gradient(146deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.025) 42%, rgba(255,255,255,0.07) 100%),
+      rgba(11, 11, 13, 0.74);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    backdrop-filter: blur(28px) saturate(180%);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.42),
+      inset 1px 0 0 rgba(255,255,255,0.11),
+      inset -1px 0 0 rgba(255,255,255,0.11),
+      0 28px 70px -24px rgba(0,0,0,0.85);
+  }
+  .mat-chrome-mobile::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 7px;
+    background: rgba(255, 255, 255, 0.06);
+    -webkit-backdrop-filter: blur(4px) saturate(240%) brightness(1.28);
+    backdrop-filter: blur(4px) saturate(240%) brightness(1.28);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+    pointer-events: none;
+    z-index: -1;
+  }
+}
+@media (max-width: 767px) and (prefers-reduced-transparency: reduce) {
+  .mat-chrome-mobile {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    background: #1A1A1E !important;
+  }
+  .mat-chrome-mobile::before { display: none !important; }
+}
+@media (max-width: 767px) and (prefers-contrast: more) {
+  .mat-chrome-mobile {
+    background: #1A1A1E !important;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.50) !important;
+  }
+  .mat-chrome-mobile::before { display: none !important; }
+}
+
+/* ── Lens ring — the loading indicator, rebuilt in the material's own language.
+   The old spinner was a CSS border with a transparent top: a 2012 shape that
+   said nothing about this product. This is a conic sweep masked to a ring, so
+   it reads as a light travelling around a lens with a bright leading head and
+   a tail that falls off — the same specular vocabulary as .mat-chrome.
+   Size and thickness come from the caller via the two custom properties. */
+.lens-ring{
+  --lens-size: 80px;
+  --lens-thickness: 8px;
+  width: var(--lens-size);
+  height: var(--lens-size);
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    rgba(255,204,0,0) 0deg,
+    rgba(255,204,0,0.06) 140deg,
+    rgba(255,204,0,0.34) 250deg,
+    #FFCC00 330deg,
+    #FFE266 352deg,
+    rgba(255,204,0,0) 360deg
+  );
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - var(--lens-thickness)), #000 calc(100% - var(--lens-thickness)));
+  mask: radial-gradient(farthest-side, transparent calc(100% - var(--lens-thickness)), #000 calc(100% - var(--lens-thickness)));
+  filter: drop-shadow(0 0 12px rgba(255,204,0,0.45));
+  animation: lens-spin 1.1s linear infinite;
+}
+@keyframes lens-spin { to { transform: rotate(360deg); } }
+
+/* Reduced motion keeps the ring — a static gold arc still reads as "working"
+   next to the live status message — but stops it turning. */
+@media (prefers-reduced-motion: reduce){
+  .lens-ring{ animation: none; }
+}
+
+/* ── Reduced motion, part 2: Tailwind's own infinite animations.
+   The audit found 76 uses of animate-pulse / animate-spin across the app and
+   not one of them stopped under prefers-reduced-motion — the motion/react
+   components honour useReducedMotion and the hand-written keyframes above are
+   all guarded, but the utility classes ran regardless. For someone with
+   vestibular sensitivity a perpetually pulsing dot is exactly the thing the
+   setting exists to stop.
+
+   animate-spin is kept ALIVE but slowed, not killed: it's the loading
+   indicator, and a frozen spinner reads as a hung app. HIG asks to reduce
+   motion, not to remove the signal that work is happening. */
+@media (prefers-reduced-motion: reduce) {
+  .animate-pulse,
+  .animate-bounce,
+  .animate-ping {
+    animation: none !important;
+  }
+  .animate-spin,
+  .lens-ring {
+    animation-duration: 3s !important;
+  }
+}
+
+/* ── Scroll containment. 31 scroll areas, zero overscroll guards: reaching the
+   end of a drawer, palette or modal list chained the scroll to the page behind
+   it, which on a phone reads as the sheet "leaking". Compose on any scroll area
+   that sits inside a floating surface. */
+.scroll-contain {
+  overscroll-behavior: contain;
+}
+
+/* ── PLATE_INSET — a well *inside* a plate: a field shell, a preview frame, a
+   result slot. The distinction from PLATE is where the light comes from. A
+   PLATE is raised, so it catches a highlight on its TOP edge; an INSET is
+   recessed, so its top edge falls into shadow. That one inversion is what
+   makes a nested surface read as carved out rather than stacked on.
+
+   Found by slice 5: the 61 de-glassed content surfaces were using FOURTEEN
+   different background values for what is really three roles — card, well,
+   and chip-on-an-image. */
+@layer components {
+  .mat-plate-inset {
+    background: rgba(9, 9, 11, 0.72);
+    box-shadow:
+      inset 0 1px 2px rgba(0, 0, 0, 0.55),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+  }
+}
+@media (prefers-contrast: more) {
+  .mat-plate-inset { background: #0C0C0E !important; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.4) !important; }
+}
+
+/* ── Rail hue calm-down. HIG Color: "Avoid using similar colors in control
+   labels if your app has a colorful background. Prefer a monochromatic
+   appearance for toolbars and tab bars." The dashboard rail is now glass
+   floating over the gold aura field — exactly that case — and it carries 15
+   module identity hues.
+
+   Rather than stripping the hues (a documented Grifon identity decision), the
+   RAIL renders them at reduced saturation. Identity survives as a tint, the
+   rail stops competing with the gold action colour, and module headers and
+   tiles keep the hue at full strength. One number to retune. */
+.rail-hue { filter: saturate(0.45) brightness(1.12); }
+.rail-hue:hover,
+button:hover .rail-hue,
+.group:hover .rail-hue { filter: saturate(1) brightness(1); }
+@media (prefers-reduced-motion: no-preference) {
+  .rail-hue { transition: filter .22s ease; }
+}
+@media (prefers-contrast: more) { .rail-hue { filter: none; } }
+
+/* ── Pricing: the section box spans the SHELL so every left edge lines up, but
+   the TEXT inside it must not. Widening the boxes to align their edges is
+   exactly what sent paragraphs to 150ch — the same trap the landing page hit
+   when its containers were snapped up.
+   Container scale and reading measure have to move together, so the box gets
+   the shell and the prose gets the measure. */
+.pricing-page section > p,
+.pricing-page section > h2 + p,
+.pricing-page section > div > p:only-child,
+.pricing-page details {
+  max-width: 68ch;
+  margin-left: auto;
+  margin-right: auto;
+}

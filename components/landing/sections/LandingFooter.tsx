@@ -34,7 +34,7 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onEnterApp, onNavi
   <>
     {/* Mobile Login Link */}
     <div className="md:hidden text-center py-6">
-      <p className="text-sm text-zinc-500">
+      <p className="text-sm text-on-surface-sublabel">
         Already have an account? <span onClick={onEnterApp} className="text-[#FFCC00] hover:underline cursor-pointer">Log in</span>
       </p>
     </div>
@@ -51,7 +51,7 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onEnterApp, onNavi
           />
 
           {/* Trust row */}
-          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 border-b border-white/5 px-6 py-8 text-[11px] font-mono uppercase tracking-widest text-zinc-500">
+          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 border-b border-white/5 px-6 py-8 text-[11px] font-mono uppercase tracking-widest text-on-surface-sublabel">
             <span className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-[#FFCC00]" /> 7-Day Money-Back Guarantee</span>
             <span className="flex items-center gap-2"><Lock className="w-4 h-4 text-[#FFCC00]" /> Secure Checkout · PayMongo</span>
             <span className="flex items-center gap-2"><Sparkles className="w-4 h-4 text-[#FFCC00]" /> Built for Filipino Businesses</span>
@@ -124,9 +124,9 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onEnterApp, onNavi
 
           {/* Legal + copyright */}
           <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-6">
-            <nav className="flex items-center gap-6 text-xs font-bold uppercase tracking-widest">
-              <a href="/privacy" onClick={(e) => { e.preventDefault(); onNavigateLegal('privacy'); }} className="hover:underline">Privacy Policy</a>
-              <a href="/terms" onClick={(e) => { e.preventDefault(); onNavigateLegal('terms'); }} className="hover:underline">Terms</a>
+            <nav className="flex items-center gap-4 text-xs font-bold uppercase tracking-widest">
+              <a href="/privacy" onClick={(e) => { e.preventDefault(); onNavigateLegal('privacy'); }} className="inline-flex min-h-11 items-center px-2 hover:underline">Privacy Policy</a>
+              <a href="/terms" onClick={(e) => { e.preventDefault(); onNavigateLegal('terms'); }} className="inline-flex min-h-11 items-center px-2 hover:underline">Terms</a>
             </nav>
             <span className="text-xs font-normal text-black/70">© 2026 Haste Enterprises. All rights reserved</span>
           </div>

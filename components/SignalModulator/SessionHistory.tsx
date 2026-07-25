@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { X, Play, Pause, Undo2, MessageSquare, Mic, Trash2, Download } from 'lucide-react';
 import type { HistoryTake } from '../../types';
 import { formatRelativeTime, HISTORY_CAP, downloadAudio } from './utils';
+import { MAT_PLATE } from '../ui/materialTokens';
 
 interface SessionHistoryProps {
   open: boolean;
@@ -66,7 +67,7 @@ const SessionHistory: React.FC<SessionHistoryProps> = ({ open, takes, onClose, o
         <header className="px-5 py-4 border-b border-white/10 flex items-center justify-between shrink-0">
           <div>
             <h2 className="text-xs font-bold text-[#FFCC00] uppercase tracking-widest">// TRANSMISSION_LOG</h2>
-            <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mt-1">
+            <p className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest mt-1">
               {takes.length} / {HISTORY_CAP} TAKES · SESSION_ONLY
             </p>
           </div>
@@ -83,7 +84,7 @@ const SessionHistory: React.FC<SessionHistoryProps> = ({ open, takes, onClose, o
         <div className="flex-1 overflow-y-auto px-3 py-3 space-y-2">
           {takes.length === 0 && (
             <div className="text-center py-12 px-4">
-              <p className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest leading-relaxed">
+              <p className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest leading-relaxed">
                 // NO_TAKES_YET<br />
                 SYNTHESIZE OR CONVERT TO LOG A TAKE
               </p>
@@ -95,7 +96,7 @@ const SessionHistory: React.FC<SessionHistoryProps> = ({ open, takes, onClose, o
             return (
               <div
                 key={take.id}
-                className="bg-zinc-900/50 border border-white/5 rounded-xl p-3 hover:border-white/10 transition-colors"
+                className={`${MAT_PLATE} border border-white/5 rounded-xl p-3 hover:border-white/10 transition-colors`}
               >
                 <div className="flex items-start gap-3">
                   <button
@@ -110,11 +111,11 @@ const SessionHistory: React.FC<SessionHistoryProps> = ({ open, takes, onClose, o
                   </button>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
-                      <KindIcon className="w-3 h-3 text-zinc-500 shrink-0" />
+                      <KindIcon className="w-3 h-3 text-on-surface-sublabel shrink-0" />
                       <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest truncate">
                         {take.voiceName}
                       </span>
-                      <span className="text-[9px] font-mono text-zinc-600 uppercase tracking-widest shrink-0">
+                      <span className="text-[9px] font-mono text-on-surface-sublabel uppercase tracking-widest shrink-0">
                         · {formatRelativeTime(take.createdAt)}
                       </span>
                     </div>
@@ -155,7 +156,7 @@ const SessionHistory: React.FC<SessionHistoryProps> = ({ open, takes, onClose, o
         </div>
 
         <footer className="px-5 py-3 border-t border-white/10 shrink-0">
-          <p className="text-[9px] font-mono text-zinc-600 uppercase tracking-widest leading-relaxed">
+          <p className="text-[9px] font-mono text-on-surface-sublabel uppercase tracking-widest leading-relaxed">
             // CLEARED_ON_REFRESH — DEPLOY_AUDIO_TO_KEEP
           </p>
         </footer>

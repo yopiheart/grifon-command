@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { Clapperboard, X } from 'lucide-react';
+import { MAT_VEIL } from './materialTokens';
 import { GoldButton } from './GoldButton';
 import { DUR, SPRING } from './motionTokens';
 import { FOUNDING_OFFER, seatsRemaining } from '../../config/foundingOffer';
@@ -60,7 +61,7 @@ export const ExitIntentModal: React.FC<ExitIntentModalProps> = ({ triggered, onD
           role="dialog"
           aria-modal="true"
           aria-label="One more take — start free"
-          className="fixed inset-0 z-[80] flex items-center justify-center p-4 bg-zinc-950/80 backdrop-blur-sm"
+          className={`fixed inset-0 z-[80] flex items-center justify-center p-4 ${MAT_VEIL}`}
         >
           <motion.div
             initial={reduce ? { opacity: 0 } : { opacity: 0, y: 24, scale: 0.96 }}
@@ -68,7 +69,7 @@ export const ExitIntentModal: React.FC<ExitIntentModalProps> = ({ triggered, onD
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: 16, scale: 0.98 }}
             transition={SPRING.pop}
             onClick={(e) => e.stopPropagation()}
-            className="relative w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl border border-white/10 bg-zinc-900/90 backdrop-blur-xl shadow-[0_0_60px_-12px_rgba(255,204,0,0.35)]"
+            className="relative w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl border border-white/10 bg-zinc-900/90 shadow-[0_0_60px_-12px_rgba(255,204,0,0.35)]"
           >
             {/* Clapper sticks — snap shut on entrance. */}
             <motion.div
@@ -109,7 +110,7 @@ export const ExitIntentModal: React.FC<ExitIntentModalProps> = ({ triggered, onD
                 />
               )}
             </div>
-            <p className="mt-2 text-center text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+            <p className="mt-2 text-center text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">
               Real Grifon ad · 0 edits
             </p>
 
@@ -124,7 +125,7 @@ export const ExitIntentModal: React.FC<ExitIntentModalProps> = ({ triggered, onD
             </button>
 
             {/* Slate row */}
-            <div className="flex items-center justify-between px-6 pt-5 text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+            <div className="flex items-center justify-between px-6 pt-5 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">
               <span>Scene 01 · Take 1</span>
               <span className="flex items-center gap-1.5">
                 <Clapperboard className="h-3.5 w-3.5 shrink-0" /> Grifon Studio
@@ -163,7 +164,7 @@ export const ExitIntentModal: React.FC<ExitIntentModalProps> = ({ triggered, onD
               </GoldButton>
             </div>
 
-            <p className="px-6 mt-3 mb-6 text-center text-[11px] font-mono uppercase tracking-wider text-zinc-500">
+            <p className="px-6 mt-3 mb-6 text-center text-[11px] font-mono uppercase tracking-wider text-on-surface-sublabel">
               Walang card · Cancel anytime
             </p>
           </motion.div>

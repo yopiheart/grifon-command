@@ -15,7 +15,7 @@ const Button: React.FC<ButtonProps> = ({ children, variant = 'primary', classNam
   const variantStyles = {
     primary: "bg-[#FFCC00] text-black hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(255,204,0,0.4)] active:translate-y-1 rounded-full",
     secondary: "bg-transparent border border-white/10 text-zinc-400 hover:text-white hover:bg-white/5 rounded-full",
-    ghost: "bg-transparent text-zinc-500 hover:text-white hover:bg-white/5 rounded-full"
+    ghost: "bg-transparent text-on-surface-sublabel hover:text-white hover:bg-white/5 rounded-full"
   };
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {

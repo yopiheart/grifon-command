@@ -37,7 +37,7 @@ export const QuotaMeter: React.FC<QuotaMeterProps> = ({ plan, used = 0, limit, l
     : Math.min(100, Math.max(0, (used / Math.max(1, effectiveLimit)) * 100));
 
   return (
-    <div className="flex items-center gap-3 bg-zinc-900/80 backdrop-blur-xl rounded-full px-4 py-2">
+    <div className="flex items-center gap-3 bg-zinc-900/80 rounded-full px-4 py-2">
       <div className="flex items-center gap-2">
         {isUnlimited ? (
           <InfinityIcon className="w-4 h-4 text-[#FFCC00]" />
@@ -54,7 +54,7 @@ export const QuotaMeter: React.FC<QuotaMeterProps> = ({ plan, used = 0, limit, l
               <span className="text-sm lg:text-base font-mono font-bold text-white tabular-nums">
                 {used}
               </span>
-              <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">
+              <span className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest">
                 / {effectiveLimit} {label ?? 'Daily AI'}
               </span>
             </>
@@ -77,7 +77,7 @@ export const QuotaMeter: React.FC<QuotaMeterProps> = ({ plan, used = 0, limit, l
 
       <div className="flex items-center gap-1.5">
         <div className="w-1.5 h-1.5 rounded-full bg-[#FFCC00]" />
-        <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">
+        <span className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest">
           {tier}
         </span>
       </div>

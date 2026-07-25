@@ -9,6 +9,7 @@ import JSZip from 'jszip';
 import saveAs from 'file-saver';
 import { useSubscription } from '../hooks/useSubscription';
 import { watermarkImage } from '../utils/watermark';
+import { MAT_PLATE_INSET } from './ui/materialTokens';
 
 interface Step7Props {
   allData: AllData;
@@ -29,7 +30,7 @@ const CopyableContent: React.FC<{ title: string; content: string }> = ({ title, 
   };
 
   return (
-    <div className="relative p-6 bg-zinc-950/50 rounded-xl border border-white/10">
+    <div className={`relative p-6 ${MAT_PLATE_INSET} rounded-xl border border-white/10`}>
       <div className="flex items-center justify-between mb-4">
         <h4 className="font-bold text-[10px] text-[#FFCC00] uppercase tracking-widest font-mono">// {title}</h4>
         <button
@@ -57,7 +58,7 @@ const ImageAssetPanel: React.FC<{ title: string; src: string; aspectRatio: '9:16
     link.click();
   };
   return (
-    <div className="p-6 bg-zinc-950/50 rounded-xl border border-white/10 flex flex-col items-center gap-6">
+    <div className={`p-6 ${MAT_PLATE_INSET} rounded-xl border border-white/10 flex flex-col items-center gap-6`}>
       <div className="flex items-center justify-between w-full">
         <h4 className="font-bold text-[10px] text-[#FFCC00] uppercase tracking-widest font-mono">// {title}</h4>
         <button
@@ -166,7 +167,7 @@ const Step7FinalOutput: React.FC<Step7Props> = ({ allData, onRestart, onBack, on
             onPreview={() => setPreviewImage({ url: avatar.url, filename: 'avatar.png' })}
           />
         ) : (
-          <p className="text-zinc-500 text-sm font-mono p-6">// AVATAR_NOT_GENERATED</p>
+          <p className="text-on-surface-sublabel text-sm font-mono p-6">// AVATAR_NOT_GENERATED</p>
         );
       case 'thumbnail':
         return thumbnailUrl ? (
@@ -179,7 +180,7 @@ const Step7FinalOutput: React.FC<Step7Props> = ({ allData, onRestart, onBack, on
             onPreview={() => setPreviewImage({ url: thumbnailUrl, filename: 'thumbnail.png' })}
           />
         ) : (
-          <p className="text-zinc-500 text-sm font-mono p-6">// THUMBNAIL_NOT_GENERATED</p>
+          <p className="text-on-surface-sublabel text-sm font-mono p-6">// THUMBNAIL_NOT_GENERATED</p>
         );
       case 'storyboard':
         return <CopyableContent title="Storyboard & Image Prompts" content={storyboardText} />;
@@ -190,7 +191,7 @@ const Step7FinalOutput: React.FC<Step7Props> = ({ allData, onRestart, onBack, on
 
   return (
     <StepShell sublabel="STEP 8 · FINAL OUTPUT" title="Final Output & Assets">
-      <p className="-mt-4 mb-6 text-[11px] font-mono leading-relaxed text-zinc-500">
+      <p className="-mt-4 mb-6 text-[11px] font-mono leading-relaxed text-on-surface-sublabel">
         Review your campaign, export the bundle, ship the video.
       </p>
 
@@ -207,7 +208,7 @@ const Step7FinalOutput: React.FC<Step7Props> = ({ allData, onRestart, onBack, on
                 isActive
                   ? 'bg-[#FFCC00]/10 text-[#FFCC00] border-[#FFCC00]/40'
                   : disabled
-                  ? 'bg-zinc-950 text-zinc-700 border-white/5 cursor-not-allowed'
+                  ? 'bg-zinc-950 text-on-surface-sublabel border-white/5 cursor-not-allowed'
                   : 'bg-zinc-950 text-zinc-400 border-white/10 hover:border-[#FFCC00]/40 hover:text-zinc-200'
               }`}
             >
@@ -241,7 +242,7 @@ const Step7FinalOutput: React.FC<Step7Props> = ({ allData, onRestart, onBack, on
       <div className="mt-6 flex justify-center">
         <button
           onClick={onRestart}
-          className="flex items-center gap-2 text-[10px] font-mono tracking-widest uppercase text-zinc-500 hover:text-zinc-200 hover:border-white/20 transition-colors border border-white/5 rounded-full px-4 py-1.5"
+          className="flex items-center gap-2 text-[10px] font-mono tracking-widest uppercase text-on-surface-sublabel hover:text-zinc-200 hover:border-white/20 transition-colors border border-white/5 rounded-full px-4 py-1.5"
         >
           <RotateCcw className="w-3 h-3" /> Clear Session &amp; Restart
         </button>

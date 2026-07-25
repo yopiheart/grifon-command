@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Loader2, Film, Search, Image as ImageIcon, Layers, Activity, Zap, BellOff, ArrowRight, X } from 'lucide-react';
 import { SPRING } from '../ui/motionTokens';
 import type { ActiveJob, JobKind } from '../../services/activeJobsService';
+import { MAT_CHROME, MAT_VEIL } from '../ui/materialTokens';
 
 const KIND_ICON: Record<JobKind, React.ComponentType<{ className?: string }>> = {
   video: Film,
@@ -45,16 +46,16 @@ export const NotificationsPanel: React.FC<NotificationsPanelProps> = ({
           <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 z-[75] bg-black/40 backdrop-blur-sm lg:bg-transparent lg:backdrop-blur-none"
+            className={`fixed inset-0 z-[75] ${MAT_VEIL} lg:bg-transparent lg:backdrop-blur-none`}
           />
           <motion.div
             initial={{ opacity: 0, y: 16, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.98 }}
             transition={SPRING.standard}
-            className="fixed z-[76] bg-zinc-900/95 backdrop-blur-xl ring-1 ring-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden
+            className={`fixed z-[76] ${MAT_CHROME} ring-1 ring-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden
               left-3 right-3 bottom-3 rounded-3xl
-              lg:left-24 lg:right-auto lg:bottom-6 lg:w-80 lg:rounded-2xl"
+              lg:left-24 lg:right-auto lg:bottom-6 lg:w-80 lg:rounded-2xl`}
           >
             <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06]">
               <span className="text-sm font-bold text-white tracking-tight">Notifications</span>
@@ -67,10 +68,10 @@ export const NotificationsPanel: React.FC<NotificationsPanelProps> = ({
               {isEmpty && (
                 <div className="flex flex-col items-center justify-center text-center py-10 px-4">
                   <div className="w-12 h-12 rounded-full bg-zinc-950 ring-1 ring-white/[0.06] flex items-center justify-center mb-3">
-                    <BellOff className="w-5 h-5 text-zinc-600" />
+                    <BellOff className="w-5 h-5 text-on-surface-sublabel" />
                   </div>
                   <p className="text-sm font-semibold text-zinc-300">You're all caught up</p>
-                  <p className="text-xs text-zinc-500 mt-1">Render updates land here while you work.</p>
+                  <p className="text-xs text-on-surface-sublabel mt-1">Render updates land here while you work.</p>
                 </div>
               )}
 
@@ -101,7 +102,7 @@ export const NotificationsPanel: React.FC<NotificationsPanelProps> = ({
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="text-sm font-semibold text-white truncate">{job.label}</div>
-                      <div className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mt-0.5 truncate">
+                      <div className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest mt-0.5 truncate">
                         {job.detail || 'In progress'}
                       </div>
                     </div>

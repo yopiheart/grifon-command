@@ -5,6 +5,7 @@ import { DUR, EASE } from './motionTokens';
 import { Menu, X, Volume2, VolumeX } from 'lucide-react';
 import { useUiSound } from '../../services/uiSoundService';
 import { GrifonMark } from './GrifonMark';
+import { MAT_CHROME, MAT_SLAB, SCROLL_EDGE } from './materialTokens';
 
 export interface SiteNavLink {
   label: string;
@@ -39,7 +40,7 @@ const SoundToggle: React.FC<{ className?: string; withLabel?: boolean }> = ({
       aria-pressed={enabled}
       aria-label={enabled ? 'Mute interface sounds' : 'Enable interface sounds'}
       title={enabled ? 'Sound on' : 'Sound off'}
-      className={`flex items-center gap-2 text-zinc-400 hover:text-[#FFCC00] transition-colors cursor-pointer ${className}`}
+      className={`flex h-11 min-w-11 items-center justify-center gap-2 text-zinc-400 hover:text-[#FFCC00] transition-colors cursor-pointer ${className}`}
     >
       {enabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
       {withLabel && (
@@ -154,11 +155,14 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
   );
 
   return (
+    // CHROME tier once scrolled — the header is the canonical floating
+    // functional layer, and past the fold there's real content beneath it to
+    // refract. At rest it stays fully transparent so the hero leads.
     <header
-      className={`transition-[background-color,border-color,backdrop-filter] duration-300 ${
+      className={`relative transition-[background-color,border-color,backdrop-filter] duration-300 ${
         scrolled
-          ? 'backdrop-blur-xl bg-zinc-950/80 border-b border-white/10'
-          : 'backdrop-blur-none bg-transparent border-b border-transparent'
+          ? `${MAT_CHROME} ${SCROLL_EDGE} border-b border-white/10`
+          : ' bg-transparent border-b border-transparent'
       }`}
     >
       <div className="relative flex items-center px-4 sm:px-6 lg:px-8 py-3 max-w-7xl mx-auto">
@@ -193,14 +197,14 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
         <div className="flex md:hidden flex-1 justify-end items-center gap-2.5">
           <button
             onClick={onEnterApp}
-            className="bg-transparent border border-[#FFCC00] text-[#FFCC00] text-[10px] font-black uppercase tracking-widest px-3.5 py-1.5 rounded-full hover:bg-[#FFCC00]/10 transition-all"
+            className="flex h-11 items-center bg-transparent border border-[#FFCC00] text-[#FFCC00] text-[10px] font-black uppercase tracking-widest px-3.5 rounded-full hover:bg-[#FFCC00]/10 transition-all"
           >
             {ctaLabel}
           </button>
           <button
             onClick={() => setMenuOpen(true)}
             aria-label="Open menu"
-            className="p-1.5 rounded-lg text-zinc-300 hover:text-white hover:bg-white/10 transition-all"
+            className="flex h-11 w-11 items-center justify-center rounded-lg text-zinc-300 hover:text-white hover:bg-white/10 transition-all"
           >
             <Menu className="w-5 h-5" />
           </button>
@@ -218,7 +222,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: DUR.fast }}
-            className="fixed inset-0 z-[60] bg-zinc-950/95 backdrop-blur-xl md:hidden flex flex-col"
+            className={`fixed inset-0 z-[60] ${MAT_SLAB} md:hidden flex flex-col`}
           >
             <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
               {Logo}

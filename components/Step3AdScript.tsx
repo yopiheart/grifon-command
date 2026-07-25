@@ -12,6 +12,7 @@ import { TitledCard } from './ui/TitledCard';
 import { FieldLabel } from './ui/FieldLabel';
 import { TextArea } from './ui/TextField';
 import { SegButton } from './ui/SegButton';
+import { MAT_PLATE, MAT_PLATE_INSET } from './ui/materialTokens';
 
 interface Step3Props {
   businessInfo: BusinessInfo;
@@ -280,7 +281,7 @@ const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, setBusinessInfo, sc
   }> = ({ title, lines, onChange, onClick, isSelected }) => (
     <div
       onClick={onClick}
-      className={`p-6 bg-zinc-950/50 border transition-all duration-200 cursor-pointer backdrop-blur-md rounded-xl ${isSelected ? 'border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'border-white/10 hover:border-[#FFCC00]'}`}
+      className={`p-6 ${MAT_PLATE_INSET} border transition-all duration-200 cursor-pointer rounded-xl ${isSelected ? 'border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)]' : 'border-white/10 hover:border-[#FFCC00]'}`}
     >
       <div className="flex justify-between items-center mb-4 pb-2 border-b border-white/10">
         <h4 className="font-bold text-[10px] uppercase text-[#FFCC00] tracking-widest font-mono">{title}</h4>
@@ -303,7 +304,7 @@ const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, setBusinessInfo, sc
           <h2 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight">
             Cinematic Director's Treatment
           </h2>
-          <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mt-2">
+          <p className="text-[10px] text-on-surface-sublabel font-mono tracking-widest uppercase mt-2">
             // Select a visual world for your high-end product spec ad. This replaces the standard text script.
           </p>
         </div>
@@ -317,7 +318,7 @@ const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, setBusinessInfo, sc
               <div 
                 key={theme.id}
                 onClick={() => handleThemeSelect(theme)}
-                className={`p-8 bg-zinc-950/50 backdrop-blur-xl rounded-[2rem] border transition-all duration-300 cursor-pointer flex flex-col h-full relative overflow-hidden group ${selectedThemeId === theme.id ? 'border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)] scale-[1.02]' : 'border-white/10 hover:border-white/20'}`}
+                className={`p-8 ${MAT_PLATE_INSET} rounded-[2rem] border transition-all duration-300 cursor-pointer flex flex-col h-full relative overflow-hidden group ${selectedThemeId === theme.id ? 'border-[#FFCC00] shadow-[0_0_15px_rgba(255,204,0,0.2)] scale-[1.02]' : 'border-white/10 hover:border-white/20'}`}
               >
                 <div className={`absolute -right-8 -top-8 w-24 h-24 blur-2xl rounded-full transition-opacity ${selectedThemeId === theme.id ? 'opacity-40' : 'opacity-10'}`} style={{ backgroundColor: theme.colorPalette.split(',')[0] }}></div>
                 
@@ -331,7 +332,7 @@ const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, setBusinessInfo, sc
                 </p>
                 
                 <div className="pt-4 border-t border-white/10">
-                   <p className="text-[8px] text-zinc-500 uppercase font-bold tracking-widest mb-1">METAPHOR_TEXTURE</p>
+                   <p className="text-[8px] text-on-surface-sublabel uppercase font-bold tracking-widest mb-1">METAPHOR_TEXTURE</p>
                    <p className="text-[10px] text-[#FFCC00] font-bold uppercase">{theme.texturePrompt}</p>
                 </div>
 
@@ -360,7 +361,7 @@ const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, setBusinessInfo, sc
 
   return (
     <StepShell sublabel="STEP 3 · AD SCRIPT" title="Generate Ad Script">
-      <p className="-mt-4 mb-6 text-[11px] font-mono leading-relaxed text-zinc-500">
+      <p className="-mt-4 mb-6 text-[11px] font-mono leading-relaxed text-on-surface-sublabel">
         Select a language, generate options, and then edit the script to perfection.
       </p>
 
@@ -372,7 +373,7 @@ const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, setBusinessInfo, sc
           title="Pick Your Angle"
           className="mb-6"
           right={directorAngleBrief ? (
-            <button onClick={() => setDirectorAngleBrief(null)} className="text-[10px] text-zinc-500 hover:text-white font-mono uppercase tracking-widest transition-colors">
+            <button onClick={() => setDirectorAngleBrief(null)} className="text-[10px] text-on-surface-sublabel hover:text-white font-mono uppercase tracking-widest transition-colors">
               Clear selection
             </button>
           ) : undefined}
@@ -384,7 +385,7 @@ const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, setBusinessInfo, sc
 
             {angleOptions.headlines.length > 0 && (
               <div>
-                <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">// HEADLINES</p>
+                <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest mb-2">// HEADLINES</p>
                 <div className="flex flex-wrap gap-2">
                   {angleOptions.headlines.map((opt, i) => {
                     if (opt.kind !== 'headline') return null;
@@ -406,7 +407,7 @@ const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, setBusinessInfo, sc
 
             {angleOptions.hooks.length > 0 && (
               <div>
-                <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">// VIDEO_HOOKS</p>
+                <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest mb-2">// VIDEO_HOOKS</p>
                 <div className="flex flex-wrap gap-2">
                   {angleOptions.hooks.map((opt, i) => {
                     if (opt.kind !== 'hook') return null;
@@ -428,7 +429,7 @@ const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, setBusinessInfo, sc
 
             {angleOptions.ads.length > 0 && (
               <div>
-                <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">// AD_CONCEPTS</p>
+                <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest mb-2">// AD_CONCEPTS</p>
                 <div className="flex flex-wrap gap-2">
                   {angleOptions.ads.map((opt, i) => {
                     if (opt.kind !== 'ad') return null;
@@ -490,7 +491,7 @@ const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, setBusinessInfo, sc
           )}
           {/* AI STRATEGY ADVICE BUBBLE */}
           {strategicAudit && (
-            <div className="p-8 bg-zinc-900 border border-white/10 backdrop-blur-md relative overflow-hidden group rounded-2xl">
+            <div className={`p-8 ${MAT_PLATE} border border-white/10 relative overflow-hidden group rounded-2xl`}>
                 <div className="absolute top-0 left-0 bg-[#FFCC00] text-black text-[10px] font-black px-4 py-1.5 font-mono tracking-widest uppercase z-10 shadow-lg">
                     [ DIRECTOR_CRITIQUE ]
                 </div>

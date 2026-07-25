@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { ChevronLeft } from 'lucide-react';
 import { GrifonMark } from './GrifonMark';
+import { MAT_CHROME } from './materialTokens';
 
 type Props = {
   title: string;
@@ -18,7 +19,7 @@ const LegalPageLayout: React.FC<Props> = ({ title, effectiveDate, onBack, backLa
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white font-sans">
-      <header className="sticky top-0 z-40 backdrop-blur-xl bg-zinc-950/80 border-b border-white/10">
+      <header className={`sticky top-0 z-40 ${MAT_CHROME} border-b border-white/10`}>
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
           <button
             onClick={onBack}
@@ -43,7 +44,7 @@ const LegalPageLayout: React.FC<Props> = ({ title, effectiveDate, onBack, backLa
         <h1 className="text-3xl md:text-4xl font-black uppercase tracking-tight mb-3">
           {title}
         </h1>
-        <p className="text-xs font-mono text-zinc-500 mb-10">
+        <p className="text-xs font-mono text-on-surface-sublabel mb-10">
           Effective date: {effectiveDate}
         </p>
 
@@ -51,7 +52,7 @@ const LegalPageLayout: React.FC<Props> = ({ title, effectiveDate, onBack, backLa
           {children}
         </div>
 
-        <footer className="mt-16 pt-8 border-t border-white/5 text-xs text-zinc-500 font-mono">
+        <footer className="mt-16 pt-8 border-t border-white/5 text-xs text-on-surface-sublabel font-mono">
           <p>© 2026 Haste Enterprises — Grifon.AI</p>
           <p className="mt-1">Questions? Contact <a href="mailto:grifon.ai@gmail.com" className="text-[#FFCC00] hover:underline">grifon.ai@gmail.com</a></p>
         </footer>

@@ -56,7 +56,7 @@ export const CardForm: React.FC<CardFormProps> = ({ onSubmit, isSubmitting, tota
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label className="block text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">
+        <label className="block text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest mb-2">
           Card information
         </label>
         <input
@@ -97,7 +97,7 @@ export const CardForm: React.FC<CardFormProps> = ({ onSubmit, isSubmitting, tota
       </div>
 
       <div>
-        <label className="block text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">
+        <label className="block text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest mb-2">
           Cardholder name
         </label>
         <input
@@ -111,7 +111,7 @@ export const CardForm: React.FC<CardFormProps> = ({ onSubmit, isSubmitting, tota
         />
       </div>
 
-      <p className="text-[10px] text-zinc-500 flex items-center gap-1.5">
+      <p className="text-[10px] text-on-surface-sublabel flex items-center gap-1.5">
         <Lock className="w-3 h-3" /> Encrypted by PayMongo &middot; 256-bit TLS
       </p>
 
@@ -128,7 +128,7 @@ export const CardForm: React.FC<CardFormProps> = ({ onSubmit, isSubmitting, tota
         </span>
       </button>
 
-      <p className="text-[11px] text-zinc-500 leading-relaxed">{authorizationText}</p>
+      <p className="text-[11px] text-on-surface-sublabel leading-relaxed">{authorizationText}</p>
     </form>
   );
 };

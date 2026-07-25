@@ -237,7 +237,7 @@ const ScenePipelineTile: React.FC<ScenePipelineTileProps> = ({
 
   const statusBadge = (status?: SceneStatus, error?: string) => {
     if (!status || status === 'queued') {
-      return <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest">// READY</span>;
+      return <span className="text-[9px] font-mono text-on-surface-sublabel uppercase tracking-widest">// READY</span>;
     }
     if (status === 'rendering') {
       return (
@@ -266,8 +266,8 @@ const ScenePipelineTile: React.FC<ScenePipelineTileProps> = ({
   if (sceneBatch.length === 0) {
     return (
       <GlassPanel className="p-8 text-center">
-        <Layers className="w-8 h-8 text-zinc-600 mx-auto mb-4" />
-        <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">
+        <Layers className="w-8 h-8 text-on-surface-sublabel mx-auto mb-4" />
+        <p className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest">
           // NO_SCENES_RECEIVED — RENDER ALL FROM GENERATE_VIDEO FIRST
         </p>
       </GlassPanel>
@@ -276,7 +276,7 @@ const ScenePipelineTile: React.FC<ScenePipelineTileProps> = ({
 
   return (
     <div className="flex flex-col gap-6">
-      {/* relative z-50: GlassPanel's backdrop-blur creates a stacking context, so the
+      {/* relative z-50: GlassPanel's creates a stacking context, so the
           VoicePicker dropdown (absolute z-30) was trapped inside this panel and the
           later-in-DOM scene-list panel painted over it. Lifting this whole panel above
           the scene list lets the dropdown overlay the scene rows. */}
@@ -288,7 +288,7 @@ const ScenePipelineTile: React.FC<ScenePipelineTileProps> = ({
               // SCENE_PIPELINE · {sceneBatch.length}_SCENES_FROM_GENERATE_VIDEO
             </span>
           </div>
-          <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">
+          <span className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest">
             ~{totalChars.toLocaleString()}_CHARS · ~${estCostUsd.toFixed(2)}
           </span>
         </div>
@@ -314,7 +314,7 @@ const ScenePipelineTile: React.FC<ScenePipelineTileProps> = ({
                 className={`px-4 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest border transition-all ${
                   stabilityMode === mode
                     ? 'bg-[#FFCC00]/10 border-[#FFCC00] text-[#FFCC00]'
-                    : 'border-white/10 text-zinc-500 hover:text-white'
+                    : 'border-white/10 text-on-surface-sublabel hover:text-white'
                 } disabled:opacity-50 disabled:cursor-not-allowed`}
               >
                 {STABILITY_LABELS[mode]}
@@ -337,13 +337,13 @@ const ScenePipelineTile: React.FC<ScenePipelineTileProps> = ({
               className={`px-4 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest border transition-all ${
                 emotionAware
                   ? 'bg-[#FFCC00]/10 border-[#FFCC00] text-[#FFCC00]'
-                  : 'border-white/10 text-zinc-500 hover:text-white'
+                  : 'border-white/10 text-on-surface-sublabel hover:text-white'
               } disabled:opacity-50 disabled:cursor-not-allowed`}
             >
               {emotionAware ? 'ON' : 'OFF'}
             </button>
           </div>
-          <p className="text-[10px] font-mono text-zinc-500 tracking-widest">
+          <p className="text-[10px] font-mono text-on-surface-sublabel tracking-widest">
             {emotionAware
               ? '// v3 delivery tags shape each scene by its hook / build / CTA role'
               : '// flat read — consistent tone, no expressive tags'}
@@ -374,7 +374,7 @@ const ScenePipelineTile: React.FC<ScenePipelineTileProps> = ({
                 </span>
               )}
               <span className="flex-1 text-sm text-zinc-300 truncate font-sans">
-                {scene.scriptLine || <span className="italic text-zinc-600">(empty)</span>}
+                {scene.scriptLine || <span className="italic text-on-surface-sublabel">(empty)</span>}
               </span>
               <div className="shrink-0">{statusBadge(state?.status, state?.error)}</div>
               {state?.status === 'done' && state.audioUrl && (

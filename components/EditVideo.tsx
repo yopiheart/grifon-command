@@ -32,6 +32,7 @@ import {
 } from '../services/omniStyleService';
 import { trackEvent } from '../services/analyticsService';
 import { seedCaptionsEnabled } from '../utils/asmrSeeds';
+import { MAT_VEIL, MAT_PLATE_INSET } from './ui/materialTokens';
 
 export interface EditorBatchPayload {
   sceneBatch: SceneBatchEntry[];
@@ -511,7 +512,7 @@ const BatchEditMode: React.FC<{
       <div className="w-full max-w-6xl mx-auto">
         <header className="flex flex-col items-start gap-4 mb-8 w-full border-b border-white/10 pb-6 relative">
           <div className="flex items-center justify-between w-full">
-            <button onClick={onBack} className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-zinc-500 hover:text-white uppercase tracking-widest transition-colors">
+            <button onClick={onBack} className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-on-surface-sublabel hover:text-white uppercase tracking-widest transition-colors">
               <ChevronLeft className="w-4 h-4" /> <span className="hidden md:inline">COMMAND CENTER</span><span className="md:hidden">BACK</span>
             </button>
             <span className="text-[10px] font-mono text-[#FFCC00] uppercase tracking-widest">
@@ -522,7 +523,7 @@ const BatchEditMode: React.FC<{
             <h1 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight break-words whitespace-normal leading-tight">
               Edit Bay <span className="text-[#FFCC00]">// FINAL RENDER</span>
             </h1>
-            <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mt-2">
+            <p className="text-[10px] text-on-surface-sublabel font-mono tracking-widest uppercase mt-2">
               // VOICE CONSOLIDATION → DEAD-AIR TRIM → FINAL MP4
             </p>
           </div>
@@ -544,7 +545,7 @@ const BatchEditMode: React.FC<{
             {/* Dev-gated style selector — Slice-3-replaceable. */}
             {devUnlocked && (
               <div className="flex items-center gap-2 flex-wrap mb-4">
-                <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">// DEV_STYLE</span>
+                <span className="text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">// DEV_STYLE</span>
                 {([
                   { id: 'premium_reel', label: 'PREMIUM REEL' },
                   { id: 'vox_explainer', label: 'VOX EXPLAINER' },
@@ -579,7 +580,7 @@ const BatchEditMode: React.FC<{
                 >
                   {omniApplying ? 'APPLYING STYLE…' : 'APPLY STYLE'}
                 </GoldButton>
-                <p className="text-[10px] text-zinc-500 font-mono mt-2">
+                <p className="text-[10px] text-on-surface-sublabel font-mono mt-2">
                   // Premium styles take ~3–5 minutes. Scenes that can't be styled keep the standard edit.
                 </p>
                 {omniError && <p className="text-[10px] text-red-400 font-mono mt-1">// {omniError}</p>}
@@ -623,11 +624,11 @@ const BatchEditMode: React.FC<{
                                 <Sparkles className="w-3.5 h-3.5" /> STYLED
                               </span>
                             ) : res?.outcome === 'fallback' || !routed ? (
-                              <span className="flex items-center gap-1.5 text-[10px] font-mono text-zinc-500">
+                              <span className="flex items-center gap-1.5 text-[10px] font-mono text-on-surface-sublabel">
                                 <Minus className="w-3.5 h-3.5" /> Scene {s.sceneIdx + 1} used the standard edit
                               </span>
                             ) : (
-                              <span className="text-[10px] font-mono text-zinc-600">// queued</span>
+                              <span className="text-[10px] font-mono text-on-surface-sublabel">// queued</span>
                             )}
                             <div className="flex-1" />
                             {res?.outcome === 'styled' && res.styledUrl && (
@@ -654,7 +655,7 @@ const BatchEditMode: React.FC<{
                       .filter((s) => omniResults[s.sceneIdx]?.outcome === 'styled' && omniResults[s.sceneIdx]?.styledUrl)
                       .map((s) => (
                         <div key={s.sceneIdx} className="flex flex-col gap-1">
-                          <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest">
+                          <span className="text-[9px] font-mono text-on-surface-sublabel uppercase tracking-widest">
                             SCENE_{String(s.sceneIdx + 1).padStart(2, '0')} · STYLED
                           </span>
                           <video
@@ -668,7 +669,7 @@ const BatchEditMode: React.FC<{
                 )}
               </>
             ) : (
-              <p className="text-[10px] text-zinc-500 font-mono">
+              <p className="text-[10px] text-on-surface-sublabel font-mono">
                 // No Edit Style selected — scenes render with the standard edit.
               </p>
             )}
@@ -687,7 +688,7 @@ const BatchEditMode: React.FC<{
           {/* Step 1 — consolidate voice */}
           <div className="flex flex-col md:flex-row md:items-end gap-4">
             <div className="flex-1">
-              <label className="block text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">
+              <label className="block text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest mb-2">
                 // STEP_1 · BRAND_VOICE
               </label>
               <select
@@ -735,7 +736,7 @@ const BatchEditMode: React.FC<{
             </button>
           </div>
 
-          <p className="text-[10px] text-zinc-500 font-mono mt-2">
+          <p className="text-[10px] text-on-surface-sublabel font-mono mt-2">
             // Talking scenes use the voice-changer (preserves lip-sync); b-roll/hook use TTS. Spends your daily TTS/STS quota (Creator+).
           </p>
           {voiceReady && (
@@ -744,7 +745,7 @@ const BatchEditMode: React.FC<{
             </p>
           )}
           {consolidateNotes.map((n, i) => (
-            <p key={i} className="text-[10px] text-zinc-500 font-mono">// {n}</p>
+            <p key={i} className="text-[10px] text-on-surface-sublabel font-mono">// {n}</p>
           ))}
           {consolidateError && (
             <p className="text-[10px] text-red-400 font-mono mt-1">// {consolidateError}</p>
@@ -752,13 +753,13 @@ const BatchEditMode: React.FC<{
 
           {/* Step 2 — assemble final MP4 (end-card recap removed 2026-06-16) */}
           <div className="mt-5 pt-5 border-t border-white/5">
-            <label className="block text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">
+            <label className="block text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest mb-2">
               // STEP_2 · ASSEMBLE_FINAL_MP4
             </label>
             {/* Raw / Auto edit mode. AUTO = captions + SFX + music burned in
                 (ready to post). RAW = stitched clips only, edit it yourself. */}
             <div className="mb-3">
-              <span className="block text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">// EDIT_MODE</span>
+              <span className="block text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest mb-2">// EDIT_MODE</span>
               <div className="flex gap-2">
                 {([
                   { v: true, label: 'Auto' },
@@ -778,7 +779,7 @@ const BatchEditMode: React.FC<{
                   </button>
                 ))}
               </div>
-              <p className="text-[10px] text-zinc-500 font-mono mt-2">
+              <p className="text-[10px] text-on-surface-sublabel font-mono mt-2">
                 {burnInEnabled
                   ? '// Captions · SFX · music — ready to post'
                   : '// Stitched clips only — edit it yourself'}
@@ -787,7 +788,7 @@ const BatchEditMode: React.FC<{
             {/* Captions (spoken-word subtitles) — only meaningful in Auto mode. */}
             {burnInEnabled && (
               <div className="mb-3">
-                <span className="block text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">// CAPTIONS</span>
+                <span className="block text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest mb-2">// CAPTIONS</span>
                 <div className="flex gap-2">
                   {([
                     { v: true, label: 'On' },
@@ -807,7 +808,7 @@ const BatchEditMode: React.FC<{
                     </button>
                   ))}
                 </div>
-                <p className="text-[10px] text-zinc-500 font-mono mt-2">
+                <p className="text-[10px] text-on-surface-sublabel font-mono mt-2">
                   {captionsEnabled
                     ? '// Spoken-word subtitles burned in'
                     : '// No subtitles — hook title & callouts stay'}
@@ -823,7 +824,7 @@ const BatchEditMode: React.FC<{
               >
                 {musicGenOn
                   ? <CheckSquare className="w-4 h-4 shrink-0 text-[#FFCC00]" />
-                  : <Square className="w-4 h-4 shrink-0 text-zinc-500" />}
+                  : <Square className="w-4 h-4 shrink-0 text-on-surface-sublabel" />}
                 // CUSTOM_MUSIC_BED <span className="text-[#FFCC00]">· PRO</span>
               </button>
             )}
@@ -835,7 +836,7 @@ const BatchEditMode: React.FC<{
               {isRendering ? 'RENDERING FINAL VIDEO…' : 'RENDER FINAL VIDEO'}
             </GoldButton>
             {!voiceReady && (
-              <p className="text-[10px] text-zinc-500 font-mono mt-2 text-center">
+              <p className="text-[10px] text-on-surface-sublabel font-mono mt-2 text-center">
                 // Consolidate voice first to enable render.
               </p>
             )}
@@ -886,7 +887,7 @@ const BatchEditMode: React.FC<{
                       <Copy className="w-3.5 h-3.5 shrink-0" /> {creativeIdCopied ? 'Copied' : 'Copy'}
                     </button>
                   </div>
-                  <p className="mt-2 text-xs text-zinc-500">
+                  <p className="mt-2 text-xs text-on-surface-sublabel">
                     Name your Meta ad with this so Grifon can read its results.
                   </p>
                 </div>
@@ -927,24 +928,24 @@ const BatchEditMode: React.FC<{
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                 <div>
-                  <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest">DURATION</p>
+                  <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest">DURATION</p>
                   <p className="text-white font-mono">{formatSec(edl.meta.totalDurationSec)}</p>
                 </div>
                 <div>
-                  <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest">ASPECT</p>
+                  <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest">ASPECT</p>
                   <p className="text-white font-mono">{edl.meta.aspectRatio}</p>
                 </div>
                 <div>
-                  <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest">PLATFORM</p>
+                  <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest">PLATFORM</p>
                   <p className="text-white font-mono uppercase">{edl.meta.targetPlatform}</p>
                 </div>
                 <div>
-                  <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest">FORMULA</p>
+                  <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest">FORMULA</p>
                   <p className="text-white font-mono uppercase">{(edl.meta.formulaApplied ?? []).join(' + ') || '—'}</p>
                 </div>
               </div>
               <div className="mt-4 pt-4 border-t border-white/5">
-                <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-1">HOOK STRATEGY</p>
+                <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest mb-1">HOOK STRATEGY</p>
                 <p className="text-zinc-300 text-sm">{edl.meta.hookStrategy}</p>
               </div>
             </GlassPanel>
@@ -965,17 +966,17 @@ const BatchEditMode: React.FC<{
                           SCENE_{String(scene.sceneIdx + 1).padStart(2, '0')}
                         </span>
                         {scene.transitionIn && (
-                          <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest">
+                          <span className="text-[9px] font-mono text-on-surface-sublabel uppercase tracking-widest">
                             // IN: {scene.transitionIn.type.toUpperCase()} ({scene.transitionIn.durationSec}s)
                           </span>
                         )}
                         {scene.cameraEffect && scene.cameraEffect !== 'none' && (
-                          <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest">
+                          <span className="text-[9px] font-mono text-on-surface-sublabel uppercase tracking-widest">
                             // CAM: {scene.cameraEffect.toUpperCase()}
                           </span>
                         )}
                       </div>
-                      <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest">
+                      <span className="text-[9px] font-mono text-on-surface-sublabel uppercase tracking-widest">
                         {(scene.keepSegments ?? [])
                           .map((s) => `${formatSec(s.startSec)}–${formatSec(s.endSec)}`)
                           .join(', ')}
@@ -989,7 +990,7 @@ const BatchEditMode: React.FC<{
                               {ov.style} · {ov.position}
                             </span>
                             <span className="font-mono text-white">"{ov.text}"</span>
-                            <span className="text-[9px] font-mono text-zinc-500">
+                            <span className="text-[9px] font-mono text-on-surface-sublabel">
                               [{formatSec(ov.startSec)}–{formatSec(ov.endSec)}]
                             </span>
                           </div>
@@ -1009,7 +1010,7 @@ const BatchEditMode: React.FC<{
                         ))}
                       </div>
                     )}
-                    <p className="text-[10px] text-zinc-500 font-mono italic mt-1">// {scene.notes}</p>
+                    <p className="text-[10px] text-on-surface-sublabel font-mono italic mt-1">// {scene.notes}</p>
                   </div>
                 ))}
               </div>
@@ -1021,7 +1022,7 @@ const BatchEditMode: React.FC<{
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">RULES APPLIED</p>
+                  <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest mb-2">RULES APPLIED</p>
                   <ul className="space-y-1">
                     {(edl.formulaCheck?.rulesApplied ?? []).map((r, i) => (
                       <li key={i} className="text-zinc-300 text-sm">✓ {r}</li>
@@ -1029,9 +1030,9 @@ const BatchEditMode: React.FC<{
                   </ul>
                 </div>
                 <div>
-                  <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">WEAKNESSES FLAGGED</p>
+                  <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest mb-2">WEAKNESSES FLAGGED</p>
                   {(edl.formulaCheck?.weaknessesFlagged ?? []).length === 0 ? (
-                    <p className="text-zinc-500 text-sm italic">// None — formula intact.</p>
+                    <p className="text-on-surface-sublabel text-sm italic">// None — formula intact.</p>
                   ) : (
                     <ul className="space-y-1">
                       {(edl.formulaCheck?.weaknessesFlagged ?? []).map((w, i) => (
@@ -1042,7 +1043,7 @@ const BatchEditMode: React.FC<{
                 </div>
               </div>
               <div className="mt-4 pt-4 border-t border-white/5">
-                <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">GLOBAL SFX PICKS</p>
+                <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest mb-2">GLOBAL SFX PICKS</p>
                 <div className="flex gap-2 flex-wrap">
                   {(edl.globalSfxPicks ?? []).map((sfx) => (
                     <span
@@ -1058,8 +1059,8 @@ const BatchEditMode: React.FC<{
 
             <GlassPanel className="p-6 bg-zinc-900/30">
               <div className="flex items-center gap-2 mb-2">
-                <Scissors className="w-3.5 h-3.5 text-zinc-500" />
-                <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest">
+                <Scissors className="w-3.5 h-3.5 text-on-surface-sublabel" />
+                <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest">
                   // PHASE_1A · STUB BRAIN
                 </p>
               </div>
@@ -1161,7 +1162,7 @@ const EditVideo: React.FC<EditVideoProps> = ({ onBack, editorBatch, avatarGender
       <div className="w-full max-w-6xl mx-auto">
         <header className="flex flex-col items-start gap-4 mb-8 w-full border-b border-white/10 pb-6 relative">
           <div className="flex items-center justify-between w-full">
-            <button onClick={onBack} className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-zinc-500 hover:text-white uppercase tracking-widest transition-colors">
+            <button onClick={onBack} className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-on-surface-sublabel hover:text-white uppercase tracking-widest transition-colors">
               <ChevronLeft className="w-4 h-4" /> <span className="hidden md:inline">COMMAND CENTER</span><span className="md:hidden">BACK</span>
             </button>
           </div>
@@ -1169,7 +1170,7 @@ const EditVideo: React.FC<EditVideoProps> = ({ onBack, editorBatch, avatarGender
             <h1 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight break-words whitespace-normal leading-tight">
                 Edit Bay
             </h1>
-            <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase mt-2">
+            <p className="text-[10px] text-on-surface-sublabel font-mono tracking-widest uppercase mt-2">
                 // TURN RAW FOOTAGE INTO VIRAL GOLD
             </p>
           </div>
@@ -1191,13 +1192,13 @@ const EditVideo: React.FC<EditVideoProps> = ({ onBack, editorBatch, avatarGender
                              </label>
                              <div className="flex gap-4">
                                 <button 
-                                    className={`pb-2 text-[10px] font-mono tracking-widest uppercase transition-colors ${scriptSource === 'paste' ? 'text-[#FFCC00] border-b-2 border-[#FFCC00]' : 'text-zinc-500 hover:text-zinc-300'}`}
+                                    className={`pb-2 text-[10px] font-mono tracking-widest uppercase transition-colors ${scriptSource === 'paste' ? 'text-[#FFCC00] border-b-2 border-[#FFCC00]' : 'text-on-surface-sublabel hover:text-zinc-300'}`}
                                     onClick={() => setScriptSource('paste')}
                                 >
                                     Paste Text
                                 </button>
                                 <button 
-                                    className={`pb-2 text-[10px] font-mono tracking-widest uppercase transition-colors ${scriptSource === 'upload' ? 'text-[#FFCC00] border-b-2 border-[#FFCC00]' : 'text-zinc-500 hover:text-zinc-300'}`}
+                                    className={`pb-2 text-[10px] font-mono tracking-widest uppercase transition-colors ${scriptSource === 'upload' ? 'text-[#FFCC00] border-b-2 border-[#FFCC00]' : 'text-on-surface-sublabel hover:text-zinc-300'}`}
                                     onClick={() => setScriptSource('upload')}
                                 >
                                     Upload File
@@ -1207,7 +1208,7 @@ const EditVideo: React.FC<EditVideoProps> = ({ onBack, editorBatch, avatarGender
 
                         {scriptSource === 'upload' ? (
                             <div className="space-y-2">
-                                <label className="bg-zinc-950/50 border-2 border-dashed border-white/10 hover:border-[#FFCC00] hover:bg-zinc-800/80 text-zinc-400 p-4 rounded-xl flex items-center justify-center cursor-pointer transition-all">
+                                <label className={`${MAT_PLATE_INSET} border-2 border-dashed border-white/10 hover:border-[#FFCC00] hover:bg-zinc-800/80 text-zinc-400 p-4 rounded-xl flex items-center justify-center cursor-pointer transition-all`}>
                                     <UploadCloud className="w-5 h-5 mr-2" />
                                     <span className="font-mono text-sm uppercase tracking-widest">Upload .TXT Script</span>
                                     <input 
@@ -1237,7 +1238,7 @@ const EditVideo: React.FC<EditVideoProps> = ({ onBack, editorBatch, avatarGender
                         <label className="block text-[10px] text-zinc-400 font-mono uppercase tracking-widest mb-2">
                             // KEY_SCENES_SCREENSHOTS
                         </label>
-                        <p className="text-[10px] text-zinc-500 mb-4 font-mono">
+                        <p className="text-[10px] text-on-surface-sublabel mb-4 font-mono">
                             Upload screenshots or photos of your raw footage. The AI will analyze visual composition against your script.
                         </p>
                         
@@ -1258,8 +1259,8 @@ const EditVideo: React.FC<EditVideoProps> = ({ onBack, editorBatch, avatarGender
                              </div>
                         )}
 
-                        <label className="bg-zinc-950/50 border-2 border-dashed border-white/10 hover:border-[#FFCC00] hover:bg-zinc-800/80 text-zinc-400 p-6 rounded-xl flex flex-col items-center justify-center cursor-pointer transition-all min-h-[100px]">
-                            <ImageIcon className="w-6 h-6 mb-2 text-zinc-500" />
+                        <label className={`${MAT_PLATE_INSET} border-2 border-dashed border-white/10 hover:border-[#FFCC00] hover:bg-zinc-800/80 text-zinc-400 p-6 rounded-xl flex flex-col items-center justify-center cursor-pointer transition-all min-h-[100px]`}>
+                            <ImageIcon className="w-6 h-6 mb-2 text-on-surface-sublabel" />
                             <span className="font-mono text-[10px] uppercase tracking-widest">[CLICK TO UPLOAD KEYFRAMES]</span>
                             <input 
                                 type="file" 
@@ -1317,7 +1318,7 @@ const EditVideo: React.FC<EditVideoProps> = ({ onBack, editorBatch, avatarGender
                     
                     <div className="flex-grow bg-zinc-950 border border-white/10 rounded-xl p-6 overflow-y-auto custom-scrollbar relative">
                         {isAnalyzing ? (
-                            <div className="absolute inset-0 flex items-center justify-center bg-zinc-950/80 backdrop-blur-sm z-10 rounded-xl">
+                            <div className={`absolute inset-0 flex items-center justify-center ${MAT_VEIL} z-10 rounded-xl`}>
                                 <Loader message="WATCHING & STRATEGIZING..." />
                             </div>
                         ) : result ? (
@@ -1325,7 +1326,7 @@ const EditVideo: React.FC<EditVideoProps> = ({ onBack, editorBatch, avatarGender
                                 {result}
                             </pre>
                         ) : (
-                            <div className="flex flex-col items-center justify-center h-full text-zinc-500">
+                            <div className="flex flex-col items-center justify-center h-full text-on-surface-sublabel">
                                 <p className="font-mono text-center mb-2 text-[10px] uppercase tracking-widest">// SYSTEM_STANDBY</p>
                                 <p className="text-sm text-center max-w-xs">
                                     Upload script and scene screenshots to receive a frame-by-frame viral editing strategy.

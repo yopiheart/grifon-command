@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { DUR, SPRING } from './motionTokens';
 import { Check, Crown, Sparkles, X } from 'lucide-react';
+import { MAT_VEIL } from './materialTokens';
 import { GoldButton } from './GoldButton';
 import { PLAN_FEATURES } from '../../config/planFeatures';
 import type { PlanId } from '../../utils/planGate';
@@ -97,7 +98,7 @@ export const QuotaWallModal: React.FC<QuotaWallModalProps> = ({
   };
   const topupRow = showTopup ? (
     <div className="px-6 mt-4">
-      <div className="mb-2 flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+      <div className="mb-2 flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">
         <span className="h-px flex-1 bg-white/10" /> or top up now <span className="h-px flex-1 bg-white/10" />
       </div>
       <div className="grid grid-cols-2 gap-2">
@@ -134,7 +135,7 @@ export const QuotaWallModal: React.FC<QuotaWallModalProps> = ({
           role="dialog"
           aria-modal="true"
           aria-label="Monthly limit reached — upgrade"
-          className="fixed inset-0 z-[80] flex items-center justify-center p-4 bg-zinc-950/80 backdrop-blur-sm"
+          className={`fixed inset-0 z-[80] flex items-center justify-center p-4 ${MAT_VEIL}`}
         >
           <motion.div
             initial={reduce ? { opacity: 0 } : { opacity: 0, y: 24, scale: 0.96 }}
@@ -142,7 +143,7 @@ export const QuotaWallModal: React.FC<QuotaWallModalProps> = ({
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: 16, scale: 0.98 }}
             transition={SPRING.pop}
             onClick={(e) => e.stopPropagation()}
-            className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/80 backdrop-blur-xl shadow-[0_0_60px_-12px_rgba(255,204,0,0.35)]"
+            className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/80 shadow-[0_0_60px_-12px_rgba(255,204,0,0.35)]"
           >
             {/* Dismiss */}
             <button
@@ -155,7 +156,7 @@ export const QuotaWallModal: React.FC<QuotaWallModalProps> = ({
             </button>
 
             {/* Sub-label */}
-            <div className="flex items-center gap-1.5 px-6 pt-6 text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+            <div className="flex items-center gap-1.5 px-6 pt-6 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">
               <Crown className="h-3.5 w-3.5 shrink-0 text-[#FFCC00]" /> Monthly limit reached
             </div>
 
@@ -205,7 +206,7 @@ export const QuotaWallModal: React.FC<QuotaWallModalProps> = ({
                 <button
                   type="button"
                   onClick={onDismiss}
-                  className="w-full px-6 py-2 mt-3 mb-6 text-center text-xs font-mono uppercase tracking-wider text-zinc-500 hover:text-zinc-300 transition-colors"
+                  className="w-full px-6 py-2 mt-3 mb-6 text-center text-xs font-mono uppercase tracking-wider text-on-surface-sublabel hover:text-zinc-300 transition-colors"
                 >
                   Maybe later
                 </button>

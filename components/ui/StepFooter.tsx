@@ -1,5 +1,6 @@
 import React from 'react';
 import { GoldButton } from './GoldButton';
+import { MAT_CHROME_MOBILE } from './materialTokens';
 
 // ===========================================================================
 // StepFooter — the shared wizard nav bar: ghost BACK on the left, gold CONFIRM
@@ -37,7 +38,11 @@ export const StepFooter: React.FC<{
   center,
   renderNext,
 }) => (
-  <div className="mt-8 flex items-center justify-between gap-4 border-t border-white/10 pt-6 max-md:sticky max-md:bottom-3 max-md:z-30">
+  // On mobile this bar detaches and floats over the form it belongs to, so
+  // that — and only that — is when it earns the CHROME tier (`mat-chrome-mobile`
+  // is breakpoint-scoped in index.css). On desktop it stays an in-flow rule at
+  // the bottom of the panel: content, not chrome.
+  <div className={`mt-8 flex items-center justify-between gap-4 border-t border-white/10 pt-6 max-md:sticky max-md:bottom-3 max-md:z-30 max-md:rounded-2xl max-md:border-t-0 max-md:p-3 ${MAT_CHROME_MOBILE}`}>
     {hideBack ? (
       <span />
     ) : (

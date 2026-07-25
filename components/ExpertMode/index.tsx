@@ -155,7 +155,7 @@ const GenerationProgress: React.FC<{
 }> = ({ stages, running, error, onRetry, onBack }) => (
   <GlassPanel className="mx-auto flex max-w-2xl flex-col gap-5">
     <div>
-      <p className="mb-1 text-[10px] font-mono uppercase tracking-widest text-zinc-500">// DIRECTOR'S CUT · GENERATING</p>
+      <p className="mb-1 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">// DIRECTOR'S CUT · GENERATING</p>
       <h2 className="text-2xl font-black uppercase tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500">
         Building Your Ad
       </h2>
@@ -170,10 +170,10 @@ const GenerationProgress: React.FC<{
               : s.status === 'error' ? <AlertTriangle className="h-4 w-4 text-amber-500" />
               : <span className="block h-2 w-2 rounded-full bg-zinc-700" />}
           </span>
-          <span className={`text-sm ${s.status === 'pending' || s.status === 'skipped' ? 'text-zinc-500' : 'text-zinc-200'}`}>
+          <span className={`text-sm ${s.status === 'pending' || s.status === 'skipped' ? 'text-on-surface-sublabel' : 'text-zinc-200'}`}>
             {s.label}
           </span>
-          {s.detail && <span className="ml-auto text-[10px] font-mono uppercase tracking-widest text-zinc-500">{s.detail}</span>}
+          {s.detail && <span className="ml-auto text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">{s.detail}</span>}
         </li>
       ))}
     </ul>
@@ -215,7 +215,7 @@ const Frame: React.FC<{ onBack: () => void; backLabel?: string; children: React.
       <header className="flex flex-col items-start gap-4 mb-8 w-full border-b border-white/10 pb-4">
         <button
           onClick={onBack}
-          className="-ml-1 flex min-h-11 items-center gap-2 px-1 py-2 text-xs font-mono text-zinc-500 hover:text-white uppercase tracking-widest transition-colors"
+          className="-ml-1 flex min-h-11 items-center gap-2 px-1 py-2 text-xs font-mono text-on-surface-sublabel hover:text-white uppercase tracking-widest transition-colors"
         >
           <ChevronLeft className="w-4 h-4 shrink-0" /> <span className="hidden md:inline">{backLabel}</span>
           <span className="md:hidden">BACK</span>
@@ -228,9 +228,9 @@ const Frame: React.FC<{ onBack: () => void; backLabel?: string; children: React.
             <span className="rounded-md border border-[#FFCC00]/40 bg-[#FFCC00]/10 px-2 py-0.5 text-[10px] font-mono uppercase tracking-widest text-[#FFCC00]">
               Dev
             </span>
-            <Clapperboard className="h-5 w-5 text-zinc-600" />
+            <Clapperboard className="h-5 w-5 text-on-surface-sublabel" />
           </div>
-          <p className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase">
+          <p className="text-[10px] text-on-surface-sublabel font-mono tracking-widest uppercase">
             // BRING YOUR OWN SCRIPT · CONTROL EVERY SCENE
           </p>
         </div>

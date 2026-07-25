@@ -278,7 +278,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack, onViewLegal 
           <GrifonMark className="h-9 w-9" />
           <span className="text-white font-black italic text-lg tracking-tight">GRIFON</span>
         </div>
-        <p className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.25em] text-zinc-500">
+        <p className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.25em] text-on-surface-sublabel">
           <Lock className="w-3.5 h-3.5 shrink-0 text-[#FFCC00]" />
           Secure checkout
         </p>
@@ -304,16 +304,16 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack, onViewLegal 
         />
 
         <GlassPanel>
-          <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">
+          <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest mb-2">
             Contact information
           </p>
           <div className="bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 mb-4">
             <p className="text-zinc-300 text-sm">{email ?? 'Not signed in'}</p>
-            <p className="text-[10px] text-zinc-500 mt-1">Receipt will be sent here</p>
+            <p className="text-[10px] text-on-surface-sublabel mt-1">Receipt will be sent here</p>
           </div>
 
           <div className="mb-6">
-            <label htmlFor="checkout-phone" className="block text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">
+            <label htmlFor="checkout-phone" className="block text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest mb-2">
               Contact number
             </label>
             <input
@@ -327,10 +327,10 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack, onViewLegal 
               className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-zinc-600 focus:outline-none focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00]"
               required
             />
-            <p className="text-[10px] text-zinc-500 mt-1.5">For order updates and support via Viber / SMS.</p>
+            <p className="text-[10px] text-on-surface-sublabel mt-1.5">For order updates and support via Viber / SMS.</p>
           </div>
 
-          <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-3">
+          <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest mb-3">
             Payment method
           </p>
           <div className="mb-6">
@@ -366,20 +366,20 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack, onViewLegal 
       </div>
 
       {/* Payment trust strip — every badge is a real capability, no fake marks */}
-      <div className="relative max-w-6xl mx-auto mt-8 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+      <div className="relative max-w-6xl mx-auto mt-8 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">
         <span className="flex items-center gap-1.5"><Lock className="w-3 h-3 shrink-0 text-[#FFCC00]" /> 256-bit SSL</span>
-        <span className="text-zinc-700">·</span>
+        <span className="text-on-surface-sublabel">·</span>
         <span>Powered by PayMongo</span>
-        <span className="text-zinc-700">·</span>
+        <span className="text-on-surface-sublabel">·</span>
         <span>GCash</span>
-        <span className="text-zinc-700">·</span>
+        <span className="text-on-surface-sublabel">·</span>
         <span>Maya</span>
-        <span className="text-zinc-700">·</span>
+        <span className="text-on-surface-sublabel">·</span>
         <span>Visa</span>
-        <span className="text-zinc-700">·</span>
+        <span className="text-on-surface-sublabel">·</span>
         <span>Mastercard</span>
       </div>
-      <p className="relative text-center text-zinc-600 text-xs mt-3">
+      <p className="relative text-center text-on-surface-sublabel text-xs mt-3">
         <button type="button" onClick={() => onViewLegal?.('terms')} className="hover:text-zinc-400 transition-colors">
           Terms
         </button>{' '}

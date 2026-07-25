@@ -3,6 +3,7 @@ import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform, use
 import { Star, ArrowRight, Building2, UtensilsCrossed, ShoppingBag, ChevronsRight } from 'lucide-react';
 import { GoldButton } from '../../ui/GoldButton';
 import { SignatureScribble } from '../SignatureScribble';
+import { BAND } from '../../ui/layoutTokens';
 
 interface ReceiptsRailProps {
   onEnterApp: () => void;
@@ -281,7 +282,7 @@ export const ReceiptsRail: React.FC<ReceiptsRailProps> = ({ onEnterApp }) => {
   if (!pinned) {
     // Mobile + reduced-motion: cream band, auto-playing snap carousel.
     return (
-      <section id="reviews" className="relative z-10 scroll-mt-28 bg-[#F2F1EA] py-16 md:py-24">
+      <section id="reviews" className={`relative z-10 scroll-mt-28 bg-[#F2F1EA] ${BAND}`}>
         <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
           {label}
           <h2 className="text-3xl font-bold uppercase tracking-tight text-zinc-900 md:text-5xl">

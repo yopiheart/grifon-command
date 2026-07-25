@@ -76,7 +76,7 @@ export const ScriptStudio: React.FC<{
         <TitledCard
           title="TARGET LENGTH"
           right={
-            <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+            <span className="text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">
               {lines.length} scene{lines.length === 1 ? '' : 's'} · cap {maxScenes}
             </span>
           }
@@ -97,7 +97,7 @@ export const ScriptStudio: React.FC<{
           <TitledCard
             title="SCENES"
             right={
-              <span className={`flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest ${overBudget ? 'text-amber-500' : 'text-zinc-500'}`}>
+              <span className={`flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest ${overBudget ? 'text-amber-500' : 'text-on-surface-sublabel'}`}>
                 <Clock className="h-3 w-3 shrink-0" /> ~{totalSec.toFixed(1)}s / {target}s
               </span>
             }
@@ -118,7 +118,7 @@ export const ScriptStudio: React.FC<{
                         {i + 1}. {b.label}
                       </span>
                       <div className="flex items-center gap-2.5">
-                        <span className={`text-[10px] font-mono ${over ? 'text-amber-500' : 'text-zinc-500'}`}>
+                        <span className={`text-[10px] font-mono ${over ? 'text-amber-500' : 'text-on-surface-sublabel'}`}>
                           {v.wordCount}/{b.wordCap}w · ~{v.estSeconds.toFixed(1)}s
                         </span>
                         {lines.length > 1 && (
@@ -126,7 +126,7 @@ export const ScriptStudio: React.FC<{
                             type="button"
                             onClick={() => removeScene(i)}
                             aria-label={`Remove scene ${i + 1}`}
-                            className="-my-3 -mr-3 flex min-h-11 min-w-11 items-center justify-center text-zinc-600 hover:text-white transition-colors"
+                            className="-my-3 -mr-3 flex min-h-11 min-w-11 items-center justify-center text-on-surface-sublabel hover:text-white transition-colors"
                           >
                             <Trash2 className="h-3.5 w-3.5 shrink-0" />
                           </button>
@@ -169,7 +169,7 @@ export const ScriptStudio: React.FC<{
               <Plus className="h-4 w-4 shrink-0" /> Add scene
             </button>
             {atCap && (
-              <p className="mt-2 text-center text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+              <p className="mt-2 text-center text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">
                 Plan cap reached ({maxScenes} scenes)
               </p>
             )}

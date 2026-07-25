@@ -2,6 +2,7 @@ import React from 'react';
 import { Minimize2 } from 'lucide-react';
 import { DriftOrbs, SpineNode } from './motion';
 import type { OneShotStage, OneShotStageId } from '../../hooks/useOneShotGeneration';
+import { MAT_PLATE } from '../ui/materialTokens';
 
 /**
  * "Building your ad" screen for the One-Shot Ad flow. Reads the live stage list
@@ -70,14 +71,14 @@ export const RunningScreen: React.FC<{
           </button>
         </div>
 
-        <div className="mb-8 rounded-2xl border border-white/10 bg-zinc-900/60 p-4">
+        <div className={`mb-8 rounded-2xl border border-white/10 ${MAT_PLATE} p-4`}>
           <div className="flex items-center justify-between text-xs">
             <span className="font-mono uppercase tracking-widest text-zinc-400">
               Building your plan · {doneCount}/{total} phases
             </span>
-            <span className="font-mono text-zinc-500">~1–3 min</span>
+            <span className="font-mono text-on-surface-sublabel">~1–3 min</span>
           </div>
-          <p className="mt-1 text-[11px] text-zinc-500">Keep this tab open — your AI crew is on it. We&apos;ll drop you into review when the plan&apos;s ready.</p>
+          <p className="mt-1 text-[11px] text-on-surface-sublabel">Keep this tab open — your AI crew is on it. We&apos;ll drop you into review when the plan&apos;s ready.</p>
         </div>
 
         <div className="grid gap-8 md:grid-cols-[1fr_1.1fr]">
@@ -85,7 +86,7 @@ export const RunningScreen: React.FC<{
           <div>
             {phases.map((phase, i) => (
               <SpineNode key={phase.label} state={phase.state} last={i === phases.length - 1}>
-                <p className={`text-sm font-semibold ${phase.state === 'pending' ? 'text-zinc-500' : 'text-white'}`}>
+                <p className={`text-sm font-semibold ${phase.state === 'pending' ? 'text-on-surface-sublabel' : 'text-white'}`}>
                   {phase.label}
                   {phase.state === 'active' && <span className="ml-1 text-[#FFCC00]">…</span>}
                 </p>
@@ -97,8 +98,8 @@ export const RunningScreen: React.FC<{
 
           {/* Scene placeholder gallery — fills as the storyboard renders. */}
           <div>
-            <p className="mb-1 text-[10px] font-mono uppercase tracking-widest text-zinc-500">// Your scenes, assembling</p>
-            <p className="mb-3 text-[11px] text-zinc-500">{sceneDetail ? `Scenes rendering — ${sceneDetail}` : 'Your scenes appear here as they are shot.'}</p>
+            <p className="mb-1 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">// Your scenes, assembling</p>
+            <p className="mb-3 text-[11px] text-on-surface-sublabel">{sceneDetail ? `Scenes rendering — ${sceneDetail}` : 'Your scenes appear here as they are shot.'}</p>
             <div className="grid grid-cols-3 gap-2">
               {Array.from({ length: 6 }).map((_, i) => (
                 <div key={i} className="aspect-[9/16] animate-pulse rounded-lg bg-gradient-to-br from-zinc-800/70 to-zinc-900" />

@@ -2,6 +2,8 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { DUR } from '../../ui/motionTokens';
 import { SignatureScribble } from '../SignatureScribble';
+import { BAND_TIGHT } from '../../ui/layoutTokens';
+import { MAT_PLATE } from '../../ui/materialTokens';
 
 // All four are defensible: ~30-min build (product speed), ₱997 vs agency (real
 // pricing), 20+ businesses helped (real 2025 client count), 5 modules (matches
@@ -15,15 +17,15 @@ const METRICS = [
 ];
 
 export const RoiMetrics: React.FC = () => (
-  <section className="py-12 md:py-20 px-4 sm:px-6 lg:px-8 relative z-10">
-    <div className="max-w-7xl mx-auto bg-zinc-900/30 backdrop-blur-xl border border-white/5 rounded-3xl sm:rounded-[40px] p-8 sm:p-12 md:p-16">
+  <section className={`${BAND_TIGHT} px-4 sm:px-6 lg:px-8 relative z-10`}>
+    <div className={`max-w-7xl mx-auto ${MAT_PLATE} border border-white/5 rounded-3xl sm:rounded-[40px] p-8 sm:p-12 md:p-16`}>
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: DUR.entrance }}
       >
-        <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-[0.25em] text-center mb-2">// PROOF</p>
+        <p className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-[0.25em] text-center mb-2">// PROOF</p>
         <h2 className="text-2xl md:text-4xl font-bold text-center mb-10 md:mb-16 uppercase tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
           THE NUMBERS DON'T{' '}
           <span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">lie.</span>

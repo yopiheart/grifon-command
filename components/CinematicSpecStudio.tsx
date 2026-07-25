@@ -9,6 +9,7 @@ import GeneratedFrameTile from './ui/GeneratedFrameTile';
 import { RefreshCcw, UploadCloud, Video, ChevronLeft, ChevronDown, Settings2, Image as ImageIcon, MonitorPlay, Download, Edit2 } from 'lucide-react';
 import saveAs from 'file-saver';
 import Step6VideoPrompts from './Step6VideoPrompts';
+import { MAT_CHROME, MAT_PLATE, MAT_PLATE_INSET } from './ui/materialTokens';
 
 const GrifonLogo = ({ className = "h-8 w-auto" }: { className?: string }) => (
   <img src="/logo.png" alt="GRIFON Logo" className={`object-contain ${className}`} />
@@ -222,7 +223,7 @@ const CinematicSpecStudio: React.FC<CinematicSpecStudioProps> = ({
       {/* HUD HEADER */}
       <header className="flex flex-col items-start gap-4 mb-8 w-full border-b border-white/10 pb-4">
         <div className="flex items-center justify-between w-full">
-          <button onClick={onBack} className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-zinc-500 hover:text-white uppercase tracking-widest transition-colors">
+          <button onClick={onBack} className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-on-surface-sublabel hover:text-white uppercase tracking-widest transition-colors">
             <ChevronLeft className="w-4 h-4" /> <span className="hidden md:inline">COMMAND CENTER</span><span className="md:hidden">BACK</span>
           </button>
         </div>
@@ -230,7 +231,7 @@ const CinematicSpecStudio: React.FC<CinematicSpecStudioProps> = ({
           <h1 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight break-words whitespace-normal leading-tight">
             CINEMA COMMAND <span className="text-[#FFCC00] hidden sm:inline">// ODYSSEY</span>
           </h1>
-          <div className="text-[10px] text-zinc-500 tracking-widest uppercase font-mono mt-2">
+          <div className="text-[10px] text-on-surface-sublabel tracking-widest uppercase font-mono mt-2">
             // ODYSSEY_v6.0
           </div>
         </div>
@@ -248,7 +249,7 @@ const CinematicSpecStudio: React.FC<CinematicSpecStudioProps> = ({
               <button 
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-full text-[10px] font-bold tracking-widest transition-all ${activeTab === tab.id ? 'bg-[#FFCC00] text-black' : 'text-zinc-500 hover:text-white'}`}
+                className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-full text-[10px] font-bold tracking-widest transition-all ${activeTab === tab.id ? 'bg-[#FFCC00] text-black' : 'text-on-surface-sublabel hover:text-white'}`}
               >
                 <Icon className="w-3 h-3" />
                 {tab.label}
@@ -268,26 +269,26 @@ const CinematicSpecStudio: React.FC<CinematicSpecStudioProps> = ({
             
             <div className="space-y-6 flex-1 overflow-y-auto pb-48 md:pb-6 custom-scrollbar">
               <div>
-                <label className="flex justify-between items-center text-[10px] font-mono text-zinc-500 uppercase mb-2">Camera_Body</label>
+                <label className="flex justify-between items-center text-[10px] font-mono text-on-surface-sublabel uppercase mb-2">Camera_Body</label>
                 <div className="relative">
                   <select value={config.camera} onChange={(e) => setConfig({...config, camera: e.target.value as any})} className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-sm md:text-base font-medium text-white focus:outline-none focus:border-[#FFCC00]/50 transition-colors appearance-none truncate pr-10">
                     {CAMERAS.map(c => <option key={c} value={c}>{c}</option>)}
                   </select>
-                  <ChevronDown className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none" />
+                  <ChevronDown className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-sublabel pointer-events-none" />
                 </div>
               </div>
               <div>
-                <label className="flex justify-between items-center text-[10px] font-mono text-zinc-500 uppercase mb-2">Lens_Selection</label>
+                <label className="flex justify-between items-center text-[10px] font-mono text-on-surface-sublabel uppercase mb-2">Lens_Selection</label>
                 <div className="relative">
                   <select value={config.lens} onChange={(e) => setConfig({...config, lens: e.target.value as any})} className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-sm md:text-base font-medium text-white focus:outline-none focus:border-[#FFCC00]/50 transition-colors appearance-none truncate pr-10">
                     {LENSES.map(l => <option key={l} value={l}>{l}</option>)}
                   </select>
-                  <ChevronDown className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none" />
+                  <ChevronDown className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-sublabel pointer-events-none" />
                 </div>
               </div>
 
               <div className="pt-6 border-t border-white/10 space-y-4">
-                <h3 className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">// RENDER_CONFIG</h3>
+                <h3 className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest">// RENDER_CONFIG</h3>
                 <div className="grid grid-cols-3 gap-2">
                     {RATIOS.map(r => (
                       <button key={r} onClick={() => setConfig({...config, aspectRatio: r})} className={`py-2 rounded-xl text-xs font-bold border transition-all ${config.aspectRatio === r ? 'bg-[#FFCC00] text-black border-[#FFCC00]' : 'bg-zinc-950 text-zinc-400 border-white/10 hover:border-white/20'}`}>{r}</button>
@@ -295,7 +296,7 @@ const CinematicSpecStudio: React.FC<CinematicSpecStudioProps> = ({
                 </div>
                 <div className="flex gap-2 bg-zinc-950 p-1 rounded-xl border border-white/10">
                     {QUALITIES.map(q => (
-                        <button key={q} onClick={() => setConfig({...config, resolution: q as any})} className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${config.resolution === q ? 'bg-zinc-800 text-white' : 'text-zinc-500 hover:text-white'}`}>{q}</button>
+                        <button key={q} onClick={() => setConfig({...config, resolution: q as any})} className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${config.resolution === q ? 'bg-zinc-800 text-white' : 'text-on-surface-sublabel hover:text-white'}`}>{q}</button>
                     ))}
                 </div>
               </div>
@@ -333,7 +334,7 @@ const CinematicSpecStudio: React.FC<CinematicSpecStudioProps> = ({
                  </div>
                  <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4 overflow-y-auto pr-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                     {narrative.map((scene, i) => (
-                      <div key={i} className="p-5 bg-zinc-900/80 border border-white/10 rounded-2xl backdrop-blur-xl">
+                      <div key={i} className={`p-5 ${MAT_PLATE} border border-white/10 rounded-2xl`}>
                          <div className="flex justify-between items-center mb-3">
                             <span className="text-[10px] font-mono font-bold text-zinc-400 uppercase">{scene.phase}</span>
                             <span className="text-[10px] font-mono font-bold text-[#FFCC00] uppercase">{scene.emotion}</span>
@@ -374,8 +375,8 @@ const CinematicSpecStudio: React.FC<CinematicSpecStudioProps> = ({
 
             {!narrative && !isLoading && !result && (
               <div className="text-center opacity-40 animate-pulse">
-                <Video className="w-16 h-16 mx-auto mb-6 text-zinc-600" />
-                <p className="text-[10px] tracking-[0.4em] uppercase text-zinc-500 font-mono">// STANDBY: AWAITING_SYNTHESIS_INTENT</p>
+                <Video className="w-16 h-16 mx-auto mb-6 text-on-surface-sublabel" />
+                <p className="text-[10px] tracking-[0.4em] uppercase text-on-surface-sublabel font-mono">// STANDBY: AWAITING_SYNTHESIS_INTENT</p>
               </div>
             )}
           </div>
@@ -397,12 +398,12 @@ const CinematicSpecStudio: React.FC<CinematicSpecStudioProps> = ({
                   { id: 'logo', label: 'SLOT 5: BRAND_MARK', data: config.logoAsset, ref: logoInputRef }
                 ].map(slot => (
                   <div key={slot.id} className="space-y-2">
-                    <label className="block text-[10px] font-mono text-zinc-500 uppercase tracking-widest">{slot.label}</label>
+                    <label className="block text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest">{slot.label}</label>
                     <div 
                       onClick={() => slot.ref.current?.click()}
-                      className={`bg-zinc-950/50 border-2 border-dashed border-white/10 rounded-xl hover:border-[#FFCC00] hover:bg-zinc-800/80 transition-all cursor-pointer flex flex-col items-center justify-center p-6 min-h-[100px] ${slot.data ? 'border-[#FFCC00]/40 bg-[#FFCC00]/5 overflow-hidden p-0' : ''}`}
+                      className={`${MAT_PLATE_INSET} border-2 border-dashed border-white/10 rounded-xl hover:border-[#FFCC00] hover:bg-zinc-800/80 transition-all cursor-pointer flex flex-col items-center justify-center p-6 min-h-[100px] ${slot.data ? 'border-[#FFCC00]/40 bg-[#FFCC00]/5 overflow-hidden p-0' : ''}`}
                     >
-                      {slot.data ? <img src={slot.data} className="w-full h-full object-cover" /> : <UploadCloud className="w-6 h-6 text-zinc-600" />}
+                      {slot.data ? <img src={slot.data} className="w-full h-full object-cover" /> : <UploadCloud className="w-6 h-6 text-on-surface-sublabel" />}
                       <input type="file" hidden ref={slot.ref} onChange={(e) => handleFileUpload(e, slot.id as any)} accept="image/*" />
                     </div>
                   </div>
@@ -416,14 +417,14 @@ const CinematicSpecStudio: React.FC<CinematicSpecStudioProps> = ({
       {/* PRESETS */}
       <div className="fixed bottom-28 left-1/2 -translate-x-1/2 flex items-center gap-2 overflow-x-auto w-full hide-scrollbar pb-2 snap-x z-40 px-4">
         {['THE_ELEMENTAL', 'THE_SPEEDSTER', 'THE_LUXURY', 'THE_FRESH'].map(p => (
-          <button key={p} onClick={() => handlePreset(p)} className="shrink-0 whitespace-nowrap text-[10px] font-bold text-zinc-400 hover:text-black hover:bg-[#FFCC00] bg-zinc-900/80 backdrop-blur-md border border-white/10 px-4 py-2 rounded-full transition-all uppercase shadow-lg">
+          <button key={p} onClick={() => handlePreset(p)} className="shrink-0 whitespace-nowrap text-[10px] font-bold text-zinc-400 hover:text-black hover:bg-[#FFCC00] bg-zinc-900/80 border border-white/10 px-4 py-2 rounded-full transition-all uppercase shadow-lg">
             {p.replace('_', ' ')}
           </button>
         ))}
       </div>
 
       {/* COMMAND CENTER FOOTER */}
-      <footer className="fixed bottom-8 left-1/2 -translate-x-1/2 w-[95%] max-w-6xl bg-zinc-900/90 backdrop-blur-2xl border border-white/10 rounded-full p-2 flex items-center gap-2 shadow-2xl z-50">
+      <footer className={`fixed bottom-8 left-1/2 -translate-x-1/2 w-[95%] max-w-6xl ${MAT_CHROME} border border-white/10 rounded-full p-2 flex items-center gap-2 shadow-2xl z-50`}>
         <div className="flex-1 w-full min-w-[50%] relative">
           <input 
             type="text"

@@ -29,7 +29,7 @@ export const EwalletButtons: React.FC<EwalletButtonsProps> = ({ active, onContin
         <p className="text-zinc-300 text-sm mb-2">
           You'll be redirected to <span className="text-white font-semibold">{label}</span> to complete your payment.
         </p>
-        <p className="text-zinc-500 text-xs leading-relaxed">
+        <p className="text-on-surface-sublabel text-xs leading-relaxed">
           Pay with your {label} balance. After payment, you'll return to Grifon Command.
         </p>
       </div>
@@ -55,7 +55,7 @@ export const EwalletButtons: React.FC<EwalletButtonsProps> = ({ active, onContin
         </span>
       </button>
 
-      <p className="text-[11px] text-zinc-500 leading-relaxed">{authorizationText}</p>
+      <p className="text-[11px] text-on-surface-sublabel leading-relaxed">{authorizationText}</p>
     </div>
   );
 };

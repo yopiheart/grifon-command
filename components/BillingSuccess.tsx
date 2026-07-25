@@ -233,7 +233,7 @@ const BillingSuccess: React.FC<Props> = ({ onContinue, email }) => {
               </div>
 
               <div>
-                <p className="text-[8px] font-mono uppercase tracking-[0.3em] text-zinc-500 mb-1">Plan</p>
+                <p className="text-[8px] font-mono uppercase tracking-[0.3em] text-on-surface-sublabel mb-1">Plan</p>
                 <p className="text-2xl font-black uppercase tracking-tighter text-white leading-none">
                   {planLabel}
                 </p>
@@ -246,18 +246,18 @@ const BillingSuccess: React.FC<Props> = ({ onContinue, email }) => {
 
               <div className="flex items-end justify-between gap-3">
                 <div className="min-w-0">
-                  <p className="text-[8px] font-mono uppercase tracking-[0.3em] text-zinc-500 mb-0.5">Member</p>
+                  <p className="text-[8px] font-mono uppercase tracking-[0.3em] text-on-surface-sublabel mb-0.5">Member</p>
                   <p className="text-[10px] font-mono text-zinc-300 truncate">{email ?? '—'}</p>
                 </div>
                 <div className="text-right shrink-0">
-                  <p className="text-[8px] font-mono uppercase tracking-[0.3em] text-zinc-500 mb-0.5">Est.</p>
+                  <p className="text-[8px] font-mono uppercase tracking-[0.3em] text-on-surface-sublabel mb-0.5">Est.</p>
                   <p className="text-[10px] font-mono text-[#FFCC00]">{estDate}</p>
                 </div>
               </div>
             </div>
           </div>
         </motion.div>
-        <p className="text-[9px] font-mono uppercase tracking-[0.3em] text-zinc-600 mb-8 hidden lg:block">
+        <p className="text-[9px] font-mono uppercase tracking-[0.3em] text-on-surface-sublabel mb-8 hidden lg:block">
           Move cursor to tilt
         </p>
 
@@ -283,11 +283,11 @@ const BillingSuccess: React.FC<Props> = ({ onContinue, email }) => {
             <Share2 className="w-4 h-4 shrink-0" />
             {sharing ? 'Preparing card…' : saved ? 'Card saved — check Downloads' : 'Share my card'}
           </button>
-          <p className="text-[10px] font-mono uppercase tracking-widest text-zinc-600 mt-1">
+          <p className="text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel mt-1">
             // Your first ad in 30 minutes — starting now
           </p>
           {email && (
-            <p className="text-[10px] text-zinc-600">Receipt sent to {email}</p>
+            <p className="text-[10px] text-on-surface-sublabel">Receipt sent to {email}</p>
           )}
         </motion.div>
       </motion.div>

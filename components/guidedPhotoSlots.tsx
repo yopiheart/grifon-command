@@ -237,7 +237,7 @@ export const SampleTile: React.FC<{ src: string; caption: string; good: boolean;
           {good ? <Check className="w-3 h-3" /> : <X className="w-3 h-3" />}
         </span>
       </button>
-      <p className="text-[8px] text-zinc-500 font-mono uppercase tracking-tighter mt-1.5 text-center">{caption}</p>
+      <p className="text-[8px] text-on-surface-sublabel font-mono uppercase tracking-tighter mt-1.5 text-center">{caption}</p>
     </div>
   );
 };

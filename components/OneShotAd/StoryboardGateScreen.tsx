@@ -39,7 +39,7 @@ export const StoryboardGateScreen: React.FC<{
   return (
     <div className="relative min-h-screen overflow-hidden bg-zinc-950 px-4 py-10 text-white">
       <div className="relative mx-auto w-full max-w-4xl">
-        <p className="mb-1 text-[10px] font-mono uppercase tracking-widest text-zinc-500">// APPROVE YOUR SCENES · BEFORE WE FILM</p>
+        <p className="mb-1 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">// APPROVE YOUR SCENES · BEFORE WE FILM</p>
         <h1 className="mb-2 text-3xl font-black uppercase tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500">
           Your Storyboard
         </h1>
@@ -134,10 +134,10 @@ export const StoryboardGateScreen: React.FC<{
               )}
             </span>
           </ShimmerButton>
-          <p className="mt-2 flex items-center justify-center gap-1.5 text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+          <p className="mt-2 flex items-center justify-center gap-1.5 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">
             <Film className="h-3 w-3" /> Approving starts the video render
           </p>
-          <button type="button" onClick={onStartOver} className="mx-auto mt-4 flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500 transition-colors hover:border-white/25 hover:text-white">
+          <button type="button" onClick={onStartOver} className="mx-auto mt-4 flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel transition-colors hover:border-white/25 hover:text-white">
             <RotateCcw className="h-3.5 w-3.5" /> Start over
           </button>
         </div>

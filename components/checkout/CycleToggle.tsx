@@ -48,7 +48,7 @@ export const CycleToggle: React.FC<CycleToggleProps> = ({
 
   return (
     <div className="mb-6">
-      <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">Billing cycle</p>
+      <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest mb-2">Billing cycle</p>
 
       {/* Segmented control — sliding gold indicator behind the active segment. */}
       <div className="relative grid grid-cols-2 gap-1 rounded-xl border border-white/10 bg-zinc-950 p-1">
@@ -115,7 +115,7 @@ export const CycleToggle: React.FC<CycleToggleProps> = ({
 
       {/* Annual confirmation anchor — honest per-month framing, low-key switch-back. */}
       {cycle === 'annual' && monthlyEquivalentCentavos !== undefined && (
-        <p className="mt-3 text-xs text-zinc-500">
+        <p className="mt-3 text-xs text-on-surface-sublabel">
           That's {formatPHP(monthlyEquivalentCentavos)}/mo, billed annually.{' '}
           <button
             type="button"

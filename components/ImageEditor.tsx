@@ -7,6 +7,7 @@ import Loader from './ui/Loader';
 import { Trash2, RefreshCw, Copy, Check, Sparkles, Image as ImageIcon, ChevronLeft, Wand2, Layers } from 'lucide-react';
 import saveAs from 'file-saver';
 import GeneratedFrameTile from './ui/GeneratedFrameTile';
+import { MAT_CHROME, MAT_PLATE } from './ui/materialTokens';
 
 interface ImageEditorProps {
   onBack: () => void;
@@ -48,11 +49,11 @@ const TikTokOverlay: React.FC = () => (
             </div>
             <div className="flex flex-col items-center gap-6 pb-4">
                 <div className="flex flex-col items-center gap-1">
-                    <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center"><Sparkles className="w-5 h-5 text-white" /></div>
+                    <div className="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center"><Sparkles className="w-5 h-5 text-white" /></div>
                     <span className="text-white text-[10px] font-bold">128K</span>
                 </div>
                 <div className="flex flex-col items-center gap-1">
-                    <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center"><Check className="w-5 h-5 text-white" /></div>
+                    <div className="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center"><Check className="w-5 h-5 text-white" /></div>
                     <span className="text-white text-[10px] font-bold">1.2K</span>
                 </div>
             </div>
@@ -247,10 +248,10 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ onBack, ethnicity = 'Global' 
       {/* --- HUD HEADER --- */}
       <header className="flex flex-col items-start gap-4 mb-8 w-full border-b border-white/10 pb-6 relative z-30 p-4 md:p-6 m-4">
         <div className="flex items-center justify-between w-full">
-          <button onClick={onBack} className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-zinc-500 hover:text-white uppercase tracking-widest transition-colors">
+          <button onClick={onBack} className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-on-surface-sublabel hover:text-white uppercase tracking-widest transition-colors">
             <ChevronLeft className="w-4 h-4" /> <span className="hidden md:inline">COMMAND CENTER</span><span className="md:hidden">BACK</span>
           </button>
-          <div className="hidden md:flex items-center gap-4 text-[8px] font-mono text-zinc-600 tracking-tighter uppercase">
+          <div className="hidden md:flex items-center gap-4 text-[8px] font-mono text-on-surface-sublabel tracking-tighter uppercase">
             [ FIRMWARE_v4.2 ] [ ASYNC_CORE_ACTIVE ]
           </div>
         </div>
@@ -258,7 +259,7 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ onBack, ethnicity = 'Global' 
           <h1 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-500 uppercase tracking-tight break-words whitespace-normal leading-tight">
             Image Lab
           </h1>
-          <span className="hidden lg:block text-[9px] text-zinc-600 tracking-widest font-mono uppercase whitespace-nowrap mt-2">// SESSION_ENCRYPTED // CORE_READY</span>
+          <span className="hidden lg:block text-[9px] text-on-surface-sublabel tracking-widest font-mono uppercase whitespace-nowrap mt-2">// SESSION_ENCRYPTED // CORE_READY</span>
         </div>
       </header>
 
@@ -279,7 +280,7 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ onBack, ethnicity = 'Global' 
                     `}>
                         <Sparkles className="w-6 h-6 md:w-8 md:h-8 text-[#FFCC00]" />
                     </div>
-                    <p className="text-[10px] md:text-[11px] font-mono tracking-[0.2em] uppercase text-center px-8 text-zinc-500">
+                    <p className="text-[10px] md:text-[11px] font-mono tracking-[0.2em] uppercase text-center px-8 text-on-surface-sublabel">
                         {isDragging ? "[ RELEASE_TO_INJECT ]" : "[ DROP_ASSET_FOR_ANALYSIS ]"}
                     </p>
                     {!isDragging && (
@@ -299,10 +300,10 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ onBack, ethnicity = 'Global' 
             <div className="flex flex-wrap justify-center gap-6 md:gap-10 mb-16 w-full max-w-7xl animate-in fade-in duration-500">
                 {images.map((img, i) => (
                     <div key={i} className="relative group scanner-active">
-                        <div className="w-48 h-48 md:w-64 md:h-64 bg-zinc-900 border border-white/10 p-2 shadow-2xl relative overflow-hidden rounded-2xl">
-                            <img src={img} className="w-full h-full object-cover transition-all group-hover:scale-105 duration-500 rounded-xl opacity-90" />
+                        <div className={`w-48 h-48 md:w-64 md:h-64 ${MAT_PLATE} border border-white/10 p-2 shadow-2xl relative overflow-hidden rounded-2xl`}>
+                            <img src={img} className="w-full h-full object-cover transition-all group-hover:scale-105 duration-500 rounded-lg opacity-90" />
                             <div className="absolute top-4 left-4 bg-[#FFCC00] text-[9px] font-black px-3 py-1 text-black uppercase rounded-full shadow-lg tracking-widest">ASSET 0{i+1}</div>
-                            <button onClick={() => removeImage(i)} className="absolute top-4 right-4 bg-red-600/80 backdrop-blur-md p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600 shadow-xl"><Trash2 className="w-4 h-4 text-white"/></button>
+                            <button onClick={() => removeImage(i)} className="absolute top-4 right-4 bg-red-600/80 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600 shadow-xl"><Trash2 className="w-4 h-4 text-white"/></button>
                         </div>
                     </div>
                 ))}
@@ -316,20 +317,20 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ onBack, ethnicity = 'Global' 
                     {showTikTokPreview && <TikTokOverlay />}
 
                     {refineCount > 0 && (
-                        <div className="absolute top-6 left-6 bg-zinc-900/80 backdrop-blur-xl border border-[#FFCC00]/30 px-3 py-1.5 rounded-full text-[9px] font-mono tracking-widest uppercase text-[#FFCC00] shadow-xl">
+                        <div className="absolute top-6 left-6 bg-zinc-900/80 border border-[#FFCC00]/30 px-3 py-1.5 rounded-full text-[9px] font-mono tracking-widest uppercase text-[#FFCC00] shadow-xl">
                             MOLD PASS 0{refineCount}
                         </div>
                     )}
 
                     <div className="absolute top-6 right-6 flex flex-col md:flex-row gap-3">
-                        <button onClick={handleRefine} title="Continue molding this result" className="px-4 py-2 rounded-full text-[9px] md:text-[10px] font-mono tracking-widest uppercase transition-all shadow-xl backdrop-blur-xl border bg-[#FFCC00] text-black border-[#FFCC00] hover:shadow-[0_0_20px_rgba(255,204,0,0.4)] flex items-center gap-2">
+                        <button onClick={handleRefine} title="Continue molding this result" className="px-4 py-2 rounded-full text-[9px] md:text-[10px] font-mono tracking-widest uppercase transition-all shadow-xl border bg-[#FFCC00] text-black border-[#FFCC00] hover:shadow-[0_0_20px_rgba(255,204,0,0.4)] flex items-center gap-2">
                             <Wand2 className="w-3.5 h-3.5" /> REFINE
                         </button>
-                        <button onClick={() => setShowTikTokPreview(!showTikTokPreview)} className={`px-4 py-2 rounded-full text-[9px] md:text-[10px] font-mono tracking-widest uppercase transition-all shadow-xl backdrop-blur-xl border ${showTikTokPreview ? 'bg-white text-black border-white' : 'bg-zinc-900/80 border-white/20 text-white hover:bg-white/10'}`}>
+                        <button onClick={() => setShowTikTokPreview(!showTikTokPreview)} className={`px-4 py-2 rounded-full text-[9px] md:text-[10px] font-mono tracking-widest uppercase transition-all shadow-xl border ${showTikTokPreview ? 'bg-white text-black border-white' : 'bg-zinc-900/80 border-white/20 text-white hover:bg-white/10'}`}>
                             {showTikTokPreview ? 'HIDE PREVIEW' : 'AD PREVIEW'}
                         </button>
                         <div className="flex gap-2">
-                            <button onClick={handleReset} title="Start over from scratch" className="bg-zinc-900/80 backdrop-blur-xl border border-white/20 p-3 text-zinc-300 rounded-full hover:text-[#FFCC00] transition-colors shadow-xl"><RefreshCw className="w-4 h-4"/></button>
+                            <button onClick={handleReset} title="Start over from scratch" className="bg-zinc-900/80 border border-white/20 p-3 text-zinc-300 rounded-full hover:text-[#FFCC00] transition-colors shadow-xl"><RefreshCw className="w-4 h-4"/></button>
                             <button onClick={() => saveAs(finalImage, 'studio-core-render.png')} className="bg-[#FFCC00] p-3 text-black rounded-full hover:shadow-[0_0_20px_rgba(255,204,0,0.4)] transition-all shadow-xl"><Copy className="w-4 h-4"/></button>
                         </div>
                     </div>
@@ -344,7 +345,7 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ onBack, ethnicity = 'Global' 
                         <Layers className="w-4 h-4 text-[#FFCC00] shrink-0" />
                         <span className="text-[9px] md:text-xs font-mono text-[#FFCC00] uppercase tracking-[0.2em] truncate">// DIVERGENCE_FIELD : SELECT_TO_CONVERGE</span>
                     </div>
-                    <button onClick={() => setStudioState('review')} className="text-[9px] md:text-[10px] text-zinc-500 uppercase hover:text-white underline font-mono tracking-widest shrink-0 ml-4">&larr; REVISE PROMPT</button>
+                    <button onClick={() => setStudioState('review')} className="text-[9px] md:text-[10px] text-on-surface-sublabel uppercase hover:text-white underline font-mono tracking-widest shrink-0 ml-4">&larr; REVISE PROMPT</button>
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                     {variants.map((v, idx) => (
@@ -361,7 +362,7 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ onBack, ethnicity = 'Global' 
                             emptyState={v === null && rerollingIndex !== idx ? (
                                 <button
                                     onClick={() => rerollVariant(idx)}
-                                    className="w-full h-full flex flex-col items-center justify-center gap-3 text-zinc-500 hover:text-[#FFCC00] transition-colors"
+                                    className="w-full h-full flex flex-col items-center justify-center gap-3 text-on-surface-sublabel hover:text-[#FFCC00] transition-colors"
                                 >
                                     <RefreshCw className="w-6 h-6" />
                                     <span className="text-[10px] font-mono uppercase tracking-widest">VARIATION_FAILED &middot; RE-ROLL</span>
@@ -400,10 +401,10 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ onBack, ethnicity = 'Global' 
                     <textarea 
                         value={suggestion.finalPrompt}
                         onChange={(e) => setSuggestion({...suggestion, finalPrompt: e.target.value})}
-                        className="w-full bg-zinc-900 border border-white/10 text-sm text-zinc-300 focus:ring-1 focus:ring-[#FFCC00] focus:border-[#FFCC00] p-6 rounded-xl h-32 font-mono leading-relaxed resize-none custom-scrollbar outline-none"
+                        className={`w-full ${MAT_PLATE} border border-white/10 text-sm text-zinc-300 focus:ring-1 focus:ring-[#FFCC00] focus:border-[#FFCC00] p-6 rounded-xl h-32 font-mono leading-relaxed resize-none custom-scrollbar outline-none`}
                     />
                     <div className="flex justify-between items-center mt-8 gap-4">
-                        <button onClick={handleReset} className="text-[9px] md:text-[10px] text-zinc-500 uppercase hover:text-white underline font-mono tracking-widest shrink-0">ABORT PROTOCOL</button>
+                        <button onClick={handleReset} className="text-[9px] md:text-[10px] text-on-surface-sublabel uppercase hover:text-white underline font-mono tracking-widest shrink-0">ABORT PROTOCOL</button>
                         <div className="flex items-center gap-3">
                             <button onClick={onExploreVariations} title={`Synthesize ${VARIATION_COUNT} variations to compare`} className="px-5 py-4 text-[10px] md:text-xs flex items-center gap-2 rounded-xl font-mono tracking-widest uppercase bg-zinc-950 border border-white/10 text-zinc-300 hover:border-[#FFCC00] hover:text-[#FFCC00] transition-all">
                                 <Layers className="w-4 h-4" /> EXPLORE {VARIATION_COUNT}&times;
@@ -419,7 +420,7 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ onBack, ethnicity = 'Global' 
 
             {/* Floating Interaction Pill */}
             <div className={`
-                bg-zinc-950/80 backdrop-blur-xl border border-white/10 p-2 md:p-3 flex flex-col rounded-3xl shadow-[0_40px_100px_rgba(0,0,0,0.9)] transition-all group
+                bg-zinc-950/80 border border-white/10 p-2 md:p-3 flex flex-col rounded-3xl shadow-[0_40px_100px_rgba(0,0,0,0.9)] transition-all group
                 ${studioState !== 'idle' ? 'opacity-20 pointer-events-none' : 'opacity-100'}
             `}>
                 {/* Internal Top: Aspect Ratio (Always visible in pill for mobile logic) */}
@@ -429,10 +430,10 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ onBack, ethnicity = 'Global' 
                             key={r} 
                             onClick={() => setAspectRatio(r as any)}
                             className={`
-                                text-[8px] md:text-[10px] px-4 md:px-6 py-1.5 md:py-2.5 font-mono uppercase tracking-widest transition-all rounded-full border border-transparent backdrop-blur-[10px]
+                                text-[8px] md:text-[10px] px-4 md:px-6 py-1.5 md:py-2.5 font-mono uppercase tracking-widest transition-all rounded-full border border-transparent-[10px]
                                 ${aspectRatio === r 
                                     ? 'bg-[#FFCC00] text-black shadow-[0_0_10px_#FFCC00] scale-105 z-10 border-[#FFCC00]' 
-                                    : 'text-zinc-500 hover:text-white hover:bg-white/10 hover:border-white/10'}
+                                    : 'text-on-surface-sublabel hover:text-white hover:bg-white/10 hover:border-white/10'}
                             `}
                         >
                             {r}
@@ -479,15 +480,15 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ onBack, ethnicity = 'Global' 
             </div>
             
             <div className="flex justify-center gap-8 mt-2 opacity-30 select-none pointer-events-none">
-                <p className="text-[7px] md:text-[8px] text-zinc-500 font-mono tracking-[0.4em] uppercase">STUDIO_CORE_v4.2_STABLE</p>
-                <p className="hidden md:block text-[7px] md:text-[8px] text-zinc-500 font-mono tracking-[0.4em] uppercase">LUMEN_CORE: LOCKED</p>
-                <p className="hidden md:block text-[7px] md:text-[8px] text-zinc-500 font-mono tracking-[0.4em] uppercase">NO_GHOSTING_ACTIVE</p>
+                <p className="text-[7px] md:text-[8px] text-on-surface-sublabel font-mono tracking-[0.4em] uppercase">STUDIO_CORE_v4.2_STABLE</p>
+                <p className="hidden md:block text-[7px] md:text-[8px] text-on-surface-sublabel font-mono tracking-[0.4em] uppercase">LUMEN_CORE: LOCKED</p>
+                <p className="hidden md:block text-[7px] md:text-[8px] text-on-surface-sublabel font-mono tracking-[0.4em] uppercase">NO_GHOSTING_ACTIVE</p>
             </div>
         </div>
       </footer>
 
       {error && (
-        <div className="fixed top-24 left-1/2 -translate-x-1/2 z-50 bg-red-900/20 backdrop-blur-xl border border-red-500/50 p-4 rounded-xl animate-in fade-in slide-in-from-top-4 shadow-2xl">
+        <div className={`fixed top-24 left-1/2 -translate-x-1/2 z-50 ${MAT_CHROME} border border-red-500/50 p-4 rounded-xl animate-in fade-in slide-in-from-top-4 shadow-2xl`}>
             <p className="text-red-500 font-mono text-[10px] uppercase tracking-widest">{error}</p>
         </div>
       )}

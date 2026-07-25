@@ -9,7 +9,7 @@ colors:
   on-surface: "#FFFFFF"
   on-surface-muted: "#D4D4D8"
   on-surface-dim: "#A1A1AA"
-  on-surface-sublabel: "#71717A"
+  on-surface-sublabel: "#82828B"
   proof-band: "#F2F1EA"
 typography:
   headline-display:
@@ -98,7 +98,24 @@ A minimal palette: a single gold accent against neutral ink gradients on deep OL
 - **Primary (`#FFCC00`, "Grifon Gold"):** The sole driver of interaction — active states, selected toggles, main CTAs, focus rings, hover borders. Why gold instead of blue: signals premium + energetic action rather than corporate trust.
 - **Surface (`#09090B`, zinc-950):** The canvas. **Never use pure `#000000`** — pure black reads flat, zinc-950 retains atmosphere so glass effects can land.
 - **Surface-elevated (`#18181B`, zinc-900) at 80% opacity:** Glass panel base. Always paired with `backdrop-blur-xl`.
-- **On-surface ladder (white → zinc-500):** A four-step text hierarchy — `on-surface` for active text, `on-surface-muted` for body, `on-surface-dim` for passive, `on-surface-sublabel` for meta.
+- **On-surface ladder:** A four-step text hierarchy — `on-surface` for active text, `on-surface-muted` for body, `on-surface-dim` for passive, `on-surface-sublabel` for meta. **Every step clears 4.5:1 on `surface`.** See the contrast floor below.
+
+### Contrast floor (measured, non-negotiable)
+
+Apple's HIG sets the accessibility minimum at **4.5:1 for text up to 17pt** and Dark Mode asks you to *"strive for a contrast ratio of 7:1, especially in small text."* Grifon's ladder was audited against `surface` (`#09090B`) and three steps failed:
+
+| Role | Hex | vs `surface` | Verdict |
+|---|---|---|---|
+| `on-surface` | `#FFFFFF` | 19.90:1 | pass |
+| `on-surface-muted` | `#D4D4D8` | 13.46:1 | pass |
+| `on-surface-dim` | `#A1A1AA` | 7.76:1 | pass (clears 7:1) |
+| `on-surface-sublabel` | **`#82828B`** | **5.22:1** | pass — *was `#71717A` at 4.12:1* ✗ |
+| ~~`zinc-600`~~ | `#52525B` | 2.57:1 | **banned as text** |
+| ~~`zinc-700`~~ | `#3F3F46` | 1.91:1 | **banned as text** |
+
+- **Never use `text-zinc-500`, `text-zinc-600` or `text-zinc-700` on a dark surface.** They fail. Use `text-on-surface-sublabel` — that role exists precisely so the dimmest step is still legible. This matters most for the `//` mono meta-labels, which are 10px: the smallest type in the app was also the lowest-contrast.
+- `zinc-500/600/700` remain fine for **borders, fills and backgrounds** — the floor governs text and icons only.
+- **Light-band exception.** Inside the `proof-band` (`#F2F1EA`) the ladder inverts: a *brighter* grey is worse there (`#82828B` scores only 3.36:1 on the band). The band keeps the dark zinc ladder DESIGN.md already prescribes — `text-zinc-900` / `text-zinc-600` / `text-zinc-500`. The sweep deliberately excludes [CreamBand](components/landing/CreamBand.tsx) and [ReceiptsRail](components/landing/sections/ReceiptsRail.tsx).
 - **Borders:** Subtle borders are `white` at 10% alpha (Tailwind `border-white/10`). Alpha-on-color is an *effect*, not a color role, so it isn't a token — apply it directly in component CSS.
 - **Proof-band (`#F2F1EA`):** Warm off-white reserved EXCLUSIVELY for the marketing light band exception below. Never an in-app surface.
 
@@ -147,11 +164,41 @@ Gold means "do this" — it must never be overloaded to mean "watch out." For **
 - Cards are separated by `spacing.lg` or `spacing.xl`.
 - Panel padding: `spacing.lg` (p-6) default, `spacing.xl` (p-8) for primary forms.
 
-## Elevation & Depth
+## Elevation & Depth — the material tier system
 
-Elevation is expressed through **frosted glass**, not drop shadows:
+Elevation is expressed through **material tier**, not drop shadows. Tokens live in
+[components/ui/materialTokens.ts](components/ui/materialTokens.ts); the CSS bodies are in
+[index.css](index.css) (the rim lens needs `mask-composite`, which Tailwind can't express).
 
-- Panels: `backdrop-blur-xl` + `border border-white/10` over `surface-elevated` at 80% opacity.
+This replaces the former blanket rule *"panels are `backdrop-blur-xl` glass."* Evaluated against
+Apple's Liquid Glass docs — see [workflows/liquid_glass_decision.md](workflows/liquid_glass_decision.md).
+Their rule is a **hierarchy** rule, not a visual-effect rule: the material belongs to the
+**functional layer** (nav + controls floating above content) and explicitly **not** to the content
+layer. Grifon had it inverted — 105 `backdrop-filter`s, most of them wrapping forms and data.
+
+| Tier | Class | Job | Treatment |
+|---|---|---|---|
+| **CHROME** | `MAT_CHROME` | floats above content, operable | `blur(28px) saturate(190%)` + 7px masked rim lens + travelling specular. **The only tier that refracts.** |
+| **PLATE** | `MAT_PLATE` | content at rest | tonal fill ~94% + inset top hairline, **no** backdrop-filter |
+| **SLAB** | `MAT_SLAB` | has taken the screen | fully opaque, deep falloff |
+| **VEIL** | `MAT_VEIL` | suppresses what's behind | `blur(8px)` + 72% dim, never holds text |
+
+- **Picking one:** does it float above content the user is reading, and can you operate it? → CHROME.
+  Is it *the* content? → PLATE. Has it taken over the screen? → SLAB. Does it exist to dim? → VEIL.
+- **CHROME must earn it.** Over a flat `zinc-950` field, glass is optically a no-op — a GPU
+  compositing pass for a faint grey wash. Give it something to bend (the `Aurora` field, the
+  `GatewayReel`, scrolling content) or use PLATE. **If a change raises the app's `backdrop-filter`
+  count, it's the wrong change.**
+- **Primitives:** [`<GlassPanel>`](components/ui/GlassPanel.tsx) is PLATE by default (content layer);
+  [`<LiquidGlass>`](components/ui/LiquidGlass.tsx) is CHROME (functional layer). Both take a `tier` prop.
+- **Scroll edge effect** (`SCROLL_EDGE`) on any sticky bar — content grades out beneath it instead
+  of colliding with its labels.
+- **Accessibility is not optional.** `prefers-reduced-transparency` and `prefers-contrast: more`
+  collapse every glass surface to a solid tonal fill (rim + specular off, contrast ring on). Any new
+  material must carry the same guards — same standing as `prefers-reduced-motion`.
+- **Concentric radii.** A nested corner is the outer radius **minus** the padding between them, so
+  curves stay parallel. Use `concentricRadius(outer, padding)` — a 16px panel with `p-3` wants a 4px
+  inner corner, not another `rounded-xl`.
 - Primary action hover: gold glow `shadow-[0_0_20px_rgba(255,204,0,0.4)]` + slight `scale-105`.
 - Avoid conventional drop shadows on UI chrome — they break the cinematic feel.
 - **Demo-mockup chrome exception:** simulated browser windows or app frames *inside* marketing sections (e.g. "see it in action" composites) MAY use shadows for layering. Shadow color is either Grifon Gold tinted glow (`shadow-[#FFCC00]/15` to `shadow-[#FFCC00]/25`) or pure black falloff (`shadow-[0_30px_60px_rgba(0,0,0,0.8)]`). Never another hue. Real UI panels still use glass + blur.
@@ -166,7 +213,8 @@ Elevation is expressed through **frosted glass**, not drop shadows:
 
 ## Components
 
-- **glassPanel:** `bg-zinc-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6` (or `p-8`). Wraps ALL forms, tool settings, data displays.
+- **glassPanel:** `MAT_PLATE border border-white/10 rounded-2xl p-6` (or `p-8`). Wraps ALL forms, tool settings, data displays. Tonal, **not** blurred — see Elevation & Depth; pass `tier="chrome"` only when it floats over live content.
+- **liquidGlass:** the CHROME primitive — floating nav, rails, command palette, sticky bars. Radii are the caller's (`rounded-full` on a pill nav, `rounded-3xl` on a card); the rim lens inherits them.
 - **goldButton:** `bg-[#FFCC00] text-black font-black uppercase tracking-widest px-8 py-4 rounded-xl hover:shadow-[0_0_20px_rgba(255,204,0,0.4)] hover:scale-105 transition-all`. (In-app primary CTA. Use `rounded-full` instead of `rounded-xl` on marketing surfaces — see Shapes.)
 - **goldButtonGhost:** `bg-transparent border border-[#FFCC00] text-[#FFCC00] font-black uppercase tracking-widest px-5 py-2 rounded-full hover:bg-[#FFCC00]/10 hover:shadow-[0_0_15px_rgba(255,204,0,0.3)] hover:scale-105 transition-all`. Persistent secondary CTA — use in sticky navs or footer when a primary `goldButton` exists elsewhere on the same surface, so the nav doesn't compete with the hero CTA.
 - **ghostButton:** `bg-zinc-950 border border-white/10 text-zinc-400 hover:text-white hover:border-[#FFCC00] transition-all rounded-xl`.

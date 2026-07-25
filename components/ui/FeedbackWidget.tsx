@@ -5,6 +5,7 @@ import { Pill } from './SegButton';
 import Textarea from './Textarea';
 import { GoldButton } from './GoldButton';
 import { shouldShowFeedback, markFeedbackSeen, submitFeedback } from '../../services/feedbackService';
+import { MAT_CHROME } from './materialTokens';
 
 // Phase 1 of the Data-Driven Growth Loop (workflows/growth_loop.md): a compact,
 // non-blocking NPS micro-widget. Fires at the "value delivered" moment (the
@@ -79,7 +80,7 @@ export const FeedbackWidget: React.FC<FeedbackWidgetProps> = ({ active, module }
           {...anim}
           role="dialog"
           aria-label="Quick feedback"
-          className="fixed bottom-4 left-4 right-4 z-40 sm:left-auto sm:right-4 sm:w-96 rounded-2xl border border-white/10 bg-zinc-900/80 backdrop-blur-xl p-5"
+          className={`fixed bottom-4 left-4 right-4 z-40 sm:left-auto sm:right-4 sm:w-96 rounded-2xl border border-white/10 ${MAT_CHROME} p-5`}
         >
           {status === 'thanks' ? (
             <div className="flex items-center gap-3 py-1">
@@ -91,7 +92,7 @@ export const FeedbackWidget: React.FC<FeedbackWidgetProps> = ({ active, module }
               <button
                 onClick={handleDismiss}
                 aria-label="Dismiss feedback"
-                className="absolute top-2 right-2 p-2 text-zinc-500 hover:text-white transition-colors"
+                className="absolute top-2 right-2 p-2 text-on-surface-sublabel hover:text-white transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -119,7 +120,7 @@ export const FeedbackWidget: React.FC<FeedbackWidgetProps> = ({ active, module }
                     </Pill>
                   ))}
                 </div>
-                <div className="mt-1 flex justify-between text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+                <div className="mt-1 flex justify-between text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">
                   <span>not likely</span>
                   <span>very likely</span>
                 </div>

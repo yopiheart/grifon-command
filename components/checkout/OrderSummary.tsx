@@ -62,7 +62,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
     <GlassPanel className="lg:sticky lg:top-8 self-start">
       <button
         onClick={onBack}
-        className="flex items-center gap-2 text-zinc-500 hover:text-white transition-colors mb-6 text-sm"
+        className="flex items-center gap-2 text-on-surface-sublabel hover:text-white transition-colors mb-6 text-sm"
       >
         <ArrowLeft className="w-4 h-4" /> Back to plans
       </button>
@@ -78,7 +78,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
         />
       )}
 
-      <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-2">Subscribe to</p>
+      <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest mb-2">Subscribe to</p>
       <h1 className="text-xl font-semibold text-white mb-6">
         {planName}{' '}
         <span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">— {cycle}</span>
@@ -101,7 +101,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
           </p>
         )}
         {cycle === 'annual' && monthlyEquivalentCentavos !== undefined && (
-          <p className="text-zinc-500 text-xs mt-1">
+          <p className="text-on-surface-sublabel text-xs mt-1">
             {formatPHP(monthlyEquivalentCentavos)} / month, billed annually
             {monthlyComparisonSavingsCentavos !== undefined && monthlyComparisonSavingsCentavos > 0 && (
               <span className="text-[#FFCC00] ml-2">
@@ -119,7 +119,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
 
       {inclusions && inclusions.length > 0 && (
         <>
-          <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest mb-3">What's included</p>
+          <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest mb-3">What's included</p>
           <ul className="space-y-2.5 mb-6">
             {inclusions.map((feature) => (
               <li key={feature} className="flex items-start gap-3 text-sm text-zinc-300">
@@ -164,7 +164,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
               <span className="block text-sm font-semibold text-white">
                 {ORDER_BUMP.title} <span className="text-[#FFCC00]">+{ORDER_BUMP.priceLabel}</span>
               </span>
-              <span className="mt-0.5 block text-xs text-zinc-500 leading-relaxed">{ORDER_BUMP.blurb}</span>
+              <span className="mt-0.5 block text-xs text-on-surface-sublabel leading-relaxed">{ORDER_BUMP.blurb}</span>
             </span>
           </button>
           <div className="border-t border-white/10 my-6" />
@@ -186,7 +186,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
         <button
           type="button"
           onClick={() => setPromoOpen((v) => !v)}
-          className="flex items-center gap-2 text-zinc-500 hover:text-white text-xs transition-colors"
+          className="flex items-center gap-2 text-on-surface-sublabel hover:text-white text-xs transition-colors"
         >
           <Tag className="w-3.5 h-3.5" />
           Have a promo code?
@@ -221,14 +221,14 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
           {(totalCentavos / 100).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
         </span>
       </div>
-      <p className="mt-2 text-right text-[10px] font-mono uppercase tracking-widest text-zinc-600">
+      <p className="mt-2 text-right text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">
         // One-time payment — no auto-renew
       </p>
 
       <button
         type="button"
         onClick={() => setVatOpen((v) => !v)}
-        className="flex items-center gap-1.5 text-zinc-500 hover:text-white text-xs mt-3 transition-colors"
+        className="flex items-center gap-1.5 text-on-surface-sublabel hover:text-white text-xs mt-3 transition-colors"
       >
         View tax breakdown
         <ChevronDown className={`w-3 h-3 transition-transform ${vatOpen ? 'rotate-180' : ''}`} />
@@ -247,7 +247,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
             <span>Total</span>
             <span>{formatPHP(totalCentavos)}</span>
           </div>
-          <p className="text-zinc-500 text-[10px] pt-2 leading-relaxed">
+          <p className="text-on-surface-sublabel text-[10px] pt-2 leading-relaxed">
             12% VAT included as required by BIR. Receipt with full breakdown will be emailed.
           </p>
         </div>

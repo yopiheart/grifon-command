@@ -38,7 +38,7 @@ const LockedVideoPreview: React.FC<LockedVideoPreviewProps> = ({
       <div className="w-full max-w-3xl mx-auto">
         <button
           onClick={onBack}
-          className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-zinc-500 hover:text-white uppercase tracking-widest transition-colors mb-8 mt-4"
+          className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-on-surface-sublabel hover:text-white uppercase tracking-widest transition-colors mb-8 mt-4"
         >
           <ChevronLeft className="w-4 h-4" /> COMMAND CENTER
         </button>

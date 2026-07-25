@@ -36,7 +36,7 @@ export const Hero: React.FC<HeroProps> = ({ onEnterApp, heroSentinelRef }) => (
       >
         <motion.p
           variants={lineReveal}
-          className="text-[10px] font-mono uppercase tracking-[0.25em] text-zinc-500 mb-6"
+          className="text-[10px] font-mono uppercase tracking-[0.25em] text-on-surface-sublabel mb-6"
         >
           // AI MARKETING STUDIO — BUILT FOR FILIPINO BUSINESSES
         </motion.p>
@@ -76,7 +76,7 @@ export const Hero: React.FC<HeroProps> = ({ onEnterApp, heroSentinelRef }) => (
             </GoldButton>
             <a
               href="#reviews"
-              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur px-6 py-3 text-sm font-semibold text-zinc-300 hover:text-white hover:border-white/30 transition"
+              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-zinc-300 hover:text-white hover:border-white/30 transition"
             >
               SEE A COMPLETE CAMPAIGN
               <ArrowDown className="w-4 h-4" />
@@ -84,14 +84,14 @@ export const Hero: React.FC<HeroProps> = ({ onEnterApp, heroSentinelRef }) => (
           </div>
           {/* Click-trigger trust row: one last "why believe" at the decision pixel.
               Claims mirror the proof band — nothing new is asserted here. */}
-          <div className="mt-4 flex flex-wrap items-center justify-center lg:justify-start gap-x-2 gap-y-1 text-[11px] font-mono uppercase tracking-widest text-zinc-500">
+          <div className="mt-4 flex flex-wrap items-center justify-center lg:justify-start gap-x-2 gap-y-1 text-[11px] font-mono uppercase tracking-widest text-on-surface-sublabel">
             <span className="flex items-center gap-0.5" aria-label="5 stars">
               {[1, 2, 3, 4, 5].map((s) => (
                 <Star key={s} size={11} strokeWidth={0} fill="#FFCC00" />
               ))}
             </span>
             <span>early Filipino business owners</span>
-            <span className="text-zinc-700">·</span>
+            <span className="text-on-surface-sublabel">·</span>
             <span>{CTA_REASSURANCE}</span>
           </div>
         </motion.div>

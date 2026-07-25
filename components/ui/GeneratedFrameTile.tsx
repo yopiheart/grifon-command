@@ -1,6 +1,7 @@
 import React from 'react';
 import type { LucideIcon } from 'lucide-react';
 import Loader from './Loader';
+import { MAT_VEIL } from './materialTokens';
 
 /**
  * A single generated-image tile: image + hover-action overlay + label badge,
@@ -68,7 +69,7 @@ const GeneratedFrameTile: React.FC<GeneratedFrameTileProps> = ({
             } ${busy ? 'opacity-50 animate-pulse' : ''}`}
           />
           {actions.length > 0 && (
-            <div className="absolute inset-0 bg-zinc-950/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-center gap-3 p-6 z-20">
+            <div className={`absolute inset-0 ${MAT_VEIL} opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-center gap-3 p-6 z-20`}>
               {actions.map((a, i) => {
                 const Icon = a.icon;
                 return (
@@ -94,13 +95,13 @@ const GeneratedFrameTile: React.FC<GeneratedFrameTileProps> = ({
         <div className="w-full h-full flex flex-col items-center justify-center gap-3">
           <Loader message="" size="sm" />
           {loadingMessage && (
-            <p className="text-[10px] font-mono text-zinc-500 tracking-widest uppercase">{loadingMessage}</p>
+            <p className="text-[10px] font-mono text-on-surface-sublabel tracking-widest uppercase">{loadingMessage}</p>
           )}
         </div>
       )}
 
       {label && (
-        <div className="absolute top-3 left-3 bg-zinc-950/80 backdrop-blur-md text-[#FFCC00] text-[10px] font-mono px-3 py-1 rounded-lg uppercase tracking-widest z-10 border border-white/10">
+        <div className="absolute top-3 left-3 bg-zinc-950/80 text-[#FFCC00] text-[10px] font-mono px-3 py-1 rounded-lg uppercase tracking-widest z-10 border border-white/10">
           {label}
         </div>
       )}

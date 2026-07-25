@@ -12,9 +12,11 @@ import { SignatureScribble } from "./landing/SignatureScribble";
 import { startCheckout, type PlanId, type BillingCycle } from "../services/billingService";
 import { PLAN_FEATURES } from "../config/planFeatures";
 import { PRO_VALUE_STACK, PRO_VALUE_TOTAL, FOUNDING_NOTE } from "../config/valueStack";
+import { MAT_CHROME, SCROLL_EDGE, MAT_PLATE } from './ui/materialTokens';
+import { PX } from './ui/layoutTokens';
 
 const Check = () => <CheckIcon size={16} strokeWidth={2.5} className="text-[#FFCC00]" />;
-const X = () => <XIcon size={14} strokeWidth={1.5} className="text-zinc-600" />;
+const X = () => <XIcon size={14} strokeWidth={1.5} className="text-on-surface-sublabel" />;
 const Lock = () => <LockIcon size={14} strokeWidth={1.2} className="text-[#FFCC00]" />;
 const Star = () => <StarIcon size={14} strokeWidth={0} fill="#FFCC00" className="text-[#FFCC00]" />;
 
@@ -183,7 +185,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
   ];
 
   return (
-    <div className="font-sans" style={{
+    <div className="font-sans pricing-page" style={{
       minHeight: "100vh",
       background: "#09090b",
       color: "#fff",
@@ -302,9 +304,9 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
 
         {/* ===== HERO SECTION ===== */}
         <section className="grid-bg" style={{ 
-          padding: "80px 20px 60px", 
+          padding: "80px 20px", 
           textAlign: "center",
-          maxWidth: 900, margin: "0 auto",
+          maxWidth: PX.SHELL, margin: "0 auto",
         }}>
           <div className={loaded ? "fade-up" : ""} style={{ animationDelay: "0.1s" }}>
           </div>
@@ -330,7 +332,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
             animationDelay: "0.3s",
             fontSize: "clamp(15px, 2.5vw, 19px)", 
             color: "#a1a1aa", 
-            maxWidth: 560, 
+            maxWidth: PX.MEASURE, 
             margin: "0 auto 32px",
             lineHeight: 1.6,
           }}>
@@ -375,8 +377,11 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
             band across the page) ===== */}
         <div
           ref={billingBarRef}
-          className={`sticky z-30 mb-6 py-3 px-5 transition-[background-color,backdrop-filter] duration-300 ${
-            barStuck ? "backdrop-blur-xl bg-zinc-950/70" : "backdrop-blur-none bg-transparent"
+          // CHROME once stuck — the plan cards scroll under this switcher, so
+          // it's a floating control surface, and the scroll edge keeps the
+          // labels off whatever passes beneath.
+          className={`sticky z-30 mb-6 py-3 px-5 rounded-2xl transition-[background-color,backdrop-filter] duration-300 ${
+            barStuck ? `${MAT_CHROME} ${SCROLL_EDGE}` : " bg-transparent"
           }`}
           style={{ top: headerH }}
         >
@@ -610,7 +615,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
 
         {/* ===== VALUE STACK SECTION (Pro) ===== */}
         <section style={{
-          maxWidth: 700,
+          maxWidth: PX.SHELL,
           margin: "0 auto 80px",
           padding: "0 20px",
         }}>
@@ -723,7 +728,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
 
         {/* ===== COMPARISON: OLD WAY vs GRIFON ===== */}
         <section style={{
-          maxWidth: 800,
+          maxWidth: PX.SHELL,
           margin: "0 auto 80px",
           padding: "0 20px",
         }}>
@@ -815,7 +820,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
         />
 
         {/* ===== SOCIAL PROOF ===== */}
-        <section className="py-12 md:py-24 border-b border-white/5 bg-transparent backdrop-blur-sm relative z-10">
+        <section className="py-12 md:py-24 border-b border-white/5 bg-transparent relative z-10">
           <div className="max-w-7xl mx-auto px-4">
             <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#FFCC00] text-center mb-2">
               // WHAT EARLY USERS ARE SAYING
@@ -829,7 +834,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
               {testimonials.map((testimonial, idx) => (
                 <div 
                   key={idx} 
-                  className="bg-zinc-900/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 flex flex-col h-full"
+                  className={`${MAT_PLATE} border border-white/10 rounded-3xl p-8 flex flex-col h-full`}
                 >
                   <div className="px-2 flex-1 flex flex-col">
                     <div className="flex gap-1 mb-4">
@@ -842,7 +847,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
                     </p>
                     <div>
                       <div className="text-white font-bold text-base">{testimonial.name}</div>
-                      <div className="text-zinc-500 text-sm">{testimonial.biz}</div>
+                      <div className="text-on-surface-sublabel text-sm">{testimonial.biz}</div>
                     </div>
                   </div>
                 </div>
@@ -852,8 +857,8 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
         </section>
 
         {/* ===== GUARANTEE ===== */}
-        <section className="max-w-[600px] mx-auto mb-20 px-5 text-center">
-          <AnimatedBorder intense containerClassName="h-full w-full" className="p-10 md:p-12 text-center bg-zinc-900/80 backdrop-blur-xl relative overflow-hidden">
+        <section style={{ maxWidth: PX.SHELL }} className="mx-auto mb-20 px-5 text-center">
+          <AnimatedBorder intense containerClassName="h-full w-full" className="p-10 md:p-12 text-center bg-zinc-900/80 relative overflow-hidden">
             <ShieldCheck className="w-12 h-12 text-[#FFCC00] mx-auto mb-4" />
             <h3 className="text-2xl md:text-3xl font-bold uppercase tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
               7-Day Money-Back Guarantee
@@ -868,7 +873,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
 
         {/* ===== FAQ ===== */}
         <section style={{
-          maxWidth: 650, margin: "0 auto 80px",
+          maxWidth: PX.SHELL, margin: "0 auto 80px",
           padding: "0 20px",
         }}>
           <h2 className="bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500" style={{
@@ -930,8 +935,8 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
         {/* ===== FINAL CTA ===== */}
         <section style={{
           textAlign: "center",
-          padding: "60px 20px 80px",
-          maxWidth: 600,
+          padding: "80px 20px",
+          maxWidth: PX.SHELL,
           margin: "0 auto",
         }}>
           <h2 className="bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500" style={{
@@ -976,10 +981,10 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
           fontSize: 11, color: "#3f3f46",
         }}>
           <div style={{ marginBottom: 12, display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "8px 20px" }}>
-            <a href="/terms" onClick={(e) => { e.preventDefault(); onNavigateLegal('terms'); }} style={{ color: "#71717a", textDecoration: "none" }}>Terms</a>
-            <a href="/privacy" onClick={(e) => { e.preventDefault(); onNavigateLegal('privacy'); }} style={{ color: "#71717a", textDecoration: "none" }}>Privacy</a>
-            <a href="/refund" onClick={(e) => { e.preventDefault(); onNavigateLegal('refund'); }} style={{ color: "#71717a", textDecoration: "none" }}>Refund</a>
-            <a href="/support" onClick={(e) => { e.preventDefault(); onNavigateLegal('support'); }} style={{ color: "#71717a", textDecoration: "none" }}>Support</a>
+            <a href="/terms" onClick={(e) => { e.preventDefault(); onNavigateLegal('terms'); }} style={{ color: "#82828b", textDecoration: "none", display: "inline-flex", alignItems: "center", minHeight: 44, padding: "0 8px" }}>Terms</a>
+            <a href="/privacy" onClick={(e) => { e.preventDefault(); onNavigateLegal('privacy'); }} style={{ color: "#82828b", textDecoration: "none", display: "inline-flex", alignItems: "center", minHeight: 44, padding: "0 8px" }}>Privacy</a>
+            <a href="/refund" onClick={(e) => { e.preventDefault(); onNavigateLegal('refund'); }} style={{ color: "#82828b", textDecoration: "none", display: "inline-flex", alignItems: "center", minHeight: 44, padding: "0 8px" }}>Refund</a>
+            <a href="/support" onClick={(e) => { e.preventDefault(); onNavigateLegal('support'); }} style={{ color: "#82828b", textDecoration: "none", display: "inline-flex", alignItems: "center", minHeight: 44, padding: "0 8px" }}>Support</a>
           </div>
           GRIFON.AI © 2026 — Haste Enterprises — Built in the Philippines
         </footer>

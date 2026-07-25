@@ -2,8 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { DUR, EASE, SPRING, reducedMotion } from './ui/motionTokens';
 import {
-  Sparkles, ArrowRight, ChevronRight, Film, Search, Target,
-  Flame, Lock, Menu, Bell,
+  Sparkles, ArrowRight, ChevronRight, Flame, Lock, Menu, Bell,
 } from 'lucide-react';
 import { useSubscription } from '../hooks/useSubscription';
 import { planAtLeast, type PlanId } from '../utils/planGate';
@@ -27,6 +26,7 @@ import {
   HAIRLINE, CARD_TONAL, FILL_REST, FILL_HOVER, ROW_HOVER, RING_FIELD,
   GOLD_GLOW_HOVER, entrance, SLATE_BEATS,
 } from './ui/dashboardTokens';
+import { MAT_CHROME, SCROLL_EDGE } from './ui/materialTokens';
 import { SettingsModal } from './dashboard/SettingsModal';
 import { NotificationsPanel } from './dashboard/NotificationsPanel';
 
@@ -81,11 +81,13 @@ const RAIL_GROUPS: { label: string; ids: string[] }[] = [
 ];
 
 // Outcome chips under the hero — deep-link straight into a module.
+// Icons come from the registry so a chip can never disagree with the rail row
+// it deep-links to.
 const HERO_CHIPS = [
-  { id: 'creative_director', label: 'Make a video ad', icon: Film },
-  { id: 'market_research', label: 'Research my market', icon: Search },
-  { id: 'offer_optimizer', label: 'Build an offer', icon: Target },
-];
+  { id: 'creative_director', label: 'Make a video ad' },
+  { id: 'market_research', label: 'Research my market' },
+  { id: 'offer_optimizer', label: 'Build an offer' },
+].map((c) => ({ ...c, icon: getModuleIdentity(c.id).icon }));
 
 // Slice 5 — gated modules and the plan tier that unlocks each. Modules absent
 // here are free. The full roster is tiered so every rail row can show its
@@ -328,7 +330,9 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
       />
 
       {/* Mobile top bar */}
-      <div className={`lg:hidden fixed top-0 left-0 right-0 z-40 h-14 px-3 flex items-center justify-between bg-zinc-950/85 backdrop-blur-xl border-b ${HAIRLINE}`}>
+      {/* CHROME + scroll edge — the slate scrolls under this bar, so content
+          grades out beneath it instead of colliding with the icons. */}
+      <div className={`lg:hidden fixed top-0 left-0 right-0 z-40 h-14 px-3 flex items-center justify-between ${MAT_CHROME} ${SCROLL_EDGE} border-b ${HAIRLINE}`}>
         <button onClick={() => setMobileOpen(true)} aria-label="Menu" className={`w-11 h-11 rounded-xl text-zinc-300 hover:text-white ${ROW_HOVER} transition-colors flex items-center justify-center`}>
           <Menu className="w-5 h-5" />
         </button>
@@ -360,7 +364,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
             </motion.p>
             <motion.p
               {...entrance(reduce, SLATE_BEATS.callSheet)}
-              className={`text-center ${T_LABEL} text-zinc-600 mb-3`}
+              className={`text-center ${T_LABEL} text-on-surface-sublabel mb-3`}
             >
               {callSheet}
             </motion.p>
@@ -376,7 +380,11 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
               {...entrance(reduce, SLATE_BEATS.heroInput)}
               className="w-full max-w-2xl mx-auto"
             >
-              <div className={`${CARD_TONAL} backdrop-blur-xl rounded-2xl ${RING_FIELD} p-3 lg:p-4 flex items-center gap-3 focus-within:ring-[#FFCC00]/40 transition-all`}>
+              {/* Deliberately NOT chrome: the hero input sits in the flow of the
+                  slate, it doesn't float over anything. Its backdrop-filter was
+                  blurring a near-black field for nothing, so it's gone — the ring
+                  and tonal fill carry the field treatment. */}
+              <div className={`${CARD_TONAL} rounded-2xl ${RING_FIELD} p-3 lg:p-4 flex items-center gap-3 focus-within:ring-[#FFCC00]/40 transition-all`}>
                 <Sparkles className="w-5 h-5 text-[#FFCC00] flex-shrink-0 ml-1" />
                 <input
                   type="text"
@@ -384,7 +392,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                   onChange={(e) => setHeroInput(e.target.value)}
                   onKeyDown={(e) => { if (e.key === 'Enter') submitHero(); }}
                   placeholder={`Tell me about your business — e.g. ${HERO_PROMPTS[promptIndex]}`}
-                  className="bg-transparent text-white text-sm lg:text-base flex-1 min-w-0 outline-none placeholder:text-zinc-600"
+                  className="bg-transparent text-white text-sm lg:text-base flex-1 min-w-0 outline-none placeholder:text-on-surface-sublabel"
                 />
                 <button
                   onClick={submitHero}
@@ -410,12 +418,12 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                 ))}
               </div>
 
-              <p className="text-center text-xs text-zinc-500 mt-4">
+              <p className="text-center text-xs text-on-surface-sublabel mt-4">
                 One prompt → a full video ad. Grifon researches, scripts, and storyboards it for you.
               </p>
 
               {!quota.loading && quota.workflows.used > 0 && (
-                <p className="text-center text-xs text-zinc-500 mt-3">
+                <p className="text-center text-xs text-on-surface-sublabel mt-3">
                   You've shipped <span className="text-[#FFCC00] font-semibold">{quota.workflows.used}</span>{' '}
                   workflow{quota.workflows.used === 1 ? '' : 's'} this month. Tuloy lang.
                   {weeklyActiveDays >= 2 && (
@@ -455,7 +463,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
 
           {/* EXPLORE TOOLS */}
           <div className="w-full mb-16">
-            <p className={`${T_LABEL} text-zinc-500 mb-4`}>// EXPLORE TOOLS</p>
+            <p className={`${T_LABEL} text-on-surface-sublabel mb-4`}>// EXPLORE TOOLS</p>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
               {exploreTiles.map((tile, i) => {
                 const isMore = !tile.featured && !CORE_MODULES.some((c) => c.id === tile.id);
@@ -488,8 +496,8 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                       <Icon className="w-5 h-5" style={{ color: tile.hue }} />
                     </div>
                     <p className="text-sm font-bold text-white tracking-tight">{tile.name}</p>
-                    <p className="text-xs text-zinc-500 mt-1 leading-snug line-clamp-2">{tile.desc}</p>
-                    {tile.featured && <ChevronRight className="absolute top-4 right-4 w-4 h-4 text-zinc-600 group-hover:text-[#FFCC00] transition-colors" />}
+                    <p className="text-xs text-on-surface-sublabel mt-1 leading-snug line-clamp-2">{tile.desc}</p>
+                    {tile.featured && <ChevronRight className="absolute top-4 right-4 w-4 h-4 text-on-surface-sublabel group-hover:text-[#FFCC00] transition-colors" />}
                   </motion.button>
                 );
               })}

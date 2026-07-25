@@ -8,6 +8,7 @@ import { hydrateOneShotDraft, loadOneShotDraft, clearOneShotDraft } from '../../
 import { LaunchScreen } from './LaunchScreen';
 import { RunningScreen } from './RunningScreen';
 import ProducerFlow from './ProducerFlow';
+import { MAT_PLATE } from '../ui/materialTokens';
 
 /**
  * Opt-in switch to the new orchestrator-driven flow (Running → storyboard gate →
@@ -155,7 +156,7 @@ const OneShotAd: React.FC<OneShotAdProps> = ({
   const BackBar = (
     <button
       onClick={onBack}
-      className="absolute left-4 top-4 z-20 flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500 hover:text-white"
+      className="absolute left-4 top-4 z-20 flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel hover:text-white"
     >
       <ChevronLeft className="h-4 w-4" /> Command Center
     </button>
@@ -198,7 +199,7 @@ const OneShotAd: React.FC<OneShotAdProps> = ({
     return (
       <div className="relative min-h-screen bg-zinc-950 px-4 py-10 text-white">
         {BackBar}
-        <div className="mx-auto mt-16 max-w-md rounded-2xl border border-white/10 bg-zinc-900/70 p-6 backdrop-blur-xl">
+        <div className={`mx-auto mt-16 max-w-md rounded-2xl border border-white/10 ${MAT_PLATE} p-6`}>
           <div className="mb-3 flex items-center gap-2 text-[#FFCC00]">
             <Sparkles className="h-4 w-4 shrink-0" />
             <span className="text-[10px] font-mono uppercase tracking-widest">// Unfinished ad</span>

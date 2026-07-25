@@ -3,6 +3,7 @@ import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { DUR, EASE } from './motionTokens';
 import { CheckCircle, MapPin, X } from 'lucide-react';
 import { RECENT_ACTIVITY } from '../../config/recentActivity';
+import { MAT_PLATE } from './materialTokens';
 
 const initialsOf = (name: string): string =>
   name
@@ -62,7 +63,7 @@ export const RecentActivityToast: React.FC = () => {
             animate={reduce ? { opacity: 1 } : { opacity: 1, scale: 1 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
             transition={{ duration: DUR.base, ease: EASE.out }}
-            className="pointer-events-auto flex items-center gap-3 w-full sm:max-w-[300px] mx-auto rounded-2xl border border-white/10 bg-zinc-900/90 backdrop-blur-xl px-4 py-3"
+            className={`pointer-events-auto flex items-center gap-3 w-full sm:max-w-[300px] mx-auto rounded-2xl border border-white/10 ${MAT_PLATE} px-4 py-3`}
           >
             {/* Gold initials avatar with a verified check badge */}
             <div className="relative shrink-0">
@@ -78,7 +79,7 @@ export const RecentActivityToast: React.FC = () => {
               <p className="text-sm text-white leading-snug">
                 <span className="font-semibold">{item.name}</span> {item.action}
               </p>
-              <p className="mt-0.5 flex items-center gap-1 text-[11px] text-zinc-500">
+              <p className="mt-0.5 flex items-center gap-1 text-[11px] text-on-surface-sublabel">
                 <MapPin className="h-3 w-3 shrink-0" />
                 {item.city} · {minsAgo} mins ago
               </p>
@@ -87,7 +88,7 @@ export const RecentActivityToast: React.FC = () => {
             <button
               onClick={() => setDismissed(true)}
               aria-label="Dismiss"
-              className="shrink-0 -mr-1 p-1 rounded-full text-zinc-500 hover:text-white transition-colors"
+              className="shrink-0 -mr-1 p-1 rounded-full text-on-surface-sublabel hover:text-white transition-colors"
             >
               <X className="h-3.5 w-3.5" />
             </button>

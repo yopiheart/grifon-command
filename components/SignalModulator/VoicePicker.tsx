@@ -173,7 +173,7 @@ export const VoicePicker: React.FC<VoicePickerProps> = ({ library, value, onChan
             )}
           </div>
           {voice.description && (
-            <div className="text-[10px] text-zinc-500 truncate">{voice.description}</div>
+            <div className="text-[10px] text-on-surface-sublabel truncate">{voice.description}</div>
           )}
         </button>
       </div>
@@ -195,14 +195,14 @@ export const VoicePicker: React.FC<VoicePickerProps> = ({ library, value, onChan
             <>
               {(selected as any)._kind === 'mine'
                 ? <User className="w-4 h-4 text-[#FFCC00] shrink-0" />
-                : <Sparkles className="w-4 h-4 text-zinc-500 shrink-0" />}
+                : <Sparkles className="w-4 h-4 text-on-surface-sublabel shrink-0" />}
               <span className="text-sm font-medium text-white truncate">{selected.name}</span>
             </>
           ) : (
-            <span className="text-sm text-zinc-500">{loading ? 'Loading voices…' : 'Select a voice'}</span>
+            <span className="text-sm text-on-surface-sublabel">{loading ? 'Loading voices…' : 'Select a voice'}</span>
           )}
         </span>
-        <ChevronDown className={`w-4 h-4 text-zinc-500 transition-transform ${open ? 'rotate-180' : ''}`} />
+        <ChevronDown className={`w-4 h-4 text-on-surface-sublabel transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
 
       {open && (
@@ -246,7 +246,7 @@ export const VoicePicker: React.FC<VoicePickerProps> = ({ library, value, onChan
               <button
                 type="button"
                 onClick={() => setFilters(EMPTY_FILTERS)}
-                className="mt-2 flex items-center gap-1 text-[10px] font-mono text-zinc-500 hover:text-[#FFCC00] uppercase tracking-widest"
+                className="mt-2 flex items-center gap-1 text-[10px] font-mono text-on-surface-sublabel hover:text-[#FFCC00] uppercase tracking-widest"
               >
                 <X className="w-3 h-3" /> CLEAR_FILTERS
               </button>
@@ -289,7 +289,7 @@ export const VoicePicker: React.FC<VoicePickerProps> = ({ library, value, onChan
 
             {stockGroupsVisible && stockGroups.map(group => (
               <div key={group.language}>
-                <div className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest px-3 py-1.5">
+                <div className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest px-3 py-1.5">
                   // STOCK · {group.language.toUpperCase()}
                 </div>
                 <div className="space-y-1">
@@ -317,7 +317,7 @@ export const VoicePicker: React.FC<VoicePickerProps> = ({ library, value, onChan
             )}
 
             {stockGroups.length === 0 && library.myVoices.length === 0 && library.libraryVoices.length === 0 && recommended.length === 0 && (
-              <div className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest px-3 py-4 text-center">
+              <div className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest px-3 py-4 text-center">
                 {hasActiveFilter ? '// NO_MATCHES — TRY_CLEARING_FILTERS' : '// NO_VOICES_AVAILABLE'}
               </div>
             )}

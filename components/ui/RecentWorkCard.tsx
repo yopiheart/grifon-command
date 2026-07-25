@@ -1,23 +1,17 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { DUR } from './motionTokens';
-import { Clock, ArrowRight, Film, Search, Target, Type, Image as ImageIcon, Video, User, Clapperboard, Wand2, Calendar, Scissors, Mic } from 'lucide-react';
+import { Clock, ArrowRight, Film } from 'lucide-react';
 import type { RecentItem, RecentWorkKind } from '../../services/recentWorkService';
+import { MODULE_IDENTITY } from '../../config/moduleIdentity';
+import { MAT_PLATE } from './materialTokens';
 
-const MODULE_ICON: Record<string, React.ComponentType<{ className?: string }>> = {
-  creative_director: Film,
-  market_research: Search,
-  offer_optimizer: Target,
-  caption_headline: Type,
-  image_editor: ImageIcon,
-  cinematic_studio: Video,
-  influencer_forge: User,
-  generate_video: Clapperboard,
-  image_ads: Wand2,
-  organic_calendar: Calendar,
-  edit_video: Scissors,
-  signal_modulator: Mic,
-};
+// Icons come from the module registry — this file used to keep its own map,
+// which had drifted badly: Director AI showed a film strip here and a
+// clapperboard in the rail, Render Bay showed exactly the opposite. One
+// module, one icon, everywhere.
+const iconFor = (moduleId: string): React.ComponentType<{ className?: string }> =>
+  MODULE_IDENTITY[moduleId]?.icon ?? Film;
 
 const KIND_LABEL: Record<RecentWorkKind, string> = {
   visit: 'Opened',
@@ -55,17 +49,17 @@ export const RecentWorkCard: React.FC<RecentWorkCardProps> = ({ items, onResume,
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: DUR.slow, delay }}
-      className="bg-zinc-900/70 backdrop-blur-xl rounded-2xl p-4 lg:p-5"
+      className={`${MAT_PLATE} rounded-2xl p-4 lg:p-5`}
     >
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
           <Clock className="w-3.5 h-3.5 text-[#FFCC00]" />
-          <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">
+          <span className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest">
             // RECENTLY OPENED
           </span>
         </div>
         {items.length > TOP_N && (
-          <span className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest">
+          <span className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest">
             +{items.length - TOP_N} more
           </span>
         )}
@@ -73,12 +67,12 @@ export const RecentWorkCard: React.FC<RecentWorkCardProps> = ({ items, onResume,
 
       {top.length === 0 ? (
         <div className="py-4 text-center">
-          <p className="text-xs text-zinc-500">Open a module above para magsimula.</p>
+          <p className="text-xs text-on-surface-sublabel">Open a module above para magsimula.</p>
         </div>
       ) : (
         <div className="space-y-1.5">
           {top.map(item => {
-            const Icon = MODULE_ICON[item.moduleId] ?? Clock;
+            const Icon = iconFor(item.moduleId);
             const isVisit = item.kind === 'visit';
             return (
               <button
@@ -91,11 +85,11 @@ export const RecentWorkCard: React.FC<RecentWorkCardProps> = ({ items, onResume,
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="text-sm font-semibold text-white truncate leading-tight">{item.title}</div>
-                  <div className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mt-0.5">
+                  <div className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest mt-0.5">
                     {isVisit ? formatRelative(item.ts) : `${KIND_LABEL[item.kind]} · ${formatRelative(item.ts)}`}
                   </div>
                 </div>
-                <ArrowRight className="w-4 h-4 text-zinc-700 group-hover:text-[#FFCC00] group-hover:translate-x-0.5 transition-all flex-shrink-0" />
+                <ArrowRight className="w-4 h-4 text-on-surface-sublabel group-hover:text-[#FFCC00] group-hover:translate-x-0.5 transition-all flex-shrink-0" />
               </button>
             );
           })}

@@ -5,6 +5,8 @@ import { Film, Search, Target, Type, ImageIcon } from 'lucide-react';
 import { DirectorDemo, ResearchDemo, OfferDemo, CaptionDemo, ImageDemo } from '../InclusionDemos';
 import { setIntendedModule } from '../../../services/moduleIntentService';
 import { SnapRail } from '../SnapRail';
+import { BAND_HERO, MEASURE } from '../../ui/layoutTokens';
+import { MAT_PLATE } from '../../ui/materialTokens';
 
 /**
  * Director AI's signature frame: a camera viewfinder — breathing gold corner
@@ -12,7 +14,7 @@ import { SnapRail } from '../SnapRail';
  * AnimatedBorder (TrustFaq) so the two hero treatments never read as twins.
  */
 const ViewfinderFrame: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <div className="relative rounded-3xl border border-white/10 bg-zinc-900/40 p-6 backdrop-blur-2xl md:p-10">
+  <div className={`relative rounded-3xl border border-white/10 ${MAT_PLATE} p-6 md:p-10`}>
     <span aria-hidden="true" className="finder-corner pointer-events-none absolute left-3 top-3 h-6 w-6 rounded-tl-lg border-l-2 border-t-2 border-[#FFCC00]" />
     <span aria-hidden="true" className="finder-corner pointer-events-none absolute right-3 top-3 h-6 w-6 rounded-tr-lg border-r-2 border-t-2 border-[#FFCC00]" style={{ animationDelay: '0.8s' }} />
     <span aria-hidden="true" className="finder-corner pointer-events-none absolute bottom-3 left-3 h-6 w-6 rounded-bl-lg border-b-2 border-l-2 border-[#FFCC00]" style={{ animationDelay: '1.6s' }} />
@@ -42,7 +44,7 @@ interface ModulesProps {
 
 /** What You Get: Director AI as the full-width feature row, the other four working modules in a grid. */
 export const Modules: React.FC<ModulesProps> = ({ onEnterApp }) => (
-  <section id="what-you-get" className="scroll-mt-28 py-16 md:py-32 px-4 sm:px-6 lg:px-8 relative z-10">
+  <section id="what-you-get" className={`scroll-mt-28 ${BAND_HERO} px-4 sm:px-6 lg:px-8 relative z-10`}>
     <div className="max-w-7xl mx-auto">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -51,12 +53,12 @@ export const Modules: React.FC<ModulesProps> = ({ onEnterApp }) => (
         transition={{ duration: DUR.entrance }}
         className="text-center mb-12 md:mb-16"
       >
-        <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-[0.25em] mb-4">// WHAT YOU GET</p>
+        <p className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-[0.25em] mb-4">// WHAT YOU GET</p>
         <h2 className="text-3xl md:text-5xl font-bold uppercase tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
           <span className="font-serif italic normal-case tracking-normal text-[#FFCC00]">Everything</span>{' '}
           YOU NEED. NOTHING YOU DON'T.
         </h2>
-        <p className="text-zinc-400 max-w-2xl mx-auto text-base mt-4">
+        <p className={`text-zinc-400 ${MEASURE} text-base mt-4`}>
           Five battle-tested AI modules. Each one replaces a freelancer, an agency, or 6 hours of your time. Hindi lang sinasabi — ipinapakita.
         </p>
       </motion.div>
@@ -72,7 +74,7 @@ export const Modules: React.FC<ModulesProps> = ({ onEnterApp }) => (
         <ViewfinderFrame>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             <div>
-              <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+              <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">
                 <Film className="w-3.5 h-3.5 text-[#FFCC00]" />
                 Video Ads
               </div>
@@ -100,10 +102,10 @@ export const Modules: React.FC<ModulesProps> = ({ onEnterApp }) => (
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: DUR.slow, delay: idx * 0.08 }}
-              className="snap-center flex-shrink-0 w-[85vw] max-w-[360px] md:w-auto md:max-w-none flex flex-col bg-zinc-900/40 backdrop-blur-2xl border border-white/10 rounded-3xl p-6 md:p-7"
+              className={`snap-center flex-shrink-0 w-[85vw] max-w-[360px] md:w-auto md:max-w-none flex flex-col ${MAT_PLATE} border border-white/10 rounded-3xl p-6 md:p-7`}
             >
               <module.Demo />
-              <div className="mt-5 flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+              <div className="mt-5 flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">
                 <module.icon className="w-3.5 h-3.5 text-[#FFCC00]" />
                 {module.label}
               </div>
@@ -117,7 +119,7 @@ export const Modules: React.FC<ModulesProps> = ({ onEnterApp }) => (
                   setIntendedModule(module.moduleId);
                   onEnterApp();
                 }}
-                className="mt-auto pt-4 inline-flex items-center gap-1.5 text-zinc-300 hover:text-[#FFCC00] text-sm font-semibold transition-colors self-start"
+                className="mt-auto pt-4 inline-flex min-h-11 items-center gap-1.5 text-zinc-300 hover:text-[#FFCC00] text-sm font-semibold transition-colors self-start"
               >
                 {module.cta}
                 <span aria-hidden="true">→</span>
