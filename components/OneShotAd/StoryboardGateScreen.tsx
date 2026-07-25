@@ -114,6 +114,15 @@ export const StoryboardGateScreen: React.FC<{
                     {scriptLine}
                   </div>
                 )}
+                {/* flaggedReason is written by five code paths and, until now, shown by none — so a
+                    refused regen looked identical to nothing happening. Rendered independently of
+                    `status` on purpose: a scene can carry a reason (e.g. the presenter reference
+                    was lost on reload) while its existing image is still perfectly approvable. */}
+                {sc.flaggedReason && (
+                  <div className="pointer-events-none absolute inset-x-0 bottom-9 bg-black/80 px-2 py-1 text-[9px] font-mono leading-tight text-amber-300">
+                    {sc.flaggedReason}
+                  </div>
+                )}
                 <button
                   onClick={() => !anyBusy && onRegenScene(sc.sceneIdx)}
                   disabled={anyBusy}

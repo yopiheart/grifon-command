@@ -911,6 +911,17 @@ export async function regenSceneImage(run: ProductionRun, sceneIdx: number, cb: 
   const sc = run.scenes.find((s) => s.sceneIdx === sceneIdx);
   if (!scene || !sc) return run;
 
+  // Refuse before the spinner and before any spend — see identityRefLost. The good image stays,
+  // and `status` is left alone so one refused scene can't block approval of a fine run.
+  if (identityRefLost(run, scene)) {
+    emitRunEvent('node_fail', run.runId, { node: 'regen', sceneIdx, error: 'identity_reference_lost' });
+    await commit((r) => {
+      const s = r.scenes.find((x) => x.sceneIdx === sceneIdx);
+      if (s) s.flaggedReason = IDENTITY_REF_LOST_REASON;
+    });
+    return run;
+  }
+
   await commit((r) => {
     const s = r.scenes.find((x) => x.sceneIdx === sceneIdx)!;
     s.status = 'rendering';
@@ -977,6 +988,45 @@ export async function regenSceneImage(run: ProductionRun, sceneIdx: number, cb: 
  * voice for that scene (via the atomic claim so it never double-spends), then re-assembles
  * the final cut. Used for a flagged scene OR a re-roll. Returns the run back in `review`.
  */
+/** Reference modes whose render REQUIRES the locked presenter photo. Same set as the gate's
+ *  `wantIdentity` — kept as its own constant because this one guards GENERATION, not a check. */
+const IDENTITY_MODES = new Set(['avatar', 'both', 'avatar_venue']);
+
+/** Shown to the user on a refused regen/reshoot. Names the cause and the only real escape. */
+export const IDENTITY_REF_LOST_REASON =
+  'Presenter reference was lost on reload — Start over to re-shoot this scene';
+
+/**
+ * Has the presenter reference gone missing, making a fresh generation guaranteed-wrong?
+ *
+ * `slimCheckpointInput` (services/producerRunService.ts) drops any `data:` string over 700KB from
+ * the checkpointed `input` to stay under api/producer/run's 2mb body cap. The compressed hero
+ * survives that (~160KB measured); a 2K avatar does NOT — `avatarModel` still renders at 2K. So
+ * after ANY reload or cross-device resume, `input.avatar.url` is simply gone.
+ *
+ * Generating anyway does not degrade — it produces a confidently wrong image, and the doc's stated
+ * cost ("at most it costs a cross-device resume of that one oversized image") badly understates it.
+ * Measured on run apr_876ef559 (2026-07-25): with the avatar absent, `generateSceneImage` still
+ * takes its `referenceImageMode === 'avatar'` branch (that branch, alone among the five, has no
+ * `&& references.avatarUrl` guard), so "Reference Image 1" silently resolves to the PRODUCT photo.
+ * IDENTITY_LOCK then tries to preserve a bottle's face and hair — no person is rendered at all —
+ * and the same branch's rule 6 states "This frame has no product reference photo — any label you
+ * render would be an invented fake … leave the surface empty", which the model obeys faithfully.
+ * Result: a product-only still wearing a BLANK label, overwriting a good image, for real money.
+ *
+ * 'both' and 'avatar_venue' fail differently but just as badly: their branches DO guard on the
+ * avatar, so they fall through to the STRICT_NEGATIVE "NO HUMANS" branch — a people-free frame for
+ * a scene whose whole point is the presenter.
+ *
+ * So: refuse. This is a stop-loss, not the fix — the real repair is to stop losing the reference
+ * (compress it like the hero, or give it its own column the way `record_image` does for stills).
+ */
+function identityRefLost(run: ProductionRun, scene: Scene): boolean {
+  if (!IDENTITY_MODES.has(scene.referenceImage ?? 'avatar')) return false;
+  const url = run.input.avatar?.url;
+  return !(typeof url === 'string' && url.startsWith('data:'));
+}
+
 export async function reshootScene(run: ProductionRun, sceneIdx: number, cb: ProducerCallbacks, deps: ProducerDeps): Promise<ProductionRun> {
   const commit = async (mut: (r: ProductionRun) => void) => {
     mut(run);
@@ -987,6 +1037,18 @@ export async function reshootScene(run: ProductionRun, sceneIdx: number, cb: Pro
   const scene = run.storyboard?.[sceneIdx];
   const sc = run.scenes.find((s) => s.sceneIdx === sceneIdx);
   if (!scene || !sc) return run;
+
+  // BEFORE requeueScene, deliberately: requeue NULLs job_handle/video_url/audio_url, so guarding
+  // after it would destroy the very clip we are declining to replace.
+  if (identityRefLost(run, scene)) {
+    emitRunEvent('node_fail', run.runId, { node: 'reshoot', sceneIdx, error: 'identity_reference_lost' });
+    await commit((r) => {
+      const s = r.scenes.find((x) => x.sceneIdx === sceneIdx);
+      // status untouched: the existing clip is still good and must stay approvable.
+      if (s) s.flaggedReason = IDENTITY_REF_LOST_REASON;
+    });
+    return run;
+  }
 
   await commit((r) => {
     // Stay parked at the First Cut gate — a per-scene re-roll must NOT throw the user to the

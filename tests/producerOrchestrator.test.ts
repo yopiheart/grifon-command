@@ -16,6 +16,7 @@ import {
   applyPreset,
   regenSceneImage,
   reshootScene,
+  IDENTITY_REF_LOST_REASON,
   assembleFinalScript,
   mapReportToWizard,
   deriveAngleBrief,
@@ -636,8 +637,12 @@ describe('gates — park/resume are persist-backed and stay parked during busy o
 
 describe('regenSceneImage — image-only regenerate at the storyboard gate (no spend)', () => {
   it('regenerates the scene image without ever touching video/poll', async () => {
+    // identityAvatar() (a real `data:` reference) rather than makeInput()'s 'avatar.png'
+    // placeholder: regen now REFUSES a reference the model cannot actually receive, and a remote
+    // url is exactly that — generateSceneImage matches /^data:/ before attaching the part. The
+    // placeholder was never load-bearing here; this test is about regen being image-only.
     const { deps, spies } = makeFakeDeps();
-    const run = createProductionRun(makeInput(), 'u1');
+    const run = createProductionRun(makeInput({ avatar: identityAvatar() }), 'u1');
     await runProduction(run, cb(), deps); // park at the storyboard gate (images built, no video)
 
     spies.generateSceneImage.mockClear();
@@ -1634,6 +1639,96 @@ describe("P4 — gate-skip visibility ('check_skip')", () => {
 // producer_scenes.gate_verdict at all: the verdict reached only the run-header checkpoint jsonb,
 // which is overwritten on every transition, so the dataset was discarded every run. These assert
 // at the transport seam (recordSceneImage's arguments) — the durable write, not the checkpoint.
+
+// --- 24. Regen/reshoot refuse when the presenter reference is gone -------------
+// slimCheckpointInput drops any data: string over 700KB from the checkpointed input, and a 2K
+// avatar exceeds that while the compressed hero does not. So after ANY reload the avatar url is
+// absent — and generating anyway does not degrade, it produces a confidently WRONG image that
+// overwrites a good one and costs money (measured on run apr_876ef559: a product-only still with
+// a BLANK label, because generateSceneImage's 'avatar' branch is the one branch of five with no
+// `&& references.avatarUrl` guard, so "Reference Image 1" silently became the product photo).
+
+describe('regen/reshoot refuse a lost presenter reference', () => {
+  /** The post-reload shape: avatar present as an object, `url` stripped by the slimmer. */
+  const strippedAvatar = () => ({ url: undefined as unknown as string, description: 'a Filipino host', ethnicity: 'Filipino', prompt: '' });
+
+  it('regen does NOT spend, does NOT touch the image, and surfaces a reason', async () => {
+    const { deps, spies } = makeFakeDeps({ imageGateCheck: undefined, checkSceneImage: undefined });
+    const run = createProductionRun(makeInput({ avatar: strippedAvatar() }), 'u1');
+    await runProduction(run, cb(), deps);
+    const before = run.scenes.find((s) => s.sceneIdx === 0)!.imageUrl;
+    spies.generateSceneImage.mockClear();
+
+    await regenSceneImage(run, 0, cb(), deps);
+
+    expect(spies.generateSceneImage).not.toHaveBeenCalled(); // the whole point: zero spend
+    const sc = run.scenes.find((s) => s.sceneIdx === 0)!;
+    expect(sc.imageUrl).toBe(before); // the good image survives
+    expect(sc.flaggedReason).toBe(IDENTITY_REF_LOST_REASON);
+    // status untouched — one refused scene must not block approval of an otherwise-fine run.
+    expect(sc.status).not.toBe('flagged');
+  });
+
+  it('a product scene still regenerates — it never needed the presenter', async () => {
+    // Scene 1 of the default storyboard is referenceImage:'product'. Refusing it too would be a
+    // false positive that breaks regen for scenes the missing avatar cannot affect.
+    const { deps, spies } = makeFakeDeps({ imageGateCheck: undefined, checkSceneImage: undefined });
+    const run = createProductionRun(makeInput({ avatar: strippedAvatar() }), 'u1');
+    await runProduction(run, cb(), deps);
+    spies.generateSceneImage.mockClear();
+
+    await regenSceneImage(run, 1, cb(), deps);
+
+    expect(spies.generateSceneImage).toHaveBeenCalledTimes(1);
+    expect(run.scenes.find((s) => s.sceneIdx === 1)!.flaggedReason).toBeUndefined();
+  });
+
+  it('reshoot refuses BEFORE requeueScene, so the existing clip is not destroyed', async () => {
+    // Ordering is the whole risk here: requeue NULLs job_handle/video_url/audio_url, so a guard
+    // placed after it would wipe the very clip we are declining to replace.
+    // Deliberately NOT going through approveStoryboard: that starts the production driver, whose
+    // own stale-claim escape also calls requeueScene, which would contaminate the count. The guard
+    // is the first statement in reshootScene, so it is reachable straight from the parked run.
+    const { deps, spies, store } = makeFakeDeps({ imageGateCheck: undefined, checkSceneImage: undefined });
+    const run = createProductionRun(makeInput({ avatar: strippedAvatar() }), 'u1');
+    await runProduction(run, cb(), deps);
+    (store.requeueScene as any).mockClear();
+    spies.generateSceneImage.mockClear();
+
+    await reshootScene(run, 0, cb(), deps);
+
+    expect(store.requeueScene).not.toHaveBeenCalled();
+    expect(spies.generateSceneImage).not.toHaveBeenCalled();
+    expect(spies.submitVideo).not.toHaveBeenCalled();
+    expect(run.scenes.find((s) => s.sceneIdx === 0)!.flaggedReason).toBe(IDENTITY_REF_LOST_REASON);
+  });
+
+  it('a usable data: reference is never refused', async () => {
+    const { deps, spies } = makeFakeDeps({ imageGateCheck: undefined, checkSceneImage: undefined });
+    const run = createProductionRun(makeInput({ avatar: identityAvatar() }), 'u1');
+    await runProduction(run, cb(), deps);
+    spies.generateSceneImage.mockClear();
+
+    await regenSceneImage(run, 0, cb(), deps);
+
+    expect(spies.generateSceneImage).toHaveBeenCalledTimes(1);
+    expect(run.scenes.find((s) => s.sceneIdx === 0)!.flaggedReason).toBeUndefined();
+  });
+
+  it('a REMOTE url is refused too — only an inline data: reference actually reaches the model', async () => {
+    // 'avatar.png' is the other post-slim shape. generateSceneImage matches /^data:/ before
+    // attaching the part, so a remote url is silently no reference at all.
+    const { deps, spies } = makeFakeDeps({ imageGateCheck: undefined, checkSceneImage: undefined });
+    const run = createProductionRun(makeInput(), 'u1'); // default avatar url = 'avatar.png'
+    await runProduction(run, cb(), deps);
+    spies.generateSceneImage.mockClear();
+
+    await regenSceneImage(run, 0, cb(), deps);
+
+    expect(spies.generateSceneImage).not.toHaveBeenCalled();
+    expect(run.scenes.find((s) => s.sceneIdx === 0)!.flaggedReason).toBe(IDENTITY_REF_LOST_REASON);
+  });
+});
 
 describe('P4 — gate verdict persistence', () => {
   it('persists each scene’s verdict on the durable row, not just the checkpoint', async () => {
