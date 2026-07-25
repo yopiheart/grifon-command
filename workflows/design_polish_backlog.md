@@ -50,15 +50,20 @@ Open these in 3 tabs, paste `https://app.grifon.ai/` into each, click the refres
 
 ## Pending — next agent session (when Neil greenlights)
 
-### P1 · CDN Tailwind → PostCSS migration
+### ~~P1 · CDN Tailwind → PostCSS migration~~ — SHIPPED 2026-07-25
 
-**Status:** Production hygiene blocker before paid traffic.
+**Done.** `cdn.tailwindcss.com` and the inline `tailwind.config = {...}` block are out of `index.html`; new `tailwind.config.js` (content globs + safelist + verbatim theme port) and `postcss.config.js` drive a real build-time compile. `tailwindcss`/`postcss`/`autoprefixer` were already in devDependencies and `index.css` already had the three `@tailwind` directives, so the diff was 3 files — the wiring was never the risk.
 
-**Why deferred:** Migrating off `cdn.tailwindcss.com` (which throws "should not be used in production" warning) requires `tailwind.config.js` + `postcss.config.js` + verification that styling didn't shift across the entire app, not just marketing surfaces. Every page in the app would need eyeballing.
+**Result:** CSS 10.01 kB → 118.26 kB (gzip 2.45 → 18.76 kB), against a ~3 MB runtime script and a browser-side JIT compile removed. Clear first-paint win on the low-end Android the PH audience runs, and the "should not be used in production" warning is gone.
 
-**Scope:** ~30 lines added (config files), 1 line removed ([index.html:8](../index.html#L8) script tag), ~1-2 hours of regression testing across landing / pricing / dashboard / each module.
+**The two real risks, and how they were closed** — full write-up in [liquid_glass_decision.md → Tier precedence](liquid_glass_decision.md):
 
-**How to resume:** `index.html` currently loads `cdn.tailwindcss.com` + has an inline `tailwind.config = {...}` block. The `index.css` file already has `@tailwind` directives waiting for PostCSS to process them. Add the configs, remove the CDN script + inline config, run the dev server, smoke each route.
+1. **Purge deletes the material system.** Custom CSS inside `@layer components` IS tree-shaken, and that is where the five tiers live. Found today via `materialTokens.ts` literals; safelisted so a future refactor of those constants can't silently strip every glass surface with a green build.
+2. **Cascade inversion.** The tiers must stay *defaults, not locks*. Under the CDN that held because CDN output is unlayered; under PostCSS it holds because Tailwind hoists `@layer components` above utilities in source order. Same outcome, different mechanism — verified by byte offset in the built CSS, not by argument.
+
+**Verified:** build clean · 1005 tests · design:lint 0/0 · bundle-leak clean · byte-offset cascade check · and an 8-point Chromium pass at 1440×900 + 390×844 on landing and pricing, all PASS — including the header-over-cream-proof-band case (stayed dark glass, `rgba(11,11,13,0.74)` + `blur(28px) saturate(1.8)`), scroll-edge at rest vs scrolled, the pricing billing toggle sliding, `document.body` computing to `rgb(9,9,11)`, and zero missing-stylesheet or Tailwind-CDN console warnings.
+
+**Not covered:** authenticated surfaces (dashboard + the 15 modules) were not eyeballed — no Supabase creds in the sandbox. Purge misses are global rather than per-route, and no custom class was dropped from the bundle, so the risk there is low but not zero. Worth a pass on the next session where Neil is logged in.
 
 ### P1 · Module-by-module Zone 3 deep audit
 

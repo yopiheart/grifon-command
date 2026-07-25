@@ -86,7 +86,7 @@ Moves **01 · 02 · 03 · 04 · 05** are in the app. Move **06** (concentric rad
 - `components/ui/GatewayReel.tsx` — abstract gold/zinc ad plates drifting behind the auth glass. Move 02.
 
 **Changed**
-- `index.css` — the four tier bodies in `@layer components` (native cascade layer: Tailwind here is the **Play CDN**, whose output is unlayered, so a caller's one-off utility still wins), `.scroll-edge`, `.mat-chrome-mobile`, the `gateway-reel` keyframe, and the **`prefers-reduced-transparency` + `prefers-contrast: more` guards** (move 04 — the one genuine defect).
+- `index.css` — the four tier bodies in `@layer components` (see **Tier precedence** below for why a caller's one-off utility still beats them), `.scroll-edge`, `.mat-chrome-mobile`, the `gateway-reel` keyframe, and the **`prefers-reduced-transparency` + `prefers-contrast: more` guards** (move 04 — the one genuine defect).
 - `components/ui/GlassPanel.tsx` — default flipped to PLATE, `tier` escape hatch. **64 of its 65 call sites lost their backdrop-filter**; the auth gateway is the one that kept it.
 - `components/ui/SiteHeader.tsx` — CHROME + scroll edge once scrolled; fully transparent at rest so the hero still leads.
 - `components/ui/StepFooter.tsx` — CHROME below `md` only, where it actually detaches and floats.
@@ -278,3 +278,23 @@ Neil asked for every one of them, so nothing is parked any more.
 Nothing. Every item raised in this session is shipped.
 
 **Kill switch:** revert `GlassPanel.tsx` to `bg-zinc-900/80 backdrop-blur-xl …` and the app returns to v1 look; the tier CSS becomes dead but harmless. Full revert = this commit.
+
+---
+
+## Tier precedence — the mechanism changed on 2026-07-25, the behaviour did not
+
+The tiers are declared in `@layer components` so that a caller's one-off utility (a stray `bg-*` or `backdrop-blur-*`) still overrides them. They are **defaults, not locks.** That contract has held throughout, but it has now rested on two *different* mechanisms, and conflating them will mislead the next person who touches this.
+
+| | Play CDN (until 2026-07-25) | PostCSS build (now) |
+|---|---|---|
+| What `@layer components` is | a **native CSS cascade layer** | a **Tailwind directive** — v3 intercepts it and hoists the rules to the `@tailwind components` position |
+| Why utilities win | CDN output is **unlayered**, and unlayered beats layered regardless of order | same specificity (one class), and utilities are emitted **later in source order** |
+| Are the tiers purgeable? | no — the CDN scans the live DOM | **yes** — custom CSS in `@layer components` is tree-shaken against `content` |
+
+Two consequences worth carrying forward:
+
+1. **The tiers are now deletable.** All six class names (`mat-chrome`, `mat-plate`, `mat-plate-inset`, `mat-slab`, `mat-veil`, `scroll-edge`) are found via their `materialTokens.ts` string literals, so they survive today. Refactor those constants into anything computed — a `clsx` map, a template literal, a lookup — and Tailwind will strip the entire material system **with a green build and no warning.** They are safelisted in `tailwind.config.js` as insurance; keep them there. Everything else in `index.css` sits outside `@layer` and is never shaken.
+
+2. **Don't reason about this — measure it.** Verified by byte offset in the built CSS rather than by argument: `.mat-chrome`/`.mat-plate` at 4900/6112, `.animate-spin` at 20405, `.bg-zinc-900` at 34582, `.backdrop-blur-xl` at 76638, then `prefers-reduced-transparency` at 84127 and the `animate-*` reduced-motion overrides at 86961. Tiers before utilities; a11y guards after everything. Re-run that check after any change to `index.css` ordering or the Tailwind config.
+
+Also lifted by the migration: a variant **can** now be stacked on a custom class (`max-md:mat-chrome` would compile), which the CDN could not do. `.mat-chrome-mobile` stays explicit anyway — it is a different tier body, not `mat-chrome` under a breakpoint.

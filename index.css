@@ -347,10 +347,15 @@ html { scroll-behavior: smooth; }
 
 /* Mobile-only CHROME. Some surfaces are chrome only at one breakpoint — the
    wizard StepFooter detaches and floats over the form below `md`, but is an
-   in-flow rule at the bottom of the panel above it. Tailwind here is the Play
-   CDN, which only generates variants for classes it knows, so `max-md:` can't
-   be stacked on a custom class — this is the explicit form. No specular: the
-   trigger is hover, and this tier only exists on touch. */
+   in-flow rule at the bottom of the panel above it. This is the explicit form.
+
+   It was originally written this way because the Play CDN only generated
+   variants for classes it already knew, so `max-md:` could not be stacked on a
+   custom class. The 2026-07-25 PostCSS migration LIFTED that constraint —
+   Tailwind's own `@layer components` grants variant support to custom CSS, so
+   `max-md:mat-chrome` would now compile. Kept explicit anyway: this rule is a
+   distinct tier body (no specular — the trigger is hover, and this tier only
+   exists on touch), not the same body under a breakpoint. */
 @media (max-width: 767px) {
   .mat-chrome-mobile {
     position: relative;
