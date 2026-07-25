@@ -31,6 +31,7 @@ const Body = z.discriminatedUnion('action', [
   // absent = leave the stored verdict alone, null = clear it, object = store it.
   z.object({ action: z.literal('record_image'), runId: z.string().min(8).max(200), sceneIdx: z.number().int().min(0).max(23), imageUrl: z.string().max(3_000_000), endFrameUrl: z.string().max(3_000_000).nullable().optional(), gateVerdict: z.record(z.string(), z.unknown()).nullable().optional() }),
   z.object({ action: z.literal('record_thumbnail'), runId: z.string().min(8).max(200), thumbnailUrl: z.string().max(3_000_000) }),
+  z.object({ action: z.literal('record_avatar'), runId: z.string().min(8).max(200), avatarUrl: z.string().max(3_000_000) }),
   z.object({ action: z.literal('complete'), runId: z.string().min(8).max(200), sceneIdx: z.number().int().min(0).max(23), videoUrl: z.string().max(4000), audioUrl: z.string().max(4000).optional() }),
   z.object({ action: z.literal('flag'), runId: z.string().min(8).max(200), sceneIdx: z.number().int().min(0).max(23), reason: z.string().max(500).optional() }),
   z.object({ action: z.literal('requeue'), runId: z.string().min(8).max(200), sceneIdx: z.number().int().min(0).max(23) }),
@@ -180,6 +181,26 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         // Includes the "column does not exist" case when producer_runs.sql has not been
         // re-run yet — the caller treats this as best-effort, so the run is unaffected.
         console.error('[producer/advance] record_thumbnail failed:', error.message);
+        return res.status(500).json({ error: 'write_failed' });
+      }
+      return res.status(200).json({ ok: true, changed: true });
+    }
+
+    case 'record_avatar': {
+      // The locked presenter reference, on its own column for the same reason record_thumbnail
+      // exists — it is a base64 data URL, and the run-header `input` is slimmed in transit
+      // (slimCheckpointInput drops data: strings over 700KB), which silently ate a 2K avatar on
+      // every reload. Like record_thumbnail this deliberately does NOT touch `revision`: it is an
+      // out-of-band artifact write, not a checkpoint, so it cannot interfere with the optimistic
+      // concurrency guard in api/producer/run.ts.
+      const { error } = await admin
+        .from('producer_runs')
+        .update({ avatar_url: body.avatarUrl, updated_at: nowIso })
+        .eq('run_id', body.runId);
+      if (error) {
+        // Includes "column does not exist" when producer_runs.sql has not been re-run. The caller
+        // treats this as best-effort, and the regen refusal guard still protects the user.
+        console.error('[producer/advance] record_avatar failed:', error.message);
         return res.status(500).json({ error: 'write_failed' });
       }
       return res.status(200).json({ ok: true, changed: true });

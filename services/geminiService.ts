@@ -2143,7 +2143,16 @@ export const generateSceneImage = async (
 
     // --- FORGE_STUDIO_v6.0_GATES ---
     let consistencyRules = "";
-    if (referenceImageMode === 'avatar') {
+    // `&& references.avatarUrl` added 2026-07-25 (Neil-approved). This was the ONE branch of the
+    // five below with no guard on its own reference, and the asymmetry was load-bearing: with the
+    // avatar missing (input.avatar.url does not survive a checkpoint — see producer_runs.avatar_url)
+    // this branch still ran, but no avatar part had been pushed, so "Reference Image 1" silently
+    // resolved to the PRODUCT photo. IDENTITY_LOCK then tried to preserve a bottle's face and hair
+    // — no person rendered — and rule 6's "This frame has no product reference photo … leave the
+    // surface empty" was obeyed faithfully, producing a BLANK label. Guarded, it falls through to
+    // STRICT_NEGATIVE, which is at least honest about having no human reference. Prompt text
+    // itself is unchanged.
+    if (referenceImageMode === 'avatar' && references.avatarUrl) {
         consistencyRules = `
         **IDENTITY_LOCK + ENVIRONMENT_SYNC:**
         1. **LOCKED (preserve from Reference Image 1, NEVER change across scenes — non-negotiable):** face, skin tone, bone structure, **hair styling** (color AND style — if Reference Image 1 shows hair tied up in a bun or ponytail, render it tied up in EVERY scene; do NOT let it down. If Reference Image 1 shows hair down/loose, do NOT tie it up in any scene. Hair styling drift between scenes is BANNED), wardrobe (color, cut, fabric — same blouse/top across scenes), body type. Scene-driven action MAY change pose/expression, but MUST NOT change hair styling, wardrobe, or body type.

@@ -27,6 +27,11 @@ export interface ProductionRunRow {
    * `artifacts` for the same reason scene images are (multi-MB jsonb → statement timeouts).
    * Optional: absent until supabase/producer_runs.sql has been re-run. */
   thumbnail_url?: string | null;
+  /** Locked presenter reference (base64 data URL), written out-of-band via 'record_avatar'.
+   * `input.avatar.url` cannot survive here: slimCheckpointInput drops data: strings over 700KB
+   * and a 2K avatar exceeds that, so on resume this column is the ONLY copy.
+   * Optional: absent until supabase/producer_runs.sql has been re-run. */
+  avatar_url?: string | null;
   /** Monotonic optimistic-concurrency guard (see api/producer/run.ts checkpoint). */
   revision: number;
   created_at: string;
@@ -251,6 +256,16 @@ export const recordSceneImage = (
  * Best-effort at the call site: a failure here costs the cover frame on resume, nothing else. */
 export const recordThumbnail = (runId: string, thumbnailUrl: string): Promise<SceneWriteResult> =>
   post('/api/producer/advance', { action: 'record_thumbnail', runId, thumbnailUrl }).then(toWriteResult);
+
+/** Hard ceiling on a persisted avatar, matching advance.ts's zod cap. Above this the POST would
+ *  400 and we would learn nothing, so the caller measures and reports instead — see recordAvatar. */
+export const MAX_AVATAR_CHARS = 3_000_000;
+
+/** Persist the locked presenter reference on its own run-header column. Best-effort at the call
+ *  site: a failure costs correct regeneration after a reload, which the refusal guard then
+ *  reports to the user rather than papering over. */
+export const recordAvatar = (runId: string, avatarUrl: string): Promise<SceneWriteResult> =>
+  post('/api/producer/advance', { action: 'record_avatar', runId, avatarUrl }).then(toWriteResult);
 
 /** Mark a scene done with its rendered urls (rendering → done). */
 export const completeScene = (runId: string, sceneIdx: number, videoUrl: string, audioUrl?: string): Promise<SceneWriteResult> =>

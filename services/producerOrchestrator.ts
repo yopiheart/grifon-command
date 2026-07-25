@@ -330,6 +330,11 @@ export interface ProducerRunStore {
    * recordSceneImage. OPTIONAL: absent in tests and on any deps built before this existed, in
    * which case the thumbnail simply isn't durable across resume (the pre-existing behavior). */
   recordThumbnail?: (runId: string, thumbnailUrl: string) => Promise<{ changed: boolean }>;
+  /** Persist the locked presenter reference on its own run-header column. Unlike the thumbnail
+   * this is not a convenience: `input` is slimmed in transit, so without it a resumed run has NO
+   * avatar reference and regeneration is guaranteed-wrong. OPTIONAL for the same back-compat
+   * reason as recordThumbnail; absent → identityRefLost refuses the regen instead. */
+  recordAvatar?: (runId: string, avatarUrl: string) => Promise<{ changed: boolean }>;
   completeScene: (runId: string, sceneIdx: number, videoUrl: string, audioUrl?: string) => Promise<{ changed: boolean }>;
   flagScene: (runId: string, sceneIdx: number, reason?: string) => Promise<{ changed: boolean }>;
   requeueScene: (runId: string, sceneIdx: number) => Promise<{ changed: boolean }>;
@@ -681,8 +686,45 @@ export async function runProduction(initial: ProductionRun, cb: ProducerCallback
   }
 }
 
+/** Hard ceiling on a persisted avatar — mirrors the zod cap on api/producer/advance.ts's
+ *  'record_avatar'. Above it the POST would 400 and we would learn nothing. */
+const MAX_AVATAR_CHARS = 3_000_000;
+
+/**
+ * Persist the presenter reference on its own run-header column, once, best-effort.
+ *
+ * This is the durable copy. `input.avatar.url` cannot survive a checkpoint — slimCheckpointInput
+ * drops data: strings over 700KB and a 2K avatar exceeds that — so without this a resumed run has
+ * no reference at all and every regen renders a wrong image (see identityRefLost).
+ *
+ * The size is MEASURED rather than assumed. A generated 2K avatar has never reached the database
+ * intact, so its real length was unknown when this was written; if it exceeds the cap the skip is
+ * emitted with the actual char count, which turns a silent failure into the exact number needed to
+ * choose the next step (compress before storing, or move to Supabase Storage). Never throws —
+ * telemetry and durability must not be able to fail a run.
+ */
+async function persistAvatarReference(run: ProductionRun, deps: ProducerDeps): Promise<void> {
+  const url = run.input.avatar?.url;
+  if (!deps.run.recordAvatar || typeof url !== 'string' || !url.startsWith('data:')) return;
+  if (url.length > MAX_AVATAR_CHARS) {
+    emitRunEvent('node_fail', run.runId, {
+      node: 'avatar_persist', error: 'avatar_too_large', chars: url.length, cap: MAX_AVATAR_CHARS,
+    });
+    return;
+  }
+  try {
+    await deps.run.recordAvatar(run.runId, url);
+  } catch {
+    /* best-effort — the refusal guard reports the consequence to the user if it matters */
+  }
+}
+
 async function runProductionInner(initial: ProductionRun, cb: ProducerCallbacks, deps: ProducerDeps): Promise<ProductionRun> {
   let run = initial;
+
+  // Fire-and-forget: the reference is needed by a LATER regen, never by this run's own stages
+  // (which still hold `input` in memory), so nothing here should wait on a durability write.
+  void persistAvatarReference(run, deps);
 
   const commit = async (mut: (r: ProductionRun) => void) => {
     mut(run);

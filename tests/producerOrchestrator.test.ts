@@ -177,6 +177,9 @@ function makeFakeStore(seed: Record<number, Partial<FakeSceneRow>> = {}) {
       if (gateVerdict !== undefined) rows.get(i)!.gateVerdict = gateVerdict;
       return { changed: true };
     }),
+    // Durable presenter reference (producer_runs.avatar_url). Present here because a resumed run
+    // has NO other copy — `input.avatar.url` is stripped in transit by slimCheckpointInput.
+    recordAvatar: vi.fn(async (_runId: string, _avatarUrl: string) => ({ changed: true })),
     completeScene: vi.fn(async (_runId: string, i: number, videoUrl: string, audioUrl?: string) => {
       const s = rows.get(i);
       if (s && (s.status === 'submitting' || s.status === 'rendering')) {
@@ -1647,6 +1650,57 @@ describe("P4 — gate-skip visibility ('check_skip')", () => {
 // overwrites a good one and costs money (measured on run apr_876ef559: a product-only still with
 // a BLANK label, because generateSceneImage's 'avatar' branch is the one branch of five with no
 // `&& references.avatarUrl` guard, so "Reference Image 1" silently became the product photo).
+
+describe('presenter reference is persisted durably at run start', () => {
+  beforeEach(() => { trackEventMock.mockClear(); });
+
+  it('records a usable reference on its own column', async () => {
+    const { deps, store } = makeFakeDeps({ imageGateCheck: undefined, checkSceneImage: undefined });
+    const run = createProductionRun(makeInput({ avatar: identityAvatar() }), 'u1');
+
+    await runProduction(run, cb(), deps);
+
+    expect(store.recordAvatar).toHaveBeenCalledWith(run.runId, identityAvatar().url);
+  });
+
+  it('does not record a reference the model could never receive', async () => {
+    // 'avatar.png' — a remote url. generateSceneImage matches /^data:/ before attaching the part,
+    // so persisting this would only make a resumed run LOOK recoverable while still failing.
+    const { deps, store } = makeFakeDeps({ imageGateCheck: undefined, checkSceneImage: undefined });
+    const run = createProductionRun(makeInput(), 'u1');
+
+    await runProduction(run, cb(), deps);
+
+    expect(store.recordAvatar).not.toHaveBeenCalled();
+  });
+
+  it('skips an oversized reference and REPORTS its real size instead of failing silently', async () => {
+    // A generated 2K avatar has never reached the database intact, so its true length was unknown
+    // when this shipped. The event carries the measured count so the follow-up decision (compress,
+    // or move to Storage) is made on data rather than on a guess.
+    const huge = `data:image/png;base64,${'A'.repeat(3_000_001)}`;
+    const { deps, store } = makeFakeDeps({ imageGateCheck: undefined, checkSceneImage: undefined });
+    const run = createProductionRun(makeInput({ avatar: { ...identityAvatar(), url: huge } }), 'u1');
+
+    await runProduction(run, cb(), deps);
+
+    expect(store.recordAvatar).not.toHaveBeenCalled();
+    const fails = (trackEventMock.mock.calls as any[]).map((c) => c[0])
+      .filter((p) => p?.event === 'node_fail' && p?.meta?.node === 'avatar_persist');
+    expect(fails).toHaveLength(1);
+    expect(fails[0].meta).toMatchObject({ error: 'avatar_too_large', chars: huge.length });
+  });
+
+  it('a run whose deps predate the column still completes normally', async () => {
+    const { deps } = makeFakeDeps({ imageGateCheck: undefined, checkSceneImage: undefined });
+    (deps.run as any).recordAvatar = undefined;
+    const run = createProductionRun(makeInput({ avatar: identityAvatar() }), 'u1');
+
+    const out = await runProduction(run, cb(), deps);
+
+    expect(out.gate).toBe('storyboard'); // parks exactly as before — durability is best-effort
+  });
+});
 
 describe('regen/reshoot refuse a lost presenter reference', () => {
   /** The post-reload shape: avatar present as an object, `url` stripped by the slimmer. */

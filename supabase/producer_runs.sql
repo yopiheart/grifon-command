@@ -44,6 +44,21 @@ alter table public.producer_runs add column if not exists cost_usd numeric not n
 -- the run behaves exactly as it did before — nothing else depends on it.
 alter table public.producer_runs add column if not exists thumbnail_url text;
 
+-- The locked PRESENTER reference, same doctrine as thumbnail_url above and for a sharper reason.
+-- `input` is slimmed at the transport boundary (slimCheckpointInput drops any data: string over
+-- 700KB to stay under api/producer/run's 2mb cap). The compressed hero survives that at ~160KB; a
+-- 2K avatar does NOT, so before this column existed input.avatar.url was simply GONE after any
+-- reload — verified on run apr_876ef559 (2026-07-25), whose stored row has heroImageBase64 intact
+-- and input.avatar carrying no url key at all.
+--
+-- That was not a cosmetic loss. A regen with no presenter reference does not degrade, it renders a
+-- confidently WRONG image (no person, blank product label) over a good one, and charges for it.
+-- Storing the reference on its own column is what lets a resumed run keep regenerating correctly.
+-- Degrades safely exactly like thumbnail_url: if this alter has not been applied the write 500s,
+-- the orchestrator swallows it (best-effort), and behaviour falls back to the refusal guard in
+-- producerOrchestrator's identityRefLost — a clear message instead of a wrong image.
+alter table public.producer_runs add column if not exists avatar_url text;
+
 -- ── Per-scene job queue ───────────────────────────────────────────────────────
 -- One row per (run, scene). A relational child table (not a jsonb array on the run)
 -- is deliberate: it makes the atomic claim below a single-row UPDATE, which is what

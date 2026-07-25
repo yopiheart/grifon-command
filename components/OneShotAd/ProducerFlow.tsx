@@ -38,6 +38,26 @@ import { newRunId, loadRun, type ProductionRunRow, type ProductionSceneRow } fro
  */
 const ACTIVE_RUN_KEY = 'osa_producer_active_run';
 
+/**
+ * Splice the durable presenter reference back into `input`.
+ *
+ * `input.avatar.url` never survives a checkpoint: slimCheckpointInput drops data: strings over
+ * 700KB to stay under api/producer/run's 2mb cap, and a 2K avatar exceeds it (the compressed hero,
+ * ~160KB, does not — which is why the hero comes back and the avatar does not). The durable copy
+ * lives on producer_runs.avatar_url, written out-of-band by 'record_avatar' — same doctrine as
+ * scene images and the cover frame: base64 never rides the run-header jsonb.
+ *
+ * Without this a resumed run has no reference, and a regen renders a person-free still with a
+ * blank product label over a good image (run apr_876ef559, 2026-07-25). The column is preferred
+ * over whatever is in `input` because the slimmer only ever removes — it never leaves a stale
+ * value — and the fallback keeps runs checkpointed before the column existed working unchanged.
+ */
+export function hydrateInput(row: ProductionRunRow): OrchInput {
+  const input = row.input as unknown as OrchInput;
+  if (!row.avatar_url || !input?.avatar) return input;
+  return { ...input, avatar: { ...input.avatar, url: row.avatar_url } };
+}
+
 /** Rebuild an in-memory run from the server checkpoint (resume-to-true-state). */
 function fromRow(row: ProductionRunRow, scenes: ProductionSceneRow[]): ProductionRun {
   const art = (row.artifacts ?? {}) as Record<string, any>;
@@ -88,7 +108,7 @@ function fromRow(row: ProductionRunRow, scenes: ProductionSceneRow[]): Productio
     // abandons any in-flight reshoot/preset op (see the scene normalization above).
     takesUsed: typeof art.takesUsed === 'number' ? art.takesUsed : 0,
     busy: undefined,
-    input: row.input as unknown as OrchInput,
+    input: hydrateInput(row),
     stages: (row.stages as any[]) ?? [],
     scenes: sceneState,
     report: art.report,
