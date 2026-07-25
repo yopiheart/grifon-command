@@ -169,7 +169,6 @@
     }
     </script>
 
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
@@ -333,55 +332,9 @@
         text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
       }
     </style>
-    <script>
-      // ============================================================
-      // Inline Tailwind config — sourced from DESIGN.md (role names)
-      // To regenerate the canonical tokens: npm run design:tailwind
-      // (output: design.tokens.json) then mirror the `colors` block below.
-      // ============================================================
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Inter', 'sans-serif'],
-              mono: ['JetBrains Mono', 'monospace'],
-              oswald: ['Oswald', 'sans-serif'],
-              // serif-accent (DESIGN.md): marketing headline accent words + marquees ONLY
-              serif: ['Instrument Serif', 'Georgia', 'serif'],
-            },
-            colors: {
-              // --- DESIGN.md roles (canonical) ---
-              'primary':             '#FFCC00',
-              'surface':             '#09090B',
-              'surface-elevated':    '#18181B',
-              'on-surface':          '#FFFFFF',
-              'on-surface-muted':    '#D4D4D8',
-              'on-surface-dim':      '#A1A1AA',
-              'on-surface-sublabel': '#82828B',
-
-              // --- Transitional aliases (legacy names → DESIGN.md values) ---
-              // The old `brand-primary` was purple (#D67BFF) — purged per design directive.
-              // Delete each alias as its consumers migrate to role names.
-              'brand-primary':       '#FFCC00', // was purple; now gold
-              'brand-yellow':        '#FFCC00', // alias of primary
-              'brand-yellow-dark':   '#B28F00',
-              'brand-green':         '#10B981', // success signal; not in DESIGN.md
-              'brand-light':         '#D4D4D8', // → on-surface-muted
-              'brand-dark':          '#09090B', // → surface (was #050505)
-              'brand-secondary':     '#71717A', // → on-surface-sublabel
-              'background-dark':     '#09090B', // → surface (was #050505)
-              'background-light':    '#18181B', // → surface-elevated (was #111111)
-              'input-bg':            'rgba(255, 255, 255, 0.05)',
-              'text-primary':        '#FFFFFF', // → on-surface
-              'text-secondary':      '#A1A1AA', // → on-surface-dim
-              'border-color':        'rgba(255, 255, 255, 0.08)',
-              // Marketing light band exception (DESIGN.md) — max ONE band per marketing page
-              'proof-band':          '#F2F1EA',
-            }
-          }
-        }
-      }
-    </script>
+    <!-- Tailwind config moved to tailwind.config.js on 2026-07-25 when the
+         cdn.tailwindcss.com Play CDN was replaced by a real PostCSS build.
+         The theme lives there now — do not re-add an inline config block. -->
     <script type="importmap">
     {
       "imports": {

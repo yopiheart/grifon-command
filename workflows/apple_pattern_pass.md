@@ -48,8 +48,9 @@ Smaller parked follow-ups, in rough order:
 1. SnapRail adoption for ProofGallery + pricing card rail (consistency + paddles everywhere).
 2. Move 6 (opportunistic): overlays materialize via blur+opacity on `EASE.veil` (modals,
    CommandPalette) — do alongside other work, not standalone.
-3. `npm run design:lint` is BROKEN on clean main (design.md CLI exits 1, zero output) — tooling
-   fix; it silently no-ops the brand gate.
+3. ~~`npm run design:lint` is BROKEN on clean main~~ — **STALE, corrected 2026-07-25.** Re-ran it:
+   exits **0** with real JSON output (`errors: 0, warnings: 0, infos: 1`, and it reports the token
+   counts it parsed). The brand gate is live, not no-op'd. Whatever broke it has since been fixed.
 4. Pre-existing Framer Motion console warning ("non-static position … scroll offset") on landing +
    pricing — harmless but noisy; root-cause when nearby.
 5. Pricing page inline-`style={{}}` Tailwind-ization — known debt, explicitly out of scope so far.

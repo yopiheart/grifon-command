@@ -75,9 +75,11 @@ export const MAT_PLATE_INSET = 'mat-plate-inset';
  * and content at another (the wizard StepFooter detaches and floats over the
  * form on mobile, but is an in-flow rule at the bottom of the panel on desktop).
  *
- * Breakpoint-scoped in index.css rather than composed as `max-md:mat-chrome`,
- * because Tailwind here is the Play CDN — it only generates variants for
- * classes it already knows, so a variant can't be stacked on a custom class.
+ * Breakpoint-scoped in index.css rather than composed as `max-md:mat-chrome`.
+ * That was originally forced by the Play CDN, which only generated variants for
+ * classes it already knew; the 2026-07-25 PostCSS migration lifted it. It stays
+ * explicit because this is a DIFFERENT tier body, not `mat-chrome` under a
+ * breakpoint — it drops the specular, whose trigger is hover.
  */
 export const MAT_CHROME_MOBILE = 'mat-chrome-mobile';
 

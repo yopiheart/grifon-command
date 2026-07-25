@@ -112,8 +112,13 @@ export default defineConfig(({ mode }) => {
       },
     },
     build: {
-      // Vite 8 defaults to lightningcss, which warns on every @tailwind directive
-      // it doesn't recognize. esbuild minifies fine and stays quiet.
+      // Originally set because Vite 8 defaults to lightningcss, which warned on
+      // every @tailwind directive it didn't recognize — back when nothing
+      // processed them and they reached the minifier intact. The 2026-07-25
+      // PostCSS migration consumes those directives before minification, so
+      // that reason is gone. Kept on esbuild deliberately: it's the minifier
+      // the current CSS output was verified against (incl. the tier cascade
+      // order), and swapping it is a change to shipped bytes for no gain.
       cssMinify: 'esbuild',
     },
   }
