@@ -33,6 +33,20 @@ const EventBody = z.object({
 // null (not rejected) so a bad correlator never fails an otherwise-valid event insert.
 const RUN_ID_RE = /^[A-Za-z0-9_-]{1,64}$/;
 
+// SERVER-DERIVED event names — a client may never write these (2026-07-25, from the
+// GPT 5.6 Sol architecture consult). Both are emitted exclusively by api/_lib/runEvents.ts
+// on the SERVICE ROLE, which bypasses this handler entirely; the client's own run-event
+// vocabulary (services/producerOrchestrator.ts:481 — node_start/node_done/node_fail/
+// check_fail/check_skip/gate_park/gate_approve) deliberately excludes them.
+//
+// Why it matters: public.run_cogs sums meta->>'estUsd' over every event='cogs' row grouped
+// by (run_id, user_id), so without this a caller could POST event='cogs' with an invented
+// estUsd against their OWN run and inflate its cost. Cross-user forgery is already caught by
+// run_attribution_anomalies, but SAME-user forgery matches the run owner and raises no alarm —
+// it is invisible, and it breaks the "cost is server-derived" invariant the view rests on.
+// Self-poisoning only (no other user's numbers move), which is why this is a guard, not a P0.
+const SERVER_ONLY_EVENTS = new Set(['cogs', 'watchdog_kill']);
+
 // Hard ceiling on the serialized meta payload — defense-in-depth behind the body
 // limit, and independent of how the host parses the body.
 const MAX_META_BYTES = 8 * 1024;
@@ -67,6 +81,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   if (meta && JSON.stringify(meta).length > MAX_META_BYTES) {
     return res.status(400).json({ error: 'meta_too_large' });
+  }
+
+  // Reject reserved server-derived names outright. 403 rather than a silent drop: a caller
+  // reaching here is either forging cost attribution or a client bug that would otherwise
+  // corrupt run_cogs invisibly — both deserve to be loud. Safe to reject because the only
+  // client transport (services/analyticsService.ts trackEvent) is fire-and-forget inside a
+  // try/catch with no retry, so a 403 can never surface to a user or storm the endpoint.
+  if (SERVER_ONLY_EVENTS.has(event)) {
+    console.warn(`[events] rejected reserved event '${event}' from user=${user?.id ?? 'anon'}`);
+    return res.status(403).json({ error: 'reserved_event' });
   }
 
   // Sanitize the run correlator — a garbage value is stripped to null, never rejected.
