@@ -1,5 +1,6 @@
 <!doctype html>
-<!-- GRIFON noir carousel — Slide 3 DEEP DIVE (Kallaway "LEVEL 2" structure: mini-stack top-right with blur-teased rows + highlighted chip, big serif title, meaty body) -->
+<!-- GRIFON noir carousel — Slide 3 DEEP DIVE (Kallaway "LEVEL 2" structure: mini-stack top-right with blur-teased rows + highlighted chip, big serif title, meaty body)
+     v4 sweep 2026-07-25: lit ground, soft-light masked grain, tight gold bloom, the example card on glass. -->
 <html lang="tl">
 <head>
 <meta charset="utf-8">
@@ -9,31 +10,64 @@
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { background: #333; }
+
+  /* ── GROUND — lit, off-centre left to match this slide's asymmetry. ── */
   #canvas {
     position: relative; width: 1080px; height: 1350px; overflow: hidden;
-    background: radial-gradient(ellipse 900px 750px at 42% 44%, #121215 0%, #09090B 58%, #070708 100%);
+    background:
+      radial-gradient(ellipse 860px 680px at 40% 42%,
+        rgba(255,204,0,0.050) 0%, rgba(255,204,0,0.013) 32%, transparent 64%),
+      radial-gradient(ellipse 1080px 980px at 40% 42%,
+        #191920 0%, #101014 36%, #0A0A0C 72%, #070708 100%);
     font-family: 'Inter', sans-serif;
   }
+
+  /* Gold pool behind the serif title — the light the tight shadow sits in. */
+  .glow {
+    position: absolute; left: 40%; top: 47%; width: 900px; height: 520px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(ellipse at center,
+      rgba(255,204,0,0.075) 0%, rgba(255,190,0,0.022) 40%, transparent 70%);
+  }
+
+  /* ── GRAIN — soft-light (was screen), coarser, masked to the light. ── */
   .grain {
     position: absolute; inset: 0; z-index: 9; pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    opacity: 0.15; mix-blend-mode: screen;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.62' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 150px 150px;
+    opacity: 0.16; mix-blend-mode: soft-light;
+    -webkit-mask-image: radial-gradient(ellipse 1030px 930px at 40% 42%, #000 0%, rgba(0,0,0,0.5) 44%, transparent 78%);
+    mask-image: radial-gradient(ellipse 1030px 930px at 40% 42%, #000 0%, rgba(0,0,0,0.5) 44%, transparent 78%);
   }
-  /* blur-teased mini stack, top-right (the Kallaway ladder move) */
-  .stackmini { position: absolute; top: 96px; right: 90px; width: 300px; }
+
+  /* blur-teased mini stack, top-right (the Kallaway ladder move).
+     Left OFF glass deliberately — see the note on .ex below. */
+  /* Pre-existing bug fixed in the v4 sweep: at 300px wide / 20px / .18em
+     tracking, the highlighted row "02 · Masakit na Tanong" overflowed and
+     wrapped, so its gold background broke into two ragged bands with
+     "TANONG" stranded on its own line. Widened to 392px, dropped to 17px,
+     and the chip is now an inline-block with its own tighter tracking so the
+     highlight stays one clean band. The blurred rows are unaffected — they
+     are illegible by design. */
+  .stackmini { position: absolute; top: 96px; right: 82px; width: 392px; z-index: 2; }
   .row {
     padding: 15px 0; text-align: center;
-    font-weight: 800; font-size: 20px; letter-spacing: .18em; text-transform: uppercase;
+    font-weight: 800; font-size: 17px; letter-spacing: .18em; text-transform: uppercase;
     color: #A1A1AA; filter: blur(7px); opacity: .75;
   }
   .row + .row { border-top: 1px solid rgba(255,204,0,0.30); }
   .row.hot { filter: none; opacity: 1; }
-  .row.hot span { background: #FFCC00; color: #09090B; padding: 4px 12px; }
+  .row.hot span {
+    display: inline-block;
+    background: #FFCC00; color: #09090B;
+    padding: 5px 12px; letter-spacing: .10em; white-space: nowrap;
+  }
   .arrow {
-    position: absolute; top: 258px; right: 396px;
+    position: absolute; top: 252px; right: 488px; z-index: 2;
     font-size: 56px; color: #FFFFFF; transform: rotate(18deg);
   }
-  .block { position: absolute; top: 470px; left: 96px; right: 96px; }
+
+  .block { position: absolute; top: 470px; left: 96px; right: 96px; z-index: 2; }
   .kicker {
     font-weight: 800; font-size: 34px; letter-spacing: .14em;
     text-transform: uppercase; color: #FFFFFF;
@@ -41,31 +75,76 @@
   .title {
     font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-weight: 400;
     font-size: 108px; line-height: 1.02; color: #FFCC00; margin-top: 18px;
-    text-shadow: 0 0 55px rgba(255,204,0,0.25);
+    /* Tight + bright. Was 0 0 55px / 0.25 — a wide dim shadow traces the
+       glyphs in khaki instead of lighting them. */
+    text-shadow: 0 0 20px rgba(255,204,0,0.28);
   }
-  .body { margin-top: 54px; font-size: 34px; font-weight: 600; line-height: 1.6; color: #F4F4F5; }
+  .body { margin-top: 50px; font-size: 34px; font-weight: 600; line-height: 1.6; color: #F4F4F5; }
   .body b { color: #FFCC00; font-weight: 700; }
+
+  /* ── THE ONE GLASS ELEMENT ───────────────────────────────────────────
+     The example card gets it, not the ladder. Two glass surfaces on one
+     slide is the "multiple custom controls" overuse Apple warns about, and
+     between the two this is the one worth promoting: it's the screenshot —
+     the actual hook a reader steals. The ladder is navigation furniture and
+     its blur-tease already carries its own depth cue.
+
+     Was a flat rgba(24,24,27,0.5) box with a gold left border. Keeps the
+     gold edge as the rim's brightest stop, so nothing is lost. ── */
   .ex {
-    margin-top: 46px; padding: 34px 38px;
-    border-left: 2px solid #FFCC00; background: rgba(24,24,27,0.5);
+    position: relative; isolation: isolate;
+    margin-top: 44px; padding: 38px 42px; border-radius: 26px;
+    background:
+      linear-gradient(158deg,
+        rgba(255,255,255,0.075) 0%, rgba(255,255,255,0.019) 44%, rgba(255,255,255,0.046) 100%),
+      rgba(11,11,13,0.52);
+    backdrop-filter: blur(28px) saturate(190%);
+    -webkit-backdrop-filter: blur(28px) saturate(190%);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.17),
+      inset 0 -1px 0 rgba(255,255,255,0.05),
+      0 38px 84px -22px rgba(0,0,0,0.72);
+  }
+  /* Rim lens, weighted gold along the left edge so the original accent
+     survives the move onto glass. */
+  .ex::before {
+    content: ''; position: absolute; inset: 0; border-radius: inherit;
+    padding: 1.5px; pointer-events: none;
+    background: linear-gradient(118deg,
+      rgba(255,204,0,0.62) 0%, rgba(255,204,0,0.26) 16%,
+      rgba(255,255,255,0.28) 44%, rgba(255,255,255,0.05) 70%,
+      rgba(255,255,255,0.22) 100%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+  }
+  .ex::after {
+    content: ''; position: absolute; left: 0; right: 0; top: 0; height: 56%;
+    border-radius: 26px 26px 0 0; pointer-events: none;
+    background: linear-gradient(172deg, rgba(255,255,255,0.055) 0%, transparent 78%);
   }
   .ex .q {
+    position: relative; z-index: 1;
     font-family: 'Instrument Serif', Georgia, serif; font-style: italic;
     font-size: 40px; line-height: 1.3; color: #FFFFFF;
   }
   .ex .tag {
+    position: relative; z-index: 1;
     margin-top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 16px;
     letter-spacing: .28em; text-transform: uppercase; color: #A1A1AA;
   }
+
   .sig {
     position: absolute; left: 50%; bottom: 64px; transform: translateX(-50%);
     font-family: 'JetBrains Mono', monospace; font-size: 14px;
-    letter-spacing: 0.42em; text-transform: uppercase; color: #52525B;
+    letter-spacing: 0.42em; text-transform: uppercase; color: #82828B;
   }
 </style>
 </head>
 <body>
 <div id="canvas">
+  <div class="glow"></div>
   <div class="stackmini">
     <div class="row">Pattern Break</div>
     <div class="row hot"><span>02 &middot; Masakit na Tanong</span></div>
