@@ -706,13 +706,17 @@ function makeMorphDeps(over: Partial<ProducerDeps> = {}) {
 }
 
 describe('camera framing rotation across scenes', () => {
-  // AVATAR_CAMERA_ANGLES (services/geminiService.ts) holds 4 framings and is selected by
-  // `variationIndex % 4`. Its stated purpose, verbatim from that file: "so consecutive scenes
-  // get different framings". The orchestrator's ONLY job is to feed it the scene index — it
-  // used to pass a constant 0, which pinned all 9 scenes of a real run to one framing and made
-  // the rotation contribute nothing (Neil's eyeball on the HIRAYA GLOW run, 2026-07-25).
-  // Asserted on the variationIndex ARGUMENT (the seam), not on any rendered pixel.
-  const CAMERA_ANGLE_COUNT = 4; // = AVATAR_CAMERA_ANGLES.length
+  // AVATAR_CAMERA_ANGLES (services/geminiService.ts) is selected by
+  // `variationIndex % AVATAR_CAMERA_ANGLES.length`. Its stated purpose, verbatim from that file:
+  // "so consecutive scenes get different framings". The orchestrator's ONLY job is to feed it the
+  // scene index — it used to pass a constant 0, which pinned all 9 scenes of a real run to one
+  // framing and made the rotation contribute nothing (Neil's eyeball on the HIRAYA GLOW run,
+  // 2026-07-25). Asserted on the variationIndex ARGUMENT (the seam), not on any rendered pixel.
+  //
+  // Kept in step with the set BY HAND on purpose: geminiService is a TUNED file and the set is
+  // prompt content, so a change to it is a deliberate, approved act (HIGH_ANGLE_SELFIE was cut
+  // 2026-07-25) — not something a test should silently absorb by importing the array.
+  const CAMERA_ANGLE_COUNT = 3; // = AVATAR_CAMERA_ANGLES.length
   const FIVE: Scene[] = Array.from({ length: 5 }, (_, i) => ({
     scriptLine: `Line ${i}`,
     sceneDescription: `d${i}`,
@@ -741,11 +745,13 @@ describe('camera framing rotation across scenes', () => {
     const framings = framingByPrompt(spies.generateSceneImage);
     const buckets = FIVE.map((_, i) => framings.get(`IMG${i}`)![0]);
 
-    // Scenes 0-3 must each land on a DIFFERENT framing — the entire point of the rotation.
-    // Under the old constant this was [0,0,0,0] and the set size was 1.
-    expect(new Set(buckets.slice(0, 4)).size).toBe(CAMERA_ANGLE_COUNT);
-    // Scene 4 wraps back onto scene 0's framing: proves a ROTATION, not merely distinct values.
-    expect(buckets[4]).toBe(buckets[0]);
+    // One full pass of the set must land on a DIFFERENT framing every time — the entire point of
+    // the rotation. Under the old constant every entry was 0 and the set size was 1.
+    expect(new Set(buckets.slice(0, CAMERA_ANGLE_COUNT)).size).toBe(CAMERA_ANGLE_COUNT);
+    // The scene right after a full pass wraps back onto scene 0's framing: proves a ROTATION,
+    // not merely distinct values. Indexed off the count so cutting an angle can't silently
+    // turn this into a tautology.
+    expect(buckets[CAMERA_ANGLE_COUNT]).toBe(buckets[0]);
   });
 
   it('a still that fails the deterministic check rerolls onto a DIFFERENT framing', async () => {

@@ -1414,7 +1414,7 @@ async function runStage(
           try {
             if (needsMain) {
               // variationIndex = the SCENE INDEX, so the 4-angle camera rotation in
-              // geminiService (AVATAR_CAMERA_ANGLES, picked by `variationIndex % 4`) actually
+              // geminiService (AVATAR_CAMERA_ANGLES, picked by `variationIndex % length`) actually
               // rotates — its whole stated purpose is "consecutive scenes get different
               // framings". Passing a constant 0 pinned every scene to INTIMATE_CLOSE_UP and the
               // rotation contributed nothing, leaving runs of near-identical eye-level frontal

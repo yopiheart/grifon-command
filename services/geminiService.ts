@@ -823,14 +823,24 @@ export const deleteVideoLibraryItem = async (path: string): Promise<void> => {
 };
 
 // CAMERA ANGLE SET — rebalanced 2026-05-08-late-late-evening for storyboard-variety + face-to-camera safety.
-// 4 framings the model reliably renders. Rotated via `variationIndex % AVATAR_CAMERA_ANGLES.length`
+// Framings the model reliably renders. Rotated via `variationIndex % AVATAR_CAMERA_ANGLES.length`
 // so consecutive scenes get different framings. SIDE_PROFILE_TALK and DYNAMIC_SHOULDER were dropped
 // because the model silently collapsed them to a frontal portrait when IDENTITY_LOCK was firing.
+//
+// HIGH_ANGLE_SELFIE dropped 2026-07-25 (Neil-approved) for the SAME collapse behaviour, now with
+// live evidence. Its "Subject looks UP at camera" fought the very common product-holding action,
+// a conflict first recorded in the 2026-07-05 model eval ("HIGH_ANGLE_SELFIE 'looks UP'
+// self-contradicts looking-down scene actions") and never acted on. In the 2026-07-25 flag-ON run
+// BOTH scenes that landed on this slot (idx 3 and idx 7) rendered as plain medium shots per the
+// image gate's own compositionNotes — and both carried the run's only two defects: an avatar
+// looking DOWN at the bottle on a speaking scene (banned by FACE_TO_CAMERA, and a lip-sync +
+// identity-drift risk once the still becomes a video first frame) and a hallucinated extra hand.
+// n=2, so this is a cheap reversible cut, not a proven law — restore it behind an eval if a
+// non-conflicting 4th framing is ever wanted (a LOW_ANGLE or OVER_SHOULDER that commands no gaze).
 const AVATAR_CAMERA_ANGLES = [
     "INTIMATE_CLOSE_UP: Framing neck up. Face fully toward camera. Focus: Eyes. Steady, locked framing.",
     "MEDIUM_FRONTAL: Chest-up, eye-level frontal angle. Face squarely toward camera. Steady tripod-style framing. 50mm lens feel. Casual conversational vibe.",
-    "WIDE_BUST_SHOT: Waist up, near-frontal angle. Face toward camera. Steady framing. Background depth-of-field matches 85mm lens.",
-    "HIGH_ANGLE_SELFIE: Camera above eye-level looking down at face. Relatable, casual vlog vibe, steady framing. Subject looks UP at camera (face fully toward camera)."
+    "WIDE_BUST_SHOT: Waist up, near-frontal angle. Face toward camera. Steady framing. Background depth-of-field matches 85mm lens."
 ];
 
 const LIGHTING_TOKENS = {
@@ -2051,10 +2061,7 @@ Task: Generate an 8-scene visual storyboard.
 - **PACING:** 1.5s - 2.0s scene changes.
 - **CONSECUTIVE RULE:** Max 2 consecutive "Talking Head" scenes.
 - **CAMERA DYNAMICS:** Cycle through these angles:
-  1. ${AVATAR_CAMERA_ANGLES[0]}
-  2. ${AVATAR_CAMERA_ANGLES[1]}
-  3. ${AVATAR_CAMERA_ANGLES[2]}
-  4. ${AVATAR_CAMERA_ANGLES[3]}
+${AVATAR_CAMERA_ANGLES.map((a, i) => `  ${i + 1}. ${a}`).join('\n')}
   
 **CONFIG:**
 - Monetization Game: ${config.monetizationGame}
