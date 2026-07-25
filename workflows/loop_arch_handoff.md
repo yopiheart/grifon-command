@@ -18,6 +18,55 @@ Four stacked branches, pushed, **no PRs, nothing merged, nothing deployed by us,
 - All verification was **unit-test + mocked**; no live-provider, no preview, no prod evidence exists. P1's only smoke = local dev server 401 probes.
 - Every phase passed an adversarial critic (Opus post-policy). Full audit answers: see the read-only status Q&A at the end of the 2026-07-23 session transcript.
 
+## ▶ SESSION CLOSE 2026-07-25 — everything below is history; this is the state and what is left
+
+**Eight fixes shipped, `main` at `ee93e20`.** Every one was found by driving the real product, and
+three of the biggest came from Neil's eye, not from tests: the storyboard's camera sameness, the
+unclickable Regenerate button, and the regen that returned a blank-label product shot.
+
+| | Fix | Commit |
+|---|---|---|
+| P1 | Camera rotation never rotated — a constant `variationIndex` pinned every scene to one framing | `4f662a3` |
+| P2 | `producer_scenes.gate_verdict` was written by nothing — the flag-only phase discarded its own dataset every run | `24cc077` |
+| P3 | A server-side fail-open was invisible to telemetry | `24cc077` |
+| — | HIGH_ANGLE_SELFIE cut — the model never rendered it and both slots carried the run's only defects (TUNED, approved) | `c45ff6e` |
+| — | `GlassPanel`'s `p-8` silently beat every caller override at **43 sites** — the PR #74 CDN→PostCSS regression, and the root cause of the dead Regenerate button | `e8e5e22` |
+| C | Regen/reshoot refuse a lost presenter reference instead of burning money on a guaranteed-wrong image | `e7d9945` |
+| B+A | `producer_runs.avatar_url` + the missing guard on geminiService's avatar branch (TUNED, approved) | `a1d8b7e` |
+| P9 | A fail-open now says WHY (`IMAGE_GATE_EMPTY` vs `IMAGE_GATE_UNPARSEABLE` + finishReason) | `ee93e20` |
+
+Suite 1048 passed / 26 skipped, build + bundle-leak + design:lint clean. SQL applied and verified
+against `information_schema`: `producer_runs.avatar_url text` nullable at ordinal 16.
+
+### What is LEFT
+
+1. **Flip Production** — set `IMAGE_GATE_ENABLED` + `VITE_IMAGE_GATE_ENABLED` = `true` on the
+   **Production** scope, then redeploy Production. `VITE_` is build-time, so the redeploy is
+   mandatory and must not reuse a cached build. **This is safe with P9 open**: the gate is
+   flag-only and fails open, so it can neither block a user nor reroll — flipping only starts
+   recording verdicts, and it is the fastest way to gather the P9 evidence at real volume. (An
+   earlier note in this session said to hold the flip until P9 was understood. That was
+   over-cautious: P9 governs whether the PRECISION NUMBERS can be trusted, not whether the flip
+   is safe.)
+2. **Read the first fail-open causes** once Production has a few runs:
+   ```sql
+   select meta->>'detail' as cause, count(*)
+     from events where event = 'check_skip' and meta->>'reason' = 'gate_unavailable'
+    group by 1 order by 2 desc;
+   ```
+   `IMAGE_GATE_EMPTY: finish=SAFETY` → a safety stop on person imagery, and the gate model or its
+   prompt needs to change. `IMAGE_GATE_UNPARSEABLE` → format drift, add a responseSchema.
+3. **Watch for `node_fail{avatar_persist, avatar_too_large}`.** A generated 2K avatar has never
+   reached the database intact, so the 3M cap is untested against a real one. If that event fires,
+   its `chars` field is the measurement needed to choose between compressing the reference and
+   moving it to Supabase Storage. If it never fires, B is done.
+4. **Delete `preview/image-gate-test`** once Production is confirmed — it exists only to produce
+   Preview builds and carries no work of its own.
+5. **Still open, unranked:** P4 (Gate-1 regenerate has no cap — unlimited paid image calls),
+   P5/P6/P7 (the generator ignoring its own explicit negative constraints: hook end-frame
+   "NO people", FACE_TO_CAMERA on speaking scenes, unverifiable scarcity + a therapeutic claim —
+   all TUNED, all gated on Neil), P8 (the gate has no gaze or anatomy signal at all).
+
 ## ✅ FLAG-ON RUN EXECUTED 2026-07-25 — the gate is LIVE. Read this before the runbook below.
 
 Run `apr_b3979138-7743-45c8-91cd-a1b747fb6181`, HIRAYA GLOW (the committed
