@@ -38,17 +38,23 @@ unclickable Regenerate button, and the regen that returned a blank-label product
 Suite 1048 passed / 26 skipped, build + bundle-leak + design:lint clean. SQL applied and verified
 against `information_schema`: `producer_runs.avatar_url text` nullable at ordinal 16.
 
+### ✅ PRODUCTION FLIPPED 2026-07-25 — P4 is LIVE
+
+Both flags set to `true` on the **Production and Preview** scope, Production redeployed at
+`254e1e4`, and **confirmed empirically rather than assumed**: the same two browser probes used on
+Preview were re-run against grifon.ai — the client flag read `true` straight out of the shipped
+bundle, and `/api/gemini/image` in gate mode did NOT return the 503 kill-switch branch.
+
+Two things this settled that the doc previously listed as unknown:
+- **Vercel's "Sensitive" marking does NOT block build-time injection.** Both flags are marked
+  Sensitive and the `VITE_` half still reached the bundle. The earlier note said this was
+  unverified; it is now verified, twice (Preview then Production).
+- **The throwaway branch `preview/image-gate-test` is DELETED.** It only ever carried empty rebuild
+  commits on top of `main`.
+
 ### What is LEFT
 
-1. **Flip Production** — set `IMAGE_GATE_ENABLED` + `VITE_IMAGE_GATE_ENABLED` = `true` on the
-   **Production** scope, then redeploy Production. `VITE_` is build-time, so the redeploy is
-   mandatory and must not reuse a cached build. **This is safe with P9 open**: the gate is
-   flag-only and fails open, so it can neither block a user nor reroll — flipping only starts
-   recording verdicts, and it is the fastest way to gather the P9 evidence at real volume. (An
-   earlier note in this session said to hold the flip until P9 was understood. That was
-   over-cautious: P9 governs whether the PRECISION NUMBERS can be trusted, not whether the flip
-   is safe.)
-2. **Read the first fail-open causes** once Production has a few runs:
+1. **Read the first fail-open causes** once Production has a few runs:
    ```sql
    select meta->>'detail' as cause, count(*)
      from events where event = 'check_skip' and meta->>'reason' = 'gate_unavailable'
@@ -56,13 +62,15 @@ against `information_schema`: `producer_runs.avatar_url text` nullable at ordina
    ```
    `IMAGE_GATE_EMPTY: finish=SAFETY` → a safety stop on person imagery, and the gate model or its
    prompt needs to change. `IMAGE_GATE_UNPARSEABLE` → format drift, add a responseSchema.
-3. **Watch for `node_fail{avatar_persist, avatar_too_large}`.** A generated 2K avatar has never
+2. **Watch for `node_fail{avatar_persist, avatar_too_large}`.** A generated 2K avatar has never
    reached the database intact, so the 3M cap is untested against a real one. If that event fires,
    its `chars` field is the measurement needed to choose between compressing the reference and
    moving it to Supabase Storage. If it never fires, B is done.
-4. **Delete `preview/image-gate-test`** once Production is confirmed — it exists only to produce
-   Preview builds and carries no work of its own.
-5. **Still open, unranked:** P4 (Gate-1 regenerate has no cap — unlimited paid image calls),
+3. **Eyeball the 43 GlassPanels.** The padding fix (`e8e5e22`) restored the padding those call
+   sites always asked for, which is correct but VISIBLE app-wide. Build, 1048 tests and
+   `design:lint` are all green and none of them can tell whether it LOOKS right. Dashboard,
+   EditVideo and CinematicSpecStudio hold the most panels.
+4. **Still open, unranked:** P4 (Gate-1 regenerate has no cap — unlimited paid image calls),
    P5/P6/P7 (the generator ignoring its own explicit negative constraints: hook end-frame
    "NO people", FACE_TO_CAMERA on speaking scenes, unverifiable scarcity + a therapeutic claim —
    all TUNED, all gated on Neil), P8 (the gate has no gaze or anatomy signal at all).
