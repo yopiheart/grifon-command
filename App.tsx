@@ -322,7 +322,13 @@ const App: React.FC = () => {
     if (bootStartRef.current === null) bootStartRef.current = Date.now();
     const ready = !isCheckingSession && !isLoadingSession;
     if (!ready) return;
-    const MIN_MS = 1400;
+    // HIG Motion: "Let people cancel motion. Avoid making people wait for an
+    // animation to complete before they can do anything." This used to hold the
+    // boot screen for a full 1400ms AFTER the session was already ready — the
+    // film-leader beat was costing real waiting time. The beat is kept, but
+    // only long enough for the entrance animation to land (240ms), so a fast
+    // session no longer sits behind a clapperboard it has already earned past.
+    const MIN_MS = 240;
     const elapsed = Date.now() - (bootStartRef.current ?? Date.now());
     const t = window.setTimeout(() => setIsBooting(false), Math.max(0, MIN_MS - elapsed));
     return () => window.clearTimeout(t);
@@ -1344,9 +1350,9 @@ const App: React.FC = () => {
                         stays the explicit unchecked box. font-sans keeps it out of the mono law. */}
                     <p className="text-center text-[11px] text-on-surface-sublabel leading-snug normal-case font-sans">
                       By continuing, you agree to our{' '}
-                      <button type="button" onClick={() => openLegalFromAuth('terms')} className="font-sans underline text-zinc-400 hover:text-[#FFCC00] transition-colors">Terms of Service</button>{' '}
+                      <button type="button" onClick={() => openLegalFromAuth('terms')} className="inline-flex min-h-11 items-center font-sans underline text-zinc-400 hover:text-[#FFCC00] transition-colors">Terms of Service</button>{' '}
                       and{' '}
-                      <button type="button" onClick={() => openLegalFromAuth('privacy')} className="font-sans underline text-zinc-400 hover:text-[#FFCC00] transition-colors">Privacy Policy</button>.
+                      <button type="button" onClick={() => openLegalFromAuth('privacy')} className="inline-flex min-h-11 items-center font-sans underline text-zinc-400 hover:text-[#FFCC00] transition-colors">Privacy Policy</button>.
                     </p>
                   </form>
                 )}
@@ -1429,9 +1435,9 @@ const App: React.FC = () => {
                       footer carries only what's unique here: Refund + Support. All return
                       to the auth form (openLegalFromAuth) so reading them costs no entries. */}
                   <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest">
-                    <button type="button" onClick={() => openLegalFromAuth('refund')} className="hover:text-[#FFCC00] transition-colors">REFUND</button>
+                    <button type="button" onClick={() => openLegalFromAuth('refund')} className="inline-flex min-h-11 items-center px-2 hover:text-[#FFCC00] transition-colors">REFUND</button>
                     <span className="text-on-surface-sublabel">·</span>
-                    <button type="button" onClick={() => openLegalFromAuth('support')} className="hover:text-[#FFCC00] transition-colors">SUPPORT</button>
+                    <button type="button" onClick={() => openLegalFromAuth('support')} className="inline-flex min-h-11 items-center px-2 hover:text-[#FFCC00] transition-colors">SUPPORT</button>
                   </div>
                   <p className="hidden md:block text-[10px] font-mono text-on-surface-sublabel tracking-[0.4em] uppercase">// SESSION_ENCRYPTED</p>
                 </div>

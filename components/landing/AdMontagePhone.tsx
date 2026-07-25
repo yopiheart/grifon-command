@@ -155,7 +155,7 @@ export const AdMontagePhone: React.FC<{ className?: string }> = ({ className = '
                 setIndex(i);
               }}
               aria-pressed={active}
-              className={`inline-flex min-h-[40px] items-center rounded-full border bg-zinc-900/60 px-4 text-xs font-semibold transition-colors ${
+              className={`inline-flex min-h-11 items-center rounded-full border bg-zinc-900/60 px-4 text-xs font-semibold transition-colors ${
                 active
                   ? 'border-[#FFCC00]/60 text-[#FFCC00]'
                   : 'border-white/15 text-zinc-400 hover:text-white'

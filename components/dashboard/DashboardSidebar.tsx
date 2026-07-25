@@ -159,7 +159,10 @@ const SidebarBody: React.FC<SidebarBodyProps> = ({
                   {/* Locked rows dim icon + label only — the lock badge and tier word
                       (the unlock path) stay at full opacity for the legibility gate. */}
                   <span className="relative shrink-0">
-                    <Icon className={`w-5 h-5 ${item.locked ? 'opacity-45 group-hover:opacity-80 transition-opacity' : ''}`} style={{ color: item.hue }} />
+                    <Icon
+                      className={`w-5 h-5 rail-hue ${item.locked ? 'opacity-45 group-hover:opacity-80 transition-opacity' : ''}`}
+                      style={{ color: item.hue }}
+                    />
                     {/* Lock stays legible even in the icon-only rail. */}
                     {!expanded && item.locked && (
                       <span className="absolute -bottom-1 -right-1 bg-zinc-950 rounded-full p-px">

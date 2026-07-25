@@ -488,3 +488,37 @@ html { scroll-behavior: smooth; }
 @media (prefers-contrast: more) {
   .mat-plate-inset { background: #0C0C0E !important; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.4) !important; }
 }
+
+/* ── Rail hue calm-down. HIG Color: "Avoid using similar colors in control
+   labels if your app has a colorful background. Prefer a monochromatic
+   appearance for toolbars and tab bars." The dashboard rail is now glass
+   floating over the gold aura field — exactly that case — and it carries 15
+   module identity hues.
+
+   Rather than stripping the hues (a documented Grifon identity decision), the
+   RAIL renders them at reduced saturation. Identity survives as a tint, the
+   rail stops competing with the gold action colour, and module headers and
+   tiles keep the hue at full strength. One number to retune. */
+.rail-hue { filter: saturate(0.45) brightness(1.12); }
+.rail-hue:hover,
+button:hover .rail-hue,
+.group:hover .rail-hue { filter: saturate(1) brightness(1); }
+@media (prefers-reduced-motion: no-preference) {
+  .rail-hue { transition: filter .22s ease; }
+}
+@media (prefers-contrast: more) { .rail-hue { filter: none; } }
+
+/* ── Pricing: the section box spans the SHELL so every left edge lines up, but
+   the TEXT inside it must not. Widening the boxes to align their edges is
+   exactly what sent paragraphs to 150ch — the same trap the landing page hit
+   when its containers were snapped up.
+   Container scale and reading measure have to move together, so the box gets
+   the shell and the prose gets the measure. */
+.pricing-page section > p,
+.pricing-page section > h2 + p,
+.pricing-page section > div > p:only-child,
+.pricing-page details {
+  max-width: 68ch;
+  margin-left: auto;
+  margin-right: auto;
+}

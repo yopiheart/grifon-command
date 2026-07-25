@@ -301,7 +301,7 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ onBack, ethnicity = 'Global' 
                 {images.map((img, i) => (
                     <div key={i} className="relative group scanner-active">
                         <div className={`w-48 h-48 md:w-64 md:h-64 ${MAT_PLATE} border border-white/10 p-2 shadow-2xl relative overflow-hidden rounded-2xl`}>
-                            <img src={img} className="w-full h-full object-cover transition-all group-hover:scale-105 duration-500 rounded-xl opacity-90" />
+                            <img src={img} className="w-full h-full object-cover transition-all group-hover:scale-105 duration-500 rounded-lg opacity-90" />
                             <div className="absolute top-4 left-4 bg-[#FFCC00] text-[9px] font-black px-3 py-1 text-black uppercase rounded-full shadow-lg tracking-widest">ASSET 0{i+1}</div>
                             <button onClick={() => removeImage(i)} className="absolute top-4 right-4 bg-red-600/80 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600 shadow-xl"><Trash2 className="w-4 h-4 text-white"/></button>
                         </div>

@@ -124,9 +124,9 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onEnterApp, onNavi
 
           {/* Legal + copyright */}
           <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-6">
-            <nav className="flex items-center gap-6 text-xs font-bold uppercase tracking-widest">
-              <a href="/privacy" onClick={(e) => { e.preventDefault(); onNavigateLegal('privacy'); }} className="hover:underline">Privacy Policy</a>
-              <a href="/terms" onClick={(e) => { e.preventDefault(); onNavigateLegal('terms'); }} className="hover:underline">Terms</a>
+            <nav className="flex items-center gap-4 text-xs font-bold uppercase tracking-widest">
+              <a href="/privacy" onClick={(e) => { e.preventDefault(); onNavigateLegal('privacy'); }} className="inline-flex min-h-11 items-center px-2 hover:underline">Privacy Policy</a>
+              <a href="/terms" onClick={(e) => { e.preventDefault(); onNavigateLegal('terms'); }} className="inline-flex min-h-11 items-center px-2 hover:underline">Terms</a>
             </nav>
             <span className="text-xs font-normal text-black/70">© 2026 Haste Enterprises. All rights reserved</span>
           </div>

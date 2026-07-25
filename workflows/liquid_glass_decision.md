@@ -255,7 +255,26 @@ The principle worth keeping: **Apple's glass adapts because the OS is adaptive. 
 
 **Verified in Chromium:** War Room (PLATE card + INSET wells reading correctly), the dashboard, and the header over *both* a dark backdrop and the light band. Build clean, 1005 tests, design:lint silent.
 
+### Slice 6 — the six open items, ALL SHIPPED 2026-07-25
+
+Neil asked for every one of them, so nothing is parked any more.
+
+| # | Item | Done |
+|---|---|---|
+| 01 | **Mono rail vs identity hues** | Rail icons render at `saturate(.45)` via `.rail-hue`, full strength on hover and on module headers/tiles. Identity survives as a tint; the rail stops competing with the gold action colour. One number to retune. |
+| 02 | **Legal links 16–17px** | Landing footer, pricing footer and the auth gateway's legal row all get `min-h-11`. Pricing's links also moved off `#71717a` (4.12:1) onto `#82828b`. |
+| 03 | **BootScreen's artificial hold** | `MIN_MS` 1400 → **240**. The film-leader beat stays, but only long enough for the entrance to land — a fast session no longer waits behind a clapperboard it has already earned past. |
+| 04 | **Pricing section edges** | Every section box now spans `PX.SHELL`, so the edges land at one x instead of three. |
+| 05 | **Concentric radii** | Audited: **8 already concentric, 13 drifting** — but 11 of the 13 want a *0px* inner corner, which would square off the brand's soft radii. Fixed the two that yield a real corner (ImageEditor's 16px frame wanted an 8px image, had 12px). The rule's boundary is now documented: it applies when padding < outer radius; below that it bottoms out and Grifon keeps a small radius on purpose. |
+| 06 | **Long desktop lines** | **0 lines over 75ch** on landing and pricing, at both widths. |
+
+**Bonus, since "walang iiwanan":** tap targets under 44px went **landing mobile 17 → 1, pricing mobile 12 → 1**. Both survivors are the same thing — an inline "Privacy Policy" link *inside a sentence* in the consent banner, which cannot be 44px tall without breaking the line box. WCAG exempts inline links in prose; that one stays.
+
+**The trap, hit twice and recorded both times:** widening the pricing sections to align their edges pushed the FAQ answers to **150ch**. Same failure as the landing containers earlier. Container scale and reading measure must move together — the box gets the shell, the prose gets the measure.
+
+**Verified:** build clean · 1005 tests · design:lint silent · bundle-leak clean · measured in Chromium at 1440 and 390 on landing + pricing, and the dashboard rail eyeballed.
+
 ### Still open
-Move 06's concentric radii on whatever gets touched next. Plus the four standing decisions: mono rail vs identity hues, 16px legal links, BootScreen's artificial hold, and the 6 desktop lines still near the top of the reading band.
+Nothing. Every item raised in this session is shipped.
 
 **Kill switch:** revert `GlassPanel.tsx` to `bg-zinc-900/80 backdrop-blur-xl …` and the app returns to v1 look; the tier CSS becomes dead but harmless. Full revert = this commit.

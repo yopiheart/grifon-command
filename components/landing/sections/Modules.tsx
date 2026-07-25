@@ -119,7 +119,7 @@ export const Modules: React.FC<ModulesProps> = ({ onEnterApp }) => (
                   setIntendedModule(module.moduleId);
                   onEnterApp();
                 }}
-                className="mt-auto pt-4 inline-flex items-center gap-1.5 text-zinc-300 hover:text-[#FFCC00] text-sm font-semibold transition-colors self-start"
+                className="mt-auto pt-4 inline-flex min-h-11 items-center gap-1.5 text-zinc-300 hover:text-[#FFCC00] text-sm font-semibold transition-colors self-start"
               >
                 {module.cta}
                 <span aria-hidden="true">→</span>

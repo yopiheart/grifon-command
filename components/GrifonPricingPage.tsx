@@ -185,7 +185,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
   ];
 
   return (
-    <div className="font-sans" style={{
+    <div className="font-sans pricing-page" style={{
       minHeight: "100vh",
       background: "#09090b",
       color: "#fff",
@@ -306,7 +306,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
         <section className="grid-bg" style={{ 
           padding: "80px 20px", 
           textAlign: "center",
-          maxWidth: PX.COLUMN, margin: "0 auto",
+          maxWidth: PX.SHELL, margin: "0 auto",
         }}>
           <div className={loaded ? "fade-up" : ""} style={{ animationDelay: "0.1s" }}>
           </div>
@@ -615,7 +615,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
 
         {/* ===== VALUE STACK SECTION (Pro) ===== */}
         <section style={{
-          maxWidth: PX.MEASURE,
+          maxWidth: PX.SHELL,
           margin: "0 auto 80px",
           padding: "0 20px",
         }}>
@@ -728,7 +728,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
 
         {/* ===== COMPARISON: OLD WAY vs GRIFON ===== */}
         <section style={{
-          maxWidth: PX.COLUMN,
+          maxWidth: PX.SHELL,
           margin: "0 auto 80px",
           padding: "0 20px",
         }}>
@@ -857,7 +857,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
         </section>
 
         {/* ===== GUARANTEE ===== */}
-        <section style={{ maxWidth: PX.MEASURE }} className="mx-auto mb-20 px-5 text-center">
+        <section style={{ maxWidth: PX.SHELL }} className="mx-auto mb-20 px-5 text-center">
           <AnimatedBorder intense containerClassName="h-full w-full" className="p-10 md:p-12 text-center bg-zinc-900/80 relative overflow-hidden">
             <ShieldCheck className="w-12 h-12 text-[#FFCC00] mx-auto mb-4" />
             <h3 className="text-2xl md:text-3xl font-bold uppercase tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500">
@@ -873,7 +873,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
 
         {/* ===== FAQ ===== */}
         <section style={{
-          maxWidth: PX.MEASURE, margin: "0 auto 80px",
+          maxWidth: PX.SHELL, margin: "0 auto 80px",
           padding: "0 20px",
         }}>
           <h2 className="bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500" style={{
@@ -936,7 +936,7 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
         <section style={{
           textAlign: "center",
           padding: "80px 20px",
-          maxWidth: PX.MEASURE,
+          maxWidth: PX.SHELL,
           margin: "0 auto",
         }}>
           <h2 className="bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500" style={{
@@ -981,10 +981,10 @@ export default function GrifonPricing({ onEnterApp, onNavigateHome, onNavigateLe
           fontSize: 11, color: "#3f3f46",
         }}>
           <div style={{ marginBottom: 12, display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "8px 20px" }}>
-            <a href="/terms" onClick={(e) => { e.preventDefault(); onNavigateLegal('terms'); }} style={{ color: "#71717a", textDecoration: "none" }}>Terms</a>
-            <a href="/privacy" onClick={(e) => { e.preventDefault(); onNavigateLegal('privacy'); }} style={{ color: "#71717a", textDecoration: "none" }}>Privacy</a>
-            <a href="/refund" onClick={(e) => { e.preventDefault(); onNavigateLegal('refund'); }} style={{ color: "#71717a", textDecoration: "none" }}>Refund</a>
-            <a href="/support" onClick={(e) => { e.preventDefault(); onNavigateLegal('support'); }} style={{ color: "#71717a", textDecoration: "none" }}>Support</a>
+            <a href="/terms" onClick={(e) => { e.preventDefault(); onNavigateLegal('terms'); }} style={{ color: "#82828b", textDecoration: "none", display: "inline-flex", alignItems: "center", minHeight: 44, padding: "0 8px" }}>Terms</a>
+            <a href="/privacy" onClick={(e) => { e.preventDefault(); onNavigateLegal('privacy'); }} style={{ color: "#82828b", textDecoration: "none", display: "inline-flex", alignItems: "center", minHeight: 44, padding: "0 8px" }}>Privacy</a>
+            <a href="/refund" onClick={(e) => { e.preventDefault(); onNavigateLegal('refund'); }} style={{ color: "#82828b", textDecoration: "none", display: "inline-flex", alignItems: "center", minHeight: 44, padding: "0 8px" }}>Refund</a>
+            <a href="/support" onClick={(e) => { e.preventDefault(); onNavigateLegal('support'); }} style={{ color: "#82828b", textDecoration: "none", display: "inline-flex", alignItems: "center", minHeight: 44, padding: "0 8px" }}>Support</a>
           </div>
           GRIFON.AI © 2026 — Haste Enterprises — Built in the Philippines
         </footer>
