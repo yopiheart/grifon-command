@@ -52,8 +52,36 @@ select (s->>'sceneIdx')::int, s->'gateVerdict'->>'pass', s->'gateVerdict'->>'rea
 | P2 | **`producer_scenes.gate_verdict` is never written by anything.** Column exists, documented as the source for the offline precision analysis — but the verdict only ever reaches the run-header checkpoint jsonb. **This throws away the dataset the whole flag-only phase exists to build.** Fix before flipping Production. | `producerOrchestrator` + `api/producer/advance.ts` | OPEN |
 | P3 | **A server-side fail-open is invisible.** 2/9 scenes returned `gate_unavailable` with no `check_skip`/`check_fail`, so the "gate didn't really run" rate is uncountable — exactly the metric contamination the check_skip/check_fail split was designed to prevent. | `producerOrchestrator` | OPEN |
 | P4 | Regenerate at Gate-1 has **no cap** (unlimited paid image calls — a COGS hole) and `text-zinc-400` on `bg-zinc-900` reads as disabled (missed by the `a149525` contrast sweep). | `StoryboardGateScreen.tsx` | OPEN |
-| P5 ⚠ | Hook-morph puts the product on the END frame **by design** (`prompts.ts` "HOOK END-FRAME = RESOLVED REVEAL"). Right for Hype Drop; wrong for Real Talk Review, whose script has its own reveal beat — the reveal gets spent twice and lands neither time. Rule is format-blind; should be conditional on `scriptType`. | **TUNED** `api/_lib/prompts.ts` | GATED — Neil |
+| P5 ⚠ | **CORRECTED — this is not a doctrine gap, it is non-compliance.** An earlier read of this called the hook end-frame rule "format-blind, should be conditional on scriptType". Wrong: the rule ALREADY branches three ways (`isServices` / `isUGCPro` / else) and `real_talk` derives `scriptType: 'Testimonial'`, which lands on the else branch — *"NO people, faces, hands, or bodies in the hook end frame"* ([prompts.ts](../api/_lib/prompts.ts) :1612). The generated frame had a person, a face AND hands, with the mouth occluded by the bottle. The doctrine is right; **the generator is ignoring its own explicit negative constraint.** | **TUNED** `api/_lib/prompts.ts` | GATED — Neil |
 | P6 ⚠ | The script generator emits **unverifiable scarcity** ("limited stock" on a product with no inventory signal) and a **therapeutic claim** ("nag-heal talaga" on a cosmetic — PH FDA). Systemic, not one ad. | **TUNED** prompts | GATED — Neil |
+| P7 | **`FACE_TO_CAMERA` violated on a speaking scene.** Second run, scene 4: avatar looking DOWN at the bottle while delivering a line. `looking-down-at-mug` is banned BY NAME in that block ([geminiService.ts](../services/geminiService.ts) :2144) "required for downstream lip sync". Neil's read of the risk is the right one and worth keeping: the still is the video's FIRST FRAME, so a turned head forces the video model to invent unseen face angles — which is where identity drifts. | **TUNED** prompts | GATED — Neil |
+| P8 | **The gate cannot see gaze OR anatomy.** `ImageGateObservations` has five fields and no face-visibility or limb-count signal; `compositionNotes` is free text and explicitly "never gates this phase". So the only two flag families are `identity_drift` and `garbled_label` — scene 8's extra hand and scene 4's averted gaze were never *missed*, they were never *in scope*. Adding `faceTowardCamera` is one boolean + one flag, but a new flag family has no business existing before the precision dataset (P2) has data. | `api/_lib/imageGate.ts` | OPEN — after P2 data |
+| P9 | **Fail-open rate is HIGH and rising: 3/8 (37.5%) on the second run vs 2/9 (22%) on the first.** The gate declines to judge over a third of the time, halving dataset accumulation. Invisible before P3 — this is P3 paying for itself within the hour. Root cause unknown; the prime suspect is `IMAGE_GATE_UNPARSEABLE` from `gemini-3.5-flash`. | `api/_lib/imageGate.ts` | OPEN — investigate |
+
+### Second run 2026-07-25 — `apr_876ef559-ad7a-4513-a295-4175920fa1c8` (8 scenes, ~$0.73)
+
+Validated all three fixes at once, on the evidence rather than by eye alone:
+
+- **P1 ✅** camera rotation live — the gate's own `compositionNotes` read "Extreme close-up",
+  "Medium shot", "Close-up portrait", "Centered medium shot" across the run. Neil confirmed the
+  visual improvement unprompted.
+- **P2 ✅** `producer_scenes.gate_verdict` populated on **all 8** scenes, and it carries
+  `compositionNotes` too — richer than the column was specced for. The dataset is now accumulating.
+- **P3 ✅** exactly **3** `check_skip{gate_unavailable}` rows on 3 distinct scenes, in exact
+  correspondence with the 3 verdicts carrying `reason: 'gate_unavailable'` (idx 1, 2, 5).
+
+**Then HIGH_ANGLE_SELFIE was cut from `AVATAR_CAMERA_ANGLES`** (`c45ff6e`, Neil-approved TUNED
+change) — see that commit for the full n=2 evidence chain and the restore path. It also fixed a
+latent trap: the storyboard prompt hardcoded `AVATAR_CAMERA_ANGLES[0..3]`, so the cut would have
+rendered the literal string `"4. undefined"` into a live prompt. Generated with `.map()` now.
+
+**Still open from the eyeball, not yet fixed:** the Gate-1 Regenerate button is unclickable because
+the scriptLine caption overlays it and lacks `pointer-events-none`
+([StoryboardGateScreen.tsx](../components/OneShotAd/StoryboardGateScreen.tsx) :107). Recommended fix
+is `pointer-events-none` PLUS scoping the caption to the image box instead of the panel, so it
+cannot reach the button strip by construction — three separate pixel-arithmetic hypotheses were
+checked and all three were wrong (`bottom-9` and `min-h-[36px]` both generate correctly; the
+contrast sweep touched only three text colours).
 
 Also worth knowing: the gate passed 7/7 with zero flags, so **there is still no evidence it CAN
 flag** — a gate that never fires is indistinguishable from one that isn't judging. P2 is what turns
