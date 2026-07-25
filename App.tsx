@@ -322,13 +322,14 @@ const App: React.FC = () => {
     if (bootStartRef.current === null) bootStartRef.current = Date.now();
     const ready = !isCheckingSession && !isLoadingSession;
     if (!ready) return;
-    // HIG Motion: "Let people cancel motion. Avoid making people wait for an
-    // animation to complete before they can do anything." This used to hold the
-    // boot screen for a full 1400ms AFTER the session was already ready — the
-    // film-leader beat was costing real waiting time. The beat is kept, but
-    // only long enough for the entrance animation to land (240ms), so a fast
-    // session no longer sits behind a clapperboard it has already earned past.
-    const MIN_MS = 240;
+    // Tuned from a real recording, not from theory. 1400ms was a genuine wait;
+    // 240ms overcorrected so hard the beat became a two-frame flash — Neil
+    // couldn't see it at all on his own sign-in. 900ms is the honest middle:
+    // long enough to read "Welcome back, <name>" and land the clapper snap,
+    // short enough that it reads as a transition rather than a queue. It also
+    // only ever runs on an OAuth return, where the user has just come back from
+    // Google — this is the handoff, not an interruption of one.
+    const MIN_MS = 900;
     const elapsed = Date.now() - (bootStartRef.current ?? Date.now());
     const t = window.setTimeout(() => setIsBooting(false), Math.max(0, MIN_MS - elapsed));
     return () => window.clearTimeout(t);
@@ -933,14 +934,31 @@ const App: React.FC = () => {
     }
     veilBusy.current = true;
     setVeil({ label });
+    // Retuned 2026-07-25 from a screen recording. These two numbers, not the
+    // component, were what made the transition feel like a stall: the route
+    // committed at 380ms but the veil stayed up until 1000ms, so more than half
+    // a second of it was a dead hold over a page that had ALREADY swapped. On
+    // the recording that read as a second of empty black.
+    //
+    // Now the commit lands just after the pane finishes covering, and the pane
+    // holds only ~200ms before leaving. Nothing is being fetched here — it's an
+    // SPA route change — so any hold beyond hiding the swap is theatre the user
+    // pays for in waiting.
+    //
+    // These two numbers are the whole feel of the transition, and they trade off
+    // against each other: too long and it stalls (the 1000ms original), too
+    // short and it's a flash you can't see (the same mistake that made the boot
+    // screen invisible at 240ms). 220 / 520 is the middle — a wipe you register
+    // without waiting for. Raise the second number to make it more cinematic,
+    // lower it to make it snappier.
     window.setTimeout(() => {
       commit();
       window.scrollTo(0, 0);
-    }, 380);
+    }, 220);
     window.setTimeout(() => {
       setVeil(null);
       veilBusy.current = false;
-    }, 1000);
+    }, 520);
   };
   const veilToLegal = (route: 'terms' | 'privacy' | 'refund' | 'support') => {
     const labels = {
