@@ -898,11 +898,14 @@ export const buildAdScriptPrompt = (
          - Any "X for Y" or "buy 1 take 1" with prices
          Even if "${offer}" contains explicit prices, STRIP them. The CTA's job is to make them tap — the LP/Messenger reveals the price.
 
-         REQUIRED IN OUTPUT: at least ONE scarcity word (e.g., "first 50", "limited", "today only"). Then include ONLY the non-price value-adds that LITERALLY appear in "${offer}" (e.g. free shipping, a bonus, a guarantee), named verbatim or near-verbatim — and NOTHING ELSE. Do NOT invent or add any bonus that is not in "${offer}": no free ebook, no freebie, no guarantee unless the offer actually states it. Drop the peso amounts; keep only the bonus items the offer names.
-         - ✅ offer "₱199 per bottle (Buy 3, free shipping)" → "Tara, click mo na sa baba — first 50 lang may libreng shipping, subukan mo na." (Tagalog-dominant; opens "Tara", closes "subukan mo na"; only the offer's real value-add)
+         SCARCITY — CONDITIONAL, NEVER INVENTED: include a scarcity phrase ONLY when "${offer}" states a real limit — a number, a quantity, or a deadline ("first 50", "10 slots left", "until Friday", "today only"). Name it verbatim or near-verbatim from the offer. If "${offer}" states no limit, the CTA carries NO scarcity at all: "limited", "limited stock", "limited lang", "habang may stock", "mauubos na" and equivalents are BANNED, because a stock or deadline claim the business never made cannot be verified by anyone. A CTA with no scarcity is correct and complete — urgency is not a required ingredient.
+         Then include ONLY the non-price value-adds that LITERALLY appear in "${offer}" (e.g. free shipping, a bonus, a guarantee), named verbatim or near-verbatim — and NOTHING ELSE. Do NOT invent or add any bonus that is not in "${offer}": no free ebook, no freebie, no guarantee unless the offer actually states it. Drop the peso amounts; keep only the bonus items the offer names.
+         - ✅ offer "₱199 per bottle (Buy 3, free shipping)" → "Tara, click mo na sa baba — may libreng shipping, subukan mo na." (Tagalog-dominant; opens "Tara", closes "subukan mo na"; carries the offer's real value-add and NO scarcity, because the offer names no limit)
+         - ✅ offer "first 50 orders get free shipping" → "Tara, click mo na sa baba — first 50 lang may libreng shipping, subukan mo na." (the scarcity is real; it came from the offer)
+         - ❌ "Tara, click mo na sa baba, limited lang — subukan mo na." (invents a stock limit the offer never stated — banned)
          - ❌ "Tara, click mo na — may libreng recipe ebook!" (invents an ebook the offer never mentioned — banned)
          - ❌ "Click below, first 50 for P999 may free shipping!" (English-dominant AND leaks price — banned)
-         If "${offer}" is empty OR names no non-price value-add (price only), DROP the bonus clause entirely and use a clean scarcity CTA: "Tara, click mo na sa baba, limited lang — subukan mo na."
+         If "${offer}" is empty OR names no non-price value-add (price only), DROP the bonus clause entirely and use a clean CTA with no scarcity and no invented benefit: "Tara, click mo na sa baba — subukan mo na."
 
       **APPEARANCE-CLAIM GUARDRAIL (Meta policy):** If the transformation in beat 4 is on a
       PERSON (skin, hair, body), frame the result as glow / fresh / feel — NEVER medical or
@@ -952,11 +955,14 @@ export const buildAdScriptPrompt = (
            - Any "X for Y" or "buy 1 take 1" with prices
            Even if "${offer}" contains explicit prices, STRIP them. The CTA's job is to make them tap — the LP/Messenger reveals the price.
 
-           REQUIRED IN OUTPUT: at least ONE scarcity word (e.g., "first 50", "limited slots", "today only"). Then include ONLY the non-price value-adds that LITERALLY appear in "${offer}" (e.g. free shipping, a bonus, a guarantee), named verbatim or near-verbatim — and NOTHING ELSE. Do NOT invent or add any bonus that is not in "${offer}": no free ebook, no freebie, no guarantee unless the offer actually states it. Drop the peso amounts; keep only the bonus items the offer names.
-           - ✅ offer "₱199 per bottle (Buy 3, free shipping)" → "Tara, click mo na sa baba — first 50 lang may libreng shipping, ngayon na!" (Tagalog-dominant; opens "Tara", closes "ngayon na"; only the offer's real value-add; no banned 'i-' prefix)
+           SCARCITY — CONDITIONAL, NEVER INVENTED: include a scarcity phrase ONLY when "${offer}" states a real limit — a number, a quantity, or a deadline ("first 50", "10 slots left", "until Friday", "today only"). Name it verbatim or near-verbatim from the offer. If "${offer}" states no limit, the CTA carries NO scarcity at all: "limited", "limited slots", "limited lang", "habang may stock", "mauubos na" and equivalents are BANNED, because a stock or deadline claim the business never made cannot be verified by anyone. A CTA with no scarcity is correct and complete — urgency is not a required ingredient.
+           Then include ONLY the non-price value-adds that LITERALLY appear in "${offer}" (e.g. free shipping, a bonus, a guarantee), named verbatim or near-verbatim — and NOTHING ELSE. Do NOT invent or add any bonus that is not in "${offer}": no free ebook, no freebie, no guarantee unless the offer actually states it. Drop the peso amounts; keep only the bonus items the offer names.
+           - ✅ offer "₱199 per bottle (Buy 3, free shipping)" → "Tara, click mo na sa baba — may libreng shipping, ngayon na!" (Tagalog-dominant; opens "Tara", closes "ngayon na"; the offer's real value-add and NO scarcity, because the offer names no limit; no banned 'i-' prefix)
+           - ✅ offer "first 50 orders get free shipping" → "Tara, click mo na sa baba — first 50 lang may libreng shipping, ngayon na!" (the scarcity is real; it came from the offer)
+           - ❌ "Tara, click mo na sa baba ngayon, limited lang!" (invents a stock limit the offer never stated — banned)
            - ❌ "Tara, click mo na — may libreng recipe ebook ngayon!" (invents an ebook the offer never mentioned — banned)
            - ❌ "Click below, 50 slots for P299, P499, P999, free shipping!" (English-dominant AND leaks price — banned)
-           If "${offer}" is empty OR names no non-price value-add (price only), DROP the bonus clause entirely and use a clean scarcity CTA: "Tara, click mo na sa baba ngayon, limited lang!"
+           If "${offer}" is empty OR names no non-price value-add (price only), DROP the bonus clause entirely and use a clean CTA with no scarcity and no invented benefit: "Tara, click mo na sa baba ngayon!"
 
         **APPEARANCE-CLAIM GUARDRAIL (Meta policy):** If the result in beat 5 is on a PERSON
         (skin, hair, body), frame it as glow / fresh / feel — NEVER medical or corrective

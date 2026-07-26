@@ -78,6 +78,33 @@ describe('adscript — APPEARANCE-CLAIM GUARDRAIL coverage', () => {
     expect(prompt).toMatch(/spoken first-person claim/i);
   });
 
+  // P6(a). The old rule said "REQUIRED IN OUTPUT: at least ONE scarcity word", so a product with
+  // no inventory signal was ORDERED to fabricate one — the model was obeying, not misbehaving.
+  // Worse, the ✅ example demonstrated it: offer "₱199 per bottle (Buy 3, free shipping)" states
+  // no limit, yet the model was shown "first 50 lang" as the correct answer.
+  for (const branch of PERSON_FACING.filter((b) => b.scriptType !== 'Services')) {
+    it(`${branch.name}: scarcity is conditional on the offer, never mandated`, () => {
+      const prompt = buildAdScriptPrompt(
+        testimonialInput({ businessInfo: { scriptType: branch.scriptType } }),
+      );
+      expect(prompt).toContain(branch.marker);
+      expect(prompt).toMatch(/SCARCITY — CONDITIONAL, NEVER INVENTED/);
+      // The mandate must be GONE, not merely softened elsewhere in the prompt.
+      expect(prompt).not.toMatch(/REQUIRED IN OUTPUT: at least ONE scarcity word/);
+      // And a no-limit offer must have no scarcity fallback to fall into.
+      expect(prompt).toMatch(/no scarcity and no invented benefit/);
+    });
+  }
+
+  it('teaches the no-scarcity case by EXAMPLE, not just by rule', () => {
+    // A rule the examples contradict loses to the examples, which is exactly how the old
+    // prompt taught invention. Both a real-limit and a no-limit offer must be demonstrated.
+    const prompt = buildAdScriptPrompt(testimonialInput());
+    expect(prompt).toMatch(/carries the offer's real value-add and NO scarcity/);
+    expect(prompt).toMatch(/the scarcity is real; it came from the offer/);
+    expect(prompt).toMatch(/invents a stock limit the offer never stated — banned/);
+  });
+
   it('still permits dramatic before/after on objects (guardrail is not a blanket ban)', () => {
     expect(buildAdScriptPrompt(testimonialInput())).toMatch(
       // \s+ so the assertion survives re-wrapping of the prompt's line breaks.
