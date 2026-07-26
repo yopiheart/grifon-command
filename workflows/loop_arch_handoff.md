@@ -54,26 +54,103 @@ Two things this settled that the doc previously listed as unknown:
 
 ### What is LEFT
 
-1. **Read the first fail-open causes** once Production has a few runs:
-   ```sql
-   select meta->>'detail' as cause, count(*)
-     from events where event = 'check_skip' and meta->>'reason' = 'gate_unavailable'
-    group by 1 order by 2 desc;
-   ```
-   `IMAGE_GATE_EMPTY: finish=SAFETY` → a safety stop on person imagery, and the gate model or its
-   prompt needs to change. `IMAGE_GATE_UNPARSEABLE` → format drift, add a responseSchema.
-2. **Watch for `node_fail{avatar_persist, avatar_too_large}`.** A generated 2K avatar has never
-   reached the database intact, so the 3M cap is untested against a real one. If that event fires,
-   its `chars` field is the measurement needed to choose between compressing the reference and
-   moving it to Supabase Storage. If it never fires, B is done.
+1. ~~**Read the first fail-open causes**~~ → **ANSWERED 2026-07-26 by replay, and BOTH hypotheses
+   below were wrong.** It is `IMAGE_GATE_UNPARSEABLE`, but NOT format drift — the model returns a
+   complete, correct observation object with broken brace/quote framing at the very end, on a clean
+   `finishReason: STOP`. Full evidence + the corrected fix in the section immediately below. The
+   original (wrong) reading is kept here so the mistake stays legible:
+   > ~~`IMAGE_GATE_EMPTY: finish=SAFETY` → a safety stop on person imagery, and the gate model or
+   > its prompt needs to change. `IMAGE_GATE_UNPARSEABLE` → format drift, add a responseSchema.~~
+2. **`node_fail{avatar_persist, avatar_too_large}` — NOT "done", UNTESTED.** Zero rows in `events`,
+   but that is not evidence: the guard shipped in `a1d8b7e` at **02:31 PH 2026-07-26**, and the last
+   run ran **01:24 → 02:07 PH**. The emitting code has never executed in production. Only 4
+   `node_fail` rows exist at all, every one `edl` from 07-23. Re-check after the next real run —
+   and query `meta->>'error'`, NOT `meta->>'reason'`: the event shape is
+   `{node:'avatar_persist', error:'avatar_too_large', chars: url.length}`
+   ([producerOrchestrator.ts](../services/producerOrchestrator.ts) :711). Its `chars` is still the
+   measurement needed to choose between compressing the reference and Supabase Storage.
 3. **Eyeball the 43 GlassPanels.** The padding fix (`e8e5e22`) restored the padding those call
    sites always asked for, which is correct but VISIBLE app-wide. Build, 1048 tests and
-   `design:lint` are all green and none of them can tell whether it LOOKS right. Dashboard,
-   EditVideo and CinematicSpecStudio hold the most panels.
+   `design:lint` are all green and none of them can tell whether it LOOKS right.
+   **Corrected 2026-07-26 — `Dashboard.tsx` contains ZERO GlassPanels.** Real spread: 45 override
+   sites, **37 actually changed** (8 already said `p-8`). EditVideo **8**, GenerateVideo 4,
+   CinematicSpecStudio / DirectorOneShot / ImageEditor / FirstCutScreen 2 each, SignalModulator
+   tiles 4 across 4 files, then 13 singletons. Direction matters more than count: **28 shrank
+   2–8px** (`p-6`×22, `p-5`×6 — near-invisible), **5 grew** (`p-10`×4, `p-12`×1 — more air, safest
+   of all), and only **4 shrank hard** — and all four were read and are deliberate frame-wrappers
+   where the padding IS the border: [OrganicCalendar](../components/OrganicCalendar.tsx) :177 `p-0`
+   (image bleeds to the card edge), [ImageEditor](../components/ImageEditor.tsx) :315 `p-2 md:p-3`
+   (thin gold frame), [FirstCutScreen](../components/OneShotAd/FirstCutScreen.tsx) :69 `p-3` (hero
+   video frame), and GlassPanel's own default. **Residual risk is low; the eyeball is now a
+   confirmation, not a search.** Look hardest at EditVideo. Note the populated screens need real
+   project data, so this wants Neil's own logged-in session.
 4. **Still open, unranked:** P4 (Gate-1 regenerate has no cap — unlimited paid image calls),
    P5/P6/P7 (the generator ignoring its own explicit negative constraints: hook end-frame
    "NO people", FACE_TO_CAMERA on speaking scenes, unverifiable scarcity + a therapeutic claim —
    all TUNED, all gated on Neil), P8 (the gate has no gaze or anatomy signal at all).
+
+## ▶ 2026-07-26 — THE FAIL-OPEN ROOT CAUSE, ANSWERED BY REPLAY (item 1 CLOSED)
+
+**No production run was needed.** The exact stills that failed open are stored as data URLs in
+`producer_scenes.image_url`, so the failing calls were replayed offline through the REAL
+`IMAGE_GATE_PROMPT` / `IMAGE_GATE_MODEL` / `parseImageGateResponse`. **39 calls, ~$0.08** against
+the $0.73 budgeted for a fresh run. Only `referenceImage:'product'` scenes were replayed (idx 0, 2,
+5) because those sent no reference image originally — so the request is identical to the one that
+failed. Script: `.tmp/gate-replay.ts` (gitignored, dies with the defreezer; trivially rebuilt).
+
+**9 of 39 failed (23%)** — matching the 22% / 37.5% seen live. Every single failure:
+
+| | |
+|---|---|
+| `finishReason` | **`STOP`** — never `SAFETY`, never `MAX_TOKENS` |
+| output tokens | 57–71, indistinguishable from the passes — nothing was truncated by budget |
+| response parts | `n=1`, and hand-joining the parts equals `resp.text` — **the SDK read is faithful; the defect is provider-side, not ours** |
+
+**Root cause: brace/quote framing damage at the END of an otherwise perfect object.** Four distinct
+malformations, verbatim from the failures:
+
+```
+1. missing closing brace   ..."compositionNotes": "Centered close-up of a dropper bottle…"   ← no }
+2. one extra brace         ..."…on a counter"\n}\n}
+3. FIVE extra braces       ..."…marble coaster"\n}\n}\n}\n}\n}\n}
+4. stray quote             ..."…with background plants."\n"\n}
+```
+
+**The observations were COMPLETE and CORRECT in all 9 failures** — `personPresent`,
+`productLabelText: "HIRAYA GLOW"`, `labelLegible: true`, `compositionNotes` all present and
+accurate. The gate is not declining to judge; it judges correctly and we discard the verdict over
+one missing or surplus character. That is 23% of the precision dataset thrown away for nothing.
+
+**Why:** `responseMimeType: 'application/json'` **without** a `responseSchema` is a hint, not
+constrained decoding. There is no `responseSchema` anywhere in `api/`.
+
+> **⚠ [omniGate.ts](../api/_lib/omniGate.ts) has the identical configuration** — same
+> `gemini-3.5-flash`, same `responseMimeType`, same absent schema, same `.text` read
+> (`:189`). The video gate very likely carries the same ~23% invisible fail-open rate. Never measured.
+
+**Fix (proposed, NOT applied — TUNED file, gated on Neil):**
+1. **`responseSchema` on the gate call** — kills the class at the source (real constrained decoding).
+2. **Harden `parseImageGateResponse`** — brace-*balancing* scan from the first `{` instead of
+   `lastIndexOf('}')`. Recovers malformations 1–3 on its own; 4 needs #1. Defense in depth: one
+   stops the damage, the other survives it.
+3. Do both, then audit `omniGate` for the same thing before video volume grows.
+
+**Other corrections this replay forced on the notes below:**
+- The fail-open rate was under-reported. Only **6 of 8 scenes were gated at all** on
+  `apr_876ef559` (idx 3 and 7 have `gate_verdict = null`) — so the real rate among gated scenes is
+  **3/6 = 50%**, not 3/8 = 37.5%.
+- **Fail-open does NOT correlate with reference mode.** `avatar` (idx 1) and `product` (idx 2, 5)
+  both failed; `avatar` (idx 4), `product` (idx 0) and `both` (idx 6) all passed. The
+  "two-image face-match trips a biometric safety block" theory is dead.
+- The standing suspicion recorded in `ee93e20` ("points at EMPTY rather than format drift") was
+  wrong in both directions. The `detail` plumbing it added is still the right instrument — it just
+  has not seen a production run yet.
+- **No production run has happened since the flip.** Newest `producer_runs` row is `apr_876ef559`
+  @ 2026-07-25 17:24 UTC, which predates both `ee93e20` and the flip, so every `check_skip` row in
+  the table still has `detail = null`. The first real run will populate it.
+- The 5 pre-fix fail-opens were recoverable anyway, from **Vercel runtime logs**, which still
+  carried `[api/_lib/imageGate] gate infra failure — failing open: IMAGE_GATE_UNPARSEABLE` for both
+  runs. Worth remembering as a free evidence source before paying to reproduce anything.
 
 ## ✅ FLAG-ON RUN EXECUTED 2026-07-25 — the gate is LIVE. Read this before the runbook below.
 
@@ -110,10 +187,10 @@ select (s->>'sceneIdx')::int, s->'gateVerdict'->>'pass', s->'gateVerdict'->>'rea
 | P3 | **A server-side fail-open is invisible.** 2/9 scenes returned `gate_unavailable` with no `check_skip`/`check_fail`, so the "gate didn't really run" rate is uncountable — exactly the metric contamination the check_skip/check_fail split was designed to prevent. | `producerOrchestrator` | OPEN |
 | P4 | Regenerate at Gate-1 has **no cap** (unlimited paid image calls — a COGS hole) and `text-zinc-400` on `bg-zinc-900` reads as disabled (missed by the `a149525` contrast sweep). | `StoryboardGateScreen.tsx` | OPEN |
 | P5 ⚠ | **CORRECTED — this is not a doctrine gap, it is non-compliance.** An earlier read of this called the hook end-frame rule "format-blind, should be conditional on scriptType". Wrong: the rule ALREADY branches three ways (`isServices` / `isUGCPro` / else) and `real_talk` derives `scriptType: 'Testimonial'`, which lands on the else branch — *"NO people, faces, hands, or bodies in the hook end frame"* ([prompts.ts](../api/_lib/prompts.ts) :1612). The generated frame had a person, a face AND hands, with the mouth occluded by the bottle. The doctrine is right; **the generator is ignoring its own explicit negative constraint.** | **TUNED** `api/_lib/prompts.ts` | GATED — Neil |
-| P6 ⚠ | The script generator emits **unverifiable scarcity** ("limited stock" on a product with no inventory signal) and a **therapeutic claim** ("nag-heal talaga" on a cosmetic — PH FDA). Systemic, not one ad. | **TUNED** prompts | GATED — Neil |
-| P7 | **`FACE_TO_CAMERA` violated on a speaking scene.** Second run, scene 4: avatar looking DOWN at the bottle while delivering a line. `looking-down-at-mug` is banned BY NAME in that block ([geminiService.ts](../services/geminiService.ts) :2144) "required for downstream lip sync". Neil's read of the risk is the right one and worth keeping: the still is the video's FIRST FRAME, so a turned head forces the video model to invent unseen face angles — which is where identity drifts. | **TUNED** prompts | GATED — Neil |
+| P6 ⚠ | The script generator emits **unverifiable scarcity** ("limited stock" on a product with no inventory signal) and a **therapeutic claim** ("nag-heal talaga" on a cosmetic — PH FDA). Systemic, not one ad. **DIAGNOSED 2026-07-26 — the model is not misbehaving on either count.** (a) The scarcity is **MANDATED**: [prompts.ts](../api/_lib/prompts.ts) :891 (Testimonial branch) and :935 (MrBeast) both say *"REQUIRED IN OUTPUT: at least ONE scarcity word"*, with a scarcity-CTA fallback at :895/:939 when the offer is empty — a product with no inventory signal is **forced** into fabricating one. Confirmed in the run: scene 7's line is *"Tara, click mo na — first 50 may libreng shipping."* (b) The therapeutic claim is a **coverage hole**: the APPEARANCE-CLAIM GUARDRAIL — which already bans *"medical or corrective claims"* verbatim — exists on UGCPro tryon/transformation (:568, :681, :709) and in the storyboard builder (:1430, :1516), but the `isTestimonial` branch (861–906) has **no guardrail at all**. `real_talk` → `Testimonial` → unguarded. Confirmed: scene 5's line is *"Iba ito, dahil focus ito sa pag-heal…"*. So the low-risk fix is **copying already-approved text**, not writing new doctrine. | **TUNED** `api/_lib/prompts.ts` | GATED — Neil |
+| P7 | **`FACE_TO_CAMERA` violated on a speaking scene.** Second run, scene 4: avatar looking DOWN at the bottle while delivering a line. `looking-down-at-mug` is banned BY NAME in that block ([geminiService.ts](../services/geminiService.ts) :2144) "required for downstream lip sync". Neil's read of the risk is the right one and worth keeping: the still is the video's FIRST FRAME, so a turned head forces the video model to invent unseen face angles — which is where identity drifts. **DIAGNOSED 2026-07-26 — the prompt contradicts itself and the contradiction resolves AGAINST face-to-camera by design.** Rule 2 of the avatar block ([geminiService.ts](../services/geminiService.ts) :2159) declares VARIES *"AUTHORITATIVE over IDENTITY_LOCK"*, names **gaze direction** explicitly, and its own worked example is *"If the Scene Prompt says 'looking down… holding an empty mug,' render exactly that."* So a storyboard line telling the avatar to look at the bottle legally overrides FACE_TO_CAMERA. The defect therefore ENTERS at the storyboard, which means it can be fixed upstream without touching the identity block — the most load-bearing prompt in the app. | **TUNED** prompts | GATED — Neil |
 | P8 | **The gate cannot see gaze OR anatomy.** `ImageGateObservations` has five fields and no face-visibility or limb-count signal; `compositionNotes` is free text and explicitly "never gates this phase". So the only two flag families are `identity_drift` and `garbled_label` — scene 8's extra hand and scene 4's averted gaze were never *missed*, they were never *in scope*. Adding `faceTowardCamera` is one boolean + one flag, but a new flag family has no business existing before the precision dataset (P2) has data. | `api/_lib/imageGate.ts` | OPEN — after P2 data |
-| P9 | **Fail-open rate is HIGH and rising: 3/8 (37.5%) on the second run vs 2/9 (22%) on the first.** The gate declines to judge over a third of the time, halving dataset accumulation. Invisible before P3 — this is P3 paying for itself within the hour. Root cause unknown; the prime suspect is `IMAGE_GATE_UNPARSEABLE` from `gemini-3.5-flash`. | `api/_lib/imageGate.ts` | OPEN — investigate |
+| P9 | **Fail-open rate is HIGH and rising: 3/8 (37.5%) on the second run vs 2/9 (22%) on the first.** The gate declines to judge over a third of the time, halving dataset accumulation. Invisible before P3 — this is P3 paying for itself within the hour. Root cause unknown; the prime suspect is `IMAGE_GATE_UNPARSEABLE` from `gemini-3.5-flash`. | `api/_lib/imageGate.ts` | **ROOT-CAUSED 2026-07-26** — malformed brace/quote framing on a `finishReason:STOP` response, not drift and not a safety stop. Suspect was right, reasoning was wrong. Fix gated on Neil. |
 
 ### Second run 2026-07-25 — `apr_876ef559-ad7a-4513-a295-4175920fa1c8` (8 scenes, ~$0.73)
 
