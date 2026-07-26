@@ -84,10 +84,29 @@ Two things this settled that the doc previously listed as unknown:
    video frame), and GlassPanel's own default. **Residual risk is low; the eyeball is now a
    confirmation, not a search.** Look hardest at EditVideo. Note the populated screens need real
    project data, so this wants Neil's own logged-in session.
-4. **Still open, unranked:** P4 (Gate-1 regenerate has no cap — unlimited paid image calls),
-   P5/P6/P7 (the generator ignoring its own explicit negative constraints: hook end-frame
-   "NO people", FACE_TO_CAMERA on speaking scenes, unverifiable scarcity + a therapeutic claim —
-   all TUNED, all gated on Neil), P8 (the gate has no gaze or anatomy signal at all).
+4. **✅ P6 CLOSED 2026-07-26** — both halves shipped, Neil-approved, and it turned out to be
+   wider than one branch. See the P6 row below for the diagnosis; the commits:
+   - `b616f8b` — APPEARANCE-CLAIM GUARDRAIL added to `isTestimonial`, which had none.
+   - `b35ca5e` — and to `isServices` + the MrBeast/else branch, which also had none. All three
+     pre-existing copies lived inside `isUGCPro`. **Services was the sharper exposure** — the
+     guardrail's own wording names "derma, aesthetic, dental, salon, and clinic results", the
+     exact businesses that branch serves. `RealEstate` and `Temu` deliberately left alone
+     (neither is a bodily-result format — a judgement call, not a hole).
+   - `c25a9c9` — scarcity made CONDITIONAL on the offer stating a real limit. The old rule
+     *ordered* fabrication, and **the ✅ example demonstrated it** (offer "₱199 per bottle
+     (Buy 3, free shipping)" names no limit, yet "first 50 lang" was shown as correct) — so
+     fixing the rule alone would have lost to the example.
+   - Guardrail coverage is now a **table-driven invariant** in
+     [tests/unit/adscriptGuardrails.test.ts](../tests/unit/adscriptGuardrails.test.ts): adding a
+     person-facing scriptType without a guardrail fails there instead of shipping. Each row also
+     asserts a branch-unique structure header, so the table cannot pass by exercising one branch
+     three times.
+
+   **Still open, unranked:** P4 (Gate-1 regenerate has no cap — unlimited paid image calls),
+   P5 + P7 (the generator ignoring its own explicit negative constraints: hook end-frame
+   "NO people", FACE_TO_CAMERA on speaking scenes — both TUNED, both gated on Neil, and both
+   better measured than argued now that the gate is reliable), P8 (the gate has no gaze or
+   anatomy signal at all).
 
 ## ▶ 2026-07-26 — THE FAIL-OPEN ROOT CAUSE, ANSWERED BY REPLAY (item 1 CLOSED)
 
