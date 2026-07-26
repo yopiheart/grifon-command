@@ -894,6 +894,16 @@ export const buildAdScriptPrompt = (
          - ❌ "Click below, first 50 for P999 may free shipping!" (English-dominant AND leaks price — banned)
          If "${offer}" is empty OR names no non-price value-add (price only), DROP the bonus clause entirely and use a clean scarcity CTA: "Tara, click mo na sa baba, limited lang — subukan mo na."
 
+      **APPEARANCE-CLAIM GUARDRAIL (Meta policy):** If the transformation in beat 4 is on a
+      PERSON (skin, hair, body), frame the result as glow / fresh / feel — NEVER medical or
+      corrective claims ("removes wrinkles", "cures acne", "whitens in 7 days", "nag-heal",
+      "gumaling", "nagpapagaling" — all BANNED). Surfaces, fabrics, and objects may show
+      dramatic before/after freely.
+      SPEED RULE: never claim a result speed the brief does not state — "agad", "instant",
+      "overnight", "right away" and equivalents are BANNED unless the input explicitly makes
+      that claim. In a testimonial EVERY beat is a spoken first-person claim, so there is no
+      visual-convention defence here: if the speaker says it, the ad claims it.
+
       **INTRO PATTERN EXAMPLES** (for beat 1 — adapt content to audience, do not copy literally):
       - OFW audience → "Ako si Mark. 5 years na akong nasa Saudi para mabuhay yung pamilya — pero may isang bagay na halos natalo ako."
       - Filipino mom audience → "Ako si Tin, single mom ng dalawang bata. Akala ko kaya ko na lahat — until one Sunday morning..."
