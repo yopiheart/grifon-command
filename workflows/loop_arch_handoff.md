@@ -128,12 +128,30 @@ constrained decoding. There is no `responseSchema` anywhere in `api/`.
 > `gemini-3.5-flash`, same `responseMimeType`, same absent schema, same `.text` read
 > (`:189`). The video gate very likely carries the same ~23% invisible fail-open rate. Never measured.
 
-**Fix (proposed, NOT applied — TUNED file, gated on Neil):**
-1. **`responseSchema` on the gate call** — kills the class at the source (real constrained decoding).
-2. **Harden `parseImageGateResponse`** — brace-*balancing* scan from the first `{` instead of
-   `lastIndexOf('}')`. Recovers malformations 1–3 on its own; 4 needs #1. Defense in depth: one
-   stops the damage, the other survives it.
-3. Do both, then audit `omniGate` for the same thing before video volume grows.
+### ✅ FIXED + LIVE-VERIFIED 2026-07-26 — `e878d53` (Neil-approved)
+
+Both layers shipped to `main`:
+1. **`IMAGE_GATE_SCHEMA` passed as `responseSchema`** — real constrained decoding. Tri-state fields
+   deliberately `nullable`: null means "unverifiable", the path `judgeImageGate` never flags on, and
+   forcing a boolean would manufacture `identity_drift` out of "I could not tell".
+2. **`extractJsonObject`** replaces `lastIndexOf('}')` — a string- and escape-aware balance scan.
+   `lastIndexOf` could not tell a real closer from a stray one, nor see that a `}` inside a string
+   value is not a closer at all. That blindness is what discarded the verdicts.
+
+**Verified against the same three stills that failed, on the fixed code: 36/36 clean, zero
+fail-opens** (two independent batches of 18). Baseline on the identical images was 5/18 failures,
+so a run of 36 by luck alone is ~0.01% likely. Corroborated independently of the pass count: 11 of
+the first 18 responses came back **minified** at 38–48 output tokens, a shape that never once
+appeared in the 39 pre-fix calls (all pretty-printed, 57–71 tokens) — the decoder path visibly
+changed, which is what proves the schema is actually applied and not silently ignored.
+
+Suite 1058 passed / 26 skipped, build + bundle-leak clean. Tests use the four malformations
+verbatim from the replay — recordings, not constructions, so they cannot be tautological.
+
+> **⚠ STILL OPEN: `omniGate.ts` was deliberately NOT touched.** Same model, same
+> `responseMimeType`, no schema, same `.text` read. It very likely carries the same ~23% rate,
+> unmeasured. It needs the same two-line treatment plus its own replay — the video gate has no
+> equivalent of `producer_scenes.image_url` to replay from, so that one may need a live run.
 
 **Other corrections this replay forced on the notes below:**
 - The fail-open rate was under-reported. Only **6 of 8 scenes were gated at all** on
