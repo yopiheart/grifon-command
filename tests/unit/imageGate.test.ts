@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import {
   parseImageGateResponse,
+  extractJsonObject,
   judgeImageGate,
   gateImage,
   type ImageGateObservations,
@@ -48,6 +49,72 @@ describe('parseImageGateResponse', () => {
     expect(parseImageGateResponse('no json here')).toBeNull();
     expect(parseImageGateResponse('')).toBeNull();
     expect(parseImageGateResponse('}{')).toBeNull();
+  });
+});
+
+// The four framing malformations that actually caused the 23% fail-open rate, captured
+// VERBATIM on 2026-07-26 by replaying the stills of run apr_876ef559 through the live
+// gate (39 calls, 9 failures). Every one arrived on finishReason STOP with correct,
+// complete observations — the verdict was sound and we threw it away over punctuation.
+// These strings are the independent source of truth: they are recordings, not constructions.
+describe('parseImageGateResponse — real malformed framing from production stills', () => {
+  const BODY =
+    '{\n  "personPresent": false,\n  "personMatchesReference": null,\n' +
+    '  "productLabelText": "HIRAYA GLOW",\n  "labelLegible": true,\n' +
+    '  "compositionNotes": "Centered close-up of a dropper bottle on a counter"';
+  const EXPECTED = {
+    personPresent: false,
+    personMatchesReference: null,
+    productLabelText: 'HIRAYA GLOW',
+    labelLegible: true,
+    compositionNotes: 'Centered close-up of a dropper bottle on a counter',
+  };
+
+  it('recovers a response with NO closing brace', () => {
+    expect(parseImageGateResponse(BODY)).toEqual(EXPECTED);
+  });
+
+  it('recovers a response with one surplus brace', () => {
+    expect(parseImageGateResponse(`${BODY}\n}\n}`)).toEqual(EXPECTED);
+  });
+
+  it('recovers a response with five surplus braces', () => {
+    expect(parseImageGateResponse(`${BODY}\n}\n}\n}\n}\n}\n}\n`)).toEqual(EXPECTED);
+  });
+
+  it('recovers a response with a stray quote before the close', () => {
+    expect(parseImageGateResponse(`${BODY}\n"\n}`)).toEqual(EXPECTED);
+  });
+
+  it('still parses the well-formed response identically (no repair path taken)', () => {
+    expect(parseImageGateResponse(`${BODY}\n}`)).toEqual(EXPECTED);
+  });
+});
+
+describe('extractJsonObject', () => {
+  it('stops at the real close and ignores trailing prose', () => {
+    expect(extractJsonObject('{"a":1} and then some commentary')).toBe('{"a":1}');
+  });
+
+  it('never miscounts a brace INSIDE a string (the lastIndexOf bug)', () => {
+    // lastIndexOf('}') would have cut after the brace in the VALUE, truncating the object.
+    const s = '{"notes":"a } inside text","b":2}';
+    expect(extractJsonObject(s)).toBe(s);
+  });
+
+  it('is not fooled by an ESCAPED quote when tracking string state', () => {
+    const s = '{"notes":"she said \\"hi\\" loudly","b":2}';
+    expect(extractJsonObject(s)).toBe(s);
+    expect(JSON.parse(extractJsonObject(s)!).b).toBe(2);
+  });
+
+  it('drops a dangling comma when closing a truncated object', () => {
+    expect(extractJsonObject('{"a":1,')).toBe('{"a":1}');
+  });
+
+  it('returns null when there is nothing to repair', () => {
+    expect(extractJsonObject('no braces at all')).toBeNull();
+    expect(extractJsonObject('}{')).toBeNull();
   });
 });
 

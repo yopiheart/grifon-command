@@ -1,4 +1,4 @@
-import { GoogleGenAI } from '@google/genai';
+import { GoogleGenAI, Type } from '@google/genai';
 
 // ============================================================================
 // api/_lib/imageGate.ts — the per-still QA gate for producer scene images.
@@ -51,6 +51,39 @@ Field rules:
 
 Output the JSON object only. No markdown fences, no commentary.`;
 
+/**
+ * Structured-output schema for the gate call — the SHAPE the prompt above already
+ * asks for, restated where the decoder can enforce it.
+ *
+ * Added 2026-07-26 after the fail-open root cause was measured (39-call replay of the
+ * stills that actually failed on run apr_876ef559): `responseMimeType: 'application/json'`
+ * ALONE is a hint, not constrained decoding. 23% of responses came back with correct,
+ * complete observations wrapped in damaged framing — a missing '}', one or five surplus
+ * '}', or a stray '"' before the close — every one of them on a clean finishReason STOP
+ * with normal output-token counts. The verdicts were sound; only the punctuation was not.
+ *
+ * The three tri-state fields stay NULLABLE on purpose: null means "unverifiable", which
+ * is the conservative path {@link judgeImageGate} never flags on. Forcing a boolean here
+ * would turn "I could not tell" into a hard claim and manufacture identity_drift flags.
+ */
+export const IMAGE_GATE_SCHEMA = {
+  type: Type.OBJECT,
+  properties: {
+    personPresent: { type: Type.BOOLEAN },
+    personMatchesReference: { type: Type.BOOLEAN, nullable: true },
+    productLabelText: { type: Type.STRING, nullable: true },
+    labelLegible: { type: Type.BOOLEAN, nullable: true },
+    compositionNotes: { type: Type.STRING },
+  },
+  required: [
+    'personPresent',
+    'personMatchesReference',
+    'productLabelText',
+    'labelLegible',
+    'compositionNotes',
+  ],
+};
+
 /** Reference modes that imply the locked avatar/person must appear in the scene. */
 const IDENTITY_MODES = new Set(['avatar', 'both', 'avatar_venue']);
 
@@ -93,6 +126,60 @@ export interface ImageGateExpectations {
 }
 
 /**
+ * Recover the object text from a response whose brace/quote framing is damaged at the
+ * tail. Defence in depth behind {@link IMAGE_GATE_SCHEMA}: the schema should stop the
+ * damage happening, this survives it if the decoder ever slips again.
+ *
+ * Walks from the first `{` with string- and escape-awareness, so a brace INSIDE a string
+ * is never miscounted. That awareness is the whole point — the previous `lastIndexOf('}')`
+ * could not tell a real closer from a stray one, and it is what discarded 23% of the
+ * verdicts. All four malformations measured on 2026-07-26 are handled:
+ *
+ *   surplus braces  `{…}\n}` and `{…}\n}\n}\n}\n}\n}`  -> stop at the depth-0 close, ignore the rest
+ *   missing brace   `{…"notes": "centered"`             -> close what is still open
+ *   stray quote     `{…"notes": "centered"\n"\n}`       -> drop the unterminated string, then close
+ *
+ * Returns null when there is no `{` at all, or when the text opens nothing to repair —
+ * the caller then fails open exactly as before. Exported for direct unit testing.
+ */
+export function extractJsonObject(s: string): string | null {
+  const start = s.indexOf('{');
+  if (start === -1) return null;
+  let depth = 0;
+  let inString = false;
+  let escaped = false;
+  let openQuoteAt = -1;
+  for (let i = start; i < s.length; i++) {
+    const c = s[i];
+    if (inString) {
+      if (escaped) escaped = false;
+      else if (c === '\\') escaped = true;
+      else if (c === '"') inString = false;
+      continue;
+    }
+    if (c === '"') {
+      inString = true;
+      openQuoteAt = i;
+    } else if (c === '{') depth++;
+    else if (c === '}' && --depth === 0) {
+      return s.slice(start, i + 1); // the real end — anything after it is surplus
+    }
+  }
+  if (depth <= 0) return null; // nothing left open: not a repairable tail
+  // Ran out of input mid-object. If we are stranded inside a string, that string is the
+  // damage (the stray-quote case) — cut it away. A dangling comma would then be the last
+  // thing left, and that is not valid JSON either, so drop it too.
+  const cut = (inString && openQuoteAt > start ? s.slice(start, openQuoteAt) : s.slice(start))
+    .trimEnd()
+    .replace(/,$/, '');
+  // Only repair something that actually carries a property. A bare '{' is garbage, not a
+  // damaged observation object, and closing it into '{}' would parse — turning a fail-open
+  // into a silent all-defaults verdict (personPresent:false), which is far worse than null.
+  if (!cut.includes(':')) return null;
+  return cut + '}'.repeat(depth);
+}
+
+/**
  * Tolerant extraction of the observations from a raw model response. Strips
  * markdown fences and grabs the first balanced-looking `{...}` object, coercing
  * every field defensively so a malformed type never over-flags. Returns null
@@ -100,13 +187,11 @@ export interface ImageGateExpectations {
  */
 export function parseImageGateResponse(raw: string): ImageGateObservations | null {
   if (!raw) return null;
-  let s = raw.replace(/```[a-zA-Z]*\n?/g, '').replace(/```/g, '').trim();
-  const start = s.indexOf('{');
-  const end = s.lastIndexOf('}');
-  if (start === -1 || end === -1 || end <= start) return null;
-  s = s.slice(start, end + 1);
+  const s = raw.replace(/```[a-zA-Z]*\n?/g, '').replace(/```/g, '').trim();
+  const candidate = extractJsonObject(s);
+  if (candidate === null) return null;
   try {
-    const obj = JSON.parse(s);
+    const obj = JSON.parse(candidate);
     if (!obj || typeof obj !== 'object') return null;
     const label =
       typeof obj.productLabelText === 'string' && obj.productLabelText.trim()
@@ -248,7 +333,7 @@ export async function runImageGate(params: RunImageGateParams): Promise<ImageGat
   const resp = await ai.models.generateContent({
     model: params.model || IMAGE_GATE_MODEL,
     contents: [{ role: 'user', parts }],
-    config: { responseMimeType: 'application/json' },
+    config: { responseMimeType: 'application/json', responseSchema: IMAGE_GATE_SCHEMA },
   });
   const raw = (resp as any)?.text ?? '';
   const observations = parseImageGateResponse(raw);
