@@ -132,7 +132,7 @@ ffmpeg -y -v error -i "$E/cut-flash.mp4" \
   -i "$SFX/whoosh-v3.mp3" -i "$SFX/ding-v2.mp3" -i "$SFX/pop-v3.mp3" \
   -i "$SFX/swish-v2.mp3" -i "$SFX/swish-v3.mp3" \
   -filter_complex "\
-[1:a]volume=0.13,afade=t=out:st=$(awk "BEGIN{print $T6+3.6}"):d=1.4[mus];\
+[1:a]volume=0.17,afade=t=out:st=$(awk "BEGIN{print $T6+3.6}"):d=1.4[mus];\
 [2:a]volume=0.55,adelay=$(at $T1)|$(at $T1)[fx1];\
 [3:a]volume=0.55,adelay=$(at $T3)|$(at $T3)[fx2];\
 [4:a]volume=0.50,adelay=$(at $T3)|$(at $T3)[fx3];\
