@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="tl" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px; height: 1920px; overflow: hidden;
+        background: transparent;
+      }
+      body { font-family: "Anton", sans-serif; }
+
+      /* KM-003 hook stack. FACE-SAFE: measured head-top across s1 sits at
+         y~340-380 through the push-in, so the whole stack lives above y=330.
+         Same Lane B treatment as KM-002 (gold hero + blurred white echo,
+         outline-not-box) so the two ads read as one campaign. */
+      .wordgroup {
+        position: absolute; left: 0; right: 0; text-align: center;
+        will-change: transform, opacity;
+      }
+      .wordgroup .echo, .wordgroup .hero {
+        position: absolute; left: 50%; top: 0; white-space: nowrap;
+        font-weight: 400; text-transform: uppercase; letter-spacing: 2px;
+        will-change: transform, opacity;
+      }
+      .echo { font-size: 104px; color: rgba(255,255,255,0.32); filter: blur(9px); }
+      .hero {
+        font-size: 94px;
+        -webkit-text-stroke: 4px rgba(15,20,35,0.9);
+        paint-order: stroke fill;
+        text-shadow:
+          0 0 22px rgba(255,255,255,0.35),
+          0 10px 24px rgba(0,0,0,0.6),
+          0 4px 0 rgba(90,60,0,0.9);
+      }
+      .white .hero { color: #FFFFFF; }
+      .gold  .hero { color: #F5B301; }
+
+      #g1 { top: 130px; }
+      #g2 { top: 236px; }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="3.92"
+      data-width="1080"
+      data-height="1920"
+    >
+      <div class="wordgroup white" id="g1" data-layout-allow-overlap>
+        <div class="echo" data-layout-allow-overlap>TAMA BA</div>
+        <div class="hero" data-layout-allow-overlap>TAMA BA</div>
+      </div>
+      <div class="wordgroup gold" id="g2" data-layout-allow-overlap>
+        <div class="echo" data-layout-allow-overlap>AKO?</div>
+        <div class="hero" data-layout-allow-overlap>AKO?</div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      /* Scroll-stop first: the stack lands in the opening beat rather than
+         waiting for the spoken "tama ako" at ~3.2s, then pays that line off
+         when it arrives. Coherence rule 2 — complements, never verbatim. */
+      const groups = [
+        { hero: "#g1 .hero", echo: "#g1 .echo", at: 0.18, rot: -3 },
+        { hero: "#g2 .hero", echo: "#g2 .echo", at: 0.62, rot: 2 },
+      ];
+
+      for (const g of groups) {
+        tl.fromTo(g.hero,
+          { xPercent: -50, scale: 0.3, rotation: g.rot * 2, opacity: 0 },
+          { xPercent: -50, scale: 1, rotation: g.rot, opacity: 1, duration: 0.42, ease: "back.out(1.6)" },
+          g.at);
+        tl.fromTo(g.echo,
+          { xPercent: -50, yPercent: -6, scale: 0.5, opacity: 0 },
+          { xPercent: -50, yPercent: -6, scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.2)" },
+          g.at + 0.06);
+        /* living drift so the stack never freezes under the push-in */
+        tl.to(g.hero, { scale: 1.045, y: -8, duration: 3.85 - g.at, ease: "sine.inOut" }, g.at + 0.45);
+        tl.to(g.echo, { scale: 1.08, y: -16, duration: 3.85 - g.at, ease: "sine.inOut" }, g.at + 0.5);
+      }
+
+      /* punctuation beat on "tama ako" (trimmed s1 t~3.15) — a nudge, not a re-entry */
+      tl.to("#g2 .hero", { scale: 1.14, duration: 0.16, ease: "power2.out", yoyo: true, repeat: 1 }, 3.15);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

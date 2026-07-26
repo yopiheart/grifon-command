@@ -67,3 +67,8 @@ public/mediapipe/wasm/
 # Vercel CLI auth tokens — NEVER commit (restore-vercel.ps1 also refuses in-repo token files)
 .vercel-token
 vercel-token.txt
+
+# Kuya Marvin ad edits — intermediates, rebuildable via ads/*/build-cut.sh
+clients/oceanides/kuya-marvin/ads/*/edit/
+# Hyperframes transparent intermediates — rebuildable from the committed HTML
+clients/oceanides/kuya-marvin/ads/*/overlays/*.mov

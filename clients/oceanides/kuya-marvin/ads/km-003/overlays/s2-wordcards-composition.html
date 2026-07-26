@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="tl" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px; height: 1920px; overflow: hidden;
+        background: transparent;
+      }
+      body { font-family: "Anton", sans-serif; }
+
+      /* s2 AGITATE word-cards over hands-only bathroom b-roll. No face in this
+         scene, so the cards own the centre of frame. These REPLACE karaoke
+         captions here (Coherence rule 2: the VO already says these words —
+         running both would be verbatim duplication, and the hook rule's
+         one-text-system-at-a-time logic applies to the agitate beat too). */
+      .card {
+        position: absolute; left: 0; right: 0; top: 760px;
+        text-align: center; will-change: transform, opacity; opacity: 0;
+      }
+      .card .echo, .card .hero {
+        position: absolute; left: 50%; top: 0; white-space: nowrap;
+        font-weight: 400; text-transform: uppercase; letter-spacing: 3px;
+        will-change: transform, opacity;
+      }
+      .card .echo { font-size: 128px; color: rgba(255,255,255,0.30); filter: blur(11px); }
+      .card .hero {
+        font-size: 116px; color: #FFFFFF;
+        -webkit-text-stroke: 5px rgba(15,20,35,0.92);
+        paint-order: stroke fill;
+        text-shadow:
+          0 0 26px rgba(255,255,255,0.30),
+          0 12px 26px rgba(0,0,0,0.65),
+          0 5px 0 rgba(90,60,0,0.9);
+      }
+      .card .hero .gold { color: #F5B301; }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="6.97"
+      data-width="1080"
+      data-height="1920"
+    >
+      <div class="card" id="c1" data-layout-allow-overlap>
+        <div class="echo" data-layout-allow-overlap>TIMBA NA NAMAN</div>
+        <div class="hero" data-layout-allow-overlap><span class="gold" data-layout-allow-overlap>TIMBA</span> NA NAMAN</div>
+      </div>
+      <div class="card" id="c2" data-layout-allow-overlap>
+        <div class="echo" data-layout-allow-overlap>PLUNGER ULIT</div>
+        <div class="hero" data-layout-allow-overlap><span class="gold" data-layout-allow-overlap>PLUNGER</span> ULIT</div>
+      </div>
+      <div class="card" id="c3" data-layout-allow-overlap>
+        <div class="echo" data-layout-allow-overlap>BUKAS NA LANG</div>
+        <div class="hero" data-layout-allow-overlap><span class="gold" data-layout-allow-overlap>BUKAS</span> NA LANG</div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      /* Speech-locked to the s2 VO map (silencedetect -22dB): sentence 1 runs
+         0.00-4.51 ("...timba... plunger nang plunger, libreng workout"),
+         sentence 2 runs 4.72-6.73 ("Hay, bukas ko aayusin..."). Each card
+         lands on its own word. */
+      const cards = [
+        { el: "#c1", in: 0.45, out: 2.35, rot: -2.5 },
+        { el: "#c2", in: 2.55, out: 4.50, rot:  2.0 },
+        { el: "#c3", in: 4.78, out: 6.85, rot: -1.5 },
+      ];
+
+      for (const c of cards) {
+        tl.set(c.el, { opacity: 1 }, c.in);
+        tl.fromTo(c.el + " .hero",
+          { xPercent: -50, scale: 0.34, rotation: c.rot * 2, opacity: 0 },
+          { xPercent: -50, scale: 1, rotation: c.rot, opacity: 1, duration: 0.38, ease: "back.out(1.7)" },
+          c.in);
+        tl.fromTo(c.el + " .echo",
+          { xPercent: -50, yPercent: -6, scale: 0.5, opacity: 0 },
+          { xPercent: -50, yPercent: -6, scale: 1, opacity: 1, duration: 0.46, ease: "back.out(1.2)" },
+          c.in + 0.05);
+        /* living drift while held */
+        tl.to(c.el + " .hero", { scale: 1.05, y: -10, duration: c.out - c.in - 0.5, ease: "sine.inOut" }, c.in + 0.4);
+        tl.to(c.el + " .echo", { scale: 1.09, y: -18, duration: c.out - c.in - 0.5, ease: "sine.inOut" }, c.in + 0.45);
+        /* hard-ish exit so the next card owns the frame alone */
+        tl.to(c.el, { opacity: 0, duration: 0.12, ease: "power2.in" }, c.out);
+      }
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
