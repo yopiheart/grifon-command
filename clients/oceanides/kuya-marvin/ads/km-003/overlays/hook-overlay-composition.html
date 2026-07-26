@@ -18,10 +18,16 @@
       }
       body { font-family: "Anton", sans-serif; }
 
-      /* KM-003 hook stack. FACE-SAFE: measured head-top across s1 sits at
-         y~340-380 through the push-in, so the whole stack lives above y=330.
-         Same Lane B treatment as KM-002 (gold hero + blurred white echo,
-         outline-not-box) so the two ads read as one campaign. */
+      /* KM-003 hook stack, v2 (Neil review 2026-07-27).
+         POSITION: the v1 stack sat at y=130-350 and a 4:5 news-feed placement
+         (1080x1350 centre crop) eats the top 285px — "TAMA BA" was cut clean
+         off. Now y=300-516, inside BOTH the 4:5 band (285-1635) and the
+         product's own safeZone() top of 269 / HOOK_TOP_FRAC 0.15 = y288
+         (drawPlan.ts). Marvin's head-top sits at y~340-380 through the
+         push-in, so the stack grazes hair only — never the face.
+         COPY: carries the cold read itself, not the challenge. "TAMA BA AKO?"
+         was meaningless on a muted feed scroll; a specific guess lands the
+         mentalism hit at frame 1 and works with the sound off. */
       .wordgroup {
         position: absolute; left: 0; right: 0; text-align: center;
         will-change: transform, opacity;
@@ -31,9 +37,9 @@
         font-weight: 400; text-transform: uppercase; letter-spacing: 2px;
         will-change: transform, opacity;
       }
-      .echo { font-size: 104px; color: rgba(255,255,255,0.32); filter: blur(9px); }
+      .echo { font-size: 102px; color: rgba(255,255,255,0.32); filter: blur(9px); }
       .hero {
-        font-size: 94px;
+        font-size: 92px;
         -webkit-text-stroke: 4px rgba(15,20,35,0.9);
         paint-order: stroke fill;
         text-shadow:
@@ -44,8 +50,8 @@
       .white .hero { color: #FFFFFF; }
       .gold  .hero { color: #F5B301; }
 
-      #g1 { top: 130px; }
-      #g2 { top: 236px; }
+      #g1 { top: 300px; }
+      #g2 { top: 408px; }
     </style>
   </head>
   <body>
@@ -58,12 +64,12 @@
       data-height="1920"
     >
       <div class="wordgroup white" id="g1" data-layout-allow-overlap>
-        <div class="echo" data-layout-allow-overlap>TAMA BA</div>
-        <div class="hero" data-layout-allow-overlap>TAMA BA</div>
+        <div class="echo" data-layout-allow-overlap>MAY TIMBA</div>
+        <div class="hero" data-layout-allow-overlap>MAY TIMBA</div>
       </div>
       <div class="wordgroup gold" id="g2" data-layout-allow-overlap>
-        <div class="echo" data-layout-allow-overlap>AKO?</div>
-        <div class="hero" data-layout-allow-overlap>AKO?</div>
+        <div class="echo" data-layout-allow-overlap>SA BANYO NYO.</div>
+        <div class="hero" data-layout-allow-overlap>SA BANYO NYO.</div>
       </div>
     </div>
 
@@ -71,18 +77,21 @@
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true });
 
-      /* Scroll-stop first: the stack lands in the opening beat rather than
-         waiting for the spoken "tama ako" at ~3.2s, then pays that line off
-         when it arrives. Coherence rule 2 — complements, never verbatim. */
+      /* P7 (11 corroborations, applied): text on frame 1 — the hook caption is
+         already on screen when the video starts, because on a muted feed the
+         TEXT does the scroll-stopping alone. g1 fires at 0, g2 a beat later. */
       const groups = [
-        { hero: "#g1 .hero", echo: "#g1 .echo", at: 0.18, rot: -3 },
-        { hero: "#g2 .hero", echo: "#g2 .echo", at: 0.62, rot: 2 },
+        { hero: "#g1 .hero", echo: "#g1 .echo", at: 0.00, rot: -3 },
+        { hero: "#g2 .hero", echo: "#g2 .echo", at: 0.30, rot: 2 },
       ];
 
       for (const g of groups) {
+        /* g1 snaps (0.26s from 55%) so it is legible within ~2 frames rather
+           than growing from nothing — a slow pop at t=0 is not "on frame 1". */
+        const first = g.at === 0;
         tl.fromTo(g.hero,
-          { xPercent: -50, scale: 0.3, rotation: g.rot * 2, opacity: 0 },
-          { xPercent: -50, scale: 1, rotation: g.rot, opacity: 1, duration: 0.42, ease: "back.out(1.6)" },
+          { xPercent: -50, scale: first ? 0.55 : 0.3, rotation: g.rot * 2, opacity: 0 },
+          { xPercent: -50, scale: 1, rotation: g.rot, opacity: 1, duration: first ? 0.26 : 0.42, ease: "back.out(1.6)" },
           g.at);
         tl.fromTo(g.echo,
           { xPercent: -50, yPercent: -6, scale: 0.5, opacity: 0 },

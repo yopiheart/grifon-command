@@ -143,8 +143,8 @@ ffmpeg -y -v error -i "$E/cut-flash.mp4" \
 [9:a]volume=0.30,adelay=$(at $T4)|$(at $T4)[fx8];\
 [0:a][mus][fx1][fx2][fx3][fx4][fx5][fx6][fx7][fx8]amix=inputs=10:duration=first:dropout_transition=0:normalize=0,\
 loudnorm=I=-14:TP=-1.5:LRA=11[a]" \
-  -map 0:v -map "[a]" -c:v copy $AAC "$AD/KM-003-AD-v1.mp4"
+  -map 0:v -map "[a]" -c:v copy $AAC "$AD/KM-003-AD-v2.mp4"
 
-echo "== done: $AD/KM-003-AD-v1.mp4 =="
+echo "== done: $AD/KM-003-AD-v2.mp4 =="
 ffprobe -v error -select_streams v:0 -show_entries stream=width,height,r_frame_rate \
-  -show_entries format=duration -of default=nw=1 "$AD/KM-003-AD-v1.mp4"
+  -show_entries format=duration -of default=nw=1 "$AD/KM-003-AD-v2.mp4"
