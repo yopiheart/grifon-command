@@ -22,6 +22,28 @@ explain *why* MER moves; we scale on MER/ROAS, never on a diagnostic alone.
   `.env`, scopes `ads_management` / `business_management` / `read_insights` /
   `pages_*`). Blocks every live `meta ads insights` pull. See
   `workflows/infra_setup.md` → "Meta Ads CLI".
+  **2026-07-27:** `AD_ACCOUNT_ID=585951286230395` is set; `ACCESS_TOKEN` is
+  commented out in `.env` with full generation steps. Token dies with the
+  defreezer every reboot — keep it in a password manager.
+- [ ] **FIRST CAMPAIGN READY TO LAUNCH — Oceanides / Kuya Marvin KM-003.**
+  Creative done and Neil-approved (two hook variants). Structure decided:
+  **Engagement → Messaging apps**, maximize conversations, 1 CBO / 1 ad set,
+  PH broad + Advantage+, ₱500/day, ad account `585951286230395`. NOT Sales —
+  at ₱500/day a sales-optimized ad set gets ~10 events/week against the ~50
+  needed to exit learning, and Sales→Messaging additionally needs CAPI for
+  Business Messaging to feed conversions back. No pixel: messaging conversions
+  are counted at the Page, and the only dataset on that account is Neil's own
+  "Grifon Pixel" (`1921429268517231`) which must NOT be attached.
+  **Blocked on:** the token above, plus three numbers from Neil — average job
+  value, conversation→booking rate, target CPA per booked job. Without them
+  there is no break-even ROAS and no kill threshold.
+  Full handoff: `clients/oceanides/kuya-marvin/ads/NEXT-SESSION.md`.
+- [ ] **Creative diversification gap (Andromeda).** hook1 and hook2 share
+  seg2-seg6 byte-for-byte — clean as an experiment, weak as delivery: the
+  retrieval engine reads near-identical videos as cosmetic dupes and prices
+  CPM accordingly. Playbook wants 4-6 genuinely distinct creatives in the ad
+  set. Needs a `grifon-cmo` + `grifon-creative-director` brief for 2-4 new
+  concepts (different opening visual/format, not a new hook on the same body).
 - [ ] **Log the first real campaign** here once spend goes live — until then the
   Pattern Index is empty and the skill runs on canon, not on our own data.
 - [ ] When ≥10 campaigns are logged, revisit whether the parked Python tools
