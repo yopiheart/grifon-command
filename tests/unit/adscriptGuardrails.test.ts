@@ -30,10 +30,32 @@ const testimonialInput = (overrides: Record<string, unknown> = {}) =>
     contrarianTruth: '',
   }) as any;
 
+// Written as a table, not one test per branch, so ADDING a person-facing scriptType and
+// forgetting its guardrail fails here instead of shipping. That omission is the entire bug
+// class: three copies of the guardrail existed and nobody noticed which branches lacked one.
+// `marker` is a structure header unique to that branch. Without it these tests could all be
+// silently exercising the SAME branch and still pass, which would prove nothing.
+const PERSON_FACING = [
+  { name: 'Testimonial', scriptType: 'Testimonial', marker: 'TESTIMONIAL STRUCTURE' },
+  { name: 'Services', scriptType: 'Services', marker: 'SERVICES TESTIMONIAL 6-BEAT' },
+  { name: 'MrBeast (default branch)', scriptType: 'MrBeast', marker: 'MRBEAST STRUCTURE' },
+] as const;
+
 describe('adscript — APPEARANCE-CLAIM GUARDRAIL coverage', () => {
-  it('the Testimonial branch carries the guardrail', () => {
-    expect(buildAdScriptPrompt(testimonialInput())).toContain('APPEARANCE-CLAIM GUARDRAIL');
-  });
+  for (const branch of PERSON_FACING) {
+    it(`the ${branch.name} branch carries the guardrail`, () => {
+      const prompt = buildAdScriptPrompt(
+        testimonialInput({ businessInfo: { scriptType: branch.scriptType } }),
+      );
+      expect(prompt).toContain(branch.marker); // we are really in the branch we think we are
+      expect(prompt).toContain('APPEARANCE-CLAIM GUARDRAIL');
+      // The Tagalog forms are the whole reason the original ban list failed to catch
+      // "nag-heal talaga" — every branch that generates Taglish needs them, not just the first.
+      expect(prompt).toContain('nag-heal');
+      expect(prompt).toContain('gumaling');
+      expect(prompt).toContain('SPEED RULE');
+    });
+  }
 
   it('bans therapeutic claims in BOTH languages the branch generates in', () => {
     const prompt = buildAdScriptPrompt(testimonialInput());

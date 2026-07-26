@@ -800,6 +800,16 @@ export const buildAdScriptPrompt = (
          INQUIRE via Viber, Messenger/DM, or walk-in — NOT a checkout link. Forbidden: "buy now",
          "add to cart", "order now", product-scarcity ("only 3 left").
 
+      **APPEARANCE-CLAIM GUARDRAIL (Meta policy):** If the result is on a PERSON — including
+      derma, aesthetic, dental, salon, and clinic results — frame it as glow / fresh / feel /
+      confidence, NEVER medical or corrective claims ("removes wrinkles", "cures acne",
+      "whitens in 7 days", "nag-heal", "gumaling", "nagpapagaling" — all BANNED). Surfaces,
+      spaces, fabrics, and objects may show dramatic before/after freely.
+      SPEED RULE: never claim a result speed the brief does not state — "agad", "instant",
+      "overnight", "right away" and equivalents are BANNED unless the input explicitly makes
+      that claim. This format is a spoken first-person customer story end to end, so there is
+      no visual-convention defence: if the customer says it, the ad claims it.
+
       ${DIRECTOR_CRITIQUE_INSTRUCTION}
       ${USER_CHOSEN_ANGLE_BLOCK}
       Format: Return valid JSON: { "hook1": [...], "hook2": [...], "body": [...], "strategicAudit": "..." }
@@ -947,6 +957,16 @@ export const buildAdScriptPrompt = (
            - ❌ "Tara, click mo na — may libreng recipe ebook ngayon!" (invents an ebook the offer never mentioned — banned)
            - ❌ "Click below, 50 slots for P299, P499, P999, free shipping!" (English-dominant AND leaks price — banned)
            If "${offer}" is empty OR names no non-price value-add (price only), DROP the bonus clause entirely and use a clean scarcity CTA: "Tara, click mo na sa baba ngayon, limited lang!"
+
+        **APPEARANCE-CLAIM GUARDRAIL (Meta policy):** If the result in beat 5 is on a PERSON
+        (skin, hair, body), frame it as glow / fresh / feel — NEVER medical or corrective
+        claims ("removes wrinkles", "cures acne", "whitens in 7 days", "nag-heal", "gumaling",
+        "nagpapagaling" — all BANNED). Surfaces, fabrics, and objects may show dramatic
+        before/after freely.
+        SPEED RULE: never claim a result speed the brief does not state — "agad", "instant",
+        "overnight", "right away" and equivalents are BANNED unless the input explicitly makes
+        that claim. Every beat here is spoken, so there is no visual-convention defence: if the
+        script says it, the ad claims it.
 
         **IDENTITY PATTERN EXAMPLES** (for beat 2 — adapt to audience, do not copy literally):
         - OFW family audience → "Tuwing umagang malayo sa pamilya, kape ang nag-aalala sa'yo."
