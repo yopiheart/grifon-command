@@ -72,3 +72,7 @@ vercel-token.txt
 clients/oceanides/kuya-marvin/ads/*/edit/
 # Hyperframes transparent intermediates — rebuildable from the committed HTML
 clients/oceanides/kuya-marvin/ads/*/overlays/*.mov
+
+# Preset Foundry artifact build output (rebuild: ads/build-preset-foundry.mjs)
+.tmp/preset-foundry.html
+.tmp/foundry-frame.jpg
