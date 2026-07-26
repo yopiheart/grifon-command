@@ -44,4 +44,20 @@ while IFS='|' read -r ref cdate; do
 done < <(git for-each-ref --sort=-committerdate --format='%(refname:short)|%(committerdate:short)' refs/remotes/origin 2>/dev/null)
 if [ "$flight" -eq 0 ]; then echo "  - (none — every remote branch is merged into main)"; fi
 
+# --- GIT IDENTITY (added 2026-07-26) -------------------------------------------
+# scripts/restore-git-identity.ps1 has existed for a while and is correct, but
+# nothing ever pointed at it — so every session rediscovered the same failure the
+# hard way: the first `git commit` dies with "Author identity unknown", mid-task,
+# after the work is already done. The script was not the missing piece; knowing it
+# exists at the right moment was. Checked here rather than reminded unconditionally,
+# so it stays silent on the machines where the identity survives and only speaks up
+# on the wiped ones. Detect-and-tell, not auto-fix: this writes to the machine's
+# GLOBAL git config, which is the user's call, matching how every other restore-*
+# script in this repo is armed.
+if ! git config user.email >/dev/null 2>&1; then
+  echo ""
+  echo "GIT IDENTITY MISSING — the defreezer wiped it. Every commit will fail with 'Author identity unknown' until you run:"
+  echo "  .\\scripts\\restore-git-identity.ps1"
+fi
+
 exit 0
