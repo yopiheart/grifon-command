@@ -18,6 +18,146 @@ Four stacked branches, pushed, **no PRs, nothing merged, nothing deployed by us,
 - All verification was **unit-test + mocked**; no live-provider, no preview, no prod evidence exists. P1's only smoke = local dev server 401 probes.
 - Every phase passed an adversarial critic (Opus post-policy). Full audit answers: see the read-only status Q&A at the end of the 2026-07-23 session transcript.
 
+## ▶ SESSION CLOSE 2026-07-26 — first post-fix production run. READ THIS FIRST.
+
+**Run `apr_23a6657b-ea83-496a-99f8-1ca96d141622`** — HIRAYA GLOW, Real Talk Review, 9:16, 8 scenes,
+**parked at Gate-1 and NOT approved** (no video spend). Launch→gate 2m27s, **$0.65 / 19 calls**,
+`run_attribution_anomalies` empty. Neil drove the browser; the agent watched Postgres.
+
+### What this run PROVED (three fixes validated in production, not by replay)
+
+| | Result |
+|---|---|
+| **Gate (`e878d53`)** | **8/8 scenes gated, ZERO fail-opens, zero `check_skip`, zero flags.** Baseline on the previous run was 3/6 = 50% fail-open. The `responseSchema` + `extractJsonObject` fix holds at real volume. |
+| **Camera rotation (`4f662a3`)** | Live — the gate's own `compositionNotes` read "Extreme close-up", "Medium shot", "Mirror reflection", "Centered close-up" across one run. |
+| **Scarcity (`c25a9c9`)** | **The discriminating test passed.** Offer was deliberately chosen to state NO limit ("Facial serum, ₱499 per bottle, free shipping"). CTA came back *"Tara, click mo na sa baba — may libreng shipping, subukan mo na."* — zero scarcity words, and it KEPT the real free-shipping value-add. The old prompt produced "first 50 may libreng shipping" on a comparable offer. |
+| **Claims (`b616f8b`)** | `scriptType: Testimonial` → the formerly-unguarded branch was the one exercised. Near-perfect A/B in the same slot: old *"Iba ito, dahil focus ito sa pag-heal…"* → new *"Iba ang Hiraya Glow, nililinis lang nito ang natural glow."* The hook even self-disclaims: *"Hindi kailangan pumuti."* No `heal`/`gumaling`/`nag-heal` anywhere. |
+
+Softest surviving line, judgement call, left alone: *"Kahit sensitive ang skin ko, hindi naman ako
+nag-breakout rito."* — an individual-experience statement, standard for the format.
+
+### ⚠ NEW DEFECT 1 — `persistAvatarReference` races the run INSERT, so `a1d8b7e` is a NO-OP on every fresh run
+
+**Item 2 of the old "What is LEFT" list is answered, and the answer is not "it's fine".**
+`node_fail{avatar_persist}` did not fire because **that code can never run as ordered.**
+
+`void persistAvatarReference(run, deps)` is the FIRST statement of `runProductionInner`
+([producerOrchestrator.ts:727](../services/producerOrchestrator.ts)) — fired before any `commit()`,
+therefore before the run row is INSERTed by the first `deps.persist(run)`. `record_avatar` hits the
+ownership guard at [advance.ts:79](../api/producer/advance.ts), which returns **404 `run_not_found`**
+when the row does not exist yet, and the empty `catch {}` at
+[producerOrchestrator.ts:717](../services/producerOrchestrator.ts) swallows it silently.
+
+**Confirmed in production logs, not inferred:** exactly ONE `404 POST /api/producer/advance` at
+**15:39:30**, four seconds BEFORE `producer_runs.created_at` = 15:39:34.275. That is the call.
+
+Corroborating evidence chain (each independently rules out an alternative):
+- `avatar_url` NULL → the write never landed.
+- No `node_fail{avatar_persist}` → the size cap was NOT hit; the failure is after that check.
+- **Zero `check_skip{no_identity_reference}` on 5 identity-mode scenes** (UI 2,3,6 `avatar`; 4,7
+  `both`) → `run.input.avatar.url` WAS a usable data URL in memory all run. So the guard passed and
+  `recordAvatar` really was called. Durability failed; the gate's identity checks were real.
+- `recordAvatar` IS wired ([producerDeps.ts:119](../services/producerDeps.ts)) → not a missing dep.
+- `createProductionRun` is a pure in-memory factory → nothing creates the row earlier.
+
+**Consequence:** the presenter reference is never durable, so after ANY reload the regen refuses
+(the `e7d9945` stop-loss fires — correct behavior, wrong cause). And **`chars` — the measurement
+needed to choose between compressing the reference and Supabase Storage — is STILL unmeasured.**
+Fix is an ordering change, not a redesign: call it after the first checkpoint. Note the call site
+requests `'1K'` ([ProducerFlow.tsx:267](../components/OneShotAd/ProducerFlow.tsx)), so this doc's
+older "a 2K avatar" sizing assumption may be stale for this path.
+
+### ⚠ NEW DEFECT 2 — regenerated images are the ONLY ungated ones, and the deferral has come due
+
+`regenSceneImage` sets `s.gateVerdict = undefined` and never re-gates. Clearing is correct (a
+verdict must not describe an image it never judged), but the code comment
+([producerOrchestrator.ts:1001](../services/producerOrchestrator.ts)) says verbatim:
+*"Re-gating the regen is flag-ON work."* **The flag has been ON since 2026-07-25.** Nobody came back.
+
+Verified live: Neil regenerated UI Scene 2 (db idx 1) at 15:59:21 → its `gate_verdict` is now `null`
+while all 7 others carry verdicts. **The one image a human had already found defective became the
+only image in the run with zero automated check.** Regen is what users do when they see something
+wrong, so this inverts coverage exactly where it matters most.
+
+### ⚠ NEW DEFECT 3 — regen never varies the camera angle
+
+`regenSceneImage` passes a hardcoded `variationIndex: 1`
+([producerOrchestrator.ts:989](../services/producerOrchestrator.ts)). `AVATAR_CAMERA_ANGLES` is
+indexed by `variationIndex % length`, so **every regen of a scene returns the same framing** — a
+user re-rolling five times gets five variations of one angle. Same defect class as P1 (constant
+`variationIndex`), left behind in the regen path when P1 was fixed on the main path.
+
+### Structural finding — the storyboard has no Testimonial branch
+
+Two different branches run: the SCRIPT takes `isTestimonial`
+([prompts.ts:871](../api/_lib/prompts.ts), 8 beats), the STORYBOARD falls through to the generic
+**NARRATIVE RETENTION RHYTHM** ([prompts.ts:1558](../api/_lib/prompts.ts)) — four lines. Not MrBeast.
+
+**The storyboard obeyed every one of its rules and still broke the ad.** Scene 2 = Avatar Talking ✓,
+max-2-consecutive-avatar ✓, alternation ✓, product-shot close ✓. But the beat map shows why that is
+not enough:
+
+| UI Scene | Script beat | Reference | Rendered |
+|---|---|---|---|
+| 5 | **Transformation** | `product` | close-up of the bottle |
+| 6 | Proof | `avatar` | the woman |
+
+The alternation rule is **content-blind** — it optimizes pacing and cannot see that "Ngayon, fresh na
+ang face ko" is the one beat whose entire job is showing the change on the human. The result line and
+the result visual ended up in different scenes. Proposed minimal fix (NOT built, TUNED): one clause —
+the alternation is free EXCEPT when a line is about the person's own body or result. Do not touch
+Scene 6; it is fine where it is.
+
+Two related gaps found while reading: the pacing rule never defines whether `both` counts as "Avatar
+Talking" (the model is guessing), and **the plain product Testimonial lands in the vaguest branch in
+the file** — Services, RealEstate and every UGC Pro archetype spell out `referenceImage` scene by
+scene, while the most mainstream format gets "alternate between Product B-Roll and Avatar Talking".
+
+### ✅ SHIPPED THIS SESSION — hook start-frame subject (`8063875`, live on grifon.ai)
+
+The run's hook opened on **a clay pot**. The prompt asked for *"a dry, matte, textured surface in a
+neutral beige tone"* — a material and a colour, no subject — so the model rendered an arbitrary
+matching object, on the one beat every viewer is guaranteed to see.
+
+An earlier proposal in-session (open on a human face) was **wrong and caught before shipping**: it
+collides with the HOOK ANCHOR RULE, whose own text names face→product interpolation as *"the single
+worst failure mode for the hook."* What shipped instead requires a NAMED subject, routes it by what
+the hook SAYS rather than by format (the conditional shape borrowed from `c25a9c9`), bans a full face
+in the start frame, and — the load-bearing part — **adds a person-led worked example beside the
+existing object-led one.** The anchor rule's only example was coffee grounds beside a mug; per the
+scarcity lesson, an example teaches harder than a rule. `hookStartFrameSubject.test.ts` pins the two
+examples as a PAIR so deleting either fails. Suite 1072/26, build + bundle-leak clean.
+
+**Free verification next run:** read the gate's `compositionNotes` for UI Scene 1. Still
+"clay vessel"/"textured surface" → the change did not take. Names a cheek/skin → it worked.
+No video render needed.
+
+### Launch filter (agreed with Neil 2026-07-26)
+
+A defect blocks launch only if it (a) produces a legally or reputationally unsafe ad, (b) burns the
+user's money with no recourse, or (c) happens on most runs and the user cannot fix it at a gate.
+**Nothing found this session blocks launch** — all three (a)-class items already shipped; the avatar
+bug fails SAFE (refuses rather than charging for a wrong image); the ungated regen is a data-quality
+issue on a flag-only gate that cannot block or reroll a user; hands are user-fixable at Gate-1.
+
+**Bounded pre-launch bar, NOT a perfectionism loop:** 2–3 more runs on DIFFERENT recipes, all parked
+at the storyboard gate, no video (~$0.65 each). Purpose: confirm the guardrails hold across branches
+— **the Services branch is the sharpest exposure, since the guardrail's own wording names "derma,
+aesthetic, dental, salon, and clinic results".** Pass that and launch; craft work continues after.
+
+### Open, ranked, none blocking
+
+1. `persistAvatarReference` ordering (defect 1) — non-TUNED, small, and it unblocks the `chars`
+   measurement this doc has wanted for two sessions.
+2. Re-gate the regen (defect 2) — non-TUNED, closes the coverage inversion.
+3. Scene-5 content-blind alternation clause — **TUNED, gated on Neil.**
+4. Anatomy signal in the gate (P8) — Neil has now independently observed hand defects on two runs;
+   the gate has no limb/anatomy field at all, so these were never missed, only out of scope. The
+   instrument IS the measurement, same argument as the flag-only phase.
+5. Regen `variationIndex` (defect 3) — one line.
+6. `both`-as-b-roll ambiguity in the pacing rule — TUNED.
+7. `omniGate.ts` still untouched (same model, same missing schema, ~23% suspected, unmeasured).
+
 ## ▶ SESSION CLOSE 2026-07-25 — everything below is history; this is the state and what is left
 
 **Eight fixes shipped, `main` at `ee93e20`.** Every one was found by driving the real product, and
