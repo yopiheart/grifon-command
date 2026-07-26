@@ -39,7 +39,10 @@ mkdir -p "$E"
 [ -f "api/_lib/assets/fonts/Anton-Regular.ttf" ] || {
   echo "ERROR: run this from the repo root (Anton-Regular.ttf not found)" >&2; exit 1; }
 
-V="-c:v libx264 -preset medium -crf 17 -pix_fmt yuv420p -r 30"
+# CRF 20 (~7.6 Mbps): Meta re-encodes every upload and recommends ~8-10 Mbps for
+# 1080p vertical, so CRF 17 (11.3 Mbps) was paying storage for detail Meta throws
+# away. 32% smaller, no visible difference after their pass. (Neil, 2026-07-27)
+V="-c:v libx264 -preset medium -crf 20 -pix_fmt yuv420p -r 30"
 AAC="-c:a aac -b:a 192k -ar 48000 -ac 2"
 
 # Pacing (skill Fix 5): Neil flagged KM-002 as mabagal. 1.10x on talking,
