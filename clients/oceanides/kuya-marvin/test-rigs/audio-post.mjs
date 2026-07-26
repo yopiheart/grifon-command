@@ -21,11 +21,18 @@ if (!key) throw new Error('ELEVEN_LABS_API_KEY missing in .env');
 const VOICE_ID = 'jL41fXY8JXGEarmJ5g3f'; // Kuya Marvin clone (2026-07-22)
 const STS_MODEL = 'eleven_multilingual_sts_v2';
 const TTS_MODEL = 'eleven_multilingual_v2';
-// robust = pinaka-consistent identity hold (mirrors api/_lib/elevenlabs.ts)
-const VOICE_SETTINGS = { stability: 0.75, similarity_boost: 0.85 };
-
 const [mode, ...rest] = process.argv.slice(2);
 const arg = (name) => { const i = rest.indexOf(name); return i >= 0 ? rest[i + 1] : undefined; };
+
+// robust (0.75) = pinaka-consistent identity hold (mirrors api/_lib/elevenlabs.ts).
+// natural (0.50) = mas buhay ang prosody — ito ang KM-003+ default para sa STS
+// (skill PACING & ENERGY Fix 4; ang boses ang nagdadala ng energy dahil naka-lock
+// ang mukha ni Veo). Override via --stability.
+const STABILITY_PRESETS = { robust: 0.75, natural: 0.5, creative: 0.3 };
+const stabArg = arg('--stability') || 'robust';
+const stability = STABILITY_PRESETS[stabArg] ?? Number(stabArg);
+if (!Number.isFinite(stability)) throw new Error(`--stability must be robust|natural|creative or a number, got: ${stabArg}`);
+const VOICE_SETTINGS = { stability, similarity_boost: 0.85 };
 
 if (mode === 'sts') {
   const inPath = arg('--in');

@@ -60,22 +60,53 @@ compositions, generator). Sister skills: `marvin-avatar` (plates), `ai-editor` (
     ghost sa huling segundo — ang cut ay sa editor).
   - Marvin delta: panatilihin ang EXPRESSION LOCK (mas mahigpit kaysa app "micro-expressions"
     — identity ang batas natin; ang emosyon ay DALA NG BOSES).
-- **Fix 2 — word budget:** 16-20 words kada 8s clip (2 formula-lines pinagdugtong OK) para
-  hindi na kailangan mag-stretch ni Veo.
-- **Fix 3 — delivery direction:** "warm, upbeat, confident energy at a brisk natural pace,
-  parang excited kuya na may sasabihing importante, never announcer-hype".
+- **Fix 2 — word budget: BINAWI (Neil, 2026-07-27).** ~~16-20 words kada 8s clip~~ →
+  **bumalik sa Director AI na 7-12 words kada body line** (`prompts.ts` L375; hook 5-8).
+  BAKIT: ang pagdikit ng 2 formula-lines ay nag-solve nga ng Veo stretching, pero
+  **pinutol nito sa kalahati ang cut rate** — 4 na mahabang single-angle na eksena
+  imbes na ~8. Ito ang eksaktong dahilan kung bakit mas engaging ang one-shot kaysa
+  KM-003 (Neil, hands-on comparison). Ang stretching ay sinosolusyonan sa TRIM, hindi
+  sa mas mahabang linya: 10 words ≈ 4s ng salita sa 8s na clip, putulin ang natitira.
+  **KAPALIT: ~$6-8 kada ad imbes na $4** (mas maraming clip) — aprubado ni Neil 2026-07-27.
+- **Fix 3 — delivery direction: PACE LANG, walang emotional-affect words (KM-003 lesson).**
+  Ang ~~"warm, upbeat, confident energy... parang excited kuya"~~ ay **lumalaban sa
+  EXPRESSION LOCK** at bumibili ng teeth-baring grin na wala sa plate (napatunayan sa
+  KM-003 s1 roll 1). Ang STS clone ang nagdadala ng TONO — **lip-motion SPEED lang ang
+  kailangan ni Veo.** Gamitin: *"brisk, natural conversational clip, finishes well within
+  the shot, never slow, never stretching or padding syllables"* + explicit na NO SMILE
+  clause. Ang enerhiya ay nasa BOSES.
 - **Fix 4 — STS stability:** `natural` (0.50) sa halip na `robust` para buhay ang prosody.
 - **Fix 5 — edit speedup:** 1.05–1.12x (setpts+atempo) kapag kulang pa rin.
 - **Tone guardrail (CMO):** mabilis OO, pero kuya-next-door confidence — hindi MrBeast
   shout. Ang believability ang differentiator vs malabanan swarm.
 
-## FACE-SAFE TEXT ZONES (Neil, 2026-07-23)
+## FEED-SAFE + FACE-SAFE TEXT ZONES (Neil 2026-07-23; 4:5 band idinagdag 2026-07-27)
 
-Walang overlay text o caption na tatakip sa mukha ni Marvin — kailanman. Bago i-final
-ang overlay/caption positions sa isang scene: i-frame-strip ang clip, tingnan kung saan
-ang mukha sa buong duration (gumagalaw ang ulo), at ilagay ang text sa malinaw na safe
-zone (default: captions y≈1267–1560 sa ilalim ng chest line ng close-up; hook stack sa
-taas y≈170–540 kapag ang mukha ay nasa gitna/baba). Kapag close-up na halos puno ang
+**DALAWANG hangganan ang bawat text layer, hindi isa.**
+
+**(1) FEED-SAFE — ang 4:5 crop.** Ang Meta news feed ay nagpi-piga ng 1080×1920 papuntang
+**1080×1350**: nawawala ang **285px sa taas AT baba**. Anumang text sa labas ng
+**y=285–1635** ay MAWAWALA sa feed placement. Nangyari ito sa KM-003 v1 — nasa y=130 ang
+hook stack, at ang buong unang linya ay naputol nang malinis.
+Ang app mismo ay may sagot na — gamitin ito, huwag mag-imbento:
+- `HOOK_TOP_FRAC = 0.15` → **hook text sa y≈288** ([drawPlan.ts](api/_lib/drawPlan.ts))
+- `safeZone()`: `SZ_TOP 0.14` / `SZ_BOTTOM 0.22` / `SZ_SIDE 0.10` → **y 269–1498, x 108–972**
+- `yFracTalking 0.66` → **captions sa y≈1267** (preset-driven, IMPACT/HYPE/CLEAN magkaiba)
+VERIFIER: i-overlay ang 4:5 band sa isang frame at tingnan — hindi hulaan.
+
+**(2) FACE-SAFE.** Walang overlay text o caption na tatakip sa mukha ni Marvin — kailanman.
+I-frame-strip ang clip, tingnan kung saan ang mukha sa BUONG duration (gumagalaw ang ulo at
+lumalaki sa push-in), saka ilagay ang text.
+
+**Ang salungatan sa pagitan ng dalawa, at ang tamang lunas.** Sa masikip na close-up plate,
+ang ulo ni Marvin ay nasa y≈340-380 — kaya **52px lang** ang malinaw sa pagitan ng feed-safe
+top (285) at ng buhok niya. Kulang sa 2-line stack. **Ang totoong ayos ay nasa PLATE, hindi
+sa text:** i-frame ang hook plate na mas MABABA si Marvin para may tunay na headroom
+(y 288–600) ang text. Ito ang doktrina mula KM-004 (Neil, 2026-07-27). Pansamantalang
+lunas kapag naka-render na ang plate: ibaba ang stack hanggang sa sumagi sa BUHOK lang,
+hindi sa mukha.
+
+Kapag close-up na halos puno ang
 frame ang mukha, ILIPAT ang text kung saan readable — ang readability ng viewer ang
 panalo, hindi ang template position. Idagdag sa VERIFIER: face-occlusion check sa
 frame strips (`covers_face: false` ang standard, same sa render_audit).
@@ -87,8 +118,39 @@ i-load ang `grifon-cmo` (offer/hook/awareness/tone check) at `grifon-creative-di
 (visual grammar, consistency locks, safe zones, format) para i-verify ang plano. Mas
 mura ang paper fix kaysa regenerated plates/clips. Tapos Neil approval, saka plates.
 
+## RENDER PRESET — TANUNGIN SI NEIL BAGO MAGSIMULA (2026-07-27)
+
+**May WALONG preset sa [renderPresets.ts](api/_lib/renderPresets.ts), hindi lang isa:**
+`classic` · `impact` · `hype` · `clean` · `none` · `punch` · `bars` · `spotlight`.
+Bawat isa ay buong "editor personality" — caption face, chunk animation, hook reveal,
+cut transition, SFX palette, magkakasabay.
+
+**PROSESO (Neil, 2026-07-27): itanong ang preset BAGO magsimula ang produksyon**, hindi
+pagkatapos. Ipakita ang **Preset Foundry** artifact — buhay ang animation ng lahat ng 8:
+`https://claude.ai/code/artifact/3422f0ff-9825-4f82-a68b-6915c482be7e`
+Rebuild: `node clients/oceanides/kuya-marvin/ads/build-preset-foundry.mjs` (template +
+script naka-commit sa `ads/`).
+
+- **KM-004 pataas = `spotlight`** (aprubado ni Neil 2026-07-27): buto ng IMPACT (Anton
+  caps, outline-hindi-box, title-stack slam) + **VO-timed active-word invert**. Tinatamaan
+  ang tunay nating mahinang axis — ang pace ay caption churn (P1), at ang invert ay
+  gumagalaw kada SALITA, hindi isang beses kada chunk. Walang dagdag na eksena o Veo spend.
+- KM-002/KM-003 ay `impact`. Runner-up ang `punch`.
+- **IWASAN kay Marvin:** `hype` (MrBeast shout — maling register sa trust service),
+  `bars` at `classic` (parehong solid caption box — kontra sa **P2**, 8 corroborations).
+
 ## CAMERA ANGLES (expansion, gated)
 
+- **MOTION DOCTRINE (Neil, 2026-07-27): STATIC sa generation, PUNCH-IN sa edit.**
+  Ang **P4** ("always be zooming", 4 corroborations) ay **kontrado ng E3, E6, at ng buong
+  2026-07-12 creator batch (E8–E13)** para sa authority talking-head: *static camera +
+  10-15% punch-in sa emphasis/cuts LANG, walang tuloy-tuloy na drift.* Si Marvin ay
+  authority talking-head.
+  - **Veo prompt:** alisin ang push-in — naka-lock/static ang camera.
+  - **Punch-in:** gawin sa build script ng ad (`build-cut.sh`) sa emphasis beats.
+  - **HUWAG galawin ang `renderPresets.ts`** (TUNED) — at may dahilan ang `intensity: 0`
+    doon: *"generated clips carry their own moves, and renderer zoom on top reads as a
+    pulse"* (Neil 2026-06-10). Kapag static na ang generation, wala nang pulse conflict.
 - Proven: eye-level / slight-low / slight-high close-up (KM-002).
 - **Side-angle talking, dalawang legal na lane (Neil 2026-07-25 — pinalitan ang
   lumang "profile BANNED" na basehan):**
@@ -200,9 +262,11 @@ Bawat assembled cut, bago i-present:
 
 1. **RAI name filter:** BAWAL ang pangalan ("Kuya Marvin") sa Veo-spoken dialogue —
    hinaharang ng real-person filter. Attribution line = end-card VO (clone TTS) + nakasulat.
-2. **Letterbox:** 2:3 plates (1024×1536) → nile-letterbox ni Veo sa 9:16. Edit fix:
-   `crop=908:1614:86:153,scale=1080:1920`. O i-pre-crop ang plate sa 864×1536 (9:16)
-   bago i-Veo (ilagay ang mahalagang background malapit sa gitna).
+2. **Letterbox — SOLVED SA PINAGMULAN (KM-003):** **i-pre-crop ang plate sa 864×1536 (9:16)
+   BAGO mag-Veo** (sharp `.extract({left:80,top:0,width:864,height:1536})`). Walang
+   letterbox, walang crop-at-upscale sa edit, at `crop=1080:1920:0:0` ang cropdetect sa
+   buong takbo. Ito na ang default — ang lumang edit fix (`crop=908:1614:86:153,scale=
+   1080:1920`) ay para lang sa lumang 2:3 na footage ng KM-002.
 3. **Concat:** laging concat FILTER na may isang re-encode; ang demuxer `-c copy` ay
    nagpuputol ng DTS → black frames.
 4. **Hook scene = overlay text LANG, walang karaoke captions** (attention war).
@@ -221,4 +285,30 @@ Bawat assembled cut, bago i-present:
 10. **Bash var scoping:** sa `A=x && cmd1 & cmd2 &` ang vars ay HINDI umaabot sa
     cmd2+ — ihiwalay ng `;` ang assignments bago mag-background ng jobs.
 11. **Voice ID + costs:** clone `jL41fXY8JXGEarmJ5g3f`; buong ad ≈ $5–7 (Veo ~$1/clip
-    + retries, ElevenLabs cents, plates/overlays/end card $0).
+    + retries, ElevenLabs cents, plates/overlays/end card $0). **KM-004 pataas: ~$6–8**
+    dahil sa mas maraming maikling eksena (see PACING Fix 2).
+
+### KM-003 lessons (2026-07-27)
+
+12. **`drawtext` fontfile ay nireresolba laban sa CWD ng ffmpeg, hindi sa script.** Kapag
+    mali ang path, **TAHIMIK itong babagsak sa default serif** — hindi nagka-crash, at
+    mukhang tama ang render hangga't hindi mo tiningnan nang full-res. Nawala ang buong
+    IMPACT treatment sa unang KM-003 build nang hindi napapansin sa thumbnails. Maglagay
+    ng existence guard sa build script, at **i-verify ang captions sa FULL RESOLUTION** —
+    hindi sa frame-strip (masyadong maliit para hatulan ang typography).
+13. **Ang emotional-affect delivery cue ay kalaban ng EXPRESSION LOCK.** See PACING Fix 3.
+    Ang tono ay galing sa STS; pace lang ang hingin kay Veo.
+14. **Sparse frame-strips ay gumagawa ng FALSE ALARM.** Dalawang "depekto" sa KM-003
+    (s5 pre-speech beat, s4 wincing face) ay nawala sa dense sampling — normal na
+    consonant mouth-shapes lang at sarado-bibig na sandali. **Bago mag-re-roll ng
+    $1 na clip, i-dense-sample muna ang pinag-aalinlanganang rehiyon.**
+15. **Overlay text ay dapat may kahulugan kapag NAKA-MUTE.** Malaking bahagi ng feed
+    views ay nagsisimulang tahimik, at **P7** (11 corroborations, applied) ay
+    text-on-frame-1 — ang TEXT ang humihinto ng scroll nang mag-isa. Ang hook overlay ay
+    dapat dalhin ang **nilalaman** (ang cold read, ang hula, ang pain), **hindi ang
+    hamon o ang pang-uulit ng binibigkas**. KM-003 v1: "TAMA BA AKO?" = walang kahulugan
+    kapag tahimik. v2: "MAY TIMBA / SA BANYO NYO." = tumatama agad.
+16. **Ang pace ay caption churn, hindi cut rate** — **P1**, 11 corroborations, applied:
+    1–3 word chunks kada **0.4–0.6s** habang ang shot ay humahawak ng 4–7s. Kapag
+    "mabagal" ang pakiramdam ng ad, **hatiin muna ang caption chunks** bago mag-isip ng
+    mas maraming eksena o mas mabilis na cut. Libre ito at hindi ginagalaw ang render.
