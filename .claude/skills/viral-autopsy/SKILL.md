@@ -52,6 +52,12 @@ Read `workflows/viral_swipe_file.md`:
 Required before running the tool (ask if missing):
 - The video: URL (TikTok/YT/IG auto-download) or a local file path. FB Ad
   Library videos usually need a manual download first.
+- **The canonical source URL/ID, recorded even when analyzing a local file**
+  (permalink, IG shortcode, or Ad Library id — NOT a signed fbcdn/CDN URL,
+  those expire). It goes in the entry's **Source:** line. Lesson 2026-07-27:
+  the E15–E18 TEMU batch is unrecoverable because only `.tmp` filenames were
+  recorded — the defreezer ate the MP4s and there is no way back to the
+  originals for vault backfill or re-verification.
 - **Niche** (e.g. "skincare PH") and **source** (e.g. `fb-ad-library`).
 - *Why this video* — what made it worth autopsying (views vs channel size,
   longest-running ad, Neil's gut). Record this; it's the outlier rationale.
@@ -198,6 +204,7 @@ vibes.
 ```markdown
 ### <YYYY-MM-DD> — <title/slug> (<source>, <niche>)
 **Why autopsied:** <outlier rationale>  ·  **File:** `.tmp/viral-intel/<slug>.json` (disposable)
+**Source:** <canonical permalink / IG shortcode / Ad Library id — the re-download path; never a signed CDN URL>
 **Format:** <storytelling_format.name>, <duration>s, <shots.count> shots (median <X>s)
 
 | Hook | Pace driver | Captions | Edit grammar | Camera | Reveal | CTA |

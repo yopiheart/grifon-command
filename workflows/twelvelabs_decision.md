@@ -86,6 +86,40 @@ real-time/streaming (the brief itself flags that gap).
    away. The philosophy is already implemented in markdown; the vault is a
    nice-to-have, not a foundation.
 
+## Market-usage scan (2026-07-27, Neil's directive before deciding on face-off follow-ups)
+
+Who actually uses TwelveLabs in production, and how — researched via their case
+studies + independent press. **Pattern: every public production deployment is a
+search/organization layer over a large owned archive; no public case uses
+Pegasus as a standalone creative-analysis brain.**
+
+- **NFL / MLSE / Dyn Sport / SBS (sports & media, their core vertical):**
+  archive search + highlight retrieval. MLSE: content discovery 5+ days →
+  minutes ("97%"), search 16h → 9min per project. It's *finding* footage, not
+  judging creatives.
+- **UNICEF Korea:** 8TB field archive made searchable, ~95% search-time cut.
+- **GS SHOP (closest to our domain):** Shortpick short-form commerce recs —
+  Marengo+Pegasus read the videos customers watch, feed the rec engine:
+  +57.5% ordering customers, +29.4% conversion (Seoul Economic Daily
+  2026-06-12). Key detail: **Pegasus is a component in a hybrid with Anthropic
+  Claude Sonnet 4 + Cohere embeddings** — the video model is the eyes, a
+  stronger reasoner is the brain. That is architecturally OUR setup (Jockey
+  retrieval → Gemini tuned analyzer → Claude main-loop referee).
+- **Mantis / AffiliateNetwork:** brand-safety & moderation scanning at scale.
+- **Company health:** $100M Series B closed 2026-07-01 (NEA + NAVER co-lead,
+  Amazon participating; multiyear AWS/Bedrock commitment). Not disappearing;
+  free-tier 90-day expiry remains our practical constraint.
+- Their own "how users use Pegasus" study: dominant workflows are summaries,
+  chapterization, transcription/OCR, safety checks, highlight extraction —
+  "what's in my footage" tasks. Ad analysis is 1 of 11 categories, no named
+  customer.
+
+**Conclusion:** market evidence agrees with the face-off Round 1 result and
+this doc's verdict — corpus-scale retrieval is where TwelveLabs earns its keep
+(our vault/M2 use), and nobody replaces a tuned analyzer with Pegasus alone.
+Their headline wins are at 8TB/century-scale archives; our corpus is dozens of
+videos, so search-only free-tier footing stays proportionate.
+
 ## Status
 
 - [x] **Pilot RUN + PASSED 2026-07-25** (same night — Neil re-authed the

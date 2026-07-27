@@ -1160,3 +1160,23 @@ vendor console's UI copy instead of verifying (see the entry above).
 the HTTP method is part of the canonical request, so probe with a ranged GET. And Meta's automatic
 video thumbnail is **frame 0**, so any hook overlay that fades in will be missed entirely; put it on
 frame 0 or hand Meta an explicit thumbnail.
+
+### 2026-07-27 — Video-model soft reads flip between runs; a single confident answer is not evidence
+
+**Context:** The Pegasus vs Gemini face-off Round 1 (`workflows/pegasus_gemini_faceoff.md`) asked both
+models the same 8 questions about OP2 — a video BOTH had already analyzed on 2026-07-25 with
+documented answers.
+
+**What went wrong:** Nothing broke this time — but the runs exposed how unstable single reads are, in
+both directions. Gemini FIXED its two documented 7/25 misses (`holds_to_final_frame` and the
+28-shot/1.5s-median soft read) without any prompt change; Jockey/Pegasus REGRESSED on its documented
+7/25 win (the P.S.-joke ending — now claims the CTA holds) while fixing its proof-metrics miss. Same
+videos, same questions, opposite flips. Had we trusted either model's 7/25 read as "its answer," half
+of it would silently no longer reproduce.
+
+**Lesson:** A video model's timing/interpretation claim is a *sample*, not a property of the model —
+never cite a single run as evidence that a model "can" or "can't" read something, and never relax the
+render_audit Step 3c gate because a soft read "looked right before." Anything pattern-driving needs
+the deterministic referee (ffmpeg/OCR); anything model-vs-model needs multiple runs before a verdict.
+This is the empirical footing under two standing rules: "Gemini's read is a hypothesis" (viral-autopsy
+guardrail 3) and "Jockey output = hypothesis" (twelvelabs_decision).
