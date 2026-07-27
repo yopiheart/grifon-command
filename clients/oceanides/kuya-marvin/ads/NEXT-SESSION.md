@@ -172,7 +172,26 @@ Ginawa ng agent via Meta Ads MCP, **lahat PAUSED, ₱0.00 ang nagastos**:
 | --- | --- | --- |
 | Campaign `OCEANIDES-KM003-hook2` | `120250672316430347` | ⏸️ PAUSED · CBO ₱500/araw · OUTCOME_ENGAGEMENT |
 | Ad set `OCEANIDES-KM003-hook2-NCR-broad` | `120250672331730347` | ⏸️ PAUSED · CONVERSATIONS · MESSENGER · start 2026-07-28 00:00+08 |
-| Ad | — | ⛔ **kulang pa** |
+| Ad `OCEANIDES-KM003-hook2-v1` | `120250673468830347` | ⏸️ PAUSED · video `1027821226498071` · `self_ai_disclosure: OPT_IN` |
+
+**Handa nang i-ON.** Na-verify ang render sa `ads_get_ad_preview` (MOBILE_FEED_STANDARD).
+
+🖼️ **Thumbnail — aral na nagkakahalaga ng buong plate.** Ang auto-thumbnail ni
+Meta ay **frame 0**, at **nag-fade in ang hook overlay** — kaya walang teksto ang
+napili niya, mukha lang ni Marvin na walang sinasabi. (Ang commit note natin na
+*"legible on frame 1"* ay hindi eksakto; mga **0.5s** talaga.) Kinuha ang
+**t=1.4s** sa halip: buo ang `HINDI BARADO. / PUNO NA.`, sarado ang bibig, at
+mas kita ang trak dahil bago pa ang push-in.
+
+**Hindi Grifon/MrBeast-formula plate ang ginamit, sinadya.** Ang buong tayo ni
+Kuya Marvin ay *hindi siya mukhang ad*. Ang makintab na gold-and-black na plate
+sa ibabaw ng UGC-style na video ay sumisigaw ng ADVERTISEMENT bago pa mapanood
+ang unang segundo — itinataas nito ang mismong bantay na ibinababa ng creative.
+At sa Feed/Reels ay **kusang tumutugtog** ang video, kaya ang cover ay kisap
+lang, hindi pinto (iba sa YouTube, kung saan tama ang MrBeast rules). Ang tunay
+na frame na may burned-in na hook ang nakakakuha ng teksto **nang hindi
+nawawala ang pagiging totoo**. *(Production rule para sa KM-004: huwag i-fade
+ang hook overlay — ilagay sa frame 0, kung hindi ay mali ang pipiliin ni Meta.)*
 
 **Permission:** idinagdag ni Neil sa [`.claude/settings.json`](../../../../.claude/settings.json) ang siyam na `mcp__claude_ai_Meta_Ads__ads_create_*` / `_get_*` rules. **Sadyang WALA** ang `ads_update_entity` at `ads_activate_entity` — sila lang ang kayang gawing ACTIVE, kaya **ipinapatupad ng allowlist ang money gate**, hindi lang ng patakaran. Si Neil ang pumipindot ng ON.
 
