@@ -35,32 +35,44 @@ Ang Post 4 ang sumasagot niyan, kaya siya ang dapat nasa taas.
 
 ---
 
-## 🚚 Batas sa larawan — ASUL na tanker lang
+## 🔴 BATAS SA LARAWAN — BAWAL ang asul na vacuum tanker
 
-**Ang puting aluminum box van ay MALING sasakyan.** Cargo truck yun. Ang
-siphoning ay ginagawa ng **asul na vacuum tanker na may suction hoses**, at
-yun ang nasa `identity-lock/` + `Approved images from gpt 5.6/`. Alam na pala
-natin to — nakasulat sa `content-calendar.md`: *"were showing a wrong truck."*
+**Neil, 2026-07-28: WALANG ganitong truck ang Oceanides.** Ang asul na vacuum
+tanker na may suction hoses sa `identity-lock/` at sa
+`Approved images from gpt 5.6/` ay **imbento** — AI-generated na sasakyan na
+hindi umiiral sa totoong fleet. **Huwag itong ipakita sa kahit anong
+customer-facing surface.** Ang pagpapakita ng kagamitang wala ka ay
+mas malaking panganib kaysa sa pagkakapareho ng litrato: kapag dumating ang
+ibang truck, sinungaling ang unang impresyon.
 
-**Hindi ginagamit dito** (puting box van): `post2-inspection-4x5.png`,
-`post3-selfie-gate-4x5.png`, `post3-selfie-jobsite-v2-4x5.png`.
+**Ang TAMANG sasakyan ay ang puting van** na nasa
+`profile-assets/` — yun ang totoong hawak nila.
 
-Pangalawang batas: **isang selfie lang sa buong batch.** Ang apat na magkaibang
-framing ang gumagawa ng grid na mukhang totoong tao, hindi photoshoot:
+**Mga file na BAWAL sa customer-facing:**
+`identity-lock/marvin-taste-*`, `identity-lock/marvin-nano-*`, at ang buong
+`Approved images from gpt 5.6/` na may asul na tanker. Identity-reference at
+internal lang sila.
 
-| Post | Framing |
-| --- | --- |
-| 1 | standing portrait, katabi ang tanker |
-| 2 | hands-only b-roll, walang mukha |
-| 3 | video |
-| 4 | walking full-body, environmental |
-| 5 | selfie — ang iisa |
+> ⚠️ Hindi ito ang `content-calendar.md` na "wrong truck" note. Iba yun
+> (branding ng litrato sa corporate page). Ito ay: **hindi umiiral ang
+> sasakyan.**
+
+### Ang natitirang trade-off — hindi pa nalulutas
+
+Tatlo lang ang totoong Marvin still na mayroon tayo, at **dalawa sa kanila ay
+selfie** (`post3-selfie-gate`, `post3-selfie-jobsite-v2`). Kaya sa batch na to
+ay **may dalawang selfie pa rin** — nilayo ko sila (Post 1 at Post 5) para
+hindi magkatabi sa grid, pero hindi ito solusyon.
+
+**Ang tunay na ayos:** gumawa ng 2–3 bagong Marvin still gamit ang
+`marvin-avatar` skill — **kasama ang PUTING van, hindi tanker** — para may
+standing at working framing tayo na hindi selfie. Susunod na session.
 
 ---
 
 ## POST 1 — Sino ako
-**Larawan:** `Approved images from gpt 5.6/ChatGPT Image Jul 19, 2026, 05_57_05 PM.png`
-*(nakatayo sa tabi ng asul na tanker, hawak ang phone, kalmado)*
+**Larawan:** `profile-assets/post3-selfie-gate-4x5.png`
+*(malapitang selfie sa gate — pinaka-personal, bagay sa intro)*
 **Awareness:** entry · **Cialdini:** Liking + Authority
 
 ```
@@ -134,9 +146,9 @@ Libre yung tingin namin sa tank. Message lang kayo dito.
 ---
 
 ## POST 4 — Presyo muna, tapos trabaho  🔴 I-PIN ITO
-**Larawan:** `identity-lock/marvin-taste-3-walking-side.png`
-*(naglalakad sa tabi ng asul na tanker sa eskinita — mukhang dumarating,
-hindi nagpapa-picture)*
+**Larawan:** `profile-assets/post2-inspection-4x5.png`
+*(nakatayo, hawak ang phone, manhole sa harapan — ang tanging hindi-selfie
+sa tatlo, kaya dito siya sa pinaka-mahalagang post)*
 **Awareness:** Solution Aware · **Cialdini:** Authority + Reciprocity
 
 Pinapatay nito yung #1 objection sa kategoryang to. Ang septic ay puno ng
@@ -161,9 +173,8 @@ Wala kaming dahilan para itago yung presyo. Kaya hindi namin itinatago.
 ---
 
 ## POST 5 — Ano yung mangyayari kapag nag-message ka
-**Larawan:** `Approved images from gpt 5.6/ChatGPT Image Jul 19, 2026, 06_09_49 PM.png`
-*(selfie kasama ang tanker at nakarolyong hose, hapon na liwanag — ang
-IISANG selfie sa batch)*
+**Larawan:** `profile-assets/post3-selfie-jobsite-v2-4x5.png`
+*(selfie sa jobsite — nilayo kay Post 1 para hindi magkatabi sa grid)*
 **Awareness:** Most Aware · **layunin:** patayin yung friction bago mag-message
 
 ```
@@ -232,11 +243,9 @@ Dalawang implikasyon:
 ### Page basics
 - [ ] Category **Local service**
 - [ ] Profile photo — `profile-assets/profile-4-fullteeth-van.png`
-      ⚠️ **I-verify muna kung asul na tanker ang nasa likod, hindi puting van.**
-      Kung puting van, kumuha ng crop mula sa `identity-lock/` o sa approved
-      folder. Ang profile photo ang unang nakikita — dito pinakamahal ang
-      maling truck.
-- [ ] Cover photo — `profile-assets/cover-3-with-text.png` — parehong check
+- [ ] Cover photo — `profile-assets/cover-3-with-text.png`
+      ⚠️ Tingnan lang kung **walang asul na tanker** sa alinman sa dalawa.
+      Puting van lang ang pwede.
 - [ ] About na may **number** (dito siya, hindi sa caption)
 - [ ] **Call button** naka-set up
 - [ ] Messenger **instant reply** naka-on (kopya nasa `ads/NEXT-SESSION.md`)

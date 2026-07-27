@@ -211,6 +211,15 @@ amber (floor sa itaas). Walang paper surface sa video overlays o dashboards.
   trabaho — doc muna, saka implementation.
 
 **Don't:**
+- 🔴 **Huwag ang asul na vacuum tanker.** (Neil, 2026-07-28) **Walang ganitong
+  truck ang Oceanides** — imbentong sasakyan siya na lumabas sa mga
+  identity-reference na generation (`identity-lock/marvin-taste-*`,
+  `identity-lock/marvin-nano-*`, `Approved images from gpt 5.6/`). **Bawal sa
+  lahat ng customer-facing surface**: post, ad, cover, profile, template.
+  Ang **puting van** sa `profile-assets/` ang totoong fleet. Ang pagpapakita
+  ng kagamitang wala ka ay hindi cosmetic na mali — sinungaling ang unang
+  impresyon pagdating ng ibang truck. Identity-reference lang ang mga file na
+  iyon (mukha ni Marvin), hindi asset ng sasakyan.
 - Huwag ang Grifon system dito — walang `#FFCC00`, walang zinc/charcoal
   grounds, walang glass/backdrop-blur, walang MrBeast plates.
 - Huwag ang safety orange `#FF8324` — deprecated (improvised bago naitala ang
