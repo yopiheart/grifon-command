@@ -27,8 +27,45 @@ magtayo ng kahit ano.
   **tuloy-tuloy** na itala ang `Create order` + `Mark as lead` sa Page inbox.
   Dito manggagaling ang 2 sa 3 numerong kailangan sa Day 7. Kalahating pagtatala
   = ingay, hindi signal.
-- **Desisyon:** i-merge ba ang `feat/km-003-hook2-ab` sa `main`? *(Doon nakatira
-  ang video; ang kopya sa `main` ay ang luma pang CRF 17.)*
+- ✅ ~~I-merge ang `feat/km-003-hook2-ab`~~ — **TAPOS 2026-07-27.** Nasa `main` na
+  ang hook2 video, ang STS audio, ang overlay composition, ang `HOOK=` switch sa
+  `build-cut.sh`, at ang CRF 20 na re-encode ng pareho. Wala nang asset ng launch
+  na nakatago sa branch.
+
+---
+
+## 📋 I-PASTE ITO SA SIMULA NG SUSUNOD NA SESSION
+
+```
+Ituloy natin si Kuya Marvin / Oceanides. Basahin mo muna:
+  clients/oceanides/kuya-marvin/ads/NEXT-SESSION.md
+  workflows/ad_performance_ledger.md
+
+Buo na at PAUSED ang KM-003 campaign (120250672316430347 /
+120250672331730347 / 120250673468830347). Zero pa ang gastos.
+
+Sasabihin ko kung na-ON ko na ba siya o hindi pa.
+
+KUNG HINDI PA NA-ON — ito ang haharangin:
+  1. Gawin ang 3-5 organic post para sa Page (wala pa tayong content plan —
+     ikaw ang gagawa, Taglish 50/50 + kalmadong-eksperto na tono, nasa
+     .claude/skills/_shared/taglish-voice.md ang panuntunan)
+  2. Ipaalala sa akin ang Page basics + AI label + Text improvements OFF
+
+KUNG NA-ON KO NA, at may 3-7 araw nang datos:
+  1. Kunin mo mismo ang insights gamit ang token (huwag mo akong pakopyahin
+     ng numero nang kamay) — gastos, CPM, CTR, frequency, hook rate,
+     hold rate, cost per messaging conversation
+  2. Ibibigay ko ang booking count + halaga mula sa Create order sa inbox
+  3. Unang entry sa workflows/ad_performance_ledger.md
+  4. Gawin ang live auto-updating dashboard artifact (mcp capability —
+     kailangan mo munang makakita ng totoong insights response bago mo
+     isulat ang page)
+  5. Brief para sa 2-3 bagong konsepto, kasama ang IMAGE AD
+
+Bago ka gumawa ng bagong tool o script: subukan mo muna ang
+tools/meta_upload_video.mjs — naka-commit pero UNTESTED.
+```
 
 ### 📅 Day 7 — ako ang gagawa
 Ako na ang kukuha ng insights (gumagana na ang token — **huwag mo nang kopyahin
