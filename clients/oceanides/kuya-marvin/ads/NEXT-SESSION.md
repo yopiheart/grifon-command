@@ -11,8 +11,15 @@ kailangang basahin ulit ang buong usapan.
 magtayo ng kahit ano.
 
 ### 🔴 Bago pindutin ang ON (ikaw lang ang makakagawa)
-1. **3–5 organic post sa Page** + i-post ang video organically.
+1. **3–5 organic post sa Page.** ✅ *(Sulat na — limang post, handa nang i-paste:
+   [`organic/PAGE-LAUNCH-POSTS.md`](../organic/PAGE-LAUNCH-POSTS.md). Kasama doon
+   ang order ng pag-post, alin ang i-pin, at ang buong pre-flight checklist.)*
    Blangkong Page = patay na tiwala, at mas mataas ang review risk sa unang ad.
+   ⚠️ **Hindi na kailangang i-post ang video organically** para sa
+   `object_story_id` — may sarili nang dark post ang ad
+   (`1184710811397498_122106985077399203`, video `1063414612882026`, na-verify
+   2026-07-27). Nasa plano pa rin siya bilang Post 3, pero para sa tiwala na
+   lang, hindi para sa upload.
 2. **Page basics** — category *Local service*, profile + cover, About, at ang
    **numero sa About + Call button** (hindi sa caption).
 3. **Tingnan ang AI label** sa ad (ipinasa ang `OPT_IN`, kumpirmahin sa UI) at
