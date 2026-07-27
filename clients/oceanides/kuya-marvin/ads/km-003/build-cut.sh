@@ -16,8 +16,20 @@
 #  - concat FILTER with one re-encode (never demuxer -c copy — lesson #3).
 set -euo pipefail
 
+# HOOK VARIANT — the cheap A/B. Everything downstream of seg1 is byte-identical
+# between the two, so the test isolates exactly one variable: the hook.
+#   HOOK=hook1  "Ilarawan ko ang banyo nyo ha. Sabihin nyo kung tama ako."  (cold read)
+#   HOOK=hook2  "Hindi barado ang inodoro nyo. Puno na."                    (contrarian claim)
+HOOK="${HOOK:-hook1}"
+case "$HOOK" in
+  hook1) H_STS="s1-hook-sts.mp4";  H_OVL="hook-overlay.mov";  H_A1=1.10; H_A2=3.05; H_B1=4.88; H_B2=6.85; OUT="KM-003-AD-v2.mp4" ;;
+  hook2) H_STS="s1-hook2-sts.mp4"; H_OVL="hook2-overlay.mov"; H_A1=0.00; H_A2=1.50; H_B1=2.50; H_B2=3.85; OUT="KM-003-AD-hook2-v1.mp4" ;;
+  *) echo "ERROR: HOOK must be hook1 or hook2" >&2; exit 1 ;;
+esac
+echo "== variant: $HOOK -> $OUT =="
+
 AD="clients/oceanides/kuya-marvin/ads/km-003"
-C="$AD/clips"; A="$AD/audio-post"; O="$AD/overlays"; P="$AD/plates"; E="$AD/edit"
+C="$AD/clips"; A="$AD/audio-post"; O="$AD/overlays"; P="$AD/plates"; E="$AD/edit/$HOOK"
 MUSIC="api/_lib/assets/music/testimonial.mp3"
 SFX="api/_lib/assets/sfx"
 mkdir -p "$E"
@@ -27,7 +39,10 @@ mkdir -p "$E"
 [ -f "api/_lib/assets/fonts/Anton-Regular.ttf" ] || {
   echo "ERROR: run this from the repo root (Anton-Regular.ttf not found)" >&2; exit 1; }
 
-V="-c:v libx264 -preset medium -crf 17 -pix_fmt yuv420p -r 30"
+# CRF 20 (~7.6 Mbps): Meta re-encodes every upload and recommends ~8-10 Mbps for
+# 1080p vertical, so CRF 17 (11.3 Mbps) was paying storage for detail Meta throws
+# away. 32% smaller, no visible difference after their pass. (Neil, 2026-07-27)
+V="-c:v libx264 -preset medium -crf 20 -pix_fmt yuv420p -r 30"
 AAC="-c:a aac -b:a 192k -ar 48000 -ac 2"
 
 # Pacing (skill Fix 5): Neil flagged KM-002 as mabagal. 1.10x on talking,
@@ -39,14 +54,14 @@ echo "== seg1: HOOK (two sub-cuts, the ~1.9s dead-pose gap removed) =="
 # s1 speech: 1.19-2.99 ("Ilarawan ko ang banyo nyo ha.") then 4.94-6.72
 # ("Sabihin nyo kung tama ako."). The 2s between is a held smile with no
 # speech — cutting it is what makes this hook land in 4s.
-ffmpeg -y -v error -ss 1.10 -to 3.05 -i "$A/s1-hook-sts.mp4" \
+ffmpeg -y -v error -ss $H_A1 -to $H_A2 -i "$A/$H_STS" \
   -vf "fps=30,scale=1080:1920" $V $AAC "$E/s1a.mp4"
-ffmpeg -y -v error -ss 4.88 -to 6.85 -i "$A/s1-hook-sts.mp4" \
+ffmpeg -y -v error -ss $H_B1 -to $H_B2 -i "$A/$H_STS" \
   -vf "fps=30,scale=1080:1920" $V $AAC "$E/s1b.mp4"
 ffmpeg -y -v error -i "$E/s1a.mp4" -i "$E/s1b.mp4" -filter_complex \
   "[0:v][0:a][1:v][1:a]concat=n=2:v=1:a=1[v][a]" -map "[v]" -map "[a]" $V $AAC "$E/s1-joined.mp4"
 # hook overlay (transparent MOV) over the joined hook
-ffmpeg -y -v error -i "$E/s1-joined.mp4" -i "$O/hook-overlay.mov" -filter_complex \
+ffmpeg -y -v error -i "$E/s1-joined.mp4" -i "$O/$H_OVL" -filter_complex \
   "[0:v][1:v]overlay=0:0:shortest=1[v]" -map "[v]" -map 0:a $V $AAC "$E/seg1-raw.mp4"
 ffmpeg -y -v error -i "$E/seg1-raw.mp4" -filter_complex \
   "[0:v]setpts=PTS/$SPD[v];[0:a]atempo=$SPD[a]" -map "[v]" -map "[a]" $V $AAC "$E/seg1.mp4"
@@ -143,8 +158,8 @@ ffmpeg -y -v error -i "$E/cut-flash.mp4" \
 [9:a]volume=0.30,adelay=$(at $T4)|$(at $T4)[fx8];\
 [0:a][mus][fx1][fx2][fx3][fx4][fx5][fx6][fx7][fx8]amix=inputs=10:duration=first:dropout_transition=0:normalize=0,\
 loudnorm=I=-14:TP=-1.5:LRA=11[a]" \
-  -map 0:v -map "[a]" -c:v copy $AAC "$AD/KM-003-AD-v2.mp4"
+  -map 0:v -map "[a]" -c:v copy $AAC "$AD/$OUT"
 
-echo "== done: $AD/KM-003-AD-v2.mp4 =="
+echo "== done: $AD/$OUT =="
 ffprobe -v error -select_streams v:0 -show_entries stream=width,height,r_frame_rate \
-  -show_entries format=duration -of default=nw=1 "$AD/KM-003-AD-v2.mp4"
+  -show_entries format=duration -of default=nw=1 "$AD/$OUT"
