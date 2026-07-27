@@ -130,7 +130,10 @@ on the "+13.1%" claim now, and Round 1 points the other way.
 Raw answer files: `.tmp/faceoff/lane-g.json` + Jockey transcripts (disposable —
 this section stands alone).
 
-**Artifact (phone-readable report, survives the defreezer):**
-`https://claude.ai/code/artifact/fd0b3457-a171-4865-b460-8baf6e55a523` — NOIR
-scoreboard + market scan + decision. Redeploy to the SAME URL (pass it as the
-Artifact tool's `url` param) when Round 2 results land.
+**Artifacts (phone-readable reports, survive the defreezer):** two renderings
+of the same verified data — redeploy to the SAME URLs (pass as the Artifact
+tool's `url` param) when Round 2 results land:
+- **NOIR** (standing default treatment):
+  `https://claude.ai/code/artifact/fd0b3457-a171-4865-b460-8baf6e55a523`
+- **God Mode 2050** (gold-hologram command-deck variant, Neil-requested option
+  2026-07-27): `https://claude.ai/code/artifact/00ff8be9-8c00-4624-9e54-ff2088db2343`
