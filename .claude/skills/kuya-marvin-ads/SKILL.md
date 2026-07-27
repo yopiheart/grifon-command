@@ -5,6 +5,11 @@ description: End-to-end production ng Kuya Marvin (Oceanides) AI video ads — s
 
 # Kuya Marvin Ads — Production Pipeline
 
+> **Design system:** lahat ng Oceanides visual (templates, overlays, dashboards)
+> ay sumusunod sa [`clients/oceanides/DESIGN.md`](../../../clients/oceanides/DESIGN.md)
+> (navy + amber, Anton/Inter, "Hindi Mukhang Ad" doctrine, contrast floor).
+> HINDI applicable ang Grifon DESIGN.md sa client work na ito.
+
 Ang buong recipe na pinatunayan ng KM-002 pilot (approved ni Neil 2026-07-23, v4).
 Reference build: `clients/oceanides/kuya-marvin/ads/km-002-pilot/` (shot plan, rigs,
 compositions, generator). Sister skills: `marvin-avatar` (plates), `ai-editor` (lab),
