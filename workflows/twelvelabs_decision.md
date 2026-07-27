@@ -104,6 +104,13 @@ real-time/streaming (the brief itself flags that gap).
       was *more* accurate than Gemini's `holds_to_final_frame: true`.
 - [x] M1 (ingest step) + M2 (corpus-query assist) added to
       `.claude/skills/viral-autopsy/SKILL.md` per the approved plan.
+- [x] **Face-off Round 1 vs Gemini RUN 2026-07-27** (Neil's directive: verify
+      the "+13.1% over Gemini" homepage claim on our workload). Result: Gemini
+      13/16, Pegasus/Jockey 11/16 on OP2 — parity band, **this verdict stands**;
+      Pegasus lost hardest on cut-level temporal precision (its own marketing
+      axis), both models failed long-take detection (render_audit doctrine
+      confirmed), and Jockey's free plan rate-limits queries at 5/min. Full
+      protocol + scoring: [pegasus_gemini_faceoff.md](pegasus_gemini_faceoff.md).
 - [ ] **Graduation decision due before ~2026-10-22** (free-tier index 90-day
       expiry): if the vault has earned its keep, move to Developer plan
       (~$3 one-time full-corpus re-index + ~$0.11/mo) and backfill winners.
