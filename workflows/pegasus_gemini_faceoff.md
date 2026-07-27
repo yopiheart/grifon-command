@@ -129,3 +129,8 @@ on the "+13.1%" claim now, and Round 1 points the other way.
 
 Raw answer files: `.tmp/faceoff/lane-g.json` + Jockey transcripts (disposable —
 this section stands alone).
+
+**Artifact (phone-readable report, survives the defreezer):**
+`https://claude.ai/code/artifact/fd0b3457-a171-4865-b460-8baf6e55a523` — NOIR
+scoreboard + market scan + decision. Redeploy to the SAME URL (pass it as the
+Artifact tool's `url` param) when Round 2 results land.
