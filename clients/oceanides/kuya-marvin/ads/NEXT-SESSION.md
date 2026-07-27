@@ -99,6 +99,9 @@ SAME URLs (Artifact tool `url` param) kapag nag-update ang launch state:
   `https://claude.ai/code/artifact/51827976-482d-45d2-9f86-771aace25449`
 - **Option B — Field Ops Ticket** (Kuya Marvin work-order, anti-polish):
   `https://claude.ai/code/artifact/b248874e-c6b2-4497-8fcc-a10c2666356f`
+- **Page Launch Run Sheet** (ang limang organic post, kopya-paste sa phone +
+  pre-flight bago i-ON) — sumusunod sa `clients/oceanides/DESIGN.md`:
+  `https://claude.ai/code/artifact/5952f7ba-859c-45b9-a295-fa8320c4d5d4`
 
 *(Hiwalay ito sa Day-7 live auto-updating dashboard na naka-plano sa itaas —
 static snapshots ito ng launch runbook; ang live isa ay gagawin pagkakita ng

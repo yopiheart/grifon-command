@@ -188,6 +188,10 @@ amber (floor sa itaas). Walang paper surface sa video overlays o dashboards.
 
 ## Registered artifacts (i-redeploy sa SAME URLs)
 
+- **KM-003 Page Launch — Run Sheet (2026-07-27):** ang limang organic post na
+  kopya-paste habang nagpo-post sa phone, kasama ang pre-flight bago i-ON.
+  `https://claude.ai/code/artifact/5952f7ba-859c-45b9-a295-fa8320c4d5d4`
+  Source: `kuya-marvin/organic/PAGE-LAUNCH-POSTS.md`. Pumasa sa 390×844 gate.
 - **KM-003 Launch dashboard — Field Ops Ticket (PINILI, on-brand recut 2026-07-27):**
   `https://claude.ai/code/artifact/b248874e-c6b2-4497-8fcc-a10c2666356f`
 - KM-003 Launch dashboard — Abyss Command (option, hindi pinili):

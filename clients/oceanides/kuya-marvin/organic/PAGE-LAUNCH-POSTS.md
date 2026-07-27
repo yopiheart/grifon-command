@@ -35,8 +35,32 @@ Ang Post 4 ang sumasagot niyan, kaya siya ang dapat nasa taas.
 
 ---
 
+## 🚚 Batas sa larawan — ASUL na tanker lang
+
+**Ang puting aluminum box van ay MALING sasakyan.** Cargo truck yun. Ang
+siphoning ay ginagawa ng **asul na vacuum tanker na may suction hoses**, at
+yun ang nasa `identity-lock/` + `Approved images from gpt 5.6/`. Alam na pala
+natin to — nakasulat sa `content-calendar.md`: *"were showing a wrong truck."*
+
+**Hindi ginagamit dito** (puting box van): `post2-inspection-4x5.png`,
+`post3-selfie-gate-4x5.png`, `post3-selfie-jobsite-v2-4x5.png`.
+
+Pangalawang batas: **isang selfie lang sa buong batch.** Ang apat na magkaibang
+framing ang gumagawa ng grid na mukhang totoong tao, hindi photoshoot:
+
+| Post | Framing |
+| --- | --- |
+| 1 | standing portrait, katabi ang tanker |
+| 2 | hands-only b-roll, walang mukha |
+| 3 | video |
+| 4 | walking full-body, environmental |
+| 5 | selfie — ang iisa |
+
+---
+
 ## POST 1 — Sino ako
-**Larawan:** `profile-assets/post3-selfie-gate-4x5.png`
+**Larawan:** `Approved images from gpt 5.6/ChatGPT Image Jul 19, 2026, 05_57_05 PM.png`
+*(nakatayo sa tabi ng asul na tanker, hawak ang phone, kalmado)*
 **Awareness:** entry · **Cialdini:** Liking + Authority
 
 ```
@@ -81,6 +105,12 @@ Kaya kung ilang buwan na kayong ganyan, hindi na tubo yung inaayos nyo.
 > dito** — mas mukha siyang totoong phone photo, na siyang gusto natin sa
 > persona page. Kung gusto mo talagang gawing 4:5, kailangan muna ng ffmpeg
 > (`.\scripts\restore-hyperframes.ps1`), wala siya sa PATH ngayon.
+>
+> ℹ️ **Ito lang ang larawang galing sa ad video.** Sinadya: hands-only siya,
+> walang mukha, at siya ang pinaka-malinaw na paglalarawan ng linyang "timba".
+> Ang pag-ulit ng eksaktong mechanism visual ay reinforcement, at ito ang
+> tanging post na hindi mukhang portrait — kaya hindi siya nakakasira sa
+> pagkakaiba-iba ng grid.
 
 ---
 
@@ -104,7 +134,9 @@ Libre yung tingin namin sa tank. Message lang kayo dito.
 ---
 
 ## POST 4 — Presyo muna, tapos trabaho  🔴 I-PIN ITO
-**Larawan:** `profile-assets/post2-inspection-4x5.png`
+**Larawan:** `identity-lock/marvin-taste-3-walking-side.png`
+*(naglalakad sa tabi ng asul na tanker sa eskinita — mukhang dumarating,
+hindi nagpapa-picture)*
 **Awareness:** Solution Aware · **Cialdini:** Authority + Reciprocity
 
 Pinapatay nito yung #1 objection sa kategoryang to. Ang septic ay puno ng
@@ -129,7 +161,9 @@ Wala kaming dahilan para itago yung presyo. Kaya hindi namin itinatago.
 ---
 
 ## POST 5 — Ano yung mangyayari kapag nag-message ka
-**Larawan:** `profile-assets/post3-selfie-jobsite-v2-4x5.png`
+**Larawan:** `Approved images from gpt 5.6/ChatGPT Image Jul 19, 2026, 06_09_49 PM.png`
+*(selfie kasama ang tanker at nakarolyong hose, hapon na liwanag — ang
+IISANG selfie sa batch)*
 **Awareness:** Most Aware · **layunin:** patayin yung friction bago mag-message
 
 ```
@@ -198,7 +232,11 @@ Dalawang implikasyon:
 ### Page basics
 - [ ] Category **Local service**
 - [ ] Profile photo — `profile-assets/profile-4-fullteeth-van.png`
-- [ ] Cover photo — `profile-assets/cover-3-with-text.png`
+      ⚠️ **I-verify muna kung asul na tanker ang nasa likod, hindi puting van.**
+      Kung puting van, kumuha ng crop mula sa `identity-lock/` o sa approved
+      folder. Ang profile photo ang unang nakikita — dito pinakamahal ang
+      maling truck.
+- [ ] Cover photo — `profile-assets/cover-3-with-text.png` — parehong check
 - [ ] About na may **number** (dito siya, hindi sa caption)
 - [ ] **Call button** naka-set up
 - [ ] Messenger **instant reply** naka-on (kopya nasa `ads/NEXT-SESSION.md`)
