@@ -113,7 +113,32 @@ Walang kill threshold kung wala ang mga ito, at hindi mag-iimbento ang agent:
 3. Target CPA kada nabook na trabaho
 
 Mula doon: **break-even ROAS = 1 ÷ net margin.**
-Pansamantalang hangganan: **₱3,500 (1 linggo) na walang nabook na trabaho = hinto.**
+
+**Naayos 2026-07-27 — hindi na ito humaharang sa launch.** Sinabi ni Neil na
+hindi niya alam ang tatlo, at hindi mag-iimbento ang agent. Sa halip, **hinati
+ang gate**: hindi kailangan ng tatlong numero sa linggo 1, dahil **kalibrasyon**
+ang trabaho noon, hindi kita. Ang **Gate 1** ay puro proseso (gastos kada
+usapan) — tingnan ang KILL GATES sa ibaba. Ang **Gate 2** (linggo 2) ang
+ekonomiya, at pagsapit noon ay **gagawa na mismo ang campaign ng dalawa sa
+tatlong numero** — ilang usapan ang naging booking, at magkano ang mga na-book.
+Ang natitira ay net margin.
+
+Ipapadala ni Neil sa Oceanides (isang Viber message, kayang sagutin sa memorya):
+> *Boss, para ma-set up ko nang tama ang ads: (1) magkano ang huling 5 siphoning
+> job nyo? (2) sa 10 taong nagme-message, ilan ang tumutuloy magpa-book?
+> (3) sa bawat ₱1,000 na singil, magkano ang natitira pagkatapos ng gastos —
+> trak, gas, tao?*
+
+### KILL GATES — Linggo 1 (walang kailangang numero)
+
+| Nagastos | Kung ganito | Gawin |
+| --- | --- | --- |
+| ₱1,000 (~2 araw) | **Zero** usapan | 🛑 Patay — creative o targeting, hindi ang alok |
+| ₱1,500 (~3 araw) | > ₱150/usapan | ⏸️ Hinto, tingnan ang hook rate |
+| ₱3,500 (7 araw) | ₱40–80/usapan | ✅ Malusog — tuloy |
+| ₱3,500 | > ₱120/usapan | 🛑 Hinto |
+
+**Huwag gumalaw ng budget sa unang 3 araw** — learning phase pa, ire-reset lang.
 
 ---
 
@@ -125,7 +150,11 @@ Pansamantalang hangganan: **₱3,500 (1 linggo) na walang nabook na trabaho = hi
 | Ad credit | **WALA** | Ang ₱5,156 ay **billing threshold**, hindi libreng pera — kung kailan sisingilin ang Visa ...5464, hindi kung magkano ang libre. Babayaran ang bawat piso. |
 | Pixel | **Huwag gumawa** | Messages campaign ito — `messaging_conversation_started` sa antas ng Page, walang pixel. Ang tanging naka-attach na dataset ay **"Grifon Pixel"** (`1921429268517231`) — sariling SaaS pixel ni Neil. Huwag itong i-tick sa ad set. |
 | Objective | **Engagement → Messaging apps**, maximize conversations | Kailangan ng ~50 events/linggo para makalabas sa learning. Sa ₱500/araw: usapan = 44–87/linggo ✅; sales = ~10/linggo ❌. Ang Sales → Messaging ay kailangan din ng CAPI for Business Messaging na wala pa tayo. |
-| Structure | 1 CBO campaign, 1 ad set, PH broad + Advantage+ | Playbook para sa <₱1k/araw |
+| Structure | 1 CBO campaign, 1 ad set, **NCR + Advantage+** | Playbook para sa <₱1k/araw. ⚠️ **NAITAMA 2026-07-27: "PH broad" → NCR.** May trak ang Oceanides — ang PH broad ay nagbabayad ng impressions sa Davao/Cebu na hindi naman kayang puntahan. **Ang geo ang tanging targeting lever na hindi dapat pinapabroad ng local service business.** Advantage+ pa rin ang audience, sa loob lang ng NCR. Palawakin kapag kumpirmado na may trak sa Bulacan/Rizal/Cavite/Laguna (may Page silang "Oceanides Malabanan Bulacan Branch" — hindi pa nakumpirma). |
+| Creative na ilalabas | **hook2 mag-isa** — `KM-003-AD-hook2-v1.mp4` | Neil-approved 2026-07-27. Isa lang, hindi A/B: sa ₱500/araw walang sample para resolbahin ang hook-level difference, at ang hatiin ang ~50 events/linggo ay binabagal ang paglabas sa learning phase habang binabayaran ang dupe-CPM. Ang linggo 1 ay **kalibrasyon**, isang variable lang. |
+| Caption | Option A — mechanism reframe | Isa lang, hindi dalawa: pareho ang video byte-for-byte, kaya ang pangalawang ad ay purong cosmetic dupe. Kung gusto ng copy test sa hinaharap, gamitin ang **maraming primary-text option sa loob ng ISANG ad** (native, walang dupe, hindi naghahati ng learning) — hindi pangalawang ad. |
+| Contact number | **Wala sa caption** | Naka-optimize sa `messaging_conversation_started`; ang tumatawag ay hindi nabibilang na conversion at nawawala ang attribution. Ilagay sa **Page About + Call button + Messenger instant reply** — doon, pumuputok muna ang conversion event bago nila makita ang number. |
+| Advantage+ text enhancements | **OFF** | Ang *Text improvements* at *Translate text* ay muling isinusulat ang copy. Ang buong hook ay isang mekanismong claim sa tuned Taglish — sisirain siya ng auto-rewrite. Visual enhancements ayos lang. |
 | Budget | ₱500/araw | Min ay ₱61.81, limit ay ₱1,228.74 — pasok |
 | Delivery encode | CRF 20 (~7.6 Mbps) | Ini-re-encode ng Meta ang lahat; 40% mas maliit, walang pagkakaiba |
 | Preset (KM-004) | `spotlight` | Buto ng IMPACT + VO-timed active-word invert |
@@ -135,37 +164,109 @@ nang nagbabalik ng nabook na trabaho. Hindi ngayon.
 
 ---
 
-## 🟡 Desisyon ni Neil bukas
+## 🚀 CAMPAIGN STRUCTURE — handa nang i-encode sa Ads Manager
 
-1. **I-merge ba ang `feat/km-003-hook2-ab` sa main?** Naroon ang hook2 variant +
-   ang CRF 20 na pagbabago — parehong aprubado na. Naiwang unmerged para sa
-   tawag mo. *(Ang unmerged branch ang paulit-ulit na dahilan kung bakit
-   naiisip ng agent na "hindi pa gawa" ang isang bagay — see CLAUDE.md.)*
-2. **Alin ang ilalabas — hook1, hook2, o pareho bilang ad set?**
-   Panoorin mo pareho. Machine gates lang ang pumasa; mata mo ang huling hatol.
-3. **Creative diversification.** Magkapareho ang hook1 at hook2 mula seg2
-   pababa, byte-for-byte. Malinis bilang eksperimento pero **mahina sa
-   Andromeda** — cosmetic dupe ang basa niya, mas mataas ang CPM. Humihingi ang
-   playbook ng **4–6 na tunay na magkakaibang creative**. Kailangan ng brief kina
-   `grifon-cmo` + `grifon-creative-director` para sa 2–4 pang **bagong konsepto**
-   (ibang panimulang eksena/format — hindi ibang hook lang sa parehong katawan).
+Ad account `585951286230395` · Page identity `Kuya Marvin ng Oceanides`
+(`1184710811397498`). **Manu-mano sa Ads Manager**, hindi sa CLI — ang
+ad-strategist guardrail ay hindi kailanman gumagastos nang mag-isa, kaya ang
+token ay **pambasa** (insights + ledger), hindi panggastos.
+
+```
+Campaign   OCEANIDES-KM003-hook2
+Ad set     OCEANIDES-KM003-hook2-NCR-broad
+Ad         OCEANIDES-KM003-hook2-v1
+```
+
+**Campaign** — Objective **Engagement** · conversion location **Messaging apps**
+· **CBO ₱500/araw** · Highest volume, walang bid cap · Special ad category
+**WALA** · A/B test toggle **OFF**.
+
+**Ad set** — Performance goal **Maximize number of conversations** ·
+messaging app **Messenger LANG** (walang naka-connect na Instagram sa Page,
+walang WhatsApp — ang tiklop sa kanila ay naghahati ng delivery sa destination
+na walang tao) · Schedule start **12:00 AM** ng susunod na araw, walang end date
+· Location **Metro Manila (NCR)** bilang region, at **"People living in this
+location"** (ang default na *living in or recently in* ay kasama ang turista —
+walang septic tank ang turista) · Age **25–65+** · Gender all ·
+**Advantage+ audience**, walang detailed targeting · **Advantage+ placements**
+(pasok ang 9:16 — ang hook overlay ay ginawa nang nasa 4:5 feed-safe band) ·
+Billing **Impressions**.
+
+**Ad** — Single video `KM-003-AD-hook2-v1.mp4` (36.8s · 1080×1920 · ~30 MB) ·
+CTA **Send Message** · message template **Start conversations** (hindi bot) ·
+Headline **`Hindi Barado. Puno Na.`** · Description
+**`Libreng tingin sa septic tank`** · 🔴 **AI label ON** · 🔴 **Text
+improvements + Translate OFF**.
+
+**Primary text (Option A — LOCKED):**
+```
+Kapag nagbubuhos ka na ng timba para lang bumaba — hindi na yan barado.
+Puno na ang septic tank.
+
+Kaya kahit anong plunger, balik nang balik ang problema. Hindi mo
+naman kasi inaayos ang totoong dahilan.
+
+Libre ang tingin namin sa tangke nyo. Ipapakita ang buong singil bago
+magsimula. Kung ayaw nyo, ayos lang — walang bayad, walang pilitan.
+
+Serbisyo sa buong Metro Manila. Message nyo lang kami —
+si Kuya Marvin ang sasagot.
+```
+
+**Messenger instant reply** (Page → Inbox → Automations) — palitan ang number:
+```
+Salamat sa pag-message! Si Kuya Marvin ito ng Oceanides.
+
+Para mabilis: (1) saan po kayo sa Metro Manila? (2) gaano na
+katagal ang problema?
+
+Emergency? Tawag na lang po diretso: 09XX-XXX-XXXX
+```
 
 ---
 
-## Bago mag-publish — huwag kalimutan
+## 🟡 Natitirang desisyon
 
-- **AI label ON** sa Meta (ad level, Advantage+ creative section) — AI-generated ang video
-- Page identity = **Oceanides / Kuya Marvin**, hindi ang Grifon page
-- Pangalan sa tatlong antas para malinis ang reporting filter:
-  ```
-  Campaign  OCEANIDES-KM003-hook1
-  Ad set    OCEANIDES-KM003-hook1-PH-broad
-  Ad        OCEANIDES-KM003-hook1-v2
-  ```
-- Organic muna sa Page bago ang bayad na ad
-- I-log sa [`workflows/ad_performance_ledger.md`](../../../../workflows/ad_performance_ledger.md)
-  paglabas ng numbers — **wala pa itong laman**, kaya canon pa rin ang takbo
-  ng ad-strategist, hindi sariling data natin
+1. ✅ ~~Alin ang ilalabas~~ — **hook2, mag-isa.** Aprubado ni Neil 2026-07-27.
+2. **I-merge ba ang `feat/km-003-hook2-ab` sa main?** Naroon ang hook2 variant +
+   ang CRF 20 na pagbabago — parehong aprubado na. Naiwang unmerged para sa
+   tawag ni Neil. *(Ang unmerged branch ang paulit-ulit na dahilan kung bakit
+   naiisip ng agent na "hindi pa gawa" ang isang bagay — see CLAUDE.md.)*
+3. **Creative diversification — orasan, hindi "kalaunan."** Humihingi ang
+   playbook ng **4–6 na tunay na magkakaibang creative** sa isang ad set;
+   isa ang ilalabas natin. Sinadya: kalibrasyon ang linggo 1, at hindi ka
+   makakagawa ng pang-lima nang bulag. **Pero 5–7 araw lang** — lampas doon at
+   ang dupe-CPM at creative fatigue na ang kakain ng badyet. Brief kina
+   `grifon-cmo` + `grifon-creative-director` para sa 2–3 **bagong konsepto**
+   (ibang panimulang eksena/format — hindi ibang hook lang sa parehong katawan).
+   Nakahanda na ang isa: **Option C, ang anti-scam reframe**
+   (`Presyo Muna. Tapos Trabaho.`) — Product Aware siya kaya mali sa malamig na
+   audience, pero tama sa **retargeting** ng mga nanood pero hindi nag-message.
+4. **Sakop sa labas ng NCR** — kumpirmahin sa Oceanides kung may trak sa
+   Bulacan/Rizal/Cavite/Laguna. Hanggang wala, NCR lang.
+
+---
+
+## ✅ PRE-FLIGHT — huwag mag-publish kung may hindi pa tapos
+
+- [ ] **Messenger instant reply naka-set up** (kopya sa itaas) — kung wala, may
+      darating na usapan na walang sasagot. **Ito ang pinakamadalas na aksidente.**
+- [ ] **Number nasa Page About + Call button** — hindi sa caption
+- [ ] **3–5 organic post sa Page** — titingnan nila ang Page bago mag-message;
+      blangkong Page = patay na tiwala at mas mataas ang review risk
+- [ ] **I-post ang video organically** bago siya gawing ad
+- [ ] Page category **Local service**, may profile + cover + About
+- [ ] **AI label ON** (ad level, Advantage+ creative section) — AI-generated ang video
+- [ ] **Text improvements + Translate text OFF**
+- [ ] Page identity = **Kuya Marvin ng Oceanides**, hindi ang Grifon page
+- [ ] Payment method aktibo (Visa …5464 — ₱1,228.74/araw limit, pasok ang ₱500)
+- [ ] I-log sa [`workflows/ad_performance_ledger.md`](../../../../workflows/ad_performance_ledger.md)
+      paglabas ng numbers — **wala pa itong laman**, kaya canon pa rin ang takbo
+      ng ad-strategist, hindi sariling data natin
+
+**Day 7 — ibigay sa ad-strategist:** gastos, usapan, hook rate, hold rate, CPM.
+Ito ang magiging **unang entry** ng ledger, at doon papasok ang brief para sa
+2–3 bagong konsepto.
 
 ---
 
