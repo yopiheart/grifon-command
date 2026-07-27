@@ -13,8 +13,9 @@ Resolve the directory containing this `SKILL.md`, then use these bundled files i
 
 1. `assets/zam-face-reference.jpg` — primary raw identity reference.
 2. `assets/zam-approved-scene-reference.png` — approved reference for natural face, head, neck, shoulder, and body integration.
+3. `../zam-master/opt-C-presenter.png` — the approved Zam master (Neil, 2026-07-28); optional third anchor. Include it for presenter/ads registers and tightly matched batches.
 
-Pass both files to the built-in image-generation tool for every new Zam image. Label their roles in the prompt. An attached user image may be a third scene, pose, outfit, or style reference; never let it replace Zam's identity anchors unless the user explicitly asks.
+Pass at least the first two files to the built-in image-generation tool for every new Zam image. Label their roles in the prompt. An attached user image may be an additional scene, pose, outfit, or style reference; never let it replace Zam's identity anchors unless the user explicitly asks.
 
 ## Expand a short request
 

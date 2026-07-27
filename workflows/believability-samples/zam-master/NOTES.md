@@ -33,10 +33,12 @@ All three are **strict eye level** (lens at her eye height — no selfie tilt, n
 | `opt-B-outdoor-candid.png` | Outdoor candid — Manila sidewalk, overcast, mid-step turn-back | Lifestyle content, story-beat ads |
 | `opt-C-presenter.png` | Presenter — seated, home content corner, talking-to-camera, chest-up | Ads / the future avatar plate + Veo talking-head anchor |
 
-**STATUS: awaiting Neil's eyeball.** None approved yet. Whichever he picks becomes
-the new master and should be added as a third anchor for future Zam generations
-(per `generate-zam-images/SKILL.md` — "If the user approves a newer image as the
-master, add it as an optional third reference").
+**STATUS: ✅ Option C (presenter) APPROVED — Neil, 2026-07-28 (remote session).**
+`opt-C-presenter.png` is the new Zam master reference. It is registered as the
+optional third anchor in `generate-zam-images/SKILL.md` (per its own rule: "If the
+user approves a newer image as the master, add it as an optional third reference").
+Options A and B stay in this folder as unapproved registers — reusable scene recipes,
+not masters.
 
 ### Shared prompt spine (reused in all 3)
 
@@ -83,18 +85,111 @@ Per-option deltas (scene / pose / wardrobe / light):
   leaf blurred far right. Soft window daylight 45° camera-left, **no ring-light look**.
   Clean natural makeup, skin still reads as skin.
 
+## Dusk register — the "polished ads pero 99% real" brief (DECODED 2026-07-28)
+
+Neil's brief: *"feeling maganda rin to for ads/content, parang pasok sya sa polished ads
+pero make sure 99% real parin sya."* The Google Doc reference
+(`https://docs.google.com/document/d/1rjRBiqYyVmbafUaCYejMmA9LtvfqoE02lGSW6V58ozk/mobilebasic`)
+was fetched via the Drive connector on 2026-07-28. Banked verbatim so no session ever
+needs the link again:
+
+> **Dusk Effect Prompt** (Image Model: Nano Banana Pro)
+>
+> Ultra-realistic clouds at dusk, with no visible sun, just a natural sky gradient from
+> golden yellow and soft orange on the horizon to pink, lavender, and deep blue overhead.
+> Keep the sky about 20% darker while keeping the people and foreground well-lit with
+> natural lighting and details. Add soft atmospheric haze, cinematic HDR, smooth tonal
+> transitions, rich natural green tones, subtle blooms, DSLR quality, premium landscape
+> photography, 8K, photorealistic, natural look without AI.
+
+**Register decode:** premium dusk-light DSLR photography wrapped around a real-looking
+Zam. The polish lives in the SKY and the light (gradient dusk sky, ~20% darker than the
+subject, haze, subtle bloom, smooth tonals); the 99%-real lives in the SUBJECT (pores,
+flyaways, real fabric, no beauty-filter smoothing, no over-HDR on skin). That split is
+the whole trick — cinematic language is scoped to the environment, never the face.
+
+## The 3 dusk options (D/E/F) — FIRE-READY, not yet generated
+
+⚠ Needs the cafe PC (codex-image = Codex CLI; remote sandbox exits 10). Run all three,
+then Neil eyeballs against the Dusk Effect reference + `../believability_dna.md`.
+
+**Triple anchors on every call** — the approved master is now the third reference:
+
+```bash
+node .claude/skills/codex-image/generate.mjs \
+  --out .tmp/zam-dusk/<name>.png --size 1024x1536 \
+  --edit workflows/believability-samples/generate-zam-images/assets/zam-face-reference.jpg \
+  --edit workflows/believability-samples/generate-zam-images/assets/zam-approved-scene-reference.png \
+  --edit workflows/believability-samples/zam-master/opt-C-presenter.png \
+  --prompt "<per-option prompt below>"
+```
+
+### Shared dusk prompt spine (all 3)
+
+> IDENTITY: the same recognizable adult Filipina woman in the three inputs (Image 1 =
+> raw face/identity anchor, Image 2 = approved body-integration anchor, Image 3 =
+> approved presenter master). Preserve her face shape, high forehead, dark-brown almond
+> eyes, natural full brows, straight nose, soft full lips, softly rounded jawline, warm
+> light-tan skin, and her black shoulder-length layered hair with slightly wispy ends.
+> Allow natural variation from expression, head angle, lens and light.
+>
+> CAMERA: strict EYE LEVEL — lens exactly at her eye height, horizon through her eyes,
+> no downward selfie tilt and no low angle. Premium DSLR quality, shallow depth of
+> field, clean sharp focus on her eyes.
+>
+> DUSK LIGHT: ultra-realistic dusk sky with no visible sun — natural gradient from
+> golden yellow and soft orange at the horizon to pink, lavender and deep blue overhead.
+> Keep the sky about 20% darker while Zam and the foreground stay well-lit with natural
+> ambient dusk light. Soft atmospheric haze, subtle bloom on distant lights, smooth
+> tonal transitions across the sky. The cinematic polish applies to the SKY and
+> environment ONLY.
+>
+> INTEGRATION: head, neck, shoulders, torso and arms are ONE coherent person from the
+> start. Correct adult head-to-body scale, natural jaw-to-neck transition, soft chin
+> shadow, realistic collarbone and shoulder slope, hair strands overlapping ears and
+> collar, identical skin tone, pore texture, sharpness, grain and compression across
+> face, neck and hands.
+>
+> SUBJECT CHARACTER: her skin stays 99% real — visible pores, fine facial hair,
+> individual flyaway strands lifted by evening breeze, real fabric texture and folds,
+> faint natural film grain. Polished-ad light, untouched skin.
+>
+> AVOID: face-swap or pasted floating head, oversized head, hard jaw cutout, mismatched
+> face-vs-body colour or sharpness, rigid passport expression, generic influencer face,
+> beauty-filter smoothing, HDR on the skin, studio lighting, ring-light catchlights,
+> visible sun or lens flare on the face, warped anatomy, extra fingers, text, logos,
+> watermark.
+
+### Per-option deltas
+
+- **D — dusk street portrait (`opt-D-dusk-street.png`):** standing on a Metro Manila
+  street at dusk, body 20° off camera, relaxed confident almost-smile, one thumb hooked
+  in a small crossbody bag strap. Shops and streetlights just starting to glow warm
+  behind her, soft bokeh, tangled overhead wires silhouetted against the gradient sky,
+  distant jeepney tail-lights as subtle bloom points. Rust-orange knit top, dark jeans.
+  Light everyday makeup.
+- **E — dusk lifestyle (`opt-E-dusk-terrace.png`):** leaning a forearm on a plain
+  concrete balcony/terrace rail, half-turned to the camera mid-laugh, holding an iced
+  coffee cup low. Fading golden horizon behind the rail, city rooftops and a few early
+  lights dissolving into haze, warm horizon rim light on her hair edge, cooler lavender
+  fill from above. Oversized soft white shirt, sleeves pushed up. Bare-face / minimal
+  makeup.
+- **F — dusk presenter, the ads plate (`opt-F-dusk-presenter.png`):** chest-up,
+  talking-to-camera with lips parted mid-sentence and direct warm eye contact, seated
+  on a rooftop/terrace stool, torso 15° off axis with face back to lens — same
+  presenter energy as the approved Option C master but against the dusk sky. Gradient
+  dusk sky fills the background with thin ultra-realistic clouds, one or two far
+  rooftop silhouettes low in frame, soft ambient dusk as the key light (NO ring light,
+  no artificial fill). Sage-green ribbed knit top, small gold studs. Clean natural
+  makeup, skin still reads as skin.
+
 ## OPEN / NEXT SESSION
 
-1. **Neil picks A / B / C** (or rejects all → regenerate with notes).
-2. **PENDING REQUEST — not yet started:** Neil asked for **3 MORE options** matching the
-   reference in this Google Doc:
-   `https://docs.google.com/document/d/1rjRBiqYyVmbafUaCYejMmA9LtvfqoE02lGSW6V58ozk/mobilebasic`
-   Brief: *"feeling maganda rin to for ads/content, parang pasok sya sa polished ads pero
-   make sure 99% real parin sya."* → **polished-ads register, but still 99% real.** The
-   doc was NOT fetched before the session ended — open it first, decode the look, then
-   generate 3 at the same eye level + dual-anchor discipline.
-3. Once a master is approved: the real make-or-break is still **ONE Veo 3.1 motion +
-   lip-sync test, rendered RAW/ungraded** (see [`../ZAM-AVATAR-NOTES.md`](../ZAM-AVATAR-NOTES.md)
+1. ~~Neil picks A / B / C~~ → **DONE: Option C approved 2026-07-28.**
+2. **Generate D / E / F on the cafe PC** (commands above) → Neil eyeballs → approved
+   one(s) join the dusk-register bank for ads/content.
+3. The real make-or-break is still **ONE Veo 3.1 motion + lip-sync test on the Option C
+   master, rendered RAW/ungraded** (see [`../ZAM-AVATAR-NOTES.md`](../ZAM-AVATAR-NOTES.md)
    next-steps §3 and the Surface-A raw-first rule in [`../believability_dna.md`](../believability_dna.md)).
    Stills are not an avatar until identity holds in motion.
 
