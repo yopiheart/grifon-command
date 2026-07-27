@@ -164,7 +164,35 @@ nang nagbabalik ng nabook na trabaho. Hindi ngayon.
 
 ---
 
-## 🚀 CAMPAIGN STRUCTURE — handa nang i-encode sa Ads Manager
+## 🟢 NAGAWA NA SA META (2026-07-27) — huwag nang ulitin
+
+Ginawa ng agent via Meta Ads MCP, **lahat PAUSED, ₱0.00 ang nagastos**:
+
+| Object | ID | Status |
+| --- | --- | --- |
+| Campaign `OCEANIDES-KM003-hook2` | `120250672316430347` | ⏸️ PAUSED · CBO ₱500/araw · OUTCOME_ENGAGEMENT |
+| Ad set `OCEANIDES-KM003-hook2-NCR-broad` | `120250672331730347` | ⏸️ PAUSED · CONVERSATIONS · MESSENGER · start 2026-07-28 00:00+08 |
+| Ad | — | ⛔ **kulang pa** |
+
+**Permission:** idinagdag ni Neil sa [`.claude/settings.json`](../../../../.claude/settings.json) ang siyam na `mcp__claude_ai_Meta_Ads__ads_create_*` / `_get_*` rules. **Sadyang WALA** ang `ads_update_entity` at `ads_activate_entity` — sila lang ang kayang gawing ACTIVE, kaya **ipinapatupad ng allowlist ang money gate**, hindi lang ng patakaran. Si Neil ang pumipindot ng ON.
+
+⚠️ **Targeting:** **20 km radius** mula (14.54, 121.02) + `location_types: ["home"]`, hindi ang opisyal na NCR region. Walang `ads_targeting_search` sa connector kaya walang paraan para makuha ang tunay na region key, at bawal manghula ng targeting ID. Para sa trak, makatuwiran ang radius (oras ng biyahe ang totoong limitasyon) **pero may tagas sa Rizal/Cavite/Bulacan.** Palitan sa UI kung gusto ng eksaktong NCR: ad set → Location → tanggalin ang pin → i-type ang "Metro Manila" → piliin ang region.
+
+⚠️ **Dayparting: HUWAG.** Nag-aalok si Meta ng *"22.8% more conversions during business hours"* — tantiya niya, hindi datos natin. Tatlong dahilan kung bakit mali ngayon: (a) **sa gabi umaapaw ang tangke** — pinakamataas-intent na buyer iyon, at 24/7 ang instant reply; (b) binabagal ang paglabas sa learning phase (kapos na sa ~50 events/linggo); (c) pipilitin ang ₱500 sa mas kaunting oras kung saan mas maraming kaagaw = mas mataas na CPM. Balikan sa **Day 14+** kapag may cost-per-conversation kada oras na.
+
+### Ang huling hakbang — organic post muna
+
+**Tinanggihan ni Meta ang `ads_creative_upload_video`:** *"This tool is new and is being gradually rolled out across ad accounts."* Vendor rollout gate — walang setting na mapipindot, hindi kayang lampasan.
+
+Ang R2 route ay **gumagana at handa na** para sa susunod: `.tmp/r2-upload.mjs` (mirror ng `api/_lib/r2.ts` — aws4fetch SigV4, hour-floored date) ang nag-uupload at gumagawa ng presigned GET URL; napatunayan sa ranged GET (`206 bytes 0-0/31502229`). Nakaimbak na ang video sa key `ad-delivery/oceanides/KM-003-AD-hook2-v1.mp4`. *(Gotcha: GET-signed URL + HEAD request = garantisadong 403 — bahagi ng SigV4 canonical request ang HTTP method. Mag-probe gamit ang ranged GET.)*
+
+**Kaya: i-post ang video organically sa Page**, tapos gagawin ang ad mula sa post gamit ang `object_story_id` (`pageID_postID`) — hindi na kailangan ng upload API. Mas malakas pa: dala-dala ng ad ang like/comment/share ng organic post = libreng social proof. Nasa pre-flight checklist na ito kanina pa, kaya walang dagdag na trabaho.
+
+*(Hinila ang `KM-003-AD-hook2-v1.mp4` galing `origin/feat/km-003-hook2-ab` papunta sa working tree — ang kopya sa `main` ay ang luma pang CRF 17.)*
+
+---
+
+## 🚀 CAMPAIGN STRUCTURE — reference ng mga setting
 
 Ad account `585951286230395` · Page identity `Kuya Marvin ng Oceanides`
 (`1184710811397498`). **Manu-mano sa Ads Manager**, hindi sa CLI — ang
