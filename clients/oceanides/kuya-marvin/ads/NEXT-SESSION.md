@@ -82,6 +82,23 @@ appeal — hindi ito hudyat na mali ang creative.
 
 ---
 
+## 📱 Launch dashboard artifacts (2026-07-27 gabi — phone-readable, survive ang defreezer)
+
+Dalawang rendering ng page na ito (blockers, specs, kill gates, Day-7) — hawak
+habang nasa Ads Manager; parehong pumasa sa 390×844 smoke gate. I-redeploy sa
+SAME URLs (Artifact tool `url` param) kapag nag-update ang launch state:
+
+- **Option A — Abyss Command** (ocean HUD):
+  `https://claude.ai/code/artifact/51827976-482d-45d2-9f86-771aace25449`
+- **Option B — Field Ops Ticket** (Kuya Marvin work-order, anti-polish):
+  `https://claude.ai/code/artifact/b248874e-c6b2-4497-8fcc-a10c2666356f`
+
+*(Hiwalay ito sa Day-7 live auto-updating dashboard na naka-plano sa itaas —
+static snapshots ito ng launch runbook; ang live isa ay gagawin pagkakita ng
+totoong insights response.)*
+
+---
+
 ## Nasaan tayo
 
 **Tapos at aprubado ni Neil:** KM-003, dalawang variant, parehong pasado sa VERIFIER.
