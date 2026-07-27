@@ -29,23 +29,74 @@ Buong production record + triage findings: [`km-003-script-storyboard.md`](km-00
 
 ### 1. Meta System User token
 
-Nakalagay na sa `.env`: `AD_ACCOUNT_ID=585951286230395`.
-Kulang pa: `ACCESS_TOKEN` — naka-comment out sa `.env` na may kumpletong tagubilin.
+**Setup na tapos na (2026-07-27, session ng umaga).** Ang natitira lang ay ang
+mismong token — buo na ang lahat ng nasa ilalim nito, huwag nang ulitin:
 
-**Huwag ipaste ang token sa chat** — diretso sa `.env`, tanggalin ang `#`.
+| Bagay | Halaga |
+| --- | --- |
+| Business portfolio | **Zam Grifon – Personal Brand** — `2055039121369832` |
+| System user | **`Oceanides Automation`** — `61592724653740`, role **Admin** |
+| Page | **`Kuya Marvin ng Oceanides`** — `1184710811397498` → *Full access* ✅ |
+| Ad account | `585951286230395` (Hidden Luxurious Condos) → *Manage campaigns* ✅ |
+| App | **`Oceanides Automation`** — `888885250507284`, ginawa 2026-07-27, use cases: *Create & manage ads with Marketing API* + *Measure ad performance data* + *Manage everything on your Page* |
+| App role ng system user | **`Manage app` (Full access)** = Administrator ✅ |
 
-Hakbang (business.facebook.com/settings, nasa **Zam Grifon – Personal Brand**):
-1. **Users → System users → Add** — `Grifon Ads CLI`, role **Admin**
-2. **Assign assets** (madalas dito nagkakamali — kung laktawan, gagana ang token
-   pero walang makikita): ad account `585951286230395` → *Manage campaigns*;
-   Page ng Oceanides / Kuya Marvin → *Full control*
-3. **Generate new token** — pumili ng App (gumawa sa developers.facebook.com kung
-   wala), i-tick: `ads_management`, `business_management`, `read_insights`,
-   `pages_show_list`, `pages_read_engagement`, `pages_manage_metadata`.
+Nakalagay na sa `.env`: `AD_ACCOUNT_ID=585951286230395` at ang linyang
+`ACCESS_TOKEN=` na may placeholder. **Huwag ipaste ang token sa chat** — diretso
+sa `.env`, palitan lang ang `PASTE_SYSTEM_USER_TOKEN_HERE`.
+
+Natitirang hakbang:
+1. **Generate token** → app `Oceanides Automation` → expiration **Never** →
+   i-tick ang walo: `ads_management`, `ads_read`, `business_management`,
+   `read_insights`, `pages_show_list`, `pages_read_engagement`,
+   `pages_manage_metadata`, `pages_manage_ads`.
    **Kopyahin agad — isang beses lang ipinapakita.**
-4. Paste sa `.env`, tanggalin ang `#`
-5. `pip install meta-ads` → `meta auth status` → `meta ads adaccount list`
+2. Paste sa `.env`
+3. `pip install meta-ads` → `meta auth status` → `meta ads adaccount list`
    (exit code 3 = auth problem, malamang scope o hindi naka-assign ang asset)
+
+*Hindi tiniklop:* `catalog_management` (walang produkto/feed sa Messages
+campaign), `facebook_branded_content_ads_brand`, `pages_manage_posts`,
+`pages_manage_engagement`, `pages_read_user_content`, `threads_business_basic`.
+*Never* ang expiration: 60 araw ay tahimik na masisira pagkalipas ng dalawang
+buwan sa cafe-PC na ito. I-revoke agad kung: napasok sa git ang `.env`, na-paste
+ang token kahit saan pa, o may campaign na hindi ikaw ang gumawa.
+
+**Natutunan habang ginagawa** — para hindi na ulit maghanap:
+- **Reserved words sa pangalan ng system user.** Tinanggihan ni Meta ang
+  `Grifon Ads CLI`, `Ads Automation`, at `Marketing API` — lahat na may **"Ads"**
+  o **"API"** — na may walang kwentang error na *"You choose an invalid System
+  User name."* Pumasa ang `Oceanides Automation`. Hindi "Grifon" ang problema.
+- **Walang "Apps" sa Assign assets dialog kung walang app ang portfolio.**
+  Sumusulpot lang ang asset type na `Apps` kapag may pag-aaring app na ang
+  portfolio. Ang `Installed apps` tab ay **read-only** — walang Add button doon
+  (*"Generate a token to manage your business assets"*), kaya huwag mo nang
+  hanapin.
+- 🔴 **ANG PINAKAMALAKING PATIBONG — `Develop app` ≠ sapat.** Dalawang magkaibang
+  sistema ng permission si Meta na magkahawig ang salita:
+  *asset access* (Business Settings) vs *app role* (app dashboard). Ang
+  **`Develop app`** ay nagbibigay lang ng app role na **Developer**, at ang
+  Generate token ay sasabog ng *"No permissions available — Assign an app role
+  to the system user"* na may **blangkong** listahan. Ang tama:
+  **System users → Assigned assets → Apps → Manage → buksan ang `Manage app`
+  (Full access)** = Administrator. Doon lang mapupuno ang listahan ng scopes.
+  Huwag itong ayusin sa `App roles → Roles` ng app dashboard — sabi mismo ni
+  Meta doon, sa Business Manager ang tamang lugar.
+- **Personal profile ≠ business portfolio.** Buhay ang Page pero nakatali sa
+  personal profile ni Neil, kaya hindi siya lumalabas sa Assign assets. Naayos sa
+  **Accounts → Pages → Add → "Add a Page"** (hindi *Request access* — si Neil ang
+  admin). ⚠️ Inililipat nito ang **ownership** ng Page sa business portfolio.
+
+**⚠️ Utang na dapat bayaran.** Nasa personal portfolio ni Neil ngayon ang Page ng
+kliyente, dahil **UNSETTLED** ang totoong Oceanides portfolio (`534113769107319`).
+Pagkabayad nila, ilipat ang Page **at** ad account sa portfolio nila — kung hindi,
+mananatiling nakakabit sa personal brand ni Neil ang buong ad history, audience,
+at usapan ng kliyente.
+
+**⚠️ Huwag pindutin ang `Revoke tokens` sa `Conversions API System User`**
+(`61591452867922`) — mamamatay ang Meta CAPI ng Grifon at kailangang
+i-regenerate lahat. Hiwalay siya sa `Oceanides Automation`; iyon ang dahilan
+kung bakit dalawa sila.
 
 ⚠️ **Itago sa password manager.** Buburahin ng defreezer ang `.env` kada reboot;
 kailangan mong ipaste ulit. Hindi pwedeng ilagay sa repo ang sikreto.

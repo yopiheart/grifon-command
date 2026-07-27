@@ -63,15 +63,84 @@ Track status in this section. Update as items complete.
 - [x] First production deploy reachable at https://app.grifon.ai (now redirects)
 - Outstanding: Vercel billing address incomplete (Settings → Billing → Update Address) — non-blocking but Vercel will eventually nag
 
-### 7. Meta Ads CLI (paid-ads execution) — NOT STARTED
-Prerequisite for the `grifon-ad-strategist` skill to pull live insights / draft spend commands. Until this is done, the skill runs on canon only and the Ad Performance Ledger stays empty.
-- [ ] `pip install meta-ads` on the working machine (cafe-PC: re-runs each session unless added to a restore script)
-- [ ] Create an **admin System User** in Meta Business Suite → Settings → Users → System Users
-- [ ] Assign assets to it: the ad account, the FB Page(s), pixel/dataset, catalog
-- [ ] Add the System User as **App Admin** in the Meta for Developers app
-- [ ] Generate a System User access token with scopes: `ads_management`, `business_management`, `read_insights`, `pages_show_list`, `pages_read_engagement`, `pages_manage_ads`, `catalog_management`
-- [ ] Put `ACCESS_TOKEN=<token>` and `AD_ACCOUNT_ID=<id>` in `.env` (never paste into chat — see Edge Cases)
-- [ ] Verify with `meta auth status` and `meta ads adaccount list`
+### 7. Meta Ads CLI (paid-ads execution) — ✅ DONE 2026-07-27
+
+Prerequisite for the `grifon-ad-strategist` skill to pull live insights / draft
+spend commands. **This is the full runbook** — it took ~90 minutes of dead ends
+the first time because Meta splits one token across six screens and its own
+error messages point the wrong way. Follow it in order and it's ~15 minutes.
+
+> **The runbook is client-agnostic.** Redo it per business portfolio, not per
+> client — one system user can hold many ad accounts and Pages. The Oceanides /
+> Kuya Marvin instance (all live IDs) is recorded in
+> [`clients/oceanides/kuya-marvin/ads/NEXT-SESSION.md`](../clients/oceanides/kuya-marvin/ads/NEXT-SESSION.md).
+
+**Order matters — the app must exist before the system user can be finished.**
+
+1. **App first.** `developers.facebook.com/apps` → **Create App**.
+   - Use cases (multi-select): **Create & manage ads with Marketing API** +
+     **Measure ad performance data with Marketing API** + **Manage everything on
+     your Page**. Do NOT pick legacy *Other* ("going away soon") or *Create an
+     app without a use case* (ships zero permissions).
+   - 🔴 On the **Business** step, select the owning **business portfolio**. Miss
+     this and the app is portfolio-less and the whole flow dead-ends.
+   - "Development mode" / *Unpublished* is FINE — App Review is only for other
+     people's data. Don't click **Become a Tech Provider**.
+2. **System user.** `business.facebook.com/settings` → Users → **System users**
+   → Add, role **Admin**.
+   - ⚠️ **Meta rejects names containing "Ads" or "API"** with the useless error
+     *"You choose an invalid System User name."* `Grifon Ads CLI`,
+     `Ads Automation`, `Marketing API` all failed; `Oceanides Automation` passed.
+3. **Assign assets** (this is where "the token works but returns nothing" is
+   born) → **Assign assets**, once per type:
+   - **Ad accounts** → the account → *Manage campaigns*
+   - **Facebook Pages** → the Page → *Full control*
+   - **Apps** → the app from step 1 → see step 4
+   - The `Apps` asset type **only appears once the portfolio owns an app** — that
+     is why step 1 comes first. The `Installed apps` tab is read-only; it has no
+     Add button, so don't hunt for one there.
+4. 🔴 **`Develop app` is NOT enough — the single biggest trap.** Meta runs two
+   look-alike permission systems: *asset access* (Business Settings) and *app
+   role* (app dashboard). `Develop app` maps to app role **Developer**, and
+   Generate token then dies with *"No permissions available — Assign an app role
+   to the system user"* and an **empty** scope list.
+   **Fix:** System users → Assigned assets → **Apps → Manage → toggle
+   `Manage app` (Full access)** = Administrator. Now the scope list populates.
+   Do this in Business Manager, not in the app dashboard's *App roles → Roles* —
+   Meta's own banner there says Business Manager is the right place.
+5. **If the Page isn't in the Assign-assets list**, it's owned by a personal
+   profile, not the portfolio. Fix at **Accounts → Pages → Add → "Add a Page"**
+   (use *Request access* instead when another business owns it — never *Claim*).
+   ⚠️ "Add a Page" **transfers Page ownership** to the portfolio; there's a
+   cooldown on undoing it. Deliberate act, not a shortcut.
+6. **Generate token** → select the app → expiration **Never** (60 days dies
+   silently two months later on a defreezer machine, long after anyone
+   remembers this runbook) → tick:
+   `ads_management`, `ads_read`, `business_management`, `read_insights`,
+   `pages_show_list`, `pages_read_engagement`, `pages_manage_metadata`,
+   `pages_manage_ads`.
+   Skip `catalog_management` unless the campaign uses a product feed / dynamic
+   ads. Skip `facebook_branded_content_ads_brand`, `pages_manage_posts`,
+   `pages_manage_engagement`, `pages_read_user_content`, `threads_business_basic`.
+   **Shown once — copy immediately.**
+7. `ACCESS_TOKEN=<token>` + `AD_ACCOUNT_ID=<id>` in `.env` (never paste into chat
+   — see Edge Cases). **Keep the token in a password manager**: the defreezer
+   eats `.env` every reboot and the token cannot be re-displayed.
+8. Verify: `pip install meta-ads` → `meta auth status` →
+   `meta ads adaccount list`. **Exit code 3 = auth**, and it is almost always a
+   missing asset assignment (step 3/4), not a bad token.
+9. **Revoke immediately** if `.env` lands in git, the token is pasted anywhere
+   else, or an unrecognised campaign appears — a `Never` token with
+   `ads_management` can spend real money until revoked.
+
+Not blocking, but note for later: an **Unverified business** portfolio is fine
+for system-user tokens on its own assets; business verification only gates
+Advanced Access and higher rate limits.
+
+**The token is a READ tool.** Per the `grifon-ad-strategist` guardrail the agent
+never fires spend — campaigns are built by hand in Ads Manager or drafted for
+Neil to paste. So never let token setup block a launch.
+
 - [ ] TikTok has no CLI — run TikTok Ads Manager by hand; the skill drafts structure/decisions, Neil executes
 
 ## Tools

@@ -1086,3 +1086,37 @@ caught it at the end: "pati sa pag-merge... sunog na sunog na credits ko."
    explicit `model` param (normally `opus`; `sonnet` for browser/smoke work). Pinned agents
    (`code-executor` = opus, `smoke-tester` = sonnet) are already safe.
 
+
+## 2026-07-27 — Meta's own error messages point the wrong way: don't guess a console flow, find the runbook
+
+**What happened:** Provisioning one Meta System User token (Oceanides / Kuya Marvin, KM-003 launch)
+took ~90 minutes across six Business-Manager/developer screens. The agent guided step-by-step and
+was wrong three separate times, each time because it reasoned from Meta's UI copy instead of
+verifying: (1) told Neil to assign the App from the **Assign assets** dialog — `Apps` isn't in that
+dialog until the portfolio owns an app; (2) told him to use the **Installed apps** tab's "Add"
+button — that tab is read-only and has no Add button; (3) told him `Develop app` was the right
+asset permission — it maps to app role **Developer**, and token generation then fails with
+*"No permissions available"* and an empty scope list. The real fix was one toggle: **`Manage app`
+(Full access)** = Administrator.
+
+**Also burned time:** Meta silently rejects System User names containing **"Ads"** or **"API"** with
+*"You choose an invalid System User name."* — three names failed before one passed. And the
+Facebook Page existed but was owned by Neil's **personal profile**, not the portfolio, so it never
+appeared in Assign assets; nothing in the repo recorded the Page ID, so the previous session's
+handoff had simply assumed it existed.
+
+**Lesson:** For a vendor console flow with many steps and poor error copy, the first wrong turn
+costs 10 minutes and the fifth costs the session. Two rules:
+1. **Write the runbook the FIRST time you walk one, and put it where the next session will look for
+   it — not only in the client-specific handoff.** This one now lives in
+   [workflows/infra_setup.md](workflows/infra_setup.md) §7 (client-agnostic) with the live IDs in
+   [clients/oceanides/kuya-marvin/ads/NEXT-SESSION.md](clients/oceanides/kuya-marvin/ads/NEXT-SESSION.md).
+   The `~/.claude/` memory directory does NOT survive the defreezer — "save this for later" always
+   means commit to the repo.
+2. **When a handoff doc asserts an external asset exists (a Page, an account, a token), it is an
+   assumption until an ID is written down.** Record the ID, or mark it unverified. A blocker
+   discovered mid-flow is far more expensive than one discovered while writing the handoff.
+
+**Non-blocking corollary:** the ad-strategist guardrail means the CLI token is a **read** tool —
+the agent never fires spend. Never let API provisioning block a campaign launch that can be built
+by hand in Ads Manager.
