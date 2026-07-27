@@ -18,26 +18,33 @@ explain *why* MER moves; we scale on MER/ROAS, never on a diagnostic alone.
 
 ## Pending Actions
 
-- [ ] **Provision the Meta Ads CLI** (System User token + `AD_ACCOUNT_ID` in
-  `.env`, scopes `ads_management` / `business_management` / `read_insights` /
-  `pages_*`). Blocks every live `meta ads insights` pull. See
-  `workflows/infra_setup.md` → "Meta Ads CLI".
-  **2026-07-27:** `AD_ACCOUNT_ID=585951286230395` is set; `ACCESS_TOKEN` is
-  commented out in `.env` with full generation steps. Token dies with the
-  defreezer every reboot — keep it in a password manager.
-- [ ] **FIRST CAMPAIGN READY TO LAUNCH — Oceanides / Kuya Marvin KM-003.**
-  Creative done and Neil-approved (two hook variants). Structure decided:
-  **Engagement → Messaging apps**, maximize conversations, 1 CBO / 1 ad set,
-  PH broad + Advantage+, ₱500/day, ad account `585951286230395`. NOT Sales —
-  at ₱500/day a sales-optimized ad set gets ~10 events/week against the ~50
-  needed to exit learning, and Sales→Messaging additionally needs CAPI for
-  Business Messaging to feed conversions back. No pixel: messaging conversions
-  are counted at the Page, and the only dataset on that account is Neil's own
-  "Grifon Pixel" (`1921429268517231`) which must NOT be attached.
-  **Blocked on:** the token above, plus three numbers from Neil — average job
-  value, conversation→booking rate, target CPA per booked job. Without them
-  there is no break-even ROAS and no kill threshold.
+- [x] **Provision the Meta Ads CLI** — ✅ **DONE 2026-07-27.** System User
+  `Oceanides Automation` (`61592724653740`), non-expiring token in `.env`,
+  `AD_ACCOUNT_ID=585951286230395`. Full runbook (with the three traps that cost
+  90 minutes) in `workflows/infra_setup.md` §7. Token dies with the defreezer
+  every reboot — Neil keeps it in Bitwarden.
+- [ ] **FIRST CAMPAIGN BUILT, ONE TOGGLE FROM LIVE — Oceanides / Kuya Marvin
+  KM-003.** All three objects exist and are **PAUSED** (₱0.00 spent):
+  campaign `120250672316430347` · ad set `120250672331730347` · ad
+  `120250673468830347`. **Engagement → Messaging apps**, maximize conversations,
+  1 CBO / 1 ad set, **NCR (20 km radius)** + Advantage+, ₱500/day.
+  NOT Sales — at ₱500/day a sales-optimized ad set gets ~10 events/week against
+  the ~50 needed to exit learning, and Sales→Messaging additionally needs CAPI
+  for Business Messaging to feed conversions back. No pixel: messaging
+  conversions are counted at the Page, and the only dataset on that account is
+  Neil's own "Grifon Pixel" (`1921429268517231`) which must NOT be attached.
+  **Remaining before Neil flips it ON:** 3–5 organic posts on the Page, verify
+  the AI label, and switch Advantage+ *Text improvements / Translate* OFF.
+  **The three numbers are no longer blocking** — the gate was split (week 1 runs
+  on cost-per-conversation alone), and Neil's manual `Create order` / `Mark as
+  lead` recording in the Page inbox will generate two of the three by Day 7.
   Full handoff: `clients/oceanides/kuya-marvin/ads/NEXT-SESSION.md`.
+- [ ] **Agent can now BUILD campaigns, not just read.** Nine
+  `mcp__claude_ai_Meta_Ads__ads_create_*` / `_get_*` rules are allowlisted in
+  `.claude/settings.json`. **`ads_update_entity` and `ads_activate_entity` are
+  deliberately absent** — they are the only tools that flip a campaign ACTIVE,
+  so the "never spend autonomously" guardrail is enforced by the permission
+  system, not only by this skill's policy. Do not add them without Neil.
 - [ ] **Creative diversification gap (Andromeda).** hook1 and hook2 share
   seg2-seg6 byte-for-byte — clean as an experiment, weak as delivery: the
   retrieval engine reads near-identical videos as cosmetic dupes and prices

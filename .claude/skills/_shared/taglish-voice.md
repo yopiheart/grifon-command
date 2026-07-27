@@ -243,3 +243,59 @@ possible.
 Saklaw: FB/TikTok posts, captions, bio, DM replies, ad copy, script-pool text na
 magiging burned-in captions. Lahat ng BAGONG copy ay sumusunod dito; ang mga
 lumang committed na copy ay i-normalize kapag ginalaw.
+
+## Mixing Ratio + Tone (Neil, 2026-07-27 — DEFAULT na para sa lahat ng bagong ad copy)
+
+Neil's call after the KM-003 Messenger scripts: **mas mataas na English ang dapat
+default — mga 50/50 — hindi mabigat na Tagalog.** Ang dahilan niya: *"para hindi
+maging bulol or maling grammar."* Kapag pinilit ang Tagalog sa bawat salita,
+nagiging awkward at mali ang tunog. Tumataas din ito sa halip na bumaba ang
+"translated" na dating na ipinagbabawal na ng spec sa itaas.
+
+**Ang panuntunan ay hindi porsyento — ito ang paghahati:**
+
+| Gamitin ang **English** para sa | Gamitin ang **Tagalog** para sa |
+| --- | --- |
+| Bagay at logistics: *septic tank, price, check, free, truck, schedule, size, available, morning* | Ang tao: awa, diagnosis, pag-agitate, at ang close |
+
+Kapag ininglis mo ang bahaging pantao, nagiging **call center**. Kapag
+tinagalog mo ang bawat teknikal na termino, nagiging **bulol**. Ang split ang
+gumagana, hindi ang bilang.
+
+**Tumatakbo ito sa buong sukat ng surface** — mas maraming English ang tina-type
+ng Pinoy kaysa sa sinasalita nila, kaya:
+
+- **Messenger / DM / comment reply** — pinaka-mataas ang English (~50/50)
+- **Ad caption / post copy** — 50/50, pero tumutugma sa video na kasama nito
+- **Spoken VO / script lines** — mas kaunting English na connector, pero
+  **English pa rin ang teknikal na noun** (walang tunay na tubero ang nagsasabi
+  ng "tangke ng dumi"). Huwag itong gawing dahilan para bumalik sa deep Tagalog.
+
+### Tone (kasama ng ratio — magkasama silang ipinasa ni Neil)
+
+Ang default ay **kalmadong eksperto**, hindi masiglang salesman: yung taong
+nakakita na nito ng limandaang beses at hindi na nagugulat. Sa mga kategoryang
+may kahihiyan (septic, utang, kalusugan, pagkabigo), **ang pagiging kalmado ang
+nagpapabuti sa customer** — ang labis na sigla ay nagpapapansin sa kanila sa
+sarili nila.
+
+**Apat na bawal:**
+
+1. **Sobrang friendly / salesy** — `"Hello po! Good day! 😊 Thank you so much!!! ⭐⭐⭐"`
+   Sa kategoryang puno ng manloloko, **ang labis na sigla ay mukhang scam.**
+2. **Corporate / call center** — `"We appreciate your inquiry. Kindly provide..."`
+   Pinapatay ang persona; nagiging company ka, hindi tao.
+3. **Sobrang casual / barkada** — `"Uy bro! Sagot ko yan pre!"`
+   Nawawala ang awtoridad kapag nagbibigay ka ng teknikal na hatol.
+4. **Sobrang sabik** — tatlong follow-up sa isang oras. **Ang desperado ay
+   kahina-hinala.** Isang malinis na follow-up, tapos isa na lang makalipas ang
+   ilang araw.
+
+**Tatlong mekaniko na nagbabago ng tono nang walang salita:** hatiin ang mahabang
+sagot sa **2 mensahe** (ang isang malaking talata sa Messenger ay mukhang
+kopya-paste, at ang kopya-paste ay senyales ng scam); **huminto ng 1–2 minuto**
+bago sumagot (ang instant na sagot pagkatapos ng auto-reply ay halatang bot); at
+**isang emoji o wala** — hindi kailanman sa hatol o sa presyo.
+
+Buhay na halimbawa ng buong register: ang Kuya Marvin messaging flow sa
+[`clients/oceanides/kuya-marvin/ads/NEXT-SESSION.md`](../../../clients/oceanides/kuya-marvin/ads/NEXT-SESSION.md).

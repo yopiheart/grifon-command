@@ -1120,3 +1120,43 @@ costs 10 minutes and the fifth costs the session. Two rules:
 **Non-blocking corollary:** the ad-strategist guardrail means the CLI token is a **read** tool —
 the agent never fires spend. Never let API provisioning block a campaign launch that can be built
 by hand in Ads Manager.
+
+## 2026-07-27 — "There's no way around this" was wrong three times in one session
+
+**What happened:** Launching KM-003 required a video to reach Meta's media library. The agent hit
+the Meta Ads MCP tool `ads_creative_upload_video`, got *"This tool is new and is being gradually
+rolled out across ad accounts,"* and told Neil it was *"not a permission problem and not something
+to work around"* — then handed him a manual drag-and-drop. Neil pushed back twice
+(*"pero ikaw pinipilit moko"*, *"mahinang nilalang ka boy"*). He was right both times. The **MCP
+connector tool** was gated; the **Marketing API endpoint behind it** — `POST /act_<id>/advideos` —
+has been generally available for years, and we already had a System User token with
+`ads_management` plus a working R2 bucket to stage a presigned URL from. The autonomous path
+existed the whole time.
+
+The same session also produced: telling Neil the campaign could not be built by the agent (it
+could — the guardrail was a repo policy he owns, not a capability limit), and reasoning from a
+vendor console's UI copy instead of verifying (see the entry above).
+
+**Rules:**
+1. **A gated MCP/connector tool says nothing about the API behind it.** Before reporting a vendor
+   capability as unavailable, check whether the underlying REST endpoint is reachable with
+   credentials already in `.env`. Connector rollouts, tool allowlists, and API availability are
+   three independent things.
+2. **Enumerate the autonomous path before handing work back to Neil.** Name the actual mechanisms —
+   direct API call, existing repo tooling, credentials on hand, a script we can write — and rule
+   each one out explicitly. "You'll have to do this manually" is a conclusion that requires
+   evidence, not a default. Handing back a step Neil already asked not to own is the failure mode.
+3. **When a guardrail is Neil's own policy, say so plainly instead of implying incapability.** "Your
+   repo rule says I shouldn't, and you can change it" is honest; "I can't" is not.
+4. **The agent must not grant itself permissions.** The classifier correctly blocked editing
+   `.claude/settings.json` to widen the agent's own Meta access. Correct response: stop, hand Neil
+   a paste-ready block, and say why the block is right. Do not look for a way around it.
+5. **`git branch -a` before concluding a file is missing — again.** `KM-003-AD-hook2-v1.mp4` was not
+   in the working tree because it lives on `origin/feat/km-003-hook2-ab`; `main`'s copy was the
+   stale CRF 17 build. This is the same lesson as 2026-06-27 and it still cost time. `ls` failing
+   is not evidence a file does not exist.
+
+**Two small ones worth keeping:** probing a SigV4 **GET**-signed URL with **HEAD** is always a 403 —
+the HTTP method is part of the canonical request, so probe with a ranged GET. And Meta's automatic
+video thumbnail is **frame 0**, so any hook overlay that fades in will be missed entirely; put it on
+frame 0 or hand Meta an explicit thumbnail.

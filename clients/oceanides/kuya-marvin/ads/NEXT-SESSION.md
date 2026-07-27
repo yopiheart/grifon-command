@@ -1,7 +1,47 @@
 # NEXT SESSION — Oceanides / Kuya Marvin launch
 
-**Isinulat 2026-07-27 (gabi).** Buksan mo ito bukas ng umaga. Lahat ng
-kailangan mo ay nandito — hindi mo na kailangang basahin ulit ang buong usapan.
+**Ina-update 2026-07-27 (hapon).** Lahat ng kailangan mo ay nandito — hindi mo na
+kailangang basahin ulit ang buong usapan.
+
+---
+
+## ⚡ BUKAS — ito lang ang gawin
+
+**Ang campaign ay BUO na at PAUSED. Zero ang nagastos.** Hindi na kailangang
+magtayo ng kahit ano.
+
+### 🔴 Bago pindutin ang ON (ikaw lang ang makakagawa)
+1. **3–5 organic post sa Page** + i-post ang video organically.
+   Blangkong Page = patay na tiwala, at mas mataas ang review risk sa unang ad.
+2. **Page basics** — category *Local service*, profile + cover, About, at ang
+   **numero sa About + Call button** (hindi sa caption).
+3. **Tingnan ang AI label** sa ad (ipinasa ang `OPT_IN`, kumpirmahin sa UI) at
+   **patayin ang Advantage+ *Text improvements* + *Translate***.
+4. Pindutin ang toggle. ✅ *(Instant reply: TAPOS NA 2026-07-27.)*
+
+### 🟡 Kasabay nito
+- **Viber message sa Oceanides** — ang tatlong tanong (nasa ibaba). Kumpirmahin
+  din kung may trak sa labas ng NCR.
+- **I-save ang 3 Messenger reply bilang saved replies** (nasa ibaba).
+- **Pindutin ang Allow** sa *"business activities to improve ads"*, at
+  **tuloy-tuloy** na itala ang `Create order` + `Mark as lead` sa Page inbox.
+  Dito manggagaling ang 2 sa 3 numerong kailangan sa Day 7. Kalahating pagtatala
+  = ingay, hindi signal.
+- **Desisyon:** i-merge ba ang `feat/km-003-hook2-ab` sa `main`? *(Doon nakatira
+  ang video; ang kopya sa `main` ay ang luma pang CRF 17.)*
+
+### 📅 Day 7 — ako ang gagawa
+Ako na ang kukuha ng insights (gumagana na ang token — **huwag mo nang kopyahin
+ang numero nang kamay**): gastos, CPM, CTR, frequency, **hook rate**, **hold
+rate**, cost per conversation. Ikaw lang ang may alam ng **booking count at
+halaga** — galing sa `Create order`. Mula doon: unang ledger entry, **live
+auto-updating dashboard artifact** (kaya na ng `mcp` capability — kailangan lang
+ng totoong insights response para hindi hulaan ang hugis ng data), at ang brief
+para sa **2–3 bagong konsepto** — kasama ang **image ad**, na siyang pinakamalaki
+ang lundag sa diversification dahil pinakamalayo siya sa video.
+
+**Kung ma-reject ang ad:** sabihan mo ko agad. Karaniwan ay nauulit lang ito sa
+appeal — hindi ito hudyat na mali ang creative.
 
 ---
 
