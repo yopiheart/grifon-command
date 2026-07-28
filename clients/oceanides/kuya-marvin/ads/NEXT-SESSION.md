@@ -88,29 +88,46 @@ ano. Ang natitira ay pagbabantay at ang Day 7.
 Ituloy natin si Kuya Marvin / Oceanides. Basahin mo muna:
   clients/oceanides/kuya-marvin/ads/NEXT-SESSION.md
   clients/oceanides/DESIGN.md
-  workflows/ad_performance_ledger.md
 
-LIVE na ang KM-003 simula 2026-07-28 (120250672316430347 /
-120250672331730347 / 120250673468830347). Day 1: ₱666 gastos,
-50 messages, ₱13.33 kada message.
-
-Kunin mo mismo ang bagong numero sa Meta gamit ang token — huwag mo
-akong pakopyahin nang kamay. I-redeploy mo rin ang live dashboard sa
-PAREHONG URL:
+LIVE ang KM-003 mula 2026-07-28 (campaign 120250672316430347).
+Day 1: ₱666 gastos, 50 messages, ₱13.33 kada message.
+Day 7 = Ago 3. Live dashboard (i-redeploy sa PAREHONG URL):
   https://claude.ai/code/artifact/4d411162-ba99-4e99-bd28-92ffc2dca6ba
 
-KUNG DAY 7 NA:
-  1. Ibibigay ko ang booking count + halaga mula sa Create order sa inbox
-  2. Unang entry sa workflows/ad_performance_ledger.md
-  3. Brief para sa 2-3 bagong concept, kasama ang IMAGE AD
+UNAHIN MO ITO, sunod-sunod:
 
-KUNG HINDI PA DAY 7: bantayan lang. Wag galawin ang budget.
+1. Kunin mo mismo ang numero sa Meta gamit ang token. Huwag mo akong
+   pakopyahin nang kamay. I-redeploy ang dashboard.
 
-Bago ka gumawa ng bagong tool o script: subukan mo muna ang
+2. TANUNGIN MO AKO BAGO GUMAWA NG KAHIT ANO:
+   (a) Nasasagot ba ang inbox? Ilan ang hindi nasagot?
+   (b) Nagta-tag ba ako ng "Create order" sa bawat na-book?
+   Kung HINDI sa alinman, ITO ang trabaho ngayong session — hindi ang
+   creative. Walang kwenta ang murang message na walang sumasagot, at
+   walang Day-7 verdict kung walang naitalang booking.
+
+3. Kung ayos ang inbox: gawin ang IMAGE AD.
+   Ito ang pinakamabilis na diversification (walang Veo, walang STS,
+   walang render pipeline) at may deadline tayong Ago 3 bago kumain
+   ang creative fatigue. Sundin ang clients/oceanides/DESIGN.md at ang
+   static_ad_swipe_file.md. HUWAG munang i-upload — ipakita mo muna
+   sa akin.
+
+4. Kung Ago 3 na (Day 7): ibibigay ko ang booking count + halaga,
+   tapos unang entry sa workflows/ad_performance_ledger.md.
+
+HUWAG GAWIN NANG WALANG SABI KO:
+- Huwag taasan ang budget kahit mura ang message. Reply capacity ang
+  bottleneck, hindi budget — lalala lang.
+- Huwag galawin ang targeting/geo. May sakop kami sa labas ng NCR pero
+  hindi pa alam kung alin, at nirereset ng pagbabago ang learning phase.
+- Huwag mag-retargeting ad muna. Naghahati ng ₱500/araw.
+
+Bago gumawa ng bagong tool o script: subukan muna ang
 tools/meta_upload_video.mjs — naka-commit pero UNTESTED.
 ```
 
-### 📅 Day 7 (Ago 4) — ako ang gagawa
+### 📅 Day 7 = **Ago 3** (Hul 28 ang Day 1) — ako ang gagawa
 Ako na ang kukuha ng insights (gumagana na ang token — **huwag mo nang kopyahin
 ang numero nang kamay**). Ikaw lang ang may alam ng **booking count at halaga**
 — galing sa `Create order`. Mula doon: **unang ledger entry** at ang brief para
@@ -124,7 +141,7 @@ na sa totoong data (URL sa itaas).
 Humihingi ang playbook ng 4–6 na magkakaibang creative sa isang ad set; isa ang
 meron tayo. Sinadya iyon para sa testing week, pero **5–7 araw lang** — lampas
 doon at ang dupe-CPM at creative fatigue na ang kakain ng budget. Ibig sabihin:
-**dapat may bagong konsepto na bago mag-Ago 4.**
+**dapat may bagong konsepto na bago mag-Ago 3.**
 
 **Kung ma-reject ang ad:** sabihan mo ko agad. Karaniwan ay nauulit lang ito sa
 appeal — hindi ito hudyat na mali ang creative.
@@ -436,7 +453,7 @@ Emergency? Tawag na lang po diretso: 09XX-XXX-XXXX
    ad set; **isa** ang meron tayo. Sinadya iyon: testing week ang linggo 1, at
    hindi ka makakagawa ng pang-lima nang bulag. **Pero 5–7 araw lang** — lampas
    doon at ang dupe-CPM at creative fatigue na ang kakain ng budget.
-   **Deadline: bago mag-2026-08-04.** Brief kina `grifon-cmo` +
+   **Deadline: bago mag-2026-08-03** (= Day 7; Hul 28 ang Day 1). Brief kina `grifon-cmo` +
    `grifon-creative-director` para sa 2–3 **bagong konsepto** (ibang panimulang
    eksena/format — hindi ibang hook lang sa parehong katawan), kasama ang
    **image ad**. Nakahanda na ang isa: **Option C, ang anti-scam reframe**
