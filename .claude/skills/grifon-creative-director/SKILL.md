@@ -121,7 +121,13 @@ Before editing existing files, follow [.claude/skills/surgical-edit/](.claude/sk
 - **Zam Grifon organic / ads / social:** Premium Taglish. Sabri Suby direct-response.
 - **Landing / pricing / onboarding:** English. 4th–5th grade. Punchy.
 - **Formal (decks, proposals, PJW):** Pure English. Data-backed. Quiet confidence.
-- **TikTok / Reels thumbnails:** MrBeast — 3–5 big words, expressive face, high contrast, never mention price.
+- **TikTok / Reels thumbnails, ad stills, hero frames:** governed by
+  [`../_shared/thumbnail-law.md`](../_shared/thumbnail-law.md) (decoded 2026-07-28 from 15 real
+  MrBeast thumbnails). **Text is never a sentence to the viewer** — only a number that quantifies
+  the stake, a label physically present in the scene, or the word being spoken. Face left-third or
+  center, rim-lit foreground, "the thing" on the opposite side, one contrast device, warm smile by
+  default (not shock). Prize numbers yes, price numbers never. The old "3–5 big words overlaid" rule
+  was wrong — all 15 files contradict it; don't reintroduce it.
 
 For anything beyond a headline or button label, hand the copy brief to `grifon-cmo` and wrap their output in the visual. Don't write long-form copy yourself — that's not your seat.
 

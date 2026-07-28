@@ -159,14 +159,32 @@ Rules of use:
 - Title complements thumbnail — never repeats it
 - Always deliver what the title promises
 
-## THUMBNAIL RULES (MrBeast)
+## THUMBNAIL RULES (decoded MrBeast frame grammar)
 
-- 3–5 words max overlaid
-- Big, bold, high-contrast text
-- One focal point: face, product, or result
-- Gold #FFCC00 + white text on dark backgrounds
-- Expressive emotion (shock, excitement, curiosity)
-- NEVER mention price in thumbnails or scripts
+**Canonical spec:** [`../_shared/thumbnail-law.md`](../_shared/thumbnail-law.md) — decoded
+2026-07-28 from 15 real MrBeast thumbnails (all examined). Re-read it before briefing any
+thumbnail, ad still, or hero frame. It wins on any conflict with this summary.
+
+**THE LAW:** text in the frame is never a message. It is a **number** that quantifies the stake, a
+**label physically present in the scene**, or the **word being spoken** at that instant. Never a
+sentence written to the viewer. Zero of the 15 carry a marketing sentence — if you need one, the
+image failed; fix the image.
+
+*(This replaces the old "3–5 big words overlaid" rule, which all 15 files contradict — it described
+the 2019–2021 MrBeast era. Don't reintroduce it.)*
+
+- **One focal point.** Face left-third or center, foreground, rim-lit; "the thing" on the other side.
+- **Contrast device** — two poles in one frame that shouldn't coexist ($1 vs $1B, baby vs elderly).
+  This is the Purple Cow made visual. Name the second pole before briefing the visual.
+- **Expression defaults to a warm open smile**, not shock. Escalate only when the premise earns it —
+  forced shock reads as AI slop.
+- **Prize numbers yes, price numbers never.** A number for what they GET (outcome, scale, count,
+  duration) is the engine. A peso price, tier, or discount stays banned in thumbnails and scripts.
+- When text IS legitimately used on a Grifon-branded still, it follows brand: `#FFCC00` + white on
+  dark. Never on the face.
+- **Paid ads: S12 outranks MrBeast.** `S12 pattern-interrupt`, 9 ads / 5 brands, is our own
+  DR-gated evidence. MrBeast's numbers came from free content, where a wrong click costs 3 seconds
+  instead of ad spend — pure curiosity gap on a paid ad trains Andromeda on clickers, not buyers.
 
 ## LANGUAGE RULES
 
