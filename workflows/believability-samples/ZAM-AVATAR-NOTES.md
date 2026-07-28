@@ -12,8 +12,10 @@ to her photo) — so identity is built on her actual pixels, not text-gen.
 - `zam-register-1-raw-ugc.png` — phone selfie, window light, messy bedroom. **Trust winner.**
 - `zam-register-2-polished-ugc.png` — ring-light creator grade, clean-but-real.
 - `zam-register-3-cinematic.png` — studio key+rim, reads as "an ad."
-- `zam-var-1-kitchen.png` / `zam-var-2-car.png` / `zam-var-3-bathroom-mirror.png` /
-  `zam-var-4-cafe-outdoor.png` — raw-ugc identity-lock test: 4 rooms/angles/outfits.
+- ~~`zam-var-1-kitchen.png` / `zam-var-2-car.png` / `zam-var-3-bathroom-mirror.png` /
+  `zam-var-4-cafe-outdoor.png`~~ — raw-ugc identity-lock test: 4 rooms/angles/outfits.
+  **DELETED 2026-07-28 (Neil: hindi pasado).** The test's *findings* below still stand;
+  recover the images from git history if ever needed.
 
 ## Result (honest)
 

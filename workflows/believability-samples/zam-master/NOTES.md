@@ -29,16 +29,17 @@ All three are **strict eye level** (lens at her eye height — no selfie tilt, n
 
 | File | Register | Use |
 |---|---|---|
-| `opt-A-raw-ugc.png` | Raw UGC — friend-taken, home interior, window light, waist-up | Highest-trust / organic content. The `believability_dna.md` trust winner register. |
-| `opt-B-outdoor-candid.png` | Outdoor candid — Manila sidewalk, overcast, mid-step turn-back | Lifestyle content, story-beat ads |
+| ~~`opt-A-raw-ugc.png`~~ | Raw UGC — friend-taken, home interior, window light, waist-up | **DELETED 2026-07-28 (Neil: hindi pasado).** Recipe text below stays reusable. |
+| ~~`opt-B-outdoor-candid.png`~~ | Outdoor candid — Manila sidewalk, overcast, mid-step turn-back | **DELETED 2026-07-28 (Neil: hindi pasado).** Recipe text below stays reusable. |
 | `opt-C-presenter.png` | Presenter — seated, home content corner, talking-to-camera, chest-up | Ads / the future avatar plate + Veo talking-head anchor |
 
 **STATUS: ✅ Option C (presenter) APPROVED — Neil, 2026-07-28 (remote session).**
 `opt-C-presenter.png` is the new Zam master reference. It is registered as the
 optional third anchor in `generate-zam-images/SKILL.md` (per its own rule: "If the
 user approves a newer image as the master, add it as an optional third reference").
-Options A and B stay in this folder as unapproved registers — reusable scene recipes,
-not masters.
+Options A and B were kept briefly as unapproved registers, then **deleted 2026-07-28
+(Neil: hindi pasado)** — their scene-recipe text below remains reusable; images
+recoverable from git history.
 
 ### Shared prompt spine (reused in all 3)
 
@@ -209,6 +210,13 @@ collapses — exactly the pasted-face failure. The fix is a **two-step pipeline*
 Run 2 (same session): `opt-D2-dusk-street-relight.png` = dusk relight directly on
 `opt-B-outdoor-candid.png`; `opt-E2` = fresh daylight terrace base
 (`opt-E2-terrace-daylight-base.png`) → dusk relight (`opt-E2-dusk-terrace-relight.png`).
+
+**Run 2 verdict (Neil, 2026-07-28): D2 ❌ rejected + deleted** (along with its opt-B
+base and opt-A — hindi pasado). The two-step relight pipeline itself is NOT
+invalidated — D2's base (opt-B) was itself rejected, so the relight inherited a bad
+base. Next D attempt should start from a NEW believable daylight street base Neil
+approves first. **E2 pair: no verdict yet** — still in `.tmp/zam-dusk/`, awaiting
+eyeball; bank or delete next session (defreezer wipes `.tmp/`).
 
 ## OPEN / NEXT SESSION
 
