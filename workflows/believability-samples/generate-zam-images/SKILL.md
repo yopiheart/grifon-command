@@ -11,11 +11,11 @@ Turn a short scene idea into a finished image of Zam. Do not make the user write
 
 Resolve the directory containing this `SKILL.md`, then use these bundled files in this order:
 
-1. `assets/zam-face-reference.jpg` — primary raw identity reference.
-2. `assets/zam-approved-scene-reference.png` — approved reference for natural face, head, neck, shoulder, and body integration.
-3. `../zam-master/opt-C-presenter.png` — the approved Zam master (Neil, 2026-07-28); optional third anchor. Include it for presenter/ads registers and tightly matched batches.
+1. `assets/zam-ref-1-front-neutral.jpg` — primary REAL front identity reference (2026-07-28 Viber set). ⚠ The whole real set is front-cam **beauty-filter smoothed** — every prompt MUST carry a skin-texture-restoration block (visible pores, vellus hair, T-zone sheen, sensor grain; "do NOT reproduce the airbrushed smoothness").
+2. `assets/zam-ref-3-three-quarter-right.jpg` (or `zam-ref-4-three-quarter-left.jpg`, match the requested angle) — real three-quarter structure reference. Also available: `zam-ref-2-front-smile.jpg`.
+3. `../zam-master/zam-master-v2-presenter.png` — **the approved Zam master (Neil, 2026-07-28)**, generated FROM the real set with texture restored. Use as the framing / body-integration / image-character anchor — label it "not for facial identity" so it never outvotes the real photos.
 
-Pass at least the first two files to the built-in image-generation tool for every new Zam image. Label their roles in the prompt. An attached user image may be an additional scene, pose, outfit, or style reference; never let it replace Zam's identity anchors unless the user explicitly asks.
+Pass at least anchors 1 + 3 for every new Zam image; add the matching angle ref when the pose is off-front. Label their roles in the prompt. Legacy anchors (`assets/zam-face-reference.jpg`, `assets/zam-approved-scene-reference.png`, `../zam-master/opt-C-presenter.png`) are SUPERSEDED 2026-07-28 — do not use them for identity; Zam's chat-sent photos are also never anchors (low-res + filtered — the documented AI-look root cause). An attached user image may be an additional scene, pose, outfit, or style reference; never let it replace Zam's identity anchors unless the user explicitly asks.
 
 ## Expand a short request
 

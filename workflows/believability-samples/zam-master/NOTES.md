@@ -33,10 +33,14 @@ All three are **strict eye level** (lens at her eye height — no selfie tilt, n
 | ~~`opt-B-outdoor-candid.png`~~ | Outdoor candid — Manila sidewalk, overcast, mid-step turn-back | **DELETED 2026-07-28 (Neil: hindi pasado).** Recipe text below stays reusable. |
 | `opt-C-presenter.png` | Presenter — seated, home content corner, talking-to-camera, chest-up | Ads / the future avatar plate + Veo talking-head anchor |
 
-**STATUS: ✅ Option C (presenter) APPROVED — Neil, 2026-07-28 (remote session).**
-`opt-C-presenter.png` is the new Zam master reference. It is registered as the
-optional third anchor in `generate-zam-images/SKILL.md` (per its own rule: "If the
-user approves a newer image as the master, add it as an optional third reference").
+**STATUS: ⬆ SUPERSEDED — `zam-master-v2-presenter.png` is the Zam master (Neil:
+"PASADO", 2026-07-28 cafe session).** Built from the NEW 4-photo real ref set
+(`../generate-zam-images/assets/zam-ref-1..4`, Viber 2026-07-28) with an explicit
+skin-texture-restoration block — the fix for the beauty-filter/AI-look problem that
+plagued every generation anchored on Zam's chat-sent photos. Anchor stack + the
+texture-restore rule live in `generate-zam-images/SKILL.md`. `opt-C-presenter.png`
+(approved earlier the same day, built on the OLD low-quality refs) is demoted to
+historical reference — do not anchor identity on it.
 Options A and B were kept briefly as unapproved registers, then **deleted 2026-07-28
 (Neil: hindi pasado)** — their scene-recipe text below remains reusable; images
 recoverable from git history.
