@@ -108,7 +108,7 @@ subject, haze, subtle bloom, smooth tonals); the 99%-real lives in the SUBJECT (
 flyaways, real fabric, no beauty-filter smoothing, no over-HDR on skin). That split is
 the whole trick — cinematic language is scoped to the environment, never the face.
 
-## The 3 dusk options (D/E/F) — FIRE-READY, not yet generated
+## The 3 dusk options (D/E/F) — GENERATED 2026-07-28 (cafe PC), verdict below
 
 ⚠ Needs the cafe PC (codex-image = Codex CLI; remote sandbox exits 10). Run all three,
 then Neil eyeballs against the Dusk Effect reference + `../believability_dna.md`.
@@ -183,11 +183,39 @@ node .claude/skills/codex-image/generate.mjs \
   no artificial fill). Sage-green ribbed knit top, small gold studs. Clean natural
   makeup, skin still reads as skin.
 
+## Dusk run 1 verdict (Neil eyeball, 2026-07-28) — and the REAL preset decode
+
+- **F — dusk presenter: ✅ APPROVED.** Banked as `opt-F-dusk-presenter.png` in this
+  folder. It survived because its framing is nearly identical to the approved Option C
+  master — the model had almost nothing to invent.
+- **D — dusk street / E — dusk terrace: ❌ REJECTED.** Neil: Zam does not look like she
+  is really there; the face reads as pasted on ("parang kinabit lang"), worst on E.
+
+**Register decode v2 — the lesson (bank this):** Neil's before/after sample of the
+original Dusk Effect preset shows it applied to a REAL photograph — same person, same
+pose, same board, pixel-identical subject; only the sky and light change. **The Dusk
+Effect prompt is an EDIT PASS over an existing believable photo, not a text-to-scene
+generation register.** Generating the whole dusk scene from scratch (run 1's D/E)
+forces the model to invent subject + scene + dusk grade at once, and integration
+collapses — exactly the pasted-face failure. The fix is a **two-step pipeline**:
+
+1. **Base:** a believable image in the PROVEN daylight raw register (an approved
+   zam-master option, or a fresh triple-anchor generation using the original A/B/C
+   spine — overcast daylight, phone-exposure image character).
+2. **Relight:** single-`--edit` pass on that base with the dusk prompt, subject
+   HARD-LOCKED ("do not change the woman in any way — change ONLY sky, ambient light
+   and background environment").
+
+Run 2 (same session): `opt-D2-dusk-street-relight.png` = dusk relight directly on
+`opt-B-outdoor-candid.png`; `opt-E2` = fresh daylight terrace base
+(`opt-E2-terrace-daylight-base.png`) → dusk relight (`opt-E2-dusk-terrace-relight.png`).
+
 ## OPEN / NEXT SESSION
 
 1. ~~Neil picks A / B / C~~ → **DONE: Option C approved 2026-07-28.**
-2. **Generate D / E / F on the cafe PC** (commands above) → Neil eyeballs → approved
-   one(s) join the dusk-register bank for ads/content.
+2. ~~Generate D / E / F on the cafe PC~~ → **DONE 2026-07-28: F approved + banked;
+   D/E rejected (pasted-face) → redone via the two-step relight pipeline above; D2/E2
+   awaiting Neil's eyeball.**
 3. The real make-or-break is still **ONE Veo 3.1 motion + lip-sync test on the Option C
    master, rendered RAW/ungraded** (see [`../ZAM-AVATAR-NOTES.md`](../ZAM-AVATAR-NOTES.md)
    next-steps §3 and the Surface-A raw-first rule in [`../believability_dna.md`](../believability_dna.md)).
