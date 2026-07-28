@@ -141,6 +141,11 @@ markdown file works) with three parts:
 - **Full-auto is deferred.** A GitHub Action that runs Claude on every PR open (no human in the
   loop) needs an `ANTHROPIC_API_KEY` secret in CI. Adding a CI secret is a security-surface change —
   route it through `straw-man-audit` first, and get Neil's explicit go.
+- **Sol advisory lens (gated trial, 2026-07-28).** If the diff is Claude-authored AND high-risk
+  (`api/_lib/`, auth/billing/quota, render plumbing), optionally run the Sol advisory review per
+  [sol_advisory_review_trial.md](sol_advisory_review_trial.md) alongside step 4's critic —
+  advisory-only, Claude judges every finding, skip freely if Codex CLI is absent or Sol quota is
+  needed for the executor lane.
 - **Blast-radius step is a gated trial (adopted 2026-07-20).** Run it on the next 2–3 PRs and
   compare critic quality/scoping with prior reviews (same ≥3-corroboration bar as the Swipe File)
   before writing `scripts/restore-code-review-graph.ps1` or considering the tool's no-LLM GitHub
