@@ -106,15 +106,32 @@ UNAHIN MO ITO, sunod-sunod:
    creative. Walang kwenta ang murang message na walang sumasagot, at
    walang Day-7 verdict kung walang naitalang booking.
 
-3. Kung ayos ang inbox: gawin ang IMAGE AD.
+3. ORGANIC — paalalahanan mo ako, may lead time ito:
+   Kailangan kong sabihan si Marvin na kumuha ng 2-3 phone photo kada
+   job (tangke, trak, bago/pagkatapos). Ito ang magiging content ng
+   Page. Hangga't walang litrato, walang maipo-post na totoo.
+   Cadence: 2 post kada linggo, HINDI araw-araw. Walang story muna.
+   Kapag may litrato na ako, tulungan mo akong isulat ang caption
+   (Taglish 50/50, kalmadong-eksperto, walang emoji-stack).
+
+   ⚠️ HUWAG i-recycle ang READY-TO-POST.md, content-calendar.md, o ang
+   oceanides_daily_posts.md — corporate/branch pages yun, hindi kay
+   Marvin, at sisirain ng register nila ang persona. Tingnan ang
+   seksyong "ORGANIC — ano ang meron" sa ibaba.
+
+4. Kung ayos ang inbox: gawin ang IMAGE AD.
    Ito ang pinakamabilis na diversification (walang Veo, walang STS,
    walang render pipeline) at may deadline tayong Ago 3 bago kumain
    ang creative fatigue. Sundin ang clients/oceanides/DESIGN.md at ang
    static_ad_swipe_file.md. HUWAG munang i-upload — ipakita mo muna
    sa akin.
 
-4. Kung Ago 3 na (Day 7): ibibigay ko ang booking count + halaga,
-   tapos unang entry sa workflows/ad_performance_ledger.md.
+5. Kung Ago 3 na (Day 7):
+   (a) Ibibigay ko ang booking count + halaga, tapos unang entry sa
+       workflows/ad_performance_ledger.md.
+   (b) SAKA gawin ang 2-linggong organic calendar — hindi mas maaga.
+       Ang source ay ang totoong tanong sa 350 message ng linggo 1,
+       hindi hula. Sabihan mo ako kung anong paulit-ulit na tanong.
 
 HUWAG GAWIN NANG WALANG SABI KO:
 - Huwag taasan ang budget kahit mura ang message. Reply capacity ang
@@ -126,6 +143,51 @@ HUWAG GAWIN NANG WALANG SABI KO:
 Bago gumawa ng bagong tool o script: subukan muna ang
 tools/meta_upload_video.mjs — naka-commit pero UNTESTED.
 ```
+
+## 📄 ORGANIC — ano ang meron (sinuri 2026-07-29)
+
+**Para sa Page ni Marvin: wala nang natitira.** Ang
+[`organic/PAGE-LAUNCH-POSTS.md`](../organic/PAGE-LAUNCH-POSTS.md) ay limang
+launch post, isang beses lang gamitin, **na-post na lahat.** Walang sumunod.
+
+### ⚠️ Tatlong file na mukhang sagot pero IBANG PAGE
+
+| File | Para kanino | Kay Marvin? |
+| --- | --- | --- |
+| [`clients/oceanides/READY-TO-POST.md`](../../READY-TO-POST.md) — 8 post | Corporate Oceanides Page | ❌ Tinanggihan na (emoji-heavy, badge-stack, hashtag block, lumang typography, mabigat na Tagalog) |
+| [`clients/oceanides/content-calendar.md`](../../content-calendar.md) — 30 araw | Corporate / branch audience | ❌ Ibang register; may baked-on logo + contact sa bawat post |
+| [`workflows/oceanides_daily_posts.md`](../../../../workflows/oceanides_daily_posts.md) — 30 larawan/araw, automated | **15 city branch pages** | ❌ Ibang page |
+
+Ang pangatlo ang pinaka-nakakalito: **tumatakbo na siya araw-araw mula
+2026-07-15**, kaya mukhang may sistema na si Marvin. Meron — pero sa branch
+pages. **Si Marvin ang nag-iisang page na walang ongoing content system**, at
+sinadya iyon: siya ang may pinaka-mahigpit na register (bawal magmukhang ad),
+kaya hindi pwedeng i-recycle ang corporate copy.
+
+Natitirang hilaw na materyal: [`script-pool.json`](../../script-pool.json) —
+10 topic, **walo ang hindi pa nagamit** (KM-001, KM-004 hanggang KM-010). Pero
+**video script** sila, hindi post — kailangan pang i-adapt.
+
+### Ang plano (Neil, 2026-07-29)
+
+- **Ngayon hanggang Ago 3: 2 post kada linggo**, galing sa **totoong jobsite
+  photo**. Nasa field si Marvin araw-araw; ang totoong litrato ng totoong
+  tangke ay mas malakas sa trust page kaysa kahit anong ginawa nating plate,
+  at libre. 🔴 **Sabihan si Marvin na kumuha ng 2–3 litrato kada job** — may
+  lead time ito, kaya ito ang unang hihingin sa susunod na session.
+- **Walang story muna.** Sa followers lang halos lumalabas ang stories, at
+  bago pa ang page — araw-araw na trabaho para sa halos walang nakakakita.
+  Ang taong galing sa ad ay tumitingin sa **page**, hindi sa story. Balikan
+  kapag may follower base na.
+- **Hindi araw-araw ang post.** Ang trabaho ng page ngayon ay **checkpoint**
+  (nakita ang ad → tiningnan ang page → nagdesisyon kung magme-message), hindi
+  reach machine. Nasasagot yan ng ilang magandang post. At ang bawat oras sa
+  organic ay oras na hindi nakasagot sa 50 message kada araw — doon ang pera.
+- **Ago 3 (Day 7): saka ang 2-linggong calendar**, hindi mas maaga. Ang source
+  ay ang **paulit-ulit na tanong sa 350 message ng linggo 1** — totoong datos,
+  hindi hula.
+
+---
 
 ### 📅 Day 7 = **Ago 3** (Hul 28 ang Day 1) — ako ang gagawa
 Ako na ang kukuha ng insights (gumagana na ang token — **huwag mo nang kopyahin
