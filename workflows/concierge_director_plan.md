@@ -96,6 +96,18 @@ Build Grifon's flows as a **clean callable tool layer** over `api/*`
   our market (Filipino SMBs) does not live in MCP clients. MCP is a
   power-user/agency/internal channel, not the consumer surface.
 
+### Director-brain shape when Option A resurfaces — skills-as-workforce (noted 2026-07-28)
+Deferred along with the brain itself (§10 rescope kept Concierge = productized Expert,
+no new AI brain) — recorded here so it isn't re-derived later: **if/when
+`api/director/run.ts` gets built, load its orchestration from versioned markdown
+skill/formula files with a small resolver (task → skill), rather than hardcoding flow
+logic in TS.** Same format as the workflow layer's `.claude/skills/`, so improvements
+port in both directions, and it composes cleanly with the MCP-ready flow layer above
+(a skill file is just another tool description + procedure). TUNED content stays
+TUNED — skills *reference* `api/_lib/prompts.ts`, never fork it. Source: Garry Tan
+"New Physics of Business" brief eval (2026-07-28) — the one product-layer apply;
+everything else in that brief was already WAT doctrine.
+
 ### Higgsfield MCP — not a competitor, a possible backend
 Higgsfield MCP (launched 2026-04-28) exposes 30+ raw generation models (Soul,
 Kling, Veo, Sora, Seedance...) as MCP tools: generate image/video, train
