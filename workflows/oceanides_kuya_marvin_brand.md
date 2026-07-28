@@ -1,6 +1,12 @@
 # Kuya Marvin ng Oceanides — Personal Brand SOP
 
-**Status:** PLANNED 2026-07-18 (grill-me + premortem with Neil; plan approved). Gate 1 pending — waiting on Marvin reference selfies + consent.
+**Status:** 🟢 **LIVE — nasa PAID ADS na (2026-07-28).** Ang doc na ito ay ang
+founding SOP (PLANNED 2026-07-18, grill-me + premortem kay Neil); ang mga gate
+sa ibaba ay **napasa na** — historical record na sila, hindi hinihintay.
+Kasalukuyang estado: FB Page live at may laman, refs + consent tapos, KM-003
+video ad tumatakbo sa Meta (₱500/araw, ₱13.33 kada message sa Day 1).
+👉 **Ang buhay na estado ay nasa [`clients/oceanides/kuya-marvin/ads/NEXT-SESSION.md`](../clients/oceanides/kuya-marvin/ads/NEXT-SESSION.md)** —
+doon tumingin, hindi dito, kung ano ang ginagawa ngayon.
 **Owner:** Neil (gates, payouts, final say) · agent (scripts, renders, QA) · Marvin (face + field clips)
 **Sister docs:** [oceanides_daily_posts.md](oceanides_daily_posts.md) (distribution doctrine hard lines) · [oceanides_referrer_program.md](oceanides_referrer_program.md) (tracking sheet, GC) · [believability_dna.md](believability_dna.md) (register system, raw-first rule) · [believability-samples/ZAM-AVATAR-NOTES.md](believability-samples/ZAM-AVATAR-NOTES.md) (identity-lock pattern na ginagaya)
 
@@ -16,7 +22,12 @@ Personal brand para sa Oceanides: **"Kuya Marvin ng Oceanides"** — si Marvin B
 
 **Premortem failure modes (Neil, 2026-07-18):** (1) halatang AI, walang naniwala; (2) views pero zero bookings. Ang dalawang hard gates sa ibaba ang direktang sagot — hindi sila nego.
 
-## HARD GATE 1 — Believability (bago ang LAHAT)
+## HARD GATE 1 — Believability (bago ang LAHAT) — ✅ NAPASA
+
+> **Napasa na ito.** Live ang FB Page mula 2026-07-20, at tatlong AI video ad
+> (KM-002 pilot, KM-003 v2 + hook2) ang naipirmi at nai-render — hawak ng
+> talking-avatar lane. Ang seksyong ito ay panuntunan pa rin para sa **bagong**
+> avatar/register, pero hindi na siya humaharang sa Kuya Marvin.
 
 **Walang account creation, walang launch, hangga't hindi pasado ang avatar sa MOTION.** (Ang Zam Veo motion test ay hindi pa tapos — unproven pa in-house ang talking-avatar lane. Stills are not an avatar.)
 
@@ -26,7 +37,10 @@ Personal brand para sa Oceanides: **"Kuya Marvin ng Oceanides"** — si Marvin B
 4. **GO:** pasado sa motion → unlock ang Lane A (talking avatar). Finishing lang pagkatapos: captions + UGC LUT + fast cuts (believability_dna sequencing rule — LUT is step 3, not step 1).
    **NO-GO:** hindi pasado → **fallback format, buhay pa rin ang brand:** totoong jobsite footage + ElevenLabs Taglish VO ("boses ni Kuya Marvin") + identity-locked stills — walang talking avatar. Si Marvin ay nasa field araw-araw; 30-sec phone clips ng tangke/trabaho ang raw material — hindi siya kailangang magsalita sa camera.
 
-**Gate 1 result:** _(pending — in progress)_
+**Gate 1 result:** ✅ **GO — Lane A (talking avatar) unlocked.** Napatunayan ng
+KM-002 pilot at ng KM-003 na naipadala sa Meta. Ang buong production record ay
+nasa [`clients/oceanides/kuya-marvin/ads/km-003-script-storyboard.md`](../clients/oceanides/kuya-marvin/ads/km-003-script-storyboard.md)
+at sa `.claude/skills/kuya-marvin-ads/`.
 
 **Gate 1 progress log:**
 
@@ -91,10 +105,22 @@ Personal brand para sa Oceanides: **"Kuya Marvin ng Oceanides"** — si Marvin B
 
 - Itong SOP — living doc: gate results, checkpoint verdicts, learnings.
 - `clients/oceanides/kuya-marvin/script-pool.json` — seed pool (10 education hooks). ✅ 2026-07-18
-- `clients/oceanides/kuya-marvin/refs/` — 4 reference selfies (front-neutral, 2× three-quarter, front-smiling; 3072×4096, iisang session). ✅ 2026-07-18 — verbal consent given (Marvin present with Neil); written consent pending signature. **+ `marvin-ref-5-body-master.jpg`** ✅ 2026-07-19 — full-body reference (galing sa GPT 5.6 Sol skill assets); mandatory anchor sa bawat generation per `.claude/skills/marvin-avatar/`.
+- `clients/oceanides/kuya-marvin/refs/` — 4 reference selfies (front-neutral, 2× three-quarter, front-smiling; 3072×4096, iisang session). ✅ 2026-07-18 — verbal consent given (Marvin present with Neil); **written consent EXECUTED 2026-07-20** (tingnan sa ibaba). **+ `marvin-ref-5-body-master.jpg`** ✅ 2026-07-19 — full-body reference (galing sa GPT 5.6 Sol skill assets); mandatory anchor sa bawat generation per `.claude/skills/marvin-avatar/`.
 - `.claude/skills/marvin-avatar/` — ang identity-lock generation skill (adapted mula kay GPT 5.6 Sol). ✅ 2026-07-19. `identity-lock/manifest*.json` ang reproducible prompt sets.
-- `clients/oceanides/kuya-marvin/consent-agreement-template.docx` — 1-page likeness/AI consent (fill-ins: company legal name, compensation, post-termination content choice). ✅ 2026-07-18 — emailed to Marvin via Gmail draft; awaiting signed copy.
-- Accounts (TikTok + FB Page) — PAGKATAPOS lang pumasa ang Gate 1. _(pending)_
+- **Consent — ✅ EXECUTED 2026-07-20, 3:31 PM.** Hindi na ito bukas na item.
+  Naipadala 3:30 PM sa thread na "Agreement - Oceanides Contract" (Oceanides
+  account); tinanggap ni **Dan Marvin Balaba** 3:31 PM sa email reply
+  ("Nabasa ko at sumasang-ayon ako…"). Effective 2026-07-20. Ang Gmail thread
+  ang legal na ebidensya sa ilalim ng R.A. 8792 — **huwag i-delete, i-archive
+  at i-label.** Buong teksto + record copy:
+  [`clients/oceanides/kuya-marvin/consent-agreement-FINAL-2026-07-20.md`](../clients/oceanides/kuya-marvin/consent-agreement-FINAL-2026-07-20.md).
+  *(Obsolete na ang lumang `consent-agreement-template.docx` na "awaiting
+  signed copy" — email-reply consent ang naging path, hindi pirma.)*
+- Accounts — ✅ **FB Page LIVE** (`facebook.com/kuyamarvin.oceanides`, ID
+  `1184710811397498`) mula 2026-07-20, may profile/cover/About/posts at
+  nagpapatakbo na ng paid ads. ⏸️ **TikTok — hindi pa ginagawa** (walang
+  naka-connect na Instagram man sa Page; Messenger lang ang destination ng
+  KM-003).
 
 ## RESUME STATE (2026-07-22 — LANE A BATCH IN PROGRESS)
 
