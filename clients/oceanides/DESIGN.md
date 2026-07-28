@@ -183,7 +183,7 @@ amber (floor sa itaas). Walang paper surface sa video overlays o dashboards.
 | --- | --- | --- |
 | **Static templates** (`templates/`, 4:5 & 1:1, cover, endcard) | HTML → `render.mjs` | tokens dito; Google Fonts OK; cover text block sa loob ng `x≤760` all-device crop |
 | **Video ads** (KM-00x overlays + captions) | Hyperframes HTML + `build-captions.mjs` | **FACE-SAFE: walang text sa mukha ni Marvin, kailanman** · 4:5 feed-safe band — i-VERIFY sa frame, huwag hulaan · **hook overlay sa frame 0, walang fade-in** (frame 0 ang Meta thumbnail) · overlay dapat may kahulugan NAKA-MUTE · hook 5–8 words pattern interrupt · CTA walang peso sign · walang Grifon-style plates |
-| **Internal dashboards / artifacts** | Artifact tool | Field-Ops-ticket language (ito ang piniling direction ni Neil 2026-07-27) · Taglish · `data-mono` allowed · **mandatory 390×844 smoke-tester gate + mobile-safe checklist sa CLAUDE.md** · walang client secrets/tokens |
+| **Internal dashboards / artifacts** | Artifact tool | Field-Ops-ticket language (ito ang piniling direction ni Neil 2026-07-27) · Taglish · `data-mono` allowed · **mandatory 390×844 smoke-tester gate + mobile-safe checklist sa CLAUDE.md** · walang client secrets/tokens · **placeholder/demo na numero ay dapat HALATANG peke** (tingnan ang Don'ts) |
 | **Marvin mismo** (plates, stills) | `marvin-avatar` + identity-lock manifests | identity consistency ang batas — huwag i-style ang mukha; hindi token concern |
 
 ## Registered artifacts (i-redeploy sa SAME URLs)
@@ -194,6 +194,12 @@ amber (floor sa itaas). Walang paper surface sa video overlays o dashboards.
   Source: `kuya-marvin/organic/PAGE-LAUNCH-POSTS.md`. Pumasa sa 390×844 gate.
 - **KM-003 Launch dashboard — Field Ops Ticket (PINILI, on-brand recut 2026-07-27):**
   `https://claude.ai/code/artifact/b248874e-c6b2-4497-8fcc-a10c2666356f`
+- **KM-003 LIVE Work Order (2026-07-28)** — ang tumatakbong dashboard: messages,
+  gastos, kill-gate verdict, video funnel, per-day table. Kumukuha mismo sa Meta
+  Ads via `mcp` capability (`ads_get_ad_entities`, 5-min refetch), hindi
+  snapshot. Source: `kuya-marvin/ads/km-003/dashboard-live.html`. Pumasa sa
+  390×844 gate.
+  `https://claude.ai/code/artifact/4d411162-ba99-4e99-bd28-92ffc2dca6ba`
 - KM-003 Launch dashboard — Abyss Command (option, hindi pinili):
   `https://claude.ai/code/artifact/51827976-482d-45d2-9f86-771aace25449`
 - Kuya Marvin Messenger cheat sheet:
@@ -220,6 +226,15 @@ amber (floor sa itaas). Walang paper surface sa video overlays o dashboards.
   ng kagamitang wala ka ay hindi cosmetic na mali — sinungaling ang unang
   impresyon pagdating ng ibang truck. Identity-reference lang ang mga file na
   iyon (mukha ni Marvin), hindi asset ng sasakyan.
+- 🔴 **Huwag ang kapani-paniwalang peke na numero sa demo/placeholder mode.**
+  (Neil, 2026-07-28) Ang `?demo=1` ng live dashboard ay may ₱1,234.50 gastos at
+  42 messages — makatuwirang laki para sa ₱500/araw na campaign. Nakita ni Neil
+  ang smoke-test screenshot at inakalang totoo, at tama siyang magtaka: first
+  day pa lang, ₱670 pa lang talaga. **Isang screenshot lang, wala nang konteksto
+  ng URL.** Dalawang bagay ang kailangan: (1) **repdigit-9 na halaga**
+  (`₱99,999`, `999`, `9.99%`) at petsang `1999` — walang campaign na ganito;
+  (2) **`danger`-red na banner** na nasa taas bago ang unang panel. Bantayan din
+  ang rounding: ang `₱9,999.99` ay nagiging `₱10,000` na mukhang totoo.
 - Huwag ang Grifon system dito — walang `#FFCC00`, walang zinc/charcoal
   grounds, walang glass/backdrop-blur, walang MrBeast plates.
 - Huwag ang safety orange `#FF8324` — deprecated (improvised bago naitala ang

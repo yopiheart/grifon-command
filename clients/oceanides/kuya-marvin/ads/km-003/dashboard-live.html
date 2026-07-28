@@ -1,0 +1,545 @@
+<title>KM-003 Live Work Order</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root {
+    --primary: #F5B301;
+    --surface: #0E2C5E;
+    --surface-deep: #0A1F45;
+    --surface-void: #071630;
+    --ocean: #1C63AD;
+    --sky: #5AA6E6;
+    --sky-deep: #3E8FD0;
+    --on-surface: #FFFFFF;
+    --on-surface-muted: #DFE8F5;
+    --on-surface-dim: #8FB3DD;
+    --good: #3ED36B;
+    --danger: #D7263D;
+    --display: Anton, 'Roboto Condensed', 'Arial Narrow', Impact, sans-serif;
+    --body: Inter, 'Helvetica Neue', Arial, sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, Consolas, monospace;
+  }
+  html, body { background: var(--surface-void); margin: 0; }
+  body {
+    font-family: var(--body);
+    color: var(--on-surface-muted);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* Ground: solid navy ladder — no fixed-attachment, no glass */
+  .ground {
+    position: fixed; inset: 0; z-index: 0;
+    background: linear-gradient(178deg, #123A73 0%, var(--surface-deep) 46%, var(--surface-void) 100%);
+  }
+  .page {
+    position: relative; z-index: 1;
+    max-width: 640px; margin: 0 auto; padding: 0 0 34px;
+  }
+
+  /* --- Work-order header --- */
+  .hazard {
+    height: 12px;
+    background: repeating-linear-gradient(-45deg, var(--primary) 0 16px, var(--surface-deep) 16px 32px);
+  }
+  header { padding: 18px 16px 16px; }
+  .chip {
+    display: inline-block; background: var(--primary); color: var(--surface-deep);
+    font-weight: 900; font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+    padding: 4px 9px; border-radius: 4px;
+  }
+  h1 {
+    font-family: var(--display); font-weight: 400; text-transform: uppercase;
+    font-size: clamp(38px, 11vw, 56px); line-height: .92; letter-spacing: .5px;
+    color: var(--on-surface); margin: 12px 0 0; text-wrap: balance;
+  }
+  h1 .amber { color: var(--primary); }
+  .sub {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--sky); margin-top: 9px;
+  }
+
+  /* Status strip */
+  .strip {
+    display: flex; align-items: center; gap: 9px; flex-wrap: wrap;
+    margin-top: 14px; padding-top: 13px;
+    border-top: 1px dashed rgba(143,179,221,.4);
+  }
+  .stamp {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: var(--mono); font-size: 11px; font-weight: 500;
+    letter-spacing: .14em; text-transform: uppercase;
+    padding: 5px 11px; border-radius: 2px;
+    border: 2px double var(--on-surface-dim); color: var(--on-surface-dim);
+  }
+  .stamp.live { border-color: var(--good); color: var(--good); }
+  .stamp.hold { border-color: var(--danger); color: var(--danger); }
+  .stamp .led { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+  .updated {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em;
+    color: var(--on-surface-dim); text-transform: uppercase;
+  }
+  button.refresh {
+    margin-left: auto; cursor: pointer;
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; font-weight: 500;
+    text-transform: uppercase;
+    color: var(--surface-deep); background: var(--primary);
+    border: 0; border-radius: 4px; padding: 6px 13px;
+  }
+  button.refresh:active { background: #D89E01; }
+  button.refresh:focus-visible { outline: 2px solid var(--on-surface); outline-offset: 2px; }
+
+  /* --- Panels: solid tonal fill, print devices, walang glass --- */
+  .panel {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 3px;
+    margin: 12px 16px; padding: 15px;
+  }
+  .panel > .tab {
+    display: inline-block; background: var(--primary); color: var(--surface-deep);
+    font-weight: 900; font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+    padding: 4px 9px; border-radius: 4px; margin: -25px 0 13px;
+  }
+  .note {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .06em;
+    color: var(--on-surface-dim); margin-top: 11px;
+    padding-top: 10px; border-top: 1px dashed rgba(143,179,221,.35);
+    text-transform: uppercase;
+  }
+
+  .banner {
+    display: none; margin: 12px 16px; padding: 12px 14px; border-radius: 3px;
+    font-size: 13px; color: var(--on-surface-muted);
+    background: var(--surface-deep); border-left: 4px solid var(--danger);
+  }
+  .banner.show { display: block; }
+  .banner strong { color: var(--on-surface); }
+  .demo {
+    display: none; margin: 12px 16px; padding: 11px 13px; border-radius: 3px;
+    font-weight: 800; font-size: 12px; letter-spacing: .4px; text-transform: uppercase;
+    color: var(--on-surface); background: var(--danger);
+  }
+  .demo.show { display: block; }
+
+  /* KPI cells */
+  .kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(255,255,255,.12); }
+  .cell { background: var(--surface); padding: 12px 13px; }
+  .cell .lbl {
+    font-family: var(--body); font-weight: 800; font-size: 10px;
+    letter-spacing: 1.2px; text-transform: uppercase; color: var(--sky);
+  }
+  .cell .val {
+    font-family: var(--display); font-weight: 400; font-size: 38px; line-height: 1;
+    letter-spacing: .5px; color: var(--on-surface); margin-top: 5px;
+    font-variant-numeric: tabular-nums;
+  }
+  .cell .val.sm { font-size: 27px; }
+  .cell .val.good { color: var(--good); }
+  .cell .val.danger { color: var(--danger); }
+  .cell .foot { font-family: var(--mono); font-size: 9.5px; letter-spacing: .08em; color: var(--on-surface-dim); margin-top: 4px; text-transform: uppercase; }
+  .minis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(255,255,255,.12); margin-top: 1px; }
+  .mini { background: var(--surface); padding: 9px 4px; text-align: center; }
+  .mini .lbl { font-weight: 800; font-size: 9px; letter-spacing: 1px; color: var(--sky); }
+  .mini .val { font-family: var(--display); font-size: 19px; color: var(--on-surface); margin-top: 3px; font-variant-numeric: tabular-nums; }
+
+  /* Verdict block */
+  .verdict {
+    display: flex; gap: 11px; align-items: flex-start;
+    background: var(--surface-deep); border-left: 4px solid var(--on-surface-dim);
+    padding: 12px 13px; border-radius: 2px; margin-bottom: 13px;
+  }
+  .verdict .mark { font-family: var(--display); font-size: 26px; line-height: .9; color: var(--on-surface-dim); }
+  .verdict .vt { font-family: var(--display); font-size: 19px; letter-spacing: .5px; text-transform: uppercase; color: var(--on-surface); }
+  .verdict .vb { font-size: 13px; color: var(--on-surface-muted); margin-top: 3px; }
+  .verdict.go { border-left-color: var(--good); }
+  .verdict.go .mark, .verdict.go .vt { color: var(--good); }
+  .verdict.stop { border-left-color: var(--danger); }
+  .verdict.stop .mark, .verdict.stop .vt { color: var(--danger); }
+
+  /* Tables */
+  .tw { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  th {
+    font-weight: 800; font-size: 9.5px; letter-spacing: 1.2px; text-transform: uppercase;
+    color: var(--sky); text-align: left; padding: 6px 8px;
+    border-bottom: 1px solid rgba(255,255,255,.16);
+  }
+  td {
+    padding: 8px; color: var(--on-surface-muted); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+    border-bottom: 1px dashed rgba(143,179,221,.28);
+  }
+  th:first-child, td:first-child { padding-left: 3px; }
+  .num, th.num { text-align: right; }
+  /* Per-day table carries 5 numeric columns — tighten so it fits 390px without clipping */
+  table.tight { font-size: 11.5px; }
+  table.tight th, table.tight td { padding: 7px 4px; }
+  table.tight th:last-child, table.tight td:last-child { padding-right: 2px; }
+  tr.hit td { background: var(--surface-deep); color: var(--on-surface); }
+  tr.hit td:first-child { box-shadow: inset 3px 0 0 var(--primary); }
+
+  /* Funnel */
+  .frow { display: grid; grid-template-columns: 78px 1fr 90px; gap: 9px; align-items: center; margin-bottom: 9px; }
+  .frow .fl { font-weight: 800; font-size: 9.5px; letter-spacing: 1.1px; text-transform: uppercase; color: var(--sky); }
+  .bar { height: 12px; background: var(--surface-deep); border: 1px solid rgba(255,255,255,.1); border-radius: 2px; overflow: hidden; }
+  .bar .fill { height: 100%; width: 0%; background: var(--ocean); transition: width .5s ease; }
+  .frow .fv { font-family: var(--mono); font-size: 10.5px; color: var(--on-surface-dim); text-align: right; font-variant-numeric: tabular-nums; }
+
+  /* Day-7 list */
+  ol.plan { margin: 0; padding-left: 18px; }
+  ol.plan li { font-size: 13px; margin-bottom: 7px; color: var(--on-surface-muted); }
+  ol.plan strong { color: var(--on-surface); font-weight: 800; }
+  .daychip {
+    display: inline-block; font-family: var(--mono); font-size: 10.5px; font-weight: 500;
+    letter-spacing: .14em; text-transform: uppercase;
+    color: var(--primary); border: 1px dashed var(--primary);
+    border-radius: 2px; padding: 4px 10px; margin-bottom: 12px;
+  }
+
+  footer { padding: 4px 16px 0; text-align: center; }
+  footer .ids {
+    font-family: var(--mono); font-size: 9px; letter-spacing: .04em;
+    color: var(--on-surface-dim); word-break: break-all; margin-bottom: 9px;
+  }
+  footer .sig {
+    font-family: var(--display); font-size: 13px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--sky);
+  }
+  .stale .cell .val, .stale .bar .fill, .stale .mini .val { opacity: .5; }
+  @media (prefers-reduced-motion: reduce) { .bar .fill { transition: none; } }
+</style>
+
+<div class="ground"></div>
+
+<div class="page">
+  <div class="hazard"></div>
+  <header>
+    <span class="chip">Work order · KM-003</span>
+    <h1>Live sa <span class="amber">Meta</span></h1>
+    <div class="sub">Oceanides Malabanan · NCR 20 km · ₱500 kada araw</div>
+    <div class="strip">
+      <span class="stamp" id="statusStamp"><span class="led"></span><span id="statusText">Nagloload</span></span>
+      <span class="updated" id="stamp"></span>
+      <button class="refresh" id="refreshBtn" type="button">↻ Refresh</button>
+    </div>
+  </header>
+
+  <div class="demo" id="demoFlag">Test mode. Gawa-gawa lang ang numero dito, hindi ito galing sa Meta.</div>
+  <div class="banner" id="banner"></div>
+
+  <section class="panel">
+    <span class="tab">Total simula nang mag-start</span>
+    <div class="kpis">
+      <div class="cell">
+        <div class="lbl">Messages</div>
+        <div class="val" id="kConv">—</div>
+        <div class="foot">Nag-message sa Page</div>
+      </div>
+      <div class="cell">
+        <div class="lbl">₱ kada message</div>
+        <div class="val" id="kCPR">—</div>
+        <div class="foot">Target ₱40 hanggang ₱80</div>
+      </div>
+      <div class="cell">
+        <div class="lbl">Gastos</div>
+        <div class="val sm" id="kSpend">—</div>
+        <div class="foot">Budget ₱500 kada araw</div>
+      </div>
+      <div class="cell">
+        <div class="lbl">Today</div>
+        <div class="val sm" id="kToday">—</div>
+        <div class="foot" id="kTodaySub">Messages · gastos</div>
+      </div>
+    </div>
+    <div class="minis">
+      <div class="mini"><div class="lbl">CTR</div><div class="val" id="mCtr">—</div></div>
+      <div class="mini"><div class="lbl">CPM</div><div class="val" id="mCpm">—</div></div>
+      <div class="mini"><div class="lbl">Reach</div><div class="val" id="mReach">—</div></div>
+      <div class="mini"><div class="lbl">Freq</div><div class="val" id="mFreq">—</div></div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <span class="tab">Kailan hihinto · week 1</span>
+    <div class="verdict" id="verdict">
+      <div class="mark" id="vMark">·</div>
+      <div>
+        <div class="vt" id="vTitle">Wala pang data</div>
+        <div class="vb" id="vBody">Pag may numero na, dito lalabas kung tuloy o hinto.</div>
+      </div>
+    </div>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Gastos</th><th>Kung ganito</th><th>Gawin</th></tr></thead>
+        <tbody id="gateRows">
+          <tr data-gate="1"><td>₱1,000</td><td>Walang nag-message</td><td>Stop na</td></tr>
+          <tr data-gate="2"><td>₱1,500</td><td>Mahigit ₱150 kada message</td><td>Hinto muna</td></tr>
+          <tr data-gate="3"><td>₱3,500</td><td>₱40 to ₱80 kada message</td><td>Tuloy lang</td></tr>
+          <tr data-gate="4"><td>₱3,500</td><td>Mahigit ₱120 kada message</td><td>Stop na</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">Wag galawin ang budget sa first 3 days. Nag-aaral pa ang Meta.</div>
+  </section>
+
+  <section class="panel">
+    <span class="tab">Video · ilan ang tumingin</span>
+    <div class="frow"><span class="fl">Nag-play</span><div class="bar"><div class="fill" id="fPlay"></div></div><span class="fv" id="vPlay">—</span></div>
+    <div class="frow"><span class="fl">25%</span><div class="bar"><div class="fill" id="fP25"></div></div><span class="fv" id="vP25">—</span></div>
+    <div class="frow"><span class="fl">50%</span><div class="bar"><div class="fill" id="fP50"></div></div><span class="fv" id="vP50">—</span></div>
+    <div class="frow"><span class="fl">Thruplay</span><div class="bar"><div class="fill" id="fThru"></div></div><span class="fv" id="vThru">—</span></div>
+    <div class="note">Base sa bilang ng nakakita ng ad.</div>
+  </section>
+
+  <section class="panel">
+    <span class="tab">Per day</span>
+    <div class="tw">
+      <table class="tight">
+        <thead><tr><th>Araw</th><th class="num">Gastos</th><th class="num">Msg</th><th class="num">₱/msg</th><th class="num">CTR</th></tr></thead>
+        <tbody id="dailyRows"><tr><td colspan="5" style="color:var(--on-surface-dim)">Wala pang data.</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel">
+    <span class="tab">Day 7 · next steps</span>
+    <div class="daychip" id="dayChip">Testing week · day 1 ng 7</div>
+    <ol class="plan">
+      <li><strong>Numbers pull.</strong> Ako na kukuha sa Meta. Ikaw yung magbibigay kung ilan ang na-book at magkano, galing sa Create order sa inbox.</li>
+      <li><strong>First entry sa ledger.</strong> Dito magsisimula yung sarili nating data, hindi na hiram na playbook.</li>
+      <li><strong>Brief para sa 2 to 3 bagong concept</strong>, kasama ang image ad. Bago pa mapagod yung iisang video.</li>
+    </ol>
+    <div class="note">Habang tumatakbo: i-tag bilang Create order sa inbox ang bawat na-book. Doon galing yung Gate 2.</div>
+  </section>
+
+  <footer>
+    <div class="ids">Camp 120250672316430347 · Adset 120250672331730347 · Ad 120250673468830347</div>
+    <div class="sig">Oceanides</div>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var SERVER = 'claude_ai_Meta_Ads';
+  var TOOL = 'ads_get_ad_entities';
+  var ASK = 'live dashboard ng KM-003 ni Kuya Marvin: messages, gastos, kill gates';
+  var FIELDS = ['id','name','effective_status','amount_spent','results','cost_per_result',
+    'impressions','clicks','ctr','cpm','frequency','reach',
+    'video_thruplay_watched_actions','video_p25_watched_actions','video_p50_watched_actions','video_play_actions'];
+  var BASE = {
+    ad_account_id: '585951286230395',
+    fields: FIELDS,
+    level: 'ad',
+    date_preset: 'maximum',
+    filtering: [{ field: 'campaign.id', operator: 'IN', value: ['120250672316430347'] }],
+    advertiser_request: ASK
+  };
+  var DAILY = {};
+  for (var k in BASE) DAILY[k] = BASE[k];
+  DAILY.time_increment = '1';
+
+  var $ = function (id) { return document.getElementById(id); };
+  function php(n) {
+    if (n == null) return '—';
+    return '₱' + n.toLocaleString('en-PH', { maximumFractionDigits: n >= 100 ? 0 : 2 });
+  }
+  function num(v) {
+    if (v == null) return null;
+    if (typeof v === 'number') return v;
+    var s = String(v);
+    if (/not available/i.test(s)) return null;
+    var m = s.replace(/,/g, '').match(/-?\d+(\.\d+)?/);
+    return m ? parseFloat(m[0]) : null;
+  }
+  function parseEntities(payload) {
+    if (!payload) return [];
+    var raw = payload.ad_entities != null ? payload.ad_entities : payload;
+    if (typeof raw === 'string') { try { raw = JSON.parse(raw); } catch (e) { return []; } }
+    return Array.isArray(raw) ? raw : [];
+  }
+
+  var last = { life: null, daily: null, stale: false };
+
+  function setStamp(status) {
+    var el = $('statusStamp'), txt = $('statusText');
+    el.className = 'stamp';
+    if (status === 'ACTIVE') { el.className += ' live'; txt.textContent = 'Live · tumatakbo'; }
+    else if (status === 'PAUSED') { el.className += ' hold'; txt.textContent = 'Naka-pause'; }
+    else if (status) { el.className += ' hold'; txt.textContent = status; }
+    else { txt.textContent = 'Nagloload'; }
+  }
+  function banner(html) {
+    var b = $('banner');
+    if (!html) { b.className = 'banner'; b.innerHTML = ''; return; }
+    b.className = 'banner show'; b.innerHTML = html;
+  }
+  function fmtTime(ms) {
+    return new Date(ms).toLocaleTimeString('en-PH', { hour: 'numeric', minute: '2-digit' });
+  }
+
+  function renderLife() {
+    var rows = last.life; if (!rows || !rows.length) return;
+    var e = rows[0];
+    var spend = num(e.amount_spent), conv = num(e.results && e.results.value);
+    var cpr = num(e.cost_per_result && e.cost_per_result.value);
+    if (cpr == null && spend != null && conv) cpr = spend / conv;
+    var imp = num(e.impressions);
+
+    setStamp(e.effective_status);
+    $('kConv').textContent = conv != null ? conv.toLocaleString() : '—';
+    $('kSpend').textContent = php(spend);
+    var c = $('kCPR');
+    c.textContent = cpr != null ? php(cpr) : '—';
+    c.className = 'val ' + (cpr == null ? '' : cpr <= 80 ? 'good' : cpr <= 120 ? '' : 'danger');
+    $('mCtr').textContent = num(e.ctr) != null ? num(e.ctr) + '%' : '—';
+    $('mCpm').textContent = num(e.cpm) != null ? php(num(e.cpm)) : '—';
+    $('mReach').textContent = num(e.reach) != null ? num(e.reach).toLocaleString() : '—';
+    $('mFreq').textContent = num(e.frequency) != null ? String(num(e.frequency)) : '—';
+
+    [['fPlay','vPlay','video_play_actions'],['fP25','vP25','video_p25_watched_actions'],
+     ['fP50','vP50','video_p50_watched_actions'],['fThru','vThru','video_thruplay_watched_actions']]
+    .forEach(function (p) {
+      var v = num(e[p[2]]);
+      if (v != null && imp) {
+        var pct = Math.min(100, v / imp * 100);
+        $(p[0]).style.width = pct.toFixed(1) + '%';
+        $(p[1]).textContent = v.toLocaleString() + ' · ' + pct.toFixed(0) + '%';
+      } else { $(p[1]).textContent = '—'; }
+    });
+    verdict(spend, conv, cpr);
+  }
+
+  function verdict(spend, conv, cpr) {
+    var v = $('verdict'), mark = $('vMark'), title = $('vTitle'), body = $('vBody');
+    document.querySelectorAll('#gateRows tr').forEach(function (r) { r.className = ''; });
+    function gate(n) { var r = document.querySelector('#gateRows tr[data-gate="' + n + '"]'); if (r) r.className = 'hit'; }
+    if (spend == null) return;
+    if ((conv == null || conv === 0) && spend >= 1000) {
+      v.className = 'verdict stop'; mark.textContent = '✕'; gate(1);
+      title.textContent = 'Stop na';
+      body.textContent = 'Walang nag-message kahit ' + php(spend) + ' na ang gastos. Yung video o yung targeting ang sira, hindi yung offer. Wag nang hintayin ang Day 7.';
+    } else if (spend >= 3500 && cpr != null && cpr > 120) {
+      v.className = 'verdict stop'; mark.textContent = '✕'; gate(4);
+      title.textContent = 'Stop na';
+      body.textContent = php(cpr) + ' kada message. Sobrang mahal na, lampas sa ₱120 limit.';
+    } else if (spend >= 1500 && cpr != null && cpr > 150) {
+      v.className = 'verdict stop'; mark.textContent = '!'; gate(2);
+      title.textContent = 'Hinto muna';
+      body.textContent = php(cpr) + ' kada message. Check muna natin kung ilan ang tumitingin sa video bago tumuloy.';
+    } else if (cpr != null && conv > 0) {
+      if (cpr <= 80) {
+        v.className = 'verdict go'; mark.textContent = '✔'; gate(3);
+        title.textContent = 'Okay · tuloy lang';
+        body.textContent = php(cpr) + ' kada message. ' + (cpr < 40
+          ? 'Mas mura pa sa ₱40 to ₱80 target. Wag galawin ang budget, nag-aaral pa ang Meta.'
+          : 'Nasa loob ng ₱40 to ₱80 target.');
+      } else {
+        v.className = 'verdict'; mark.textContent = '·';
+        title.textContent = 'Bantayan';
+        body.textContent = php(cpr) + ' kada message. Mahal na kesa sa ₱80 target pero hindi pa naman dapat itigil.';
+      }
+    }
+  }
+
+  function renderDaily() {
+    var rows = last.daily; if (!rows) return;
+    var tb = $('dailyRows'); tb.innerHTML = '';
+    if (!rows.length) { tb.innerHTML = '<tr><td colspan="5" style="color:var(--on-surface-dim)">Wala pang data.</td></tr>'; return; }
+    var today = rows[rows.length - 1];
+    rows.slice().reverse().forEach(function (e) {
+      var spend = num(e.amount_spent), conv = num(e.results && e.results.value);
+      var cpr = num(e.cost_per_result && e.cost_per_result.value);
+      if (cpr == null && spend != null && conv) cpr = spend / conv;
+      var tr = document.createElement('tr');
+      tr.innerHTML = '<td>' + (e.date_start ? e.date_start.replace(/,\s*2\d{3}$/, '') : '—') +
+        '</td><td class="num">' + php(spend) +
+        '</td><td class="num">' + (conv != null ? conv : '—') +
+        '</td><td class="num">' + (cpr != null ? php(cpr) : '—') +
+        '</td><td class="num">' + (num(e.ctr) != null ? num(e.ctr) + '%' : '—') + '</td>';
+      tb.appendChild(tr);
+    });
+    $('dayChip').textContent = 'Testing week · day ' + rows.length + ' ng 7';
+    var tConv = num(today.results && today.results.value), tSpend = num(today.amount_spent);
+    $('kToday').textContent = (tConv != null ? tConv : '—') + ' · ' + php(tSpend);
+    $('kTodaySub').textContent = 'Messages · gastos · ' + (today.date_start || '');
+  }
+
+  function stampUpdate(result) {
+    var t = (result.cache && result.cache.storedAt) || Date.now();
+    $('stamp').textContent = 'Update ' + fmtTime(t);
+    document.querySelector('.page').classList.toggle('stale', !!last.stale);
+  }
+
+  function onError(err) {
+    var code = err && err.code;
+    if (code === 'needs_reauth') {
+      last.life = null; last.daily = null;
+      banner('<strong>Kailangan i-reconnect ang Meta Ads.</strong> Punta sa claude.ai Settings, Connectors, i-reconnect ang Meta Ads, tapos i-reload ito.');
+    } else if (code === 'server_not_connected' || code === 'selection_required') {
+      last.life = null; last.daily = null;
+      banner('<strong>Walang Meta Ads connector dito.</strong> I-add o piliin ang Meta Ads sa claude.ai Settings, Connectors.');
+    } else if (code === 'not_granted' || code === 'capability_disabled' || code === 'capability_removed') {
+      banner('<strong>Hindi live ang view na ito.</strong> Buksan mo sa claude.ai para gumana yung live na numero.');
+    } else if (code === 'blocked_by_policy' || code === 'approval_required') {
+      banner('<strong>Naka-block yung Meta Ads call.</strong> Hindi ito maaayos ng reload, kailangan ng approval.');
+    } else if (code === 'tool_error') {
+      last.stale = true; document.querySelector('.page').classList.add('stale');
+      banner('<strong>May error na binalik ang Meta:</strong> ' + (err.message || 'walang detalye') + '. Yung huling numero pa rin ang nasa screen.');
+    } else {
+      last.stale = true; document.querySelector('.page').classList.add('stale');
+      if (!last.life) banner('<strong>Hindi ma-reach ang Meta ngayon.</strong> Susubukan ulit automatic.');
+    }
+  }
+
+  function onData(which, result) {
+    last.stale = false; banner(null);
+    last[which] = parseEntities(result.payload);
+    if (which === 'life') renderLife(); else renderDaily();
+    stampUpdate(result);
+  }
+
+  function boot() {
+    if (/[?&]demo=1/.test(location.search)) {
+      // Layout smoke test lang. Obvious-fake na numero (9s) para hindi ito
+      // mapagkamalang totoong campaign data sa isang screenshot.
+      $('demoFlag').className = 'demo show';
+      var mk = function (over) {
+        var e = { effective_status: 'ACTIVE', amount_spent: 'PHP99,999',
+          results: { value: '999 (Messaging conversations started)' },
+          cost_per_result: { value: 'PHP99.99 (Messaging conversations started)' },
+          impressions: '99,999', ctr: '9.99%', cpm: 'PHP99.99', frequency: '9.99', reach: '99,999',
+          video_play_actions: '99,999', video_p25_watched_actions: '39,999',
+          video_p50_watched_actions: '29,999', video_thruplay_watched_actions: '19,999',
+          date_start: 'January 1, 1999' };
+        for (var k in over) e[k] = over[k];
+        return e;
+      };
+      onData('life', { payload: { ad_entities: JSON.stringify([mk({})]) } });
+      onData('daily', { payload: { ad_entities: JSON.stringify([
+        mk({}), mk({ date_start: 'January 2, 1999' })
+      ]) } });
+      return;
+    }
+    if (!window.claude || window.claude.mcp === undefined) {
+      setStamp(null); $('statusText').textContent = 'Static view';
+      banner('<strong>Hindi live ang view na ito.</strong> Buksan mo sa claude.ai para makita yung totoong numero.');
+      return;
+    }
+    var opts = { cache: { staleTime: 120000, gcTime: 3600000 }, refetchInterval: 300000 };
+    window.claude.mcp.watchTool(SERVER, TOOL, BASE, function (ev) {
+      if (ev.type === 'data') onData('life', ev.result); else onError(ev.error);
+    }, opts);
+    window.claude.mcp.watchTool(SERVER, TOOL, DAILY, function (ev) {
+      if (ev.type === 'data') onData('daily', ev.result); else onError(ev.error);
+    }, opts);
+    $('refreshBtn').addEventListener('click', function () {
+      var b = $('refreshBtn');
+      b.textContent = '↻ …';
+      window.claude.mcp.invalidate(SERVER, TOOL)
+        .catch(function () {})
+        .then(function () { setTimeout(function () { b.textContent = '↻ Refresh'; }, 1200); });
+    });
+  }
+  boot();
+})();
+</script>

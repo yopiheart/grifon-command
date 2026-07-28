@@ -299,3 +299,31 @@ bago sumagot (ang instant na sagot pagkatapos ng auto-reply ay halatang bot); at
 
 Buhay na halimbawa ng buong register: ang Kuya Marvin messaging flow sa
 [`clients/oceanides/kuya-marvin/ads/NEXT-SESSION.md`](../../../clients/oceanides/kuya-marvin/ads/NEXT-SESSION.md).
+
+### Reading level: grade 4 (Neil, 2026-07-28 — sakop pati DASHBOARDS at artifacts)
+
+Ang "avoid deep Tagalog" sa itaas ay hindi lang tungkol sa mga connector tulad
+ng *gayunpaman*. Sakop nito pati ang mga **payak na salita na tinagalog nang
+sobra** — mga salitang tama naman sa diksyunaryo pero **hindi sinasabi ng tao**.
+Napansin ito ni Neil sa KM-003 dashboard: *"sakit sa mata basahin."*
+
+| Bawal (sobrang lalim) | Gamitin |
+| --- | --- |
+| datos | data |
+| malusog (para sa metric) | okay, maganda |
+| kalibrasyon | testing week |
+| usapan (para sa messaging conversation) | message |
+| badyet | budget |
+| patayin | stop na |
+| araw-araw (bilang heading) | per day |
+| hinihintay ang datos | wala pang data |
+| nagsisimula / naghihintay | nagloload, wala pa |
+
+**Ang tunay na tanong:** sasabihin ba ito ng kausap mo nang malakas? Kung
+"iminumungkahi" ang tunog nito, palitan. Kapag may English na salita na
+karaniwang sinasabi ng Pinoy (`data`, `budget`, `message`, `stop`, `okay`,
+`per day`), **iyon ang gamitin** — huwag maghanap ng katumbas sa Tagalog.
+
+Ang **internal dashboards at artifacts ay hindi exempt.** Madalas silang binabasa
+sa cellphone habang nasa Ads Manager, kaya doon pa nga mas kailangan ang
+pinakamadaling salita, hindi ang pinaka-tama.

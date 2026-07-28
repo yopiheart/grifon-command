@@ -1,43 +1,82 @@
 # NEXT SESSION — Oceanides / Kuya Marvin launch
 
-**Ina-update 2026-07-27 (hapon).** Lahat ng kailangan mo ay nandito — hindi mo na
+**Ina-update 2026-07-28 (gabi).** Lahat ng kailangan mo ay nandito — hindi mo na
 kailangang basahin ulit ang buong usapan.
 
 ---
 
-## ⚡ BUKAS — ito lang ang gawin
+## 🟢 LIVE NA — DAY 1 TAPOS (2026-07-28)
 
-**Ang campaign ay BUO na at PAUSED. Zero ang nagastos.** Hindi na kailangang
-magtayo ng kahit ano.
+**Na-ON ni Neil. Tumatakbo na ang KM-003.** Ito ang totoong numero, hinila mismo
+sa Meta gamit ang token (hindi kinopya nang kamay):
 
-### 🔴 Bago pindutin ang ON (ikaw lang ang makakagawa)
-1. **3–5 organic post sa Page.** ✅ *(Sulat na — limang post, handa nang i-paste:
-   [`organic/PAGE-LAUNCH-POSTS.md`](../organic/PAGE-LAUNCH-POSTS.md). Kasama doon
-   ang order ng pag-post, alin ang i-pin, at ang buong pre-flight checklist.)*
-   Blangkong Page = patay na tiwala, at mas mataas ang review risk sa unang ad.
-   ⚠️ **Hindi na kailangang i-post ang video organically** para sa
-   `object_story_id` — may sarili nang dark post ang ad
-   (`1184710811397498_122106985077399203`, video `1063414612882026`, na-verify
-   2026-07-27). Nasa plano pa rin siya bilang Post 3, pero para sa tiwala na
-   lang, hindi para sa upload.
-2. **Page basics** — category *Local service*, profile + cover, About, at ang
-   **numero sa About + Call button** (hindi sa caption).
-3. **Tingnan ang AI label** sa ad (ipinasa ang `OPT_IN`, kumpirmahin sa UI) at
-   **patayin ang Advantage+ *Text improvements* + *Translate***.
-4. Pindutin ang toggle. ✅ *(Instant reply: TAPOS NA 2026-07-27.)*
+| Metric | Day 1 (Hul 28) |
+| --- | --- |
+| Gastos | **₱666.30** (₱670.82 sa Ads Manager UI nang 11:30pm — ilang minutong lag ang API) |
+| Messages | **50** |
+| ₱ kada message | **₱13.33** |
+| Impressions / Reach | 7,212 / 5,113 |
+| CTR | 6.20% |
+| CPM | ₱92.39 |
+| Frequency | 1.41 |
+| Thruplay | 1,716 |
 
-### 🟡 Kasabay nito
-- **Viber message sa Oceanides** — ang tatlong tanong (nasa ibaba). Kumpirmahin
-  din kung may trak sa labas ng NCR.
-- **I-save ang 3 Messenger reply bilang saved replies** (nasa ibaba).
-- **Pindutin ang Allow** sa *"business activities to improve ads"*, at
-  **tuloy-tuloy** na itala ang `Create order` + `Mark as lead` sa Page inbox.
-  Dito manggagaling ang 2 sa 3 numerong kailangan sa Day 7. Kalahating pagtatala
-  = ingay, hindi signal.
-- ✅ ~~I-merge ang `feat/km-003-hook2-ab`~~ — **TAPOS 2026-07-27.** Nasa `main` na
-  ang hook2 video, ang STS audio, ang overlay composition, ang `HOOK=` switch sa
-  `build-cut.sh`, at ang CRF 20 na re-encode ng pareho. Wala nang asset ng launch
-  na nakatago sa branch.
+**₱13.33 kada message laban sa ₱40–80 target band.** Tatlong beses na mas mura
+kaysa sa pinakamagandang inaasahan. Hindi ito dahilan para dagdagan ang budget —
+**learning phase pa, at ang paggalaw ng budget sa first 3 days ay nagre-reset
+nito.** Ang tanong sa Day 7 ay hindi na "mura ba ang message" kundi **"nagiging
+booking ba ang 50 messages kada araw?"** — iyon ang hawak ni Neil, hindi ng API.
+
+⚠️ **Bagong trabaho na dulot nito:** 50 usapan kada araw ay tunay na dami para
+sa isang taong sumasagot nang kamay. Kung hindi kayang habulin ang inbox, ang
+bottleneck ay hindi na ang ad — ang reply speed na. Bantayan.
+
+### 📊 LIVE dashboard (auto-updating, phone-readable)
+
+`https://claude.ai/code/artifact/4d411162-ba99-4e99-bd28-92ffc2dca6ba`
+
+Hindi ito snapshot — kumukuha mismo sa Meta tuwing 5 minuto via `mcp`
+capability. Laman: messages, gastos, ₱/message, kill-gate verdict (kusang
+nagsasabi kung tuloy o hinto), video funnel, per-day table. Source:
+[`km-003/dashboard-live.html`](km-003/dashboard-live.html) — i-redeploy sa
+PAREHONG URL kapag may binago.
+
+*(Ang `?demo=1` ay test mode lang: repdigit-9 na peke na numero + pulang banner.
+Kung may makita kang `₱99,999`, hindi iyon totoo.)*
+
+---
+
+## ⚡ SUSUNOD — ito lang ang gawin
+
+**Ang campaign ay LIVE na at gumagastos.** Hindi na kailangang magtayo ng kahit
+ano. Ang natitira ay pagbabantay at ang Day 7.
+
+### 🔴 Hindi pa tapos (ikaw lang ang makakagawa)
+
+1. **Pagtatala sa inbox — ito na ang pinakamahalaga ngayon.** Tuwing may
+   nagbo-book, i-tag bilang `Create order`; kung interesado pero hindi pa
+   tuloy, `Mark as lead`. **Dito manggagaling ang 2 sa 3 numerong kailangan sa
+   Day 7** (ilan ang naging booking, magkano ang halaga). Kalahating pagtatala
+   ay ingay, hindi signal — at sa 50 message kada araw, mabilis itong maipon.
+   Pindutin din ang **Allow** sa *"business activities to improve ads"*.
+2. **2–3 bagong Marvin still** via `marvin-avatar`, **kasama ang puting van.**
+   Sa limang organic post, tatlo lang ang totoong Marvin still at **dalawa doon
+   ay selfie**. Nilayo sila sa grid bilang band-aid, pero ang tunay na ayos ay
+   bagong plate na may standing/working framing — hindi selfie. 🔴 **Puting van
+   ang totoong fleet** (`profile-assets/`); bawal ang asul na tanker, imbento
+   siya (tingnan ang `clients/oceanides/DESIGN.md` Don'ts).
+3. **Viber message sa Oceanides** — ang tatlong tanong (nasa ibaba). Kumpirmahin
+   din kung may trak sa labas ng NCR (Bulacan/Rizal/Cavite/Laguna). Hanggang
+   walang sagot, NCR lang ang targeting.
+
+### ✅ Tapos na — huwag nang balikan
+- **3–5 organic post** — nakapost. Run sheet: [`organic/PAGE-LAUNCH-POSTS.md`](../organic/PAGE-LAUNCH-POSTS.md).
+- **Messenger instant reply + 3 saved replies** — TAPOS 2026-07-27.
+- **Page basics, AI label ON, Text improvements + Translate OFF** — TAPOS.
+- **`feat/km-003-hook2-ab` merged** — TAPOS 2026-07-27. Nasa `main` na ang hook2
+  video, STS audio, overlay composition, `HOOK=` switch sa `build-cut.sh`, at
+  ang CRF 20 re-encode. Wala nang asset ng launch na nakatago sa branch.
+- **Toggle ON** — TAPOS 2026-07-28. Tumatakbo na.
 
 ---
 
@@ -46,66 +85,69 @@ magtayo ng kahit ano.
 ```
 Ituloy natin si Kuya Marvin / Oceanides. Basahin mo muna:
   clients/oceanides/kuya-marvin/ads/NEXT-SESSION.md
+  clients/oceanides/DESIGN.md
   workflows/ad_performance_ledger.md
 
-Buo na at PAUSED ang KM-003 campaign (120250672316430347 /
-120250672331730347 / 120250673468830347). Zero pa ang gastos.
+LIVE na ang KM-003 simula 2026-07-28 (120250672316430347 /
+120250672331730347 / 120250673468830347). Day 1: ₱666 gastos,
+50 messages, ₱13.33 kada message.
 
-Sasabihin ko kung na-ON ko na ba siya o hindi pa.
+Kunin mo mismo ang bagong numero sa Meta gamit ang token — huwag mo
+akong pakopyahin nang kamay. I-redeploy mo rin ang live dashboard sa
+PAREHONG URL:
+  https://claude.ai/code/artifact/4d411162-ba99-4e99-bd28-92ffc2dca6ba
 
-KUNG HINDI PA NA-ON — ito ang haharangin:
-  1. Gawin ang 3-5 organic post para sa Page (wala pa tayong content plan —
-     ikaw ang gagawa, Taglish 50/50 + kalmadong-eksperto na tono, nasa
-     .claude/skills/_shared/taglish-voice.md ang panuntunan)
-  2. Ipaalala sa akin ang Page basics + AI label + Text improvements OFF
+KUNG DAY 7 NA:
+  1. Ibibigay ko ang booking count + halaga mula sa Create order sa inbox
+  2. Unang entry sa workflows/ad_performance_ledger.md
+  3. Brief para sa 2-3 bagong concept, kasama ang IMAGE AD
 
-KUNG NA-ON KO NA, at may 3-7 araw nang datos:
-  1. Kunin mo mismo ang insights gamit ang token (huwag mo akong pakopyahin
-     ng numero nang kamay) — gastos, CPM, CTR, frequency, hook rate,
-     hold rate, cost per messaging conversation
-  2. Ibibigay ko ang booking count + halaga mula sa Create order sa inbox
-  3. Unang entry sa workflows/ad_performance_ledger.md
-  4. Gawin ang live auto-updating dashboard artifact (mcp capability —
-     kailangan mo munang makakita ng totoong insights response bago mo
-     isulat ang page)
-  5. Brief para sa 2-3 bagong konsepto, kasama ang IMAGE AD
+KUNG HINDI PA DAY 7: bantayan lang. Wag galawin ang budget.
 
 Bago ka gumawa ng bagong tool o script: subukan mo muna ang
 tools/meta_upload_video.mjs — naka-commit pero UNTESTED.
 ```
 
-### 📅 Day 7 — ako ang gagawa
+### 📅 Day 7 (Ago 4) — ako ang gagawa
 Ako na ang kukuha ng insights (gumagana na ang token — **huwag mo nang kopyahin
-ang numero nang kamay**): gastos, CPM, CTR, frequency, **hook rate**, **hold
-rate**, cost per conversation. Ikaw lang ang may alam ng **booking count at
-halaga** — galing sa `Create order`. Mula doon: unang ledger entry, **live
-auto-updating dashboard artifact** (kaya na ng `mcp` capability — kailangan lang
-ng totoong insights response para hindi hulaan ang hugis ng data), at ang brief
-para sa **2–3 bagong konsepto** — kasama ang **image ad**, na siyang pinakamalaki
-ang lundag sa diversification dahil pinakamalayo siya sa video.
+ang numero nang kamay**). Ikaw lang ang may alam ng **booking count at halaga**
+— galing sa `Create order`. Mula doon: **unang ledger entry** at ang brief para
+sa **2–3 bagong konsepto** — kasama ang **image ad**, na siyang pinakamalaki ang
+lundag sa diversification dahil pinakamalayo siya sa video.
+
+✅ ~~live auto-updating dashboard artifact~~ — **TAPOS 2026-07-28**, tumatakbo
+na sa totoong data (URL sa itaas).
+
+⏰ **Ang orasan ng creative diversification ay tumatakbo na simula 2026-07-28.**
+Humihingi ang playbook ng 4–6 na magkakaibang creative sa isang ad set; isa ang
+meron tayo. Sinadya iyon para sa testing week, pero **5–7 araw lang** — lampas
+doon at ang dupe-CPM at creative fatigue na ang kakain ng budget. Ibig sabihin:
+**dapat may bagong konsepto na bago mag-Ago 4.**
 
 **Kung ma-reject ang ad:** sabihan mo ko agad. Karaniwan ay nauulit lang ito sa
 appeal — hindi ito hudyat na mali ang creative.
 
 ---
 
-## 📱 Launch dashboard artifacts (2026-07-27 gabi — phone-readable, survive ang defreezer)
+## 📱 Artifacts (phone-readable, survive ang defreezer)
 
-Dalawang rendering ng page na ito (blockers, specs, kill gates, Day-7) — hawak
-habang nasa Ads Manager; parehong pumasa sa 390×844 smoke gate. I-redeploy sa
-SAME URLs (Artifact tool `url` param) kapag nag-update ang launch state:
+I-redeploy sa SAME URLs (Artifact tool `url` param) kapag may binago. Lahat ay
+pumasa sa 390×844 smoke gate at sumusunod sa
+[`clients/oceanides/DESIGN.md`](../../DESIGN.md).
 
-- **Option A — Abyss Command** (ocean HUD):
-  `https://claude.ai/code/artifact/51827976-482d-45d2-9f86-771aace25449`
-- **Option B — Field Ops Ticket** (Kuya Marvin work-order, anti-polish):
-  `https://claude.ai/code/artifact/b248874e-c6b2-4497-8fcc-a10c2666356f`
-- **Page Launch Run Sheet** (ang limang organic post, kopya-paste sa phone +
-  pre-flight bago i-ON) — sumusunod sa `clients/oceanides/DESIGN.md`:
+**Buhay pa — ito ang gamitin ngayon:**
+- 🟢 **LIVE Work Order** (auto-updating, tunay na numero mula sa Meta):
+  `https://claude.ai/code/artifact/4d411162-ba99-4e99-bd28-92ffc2dca6ba`
+- **Page Launch Run Sheet** (ang limang organic post + pre-flight):
   `https://claude.ai/code/artifact/5952f7ba-859c-45b9-a295-fa8320c4d5d4`
+- **Messenger cheat sheet** (3 reply script + tone rules, habang sumasagot):
+  `https://claude.ai/code/artifact/3c5a2aec-2c71-4866-b454-8a57530025de`
 
-*(Hiwalay ito sa Day-7 live auto-updating dashboard na naka-plano sa itaas —
-static snapshots ito ng launch runbook; ang live isa ay gagawin pagkakita ng
-totoong insights response.)*
+**Luma na — pre-launch snapshot lang, hindi na ito nag-a-update:**
+- Option B — Field Ops Ticket (PINILI noon):
+  `https://claude.ai/code/artifact/b248874e-c6b2-4497-8fcc-a10c2666356f`
+- Option A — Abyss Command (hindi pinili):
+  `https://claude.ai/code/artifact/51827976-482d-45d2-9f86-771aace25449`
 
 ---
 
@@ -129,12 +171,12 @@ Buong production record + triage findings: [`km-003-script-storyboard.md`](km-00
 
 ---
 
-## 🔴 HUMAHARANG SA LAUNCH — dalawa lang
+## ✅ DATING HUMAHARANG — pareho nang naayos (reference na lang ito)
 
-### 1. Meta System User token
+### 1. Meta System User token — ✅ GUMAGANA NA
 
-**Setup na tapos na (2026-07-27, session ng umaga).** Ang natitira lang ay ang
-mismong token — buo na ang lahat ng nasa ilalim nito, huwag nang ulitin:
+**Setup tapos 2026-07-27; nagamit na ang token para hilahin ang Day-1 numbers
+(2026-07-28).** Reference na lang ito — huwag nang ulitin ang setup:
 
 | Bagay | Halaga |
 | --- | --- |
@@ -146,10 +188,10 @@ mismong token — buo na ang lahat ng nasa ilalim nito, huwag nang ulitin:
 | App role ng system user | **`Manage app` (Full access)** = Administrator ✅ |
 
 Nakalagay na sa `.env`: `AD_ACCOUNT_ID=585951286230395` at ang linyang
-`ACCESS_TOKEN=` na may placeholder. **Huwag ipaste ang token sa chat** — diretso
-sa `.env`, palitan lang ang `PASTE_SYSTEM_USER_TOKEN_HERE`.
+`ACCESS_TOKEN=`. **Huwag ipaste ang token sa chat** — diretso sa `.env`.
+⚠️ **Buburahin ito ng defreezer kada reboot** — ipaste ulit mula sa password
+manager mo. Ito ang mga hakbang kung kailangang gumawa ng bago:
 
-Natitirang hakbang:
 1. **Generate token** → app `Oceanides Automation` → expiration **Never** →
    i-tick ang walo: `ads_management`, `ads_read`, `business_management`,
    `read_insights`, `pages_show_list`, `pages_read_engagement`,
@@ -237,12 +279,16 @@ Ipapadala ni Neil sa Oceanides (isang Viber message, kayang sagutin sa memorya):
 
 | Nagastos | Kung ganito | Gawin |
 | --- | --- | --- |
-| ₱1,000 (~2 araw) | **Zero** usapan | 🛑 Patay — creative o targeting, hindi ang alok |
-| ₱1,500 (~3 araw) | > ₱150/usapan | ⏸️ Hinto, tingnan ang hook rate |
-| ₱3,500 (7 araw) | ₱40–80/usapan | ✅ Malusog — tuloy |
-| ₱3,500 | > ₱120/usapan | 🛑 Hinto |
+| ₱1,000 (~2 araw) | **Zero** message | 🛑 Patay — creative o targeting, hindi ang alok |
+| ₱1,500 (~3 araw) | > ₱150/message | ⏸️ Hinto, tingnan ang hook rate |
+| ₱3,500 (7 araw) | ₱40–80/message | ✅ Okay — tuloy |
+| ₱3,500 | > ₱120/message | 🛑 Hinto |
 
 **Huwag gumalaw ng budget sa unang 3 araw** — learning phase pa, ire-reset lang.
+
+📍 **Nasaan tayo (Day 1, 2026-07-28): ₱13.33 kada message.** Malayong-malayo sa
+lahat ng kill line, at mas mura pa sa ₱40–80 target band. Ang panganib ngayon ay
+hindi na ang gastos — **ito ay kung kaya bang sagutin ang 50 message kada araw.**
 
 ---
 
@@ -268,17 +314,19 @@ nang nagbabalik ng nabook na trabaho. Hindi ngayon.
 
 ---
 
-## 🟢 NAGAWA NA SA META (2026-07-27) — huwag nang ulitin
+## 🟢 NAGAWA NA SA META — huwag nang ulitin
 
-Ginawa ng agent via Meta Ads MCP, **lahat PAUSED, ₱0.00 ang nagastos**:
+Ginawa ng agent via Meta Ads MCP noong 2026-07-27 (PAUSED, ₱0 gastos);
+**pinindot ni Neil ang ON noong 2026-07-28**:
 
 | Object | ID | Status |
 | --- | --- | --- |
-| Campaign `OCEANIDES-KM003-hook2` | `120250672316430347` | ⏸️ PAUSED · CBO ₱500/araw · OUTCOME_ENGAGEMENT |
-| Ad set `OCEANIDES-KM003-hook2-NCR-broad` | `120250672331730347` | ⏸️ PAUSED · CONVERSATIONS · MESSENGER · start 2026-07-28 00:00+08 |
-| Ad `OCEANIDES-KM003-hook2-v1` | `120250673468830347` | ⏸️ PAUSED · video `1027821226498071` · `self_ai_disclosure: OPT_IN` |
+| Campaign `OCEANIDES-KM003-hook2` | `120250672316430347` | 🟢 ACTIVE · CBO ₱500/araw · OUTCOME_ENGAGEMENT |
+| Ad set `OCEANIDES-KM003-hook2-NCR-broad` | `120250672331730347` | 🟢 ACTIVE · CONVERSATIONS · MESSENGER · start 2026-07-28 00:00+08 |
+| Ad `OCEANIDES-KM003-hook2-v1` | `120250673468830347` | 🟢 ACTIVE · video `1027821226498071` · `self_ai_disclosure: OPT_IN` |
 
-**Handa nang i-ON.** Na-verify ang render sa `ads_get_ad_preview` (MOBILE_FEED_STANDARD).
+**Tumatakbo na.** Na-verify ang render sa `ads_get_ad_preview` (MOBILE_FEED_STANDARD)
+bago pa i-ON; kumpirmado ang delivery ng Day-1 numbers sa itaas.
 
 🖼️ **Thumbnail — aral na nagkakahalaga ng buong plate.** Ang auto-thumbnail ni
 Meta ay **frame 0**, at **nag-fade in ang hook overlay** — kaya walang teksto ang
@@ -379,45 +427,49 @@ Emergency? Tawag na lang po diretso: 09XX-XXX-XXXX
 ## 🟡 Natitirang desisyon
 
 1. ✅ ~~Alin ang ilalabas~~ — **hook2, mag-isa.** Aprubado ni Neil 2026-07-27.
-2. **I-merge ba ang `feat/km-003-hook2-ab` sa main?** Naroon ang hook2 variant +
-   ang CRF 20 na pagbabago — parehong aprubado na. Naiwang unmerged para sa
-   tawag ni Neil. *(Ang unmerged branch ang paulit-ulit na dahilan kung bakit
-   naiisip ng agent na "hindi pa gawa" ang isang bagay — see CLAUDE.md.)*
-3. **Creative diversification — orasan, hindi "kalaunan."** Humihingi ang
-   playbook ng **4–6 na tunay na magkakaibang creative** sa isang ad set;
-   isa ang ilalabas natin. Sinadya: kalibrasyon ang linggo 1, at hindi ka
-   makakagawa ng pang-lima nang bulag. **Pero 5–7 araw lang** — lampas doon at
-   ang dupe-CPM at creative fatigue na ang kakain ng badyet. Brief kina
-   `grifon-cmo` + `grifon-creative-director` para sa 2–3 **bagong konsepto**
-   (ibang panimulang eksena/format — hindi ibang hook lang sa parehong katawan).
-   Nakahanda na ang isa: **Option C, ang anti-scam reframe**
+2. ✅ ~~I-merge ang `feat/km-003-hook2-ab`~~ — **TAPOS 2026-07-27.**
+3. 🔴 **Creative diversification — tumatakbo na ang orasan (simula 2026-07-28).**
+   Humihingi ang playbook ng **4–6 na tunay na magkakaibang creative** sa isang
+   ad set; **isa** ang meron tayo. Sinadya iyon: testing week ang linggo 1, at
+   hindi ka makakagawa ng pang-lima nang bulag. **Pero 5–7 araw lang** — lampas
+   doon at ang dupe-CPM at creative fatigue na ang kakain ng budget.
+   **Deadline: bago mag-2026-08-04.** Brief kina `grifon-cmo` +
+   `grifon-creative-director` para sa 2–3 **bagong konsepto** (ibang panimulang
+   eksena/format — hindi ibang hook lang sa parehong katawan), kasama ang
+   **image ad**. Nakahanda na ang isa: **Option C, ang anti-scam reframe**
    (`Presyo Muna. Tapos Trabaho.`) — Product Aware siya kaya mali sa malamig na
    audience, pero tama sa **retargeting** ng mga nanood pero hindi nag-message.
 4. **Sakop sa labas ng NCR** — kumpirmahin sa Oceanides kung may trak sa
    Bulacan/Rizal/Cavite/Laguna. Hanggang wala, NCR lang.
+5. **Kayang habulin ba ang 50 message kada araw?** Bagong tanong ito, dulot ng
+   Day-1 volume. Kung hindi, hindi na ang ad ang bottleneck — ang reply speed na.
+   Ang sagot dito ang magsasabi kung dapat bang dagdagan o bawasan ang budget
+   pagkatapos ng learning phase.
 
 ---
 
-## ✅ PRE-FLIGHT — huwag mag-publish kung may hindi pa tapos
+## ✅ PRE-FLIGHT — natapos lahat bago i-ON (2026-07-28)
 
-- [ ] **Messenger instant reply naka-set up** (kopya sa itaas) — kung wala, may
-      darating na usapan na walang sasagot. **Ito ang pinakamadalas na aksidente.**
-- [ ] **Number nasa Page About + Call button** — hindi sa caption
-- [ ] **3–5 organic post sa Page** — titingnan nila ang Page bago mag-message;
-      blangkong Page = patay na tiwala at mas mataas ang review risk
-- [ ] **I-post ang video organically** bago siya gawing ad
-- [ ] Page category **Local service**, may profile + cover + About
-- [ ] **AI label ON** (ad level, Advantage+ creative section) — AI-generated ang video
-- [ ] **Text improvements + Translate text OFF**
-- [ ] Page identity = **Kuya Marvin ng Oceanides**, hindi ang Grifon page
-- [ ] Payment method aktibo (Visa …5464 — ₱1,228.74/araw limit, pasok ang ₱500)
-- [ ] I-log sa [`workflows/ad_performance_ledger.md`](../../../../workflows/ad_performance_ledger.md)
-      paglabas ng numbers — **wala pa itong laman**, kaya canon pa rin ang takbo
-      ng ad-strategist, hindi sariling data natin
+- [x] **Messenger instant reply naka-set up** (kopya sa itaas)
+- [x] **Number nasa Page About + Call button** — hindi sa caption
+- [x] **3–5 organic post sa Page**
+- [x] Page category **Local service**, may profile + cover + About
+- [x] **AI label ON** (ad level, Advantage+ creative section)
+- [x] **Text improvements + Translate text OFF**
+- [x] Page identity = **Kuya Marvin ng Oceanides**, hindi ang Grifon page
+- [x] Payment method aktibo (Visa …5464 — ₱1,228.74/araw limit, pasok ang ₱500)
+- [ ] **I-log sa [`workflows/ad_performance_ledger.md`](../../../../workflows/ad_performance_ledger.md)** — 🔴 **BUKAS PA.**
+      Sa Day 7 ito, kapag may booking count na si Neil. **Wala pa itong laman**,
+      kaya canon pa rin ang takbo ng ad-strategist, hindi sariling data natin.
 
-**Day 7 — ibigay sa ad-strategist:** gastos, usapan, hook rate, hold rate, CPM.
-Ito ang magiging **unang entry** ng ledger, at doon papasok ang brief para sa
-2–3 bagong konsepto.
+*(Hindi na kailangan ang lumang item na "i-post ang video organically" — may
+sarili nang dark post ang ad, `1184710811397498_122106985077399203`, video
+`1063414612882026`, na-verify 2026-07-27.)*
+
+**Day 7 — ibigay sa ad-strategist:** gastos, messages, hook rate, hold rate, CPM
+(kukunin ng agent) + **booking count at halaga** (kay Neil lang galing). Ito ang
+magiging **unang entry** ng ledger, at doon papasok ang brief para sa 2–3 bagong
+konsepto.
 
 ---
 
