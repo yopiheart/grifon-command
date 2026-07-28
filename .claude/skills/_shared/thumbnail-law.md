@@ -98,14 +98,26 @@ content (`18, 19`). Neutral/menacing when the premise is threat (`13`).
 Forcing extreme shock on every frame produces the screaming-face look that reads instantly as AI
 slop. **Match the expression to the premise; default warm, escalate only when the scene earns it.**
 
-## The contrast device — this is the Purple Cow, rendered
+## The contrast device — the ENGINE, not a rule among rules
 
 Recurs in `16` ($1 vs $1B), `21` (baby vs elderly), `127` (slime vs ice), `120` (cash vs a call to
 Mom), `132` (supercar vs wall). **5 of 15.**
 
 One frame that poses a question you cannot answer without watching. Not "here is a thing" — "here
-are two things that should not be in the same picture." When a concept has no contrast device, ask
-what the second pole should be *before* touching the visual.
+are two things that should not be in the same picture."
+
+**THE TWO-POLE TEST — run it before you brief or generate anything:**
+
+> Name the two poles in one sentence. If you can't, you don't have a thumbnail yet — you have a
+> photograph. Go back to the concept; do not proceed to the visual.
+
+**Why this outranks the text law.** Proven the hard way on the 2026-07-28 test run: a generated
+Grifon frame obeyed every branch of the text law perfectly — zero text, warm smile, saturated,
+photographic, correct face placement — and was completely forgettable. A man standing in front of
+colourful screens. Compliant and dead, because there was no second pole and therefore no question.
+
+The text law is **necessary but not sufficient.** It stops you from ruining a good frame; only the
+contrast device makes the frame worth stopping for. When time is short, spend it here.
 
 ## Short-form is a FRAME, not a composite
 
@@ -159,6 +171,39 @@ proof passing cleanly through the no-fake-proof constraint, and it beats any cap
 (Standing: never use "Malabanan".)
 
 ---
+
+## Register: exaggerate the SITUATION, never the RENDERING
+
+The law's lighting layer (saturated, high-key, rim-lit, hyper-real commercial photography) collides
+head-on with the believability register that governs real-person content —
+[`marvin-avatar`](../marvin-avatar/SKILL.md) mandates flat overcast, no rim light, matte skin, never
+cinematic. Surfaced on the 2026-07-28 test run. Resolve it this way, not by picking a side:
+
+**MrBeast's frames are not faked — his situations are.** `120` real cash in a real briefcase, `274`
+a real taxi and real hands, `130` a real flamethrower and a real pizza, `131` a real printed board,
+`117` a raw video frame. He stages something genuinely remarkable and photographs it straight. The
+exaggeration lives in *what happened*, not in *how it was rendered*.
+
+So the split is by **subject**, and the reason is trust exposure, not taste:
+
+| Subject | Rendering | Situation |
+|---|---|---|
+| **Grifon** (SaaS, no real named person) | stylize freely — composite, saturate, hyper-real. No trust liability. | push hard |
+| **Kuya Marvin / Oceanides**, and any real named person or client | **believability register wins** — flat overcast, matte skin, phone-camera, per `marvin-avatar` | push hard |
+
+A viewer who clocks a MrBeast thumbnail as staged thinks *"this looks fun."* A Filipino homeowner
+who clocks Marvin's photo as AI thinks *"is this company even real?"* — and then does not let him
+into their house. MrBeast spends 500M subscribers' worth of accumulated trust; a service brand
+pre-launch has none. Identical stylization, completely different bill.
+
+**This has already been paid for once:** the blue vacuum tanker was retired from Marvin content
+because Oceanides owns no such truck — logged as a believability/truth risk. A composited scene
+implying equipment, scale, or results they don't have is not a style choice, it is a **claim**.
+
+Marvin's contrast devices must therefore be *true ones*, and he already has them: the real
+before/after pair ([`clients/oceanides/assets/`](../../../clients/oceanides/assets/) `before-1.jpg`
+/ `after-1.jpg`), the real DENR and BIR badges, the real van, real scale, real elapsed time. True
+poles hit harder than invented ones anyway — they survive the comments section.
 
 ## What this does NOT license
 
