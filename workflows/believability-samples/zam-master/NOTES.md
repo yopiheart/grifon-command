@@ -33,14 +33,18 @@ All three are **strict eye level** (lens at her eye height — no selfie tilt, n
 | ~~`opt-B-outdoor-candid.png`~~ | Outdoor candid — Manila sidewalk, overcast, mid-step turn-back | **DELETED 2026-07-28 (Neil: hindi pasado).** Recipe text below stays reusable. |
 | `opt-C-presenter.png` | Presenter — seated, home content corner, talking-to-camera, chest-up | Ads / the future avatar plate + Veo talking-head anchor |
 
-**STATUS: ⬆ SUPERSEDED — `zam-master-v2-presenter.png` is the Zam master (Neil:
-"PASADO", 2026-07-28 cafe session).** Built from the NEW 4-photo real ref set
-(`../generate-zam-images/assets/zam-ref-1..4`, Viber 2026-07-28) with an explicit
-skin-texture-restoration block — the fix for the beauty-filter/AI-look problem that
-plagued every generation anchored on Zam's chat-sent photos. Anchor stack + the
-texture-restore rule live in `generate-zam-images/SKILL.md`. `opt-C-presenter.png`
-(approved earlier the same day, built on the OLD low-quality refs) is demoted to
-historical reference — do not anchor identity on it.
+**STATUS: ✅ `opt-C-presenter.png` is the Zam master — REINSTATED 2026-07-28
+(same-day arc, bank this so it never repeats):** a 4-photo real ref set from Zam
+(Viber) was banked, a `zam-master-v2-presenter` was built from it (briefly PASADO),
+and street/terrace/dusk lines were generated through v4 + one Veo 3.1-lite motion
+test. Final Neil verdict: **bagsak — everything derived from Zam's chat-sent photos
+reads as AI** ("di talaga maganda ang reference na pinapasa niya"). ENTIRE derived
+line purged: the 4 refs, v2 master, all v2/v3/v4 renders, the Veo test. Recovery
+point if ever needed: commit `4a04a26`. **Standing doctrine: anchor Zam like a
+fully-AI persona — on the approved AI master + `zam-approved-scene-reference`
+(body) — NEVER on chat-sent photos, until a proper ref shoot exists** (rear cam,
+no beauty filter, window daylight, angle set + friend-taken waist-up body shot,
+sent as FILES). Rule lives in `generate-zam-images/SKILL.md`.
 Options A and B were kept briefly as unapproved registers, then **deleted 2026-07-28
 (Neil: hindi pasado)** — their scene-recipe text below remains reusable; images
 recoverable from git history.

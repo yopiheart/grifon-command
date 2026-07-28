@@ -11,11 +11,13 @@ Turn a short scene idea into a finished image of Zam. Do not make the user write
 
 Resolve the directory containing this `SKILL.md`, then use these bundled files in this order:
 
-1. `assets/zam-ref-1-front-neutral.jpg` — primary REAL front identity reference (2026-07-28 Viber set). ⚠ The whole real set is front-cam **beauty-filter smoothed** — every prompt MUST carry a skin-texture-restoration block (visible pores, vellus hair, T-zone sheen, sensor grain; "do NOT reproduce the airbrushed smoothness").
-2. `assets/zam-ref-3-three-quarter-right.jpg` (or `zam-ref-4-three-quarter-left.jpg`, match the requested angle) — real three-quarter structure reference. Also available: `zam-ref-2-front-smile.jpg`.
-3. `../zam-master/zam-master-v2-presenter.png` — **the approved Zam master (Neil, 2026-07-28)**, generated FROM the real set with texture restored. Use as the framing / body-integration / image-character anchor — label it "not for facial identity" so it never outvotes the real photos.
+1. `../zam-master/opt-C-presenter.png` — **the approved Zam master (Neil, 2026-07-28; REINSTATED same day after the v2 purge)** — the source of truth for her face, beauty level and skin character.
+2. `assets/zam-approved-scene-reference.png` — approved BODY-INTEGRATION reference: body build, neck, shoulders, head-to-body scale (the anti-"kinabit" anchor — always include it when framing goes below chest-up).
+3. `assets/zam-face-reference.jpg` — legacy raw identity tether; optional third anchor.
 
-Pass at least anchors 1 + 3 for every new Zam image; add the matching angle ref when the pose is off-front. Label their roles in the prompt. Legacy anchors (`assets/zam-face-reference.jpg`, `assets/zam-approved-scene-reference.png`, `../zam-master/opt-C-presenter.png`) are SUPERSEDED 2026-07-28 — do not use them for identity; Zam's chat-sent photos are also never anchors (low-res + filtered — the documented AI-look root cause). An attached user image may be an additional scene, pose, outfit, or style reference; never let it replace Zam's identity anchors unless the user explicitly asks.
+**HARD RULE (Neil verdict, 2026-07-28): photos Zam sends over chat are NEVER anchors — in ANY batch.** Two batches were tried (the original low-res set, then a 4-photo Viber set with front/three-quarter angles); everything generated from them read as AI ("bagsak, AI talaga") and the entire derived line — including the short-lived `zam-master-v2-presenter` — was purged (recoverable at git tag/commit `4a04a26` if ever needed). Zam is anchored the way the fully-AI personas are: on the approved AI master, not on her real photos, until a PROPER ref shoot exists (rear camera, beauty filter off, window daylight, front/3-4/smile angles + a friend-taken waist-up body shot, sent as files not chat images).
+
+Every prompt still carries the skin-texture block (visible pores, vellus hair, T-zone sheen, sensor grain) — the master already has real texture; keep it. An attached user image may be an additional scene, pose, outfit, or style reference; never let it replace Zam's identity anchors unless the user explicitly asks.
 
 ## Expand a short request
 
