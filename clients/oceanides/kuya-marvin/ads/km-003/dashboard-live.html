@@ -120,6 +120,19 @@
     color: var(--on-surface); background: var(--danger);
   }
   .demo.show { display: block; }
+  .banner .code {
+    display: inline-block; margin-top: 6px;
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .04em;
+    color: var(--on-surface-dim); word-break: break-word;
+  }
+  .diag {
+    display: none; margin: 0 16px 12px; padding: 10px 12px; border-radius: 3px;
+    font-family: var(--mono); font-size: 10px; line-height: 1.6;
+    letter-spacing: .02em; color: var(--on-surface-dim);
+    background: var(--surface-deep); border: 1px dashed rgba(143,179,221,.35);
+    word-break: break-word;
+  }
+  .diag.show { display: block; }
 
   /* KPI cells */
   .kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(255,255,255,.12); }
@@ -226,6 +239,7 @@
 
   <div class="demo" id="demoFlag">Test mode. Gawa-gawa lang ang numero dito, hindi ito galing sa Meta.</div>
   <div class="banner" id="banner"></div>
+  <div class="diag" id="diag"></div>
 
   <section class="panel">
     <span class="tab">Total simula nang mag-start</span>
@@ -470,25 +484,68 @@
     document.querySelector('.page').classList.toggle('stale', !!last.stale);
   }
 
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  }
+  // Laging isama ang code + message. Kung walang code na nakikita, bulag ang
+  // pag-aayos — ito ang mismong dahilan kung bakit hindi ma-diagnose ang
+  // unang bersyon nito (Neil, 2026-07-28).
+  function detail(err) {
+    var bits = [];
+    if (err && err.code) bits.push(esc(err.code));
+    if (err && err.message) bits.push(esc(err.message));
+    if (!bits.length) bits.push('walang detalye');
+    return '<br><span class="code">' + bits.join(' — ') + '</span>';
+  }
+
   function onError(err) {
     var code = err && err.code;
     if (code === 'needs_reauth') {
       last.life = null; last.daily = null;
-      banner('<strong>Kailangan i-reconnect ang Meta Ads.</strong> Punta sa claude.ai Settings, Connectors, i-reconnect ang Meta Ads, tapos i-reload ito.');
+      banner('<strong>Kailangan i-reconnect ang Meta Ads.</strong> Punta sa claude.ai Settings, Connectors, i-reconnect ang Meta Ads, tapos i-reload ito.' + detail(err));
     } else if (code === 'server_not_connected' || code === 'selection_required') {
       last.life = null; last.daily = null;
-      banner('<strong>Walang Meta Ads connector dito.</strong> I-add o piliin ang Meta Ads sa claude.ai Settings, Connectors.');
+      banner('<strong>Walang Meta Ads connector dito.</strong> I-add o piliin ang Meta Ads sa claude.ai Settings, Connectors.' + detail(err));
     } else if (code === 'not_granted' || code === 'capability_disabled' || code === 'capability_removed') {
-      banner('<strong>Hindi live ang view na ito.</strong> Buksan mo sa claude.ai para gumana yung live na numero.');
+      banner('<strong>Hindi live ang view na ito.</strong> Buksan mo sa claude.ai para gumana yung live na numero.' + detail(err));
     } else if (code === 'blocked_by_policy' || code === 'approval_required') {
-      banner('<strong>Naka-block yung Meta Ads call.</strong> Hindi ito maaayos ng reload, kailangan ng approval.');
+      banner('<strong>Naka-block yung Meta Ads call.</strong> Hindi ito maaayos ng reload, kailangan ng approval.' + detail(err));
+    } else if (code === 'not_in_manifest') {
+      banner('<strong>Wala sa manifest ang tool na tinawag.</strong> Kailangan itong i-republish, hindi mo ito kayang ayusin diyan.' + detail(err));
     } else if (code === 'tool_error') {
       last.stale = true; document.querySelector('.page').classList.add('stale');
-      banner('<strong>May error na binalik ang Meta:</strong> ' + (err.message || 'walang detalye') + '. Yung huling numero pa rin ang nasa screen.');
+      banner('<strong>May error na binalik ang Meta.</strong> Yung huling numero pa rin ang nasa screen.' + detail(err));
     } else {
       last.stale = true; document.querySelector('.page').classList.add('stale');
-      if (!last.life) banner('<strong>Hindi ma-reach ang Meta ngayon.</strong> Susubukan ulit automatic.');
+      if (!last.life) banner('<strong>Hindi ma-reach ang Meta ngayon.</strong> Susubukan ulit automatic.' + detail(err));
     }
+    diagnose();
+  }
+
+  // Isang beses lang: ilista kung anong connector at tool ang TALAGANG
+  // nakikita ng frame. Dito lumalabas ang maling server name o tool name.
+  var diagnosed = false;
+  function diagnose() {
+    if (diagnosed || !window.claude || !window.claude.mcp || !window.claude.mcp.listTools) return;
+    diagnosed = true;
+    window.claude.mcp.listTools().then(function (res) {
+      var servers = (res && res.servers) || [];
+      var txt = servers.length
+        ? servers.map(function (s) {
+            return s.server + ' [' + s.authStatus + '] → ' +
+              ((s.tools || []).map(function (t) { return t.name; }).join(', ') || 'walang tool');
+          }).join(' · ')
+        : 'walang connector na nakikita ng page na ito';
+      var d = $('diag');
+      d.innerHTML = 'Nakikita ng page: ' + esc(txt) + '<br>Hinahanap: ' + esc(SERVER) + ' → ' + esc(TOOL);
+      d.className = 'diag show';
+    }).catch(function (e) {
+      var d = $('diag');
+      d.innerHTML = 'listTools failed: ' + esc((e && e.code) || '') + ' ' + esc((e && e.message) || '');
+      d.className = 'diag show';
+    });
   }
 
   function onData(which, result) {
@@ -525,21 +582,43 @@
       banner('<strong>Hindi live ang view na ito.</strong> Buksan mo sa claude.ai para makita yung totoong numero.');
       return;
     }
+
+    // callTool ang PANGUNAHING daan. Ang watchTool ay tinatanggihan kapag ang
+    // connector ay nag-declare ng readOnlyHint:false, kaya hindi siya pwedeng
+    // maging tanging paraan para makakuha ng numero.
+    function pull(which, input, refresh) {
+      return window.claude.mcp.callTool(SERVER, TOOL, input, {
+        cache: refresh ? { refresh: true } : { staleTime: 120000, gcTime: 3600000 }
+      }).then(function (res) { onData(which, res); return true; })
+        .catch(function (err) { onError(err); return false; });
+    }
+    function pullAll(refresh) {
+      return Promise.all([pull('life', BASE, refresh), pull('daily', DAILY, refresh)]);
+    }
+
+    pullAll(false);
+    setInterval(function () { pullAll(false); }, 300000);
+
+    // Live updates kung pinapayagan. Kapag hindi, may polling pa rin sa itaas,
+    // kaya hindi na kailangang ipakita ang registration error na ito.
     var opts = { cache: { staleTime: 120000, gcTime: 3600000 }, refetchInterval: 300000 };
-    window.claude.mcp.watchTool(SERVER, TOOL, BASE, function (ev) {
-      if (ev.type === 'data') onData('life', ev.result); else onError(ev.error);
-    }, opts);
-    window.claude.mcp.watchTool(SERVER, TOOL, DAILY, function (ev) {
-      if (ev.type === 'data') onData('daily', ev.result); else onError(ev.error);
-    }, opts);
+    try {
+      window.claude.mcp.watchTool(SERVER, TOOL, BASE, function (ev) {
+        if (ev.type === 'data') onData('life', ev.result);
+      }, opts);
+      window.claude.mcp.watchTool(SERVER, TOOL, DAILY, function (ev) {
+        if (ev.type === 'data') onData('daily', ev.result);
+      }, opts);
+    } catch (e) { /* polling na lang */ }
+
     $('refreshBtn').addEventListener('click', function () {
       var b = $('refreshBtn');
       b.textContent = '↻ …';
-      window.claude.mcp.invalidate(SERVER, TOOL)
-        .catch(function () {})
-        .then(function () { setTimeout(function () { b.textContent = '↻ Refresh'; }, 1200); });
+      pullAll(true).then(function () { b.textContent = '↻ Refresh'; });
     });
+    return;
   }
+
   boot();
 })();
 </script>

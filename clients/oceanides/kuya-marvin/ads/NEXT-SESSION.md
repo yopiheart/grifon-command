@@ -65,9 +65,11 @@ ano. Ang natitira ay pagbabantay at ang Day 7.
    bagong plate na may standing/working framing — hindi selfie. 🔴 **Puting van
    ang totoong fleet** (`profile-assets/`); bawal ang asul na tanker, imbento
    siya (tingnan ang `clients/oceanides/DESIGN.md` Don'ts).
-3. **Viber message sa Oceanides** — ang tatlong tanong (nasa ibaba). Kumpirmahin
-   din kung may trak sa labas ng NCR (Bulacan/Rizal/Cavite/Laguna). Hanggang
-   walang sagot, NCR lang ang targeting.
+3. **Viber message sa Oceanides** — ang tatlong tanong (nasa ibaba).
+   ✅ ~~may trak ba sa labas ng NCR~~ — **KUMPIRMADO NI NEIL 2026-07-28: MERON.**
+   ⚠️ **Kulang pa: ALIN ang mga lugar.** Hindi pwedeng hulaan ang targeting —
+   kailangan ng listahan (Bulacan? Rizal? Cavite? Laguna? gaano kalayo?) bago
+   galawin ang ad set. Isama sa parehong Viber message.
 
 ### ✅ Tapos na — huwag nang balikan
 - **3–5 organic post** — nakapost. Run sheet: [`organic/PAGE-LAUNCH-POSTS.md`](../organic/PAGE-LAUNCH-POSTS.md).
@@ -273,7 +275,8 @@ Ipapadala ni Neil sa Oceanides (isang Viber message, kayang sagutin sa memorya):
 > *Boss, para ma-set up ko nang tama ang ads: (1) magkano ang huling 5 siphoning
 > job nyo? (2) sa 10 taong nagme-message, ilan ang tumutuloy magpa-book?
 > (3) sa bawat ₱1,000 na singil, magkano ang natitira pagkatapos ng gastos —
-> trak, gas, tao?*
+> trak, gas, tao? (4) saan-saan po kayo pwedeng pumunta sa labas ng Metro
+> Manila? Ilista nyo lang ang lugar.*
 
 ### KILL GATES — Linggo 1 (walang kailangang numero)
 
@@ -300,7 +303,7 @@ hindi na ang gastos — **ito ay kung kaya bang sagutin ang 50 message kada araw
 | Ad credit | **WALA** | Ang ₱5,156 ay **billing threshold**, hindi libreng pera — kung kailan sisingilin ang Visa ...5464, hindi kung magkano ang libre. Babayaran ang bawat piso. |
 | Pixel | **Huwag gumawa** | Messages campaign ito — `messaging_conversation_started` sa antas ng Page, walang pixel. Ang tanging naka-attach na dataset ay **"Grifon Pixel"** (`1921429268517231`) — sariling SaaS pixel ni Neil. Huwag itong i-tick sa ad set. |
 | Objective | **Engagement → Messaging apps**, maximize conversations | Kailangan ng ~50 events/linggo para makalabas sa learning. Sa ₱500/araw: usapan = 44–87/linggo ✅; sales = ~10/linggo ❌. Ang Sales → Messaging ay kailangan din ng CAPI for Business Messaging na wala pa tayo. |
-| Structure | 1 CBO campaign, 1 ad set, **NCR + Advantage+** | Playbook para sa <₱1k/araw. ⚠️ **NAITAMA 2026-07-27: "PH broad" → NCR.** May trak ang Oceanides — ang PH broad ay nagbabayad ng impressions sa Davao/Cebu na hindi naman kayang puntahan. **Ang geo ang tanging targeting lever na hindi dapat pinapabroad ng local service business.** Advantage+ pa rin ang audience, sa loob lang ng NCR. Palawakin kapag kumpirmado na may trak sa Bulacan/Rizal/Cavite/Laguna (may Page silang "Oceanides Malabanan Bulacan Branch" — hindi pa nakumpirma). |
+| Structure | 1 CBO campaign, 1 ad set, **NCR + Advantage+** | Playbook para sa <₱1k/araw. ⚠️ **NAITAMA 2026-07-27: "PH broad" → NCR.** May trak ang Oceanides — ang PH broad ay nagbabayad ng impressions sa Davao/Cebu na hindi naman kayang puntahan. **Ang geo ang tanging targeting lever na hindi dapat pinapabroad ng local service business.** Advantage+ pa rin ang audience, sa loob lang ng NCR. ✅ **Kumpirmado ni Neil 2026-07-28 na may sakop sa labas ng NCR** (may Page silang "Oceanides Malabanan Bulacan Branch"), pero **hindi pa alam kung alin at hindi pa dapat galawin** — tingnan ang Natitirang desisyon #4. |
 | Creative na ilalabas | **hook2 mag-isa** — `KM-003-AD-hook2-v1.mp4` | Neil-approved 2026-07-27. Isa lang, hindi A/B: sa ₱500/araw walang sample para resolbahin ang hook-level difference, at ang hatiin ang ~50 events/linggo ay binabagal ang paglabas sa learning phase habang binabayaran ang dupe-CPM. Ang linggo 1 ay **kalibrasyon**, isang variable lang. |
 | Caption | Option A — mechanism reframe | Isa lang, hindi dalawa: pareho ang video byte-for-byte, kaya ang pangalawang ad ay purong cosmetic dupe. Kung gusto ng copy test sa hinaharap, gamitin ang **maraming primary-text option sa loob ng ISANG ad** (native, walang dupe, hindi naghahati ng learning) — hindi pangalawang ad. |
 | Contact number | **Wala sa caption** | Naka-optimize sa `messaging_conversation_started`; ang tumatawag ay hindi nabibilang na conversion at nawawala ang attribution. Ilagay sa **Page About + Call button + Messenger instant reply** — doon, pumuputok muna ang conversion event bago nila makita ang number. |
@@ -439,8 +442,16 @@ Emergency? Tawag na lang po diretso: 09XX-XXX-XXXX
    **image ad**. Nakahanda na ang isa: **Option C, ang anti-scam reframe**
    (`Presyo Muna. Tapos Trabaho.`) — Product Aware siya kaya mali sa malamig na
    audience, pero tama sa **retargeting** ng mga nanood pero hindi nag-message.
-4. **Sakop sa labas ng NCR** — kumpirmahin sa Oceanides kung may trak sa
-   Bulacan/Rizal/Cavite/Laguna. Hanggang wala, NCR lang.
+4. 🟡 **Sakop sa labas ng NCR — KUMPIRMADO NA MERON (Neil, 2026-07-28), pero
+   HUWAG MUNA GALAWIN.** Dalawang dahilan bago palawakin:
+   **(a) Learning phase.** Ang paggalaw ng targeting ay nagre-reset nito, at
+   nasa ₱13.33 kada message tayo — hindi mo sinisira ang gumagana habang
+   nag-aaral pa siya. Pinakamaaga: pagkatapos ng Day 7.
+   **(b) Hindi pa alam kung ALIN.** "May trak sa labas ng NCR" ay hindi
+   targeting spec. Kailangan ng listahan ng lugar bago baguhin ang radius o
+   idagdag ang region — bawal manghula ng geo.
+   Kapag alam na: **hiwalay na ad set** ang tama, hindi pagpapalawak ng
+   kasalukuyan — para hindi mahaluan ang NCR data na binabayaran na natin.
 5. **Kayang habulin ba ang 50 message kada araw?** Bagong tanong ito, dulot ng
    Day-1 volume. Kung hindi, hindi na ang ad ang bottleneck — ang reply speed na.
    Ang sagot dito ang magsasabi kung dapat bang dagdagan o bawasan ang budget
