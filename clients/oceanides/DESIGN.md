@@ -200,6 +200,21 @@ amber (floor sa itaas). Walang paper surface sa video overlays o dashboards.
   snapshot. Source: `kuya-marvin/ads/km-003/dashboard-live.html`. Pumasa sa
   390×844 gate.
   `https://claude.ai/code/artifact/4d411162-ba99-4e99-bd28-92ffc2dca6ba`
+
+  🔴 **Tatlong aral sa `mcp`-capability artifacts** (2026-07-29, tatlong deploy
+  bago gumana — huwag nang ulitin):
+  1. **DISPLAY NAME ang tawag sa `callTool`, hindi ang tool-prefix segment.**
+     Ang `claude_ai_Meta_Ads` ay `not_in_manifest`; **`Meta Ads`** ang tama.
+     Nag-resolve nang tama ang MANIFEST sa segment — ang CALL lang ang mali,
+     kaya mukhang tama ang lahat mula sa labas. **Huwag hulaan: kunin ang
+     pangalan sa `listTools()` bago tumawag** (tingnan ang `resolveServer()`).
+  2. **`callTool` ang pangunahing daan, hindi `watchTool`.** Tinatanggihan ang
+     `watchTool` kapag may `readOnlyHint:false` ang tool, at kapag iyon lang
+     ang daan mo, walang numerong lalabas. Gamitin ang `callTool` +
+     `setInterval`; ang `watchTool` ay enhancement lang.
+  3. **Ipakita ang error `code` sa screen.** Ang generic na "hindi ma-reach"
+     na banner ay nagpabulag sa dalawang deploy. Isang `listTools()` diagnostic
+     box ang nagsabi ng sagot sa isang tingin.
 - KM-003 Launch dashboard — Abyss Command (option, hindi pinili):
   `https://claude.ai/code/artifact/51827976-482d-45d2-9f86-771aace25449`
 - Kuya Marvin Messenger cheat sheet:

@@ -334,7 +334,12 @@
 
 <script>
 (function () {
-  var SERVER = 'claude_ai_Meta_Ads';
+  // DISPLAY NAME ang gamit ng connector, hindi ang tool-prefix segment.
+  // Ang `claude_ai_Meta_Ads` ay tinanggihan ng `not_in_manifest` (2026-07-29) —
+  // "Meta Ads" ang totoong pangalan. Huwag hulaan ito: ang resolveServer() sa
+  // ibaba ang kumukuha ng tunay na pangalan mula mismo sa listTools().
+  var SERVER = 'Meta Ads';
+  var SERVER_CANDIDATES = ['Meta Ads', 'claude_ai_Meta_Ads'];
   var TOOL = 'ads_get_ad_entities';
   var ASK = 'live dashboard ng KM-003 ni Kuya Marvin: messages, gastos, kill gates';
   var FIELDS = ['id','name','effective_status','amount_spent','results','cost_per_result',
@@ -596,20 +601,46 @@
       return Promise.all([pull('life', BASE, refresh), pull('daily', DAILY, refresh)]);
     }
 
-    pullAll(false);
-    setInterval(function () { pullAll(false); }, 300000);
+    // Kunin ang TOTOONG server name bago tumawag. Ang manifest ay tumatanggap
+    // ng display name, pero iba-iba ang tawag dito sa bawat viewer, kaya
+    // hulaan = `not_in_manifest`. Ito ang nagpabagsak ng unang dalawang deploy.
+    function resolveServer() {
+      if (!window.claude.mcp.listTools) return Promise.resolve();
+      return window.claude.mcp.listTools().then(function (res) {
+        var servers = (res && res.servers) || [];
+        var hit = null;
+        for (var i = 0; i < servers.length; i++) {
+          var tools = servers[i].tools || [];
+          for (var j = 0; j < tools.length; j++) {
+            if (tools[j].name === TOOL) { hit = servers[i].server; break; }
+          }
+          if (hit) break;
+        }
+        if (!hit) {
+          for (var k = 0; k < servers.length; k++) {
+            if (SERVER_CANDIDATES.indexOf(servers[k].server) !== -1) { hit = servers[k].server; break; }
+          }
+        }
+        if (hit) SERVER = hit;
+      }).catch(function () { /* panatilihin ang default */ });
+    }
 
-    // Live updates kung pinapayagan. Kapag hindi, may polling pa rin sa itaas,
-    // kaya hindi na kailangang ipakita ang registration error na ito.
-    var opts = { cache: { staleTime: 120000, gcTime: 3600000 }, refetchInterval: 300000 };
-    try {
-      window.claude.mcp.watchTool(SERVER, TOOL, BASE, function (ev) {
-        if (ev.type === 'data') onData('life', ev.result);
-      }, opts);
-      window.claude.mcp.watchTool(SERVER, TOOL, DAILY, function (ev) {
-        if (ev.type === 'data') onData('daily', ev.result);
-      }, opts);
-    } catch (e) { /* polling na lang */ }
+    resolveServer().then(function () {
+      pullAll(false);
+      setInterval(function () { pullAll(false); }, 300000);
+
+      // Live updates kung pinapayagan. Kapag hindi, may polling pa rin sa
+      // itaas, kaya hindi na kailangang ipakita ang registration error nito.
+      var opts = { cache: { staleTime: 120000, gcTime: 3600000 }, refetchInterval: 300000 };
+      try {
+        window.claude.mcp.watchTool(SERVER, TOOL, BASE, function (ev) {
+          if (ev.type === 'data') onData('life', ev.result);
+        }, opts);
+        window.claude.mcp.watchTool(SERVER, TOOL, DAILY, function (ev) {
+          if (ev.type === 'data') onData('daily', ev.result);
+        }, opts);
+      } catch (e) { /* polling na lang */ }
+    });
 
     $('refreshBtn').addEventListener('click', function () {
       var b = $('refreshBtn');
