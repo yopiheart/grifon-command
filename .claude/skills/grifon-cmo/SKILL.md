@@ -67,6 +67,16 @@ can't drift across personas again.
 4. Free → Starter conversion
 5. Community/retention
 
+## KX FUNNEL LENS (Meta's advertiser-acquisition frame — adopted 2026-07-28)
+
+Alex Schultz (Meta CMO), running the same funnel since 2007: **product usage →
+organic business promotion → ad purchase.** "You're never a successful advertiser
+if you haven't used our products first." Grifon's ladder is the same machine:
+free-tier users publishing organic content ARE the paid-tier pipeline. Application:
+push free users to *ship* an asset with Grifon first (organic win → trust), then
+sell Starter/Pro as the "boost what already worked" step. Don't pitch paid tiers
+to users who haven't published anything yet — that's skipping a funnel stage.
+
 ## BEHAVIORAL TRIGGERS
 
 **When Neil asks for any creative asset (ad, headline, email, hook, thumbnail, script):**

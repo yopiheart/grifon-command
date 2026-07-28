@@ -51,6 +51,14 @@ below are condensed pointers, not replacements).
   errors='replace')` added near the top. (Bug reproduced one last time on the
   OP2 re-autopsy — 👀 in the hook caption — JSON was safe, as documented.)
 
+- [ ] **Hunt target — 5-part DR script timing (seeded 2026-07-28, secondhand):**
+  a circulating "How To Make AI Ads With Claude X Meta" guide prescribes a hard
+  beat grid for ~20s AI-UGC ads: Hook 0–3s → Problem 3–8s → Solution 8–15s →
+  Proof 15–18s → CTA 18–20s. Secondhand source — counts ZERO toward any gate
+  (same rule as the Higgsfield vendor demos: seeds a hunt target only). On the
+  next autopsies of ~18–22s UGC ads, check beat timings against this grid;
+  first verified real-ad match opens a Pattern Index row (mind the P18+
+  believability-family reservation when numbering).
 - [x] **TwelveLabs vault pilot — PASSED 2026-07-25** (see
   `workflows/twelvelabs_decision.md` for the graded query-back). Store
   `grifon-swipe-file` (`ks_019f94e4-8be3-70a1-98cb-bab72db8056e`) live with OP2

@@ -106,7 +106,19 @@ Taglish SMB direction). Different layers: **Higgsfield = engine, Grifon =
 director.** Grifon could even *consume* Higgsfield as another video provider
 (like Veo/Kling). Refs: higgsfield.ai/mcp, mcp.directory/blog/higgsfield-mcp-guide.
 
----
+### Arcads + Meta MCP — the Concierge thesis is now market-validated (2026-07-28)
+A circulating "How To Make AI Ads With Claude X Meta" workflow chains two MCP
+servers inside one Claude conversation — **Arcads MCP** (AI-actor UGC video gen;
+models incl. VO3.1, Kling Motion Control, Nano Banana Pro, Sora 2 Pro,
+Seedance 2.0) + **Meta MCP** (research → creative upload → campaign launch →
+iteration) — i.e. natural-language end-to-end ad creation with zero Ads Manager
+touches. That IS this doc's thesis, assembled by someone else — minus Grifon's
+director-layer IP (tuned formulas, MarketMind, Swipe File, Taglish SMB
+doctrine) and PH positioning (₱ pricing, PayMongo). Unlike Higgsfield
+(primitives, possible backend), **Arcads competes at the actor/UGC layer.**
+Implication: the category window is open and moving — weight this when
+re-prioritizing the build order in §5. Do NOT adopt Arcads as a creative
+source for Grifon's own campaigns; the wizard's output is the dogfood.
 
 ## 3. Current state of the code (evidence-bound)
 

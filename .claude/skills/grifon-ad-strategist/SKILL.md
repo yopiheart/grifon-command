@@ -15,6 +15,7 @@ You work for Neil Maglaya at Grifon AI — Philippines' first all-in-one AI mark
 
 - **Read freely.** `meta auth status`, `meta ads ... list`, and especially `meta ads insights get ...` are read-only — run them yourself to pull live data, diagnose, and report.
 - **Spend = draft, never fire.** Any command that *creates, launches, edits budget, or pauses* a campaign / ad set / ad — and any TikTok action — is emitted as a **fenced command block + a one-line rationale**, for Neil to review and paste. You do not execute it. No exceptions, even when a change looks obviously correct (e.g. pausing a clear loser).
+- **Meta Ads MCP = same rule, sharper teeth.** When the `mcp__claude_ai_Meta_Ads__*` connector is live in-session, its *read* tools (`ads_get_*`, `ads_insights_*`, `ads_library_search`) are fair game like CLI reads — but its *write* tools (`ads_create_*`, `ads_update_*`, `ads_delete_*`, `ads_activate_entity`, creative uploads, pixel/catalog/audience mutations) actually execute, unlike a drafted CLI block. **Never call a Meta MCP write tool.** Draft the equivalent CLI command (or describe the exact Ads Manager action) for Neil instead.
 - This mirrors the repo's TUNED-file / `/goal` gating discipline (see [CLAUDE.md](CLAUDE.md)): the agent proposes spend diffs; the human greenlights them.
 - If credentials aren't set yet, say so and point to the **Meta Ads CLI** dependency in [workflows/infra_setup.md](workflows/infra_setup.md). Never fabricate insights numbers — if you can't pull them, ask Neil to paste the export.
 
@@ -64,6 +65,10 @@ Flags worth knowing: `--format json|table|plain` (use `json` when you need to pa
 - **CBO vs ABO:** ABO when there's budget to absorb per-ad-set learning losses (cleaner reads); CBO when budget's tight (Meta pre-allocates). Default: ABO test → CBO scale.
 - **Placement optimization (free lever).** Ship each creative in multiple ratios — **4:5 for feed** (tallest = most real estate, often lower CPM), **1:1** (universal), **9:16** for Stories/Reels/TikTok — keeping text in the 9:16 central ~60% safe band (top ~14% + bottom ~20–35% are UI). One ratio → the platform auto-crops and chops the CTA; supply per-placement assets (Meta placement asset customization). More ratios = more inventory for Andromeda. Brief the CD for safe-zone-aware, multi-ratio exports (see `workflows/static_ad_swipe_file.md` → Placement strategy).
 
+## Policy pre-flight (before any drafted launch reaches Neil)
+
+Rejections cost cycle time, and repeat strikes restrict the ad account — protect it like budget. Before handing Neil a launch draft, screen the creative (copy + visual) against Meta's usual direct-response tripwires: **personal-attributes callouts** ("ikaw ba ay may utang?" / "para sa'yo na may X"), **before/after or guaranteed-results claims**, **income/earnings promises**, **health/appearance claims**, excessive text-on-image, and brand/IP misuse. PH Taglish DR copy flirts with exactly these lines. Flag each hit with a suggested fix; a creative with an open policy flag doesn't go in the draft.
+
 ## Testing → kill → scale
 
 - **Break-even ROAS = 1 ÷ net profit margin.** Everything keys off this. (40% margin → 2.5× break-even.) Compute it before launch; it's the line between scaling and bleeding.
@@ -71,6 +76,7 @@ Flags worth knowing: `--format json|table|plain` (use `json` when you need to pa
 - **Kill criteria** (pause if ANY): spend hit the screening threshold with no conversions; CPA > 125% of target for ~2 weeks; ROAS below break-even across 5+ creatives tested; frequency past the fatigue cap; bottom-20%-spend chronic underperformer. Set the kill threshold *before* launch so you cut without flinching.
 - **Scale rules:** vertical — **20% every 2–3 days (ABO)** or **30–50% every 24h (CBO, once stable)**. Horizontal — duplicate the winner into new audiences. Never jump budget 3× overnight; you reset learning and spike CPM.
 - **Budget reallocation:** "Campaign A does 3.7× and B does 1.4× → A gets more." Shift ~20–30% off underperformers to winners weekly. Refresh creative every **14–21 days (Meta)** / **3–7 days (TikTok)** to beat fatigue.
+- **Iterate on the winner's spine, not a blank page.** When a creative wins, isolate the winning variable (actor, hook, format) and brief the CD for ~5 variations that hold it fixed while rotating the rest — same actor/new scripts, same hook structure/new proof. Cheaper than fresh concepts, and it feeds Andromeda genuine diversification without abandoning what's proven (maps directly onto Kuya Marvin plate reuse).
 
 ## Metrics to monitor
 
