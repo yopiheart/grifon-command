@@ -189,7 +189,23 @@ So the split is by **subject**, and the reason is trust exposure, not taste:
 | Subject | Rendering | Situation |
 |---|---|---|
 | **Grifon** (SaaS, no real named person) | stylize freely — composite, saturate, hyper-real. No trust liability. | push hard |
-| **Kuya Marvin / Oceanides**, and any real named person or client | **believability register wins** — flat overcast, matte skin, phone-camera, per `marvin-avatar` | push hard |
+| **Kuya Marvin / Oceanides**, and any real named person or client | **believability register wins** — soft even light on the face, matte skin, phone-camera, per `marvin-avatar` | push hard |
+
+**The believable register is NOT the grey register.** Learned the hard way on the same test run:
+"flat overcast" was misread as *drain the colour*, and the result — grey concrete, white sky, silver
+van, one navy shirt — was rejected on sight ("sakit sa mata"). The rule governs the **light on the
+subject's face**, not the **colour of the world**. A bright tropical Philippine day (deep blue sky,
+white cumulus, banana and palm, warm concrete) is simply *true*, and it costs the register nothing
+as long as his face stays in soft even light with no hard shadow, sun patch, rim light or
+golden-hour cast. Approved reference:
+[`clients/oceanides/kuya-marvin/daylight-register/marvin-daylight-master.png`](../../../clients/oceanides/kuya-marvin/daylight-register/marvin-daylight-master.png)
+(Neil, 2026-07-28).
+
+**Watch the neighbours, not the frame alone.** The muted version only read as broken because it sat
+directly beside two saturated Grifon frames — a real contrast effect, and the reason the first
+verdict was "still grey." In a live Meta feed a believable frame sits beside friends' photos and
+native content, where the muted register reads correctly. Judge a frame against the feed it will
+actually run in, never against our own swipe set.
 
 A viewer who clocks a MrBeast thumbnail as staged thinks *"this looks fun."* A Filipino homeowner
 who clocks Marvin's photo as AI thinks *"is this company even real?"* — and then does not let him
