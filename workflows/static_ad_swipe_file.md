@@ -32,6 +32,12 @@ Times-Square spectacle, E89 fabricated "THE AI INSIDER" masthead). Next E-number
 `why_it_works` concrete-evidence count alone while carrying perfectly good verbatim copy, layout
 walks, and hex palettes; those three entries are completed with agent-eyeball evidence and marked
 ⓥ. Second batch in a row the gate mislabels good output — worth relaxing (see the 2026-07-12 note).
+**Source PNGs deliberately NOT committed** (21 MB for 12 ads, and git keeps it forever; the
+compressed `assets/ad-swipe/E82–E93` JPGs are the working reference). The Meta Ad Library archive
+IDs are recorded here instead so the originals stay re-pullable after the defreezer: E82
+`1359683222881048` · E83 `1487733439566843` · E84 `1519110139935494` · E85 `1806151113721324` ·
+E86 `1931773761032904` · E87 `2179559642791080` · E88 `2345735869250066` · E89 `2663264424068354` ·
+E90 `969143478907171` · E91 `972936268520795` · E92 `976058025365069` · E93 `980161074407883`.
 
 **RESUME (previous, Opus 4.8 per Neil 2026-07-12):** batch **E51–E81 DONE** —
 breadth-first ingest of 8 high-relevance SaaS / AI / fintech / marketing brands
