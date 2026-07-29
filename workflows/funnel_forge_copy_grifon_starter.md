@@ -71,6 +71,17 @@ Straight from DESIGN.md frontmatter — Grifon Gold `#FFCC00` on zinc-950 world,
 
 ---
 
-**Approve / edit:** (1) headline A/B/C, (2) consent text, (3) thank-you bridge CTA
-target (grifon.ai free signup — tama ba ang URL na gagamitin?), (4) the 8 niches list.
-On approval → build `funnels/grifon-starter/`, brand-check, smoke, deploy to vercel.app.
+**LOCKED (Neil, 2026-07-29):** (1) Headline **A** — "Get Your Free Ad Battle Plan — Made
+For Your Business, In 60 Seconds." (2) Consent text approved as written. (3) Thank-you
+bridge CTA → `https://grifon.ai/?utm_source=funnel&utm_medium=thankyou&utm_campaign=grifon-starter-v1`
+(grifon.ai is the canonical production domain per index.html; UTMs make funnel-sourced
+signups measurable). (4) Niches + **Real Estate** = 8 niches + Other → 9 Battle Plan
+variants: Food & Beverage / Fashion & Beauty / Health & Wellness / Home Services /
+Professional Services / Online Store (E-commerce) / Coaching & Education / Real Estate / Other.
+
+**OPEN — magnet delivery mechanism (Neil call):** walang email-sender infra pa ang funnel
+(walang Resend/Brevo). Options: **(A, recommended)** deliver the Battle Plan ON the
+thank-you page mismo — instant, niche-routed from the quiz answer, zero infra; email
+nurture sequence follows later once a sender is wired. **(B)** "check your inbox" as
+written — pero kailangan muna ng email service bago mag-live. A ships this week; B needs
+one more integration.
