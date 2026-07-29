@@ -1,3 +1,13 @@
+/* Brand fonts — SELF-HOSTED via @fontsource (same-origin woff2, bundled by
+   Vite; still zero external requests). Inter = DESIGN.md display/body;
+   JetBrains Mono = eyebrow/mono blocks. Weight 500 is banned by DESIGN.md. */
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/inter/700.css';
+@import '@fontsource/inter/800.css';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/600.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,8 +17,8 @@
    first paint is already correct and nothing flashes. A funnel that ships a
    different brand simply overwrites these on :root.
 
-   Fonts are SYSTEM STACKS ONLY. No CDN, no @font-face, no network request from
-   this page (funnels are ad landing pages; every extra RTT is measurable).
+   No CDN and no cross-origin request from this page (funnels are ad landing
+   pages; every extra RTT is measurable) — fonts ship inside the bundle above.
 --------------------------------------------------------------------------- */
 :root {
   --brand-primary: #ffcc00;
