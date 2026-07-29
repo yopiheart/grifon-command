@@ -15,10 +15,12 @@ inside the instance dir (CLI login: Neil's Vercel account `neilmaglayabusiness22
 - **Env vars (production) required by `api/lead.ts`:** `SUPABASE_URL` (= the value of
   `VITE_SUPABASE_URL` in root `.env`) + `SUPABASE_SERVICE_ROLE_KEY` (same name in root
   `.env`). Set via `npx vercel env add <NAME> production` from the instance dir (paste
-  value at the prompt), THEN redeploy `--prod` — functions only pick env up on deploy.
-  ⚠ 2026-07-29 status: page live, env vars NOT yet set (agent classifier correctly blocks
-  the agent from piping secrets; Neil runs the two commands) — form returns
-  `not_configured` until then.
+  value at the prompt, ONE command at a time), THEN redeploy `--prod` — functions only
+  pick env up on deploy. ✅ 2026-07-29: both SET and verified — full e2e green (POST →
+  `{ok:true}` → row in `funnel_leads` w/ server stamps → test row deleted). Neil phone
+  eyeball passed ("gumana lahat ng buttons"). Funnel→product email hand-off live: thank-you
+  bridge CTA → `grifon.ai/login?...&email=<lead>` → OTP field prefilled (App.tsx, pushed
+  same day — main app auto-deploy carries it to grifon.ai).
 - Leads land in Supabase `public.funnel_leads` (project `GRIFON AI` / varoqxjccqmskzeejagn),
   `funnel_id = 'grifon-starter-v1'`. Live-test convention: submit with `funnel_id`-visible
   test email, verify row via `execute_sql`, delete the test row.

@@ -18,8 +18,14 @@ File patterns **L1 L2 L4 L7 L8** (`workflows/funnel_swipe_file.md`, all `propose
   `nextStep` CTA.
 - **Consent (L4):** checkbox **unchecked by default**, verbatim `consent.text` from config is
   displayed AND posted; server stamps it into `funnel_leads.consent_text`.
-- **No external network calls** in the page: system font stack (Inter fallback chain), no CDNs.
-  Meta Pixel loads ONLY when `tracking.metaPixelId` is set (off by default).
+- **No external network calls** in the page: fonts are SELF-HOSTED @fontsource woff2 (Inter +
+  JetBrains Mono, bundled same-origin — a bare CSS stack renders as Roboto/SF on visitor
+  devices), no CDNs. Meta Pixel loads ONLY when `tracking.metaPixelId` is set (off by default).
+- **ESM rule:** every VALUE import reachable from `api/lead.ts` (the `funnel.config.ts` chain)
+  uses explicit `.js` extensions — Vercel's node runtime is strict ESM; extensionless imports
+  build in Vite and crash in production.
+- **Email hand-off:** the lead's email rides the thank-you redirect (`?email=`, scrubbed after
+  read) and is appended to the bridge CTA so the product's `/login?email=` prefills its signup.
 - **Motion:** `motion/react` with the vendored token system; every animation respects
   `prefers-reduced-motion` via the `reducedMotion()` helper.
 - Mobile-first: design for 390×844 first, enhance at ≥1024px.

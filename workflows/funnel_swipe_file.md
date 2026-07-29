@@ -41,6 +41,13 @@ Template/build changes distilled from ≥3-corroborated L-patterns, awaiting Nei
 
 *(none yet)*
 
+**Parked — endorsed-but-deferred (2026-07-29 plan), promote to FGPs when their trigger fires:**
+- **Checkout / order bumps / upsells** (F01 checkout + F02 VIP anatomy decoded and waiting) — trigger: a funnel needs to SELL, not just capture. Needs PayMongo per client.
+- **`vsl-hybrid` third archetype** (F02 + F05, 2 corroborations — one short of the gate) — trigger: a 3rd operator's VSL-bridge page gets autopsied.
+- **A/B page variants** (L2 makes it config-cheap) — trigger: first funnel with enough traffic to split.
+- **Email nurture sequences** — trigger: a sender (Resend/Brevo) gets wired; recon inbox sequences (`+recon` Gmail) are the swipe source.
+- **Magic-link auto-account from funnel submit** (skip even the OTP screen) — trigger: same sender infra + auth-flow design with Neil.
+
 ---
 
 ## Entries
