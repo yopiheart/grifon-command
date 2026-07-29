@@ -6,6 +6,7 @@ import { MAT_VEIL } from './materialTokens';
 import { GoldButton } from './GoldButton';
 import { DUR, SPRING } from './motionTokens';
 import { FOUNDING_OFFER, seatsRemaining } from '../../config/foundingOffer';
+import { useCountdown } from './useCountdown';
 
 interface ExitIntentModalProps {
   triggered: boolean;
@@ -21,6 +22,9 @@ interface ExitIntentModalProps {
  */
 export const ExitIntentModal: React.FC<ExitIntentModalProps> = ({ triggered, onDismiss, onEnterApp }) => {
   const reduce = useReducedMotion();
+  // Same clock as UrgencyBar: once the founding deadline passes, the urgency
+  // row must vanish here too — a stale "ends June 30" is fabricated scarcity.
+  const { expired } = useCountdown(FOUNDING_OFFER.deadlineISO);
 
   // Lock background scroll while open.
   useEffect(() => {
@@ -132,17 +136,19 @@ export const ExitIntentModal: React.FC<ExitIntentModalProps> = ({ triggered, onD
               </span>
             </div>
 
-            {/* Honest urgency */}
-            <div className="mx-6 mt-4 flex items-center gap-2 rounded-lg border border-[#FFCC00]/25 bg-[#FFCC00]/5 px-3 py-2 text-xs text-zinc-300">
-              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#FFCC00] animate-pulse" />
-              <span>
-                Founding price ends {FOUNDING_OFFER.closesLabel} ·{' '}
-                <span className="font-semibold text-[#FFCC00]">
-                  {seatsRemaining()} of {FOUNDING_OFFER.seatCap}
-                </span>{' '}
-                seats left
-              </span>
-            </div>
+            {/* Honest urgency — only while the founding deadline is genuinely live */}
+            {!expired && (
+              <div className="mx-6 mt-4 flex items-center gap-2 rounded-lg border border-[#FFCC00]/25 bg-[#FFCC00]/5 px-3 py-2 text-xs text-zinc-300">
+                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#FFCC00] animate-pulse" />
+                <span>
+                  Founding price ends {FOUNDING_OFFER.closesLabel} ·{' '}
+                  <span className="font-semibold text-[#FFCC00]">
+                    {seatsRemaining()} of {FOUNDING_OFFER.seatCap}
+                  </span>{' '}
+                  seats left
+                </span>
+              </div>
+            )}
 
             {/* Headline — sentence-case (overrides the global uppercase heading LAW) for the
                 conversational Taglish jab. */}

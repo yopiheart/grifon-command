@@ -1,0 +1,377 @@
+<title>Grifon Funnel Review &mdash; GOAT Patterns vs Our Landing</title>
+
+<style>
+:root{
+  --ground-0:#070708;
+  --ground-1:#131316;
+  --ground-2:#09090B;
+  --gold:#FFCC00;
+  --gold-soft:rgba(255,204,0,.06);
+  /* Contrast-audited NOIR floors (see CLAUDE.md → Artifact Reporting, 2026-07-29):
+     ratios below are measured against the charcoal ground, not estimated. */
+  --silver-a:#FAFAFA;   /* 15.9:1 — emphasis */
+  --body:#A1A1AA;       /* 7.3:1 — AAA body */
+  --meta:#9A9AA3;       /* 6.7:1 — small mono captions (never #71717A: 3.89:1 fails AA) */
+  --flag:#FF8563;       /* 7.9:1 — warning hue at small sizes */
+  --line:rgba(255,255,255,.10);
+  --display:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+  --serif:'Instrument Serif',Georgia,'Times New Roman',serif;
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --wrap:min(68ch,100%);
+}
+
+/* NOIR commits to one dark world by design (charcoal ground + grain + glass
+   would not survive a light inversion). Both theme signals pin the same palette. */
+:root[data-theme="light"],:root[data-theme="dark"]{color-scheme:dark;}
+
+*{box-sizing:border-box;}
+html,body{background:var(--ground-0);}
+body{
+  margin:0;
+  font-family:var(--display);
+  color:var(--body);
+  font-size:16px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* Fixed ground + grain as their own fixed DIVs — the Android WebView detaches
+   background-attachment:fixed and mispaints naked fixed <svg> filters. */
+.ground,.grain{position:fixed;inset:0;pointer-events:none;}
+.ground{
+  z-index:0;
+  background:
+    radial-gradient(120% 80% at 50% 0%, var(--gold-soft) 0%, transparent 55%),
+    radial-gradient(140% 100% at 50% 8%, var(--ground-1) 0%, var(--ground-2) 45%, var(--ground-0) 100%);
+}
+.grain{
+  z-index:1;
+  opacity:.15;
+  mix-blend-mode:screen;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat:repeat;
+  background-size:240px 240px;
+}
+
+.page{position:relative;z-index:2;padding:0 20px 96px;}
+.col{width:var(--wrap);margin:0 auto;}
+
+.eyebrow{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.32em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin:0 0 20px;
+}
+.eyebrow.dim{color:var(--meta);}
+
+h1,h2,h3{
+  font-family:var(--display);
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:-.02em;
+  line-height:.94;
+  text-wrap:balance;
+  margin:0;
+  /* SOLID display type — clipped-gradient text is BANNED in artifacts: the
+     Android WebView the Claude app uses mispaints clipped gradients (verified
+     on Neil's phone 2026-07-29). Solid #F5F5F7 = 17.3:1 on every line. */
+  color:#F5F5F7;
+  text-shadow:0 0 18px rgba(255,204,0,.18);
+}
+h1{font-size:clamp(2.6rem,10vw,5rem);}
+h2{font-size:clamp(1.6rem,5.2vw,2.4rem);}
+h3{font-size:clamp(1.05rem,3.2vw,1.3rem);letter-spacing:0;text-shadow:none;}
+.serif{
+  font-family:var(--serif);
+  font-style:italic;
+  font-weight:400;
+  text-transform:none;
+  letter-spacing:0;
+  color:var(--gold);
+  /* Tight bloom (9px) — a wide halo softens thin serif strokes. */
+  filter:drop-shadow(0 0 9px rgba(255,204,0,.30));
+  -webkit-text-stroke:.012em currentColor;
+}
+p{margin:0 0 18px;}
+strong{color:var(--silver-a);font-weight:600;}
+em{color:var(--gold);font-style:normal;}
+.lede{font-size:clamp(1.02rem,2.6vw,1.16rem);color:#D4D4D8;}
+.meta{font-family:var(--mono);font-size:11.5px;color:var(--meta);letter-spacing:.06em;}
+
+section{padding:64px 0 0;}
+.rule{height:1px;background:linear-gradient(90deg,transparent,var(--line) 18%,var(--line) 82%,transparent);margin:72px 0 0;}
+
+/* Liquid glass built to survive WITHOUT backdrop-filter; blur is enhancement. */
+.glass{
+  position:relative;
+  border-radius:18px;
+  padding:26px 24px;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.075) 0%,rgba(255,255,255,.022) 38%,rgba(255,255,255,0) 100%),
+    linear-gradient(180deg,rgba(24,24,27,.92) 0%,rgba(14,14,16,.94) 100%);
+  border:1px solid var(--line);
+  box-shadow:0 1px 0 rgba(255,255,255,.09) inset,0 22px 48px -26px rgba(0,0,0,.95);
+}
+@supports (backdrop-filter:blur(1px)){
+  .glass{backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);}
+}
+.glass.gold{border-color:rgba(255,204,0,.34);box-shadow:0 1px 0 rgba(255,255,255,.09) inset,0 0 26px rgba(255,204,0,.13),0 22px 48px -26px rgba(0,0,0,.95);}
+.glass.flag{border-color:rgba(255,133,99,.38);}
+.glass + .glass{margin-top:16px;}
+
+/* Scoreboard — the hero's proof row */
+.score{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:30px;}
+.score .glass{padding:18px 14px;text-align:center;}
+.score .n{
+  font-family:var(--display);font-weight:900;font-size:clamp(1.9rem,7vw,2.8rem);
+  line-height:1;color:var(--gold);filter:drop-shadow(0 0 10px rgba(255,204,0,.28));
+  font-variant-numeric:tabular-nums;
+}
+.score .n.flagged{color:var(--flag);filter:drop-shadow(0 0 10px rgba(255,133,99,.25));}
+.score .lbl{margin-top:8px;font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--meta);}
+
+/* Status tags */
+.tag{
+  display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;
+  text-transform:uppercase;padding:4px 9px;border-radius:99px;
+  border:1px solid var(--line);color:var(--meta);white-space:nowrap;
+}
+.tag.ok{border-color:rgba(255,204,0,.45);color:var(--gold);}
+.tag.no{border-color:rgba(255,133,99,.45);color:var(--flag);}
+.pid{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;}
+
+.cardhead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px;}
+.cardhead h3{flex:1 1 auto;min-width:0;}
+
+table{width:100%;border-collapse:collapse;font-size:14px;}
+.scroller{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--meta);font-weight:400;white-space:nowrap;}
+td b{color:var(--silver-a);font-weight:600;}
+td .pid{font-size:10px;}
+
+ul{margin:0 0 18px;padding-left:0;list-style:none;}
+li{position:relative;padding-left:20px;margin-bottom:9px;}
+li::before{content:"";position:absolute;left:2px;top:.72em;width:6px;height:1px;background:var(--gold);}
+li.no::before{background:var(--flag);}
+
+/* Run sheet — a true sequence, so the numbering carries information */
+.run{counter-reset:step;margin-top:6px;}
+.run .glass{display:flex;gap:18px;align-items:flex-start;}
+.run .glass::before{
+  counter-increment:step;
+  content:counter(step,decimal-leading-zero);
+  font-family:var(--serif);font-style:italic;font-size:2rem;line-height:1;
+  color:rgba(255,204,0,.5);flex:0 0 auto;margin-top:2px;
+}
+.run .body{flex:1 1 auto;min-width:0;}
+.owner{
+  display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:.2em;
+  text-transform:uppercase;padding:3px 8px;border-radius:99px;margin-left:8px;
+  border:1px solid rgba(255,204,0,.35);color:var(--gold);vertical-align:middle;white-space:nowrap;
+}
+.owner.agent{border-color:var(--line);color:var(--meta);}
+
+blockquote{
+  margin:26px 0;padding:4px 0 4px 20px;border-left:2px solid var(--gold);
+  font-family:var(--serif);font-style:italic;font-size:1.25rem;color:var(--silver-a);
+}
+blockquote .meta{display:block;margin-top:8px;font-style:normal;}
+
+.sig{
+  margin-top:88px;text-align:center;
+  font-family:var(--mono);font-size:11px;letter-spacing:.42em;
+  color:#5B5B63;text-transform:uppercase;
+}
+
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none;}
+  *{scroll-behavior:auto !important;}
+}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px;}
+</style>
+
+<div class="ground"></div>
+<div class="grain"></div>
+
+<div class="page">
+
+  <!-- ============ HERO ============ -->
+  <header class="col" style="padding-top:84px;">
+    <p class="eyebrow">// FUNNEL REVIEW &middot; F01&ndash;F06 vs GRIFON LANDING</p>
+    <h1>Stolen from<br>the GOATs.<br><span class="serif">Applied to us.</span></h1>
+    <p class="lede" style="margin-top:26px;">
+      Yesterday we decoded <strong>six live funnels</strong> from Sabri Suby, Russell Brunson, and
+      Alex Hormozi (F01&ndash;F06, patterns L1&ndash;L10). Today: every pattern held against our own
+      landing page, section by section. What we already match, what to add, what to fix &mdash;
+      and one live integrity bug we caught in the process.
+    </p>
+    <p class="meta">2026-07-29 &middot; sources: workflows/funnel_swipe_file.md &middot; components/landing/* &middot; config/foundingOffer.ts</p>
+
+    <div class="score">
+      <div class="glass"><div class="n">6</div><div class="lbl">Patterns matched</div></div>
+      <div class="glass"><div class="n">4</div><div class="lbl">Worth adding</div></div>
+      <div class="glass"><div class="n flagged">4</div><div class="lbl">Need fixing</div></div>
+    </div>
+
+    <blockquote class="reveal">
+      Steal the <em>structure</em> and the <em>lever</em> &mdash; never the lie.
+      <span class="meta">THE TRUST LINE &middot; FUNNEL SWIPE FILE</span>
+    </blockquote>
+  </header>
+
+  <div class="rule"></div>
+
+  <!-- ============ ACT I: THE LIVE BUG ============ -->
+  <section class="col reveal">
+    <p class="eyebrow" style="color:var(--flag);">// ACT I &middot; THE ONE WE WERE COMMITTING OURSELVES</p>
+    <h2>A stale offer is an <span class="serif">L5 sin.</span></h2>
+    <p style="margin-top:18px;">
+      We flagged Brunson's hardcoded &ldquo;2,745 registered&rdquo; counter and Sabri's static
+      stock-bar GIF as <strong>do-not-replicate</strong> (L5, cosmetic scarcity). Then we looked at our
+      own page on July 29:
+    </p>
+
+    <div class="glass flag">
+      <div class="cardhead"><h3>The founding offer expired June 30 &mdash; a month ago</h3><span class="tag no">CAUGHT LIVE</span></div>
+      <p><code class="meta">config/foundingOffer.ts</code> still carries <strong>three TODO(Neil) markers</strong>:
+      unconfirmed deadline, unconfirmed &#8369;497 founding price, and a hand-typed
+      <strong>seatsClaimed: 150</strong> that no system updates.</p>
+      <ul>
+        <li>The <b style="color:var(--silver-a)">UrgencyBar</b> behaved &mdash; it flipped to the honest &ldquo;Founding pricing ended&rdquo; fallback.</li>
+        <li class="no">The <b style="color:var(--silver-a)">ExitIntentModal</b> did NOT check expiry &mdash; it was still telling visitors
+        <em>&ldquo;Founding price ends June 30 &middot; 50 of 200 seats left&rdquo;</em> a full month after the deadline.
+        Exactly the Brunson counter, on our page.</li>
+      </ul>
+    </div>
+
+    <div class="glass gold">
+      <div class="cardhead"><h3>Status</h3><span class="tag ok">CODE FIXED THIS SESSION</span></div>
+      <p style="margin-bottom:0;">The modal now runs on the <strong>same countdown clock as the UrgencyBar</strong> &mdash; the urgency
+      row disappears the second the deadline passes, whatever the config says.
+      <em>Still open (Neil's call):</em> relaunch the founding offer with a real deadline and a real
+      seat count, or flip <code class="meta">enabled: false</code> until there is one. Honest scarcity
+      needs true numbers behind it.</p>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- ============ ACT II: MATCHED ============ -->
+  <section class="col reveal">
+    <p class="eyebrow">// ACT II &middot; WHAT WE ALREADY MATCH</p>
+    <h2>Six patterns, <span class="serif">already ours.</span></h2>
+    <p style="margin-top:18px;">The structural spine of the landing already passes the GOAT test &mdash; these need no work, only protection:</p>
+    <div class="scroller glass" style="padding:10px 6px;">
+      <table>
+        <tr><th>Pattern</th><th>Their version</th><th>Our version</th></tr>
+        <tr><td><span class="pid">L8</span><br><b>Single-anchor CTA</b></td><td>Suby: &ldquo;RUSH ME A FREE COPY&rdquo; &times;16 &rarr; one form</td><td>&ldquo;CREATE MY FIRST AD &mdash; FREE&rdquo; across hero, rail, pill, exit modal</td></tr>
+        <tr><td><span class="pid">F02</span><br><b>Value stack w/ prices</b></td><td>Brunson: &ldquo;$28,485+ &rarr; FREE&rdquo; table</td><td>OfferStack: &#8369;135,000 itemized &rarr; &#8369;2,497/mo, scribble-struck</td></tr>
+        <tr><td><span class="pid">F04</span><br><b>Tangibilized product</b></td><td>Hormozi: PDF mockup shots</td><td>AdMontagePhone cycling finished ads in the hero</td></tr>
+        <tr><td><span class="pid">F01</span><br><b>Risk reversal</b></td><td>Suby: &ldquo;pinky promise&rdquo; guarantee theater</td><td>7-day money-back &mdash; <em>keep the ad plan either way</em>. Arguably cleaner.</td></tr>
+        <tr><td><span class="pid">L10</span><br><b>Exit-intent</b></td><td>Suby: 2-stage, name-personalized</td><td>&ldquo;FINAL TAKE&rdquo; film slate &mdash; tasteful single stage</td></tr>
+        <tr><td><span class="pid">L4</span><br><b>Consent at form</b></td><td>Hormozi: verbatim TCPA block</td><td>PH DPA consent, server-stamped &mdash; shipped PR #21</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- ============ ACT III: ADD ============ -->
+  <section class="col reveal">
+    <p class="eyebrow">// ACT III &middot; WHAT THE GOATS DO THAT WE DON'T</p>
+    <h2>Four moves <span class="serif">worth stealing.</span></h2>
+
+    <div style="margin-top:26px;">
+      <div class="glass gold">
+        <div class="cardhead"><h3>1 &middot; One-question segmentation</h3><span class="tag ok">HIGHEST ROI</span></div>
+        <p class="meta" style="margin-bottom:10px;">L3 + L6 &middot; 5-of-6 funnels corroborate &middot; our biggest structural gap</p>
+        <p style="margin-bottom:0;">Every Hormozi form asks revenue + ownership; Brunson opens with &ldquo;Which one best
+        describes you?&rdquo; We capture <strong>nothing</strong> before generic signup. One select &mdash;
+        <em>&ldquo;Anong business mo &mdash; F&amp;B / online selling / real estate / services?&rdquo;</em> &mdash;
+        is a triple win: pre-fills the wizard &amp; Market Research, scores the lead, and routes
+        ad&rarr;LP matching later.</p>
+      </div>
+
+      <div class="glass">
+        <div class="cardhead"><h3>2 &middot; Audit the post-preview unlock moment</h3><span class="tag ok">L1 &middot; 6-OF-6</span></div>
+        <p style="margin-bottom:0;">The most corroborated pattern in the file: <strong>the thank-you moment sells the next rung</strong>
+        (&ldquo;IMPORTANT &mdash; before you check your email, watch this&rdquo;). Our equivalent attention
+        peak is <em>the free preview ad finishing</em>. That screen must present ONE clear
+        Starter/Pro bridge &mdash; not a generic dashboard. Product-side audit, next session.</p>
+      </div>
+
+      <div class="glass">
+        <div class="cardhead"><h3>3 &middot; Vertical-skinned landing variants</h3><span class="tag ok">L2</span></div>
+        <p style="margin-bottom:0;">F03 vs F06 are one template with a swapped eyebrow (&ldquo;Designed for Financial Planning
+        Firms over $1M&rdquo;) and testimonial. Our ReceiptsRail already names three verticals &mdash;
+        Real Estate, F&amp;B, E-commerce &mdash; and the funnel-forge machinery already exists.
+        Grifon just hasn't pointed it at itself.</p>
+      </div>
+
+      <div class="glass">
+        <div class="cardhead"><h3>4 &middot; The honest disqualification line</h3><span class="tag ok">F05 &middot; CHEAP</span></div>
+        <p style="margin-bottom:0;">Hormozi, on a $5k offer: <em>&ldquo;If you haven't made at least $5k from the free content,
+        don't do it.&rdquo;</em> One FAQ line &mdash; &ldquo;Kung wala ka pang binebenta, hindi pa ito
+        para sa&rsquo;yo&rdquo; &mdash; makes every other claim on the page more believable. Takeaway
+        selling as a trust device.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- ============ ACT IV: FIX ============ -->
+  <section class="col reveal">
+    <p class="eyebrow" style="color:var(--flag);">// ACT IV &middot; WHAT TO FIX OR REMOVE</p>
+    <h2>Precision is the <span class="serif">credibility device.</span></h2>
+    <p style="margin-top:18px;">L9's whole lesson: the GOATs are believed <strong>because their numbers are exact</strong>
+    (&ldquo;$7.8 billion in 1067 niches&rdquo;). Ours wobble in three places:</p>
+    <ul style="margin-top:14px;">
+      <li class="no"><strong>Price-anchor chaos.</strong> Four prices share one page &mdash; &#8369;497 (urgency bar),
+      &#8369;997 (marquee + metrics), &#8369;2,497 (stack + offer). F05 reveals its price once, inside the
+      FAQ, after the value stack. Pick the hero anchor; let the others live on the pricing page.</li>
+      <li class="no"><strong>&ldquo;100+ businesses&rdquo; vs the code comment beside it saying &ldquo;20+ (real 2025
+      client count).&rdquo;</strong> Under a heading that reads <em>THE NUMBERS DON'T LIE</em>. Whichever is true,
+      state that one &mdash; a real 20+ beats an inflatable 100+.</li>
+      <li class="no"><strong>Vague hero trust row.</strong> &ldquo;Early Filipino business owners&rdquo; where the GOATs write
+      &ldquo;6704 customer reviews&rdquo; / &ldquo;250,000 business owners.&rdquo; The moment a real beta count exists, print the exact figure.</li>
+      <li class="no"><strong>The founding-offer decision</strong> (Act I) &mdash; relaunch with real numbers or disable. The code
+      is honest now; the offer itself still needs to be.</li>
+    </ul>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- ============ RUN SHEET ============ -->
+  <section class="col reveal">
+    <p class="eyebrow">// NEXT MOVES &middot; IN ORDER</p>
+    <h2>The run <span class="serif">sheet.</span></h2>
+    <div class="run" style="margin-top:26px;">
+      <div class="glass"><div class="body"><strong>Decide the founding offer</strong><span class="owner">NEIL DECIDES</span><p class="meta" style="margin:6px 0 0;">Real deadline + real seat count, or enabled:false. Unblocks the whole scarcity layer.</p></div></div>
+      <div class="glass"><div class="body"><strong>Settle the true client count &amp; hero anchor price</strong><span class="owner">NEIL DECIDES</span><p class="meta" style="margin:6px 0 0;">Two answers &rarr; RoiMetrics, marquee, and hero trust row get corrected in one pass.</p></div></div>
+      <div class="glass"><div class="body"><strong>Add the disqualification FAQ line</strong><span class="owner agent">AGENT BUILDS</span><p class="meta" style="margin:6px 0 0;">One entry in TrustFaq. Cheapest trust win on the list.</p></div></div>
+      <div class="glass"><div class="body"><strong>Design the one-question segmentation</strong><span class="owner agent">AGENT PLANS &middot; NEIL GATES</span><p class="meta" style="margin:6px 0 0;">Where it lives (signup vs first-run), the four options, and what it pre-fills. Grill-me session.</p></div></div>
+      <div class="glass"><div class="body"><strong>Audit the post-preview unlock screen (L1)</strong><span class="owner agent">AGENT BUILDS</span><p class="meta" style="margin:6px 0 0;">Smoke-walk the free flow; report whether the attention peak sells ONE next step.</p></div></div>
+      <div class="glass"><div class="body"><strong>Vertical LP variants via funnel-forge</strong><span class="owner agent">PARKED &middot; NEEDS AD TRAFFIC</span><p class="meta" style="margin:6px 0 0;">Worth building when Grifon runs vertical ad sets &mdash; same trigger discipline as the swipe-file gates.</p></div></div>
+    </div>
+  </section>
+
+  <p class="sig">GRIFON</p>
+</div>
+
+<script>
+(function(){
+  var els=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in');});return;}
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});
+  },{threshold:.12});
+  els.forEach(function(e){io.observe(e);});
+})();
+</script>
