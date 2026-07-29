@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------------------
+   Brand defaults — same names src/theme/brand.ts writes at runtime, so the
+   first paint is already correct and nothing flashes. A funnel that ships a
+   different brand simply overwrites these on :root.
+
+   Fonts are SYSTEM STACKS ONLY. No CDN, no @font-face, no network request from
+   this page (funnels are ad landing pages; every extra RTT is measurable).
+--------------------------------------------------------------------------- */
+:root {
+  --brand-primary: #ffcc00;
+  --brand-surface: #09090b;
+  --brand-surface-elevated: #18181b;
+  --brand-on-surface: #ffffff;
+  --brand-on-surface-muted: #d4d4d8;
+  --brand-on-surface-dim: #a1a1aa;
+  --brand-proof-band: #f2f1ea;
+  --brand-font-display: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --brand-font-body: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --brand-font-accent: Georgia, 'Times New Roman', serif;
+  --brand-radius: 1rem;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Mobile-first hard rule: nothing may scroll sideways at 390px. */
+    overflow-x: hidden;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--brand-surface);
+    color: var(--brand-on-surface);
+    font-family: var(--brand-font-body);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--brand-font-display);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  /* One focus treatment for the whole funnel — forms are the conversion event,
+     so their focus state is never left to the browser default. */
+  :focus-visible {
+    outline: 2px solid var(--brand-primary);
+    outline-offset: 2px;
+  }
+}
+
+/* Belt-and-braces to the reducedMotion() helper: the helper zeroes motion/react
+   transitions, this zeroes anything CSS-driven (smooth scroll included). */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

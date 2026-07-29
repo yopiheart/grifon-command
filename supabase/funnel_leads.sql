@@ -42,9 +42,11 @@ create table if not exists public.funnel_leads (
 );
 
 -- One row per (funnel, email): repeat submits update the existing lead
--- (api/lead.ts upserts on this index) instead of duplicating.
+-- (api/lead.ts upserts on this index) instead of duplicating. Plain columns
+-- (not lower(email)) so PostgREST upsert onConflict can target it —
+-- api/lead.ts MUST lowercase+trim email before every write.
 create unique index if not exists funnel_leads_dedupe
-  on public.funnel_leads (funnel_id, lower(email));
+  on public.funnel_leads (funnel_id, email);
 
 create index if not exists funnel_leads_client_created
   on public.funnel_leads (client_id, created_at desc);
