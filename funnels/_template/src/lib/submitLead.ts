@@ -51,11 +51,17 @@ export type LeadResult = { ok: true } | { ok: false; error: string };
  * is a separate MPA document, so the redirect IS the only handoff there is.
  * No magnet (or no answer given) → the bare bridge, exactly as before.
  */
-export const thankYouUrlFor = (qualifiers?: Record<string, string>): string => {
+export const thankYouUrlFor = (qualifiers?: Record<string, string>, email?: string): string => {
   const { magnet } = funnelConfig.thankYou;
-  if (!magnet) return THANK_YOU_URL;
-  const answer = qualifiers?.[magnet.qualifierId];
-  return answer ? `${THANK_YOU_URL}?v=${encodeURIComponent(answer)}` : THANK_YOU_URL;
+  const params = new URLSearchParams();
+  const answer = magnet ? qualifiers?.[magnet.qualifierId] : undefined;
+  if (answer) params.set('v', answer);
+  // The lead's email rides along so the bridge CTA can hand it to the product's
+  // signup prefill (?email=). The thank-you page scrubs it from its URL on
+  // arrival — it exists in the address bar only for the duration of the redirect.
+  if (email) params.set('email', email);
+  const qs = params.toString();
+  return qs ? `${THANK_YOU_URL}?${qs}` : THANK_YOU_URL;
 };
 
 /**
@@ -93,6 +99,6 @@ export const submitLead = async (submission: LeadSubmission): Promise<LeadResult
     return { ok: false, error: payload.error ?? `http_${response.status}` };
   }
 
-  window.location.href = thankYouUrlFor(submission.qualifiers);
+  window.location.href = thankYouUrlFor(submission.qualifiers, submission.email);
   return { ok: true };
 };

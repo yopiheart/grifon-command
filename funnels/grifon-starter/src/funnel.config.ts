@@ -133,7 +133,7 @@ export const funnelConfig: FunnelConfig = {
     },
     nextStep: {
       label: 'Make This Ad Free With Grifon →',
-      href: 'https://grifon.ai/?utm_source=funnel&utm_medium=thankyou&utm_campaign=grifon-starter-v1',
+      href: 'https://grifon.ai/login?utm_source=funnel&utm_medium=thankyou&utm_campaign=grifon-starter-v1',
     },
   },
 };

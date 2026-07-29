@@ -135,6 +135,17 @@ const INTENT_MODULE_IDS = new Set(['market_research', 'offer_optimizer', 'captio
 // enough to catch typos before we burn an OTP send. Submit-time guards stay.
 const isPlausibleEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
 
+// Funnel → product hand-off: a lead-gen funnel's thank-you CTA lands on
+// /login?email=<lead email> so the passwordless signup field is already filled
+// — the lead only sends + types the 6-digit code. Implausible values are
+// ignored; the param is scrubbed from the URL right after mount (see the
+// effect beside the auth state) so the address bar and history stay clean.
+const readEmailPrefill = (): string => {
+  if (typeof window === 'undefined') return '';
+  const v = new URLSearchParams(window.location.search).get('email')?.trim() ?? '';
+  return isPlausibleEmail(v) ? v : '';
+};
+
 const App: React.FC = () => {
   const [currentRoute, setCurrentRoute] = useState<Route>(detectInitialRoute);
   // When a legal page is opened from checkout OR the auth gateway, remember the
@@ -163,7 +174,7 @@ const App: React.FC = () => {
           {node}
         </PlanGate>
       );
-  const [authEmail, setAuthEmail] = useState('');
+  const [authEmail, setAuthEmail] = useState(readEmailPrefill);
   // Set true once the email field is blurred, so the format hint only shows
   // after the user has left the field (not while mid-type).
   const [emailTouched, setEmailTouched] = useState(false);
@@ -179,6 +190,15 @@ const App: React.FC = () => {
   // (Google/GitHub) sits above as the one-tap alternative.
   const [authMode, setAuthMode] = useState<'email' | 'otp'>('email');
   const [authNotice, setAuthNotice] = useState('');
+  // Scrub the funnel-prefill ?email= param once it has been read into state —
+  // an email address must not linger in the URL/history/share sheet.
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const url = new URL(window.location.href);
+    if (!url.searchParams.has('email')) return;
+    url.searchParams.delete('email');
+    window.history.replaceState({}, '', `${url.pathname}${url.search}${url.hash}`);
+  }, []);
   const [pendingSignUpEmail, setPendingSignUpEmail] = useState('');
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [isCheckingSession, setIsCheckingSession] = useState(true);

@@ -67,6 +67,20 @@ export const ThankYou: React.FC<ThankYouProps> = ({ config }) => {
   const search = typeof window === 'undefined' ? '' : window.location.search;
   const plan = thankYou.magnet ? resolveMagnetPlan(thankYou.magnet, search) : undefined;
 
+  // Funnel → product hand-off: the lead's email arrives as ?email=, is read
+  // into memory, appended to the bridge CTA (the product's signup prefills
+  // from it), and scrubbed from this page's URL immediately below.
+  const leadEmail = new URLSearchParams(search).get('email') ?? undefined;
+  useEffect(() => {
+    if (typeof window === 'undefined' || !leadEmail) return;
+    const url = new URL(window.location.href);
+    url.searchParams.delete('email');
+    window.history.replaceState({}, '', `${url.pathname}${url.search}${url.hash}`);
+  }, [leadEmail]);
+  const bridgeHref = leadEmail
+    ? `${thankYou.nextStep.href}${thankYou.nextStep.href.includes('?') ? '&' : '?'}email=${encodeURIComponent(leadEmail)}`
+    : thankYou.nextStep.href;
+
   // The conversion event lives here, not on submit: this page only renders
   // after the server has accepted the lead, so it can't fire on a failed POST.
   useEffect(() => {
@@ -114,7 +128,7 @@ export const ThankYou: React.FC<ThankYouProps> = ({ config }) => {
             {thankYou.nextStep.blurb && (
               <p className="mb-5 text-base text-brand-on-surface-muted">{thankYou.nextStep.blurb}</p>
             )}
-            <CtaButton onClick={() => (window.location.href = thankYou.nextStep.href)}>
+            <CtaButton onClick={() => (window.location.href = bridgeHref)}>
               {thankYou.nextStep.label}
             </CtaButton>
           </div>
