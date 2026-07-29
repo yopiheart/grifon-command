@@ -20,8 +20,13 @@ export interface FoundingOffer {
   closesLabel: string;
 }
 
+// DISABLED 2026-07-29 (funnel review, L5 audit): the ₱497 price has no backing
+// plan in api/_lib/paymongo.ts PLAN_CATALOG (checkout would charge ₱997), the
+// June 30 deadline lapsed, and seatsClaimed is hand-typed with no live counter.
+// Re-enable ONLY with a real promo price in the catalog, a real deadline, and
+// a seat count wired to actual subscription data.
 export const FOUNDING_OFFER: FoundingOffer = {
-  enabled: true,
+  enabled: false,
   deadlineISO: '2026-06-30T23:59:59+08:00', // TODO(Neil): set the real close date
   seatCap: 200,
   seatsClaimed: 150, // TODO(Neil): update as seats fill

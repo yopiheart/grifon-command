@@ -12,6 +12,9 @@ const FAQS = [
   { q: 'HOW IS THIS DIFFERENT FROM CANVA OR CHATGPT?', a: 'Canva gives you templates. ChatGPT gives you generic text. Neither gives you market research, ad strategy, or a complete campaign. Grifon does all of it in one app.' },
   { q: 'IS THERE A LIMIT ON WHAT I CAN CREATE?', a: 'Yes — each plan has its own limits. Free gives you 1 complete ad plan a month (preview only). Starter adds 1 finished video ad, Pro gives you 40 workflows and 8 finished video ads a month, and Business 100 workflows and 15. See the pricing page for the full breakdown.' },
   { q: "WHAT IF IT DOESN'T WORK FOR MY BUSINESS?", a: "Every paid plan has a 7-day money-back guarantee. Generate your first ad — if it's not something you'd actually run, get a full refund and keep the plan." },
+  // F05-style honest disqualification (takeaway selling as a trust device):
+  // naming who it's NOT for makes every other claim on the page more believable.
+  { q: 'PARA KANINO ITO — AT PARA KANINO HINDI?', a: "Kung may binebenta ka na — produkto, serbisyo, o listing — Grifon will pay for itself sa unang ad na gumana. Pero kung wala ka pang alam na ibebenta, hindi pa ito para sa'yo. Ayusin muna ang offer mo — nandito lang kami pagbalik mo." },
 ];
 
 /** Guarantee + FAQ + Messenger support CTA with a live presence indicator. */

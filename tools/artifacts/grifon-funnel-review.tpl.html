@@ -216,7 +216,7 @@ blockquote .meta{display:block;margin-top:8px;font-style:normal;}
     <div class="score">
       <div class="glass"><div class="n">6</div><div class="lbl">Patterns matched</div></div>
       <div class="glass"><div class="n">4</div><div class="lbl">Worth adding</div></div>
-      <div class="glass"><div class="n flagged">4</div><div class="lbl">Need fixing</div></div>
+      <div class="glass"><div class="n">4</div><div class="lbl">Found &amp; fixed</div></div>
     </div>
 
     <blockquote class="reveal">
@@ -251,12 +251,15 @@ blockquote .meta{display:block;margin-top:8px;font-style:normal;}
     </div>
 
     <div class="glass gold">
-      <div class="cardhead"><h3>Status</h3><span class="tag ok">CODE FIXED THIS SESSION</span></div>
-      <p style="margin-bottom:0;">The modal now runs on the <strong>same countdown clock as the UrgencyBar</strong> &mdash; the urgency
-      row disappears the second the deadline passes, whatever the config says.
-      <em>Still open (Neil's call):</em> relaunch the founding offer with a real deadline and a real
-      seat count, or flip <code class="meta">enabled: false</code> until there is one. Honest scarcity
-      needs true numbers behind it.</p>
+      <div class="cardhead"><h3>Status</h3><span class="tag ok">FIXED &middot; OFFER DISABLED</span></div>
+      <p>The modal now runs on the <strong>same countdown clock as the UrgencyBar</strong> &mdash; the urgency
+      row disappears the second the deadline passes, whatever the config says.</p>
+      <p style="margin-bottom:0;"><strong>Then the checkout audit settled the rest:</strong> the &#8369;497 founding price has
+      <em>no backing plan</em> in <code class="meta">api/_lib/paymongo.ts</code> PLAN_CATALOG &mdash; checkout
+      charges &#8369;997. The offer was never deliverable, so the bar is now
+      <code class="meta">enabled: false</code>, and the exit modal was decoupled from the promo flag so
+      the free-trial recapture survives. Re-enable only with a real catalog price, a real deadline,
+      and a seat count wired to real subscription data.</p>
     </div>
   </section>
 
@@ -333,16 +336,15 @@ blockquote .meta{display:block;margin-top:8px;font-style:normal;}
     <p style="margin-top:18px;">L9's whole lesson: the GOATs are believed <strong>because their numbers are exact</strong>
     (&ldquo;$7.8 billion in 1067 niches&rdquo;). Ours wobble in three places:</p>
     <ul style="margin-top:14px;">
-      <li class="no"><strong>Price-anchor chaos.</strong> Four prices share one page &mdash; &#8369;497 (urgency bar),
-      &#8369;997 (marquee + metrics), &#8369;2,497 (stack + offer). F05 reveals its price once, inside the
-      FAQ, after the value stack. Pick the hero anchor; let the others live on the pricing page.</li>
-      <li class="no"><strong>&ldquo;100+ businesses&rdquo; vs the code comment beside it saying &ldquo;20+ (real 2025
-      client count).&rdquo;</strong> Under a heading that reads <em>THE NUMBERS DON'T LIE</em>. Whichever is true,
-      state that one &mdash; a real 20+ beats an inflatable 100+.</li>
-      <li class="no"><strong>Vague hero trust row.</strong> &ldquo;Early Filipino business owners&rdquo; where the GOATs write
-      &ldquo;6704 customer reviews&rdquo; / &ldquo;250,000 business owners.&rdquo; The moment a real beta count exists, print the exact figure.</li>
-      <li class="no"><strong>The founding-offer decision</strong> (Act I) &mdash; relaunch with real numbers or disable. The code
-      is honest now; the offer itself still needs to be.</li>
+      <li><strong>Price-anchor chaos &mdash; FIXED.</strong> Was four prices on one page (&#8369;497 / &#8369;997 / &#8369;2,497).
+      Now: the dead &#8369;497 bar is gone, marquee + metrics read <em>from &#8369;997/mo</em> (Starter, verified
+      against PLAN_CATALOG), and the &#8369;2,497 Pro story lives only in the OfferStack &mdash; the F05 shape.</li>
+      <li><strong>&ldquo;100+ businesses&rdquo; &mdash; FIXED to &ldquo;20+&rdquo;,</strong> the number the code itself documents as
+      the real 2025 client count. Under <em>THE NUMBERS DON'T LIE</em>, a real 20+ beats an inflatable 100+.</li>
+      <li><strong>Vague hero trust row &mdash; FIXED.</strong> &ldquo;Early Filipino business owners&rdquo; is now
+      &ldquo;20+ Filipino business owners,&rdquo; mirroring the metrics band. Upgrade the figure as the real count grows.</li>
+      <li><strong>The founding-offer decision &mdash; RESOLVED by audit</strong> (Act I): &#8369;497 was never in the checkout
+      catalog, so the bar is disabled until a true promo exists.</li>
     </ul>
   </section>
 
@@ -353,9 +355,9 @@ blockquote .meta{display:block;margin-top:8px;font-style:normal;}
     <p class="eyebrow">// NEXT MOVES &middot; IN ORDER</p>
     <h2>The run <span class="serif">sheet.</span></h2>
     <div class="run" style="margin-top:26px;">
-      <div class="glass"><div class="body"><strong>Decide the founding offer</strong><span class="owner">NEIL DECIDES</span><p class="meta" style="margin:6px 0 0;">Real deadline + real seat count, or enabled:false. Unblocks the whole scarcity layer.</p></div></div>
-      <div class="glass"><div class="body"><strong>Settle the true client count &amp; hero anchor price</strong><span class="owner">NEIL DECIDES</span><p class="meta" style="margin:6px 0 0;">Two answers &rarr; RoiMetrics, marquee, and hero trust row get corrected in one pass.</p></div></div>
-      <div class="glass"><div class="body"><strong>Add the disqualification FAQ line</strong><span class="owner agent">AGENT BUILDS</span><p class="meta" style="margin:6px 0 0;">One entry in TrustFaq. Cheapest trust win on the list.</p></div></div>
+      <div class="glass"><div class="body"><strong>Decide the founding offer</strong><span class="owner">DONE &middot; 07-29</span><p class="meta" style="margin:6px 0 0;">Checkout audit made the call: &#8369;497 has no backing plan &rarr; bar disabled, exit modal decoupled so recapture survives.</p></div></div>
+      <div class="glass"><div class="body"><strong>Settle the true client count &amp; hero anchor price</strong><span class="owner">DONE &middot; 07-29</span><p class="meta" style="margin:6px 0 0;">20+ (the repo's documented real count) in metrics + hero; marquee reads FROM &#8369;997/MO; &#8369;2,497 confined to OfferStack.</p></div></div>
+      <div class="glass"><div class="body"><strong>Add the disqualification FAQ line</strong><span class="owner">DONE &middot; 07-29</span><p class="meta" style="margin:6px 0 0;">&ldquo;Para kanino ito &mdash; at para kanino hindi?&rdquo; now closes the TrustFaq list.</p></div></div>
       <div class="glass"><div class="body"><strong>Design the one-question segmentation</strong><span class="owner agent">AGENT PLANS &middot; NEIL GATES</span><p class="meta" style="margin:6px 0 0;">Where it lives (signup vs first-run), the four options, and what it pre-fills. Grill-me session.</p></div></div>
       <div class="glass"><div class="body"><strong>Audit the post-preview unlock screen (L1)</strong><span class="owner agent">AGENT BUILDS</span><p class="meta" style="margin:6px 0 0;">Smoke-walk the free flow; report whether the attention peak sells ONE next step.</p></div></div>
       <div class="glass"><div class="body"><strong>Vertical LP variants via funnel-forge</strong><span class="owner agent">PARKED &middot; NEEDS AD TRAFFIC</span><p class="meta" style="margin:6px 0 0;">Worth building when Grifon runs vertical ad sets &mdash; same trigger discipline as the swipe-file gates.</p></div></div>

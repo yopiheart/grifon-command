@@ -11,8 +11,8 @@ import { MAT_PLATE } from '../../ui/materialTokens';
 // no campaign-performance data to back those.
 const METRICS = [
   { metric: '30', label: 'Minutes to a full campaign' },
-  { metric: '₱997', label: 'Per month — not ₱30K for an agency', circled: true },
-  { metric: '100+', label: "Filipino businesses we've helped" },
+  { metric: '₱997', label: 'A month to start — not ₱30K for an agency', circled: true },
+  { metric: '20+', label: "Filipino businesses we've helped" },
   { metric: '5', label: 'AI modules in one app' },
 ];
 
