@@ -350,6 +350,57 @@ blockquote .meta{display:block;margin-top:8px;font-style:normal;}
 
   <div class="rule"></div>
 
+  <!-- ============ ACT V: THE UNLOCK AUDIT ============ -->
+  <section class="col reveal">
+    <p class="eyebrow" style="color:var(--flag);">// ACT V &middot; THE L1 UNLOCK AUDIT (RUN-SHEET 05)</p>
+    <h2>Our thank-you moment <span class="serif">leaks.</span></h2>
+    <p style="margin-top:18px;">
+      L1 &mdash; <strong>the post-opt-in moment sells exactly ONE next step</strong> &mdash; is the most
+      corroborated pattern in the swipe file (6 of 6 funnels). Our equivalent peak is the screen
+      where the free ad plan finishes. Code-walked end to end on 07-29. Verdict:
+      <em>FAIL, with receipts</em> &mdash; and one genuinely good asset to build on.
+    </p>
+
+    <div class="glass flag">
+      <div class="cardhead"><h3>The census: 17 clickables. 1 money path.</h3><span class="tag no">L1 FAIL</span></div>
+      <p style="margin-bottom:0;">At the exact moment Hormozi shows one video and one button, our completion screen offers
+      <strong>seventeen clickable elements across ~ten destinations</strong> &mdash; tabs, downloads, back-buttons,
+      a restart, an NPS card &mdash; and exactly one path toward money
+      (<code class="meta">GENERATE VIDEO NOW &gt;</code>), styled like a free next step. No price, no plan name,
+      no &ldquo;1 of 1 free workflows used,&rdquo; no watermark disclosure anywhere on the screen.</p>
+    </div>
+
+    <div class="glass">
+      <div class="cardhead"><h3>The five sharpest leaks</h3></div>
+      <ul style="margin-bottom:0;">
+        <li class="no"><strong>The perfect nudge is dead code.</strong> A Taglish line written for exactly this moment
+        (&ldquo;Gawa mo na ang free ad plan mo &mdash; i-render na natin&hellip;&rdquo;) exists in
+        <code class="meta">config/upgradeNudge.ts</code> but is <em>never rendered anywhere</em> &mdash; it survives only
+        as a boolean powering a bell-dot on the Dashboard.</li>
+        <li class="no"><strong>A banner hijacks the peak.</strong> One-shot users see &ldquo;Run Market Research First&rdquo;
+        on the completion screen &mdash; routing them <em>away</em> from their finished ad at maximum attention.</li>
+        <li class="no"><strong>The free exit out-muscles the paid one.</strong> <code class="meta">EXPORT_BUNDLE (.ZIP)</code>
+        hands over everything, fully satisfying, co-equal in the layout with the money CTA.</li>
+        <li class="no"><strong>Paying destroys the ad.</strong> Both paywall exits (pricing page, &#8369;499 top-up) lose all
+        wizard state &mdash; a user who pays comes back to an empty dashboard, not to the ad they just bought.</li>
+        <li class="no"><strong>Watermark leak.</strong> The image lightbox&rsquo;s download button serves the raw,
+        un-watermarked asset &mdash; the free tier&rsquo;s only passive friction, gone in one click.</li>
+      </ul>
+    </div>
+
+    <div class="glass gold">
+      <div class="cardhead"><h3>The good news &mdash; and the fix shape</h3><span class="tag ok">DESIGNED &middot; NEIL GATES</span></div>
+      <p style="margin-bottom:0;"><strong>LockedVideoPreview is already the right L1 mechanic</strong> &mdash; the user&rsquo;s own ad,
+      blurred behind a gold lock, is better than anything the GOATs showed us. The designed fix
+      (full spec: <code class="meta">workflows/post_preview_bridge.md</code>): make the completion screen a true bridge &mdash;
+      ONE gold CTA that names its price, the dead Taglish nudge finally rendered at its moment, an honest
+      &ldquo;1/1 used &middot; exports watermarked&rdquo; line, demoted exits, the ad persisted across the paywall,
+      and the lightbox leak plugged. Build is Neil-gated &rarr; code-executor.</p>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
   <!-- ============ RUN SHEET ============ -->
   <section class="col reveal">
     <p class="eyebrow">// NEXT MOVES &middot; IN ORDER</p>
@@ -358,8 +409,8 @@ blockquote .meta{display:block;margin-top:8px;font-style:normal;}
       <div class="glass"><div class="body"><strong>Decide the founding offer</strong><span class="owner">DONE &middot; 07-29</span><p class="meta" style="margin:6px 0 0;">Checkout audit made the call: &#8369;497 has no backing plan &rarr; bar disabled, exit modal decoupled so recapture survives.</p></div></div>
       <div class="glass"><div class="body"><strong>Settle the true client count &amp; hero anchor price</strong><span class="owner">DONE &middot; 07-29</span><p class="meta" style="margin:6px 0 0;">20+ (the repo's documented real count) in metrics + hero; marquee reads FROM &#8369;997/MO; &#8369;2,497 confined to OfferStack.</p></div></div>
       <div class="glass"><div class="body"><strong>Add the disqualification FAQ line</strong><span class="owner">DONE &middot; 07-29</span><p class="meta" style="margin:6px 0 0;">&ldquo;Para kanino ito &mdash; at para kanino hindi?&rdquo; now closes the TrustFaq list.</p></div></div>
-      <div class="glass"><div class="body"><strong>Design the one-question segmentation</strong><span class="owner agent">AGENT PLANS &middot; NEIL GATES</span><p class="meta" style="margin:6px 0 0;">Where it lives (signup vs first-run), the four options, and what it pre-fills. Grill-me session.</p></div></div>
-      <div class="glass"><div class="body"><strong>Audit the post-preview unlock screen (L1)</strong><span class="owner agent">AGENT BUILDS</span><p class="meta" style="margin:6px 0 0;">Smoke-walk the free flow; report whether the attention peak sells ONE next step.</p></div></div>
+      <div class="glass"><div class="body"><strong>Design the one-question segmentation</strong><span class="owner">PROPOSAL READY &middot; NEIL GATES</span><p class="meta" style="margin:6px 0 0;">Key find: the question already exists in-product (LaunchScreen vertical picker). Design captures it on the landing CTA click &rarr; rides signup &rarr; pre-fills wizard. Four gates for Neil in workflows/post_preview_bridge.md.</p></div></div>
+      <div class="glass"><div class="body"><strong>Audit the post-preview unlock screen (L1)</strong><span class="owner">DONE &middot; 07-29</span><p class="meta" style="margin:6px 0 0;">Verdict: FAIL &mdash; 17 clickables, 1 disguised money path (Act V above). Fix shape designed; build is Neil-gated.</p></div></div>
       <div class="glass"><div class="body"><strong>Vertical LP variants via funnel-forge</strong><span class="owner agent">PARKED &middot; NEEDS AD TRAFFIC</span><p class="meta" style="margin:6px 0 0;">Worth building when Grifon runs vertical ad sets &mdash; same trigger discipline as the swipe-file gates.</p></div></div>
     </div>
   </section>
