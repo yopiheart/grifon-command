@@ -19,7 +19,21 @@ entry links its image on the line under the heading (`![E<NN>](../assets/ad-swip
 get a duplicate — attach its image to the existing entry via
 `--ingest-only --entry E<n>` (no new entry, no Pattern bump).
 
-**RESUME (next session, Opus 4.8 per Neil 2026-07-12):** batch **E51–E81 DONE** —
+**RESUME (2026-07-29):** batch **E82–E93 DONE** — Russell Brunson (12 ads, `fb-ad-library`,
+sources in `assets/Russel brunson top performing image ads/`). It is **one campaign**: 3 hook
+families × ~4 visual worlds each, copy held byte-identical → new **S34 one-copy/N-worlds**,
+**S35 diegetic real-world surface**, **S36 deconstructed-math offer**, **S37 tagline-as-logo**;
+S13 (mascot/recall) is now **contested** — all 12 run with no brand mark at all. Drafted
+**GP-6 "One Hook / N Worlds"** but it is **single-brand and NOT approvable yet** — the next
+static-autopsy batches must look specifically for copy-constant/world-variable sets from 2+ other
+advertisers before GP-6 can move to `proposed`. Two S7-class trust flags recorded (E86 fabricated
+Times-Square spectacle, E89 fabricated "THE AI INSIDER" masthead). Next E-number = **E94**.
+**Tool note (recurring):** the specificity gate again over-fired — E82/E86/E92 failed twice on the
+`why_it_works` concrete-evidence count alone while carrying perfectly good verbatim copy, layout
+walks, and hex palettes; those three entries are completed with agent-eyeball evidence and marked
+ⓥ. Second batch in a row the gate mislabels good output — worth relaxing (see the 2026-07-12 note).
+
+**RESUME (previous, Opus 4.8 per Neil 2026-07-12):** batch **E51–E81 DONE** —
 breadth-first ingest of 8 high-relevance SaaS / AI / fintech / marketing brands
 (OpenAI, Meta for Business, Google Gemini, Alex Hormozi, Sabri Suby, Stripe, Wise,
 Meta), 3–4 distinct concepts each, via 8 parallel `/static-autopsy` subagents.
@@ -60,15 +74,15 @@ Proposal) → `applied` (shipped as an Image Ads Gen template or CMO playbook).
 | S4 | **Offer-stack checklist** — gold/green ✅ list of what they GET (calls, templates, bonuses) + guarantee tag. Reciprocity + commitment. | **6 across 5 brands — cross-niche 2026-07-12** (E2, E3 Gadzhi; E40 IM8; E63 Hormozi value-stack; E54 OpenAI numbered 1–8 task list; E57 Meta for Business checklist) | observed |
 | S5 | **Gold-on-black SaaS palette** — `#FFCC00`-class gold + near-black, glassy cards, gold lozenge "VIP/PRO" badge, gold gradient CTA bar. (Already Grifon's palette.) | 5 across 2 brands (E1–E4 Gadzhi; E63 Hormozi gold-on-black value-stack; E65-var Hormozi gold-on-near-black) | observed |
 | S6 | **CTA-bar color A/B test** — same creative shipped with gold / green / blue "Learn more" bars across the set; they're testing button color, not just creative. | 3 (E1 gold, E2 green, E4 blue) | observed |
-| S7 | **Fake-DM / manufactured interaction / manufactured scarcity** — "pre-approved," blurred meeting invite, "selecting a few people," staged AMA-sticker Q&A dressed as organic. **ANTI-PATTERN for Grifon** — recorded so we copy the *layout* (cohort offer, AMA-reply format) but never the fabrication. | 3 (E4, E1-urgency; E19 Grüns fake-AMA) | observed (do-not-replicate) |
-| S8 | **Hyper-specific audience callout** — name the exact buyer in the hook ("If you own a *[niche]* doing *[revenue]*"; "on GLP-1"; "Women 40+"; "Postpartum…"). Self-identification + specificity (Sabri Suby dream-buyer). ONE template → N variants off a swapped variable. | **16 across 7 brands** (E5 service; E8/E11, E19, E20, E25, E26 Grüns; E13, E37 IM8; E43 Cursor; E67 Sabri "16 hrs/day"; E65/E66 Hormozi "$1M+"/"$10M"; E76/E77 Wise "Clients overseas?") | **proposed — strongest pattern, drives GP-2** |
+| S7 | **Fake-DM / manufactured interaction / manufactured scarcity** — "pre-approved," blurred meeting invite, "selecting a few people," staged AMA-sticker Q&A dressed as organic. **ANTI-PATTERN for Grifon** — recorded so we copy the *layout* (cohort offer, AMA-reply format) but never the fabrication. | 5 across 3 brands (E4, E1-urgency; E19 Grüns fake-AMA; **E86 Brunson AI-generated Times-Square takeover + awed crowd = manufactured public spectacle; E89 Brunson fabricated masthead "THE AI INSIDER" shot at a real newsstand = fabricated publication implying editorial coverage**) | observed (do-not-replicate) |
+| S8 | **Hyper-specific audience callout** — name the exact buyer in the hook ("If you own a *[niche]* doing *[revenue]*"; "on GLP-1"; "Women 40+"; "Postpartum…"). Self-identification + specificity (Sabri Suby dream-buyer). ONE template → N variants off a swapped variable. | **19 across 8 brands** (E5 service; E8/E11, E19, E20, E25, E26 Grüns; E13, E37 IM8; E43 Cursor; E67 Sabri "16 hrs/day"; E65/E66 Hormozi "$1M+"/"$10M"; E76/E77 Wise "Clients overseas?"; **E82/E83 Brunson "The Coaches Winning Right Now"; E85 Brunson "FOR CONSULTANTS WHOSE WORK FEELS TOO CUSTOM FOR ANY SYSTEM" — the callout that names the buyer's OBJECTION, not just their trade**) | **proposed — strongest pattern, drives GP-2** |
 | S9 | **Anti-design text-only pattern interrupt** — flat solid bg, centered white sans, zero imagery/logo/CTA button; reads as a personal note, not an ad. **Contradicts S5 + Grifon's cinematic brand** — adopt the copy mechanic; test the bare visual only as a deliberate experiment. | **7 across 5 brands — crossed ≥3 2026-07-12** (E5 service; E24 Grüns; E51 OpenAI testimonial; E79–E81 Meta security PSAs; E57 Meta for Business notebook flat-lay) | observed (brand-conflict) |
-| S10 | **Value-first lead magnet (TOF)** — gives a free asset ("Scaling Roadmap", "FREE Starter Kit") to a cold dream-buyer. Top-of-funnel; the opposite end from the E1–E4 bottom-funnel upsell. | **5 across 4 brands — cross-niche 2026-07-12** (E5 service; E12, E40 IM8; E73 Stripe "READ OUR GUIDE" pricing guide; E57 Meta for Business "3 hacks") | observed |
-| S11 | **Trend-hijack** — ride a live cultural wave so the ad feels like the moment, not a pitch (GLP-1 / Ozempic). Grifon's wave is **"AI"**. | **15 across 6 brands — the AI category itself now in-file 2026-07-12** (E7, E8, E10, E29 Grüns; E14, E16, E37 IM8; E18, E45 Cursor; E59–E62 Google Gemini — AI product riding the live World-Cup wave; E65 Hormozi "generic AI vs your custom AI"; E57 Meta for Business "the AI behind Advantage+") | observed |
-| S12 | **Pattern-interrupt hook** — curiosity/novelty/apology/gross-out that doesn't read as an ad ("We NEVER do this", "WE'RE SO SORRY", "RABBIT POOPS?", "We're back."). | **9 across 5 brands — crossed ≥3 2026-07-12** (E6, E7, E21, E24 Grüns; E65 Hormozi trading-card, E66 Hormozi broken-chain metaphor; E69 Sabri Memoji; E80 Meta color-noun; E62 Gemini banana-jacket character) | observed |
-| S13 | **Mascot / recall device** — a repeated motif (gummy bear) carries instant brand ID; E23 upgrades it from motif to *actor* (mascot golfing in the buyer's world). Grifon's mark + gold light-sweep is the under-used equivalent. | 5 across 4 brands (E6–E11, E23 Grüns; E69 Sabri Memoji; E62 Gemini character; E79/E80 Meta logo-lockup recall) | observed |
+| S10 | **Value-first lead magnet (TOF)** — gives a free asset ("Scaling Roadmap", "FREE Starter Kit") to a cold dream-buyer. Top-of-funnel; the opposite end from the E1–E4 bottom-funnel upsell. | **6 across 5 brands — cross-niche 2026-07-12** (E5 service; E12, E40 IM8; E73 Stripe "READ OUR GUIDE" pricing guide; E57 Meta for Business "3 hacks"; E85 Brunson "Free 5-DAY AI PROGRAM") | observed |
+| S11 | **Trend-hijack** — ride a live cultural wave so the ad feels like the moment, not a pitch (GLP-1 / Ozempic). Grifon's wave is **"AI"**. | **27 across 7 brands — 2026-07-29** (E7, E8, E10, E29 Grüns; E14, E16, E37 IM8; E18, E45 Cursor; E59–E62 Google Gemini; E65 Hormozi "generic AI vs your custom AI"; E57 Meta for Business "the AI behind Advantage+"; **E82–E93 Brunson — all 12 creatives in one campaign name AI as the enabler ("AI MADE IT POSSIBLE", "WITH AI", "ANYONE WITH CHATGPT")**) | observed |
+| S12 | **Pattern-interrupt hook** — curiosity/novelty/apology/gross-out that doesn't read as an ad ("We NEVER do this", "WE'RE SO SORRY", "RABBIT POOPS?", "We're back."). | **20 across 6 brands — 2026-07-29** (E6, E7, E21, E24 Grüns; E65 Hormozi trading-card, E66 Hormozi broken-chain metaphor; E69 Sabri Memoji; E80 Meta color-noun; E62 Gemini banana-jacket character; **E82–E93 Brunson — 11/12 interrupt by WORLD (chalk, cassette, diorama, newsprint) rather than by copy; see S34/S35**) | observed |
+| S13 | **Mascot / recall device** — a repeated motif (gummy bear) carries instant brand ID; E23 upgrades it from motif to *actor* (mascot golfing in the buyer's world). Grifon's mark + gold light-sweep is the under-used equivalent. ⚠️ **Loudly contradicted 2026-07-29:** all 12 Brunson creatives (E82–E93) ship `brand_visible: false` — no logo, no mark, no colour system. Recall is carried entirely by a repeated *copy* line (see S37). A top-performing set can run fully anonymous; brand marks are not a precondition for scroll-stop. | 5 across 4 brands (E6–E11, E23 Grüns; E69 Sabri Memoji; E62 Gemini character; E79/E80 Meta logo-lockup recall) — **contradicted by 12 (Brunson E82–E93)** | observed (contested) |
 | S14 | **Full-canvas color A/B** — test the *whole background* color (green/yellow/blue/beige), not just the CTA. Extends S6. | **6 across 5 brands — now cross-NICHE** (E6–E11, E21 Grüns; E31 IM8; E44 Cursor; E75/E77 Wise full-canvas forest/lime; E64 Hormozi flat purple canvas) | observed |
-| S15 | **Stat-stack proof** — numerals as proof, stacked ("21 vitamins. 20 cal. 1 net carb."; "60+ ingredients"). | **16 across 7 brands — crossed the independent-brand bar 2026-07-12** (E8, E10, E23, E26 Grüns; E14, E31, E33, E34, E37, E38 IM8; E63 Hormozi non-round stack; E68 Sabri "3,227 reviews"; E71 Stripe "75%"; E77 Wise "74% instant"; E53/E54 OpenAI) | observed |
+| S15 | **Stat-stack proof** — numerals as proof, stacked ("21 vitamins. 20 cal. 1 net carb."; "60+ ingredients"). | **16 across 7 brands — crossed the independent-brand bar 2026-07-12** (E8, E10, E23, E26 Grüns; E14, E31, E33, E34, E37, E38 IM8; E63 Hormozi non-round stack; E68 Sabri "3,227 reviews"; E71 Stripe "75%"; E77 Wise "74% instant"; E53/E54 OpenAI; E84 Brunson "$10,000 / 100 / $100"; E89 Brunson "8 SECONDS") | observed |
 | S16 | **Borrowed authority** — social proof by association (celebrity / sports partnership: Inter Miami CF; Lisa Rinna campaign). Grifon = client logos / testimonials / "trusted by N PH businesses." | **18 across 6 brands — cross-niche confirmed 2026-07-12** (E15, E32–E36, E40 IM8; E22 Grüns; E46–E50 Kylie; E68/E70 Sabri (Google + Forbes borrowed); E71 Stripe co-brand lockup; E81 Meta govt-agency; E56 Meta for Business verified-badge; E51/E53 OpenAI named founder) | observed |
 | S17 | **"Imagine…" future-pace + objection-handling** — paint the after-state, defuse the fear ("Imagine your GLP-1 journey, without the side effects"). | 1 (E16 IM8) | observed |
 | S18 | **Style axis: premium-editorial vs flat-graphic** — IM8 (crimson, serif, lifestyle photography, restraint) vs Grüns (loud color-block, mascot, discount). **Grifon = the premium lane** (cinematic gold/black). | brand-level (Grüns flat; IM8 premium; Cursor + Kylie all-premium; +Stripe all-premium fluid-gradient benchmark; +OpenAI runs the axis WITHIN one campaign — E51 minimal-anti-design ↔ E53 premium-editorial, identical Sebastian Korts testimonial copy; +Wise spans both poles — E75/E77 flat-graphic ↔ E78 premium-photo) | observed |
@@ -77,8 +91,8 @@ Proposal) → `applied` (shipped as an Image Ads Gen template or CMO playbook).
 | S21 | **Native-format camouflage** — the ad dresses as organic platform UI (IG story AMA sticker, Close-Friends badge, caption cards, handle overlay) to bypass banner blindness. Slides into S7 the moment the interaction is faked — Grifon version uses REAL community questions only. | **11 across 5 brands — crossed the independent-brand bar 2026-07-12** (E19, E27 Grüns; E34, E35, E39 IM8; E67/E68/E70 Sabri (NEWS badge / Google SERP / Forbes card — the DECEPTIVE kind, layout-only); E52 OpenAI in-app moment; E55/E56 Meta for Business native chrome) | observed |
 | S22 | **Category-king flex** — publicly acknowledge copycats/doubters to frame the brand as the original ("we see you, copycats."; "We hereby accept your apology."). Late-stage play — only works once you ARE the category leader. | 3 across 3 brands (E22 Grüns; E68 Sabri multi-retailer dominance + E70 "fastest-growing agency"; E71 Stripe category-king by association) | observed |
 | S23 | **Real-scarcity nostalgia drop** — limited-edition collab with a legacy childhood brand (Grüns × Popsicle Firecracker), run as a full campaign system (flavor graphic + UGC + meme + text-only sellout apology). Scarcity is REAL (sold out, no restock) — passes the trust line. | 1 (E27 campaign, Grüns) | observed |
-| S24 | **Format-enemy positioning** — villainize the incumbent *format/ritual*, not a competitor brand ("STOP CHOKING DOWN GRASS IN A GLASS. Measure. Blend. Gag. Scrub."; "STOP PUNISHING YOURSELF WITH POWDERS."). Grifon's enemy: the ₱30K agency retainer / DIY all-nighter. | **9 across 4 brands — now cross-NICHE** (E28, E29-var Grüns; E31, E34, E38, E39 IM8; E42 Cursor; E75 Wise "skip the airport queue" + E78 "STOP SPENDING LIKE A TOURIST" — enemy = the FX/exchange ritual) | observed |
-| S25 | **Uncanny meme creative** — toys/dolls/hand-drawn doodles ARE the whole ad (Barbie split-meme, marker-doodle pack shot). Feed-native, cheap, honest (nobody mistakes a doll for a fake testimonial). | 3 across 2 brands (E29, E30 Grüns; E69 Sabri Memoji-as-hero) | observed |
+| S24 | **Format-enemy positioning** — villainize the incumbent *format/ritual*, not a competitor brand ("STOP CHOKING DOWN GRASS IN A GLASS. Measure. Blend. Gag. Scrub."; "STOP PUNISHING YOURSELF WITH POWDERS."). Grifon's enemy: the ₱30K agency retainer / DIY all-nighter. | **15 across 5 brands — 2026-07-29** (E28, E29-var Grüns; E31, E34, E38, E39 IM8; E42 Cursor; E75 Wise "skip the airport queue" + E78 "STOP SPENDING LIKE A TOURIST"; **E82, E83, E87, E88, E93 Brunson — enemy = *selling "coaching"* as a format, never a named rival; E89 — enemy = the book you already wrote**) | observed |
+| S25 | **Uncanny meme creative** — toys/dolls/hand-drawn doodles ARE the whole ad (Barbie split-meme, marker-doodle pack shot). Feed-native, cheap, honest (nobody mistakes a doll for a fake testimonial). | 4 across 3 brands (E29, E30 Grüns; E69 Sabri Memoji-as-hero; E92 Brunson miniature-diner diorama) | observed |
 | S26 | **Taboo/crude register** — bodily-function, profanity, and anatomical hooks matched per segment ("RABBIT POOPS?", "DON'T GHOST YOUR BALLS.", "F*CK YOU, HAIR LOSS"). Strong scroll-stop, brand-safety risk; off Grifon's premium register — the *mechanic* (name the unspoken pain bluntly) ports, the words don't. | 3 (E20, E21, E30 — one brand, below the independent-brand bar) | observed |
 | S27 | **Wealth-contrast price anchor** — someone who could afford anything *chose* the cheap-per-day option ("GIANNIS COULD AFFORD ANYTHING. HE CHOSE A $2.61/DAY DRINK."). Collapses "premium = expensive" and reframes price as a daily cost. Grifon: "Agencies charge ₱30K/mo. Grifon is ₱XX/day." | 2 across 2 brands (E35 IM8 "Giannis $2.61/day"; E70 Sabri "$50 & a laptop → $74M Shark") | observed |
 | S28 | **Illustrated transformation timeline** — staged before→during→after strip with NAMED stages or months (BEFORE→RITUAL→RESET; JULY→AUGUST→SEPTEMBER); process-framing beats binary before/after. ⚠️ Implied body-claims are a trust gray zone (E37 flagged implausible) — Grifon ports it with REAL artifacts only (BRIEF→GRIFON→LAUNCHED). | 2 (E31-var, E37 — one brand) | observed |
@@ -87,6 +101,10 @@ Proposal) → `applied` (shipped as an Image Ads Gen template or CMO playbook).
 | S31 | **Texture-macro sensory hero** — a macro shot of the product's physical texture (the squeeze, the drip, the swatch) is the focal proof; it SHOWS the sensory promise instead of claiming it. Physical-product-native; Grifon's analog is the crisp UI-detail close-up (pairs with S20). | 2 across 2 brands (E48 Kylie squeeze; E78 Wise breakfast-table sensory flat-lay) | observed |
 | S32 | **Prompt-to-outcome tableau** — the AI-native specialization of S20: show the exact INPUT prompt + its RENDERED output together as the creative (prompt pill → result card / notification / generated asset). Honest, and it teaches the user what to type. Grifon analog: One-Shot brief → the generated ad, shown side by side. | 4 across 2 brands (E59, E60, E61 Google Gemini; E52 OpenAI chat-pill) | observed |
 | S33 | **Gamified character / trading card** — frame the founder / the product / a feature as a collectible RPG card (level badge, stars, stat-bars, gem). High-novelty scroll-stopper; pairs with Grifon's avatar tooling. | 1 (E65 Hormozi) | observed |
+| S34 | **One copy / N worlds** — lock the headline block byte-identical and vary the *entire visual universe* per creative: lecture hall → podcast set → sidewalk chalk → subway newspaper → cassette label → Tokyo fly-poster → Times-Square billboard → whiteboard → miniature diorama → punk-zine collage → graffiti mural. The **inverse of S14** (colour is the variable, design constant) and **orthogonal to S30** (language is the variable, design constant): here *copy is the constant and the world is the variable*. Once a hook is proven, creative volume becomes an art-direction problem, not a copywriting one — and each world is a genuinely different scroll-stop for the same message. | **12 across 1 brand — below the independent-brand bar** (E82–E93 Brunson: 3 hook families × ~4 worlds each) | observed — **drives draft GP-6; needs a 2nd + 3rd brand before it can move to `proposed`** |
+| S35 | **Diegetic real-world surface** — the copy is *written on a physical object inside a photographed scene* (chalk on pavement, newsprint, a cassette label, a pasted poster, a marquee, a whiteboard, a sprayed wall) rather than composited as an overlay layer. Distinct from **S21** (camouflage as *platform UI*) and **S9** (flat anti-design text): the headline becomes an artifact the viewer *discovers*, which reads as non-commercial and buys a second of attention before the pitch registers. Cheap for us — `generateSceneImage` makes the surface, the copy is baked into the world. | **10 across 1 brand** (E82, E83, E85, E87, E88, E89, E90, E91, E92, E93 Brunson) — single-brand | observed |
+| S36 | **Deconstructed-math offer** — break the aspirational number into arithmetic the buyer can verify in their head ("$10,000 MONTHLY RECURRING REVENUE **FROM 100 CUSTOMERS PAYING $100 EACH**"). Converts a get-rich-quick-shaped number into a plan, and it is honest by construction — it claims a *structure*, not a result. Grifon port: "₱30K/mo agency = ₱1,000/day. Grifon = ₱XX/day." | 1 (E84 Brunson) | observed |
+| S37 | **Tagline-as-logo** — with zero brand marks anywhere in the set, one short repeated sign-off line ("YOUR EDGE STARTS HERE.") carries 100 % of cross-creative recall, and stands in for the on-image CTA (the platform button does that job). Extends **S29**'s "sign-off substitutes for a CTA" mechanic to a brand-level lock line. Portable and free; the risk is that anonymous creative builds campaign recall, not brand equity. | 6 across 1 brand (E84, E85, E86, E90, E91, E92 Brunson) | observed |
 
 ## Gated Proposals
 
@@ -274,6 +292,56 @@ approves, then surgical edit + vitest + verify. **Strong sibling:** S30 geo-loca
 master creative (6 brands) — every GP-5 template should ship EN/Taglish/Bisaya variants
 off one master, near-free via `captureToPng` (fold into the build, not a separate GP).
 
+### GP-6 (DRAFT — evidence gate NOT yet met) — "One Hook / N Worlds" variant engine for Image Ads Gen
+
+⚠️ **Status: single-brand.** S34 has 12 corroborations but all from **one** advertiser (Russell
+Brunson, E82–E93). Per the 3-corroboration rule, *independent brands preferred* — this is drafted
+now because it is the most directly buildable finding in the file, but it must **not** be
+approved or built until at least **2 more independent brands** show the same copy-constant /
+world-variable structure. Next static-autopsy batches should look for it explicitly.
+
+**Why:** every existing family (GP-1..GP-5) answers *"what should this one ad look like?"*. S34
+answers a different and more valuable question for a generator: **"we have a hook that works —
+now give me twelve of them."** Brunson runs 3 hooks across ~12 wildly different visual universes
+with the headline held byte-identical. That is precisely the shape of a generator loop, and it is
+the one creative-multiplication axis Grifon does not currently have: today `generateAdCreatives`
+varies the *template*, which also varies the copy and the layout. Here the copy is frozen and only
+the world moves — so the A/B is clean (you learn which world sells the hook) and the marginal cost
+of variant N+1 is one image-model call.
+
+**Funnel slot:** post-validation scaling. Ships *after* a hook proves out — pairs with the
+`grifon-ad-strategist` playbook (more distinct creatives = more Andromeda inventory against the
+same winning message, without re-testing copy).
+
+**Proposed shape:**
+- **Input:** one approved headline block (hook + sub-head + optional sign-off line) + `worldCount`.
+- **World library** (seeded from E82–E93, each a prompt preset for `generateSceneImage`):
+  keynote stage · podcast whiteboard · sidewalk chalk · held newspaper (POV) · handwritten
+  cassette/retro-media label · wild-posted street poster · city billboard · war-room whiteboard ·
+  miniature diorama · punk-zine paper-cut collage · sprayed mural. Grifon-native additions:
+  jeepney-route wall, sari-sari-store signage, Divisoria pillar, whiteboard sa opisina.
+- **Copy is immutable across worlds** — the generator may re-flow line breaks to fit the surface
+  (E88 wraps in 5 lines, E93 in 4) but may not rewrite a word. This needs to be a hard prompt
+  constraint, not a suggestion.
+- **S35 pairing:** each world renders the copy as a **diegetic surface** where possible (baked into
+  the scene) rather than as an overlay, which is what makes the interrupt work.
+- **S37 pairing:** one lock line ("Your edge starts here."-equivalent, in Grifon's voice) repeated
+  across every world as the recall device.
+
+**Guardrails (inherit + add):**
+- **Trust line applies to worlds, not just copy.** E86 and E89 show exactly how this family goes
+  wrong: a world may not fabricate third-party endorsement — no invented mastheads, no manufactured
+  crowds, no simulated news coverage, no fake awards. Worlds must be *neutral surfaces* (a wall, a
+  page, a board, an object), never *institutions*.
+- **Brand visibility is a decision, not a default.** Brunson ships fully anonymous (S13 contradiction).
+  Grifon's DESIGN.md says the opposite. Recommend: keep the Grifon mark, ship anonymous only as a
+  deliberate A/B — and log which wins.
+- **Multi-ratio (S19):** Brunson's whole set is 1:1 only — a real gap. Ours should export 4:5 / 1:1 /
+  9:16 per world from the start; note that diegetic copy is *harder* to re-frame than an overlay, so
+  the safe-zone has to be planned into the world prompt.
+- Editing `generateAdCreatives` touches the **TUNED** `services/geminiService.ts` — Neil approves,
+  then surgical edit + vitest + verify. Nothing here is applied autonomously.
+
 ## Cross-Vertical Pattern Map
 
 These patterns are **not** about supplements or coaching — they're portable
@@ -320,6 +388,149 @@ More ratios also = more inventory for Andromeda to retrieve against. Logged to t
 Append newest at the top. Each entry's second line is its committed image
 (`![E<NN>](../assets/ad-swipe/E<NN>-<brand-slug>.jpg)`) — E1–E17 backfill their
 image link as they're re-encountered via `--ingest-only`.
+
+> **Batch 2026-07-29 (E82–E93) — Russell Brunson, ONE campaign in 12 visual worlds.**
+> Neil's drop of Brunson's top-performing image ads turned out to be a single campaign, not
+> 12 unrelated ads: **3 hook families × ~4 radically different visual universes each**, with the
+> headline copy held byte-identical across worlds. That inversion (copy constant, *entire visual
+> world* variable) is new to the file → **S34**, and it is the most directly portable finding we
+> have for Image Ads Gen → drafted **GP-6** (single-brand, so gated pending cross-brand
+> corroboration). Also new: **S35 diegetic real-world surface** (copy written ON a physical
+> object inside a photographed scene — chalk, newsprint, cassette label, wild-posted paper — 10/12),
+> **S36 deconstructed-math offer**, **S37 tagline-as-logo**. ⚠️ Two S7-class trust flags: E86's
+> AI-generated Times-Square crowd (manufactured public spectacle) and E89's fabricated
+> "THE AI INSIDER" masthead shot at a real newsstand (fabricated publication). Layout stealable,
+> the fabrication is not. Gate note: E82/E86/E92 tripped `GENERIC_OUTPUT` twice on the
+> `why_it_works` concrete-evidence count only; their entries are completed with agent-eyeball
+> evidence and marked ⓥ.
+
+### 2026-07-29 — E93 Russell Brunson "The Coaches Winning Right Now Stopped Selling 'Coaching.'" — cassette-tape world (fb-ad-library, info-product / funnel education)
+![E93](../assets/ad-swipe/E93-russell-brunson.jpg)
+**Why swiped:** Neil's top-performer drop; the most extreme world-swap in the set — the identical $97/month hook delivered on a handwritten cassette label. · **Format:** 1:1, product-macro / diegetic-surface
+**Layout:** tight three-quarter macro of a clear-shell cassette resting on a stack of jewel cases atop a Walkman; the beige paper label fills the centre and carries all copy; two hub windows interrupt the text block mid-line; below the label rule, "A1:" and "A2:" run as a tracklist; warm low-key ambient falls off to black at the edges. Focal point = the handwritten label.
+**Copy (verbatim):** "THE COACHES WINNING RIGHT NOW STOPPED SELLING "COACHING." THEY SELL SOFTWARE WITH THEIR COACHING BAKED IN FOR $97/MONTH." — "A1: AI MADE IT POSSIBLE." / "A2: HERE'S HOW IT'S DONE." — no on-image CTA.
+**Visual DNA:** label cream `#C5B48C` · ink `#111111` · shell/shadow `#1E1E1E` · warm ambient `#2C251E`. Handwritten marker caps, medium weight. Register: nostalgic-analog macro (not "minimal-anti-design" as the tool guessed).
+**Levers:** trend-hijack ("A1: AI MADE IT POSSIBLE.") · format-enemy positioning ("STOPPED SELLING 'COACHING.'") · price anchor ("$97/MONTH") · curiosity-gap structured as a tracklist — you have to flip to side A2 to get the how.
+**Weaknesses / trust flags:** no brand mark anywhere. **AI-render artifact:** the player's logotype reads **"WALHMAN"**, not WALKMAN (the tool reported it as WALKMAN — corrected on eyeball). Handwriting is slow to read at scroll speed.
+**So What for Grifon:** the A1/A2 tracklist is a free curiosity device — split the promise from the mechanism and make the click the only way to get side B. Copy mechanic, not a template.
+**Patterns:** corroborates S34, S35, S11, S12, S24; new candidate none; contradicts S13 (zero recall device).
+
+### 2026-07-29 — E92 Russell Brunson "Nobody Believed One Person Could Run A Full Marketing Operation With AI." — miniature-diner world (fb-ad-library, info-product / funnel education) ⓥ
+![E92](../assets/ad-swipe/E92-russell-brunson.jpg)
+**Why swiped:** highest-novelty visual in the set — a tabletop miniature diorama hosting a B2B AI offer. · **Format:** 1:1, uncanny-miniature diorama
+**Layout:** vertical stack — a glowing cream marquee sign on twin posts occupies the top third and carries the full hook; the miniature diner body fills the middle; through the windows, left-to-right: a lit jukebox, a neon "OPEN", and a small black sign reading the campaign tagline; a single tiny seated figure bottom-right; bokeh warm lights float in near-black negative space.
+**Copy (verbatim):** "NOBODY BELIEVED ONE PERSON COULD RUN A FULL MARKETING OPERATION WITH AI. THEN I SHOWED THEM MINE." — window signs "OPEN" and "YOUR EDGE STARTS HERE" — no CTA button.
+**Visual DNA:** marquee `#F7E5A9` · marquee text `#1C120C` · neon `#FF5722` · interior glow `#E67E22` · ground `#0D0D0D`. Condensed gothic caps, heavy. Register: uncanny-toy-miniature.
+**Levers:** ⓥ pattern-interrupt — a miniature diorama is ~0 % of a B2B feed · trend-hijack ("...OPERATION WITH AI") · open-loop narrative ("THEN I SHOWED THEM MINE." withholds the reveal) · ⓥ the tagline is placed as *set dressing* (a sign inside the window), so the only two brand-ish elements in frame are diegetic props, not overlays.
+**Weaknesses / trust flags:** zero brand attribution; the diner↔AI-marketing link is purely metaphorical and carries no argument. No fabrication — nobody mistakes a model diner for evidence (the honest end of the uncanny lane).
+**So What for Grifon:** the cheapest legitimate scroll-stop in the set — novelty carried entirely by the *world*, with the claim unchanged. Feeds GP-6's world library.
+**Patterns:** corroborates S34, S35, S25, S12, S11, S37; new candidate none; contradicts S13.
+
+### 2026-07-29 — E91 Russell Brunson "Nobody Believed One Person Could Run A Full Marketing Operation With AI." — war-room whiteboard world (fb-ad-library, info-product / funnel education)
+![E91](../assets/ad-swipe/E91-russell-brunson.jpg)
+**Why swiped:** the "system" proof-frame — the hook is circled in the middle of a fully worked-out strategy board. · **Format:** 1:1, whiteboard-schematic
+**Layout:** a dark-framed whiteboard fills the frame; dead centre, a red double-ring circles the hook; the tagline sits directly below it in red; two black-and-white portraits are taped left and right; the four corners carry marker diagrams — "COMPANY A → LEADS" upper-left, a green "PROJECTIONS" line graph upper-right, a "CLENTS" node graph lower-left, "SOURCE OF POWER → DEVELOPMENT / PRODUCTION / DISTRIBUTION" lower-right; a "JAN FEB X MAR X" timeline runs along the top.
+**Copy (verbatim):** "NOBODY BELIEVED ONE PERSON COULD RUN A FULL MARKETING OPERATION WITH AI. THEN I SHOWED THEM MINE." — "Your Edge Starts Here." — plus board furniture: "PROJECTIONS", "COMPANY A", "LEADS", "SOURCE OF POWER", "DEVELOPMENT", "PRODUCTION", "DISTRIBUTION", "CLENTS".
+**Visual DNA:** board `#D2DCD6` · red marker `#8E2424` (hook + tagline) · blue-black `#1A1D20` (diagrams) · green `#1E4638` (labels) — a deliberate three-marker colour code: red = the claim, blue = the machine, green = the outcome. Handwritten marker caps. Register: raw-ugc / behind-the-scenes.
+**Levers:** trend-hijack · underdog-narrative open loop ("THEN I SHOWED THEM MINE.") · **system-implication** — the surrounding flowcharts assert a proprietary machine without stating a single claim you could check.
+**Weaknesses / trust flags:** ⚠ real typo on the board — "**CLENTS**" (lower-left), verified on eyeball. The taped portraits are anonymous stock-looking men in suits implying colleagues/clients who are never named. High cognitive load. The diagrams are decorative, not informative — persuasion by *appearance* of rigour; not S7 (nothing specific is faked) but the closest this set comes.
+**So What for Grifon:** the frame is honest for us only if the board is *real* — a genuine Grifon pipeline diagram (BRIEF → SCRIPT → STORYBOARD → RENDER) circled around a real claim. Don't ship decorative charts.
+**Patterns:** corroborates S34, S35, S11, S12; new candidate none; contradicts S13. (Tool tagged S25 uncanny-meme — **rejected on eyeball**: this is a straight staged photo, not a toy/doodle creative.)
+
+### 2026-07-29 — E90 Russell Brunson "Nobody Believed One Person Could Run A Full Marketing Operation With AI." — Tokyo wild-posting world (fb-ad-library, info-product / funnel education)
+![E90](../assets/ad-swipe/E90-russell-brunson.jpg)
+**Why swiped:** the same hook again, this time as a weathered fly-poster in a neon ramen alley — pure world-swap, zero copy change. · **Format:** 1:1, environmental / wild-posting mockup
+**Layout:** a central concrete pillar splits the frame; a large weathered cream poster is pasted at eye level carrying the hook in bold condensed caps, tagline below with a line break; the pillar's lower third is layered graffiti and stickers; left, a glowing ramen counter with a cook and a red lantern; right, a figure walking away down the alley; warm practicals against deep shadow.
+**Copy (verbatim):** "Nobody Believed One Person Could Run A Full Marketing Operation With AI. Then I Showed Them Mine." — "YOUR EDGE STARTS HERE." — no CTA.
+**Visual DNA:** poster `#D2C9B1` · ink `#1A1A1A` · lantern/practical warm `#E06D3B` · alley shadow `#0D1317`. Condensed bold sans, mixed case. Register: cinematic-environmental (not "minimal-anti-design" as the tool guessed — the frame is heavily art-directed).
+**Levers:** trend-hijack · pattern-interrupt via setting · **grassroots/underground borrowed context** — a fly-poster reads as something a person put up, not something a brand bought.
+**Weaknesses / trust flags:** AI-generated environment (poster is weathered but its type is perfectly crisp; background signage text is gibberish). No brand attribution. The Tokyo setting has no relationship to the offer — atmosphere doing the work of an argument.
+**So What for Grifon:** the wild-posting frame is a strong, honest Grifon world (a Grifon poster on a Manila jeepney-route wall / Divisoria pillar) — it localises without claiming anything. Feeds GP-6 + pairs with S30's EN/Taglish/Bisaya swap.
+**Patterns:** corroborates S34, S35, S11, S12, S37; new candidate none; contradicts S13.
+
+### 2026-07-29 — E89 Russell Brunson "ANYONE WITH CHATGPT CAN READ YOUR BOOK IN 8 SECONDS NOW." (fb-ad-library, info-product / funnel education)
+![E89](../assets/ad-swipe/E89-russell-brunson.jpg)
+**Why swiped:** the sharpest threat-hook in the set, and the clearest trust violation — a fabricated publication photographed at a real newsstand. · **Format:** 1:1, fabricated-tabloid prop
+**Layout:** POV hand holds a tabloid at a magazine rack; a black masthead bar reads "THE AI INSIDER" across the top; below it a four-line black slab headline; lower half splits — body copy left, a grayscale hooded-figure-at-laptop photo right; a red banner runs full width at the bottom; real magazine covers blur on both sides.
+**Copy (verbatim):** "ANYONE WITH CHATGPT CAN READ YOUR BOOK IN 8 SECONDS NOW." — "AI JUST MADE IT POSSIBLE TO TURN THE SAME CONTENT INTO SOFTWARE PEOPLE PAY YOU MONTHLY TO USE" — CTA "LEARN HOW".
+**Visual DNA:** newsprint `#EAE6DF` · ink/masthead `#1A1A1A` · CTA red `#B83A3A` · CTA text `#FFFFFF`. Impact/Arial-Black caps, black weight. Register: raw-ugc tabloid.
+**Levers:** **loss-framing / threat-to-the-asset** ("CAN READ YOUR BOOK IN 8 SECONDS") — attacks something the buyer already owns · immediate pivot offered ("TURN THE SAME CONTENT INTO SOFTWARE PEOPLE PAY YOU MONTHLY") · trend-hijack (ChatGPT named) · specificity ("8 SECONDS").
+**Weaknesses / trust flags:** 🚩 **S7-class — fabricated publication.** "THE AI INSIDER" does not exist; shooting the prop in a real retail magazine rack manufactures the impression of third-party editorial coverage. The hooded-hacker stock trope is sensationalist. **Copy the loss-frame and the tabloid grid; never the fake masthead.**
+**So What for Grifon:** the honest port of the loss-frame is real and strong for Bryan — "Your competitor shipped 30 ads this month. You shipped 2." No invented publication, no borrowed newsstand.
+**Patterns:** corroborates S34, S35, S11, S12, S15, S21, S24 (books as the enemy format), **S7 (anti-pattern, do-not-replicate)**; new candidate none.
+
+### 2026-07-29 — E88 Russell Brunson "THE COACHES WINNING RIGHT NOW STOPPED SELLING 'COACHING'" — subway-newspaper world (fb-ad-library, info-product / funnel education)
+![E88](../assets/ad-swipe/E88-russell-brunson.jpg)
+**Why swiped:** the coaching hook rendered as a broadsheet read over someone's shoulder on a train — the "everyone is already talking about this" frame. · **Format:** 1:1, POV physical-prop
+**Layout:** POV, two hands hold an open newspaper filling ~85 % of frame; a rule runs above a five-line black slab headline; a second rule separates the two-line sub-head lower-left; a grayscale silhouette-pointing-at-a-screen photo sits lower-right; three columns of body text run along the bottom edge; the subway car and a face behind blur out.
+**Copy (verbatim):** "THE COACHES WINNING RIGHT NOW STOPPED SELLING "COACHING" THEY SELL SOFTWARE WITH THEIR COACHING BAKED IN FOR $97/MONTH" — "AI MADE IT POSSIBLE. HERE'S HOW IT'S DONE" — no CTA.
+**Visual DNA:** newsprint `#DCD3C1` · ink `#1A1A1A` · blurred car interior `#4A4E41`. Franklin-Gothic-condensed caps, black weight. Register: photo-real prop.
+**Levers:** format-enemy positioning ("STOPPED SELLING 'COACHING'") · price anchor ("$97/MONTH") · open loop ("HERE'S HOW IT'S DONE") · **implied consensus** — printing it as news says the shift is already established fact.
+**Weaknesses / trust flags:** the column text is AI gibberish under any zoom (verified). Unbranded masthead-less prop, so it stops short of E89's fabricated-publication violation — but it is the same device one notch safer. Trust flag: simulated newsprint.
+**So What for Grifon:** the *hand-held prop POV* is the reusable half — a real printed Grifon one-pager held in a real Manila setting. Skip the newspaper connotation of editorial endorsement.
+**Patterns:** corroborates S34, S35, S11, S12, S24; new candidate none; contradicts S13.
+
+### 2026-07-29 — E87 Russell Brunson "THE COACHES WINNING RIGHT NOW STOPPED SELLING 'COACHING.'" — sidewalk-chalk world (fb-ad-library, info-product / funnel education)
+![E87](../assets/ad-swipe/E87-russell-brunson.jpg)
+**Layout:** high-angle onto grey pavement with motion-blurred commuter legs crossing the top third; a chalk diagram (person icon → two arrows → browser window with a check) sits upper-centre; below it a tan-chalk double-ruled box holds the hook in chalk serif caps; a blue-chalk box at the bottom holds the sub-line; a discarded paper coffee cup lies bottom-right as a realism prop. Focal point = the tan-bordered box.
+**Copy (verbatim):** "THE COACHES WINNING RIGHT NOW STOPPED SELLING "COACHING." THEY SELL SOFTWARE WITH THEIR COACHING BAKED IN FOR $97/MONTH." — "AI MADE IT POSSIBLE. HERE'S HOW IT'S DONE."
+**Visual DNA:** pavement `#333333` · chalk white `#EAEAEA` · tan chalk border `#D4C39E` · cup `#C4A482`. Chalk-drawn serif caps. Register: guerrilla street-art.
+**Levers:** pattern-interrupt (a photographed pavement is not a feed shape) · format-enemy positioning · price anchor · **transience implies non-commercial** — chalk reads as a person's act, not a media buy.
+**Weaknesses / trust flags:** no brand mark; the chalk aesthetic reads cheap for a high-ticket B2B buyer; blur composition pushes text off the 9:16 safe band. No fabrication.
+**So What for Grifon:** the little person→browser→✓ chalk diagram is the honest core — a hand-drawn *mechanism* sketch is a legitimate way to explain Grifon's pipeline without a UI screenshot.
+**Patterns:** corroborates S34, S35, S11, S12, S24; new candidate none; contradicts S13.
+
+### 2026-07-29 — E86 Russell Brunson "Nobody Believed One Person Could Run A Full Marketing Operation With AI." — Times-Square-billboard world (fb-ad-library, info-product / funnel education) ⓥ
+![E86](../assets/ad-swipe/E86-russell-brunson.jpg)
+**Layout:** a curved blue LED billboard occupies the upper two-thirds; a red "Special Report" badge caps it; five lines of white headline fill the screen; a dark band across the base of the billboard carries the tagline; the bottom third is a packed crowd shot from behind/below, every face tilted up open-mouthed; city lights and other billboards flank both sides.
+**Copy (verbatim):** "Special Report" — "Nobody Believed One Person Could Run A Full Marketing Operation With AI. Then I Showed Them Mine." — "YOUR EDGE STARTS HERE" — no CTA button.
+**Visual DNA:** billboard blue `#004B87` · alert red `#C83B1E` · white `#FFFFFF` · night `#121214`. Helvetica-class bold, mixed case. Register: premium-editorial spectacle.
+**Levers:** ⓥ **borrowed news urgency** — the red "Special Report" badge is a broadcast-alert convention, not a brand element · ⓥ **manufactured social proof at scale** — ~40 upturned faces in frame assert public consensus no copy line could claim · trend-hijack · open-loop narrative.
+**Weaknesses / trust flags:** 🚩 **S7-class — manufactured public spectacle.** The Times-Square takeover and the awed crowd are AI-generated; several faces are uncanny on inspection. The image asserts fame that did not happen. **Steal the alert-badge + single-claim billboard layout; never the fabricated crowd.**
+**So What for Grifon:** the badge device is portable and honest if the badge tells the truth ("NEW", "BETA", "PH ONLY"). The crowd is not portable at all.
+**Patterns:** corroborates S34, S35, S11, S12, S37, **S7 (anti-pattern, do-not-replicate)**; new candidate none; contradicts S13.
+
+### 2026-07-29 — E85 Russell Brunson "Free 5-DAY AI PROGRAM" (fb-ad-library, info-product / funnel education)
+![E85](../assets/ad-swipe/E85-russell-brunson.jpg)
+**Why swiped:** the only pure lead-magnet creative in the set, and the sharpest objection-handling line Brunson runs. · **Format:** 1:1, graffiti-mural world
+**Layout:** dark brick wall lit by a single top-left practical; a glowing blue mural of a brain — organic left hemisphere, circuit-board right hemisphere — anchors the top centre; the offer headline is stencilled huge directly beneath it; four lines of stencil body copy follow; a separate stencilled block near the bottom carries the tagline; bottom-right, a hooded figure with a spray can stands back-to-camera mid-work, spray cans and a stencil sheet on the ground.
+**Copy (verbatim):** "Free 5-DAY AI PROGRAM" — "FOR CONSULTANTS WHOSE WORK FEELS TOO CUSTOM FOR ANY SYSTEM." — "FIVE SESSIONS SHOW HOW AI HANDLES THE REPEATABLE LAYER." — "YOUR EDGE STARTS HERE."
+**Visual DNA:** brick/night `#120C0A` · spray-glow cyan `#4BA3C3` · stencil chalk-white `#D9D9D9`. Heavy stencil caps. Register: street-art / counter-culture.
+**Levers:** value-first lead magnet ("Free 5-DAY AI PROGRAM") · **hyper-specific audience callout that names the objection itself** ("FOR CONSULTANTS WHOSE WORK FEELS TOO CUSTOM FOR ANY SYSTEM.") · precise scope-setting ("FIVE SESSIONS", "THE REPEATABLE LAYER") — it concedes the custom part instead of overclaiming · trend-hijack.
+**Weaknesses / trust flags:** no brand mark, no explicit CTA. None on trust — the offer is free and the scope claim is modest.
+**So What for Grifon:** **the strongest copy lift in the batch.** "AI handles the repeatable layer" is exactly Grifon's honest position against Bryan's "my business is different" objection — concede the custom 20 %, own the repeatable 80 %. Route to `grifon-cmo`; feeds GP-2 (Niche Callout).
+**Patterns:** corroborates S8, S10, S11, S12, S34, S35, S37; new candidate none; contradicts S13.
+
+### 2026-07-29 — E84 Russell Brunson "HOW TO USE AI TO BUILD $10,000 MONTHLY RECURRING REVENUE FROM 100 CUSTOMERS PAYING $100 EACH" (fb-ad-library, info-product / funnel education)
+![E84](../assets/ad-swipe/E84-russell-brunson.jpg)
+**Why swiped:** the loudest creative in the set and the only one carrying an explicit offer-math argument. · **Format:** 1:1, punk-zine collage
+**Layout:** flat hot-pink canvas; a grayscale vintage cash register stands centre; eight white paper-cut strips of black condensed caps stagger down the frame left-to-right, each holding one clause of the headline; a hand-drawn white arrow curves from the open register drawer bottom-left to a photographed pile of $100 bills; a yellow highlighter block bottom-right holds the tagline in typewriter serif; a hand-drawn asterisk sits top-right.
+**Copy (verbatim):** "HOW TO USE AI / TO BUILD / $10,000 MONTHLY RECURRING / REVENUE / FROM 100 CUSTOMERS / PAYING $100 EACH / WITHOUT ADDING HOURS / OR HIRING A TEAM" — "Your Edge Starts Here."
+**Visual DNA:** hot pink `#E51A75` · strips `#FFFFFF` · ink `#1A1A1A` · highlighter yellow `#F1CE3E`. Franklin-Gothic-condensed black caps + typewriter serif for the tagline. Register: flat-graphic / ransom-note collage.
+**Levers:** **deconstructed math** ("$10,000" = "100 CUSTOMERS" × "$100 EACH") — turns an aspirational number into arithmetic the buyer can check · objection pre-empt ("WITHOUT ADDING HOURS OR HIRING A TEAM") · trend-hijack · stat-stack.
+**Weaknesses / trust flags:** cash-pile imagery is get-rich-quick coded and risks both platform review and buyer skepticism; no brand mark. The math is honest arithmetic, not a claimed result — no fabrication.
+**So What for Grifon:** deconstructed math ports directly and honestly: "₱30K/mo agency = ₱1,000/day. Grifon = ₱XX/day." → new **S36**; strong candidate for a GP-1 `Guarantee Hero` sibling.
+**Patterns:** corroborates S11, S12, S14, S15, S34, S37; **new candidate S36 (deconstructed-math offer)**; contradicts S13.
+
+### 2026-07-29 — E83 Russell Brunson "The Coaches Winning Right Now Stopped Selling 'Coaching.'" — podcast-whiteboard world (fb-ad-library, info-product / funnel education)
+![E83](../assets/ad-swipe/E83-russell-brunson.jpg)
+**Layout:** a staged two-host podcast set — man left, woman right, both in headphones mid-gesture, mics and mugs and a laptop on a wood table across the bottom third; behind them a whiteboard on brick; the hook is marker-lettered on the whiteboard inside a hand-drawn oval; the sub-head runs below unboxed; a blue down-arrow leads to the final line in blue marker; faint pre-existing scribbles ("Plan?", arrows) fill the board margins.
+**Copy (verbatim):** "The Coaches Winning Right Now Stopped Selling "Coaching."" — "They Sell Software With Their Coaching Baked In For $97/Month" — "AI Made it Possible. Here's How It's Done" (blue).
+**Visual DNA:** whiteboard `#F0F2F2` · marker `#1A1A1A` · accent blue `#00558F` (arrow + payoff line) · brick `#8C583C`. Hand-drawn marker face, title case. Register: raw-ugc studio.
+**Levers:** format-enemy positioning · trend-hijack · **conversation framing** — two people mid-argument implies the claim is contested and being settled, not announced · the circle-and-arrow does the hierarchy work a design system would normally do.
+**Weaknesses / trust flags:** board margin scribbles are AI gibberish; no brand mark, no CTA. The hosts are anonymous — nobody is claimed to have said this, so it stops short of a fabricated endorsement.
+**So What for Grifon:** the **circle + arrow annotation layer** over a photographic base is a near-free `captureToPng` overlay — hierarchy without a design language, and it reads organic. Cheapest world in the set for us to build.
+**Patterns:** corroborates S34, S35, S11, S12, S21, S24; new candidate none; contradicts S13.
+
+### 2026-07-29 — E82 Russell Brunson "The Coaches Winning Right Now Stopped Selling 'Coaching.'" — keynote-stage world (fb-ad-library, info-product / funnel education) ⓥ
+![E82](../assets/ad-swipe/E82-russell-brunson.jpg)
+**Layout:** a projection screen fills the upper two-thirds, deep navy with six lines of white serif; a suited presenter in silhouette stands at the right edge with a pointer raised to the screen; the sub-line runs small along the screen's bottom edge; the lower third is a darkened lecture hall shot from behind — rows of silhouetted heads and ~10 glowing open laptops. Focal point = the serif headline.
+**Copy (verbatim):** "The Coaches Winning Right Now Stopped Selling "Coaching." They Sell Software With Their Coaching Baked In For $97/Month" — "• AI Made It Possible. Here's How It's Done".
+**Visual DNA:** screen navy `#0A1D30` · white `#FFFFFF` · hall black `#050505` · screen-glow rim `#7FA8CC`. Georgia-class serif, title case, medium weight — the only serif-led creative in the set. Register: premium-editorial / conference.
+**Levers:** ⓥ **borrowed institutional authority** — the claim is staged as *taught from a stage to a paying room*, which is proof-by-setting; no credential is stated · trend-hijack ("AI Made It Possible.") · format-enemy positioning ("Stopped Selling 'Coaching.'") · ⓥ price anchor ("$97/Month") set inside the slide so it reads as curriculum, not an offer.
+**Weaknesses / trust flags:** ⓥ **the sub-line is physically occluded** — the presenter's arm and pointer cut across "How It's Don[e]", losing the payoff word; a real production error. Presenter's hand merges into the screen (AI artifact); laptop screens are generic mush. Trust flag: AI-generated scene simulating a real live event.
+**So What for Grifon:** proof-by-setting is cheap and honest *only* if the event happened. We have a real one available — shoot the claim as a slide from an actual Grifon workshop, not a generated auditorium.
+**Patterns:** corroborates S34, S35, S11, S24, S8; new candidate none; contradicts S13.
 
 > **Batch 2026-07-12 (E51–E81) — high-relevance SaaS / AI / fintech / marketing brands.**
 > Breadth-first ingest (8 independent brands, best 3–4 distinct concepts each) from the
