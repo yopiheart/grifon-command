@@ -1,0 +1,608 @@
+<title>One Hook, Twelve Worlds &mdash; Static Autopsy E82&ndash;E93</title>
+
+<style>
+:root{
+  --ground-0:#070708;
+  --ground-1:#131316;
+  --ground-2:#09090B;
+  --gold:#FFCC00;
+  --gold-soft:rgba(255,204,0,.06);
+  /* Contrast-audited against the charcoal ground (#131316), 2026-07-29.
+     Ratios in comments are measured, not estimated. AA=4.5:1, AAA=7:1. */
+  --silver-a:#FAFAFA;   /* 15.9:1 — emphasis text (strong, .hookline, td b) */
+  /* --silver-b removed: it only existed as the dark stop of the clipped-gradient
+     heading ramp, and that whole mechanism is gone. Headings are solid #F5F5F7. */
+  --body:#A1A1AA;       /* 7.3:1 — AAA, fine for body */
+  --meta:#9A9AA3;       /* 6.7:1 — was #71717A (3.89:1), which FAILED AA at the 10-11px it was used at */
+  --line:rgba(255,255,255,.10);
+  --flag:#FF8563;       /* 7.9:1 — was #E0563A (4.98:1), used at 9.5-11px where AAA matters most */
+  --display:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+  --serif:'Instrument Serif',Georgia,'Times New Roman',serif;
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --wrap:min(68ch,100%);
+}
+
+/* NOIR commits to a single dark world by design — the subject is a charcoal
+   swipe file, and a light inversion would break the ground/grain/glass system.
+   Both theme signals are pinned to the same palette rather than left undefined. */
+:root[data-theme="light"],:root[data-theme="dark"]{color-scheme:dark;}
+
+*{box-sizing:border-box;}
+html,body{background:var(--ground-0);}
+body{
+  margin:0;
+  font-family:var(--display);
+  color:var(--body);
+  font-size:16px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* --- Fixed ground + grain. Mobile WebView detaches background-attachment:fixed
+       and mis-paints a naked <svg> filter, so both are their own fixed DIVs. --- */
+.ground,.grain{position:fixed;inset:0;pointer-events:none;}
+.ground{
+  z-index:0;
+  background:
+    radial-gradient(120% 80% at 50% 0%, var(--gold-soft) 0%, transparent 55%),
+    radial-gradient(140% 100% at 50% 8%, var(--ground-1) 0%, var(--ground-2) 45%, var(--ground-0) 100%);
+}
+.grain{
+  z-index:1;
+  opacity:.15;
+  mix-blend-mode:screen;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat:repeat;
+  background-size:240px 240px;
+}
+
+.page{position:relative;z-index:2;padding:0 20px 96px;}
+.col{width:var(--wrap);margin:0 auto;}
+.wide{width:min(1120px,100%);margin:0 auto;}
+
+/* --- Type --- */
+.eyebrow{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.32em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin:0 0 20px;
+}
+.eyebrow.dim{color:var(--meta);}
+
+h1,h2,h3{
+  font-family:var(--display);
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:-.02em;
+  line-height:.94;
+  text-wrap:balance;
+  margin:0;
+  /* SOLID, not a clipped gradient. `background-clip:text` + `color:transparent`
+     paints wrong in the Android WebView the Claude app renders artifacts in:
+     verified on Neil's device 2026-07-29, where every clipped heading came out
+     inverted and far darker than either gradient stop, while every SOLID-colour
+     element on the same screen (gold eyebrow, gold italic serif, body, mono
+     captions) rendered perfectly. The clip was the only differing feature.
+     A headless-Chromium viewport check CANNOT catch this — Chromium supports the
+     property; the WebView mispaints it. So the fragile feature is removed rather
+     than patched. 17.3:1 on every line, identical top to bottom. */
+  color:#F5F5F7;
+  /* text-shadow is unreliable on clipped text but rock-solid on solid text —
+     which is exactly what this is now. Gold bloom, maximum compatibility. */
+  text-shadow:0 0 18px rgba(255,204,0,.18);
+}
+h1{font-size:clamp(2.7rem,10.5vw,5.4rem);}
+h2{font-size:clamp(1.7rem,5.4vw,2.6rem);}
+/* h3 is small — an 18px bloom would haze it. Solid, no glow. */
+h3{font-size:clamp(1.05rem,3.2vw,1.3rem);letter-spacing:0;text-shadow:none;}
+.serif{
+  font-family:var(--serif);
+  font-style:italic;
+  font-weight:400;
+  text-transform:none;
+  letter-spacing:0;
+  color:var(--gold);
+  background:none;-webkit-background-clip:border-box;background-clip:border-box;
+  /* Same reasoning as h1: the serif is thin, so a wide halo eats its strokes.
+     Hugged in to 9px and paired with a hairline weight lift instead. */
+  filter:drop-shadow(0 0 9px rgba(255,204,0,.30));
+  -webkit-text-stroke:.012em currentColor;
+}
+p{margin:0 0 18px;}
+strong{color:var(--silver-a);font-weight:600;}
+em{color:var(--gold);font-style:normal;}
+a{color:var(--gold);}
+.lede{font-size:clamp(1.02rem,2.6vw,1.16rem);color:#D4D4D8;}
+.meta{font-family:var(--mono);font-size:11.5px;color:var(--meta);letter-spacing:.06em;}
+
+section{padding:64px 0 0;}
+.rule{height:1px;background:linear-gradient(90deg,transparent,var(--line) 18%,var(--line) 82%,transparent);margin:72px 0 0;}
+
+/* --- Liquid glass, built to survive WITHOUT backdrop-filter.
+       Layered sheen + top-edge highlight + edge lighting + shadow carry it;
+       the blur is progressive enhancement only. --- */
+.glass{
+  position:relative;
+  border-radius:18px;
+  padding:26px 24px;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.075) 0%,rgba(255,255,255,.022) 38%,rgba(255,255,255,0) 100%),
+    linear-gradient(180deg,rgba(24,24,27,.92) 0%,rgba(14,14,16,.94) 100%);
+  border:1px solid var(--line);
+  box-shadow:0 1px 0 rgba(255,255,255,.09) inset,0 22px 48px -26px rgba(0,0,0,.95);
+}
+@supports (backdrop-filter:blur(1px)){
+  .glass{backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);}
+}
+.glass.gold{border-color:rgba(255,204,0,.34);box-shadow:0 1px 0 rgba(255,255,255,.09) inset,0 0 26px rgba(255,204,0,.13),0 22px 48px -26px rgba(0,0,0,.95);}
+.glass.flag{border-color:rgba(255,133,99,.38);}
+.glass + .glass{margin-top:16px;}
+
+/* --- Hook / world strip: the page renders S34 rather than describing it --- */
+.hookline{
+  font-family:var(--display);
+  font-weight:800;
+  font-size:clamp(1.05rem,3.5vw,1.45rem);
+  line-height:1.24;
+  color:var(--silver-a);
+  letter-spacing:-.01em;
+  margin:0 0 6px;
+  text-wrap:balance;
+}
+.hooksub{color:var(--body);margin:0 0 4px;font-size:.96rem;}
+.locked{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold);margin-top:14px;
+}
+.locked::before{content:"";width:16px;height:1px;background:var(--gold);}
+
+.strip{
+  display:flex;gap:12px;
+  overflow-x:auto;
+  padding:4px 4px 14px;
+  margin-top:18px;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+}
+.strip::-webkit-scrollbar{height:6px;}
+.strip::-webkit-scrollbar-thumb{background:rgba(255,255,255,.13);border-radius:99px;}
+.world{flex:0 0 168px;scroll-snap-align:start;}
+.world img{
+  display:block;width:100%;height:auto;max-width:100%;
+  border-radius:11px;border:1px solid var(--line);
+  box-shadow:0 14px 30px -20px #000;
+}
+.world .cap{margin-top:9px;font-family:var(--mono);font-size:10px;letter-spacing:.09em;color:var(--meta);text-transform:uppercase;line-height:1.45;}
+.world .cap b{color:var(--gold);font-weight:500;}
+.world.flagged img{border-color:rgba(255,133,99,.5);}
+.world.flagged .cap b{color:var(--flag);}
+
+/* --- Pattern + option cards --- */
+.grid{display:grid;gap:16px;grid-template-columns:1fr;}
+@media(min-width:760px){.grid.two{grid-template-columns:1fr 1fr;}}
+.pid{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;}
+.count{font-family:var(--mono);font-size:10.5px;color:var(--meta);letter-spacing:.08em;}
+.tag{
+  display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;
+  text-transform:uppercase;padding:4px 9px;border-radius:99px;
+  border:1px solid var(--line);color:var(--meta);
+}
+.tag.rec{border-color:rgba(255,204,0,.45);color:var(--gold);}
+.tag.no{border-color:rgba(255,133,99,.45);color:var(--flag);}
+
+table{width:100%;border-collapse:collapse;font-size:14px;}
+.scroller{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--meta);font-weight:400;white-space:nowrap;}
+td b{color:var(--silver-a);font-weight:600;}
+
+.prompt{
+  font-family:var(--mono);
+  font-size:12.5px;
+  line-height:1.6;
+  color:#C7C7CC;
+  background:rgba(0,0,0,.42);
+  border:1px solid var(--line);
+  border-left:2px solid var(--gold);
+  border-radius:10px;
+  padding:14px 15px;
+  margin:12px 0 0;
+  white-space:pre-wrap;
+  word-break:break-word;
+  overflow-x:auto;
+}
+
+ul{margin:0 0 18px;padding-left:0;list-style:none;}
+li{position:relative;padding-left:20px;margin-bottom:9px;}
+li::before{content:"";position:absolute;left:2px;top:.72em;width:6px;height:1px;background:var(--gold);}
+li.no::before{background:var(--flag);}
+
+.sig{
+  margin-top:88px;text-align:center;
+  font-family:var(--mono);font-size:11px;letter-spacing:.42em;
+  color:#3F3F46;text-transform:uppercase;
+}
+
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none;}
+  *{scroll-behavior:auto !important;}
+}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px;}
+</style>
+
+<div class="ground"></div>
+<div class="grain"></div>
+
+<div class="page">
+
+  <header class="col" style="padding:88px 0 0;">
+    <p class="eyebrow">// static autopsy &middot; E82&ndash;E93</p>
+    <h1>One&nbsp;hook.<br>Twelve<br>worlds.</h1>
+    <p class="lede" style="margin-top:28px;">
+      Twelve Russell Brunson ads. <strong>Hindi sila labindalawang ads.</strong>
+      Isa lang yang campaign: <span class="serif" style="font-size:1.15em;">tatlong hook, labindalawang mundo</span>,
+      at hindi ginalaw ang kahit isang salita ng copy.
+    </p>
+    <p class="meta">2026-07-29 &nbsp;&middot;&nbsp; fb-ad-library &nbsp;&middot;&nbsp; 12 ads decoded &nbsp;&middot;&nbsp; 4 new patterns &nbsp;&middot;&nbsp; 2 trust flags</p>
+  </header>
+
+  <div class="rule"></div>
+
+  <!-- ============ THE FINDING ============ -->
+  <section class="col reveal">
+    <p class="eyebrow dim">// ang natuklasan</p>
+    <h2>Copy ang constant.<br>Mundo ang variable.</h2>
+    <p style="margin-top:24px;">
+      Ito yung baligtad ng lahat ng alam natin. Sa <strong>S14</strong>, kulay ang pinapalitan at
+      pareho ang design. Sa <strong>S30</strong>, wika ang pinapalitan at pareho pa rin ang design.
+      Dito, <em>naka-freeze ang copy at ang buong mundo ang pinapalitan.</em>
+    </p>
+    <p>
+      Ibig sabihin: kapag may hook ka nang gumagana, hindi na copywriting problem ang paggawa ng
+      dagdag na creative. Art direction na lang siya. Isang image call kada bagong mundo.
+    </p>
+  </section>
+
+  <!-- HOOK 1 -->
+  <section class="wide reveal">
+    <div class="glass">
+      <p class="eyebrow dim" style="margin-bottom:14px;">// hook 01 &nbsp;&middot;&nbsp; 5 worlds</p>
+      <p class="hookline">The Coaches Winning Right Now Stopped Selling &ldquo;Coaching.&rdquo;</p>
+      <p class="hooksub">They Sell Software With Their Coaching Baked In For $97/Month.</p>
+      <p class="hooksub" style="color:var(--meta);">AI Made It Possible. Here&rsquo;s How It&rsquo;s Done.</p>
+      <span class="locked">copy locked &middot; world varies</span>
+      <div class="strip">
+        <figure class="world" style="margin:0;"><img src="__E82__" alt="Keynote stage: the headline projected on an auditorium screen"><figcaption class="cap"><b>E82</b><br>keynote stage</figcaption></figure>
+        <figure class="world" style="margin:0;"><img src="__E83__" alt="Podcast studio whiteboard with the headline in marker"><figcaption class="cap"><b>E83</b><br>podcast whiteboard</figcaption></figure>
+        <figure class="world" style="margin:0;"><img src="__E87__" alt="The headline drawn in chalk on a city sidewalk"><figcaption class="cap"><b>E87</b><br>sidewalk chalk</figcaption></figure>
+        <figure class="world" style="margin:0;"><img src="__E88__" alt="The headline as a newspaper front page read on a subway"><figcaption class="cap"><b>E88</b><br>subway newspaper</figcaption></figure>
+        <figure class="world" style="margin:0;"><img src="__E93__" alt="The headline handwritten on a cassette tape label"><figcaption class="cap"><b>E93</b><br>cassette label</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOOK 2 -->
+  <section class="wide reveal" style="padding-top:20px;">
+    <div class="glass">
+      <p class="eyebrow dim" style="margin-bottom:14px;">// hook 02 &nbsp;&middot;&nbsp; 4 worlds</p>
+      <p class="hookline">Nobody Believed One Person Could Run A Full Marketing Operation With AI. Then I Showed Them Mine.</p>
+      <p class="hooksub" style="color:var(--meta);">Your Edge Starts Here.</p>
+      <span class="locked">copy locked &middot; world varies</span>
+      <div class="strip">
+        <figure class="world flagged" style="margin:0;"><img src="__E86__" alt="A Times Square billboard above an awed crowd"><figcaption class="cap"><b>E86 &middot; flagged</b><br>billboard + crowd</figcaption></figure>
+        <figure class="world" style="margin:0;"><img src="__E90__" alt="A weathered poster pasted on a pillar in a Tokyo alley"><figcaption class="cap"><b>E90</b><br>tokyo fly-poster</figcaption></figure>
+        <figure class="world" style="margin:0;"><img src="__E91__" alt="A war-room whiteboard with the headline circled in red marker"><figcaption class="cap"><b>E91</b><br>war-room board</figcaption></figure>
+        <figure class="world" style="margin:0;"><img src="__E92__" alt="A miniature model diner with the headline on its marquee"><figcaption class="cap"><b>E92</b><br>miniature diner</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOOK 3 -->
+  <section class="wide reveal" style="padding-top:20px;">
+    <div class="glass">
+      <p class="eyebrow dim" style="margin-bottom:14px;">// standalone offers &nbsp;&middot;&nbsp; 3 worlds</p>
+      <p class="hookline">Free 5-Day AI Program &mdash; for consultants whose work feels too custom for any system.</p>
+      <p class="hooksub" style="color:var(--meta);">Plus the $10,000 math ad, plus the tabloid.</p>
+      <span class="locked">different hooks &middot; same campaign system</span>
+      <div class="strip">
+        <figure class="world" style="margin:0;"><img src="__E85__" alt="A glowing brain mural sprayed on a brick wall"><figcaption class="cap"><b>E85</b><br>graffiti mural</figcaption></figure>
+        <figure class="world" style="margin:0;"><img src="__E84__" alt="Paper-cut headline strips over a vintage cash register on hot pink"><figcaption class="cap"><b>E84</b><br>paper-cut zine</figcaption></figure>
+        <figure class="world flagged" style="margin:0;"><img src="__E89__" alt="A tabloid held at a magazine rack"><figcaption class="cap"><b>E89 &middot; flagged</b><br>fake tabloid</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- ============ PATTERNS ============ -->
+  <section class="wide reveal">
+    <div class="col" style="margin:0 auto 30px;">
+      <p class="eyebrow dim">// bagong patterns sa swipe file</p>
+      <h2>Apat na bago</h2>
+    </div>
+    <div class="grid two">
+      <div class="glass gold">
+        <p class="pid">S34 &nbsp;&middot;&nbsp; one copy / N worlds</p>
+        <h3 style="margin:10px 0 10px;">Ang engine</h3>
+        <p style="margin:0 0 12px;">I-freeze ang headline. Palitan ang buong visual universe. Baligtad ng S14, pahalang sa S30.</p>
+        <p class="count">12 ads &middot; 1 brand &middot; kulang pa sa independent-brand bar</p>
+      </div>
+      <div class="glass">
+        <p class="pid">S35 &nbsp;&middot;&nbsp; diegetic surface</p>
+        <h3 style="margin:10px 0 10px;">Nakasulat sa bagay</h3>
+        <p style="margin:0 0 12px;">Ang copy ay <em>nasa loob</em> ng eksena. Chalk sa semento, tinta sa dyaryo, marker sa label. Hindi overlay. Kaya parang may nakita ka, hindi parang may nag-ad sayo.</p>
+        <p class="count">10 sa 12 &middot; 1 brand</p>
+      </div>
+      <div class="glass">
+        <p class="pid">S36 &nbsp;&middot;&nbsp; deconstructed math</p>
+        <h3 style="margin:10px 0 10px;">Hatiin ang number</h3>
+        <p style="margin:0 0 12px;">&ldquo;$10,000 = 100 customers &times; $100 each.&rdquo; Nagiging plano yung mukhang get-rich-quick na number. Honest siya kasi structure ang inaangkin, hindi resulta.</p>
+        <p class="count">1 ad &middot; may Grifon constraint (basahin sa baba)</p>
+      </div>
+      <div class="glass">
+        <p class="pid">S37 &nbsp;&middot;&nbsp; tagline-as-logo</p>
+        <h3 style="margin:10px 0 10px;">Walang logo, may recall</h3>
+        <p style="margin:0 0 12px;">Lahat ng 12 ay <strong>walang kahit anong brand mark</strong>. Isang linya lang ang nagbubuklod: &ldquo;Your edge starts here.&rdquo; Sinasalungat nito ang S13.</p>
+        <p class="count">6 sa 12 &middot; brand_visible: false sa lahat</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- ============ TRUST LINE ============ -->
+  <section class="col reveal">
+    <p class="eyebrow dim" style="color:var(--flag);">// ang linyang hindi tatawirin</p>
+    <h2>Dalawang bagay na<br>hindi kokopyahin</h2>
+    <p style="margin-top:24px;">
+      Sampu sa labindalawa ay malinis. Dalawa ang tumawid. Ang layout at ang lever, kunin natin.
+      Ang peke, hindi. Hindi ito taste &mdash; si Bryan ang bumibili, at ang una niyang objection ay
+      <em>&ldquo;baka scam lang to.&rdquo;</em>
+    </p>
+    <div class="glass flag" style="margin-top:24px;">
+      <p class="pid" style="color:var(--flag);">E86 &nbsp;&middot;&nbsp; manufactured public spectacle</p>
+      <p style="margin:12px 0 0;">AI-generated na Times Square takeover, may crowd na nakatingala at nakanganga.
+      Nag-aangkin ng katanyagan na hindi naman nangyari. <strong>Yung &ldquo;Special Report&rdquo; badge, pwede</strong> &mdash;
+      kung totoo ang sinasabi ng badge. Yung crowd, hindi.</p>
+    </div>
+    <div class="glass flag">
+      <p class="pid" style="color:var(--flag);">E89 &nbsp;&middot;&nbsp; fabricated publication</p>
+      <p style="margin:12px 0 0;">&ldquo;THE AI INSIDER&rdquo; ay walang ganung dyaryo. Kinunan pa sa <strong>totoong newsstand</strong>,
+      kaya mukhang may editorial coverage. Yung loss-frame, sobrang lakas at pwedeng gayahin nang tapat.
+      Yung masthead, hindi kailanman.</p>
+    </div>
+    <p style="margin-top:22px;color:var(--meta);font-size:14.5px;">
+      Rule para sa GP-6: ang isang mundo ay pwedeng maging <strong>neutral surface</strong> &mdash; pader, papel,
+      board, bagay. Hindi siya pwedeng maging <strong>institusyon</strong>.
+    </p>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- ============ GRIFON CAMPAIGN ============ -->
+  <section class="col reveal">
+    <p class="eyebrow">// port sa grifon</p>
+    <h2>Yung campaign</h2>
+    <p style="margin-top:24px;">
+      Una, yung sequence, kasi madaling mali: <strong>hindi discovery ang S34, scaling siya.</strong>
+      Mali yung mag-spin agad ng 12 worlds sa hook na hindi pa napapatunayan.
+    </p>
+    <div class="scroller">
+      <table style="margin:20px 0 8px;">
+        <thead><tr><th>Phase</th><th>Gagawin</th><th>Metric</th></tr></thead>
+        <tbody>
+          <tr><td><b>1</b></td><td>I-test ang 3 hooks bilang flat creatives. Isang mundo lang.</td><td>CTR + cost per free signup</td></tr>
+          <tr><td><b>2</b></td><td>Kung sino nanalo, doon ilabas ang 8 worlds. Naka-freeze ang copy.</td><td>CPA per world, parehong hook</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="wide reveal" style="padding-top:34px;">
+    <div class="grid">
+      <div class="glass gold">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:16px;">
+          <span class="tag rec">recommended</span><span class="tag">~70%</span><span class="tag">problem aware</span><span class="tag">S24 &middot; 15 ads / 5 brands</span>
+        </div>
+        <p class="hookline">Yung mga business owner na lumalago ngayon, tumigil na sa paggawa ng content.</p>
+        <p class="hooksub">Hindi sila naghire ng agency. Isang upo lang, buong buwan na ang ads.</p>
+        <p class="hooksub" style="color:var(--gold);font-style:italic;font-family:var(--serif);font-size:1.12rem;">Dito nagsisimula ang edge mo.</p>
+        <p style="margin:16px 0 0;font-size:14.5px;color:var(--meta);">
+          Format-enemy positioning ang pinaka-corroborated na lever sa buong file. Ang kalaban ay yung
+          <em>gawain</em>, hindi si Canva o yung agency. Walang kalaban na pwedeng mag-reply.
+        </p>
+      </div>
+
+      <div class="glass">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:16px;">
+          <span class="tag">~65%</span><span class="tag">solution aware</span><span class="tag">warm retarget</span><span class="tag">lift: E85</span>
+        </div>
+        <p class="hookline">Iba daw ang negosyo mo, kaya di raw pwede ang AI.</p>
+        <p class="hooksub">Tama ka. Yung 20% na custom, sayo pa rin yun. Yung 80% na paulit-ulit, kami na.</p>
+        <p class="hooksub" style="color:var(--gold);font-style:italic;font-family:var(--serif);font-size:1.12rem;">Dito nagsisimula ang edge mo.</p>
+        <p style="margin:16px 0 0;font-size:14.5px;color:var(--meta);">
+          Diretsong lift mula sa E85. Inaamin niya yung custom part imbes na i-overclaim, kaya
+          namamatay yung #1 objection ni Bryan nang walang pagtatalo. Ito yung pinakamalakas na copy sa buong batch.
+        </p>
+      </div>
+
+      <div class="glass">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:16px;">
+          <span class="tag">~50%</span><span class="tag">bold</span><span class="tag">S36 port</span>
+        </div>
+        <p class="hookline">20 oras kada buwan sa paggawa ng content. Dalawa at kalahating araw ng trabaho. Kada buwan.</p>
+        <p class="hooksub">Yan yung binabayaran mo. Hindi pera. Oras.</p>
+        <p class="hooksub" style="color:var(--gold);font-style:italic;font-family:var(--serif);font-size:1.12rem;">Dito nagsisimula ang edge mo.</p>
+        <p style="margin:16px 0 0;font-size:14.5px;color:var(--meta);">
+          Ito yung version ng S36 na hindi bumabasag sa price rule. Basahin sa baba.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- ============ CONFLICT ============ -->
+  <section class="col reveal">
+    <p class="eyebrow dim">// conflict na na-catch</p>
+    <h2>Bawal ang presyo<br>sa creative</h2>
+    <p style="margin-top:24px;">
+      Yung price anchor ni Brunson (<strong>$97/Month</strong>, at yung <strong>$10,000 = 100 &times; $100</strong> sa E84)
+      ay hindi natin puwedeng kopyahin nang diretso. Naka-hard guardrail yun sa
+      <span style="font-family:var(--mono);font-size:13px;color:#D4D4D8;">_shared/pricing-ladder.md</span>:
+      <em>never show price in ad creatives.</em>
+    </p>
+    <p>
+      So hindi mabubuhay ang S36 kung presyo ang ipapa-math. Ang honest port:
+      <strong>i-deconstruct ang oras, hindi ang bayad.</strong> Yun yung Option C.
+    </p>
+    <p>
+      Mas malakas pa nga. Oras ni Bryan ang sinasakit, hindi wallet niya &mdash; at wala siyang
+      counter-argument sa sarili niyang kalendaryo.
+    </p>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- ============ WORLDS ============ -->
+  <section class="col reveal">
+    <p class="eyebrow">// production</p>
+    <h2>Ang walong mundo</h2>
+    <p style="margin-top:24px;">
+      Bawat isa ay <strong>surface plate</strong> muna: gagawa ang image model ng eksena na may
+      <em>blangkong copy zone</em>, tapos si <span style="font-family:var(--mono);font-size:13px;">captureToPng</span>
+      ang magsusulat ng nakapirming copy doon.
+    </p>
+    <p>
+      <strong>Pero may exception, at ito yung mahalaga.</strong> Sa mga surface na sulat-kamay
+      &mdash; chalk, marker, ballpen &mdash; hayaan nating ang image model na mismo ang sumulat.
+      Doon, ang bahagyang mali ay mukhang tao. Sa mga naka-print na surface &mdash; tarpaulin,
+      one-pager &mdash; overlay tayo, kasi doon ang mali ay mukhang sira.
+    </p>
+    <p style="color:var(--meta);font-size:14.5px;">
+      Nakita natin to mismo sa batch: &ldquo;WALHMAN&rdquo; sa E93 at &ldquo;CLENTS&rdquo; sa E91.
+      Sa sulat-kamay, hindi mo halos mapapansin. Sa naka-print, sirang ad na yun.
+    </p>
+  </section>
+
+  <section class="wide reveal" style="padding-top:30px;">
+    <div class="grid two">
+
+      <div class="glass">
+        <p class="pid">01 &nbsp;&middot;&nbsp; office whiteboard</p>
+        <p class="count" style="margin:8px 0 0;">handwritten lane &middot; model writes the copy</p>
+        <div class="prompt">Photoreal interior, maliit na Filipino SME office sa Metro Manila. Isang whiteboard na naka-mount sa off-white na pader, medyo may bahid ng lumang marker. Nakasulat sa itim na marker ang headline, may hand-drawn na bilog sa unang linya. Sa kaliwa at kanan, totoong pipeline diagram: BRIEF, SCRIPT, STORYBOARD, RENDER, na konektado ng arrow. Natural na liwanag mula sa bintana sa kaliwa. Bahagyang anggulo, hindi harapan. Walang tao sa frame.</div>
+      </div>
+
+      <div class="glass">
+        <p class="pid">02 &nbsp;&middot;&nbsp; manila sidewalk chalk</p>
+        <p class="count" style="margin:8px 0 0;">handwritten lane</p>
+        <div class="prompt">High-angle photoreal shot ng semento na bangketa sa Maynila, tanghaling tapat. Nakasulat sa puting chalk ang headline sa loob ng isang chalk-drawn na kahon. Motion-blurred na paa ng mga naglalakad sa itaas na bahagi ng frame. Basang mantsa at tuyong dahon sa gilid. Malamig na anino, mainit na sikat ng araw. Walang mukha sa frame.</div>
+      </div>
+
+      <div class="glass">
+        <p class="pid">03 &nbsp;&middot;&nbsp; jeepney-route wall</p>
+        <p class="count" style="margin:8px 0 0;">printed lane &middot; overlay + perspective warp</p>
+        <div class="prompt">Photoreal na pader sa tabi ng jeepney route sa Maynila. Isang malaking wild-posted paper poster, medyo kulubot at may bahid ng pandikit, nakadikit sa hollow-block na pader. Nakalimbag ang headline sa poster sa makapal na condensed sans. Sa paligid, mga natuklap na lumang poster at bakas ng ulan. Late afternoon na liwanag, mahabang anino. Walang logo ng ibang brand na nababasa.</div>
+      </div>
+
+      <div class="glass">
+        <p class="pid">04 &nbsp;&middot;&nbsp; likod ng resibo</p>
+        <p class="count" style="margin:8px 0 0;">handwritten lane &middot; PH-native na cassette label</p>
+        <div class="prompt">Macro photoreal shot ng likod ng isang thermal receipt roll na nakapatong sa gasgas na wooden counter. Nakasulat sa ballpen ang headline, medyo pahilig ang linya. Malapit sa gilid, isang kalahating naiinom na kape at isang ballpen. Mainit at mababang liwanag, mababaw na depth of field na naka-focus sa sulat.</div>
+      </div>
+
+      <div class="glass">
+        <p class="pid">05 &nbsp;&middot;&nbsp; sari-sari store tarp</p>
+        <p class="count" style="margin:8px 0 0;">printed lane &middot; overlay</p>
+        <div class="prompt">Photoreal na sari-sari store facade sa isang residential na kanto sa Pilipinas. Isang tarpaulin na naka-tie sa bakal na grill, may bahagyang lukot at sinag ng araw. Nakalimbag ang headline sa tarpaulin sa malinis na bold sans. Sa likod, mga nakasabit na sachet at plastic na banga. Umaga, malinaw na liwanag. Walang mukha, walang ibang brand logo na nababasa.</div>
+      </div>
+
+      <div class="glass">
+        <p class="pid">06 &nbsp;&middot;&nbsp; miniature sari-sari store</p>
+        <p class="count" style="margin:8px 0 0;">printed lane &middot; pinakamataas na novelty</p>
+        <div class="prompt">Tabletop miniature diorama ng isang Filipino sari-sari store sa gabi, tilt-shift na photoreal. May maliit na naka-ilaw na signboard sa itaas ng bintana na nagdadala ng headline. Mainit na tungsten na ilaw mula sa loob, bokeh na dilim sa likod. Isang napakaliit na figure na nakaupo sa monoblock chair sa tabi. Sadyang halatang miniature.</div>
+      </div>
+
+      <div class="glass">
+        <p class="pid">07 &nbsp;&middot;&nbsp; paper-cut zine</p>
+        <p class="count" style="margin:8px 0 0;">printed lane &middot; pang-A/B lang, off-brand by design</p>
+        <div class="prompt">Flat graphic collage sa matingkad na solidong background. Grayscale na cut-out ng isang lumang mechanical na wall clock sa gitna. Ang headline ay nakalimbag sa magkakahiwalay na puting paper-cut strips na nagkakapatong-patong pababa, bawat strip ay may bahagyang punit na gilid at anino. Isang hand-drawn na puting arrow. Walang tao, walang pera sa frame.</div>
+      </div>
+
+      <div class="glass">
+        <p class="pid">08 &nbsp;&middot;&nbsp; one-pager sa jeep</p>
+        <p class="count" style="margin:8px 0 0;">printed lane &middot; POV, walang dating dyaryo</p>
+        <div class="prompt">First-person POV photoreal, dalawang kamay na may hawak na isang naka-print na A4 na papel sa loob ng isang umaandar na jeepney. Nakalimbag ang headline sa itaas ng papel sa malaking bold sans, may isang simpleng diagram sa ibaba. Blurred na loob ng jeepney sa likod: bakal na barandilya, sinag ng araw sa bintana, ibang pasahero na hindi kilala. Walang masthead, hindi dyaryo, isang malinis na naka-print na papel lang.</div>
+      </div>
+
+    </div>
+
+    <div class="col" style="margin:30px auto 0;">
+      <div class="glass flag">
+        <p class="pid" style="color:var(--flag);">bawal na mundo</p>
+        <ul style="margin:14px 0 0;">
+          <li class="no">Pekeng dyaryo o masthead.</li>
+          <li class="no">Pekeng billboard na may crowd.</li>
+          <li class="no">Pekeng &ldquo;Special Report&rdquo; o news badge.</li>
+          <li class="no">Pekeng award, seal, o logo ng ahensya.</li>
+        </ul>
+        <p style="margin:16px 0 0;font-size:14.5px;color:var(--meta);">Neutral surface, hindi institusyon.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- ============ DEVIATION + GP6 ============ -->
+  <section class="col reveal">
+    <p class="eyebrow dim">// dalawang bagay bago tayo mag-build</p>
+    <h2>Status</h2>
+
+    <div class="glass" style="margin-top:26px;">
+      <h3 style="margin:0 0 12px;">Hindi natin kokopyahin ang zero-branding</h3>
+      <p style="margin:0;">Lahat ng 12 ads niya ay walang brand mark. Hindi ko irerecommend na gayahin natin
+      nang buo &mdash; may sarili tayong DESIGN.md at si Bryan ay bumibili ng tiwala, hindi misteryo.
+      <strong>Panatilihin ang Grifon mark.</strong> Yung anonymous na version, ilabas mo bilang
+      sadyang A/B, tapos i-log kung sino nanalo. Kung mananalo yung anonymous, malaking natutunan yun.</p>
+    </div>
+
+    <div class="glass" style="margin-top:16px;">
+      <h3 style="margin:0 0 12px;">GP-6 &mdash; naka-draft, hindi pa pwedeng aprubahan</h3>
+      <p style="margin:0 0 12px;">Ang &ldquo;One Hook / N Worlds&rdquo; engine ay yung pinaka-buildable na finding
+      sa buong swipe file. Pero <strong>isang brand lang ang evidence.</strong> 12 ads, si Brunson lang.</p>
+      <p style="margin:0;">Sinulat ko na siya sa file na naka-flag na <em>NOT approvable</em> hangga&rsquo;t walang
+      dalawa pang independent advertisers na ganito ang istruktura. Hindi ko papalusutin ang
+      3-corroboration rule kahit gaano kaganda ang finding. Yun yung buong punto ng gate.</p>
+    </div>
+
+    <p style="margin-top:28px;color:var(--meta);font-size:14.5px;">
+      Susunod na E-number: <strong>E94</strong>. Ang hahanapin sa susunod na batch: sinong ibang
+      advertiser ang nag-fi-freeze ng copy at nagpapalit ng mundo.
+    </p>
+  </section>
+
+  <p class="sig">Grifon</p>
+</div>
+
+<script>
+(function(){
+  var els=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)||window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    els.forEach(function(e){e.classList.add('in');});
+    return;
+  }
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}
+    });
+  },{rootMargin:'0px 0px -8% 0px',threshold:.06});
+  els.forEach(function(e){io.observe(e);});
+})();
+</script>
