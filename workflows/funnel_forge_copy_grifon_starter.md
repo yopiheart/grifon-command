@@ -79,9 +79,12 @@ signups measurable). (4) Niches + **Real Estate** = 8 niches + Other → 9 Battl
 variants: Food & Beverage / Fashion & Beauty / Health & Wellness / Home Services /
 Professional Services / Online Store (E-commerce) / Coaching & Education / Real Estate / Other.
 
-**OPEN — magnet delivery mechanism (Neil call):** walang email-sender infra pa ang funnel
-(walang Resend/Brevo). Options: **(A, recommended)** deliver the Battle Plan ON the
-thank-you page mismo — instant, niche-routed from the quiz answer, zero infra; email
-nurture sequence follows later once a sender is wired. **(B)** "check your inbox" as
-written — pero kailangan muna ng email service bago mag-live. A ships this week; B needs
-one more integration.
+**LOCKED (Neil, 2026-07-29): delivery = Option A, on-page.** The thank-you page renders
+the Battle Plan variant matching the lead's niche answer (routed via redirect param).
+Revised thank-you copy: headline `Your Battle Plan is ready.` · body `Here it is — the
+hook, the angle, and the first ad to run this week for your business.` · below the plan,
+the ONE bridge CTA (L1): `Make This Ad Free With Grifon →` → grifon.ai + UTMs. Email
+nurture = later phase, once a sender (Resend/Brevo) is wired; consent checkbox already
+captures permission for it. Reassurance line under the form changes to:
+`Free. No credit card. Your plan appears instantly.` Battle Plan content for all 9
+variants: `workflows/funnel_forge_battleplan_content.md`.
