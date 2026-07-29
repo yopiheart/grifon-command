@@ -342,6 +342,27 @@ same winning message, without re-testing copy).
 - Editing `generateAdCreatives` touches the **TUNED** `services/geminiService.ts` — Neil approves,
   then surgical edit + vitest + verify. Nothing here is applied autonomously.
 
+**Two lanes for getting copy onto the surface (learned by running it, 2026-07-29).** A Phase-1
+test batch was generated via `codex-image` (3 hooks, one world, gpt-image-2, baked-in handwriting) —
+see `assets/grifon-ads/phase1-hooktest/`. Two runs, 9 images, **verbatim copy accuracy was 100 %
+both times**, Taglish included. Findings:
+
+- **Handwritten surfaces → let the image model write the copy.** Chalk, marker, ballpen. A slightly
+  uneven letterform reads as a human hand, so the model's imperfection is *on-register*. (The
+  swipe file's own evidence: E93's "WALHMAN" and E91's "CLENTS" are barely noticeable precisely
+  because they're handwritten.)
+- **Printed surfaces → `generateSceneImage` makes a text-free plate, `captureToPng` overlays.**
+  Tarpaulin, one-pager, poster. There, a malformed glyph reads as a *broken ad*, not a human one.
+- **Framing is the real failure mode, not the text.** V1 put the whiteboard at ~70 % of frame with
+  office context around it; at feed scale it read as "a photo of an office" and the hook was
+  unreadable. V2 pushed the surface to ~92 % of frame and fixed it. Bake "the surface fills the
+  frame" into every world prompt — Brunson's E91 does exactly this.
+- ⚠️ **The lanes INVERT between phases — this is the easy mistake.** A **hook test** (copy is the
+  variable) must use **ONE plate + overlays**, or per-image world variance (board grubbiness,
+  angle, lighting) contaminates the result. A **world test** (world is the variable) is where
+  baked-in handwriting belongs. Generating N separate baked-in images for a *hook* test silently
+  tests two variables at once.
+
 ## Cross-Vertical Pattern Map
 
 These patterns are **not** about supplements or coaching — they're portable
