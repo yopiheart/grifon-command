@@ -24,7 +24,8 @@ Every structural choice cites its evidence (F/L = funnel swipe file, S = static 
 - **C (bold):** `Stop Guessing. Run The Ad The Winners Already Proved.`
   *Contrarian/authority angle off our decoded-ads corpus. Needs the subhead to carry the mechanism.*
 
-**Subhead:** `Answer 4 quick questions about your business. We'll send you a free Battle Plan: the hook that fits your niche, the ad angle that's winning right now, and the first ad you should run this week.`
+**Subhead:** `Answer 4 quick questions about your business. We'll show you your free Battle Plan — instantly: the hook that fits your niche, the ad angle that's winning right now, and the first ad you should run this week.`
+*(2026-07-29: "send you" → "show you…instantly" after delivery moved on-page; the old verb contradicted the reassurance line.)*
 *(Mechanism + 3-item specificity; mirrors F04's tangibilized-freebie play — mockup image beside it.)*
 
 **Form (the quiz — L3 progressive qualification, 5/6 corroborations):**

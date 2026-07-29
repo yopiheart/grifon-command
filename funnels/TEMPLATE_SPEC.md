@@ -1,7 +1,8 @@
 # funnels/_template — Data Contract & Build Spec
 
 The canonical lead-gen funnel template (Funnel Forge Phase 2). Every funnel instance is a copy
-of `_template/` with only `src/funnel.config.ts` (+ assets) edited. Evidence base: Funnel Swipe
+of `_template/` with only `src/funnel.config.ts` (+ assets/data) edited — first instance:
+`funnels/grifon-starter/` (`grifon-starter-v1`). Evidence base: Funnel Swipe
 File patterns **L1 L2 L4 L7 L8** (`workflows/funnel_swipe_file.md`, all `proposed (baseline)`).
 
 ## Architecture rules
@@ -90,7 +91,18 @@ export interface FunnelConfig {
     magnetDelivery: string;      // "Check your inbox — it's on the way" line
     nextStep: { label: string; href: string; blurb?: string };  // THE one bridge CTA (L1)
     steps?: string[];            // optional "what happens next" list (F02 pattern)
+    magnet?: {                   // optional ON-PAGE delivery — no sender needed
+      qualifierId: string;       // which qualifier answer routes the variant
+      variants: Record<string, BattlePlan>;  // keys = EXACT qualifier option strings
+      fallback: string;          // key used when ?v= is missing/unknown
+    };
   };
+}
+
+export interface BattlePlan {   // one on-page magnet variant; all copy is config data
+  title: string;
+  blocks: Array<{ heading: string; body: string[] }>;
+    // a body string starting with `SKELETON:` renders as a mono, ruled script block
 }
 
 export type SectionInstance =
@@ -98,7 +110,8 @@ export type SectionInstance =
       // minimal archetype hero: headline + embedded LeadForm (F03/F06 anatomy)
   | { type: 'hero';            props: { eyebrow?: string; headline: string; subhead?: string; ctaLabel: string } }
       // longform hero: big claim + ctaBlock behavior (scrolls to #lead-form)
-  | { type: 'socialProofBar';  props: { rating?: string; reviewCount?: string; logos?: string[] } }
+  | { type: 'socialProofBar';  props: { line?: string; rating?: string; reviewCount?: string; logos?: string[] } }
+      // `line` = single authority sentence (L9); rating/logos = the classic strip
   | { type: 'testimonialWall'; props: { heading?: string; items: Array<{ quote: string; name: string; role?: string }> } }
   | { type: 'originStory';     props: { heading: string; paragraphs: string[] } }
   | { type: 'caseStudyMetrics';props: { heading?: string; items: Array<{ metric: string; caption: string }> } }
@@ -133,7 +146,9 @@ from the request body) → supabase-js service-role upsert `onConflict: 'funnel_
 
 `lib/submitLead.ts` (client): reads `location.search` once for `utm_*` keys → posts JSON →
 on `{ ok: true }` → `window.location.href = '/thank-you.html'` (Vercel serves clean
-`/thank-you` too; use relative href from config if provided). Optimistic disabled-button state;
+`/thank-you` too; use relative href from config if provided). With `thankYou.magnet`
+configured it appends `?v=<encodeURIComponent(answer to magnet.qualifierId)>` — the redirect
+is the only handoff between the two MPA documents. Optimistic disabled-button state;
 inline error message on failure. Fires Pixel `Lead` on thank-you page load (no-op without pixelId).
 
 ## Demo configs

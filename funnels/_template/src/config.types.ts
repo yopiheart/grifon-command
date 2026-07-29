@@ -60,7 +60,29 @@ export interface FunnelConfig {
     nextStep: { label: string; href: string; blurb?: string };
     /** Optional "what happens next" list (F02 pattern). */
     steps?: string[];
+    /**
+     * Optional on-page magnet delivery — the fastest fulfilment there is: no
+     * inbox, no sender, no deliverability. The lead's answer to `qualifierId`
+     * rides to the thank-you page as `?v=…`; the page renders
+     * `variants[v] ?? variants[fallback]` above the bridge CTA.
+     * Variant keys are the EXACT qualifier option strings shown in the form.
+     */
+    magnet?: {
+      qualifierId: string;
+      variants: Record<string, BattlePlan>;
+      fallback: string;
+    };
   };
+}
+
+/**
+ * One on-page magnet variant. Every string lives in the funnel's own config/data —
+ * the renderer is generic. A body string beginning with `SKELETON:` is rendered as
+ * a fill-in-the-blanks script block (mono, ruled) instead of a paragraph.
+ */
+export interface BattlePlan {
+  title: string;
+  blocks: Array<{ heading: string; body: string[] }>;
 }
 
 export type SectionInstance =
@@ -68,7 +90,8 @@ export type SectionInstance =
   | { type: 'heroOptin'; props: { eyebrow?: string; headline: string; subhead?: string; mockupImage?: string } }
   /** Longform hero: big claim + ctaBlock behavior (scrolls to #lead-form). */
   | { type: 'hero'; props: { eyebrow?: string; headline: string; subhead?: string; ctaLabel: string } }
-  | { type: 'socialProofBar'; props: { rating?: string; reviewCount?: string; logos?: string[] } }
+  /** `line` is the authority sentence variant (L9); rating/logos are the strip variant. */
+  | { type: 'socialProofBar'; props: { line?: string; rating?: string; reviewCount?: string; logos?: string[] } }
   | { type: 'testimonialWall'; props: { heading?: string; items: Array<{ quote: string; name: string; role?: string }> } }
   | { type: 'originStory'; props: { heading: string; paragraphs: string[] } }
   /** L9: specific-number authority stack. */

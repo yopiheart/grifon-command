@@ -6,6 +6,8 @@
 // landed on). Everything else is stamped server-side in api/lead.ts.
 // ===========================================================================
 
+import { funnelConfig } from '../funnel.config';
+
 export const THANK_YOU_URL = '/thank-you.html';
 
 const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'] as const;
@@ -44,6 +46,19 @@ export interface LeadSubmission {
 export type LeadResult = { ok: true } | { ok: false; error: string };
 
 /**
+ * Where to send the lead next. With on-page magnet delivery configured, the
+ * routing answer travels in the URL rather than in storage — the thank-you page
+ * is a separate MPA document, so the redirect IS the only handoff there is.
+ * No magnet (or no answer given) → the bare bridge, exactly as before.
+ */
+export const thankYouUrlFor = (qualifiers?: Record<string, string>): string => {
+  const { magnet } = funnelConfig.thankYou;
+  if (!magnet) return THANK_YOU_URL;
+  const answer = qualifiers?.[magnet.qualifierId];
+  return answer ? `${THANK_YOU_URL}?v=${encodeURIComponent(answer)}` : THANK_YOU_URL;
+};
+
+/**
  * POSTs the lead and, on success, moves the browser to the thank-you bridge.
  * Returns the result too, so the caller can keep the button disabled through
  * the navigation instead of flashing back to an idle state.
@@ -78,6 +93,6 @@ export const submitLead = async (submission: LeadSubmission): Promise<LeadResult
     return { ok: false, error: payload.error ?? `http_${response.status}` };
   }
 
-  window.location.href = THANK_YOU_URL;
+  window.location.href = thankYouUrlFor(submission.qualifiers);
   return { ok: true };
 };
