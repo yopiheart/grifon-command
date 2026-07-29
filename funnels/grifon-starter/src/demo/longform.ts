@@ -1,5 +1,5 @@
-import type { FunnelConfig } from '../config.types';
-import { DEMO_BRAND } from './brand';
+﻿import type { FunnelConfig } from '../config.types';
+import { DEMO_BRAND } from './brand.js';
 
 // ===========================================================================
 // DEMO — 'longform' archetype (condensed F01 spine, Suby-style sales letter).

@@ -1,5 +1,5 @@
 ﻿import type { FunnelConfig } from './config.types';
-import { BATTLE_PLANS } from './battlePlans';
+import { BATTLE_PLANS } from './battlePlans.js';
 
 // ===========================================================================
 // grifon-starter-v1 — THE ACTIVE CONFIG (Grifon's own lead funnel).

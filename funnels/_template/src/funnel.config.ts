@@ -1,5 +1,5 @@
 import type { FunnelConfig } from './config.types';
-import { minimal } from './demo/minimal';
+import { minimal } from './demo/minimal.js';
 
 // ===========================================================================
 // THE ACTIVE CONFIG — the one file a funnel instance edits.

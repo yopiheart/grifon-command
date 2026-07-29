@@ -1,5 +1,5 @@
-import type { FunnelConfig } from '../config.types';
-import { DEMO_BRAND } from './brand';
+﻿import type { FunnelConfig } from '../config.types';
+import { DEMO_BRAND } from './brand.js';
 
 // ===========================================================================
 // DEMO — 'minimal' archetype (F03 anatomy, Hormozi-style squeeze).
