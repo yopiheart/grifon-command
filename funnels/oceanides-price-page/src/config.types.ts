@@ -101,6 +101,8 @@ export type SectionInstance =
         eyebrow?: string;
         headline: string;
         subhead?: string;
+        /** S8 audience callout — names the reader before they hit the price. */
+        audience?: string;
         ctaLabel: string;
         logo?: string;
         logoAlt?: string;
@@ -131,12 +133,27 @@ export type SectionInstance =
   /** L9: specific-number authority stack. */
   | { type: 'caseStudyMetrics'; props: { heading?: string; items: Array<{ metric: string; caption: string }> } }
   | { type: 'valueStack'; props: { heading: string; items: Array<{ label: string; value?: string }>; totalLine?: string } }
+  /**
+   * OCEANIDES-only. Matched before/after shots of the same fixture — the only
+   * outcome proof this brand owns (no testimonials, no review count, and
+   * inventing them is a hard ban). Pairs MUST be the same fixture in the same
+   * light; a mismatched pair proves nothing and poisons the ones beside it.
+   */
+  | {
+      type: 'beforeAfter';
+      props: {
+        heading: string;
+        eyebrow?: string;
+        note?: string;
+        pairs: Array<{ before: string; after: string; alt: string; caption?: string }>;
+      };
+    }
   | { type: 'objectionReversal'; props: { heading: string; body: string[] } }
   | { type: 'guarantee'; props: { heading: string; body: string } }
   /** Repeatable (L8) — always scrolls to the ONE #lead-form. */
   | { type: 'ctaBlock'; props: { label: string; urgency?: string } }
   | { type: 'bonusStack'; props: { heading: string; bonuses: Array<{ title: string; blurb: string; value?: string }> } }
-  | { type: 'faqAccordion'; props: { items: Array<{ q: string; a: string }> } }
+  | { type: 'faqAccordion'; props: { heading?: string; items: Array<{ q: string; a: string }> } }
   /** P.S. ladder (F01). */
   | { type: 'psBlock'; props: { items: string[] } }
   /** Standalone form (longform archetype). */

@@ -3,12 +3,18 @@ import type { PropsOf } from '../config.types';
 import { SectionShell } from '../primitives/SectionShell';
 import { GlassCard } from '../primitives/GlassCard';
 import { Reveal } from '../primitives/Reveal';
+import { SectionHeading } from '../primitives/SectionHeading';
 
 // Native <details>/<summary>: keyboard and screen-reader correct for free, open
 // state survives Ctrl+F, and it needs no JS state or motion — so there is no
 // reduced-motion question to answer here at all.
-export const FaqAccordion: React.FC<PropsOf<'faqAccordion'>> = ({ items }) => (
+export const FaqAccordion: React.FC<PropsOf<'faqAccordion'>> = ({ items, heading }) => (
   <SectionShell width="prose">
+    {heading && (
+      <Reveal>
+        <SectionHeading className="mb-8">{heading}</SectionHeading>
+      </Reveal>
+    )}
     <div className="space-y-3">
       {items.map((item, i) => (
         <Reveal key={`${item.q}-${i}`} index={i}>

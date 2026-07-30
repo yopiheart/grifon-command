@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { FORM_SECTION_TYPES, type FunnelConfig, type SectionInstance } from '../config.types';
 import { SECTION_REGISTRY } from '../sections/registry';
+import { StickyCta } from '../primitives/StickyCta';
 
 interface LandingProps {
   config: FunnelConfig;
@@ -31,5 +32,15 @@ export const Landing: React.FC<LandingProps> = ({ config }) => {
     }
   }, [config.sections]);
 
-  return <main>{config.sections.map(renderSection)}</main>;
+  // The hero owns the label + number; the sticky bar reuses them so there is
+  // one place to change the CTA copy and the phone.
+  const hero = config.sections.find((s) => s.type === 'hero');
+  const heroProps = hero?.type === 'hero' ? hero.props : undefined;
+
+  return (
+    <>
+      <main>{config.sections.map(renderSection)}</main>
+      {heroProps && <StickyCta label={heroProps.ctaLabel} phone={heroProps.phone} />}
+    </>
+  );
 };

@@ -7,6 +7,7 @@ import { TestimonialWall } from './TestimonialWall';
 import { OriginStory } from './OriginStory';
 import { CaseStudyMetrics } from './CaseStudyMetrics';
 import { ValueStack } from './ValueStack';
+import { BeforeAfter } from './BeforeAfter';
 import { ObjectionReversal } from './ObjectionReversal';
 import { Guarantee } from './Guarantee';
 import { CtaBlock } from './CtaBlock';
@@ -29,6 +30,7 @@ export const SECTION_REGISTRY: SectionComponents = {
   originStory: OriginStory,
   caseStudyMetrics: CaseStudyMetrics,
   valueStack: ValueStack,
+  beforeAfter: BeforeAfter,
   objectionReversal: ObjectionReversal,
   guarantee: Guarantee,
   ctaBlock: CtaBlock,

@@ -6,10 +6,17 @@ import type { FunnelConfig } from './config.types';
 // ⚠️ COPY STATUS: DRAFT, PENDING GATE 2 (Neil).
 // Offer doc (Gate 1): workflows/oceanides_offer_price_page.md
 //
-// 🔴 Every `[TANONG KAY BOSS JAY]` marker below is a REAL unknown, not filler.
-// They must be answered before this page goes live — the whole promise of the
-// page is that the price is COMPLETE, so shipping it with a gap would break the
-// exact thing it sells. See §8 of the offer doc.
+// PRICING is Boss Jay's, confirmed 2026-07-30: ₱5,000 per TRUCKLOAD (full or
+// not, it counts as one), a second truckload is ₱5,000 again, the 30-day
+// warranty covers BARA only (not refilling — a canteen or apartment fills
+// faster than a house and that is not a defect), and extra hose is ₱100 per 3
+// metres. Every one of those is on the page in plain words, because the page's
+// entire promise is that the price is COMPLETE. Any gap breaks the thing it
+// sells — so no placeholder text ships here, ever.
+//
+// 🟡 Still soft: the number of hose metres INCLUDED before the ₱100/3m starts.
+// Boss Jay gave the rate but not the baseline, so the copy says "kasama na ang
+// standard na hose ng truck" — true, and it does not invent a number.
 //
 // WHY THIS PAGE EXISTS
 // 2 days of live KM-003 ads: ₱1,284 spend, 100 messages, ₱12.84/message — and
@@ -136,6 +143,12 @@ export const funnelConfig: FunnelConfig = {
         // amber is the single accent in the system and spending it on five words
         // spends the scroll-stop it exists to buy.
         headline: '₱5,000. **Walang dagdag** pagdating ng truck.',
+        // S8 audience callout (9 ads / 5 brands). 77% of the ad audience was
+        // women 35-64 running a household, and Zam's 2 days in the inbox were
+        // households, apartments, and tenants — so the callout names them, not
+        // a generic "customer".
+        audience:
+          'Para sa may bahay, apartment, at negosyo sa Metro Manila na puno na ang septic tank.',
         subhead:
           'Isang truckload na siphoning, 4,000 litro, may 30-day warranty. Nakasulat ang presyo bago kami magsimula. Kung may dagdag, nasa ibaba nakalista lahat. Wala kaming itinatago.',
         ctaLabel: 'Mag-book ng schedule',
@@ -143,11 +156,10 @@ export const funnelConfig: FunnelConfig = {
         logoAlt: 'Oceanides',
         image: '/img/hero-truck.webp',
         imageAlt: 'Puting truck ng Oceanides na nakaparada sa kalye sa Metro Manila',
-        // 🔴 PLACEHOLDER. Repdigit-9 on purpose (clients/oceanides/DESIGN.md
-        // placeholder rule): an obviously fake number can never be mistaken for
-        // a real one. Neil has not given the real number yet. DO NOT DEPLOY
-        // with this still here.
-        phone: '0999 999 9999',
+        // Zam Grifon — admin / sales support. Sya ang sumasagot sa tumatawag
+        // (Neil, 2026-07-30). Ginagamit din to ng StickyCta, kaya isang lugar
+        // lang ang papalitan kapag nagbago.
+        phone: '0935 258 9927',
         phoneLabel: 'Tawag o text, 24 oras',
       },
     },
@@ -173,7 +185,7 @@ export const funnelConfig: FunnelConfig = {
         heading: 'Ano ang kasama sa **₱5,000**',
         items: [
           { label: 'Isang truckload na siphoning, 4 cubic o 4,000 litro' },
-          { label: 'Hose hanggang [TANONG KAY BOSS JAY] metro, kasama na' },
+          { label: 'Kasama na ang standard na hose ng truck' },
           { label: 'Litrato ng tangke nyo bago at pagkatapos, para may pagkumparahan' },
           { label: '30-day warranty kung bumalik ang bara' },
           { label: 'BIR official receipt' },
@@ -198,6 +210,33 @@ export const funnelConfig: FunnelConfig = {
           'Pangalawang truckload, ₱5,000 ulit. Kapag hindi kasya sa isa ang laman ng tangke nyo. Sasabihin namin bago pa namin simulan ang pangalawa, hindi pagkatapos.',
           'Yun lang. Wala nang iba. At sasabihin namin bago kami magsimula, hindi habang ginagawa.',
         ],
+      },
+    },
+
+    // Ang tanging outcome proof na hawak natin. Walang testimonial, walang
+    // review count, walang taon-sa-serbisyo, at bawal mag-imbento. Dalawang
+    // TUGMANG pares lang — parehong fixture, parehong ilaw. Ang hindi tugmang
+    // pares ay walang pinapatunayan at sinisira pa ang tabi nya.
+    {
+      type: 'beforeAfter',
+      props: {
+        eyebrow: 'Totoong trabaho',
+        heading: 'Ganito ang **hitsura** ng tapos.',
+        pairs: [
+          {
+            before: '/img/ba-1-before.webp',
+            after: '/img/ba-1-after.webp',
+            alt: 'bilog na septic tank manhole',
+            caption: 'Puno hanggang labi. Pagkatapos, kita na ang sahig at ang dingding ng tangke.',
+          },
+          {
+            before: '/img/ba-2-before.webp',
+            after: '/img/ba-2-after.webp',
+            alt: 'parisukat na catch basin na may pulang tubo',
+            caption: 'Parehong basin, parehong pulang tubo. Ang pagkakaiba ay ang laman.',
+          },
+        ],
+        note: 'Kinukunan namin ng litrato ang tangke nyo bago at pagkatapos ng bawat trabaho, at ibinibigay sa inyo. Hindi to pang-porma. Ito ang pinagbabasehan kapag may tanong sa warranty, para hindi salita laban sa salita.',
       },
     },
 
@@ -226,6 +265,7 @@ export const funnelConfig: FunnelConfig = {
     {
       type: 'faqAccordion',
       props: {
+        heading: 'Mga **tanong** na madalas itanong',
         items: [
           {
             q: 'Hindi ko alam kung nasaan ang septic tank namin. Ano ang gagawin ko?',

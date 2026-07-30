@@ -4,7 +4,7 @@ import { SectionShell } from '../primitives/SectionShell';
 import { GlassCard } from '../primitives/GlassCard';
 import { Reveal } from '../primitives/Reveal';
 
-import { goldEmphasis } from '../lib/goldEmphasis';
+import { SectionHeading } from '../primitives/SectionHeading';
 
 // Itemised deliverables, then the total.
 //
@@ -22,7 +22,7 @@ import { goldEmphasis } from '../lib/goldEmphasis';
 export const ValueStack: React.FC<PropsOf<'valueStack'>> = ({ heading, items, totalLine }) => (
   <SectionShell width="prose">
     <Reveal>
-      <h2 className="mb-8 text-center text-2xl md:text-4xl">{goldEmphasis(heading)}</h2>
+      <SectionHeading align="center" className="mb-8">{heading}</SectionHeading>
     </Reveal>
     <Reveal index={1}>
       <GlassCard padded={false}>

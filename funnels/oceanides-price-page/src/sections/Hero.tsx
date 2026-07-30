@@ -33,6 +33,7 @@ export const Hero: React.FC<PropsOf<'hero'>> = ({
   eyebrow,
   headline,
   subhead,
+  audience,
   ctaLabel,
   logo,
   logoAlt,
@@ -45,22 +46,18 @@ export const Hero: React.FC<PropsOf<'hero'>> = ({
     <Reveal>
       <div className="grid items-center gap-10 md:grid-cols-[1.05fr_1fr] md:gap-12">
         <div>
+          {/* Logo as a floating DISC. scripts/build-assets.mjs circle-masks the
+              source, so the white square is gone and what is left reads as a
+              seal, not a pasted rectangle. The amber ring is the print device
+              that ties it to the rest of the system. */}
           {logo && (
-            <div className="mb-7 inline-flex items-center gap-3 rounded-brand bg-brand-proof-band p-2 pr-4">
-              <img
-                src={logo}
-                alt={logoAlt ?? 'Oceanides'}
-                width={44}
-                height={44}
-                className="h-11 w-11 rounded-[2px] object-contain"
-              />
-              <span className="text-[11px] font-black uppercase leading-tight tracking-[1px] text-[#0b1b33]">
-                Oceanides
-                <span className="block font-semibold tracking-[0.5px] text-[#5b6b85]">
-                  Siphoning Services
-                </span>
-              </span>
-            </div>
+            <img
+              src={logo}
+              alt={logoAlt ?? 'Oceanides'}
+              width={72}
+              height={72}
+              className="mb-6 h-16 w-16 rounded-full ring-2 ring-brand-primary md:h-[72px] md:w-[72px]"
+            />
           )}
 
           {eyebrow && (
@@ -70,6 +67,17 @@ export const Hero: React.FC<PropsOf<'hero'>> = ({
           )}
 
           <h1 className="text-[2.375rem] leading-[0.95] md:text-[3.75rem]">{goldEmphasis(headline)}</h1>
+
+          {/* Audience callout (S8, 9 ads / 5 brands). Naming the reader is the
+              cheapest qualification device there is: it tells the right person
+              "ikaw to" before they have read a single price, and it tells the
+              wrong person to leave — which is worth just as much when every
+              click is paid for. */}
+          {audience && (
+            <p className="mt-5 border-l-[3px] border-brand-primary pl-4 text-sm font-semibold leading-snug text-brand-on-surface md:text-base">
+              {audience}
+            </p>
+          )}
 
           {subhead && (
             <p className="mt-6 max-w-xl text-base leading-relaxed text-brand-on-surface-muted md:text-lg">

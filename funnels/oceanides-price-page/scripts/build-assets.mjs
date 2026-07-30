@@ -38,18 +38,47 @@ const REPO_ROOT = resolve(INSTANCE, '..', '..');
 const SRC = join(REPO_ROOT, 'clients', 'oceanides', 'assets');
 const OUT = join(INSTANCE, 'public', 'img');
 
-/** @type {Array<{src: string, out: string, width: number, quality?: number, fit?: string}>} */
+/** @type {Array<{src: string, out: string, width: number, quality?: number, circle?: boolean}>} */
 const JOBS = [
-  // Logo — 316x316 jpeg with a near-white ground (sampled 243,252,251), so it is
-  // rendered on a paper chip in the UI rather than keyed out. Keying white from a
-  // JPEG leaves fringing on the navy.
-  { src: 'logo.jpg', out: 'logo.webp', width: 256, quality: 88 },
+  // Logo — 316x316 JPEG. The artwork is a full-colour CIRCULAR badge (navy shield,
+  // blue wave, navy wordmark) sitting on a white ground.
+  //
+  // Neil, 2026-07-30: "paano yan lulutang ng walang white background pero visible."
+  // Three options were on the table and only one is honest:
+  //   ✗ key the white to transparent — the artwork is NAVY on white, so on a navy
+  //     page it would vanish into the background. Worse than the chip.
+  //   ✗ knock it out to solid white — throws away the shield, the wave, and the
+  //     colour, i.e. most of the logo.
+  //   ✓ CIRCULAR MASK. The logo is already a disc; the white is part of the disc,
+  //     not a background behind it. Cutting the square corners off makes it read
+  //     as a deliberate decal/seal instead of a pasted rectangle — and print
+  //     brands put full-colour seals on white by convention anyway.
+  // `circle: true` composites an SVG circle with dest-in, and webp keeps the alpha.
+  { src: 'logo.jpg', out: 'logo.webp', width: 320, quality: 90, circle: true },
 
-  // Official marks. Both carry real alpha, so they drop straight onto navy.
-  // badge-denr is a 704x78 wide lockup, badge-bir a 1280 square — different
-  // aspect ratios, so they are sized by WIDTH and aligned on a shared row height.
-  { src: 'badge-denr.png', out: 'badge-denr.webp', width: 420, quality: 90 },
-  { src: 'badge-bir.png', out: 'badge-bir.webp', width: 200, quality: 90 },
+  // Official marks. Both carry alpha, BUT their artwork is near-black, so they are
+  // effectively invisible on navy (Neil: "hindi rin masyadong visible dahil black").
+  // Fix is in the UI, not here: SocialProofBar renders them on the PAPER band.
+  // That is also how official seals are used in print — never reversed out.
+  { src: 'badge-denr.png', out: 'badge-denr.webp', width: 560, quality: 92 },
+  { src: 'badge-bir.png', out: 'badge-bir.webp', width: 260, quality: 92 },
+
+  // Before/after pairs — the only outcome proof the brand owns. There are no
+  // testimonials, no review count, no years-in-service, and inventing any of
+  // them is a hard ban, so these two pairs carry the whole proof burden.
+  //
+  // ⛔ Only MATCHED pairs ship. Each of these is the same fixture, same lighting,
+  // same surrounding concrete, shot before and after — ba-2 even keeps the same
+  // red pipe in frame. `before-1.jpg` / `after-1.jpg` were DROPPED: they are two
+  // different fixtures (a screened grease trap vs a dark tank), so as a "pair"
+  // they prove nothing and quietly teach the reader to distrust the others.
+  // Two real pairs beat three with one fake.
+  //
+  // 640px / q68, lazy-loaded below the fold: proof has to be legible, not sharp.
+  { src: 'tb2-ba2-before.png', out: 'ba-1-before.webp', width: 640, quality: 68 },
+  { src: 'tb2-ba2-after.png', out: 'ba-1-after.webp', width: 640, quality: 68 },
+  { src: 'tb2-ba3-before.png', out: 'ba-2-before.webp', width: 640, quality: 68 },
+  { src: 'tb2-ba3-after.png', out: 'ba-2-after.webp', width: 640, quality: 68 },
 
   // Hero: real Philippine street, real fleet. Landscape suits the photoScrim
   // (the brand's one sanctioned cinematic move: a left-to-right navy wash).
@@ -68,10 +97,22 @@ for (const job of JOBS) {
   const inPath = join(SRC, job.src);
   const outPath = join(OUT, job.out);
   try {
-    const buf = await sharp(inPath)
-      .resize({ width: job.width, fit: 'inside', withoutEnlargement: true })
-      .webp({ quality: job.quality ?? 80 })
-      .toBuffer();
+    let pipe = sharp(inPath).resize({ width: job.width, fit: 'inside', withoutEnlargement: true });
+
+    if (job.circle) {
+      // Square-in, disc-out. `dest-in` keeps only the pixels under the circle,
+      // so the square corners become genuinely transparent rather than white.
+      // The SVG circle is antialiased, which is what stops the rim from jaggying
+      // against navy the way a hard threshold would.
+      const { width = job.width, height = job.width } = await pipe.metadata();
+      const d = Math.min(width, height);
+      const mask = Buffer.from(
+        `<svg width="${width}" height="${height}"><circle cx="${width / 2}" cy="${height / 2}" r="${d / 2}" fill="#fff"/></svg>`,
+      );
+      pipe = sharp(await pipe.png().toBuffer()).composite([{ input: mask, blend: 'dest-in' }]);
+    }
+
+    const buf = await pipe.webp({ quality: job.quality ?? 80, alphaQuality: 100 }).toBuffer();
     await writeFile(outPath, buf);
     total += buf.byteLength;
     console.log(`  ${job.src.padEnd(24)} -> public/img/${job.out.padEnd(20)} ${kb(buf.byteLength)}`);

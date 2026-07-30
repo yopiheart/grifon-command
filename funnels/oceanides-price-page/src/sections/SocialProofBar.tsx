@@ -31,15 +31,22 @@ export const SocialProofBar: React.FC<PropsOf<'socialProofBar'>> = ({
   <SectionShell rhythm="band" className="border-y-2 border-white/15">
     <Reveal>
       <div className="space-y-6 text-center">
+        {/* PAPER BAND. Neil, 2026-07-30: "ung logo ng denr at sec hindi rin
+            masyadong visible dahil black." Correct — both marks are near-black
+            artwork on transparent, so on navy they disappear. The fix is not to
+            recolour them: an official seal is never reversed out, and repainting
+            a government mark is the kind of liberty you do not take. Put them
+            where seals belong, on paper. DESIGN.md already carries the surface
+            (--brand-proof-band #F4F6FA) for exactly this. */}
         {badges && badges.length > 0 && (
-          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
+          <div className="mx-auto flex max-w-2xl flex-wrap items-center justify-center gap-x-10 gap-y-6 rounded-brand bg-brand-proof-band px-6 py-5">
             {badges.map((badge) => (
               <img
                 key={badge.src}
                 src={badge.src}
                 alt={badge.alt}
                 loading="lazy"
-                className="h-11 w-auto max-w-[190px] object-contain md:h-14 md:max-w-[240px]"
+                className="h-10 w-auto max-w-[240px] object-contain md:h-12 md:max-w-[300px]"
               />
             ))}
           </div>
