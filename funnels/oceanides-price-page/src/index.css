@@ -1,0 +1,103 @@
+﻿/* Brand fonts - SELF-HOSTED via @fontsource (same-origin woff2, bundled by
+   Vite; still zero external requests). Weight 500 is banned by DESIGN.md.
+
+   Anton is the Oceanides display face (clients/oceanides/DESIGN.md). It ships a
+   SINGLE weight (400) by design — "walang bold/italic variants; huwag i-fake."
+   Self-hosting is mandatory, not cosmetic: naming "Anton" in a CSS stack without
+   the woff2 renders as Roboto/Impact on a visitor's phone (funnel-forge rule #3). */
+@import '@fontsource/anton/400.css';
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/inter/700.css';
+@import '@fontsource/inter/800.css';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/600.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------------------
+   Brand defaults — same names src/theme/brand.ts writes at runtime, so the
+   first paint is already correct and nothing flashes. These MIRROR the brand
+   block in src/funnel.config.ts; keep them in sync or the page flashes Grifon
+   yellow before React boots.
+
+   Values are the Oceanides tokens, copied 1:1 from the YAML frontmatter of
+   clients/oceanides/DESIGN.md (v1.0). Never hardcode a hex here that isn't in
+   that file — it is the source of truth for every Oceanides surface.
+
+   All fonts are bundled woff2 (see the @import block above). No CDN, no network
+   request from this page.
+--------------------------------------------------------------------------- */
+:root {
+  /* amber — the ONLY accent. "sa dagat ng asul, ang amber ang pumipigil ng scroll." */
+  --brand-primary: #f5b301;
+  /* navy ladder replaces black. "ang itim ay Grifon; ang navy ang nagpapa-Oceanides." */
+  --brand-surface: #0e2c5e;
+  --brand-surface-elevated: #0a1f45;
+  --brand-on-surface: #ffffff;
+  --brand-on-surface-muted: #dfe8f5;
+  /* #8FB3DD = 7.5:1 on surface-deep, the darkest legal text step on navy. */
+  --brand-on-surface-dim: #8fb3dd;
+  --brand-proof-band: #f4f6fa;
+  --brand-font-display: Anton, 'Roboto Condensed', 'Arial Narrow', Impact, sans-serif;
+  --brand-font-body: Inter, 'Helvetica Neue', Arial, sans-serif;
+  --brand-font-accent: 'JetBrains Mono', ui-monospace, monospace;
+  /* Print world, not app world — corners stay tight. */
+  --brand-radius: 0.25rem;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Mobile-first hard rule: nothing may scroll sideways at 390px. */
+    overflow-x: hidden;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--brand-surface);
+    color: var(--brand-on-surface);
+    font-family: var(--brand-font-body);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Anton spec from clients/oceanides/DESIGN.md: UPPERCASE, line-height .9-.95,
+     letter-spacing +0.5px. The template's default -0.02em is for Inter display —
+     negative tracking on a condensed face closes the counters into mush. */
+  h1,
+  h2,
+  h3 {
+    font-family: var(--brand-font-display);
+    font-weight: 400;
+    text-transform: uppercase;
+    line-height: 0.95;
+    letter-spacing: 0.5px;
+    text-wrap: balance;
+  }
+
+  /* One focus treatment for the whole funnel — forms are the conversion event,
+     so their focus state is never left to the browser default. */
+  :focus-visible {
+    outline: 2px solid var(--brand-primary);
+    outline-offset: 2px;
+  }
+}
+
+/* Belt-and-braces to the reducedMotion() helper: the helper zeroes motion/react
+   transitions, this zeroes anything CSS-driven (smooth scroll included). */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
