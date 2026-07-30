@@ -58,6 +58,7 @@ import {
 } from './services/supabaseClient';
 import { popIntendedPlan, peekIntendedPlan, saveIntendedPlan, startCheckout } from './services/billingService';
 import { popIntendedModule } from './services/moduleIntentService';
+import { setReturnToAd, popReturnToAd } from './services/returnToAdService';
 import { grant as grantMarketingConsent, getMarketingConsent } from './services/consentService';
 import { POLICY_VERSION, isKnownPolicyVersion } from './services/consentConstants';
 import { ConsentBanner } from './components/ui/ConsentBanner';
@@ -70,6 +71,7 @@ import { RouteVeil, type VeilState } from './components/ui/RouteVeil';
 import { QuotaWallModal } from './components/ui/QuotaWallModal';
 import { quotaWallStore } from './services/quotaWallStore';
 import { useSubscription } from './hooks/useSubscription';
+import { useQuota } from './hooks/useQuota';
 import { nextTier, planAtLeast, type PlanId } from './utils/planGate';
 import { getSession, setSession, clearSession, type WizardSessionV1 } from './services/wizardSessionStore';
 import { MAT_PLATE } from './components/ui/materialTokens';
@@ -161,6 +163,20 @@ const App: React.FC = () => {
   // at the app root so any module/wizard step triggers it without prop drilling.
   const quotaWall = useSyncExternalStore(quotaWallStore.subscribe, quotaWallStore.getSnapshot);
   const { billing_cycle, plan_id, loading: subLoading } = useSubscription();
+  // Purchased top-up balances — the video gate below must see a paid ₱499
+  // credit, or the buyer hits the paywall for the thing they just bought.
+  const { credits: topupCredits, loading: creditsLoading, refetch: refetchQuota } = useQuota();
+
+  // The hook fetches once per mount, which goes stale across in-SPA checkout
+  // returns and OTP sign-in (critic 2026-07-30: a buyer came back to a
+  // credits:0 paywall). Refetch on every landing on the app surface; the
+  // delayed second pass absorbs webhook lag on credit grants.
+  useEffect(() => {
+    if (!isAuthenticated || currentRoute !== 'app') return;
+    refetchQuota();
+    const id = window.setTimeout(refetchQuota, 4000);
+    return () => window.clearTimeout(id);
+  }, [isAuthenticated, currentRoute, refetchQuota]);
   // Slice 5 — gate a graduated module's RENDER behind a plan tier, with the
   // grifon_dev_unlock bypass. Catches direct access (e.g. the video→AI-editor
   // hand-off), not just the Dashboard tile. Server stays authoritative for the
@@ -495,6 +511,18 @@ const App: React.FC = () => {
     const mod = popIntendedModule();
     if (mod && INTENT_MODULE_IDS.has(mod)) setActiveModule(mod);
   }, [isAuthenticated]);
+
+  // Return-to-ad intent (stashed by the Step-8 paywall exits). Same shape and
+  // ordering as the module deep-link above — a pending plan checkout still wins,
+  // and we wait for the IndexedDB session load so a fresh mount (post-payment
+  // redirect) can restore the finished ad instead of falsely finding nothing.
+  useEffect(() => {
+    if (!isAuthenticated || currentRoute !== 'app') return;
+    if (peekIntendedPlan()) return;
+    if (isLoadingSession) return;
+    if (!popReturnToAd()) return;
+    restoreFinishedAd(); // no-op when no step-8 ad exists
+  }, [isAuthenticated, currentRoute, isLoadingSession]);
 
   useEffect(() => {
     if (!isAuthenticated) return;
@@ -843,6 +871,11 @@ const App: React.FC = () => {
     } finally {
       setActiveModule(null);
       restart();
+      // Shared cafe-PC hygiene: intent stashes are sessionStorage and would
+      // otherwise survive into the NEXT user's login on this tab.
+      popReturnToAd();
+      popIntendedModule();
+      popIntendedPlan();
       setAuthEmail('');
       setAuthCode('');
       setAuthError('');
@@ -882,6 +915,25 @@ const App: React.FC = () => {
     });
   };
 
+  // Land the user back on their finished ad (Step 8). Two sources, in order:
+  // the in-memory wizard (soft paywall exit — nothing was lost, only hidden) and
+  // the persisted session (hard redirect / post-payment reload), which goes
+  // through resumeSession so the restore path stays single. Returns false when
+  // there is no finished ad to return to — callers treat that as a no-op.
+  const restoreFinishedAd = (): boolean => {
+    if (currentStep === TOTAL_STEPS) {
+      setDirectorMode('steps');
+      setActiveModule('creative_director');
+      return true;
+    }
+    if (pendingSession?.currentStep === TOTAL_STEPS) {
+      resumeSession(); // restores every field + directorMode 'steps' + currentStep 8
+      setActiveModule('creative_director');
+      return true;
+    }
+    return false;
+  };
+
   const declineSession = () => {
     if (userId) clearSession(userId);
     setPendingSession(null);
@@ -907,6 +959,10 @@ const App: React.FC = () => {
     setPrefillSource(null);
     setMarketMindLoadedAvatar(null);
     setDirectorMode('oneshot'); // a finished/restarted ad returns to the default surface
+    // A restarted ad is finished business: drop the persisted session too, or
+    // the Dashboard keeps offering a "finished ad" card that no longer exists.
+    if (userId) clearSession(userId);
+    setPendingSession(null);
   };
 
   // Generic URL-syncing navigation: swap the route AND the address bar so the
@@ -1038,7 +1094,20 @@ const App: React.FC = () => {
         onReset={() => setCurrentRoute('app')}
         resetLabel="CONTINUE TO APP"
       >
-        <BillingSuccess onContinue={() => setCurrentRoute('app')} email={userEmail} />
+        <BillingSuccess
+          // This screen IS the fork, so both buttons consume the return-to-ad
+          // intent — otherwise the pop effect would drag a "create my first ad"
+          // click back to the old run.
+          onContinue={() => { popReturnToAd(); setCurrentRoute('app'); }}
+          email={userEmail}
+          // The ad they just bought the plan FOR — only offered when a finished
+          // (Step 8) run actually exists, in memory or in the saved session.
+          onReturnToAd={
+            currentStep === TOTAL_STEPS || pendingSession?.currentStep === TOTAL_STEPS
+              ? () => { popReturnToAd(); setCurrentRoute('app'); restoreFinishedAd(); }
+              : undefined
+          }
+        />
       </ErrorBoundary>
     );
   }
@@ -1494,21 +1563,24 @@ const App: React.FC = () => {
   let moduleElement: React.ReactNode;
 
   if (!activeModule) {
-    moduleElement = <Dashboard onSelectModule={setActiveModule} activeModule={activeModule} userEmail={userEmail} userId={userId} onLogout={handleLogout} onUpgrade={() => goToLegal('pricing')} />;
+    moduleElement = <Dashboard onSelectModule={setActiveModule} activeModule={activeModule} userEmail={userEmail} userId={userId} onLogout={handleLogout} onUpgrade={() => goToLegal('pricing')} onResumeFinishedAd={() => { if (!restoreFinishedAd()) setActiveModule('creative_director'); }} />;
   } else if (activeModule === 'generate_video') {
     // Slice 3 — video is metered per FINISHED AD. Starter+ render (1/8/15 ads);
     // Free renders 0 and instead lands on the LockedVideoPreview upsell at the
-    // hand-off. Server stays authoritative (meterVideoRequest); this is the UX
-    // gate. PlanGate is bypassed here so Free gets the tailored upsell, not the
-    // generic lock screen.
-    if (subLoading) {
+    // hand-off — UNLESS they hold a purchased ₱499 video credit, which the
+    // server would honor (consumeCredit) but this gate used to ignore. Server
+    // stays authoritative (meterVideoRequest); this is the UX gate. PlanGate is
+    // bypassed here so Free gets the tailored upsell, not the generic lock
+    // screen. Credits load with the same blank-guard as the plan so a paying
+    // credit-holder never flashes the paywall (and vice versa).
+    if (subLoading || (plan_id === 'free' && creditsLoading)) {
       moduleElement = <div className="min-h-screen bg-zinc-950" />;
-    } else if (plan_id === 'free') {
+    } else if (plan_id === 'free' && topupCredits.video_ad_credits <= 0) {
       moduleElement = (
         <LockedVideoPreview
           onBack={() => setActiveModule(null)}
-          onUpgrade={() => { setActiveModule(null); goToLegal('pricing'); }}
-          onBuyTopup={() => { window.location.href = '/checkout?topup=video_ad_single'; }}
+          onUpgrade={() => { setReturnToAd(); setActiveModule(null); goToLegal('pricing'); }}
+          onBuyTopup={() => { setReturnToAd(); window.location.href = '/checkout?topup=video_ad_single'; }}
           thumbnailUrl={thumbnailUrl}
           previewImageUrl={storyboard[0]?.imageUrl}
         />
@@ -1637,7 +1709,9 @@ const App: React.FC = () => {
     const hasRunResearch = !!localStorage.getItem('marketMindReport');
     const wizardPristine = currentStep === 1 && !clientDetails.brandName && !businessInfo.product && script === null;
     const showResumePill = !isLoadingSession && pendingSession !== null && !hasRestored && wizardPristine;
-    const showNudge = !hasRunResearch && !directorNudgeDismissed && !showResumePill;
+    // Never on Step 8: the finished-ad screen is the attention peak, and this
+    // banner routes the user away from the ad they just made.
+    const showNudge = !hasRunResearch && !directorNudgeDismissed && !showResumePill && currentStep !== 8;
     const showLoadedConfirmation = hasRunResearch && marketMindLoadedAvatar && !showResumePill;
     // One-shot is the default surface; a pending step session forces steps mode
     // so the user can resume where they left off.
@@ -1815,7 +1889,7 @@ const App: React.FC = () => {
                 {currentStep === 5 && <Step5Storyboard script={finalScript} avatar={avatar} businessInfo={businessInfo} storyboard={storyboard} setStoryboard={setStoryboard} onNext={() => setCurrentStep(6)} onBack={() => setCurrentStep(4)} aspectRatio={aspectRatio} language={language} />}
                 {currentStep === 6 && <Step6Thumbnail script={finalScript} avatar={avatar} businessInfo={businessInfo} aspectRatio={aspectRatio} thumbnailUrl={thumbnailUrl} setThumbnailUrl={setThumbnailUrl} onNext={() => setCurrentStep(7)} onBack={() => setCurrentStep(5)} />}
                 {currentStep === 7 && <Step6VideoPrompts storyboard={storyboard} videoPrompts={videoPrompts} setVideoPrompts={setVideoPrompts} onNext={() => setCurrentStep(8)} onBack={() => setCurrentStep(6)} businessInfo={businessInfo} />}
-                {currentStep === 8 && <Step7FinalOutput allData={{ clientDetails, businessInfo, finalScript, avatar, storyboard, videoPrompts, thumbnailUrl, aspectRatio }} onRestart={restart} onBack={directorUnlocked ? () => setCurrentStep(7) : () => setDirectorMode('oneshot')} onGenerateVideo={() => setActiveModule('generate_video')} />}
+                {currentStep === 8 && <Step7FinalOutput allData={{ clientDetails, businessInfo, finalScript, avatar, storyboard, videoPrompts, thumbnailUrl, aspectRatio }} onRestart={restart} onBack={directorUnlocked ? () => setCurrentStep(7) : () => setDirectorMode('oneshot')} onGenerateVideo={() => setActiveModule('generate_video')} hasVideoCredit={creditsLoading ? null : topupCredits.video_ad_credits > 0} />}
             </div>
             </>
             )}

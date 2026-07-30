@@ -2,17 +2,20 @@ import React, { useState, useRef, useEffect, MouseEvent as ReactMouseEvent } fro
 import { createPortal } from 'react-dom';
 import { ZoomOut, X } from 'lucide-react';
 import Button from './Button';
+import { watermarkImage } from '../../utils/watermark';
 
 interface ImageModalProps {
   imageUrl: string;
   onClose: () => void;
   filename?: string;
+  /** Free-tier lightbox downloads carry the export watermark. Off by default. */
+  watermark?: boolean;
 }
 
 const ZOOM_SCALE = 2;
 const DRAG_THRESHOLD_PX = 4;
 
-const ImageModal: React.FC<ImageModalProps> = ({ imageUrl, onClose, filename }) => {
+const ImageModal: React.FC<ImageModalProps> = ({ imageUrl, onClose, filename, watermark = false }) => {
   const [zoomed, setZoomed] = useState(false);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [dragging, setDragging] = useState(false);
@@ -26,9 +29,12 @@ const ImageModal: React.FC<ImageModalProps> = ({ imageUrl, onClose, filename }) 
 
   if (!imageUrl) return null;
 
-  const handleDownload = () => {
+  const handleDownload = async () => {
+    // watermarkImage returns the original on any failure, so the download always
+    // succeeds. No-op unless the caller opted in.
+    const href = watermark ? await watermarkImage(imageUrl) : imageUrl;
     const link = document.createElement('a');
-    link.href = imageUrl;
+    link.href = href;
     const name = filename || `generated-image-${new Date().toISOString()}.png`;
     link.download = name;
     document.body.appendChild(link);

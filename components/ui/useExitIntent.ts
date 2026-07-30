@@ -19,7 +19,7 @@ const markShown = (): void => {
 };
 
 interface UseExitIntentOptions {
-  /** Master switch. Pass `!isAuthenticated && FOUNDING_OFFER.enabled`. */
+  /** Master switch. Pass `!isAuthenticated` (decoupled from FOUNDING_OFFER — the modal is a free-trial pitch, not a promo banner). */
   enabled: boolean;
 }
 

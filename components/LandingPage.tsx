@@ -4,7 +4,6 @@ import { SiteHeader, type SiteNavLink } from './ui/SiteHeader';
 import { UrgencyBar } from './ui/UrgencyBar';
 import { ExitIntentModal } from './ui/ExitIntentModal';
 import { useExitIntent } from './ui/useExitIntent';
-import { FOUNDING_OFFER } from '../config/foundingOffer';
 import { Marquee } from './landing/Marquee';
 import { PinnedCtaPill } from './landing/PinnedCtaPill';
 import { Hero } from './landing/sections/Hero';
@@ -31,9 +30,12 @@ interface LandingPageProps {
 const SPY_SECTIONS = ['#what-you-get', '#reviews', '#faq'];
 
 const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing, onNavigateLegal, isAuthenticated = false }) => {
-  // Desktop-only exit-intent recapture — once/session, never for logged-in visitors.
+  // Desktop-only exit-intent recapture — once/session, never for logged-in
+  // visitors. Decoupled from FOUNDING_OFFER.enabled (2026-07-29): the modal is
+  // a free-trial pitch that stands without the founding urgency row, so a dead
+  // promo must not kill the recapture.
   const { triggered: exitTriggered, dismiss: dismissExit } = useExitIntent({
-    enabled: !isAuthenticated && FOUNDING_OFFER.enabled,
+    enabled: !isAuthenticated,
   });
 
   const heroSentinelRef = useRef<HTMLDivElement>(null);
@@ -105,7 +107,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
       <RoiMetrics />
 
       <Marquee
-        items={['30 minutes', 'NOT 3 DAYS', '₱997/mo', 'BUILT FOR FILIPINO BUSINESSES']}
+        items={['30 minutes', 'NOT 3 DAYS', 'FROM ₱997/MO', 'BUILT FOR FILIPINO BUSINESSES']}
         duration={26}
         reverse
         className="relative z-10 bg-zinc-950/60"

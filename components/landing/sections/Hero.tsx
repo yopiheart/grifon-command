@@ -90,7 +90,7 @@ export const Hero: React.FC<HeroProps> = ({ onEnterApp, heroSentinelRef }) => (
                 <Star key={s} size={11} strokeWidth={0} fill="#FFCC00" />
               ))}
             </span>
-            <span>early Filipino business owners</span>
+            <span>20+ Filipino business owners</span>
             <span className="text-on-surface-sublabel">·</span>
             <span>{CTA_REASSURANCE}</span>
           </div>

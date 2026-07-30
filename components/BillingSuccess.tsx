@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { EASE, DUR } from './ui/motionTokens';
-import { CheckCircle2, Loader2, Share2, ArrowRight } from 'lucide-react';
+import { CheckCircle2, Loader2, Share2, ArrowRight, Film } from 'lucide-react';
 import { useSubscription } from '../hooks/useSubscription';
 import { GrifonMark } from './ui/GrifonMark';
 import { GlassPanel } from './ui/GlassPanel';
@@ -14,6 +14,11 @@ type Props = {
   onContinue: () => void;
   /** Buyer's email — printed on the membership card (real data only). */
   email?: string | null;
+  /**
+   * Back to the finished (Step 8) ad this plan was bought for. Undefined when no
+   * such run exists — the screen then reads exactly as it did before.
+   */
+  onReturnToAd?: () => void;
 };
 
 /**
@@ -22,7 +27,7 @@ type Props = {
  * pointer tilt on desktop, native share via html2canvas (already a dependency).
  * The activation CTA sends the buyer straight to their first ad.
  */
-const BillingSuccess: React.FC<Props> = ({ onContinue, email }) => {
+const BillingSuccess: React.FC<Props> = ({ onContinue, email, onReturnToAd }) => {
   const { plan_id, status, loading } = useSubscription();
   const activated = !loading && status === 'active' && plan_id !== 'free';
   const reduceMotion = useReducedMotion();
@@ -268,6 +273,14 @@ const BillingSuccess: React.FC<Props> = ({ onContinue, email }) => {
           transition={{ duration: DUR.slow, delay: 0.7 }}
           className="w-full flex flex-col gap-3 mt-4 lg:mt-0"
         >
+          {onReturnToAd && (
+            <GoldButton onClick={onReturnToAd} className="w-full justify-center py-4 text-sm">
+              <span className="inline-flex items-center justify-center gap-2.5">
+                BALIK SA AD MO — I-RENDER NA
+                <Film className="w-4 h-4 shrink-0" />
+              </span>
+            </GoldButton>
+          )}
           <GoldButton onClick={onContinue} className="w-full justify-center py-4 text-sm">
             <span className="inline-flex items-center justify-center gap-2.5">
               CREATE MY FIRST AD
