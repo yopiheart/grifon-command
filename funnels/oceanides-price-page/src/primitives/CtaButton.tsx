@@ -1,13 +1,28 @@
 import React from 'react';
 
 // ===========================================================================
-// CtaButton — derived from the app's GoldButton (glossy variant), but every
-// colour comes from the brand CSS vars instead of hardcoded #FFCC00/zinc.
+// CtaButton — OCEANIDES build. De-glossed from the template.
 //
-// The glossy look survives the port because it is built from LAYERED GRADIENTS
-// over the brand colour (a white sheen on the top half + an inset top hairline
-// + a soft halo), not from a second hue. Re-skinning the funnel re-skins the
-// button with no code change.
+// The template's button is a port of the app's GoldButton: a white sheen over
+// the top half, a darkening foot, and an inset highlight, so it reads as a lit
+// glossy surface. That is the Grifon world. It is wrong here on two counts from
+// clients/oceanides/DESIGN.md:
+//
+//   law #2 "Walang glass"      — elevation is tonal fill + print devices, never
+//                                gloss. A gradient-lit pill is the same optical
+//                                trick as a frosted panel.
+//   law #1 "Hindi Mukhang Ad"  — "ang makintab na ad-plate ay itinataas ang
+//                                bantay na ibinababa ng creative." A shiny CTA
+//                                on a trust page raises the scam guard.
+//
+// Also fixed: the template sets `text-black` on the amber fill. DESIGN.md bans
+// pure black outright ("ang itim ay Grifon; ang navy ang nagpapa-Oceanides"),
+// and names the correct pairing explicitly — "always surface-deep text on amber
+// chips." So amber carries --brand-surface-elevated (#0A1F45), not #000.
+// (White on amber is 1.9:1 and is a hard ban; that one the template avoided.)
+//
+// What is left is a flat amber slab with a defined edge — the eyebrowChip
+// grammar of the brand, scaled up to a button.
 // ===========================================================================
 
 type Variant = 'primary' | 'ghost';
@@ -19,19 +34,18 @@ interface CtaButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   block?: boolean;
 }
 
+// rounded-brand (0.25rem) not rounded-full: print world, tight corners.
 const BASE =
-  'relative overflow-hidden inline-flex items-center justify-center gap-2 rounded-full font-bold uppercase tracking-wide ' +
+  'relative inline-flex items-center justify-center gap-2 rounded-brand font-bold uppercase tracking-wide ' +
   'px-6 py-4 md:px-9 text-sm md:text-base leading-tight text-center ' +
-  'transition-all duration-300 active:translate-y-0 active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0';
+  'transition-colors duration-200 active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed';
 
-const PRIMARY =
-  'bg-brand-primary text-black ' +
-  'shadow-[inset_0_1px_0_rgba(255,255,255,0.55),0_0_18px_rgba(0,0,0,0.25)] ' +
-  'hover:-translate-y-0.5 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.65),0_10px_24px_-8px_rgba(0,0,0,0.55)]';
+// Flat amber. The only motion is a tonal shift on hover — no lift, no bloom.
+const PRIMARY = 'bg-brand-primary text-brand-elevated hover:brightness-95';
 
 const GHOST =
-  'bg-transparent text-brand-on-surface border border-white/15 ' +
-  'hover:-translate-y-0.5 hover:border-brand-primary hover:text-brand-primary';
+  'bg-transparent text-brand-on-surface border-2 border-white/25 ' +
+  'hover:border-brand-primary hover:text-brand-primary';
 
 export const CtaButton: React.FC<CtaButtonProps> = ({
   children,
@@ -44,19 +58,6 @@ export const CtaButton: React.FC<CtaButtonProps> = ({
     className={`${BASE} ${variant === 'primary' ? PRIMARY : GHOST} ${block ? 'w-full' : ''} ${className}`}
     {...props}
   >
-    {variant === 'primary' && (
-      <>
-        {/* Top-half gloss + a darkening foot: reads as a lit surface on any brand hue. */}
-        <span
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/40 to-transparent"
-        />
-        <span
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/10 to-transparent"
-        />
-      </>
-    )}
-    <span className="relative z-10">{children}</span>
+    {children}
   </button>
 );

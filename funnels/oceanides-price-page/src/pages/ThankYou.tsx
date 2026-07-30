@@ -112,7 +112,9 @@ export const ThankYou: React.FC<ThankYouProps> = ({ config }) => {
               <ol className="space-y-4">
                 {thankYou.steps.map((step, i) => (
                   <li key={i} className="flex gap-4">
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand-primary text-sm font-bold text-black">
+                    {/* surface-deep on amber, never black: DESIGN.md pairs amber
+                        chips with surface-deep text, and bans pure #000 brand-wide. */}
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand-primary text-sm font-bold text-brand-elevated">
                       {i + 1}
                     </span>
                     <span className="text-base leading-relaxed text-brand-on-surface-muted">{step}</span>

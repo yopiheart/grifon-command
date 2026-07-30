@@ -35,7 +35,8 @@ const friendlyError = (code: string): string =>
   ERROR_COPY[code] ?? 'Something went wrong on our end. Please try again.';
 
 const INPUT_CLASS =
-  'w-full rounded-brand bg-black/30 border border-white/15 px-4 py-3 text-base text-brand-on-surface ' +
+  // 2px border = the DESIGN.md checklist-row/print grammar, same as GlassCard.
+  'w-full rounded-brand bg-black/30 border-2 border-white/20 px-4 py-3 text-base text-brand-on-surface ' +
   'placeholder:text-brand-on-surface-dim transition-colors duration-200 ' +
   'focus:border-brand-primary focus:outline-none focus:ring-1 focus:ring-brand-primary';
 
