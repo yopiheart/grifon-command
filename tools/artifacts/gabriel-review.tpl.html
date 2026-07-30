@@ -1,0 +1,504 @@
+<title>Kuya Gabriel v1 + ang price page</title>
+
+<style>
+  /* Fonts inlined as data URIs. The artifact CSP blocks font CDNs outright, so a
+     linked webfont would fall back silently and Anton would render as Arial. */
+  @font-face {
+    font-family: 'Anton';
+    src: url('__FONT_ANTON__') format('woff2');
+    font-weight: 400;
+    font-display: block;
+  }
+  @font-face {
+    font-family: 'InterOC';
+    src: url('__FONT_INTER_400__') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'InterOC';
+    src: url('__FONT_INTER_700__') format('woff2');
+    font-weight: 700;
+    font-display: swap;
+  }
+
+  /* SINGLE THEME, on purpose. Oceanides is a navy print world (clients/oceanides/
+     DESIGN.md: "ang itim ay Grifon; ang navy ang nagpapa-Oceanides ng frame kahit
+     walang logo"). Flipping this page to a light ground would not be a theme, it
+     would be a different brand. Nothing here reads a theme token, so the viewer's
+     toggle cannot half-apply and break it. */
+  :root {
+    --void: #071630;
+    --deep: #0a1f45;
+    --surface: #0e2c5e;
+    --amber: #f5b301;
+    --ink: #ffffff;
+    --muted: #dfe8f5;
+    --dim: #8fb3dd;
+    --paper: #f4f6fa;
+    --on-paper: #0b1b33;
+    --good: #3ed36b;
+    --warn: #ffb27a;
+    --line: rgba(255, 255, 255, 0.2);
+    --mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  }
+
+  html {
+    background: var(--void);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    background: var(--void);
+    color: var(--muted);
+    font-family: 'InterOC', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  .wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px 72px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: 'Anton', 'Roboto Condensed', 'Arial Narrow', Impact, sans-serif;
+    font-weight: 400;
+    text-transform: uppercase;
+    line-height: 0.95;
+    letter-spacing: 0.5px;
+    text-wrap: balance;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  h1 {
+    font-size: clamp(2.25rem, 8vw, 3.75rem);
+  }
+  h2 {
+    font-size: clamp(1.625rem, 5vw, 2.5rem);
+  }
+  h3 {
+    font-size: 1.0625rem;
+    letter-spacing: 0.4px;
+  }
+
+  .gold {
+    color: var(--amber);
+  }
+
+  /* eyebrowChip — DESIGN.md calls this "ang signature element ng brand".
+     surface-deep on amber, never white on amber (1.9:1, hard ban). */
+  .chip {
+    display: inline-block;
+    background: var(--amber);
+    color: var(--deep);
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: 1;
+    padding: 5px 9px;
+    border-radius: 4px;
+  }
+
+  .rule {
+    display: block;
+    width: 56px;
+    height: 3px;
+    background: var(--amber);
+    margin-top: 18px;
+  }
+
+  header .meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-top: 22px;
+  }
+
+  .lede {
+    max-width: 60ch;
+    margin-top: 20px;
+    color: var(--muted);
+  }
+
+  section {
+    margin-top: 64px;
+  }
+
+  .section-head {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  /* --- plates ------------------------------------------------------------ */
+  .plates {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 22px;
+  }
+
+  .plate {
+    background: var(--deep);
+    border: 2px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .plate.wide {
+    grid-column: 1 / -1;
+  }
+
+  .plate figure {
+    margin: 0;
+    position: relative;
+    background: var(--surface);
+  }
+
+  .plate img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .plate .idx {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+
+  .plate .body {
+    padding: 16px 18px 20px;
+    border-top: 2px solid var(--line);
+  }
+
+  .plate p {
+    margin: 8px 0 0;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+
+  .flags {
+    list-style: none;
+    margin: 14px 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .flags li {
+    display: flex;
+    gap: 9px;
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--dim);
+  }
+
+  .flags .mark {
+    flex: 0 0 auto;
+    font-weight: 700;
+  }
+  .flags .ok .mark {
+    color: var(--good);
+  }
+  .flags .soft .mark {
+    color: var(--warn);
+  }
+
+  /* --- phone frames ------------------------------------------------------ */
+  /* The screenshots are 390px-wide full-page captures dropped into a scrollable
+     window. Neil asked how to see the page on his phone while he is away from the
+     PC — so the page IS the interaction: swipe inside the frame and it scrolls
+     exactly like the real thing. */
+  .phones {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 26px;
+    align-items: start;
+  }
+
+  .phone {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .phone .screen {
+    background: var(--deep);
+    border: 3px solid rgba(255, 255, 255, 0.28);
+    border-radius: 18px;
+    padding: 8px;
+    max-width: 406px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .phone .viewport {
+    height: 560px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-radius: 10px;
+    background: var(--surface);
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  .phone .viewport img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .phone figcaption {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--dim);
+    text-align: center;
+  }
+
+  .hint {
+    font-size: 13px;
+    color: var(--dim);
+    margin-top: 18px;
+  }
+
+  /* --- open items -------------------------------------------------------- */
+  .items {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .item {
+    background: var(--deep);
+    border: 2px solid var(--line);
+    border-left: 4px solid var(--amber);
+    border-radius: 4px;
+    padding: 18px 20px;
+  }
+
+  .item.stop {
+    border-left-color: #ff8563;
+  }
+
+  .item h3 {
+    color: var(--ink);
+  }
+
+  .item p {
+    margin: 8px 0 0;
+    font-size: 14.5px;
+    color: var(--muted);
+  }
+
+  .item .why {
+    color: var(--dim);
+    font-size: 13.5px;
+  }
+
+  footer {
+    margin-top: 72px;
+    padding-top: 22px;
+    border-top: 2px solid var(--line);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--dim);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+  }
+
+  code {
+    font-family: var(--mono);
+    font-size: 0.9em;
+    color: var(--dim);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="chip">Oceanides · review sheet</span>
+    <h1 style="margin-top: 18px">Si Gabriel, at ang <span class="gold">pahina</span>.</h1>
+    <span class="rule"></span>
+    <p class="lede">
+      Apat na larawan ni Gabriel, lahat unang roll, walang retry. Kasama na rin ang buong price page
+      na pwede mong i-swipe dito mismo sa telepono mo.
+    </p>
+    <p class="meta">30 Hulyo 2026 · v1 · hindi pa live</p>
+  </header>
+
+  <section>
+    <div class="section-head">
+      <span class="chip">Ang tao</span>
+      <h2>Humawak ang mukha nya sa <span class="gold">unang roll</span>.</h2>
+    </div>
+
+    <div class="plates">
+      <div class="plate">
+        <figure>
+          <span class="chip idx">01 · FB profile</span>
+          <img src="__PLATE_PROFILE__" alt="Gabriel, chest-up, navy polo, nakangiti" />
+        </figure>
+        <div class="body">
+          <h3>Profile picture</h3>
+          <p>Malapit at mainit. Ito ang unang makikita ng taong hihingan mo ng pera, kaya ngiti, hindi seryoso.</p>
+          <ul class="flags">
+            <li class="ok"><span class="mark">OK</span><span>Kumpleto at pantay ang ngipin</span></li>
+            <li class="ok"><span class="mark">OK</span><span>Kita ang hikaw nya</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="plate">
+        <figure>
+          <span class="chip idx">02 · Website</span>
+          <img src="__PLATE_WEBSITE__" alt="Gabriel na nakahalukipkip sa isang eskinita" />
+        </figure>
+        <div class="body">
+          <h3>Website portrait</h3>
+          <p>Yung nakahalukipkip na hiniling mo. Totoong eskinita, totoong gate, totoong kable sa itaas.</p>
+          <ul class="flags">
+            <li class="ok"><span class="mark">OK</span><span>Tamang tattoo: Polynesian blackwork</span></li>
+            <li class="soft"><span class="mark">?</span><span>Medyo seryoso ang mukha. Pwedeng i-roll ulit.</span></li>
+            <li class="soft"><span class="mark">?</span><span>Hindi masyadong kita ang wristband</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="plate wide">
+        <figure>
+          <span class="chip idx">03 · Cover photo</span>
+          <img src="__PLATE_COVER__" alt="Gabriel sa tabi ng puting truck na may silver na closed van" />
+        </figure>
+        <div class="body">
+          <h3>Cover photo</h3>
+          <p>
+            Puting cab at silver na closed van. Tamang fleet, hindi yung asul na tanker na bawal at hindi
+            naman talaga inyo. May malinis na espasyo sa kanan para sa teksto.
+          </p>
+          <ul class="flags">
+            <li class="ok"><span class="mark">OK</span><span>Tamang truck</span></li>
+            <li class="soft"><span class="mark">?</span><span>Maliit ang mukha nya. Dito madalas lumalabas ang AI feel, kaya bantayan.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="plate">
+        <figure>
+          <span class="chip idx">04 · Nakaturo</span>
+          <img src="__PLATE_POINTING__" alt="Gabriel na nakangiti at nakaturo sa camera" />
+        </figure>
+        <div class="body">
+          <h3>Yung nakaturo</h3>
+          <p>
+            Ginawa kong mainit na ngiti, hindi gulat na mukha. Yun ang totoong default ni MrBeast, at sa
+            kategoryang puno ng manloloko, ang labis na sigla ay mukhang scam.
+          </p>
+          <ul class="flags">
+            <li class="ok"><span class="mark">OK</span><span>Hindi pinayat, hindi pinalapad ang balikat</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="display: __SHOTS_DISPLAY__">
+    <div class="section-head">
+      <span class="chip">Ang pahina</span>
+      <h2>I-swipe mo sa loob ng <span class="gold">frame</span>.</h2>
+    </div>
+
+    <div class="phones">
+      <figure class="phone" style="margin: 0">
+        <div class="screen">
+          <div class="viewport" tabindex="0" aria-label="Landing page, i-scroll">
+            <img src="__SHOT_LANDING__" alt="Buong landing page sa 390px" />
+          </div>
+        </div>
+        <figcaption>Landing page</figcaption>
+      </figure>
+
+      <figure class="phone" style="margin: 0">
+        <div class="screen">
+          <div class="viewport" tabindex="0" aria-label="Thank you page, i-scroll">
+            <img src="__SHOT_THANKYOU__" alt="Thank you page, yung hindi alam kung nasaan ang tank" />
+          </div>
+        </div>
+        <figcaption>Pagkatapos mag-book · hindi alam nasaan ang tank</figcaption>
+      </figure>
+    </div>
+
+    <p class="hint">
+      Kuha ito sa 390px, kasing lapad ng telepono. Larawan lang ito, hindi buhay na page, kaya walang
+      pipindutin. Kapag naka-deploy na sa Vercel, magiging totoong link na to.
+    </p>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <span class="chip">Hinihintay</span>
+      <h2>Tatlo, at <span class="gold">sa iyo</span> lahat.</h2>
+    </div>
+
+    <div class="items">
+      <div class="item stop">
+        <h3>Ang DENR badge ay Region 7</h3>
+        <p>Cebu, Bohol, Negros. Nasa Metro Manila tayo.</p>
+        <p class="why">
+          Sa pahinang ang buong benta ay walang tinatago, hindi pwedeng magpakita ng papel na hindi
+          natin hawak. Tanggalin, palitan ng tama, o gawing teksto na may totoong numero: SEC Reg. No.,
+          BIR TIN, at DENR-accredited na tapunan. Ang tiyak na numero ay mas malakas kaysa hiram na seal.
+        </p>
+      </div>
+
+      <div class="item stop">
+        <h3>Consent ni Gabriel</h3>
+        <p>Kailangan nya ng pirmadong likeness agreement bago lumabas ang mukha nya kahit saan.</p>
+        <p class="why">
+          May template na tayo, yung kay Marvin. Legal ito, hindi teknikal, kaya walang code na
+          makakalusot dito.
+        </p>
+      </div>
+
+      <div class="item">
+        <h3>Ilang metro ng hose ang kasama</h3>
+        <p>Binigay ni Boss Jay ang rate, ₱100 kada 3 metro, pero hindi ang simula.</p>
+        <p class="why">
+          Isinulat ko munang kasama na ang standard na hose ng truck. Totoo yun at walang inimbentong
+          numero, pero mas malakas kung eksakto.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Oceanides · Kuya Gabriel</span>
+    <span>Hindi pa live</span>
+    <span>Huwag i-forward, may mukha ng tao dito na wala pang pirmadong consent</span>
+  </footer>
+</div>
