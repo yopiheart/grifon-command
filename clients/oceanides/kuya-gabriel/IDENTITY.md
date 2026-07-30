@@ -86,10 +86,18 @@ pisngi, tainga, panga, labi.
 
 ## Identity anchors — hindi nagbabago kahit kailan
 
-1. **Tattoo sa isang forearm** — madilim, malaki, mula siko pababa. **Sabihin nang
-   positional, hindi kaliwa o kanan** (nagkakamali ang model sa mirror): *"the
-   forearm of the arm that also carries the dark wristband."*
-2. **Madilim na wristband** sa parehong braso ng tattoo.
+1. **Tattoo sa isang forearm** — **Polynesian / tribal blackwork sleeve**, siko
+   pababa hanggang malapit sa pulso. Matitibay at itim na geometric na banda:
+   tatsulok, chevron, spearhead, at pinong pattern na parang kaliskis, may
+   malinis na hindi natintahang balat sa pagitan. Kumpirmado sa body master,
+   2026-07-30. **Sabihin nang positional, hindi kaliwa o kanan** (nagkakamali
+   ang model sa mirror): *"the forearm of the arm that also carries the dark
+   wristband."*
+   *(Ang eksaktong pattern ay hindi makokopya ng AI at ayos lang yun. Ang
+   dapat hindi magbago ay ang KLASE: Polynesian blackwork, hindi script,
+   hindi larawan, hindi kulay, hindi bagong-bago ang itsura.)*
+2. **Itim na rubber wristband** sa pulso ng parehong braso, may maliit na
+   pulang teksto. Huwag i-render ang teksto — banda lang.
 3. **Stud na hikaw** sa isang tainga.
 
 *(Kay Marvin, relo ang pangalawang anchor. Kay Gabriel, wristband at hikaw.
