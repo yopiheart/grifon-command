@@ -31,23 +31,33 @@ export const SocialProofBar: React.FC<PropsOf<'socialProofBar'>> = ({
   <SectionShell rhythm="band" className="border-y-2 border-white/15">
     <Reveal>
       <div className="space-y-6 text-center">
-        {/* PAPER BAND. Neil, 2026-07-30: "ung logo ng denr at sec hindi rin
-            masyadong visible dahil black." Correct — both marks are near-black
-            artwork on transparent, so on navy they disappear. The fix is not to
-            recolour them: an official seal is never reversed out, and repainting
-            a government mark is the kind of liberty you do not take. Put them
-            where seals belong, on paper. DESIGN.md already carries the surface
-            (--brand-proof-band #F4F6FA) for exactly this. */}
+        {/* PER-BADGE DECAL CHIPS.
+            v1 was ONE wide paper band holding both marks — Neil, 2026-07-30:
+            "bat gayan parang paperboard na white gara kadiri." He was right, and
+            the cause was aspect ratio, not taste: the DENR mark is a 9:1
+            horizontal lockup and the BIR mark is a 1:1 seal. Sizing both to a
+            shared height inside one box left a huge empty white field with two
+            small marks adrift in it.
+            Fix: each mark gets its OWN chip, sized snug to its own artwork, with
+            a shared HEIGHT so their visual weight matches while their widths are
+            free to differ. Reads as two decals on a truck door, which is the
+            print grammar this brand already speaks.
+            Still on paper, not reversed out: an official seal is never recoloured
+            and a government mark is not ours to repaint. */}
         {badges && badges.length > 0 && (
-          <div className="mx-auto flex max-w-2xl flex-wrap items-center justify-center gap-x-10 gap-y-6 rounded-brand bg-brand-proof-band px-6 py-5">
+          <div className="flex flex-wrap items-center justify-center gap-4">
             {badges.map((badge) => (
-              <img
+              <span
                 key={badge.src}
-                src={badge.src}
-                alt={badge.alt}
-                loading="lazy"
-                className="h-10 w-auto max-w-[240px] object-contain md:h-12 md:max-w-[300px]"
-              />
+                className="inline-flex items-center rounded-brand bg-brand-proof-band px-4 py-3 md:px-5 md:py-4"
+              >
+                <img
+                  src={badge.src}
+                  alt={badge.alt}
+                  loading="lazy"
+                  className="h-12 w-auto object-contain md:h-16"
+                />
+              </span>
             ))}
           </div>
         )}
