@@ -173,6 +173,50 @@ ang pumili.** Yun ang tama, hindi ang basta ako ang magdesisyon.
 
 ---
 
+## Dalawang aral mula sa v1 (Gabriel mismo ang nag-flag, 2026-07-30)
+
+Pumasa ang v1 sa QA ko. **Bumagsak sya sa mata ni Gabriel.** Yun ang buong punto
+kung bakit triage lang ang QA ng agent.
+
+### 1. "Parang ang laki ng ulo ko"
+
+Nangyari sa website portrait. Tatlong bagay ang sabay na nagdulot:
+
+- **Nakahalukipkip sya.** Pinipiga ng nakakrus na braso ang katawan papasok.
+  Kapag lumiit ang torso sa mata, lumalaki ang ulo kahit tama ang sukat.
+- **Buong katawan sa 3 metro.** Ito ang mid-distance zone na binabanggit ng
+  camera-distance rule — dito lumalabas ang lahat ng tell.
+- **Puro bawal ang prompt ko** ("huwag palakihin ang ulo") na walang **positibong
+  target**. Parehong pagkakamali ng ilaw, ibang anyo lang.
+
+**Ang lunas, sa ganitong pagkakasunod:**
+1. Bigyan ng sukat na masusukat: *"his head is roughly one third the width of his
+   shoulders, exactly as in the body master."*
+2. Ilapit ang camera. Waist-up sa 2 metro, hindi buong katawan sa 3.
+3. Buksan ang katawan. Kamay sa bulsa o nakalaylay, **hindi nakahalukipkip.**
+4. Kapag nagdadalawang isip: *"render the head slightly smaller rather than
+   slightly larger."*
+
+🔴 **Huwag ayusin sa pagpapalaki ng katawan.** Nasa skill na to at totoo pa rin.
+Ang lalabas ay isang tao na hindi sya.
+
+### 2. "Parang kinabit lang o photoshop"
+
+Nangyari sa cover. Dalawang sanhi, at akin pareho:
+
+- **Ipinasa ko ang litrato ng truck bilang pangatlong `--edit` ref.** Tinuruan
+  nito ang model na **mag-composite**, hindi gumawa ng isang eksena. Mas mabuting
+  ilarawan na lang ang truck sa salita at tanggapin na hindi eksakto ang modelo,
+  kaysa sa isang larawang halatang pinagdikit.
+- 🔴 **Nasa open shade sya habang maaraw ang eksena.** Ito ang tunay na tell.
+  Walang makikitang dahilan kung bakit malambot ang ilaw sa kanya samantalang
+  matigas ang anino sa likod nya. **Kailangang may PINAGMULAN ang lilim nya sa
+  loob ng frame** — halimbawa, nakatayo sya sa anino ng truck. Isang linya lang
+  ang pagkakaiba, pero yun ang naghihiwalay ng litrato sa collage.
+
+**Ang panuntunan:** isang araw, isang direksyon ng anino, isang kulay ng ilaw,
+para sa tao AT sa paligid. Isulat ito nang tahasan sa bawat field shot.
+
 ## QA gates — pareho pa rin kay Marvin
 
 Ihambing sa **body master**, hindi sa ibang generation. Kapag may isang HINDI:
