@@ -140,6 +140,8 @@ interface Props {
   presetUnlocked: boolean;
   /** True when the user is already on Business — hides the First Cut "Advanced Editor" teaser. */
   isBusinessTier: boolean;
+  /** Landing-segmentation vertical — a DEFAULT for the LaunchScreen picker only. */
+  preferredVertical?: string;
   onBack: () => void;
   onUpgrade: () => void;
   onSwitchToSteps: () => void;
@@ -147,7 +149,7 @@ interface Props {
   onCloneVoice: () => void;
 }
 
-const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocked, isBusinessTier, onBack, onUpgrade, onSwitchToSteps, onSwitchToExpert, onCloneVoice }) => {
+const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocked, isBusinessTier, preferredVertical, onBack, onUpgrade, onSwitchToSteps, onSwitchToExpert, onCloneVoice }) => {
   const [run, setRun] = useState<ProductionRun | null>(null);
   const [phase, setPhase] = useState<'launch' | 'researching' | 'error' | 'resuming'>('resuming');
   const [errMsg, setErrMsg] = useState('');
@@ -514,6 +516,7 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
         onSwitchToExpert={onSwitchToExpert}
         onBack={onBack}
         onCloneVoice={onCloneVoice}
+        preferredVertical={preferredVertical}
         producerEngine
       />
     </div>

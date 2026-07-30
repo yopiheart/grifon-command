@@ -141,9 +141,13 @@ export const LaunchScreen: React.FC<{
   onBack?: () => void;
   /** Open Signal Modulator's Voice Cloning tab to record/clone a custom voice. */
   onCloneVoice?: () => void;
+  /** Vertical answered on the landing chip question (or a saved user_metadata preference).
+   * A DEFAULT only — a restored draft's own vertical always wins, and 'product' is the
+   * final fallback. */
+  preferredVertical?: string;
   /** True on the producer engine (?osaEngine=producer) — unlocks producer-only recipes (Pure Hype). */
   producerEngine?: boolean;
-}> = ({ onLaunch, directorUnlocked, onUpgrade, onSwitchToSteps, onSwitchToExpert, onBack, onCloneVoice, producerEngine }) => {
+}> = ({ onLaunch, directorUnlocked, onUpgrade, onSwitchToSteps, onSwitchToExpert, onBack, onCloneVoice, preferredVertical, producerEngine }) => {
   // Premium cinematic click cues — One-Shot only, ON by default, mutable.
   const sfx = useOneShotSfx();
   const isMobile = useIsMobile();
@@ -180,7 +184,10 @@ export const LaunchScreen: React.FC<{
   const [businessAddress, setBusinessAddress] = useState(restored?.businessAddress ?? '');
 
   // --- Creative axes ------------------------------------------------------
-  const [vertical, setVertical] = useState(restored?.vertical ?? 'product');
+  // Draft > landing-segmentation answer > 'product'. The restored draft is read once
+  // per mount above, so a returning user's own pick can never be overwritten by the
+  // segmentation default.
+  const [vertical, setVertical] = useState(restored?.vertical ?? preferredVertical ?? 'product');
   // The user picks a named Recipe; the four engine axes below are DERIVED from it (never held
   // as independent state), so launch()/deriveScriptType()/ProductionInput are byte-unchanged.
   const [recipe, setRecipe] = useState<RecipeId>(restored?.recipe ?? 'real_talk');
@@ -492,7 +499,8 @@ export const LaunchScreen: React.FC<{
     setHero(''); setOffer(''); setBrandName(''); setPrice(''); setForceFresh(false);
     setServicePhotos([]); setServiceArchetype('venue'); setReArchetype('listing');
     setLocalService(false); setBusinessAddress('');
-    setVertical('product'); setRecipe('real_talk');
+    // Reset drops the draft too, so the segmentation answer is the default again.
+    setVertical(preferredVertical ?? 'product'); setRecipe('real_talk');
     setPresenterMode('auto'); setGender('Any'); setAgeRange(''); setEthnicity(''); setShowCastHints(false);
     setAvatarUrl('');
     setLanguage('Taglish'); setAspectRatio('9:16');

@@ -6,6 +6,9 @@ import { ExitIntentModal } from './ui/ExitIntentModal';
 import { useExitIntent } from './ui/useExitIntent';
 import { Marquee } from './landing/Marquee';
 import { PinnedCtaPill } from './landing/PinnedCtaPill';
+import { VerticalPickerModal } from './landing/VerticalPickerModal';
+import { setIntendedVertical } from '../services/verticalIntentService';
+import { trackEvent } from '../services/analyticsService';
 import { Hero } from './landing/sections/Hero';
 import { ProofGallery } from './landing/sections/ProofGallery';
 import { ProofBand } from './landing/sections/ProofBand';
@@ -29,6 +32,26 @@ interface LandingPageProps {
 // Scroll-spy over the anchor sections so the header can squiggle the active link.
 const SPY_SECTIONS = ['#what-you-get', '#reviews', '#faq'];
 
+// One-question segmentation: asked at most ONCE per session, whether the visitor
+// answered or skipped. The stash itself can't be the marker (a skip stores
+// nothing), so the "already decided" flag is its own key. sessionStorage-backed
+// with the same swallow-everything contract as the intent services.
+const VERTICAL_ASKED_KEY = 'grifon_vertical_asked';
+
+const hasDecidedVertical = (): boolean => {
+  try {
+    return sessionStorage.getItem(VERTICAL_ASKED_KEY) === '1';
+  } catch {
+    return true; // storage unavailable → never interrupt the CTA
+  }
+};
+
+const markVerticalDecided = () => {
+  try {
+    sessionStorage.setItem(VERTICAL_ASKED_KEY, '1');
+  } catch {}
+};
+
 const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing, onNavigateLegal, isAuthenticated = false }) => {
   // Desktop-only exit-intent recapture — once/session, never for logged-in
   // visitors. Decoupled from FOUNDING_OFFER.enabled (2026-07-29): the modal is
@@ -45,6 +68,48 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
   // The Receipts Rail ends on its own CTA card — pill hides so they never compete.
   const railZoneRef = useRef<HTMLDivElement>(null);
   const [activeHref, setActiveHref] = useState<string | undefined>(undefined);
+
+  // One-question segmentation (workflows/post_preview_bridge.md Part 2). The
+  // first primary-CTA click of a guest session opens the chip modal; the answer
+  // is stashed for App.tsx to pop after auth. Deliberately NOT wired to the
+  // Modules CTAs (they already carry a module intent), the exit-intent modal
+  // (already an interception), the header login button, or logged-in visitors.
+  const [askVertical, setAskVertical] = useState(false);
+
+  // Every path here is fail-open: any throw (or a DOM-less environment where the
+  // modal can't portal) falls straight through to onEnterApp — the signup CTA is
+  // never allowed to die for a segmentation question.
+  const enterAppWithSegmentation = () => {
+    let ask = false;
+    try {
+      ask = !isAuthenticated && typeof document !== 'undefined' && !hasDecidedVertical();
+    } catch {
+      ask = false; // any throw → straight into the app, question skipped
+    }
+    if (ask) setAskVertical(true);
+    else onEnterApp();
+  };
+
+  const handlePickVertical = (vertical: string, rawLabel: string) => {
+    try {
+      markVerticalDecided();
+      setIntendedVertical(vertical);
+      void trackEvent({ event: 'segmentation_answered', meta: { vertical, raw: rawLabel } });
+    } catch {
+      /* the answer is a nice-to-have; entering the app is not */
+    }
+    setAskVertical(false);
+    onEnterApp();
+  };
+
+  const handleSkipVertical = () => {
+    try {
+      markVerticalDecided();
+      void trackEvent({ event: 'segmentation_skipped' });
+    } catch {}
+    setAskVertical(false);
+    onEnterApp();
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -76,6 +141,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
 
       <ExitIntentModal triggered={exitTriggered} onDismiss={dismissExit} onEnterApp={onEnterApp} />
 
+      <VerticalPickerModal open={askVertical} onPick={handlePickVertical} onSkip={handleSkipVertical} />
+
       <Aurora intensity="marketing" />
 
       {/* STICKY TOP — founding urgency bar + nav */}
@@ -84,7 +151,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
         <SiteHeader onEnterApp={onEnterApp} navLinks={navLinks} showLogin activeHref={activeHref} />
       </div>
 
-      <Hero onEnterApp={onEnterApp} heroSentinelRef={heroSentinelRef} />
+      <Hero onEnterApp={enterAppWithSegmentation} heroSentinelRef={heroSentinelRef} />
 
       <Marquee
         items={['Scripts', 'CAPTIONS', 'Storyboards', 'MARKET RESEARCH', 'Image Ads', 'OFFERS']}
@@ -97,7 +164,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
       <ProofBand />
 
       <div ref={railZoneRef}>
-        <ReceiptsRail onEnterApp={onEnterApp} />
+        <ReceiptsRail onEnterApp={enterAppWithSegmentation} />
       </div>
 
       <Modules onEnterApp={onEnterApp} />
@@ -125,7 +192,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onNavigatePricing
       </div>
 
       <PinnedCtaPill
-        onEnterApp={onEnterApp}
+        onEnterApp={enterAppWithSegmentation}
         heroSentinelRef={heroSentinelRef}
         hideRefs={[railZoneRef, offerStackRef, bottomZoneRef]}
       />

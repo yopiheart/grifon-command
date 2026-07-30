@@ -55,9 +55,11 @@ import {
   type OAuthProvider,
   sendEmailOtp,
   verifyEmailOtp,
+  saveBusinessVertical,
 } from './services/supabaseClient';
 import { popIntendedPlan, peekIntendedPlan, saveIntendedPlan, startCheckout } from './services/billingService';
 import { popIntendedModule } from './services/moduleIntentService';
+import { popIntendedVertical } from './services/verticalIntentService';
 import { setReturnToAd, popReturnToAd } from './services/returnToAdService';
 import { grant as grantMarketingConsent, getMarketingConsent } from './services/consentService';
 import { POLICY_VERSION, isKnownPolicyVersion } from './services/consentConstants';
@@ -131,6 +133,12 @@ const ROUTE_PATHS: Record<Route, string> = {
 // Allowlist so a stale/tampered sessionStorage value can never route to an
 // unexpected activeModule. Ids match the strings the activeModule switch uses.
 const INTENT_MODULE_IDS = new Set(['market_research', 'offer_optimizer', 'caption_headline', 'image_ads']);
+
+// The landing one-question segmentation answers in the EXISTING One-Shot vertical
+// vocabulary (LaunchScreen VERTICALS → deriveBusinessType). Allowlisted so neither
+// a stale sessionStorage stash nor a tampered user_metadata value can pre-select
+// something the picker doesn't know about.
+const INTENT_VERTICALS = new Set(['product', 'service', 'real_estate']);
 
 // Plausible-email gate for the signup field: enables the CONTINUE button and
 // drives the on-blur format hint. Intentionally loose (not RFC-perfect) — just
@@ -228,6 +236,10 @@ const App: React.FC = () => {
   // Standalone Signal Modulator (from the dashboard) keeps the dashboard default.
   const [signalReturnToOneShot, setSignalReturnToOneShot] = useState(false);
   const [directorNudgeDismissed, setDirectorNudgeDismissed] = useState(false);
+  // Business vertical from the landing one-question segmentation (or a previously
+  // saved answer in user_metadata). Only ever a DEFAULT for the One-Shot picker —
+  // a restored draft's own vertical always wins.
+  const [preferredVertical, setPreferredVertical] = useState<string | null>(null);
   const [currentStep, setCurrentStep] = useState(1);
   // Director AI entry mode: one-shot (default — auto-generate the whole ad) vs
   // the preserved 8-step wizard ('steps', advanced/Director mode) vs Expert Mode
@@ -523,6 +535,30 @@ const App: React.FC = () => {
     if (!popReturnToAd()) return;
     restoreFinishedAd(); // no-op when no step-8 ad exists
   }, [isAuthenticated, currentRoute, isLoadingSession]);
+
+  // One-question segmentation intent (the landing chip modal). Same ordering
+  // contract as the two intents above — a pending plan checkout still wins. A
+  // fresh answer is persisted to user_metadata so the preference outlives this
+  // session; with no stash we read that saved preference back instead (later
+  // mount / another device). Non-blocking: a failure only costs a pre-filled
+  // default, so nothing here is awaited by the UI.
+  useEffect(() => {
+    if (!isAuthenticated) return;
+    if (peekIntendedPlan()) return;
+    const stashed = popIntendedVertical();
+    if (stashed && INTENT_VERTICALS.has(stashed)) {
+      setPreferredVertical(stashed);
+      saveBusinessVertical(stashed).catch(() => { /* preference-only; retried on the next answer */ });
+      return;
+    }
+    (async () => {
+      try {
+        const { data } = await getSupabase().auth.getSession();
+        const saved = data.session?.user?.user_metadata?.business_vertical;
+        if (typeof saved === 'string' && INTENT_VERTICALS.has(saved)) setPreferredVertical(saved);
+      } catch { /* no saved preference → the picker keeps its 'product' default */ }
+    })();
+  }, [isAuthenticated]);
 
   useEffect(() => {
     if (!isAuthenticated) return;
@@ -876,6 +912,8 @@ const App: React.FC = () => {
       popReturnToAd();
       popIntendedModule();
       popIntendedPlan();
+      popIntendedVertical();
+      setPreferredVertical(null);
       setAuthEmail('');
       setAuthCode('');
       setAuthError('');
@@ -1759,6 +1797,9 @@ const App: React.FC = () => {
           directorUnlocked={directorUnlocked}
           presetUnlocked={presetUnlocked}
           isBusinessTier={plan_id === 'business'}
+          // Landing segmentation answer → the LaunchScreen vertical default. A
+          // restored draft's own vertical still wins over it.
+          preferredVertical={preferredVertical ?? undefined}
           onBack={() => setActiveModule(null)}
           onUpgrade={() => { setActiveModule(null); goToLegal('pricing'); }}
           onSwitchToSteps={() => { setDirectorMode('steps'); setCurrentStep(1); }}

@@ -149,16 +149,24 @@ What's missing is capture BEFORE the app + a per-user home for the answer:
   routing for vertical landing variants (run-sheet item 06) — one taxonomy from
   ad set → landing chip → wizard prefill.
 
-### Neil's gates (answer these, then it's a code-executor brief)
+### SHIPPED 2026-07-30 (Neil: "go sa segmentation build" — gates resolved to
+the recommendations): landing placement at CTA click (`VerticalPickerModal`,
+wraps Hero/ReceiptsRail/PinnedCtaPill only, once per session, fail-open —
+the CTA can never die for the question); copy as designed; "Iba pa" →
+`product` + raw label logged; ship-and-watch via `segmentation_answered` /
+`segmentation_skipped` events (pre-auth, session-id stitched). Transport:
+`services/verticalIntentService.ts` stash → App pop (after plan-intent bail,
+allowlisted) → `saveBusinessVertical` to `user_metadata` + `preferredVertical`
+prop into both One-Shot engines. Priority enforced at
+`LaunchScreen.tsx` `useState(restored?.vertical ?? preferredVertical ?? 'product')`
+— draft always wins. Critic: PASS 9/9, timing hole proven unreachable.
 
-1. **Placement:** landing chip-row on CTA click (recommended) vs post-auth
-   first-run card (replacing `OnboardingNudge`)? Landing = better data, +1 tap
-   before signup; first-run = zero signup friction, no ad-matching value.
-2. **Copy:** "Anong business mo?" + the four chips above — edit freely.
-3. **"Iba pa" behavior:** maps to `product` default silently, or unlocks a
-   free-text hint we only log?
-4. **Ship gate:** A/B it (needs traffic) or ship-and-watch (beta traffic too
-   small to split — recommended: ship-and-watch, events tell us skip rate).
+**Critic edges accepted as-is (low/info — revisit only if events show pain):**
+F1 checkout-failure path strands the answer for the session (self-heals next
+mount); F2 modal has no focus trap (same gap as ExitIntentModal); F3
+cross-tab email-confirm drops the stash (inherent to the pattern); F4 logout
+doesn't clear `grifon_vertical_asked` (next cafe-PC guest not re-asked —
+analytics undercount only).
 
 ---
 

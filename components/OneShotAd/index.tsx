@@ -45,6 +45,9 @@ interface OneShotAdProps {
   presetUnlocked: boolean;
   /** True when the user is already on Business — hides the First Cut "Advanced Editor" teaser. */
   isBusinessTier: boolean;
+  /** Vertical from the landing one-question segmentation — a DEFAULT for the
+   * LaunchScreen picker only; a restored draft's own vertical wins. */
+  preferredVertical?: string;
   onBack: () => void;
   /** Route to pricing when a locked user reaches for Director mode. */
   onUpgrade: () => void;
@@ -67,6 +70,7 @@ const OneShotAd: React.FC<OneShotAdProps> = ({
   directorUnlocked,
   presetUnlocked,
   isBusinessTier,
+  preferredVertical,
   onBack,
   onUpgrade,
   onSwitchToSteps,
@@ -83,6 +87,7 @@ const OneShotAd: React.FC<OneShotAdProps> = ({
         directorUnlocked={directorUnlocked}
         presetUnlocked={presetUnlocked}
         isBusinessTier={isBusinessTier}
+        preferredVertical={preferredVertical}
         onBack={onBack}
         onUpgrade={onUpgrade}
         onSwitchToSteps={onSwitchToSteps}
@@ -249,6 +254,7 @@ const OneShotAd: React.FC<OneShotAdProps> = ({
         onSwitchToExpert={onSwitchToExpert}
         onBack={onBack}
         onCloneVoice={onCloneVoice}
+        preferredVertical={preferredVertical}
       />
     </div>
   );

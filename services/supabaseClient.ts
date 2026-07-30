@@ -151,3 +151,14 @@ export const updatePassword = async (newPassword: string): Promise<void> => {
   const { error } = await supabase.auth.updateUser({ password: newPassword });
   if (error) throw error;
 };
+
+// Persist the business vertical from the landing one-question segmentation
+// ('product' | 'service' | 'real_estate'). user_metadata is client-writable and
+// already carries signup intent signals (marketing_opt_in above), so the answer
+// survives across sessions/devices with no migration and no new table. Purely a
+// UI preference — a failure only costs a pre-filled default, never a flow.
+export const saveBusinessVertical = async (vertical: string): Promise<void> => {
+  const supabase = getSupabase();
+  const { error } = await supabase.auth.updateUser({ data: { business_vertical: vertical } });
+  if (error) throw error;
+};
