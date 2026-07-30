@@ -36,6 +36,7 @@ The sections below are the technical-vocabulary deep dives — wizard internals 
 | **Chain Role** | A **Scene**'s position in the cinematic relay chain: `Metaphor_A`, `Anchor_B`, `Action_C`, `Hero_D`. | Slot, sequence position |
 | **Video Prompt** | The final per-line prompt sent to the video model; tagged `talking`, `b-roll`, or `cinematic`. | Generation prompt |
 | **Visual Theme** | A reusable look-and-feel preset (vibe, texture prompt, color palette) applied across **Storyboard** generation. | Style, aesthetic |
+| **Vertical** | The business-type taxonomy — `product` \| `service` \| `real_estate` (plus a locked `app`). Chosen on the landing chip question ("Anong business mo?") or the One-Shot picker; drives **Sub-format gating** and the Step 2 `businessType` via `deriveBusinessType`. | Niche (UI label only), industry, category |
 | **AllData** | The bundled wizard state passed downstream — Client Details + Business Info + Script + Avatar + Storyboard + Video Prompts + thumbnail + aspect ratio. | Project, session, payload |
 
 ## UGC Pro voices & sub-format gating (Slice 4, 2026-07-09)

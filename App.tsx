@@ -9,10 +9,11 @@ import Step3AdScript from './components/Step3AdScript';
 import Step4Avatar from './components/Step4Avatar';
 import Step5Storyboard from './components/Step5Storyboard';
 import OneShotAd from './components/OneShotAd';
+import { ReviewScreen } from './components/OneShotAd/ReviewScreen';
 import ExpertMode from './components/ExpertMode';
 import LockedVideoPreview from './components/LockedVideoPreview';
 import PlanGate from './components/PlanGate';
-import type { OneShotSinks } from './hooks/useOneShotGeneration';
+import type { OneShotSinks, SceneTrim } from './hooks/useOneShotGeneration';
 import Step6Thumbnail from './components/Step6Thumbnail';
 import Step6VideoPrompts from './components/Step6VideoPrompts';
 import Step7FinalOutput from './components/Step7FinalOutput';
@@ -55,9 +56,11 @@ import {
   type OAuthProvider,
   sendEmailOtp,
   verifyEmailOtp,
+  saveBusinessVertical,
 } from './services/supabaseClient';
 import { popIntendedPlan, peekIntendedPlan, saveIntendedPlan, startCheckout } from './services/billingService';
 import { popIntendedModule } from './services/moduleIntentService';
+import { popIntendedVertical } from './services/verticalIntentService';
 import { setReturnToAd, popReturnToAd } from './services/returnToAdService';
 import { grant as grantMarketingConsent, getMarketingConsent } from './services/consentService';
 import { POLICY_VERSION, isKnownPolicyVersion } from './services/consentConstants';
@@ -131,6 +134,12 @@ const ROUTE_PATHS: Record<Route, string> = {
 // Allowlist so a stale/tampered sessionStorage value can never route to an
 // unexpected activeModule. Ids match the strings the activeModule switch uses.
 const INTENT_MODULE_IDS = new Set(['market_research', 'offer_optimizer', 'caption_headline', 'image_ads']);
+
+// The landing one-question segmentation answers in the EXISTING One-Shot vertical
+// vocabulary (LaunchScreen VERTICALS → deriveBusinessType). Allowlisted so neither
+// a stale sessionStorage stash nor a tampered user_metadata value can pre-select
+// something the picker doesn't know about.
+const INTENT_VERTICALS = new Set(['product', 'service', 'real_estate']);
 
 // Plausible-email gate for the signup field: enables the CONTINUE button and
 // drives the on-blur format hint. Intentionally loose (not RFC-perfect) — just
@@ -228,12 +237,18 @@ const App: React.FC = () => {
   // Standalone Signal Modulator (from the dashboard) keeps the dashboard default.
   const [signalReturnToOneShot, setSignalReturnToOneShot] = useState(false);
   const [directorNudgeDismissed, setDirectorNudgeDismissed] = useState(false);
+  // Business vertical from the landing one-question segmentation (or a previously
+  // saved answer in user_metadata). Only ever a DEFAULT for the One-Shot picker —
+  // a restored draft's own vertical always wins.
+  const [preferredVertical, setPreferredVertical] = useState<string | null>(null);
   const [currentStep, setCurrentStep] = useState(1);
   // Director AI entry mode: one-shot (default — auto-generate the whole ad) vs
   // the preserved 8-step wizard ('steps', advanced/Director mode) vs Expert Mode
   // ('expert' — Director's Cut, bring-your-own-script; dev-unlock gated for v1).
   // Slice 4 gates 'steps' to Business.
-  const [directorMode, setDirectorMode] = useState<'oneshot' | 'steps' | 'expert'>('oneshot');
+  // 'steps' (the 8-step wizard) is an ADMIN/DEV surface — consumers land on
+  // 'review' (components/OneShotAd/ReviewScreen) once their plan is built.
+  const [directorMode, setDirectorMode] = useState<'oneshot' | 'steps' | 'expert' | 'review'>('oneshot');
   const [clientDetails, setClientDetails] = useState<ClientDetails>({ brandName: '', offer: '' });
   const [businessInfo, setBusinessInfo] = useState<BusinessInfo>({
     product: '',
@@ -254,6 +269,9 @@ const App: React.FC = () => {
   const [avatar, setAvatar] = useState<Avatar | null>(null);
   const avatarGender = useMemo(() => inferAvatarGender(avatar), [avatar]);
   const [storyboard, setStoryboard] = useState<Scene[]>([]);
+  // Free-tier scene trim from the one-shot run — drives the review surface's
+  // "N of M scenes" upsell line. null = the full storyboard was rendered.
+  const [sceneTrim, setSceneTrim] = useState<SceneTrim | null>(null);
   const [videoPrompts, setVideoPrompts] = useState<VideoPrompt[]>([]);
   const [aspectRatio, setAspectRatio] = useState<'9:16' | '16:9' | null>(null);
   const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
@@ -523,6 +541,30 @@ const App: React.FC = () => {
     if (!popReturnToAd()) return;
     restoreFinishedAd(); // no-op when no step-8 ad exists
   }, [isAuthenticated, currentRoute, isLoadingSession]);
+
+  // One-question segmentation intent (the landing chip modal). Same ordering
+  // contract as the two intents above — a pending plan checkout still wins. A
+  // fresh answer is persisted to user_metadata so the preference outlives this
+  // session; with no stash we read that saved preference back instead (later
+  // mount / another device). Non-blocking: a failure only costs a pre-filled
+  // default, so nothing here is awaited by the UI.
+  useEffect(() => {
+    if (!isAuthenticated) return;
+    if (peekIntendedPlan()) return;
+    const stashed = popIntendedVertical();
+    if (stashed && INTENT_VERTICALS.has(stashed)) {
+      setPreferredVertical(stashed);
+      saveBusinessVertical(stashed).catch(() => { /* preference-only; retried on the next answer */ });
+      return;
+    }
+    (async () => {
+      try {
+        const { data } = await getSupabase().auth.getSession();
+        const saved = data.session?.user?.user_metadata?.business_vertical;
+        if (typeof saved === 'string' && INTENT_VERTICALS.has(saved)) setPreferredVertical(saved);
+      } catch { /* no saved preference → the picker keeps its 'product' default */ }
+    })();
+  }, [isAuthenticated]);
 
   useEffect(() => {
     if (!isAuthenticated) return;
@@ -876,6 +918,8 @@ const App: React.FC = () => {
       popReturnToAd();
       popIntendedModule();
       popIntendedPlan();
+      popIntendedVertical();
+      setPreferredVertical(null);
       setAuthEmail('');
       setAuthCode('');
       setAuthError('');
@@ -908,7 +952,9 @@ const App: React.FC = () => {
     setThumbnailUrl(pendingSession.thumbnailUrl);
     setPendingSession(null);
     setHasRestored(true);
-    setDirectorMode('steps'); // resumed work is mid-wizard — keep the step view
+    // Dev resumes into the wizard cockpit; everyone else lands on the consumer
+    // review surface (the 8-step chrome is not a user surface).
+    setDirectorMode(devUnlocked ? 'steps' : 'review');
     toast.success(`// SESSION_RESUMED — STEP_${stepLabel}_OF_08`, {
       description: 'Your earlier work has been restored.',
       duration: 6000,
@@ -922,12 +968,12 @@ const App: React.FC = () => {
   // there is no finished ad to return to — callers treat that as a no-op.
   const restoreFinishedAd = (): boolean => {
     if (currentStep === TOTAL_STEPS) {
-      setDirectorMode('steps');
+      setDirectorMode(devUnlocked ? 'steps' : 'review');
       setActiveModule('creative_director');
       return true;
     }
     if (pendingSession?.currentStep === TOTAL_STEPS) {
-      resumeSession(); // restores every field + directorMode 'steps' + currentStep 8
+      resumeSession(); // restores every field + the right surface + currentStep 8
       setActiveModule('creative_director');
       return true;
     }
@@ -950,6 +996,7 @@ const App: React.FC = () => {
     setFinalScript([]);
     setAvatar(null);
     setStoryboard([]);
+    setSceneTrim(null);
     setVideoPrompts([]);
     setAspectRatio(null);
     setThumbnailUrl(null);
@@ -1580,7 +1627,6 @@ const App: React.FC = () => {
         <LockedVideoPreview
           onBack={() => setActiveModule(null)}
           onUpgrade={() => { setReturnToAd(); setActiveModule(null); goToLegal('pricing'); }}
-          onBuyTopup={() => { setReturnToAd(); window.location.href = '/checkout?topup=video_ad_single'; }}
           thumbnailUrl={thumbnailUrl}
           previewImageUrl={storyboard[0]?.imageUrl}
         />
@@ -1661,9 +1707,9 @@ const App: React.FC = () => {
     moduleElement = gateModule(<CinematicSpecStudio onBack={() => setActiveModule(null)} onNavigate={setActiveModule} businessInfo={businessInfo} narrative={cinematicNarrative} setNarrative={setCinematicNarrative} frameMap={cinematicFrameMap} setFrameMap={setCinematicFrameMap} result={cinematicResult} setResult={setCinematicResult} />, 'business', 'Commercial & Cinematic Studio');
   } else if (activeModule === 'concierge_mode') {
     // Concierge (Slice 1) — Business-tier first-class door into the EXISTING
-    // ExpertMode ("bring your own script"). Reuses One-Shot's sinks + Step 8
-    // review hand-off, so the wizard sees identical AllData. Dev-unlock testers
-    // get the Business cap (6 scenes) to exercise the full range.
+    // ExpertMode ("bring your own script"). Reuses One-Shot's sinks + the
+    // consumer review hand-off, so review sees identical AllData. Dev-unlock
+    // testers get the Business cap (6 scenes) to exercise the full range.
     const conciergeSinks: OneShotSinks = {
       setScript, setFinalScript, setAvatar, setStoryboard, setThumbnailUrl, setVideoPrompts, setLanguage,
     };
@@ -1675,7 +1721,7 @@ const App: React.FC = () => {
         setClientDetails={setClientDetails}
         setBusinessInfo={setBusinessInfo}
         setAspectRatio={setAspectRatio}
-        onReview={() => { setActiveModule('creative_director'); setDirectorMode('steps'); setCurrentStep(8); }}
+        onReview={() => { setActiveModule('creative_director'); setDirectorMode('review'); setCurrentStep(8); }}
       />
     ), 'business', 'Concierge');
   } else if (activeModule === 'market_research') {
@@ -1717,7 +1763,7 @@ const App: React.FC = () => {
     // so the user can resume where they left off.
     const showOneShot = directorMode === 'oneshot' && !showResumePill;
     const oneShotSinks: OneShotSinks = {
-      setScript, setFinalScript, setAvatar, setStoryboard, setThumbnailUrl, setVideoPrompts, setLanguage,
+      setScript, setFinalScript, setAvatar, setStoryboard, setThumbnailUrl, setVideoPrompts, setLanguage, setSceneTrim,
     };
     // Director (step-by-step) mode is ADMIN/DEV-ONLY — the 8-step wizard is Neil's
     // control cockpit, not a user surface. All paying tiers ride One-Shot (Free/
@@ -1747,18 +1793,70 @@ const App: React.FC = () => {
           onReview={() => { setDirectorMode('steps'); setCurrentStep(8); }}
         />
       );
+    } else if (showResumePill && pendingSession && !devUnlock) {
+      // Consumer resume: the wizard's resume pill lives inside the 8-step chrome,
+      // which consumers must never see. Same decision, same strings, rendered in
+      // the One-Shot world — RESUME lands on the review surface.
+      moduleElement = (
+        <div className="relative min-h-screen bg-zinc-950 px-4 py-10 text-white">
+          <button
+            onClick={() => setActiveModule(null)}
+            className="mb-8 flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel transition-colors hover:text-white"
+          >
+            <ChevronLeft className="h-4 w-4" /> Command Center
+          </button>
+          <div className={`mx-auto mt-10 max-w-md rounded-2xl border border-[#FFCC00]/30 ${MAT_PLATE} p-6`}>
+            <div className="mb-3 flex items-center gap-2 text-[#FFCC00]">
+              <RotateCw className="h-4 w-4 shrink-0" />
+              <span className="text-[10px] font-mono uppercase tracking-widest">// PREVIOUS_SESSION_DETECTED</span>
+            </div>
+            <p className="text-xs text-zinc-400">
+              STEP_{String(pendingSession.currentStep).padStart(2, '0')}_OF_08
+              {pendingSession.clientDetails.brandName && ` — ${pendingSession.clientDetails.brandName.toUpperCase()}`}
+            </p>
+            <div className="mt-5 flex items-center gap-3">
+              <GoldButton onClick={resumeSession} className="px-4 py-2 text-xs">
+                RESUME
+              </GoldButton>
+              <button
+                onClick={declineSession}
+                className="text-xs font-medium text-on-surface-sublabel transition-colors hover:text-white"
+              >
+                START_FRESH
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    } else if (directorMode === 'review') {
+      // The consumer review surface — full-bleed in the One-Shot world (no wizard
+      // header, no StepIndicator, no research nudge). Same AllData Step 8 gets.
+      moduleElement = (
+        <ReviewScreen
+          allData={{ clientDetails, businessInfo, finalScript, avatar, storyboard, videoPrompts, thumbnailUrl, aspectRatio }}
+          sceneTrim={sceneTrim}
+          hasVideoCredit={creditsLoading ? null : topupCredits.video_ad_credits > 0}
+          onGenerateVideo={() => setActiveModule('generate_video')}
+          onMakeAnother={restart}
+          onBack={() => setActiveModule(null)}
+        />
+      );
     } else if (showOneShot) {
-      // One-Shot Ad — full-screen intake → research → generate → Step 8 review.
+      // One-Shot Ad — full-screen intake → research → generate → consumer review.
       moduleElement = (
         <OneShotAd
           userId={userId}
           sinks={oneShotSinks}
+          storyboard={storyboard}
           setClientDetails={setClientDetails}
           setBusinessInfo={setBusinessInfo}
           setAspectRatio={setAspectRatio}
           directorUnlocked={directorUnlocked}
           presetUnlocked={presetUnlocked}
           isBusinessTier={plan_id === 'business'}
+          // Landing segmentation answer → the LaunchScreen vertical default. A
+          // restored draft's own vertical still wins over it.
+          preferredVertical={preferredVertical ?? undefined}
           onBack={() => setActiveModule(null)}
           onUpgrade={() => { setActiveModule(null); goToLegal('pricing'); }}
           onSwitchToSteps={() => { setDirectorMode('steps'); setCurrentStep(1); }}
@@ -1766,7 +1864,7 @@ const App: React.FC = () => {
           // "Director's Cut" door does not render for them.
           onSwitchToExpert={devUnlock ? () => setDirectorMode('expert') : undefined}
           onCloneVoice={() => { setSignalInitialTile('clone'); setSignalReturnToOneShot(true); setActiveModule('signal_modulator'); }}
-          onReview={() => { setDirectorMode('steps'); setCurrentStep(8); }}
+          onReview={() => { setDirectorMode('review'); setCurrentStep(8); }}
         />
       );
     } else {

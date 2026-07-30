@@ -1,6 +1,7 @@
 import React from 'react';
 import { Minimize2 } from 'lucide-react';
-import { DriftOrbs, SpineNode } from './motion';
+import { DriftOrbs, SceneReveal, SpineNode } from './motion';
+import type { Scene } from '../../types';
 import type { OneShotStage, OneShotStageId } from '../../hooks/useOneShotGeneration';
 import { MAT_PLATE } from '../ui/materialTokens';
 
@@ -12,9 +13,12 @@ import { MAT_PLATE } from '../ui/materialTokens';
  * research call that runs before the generation chain.
  */
 const PIPELINE_PHASES: { label: string; stages: OneShotStageId[] }[] = [
-  { label: 'Directing your shoot', stages: ['script', 'avatar', 'storyboard'] },
+  // Membership follows the hook's real execution order (thumbnail now runs right
+  // after casting, before the storyboard) so the spine never lights a later phase
+  // while an earlier one is still going.
+  { label: 'Directing your shoot', stages: ['script', 'avatar', 'thumbnail', 'storyboard'] },
   { label: 'Filming your scenes', stages: ['scenes'] },
-  { label: 'Polishing the final cut', stages: ['thumbnail', 'videoPrompts'] },
+  { label: 'Polishing the final cut', stages: ['videoPrompts'] },
 ];
 
 type PhaseState = 'done' | 'active' | 'pending';
@@ -22,8 +26,10 @@ type PhaseState = 'done' | 'active' | 'pending';
 export const RunningScreen: React.FC<{
   researching: boolean;
   stages: OneShotStage[];
+  /** Live storyboard from App state — the scene tiles fill in as each image lands. */
+  scenes?: Scene[];
   onMinimize: () => void;
-}> = ({ researching, stages, onMinimize }) => {
+}> = ({ researching, stages, scenes = [], onMinimize }) => {
   const stageOf = (id: OneShotStageId) => stages.find((s) => s.id === id);
   const started = stages.some((s) => s.status !== 'pending');
 
@@ -100,11 +106,24 @@ export const RunningScreen: React.FC<{
           <div>
             <p className="mb-1 text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">// Your scenes, assembling</p>
             <p className="mb-3 text-[11px] text-on-surface-sublabel">{sceneDetail ? `Scenes rendering — ${sceneDetail}` : 'Your scenes appear here as they are shot.'}</p>
-            <div className="grid grid-cols-3 gap-2">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="aspect-[9/16] animate-pulse rounded-lg bg-gradient-to-br from-zinc-800/70 to-zinc-900" />
-              ))}
-            </div>
+            {scenes.length === 0 ? (
+              <div className="grid grid-cols-3 gap-2">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <div key={i} className="aspect-[9/16] animate-pulse rounded-lg bg-gradient-to-br from-zinc-800/70 to-zinc-900" />
+                ))}
+              </div>
+            ) : (
+              <div className="grid grid-cols-3 gap-2">
+                {scenes.map((sc, i) => (
+                  <div
+                    key={i}
+                    className={`aspect-[9/16] overflow-hidden rounded-lg border ${sc.imageUrl ? 'border-[#FFCC00]/40' : 'border-white/10'}`}
+                  >
+                    <SceneReveal imageUrl={sc.imageUrl} loading={!sc.imageUrl} alt={`Scene ${i + 1}`} />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

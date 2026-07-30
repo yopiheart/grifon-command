@@ -8,6 +8,8 @@ import {
   generateVideoPrompts,
 } from '../services/geminiService';
 import { renderSceneImages } from '../utils/sceneRender';
+import { useQuota } from './useQuota';
+import { PLAN_LIMITS } from '../utils/planGate';
 
 /**
  * One-shot orchestrator: runs the same generation chain the 8-step Director
@@ -58,16 +60,73 @@ export interface OneShotSinks {
   setThumbnailUrl: (url: string | null) => void;
   setVideoPrompts: (vp: VideoPrompt[]) => void;
   setLanguage: (l: 'English' | 'Taglish') => void;
+  /** Free-tier scene trim (see capScenesToBudget) — `null` when the whole
+   * storyboard was rendered. Optional: only the review surface consumes it. */
+  setSceneTrim?: (t: SceneTrim | null) => void;
 }
 
+/** How many scenes were actually rendered out of the storyboard the AI wrote. */
+export interface SceneTrim {
+  shown: number;
+  full: number;
+}
+
+// Execution order — the thumbnail runs BEFORE the storyboard/scene stages so a
+// budget-limited run always ends up with a cover frame (the scene loop used to
+// eat the whole image allowance first and leave the ad thumbnail-less).
 const INITIAL_STAGES: OneShotStage[] = [
   { id: 'script', label: 'Writing your script', status: 'pending' },
   { id: 'avatar', label: 'Casting your spokesperson', status: 'pending' },
+  { id: 'thumbnail', label: 'Designing the thumbnail', status: 'pending' },
   { id: 'storyboard', label: 'Building the storyboard', status: 'pending' },
   { id: 'scenes', label: 'Rendering scene visuals', status: 'pending' },
-  { id: 'thumbnail', label: 'Designing the thumbnail', status: 'pending' },
   { id: 'videoPrompts', label: 'Prepping the video shots', status: 'pending' },
 ];
+
+/** One thumbnail = one metered image. */
+const THUMBNAIL_IMAGE_COST = 1;
+
+/**
+ * Image-generation cost of ONE storyboard scene. Mirrors the two call sites in
+ * utils/sceneRender.ts: a main frame (override / start / imagePrompt) plus an
+ * end frame when the scene is a hook morph.
+ */
+export const sceneImageCost = (scene: Scene): number =>
+  (scene.userImagePromptOverride || scene.startFramePrompt || scene.imagePrompt ? 1 : 0)
+  + (scene.endFramePrompt ? 1 : 0);
+
+/**
+ * The ethnicity the run casts with. An explicit intake pick always wins; "Auto"
+ * (blank) used to travel as '' all the way to the storyboard, which reads it as
+ * 'Global/Neutral' — that is how a Taglish ad ended up with a non-Filipino
+ * presenter. Blank + Taglish now means the market it's actually for.
+ */
+export const castEthnicityFor = (
+  hinted: string | undefined,
+  language: 'English' | 'Taglish',
+): string => hinted?.trim() || (language === 'Taglish' ? 'Filipino' : '');
+
+/**
+ * Trim a storyboard to what the remaining image budget can actually render.
+ *
+ * Every /api/gemini/image call meters one 'images' unit (free limit 5), and one
+ * run spends avatar + thumbnail + one-or-two per scene — so an untrimmed free run
+ * exhausts the allowance mid-storyboard and the tail scenes come back empty.
+ * Keeps scenes in narrative order and stops at the first one that doesn't fit.
+ * Free tier only; paid plans render the full storyboard.
+ */
+export const capScenesToBudget = (scenes: Scene[], budget: number, reserved: number): Scene[] => {
+  const sceneBudget = budget - reserved;
+  const kept: Scene[] = [];
+  let spent = 0;
+  for (const scene of scenes) {
+    const cost = sceneImageCost(scene);
+    if (spent + cost > sceneBudget) break;
+    spent += cost;
+    kept.push(scene);
+  }
+  return kept;
+};
 
 export interface UseOneShotGeneration {
   stages: OneShotStage[];
@@ -86,6 +145,10 @@ export const useOneShotGeneration = (): UseOneShotGeneration => {
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const runningRef = useRef(false);
+  // Live image allowance, read through a ref so `run` keeps a stable identity.
+  const quota = useQuota();
+  const quotaRef = useRef(quota);
+  quotaRef.current = quota;
 
   const patch = useCallback((id: OneShotStageId, status: StageStatus, detail?: string) => {
     setStages(prev => prev.map(s => (s.id === id ? { ...s, status, detail } : s)));
@@ -108,6 +171,23 @@ export const useOneShotGeneration = (): UseOneShotGeneration => {
     setDone(false);
     setError(null);
     sinks.setLanguage(language);
+    sinks.setSceneTrim?.(null);
+    // A fresh run must not show the previous run's tiles in RunningScreen.
+    sinks.setStoryboard([]);
+
+    // Snapshot the image allowance BEFORE the first spend. Trim ONLY on
+    // positive evidence of a free plan with real numbers (loaded) — an
+    // unresolved or failed quota read must never trim a paying user's run,
+    // and must never zero-out a free one (critic 2026-07-30). When evidence
+    // is missing we fall back to pre-feature behavior: no client trim, the
+    // server's per-call metering degrades scenes as before, and the
+    // thumbnail-first ordering still protects the key asset.
+    const { plan, images, loading: quotaLoading, loaded: quotaLoaded } = quotaRef.current;
+    const isFreePlan = quotaLoaded && !quotaLoading && plan === 'free';
+    const imageBudget = isFreePlan ? images.remaining : PLAN_LIMITS.free.images;
+    // An intake-supplied presenter costs no image; an auto-cast one does.
+    const avatarImageCost = presetAvatar?.url ? 0 : 1;
+    const castEthnicity = castEthnicityFor(castHints?.ethnicity, language);
 
     try {
       // 1 — Script (critical)
@@ -139,7 +219,7 @@ export const useOneShotGeneration = (): UseOneShotGeneration => {
           businessInfo.audience,
           castHints?.gender ?? 'Any',
           castHints?.ageRange ?? '',
-          castHints?.ethnicity ?? '',
+          castEthnicity,
           aspectRatio,
           '1K',
           [],
@@ -149,14 +229,27 @@ export const useOneShotGeneration = (): UseOneShotGeneration => {
           prompt: `An avatar for an ad targeting ${businessInfo.audience}`,
           url,
           description,
-          ethnicity: castHints?.ethnicity ?? '',
+          ethnicity: castEthnicity,
           gender: castHints?.gender ?? 'Any',
         };
       }
       sinks.setAvatar(avatar);
       patch('avatar', 'done');
 
-      // 3 — Storyboard scenes (critical)
+      // 3 — Thumbnail (best-effort). Runs BEFORE the storyboard so the scene loop
+      // can never spend the image allowance the cover frame needs.
+      patch('thumbnail', 'running');
+      try {
+        const brandColors = businessInfo.brandColors ? businessInfo.brandColors.split(',').map(c => c.trim()) : [];
+        const thumbnailUrl = await generateThumbnail(finalScript, avatar.description, businessInfo, aspectRatio, avatar.url, '1K', brandColors);
+        sinks.setThumbnailUrl(thumbnailUrl);
+        patch('thumbnail', 'done');
+      } catch (err) {
+        console.error('One-shot thumbnail failed:', err);
+        patch('thumbnail', 'error', 'Regenerate in review');
+      }
+
+      // 4 — Storyboard scenes (critical)
       patch('storyboard', 'running');
       const storyboardResponse = await generateStoryboard(
         finalScript,
@@ -165,11 +258,18 @@ export const useOneShotGeneration = (): UseOneShotGeneration => {
         avatar.ethnicity || 'Global/Neutral',
         language,
       );
-      const scenes = storyboardResponse.scenes;
+      const fullScenes = storyboardResponse.scenes;
+      // Free tier only: the 5-image monthly allowance has to cover the presenter,
+      // the thumbnail AND every scene frame, so keep the scenes that fit instead
+      // of letting the tail 429 out into empty tiles. Paid plans render it all.
+      const scenes = isFreePlan
+        ? capScenesToBudget(fullScenes, imageBudget, avatarImageCost + THUMBNAIL_IMAGE_COST)
+        : fullScenes;
       sinks.setStoryboard(scenes);
+      sinks.setSceneTrim?.(scenes.length < fullScenes.length ? { shown: scenes.length, full: fullScenes.length } : null);
       patch('storyboard', 'done', `${scenes.length} scenes`);
 
-      // 4 — Scene visuals (best-effort; one failure must not sink the plan)
+      // 5 — Scene visuals (best-effort; one failure must not sink the plan)
       patch('scenes', 'running', `0 / ${scenes.length}`);
       let rendered = 0;
       let sceneFailures = 0;
@@ -190,18 +290,6 @@ export const useOneShotGeneration = (): UseOneShotGeneration => {
         sceneFailures === scenes.length && scenes.length > 0 ? 'error' : 'done',
         sceneFailures > 0 ? `${rendered} / ${scenes.length} (retry ${sceneFailures} in editor)` : `${rendered} / ${scenes.length}`,
       );
-
-      // 5 — Thumbnail (best-effort)
-      patch('thumbnail', 'running');
-      try {
-        const brandColors = businessInfo.brandColors ? businessInfo.brandColors.split(',').map(c => c.trim()) : [];
-        const thumbnailUrl = await generateThumbnail(finalScript, avatar.description, businessInfo, aspectRatio, avatar.url, '1K', brandColors);
-        sinks.setThumbnailUrl(thumbnailUrl);
-        patch('thumbnail', 'done');
-      } catch (err) {
-        console.error('One-shot thumbnail failed:', err);
-        patch('thumbnail', 'error', 'Regenerate in review');
-      }
 
       // 6 — Video prompts (best-effort)
       patch('videoPrompts', 'running');
@@ -228,6 +316,10 @@ export const useOneShotGeneration = (): UseOneShotGeneration => {
       }));
       return false;
     } finally {
+      // Refresh the allowance for the NEXT run — a retry from the error screen
+      // reuses this mounted hook, and a stale snapshot would over-plan by the
+      // images this run already spent (critic 2026-07-30 bug 3).
+      void quotaRef.current.refetch();
       setRunning(false);
       runningRef.current = false;
     }

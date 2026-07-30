@@ -82,6 +82,51 @@ mount, so an in-SPA checkout return (or OTP sign-in) carried stale
 `credits: 0` and re-paywalled the buyer — App now refetches quota on every
 landing on the app surface with a 4s second pass for webhook lag.
 
+## Part 3 — Consumer Review repair (Neil's 2026-07-30 preview walk)
+
+Neil's live walk of the preview exposed the deeper truth behind Part 1: the
+free user should never have LANDED on Step 8 at all — the 8-step wizard
+chrome is an admin/dev surface (now an agent_lessons hard rule). Two slices
+shipped 2026-07-30 (both code-executor + adversarial critic):
+
+**Slice A — ReviewScreen + routing:** new `components/OneShotAd/ReviewScreen.tsx`
+(One-Shot-world review: script, scene stills, character, thumbnail — NO
+prompts, any tier; assets-only ZIP; Step7's bridge mechanics reused verbatim).
+New `directorMode: 'review'`; every consumer path (one-shot completion,
+concierge, resume, return-to-ad, billing-success, dashboard card) lands
+there; devUnlock keeps the Step-8 cockpit + wizard. LockedVideoPreview:
+₱499 removed for free users (member perk lives in QuotaWallModal only),
+viewport-fit side-by-side layout. RunningScreen tiles now show real scene
+images as they land.
+
+**Slice B — pipeline honesty:** generation order is now script → avatar →
+THUMBNAIL → storyboard → scenes → prompts (thumbnail can no longer be starved
+by the scene loop). FREE runs are budget-aware: reserve avatar+thumbnail,
+greedily cap scenes (hook-morph scene costs 2 images), trim surfaced on
+ReviewScreen ("N of M scenes — full storyboard on Starter"); paid never
+trimmed; 13 new unit tests pin the never-overspend invariant. Talent chip
+row on LaunchScreen (Auto/Filipino/Pan-Asian/Caucasian/Custom); the Auto
+foreigner bug is fixed at the transport level — Taglish+Auto now derives
+'Filipino' into the avatar/storyboard args (root cause: empty ethnicity →
+storyboard told 'Global/Neutral'; producer engine already defaulted
+'Filipino'). No tuned prompt content touched.
+
+**GATED PROPOSAL — UGC-authentic thumbnail (needs Neil's per-diff approval,
+TUNED):** the product has exactly ONE thumbnail style — hard-coded MrBeast
+shock-face (`services/geminiService.ts:2323-2402`, style const at :882) — so
+every UGC ad gets a hype-drop cover. Proposal: a sibling generator (or style
+param) with a UGC-authentic prompt (real-person candid still, natural
+expression, no shock face, no saturated rim light), selected automatically
+when scriptType is a UGC Pro sub-format. This is the one piece of the repair
+that cannot avoid tuned content; parked until Neil approves the exact prompt
+diff.
+
+**Future (grill-me session):** "My Campaigns" library — server-side rows
+exist only for producer runs (`producer_runs`/`producer_scenes`); legacy
+one-shot ads live solely in per-device IndexedDB. A cross-device,
+campaign-grouped library (Gemini-Library-style, per Neil's reference
+screenshots) needs a persistence path for legacy runs + a library UI.
+
 **STILL OPEN (flagged by critics, all pre-existing — next candidates):**
 1. **Top-up buyers never see billing_success** — `TopUpCheckoutPage` succeeds
    in-page; recovery now works (return intent + quota refetch) but the
@@ -149,16 +194,24 @@ What's missing is capture BEFORE the app + a per-user home for the answer:
   routing for vertical landing variants (run-sheet item 06) — one taxonomy from
   ad set → landing chip → wizard prefill.
 
-### Neil's gates (answer these, then it's a code-executor brief)
+### SHIPPED 2026-07-30 (Neil: "go sa segmentation build" — gates resolved to
+the recommendations): landing placement at CTA click (`VerticalPickerModal`,
+wraps Hero/ReceiptsRail/PinnedCtaPill only, once per session, fail-open —
+the CTA can never die for the question); copy as designed; "Iba pa" →
+`product` + raw label logged; ship-and-watch via `segmentation_answered` /
+`segmentation_skipped` events (pre-auth, session-id stitched). Transport:
+`services/verticalIntentService.ts` stash → App pop (after plan-intent bail,
+allowlisted) → `saveBusinessVertical` to `user_metadata` + `preferredVertical`
+prop into both One-Shot engines. Priority enforced at
+`LaunchScreen.tsx` `useState(restored?.vertical ?? preferredVertical ?? 'product')`
+— draft always wins. Critic: PASS 9/9, timing hole proven unreachable.
 
-1. **Placement:** landing chip-row on CTA click (recommended) vs post-auth
-   first-run card (replacing `OnboardingNudge`)? Landing = better data, +1 tap
-   before signup; first-run = zero signup friction, no ad-matching value.
-2. **Copy:** "Anong business mo?" + the four chips above — edit freely.
-3. **"Iba pa" behavior:** maps to `product` default silently, or unlocks a
-   free-text hint we only log?
-4. **Ship gate:** A/B it (needs traffic) or ship-and-watch (beta traffic too
-   small to split — recommended: ship-and-watch, events tell us skip rate).
+**Critic edges accepted as-is (low/info — revisit only if events show pain):**
+F1 checkout-failure path strands the answer for the session (self-heals next
+mount); F2 modal has no focus trap (same gap as ExitIntentModal); F3
+cross-tab email-confirm drops the stash (inherent to the pattern); F4 logout
+doesn't clear `grifon_vertical_asked` (next cafe-PC guest not re-asked —
+analytics undercount only).
 
 ---
 
