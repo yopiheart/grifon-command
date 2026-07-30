@@ -39,9 +39,16 @@ export const BeforeAfter: React.FC<PropsOf<'beforeAfter'>> = ({ heading, eyebrow
           <figure className="overflow-hidden rounded-brand border-2 border-white/20 bg-brand-elevated">
             <div className="grid grid-cols-2">
               {(
+                // BEFORE / AFTER in English, not "Bago / Pagkatapos".
+                // Neil, 2026-07-30: "BAGO PAGKATAPOS? BEFORE & AFTER MO NALANG
+                // SANA KAKA STRESS NAMAN." He is right and it is the rule, not a
+                // preference: taglish-voice.md puts English on the THINGS and
+                // technical labels, Tagalog on the human part. A photo label is
+                // as technical as it gets, and every Filipino already says
+                // "before and after" out loud.
                 [
-                  { src: pair.before, label: 'Bago', tone: 'dim' as const },
-                  { src: pair.after, label: 'Pagkatapos', tone: 'amber' as const },
+                  { src: pair.before, label: 'Before', tone: 'dim' as const },
+                  { src: pair.after, label: 'After', tone: 'amber' as const },
                 ]
               ).map((shot) => (
                 <div key={shot.src} className="relative">

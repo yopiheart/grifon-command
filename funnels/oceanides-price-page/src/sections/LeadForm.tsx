@@ -18,21 +18,23 @@ import { CtaButton } from '../primitives/CtaButton';
 // ===========================================================================
 
 const FIELD_META: Record<'name' | 'email' | 'phone', { label: string; type: string; autoComplete: string }> = {
-  name: { label: 'Name', type: 'text', autoComplete: 'name' },
+  name: { label: 'Pangalan', type: 'text', autoComplete: 'name' },
   email: { label: 'Email', type: 'email', autoComplete: 'email' },
-  phone: { label: 'Phone', type: 'tel', autoComplete: 'tel' },
+  phone: { label: 'Cellphone number', type: 'tel', autoComplete: 'tel' },
 };
 
+// Taglish, kagaya ng buong page. Naiwang English ito noong una at hindi
+// makikita lang kapag may pumalya, kaya madali syang makaligtaan.
 const ERROR_COPY: Record<string, string> = {
-  invalid_email: 'That email address doesn’t look right.',
-  missing_consent: 'Please tick the consent box to continue.',
-  invalid_body: 'Some details are missing — please check the form.',
-  rate_limited: 'Too many attempts. Give it a minute and try again.',
-  network_error: 'Connection problem. Check your signal and try again.',
+  invalid_email: 'Mukhang mali ang email. Pakicheck ulit.',
+  missing_consent: 'Pakitik lang yung box sa ibaba bago mag-send.',
+  invalid_body: 'May kulang pa. Pakitingnan ulit ang form.',
+  rate_limited: 'Sunod-sunod masyado. Sandali lang, tapos ulitin mo.',
+  network_error: 'Mahina ang connection. Check mo ang signal, tapos ulitin.',
 };
 
 const friendlyError = (code: string): string =>
-  ERROR_COPY[code] ?? 'Something went wrong on our end. Please try again.';
+  ERROR_COPY[code] ?? 'May problema sa amin, hindi sa iyo. Pakiulit lang.';
 
 const INPUT_CLASS =
   // 2px border = the DESIGN.md checklist-row/print grammar, same as GlassCard.
@@ -118,7 +120,7 @@ export const LeadForm: React.FC = () => {
               onChange={(e) => setQualifiers((prev) => ({ ...prev, [qualifier.id]: e.target.value }))}
               className={INPUT_CLASS}
             >
-              <option value="">Select…</option>
+              <option value="">Pumili…</option>
               {qualifier.options.map((option) => (
                 <option key={option} value={option}>
                   {option}
@@ -163,7 +165,7 @@ export const LeadForm: React.FC = () => {
       )}
 
       <CtaButton type="submit" block disabled={submitting} className="mt-6">
-        {submitting ? 'Sending…' : form.ctaLabel}
+        {submitting ? 'Sini-send…' : form.ctaLabel}
       </CtaButton>
 
       {form.reassurance && (

@@ -14,7 +14,7 @@ const setMeta = (attr: 'name' | 'property', key: string, content: string): void 
 };
 
 export const applyDocumentMeta = (meta: FunnelConfig['meta'], titleSuffix?: string): void => {
-  const title = titleSuffix ? `${titleSuffix} — ${meta.title}` : meta.title;
+  const title = titleSuffix ? `${titleSuffix} · ${meta.title}` : meta.title;
   document.title = title;
   setMeta('name', 'description', meta.description);
   setMeta('property', 'og:title', title);

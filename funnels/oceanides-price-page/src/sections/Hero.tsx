@@ -9,24 +9,24 @@ import { goldEmphasis } from '../lib/goldEmphasis';
 import { scrollToLeadForm } from '../lib/scrollToForm';
 
 // ===========================================================================
-// Hero — OCEANIDES build. Rebuilt from the template's centred text block after
-// Neil's read on 2026-07-30: "ganto talaga plain lang walang theme or design?"
-// He was right. The template hero is brand-agnostic by design; this one uses the
-// components clients/oceanides/DESIGN.md actually specifies:
+// Hero — OCEANIDES build, CENTRED STACK (Neil, 2026-07-30, Apple as the ref).
 //
-//   - logo lockup on a PAPER chip. logo.jpg has a near-white ground (sampled
-//     243,252,251) and keying white out of a JPEG fringes on navy, so the paper
-//     surface is the honest treatment — and it is already in the system.
-//   - eyebrowChip ("ang signature element ng brand"), not plain tracked text
-//   - gold-emphasis Anton headline via `**…**` (Anton has ONE weight, so colour
-//     is the brand's only emphasis channel)
-//   - photoScrim over the truck photo: "Ito ang tanging cinematic move ng brand."
-//   - phonePill for the caller who will not fill a form
+// v2 was a two-column split: copy left, truck photo right. Neil asked to centre
+// the lockup and drop the truck below the CTA, pointing at apple.com. He is
+// right, and the reason is structural rather than fashion:
 //
-// LEFT-ALIGNED, not centred. The print world this brand lives in sets copy on a
-// left rail; a centred column reads as a deck. Text left, photo right, stacking
-// on mobile with the photo BELOW the CTA — the price and the action must clear
-// the fold on a 390px screen before any image does.
+//   - A side-by-side hero forces the headline to share horizontal space, so the
+//     type has to shrink exactly where it should be loudest. Centred, the
+//     headline gets the full measure and ₱5,000 can actually shout.
+//   - The photo below the CTA means the PRICE and the ACTION both clear the
+//     fold on a 390px phone, every time, with no stacking guesswork.
+//   - It collapses to one column on mobile with zero layout change, so what
+//     Neil approves on desktop is what ships to the phone.
+//
+// The Apple move worth stealing is restraint, not the aesthetic: one centred
+// claim, one line under it, one action, then the product photographed large and
+// clean. What is NOT stolen is Apple's white ground and light type — this stays
+// navy + amber matte print per clients/oceanides/DESIGN.md.
 // ===========================================================================
 
 export const Hero: React.FC<PropsOf<'hero'>> = ({
@@ -44,77 +44,75 @@ export const Hero: React.FC<PropsOf<'hero'>> = ({
 }) => (
   <SectionShell>
     <Reveal>
-      <div className="grid items-center gap-10 md:grid-cols-[1.05fr_1fr] md:gap-12">
-        <div>
-          {/* Logo as a floating DISC. scripts/build-assets.mjs circle-masks the
-              source, so the white square is gone and what is left reads as a
-              seal, not a pasted rectangle. The amber ring is the print device
-              that ties it to the rest of the system. */}
-          {logo && (
-            <img
-              src={logo}
-              alt={logoAlt ?? 'Oceanides'}
-              width={72}
-              height={72}
-              className="mb-6 h-16 w-16 rounded-full ring-2 ring-brand-primary md:h-[72px] md:w-[72px]"
-            />
-          )}
+      <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
+        {/* Logo as a floating DISC — build-assets.mjs circle-masks the source so
+            the white square is gone and it reads as a seal, not a pasted box. */}
+        {logo && (
+          <img
+            src={logo}
+            alt={logoAlt ?? 'Oceanides'}
+            width={72}
+            height={72}
+            className="mb-6 h-16 w-16 rounded-full ring-2 ring-brand-primary md:h-[72px] md:w-[72px]"
+          />
+        )}
 
-          {eyebrow && (
-            <div className="mb-5">
-              <EyebrowChip>{eyebrow}</EyebrowChip>
-            </div>
-          )}
-
-          <h1 className="text-[2.375rem] leading-[0.95] md:text-[3.75rem]">{goldEmphasis(headline)}</h1>
-
-          {/* Audience callout (S8, 9 ads / 5 brands). Naming the reader is the
-              cheapest qualification device there is: it tells the right person
-              "ikaw to" before they have read a single price, and it tells the
-              wrong person to leave — which is worth just as much when every
-              click is paid for. */}
-          {audience && (
-            <p className="mt-5 border-l-[3px] border-brand-primary pl-4 text-sm font-semibold leading-snug text-brand-on-surface md:text-base">
-              {audience}
-            </p>
-          )}
-
-          {subhead && (
-            <p className="mt-6 max-w-xl text-base leading-relaxed text-brand-on-surface-muted md:text-lg">
-              {subhead}
-            </p>
-          )}
-
-          <div className="mt-9 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center">
-            <CtaButton onClick={scrollToLeadForm}>{ctaLabel}</CtaButton>
-            {phone && <PhonePill number={phone} label={phoneLabel} />}
+        {eyebrow && (
+          <div className="mb-5">
+            <EyebrowChip>{eyebrow}</EyebrowChip>
           </div>
+        )}
 
-          {phone && (
-            <p className="mt-4 text-sm text-brand-on-surface-dim">
-              Umaapaw na ngayon? Tumawag ka na, wag ka nang mag-fill ng form.
-            </p>
-          )}
+        <h1 className="text-[2.5rem] leading-[0.95] md:text-[4.25rem]">{goldEmphasis(headline)}</h1>
+
+        {/* S8 audience callout — names the reader before they hit the price.
+            Centred, so the amber rule sits under it instead of beside it. */}
+        {audience && (
+          <p className="mt-6 max-w-xl text-sm font-semibold leading-snug text-brand-on-surface md:text-base">
+            {audience}
+          </p>
+        )}
+
+        {subhead && (
+          <p className="mt-5 max-w-2xl text-base leading-relaxed text-brand-on-surface-muted md:text-lg">
+            {subhead}
+          </p>
+        )}
+
+        <div className="mt-9 flex w-full flex-col items-stretch gap-4 sm:w-auto sm:flex-row sm:items-center sm:justify-center">
+          <CtaButton onClick={scrollToLeadForm}>{ctaLabel}</CtaButton>
+          {phone && <PhonePill number={phone} label={phoneLabel} />}
         </div>
 
-        {image && (
-          <div className="relative overflow-hidden rounded-brand border-2 border-white/15">
-            <img
-              src={image}
-              alt={imageAlt ?? ''}
-              className="block h-full w-full object-cover"
-              loading="eager"
-            />
-            {/* photoScrim, verbatim from DESIGN.md — the brand's one cinematic move.
-                Left-to-right on desktop so the photo dissolves toward the copy;
-                bottom-up on mobile, where the copy sits above it instead. */}
-            <span
-              aria-hidden
-              className="pointer-events-none absolute inset-0 bg-[linear-gradient(0deg,rgba(10,31,69,0.96),rgba(10,31,69,0))] md:bg-[linear-gradient(270deg,rgba(10,31,69,0),rgba(10,31,69,0.96))]"
-            />
-          </div>
+        {phone && (
+          <p className="mt-4 text-sm text-brand-on-surface-dim">
+            Umaapaw na ngayon? Tumawag ka na, wag ka nang mag-fill ng form.
+          </p>
         )}
       </div>
     </Reveal>
+
+    {/* The truck, large and centred under the action — the Apple product shot
+        slot. Wider than the copy measure so it reads as the payoff, not a
+        thumbnail hanging off the text. */}
+    {image && (
+      <Reveal index={1}>
+        <div className="relative mx-auto mt-14 max-w-4xl overflow-hidden rounded-brand border-2 border-white/15">
+          <img
+            src={image}
+            alt={imageAlt ?? ''}
+            className="block w-full"
+            loading="eager"
+          />
+          {/* photoScrim, verbatim from DESIGN.md — "ang tanging cinematic move ng
+              brand." Bottom-up here so the photo settles into the navy ground
+              instead of ending on a hard edge. */}
+          <span
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-[linear-gradient(0deg,rgba(10,31,69,0.9),rgba(10,31,69,0))]"
+          />
+        </div>
+      </Reveal>
+    )}
   </SectionShell>
 );

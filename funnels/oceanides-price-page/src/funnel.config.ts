@@ -67,7 +67,7 @@ export const funnelConfig: FunnelConfig = {
     clientId: 'oceanides',
     funnelId: 'oceanides-price-page-v1',
     archetype: 'longform',
-    title: 'Oceanides — ₱5,000 Septic Tank Siphoning, Metro Manila',
+    title: 'Oceanides · ₱5,000 Septic Tank Siphoning, Metro Manila',
     description:
       'Isang presyo, nakasulat bago magsimula. Nakalista rin ang mga dagdag na itinatago ng iba. May BIR receipt at 30-day warranty.',
   },
@@ -100,7 +100,7 @@ export const funnelConfig: FunnelConfig = {
     headline: 'Mag-book ng schedule',
     ctaLabel: 'Kunin ang schedule ko',
     reassurance:
-      'Tatawagan ka namin para kumpirmahin ang oras. Walang bayad hangga\'t hindi pa napagkakasunduan ang presyo.',
+      'Tatawagan ka namin para kumpirmahin ang oras. Walang bayad kung hindi pa napagkakasunduan ang presyo.',
     consent: {
       required: false,
       text: 'Oo, pwede nyo akong tawagan o i-text tungkol sa booking na to. Protektado ang detalye ko sa ilalim ng Data Privacy Act of 2012 at ng Privacy Policy nyo. Matatawagan pa rin ako para sa schedule kahit hindi ko to i-check.',
@@ -117,7 +117,7 @@ export const funnelConfig: FunnelConfig = {
       {
         id: 'role',
         label: 'Ikaw ba ang may-ari?',
-        options: ['Ako ang may-ari', 'Tenant ako', 'Ako ang nangangasiwa'],
+        options: ['Ako ang may-ari', 'Tenant ako', 'Ako ang caretaker'],
         required: true,
       },
       { id: 'city', label: 'Saan kayo sa Metro Manila?', options: NCR_CITIES, required: true },
@@ -186,7 +186,7 @@ export const funnelConfig: FunnelConfig = {
         items: [
           { label: 'Isang truckload na siphoning, 4 cubic o 4,000 litro' },
           { label: 'Kasama na ang standard na hose ng truck' },
-          { label: 'Litrato ng tangke nyo bago at pagkatapos, para may pagkumparahan' },
+          { label: 'Before at after na litrato ng tank nyo, para may makita kayo' },
           { label: '30-day warranty kung bumalik ang bara' },
           { label: 'BIR official receipt' },
           { label: 'Legal na tapunan sa DENR-partner facility' },
@@ -221,22 +221,22 @@ export const funnelConfig: FunnelConfig = {
       type: 'beforeAfter',
       props: {
         eyebrow: 'Totoong trabaho',
-        heading: 'Ganito ang **hitsura** ng tapos.',
+        heading: 'Tingnan mo ang **before at after**.',
         pairs: [
           {
             before: '/img/ba-1-before.webp',
             after: '/img/ba-1-after.webp',
             alt: 'bilog na septic tank manhole',
-            caption: 'Puno hanggang labi. Pagkatapos, kita na ang sahig at ang dingding ng tangke.',
+            caption: 'Puno hanggang labi. After, kita na ang sahig at ang dingding ng tank.',
           },
           {
             before: '/img/ba-2-before.webp',
             after: '/img/ba-2-after.webp',
-            alt: 'parisukat na catch basin na may pulang tubo',
-            caption: 'Parehong basin, parehong pulang tubo. Ang pagkakaiba ay ang laman.',
+            alt: 'square na tank na may pulang tubo',
+            caption: 'Parehong tank, parehong pulang tubo. Ang laman lang ang nagbago.',
           },
         ],
-        note: 'Kinukunan namin ng litrato ang tangke nyo bago at pagkatapos ng bawat trabaho, at ibinibigay sa inyo. Hindi to pang-porma. Ito ang pinagbabasehan kapag may tanong sa warranty, para hindi salita laban sa salita.',
+        note: 'May before at after na litrato ang bawat trabaho, at ibinibigay namin sa inyo. Hindi to pang-porma. Ito ang tinitingnan kapag may tanong sa warranty, para hindi salita laban sa salita.',
       },
     },
 
@@ -285,7 +285,7 @@ export const funnelConfig: FunnelConfig = {
           },
           {
             q: 'Ano ang sakop ng 30-day warranty?',
-            a: 'Ang bara. Kapag bumalik ang bara sa loob ng 30 araw, babalikan namin. Ang hindi sakop ay kung mapuno ulit ang tangke, kasi nakadepende yun sa dami ng gumagamit. Ang kainan, hotel, o apartment na maraming tao ay mas mabilis talagang mapuno kaysa sa bahay, at hindi yun depekto ng trabaho. Kaya kinukunan namin ng litrato ang tangke bago at pagkatapos, para may pagkumparahan kayo at hindi basta salita lang.',
+            a: 'Ang bara. Kapag bumalik ang bara sa loob ng 30 araw, babalikan namin. Ang hindi sakop ay kung mapuno ulit ang tangke, kasi nakadepende yun sa dami ng gumagamit. Ang kainan, hotel, o apartment na maraming tao ay mas mabilis talagang mapuno kaysa sa bahay, at hindi yun depekto ng trabaho. Kaya kinukunan namin ng before at after na litrato ang tank nyo, para may makita kayo at hindi basta salita lang.',
           },
           {
             q: 'Saan kayo pwede pumunta?',
@@ -329,7 +329,7 @@ export const funnelConfig: FunnelConfig = {
     steps: [
       'Tatawagan ka namin para sa schedule at sa buong presyo.',
       'Pagdating ng truck, uulitin namin ang presyo bago magsimula.',
-      'Pagkatapos, bibigyan ka ng BIR official receipt at ng 30-day warranty.',
+      'Tapos, bibigyan ka ng BIR official receipt at ng 30-day warranty.',
     ],
     // L1 — ang thank-you page ay hindi resibo, may susunod na hakbang sya.
     // 🔴 TANONG KAY NEIL: anong number ang ilalagay dito?
@@ -371,7 +371,7 @@ export const funnelConfig: FunnelConfig = {
               ],
             },
             {
-              heading: 'Pagkatapos',
+              heading: 'Tapos',
               body: [
                 'Kunan mo ng litrato ang mga nakita mo at ipadala sa amin kapag tumawag kami. Tutulungan ka naming basahin kung alin doon ang tangke.',
                 'Walang bayad ito. Kapag nakita na, doon lang tayo magbo-book ng schedule.',
