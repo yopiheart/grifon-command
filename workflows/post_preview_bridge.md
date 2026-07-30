@@ -58,19 +58,30 @@ STARTER ₱997", free only), export demoted to ghost (all tiers), research
 banner suppressed on step 8, lightbox watermark leak plugged (optional
 `watermark` prop on ImageModal; all 7 call sites verified unaffected).
 
-**REMAINING (next slice — "resume routing", executor-investigated 2026-07-30):**
-persistence itself is DONE — `App.tsx:589-621` autosaves the full step-8
-payload to IndexedDB and the hard-redirect (₱499 top-up) path already resumes
-via the pill. Three routing gaps:
-1. `Dashboard.tsx:163` filters step 8 out of `ResumeDraftCard`
-   (`currentStep < WIZARD_TOTAL_STEPS`) — a finished ad is "not a draft," so
-   the Dashboard offers no way back. Smallest fix.
-2. The soft exit (`See plans`, `App.tsx:1510`) leaves state in memory but
-   unreachable (`showResumePill` stays false, `directorMode` reverts to
-   one-shot). Draft sits in IndexedDB the whole time.
-3. No return-to-ad intent on either paywall exit; `billing_success`
-   (`App.tsx:1033`) never consults the wizard session. The
-   `moduleIntentService` stash-and-pop is the pattern to copy.
+**RESUME ROUTING — SHIPPED 2026-07-30** (executor slice + 4 critic-driven
+fixes in the main loop): the Dashboard now surfaces finished step-8 ads as a
+one-click "Balikan ang ad mo" card (App provides `onResumeFinishedAd` →
+`restoreFinishedAd()`); both Step-8 paywall exits (`See plans` AND the ₱499
+top-up redirect) stash a `grifon_return_to_ad` intent
+(`services/returnToAdService.ts`, mirrors moduleIntentService; pop effect in
+App.tsx ordered after the plan-intent bail, gated on `isLoadingSession`);
+`billing_success` offers "BALIK SA AD MO — I-RENDER NA" when a step-8 run
+exists and both its buttons consume the intent; `restart()` now clears the
+persisted session (no stale finished-ad cards); `handleLogout` clears all
+three sessionStorage intent keys (shared cafe-PC hygiene).
+
+**STILL OPEN (flagged by the adversarial critic, all pre-existing — next candidates):**
+1. **Top-up buyers never see billing_success** — `TopUpCheckoutPage` succeeds
+   in-page; recovery is onBack → Dashboard → resume card (works, extra hops).
+2. **`LockedVideoPreview` has no credit check** (`App.tsx` gate is
+   `plan_id === 'free'` only) — a Free user who BOUGHT a ₱499 video credit
+   still hits the paywall instead of rendering. Revenue-path bug, worth its
+   own slice.
+3. **`BillingSuccess` hides all CTAs behind `activated` (plan ≠ free)** — a
+   top-up-only buyer reaching it would spin on "Activating…" forever.
+4. **MarketMind autofill hazard**: an unconsumed `grifon_pendingAutofill`
+   (<10 min) can knock a just-restored step-8 ad back to Step 1
+   (`App.tsx:640-704` shares deps with the restore path). Unusual sequence.
 Paywall unification (Step-8 vs Dashboard-tile) also still open.
 
 ### Recommended fix shape (original design, for reference)

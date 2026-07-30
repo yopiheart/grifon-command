@@ -58,6 +58,7 @@ import {
 } from './services/supabaseClient';
 import { popIntendedPlan, peekIntendedPlan, saveIntendedPlan, startCheckout } from './services/billingService';
 import { popIntendedModule } from './services/moduleIntentService';
+import { setReturnToAd, popReturnToAd } from './services/returnToAdService';
 import { grant as grantMarketingConsent, getMarketingConsent } from './services/consentService';
 import { POLICY_VERSION, isKnownPolicyVersion } from './services/consentConstants';
 import { ConsentBanner } from './components/ui/ConsentBanner';
@@ -496,6 +497,18 @@ const App: React.FC = () => {
     if (mod && INTENT_MODULE_IDS.has(mod)) setActiveModule(mod);
   }, [isAuthenticated]);
 
+  // Return-to-ad intent (stashed by the Step-8 paywall exits). Same shape and
+  // ordering as the module deep-link above — a pending plan checkout still wins,
+  // and we wait for the IndexedDB session load so a fresh mount (post-payment
+  // redirect) can restore the finished ad instead of falsely finding nothing.
+  useEffect(() => {
+    if (!isAuthenticated || currentRoute !== 'app') return;
+    if (peekIntendedPlan()) return;
+    if (isLoadingSession) return;
+    if (!popReturnToAd()) return;
+    restoreFinishedAd(); // no-op when no step-8 ad exists
+  }, [isAuthenticated, currentRoute, isLoadingSession]);
+
   useEffect(() => {
     if (!isAuthenticated) return;
     const intended = popIntendedPlan();
@@ -843,6 +856,11 @@ const App: React.FC = () => {
     } finally {
       setActiveModule(null);
       restart();
+      // Shared cafe-PC hygiene: intent stashes are sessionStorage and would
+      // otherwise survive into the NEXT user's login on this tab.
+      popReturnToAd();
+      popIntendedModule();
+      popIntendedPlan();
       setAuthEmail('');
       setAuthCode('');
       setAuthError('');
@@ -882,6 +900,25 @@ const App: React.FC = () => {
     });
   };
 
+  // Land the user back on their finished ad (Step 8). Two sources, in order:
+  // the in-memory wizard (soft paywall exit — nothing was lost, only hidden) and
+  // the persisted session (hard redirect / post-payment reload), which goes
+  // through resumeSession so the restore path stays single. Returns false when
+  // there is no finished ad to return to — callers treat that as a no-op.
+  const restoreFinishedAd = (): boolean => {
+    if (currentStep === TOTAL_STEPS) {
+      setDirectorMode('steps');
+      setActiveModule('creative_director');
+      return true;
+    }
+    if (pendingSession?.currentStep === TOTAL_STEPS) {
+      resumeSession(); // restores every field + directorMode 'steps' + currentStep 8
+      setActiveModule('creative_director');
+      return true;
+    }
+    return false;
+  };
+
   const declineSession = () => {
     if (userId) clearSession(userId);
     setPendingSession(null);
@@ -907,6 +944,10 @@ const App: React.FC = () => {
     setPrefillSource(null);
     setMarketMindLoadedAvatar(null);
     setDirectorMode('oneshot'); // a finished/restarted ad returns to the default surface
+    // A restarted ad is finished business: drop the persisted session too, or
+    // the Dashboard keeps offering a "finished ad" card that no longer exists.
+    if (userId) clearSession(userId);
+    setPendingSession(null);
   };
 
   // Generic URL-syncing navigation: swap the route AND the address bar so the
@@ -1038,7 +1079,20 @@ const App: React.FC = () => {
         onReset={() => setCurrentRoute('app')}
         resetLabel="CONTINUE TO APP"
       >
-        <BillingSuccess onContinue={() => setCurrentRoute('app')} email={userEmail} />
+        <BillingSuccess
+          // This screen IS the fork, so both buttons consume the return-to-ad
+          // intent — otherwise the pop effect would drag a "create my first ad"
+          // click back to the old run.
+          onContinue={() => { popReturnToAd(); setCurrentRoute('app'); }}
+          email={userEmail}
+          // The ad they just bought the plan FOR — only offered when a finished
+          // (Step 8) run actually exists, in memory or in the saved session.
+          onReturnToAd={
+            currentStep === TOTAL_STEPS || pendingSession?.currentStep === TOTAL_STEPS
+              ? () => { popReturnToAd(); setCurrentRoute('app'); restoreFinishedAd(); }
+              : undefined
+          }
+        />
       </ErrorBoundary>
     );
   }
@@ -1494,7 +1548,7 @@ const App: React.FC = () => {
   let moduleElement: React.ReactNode;
 
   if (!activeModule) {
-    moduleElement = <Dashboard onSelectModule={setActiveModule} activeModule={activeModule} userEmail={userEmail} userId={userId} onLogout={handleLogout} onUpgrade={() => goToLegal('pricing')} />;
+    moduleElement = <Dashboard onSelectModule={setActiveModule} activeModule={activeModule} userEmail={userEmail} userId={userId} onLogout={handleLogout} onUpgrade={() => goToLegal('pricing')} onResumeFinishedAd={() => { if (!restoreFinishedAd()) setActiveModule('creative_director'); }} />;
   } else if (activeModule === 'generate_video') {
     // Slice 3 — video is metered per FINISHED AD. Starter+ render (1/8/15 ads);
     // Free renders 0 and instead lands on the LockedVideoPreview upsell at the
@@ -1507,8 +1561,8 @@ const App: React.FC = () => {
       moduleElement = (
         <LockedVideoPreview
           onBack={() => setActiveModule(null)}
-          onUpgrade={() => { setActiveModule(null); goToLegal('pricing'); }}
-          onBuyTopup={() => { window.location.href = '/checkout?topup=video_ad_single'; }}
+          onUpgrade={() => { setReturnToAd(); setActiveModule(null); goToLegal('pricing'); }}
+          onBuyTopup={() => { setReturnToAd(); window.location.href = '/checkout?topup=video_ad_single'; }}
           thumbnailUrl={thumbnailUrl}
           previewImageUrl={storyboard[0]?.imageUrl}
         />

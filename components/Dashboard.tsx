@@ -37,6 +37,9 @@ interface DashboardProps {
   userId?: string | null;
   onLogout?: () => void;
   onUpgrade?: () => void;
+  /** One-click restore of a finished (Step 8) ad — provided by App so the card
+      lands on the ad directly instead of the module's default surface. */
+  onResumeFinishedAd?: () => void;
 }
 
 const WIZARD_TOTAL_STEPS = 8;
@@ -107,7 +110,7 @@ const MODULE_TIER: Record<string, PlanId> = {
   influencer_forge: 'business',
 };
 
-const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, userEmail, userId, onLogout, onUpgrade }) => {
+const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, userEmail, userId, onLogout, onUpgrade, onResumeFinishedAd }) => {
   const reduce = useReducedMotion();
   const [isAdmin, setIsAdmin] = useState(false);
   useEffect(() => {
@@ -160,7 +163,9 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
     let cancelled = false;
     getSession(userId).then((s) => {
       if (cancelled) return;
-      if (s && s.currentStep > 1 && s.currentStep < WIZARD_TOTAL_STEPS) setDraftSession(s);
+      // Step 8 counts: a finished ad is the thing the user most wants back
+      // after a paywall exit, so the card offers it too (finished-ad copy).
+      if (s && s.currentStep > 1 && s.currentStep <= WIZARD_TOTAL_STEPS) setDraftSession(s);
       else setDraftSession(null);
     });
     return () => { cancelled = true; };
@@ -444,7 +449,12 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectModule, activeModule, use
                 totalSteps={WIZARD_TOTAL_STEPS}
                 savedAt={draftSession.savedAt}
                 brandName={draftSession.clientDetails?.brandName}
-                onResume={() => handleSelectModule('creative_director')}
+                onResume={() => {
+                  // A finished ad gets the one-click restore App provides; mid-flow
+                  // drafts keep the existing open-the-module + resume-pill path.
+                  if (draftSession.currentStep >= WIZARD_TOTAL_STEPS && onResumeFinishedAd) onResumeFinishedAd();
+                  else handleSelectModule('creative_director');
+                }}
                 onDiscard={discardDraft}
                 delay={0.2}
               />

@@ -34,9 +34,10 @@ export const ResumeDraftCard: React.FC<ResumeDraftCardProps> = ({
   delay = 0,
 }) => {
   const pct = Math.max(0, Math.min(1, currentStep / totalSteps));
-  const subtitle = brandName
-    ? `${brandName} · Step ${currentStep} of ${totalSteps}`
-    : `Step ${currentStep} of ${totalSteps}`;
+  // Last step = the ad is done, not a draft. Same card, finished-ad copy.
+  const finished = currentStep >= totalSteps;
+  const progress = finished ? 'Ready to render' : `Step ${currentStep} of ${totalSteps}`;
+  const subtitle = brandName ? `${brandName} · ${progress}` : progress;
 
   return (
     <motion.div
@@ -49,7 +50,7 @@ export const ResumeDraftCard: React.FC<ResumeDraftCardProps> = ({
 
       <button
         onClick={onDiscard}
-        aria-label="Discard draft"
+        aria-label={finished ? 'Discard finished ad' : 'Discard draft'}
         className="absolute top-3 right-3 text-on-surface-sublabel hover:text-white transition-colors z-10 p-1 -m-1"
       >
         <X className="w-3.5 h-3.5" />
@@ -61,7 +62,7 @@ export const ResumeDraftCard: React.FC<ResumeDraftCardProps> = ({
         </div>
         <div className="flex-1 min-w-0">
           <div className="text-[10px] font-mono text-[#FFCC00] uppercase tracking-widest mb-0.5">
-            // RESUME DRAFT
+            {finished ? '// FINISHED_AD — READY_TO_RENDER' : '// RESUME DRAFT'}
           </div>
           <div className="text-sm font-bold text-white truncate">Director</div>
           <div className="text-[10px] font-mono text-on-surface-sublabel uppercase tracking-widest truncate">
@@ -75,7 +76,7 @@ export const ResumeDraftCard: React.FC<ResumeDraftCardProps> = ({
           onClick={onResume}
           className="hidden sm:flex bg-[#FFCC00] text-black font-bold uppercase text-[11px] tracking-wide px-4 py-2 rounded-full hover:scale-105 active:scale-95 transition-all items-center gap-1.5 flex-shrink-0"
         >
-          Resume
+          {finished ? 'Balikan ang ad mo' : 'Resume'}
           <ArrowRight className="w-3 h-3" />
         </button>
       </div>
@@ -84,7 +85,7 @@ export const ResumeDraftCard: React.FC<ResumeDraftCardProps> = ({
         onClick={onResume}
         className="sm:hidden mt-3 w-full bg-[#FFCC00] text-black font-bold uppercase text-xs tracking-wide px-4 py-2.5 rounded-full active:scale-95 transition-all flex items-center justify-center gap-1.5 relative z-10"
       >
-        Resume Draft
+        {finished ? 'Balikan ang ad mo' : 'Resume Draft'}
         <ArrowRight className="w-3.5 h-3.5" />
       </button>
 
