@@ -71,6 +71,7 @@ import { RouteVeil, type VeilState } from './components/ui/RouteVeil';
 import { QuotaWallModal } from './components/ui/QuotaWallModal';
 import { quotaWallStore } from './services/quotaWallStore';
 import { useSubscription } from './hooks/useSubscription';
+import { useQuota } from './hooks/useQuota';
 import { nextTier, planAtLeast, type PlanId } from './utils/planGate';
 import { getSession, setSession, clearSession, type WizardSessionV1 } from './services/wizardSessionStore';
 import { MAT_PLATE } from './components/ui/materialTokens';
@@ -162,6 +163,20 @@ const App: React.FC = () => {
   // at the app root so any module/wizard step triggers it without prop drilling.
   const quotaWall = useSyncExternalStore(quotaWallStore.subscribe, quotaWallStore.getSnapshot);
   const { billing_cycle, plan_id, loading: subLoading } = useSubscription();
+  // Purchased top-up balances — the video gate below must see a paid ₱499
+  // credit, or the buyer hits the paywall for the thing they just bought.
+  const { credits: topupCredits, loading: creditsLoading, refetch: refetchQuota } = useQuota();
+
+  // The hook fetches once per mount, which goes stale across in-SPA checkout
+  // returns and OTP sign-in (critic 2026-07-30: a buyer came back to a
+  // credits:0 paywall). Refetch on every landing on the app surface; the
+  // delayed second pass absorbs webhook lag on credit grants.
+  useEffect(() => {
+    if (!isAuthenticated || currentRoute !== 'app') return;
+    refetchQuota();
+    const id = window.setTimeout(refetchQuota, 4000);
+    return () => window.clearTimeout(id);
+  }, [isAuthenticated, currentRoute, refetchQuota]);
   // Slice 5 — gate a graduated module's RENDER behind a plan tier, with the
   // grifon_dev_unlock bypass. Catches direct access (e.g. the video→AI-editor
   // hand-off), not just the Dashboard tile. Server stays authoritative for the
@@ -1552,12 +1567,15 @@ const App: React.FC = () => {
   } else if (activeModule === 'generate_video') {
     // Slice 3 — video is metered per FINISHED AD. Starter+ render (1/8/15 ads);
     // Free renders 0 and instead lands on the LockedVideoPreview upsell at the
-    // hand-off. Server stays authoritative (meterVideoRequest); this is the UX
-    // gate. PlanGate is bypassed here so Free gets the tailored upsell, not the
-    // generic lock screen.
-    if (subLoading) {
+    // hand-off — UNLESS they hold a purchased ₱499 video credit, which the
+    // server would honor (consumeCredit) but this gate used to ignore. Server
+    // stays authoritative (meterVideoRequest); this is the UX gate. PlanGate is
+    // bypassed here so Free gets the tailored upsell, not the generic lock
+    // screen. Credits load with the same blank-guard as the plan so a paying
+    // credit-holder never flashes the paywall (and vice versa).
+    if (subLoading || (plan_id === 'free' && creditsLoading)) {
       moduleElement = <div className="min-h-screen bg-zinc-950" />;
-    } else if (plan_id === 'free') {
+    } else if (plan_id === 'free' && topupCredits.video_ad_credits <= 0) {
       moduleElement = (
         <LockedVideoPreview
           onBack={() => setActiveModule(null)}
@@ -1871,7 +1889,7 @@ const App: React.FC = () => {
                 {currentStep === 5 && <Step5Storyboard script={finalScript} avatar={avatar} businessInfo={businessInfo} storyboard={storyboard} setStoryboard={setStoryboard} onNext={() => setCurrentStep(6)} onBack={() => setCurrentStep(4)} aspectRatio={aspectRatio} language={language} />}
                 {currentStep === 6 && <Step6Thumbnail script={finalScript} avatar={avatar} businessInfo={businessInfo} aspectRatio={aspectRatio} thumbnailUrl={thumbnailUrl} setThumbnailUrl={setThumbnailUrl} onNext={() => setCurrentStep(7)} onBack={() => setCurrentStep(5)} />}
                 {currentStep === 7 && <Step6VideoPrompts storyboard={storyboard} videoPrompts={videoPrompts} setVideoPrompts={setVideoPrompts} onNext={() => setCurrentStep(8)} onBack={() => setCurrentStep(6)} businessInfo={businessInfo} />}
-                {currentStep === 8 && <Step7FinalOutput allData={{ clientDetails, businessInfo, finalScript, avatar, storyboard, videoPrompts, thumbnailUrl, aspectRatio }} onRestart={restart} onBack={directorUnlocked ? () => setCurrentStep(7) : () => setDirectorMode('oneshot')} onGenerateVideo={() => setActiveModule('generate_video')} />}
+                {currentStep === 8 && <Step7FinalOutput allData={{ clientDetails, businessInfo, finalScript, avatar, storyboard, videoPrompts, thumbnailUrl, aspectRatio }} onRestart={restart} onBack={directorUnlocked ? () => setCurrentStep(7) : () => setDirectorMode('oneshot')} onGenerateVideo={() => setActiveModule('generate_video')} hasVideoCredit={creditsLoading ? null : topupCredits.video_ad_credits > 0} />}
             </div>
             </>
             )}

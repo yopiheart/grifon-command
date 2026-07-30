@@ -13,6 +13,11 @@ import { computeUpgradeNudge } from '../config/upgradeNudge';
 import { MAT_PLATE_INSET } from './ui/materialTokens';
 
 interface Step7Props {
+  /** Free user holds a purchased ₱499 video credit — the CTA then says "use
+      your credit" instead of quoting Starter, and the upsell nudge is dropped.
+      `null` = still loading: the bridge holds back entirely rather than flash
+      the wrong price at a credit-holder (critic 2026-07-30). */
+  hasVideoCredit?: boolean | null;
   allData: AllData;
   onRestart: () => void;
   onBack: () => void;
@@ -88,7 +93,7 @@ const ImageAssetPanel: React.FC<{ title: string; src: string; aspectRatio: '9:16
   );
 };
 
-const Step7FinalOutput: React.FC<Step7Props> = ({ allData, onRestart, onBack, onGenerateVideo }) => {
+const Step7FinalOutput: React.FC<Step7Props> = ({ allData, onRestart, onBack, onGenerateVideo, hasVideoCredit = false }) => {
   const { clientDetails, finalScript, avatar, storyboard, videoPrompts, thumbnailUrl, aspectRatio } = allData;
   const { plan_id, loading: planLoading } = useSubscription();
   // Two gates on purpose: watermarking stays on the raw plan check so the
@@ -96,11 +101,12 @@ const Step7FinalOutput: React.FC<Step7Props> = ({ allData, onRestart, onBack, on
   // The visible bridge waits for the plan to resolve so paid users never
   // flash the free treatment.
   const isFree = plan_id === 'free'; // Free exports are watermarked (Slice 3)
-  const showFreeBridge = !planLoading && isFree;
+  const showFreeBridge = !planLoading && isFree && hasVideoCredit !== null;
   // The Taglish moment-of-value pitch was written for exactly this screen. Free
   // is 1 workflow and reaching Step 8 means it is spent, so the usage triple is
   // fixed — no quota fetch needed.
-  const freeNudge = showFreeBridge ? computeUpgradeNudge('free', { used: 1, limit: 1, remaining: 0 }) : null;
+  // A credit-holder already paid — no upsell pitch, just point at the render.
+  const freeNudge = showFreeBridge && !hasVideoCredit ? computeUpgradeNudge('free', { used: 1, limit: 1, remaining: 0 }) : null;
   const [activeTab, setActiveTab] = useState<TabKey>('script');
   const [exporting, setExporting] = useState(false);
   const [previewImage, setPreviewImage] = useState<{ url: string; filename: string } | null>(null);
@@ -237,6 +243,11 @@ const Step7FinalOutput: React.FC<Step7Props> = ({ allData, onRestart, onBack, on
             // 1/1 FREE WORKFLOW USED · EXPORTS WATERMARKED
           </p>
           {freeNudge && <p className="text-sm text-zinc-300 leading-relaxed">{freeNudge.message}</p>}
+          {hasVideoCredit && (
+            <p className="text-sm text-zinc-300 leading-relaxed">
+              May bayad ka nang video credit — tapusin na natin: i-render ang ad mo.
+            </p>
+          )}
         </div>
       )}
 
@@ -254,7 +265,7 @@ const Step7FinalOutput: React.FC<Step7Props> = ({ allData, onRestart, onBack, on
               <Package className="w-4 h-4" /> {exporting ? 'BUNDLING...' : 'EXPORT_BUNDLE (.ZIP)'}
             </button>
             <GoldButton onClick={onGenerateVideo} className="rounded-full px-6 py-3 flex items-center justify-center gap-2 text-[10px]">
-              <Video className="w-4 h-4" /> {showFreeBridge ? 'I-RENDER ANG VIDEO — STARTER ₱997' : 'GENERATE VIDEO NOW >'}
+              <Video className="w-4 h-4" /> {showFreeBridge ? (hasVideoCredit ? 'I-RENDER ANG VIDEO — GAMIT ANG CREDIT MO' : 'I-RENDER ANG VIDEO — STARTER ₱997') : 'GENERATE VIDEO NOW >'}
             </GoldButton>
           </div>
         }

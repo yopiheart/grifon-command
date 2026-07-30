@@ -399,8 +399,10 @@ blockquote .meta{display:block;margin-top:8px;font-style:normal;}
       <p style="margin-bottom:0;"><strong>Resume routing &mdash; also shipped (07-30):</strong> the finished ad is now always reachable
       again &mdash; a one-click &ldquo;Balikan ang ad mo&rdquo; card on the Dashboard, both paywall exits stash a
       return-to-ad intent, and the post-payment screen offers <em>BALIK SA AD MO &mdash; I-RENDER NA</em> when a
-      finished run exists. The critic pass also surfaced the next revenue bug: a Free user who BUYS the
-      &#8369;499 video credit still hits the paywall (no credit check in the gate) &mdash; queued in
+      finished run exists. And the &#8369;499 revenue leak is closed too (07-30): the video gate now honors purchased
+      credits, Step 8 tells credit-holders <em>GAMIT ANG CREDIT MO</em> instead of re-pitching Starter, and
+      quota refetches on every return to the app &mdash; the critic caught that a buyer coming back from
+      checkout carried stale zero-credits and got re-paywalled. Remaining follow-ups queued in
       <code class="meta">workflows/post_preview_bridge.md</code>.</p>
     </div>
   </section>

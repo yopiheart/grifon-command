@@ -70,18 +70,30 @@ exists and both its buttons consume the intent; `restart()` now clears the
 persisted session (no stale finished-ad cards); `handleLogout` clears all
 three sessionStorage intent keys (shared cafe-PC hygiene).
 
-**STILL OPEN (flagged by the adversarial critic, all pre-existing — next candidates):**
+**CREDIT-AWARE VIDEO GATE — SHIPPED 2026-07-30** (main-loop slice + critic
+round): the `generate_video` gate now honors purchased ₱499 credits
+(`useQuota().credits.video_ad_credits > 0` → straight to GenerateVideo; the
+server was always willing via `consumeCredit`, only the client gate was
+blind). Step 8 reflects it honestly — credit-holders get "I-RENDER ANG VIDEO
+— GAMIT ANG CREDIT MO" + a credit line instead of the Starter pitch, via a
+tri-state `hasVideoCredit` prop (`null` = loading = bridge holds back, no
+wrong-price flash). The critic's biggest catch: `useQuota` fetched once per
+mount, so an in-SPA checkout return (or OTP sign-in) carried stale
+`credits: 0` and re-paywalled the buyer — App now refetches quota on every
+landing on the app surface with a 4s second pass for webhook lag.
+
+**STILL OPEN (flagged by critics, all pre-existing — next candidates):**
 1. **Top-up buyers never see billing_success** — `TopUpCheckoutPage` succeeds
-   in-page; recovery is onBack → Dashboard → resume card (works, extra hops).
-2. **`LockedVideoPreview` has no credit check** (`App.tsx` gate is
-   `plan_id === 'free'` only) — a Free user who BOUGHT a ₱499 video credit
-   still hits the paywall instead of rendering. Revenue-path bug, worth its
-   own slice.
-3. **`BillingSuccess` hides all CTAs behind `activated` (plan ≠ free)** — a
+   in-page; recovery now works (return intent + quota refetch) but the
+   "BALIK SA AD MO" celebration surface never shows for top-ups.
+2. **`BillingSuccess` hides all CTAs behind `activated` (plan ≠ free)** — a
    top-up-only buyer reaching it would spin on "Activating…" forever.
-4. **MarketMind autofill hazard**: an unconsumed `grifon_pendingAutofill`
+3. **MarketMind autofill hazard**: an unconsumed `grifon_pendingAutofill`
    (<10 min) can knock a just-restored step-8 ad back to Step 1
    (`App.tsx:640-704` shares deps with the restore path). Unusual sequence.
+4. **`useQuota`/`useSubscription` await `getSession()` outside try/catch** —
+   plausible-only permanent-loading hang; same pre-existing pattern in both
+   hooks, fix them together if ever.
 Paywall unification (Step-8 vs Dashboard-tile) also still open.
 
 ### Recommended fix shape (original design, for reference)
