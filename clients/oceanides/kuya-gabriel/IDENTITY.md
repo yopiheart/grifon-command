@@ -217,6 +217,38 @@ Nangyari sa cover. Dalawang sanhi, at akin pareho:
 **Ang panuntunan:** isang araw, isang direksyon ng anino, isang kulay ng ilaw,
 para sa tao AT sa paligid. Isulat ito nang tahasan sa bawat field shot.
 
+### 3. "Nag-standout masyado yung kulay ng balat ko, parang pinatong lang"
+
+Si Gabriel ulit, sa cover v2. Inayos ko ang unang problema at gumawa ng bago.
+
+Inilagay ko sya sa **anino ng truck** habang **maaraw** ang natitirang eksena.
+Nabigyan nga ng dahilan ang malambot na ilaw sa kanya, pero ang ilaw sa anino ay
+**mas malamig** — galing sa langit, hindi sa araw. Pinanatili ng model na mainit
+ang balat nya. Resulta: lumulutang sya sa paligid, at bumalik ang pinatong na
+dating sa ibang pintuan.
+
+🔴 **Ito ang KULAY ≠ ILAW, baligtad.** Ang orihinal na aral ay tungkol sa eksena
+na hindi dapat gray. Ito naman ay tungkol sa TAO: ang *"warm tan Filipino skin
+tone"* ay naglalarawan ng **pigment nya**, hindi ng ilaw sa kanya. Kapag hindi
+mo pinaghiwalay ang dalawa sa prompt, binabasa ng model ang "warm" bilang
+**mainit na ilaw** at nilalagyan sya ng ginintuang liwanag na wala sa paligid.
+
+**Ang lunas, at mas malinis kaysa sa anino:** wag nang gumamit ng anino.
+**Isang maulap na araw, isang ilaw para sa lahat.** Walang direktang sikat,
+walang anino sa lupa, walang maliwanag na batik. Isulat nang tahasan:
+
+> *"His warm tan colouring is his NATURAL SKIN PIGMENT, not a warm light falling
+> on him. The light itself stays neutral. If you compare a patch of his forearm
+> to the concrete beside it, they must read as the same exposure and the same
+> white balance. He must not separate or pop from the background."*
+
+Ito rin ang dahilan kung bakit gumana ang website v3 sa unang subok: buong
+eksena ay maulap, isang ilaw, walang kailangang ipaliwanag.
+
+**At tandaan kung sino ang nakakita nito.** Dalawang beses nang nauna si Gabriel
+sa QA ko. Hindi sya subject lang — mata sya. Ipakita sa kanya bawat batch bago
+sabihing tapos.
+
 ## QA gates — pareho pa rin kay Marvin
 
 Ihambing sa **body master**, hindi sa ibang generation. Kapag may isang HINDI:
