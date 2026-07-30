@@ -22,7 +22,7 @@ import { SectionHeading } from '../primitives/SectionHeading';
 export const ValueStack: React.FC<PropsOf<'valueStack'>> = ({ heading, items, totalLine }) => (
   <SectionShell width="prose">
     <Reveal>
-      <SectionHeading align="center" className="mb-8">{heading}</SectionHeading>
+      <SectionHeading className="mb-8">{heading}</SectionHeading>
     </Reveal>
     <Reveal index={1}>
       <GlassCard padded={false}>

@@ -186,6 +186,34 @@ amber (floor sa itaas). Walang paper surface sa video overlays o dashboards.
 | **Internal dashboards / artifacts** | Artifact tool | Field-Ops-ticket language (ito ang piniling direction ni Neil 2026-07-27) · Taglish · `data-mono` allowed · **mandatory 390×844 smoke-tester gate + mobile-safe checklist sa CLAUDE.md** · walang client secrets/tokens · **placeholder/demo na numero ay dapat HALATANG peke** (tingnan ang Don'ts) |
 | **Marvin mismo** (plates, stills) | `marvin-avatar` + identity-lock manifests | identity consistency ang batas — huwag i-style ang mukha; hindi token concern |
 
+## Layout: isang rail (Neil, 2026-07-30)
+
+> *"Ung before & after headline/text hindi na igitna eto lang ang naiiba. Please
+> sana matandaan mo lahat ng to. Dapat aligned yan bro."*
+
+Hindi ito panlasa. **Print world ito**, at ang print ay nakapatong sa isang
+kaliwang rail. Ang naka-gitnang column ay dating deck, hindi papel.
+
+| Bahagi | Lapad | Puwesto |
+|---|---|---|
+| **Content sections** (presyo, kwento, objection, before/after, FAQ, form, P.S.) | `prose` (46rem) | Kaliwa. **Walang exception.** |
+| **Bands** (hero, proof strip, footer) | `shell` (72rem) | Pwedeng gitna. Strip sila, hindi babasahing column. |
+| **Hero** | `shell` | 🔴 **Ito lang ang naka-gitna.** Isang sandali, tapos bumabalik sa rail ang buong page. |
+
+**Ang nangyaring pagkakamali:** nasa `shell` ang before/after habang nasa `prose`
+ang lahat ng iba, kaya **208px ang layo ng gilid nya.** Hindi to makikita kapag
+isang file lang ang binabasa mo. Lumalabas lang kapag nag-scroll ka at tumatalon
+ang teksto sa gilid.
+
+⚙️ **May bantay na ito ngayon:** `funnels/oceanides-price-page/scripts/lint-layout.mjs`,
+naka-wire sa `prebuild`. Babagsak ang build kapag may section na lumihis sa rail
+o nag-center nang walang karapatan. **Huwag itong ayusin sa pamamagitan ng
+pagdagdag sa exception list** — ayusin ang section.
+
+Katabi nya ang `lint-voice.mjs` na siyang bumabantay sa copy laban sa
+[`taglish-voice.md`](../../.claude/skills/_shared/taglish-voice.md). Parehong
+dahilan ang dalawa: **hindi umaasa sa pagtanda, gate ang gamit.**
+
 ## Registered artifacts (i-redeploy sa SAME URLs)
 
 - **Kuya Gabriel v1 + ang price page (2026-07-30):** apat na identity-lock plate ni

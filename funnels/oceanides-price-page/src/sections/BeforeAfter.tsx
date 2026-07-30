@@ -28,12 +28,12 @@ import { Reveal } from '../primitives/Reveal';
 // ===========================================================================
 
 export const BeforeAfter: React.FC<PropsOf<'beforeAfter'>> = ({ heading, eyebrow, note, pairs }) => (
-  <SectionShell>
+  <SectionShell width="prose">
     <Reveal>
       <SectionHeading eyebrow={eyebrow}>{heading}</SectionHeading>
     </Reveal>
 
-    <div className="mt-10 grid gap-8 md:grid-cols-2 md:gap-10">
+    <div className="mt-10 flex flex-col gap-8">
       {pairs.map((pair, i) => (
         <Reveal key={pair.before} index={i}>
           <figure className="overflow-hidden rounded-brand border-2 border-white/20 bg-brand-elevated">

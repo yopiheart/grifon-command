@@ -12,7 +12,7 @@ export const LeadFormSection: React.FC<PropsOf<'leadFormSection'>> = ({ heading 
   <SectionShell width="prose">
     {heading && (
       <Reveal>
-        <SectionHeading align="center" className="mb-8">{heading}</SectionHeading>
+        <SectionHeading className="mb-8">{heading}</SectionHeading>
       </Reveal>
     )}
     <Reveal index={1}>

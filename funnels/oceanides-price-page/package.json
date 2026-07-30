@@ -7,8 +7,9 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "prebuild": "node scripts/lint-voice.mjs",
-    "lint:voice": "node scripts/lint-voice.mjs"
+    "prebuild": "node scripts/lint-voice.mjs && node scripts/lint-layout.mjs",
+    "lint:voice": "node scripts/lint-voice.mjs",
+    "lint:layout": "node scripts/lint-layout.mjs"
   },
   "dependencies": {
     "@fontsource/anton": "^5.2.5",
