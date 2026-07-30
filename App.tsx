@@ -1637,7 +1637,9 @@ const App: React.FC = () => {
     const hasRunResearch = !!localStorage.getItem('marketMindReport');
     const wizardPristine = currentStep === 1 && !clientDetails.brandName && !businessInfo.product && script === null;
     const showResumePill = !isLoadingSession && pendingSession !== null && !hasRestored && wizardPristine;
-    const showNudge = !hasRunResearch && !directorNudgeDismissed && !showResumePill;
+    // Never on Step 8: the finished-ad screen is the attention peak, and this
+    // banner routes the user away from the ad they just made.
+    const showNudge = !hasRunResearch && !directorNudgeDismissed && !showResumePill && currentStep !== 8;
     const showLoadedConfirmation = hasRunResearch && marketMindLoadedAvatar && !showResumePill;
     // One-shot is the default surface; a pending step session forces steps mode
     // so the user can resume where they left off.

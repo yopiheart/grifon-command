@@ -9,6 +9,7 @@ import JSZip from 'jszip';
 import saveAs from 'file-saver';
 import { useSubscription } from '../hooks/useSubscription';
 import { watermarkImage } from '../utils/watermark';
+import { computeUpgradeNudge } from '../config/upgradeNudge';
 import { MAT_PLATE_INSET } from './ui/materialTokens';
 
 interface Step7Props {
@@ -89,8 +90,17 @@ const ImageAssetPanel: React.FC<{ title: string; src: string; aspectRatio: '9:16
 
 const Step7FinalOutput: React.FC<Step7Props> = ({ allData, onRestart, onBack, onGenerateVideo }) => {
   const { clientDetails, finalScript, avatar, storyboard, videoPrompts, thumbnailUrl, aspectRatio } = allData;
-  const { plan_id } = useSubscription();
+  const { plan_id, loading: planLoading } = useSubscription();
+  // Two gates on purpose: watermarking stays on the raw plan check so the
+  // loading window (plan_id defaults to 'free') fails SAFE — watermarked.
+  // The visible bridge waits for the plan to resolve so paid users never
+  // flash the free treatment.
   const isFree = plan_id === 'free'; // Free exports are watermarked (Slice 3)
+  const showFreeBridge = !planLoading && isFree;
+  // The Taglish moment-of-value pitch was written for exactly this screen. Free
+  // is 1 workflow and reaching Step 8 means it is spent, so the usage triple is
+  // fixed — no quota fetch needed.
+  const freeNudge = showFreeBridge ? computeUpgradeNudge('free', { used: 1, limit: 1, remaining: 0 }) : null;
   const [activeTab, setActiveTab] = useState<TabKey>('script');
   const [exporting, setExporting] = useState(false);
   const [previewImage, setPreviewImage] = useState<{ url: string; filename: string } | null>(null);
@@ -220,20 +230,31 @@ const Step7FinalOutput: React.FC<Step7Props> = ({ allData, onRestart, onBack, on
 
       <div className="min-h-[420px]">{renderPanel()}</div>
 
+      {/* The bridge: state the state, then the one paid next step (L1). */}
+      {showFreeBridge && (
+        <div className={`mt-8 p-6 ${MAT_PLATE_INSET} rounded-xl border border-[#FFCC00]/30 flex flex-col gap-3`}>
+          <p className="text-[10px] text-on-surface-sublabel font-mono uppercase tracking-widest">
+            // 1/1 FREE WORKFLOW USED · EXPORTS WATERMARKED
+          </p>
+          {freeNudge && <p className="text-sm text-zinc-300 leading-relaxed">{freeNudge.message}</p>}
+        </div>
+      )}
+
       <StepFooter
         onBack={onBack}
         backLabel="Back"
         renderNext={
           <div className="flex flex-col sm:flex-row gap-3">
+            {/* Ghost treatment: the free exit stays available but reads as secondary. */}
             <button
               onClick={exportBundle}
               disabled={exporting}
-              className="flex items-center justify-center gap-2 rounded-full px-6 py-3 border border-[#FFCC00]/40 hover:border-[#FFCC00] text-[#FFCC00] hover:bg-[#FFCC00]/5 transition-colors text-[10px] font-mono tracking-widest uppercase disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center justify-center gap-2 rounded-full px-6 py-3 bg-zinc-950 border border-white/10 text-zinc-400 hover:text-[#FFCC00] hover:border-[#FFCC00]/40 transition-colors text-[10px] font-mono tracking-widest uppercase disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Package className="w-4 h-4" /> {exporting ? 'BUNDLING...' : 'EXPORT_BUNDLE (.ZIP)'}
             </button>
             <GoldButton onClick={onGenerateVideo} className="rounded-full px-6 py-3 flex items-center justify-center gap-2 text-[10px]">
-              <Video className="w-4 h-4" /> GENERATE VIDEO NOW &gt;
+              <Video className="w-4 h-4" /> {showFreeBridge ? 'I-RENDER ANG VIDEO — STARTER ₱997' : 'GENERATE VIDEO NOW >'}
             </GoldButton>
           </div>
         }
@@ -253,6 +274,7 @@ const Step7FinalOutput: React.FC<Step7Props> = ({ allData, onRestart, onBack, on
           imageUrl={previewImage.url}
           onClose={() => setPreviewImage(null)}
           filename={previewImage.filename}
+          watermark={isFree}
         />
       )}
     </StepShell>

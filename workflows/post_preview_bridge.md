@@ -50,7 +50,30 @@ Audited free-user journey (One-Shot → `onReview()` → `App.tsx` step 8):
    right L1 mechanic. It just (a) offers two competing prices at once and
    (b) both its exits lose the artifact.
 
-### Recommended fix shape (Neil-gated, next build session)
+### Build status (2026-07-30, Neil approved "go sa bridge fix")
+
+**SHIPPED (code-executor slice, reviewed by main loop + fresh critic):**
+state line, rendered Taglish nudge, price-naming CTA ("I-RENDER ANG VIDEO —
+STARTER ₱997", free only), export demoted to ghost (all tiers), research
+banner suppressed on step 8, lightbox watermark leak plugged (optional
+`watermark` prop on ImageModal; all 7 call sites verified unaffected).
+
+**REMAINING (next slice — "resume routing", executor-investigated 2026-07-30):**
+persistence itself is DONE — `App.tsx:589-621` autosaves the full step-8
+payload to IndexedDB and the hard-redirect (₱499 top-up) path already resumes
+via the pill. Three routing gaps:
+1. `Dashboard.tsx:163` filters step 8 out of `ResumeDraftCard`
+   (`currentStep < WIZARD_TOTAL_STEPS`) — a finished ad is "not a draft," so
+   the Dashboard offers no way back. Smallest fix.
+2. The soft exit (`See plans`, `App.tsx:1510`) leaves state in memory but
+   unreachable (`showResumePill` stays false, `directorMode` reverts to
+   one-shot). Draft sits in IndexedDB the whole time.
+3. No return-to-ad intent on either paywall exit; `billing_success`
+   (`App.tsx:1033`) never consults the wizard session. The
+   `moduleIntentService` stash-and-pop is the pattern to copy.
+Paywall unification (Step-8 vs Dashboard-tile) also still open.
+
+### Recommended fix shape (original design, for reference)
 
 Make Step 8 an actual thank-you bridge, F03/F04-style:
 
