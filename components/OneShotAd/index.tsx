@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ChevronLeft, AlertTriangle, RotateCw, Loader2, Sparkles, FilePlus2 } from 'lucide-react';
-import type { ClientDetails, BusinessInfo } from '../../types';
+import type { ClientDetails, BusinessInfo, Scene } from '../../types';
 import { generateMarketResearch } from '../../services/geminiService';
 import { mapReportToWizard, type ProductionInput } from '../../services/oneShotIntake';
 import { useOneShotGeneration, type OneShotSinks } from '../../hooks/useOneShotGeneration';
@@ -28,14 +28,16 @@ const useProducerEngine = (): boolean => {
  * One-Shot Ad module container. Collects a brief (LaunchScreen), runs market
  * research, projects it onto the wizard, then drives main's client-side
  * `useOneShotGeneration` chain (script → presenter → storyboard → scenes →
- * thumbnail → video prompts). On completion it routes to Step 8 review, where
- * the GenerateVideo hand-off (and metered render) already live — identical to
- * the Director one-shot, just with a richer intake.
+ * thumbnail → video prompts). On completion it routes to the consumer review
+ * surface (ReviewScreen), where the GenerateVideo hand-off (and metered render)
+ * already live — identical to the Director one-shot, just with a richer intake.
  */
 interface OneShotAdProps {
   userId: string | null;
-  /** Setters into App.tsx's central wizard state — keeps Step 8 review + GenerateVideo in sync. */
+  /** Setters into App.tsx's central wizard state — keeps review + GenerateVideo in sync. */
   sinks: OneShotSinks;
+  /** Live storyboard read back from App state — feeds the running screen's scene tiles. */
+  storyboard?: Scene[];
   setClientDetails: (c: ClientDetails) => void;
   setBusinessInfo: (b: BusinessInfo) => void;
   setAspectRatio: (r: '9:16' | '16:9') => void;
@@ -57,13 +59,14 @@ interface OneShotAdProps {
   onSwitchToExpert?: () => void;
   /** Open Signal Modulator's Voice Cloning tab from the voice picker. */
   onCloneVoice: () => void;
-  /** After a successful run → Step 8 review + video hand-off. */
+  /** After a successful run → the consumer review surface + video hand-off. */
   onReview: () => void;
 }
 
 const OneShotAd: React.FC<OneShotAdProps> = ({
   userId,
   sinks,
+  storyboard,
   setClientDetails,
   setBusinessInfo,
   setAspectRatio,
@@ -181,7 +184,7 @@ const OneShotAd: React.FC<OneShotAdProps> = ({
     return (
       <div className="relative">
         {BackBar}
-        <RunningScreen researching={researching} stages={oneShot.stages} onMinimize={onBack} />
+        <RunningScreen researching={researching} stages={oneShot.stages} scenes={storyboard} onMinimize={onBack} />
       </div>
     );
   }

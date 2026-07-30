@@ -82,6 +82,51 @@ mount, so an in-SPA checkout return (or OTP sign-in) carried stale
 `credits: 0` and re-paywalled the buyer — App now refetches quota on every
 landing on the app surface with a 4s second pass for webhook lag.
 
+## Part 3 — Consumer Review repair (Neil's 2026-07-30 preview walk)
+
+Neil's live walk of the preview exposed the deeper truth behind Part 1: the
+free user should never have LANDED on Step 8 at all — the 8-step wizard
+chrome is an admin/dev surface (now an agent_lessons hard rule). Two slices
+shipped 2026-07-30 (both code-executor + adversarial critic):
+
+**Slice A — ReviewScreen + routing:** new `components/OneShotAd/ReviewScreen.tsx`
+(One-Shot-world review: script, scene stills, character, thumbnail — NO
+prompts, any tier; assets-only ZIP; Step7's bridge mechanics reused verbatim).
+New `directorMode: 'review'`; every consumer path (one-shot completion,
+concierge, resume, return-to-ad, billing-success, dashboard card) lands
+there; devUnlock keeps the Step-8 cockpit + wizard. LockedVideoPreview:
+₱499 removed for free users (member perk lives in QuotaWallModal only),
+viewport-fit side-by-side layout. RunningScreen tiles now show real scene
+images as they land.
+
+**Slice B — pipeline honesty:** generation order is now script → avatar →
+THUMBNAIL → storyboard → scenes → prompts (thumbnail can no longer be starved
+by the scene loop). FREE runs are budget-aware: reserve avatar+thumbnail,
+greedily cap scenes (hook-morph scene costs 2 images), trim surfaced on
+ReviewScreen ("N of M scenes — full storyboard on Starter"); paid never
+trimmed; 13 new unit tests pin the never-overspend invariant. Talent chip
+row on LaunchScreen (Auto/Filipino/Pan-Asian/Caucasian/Custom); the Auto
+foreigner bug is fixed at the transport level — Taglish+Auto now derives
+'Filipino' into the avatar/storyboard args (root cause: empty ethnicity →
+storyboard told 'Global/Neutral'; producer engine already defaulted
+'Filipino'). No tuned prompt content touched.
+
+**GATED PROPOSAL — UGC-authentic thumbnail (needs Neil's per-diff approval,
+TUNED):** the product has exactly ONE thumbnail style — hard-coded MrBeast
+shock-face (`services/geminiService.ts:2323-2402`, style const at :882) — so
+every UGC ad gets a hype-drop cover. Proposal: a sibling generator (or style
+param) with a UGC-authentic prompt (real-person candid still, natural
+expression, no shock face, no saturated rim light), selected automatically
+when scriptType is a UGC Pro sub-format. This is the one piece of the repair
+that cannot avoid tuned content; parked until Neil approves the exact prompt
+diff.
+
+**Future (grill-me session):** "My Campaigns" library — server-side rows
+exist only for producer runs (`producer_runs`/`producer_scenes`); legacy
+one-shot ads live solely in per-device IndexedDB. A cross-device,
+campaign-grouped library (Gemini-Library-style, per Neil's reference
+screenshots) needs a persistence path for legacy runs + a library UI.
+
 **STILL OPEN (flagged by critics, all pre-existing — next candidates):**
 1. **Top-up buyers never see billing_success** — `TopUpCheckoutPage` succeeds
    in-page; recovery now works (return intent + quota refetch) but the

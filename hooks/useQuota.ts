@@ -13,6 +13,10 @@ export type Quota = Record<MeterUnit, UnitUsage> & {
   plan: PlanId;
   credits: Credits;
   loading: boolean;
+  /** True only after a SUCCESSFUL usage fetch. Distinguishes "the numbers are
+      real" from the DEFAULT zeros left behind by a failed/absent fetch —
+      consumers making spend decisions must check this, not just !loading. */
+  loaded: boolean;
   refetch: () => void;
 };
 
@@ -29,6 +33,7 @@ const DEFAULT: Omit<Quota, 'refetch'> = {
   omni_ads: ZERO,
   credits: ZERO_CREDITS,
   loading: true,
+  loaded: false,
 };
 
 /**
@@ -68,6 +73,7 @@ export const useQuota = (): Quota => {
         omni_ads: data.omni_ads ?? ZERO,
         credits: data.credits ?? ZERO_CREDITS,
         loading: false,
+        loaded: true,
       });
     } catch {
       setState((s) => ({ ...s, loading: false }));

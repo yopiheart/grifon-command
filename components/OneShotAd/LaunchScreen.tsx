@@ -78,6 +78,16 @@ const VERTICALS: { value: string; label: string; desc: string; Icon: typeof Pack
   { value: 'app', label: 'App', desc: 'Mobile app / SaaS', Icon: Smartphone, locked: true },
 ];
 
+/** Talent presets for the visible chip row. `value` IS the castHints.ethnicity
+ * string the run receives — Auto stays empty, and the hook then defaults the
+ * look from the ad's language/market. Custom hands the field back to the user. */
+const TALENT_PRESETS: { value: string; label: string }[] = [
+  { value: '', label: 'Auto' },
+  { value: 'Filipino', label: 'Filipino' },
+  { value: 'Pan-Asian', label: 'Pan-Asian' },
+  { value: 'Caucasian', label: 'Caucasian' },
+];
+
 /** Close a popover/menu when clicking outside its wrapper. Only listens while
  * `enabled` (open) — otherwise a CLOSED popover's listener would fire on every
  * click and slam the OPEN sibling shut on mousedown, eating the real click. */
@@ -212,8 +222,13 @@ export const LaunchScreen: React.FC<{
   const [gender, setGender] = useState<'Any' | 'Male' | 'Female'>(restored?.gender ?? 'Any');
   const [ageRange, setAgeRange] = useState(restored?.ageRange ?? '');
   const [ethnicity, setEthnicity] = useState(restored?.ethnicity ?? '');
+  // The talent chip row owns `ethnicity` now (Auto = ''); Custom reveals the
+  // free-text field. Derived on restore so a saved non-preset look reopens it.
+  const [talentCustom, setTalentCustom] = useState<boolean>(
+    !!restored?.ethnicity && !TALENT_PRESETS.some((t) => t.value === restored.ethnicity),
+  );
   const [showCastHints, setShowCastHints] = useState<boolean>(
-    !!(restored?.ethnicity || restored?.ageRange || (restored?.gender && restored.gender !== 'Any')),
+    !!(restored?.ageRange || (restored?.gender && restored.gender !== 'Any')),
   );
   const [avatarUrl, setAvatarUrl] = useState<string>(restored?.avatarUrl ?? '');
   const [avatarErr, setAvatarErr] = useState('');
@@ -501,7 +516,7 @@ export const LaunchScreen: React.FC<{
     setLocalService(false); setBusinessAddress('');
     // Reset drops the draft too, so the segmentation answer is the default again.
     setVertical(preferredVertical ?? 'product'); setRecipe('real_talk');
-    setPresenterMode('auto'); setGender('Any'); setAgeRange(''); setEthnicity(''); setShowCastHints(false);
+    setPresenterMode('auto'); setGender('Any'); setAgeRange(''); setEthnicity(''); setTalentCustom(false); setShowCastHints(false);
     setAvatarUrl('');
     setLanguage('Taglish'); setAspectRatio('9:16');
     setVoiceId(voiceOpts[0]?.id ?? STOCK_FALLBACK[0]?.id ?? '');
@@ -838,6 +853,34 @@ export const LaunchScreen: React.FC<{
               </button>
             </div>
           )}
+          {/* ---- Talent — promoted out of the Presenter modal's Advanced drawer.
+              An untouched "Auto" used to ship an EMPTY ethnicity, so a Taglish ad
+              got cast as Global/Neutral. Only meaningful while AI Director casts
+              (an uploaded presenter already fixes the look). ---- */}
+          {presenterMode === 'auto' && (
+            <div className="mt-4">
+              <label className={`mb-1.5 block text-zinc-400 ${T_LABEL}`}>// Talent</label>
+              <div className="flex flex-wrap gap-2">
+                {TALENT_PRESETS.map((t) => (
+                  <TalentChip
+                    key={t.label}
+                    active={!talentCustom && ethnicity === t.value}
+                    onClick={() => { setTalentCustom(false); setEthnicity(t.value); sfx.play('select'); }}
+                  >
+                    {t.label}
+                  </TalentChip>
+                ))}
+                <TalentChip active={talentCustom} onClick={() => { setTalentCustom(true); sfx.play('select'); }}>
+                  Custom
+                </TalentChip>
+              </div>
+              {talentCustom && (
+                <div className="mt-2">
+                  <MiniInput placeholder="e.g. Korean, Latina, Indian" value={ethnicity} onChange={setEthnicity} />
+                </div>
+              )}
+            </div>
+          )}
 
           {/* ---- GENERATE --------------------------------------------------- */}
           <div className="mt-6 max-md:sticky max-md:bottom-3 max-md:z-30">
@@ -1070,7 +1113,7 @@ export const LaunchScreen: React.FC<{
                   onClick={() => setShowCastHints((v) => !v)}
                   className={`flex w-full items-center justify-between gap-2 border border-white/10 bg-zinc-950 px-4 ${CTRL_H} ${R_CTRL} ${T_LABEL} text-zinc-400 transition-colors hover:border-white/30 hover:text-white`}
                 >
-                  <span className="inline-flex items-center gap-2"><Settings2 className="h-3.5 w-3.5 shrink-0" /> Advanced · specify look (optional)</span>
+                  <span className="inline-flex items-center gap-2"><Settings2 className="h-3.5 w-3.5 shrink-0" /> Advanced · gender and age (optional)</span>
                   <ChevronDown className={`h-4 w-4 shrink-0 opacity-60 transition-transform ${showCastHints ? 'rotate-180' : ''}`} />
                 </button>
                 {showCastHints && (
@@ -1080,10 +1123,9 @@ export const LaunchScreen: React.FC<{
                         <SegBtn key={g} active={gender === g} onClick={() => setGender(g)}>{g}</SegBtn>
                       ))}
                     </div>
-                    <div className="grid grid-cols-2 gap-2">
-                      <MiniInput placeholder="e.g. Filipino" value={ethnicity} onChange={setEthnicity} />
-                      <MiniInput placeholder="e.g. 25-34" value={ageRange} onChange={setAgeRange} />
-                    </div>
+                    {/* Look/ethnicity moved out to the Talent chip row on the main
+                        form — it was the one hint users actually needed. */}
+                    <MiniInput placeholder="e.g. 25-34" value={ageRange} onChange={setAgeRange} />
                     <p className="text-[11px] leading-snug text-on-surface-sublabel">Leave blank to let AI Director cast from your market research.</p>
                   </div>
                 )}
@@ -1201,6 +1243,21 @@ const SegBtn: React.FC<{ active: boolean; onClick: () => void; children: React.R
     onClick={onClick}
     disabled={disabled}
     className={`flex-1 border px-2 ${CTRL_H} ${R_CTRL} ${T_VALUE} uppercase transition-all ${
+      active ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]' : 'border-white/10 text-zinc-400 hover:border-white/30'
+    }`}
+  >
+    {children}
+  </button>
+);
+
+/** A talent-row chip — SegBtn's visual language (h-11 control floor, R_CTRL, gold
+ * when active) but content-sized instead of flex-1, so the row wraps on a phone
+ * without squeezing "Pan-Asian" into an unreadable column. */
+const TalentChip: React.FC<{ active: boolean; onClick: () => void; children: React.ReactNode }> = ({ active, onClick, children }) => (
+  <button
+    type="button"
+    onClick={onClick}
+    className={`border px-4 ${CTRL_H} ${R_CTRL} ${T_VALUE} uppercase transition-all ${
       active ? 'border-[#FFCC00] bg-[#FFCC00]/10 text-[#FFCC00]' : 'border-white/10 text-zinc-400 hover:border-white/30'
     }`}
   >

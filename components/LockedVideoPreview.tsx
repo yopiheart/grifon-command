@@ -11,13 +11,19 @@ import { GoldButton } from './ui/GoldButton';
  * thumbnail / first scene, blurred behind a lock + play button, with the upgrade
  * CTA. Seeing the finished ad one tap from coming alive is the highest-intent
  * upsell moment in the funnel (see workflows/pricing_unit_economics.md §5).
+ *
+ * This screen sells Starter ONLY. The ₱499 single-ad top-up is a PAID-MEMBER
+ * perk behind the quota wall (Neil, 2026-07-30) — never a free-tier door, or the
+ * subscription pitch competes with a one-off that undercuts it.
+ *
+ * Layout is side-by-side on desktop (teaser left, pitch right) so the whole
+ * moment fits one viewport with no scroll; it stacks below `lg`, where a little
+ * scrolling is fine.
  */
 
 interface LockedVideoPreviewProps {
   onBack: () => void;
   onUpgrade: () => void;
-  /** Standalone ₱499 single-ad door — render this ONE ad without subscribing. */
-  onBuyTopup?: () => void;
   /** The user's generated thumbnail (preferred teaser). */
   thumbnailUrl?: string | null;
   /** Fallback teaser — the first storyboard scene image. */
@@ -27,29 +33,25 @@ interface LockedVideoPreviewProps {
 const LockedVideoPreview: React.FC<LockedVideoPreviewProps> = ({
   onBack,
   onUpgrade,
-  onBuyTopup,
   thumbnailUrl,
   previewImageUrl,
 }) => {
   const teaser = thumbnailUrl || previewImageUrl || null;
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-white font-sans flex flex-col items-center p-6">
-      <div className="w-full max-w-3xl mx-auto">
+    <div className="min-h-screen bg-zinc-950 text-white font-sans flex flex-col p-4 md:p-6">
+      <div className="w-full max-w-5xl mx-auto flex flex-col flex-1">
         <button
           onClick={onBack}
-          className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-on-surface-sublabel hover:text-white uppercase tracking-widest transition-colors mb-8 mt-4"
+          className="flex items-center gap-2 text-[10px] md:text-xs font-mono text-on-surface-sublabel hover:text-white uppercase tracking-widest transition-colors mb-4 mt-2 shrink-0"
         >
           <ChevronLeft className="w-4 h-4" /> COMMAND CENTER
         </button>
 
-        <GlassPanel className="p-6 md:p-10 text-center">
-          <p className="text-[10px] font-mono text-[#FFCC00] uppercase tracking-[0.25em] mb-4">
-            // YOUR_AD_IS_READY_TO_COME_ALIVE
-          </p>
-
-          {/* Teaser: the user's own asset, blurred behind a lock + play button. */}
-          <div className="relative mx-auto mb-8 w-full max-w-sm aspect-[9/16] rounded-2xl overflow-hidden border border-white/10 bg-zinc-900">
+        <GlassPanel className="p-6 md:p-8 flex flex-col lg:flex-row lg:items-center gap-8">
+          {/* Teaser: the user's own asset, blurred behind a lock + play button.
+              Height-capped so the panel never outgrows the viewport on desktop. */}
+          <div className="relative mx-auto w-full max-w-[240px] lg:max-w-none lg:mx-0 lg:h-[calc(100vh-13rem)] lg:max-h-[520px] lg:w-auto lg:shrink-0 aspect-[9/16] rounded-2xl overflow-hidden border border-white/10 bg-zinc-900">
             {teaser ? (
               <img
                 src={teaser}
@@ -70,37 +72,29 @@ const LockedVideoPreview: React.FC<LockedVideoPreviewProps> = ({
             </div>
           </div>
 
-          <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tight mb-4">
-            Turn your plan into a{' '}
-            <span className="text-[#FFCC00]">real video ad</span>
-          </h2>
-
-          <p className="text-sm text-zinc-400 max-w-md mx-auto mb-8 leading-relaxed">
-            Your free plan builds the whole ad — script, storyboard, avatar and
-            thumbnail. Rendering it into a finished, ready-to-post video is a paid
-            feature. Upgrade to <span className="text-white font-bold">Starter</span> to
-            bring this one to life, or <span className="text-white font-bold">Pro</span> for
-            8 finished ads a month plus the AI editor.
-          </p>
-
-          <GoldButton onClick={onUpgrade} className="px-8 py-3" glossy>
-            <Sparkles className="w-4 h-4 mr-2 inline" />
-            See plans &amp; unlock video
-          </GoldButton>
-
-          {onBuyTopup && (
-            <p className="mt-5 text-sm text-zinc-400">
-              Just need this one?{' '}
-              <button
-                type="button"
-                onClick={onBuyTopup}
-                className="text-[#FFCC00] font-semibold hover:underline"
-              >
-                Get 1 ad for ₱499
-              </button>{' '}
-              — no subscription.
+          <div className="text-center lg:text-left min-w-0">
+            <p className="text-[10px] font-mono text-[#FFCC00] uppercase tracking-[0.25em] mb-4">
+              // YOUR_AD_IS_READY_TO_COME_ALIVE
             </p>
-          )}
+
+            <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tight mb-4">
+              Turn your plan into a{' '}
+              <span className="text-[#FFCC00]">real video ad</span>
+            </h2>
+
+            <p className="text-sm text-zinc-400 max-w-md mx-auto lg:mx-0 mb-8 leading-relaxed">
+              Your free plan builds the whole ad — script, storyboard, avatar and
+              thumbnail. Rendering it into a finished, ready-to-post video is a paid
+              feature. Upgrade to <span className="text-white font-bold">Starter</span> to
+              bring this one to life, or <span className="text-white font-bold">Pro</span> for
+              8 finished ads a month plus the AI editor.
+            </p>
+
+            <GoldButton onClick={onUpgrade} className="px-8 py-3" glossy>
+              <Sparkles className="w-4 h-4 mr-2 inline" />
+              See plans &amp; unlock video
+            </GoldButton>
+          </div>
         </GlassPanel>
       </div>
     </div>
