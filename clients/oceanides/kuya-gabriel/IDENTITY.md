@@ -266,6 +266,34 @@ Ihambing sa **body master**, hindi sa ibang generation. Kapag may isang HINDI:
 
 ---
 
+## ✅ Aprubado — ito na ang pamantayan
+
+Ang mga aprubadong larawan ang **pinagbabatayan ng bawat susunod na roll**, hindi
+ang ibang AI output. Ganito na-decode ang recipe ni Marvin: mula 1-sa-7 na pasado,
+naging 3-sa-3 nang may aprubadong pamantayan nang maihambing.
+
+| Larawan | Kalagayan | Kung bakit sya pumasa |
+|---|---|---|
+| `gabriel-cover-v3.png` | ✅ **APPROVED** (Neil + Gabriel, 2026-07-30) | Isang maulap na araw, isang ilaw para sa lahat. Walang anino sa lupa, walang maliwanag na batik, at pareho ang exposure ng balat nya at ng semento. Hindi na sya lumulutang. |
+| `gabriel-website-v3.png` | 🟡 Malapit na | Tama na ang katawan at ang ulo, at gumagana ang bukas na overshirt. Tinanggihan ang ngiti. |
+| `gabriel-profile-v1.png` | 🟡 Hindi pa napagdedesisyunan | May ngiting kitang ngipin. Naghihintay ng hatol ni Gabriel. |
+| `gabriel-pointing-v1.png` | 🟡 Hindi pa napagdedesisyunan | — |
+
+### 🔴 Walang ngiti ang default (Gabriel, 2026-07-30)
+
+Hiniling ni Gabriel na alisin ang ngiti at ang ngipin. **Tama sya, at sang-ayon
+ang brand:** *"Ang default ay kalmadong eksperto, hindi masiglang salesman... Sa
+kategoryang puno ng manloloko, ang labis na sigla ay mukhang scam."*
+
+**Ang panuntunan mula ngayon:** sarado at nakarelaks ang bibig, walang ngiti,
+walang kitang ngipin, pantay ang baba, diretso ang tingin sa lens.
+
+**Isang exception, at hindi pa ito napagdedesisyunan:** ang **FB profile picture.**
+Doon lang, may argumento ang ngiti — yun ang unang mukhang makikita ng taong
+hihingan mo ng ₱499, at kailangan nilang makita ang tao bago ang trabahador.
+Pero **kay Gabriel ang mukha at sa kanya ang huling salita.** Hintayin ang sagot
+nya bago i-lock.
+
 ## Kalagayan
 
 - ✅ 6 na reference photo, na-rename sa anggulo
