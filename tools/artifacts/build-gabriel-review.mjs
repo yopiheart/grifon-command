@@ -62,10 +62,13 @@ tokens.__FONT_INTER_400__ = await font('inter', 'inter-latin-400-normal.woff2');
 tokens.__FONT_INTER_700__ = await font('inter', 'inter-latin-700-normal.woff2');
 
 // --- Gabriel plates --------------------------------------------------------
+// The FINAL set. The rejected iterations (website v1-v3, cover v1-v2) were
+// deleted after Gabriel's own eye caught the big head, the pasted look and the
+// skin standing out. Their stories live in clients/oceanides/kuya-gabriel/IDENTITY.md.
 const plateJobs = [
-  ['__PLATE_PROFILE__', 'gabriel-profile-v1.png', 720],
-  ['__PLATE_WEBSITE__', 'gabriel-website-v1.png', 620],
-  ['__PLATE_COVER__', 'gabriel-cover-v1.png', 900],
+  ['__PLATE_PROFILE__', 'gabriel-profile-v2.png', 720],
+  ['__PLATE_WEBSITE__', 'gabriel-website-v4.png', 620],
+  ['__PLATE_COVER__', 'gabriel-cover-v3.png', 900],
   ['__PLATE_POINTING__', 'gabriel-pointing-v1.png', 620],
 ];
 for (const [token, file, width] of plateJobs) {
@@ -126,7 +129,39 @@ for (const [label, re] of banned) {
   }
 }
 
+// TWO OUTPUTS, and the difference is not cosmetic.
+//
+// The Artifact tool wraps whatever it publishes in its own
+// `<!doctype html><head>…</head><body>` skeleton, so the file it receives must be
+// a BODY FRAGMENT with no document tags of its own.
+//
+// The committed twin is opened DIRECTLY off disk — Neil sends it over Viber or
+// email and someone double-clicks it. With no `<meta charset>`, Chromium guesses
+// windows-1252 and every `·` in the copy renders as `Â·`. Caught by the mobile
+// gate on 2026-07-30, visible on both breakpoints. The hosted page was fine the
+// whole time because the wrapper declares the charset; only the twin broke, and
+// the twin is the entire reason the file exists.
+//
+// So: fragment for publishing, full document for sharing.
+const FRAGMENT = join(ROOT, '.tmp', 'gabriel-review.fragment.html');
+const standalone = `<!doctype html>
+<html lang="tl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kuya Gabriel + ang price page</title>
+</head>
+<body>
+${html}
+</body>
+</html>
+`;
+
 await mkdir(dirname(OUT), { recursive: true });
-await writeFile(OUT, html, 'utf8');
-console.log(`\n  images ${kb(total)}  ·  page ${kb(Buffer.byteLength(html))}`);
-console.log(`  → ${OUT}`);
+await mkdir(dirname(FRAGMENT), { recursive: true });
+await writeFile(OUT, standalone, 'utf8');
+await writeFile(FRAGMENT, html, 'utf8');
+
+console.log(`\n  images ${kb(total)}  ·  page ${kb(Buffer.byteLength(standalone))}`);
+console.log(`  → ${OUT}          (standalone twin, i-share ito)`);
+console.log(`  → ${FRAGMENT}   (fragment, ito ang ipa-publish)`);

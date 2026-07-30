@@ -76,6 +76,24 @@ for (const file of files) {
       why: 'ang hero lang ang naka-gitna, ang iba ay nasa kaliwang rail',
     });
   }
+
+  // A <SectionHeading> wrapped in a padded box drifts off the rail even when the
+  // shell width is right. ObjectionReversal did exactly this: an amber left-rule
+  // box with `pl-5` around the whole section pushed its heading 22px right of
+  // every other heading. Invisible in the file, obvious when scrolling.
+  const lines = src.split('\n');
+  lines.forEach((line, i) => {
+    if (!/<(div|section|article)[^>]*\b(pl-|px-|ml-|mx-)/.test(line)) return;
+    const window = lines.slice(i + 1, i + 4).join('\n');
+    if (/<SectionHeading/.test(window)) {
+      hits.push({
+        file,
+        what: `may padding ang nakabalot sa heading (linya ${i + 1})`,
+        fix: 'ilabas ang <SectionHeading> sa padded na box, ang body na lang ang balutin',
+        why: 'lumilihis ang heading sa rail kahit tama ang lapad ng section',
+      });
+    }
+  });
 }
 
 if (hits.length === 0) {
