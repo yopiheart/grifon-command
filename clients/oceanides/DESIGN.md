@@ -188,6 +188,15 @@ amber (floor sa itaas). Walang paper surface sa video overlays o dashboards.
 
 ## Registered artifacts (i-redeploy sa SAME URLs)
 
+- **Kuya Gabriel v1 + ang price page (2026-07-30):** apat na identity-lock plate ni
+  Gabriel na may QA verdict, at ang buong landing + thank-you page sa loob ng phone
+  frame na kayang i-swipe. Ginawa dahil naka-remote si Neil at hindi nya masilip ang
+  page sa cellphone. Naka-link din sa isang Gmail draft.
+  `https://claude.ai/code/artifact/99a49f2a-96a1-499a-a681-c257e47f38df`
+  Twin: [`artifacts/gabriel-review.html`](../../artifacts/gabriel-review.html) ·
+  Build: `node tools/artifacts/build-gabriel-review.mjs`. Pumasa sa 390×844 gate.
+  ⚠️ **May mukha ng tao na wala pang pirmadong consent** — huwag i-share hangga't
+  hindi pa pirmado ang likeness agreement ni Gabriel.
 - **KM-003 Page Launch — Run Sheet (2026-07-27):** ang limang organic post na
   kopya-paste habang nagpo-post sa phone, kasama ang pre-flight bago i-ON.
   `https://claude.ai/code/artifact/5952f7ba-859c-45b9-a295-fa8320c4d5d4`
