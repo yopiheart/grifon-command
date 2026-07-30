@@ -130,11 +130,25 @@ export const funnelConfig: FunnelConfig = {
     {
       type: 'hero',
       props: {
-        eyebrow: 'SEPTIC TANK SIPHONING · METRO MANILA',
-        headline: '₱5,000. Walang dagdag pagdating ng truck.',
+        eyebrow: 'Septic tank siphoning · Metro Manila',
+        // `**…**` renders amber (lib/goldEmphasis). Anton ships ONE weight, so
+        // colour is the brand's only emphasis channel. Keep it to 1-2 runs —
+        // amber is the single accent in the system and spending it on five words
+        // spends the scroll-stop it exists to buy.
+        headline: '₱5,000. **Walang dagdag** pagdating ng truck.',
         subhead:
-          'Isang load na siphoning, 4,000 litro, may 30-day warranty. Nakasulat ang presyo bago kami magsimula. Kung may dagdag, nasa ibaba nakalista lahat. Wala kaming itinatago.',
+          'Isang truckload na siphoning, 4,000 litro, may 30-day warranty. Nakasulat ang presyo bago kami magsimula. Kung may dagdag, nasa ibaba nakalista lahat. Wala kaming itinatago.',
         ctaLabel: 'Mag-book ng schedule',
+        logo: '/img/logo.webp',
+        logoAlt: 'Oceanides',
+        image: '/img/hero-truck.webp',
+        imageAlt: 'Puting truck ng Oceanides na nakaparada sa kalye sa Metro Manila',
+        // 🔴 PLACEHOLDER. Repdigit-9 on purpose (clients/oceanides/DESIGN.md
+        // placeholder rule): an obviously fake number can never be mistaken for
+        // a real one. Neil has not given the real number yet. DO NOT DEPLOY
+        // with this still here.
+        phone: '0999 999 9999',
+        phoneLabel: 'Tawag o text, 24 oras',
       },
     },
 
@@ -145,6 +159,10 @@ export const funnelConfig: FunnelConfig = {
     {
       type: 'socialProofBar',
       props: {
+        badges: [
+          { src: '/img/badge-denr.webp', alt: 'DENR registered' },
+          { src: '/img/badge-bir.webp', alt: 'BIR registered' },
+        ],
         line: 'SEC-rehistrado. May BIR official receipt. DENR-partner na tapunan. Ito ang mga papel na hindi kayang ibigay ng karaniwang siphoner.',
       },
     },
@@ -152,16 +170,17 @@ export const funnelConfig: FunnelConfig = {
     {
       type: 'valueStack',
       props: {
-        heading: 'Ano ang kasama sa ₱5,000',
+        heading: 'Ano ang kasama sa **₱5,000**',
         items: [
-          { label: 'Isang load na siphoning, 4 cubic o 4,000 litro' },
+          { label: 'Isang truckload na siphoning, 4 cubic o 4,000 litro' },
           { label: 'Hose hanggang [TANONG KAY BOSS JAY] metro, kasama na' },
-          { label: '30-day warranty kung bumalik ang bara o puno' },
+          { label: 'Litrato ng tangke nyo bago at pagkatapos, para may pagkumparahan' },
+          { label: '30-day warranty kung bumalik ang bara' },
           { label: 'BIR official receipt' },
           { label: 'Legal na tapunan sa DENR-partner facility' },
           { label: 'Nakasulat na presyo bago kami magsimula' },
         ],
-        totalLine: '₱5,000. Isang presyo, hindi range.',
+        totalLine: '₱5,000 kada truckload. Isang presyo, hindi range.',
       },
     },
 
@@ -174,8 +193,9 @@ export const funnelConfig: FunnelConfig = {
         heading: 'Ang mga dagdag na itinatago ng iba',
         body: [
           'Lahat ng siphoner may ganitong singil. Kami lang ang naglalagay nito sa page bago ka pa mag-book.',
-          'Sobrang hose, ₱100 kada tubo. Kapag malayo ang mapaparadahan ng truck sa tangke nyo.',
+          'Sobrang hose, ₱100 kada 3 metrong dagdag. Kapag malayo ang mapaparadahan ng truck sa tangke nyo.',
           'Bakbak ng takip, ₱500 hanggang ₱1,000. Kapag nakasarado ang tangke at kailangang buksan. Kasama na ang semento at ang pagsasara ulit pagkatapos.',
+          'Pangalawang truckload, ₱5,000 ulit. Kapag hindi kasya sa isa ang laman ng tangke nyo. Sasabihin namin bago pa namin simulan ang pangalawa, hindi pagkatapos.',
           'Yun lang. Wala nang iba. At sasabihin namin bago kami magsimula, hindi habang ginagawa.',
         ],
       },
@@ -220,12 +240,12 @@ export const funnelConfig: FunnelConfig = {
             a: 'Kasi ibang bagay yun. Sa ₱2,500 walang resibo, walang warranty, at hindi mo alam kung saan itinapon ang laman. Karaniwan din na yun ang nagiging ₱4,000 o ₱5,500 pagdating ng truck. May comment nga sa ad namin na ganoon mismo ang nangyari sa kanya. Ang sa amin, ₱5,000 sa page at ₱5,000 pa rin sa dulo.',
           },
           {
-            q: 'Paano kung hindi kasya sa isang load ang tangke namin?',
-            a: '[TANONG KAY BOSS JAY] Kailangan ng sagot dito bago mag-live: doble ba ang ₱5,000 sa pangalawang load, o may ibang presyo?',
+            q: 'Paano kung hindi kasya sa isang truckload ang tangke namin?',
+            a: 'Kada truckload ang bayad, kaya ₱5,000 ulit ang pangalawa. Ganoon din kahit hindi mapuno ang truck, isang truckload pa rin ang bilang. Pero hindi ka namin gugulatin: bago namin simulan ang pangalawa, sasabihin muna namin sa iyo. Ikaw pa rin ang magdedesisyon.',
           },
           {
             q: 'Ano ang sakop ng 30-day warranty?',
-            a: '[TANONG KAY BOSS JAY] Kailangan ng eksaktong sakop: bara lang ba, o pati kung mapuno ulit?',
+            a: 'Ang bara. Kapag bumalik ang bara sa loob ng 30 araw, babalikan namin. Ang hindi sakop ay kung mapuno ulit ang tangke, kasi nakadepende yun sa dami ng gumagamit. Ang kainan, hotel, o apartment na maraming tao ay mas mabilis talagang mapuno kaysa sa bahay, at hindi yun depekto ng trabaho. Kaya kinukunan namin ng litrato ang tangke bago at pagkatapos, para may pagkumparahan kayo at hindi basta salita lang.',
           },
           {
             q: 'Saan kayo pwede pumunta?',
@@ -239,10 +259,13 @@ export const funnelConfig: FunnelConfig = {
 
     {
       type: 'psBlock',
+      // ⚠️ Walang "P.S." sa simula ng string. Ang PsBlock component mismo ang
+      // gumagawa ng label (P.S. / P.P.S. / P.P.P.S.). Kapag inulit mo dito,
+      // dumodoble sa page. Nakita ni Neil 2026-07-30.
       props: {
         items: [
-          'P.S. Kung hindi ka pa handang mag-book, i-save mo na lang tong page. Kapag may nag-quote sa iyo, ihambing mo kung ano ang kasama at kung ano ang dagdag. Yun ang pinakamabilis na paraan para malaman kung tapat sila.',
-          'P.P.S. Kung emergency at umaapaw na ngayon, i-fill mo pa rin to. Tatawagan ka namin, hindi na maghihintay ng email.',
+          'Kung hindi ka pa handang mag-book, i-save mo na lang tong page. Kapag may nag-quote sa iyo, ihambing mo kung ano ang kasama at kung ano ang dagdag. Yun ang pinakamabilis na paraan para malaman kung tapat sila.',
+          'Kung emergency at umaapaw na ngayon, wag ka nang mag-fill ng form. Tumawag ka na diretso sa number sa itaas.',
         ],
       },
     },
@@ -250,6 +273,7 @@ export const funnelConfig: FunnelConfig = {
     {
       type: 'complianceFooter',
       props: {
+        logo: '/img/logo.webp',
         brandLine:
           'Oceanides Plumbing Siphoning & Pest Management Services OPC. SEC, BIR, at DENR na rehistrado.',
         disclaimer:

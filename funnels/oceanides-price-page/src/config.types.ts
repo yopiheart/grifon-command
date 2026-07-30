@@ -88,10 +88,44 @@ export interface BattlePlan {
 export type SectionInstance =
   /** Minimal archetype hero: headline + the embedded LeadForm (F03/F06 anatomy). */
   | { type: 'heroOptin'; props: { eyebrow?: string; headline: string; subhead?: string; mockupImage?: string } }
-  /** Longform hero: big claim + ctaBlock behavior (scrolls to #lead-form). */
-  | { type: 'hero'; props: { eyebrow?: string; headline: string; subhead?: string; ctaLabel: string } }
-  /** `line` is the authority sentence variant (L9); rating/logos are the strip variant. */
-  | { type: 'socialProofBar'; props: { line?: string; rating?: string; reviewCount?: string; logos?: string[] } }
+  /**
+   * Longform hero: big claim + ctaBlock behavior (scrolls to #lead-form).
+   * OCEANIDES additions — `logo`/`image`/`phone` are the DESIGN.md hero lockup
+   * (wordmark, photoScrim photo, phonePill). `headline` supports `**amber**`
+   * runs via lib/goldEmphasis: Anton has one weight, so colour is the only
+   * emphasis channel the brand has.
+   */
+  | {
+      type: 'hero';
+      props: {
+        eyebrow?: string;
+        headline: string;
+        subhead?: string;
+        ctaLabel: string;
+        logo?: string;
+        logoAlt?: string;
+        image?: string;
+        imageAlt?: string;
+        phone?: string;
+        phoneLabel?: string;
+      };
+    }
+  /**
+   * `line` is the authority sentence variant (L9); rating/logos are the strip
+   * variant. OCEANIDES adds `badges`: real BIR/DENR marks as images. This is the
+   * one place the brand has genuine proof — there are no testimonials, no years
+   * in service, no household count, and inventing any of those is a hard ban.
+   */
+  | {
+      type: 'socialProofBar';
+      props: {
+        line?: string;
+        rating?: string;
+        reviewCount?: string;
+        logos?: string[];
+        badges?: Array<{ src: string; alt: string }>;
+      };
+    }
   | { type: 'testimonialWall'; props: { heading?: string; items: Array<{ quote: string; name: string; role?: string }> } }
   | { type: 'originStory'; props: { heading: string; paragraphs: string[] } }
   /** L9: specific-number authority stack. */
@@ -107,7 +141,15 @@ export type SectionInstance =
   | { type: 'psBlock'; props: { items: string[] } }
   /** Standalone form (longform archetype). */
   | { type: 'leadFormSection'; props: { heading?: string } }
-  | { type: 'complianceFooter'; props: { brandLine: string; disclaimer?: string; links?: Array<{ label: string; href: string }> } };
+  | {
+      type: 'complianceFooter';
+      props: {
+        brandLine: string;
+        disclaimer?: string;
+        links?: Array<{ label: string; href: string }>;
+        logo?: string;
+      };
+    };
 
 export type SectionType = SectionInstance['type'];
 

@@ -223,18 +223,47 @@ compliance segment. Hindi makaka-issue ng DENR cert ang crew.
 
 ---
 
-## 8. 🔴 KAILANGAN KAY BOSS JAY BAGO MAG-LIVE ANG PAGE
+## 8. Mga tanong kay Boss Jay — 3 sagot na, 3 bukas pa
 
-Hindi ako mag-iimbento ng presyo. Anim na tanong, kayang sagutin sa memorya:
+**✅ Nasagot na (Boss Jay via Neil, 2026-07-30). Nasa page na lahat:**
 
-1. **Ilang metro ng hose ang kasama sa ₱5,000?** Kailan nagsisimula ang ₱100/tubo?
-2. **Ilang metro kada "tubo"?**
-3. **Paano kung hindi kasya sa 1 load ang tangke?** Doble ba ang ₱5,000, o may
-   ibang presyo ang pangalawang load? **Ito ang pinakamalaking butas ngayon.**
-4. **Ano pa ang ibang dagdag** na hindi nabanggit ni Zam? (malayo ang lokasyon,
-   gabi, weekend, hagdan, makipot na daanan?)
-5. **Ano ang eksaktong sakop ng 30-day warranty?** Bara lang ba, o pati puno ulit?
+1. ✅ **Pangalawang truckload = ₱5,000 ulit.** Kada truckload ang bilang, at
+   **mapuno man o hindi ang truck, isa pa ring truckload.** Nakalagay na sa
+   listahan ng dagdag at sa FAQ, kasama ang: *"sasabihin namin bago pa namin
+   simulan ang pangalawa, hindi pagkatapos."*
+2. ✅ **Warranty = bara lang.** Hindi sakop ang mapuno ulit, kasi nakadepende
+   yun sa dami ng gumagamit — mas mabilis mapuno ang kainan, hotel, o apartment
+   kaysa bahay, at hindi yun depekto ng trabaho. Isinulat sa FAQ mismo ang
+   dahilan, hindi lang ang patakaran.
+3. ✅ **Hose = ₱100 kada 3 metrong dagdag** (hindi "kada tubo").
+
+**🆕 Nakuha rin dito, at ginawang selling point:** may **litrato ng tangke bago
+at pagkatapos** ang bawat trabaho. Hindi to binanggit bilang benta, pero ito ang
+nagpapatunay ng warranty at nagpapatahimik ng away. Nasa value stack na.
+
+**🔴 Bukas pa — hindi pwedeng mag-live nang wala ang tatlong to:**
+
+4. **Ilang metro ng hose ang KASAMA sa ₱5,000** bago magsimula ang ₱100/3m?
+   Binigay ang rate pero hindi ang baseline. Ito na lang ang natitirang
+   `[TANONG KAY BOSS JAY]` sa buong page.
+5. **Ano pa ang ibang dagdag** na hindi nabanggit ni Zam? (gabi, weekend,
+   hagdan, makipot na daanan, malayong lokasyon?)
 6. **Saan-saan kayo pwede sa labas ng NCR?** Ilista ang lugar. Hindi pwedeng hulaan.
+
+**Kay Neil naman:**
+
+7. 📞 **Anong number ang ilalagay?** Naka-placeholder ngayon ang phonePill sa
+   `0999 999 9999` — sinadyang repdigit-9 (DESIGN.md placeholder rule) para
+   hindi sya mapagkamalang totoo.
+8. 📸 **Totoong job photo ba ang `tb2-ba2` / `tb2-ba3` before-after pairs, o
+   AI-generated?** Mukhang tunay na magkapares (parehong manhole, ilaw, paligid)
+   at malakas syang proof — pero ang `tb2-` prefix ay galing sa AI branch-page
+   generator. **Hindi ko ilalagay hangga't hindi kumpirmado.** "Walang fake
+   proof" ang hard ban, at ang ipakitang totoong trabaho ang isang AI render ay
+   parehong mali ng asul na tanker pero mas malaki.
+9. 👷 **May pahintulot ba ang CREW 1/2/3 na mailagay ang mukha nila sa website?**
+   Kumpirmado ni Neil na totoong crew sila. Ganito rin ang ginawa kay Marvin.
+   Hindi humaharang — buo na ang design kahit wala pa sila.
 
 At isa pa, para sa 3-bahay na test:
 > Boss, kapag hindi alam ng customer kung nasaan ang septic tank nila, paano nyo

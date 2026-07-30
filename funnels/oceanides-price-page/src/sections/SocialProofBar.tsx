@@ -3,18 +3,47 @@ import type { PropsOf } from '../config.types';
 import { SectionShell } from '../primitives/SectionShell';
 import { Reveal } from '../primitives/Reveal';
 
-// A thin trust strip directly under the fold. Logos are plain strings by
-// contract (wordmarks, not images) so a funnel can ship proof without waiting
-// on asset permissions — and so nothing here can trigger a network request.
-//
-// Two shapes, either or both: `line` is a single authority sentence (L9 —
-// specific numbers a funnel can actually stand behind), rating/logos are the
-// classic strip. A funnel with no review count simply omits it rather than
+// A thin trust strip directly under the fold. `line` is the authority sentence
+// (L9 — specific numbers a funnel can actually stand behind); rating/logos are
+// the classic strip. A funnel with no review count omits it rather than
 // inventing one.
-export const SocialProofBar: React.FC<PropsOf<'socialProofBar'>> = ({ line, rating, reviewCount, logos }) => (
-  <SectionShell rhythm="band" className="border-y border-white/10">
+//
+// OCEANIDES: this brand has NO conventional proof — no testimonials, no
+// years-in-service, no household count, no rating. DESIGN.md bans making any of
+// them up ("Walang fake proof"), so the L9 lever sits empty and this page does
+// not pretend otherwise.
+//
+// What it DOES have is the moat: real SEC / BIR / DENR registration. Per
+// workflows/oceanides_business_model.md — "Ang moat ay ang PAPEL, hindi ang
+// truck. Ang crews ay hindi makaka-issue ng DENR-compliance certificate; si
+// Oceanides lang." Hence `badges`: the actual marks, not words, because a
+// customer who has been burned reads a seal faster than a sentence.
+//
+// The template's rule that this strip triggers no network request still holds —
+// badges are same-origin bundled webp from scripts/build-assets.mjs, not a CDN.
+export const SocialProofBar: React.FC<PropsOf<'socialProofBar'>> = ({
+  line,
+  rating,
+  reviewCount,
+  logos,
+  badges,
+}) => (
+  <SectionShell rhythm="band" className="border-y-2 border-white/15">
     <Reveal>
-      <div className="space-y-4 text-center">
+      <div className="space-y-6 text-center">
+        {badges && badges.length > 0 && (
+          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
+            {badges.map((badge) => (
+              <img
+                key={badge.src}
+                src={badge.src}
+                alt={badge.alt}
+                loading="lazy"
+                className="h-11 w-auto max-w-[190px] object-contain md:h-14 md:max-w-[240px]"
+              />
+            ))}
+          </div>
+        )}
         {line && (
           <p className="mx-auto max-w-prose text-sm leading-relaxed text-brand-on-surface-muted md:text-base">
             {line}
