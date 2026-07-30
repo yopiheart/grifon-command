@@ -9,6 +9,7 @@ import { useReducedMotion } from 'motion/react';
 import { GlassPanel } from '../ui/GlassPanel';
 import { DUR } from '../ui/motionTokens';
 import { useOneShotSfx } from '../../services/uiSoundService';
+import { useQuota } from '../../hooks/useQuota';
 import { saveOneShotDraft, loadOneShotDraft, clearOneShotDraft } from '../../utils/oneShotDraft';
 import ImageModal from '../ui/ImageModal';
 import { DriftOrbs } from './motion';
@@ -161,6 +162,16 @@ export const LaunchScreen: React.FC<{
   // Premium cinematic click cues — One-Shot only, ON by default, mutable.
   const sfx = useOneShotSfx();
   const isMobile = useIsMobile();
+
+  // Pre-check the monthly allowance so an exhausted account learns BEFORE
+  // typing a brief, not from the post-click banner. A run needs 1 report +
+  // 1 workflow at minimum, so either at zero blocks it. Fail-open on
+  // purpose: only POSITIVE evidence (loaded, not loading) may disable the
+  // CTA — an unknown/failed quota read never blocks a healthy account.
+  const quota = useQuota();
+  const allowanceExhausted =
+    quota.loaded && !quota.loading &&
+    (quota.reports.remaining === 0 || quota.workflows.remaining === 0);
 
   // Restore an in-flight brief if the user bounced out mid-session (e.g. to clone
   // a voice). Held in memory by oneShotDraft; saved at nav-time, cleared on launch
@@ -886,18 +897,25 @@ export const LaunchScreen: React.FC<{
           <div className="mt-6 max-md:sticky max-md:bottom-3 max-md:z-30">
             <button
               type="button"
-              disabled={!ready}
+              disabled={!ready || allowanceExhausted}
               onClick={() => { if (ready) sfx.play('confirm'); launch(); }}
               className={`relative flex w-full items-center justify-center gap-2 ${R_CTRL} h-12 font-mono text-sm font-bold uppercase tracking-widest transition-all active:scale-[0.99] ${
-                ready
+                ready && !allowanceExhausted
                   ? 'bg-[#FFCC00] text-black shadow-[0_0_24px_rgba(255,204,0,0.4)] hover:shadow-[0_0_40px_rgba(255,204,0,0.6)]'
                   : 'cursor-not-allowed bg-zinc-800 text-on-surface-sublabel'
               }`}
             >
               <Zap className="h-4 w-4 shrink-0" /> Make My Ad
             </button>
-            <p className={`mt-2 flex items-center justify-center gap-1.5 text-center ${T_LABEL} ${ready ? 'text-zinc-400' : 'text-amber-400/80'}`}>
-              {ready ? (
+            <p className={`mt-2 flex items-center justify-center gap-1.5 text-center ${T_LABEL} ${ready && !allowanceExhausted ? 'text-zinc-400' : 'text-amber-400/80'}`}>
+              {allowanceExhausted ? (
+                <>
+                  Monthly allowance used — resets next month.{' '}
+                  <button type="button" onClick={onUpgrade} className="font-bold text-[#FFCC00] underline underline-offset-2 hover:text-[#FFD83D]">
+                    See plans
+                  </button>
+                </>
+              ) : ready ? (
                 <><Sparkles className="h-3 w-3 shrink-0 text-[#FFCC00]/70" /> One ad → script · storyboard · scenes · thumbnail</>
               ) : reason}
             </p>
