@@ -34,7 +34,9 @@ export const computeUpgradeNudge = (
     // turn the plan into a real video. Lands at the moment of value, not cold.
     if (used <= 0 || remaining > 0) return null;
     return {
-      message: `Gawa mo na ang free ad plan mo — i-render na natin into a real video ad. Mag-Starter (₱997) para sa unang video, o mag-Pro para sa 8/buwan.`,
+      // Wording dictated verbatim by Neil 2026-07-30 — do not "improve" the
+      // Taglish without his read-back (see agent_lessons: Taglish copy rule).
+      message: `Gawa na ang free ad plan mo — gawin na nating totoong video. Mag-Starter (₱997) para sa unang video mo, o mag-Pro para sa 8 video ads per month.`,
       urgency: 'final',
     };
   }
