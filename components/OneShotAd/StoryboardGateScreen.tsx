@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { RefreshCw, Clapperboard, CheckCircle2, AlertTriangle, Film, RotateCcw, Loader2 } from 'lucide-react';
 import { GlassPanel } from '../ui/GlassPanel';
+import ImageModal from '../ui/ImageModal';
 import { ShimmerButton, SceneReveal } from './motion';
 import type { ProductionRun } from '../../services/producerOrchestrator';
 
@@ -31,6 +32,11 @@ export const StoryboardGateScreen: React.FC<{
    *  so a user who gets no instant feedback can't double-fire the approval (F1, live canary). */
   approving?: boolean;
 }> = ({ run, regenerating, onRegenScene, onApprove, onStartOver, approving = false }) => {
+  // Click-to-zoom lightbox (Neil request, 2026-07-31): the wizard steps and ReviewScreen
+  // have had ImageModal since the original view-full-image request — this screen was born
+  // later (2026-07-01 recovery) and never got it, which made gate-time QA of the hook
+  // END frame nearly impossible at inset size.
+  const [lightbox, setLightbox] = useState<{ url: string; name: string } | null>(null);
   const flagged = run.scenes.filter((s) => s.status === 'flagged').length;
   const anyBusy = regenerating !== null;
   // Can't film until every scene has an image and none is still flagged.
@@ -78,16 +84,29 @@ export const StoryboardGateScreen: React.FC<{
                 key={sc.sceneIdx}
                 className={`relative overflow-hidden p-0 ${isFlagged ? 'ring-1 ring-amber-500/60' : ''}`}
               >
-                <div className="aspect-[9/16]">
+                <div className="relative aspect-[9/16]">
                   <SceneReveal imageUrl={sc.imageUrl} loading={busy} alt={`Scene ${sc.sceneIdx + 1}`} />
+                  {sc.imageUrl && !busy && (
+                    <button
+                      type="button"
+                      aria-label={`View scene ${sc.sceneIdx + 1} full size`}
+                      onClick={() => setLightbox({ url: sc.imageUrl!, name: `scene-${sc.sceneIdx + 1}.png` })}
+                      className="absolute inset-0 cursor-zoom-in"
+                    />
+                  )}
                 </div>
                 {/* Hook-morph END keyframe: the tile's main image is the START frame; the video
                     morphs into this one. Inset so the user approves BOTH compositions. */}
                 {endFrameUrl && !busy && (
-                  <div className="absolute bottom-11 right-1.5 w-[36%] overflow-hidden rounded border border-white/25 shadow-lg">
+                  <button
+                    type="button"
+                    aria-label={`View scene ${sc.sceneIdx + 1} end frame full size`}
+                    onClick={() => setLightbox({ url: endFrameUrl, name: `scene-${sc.sceneIdx + 1}-end-frame.png` })}
+                    className="absolute bottom-11 right-1.5 w-[36%] cursor-zoom-in overflow-hidden rounded border border-white/25 p-0 shadow-lg"
+                  >
                     <img src={endFrameUrl} alt={`Scene ${sc.sceneIdx + 1} end frame`} className="block aspect-[9/16] w-full object-cover" />
                     <div className="absolute left-0 top-0 rounded-br bg-black/70 px-1 py-0.5 text-[8px] font-mono uppercase text-zinc-300">End</div>
-                  </div>
+                  </button>
                 )}
                 <div className="absolute left-1.5 top-1.5 rounded bg-black/70 px-1.5 py-0.5 text-[9px] font-mono text-zinc-300">
                   {sc.sceneIdx + 1}
@@ -156,6 +175,7 @@ export const StoryboardGateScreen: React.FC<{
           </button>
         </div>
       </div>
+      {lightbox && <ImageModal imageUrl={lightbox.url} filename={lightbox.name} onClose={() => setLightbox(null)} />}
     </div>
   );
 };
