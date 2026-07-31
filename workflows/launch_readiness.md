@@ -118,10 +118,23 @@ no-billing Gemini key (every `/api/gemini/text` → 429). Full state:
    self-recovering ([#89](https://github.com/yopiheart/grifon-command/issues/89)); final-cut phase
    *presents* as failing while succeeding ([#90](https://github.com/yopiheart/grifon-command/issues/90)).
    The 429-quota UX find did NOT reproduce — the key is billed now (pre-flight probe in
-   `smoke_test_setup.md` step 0 is the standing guard). **Remaining: Neil's eyeball verdict on the
-   finished ad, then #89/#90 fixes → land the engine as default** (P5 flip stays gated per
-   `loop_arch_handoff.md`). Evidence: issue #88 comments + `.tmp/producer-smoke-0731/` (screenshots
-   die with the defreezer; the issue comments are the durable record).
+   `smoke_test_setup.md` step 0 is the standing guard). **Neil eyeballed the finished ad 2026-08-01
+   → 7-issue punch list, ALL filed, next session = fix pass** (his call: "ayusin natin lahat"):
+   [#89](https://github.com/yopiheart/grifon-command/issues/89) resume dashboard-flash ·
+   [#90](https://github.com/yopiheart/grifon-command/issues/90) final-cut fake-fail UX ·
+   [#91](https://github.com/yopiheart/grifon-command/issues/91) last-scene breathy tail (trim to VO
+   end) · [#92](https://github.com/yopiheart/grifon-command/issues/92) hook-morph AI goo ·
+   [#93](https://github.com/yopiheart/grifon-command/issues/93) talking-avatar framing/facing rules
+   (TUNED — needs Neil diff-approval + regression session) ·
+   [#94](https://github.com/yopiheart/grifon-command/issues/94) captions (overlay-before-VO, numerals
+   dropped, scene-2 double text) · [#95](https://github.com/yopiheart/grifon-command/issues/95)
+   ElevenLabs v3 audio-tags pronunciation (validate then non-tuned mapper). Quick wins first:
+   #91+#94 are small deterministic renderFfmpeg/alignment fixes that close half the quality gap to
+   the KM lane (Hyperframes product swap re-asked 2026-08-01 → verdict STANDS per
+   `hyperframes_decision.md`; the sanctioned bridge is Move 3's alpha-motion asset kit). Then #89/#90
+   → land the engine as default (P5 flip stays gated per `loop_arch_handoff.md`). Evidence: issue #88
+   comments + `.tmp/producer-smoke-0731/` (screenshots die with the defreezer; issues are the
+   durable record). Resume tomorrow: `gh issue list --state open` + this item.
 2. **Slice 2 — video rate-limit re-scope** (per-clip → per-ad-launch, `api/gemini/video.ts`). Neil
    sign-off gate; without it >5-scene ads self-throttle.
 3. **[`oneshot_flow_fixes.md`](oneshot_flow_fixes.md) verify-and-close** — ProducerFlow likely fixed
