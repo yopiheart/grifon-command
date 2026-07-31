@@ -65,7 +65,9 @@ supersedes the scattered "Reusable smoke setup" notes in `expert_manual_mode.md`
 3. `npm run dev` (restart it if the flags were added while it was running).
 4. Dev unlock for gated UI (presets etc.): `localStorage.grifon_dev_unlock='1'`.
 5. Producer-engine smokes: navigate with `?osaEngine=producer` (persists to localStorage;
-   `?osaEngine=steps` forces legacy).
+   `?osaEngine=steps` forces legacy). **Already-authenticated sessions: use
+   `/app?osaEngine=producer`, NOT `/?osaEngine=producer`** — the post-auth redirect on `/`
+   strips the query via `history.replaceState` before it persists (found 2026-07-31 smoke).
 6. Pre-create any screenshot/output folder from the MAIN loop before spawning the agent
    (background agents auto-deny permission prompts — agent_lessons 2026-06-10).
 7. **Playwright "Browser is already in use for …mcp-chrome-351a002" → orphaned MCP servers.**
