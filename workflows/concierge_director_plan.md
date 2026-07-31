@@ -413,6 +413,12 @@ optional "advanced"). Remaining:
 
 ## Tracking pilot: GitHub Issues as the initiative map (decided 2026-07-08)
 
+> **CHARTED 2026-07-31 — the map is LIVE: [#87](https://github.com/yopiheart/grifon-command/issues/87)**
+> (label `concierge:map`), with children #79–#86 (3 decisions on the frontier, 5 blocked slices).
+> **Resume Concierge work from the map issue, not from re-reading this doc top-to-bottom** — this
+> doc stays the design source of truth; #87 owns current state. Frontier check:
+> `gh issue list --label concierge:decision --state open` (re-arm gh first: `.\scripts\restore-gh.ps1`).
+
 When this work resumes, pilot **GitHub Issues** as the cross-session tracker for THIS initiative
 only (adapted from Matt Pocock's `wayfinder` skill — evaluation in the 2026-07-08 skills-v1.1
 session). Why: Issues survive the defreezer exactly like the repo does, remote sessions already

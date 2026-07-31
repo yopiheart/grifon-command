@@ -129,7 +129,9 @@ no-billing Gemini key (every `/api/gemini/text` → 429). Full state:
    `drawplan-refactor`; merge the trivial `claude/anthropic-pdf-loop-eval-zidz7n` timeout bump.
 8. **Expert-mode Bucket B decision** (HELD merge) + Slice-0 merge-vs-evolve — gates Concierge, which
    is Business-tier, not free-beta. Branch is 69 behind main → salvage = cherry-pick (A4 upload gate,
-   Bucket B relight), not merge. Decide soon, build later.
+   Bucket B relight), not merge. Decide soon, build later. **Tracked on the Concierge map
+   [#87](https://github.com/yopiheart/grifon-command/issues/87) (charted 2026-07-31): this decision
+   is frontier ticket [#79](https://github.com/yopiheart/grifon-command/issues/79).**
 9. **`claude/privacy-dashboard-bugs-mfk10d`** (passwordless OTP) — real unmerged auth code; conflict-
    check vs main's newer OAuth funnel work before merge-vs-redo.
 
