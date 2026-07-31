@@ -70,7 +70,15 @@ supersedes the scattered "Reusable smoke setup" notes in `expert_manual_mode.md`
    strips the query via `history.replaceState` before it persists (found 2026-07-31 smoke).
 6. Pre-create any screenshot/output folder from the MAIN loop before spawning the agent
    (background agents auto-deny permission prompts — agent_lessons 2026-06-10).
-7. **Playwright "Browser is already in use for …mcp-chrome-351a002" → orphaned MCP servers.**
+7. **MCP snapshot overflow on media-heavy screens (hit 2026-07-31, Producer render + First Cut).**
+   Once the scene gallery / video player mounts, `browser_snapshot` (and the auto-snapshot attached
+   to `browser_click`/`browser_navigate`/`browser_wait_for`) balloons past the MCP token limit
+   (~1.5M chars — base64 image/video data inlined into the a11y tree) and every ref-based action
+   fails. Brief smoke agents driving these screens to work by `browser_evaluate` with
+   `document.querySelector(...).click()` + minimal return values, and `browser_take_screenshot`
+   (saves to disk even when its own text response overflows). Aria-labels on controls make this
+   reliable — keep adding them.
+8. **Playwright "Browser is already in use for …mcp-chrome-351a002" → orphaned MCP servers.**
    Prior sessions leave `@playwright/mcp` node processes + their Chrome tree holding the
    shared profile lock (hit 2026-07-03). Fix from the MAIN loop: list candidates with
    `Get-CimInstance Win32_Process` filtered on `playwright*mcp` / `mcp-chrome-351a002`,

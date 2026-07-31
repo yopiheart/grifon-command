@@ -110,9 +110,18 @@ no-billing Gemini key (every `/api/gemini/text` → 429). Full state:
 
 ### Priority stack for launch (most → least)
 
-1. **Producer flow smoke + land it** — blocked on the Neil-batch below; then drive the two unreached
-   hard gates (resume mid-run, no-double-spend) + fix the 429-quota UX find (endless "Researching your
-   market…" spinner with no quota-specific error).
+1. **Producer flow smoke + land it** — **RAN 2026-07-31, PASSED end-to-end** (Neil GO'd both legs:
+   gate-stop ~₱20 then full render ~₱550): OTP sign-in → intake → 9 scenes → storyboard gate →
+   FILM IT → mid-render reload → 0:35 finished ad on First Cut with thumbnail + 7 presets. **Both
+   formerly-unreached hard gates verified: no-double-spend PASS (DB `attempts`=1 ×9 through the
+   reload) and resume PASS on data / FAIL on UX** — reload flashes the Dashboard ~30s before
+   self-recovering ([#89](https://github.com/yopiheart/grifon-command/issues/89)); final-cut phase
+   *presents* as failing while succeeding ([#90](https://github.com/yopiheart/grifon-command/issues/90)).
+   The 429-quota UX find did NOT reproduce — the key is billed now (pre-flight probe in
+   `smoke_test_setup.md` step 0 is the standing guard). **Remaining: Neil's eyeball verdict on the
+   finished ad, then #89/#90 fixes → land the engine as default** (P5 flip stays gated per
+   `loop_arch_handoff.md`). Evidence: issue #88 comments + `.tmp/producer-smoke-0731/` (screenshots
+   die with the defreezer; the issue comments are the durable record).
 2. **Slice 2 — video rate-limit re-scope** (per-clip → per-ad-launch, `api/gemini/video.ts`). Neil
    sign-off gate; without it >5-scene ads self-throttle.
 3. **[`oneshot_flow_fixes.md`](oneshot_flow_fixes.md) verify-and-close** — ProducerFlow likely fixed
