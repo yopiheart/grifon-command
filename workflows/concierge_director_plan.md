@@ -414,10 +414,16 @@ optional "advanced"). Remaining:
 ## Tracking pilot: GitHub Issues as the initiative map (decided 2026-07-08)
 
 > **CHARTED 2026-07-31 — the map is LIVE: [#87](https://github.com/yopiheart/grifon-command/issues/87)**
-> (label `concierge:map`), with children #79–#86 (3 decisions on the frontier, 5 blocked slices).
-> **Resume Concierge work from the map issue, not from re-reading this doc top-to-bottom** — this
-> doc stays the design source of truth; #87 owns current state. Frontier check:
-> `gh issue list --label concierge:decision --state open` (re-arm gh first: `.\scripts\restore-gh.ps1`).
+> (label `concierge:map`). **Resume Concierge work from the map issue, not from re-reading this doc
+> top-to-bottom** — this doc stays the design source of truth; #87 owns current state. Frontier check:
+> `gh issue list --label concierge:decision --label concierge:slice --state open` (re-arm gh first:
+> `.\scripts\restore-gh.ps1`).
+>
+> ⚠️ **RE-CHARTED same day (grill of #79): the build described below as pending was ALREADY ON MAIN**
+> — shipped 2026-06-29 via squash-PRs #28/#31/#32 (foundation + Bucket B + door/gate + free-form
+> Script Studio + sequence picker + wizard retirement). This doc's "Open decisions" / "Build slices"
+> sections are now HISTORY, not plan. Remaining live work per #87: the end-to-end smoke (#88,
+> piggybacks the Producer smoke), upload-lane ratification (#80), Business pricing (#81).
 
 When this work resumes, pilot **GitHub Issues** as the cross-session tracker for THIS initiative
 only (adapted from Matt Pocock's `wayfinder` skill — evaluation in the 2026-07-08 skills-v1.1

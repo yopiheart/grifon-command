@@ -1203,3 +1203,28 @@ committing it just moves the disagreement to CI, which runs a DIFFERENT npm majo
 If the M-noise is annoying, the fix is aligning the local npm to CI's major (or ignoring the noise),
 never adopting the drift. Also: GitHub's failure-email subject names the exact commit — read it before
 theorizing; and the *absence* of failure emails on prior pushes is evidence those runs were green.
+
+### 2026-07-31 — Charted a whole ticket map off stale docs while every "unbuilt" slice sat on main (4th strike, squash-merge variant)
+
+**Context:** Evaluating Matt Pocock's `wayfinder` skill led to executing the 2026-07-08 tracking-pilot
+decision: a GitHub-Issues map for the Concierge initiative (#87), charted from
+`concierge_director_plan.md` + `launch_readiness.md` item 8, which described the Expert foundation as
+unlanded ("branch 69 behind, salvage = cherry-pick, Bucket B HELD, decide soon build later"). The
+SessionStart hook reinforced this by listing `feat/expert-mode-directors-cut` as "+27 unmerged."
+
+**What went wrong:** The very first frontier ticket grilled (#79) collapsed on the blind-spot pass:
+ALL of it — foundation, Bucket B tuned relight, A4 gate, the Concierge door, free-form Script Studio,
+sequence picker, wizard retirement — had been on MAIN since 2026-06-29 via squash-PRs #28/#31/#32.
+The existing 2026-06-27 rule ("check origin/* before declaring unbuilt") was followed and still
+failed, because it checks BRANCHES: `git cherry` showed +27 "unmerged" commits that were all
+patch-invisible duplicates of the squash, and nobody checked main's CONTENT. The docs postdated the
+merges and were simply never corrected (librarian sweep didn't exist until 2026-07-28). Five of the
+map's eight tickets were stale on arrival.
+
+**Lesson:** Branch lists and ahead-counts are not evidence either — squash merges make `git cherry`
+lie. Before declaring anything unbuilt, verify against main's content: `git ls-tree origin/main <paths>`
+and `git grep <feature-signature> origin/main`. Delete branches immediately after squash-merging them —
+every surviving dead branch re-arms this trap in the SessionStart list. And when a planning doc's
+claims gate real work, spot-check the claim against main before building on it, no matter how recent
+the doc's date looks. Silver lining: the map pilot caught in one grill what three prior sessions
+missed — externalized, closeable state earns its keep.

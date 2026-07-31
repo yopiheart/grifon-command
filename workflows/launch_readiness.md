@@ -127,11 +127,16 @@ no-billing Gemini key (every `/api/gemini/text` → 429). Full state:
 7. **Branch hygiene** — land `docs/believability-content-look` (the SUPERSET: seedance/cinematic
    tooling + skills not on main, only 9 behind); push + PR the committed-but-unpushed
    `drawplan-refactor`; merge the trivial `claude/anthropic-pdf-loop-eval-zidz7n` timeout bump.
-8. **Expert-mode Bucket B decision** (HELD merge) + Slice-0 merge-vs-evolve — gates Concierge, which
-   is Business-tier, not free-beta. Branch is 69 behind main → salvage = cherry-pick (A4 upload gate,
-   Bucket B relight), not merge. Decide soon, build later. **Tracked on the Concierge map
-   [#87](https://github.com/yopiheart/grifon-command/issues/87) (charted 2026-07-31): this decision
-   is frontier ticket [#79](https://github.com/yopiheart/grifon-command/issues/79).**
+8. ~~Expert-mode Bucket B decision + Slice-0 merge-vs-evolve~~ **RESOLVED BY HISTORY (grill 2026-07-31,
+   [#79](https://github.com/yopiheart/grifon-command/issues/79)): this item was stale — the entire
+   Concierge build (foundation + Bucket B relight + A4 gate + door/gate + free-form Script Studio +
+   sequence picker + wizard retirement) landed on main 2026-06-29 via squash-PRs #28/#31/#32.** The
+   Expert branch was salvage-empty and is deleted. What actually remains, tracked on the Concierge map
+   [#87](https://github.com/yopiheart/grifon-command/issues/87): the end-to-end smoke
+   [#88](https://github.com/yopiheart/grifon-command/issues/88) (**piggybacks on the #1 Producer smoke
+   session — same prerequisites, Gemini-key pre-flight first, no dedicated session**), the upload-lane
+   ratification [#80](https://github.com/yopiheart/grifon-command/issues/80), and Business pricing
+   [#81](https://github.com/yopiheart/grifon-command/issues/81).
 9. **`claude/privacy-dashboard-bugs-mfk10d`** (passwordless OTP) — real unmerged auth code; conflict-
    check vs main's newer OAuth funnel work before merge-vs-redo.
 
