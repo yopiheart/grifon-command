@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { Download, RefreshCw, Wand2, Plus, CheckCircle2, AlertTriangle, Lock, Film, ArrowRight, Image as ImageIcon, ImageDown } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { Download, RefreshCw, Wand2, Plus, CheckCircle2, AlertTriangle, Lock, Film, ArrowRight, Image as ImageIcon, ImageDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import { GlassPanel } from '../ui/GlassPanel';
+import ImageModal from '../ui/ImageModal';
 import { GoldButton } from '../ui/GoldButton';
 import { ShimmerButton, SceneReveal } from './motion';
 import type { ProductionRun } from '../../services/producerOrchestrator';
@@ -56,6 +57,10 @@ export const FirstCutScreen: React.FC<{
   const takesUsed = run.takesUsed ?? 0;
   const [armedIdx, setArmedIdx] = useState<number | null>(null);
   const freeTakesLeft = Math.max(0, FREE_TAKES - takesUsed);
+  // Click-to-zoom lightbox (Neil request 2026-08-01, sibling of the gate-screen one).
+  const [lightbox, setLightbox] = useState<{ url: string; name: string } | null>(null);
+  const stripRef = useRef<HTMLDivElement>(null);
+  const scrollStrip = (dir: -1 | 1) => stripRef.current?.scrollBy({ left: dir * 320, behavior: 'smooth' });
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-zinc-950 px-4 py-10 text-white">
@@ -103,8 +108,26 @@ export const FirstCutScreen: React.FC<{
           </div>
         )}
 
-        {/* Scene film-strip */}
-        <div className="mt-4 flex snap-x gap-3 overflow-x-auto pb-2">
+        {/* Scene film-strip — arrow affordances because a mouse can't obviously
+            scroll a horizontal strip (Neil, 2026-08-01: "wala man lang scroller"). */}
+        <div className="relative mt-4">
+          <button
+            type="button"
+            aria-label="Scroll scenes left"
+            onClick={() => scrollStrip(-1)}
+            className="absolute -left-2 top-[40%] z-10 -translate-y-1/2 rounded-full border border-white/15 bg-black/70 p-1.5 text-zinc-300 transition-colors hover:border-[#FFCC00]/60 hover:text-[#FFCC00]"
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </button>
+          <button
+            type="button"
+            aria-label="Scroll scenes right"
+            onClick={() => scrollStrip(1)}
+            className="absolute -right-2 top-[40%] z-10 -translate-y-1/2 rounded-full border border-white/15 bg-black/70 p-1.5 text-zinc-300 transition-colors hover:border-[#FFCC00]/60 hover:text-[#FFCC00]"
+          >
+            <ChevronRight className="h-4 w-4" />
+          </button>
+        <div ref={stripRef} className="flex snap-x gap-3 overflow-x-auto pb-2">
           {run.scenes.map((sc) => {
             const busy = reshooting === sc.sceneIdx;
             const isFlagged = sc.status === 'flagged';
@@ -165,23 +188,30 @@ export const FirstCutScreen: React.FC<{
             );
           })}
         </div>
+        </div>
 
         {/* Thumbnail surface (finding #30) — the producer's cover frame, read from run
             state the same way scenes are. Nothing renders when the run has no thumbnail. */}
         {run.thumbnailUrl && (
           <div className="mt-4 flex items-center gap-3">
-            <div className="relative w-20 shrink-0 overflow-hidden rounded-xl border border-white/10">
+            <button
+              type="button"
+              aria-label="View thumbnail full size"
+              onClick={() => setLightbox({ url: run.thumbnailUrl!, name: 'ad-thumbnail.png' })}
+              className="relative w-20 shrink-0 cursor-zoom-in overflow-hidden rounded-xl border border-white/10 p-0 transition-colors hover:border-[#FFCC00]/60"
+            >
               <img src={run.thumbnailUrl} alt="Ad thumbnail" className="aspect-[9/16] w-full bg-zinc-950 object-cover" />
               <div className="absolute left-1 top-1 flex items-center gap-1 rounded bg-black/70 px-1.5 py-0.5 text-[9px] font-mono text-zinc-300">
                 <ImageIcon className="h-3 w-3" />
               </div>
-            </div>
+            </button>
             <div className="min-w-0">
               <p className="text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">// Thumbnail</p>
-              <p className="text-xs text-zinc-400">Your scroll-stopping cover frame — download it below.</p>
+              <p className="text-xs text-zinc-400">Your scroll-stopping cover frame — click to view, download below.</p>
             </div>
           </div>
         )}
+        {lightbox && <ImageModal imageUrl={lightbox.url} filename={lightbox.name} onClose={() => setLightbox(null)} />}
 
         {/* Edit-style switcher (Decision 8) — AUTO free/all-tiers; IMPACT/CLEAN Pro+. */}
         {onChoosePreset && (
