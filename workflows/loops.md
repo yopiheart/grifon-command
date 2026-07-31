@@ -73,8 +73,10 @@ the goal that executes it.
 **SessionStart re-arm hook** — [.claude/hooks/session-start.sh](../.claude/hooks/session-start.sh)
 fires on every session start (and `/clear`) and re-surfaces, deterministically:
 every `/loop` re-arm command in `session_reminders.md`, the dead-`/goal`
-warning, and this registry. The defreezer can wipe session state; it can't
-wipe the repo.
+warning, this registry, the unmerged-branch list, the git-identity check, and
+(since 2026-07-31) the **wayfinder frontier** — open `concierge:*` tickets from
+the Concierge map (issue #87), degrading gracefully when gh is wiped/unauthed.
+The defreezer can wipe session state; it can't wipe the repo.
 
 - Arm: nothing — wired in `.claude/settings.json`.
 - Kill switch: remove the `SessionStart` block from settings.json.

@@ -44,6 +44,33 @@ while IFS='|' read -r ref cdate; do
 done < <(git for-each-ref --sort=-committerdate --format='%(refname:short)|%(committerdate:short)' refs/remotes/origin 2>/dev/null)
 if [ "$flight" -eq 0 ]; then echo "  - (none — every remote branch is merged into main)"; fi
 
+# --- WAYFINDER FRONTIER (added 2026-07-31, grill of #79) -----------------------
+# The Concierge initiative is tracked as a GitHub-Issues map (issue #87 — see
+# concierge_director_plan.md "Tracking pilot"). Issues survive the defreezer
+# exactly like the repo; the gh CLI does not. Same doctrine as the branch list
+# above: surface the takable frontier BEFORE a session re-derives state from
+# possibly-stale docs. Degrades gracefully — never blocks session start.
+echo ""
+echo "WAYFINDER FRONTIER (Concierge map = issue #87; open concierge:* tickets, one per session):"
+GH_BIN="$(command -v gh || true)"
+if [ -z "$GH_BIN" ] && [ -n "${LOCALAPPDATA:-}" ] && [ -x "$LOCALAPPDATA/Programs/GitHubCLI/bin/gh.exe" ]; then
+  GH_BIN="$LOCALAPPDATA/Programs/GitHubCLI/bin/gh.exe"
+fi
+if [ -z "$GH_BIN" ]; then
+  echo "  - gh not installed (defreezer wiped it). Re-arm with: .\\scripts\\restore-gh.ps1 — the frontier will list here once gh is back."
+else
+  frontier=$("$GH_BIN" issue list --state open --limit 50 --json number,title,labels \
+    --jq '.[] | select(any(.labels[]; .name | startswith("concierge:"))) | "  - #\(.number) [\([.labels[].name | select(startswith("concierge:"))][0])] \(.title)"' 2>/dev/null)
+  rc=$?
+  if [ "$rc" -ne 0 ]; then
+    echo "  - could not read Issues (gh unauthenticated or offline) — run: gh auth login, then: gh issue list --state open"
+  elif [ -z "$frontier" ]; then
+    echo "  - (frontier empty — no open concierge:* tickets; check map issue #87 for fog / next work)"
+  else
+    echo "$frontier"
+  fi
+fi
+
 # --- GIT IDENTITY (added 2026-07-26) -------------------------------------------
 # scripts/restore-git-identity.ps1 has existed for a while and is correct, but
 # nothing ever pointed at it — so every session rediscovered the same failure the
