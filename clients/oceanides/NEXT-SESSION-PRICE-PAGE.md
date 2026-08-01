@@ -1,7 +1,7 @@
-# NEXT SESSION — Oceanides price page + Kuya Gabriel
+# NEXT SESSION — Oceanides: thank-you page pass, tapos DEPLOY
 
-**Isinulat 2026-07-30 (gabi).** Lahat ng kailangan mo ay nandito. Hindi mo na
-kailangang basahin ulit ang buong usapan.
+**Isinulat 2026-08-01 (gabi, pagkatapos ng redesign session).** Ang landing page ay
+REDESIGNED na at **inaprubahan ni Neil**: *"Okay na saken tong first page."*
 
 > **I-paste ito sa simula ng susunod na session:**
 >
@@ -9,174 +9,96 @@ kailangang basahin ulit ang buong usapan.
 > Ituloy natin ang Oceanides. Basahin mo muna:
 >   clients/oceanides/NEXT-SESSION-PRICE-PAGE.md
 >   clients/oceanides/DESIGN.md
->   clients/oceanides/kuya-gabriel/IDENTITY.md
->
-> Nasa branch feat/oceanides-price-page ang lahat, 20+ commit. Hindi pa naka-merge.
+> Nasa branch feat/oceanides-price-page ang lahat, 30 commit. Hindi pa naka-merge.
+> Una ang thank-you page pass, tapos Gate 2 read ni Neil, tapos deploy.
 > ```
 
 ---
 
-## 🔴 Unahin: apat na bagay na naghihintay sa akin
+## Ano ang nangyari sa session na to (2026-08-01, commits `1e42e74..d7bdc40`)
 
-**Wala sa apat na to ang kayang tapusin ng agent. Ako lang.**
+Ang buong DGP-2 redesign (`workflows/design_swipe_file.md` sa main ang evidence base):
 
-1. **DENR badge = Region 7 Central Visayas.** Cebu yun, nasa Metro Manila tayo.
-   Naka-flag na dati sa `content-calendar.md` L70 at hindi naaksyunan.
-   **Tatlong pagpipilian:** tanggalin, palitan ng tamang NCR, o gawing teksto na
-   may totoong numero (SEC Reg. No. + BIR TIN + DENR-accredited na tapunan).
-   Ang tiyak na numero ay mas malakas kaysa hiram na seal.
-   🔴 **Hindi pwedeng mag-live ang page hangga't hindi to naaayos.**
-2. **Consent ni Gabriel.** Pirmadong likeness agreement bago lumabas ang mukha
-   nya kahit saan. Template: `kuya-marvin/consent-agreement-FINAL-2026-07-20.md`.
-   Legal ito, hindi teknikal.
-3. **Ilang metro ng hose ang KASAMA** bago mag-₱100 kada 3 metro. Binigay ni
-   Boss Jay ang rate pero hindi ang simula. Nakasulat ngayon na "kasama na ang
-   standard na hose ng truck" — totoo, at walang inimbentong numero.
-4. **Hatol ni Gabriel** sa `profile-v2` at `website-v4`. Tatlong beses na syang
-   nauna sa QA ng agent, kaya sya pa rin ang huling mata.
+- **Hero price ticket** — ang "nakasulat na presyo" bilang print na quotation sa fold:
+  ₱5,000 + tatlong posibleng dagdag + "Wala nang iba." Isang numero lang ang ticket
+  (tanggal ang 4,000-litro sa presyo line — nagbabanggaan sa ₱5,000 sa mabilis na tingin).
+- **Chapter grounds** — hindi na navy wall: gradient hero → navy-deep trust →
+  paper na presyo chapter → navy kwento → paper FAQ → navy-deep form → void footer.
+- **Papeles sa fold** — SEC Registered / BIR OR / DENR-partner chips sa hero; TOTOONG
+  numbers sa trust band (DENR Cert of Treatment No., DENR ID, BIR TIN — verbatim kay
+  Neil). **Tanggal na ang maling Region-7 DENR badge sa render.**
+- **"Mahigit 1,000 na tangke"** — totoo, panindigan ni Boss Jay. HINDI ginamit ang
+  imbentong "1,347".
+- **Clients marquee** — 14 totoong client names (Toyota, Jollibee, Uniqlo, Ayala Land…)
+  galing sa company profile deck. Unboxed wordmarks + amber diamonds. Pangalan, hindi
+  logo (walang rights sa artwork; kung gustuhin ni Neil ang logos, kailangan ng files).
+- **Before/after wipe slider** — interactive; **ang orientation ay NAHULI NI NEIL na
+  baligtad at naayos** (kaliwa = BEFORE madumi, kanan = AFTER malinis). Provenance ng
+  dalawang pairs: RESOLVED — totoong litrato, kumpirmado ni Neil (nakatala sa
+  `scripts/build-assets.mjs`).
+- **Si Gabriel sa page** — consent pirmado ✅, images approved ✅ (Neil 2026-08-01).
+  "Si Gabriel ang haharap sa inyo" section bago ang FAQ.
+- **Watermarks** — OCEANIDES diagonal na NAKAPASO sa webp files (proof, truck, van,
+  Gabriel) via `build-assets.mjs`. Hindi CSS overlay.
+- **==highlighter==** — amber marker sa 4 na load-bearing na linya (goldEmphasis).
+- **DENR Certificate FAQ** — hiwalay na serbisyo: **₱12,000 bahay / ₱15,000 company**
+  (hindi kasama sa ₱5,000). Nasa `workflows/oceanides_business_model.md` din.
+- **Semento sa bakbak** — naitama: customer ang magbibigay; kung Oceanides, +₱500;
+  pwedeng ipagawa sa iba ang pagsasara.
+- **Thank-you tel CTA** — `tel:+639352589927` na, at naayos ang bug na nagdidikit ng
+  `?email=` sa tel: URI (http bridge lang ang dinidikitan na ngayon).
 
-**Kay Boss Jay pa rin, hindi humaharang:** ano pang ibang dagdag (gabi, weekend,
-hagdan, makipot na daanan)? At saan-saan sa labas ng NCR?
+## ▶ UUNAHIN SA SUSUNOD: 3 hakbang
 
----
+1. **Thank-you page pass** (maliit): i-apply ang chapter-ground world sa
+   `src/pages/ThankYou.tsx` + ayusin ang dalawang lumang violation doon
+   (`bg-black/30` at `font-mono` — bawal pareho sa DESIGN.md). I-smoke ang buong
+   opt-in walk: form → thank-you → `?v=` magnet variants (Oo alam ko / Hindi ko alam)
+   → save-number button. Test rows: `funnel_id: 'oceanides-price-page-smoke'`, burahin.
+2. ⛔ **Gate 2 ni Neil**: buong basa ng landing + thank-you sa PC. Ang copy ay DRAFT
+   pa rin sa config header hangga't hindi ito nangyayari.
+3. **DEPLOY** (walang ibang haharang pagkatapos ng Gate 2):
+   ```bash
+   cd funnels/oceanides-price-page
+   npm install && npm run build
+   npx vercel deploy --prod --yes
+   # env vars: KAMAY NI NEIL, isang command kada isa (nasira ang key dati sa maling paste)
+   npx vercel env add SUPABASE_URL production
+   npx vercel env add SUPABASE_SERVICE_ROLE_KEY production
+   npx vercel deploy --prod --yes   # walang epekto ang env hanggang bagong deploy
+   ```
+   Live test: POST sa prod `/api/lead` → `{ok:true}` → row sa Supabase
+   (`client_id='oceanides'`) → burahin ang test row. I-share ang ALIAS
+   (`oceanides-price-page.vercel.app`), hindi ang deployment URL. Itala sa
+   `workflows/funnel_deploys.md`.
 
-## Ano ang ginawa ngayong gabi
+## 🅿 Balikan (hindi humaharang sa deploy)
 
-### Ang page — `funnels/oceanides-price-page/`
+- **SEC Reg. No.** — skip muna sabi ni Neil 2026-08-01, "balikan nalang." Pagdating:
+  isang entry sa `receipts` sa `funnel.config.ts` socialProofBar.
+- **Hose baseline** ni Boss Jay (ilang metro kasama) — honest na ang copy ngayon.
+- **Logo version ng marquee** — kung gustuhin ni Neil; kailangan ng malinis na files.
+- **Real-bookings feed** ("may nag-book sa Pasig, 2 oras ang nakalipas") — POST-LAUNCH,
+  totoong data lang mula `funnel_leads`. Ang fake version ay tinanggihan at bawal.
+- **Kuya Marvin legacy**: PAUSED ang lumang ad; ⚠️ may utang sa 100 taong nag-message
+  ("libre ang tingin") — sinuman ang tumawag, libre. Bagong Page ni Gabriel: 3-5 post
+  muna bago i-ON ang unang ad.
 
-**Bakit sya umiiral:** 2 araw na live ads, **₱1,284 gastos, 100 message,
-₱12.84 kada message, at ISANG order.** Ang leak ay hindi lead gen, ang close.
-Palaging pareho ang namamatayan: *magkano?* → *"depende sa location, 4k to
-4500"* → tahimik. May public comment pa sa ad: *"From 4500 ... umabot sa 5500."*
-Ang sagot sa telepono ay kinukumpirma ang takot, hindi inaalis.
+## ⚙️ Mga gate na wag galawin
 
-**Kaya sinasagot ng page ang "magkano" nang buo at nakasulat, kasama ang mga
-dagdag na itinatago ng iba.**
-
-Laman: ₱5,000 kada truckload · ₱100 kada 3 metrong hose · ₱500-1k na bakbak ·
-₱5,000 ulit ang pangalawang truckload · 30-day warranty sa BARA lang · before at
-after na litrato · guarantee na *"kung tumaas ang presyo pagdating, kami ang
-sasagot sa dagdag."*
-
-Tatlong lane, isang page: **alam nila nasaan ang tank** → direct booking ·
-**hindi alam** → libreng checklist · **tenant** → script para sa landlord.
-
-### Si Gabriel — `clients/oceanides/kuya-gabriel/`
-
-Bagong field inspector, kapalit ni Kuya Marvin. 6 reference photo, buong
-identity payload sa [`IDENTITY.md`](kuya-gabriel/IDENTITY.md).
-
-| Larawan | Kalagayan |
-|---|---|
-| `gabriel-cover-v3.png` | ✅ **APPROVED** |
-| `gabriel-website-v4.png` | Hinihintay si Gabriel |
-| `gabriel-profile-v2.png` | Hinihintay si Gabriel |
-| `gabriel-pointing-v1.png` | 🟡 Nakangiti pa. Papalitan ba? |
-
----
-
-## ⚙️ Dalawang gate na huwag mong bubuksan
-
-Ito ang pinakamahalagang bagay na naiwan ngayong gabi, kaya wag mong burahin.
-
-**Neil, 2026-07-30:** *"lagi nalang sumasablay, nakakalimot parang may amnesia
-kayo. Bat ganun need nalang lagi icall out."*
-
-Tama sya, at **structural** ang sanhi. Tumutunog ang hook kapag si Neil ang
-nag-Tagalog, kaya tama ang chat replies. Pero **walang nagche-check sa copy na
-nakatago sa loob ng file.** Ganun din sa alignment: walang mali kapag isang
-component lang ang binasa mo, lumalabas lang kapag buong page na.
-
-| Gate | Binabantayan |
-|---|---|
-| `scripts/lint-voice.mjs` | Copy laban sa [`taglish-voice.md`](../../.claude/skills/_shared/taglish-voice.md). Nahuli agad ang 4 na hindi napansin, kasama ang buong ERROR COPY ng form na naiwang English. |
-| `scripts/lint-layout.mjs` | Bawat section laban sa isang kaliwang rail. Nahuli ang heading na lumihis ng 22px dahil sa padded na box. |
-
-Naka-wire pareho sa `prebuild`, kaya **bumabagsak ang build** kapag may lumihis.
-
-🔴 **Kapag pumalya ang lint, huwag mo itong ayusin sa pagdagdag sa exception
-list. Ang section ang ayusin.** Yun ang pinakamadaling paraan para masira ulit
-ito.
-
----
-
-## Mga aral na huwag nang uulitin
-
-Nasa [`IDENTITY.md`](kuya-gabriel/IDENTITY.md) ang buong kwento ng tatlo.
-Maikling bersyon:
-
-1. **"Ang laki ng ulo ko."** Nakahalukipkip sya, kaya pumipiga ang katawan
-   papasok at lumalaki ang ulo. Buong katawan pa sa 3 metro, na siyang
-   mid-distance zone kung saan namamatay ang mga plate. **Ang lunas ay sukat na
-   masusukat** (ulo = 1/3 ng lapad ng balikat), mas malapit na camera, at bukas
-   na katawan.
-2. **"Parang kinabit lang."** Ipinasa ang litrato ng truck bilang 3rd `--edit`
-   ref, at tinuruan nito ang model na **mag-composite** imbes na gumawa ng isang
-   eksena. Ilarawan na lang ang truck sa salita.
-3. **"Nag-standout masyado yung kulay ng balat ko."** Nasa lilim sya habang
-   maaraw ang paligid. Ang *"warm tan skin tone"* ay naglalarawan ng **pigment**
-   nya, hindi ng ilaw. **Isang maulap na araw, isang ilaw para sa lahat.**
-
-**Si Gabriel ang nakakita ng tatlo, hindi ang agent.** Hindi lang sya subject.
-Ipakita sa kanya bawat batch bago sabihing tapos.
-
----
-
-## Naiwan kay Kuya Marvin
-
-- **Manatiling PAUSED ang ad.** Retirado ang persona at nagbago ang offer.
-- ⚠️ **May utang sa 100 taong nag-message.** Nangako ang ad ng *"Libre ang
-  tingin namin sa tangke nyo."* Sinuman sa kanila ang tumawag ay dapat bigyan ng
-  libre, hindi ₱499. Legacy cost, hindi bug.
-- **Bagong Page para kay Gabriel.** Tama sa policy, walang hinihinging followers
-  si Meta. Pero **kailangan pa rin ng 3-5 post bago i-ON ang unang ad** — ang
-  unang gagawin ng taong hihingan mo ng pera ay i-click ang Page mo.
-
----
-
-## Kapag naayos na ang apat, deploy na
-
-```bash
-cd funnels/oceanides-price-page
-npm install
-npm run build                       # tumatakbo ang 2 lint bago ang build
-npx vercel deploy --prod --yes
-```
-
-Tapos ang env vars, **isang command kada isa, kamay ni Neil** (nasira ang key
-noong rep #1 sa maling paste):
-
-```bash
-npx vercel env add SUPABASE_URL production
-npx vercel env add SUPABASE_SERVICE_ROLE_KEY production
-npx vercel deploy --prod --yes      # walang epekto ang env hangga't walang bagong deploy
-```
-
-Live test: totoong POST sa prod `/api/lead` → `{ok:true}` → tingnan ang row sa
-Supabase (`client_id='oceanides'`) → **burahin ang test row**.
-I-share ang alias na `oceanides-price-page.vercel.app`, **hindi** ang
-deployment URL na may `-<hash>-` (nasa likod yun ng Vercel SSO).
-Itala sa `workflows/funnel_deploys.md` — wala sa git ang Vercel settings.
-
----
+`scripts/lint-voice.mjs` + `scripts/lint-layout.mjs`, naka-wire sa prebuild. Kapag
+pumalya, **ang section ang ayusin, hindi ang exception list.** Ang Gabriel image lessons
+ay nasa [`kuya-gabriel/IDENTITY.md`](kuya-gabriel/IDENTITY.md).
 
 ## Re-arm pagkatapos ng reboot
 
 ```powershell
 .\scripts\restore-git-identity.ps1
-.\scripts\restore-codex.ps1
+.\scripts\restore-gh.ps1
 ```
-
-⚠️ **Naka-block ang `.ps1` sa PC na to.** Kung sumabog ang `codex login`,
-gamitin ang **`codex.cmd login`** — nilalaktawan nito ang wrapper. O ayusin nang
-minsanan: `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`.
 
 ## Mga link
 
-- **Review artifact** (phone-readable, may swipe-able na page preview):
-  `https://claude.ai/code/artifact/99a49f2a-96a1-499a-a681-c257e47f38df`
-  Twin: [`artifacts/gabriel-review.html`](../../artifacts/gabriel-review.html) ·
-  Build: `node tools/artifacts/build-gabriel-review.mjs`
-- **Gmail draft:** *"Kuya Gabriel v1 + ang price page (30 Hulyo)"*
-- **Offer doc (Gate 1):** [`workflows/oceanides_offer_price_page.md`](../../workflows/oceanides_offer_price_page.md)
-- **Presyo, source of truth:** [`workflows/oceanides_business_model.md`](../../workflows/oceanides_business_model.md)
+- Offer doc (Gate 1): [`workflows/oceanides_offer_price_page.md`](../../workflows/oceanides_offer_price_page.md)
+- Presyo source of truth: [`workflows/oceanides_business_model.md`](../../workflows/oceanides_business_model.md)
+- Design evidence: `workflows/design_swipe_file.md` (sa main) — DGP-2 ang recipe
