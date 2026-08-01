@@ -247,8 +247,10 @@ export const funnelConfig: FunnelConfig = {
       ground: 'paper',
       props: {
         heading: 'Ang mga dagdag na itinatago ng iba',
+        // `==…==` = highlighter (goldEmphasis) — iisang linya kada section,
+        // yung sinasabi ang buong benta. Kapag lahat naka-highlight, wala.
         body: [
-          'Lahat ng siphoner may ganitong singil. Kami lang ang naglalagay nito sa page bago ka pa mag-book.',
+          'Lahat ng siphoner may ganitong singil. ==Kami lang ang naglalagay nito sa page bago ka pa mag-book.==',
           'Sobrang hose, ₱100 kada 3 metrong dagdag. Kapag malayo ang mapaparadahan ng truck sa tangke nyo.',
           'Bakbak ng takip, ₱500 hanggang ₱1,000. Kapag nakasarado ang tangke at kailangang buksan. Kasama na ang semento at ang pagsasara ulit pagkatapos.',
           'Pangalawang truckload, ₱5,000 ulit. Kapag hindi kasya sa isa ang laman ng tangke nyo. Sasabihin namin bago pa namin simulan ang pangalawa, hindi pagkatapos.',
@@ -295,7 +297,7 @@ export const funnelConfig: FunnelConfig = {
         paragraphs: [
           'Kapag nagbubuhos ka na ng timba para lang bumaba, hindi na yan barado.',
           'Puno na ang septic tank. Kaya kahit anong plunger, balik nang balik ang problema. Hindi mo naman kasi inaayos ang totoong dahilan.',
-          'Kaya ang tinitingnan namin ay ang tangke, hindi ang toilet. Kapag hindi pa naman puno, sasabihin namin. Uuwi kami. Hindi ka namin pipilitin.',
+          'Kaya ang tinitingnan namin ay ang tangke, hindi ang toilet. ==Kapag hindi pa naman puno, sasabihin namin. Uuwi kami.== Hindi ka namin pipilitin.',
         ],
         // Nandito na ang litrato ng truck, hindi na sa hero. Sa ilalim ng CTA
         // sya dati, kaya sliver lang sya sa fold at walang nakakakita.
@@ -309,7 +311,7 @@ export const funnelConfig: FunnelConfig = {
       ground: 'navy',
       props: {
         heading: 'Kung tumaas ang presyo pagdating, kami ang sasagot',
-        body: 'Yung presyong sinabi namin sa telepono ay yun din ang babayaran mo. Kung may nakita kaming dagdag na hindi namin nasabi sa iyo, kami ang sasagot doon, hindi ikaw. Ang tanging hindi sakop nito ay kung mali ang sinabi mo sa amin, halimbawa isang tangke ang sinabi mo pero dalawa pala.',
+        body: 'Yung presyong sinabi namin sa telepono ay yun din ang babayaran mo. Kung may nakita kaming dagdag na hindi namin nasabi sa iyo, ==kami ang sasagot doon, hindi ikaw.== Ang tanging hindi sakop nito ay kung mali ang sinabi mo sa amin, halimbawa isang tangke ang sinabi mo pero dalawa pala.',
       },
     },
 
@@ -329,7 +331,7 @@ export const funnelConfig: FunnelConfig = {
           },
           {
             q: 'Bakit ₱5,000 eh may nag-aalok sa akin ng ₱2,500?',
-            a: 'Kasi ibang bagay yun. Sa ₱2,500 walang resibo, walang warranty, at hindi mo alam kung saan itinapon ang laman. Karaniwan din na yun ang nagiging ₱4,000 o ₱5,500 pagdating ng truck. May comment nga sa ad namin na ganoon mismo ang nangyari sa kanya. Ang sa amin, ₱5,000 sa page at ₱5,000 pa rin sa dulo.',
+            a: 'Kasi ibang bagay yun. Sa ₱2,500 walang resibo, walang warranty, at hindi mo alam kung saan itinapon ang laman. Karaniwan din na yun ang nagiging ₱4,000 o ₱5,500 pagdating ng truck. May comment nga sa ad namin na ganoon mismo ang nangyari sa kanya. ==Ang sa amin, ₱5,000 sa page at ₱5,000 pa rin sa dulo.==',
           },
           {
             q: 'Paano kung hindi kasya sa isang truckload ang tangke namin?',

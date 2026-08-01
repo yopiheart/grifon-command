@@ -22,10 +22,19 @@ import React from 'react';
 // on the page calls it, and the concept is "the one emphasis run", not the hex.
 // ===========================================================================
 
-const TOKEN = /\*\*(.+?)\*\*/g;
+// `==…==` is the second channel (2026-08-01, hiniling ni Neil galing sa Suby
+// longform evidence): a HIGHLIGHTER stroke — amber fill, surface-deep text,
+// the literal marker-pen-on-paper device of the print world. Amber bg + navy
+// text is 8.8:1 sa lahat ng ground, kaya ground-agnostic sya (walang paper
+// branching, di tulad ng accent TEXT). box-decoration-break:clone keeps the
+// fill padding on every wrapped line, hindi lang sa una.
+//
+// Discipline, pareho sa amber runs: iisang highlight kada section, sa linya
+// na sinasabi ang buong benta. Kapag lahat naka-highlight, walang naka-highlight.
+const TOKEN = /\*\*(.+?)\*\*|==(.+?)==/g;
 
 export const goldEmphasis = (text: string): React.ReactNode => {
-  if (!text.includes('**')) return text;
+  if (!text.includes('**') && !text.includes('==')) return text;
 
   const out: React.ReactNode[] = [];
   let cursor = 0;
@@ -33,11 +42,22 @@ export const goldEmphasis = (text: string): React.ReactNode => {
   for (const match of text.matchAll(TOKEN)) {
     const at = match.index ?? 0;
     if (at > cursor) out.push(text.slice(cursor, at));
-    out.push(
-      <span key={`${at}-${match[1]}`} className="text-brand-accent-text">
-        {match[1]}
-      </span>,
-    );
+    if (match[1] !== undefined) {
+      out.push(
+        <span key={`${at}-${match[1]}`} className="text-brand-accent-text">
+          {match[1]}
+        </span>,
+      );
+    } else {
+      out.push(
+        <mark
+          key={`${at}-${match[2]}`}
+          className="bg-brand-primary px-1 py-px text-brand-elevated [-webkit-box-decoration-break:clone] [box-decoration-break:clone]"
+        >
+          {match[2]}
+        </mark>,
+      );
+    }
     cursor = at + match[0].length;
   }
 

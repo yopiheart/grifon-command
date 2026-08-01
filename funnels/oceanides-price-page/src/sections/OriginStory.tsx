@@ -3,6 +3,7 @@ import type { PropsOf } from '../config.types';
 import { SectionShell } from '../primitives/SectionShell';
 import { Reveal } from '../primitives/Reveal';
 import { SectionHeading } from '../primitives/SectionHeading';
+import { goldEmphasis } from '../lib/goldEmphasis';
 
 // Prose measure, not grid width — this is the one section people actually read
 // end to end, so it gets a reading column instead of the page column.
@@ -21,7 +22,7 @@ export const OriginStory: React.FC<PropsOf<'originStory'>> = ({ heading, paragra
     <div className="mt-6 space-y-5">
       {paragraphs.map((paragraph, i) => (
         <Reveal key={i} index={i}>
-          <p className="text-base leading-relaxed text-brand-on-surface-muted md:text-lg">{paragraph}</p>
+          <p className="text-base leading-relaxed text-brand-on-surface-muted md:text-lg">{goldEmphasis(paragraph)}</p>
         </Reveal>
       ))}
     </div>

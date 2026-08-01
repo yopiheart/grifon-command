@@ -4,6 +4,7 @@ import { SectionShell } from '../primitives/SectionShell';
 import { GlassCard } from '../primitives/GlassCard';
 import { Reveal } from '../primitives/Reveal';
 import { SectionHeading } from '../primitives/SectionHeading';
+import { goldEmphasis } from '../lib/goldEmphasis';
 
 // Native <details>/<summary>: keyboard and screen-reader correct for free, open
 // state survives Ctrl+F, and it needs no JS state or motion — so there is no
@@ -33,7 +34,9 @@ export const FaqAccordion: React.FC<PropsOf<'faqAccordion'>> = ({ items, heading
                   +
                 </span>
               </summary>
-              <p className="px-5 pb-5 text-sm leading-relaxed text-brand-on-surface-muted md:px-6">{item.a}</p>
+              <p className="px-5 pb-5 text-sm leading-relaxed text-brand-on-surface-muted md:px-6">
+                {goldEmphasis(item.a)}
+              </p>
             </details>
           </GlassCard>
         </Reveal>

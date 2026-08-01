@@ -3,6 +3,7 @@ import type { PropsOf } from '../config.types';
 import { SectionShell } from '../primitives/SectionShell';
 import { Reveal } from '../primitives/Reveal';
 import { SectionHeading } from '../primitives/SectionHeading';
+import { goldEmphasis } from '../lib/goldEmphasis';
 
 // Names the reader's objection out loud, then dismantles it.
 //
@@ -21,7 +22,7 @@ export const ObjectionReversal: React.FC<PropsOf<'objectionReversal'>> = ({ head
       <div className="mt-6 space-y-4 border-l-2 border-brand-primary pl-5 md:pl-8">
         {body.map((paragraph, i) => (
           <p key={i} className="text-base leading-relaxed text-brand-on-surface-muted md:text-lg">
-            {paragraph}
+            {goldEmphasis(paragraph)}
           </p>
         ))}
       </div>
