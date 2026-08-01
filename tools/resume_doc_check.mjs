@@ -104,11 +104,20 @@ if (!stampMatch) {
     if (!known) {
       warn(`NOW.md names anchor commit ${anchor}, which this clone does not have. Re-anchor it to a commit on main.`);
     } else {
-      const drift = git('rev-list', '--count', `${anchor}..HEAD`);
-      if (drift && Number(drift) > 0) {
-        warn(`NOW.md's anchor commit ${anchor} is ${drift} commit(s) behind HEAD — re-stamp when you rewrite it.`);
+      // Count only commits that changed something OTHER than NOW.md itself. A commit whose
+      // sole content is the rewritten NOW.md cannot invalidate its own anchor — demanding
+      // otherwise is unsatisfiable (the SHA is not known until after the commit exists, and
+      // amending to "fix" it just mints a new SHA, forever). Drift means the WORK moved on
+      // without NOW.md, which is the thing actually worth catching.
+      const since = git('rev-list', `${anchor}..HEAD`).split('\n').filter(Boolean);
+      const workCommits = since.filter((sha) => {
+        const touched = git('show', '--name-only', '--format=', sha).split('\n').filter(Boolean);
+        return touched.some((f) => f !== 'NOW.md');
+      });
+      if (workCommits.length) {
+        warn(`NOW.md's anchor commit ${anchor} is ${workCommits.length} commit(s) behind HEAD — the work moved on without it. Re-stamp when you rewrite it.`);
       } else {
-        pass(`NOW.md's anchor commit ${anchor} is current with HEAD.`);
+        pass(`NOW.md's anchor commit ${anchor} is current with HEAD${since.length ? ` (${since.length} NOW.md-only commit(s) since, which don't count as drift)` : ''}.`);
       }
     }
   }
