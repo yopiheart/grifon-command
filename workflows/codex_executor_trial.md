@@ -44,4 +44,18 @@ this decision, now the `code-executor` model) raises that bar at identical cost 
 watch the next few Sol runs against the new baseline; if the review-burden balance
 flips, reopen this gate rather than silently reverting.
 
+**Instrumented 2026-08-02.** That "watch the next few runs" was unmeasurable until now —
+nothing recorded which lane produced which diff, so a reopen decision would have run on
+memory the defreezer wipes. Commits now carry an `Executor: codex-sol | code-executor |
+main-loop` git trailer (CLAUDE.md convention; the main loop stamps it, since neither
+executor commits). Read the standings with `node tools/executor_ledger.mjs
+[--since=2026-07-24]` — commits, churn, and **follow-up-fix rate** per lane (a later
+`fix(`/`revert` touching the same files within 5 commits). **Reference baseline, measured
+2026-08-02 on untagged history: 25% since 2026-07-24** (the Opus 5 window this gate is
+re-scored against; 15% over the longer since-2026-07-01 window, for context — the recent
+stretch is Oceanides page work, which iterates in public and fixes fast, so prefer the
+25% figure only against comparably UI-heavy lanes). A lane running materially hotter
+is carrying the review burden this gate's DROP criterion names. Coverage starts at zero
+and only accrues going forward, so the first honest read is ~3 tagged commits per lane.
+
 **~~When closing this gate, also action the parked `openai/codex-plugin-cc` decision~~ — ACTIONED 2026-07-28: DROP, never revisit** (Neil's call; see agent_lessons.md decision log 2026-07-28). The plugin's one valuable idea (advisory cross-model lens on Claude-built diffs) was stolen CLI-side as the Sol advisory-review gated trial (`workflows/sol_advisory_review_trial.md`); Stop-hook gate, `/codex:transfer`, and the transport swap stay rejected. Nothing left to do here. *(Staleness caught by `tools/librarian_sweep.mjs` on its first run, 2026-07-28.)*

@@ -22,7 +22,9 @@ Rules:
   the architecture is a stop-and-report, not a log-and-continue.
 - After edits, run `npm run build` and `npx vitest run`. If either fails, fix and re-run
   until green, or report the blocker.
-- Never commit or push — git stays in the main loop, which reviews your diff first.
+- Never commit or push — git stays in the main loop, which reviews your diff first and
+  stamps the `Executor: code-executor` trailer on the commit (see CLAUDE.md; read the
+  standings with `node tools/executor_ledger.mjs`).
 
 Working discipline (how to execute, every task):
 - Evidence before reasoning: never design from memory of what a file, API, or type
