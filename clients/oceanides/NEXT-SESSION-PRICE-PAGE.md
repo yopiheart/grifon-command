@@ -66,6 +66,34 @@ Ang buong DGP-2 redesign (`workflows/design_swipe_file.md` sa main ang evidence 
    `?email=` scrub, zero console error. ⚠️ Ang `form → /api/lead → thank-you` na
    hakbang ay HINDI pa nate-test lokal (walang api bridge ang `vite preview`);
    ang live POST test pagkatapos ng deploy ang sumasakop doon.
+1b. ✅ **TAPOS — huling pass 2026-08-01** (mga sagot sa review ni Neil):
+   - **PhonePill sa void chapter ng thank-you.** Hindi mo mase-save ang numerong
+     hindi mo nakikita, at patay ang `tel:` sa desktop. Nakalimbag na ang
+     `0935 258 9927` katabi ng button.
+   - **Chapter 2 ng thank-you: `navy-deep` → `navy`.** Nagtatapos ang gradient sa
+     `#0A1F45` at iyon din ang `navy-deep`, kaya walang gilid. `#0E2C5E` na sya.
+   - **Marquee readability.** HINDI kulay ang problema (16.2:1 ang puti; lalong
+     lalala kapag dinilim). Dalawang mekanikal na sanhi: pinuputol ng
+     `overflow:hidden` ang pangalan sa gitna ng salita sa magkabilang gilid, at
+     73px/s ang bilis. Ngayon: `mask-image` edge fade + 40s → **75s** (39px/s).
+     Kung mahirap pa rin, ang laki ang susunod na lever (`text-lg` → `text-base`),
+     pero D07-backed ang laki kaya hindi ko muna hinawakan.
+   - **Ang huling pinto sa footer**: nakalimbag na numero + Messenger button, sa
+     ibabaw ng legal. Bagong copy: `May tanong bago ka mag-book? Nandito kami.`
+   - **Ikatlong pinto sa StickyCta**: Messenger icon button. Icon-only sa ilalim
+     ng `sm`. ⚠️ Nag-two-lines ang primary sa unang subok (223px lang ang natira
+     laban sa ~231px na kailangan) kaya hinigpitan lahat ng horizontal value sa
+     mobile at 13px ang type doon. **Ang 360px ang totoong constraint, hindi 390.**
+   - 🟡 **BLANGKO PA ANG `MESSENGER` const sa `funnel.config.ts`.** Kailangan ng
+     totoong `m.me/...` link ng Page ni Gabriel. Habang blangko, hindi lumalabas
+     ang button sa dalawang lugar at walang sirang link, kaya ligtas i-deploy.
+     Isang string lang ang ipapasok pagdating.
+
+1c. 🟡 **HINDI PA NASASAGOT NI NEIL: ang oras ng tawag.** Tatlong beses sinasabi
+   ng thank-you na "tatawagan ka namin" at ni minsan hindi sinasabi kung kailan.
+   Iyon ang tanging tanong ng kaka-book lang. Kailangan ng totoong sagot ni Zam
+   bago ilagay. Wag mag-imbento.
+
 2. ⛔ **Gate 2 ni Neil**: buong basa ng landing + thank-you sa PC. Ang copy ay DRAFT
    pa rin sa config header hangga't hindi ito nangyayari.
    Lokal na tingin: `npm run build && npx vite preview --port 4173` sa

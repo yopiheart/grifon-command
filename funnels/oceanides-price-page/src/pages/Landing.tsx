@@ -58,7 +58,13 @@ export const Landing: React.FC<LandingProps> = ({ config }) => {
   return (
     <>
       <main>{config.sections.map(renderSection)}</main>
-      {heroProps && <StickyCta label={heroProps.ctaLabel} phone={heroProps.phone} />}
+      {heroProps && (
+        <StickyCta
+          label={heroProps.ctaLabel}
+          phone={heroProps.phone}
+          messenger={heroProps.messenger}
+        />
+      )}
     </>
   );
 };

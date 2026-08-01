@@ -68,6 +68,13 @@ export interface FunnelConfig {
     /** Heading over `steps`. Omit and the list renders bare. */
     stepsHeading?: string;
     /**
+     * Printed beside the bridge CTA. You cannot SAVE a number you cannot SEE,
+     * and a bare `tel:` button does nothing at all on a desktop browser, so the
+     * number itself has to be on the page as text.
+     */
+    phone?: string;
+    phoneLabel?: string;
+    /**
      * Optional on-page magnet delivery — the fastest fulfilment there is: no
      * inbox, no sender, no deliverability. The lead's answer to `qualifierId`
      * rides to the thank-you page as `?v=…`; the page renders
@@ -148,6 +155,13 @@ type SectionBody =
         logoAlt?: string;
         phone?: string;
         phoneLabel?: string;
+        /**
+         * Messenger link for the StickyCta's third door. It is NOT rendered in
+         * the hero itself: the fold already carries the form CTA and the phone,
+         * and a third choice at the decision moment is a choice fewer people
+         * make. It lives on the hero props only because StickyCta reads them.
+         */
+        messenger?: string;
         ticket?: PriceTicketData;
         /** Short bordered text chips — SEC / BIR / DENR, above the fold. */
         trustChips?: string[];
@@ -245,6 +259,20 @@ type SectionBody =
         disclaimer?: string;
         links?: Array<{ label: string; href: string }>;
         logo?: string;
+        /**
+         * The LAST DOOR (Neil, 2026-08-01): "if ever na umabot sila dun at hindi
+         * mag fill up at hindi pumindot atleast meron silang visible number."
+         * A reader who scrolled the whole page without acting is not a lost
+         * lead, they are an unanswered question. Printed number + Messenger,
+         * above the legal text, because the fine print is the last thing to
+         * READ and this is the last thing to DO.
+         */
+        contactLine?: string;
+        phone?: string;
+        phoneLabel?: string;
+        /** `m.me/...` or the full page URL. Omit and the button does not render. */
+        messenger?: string;
+        messengerLabel?: string;
       };
     };
 

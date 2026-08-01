@@ -6,6 +6,7 @@ import { GlassCard } from '../primitives/GlassCard';
 import { EyebrowChip } from '../primitives/EyebrowChip';
 import { Reveal } from '../primitives/Reveal';
 import { CtaButton } from '../primitives/CtaButton';
+import { PhonePill } from '../primitives/PhonePill';
 import { goldEmphasis } from '../lib/goldEmphasis';
 import { trackLead } from '../lib/pixel';
 
@@ -94,9 +95,17 @@ const resolveMagnetPlan = (
 // a printed piece changes stock when it changes argument.
 //
 //   navy-gradient   ang kumpirmasyon      the arrival, the one centred moment
-//   navy-deep       ang susunod           what happens next, on the rail
+//   navy            ang susunod           what happens next, on the rail
 //   paper           ang handout           the magnet, on quotation stock
 //   void            ang isang hakbang     the bridge CTA, bottom of the page
+//
+// Chapter 2 is `navy`, NOT `navy-deep`, and that is a correction rather than a
+// preference: the gradient above it RESOLVES to surface-deep, which is exactly
+// what `navy-deep` paints, so the two chapters met at the same hex and read as
+// one unbroken field. The ladder's own rule is that chapter transitions are
+// HARD edges. Lighter navy gives a real edge, and the card inside still gets
+// its tonal step, just inverted: it recesses (surface-deep on surface) instead
+// of lifting. A printed panel is allowed to be the darker box on the sheet.
 //
 // Everything after the arrival sits on the ONE left rail — clients/oceanides/
 // DESIGN.md, "Layout: isang rail". The old page centred the whole document,
@@ -163,10 +172,9 @@ export const ThankYou: React.FC<ThankYouProps> = ({ config }) => {
         </SectionShell>
       </div>
 
-      {/* 2 — ANG SUSUNOD. On navy-deep, where `--brand-card` steps up to the
-          lighter navy so the list actually reads as a panel. */}
+      {/* 2 — ANG SUSUNOD. */}
       {thankYou.steps && thankYou.steps.length > 0 && (
-        <div className="ground-navy-deep">
+        <div className="ground-navy">
           <SectionShell width="prose">
             {thankYou.stepsHeading && (
               <Reveal>
@@ -214,9 +222,19 @@ export const ThankYou: React.FC<ThankYouProps> = ({ config }) => {
                 {thankYou.nextStep.blurb}
               </p>
             )}
-            <CtaButton onClick={() => (window.location.href = bridgeHref)}>
-              {thankYou.nextStep.label}
-            </CtaButton>
+            {/* The button and the PRINTED number, same row grammar as the hero.
+                Asking someone to save a number the page never shows is asking
+                them to save nothing, and a bare `tel:` button is a dead end on
+                any desktop browser. The pill is the number; the button is the
+                action. Both dial on a phone, which is the correct redundancy. */}
+            <div className="flex flex-col items-stretch gap-4 sm:flex-row sm:items-center">
+              <CtaButton onClick={() => (window.location.href = bridgeHref)}>
+                {thankYou.nextStep.label}
+              </CtaButton>
+              {thankYou.phone && (
+                <PhonePill number={thankYou.phone} label={thankYou.phoneLabel} />
+              )}
+            </div>
           </Reveal>
         </SectionShell>
       </div>

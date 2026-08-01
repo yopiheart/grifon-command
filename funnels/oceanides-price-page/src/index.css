@@ -205,14 +205,27 @@
   }
 }
 
+/* READABILITY PASS (Neil, 2026-08-01: "parang hirap basahin").
+   The colour was never the problem. White on navy measures 16.2:1 and every
+   dimmer step in the palette would make it HARDER, not easier. Two mechanical
+   causes, both visible in his screenshot:
+
+   1. `overflow: hidden` guillotines a name mid-word at each edge ("es", "Toy"),
+      and the eye keeps trying to finish a word that was cut. A soft mask lets
+      names dissolve instead, which is also how a real printed strip behaves
+      under a fold. Ground-agnostic, so it survives a chapter move.
+   2. It was travelling ~73px/s. Reading a moving target at that speed is hard
+      at any contrast; the slower track below is ~39px/s. */
 .marquee {
   overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
 }
 
 .marquee__track {
   display: flex;
   width: max-content;
-  animation: marquee-slide 40s linear infinite;
+  animation: marquee-slide 75s linear infinite;
 }
 
 /* Pause on hover so a reader can actually read a name they half-caught. */
@@ -283,6 +296,13 @@
      names behind the clip. So it stops being a strip: the list wraps into a
      static block and the duplicate copy, which only ever existed to make the
      loop seamless, is removed from the layout as well as from the a11y tree. */
+  /* The edge mask exists to hide a moving cut. Nothing moves here, so the mask
+     would just fade the first and last name of a static block for no reason. */
+  .marquee {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
   .marquee__track {
     animation: none;
     width: 100%;

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { DUR, EASE, reducedMotion } from '../theme/motionTokens';
 import { scrollToLeadForm } from '../lib/scrollToForm';
+import { MessengerGlyph } from './MessengerButton';
 
 // ===========================================================================
 // StickyCta — the always-there booking bar, docked to the bottom of the screen.
@@ -30,9 +31,34 @@ interface StickyCtaProps {
   label: string;
   phone?: string;
   phoneLabel?: string;
+  /** `m.me/...`. Omit and the bar stays two doors wide. */
+  messenger?: string;
 }
 
-export const StickyCta: React.FC<StickyCtaProps> = ({ label, phone, phoneLabel = 'Tawag' }) => {
+// Secondary doors. Same slab, so neither competes with the amber primary.
+//
+// The LABEL hides below 640px and the button becomes the glyph alone. That is
+// what buys room for a third door without touching the approved primary copy.
+// aria-label carries the meaning at every width, so nothing is lost to a
+// screen reader when the text is not painted.
+//
+// The mobile paddings below are MEASURED, not guessed: the first attempt left
+// the primary 223px, and "Mag-book ng schedule" wants ~231px at 14px, so it
+// wrapped to two lines and the bar grew to 68px tall. Every horizontal value
+// here tightens below `sm` — container gap, secondary padding, primary padding
+// and type size — because the constraint is not 390px, it is 360px (Galaxy A
+// class), where the same row has 24px less to spend.
+const SECONDARY =
+  'flex shrink-0 items-center gap-2 rounded-brand border-2 border-white/25 px-3 py-3.5 sm:px-4 ' +
+  'text-sm font-bold uppercase tracking-wide text-brand-on-surface ' +
+  'transition-colors duration-200 hover:border-brand-primary hover:text-brand-primary';
+
+export const StickyCta: React.FC<StickyCtaProps> = ({
+  label,
+  phone,
+  phoneLabel = 'Tawag',
+  messenger,
+}) => {
   const reduce = useReducedMotion();
   const [visible, setVisible] = useState(false);
 
@@ -94,11 +120,11 @@ export const StickyCta: React.FC<StickyCtaProps> = ({ label, phone, phoneLabel =
           // pb-safe: iOS home-indicator gutter, so the bar is not half-swallowed.
           style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
         >
-          <div className="mx-auto flex max-w-shell items-center gap-3">
+          <div className="mx-auto flex max-w-shell items-center gap-2 sm:gap-3">
             <button
               type="button"
               onClick={scrollToLeadForm}
-              className="flex-1 rounded-brand bg-brand-primary px-5 py-3.5 text-sm font-bold uppercase tracking-wide text-brand-elevated transition-colors duration-200 hover:brightness-95"
+              className="flex-1 whitespace-nowrap rounded-brand bg-brand-primary px-4 py-3.5 text-[13px] font-bold uppercase tracking-wide text-brand-elevated transition-colors duration-200 hover:brightness-95 sm:px-5 sm:text-sm"
             >
               {label}
             </button>
@@ -106,7 +132,7 @@ export const StickyCta: React.FC<StickyCtaProps> = ({ label, phone, phoneLabel =
               <a
                 href={`tel:${phone.replace(/[^\d+]/g, '')}`}
                 aria-label={`Tumawag sa ${phone.split('').join(' ')}`}
-                className="flex shrink-0 items-center gap-2 rounded-brand border-2 border-white/25 px-4 py-3.5 text-sm font-bold uppercase tracking-wide text-brand-on-surface transition-colors duration-200 hover:border-brand-primary hover:text-brand-primary"
+                className={SECONDARY}
               >
                 <svg
                   aria-hidden
@@ -120,7 +146,22 @@ export const StickyCta: React.FC<StickyCtaProps> = ({ label, phone, phoneLabel =
                 >
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />
                 </svg>
-                {phoneLabel}
+                <span className="hidden sm:inline">{phoneLabel}</span>
+              </a>
+            )}
+            {messenger && (
+              <a
+                href={messenger}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Mag-message sa Messenger"
+                className={SECONDARY}
+              >
+                {/* The bolt is knocked out in surface-deep, which is exactly
+                    this bar's fill, so the glyph reads as one shape here with
+                    no disc behind it. */}
+                <MessengerGlyph className="h-4 w-4" />
+                <span className="hidden sm:inline">Message</span>
               </a>
             )}
           </div>

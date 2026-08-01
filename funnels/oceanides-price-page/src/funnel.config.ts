@@ -41,6 +41,21 @@ import type { FunnelConfig } from './config.types';
 // No apostrophes in contractions (nyo, yun, yan, to, wag, di).
 // ===========================================================================
 
+// ---------------------------------------------------------------------------
+// CONTACT — isang lugar lang, ginagamit ng APAT na surface: ang hero, ang
+// StickyCta, ang footer, at ang thank-you page. Nakahiwalay sila dito dahil
+// ang numerong nasa dalawang lugar ay numerong maghihiwalay sa susunod na
+// palit. Zam Grifon ang sumasagot (Neil, 2026-07-30).
+// ---------------------------------------------------------------------------
+const PHONE = '0935 258 9927';
+const PHONE_LABEL = 'Tawag o text, 24 oras';
+
+// 🟡 HINDI PA PUNO. Kailangan ng totoong link ng Page ni Gabriel, halimbawa
+// `https://m.me/oceanidesph`. Habang blangko ito, HINDI lumalabas ang Messenger
+// button kahit saan (hero bar, footer) at walang masisirang link, kaya ligtas
+// itong i-deploy nang ganito. Ipasok lang ang link at lalabas na sya sa dalawa.
+const MESSENGER = '';
+
 const NCR_CITIES = [
   'Quezon City',
   'Manila',
@@ -166,11 +181,13 @@ export const funnelConfig: FunnelConfig = {
         ctaLabel: 'Mag-book ng schedule',
         logo: '/img/logo.webp',
         logoAlt: 'Oceanides',
-        // Zam Grifon — admin / sales support. Sya ang sumasagot sa tumatawag
-        // (Neil, 2026-07-30). Ginagamit din to ng StickyCta, kaya isang lugar
-        // lang ang papalitan kapag nagbago.
-        phone: '0935 258 9927',
-        phoneLabel: 'Tawag o text, 24 oras',
+        // Zam Grifon, admin / sales support. Sya ang sumasagot sa tumatawag
+        // (Neil, 2026-07-30). Nasa PHONE const sa itaas ang numero, kaya isang
+        // lugar lang ang papalitan kapag nagbago.
+        phone: PHONE,
+        phoneLabel: PHONE_LABEL,
+        // Hindi ito lumalabas sa hero mismo. Binabasa lang sya ng StickyCta.
+        messenger: MESSENGER || undefined,
         // ANG QUOTATION, NAKA-PRINT. Walang bagong numero dito — pareho lahat
         // ng nasa objectionReversal sa ibaba. Ang pinagkaiba ay nakikita mo na
         // sila BAGO ka mag-scroll, at nakasulat sila na parang resibo, hindi
@@ -460,6 +477,13 @@ export const funnelConfig: FunnelConfig = {
       ground: 'void',
       props: {
         logo: '/img/logo.webp',
+        // ANG HULING PINTO (Neil, 2026-08-01). Ang nakarating dito na hindi
+        // nag-form at hindi tumawag ay hindi talunan, may tanong lang sya na
+        // walang sumagot. Nakalimbag na numero at Messenger, bago ang legal.
+        contactLine: 'May tanong bago ka mag-book? Nandito kami.',
+        phone: PHONE,
+        phoneLabel: PHONE_LABEL,
+        messenger: MESSENGER || undefined,
         brandLine:
           'Oceanides Plumbing Siphoning & Pest Management Services OPC. SEC, BIR, at DENR na rehistrado.',
         disclaimer:
@@ -500,6 +524,11 @@ export const funnelConfig: FunnelConfig = {
       href: 'tel:+639352589927',
       blurb: 'I-save mo ito para hindi ka na maghanap kapag may nangyari ulit.',
     },
+    // Nakalimbag na numero katabi ng button. Hindi mo mase-save ang numerong
+    // hindi mo nakikita, at sa desktop ay wala talagang nangyayari kapag
+    // pinindot ang `tel:` na walang nakasulat na numero sa tabi.
+    phone: PHONE,
+    phoneLabel: PHONE_LABEL,
     // Routed sa qualifier na `tank_location`. Ang tenant ay sinasagot na sa FAQ
     // sa landing page — mas maaga yun, kaya ang landlord na mismo ang nag-fo-form.
     magnet: {
