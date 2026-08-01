@@ -113,6 +113,54 @@ screenshots: assets/design-swipe/D<NN>/  (desktop.png, mobile.png, detail-*.png)
 **Patterns:** corroborates <DP-IDs> · new candidate <or none> · contradicts <or none>
 ```
 
+### D06 — serhant.com (SERHANT., luxury real estate) — 2026-08-01
+world: masthead luxury media-brand        confidence: high (smoke-tester capture + computed tokens)
+screenshots: assets/design-swipe/D06/ (desktop-fold, desktop-section, mobile-fold)
+**Why swiped:** Tier-1 real-estate niche — how a personal brand becomes an institution.
+**LAYOUT WALK:** transparent header over video hero → white-ground listings grid (3-col photo cards, price huge) → **black-ground "trophy listings" band ($89M/$76M/$47M)** → regions picker. Grounds alternate pure black/white per section.
+**SYSTEM EXTRACTION:** Montserrat only, H1 68px/800 with **-1.5px tracking** (dense masthead feel) · black + white grounds, deep royal `#001A72` accent (pill text, headers) · pills 100px radius vs plain text-links · all-caps ribbons ("FOR SALE").
+**MOTION & INTERACTION:** autoplaying behind-the-scenes video hero (only on-load motion in batch); rest static.
+**PREMIUM MECHANISM:** (1) media-company positioning — the hero shows the brand *being filmed*, selling attention as the product; (2) price-as-proof — $89M cards ARE the social proof; (3) tight-tracked heavy sans reads as a masthead, not a website.
+**MOBILE FLOOR CHECK:** video crops tighter, search collapses to one line, nav → icons; clean.
+**STEALABLE:** alternating black/white section grounds as drama; founder-on-camera as trust anchor; specificity-as-proof (cross-file: L9).
+**Patterns:** corroborates DP1 · new candidates: single-accent discipline; stat-as-trust · contradicts none.
+
+### D05 — dermamedicalus.com (Derma Medical, aesthetics clinic/training) — 2026-08-01
+world: clinical-luxury navy-and-gold academy        confidence: high (smoke-tester capture + computed tokens)
+screenshots: assets/design-swipe/D05/ (desktop-fold, desktop-section, mobile-fold)
+**Why swiped:** Tier-1 clinic niche — and an EXTERNAL validation of the Oceanides navy+warm-metal axis (D02).
+**LAYOUT WALK:** navy header w/ gold serif wordmark → asymmetric hero (text-left on solid navy, clinical-editorial photo right, accreditation badges) → city ticker → vertical-tab content module (gold active-underline) → two-tone serif section heads.
+**SYSTEM EXTRACTION:** serif display 82px/500 (Times-class) over Montserrat body · deep navy `#001F3C` ground + muted gold `#CD9253` accent · **CTAs sharp-cornered (0px radius), solid gold, dark text** + plain text-arrow secondary · two-tone headline device (gold word + white/navy words) as structure.
+**MOTION & INTERACTION:** 20%-off lead popup auto-fires on desktop (conversion-first, costs elegance); mobile gets a sticky bottom tab bar (Home/Courses/Call/Chat) — app-like nav desktop doesn't have.
+**PREMIUM MECHANISM:** (1) academic authority stack — serif + credential badges (ACCME/CPD) + navy = institution, not spa; (2) gold used sparingly and always with dark text = warm metal restraint; (3) clinical-artistic photography (anatomy markings as art direction) signals expertise viscerally.
+**MOBILE FLOOR CHECK:** hero stacks, image becomes tall right-bleed crop; badges/CTA stack fine.
+**STEALABLE:** two-tone headline as a rhythm device; credentials-at-the-fold; sharp-corner CTA as a "serious institution" signal (vs consumer pills); sticky mobile action bar for call-now businesses.
+**Patterns:** corroborates DP1 · new candidates: serif-display-over-sans-body premium; navy+warm-metal institutional; single-accent discipline · contradicts none.
+
+### D04 — merrymaids.com (Merry Maids, home cleaning franchise) — 2026-08-01
+world: boutique editorial home-service warmth        confidence: high (smoke-tester capture + computed tokens)
+screenshots: assets/design-swipe/D04/ (desktop-fold, desktop-section, mobile-fold)
+**Why swiped:** THE Tier-1 find — a cleaning franchise that reads boutique-hospitality. Direct evidence for the Oceanides redesign: premium is available in "unglamorous" service niches.
+**LAYOUT WALK:** white header w/ green pill CTA → full-bleed warm lifestyle hero (family + dog, natural light) → 4-up bordered value-prop cards (thin line icons) → centered serif testimonial carousel → "5-star Promise" split panel w/ overlapping circular badge.
+**SYSTEM EXTRACTION:** **serif display Borax VF 72px/400** over geometric sans Alexandria body · white/off-white ground, warm grey text `#4E4B48`, ONE accent: leafy green `#78BE21` (CTAs, badges, logo — nothing else) · pills 50px radius, filled primary / ghost secondary.
+**MOTION & INTERACTION:** essentially static; testimonial carousel with arrow paging. Calm.
+**PREMIUM MECHANISM:** (1) hospitality codes in a utility niche — big soft serif + warm candid photography where every competitor goes corporate-sans + stock; (2) one-accent discipline makes the green feel like a brand, not a highlight color; (3) whitespace + regular-weight display = confidence (shouting is downmarket).
+**MOBILE FLOOR CHECK:** hero recrops, headline reflows 3 lines, cards stack single-column; nothing breaks.
+**STEALABLE:** serif-display-over-sans-body as THE premium lever for service brands; circular promise badge overlapping photography; warm-documentary photo direction brief.
+**Patterns:** corroborates DP1 (vs D03 — same niche, opposite world, this one reads premium) · new candidates: serif-display premium; single-accent discipline · contradicts none.
+
+### D03 — janiking.com (JaniKing, commercial cleaning franchise) — 2026-08-01
+world: corporate franchise navy trust        confidence: high (smoke-tester capture + computed tokens)
+screenshots: assets/design-swipe/D03/ (desktop-fold, desktop-section, mobile-fold)
+**Why swiped:** Tier-1 services niche — the ESTABLISHED-BUT-NOT-PREMIUM pole; the measured contrast case for D04.
+**LAYOUT WALK:** utility bar (phone/search) → split hero (two desaturated navy-graded photo panels, all-caps captions, ghost buttons) → navy trust band → stat strip ("6,900 Unit Franchises", crown icon) → team-photo + slate panel ("56 years of trust") → 4-up service icon grid → diagonal-cut band transitions.
+**SYSTEM EXTRACTION:** Poppins only, H1 37px/700 · white ground + deep navy `#1A3354` bands, sky-blue icon accent + **a mustard CTA that appears only on mobile** (accent drift) · CTAs 3px radius, weight 900, all-caps · grey body `#777`.
+**MOTION & INTERACTION:** static; cookie + chat popups float over the hero (clutter at the money moment).
+**PREMIUM MECHANISM (and its ceiling):** institutional scale numbers + uniformed-staff photography + navy = *dependable*, but blunt directive headlines, small tight display type, accent drift, and popup clutter cap it at "established," never "premium." The gap between D03 and D04 is pure design world — same industry, same trust ingredients.
+**MOBILE FLOOR CHECK:** hero collapses to one photo + stacked full-width CTAs in TWO different accent colors; chat bubble overlaps stat numbers.
+**STEALABLE:** stat-as-trust band placement (number + icon + navy); the anti-pattern list above (what to NOT do) is itself the value.
+**Patterns:** corroborates DP1 · new candidate: stat-as-trust · contradicts single-accent discipline (the exception that proves it).
+
 ### D02 — clients/oceanides/DESIGN.md (Oceanides, PH local water-delivery service) — 2026-08-01 — CALIBRATION
 world: matte municipal print, warm trust        confidence: high (our own shipped work)
 screenshots: none — the governing DESIGN.md + the live `feat/oceanides-price-page` branch are ground truth
