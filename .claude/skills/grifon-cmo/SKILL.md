@@ -197,6 +197,16 @@ the 2019–2021 MrBeast era. Don't reintroduce it.)*
 
 Never mix registers inside one asset. Taglish post = Taglish throughout.
 
+- ⚠️ **The mapping above governs GRIFON'S OWN surfaces only.** Verified 2026-08-01: our funnel
+  is English as specified (`funnels/grifon-starter` — *"Get Your Free Ad Battle Plan…"*), while
+  Oceanides ships Taglish — and both are correct. **Client work under `clients/<name>/` follows
+  that client's market and its own `DESIGN.md`, not this table.** Same carve-out shape as the
+  artifact rule in `CLAUDE.md`, which cost a full rebuild on 2026-07-28 precisely because it was
+  not written down. Do not "correct" a client's Taglish landing page to English by citing this list.
+- **Spoken assets (ads, VO scripts, captions read aloud): after the register is chosen here, take
+  delivery direction from [`../_shared/vo-direction.md`](../_shared/vo-direction.md)** — pacing,
+  pauses, inflection and repetition, mapped to the levers we actually control.
+
 ## SALES SCRIPT RULES
 
 - **Inbound DMs:** lead with the pain, not the product. Ask one qualifying question before pitching.
