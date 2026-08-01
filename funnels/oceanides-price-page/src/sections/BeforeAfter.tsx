@@ -54,15 +54,20 @@ const WipePair: React.FC<{ pair: Pair }> = ({ pair }) => {
     // pushes the caption clean off a phone screen.
     <figure className="max-w-[26rem] overflow-hidden rounded-brand border-2 border-brand-card-border bg-brand-card">
       <div className="relative select-none" style={{ '--pos': `${pos}%` } as React.CSSProperties}>
+        {/* Layering (naitama 2026-08-01 — nahuli ni Neil na baligtad): ang
+            OVERLAY na naka-clip sa KALIWANG bahagi ay dapat ang BEFORE, dahil
+            ang BEFORE tag ay nasa kaliwang sulok. Base = AFTER (buo, kanan ang
+            laging kita), overlay = BEFORE (kaliwa). Ang clip ay pumuputol mula
+            sa kanan (`inset right`), kaya ang natitirang kaliwa ang ipinapakita. */}
         <img
-          src={pair.before}
-          alt={`Before: ${pair.alt}`}
+          src={pair.after}
+          alt={`After: ${pair.alt}`}
           loading="lazy"
           className="block aspect-[3/4] w-full object-cover"
         />
         <img
-          src={pair.after}
-          alt={`After: ${pair.alt}`}
+          src={pair.before}
+          alt={`Before: ${pair.alt}`}
           loading="lazy"
           className="absolute inset-0 block h-full w-full object-cover"
           style={{ clipPath: 'inset(0 calc(100% - var(--pos)) 0 0)' }}
