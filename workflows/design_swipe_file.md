@@ -113,6 +113,66 @@ screenshots: assets/design-swipe/D<NN>/  (desktop.png, mobile.png, detail-*.png)
 **Patterns:** corroborates <DP-IDs> · new candidate <or none> · contradicts <or none>
 ```
 
+### D11 — skylrk.com (SKYLRK, PH streetwear e-com) — 2026-08-01
+world: moody noir product-float gallery        confidence: high (smoke-tester capture + computed tokens)
+screenshots: assets/design-swipe/D11/ (desktop-fold, desktop-section, mobile-fold)
+**Why swiped:** Neil's drop — turns out to be a PHILIPPINE brand (₱ pricing) proving world-class hype design ships from our market. External corroboration for the D01 NOIR axis (grain + dark gradient ground).
+**LAYOUT WALK:** no sections — one continuous scroll canvas: glass-pill chrome (wordmark, cart "0 +", `[ ₱PHP ]` toggle) over 14+ products floating at varying depths/sizes on a shifting icy-blue→near-black gradient with heavy film grain. Most items "Sold out."
+**SYSTEM EXTRACTION:** Suisse Intl · pure black ground + animated gradient overlay + grain · **no H1 anywhere** — type confined to small tracked-out UI chrome · no accent color: the PRODUCTS are the color, popping against the cool dark ground · glass pills as the only chrome.
+**MOTION & INTERACTION:** shifting gradient ground + depth-float parallax implied; no CTA buttons at all — products themselves are the interface.
+**PREMIUM MECHANISM:** (1) gallery-not-catalog — scattered non-grid float says art object, not inventory; (2) hype-by-absence — no headline, no pitch, "Sold out" stamps as the persuasion; (3) grain + gradient dark ground gives physical texture to a digital page.
+**MOBILE FLOOR CHECK:** collapses to one floating product per viewport; world holds.
+**STEALABLE:** grain-over-gradient as texture (validates D01 NOIR externally); glass-pill chrome; scarcity-as-copy. NOT stealable for lead-gen: the no-CTA model (hype brands only).
+**Patterns:** corroborates DP1; D01's grain/dark-gradient axis (1st external) · new candidate: product-as-hero · contradicts none (the no-CTA anti-pattern is model-specific).
+
+### D10 — vertus.ai/superintelligence (Vertus AI) — 2026-08-01
+world: uncanny biological sci-art minimalism        confidence: high (smoke-tester capture + computed tokens)
+screenshots: assets/design-swipe/D10/ (desktop-fold, desktop-section, mobile-fold)
+**Why swiped:** AI SaaS — how to be unforgettable with ONE image and near-zero copy.
+**LAYOUT WALK:** plain white nav → hero: photoreal 3D render (pink coral-organic growth on pale bone) filling >80% of viewport, headline low-left over white fade → pink-eyebrow value section ("Built Like a Brain, not a Database", pink-highlighted keyword) → two gray comparison cards (fixed-architecture vs dynamic-topology process chains) → closing CTA band.
+**SYSTEM EXTRACTION:** Aspektavf custom sans, H1 48px/500, -1.44px tracking · white ground, pure black/white/gray + ONE hot-pink/magenta accent (hero form, eyebrow icon, highlighted word — nothing else) · pills 500px radius, black fill / white outline pair, 3× repetition.
+**MOTION & INTERACTION:** static in capture.
+**PREMIUM MECHANISM:** (1) one singular uncanny image carries the entire brand — everything else stands down; (2) accent color appears ONLY where meaning lives (the brain word, the organic form) — color as semantics, not decoration; (3) zero trust devices — pure conceptual confidence (works for frontier-tech positioning, nowhere else).
+**MOBILE FLOOR CHECK:** hero crops to the coral form, text block stacks at bottom; holds.
+**STEALABLE:** highlighted-keyword device (accent on the one load-bearing word); comparison-card process chains; the "one image, total restraint" formula for category-creator positioning.
+**Patterns:** corroborates DP1 · new candidate: single-accent discipline · contradicts none.
+
+### D09 — cursor.com (Cursor, AI coding agent) — 2026-08-01
+world: quiet technical minimalism, painterly warmth        confidence: high (smoke-tester capture + computed tokens)
+screenshots: assets/design-swipe/D09/ (desktop-fold, desktop-section, mobile-fold)
+**Why swiped:** Grifon's competitive category (Tier 3) — the extreme-restraint pole of premium.
+**LAYOUT WALK:** flat text nav + black pill Download → hero: **26px H1** ("Cursor is your coding agent…"), left-aligned, plain → full IDE screenshot on a muted oil-painting landscape backdrop → agent-workflow UI panels → right-aligned bold claim + cloud-agent browser mockup.
+**SYSTEM EXTRACTION:** CursorGothic custom grotesque, everything ~400 weight · warm bone ground `#F7F7F4`, near-black `#26251E` — low-saturation, paper-like, NO accent color at all · black pills + plain arrow-links · mono appears only inside product UI, never in marketing type.
+**MOTION & INTERACTION:** static reliance on real product screenshots as imagery.
+**PREMIUM MECHANISM:** (1) a hero headline SMALLER than body copy — ultimate "the product speaks" flex; confidence signaled by what's withheld; (2) painterly fine-art texture humanizes a technical tool; (3) real dense product UI as proof — no marketing illustration anywhere.
+**MOBILE FLOOR CHECK:** ⚠ the IDE screenshot does NOT reflow — scaled-down desktop UI, illegible text, clipped columns. A real responsive weakness; do not copy the screenshot-as-hero without a mobile-specific crop.
+**STEALABLE:** understatement as register; product-as-hero (with a mobile plan D09 lacks); warm-bone ground as the anti-slop alternative to pure white.
+**Patterns:** corroborates DP1 · new candidates: product-as-hero; type-posture-as-register (restraint pole) · contradicts the "big display type = premium" assumption.
+
+### D08 — wise.com/ph (Wise, fintech) — 2026-08-01
+world: bold flat fintech poster-green        confidence: high (smoke-tester capture + computed tokens)
+screenshots: assets/design-swipe/D08/ (desktop-fold, desktop-section, mobile-fold)
+**Why swiped:** Tier-2 trust-critical fintech, PH-localized page — the maximalist-type pole of premium.
+**LAYOUT WALK:** nav (PH flag + green pill) → centered mega-headline on plain white → gray subhead + one green pill → animated 3D globe (teal earth, gold coin discs w/ ₱, pause control) → **send-money calculator card on full-bleed brand-green panel ("121.38 PHP", "Arrives by Monday")** → localized value section → two-col product cards (balance UI, physical card).
+**SYSTEM EXTRACTION:** custom Wise Sans **105px/900** display over Inter 18px body — the batch's most extreme type jump · white ground + ONE saturated green `#9FE870`, near-black text, high contrast · pills 9999px, very high CTA density (3+ per two screens).
+**MOTION & INTERACTION:** confirmed animated globe (has a pause control — accessibility-correct autoplay).
+**PREMIUM MECHANISM:** (1) poster-grade type scale — 105px/900 reads as a statement of scale itself; (2) REAL product math in the fold (live fees, arrival day) — the calculator is the trust device, not a badge; (3) one brand green owning every interactive element.
+**MOBILE FLOOR CHECK:** adds an app-rating trust row (4.8★ / 152K + 1.3M reviews) not prominent on desktop — mobile gets MORE trust, not less. Headline wraps 4 lines and stays huge.
+**STEALABLE:** proof-object in the fold (calculator/live math) — directly portable to service pricing pages; mobile-specific trust row; single-green CTA ownership.
+**Patterns:** corroborates DP1 · new candidates: single-accent discipline; proof-object-in-fold; type-posture-as-register (maximal pole) · contradicts none.
+
+### D07 — stripe.com (Stripe, payments infrastructure) — 2026-08-01
+world: airy editorial fintech gradient-glass        confidence: high (smoke-tester capture + computed tokens)
+screenshots: assets/design-swipe/D07/ (desktop-fold, desktop-section, mobile-fold)
+**Why swiped:** Tier-2 — the institutional-trust masterclass; the internet's default "premium SaaS" reference.
+**LAYOUT WALK:** thin text nav → editorial hero (multi-line headline mixing black + gradient-tinted runs, diagonal rainbow-mesh ribbon bleeding off-edge) → indigo pill + Google-outline pill → 7-logo enterprise bar (Amazon, Nvidia, Ford, Coinbase, Google, Shopify) → two-tone section heads → product triad (AI chat UI, pastel card mockup, globe-dots viz) → floating dashboard mockup on pink-purple gradient panel.
+**SYSTEM EXTRACTION:** Söhne, H1 48px at **weight 300** with -0.96px tracking — thin-at-scale airiness · white ground, indigo primary, rainbow gradient as decorative BLEED (never a text ground) · pills 4px-adjacent radius, low CTA density.
+**MOTION & INTERACTION:** scroll-reveal likely; not confirmed in static capture.
+**PREMIUM MECHANISM:** (1) thin weight at display size — effortlessness as authority (the inverse of D08, same conclusion); (2) gradient quarantined to decoration so text stays maximum-contrast; (3) trust stack of logos + a live oddly-specific stat ("1.69% of global GDP") — precision as credibility (cross-file: L9).
+**MOBILE FLOOR CHECK:** ribbon becomes full-width backdrop behind text, logo bar truncates to 2, CTAs stack; holds.
+**STEALABLE:** two-tone headline emphasis; gradient-as-bleed discipline; the specific-stat trust line; product-UI mockups as section imagery.
+**Patterns:** corroborates DP1 · new candidates: single-accent discipline; type-posture-as-register (thin pole); stat-as-trust (w/ D03 D06) · contradicts none.
+
 ### D06 — serhant.com (SERHANT., luxury real estate) — 2026-08-01
 world: masthead luxury media-brand        confidence: high (smoke-tester capture + computed tokens)
 screenshots: assets/design-swipe/D06/ (desktop-fold, desktop-section, mobile-fold)
