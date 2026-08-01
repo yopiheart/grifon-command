@@ -113,6 +113,42 @@ screenshots: assets/design-swipe/D<NN>/  (desktop.png, mobile.png, detail-*.png)
 **Patterns:** corroborates <DP-IDs> · new candidate <or none> · contradicts <or none>
 ```
 
+### D14 — im8health.com (IM8, celebrity supplement DTC) — 2026-08-01
+world: clinical-premium celebrity wellness        confidence: high (smoke-tester capture + computed tokens)
+screenshots: assets/design-swipe/D14/ (desktop-fold, desktop-section, mobile-fold)
+**Why swiped:** Tier-1-adjacent supplement DTC — premium health authority done at celebrity scale; has a PHP currency selector (sells to our market).
+**LAYOUT WALK:** countdown promo bar (30% welcome offer, live timer) → serif `I·M·8` wordmark nav → split hero: Beckham candid kitchen photo left, copy stack right (Clinicians' Choice badge · clinical stats 95%/85%/80% · 4.8★ 22,104 reviews · dual pill CTAs) → solid oxblood trust band → authority section (caps eyebrow + serif head) → 3 product cards w/ NSF CERTIFIED SPORT badges on peach gradients.
+**SYSTEM EXTRACTION:** serif display **ABC Arizona Flare 40px/400** over Aeonik sans body · white/cream grounds banded with deep oxblood `#A40011` · pills 100px, solid-oxblood primary + outline-ghost secondary as a repeated PAIR · caps eyebrows for credentials only.
+**MOTION & INTERACTION:** live countdown ticking; gamified scratch-card popup on entry (no discoverable close — Escape only; dark-pattern flag).
+**PREMIUM MECHANISM:** (1) serif-authority + sans-utility split — pharma-adjacent gravitas, zero playfulness; (2) trust stacked AT the fold, not below it: badge + trial stats + rating + celebrity in one viewport; (3) one oxblood owning every interactive and every trust band.
+**MOBILE FLOOR CHECK:** hero flips text-first (photo drops below fold) — deliberate mobile recomposition, opposite of desktop; countdown reflows 2 lines.
+**STEALABLE:** trust-stack-at-the-fold ordering; primary+ghost CTA pairing; dark-band trust interludes between white sections. Flag: the no-close popup is a do-not-replicate.
+**Patterns:** corroborates DP1; serif-display premium; single-accent discipline; stat-as-trust · new candidate: trust-stack-at-fold · contradicts none.
+
+### D13 — gruns.co (Grüns, superfood gummies DTC) — 2026-08-01
+world: candy-bright wellness conversion machine        confidence: high (smoke-tester capture + computed tokens)
+screenshots: assets/design-swipe/D13/ (desktop-fold, desktop-section, mobile-fold)
+**Why swiped:** the ENERGY pole of DTC — maximum conversion pressure styled as fun; the measured contrast to D14's clinical restraint in the same broad niche.
+**LAYOUT WALK:** pink emoji promo bar → hero: 4.8★/100k-reviews/1M-members line ABOVE the headline, bold sans head with green keyword emphasis ("You'll Actually Crave"), pouch shot + red "limited edition" starburst → 3 yellow stat circles (60+/21/6g) → greyscale press bar (Forbes, TODAY, People…) → flavor cards w/ ribbon tags → white value cards on flat kelly-green field scattered with 3D gummy bears.
+**SYSTEM EXTRACTION:** Work Sans ONLY — no serif; 44px/700 head, -2.2px tracking · cream/pale-yellow ground, kelly-green anchor + yellow badges + red starburst (deliberately multi-accent) · pills, dark-green fill, the single most-repeated element on the page · green color-highlighting replaces a second typeface as the emphasis device.
+**MOTION & INTERACTION:** 52%-off segmentation quiz popup on entry (asks which problem you're solving — lead-scoring, cross-file: L3/L6) + persistent peeled "Get 52% Off" edge tab; countdown-free urgency.
+**PREMIUM MECHANISM (different target):** this world optimizes CRAVE, not premium — candy palette + food-photography grade + offer pressure. The lesson is fit-to-outcome: for impulse CPG, "premium restraint" would LOWER conversion. Design world must match the buying temperature.
+**MOBILE FLOOR CHECK:** hero recomposes photo-first (opposite of D14's text-first flip — both deliberate); sticky offer tab persists.
+**STEALABLE:** review-line-above-headline ordering; quantified stat circles; keyword-color emphasis instead of a display font; the segmentation-quiz popup pattern (cross-file: L6).
+**Patterns:** corroborates DP1; stat-as-trust; trust-stack-at-fold · **deliberately contradicts single-accent discipline** — evidence the pattern is register-dependent, not universal.
+
+### D12 — graza.co (Graza, DTC olive oil) — 2026-08-01
+world: playful editorial olive-oil zine        confidence: high (smoke-tester capture + computed tokens)
+screenshots: assets/design-swipe/D12/ (desktop-fold, desktop-section, mobile-fold)
+**Why swiped:** Tier-1 food niche — the craft-personality masterclass; distinctiveness through typographic craft, zero badges.
+**LAYOUT WALK:** thin serif wordmark nav w/ cream pills → full-bleed hero VIDEO (hand squeezing the teal bottle, warm cinematic grade), condensed-serif head bottom-left, lime pill CTA → hand-drawn olive-branch line art + "*DRIP*" annotation → **giant melting-drip "GRAZA" wordmark set-piece (letters melt at the baseline)** → product carousel w/ pill category tags + autoplay videos (pause controls).
+**SYSTEM EXTRACTION:** **ITC Garamond Condensed 72px/400 display over GT Alpina TYPEWRITER body** — the boldest type pairing in the file · warm cream ground `#F6E6D9`, deep olive text `#3C422E`, lime CTA + mustard cap accents · pills everywhere, sentence-case headlines · hand-lettered annotations as an accent device.
+**MOTION & INTERACTION:** autoplay muted product videos (with pause controls); the melting wordmark reads as a designed scroll set-piece.
+**PREMIUM MECHANISM:** (1) craft-density — custom drip type, typewriter body, hand annotations: every detail says a human with taste made this (the literal anti-slop signature); (2) product-in-use video, never static pack shots — appetite through motion; (3) warm cream ground instead of white = pantry, not supermarket.
+**MOBILE FLOOR CHECK:** hero recrops vertical, head + CTA stack below video; holds.
+**STEALABLE:** one bespoke typographic set-piece per page as the personality anchor; typewriter/mono body as craft signal; warm-ground food palette; in-use video hero.
+**Patterns:** corroborates DP1; serif-display premium · new candidates: craft-density; warm-ground-not-white (w/ D09) · contradicts none.
+
 ### D11 — skylrk.com (SKYLRK, PH streetwear e-com) — 2026-08-01
 world: moody noir product-float gallery        confidence: high (smoke-tester capture + computed tokens)
 screenshots: assets/design-swipe/D11/ (desktop-fold, desktop-section, mobile-fold)
