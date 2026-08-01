@@ -1,6 +1,8 @@
 # NOW
 
-**Stamped: 2026-08-01** · Anchor commit: `abbe72f`
+**Stamped: 2026-08-01** · Anchor commit: `ecb64c5`
+*(Since `abbe72f`: voice/language doctrine only — `taglish-voice.md` STEP 0, `vo-direction.md`,
+the client-work carve-out, session clock. No punch-list state changed.)*
 
 > The single resume doc. One screen, one next action. Read this first.
 > **Freshness contract:** if the stamp is >5 days behind `git log -1`, treat as UNVERIFIED —
