@@ -1,6 +1,6 @@
 # NOW
 
-**Stamped: 2026-08-01** · Anchor commit: `ecb64c5`
+**Stamped: 2026-08-01** · Anchor commit: `b030d95`
 
 > The single resume doc. One screen, one next action. Read this first.
 > **Freshness contract:** if the stamp is >5 days behind `git log -1`, treat as UNVERIFIED —
@@ -49,6 +49,10 @@ now written down in that skill).
 
 Why the page exists: 2 days of ads = **₱1,284 spend, 100 messages, ₱12.84/message, ONE order.**
 The leak is the close, not lead-gen — every thread dies at *"magkano?"*.
+
+**🆕 Landed 2026-08-01 (`b030d95`, main):** design doctrine — `workflows/design_swipe_file.md`
+(D-/DP-/DGP, calibration D01 NOIR + D02 Oceanides) + funnel-forge step-1 curation pass + CD
+step-5 client carve-out. Next client funnel starts from D-entries, never a Grifon re-skin.
 
 ## 🅿 PARKED — Grifon punch list (resume trigger: Neil says so)
 
