@@ -81,7 +81,16 @@ export const StickyCta: React.FC<StickyCtaProps> = ({ label, phone, phoneLabel =
           animate={{ y: 0 }}
           exit={{ y: '100%' }}
           transition={reducedMotion(reduce, { duration: DUR.base, ease: EASE.expressive })}
-          className="fixed inset-x-0 bottom-0 z-50 border-t-2 border-white/20 bg-brand-elevated/95 px-4 py-3 backdrop-blur-sm"
+          // 🔴 OPAQUE, and no backdrop-filter. It used to be `bg-brand-elevated/95
+          // backdrop-blur-sm`, and BOTH halves of that were wrong. The brand
+          // tokens are raw hex custom properties, so a Tailwind opacity modifier
+          // on one silently produces nothing (see the NOTE in tailwind.config.js)
+          // — the bar shipped with NO background at all, and the "Mag-book ng
+          // schedule" heading read straight through it as a ghost. The blur was
+          // the fallback that made it look almost-intentional, and it is banned
+          // outright: clients/oceanides/DESIGN.md law #2, "walang glass."
+          // Solid surface-deep, one hairline top edge, print world.
+          className="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-brand-elevated px-4 py-3"
           // pb-safe: iOS home-indicator gutter, so the bar is not half-swallowed.
           style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
         >

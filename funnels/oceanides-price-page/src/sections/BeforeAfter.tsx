@@ -23,8 +23,13 @@ import { Reveal } from '../primitives/Reveal';
 // A "pair" of two different manholes proves nothing and teaches the reader to
 // distrust every other pair on the page. See scripts/build-assets.mjs.
 //
-// BEFORE is on the left and dimmed slightly; AFTER carries the amber label.
-// The eye lands on the resolved state, which is what is being sold.
+// BEFORE is on the left in a navy tag; AFTER carries the amber one. The eye
+// lands on the resolved state, which is what is being sold.
+//
+// The frame is ground-relative (`brand-card` / `brand-card-border`), so on the
+// paper chapter the photos sit in a white mount instead of a navy one. The two
+// TAGS are NOT ground-relative and must not be: they sit on the photograph, so
+// their contrast is against the image, not against the page.
 // ===========================================================================
 
 export const BeforeAfter: React.FC<PropsOf<'beforeAfter'>> = ({ heading, eyebrow, note, pairs }) => (
@@ -36,7 +41,7 @@ export const BeforeAfter: React.FC<PropsOf<'beforeAfter'>> = ({ heading, eyebrow
     <div className="mt-10 flex flex-col gap-8">
       {pairs.map((pair, i) => (
         <Reveal key={pair.before} index={i}>
-          <figure className="overflow-hidden rounded-brand border-2 border-white/20 bg-brand-elevated">
+          <figure className="overflow-hidden rounded-brand border-2 border-brand-card-border bg-brand-card">
             <div className="grid grid-cols-2">
               {(
                 // BEFORE / AFTER in English, not "Bago / Pagkatapos".
@@ -62,7 +67,7 @@ export const BeforeAfter: React.FC<PropsOf<'beforeAfter'>> = ({ heading, eyebrow
                     className={`absolute left-2 top-2 rounded-[4px] px-2 py-1 text-[10px] font-black uppercase leading-none tracking-[1px] ${
                       shot.tone === 'amber'
                         ? 'bg-brand-primary text-brand-elevated'
-                        : 'bg-[rgba(7,22,48,0.85)] text-brand-on-surface-muted'
+                        : 'bg-brand-elevated text-white'
                     }`}
                   >
                     {shot.label}
@@ -71,7 +76,7 @@ export const BeforeAfter: React.FC<PropsOf<'beforeAfter'>> = ({ heading, eyebrow
               ))}
             </div>
             {pair.caption && (
-              <figcaption className="border-t-2 border-white/15 px-4 py-3 text-sm leading-snug text-brand-on-surface-muted">
+              <figcaption className="border-t-2 border-brand-card-border px-4 py-3 text-sm leading-snug text-brand-on-surface-muted">
                 {pair.caption}
               </figcaption>
             )}

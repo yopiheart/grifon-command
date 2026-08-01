@@ -20,6 +20,16 @@ export default {
           'on-surface-muted': 'var(--brand-on-surface-muted)',
           'on-surface-dim': 'var(--brand-on-surface-dim)',
           'proof-band': 'var(--brand-proof-band)',
+          // Ground-relative tokens — these four flip inside .ground-paper /
+          // .on-paper (see the ground ladder in src/index.css). Reading them
+          // through a class is what keeps sections ground-agnostic: no section
+          // ever branches on "am I on navy or paper?".
+          ocean: 'var(--brand-ocean)',
+          'accent-text': 'var(--brand-accent-text)',
+          good: 'var(--brand-good)',
+          card: 'var(--brand-card)',
+          'card-border': 'var(--brand-card-border)',
+          hairline: 'var(--brand-hairline)',
         },
       },
       fontFamily: {

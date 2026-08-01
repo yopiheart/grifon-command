@@ -11,7 +11,9 @@ export const Guarantee: React.FC<PropsOf<'guarantee'>> = ({ heading, body }) => 
   <SectionShell width="prose">
     <Reveal>
       <GlassCard className="border-brand-primary text-center">
-        <h2 className="text-[1.5rem] leading-[0.98] text-brand-primary md:text-[2.125rem]">{goldEmphasis(heading)}</h2>
+        <h2 className="text-[1.5rem] leading-[0.98] text-brand-accent-text md:text-[2.125rem]">
+          {goldEmphasis(heading)}
+        </h2>
         <p className="mt-4 text-base leading-relaxed text-brand-on-surface-muted md:text-lg">{body}</p>
       </GlassCard>
     </Reveal>

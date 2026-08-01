@@ -46,6 +46,24 @@
   --brand-font-accent: 'JetBrains Mono', ui-monospace, monospace;
   /* Print world, not app world — corners stay tight. */
   --brand-radius: 0.25rem;
+
+  /* --- GROUND-RELATIVE TOKENS (see the ground ladder below) ----------------
+     These are the values that must FLIP when a section sits on paper instead
+     of navy. Everything else in the system is ground-agnostic. They live here
+     as the navy defaults; .ground-paper / .on-paper overrides them for its
+     subtree, and every component reads them through a Tailwind brand token, so
+     no component ever asks "what ground am I on?".                          */
+  --brand-ocean: #1c63ad;
+  --brand-surface-void: #071630;
+  /* Accent TEXT. Amber on navy (8.8:1). On paper amber is 1.7:1 and BANNED,
+     so paper swaps in ocean (5.7:1) — clients/oceanides/DESIGN.md contrast floor. */
+  --brand-accent-text: var(--brand-primary);
+  /* Semantic ✓. DESIGN.md: good-on-dark on navy, good on paper. Never amber. */
+  --brand-good: #3ed36b;
+  /* Card fill + its 2px print edge, and the 1px inner divider. */
+  --brand-card: var(--brand-surface-elevated);
+  --brand-card-border: rgba(255, 255, 255, 0.2);
+  --brand-hairline: rgba(255, 255, 255, 0.1);
 }
 
 @layer base {
@@ -83,6 +101,87 @@
   :focus-visible {
     outline: 2px solid var(--brand-primary);
     outline-offset: 2px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   THE GROUND LADDER — chapter grounds (2026-08-01)
+
+   The page used to be ONE flat navy field from the eyebrow to the footer. Every
+   section was transparent over `body`, so a 12-section price page read as a
+   single unbroken wall and nothing announced "new chapter". In a print world
+   that is the wrong failure: a printed sales piece changes STOCK when it changes
+   argument — the quotation goes on white, the story goes back on the house
+   colour. That is what these classes are.
+
+   Each ground is a full-bleed band painted by a wrapper <div> in Landing.tsx;
+   the content inside still rides the one left rail (scripts/lint-layout.mjs).
+   Transitions are HARD edges — no soft blends between chapters, because paper
+   does not fade into paper.
+
+   `.ground-paper` and `.on-paper` also FLIP the text ladder for their subtree,
+   per the DESIGN.md paper-surface exception. `.on-paper` is the ladder without
+   the background, for a paper OBJECT sitting on a navy ground (the hero price
+   ticket).
+--------------------------------------------------------------------------- */
+@layer components {
+  /* Every band re-declares `color` from the token. Flipping the custom property
+     alone is NOT enough and this bit us in the first render pass: `color` is
+     computed once on <body> as white, and a descendant INHERITS that computed
+     white — it never re-reads the variable. Anything with an explicit
+     `text-brand-*` class flipped correctly; the section <h2>, which has no
+     colour class by design, stayed white on the paper chapters. So the ground
+     owns `color`, and inheritance below it is correct by construction. */
+  .ground-navy,
+  .ground-navy-deep,
+  .ground-navy-gradient,
+  .ground-void,
+  .ground-paper,
+  .on-paper {
+    color: var(--brand-on-surface);
+  }
+
+  .ground-navy {
+    background-color: var(--brand-surface);
+  }
+
+  /* Cards step UP here. The default card fill IS surface-deep, so on a
+     surface-deep ground a card has zero tonal separation — and DESIGN.md's
+     elevation is a tonal fill, not a border. The form panel needs to read as a
+     panel, so on this ground it takes the lighter navy. */
+  .ground-navy-deep {
+    background-color: var(--brand-surface-elevated);
+    --brand-card: var(--brand-surface);
+  }
+
+  /* Hero. DESIGN.md panel rule: "tonal fill — `surface` o gradient
+     ocean → surface-deep, solid." The top stop is ocean blended 40% into
+     `surface` rather than raw #1C63AD: measured on raw ocean, amber headline
+     runs land at 3.3:1 and `on-surface-dim` at 2.5:1, both under the floor. At
+     #14427E the same three measure amber 5.4:1, white 9.9:1, dim 4.6:1. */
+  .ground-navy-gradient {
+    background-color: var(--brand-surface-elevated);
+    background-image: linear-gradient(180deg, #14427e 0%, var(--brand-surface-elevated) 100%);
+  }
+
+  .ground-void {
+    background-color: var(--brand-surface-void);
+  }
+
+  .ground-paper {
+    background-color: var(--brand-proof-band);
+  }
+
+  .ground-paper,
+  .on-paper {
+    --brand-on-surface: #0b1b33;
+    --brand-on-surface-muted: #33445e;
+    --brand-on-surface-dim: #5b6b85;
+    --brand-accent-text: var(--brand-ocean);
+    --brand-good: #1b8a3c;
+    --brand-card: #ffffff;
+    --brand-card-border: rgba(11, 27, 51, 0.14);
+    --brand-hairline: rgba(11, 27, 51, 0.1);
   }
 }
 

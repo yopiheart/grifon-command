@@ -15,10 +15,17 @@ import { SectionHeading } from '../primitives/SectionHeading';
 // buyers are running from. Honesty is the lever here, not inflation. So the rows
 // carry no invented peso values and the total is the real, single price.
 //
-// Rendered as the DESIGN.md CHECKLIST ROW: 2px box, and a ✔ in `good-on-dark`
-// (#3ED36B) — never amber. DESIGN.md is explicit that semantic ≠ accent: "amber
-// = 'tingnan mo ito,' hindi 'tama ito.'" A done-marker is a verdict, so it is
-// green; amber would spend the scroll-stop colour on a checkmark.
+// Rendered as the DESIGN.md CHECKLIST ROW: 2px box, and a ✔ in `good` — never
+// amber. DESIGN.md is explicit that semantic ≠ accent: "amber = 'tingnan mo
+// ito,' hindi 'tama ito.'" A done-marker is a verdict, so it is green; amber
+// would spend the scroll-stop colour on a checkmark. The green STEP is
+// ground-relative (#3ED36B on navy, #1B8A3C on paper) and comes from the token,
+// so this section does not care which chapter it is printed on.
+//
+// The total is an amber CHIP, not amber type. This section sits on the paper
+// chapter and amber TEXT on paper is 1.7:1 — a hard ban in the contrast floor.
+// As a fill with surface-deep text it is 8.8:1, and it reads more like a stamped
+// figure on a quotation than a coloured word did.
 export const ValueStack: React.FC<PropsOf<'valueStack'>> = ({ heading, items, totalLine }) => (
   <SectionShell width="prose">
     <Reveal>
@@ -30,14 +37,13 @@ export const ValueStack: React.FC<PropsOf<'valueStack'>> = ({ heading, items, to
           {items.map((item, i) => (
             <li
               key={`${item.label}-${i}`}
-              className="flex items-start gap-4 border-b border-white/10 px-5 py-4 last:border-b-0 md:px-8"
+              className="flex items-start gap-4 border-b border-brand-hairline px-5 py-4 last:border-b-0 md:px-8"
             >
               <svg
                 aria-hidden
                 viewBox="0 0 24 24"
-                className="mt-0.5 h-5 w-5 shrink-0"
+                className="mt-0.5 h-5 w-5 shrink-0 stroke-brand-good"
                 fill="none"
-                stroke="#3ED36B"
                 strokeWidth="3"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -52,9 +58,11 @@ export const ValueStack: React.FC<PropsOf<'valueStack'>> = ({ heading, items, to
           ))}
         </ul>
         {totalLine && (
-          <p className="border-t-2 border-white/20 px-5 py-5 text-center font-display text-2xl uppercase leading-none tracking-[0.5px] text-brand-primary md:px-8 md:text-3xl">
-            {totalLine}
-          </p>
+          <div className="border-t-2 border-brand-card-border px-5 py-5 md:px-8">
+            <span className="inline-block rounded-[4px] bg-brand-primary px-4 py-2.5 font-display text-xl uppercase leading-none tracking-[0.5px] text-brand-elevated md:text-2xl">
+              {totalLine}
+            </span>
+          </div>
         )}
       </GlassCard>
     </Reveal>

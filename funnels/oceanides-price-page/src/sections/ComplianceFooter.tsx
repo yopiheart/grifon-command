@@ -11,7 +11,9 @@ export const ComplianceFooter: React.FC<PropsOf<'complianceFooter'>> = ({
   links,
   logo,
 }) => (
-  <SectionShell rhythm="band" className="border-t-2 border-white/15">
+  // pb-28: the StickyCta bar comes back once the form scrolls out of view, so
+  // the last thing on the page needs a gutter it can never sit on top of.
+  <SectionShell rhythm="band" className="border-t-2 border-white/15 pb-28 md:pb-28">
     <div className="space-y-4 text-center">
       {/* Paper chip, same treatment as the hero lockup: logo.jpg carries a
           near-white ground, and keying white out of a JPEG fringes on navy. */}

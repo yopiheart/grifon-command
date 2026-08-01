@@ -134,8 +134,20 @@ export const funnelConfig: FunnelConfig = {
   tracking: {},
 
   sections: [
+    // GROUNDS (`ground`, 2026-08-01). The page reads in chapters, and each
+    // chapter changes stock the way a printed sales piece does:
+    //   hero            navy-gradient  the arrival
+    //   proof strip     navy-deep      a thin darker trust band
+    //   presyo chapter  paper          quotation, objection, before/after
+    //   kwento chapter  navy           mechanism + the promise
+    //   FAQ             paper          back to the quotation stock
+    //   form + P.S.     navy-deep      the desk you sign at
+    //   footer          void           the bottom of the page
+    // Section components never read this — Landing.tsx paints the band, and the
+    // paper grounds flip the text ladder for everything inside them.
     {
       type: 'hero',
+      ground: 'navy-gradient',
       props: {
         eyebrow: 'Septic tank siphoning · Metro Manila',
         // `**…**` renders amber (lib/goldEmphasis). Anton ships ONE weight, so
@@ -154,13 +166,30 @@ export const funnelConfig: FunnelConfig = {
         ctaLabel: 'Mag-book ng schedule',
         logo: '/img/logo.webp',
         logoAlt: 'Oceanides',
-        image: '/img/hero-truck.webp',
-        imageAlt: 'Puting truck ng Oceanides na nakaparada sa kalye sa Metro Manila',
         // Zam Grifon — admin / sales support. Sya ang sumasagot sa tumatawag
         // (Neil, 2026-07-30). Ginagamit din to ng StickyCta, kaya isang lugar
         // lang ang papalitan kapag nagbago.
         phone: '0935 258 9927',
         phoneLabel: 'Tawag o text, 24 oras',
+        // ANG QUOTATION, NAKA-PRINT. Walang bagong numero dito — pareho lahat
+        // ng nasa objectionReversal sa ibaba. Ang pinagkaiba ay nakikita mo na
+        // sila BAGO ka mag-scroll, at nakasulat sila na parang resibo, hindi
+        // parang claim. Yun ang buong punto ng page.
+        ticket: {
+          tab: 'Nakasulat na presyo',
+          lead: { label: 'Isang truckload, 4,000 litro', amount: '₱5,000' },
+          addOnsLabel: 'Kung kailangan lang:',
+          addOns: [
+            { label: 'Sobrang hose, kada 3 metro', amount: '₱100' },
+            { label: 'Bakbak ng takip', amount: '₱500 - 1,000' },
+            { label: 'Pangalawang truckload', amount: '₱5,000' },
+          ],
+          footnote: 'Wala nang iba. Sasabihin namin bago magsimula.',
+        },
+        // Ang papeles, hinila sa fold. Teksto, hindi seal: ang badge artwork ay
+        // maling DENR region, at ang maling seal sa trust page ay mas masama
+        // kaysa sa walang seal.
+        trustChips: ['SEC-rehistrado', 'BIR official receipt', 'DENR-partner na tapunan'],
       },
     },
 
@@ -168,19 +197,24 @@ export const funnelConfig: FunnelConfig = {
     // sa serbisyo, walang bilang ng naserbisyuhan) at BAWAL mag-imbento
     // (clients/oceanides/DESIGN.md Don'ts). Ang papel ang tanging totoong lever
     // na hawak natin — at ito rin ang moat: hindi makaka-issue ng DENR cert ang crew.
+    //
+    // 🔴 WALA NANG BADGE IMAGES (2026-08-01). Maling region ang DENR mark sa
+    // `/img/badge-denr.webp`, at ang maling seal sa page na ang buong benta ay
+    // TIWALA ay mas masama kaysa sa walang seal. Sumama na ang BIR badge para
+    // pare-pareho. Nasa disk pa rin ang dalawang file, hindi na lang naka-render.
+    // Ang papeles ay nasa hero na ngayon bilang `trustChips` — nasa itaas ng
+    // fold at hindi pwedeng maling artwork.
     {
       type: 'socialProofBar',
+      ground: 'navy-deep',
       props: {
-        badges: [
-          { src: '/img/badge-denr.webp', alt: 'DENR registered' },
-          { src: '/img/badge-bir.webp', alt: 'BIR registered' },
-        ],
         line: 'SEC-rehistrado. May BIR official receipt. DENR-partner na tapunan. Ito ang mga papel na hindi kayang ibigay ng karaniwang siphoner.',
       },
     },
 
     {
       type: 'valueStack',
+      ground: 'paper',
       props: {
         heading: 'Ano ang kasama sa **₱5,000**',
         items: [
@@ -201,6 +235,7 @@ export const funnelConfig: FunnelConfig = {
     // negatibo bago pa nila matuklasan.)
     {
       type: 'objectionReversal',
+      ground: 'paper',
       props: {
         heading: 'Ang mga dagdag na itinatago ng iba',
         body: [
@@ -219,6 +254,7 @@ export const funnelConfig: FunnelConfig = {
     // pares ay walang pinapatunayan at sinisira pa ang tabi nya.
     {
       type: 'beforeAfter',
+      ground: 'paper',
       props: {
         eyebrow: 'Totoong trabaho',
         heading: 'Tingnan mo ang **before at after**.',
@@ -244,6 +280,7 @@ export const funnelConfig: FunnelConfig = {
     // ng KM-003 — napatunayan nang totoo sa 7,047 na tao.
     {
       type: 'originStory',
+      ground: 'navy',
       props: {
         heading: 'Hindi barado. Puno na.',
         paragraphs: [
@@ -251,11 +288,16 @@ export const funnelConfig: FunnelConfig = {
           'Puno na ang septic tank. Kaya kahit anong plunger, balik nang balik ang problema. Hindi mo naman kasi inaayos ang totoong dahilan.',
           'Kaya ang tinitingnan namin ay ang tangke, hindi ang toilet. Kapag hindi pa naman puno, sasabihin namin. Uuwi kami. Hindi ka namin pipilitin.',
         ],
+        // Nandito na ang litrato ng truck, hindi na sa hero. Sa ilalim ng CTA
+        // sya dati, kaya sliver lang sya sa fold at walang nakakakita.
+        image: '/img/hero-truck.webp',
+        imageAlt: 'Puting truck ng Oceanides na nakaparada sa kalye sa Metro Manila',
       },
     },
 
     {
       type: 'guarantee',
+      ground: 'navy',
       props: {
         heading: 'Kung tumaas ang presyo pagdating, kami ang sasagot',
         body: 'Yung presyong sinabi namin sa telepono ay yun din ang babayaran mo. Kung may nakita kaming dagdag na hindi namin nasabi sa iyo, kami ang sasagot doon, hindi ikaw. Ang tanging hindi sakop nito ay kung mali ang sinabi mo sa amin, halimbawa isang tangke ang sinabi mo pero dalawa pala.',
@@ -264,6 +306,7 @@ export const funnelConfig: FunnelConfig = {
 
     {
       type: 'faqAccordion',
+      ground: 'paper',
       props: {
         heading: 'Mga **tanong** na madalas itanong',
         items: [
@@ -295,10 +338,17 @@ export const funnelConfig: FunnelConfig = {
       },
     },
 
-    { type: 'leadFormSection', props: { heading: 'Mag-book ng schedule' } },
+    // Isang heading lang ang lumalabas dito. Kapag may `heading` ang section,
+    // pinapatay ng LeadFormSection ang headline sa loob ng card — dating
+    // dalawang beses na magkasunod ang "Mag-book ng schedule" (Neil, dobleng
+    // heading sa render pass 2026-08-01). Ang section-level heading ang piniling
+    // manatili kasi sya lang ang may Anton + amber rule na treatment ng ibang
+    // section; ang `form.headline` sa config ay ginagamit pa rin ng heroOptin.
+    { type: 'leadFormSection', ground: 'navy-deep', props: { heading: 'Mag-book ng schedule' } },
 
     {
       type: 'psBlock',
+      ground: 'navy-deep',
       // ⚠️ Walang "P.S." sa simula ng string. Ang PsBlock component mismo ang
       // gumagawa ng label (P.S. / P.P.S. / P.P.P.S.). Kapag inulit mo dito,
       // dumodoble sa page. Nakita ni Neil 2026-07-30.
@@ -312,6 +362,7 @@ export const funnelConfig: FunnelConfig = {
 
     {
       type: 'complianceFooter',
+      ground: 'void',
       props: {
         logo: '/img/logo.webp',
         brandLine:

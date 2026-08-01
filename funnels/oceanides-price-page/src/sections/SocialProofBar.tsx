@@ -16,53 +16,24 @@ import { Reveal } from '../primitives/Reveal';
 // What it DOES have is the moat: real SEC / BIR / DENR registration. Per
 // workflows/oceanides_business_model.md — "Ang moat ay ang PAPEL, hindi ang
 // truck. Ang crews ay hindi makaka-issue ng DENR-compliance certificate; si
-// Oceanides lang." Hence `badges`: the actual marks, not words, because a
-// customer who has been burned reads a seal faster than a sentence.
+// Oceanides lang."
 //
-// The template's rule that this strip triggers no network request still holds —
-// badges are same-origin bundled webp from scripts/build-assets.mjs, not a CDN.
-export const SocialProofBar: React.FC<PropsOf<'socialProofBar'>> = ({
-  line,
-  rating,
-  reviewCount,
-  logos,
-  badges,
-}) => (
+// 🔴 THE BADGE IMAGES ARE GONE (2026-08-01). `badge-denr.webp` shows the WRONG
+// DENR region. A wrong seal on a page whose entire product is trust is worse
+// than no seal at all, and the BIR mark went with it so the row does not read as
+// half-finished. The prop stays in the type for template compatibility; this
+// instance simply stops passing it, and the files stay on disk.
+//
+// So this is a TEXT band now, and it is sized like one: the sentence is the
+// element, not a caption under something else. The same three papers also ride
+// the hero as `trustChips`, above the fold, where a text chip cannot be the
+// wrong artwork.
+export const SocialProofBar: React.FC<PropsOf<'socialProofBar'>> = ({ line, rating, reviewCount, logos }) => (
   <SectionShell rhythm="band" className="border-y-2 border-white/15">
     <Reveal>
       <div className="space-y-6 text-center">
-        {/* PER-BADGE DECAL CHIPS.
-            v1 was ONE wide paper band holding both marks — Neil, 2026-07-30:
-            "bat gayan parang paperboard na white gara kadiri." He was right, and
-            the cause was aspect ratio, not taste: the DENR mark is a 9:1
-            horizontal lockup and the BIR mark is a 1:1 seal. Sizing both to a
-            shared height inside one box left a huge empty white field with two
-            small marks adrift in it.
-            Fix: each mark gets its OWN chip, sized snug to its own artwork, with
-            a shared HEIGHT so their visual weight matches while their widths are
-            free to differ. Reads as two decals on a truck door, which is the
-            print grammar this brand already speaks.
-            Still on paper, not reversed out: an official seal is never recoloured
-            and a government mark is not ours to repaint. */}
-        {badges && badges.length > 0 && (
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            {badges.map((badge) => (
-              <span
-                key={badge.src}
-                className="inline-flex items-center rounded-brand bg-brand-proof-band px-4 py-3 md:px-5 md:py-4"
-              >
-                <img
-                  src={badge.src}
-                  alt={badge.alt}
-                  loading="lazy"
-                  className="h-12 w-auto object-contain md:h-16"
-                />
-              </span>
-            ))}
-          </div>
-        )}
         {line && (
-          <p className="mx-auto max-w-prose text-sm leading-relaxed text-brand-on-surface-muted md:text-base">
+          <p className="mx-auto max-w-prose text-base font-bold leading-relaxed text-brand-on-surface md:text-lg">
             {line}
           </p>
         )}

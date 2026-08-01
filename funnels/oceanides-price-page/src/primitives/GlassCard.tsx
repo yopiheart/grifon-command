@@ -35,9 +35,12 @@ interface GlassCardProps extends React.HTMLAttributes<HTMLDivElement> {
   padded?: boolean;
 }
 
-// Navy card on navy ground. Separation comes from the border and the tonal step,
-// never from a blur or a shadow bloom.
-const DARK = 'bg-brand-elevated border-white/20 text-brand-on-surface';
+// GROUND-RELATIVE (2026-08-01). `--brand-card` / `--brand-card-border` are navy
+// by default and flip to white-on-paper inside a `.ground-paper` band, so the
+// SAME card renders correctly in both chapters and no section has to ask which
+// ground it landed on. Separation still comes from the border and the tonal
+// step, never from a blur or a shadow bloom.
+const DARK = 'bg-brand-card border-brand-card-border text-brand-on-surface';
 
 // Paper card. DESIGN.md paper-surface rule: white cards, rgba(11,27,51,.1) borders,
 // dark text. Kept a hair heavier here so the border survives on a phone.

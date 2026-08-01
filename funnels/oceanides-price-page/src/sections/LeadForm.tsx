@@ -38,13 +38,23 @@ const friendlyError = (code: string): string =>
 
 const INPUT_CLASS =
   // 2px border = the DESIGN.md checklist-row/print grammar, same as GlassCard.
-  'w-full rounded-brand bg-black/30 border-2 border-white/20 px-4 py-3 text-base text-brand-on-surface ' +
+  // The well is surface-void, not a black overlay: "huwag pure #000000 o
+  // charcoal — ang itim ay Grifon; ang navy ang nagpapa-Oceanides."
+  'w-full rounded-brand bg-[rgba(7,22,48,0.7)] border-2 border-white/20 px-4 py-3 text-base text-brand-on-surface ' +
   'placeholder:text-brand-on-surface-dim transition-colors duration-200 ' +
   'focus:border-brand-primary focus:outline-none focus:ring-1 focus:ring-brand-primary';
 
 const LABEL_CLASS = 'block text-xs font-semibold uppercase tracking-widest text-brand-on-surface-dim mb-2';
 
-export const LeadForm: React.FC = () => {
+interface LeadFormProps {
+  /**
+   * Set false when the section above already renders the same heading —
+   * otherwise the page shows it twice, back to back. See LeadFormSection.
+   */
+  showHeadline?: boolean;
+}
+
+export const LeadForm: React.FC<LeadFormProps> = ({ showHeadline = true }) => {
   const { form } = funnelConfig;
   const fields = form.fields.includes('email') ? form.fields : ['email' as const, ...form.fields];
 
@@ -86,7 +96,7 @@ export const LeadForm: React.FC = () => {
 
   return (
     <form id={LEAD_FORM_ANCHOR} onSubmit={handleSubmit} noValidate className="scroll-mt-24">
-      <h2 className="text-2xl md:text-3xl font-bold leading-tight mb-6">{form.headline}</h2>
+      {showHeadline && <h2 className="mb-6 text-2xl leading-tight md:text-3xl">{form.headline}</h2>}
 
       <div className="space-y-4">
         {fields.map((field) => (

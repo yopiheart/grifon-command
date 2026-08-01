@@ -5,27 +5,32 @@ import { Reveal } from '../primitives/Reveal';
 import { CtaButton } from '../primitives/CtaButton';
 import { EyebrowChip } from '../primitives/EyebrowChip';
 import { PhonePill } from '../primitives/PhonePill';
+import { PriceTicket } from '../primitives/PriceTicket';
 import { goldEmphasis } from '../lib/goldEmphasis';
 import { scrollToLeadForm } from '../lib/scrollToForm';
 
 // ===========================================================================
-// Hero — OCEANIDES build, CENTRED STACK (Neil, 2026-07-30, Apple as the ref).
+// Hero — OCEANIDES build. Claim on the left, QUOTATION on the right.
 //
-// v2 was a two-column split: copy left, truck photo right. Neil asked to centre
-// the lockup and drop the truck below the CTA, pointing at apple.com. He is
-// right, and the reason is structural rather than fashion:
+// v3 was a centred Apple-style stack with the truck photo underneath. The stack
+// was right about restraint and wrong about what the product is. Apple puts the
+// product under the claim because the product is a photograph. Here the product
+// is a PRICE, and the thing that makes this page different from every siphoner
+// who says "depende" is that the price is WRITTEN DOWN. So the printed ticket
+// takes the product slot, and the truck photo moves to the kwento chapter where
+// it can be looked at instead of glimpsed as a sliver at the fold.
 //
-//   - A side-by-side hero forces the headline to share horizontal space, so the
-//     type has to shrink exactly where it should be loudest. Centred, the
-//     headline gets the full measure and ₱5,000 can actually shout.
-//   - The photo below the CTA means the PRICE and the ACTION both clear the
-//     fold on a 390px phone, every time, with no stacking guesswork.
-//   - It collapses to one column on mobile with zero layout change, so what
-//     Neil approves on desktop is what ships to the phone.
+// Composition:
+//   ≥lg   two columns — claim + action on the rail, ticket held to ~400px right
+//   <lg   one column, DOM order = reading order:
+//         eyebrow → H1 → audience → subhead → TICKET → CTA + phone → papers
 //
-// The Apple move worth stealing is restraint, not the aesthetic: one centred
-// claim, one line under it, one action, then the product photographed large and
-// clean. What is NOT stolen is Apple's white ground and light type — this stays
+// The ticket has to start inside the 844px fold on a 390px phone, which is why
+// the CTA block is a separate grid item rather than part of the copy column: on
+// desktop it tucks under the claim (row 2, col 1) beside the full-height ticket,
+// and on mobile it simply falls after it. One DOM, no duplicated markup.
+//
+// Still not stolen from Apple: the white ground and the light type. This stays
 // navy + amber matte print per clients/oceanides/DESIGN.md.
 // ===========================================================================
 
@@ -37,14 +42,14 @@ export const Hero: React.FC<PropsOf<'hero'>> = ({
   ctaLabel,
   logo,
   logoAlt,
-  image,
-  imageAlt,
   phone,
   phoneLabel,
+  ticket,
+  trustChips,
 }) => (
   <SectionShell>
-    <Reveal>
-      <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
+    <div className="grid items-start gap-9 lg:grid-cols-[minmax(0,1fr)_400px] lg:gap-14">
+      <Reveal className="mx-auto w-full max-w-2xl text-center lg:col-start-1 lg:row-start-1 lg:mx-0 lg:max-w-none lg:text-left">
         {/* Logo as a floating DISC — build-assets.mjs circle-masks the source so
             the white square is gone and it reads as a seal, not a pasted box. */}
         {logo && (
@@ -53,7 +58,7 @@ export const Hero: React.FC<PropsOf<'hero'>> = ({
             alt={logoAlt ?? 'Oceanides'}
             width={72}
             height={72}
-            className="mb-6 h-16 w-16 rounded-full ring-2 ring-brand-primary md:h-[72px] md:w-[72px]"
+            className="mx-auto mb-6 h-16 w-16 rounded-full ring-2 ring-brand-primary md:h-[72px] md:w-[72px] lg:mx-0"
           />
         )}
 
@@ -63,56 +68,63 @@ export const Hero: React.FC<PropsOf<'hero'>> = ({
           </div>
         )}
 
-        <h1 className="text-[2.5rem] leading-[0.95] md:text-[4.25rem]">{goldEmphasis(headline)}</h1>
+        <h1 className="text-[2.5rem] leading-[0.95] md:text-[4.25rem] lg:text-[3.75rem] xl:text-[4.25rem]">
+          {goldEmphasis(headline)}
+        </h1>
 
-        {/* S8 audience callout — names the reader before they hit the price.
-            Centred, so the amber rule sits under it instead of beside it. */}
+        {/* S8 audience callout — names the reader before they hit the price. */}
         {audience && (
-          <p className="mt-6 max-w-xl text-sm font-semibold leading-snug text-brand-on-surface md:text-base">
-            {audience}
-          </p>
+          <p className="mt-6 text-sm font-semibold leading-snug text-brand-on-surface md:text-base">{audience}</p>
         )}
 
         {subhead && (
-          <p className="mt-5 max-w-2xl text-base leading-relaxed text-brand-on-surface-muted md:text-lg">
-            {subhead}
-          </p>
+          <p className="mt-5 text-base leading-relaxed text-brand-on-surface-muted md:text-lg">{subhead}</p>
         )}
+      </Reveal>
 
-        <div className="mt-9 flex w-full flex-col items-stretch gap-4 sm:w-auto sm:flex-row sm:items-center sm:justify-center">
+      {/* self-center, not start: the ticket is ~300px against a ~800px copy
+          column, and pinned to the top it left the right half of the fold
+          empty. Centred it sits against the claim it is evidence for. */}
+      {ticket && (
+        <Reveal
+          index={1}
+          className="mx-auto w-full max-w-md lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:max-w-none lg:self-center"
+        >
+          <PriceTicket {...ticket} />
+        </Reveal>
+      )}
+
+      <Reveal
+        index={2}
+        className="mx-auto w-full max-w-2xl lg:col-start-1 lg:row-start-2 lg:mx-0 lg:max-w-none"
+      >
+        <div className="flex w-full flex-col items-stretch gap-4 sm:flex-row sm:items-center sm:justify-center lg:justify-start">
           <CtaButton onClick={scrollToLeadForm}>{ctaLabel}</CtaButton>
           {phone && <PhonePill number={phone} label={phoneLabel} />}
         </div>
 
         {phone && (
-          <p className="mt-4 text-sm text-brand-on-surface-dim">
+          <p className="mt-4 text-center text-sm text-brand-on-surface-dim lg:text-left">
             Umaapaw na ngayon? Tumawag ka na, wag ka nang mag-fill ng form.
           </p>
         )}
-      </div>
-    </Reveal>
 
-    {/* The truck, large and centred under the action — the Apple product shot
-        slot. Wider than the copy measure so it reads as the payoff, not a
-        thumbnail hanging off the text. */}
-    {image && (
-      <Reveal index={1}>
-        <div className="relative mx-auto mt-14 max-w-4xl overflow-hidden rounded-brand border-2 border-white/15">
-          <img
-            src={image}
-            alt={imageAlt ?? ''}
-            className="block w-full"
-            loading="eager"
-          />
-          {/* photoScrim, verbatim from DESIGN.md — "ang tanging cinematic move ng
-              brand." Bottom-up here so the photo settles into the navy ground
-              instead of ending on a hard edge. */}
-          <span
-            aria-hidden
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-[linear-gradient(0deg,rgba(10,31,69,0.9),rgba(10,31,69,0))]"
-          />
-        </div>
+        {/* The papers, pulled up to the fold. Bordered text chips, not seals:
+            a text chip cannot show the wrong DENR region the way the badge
+            artwork did, and it costs no image request at the fold. */}
+        {trustChips && trustChips.length > 0 && (
+          <ul className="mt-7 flex flex-wrap justify-center gap-2 lg:justify-start">
+            {trustChips.map((chip) => (
+              <li
+                key={chip}
+                className="rounded-[4px] border border-white/25 px-3 py-1.5 text-[11px] font-extrabold uppercase leading-none tracking-[1px] text-brand-on-surface"
+              >
+                {chip}
+              </li>
+            ))}
+          </ul>
+        )}
       </Reveal>
-    )}
+    </div>
   </SectionShell>
 );

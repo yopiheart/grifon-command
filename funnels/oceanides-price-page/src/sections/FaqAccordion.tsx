@@ -26,7 +26,9 @@ export const FaqAccordion: React.FC<PropsOf<'faqAccordion'>> = ({ items, heading
                 {item.q}
                 <span
                   aria-hidden
-                  className="shrink-0 text-brand-primary transition-transform duration-200 group-open:rotate-45"
+                  // accent-text, not primary: this section rides the paper
+                  // chapter, where amber type is 1.7:1 and banned. Ocean there.
+                  className="shrink-0 text-brand-accent-text transition-transform duration-200 group-open:rotate-45"
                 >
                   +
                 </span>

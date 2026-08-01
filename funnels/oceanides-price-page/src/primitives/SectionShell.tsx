@@ -17,7 +17,11 @@ interface SectionShellProps {
   id?: string;
   rhythm?: 'shell' | 'band';
   width?: 'shell' | 'prose';
-  /** `proof` is the documented light band; everything else rides the dark canvas. */
+  /**
+   * `proof` is the documented light band. For this instance the chapter GROUNDS
+   * (src/index.css, painted by Landing.tsx) do that job page-wide; this stays
+   * for template configs that want a single light section.
+   */
   tone?: 'default' | 'proof';
   className?: string;
 }
@@ -42,7 +46,9 @@ export const SectionShell: React.FC<SectionShellProps> = ({
 }) => (
   <section
     id={id}
-    className={`w-full ${RHYTHM[rhythm]} ${tone === 'proof' ? 'bg-brand-proof-band text-black' : ''} ${className}`}
+    // `ground-paper` carries the inverted text ladder with it, so a proof band
+    // never needs `text-black` — which DESIGN.md bans outright anyway.
+    className={`w-full ${RHYTHM[rhythm]} ${tone === 'proof' ? 'ground-paper' : ''} ${className}`}
   >
     <div className={`mx-auto w-full ${WIDTH[width]} px-5 md:px-8`}>{children}</div>
   </section>
