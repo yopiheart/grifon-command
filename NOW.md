@@ -1,6 +1,6 @@
 # NOW
 
-**Stamped: 2026-08-01** · Anchor commit: `8090420`
+**Stamped: 2026-08-01** · Anchor commit: `c50136f`
 
 > The single resume doc. One screen, one next action. Read this first, before
 > `launch_readiness.md` or any handoff file.
