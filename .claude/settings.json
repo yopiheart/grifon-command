@@ -9,13 +9,8 @@
     "comment": "Read-only inspection + the verify-changes build/test commands are pre-approved so they never prompt. Survives the cafe-PC defreezer because it lives in the repo. Deliberately omits git commit/push and rm — CLAUDE.md says commit only when asked, so those stay prompt-gated.",
     "comment_defaultMode": "auto = the auto-classifier permission mode (NOT acceptEdits/edit-automatically, which Neil dislikes). Safe actions auto-approve; risky/destructive ones (commit/push, rm) still prompt = Neil's 'auto-run, I review commits' (2026-07-01). Lives in the repo so it survives the cafe-PC defreezer; a machine-local toggle would not. First use may show a one-time auto-mode opt-in dialog to accept.",
     "defaultMode": "auto",
+    "comment_adSpend": "Meta Ads WRITE tools are deliberately absent here. They used to be auto-approved, which contradicted the grifon-ad-strategist hard rule ('never spend Neil's money autonomously') — create_campaign + create_ad_set + create_creative + create_ad is the complete chain to a live spending campaign, with no prompt anywhere in it. Enforcement now lives in the ad-spend-gate.sh PreToolUse hook (deny on spend switches, ask on staging writes), which also covers the `meta-ads` CLI path over Bash that an allowlist cannot see. Only read tools stay allowlisted.",
     "allow": [
-            "mcp__claude_ai_Meta_Ads__ads_create_campaign",
-      "mcp__claude_ai_Meta_Ads__ads_create_ad_set",
-      "mcp__claude_ai_Meta_Ads__ads_create_creative",
-      "mcp__claude_ai_Meta_Ads__ads_create_ad",
-      "mcp__claude_ai_Meta_Ads__ads_creative_upload_video",
-      "mcp__claude_ai_Meta_Ads__ads_creative_upload_image",
       "mcp__claude_ai_Meta_Ads__ads_get_ad_videos",
       "mcp__claude_ai_Meta_Ads__ads_get_ad_account_pages",
       "mcp__claude_ai_Meta_Ads__ads_get_ad_preview",
@@ -38,6 +33,18 @@
     ]
   },
   "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "mcp__claude_ai_Meta_Ads__.*|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "bash",
+            "command": "bash .claude/hooks/ad-spend-gate.sh"
+          }
+        ]
+      }
+    ],
     "UserPromptSubmit": [
       {
         "hooks": [

@@ -33,7 +33,7 @@ node .claude/skills/codex-executor/execute.mjs --brief .tmp/brief-<slug>.md [--m
 - `--model` — optional Codex model override. Set this to the GPT 5.6 Sol model id once confirmed in `codex exec --help` / OpenAI docs; omitted, Codex uses its CLI default.
 - `--self-review` — runs Sol's devil's-advocate second pass over its own diff (dead handlers, unwired UI, unmet acceptance criteria) before the wrapper verifies. Recommended for anything with a UI edge; it's the brief's "multi-pass refinement" pattern and it's cheap (ChatGPT-plan tokens).
 
-4. **Review the diff in the main loop** (Claude), exactly as with a `code-executor` report. The wrapper never commits.
+4. **Review the diff in the main loop** (Claude), exactly as with a `code-executor` report. The wrapper never commits. When the main loop commits the reviewed diff, it stamps `Executor: codex-sol` as a git trailer (CLAUDE.md convention) — that trailer is the only durable record of which lane wrote what, and it's what `node tools/executor_ledger.mjs` reads to keep the reopenable gate below scorable against the Opus 5 baseline.
 
 ## What the wrapper enforces (Codex doesn't know Grifon's rules — the wrapper does)
 
