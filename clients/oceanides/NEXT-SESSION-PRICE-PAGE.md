@@ -63,9 +63,33 @@ Ang buong DGP-2 redesign (`workflows/design_swipe_file.md` sa main ang evidence 
    (pinili ni Neil — English ang tatak ng totoong resibo) at
    `stepsHeading: 'Ito ang susunod na mangyayari'`. Optional pareho sa types.
    Smoke: pumasa sa 390×844 + 1280×900, dalawang `?v=` variant + garbage fallback,
-   `?email=` scrub, zero console error. ⚠️ Ang `form → /api/lead → thank-you` na
-   hakbang ay HINDI pa nate-test lokal (walang api bridge ang `vite preview`);
-   ang live POST test pagkatapos ng deploy ang sumasakop doon.
+   `?email=` scrub, zero console error.
+
+1d. ✅ **TAPOS — form validation + local API bridge (2026-08-01).**
+   Nag-report si Neil na "ayaw mapunta sa thank you page." Hindi bug ng page:
+   static files lang ang sine-serve ng `vite dev`/`preview`, at Vercel function
+   ang `api/lead.ts`, kaya 404 ang POST. Dalawang bagay ang ginawa:
+   - **`src/lib/phPhone.ts`** — PH mobile normalizer, hiniram ng form AT ng API.
+     Tinatanggap ang `09XXXXXXXXX`, `+639...`, `639...`, `9...`; nagno-normalize
+     papuntang `09XXXXXXXXX` bago isulat, kaya isang hugis ang column.
+     🔴 **HUGIS LANG, WALANG CARRIER PREFIX WHITELIST.** Naglalabas ng bagong
+     prefix ang mga carrier (099x/089x ng DITO), at ang lumang whitelist ay
+     TUMATANGGI ng totoong customer sa form. Tahimik at permanente iyon, at mas
+     masama kaysa sa maling numerong nahuhuli naman sa callback.
+   - **`vite.config.ts` dev/preview bridge para sa `/api/lead`.** May Supabase
+     env = totoong handler; wala = MOCK na pareho ang request rules pero walang
+     row. Nakakapag-lakad na ang buong daan lokal: form → thank-you → `?v=`
+     routing. ⚠️ Walang pinapatunayan ang mock tungkol sa Supabase (upsert,
+     unique index, column types) — ang live POST pagkatapos ng deploy pa rin
+     ang gate. Maingay sa terminal ang mock para dyan mismo.
+   - **Required na talaga ang phone.** Sinasabi ng config na required sya mula
+     pa noong una ("walang booking na hindi natatawagan") pero `email` lang ang
+     may `required` sa markup, at `noValidate` naman ang form, kaya walang
+     nagbabantay. Puwedeng makapasok noon ang lead na walang matawagan.
+   - Server-side ulit ang check sa `api/lead.ts`: ito ang tanging
+     unauthenticated write, kaya walang pinapatunayan ang browser-side guard.
+   Smoke: 7 kaso lahat pumasa (blangko, kulang, landline, nabubura habang nagta-
+   type, nagre-reformat sa blur, buong happy path, tamang magnet variant).
 1b. ✅ **TAPOS — huling pass 2026-08-01** (mga sagot sa review ni Neil):
    - **PhonePill sa void chapter ng thank-you.** Hindi mo mase-save ang numerong
      hindi mo nakikita, at patay ang `tel:` sa desktop. Nakalimbag na ang

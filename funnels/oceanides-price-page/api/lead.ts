@@ -2,6 +2,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { z } from 'zod';
 import { createClient } from '@supabase/supabase-js';
 import { funnelConfig } from '../src/funnel.config.js';
+import { normalizePhMobile } from '../src/lib/phPhone.js';
 
 // ===========================================================================
 // POST /api/lead — the ONLY backend this funnel has.
@@ -81,6 +82,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   // every write or "Neil@x.com" and "neil@x.com" become two leads.
   const email = lead.email.trim().toLowerCase();
 
+  // Phone is validated AGAIN here, not only in the form. The client check is a
+  // courtesy to a human who mistyped; this one is the rule. `/api/lead` is the
+  // single unauthenticated write in the system and anything can POST to it, so
+  // a browser-side guard proves nothing about what actually arrives. Same
+  // normalisation both sides (src/lib/phPhone.ts), so the column holds one
+  // shape whoever wrote the row.
+  let phone: string | null = null;
+  if (lead.phone) {
+    const parsedPhone = normalizePhMobile(lead.phone);
+    if (!parsedPhone.ok) {
+      return res.status(400).json({ error: 'invalid_phone' });
+    }
+    phone = parsedPhone.local;
+  }
+
   const ip = firstHop(req);
   if (ip && rateLimited(ip)) {
     res.setHeader('Retry-After', '60');
@@ -113,7 +129,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         funnel_id: funnelConfig.meta.funnelId,
         name: lead.name ?? null,
         email,
-        phone: lead.phone ?? null,
+        phone,
         consent: lead.consent,
         consent_text: consentConfig.text,
         policy_version: consentConfig.policyVersion,
