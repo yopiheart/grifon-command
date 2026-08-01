@@ -136,10 +136,19 @@ hindi, at mas makitid pala ang rule kaysa sa akala.
   rehistradong pangalan (`Oceanides Plumbing Siphoning & Pest Management
   Services OPC`). Idagdag para may matutugma ang magve-verify sa SEC.
 
-1c. 🟡 **HINDI PA NASASAGOT NI NEIL: ang oras ng tawag.** Tatlong beses sinasabi
-   ng thank-you na "tatawagan ka namin" at ni minsan hindi sinasabi kung kailan.
-   Iyon ang tanging tanong ng kaka-book lang. Kailangan ng totoong sagot ni Zam
-   bago ilagay. Wag mag-imbento.
+1c. ✅ **SAGOT NA ANG ORAS NG TAWAG** (Neil, 2026-08-01): **8AM to 5PM.**
+   Nakalagay na sa `steps[0]` ng thank-you: *"8AM hanggang 5PM kami tumatawag,
+   kaya kung gabi ka nag-book, bukas ng umaga ang tawag."* Window ito, hindi
+   bilis. Walang pangakong "sa loob ng isang oras."
+   🟡 **Tingnan sa Gate 2:** sinasabi ng hero na `Tawag o text, 24 oras` ang
+   phone label. Magkatugma naman sila (pasok ang tawag 24h, palabas ang tawag
+   8-5) pero baka mapansin. Desisyon ni Neil kung hahayaan.
+
+1e. ✅ **SARADO ANG TANONG SA TIN** (Neil, 2026-08-01): *"OKAY NA YAN parehas
+   yan gagamitin ung nilagay mo sa page."* Nag-flag ako na ang
+   `260-084-087-000` ay nakapangalan kay Agosto Lobrino Cepriano sa SEC docs at
+   baka hiwalay ang TIN ng OPC. Sinagot na ni Neil: iisa lang sila, tuloy ang
+   nasa page. **Wag nang buksan ulit ito sa susunod na session.**
 
 2. ⛔ **Gate 2 ni Neil**: buong basa ng landing + thank-you sa PC. Ang copy ay DRAFT
    pa rin sa config header hangga't hindi ito nangyayari.

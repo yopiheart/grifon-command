@@ -516,7 +516,11 @@ export const funnelConfig: FunnelConfig = {
     magnetDelivery: 'Habang naghihintay ka, ito ang gawin mo.',
     stepsHeading: 'Ito ang susunod na mangyayari',
     steps: [
-      'Tatawagan ka namin para sa schedule at sa buong presyo.',
+      // ANG ORAS NG TAWAG (Neil, 2026-08-01: "8AM to 5PM"). Tatlong beses
+      // sinasabi ng page na "tatawagan ka namin" at ni minsan hindi kung
+      // kailan, samantalang iyon ang tanging tanong ng kaka-book lang.
+      // Window ito, hindi bilis: walang pangakong "sa loob ng isang oras."
+      'Tatawagan ka namin para sa schedule at sa buong presyo. 8AM hanggang 5PM kami tumatawag, kaya kung gabi ka nag-book, bukas ng umaga ang tawag.',
       'Pagdating ng truck, uulitin namin ang presyo bago magsimula.',
       'Tapos, bibigyan ka ng BIR official receipt at ng 30-day warranty.',
     ],
