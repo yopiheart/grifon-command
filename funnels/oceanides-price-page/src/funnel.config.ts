@@ -209,6 +209,15 @@ export const funnelConfig: FunnelConfig = {
       ground: 'navy-deep',
       props: {
         line: 'SEC-rehistrado. May BIR official receipt. DENR-partner na tapunan. Ito ang mga papel na hindi kayang ibigay ng karaniwang siphoner.',
+        // TOTOONG numero, galing kay Neil 2026-08-01, verbatim — walang binago
+        // sa format. DP5: mas malakas ang tiyak na numero kaysa hiram na seal;
+        // kahit sino pwedeng mag-verify. SEC Reg. No. = TO FOLLOW pa kay Neil,
+        // idadagdag dito pagdating.
+        receipts: [
+          { label: 'DENR Certificate of Treatment No.', value: 'BEHMC(1)WHN0095001WW260318' },
+          { label: 'DENR ID No.', value: 'OL-TR-R3-14-000080' },
+          { label: 'BIR TIN (Non-VAT)', value: '260-084-087-00000' },
+        ],
       },
     },
 

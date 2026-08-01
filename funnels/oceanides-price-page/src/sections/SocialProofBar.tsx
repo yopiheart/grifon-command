@@ -28,7 +28,7 @@ import { Reveal } from '../primitives/Reveal';
 // element, not a caption under something else. The same three papers also ride
 // the hero as `trustChips`, above the fold, where a text chip cannot be the
 // wrong artwork.
-export const SocialProofBar: React.FC<PropsOf<'socialProofBar'>> = ({ line, rating, reviewCount, logos }) => (
+export const SocialProofBar: React.FC<PropsOf<'socialProofBar'>> = ({ line, rating, reviewCount, logos, receipts }) => (
   <SectionShell rhythm="band" className="border-y-2 border-white/15">
     <Reveal>
       <div className="space-y-6 text-center">
@@ -36,6 +36,27 @@ export const SocialProofBar: React.FC<PropsOf<'socialProofBar'>> = ({ line, rati
           <p className="mx-auto max-w-prose text-base font-bold leading-relaxed text-brand-on-surface md:text-lg">
             {line}
           </p>
+        )}
+        {receipts && receipts.length > 0 && (
+          // Ang totoong numero ang pinakamalakas na trust device na hawak ng
+          // page (DP5 — mas malakas ang tiyak na numero kaysa hiram na seal).
+          // Print register: label sa sky, value sa white, dashed na hiwalay
+          // kada resibo. Mahahaba ang cert numbers kaya break-all sa mobile.
+          <ul className="mx-auto flex max-w-4xl flex-col items-stretch justify-center gap-3 sm:flex-row sm:flex-wrap">
+            {receipts.map((r) => (
+              <li
+                key={r.label}
+                className="rounded-[4px] border border-dashed border-white/25 px-4 py-3 text-left"
+              >
+                <p className="text-[10px] font-black uppercase leading-none tracking-[1px] text-brand-on-surface-dim">
+                  {r.label}
+                </p>
+                <p className="mt-1.5 break-all text-sm font-bold tabular-nums leading-snug text-brand-on-surface">
+                  {r.value}
+                </p>
+              </li>
+            ))}
+          </ul>
         )}
         {(rating || (logos && logos.length > 0)) && (
           <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4">

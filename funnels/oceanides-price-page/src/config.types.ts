@@ -161,6 +161,10 @@ type SectionBody =
         reviewCount?: string;
         logos?: string[];
         badges?: Array<{ src: string; alt: string }>;
+        /** Totoong registration numbers, rendered bilang print receipts row.
+         *  Verbatim ang label at value na galing kay Neil/Boss Jay — walang
+         *  inimbentong numero, walang binagong format. */
+        receipts?: Array<{ label: string; value: string }>;
       };
     }
   | { type: 'testimonialWall'; props: { heading?: string; items: Array<{ quote: string; name: string; role?: string }> } }
