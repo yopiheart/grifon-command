@@ -47,6 +47,7 @@ import type {
   StabilityMode,
   StoryboardResponse,
   VideoModelType,
+  VoiceWord,
 } from '../types';
 import type { RenderJob } from '../components/GenerateVideo/RenderAllRunner';
 // P4 image gate: deterministic still checks (utils, free) + the AI gate result shape.
@@ -114,6 +115,18 @@ export interface ProductionSceneState {
   imageUrl?: string;
   videoUrl?: string;
   audioUrl?: string;
+  /** Measured word timings for `audioUrl` (ElevenLabs forced alignment, from the
+   * consolidation result). Fed to the final render as FinalRenderScene.voiceWords so trim +
+   * overlays anchor to REAL speech-end instead of silencedetect. Always written together with
+   * `audioUrl` — alignment from a different MP3 is worse than none — and absent (never `[]`)
+   * when the aligner returned nothing, so the renderer falls back to the silence anchor.
+   *
+   * Lives in the run-header checkpoint jsonb, NOT a producer_scenes column. That is deliberate
+   * and NOT a violation of the keep-blobs-off-the-header rule in supabase/producer_runs.sql:
+   * images/base64 are excluded there because multi-MB jsonb caused statement timeouts, whereas
+   * a whole ad's alignment is ~150 `{text,start,end}` objects — a few KB. Don't "fix" this by
+   * moving it to its own column. */
+  words?: VoiceWord[];
   /** Why this scene needs a reshoot (image/video/voice failure). */
   flaggedReason?: string;
   /** P4: the AI image-gate verdict for this scene's still (identity/label perception).
@@ -450,6 +463,15 @@ export function assembleFinalScript(script: Script): string[] {
 
 /** Clamp n into [lo, hi]. Module-local so the no-VO fast-cut pacing math stays inline. */
 const clamp = (n: number, lo: number, hi: number): number => Math.min(hi, Math.max(lo, n));
+
+/** Normalize a consolidation result's forced alignment for storage: a usable array, or
+ * `undefined` when the aligner returned nothing. An empty `[]` must never be stored — the
+ * renderer treats "has words" as "anchor the trim on measured speech", and a zero-length
+ * window would anchor on nothing. Shared by BOTH consolidation commit sites (batch voices
+ * stage + single-scene reshoot) so a retried scene can't silently revert to the silence
+ * anchor mid-ad. */
+const alignedWords = (res: { words?: VoiceWord[] } | undefined): VoiceWord[] | undefined =>
+  res?.words?.length ? res.words : undefined;
 
 /** Per-model, per-resolution valid clip durations (inline mirror of VIDEO_MODEL_SPECS). */
 const VALID_DURATIONS: Partial<Record<VideoModelType, Record<'720p' | '1080p', number[]>>> = {
@@ -1178,10 +1200,16 @@ export async function reshootScene(run: ProductionRun, sceneIdx: number, cb: Pro
 
     // 3. Voice
     const voiceRes = await deps.consolidateVoices([{ sceneIdx, type, scriptLine: scene.scriptLine, videoUrl }], run.input.voiceId, run.input.stabilityMode ?? 'robust');
-    const audioUrl = voiceRes.find((v) => v.sceneIdx === sceneIdx)?.audioUrl ?? null;
+    const res = voiceRes.find((v) => v.sceneIdx === sceneIdx);
+    const audioUrl = res?.audioUrl ?? null;
     await commit((r) => {
       const s = r.scenes.find((x) => x.sceneIdx === sceneIdx)!;
-      if (audioUrl) s.audioUrl = audioUrl;
+      if (audioUrl) {
+        s.audioUrl = audioUrl;
+        // New MP3 → new alignment (or none). Assigning even when absent CLEARS the previous
+        // take's words, which would otherwise time this scene's trim off a discarded audio file.
+        s.words = alignedWords(res);
+      }
       s.status = 'done';
     });
 
@@ -1743,7 +1771,11 @@ async function runStage(
       await commit((r) => {
         for (const res of results) {
           const sc = r.scenes.find((s) => s.sceneIdx === res.sceneIdx);
-          if (sc && res.audioUrl) sc.audioUrl = res.audioUrl;
+          if (sc && res.audioUrl) {
+            sc.audioUrl = res.audioUrl;
+            // Keep the forced alignment paired with the MP3 it measured (see the reshoot path).
+            sc.words = alignedWords(res);
+          }
         }
       });
       return;
@@ -1803,6 +1835,11 @@ async function runStage(
             transitionIn: plan?.transitionIn,
             // No-VO kills subtitle captions; EDL overlayText still burns.
             scriptLine: sfxOnly ? '' : scriptLine,
+            // Measured VO word timings → the renderer anchors trim + overlay clamp on real
+            // speech-end instead of silencedetect. Omitted in exactly the cases scriptLine is
+            // blanked or there is no VO at all (no-VO run / audio-less scene) — there is no
+            // speech to anchor to, and the silence/keepSegments path is the right one there.
+            voiceWords: sfxOnly || !s.audioUrl ? undefined : s.words,
             sceneType: run.videoPrompts?.[s.sceneIdx]?.type ?? 'b-roll',
             isHook,
           };

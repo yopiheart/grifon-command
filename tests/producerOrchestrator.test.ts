@@ -31,7 +31,7 @@ import {
   type VideoJobHandle,
 } from '../services/producerOrchestrator.js';
 import { gateDepsFor } from '../services/producerDeps.js';
-import type { MarketResearchReport, Script, Scene, VideoPrompt } from '../types.js';
+import type { MarketResearchReport, Script, Scene, VideoPrompt, VoiceWord } from '../types.js';
 
 // ---------------------------------------------------------------------------
 // The spend-bearing Producer state machine. Ported + extended from the dead
@@ -1849,5 +1849,111 @@ describe('P4 — gate verdict persistence', () => {
 
     expect(rows.get(0)!.gateVerdict).toBeNull(); // cleared, not inherited
     expect(run.scenes.find((s) => s.sceneIdx === 0)?.gateVerdict).toBeUndefined();
+  });
+});
+
+// --- 24. Forced-alignment word timings reach the final render (issue #91) ----
+// The consolidator already returns per-scene forced alignment; the producer used to drop it,
+// so every producer render trimmed on `silencedetect` and left a breathy tail on the last
+// scene. These lock the thread: consolidation → ProductionSceneState.words → the render
+// request's voiceWords (which is what flips [renderFfmpeg:trim] anchor to 'speech').
+
+describe('voice word timings — producer threads forced alignment to the renderer', () => {
+  const WORDS_0: VoiceWord[] = [
+    { text: 'Hook', start: 0, end: 0.42 },
+    { text: 'one', start: 0.42, end: 0.9 },
+  ];
+  const WORDS_1: VoiceWord[] = [{ text: 'Body', start: 0, end: 0.6 }];
+
+  /** consolidateVoices that returns whatever alignment the test dictates per sceneIdx. */
+  const alignedConsolidator = (byScene: Record<number, VoiceWord[] | undefined>) =>
+    vi.fn(async (scenes: { sceneIdx: number }[]) =>
+      scenes.map((s) => ({ sceneIdx: s.sceneIdx, audioUrl: `aud://${s.sceneIdx}`, words: byScene[s.sceneIdx] })),
+    );
+
+  async function runWith(over: Partial<ProducerDeps>, input = makeInput()) {
+    const harness = makeFakeDeps(over);
+    const run = createProductionRun(input, 'u1');
+    const callbacks = cb();
+    await runProduction(run, callbacks, harness.deps);
+    await approveStoryboard(run, callbacks, harness.deps);
+    return { ...harness, run, callbacks };
+  }
+
+  const lastRenderReq = (spies: { renderFinalVideo: { mock: { calls: any[] } } }) =>
+    spies.renderFinalVideo.mock.calls[spies.renderFinalVideo.mock.calls.length - 1][0];
+
+  it('batch consolidation stores the words it received, per scene', async () => {
+    const { run } = await runWith({ consolidateVoices: alignedConsolidator({ 0: WORDS_0, 1: WORDS_1 }) as any });
+    expect(run.scenes.find((s) => s.sceneIdx === 0)!.words).toEqual(WORDS_0);
+    expect(run.scenes.find((s) => s.sceneIdx === 1)!.words).toEqual(WORDS_1);
+  });
+
+  it('stores NOTHING when alignment is missing or empty (never an empty array)', async () => {
+    // `[]` would read downstream as "we measured speech" and anchor the trim on a zero-length
+    // window; absent correctly falls back to silencedetect.
+    const { run } = await runWith({ consolidateVoices: alignedConsolidator({ 0: undefined, 1: [] }) as any });
+    expect(run.scenes.find((s) => s.sceneIdx === 0)!.words).toBeUndefined();
+    expect(run.scenes.find((s) => s.sceneIdx === 1)!.words).toBeUndefined();
+    // ...and the audio itself still landed — absent alignment is not a voice failure.
+    expect(run.scenes.every((s) => !!s.audioUrl)).toBe(true);
+  });
+
+  it('the single-scene reshoot path stores them too (a retry must not revert to the silence anchor)', async () => {
+    const { deps, run, callbacks, spies } = await runWith({
+      consolidateVoices: alignedConsolidator({ 0: WORDS_0, 1: undefined }) as any,
+    });
+    expect(run.scenes.find((s) => s.sceneIdx === 1)!.words).toBeUndefined(); // precondition
+
+    // The reshoot re-consolidates scene 1 alone; this time alignment comes back.
+    (deps as any).consolidateVoices = alignedConsolidator({ 1: WORDS_1 });
+    await reshootScene(run, 1, callbacks, deps);
+
+    expect(run.scenes.find((s) => s.sceneIdx === 1)!.words).toEqual(WORDS_1);
+    expect(lastRenderReq(spies).scenes.find((s: any) => s.sceneIdx === 1).voiceWords).toEqual(WORDS_1);
+  });
+
+  it('a reshoot that comes back WITHOUT alignment clears the previous take’s words', async () => {
+    // Words measured against a discarded MP3 are worse than none — they would time the trim
+    // off audio that is no longer in the render.
+    const { deps, run, callbacks } = await runWith({
+      consolidateVoices: alignedConsolidator({ 0: WORDS_0, 1: WORDS_1 }) as any,
+    });
+    (deps as any).consolidateVoices = alignedConsolidator({ 1: undefined });
+    await reshootScene(run, 1, callbacks, deps);
+    expect(run.scenes.find((s) => s.sceneIdx === 1)!.words).toBeUndefined();
+  });
+
+  it('the final render request carries voiceWords from stored scene state', async () => {
+    const { spies } = await runWith({ consolidateVoices: alignedConsolidator({ 0: WORDS_0, 1: WORDS_1 }) as any });
+    const req = lastRenderReq(spies);
+    expect(req.scenes.find((s: any) => s.sceneIdx === 0).voiceWords).toEqual(WORDS_0);
+    expect(req.scenes.find((s: any) => s.sceneIdx === 1).voiceWords).toEqual(WORDS_1);
+  });
+
+  it('a scene with no audio gets no voiceWords, even if state somehow carries them', async () => {
+    // Guarding on audioUrl (not just on `words` being set) is the point: alignment with no MP3
+    // in the render describes speech that will never play.
+    const { deps, spies, run, callbacks } = await runWith({
+      consolidateVoices: alignedConsolidator({ 0: WORDS_0, 1: WORDS_1 }) as any,
+    });
+    const s1 = run.scenes.find((s) => s.sceneIdx === 1)!;
+    s1.audioUrl = undefined;
+    await applyPreset(run, 'impact', callbacks, deps); // re-assembles → fresh render request
+    const req = lastRenderReq(spies);
+    expect(req.scenes.find((s: any) => s.sceneIdx === 1).voiceWords).toBeUndefined();
+    expect(req.scenes.find((s: any) => s.sceneIdx === 0).voiceWords).toEqual(WORDS_0); // sibling untouched
+  });
+
+  it('sfx_only scenes get NO voiceWords — parity with the blanked scriptLine', async () => {
+    const { spies } = await runWith(
+      { consolidateVoices: alignedConsolidator({ 0: WORDS_0, 1: WORDS_1 }) as any },
+      makeInput({ audioMode: 'sfx_only' }),
+    );
+    const req = lastRenderReq(spies);
+    for (const sc of req.scenes) {
+      expect(sc.scriptLine).toBe('');
+      expect(sc.voiceWords).toBeUndefined();
+    }
   });
 });
