@@ -1,6 +1,6 @@
 # NOW
 
-**Stamped: 2026-08-01** · Anchor commit: `fc6391a`
+**Stamped: 2026-08-01** · Anchor commit: `abbe72f`
 
 > The single resume doc. One screen, one next action. Read this first.
 > **Freshness contract:** if the stamp is >5 days behind `git log -1`, treat as UNVERIFIED —
@@ -11,66 +11,67 @@
 
 ## ▶ NEXT ACTION
 
-**1. ⛔ BLOCKER — [#96](https://github.com/yopiheart/grifon-command/issues/96): check the ElevenLabs key's `forced_alignment` permission before ANY paid render.**
-The local key is valid (`/v1/voices` 200) but scoped — `/v1/forced-alignment` → 401.
-`consolidate.ts` swallows that in a `console.warn` and falls back to caption estimates. If the
-**production** key is scoped the same, `words` is never produced, the shipped speech-anchor fix
-is inert, and a ₱550 smoke logs `anchor: "silence"` everywhere — reading as "the fix failed"
-when the cause is a dashboard checkbox. Only the local key was observable; production is unproven.
+**#94.3 — the scene-2 double-render. Free to verify, and it now owns the only real caption defect.**
 
-**2. Two decisions only Neil can make** (both argued in `4a7bd7b`'s commit body):
-- **Golden snapshot** — `drawPlan.snapshot.test.ts.snap` says *any diff = escalate*. 8 lines
-  moved, verified twice as one field (`startSec` 0.3→0.4 ×7, 0→0.4 ×1). Bless or reject.
-- **Overlay drop-case** — a classic-preset callout on a scene whose VO starts >1.1s in now
-  **vanishes** instead of flashing early (subtitle still carries the line). Restraint, or keep?
+The `$0` harness works again (`abbe72f`) and the failing run's footage is recovered locally, so
+this needs no paid render. Task: audit the burn-in layer selection in `api/_lib/renderFfmpeg.ts`
+— establish which overlay/caption classes are *supposed* to burn on RAW (`preset=none`) at all,
+then re-stitch and eyeball. **It also owns the real defect behind #94.2:** the EDL writes
+`8 hours` while the script spells `Eight hours`, so when both layers burn you see two different
+renderings of the same sentence.
 
-**3. Verify FREE before paying.** Run `apr_69e5adc6…`'s 9 clips + 9 VO MP3s are recovered and
-expiry-proof (R2 objects were alive; only the presigned URLs lapsed). `restitch-real.test.ts`
-re-stitches real footage for $0. ⚠ Its `SpecScene` has **no `voiceWords` field** — add it, or the
-harness runs `anchor: "silence"` and proves nothing. Blocked on #96 for real alignment; fallback
-is ffmpeg-measured onset/speech-end (verifies the render logic, not the aligner).
-**Measured expectation: `detectedSec` 5.5093 → ~3.49.** NOT ~2.96 — that came from the issue's
-estimate and is wrong; treat ~2.96 as suspicious, not success.
+Re-run the harness with:
+```powershell
+node .tmp/mkspec.mjs <scratchpad> words   # or rebuild from workflows/ notes if .tmp is gone
+$env:RUN_RESTITCH='1'; npx vitest run tests/integration/restitch-real.test.ts
+```
+Assets die with the defreezer — recover via Supabase `producer_runs` + R2 re-presign (the run is
+`apr_69e5adc6-6072-403d-bd15-b22ebe0c65e5`), then re-derive alignment via `/v1/forced-alignment`.
 
-**4. Only then the paid render** — for `#92` (needs fresh generation), reloading mid-run to catch
-`#89`/`#90` in the same pass. Real risk to listen for: **the last word must not be clipped**
-(the anchor removes ~2.0s). Correct-by-design: `sfx_only` runs log `silence` (no VO).
+**Two Neil decisions still open** (argued in `4a7bd7b`'s body): the golden-snapshot diff (8 lines,
+one field) and the overlay drop-case. ⚠ On the real footage the overlay did **not** vanish — it
+just started on time — so the drop-case is theoretical for short-hold overlays only.
+
+## ✅ Verified $0 — do NOT re-verify in a paid batch
+
+- **#91** baseline **35.80s → 33.70s** (−2.10s). Baseline reproduces the reported bad duration
+  exactly; the cut matches the ffmpeg-measured tail (~2.08s).
+- **#94.1** at 0.5s into scene 2 (VO onset 1.419s) the baseline frame shows the overlay burned in;
+  the fixed frame is clean.
 
 ## Punch list
 
 | # | Issue | State |
 |---|---|---|
-| ✅ | **#91** tail · **#94.1** early overlay | Committed `4a7bd7b` + `8090420`. Unproven until a render. |
-| 1 | **#96** alignment silently disabled by key scope | **NEW, blocks the smoke.** See above. |
-| 2 | **#94.3** scene-2 double-renders overlay + captions | **Carries the real fix for what Neil saw.** Also owns: EDL writes `8 hours` while the script spells `Eight hours`, so the two burned layers disagree. |
-| 3 | **#94.2** numerals | ⚠ **MISDIAGNOSED — re-scope first.** Script said "Eight" (spelled); only the EDL overlay said "8". Captions render from `scriptLine`, so nothing was dropped and the aligner never saw a numeral — the chosen "aligner token-matching" fix would change nothing. Real latent case is scene idx=2 (`"Tuwing 3 PM…"`), **unverified**. Full evidence in the #94 comment. `phoneticNormalizer.ts` does NOT exist (deleted `2e70c5a`). |
-| 4 | **#89** resume flash · **#90** final-cut fake-fail | Not started. UX only; data-safe. |
-| 5 | **#92** hook-morph goo · **#95** v3 audio tags | Not started. #95 = validate, then a non-tuned mapper. |
+| ✅ | **#91** · **#94.1** | Committed `4a7bd7b`+`8090420`, **verified $0** `abbe72f`. |
+| 1 | **#94.3** double-render | **NEXT.** Free. Owns the `8` vs `Eight` layer disagreement. |
+| 2 | **#94.2** numerals | **CLOSE AS NOT-REPRODUCIBLE.** Script said "Eight"; only the EDL overlay said "8"; the aligner returns `"3"` fine on the real numeral case. Nothing to fix — evidence in the #94 comment. |
+| 3 | **#95** v3 audio tags | Free-ish (TTS calls only, no render). Validate, then a non-tuned mapper. |
+| 4 | **#92** hook-morph · **#89**/**#90** resume-UX | **Deferred to the Slice B batch** (Neil 2026-08-01) — needs fresh generation; #89/#90 caught by reloading mid-run. See `sample_batch_test_spec.md`. |
+| 5 | **#96** alignment silently disabled by key scope | Key now has `forced_alignment` ✅. Remaining: make the failure LOUD (a `console.warn` should not be how a permanent caption degradation announces itself). |
 | 6 | **#93** talking-avatar framing | ⛔ **TUNED** — own regression-armed session, Neil diff-approval. Never bundle. |
 
 ## ⛔ Gated — not without Neil
 
 **P5 engine-default flip** (after the punch list) · **Hyperframes product swap** (verdict STANDS,
-workflow lane only) · **Slice 2** video rate-limit re-scope (`api/gemini/video.ts`; without it
->5-scene ads self-throttle).
+workflow lane only) · **Slice 2** video rate-limit re-scope · **any paid render**.
 
 ## 🔧 Arm before starting
 
 ```powershell
-.\scripts\restore-git-identity.ps1    # else commits die "Author identity unknown"
-.\scripts\restore-gh.ps1              # issues ARE the durable record
+.\scripts\restore-git-identity.ps1
+.\scripts\restore-gh.ps1     # gh may miss bash PATH → $LOCALAPPDATA/Programs/GitHubCLI/bin/gh.exe
 ```
-`gh` may miss the bash PATH — fallback `$LOCALAPPDATA/Programs/GitHubCLI/bin/gh.exe`.
 
 ## 📍 Deeper · 🅿 Parked
 
 [launch_readiness.md](workflows/launch_readiness.md) (scoreboard, not resume) ·
-[loop_arch_handoff.md](workflows/loop_arch_handoff.md) (engine + P5) ·
+[sample_batch_test_spec.md](workflows/sample_batch_test_spec.md) (**one batch, 3 deliverables**) ·
 [post_beta_roadmap.md](workflows/post_beta_roadmap.md) (**#25 Brand Brain** = first post-launch build)
 
-Parked: Slice B sample batch · KM-003 Veo clips (~$4, needs hook pick) · TwelveLabs M1 vault ·
-[oneshot_flow_fixes.md](workflows/oneshot_flow_fixes.md) · **#91 residual:** degraded resume
-(checkpoint absent) loses alignment silently — see the #91 comment.
+Parked: KM-003 Veo clips · TwelveLabs M1 vault · `oneshot_flow_fixes.md` · **#91 residual:**
+degraded resume (checkpoint absent) loses alignment silently · `burnin-render.test.ts` is
+probably SSRF-blocked too (same local-server pattern) — untested.
 
 ---
 
