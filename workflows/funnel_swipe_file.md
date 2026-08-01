@@ -47,6 +47,7 @@ Template/build changes distilled from ≥3-corroborated L-patterns, awaiting Nei
 - **A/B page variants** (L2 makes it config-cheap) — trigger: first funnel with enough traffic to split.
 - **Email nurture sequences** — trigger: a sender (Resend/Brevo) gets wired; recon inbox sequences (`+recon` Gmail) are the swipe source.
 - **Magic-link auto-account from funnel submit** (skip even the OTP screen) — trigger: same sender infra + auth-flow design with Neil.
+- **`FunnelConfig.brand` expressive axes** (ground/texture treatment, card treatment `glass|solid|outline`, density, motion personality — today the block is colors+fonts+radius and the visual world is fixed Grifon DNA) — trigger: first client whose approved DESIGN.md the current block can't express. Evidence + full spec live as **DGP-1** in `workflows/design_swipe_file.md`; ships as an FGP here.
 
 ---
 

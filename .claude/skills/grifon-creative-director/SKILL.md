@@ -72,11 +72,13 @@ You collaborate with `grifon-cmo` (strategy + copy). When a deliverable needs bo
 
 Run the full 6-step breakdown in order. Do not skip steps. Be exhaustive.
 
+When the reference was dropped to build or evolve a **design world** (new client, niche exploration, "make it premium"), also record steps 1–4 as a D-entry in [workflows/design_swipe_file.md](../../../workflows/design_swipe_file.md) — the extraction compounds there, and per-client DESIGN.md authorship cites D-/DP-IDs (funnel-forge step 1).
+
 1. **Layout breakdown (top → bottom)** — Section by section. Hero, navbar, each section, CTAs, footer. Containers, grids, spacing. User flow. What works. What doesn't.
 2. **Design system extraction** — Fonts (exact or closest match). Hex codes + where each is used. Type scale (H1–H6, body, caption). Spacing tokens. Visual hierarchy.
 3. **Interactions & effects** — Scroll animations, hover states, page transitions, microinteractions, motion style, easing, glows, gradients, shadows, blur, lighting.
 4. **Technical analysis** — Likely framework, layout method (Flex/Grid), animation library (CSS/Framer/GSAP), component reusability.
-5. **Reimagined Grifon version** — Adapt to `bg-zinc-950` + `#FFCC00`. Upgrade to more cinematic. Conversion + UX improvements. What to steal, skip, improve.
+5. **Reimagined version — for the surface that owns it.** Grifon surfaces: adapt to `bg-zinc-950` + `#FFCC00`, upgrade to more cinematic. **Client work (`clients/<name>/`): adapt into THAT client's DESIGN.md world — NOIR/Grifon tokens never apply** (the 2026-07-28 Oceanides artifact rebuild is the scar). Design-Swipe-File ingest (building a design world for a new client/niche): no port at all — steps 1–4 ARE the deliverable, recorded as a D-entry. Conversion + UX improvements. What to steal, skip, improve.
 6. **Build instructions** — Section-by-section spec. Exact Tailwind classes. Reuse `GlassPanel`, `GoldButton`, ghost-button pattern, `Input`, `Textarea`. Animation behavior. Mobile-first breakpoints (375px baseline).
 
 ### When Neil asks for original design work

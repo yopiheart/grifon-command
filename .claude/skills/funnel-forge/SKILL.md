@@ -8,6 +8,7 @@ disable-model-invocation: true
 
 Ship one funnel instance under `funnels/<slug>/` from `funnels/_template/`.
 Evidence source: [workflows/funnel_swipe_file.md](../../../workflows/funnel_swipe_file.md) — **every structural choice (archetype, section order, CTA cadence, form design) must cite an F- or L-ID.** No evidence → default to the template's archetype baseline and say so.
+Aesthetic choices (the client's design world: palette, type, texture, motion personality) cite **D-/DP-IDs** from [workflows/design_swipe_file.md](../../../workflows/design_swipe_file.md) the same way — no evidence → anchor to the closest calibration world (D01 Grifon NOIR / D02 Oceanides) and say so in the client's DESIGN.md.
 Proven end-to-end 2026-07-29 on `grifon-starter` (live: grifon-starter.vercel.app). Deploy registry: [workflows/funnel_deploys.md](../../../workflows/funnel_deploys.md).
 
 ## Hard-won build rules (each one cost a real bug on the first rep — do not relearn)
@@ -49,7 +50,7 @@ Proven end-to-end 2026-07-29 on `grifon-starter` (live: grifon-starter.vercel.ap
 
 ## The rep (with Neil gates marked ⛔)
 
-1. **Inputs.** Market research + optimized offer must exist (run Market Research / Offer Optimizer modules or the client-doc equivalents first). For a new client: author `clients/<name>/DESIGN.md` by cloning the root DESIGN.md frontmatter skeleton and swapping values (Oceanides precedent).
+1. **Inputs.** Market research + optimized offer must exist (run Market Research / Offer Optimizer modules or the client-doc equivalents first). For a new client: **run the design-curation pass BEFORE authoring `clients/<name>/DESIGN.md`** — pick 3–5 live reference sites in the client's niche (Mobbin / Land-book / whatever Neil drops), run `grifon-creative-director`'s 6-step extraction on the best 1–2, record them as D-entries in [workflows/design_swipe_file.md](../../../workflows/design_swipe_file.md), then author the DESIGN.md from that evidence (frontmatter skeleton cloned from root DESIGN.md, **values from the D-entries — never a Grifon re-skin with swapped hexes**; the 2026-07-28 NOIR-on-Oceanides rebuild is the cautionary tale). Time-box: ~30 min, not a research week. No time / no references → anchor to the closest calibration world (D01/D02) and say so.
 2. ⛔ **Neil gate — offer/lead-magnet pick.** `grifon-cmo` proposes 3 lead-magnet options (value-stack framing + paid-tier bridge). No build before Neil picks.
 3. **Copy.** `grifon-cmo` writes full section copy for the chosen archetype (`minimal` | `longform`), citing F-/L-IDs per structural choice. ⛔ **Neil gate — headline + offer-stack approval as a copy doc** (before any code).
 4. **Build.** Copy `_template` → `funnels/<slug>/`; fill `src/funnel.config.ts` (brand block maps 1:1 from the governing DESIGN.md frontmatter; sections; form incl. verbatim consent text + policy version; thank-you). `npm run build` green inside the instance; root app build untouched.
