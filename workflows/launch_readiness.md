@@ -129,7 +129,15 @@ no-billing Gemini key (every `/api/gemini/text` → 429). Full state:
    *presents* as failing while succeeding ([#90](https://github.com/yopiheart/grifon-command/issues/90)).
    The 429-quota UX find did NOT reproduce — the key is billed now (pre-flight probe in
    `smoke_test_setup.md` step 0 is the standing guard). **Neil eyeballed the finished ad 2026-08-01
-   → 7-issue punch list, ALL filed, next session = fix pass** (his call: "ayusin natin lahat"):
+   → 7-issue punch list, ALL filed, next session = fix pass** (his call: "ayusin natin lahat").
+   **⏭ FIX PASS STARTED 2026-08-01 — live state is [`NOW.md`](../NOW.md), not this list.**
+   `#91` + `#94.1` are DONE (`4a7bd7b` anchor logic, `8090420` producer threading; suite 1106
+   green) and now await Neil's two eyeball decisions + ONE paid producer smoke. `#94` as a whole
+   is **not** closed — only sub-item `.1`; `.2` (numerals) and `.3` (double-render) are untouched.
+   Two corrections worth carrying: `#91`'s filed root cause was WRONG (the trimmer always read the
+   VO MP3, never the clip — a "clip→VO" swap would have been a no-op), and `#94.2` briefs against
+   `services/phoneticNormalizer.ts`, which was DELETED in `2e70c5a` on 2026-06-13 — do not
+   resurrect it. Both corrections are posted as comments on the issues. Original list:
    [#89](https://github.com/yopiheart/grifon-command/issues/89) resume dashboard-flash ·
    [#90](https://github.com/yopiheart/grifon-command/issues/90) final-cut fake-fail UX ·
    [#91](https://github.com/yopiheart/grifon-command/issues/91) last-scene breathy tail (trim to VO
