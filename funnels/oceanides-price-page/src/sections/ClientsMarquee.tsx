@@ -28,15 +28,22 @@ export const ClientsMarquee: React.FC<PropsOf<'clientsMarquee'>> = ({ label, nam
   // The list is rendered TWICE. The first copy is the content; the second is
   // purely the mechanism that makes the loop seamless, so it is hidden from
   // assistive tech and dropped entirely under prefers-reduced-motion.
+  // Open wordmark treatment, hindi boxed chips (Neil, 2026-08-01 — plain ang
+  // dating ng chips). Ang D07 Stripe logo bar ang ebidensya: ang malaki at
+  // TAHIMIK na marka ang mukhang endorsement; ang naka-kahon na maliit na text
+  // ay mukhang UI tag. Kaya: malaking Inter 800 na pangalan, amber diamond na
+  // separator, walang border. Ang laki mismo ang trust device.
   const row = (hidden: boolean) => (
-    <div className="marquee__row" aria-hidden={hidden || undefined}>
+    <div className="marquee__row items-baseline" aria-hidden={hidden || undefined}>
       {names.map((name) => (
-        <span
-          key={name}
-          className="mr-3 whitespace-nowrap rounded-[4px] border border-white/25 px-4 py-2 text-[13px] font-bold text-brand-on-surface"
-        >
-          {name}
-        </span>
+        <React.Fragment key={name}>
+          <span className="whitespace-nowrap text-lg font-extrabold tracking-wide text-brand-on-surface md:text-xl">
+            {name}
+          </span>
+          <span aria-hidden className="mx-5 text-[9px] text-brand-primary md:mx-7">
+            ◆
+          </span>
+        </React.Fragment>
       ))}
     </div>
   );

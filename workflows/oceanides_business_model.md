@@ -19,6 +19,12 @@
 |---|---|---|---|---|
 | Siphoning, walang cert (residential) | ₱4,000/load, 30-day warranty | ₱2,500–3,000/load sa crew | **~₱1,000–1,500/load** | 1 load = 4 cubic / 4,000 L |
 | Siphoning + DENR certificate (companies) | ₱12,000–15,000/load (tatawad si client) | same crew cost | **~₱9,000–12,000/load** | Mostly companies, minimum 5–10 loads bawat avail |
+
+> **Refinement (Neil, 2026-08-01):** ang DENR Certificate of Treatment ay ini-issue lang sa
+> mga willing magdagdag — **₱12,000 kapag residential, ₱15,000 kapag company.** Nasa FAQ na
+> ng price page bilang hiwalay na serbisyo (hindi kasama sa ₱5,000). Dagdag din: sa bakbak
+> ng takip (₱500–1,000), **customer ang nagbibigay ng semento** — kung Oceanides ang
+> magdadala, dagdag ₱500; pwede ring ipagawa ng customer ang pagsasara sa iba.
 | Lusong / manual cleaning | ₱15,000–50,000+ (laki/dami ng tank) | 30% sa crew | **70% sa company** | Pinakamataas na absolute margin |
 
 Rule of thumb: **1 certified B2B load ≈ 7–8 residential loads** ang gross profit;

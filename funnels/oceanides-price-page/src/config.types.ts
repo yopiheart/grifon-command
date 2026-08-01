@@ -99,8 +99,12 @@ export type Ground = 'navy' | 'navy-deep' | 'navy-gradient' | 'paper' | 'void';
 export interface PriceTicketData {
   /** Amber tab pinned over the ticket's top edge. */
   tab: string;
-  /** The headline line item — the one number the page exists to state. */
-  lead: { label: string; amount: string };
+  /** The headline line item — the one number the page exists to state.
+   *  `sub` is a small dim line under the label. WALANG numero dito: ang
+   *  "4,000 litro" katabi ng "₱5,000" ay dalawang malaking numero na
+   *  nagbabanggaan sa mabilis na tingin (Neil, 2026-08-01 — "may 4k tapos
+   *  5k, ang gulo"). Isang numero lang ang ticket: ang presyo. */
+  lead: { label: string; sub?: string; amount: string };
   /** Row label above the conditional charges, e.g. "Kung kailangan lang:". */
   addOnsLabel: string;
   /** The charges other siphoners hide. Printing them IS the offer. */

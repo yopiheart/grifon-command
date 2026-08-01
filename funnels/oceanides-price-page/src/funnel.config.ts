@@ -177,7 +177,13 @@ export const funnelConfig: FunnelConfig = {
         // parang claim. Yun ang buong punto ng page.
         ticket: {
           tab: 'Nakasulat na presyo',
-          lead: { label: 'Isang truckload, 4,000 litro', amount: '₱5,000' },
+          // Walang "4,000 litro" dito — nasa subhead na yun. Isang numero lang
+          // ang ticket: ang presyo (Neil, 2026-08-01).
+          lead: {
+            label: 'Isang truckload na siphoning',
+            sub: 'Kasama na ang standard na hose ng truck',
+            amount: '₱5,000',
+          },
           addOnsLabel: 'Kung kailangan lang:',
           addOns: [
             { label: 'Sobrang hose, kada 3 metro', amount: '₱100' },
@@ -189,7 +195,7 @@ export const funnelConfig: FunnelConfig = {
         // Ang papeles, hinila sa fold. Teksto, hindi seal: ang badge artwork ay
         // maling DENR region, at ang maling seal sa trust page ay mas masama
         // kaysa sa walang seal.
-        trustChips: ['SEC-rehistrado', 'BIR official receipt', 'DENR-partner na tapunan'],
+        trustChips: ['SEC Registered', 'BIR official receipt', 'DENR-partner na tapunan'],
       },
     },
 
@@ -214,7 +220,7 @@ export const funnelConfig: FunnelConfig = {
         // (walang "1,247"): ang pekeng katiyakan ang unang bagay na sinusuri ng
         // tao sa trust page. Kapag may naibigay na si Boss Jay na eksaktong
         // bilang na may talaan, palitan to ng bilang na yun.
-        line: 'Mahigit 1,000 na tangke na ang naserbisyuhan namin sa Metro Manila. SEC-rehistrado. May BIR official receipt. DENR-partner na tapunan. Ito ang mga papel na hindi kayang ibigay ng karaniwang siphoner.',
+        line: 'Mahigit 1,000 na tangke na ang naserbisyuhan namin sa Metro Manila. SEC Registered. May BIR official receipt. DENR-partner na tapunan. Ito ang mga papel na hindi kayang ibigay ng karaniwang siphoner.',
         // TOTOONG numero, galing kay Neil 2026-08-01, verbatim — walang binago
         // sa format. DP5: mas malakas ang tiyak na numero kaysa hiram na seal;
         // kahit sino pwedeng mag-verify. SEC Reg. No. = TO FOLLOW pa kay Neil,
@@ -293,7 +299,10 @@ export const funnelConfig: FunnelConfig = {
         body: [
           'Lahat ng siphoner may ganitong singil. ==Kami lang ang naglalagay nito sa page bago ka pa mag-book.==',
           'Sobrang hose, ₱100 kada 3 metrong dagdag. Kapag malayo ang mapaparadahan ng truck sa tangke nyo.',
-          'Bakbak ng takip, ₱500 hanggang ₱1,000. Kapag nakasarado ang tangke at kailangang buksan. Kasama na ang semento at ang pagsasara ulit pagkatapos.',
+          // ⚠️ HINDI kasama ang semento (Neil, 2026-08-01 — mali ang dating
+          // "kasama na ang semento"): customer ang magbibigay; kung Oceanides
+          // ang magdadala, dagdag ₱500; pwede rin nilang ipagawa sa iba.
+          'Bakbak ng takip, ₱500 hanggang ₱1,000. Kapag nakasarado ang tangke at kailangang buksan. Kasama ang pagsasara ulit, pero kayo ang magbibigay ng semento. Kung kami ang magdadala ng semento, dagdag na ₱500. Kung ayaw nyo ng dagdag, pwede nyong ipagawa ang pagsasara sa ibang marunong.',
           'Pangalawang truckload, ₱5,000 ulit. Kapag hindi kasya sa isa ang laman ng tangke nyo. Sasabihin namin bago pa namin simulan ang pangalawa, hindi pagkatapos.',
           'Yun lang. Wala nang iba. At sasabihin namin bago kami magsimula, hindi habang ginagawa.',
         ],
@@ -405,6 +414,16 @@ export const funnelConfig: FunnelConfig = {
           {
             q: 'Ano ang sakop ng 30-day warranty?',
             a: 'Ang bara. Kapag bumalik ang bara sa loob ng 30 araw, babalikan namin. Ang hindi sakop ay kung mapuno ulit ang tangke, kasi nakadepende yun sa dami ng gumagamit. Ang kainan, hotel, o apartment na maraming tao ay mas mabilis talagang mapuno kaysa sa bahay, at hindi yun depekto ng trabaho. Kaya kinukunan namin ng before at after na litrato ang tank nyo, para may makita kayo at hindi basta salita lang.',
+          },
+          // DENR Certificate of Treatment = HIWALAY na serbisyo, hindi kasama
+          // sa ₱5,000 (Neil, 2026-08-01): ₱12,000 residential / ₱15,000
+          // company. Nasa workflows/oceanides_business_model.md ang margin
+          // math — ito ang B2B moat. FAQ ang tamang bahay nya (F05 evidence:
+          // presyo sa loob ng FAQ pagkatapos ng value stack), hindi ang
+          // ticket — ang ticket ay singil ng siphoning job lang.
+          {
+            q: 'Kailangan ko ng DENR Certificate of Treatment. Meron ba kayo?',
+            a: 'Meron. Dagdag na serbisyo yun: ₱12,000 para sa bahay, ₱15,000 para sa negosyo o company. Ito yung opisyal na papel na nagpapatunay na dinala sa DENR-partner na tapunan ang laman ng tangke nyo. Madalas hinihingi to ng building admin, ng barangay, o para sa permit. Ang karaniwang siphoner, hindi makakapagbigay nyan. Sabihin nyo lang sa tawag kung kailangan nyo.',
           },
           {
             q: 'Saan kayo pwede pumunta?',

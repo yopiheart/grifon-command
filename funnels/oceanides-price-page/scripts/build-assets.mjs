@@ -21,10 +21,16 @@
  *  - truck-street / van: eyeballed 2026-07-30. WHITE cab + silver aluminium closed
  *    van = the real fleet. NOT the invented blue vacuum tanker, which is a hard ban
  *    on every customer-facing surface.
- *  - before/after pairs are DELIBERATELY EXCLUDED. tb2-ba2/ba3 look like a genuine
- *    matched pair, but the `tb2-` prefix comes from the AI branch-page generator and
- *    provenance is unconfirmed. "Walang fake proof" — presenting an AI render as a
- *    real job is the blue-tanker mistake at a larger scale. Waiting on Neil.
+ *  - before/after pairs (tb2-ba2/ba3): provenance question RESOLVED. The `tb2-`
+ *    prefix is from the branch-page tooling, which raised the AI-render worry —
+ *    but Neil confirmed 2026-08-01, direct quote "totoo yan": these are REAL job
+ *    photos. Kung may magduda, si Boss Jay ang may hawak ng original files.
+ *
+ * WATERMARK (Neil, 2026-08-01 — "baka nakawin"): proof at fleet photos get an
+ * OCEANIDES watermark BAKED INTO the webp (a CSS overlay dies on right-click →
+ * save). Diagonal, centered, white ~30% + faint navy stroke so it reads on both
+ * bright concrete and dark tank water, sized off the real post-resize width.
+ * Readable but not loud — the proof stays proof, hindi nasisira ang litrato.
  */
 
 import { mkdir, writeFile } from 'node:fs/promises';
@@ -83,17 +89,17 @@ const JOBS = [
   // Two real pairs beat three with one fake.
   //
   // 640px / q68, lazy-loaded below the fold: proof has to be legible, not sharp.
-  { src: 'tb2-ba2-before.png', out: 'ba-1-before.webp', width: 640, quality: 68 },
-  { src: 'tb2-ba2-after.png', out: 'ba-1-after.webp', width: 640, quality: 68 },
-  { src: 'tb2-ba3-before.png', out: 'ba-2-before.webp', width: 640, quality: 68 },
-  { src: 'tb2-ba3-after.png', out: 'ba-2-after.webp', width: 640, quality: 68 },
+  { src: 'tb2-ba2-before.png', out: 'ba-1-before.webp', width: 640, quality: 68, watermark: true },
+  { src: 'tb2-ba2-after.png', out: 'ba-1-after.webp', width: 640, quality: 68, watermark: true },
+  { src: 'tb2-ba3-before.png', out: 'ba-2-before.webp', width: 640, quality: 68, watermark: true },
+  { src: 'tb2-ba3-after.png', out: 'ba-2-after.webp', width: 640, quality: 68, watermark: true },
 
   // Hero: real Philippine street, real fleet. Landscape suits the photoScrim
   // (the brand's one sanctioned cinematic move: a left-to-right navy wash).
-  { src: 'tb2-truck-street.png', out: 'hero-truck.webp', width: 1280, quality: 74 },
+  { src: 'tb2-truck-street.png', out: 'hero-truck.webp', width: 1280, quality: 74, watermark: true },
 
   // Studio cutout of the same van for the narrower proof slot.
-  { src: 'van-clean.png', out: 'van.webp', width: 720, quality: 78 },
+  { src: 'van-clean.png', out: 'van.webp', width: 720, quality: 78, watermark: true },
 
   // Gabriel, the field inspector. Consent signed and images approved by Neil,
   // 2026-08-01 — the same gate the identity-lock artifact was held behind.
@@ -106,6 +112,7 @@ const JOBS = [
     width: 1200,
     quality: 78,
     dir: 'clients/oceanides/kuya-gabriel/identity-lock',
+    watermark: true,
   },
 ];
 
@@ -131,6 +138,27 @@ for (const job of JOBS) {
         `<svg width="${width}" height="${height}"><circle cx="${width / 2}" cy="${height / 2}" r="${d / 2}" fill="#fff"/></svg>`,
       );
       pipe = sharp(await pipe.png().toBuffer()).composite([{ input: mask, blend: 'dest-in' }]);
+    }
+
+    if (job.watermark) {
+      // Render the resize FIRST, then measure the result — sharp.metadata()
+      // reads the INPUT file, so sizing the SVG off it would scale the mark to
+      // the pre-resize dimensions (the circle job above survives that only
+      // because the logo never actually resizes).
+      const base = await pipe.png().toBuffer();
+      const { width: w, height: h } = await sharp(base).metadata();
+      const fs = Math.round(w / 7.5);
+      const mark = Buffer.from(
+        `<svg width="${w}" height="${h}">
+           <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle"
+             transform="rotate(-18 ${w / 2} ${h / 2})"
+             font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="${fs}"
+             letter-spacing="${Math.round(fs * 0.16)}"
+             fill="#FFFFFF" fill-opacity="0.30"
+             stroke="#0A1F45" stroke-opacity="0.20" stroke-width="2">OCEANIDES</text>
+         </svg>`,
+      );
+      pipe = sharp(base).composite([{ input: mark, blend: 'over' }]);
     }
 
     const buf = await pipe.webp({ quality: job.quality ?? 80, alphaQuality: 100 }).toBuffer();

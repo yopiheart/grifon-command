@@ -37,7 +37,14 @@ export const PriceTicket: React.FC<PriceTicketData> = ({ tab, lead, addOnsLabel,
     <EyebrowChip className="absolute -top-3 left-5">{tab}</EyebrowChip>
 
     <div className="flex items-baseline justify-between gap-4">
-      <span className="text-sm font-bold leading-snug text-brand-on-surface md:text-base">{lead.label}</span>
+      <span className="text-sm font-bold leading-snug text-brand-on-surface md:text-base">
+        {lead.label}
+        {lead.sub && (
+          <span className="mt-1 block text-xs font-normal leading-snug text-brand-on-surface-dim">
+            {lead.sub}
+          </span>
+        )}
+      </span>
       <span className={`${AMOUNT} font-display text-[2rem] leading-none tracking-[0.5px] md:text-[2.5rem]`}>
         {lead.amount}
       </span>
