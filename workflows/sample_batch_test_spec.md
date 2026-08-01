@@ -3,10 +3,20 @@
 **Status:** SPEC READY 2026-07-11. Assets generated (see inventory). Waiting on Neil's GO
 (paid Gemini quota) + a pre-authenticated browser session.
 
-**One batch, two deliverables — do not run it twice** (standing call, `e822647`):
+**One batch, THREE deliverables — do not run it twice** (standing call, `e822647`; third added 2026-08-01 by Neil):
 1. The **owed `gemini-eval` batch** from UGC Pro Slices 1–4 (`ugc_pro_formats_plan.md`).
 2. The **sample preset previews** for the Slice A recipe gallery
    (`oneshot_format_showcase.md` → Slice B).
+3. **The punch-list items that need fresh generation** — `#92` (hook-morph AI goo) rides along
+   instead of paying for a dedicated render, and **`#89`/`#90` are caught by reloading mid-run**
+   during any batch run (they are resume/UX defects, so they need a render *in flight*, not a
+   finished MP4). Neil's call 2026-08-01: *"ayoko muna mag generate… isahang render na lang."*
+   ⚠ `#91` and `#94.1` do **NOT** need this batch — already verified $0 on recovered footage
+   (`abbe72f`). Do not re-verify them here.
+   **Before this batch runs, confirm the ElevenLabs key still has `forced_alignment`
+   ([#96](https://github.com/yopiheart/grifon-command/issues/96))** — without it every scene
+   falls back to caption estimates *silently*, which would quietly degrade the very samples
+   this batch exists to produce.
 
 The agent NEVER fires the paid runs autonomously. Neil drives the producer; the agent grades.
 
