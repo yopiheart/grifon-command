@@ -164,7 +164,7 @@ Claude Artifacts — private claude.ai-hosted pages published from sessions via 
 - `billingService.ts` — PayMongo checkout flow
 - `voiceService.ts` — ElevenLabs voice synthesis
 
-  Also: `activeJobsService.ts` / `activeJobStore.ts` (async render-job tracking → `ui/ActiveJobsPanel.tsx`), `wizardSessionStore.ts` (wizard draft persistence/resume → `ui/ResumeDraftCard.tsx`), `recentWorkService.ts` (→ `ui/RecentWorkCard.tsx`), `checkoutService.ts` (checkout state), `phoneticNormalizer.ts` (voice text normalization).
+  Also: `activeJobsService.ts` / `activeJobStore.ts` (async render-job tracking → `ui/ActiveJobsPanel.tsx`), `wizardSessionStore.ts` (wizard draft persistence/resume → `ui/ResumeDraftCard.tsx`), `recentWorkService.ts` (→ `ui/RecentWorkCard.tsx`), `checkoutService.ts` (checkout state). *(`phoneticNormalizer.ts` was listed here until 2026-08-01 but was DELETED in `2e70c5a` on 2026-06-13 — Neil A/B-listened and dropped Taglish respelling entirely; raw script now goes to TTS verbatim. Do not resurrect it: any future TTS text normalization, e.g. the numeral gap in issue #94, needs a fresh decision about where it lives.)*
 
 **Async video pattern** — Video renders are long-running, so they are fire-then-poll: a generate call returns a job, then the client polls `api/gemini/video/poll.ts` / `api/kling/video/poll.ts` until done. A Vercel cron, `api/cron/cleanup-gemini-videos.ts`, reaps expired Gemini video artifacts.
 
