@@ -469,9 +469,24 @@ export const funnelConfig: FunnelConfig = {
   ],
 
   thankYou: {
+    // 🆕 BAGONG COPY 2026-08-01, para kay Neil sa Gate 2. Dalawang string lang:
+    // ang chip sa taas (status stamp ng print world, tulad ng nasa bawat chapter
+    // ng landing) at ang heading sa ibabaw ng tatlong hakbang. Walang bagong
+    // pangako, walang bagong numero. Kung hindi bagay sa tenga mo, burahin lang
+    // ang linya at mawawala ang chip o ang heading, hindi masisira ang page.
+    // English ang chip na to, sinadya (Neil, 2026-08-01). Ang "Booking
+    // natanggap" ay Taglish sa isang label na ang trabaho ay maging RESIBO —
+    // at ang resibo sa totoong buhay ay English ang tatak. Nag-a-uppercase na
+    // ang EyebrowChip sa CSS, kaya kung ano man ang case dito ay CONFIRMED
+    // pa rin ang lalabas.
+    eyebrow: 'BOOKING CONFIRMED',
     headline: 'Nakuha na namin. Tatawagan ka namin.',
     body: 'Nakalista na ang booking mo. Tatawagan ka namin para kumpirmahin ang oras at ang buong presyo bago pa may pumunta.',
+    // Ito ang eyebrow ng handout chapter ngayon, hindi na ang kicker sa pinaka-
+    // taas ng page: nauuna kasi dati sa "Nakuha na namin" at parang nagsasalita
+    // na ng susunod bago pa masabing natanggap nga.
     magnetDelivery: 'Habang naghihintay ka, ito ang gawin mo.',
+    stepsHeading: 'Ito ang susunod na mangyayari',
     steps: [
       'Tatawagan ka namin para sa schedule at sa buong presyo.',
       'Pagdating ng truck, uulitin namin ang presyo bago magsimula.',

@@ -52,14 +52,21 @@ export interface FunnelConfig {
   /** Ordered; rendered verbatim by Landing.tsx through SECTION_REGISTRY. */
   sections: SectionInstance[];
   thankYou: {
+    /** Amber chip above the headline — the brand's status stamp on the arrival chapter. */
+    eyebrow?: string;
     headline: string;
     body: string;
-    /** "Check your inbox — it's on the way" line. */
+    /**
+     * "Check your inbox — it's on the way" line. Renders as the EYEBROW of the
+     * magnet chapter, i.e. the label on the handout, not a page-level kicker.
+     */
     magnetDelivery: string;
     /** L1: THE one bridge CTA. A thank-you page is never a bare receipt. */
     nextStep: { label: string; href: string; blurb?: string };
     /** Optional "what happens next" list (F02 pattern). */
     steps?: string[];
+    /** Heading over `steps`. Omit and the list renders bare. */
+    stepsHeading?: string;
     /**
      * Optional on-page magnet delivery — the fastest fulfilment there is: no
      * inbox, no sender, no deliverability. The lead's answer to `qualifierId`
