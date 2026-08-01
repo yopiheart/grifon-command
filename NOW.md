@@ -1,6 +1,6 @@
 # NOW
 
-**Stamped: 2026-08-01** · Anchor commit: `5750413` (main) · branch head: `23455fd`
+**Stamped: 2026-08-01** · Anchor commit: `badc0bc` (main) · branch head: `23455fd`
 
 > The single resume doc. One screen, one next action. Read this first.
 > **Freshness contract:** if the stamp is >5 days behind `git log -1`, treat as UNVERIFIED —
@@ -11,8 +11,7 @@
 
 ## ▶ NEXT ACTION — OCEANIDES: Gate 2 → deploy → unang campaign sa page
 
-Tapos na ang buong page (landing + thank-you + form). Ang natitira ay tatlong
-bagay na **si Neil lang ang makakagawa**, tapos deploy. Detalyadong handoff:
+Tapos na ang buong page (landing + thank-you + form). Handoff at buong detalye:
 `clients/oceanides/NEXT-SESSION-PRICE-PAGE.md`. Paste this to start:
 
 ```
@@ -30,62 +29,49 @@ Ang `clients/oceanides/DESIGN.md` ang batas doon, hindi ang Grifon `DESIGN.md`.
 
 ### ⛔ Kay Neil lang (humaharang sa deploy at sa ads)
 
-1. **Gate 2** — buong basa ng landing + thank-you. DRAFT pa rin ang copy hangga't wala nito.
+1. **Gate 2** — buong basa ng landing + thank-you. DRAFT ang copy hangga't wala nito.
 2. **Oras ng tawag** — tatlong beses sinasabi ng thank-you na "tatawagan ka namin"
-   at ni minsan hindi sinasabi kung kailan. Kailangan ng kayang panindigan ni Zam.
+   at ni minsan hindi kung kailan. Kailangan ng kayang panindigan ni Zam.
 3. **Meta Pixel ID** — `tracking: {}` ngayon, PATAY. Walang Lead data at walang
-   maiipong retargeting audience kung mag-a-ads nang wala ito. Hindi na mababawi.
+   maiipong retargeting audience kung mag-a-ads nang wala nito. Hindi mababawi.
 
-### Session 2026-08-01 sa isang tingin (`b26f533..23455fd`)
+### Session 2026-08-01 (`b26f533..23455fd`) — buong listahan nasa branch doc
 
-Thank-you page: apat na chapter, isang rail, tatlong DESIGN.md violation naayos ·
-PhonePill katabi ng CTA (hindi mase-save ang numerong hindi nakikita) · marquee
-edge-fade + 40s→75s (hindi kulay ang sanhi ng "hirap basahin", putol sa gitna ng
-salita at bilis) · huling pinto sa footer (numero + Messenger) · ikatlong pinto sa
-sticky bar · **PH mobile validation** (hugis lang, walang carrier whitelist) +
-required na talaga ang phone · **local `/api/lead` bridge** kaya nalalakad na ang
-buong daan bago mag-deploy · m.me link naka-wire (`m.me/OceanidesMalabanan`,
-na-verify) · FB profile + cover na naka-crop na (`clients/oceanides/page-assets/`).
-**Desisyon:** wag palitan ang pangalan/username ng FB Page (mas makitid ang
-"never Malabanan" rule kaysa akala — para sa COPY iyon, at ito ang search term).
-**Naayos matapos hulihin ni Neil:** 11px na Anton na label sa handout (h1-h3 ay
-sapilitang Anton; label = `<p>`, heading = h-tag). Bagong `subhead` role sa DESIGN.md.
+Thank-you 4-chapter + isang rail · PH mobile validation (hugis lang, walang carrier
+whitelist) at required na ang phone · **local `/api/lead` bridge** kaya nalalakad na
+ang buong daan bago mag-deploy · marquee readability · footer + sticky-bar Messenger
+(`m.me/OceanidesMalabanan`, verified) · FB profile+cover sa `page-assets/`.
+**Desisyon:** wag palitan ang pangalan ng FB Page. **Nahuli ni Neil:** 11px Anton na
+label (h1-h3 ay sapilitang Anton; label = `<p>`) → bagong `subhead` role sa DESIGN.md.
 
 ### 🅿 Parked sa Oceanides (hindi humaharang sa deploy)
 
-**SEC Reg. No.** (nasa Certificate of Incorporation, wala sa dalawang PDF) ·
-**ang TIN sa page** ay nakapangalan kay Cepriano sa SEC docs, ipa-check sa BIR
-Form 2303 kung iyon din ang TIN ng OPC · hose baseline ni Boss Jay · logo-marquee ·
-real-bookings feed (post-launch, totoong data lang) · **utang sa 100 taong
-nangakuan ng "libre ang tingin"** sa lumang Marvin ad · About ng FB Page: idagdag
-ang buong SEC name · i-archive ang June 2025 post na AI ang mukha · 3-5 organic
-post bago i-ON ang unang ad.
+**SEC Reg. No.** (nasa Certificate of Incorporation) · **ang TIN sa page** ay
+nakapangalan kay Cepriano sa SEC docs, ipa-check sa BIR Form 2303 · **utang sa 100
+taong nangakuan ng "libre ang tingin"** · FB About: idagdag ang buong SEC name ·
+i-archive ang June 2025 post na AI ang mukha · 3-5 organic post bago ang unang ad ·
+hose baseline · logo-marquee · real-bookings feed (post-launch, totoong data lang).
 
 ### Pagkatapos ng deploy: ang unang campaign
 
-Rekomendasyon: **sa page, Leads ang objective, hindi Messenger.** Ang KM-003 ay
-100 messages sa ₱13.33 pero ISANG order — ang close ang butas, at ang page mismo
-ang ayos doon. Caveat: mas mahal ang website leads sa unang linggo habang walang
-pixel data; **cost per BOOKING ang titingnan, hindi cost per message.**
-Creative: static muna na si Gabriel ang harap (may identity-lock stills na);
-video ay mas malaking build. Ang `grifon-ad-strategist` ang magda-draft ng
-istraktura at budget, si Neil ang magpapaputok. Hindi ito gumagastos mag-isa.
+**Sa page, Leads ang objective, hindi Messenger.** Ang KM-003 ay 100 messages sa
+₱13.33 pero ISANG order — ang close ang butas, at ang page mismo ang ayos doon.
+Caveat: mas mahal ang website leads habang walang pixel data, kaya **cost per
+BOOKING ang titingnan, hindi cost per message.** `grifon-ad-strategist` ang
+magda-draft, si Neil ang magpapaputok.
 
 ## 🅿 PARKED — Grifon punch list (resume trigger: Neil says so)
 
-Detail lives in the GitHub issues — the durable record, not here.
-
-- ✅ **#91** + **#94.1** fixed, verified $0. **#94.3** next, free, owns the real
-  caption defect. **#94.2** → close NOT-REPRODUCIBLE.
+- ✅ **#91**+**#94.1** fixed, $0. **#94.3** next (free, owns the real caption
+  defect). **#94.2** → close NOT-REPRODUCIBLE.
 - **#96** `forced_alignment` granted ✅ — remaining: make the failure loud.
-- **#92** + **#89**/**#90** ride the Slice B batch; **#93** ⛔ TUNED — own session.
-- **Two Neil decisions open:** golden-snapshot diff + overlay drop-case.
+- **#92**+**#89**/**#90** ride Slice B; **#93** ⛔ TUNED. Neil decisions bukas: golden-snapshot diff + overlay drop-case.
 
 ## ⛔ Gated — not without Neil
 
-Any paid render · P5 engine-default flip · Hyperframes product swap (verdict STANDS) ·
-Slice 2 video rate-limit re-scope · merging `feat/oceanides-price-page` · ang DEPLOY
-mismo ay pagkatapos lang ng Gate 2 full read ni Neil · anumang ad spend.
+Any paid render · P5 engine-default flip · Hyperframes product swap · Slice 2 video
+rate-limit re-scope · merging `feat/oceanides-price-page` · ang DEPLOY (Gate 2 muna) ·
+anumang ad spend.
 
 ## 🔧 Arm before starting
 
