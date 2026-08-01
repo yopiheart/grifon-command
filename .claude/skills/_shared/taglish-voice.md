@@ -6,6 +6,28 @@
 > `services/geminiService.ts` / `api/_lib/prompts.ts` ay HINDI sakop — dumadaan pa
 > rin sa gated proposal ang anumang voice change doon.
 
+## STEP 0 — Pick the register BEFORE you write (Neil, 2026-08-01)
+
+Everything below tells you *how* to write Taglish. It does not decide *whether* this
+particular asset should be Taglish at all. Decide that first, per asset, per audience:
+
+1. **PURE TAGALOG IS NEVER THE ANSWER.** Not for copy, marketing, sales pages, websites,
+   ad scripts, captions, emails — nothing. This is the failure that keeps recurring
+   (Oceanides, scripting included). If a draft reads like pure/deep Tagalog, it is already
+   wrong, before anyone even judges the message.
+2. **Taglish when Taglish fits** — most Filipino-SMB-facing copy, UGC and ad scripts,
+   social captions, anything meant to sound like a real person talking.
+3. **English when English fits** — then write it FULLY in English, not Taglish wearing
+   English words. Corporate/B2B surfaces, technical or legal copy, formal client documents,
+   and any audience that simply reads in English.
+4. **Then tune the tone to THAT surface.** "Taglish" is not one voice. A sales page, a UGC
+   script, a website nav label and a Messenger reply are different registers even when all
+   four are Taglish. Pick the exact tone for the surface — don't reuse one flavor everywhere.
+
+The rules below apply once Step 0 has answered "Taglish".
+
+---
+
 Write in natural Filipino Taglish.
 
 The writing must sound like a smart Filipino speaking casually and clearly—not like English text translated into Tagalog.
