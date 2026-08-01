@@ -84,10 +84,33 @@ Ang buong DGP-2 redesign (`workflows/design_swipe_file.md` sa main ang evidence 
      ng `sm`. ⚠️ Nag-two-lines ang primary sa unang subok (223px lang ang natira
      laban sa ~231px na kailangan) kaya hinigpitan lahat ng horizontal value sa
      mobile at 13px ang type doon. **Ang 360px ang totoong constraint, hindi 390.**
-   - 🟡 **BLANGKO PA ANG `MESSENGER` const sa `funnel.config.ts`.** Kailangan ng
-     totoong `m.me/...` link ng Page ni Gabriel. Habang blangko, hindi lumalabas
-     ang button sa dalawang lugar at walang sirang link, kaya ligtas i-deploy.
-     Isang string lang ang ipapasok pagdating.
+   - ✅ **MAY LINK NA ANG MESSENGER**: `https://m.me/OceanidesMalabanan`
+     (ibinigay ni Neil 2026-08-01). Na-verify: 302 papuntang Page ID
+     `291924520660232`, kaya totoo ang handle. Nakatali sya sa USERNAME, hindi
+     sa Page, kaya kapag pinalitan ang username ay maputol ang link nang
+     tahimik. Nasa comment sa itaas ng const ang babala.
+
+### 🔴 DESISYON: HUWAG palitan ang pangalan/username ng FB Page (2026-08-01)
+
+Tinanong ni Neil kung papalitan dahil "Malabanan" ang nasa Page name. Sagot:
+hindi, at mas makitid pala ang rule kaysa sa akala.
+
+- **Ang "never Malabanan" hard rule ay para sa COPY/scripts, hindi sa pangalan
+  ng negosyo.** Nakasulat mismo sa [`marvin-avatar/SKILL.md:23`](../../.claude/skills/marvin-avatar/SKILL.md):
+  *"real company branding, allowed sa IMAHE."* Pinapayagan din ng
+  `oceanides_daily_posts.md` ang `#Malabanan` bilang SEO hashtag. Ang bawal ay
+  ang pagsusulat nito sa sales copy at image copy natin.
+- **Ito ang hinahanap ng tao.** Ang "malabanan" ang generic na salita ng
+  kategorya sa PH, at ang Page NAME ang pinakamalakas na signal sa FB search.
+  Ang pagtanggal nito ay panghabambuhay na bayad sa organic discovery.
+- **Totoong branding sya.** Nasa uniform at nasa logo mismo ang "OCEANIDES
+  MALABANAN". Kapag tinanggal sa Page pero nasa damit pa rin, hindi tugma.
+- **May gastos ang pagpapalit:** maputol ang bawat lumang link at ang m.me
+  (kaya sirang button ang landing page), at dumadaan sa review ng Meta ang
+  name change. Bisperas ng deploy at ng unang ad ang pinakamasamang oras.
+- **Ang totoong butas ay ang About, hindi ang pangalan:** wala doon ang buong
+  rehistradong pangalan (`Oceanides Plumbing Siphoning & Pest Management
+  Services OPC`). Idagdag para may matutugma ang magve-verify sa SEC.
 
 1c. 🟡 **HINDI PA NASASAGOT NI NEIL: ang oras ng tawag.** Tatlong beses sinasabi
    ng thank-you na "tatawagan ka namin" at ni minsan hindi sinasabi kung kailan.

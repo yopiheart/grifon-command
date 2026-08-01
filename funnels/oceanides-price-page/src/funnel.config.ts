@@ -50,11 +50,15 @@ import type { FunnelConfig } from './config.types';
 const PHONE = '0935 258 9927';
 const PHONE_LABEL = 'Tawag o text, 24 oras';
 
-// 🟡 HINDI PA PUNO. Kailangan ng totoong link ng Page ni Gabriel, halimbawa
-// `https://m.me/oceanidesph`. Habang blangko ito, HINDI lumalabas ang Messenger
-// button kahit saan (hero bar, footer) at walang masisirang link, kaya ligtas
-// itong i-deploy nang ganito. Ipasok lang ang link at lalabas na sya sa dalawa.
-const MESSENGER = '';
+// Ang totoong Page (Neil, 2026-08-01): facebook.com/OceanidesMalabanan
+// Ang `m.me/<username>` ay ang Messenger form ng vanity URL na yun.
+//
+// ⚠️ NAKATALI TO SA USERNAME, HINDI SA PAGE. Kapag pinalitan ang username ng
+// Page, MAPUPUTOL ang link na to at walang magsasabi sa atin. Kaya bago
+// palitan ang username kailanman, palitan din ang linyang to. (Tingnan ang
+// clients/oceanides/NEXT-SESSION-PRICE-PAGE.md kung bakit hindi inirekomenda
+// ang pagpapalit.)
+const MESSENGER = 'https://m.me/OceanidesMalabanan';
 
 const NCR_CITIES = [
   'Quezon City',
