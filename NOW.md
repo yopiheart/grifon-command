@@ -26,10 +26,17 @@ implemented, committed, suite green — but *nothing is proven until a real rend
      restraint, or should those overlays be kept? (Keeping them costs caption chunks + b-roll
      subtitles — the trade is in the commit body.)
 
-**2. Then the smoke — one run, and it must answer one question.** On a producer (`apr_`) render,
-   `[renderFfmpeg:trim]` for the FINAL scene must read `anchor: "speech"`, with `detectedSec`
-   ≈ 5.51 → ~2.96. Listen for the real risk: **the last word must not be clipped** (the anchor
-   removes ~2.5s). Also check a late-VO scene shows its overlay *with* the first word.
+**2. Verify FREE first — the failing run's assets are recovered.** Run `apr_69e5adc6…`'s 9 clips +
+   9 VO MP3s are downloaded and expiry-proof (R2 objects were alive; only the presigned URLs had
+   lapsed, re-signed with the app's own creds). `tests/integration/restitch-real.test.ts` re-stitches
+   real footage for **$0**. ⚠ Its `SpecScene` has **no `voiceWords` field** — must be added, or the
+   harness runs `anchor: "silence"` and proves nothing. Measured expectation: `detectedSec`
+   **5.5093 → ~3.49** (true speech ends ~3.43s; NOT ~2.96 — that earlier figure came from the
+   issue's estimate and is wrong; treat ~2.96 as suspicious, not success).
+
+**3. Only then the paid render** — for `#92` (needs fresh generation), reloading mid-run to catch
+   `#89`/`#90` in the same pass. Listen for the real risk: **the last word must not be clipped**
+   (the anchor removes ~2.0s).
    - Correct-by-design exceptions: `sfx_only` runs log `silence` everywhere (no VO), and any
      scene whose ElevenLabs alignment failed keeps `silence`.
    - **If it's `silence` everywhere → check `/api/voice/consolidate` for a `words` array BEFORE
@@ -40,8 +47,8 @@ implemented, committed, suite green — but *nothing is proven until a real rend
 | # | Issue | State |
 |---|---|---|
 | ✅ | **#91** breathy tail · **#94.1** early overlay | Committed `4a7bd7b` + `8090420`. Awaiting smoke. |
-| 3 | **#94.3** scene-2 double-renders overlay + captions | Not started. Independent burn-in audit; establish which layer classes burn on RAW at all. |
-| 4 | **#94.2** numerals dropped ("₱149" silently loses caption words) | Not started. **Decided approach: fix aligner token-matching**, NOT TTS-side. ⚠ `services/phoneticNormalizer.ts` DOES NOT EXIST — deleted in `2e70c5a`; the issue text is wrong. Do not resurrect it. |
+| 3 | **#94.3** scene-2 double-renders overlay + captions | Not started. **Now carries the real fix for what Neil saw.** Also owns the true defect: the EDL writes `8 hours` while the script spells `Eight hours`, so the two burned layers disagree. |
+| 4 | **#94.2** numerals | ⚠ **MISDIAGNOSED — re-scope before building.** DB pull proves the script said "**Eight** hours" (spelled) and only the EDL overlay said "8". Captions render from `scriptLine`, so nothing was dropped and the aligner never saw a numeral — the chosen "fix aligner token-matching" would change nothing. Real latent case is scene idx=2 (`"Tuwing 3 PM…"`, a genuine spoken numeral), **unverified**. Verify with the $0 restitch; fix only if it reproduces. Also: `phoneticNormalizer.ts` does NOT exist (deleted `2e70c5a`) — do not resurrect. |
 | 5 | **#89** resume dashboard-flash · **#90** final-cut fake-fail | Not started. UX only; data-safe already. |
 | 6 | **#92** hook-morph AI goo | Not started. |
 | 7 | **#95** ElevenLabs v3 audio-tag pronunciation | Not started. Validate, then a non-tuned mapper. |
