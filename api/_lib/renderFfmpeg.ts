@@ -22,7 +22,7 @@ import {
   planScene, planEndCardLayers,
   buildTextFilter, buildBoxFilter, buildTransitionFilters, buildCameraFilter,
   effectiveCameraEffect, planTransitions, pickSceneSfx, snapSfxAnchor,
-  clampAnchor,
+  clampAnchor, speechWindow,
   FLIP_C1, FLIP_C3, MIN_SFX_GAP,
   type DrawLayer, type TextLayer, type WordTiming, type SfxCandidate,
 } from './drawPlan.js';
@@ -34,8 +34,10 @@ export * from './drawPlan.js';
 //   H.264/AAC), then concat via the concat FILTER with re-encode (NOT the
 //   demuxer) to avoid A/V drift (premortem #5).
 //
-// Trim length comes from `silencedetect` on the voice MP3 + a 0.3s pad so a soft
-// final word survives (premortem #4c). Audio-less scenes use fallbackDurationSec
+// Trim length comes from the scene's MEASURED speech-end (forced-alignment
+// words) + a pad so a soft final word survives (premortem #4c), falling back to
+// `silencedetect` on the voice MP3 when the scene carries no alignment
+// (resolveSpeechEndSec). Audio-less scenes use fallbackDurationSec
 // (EDL keepSegments) or the full clip, with a silent track so concat stays
 // stream-uniform.
 
@@ -493,6 +495,49 @@ export function detectTrimSec(mp3Path: string): number | null {
   return parseTrimSec(stderr, duration);
 }
 
+/** How a scene's speech-end gets measured; lazy so the anchored path never pays
+ * for the (full-decode) silencedetect pass it doesn't use. */
+export interface SpeechMeasure {
+  /** silencedetect on the VO MP3 — the pre-alignment fallback signal. */
+  silenceSec: () => number | null;
+  /** VO MP3 duration — caps the anchored trim so it can't outrun the audio. */
+  audioDurationSec: () => number | null;
+}
+
+/**
+ * The scene's trim anchor (`detectedSec`) — where the VOICE stops, plus the pad.
+ *
+ * PRIMARY (#91): forced-alignment words measure speech directly, so the last
+ * word's end IS the speech-end. silencedetect can only answer "where does AUDIO
+ * stop", and an ElevenLabs MP3 carries breath/room tone above the -35dB floor —
+ * that honest answer left a ~2.5s breathy tail on the closing scene.
+ *
+ * FALLBACK: no alignment → silencedetect, byte-identical to the pre-anchor path.
+ *
+ * Either way the last scene swaps the standard pad for the razor pad: its tail
+ * is the ad's closing frame and Kling clips bake ghost/dissolve frames into
+ * final beats.
+ */
+export function resolveSpeechEndSec(
+  scene: Pick<FinalRenderScene, 'voiceWords'>,
+  isLastScene: boolean,
+  measure: SpeechMeasure
+): number | null {
+  const speech = speechWindow(scene);
+  let detectedSec: number | null;
+  if (speech) {
+    const audioSec = measure.audioDurationSec();
+    const padded = speech.end + PAD_SEC;
+    detectedSec = typeof audioSec === 'number' && audioSec > 0 ? Math.min(padded, audioSec) : padded;
+  } else {
+    detectedSec = measure.silenceSec();
+  }
+  if (isLastScene && typeof detectedSec === 'number') {
+    detectedSec = Math.max(0.5, detectedSec - PAD_SEC + LAST_SCENE_PAD_SEC);
+  }
+  return detectedSec;
+}
+
 export interface TrimPlan {
   trimSec: number | null;
   /** Pad the audio to the video length (hook): keeps the full visual reveal. */
@@ -503,7 +548,7 @@ export interface TrimPlan {
  * Per-scene trim decision. Ground-truth, script/product-agnostic:
  *
  *  PRIMARY — voiced scene → trim to the ACTUAL voice-over end measured from the
- *    VO MP3 (`detectedSec` = silencedetect speech-end + pad, capped to the clip).
+ *    VO (`detectedSec` = resolveSpeechEndSec's speech-end + pad, capped to the clip).
  *    This never cuts the VO and removes BOTH the silent video tail AND any
  *    trailing silence baked into the MP3. The hook (`keepFullClip`) holds the
  *    product reveal a beat past the VO instead of a long silent morph tail.
@@ -878,18 +923,22 @@ export async function renderFinalVideo(
       const probeSec = probeDurationSec(videoPath);
       // Measure the actual VO speech-end for every voiced scene — this is now the
       // PRIMARY trim signal (chooseTrim), ground-truth across any script/product.
-      let detectedSec = audioPath ? detectTrimSec(audioPath) : null;
-      // The last scene closes the ad: swap the standard pad for the razor pad so
-      // the final frame is the CTA, not a ghost tail or dead beat.
+      // Measured alignment beats silencedetect whenever the scene carries it (#91).
       const isLastScene = i === scenes.length - 1;
-      if (isLastScene && typeof detectedSec === 'number') {
-        detectedSec = Math.max(0.5, detectedSec - PAD_SEC + LAST_SCENE_PAD_SEC);
+      let detectedSec: number | null = null;
+      if (audioPath) {
+        const ap = audioPath;
+        detectedSec = resolveSpeechEndSec(scene, isLastScene, {
+          silenceSec: () => detectTrimSec(ap),
+          audioDurationSec: () => probeDurationSec(ap),
+        });
       }
 
       const { trimSec, padAudio } = chooseTrim(scene, probeSec, detectedSec);
       console.log('[renderFfmpeg:trim]', {
         sceneIdx: scene.sceneIdx, probeSec, detectedSec, trimSec,
         keepFullClip: !!scene.keepFullClip, isLastScene,
+        anchor: speechWindow(scene) ? 'speech' : 'silence',
       });
 
       // Compile the draw plan first — emphasis SFX are derived from its layers.

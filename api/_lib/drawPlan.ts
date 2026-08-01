@@ -285,6 +285,35 @@ export function hookTitleLayout(
 }
 
 /**
+ * The scene's MEASURED speech window (seconds, scene-relative) from ElevenLabs
+ * forced alignment: `onset` = when the first word is actually spoken, `end` =
+ * when the last one finishes. This is the ground truth both the trim (#91) and
+ * the overlay onset (#94.1) anchor to — silencedetect only knows where AUDIO
+ * stops (breath/room tone reads as content above the noise floor), and a clip's
+ * bounds know nothing about the voice at all.
+ *
+ * Returns null when the scene carries no usable alignment (absent, empty, or
+ * degenerate times) — every caller then keeps its pre-alignment behavior.
+ * Min/max rather than first/last so one out-of-order token can't shrink the
+ * window; for well-formed (sorted) input they are identical.
+ */
+export function speechWindow(
+  scene: Pick<FinalRenderScene, 'voiceWords'>
+): { onset: number; end: number } | null {
+  const words = scene.voiceWords;
+  if (!words?.length) return null;
+  let onset = Infinity;
+  let end = -Infinity;
+  for (const w of words) {
+    if (Number.isFinite(w?.start)) onset = Math.min(onset, w.start);
+    if (Number.isFinite(w?.end)) end = Math.max(end, w.end);
+  }
+  if (!Number.isFinite(onset) || !Number.isFinite(end) || end <= 0) return null;
+  onset = Math.max(0, onset);
+  return { onset, end: Math.max(onset, end) };
+}
+
+/**
  * Map caption chunks onto MEASURED speech times (forced alignment). Each
  * chunk's window opens when its first word is actually spoken and holds until
  * the next chunk opens (continuous, CapCut-style — what kills perceived lag is
@@ -622,7 +651,15 @@ export function planScene(
     const oEnd = !cls && overlay!.style === 'punchline' ? end : Math.min(end, OVERLAY_HOLD_SEC);
     // Offset a sound-paired overlay so its pop reads after the cut whoosh — but
     // never so far that the overlay shows < 0.4s.
-    const oStart = emphasisSfx ? Math.min(CALLOUT_LEAD, Math.max(0, oEnd - 0.4)) : 0;
+    const oLead = emphasisSfx ? Math.min(CALLOUT_LEAD, Math.max(0, oEnd - 0.4)) : 0;
+    // #94.1: an overlay must never pop before the voice it belongs to. When the
+    // scene carries forced-alignment words, hold it until the VO's first word is
+    // actually spoken (measured onset — a scene can open on 1.4s of silence).
+    // The END is left alone: extending it would push overlayClearSec and start
+    // sacrificing caption chunks, so an overlay whose whole hold sits before the
+    // onset is dropped by the ≥0.4s readable floor below instead (the properly
+    // timed caption still carries the line). Unaligned scenes are unchanged.
+    const oStart = Math.max(oLead, speechWindow(scene)?.onset ?? 0);
     if (oEnd - oStart >= 0.4) {
       layers.push({
         kind: 'text', text: lines.join('\n'), fontsize, color, boxAlpha: preset.caption.boxAlpha,
