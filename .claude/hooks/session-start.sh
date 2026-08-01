@@ -10,6 +10,14 @@
 
 set -uo pipefail
 
+# --- CLOCK (added 2026-08-01) --------------------------------------------------
+# The harness injects the DATE but never the time, so a session that reads commit
+# timestamps will happily infer the wrong half of the day and say "tonight" at
+# lunch. One `date` call removes the guess. NOTE: this cafe PC reports CST/GMT+0800
+# — the same offset as Manila but not the PH zone, so trust the number, not the label.
+echo "LOCAL CLOCK: $(date '+%A, %Y-%m-%d %H:%M %Z') — say the time of day from THIS, never inferred from commit timestamps."
+echo ""
+
 echo "SESSION RE-ARM CHECKLIST (session state does not survive reboots or /clear — see workflows/session_reminders.md):"
 
 # Surface every /loop re-arm command documented in session_reminders.md, so
