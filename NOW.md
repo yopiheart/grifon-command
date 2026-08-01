@@ -1,6 +1,6 @@
 # NOW
 
-**Stamped: 2026-08-01** · Anchor commit: `c50136f`
+**Stamped: 2026-08-01** · Anchor commit: `HEAD`
 
 > The single resume doc. One screen, one next action. Read this first, before
 > `launch_readiness.md` or any handoff file.
@@ -14,8 +14,16 @@
 
 ## ▶ NEXT ACTION
 
-**Neil's eyeball on two items, then fire ONE paid producer smoke.** #91 + #94.1 are
-implemented, committed, suite green — but *nothing is proven until a real render runs.*
+**⛔ BLOCKER FIRST — [#96](https://github.com/yopiheart/grifon-command/issues/96): check the ElevenLabs key's `forced_alignment` permission BEFORE any paid render.**
+The local `.env` key is valid (`/v1/voices` 200) but **scoped** — `/v1/forced-alignment` returns
+401 *"missing the permission forced_alignment"*. `consolidate.ts` swallows that in a `console.warn`
+and falls back to estimates. **If the production key is scoped the same way, `words` is never
+produced, the shipped speech-anchor fix is inert, and a ₱550 smoke logs `anchor: "silence"`
+everywhere and reads as "the fix failed."** One dashboard checkbox decides whether the smoke can
+prove anything. (Unproven for production — only the local key was observable.)
+
+Then: #91 + #94.1 are implemented, committed, suite green — but *nothing is proven until a
+render runs.*
 
 **1. Two decisions only Neil can make** (both explained in `4a7bd7b`'s commit body):
    - **Golden snapshot baseline** — `tests/unit/drawPlan.snapshot.test.ts.snap` header says
