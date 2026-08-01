@@ -1,6 +1,10 @@
 # July Close-Out Plan — isang session, lahat ng pending, sabay-sabay
 
-**Written 2026-07-11 (Fable 5). Purpose:** Neil's single resume doc. Next session, ang
+> **⛔ NO LONGER THE RESUME DOC (superseded 2026-08-01 — the resume doc is [`NOW.md`](../NOW.md)).**
+> Kept as the July close-out record. Its inventory below is July-accurate; do NOT start a session
+> from here or you will re-derive three-week-old state.
+
+**Written 2026-07-11 (Fable 5). Purpose (as-written):** Neil's single resume doc. Next session, ang
 one-liner lang: *"Read CLAUDE.md + workflows/july_close_out_plan.md — execute."*
 Everything here is sequenced cheapest-first with parallel lanes marked. Deep context
 lives in [`sample_batch_test_spec.md`](sample_batch_test_spec.md) (13 findings),

@@ -16,8 +16,32 @@ echo "SESSION RE-ARM CHECKLIST (session state does not survive reboots or /clear
 # that doc stays the single source of truth for what needs re-arming.
 grep -h '^/loop' workflows/session_reminders.md 2>/dev/null | sed 's/^/  - Offer to re-arm: /'
 
-echo "  - An active /goal from a previous session did NOT survive — check workflows/launch_readiness.md for where work stopped before starting fresh."
+echo "  - An active /goal from a previous session did NOT survive — read NOW.md for where work stopped before starting fresh."
 echo "  - Loop registry (every loop, its arm command, verifier, kill switch): workflows/loops.md"
+
+# --- NOW.md (added 2026-08-01, Garry Tan brief fold-in #2) ---------------------
+# The library was fine; retrieval was not. launch_readiness.md had become a chain
+# of CURRENT/PREVIOUS blocks pointing at loop_arch_handoff.md pointing elsewhere —
+# three docs deep before a session could take its first real action, with a
+# "this file is two weeks stale" warning sitting above live content. NOW.md is the
+# one-screen replacement. Surfaced here rather than merely referenced, because a
+# pointer a fresh session must REMEMBER to follow is the same failure as the stale
+# doc it replaced. Also enforces NOW.md's own freshness contract: an unmaintained
+# NOW.md is more dangerous than none, so it must announce its own rot.
+echo ""
+# Health first: tools/resume_doc_check.mjs owns every freshness/rot/claimant rule, so the
+# thresholds live in exactly ONE place. --quiet prints nothing while healthy and only speaks
+# up on WARN/FAIL, so a good session start stays quiet and a rotted one is impossible to miss.
+if command -v node >/dev/null 2>&1 && [ -f tools/resume_doc_check.mjs ]; then
+  node tools/resume_doc_check.mjs --quiet 2>/dev/null | sed 's/^/  /'
+fi
+if [ -f NOW.md ]; then
+  stamp=$(grep -m1 '^\*\*Stamped:' NOW.md 2>/dev/null | sed -E 's/.*Stamped:[[:space:]]*([0-9]{4}-[0-9]{2}-[0-9]{2}).*/\1/')
+  echo "NOW.md — the resume doc (stamped ${stamp:-unknown}). Read it before launch_readiness.md or any handoff:"
+  sed -n '/^## ▶ NEXT ACTION/,/^## /p' NOW.md 2>/dev/null | sed '$d' | sed '/^[[:space:]]*$/d' | head -14 | sed 's/^/  /'
+else
+  echo "NOW.md MISSING — it is the resume doc. Rebuild it from 'git log --oneline -15' + open issues before starting work."
+fi
 
 # --- BRANCH AWARENESS (added 2026-06-27, Neil-approved) ------------------------
 # The defreezer wipes LOCAL branches; only the repo + origin/* refs survive. A

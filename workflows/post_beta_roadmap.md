@@ -109,6 +109,8 @@ Half-baked ideas don't go here — they go in conversation and either die or get
 ### 3. MarketMind / Offer Optimizer "Reuse Previous Research" UX
 
 > **Status (2026-05-12):** ✅ Tier 1 shipped — [`components/ui/PreviousResearchCard.tsx`](../components/ui/PreviousResearchCard.tsx) (gold-accent banner with subject + relative timestamp + LOAD button + dismiss X) renders above the form in both [components/MarketResearch.tsx](../components/MarketResearch.tsx) and [components/OfferOptimizer.tsx](../components/OfferOptimizer.tsx) entry views. Click "LOAD" → restores results view directly (skips form). Reads `localStorage.marketMindReport` / `localStorage.offerOptimizerResult` plus new `savedAt` and `subject` sidecar keys. Card dismissable; form stays visible below. Insertion point 3 (Step 2 "auto-fill from last research" button) remains parked — separate feature, inputs aren't persisted today. Multi-history, PDF/JSON re-upload, and cross-device persistence all parked for Phase 6+ / Phase 5.2+ Supabase work.
+>
+> **⏭ RE-GRADED 2026-08-01 — the parked remainder now lives in [#25 Brand Brain](#25-brand-brain--server-backed-per-brand-context-reuse-the-retention--moat-item).** The "pure surface, no infra, localStorage" framing below was accurate when written (2026-05-12) and is now out of date: `producer_runs` was built since, and already persists per-user research + artifacts server-side. Don't build cross-device persistence as UX polish off this item — build #25.
 
 **What:** Add a "Use last research" card / quick-fill button so users don't have to dig for their downloaded `.pdf` or re-type business info when iterating on a campaign. Three insertion points:
 
@@ -1169,6 +1171,66 @@ a code-executor delegation AFTER Neil merges this branch and green-lights the pl
   between them.
 - **Source:** Neil, 2026-07-22 — "most powerful model" brief evaluation; Slice 0 shipped
   same session, capability runway parked here per the approved plan.
+
+### 25. Brand Brain — server-backed per-brand context reuse (the retention + moat item)
+
+> **Absorbs the parked remainder of [#3](#3-marketmind--offer-optimizer-reuse-previous-research-ux)**
+> (cross-device persistence / multi-history). #3 Tier 1 shipped as UI polish over `localStorage`
+> and was correctly graded "pure surface, no infra" — **in May 2026, when that was true.**
+> `producer_runs` did not exist yet. It does now, and it changes the grade: this is no longer
+> polish, it is the retention story and the one asset a competitor renting the same models
+> cannot copy. Build this one, not #3's remainder.
+
+**What:** Move per-brand accumulated context (market research, brand identity, target-market
+lock, what won last time) off the client and onto the user's account, then read it back on the
+next run so ad #2 starts from everything ad #1 learned.
+
+**The finding (2026-08-01):** the brain is *already being written and never read.*
+
+- [`services/researchCacheStore.ts`](../services/researchCacheStore.ts) is `localStorage`,
+  `MAX_ENTRIES = 10`, per-device. The customer's context dies on browser-clear, on a second
+  device, and at ad #11.
+- [`supabase/producer_runs.sql:11-27`](../supabase/producer_runs.sql#L11-L27) *already* persists
+  `input` (full ProductionInput) and `artifacts` (report / script / storyboard / EDL), keyed by
+  `user_id`, server-side, durable, revision-guarded.
+- The swap seam is already cut and already async:
+  [`producerOrchestrator.ts:313-314`](../services/producerOrchestrator.ts#L313-L314) declares
+  `getCachedResearch` / `putCachedResearch` as injected `Promise`-returning deps;
+  [`producerDeps.ts:171-172`](../services/producerDeps.ts#L171-L172) is the **single wiring
+  point**. A server-backed store is a drop-in there — no TUNED file touched.
+
+**Why it matters:** (a) **Retention** — ad #2 being visibly better than ad #1 is the reason a
+Filipino SMB pays for month 2; today every ad starts from zero. (b) **Moat** — everyone rents
+Gemini, and Higgsfield rents better models than we do; per-brand accumulated context is the
+director-layer asset they structurally cannot copy (the memory half of the "Higgsfield = engine,
+Grifon = director" position in [`concierge_director_plan.md:111-119`](concierge_director_plan.md)).
+(c) **Serves both businesses** — the same artifact is retention in the product and the thing that
+makes client rep #2 profitable in the services lane.
+
+**Why parked:** It is a *retention* feature, and retention needs users to retain. Shipping it
+before launch means building a moat around an empty field. The 7-issue Producer punch list
+(`NOW.md`) and the P5 engine-default flip come first — full stop.
+
+**When to resume:** **First build after the launch gate closes.** Trigger = engine landed as
+default AND first real users on the Producer flow. Do not let it jump the queue; do not let it
+slip either — it is the first thing in the post-launch slot, ahead of everything else in this file.
+
+**Where to start:** (1) read `producer_runs.input`/`artifacts` for the user's prior runs; (2) new
+server-backed store behind the *existing* `getCachedResearch`/`putCachedResearch` signature;
+(3) swap the wiring at `producerDeps.ts:171-172`, keep `localStorage` as offline fallback;
+(4) keep `forceFreshResearch` (the intake "Re-research" toggle) as the escape hatch — a locked
+brand identity that can't be overridden is a bug, not a feature.
+
+**Scope estimate:** ~1 day for the store + wiring. Larger if it grows a "what won last time"
+signal, which should be a **separate** slice — ship reuse first, learning second.
+
+**Source:** Garry Tan / Y Combinator "The New Physics of Business" brief, second evaluation
+2026-08-01 (*"Model quality is rented, but if you build your brain, you own that brain"*). The
+first eval (2026-07-28, `c521a5b`) scoped only the agent/workflow layer and correctly found it
+already-built; this pass scoped the **product** layer and found the same doctrine unapplied where
+it actually earns money. Sequencing (launch first, brain second) is Neil's call, same session.
+
+---
 
 ## How to add new items
 

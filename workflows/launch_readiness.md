@@ -4,9 +4,19 @@
 
 This is the meta-workflow. It doesn't do the work itself — it points to the workflows that do, and tracks overall progress. **Source of truth = the code + `git log`.** This file summarizes; it does not replace.
 
-> **⏭ CURRENT (2026-07-25). This file is two weeks stale below this block — the live
-> resume doc is [`loop_arch_handoff.md`](loop_arch_handoff.md), specifically its
-> "TOMORROW'S RUNBOOK" section.** State as of tonight:
+> ## 🧭 THIS IS THE SCOREBOARD, NOT THE RESUME DOC
+> **Where work stopped and what to do next lives in [`NOW.md`](../NOW.md)** (root, one screen,
+> stamped, surfaced automatically by the SessionStart hook). Read that first.
+>
+> This file answers a different question — *what is still outstanding before we can take paying
+> users* — and it is allowed to be a long, dated ledger. It is **not** allowed to be the thing a
+> fresh session reads to find its next action; trying to be both is what turned it into a
+> three-deep pointer chain with a "two weeks stale" warning sitting above live content
+> (2026-08-01). Dated CURRENT/PREVIOUS blocks below are **history, read newest-first** — they are
+> no longer the resume path.
+
+> **⏭ Superseded as a resume pointer — kept as the 2026-07-25 state record.** (Live resume: `NOW.md`.)
+> State as of that night:
 >
 > - **Loop-arch P1–P4 are MERGED to `main`** (`b7a545d`, 2026-07-24) — boundaries + watchdog,
 >   observability, parallelism, image gate. Suite 1017 passed / 26 skipped, build green.
