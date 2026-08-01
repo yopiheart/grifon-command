@@ -1,6 +1,6 @@
 # NOW
 
-**Stamped: 2026-08-01** · Anchor commit: `b030d95`
+**Stamped: 2026-08-01** · Anchor commit: `2e00dd7`
 
 > The single resume doc. One screen, one next action. Read this first.
 > **Freshness contract:** if the stamp is >5 days behind `git log -1`, treat as UNVERIFIED —
@@ -9,69 +9,60 @@
 
 ---
 
-## ▶ NEXT ACTION — OCEANIDES, not Grifon
+## ▶ NEXT ACTION — OCEANIDES REDESIGN (price page), not Grifon
 
-Neil's call 2026-08-01: the Grifon punch list is **parked**; next session finishes the
-Oceanides price page. Paste this to start:
+Neil's calls 2026-08-01: Grifon punch list **parked**; funnel structure of the price page is
+**approved** — the next session REDESIGNS its visual world, then finishes the page. Paste this:
 
 ```
-Ituloy natin ang Oceanides. Basahin mo muna:
+Ituloy natin ang Oceanides — redesign muna bago tapusin. Basahin mo:
+  workflows/design_swipe_file.md          ← DGP-2 = the redesign recipe (evidence-cited)
+  clients/oceanides/DESIGN.md             ← source of truth, refined by DGP-2, never overridden
   clients/oceanides/NEXT-SESSION-PRICE-PAGE.md
-  clients/oceanides/DESIGN.md
   clients/oceanides/kuya-gabriel/IDENTITY.md
-
-Nasa branch feat/oceanides-price-page ang lahat, 22 commit. Hindi pa naka-merge.
+Nasa branch feat/oceanides-price-page ang page, 22 commit. Hindi pa naka-merge.
 ```
 
-⚠ **The work is on `origin/feat/oceanides-price-page`, NOT on main.** The defreezer wipes local
+⚠ **The work is on `origin/feat/oceanides-price-page`, NOT main.** Defreezer wipes local
 branches; `origin/*` survives. Do not conclude anything is unbuilt from main's tree.
-
-⚠ **Different world, different rules.** Client work follows
-[`clients/oceanides/DESIGN.md`](clients/oceanides/DESIGN.md) — matte navy + amber print, **no
-glass, no charcoal, no `#FFCC00`**. Grifon's NOIR/DESIGN.md does **not** apply. Copy is Taglish
-by that client's market (the `grifon-cmo` English-landing-page rule is Grifon-only — carve-out
-now written down in that skill).
+⚠ **Client world:** matte navy + amber, **no glass, no charcoal, no `#FFCC00`**, Taglish copy.
+DGP-2 keeps that world (externally validated by D05/D14) and adds: serif display (DP2), price
+proof-object in the fold à la Wise (DP8 — attacks the "magkano?" thread-death directly),
+trust-stack numbers at the fold (DP6, gated on blocker #1), amber single-accent (DP3).
 
 ### 🔴 Four blockers only Neil can clear — read BEFORE building
 
-1. **DENR badge is Region 7 (Cebu); we operate in NCR.** ⛔ **The page cannot go live until this
-   is fixed.** Options: remove it, swap for the correct NCR one, or replace the borrowed seal
-   with real numbers (SEC Reg. No. + BIR TIN + DENR-accredited disposal partner) — a specific
-   number beats a borrowed seal. Was flagged once before (`content-calendar.md` L70) and not
-   actioned. **Worth deciding before the session so it isn't discovered mid-build.**
-2. **Gabriel's signed likeness consent** — legal, not technical. Template:
-   `kuya-marvin/consent-agreement-FINAL-2026-07-20.md`.
-3. **How many metres of hose are INCLUDED** before the ₱100/3m rate starts. Boss Jay gave the
-   rate, not the baseline. Page currently says "kasama na ang standard na hose ng truck" — true,
-   and invents no number. Keep it that way until he answers.
-4. **Gabriel's verdict** on `profile-v2` + `website-v4`. He has out-caught the agent's QA three
-   times — he stays the last eye.
+1. **DENR badge is Region 7 (Cebu); we operate in NCR.** ⛔ Page cannot go live until fixed.
+   Best fix per DGP-2 #4: replace borrowed seal with real numbers (SEC Reg. No. + BIR TIN) —
+   Neil must supply them; never invent.
+2. **Gabriel's signed likeness consent** — template: `kuya-marvin/consent-agreement-FINAL-2026-07-20.md`.
+3. **Metres of hose INCLUDED** before ₱100/3m starts — Boss Jay gave rate, not baseline. Page
+   says "kasama na ang standard na hose ng truck" — true, invents nothing. Keep until answered.
+4. **Gabriel's verdict** on `profile-v2` + `website-v4` — he stays the last eye.
 
-Why the page exists: 2 days of ads = **₱1,284 spend, 100 messages, ₱12.84/message, ONE order.**
-The leak is the close, not lead-gen — every thread dies at *"magkano?"*.
+Why: 2 days of ads = ₱1,284, 100 messages, ONE order. The leak is the close at *"magkano?"*.
 
-**🆕 Landed 2026-08-01 (`b030d95`, main):** design doctrine — `workflows/design_swipe_file.md`
-(D-/DP-/DGP, calibration D01 NOIR + D02 Oceanides) + funnel-forge step-1 curation pass + CD
-step-5 client carve-out. Next client funnel starts from D-entries, never a Grifon re-skin.
+**🆕 Landed 2026-08-01 (main, `b030d95`→`2e00dd7`):** Design Swipe File built AND seeded — 15
+external teardowns (D03–D17: Stripe, Wise, Cursor, Merry Maids, Derma Medical, Serhant, Graza,
+IM8, Kylie, Gymshark, Skylrk[PH!], +4), Pattern Index DP1–DP11 (8 at `proposed`), DGP-2 =
+Oceanides recipe. Plus: funnel-forge step-1 curation pass + CD step-5 client carve-out.
 
 ## 🅿 PARKED — Grifon punch list (resume trigger: Neil says so)
 
-Detail lives in the GitHub issues, which are the durable record — not here.
+Detail lives in the GitHub issues — the durable record, not here.
 
-- ✅ **#91** + **#94.1** fixed and **verified $0** (35.80s → 33.70s on the real failing footage).
-  Committed `4a7bd7b` + `8090420` + `abbe72f`.
-- **#94.3** was next, free, and owns the real caption defect (EDL `8 hours` vs script `Eight hours`).
-- **#94.2** → close as NOT-REPRODUCIBLE (evidence in the #94 comment).
-- **#96** key scope — `forced_alignment` now granted ✅; remaining work is making the failure loud.
-- **#92** + **#89**/**#90** ride the Slice B batch (`sample_batch_test_spec.md`), never a solo render.
-- **#93** ⛔ TUNED — own regression-armed session.
-- **Two Neil decisions still open:** the golden-snapshot diff (8 lines, one field) and the overlay
-  drop-case — both argued in `4a7bd7b`'s commit body. On the real footage nothing vanished.
+- ✅ **#91** + **#94.1** fixed, **verified $0** (`4a7bd7b`+`8090420`+`abbe72f`). **#94.3** next,
+  free, owns the real caption defect. **#94.2** → close NOT-REPRODUCIBLE (evidence in #94).
+- **#96** `forced_alignment` granted ✅ — remaining work: make the failure loud.
+- **#92** + **#89**/**#90** ride the Slice B batch; **#93** ⛔ TUNED — own regression-armed session.
+- **Two Neil decisions open:** golden-snapshot diff + overlay drop-case (both argued in
+  `4a7bd7b`'s commit body).
 
 ## ⛔ Gated — not without Neil
 
 Any paid render · **P5 engine-default flip** · **Hyperframes product swap** (verdict STANDS) ·
-**Slice 2** video rate-limit re-scope · merging `feat/oceanides-price-page`.
+**Slice 2** video rate-limit re-scope · merging `feat/oceanides-price-page` · DGP-2 execution
+happens WITH Neil (his eyeball is the design gate).
 
 ## 🔧 Arm before starting
 
@@ -84,6 +75,5 @@ Any paid render · **P5 engine-default flip** · **Hyperframes product swap** (v
 
 ### How to maintain this file
 
-**Overwrite it — never append.** History is `git log`'s job; appending is how the last resume doc
-rotted three pointers deep. Rewriting it is the **last** action of every session that changed the
-state of the work. Keep it one screen — the verifier fails past 90 lines.
+**Overwrite it — never append.** History is `git log`'s job. Rewriting it is the **last** action
+of every session that changed the state of the work. Keep it one screen — verifier fails past 90.
