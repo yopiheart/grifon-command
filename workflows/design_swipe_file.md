@@ -67,11 +67,20 @@ independent external brands — **calibration entries D01/D02 never count**; the
 
 | ID | Pattern | Corroborations | Status |
 |----|---------|----------------|--------|
-| DP1 | **World-first, tokens-second** — a brand's premium read comes from a coherent *world* (ground treatment, texture, type personality, motion character moving together), not from any single token. Swapping hexes inside a foreign world produces slop; D01 and D02 sit opposite on every axis yet both read premium *because* each is internally coherent. | 2 in-house calibration only (D01 D02) — needs 3 external | observed |
+| DP1 | **World-first, tokens-second** — premium comes from a coherent *world* (ground, texture, type personality, motion moving together), not any single token. Sharpest evidence: three same/adjacent-niche pairs where one brand reads premium and the other doesn't on world-coherence alone — D03 vs D04 (cleaning), D13 vs D14 (supplements — both work, for opposite registers, each coherent), D15 vs D17 (athletic energy). | 15 external (all entries) + D01/D02 calibration | proposed — process port already shipped (funnel-forge step-1 curation pass, 2026-08-01) |
+| DP2 | **Serif-display over sans-body = instant authority premium in service/consumable niches** — a large low-weight serif headline over a clean sans body is the single most repeated premium lever: D04 (Borax VF 72px, cleaning), D05 (Times-class 82px, clinic), D12 (Garamond Condensed 72px, food), D14 (Arizona Flare 40px, supplements). The sans-only competitors in the same niches (D03, D13) read functional, not premium. | 4 external, 4 niches | **proposed → DGP-2** |
+| DP3 | **Single-accent discipline** — ONE color owns every CTA/interactive/trust moment: D04 green, D05 gold, D07 indigo, D08 green, D10 pink, D14 oxblood, D17 neon. Register-dependent counter-cases, all deliberate: D13 (candy multi-accent = impulse CPG), D16 (module-matched variants = personality-led), D15 (accentless = photography-led). The only version that ALWAYS reads slop is accent *drift* (D03's mobile-only mustard). | 7 external + 3 deliberate exceptions | proposed |
+| DP4 | **Type-posture-as-register — pick an extreme, never the middle** — premium brands commit to a pole: thin-at-scale (D07 48px/300), poster-mega (D08 105px/900; D17 96px condensed), or radical restraint (D09 26px; D15 24px; D16 quiet caps). The middle (D03: 37px/700 default bold) is the slop zone — it signals no decision was made. | 6 external + 1 counter | proposed |
+| DP5 | **Specific-number authority** — precision is the credibility device: D03 "6,900 franchises", D06 $89M cards, D07 "1.69% of global GDP", D08 live "121.38 PHP" fee math, D13 "100,000 reviews", D14 "22,104 verified". Cross-file: L9 (funnel swipe) — same pattern, page level. | 6 external (+ L9 cross-file) | proposed |
+| DP6 | **Trust-stack-at-the-fold** — credibility assets live IN the first viewport, not below: D05 accreditation badges beside the H1, D13 ratings line ABOVE the headline, D14 badge+trial-stats+rating+celebrity in one screen, D08 app-ratings row (mobile). | 4 external | proposed |
+| DP7 | **Warm-ground-not-white** — consumer premium avoids pure white: D09 bone `#F7F7F4`, D12 cream `#F6E6D9`, D13 pale cream, D14 cream bands, D16 cream `#F0E6D8`. Register-dependent: institutional fintech (D07 D08) correctly stays clinical white. | 5 external | proposed |
+| DP8 | **Proof-object-in-the-fold** — the fold shows the real thing working, not an abstraction: D08 live fee calculator, D09 actual IDE screenshot, D11 products-as-the-page, D12 in-use squeeze video, D15 garment-in-motion video. | 5 external | **proposed → DGP-2** (the price-calculator port) |
+| DP9 | **Keyword-color / two-tone headline emphasis** — accent lands on the one load-bearing word: D05 gold+navy two-tone, D07 black+gradient runs, D10 pink "Brain", D13 green "You'll Actually Crave", D17 green "ACTION". The cheapest portable premium device in the file. | 5 external | proposed |
+| DP10 | **Grain/texture over dark gradient ground** (the D01 NOIR axis) — D11 (film grain + shifting blue→black gradient, PH brand). | 1 external | observed |
+| DP11 | **Craft-density as anti-slop signature** — bespoke typographic set-pieces (D12's melting wordmark, typewriter body, hand annotations) that prove a human with taste made it. | 1 external | observed |
 
-*(Next DP-number = DP2. Candidates to watch on external entries: restraint-as-luxury (small
-palette + one signature device), print-vs-cinematic ground treatments by niche, motion
-personality as a trust signal.)*
+*(Next D-number = D18. Next DP-number = DP12. Deliberate-exception ledger matters: DP3/DP4/DP7
+are REGISTER rules, not universals — the entry must say which register the client's market is in.)*
 
 ---
 
@@ -81,7 +90,30 @@ Design-system changes distilled from ≥3-corroborated DP-patterns, awaiting Nei
 approval. Template-shaped changes ALSO ship as FGPs in `funnel_swipe_file.md` (that file owns
 `funnels/_template`).
 
-*(none yet)*
+### DGP-2 — The Oceanides redesign recipe (endorsed by Neil 2026-08-01: "redesign natin ung oceanides kasi okay na ung funnel nun"; execution = next Oceanides session, WITH Neil)
+
+Scope: visual world of the price page / site on `feat/oceanides-price-page`. The funnel
+structure is approved and untouched; [clients/oceanides/DESIGN.md](../clients/oceanides/DESIGN.md)
+remains source of truth and is REFINED by this, never overridden. Copy stays Taglish.
+
+1. **Keep the navy+amber world — now externally validated.** D05 (navy+gold = clinical
+   institutional authority) and D14/D16 (warm oxblood+cream premium health/beauty family)
+   prove D02's axes were right. This is refinement, not replacement.
+2. **The DP2 lever (biggest single upgrade):** serif display over sans body. D04 is the exact
+   precedent — a cleaning franchise that reads boutique-hospitality via a 72px soft serif.
+   Oceanides currently has no display-type posture at all (DP4: the undecided middle).
+3. **The DP8 port that attacks the actual business problem:** the page exists because every ad
+   thread dies at "magkano?" (₱1,284 → 1 order). Wise's D08 answer: put the REAL math in the
+   fold — a price panel/calculator ("X drums → ₱Y, kasama na ang hose") as the hero's
+   proof-object, not a rate card buried below. Answer "magkano" before it's asked.
+4. **DP6 + DP5 trust-stack at the fold:** SEC Reg. No. + BIR TIN + served-count as specific
+   numbers beside the headline (blocker #1 in NOW.md gates this — numbers must come from Neil;
+   NEVER invent them, per the trust line).
+5. **DP3:** amber owns every CTA and trust moment, nothing else does. Watch for accent drift
+   (D03's failure mode).
+6. **DP9:** two-tone Taglish headline with the amber punch word.
+7. **Mobile recomposition, not shrinkage** (D14 text-first flip / D16 overlay→card): design the
+   390px composition as its own layout decision.
 
 **Parked — endorsed-but-deferred (2026-08-01 evaluation), promote when the trigger fires:**
 - **DGP-1: `FunnelConfig.brand` expressive axes** — today the block carries colors + fonts +
@@ -112,6 +144,42 @@ screenshots: assets/design-swipe/D<NN>/  (desktop.png, mobile.png, detail-*.png)
 **STEALABLE:** 3–5 bullets → candidate DP-patterns
 **Patterns:** corroborates <DP-IDs> · new candidate <or none> · contradicts <or none>
 ```
+
+### D17 — gelblaster.com (Gel Blaster, outdoor toy/gaming DTC) — 2026-08-01
+world: neon-dark tactical gaming-toy        confidence: high (smoke-tester capture + computed tokens)
+screenshots: assets/design-swipe/D17/ (desktop-fold, desktop-section, mobile-fold)
+**Why swiped:** the high-energy pole done with DISCIPLINE — proof that loud and premium can coexist when the accent stays singular.
+**LAYOUT WALK:** saturated-green announcement bar → near-black condensed-caps nav → full-bleed action photo hero (player aiming at camera), **96px Rajdhani condensed H1 "GET IN THE ACTION" — white words + green punch word** → "SHARE HOW YOU PLAY" UGC panel (@gelblaster IG/TikTok chips) → 3 category tiles w/ glowing green headline treatment.
+**SYSTEM EXTRACTION:** Rajdhani condensed display 96px/700 caps over Roboto body · near-black ground `#111318` + ONE neon green `#6DD747` (CTAs, highlights, glows, punch words — nothing else) · 12px-radius solid-green primary + green-outline secondary, repeated as a pair · 10%-off email popup on entry.
+**MOTION & INTERACTION:** static hero (video lives behind a "Watch It In Action" CTA instead of autoplay — deliberate choice).
+**PREMIUM MECHANISM:** (1) maximum energy, minimum palette — one neon on near-black reads gaming-grade intentional, where three accents would read toy-store cheap; (2) community-as-trust (UGC solicitation, zero review stars) fits a play brand; (3) condensed caps at 96px = kinetic authority.
+**MOBILE FLOOR CHECK:** hero recomposes to stacked (headline splits, green word gets its own line — the two-tone device survives); CTAs go full-width below the photo.
+**STEALABLE:** two-tone punch-word headline; energy-with-discipline formula; UGC panel as a trust section for community brands.
+**Patterns:** corroborates DP1; single-accent discipline; type-posture (maximal pole); keyword-color emphasis · contradicts none.
+
+### D16 — kyliecosmetics.com (Kylie Cosmetics, celebrity beauty DTC) — 2026-08-01
+world: warm celebrity beauty editorial        confidence: high (smoke-tester capture + computed tokens)
+screenshots: assets/design-swipe/D16/ (desktop-fold, desktop-section, mobile-fold)
+**Why swiped:** Tier-1 beauty niche — trust carried ENTIRELY by personality; the quiet-luxury pole of DTC.
+**LAYOUT WALK:** cream utility strip → lowercase nav ("new, best sellers, fragrance+…" — lowercase as intimacy device) → full-bleed campaign photo (Kylie on sun-bleached rocks, product ABSENT from frame), small "INTRODUCING" eyebrow + quiet caps headline + one outline CTA → asymmetric 2×4 mood-board collage (product macros + lifestyle tiles) → plain email-capture band.
+**SYSTEM EXTRACTION:** sans-only — rounded body face (Tt-Chocolate 17px), bold grotesk display used SMALL · warm cream ground `#F0E6D8`, deep oxblood `#3F2021` core accent + dusty rose-browns · 4px-radius buttons in FOUR color variants matched per module (no single CTA color — deliberate, personality-led) · desaturated-earth photo grade.
+**MOTION & INTERACTION:** essentially static; hero has a pause control (slide rotation).
+**PREMIUM MECHANISM:** (1) celebrity IS the trust stack — zero reviews, zero badges, zero guarantees anywhere at the fold; (2) quiet type + negative space where the category screams (the restraint pole of beauty); (3) mood-board grid sells a WORLD, not SKUs.
+**MOBILE FLOOR CHECK:** headline moves from photo-overlay to its own cream card below the image — deliberate recomposition; announcement bar gains promo copy desktop didn't show.
+**STEALABLE:** lowercase-as-intimacy; mood-board collage section; overlay→card mobile recomposition pattern; warm oxblood+cream palette (mirrors D14 — a warm-maroon premium family emerging in health/beauty).
+**Patterns:** corroborates DP1; warm-ground-not-white; type-posture (restraint pole) · **deliberately contradicts single-accent discipline** (module-matched variants; personality-led register — same lesson as D13).
+
+### D15 — row.gymshark.com (Gymshark, athletic apparel DTC) — 2026-08-01
+world: stark athletic-editorial monochrome        confidence: high (smoke-tester capture + computed tokens)
+screenshots: assets/design-swipe/D15/ (desktop-fold, desktop-section, mobile-fold)
+**Why swiped:** Tier-1 fitness niche — a billion-dollar brand running near-zero decoration; the drop-model restraint case.
+**LAYOUT WALK:** thin shipping-threshold strip → full-bleed autoplay video hero (torso pulling off a shirt, moody dark grade), lower-third **24px uppercase H1** ("DEVANT JUST DROPPED") + stacked white-solid/white-outline CTAs → 4-up product carousels on warm beige studio grounds (star ratings, NEW chips, wishlist hearts) → Women/Men pill toggle grid → SEO copy dump → utility footer.
+**SYSTEM EXTRACTION:** Montserrat heads / Roboto body, sans-only · black/white core, NO brand accent — the garment colorway supplies the only color · **0px-radius rectangles**, small 14px labels, exactly one primary+secondary pair per module · announcement strip as the only warm note.
+**MOTION & INTERACTION:** autoplay muted hero video w/ pause control; arrow carousels; nothing else moves.
+**PREMIUM MECHANISM:** (1) drop-culture framing — "JUST DROPPED" headline treats apparel like limited releases (scarcity without counters); (2) accentlessness as flex — the brand is confident enough to let product photography be the palette; (3) sharp rectangles + small type = editorial fashion codes, not e-com codes.
+**MOBILE FLOOR CHECK:** app-install banner + promo strip stack above hero (pushes fold down — a cost they accept for app conversion); carousel gains visible add-to-cart icons mobile-only.
+**STEALABLE:** drop-language for launches; studio-ground product cards (one consistent warm backdrop = instant catalog coherence); honest star ratings even when mediocre (★2.8 shown — radical trust).
+**Patterns:** corroborates DP1; type-posture (restraint pole); product-as-hero · contradicts "premium needs an accent color" — accentless is a valid world when photography is strong.
 
 ### D14 — im8health.com (IM8, celebrity supplement DTC) — 2026-08-01
 world: clinical-premium celebrity wellness        confidence: high (smoke-tester capture + computed tokens)
