@@ -38,7 +38,15 @@ const REPO_ROOT = resolve(INSTANCE, '..', '..');
 const SRC = join(REPO_ROOT, 'clients', 'oceanides', 'assets');
 const OUT = join(INSTANCE, 'public', 'img');
 
-/** @type {Array<{src: string, out: string, width: number, quality?: number, circle?: boolean}>} */
+/**
+ * `dir` is an OPTIONAL source folder relative to the repo root, for the few
+ * assets that do not live in clients/oceanides/assets/. Gabriel's portrait is
+ * an identity-lock plate, and identity-lock is where the approved likeness of a
+ * real person lives — copying it into assets/ would create a second copy that
+ * can drift from the one QA signed off on.
+ *
+ * @type {Array<{src: string, out: string, width: number, quality?: number, circle?: boolean, dir?: string}>}
+ */
 const JOBS = [
   // Logo — 316x316 JPEG. The artwork is a full-colour CIRCULAR badge (navy shield,
   // blue wave, navy wordmark) sitting on a white ground.
@@ -86,6 +94,19 @@ const JOBS = [
 
   // Studio cutout of the same van for the narrower proof slot.
   { src: 'van-clean.png', out: 'van.webp', width: 720, quality: 78 },
+
+  // Gabriel, the field inspector. Consent signed and images approved by Neil,
+  // 2026-08-01 — the same gate the identity-lock artifact was held behind.
+  // "Sino ang darating" is the last question a household asks before booking a
+  // stranger into their yard, so this is evidence, not decoration.
+  // Source is 1024x1536, so `withoutEnlargement` leaves it at native width.
+  {
+    src: 'gabriel-website-v4.png',
+    out: 'gabriel.webp',
+    width: 1200,
+    quality: 78,
+    dir: 'clients/oceanides/kuya-gabriel/identity-lock',
+  },
 ];
 
 const kb = (n) => `${Math.round(n / 1024)} KB`;
@@ -94,7 +115,7 @@ await mkdir(OUT, { recursive: true });
 
 let total = 0;
 for (const job of JOBS) {
-  const inPath = join(SRC, job.src);
+  const inPath = job.dir ? join(REPO_ROOT, job.dir, job.src) : join(SRC, job.src);
   const outPath = join(OUT, job.out);
   try {
     let pipe = sharp(inPath).resize({ width: job.width, fit: 'inside', withoutEnlargement: true });

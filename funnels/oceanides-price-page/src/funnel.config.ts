@@ -208,7 +208,13 @@ export const funnelConfig: FunnelConfig = {
       type: 'socialProofBar',
       ground: 'navy-deep',
       props: {
-        line: 'SEC-rehistrado. May BIR official receipt. DENR-partner na tapunan. Ito ang mga papel na hindi kayang ibigay ng karaniwang siphoner.',
+        // 🟢 TOTOO ANG BILANG. Si Boss Jay ang nag-vouch nito (Neil, 2026-08-01),
+        // kaya hindi to sakop ng "walang fake proof" ban — may pinanggalingan.
+        // "Mahigit 1,000" ang sinasabi, HINDI isang numerong mukhang eksakto
+        // (walang "1,247"): ang pekeng katiyakan ang unang bagay na sinusuri ng
+        // tao sa trust page. Kapag may naibigay na si Boss Jay na eksaktong
+        // bilang na may talaan, palitan to ng bilang na yun.
+        line: 'Mahigit 1,000 na tangke na ang naserbisyuhan namin sa Metro Manila. SEC-rehistrado. May BIR official receipt. DENR-partner na tapunan. Ito ang mga papel na hindi kayang ibigay ng karaniwang siphoner.',
         // TOTOONG numero, galing kay Neil 2026-08-01, verbatim — walang binago
         // sa format. DP5: mas malakas ang tiyak na numero kaysa hiram na seal;
         // kahit sino pwedeng mag-verify. SEC Reg. No. = TO FOLLOW pa kay Neil,
@@ -217,6 +223,41 @@ export const funnelConfig: FunnelConfig = {
           { label: 'DENR Certificate of Treatment No.', value: 'BEHMC(1)WHN0095001WW260318' },
           { label: 'DENR ID No.', value: 'OL-TR-R3-14-000080' },
           { label: 'BIR TIN (Non-VAT)', value: '260-084-087-00000' },
+        ],
+      },
+    },
+
+    // Kasunod agad ng proof strip kasi iisang kabanata sila: ang papel at ang
+    // kliyente. Ang strip ang nagsasabing legal kami, ito ang nagsasabing may
+    // ibang nagtiwala na.
+    //
+    // 🔴 PANGALAN LANG, WALANG LOGO. Wala tayong karapatan sa artwork nila, at
+    // print world to — hindi SaaS deck. Ang listahan ay galing mismo sa company
+    // profile deck ng Oceanides (Neil, 2026-08-01), verbatim: walang idinagdag,
+    // walang inayos ang pagkakasunod, walang hinulaan.
+    //
+    // "Papa Johns" na walang apostrophe — house rule sa typography (tingnan ang
+    // taglish-voice.md), at ito rin ang hinuhuli ng lint-voice.
+    {
+      type: 'clientsMarquee',
+      ground: 'navy-deep',
+      props: {
+        label: 'Naserbisyuhan na rin namin:',
+        names: [
+          'Avida',
+          'Papa Johns Pizza',
+          'Toyota',
+          'Yellow Cab Pizza Co.',
+          'Uniqlo',
+          'Jollibee',
+          'Eagle Cement',
+          'Starmall',
+          'Mang Inasal',
+          'Siomai King',
+          'GH Greenhills',
+          'Ayala Land',
+          'San Miguel Properties',
+          'Brenton International Venture Manufacturing Corp.',
         ],
       },
     },
@@ -315,6 +356,30 @@ export const funnelConfig: FunnelConfig = {
       },
     },
 
+    // Ang huling tanong bago mag-book: sino ang papasok sa bakuran ko. Dito sya
+    // sinasagot, pagkatapos ng garantiya at bago ang FAQ, kasi kapag tapos na
+    // ang usapang presyo, tao na ang natitirang alalahanin.
+    //
+    // 🔴 May pirmadong consent si Gabriel at aprubado ang mga litrato (Neil,
+    // 2026-08-01). Parehong gate ito ng lahat ng plate ni Marvin. Walang mukha
+    // ng tao ang lumalabas dito nang wala nito.
+    {
+      type: 'fieldInspector',
+      ground: 'navy',
+      props: {
+        eyebrow: 'Sino ang darating',
+        heading: 'Si **Gabriel** ang haharap sa inyo',
+        body: [
+          'Si Gabriel ang field inspector namin. Sya ang titingin sa tangke nyo pagdating, sya ang magsasabi ng buong presyo bago magsimula ang trabaho, at sya ang bahala na maayos ang lahat bago umalis ang team.',
+          'Kapag may tanong kayo habang nandyan ang truck, sya ang kausapin nyo. Hindi kayo ipapasa sa iba.',
+        ],
+        image: '/img/gabriel.webp',
+        imageAlt: 'Si Gabriel, field inspector ng Oceanides',
+        name: 'Gabriel',
+        role: 'Field Inspector',
+      },
+    },
+
     {
       type: 'faqAccordion',
       ground: 'paper',
@@ -394,10 +459,11 @@ export const funnelConfig: FunnelConfig = {
       'Tapos, bibigyan ka ng BIR official receipt at ng 30-day warranty.',
     ],
     // L1 — ang thank-you page ay hindi resibo, may susunod na hakbang sya.
-    // 🔴 TANONG KAY NEIL: anong number ang ilalagay dito?
+    // Number ni Zam, pareho ng nasa hero (0935 258 9927), naka-E.164 para
+    // diretsong madial sa cellphone.
     nextStep: {
       label: 'I-save ang number namin',
-      href: 'tel:+63',
+      href: 'tel:+639352589927',
       blurb: 'I-save mo ito para hindi ka na maghanap kapag may nangyari ulit.',
     },
     // Routed sa qualifier na `tank_location`. Ang tenant ay sinasagot na sa FAQ

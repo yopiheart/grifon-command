@@ -185,6 +185,85 @@
   }
 }
 
+/* ---------------------------------------------------------------------------
+   CLIENTS MARQUEE — the one continuously moving thing on the page.
+
+   Pure CSS, no JS and no library: the track holds the name list TWICE and slides
+   exactly one copy's width, so the loop has no seam and nothing has to measure
+   anything at runtime. `width: max-content` is what makes -50% mean "one copy".
+
+   Chips carry their own right margin instead of the track carrying `gap` —
+   with a gap the track is wider than two copies and -50% lands mid-list, which
+   shows up as a stutter once per loop.
+--------------------------------------------------------------------------- */
+@keyframes marquee-slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee {
+  overflow: hidden;
+}
+
+.marquee__track {
+  display: flex;
+  width: max-content;
+  animation: marquee-slide 40s linear infinite;
+}
+
+/* Pause on hover so a reader can actually read a name they half-caught. */
+.marquee:hover .marquee__track {
+  animation-play-state: paused;
+}
+
+.marquee__row {
+  display: flex;
+}
+
+/* ---------------------------------------------------------------------------
+   BEFORE/AFTER WIPE — the range input is the whole interaction surface.
+
+   It is transparent rather than `opacity: 0` on purpose: an invisible-by-opacity
+   control also hides its own focus ring, and this is the one keyboard-operable
+   widget on the page. The thumb is transparent because the visible handle is a
+   sibling div that tracks the same value; clicking anywhere on a range track
+   jumps the thumb AND starts a drag, so the small thumb costs nothing.
+--------------------------------------------------------------------------- */
+.wipe-range {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: ew-resize;
+}
+
+.wipe-range::-webkit-slider-runnable-track,
+.wipe-range::-moz-range-track {
+  height: 100%;
+  background: transparent;
+  border: 0;
+}
+
+.wipe-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: 0;
+  cursor: ew-resize;
+}
+
+.wipe-range::-moz-range-thumb {
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: 0;
+  cursor: ew-resize;
+}
+
 /* Belt-and-braces to the reducedMotion() helper: the helper zeroes motion/react
    transitions, this zeroes anything CSS-driven (smooth scroll included). */
 @media (prefers-reduced-motion: reduce) {
@@ -198,5 +277,23 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  /* The marquee cannot just be frozen — a stopped strip still hides half its
+     names behind the clip. So it stops being a strip: the list wraps into a
+     static block and the duplicate copy, which only ever existed to make the
+     loop seamless, is removed from the layout as well as from the a11y tree. */
+  .marquee__track {
+    animation: none;
+    width: 100%;
+  }
+
+  .marquee__row {
+    flex-wrap: wrap;
+    row-gap: 0.75rem;
+  }
+
+  .marquee__row[aria-hidden='true'] {
+    display: none;
   }
 }

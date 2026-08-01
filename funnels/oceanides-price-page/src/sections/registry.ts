@@ -3,6 +3,7 @@ import type { PropsOf, SectionType } from '../config.types';
 import { HeroOptin } from './HeroOptin';
 import { Hero } from './Hero';
 import { SocialProofBar } from './SocialProofBar';
+import { ClientsMarquee } from './ClientsMarquee';
 import { TestimonialWall } from './TestimonialWall';
 import { OriginStory } from './OriginStory';
 import { CaseStudyMetrics } from './CaseStudyMetrics';
@@ -10,6 +11,7 @@ import { ValueStack } from './ValueStack';
 import { BeforeAfter } from './BeforeAfter';
 import { ObjectionReversal } from './ObjectionReversal';
 import { Guarantee } from './Guarantee';
+import { FieldInspector } from './FieldInspector';
 import { CtaBlock } from './CtaBlock';
 import { BonusStack } from './BonusStack';
 import { FaqAccordion } from './FaqAccordion';
@@ -26,6 +28,7 @@ export const SECTION_REGISTRY: SectionComponents = {
   heroOptin: HeroOptin,
   hero: Hero,
   socialProofBar: SocialProofBar,
+  clientsMarquee: ClientsMarquee,
   testimonialWall: TestimonialWall,
   originStory: OriginStory,
   caseStudyMetrics: CaseStudyMetrics,
@@ -33,6 +36,7 @@ export const SECTION_REGISTRY: SectionComponents = {
   beforeAfter: BeforeAfter,
   objectionReversal: ObjectionReversal,
   guarantee: Guarantee,
+  fieldInspector: FieldInspector,
   ctaBlock: CtaBlock,
   bonusStack: BonusStack,
   faqAccordion: FaqAccordion,

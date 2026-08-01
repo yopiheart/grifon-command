@@ -77,9 +77,14 @@ export const ThankYou: React.FC<ThankYouProps> = ({ config }) => {
     url.searchParams.delete('email');
     window.history.replaceState({}, '', `${url.pathname}${url.search}${url.hash}`);
   }, [leadEmail]);
-  const bridgeHref = leadEmail
-    ? `${thankYou.nextStep.href}${thankYou.nextStep.href.includes('?') ? '&' : '?'}email=${encodeURIComponent(leadEmail)}`
-    : thankYou.nextStep.href;
+  // Ang ?email= rider ay para lang sa http(s) bridge (product signup prefill).
+  // Ang tel: URI ay walang query string — ang `tel:+639...?email=x` ay sirang
+  // dial sa totoong phone. Kaya web URLs lang ang dinidikitan.
+  const isWebBridge = /^https?:/i.test(thankYou.nextStep.href);
+  const bridgeHref =
+    leadEmail && isWebBridge
+      ? `${thankYou.nextStep.href}${thankYou.nextStep.href.includes('?') ? '&' : '?'}email=${encodeURIComponent(leadEmail)}`
+      : thankYou.nextStep.href;
 
   // The conversion event lives here, not on submit: this page only renders
   // after the server has accepted the lead, so it can't fire on a failed POST.

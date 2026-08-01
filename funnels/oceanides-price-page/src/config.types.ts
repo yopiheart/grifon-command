@@ -167,6 +167,13 @@ type SectionBody =
         receipts?: Array<{ label: string; value: string }>;
       };
     }
+  /**
+   * OCEANIDES-only. A scrolling strip of client NAMES — deliberately text, never
+   * logo images: we hold no rights to their artwork, and a wall of borrowed
+   * marks is the wrong device in a print world anyway. Names only, verbatim from
+   * the company profile deck.
+   */
+  | { type: 'clientsMarquee'; props: { label?: string; names: string[] } }
   | { type: 'testimonialWall'; props: { heading?: string; items: Array<{ quote: string; name: string; role?: string }> } }
   /**
    * OCEANIDES: `image` is the fleet photo. It used to hang under the hero CTA,
@@ -194,6 +201,24 @@ type SectionBody =
     }
   | { type: 'objectionReversal'; props: { heading: string; body: string[] } }
   | { type: 'guarantee'; props: { heading: string; body: string } }
+  /**
+   * OCEANIDES-only. Names and shows the one person who actually arrives. The
+   * last thing a household weighs before booking is not the price, it is who is
+   * walking into their yard. Requires a signed likeness consent — the same gate
+   * every Marvin plate goes through.
+   */
+  | {
+      type: 'fieldInspector';
+      props: {
+        eyebrow?: string;
+        heading: string;
+        body: string[];
+        image: string;
+        imageAlt: string;
+        name: string;
+        role: string;
+      };
+    }
   /** Repeatable (L8) — always scrolls to the ONE #lead-form. */
   | { type: 'ctaBlock'; props: { label: string; urgency?: string } }
   | { type: 'bonusStack'; props: { heading: string; bonuses: Array<{ title: string; blurb: string; value?: string }> } }

@@ -35,8 +35,20 @@ import { fileURLToPath } from 'node:url';
 const HERE = dirname(fileURLToPath(import.meta.url));
 const SECTIONS = resolve(HERE, '..', 'src', 'sections');
 
-/** Bands, not reading columns. These are allowed to span the wide shell. */
-const BANDS = new Set(['Hero.tsx', 'SocialProofBar.tsx', 'ComplianceFooter.tsx']);
+/**
+ * Bands, not reading columns. These are allowed to span the wide shell.
+ *
+ * ClientsMarquee joined 2026-08-01: it is a strip by construction — a row of
+ * name chips that runs past the eye and clips at both edges. Nothing in it is
+ * read top to bottom, so a 46rem reading measure would be the wrong container,
+ * not a stricter one. This is a classification, not an exemption.
+ */
+const BANDS = new Set([
+  'Hero.tsx',
+  'SocialProofBar.tsx',
+  'ClientsMarquee.tsx',
+  'ComplianceFooter.tsx',
+]);
 
 /** Only the hero centres its content. */
 const MAY_CENTRE = new Set(['Hero.tsx', 'SocialProofBar.tsx', 'ComplianceFooter.tsx']);
