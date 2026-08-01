@@ -48,15 +48,29 @@ Ang buong DGP-2 redesign (`workflows/design_swipe_file.md` sa main ang evidence 
 - **Thank-you tel CTA** — `tel:+639352589927` na, at naayos ang bug na nagdidikit ng
   `?email=` sa tel: URI (http bridge lang ang dinidikitan na ngayon).
 
-## ▶ UUNAHIN SA SUSUNOD: 3 hakbang
+## ▶ UUNAHIN SA SUSUNOD: 2 hakbang na natitira
 
-1. **Thank-you page pass** (maliit): i-apply ang chapter-ground world sa
-   `src/pages/ThankYou.tsx` + ayusin ang dalawang lumang violation doon
-   (`bg-black/30` at `font-mono` — bawal pareho sa DESIGN.md). I-smoke ang buong
-   opt-in walk: form → thank-you → `?v=` magnet variants (Oo alam ko / Hindi ko alam)
-   → save-number button. Test rows: `funnel_id: 'oceanides-price-page-smoke'`, burahin.
+1. ✅ **TAPOS — Thank-you page pass** (`e267a94`, 2026-08-01). Apat na chapter na
+   sya, kapareho ng ladder ng landing: navy-gradient (kumpirmasyon, ito lang ang
+   naka-gitna) → navy-deep (3 hakbang) → **paper** (ang magnet, bilang handout) →
+   void (bridge CTA, abot hanggang ilalim). Nasa isang rail na rin ang chapter
+   2-4 (304px lahat sa desktop). **TATLO** ang violation na naayos, hindi dalawa:
+   ang `bg-black/30` at `font-mono` na nakalista dito, PLUS ang `text-brand-primary`
+   sa block headings — nang lumipat ang magnet sa paper ground, ang amber TEXT
+   doon ay naging 1.7:1, hard ban sa contrast floor. `accent-text` na sya ngayon
+   (ocean, 5.7:1). Hindi ito lalabas kung hindi nailipat ang chapter.
+   Bagong copy, dalawang string, para sa Gate 2: `eyebrow: 'BOOKING CONFIRMED'`
+   (pinili ni Neil — English ang tatak ng totoong resibo) at
+   `stepsHeading: 'Ito ang susunod na mangyayari'`. Optional pareho sa types.
+   Smoke: pumasa sa 390×844 + 1280×900, dalawang `?v=` variant + garbage fallback,
+   `?email=` scrub, zero console error. ⚠️ Ang `form → /api/lead → thank-you` na
+   hakbang ay HINDI pa nate-test lokal (walang api bridge ang `vite preview`);
+   ang live POST test pagkatapos ng deploy ang sumasakop doon.
 2. ⛔ **Gate 2 ni Neil**: buong basa ng landing + thank-you sa PC. Ang copy ay DRAFT
    pa rin sa config header hangga't hindi ito nangyayari.
+   Lokal na tingin: `npm run build && npx vite preview --port 4173` sa
+   `funnels/oceanides-price-page`, tapos `http://localhost:4173/` at
+   `http://localhost:4173/thank-you.html`.
 3. **DEPLOY** (walang ibang haharang pagkatapos ng Gate 2):
    ```bash
    cd funnels/oceanides-price-page
