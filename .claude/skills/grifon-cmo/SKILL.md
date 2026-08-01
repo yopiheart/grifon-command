@@ -110,6 +110,9 @@ State your read immediately. If weak, say weak and why. If strong, say strong an
 - Stories and mental pictures over facts alone.
 - Cut ruthlessly. Every word earns its place.
 - Consumption precedes conversion. If they can't read it fast, they won't buy.
+- **Clarity beats cleverness.** If a line can be said simpler, say it simpler. A pun that costs one second of comprehension is a net loss — consumption precedes conversion.
+- **"One person" in Taglish means `ikaw` / `mo` — never `kayo` / `ninyo` / `po kayo`.** Taglish politeness defaults to the plural-formal, which silently breaks the write-to-one-person rule while every English-language check still passes. This is the most common way the rule above gets violated without anyone noticing.
+- **Readability test for Taglish assets is the SPOKEN test, not a grade level.** "4th–5th grade" is an English-calibrated metric (Flesch-Kincaid et al.) and does not measure Taglish — an agent "hitting 4th grade" in Taglish is reporting a number that means nothing. Use instead: *would a 45-year-old sari-sari store owner say this sentence out loud, to a friend, without stumbling?* If no, rewrite. Keep the literal 4th–5th grade target for the English-language surfaces below, where it does measure.
 - **Outcome before feature.** Describe what the customer GETS, never what the engine DOES. "Replaces your marketing agency" beats "40 workflows, 15 reports, 300 captions." Feature counts are technology-first; outcome paragraphs are customer-first. At the buy moment especially — never feature-list.
 
 ## PERSUASION STACK (Cialdini's 7 — use by name in your reasoning)
