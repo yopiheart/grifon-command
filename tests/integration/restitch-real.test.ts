@@ -1,4 +1,11 @@
-import { describe, it, expect, beforeAll, afterAll } from 'vitest';
+import { describe, it, expect, beforeAll, afterAll, vi } from 'vitest';
+
+// The SSRF guard (api/_lib/ssrfGuard.ts) allows https only and blocks 127.0.0.1 —
+// correct in production, but it also makes this harness's local fixture server
+// unreachable, which silently killed the documented $0 verification path. Neutered
+// HERE ONLY, in a test that serves files it produced itself from .tmp. Product code
+// is untouched; nothing outside this file sees a weakened guard.
+vi.mock('../../api/_lib/ssrfGuard.js', () => ({ assertSafeMediaUrl: () => {} }));
 import { spawnSync } from 'node:child_process';
 import { mkdirSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
@@ -37,6 +44,10 @@ interface SpecScene {
   captionRegion?: { yFracTop: number; yFracBottom: number };
   overlayText?: FinalRenderScene['overlayText'];
   sfxCues?: FinalRenderScene['sfxCues'];
+  // Measured forced alignment. WITHOUT this the harness runs the silencedetect
+  // path (`anchor: "silence"`) and cannot exercise the speech anchor at all —
+  // which is what the trim (#91) and overlay-onset (#94.1) fixes consume.
+  voiceWords?: FinalRenderScene['voiceWords'];
 }
 
 d('re-stitch real footage with captions', () => {
@@ -66,7 +77,10 @@ d('re-stitch real footage with captions', () => {
     await new Promise<void>((r) => server?.close(() => r()));
   });
 
-  const resolveAudio = (a?: string | null): string | null => {
+  // Bare filenames resolve against the local .tmp server; absolute URLs pass through.
+  // Applies to VIDEO too, so a run whose presigned clip URLs have expired can be
+  // re-stitched from locally recovered files instead of needing a fresh paid render.
+  const resolveMedia = (a?: string | null): string | null => {
     if (!a) return null;
     return /^https?:\/\//.test(a) ? a : `${base}/${encodeURIComponent(a)}`;
   };
@@ -74,8 +88,9 @@ d('re-stitch real footage with captions', () => {
   it('burns captions onto the real clips → .tmp/restitch-out.mp4 + per-caption frames', async () => {
     const scenes: FinalRenderScene[] = spec.scenes.map((s) => ({
       sceneIdx: s.sceneIdx,
-      videoUrl: s.videoUrl,
-      audioUrl: resolveAudio(s.audioUrl),
+      videoUrl: resolveMedia(s.videoUrl) as string,
+      audioUrl: resolveMedia(s.audioUrl),
+      voiceWords: s.voiceWords,
       keepFullClip: !!s.isHook,
       isHook: !!s.isHook,
       targetDurationSec: s.isHook ? null : s.targetDurationSec ?? null,
