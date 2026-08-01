@@ -51,7 +51,28 @@ const MagnetPlan: React.FC<{ plan: BattlePlan; eyebrow?: string }> = ({ plan, ey
           {/* Hairline above each block after the first: the ruled divider of a
               printed checklist, in place of a card per block. */}
           <div className={i > 0 ? 'border-t border-brand-hairline pt-9' : ''}>
-            <h3 className="text-[11px] font-black uppercase leading-none tracking-[1.2px] text-brand-accent-text">
+            {/* A HEADING, sized like one. This shipped at `text-[11px]
+                font-black uppercase` in ocean blue and Neil called it on sight:
+                "ang liliit ng text? ung kulay blue at orange?" Three separate
+                mistakes stacked into one element, and the first caused the rest:
+
+                1. It is an <h3>, and the global rule in index.css forces
+                   h1/h2/h3 to the DISPLAY face. So what was written as a small
+                   Inter label rendered as ANTON at 11px — a condensed display
+                   face squeezed to fine-print size, which is why it looked
+                   broken rather than merely small. Every other small label on
+                   this funnel is a <p> for exactly this reason.
+                2. `font-black` on Anton does nothing. Anton ships ONE weight;
+                   SectionHeading.tsx documents this trap in its own comment.
+                3. `accent-text` made it ocean blue, which is the correct token
+                   for accent TEXT on paper, but it was never an accent — it is
+                   structure. Blue plus the amber chip put two accents in one
+                   chapter and the small one read as a link.
+
+                Fixed by treating it as what it is: an Anton subhead, one tier
+                under the chapter heading, in the same navy as the body ladder.
+                No colour class fights the chip; no size class fights the face. */}
+            <h3 className="text-[1.375rem] leading-[0.95] text-brand-on-surface md:text-[1.75rem]">
               {block.heading}
             </h3>
             <div className="mt-4 space-y-3">
@@ -59,12 +80,15 @@ const MagnetPlan: React.FC<{ plan: BattlePlan; eyebrow?: string }> = ({ plan, ey
                 paragraph.startsWith(SKELETON_PREFIX) ? (
                   <p
                     key={j}
-                    className="rounded-brand border-2 border-brand-card-border border-l-[3px] border-l-brand-primary bg-brand-card px-4 py-3 text-sm leading-relaxed text-brand-on-surface"
+                    className="rounded-brand border-2 border-brand-card-border border-l-[3px] border-l-brand-primary bg-brand-card px-4 py-3 text-[17px] leading-relaxed text-brand-on-surface"
                   >
                     {paragraph.slice(SKELETON_PREFIX.length).trim()}
                   </p>
                 ) : (
-                  <p key={j} className="text-base leading-relaxed text-brand-on-surface-muted">
+                  // 17/18px, a step above the 16px used elsewhere: this is the
+                  // one block on the thank-you page a visitor actually READS
+                  // through, standing in a yard looking for a tank lid.
+                  <p key={j} className="text-[17px] leading-relaxed text-brand-on-surface-muted md:text-lg">
                     {paragraph}
                   </p>
                 )

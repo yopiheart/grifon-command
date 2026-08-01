@@ -134,9 +134,34 @@ amber (floor sa itaas). Walang paper surface sa video overlays o dashboards.
 | Role | Face | Rules |
 | --- | --- | --- |
 | `headline-display` | **Anton** (single weight — walang bold/italic variants; huwag i-fake) | UPPERCASE, `line-height .9–.95`, `letter-spacing .5px`; emphasis = kulay (`primary`), hindi weight |
-| `body-md` | **Inter** 400–800 | sentence case; 700–800 emphasis; `on-surface-muted` sa navy |
-| `label-strong` | Inter 800–900, 10–12px | uppercase, `letter-spacing 1–1.2px`, `sky` sa navy |
+| `subhead` | **Anton**, 1.375rem mobile / 1.75rem desktop | Ang hakbang sa PAGITAN ng display at body. Kulay = `on-surface`, hindi accent — istraktura ito, hindi diin. Idinagdag 2026-08-01 (tingnan sa ibaba kung bakit) |
+| `body-md` | **Inter** 400–800 | sentence case; 700–800 emphasis; `on-surface-muted` sa navy. 16px ang default; 17–18px sa mahabang babasahin |
+| `label-strong` | Inter 800–900, 10–12px | uppercase, `letter-spacing 1–1.2px`, `sky` sa navy. **`<p>` o `<span>` LANG, kailanman hindi `<h1>`–`<h3>`** |
 | `data-mono` | JetBrains Mono | internal dashboards/tickets LANG — hindi customer-facing creative |
+
+### 🔴 Ang bitag: sapilitang Anton ang `h1`–`h3` (nahuli ni Neil 2026-08-01)
+
+May global rule sa `index.css` na ang `h1, h2, h3` ay Anton + UPPERCASE. Kaya
+**ang laman ng h-tag ay hindi kailanman magiging Inter**, kahit anong Tailwind
+class ang ilagay mo.
+
+Ang nangyari: isang maliit na label ang ginawang `<h3>` na may
+`text-[11px] font-black uppercase`. Ang inaasahan ay 11px na Inter label. Ang
+lumabas ay **Anton sa 11px** — condensed display face na sinisiksik sa laki ng
+fine print, kaya mukhang sira, hindi lang maliit. (`font-black` naman ay walang
+epekto: isang weight ang Anton.) Sabi ni Neil sa unang tingin: *"ang liliit ng
+text? ung kulay blue at orange?"*
+
+Dalawang rule na lumabas dito:
+
+1. **Label = `<p>`. Heading = h-tag.** Kung maliit at uppercase, hindi sya
+   h-tag. Lahat ng ibang maliit na label sa funnel (`SocialProofBar`,
+   `ClientsMarquee`, `FieldInspector`) ay `<p>` — sundan sila.
+2. **Kapag walang bagay sa laddder na bagay sa role, iyon ay gap ng sistema,
+   hindi lisensya para pilitin ang pinakamalapit.** Walang `subhead` noon sa
+   table sa itaas, kaya ang pinakamalapit na hinawakan ay `label-strong` — at
+   ang maling role ang nagdala ng maling face, maling laki, at maling kulay
+   nang sabay. Ang `subhead` na row ang pagsasara ng gap na iyon.
 
 - **Anton ang display sa LAHAT ng surface** — stills, video captions
   (`build-captions.mjs` IMPACT chunk-pop grammar, exact drawPlan constants
