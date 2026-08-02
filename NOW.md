@@ -1,6 +1,6 @@
 # NOW
 
-**Stamped: 2026-08-02** · Anchor commit: `HEAD` (main) · **LIVE na ang Oceanides page**
+**Stamped: 2026-08-02** · Anchor: `c8e60e7` (main) · **LIVE at APPROVED ang Oceanides page**
 
 > The single resume doc. One screen, one next action. Read this first.
 > **Freshness contract:** if the stamp is >5 days behind `git log -1`, treat as UNVERIFIED —
@@ -9,54 +9,58 @@
 
 ---
 
-## ▶ NEXT ACTION — OCEANIDES: domain + privacy read → unang campaign sa page
+## ▶ NEXT ACTION — OCEANIDES: bumili ng domain, tapos ang unang campaign
 
-**LIVE na:** https://oceanides-price-page.vercel.app · Gate 2 APPROVED ni Neil
-2026-08-02 · live lead test GREEN (row pumasok sa `funnel_leads`, binura) ·
-Meta Pixel `1050997330667084` buhay sa prod bundle. Registry:
-`workflows/funnel_deploys.md`. Paste this to start:
+**Isa na lang ang natitira bago ang unang ad: ANG DOMAIN.** Lahat ng iba ay tapos
+at aprubado ni Neil (2026-08-02): landing, thank-you, at privacy page. Paste this:
 
 ```
-Ituloy natin ang Oceanides. Live na ang page:
+Ituloy natin ang Oceanides. Live at approved na ang page:
 https://oceanides-price-page.vercel.app
 Basahin mo muna ang workflows/funnel_deploys.md at ang
-clients/oceanides/kuya-marvin/ads/NEXT-SESSION.md (seksyon: Website campaign
-infrastructure). Dalawa na lang bago ang unang ad: domain at privacy read.
+clients/oceanides/kuya-marvin/ads/NEXT-SESSION.md (§Website campaign
+infrastructure). Domain na ang susunod, tapos ang unang campaign.
 ```
 
 ⚠️ **Client world:** matte navy + amber print, no glass, no `#FFCC00`, Taglish —
 `clients/oceanides/DESIGN.md` ang batas doon, hindi ang Grifon `DESIGN.md`.
 
-### ⛔ Kay Neil lang — dalawa na lang, at pareho silang bago ang UNANG AD
+### ⛔ Kay Neil lang: ang domain
 
-1. **Domain** — di pa nabibili. Hindi mave-verify sa Meta ang `*.vercel.app`, at
-   nahahati ang pixel data kapag pinalitan ang URL habang tumatakbo na ang ads.
-   Reco: brand domain (`oceanidesph.com`), hindi keyword domain. ~₱600-1,200/taon.
-2. **Basahin ang Privacy Policy** — https://oceanides-price-page.vercel.app/privacy
-   Legal notice sya ng totoong kompanya, hindi marketing copy. Hango sa kung ano
-   talaga ang ginagawa ng code, pero hindi pa nya nababasa.
+Di pa nabibili. Hindi mave-verify sa Meta ang `*.vercel.app`, at nahahati ang
+pixel data kapag pinalitan ang URL habang tumatakbo na ang ads. Reco: **brand
+domain** (`oceanidesph.com`), hindi keyword domain. ~₱600-1,200/taon. Pagkatapos:
+ikabit sa Vercel, i-verify sa Meta sa portfolio **"Neil Maglaya" `771158756811875`**.
 
-### Tatlong desisyon na hinihintay (naka-record sa `oceanides_business_model.md`)
+### ✅ Tapos na (2026-08-02)
 
-Segmented payment policy + QR-first collection · disposal slip kada byahe (**may
-risk to**: nakalimbag na sa page ang "legal na tapunan" pero crew ang nagmamaneho
-at walang per-job na papel ang ₱5,000) · libre ba o ₱499 ang Health Check.
+Gate 2 + privacy APPROVED · live e2e GREEN (row pumasok, binura) · **Pixel
+`1050997330667084`** buhay sa prod · ad account **`4165212657057538`** · Page
+`291924520660232` = ang m.me link. Registry: `workflows/funnel_deploys.md`.
+**Advanced Matching OFF at walang CAPI**, sinadya (hashed PII, di sakop ng consent).
+⏳ Hiningi ang Full admin kay Boss Jay sa portfolio `2966390243596032`; kung
+dumating bago ang ~₱10-20k spend, lilipat tayo habang mura pa.
 
-### Session 2026-08-02 — 3 hiling ni Neil, pixel, privacy, DEPLOY
+### 3 desisyon na hinihintay (`workflows/oceanides_business_model.md`)
 
-**costOfDelay** bago ang form: sarado ang fake countdown at hindi totoong tumataas
-ang presyo, kaya ang nawawala ay ang PAGPILI. **Guarantee**: "30 ARAW" seal + 6
-audit chip, nailipat sa kaliwang rail. **Tinanggihan: star rating** (zero review).
-**Pixel** naka-wire, **Advanced Matching OFF at walang CAPI** — parehong hashed
-PII papuntang Meta at hindi sya sakop ng consent natin. **Privacy Policy** ginawa
-(static, walang JS, zero Meta request). **Deploy + live e2e GREEN.**
+Segmented payment + QR-first collection · **disposal slip kada byahe** (may risk:
+nakalimbag na "legal na tapunan" pero crew ang nagmamaneho) · ₱499 Health Check.
+
+### Voice: LANGUAGE LOCK, naka-auto-fire na (bagong doctrine)
+
+`_shared/taglish-voice.md` §LANGUAGE LOCK, port ng TUNED formula sa
+`api/_lib/prompts.ts`. **Tagalog ang frame, English lang sa 4 na carve-out. Ang
+kaaway ay MANUAL-Tagalog, hindi Tagalog — piliin ang salitang bibigkasin ng tao,
+hindi ang wika.** Tatlong gate: `taglish-guard.sh` (2 trigger, pumuputok na sa
+copy nouns kahit English) · `lint-voice.mjs` sa `_template/` (mamanahin ng bawat
+funnel) · `gemini-eval` sa AI output. Hinarang ng gate ang sarili kong deploy.
 
 ## 🅿 PARKED
 
 **Oceanides:** SEC Reg. No. · utang sa 100 taong nangakuan ng "libre ang tingin" ·
 FB About: buong SEC name · 3-5 organic bago ang ad · logo-marquee · real-bookings
-feed · **reviews sa FB Page** (bubuksan ang rating chip) · **pangalawang page =
-DENR Compliance B2B**, hindi Health Check · dalawang Oceanides FB page, alin ang totoo.
+feed · **reviews sa FB Page** (bubuksan ang rating chip) · **page #2 = DENR
+Compliance B2B**, hindi Health Check · 2 FB page, alin ang totoo.
 
 **Suby 27-minute brief** (walang sariling doc): FB-group voice-of-customer mining ·
 creative-reps counter sa `ad_performance_ledger.md` · print-ad seeding ng
@@ -66,11 +70,9 @@ creative-reps counter sa `ad_performance_ledger.md` · print-ad seeding ng
 #94.3 next · #94.2 NOT-REPRODUCIBLE · #96 `forced_alignment` granted ✅ ·
 #92+#89/#90 ride Slice B · #93 ⛔ TUNED.
 
-## ⛔ Gated — not without Neil
+## ⛔ Gated — not without Neil · 🔧 Arm before starting
 
 Any paid render · P5 engine-default flip · Hyperframes swap · **anumang ad spend**.
-
-## 🔧 Arm before starting
 
 ```powershell
 .\scripts\restore-git-identity.ps1
