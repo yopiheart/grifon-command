@@ -1,6 +1,6 @@
 # NOW
 
-**Stamped: 2026-08-02** · Anchor: `c8e60e7` (main) · **LIVE at APPROVED ang Oceanides page**
+**Stamped: 2026-08-02** · Anchor: `e92fe78` (main) · **LIVE at APPROVED ang Oceanides page**
 
 > The single resume doc. One screen, one next action. Read this first.
 > **Freshness contract:** if the stamp is >5 days behind `git log -1`, treat as UNVERIFIED —
@@ -47,14 +47,22 @@ di sakop ng consent). ⏳ Hiningi ang Full admin kay Boss Jay sa portfolio
 Segmented payment + QR-first collection · **disposal slip kada byahe** (may risk:
 nakalimbag na "legal na tapunan" pero crew ang nagmamaneho) · ₱499 Health Check.
 
-### Voice: LANGUAGE LOCK, naka-auto-fire na (bagong doctrine)
+### Voice: LANGUAGE LOCK, naka-auto-fire na
+`_shared/taglish-voice.md` §LANGUAGE LOCK. Tatlong gate: `taglish-guard.sh` ·
+`lint-voice.mjs` sa `_template/` · `gemini-eval`. Detalye sa CLAUDE.md.
 
-`_shared/taglish-voice.md` §LANGUAGE LOCK, port ng TUNED formula sa
-`api/_lib/prompts.ts`. **Tagalog ang frame, English lang sa 4 na carve-out. Ang
-kaaway ay MANUAL-Tagalog, hindi Tagalog — piliin ang salitang bibigkasin ng tao,
-hindi ang wika.** Tatlong gate: `taglish-guard.sh` (2 trigger, pumuputok na sa
-copy nouns kahit English) · `lint-voice.mjs` sa `_template/` (mamanahin ng bawat
-funnel) · `gemini-eval` sa AI output. Hinarang ng gate ang sarili kong deploy.
+### 🆕 HOUSE MODEL — bagong asset lane (`assets/house-model/`, 2026-08-02)
+
+Naka-lock na Filipina house model para sa ads at content. **63 larawan, 3 anchor,
+4 lane** (raw-ugc · polished phone · polished camera · photoshoot) + 7 grade sa
+`tools/grade.mjs` at `luts/*.cube`. Basahin ang `assets/house-model/README.md`
+bago gumawa ng bago — nandoon ang 10 tuntunin (shoulder rule, eye dead zone,
+hands rule, isang anchor kada rendering, makeup ladder M0-M4). Naka-lock silang
+lahat bilang block sa `build-*.mjs`, kaya kopyahin ang pattern huwag ang prompt.
+
+⚠️ **Photoshoot lane = SINASADYANG mukhang ad.** Beauty at premium brand lang.
+Mali sa testimonial at UGC — siya ang pinakamaganda kaya siya ang unang aabutin,
+at doon ang mali. **Walang campaign na naghihintay dito** — sasabihin ni Neil.
 
 ## 🅿 PARKED
 
