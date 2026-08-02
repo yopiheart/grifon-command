@@ -151,6 +151,20 @@ Kaya may dead zone:
 Nakatulong din ang paglalagay ng tahasang eye instruction sa prompt (*crisp iris texture,
 defined pupil, real moisture, correctly shaped catchlight*) — nasa `polanchor.mjs`.
 
+### ⏱ Ang matagal na shot ay hindi mabagal, PUMALIT siya
+
+Tumagal si `pp-05` (poolside) ng 614s samantalang mga 240s ang iba. Ang lumabas ay
+hindi pool kundi isang babae na naka-beige knit sa sofa — halos kamukha pa ng ibang
+shot. **Hindi siya pumalya, pumalit siya.** Habang naghihirap ang Codex sa isang
+eksenang natatapik ang safety layer (dito: swimwear + nakalubog na binti), pumipili
+siya ng ligtas na larawan imbes na sumuko, at *matagumpay* pa ang exit code.
+
+> Kapag lumagpas ang isang shot sa **doble ng karaniwang oras** ng batch, tingnan mo
+> siya bago tanggapin. Malamang hindi yun ang hiningi mo.
+
+Hindi blanket ang swimwear block — pumasa si `pp-03` na naka-one-piece sa dusk.
+Kombinasyon ang tumatapik, hindi isang salita.
+
 ### ✋ Ang hands rule
 
 Bumagsak ang `pc-08` (bookshop) dahil sa kamay: hinahawakan niya ang gilid ng libro sa
