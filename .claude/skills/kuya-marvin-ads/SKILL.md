@@ -263,6 +263,32 @@ Bawat assembled cut, bago i-present:
 5. Machine pass ≠ approval — si Neil pa rin ang huling gate (test-3 lesson: pumasa sa
    machine, bagsak sa mata).
 
+## 🔴 PREFLIGHT GATE — SAPILITAN, NAKA-HOOK NA (2026-08-03)
+
+Ang lahat ng nasa ibaba ay prosa, at **hindi nakabantay ang prosa.** Noong
+2026-08-03 ay nag-render ako ng 4 na Veo clip (~$4) para sa script na lumalabag
+sa apat na tuned rule na nakasulat na dito bago pa magsimula. Sabi ni Neil:
+*"parang di ka nag-iimprove."* Tama sya. **Ngayon may script na.**
+
+```bash
+node tools/ad_preflight.mjs --script <ad>/script.spec.json          # BAGO ang plates
+node tools/ad_preflight.mjs --build <ad>/build-cut.sh --video <out.mp4>   # BAGO sabihing tapos
+node tools/render_audit.mjs <out.mp4>                               # sya lang ang NAKIKINIG
+```
+
+**Naka-`PreToolUse` hook ang una** ([veo-render-gate.sh](../../hooks/veo-render-gate.sh)):
+walang `script.spec.json` na pumasa = **walang Veo render.** Fail-closed sya —
+kapag may duda, humihinto, hindi dumadaan. Gate ng pera to.
+
+Ang hinuhuli nya, lahat totoong nakalusot: hook >8 salita o hinati sa 2
+pangungusap · body line >12 salita · English ratio sa labas ng 15-45% (accent
+lock) · >2 sunod na English sa umpisa · walang napiling preset · **>1 lugar sa
+mga plate** (ito ang *"parang dalawang body"*) · text sa labas ng feed-safe
+`y=285-1635` · walang caption · walang flash/SFX · music <0.18 · hindi
+napatakbo ang `render_audit.mjs`.
+
+⚠️ **Ang AD ang ayusin, hindi ang gate.** Walang exception list.
+
 ## LESSONS (huwag nang ulitin — pinagdanasan lahat sa KM-002)
 
 1. **RAI name filter:** BAWAL ang pangalan ("Kuya Marvin") sa Veo-spoken dialogue —

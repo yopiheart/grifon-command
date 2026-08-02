@@ -41,6 +41,11 @@
             "type": "command",
             "shell": "bash",
             "command": "bash .claude/hooks/ad-spend-gate.sh"
+          },
+          {
+            "type": "command",
+            "shell": "bash",
+            "command": "bash .claude/hooks/veo-render-gate.sh"
           }
         ]
       }
