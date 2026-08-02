@@ -1,0 +1,26 @@
+{
+  "preset": "spotlight",
+  "awareness": "solution_aware",
+  "spine": "KM-003 hook2 mechanism claim — hindi bagong konsepto, pinalitan lang ang alok",
+  "hook": "Puno na ang septic tank mo, hindi barado.",
+  "lines": [
+    "Kahit anong plunger, balik nang balik ang problema.",
+    "Pero ang mas nakakatakot, yung singil pagdating ng truck.",
+    "Isa ang quote sa phone, iba na sa receipt.",
+    "Grabe daw ang singilan. Yan ang sabi nila.",
+    "Kaya nasa page na ang buong presyo, nakasulat.",
+    "Pati ang mga dagdag na itinatago ng iba.",
+    "Basahin mo muna bago ka mag-book ng schedule."
+  ],
+  "plates": [
+    { "id": "s1", "location": "jobsite-a", "framing": "waist-up eye-level" },
+    { "id": "s2", "location": "jobsite-a", "framing": "waist-up slight-low" },
+    { "id": "s3", "location": "jobsite-a", "framing": "close head-and-shoulders" }
+  ],
+  "brollLane": "screen-recording ng oceanidesph.com (totoong page, $0, hindi generation)",
+  "customerVerbatim": [
+    "Talaga grabe ang singilan.",
+    "At dapat may resibo kayo.",
+    "From 4500 tapos since maikli yung hose nila, nagdagdag ng 100 per tubo, so umabot sa 5500 ang binayaran."
+  ]
+}

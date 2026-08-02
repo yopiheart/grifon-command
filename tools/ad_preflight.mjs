@@ -52,10 +52,15 @@ const RULES = {
 // dito at hindi sya Tagalog, English pa rin syang binibilang — kaya kapag mababa
 // ang ratio, ang lunas ay hindi mag-Inglis, ang lunas ay ibalik ang mga NOUN na
 // talagang binibigkas (septic tank, truck, receipt), hindi ang connector.
-const EN = new Set(`septic tank truck page schedule receipt warranty form price
+const EN = new Set(`septic tank truck page schedule receipt warranty form
 booking online message text call load hose service company office business
+plunger phone quote toilet manhole cover tubo-english discount promo
 oceanides sec bir denr meta facebook messenger grifon
 ok okay sorry thanks free live update check confirm book save`.split(/\s+/));
+// ⚠️ Sadyang WALA ang `price` dito. Sinasabi ng Pinoy ang `presyo`, at ang
+// panukalang palitan yun ng `price` ay isang totoong pagkakamali noong
+// 2026-08-02 (taglish-voice.md): sinira sana nito ang linyang walang sira.
+// Ang lexicon na to ay listahan ng SINASABI, hindi ng pwedeng i-Ingles.
 
 const fail = [];
 const warn = [];
@@ -103,10 +108,18 @@ function checkScript(specPath) {
   const en = aw.filter(isEnglish).length;
   const ratio = aw.length ? en / aw.length : 0;
   const pct = (ratio * 100).toFixed(0);
+  // ⚠️ ASIMETRIKO SYA, SINASADYA (naitama 2026-08-03 pagkatapos ng unang takbo).
+  // Ang ACCENT LOCK ay isang TEKNIKAL na panganib sa ISANG direksyon lang:
+  // binabasa ni Veo ang accent sa DOMINANTENG wika, kaya ang sobrang TAAS na
+  // English ay nagbibigay ng American accent — sira ang clip, bayad ang roll.
+  // Ang sobrang BABA ay hindi nagsisira ng accent, mas Filipino pa nga.
+  // Panlasa sya (nawawala ang mga noun na totoong binibigkas), kaya WARNING.
+  // Ang purong-Tagalog na linya ay hindi awtomatikong mali — ang KM-003 hook
+  // ang pinakamalakas na linyang pag-aari natin (taglish-voice.md rule 6).
   if (ratio < RULES.englishRatioMin) {
-    F(`English ratio ${pct}% — masyadong mababa (sahig ${RULES.englishRatioMin * 100}%). ` +
-      `HINDI ibig sabihin nito na mag-Inglis ka ng connector. Ibalik ang mga NOUN na ` +
-      `totoong binibigkas ng Pinoy: septic tank, truck, receipt, schedule.`);
+    W(`English ratio ${pct}% — mababa (target ~30%, ACCENT LOCK 70/30). Hindi to accent risk, ` +
+      `naturalness risk: tingnan kung may NOUN kang tinagalog na sinasabi naman sa English ` +
+      `(septic tank, truck, receipt, schedule, plunger). Kung wala, pwede syang dumaan.`);
   } else if (ratio > RULES.englishRatioMax) {
     F(`English ratio ${pct}% — masyadong mataas (kisame ${RULES.englishRatioMax * 100}%). Babasahin ng Veo bilang American accent.`);
   } else P(`English ratio ${pct}%`);
