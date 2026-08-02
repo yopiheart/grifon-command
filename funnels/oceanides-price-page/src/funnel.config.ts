@@ -173,7 +173,12 @@ export const funnelConfig: FunnelConfig = {
         // colour is the brand's only emphasis channel. Keep it to 1-2 runs —
         // amber is the single accent in the system and spending it on five words
         // spends the scroll-stop it exists to buy.
-        headline: '₱5,000. **Walang dagdag** pagdating ng truck.',
+        // "Sorpresang dagdag", hindi "dagdag": may listed add-on na lumalabas
+        // lang pagdating (halimbawa bakbak na nakita sa mismong araw), kaya ang
+        // "walang dagdag pagdating" ay may kasong hindi totoo — at ang guarantee
+        // ay sumasagot lang sa dagdag na HINDI nasabi. Ang kayang panindigan ay
+        // walang dagdag na hindi mo pa nababasa. (5-carrier review, 2026-08-02)
+        headline: '₱5,000. **Walang sorpresang dagdag** pagdating ng truck.',
         // S8 audience callout (9 ads / 5 brands). 77% of the ad audience was
         // women 35-64 running a household, and Zam's 2 days in the inbox were
         // households, apartments, and tenants — so the callout names them, not
@@ -181,7 +186,7 @@ export const funnelConfig: FunnelConfig = {
         audience:
           'Para sa may bahay, apartment, at negosyo sa Metro Manila na puno na ang septic tank.',
         subhead:
-          'Isang truckload na siphoning, 4,000 litro, may 30-day warranty. Nakasulat ang presyo bago kami magsimula. Kung may dagdag, nasa ibaba nakalista lahat. Wala kaming itinatago.',
+          'Isang truckload na siphoning, 4,000 litro, may 30-day warranty sa bara. Nakasulat ang presyo bago kami magsimula. Kung may dagdag, nasa ibaba nakalista lahat. Wala kaming itinatago.',
         ctaLabel: 'Mag-book ng schedule',
         logo: '/img/logo.webp',
         logoAlt: 'Oceanides',
@@ -208,7 +213,13 @@ export const funnelConfig: FunnelConfig = {
           addOnsLabel: 'Kung kailangan lang:',
           addOns: [
             { label: 'Sobrang hose, kada 3 metro', amount: '₱100' },
-            { label: 'Bakbak ng takip', amount: '₱500 - 1,000' },
+            // Dalawang linya ang bakbak scenario, hindi isa: ang tunay na ceiling
+            // kapag kami rin ang magdadala ng semento ay ₱1,500, at ang ticket na
+            // may "Wala nang iba" sa footnote ay hindi pwedeng may singil na wala
+            // sa listahan. Resibo to — isang linya kada singil. Tugma sa
+            // objectionReversal sa ibaba. (5-carrier review, 2026-08-02)
+            { label: 'Bakbak ng takip, kasama ang pagsasara', amount: '₱500 - 1,000' },
+            { label: 'Semento sa pagsasara, kung kami ang magdadala', amount: '₱500' },
             { label: 'Pangalawang truckload', amount: '₱5,000' },
           ],
           footnote: 'Wala nang iba. Sasabihin namin bago magsimula.',
@@ -469,7 +480,12 @@ export const funnelConfig: FunnelConfig = {
       // gumagawa ng label (P.S. / P.P.S. / P.P.P.S.). Kapag inulit mo dito,
       // dumodoble sa page. Nakita ni Neil 2026-07-30.
       props: {
+        // Ang unang item ay ang guarantee, inuulit. Ang headline-then-P.S. na
+        // reader (Suby: sila ang pangalawang pinakamalaking grupo pagkatapos ng
+        // skimmer) ay hindi nakakakita ng guarantee kung isang beses lang sya
+        // sa gitna ng page. F01 P.S. ladder. (5-carrier review, 2026-08-02)
         items: [
+          'Yung guarantee namin, totoo: kapag may dagdag pagdating ng truck na hindi namin sinabi bago magsimula, kami ang sasagot, hindi ikaw. Nakasulat yan sa taas, hindi lang salita sa telepono.',
           'Kung hindi ka pa handang mag-book, i-save mo na lang tong page. Kapag may nag-quote sa iyo, ihambing mo kung ano ang kasama at kung ano ang dagdag. Yun ang pinakamabilis na paraan para malaman kung tapat sila.',
           'Kung emergency at umaapaw na ngayon, wag ka nang mag-fill ng form. Tumawag ka na diretso sa number sa itaas.',
         ],
