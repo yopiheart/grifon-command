@@ -151,6 +151,18 @@ Kaya may dead zone:
 Nakatulong din ang paglalagay ng tahasang eye instruction sa prompt (*crisp iris texture,
 defined pupil, real moisture, correctly shaped catchlight*) — nasa `polanchor.mjs`.
 
+### ✋ Ang hands rule
+
+Bumagsak ang `pc-08` (bookshop) dahil sa kamay: hinahawakan niya ang gilid ng libro sa
+istante. **Fine manipulation ang sumisira.** Ang kamay na nakapatong lang, nasa bulsa,
+o may hawak na isang malaking simpleng bagay na may buong hawak ay halos hindi pumapalya.
+
+> ⛔ Walang pinipisil na maliit na bagay, walang daliring nakasingit sa manipis na bagay,
+> walang masalimuot na paggalaw ng daliri. Isang malaking bagay na may buong hawak, o
+> nakapahinga lang.
+
+Verbatim na block: `build-pcamera.mjs` at `build-pphone.mjs` → `const HANDS`.
+
 ### 📏 50mm ang default ng camera lane
 
 Sa 24/50/135mm test, **50mm lang ang nag-maintain ng identity.** Hindi yun sanhi — siya
