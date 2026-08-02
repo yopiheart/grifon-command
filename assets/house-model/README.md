@@ -9,8 +9,25 @@ content sa iba't ibang niche. Ginawa 2026-08-02 gamit ang `codex-image` bridge
 
 | File | Ano |
 | --- | --- |
-| `anchor.png` | 1024x1536, ang identity anchor. **Ito ang ipapasa sa `--edit` sa LAHAT ng bagong shot.** |
-| `anchor-4x5.png` | 1024x1280, ang delivery crop |
+| `anchor.png` | 1024x1536, ang **raw** anchor (iPhone). Para sa `raw-ugc` **at** `polished P-phone`. |
+| `anchor-polished.png` | 1024x1536, ang **camera** anchor (Sony A7 IV, 85mm). Para sa `polished P-camera`. |
+| `anchor-*-4x5.png` | 1024x1280, ang delivery crops |
+
+### ⚠️ Isang anchor kada RENDERING, hindi kada register
+
+Ito ang pinakamahalagang tuntunin sa buong file, at natutunan namin siya sa pagbagsak
+ng unang polished lane. **Hindi lang identity ang minamana sa `--edit` — pati ang
+rendering.** Kung raw na phone snapshot ang anchor, magmumukhang phone snapshot ang
+lahat ng gagawin mula doon, kahit anong ilagay mo sa prompt.
+
+Pero hindi ibig sabihin na kada register ay may sariling anchor. **Kada rendering.**
+Ang P-phone ay phone din, kaya tama sa kanya ang raw anchor — ang bumagsak doon ay
+mahinang styling at makeup, hindi ang anchor. Ang P-camera lang ang tunay na
+nangailangan ng bago.
+
+Sa bawat bagong anchor, ilagay ang **BREAK block** sa prompt (nasa
+`build-polished-anchor.mjs`): tahasang sabihing *huwag kopyahin ang image quality ng
+reference, ang mukha lang*. Wala nun, hihilahin ka pabalik sa rendering ng anchor.
 
 Hindi ito basta magandang litrato — **anchor** siya, at may tatlong dahilan kung bakit
 siya ang napili sa apat na candidate: malaki at malinaw ang mukha (~350px), neutral ang
