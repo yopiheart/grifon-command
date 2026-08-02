@@ -51,8 +51,10 @@ explain *why* MER moves; we scale on MER/ROAS, never on a diagnostic alone.
   CPM accordingly. Playbook wants 4-6 genuinely distinct creatives in the ad
   set. Needs a `grifon-cmo` + `grifon-creative-director` brief for 2-4 new
   concepts (different opening visual/format, not a new hook on the same body).
-- [ ] **Log the first real campaign** here once spend goes live — until then the
-  Pattern Index is empty and the skill runs on canon, not on our own data.
+- [x] **Log the first real campaign** — ✅ **DONE 2026-08-03.** KM-003 (Meta,
+  Oceanides): ₱1,284.92, ~100 messages, ₱12.85 each, **1 order.** Four patterns
+  opened (A1-A4), all `observed` at 1/3. The skill now runs on canon **plus one
+  data point** — still not enough to change a spend rule (≥3 gate).
 - [ ] When ≥10 campaigns are logged, revisit whether the parked Python tools
   (`tools/run_meta_campaign.py`, `tools/sync_ad_insights.py`) are worth building
   to auto-append insights — see `workflows/post_beta_roadmap.md`.
@@ -63,7 +65,7 @@ Weekly MER and spend, revenue split by funnel stage. Update one row per week.
 
 | Week | Platform(s) | Spend | Revenue | MER | New-cust rev | Returning rev | Retargeted rev | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| _(none yet)_ | | | | | | | | first row lands when live spend starts |
+| 2026-07-28 → 08-03 | Meta | ₱1,284.92 | 🔴 1 order, halaga **hindi kumpirmado** | — | — | — | — | KM-003. 2 araw lang ang delivery, tapos naka-off (Marvin→Gabriel pivot, HINDI performance kill). **Walang MER: hindi pa ibinibigay ni Neil ang halaga ng order, at bawal mag-imbento.** Lumang ₱4,000-4,500 pricing pa yun, hindi ₱5,000. |
 
 ## Pattern Index
 
@@ -72,7 +74,10 @@ Proposals) → `applied` (now standard practice / wired into a CMO or CD brief).
 
 | ID | Pattern | Corroborations | Status |
 | --- | --- | --- | --- |
-| _(none yet)_ | Patterns accrue as campaigns are logged. e.g. "Curiosity-gap hook + 9:16 UGC → ≥3× ROAS, PH skincare cold" | 0 | observed |
+| **A1** | **Mechanism-diagnosis hook** ("hindi X, Y pala") sa Solution Aware na kategorya → elite retention sa 0:03 at pinakamababang CPM sa account. KM-003: ₱79.29 CPM laban sa ₱119-₱340 ng bawat ibang video sa parehong account. | 1 | observed |
+| **A2** | **Ang alok na nangangailangan ng ISA PANG USAPAN ay kumakain ng mid-video retention.** KM-003: 41% ang nawala sa 9.2s-18.4s, eksaktong kinaroroonan ng "libre ang tingin". Matatag ang retention bago at pagkatapos nun (58.8% → 70.6% → 73.2% → 88.4%). | 1 | observed |
+| **A3** | 🔴 **Ang murang cost-per-conversation ay FALSE POSITIVE kapag masama ang close.** KM-003: ₱12.85/message (3× mas mura sa ₱40-80 target band) pero 100 message → **1 order = 1%**. Ang kill gates na naka-base sa gastos-kada-usapan ay pumasa habang bumabagsak ang negosyo. | 1 | observed |
+| **A4** | **Ang haba ay dapat sukatin sa kung saan bumabagsak ang retention, hindi sa kung ano ang kasya sa script.** 36.8s ang KM-003; 10s ang average na panonood; 8.0% lang ang umabot sa dulo. Ang CTA sa 36s ay nakikita ng 8 sa bawat 100. | 1 | observed |
 
 ## Gated Proposals
 
@@ -86,6 +91,35 @@ autonomously regardless.*
 ## Entries
 
 Append newest at the top. Use the template below.
+
+### 2026-07-28 → 08-03 — OCEANIDES-KM003-hook2 (Meta, PH septic tank siphoning / local service)
+
+**Brief from:** grifon-cmo (mechanism reframe: *"hindi barado, puno na"*) · **Creative from:** kuya-marvin-ads (**1** concept, 9:16 UGC, 36.8s)
+**Structure:** 1 CBO / 1 ad set / **1 creative** · **Objective:** OUTCOME_ENGAGEMENT → Messaging apps, maximize conversations · **Budget:** ₱500/araw · **Window:** 2 araw ng delivery
+**Break-even:** hindi kalkulado. Walang net margin si Neil noon; sinadyang hinati ang gate (linggo 1 = proseso lang). Gross kada residential job = **₱650** (`oceanides_offer_price_page.md` §3).
+
+| Spend | Revenue | MER | Messages | ₱/message | CTR | CPM | Frequency | Reach |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| ₱1,284.92 | 🔴 1 order, halaga di kumpirmado | — | ~100 | **₱12.85** | 6.57% | **₱79.29** | 1.39 | 11,666 |
+
+**Video funnel** (15,040 plays sa 16,205 impressions):
+
+| Play → 9.2s | → 18.4s | → 27.6s | → 35s | → dulo | ThruPlay | Avg |
+| --- | --- | --- | --- | --- | --- | --- |
+| 4,460 (29.7%) | 2,621 (**58.8%**) | 1,850 (70.6%) | 1,355 (73.2%) | 1,198 (88.4%) | 3,710 | **10s / 36.8s** |
+
+**Ano ang nangyari:**
+- **Hindi pinatay dahil sa performance.** `single_all_ad_off` matapos ang 2 araw — **Marvin→Gabriel pivot** (Neil, 2026-07-30). Mahalaga ang pagkakaiba: ang pinakamagandang creative sa account ang huminto sa kadahilanang wala sa numero.
+- **Pinakamagandang video na napatakbo sa account na ito, sa dalawang sukat nang sabay.** Pinakamababang CPM (₱79.29 laban sa ₱119.67 / ₱150.87 / ₱251.51 / ₱148.59) at pinakamataas na completion (8.0% laban sa 7.7% / 6.2% / 6.0% / 3.8%), sinuri laban sa lahat ng 30 ad sa `585951286230395`.
+- **₱12.85/message = 3× mas mura kaysa sa ₱40-80 na target band.** Pasado sa bawat linya ng kill gate.
+- 🔴 **At isang order pa rin.** 11,666 na naabot → ~100 message → **1**. Ang butas ay ang close, hindi ang lead gen. Pare-pareho ang namamatayan: *magkano?* → *"depende sa location, 4k to 4500"* → tahimik.
+- **Hook×Hold:** mataas ang hook (29.7% ang umaabot sa 9.2s), **bumabagsak ang hold sa gitna** (58.8% lang ang nakakatawid sa 18.4s), tapos matatag ulit. Ang 41% na yun ay hindi kumakalat sa buong video — nakaupo sya sa isang bloke, at doon mismo nakalagay ang **"libre ang tingin."**
+
+**So-What para sa susunod na campaign:** **Hindi ang murang usapan ang panalo. Ang close.** Dalawang bagay ang binabago nito, at pareho nang naaprubahan (Neil, 2026-08-03): (1) ang destination ay **price page**, hindi Messenger, para hindi na kailangang sagutin ng tao ang *"magkano"*; (2) ang alok sa creative ay hindi na *"libre ang tingin"* (isa pang usapan, at yun ang kumain ng 41%) kundi **"nakasulat ang presyo"** — kayang tapusin mag-isa. Hawak ang hook, pinapalitan ang dulo, **15-20s hindi 36.8s.**
+
+**Patterns:** bagong kandidato **A1, A2, A3, A4** (lahat 1/3, `observed` — isang campaign ay anecdote). Sinasalungat: wala. ⚠️ **A3 ang pinakamahalaga at ito rin ang pinaka-mapanganib** — kung nagbago ang kill gate natin dahil dito habang 1/3 pa lang, nagpapalit tayo ng patakaran base sa isang campaign. Hindi pa sya gated proposal.
+
+**Kulang pa:** halaga ng isang order (kay Neil lang galing) at net margin. Kapag dumating, mabubuo ang unang totoong MER row.
 
 ### Entry template
 
