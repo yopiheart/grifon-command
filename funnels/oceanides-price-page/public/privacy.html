@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="tl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Privacy Policy · Oceanides</title>
+    <!--
+      SADYANG STATIC AT WALANG JAVASCRIPT.
+
+      Nasa public/ sya, hindi isang Vite entry, kaya kinokopya lang sya nang buo
+      papunta sa dist/. Tatlong dahilan, at pinili lahat:
+
+      1. WALANG META PIXEL DITO. Mali na ang page na nagpapaliwanag ng tracking
+         ay siya mismong nagta-track sa yo habang binabasa mo sya.
+      2. Hindi nito nagagalaw ang build ng landing page na inaprubahan ni Neil
+         noong 2026-08-02. Walang bagong rollup input, walang bagong React entry.
+      3. Legal na dokumento to. Dapat syang bumukas kahit patay ang JS.
+
+      System fonts ang gamit (hindi ang self-hosted Anton/Inter ng bundle) kasi
+      hindi kayang hilahin ng static file ang hashed font assets ng build. Tama
+      lang ang bayad na yun para sa isang page na binabasa isang beses.
+
+      🔴 KAPAG NAGBAGO ANG KINOKOLEKTA, MAGBAGO ANG PAGE NA TO.
+      Ang pinagmulan ng listahan sa ibaba ay `api/lead.ts` (kung ano ang
+      isinusulat sa `funnel_leads`) at `src/lib/pixel.ts` (kung ano ang
+      ipinapadala sa Meta). Kapag may nadagdag na field, o kapag binuksan ang
+      Advanced Matching o ang Conversions API, MALI na ang linyang "hindi namin
+      ipinapadala ang pangalan, email, o number mo sa Meta" at kailangan syang
+      itama BAGO mag-live ang pagbabago.
+    -->
+    <style>
+      :root {
+        --navy: #0a1f45;
+        --navy-deep: #071630;
+        --amber: #f5b301;
+        --white: #ffffff;
+        --muted: #dfe8f5;
+        --dim: #8fb3dd;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; background: var(--navy-deep); }
+      body {
+        font-family: Inter, 'Helvetica Neue', Arial, sans-serif;
+        color: var(--muted);
+        line-height: 1.7;
+        font-size: 16px;
+        -webkit-text-size-adjust: 100%;
+      }
+      .wrap { max-width: 46rem; margin: 0 auto; padding: 40px 20px 72px; }
+      header { border-bottom: 2px solid rgba(255, 255, 255, 0.15); padding-bottom: 24px; margin-bottom: 8px; }
+      .chip {
+        display: inline-block; background: var(--amber); color: var(--navy);
+        font-size: 10px; font-weight: 900; text-transform: uppercase;
+        letter-spacing: 1px; padding: 5px 10px; border-radius: 4px;
+      }
+      h1 {
+        font-family: Anton, 'Roboto Condensed', 'Arial Narrow', Impact, sans-serif;
+        font-weight: 400; text-transform: uppercase; letter-spacing: 0.5px;
+        line-height: 0.95; color: var(--white);
+        font-size: 2rem; margin: 16px 0 8px;
+      }
+      h2 {
+        font-family: Anton, 'Roboto Condensed', 'Arial Narrow', Impact, sans-serif;
+        font-weight: 400; text-transform: uppercase; letter-spacing: 0.5px;
+        line-height: 1; color: var(--white);
+        font-size: 1.25rem; margin: 40px 0 4px;
+      }
+      h2 + .rule { display: block; width: 56px; height: 3px; background: var(--amber); margin-bottom: 16px; }
+      .stamp { font-size: 13px; color: var(--dim); margin: 0; }
+      p { margin: 0 0 14px; }
+      ul { margin: 0 0 14px; padding-left: 20px; }
+      li { margin-bottom: 8px; }
+      strong { color: var(--white); font-weight: 700; }
+      a { color: var(--amber); }
+      .panel {
+        border: 2px solid var(--amber); border-radius: 4px;
+        padding: 20px; margin: 20px 0; background: var(--navy);
+      }
+      .panel p:last-child { margin-bottom: 0; }
+      footer {
+        margin-top: 48px; padding-top: 24px;
+        border-top: 1px solid rgba(255, 255, 255, 0.15);
+        font-size: 13px; color: var(--dim);
+      }
+      @media (min-width: 768px) {
+        h1 { font-size: 2.75rem; }
+        h2 { font-size: 1.5rem; }
+        body { font-size: 17px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <span class="chip">Privacy Policy</span>
+        <h1>Ano ang kinukuha namin, at bakit</h1>
+        <p class="stamp">Huling update: 2 Agosto 2026</p>
+      </header>
+
+      <p>
+        Ito ang page kung saan ka nag-book ng siphoning. Kapag may ibinigay kang detalye
+        dito, may karapatan kang malaman kung ano ang kinuha namin, kung bakit, at kung
+        sino pa ang nakakakita nito. Nakasulat lahat dito sa simpleng salita.
+      </p>
+
+      <h2>Sino kami</h2><span class="rule"></span>
+      <p>
+        <strong>Oceanides Plumbing Siphoning &amp; Pest Management Services OPC.</strong>
+        Rehistrado sa SEC, sa BIR, at may DENR-partner na tapunan. Metro Manila ang sakop
+        ng serbisyo namin.
+      </p>
+
+      <h2>Ano ang ibinibigay mo mismo</h2><span class="rule"></span>
+      <p>Kapag pinunan mo ang booking form, ito ang hinihingi namin:</p>
+      <ul>
+        <li><strong>Pangalan</strong> mo. Pwedeng laktawan.</li>
+        <li><strong>Email</strong> address.</li>
+        <li><strong>Cellphone number.</strong> Kailangan to, kasi walang booking na hindi natatawagan.</li>
+        <li>
+          <strong>Apat na sagot tungkol sa trabaho:</strong> kung alam mo kung nasaan ang
+          septic tank, kung ikaw ba ang may-ari, saan ka sa Metro Manila, at kung anong
+          klaseng property.
+        </li>
+      </ul>
+      <p>
+        Wala kaming hinihinging address sa form. Sa tawag na lang namin yun tatanungin.
+      </p>
+
+      <h2>Ano ang awtomatikong naitatala</h2><span class="rule"></span>
+      <p>
+        Kasama ng form mo, ito ang naitatala ng server namin nang kusa. Karaniwan to sa
+        mga website, pero mas mabuting sabihin kaysa itago:
+      </p>
+      <ul>
+        <li>Ang <strong>IP address</strong> mo at ang <strong>browser</strong> na ginamit mo.</li>
+        <li>Kung <strong>saang page ka nanggaling</strong> at kung anong link ang pinindot mo.</li>
+        <li>Ang <strong>petsa at oras</strong> ng pag-submit.</li>
+        <li>
+          Ang <strong>mismong tekstong pinayagan mo</strong> sa consent checkbox at ang
+          version nito. Nakatala to para may hawak kaming record kung ano nga ba ang
+          pinayagan mo, hindi lang na pumayag ka.
+        </li>
+      </ul>
+
+      <h2>Bakit namin kailangan</h2><span class="rule"></span>
+      <ul>
+        <li>Para <strong>tawagan ka</strong> at makumpirma ang schedule at ang buong presyo bago may pumunta.</li>
+        <li>Para maibigay ang <strong>BIR official receipt</strong> at ang <strong>30-day warranty</strong>.</li>
+        <li>Para <strong>hindi dumoble</strong> ang booking mo at para mapigilan ang spam at ang mga bot.</li>
+      </ul>
+      <p>Wala nang iba. Hindi ka namin isasama sa kahit anong newsletter na hindi mo hiniling.</p>
+
+      <h2>Saan naka-imbak</h2><span class="rule"></span>
+      <p>
+        Sa <strong>Supabase</strong>, ang database provider namin, at naka-host ang page na
+        to sa <strong>Vercel</strong>. Nakasara ang database sa likod ng isang secret key.
+        Walang makakabasa nito sa labas ng Oceanides.
+      </p>
+
+      <h2>Sino pa ang nakakakita</h2><span class="rule"></span>
+      <p>
+        May <strong>Meta Pixel</strong> ang page na to. Sinasabi nito sa Facebook na may
+        bumisita sa page at may nakumpleto ng booking form, para malaman namin kung
+        gumagana ba ang ads namin. Naglalagay sya ng cookie sa browser mo.
+      </p>
+
+      <div class="panel">
+        <p>
+          <strong>Hindi namin ipinapadala sa Facebook ang pangalan, ang email, o ang
+          cellphone number mo.</strong> Sinadya to. May setting sa Facebook na kusang
+          kumukuha ng ganyang detalye mula sa form, at pinatay namin sya. Kung magbago yan
+          balang araw, papalitan muna namin ang page na to bago pa mangyari.
+        </p>
+      </div>
+
+      <p>
+        <strong>Wala kaming ibinebenta at wala kaming ibinibigay sa ibang kompanya.</strong>
+        Ang tanging makakakita ng detalye mo ay ang Oceanides at ang dalawang provider sa
+        itaas na nagpapatakbo ng system namin.
+      </p>
+      <p>
+        Kung ayaw mo ng Meta Pixel, kaya mong i-block ang cookies sa settings ng browser mo.
+        Gagana pa rin ang page at ang booking form.
+      </p>
+
+      <h2>Gaano katagal namin to itatago</h2><span class="rule"></span>
+      <p>
+        Itinatago namin ang booking record habang kailangan sya para sa serbisyo, sa resibo,
+        at sa warranty. Kung gusto mong burahin bago pa yun, sabihin mo lang at buburahin
+        namin.
+      </p>
+
+      <h2>Ang karapatan mo</h2><span class="rule"></span>
+      <p>
+        Sa ilalim ng <strong>Data Privacy Act of 2012 (RA 10173)</strong>, may karapatan
+        kang:
+      </p>
+      <ul>
+        <li><strong>Makita</strong> kung anong detalye mo ang hawak namin.</li>
+        <li><strong>Ipatama</strong> ang maling detalye.</li>
+        <li><strong>Ipabura</strong> ang detalye mo.</li>
+        <li><strong>Bawiin ang pahintulot</strong> mo kahit kailan.</li>
+      </ul>
+      <p>
+        Tumawag o mag-text ka lang sa <strong>0935 258 9927</strong>, o mag-message sa
+        <a href="https://m.me/OceanidesMalabanan">Messenger page namin</a>. Sabihin mo lang
+        kung ano ang gusto mong mangyari sa detalye mo. Walang bayad at hindi mo kailangang
+        magpaliwanag.
+      </p>
+
+      <h2>Kapag may nagbago dito</h2><span class="rule"></span>
+      <p>
+        Kapag nagbago ang kinukuha namin o kung sino ang nakakakita nito, papalitan namin
+        ang page na to at ang petsa sa itaas. Ang bersyon ng consent na pinirmahan mo ay
+        nakatala kasama ng booking mo, kaya alam pa rin natin kung ano ang pinayagan mo
+        noong araw na yun.
+      </p>
+
+      <footer>
+        <p>
+          Oceanides Plumbing Siphoning &amp; Pest Management Services OPC<br />
+          0935 258 9927 · Metro Manila
+        </p>
+        <p><a href="/">Balik sa page</a></p>
+      </footer>
+    </div>
+  </body>
+</html>

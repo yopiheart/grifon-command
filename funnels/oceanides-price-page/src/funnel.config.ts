@@ -3,7 +3,10 @@ import type { FunnelConfig } from './config.types';
 // ===========================================================================
 // OCEANIDES — PRICE PAGE  (funnel_id: oceanides-price-page-v1)
 //
-// ⚠️ COPY STATUS: DRAFT, PENDING GATE 2 (Neil).
+// ✅ COPY STATUS: APPROVED (Neil, 2026-08-02 — "Okay na saken ang page. APproved").
+// Gate 2 = buong basa nya ng landing + thank-you. Tapos na. Ang copy dito ay
+// hindi na draft: bago baguhin ang kahit anong user-visible na string, dapat may
+// dahilan na mas malakas kaysa sa panlasa, at dapat alam ni Neil.
 // Offer doc (Gate 1): workflows/oceanides_offer_price_page.md
 //
 // PRICING is Boss Jay's, confirmed 2026-07-30: ₱5,000 per TRUCKLOAD (full or
@@ -610,6 +613,15 @@ export const funnelConfig: FunnelConfig = {
         phone: PHONE,
         phoneLabel: PHONE_LABEL,
         messenger: MESSENGER || undefined,
+        // Ang consent text sa form ay nangangako ng "Privacy Policy nyo" mula pa
+        // noong una, pero walang link at walang page sa likod nun hanggang
+        // 2026-08-02. Hindi sya problema noong walang pixel at walang ads;
+        // naging problema sya nang buhayin ang Meta Pixel at magsimula tayong
+        // mangolekta ng pangalan, phone at email ng totoong tao. Static page sa
+        // `public/privacy.html`, hindi Vite entry — walang pixel sa page na
+        // nagpapaliwanag ng pixel. Ang `/privacy` ay rewrite sa vercel.json,
+        // katulad ng `/thank-you`.
+        links: [{ label: 'Privacy Policy', href: '/privacy' }],
         brandLine:
           'Oceanides Plumbing Siphoning & Pest Management Services OPC. SEC, BIR, at DENR na rehistrado.',
         disclaimer:
