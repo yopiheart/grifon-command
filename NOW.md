@@ -44,19 +44,17 @@ Oras-ng-tawag blocker: SOLVED na (`d980286`, 8AM-5PM sa thank-you).
 
 ### Session 2026-08-02 (umaga) — GUARDRAIL, nasa main (`dd616d4`)
 
-**Ad-spend gate** (`.claude/hooks/ad-spend-gate.sh`): deny sa activate/update_entity/boost
-at sa create na may ACTIVE o budget · ask sa staging writes · pass sa reads · sakop ang CLI
-sa Bash · 17/17 test. **Executor ledger** (`tools/executor_ledger.mjs`) + `Executor:`
-git trailer, baseline 25% follow-up fix.
+**Ad-spend gate** (`.claude/hooks/ad-spend-gate.sh`): deny sa activate/boost at create na
+may ACTIVE o budget · ask sa staging writes · sakop ang CLI sa Bash · 17/17 test.
+**Executor ledger** (`tools/executor_ledger.mjs`) + `Executor:` trailer, baseline 25%.
 
 ### 🅿 Parked sa Oceanides (di naka-block ang deploy)
 
 **SEC Reg. No.** · **TIN sa page** nakapangalan kay Cepriano sa SEC, ipa-check sa BIR
 2303 · utang sa 100 taong nangakuan ng "libre ang tingin" · FB About: buong SEC name ·
-i-archive ang June 2025 AI-face post · 3-5 organic bago ang unang ad · hose baseline
-(ilang metro ang kasama bago ang ₱100/3m) · logo-marquee · real-bookings feed ·
-Suby-brief follow-ups: FB-group voice-of-customer mining para sa hooks, creative-reps
-counter sa ad ledger, print-ad seeding ng static swipe file.
+i-archive ang June 2025 AI-face post · 3-5 organic bago ang unang ad · hose baseline ·
+logo-marquee · real-bookings feed · Suby follow-ups: FB-group voice-of-customer mining,
+creative-reps counter sa ledger, print-ad seeding ng static swipe file.
 
 ### Pagkatapos ng deploy: ang unang campaign
 
