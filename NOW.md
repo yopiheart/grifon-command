@@ -26,11 +26,12 @@ nagsasabi ng presyo. Panatilihin ang hook na `Hindi barado. Puno na.` (98.5% sa
 0:03, pinakamababang CPM sa account). Palitan ang dulo: doon mismo sa 9.2s-18.4s
 nawala ang **41%**, at doon nakaupo ang lumang "libre ang tingin."
 
-**Nakahanda na lahat, naghihintay lang ng pindot mo** — apat na doc, naka-commit:
-✅ **static** `clients/oceanides/out/price-addons-ticket.png` (APPROVED) ·
-**storyboard** `kuya-gabriel/ads/gb-001-script-storyboard.md` (18s, 3 Veo roll ~$3,
-libre ang s3 kasi screen recording ng totoong page) · **5 organic post**
-`kuya-gabriel/organic/PAGE-POSTS-PRE-AD.md` · **run sheet**
+**DALAWANG CREATIVE, TAPOS NA PAREHO:**
+✅ **static** `clients/oceanides/out/price-addons-ticket.png` (APPROVED ni Neil) ·
+🆕 **video** `kuya-gabriel/ads/gb-001/GB-001-AD-v1.mp4` — **20.4s**, buo mula plate
+hanggang cut, ~$4 na Veo. **⚠️ PAKINGGAN MO MUNA:** mata lang ang QA ko, hindi ko
+naririnig ang audio. Wala pang per-word caption.
+Kasama: **5 organic post** `kuya-gabriel/organic/PAGE-POSTS-PRE-AD.md` · **run sheet**
 `kuya-gabriel/ads/CAMPAIGN-RUN-SHEET.md` (paste-ready, may UTM).
 🔴 **TANONG NA HINDI KO MASAGOT:** may laman na ba ang Page `291924520660232`?
 Kung oo, laktawan ang organic at dumiretso sa run sheet.

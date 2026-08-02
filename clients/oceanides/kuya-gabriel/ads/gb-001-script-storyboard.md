@@ -112,6 +112,47 @@ Hindi ko uulitin ang buong payload. Ito ang mga bumabagsak kapag nakalimutan:
 
 ---
 
+---
+
+## ✅ PRODUCTION RECORD — v1 (2026-08-03)
+
+**Deliverable:** `gb-001/GB-001-AD-v1.mp4` — **20.4s**, 1080×1920, 30fps, 15.8 MB.
+**Rebuild:** `bash clients/oceanides/kuya-gabriel/ads/gb-001/build-cut.sh` (repo root, ffmpeg sa PATH).
+**Gastos:** 4 na Veo roll (~$4) + 3 codex-image plate (ChatGPT plan) + $0 sa screen recording.
+
+**Nagbago sa plano:** 20.4s, hindi 18s. Nag-uunat ang Veo ng dialogue para punuin
+ang 8s kada roll, kaya kahit pagkatapos ng speech-cut at ng 1.12x ay 20.4s pa rin.
+Pasok pa rin sa 15-20s na intent, at kalahati ng 36.8s ng KM-003.
+
+**Speech-cut, hindi hand-timed.** Ang `.tmp/speechcut.mjs` ang naghahanap ng
+totoong salita sa RMS envelope (50ms window, -26 dB, tinatahi ang patlang na mas
+maikli sa 0.35s). 22.2s raw → **14.8s ng puro salita**. Ito ang deterministikong
+bersyon ng ginawang kamay sa hook ng KM-003.
+
+### Dalawang depekto na nahuli ng QA
+
+1. 🔴 **NGUMITI si Gabriel sa unang s2 roll** — may ngipin at taas ng pisngi.
+   Hard rule yun na sarili nyang desisyon, at **hindi sya nahuhuli ng
+   EXPRESSION LOCK ng `veo-produce.mjs`** (sinasabi lang nun ang *"NO smiling
+   wider"*, hindi *"walang ngiti"*). Kinailangan ng hiwalay na no-smile na linya
+   sa `--setting`. Ang `s2b.mp4` ang nasa cut. **Idagdag ito sa bawat susunod na
+   roll ni Gabriel.**
+2. Ang unang s3 scroll ay dumaan sa ₱5,000 ticket nang napakabilis at nagtapos sa
+   dalawang segundong **puting espasyo**. Ngayon: 1.4s na hinto sa ticket, tapos
+   scroll na nagtatapos pa rin sa loob ng value stack.
+
+### ⚠️ Ang hindi ko kayang i-QA
+
+**Hindi ko naririnig ang audio.** Puro mata ang QA ko: identity, framing, ilaw,
+mukha, teksto, timing ng putol sa frame. **Ang boses, ang bigkas ng Taglish, at
+kung natural ba ang mga putol ay tainga mo, hindi akin.** Pakinggan mo bago
+i-upload.
+
+**Wala pang per-word captions.** Kailangan ng speech map na hindi ko ma-verify
+nang walang tainga. May bottom-third band kada beat pansamantala. Susunod na pass.
+
+---
+
 ## Neil gate — bago ang unang piso
 
 1. ⛔ **Veo render ay BAYAD at GATED.** ~$3. Hindi ako magre-render nang walang sabi mo.
