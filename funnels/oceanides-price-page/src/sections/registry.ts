@@ -10,6 +10,7 @@ import { CaseStudyMetrics } from './CaseStudyMetrics';
 import { ValueStack } from './ValueStack';
 import { BeforeAfter } from './BeforeAfter';
 import { ObjectionReversal } from './ObjectionReversal';
+import { CostOfDelay } from './CostOfDelay';
 import { Guarantee } from './Guarantee';
 import { FieldInspector } from './FieldInspector';
 import { CtaBlock } from './CtaBlock';
@@ -35,6 +36,7 @@ export const SECTION_REGISTRY: SectionComponents = {
   valueStack: ValueStack,
   beforeAfter: BeforeAfter,
   objectionReversal: ObjectionReversal,
+  costOfDelay: CostOfDelay,
   guarantee: Guarantee,
   fieldInspector: FieldInspector,
   ctaBlock: CtaBlock,

@@ -225,7 +225,55 @@ type SectionBody =
       };
     }
   | { type: 'objectionReversal'; props: { heading: string; body: string[] } }
-  | { type: 'guarantee'; props: { heading: string; body: string } }
+  /**
+   * OCEANIDES-only. The cost-of-inaction block, sitting immediately before the
+   * form — the last argument a reader meets before deciding.
+   *
+   * 🔴 THE CONSTRAINT THAT SHAPES IT. Loss aversion normally reaches for a
+   * deadline or a rising price, and this brand can use NEITHER: a fake countdown
+   * is banned outright (clients/oceanides/DESIGN.md, "walang fake proof"), and
+   * the price genuinely does not rise with waiting — ₱5,000 is ₱5,000 next
+   * month. So the loss on offer here is not money, it is the CHOICE: today the
+   * reader picks the day, the crew and the written price; after it overflows
+   * they take whoever answers first, which is the exact situation that produces
+   * the ₱2,500-became-₱5,500 story this page already quotes from its own ad.
+   *
+   * `compare` is the device: two work-order columns, same shape, so the loss is
+   * read rather than asserted. Anything added here must be defensible from copy
+   * already on the page — no new numbers enter the funnel through this section.
+   */
+  | {
+      type: 'costOfDelay';
+      props: {
+        eyebrow?: string;
+        heading: string;
+        body: string[];
+        compare?: { nowLabel: string; nowItems: string[]; laterLabel: string; laterItems: string[] };
+        /** Closing line, under the columns. Carries the one `==highlight==`. */
+        close?: string;
+      };
+    }
+  /**
+   * Risk reversal. `seal` is the printed number (IM8's "90 DAY" device, read on
+   * 2026-08-02 and ported into the print world); `chips` is the checkmark row
+   * under it.
+   *
+   * 🔴 EVERY CHIP MUST BE BACKED BY COPY THAT ALREADY SHIPS ELSEWHERE ON THE
+   * PAGE. The row's whole value is that a skimmer can audit it against the
+   * sections above; one unbacked chip turns the row into decoration and takes
+   * the honest ones down with it. There is deliberately NO rating and NO review
+   * count here — this brand has zero reviews and inventing them is a hard ban.
+   */
+  | {
+      type: 'guarantee';
+      props: {
+        eyebrow?: string;
+        heading: string;
+        body: string;
+        seal?: { value: string; unit: string; label: string };
+        chips?: string[];
+      };
+    }
   /**
    * OCEANIDES-only. Names and shows the one person who actually arrives. The
    * last thing a household weighs before booking is not the price, it is who is

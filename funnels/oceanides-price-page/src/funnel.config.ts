@@ -388,12 +388,36 @@ export const funnelConfig: FunnelConfig = {
       },
     },
 
+    // ⚠️ ANG `chips` AY AUDIT ROW, HINDI DEKORASYON. Bawat isa ay may kaukulang
+    // linya sa itaas ng page: nakasulat na presyo = ticket footnote · BIR at
+    // DENR at before/after = valueStack · SEC = trustChips at proof strip ·
+    // walang bayad bago magkasundo = `form.reassurance`. Kapag nagdagdag ka
+    // dito ng walang pinagmulan, ang totoong anim ay nasisira kasama nya.
+    //
+    // 🔴 WALANG STAR RATING AT WALANG REVIEW COUNT DITO, kahit ganyan ang IM8
+    // na pinagbasehan ng device (Neil, 2026-08-02). Zero review ang brand na to
+    // sa ngayon. Ang bituing walang bilang ay hindi mas maliit na bersyon ng
+    // social proof, peke sya, at hard ban yun sa clients/oceanides/DESIGN.md.
+    // Kapag may totoong reviews na sa FB Page, doon pa lang bubuksan ito.
     {
       type: 'guarantee',
       ground: 'navy',
       props: {
+        eyebrow: 'Ang pangako namin',
         heading: 'Kung tumaas ang presyo pagdating, kami ang sasagot',
+        // Ang 30-day warranty ay nasa valueStack at nasa FAQ na. Ito ang tanging
+        // numero sa page na kayang basahin sa bilis ng scroll, kaya inuulit sya
+        // dito bilang selyo, hindi bilang bagong pangako.
+        seal: { value: '30', unit: 'ARAW', label: 'Warranty sa bara' },
         body: 'Yung presyong sinabi namin sa telepono ay yun din ang babayaran mo. Kung may nakita kaming dagdag na hindi namin nasabi sa iyo, ==kami ang sasagot doon, hindi ikaw.== Ang tanging hindi sakop nito ay kung mali ang sinabi mo sa amin, halimbawa isang tangke ang sinabi mo pero dalawa pala.',
+        chips: [
+          'Nakasulat na presyo bago magsimula',
+          'BIR official receipt',
+          'DENR-partner na tapunan',
+          'SEC Registered',
+          'Before at after na litrato',
+          'Walang bayad bago magkasundo',
+        ],
       },
     },
 
@@ -462,6 +486,52 @@ export const funnelConfig: FunnelConfig = {
             a: 'Buong Metro Manila. Kung nasa labas ka ng NCR, mag-message ka pa rin at titingnan namin kung kaya, pero hindi pa namin masisiguro.',
           },
         ],
+      },
+    },
+
+    // ANG HULING ARGUMENTO BAGO ANG FORM (hiniling ni Neil, 2026-08-02: loss
+    // aversion "para makonsensya sila mag paservice na at marealize nila ung
+    // gastos at aberya").
+    //
+    // 🔴 KUNG ANO ANG HINDI PWEDE DITO ANG HUMUBOG NITO. Dalawang karaniwang
+    // loss-aversion lever ang sarado sa page na to: bawal ang fake countdown
+    // (DESIGN.md, "walang fake proof"), at HINDI totoong tumataas ang presyo sa
+    // paghihintay. ₱5,000 pa rin sa susunod na buwan. Ang pagsasabi ng "tataas
+    // to" sa page na ang buong benta ay tapat na presyo ay magpapabagsak ng mas
+    // maraming tiwala kaysa sa urgency na mabibili nito.
+    //
+    // Kaya ang nawawala dito ay hindi pera, ang PAGPILI. Ngayon, sya ang
+    // pumipili ng araw at ng kausap. Pag umapaw na, kung sino ang unang sumagot
+    // ang makukuha nya, at yun mismo ang sitwasyon ng ₱2,500 na naging ₱5,500 na
+    // naka-quote na sa FAQ galing sa totoong comment sa ad namin. Walang bagong
+    // numerong pumapasok sa funnel sa section na to.
+    {
+      type: 'costOfDelay',
+      ground: 'navy-deep',
+      props: {
+        eyebrow: 'Habang hinihintay mo',
+        heading: 'Hindi bumababa ang **₱5,000** kapag hinintay mo.',
+        body: [
+          'Alam namin na kaya mo pang tiisin. Isang buwan pa, baka dalawa. Ganyan naman ang karamihan, at hindi ka namin sisisihin doon.',
+          'Pero wala kang matitipid sa paghihintay. Pareho pa ring ₱5,000 sa susunod na buwan. Ang nagbabago lang ay kung sino ang pumipili.',
+          'Kung negosyo o apartment ang property mo, mas mabigat pa: bawat araw na hindi magamit ang CR ay araw na may nawawala sa iyo.',
+        ],
+        compare: {
+          nowLabel: 'Kapag ngayon ka nag-book',
+          nowItems: [
+            'Ikaw ang pumipili ng araw at ng oras.',
+            'Nakasulat na ang buong presyo bago pa dumating ang truck.',
+            'May oras kang maghanda. Malilinis mo ang daanan at matitingnan mo kung saan pwedeng pumarada.',
+          ],
+          laterLabel: 'Kapag umapaw na',
+          laterItems: [
+            'Kung sino ang unang sumagot sa tawag mo, sya na. Wala ka nang oras mamili.',
+            'Dyan mismo nangyayari ang ₱2,500 na nagiging ₱5,500 pagdating ng truck.',
+            'May lilinisin ka pa bago pa makapagsimula ang kahit sinong tawagin mo.',
+          ],
+        },
+        close:
+          'Wala kaming countdown dito at walang diskwentong mawawala mamaya. ==Pareho lang ang ₱5,000 bukas.== Ang pinagkaiba lang, ngayon ikaw pa ang pumipili.',
       },
     },
 
