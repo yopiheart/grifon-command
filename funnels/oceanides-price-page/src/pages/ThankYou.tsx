@@ -166,6 +166,8 @@ export const ThankYou: React.FC<ThankYouProps> = ({ config }) => {
 
   // The conversion event lives here, not on submit: this page only renders
   // after the server has accepted the lead, so it can't fire on a failed POST.
+  // A reload or a direct visit is NOT a conversion — trackLead spends the
+  // one-shot token submitLead set, so it fires once per submission. See pixel.ts.
   useEffect(() => {
     trackLead(config.tracking.metaPixelId);
   }, [config.tracking.metaPixelId]);

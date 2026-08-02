@@ -43,8 +43,39 @@ export const initPixel = (pixelId?: string): void => {
   fbq('track', 'PageView');
 };
 
-/** Standard `Lead` event — fired on the thank-you page, i.e. only on real conversions. */
+// A conversion fires ONCE per submission, not once per page load. The thank-you
+// page is a plain URL, so a refresh, a back-forward, or a bookmarked visit would
+// otherwise send Meta a `Lead` that never happened — and `Lead` is the single
+// event the campaign optimises on, so a padded count teaches the algorithm to
+// chase the wrong people. submitLead drops a one-shot token before it navigates;
+// the thank-you page spends it.
+//
+// FAILS OPEN on purpose: if sessionStorage is unavailable (private mode, blocked
+// storage), we fire anyway. Losing the dedupe costs one duplicate. Losing the
+// event costs the conversion, and the conversion is the whole point.
+const LEAD_TOKEN = 'oceanides_lead_pending';
+
+/** Call immediately before navigating to the thank-you page. */
+export const markLeadPending = (): void => {
+  try {
+    window.sessionStorage.setItem(LEAD_TOKEN, '1');
+  } catch {
+    // No storage — trackLead fails open and fires regardless.
+  }
+};
+
+/** Standard `Lead` event — fires once per real submission, never on a reload. */
 export const trackLead = (pixelId?: string): void => {
   if (!pixelId || !window.fbq) return;
+
+  let pending = true;
+  try {
+    pending = window.sessionStorage.getItem(LEAD_TOKEN) !== null;
+    window.sessionStorage.removeItem(LEAD_TOKEN);
+  } catch {
+    pending = true;
+  }
+  if (!pending) return;
+
   window.fbq('track', 'Lead');
 };

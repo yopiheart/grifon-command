@@ -7,6 +7,7 @@
 // ===========================================================================
 
 import { funnelConfig } from '../funnel.config';
+import { markLeadPending } from './pixel';
 
 export const THANK_YOU_URL = '/thank-you.html';
 
@@ -98,6 +99,11 @@ export const submitLead = async (submission: LeadSubmission): Promise<LeadResult
   if (!response.ok || payload.error) {
     return { ok: false, error: payload.error ?? `http_${response.status}` };
   }
+
+  // Arm the pixel BEFORE the navigation — the thank-you page is a separate
+  // document, so this token is the only thing that tells it "this load is a real
+  // conversion, not a refresh".
+  markLeadPending();
 
   window.location.href = thankYouUrlFor(submission.qualifiers, submission.email);
   return { ok: true };
