@@ -3,6 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- 🔴 META DOMAIN VERIFICATION — HUWAG BURAHIN (2026-08-02).
+         Ito ang pruweba sa Meta na atin ang oceanidesph.com. Kapag nawala,
+         nawawala ang verification, at kasama nun ang kontrol natin sa web events
+         (Aggregated Event Measurement) at ang attribution ng ads. TAHIMIK sya
+         mawawala: gagana pa rin ang page, ang ads na lang ang sisira.
+
+         Nakalagay sya DITO, sa static <head>, at hindi sa documentMeta.ts —
+         sabi mismo ng Meta: "Verification will fail if the meta-tag code is
+         outside the <head> section or in a section loaded dynamically by
+         JavaScript." Ang JS-injected na tag ay HINDI nya nakikita.
+
+         Portfolio: "Neil Maglaya" 771158756811875. -->
+    <meta name="facebook-domain-verification" content="454ce2ho33u16gctyipxowtnh2eley" />
     <!-- 🔴 STATIC META, SINADYA (2026-08-02, bago ang unang ad).
          Ini-set pa rin ng src/lib/documentMeta.ts ang mga ito mula sa funnel.config
          pagka-boot, at yun pa rin ang source of truth para sa BROWSER. Pero
