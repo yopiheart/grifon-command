@@ -99,6 +99,51 @@ Kung kailangan ng 1080x1350 para sa Meta, lanczos lang — 5% na bump, hindi tun
   ang `cinematic` (BJ Pascual) na lane. Huwag paghaluin ang register sa isang prompt —
   mush ang labas, at yun mismo ang nagmumukhang AI.
 
+## VERDICT NI NEIL (2026-08-02) — ano ang pumasa, at bakit bumagsak ang iba
+
+Tinignan ni Neil ang lahat isa-isa. Ang bumagsak ay **binura na** sa repo — nasa git
+history pa rin kung kailanganin. Tatlong bagay ang natutunan, at lahat sila structural.
+
+### ⛔ Bumagsak ang BUONG `polished-ugc` lane. Root cause: mali ang anchor.
+
+Ang buong lane ay ginawa gamit ang `--edit` mula sa `anchor.png` — at **raw-ugc na kuha
+sa iPhone yun.** Kaya hindi lang identity ang minana, pati ang rendering: ang talas, ang
+tonality, ang patag na dating ng phone. Ang salita ni Neil: *"kinopya lang ung same
+character sa reference image, parang di sya na polish, na stack sya sa raw, inadapt nya
+ung quality/camera ng reference image."* Tama siya. Naglagay lang ako ng mas magandang
+damit at ilaw sa ibabaw ng isang raw na larawan.
+
+**Hindi ito naaayos sa prompt.** Kailangan ng **sariling anchor** ang bawat register:
+isang tao, maraming anchor. Bago mag-generate ng polished, gumawa muna ng tunay na
+polished na portrait niya, i-approve, at yun ang gamiting anchor ng buong lane. Kasama
+sa prompt ang isang BREAK block na tahasang nagsasabing *huwag kopyahin ang image
+quality ng reference, ang mukha lang* — nasa `.tmp/lensref/polanchor.mjs`.
+
+### 👁 Ang eye dead zone
+
+Tatlo ang bumagsak dahil sa mata: mall OOTD, fitting room, bathroom mirror. Pareho silang
+**buong katawan o malayo**, kaya 100-150px lang ang mukha. Kulang yun para maging
+kapani-paniwala ang mata at lumalabas na patay at AI.
+
+Pero ang beach shot na sobrang layo ay **pumasa** — kasi hindi na basa ang mata doon.
+Kaya may dead zone:
+
+> **Sapat ang laki ng mukha para titigan pero kulang para i-render nang maayos = sira.**
+> Tatlong-kapat na katawan pataas, o talagang malayo. Iwasan ang gitna.
+
+Nakatulong din ang paglalagay ng tahasang eye instruction sa prompt (*crisp iris texture,
+defined pupil, real moisture, correctly shaped catchlight*) — nasa `polanchor.mjs`.
+
+### 📏 50mm ang default ng camera lane
+
+Sa 24/50/135mm test, **50mm lang ang nag-maintain ng identity.** Hindi yun sanhi — siya
+ang pinakamalapit sa geometry ng anchor, kaya siya ang pinaka-ligtas. Ang 85mm ay
+gumagana pa rin (pumasa ang `ab-4`) pero 50mm ang default kapag mahalaga ang consistency.
+
+### 🏖 Framing distance
+Pumasa ang beach fix pero *"super layo"* — masyadong maliit. Ang tamang layo ay
+mid-thigh up sa mga 2.5 metro: basa ang mukha, nandoon pa rin ang kapaligiran.
+
 ## MAKEUP — ang pinakamalaking butas ng unang 22 shot
 
 **Pinagsama ko ang dalawang magkahiwalay na bagay: `unretouched` (post-processing) at
