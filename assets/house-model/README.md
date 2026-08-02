@@ -95,6 +95,45 @@ Kung kailangan ng 1080x1350 para sa Meta, lanczos lang — 5% na bump, hindi tun
 - **Dev-time tool ang `codex-image`.** Hindi siya nakakabit sa produkto. Assets ang gamit
   nito, hindi ito nangangahulugang ganito na ang lalabas sa app — Gemini pa rin ang
   production image model.
-- **Isang register lang ang nasa library na ito: `raw-ugc` (Bumble-real).** Hindi pa
-  ginagawa ang `polished-ugc` at `cinematic` (BJ Pascual) na lane. Hiwalay silang anchor
-  at hiwalay na scaffold — huwag paghaluin sa isang prompt, mush ang labas.
+- **Dalawang register ang nasa library: `raw-ugc` at `polished-ugc`.** Hindi pa ginagawa
+  ang `cinematic` (BJ Pascual) na lane. Huwag paghaluin ang register sa isang prompt —
+  mush ang labas, at yun mismo ang nagmumukhang AI.
+
+## `polished-ugc` — `library-polished/`
+
+Post pa rin ng totoong tao, pero **inayos**. Ang linya: kung magmukha siyang ad, patay na
+ang lane dahil meron nang lane para doon. Runner: `.tmp/lensref/run-polished.mjs`.
+
+⚠️ **Hindi iisang register ang `instagram content creators/` na folder** — feed yun ng
+creator at tatlong bagay ang laman. Ang `imgi_16` ay **studio beauty shot** (gray seamless,
+malaking soft key, blowout na buhok) — kabilang siya sa `cinematic` na lane, hindi dito.
+Suriin bawat ref bago gamitin.
+
+Limang axis ang pinagkaiba sa `raw-ugc`: **pinili ang ilaw** (hindi tinanggap), **sinadya
+ang composition** (patag ang horizon, nasa third), **may grade**, **styled** ang damit at
+buhok, at **evened ang balat** — pero hindi plastic.
+
+Dalawang sub-lane, at teknikal ang pagkakaiba:
+
+| | Optics | Bokeh |
+| --- | --- | --- |
+| **P-phone** (`pol-01`…`05`) | iPhone 26mm f/1.8 | ⛔ **Bawal pa rin.** Deep DoF. |
+| **P-camera** (`pol-06`…`10`) | full-frame mirrorless 85mm f/1.8 | ✅ **Pinapayagan** — siya mismo ang nagsasabing hindi ito phone. |
+
+Ang bokeh ang buong punto ng P-camera, kaya kailangan ng hard rule sa prompt: *gradual at
+optically correct* ang paglipat mula sharp papuntang blur, **walang cut-out na gilid sa
+buhok o balikat**. Doon palaging bumabagsak ang AI kapag umaarte itong may telephoto —
+parang stickers na idinikit ang tao sa malabong background. Nasa `run-polished.mjs` ang
+verbatim na negation.
+
+### SKIN block (verbatim — ito ang pumipigil na maging ad)
+
+> Skin is lightly and tastefully retouched the way a creator edits their own photo - tone
+> evened out and stray marks softened, but real skin remains: pores still clearly visible
+> across the cheeks and nose, natural highlight sheen on the high points, fine vellus hair
+> at the hairline and jaw, real skin translucency. Absolutely no plastic skin, no waxy
+> smoothing, no airbrushed blur, no beauty filter, no face slimming or eye enlarging.
+
+Ang `no face slimming or eye enlarging` ang pinaka-mahalagang linya doon. Wala yun,
+unti-unting hinahaba ng model ang mata at pinapayat ang panga kada generation, at
+pagkatapos ng ilang shot ay iba na ang tao.
