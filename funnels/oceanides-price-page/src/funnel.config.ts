@@ -149,8 +149,27 @@ export const funnelConfig: FunnelConfig = {
     ],
   },
 
-  // Meta Pixel stays OFF until a live campaign points here (funnel-forge rule).
-  tracking: {},
+  // Meta Pixel — BUHAY na (Neil, 2026-08-02). Dataset "Oceanides Price Page",
+  // ad account 4165212657057538, portfolio "Neil Maglaya" 771158756811875.
+  //
+  // ⛔ HINDI ITO ang `1921429268517231`. Yun ang "Grifon Pixel", sariling SaaS
+  // pixel ni Neil para sa Grifon app. Ang paghalo ng SaaS signups at ng septic
+  // bookings sa isang dataset ay sumisira ng optimization ng dalawa nang sabay at
+  // hindi na mahihiwalay pagkatapos. Nakasulat din ang ban sa
+  // workflows/ad_performance_ledger.md at sa kuya-marvin/ads/NEXT-SESSION.md.
+  //
+  // BUILD-TIME to. Kapag napalitan ang ID, kailangan ng bagong deploy — walang
+  // env var na mababago sa Vercel dashboard para dito.
+  //
+  // 🔴 NAKA-OFF ANG AUTOMATIC ADVANCED MATCHING, sinadya (2026-08-02). Kinukuha
+  // nito ang name/phone/email mismo sa form at ipinapadala sa Meta (naka-hash)
+  // para sa audience matching. Ang consent checkbox natin ay sumasakop sa
+  // PAGTAWAG tungkol sa booking, hindi sa pagbabahagi ng data sa Meta para sa
+  // advertising — at `required: false` pa sya, kaya may pumapasok na lead na
+  // hindi man lang sya na-tick. Kapag sinakop na ng consent + ng totoong Privacy
+  // Policy ang paggamit na ito, sampung segundo lang buksan. Ang pagpatay nito
+  // pagkatapos mangolekta ay hindi na nakakabawi sa nakolekta na.
+  tracking: { metaPixelId: '1050997330667084' },
 
   sections: [
     // GROUNDS (`ground`, 2026-08-01). The page reads in chapters, and each
