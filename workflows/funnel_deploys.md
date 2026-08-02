@@ -4,6 +4,37 @@ Vercel settings live outside git; the defreezer wipes local CLI links. Every fun
 gets recorded here (funnel-forge skill, step 8). Re-link after a wipe: `npx vercel link`
 inside the instance dir (CLI login: Neil's Vercel account `neilmaglayabusiness22-2085`).
 
+## oceanides-price-page (oceanides-price-page-v1) — deployed 2026-08-02
+
+- **Production URL: https://oceanides-price-page.vercel.app** (ito ang i-share, HINDI ang
+  per-deployment na `-<hash>-` URL). Tatlong route, lahat 200: `/`, `/thank-you`, `/privacy`.
+- Vercel project: `oceanides-price-page` · scope `neilmaglayabusiness22-2085s-projects`.
+  CLI deploy mula sa `funnels/oceanides-price-page/` (`npx vercel deploy --prod --yes`);
+  HINDI git-connected — manual CLI run bawat redeploy.
+- `vercel.json` rewrites: `/thank-you` → `.html` at `/privacy` → `.html`.
+- **Env vars (production):** `SUPABASE_URL` (= ang value ng `VITE_SUPABASE_URL` sa root
+  `.env`) + `SUPABASE_SERVICE_ROLE_KEY`. ✅ Set 2026-08-02. **Naka-pipe mula sa `.env`,
+  hindi manual paste** (`grep '^NAME=' ../../.env | cut -d= -f2- | tr -d '\r\n' | npx
+  vercel env add NAME production`) — tinatanggal nito ang mismong failure mode na sumira
+  ng key noon. Redeploy pagkatapos ng anumang env change; sa deploy lang kumukuha ang
+  functions.
+- ✅ **Live e2e green 2026-08-02:** POST sa prod `/api/lead` → `{ok:true}` → row sa
+  `funnel_leads` na may tamang `client_id='oceanides'`, `funnel_id`, na-normalize na phone
+  (`09171234567`), `consent`, `policy_version`, server-stamped `ip`, at qualifiers sa loob
+  ng `utm` jsonb → test row DELETED (204, kumpirmadong wala na).
+- **Meta Pixel: BUHAY** — `1050997330667084` ("Oceanides Price Page"), kumpirmadong nasa
+  production bundle. Ad account `4165212657057538`, portfolio "Neil Maglaya"
+  `771158756811875`. ⛔ Hindi ang Grifon Pixel `1921429268517231`.
+  **Advanced Matching OFF at walang CAPI**, sinadya — tingnan ang dahilan sa
+  `src/funnel.config.ts` sa itaas ng `tracking`.
+- **Privacy Policy:** static `public/privacy.html`, walang JS at walang pixel.
+  ⚠️ **Kailangan pa ring basahin ni Neil bago mag-live ang ads** — legal notice sya ng
+  totoong kompanya. Kapag binuksan ang Advanced Matching o ang CAPI, MALI na ang linyang
+  "hindi namin ipinapadala ang pangalan, email, o number mo sa Meta".
+- **Domain: vercel.app alias pa lang.** Kailangan ng sariling domain BAGO ang unang ad:
+  hindi mave-verify sa Meta ang `*.vercel.app`, at nahahati ang pixel data kapag pinalitan
+  ang URL habang tumatakbo na ang ads.
+
 ## grifon-starter (grifon-starter-v1) — deployed 2026-07-29
 
 - **Production URL: https://grifon-starter.vercel.app** (public; SSO-protected deployment

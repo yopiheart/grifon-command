@@ -58,6 +58,35 @@ const RULES = [
   [/\bisinasagawa\b/i, 'grade-4 rule', 'ginagawa'],
   [/\bkatiyakan\b/i, 'grade-4 rule', 'sigurado'],
 
+  // --- 2026-08-02: nakalusot lahat ng ito sa privacy.html ---
+  // Isinulat ang buong page bago nabasa ang voice spec, at HINDI SYA NA-SCAN ng
+  // gate na to kasi `src/` + `.tsx` lang ang nilalakad noon. Sabi ni Neil:
+  // "YAN ANG SINASABE KO NOON PA! BAKIT HINDI PARIN NAAAYOS AT LAGI NALANG
+  // PAULET ULET!" Tama sya. Prose ang lesson noong 2026-08-01 at prose lang,
+  // kaya walang humuli. Ang bawat salita sa ibaba ay totoong nahuli sa live
+  // copy, hindi hula.
+  [/\bpahintulot\b/i, 'grade-4 rule, deep', 'consent'],
+  [/\bnaitatala\b/i, 'grade-4 rule, deep', 'naka-save, nakasulat'],
+  [/\bnakatala\b/i, 'grade-4 rule, deep', 'naka-save, nakasulat'],
+  [/\bteksto(ng)?\b/i, 'tinagalog ang salitang English na sinasabi naman sa English', 'text'],
+  [/\bnaka-imbak\b/i, 'grade-4 rule, deep', 'naka-store'],
+  [/\bimbakan\b/i, 'grade-4 rule, deep', 'storage'],
+  [/\bpinirmahan\b/i, 'deep, at madalas hindi totoo (tinick lang, hindi pumirma)', 'tinick mo'],
+
+  // --- "Do Not Sound Like a Translation" (taglish-voice.md) ---
+  // Ito ang mga tell na nakalista mismo sa spec bilang bawal. Mekanikal silang
+  // mahuli, kaya wala silang dahilan na umasa pa sa pagtanda.
+  [/\bang iyong\b/i, 'translated na tunog', 'yung, ang'],
+  [/\bito ay\b/i, 'translated na tunog', 'ito yung, sya ay wala na'],
+  [/\bupang\b/i, 'translated na tunog', 'para'],
+  [/\bsa pamamagitan ng\b/i, 'translated na tunog', 'gamit ang'],
+  [/\bmaaari(ng|n)?\b/i, 'translated na tunog', 'pwede'],
+  [/\bnais\b/i, 'translated na tunog', 'gusto'],
+  [/\bnararapat\b/i, 'deep Tagalog', 'dapat'],
+  [/\bbagaman?t?\b/i, 'deep Tagalog', 'kahit'],
+  [/\biminumungkahi\b/i, 'deep Tagalog', 'mas okay kung'],
+  [/\bsa kabilang banda\b/i, 'deep Tagalog', 'pero'],
+
   // --- typography rules (Neil, 2026-07-20) ---
   [/—/, 'bawal ang em dash, halatang AI-written', 'period o comma'],
   [/\bn'yo\b/i, 'bawal ang apostrophe sa contraction', 'nyo'],
@@ -68,16 +97,23 @@ const RULES = [
 ];
 
 /**
- * Only user-visible strings matter. Three things are deliberately exempt:
- *  - comments, which explain the code to developers and stay English
+ * Only user-visible strings matter. Four things are deliberately exempt:
+ *  - JS/TS comments, which explain the code to developers and stay English
+ *  - HTML comments, same reason (added 2026-08-02 with .html scanning)
  *  - `console.*` calls, which are dev-only warnings a visitor never sees
  *  - `src/demo/`, which is the template's stock sample config, not our copy
+ *
+ * `<style>` blocks are left in: CSS carries no prose, so stripping them would
+ * only add a way for the stripper itself to be wrong.
  */
 const strip = (src) =>
   src
+    .replace(/<!--[\s\S]*?-->/g, '')
     .replace(/\/\*[\s\S]*?\*\//g, '')
     .replace(/^[ \t]*\/\/.*$/gm, '')
     .replace(/console\.\w+\([\s\S]*?\);/g, '');
+
+const SCANNABLE = /\.(tsx?|html)$/;
 
 const walk = async (dir) => {
   const out = [];
@@ -86,14 +122,27 @@ const walk = async (dir) => {
     if (entry.isDirectory()) {
       if (entry.name === 'demo') continue;
       out.push(...(await walk(full)));
-    } else if (/\.tsx?$/.test(entry.name)) {
+    } else if (SCANNABLE.test(entry.name)) {
       out.push(full);
     }
   }
   return out;
 };
 
-const files = await walk(SRC);
+// 🔴 ANG SAKOP ANG NAGING BUTAS, HINDI ANG WORD LIST (2026-08-02).
+// `src/` + `.tsx` lang ang nilalakad nito noon. Ang buong Privacy Policy ay
+// nakaupo sa `public/privacy.html` — copy na nakikita ng customer, sa isang
+// direktoryo at file type na hindi kayang basahin ng gate. Pumasa ang lint
+// habang puno ng deep Tagalog ang page.
+//
+// Ang aral: ang gate na may bulag na sulok ay mas masama kaysa sa walang gate,
+// kasi nagbibigay sya ng "voice ok" na tunog ng pruweba. Kapag may bagong lugar
+// na tinitirhan ng customer-facing na copy, DITO SYA IDAGDAG sa parehong commit.
+const ROOT = resolve(HERE, '..');
+const PUBLIC = join(ROOT, 'public');
+const ROOT_HTML = ['index.html', 'thank-you.html'].map((f) => join(ROOT, f));
+
+const files = [...(await walk(SRC)), ...(await walk(PUBLIC)), ...ROOT_HTML];
 const hits = [];
 
 for (const file of files) {
@@ -102,7 +151,9 @@ for (const file of files) {
   code.split('\n').forEach((line, i) => {
     for (const [re, why, better] of RULES) {
       const m = line.match(re);
-      if (m) hits.push({ file: relative(SRC, file), line: i + 1, word: m[0], why, better });
+      // Relative sa ROOT, hindi sa SRC: mula nang ma-scan ang public/ at ang root
+      // HTML, ang SRC-relative na path ay lumalabas na `src/..\public\privacy.html`.
+      if (m) hits.push({ file: relative(ROOT, file), line: i + 1, word: m[0], why, better });
     }
   });
 }
@@ -114,7 +165,7 @@ if (hits.length === 0) {
 
 console.error(`\n✗ VOICE LINT — ${hits.length} nahuli\n`);
 for (const h of hits) {
-  console.error(`  src/${h.file}:${h.line}`);
+  console.error(`  ${h.file}:${h.line}`);
   console.error(`    "${h.word}" — ${h.why}`);
   console.error(`    gamitin: ${h.better}\n`);
 }

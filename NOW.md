@@ -1,6 +1,6 @@
 # NOW
 
-**Stamped: 2026-08-02** · Anchor commit: `69e202c` (main) · lahat ng Oceanides work ay nasa main
+**Stamped: 2026-08-02** · Anchor commit: `HEAD` (main) · **LIVE na ang Oceanides page**
 
 > The single resume doc. One screen, one next action. Read this first.
 > **Freshness contract:** if the stamp is >5 days behind `git log -1`, treat as UNVERIFIED —
@@ -9,61 +9,58 @@
 
 ---
 
-## ▶ NEXT ACTION — OCEANIDES: pixel ID + domain → deploy → unang campaign
+## ▶ NEXT ACTION — OCEANIDES: domain + privacy read → unang campaign sa page
 
-Tapos na ang buong page at **nasa main lahat**. Handoff:
-`clients/oceanides/NEXT-SESSION-PRICE-PAGE.md`. Paste this to start:
+**LIVE na:** https://oceanides-price-page.vercel.app · Gate 2 APPROVED ni Neil
+2026-08-02 · live lead test GREEN (row pumasok sa `funnel_leads`, binura) ·
+Meta Pixel `1050997330667084` buhay sa prod bundle. Registry:
+`workflows/funnel_deploys.md`. Paste this to start:
 
 ```
-Ituloy natin ang Oceanides. Basahin mo muna ang
-clients/oceanides/NEXT-SESSION-PRICE-PAGE.md at ang clients/oceanides/DESIGN.md.
-Nasa main na ang page. Kailangan ang Meta Pixel ID at ang domain bago ang unang
-ad. Deploy runbook: workflows/funnel_deploys.md.
+Ituloy natin ang Oceanides. Live na ang page:
+https://oceanides-price-page.vercel.app
+Basahin mo muna ang workflows/funnel_deploys.md at ang
+clients/oceanides/kuya-marvin/ads/NEXT-SESSION.md (seksyon: Website campaign
+infrastructure). Dalawa na lang bago ang unang ad: domain at privacy read.
 ```
 
 ⚠️ **Client world:** matte navy + amber print, no glass, no `#FFCC00`, Taglish —
 `clients/oceanides/DESIGN.md` ang batas doon, hindi ang Grifon `DESIGN.md`.
 
-### ⛔ Kay Neil lang (naka-block ang deploy at ang ads)
+### ⛔ Kay Neil lang — dalawa na lang, at pareho silang bago ang UNANG AD
 
-1. **Meta Pixel ID** — Events Manager → Data sources → bagong dataset →
-   kopyahin ang 15-16 digit na ID. Libre, walang kailangang domain. `tracking: {}`
-   pa rin, PATAY: walang Lead data, walang naiipong audience, hindi mababawi.
-   **Build-time sa `funnel.config.ts` → bagong deploy kapag napalitan.**
-2. **Domain** — di kailangan ng pixel at di humaharang sa deploy, pero kailangan
-   **bago ang unang ad**: di mave-verify sa Meta ang `*.vercel.app`, at nahahati
-   ang pixel data kapag pinalitan ang URL habang tumatakbo na ang ads.
-3. **Gate 2** — buong basa sa totoong phone. `npm run build` sa
-   `funnels/oceanides-price-page`, `npx vite preview --port 4173 --host`, buksan
-   ang LAN URL sa phone. SAGOT NA ang 24-oras vs 8AM-5PM: hayaan.
+1. **Domain** — di pa nabibili. Hindi mave-verify sa Meta ang `*.vercel.app`, at
+   nahahati ang pixel data kapag pinalitan ang URL habang tumatakbo na ang ads.
+   Reco: brand domain (`oceanidesph.com`), hindi keyword domain. ~₱600-1,200/taon.
+2. **Basahin ang Privacy Policy** — https://oceanides-price-page.vercel.app/privacy
+   Legal notice sya ng totoong kompanya, hindi marketing copy. Hango sa kung ano
+   talaga ang ginagawa ng code, pero hindi pa nya nababasa.
 
-### Session 2026-08-02 (huli) — 3 hiling ni Neil, IM8 ang reference (`69e202c`)
+### Tatlong desisyon na hinihintay (naka-record sa `oceanides_business_model.md`)
 
-**costOfDelay** bago ang form: sarado ang fake countdown (DESIGN.md) at hindi
-totoong tumataas ang presyo sa paghihintay, kaya ang nawawala ay ang PAGPILI,
-hindi pera. **Guarantee**: seal na "30 ARAW" + 6 na audit chip, nailipat sa
-kaliwang rail (naka-gitna pala at walang SectionHeading; nakalusot sa lint kasi
-`text-center` className, hindi ang prop). **Tinanggihan: star rating at review
-count** kahit yun ang device ng IM8 — zero review, hard ban ang pag-imbento.
+Segmented payment policy + QR-first collection · disposal slip kada byahe (**may
+risk to**: nakalimbag na sa page ang "legal na tapunan" pero crew ang nagmamaneho
+at walang per-job na papel ang ₱5,000) · libre ba o ₱499 ang Health Check.
 
-### Pagkatapos ng deploy: ang unang campaign
+### Session 2026-08-02 — 3 hiling ni Neil, pixel, privacy, DEPLOY
 
-**Leads ang objective sa page, hindi Messenger.** KM-003: 100 messages sa ₱13.33
-pero ISANG order, ang close ang butas. Walang pixel data pa, kaya **cost per
-BOOKING ang titingnan.** `grifon-ad-strategist` ang magda-draft, si Neil ang
-magpapaputok.
+**costOfDelay** bago ang form: sarado ang fake countdown at hindi totoong tumataas
+ang presyo, kaya ang nawawala ay ang PAGPILI. **Guarantee**: "30 ARAW" seal + 6
+audit chip, nailipat sa kaliwang rail. **Tinanggihan: star rating** (zero review).
+**Pixel** naka-wire, **Advanced Matching OFF at walang CAPI** — parehong hashed
+PII papuntang Meta at hindi sya sakop ng consent natin. **Privacy Policy** ginawa
+(static, walang JS, zero Meta request). **Deploy + live e2e GREEN.**
 
 ## 🅿 PARKED
 
-**Oceanides (di naka-block ang deploy):** SEC Reg. No. · utang sa 100 taong
-nangakuan ng "libre ang tingin" · FB About: buong SEC name · i-archive ang June
-2025 AI-face post · 3-5 organic bago ang ad · hose baseline · logo-marquee ·
-real-bookings feed · **reviews sa FB Page** (bubuksan ang rating chip).
+**Oceanides:** SEC Reg. No. · utang sa 100 taong nangakuan ng "libre ang tingin" ·
+FB About: buong SEC name · 3-5 organic bago ang ad · logo-marquee · real-bookings
+feed · **reviews sa FB Page** (bubuksan ang rating chip) · **pangalawang page =
+DENR Compliance B2B**, hindi Health Check · dalawang Oceanides FB page, alin ang totoo.
 
-**Suby 27-minute brief** (walang sariling doc, mawawala kapag na-overwrite to):
-FB-group voice-of-customer mining · creative-reps counter sa
-`ad_performance_ledger.md` · print-ad seeding ng `static_ad_swipe_file.md` · wala
-sa `grifon-cmo` ang 5-freight-carriers lens, kaya di maulit sa bagong session.
+**Suby 27-minute brief** (walang sariling doc): FB-group voice-of-customer mining ·
+creative-reps counter sa `ad_performance_ledger.md` · print-ad seeding ng
+`static_ad_swipe_file.md` · wala sa `grifon-cmo` ang 5-freight-carriers lens.
 
 **Grifon punch list** (resume trigger: Neil says so): ✅ #91+#94.1 fixed, $0 ·
 #94.3 next · #94.2 NOT-REPRODUCIBLE · #96 `forced_alignment` granted ✅ ·
@@ -71,7 +68,7 @@ sa `grifon-cmo` ang 5-freight-carriers lens, kaya di maulit sa bagong session.
 
 ## ⛔ Gated — not without Neil
 
-Any paid render · P5 engine-default flip · Hyperframes swap · ang DEPLOY · ad spend.
+Any paid render · P5 engine-default flip · Hyperframes swap · **anumang ad spend**.
 
 ## 🔧 Arm before starting
 
