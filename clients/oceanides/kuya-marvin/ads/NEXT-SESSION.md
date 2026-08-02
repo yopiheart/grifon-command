@@ -376,9 +376,15 @@ hindi na ang gastos — **ito ay kung kaya bang sagutin ang 50 message kada araw
 
 ## ✅ Napagdesisyunan na — huwag nang balikan
 
+> ⚠️ **SAKOP: ang KM-003 MESSAGES campaign lang ang table na to.** Tumpak pa rin sya
+> bilang record ng campaign na yun. **Ibang infrastructure ang WEBSITE campaign**
+> (ang price page) — tingnan ang bagong seksyon sa ibaba, "Website campaign
+> infrastructure (2026-08-02)". Huwag hilahin ang ad account o ang pixel row dito
+> papunta sa website work.
+
 | Bagay | Desisyon | Bakit |
 | --- | --- | --- |
-| Ad account | `585951286230395` (Hidden Luxurious Condos) | ACTIVE, may payment method, ₱1,228.74/araw limit. Ang totoong Oceanides account (`481608629454262`, business `534113769107319`) ay **UNSETTLED** — may hindi pa bayad. |
+| Ad account | `585951286230395` (Hidden Luxurious Condos) | ACTIVE, may payment method, ₱1,228.74/araw limit. Ang totoong Oceanides account (`481608629454262`, business `534113769107319`) ay **UNSETTLED** — may hindi pa bayad. **⚠️ HIRAM na account to at KM-003 lang ang sakop — hindi na sya ginagamit ng website campaign.** |
 | Ad credit | **WALA** | Ang ₱5,156 ay **billing threshold**, hindi libreng pera — kung kailan sisingilin ang Visa ...5464, hindi kung magkano ang libre. Babayaran ang bawat piso. |
 | Pixel | **Huwag gumawa** | Messages campaign ito — `messaging_conversation_started` sa antas ng Page, walang pixel. Ang tanging naka-attach na dataset ay **"Grifon Pixel"** (`1921429268517231`) — sariling SaaS pixel ni Neil. Huwag itong i-tick sa ad set. |
 | Objective | **Engagement → Messaging apps**, maximize conversations | Kailangan ng ~50 events/linggo para makalabas sa learning. Sa ₱500/araw: usapan = 44–87/linggo ✅; sales = ~10/linggo ❌. Ang Sales → Messaging ay kailangan din ng CAPI for Business Messaging na wala pa tayo. |
@@ -572,6 +578,37 @@ konsepto.
 Tapos ipaste ulit ang `ACCESS_TOKEN` sa `.env` mula sa password manager mo.
 
 ---
+
+## 🌐 Website campaign infrastructure (2026-08-02) — bago, hiwalay sa KM-003
+
+Ang price page (`funnels/oceanides-price-page`) ay tumatakbo sa **sariling** ad
+account at pixel. Wala syang kinalaman sa hiram na account ng KM-003.
+
+| Bagay | Halaga | Nota |
+| --- | --- | --- |
+| Business portfolio | **"Neil Maglaya"**, `771158756811875` | Admin si Neil dito. Nandito na ang Oceanides Page. |
+| Ad account | **`4165212657057538`** — "Oceanides Malabanan" | Ginawa 2026-08-02. **BAGO**, kaya asahang mababa ang spend limit sa umpisa. |
+| FB Page | **`291924520660232`** — "Oceanides Malabanan - Septic Tank and Plumbing" | ✅ Kumpirmado 2026-08-02 na sya rin ang nasa likod ng `m.me/OceanidesMalabanan` na naka-hardcode sa `funnel.config.ts`. Walang babaguhin sa config. |
+| Pixel / dataset | ⏳ hinihintay kay Neil | Pangalan: `Oceanides Price Page`. **⛔ HINDI ang `1921429268517231` (Grifon Pixel)** — sariling SaaS pixel ni Neil yun. |
+| Zam | `ブルー マーケティング` | May access sa Page, wala sa portfolio. I-add sa "Neil Maglaya" na **Page access lang**, hindi ad-account admin. |
+
+**Bakit hindi sa portfolio ng Oceanides:** ang `Malabanan Siphoning Sipsip Pozo
+Negro and Plumbing Services` (`2966390243596032`) ay kay Boss Jay
+(`theoceanides.malabanan@gmail.com`, Full access + Finance). **Basic/Partial access
+lang si Neil doon**, kaya hindi sya makakagawa ng ad account o pixel. Hiningi na ang
+Full admin; **kung dumating bago ang ~₱10-20k na spend, lilipat tayo doon habang
+mura pa** (hindi malinis na nalilipat ang pixel history at custom audiences).
+Pagkatapos nun, sarado na ang usapan at sa "Neil Maglaya" na tumira nang tuluyan.
+
+🔴 **Ang deciding question ay hindi teknikal: kaninong pera ang bumibili ng ads.**
+Hawak ni Boss Jay ang Finance sa portfolio nya. Kung card ni Neil ang gagastos,
+tama ang "Neil Maglaya". Kung si Boss Jay ang magpopondo, doon dapat.
+
+⚠️ **Elevated review risk sa bagong account** — tingnan ang Health note sa ibaba:
+2 disabled at 5 unsettled na account na ni Neil, at **tinitingnan ng Meta ang
+kasaysayan sa antas ng tao, hindi per-account.** Bagong account + bagong payment
+method + bagong domain nang sabay-sabay ang pinakamataas na risk na kombinasyon.
+Dahan-dahan sa umpisa: mababang budget, walang biglaang scale sa unang linggo.
 
 ## Health note — hindi humaharang, pero ayusin bago mag-scale
 
