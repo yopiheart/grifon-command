@@ -151,6 +151,37 @@ Kaya may dead zone:
 Nakatulong din ang paglalagay ng tahasang eye instruction sa prompt (*crisp iris texture,
 defined pupil, real moisture, correctly shaped catchlight*) — nasa `polanchor.mjs`.
 
+### 🧍 Ang balikat ang sumisira, hindi ang mukha
+
+Bumagsak sina `pc-13` at `pc-16` sa mata ni Neil: *"mukang kinabit ung muka, di align
+sa katawan."* Ang unang hinala ko ay ang face-fill instruction — pero **pumasa si
+`pc-18` kahit siya ang may pinaka-tahasang fill sa lahat.** Kaya hindi yun.
+
+| | Balikat | Ulo laban sa katawan | |
+| --- | --- | --- | --- |
+| `pc-13` | malapad, parisukat, nakaharap | maling laki ng ulo | ⛔ |
+| `pc-16` | hubad, nakaikot ang katawan | nakabaling pabalik ang ulo | ⛔ |
+| `pc-18` | **nakatago sa leather jacket** | sabay lumingon | ✅ |
+
+Ang `anchor-polished.png` ay half-body na naka-polo: takip ang balikat, halos harap.
+Kapag hubad at malapad ang balikat sa bagong shot, **kailangang imbentuhin ng model ang
+ratio ng ulo sa balikat** at doon siya nasisira. Kay `pc-18`, tinakpan ng jacket ang
+buong geometry kaya walang maling maiimbento.
+
+> **Takpan o ilapit.** Hubad at nakaharap na balikat? Ilapit ang crop o lagyan ng damit
+> na may kwelyo at manggas.
+> **Sabay lumingon ang ulo at katawan.** Ang katawang nakaikot palayo na may ulong
+> nakabaling pabalik ay palaging sira — hindi kaya ng leeg yun.
+
+Verbatim na block: `build-shoulderfix.mjs` → `const SHOULDERS`. Napatunayan sa
+`pc-13b` at `pc-16b`.
+
+⚠️ **Sa `pc-16b` dalawa ang binago nang sabay** (balikat at ilaw), kaya hindi malinis
+na naihiwalay doon ang dalawang sanhi. Ang `pc-18` ang matibay na ebidensya para sa
+balikat. Tungkol naman sa ilaw: kahit hindi siya ang sanhi, mas ligtas pa rin ang
+**key mula sa gilid** kaysa sa backlight na may bounce card sa mukha — iisang ilaw ang
+eksena at ang mukha, hindi dalawang sistema.
+
 ### ⏱ Ang matagal na shot ay senyales na TINGNAN, hindi senyales na bagsak
 
 Tumagal si `pp-05` (poolside) ng 614s samantalang mga 240s ang iba, at ang lumabas ay
