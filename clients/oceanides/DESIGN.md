@@ -241,6 +241,17 @@ dahilan ang dalawa: **hindi umaasa sa pagtanda, gate ang gamit.**
 
 ## Registered artifacts (i-redeploy sa SAME URLs)
 
+- **GB-001 Work Brief (2026-08-03):** ang unang campaign ng price page — approved na
+  static ad, 18s storyboard ni Gabriel, ang retention table na nagtakda ng hugis nito,
+  3 organic post, at ang run sheet. Ginawa habang natutulog si Neil, para may
+  mabasa sya sa cellphone paggising.
+  `https://claude.ai/code/artifact/9c0c6df5-46eb-4f75-8ea1-2631ef650d40`
+  Twin: [`artifacts/gb-001-brief.html`](../../artifacts/gb-001-brief.html) ·
+  Build: `node tools/artifacts/build-gb-001-brief.mjs`. Pumasa sa 390×844 gate.
+  ⚠️ **Aral ng gate na to:** ang `min-width` sa isang table ay tahimik na pumuputol
+  ng column sa 390px. Ang naputol ay ang mismong numerong dahilan ng table. Kapag
+  may `.scroll` container ka, hindi ibig sabihin na pasado — tingnan kung ang
+  **punto** ba ng table ay kita nang hindi nagsa-swipe.
 - **Kuya Gabriel v1 + ang price page (2026-07-30):** apat na identity-lock plate ni
   Gabriel na may QA verdict, at ang buong landing + thank-you page sa loob ng phone
   frame na kayang i-swipe. Ginawa dahil naka-remote si Neil at hindi nya masilip ang
