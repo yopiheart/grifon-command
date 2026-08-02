@@ -151,19 +151,27 @@ Kaya may dead zone:
 Nakatulong din ang paglalagay ng tahasang eye instruction sa prompt (*crisp iris texture,
 defined pupil, real moisture, correctly shaped catchlight*) — nasa `polanchor.mjs`.
 
-### ⏱ Ang matagal na shot ay hindi mabagal, PUMALIT siya
+### ⏱ Ang matagal na shot ay senyales na TINGNAN, hindi senyales na bagsak
 
-Tumagal si `pp-05` (poolside) ng 614s samantalang mga 240s ang iba. Ang lumabas ay
-hindi pool kundi isang babae na naka-beige knit sa sofa — halos kamukha pa ng ibang
-shot. **Hindi siya pumalya, pumalit siya.** Habang naghihirap ang Codex sa isang
-eksenang natatapik ang safety layer (dito: swimwear + nakalubog na binti), pumipili
-siya ng ligtas na larawan imbes na sumuko, at *matagumpay* pa ang exit code.
+Tumagal si `pp-05` (poolside) ng 614s samantalang mga 240s ang iba, at ang lumabas ay
+hindi pool kundi isang babae na naka-beige knit sa sofa. **Hindi siya pumalya, pumalit
+siya** — habang naghihirap ang Codex sa isang eksenang natatapik ang safety layer
+(dito: swimwear + nakalubog na binti), pumipili siya ng ligtas na larawan imbes na
+sumuko, at *matagumpay* pa ang exit code.
 
-> Kapag lumagpas ang isang shot sa **doble ng karaniwang oras** ng batch, tingnan mo
-> siya bago tanggapin. Malamang hindi yun ang hiningi mo.
+⚠️ **Pero huwag itong gawing bagsak-agad.** Sa wave 1, tatlo ang lumagpas sa doble:
+`pp-11` (516s), `r15-tricycle` (911s), `r21-bedroom-lamp` (1019s). **Tama silang
+tatlo**, at dalawa sa kanila ang pinakamagagandang raw shot sa buong library.
+Ang matagal ay ibig sabihin **naghirap** ang Codex — safety retry man o komplikadong
+eksena lang.
 
-Hindi blanket ang swimwear block — pumasa si `pp-03` na naka-one-piece sa dusk.
-Kombinasyon ang tumatapik, hindi isang salita.
+> Kapag lumagpas sa doble ng karaniwang oras: **tingnan mo bago tanggapin.**
+> Hindi awtomatikong mali, pero doon nagtatago ang mali.
+
+Hindi blanket ang swimwear block — pumasa si `pp-03` na naka-one-piece sa dusk, at
+pumasa si `pp-11` nang lagyan ng linen shirt na cover-up. Kombinasyon ang tumatapik,
+hindi isang salita. Kapag natapik, **magdagdag ng cover-up o alisin ang tubig sa
+katawan**, huwag basta ulitin.
 
 ### ✋ Ang hands rule
 
