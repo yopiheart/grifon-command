@@ -79,6 +79,32 @@ All smoke tests must be delegated to the `smoke-tester` subagent (defined in [.c
 
 If a planning conversation introduces a new domain concept not in `UBIQUITOUS_LANGUAGE.md`, propose adding it before writing code.
 
+## Language Register — reply in Neil's register
+
+**When Neil writes in Tagalog/Taglish, reply in Taglish.** Not deep translated Tagalog — his
+register. The full spec is [.claude/skills/_shared/taglish-voice.md](.claude/skills/_shared/taglish-voice.md);
+read it before writing any *copy* (ad, post, caption, page, script). For ordinary chat
+replies, four rules:
+
+1. **50/50 split, not heavy Tagalog.** English for things and technical nouns (price,
+   septic tank, budget, data, message, funnel, ads, video, report, booking). Tagalog for
+   the human part (the problem, the fear, the decision, the close). Full-English on the
+   human part reads as a call center; full-Tagalog on the technical part reads as bulol.
+2. **Grade-4 words.** If a person wouldn't say it out loud, replace it. ⛔ `datos`,
+   `badyet`, `usapan`, `kalibrasyon`, `pananagutan`, `panganib`, `humaharang`, `naitala`,
+   `samakatuwid`, `gayunpaman` → ✅ `data`, `budget`, `message`, `testing`, `risk`,
+   `blocker`, `nakasulat`, `kaya`, `pero`.
+3. **No em dash. No apostrophes in contractions** — `nyo`, `yun`, `yan`, `to`, `wag`, `di`.
+4. **Calm expert, not excited salesman.** No emoji stacks.
+
+⚠️ **Internal dashboards and artifacts are NOT exempt** — Neil reads them on his phone.
+This rule exists because the agent kept drifting into literary Tagalog; his verdict on the
+KM-003 dashboard was *"sakit sa mata basahin."*
+
+Enforced by [.claude/hooks/taglish-guard.sh](.claude/hooks/taglish-guard.sh) (`UserPromptSubmit`),
+which injects the rules when it sees ≥2 distinct Tagalog markers in the prompt. Fail-open —
+it never blocks a prompt. This file is the durable half; the hook is the automatic half.
+
 ## Context Hygiene
 
 LLM reasoning degrades sharply past ~100k tokens of context. Treat the conversation window as a budget.

@@ -134,9 +134,34 @@ amber (floor sa itaas). Walang paper surface sa video overlays o dashboards.
 | Role | Face | Rules |
 | --- | --- | --- |
 | `headline-display` | **Anton** (single weight — walang bold/italic variants; huwag i-fake) | UPPERCASE, `line-height .9–.95`, `letter-spacing .5px`; emphasis = kulay (`primary`), hindi weight |
-| `body-md` | **Inter** 400–800 | sentence case; 700–800 emphasis; `on-surface-muted` sa navy |
-| `label-strong` | Inter 800–900, 10–12px | uppercase, `letter-spacing 1–1.2px`, `sky` sa navy |
+| `subhead` | **Anton**, 1.375rem mobile / 1.75rem desktop | Ang hakbang sa PAGITAN ng display at body. Kulay = `on-surface`, hindi accent — istraktura ito, hindi diin. Idinagdag 2026-08-01 (tingnan sa ibaba kung bakit) |
+| `body-md` | **Inter** 400–800 | sentence case; 700–800 emphasis; `on-surface-muted` sa navy. 16px ang default; 17–18px sa mahabang babasahin |
+| `label-strong` | Inter 800–900, 10–12px | uppercase, `letter-spacing 1–1.2px`, `sky` sa navy. **`<p>` o `<span>` LANG, kailanman hindi `<h1>`–`<h3>`** |
 | `data-mono` | JetBrains Mono | internal dashboards/tickets LANG — hindi customer-facing creative |
+
+### 🔴 Ang bitag: sapilitang Anton ang `h1`–`h3` (nahuli ni Neil 2026-08-01)
+
+May global rule sa `index.css` na ang `h1, h2, h3` ay Anton + UPPERCASE. Kaya
+**ang laman ng h-tag ay hindi kailanman magiging Inter**, kahit anong Tailwind
+class ang ilagay mo.
+
+Ang nangyari: isang maliit na label ang ginawang `<h3>` na may
+`text-[11px] font-black uppercase`. Ang inaasahan ay 11px na Inter label. Ang
+lumabas ay **Anton sa 11px** — condensed display face na sinisiksik sa laki ng
+fine print, kaya mukhang sira, hindi lang maliit. (`font-black` naman ay walang
+epekto: isang weight ang Anton.) Sabi ni Neil sa unang tingin: *"ang liliit ng
+text? ung kulay blue at orange?"*
+
+Dalawang rule na lumabas dito:
+
+1. **Label = `<p>`. Heading = h-tag.** Kung maliit at uppercase, hindi sya
+   h-tag. Lahat ng ibang maliit na label sa funnel (`SocialProofBar`,
+   `ClientsMarquee`, `FieldInspector`) ay `<p>` — sundan sila.
+2. **Kapag walang bagay sa laddder na bagay sa role, iyon ay gap ng sistema,
+   hindi lisensya para pilitin ang pinakamalapit.** Walang `subhead` noon sa
+   table sa itaas, kaya ang pinakamalapit na hinawakan ay `label-strong` — at
+   ang maling role ang nagdala ng maling face, maling laki, at maling kulay
+   nang sabay. Ang `subhead` na row ang pagsasara ng gap na iyon.
 
 - **Anton ang display sa LAHAT ng surface** — stills, video captions
   (`build-captions.mjs` IMPACT chunk-pop grammar, exact drawPlan constants
@@ -186,8 +211,45 @@ amber (floor sa itaas). Walang paper surface sa video overlays o dashboards.
 | **Internal dashboards / artifacts** | Artifact tool | Field-Ops-ticket language (ito ang piniling direction ni Neil 2026-07-27) · Taglish · `data-mono` allowed · **mandatory 390×844 smoke-tester gate + mobile-safe checklist sa CLAUDE.md** · walang client secrets/tokens · **placeholder/demo na numero ay dapat HALATANG peke** (tingnan ang Don'ts) |
 | **Marvin mismo** (plates, stills) | `marvin-avatar` + identity-lock manifests | identity consistency ang batas — huwag i-style ang mukha; hindi token concern |
 
+## Layout: isang rail (Neil, 2026-07-30)
+
+> *"Ung before & after headline/text hindi na igitna eto lang ang naiiba. Please
+> sana matandaan mo lahat ng to. Dapat aligned yan bro."*
+
+Hindi ito panlasa. **Print world ito**, at ang print ay nakapatong sa isang
+kaliwang rail. Ang naka-gitnang column ay dating deck, hindi papel.
+
+| Bahagi | Lapad | Puwesto |
+|---|---|---|
+| **Content sections** (presyo, kwento, objection, before/after, FAQ, form, P.S.) | `prose` (46rem) | Kaliwa. **Walang exception.** |
+| **Bands** (hero, proof strip, footer) | `shell` (72rem) | Pwedeng gitna. Strip sila, hindi babasahing column. |
+| **Hero** | `shell` | 🔴 **Ito lang ang naka-gitna.** Isang sandali, tapos bumabalik sa rail ang buong page. |
+
+**Ang nangyaring pagkakamali:** nasa `shell` ang before/after habang nasa `prose`
+ang lahat ng iba, kaya **208px ang layo ng gilid nya.** Hindi to makikita kapag
+isang file lang ang binabasa mo. Lumalabas lang kapag nag-scroll ka at tumatalon
+ang teksto sa gilid.
+
+⚙️ **May bantay na ito ngayon:** `funnels/oceanides-price-page/scripts/lint-layout.mjs`,
+naka-wire sa `prebuild`. Babagsak ang build kapag may section na lumihis sa rail
+o nag-center nang walang karapatan. **Huwag itong ayusin sa pamamagitan ng
+pagdagdag sa exception list** — ayusin ang section.
+
+Katabi nya ang `lint-voice.mjs` na siyang bumabantay sa copy laban sa
+[`taglish-voice.md`](../../.claude/skills/_shared/taglish-voice.md). Parehong
+dahilan ang dalawa: **hindi umaasa sa pagtanda, gate ang gamit.**
+
 ## Registered artifacts (i-redeploy sa SAME URLs)
 
+- **Kuya Gabriel v1 + ang price page (2026-07-30):** apat na identity-lock plate ni
+  Gabriel na may QA verdict, at ang buong landing + thank-you page sa loob ng phone
+  frame na kayang i-swipe. Ginawa dahil naka-remote si Neil at hindi nya masilip ang
+  page sa cellphone. Naka-link din sa isang Gmail draft.
+  `https://claude.ai/code/artifact/99a49f2a-96a1-499a-a681-c257e47f38df`
+  Twin: [`artifacts/gabriel-review.html`](../../artifacts/gabriel-review.html) ·
+  Build: `node tools/artifacts/build-gabriel-review.mjs`. Pumasa sa 390×844 gate.
+  ⚠️ **May mukha ng tao na wala pang pirmadong consent** — huwag i-share hangga't
+  hindi pa pirmado ang likeness agreement ni Gabriel.
 - **KM-003 Page Launch — Run Sheet (2026-07-27):** ang limang organic post na
   kopya-paste habang nagpo-post sa phone, kasama ang pre-flight bago i-ON.
   `https://claude.ai/code/artifact/5952f7ba-859c-45b9-a295-fa8320c4d5d4`

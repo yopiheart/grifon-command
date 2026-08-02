@@ -45,6 +45,17 @@
         ]
       }
     ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "bash",
+            "command": "bash .claude/hooks/taglish-guard.sh"
+          }
+        ]
+      }
+    ],
     "SessionStart": [
       {
         "hooks": [

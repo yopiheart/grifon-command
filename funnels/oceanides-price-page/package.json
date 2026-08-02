@@ -1,0 +1,36 @@
+{
+  "name": "oceanides-price-page",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "prebuild": "node scripts/lint-voice.mjs && node scripts/lint-layout.mjs",
+    "lint:voice": "node scripts/lint-voice.mjs",
+    "lint:layout": "node scripts/lint-layout.mjs"
+  },
+  "dependencies": {
+    "@fontsource/anton": "^5.2.5",
+    "@fontsource/inter": "^5.3.0",
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "@supabase/supabase-js": "^2.103.3",
+    "motion": "^12.38.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17",
+    "@vercel/node": "^5.7.15",
+    "@vitejs/plugin-react": "^5.2.0",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32",
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5.2.2",
+    "vite": "^8.0.10"
+  }
+}

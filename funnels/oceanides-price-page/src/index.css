@@ -1,0 +1,319 @@
+﻿/* Brand fonts - SELF-HOSTED via @fontsource (same-origin woff2, bundled by
+   Vite; still zero external requests). Weight 500 is banned by DESIGN.md.
+
+   Anton is the Oceanides display face (clients/oceanides/DESIGN.md). It ships a
+   SINGLE weight (400) by design — "walang bold/italic variants; huwag i-fake."
+   Self-hosting is mandatory, not cosmetic: naming "Anton" in a CSS stack without
+   the woff2 renders as Roboto/Impact on a visitor's phone (funnel-forge rule #3). */
+@import '@fontsource/anton/400.css';
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/inter/700.css';
+@import '@fontsource/inter/800.css';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/600.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------------------
+   Brand defaults — same names src/theme/brand.ts writes at runtime, so the
+   first paint is already correct and nothing flashes. These MIRROR the brand
+   block in src/funnel.config.ts; keep them in sync or the page flashes Grifon
+   yellow before React boots.
+
+   Values are the Oceanides tokens, copied 1:1 from the YAML frontmatter of
+   clients/oceanides/DESIGN.md (v1.0). Never hardcode a hex here that isn't in
+   that file — it is the source of truth for every Oceanides surface.
+
+   All fonts are bundled woff2 (see the @import block above). No CDN, no network
+   request from this page.
+--------------------------------------------------------------------------- */
+:root {
+  /* amber — the ONLY accent. "sa dagat ng asul, ang amber ang pumipigil ng scroll." */
+  --brand-primary: #f5b301;
+  /* navy ladder replaces black. "ang itim ay Grifon; ang navy ang nagpapa-Oceanides." */
+  --brand-surface: #0e2c5e;
+  --brand-surface-elevated: #0a1f45;
+  --brand-on-surface: #ffffff;
+  --brand-on-surface-muted: #dfe8f5;
+  /* #8FB3DD = 7.5:1 on surface-deep, the darkest legal text step on navy. */
+  --brand-on-surface-dim: #8fb3dd;
+  --brand-proof-band: #f4f6fa;
+  --brand-font-display: Anton, 'Roboto Condensed', 'Arial Narrow', Impact, sans-serif;
+  --brand-font-body: Inter, 'Helvetica Neue', Arial, sans-serif;
+  --brand-font-accent: 'JetBrains Mono', ui-monospace, monospace;
+  /* Print world, not app world — corners stay tight. */
+  --brand-radius: 0.25rem;
+
+  /* --- GROUND-RELATIVE TOKENS (see the ground ladder below) ----------------
+     These are the values that must FLIP when a section sits on paper instead
+     of navy. Everything else in the system is ground-agnostic. They live here
+     as the navy defaults; .ground-paper / .on-paper overrides them for its
+     subtree, and every component reads them through a Tailwind brand token, so
+     no component ever asks "what ground am I on?".                          */
+  --brand-ocean: #1c63ad;
+  --brand-surface-void: #071630;
+  /* Accent TEXT. Amber on navy (8.8:1). On paper amber is 1.7:1 and BANNED,
+     so paper swaps in ocean (5.7:1) — clients/oceanides/DESIGN.md contrast floor. */
+  --brand-accent-text: var(--brand-primary);
+  /* Semantic ✓. DESIGN.md: good-on-dark on navy, good on paper. Never amber. */
+  --brand-good: #3ed36b;
+  /* Card fill + its 2px print edge, and the 1px inner divider. */
+  --brand-card: var(--brand-surface-elevated);
+  --brand-card-border: rgba(255, 255, 255, 0.2);
+  --brand-hairline: rgba(255, 255, 255, 0.1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Mobile-first hard rule: nothing may scroll sideways at 390px. */
+    overflow-x: hidden;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--brand-surface);
+    color: var(--brand-on-surface);
+    font-family: var(--brand-font-body);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Anton spec from clients/oceanides/DESIGN.md: UPPERCASE, line-height .9-.95,
+     letter-spacing +0.5px. The template's default -0.02em is for Inter display —
+     negative tracking on a condensed face closes the counters into mush. */
+  h1,
+  h2,
+  h3 {
+    font-family: var(--brand-font-display);
+    font-weight: 400;
+    text-transform: uppercase;
+    line-height: 0.95;
+    letter-spacing: 0.5px;
+    text-wrap: balance;
+  }
+
+  /* One focus treatment for the whole funnel — forms are the conversion event,
+     so their focus state is never left to the browser default. */
+  :focus-visible {
+    outline: 2px solid var(--brand-primary);
+    outline-offset: 2px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   THE GROUND LADDER — chapter grounds (2026-08-01)
+
+   The page used to be ONE flat navy field from the eyebrow to the footer. Every
+   section was transparent over `body`, so a 12-section price page read as a
+   single unbroken wall and nothing announced "new chapter". In a print world
+   that is the wrong failure: a printed sales piece changes STOCK when it changes
+   argument — the quotation goes on white, the story goes back on the house
+   colour. That is what these classes are.
+
+   Each ground is a full-bleed band painted by a wrapper <div> in Landing.tsx;
+   the content inside still rides the one left rail (scripts/lint-layout.mjs).
+   Transitions are HARD edges — no soft blends between chapters, because paper
+   does not fade into paper.
+
+   `.ground-paper` and `.on-paper` also FLIP the text ladder for their subtree,
+   per the DESIGN.md paper-surface exception. `.on-paper` is the ladder without
+   the background, for a paper OBJECT sitting on a navy ground (the hero price
+   ticket).
+--------------------------------------------------------------------------- */
+@layer components {
+  /* Every band re-declares `color` from the token. Flipping the custom property
+     alone is NOT enough and this bit us in the first render pass: `color` is
+     computed once on <body> as white, and a descendant INHERITS that computed
+     white — it never re-reads the variable. Anything with an explicit
+     `text-brand-*` class flipped correctly; the section <h2>, which has no
+     colour class by design, stayed white on the paper chapters. So the ground
+     owns `color`, and inheritance below it is correct by construction. */
+  .ground-navy,
+  .ground-navy-deep,
+  .ground-navy-gradient,
+  .ground-void,
+  .ground-paper,
+  .on-paper {
+    color: var(--brand-on-surface);
+  }
+
+  .ground-navy {
+    background-color: var(--brand-surface);
+  }
+
+  /* Cards step UP here. The default card fill IS surface-deep, so on a
+     surface-deep ground a card has zero tonal separation — and DESIGN.md's
+     elevation is a tonal fill, not a border. The form panel needs to read as a
+     panel, so on this ground it takes the lighter navy. */
+  .ground-navy-deep {
+    background-color: var(--brand-surface-elevated);
+    --brand-card: var(--brand-surface);
+  }
+
+  /* Hero. DESIGN.md panel rule: "tonal fill — `surface` o gradient
+     ocean → surface-deep, solid." The top stop is ocean blended 40% into
+     `surface` rather than raw #1C63AD: measured on raw ocean, amber headline
+     runs land at 3.3:1 and `on-surface-dim` at 2.5:1, both under the floor. At
+     #14427E the same three measure amber 5.4:1, white 9.9:1, dim 4.6:1. */
+  .ground-navy-gradient {
+    background-color: var(--brand-surface-elevated);
+    background-image: linear-gradient(180deg, #14427e 0%, var(--brand-surface-elevated) 100%);
+  }
+
+  .ground-void {
+    background-color: var(--brand-surface-void);
+  }
+
+  .ground-paper {
+    background-color: var(--brand-proof-band);
+  }
+
+  .ground-paper,
+  .on-paper {
+    --brand-on-surface: #0b1b33;
+    --brand-on-surface-muted: #33445e;
+    --brand-on-surface-dim: #5b6b85;
+    --brand-accent-text: var(--brand-ocean);
+    --brand-good: #1b8a3c;
+    --brand-card: #ffffff;
+    --brand-card-border: rgba(11, 27, 51, 0.14);
+    --brand-hairline: rgba(11, 27, 51, 0.1);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   CLIENTS MARQUEE — the one continuously moving thing on the page.
+
+   Pure CSS, no JS and no library: the track holds the name list TWICE and slides
+   exactly one copy's width, so the loop has no seam and nothing has to measure
+   anything at runtime. `width: max-content` is what makes -50% mean "one copy".
+
+   Chips carry their own right margin instead of the track carrying `gap` —
+   with a gap the track is wider than two copies and -50% lands mid-list, which
+   shows up as a stutter once per loop.
+--------------------------------------------------------------------------- */
+@keyframes marquee-slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* READABILITY PASS (Neil, 2026-08-01: "parang hirap basahin").
+   The colour was never the problem. White on navy measures 16.2:1 and every
+   dimmer step in the palette would make it HARDER, not easier. Two mechanical
+   causes, both visible in his screenshot:
+
+   1. `overflow: hidden` guillotines a name mid-word at each edge ("es", "Toy"),
+      and the eye keeps trying to finish a word that was cut. A soft mask lets
+      names dissolve instead, which is also how a real printed strip behaves
+      under a fold. Ground-agnostic, so it survives a chapter move.
+   2. It was travelling ~73px/s. Reading a moving target at that speed is hard
+      at any contrast; the slower track below is ~39px/s. */
+.marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+}
+
+.marquee__track {
+  display: flex;
+  width: max-content;
+  animation: marquee-slide 75s linear infinite;
+}
+
+/* Pause on hover so a reader can actually read a name they half-caught. */
+.marquee:hover .marquee__track {
+  animation-play-state: paused;
+}
+
+.marquee__row {
+  display: flex;
+}
+
+/* ---------------------------------------------------------------------------
+   BEFORE/AFTER WIPE — the range input is the whole interaction surface.
+
+   It is transparent rather than `opacity: 0` on purpose: an invisible-by-opacity
+   control also hides its own focus ring, and this is the one keyboard-operable
+   widget on the page. The thumb is transparent because the visible handle is a
+   sibling div that tracks the same value; clicking anywhere on a range track
+   jumps the thumb AND starts a drag, so the small thumb costs nothing.
+--------------------------------------------------------------------------- */
+.wipe-range {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: ew-resize;
+}
+
+.wipe-range::-webkit-slider-runnable-track,
+.wipe-range::-moz-range-track {
+  height: 100%;
+  background: transparent;
+  border: 0;
+}
+
+.wipe-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: 0;
+  cursor: ew-resize;
+}
+
+.wipe-range::-moz-range-thumb {
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: 0;
+  cursor: ew-resize;
+}
+
+/* Belt-and-braces to the reducedMotion() helper: the helper zeroes motion/react
+   transitions, this zeroes anything CSS-driven (smooth scroll included). */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  /* The marquee cannot just be frozen — a stopped strip still hides half its
+     names behind the clip. So it stops being a strip: the list wraps into a
+     static block and the duplicate copy, which only ever existed to make the
+     loop seamless, is removed from the layout as well as from the a11y tree. */
+  /* The edge mask exists to hide a moving cut. Nothing moves here, so the mask
+     would just fade the first and last name of a static block for no reason. */
+  .marquee {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .marquee__track {
+    animation: none;
+    width: 100%;
+  }
+
+  .marquee__row {
+    flex-wrap: wrap;
+    row-gap: 0.75rem;
+  }
+
+  .marquee__row[aria-hidden='true'] {
+    display: none;
+  }
+}
