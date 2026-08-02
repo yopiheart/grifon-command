@@ -6,18 +6,23 @@
   "lines": [
     "Kahit anong plunger, balik nang balik ang problema.",
     "Pero ang mas nakakatakot, yung singil pagdating ng truck.",
-    "Isa ang quote sa phone, iba na sa receipt.",
+    "Isa ang presyo sa phone, iba na sa receipt.",
     "Grabe daw ang singilan. Yan ang sabi nila.",
     "Kaya nasa page na ang buong presyo, nakasulat.",
     "Pati ang mga dagdag na itinatago ng iba.",
     "Basahin mo muna bago ka mag-book ng schedule."
   ],
   "plates": [
-    { "id": "s1", "location": "jobsite-a", "framing": "waist-up eye-level" },
-    { "id": "s2", "location": "jobsite-a", "framing": "waist-up slight-low" },
-    { "id": "s3", "location": "jobsite-a", "framing": "close head-and-shoulders" }
+    { "id": "s1", "location": "jobsite-a", "framing": "close head-and-shoulders, eye-level" },
+    { "id": "s2", "location": "jobsite-a", "framing": "medium chest-up, slight-low" },
+    { "id": "s3", "location": "jobsite-a", "framing": "tight face, eye-level" }
   ],
+  "framingRule": "🔴 IWASAN ANG PURO BODY ANGLE (Neil, 2026-08-03). Ang v1 ay tatlong waist-up/body shot kaya walang lundag ang mga cut at mukhang tatlong shoot na pinagdikit. Ang kailangan ay lundag sa LAPIT (close -> medium -> tight), isang jobsite lang, hindi tatlong pose ng buong katawan. Ang mukha ang nagbebenta sa talking ad, hindi ang katawan — at ang mahigpit na framing ay siya ring nagpapaliit ng identity-drift surface, kaya dalawang panalo sa isang desisyon.",
   "brollLane": "screen-recording ng oceanidesph.com (totoong page, $0, hindi generation)",
+  "neilNotes": {
+    "line3": "APPROVED ni Neil 2026-08-03, at sya mismo ang nagpalit ng `quote` -> `presyo`. Gamitin sa SCENE 3. Sabi nya: 'Yan tama.' Wag nang galawin ang linyang to.",
+    "preset": "spotlight — 'Sundin mo un' (Neil, 2026-08-03)"
+  },
   "customerVerbatim": [
     "Talaga grabe ang singilan.",
     "At dapat may resibo kayo.",
