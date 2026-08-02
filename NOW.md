@@ -1,6 +1,6 @@
 # NOW
 
-**Stamped: 2026-08-02** · Anchor commit: `ec43d05` (main) · `feat/oceanides-price-page` MERGED na sa main
+**Stamped: 2026-08-02** · Anchor commit: `69e202c` (main) · lahat ng Oceanides work ay nasa main
 
 > The single resume doc. One screen, one next action. Read this first.
 > **Freshness contract:** if the stamp is >5 days behind `git log -1`, treat as UNVERIFIED —
@@ -9,69 +9,69 @@
 
 ---
 
-## ▶ NEXT ACTION — OCEANIDES: Gate 2 full read → deploy → unang campaign sa page
+## ▶ NEXT ACTION — OCEANIDES: pixel ID + domain → deploy → unang campaign
 
-Tapos na ang buong page at **nasa main na lahat** (merge `ec43d05`). Handoff:
+Tapos na ang buong page at **nasa main lahat**. Handoff:
 `clients/oceanides/NEXT-SESSION-PRICE-PAGE.md`. Paste this to start:
 
 ```
-Ituloy natin ang Oceanides. Basahin mo muna:
-  clients/oceanides/NEXT-SESSION-PRICE-PAGE.md
-  clients/oceanides/DESIGN.md
-Naka-merge na sa main ang page. Gate 2 full read ni Neil, tapos deploy
-(workflows/funnel_deploys.md ang runbook), tapos ang unang campaign papunta sa page.
+Ituloy natin ang Oceanides. Basahin mo muna ang
+clients/oceanides/NEXT-SESSION-PRICE-PAGE.md at ang clients/oceanides/DESIGN.md.
+Nasa main na ang page. Kailangan ang Meta Pixel ID at ang domain bago ang unang
+ad. Deploy runbook: workflows/funnel_deploys.md.
 ```
 
-⚠️ **Client world:** matte navy + amber print, no glass, no `#FFCC00`, Taglish.
-Ang `clients/oceanides/DESIGN.md` ang batas doon, hindi ang Grifon `DESIGN.md`.
+⚠️ **Client world:** matte navy + amber print, no glass, no `#FFCC00`, Taglish —
+`clients/oceanides/DESIGN.md` ang batas doon, hindi ang Grifon `DESIGN.md`.
 
 ### ⛔ Kay Neil lang (naka-block ang deploy at ang ads)
 
-1. **Gate 2** — buong basa ng landing + thank-you sa totoong phone nya. Ang 4 na
-   5-carrier fix ay approved na (2026-08-02), pero ang buong page read ay hindi pa.
-2. **Meta Pixel ID** — `tracking: {}` ngayon, PATAY. Walang Lead data at walang
-   maiipong retargeting audience kung mag-a-ads nang wala nito. Hindi mababawi.
+1. **Meta Pixel ID** — Events Manager → Data sources → bagong dataset →
+   kopyahin ang 15-16 digit na ID. Libre, walang kailangang domain. `tracking: {}`
+   pa rin, PATAY: walang Lead data, walang naiipong audience, hindi mababawi.
+   **Build-time sa `funnel.config.ts` → bagong deploy kapag napalitan.**
+2. **Domain** — di kailangan ng pixel at di humaharang sa deploy, pero kailangan
+   **bago ang unang ad**: di mave-verify sa Meta ang `*.vercel.app`, at nahahati
+   ang pixel data kapag pinalitan ang URL habang tumatakbo na ang ads.
+3. **Gate 2** — buong basa sa totoong phone. `npm run build` sa
+   `funnels/oceanides-price-page`, `npx vite preview --port 4173 --host`, buksan
+   ang LAN URL sa phone. SAGOT NA ang 24-oras vs 8AM-5PM: hayaan.
 
-### Session 2026-08-02 (huli) — 5-carrier review + MERGE sa main
+### Session 2026-08-02 (huli) — 3 hiling ni Neil, IM8 ang reference (`69e202c`)
 
-Suby 5 freight-carriers pass sa price page, CMO-approved, applied (`90b8479`):
-headline "Walang **sorpresang** dagdag" · subhead "warranty **sa bara**" · semento
-= sariling ticket line · P.S. #1 = guarantee restate (F01). Verified: lint-voice,
-lint-layout, tsc, build, 390x844 smoke — lahat pasado. **Desisyon: walang CTA sa
-fold, tama na ang StickyCta** (lumalabas paglabas ng hero, nagtatago sa form).
-Tapos merge sa main `ec43d05` (isang conflict lang, taglish-guard hook, resolved).
-Oras-ng-tawag blocker: SOLVED na (`d980286`, 8AM-5PM sa thank-you).
-
-### Session 2026-08-02 (umaga) — GUARDRAIL, nasa main (`dd616d4`)
-
-**Ad-spend gate** (`.claude/hooks/ad-spend-gate.sh`): deny sa activate/boost at create na
-may ACTIVE o budget · ask sa staging writes · sakop ang CLI sa Bash · 17/17 test.
-**Executor ledger** (`tools/executor_ledger.mjs`) + `Executor:` trailer, baseline 25%.
-
-### 🅿 Parked sa Oceanides (di naka-block ang deploy)
-
-**SEC Reg. No.** · **TIN sa page** nakapangalan kay Cepriano sa SEC, ipa-check sa BIR
-2303 · utang sa 100 taong nangakuan ng "libre ang tingin" · FB About: buong SEC name ·
-i-archive ang June 2025 AI-face post · 3-5 organic bago ang unang ad · hose baseline ·
-logo-marquee · real-bookings feed · Suby follow-ups: FB-group voice-of-customer mining,
-creative-reps counter sa ledger, print-ad seeding ng static swipe file.
+**costOfDelay** bago ang form: sarado ang fake countdown (DESIGN.md) at hindi
+totoong tumataas ang presyo sa paghihintay, kaya ang nawawala ay ang PAGPILI,
+hindi pera. **Guarantee**: seal na "30 ARAW" + 6 na audit chip, nailipat sa
+kaliwang rail (naka-gitna pala at walang SectionHeading; nakalusot sa lint kasi
+`text-center` className, hindi ang prop). **Tinanggihan: star rating at review
+count** kahit yun ang device ng IM8 — zero review, hard ban ang pag-imbento.
 
 ### Pagkatapos ng deploy: ang unang campaign
 
-**Leads ang objective sa page, hindi Messenger.** KM-003: 100 messages sa ₱13.33 pero
-ISANG order, ang close ang butas. Mas mahal ang website leads habang walang pixel data,
-kaya **cost per BOOKING ang titingnan.** `grifon-ad-strategist` ang magda-draft, si Neil
-ang magpapaputok. Naka-block na sa hook ang sarili kong pag-fire.
+**Leads ang objective sa page, hindi Messenger.** KM-003: 100 messages sa ₱13.33
+pero ISANG order, ang close ang butas. Walang pixel data pa, kaya **cost per
+BOOKING ang titingnan.** `grifon-ad-strategist` ang magda-draft, si Neil ang
+magpapaputok.
 
-## 🅿 PARKED — Grifon punch list (resume trigger: Neil says so)
+## 🅿 PARKED
 
-- ✅ **#91**+**#94.1** fixed, $0 · **#94.3** next (owns the real caption defect) · **#94.2** close NOT-REPRODUCIBLE · **#96** `forced_alignment` granted ✅, make the failure loud.
-- **#92**+**#89**/**#90** ride Slice B; **#93** ⛔ TUNED. Neil decisions: golden-snapshot diff + overlay drop-case.
+**Oceanides (di naka-block ang deploy):** SEC Reg. No. · utang sa 100 taong
+nangakuan ng "libre ang tingin" · FB About: buong SEC name · i-archive ang June
+2025 AI-face post · 3-5 organic bago ang ad · hose baseline · logo-marquee ·
+real-bookings feed · **reviews sa FB Page** (bubuksan ang rating chip).
+
+**Suby 27-minute brief** (walang sariling doc, mawawala kapag na-overwrite to):
+FB-group voice-of-customer mining · creative-reps counter sa
+`ad_performance_ledger.md` · print-ad seeding ng `static_ad_swipe_file.md` · wala
+sa `grifon-cmo` ang 5-freight-carriers lens, kaya di maulit sa bagong session.
+
+**Grifon punch list** (resume trigger: Neil says so): ✅ #91+#94.1 fixed, $0 ·
+#94.3 next · #94.2 NOT-REPRODUCIBLE · #96 `forced_alignment` granted ✅ ·
+#92+#89/#90 ride Slice B · #93 ⛔ TUNED.
 
 ## ⛔ Gated — not without Neil
 
-Any paid render · P5 engine-default flip · Hyperframes product swap · Slice 2 video
-rate-limit re-scope · ang DEPLOY (Gate 2 full read muna) · anumang ad spend.
+Any paid render · P5 engine-default flip · Hyperframes swap · ang DEPLOY · ad spend.
 
 ## 🔧 Arm before starting
 
