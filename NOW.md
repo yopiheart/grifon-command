@@ -43,8 +43,7 @@ Gate 2 + privacy APPROVED · live e2e GREEN (row pumasok, binura) · **Pixel
 di sakop ng consent). ⏳ Hiningi ang Full admin kay Boss Jay sa portfolio
 `2966390243596032`; kung dumating bago ang ~₱10-20k spend, lilipat tayo.
 
-### 3 desisyon na hinihintay (`workflows/oceanides_business_model.md`)
-
+### 3 desisyon (`workflows/oceanides_business_model.md`)
 Segmented payment + QR-first collection · **disposal slip kada byahe** (may risk:
 nakalimbag na "legal na tapunan" pero crew ang nagmamaneho) · ₱499 Health Check.
 
@@ -66,7 +65,7 @@ Compliance B2B**, hindi Health Check · 2 FB page, alin ang totoo.
 
 **Suby 27-minute brief** (walang sariling doc): FB-group voice-of-customer mining ·
 creative-reps counter sa `ad_performance_ledger.md` · print-ad seeding ng
-`static_ad_swipe_file.md` · wala sa `grifon-cmo` ang 5-freight-carriers lens.
+`static_ad_swipe_file.md` · wala sa `grifon-cmo` ang 5-carriers lens.
 
 **Grifon punch list** (resume trigger: Neil says so): ✅ #91+#94.1 fixed, $0 ·
 #94.3 next · #94.2 NOT-REPRODUCIBLE · #96 `forced_alignment` granted ✅ ·
