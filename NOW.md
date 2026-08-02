@@ -9,37 +9,39 @@
 
 ---
 
-## ▶ NEXT ACTION — OCEANIDES: i-verify ang domain sa Meta, tapos ang campaign
+## ▶ NEXT ACTION — OCEANIDES: web events config, tapos ang UNANG CAMPAIGN
 
-**LIVE na sa https://oceanidesph.com** (+ `www.`, 6/6 na 200). Approved lahat ni
-Neil (2026-08-02): landing, thank-you, privacy. Paste this:
+**LIVE at VERIFIED.** https://oceanidesph.com (+ `www.`, 6/6 na 200) · domain
+**verified sa Meta** · pixel buhay · approved lahat ni Neil. Paste this:
 
 ```
-Ituloy natin ang Oceanides. Live na sa https://oceanidesph.com
+Ituloy natin ang Oceanides. Live at Meta-verified na ang oceanidesph.com.
 Basahin mo muna ang workflows/funnel_deploys.md at ang
 clients/oceanides/kuya-marvin/ads/NEXT-SESSION.md (§Website campaign
-infrastructure). Meta domain verification muna, tapos ang unang campaign.
+infrastructure). Web events config muna, tapos ang unang campaign.
 ```
 
 ⚠️ **Client world:** matte navy + amber print, no glass, no `#FFCC00`, Taglish —
 `clients/oceanides/DESIGN.md` ang batas doon, hindi ang Grifon `DESIGN.md`.
 
-### ⛔ Kay Neil lang: 2 bagay sa domain
+### ⛔ Kay Neil lang: isang hakbang na lang bago ang ads
 
-1. **PATAY ang auto-renewal.** Kapag di nabayaran sa 2027-08-02, mawawala ang page
-   AT ang Meta verification. Isang toggle sa Vercel → Domains.
-2. **Di pa naka-verify sa Meta.** Business Settings → Brand Safety → Domains →
-   `oceanidesph.com` sa portfolio **"Neil Maglaya" `771158756811875`** → kunin ang
-   TXT → ako na ang maglalagay sa Vercel DNS kapag naibigay mo.
+**I-connect ang pixel sa domain, tapos i-configure ang web events.** Domain page →
+**Connect assets** → dataset `1050997330667084`. Tapos Events Manager → **Aggregated
+Event Measurement** → Configure Web Events → `oceanidesph.com` → **#1 ang `Lead`**.
+Kapag di nagawa, ang iOS traffic ang unang mawawala sa attribution.
+
+✅ auto-renewal ON · **domain VERIFIED** (meta-tag sa static `<head>`, asset
+`1826135088763227`). 🔴 Huwag burahin ang tag sa `index.html`: tahimik ang
+pagkasira, ang ads ang sisira hindi ang page.
 
 ### ✅ Tapos na (2026-08-02)
 
 Gate 2 + privacy APPROVED · live e2e GREEN (row pumasok, binura) · **Pixel
-`1050997330667084`** buhay sa prod · ad account **`4165212657057538`** · Page
-`291924520660232` = ang m.me link. Registry: `workflows/funnel_deploys.md`.
-**Advanced Matching OFF at walang CAPI**, sinadya (hashed PII, di sakop ng consent).
-⏳ Hiningi ang Full admin kay Boss Jay sa portfolio `2966390243596032`; kung
-dumating bago ang ~₱10-20k spend, lilipat tayo habang mura pa.
+`1050997330667084`** · ad account **`4165212657057538`** · Page `291924520660232`
+= ang m.me link. **Advanced Matching OFF at walang CAPI**, sinadya (hashed PII,
+di sakop ng consent). ⏳ Hiningi ang Full admin kay Boss Jay sa portfolio
+`2966390243596032`; kung dumating bago ang ~₱10-20k spend, lilipat tayo.
 
 ### 3 desisyon na hinihintay (`workflows/oceanides_business_model.md`)
 

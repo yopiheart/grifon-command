@@ -38,11 +38,24 @@ inside the instance dir (CLI login: Neil's Vercel account `neilmaglayabusiness22
   Live e2e ulit sa bagong domain: POST → `{ok:true}` → row (`page_url` = `https://oceanidesph.com/`)
   → binura. Ang `oceanides-price-page.vercel.app` ay gumagana pa rin, pero **ang apex na
   ang i-share at ang ituro ng ads.**
-  - 🔴 **PATAY ANG AUTO-RENEWAL.** Kapag hindi nabayaran sa 2027-08-02, mawawala ang page
-    AT ang Meta domain verification. Isang toggle lang sa Vercel → Domains. Kay Neil to.
-  - ⏳ **Hindi pa naka-verify sa Meta.** Business Settings → Brand Safety → Domains →
-    idagdag ang `oceanidesph.com` sa portfolio **"Neil Maglaya" `771158756811875`** →
-    kunin ang TXT record → idagdag sa Vercel DNS → Verify.
+  - ✅ **Auto-renewal NAKA-ON** (Neil, 2026-08-02).
+  - ✅ **VERIFIED SA META 2026-08-02.** Domain asset ID `1826135088763227`, portfolio
+    **"Neil Maglaya" `771158756811875`**. Paraan: **meta-tag**, hindi DNS TXT —
+    `<meta name="facebook-domain-verification" content="454ce2ho33u16gctyipxowtnh2eley">`
+    nasa **static `<head>` ng `index.html`**.
+    🔴 **HUWAG BURAHIN ANG TAG.** Tahimik ang pagkasira: gagana pa rin ang page,
+    ang mawawala ay ang verification, ang kontrol sa web events (AEM), at ang
+    attribution ng ads. Nakasulat ang babala sa file mismo.
+    ⚠️ Umubra lang ito dahil naunang naayos ang static `<head>` sa parehong araw.
+    Sabi mismo ng Meta: *"Verification will fail if the meta-tag code is outside the
+    `<head>` section or in a section loaded dynamically by JavaScript."* Ang lumang
+    JS-injected na `documentMeta.ts` ay hindi nya nakikita — babagsak sana kahit tama
+    ang tag at kahit ilang beses pindutin, nang walang nagsasabi kung bakit.
+  - ⏳ **HULING HAKBANG BAGO ANG ADS: i-connect ang pixel sa domain at i-configure ang
+    web events.** Sa domain page → **Connect assets** → piliin ang dataset
+    `1050997330667084`. Tapos Events Manager → **Aggregated Event Measurement** →
+    Configure Web Events → `oceanidesph.com` → gawing **#1 priority ang `Lead`**.
+    Kung hindi naka-configure, ang iOS traffic ang unang mawawala sa attribution.
 - **Static `<head>` meta, hindi na JS-only (2026-08-02).** Ang `index.html` ay may hardcoded
   na `<title>`, `description` at Open Graph tags. Dati ay `documentMeta.ts` lang ang
   nag-se-set nila pagka-boot, at **hindi nagpapatakbo ng JS ang scraper ng Facebook** — kaya
