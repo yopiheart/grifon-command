@@ -50,10 +50,8 @@ Run sheet: `kuya-gabriel/ads/CAMPAIGN-RUN-SHEET.md` (paste-ready, may UTM).
 🔴 **TANONG NA HINDI KO MASAGOT:** may laman na ba ang Page `291924520660232`?
 Kung oo, laktawan ang organic at dumiretso sa run sheet.
 
-⚠️ **Client world:** matte navy + amber print, no glass, no `#FFCC00`, Taglish —
-`clients/oceanides/DESIGN.md` ang batas doon, hindi ang Grifon `DESIGN.md`.
-
-📱 Work brief artifact: `https://claude.ai/code/artifact/9c0c6df5-46eb-4f75-8ea1-2631ef650d40`
+⚠️ **Client world:** navy + amber print, no glass, no `#FFCC00` — `clients/oceanides/DESIGN.md`
+ang batas, hindi ang Grifon `DESIGN.md`. 📱 `claude.ai/code/artifact/9c0c6df5-46eb-4f75-8ea1-2631ef650d40`
 
 ## 🅿 PARKED
 
