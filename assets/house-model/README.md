@@ -99,6 +99,59 @@ Kung kailangan ng 1080x1350 para sa Meta, lanczos lang — 5% na bump, hindi tun
   ang `cinematic` (BJ Pascual) na lane. Huwag paghaluin ang register sa isang prompt —
   mush ang labas, at yun mismo ang nagmumukhang AI.
 
+## MAKEUP — ang pinakamalaking butas ng unang 22 shot
+
+**Pinagsama ko ang dalawang magkahiwalay na bagay: `unretouched` (post-processing) at
+`walang makeup` (bago pa pindutin ang shutter).** Sinulat ko ang *"bare face with no
+makeup"* at *"no foundation"* sa halos lahat ng 22 shot. Pero ang mga babae sa
+`Bumble dating quality/` ay may foundation, contour, lashes, gawang kilay at lip — hindi
+sila retouched, **inayusan nila ang mukha nila bago lumabas.** Yun ang dahilan kung bakit
+mas plain ang unang 22 kaysa sa refs. Hindi kulang sa realism — pinagbawalan ko ang
+makeup na suot naman talaga nila.
+
+Ang pitong sample sa `sample make up looks/` ay **iisang pamilya**: modern Filipina clean
+girl at soft glam. Walang editorial, walang graphic. Palaging: **fluffy at brushed-up na
+kilay**, **dewy at hindi kailanman matte**, **mainit na bronze sa mata**, **malambot na
+brown liner na hindi kailanman itim**, **cream blush na mataas sa pisngi**, **makintab na
+lip**. Iyan ang PH standard ngayon.
+
+| Level | Ano | Kailan |
+| --- | --- | --- |
+| **M0** | Totoong wala | Paggising, bathroom, skincare, post-workout **lang** |
+| **M1** | No-makeup makeup: brushed brows, tinted moisturiser, cream blush, lip balm, isang mascara | raw-ugc araw-araw |
+| **M2** | Labas-beat: + laminated brows, lash extensions, bronze wash, smoked brown liner, bronzer, highlighter, glossy overlined lip | raw-ugc gabi, mall, resto |
+| **M3** | Soft glam: + draped blush sa cheekbone at ilong, maliit na wing, sculpting contour, glassy skin | polished-ugc |
+| **M4** | Full glam: + body highlight, blowout, tumpak lahat | photoshoot |
+
+Verbatim na blocks: `.tmp/lensref/ab.mjs` → `const M`. A/B batch: `library-makeup/`.
+
+⚠️ **Nababago ng ilaw kung gaano kalakas mag-register ang makeup.** Sa malambot na
+harapang ilaw (`ab-5`), malinaw na kitang-kita ang M1. Sa matapang na backlight
+(`ab-3` rooftop), **nalulusaw ang M3 pababa sa M1** — nauubos ng sikat ang blush drape at
+ang liner. Tama yun sa pisika, pero ibig sabihin: kapag glam ang kailangan, **pumili ng
+ilaw na magpapakita ng makeup**, o doblehin ang M3 sa backlit na eksena. Huwag umasang
+sapat na ang level number.
+
+## CAMERA BODY — hiwalay sa focal length
+
+Hindi kinokopya ng model ang lens ng anchor — napatunayan sa 24/50/135mm test: nagbabago
+ang geometry ng mukha (nakausli sa 24mm, patag sa 135mm). Pero **hindi ko binanggit ang
+camera body kahit isang beses sa unang 22.**
+
+| Register | Body | Rendering |
+| --- | --- | --- |
+| raw-ugc | iPhone 16 Pro | Patag na HDR, tinataas ang shadows, sobrang sharpen, cool-neutral |
+| | Galaxy S24 Ultra | Mas saturated at mas matalim kaysa iPhone |
+| polished P-camera | Sony A7 IV | Malamig, klinikal, may magenta sa balat, mataas ang micro-detail |
+| | Canon EOS R6 | Mainit, mapula ang balat, malambot ang roll-off |
+| | Fujifilm X-T5 | Film simulation, kakaiba ang greens |
+| photoshoot | Phase One XF / Hasselblad H6D | Medium format studio |
+
+⛔ **Huwag gumamit ng cinema format sa stills.** RED, ARRI, VENICE, IMAX 70mm, 16mm —
+motion picture cameras lahat. Walang tunay na koleksyon ng *litrato* na kuha doon na
+masasampol ng model, kaya malabong "cinematic" ang labas at hindi partikular na rendering.
+**Para sa video (Veo, Seedance) tama sila** — mali lang ang medium.
+
 ## `polished-ugc` — `library-polished/`
 
 Post pa rin ng totoong tao, pero **inayos**. Ang linya: kung magmukha siyang ad, patay na
