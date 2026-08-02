@@ -1,0 +1,89 @@
+<!doctype html>
+<!-- OCEANIDES PRICE PAGE — static ad #1: ang add-on ticket.
+     Angle: "nakasulat ang presyo bago dumating ang truck" (Neil-approved 2026-08-03).
+     🔴 WALANG ₱5,000 DITO, SINADYA. Sa feed, isang segundo lang ang ₱5,000 laban sa
+     ₱2,500 ng crew, at talo tayo doon — kailangan ng page ng isang minuto para
+     i-reframe yun. Ang maliliit na numero ay walang sticker shock; tiwala ang
+     binebenta nila, at kailangan pa ring pumunta sa page para sa buo.
+     Standing rule: offer doc §9 — ang PAGE ang nagsasabi ng presyo, hindi ang ad.
+     Paper ground = DESIGN.md paper exception: on-paper headings, OCEAN ang accent
+     text (amber sa paper = 1.7:1, hard ban), amber bilang chip fill lang.
+     Render: node render.mjs templates/price-addons-ticket.html out/price-addons-ticket.png -->
+<html lang="tl"><head><meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --paper:#F4F6FA; --on-paper:#0B1B33; --meta:#5B6B85;
+  --navy:#0E2C5E; --navy2:#0A1F45; --ocean:#1C63AD; --gold:#F5B301;
+  --head:'Anton','Roboto Condensed','Arial Narrow',Impact,sans-serif;
+  --body:'Inter','Helvetica Neue',Arial,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#333}
+#canvas{width:1080px;height:1350px;position:relative;overflow:hidden;
+  font-family:var(--body);background:var(--paper);color:var(--on-paper);
+  -webkit-font-smoothing:antialiased}
+
+/* eyebrowChip — ang signature element ng brand. Navy text sa amber (8.8:1). */
+.chip{position:absolute;top:88px;left:78px;z-index:5;background:var(--gold);
+  color:var(--navy2);font-weight:900;font-size:20px;letter-spacing:2px;
+  text-transform:uppercase;padding:11px 18px;border-radius:4px}
+
+h1{position:absolute;top:166px;left:78px;right:78px;z-index:5;
+  font-family:var(--head);font-weight:400;font-size:92px;line-height:.95;
+  letter-spacing:.5px;text-transform:uppercase;color:var(--on-paper)}
+
+/* Ang ticket. Dashed border = print device, hindi shadow, hindi glass. */
+.ticket{position:absolute;top:426px;left:78px;right:78px;z-index:5;
+  background:#fff;border:3px dashed rgba(11,27,51,.28);border-radius:6px;
+  padding:14px 42px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:28px;
+  padding:46px 0;border-bottom:1px solid rgba(11,27,51,.1)}
+.row:last-child{border-bottom:none}
+.lbl{font-size:33px;font-weight:700;line-height:1.2;color:var(--on-paper)}
+.lbl small{display:block;font-size:23px;font-weight:600;color:var(--meta);margin-top:7px}
+.amt{flex:0 0 auto;font-family:var(--head);font-weight:400;font-size:52px;
+  letter-spacing:.5px;color:var(--ocean);white-space:nowrap}
+
+.foot{position:absolute;top:1010px;left:78px;right:78px;z-index:5;
+  font-size:30px;font-weight:800;line-height:1.3;color:var(--on-paper)}
+.foot span{color:var(--ocean)}
+
+/* Ang huling linya — dito lang tumutulak ang page. */
+.bar{position:absolute;left:78px;right:78px;bottom:92px;z-index:5;
+  display:flex;align-items:center;justify-content:space-between;gap:24px;
+  border-top:2px solid rgba(11,27,51,.14);padding-top:30px}
+.bar .cta{font-size:29px;font-weight:900;line-height:1.25;color:var(--on-paper)}
+.bar .cta small{display:block;font-size:20px;font-weight:700;color:var(--meta);
+  letter-spacing:1.6px;text-transform:uppercase;margin-top:8px}
+.bar img{height:76px;display:block;border-radius:8px}
+</style></head><body>
+<div id="canvas">
+  <p class="chip">Mga dagdag na singil</p>
+
+  <h1>Ito yung hindi sinasabi sa telepono.</h1>
+
+  <div class="ticket">
+    <div class="row">
+      <div class="lbl">Sobrang hose<small>Kada 3 metrong dagdag</small></div>
+      <div class="amt">₱100</div>
+    </div>
+    <div class="row">
+      <div class="lbl">Bakbak ng takip<small>Kasama na ang pagsasara ulit</small></div>
+      <div class="amt">₱500 - 1,000</div>
+    </div>
+    <div class="row">
+      <div class="lbl">Semento<small>Kung kami ang magdadala</small></div>
+      <div class="amt">₱500</div>
+    </div>
+  </div>
+
+  <p class="foot">Wala nang iba. <span>Sasabihin namin bago magsimula, hindi habang ginagawa.</span></p>
+
+  <div class="bar">
+    <div class="cta">Nakasulat lahat sa page, pati ang buong presyo.<small>oceanidesph.com</small></div>
+    <img src="../assets/logo.jpg" alt="Oceanides"/>
+  </div>
+</div>
+</body></html>
