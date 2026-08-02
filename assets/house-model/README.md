@@ -11,7 +11,14 @@ content sa iba't ibang niche. Ginawa 2026-08-02 gamit ang `codex-image` bridge
 | --- | --- |
 | `anchor.png` | 1024x1536, ang **raw** anchor (iPhone). Para sa `raw-ugc` **at** `polished P-phone`. |
 | `anchor-polished.png` | 1024x1536, ang **camera** anchor (Sony A7 IV, 85mm). Para sa `polished P-camera`. |
+| `anchor-photoshoot.png` | 1024x1536, ang **medium format** anchor (Phase One 110mm, beauty seamless). Para sa `photoshoot`. |
 | `anchor-*-4x5.png` | 1024x1280, ang delivery crops |
+
+Tatlong anchor, tatlong rendering, isang tao. Ang bawat isa ay napili sa 3-4 na
+kandidato gamit ang parehong tuntunin: **pinaka-neutral ang ilaw, pinakamalaki at
+pinakamalinaw ang mukha, at walang eksenang tatagos sa mga susunod na shot.** Kaya
+laging natatalo ang kandidatong may matigas na flash o may kulay na kapaligiran kahit
+mas maganda siyang larawan — magsusunog siya ng specular o kulay sa buong lane.
 
 ### ⚠️ Isang anchor kada RENDERING, hindi kada register
 
@@ -112,9 +119,27 @@ Kung kailangan ng 1080x1350 para sa Meta, lanczos lang — 5% na bump, hindi tun
 - **Dev-time tool ang `codex-image`.** Hindi siya nakakabit sa produkto. Assets ang gamit
   nito, hindi ito nangangahulugang ganito na ang lalabas sa app — Gemini pa rin ang
   production image model.
-- **Dalawang register ang nasa library: `raw-ugc` at `polished-ugc`.** Hindi pa ginagawa
-  ang `cinematic` (BJ Pascual) na lane. Huwag paghaluin ang register sa isang prompt —
-  mush ang labas, at yun mismo ang nagmumukhang AI.
+- **Apat na lane na ang buo:** `library/` (raw-ugc), `library-pphone/`, `library-polished/`
+  (P-camera), `library-photoshoot/`. Huwag paghaluin ang register sa isang prompt — mush
+  ang labas, at yun mismo ang nagmumukhang AI.
+
+## `photoshoot` — `library-photoshoot/`
+
+Ang BJ Pascual na mundo. Medium format (Phase One XF IQ4, Hasselblad H6D), studio
+seamless, malaking soft key, M4 na gawa ng MUA. Runner: `build-photoshoot.mjs`.
+
+⚠️ **Sinasadya niyang magmukhang ad**, at yun ang punto. Tama siya sa beauty at premium
+brand. **Mali siya sa testimonial at UGC ads** — doon ang trust ang binebenta, at ang
+produksyon ang pumapatay ng trust (`believability_dna.md`). Huwag siyang gamitin bilang
+default dahil siya ang pinakamaganda sa tingin; pinakamaganda siya at yun mismo ang
+problema sa ibang lane.
+
+Tatlong plate: beauty seamless (Phase One 110mm, butterfly + reflector), Hasselblad
+editorial (blazer, 45-degree key + rim), at direct-flash (matigas na anino sa pader,
+basang tela) — ang huli ay ang "WET" na look sa `bj pascual photoshoots/`.
+
+Sa grade, `warm-editorial` ang tugma. **Dito lang pwedeng pag-usapan ang teal-orange**
+kung may premium brand na humihingi — at sabihin nang malakas, hindi tahimik na idagdag.
 
 ## VERDICT NI NEIL (2026-08-02) — ano ang pumasa, at bakit bumagsak ang iba
 
