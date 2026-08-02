@@ -9,28 +9,28 @@
 
 ---
 
-## ▶ NEXT ACTION — OCEANIDES: bumili ng domain, tapos ang unang campaign
+## ▶ NEXT ACTION — OCEANIDES: i-verify ang domain sa Meta, tapos ang campaign
 
-**Isa na lang ang natitira bago ang unang ad: ANG DOMAIN.** Lahat ng iba ay tapos
-at aprubado ni Neil (2026-08-02): landing, thank-you, at privacy page. Paste this:
+**LIVE na sa https://oceanidesph.com** (+ `www.`, 6/6 na 200). Approved lahat ni
+Neil (2026-08-02): landing, thank-you, privacy. Paste this:
 
 ```
-Ituloy natin ang Oceanides. Live at approved na ang page:
-https://oceanides-price-page.vercel.app
+Ituloy natin ang Oceanides. Live na sa https://oceanidesph.com
 Basahin mo muna ang workflows/funnel_deploys.md at ang
 clients/oceanides/kuya-marvin/ads/NEXT-SESSION.md (§Website campaign
-infrastructure). Domain na ang susunod, tapos ang unang campaign.
+infrastructure). Meta domain verification muna, tapos ang unang campaign.
 ```
 
 ⚠️ **Client world:** matte navy + amber print, no glass, no `#FFCC00`, Taglish —
 `clients/oceanides/DESIGN.md` ang batas doon, hindi ang Grifon `DESIGN.md`.
 
-### ⛔ Kay Neil lang: ang domain
+### ⛔ Kay Neil lang: 2 bagay sa domain
 
-Di pa nabibili. Hindi mave-verify sa Meta ang `*.vercel.app`, at nahahati ang
-pixel data kapag pinalitan ang URL habang tumatakbo na ang ads. Reco: **brand
-domain** (`oceanidesph.com`), hindi keyword domain. ~₱600-1,200/taon. Pagkatapos:
-ikabit sa Vercel, i-verify sa Meta sa portfolio **"Neil Maglaya" `771158756811875`**.
+1. **PATAY ang auto-renewal.** Kapag di nabayaran sa 2027-08-02, mawawala ang page
+   AT ang Meta verification. Isang toggle sa Vercel → Domains.
+2. **Di pa naka-verify sa Meta.** Business Settings → Brand Safety → Domains →
+   `oceanidesph.com` sa portfolio **"Neil Maglaya" `771158756811875`** → kunin ang
+   TXT → ako na ang maglalagay sa Vercel DNS kapag naibigay mo.
 
 ### ✅ Tapos na (2026-08-02)
 
