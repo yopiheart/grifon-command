@@ -92,6 +92,15 @@ const RULES = [
   [/\bipatama\b/i, 'hindi sinasabi ng tao', 'i-correct'],
   [/\btanging\b/i, 'formal na tunog', 'lang'],
 
+  // --- 2026-08-02, PANGATLONG PASS: nahuli ng long-word scan pagkatapos maisulat
+  // ang LANGUAGE LOCK. Iisa ang hugis: mahabang passive/potential na anyo na
+  // walang taong bumibigkas. Ito ang mga natira matapos ang unang dalawang pass,
+  // kaya patunay silang hindi sapat ang pag-eyeball.
+  [/\bkumpirmahin\b/i, 'manual-Tagalog', 'i-confirm'],
+  [/\bnapagkakasunduan\b/i, 'manual-Tagalog, 7 pantig', 'nagkakasundo'],
+  [/\bmapaparadahan\b/i, 'manual-Tagalog, 6 pantig', 'pwedeng paradahan'],
+  [/\bmagdedesisyon\b/i, 'manual-Tagalog', 'ikaw ang bahala, sa yo ang desisyon'],
+
   // --- "Do Not Sound Like a Translation" (taglish-voice.md) ---
   // Ito ang mga tell na nakalista mismo sa spec bilang bawal. Mekanikal silang
   // mahuli, kaya wala silang dahilan na umasa pa sa pagtanda.

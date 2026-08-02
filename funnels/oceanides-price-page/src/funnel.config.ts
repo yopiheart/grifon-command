@@ -39,9 +39,18 @@ import type { FunnelConfig } from './config.types';
 // The premise is "answer magkano immediately" — delaying the price behind a
 // mechanism story reintroduces the exact stall this page exists to kill.
 //
-// VOICE: .claude/skills/_shared/taglish-voice.md — 50/50 (English for things and
-// technical nouns, Tagalog for the human part), grade 4, calm expert. No em dash.
-// No apostrophes in contractions (nyo, yun, yan, to, wag, di).
+// VOICE: .claude/skills/_shared/taglish-voice.md §LANGUAGE LOCK (rewritten
+// 2026-08-02, ported from the TUNED formula in api/_lib/prompts.ts). The Tagalog
+// FRAME carries the sentence; English is limited to four carve-outs (brand names,
+// prices/numbers, borrowed verbs inside a Tagalog frame, and nouns Filipinos
+// genuinely say in English). The enemy is MANUAL-Tagalog, not Tagalog — pick the
+// word a person would SPEAK, never the language. Calm expert. No em dash. No
+// apostrophes in contractions (nyo, yun, yan, to, wag, di).
+//
+// ⚠️ The old note here said "50/50 English/Tagalog". That framing is SUPERSEDED
+// and it actively caused damage: it made the ratio look like the rule, which led
+// to a proposal to swap `presyo` → `price` on lines that had nothing wrong with
+// them. Ratio is a symptom. Enforced by scripts/lint-voice.mjs on `prebuild`.
 // ===========================================================================
 
 // ---------------------------------------------------------------------------
@@ -122,7 +131,7 @@ export const funnelConfig: FunnelConfig = {
     headline: 'Mag-book ng schedule',
     ctaLabel: 'Kunin ang schedule ko',
     reassurance:
-      'Tatawagan ka namin para kumpirmahin ang oras. Walang bayad kung hindi pa napagkakasunduan ang presyo.',
+      'Tatawagan ka namin para i-confirm ang oras. Walang bayad kung hindi pa kayo nagkakasundo sa presyo.',
     consent: {
       required: false,
       text: 'Oo, pwede nyo akong tawagan o i-text tungkol sa booking na to. Protektado ang info ko sa ilalim ng Data Privacy Act of 2012 at ng Privacy Policy nyo. Matatawagan pa rin ako para sa schedule kahit hindi ko to i-check.',
@@ -369,7 +378,7 @@ export const funnelConfig: FunnelConfig = {
         // yung sinasabi ang buong benta. Kapag lahat naka-highlight, wala.
         body: [
           'Lahat ng siphoner may ganitong singil. ==Kami lang ang naglalagay nito sa page bago ka pa mag-book.==',
-          'Sobrang hose, ₱100 kada 3 metrong dagdag. Kapag malayo ang mapaparadahan ng truck sa tangke mo.',
+          'Sobrang hose, ₱100 kada 3 metrong dagdag. Kapag malayo sa tangke mo ang pwedeng paradahan ng truck.',
           // ⚠️ HINDI kasama ang semento (Neil, 2026-08-01 — mali ang dating
           // "kasama na ang semento"): customer ang magbibigay; kung Oceanides
           // ang magdadala, dagdag ₱500; pwede rin nilang ipagawa sa iba.
@@ -504,7 +513,7 @@ export const funnelConfig: FunnelConfig = {
           },
           {
             q: 'Paano kung hindi kasya sa isang truckload ang tangke namin?',
-            a: 'Kada truckload ang bayad, kaya ₱5,000 ulit ang pangalawa. Ganoon din kahit hindi mapuno ang truck, isang truckload pa rin ang bilang. Pero hindi ka namin gugulatin: bago namin simulan ang pangalawa, sasabihin muna namin sa iyo. Ikaw pa rin ang magdedesisyon.',
+            a: 'Kada truckload ang bayad, kaya ₱5,000 ulit ang pangalawa. Ganoon din kahit hindi mapuno ang truck, isang truckload pa rin ang bilang. Pero hindi ka namin gugulatin: bago namin simulan ang pangalawa, sasabihin muna namin sa iyo. Ikaw pa rin ang bahala.',
           },
           {
             q: 'Ano ang sakop ng 30-day warranty?',
@@ -643,7 +652,7 @@ export const funnelConfig: FunnelConfig = {
     // pa rin ang lalabas.
     eyebrow: 'BOOKING CONFIRMED',
     headline: 'Nakuha na namin. Tatawagan ka namin.',
-    body: 'Nakalista na ang booking mo. Tatawagan ka namin para kumpirmahin ang oras at ang buong presyo bago pa may pumunta.',
+    body: 'Nakalista na ang booking mo. Tatawagan ka namin para i-confirm ang oras at ang buong presyo bago pa may pumunta.',
     // Ito ang eyebrow ng handout chapter ngayon, hindi na ang kicker sa pinaka-
     // taas ng page: nauuna kasi dati sa "Nakuha na namin" at parang nagsasalita
     // na ng susunod bago pa masabing natanggap nga.

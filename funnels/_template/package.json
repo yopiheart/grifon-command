@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "node scripts/lint-voice.mjs",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
