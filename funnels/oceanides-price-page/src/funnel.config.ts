@@ -169,6 +169,23 @@ export const funnelConfig: FunnelConfig = {
   // hindi man lang sya na-tick. Kapag sinakop na ng consent + ng totoong Privacy
   // Policy ang paggamit na ito, sampung segundo lang buksan. Ang pagpatay nito
   // pagkatapos mangolekta ay hindi na nakakabawi sa nakolekta na.
+  //
+  // 🔴 WALA RIN TAYONG CONVERSIONS API, sinadya (2026-08-02). Browser pixel lang.
+  // Aalukin ka ng Events Manager ng apat na paraan para i-set up sya (Birch,
+  // Set up with Meta, partner, manual) — LAKTAWAN LAHAT sa ngayon:
+  //   1. Ang CAPI ay ang SERVER-SIDE na bersyon mismo ng Advanced Matching sa
+  //      itaas. Parehong hashed email/phone papuntang Meta, iisang consent gap.
+  //      Ang tanggihan ang isa tapos buksan ang isa ay hindi magkatugma.
+  //   2. Walang CAPI code ang funnel na to. Ang `api/lead.ts` ay sa Supabase lang
+  //      sumusulat. (Ang `api/_lib/metaCapi.ts` ay sa GRIFON app, hindi dito.)
+  //      Kaya ang "Set up manually" ay code na hindi pa naisusulat.
+  //   3. Ang "Set up with Meta" ay nangangailangan ng domain na wala pa tayo.
+  //   4. Ang Birch ay third-party vendor na papasok sa gitna ng leads natin at
+  //      ng Meta. Ang "17.8% lower cost per result" ay marketing number nila,
+  //      hindi sukat ng account na to.
+  // Tamang pagkakasunod: domain -> Privacy Policy -> deploy -> totoong traffic
+  // -> saka CAPI. Totoong tumutulong sya (iOS signal loss, ad blockers), pero
+  // wala syang sinasagip na signal kung wala pang traffic.
   tracking: { metaPixelId: '1050997330667084' },
 
   sections: [
