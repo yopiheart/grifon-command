@@ -3,11 +3,38 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Title/description/OG are set from funnel.config at boot (src/lib/documentMeta.ts),
-         so this file stays funnel-agnostic and needs no edit per instance.
-         No stylesheet or font <link> here on purpose: the page makes zero external
-         requests unless tracking.metaPixelId is configured. -->
-    <title>Loading…</title>
+    <!-- 🔴 STATIC META, SINADYA (2026-08-02, bago ang unang ad).
+         Ini-set pa rin ng src/lib/documentMeta.ts ang mga ito mula sa funnel.config
+         pagka-boot, at yun pa rin ang source of truth para sa BROWSER. Pero
+         **HINDI NAGPAPATAKBO NG JAVASCRIPT ANG SCRAPER NG FACEBOOK.** Ang dating
+         placeholder na title (ang salitang "Loading", may ellipsis) ang literal
+         na nakikita ng bawat link preview, share, at Messenger card. Sa page na
+         ang buong benta ay TIWALA, mukha yung sira.
+
+         Kaya nawala ang "funnel-agnostic" na kaayusan dito, at tama lang: isang
+         totoong instance to na may sariling domain, hindi na template. Kapag may
+         binago sa `meta` sa funnel.config.ts, PALITAN DIN ANG APAT NA LINYA DITO.
+         Walang gate na humuhuli nito.
+
+         Walang stylesheet o font <link> dito, sinadya rin: zero external request
+         ang page maliban sa Meta Pixel. -->
+    <title>Oceanides · ₱5,000 Septic Tank Siphoning, Metro Manila</title>
+    <meta
+      name="description"
+      content="Isang presyo, nakasulat bago magsimula. Nakalista rin ang mga dagdag na itinatago ng iba. May BIR receipt at 30-day warranty."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://oceanidesph.com/" />
+    <meta property="og:site_name" content="Oceanides" />
+    <meta property="og:title" content="₱5,000. Walang sorpresang dagdag pagdating ng truck." />
+    <meta
+      property="og:description"
+      content="Septic tank siphoning sa Metro Manila. Nakasulat ang presyo bago magsimula, at nakalista ang lahat ng posibleng dagdag. SEC Registered, may BIR official receipt, DENR-partner na tapunan."
+    />
+    <meta property="og:image" content="https://oceanidesph.com/img/hero-truck.webp" />
+    <meta property="og:image:alt" content="Puting truck ng Oceanides sa kalye sa Metro Manila" />
+    <meta property="og:locale" content="tl_PH" />
+    <meta name="twitter:card" content="summary_large_image" />
   </head>
   <body>
     <div id="root"></div>

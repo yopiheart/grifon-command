@@ -31,9 +31,23 @@ inside the instance dir (CLI login: Neil's Vercel account `neilmaglayabusiness22
   ⚠️ **Kailangan pa ring basahin ni Neil bago mag-live ang ads** — legal notice sya ng
   totoong kompanya. Kapag binuksan ang Advanced Matching o ang CAPI, MALI na ang linyang
   "hindi namin ipinapadala ang pangalan, email, o number mo sa Meta".
-- **Domain: vercel.app alias pa lang.** Kailangan ng sariling domain BAGO ang unang ad:
-  hindi mave-verify sa Meta ang `*.vercel.app`, at nahahati ang pixel data kapag pinalitan
-  ang URL habang tumatakbo na ang ads.
+- ✅ **DOMAIN LIVE 2026-08-02: https://oceanidesph.com** (+ `www.`, pareho 200 sa tatlong
+  route). Binili sa **Vercel mismo** ($11.25/taon, expiry 2027-08-02), Vercel din ang
+  registrar AT ang nameservers (`ns1/ns2.vercel-dns.com`), kaya walang third-party DNS na
+  hahawakan. Naka-connect sa project via `npx vercel domains add <host> oceanides-price-page`.
+  Live e2e ulit sa bagong domain: POST → `{ok:true}` → row (`page_url` = `https://oceanidesph.com/`)
+  → binura. Ang `oceanides-price-page.vercel.app` ay gumagana pa rin, pero **ang apex na
+  ang i-share at ang ituro ng ads.**
+  - 🔴 **PATAY ANG AUTO-RENEWAL.** Kapag hindi nabayaran sa 2027-08-02, mawawala ang page
+    AT ang Meta domain verification. Isang toggle lang sa Vercel → Domains. Kay Neil to.
+  - ⏳ **Hindi pa naka-verify sa Meta.** Business Settings → Brand Safety → Domains →
+    idagdag ang `oceanidesph.com` sa portfolio **"Neil Maglaya" `771158756811875`** →
+    kunin ang TXT record → idagdag sa Vercel DNS → Verify.
+- **Static `<head>` meta, hindi na JS-only (2026-08-02).** Ang `index.html` ay may hardcoded
+  na `<title>`, `description` at Open Graph tags. Dati ay `documentMeta.ts` lang ang
+  nag-se-set nila pagka-boot, at **hindi nagpapatakbo ng JS ang scraper ng Facebook** — kaya
+  ang literal na nakikita ng bawat link preview at Messenger card ay `Loading…`. ⚠️ Kapag may
+  binago sa `meta` sa `funnel.config.ts`, palitan din ang `index.html`. **Walang gate dito.**
 
 ## grifon-starter (grifon-starter-v1) — deployed 2026-07-29
 
