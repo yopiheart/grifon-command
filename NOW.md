@@ -26,9 +26,14 @@ nagsasabi ng presyo. Panatilihin ang hook na `Hindi barado. Puno na.` (98.5% sa
 0:03, pinakamababang CPM sa account). Palitan ang dulo: doon mismo sa 9.2s-18.4s
 nawala ang **41%**, at doon nakaupo ang lumang "libre ang tingin."
 
-Dalawang creative, nasa chat ang buong copy: **15-20s na video kay Gabriel** (hindi
-36.8s) + **static ng add-on ticket**. Pre-flight: **3-5 organic post** sa Page
-`291924520660232` bago ang unang ad, parehong gate ng KM-003.
+**Nakahanda na lahat, naghihintay lang ng pindot mo** — apat na doc, naka-commit:
+✅ **static** `clients/oceanides/out/price-addons-ticket.png` (APPROVED) ·
+**storyboard** `kuya-gabriel/ads/gb-001-script-storyboard.md` (18s, 3 Veo roll ~$3,
+libre ang s3 kasi screen recording ng totoong page) · **5 organic post**
+`kuya-gabriel/organic/PAGE-POSTS-PRE-AD.md` · **run sheet**
+`kuya-gabriel/ads/CAMPAIGN-RUN-SHEET.md` (paste-ready, may UTM).
+🔴 **TANONG NA HINDI KO MASAGOT:** may laman na ba ang Page `291924520660232`?
+Kung oo, laktawan ang organic at dumiretso sa run sheet.
 
 ⚠️ **Client world:** matte navy + amber print, no glass, no `#FFCC00`, Taglish —
 `clients/oceanides/DESIGN.md` ang batas doon, hindi ang Grifon `DESIGN.md`.
@@ -47,17 +52,11 @@ bago ang ~₱10-20k spend, lilipat tayo.
 Segmented payment + QR-first collection · **disposal slip kada byahe** (may risk:
 nakalimbag na "legal na tapunan" pero crew ang nagmamaneho) · ₱499 Health Check.
 
-### Voice: LANGUAGE LOCK, naka-auto-fire na
-`_shared/taglish-voice.md` §LANGUAGE LOCK. Tatlong gate: `taglish-guard.sh` ·
-`lint-voice.mjs` sa `_template/` · `gemini-eval`. Detalye sa CLAUDE.md.
-
-### 🆕 HOUSE MODEL (`assets/house-model/`, 2026-08-02)
-Naka-lock na Filipina model: 63 larawan, 3 anchor, 4 lane + 7 grade
-(`tools/grade.mjs`, `luts/`). **Basahin ang README doon bago gumawa ng bago** —
-10 tuntunin (shoulder rule, eye dead zone, hands, anchor kada rendering, makeup
-M0-M4), naka-lock bilang block sa `build-*.mjs`. Kopyahin ang pattern, hindi ang
-prompt. ⚠️ Photoshoot lane = **sinasadyang mukhang ad**: beauty/premium lang,
-mali sa testimonial. Walang campaign na naghihintay — sasabihin ni Neil.
+### Voice + HOUSE MODEL (`assets/house-model/`, 2026-08-02)
+LANGUAGE LOCK sa `_shared/taglish-voice.md`, 3 gate, naka-auto-fire (CLAUDE.md).
+Naka-lock na Filipina model: 63 larawan, 3 anchor, 4 lane + 7 grade. **Basahin ang
+README doon bago gumawa ng bago** — 10 tuntunin, naka-lock sa `build-*.mjs`.
+Kopyahin ang pattern, hindi ang prompt. Walang naghihintay na campaign.
 
 ## 🅿 PARKED
 
