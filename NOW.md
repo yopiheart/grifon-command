@@ -1,6 +1,6 @@
 # NOW
 
-**Stamped: 2026-08-02** · Anchor commit: `dd616d4` (main) · branch head: `965306e`
+**Stamped: 2026-08-02** · Anchor commit: `ec43d05` (main) · `feat/oceanides-price-page` MERGED na sa main
 
 > The single resume doc. One screen, one next action. Read this first.
 > **Freshness contract:** if the stamp is >5 days behind `git log -1`, treat as UNVERIFIED —
@@ -9,51 +9,54 @@
 
 ---
 
-## ▶ NEXT ACTION — OCEANIDES: Gate 2 → deploy → unang campaign sa page
+## ▶ NEXT ACTION — OCEANIDES: Gate 2 full read → deploy → unang campaign sa page
 
-Tapos na ang buong page (landing + thank-you + form). Handoff at buong detalye:
+Tapos na ang buong page at **nasa main na lahat** (merge `ec43d05`). Handoff:
 `clients/oceanides/NEXT-SESSION-PRICE-PAGE.md`. Paste this to start:
 
 ```
 Ituloy natin ang Oceanides. Basahin mo muna:
   clients/oceanides/NEXT-SESSION-PRICE-PAGE.md
   clients/oceanides/DESIGN.md
-Nasa branch feat/oceanides-price-page ang lahat, 38 commit. Hindi pa naka-merge.
-Gate 2 read muna ni Neil, tapos deploy, tapos ang unang campaign papunta sa page.
+Naka-merge na sa main ang page. Gate 2 full read ni Neil, tapos deploy
+(workflows/funnel_deploys.md ang runbook), tapos ang unang campaign papunta sa page.
 ```
 
-⚠️ **Nasa `origin/feat/oceanides-price-page` ang trabaho, HINDI sa main.** Binubura
-ng defreezer ang local branches; `origin/*` ang nabubuhay. Wag maghinuha mula sa main.
 ⚠️ **Client world:** matte navy + amber print, no glass, no `#FFCC00`, Taglish.
 Ang `clients/oceanides/DESIGN.md` ang batas doon, hindi ang Grifon `DESIGN.md`.
 
 ### ⛔ Kay Neil lang (naka-block ang deploy at ang ads)
 
-1. **Gate 2** — buong basa ng landing + thank-you. DRAFT ang copy hangga't wala nito.
-2. **Oras ng tawag** — tatlong beses sinasabi ng thank-you na "tatawagan ka namin"
-   at ni minsan hindi kung kailan. Kailangan ng kayang panindigan ni Zam.
-3. **Meta Pixel ID** — `tracking: {}` ngayon, PATAY. Walang Lead data at walang
+1. **Gate 2** — buong basa ng landing + thank-you sa totoong phone nya. Ang 4 na
+   5-carrier fix ay approved na (2026-08-02), pero ang buong page read ay hindi pa.
+2. **Meta Pixel ID** — `tracking: {}` ngayon, PATAY. Walang Lead data at walang
    maiipong retargeting audience kung mag-a-ads nang wala nito. Hindi mababawi.
 
-### Session 2026-08-02 — GUARDRAIL, naka-merge na sa main (`dd616d4`)
+### Session 2026-08-02 (huli) — 5-carrier review + MERGE sa main
+
+Suby 5 freight-carriers pass sa price page, CMO-approved, applied (`90b8479`):
+headline "Walang **sorpresang** dagdag" · subhead "warranty **sa bara**" · semento
+= sariling ticket line · P.S. #1 = guarantee restate (F01). Verified: lint-voice,
+lint-layout, tsc, build, 390x844 smoke — lahat pasado. **Desisyon: walang CTA sa
+fold, tama na ang StickyCta** (lumalabas paglabas ng hero, nagtatago sa form).
+Tapos merge sa main `ec43d05` (isang conflict lang, taglish-guard hook, resolved).
+Oras-ng-tawag blocker: SOLVED na (`d980286`, 8AM-5PM sa thank-you).
+
+### Session 2026-08-02 (umaga) — GUARDRAIL, nasa main (`dd616d4`)
 
 **Ad-spend gate** (`.claude/hooks/ad-spend-gate.sh`): deny sa activate/update_entity/boost
 at sa create na may ACTIVE o budget · ask sa staging writes · pass sa reads · sakop ang CLI
-sa Bash · wala na sa allowlist ang 4 `ads_create*` · 17/17 test. **Executor ledger**
-(`tools/executor_ledger.mjs`) + `Executor:` git trailer, baseline 25% follow-up fix.
-
-### Session 2026-08-01 (`b26f533..23455fd`) — buong listahan nasa branch doc
-
-Thank-you 4-chapter · PH mobile validation + required na phone · **local `/api/lead`
-bridge** · marquee · footer/sticky Messenger (verified) · FB profile+cover. **Nahuli ni
-Neil:** 11px Anton label → bagong `subhead` role sa DESIGN.md.
+sa Bash · 17/17 test. **Executor ledger** (`tools/executor_ledger.mjs`) + `Executor:`
+git trailer, baseline 25% follow-up fix.
 
 ### 🅿 Parked sa Oceanides (di naka-block ang deploy)
 
 **SEC Reg. No.** · **TIN sa page** nakapangalan kay Cepriano sa SEC, ipa-check sa BIR
 2303 · utang sa 100 taong nangakuan ng "libre ang tingin" · FB About: buong SEC name ·
-i-archive ang June 2025 AI-face post · 3-5 organic bago ang unang ad · hose baseline ·
-logo-marquee · real-bookings feed (post-launch, totoong data lang).
+i-archive ang June 2025 AI-face post · 3-5 organic bago ang unang ad · hose baseline
+(ilang metro ang kasama bago ang ₱100/3m) · logo-marquee · real-bookings feed ·
+Suby-brief follow-ups: FB-group voice-of-customer mining para sa hooks, creative-reps
+counter sa ad ledger, print-ad seeding ng static swipe file.
 
 ### Pagkatapos ng deploy: ang unang campaign
 
@@ -70,8 +73,7 @@ ang magpapaputok. Naka-block na sa hook ang sarili kong pag-fire.
 ## ⛔ Gated — not without Neil
 
 Any paid render · P5 engine-default flip · Hyperframes product swap · Slice 2 video
-rate-limit re-scope · merging `feat/oceanides-price-page` · ang DEPLOY (Gate 2 muna) ·
-anumang ad spend.
+rate-limit re-scope · ang DEPLOY (Gate 2 full read muna) · anumang ad spend.
 
 ## 🔧 Arm before starting
 
