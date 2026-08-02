@@ -73,6 +73,25 @@ const RULES = [
   [/\bimbakan\b/i, 'grade-4 rule, deep', 'storage'],
   [/\bpinirmahan\b/i, 'deep, at madalas hindi totoo (tinick lang, hindi pumirma)', 'tinick mo'],
 
+  // --- 2026-08-02, PANGALAWANG PASS: tinawag mismo ni Neil ang mga ito ---
+  // "detalye, Rehistrado, awtomatikong, naka-imbak etc - MGA WORDS NA PANSIN
+  // KONG SOBRANG LALIM BILANG FILIPINO! ... NAHAHALATA KANG AI!"
+  //
+  // Iisa ang hugis ng lahat ng ito: may **English na salitang sinasabi naman ng
+  // Pinoy araw-araw**, pero hinanap pa ang katumbas sa Tagalog. Yun mismo ang
+  // ipinagbabawal ng grade-4 rule sa taglish-voice.md ("Kapag may English na
+  // salita na karaniwang sinasabi ng Pinoy, IYON ang gamitin"). Ang resulta ay
+  // hindi mas magalang, mukha syang gawa ng makina.
+  [/\bdetalye\b/i, 'sobrang lalim, may English na sinasabi naman ng tao', 'info, details'],
+  [/\brehistrado\b/i, 'sobrang lalim, at hindi tugma sa "SEC Registered" sa page', 'registered'],
+  [/\bawtomatik(o|ong|a)?\b/i, 'tinagalog ang salitang sinasabi naman sa English', 'automatic'],
+  [/\bkusang?\b/i, 'sobrang lalim para sa "automatic"', 'automatic'],
+  [/\bnaserbisyuhan\b/i, 'sobrang lalim', 'na-service'],
+  [/\bserbisyo\b/i, 'mas natural ang English dito', 'service'],
+  [/\bopisyal\b/i, 'tinagalog ang salitang sinasabi naman sa English', 'official'],
+  [/\bipatama\b/i, 'hindi sinasabi ng tao', 'i-correct'],
+  [/\btanging\b/i, 'formal na tunog', 'lang'],
+
   // --- "Do Not Sound Like a Translation" (taglish-voice.md) ---
   // Ito ang mga tell na nakalista mismo sa spec bilang bawal. Mekanikal silang
   // mahuli, kaya wala silang dahilan na umasa pa sa pagtanda.

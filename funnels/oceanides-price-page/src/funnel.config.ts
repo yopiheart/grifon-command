@@ -125,14 +125,14 @@ export const funnelConfig: FunnelConfig = {
       'Tatawagan ka namin para kumpirmahin ang oras. Walang bayad kung hindi pa napagkakasunduan ang presyo.',
     consent: {
       required: false,
-      text: 'Oo, pwede nyo akong tawagan o i-text tungkol sa booking na to. Protektado ang detalye ko sa ilalim ng Data Privacy Act of 2012 at ng Privacy Policy nyo. Matatawagan pa rin ako para sa schedule kahit hindi ko to i-check.',
+      text: 'Oo, pwede nyo akong tawagan o i-text tungkol sa booking na to. Protektado ang info ko sa ilalim ng Data Privacy Act of 2012 at ng Privacy Policy nyo. Matatawagan pa rin ako para sa schedule kahit hindi ko to i-check.',
       policyVersion: 'funnel-dpa-v1-2026-07',
     },
     // L3 — progressive qualification. Ang una ang router ng thank-you page.
     qualifiers: [
       {
         id: 'tank_location',
-        label: 'Alam mo ba kung nasaan ang septic tank nyo?',
+        label: 'Alam mo ba kung nasaan ang septic tank mo?',
         options: ['Oo, alam ko', 'Hindi ko alam'],
         required: true,
       },
@@ -142,7 +142,7 @@ export const funnelConfig: FunnelConfig = {
         options: ['Ako ang may-ari', 'Tenant ako', 'Ako ang caretaker'],
         required: true,
       },
-      { id: 'city', label: 'Saan kayo sa Metro Manila?', options: NCR_CITIES, required: true },
+      { id: 'city', label: 'Saan ka sa Metro Manila?', options: NCR_CITIES, required: true },
       {
         id: 'property',
         label: 'Anong klaseng property?',
@@ -291,7 +291,7 @@ export const funnelConfig: FunnelConfig = {
         // (walang "1,247"): ang pekeng katiyakan ang unang bagay na sinusuri ng
         // tao sa trust page. Kapag may naibigay na si Boss Jay na eksaktong
         // bilang na may talaan, palitan to ng bilang na yun.
-        line: 'Mahigit 1,000 na tangke na ang naserbisyuhan namin sa Metro Manila. SEC Registered. May BIR official receipt. DENR-partner na tapunan. Ito ang mga papel na hindi kayang ibigay ng karaniwang siphoner.',
+        line: 'Mahigit 1,000 na tangke na ang na-service namin sa Metro Manila. SEC Registered. May BIR official receipt. DENR-partner na tapunan. Ito ang mga papel na hindi kayang ibigay ng karaniwang siphoner.',
         // TOTOONG numero, galing kay Neil 2026-08-01, verbatim — walang binago
         // sa format. DP5: mas malakas ang tiyak na numero kaysa hiram na seal;
         // kahit sino pwedeng mag-verify. SEC Reg. No. = TO FOLLOW pa kay Neil,
@@ -319,7 +319,7 @@ export const funnelConfig: FunnelConfig = {
       type: 'clientsMarquee',
       ground: 'navy-deep',
       props: {
-        label: 'Naserbisyuhan na rin namin:',
+        label: 'Na-service na rin namin:',
         names: [
           'Avida',
           'Papa Johns Pizza',
@@ -347,7 +347,7 @@ export const funnelConfig: FunnelConfig = {
         items: [
           { label: 'Isang truckload na siphoning, 4 cubic o 4,000 litro' },
           { label: 'Kasama na ang standard na hose ng truck' },
-          { label: 'Before at after na litrato ng tank nyo, para may makita kayo' },
+          { label: 'Before at after na litrato ng tank mo, para may makita ka' },
           { label: '30-day warranty kung bumalik ang bara' },
           { label: 'BIR official receipt' },
           { label: 'Legal na tapunan sa DENR-partner facility' },
@@ -369,12 +369,12 @@ export const funnelConfig: FunnelConfig = {
         // yung sinasabi ang buong benta. Kapag lahat naka-highlight, wala.
         body: [
           'Lahat ng siphoner may ganitong singil. ==Kami lang ang naglalagay nito sa page bago ka pa mag-book.==',
-          'Sobrang hose, ₱100 kada 3 metrong dagdag. Kapag malayo ang mapaparadahan ng truck sa tangke nyo.',
+          'Sobrang hose, ₱100 kada 3 metrong dagdag. Kapag malayo ang mapaparadahan ng truck sa tangke mo.',
           // ⚠️ HINDI kasama ang semento (Neil, 2026-08-01 — mali ang dating
           // "kasama na ang semento"): customer ang magbibigay; kung Oceanides
           // ang magdadala, dagdag ₱500; pwede rin nilang ipagawa sa iba.
-          'Bakbak ng takip, ₱500 hanggang ₱1,000. Kapag nakasarado ang tangke at kailangang buksan. Kasama ang pagsasara ulit, pero kayo ang magbibigay ng semento. Kung kami ang magdadala ng semento, dagdag na ₱500. Kung ayaw nyo ng dagdag, pwede nyong ipagawa ang pagsasara sa ibang marunong.',
-          'Pangalawang truckload, ₱5,000 ulit. Kapag hindi kasya sa isa ang laman ng tangke nyo. Sasabihin namin bago pa namin simulan ang pangalawa, hindi pagkatapos.',
+          'Bakbak ng takip, ₱500 hanggang ₱1,000. Kapag nakasarado ang tangke at kailangang buksan. Kasama ang pagsasara ulit, pero ikaw ang magbibigay ng semento. Kung kami ang magdadala ng semento, dagdag na ₱500. Kung ayaw mo ng dagdag, pwede mong ipagawa ang pagsasara sa ibang marunong.',
+          'Pangalawang truckload, ₱5,000 ulit. Kapag hindi kasya sa isa ang laman ng tangke mo. Sasabihin namin bago pa namin simulan ang pangalawa, hindi pagkatapos.',
           'Yun lang. Wala nang iba. At sasabihin namin bago kami magsimula, hindi habang ginagawa.',
         ],
       },
@@ -404,7 +404,7 @@ export const funnelConfig: FunnelConfig = {
             caption: 'Parehong tank, parehong pulang tubo. Ang laman lang ang nagbago.',
           },
         ],
-        note: 'May before at after na litrato ang bawat trabaho, at ibinibigay namin sa inyo. Hindi to pang-porma. Ito ang tinitingnan kapag may tanong sa warranty, para hindi salita laban sa salita.',
+        note: 'May before at after na litrato ang bawat trabaho, at ibinibigay namin sa iyo. Hindi to pang-porma. Ito ang tinitingnan kapag may tanong sa warranty, para hindi salita laban sa salita.',
       },
     },
 
@@ -448,7 +448,7 @@ export const funnelConfig: FunnelConfig = {
         // numero sa page na kayang basahin sa bilis ng scroll, kaya inuulit sya
         // dito bilang selyo, hindi bilang bagong pangako.
         seal: { value: '30', unit: 'ARAW', label: 'Warranty sa bara' },
-        body: 'Yung presyong sinabi namin sa telepono ay yun din ang babayaran mo. Kung may nakita kaming dagdag na hindi namin nasabi sa iyo, ==kami ang sasagot doon, hindi ikaw.== Ang tanging hindi sakop nito ay kung mali ang sinabi mo sa amin, halimbawa isang tangke ang sinabi mo pero dalawa pala.',
+        body: 'Yung presyong sinabi namin sa telepono ay yun din ang babayaran mo. Kung may nakita kaming dagdag na hindi namin nasabi sa iyo, ==kami ang sasagot doon, hindi ikaw.== Ang hindi lang sakop nito ay kung mali ang sinabi mo sa amin, halimbawa isang tangke ang sinabi mo pero dalawa pala.',
         chips: [
           'Nakasulat na presyo bago magsimula',
           'BIR official receipt',
@@ -472,10 +472,10 @@ export const funnelConfig: FunnelConfig = {
       ground: 'navy',
       props: {
         eyebrow: 'Sino ang darating',
-        heading: 'Si **Gabriel** ang haharap sa inyo',
+        heading: 'Si **Gabriel** ang haharap sa iyo',
         body: [
-          'Si Gabriel ang field inspector namin. Sya ang titingin sa tangke nyo pagdating, sya ang magsasabi ng buong presyo bago magsimula ang trabaho, at sya ang bahala na maayos ang lahat bago umalis ang team.',
-          'Kapag may tanong kayo habang nandyan ang truck, sya ang kausapin nyo. Hindi kayo ipapasa sa iba.',
+          'Si Gabriel ang field inspector namin. Sya ang titingin sa tangke mo pagdating, sya ang magsasabi ng buong presyo bago magsimula ang trabaho, at sya ang bahala na maayos ang lahat bago umalis ang team.',
+          'Kapag may tanong ka habang nandyan ang truck, sya ang kausapin mo. Hindi ka namin ipapasa sa iba.',
         ],
         image: '/img/gabriel.webp',
         imageAlt: 'Si Gabriel, field inspector ng Oceanides',
@@ -508,7 +508,7 @@ export const funnelConfig: FunnelConfig = {
           },
           {
             q: 'Ano ang sakop ng 30-day warranty?',
-            a: 'Ang bara. Kapag bumalik ang bara sa loob ng 30 araw, babalikan namin. Ang hindi sakop ay kung mapuno ulit ang tangke, kasi nakadepende yun sa dami ng gumagamit. Ang kainan, hotel, o apartment na maraming tao ay mas mabilis talagang mapuno kaysa sa bahay, at hindi yun depekto ng trabaho. Kaya kinukunan namin ng before at after na litrato ang tank nyo, para may makita kayo at hindi basta salita lang.',
+            a: 'Ang bara. Kapag bumalik ang bara sa loob ng 30 araw, babalikan namin. Ang hindi sakop ay kung mapuno ulit ang tangke, kasi nakadepende yun sa dami ng gumagamit. Ang kainan, hotel, o apartment na maraming tao ay mas mabilis talagang mapuno kaysa sa bahay, at hindi yun depekto ng trabaho. Kaya kinukunan namin ng before at after na litrato ang tank mo, para may makita ka at hindi basta salita lang.',
           },
           // DENR Certificate of Treatment = HIWALAY na serbisyo, hindi kasama
           // sa ₱5,000 (Neil, 2026-08-01): ₱12,000 residential / ₱15,000
@@ -518,7 +518,7 @@ export const funnelConfig: FunnelConfig = {
           // ticket — ang ticket ay singil ng siphoning job lang.
           {
             q: 'Kailangan ko ng DENR Certificate of Treatment. Meron ba kayo?',
-            a: 'Meron. Dagdag na serbisyo yun: ₱12,000 para sa bahay, ₱15,000 para sa negosyo o company. Ito yung opisyal na papel na nagpapatunay na dinala sa DENR-partner na tapunan ang laman ng tangke nyo. Madalas hinihingi to ng building admin, ng barangay, o para sa permit. Ang karaniwang siphoner, hindi makakapagbigay nyan. Sabihin nyo lang sa tawag kung kailangan nyo.',
+            a: 'Meron. Dagdag na service yun: ₱12,000 para sa bahay, ₱15,000 para sa negosyo o company. Ito yung official na papel na nagpapatunay na dinala sa DENR-partner na tapunan ang laman ng tangke mo. Madalas hinihingi to ng building admin, ng barangay, o para sa permit. Ang karaniwang siphoner, hindi makakapagbigay nyan. Sabihin mo lang sa tawag kung kailangan mo.',
           },
           {
             q: 'Saan kayo pwede pumunta?',
@@ -623,7 +623,7 @@ export const funnelConfig: FunnelConfig = {
         // katulad ng `/thank-you`.
         links: [{ label: 'Privacy Policy', href: '/privacy' }],
         brandLine:
-          'Oceanides Plumbing Siphoning & Pest Management Services OPC. SEC, BIR, at DENR na rehistrado.',
+          'Oceanides Plumbing Siphoning & Pest Management Services OPC. Registered sa SEC, BIR, at DENR.',
         disclaimer:
           'Ang presyong nasa page na to ay para sa residential siphoning sa loob ng Metro Manila. Ang mga dagdag na singil ay nakalista sa itaas at sasabihin bago magsimula ang trabaho.',
       },
@@ -691,7 +691,7 @@ export const funnelConfig: FunnelConfig = {
           ],
         },
         'Hindi ko alam': {
-          title: 'Hanapin natin ang tangke nyo. Libre to.',
+          title: 'Hanapin natin ang tangke mo. Libre to.',
           blocks: [
             {
               heading: 'Tingnan mo ang 5 lugar na to',

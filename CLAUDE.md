@@ -86,14 +86,22 @@ register. The full spec is [.claude/skills/_shared/taglish-voice.md](.claude/ski
 read it before writing any *copy* (ad, post, caption, page, script). For ordinary chat
 replies, four rules:
 
-1. **50/50 split, not heavy Tagalog.** English for things and technical nouns (price,
-   septic tank, budget, data, message, funnel, ads, video, report, booking). Tagalog for
-   the human part (the problem, the fear, the decision, the close). Full-English on the
-   human part reads as a call center; full-Tagalog on the technical part reads as bulol.
-2. **Grade-4 words.** If a person wouldn't say it out loud, replace it. ⛔ `datos`,
-   `badyet`, `usapan`, `kalibrasyon`, `pananagutan`, `panganib`, `humaharang`, `naitala`,
-   `samakatuwid`, `gayunpaman` → ✅ `data`, `budget`, `message`, `testing`, `risk`,
-   `blocker`, `nakasulat`, `kaya`, `pero`.
+1. **Tagalog frame, English only in the carve-outs.** Verbs, connectors and pronouns are
+   Tagalog; English is reserved for (a) brand/institution names, (b) prices and numbers,
+   (c) borrowed verbs inside a Tagalog frame (`i-confirm`, `mag-book`), (d) nouns Filipinos
+   genuinely say in English (septic tank, truck, schedule, receipt). **Don't chase a ratio**
+   — the old "50/50" framing was a symptom, not the rule, and it led to swapping perfectly
+   good Tagalog for English. See the **LANGUAGE LOCK** in `taglish-voice.md`, ported from
+   the TUNED formula in `api/_lib/prompts.ts` (Neil pointed at it: *"ganun ung gusto ko"*).
+2. **The enemy is MANUAL-Tagalog, not Tagalog.** If a person wouldn't say it out loud,
+   replace it — and the replacement is sometimes English, sometimes just simpler Tagalog.
+   Pick the word a person would *speak*, never the language. ⛔ `datos`, `detalye`,
+   `rehistrado`, `awtomatiko`, `kumpirmahin`, `napagkakasunduan`, `naitatala`, `pahintulot`,
+   `naka-imbak`, `naserbisyuhan`, `opisyal`, `kalibrasyon`, `pananagutan`, `humaharang`,
+   `samakatuwid`, `gayunpaman` → ✅ `data`, `info`, `registered`, `automatic`, `i-confirm`,
+   `nagkakasundo`, `naka-save`, `consent`, `naka-store`, `na-service`, `official`, `testing`,
+   `sagot namin`, `blocker`, `kaya`, `pero`. **A pure-Tagalog sentence is not automatically
+   wrong** — the KM-003 hook is pure Tagalog and is the best-performing line we own.
 3. **No em dash. No apostrophes in contractions** — `nyo`, `yun`, `yan`, `to`, `wag`, `di`.
 4. **Calm expert, not excited salesman.** No emoji stacks.
 
@@ -102,8 +110,17 @@ This rule exists because the agent kept drifting into literary Tagalog; his verd
 KM-003 dashboard was *"sakit sa mata basahin."*
 
 Enforced by [.claude/hooks/taglish-guard.sh](.claude/hooks/taglish-guard.sh) (`UserPromptSubmit`),
-which injects the rules when it sees ≥2 distinct Tagalog markers in the prompt. Fail-open —
-it never blocks a prompt. This file is the durable half; the hook is the automatic half.
+which now has **two triggers** (widened 2026-08-02): ≥2 distinct Tagalog markers in the prompt
+(→ reply in register), **and** any copy/sales/marketing noun in *any* language — `copy`,
+`caption`, `script`, `headline`, `landing page`, `funnel`, `post`, `CTA`… (→ run STEP 0, then
+the LANGUAGE LOCK). The second trigger exists because copy is usually *requested in English*,
+so the old hook stayed silent at exactly the moment the spec was needed. Fail-open — it never
+blocks a prompt. This file is the durable half; the hook is the automatic half.
+
+**Copy inside a funnel is also gated at build time** by `funnels/*/scripts/lint-voice.mjs`
+(wired to `prebuild`). It scans `src/` **and** `public/` **and** the root HTML — the blind spot
+that let a whole deep-Tagalog page ship on 2026-08-02 was *scope*, not the word list. When
+customer-facing copy moves into a new location, add that location to the walker in the same commit.
 
 ## Context Hygiene
 

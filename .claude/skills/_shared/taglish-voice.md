@@ -26,6 +26,94 @@ particular asset should be Taglish at all. Decide that first, per asset, per aud
 
 The rules below apply once Step 0 has answered "Taglish".
 
+### STEP 0a — market fit: hindi lahat ng surface ay Taglish (Neil, 2026-08-02)
+
+> *"make sure it would fit/perfect para sa target market kung saan ito gagamitin.
+> Kasi di naman lahat pwedeng taglish, meron ding english lang."*
+
+| Surface | Register |
+| --- | --- |
+| Oceanides at ibang PH local-service client: landing page, FB/IG post, caption, Messenger reply, UGC at ad script | **Taglish** |
+| Grifon PH ads at organic na tumutugon kay Bryan/Olivia | **Taglish** |
+| Grifon app UI, `grifon.ai` landing at pricing, `funnels/grifon-starter` | **English** (verified 2026-08-01, tama sya, wag "itama") |
+| B2B deck, Autopilot proposal, kontrata, PJW/Japanese partner | **English** |
+| Code, commit message, GitHub issue, workflow doc, `NOW.md` | **English** (nabubuhay sila pagkatapos ng usapan) |
+
+Kapag English ang sagot, **buong English** — hindi Taglish na nakasuot ng English.
+
+---
+
+## LANGUAGE LOCK — ang formula, hango sa TUNED prompt (Neil, 2026-08-02)
+
+> Pinuntahan ni Neil ang tuned Gemini script rules at sinabing *"Ganun ung gusto ko."*
+> Source: [`api/_lib/prompts.ts`](../../../api/_lib/prompts.ts) `ADSCRIPT_COMMON_RULES`
+> §LANGUAGE LOCK. ⛔ TUNED yun, hindi ine-edit. Ito ang **port** nya papuntang
+> written surfaces, at ito na ang mananaig kapag may di pagkakaunawaan sa itaas.
+
+**1. Tagalog ang FRAME.** Ang verb, connector at pronoun ay Tagalog. Doon nakaupo
+ang lahat ng iba.
+
+**2. English LANG sa apat na carve-out:**
+
+| | Carve-out | Halimbawa |
+|---|---|---|
+| a | Brand at institution name | Oceanides · SEC · BIR · DENR · Grifon · Meta |
+| b | Presyo at numero | ₱5,000 · 30-day · 4,000 litro |
+| c | Hiram na verb, nakabaon sa Tagalog frame | i-confirm · i-check · mag-book · i-save |
+| d | Noun na totoong sinasabi ng Pinoy sa English | septic tank · truck · schedule · receipt · warranty · form · page |
+
+**3. BAWAL ang English sa spec at marketing term.** Maghanap ng natural na Taglish
+o **tanggalin**. Ganito ang ginagawa ng tuned prompt:
+
+```
+"single-origin medium roast"  →  "specialty kape"  (o alisin, kaya ng visual)
+"cafe-quality goodness"       →  "parang barista ang lasa"
+"delivered to your doorstep"  →  "padala sa bahay"
+```
+
+**4. 🔴 ANG KAAWAY AY MANUAL-TAGALOG, HINDI TAGALOG.** Ito ang natuklasan noong
+2026-08-02 pagkatapos ng apat na sunod na pagpalya. Ang sira ay hindi kung gaano
+karaming Tagalog. Ang sira ay **kung anong klaseng Tagalog** — mga salitang tama
+sa diksyunaryo pero hindi sinasabi ng tao nang malakas.
+
+| Manual | Sinasabi ng tao |
+| --- | --- |
+| detalye | info |
+| rehistrado | registered |
+| awtomatiko | automatic |
+| kumpirmahin | i-confirm |
+| napagkakasunduan | nagkakasundo |
+| naitatala / nakatala | naka-save, nakasulat |
+| pahintulot | consent |
+| naka-imbak | naka-store |
+| naserbisyuhan | na-service |
+| opisyal | official |
+| ipatama | i-correct |
+
+⚠️ **Pansinin: minsan English ang lunas, minsan mas simpleng Tagalog.** Huwag
+piliin ang WIKA. Piliin ang **salitang bibigkasin ng tao.** Ang pag-aakalang
+"English ang lunas" ang mismong pagkakamali noong 2026-08-02: ang panukalang
+`presyo → price` ay sisira sana ng linyang wala namang sira.
+
+**5. Huwag maghalo ng register sa loob ng isang linya.**
+
+**6. Ang purong-Tagalog na pangungusap ay HINDI awtomatikong mali.**
+
+> *"Kapag nagbubuhos ka na ng timba para lang bumaba, hindi na yan barado."*
+
+Purong Tagalog yan, at sya ang KM-003 hook na may **98.5% retention sa 0:03,
+na-verify sa 7,047 na tao.** Pasado sya kasi zero ang manual na salita at walang
+technical na noun na dapat sanang English. **Hindi sya exception. Sya ang halimbawa.**
+
+**7. Ang ratio ay sintomas, hindi ang rule.** Ang `~70/30` sa tuned prompt ay para
+sa **spoken** Veo/TTS dahil sa ACCENT LOCK (binabasa ng engine ang accent sa
+dominanteng wika ng linya). Walang accent lock sa nakasulat na surface, kaya
+**huwag habulin ang numero.** Sundin ang frame at ang carve-out, at kusang lalabas
+ang ratio.
+
+**Ang huling test, mula mismo sa tuned prompt:**
+*"Sound like a real Filipino vlog, not a manual."*
+
 ---
 
 Write in natural Filipino Taglish.
