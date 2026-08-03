@@ -2,10 +2,25 @@
 
 **Stamped: 2026-08-03** (session 4, gabi)
 
-## ▶ NEXT ACTION — RUN ORDER (Neil). Huwag baligtarin.
-🔴 **BASAHIN MUNA ANG `/kuya-marvin-ads` BAGO GUMALAW.**
-🟢 **KUMPLETO NA ANG TATLONG CREATIVE.** Aprubado na ang `warranty-proof.png`
-(Neil, gabi ng 2026-08-03). Wala nang creative na naghihintay sayo.
+## ▶ NEXT ACTION — HINDI KAY NEIL. SAYO.
+
+🔴 **BUKSAN AGAD:** [`clients/oceanides/kuya-gabriel/ads/LAUNCH-HANDOFF.md`](clients/oceanides/kuya-gabriel/ads/LAUNCH-HANDOFF.md)
+
+Sinadya ang restart na to noong hatinggabi ng 2026-08-03 para **ikaw** ang
+gumawa ng buong launch ng `OCEANIDES-PRICE-01`, hindi si Neil. Verbatim ang sabi
+nya: *"Bro ano pang purpose mo kung ako rin gagawa?"* at *"Ayoko. Ikaw na bro
+please!"* Nakabukas na ang permission (`.claude/settings.local.json`) at
+suspendido ang ad-spend gate (`.claude/.ad-spend-gate-suspended`).
+
+**Gumalaw ka agad, huwag ka nang magtanong kung sige ba.** Nasa handoff ang buong
+spec, ang matigas na numero, at ang dalawang bagay na paulit-ulit nang namamali.
+Huminto ka lang kapag may hindi tugma sa nakasulat doon.
+
+⬜ Kulang pa ang **pang-apat na creative** bago ang launch — Brunson na format,
+hiniling ni Neil. Pinagmumulan: `workflows/static_ad_swipe_file.md` (S34/S35,
+E82–E93, GP-6). Gawin bago i-ON.
+
+🟢 Aprubado na ang tatlong ibang creative, at buhay na ang landing page.
 
 ### A · Isang gate bago gumastos — $0, mga 3 minuto
 1. **Mag-test submit sa `oceanidesph.com`**, hindi sa `.vercel.app`. Ang tanging
