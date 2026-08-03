@@ -4,7 +4,17 @@ Vercel settings live outside git; the defreezer wipes local CLI links. Every fun
 gets recorded here (funnel-forge skill, step 8). Re-link after a wipe: `npx vercel link`
 inside the instance dir (CLI login: Neil's Vercel account `neilmaglayabusiness22-2085`).
 
-## oceanides-price-page (oceanides-price-page-v1) — deployed 2026-08-02
+## oceanides-price-page (oceanides-price-page-v1) — deployed 2026-08-02 · redeployed 2026-08-03
+
+- ✅ **Redeploy 2026-08-03** (`dpl_CiKsvZNKjRJtFZ9PDaVwANWDfq2u`): dala na ng prod ang
+  `3da6997` (Lead fires once per submission, not per page load). **Live e2e ulit, green:**
+  totoong submit sa apex → `/api/lead` 200 → row sa `funnel_leads` (tamang `funnel_id`) →
+  binura (204). **Pixel-level verify sa network log:** page load = PageView lang, ZERO
+  `ev=Lead`; isang submit = **eksaktong ISANG `ev=Lead`** (`ec=1`); fresh reload
+  pagkatapos = wala ulit. Buong page walk sa 390px: walang blocker, walang annoying —
+  tanging `favicon.ico` 404 (cosmetic). ⏳ Events Manager eyeball (Lead na nakarating sa
+  dataset `1050997330667084`) ay kay Neil sa phone — ang pixel fire ay kumpirmado na sa
+  network level.
 
 - **Production URL: https://oceanides-price-page.vercel.app** (ito ang i-share, HINDI ang
   per-deployment na `-<hash>-` URL). Tatlong route, lahat 200: `/`, `/thank-you`, `/privacy`.
