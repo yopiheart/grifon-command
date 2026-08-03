@@ -54,28 +54,25 @@ muna ilalabas ang GB-001 habang boses pa ni Veo ang naririnig.
 
 ## ✅ Tapos ngayong 2026-08-03
 
-**`GB-001-AD-v2.mp4`** — 22.1s, 1080×1920, **pasado sa dalawang gate**
-(`ad_preflight --build/--video` + `render_audit` grade **B**, `vo_accent_ok`,
-walang dead air, `covers_face:false`). Walong beat: hook · plunger b-roll · takot ·
-phone b-roll · **HTML quote card** · screen scroll · CTA · end card.
-Recipe: `make-plates.mjs`, `make-broll.mjs`, `captions.mjs`, `overlays/`, `build-cut.sh`.
+**`GB-001-AD-v2.mp4`** — 22.1s, 1080×1920, **pasado sa dalawang gate** (`ad_preflight
+--build/--video` + `render_audit` grade **B**, `vo_accent_ok`, walang dead air,
+`covers_face:false`). Walong beat: hook · plunger b-roll · takot · phone b-roll ·
+**HTML quote card** · screen scroll · CTA · end card. Recipe: `make-plates.mjs`,
+`make-broll.mjs`, `captions.mjs`, `overlays/`, `build-cut.sh`.
 
-**Ang aral, at ang gate na ipinalit (`797bdf0`).** Sampung tawag sa Veo noong
-**dalawa** lang ang inaprubahan, at ang script ay pumasa pa sa gate kahit **dalawang
-linya ang nakasaksak sa bawat 8s roll** — ang eksaktong bagay na binawi ni Neil noong
-2026-07-27. Binibilang ng lumang gate ang salita kada LINYA, hindi kada CLIP. Ngayon:
-isang linya kada roll · `maxPaidRolls` na binibilang ng hook, pati hinarang ng RAI ·
-b-roll ay dapat may Kling lane · kailangan ng HTML overlay + end card + zoom.
-
-⚠️ **Butas pa rin ng gate:** kapag HTML ang overlay, nilalaktawan ang feed-safe check
-(`band()` ang hinahanap). At mali ang binabasa nyang `volume=` — nakukuha ang SFX 0.45,
-hindi ang music 0.20.
+**Ang aral, at ang gate na ipinalit (`797bdf0`).** Sampung tawag sa Veo noong **dalawa**
+lang ang inaprubahan, at pumasa pa sa gate ang script kahit **dalawang linya ang
+nakasaksak sa bawat 8s roll** — ang binawi ni Neil noong 2026-07-27. Binibilang ng lumang
+gate ang salita kada LINYA, hindi kada CLIP. Ngayon: isang linya kada roll ·
+`maxPaidRolls` na binibilang ng hook, pati hinarang ng RAI · b-roll ay dapat may Kling
+lane · kailangan ng HTML overlay + end card + zoom.
+⚠️ **Butas pa rin:** kapag HTML ang overlay, nilalaktawan ang feed-safe check (`band()`
+ang hinahanap). At mali ang `volume=` na binabasa nya — SFX 0.45, hindi music 0.20.
 
 ## 🅿 PARKED
 **Oceanides:** SEC Reg. No. · FB About: buong SEC name · logo-marquee · reviews sa Page ·
 page #2 = DENR B2B · **per-word invert ng `spotlight`** (chunk-pop lang ang gawa).
-**Grifon punch list:** #94.3 next · #94.2 NOT-REPRO · #92+#89/#90 ride Slice B · #93 ⛔ TUNED.
-
+**Grifon:** #94.3 next · #94.2 NOT-REPRO · #92+#89/#90 ride Slice B · #93 ⛔ TUNED.
 ⚠️ **Client world:** navy + amber print, no glass, no `#FFCC00` — `clients/oceanides/DESIGN.md`.
 
 ## ⛔ Gated · 🔧 Arm before starting
