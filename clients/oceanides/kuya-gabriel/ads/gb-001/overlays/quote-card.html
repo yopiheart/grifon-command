@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<style>
+  /* BEAT 5 — kapalit ng mukha ni Gabriel.
+     Puro ngiti ang r3 mula 1.1s pataas (taas ng pisngi, kunot sa mata), at
+     sarili nyang hard rule ang walang ngiti. Sa halip na gumastos ng bagong
+     roll, ang linyang "Yan ang sabi nila" ay binibigyan ng mukha ng TOTOONG
+     sinabi ng customer — nasa script.spec.json `customerVerbatim` na sila.
+     Social proof na sya, hindi na lang pagtakip. */
+  body { background: var(--navy-deep); }
+  .grain {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(120% 80% at 50% 0%, rgba(28,99,173,.35) 0%, rgba(10,31,69,0) 60%),
+      linear-gradient(180deg, var(--navy) 0%, var(--navy-deep) 55%, var(--navy-void) 100%);
+  }
+  .wrap {
+    position: absolute;
+    left: 92px; right: 92px;
+    /* Naka-senter sa loob ng feed-safe band (285-1635, gitna = 960). Ang unang
+       takbo ay naka-top:430 at blangko ang buong ibabang kalahati. */
+    top: 660px;
+  }
+  .eyebrow {
+    font-family: 'InterBlack', Arial, sans-serif;
+    font-size: 34px; letter-spacing: .3em;
+    color: var(--amber);
+    margin-bottom: 46px;
+  }
+  .q {
+    font-family: 'InterBlack', Arial, sans-serif;
+    font-size: 62px;
+    line-height: 1.3;
+    color: var(--white);
+    margin-bottom: 44px;
+    padding-left: 30px;
+    border-left: 8px solid var(--amber);
+    opacity: 0;
+  }
+  .q em { font-style: normal; color: var(--amber); }
+  .src {
+    font-family: 'InterBlack', Arial, sans-serif;
+    font-size: 28px; letter-spacing: .16em;
+    color: var(--dim);
+    opacity: 0;
+  }
+</style>
+</head>
+<body>
+  <div class="stage grain"></div>
+  <div class="wrap">
+    <div class="eyebrow">SABI NG MGA CUSTOMER</div>
+    <div class="q" id="q1">Talaga grabe ang singilan.</div>
+    <div class="q" id="q2">From <em>4500</em>, tapos nagdagdag ng <em>100 per tubo</em>. Umabot sa <em>5500</em>.</div>
+    <div class="src" id="src">TOTOONG MENSAHE, HINDI GAWA-GAWA</div>
+  </div>
+<script>
+  // Sunod-sunod na pagpasok. Ang numero ang naka-amber kasi doon dumadapo ang
+  // mata, at ang numero ang mismong sakit na pinag-uusapan.
+  const items = [
+    { el: document.getElementById('q1'),  at: 0.10 },
+    { el: document.getElementById('q2'),  at: 0.95 },
+    { el: document.getElementById('src'), at: 2.10 },
+  ];
+  window.render = function (t) {
+    for (const it of items) {
+      const p = Math.max(0, Math.min(1, (t - it.at) / 0.30));
+      const ease = 1 - Math.pow(1 - p, 3);
+      it.el.style.opacity = ease;
+      it.el.style.transform = 'translateY(' + (26 - 26 * ease) + 'px)';
+    }
+  };
+  window.render(0);
+</script>
+</body>
+</html>

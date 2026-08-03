@@ -1,121 +1,202 @@
 #!/usr/bin/env bash
-# GB-001-AD assembly — ang unang ad ni Gabriel, at ang una na tumuturo sa website.
-# Patakbuhin mula sa repo root, kailangan ng ffmpeg sa PATH:
+# GB-001-AD v2 — buong assembly. Recipe ito, hindi output; gitignored ang edit/.
+#
 #   export PATH="$PWD/.tools/ffmpeg/ffmpeg-8.1.2-essentials_build/bin:$PATH"
 #   bash clients/oceanides/kuya-gabriel/ads/gb-001/build-cut.sh
 #
-# Sources (naka-commit): plates/, plates-9x16/, clips/
-# Ang edit/ ay gitignored — ang script na to ang recipe, hindi ang output.
+# ANG PAGKAKAIBA SA v1 (na BAGSAK — anim na bagay, 2026-08-03)
+#  1. MAY CAPTION na. Ang v1 ay wala. P1, 11 corroborations: ang pace ay caption
+#     churn, hindi cut rate. Ito ang pinakamalakas na lever at libre sya.
+#  2. HTML/Hyperframes ang hook overlay at ang end card, hindi drawtext band.
+#     "Ang nagpaganda pa sa KM003 meron tong html/hyperframes" (Neil).
+#  3. Nasa y=300 ang hook, loob ng feed-safe 285-1635. Ang v1 ay nasa y=150 at
+#     naputol nang malinis ng 4:5 feed crop.
+#  4. May flash + whoosh sa bawat pangalawang cut, max 3 (aral #7).
+#  5. Music sa 0.20, hindi 0.10. Sa 0.10 ay wala kang naririnig.
+#  6. MAY GALAW ANG BAWAT BEAT. Sinukat 2026-08-03: ang push-in ni Veo ay ~15%
+#     sa buong 8s at ~7% na lang matapos ang speech-cut — nasa ilalim ng makikita.
+#     Kaya ang zoom ay dito na ginagawa, kung saan tayo ang may hawak ng lakas.
 #
-# ANG PAGKAKAIBA SA KM-003
-#  - 4 na beat, hindi 6. Ang 36.8s ay may 8.0% lang na umaabot sa dulo.
-#  - s3 ay SCREEN RECORDING ng totoong page, hindi Veo. Sa halip na sabihin ni
-#    Gabriel na nakasulat ang presyo, nakikita mo. Libre rin sya.
-#  - Ang VO ng s3 ay hinihila sa sariling Veo roll (s3-vo-source.mp4) para
-#    IISANG BOSES ang buong ad. Ang TTS mula sa ibang voice ay agad na
-#    naririnig bilang ibang tao.
-#  - SPEECH-CUT, hindi hand-timed. Ang Veo ay nag-uunat ng dialogue para punuin
-#    ang 8s, at ang patlang sa loob ang drag. Ang .tmp/speechcut.mjs ang
-#    naghahanap ng totoong salita; ang mga segment sa ibaba ay galing doon.
+# ANG NGITI, AT KUNG PAANO SYA IWINASAN NANG WALANG GASTOS
+# Ngumiti si Gabriel sa r2 at r3 — hard rule yun na sarili nyang desisyon, at
+# tatlong beses syang ngumiti kahit hinigpitan ang prompt. Dense sampling ang
+# nagturo kung saan eksakto (aral #14, hindi sparse):
+#   r2  malinis ang 0-3.7s. Nasa 4-7s ang ngiti — at natatakpan yun ng b2.
+#   r3  malinis ang 0-1.1s at ang 3.6-6.8s. Ngiti ang 1.1-3.5s.
+# Kaya ang beat 5 ay HINDI na mukha nya kundi HTML quote card na may totoong
+# sinabi ng customer. Tumutugma sya sa linyang "Yan ang sabi nila", social proof
+# sya, at zero ang gastos.
+#
+# ⛔ WALA PANG KLING. Ang dalawang b-roll ay still + FFmpeg zoom muna. Ang Kling
+#    ang deklaradong lane sa script.spec.json (`broll[].motion`) at BAYAD sya —
+#    desisyon ni Neil pagkatapos nyang panoorin ang cut na to.
 set -euo pipefail
 
 AD="clients/oceanides/kuya-gabriel/ads/gb-001"
-C="$AD/clips"; E="$AD/edit"
+C="$AD/clips"; E="$AD/edit"; O="$AD/overlays"; B="$AD/broll"
 FONT="api/_lib/assets/fonts/Anton-Regular.ttf"
 MUSIC="api/_lib/assets/music/testimonial.mp3"
-OUT="$AD/GB-001-AD-v1.mp4"
+WHOOSH="api/_lib/assets/sfx/whoosh-v2.mp3"
+POP="api/_lib/assets/sfx/pop-v3.mp3"
+OUT="$AD/GB-001-AD-v2.mp4"
 mkdir -p "$E"
 
-[ -f "$FONT" ] || { echo "ERROR: patakbuhin mula sa repo root (walang Anton-Regular.ttf)" >&2; exit 1; }
+[ -f "$FONT" ] || { echo "ERROR: patakbuhin mula sa repo root" >&2; exit 1; }
+for f in "$O/hook-overlay.mov" "$O/quote-card.mp4" "$O/endcard.mp4"; do
+  [ -f "$f" ] || { echo "ERROR: walang $f — patakbuhin muna ang overlays/render-overlay.mjs" >&2; exit 1; }
+done
 
 V="-c:v libx264 -preset medium -crf 20 -pix_fmt yuv420p -r 30"
 AAC="-c:a aac -b:a 192k -ar 48000 -ac 2"
-SPD=1.12   # 22.2s raw -> ~19.8s. Pasok sa 15-20s na target.
+SPD=1.12   # PACING Fix 5. Inuunat ni Veo ang dialogue para punuin ang 8s;
+           # ang TRIM ang unang lunas, ito ang pangalawa. 1.05-1.12 ang hanay.
 
-# Ang drawtext ay pumuputol sa apostrophe at sa colon; wala tayo nun (typography
-# rule sa taglish-voice.md). Ang kuwit ay kailangang i-escape.
-esc() { printf '%s' "$1" | sed "s/,/\\\\,/g"; }
+CAP() { node "$AD/captions.mjs" --text "$1" --dur "$2"; }
 
-# --- 1. SPEECH CUTS -------------------------------------------------------
-# Kada segment: keep-windows na galing sa speechcut.mjs, pinagdikit.
-cut_speech() {
+# --- 1. SPEECH CUTS ---------------------------------------------------------
+# Ang mga window ay galing sa silencedetect=noise=-30dB:d=0.25, hindi sa kamay.
+cut_av() {  # $1 src, $2 name, $3.. "a:b" na keep-window
   local src="$1" name="$2"; shift 2
   local n=0 inputs=() filters=""
   for seg in "$@"; do
-    local a="${seg%%:*}" b="${seg##*:}"
-    ffmpeg -y -v error -ss "$a" -to "$b" -i "$src" -vf "fps=30,scale=1080:1920" $V $AAC "$E/${name}_$n.mp4"
+    ffmpeg -y -v error -ss "${seg%%:*}" -to "${seg##*:}" -i "$src" \
+      -vf "fps=30,scale=1080:1920" $V $AAC "$E/${name}_$n.mp4"
     inputs+=(-i "$E/${name}_$n.mp4"); filters+="[$n:v][$n:a]"; n=$((n+1))
   done
   ffmpeg -y -v error "${inputs[@]}" -filter_complex "${filters}concat=n=$n:v=1:a=1[v][a]" \
     -map "[v]" -map "[a]" $V $AAC "$E/$name.mp4"
 }
-
-echo "== s1 HOOK =="
-cut_speech "$C/s1.mp4" s1cut 0:2.02 2.18:3.32 3.83:5.12 5.83:6.62
-echo "== s2 ANG TAKOT =="
-# s2b, hindi s2. Sa unang roll ay NGUMITI si Gabriel nang may ngipin at taas ng
-# pisngi. Hard rule yun na sarili nyang desisyon (IDENTITY.md, 2026-07-30) at
-# hindi sya nahuhuli ng EXPRESSION LOCK ng veo-produce, kaya may hiwalay na
-# no-smile na linya ang --setting ng roll na to. Ang ngipin sa gitna ng salita
-# ay articulation, hindi ngiti — walang taas ng pisngi, walang kunot sa mata.
-cut_speech "$C/s2b.mp4" s2cut 0:1.92 2.13:3.12 3.53:5.52 5.78:7.37
-echo "== s4 CTA =="
-cut_speech "$C/s4.mp4" s4cut 0.03:1.17 2.08:4.07
-echo "== s3 VO (audio lang) =="
-cut_speech "$C/s3-vo-source.mp4" s3vocut 0:6.12 6.28:7.52
-ffmpeg -y -v error -i "$E/s3vocut.mp4" -vn -c:a aac -b:a 192k -ar 48000 -ac 2 "$E/s3-vo.m4a"
-
-# --- 2. s3 SCREEN SCROLL --------------------------------------------------
-# Ang totoong page, hindi generation. Ang taas ng VO ang nagtatakda ng haba.
-S3DUR=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$E/s3-vo.m4a")
-echo "== s3 SCROLL (${S3DUR}s) =="
-# HUMIHINTO MUNA SA TICKET. Ang unang bersyon ay nag-scroll mula 0 hanggang 7200
-# at ang huling dalawang segundo ay purong puting espasyo — dumaan sya sa ₱5,000
-# ticket nang napakabilis at nagtapos sa wala. Ngayon: 1.4s na hinto sa ticket
-# mismo (y=200, doon nakalimbag ang presyo at ang add-ons), tapos dahan-dahang
-# scroll hanggang y=4600 na dulo pa rin ng value stack. Walang blangko.
-SCROLL_A=200; SCROLL_B=4600; HOLD=1.4
-ffmpeg -y -v error -loop 1 -framerate 30 -t "$S3DUR" -i .tmp/page-full.png \
-  -vf "scale=1080:-1,crop=1080:1920:0:'${SCROLL_A}+min(max(0\,(t-${HOLD}))/(${S3DUR}-${HOLD})\,1)*(${SCROLL_B}-${SCROLL_A})',fps=30" \
-  -an $V "$E/s3-scroll.mp4"
-ffmpeg -y -v error -i "$E/s3-scroll.mp4" -i "$E/s3-vo.m4a" -map 0:v -map 1:a -shortest $V $AAC "$E/s3.mp4"
-
-# --- 3. OVERLAYS ----------------------------------------------------------
-# 🔴 Ang hook ay nasa FRAME 0 at WALANG fade. Frame 0 ang kinukuha ni Meta
-# bilang thumbnail; ang KM-003 ay nag-fade in kaya blangkong mukha ang napili.
-# Face-safe: nasa ibabang bahagi lahat ng teksto, hindi sa mukha.
-band() { # $1 in, $2 out, $3 text, $4 y, $5 size
-  ffmpeg -y -v error -i "$1" -vf "drawtext=fontfile=$FONT:text='$(esc "$3")':fontcolor=white:fontsize=${5:-62}:line_spacing=12:box=1:boxcolor=0x0A1F45@0.86:boxborderw=28:x=(w-text_w)/2:y=$4" $V $AAC "$2"
+cut_audio() { # $1 src, $2 name, $3.. window — boses lang, para sa b-roll beat
+  local src="$1" name="$2"; shift 2
+  local n=0 inputs=() filters=""
+  for seg in "$@"; do
+    ffmpeg -y -v error -ss "${seg%%:*}" -to "${seg##*:}" -i "$src" -vn $AAC "$E/${name}_$n.m4a"
+    inputs+=(-i "$E/${name}_$n.m4a"); filters+="[$n:a]"; n=$((n+1))
+  done
+  ffmpeg -y -v error "${inputs[@]}" -filter_complex "${filters}concat=n=$n:v=0:a=1[a]" \
+    -map "[a]" $AAC "$E/$name.m4a"
 }
-echo "== overlay: hook =="
-# 88px, hindi 62. Sa 62 ay nababasa sya pero hindi sya humihinto ng scroll, at
-# ang overlay na to ang buong trabaho ng frame 0. Nananatiling nasa itaas ng
-# buhok nya ang kahon — FACE-SAFE ang batas, kahit gaano kalaki.
-band "$E/s1cut.mp4" "$E/s1ovl.mp4" "HINDI BARADO.
-PUNO NA." 150 88
-echo "== overlay: s3 =="
-band "$E/s3.mp4" "$E/s3ovl.mp4" "NASA PAGE ANG BUONG PRESYO" 1400
-echo "== overlay: CTA =="
-band "$E/s4cut.mp4" "$E/s4ovl.mp4" "BASAHIN MO MUNA
-OCEANIDESPH.COM" 1330
 
-# --- 4. SPEED + CONCAT ----------------------------------------------------
-# Nauuna ang overlay bago ang speed-up para magkasabay silang mag-scale.
-for s in s1ovl s2cut s3ovl s4ovl; do
-  ffmpeg -y -v error -i "$E/$s.mp4" -filter_complex \
-    "[0:v]setpts=PTS/$SPD[v];[0:a]atempo=$SPD[a]" -map "[v]" -map "[a]" $V $AAC "$E/${s}_spd.mp4"
-done
+echo "== speech cuts =="
+cut_av    "$C/r1.mp4"    b1v 0:2.74                      # hook
+cut_audio "$C/r1.mp4"    b2a 3.36:6.50                   # L1
+cut_av    "$C/r2.mp4"    b3v 0:1.245 1.87:3.666          # L2
+cut_audio "$C/r2.mp4"    b4a 4.376:5.620 6.117:7.140     # L3 (approved verbatim)
+cut_audio "$C/r3.mp4"    b5a 0:1.976 2.340:3.366         # L4
+cut_audio "$C/r4-vo.mp4" b6a 0:3.283 3.628:5.948         # L5 + L6
+cut_av    "$C/r3.mp4"    b7v 3.666:6.728                 # L7 CTA
+
+dur() { ffprobe -v error -show_entries format=duration -of csv=p=0 "$1"; }
+D2=$(dur "$E/b2a.m4a"); D4=$(dur "$E/b4a.m4a"); D5=$(dur "$E/b5a.m4a"); D6=$(dur "$E/b6a.m4a")
+
+# --- 2. GALAW SA MGA STILL --------------------------------------------------
+# Slow push-in. Ito ang MrBeast lever na hiningi ni Neil: kung walang galaw ang
+# eksena, patay sya. Nasa edit sya at hindi sa generation kaya kontrolado ang
+# lakas at hindi sya nasisira ng pagputol (MOTION DOCTRINE, 2026-07-27).
+still_push() { # $1 png, $2 out, $3 dur, $4 zoom-end
+  local frames; frames=$(awk -v d="$3" 'BEGIN{printf "%d", d*30}')
+  ffmpeg -y -v error -loop 1 -framerate 30 -t "$3" -i "$1" \
+    -vf "scale=1280:-1,crop=1080:1920,zoompan=z='1+($4-1)*on/${frames}':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1080x1920:fps=30,setsar=1" \
+    -an $V "$2"
+}
+echo "== b-roll push-in =="
+still_push "$B/b1.png" "$E/b2v.mp4" "$D2" 1.14
+still_push "$B/b2.png" "$E/b4v.mp4" "$D4" 1.14
+
+# --- 3. SCREEN SCROLL (beat 6) ----------------------------------------------
+# Ang totoong page, hindi generation. Humihinto muna sa ticket bago mag-scroll —
+# ang unang bersyon ay dumaan sa presyo nang napakabilis at nagtapos sa puting
+# espasyo.
+echo "== screen scroll =="
+SA=200; SB=4600; HOLD=1.4
+ffmpeg -y -v error -loop 1 -framerate 30 -t "$D6" -i .tmp/page-full.png \
+  -vf "scale=1080:-1,crop=1080:1920:0:'${SA}+min(max(0\,(t-${HOLD}))/(${D6}-${HOLD})\,1)*(${SB}-${SA})',fps=30,setsar=1" \
+  -an $V "$E/b6v.mp4"
+
+# --- 4. PAGDIKIT NG BOSES SA LARAWAN ----------------------------------------
+mux() { ffmpeg -y -v error -i "$1" -i "$2" -map 0:v -map 1:a -shortest $V $AAC "$3"; }
+mux "$E/b2v.mp4" "$E/b2a.m4a" "$E/b2.mp4"
+mux "$E/b4v.mp4" "$E/b4a.m4a" "$E/b4.mp4"
+mux "$E/b6v.mp4" "$E/b6a.m4a" "$E/b6.mp4"
+# Beat 5 — quote card. Pinuputol sa haba ng boses.
+ffmpeg -y -v error -t "$D5" -i "$O/quote-card.mp4" -i "$E/b5a.m4a" \
+  -map 0:v -map 1:a -shortest $V $AAC "$E/b5.mp4"
+
+# --- 5. HOOK OVERLAY (HTML, transparent MOV) --------------------------------
+# 🔴 FRAME 0, WALANG FADE. Frame 0 ang kinukuha ni Meta bilang thumbnail.
+echo "== hook overlay =="
+ffmpeg -y -v error -i "$E/b1v.mp4" -i "$O/hook-overlay.mov" \
+  -filter_complex "[0:v][1:v]overlay=0:0:shortest=1[v]" -map "[v]" -map 0:a $V $AAC "$E/b1.mp4"
+
+# --- 6. CAPTIONS ------------------------------------------------------------
+# Hook = overlay LANG, walang caption (aral #4 — attention war). Beat 2 pataas.
+echo "== captions =="
+capbeat() { # $1 in, $2 out, $3 text
+  local d; d=$(dur "$1")
+  ffmpeg -y -v error -i "$1" -vf "$(CAP "$3" "$d")" $V $AAC "$2"
+}
+cp "$E/b1.mp4" "$E/b1c.mp4"
+capbeat "$E/b2.mp4" "$E/b2c.mp4" "Kahit anong plunger, balik nang balik ang problema."
+capbeat "$E/b3v.mp4" "$E/b3c.mp4" "Pero ang mas nakakatakot, yung singil pagdating ng truck."
+capbeat "$E/b4.mp4" "$E/b4c.mp4" "Isa ang presyo sa phone, iba na sa receipt."
+cp "$E/b5.mp4" "$E/b5c.mp4"   # quote card — ang card mismo ang teksto
+capbeat "$E/b6.mp4" "$E/b6c.mp4" "Kaya nasa page na ang buong presyo, nakasulat. Pati ang mga dagdag na itinatago ng iba."
+capbeat "$E/b7v.mp4" "$E/b7c.mp4" "Basahin mo muna bago ka mag-book ng schedule."
+
+# --- 7. CONCAT --------------------------------------------------------------
+# Concat FILTER na may isang re-encode. Ang demuxer -c copy ay nagpuputol ng DTS
+# at gumagawa ng black frame (aral #3).
 echo "== concat =="
-ffmpeg -y -v error -i "$E/s1ovl_spd.mp4" -i "$E/s2cut_spd.mp4" -i "$E/s3ovl_spd.mp4" -i "$E/s4ovl_spd.mp4" \
-  -filter_complex "[0:v][0:a][1:v][1:a][2:v][2:a][3:v][3:a]concat=n=4:v=1:a=1[v][a]" \
-  -map "[v]" -map "[a]" $V $AAC "$E/cut-nomusic.mp4"
+ffmpeg -y -v error -i "$E/b1c.mp4" -i "$E/b2c.mp4" -i "$E/b3c.mp4" -i "$E/b4c.mp4" \
+  -i "$E/b5c.mp4" -i "$E/b6c.mp4" -i "$E/b7c.mp4" \
+  -filter_complex "[0:v][0:a][1:v][1:a][2:v][2:a][3:v][3:a][4:v][4:a][5:v][5:a][6:v][6:a]concat=n=7:v=1:a=1[v][a]" \
+  -map "[v]" -map "[a]" $V $AAC "$E/joined.mp4"
 
-# --- 5. MUSIC BED ---------------------------------------------------------
-# Mababa, at umaalis sa dulo. Kalmadong eksperto, hindi masiglang salesman.
-DUR=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$E/cut-nomusic.mp4")
-FADE=$(awk -v d="$DUR" 'BEGIN{printf "%.2f", (d-1.5 > 0 ? d-1.5 : 0)}')
-ffmpeg -y -v error -i "$E/cut-nomusic.mp4" -i "$MUSIC" -filter_complex \
-  "[1:a]atrim=0:$DUR,volume=0.10,afade=t=in:st=0:d=1,afade=t=out:st=$FADE:d=1.5[m];[0:a][m]amix=inputs=2:duration=first:dropout_transition=0[a]" \
+# --- 8. FLASH SA CUT --------------------------------------------------------
+# 0.07s, pagkatapos ng hook at kada pangalawang cut, MAX 3 (aral #7).
+F1=$(dur "$E/b1c.mp4")
+F2=$(awk -v a="$F1" -v b="$(dur "$E/b2c.mp4")" -v c="$(dur "$E/b3c.mp4")" 'BEGIN{printf "%.3f", a+b+c}')
+F3=$(awk -v a="$F2" -v b="$(dur "$E/b4c.mp4")" -v c="$(dur "$E/b5c.mp4")" 'BEGIN{printf "%.3f", a+b+c}')
+echo "== flash @ $F1 $F2 $F3 =="
+ffmpeg -y -v error -i "$E/joined.mp4" -vf "\
+drawbox=x=0:y=0:w=iw:h=ih:color=white@0.72:t=fill:enable='between(t,${F1},${F1}+0.07)',\
+drawbox=x=0:y=0:w=iw:h=ih:color=white@0.72:t=fill:enable='between(t,${F2},${F2}+0.07)',\
+drawbox=x=0:y=0:w=iw:h=ih:color=white@0.72:t=fill:enable='between(t,${F3},${F3}+0.07)'" \
+  $V $AAC "$E/flashed.mp4"
+
+# --- 9. SFX -----------------------------------------------------------------
+# Sa transition LANG, hindi random. Walang SFX na tumatakip sa unang salita.
+echo "== sfx =="
+ffmpeg -y -v error -i "$E/flashed.mp4" -i "$WHOOSH" -i "$WHOOSH" -i "$WHOOSH" -i "$POP" \
+  -filter_complex "\
+[1:a]adelay=$(awk -v t="$F1" 'BEGIN{printf "%d", t*1000}')|$(awk -v t="$F1" 'BEGIN{printf "%d", t*1000}'),volume=0.45[s1];\
+[2:a]adelay=$(awk -v t="$F2" 'BEGIN{printf "%d", t*1000}')|$(awk -v t="$F2" 'BEGIN{printf "%d", t*1000}'),volume=0.45[s2];\
+[3:a]adelay=$(awk -v t="$F3" 'BEGIN{printf "%d", t*1000}')|$(awk -v t="$F3" 'BEGIN{printf "%d", t*1000}'),volume=0.45[s3];\
+[4:a]adelay=200|200,volume=0.35[s4];\
+[0:a][s1][s2][s3][s4]amix=inputs=5:duration=first:dropout_transition=0,volume=1.6[a]" \
+  -map 0:v -map "[a]" $V $AAC "$E/sfxed.mp4"
+
+# --- 10. SPEEDUP ------------------------------------------------------------
+echo "== speedup ${SPD}x =="
+ffmpeg -y -v error -i "$E/sfxed.mp4" \
+  -filter_complex "[0:v]setpts=PTS/$SPD[v];[0:a]atempo=$SPD[a]" -map "[v]" -map "[a]" $V $AAC "$E/sped.mp4"
+
+# --- 11. END CARD -----------------------------------------------------------
+# Hard cut, hindi pinapabilis — card sya, hindi salita.
+echo "== end card =="
+ffmpeg -y -v error -t 1.4 -i "$O/endcard.mp4" -f lavfi -t 1.4 -i anullsrc=r=48000:cl=stereo \
+  -map 0:v -map 1:a -shortest $V $AAC "$E/ec.mp4"
+ffmpeg -y -v error -i "$E/sped.mp4" -i "$E/ec.mp4" \
+  -filter_complex "[0:v][0:a][1:v][1:a]concat=n=2:v=1:a=1[v][a]" -map "[v]" -map "[a]" $V $AAC "$E/full.mp4"
+
+# --- 12. MUSIC + LOUDNORM ---------------------------------------------------
+# volume=0.20, hindi 0.10. Sa 0.10 ay wala kang naririnig (v1).
+echo "== music + loudnorm =="
+DUR=$(dur "$E/full.mp4")
+FADE=$(awk -v d="$DUR" 'BEGIN{printf "%.2f", (d-1.6 > 0 ? d-1.6 : 0)}')
+ffmpeg -y -v error -i "$E/full.mp4" -i "$MUSIC" -filter_complex \
+  "[1:a]atrim=0:$DUR,volume=0.20,afade=t=in:st=0:d=1,afade=t=out:st=$FADE:d=1.6[m];\
+   [0:a][m]amix=inputs=2:duration=first:dropout_transition=0,loudnorm=I=-14:TP=-1.5:LRA=11[a]" \
   -map 0:v -map "[a]" $V $AAC "$OUT"
 
 echo
