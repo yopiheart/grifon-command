@@ -62,7 +62,7 @@ talking() {
   # punch-in at NAWALA ang buong galaw sa apat na talking beat — habang mukhang
   # matagumpay pa rin ang build. Isa na naman itong bagsak na mukhang sagot.
   local nframes; nframes=$(awk "BEGIN{printf \"%d\", $dur*$FPS}")
-  local zoom="scale=$((W*2)):-1,zoompan=z='min(1.0+0.06*on/($nframes-1),1.06)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=${W}x${H}:fps=$FPS,setsar=1"
+  local zoom="fps=$FPS,scale=$((W*2)):-1,zoompan=z='min(1.0+0.06*on/($nframes-1),1.06)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=${W}x${H}:fps=$FPS,setsar=1"
   if [ "$ovl" = "-" ]; then
     ffmpeg -y -v error -ss "$tin" -t "$dur" -i "$src" \
       -vf "$zoom" -af "aresample=48000" \
@@ -78,8 +78,18 @@ talking() {
 # still() — b-roll o card, may sariling VO. Nasa loob na ng source ang galaw.
 #   $1 video  $2 dur  $3 vo|-  $4 overlay|-  $5 out
 still() {
-  local src=$1 dur=$2 vo=$3 ovl=$4 out=$5
+  local src=$1 dur=$2 vo=$3 ovl=$4 out=$5 zoom=${6:-}
+  # 🔴 ANOD SA CARD (Neil, 2026-08-03). Nahuli ng freezedetect na may 1.9s at
+  # 1.87s na GANAP na static sa quote card at ticket card. Sadya nga silang
+  # card, pero ang ganap na hindi gumagalaw ay nababasa ring "naghang" —
+  # kararating lang natin sa tatlong totoong hang, at ayaw nating maulit ang
+  # basa. Napakabagal na push-in (1.00 -> 1.03) para hindi sya kailanman patay,
+  # pero hindi rin nakakaabala sa pagbabasa ng presyo.
   local vin="[0:v]scale=$W:$H,setsar=1,fps=$FPS[v]"
+  if [ -n "$zoom" ]; then
+    local nf; nf=$(awk "BEGIN{printf \"%d\", $dur*$FPS}")
+    vin="[0:v]fps=$FPS,scale=$((W*2)):-1,zoompan=z='min(1.0+0.03*on/($nf-1),1.03)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=${W}x${H}:fps=$FPS,setsar=1[v]"
+  fi
   local vmap="[v]"
   local inputs=(-i "$src")
   if [ "$ovl" != "-" ]; then
@@ -128,7 +138,7 @@ splice() {
     -map "[v]" -map "[a]" -c:v libx264 -crf 17 -preset slow -pix_fmt yuv420p -c:a aac -b:a 192k "$E/.spj.mp4"
   local dur; dur=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$E/.spj.mp4")
   local nf; nf=$(awk "BEGIN{printf \"%d\", $dur*$FPS}")
-  local zoom="scale=$((W*2)):-1,zoompan=z='min(1.0+0.06*on/($nf-1),1.06)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=${W}x${H}:fps=$FPS,setsar=1"
+  local zoom="fps=$FPS,scale=$((W*2)):-1,zoompan=z='min(1.0+0.06*on/($nf-1),1.06)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=${W}x${H}:fps=$FPS,setsar=1"
   ffmpeg -y -v error -i "$E/.spj.mp4" -i "$ovl" \
     -filter_complex "[0:v]$zoom[v];[1:v]setpts=PTS-STARTPTS[o];[v][o]overlay=0:0:shortest=0[vo]" \
     -map "[vo]" -map 0:a -c:v libx264 -crf 17 -preset slow -pix_fmt yuv420p -c:a aac -b:a 192k -ar 48000 -ac 2 "$out"
@@ -151,24 +161,24 @@ splice() {
 cropped() {
   local src=$1 tin=$2 dur=$3 ovl=$4 out=$5 crp=$6
   local nf; nf=$(awk "BEGIN{printf \"%d\", $dur*$FPS}")
-  local zoom="$crp,scale=$((W*2)):-1,zoompan=z='min(1.0+0.06*on/($nf-1),1.06)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=${W}x${H}:fps=$FPS,setsar=1"
+  local zoom="$crp,fps=$FPS,scale=$((W*2)):-1,zoompan=z='min(1.0+0.06*on/($nf-1),1.06)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=${W}x${H}:fps=$FPS,setsar=1"
   ffmpeg -y -v error -ss "$tin" -t "$dur" -i "$src" -i "$ovl" \
     -filter_complex "[0:v]$zoom[v];[1:v]setpts=PTS-STARTPTS[o];[v][o]overlay=0:0:shortest=0[vo]" \
     -map "[vo]" -map 0:a -t "$dur" -af "aresample=48000" \
     -c:v libx264 -crf 17 -preset slow -pix_fmt yuv420p -c:a aac -b:a 192k -ar 48000 -ac 2 "$out"
 }
 
-echo "beat 1  hook"                 ; talking "$C/r1.mp4" 0.000 4.053 "$O/hook.mov"           "$E/s01.mp4"
+echo "beat 1  hook"                 ; talking "$C/r1.mp4" 0.000 2.570 "$O/hook.mov"           "$E/s01.mp4"
 echo "beat 2  plunger + SLAM"       ; still   "$B/b1.mp4"       3.100 "$A/vo-b2.mp3" "$O/slam-toilet.mov"    "$E/s02.mp4"
-echo "beat 3  takot (SPLICED)"      ; splice  "$C/r2.mp4" "$E/s03.mp4" "$P/b3.mov"  0.000 1.60  2.420 3.18
+echo "beat 3  takot (SPLICED)"      ; splice  "$C/r2.mp4" "$E/s03.mp4" "$P/b3.mov"  0.000 1.56  2.440 0.92  3.810 0.86  5.030 0.55
 echo "beat 4  phone->papel + SLAM"  ; still   "$B/b2.mp4"       2.600 "$A/vo-b4.mp3" "$O/slam-resibo.mov"    "$E/s04.mp4"
-echo "beat 5  quote card"           ; still   "$O/quote-card.mp4" 2.700 "$A/vo-b5.mp3" -      "$E/s05.mp4"
+echo "beat 5  quote card"           ; still   "$O/quote-card.mp4" 2.700 "$A/vo-b5.mp3" -      "$E/s05.mp4" anod
 echo "beat 6  mekanismo (CROPPED)"   ; cropped "$C/r3.mp4" 0.622 3.868 "$O/slam-itinatago.mov" "$E/s06.mp4" "crop=793:1410:143:0"
 echo "beat 7  totoong page + SLAM"  ; still   "$B/page.mp4"     1.200 -            "$O/slam-nakasulat.mov"   "$E/s07.mp4"
-echo "beat 8  ticket card"          ; still   "$O/ticket-card.mp4" 3.200 "$A/vo-b8.mp3" -     "$E/s08.mp4"
+echo "beat 8  ticket card"          ; still   "$O/ticket-card.mp4" 3.200 "$A/vo-b8.mp3" -     "$E/s08.mp4" anod
 echo "beat 9  UUWI KAMI (SPLICED)"  ; splice  "$C/r4.mp4" "$E/s09.mp4" "$O/slam-uuwi.mov"  0.000 2.10  3.200 0.90  5.560 1.64
 echo "beat 10 CTA + CAPTION"        ; talking "$C/r5.mp4" 2.334 3.568 "$P/b10.mov"            "$E/s10.mp4"
-echo "beat 11 end card"             ; still   "$O/endcard.mp4"  1.800 -            -                          "$E/s11.mp4"
+echo "beat 11 end card"             ; still   "$O/endcard.mp4"  1.800 -            -                          "$E/s11.mp4" anod
 
 # --- CONCAT -----------------------------------------------------------------
 # 🔴 CONCAT FILTER, HINDI demuxer -c copy. Ang demuxer ay nagpuputol ng DTS at
@@ -183,10 +193,10 @@ ffmpeg -y -v error \
 # --- FLASH sa tatlong cut ---------------------------------------------------
 # Aral 7: flash pagkatapos ng hook at kada pangalawang cut, MAX 3. Ang mga oras
 # ay ang simula ng beat 4, 7 at 9 — kinuwenta mula sa haba sa itaas.
-#   b4 = 11.933   b7 = 21.101   b9 = 25.501   (matapos ang splice ng b3 at b9)
+#   b4 = 9.560   b7 = 18.728   b9 = 23.128
 echo "flash"
 ffmpeg -y -v error -i "$E/cut.mp4" \
-  -vf "eq=brightness='0.45*(between(t,11.933,12.003)+between(t,21.101,21.171)+between(t,25.501,25.571))'" \
+  -vf "eq=brightness='0.45*(between(t,9.560,9.630)+between(t,18.728,18.798)+between(t,23.128,23.198))'" \
   -c:v libx264 -crf 17 -preset slow -pix_fmt yuv420p -c:a copy "$E/flash.mp4"
 
 # --- MUSIC + SFX + ANG KATAHIMIKAN ------------------------------------------
@@ -202,10 +212,10 @@ ffmpeg -y -v error -i "$E/flash.mp4" \
   -stream_loop -1 -i "$M/testimonial.mp3" \
   -i "$S/whoosh-v2.mp3" -i "$S/whoosh-v2.mp3" -i "$S/whoosh-v2.mp3" \
   -filter_complex "\
-[1:a]volume='0.20*if(between(t,25.00,30.141), 0, if(between(t,24.88,25.00), (25.00-t)/0.12, if(between(t,30.141,30.261), (t-30.141)/0.12, 1)))':eval=frame,atrim=0:36,asetpts=PTS-STARTPTS[mus];\
-[2:a]adelay=11933|11933,volume=0.5[w1];\
-[3:a]adelay=21101|21101,volume=0.5[w2];\
-[4:a]adelay=25501|25501,volume=0.5[w3];\
+[1:a]volume='0.20*if(between(t,22.83,23.83), 0, if(between(t,22.71,22.83), (22.83-t)/0.12, if(between(t,23.83,23.95), (t-23.83)/0.12, 1)))':eval=frame,atrim=0:34,asetpts=PTS-STARTPTS[mus];\
+[2:a]adelay=9560|9560,volume=0.5[w1];\
+[3:a]adelay=18728|18728,volume=0.5[w2];\
+[4:a]adelay=23128|23128,volume=0.5[w3];\
 [0:a][mus][w1][w2][w3]amix=inputs=5:duration=first:dropout_transition=0:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11[a]" \
   -map 0:v -map "[a]" -c:v copy -c:a aac -b:a 192k "$E/mixed.mp4"
 

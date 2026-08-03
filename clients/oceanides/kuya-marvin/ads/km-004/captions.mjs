@@ -148,7 +148,7 @@ const BEATS = [
   // ng truck" LANG — naputol ang "Pero ang mas nakakatakot" kasi may 1.04s na
   // pahinga sa gitna ng pangungusap at ang aking speechcut ay pumili ng ISANG
   // span. Ngayon ay dalawang piraso na ang tinatahi at tinatanggal ang pahinga.
-  { name: 'b3', text: 'Pero ang mas nakakatakot, yung singil pagdating ng truck.', dur: 4.78 },
+  { name: 'b3', text: 'Pero ang mas nakakatakot, yung singil pagdating ng truck.', dur: 3.89 },
   { name: 'b4', text: 'Isa ang presyo sa phone, iba na sa receipt.',                dur: 3.4 },
   { name: 'b6', text: 'Kaya nasa page na ang buong presyo, nakasulat.',             dur: speech.r3.dur },
   // beat 9 — may `UUWI KAMI.` na slam sa y=900. Ang caption ay nasa y=845,
