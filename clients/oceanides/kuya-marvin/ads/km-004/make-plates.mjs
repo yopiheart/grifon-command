@@ -34,7 +34,24 @@ const BODY_BLOCK =
   'slightly sloping shoulders, average arms, natural waist, exact neck thickness, exact ' +
   'head-to-body scale as the body-master. Keep the forearm tattoo and the wrist watch exactly ' +
   'as placed in the body-master image when visible, on the forearm of the arm that also carries ' +
-  'the watch.';
+  'the watch. He has exactly ONE tattoo, on that single forearm only — his other forearm is ' +
+  'plain bare skin with no marks, no lines and no second tattoo.';
+
+// 🔴 NAHULI NI NEIL 2026-08-03: "parang kinabit ung ulo/muka" sa s2 at s4. Ang
+// dalawang yun ay medium chest-up — kita ang katawan sa ibaba ng dibdib, kaya
+// Lane B sila (field shot), hindi Lane A. Sabi mismo ng skill sa Lane B: "NO
+// selfie perspective... This is where pasted-face failures live." Ginamit ko ang
+// Lane A na template sa dalawang Lane B na plate. Walang ganung problema ang s3
+// dahil totoong close-up sya. Dalawang bagay pa ang kulang sa prompt ko:
+const NO_PASTE =
+  'The whole picture is ONE exposure from ONE ordinary phone camera at ONE moment. His face and ' +
+  'the background are equally in focus — NO portrait mode, NO shallow depth of field, NO ' +
+  'background blur or bokeh, NO subject cut-out. His face is NOT sharper, brighter, smoother or ' +
+  'more contrasty than his shirt and arms; the same softness, the same grain and the same white ' +
+  'balance run across his face, his neck, his collar and the wall behind him. His neck is thick ' +
+  'and continuous into the collar with no rim, no outline, no halo around the hair, and no ' +
+  'skin-tone shift at the jaw or the collar. Shoulders are relaxed and rounded, never squared, ' +
+  'and the shirt is never stretched tight across the chest.';
 
 const FACE_BLOCK =
   'Preserve his real head shape, hairline, short faded haircut, brows, eyes, nose, cheeks, ears, ' +
@@ -88,42 +105,64 @@ const BANS =
   'bodybuilder body, no oversized face, no pasted head, no HDR look, no cinematic grading, no ' +
   'studio lighting, no beauty filter.';
 
+// 🔴 LAHAT NG TALKING PLATE AY LANE A NGAYON: close-up, arm's length, hanggang
+// upper chest lang. Dalawang panalo sa isang desisyon — nawawala ang pasted-head
+// (walang ganung bagsak ang Lane A: lock-1/lock-5) AT nasusunod ang
+// camera-distance rule (Neil + Marvin + Zam, 2026-07-19): sa mid/far framing
+// maliit ang mukha sa pixels at doon lumalabas ang AI feel PAG GINALAW NG VEO.
+const LANE_A =
+  'Framing lane: this is a close-up talking plate shot at arm\'s length. The frame runs from just ' +
+  'above the top of his head down to his upper chest and NO further — his waist, his hands and ' +
+  'the ground he stands on are all outside the frame. His head fills a large part of the picture.';
+
 const plate = (framing) =>
-  [ROLES, BODY_BLOCK, FACE_BLOCK, EXPRESSION, FACE_TO_CAMERA, framing, SCENE, WARDROBE, LIGHT, REGISTER, BANS].join(' ');
+  [ROLES, BODY_BLOCK, FACE_BLOCK, NO_PASTE, EXPRESSION, FACE_TO_CAMERA, LANE_A, framing, SCENE, WARDROBE, LIGHT, REGISTER, BANS].join(' ');
 
 // --- ang anim ---------------------------------------------------------------
 
 const JOBS = [
+  // ANGLE ROTATION — nahuli ni Neil 2026-08-03: "hindi nasunod ung rotational
+  // camera angle switch, s2 at s4 parehas lang." Hindi sapat ang "slightly below
+  // eye level" — hindi sya pisikal. Ang variety ng talking scene ay galing sa
+  // TAAS NG CAMERA at sa BACKDROP (skill), kaya sinasabi na dito kung nasaan ang
+  // camera AT kung ano ang nakikita mo DAHIL dun.
   {
     out: `${AD}/plates/s1.png`,
     refs: [BODY, FACE],
     prompt: plate(
-      'Framing: close head-and-shoulders portrait at eye level, shot at arm\'s length. Place him ' +
-      'slightly LOW in the tall frame so there is clean, uncluttered sky and wall in the upper ' +
-      'third above his head.',
+      'Camera height: EYE LEVEL, straight on, level with his eyes. Backdrop: the weathered ' +
+      'hollow-block wall with the banana plant crowding in from one side behind him. Leave a ' +
+      'clear band of empty wall and sky above his head, about one fifth of the frame height, ' +
+      'before the top of his hair begins.',
     ),
   },
   {
     out: `${AD}/plates/s2.png`,
     refs: [BODY, FACE],
     prompt: plate(
-      'Framing: medium chest-up, camera a little BELOW eye level looking slightly up at him.',
+      'Camera height: LOW. The phone is held down at his CHEST height and tilted UPWARD at his ' +
+      'face. Because of this low angle you see slightly up under his jawline and under his chin, ' +
+      'and his head sits against OPEN BLUE SKY with clouds — the top edge of the hollow-block ' +
+      'wall runs low across the bottom of the background, not behind his head.',
     ),
   },
   {
     out: `${AD}/plates/s3.png`,
     refs: [BODY, FACE],
     prompt: plate(
-      'Framing: tight face close-up at eye level, his face filling much of the frame, top of head ' +
-      'to upper chest.',
+      'Camera height: EYE LEVEL, very close. Tight face close-up, his face filling most of the ' +
+      'frame, top of head to collarbone only.',
     ),
   },
   {
     out: `${AD}/plates/s4.png`,
     refs: [BODY, FACE],
     prompt: plate(
-      'Framing: close-up head-and-shoulders at eye level filling the frame. Keep the LOWER third ' +
-      'of the frame simple and uncluttered.',
+      'Camera height: HIGH. The phone is held slightly ABOVE his eye level and tilted DOWNWARD at ' +
+      'his face, so he is looking slightly UP into the lens and you see a little more of the top ' +
+      'of his head and hair. Because of this high angle the background behind him is the cement ' +
+      'yard and the open concrete septic access cover on the ground — NO sky behind his head. ' +
+      'Keep the lower part of the frame simple and uncluttered.',
     ),
   },
   // --- b-roll: ANONYMOUS na kamay. Walang identity ref, walang anchor ni Marvin.
@@ -143,15 +182,23 @@ const JOBS = [
   {
     out: `${AD}/broll/b2.png`,
     refs: [],
+    // 🔴 BALIKTAD ANG PHONE SA UNANG TAKBO (Neil, 2026-08-03): nakatalikod ang
+    // screen sa tenga. Ito ang object-logic failure na binabantayan ng skill.
+    // Ang lunas ay sabihin ang PISIKAL na katotohanan: kapag nasa tenga ang
+    // screen, ang LIKOD ng phone ang nakikita ng camera.
     prompt:
       'Ordinary phone photo, over-the-shoulder from behind and slightly to the side so NO face is ' +
-      'visible: ONE anonymous hand holding a mobile phone up to an ear, the phone screen dark and ' +
-      'switched off. A folded sheet of plain paper rests on a low concrete ledge in the ' +
-      'foreground. Ordinary Philippine backyard, a painted hollow-block wall and green leafy ' +
-      'plants behind, bright tropical daylight, well exposed, neutral white balance, natural ' +
-      'colour. No tattoos, no watch, no jewellery, no rings. Slight phone HDR, mild JPEG ' +
-      'softness, natural grain, imperfect candid framing. No text, no readable writing on the ' +
-      'paper, no logos, no watermarks, no extra fingers, no distorted hands, no cinematic grading.',
+      'visible: ONE anonymous hand holding a mobile phone to his ear in a real phone call. The ' +
+      'phone is held the correct way round — its SCREEN is pressed flat against his ear and is ' +
+      'therefore completely hidden, and the plain featureless BACK of the phone is what faces the ' +
+      'camera. The phone lies flush along the side of his head, not angled away from it. A folded ' +
+      'sheet of plain paper rests on a low concrete ledge in the foreground. Ordinary Philippine ' +
+      'backyard, a painted hollow-block wall and green leafy plants behind, bright tropical ' +
+      'daylight, well exposed, neutral white balance, natural colour. No tattoos, no watch, no ' +
+      'jewellery, no rings. Slight phone HDR, mild JPEG softness, natural grain, imperfect candid ' +
+      'framing. No text, no readable writing on the paper, no visible phone screen, no glowing ' +
+      'display, no camera lenses facing the ear, no logos, no watermarks, no extra fingers, no ' +
+      'distorted hands, no cinematic grading.',
   },
 ];
 
