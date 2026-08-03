@@ -10,18 +10,28 @@ nakabukas ang Ads Manager.
 
 ---
 
-## Bago ka magsimula, tatlo
+## ✅ Pre-flight — pasado na ang tatlo (2026-08-03)
 
-1. **Redeploy ang funnel.** Nasa commit na ang `Lead` fix pero hindi pa live.
-   ```powershell
-   cd funnels\oceanides-price-page
-   npx vercel deploy --prod --yes
-   ```
-2. **Mag-test submit sa `oceanidesph.com`** (hindi sa `.vercel.app`). Ang tanging
-   `Lead` na pumutok noon ay galing sa `.vercel.app`, kaya wala pang patunay sa
-   apex. Tingnan sa Events Manager → Test events. Tapos burahin ang test row.
-3. **3-5 post sa Page** — tingnan ang [`../organic/PAGE-POSTS-PRE-AD.md`](../organic/PAGE-POSTS-PRE-AD.md).
-   Kung matagal na at may laman ang Page, pasado na.
+1. ✅ **Buhay ang funnel sa `oceanidesph.com`.** Kasama ang bagong dalawang-hanay
+   na ₱2,500 vs ₱5,000, ang "uuwi kami" na guarantee, at ang dalawang inspector.
+2. ✅ **Napatunayan ang `Lead` sa apex.** Hindi sa Test Events — sa Network tab
+   mismo: `facebook.com/tr/?id=1050997330667084&ev=Lead` na sinagot ng `200`
+   pagdating sa thank-you page.
+
+   🔴 **Wag nang habulin ang Test Events.** Kailangan nyang matatakan ang browser
+   session gamit ang cookie ng `facebook.com`, at hinaharangan yun ng
+   third-party cookie blocking ng Chrome. **Nakakarating pa rin ang event** —
+   blangko lang ang panel. Kapag may duda ulit, ang tamang tingin ay ang
+   **Network tab** (filter `facebook`, hanapin ang `ev=Lead` + `200`).
+   ⚠️ Sa Overview naman, tiyaking **kasama ang araw na to sa date range** —
+   isang oras ang nasayang dito dahil naka-`Jul 6 – Aug 2` sya at Aug 3 na pala.
+   May **30 minutong lag** din sya, nakasulat mismo sa screen.
+3. ✅ **May laman na ang Page.** Sa `Kuya Marvin ng Oceanides` tatakbo ang tatlong
+   ad (tingnan ang kahon sa ibaba), at limang launch post na ang dumaan doon bago
+   pa ang KM-003 — [`../../kuya-marvin/organic/PAGE-LAUNCH-POSTS.md`](../../kuya-marvin/organic/PAGE-LAUNCH-POSTS.md).
+
+⚠️ **Isang linis bago mag-on:** burahin ang test row sa `funnel_leads`
+(neilmaglaya / Valenzuela / Tenant, 2026-08-03) para malinis ang bilang ng linggo 1.
 
 ---
 
@@ -30,10 +40,28 @@ nakabukas ang Ads Manager.
 ```
 Campaign   OCEANIDES-PRICE-01
 Ad set     OCEANIDES-PRICE-01-NCR-broad
-Ad 1       OCEANIDES-PRICE-01-addons-ticket      (static, gawa na)
-Ad 2       OCEANIDES-PRICE-01-warranty-proof     (static, gawa na — hintayin ang mata ni Neil)
-Ad 3       OCEANIDES-PRICE-01-gb001-video        (nakahinto hanggang may boses si Gabriel)
+Ad 1       OCEANIDES-PRICE-01-addons-ticket      (static, ✅ handa)
+Ad 2       OCEANIDES-PRICE-01-warranty-proof     (static, ✅ handa — aprubado ni Neil 2026-08-03)
+Ad 3       OCEANIDES-PRICE-01-km004-video        (video, ✅ handa — KM-004-AD-v1.mp4)
 ```
+
+### 🔴 ISANG PAGE LANG ANG LAHAT: `1184710811397498`
+
+**`Kuya Marvin ng Oceanides`.** Neil, 2026-08-03: *"sa kuya marvin namin irurun
+ung ads."* Dalawa ang naka-connect sa portfolio na `771158756811875` (ito at ang
+`291924520660232` na Oceanides Malabanan), pero **isa lang ang gagamitin ng
+tatlong ad.** Kapag hinati mo sila, nahahati rin ang like, ang comment, at ang
+mensahe sa dalawang bunton, at doon mismo sinasagot ang *"magkano ba talaga"* na
+pumapatay sa close mo.
+
+⚠️ **Alamin mo to bago mag-on: dalawang inbox pa rin ang babantayan.** Ang
+comment at mensahe galing sa ad ay papunta sa inbox ni **Kuya Marvin**. Ang
+Messenger button naman sa landing page ay naka-hardcode sa
+`m.me/OceanidesMalabanan`, kaya doon sya papunta sa inbox ng **Oceanides**.
+Sinadyang hindi na ginalaw ang config — fallback door lang ang Messenger doon,
+ang form ang pangunahing daan, at ang isang deploy-at-retest sa gabi ng launch
+ay mas malaking panganib kaysa sa nabibili nito. **Pero sabihan si Zam:
+dalawang lugar ang titingnan araw-araw.**
 
 🔴 **WAG I-ON HANGGAT WALA ANG TATLO** (Neil, 2026-08-03). Isang creative lang
 ang KM-003 at yun ang pinakamalaking structural na sablay nun — kailangan ng
@@ -61,7 +89,7 @@ na ticket ang isa, litratong pruweba ang isa, hindi kambal).
 ### Ad
 - Format **Single image**
 - Larawan: **`clients/oceanides/out/price-addons-ticket.png`** (1080×1350)
-- Page identity **`291924520660232`**
+- Page identity **`1184710811397498`** (Kuya Marvin ng Oceanides)
 - CTA **Learn more**
 - 🔴 **AI label ON**
 - 🔴 **Text improvements + Translate text OFF** (muling isinusulat nila ang copy,
@@ -131,6 +159,83 @@ Basahin mo muna ang page bago ka mag-book.
 
 ---
 
+## Ad 3 — km004-video
+
+- Format **Single video**
+- Video: **`clients/oceanides/kuya-marvin/ads/km-004/KM-004-AD-v1.mp4`**
+  (720×1280, 29.97s, 9:16)
+- Page identity, AI label, at Advantage+ toggles: pareho sa Ad 1
+- CTA **Learn more**
+
+🔴 **I-UPLOAD ANG THUMBNAIL, WAG PABAYAAN SI META NA PUMILI.** May sarili syang
+auto-pick at madalas kumukuha sa gitna ng video, kung saan nakabuka ang bibig ni
+Marvin at walang overlay. Sa ilalim ng video, pindutin ang **Change image** at
+i-upload ang **`clients/oceanides/kuya-marvin/ads/km-004/KM-004-thumb-frame0.png`**
+— ito ang totoong frame 0, `PUNO NA.` sa navy card sa itaas ng mukha nya,
+sinuring nababasa hanggang 180px.
+
+⛔ **Walang gagawing bagong MrBeast na thumbnail.** Don't #1 sa
+`clients/oceanides/DESIGN.md` — itinataas ng makintab na ad-plate ang bantay na
+ibinababa ng UGC. Aral yun ng KM-003 thumbnail, bayad na natin.
+
+**Website URL:**
+```
+https://oceanidesph.com/?utm_source=fb&utm_medium=paid&utm_campaign=oceanides-price-01&utm_content=km004-video
+```
+
+**Primary text:**
+```
+Hindi barado. Puno na.
+
+Kapag nagbubuhos ka na ng timba para lang bumaba, hindi na yan
+barado. Puno na ang septic tank. Kaya kahit anong plunger, balik
+nang balik ang problema.
+
+Ang tinitingnan namin ay ang tangke, hindi ang toilet. At kapag
+hindi pa naman puno, sasabihin namin. Uuwi kami. Hindi ka namin
+pipilitin.
+
+₱5,000 kada truckload, may resibo at 30-day warranty, at nakasulat
+sa page bago ka pa mag-book pati ang bawat dagdag.
+
+Basahin mo muna bago ka mag-book.
+```
+
+**Headline:** `Uuwi kami kung hindi pa puno.`
+**Description:** `₱5,000 kada truckload, nakasulat.`
+
+> Sinadyang ang "uuwi kami" ang headline dito at wala sa dalawang static. Ito
+> ang tanging linyang hindi kayang kopyahin ng kalaban — kada truckload ang
+> kita ng siphoner, kaya walang ibang magsasabi sayo na hindi mo pa sila
+> kailangan. Tatlong magkaibang headline sa tatlong ad = tatlong magkaibang
+> pasok, hindi tatlong bersyon ng iisa.
+
+---
+
+## ▶ Launch checklist — sundan sa Ads Manager
+
+Manu-mano lahat. Hinaharang ng [`ad-spend-gate.sh`](../../../../.claude/hooks/ad-spend-gate.sh)
+ang agent sa anumang may budget, kaya **ikaw ang pipindot ng bawat isa.**
+
+- [ ] Burahin ang test row sa `funnel_leads` (neilmaglaya, 2026-08-03)
+- [ ] Campaign: **Leads** · conversion location **Website** · **CBO ₱500/araw**
+- [ ] Special ad category **WALA** · A/B test toggle **OFF**
+- [ ] Ad set: dataset **`1050997330667084`** · event **`Lead`**
+- [ ] ⛔ Tiyaking **HINDI** ang `1921429268517231` (Grifon Pixel)
+- [ ] Location **Metro Manila (NCR)** · 🔴 **"People LIVING in this location"**
+- [ ] Age 25-65+ · gender all · **Advantage+ audience** · **Advantage+ placements**
+- [ ] Attribution **7-day click, 1-day view** · start **12:00 AM** bukas, walang end date
+- [ ] Ad 1 addons-ticket — larawan, copy, UTM, Page `1184710811397498`
+- [ ] Ad 2 warranty-proof — larawan, copy, UTM, parehong Page
+- [ ] Ad 3 km004-video — video, **naka-upload na thumbnail**, copy, UTM, parehong Page
+- [ ] 🔴 **AI label ON** sa tatlo
+- [ ] 🔴 **Text improvements + Translate text OFF** sa tatlo
+- [ ] Isang ad set lang. Isang variable ang linggo 1.
+- [ ] Publish, tapos i-check bukas ng umaga kung may **Active** na tatlo (hindi
+      `In review` na natigil o `Rejected`)
+
+---
+
 ## Ang tanong ng linggo 1
 
 **Hindi ito "magkano ang lead."** Ang sinasagot ng unang linggo ay isa lang:
@@ -140,6 +245,24 @@ Basahin mo muna ang page bago ka mag-book.
 Kunin sa Ads Manager: **leads ÷ landing page views.** Yan ang totoong scoreboard.
 Kapag 3%+, gumagana ang page at budget na lang ang usapan. Kapag mababa sa 1%,
 ang page ang aayusin, hindi ang ads.
+
+### 🔴 Pero magbilang ka rin ng BOOKED JOB, mula araw uno
+
+Nakasulat sa lead ang kill gates sa ibaba. Nasa **booked job** ang break-even mo.
+Magkaibang bagay yun, at yan mismo ang bitag na naitala na natin bilang **A3** sa
+`ad_performance_ledger.md`:
+
+> KM-003: **₱12.85 kada usapan**, tatlong beses na mas mura sa target band.
+> **Pasado sa bawat linya ng kill gate.** Isang order.
+
+Ang matigas na numero (§Unit Economics ng ledger): **₱900 net margin kada load**,
+kaya **₱900 ang break-even kada booked job**. Sa ₱3,500 kada linggo, kailangan mo
+ng **apat na booked job** para patas lang. Kung 30% ang close mo, ang 7 lead ay
+dalawang trabaho — mukhang maganda ang cost per lead at lugi ka pa rin.
+
+**Kaya isang hanay lang ang kailangan, kahit sa papel:** ilang lead ang naging
+booked job. Kung hindi mo yan bibilangin, uulitin natin ang eksaktong pagkakamali
+na kaka-log lang natin.
 
 ⚠️ **Asahan ang mabagal na learning.** Kailangan ng ~50 event kada linggo para
 lumabas sa learning phase. Sa ₱500/araw, malamang **7-21 lead kada linggo** ang
