@@ -127,6 +127,27 @@ const imageBytes = readFileSync(imagePath).toString('base64');
 const mimeType = imagePath.toLowerCase().match(/\.jpe?g$/) ? 'image/jpeg' : 'image/png';
 
 const MODEL = arg('--model') || 'veo-3.1-lite-generate-preview';
+
+// 🔴 --dry-run — IDINAGDAG 2026-08-03 MATAPOS ITONG MAGING BUTAS NG MONEY GATE.
+// Pinapadaan ng veo-render-gate.sh ang anumang tawag na may `--dry-run` NANG
+// LIBRE AT HINDI BINIBILANG, dahil inakala nitong walang gastos yun. Pero HINDI
+// PALA IMPLEMENTADO ang flag dito: tahimik syang binabalewala ng rig at
+// nagsu-submit pa rin ng totoong bayad na tawag. Nagastos ako ng dagdag na roll
+// sa butas na to habang inaalam kung bakit bumagsak ang r4 — akala ko libre.
+//
+// Ang gate ay tama; ang rig ang sira. Dito ito inaayos para maging TOTOO ang
+// pangakong libre, at hindi sa pamamagitan ng pagtanggal ng dry-run sa gate —
+// tunay na kailangan ang libreng paraan ng pagtingin sa prompt.
+if (argv.includes('--dry-run')) {
+  console.log(`[veo-produce] DRY RUN — walang tawag, walang gastos.`);
+  console.log(`  model    ${MODEL}`);
+  console.log(`  image    ${imagePath}`);
+  console.log(`  out      ${outPath}`);
+  console.log(`  formula  ${FORMULA}`);
+  console.log(`\n--- PROMPT ---\n${PROMPT}\n`);
+  process.exit(0);
+}
+
 console.log(`[veo-produce] submitting: ${MODEL}, 9:16, 1080p, 8s, formula=${FORMULA}, image=${imagePath}`);
 let operation = await ai.models.generateVideos({
   model: MODEL,
