@@ -62,6 +62,53 @@ MSG
   exit 2
 fi
 
+# --- KISAME NG BAYAD NA ROLL ------------------------------------------------
+# 🔴 Idinagdag 2026-08-03. Dalawang re-roll ang inaprubahan ni Neil. SAMPUNG
+# tawag ang ginawa — apat na hinarang ng RAI filter, at nagpatuloy ang agent sa
+# ikatlo, ikaapat at ikalima nang hindi na bumabalik. Bootstrap si Neil at
+# inuutang nya ang perang to. Sabi nya: "paladesisyon ka, hindi ka man lang mag
+# verify kung okay saken na magregenerate."
+#
+# Binibilang ang PAGSUBOK, hindi ang tagumpay — ang hinarang ng RAI ay posibleng
+# sinisingil pa rin, at hindi natin alam.
+#
+# Ang kisame ay `maxPaidRolls` sa spec. Ang pagtaas nun ay DESISYON NI NEIL.
+# Kaya kong baguhin ang file na yan, kaya hindi to kandado — pero hindi na sya
+# tahimik: kailangan ng sadyang pagpalit na makikita sa git diff.
+ad_dir=$(dirname "$spec")
+counter="$ad_dir/.paid-rolls"
+max=$(node -e "try{process.stdout.write(String(JSON.parse(require('fs').readFileSync(process.argv[1],'utf8')).maxPaidRolls||0))}catch(e){process.stdout.write('0')}" "$spec")
+used=0
+[ -f "$counter" ] && used=$(tr -cd '0-9' < "$counter")
+[ -z "$used" ] && used=0
+
+if [ "$max" -lt 1 ]; then
+  cat >&2 <<MSG
+DENY veo-render-gate: walang \`maxPaidRolls\` sa $spec.
+
+Ito ang kisame ng bayad na roll para sa ad na to. Walang bilang = walang
+hangganan, at sampung tawag ang nangyari noong 2 lang ang inaprubahan.
+
+  Idagdag sa spec:  "maxPaidRolls": <bilang na sinabi ni Neil>
+MSG
+  exit 2
+fi
+
+if [ "$used" -ge "$max" ]; then
+  cat >&2 <<MSG
+DENY veo-render-gate: naabot na ang kisame — $used sa $max na bayad na roll.
+
+HUMINTO KA. Bumalik kay Neil bago gumastos ulit. Huwag mong itaas ang
+\`maxPaidRolls\` para lang makadaan; sa kanya ang perang to at inuutang nya.
+
+Sabihin sa kanya: ilan ang nagamit, ano ang nakuha, at bakit kailangan pa.
+Kapag sinabi nyang sige, sya ang magsasabi ng bagong bilang.
+
+  Bilang:  $counter
+MSG
+  exit 2
+fi
+
 if ! node tools/ad_preflight.mjs --script "$spec" >/tmp/veo-gate.out 2>&1; then
   {
     echo "DENY veo-render-gate: bumagsak ang $spec sa preflight."
@@ -73,4 +120,8 @@ if ! node tools/ad_preflight.mjs --script "$spec" >/tmp/veo-gate.out 2>&1; then
   exit 2
 fi
 
+# Pasado. Bilangin ang PAGSUBOK na to bago sya paalisin — kahit mabigo sya sa
+# RAI filter mamaya, nagastos na natin ang pagkakataon.
+echo $((used + 1)) > "$counter"
+echo "veo-render-gate: bayad na roll $((used + 1))/$max para sa $ad_dir" >&2
 exit 0

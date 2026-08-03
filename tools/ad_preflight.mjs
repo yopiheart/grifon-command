@@ -45,6 +45,7 @@ const RULES = {
   presets: ['classic','impact','hype','clean','none','punch','bars','spotlight'],
   presetDefault: 'spotlight', // KM-004 pataas, approved ni Neil 2026-07-27
   musicFloorDb: -30,        // mas tahimik dito = wala talagang naririnig
+  linesPerRollMax: 1,       // SKILL.md PACING Fix 2 — BINAWI ni Neil 2026-07-27
 };
 
 // Ang English na TINATANGGAP sa Taglish na script: brand, numero, hiram na verb,
@@ -133,6 +134,62 @@ function checkScript(specPath) {
     else P(`opening accent trigger ok (${lead} English sa umpisa)`);
   }
 
+  // --- ISANG LINYA KADA ROLL -------------------------------------------------
+  // 🔴 ANG BUTAS NA NAGPALUSOT SA GB-001 v2 (2026-08-03). Binibilang ng gate na
+  // to ang salita kada LINYA, pero hindi nya binibilang ang linya kada CLIP.
+  // Kaya nakalusot ang pagsaksak ng DALAWANG linya sa bawat 8s na roll — ang
+  // eksaktong bagay na BINAWI ni Neil noong 2026-07-27 (SKILL.md PACING Fix 2):
+  //
+  //   "ang pagdikit ng 2 formula-lines ay nag-solve nga ng Veo stretching, pero
+  //    PINUTOL NITO SA KALAHATI ANG CUT RATE — 4 na mahabang single-angle na
+  //    eksena imbes na ~8. Ito ang eksaktong dahilan kung bakit mas engaging ang
+  //    one-shot kaysa KM-003. KAPALIT: ~$6-8 kada ad imbes na $4."
+  //
+  // Ang mas mura ay hindi ang mas tama. Alam na yun ni Neil at binayaran na nya
+  // ang desisyon. Dito na sya nakabantay, hindi na sa alaala ng agent.
+  const spoken = /^(hook|line\s*\d+)/i;
+  const rollOf = (r) => (String(r ?? '').match(/\d+/) || [null])[0];
+  if (!Array.isArray(spec.beatMap) || !spec.beatMap.length) {
+    W('walang beatMap sa spec — hindi ko masuri ang isang-linya-kada-roll. Idagdag: [{beat,plate,roll,says}]');
+  } else {
+    const perRoll = new Map();
+    for (const b of spec.beatMap) {
+      if (!spoken.test(String(b.says || '').trim())) continue;
+      const r = rollOf(b.roll);
+      if (!r) continue;
+      if (!perRoll.has(r)) perRoll.set(r, []);
+      perRoll.get(r).push(String(b.says).trim());
+    }
+    let bad = 0;
+    for (const [r, says] of perRoll) {
+      if (says.length > RULES.linesPerRollMax) {
+        bad++;
+        F(`roll ${r} ay nagsasalita ng ${says.length} linya (${says.join(' + ')}) sa isang 8s na clip. ` +
+          `Max ${RULES.linesPerRollMax}. BINAWI ni Neil ang pagdikit ng linya noong 2026-07-27 — pinuputol nito ` +
+          `sa kalahati ang cut rate at nagiging tuloy-tuloy na 8 segundong pagsasalita ang eksena. ` +
+          `Ang tama ay isang linya kada roll, mas maraming maikling eksena, ~$6-8 kada ad. Aprubado na nya ang halagang yun.`);
+      }
+    }
+    if (!bad) P(`isang linya kada roll (${perRoll.size} roll)`);
+  }
+
+  // --- budget ceiling para sa hook ---
+  // Ito ang binibilang ng veo-render-gate.sh. Kapag walang bilang, walang
+  // hangganan — at 10 tawag ang nangyari noong 2 lang ang inaprubahan (2026-08-03).
+  if (typeof spec.maxPaidRolls !== 'number' || spec.maxPaidRolls < 1) {
+    F('walang `maxPaidRolls` (bilang) sa spec. Ito ang kisame na ipinapatupad ng veo-render-gate.sh. ' +
+      'Walang bilang = walang hangganan, at 10 tawag ang nangyari noong 2 lang ang inaprubahan.');
+  } else P(`maxPaidRolls = ${spec.maxPaidRolls}`);
+
+  // --- b-roll ay dapat may motion lane ---
+  // Neil, 2026-08-03: "pag broll KLING ang gagamitin para pagalawin, hindi VEO."
+  // At ang mas matandang puna sa KM-003: "hindi gumagalaw ung b-roll, picture lang."
+  for (const b of spec.broll || []) {
+    if (!b.motion) F(`b-roll ${b.id} ay walang \`motion\` lane. Ang static na b-roll ang puna ni Neil sa KM-003 ("picture lang"). Ilagay: "Kling".`);
+    else if (!/kling/i.test(b.motion)) F(`b-roll ${b.id} ay naka-motion sa "${b.motion}". Kling ang pampagalaw ng b-roll (Neil, 2026-08-03) — Veo ay para sa talking LANG.`);
+    else P(`b-roll ${b.id} motion = ${b.motion}`);
+  }
+
   // --- isang jobsite ---
   const locs = [...new Set((spec.plates || []).map((p) => p.location).filter(Boolean))];
   if (locs.length > 1) F(`${locs.length} magkaibang lugar sa mga plate (${locs.join(', ')}). Isang jobsite lang, iba-ibang ANGGULO — kung hindi, mukhang magkaibang shoot na pinagdikit. Ito ang "parang dalawang body" ni Neil sa GB-001 v1.`);
@@ -170,6 +227,23 @@ function checkBuild(buildPath) {
 
   if (!/captions?|build-captions/i.test(sh)) F('walang caption sa build. P1, 11 corroborations, `applied`: ANG PACE AY CAPTION CHURN, hindi cut rate. Ito ang pinakamalakas na lever at libre sya.');
   else P('may caption step');
+
+  // --- HTML / Hyperframes ----------------------------------------------------
+  // Neil, 2026-08-03: "ang nagpaganda pa sa KM003 meron tong html/hyperframes na
+  // ginamit bilang b-roll o call to action sa huli na may numero/animations sa
+  // text." Ang GB-001 v1 ay purong drawtext band — yun ang bumaba.
+  if (!/\.mov|overlays?\//i.test(sh)) F('walang HTML overlay (transparent MOV) sa build. Ang hook overlay ay HTML/Hyperframes, hindi drawtext band — yan ang nagpaganda sa KM-003.');
+  else P('may HTML overlay step');
+  if (!/end[-_]?card/i.test(sh)) F('walang end card sa build. Ang CTA sa dulo ay HTML card na may animation, hindi drawtext (KM-003).');
+  else P('may end card');
+
+  // --- galaw kada beat -------------------------------------------------------
+  // SINUKAT 2026-08-03: ang push-in ni Veo ay ~15% sa 8s, ~7% na lang matapos ang
+  // speech-cut — nasa ilalim ng makikita. Kaya ang zoom ay dito na ginagawa,
+  // kung saan tayo ang may hawak ng lakas (MOTION DOCTRINE, 2026-07-27).
+  if (!/zoompan|scale=.*iw\*|crop=.*t\/|setpts.*zoom/i.test(sh) && !/PUNCH|ZOOM/i.test(sh))
+    F('walang zoom o punch-in sa edit. Halos hindi nakikita ang sariling galaw ni Veo (~7% matapos ang cut). Kung walang galaw ang eksena, patay sya — MrBeast rule, at hiling mismo ni Neil 2026-08-03.');
+  else P('may edit-side na galaw');
 }
 
 function checkVideo(videoPath) {

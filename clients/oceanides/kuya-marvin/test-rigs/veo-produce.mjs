@@ -7,7 +7,7 @@
 //   node clients/oceanides/kuya-marvin/test-rigs/veo-produce.mjs \
 //     --image <plate.png> --out <out.mp4> --line "<Taglish dialogue>" \
 //     [--setting "<framing/location sentence>"] [--model veo-3.1-lite-generate-preview] \
-//     [--formula optionb]
+//     [--formula optionb] [--camera pushin|easeback]
 //
 // --formula optionb (KM-003+) builds the prompt from the app's tuned Director AI
 // OPTION B talking-scene formula (services/geminiService.ts ~L2491): dialogue
@@ -46,6 +46,46 @@ const EXPRESSION_LOCK =
 const RAW_LOOK =
   'Raw ungraded look: authentic smartphone front-camera video, natural warm tan Filipino skin tone with slight color saturation exactly as the input image, no color grading, no cinematic look, no beauty filter, no captions, no text overlays.';
 
+// --camera (Neil, 2026-08-03): iba-ibang galaw kada eksena para hindi
+// magmukhang parehong shot na inulit ang tatlo. ADDITIVE — kapag walang flag,
+// push-in pa rin, kaya walang nagbabago sa KM-002/KM-003 at sa lahat ng lumang
+// caller. Dalawang lane lang muna, at may tali ang pangalawa:
+//   pushin    ang orihinal na Option B na galaw
+//   easeback  napakabahagyang atras LANG. May dahilan ang tali: sabi mismo ng
+//             default na SETTING dito na "the camera never pulls back", at ang
+//             camera-distance rule ay malinaw — lumalabas ang AI slop kapag
+//             lumalayo ang mukha. Kaya hindi sya tunay na pull-back; hindi
+//             lumalabas ang framing sa bracket nito at walang bagong background.
+// 🔴 SINUKAT 2026-08-03 (GB-001): ang `pushin` ay totoong gumagana pero mga 15%
+// LANG sa buong 8s. Pagkatapos ng speech-cut na ~3.5s ang nakikita, ~7% na lang
+// ang natitira — nasa ilalim na yun ng makikita ng mata. Kaya ang sabi ni Neil,
+// "di gumana ung camera movement... kahit sa previous ads ni marvin hindi rin,"
+// ay TAMA sa praktika kahit may galaw sa teknikal. Ang `static` ang sagot, at
+// tugma sya sa MOTION DOCTRINE ng skill (2026-07-27): static sa generation,
+// zoom sa edit kung saan tayo ang may hawak ng lakas at hindi sya naaapektuhan
+// ng pagputol. Nawawala rin ang pulse risk ng 2026-06-10 kasi isang pinagmumulan
+// na lang ang galaw.
+const MOVES = {
+  static:
+    'the camera is completely LOCKED OFF on a tripod and does not move at all for the entire clip — no push-in, ' +
+    'no pull-back, no zoom, no pan, no tilt, no drift, no handheld float. The framing at the last frame is ' +
+    'identical to the framing at the first frame',
+  pushin: 'a slow, smooth push-in toward him',
+  easeback:
+    'an extremely slight, slow easing back from him — so gentle it barely reads as a move. It must NEVER ' +
+    'become a real pull-back or a zoom out: the shot stays within the same framing bracket it started in for ' +
+    'the whole clip, his face stays large in frame, and NO part of the scene that was not already visible in ' +
+    'the first frame is ever revealed',
+};
+const CAM_KEY = (arg('--camera') || 'pushin').toLowerCase();
+if (!MOVES[CAM_KEY]) throw new Error(`--camera must be one of: ${Object.keys(MOVES).join(', ')}`);
+const CAMERA =
+  (CAM_KEY === 'static'
+    ? `Camera: ${MOVES[CAM_KEY]}.`
+    : `Camera: ONE gentle move only — ${MOVES[CAM_KEY]}, beginning ON THE FIRST SYLLABLE and running evenly through the line.`) +
+  ' No handheld shake, no jitter, no counter-roll, no lens breathing, no rack or pull focus, no parallax or ' +
+  'background-reveal shifts. Err toward calm over dynamic.';
+
 let PROMPT;
 if (FORMULA === 'optionb') {
   const SETTING = arg('--setting') ||
@@ -62,7 +102,7 @@ if (FORMULA === 'optionb') {
     'Pace: he speaks the full line at a brisk, natural conversational clip and finishes it well within the shot — never slow, never drawn out, never stretching or padding syllables to fill time. Natural conversational Taglish (Filipino mixed with English) with an authentic Filipino accent — never an American accent.',
     EXPRESSION_LOCK,
     'NO SMILE: he does NOT smile, grin, or bare his teeth at any point. His mouth opens ONLY as far as the words require and returns to the exact neutral set of the input image between syllables. No cheek-raising, no lip-corner lift, no laughing expression.',
-    'Camera: ONE gentle move only — a slow, smooth push-in toward him that BEGINS ON THE FIRST SYLLABLE and runs evenly through the line. No handheld shake, no jitter, no counter-roll, no lens breathing, no rack or pull focus, no parallax or background-reveal shifts. Err toward calm over dynamic.',
+    CAMERA,
     'BACKGROUND LOCK — CRITICAL: the background is IDENTICAL to the input image in every single frame — the same structures, the same vehicles, the same walls and foliage in the same positions. Nothing in the background changes, drifts, is replaced, appears, or disappears. The camera does not orbit, pan, or reveal any part of the scene that is not already visible in the input image. He also keeps his hands down and out of frame — no gestures, no pointing, no raised fingers.',
     SETTING,
     'Audio landscape: quiet residential street sync sound — faint distant traffic, a light breeze. His voice is close and clear, phone-mic quality.',
