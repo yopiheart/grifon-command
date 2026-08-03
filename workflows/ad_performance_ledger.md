@@ -67,6 +67,37 @@ Weekly MER and spend, revenue split by funnel stage. Update one row per week.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 2026-07-28 → 08-03 | Meta | ₱1,284.92 | 🔴 1 order, halaga **hindi kumpirmado** | — | — | — | — | KM-003. 2 araw lang ang delivery, tapos naka-off (Marvin→Gabriel pivot, HINDI performance kill). **Walang MER: hindi pa ibinibigay ni Neil ang halaga ng order, at bawal mag-imbento.** Lumang ₱4,000-4,500 pricing pa yun, hindi ₱5,000. |
 
+## Unit Economics — Oceanides (galing mismo kay Neil, 2026-08-03)
+
+COGS kada truckload (isang customer, isang load, sa kasalukuyang ₱5,000 na presyo):
+
+| Gastos | Halaga |
+| --- | --- |
+| Truck malabanan | ₱2,500 |
+| Field inspector (Gabriel) | ₱500 |
+| Transportation allowance | ₱600 |
+| Zam | ₱250 |
+| Neil | ₱250 |
+| **Kabuuan** | **₱4,100** |
+
+**Ang mga numerong lumalabas dito, at ang totoong hugis ng laban:**
+
+- **Net margin kada load: ₱900 (18%).** Hindi ₱650 gross ang tamang bilang — ₱900
+  matapos ang LAHAT ng payout, bago ang ads.
+- **Break-even sa ads: ₱900 kada BOOKED na trabaho.** Kapag lumagpas sa ₱900 ang
+  gastos-sa-ads para makakuha ng isang bayad na trabaho, lugi ang trabahong yun.
+  Sa ₱500/araw na budget: kailangan ng di bababa sa **isang booked job kada 1.8
+  araw** para lang pumatas.
+- **Break-even MER = 5.6×** (5,000 ÷ 900). 🔴 **Mas mataas ito sa 3-5× na target
+  band ng ledger na to** — sa 18% na margin, ang "magandang" MER na 4× ay lugi pa
+  rin kada marginal na trabaho. Para sa Oceanides, 5.6× ang pasang-awa, hindi 3×.
+- **Ang pangalawang truckload ang margin machine.** ₱5,000 ulit ang singil pero
+  ~₱2,500 na lang ang dagdag na gastos (truck lang; bayad na ang inspector,
+  transport, at payouts) → **₱2,500 margin (50%) laban sa ₱900 (18%)** ng una.
+  Ang bawat "hindi kasya sa isang load" ay hindi problema — sya ang tubo.
+- Wala pang conversion data ang ₱500/araw (sabi mismo ni Neil) — ang mga bilang
+  sa itaas ang panukat kapag dumating ang unang linggo ng totoong spend.
+
 ## Pattern Index
 
 Status: `observed` (counting) → `proposed` (≥3 corroborations, in Gated
@@ -119,7 +150,7 @@ Append newest at the top. Use the template below.
 
 **Patterns:** bagong kandidato **A1, A2, A3, A4** (lahat 1/3, `observed` — isang campaign ay anecdote). Sinasalungat: wala. ⚠️ **A3 ang pinakamahalaga at ito rin ang pinaka-mapanganib** — kung nagbago ang kill gate natin dahil dito habang 1/3 pa lang, nagpapalit tayo ng patakaran base sa isang campaign. Hindi pa sya gated proposal.
 
-**Kulang pa:** halaga ng isang order (kay Neil lang galing) at net margin. Kapag dumating, mabubuo ang unang totoong MER row.
+**Kulang pa:** ang eksaktong halaga ng isang order na yun (lumang ₱4,000-4,500 pricing — kung ₱4,500, MER ≈ 3.5; kung ₱4,000, ≈ 3.1; hindi pa kumpirmado alin). ✅ **Dumating na ang net margin (2026-08-03)** — see §Unit Economics sa itaas: ₱900/load sa bagong ₱5,000 pricing, break-even MER 5.6×. Kahit ang 3.5 na pinakamagandang basa ng KM-003 ay **lugi** sa ganyang margin — pinapatibay nito ang So-What: ang close ang laban, hindi ang lead cost.
 
 ### Entry template
 
