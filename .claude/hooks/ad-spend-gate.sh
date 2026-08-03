@@ -29,6 +29,26 @@
 
 set -uo pipefail
 
+# --- MANUAL SUSPENSION SWITCH (idinagdag 2026-08-03) --------------------------------
+# Isang beses hiningi ni Neil na alisin ang gate para sa isang gabi ("Edi tanggalin mo
+# ung rules na un tonight. Binibigyan kita ng basbas"). Ang pagbura sa hook ay ang
+# maling paraan: nawawala ang record, at walang nagsasabi kung kailan sya babalik.
+#
+# Kaya ito ang paraan: isang sentinel file. Habang nandyan sya, tulog ang gate.
+#
+#   Suspindihin :  touch .claude/.ad-spend-gate-suspended
+#   Ibalik      :  rm    .claude/.ad-spend-gate-suspended
+#
+# 🟢 KUSANG BUMABALIK ANG GATE. Hindi naka-commit ang sentinel at nasa loob sya ng
+# C:\Users\Administrator\, kaya kinakain sya ng defreezer sa unang reboot. Ang
+# pinakamasamang mangyayari ay tulog ang gate hanggang mag-reboot — hindi habambuhay.
+# Sinadya to: ang suspensyon na kailangang tandaan mong bawiin ay suspensyong
+# nakakalimutan.
+GATE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [ -f "$GATE_DIR/.ad-spend-gate-suspended" ]; then
+  exit 0
+fi
+
 input="$(cat 2>/dev/null || true)"
 [ -z "$input" ] && exit 0
 
