@@ -123,6 +123,57 @@ autonomously regardless.*
 
 Append newest at the top. Use the template below.
 
+### 2026-08-04 — OCEANIDES-PRICE-01 (Meta, PH septic tank siphoning) — 🟢 BUHAY, walang data pa
+
+**Brief from:** grifon-cmo (price transparency) · **Creative from:** kuya-marvin-ads + static-autopsy ports
+**Structure:** 1 CBO / 1 ad set / **4 static** · **Objective:** OUTCOME_LEADS → Website · **Budget:** ₱500/araw
+**Break-even:** **₱900 kada booked job**, MER 5.6× (tingnan ang §Unit Economics)
+
+| ID | |
+| --- | --- |
+| Campaign | `120248564326850056` |
+| Ad set | `120248564354250056` |
+| Ad account · Page | `4165212657057538` · `1184710811397498` (Kuya Marvin) |
+| Dataset · event | `1050997330667084` · `Lead` |
+
+**Geo:** custom location, lat `14.54` lng `121.02`, radius **20km** mula Makati,
+`location_types: ["home"]`. 🔴 **Kinopya mismo sa KM-003** (ibinigay ni Neil) —
+hindi region key. Walang region-lookup tool ang MCP connector at bawal manghula
+ng geo, kaya ang coordinate radius ang tanging paraang eksakto. Tandaan ito.
+
+**Apat na creative, apat na magkaibang pasok:**
+
+| Ad | Pasok | Pattern |
+| --- | --- | --- |
+| addons-ticket | presyo | resibo/ticket |
+| warranty-proof | panganib | totoong ba-1 litrato |
+| **hooktest-chalk** | mekanismo | **S34/S35** — tisa sa takip ng tangke, walang logo |
+| **advertorial** | kwento | Suby na anyo ng artikulo, Oceanides ang pumipirma |
+
+🔴 **WALANG VIDEO, at labag ito sa sariling patakaran ng run sheet** ("2 static +
+1 video"). Hindi kasalanan ng plano: **hinarang ng Meta ang
+`ads_creative_upload_video`** sa account na to (*"tool is being gradually rolled
+out"*), at kailangan ng `video_id` na naka-upload na bago makagawa ng video
+creative. Blanko ang video library. **Manwal na i-upload ang `KM-004-AD-v1.mp4`
+sa Ads Manager** at idagdag sa parehong ad set. Ganon din ang `ads_get_ig_accounts`
+— gated, kaya **walang Instagram placement** hangga't hindi naikakabit ni Neil.
+
+⚠️ **Sinuspinde ang `ad-spend-gate.sh` para sa launch na to** (basbas ni Neil,
+2026-08-04: *"tanggalin mo ung rules na un tonight"*), at **naibalik agad
+pagkatapos**. Ito ang unang beses. Ang agent ang gumawa at nag-ON ng buong
+campaign — hindi si Neil.
+
+**So-What (pauna, wala pang data):** ang linggo 1 ay sumasagot ng *leads ÷ landing
+page views*. **Pero magbilang din ng BOOKED JOB mula araw uno** — nasa lead ang
+kill gates, nasa booked job ang break-even, at yun mismo ang bitag ng **A3**.
+
+**Patterns:** unang totoong subok ng **S34** at **S35** sa labas ng Brunson. Kapag
+nanalo ang chalk, ito ang pangalawang brand ng S34 at lalapit ang **GP-6** sa
+`proposed`. Bagong subok din: **branded laban sa anonymous** (dalawang branded
+static laban sa isang walang logo) — i-log kung alin ang nanalo.
+
+---
+
 ### 2026-07-28 → 08-03 — OCEANIDES-KM003-hook2 (Meta, PH septic tank siphoning / local service)
 
 **Brief from:** grifon-cmo (mechanism reframe: *"hindi barado, puno na"*) · **Creative from:** kuya-marvin-ads (**1** concept, 9:16 UGC, 36.8s)
