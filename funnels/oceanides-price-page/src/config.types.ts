@@ -290,6 +290,17 @@ type SectionBody =
         imageAlt: string;
         name: string;
         role: string;
+        /**
+         * Pangalawang inspector, opsyonal (2026-08-03). Dalawa na sila: si
+         * Marvin ang nasa KM-004 na video ad, si Gabriel ang nasa GB-001. Kung
+         * isang mukha lang ang nasa page at iba ang galing sa ad, sira ang
+         * message match — at nasa CLOSE yun naka-upo, ang tanging bagay na
+         * sinusubukan nating ayusin (A3: 100 message, isang order).
+         *
+         * ADDITIVE sya nang sinasadya: `undefined` = eksaktong dating itsura,
+         * isang litrato. Walang lumang page na nasisira.
+         */
+        second?: { image: string; imageAlt: string; name: string; role: string };
       };
     }
   /** Repeatable (L8) — always scrolls to the ONE #lead-form. */
