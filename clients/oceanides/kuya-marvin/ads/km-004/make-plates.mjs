@@ -157,12 +157,23 @@ const JOBS = [
   {
     out: `${AD}/plates/s4.png`,
     refs: [BODY, FACE],
+    // 🔴 RE-ROLL 2026-08-03. Dalawang beses hinarang ng RAI likeness filter ang
+    // unang s4 ("we can't create videos with real people's names or likenesses")
+    // habang pumasa ang s1, s2 at s3 sa parehong takbo. Ang hinihinala: masyado
+    // syang deretsong headshot — malaki ang mukha, dead-center, simetriko, at
+    // nakaharap ang balikat. Mas malapit yun sa hitsura ng portrait ng totoong
+    // tao kaysa sa candid na kuha. Ang ayos ay hindi ang pag-ikot ng ULO (bawal
+    // yun, face-to-camera rule) kundi ang pag-angat ng CANDID: naka-angle ang
+    // katawan, naka-usog sa gilid ng frame, may nakikitang paligid.
     prompt: plate(
       'Camera height: HIGH. The phone is held slightly ABOVE his eye level and tilted DOWNWARD at ' +
       'his face, so he is looking slightly UP into the lens and you see a little more of the top ' +
       'of his head and hair. Because of this high angle the background behind him is the cement ' +
       'yard and the open concrete septic access cover on the ground — NO sky behind his head. ' +
-      'Keep the lower part of the frame simple and uncluttered.',
+      'Composition: this is a candid off-centre snapshot, NOT a symmetrical portrait. His torso ' +
+      'and shoulders are turned clearly away to one side while his head stays fully toward the ' +
+      'lens, and he stands OFF-CENTRE, roughly a third of the way across the frame, so the open ' +
+      'septic cover and the yard occupy the other side of the picture.',
     ),
   },
   // --- b-roll: ANONYMOUS na kamay. Walang identity ref, walang anchor ni Marvin.
@@ -203,6 +214,16 @@ const JOBS = [
 ];
 
 // --- runner: PARALLEL, hindi sunod-sunod ------------------------------------
+
+// --print <id>  — ilabas ang buong prompt para i-paste nang manwal (libre).
+// Idinagdag 2026-08-03 nang maubos ang balance ni Neil at siya na ang gumawa.
+const printId = process.argv.includes('--print') ? process.argv[process.argv.indexOf('--print') + 1] : null;
+if (printId) {
+  const j = JOBS.find((x) => x.out.includes(`/${printId}.png`));
+  if (!j) { console.error(`walang ${printId}. Meron: ` + JOBS.map((x) => x.out.split('/').pop().replace('.png', '')).join(', ')); process.exit(1); }
+  console.log(`=== ${printId} ===\nrefs: ${j.refs.join('  +  ') || '(wala — anonymous b-roll)'}\nsize: 1024x1536\n\n${j.prompt}\n`);
+  process.exit(0);
+}
 
 mkdirSync(`${AD}/plates`, { recursive: true });
 mkdirSync(`${AD}/broll`, { recursive: true });

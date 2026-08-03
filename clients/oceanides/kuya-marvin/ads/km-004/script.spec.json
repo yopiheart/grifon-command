@@ -19,7 +19,7 @@
     "Kapag hindi pa naman puno, uuwi kami. Hindi ka namin pipilitin.",
     "Basahin mo muna bago ka mag-book ng schedule."
   ],
-  "maxPaidRolls": 5,
+  "maxPaidRolls": 4,
   "plates": [
     {
       "id": "s1",
@@ -246,5 +246,6 @@
     "At dapat may resibo kayo.",
     "From 4500 tapos since maikli yung hose nila, nagdagdag ng 100 per tubo, so umabot sa 5500 ang binayaran."
   ],
-  "rotationNote": "Batas ni Neil 2026-07-25: sa LOOB ng isang ad ay pareho ang damit at lugar (continuity); ACROSS ads ay nagro-rotate. Hindi kailanman nagbabago ang identity anchors: mukha, katawan, fade na buhok, tattoo sa braso, relo."
+  "rotationNote": "Batas ni Neil 2026-07-25: sa LOOB ng isang ad ay pareho ang damit at lugar (continuity); ACROSS ads ay nagro-rotate. Hindi kailanman nagbabago ang identity anchors: mukha, katawan, fade na buhok, tattoo sa braso, relo.",
+  "rollBudgetHistory": "🔴 NAKA-LOCK SA 4 = eksaktong nagamit na (Neil, 2026-08-03: \"wala na pala akong balance\"). Walang bagong bayad na Veo roll na makakadaan sa gate. HUWAG itaas ito nang walang bagong bilang mula kay Neil. Kasaysayan: 5 ang unang kisame; lima ang totoong submission (r1,r2,r3 pasado; r4 bagsak sa RAI likeness filter; +1 nasayang sa butas ng --dry-run, inayos sa 63e0d85) pero apat lang ang nabilang. Panandaliang naitaas sa 8 nang naputol ang command, ibinalik agad. Manwal na sa Gemini free ang dalawang natitirang clip."
 }
