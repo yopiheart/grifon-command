@@ -2,10 +2,10 @@
 
 **Stamped: 2026-08-03** · Anchor: `cf3a022` (main) · **GB-001 v2 tapos. Naghihintay ng boses ni Gabriel.**
 
-> The single resume doc. One screen, one next action. Read this first.
-> **Freshness contract:** if the stamp is >5 days behind `git log -1`, treat as UNVERIFIED —
-> re-derive from `git log --oneline -15` + open issues and rewrite. Enforced by
-> `node tools/resume_doc_check.mjs` (SessionStart runs it `--quiet`).
+> One screen, one next action. Read this first. **Freshness contract:** kapag >5 araw ang
+> stamp sa likod ng `git log -1`, UNVERIFIED — i-derive ulit at isulat muli.
+> `node tools/resume_doc_check.mjs` ang tseke. ⚠️ **ADVISORY sya, hindi humaharang** —
+> dumadaan ang push kahit BAGSAK sya, kaya basahin mo talaga ang labas nya.
 
 ---
 
@@ -30,24 +30,19 @@ muna ilalabas ang GB-001 habang boses pa ni Veo ang naririnig.
    ⚠️ Kumpirmado ni Neil na **BLANGKO** ang Page `291924520660232`.
 
 ### C · Boses — kasabay ng B, hindi pagkatapos
-4. **Consent muna, na sakop ang BOSES** hindi lang ang mukha. Template sa
+4. **Consent muna na sakop ang BOSES**, hindi lang ang mukha. Template:
    `kuya-marvin/consent-agreement-FINAL-2026-07-20.md`. Legal na harang.
 5. **I-record ni Gabriel** ang `kuya-gabriel/voice/RECORDING-SCRIPT.md` — 30s,
    **tatlong take sa isang file**. Nandyan lahat ng paano at bakit.
-6. **Gumawa ng ElevenLabs clone** (`GRIFON_VOICE_CLONING_ENABLED=true` na, buhay
-   doon ang clone ni Marvin). Itala ang voice ID sa `kuya-gabriel/voice/`.
-7. **STS pass sa GB-001** — boses ni Gabriel kapalit ng kay Veo, tapos rebuild
-   (`build-cut.sh`). Dito rin nawawala ang pangangailangan ng `r4-vo` roll (~$1).
+6. **ElevenLabs clone** (`GRIFON_VOICE_CLONING_ENABLED=true` na, buhay doon ang kay
+   Marvin). Itala ang voice ID sa `kuya-gabriel/voice/`.
+7. **STS pass sa GB-001** + rebuild. Dito rin nawawala ang `r4-vo` roll (~$1).
 
-### D · Bago ang unang piso ng ad
+### D · Bago ang unang piso · E · Campaign
 8. **Redeploy ng funnel + test submit sa apex.**
-9. **Tatlong sagot ni Neil na naka-harang pa rin:**
-   - `maxPaidRolls` sa `script.spec.json` — **wala pa, kaya naka-harang ang LAHAT
-     ng bayad na render.** Sinadya.
-   - **Kling** para sa 2 b-roll (still + FFmpeg zoom pa lang sila). Bayad, gated.
-   - Ulitin ba ang r2/r3 nang **isang linya kada roll** (PACING Fix 2, ~$6-8)?
-
-### E · Campaign
+9. **Tatlong sagot ni Neil na naka-harang:** `maxPaidRolls` (wala pa, kaya **harang ang
+   LAHAT ng bayad na render** — sinadya) · **Kling** para sa 2 b-roll (bayad, gated) ·
+   ulitin ba ang r2/r3 nang **isang linya kada roll** (PACING Fix 2, ~$6-8)?
 10. `kuya-gabriel/ads/CAMPAIGN-RUN-SHEET.md` — paste-ready, may UTM.
 
 ---
