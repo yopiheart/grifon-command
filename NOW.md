@@ -46,17 +46,13 @@ pwedeng ipangako** (nakadepende sa available na truck, Neil) — ang tawag lang
 ang ipinapangako. At ang ₱0 ay **hindi "libreng tingin"**: may tawag muna bago
 umalis ang truck, doon nasasala ang ₱200-300 na biyaheng walang trabaho.
 
-**⛔ TINANGGIHAN: ang Hormozi na priced value stack.** Nakasulat ang tatlong
-dahilan sa header ng `funnel.config.ts` para hindi na muling imungkahi:
-mangangailangan sya ng imbentong halaga sa page na ang buong benta ay totoo
-lahat ng numero; tunog sya ng scammer sa market na sunog na sa "sobrang ganda
-para totohanin"; at ang leak ay ang **CLOSE** (100 message, isang order), hindi
-ang desire. Ang ginamit sa halip ay ang bakanteng bahagi ng Value Equation.
+**⛔ TINANGGIHAN: ang Hormozi na priced value stack.** Nasa header ng
+`funnel.config.ts` ang tatlong dahilan para hindi na muling imungkahi. Ang
+maikli: ang leak ay ang **CLOSE**, at ang value stack ay gamot sa desire.
 
 **Swipe carousel sa field inspector** (`607c5ff`). Lapad ang sanhi, hindi CSS:
 140px lang bawat mukha sa loob ng dalawang hanay. Sariling hanay na ang litrato,
-mga 350px sa PC at 270px sa cellphone. Purong CSS scroll-snap, walang library,
-at nananatili sa rail (walang full-bleed) kasi print world to.
+mga 350px sa PC at 270px sa cellphone. CSS scroll-snap, nasa rail pa rin.
 
 ## 🅿 PARKED
 **Oceanides:** GB-001 video (hinihintay ang boses ni Gabriel) · hook2 variant ng
