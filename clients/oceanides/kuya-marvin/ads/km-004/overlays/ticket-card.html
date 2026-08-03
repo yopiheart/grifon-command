@@ -1,0 +1,30 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="_base.css">
+<style>.card { justify-content: center; }
+       .h { font-family:'Anton',Impact,sans-serif; font-size:44px; color:var(--amber); letter-spacing:.02em; }
+       .base { margin-top:18px; font-family:'Anton',Impact,sans-serif; font-size:88px; color:var(--white); line-height:1; }
+       .base small { font-size:26px; color:var(--dim); display:block; letter-spacing:.14em; margin-top:8px;
+                     font-family:'InterBlack',sans-serif; text-transform:uppercase; }
+       .rows { margin-top:34px; border-top:2px solid rgba(245,179,1,.4); }
+       .row { display:flex; justify-content:space-between; align-items:baseline; padding:13px 0;
+              border-bottom:1px solid rgba(143,179,221,.22); font-family:'InterBlack',sans-serif; }
+       .row .l { font-size:25px; color:var(--muted); }
+       .row .r { font-size:28px; color:var(--amber); white-space:nowrap; padding-left:16px; }
+       .foot { margin-top:26px; font-family:'InterBlack',sans-serif; font-size:24px; color:var(--white); }</style></head>
+<body><div class="stage"><div class="card">
+         <div class="h">BUONG PRESYO</div>
+         <div class="base">₱5,000<small>ISANG TRUCKLOAD</small></div>
+         <div class="rows" id="rows">
+           <div class="row"><span class="l">Sobrang hose, kada 3 metro</span><span class="r">₱100</span></div>
+           <div class="row"><span class="l">Bakbak ng takip, kasama ang pagsasara</span><span class="r">₱500 - 1,000</span></div>
+           <div class="row"><span class="l">Semento sa pagsasara, kung kami ang magdadala</span><span class="r">₱500</span></div>
+           <div class="row"><span class="l">Pangalawang truckload</span><span class="r">₱5,000</span></div>
+         </div>
+         <div class="foot" id="foot">Wala nang iba. Sasabihin namin bago magsimula.</div>
+       </div></div>
+<script>const rows=[...document.querySelectorAll('.row')], foot=document.getElementById('foot');
+       window.render=function(t){
+         rows.forEach((r,i)=>{ const p=Math.max(0,Math.min(1,(t-(0.30+i*0.13))/0.24));
+           r.style.opacity=p; r.style.transform='translateX('+(14-14*p)+'px)'; });
+         foot.style.opacity=Math.max(0,Math.min(1,(t-0.95)/0.3));
+       }; window.render(0);</script></body></html>

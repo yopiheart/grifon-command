@@ -1,0 +1,74 @@
+/* KM-004 overlay base — 720x1280.
+   clients/oceanides/DESIGN.md ang batas dito, HINDI ang Grifon DESIGN.md.
+   Matte print na mundo: navy + amber, walang glass, walang #FFCC00, walang itim
+   (ang itim ay Grifon; ang navy ang nagpapa-Oceanides).
+
+   🔴 720x1280, HINDI 1080x1920. Ang buong ad ay 720 dahil dalawa sa limang clip
+   ay native na 720 mula sa Flow, at ang lanczos ng ffmpeg ay hindi nagdadagdag
+   ng detalye — napatunayan sa compare.png. Pagbaba lang, kailanman ay walang
+   pag-akyat. Kaya lahat ng sukat dito ay 0.667 ng geometry ng GB-001, at ang
+   teksto ay ini-render NATIVE sa 720 — walang teksto ang dumadaan sa scaler. */
+@font-face {
+  font-family: 'Anton';
+  src: url('../../../../../../api/_lib/assets/fonts/Anton-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'InterBlack';
+  src: url('../../../../../../api/_lib/assets/fonts/Inter-Black.ttf') format('truetype');
+  font-weight: 900;
+}
+
+:root {
+  --amber: #F5B301;
+  --navy: #0E2C5E;
+  --navy-deep: #0A1F45;
+  --navy-void: #071630;
+  --white: #FFFFFF;
+  --muted: #DFE8F5;
+  --dim: #8FB3DD;
+
+  /* Ang 4:5 feed crop ay kumakain ng 190px sa taas AT baba ng 720x1280
+     (285 x 0.667). Anumang teksto sa labas ng 190-1090 ay MAWAWALA sa feed
+     placement. Ito ang bug ng KM-003 v1 at ng GB-001 v1, dalawang beses na. */
+  --feed-top: 190px;
+  --feed-bottom: 1090px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 720px; height: 1280px; overflow: hidden; }
+body { position: relative; background: transparent; }
+
+.stage { position: absolute; inset: 0; }
+
+/* --- SLAM: ang malaking teksto na may kahulugan kapag naka-mute ------------
+   OUTLINE, hindi solidong kahon sa buong lapad — P2, 8 corroborations, at ito
+   rin ang dahilan kung bakit iniiwasan ang `bars` at `classic` na preset. */
+.slam { position: absolute; left: 0; right: 0; text-align: center; }
+.slam .line {
+  display: inline-block;
+  font-family: 'Anton', Impact, sans-serif;
+  font-size: 64px;              /* 96 x 0.667 */
+  line-height: 1.02;
+  letter-spacing: 0.01em;
+  color: var(--white);
+  background: var(--navy-deep);
+  padding: 7px 17px 11px;
+  margin-bottom: 7px;
+  box-shadow: 0 0 0 3px var(--amber);
+}
+.slam .line.two { color: var(--amber); }
+
+/* --- CARD: 720x900, naka-center sa y=190 ----------------------------------
+   Ang 1080x1350 na naka-center sa y=285 ng 1080x1920 ay EKSAKTONG pumupuno sa
+   feed-safe band (GB-001 aral 17). Sa 720x1280 ang katumbas ay 720x900 sa
+   y=190. Buo sya sa 4:5 feed at may malinis na padding sa 9:16. */
+.card {
+  position: absolute;
+  left: 0; top: 190px;
+  width: 720px; height: 900px;
+  background: var(--navy-deep);
+  border: 3px solid var(--amber);
+  padding: 54px 48px;
+  display: flex; flex-direction: column; justify-content: center;
+}

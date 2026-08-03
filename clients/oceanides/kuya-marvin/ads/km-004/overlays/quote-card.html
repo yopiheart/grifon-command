@@ -1,0 +1,18 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="_base.css">
+<style>.card { justify-content: center; }
+       .mark { font-family:'Anton',Impact,sans-serif; font-size:120px; line-height:.6; color:var(--amber);
+               opacity:.55; height:64px; }
+       .q { font-family:'Anton',Impact,sans-serif; font-size:82px; line-height:1.04; color:var(--white); }
+       .q .hi { color: var(--amber); }
+       .who { margin-top:40px; font-family:'InterBlack',sans-serif; font-size:24px; letter-spacing:.16em;
+              color:var(--dim); text-transform:uppercase; }</style></head>
+<body><div class="stage"><div class="card"><div class="mark">&ldquo;</div><div class="q" id="q">TALAGA <span class="hi">GRABE</span><br>ANG SINGILAN.</div>
+       <div class="who" id="w">SABI NG ISANG CUSTOMER</div></div></div>
+<script>const q=document.getElementById('q'),w=document.getElementById('w');
+       window.render=function(t){
+         const p=Math.max(0,Math.min(1,t/0.28)), e=1-Math.pow(1-p,3);
+         q.style.opacity=p; q.style.transform='translateY('+(18-18*e)+'px)';
+         const p2=Math.max(0,Math.min(1,(t-0.34)/0.3));
+         w.style.opacity=p2;
+       }; window.render(0);</script></body></html>

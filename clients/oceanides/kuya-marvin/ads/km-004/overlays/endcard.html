@@ -1,0 +1,19 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="_base.css">
+<style>.card { align-items:center; justify-content:center; text-align:center; }
+       .cta { font-family:'Anton',Impact,sans-serif; font-size:66px; color:var(--white); line-height:1.04; }
+       .url { margin-top:26px; font-family:'Anton',Impact,sans-serif; font-size:46px; color:var(--amber);
+              letter-spacing:.03em; }
+       .logo { margin-top:40px; width:150px; opacity:.9; }</style></head>
+<body><div class="stage"><div class="card">
+         <div class="cta" id="cta">BASAHIN MO MUNA</div>
+         <div class="url" id="url">OCEANIDESPH.COM</div>
+         <img class="logo" id="logo" src="../../../assets/logo.jpg" alt="">
+       </div></div>
+<script>const c=document.getElementById('cta'),u=document.getElementById('url'),g=document.getElementById('logo');
+       window.render=function(t){
+         const p=Math.max(0,Math.min(1,t/0.26)), e=1-Math.pow(1-p,3);
+         c.style.opacity=p; c.style.transform='scale('+(1.1-0.1*e)+')';
+         u.style.opacity=Math.max(0,Math.min(1,(t-0.30)/0.26));
+         g.style.opacity=Math.max(0,Math.min(1,(t-0.60)/0.30))*0.9;
+       }; window.render(0);</script></body></html>

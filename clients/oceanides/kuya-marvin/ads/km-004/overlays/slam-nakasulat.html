@@ -1,0 +1,16 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="_base.css">
+<style></style></head>
+<body><div class="stage"><div class="slam" style="top:213px"><div class="line" id="l0">NAKASULAT NA.</div></div></div>
+<script>
+  const els = ["l0"].map((id) => document.getElementById(id));
+  window.render = function (t) {
+    els.forEach((el, i) => {
+      const hit = 0.06 + i * 0.14, grow = 0.16;
+      const p = Math.max(0, Math.min(1, (t - hit) / grow));
+      const ease = 1 - Math.pow(1 - p, 3);
+      el.style.opacity = t >= hit ? 1 : 0;
+      el.style.transform = 'scale(' + (t >= hit ? (1.18 - 0.18 * ease) : 1.18) + ')';
+    });
+  };
+  window.render(0);</script></body></html>
