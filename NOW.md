@@ -23,7 +23,6 @@ Ang agent ang gumawa at nag-ON, hindi si Neil. Buong tala:
    at ang `*.mp4` sa `public/`, tapos i-redeploy. Hinayaan silang naka-host
    para hindi masira ang buhay na ads sa gitna ng gabi. May sariling hash na si
    Meta sa apat na larawan, kaya ligtas na sila burahin.
-5. Burahin ang test row sa `funnel_leads` (neilmaglaya, 2026-08-03).
 
 ### C · Organic habang tumatakbo
 6. `clients/oceanides/kuya-gabriel/organic/PAGE-POSTS-PRE-AD.md` — isa kada araw.
@@ -65,16 +64,13 @@ anyo ng artikulo, **hindi** pekeng balita).
 sya ngayon. Unang beses na gumastos ang agent, may basbas ni Neil.
 
 ## 🅿 PARKED
-**Oceanides:** GB-001 video (walang boses ni Gabriel) · hook2 variant ng KM-004 ·
-Kling b-roll · watermark ni Gabriel · SEC Reg. No. · FB About · reviews sa Page ·
-page #2 = DENR B2B · full-bleed na carousel sa cellphone.
+**Oceanides:** GB-001 video · hook2 variant ng KM-004 · Kling b-roll · watermark
+ni Gabriel · SEC Reg. No. · FB About · reviews sa Page · page #2 = DENR B2B.
 **Grifon:** #94.3 next · #94.2 NOT-REPRO · #92+#89/#90 ride Slice B · #93 ⛔ TUNED.
 ⚠️ **Client world:** navy + amber print, no glass, no `#FFCC00`.
 
 ## ⛔ Gated · 🔧 Arm before starting
-🔴 **UBOS ANG GEMINI API BUDGET.** Manwal sa Flow ang bagong clip. Gated pa rin:
-Kling · ⚠️ kapag nag `npm install`, i-check ang `package-lock.json`.
-
+🔴 **UBOS ANG GEMINI API BUDGET.** Manwal sa Flow ang bagong clip. Gated: Kling.
 ```powershell
 .\scripts\restore-git-identity.ps1
 .\scripts\restore-gh.ps1
