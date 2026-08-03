@@ -1,0 +1,151 @@
+<!doctype html>
+<!--
+  ADVERTORIAL — Sabri Suby na news/article na anyo, para sa OCEANIDES-PRICE-01.
+
+  🔴 SINADYANG HINDI SYA MUKHANG BALITA. Ginagaya nito ang ANYO ng artikulo
+  (kicker, headline, deck, litratong may caption, hanay ng teksto, pull-quote)
+  dahil yun ang nagpapabasa sa tao na parang impormasyon at hindi benta. Pero
+  ang pumipirma ay ang Oceanides mismo, hindi isang imbentong dyaryo.
+
+  Bakit mahalaga: bawal ang gawa-gawang masthead at pekeng news coverage —
+  S7 anti-pattern sa workflows/static_ad_swipe_file.md, at guardrail ng GP-6
+  ("worlds must be neutral surfaces, never institutions"). Mas mabigat pa: may
+  2 disabled at 5 unsettled na ad account si Neil, at ang pekeng balita ang
+  pinakamabilis na daan pabalik doon.
+
+  Totoo ang bawat numero dito at pareho sila ng nasa landing page. Ang quote sa
+  deck ay TOTOONG comment sa ad ng KM-003, verbatim.
+
+  Render: node render.mjs templates/advertorial-price.html out/advertorial-price.png
+-->
+<html lang="tl"><head><meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --navy:#0E2C5E; --navy2:#0A1F45; --ink:#0b1b33; --paper:#F4F6FA;
+  --gold:#F5B301; --rule:rgba(11,27,51,.18); --dim:#4a5b73;
+  --head:'Anton','Arial Narrow',Impact,sans-serif;
+  --body:'Inter','Helvetica Neue',Arial,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#333}
+#canvas{
+  width:1080px;height:1350px;position:relative;overflow:hidden;
+  background:var(--paper);font-family:var(--body);color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  display:flex;flex-direction:column;
+}
+
+/* Kicker bar. Label ng seksyon, HINDI pangalan ng dyaryo. */
+.kicker{
+  background:var(--navy);color:#fff;height:74px;flex:none;
+  display:flex;align-items:center;justify-content:space-between;padding:0 44px;
+}
+.kicker .tag{
+  font-weight:900;font-size:19px;letter-spacing:3.4px;text-transform:uppercase;
+}
+.kicker .loc{
+  font-weight:800;font-size:15px;letter-spacing:2.6px;text-transform:uppercase;
+  color:var(--gold);
+}
+
+.body-wrap{padding:38px 44px 0;flex:1;display:flex;flex-direction:column}
+
+h1{
+  font-family:var(--head);font-weight:400;font-size:82px;line-height:.92;
+  text-transform:uppercase;letter-spacing:.5px;
+}
+h1 .g{color:var(--gold);-webkit-text-stroke:1.5px var(--ink)}
+
+/* Deck = ang totoong comment. Naka-hanging quote, parang standfirst. */
+.deck{
+  margin-top:26px;border-left:5px solid var(--gold);padding-left:22px;
+}
+.deck p{font-size:26px;line-height:1.4;font-weight:600;color:var(--ink)}
+.deck .src{
+  margin-top:12px;font-size:16px;font-weight:800;letter-spacing:1.4px;
+  text-transform:uppercase;color:var(--dim);
+}
+
+/* Litrato na may caption — ang pinaka-editorial na device. */
+figure{margin-top:30px;position:relative}
+figure img{width:100%;height:392px;object-fit:cover;display:block;border:2px solid var(--rule)}
+figcaption{
+  margin-top:10px;font-size:16px;line-height:1.4;color:var(--dim);font-weight:600;
+  padding-bottom:16px;border-bottom:1px dashed var(--rule);
+}
+
+/* Dalawang hanay = anyo ng dyaryo, walang pagkukunwaring balita. */
+.cols{margin-top:22px;display:grid;grid-template-columns:1fr 1fr;gap:30px}
+.cols p{font-size:20px;line-height:1.5;font-weight:500}
+.cols p + p{margin-top:14px}
+.cols b{font-weight:900}
+
+/* Pull-quote = ang pangako, naka-selyo. */
+.pull{
+  margin-top:auto;background:var(--navy);color:#fff;
+  padding:26px 32px;display:flex;align-items:center;gap:26px;
+}
+.pull .n{font-family:var(--head);font-size:64px;line-height:.8;color:var(--gold);flex:none}
+.pull .t{font-size:22px;line-height:1.35;font-weight:700}
+
+.foot{
+  flex:none;height:96px;background:var(--navy2);color:#fff;
+  display:flex;align-items:center;justify-content:space-between;padding:0 44px;
+}
+.foot .brand{display:flex;align-items:center;gap:16px}
+.foot .brand img{height:52px;border-radius:8px;display:block}
+.foot .brand .nm{font-weight:900;font-size:19px;letter-spacing:1.4px;line-height:1.25}
+.foot .brand .nm span{display:block;font-size:13px;font-weight:700;letter-spacing:2.2px;color:var(--gold);text-transform:uppercase}
+.foot .url{font-family:var(--head);font-size:30px;color:#fff;letter-spacing:.8px;text-transform:uppercase}
+</style></head><body>
+<div id="canvas">
+
+  <div class="kicker">
+    <div class="tag">Paalala sa may bahay</div>
+    <div class="loc">Metro Manila</div>
+  </div>
+
+  <div class="body-wrap">
+    <h1>Dumating ang truck.<br/><span class="g">Tumaas ang presyo.</span></h1>
+
+    <div class="deck">
+      <p>&ldquo;From 4500 tapos since maikli yung hose nila, nagdagdag ng 100 per tubo, so umabot sa 5500 ang binayaran.&rdquo;</p>
+      <div class="src">Totoong comment sa ad namin</div>
+    </div>
+
+    <figure>
+      <img src="../assets/tb2-truck-action.png" alt=""/>
+      <figcaption>Kada truckload ang singil sa siphoning. Ang gulat ay hindi ang trabaho, ang dagdag na hindi sinabi bago magsimula.</figcaption>
+    </figure>
+
+    <div class="cols">
+      <div>
+        <p>Hindi bago yan, at hindi lang isang kumpanya. <b>Lahat ng siphoner may ganyang singil:</b> sobrang hose, bakbak ng takip, pangalawang truckload.</p>
+        <p>Ang pinagkaiba lang, hindi sinasabi bago magsimula ang trabaho.</p>
+        <p>Kaya ang murang quote sa telepono ay madalas na <b>mas mahal pagdating ng truck.</b></p>
+      </div>
+      <div>
+        <p>Sa amin, <b>nasa page lahat bago ka pa mag-book</b> — ₱5,000 kada truckload, at nakalista ang bawat pwedeng idagdag.</p>
+        <p>May BIR official receipt, 30-day warranty sa bara, at DENR-partner na tapunan.</p>
+        <p>At kung hindi pa naman puno ang tangke mo, sasabihin namin. <b>Uuwi kami.</b></p>
+      </div>
+    </div>
+
+    <div class="pull">
+      <div class="n">&ldquo;</div>
+      <div class="t">Kung may dagdag na hindi namin nasabi bago magsimula, <b>kami ang sasagot doon, hindi ikaw.</b></div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="brand">
+      <img src="../assets/logo.jpg" alt="Oceanides"/>
+      <div class="nm">Oceanides Malabanan<span>Siphoning &middot; Metro Manila</span></div>
+    </div>
+    <div class="url">oceanidesph.com</div>
+  </div>
+
+</div></body></html>

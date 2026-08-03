@@ -91,3 +91,4 @@ clients/oceanides/kuya-gabriel/ads/*/edit/
 # Pansamantalang hosting ng ad video para makuha ito ng Meta sa public URL.
 # Hindi kailanman naka-commit: nasa clients/oceanides/ na ang totoong kopya.
 funnels/oceanides-price-page/public/*.mp4
+funnels/oceanides-price-page/public/ad/
