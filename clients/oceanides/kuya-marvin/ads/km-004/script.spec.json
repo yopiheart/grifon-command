@@ -1,0 +1,97 @@
+{
+  "id": "KM-004",
+  "title": "Ang Resibo",
+  "preset": "spotlight",
+  "awareness": "solution_aware",
+  "destination": "https://oceanidesph.com/",
+  "adAccount": "4165212657057538",
+  "page": "1184710811397498",
+  "voice": "ElevenLabs clone jL41fXY8JXGEarmJ5g3f (Marvin). ITO ANG BUONG DAHILAN KUNG BAKIT MAS MURA ANG AD NA TO KAYSA SA GB-001: may clone si Marvin, kaya ang VO-over-visual ay TTS na ($0.00x), hindi na kailangang bumili ng Veo roll para lang sa boses. Si Gabriel ang walang clone, kaya ang roll 4 ng GB-001 ay binayarang Veo na ang tanging silbi ay audio.",
+
+  "spine": "Parehong spine ng GB-001 — mechanism-diagnosis hook, alok na hindi nangangailangan ng isa pang usapan, website ang dulo. ANG PAGKAKAIBA: dito ibinabalik ang script sa taong pinagmulan ng data. Ang hook ay linya NI MARVIN mula sa KM-003 (98.5% sa 0:03, 7,047 tao). Si Gabriel ang nanghiram nun, hindi si Marvin.",
+
+  "hook": "Puno na ang septic tank mo, hindi barado.",
+
+  "lines": [
+    "Kahit anong plunger, balik nang balik ang problema.",
+    "Pero ang mas nakakatakot, yung singil pagdating ng truck.",
+    "Isa ang presyo sa phone, iba na sa receipt.",
+    "Grabe daw ang singilan. Yan ang sabi nila.",
+    "Kaya nasa page na ang buong presyo, nakasulat.",
+    "Pati ang mga dagdag na itinatago ng iba.",
+    "Kapag hindi pa naman puno, uuwi kami. Hindi ka namin pipilitin.",
+    "Basahin mo muna bago ka mag-book ng schedule."
+  ],
+
+  "maxPaidRolls": 5,
+
+  "plates": [
+    { "id": "s1", "location": "jobsite-a", "framing": "close head-and-shoulders, eye-level", "usedIn": "beat 1 (hook) at beat 10 (CTA) — sinadyang bookend" },
+    { "id": "s2", "location": "jobsite-a", "framing": "medium chest-up, slight-low" },
+    { "id": "s3", "location": "jobsite-a", "framing": "tight face, eye-level" },
+    { "id": "s4", "location": "jobsite-a", "framing": "medium chest-up, eye-level" }
+  ],
+
+  "jobsiteA": "Likod-bahay: bukas na concrete septic access cover sa lupa, semento at halaman sa paligid, pader ng bahay sa likod. NAPILI NI NEIL 2026-08-03 para sa GB-001, at pareho ang dahilan dito: tumutugma sa hook (puno na ang septic tank) at zero na panganib ng imbentong asul na tanker — hard ban sa clients/oceanides/DESIGN.md. WALANG SASAKYAN sa frame ng lahat ng apat na plate.",
+
+  "beatMap": [
+    { "beat": 1,  "plate": "s1",               "roll": 1,           "says": "hook",                        "visual": "talking" },
+    { "beat": 2,  "plate": "broll b1",         "roll": "TTS clone", "says": "line 1",                      "visual": "b-roll" },
+    { "beat": 3,  "plate": "s2",               "roll": 2,           "says": "line 2",                      "visual": "talking" },
+    { "beat": 4,  "plate": "broll b2",         "roll": "TTS clone", "says": "line 3 (APPROVED verbatim)",  "visual": "b-roll" },
+    { "beat": 5,  "plate": "quote-card",       "roll": "TTS clone", "says": "line 4",                      "visual": "HTML card" },
+    { "beat": 6,  "plate": "s3",               "roll": 3,           "says": "line 5",                      "visual": "talking" },
+    { "beat": 7,  "plate": "screen-recording", "roll": "wala",      "says": "walang salita",               "visual": "totoong page, 1.2s glance" },
+    { "beat": 8,  "plate": "ticket-card",      "roll": "TTS clone", "says": "line 6",                      "visual": "HTML card" },
+    { "beat": 9,  "plate": "s4",               "roll": 4,           "says": "line 7",                      "visual": "talking" },
+    { "beat": 10, "plate": "s1",               "roll": 5,           "says": "line 8 (CTA)",                "visual": "talking" },
+    { "beat": 11, "plate": "end-card",         "roll": "wala",      "says": "walang salita",               "visual": "HTML end card" }
+  ],
+
+  "rollBudget": "LIMANG bayad na Veo roll ≈ $5, ~$5-7 kasama ang retries. MAS MURA kaysa sa $6-8 na inaprubahan ni Neil para sa GB-001 — at may LABING-ISANG beat imbes na pito. Hindi trick yun: ang anim na hindi-mukha na beat (2 b-roll, 2 card, screen recording, end card) ay pinapasalita ng clone TTS, at ang clone ay hindi bayad kada roll. Isang linya kada Veo roll, walang exception.",
+
+  "broll": [
+    { "id": "b1", "beat": 2, "shot": "anonymous na kamay na nagpaplunger, LUBOG ang goma sa tubig, may tabo at timba sa gilid", "motion": "Kling" },
+    { "id": "b2", "beat": 4, "shot": "over-shoulder, ISANG kamay na may hawak na phone sa tenga (patay ang screen), nakapatong na tupi ng papel sa ledge, sa bakuran", "motion": "Kling" }
+  ],
+
+  "brollNotes": "ANONYMOUS na kamay sa dalawa — kuwento ng customer ito, hindi ni Marvin. Walang relo, walang tattoo, walang anumang anchor nya. WALANG NABABASANG TEKSTO sa dalawa: dyan nag-iimbento ang model at dyan bumabagsak ang render_audit. ⚠️ GATED ang Kling. Kung hindi aprubahan ni Neil ang dagdag na ~$2-3, still + FFmpeg push-in muna ang build, kapareho ng ginawa sa GB-001 v3.",
+
+  "cards": [
+    { "id": "quote-card",  "beat": 5, "content": "Customer verbatim: \"Talaga grabe ang singilan.\" — HTML, hindi mukha ni Marvin. Social proof sya at $0.", "geometry": "1080x1350 naka-center sa y=285 ng 1080x1920 — eksaktong pumupuno sa feed-safe band (GB-001 lesson 17)." },
+    { "id": "ticket-card", "beat": 8, "content": "price-addons-ticket: ₱5,000 base + ang apat na dagdag, VERBATIM sa page. Kasama ang footnote na 'Wala nang iba. Sasabihin namin bago magsimula.'", "geometry": "1080x1350 naka-center sa y=285. NABABASA sa 375px o hindi sya pumapasa." },
+    { "id": "end-card",    "beat": 11, "content": "Logo ng Oceanides + OCEANIDESPH.COM. Walang piso, walang numero.", "geometry": "loob ng y=285-1635" }
+  ],
+
+  "motionRouting": "Talking = Veo, STATIC ang camera sa generation (MOTION DOCTRINE, SKILL.md 2026-07-27). Ang punch-in ay ginagawa sa edit kung saan tayo ang may hawak ng lakas. ITO ANG PAGKAKAIBA SA GB-001: pinanatili nun ang push-in ni Veo, na sinukat na ~7% lang matapos ang speech-cut — nasa ilalim ng makikita, kaya walang galaw ang mga talking beat. B-roll = Kling (gated). Screen recording = FFmpeg scroll.",
+
+  "accentNote": "English ratio ~10% — WARNING sa preflight, hindi FAIL, at SINADYA. Tinanong ko ang eksaktong tanong ng gate: may NOUN ba akong tinagalog na sinasabi naman sa English? Wala. Ang `singil`, `presyo`, `dagdag`, `problema` ay yun mismo ang sinasabi ng tao, at protektado pa ang `presyo` sa lexicon ng gate. Ang ACCENT LOCK ay panganib sa ISANG direksyon lang (sobrang TAAS = American accent); ang mababa ay mas Filipino. Ang pinakamalakas na linyang pag-aari natin ay purong Tagalog. HUWAG itong 'ayusin' sa susunod na session sa pamamagitan ng pagsingit ng English.",
+
+  "neilNotes": {
+    "hook": "LOCKED. Linya ni Marvin mula sa KM-003, 98.5% retention sa 0:03, sinukat sa 7,047 tao. Ito ang pinaka-mapanganib na bagay na pwedeng galawin sa buong ad. Ang mas murang paraan ng pag-test ng bagong hook ay hook2 variant: isang roll na lang ang ire-render ulit (SKILL.md lesson 8).",
+    "line3": "APPROVED ni Neil 2026-08-03, sya mismo ang nagpalit ng `quote` -> `presyo`. Wag nang galawin.",
+    "line7": "BAGO SA KM-004, at ito ang tanging tunay na bagong linya. Verbatim mula sa live na page (funnel.config.ts:430) — pinaikli lang mula sa 'Kapag hindi pa naman puno, sasabihin namin. Uuwi kami. Hindi ka namin pipilitin.' para pumasok sa 12-salitang kisame. HINDI ito ginagamit ng GB-001 kahit saan, at ito ang pinaka-nakakadisarmang bagay na sinasabi ng kompanya. Kailangan ng go ni Neil dahil pangako sya ng totoong kompanya.",
+    "preset": "spotlight — sinundan ang GB-001 at ang default ng SKILL.md para sa KM-004 pataas. ⚠️ Ang per-word invert ng spotlight ay PARKED (chunk-pop lang ang gawa, NOW.md) — chunk-pop ang makukuha natin, gaya ng GB-001 v3."
+  },
+
+  "gb001MistakesNotRepeated": [
+    "Isang linya kada Veo roll (bumagsak ang GB-001 dito nang 3 beses sa preflight).",
+    "May `maxPaidRolls` = 5 (wala nun sa GB-001, at 10 tawag ang nangyari noong 2 lang ang aprubado).",
+    "Screen recording = 1.2s na glance lang, tapos hard cut sa nababasang card (5.6s na walang makakabasa ang GB-001 v2).",
+    "Walang caption chunk na tatawid sa kuwit — kokopyahin ang gb-001/captions.mjs.",
+    "Explicit na NO-SMILE clause sa bawat roll setting (3 beses ngumiti si Gabriel; may tooth-gap issue si Marvin).",
+    "Hook overlay sa frame 0, walang fade, y=288 (ang v1 ay y=150 at pinutol ng 4:5 crop).",
+    "Existence guard sa fontfile sa build script (tahimik na bumabagsak sa serif — KM-003 lesson 12).",
+    "Pre-crop ang plate sa 864x1536 BAGO ang Veo (lesson 2).",
+    "concat FILTER, hindi demuxer copy (lesson 3).",
+    "Walang pangalan sa Veo dialogue (RAI filter, lesson 1).",
+    "Isang jobsite lang sa apat na plate.",
+    "Dense-sample muna bago mag-re-roll ng bayad na clip (lesson 14 — false alarm ang sparse strips)."
+  ],
+
+  "customerVerbatim": [
+    "Talaga grabe ang singilan.",
+    "At dapat may resibo kayo.",
+    "From 4500 tapos since maikli yung hose nila, nagdagdag ng 100 per tubo, so umabot sa 5500 ang binayaran."
+  ]
+}
