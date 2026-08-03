@@ -1,69 +1,78 @@
 # NOW — the resume doc
 
-**Stamped: 2026-08-03** (session 3)
- 
+**Stamped: 2026-08-03** (session 4, gabi)
+
 ## ▶ NEXT ACTION — RUN ORDER (Neil). Huwag baligtarin.
 🔴 **BASAHIN MUNA ANG `/kuya-marvin-ads` BAGO GUMALAW.**
-🔴 **WAG I-ON HANGGAT WALA ANG TATLONG CREATIVE** — 2 static + 1 video.
+🟢 **KUMPLETO NA ANG TATLONG CREATIVE.** Aprubado na ang `warranty-proof.png`
+(Neil, gabi ng 2026-08-03). Wala nang creative na naghihintay sayo.
 
-### A · Mata ni Neil — $0, mga 5 minuto
-1. **`clients/oceanides/out/warranty-proof.png`** — static #2 (30-araw warranty,
-   totoong ba-1 litrato). Gawa, nababasa sa 375px, **wala pang hatol.** Ito na
-   lang ang natitirang creative na naghihintay sayo.
-2. **Deploy ng price page.** Dalawa na ang inspector dun (si Marvin at si
-   Gabriel) at hindi pa naila-live. `cd funnels/oceanides-price-page &&
-   npx vercel deploy --prod --yes`
+### A · Isang gate bago gumastos — $0, mga 3 minuto
+1. **Mag-test submit sa `oceanidesph.com`**, hindi sa `.vercel.app`. Ang tanging
+   `Lead` na pumutok noon ay galing sa `.vercel.app`, at dalawang beses nang
+   na-deploy ang page mula noon. Tingnan sa Events Manager → Test events, tapos
+   burahin ang test row. **Kapag hindi pumutok yan, ₱500 kada araw kang
+   gagastusin na walang natututunan si Meta.**
 
 ### B · Buuin ang campaign — `kuya-gabriel/ads/CAMPAIGN-RUN-SHEET.md`
-3. Paste-ready ang dalawang static block na may UTM. **Idagdag ang ikatlo:**
+2. **Isulat ang ikatlong block** (naiwan 2026-08-03, ubos ang budget kaya bukas):
    `KM-004-AD-v1.mp4`, page ni Marvin `1184710811397498`, dulo ay
-   `oceanidesph.com`. Kill gates at week-1 scoreboard nandoon.
-4. Ad account `4165212657057538` — Active, may Visa. CBO ₱500/araw, dataset
-   `1050997330667084`, event `Lead`, NCR living-in, Advantage+.
+   `oceanidesph.com` na may `utm_content=km004-video`. Paste-ready na ang
+   dalawang static block. ₱0 ang gastos nito, doc lang.
+3. Ad account `4165212657057538` — Active, may Visa. CBO ₱500/araw, dataset
+   `1050997330667084`, event `Lead`, NCR living-in, Advantage+. Kill gates at
+   week-1 scoreboard nasa run sheet.
 
 ### C · Organic habang hinihintay
-5. `kuya-gabriel/organic/PAGE-POSTS-PRE-AD.md` — sulat na ang lima, may larawan
+4. `kuya-gabriel/organic/PAGE-POSTS-PRE-AD.md` — sulat na ang lima, may larawan
    bawat isa. Isa kada araw, huwag baligtarin.
 
 ---
 
-## ✅ Tapos ngayong 2026-08-03 (session 3)
+## ✅ Tapos ngayong gabi ng 2026-08-03 (session 4)
 
-**KM-004-AD-v1 — APPROVED ni Neil.** 29.97s, 720×1280, ibinalik ang script ng
-GB-001 kay Marvin kasi data nya naman yun (hook nya sa KM-003, 98.5% sa 7,047
-tao). 11 beat, 5 bayad na Veo roll. **Limang lever na wala pa sa GB-001 v3:**
-per-word invert caption (unang beses na naitayo ang `spotlight`, naka-park sya
-mula 2026-07-27), 9 na HTML overlay, may-kahulugang galaw ng b-roll, punch-in
-sa edit, at isang segundong **katahimikan** bago ang `UUWI KAMI.`
-Zero freeze, zero dead air, grade B, cropdetect `720:1280:0:0`.
+**BUHAY NA ANG PRICE PAGE.** Naka-deploy sa `oceanidesph.com`, tugma ang bundle
+hash. Kasama si Gabriel bilang pangalawang field inspector.
 
-**Apat na depektong nahuli ng verifier, hindi ng mata ko:** dalawang putol na
-linya (render_audit), nakabaong subtitle ni Veo sa r3 (frame check), face-safe
-violation sa `UUWI KAMI` (375px read), puting banda sa cards. **Tatlong hang at
-isang patay na hangin ang nahuli ng TAINGA NI NEIL** — iisa ang ugat: 24fps na
-source, 30fps na output, `zoompan` na dumodoble ng huling frame.
+**Apat na pagbabago sa offer, dumaan sa CMO** (`092fb5d`):
+1. `form.reassurance` — 8AM-5PM na oras ng tawag + ang anti-promise (*"hindi
+   kami mangangako ng bukas kung hindi namin kaya"*). **Ang truck ay HINDI
+   ipinapangako** — nakadepende sa available na truck (Neil), kaya ang tawag
+   lang ang ipinapangako. Huwag itong bawiin nang walang bagong sagot kay Boss Jay.
+2. **Bagong dalawang-hanay na ₱2,500 vs ₱5,000**, kasunod ng objectionReversal.
+   Walang bagong claim, galing lahat sa aprubadong FAQ #3.
+3. **Bagong pangalawang guarantee: ang "uuwi kami", may ₱0 na selyo.** Totoo ang
+   ₱0 (Neil). ⚠️ ₱200-300 ang biyahe kapag walang trabaho, kaya sinadyang hindi
+   sya isinulat bilang "libreng tingin" — may tawag muna bago umalis ang truck.
+4. Tinanggal ang FAQ #3, dahil #2 na ang bahay nya.
 
-**Price page: dalawa na ang field inspector.** Si Marvin (bagong street-daylight
-portrait, powder blue) at si Gabriel. Additive ang code — `second` prop, kapag
-wala ay dating itsura. Naka-build, **hindi pa deployed.**
+**⛔ TINANGGIHAN: ang Hormozi na priced value stack.** Nakasulat ang tatlong
+dahilan sa header ng `funnel.config.ts` para hindi na muling imungkahi:
+mangangailangan sya ng imbentong halaga sa page na ang buong benta ay totoo
+lahat ng numero; tunog sya ng scammer sa market na sunog na sa "sobrang ganda
+para totohanin"; at ang leak ay ang **CLOSE** (100 message, isang order), hindi
+ang desire. Ang ginamit sa halip ay ang bakanteng bahagi ng Value Equation.
 
-**Nalinis ang 204 MB** at naka-hook na ang `tools/ad_asset_sweep.mjs` sa
-SessionStart para hindi na matambakan. Walong bagong aral sa `agent_lessons.md`.
+**Swipe carousel sa field inspector** (`607c5ff`). Lapad ang sanhi, hindi CSS:
+140px lang bawat mukha sa loob ng dalawang hanay. Sariling hanay na ang litrato,
+mga 350px sa PC at 270px sa cellphone. Purong CSS scroll-snap, walang library,
+at nananatili sa rail (walang full-bleed) kasi print world to.
 
 ## 🅿 PARKED
 **Oceanides:** GB-001 video (hinihintay ang boses ni Gabriel, walang clone) ·
-hook2 variant ng KM-004 kung saan ang `UUWI KAMI` mismo ang hook — isang roll
-lang ang gastos, at nakabaon sa 20s ang pinakamalakas nating linya (basa ng CMO)
-· Kling b-roll kung may credit ang hiwalay na account · watermark ni Gabriel na
-wala kay Marvin · SEC Reg. No. · FB About · reviews sa Page · page #2 = DENR B2B.
+hook2 variant ng KM-004 kung saan ang `UUWI KAMI` mismo ang hook, isang roll
+lang ang gastos (basa ng CMO) · Kling b-roll kung may credit ang hiwalay na
+account · watermark ni Gabriel na wala kay Marvin · SEC Reg. No. · FB About ·
+reviews sa Page · page #2 = DENR B2B · full-bleed na carousel sa cellphone kung
+gusto ni Neil.
 **Grifon:** #94.3 next · #94.2 NOT-REPRO · #92+#89/#90 ride Slice B · #93 ⛔ TUNED.
 ⚠️ **Client world:** navy + amber print, no glass, no `#FFCC00` — `clients/oceanides/DESIGN.md`.
 
 ## ⛔ Gated · 🔧 Arm before starting
-🔴 **UBOS ANG GEMINI API BUDGET NI NEIL.** Naka-lock sa 4 ang `maxPaidRolls` ng
-KM-004 = eksaktong nagamit. Walang bagong Veo roll na makakadaan sa gate.
-Manwal sa Flow ang bagong clip (720p lang ang libre). Gated pa rin: Kling ·
-anumang ad spend · ⚠️ kapag nag `npm install`, i-check ang `package-lock.json`.
+🔴 **UBOS ANG GEMINI API BUDGET NI NEIL.** Walang bagong Veo roll na makakadaan
+sa gate. Manwal sa Flow ang bagong clip (720p lang ang libre). Gated pa rin:
+Kling · anumang ad spend · ⚠️ kapag nag `npm install`, i-check ang
+`package-lock.json`.
 
 ```powershell
 .\scripts\restore-git-identity.ps1
@@ -72,7 +81,10 @@ anumang ad spend · ⚠️ kapag nag `npm install`, i-check ang `package-lock.js
 .\scripts\restore-codex.ps1
 ```
 ⚠️ May sariling `node_modules` ang `funnels/oceanides-price-page` — `npm ci`
-doon bago mag-build, kinakain sya ng defreezer.
+doon bago mag-build, kinakain sya ng defreezer. **Huwag i-pipe sa `tail`** —
+ang exit code ng pipe ay galing sa `tail`, kaya nagre-report ng 0 ang pumalpak
+na install (nangyari 2026-08-03). Kapag na-reject ng OS, `rm -rf node_modules`
+muna bago ulitin.
 
 ---
 
