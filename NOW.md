@@ -22,52 +22,32 @@ E82–E93, GP-6). Gawin bago i-ON.
 
 🟢 Aprubado na ang tatlong ibang creative, at buhay na ang landing page.
 
-### A · Isang gate bago gumastos — $0, mga 3 minuto
-1. **Mag-test submit sa `oceanidesph.com`**, hindi sa `.vercel.app`. Ang tanging
-   `Lead` na pumutok noon ay galing sa `.vercel.app`, at dalawang beses nang
-   na-deploy ang page mula noon. Tingnan sa Events Manager → Test events, tapos
-   burahin ang test row. **Kapag hindi pumutok yan, ₱500 kada araw kang
-   gagastusin na walang natututunan si Meta.**
+✅ Tapos na ang pre-flight: napatunayan ang `Lead` sa apex (`ev=Lead` + `200` sa
+Network tab), kumpleto ang run sheet, at may laman ang Page ni Marvin.
 
-### B · Buuin ang campaign — `kuya-gabriel/ads/CAMPAIGN-RUN-SHEET.md`
-2. **Isulat ang ikatlong block** (naiwan 2026-08-03, ubos ang budget kaya bukas):
-   `KM-004-AD-v1.mp4`, page ni Marvin `1184710811397498`, dulo ay
-   `oceanidesph.com` na may `utm_content=km004-video`. Paste-ready na ang
-   dalawang static block. ₱0 ang gastos nito, doc lang.
-3. Ad account `4165212657057538` — Active, may Visa. CBO ₱500/araw, dataset
-   `1050997330667084`, event `Lead`, NCR living-in, Advantage+. Kill gates at
-   week-1 scoreboard nasa run sheet.
-
-### C · Organic habang hinihintay
-4. `kuya-gabriel/organic/PAGE-POSTS-PRE-AD.md` — sulat na ang lima, may larawan
-   bawat isa. Isa kada araw, huwag baligtarin.
+**Kay Neil lang:** burahin ang test row sa `funnel_leads` (neilmaglaya,
+2026-08-03) · isang organic post kada araw mula sa
+`kuya-gabriel/organic/PAGE-POSTS-PRE-AD.md`.
 
 ---
 
 ## ✅ Tapos ngayong gabi ng 2026-08-03 (session 4)
 
-**BUHAY NA ANG PRICE PAGE.** Naka-deploy sa `oceanidesph.com`, tugma ang bundle
-hash. Kasama si Gabriel bilang pangalawang field inspector.
+**BUHAY NA ANG PRICE PAGE** sa `oceanidesph.com`, kasama si Gabriel bilang
+pangalawang inspector at ang swipe carousel ng dalawang mukha (`607c5ff`).
 
-**Apat na pagbabago sa offer, dumaan sa CMO** (`092fb5d`): (1) `form.reassurance`
-— 8AM-5PM na oras ng tawag + ang anti-promise (*"hindi kami mangangako ng bukas
-kung hindi namin kaya"*); (2) bagong dalawang-hanay na **₱2,500 vs ₱5,000**,
-kasunod ng objectionReversal, walang bagong claim; (3) bagong **pangalawang
-guarantee: ang "uuwi kami", may ₱0 na selyo**; (4) tinanggal ang FAQ #3, dahil
-#2 na ang bahay nya.
+**Apat na pagbabago sa offer, dumaan sa CMO** (`092fb5d`): 8AM-5PM na oras ng
+tawag + anti-promise sa `form.reassurance` · dalawang-hanay na ₱2,500 vs ₱5,000 ·
+pangalawang guarantee na "uuwi kami" na may ₱0 selyo · tinanggal ang FAQ #3.
 
 🔴 **Dalawang bagay na huwag babaligtarin.** Ang bilis ng truck ay **hindi
-pwedeng ipangako** (nakadepende sa available na truck, Neil) — ang tawag lang
-ang ipinapangako. At ang ₱0 ay **hindi "libreng tingin"**: may tawag muna bago
-umalis ang truck, doon nasasala ang ₱200-300 na biyaheng walang trabaho.
+pwedeng ipangako** (nakadepende sa available na truck) — ang tawag lang. At ang
+₱0 ay **hindi "libreng tingin"**: may tawag muna bago umalis ang truck, doon
+nasasala ang ₱200-300 na biyaheng walang trabaho.
 
 **⛔ TINANGGIHAN: ang Hormozi na priced value stack.** Nasa header ng
-`funnel.config.ts` ang tatlong dahilan para hindi na muling imungkahi. Ang
-maikli: ang leak ay ang **CLOSE**, at ang value stack ay gamot sa desire.
-
-**Swipe carousel sa field inspector** (`607c5ff`). Lapad ang sanhi, hindi CSS:
-140px lang bawat mukha sa loob ng dalawang hanay. Sariling hanay na ang litrato,
-mga 350px sa PC at 270px sa cellphone. CSS scroll-snap, nasa rail pa rin.
+`funnel.config.ts` ang tatlong dahilan. Ang maikli: ang leak ay ang **CLOSE**,
+at ang value stack ay gamot sa desire.
 
 ## 🅿 PARKED
 **Oceanides:** GB-001 video (hinihintay ang boses ni Gabriel) · hook2 variant ng
