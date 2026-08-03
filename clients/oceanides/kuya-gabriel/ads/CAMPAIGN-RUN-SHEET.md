@@ -30,8 +30,15 @@ nakabukas ang Ads Manager.
 ```
 Campaign   OCEANIDES-PRICE-01
 Ad set     OCEANIDES-PRICE-01-NCR-broad
-Ad         OCEANIDES-PRICE-01-addons-ticket
+Ad 1       OCEANIDES-PRICE-01-addons-ticket      (static, gawa na)
+Ad 2       OCEANIDES-PRICE-01-warranty-proof     (static, gawa na — hintayin ang mata ni Neil)
+Ad 3       OCEANIDES-PRICE-01-gb001-video        (nakahinto hanggang may boses si Gabriel)
 ```
+
+🔴 **WAG I-ON HANGGAT WALA ANG TATLO** (Neil, 2026-08-03). Isang creative lang
+ang KM-003 at yun ang pinakamalaking structural na sablay nun — kailangan ng
+Andromeda ng format diversity: isang video + dalawang MAGKAIBANG static (papel
+na ticket ang isa, litratong pruweba ang isa, hindi kambal).
 
 ### Campaign
 - Objective **Leads** · conversion location **Website**
@@ -87,6 +94,40 @@ Basahin mo muna bago ka mag-book.
 
 **Headline:** `Nakasulat bago dumating ang truck.`
 **Description:** `Buong presyo at bawat dagdag, nasa page.`
+
+---
+
+## Ad 2 — warranty-proof
+
+- Format **Single image**
+- Larawan: **`clients/oceanides/out/warranty-proof.png`** (1080×1350; template
+  `clients/oceanides/templates/warranty-proof.html`, totoong ba-1 litrato)
+- Page identity, AI label, at Advantage+ toggles: pareho sa Ad 1
+- CTA **Learn more**
+
+**Website URL:**
+```
+https://oceanidesph.com/?utm_source=fb&utm_medium=paid&utm_campaign=oceanides-price-01&utm_content=warranty-proof
+```
+
+**Primary text:**
+```
+Kapag bumalik ang bara sa loob ng 30 araw, babalikan namin. Nakasulat
+yan sa page, hindi lang salita.
+
+Kinukunan namin ng before at after na litrato ang bawat tangke, at
+ibinibigay namin sa may-ari. May BIR official receipt ka rin, kaya may
+mahahabol ka kung may problema.
+
+Ang hindi sakop: kapag napuno ulit ang tangke. Depende yun sa dami ng
+gumagamit, hindi sa trabaho. Sinasabi na namin ngayon para walang
+gulatan.
+
+Basahin mo muna ang page bago ka mag-book.
+```
+
+**Headline:** `30 araw na warranty, nakasulat.`
+**Description:** `Kasama ang buong presyo sa page.`
 
 ---
 

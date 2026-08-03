@@ -1,0 +1,115 @@
+<!doctype html>
+<!-- OCEANIDES PRICE PAGE — static ad #2: ang warranty proof card.
+     Angle: risk reversal — "bumalik ang bara, babalikan namin" (CMO warranty
+     variant, ginawang STATIC sa desisyon ni Neil 2026-08-03: zero gastos, hindi
+     naghihintay ng boses, at format diversity sa Andromeda: isang video +
+     DALAWANG magkaibang static, hindi dalawang kambal).
+     🔴 BAKIT NAVY + LITRATO, hindi paper + rows gaya ng addons-ticket: kapag
+     dalawang static ang magkasama sa ad set at parehong typographic ticket sila,
+     babasahin sila ng retrieval engine bilang cosmetic dupes. Ang isa ay presyo
+     sa papel; ang isa ay PRUWEBA sa litrato. Magkaibang trabaho, magkaibang itsura.
+     🔴 LAHAT ng warranty wording ay VERBATIM sa page (funnel.config.ts FAQ +
+     guarantee + beforeAfter note) — legal na pangako ng totoong kompanya, bawal
+     mag-imbento. Pati ang HINDI sakop (pagpuno ulit) ay sinasabi — yun ang
+     pinaka-kapani-paniwalang linya sa buong card.
+     Litrato: ba-1 pair — TOTOO, kumpirmado ni Neil 2026-08-01. HUWAG palitan ng
+     tb2- pairs (hindi pa resolbado kung AI yun).
+     "30 ARAW" seal = ang mismong device ng page Guarantee card → scent match
+     pagkatapos ng click.
+     Render: node render.mjs templates/warranty-proof.html out/warranty-proof.png -->
+<html lang="tl"><head><meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --navy:#0E2C5E; --navy2:#0A1F45; --void:#071630;
+  --white:#FFFFFF; --muted:#DFE8F5; --dim:#8FB3DD; --gold:#F5B301;
+  --head:'Anton','Roboto Condensed','Arial Narrow',Impact,sans-serif;
+  --body:'Inter','Helvetica Neue',Arial,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#333}
+#canvas{width:1080px;height:1350px;position:relative;overflow:hidden;
+  font-family:var(--body);color:var(--white);
+  background:radial-gradient(120% 80% at 50% 0%, var(--navy) 0%, var(--navy2) 58%, var(--void) 100%);
+  -webkit-font-smoothing:antialiased}
+
+.chip{position:absolute;top:88px;left:78px;z-index:5;background:var(--gold);
+  color:var(--navy2);font-weight:900;font-size:20px;letter-spacing:2px;
+  text-transform:uppercase;padding:11px 18px;border-radius:4px}
+
+h1{position:absolute;top:166px;left:78px;right:78px;z-index:5;
+  font-family:var(--head);font-weight:400;font-size:92px;line-height:.95;
+  letter-spacing:.5px;text-transform:uppercase;color:var(--white)}
+h1 span{color:var(--gold)}
+
+/* Ang seal — kopya ng Guarantee card ng page mismo. */
+.seal{position:absolute;top:372px;left:78px;z-index:5;display:flex;
+  align-items:baseline;gap:22px;border-bottom:3px dashed rgba(223,232,245,.25);
+  padding-bottom:26px;padding-right:34px}
+.seal .num{font-family:var(--head);font-size:118px;line-height:.8;color:var(--gold)}
+.seal .unit{font-family:var(--head);font-size:36px;line-height:1;color:var(--white)}
+.seal .lbl{font-size:19px;font-weight:900;letter-spacing:1.8px;text-transform:uppercase;
+  color:var(--dim);margin-top:10px}
+
+.photos{position:absolute;top:528px;left:78px;right:78px;z-index:5;
+  display:flex;gap:22px}
+.ph{position:relative;flex:1;height:360px;border-radius:10px;overflow:hidden;
+  border:1px solid rgba(223,232,245,.18)}
+.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.tag{position:absolute;top:16px;left:16px;background:rgba(7,22,48,.82);
+  color:var(--white);font-weight:900;font-size:19px;letter-spacing:1.8px;
+  text-transform:uppercase;padding:8px 14px;border-radius:4px}
+.cap{position:absolute;top:908px;left:78px;right:78px;z-index:5;
+  font-size:27px;font-weight:600;line-height:1.35;color:var(--dim)}
+
+.terms{position:absolute;top:968px;left:78px;right:78px;z-index:5}
+.t{display:flex;align-items:flex-start;gap:16px;padding:10px 0;
+  font-size:27px;font-weight:700;line-height:1.3;color:var(--muted)}
+.t .ck{flex:0 0 auto;color:var(--gold);font-weight:900}
+
+.bar{position:absolute;left:78px;right:78px;bottom:56px;z-index:5;
+  display:flex;align-items:center;justify-content:space-between;gap:24px;
+  border-top:2px solid rgba(223,232,245,.18);padding-top:28px}
+.bar .cta{font-size:29px;font-weight:900;line-height:1.25;color:var(--white)}
+.bar .cta small{display:block;font-size:20px;font-weight:700;color:var(--dim);
+  letter-spacing:1.6px;text-transform:uppercase;margin-top:8px}
+.bar img{height:76px;display:block;border-radius:8px}
+</style></head><body>
+<div id="canvas">
+  <p class="chip">Ang warranty</p>
+
+  <h1>Bumalik ang bara?<br/><span>Babalikan namin.</span></h1>
+
+  <div class="seal">
+    <p class="num">30</p>
+    <div>
+      <p class="unit">ARAW</p>
+      <p class="lbl">Warranty sa bara</p>
+    </div>
+  </div>
+
+  <div class="photos">
+    <div class="ph">
+      <img src="../../../funnels/oceanides-price-page/public/img/ba-1-before.webp" alt=""/>
+      <p class="tag">Bago</p>
+    </div>
+    <div class="ph">
+      <img src="../../../funnels/oceanides-price-page/public/img/ba-1-after.webp" alt=""/>
+      <p class="tag">Pagkatapos</p>
+    </div>
+  </div>
+  <p class="cap">Puno hanggang labi, tapos kita na ang sahig. Trabaho namin to.</p>
+
+  <div class="terms">
+    <p class="t"><span class="ck">&#10003;</span>May litrato ang bawat trabaho, ibinibigay namin sa may-ari</p>
+    <p class="t"><span class="ck">&#10003;</span>May BIR official receipt, kaya may mahahabol ka</p>
+    <p class="t"><span class="ck" style="color:var(--dim)">&#10005;</span>Hindi sakop ang pagpuno ulit, hindi yun depekto ng trabaho</p>
+  </div>
+
+  <div class="bar">
+    <div class="cta">Buong warranty at buong presyo, nasa page.<small>oceanidesph.com</small></div>
+    <img src="../assets/logo.jpg" alt="Oceanides"/>
+  </div>
+</div>
+</body></html>
