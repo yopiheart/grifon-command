@@ -28,6 +28,14 @@ Ang agent ang gumawa at nag-ON, hindi si Neil. Buong tala:
 ### C · Organic habang tumatakbo
 6. `clients/oceanides/kuya-gabriel/organic/PAGE-POSTS-PRE-AD.md` — isa kada araw.
 
+### 🆕 Talaan ng booking — buhay na
+**`https://oceanidesph.com/ops`** — dito nakikita at pinupunan ni Zam ang bawat lead:
+status, **magkano**, address, notes. May password, nasa `OPS_PASSPHRASE` (hindi nakasulat
+sa repo; tingnan ang `workflows/funnel_deploys.md` kung paano palitan).
+🔴 **Punan ang Magkano kada tapos na trabaho.** Kasama nun ang `utm_content`, at yun ang
+tanging paraan para masagot kung **aling ad ang may booked job**, hindi lang kung alin ang
+may murang lead. Yun mismo ang A3 na bitag ng KM-003.
+
 ---
 
 ## 🔴 Tatlong bagay na huwag kalimutan
@@ -45,17 +53,13 @@ Ang agent ang gumawa at nag-ON, hindi si Neil. Buong tala:
 
 ## ✅ Tapos ngayong 2026-08-03/04
 
-**Buhay ang price page** sa `oceanidesph.com` — apat na pagbabago sa offer na
-dumaan sa CMO (8AM-5PM na tawag + anti-promise, dalawang-hanay na ₱2,500 vs
-₱5,000, "uuwi kami" na may ₱0 selyo, tinanggal ang FAQ #3) at swipe carousel sa
-dalawang inspector. ⛔ Tinanggihan ang Hormozi na priced value stack — nasa
-header ng `funnel.config.ts` ang tatlong dahilan.
+**Buhay ang price page** — apat na pagbabago sa offer na dumaan sa CMO, swipe
+carousel sa dalawang inspector, at naipasa ang `Lead` sa apex. ⛔ Tinanggihan ang
+Hormozi na priced value stack (nasa header ng `funnel.config.ts` ang dahilan).
 
-**Dalawang bagong static:** `hooktest-chalk-tankcover` (S34/S35 port ng Brunson,
-tisa sa takip ng tangke, **walang logo** bilang sadyang A/B) at
-`advertorial-price` (Suby na anyo ng artikulo, **hindi** pekeng balita).
-
-**Naipasa ang `Lead` sa apex** — `ev=Lead` + `200` sa Network tab.
+**Dalawang bagong static:** `hooktest-chalk-tankcover` (S34/S35 ni Brunson, tisa
+sa takip, **walang logo** bilang sadyang A/B) at `advertorial-price` (Suby na
+anyo ng artikulo, **hindi** pekeng balita).
 
 **Sinuspinde at naibalik ang `ad-spend-gate.sh`** — may sentinel-file na switch
 sya ngayon. Unang beses na gumastos ang agent, may basbas ni Neil.

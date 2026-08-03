@@ -28,6 +28,18 @@ inside the instance dir (CLI login: Neil's Vercel account `neilmaglayabusiness22
   vercel env add NAME production`) — tinatanggal nito ang mismong failure mode na sumira
   ng key noon. Redeploy pagkatapos ng anumang env change; sa deploy lang kumukuha ang
   functions.
+- 🔐 **`OPS_PASSPHRASE`** ✅ Set 2026-08-04 — ang password ng `/ops` (talaan ng booking).
+  **Hindi sya nakasulat kahit saan sa repo, sinadya.** Kay Neil at kay Zam lang sya
+  nabubuhay. Fail-closed ang `api/ops.ts`: kapag wala ang var na to, 500 ang buong page —
+  hindi sya "bumubukas na lang." Para magpalit:
+  ```bash
+  cd funnels/oceanides-price-page
+  npx vercel env rm OPS_PASSPHRASE production
+  printf '%s' 'BAGONG-PASSWORD' | npx vercel env add OPS_PASSPHRASE production
+  npx vercel deploy --prod --yes
+  ```
+  ⚠️ Ang pagpapalit ay **nagpapalayas sa lahat**: HMAC ng passphrase ang cookie, kaya
+  mag-lo-login ulit si Zam. Yun mismo ang gusto mong mangyari kapag may nakaalam nun.
 - ✅ **Live e2e green 2026-08-02:** POST sa prod `/api/lead` → `{ok:true}` → row sa
   `funnel_leads` na may tamang `client_id='oceanides'`, `funnel_id`, na-normalize na phone
   (`09171234567`), `consent`, `policy_version`, server-stamped `ip`, at qualifiers sa loob
