@@ -34,17 +34,17 @@
 **BUHAY NA ANG PRICE PAGE.** Naka-deploy sa `oceanidesph.com`, tugma ang bundle
 hash. Kasama si Gabriel bilang pangalawang field inspector.
 
-**Apat na pagbabago sa offer, dumaan sa CMO** (`092fb5d`):
-1. `form.reassurance` — 8AM-5PM na oras ng tawag + ang anti-promise (*"hindi
-   kami mangangako ng bukas kung hindi namin kaya"*). **Ang truck ay HINDI
-   ipinapangako** — nakadepende sa available na truck (Neil), kaya ang tawag
-   lang ang ipinapangako. Huwag itong bawiin nang walang bagong sagot kay Boss Jay.
-2. **Bagong dalawang-hanay na ₱2,500 vs ₱5,000**, kasunod ng objectionReversal.
-   Walang bagong claim, galing lahat sa aprubadong FAQ #3.
-3. **Bagong pangalawang guarantee: ang "uuwi kami", may ₱0 na selyo.** Totoo ang
-   ₱0 (Neil). ⚠️ ₱200-300 ang biyahe kapag walang trabaho, kaya sinadyang hindi
-   sya isinulat bilang "libreng tingin" — may tawag muna bago umalis ang truck.
-4. Tinanggal ang FAQ #3, dahil #2 na ang bahay nya.
+**Apat na pagbabago sa offer, dumaan sa CMO** (`092fb5d`): (1) `form.reassurance`
+— 8AM-5PM na oras ng tawag + ang anti-promise (*"hindi kami mangangako ng bukas
+kung hindi namin kaya"*); (2) bagong dalawang-hanay na **₱2,500 vs ₱5,000**,
+kasunod ng objectionReversal, walang bagong claim; (3) bagong **pangalawang
+guarantee: ang "uuwi kami", may ₱0 na selyo**; (4) tinanggal ang FAQ #3, dahil
+#2 na ang bahay nya.
+
+🔴 **Dalawang bagay na huwag babaligtarin.** Ang bilis ng truck ay **hindi
+pwedeng ipangako** (nakadepende sa available na truck, Neil) — ang tawag lang
+ang ipinapangako. At ang ₱0 ay **hindi "libreng tingin"**: may tawag muna bago
+umalis ang truck, doon nasasala ang ₱200-300 na biyaheng walang trabaho.
 
 **⛔ TINANGGIHAN: ang Hormozi na priced value stack.** Nakasulat ang tatlong
 dahilan sa header ng `funnel.config.ts` para hindi na muling imungkahi:
@@ -59,12 +59,10 @@ mga 350px sa PC at 270px sa cellphone. Purong CSS scroll-snap, walang library,
 at nananatili sa rail (walang full-bleed) kasi print world to.
 
 ## 🅿 PARKED
-**Oceanides:** GB-001 video (hinihintay ang boses ni Gabriel, walang clone) ·
-hook2 variant ng KM-004 kung saan ang `UUWI KAMI` mismo ang hook, isang roll
-lang ang gastos (basa ng CMO) · Kling b-roll kung may credit ang hiwalay na
-account · watermark ni Gabriel na wala kay Marvin · SEC Reg. No. · FB About ·
-reviews sa Page · page #2 = DENR B2B · full-bleed na carousel sa cellphone kung
-gusto ni Neil.
+**Oceanides:** GB-001 video (hinihintay ang boses ni Gabriel) · hook2 variant ng
+KM-004 kung saan ang `UUWI KAMI` mismo ang hook, isang roll lang (basa ng CMO) ·
+Kling b-roll kung may credit · watermark ni Gabriel · SEC Reg. No. · FB About ·
+reviews sa Page · page #2 = DENR B2B · full-bleed na carousel sa cellphone.
 **Grifon:** #94.3 next · #94.2 NOT-REPRO · #92+#89/#90 ride Slice B · #93 ⛔ TUNED.
 ⚠️ **Client world:** navy + amber print, no glass, no `#FFCC00` — `clients/oceanides/DESIGN.md`.
 
