@@ -31,9 +31,15 @@ Ang agent ang gumawa at nag-ON, hindi si Neil. Buong tala:
 **`https://oceanidesph.com/ops`** — dito nakikita at pinupunan ni Zam ang bawat lead:
 status, **magkano**, address, notes. May password, nasa `OPS_PASSPHRASE` (hindi nakasulat
 sa repo; tingnan ang `workflows/funnel_deploys.md` kung paano palitan).
-🔴 **Punan ang Magkano kada tapos na trabaho.** Kasama nun ang `utm_content`, at yun ang
+🔴 **Punan ang How much kada tapos na trabaho.** Kasama nun ang `utm_content`, at yun ang
 tanging paraan para masagot kung **aling ad ang may booked job**, hindi lang kung alin ang
 may murang lead. Yun mismo ang A3 na bitag ng KM-003.
+
+**Apat na kulang, sinunod ang bigat** (sinabi kay Neil 2026-08-04, hindi pa ginagawa):
+**(1) abiso** — kapag hindi bubuksan ni Zam, hindi nya alam na may pumasok; ang lead na
+umupo ng tatlong oras ay tumawag na sa iba. Hook point: `api/lead.ts`. **(2) buod kada ad**
+— nandyan ang datos pero manwal pa ang pagbibilang kung aling ad ang may pinakamaraming
+booked job. **(3)** kusang refresh. **(4)** search + export. Ginhawa lang ang huling dalawa.
 
 ---
 
@@ -53,15 +59,11 @@ may murang lead. Yun mismo ang A3 na bitag ng KM-003.
 ## ✅ Tapos ngayong 2026-08-03/04
 
 **Buhay ang price page** — apat na pagbabago sa offer na dumaan sa CMO, swipe
-carousel sa dalawang inspector, at naipasa ang `Lead` sa apex. ⛔ Tinanggihan ang
-Hormozi na priced value stack (nasa header ng `funnel.config.ts` ang dahilan).
-
-**Dalawang bagong static:** `hooktest-chalk-tankcover` (S34/S35 ni Brunson, tisa
-sa takip, **walang logo** bilang sadyang A/B) at `advertorial-price` (Suby na
-anyo ng artikulo, **hindi** pekeng balita).
-
-**Sinuspinde at naibalik ang `ad-spend-gate.sh`** — may sentinel-file na switch
-sya ngayon. Unang beses na gumastos ang agent, may basbas ni Neil.
+carousel, naipasa ang `Lead` sa apex. ⛔ Tinanggihan ang Hormozi na value stack.
+**Dalawang bagong static:** `hooktest-chalk-tankcover` (S34/S35 ni Brunson,
+**walang logo** bilang sadyang A/B) at `advertorial-price` (Suby, **hindi**
+pekeng balita). **Sinuspinde at naibalik ang `ad-spend-gate.sh`** — may
+sentinel-file na switch sya ngayon. Unang beses na gumastos ang agent.
 
 ## 🅿 PARKED
 **Oceanides:** GB-001 video · hook2 variant ng KM-004 · Kling b-roll · watermark
