@@ -4,6 +4,17 @@
   "outputDirectory": "dist",
   "rewrites": [
     { "source": "/thank-you", "destination": "/thank-you.html" },
-    { "source": "/privacy", "destination": "/privacy.html" }
+    { "source": "/privacy", "destination": "/privacy.html" },
+    { "source": "/ops", "destination": "/ops.html" }
+  ],
+  "headers": [
+    {
+      "source": "/ops",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" },
+        { "key": "Cache-Control", "value": "no-store, private" },
+        { "key": "Referrer-Policy", "value": "no-referrer" }
+      ]
+    }
   ]
 }

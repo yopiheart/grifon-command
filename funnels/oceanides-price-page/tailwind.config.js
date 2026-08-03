@@ -8,7 +8,7 @@
 // white/black overlay utilities for translucency instead; that keeps the brand tokens
 // authorable as plain hex in the config, which is the whole point.
 export default {
-  content: ['./index.html', './thank-you.html', './src/**/*.{ts,tsx}'],
+  content: ['./index.html', './thank-you.html', './ops.html', './src/**/*.{ts,tsx}'],
   theme: {
     extend: {
       colors: {

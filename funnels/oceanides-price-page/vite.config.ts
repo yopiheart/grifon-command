@@ -143,6 +143,59 @@ function leadApiDevPlugin(): Plugin {
   };
 }
 
+// ===========================================================================
+// opsApiDevPlugin — pareho ang layunin ng nasa itaas, para sa /api/ops.
+//
+// 🔴 WALANG MOCK DITO, sinadya. Ang mock para sa lead ay nagpapatunay ng
+// kontrata ng browser at walang PII na hinahawakan. Ang ops ay pawang PII: ang
+// pekeng roster ay hindi nagpapatunay ng kahit ano at ang pekeng "pasok" ay
+// magtuturo sayong gumagana ang password gayong hindi pa nasusubukan. Kapag
+// walang Supabase env, tumatanggi sya nang malinaw — gaya rin ng production.
+// ===========================================================================
+function opsApiDevPlugin(): Plugin {
+  const handle = async (req: any, res: any, next: () => void, server?: any) => {
+    if (!req.url?.startsWith('/api/ops')) return next();
+
+    const configured =
+      process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY && process.env.OPS_PASSPHRASE;
+    if (!configured || !server) {
+      console.log(
+        '  🟡 /api/ops: kailangan ng SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY + OPS_PASSPHRASE sa .env, at `npm run dev` (hindi preview).'
+      );
+      return json(res, 500, { error: 'not_configured' });
+    }
+
+    try {
+      const mod = await server.ssrLoadModule(entry('./api/ops.ts'));
+      req.body = req.method === 'GET' ? {} : await readBody(req);
+      req.query = Object.fromEntries(new URL(req.url, 'http://localhost').searchParams);
+      res.status = (code: number) => {
+        res.statusCode = code;
+        return res;
+      };
+      res.json = (obj: unknown) => {
+        if (!res.getHeader('content-type')) res.setHeader('content-type', 'application/json');
+        res.end(JSON.stringify(obj));
+        return res;
+      };
+      await mod.default(req, res);
+    } catch (err) {
+      console.error('[api/ops] handler threw:', err);
+      if (!res.headersSent) json(res, 500, { error: 'handler_threw' });
+    }
+  };
+
+  return {
+    name: 'ops-api-dev',
+    configureServer(server) {
+      server.middlewares.use((req: any, res: any, next: any) => handle(req, res, next, server));
+    },
+    configurePreviewServer(server) {
+      server.middlewares.use((req: any, res: any, next: any) => handle(req, res, next));
+    },
+  };
+}
+
 export default defineConfig(({ mode }) => {
   // Unprefixed secrets (SUPABASE_SERVICE_ROLE_KEY) are read by the handler from
   // process.env, exactly as they are on Vercel. Nothing here reaches the bundle.
@@ -150,12 +203,13 @@ export default defineConfig(({ mode }) => {
   for (const [key, value] of Object.entries(env)) process.env[key] = value;
 
   return {
-    plugins: [react(), leadApiDevPlugin()],
+    plugins: [react(), leadApiDevPlugin(), opsApiDevPlugin()],
     build: {
       rollupOptions: {
         input: {
           main: entry('./index.html'),
           thankYou: entry('./thank-you.html'),
+          ops: entry('./ops.html'),
         },
       },
     },
