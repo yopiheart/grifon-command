@@ -1,0 +1,36 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><style>
+@font-face { font-family:'Anton'; src:url('../../../../../../api/_lib/assets/fonts/Anton-Regular.ttf') format('truetype'); }
+* { margin:0; padding:0; box-sizing:border-box; }
+html,body { width:720px; height:1280px; overflow:hidden; background:transparent; }
+.row { position:absolute; left:0; right:0; top:845px; text-align:center; white-space:nowrap; display:none; }
+.w {
+  display:inline-block; font-family:'Anton',Impact,sans-serif; font-size:55px;
+  line-height:1.0; letter-spacing:.01em; color:#FFFFFF; padding:2px 8px 5px; margin:0 3px;
+  /* Outline sa pamamagitan ng text-shadow, HINDI solidong kahon sa buong lapad —
+     P2, 8 corroborations, at kontra sa bars at classic na preset. */
+  text-shadow: -4px 0 #0A1F45, 4px 0 #0A1F45, 0 -4px #0A1F45, 0 4px #0A1F45,
+               -3px -3px #0A1F45, 3px -3px #0A1F45, -3px 3px #0A1F45, 3px 3px #0A1F45,
+               0 5px 0 rgba(7,22,48,.55);
+}
+/* ANG INVERT: ang salitang binibigkas NGAYON ay bumabaligtad — navy na teksto
+   sa amber. Ito ang buong punto ng spotlight, at ito ang gumagalaw kada salita. */
+.w.on { color:#0A1F45; background:#F5B301; text-shadow:none; }
+</style></head><body>
+<div id="rows"><div class="row" id="r0"><span class="w" id="r0w0">PERO</span><span class="w" id="r0w1">ANG</span></div><div class="row" id="r1"><span class="w" id="r1w0">MAS</span></div><div class="row" id="r2"><span class="w" id="r2w0">NAKAKATAKOT</span></div><div class="row" id="r3"><span class="w" id="r3w0">YUNG</span><span class="w" id="r3w1">SINGIL</span></div><div class="row" id="r4"><span class="w" id="r4w0">PAGDATING</span><span class="w" id="r4w1">NG</span></div><div class="row" id="r5"><span class="w" id="r5w0">TRUCK</span></div></div>
+<script>
+const PLAN = [{"start":0,"end":0.5491666666666667,"words":[{"t":"Pero","s":0,"e":0.3661111111111111},{"t":"ang","s":0.3661111111111111,"e":0.5491666666666667}]},{"start":0.5491666666666667,"end":1.0983333333333334,"words":[{"t":"mas","s":0.5491666666666667,"e":1.0983333333333334}]},{"start":1.0983333333333334,"end":1.6475,"words":[{"t":"nakakatakot","s":1.0983333333333334,"e":1.6475}]},{"start":1.6475,"end":2.1966666666666668,"words":[{"t":"yung","s":1.6475,"e":1.8305555555555555},{"t":"singil","s":1.8305555555555555,"e":2.1966666666666668}]},{"start":2.1966666666666668,"end":2.7458333333333336,"words":[{"t":"pagdating","s":2.1966666666666668,"e":2.6085416666666665},{"t":"ng","s":2.6085416666666665,"e":2.745833333333333}]},{"start":2.7458333333333336,"end":3.2950000000000004,"words":[{"t":"truck","s":2.7458333333333336,"e":3.2950000000000004}]}];
+window.render = function (t) {
+  PLAN.forEach((p, i) => {
+    const row = document.getElementById('r' + i);
+    const live = t >= p.start && t < p.end;
+    row.style.display = live ? 'block' : 'none';
+    if (!live) return;
+    p.words.forEach((w, j) => {
+      const el = document.getElementById('r' + i + 'w' + j);
+      el.className = 'w' + (t >= w.s && t < w.e ? ' on' : '');
+    });
+  });
+};
+window.render(0);
+</script></body></html>
