@@ -218,6 +218,33 @@ function checkBuild(buildPath) {
     else P(`overlay "${label}" nasa loob ng feed-safe (${top}-${bottom})`);
   }
 
+  // --- STS: totoong boses ni Marvin ------------------------------------------
+  // 🔴 IDINAGDAG 2026-08-04, matapos maipasa ang KM-004 sa BAWAT gate na may
+  // maling boses. Ang hilaw na Veo clip ay may SARILING synthetic na boses. Ang
+  // STS pass ang nagpapalit nun ng clone ni Marvin, at nasa division-of-labor
+  // table ng skill sya mula pa noong KM-002 — pero PROSA lang sya, at hindi
+  // nakabantay ang prosa. Hindi natakbo ang hakbang, walang humuli, at ang
+  // lumabas ay ad na naghahalinhinan ang DALAWANG boses: Veo sa limang talking
+  // beat, si Marvin sa apat na VO-over-still. Tainga ni Neil ang nakahuli, isang
+  // oras bago mag-upload.
+  //
+  // Bakit hindi sya kayang hulihin ng ibang check: perpekto ang lahat ng
+  // sinusukat nila. Tama ang haba, tama ang caption sync, tama ang crop, walang
+  // dead air. Ang boses ay hindi geometry — kaya walang nakakita.
+  //
+  // Ang hinahanap nito ay ang PINAGMULAN, hindi ang tunog: kapag may talking
+  // beat na kumukuha sa hilaw na `clips/`, kailangang may STS sa daan.
+  // ⚠️ TINATANGGAL ANG KOMENTO BAGO MAG-TEST. Ang unang bersyon ng check na to ay
+  // pumasa sa mismong build na hinahanap nya, dahil ang paliwanag ko sa itaas ng
+  // `C=` ay may nakasulat na `clips/sts` — ang komento mismo ang nagpasa. Ang
+  // gate na kayang pasahan ng sarili nyang dokumentasyon ay hindi gate.
+  const shCode = sh.replace(/^[ \t]*#.*$/gm, '');
+  const usesTalkingClips = /\b(talking|splice|cropped)\s+"\$C\//.test(shCode);
+  const hasSts = /clips\/sts|audio-post\.mjs\s+sts|\bsts\s+--in/.test(shCode);
+  if (usesTalkingClips && !hasSts)
+    F('may talking clip pero WALANG STS sa daan. Boses ni Veo ang lalabas, hindi si Marvin. Ito mismo ang nakalusot sa KM-004 hanggang sa tainga ni Neil. Ayos:\n     for f in r1 r2 r3 r4 r5; do node clients/oceanides/kuya-marvin/test-rigs/audio-post.mjs sts --in <ad>/clips/$f.mp4 --out <ad>/clips/sts/$f.mp4 --stability natural; done\n     tapos ituro ang C= sa clips/sts');
+  else if (usesTalkingClips) P('dumaan sa STS ang talking clips');
+
   if (!/flash|whoosh|sfx|SFX/i.test(sh)) F('walang transition SFX o flash. Aral #7: flash pagkatapos ng hook at kada pangalawang cut, max 3.');
   else P('may transition SFX');
 
