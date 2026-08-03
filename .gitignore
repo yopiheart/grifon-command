@@ -79,3 +79,15 @@ clients/oceanides/kuya-marvin/ads/*/overlays/*.mov
 
 # Kuya Gabriel ad edits — intermediates, rebuildable via ads/*/build-cut.sh
 clients/oceanides/kuya-gabriel/ads/*/edit/
+
+# Sentinel na pansamantalang pinapatulog ang ad-spend-gate.sh (tingnan ang hook).
+# Hinding-hindi naka-commit: ang suspensyon ay dapat mamatay kasama ng makina.
+.claude/.ad-spend-gate-suspended
+
+# Tonight-only na permission grant para sa Meta Ads (tingnan ang comment sa loob).
+# Local lang: dapat syang mamatay kasama ng makina, hindi mabuhay sa repo.
+.claude/settings.local.json
+
+# Pansamantalang hosting ng ad video para makuha ito ng Meta sa public URL.
+# Hindi kailanman naka-commit: nasa clients/oceanides/ na ang totoong kopya.
+funnels/oceanides-price-page/public/*.mp4
