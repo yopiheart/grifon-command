@@ -26,13 +26,34 @@
   "maxPaidRolls": 5,
 
   "plates": [
-    { "id": "s1", "location": "jobsite-a", "framing": "close head-and-shoulders, eye-level", "usedIn": "beat 1 (hook) at beat 10 (CTA) — sinadyang bookend" },
-    { "id": "s2", "location": "jobsite-a", "framing": "medium chest-up, slight-low" },
-    { "id": "s3", "location": "jobsite-a", "framing": "tight face, eye-level" },
-    { "id": "s4", "location": "jobsite-a", "framing": "medium chest-up, eye-level" }
+    { "id": "s1", "location": "jobsite-a", "framing": "close head-and-shoulders, eye-level", "headroom": "MAY HEADROOM — nasa ibabang 2/3 ng frame si Marvin, malinis ang y=288-600 para sa hook stack", "usedIn": "beat 1 (hook) at beat 10 (CTA) — sinadyang bookend" },
+    { "id": "s2", "location": "jobsite-a", "framing": "medium chest-up, slight-low", "headroom": "normal — walang big text sa beat 3" },
+    { "id": "s3", "location": "jobsite-a", "framing": "tight face, eye-level", "headroom": "normal — walang big text sa beat 6" },
+    { "id": "s4", "location": "jobsite-a", "framing": "medium chest-up, eye-level", "headroom": "🔴 MAY HEADROOM — dito nakaupo ang `UUWI KAMI.` slam. Nasa ibabang 2/3 si Marvin, malinis ang y=288-600." }
   ],
 
-  "jobsiteA": "Likod-bahay: bukas na concrete septic access cover sa lupa, semento at halaman sa paligid, pader ng bahay sa likod. NAPILI NI NEIL 2026-08-03 para sa GB-001, at pareho ang dahilan dito: tumutugma sa hook (puno na ang septic tank) at zero na panganib ng imbentong asul na tanker — hard ban sa clients/oceanides/DESIGN.md. WALANG SASAKYAN sa frame ng lahat ng apat na plate.",
+  "plateHeadroomNote": "🔴 ITO ANG DOKTRINA NG SKILL.MD, AT LIBRE SYA NGAYON KASI WALA PA ANG PLATE. Sa masikip na close-up ay nasa y≈340-380 ang ulo, kaya 52px lang ang malinaw sa pagitan ng feed-safe top (285) at ng buhok — kulang para sa 2-linyang stack. 'Ang totoong ayos ay nasa PLATE, hindi sa text: i-frame ang plate na mas MABABA si Marvin para may tunay na headroom ang text.' Dalawang plate lang ang kailangan nito (s1, s4) dahil dalawang talking beat lang ang may big text. Kapag naka-render na ang plate, ang natitirang lunas ay ibaba ang stack hanggang sa buhok na lang ang sinasagi — mas mahina yun. Kaya ngayon ito dinidisenyo.",
+
+  "overlayText": [
+    { "beat": 1,  "text": "PUNO NA.\nHINDI BARADO.",   "over": "s1 talking",        "y": 288, "bakitMayKahuluganKapagMute": "Ang diagnosis mismo. Frame 0, walang fade — sya ang kinukuha ni Meta bilang thumbnail." },
+    { "beat": 2,  "text": "HINDI TOILET ANG SIRA.",     "over": "b1 plunger b-roll", "y": 320, "bakitMayKahuluganKapagMute": "Ang mekanismo. Hindi pag-uulit ng linya 1 — dinadala nya ang INSIGHT na hindi binibigkas. Malapit sa verbatim ng page: 'ang tinitingnan namin ay ang tangke, hindi ang toilet.'" },
+    { "beat": 4,  "text": "IBA ANG RESIBO.",            "over": "b2 phone b-roll",   "y": 320, "bakitMayKahuluganKapagMute": "Ang buong takot sa tatlong salita. Compression ng linya 3, hindi kopya." },
+    { "beat": 7,  "text": "NAKASULAT NA.",              "over": "screen recording",  "y": 320, "bakitMayKahuluganKapagMute": "Ang patunay, kasabay ng totoong page sa likod. Walang salita ang beat na to kaya ang teksto lang ang nagsasalita." },
+    { "beat": 9,  "text": "UUWI KAMI.",                 "over": "s4 talking",        "y": 320, "bakitMayKahuluganKapagMute": "Ang disarm. Ang septic company na nagsasabing uuwi kami nang walang bayad ay humihinto ng scroll nang mag-isa. Ito ang pinakamalakas na slam sa buong ad." },
+    { "beat": 11, "text": "OCEANIDESPH.COM",            "over": "end card",          "y": 320, "bakitMayKahuluganKapagMute": "Meron na sa GB-001 end card." }
+  ],
+
+  "overlayRules": "🔴 ISANG TEXT LAYER LANG SA ISANG PAGKAKATAON. Kapag nasa itaas ang big text, HUMIHINTO ang caption sa buong window nun. Ang dalawang text layer na magkasabay ay ingay, hindi diin — dyan mismo nasisira ang ideyang to kapag hindi dinisiplina. Iba pang tuntunin: (1) max 4 na salita, Anton caps, OUTLINE hindi box — P2, 8 corroborations, at kontra sa `bars`/`classic`; (2) hindi kailanman tumatakip sa mukha, kahit sa push-in — i-frame-strip muna ang BUONG clip bago ilagay; (3) loob ng y=285-1635; (4) hindi pag-uulit ng binibigkas na linya, may sarili syang dalang kahulugan (lesson 15); (5) apat lang ang BAGO (beat 2, 4, 7, 9) — kapag lahat ng beat ay may slam, wala nang slam.",
+
+  "overlayCost": "$0. Hyperframes HTML o drawtext, walang dagdag na Veo. Ang tanging bayad na epekto ay ZERO — headroom lang ang binabago sa dalawang plate, at hindi pa naman sila gawa.",
+
+  "jobsiteA": "Likod-bahay: bukas na concrete septic access cover sa lupa, mainit na semento, luntiang halaman at saging sa paligid, pader ng bahay sa likod, malalim na asul na langit na may puting cumulus sa itaas. NAPILI NI NEIL 2026-08-03 para sa GB-001, at pareho ang dahilan dito: tumutugma sa hook (puno na ang septic tank) at zero na panganib ng imbentong asul na tanker — hard ban sa clients/oceanides/DESIGN.md. WALANG SASAKYAN sa frame ng lahat ng apat na plate.",
+
+  "lightingRegister": "🔴 DAYLIGHT MASTER — `clients/oceanides/kuya-marvin/daylight-register/marvin-daylight-master.png` (APPROVED ni Neil 2026-07-28). ITO ANG NAITAMA NOONG 2026-08-03: kinopya ko sana ang lighting rule ni GABRIEL ('isang maulap na araw, isang ilaw') papunta sa spec ni Marvin, at yun mismo ang gray-on-gray na tinanggihan ni Neil — *'parang gray pa rin, sakit sa mata.'* MAGKAIBA SILA AT HINDI PWEDENG PAGPALITIN. Ang batas ay KULAY ≠ ILAW: (a) ang ILAW SA MUKHA NYA ay malambot at pantay, open shade — walang matigas na anino, walang sun patch sa balat, walang rim light, walang golden-hour orange; (b) ang ESKENA sa paligid nya ay maliwanag at makulay. Ang labas ng Pilipinas ay HINDI gray: malalim na asul na langit, puting cumulus, saging at niyog, mainit na semento. Totoong kulay yun, hindi stylization.",
+
+  "lightingPromptRule": "🔴 POSITIBONG TARGET MUNA, SAKA ANG BAWAL. Ang stack na purong bawal ('walang golden hour, walang sun patch, walang hard side light, walang rim light') na walang kasamang target ay sinasagot ng model sa pamamagitan ng PAGBAWAS NG LIWANAG — underexposed at malamig ang labas, at yun mismo ang hitsurang ayaw ni Neil. Ang tamang pagkakasunod: 'maliwanag na tropikal na araw, bukas na langit, well exposed, neutral white balance, si Marvin nakatayo sa open shade' MUNA, tapos ang mga bawal sa ilalim nun.",
+
+  "wardrobe": "Navy activewear tee na may maliit na light-blue `#38B6FF` na accent sa balikat. 🔴 HUWAG hihingin ang 'plain navy' — tahimik nitong binubura ang kulay na bahagi ng approved look (marvin-avatar taste profile).",
 
   "beatMap": [
     { "beat": 1,  "plate": "s1",               "roll": 1,           "says": "hook",                        "visual": "talking" },

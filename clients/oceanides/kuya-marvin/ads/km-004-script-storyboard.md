@@ -71,22 +71,62 @@ Pangako sya ng totoong kompanya, kaya sayo ang huling salita.
 
 ## Storyboard — labing-isang beat
 
-| # | t | Nakikita | Sinasabi | Roll | Gastos |
-| --- | --- | --- | --- | --- | --- |
-| 1 | 0.0-3.4 | **s1** talking, close, eye-level | hook | Veo 1 | $1 |
-| 2 | 3.4-6.6 | **b1** kamay na nagpaplunger, LUBOG sa tubig | linya 1 | clone TTS | $0 |
-| 3 | 6.6-10.2 | **s2** talking, medium chest-up, slight-low | linya 2 | Veo 2 | $1 |
-| 4 | 10.2-13.6 | **b2** phone sa tenga, tupi ng papel sa ledge | linya 3 | clone TTS | $0 |
-| 5 | 13.6-16.6 | **quote card** na may totoong sinabi ng customer | linya 4 | clone TTS | $0 |
-| 6 | 16.6-20.0 | **s3** talking, tight face, eye-level | linya 5 | Veo 3 | $1 |
-| 7 | 20.0-21.2 | **screen recording**, 1.2s na sulyap sa totoong page | walang salita | — | $0 |
-| 8 | 21.2-24.4 | **ticket card**, ₱5,000 + apat na dagdag, nababasa | linya 6 | clone TTS | $0 |
-| 9 | 24.4-28.0 | **s4** talking, medium chest-up, eye-level | linya 7 | Veo 4 | $1 |
-| 10 | 28.0-31.0 | **s1** talking, close, eye-level (bookend) | linya 8 | Veo 5 | $1 |
-| 11 | 31.0-32.4 | **end card**, logo + OCEANIDESPH.COM | walang salita | — | $0 |
+| # | t | Nakikita | Sinasabi | BIG TEXT | Roll | Gastos |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | 0.0-3.4 | **s1** talking, close, eye-level | hook | `PUNO NA.` / `HINDI BARADO.` | Veo 1 | $1 |
+| 2 | 3.4-6.6 | **b1** kamay na nagpaplunger, LUBOG sa tubig | linya 1 | 🆕 `HINDI TOILET ANG SIRA.` | clone TTS | $0 |
+| 3 | 6.6-10.2 | **s2** talking, medium chest-up, slight-low | linya 2 | — | Veo 2 | $1 |
+| 4 | 10.2-13.6 | **b2** phone sa tenga, tupi ng papel sa ledge | linya 3 | 🆕 `IBA ANG RESIBO.` | clone TTS | $0 |
+| 5 | 13.6-16.6 | **quote card** na may totoong sinabi ng customer | linya 4 | (card mismo) | clone TTS | $0 |
+| 6 | 16.6-20.0 | **s3** talking, tight face, eye-level | linya 5 | — | Veo 3 | $1 |
+| 7 | 20.0-21.2 | **screen recording**, 1.2s na sulyap sa totoong page | walang salita | 🆕 `NAKASULAT NA.` | — | $0 |
+| 8 | 21.2-24.4 | **ticket card**, ₱5,000 + apat na dagdag, nababasa | linya 6 | (card mismo) | clone TTS | $0 |
+| 9 | 24.4-28.0 | **s4** talking, medium chest-up, eye-level | linya 7 | 🆕 `UUWI KAMI.` | Veo 4 | $1 |
+| 10 | 28.0-31.0 | **s1** talking, close, eye-level (bookend) | linya 8 | — | Veo 5 | $1 |
+| 11 | 31.0-32.4 | **end card**, logo + OCEANIDESPH.COM | walang salita | `OCEANIDESPH.COM` | — | $0 |
 
 Flash 0.07s + whoosh sa beat 4, 7 at 9. Music 0.20. Target na haba matapos ang
 speech-cut: **26-30s**. Kung lumagpas, 1.05-1.12x speedup, hindi pagputol ng beat.
+
+---
+
+## Ang big text sa ibang scene (idea ni Neil, 2026-08-03) — pasok, at may butas nga
+
+Tama ang hinala mo. **Malaking bahagi ng feed views ay nagsisimulang TAHIMIK**
+(P7, 11 corroborations). Sa lumang hugis, ang beat 2 hanggang 10 ay maliit na
+caption lang sa ibaba ang dala. Kung naka-mute, halos walang mababasa.
+
+**Apat na bagong slam, lahat $0:**
+
+| Beat | Big text | Bakit sya may kahulugan kapag mute |
+| --- | --- | --- |
+| 2 | `HINDI TOILET ANG SIRA.` | Ang mekanismo. Hindi pag-uulit ng linya, dinadala nya ang insight na HINDI binibigkas. Malapit sa verbatim ng page. |
+| 4 | `IBA ANG RESIBO.` | Ang buong takot sa tatlong salita. |
+| 7 | `NAKASULAT NA.` | Walang salita ang beat na to. Ang teksto lang ang nagsasalita, kasabay ng totoong page sa likod. |
+| 9 | `UUWI KAMI.` | **Ang pinakamalakas.** Ang septic company na nagsasabing uuwi kami nang walang bayad ay humihinto ng scroll mag-isa. |
+
+### Ang panganib, at kung bakit ngayon eksakto ang tamang oras
+
+Dalawang bagay ang sumisira sa ideyang to kapag hindi dinisiplina:
+
+1. **Dalawang text layer na magkasabay ay ingay, hindi diin.** Kaya ang batas:
+   **kapag nasa itaas ang big text, humihinto ang caption sa buong window nun.**
+   Isang layer lang sa isang pagkakataon.
+
+2. 🔴 **Walang mapaglagyan ng big text sa isang masikip na talking shot.** Sabi
+   mismo ng skill: sa close-up ay nasa y≈340-380 ang ulo, kaya **52px lang** ang
+   malinaw sa pagitan ng feed-safe top (285) at ng buhok nya. Kulang para sa
+   2-linyang stack, at bawal tumakip sa mukha.
+
+   Ang lunas ay **nasa PLATE, hindi sa text.** I-frame si Marvin na mas mababa
+   para may tunay na headroom (y 288-600) ang teksto. **At libre sya ngayon
+   dahil hindi pa gawa ang plate.** Kapag na-render na, ang natitirang lunas ay
+   ibaba ang stack hanggang buhok na lang ang sinasagi, at mas mahina yun.
+
+Kaya dalawang plate lang ang binago: **s1** (hook) at **s4** (`UUWI KAMI.`). Yun
+lang ang dalawang talking beat na may big text. Ang s2 at s3 ay normal na framing.
+
+**Apat lang ang bago, sinadya. Kapag lahat ng beat ay may slam, wala nang slam.**
 
 ---
 
@@ -141,11 +181,34 @@ bagay na baligtad sa kakagawa lang natin, at dito nagkakamali ang model:
 
 - **Fade ang buhok ni Marvin.** Kay Gabriel ang makapal na sinuklay paurong.
 - **May relo si Marvin.** Kay Gabriel ang wristband at hikaw. Walang relo si Gabriel.
-- 🔴 **Walang ngiti, at mas mahigpit ito kay Marvin** dahil sa tooth-gap. Ang emosyon
-  ay dala ng boses, hindi ng mukha (`PACING Fix 3`).
+- **Walang ngiti sa ad na to** (expression lock — ang emosyon ay dala ng boses,
+  `PACING Fix 3`). Pero tandaan: ang tooth gap ay hindi iniiwasan sa pamamagitan
+  ng pag-iwas sa ngiti, may sarili syang override sa skill (*complete, even teeth*).
+- **Navy tee na may `#38B6FF` na accent sa balikat.** Huwag hihingin ang *plain
+  navy*, tahimik nitong binubura ang kulay na bahagi ng approved look.
 
-Isang maulap na araw, isang ilaw, walang sasakyan sa frame, puting cab lang kung
-sakali. Walang asul na tanker, hard ban yun.
+Walang sasakyan sa frame. Kung sakali, puting cab + silver aluminum closed van.
+Walang asul na tanker, hard ban yun.
+
+### 🔴 Ilaw — naitama ito matapos mong ituro (2026-08-03)
+
+Kinopya ko sana ang lighting rule ni **Gabriel** (*"isang maulap na araw, isang
+ilaw"*) papunta sa spec ni Marvin. **Mali yun**, at yun mismo ang tinanggihan mo
+noong 2026-07-28: *"parang gray pa rin, sakit sa mata."*
+
+Ang tama ay ang **daylight master** (`daylight-register/marvin-daylight-master.png`,
+approved) at ang batas nyang **KULAY ≠ ILAW**:
+
+| | |
+| --- | --- |
+| **Ilaw sa MUKHA nya** | Malambot, pantay, open shade. Walang matigas na anino, walang sun patch, walang rim light, walang golden-hour orange. |
+| **Ang ESKENA sa paligid** | **Maliwanag at makulay.** Malalim na asul na langit, puting cumulus, saging at halaman, mainit na semento. |
+
+Ang labas ng Pilipinas ay hindi gray. Totoong kulay yun, hindi stylization.
+
+At isang tuntunin sa prompt na galing mismo sa pagkakamaling yun: **positibong
+target muna, saka ang bawal.** Ang purong listahan ng bawal ay sinasagot ng model
+sa pamamagitan ng pagbawas ng liwanag, at underexposed ang labas.
 
 ---
 
