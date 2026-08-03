@@ -37,12 +37,21 @@ interface Lead {
 /** Ang order dito ang order ng paglalakbay ng lead. Huwag baguhin nang basta. */
 const STATUS_ORDER: Status[] = ['new', 'tinawagan', 'booked', 'tapos', 'hindi_natuloy'];
 
+// 🔴 ENGLISH ANG PAGE NA TO, TAGLISH ANG LANDING PAGE. Sinadya, hindi sablay
+// (Neil, 2026-08-04). Magkaibang tao ang binabasa nila: ang landing page ay para
+// sa may bahay na 35-64 na Pinoy, ang page na to ay panloob na kasangkapan nina
+// Zam at Neil. Simpleng English, grade-4 na antas. Huwag mo syang "ayusin"
+// pabalik sa Taglish sa pamamagitan ng pagturo sa landing page — magkaibang
+// surface sila, magkaibang mambabasa.
+//
+// Ang mga DB value (`new`, `tinawagan`, `booked`...) ay hindi ginagalaw: nasa
+// talaan na sila at ang pagpapalit nun ay migration, hindi label change.
 const STATUS_LABEL: Record<Status, string> = {
-  new: 'Bago',
-  tinawagan: 'Tinawagan',
-  booked: 'Naka-book',
-  tapos: 'Tapos',
-  hindi_natuloy: 'Hindi natuloy',
+  new: 'New',
+  tinawagan: 'Called',
+  booked: 'Booked',
+  tapos: 'Done',
+  hindi_natuloy: 'Cancelled',
 };
 
 // Amber = "tingnan mo ito", hindi status (DESIGN.md). Kaya ang amber ay nasa
@@ -57,10 +66,10 @@ const STATUS_TONE: Record<Status, string> = {
 };
 
 const QUALIFIER_LABEL: Record<string, string> = {
-  tank_location: 'Tangke',
-  role: 'Sino sya',
-  city: 'Siyudad',
-  property: 'Property',
+  tank_location: 'Tank',
+  role: 'Who',
+  city: 'City',
+  property: 'Place',
 };
 
 const peso = (n: number): string =>
@@ -191,7 +200,7 @@ const LeadCard: React.FC<{
       <div className="flex items-start justify-between gap-3 p-4">
         <div className="min-w-0">
           <h2 className="truncate font-display text-[1.4rem] leading-tight text-brand-on-surface">
-            {lead.name?.trim() || 'Walang pangalan'}
+            {lead.name?.trim() || 'No name'}
           </h2>
           <p className="mt-1 font-accent text-[12px] text-brand-on-surface-dim">
             {when.toLocaleDateString('en-PH', { month: 'short', day: 'numeric' })}
@@ -218,7 +227,7 @@ const LeadCard: React.FC<{
             href={`tel:${lead.phone.replace(/\s+/g, '')}`}
             className="min-w-0 flex-1 truncate rounded-brand bg-brand-primary px-3 py-2.5 text-center font-display text-[1rem] uppercase leading-none text-[#0b1b33]"
           >
-            Tawagan · {lead.phone}
+            Call · {lead.phone}
           </a>
         )}
         <button
@@ -226,7 +235,7 @@ const LeadCard: React.FC<{
           onClick={() => setOpen((v) => !v)}
           className="shrink-0 rounded-brand border-2 border-brand-card-border px-3 py-2.5 text-[11px] font-black uppercase leading-none tracking-[1px] text-brand-on-surface-muted"
         >
-          {open ? 'Isara' : 'Buksan'}
+          {open ? 'Close' : 'Open'}
         </button>
       </div>
 
@@ -241,7 +250,7 @@ const LeadCard: React.FC<{
           {!lead.consent && (
             <Row k="Consent">
               <span className="text-brand-on-surface-dim">
-                Hindi nya tinick. Pwede pa ring tawagan para sa booking.
+                No tick. You can still call them about the booking.
               </span>
             </Row>
           )}
@@ -265,7 +274,7 @@ const LeadCard: React.FC<{
 
           <div className="mt-4 grid gap-3">
             <Field
-              label="Magkano (₱)"
+              label="How much (₱)"
               placeholder="5000"
               inputMode="decimal"
               value={lead.amount === null ? '' : String(lead.amount)}
@@ -278,13 +287,13 @@ const LeadCard: React.FC<{
             />
             <Field
               label="Address"
-              placeholder="Saan sila nakatira"
+              placeholder="Where they live"
               value={lead.address ?? ''}
               onCommit={(v) => onPatch(lead.id, { address: v.trim() || null })}
             />
             <Field
               label="Notes"
-              placeholder="Kahit ano"
+              placeholder="Anything you want to remember"
               multiline
               value={lead.notes ?? ''}
               onCommit={(v) => onPatch(lead.id, { notes: v.trim() || null })}
@@ -324,10 +333,10 @@ const Login: React.FC<{ onIn: () => void }> = ({ onIn }) => {
           Oceanides
         </p>
         <h1 className="mt-3 font-display text-[2.5rem] uppercase leading-none text-brand-on-surface">
-          Talaan ng booking
+          Booking list
         </h1>
         <p className="mt-3 text-[15px] leading-relaxed text-brand-on-surface-muted">
-          May pangalan at numero ng totoong tao dito, kaya may password.
+          Real names and numbers are here. That is why it has a password.
         </p>
         <input
           type="password"
@@ -339,7 +348,7 @@ const Login: React.FC<{ onIn: () => void }> = ({ onIn }) => {
         />
         {err && (
           <p className="mt-3 text-[14px] font-bold text-brand-primary">
-            Mali ang password. Subukan mo ulit.
+            Wrong password. Please try again.
           </p>
         )}
         <button
@@ -347,7 +356,7 @@ const Login: React.FC<{ onIn: () => void }> = ({ onIn }) => {
           disabled={busy}
           className="mt-4 w-full rounded-brand bg-brand-primary px-4 py-3.5 font-display text-[1.3rem] uppercase leading-none text-[#0b1b33] disabled:opacity-60"
         >
-          {busy ? 'Sandali' : 'Pasok'}
+          {busy ? 'Wait' : 'Go in'}
         </button>
       </form>
     </div>
@@ -415,7 +424,7 @@ export const Ops: React.FC = () => {
   if (authed === null) {
     return (
       <p className="p-8 font-accent text-[12px] uppercase tracking-[2px] text-brand-on-surface-dim">
-        Binubuksan
+        Opening
       </p>
     );
   }
@@ -429,7 +438,7 @@ export const Ops: React.FC = () => {
             Oceanides
           </p>
           <h1 className="mt-1.5 font-display text-[2rem] uppercase leading-none text-brand-on-surface">
-            Talaan ng booking
+            Booking list
           </h1>
         </div>
         <button
@@ -442,10 +451,10 @@ export const Ops: React.FC = () => {
       </header>
 
       <div className="mt-6 grid grid-cols-2 gap-2.5">
-        <StatTile label="Ngayong araw" value={String(stats.today)} />
-        <StatTile label="Pitong araw" value={String(stats.week)} />
-        <StatTile label="Naka-book" value={String(stats.booked)} accent />
-        <StatTile label="Kabuuang benta" value={peso(stats.sales)} accent />
+        <StatTile label="Today" value={String(stats.today)} />
+        <StatTile label="Last 7 days" value={String(stats.week)} />
+        <StatTile label="Booked" value={String(stats.booked)} accent />
+        <StatTile label="Total sales" value={peso(stats.sales)} accent />
       </div>
 
       <div className="mt-6 flex flex-wrap gap-1.5">
@@ -460,7 +469,7 @@ export const Ops: React.FC = () => {
                 : 'border-brand-card-border text-brand-on-surface-dim'
             }`}
           >
-            {s === 'lahat' ? 'Lahat' : STATUS_LABEL[s]}
+            {s === 'lahat' ? 'All' : STATUS_LABEL[s]}
           </button>
         ))}
       </div>
@@ -468,7 +477,7 @@ export const Ops: React.FC = () => {
       <div className="mt-5 grid gap-3">
         {shown.length === 0 ? (
           <p className="rounded-brand border-2 border-dashed border-brand-card-border px-4 py-8 text-center text-[15px] text-brand-on-surface-dim">
-            {leads === null ? 'Kinukuha pa' : 'Wala pang lead dito.'}
+            {leads === null ? 'Loading' : 'No leads here yet.'}
           </p>
         ) : (
           shown.map((l) => <LeadCard key={l.id} lead={l} onPatch={patch} />)
@@ -476,10 +485,10 @@ export const Ops: React.FC = () => {
       </div>
 
       <p className="mt-10 border-t border-dashed border-brand-hairline pt-4 text-[13px] leading-relaxed text-brand-on-surface-dim">
-        Ang halaga at ang pinanggalingang ad ang magsasabi kung aling ad ang may
-        totoong booking, hindi lang kung alin ang may murang lead. Punan mo ang
-        <span className="text-brand-on-surface-muted"> Magkano </span>
-        kada tapos na trabaho.
+        Fill in
+        <span className="text-brand-on-surface-muted"> How much </span>
+        after every job you finish. That number plus the ad name tells us which ad
+        brings real jobs, not just cheap leads.
       </p>
     </div>
   );
