@@ -48,6 +48,18 @@
             "command": "bash .claude/hooks/veo-render-gate.sh"
           }
         ]
+      },
+      {
+        "matcher": "Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "bash",
+            "command": "bash .claude/hooks/lock-sync-gate.sh",
+            "timeout": 180,
+            "statusMessage": "lock-sync-gate: chine-check ang package-lock.json bago ang commit"
+          }
+        ]
       }
     ],
     "UserPromptSubmit": [

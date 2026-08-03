@@ -343,3 +343,27 @@ napatakbo ang `render_audit.mjs`.
     1–3 word chunks kada **0.4–0.6s** habang ang shot ay humahawak ng 4–7s. Kapag
     "mabagal" ang pakiramdam ng ad, **hatiin muna ang caption chunks** bago mag-isip ng
     mas maraming eksena o mas mabilis na cut. Libre ito at hindi ginagalaw ang render.
+
+### GB-001 lessons (2026-08-03)
+
+17. **Ang screen-recording/scroll beat ay PATUNAY, hindi babasahin — 1.5s max,
+    tapos putol sa nababasang card.** Ang GB-001 v2 ay may 5.6s na tuloy-tuloy na
+    page scroll na walang makakabasa sa 375px (Neil). Ang ayos: mabilis na glance
+    ng totoong page (pruweba na nakasulat), tapos hard cut sa HTML/ticket card na
+    dala ang mismong nilalaman sa readable na laki. Bonus na geometry: ang
+    **1080×1350 (4:5) na asset, naka-center sa y=285 ng 1080×1920**, ay EKSAKTONG
+    pumupuno sa feed-safe band — buo sya sa 4:5 feed at may malinis na padding sa
+    9:16. **Verifier na kasama na ng bawat cut: i-scale ang bawat text beat sa
+    375px at basahin mo mismo** — video man o static, bago kay Neil.
+18. **Walang caption chunk na tumatawid sa kuwit.** Ang kuwit ay hininga; ang
+    chunk na pinagdidikit ang dalawang parirala ("PLUNGER BALIK") ay nababasang
+    mali kahit hindi masabi kung bakit. Reference implementation: gb-001
+    `captions.mjs` (phrase-aware chunking + merge guard). Kopyahin sa bawat
+    susunod na ad; ang 0.4s floor merge ay sa LOOB lang ng parirala.
+19. **Dalawang static sa iisang ad set = dalawang MAGKAIBANG anyo.** Ang
+    Andromeda retrieval engine ay nagbabasa ng dalawang kaparehong typographic
+    ticket bilang cosmetic dupes at pineprisyo ang CPM nang ganoon. Ang lineup
+    ng OCEANIDES-PRICE-01: papel na ticket (presyo) + navy na litratong pruweba
+    (warranty) — magkaibang trabaho, magkaibang itsura. Kapag legal/warranty
+    wording ang laman, VERBATIM sa page ang kopya, kasama ang HINDI sakop —
+    bawal mag-imbento ng pangako para sa totoong kompanya.
