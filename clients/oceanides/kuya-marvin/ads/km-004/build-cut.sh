@@ -33,7 +33,19 @@
 set -euo pipefail
 
 AD="clients/oceanides/kuya-marvin/ads/km-004"
-C="$AD/clips"; B="$AD/broll"; O="$AD/overlays"; P="$AD/captions"; A="$AD/audio"
+# 🔴 `clips/sts`, HINDI `clips` (2026-08-04). Ang hilaw na Veo clip ay may
+# SARILING synthetic na boses; ang STS pass ang nagpapalit nun ng totoong clone
+# ni Marvin. Hindi ito natakbo sa unang build, kaya NAGHAHALINHINAN ang dalawang
+# boses sa buong ad — boses ni Veo ang lahat ng talking beat (r1-r5) at boses ni
+# Marvin lang ang apat na VO-over-still. Narinig ito ni Neil sa 14.9s, kung saan
+# tumatawid ang quote-card VO papunta sa r3.
+#
+# Audio lang ang hinahawakan ng STS at eksaktong 8.000s pa rin ang bawat clip
+# pagkatapos, kaya walang nagbabago sa trims, sa speechmap, at sa caption timing.
+# Kung mawala ang folder na to, patakbuhin:
+#   for f in r1 r2 r3 r4 r5; do node clients/oceanides/kuya-marvin/test-rigs/audio-post.mjs \
+#     sts --in <ad>/clips/$f.mp4 --out <ad>/clips/sts/$f.mp4 --stability natural; done
+C="$AD/clips/sts"; B="$AD/broll"; O="$AD/overlays"; P="$AD/captions"; A="$AD/audio"
 E="$AD/edit"; M="api/_lib/assets/music"; S="api/_lib/assets/sfx"
 mkdir -p "$E"
 
