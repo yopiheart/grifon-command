@@ -17,6 +17,14 @@
 #     sa buong 8s at ~7% na lang matapos ang speech-cut — nasa ilalim ng makikita.
 #     Kaya ang zoom ay dito na ginagawa, kung saan tayo ang may hawak ng lakas.
 #
+# ANG PAGKAKAIBA SA v2 (tatlong bagay, Neil 2026-08-03, lahat $0)
+#  a. Beat 6: hindi na 5.6s na scroll na walang makakabasa sa 375px — 1.5s na
+#     totoong page bilang patunay, tapos putol sa price-addons-ticket na
+#     NABABASA (see section 3). Caption sa proof lang, hindi sa ticket.
+#  b. Caption chunking: ang kuwit ay hangganan na — walang chunk na tumatawid
+#     sa kuwit (captions.mjs).
+#  c. May Oceanides logo na ang end card (overlays/endcard.html).
+#
 # ANG NGITI, AT KUNG PAANO SYA IWINASAN NANG WALANG GASTOS
 # Ngumiti si Gabriel sa r2 at r3 — hard rule yun na sarili nyang desisyon, at
 # tatlong beses syang ngumiti kahit hinigpitan ang prompt. Dense sampling ang
@@ -38,7 +46,7 @@ FONT="api/_lib/assets/fonts/Anton-Regular.ttf"
 MUSIC="api/_lib/assets/music/testimonial.mp3"
 WHOOSH="api/_lib/assets/sfx/whoosh-v2.mp3"
 POP="api/_lib/assets/sfx/pop-v3.mp3"
-OUT="$AD/GB-001-AD-v2.mp4"
+OUT="$AD/GB-001-AD-v3.mp4"
 mkdir -p "$E"
 
 [ -f "$FONT" ] || { echo "ERROR: patakbuhin mula sa repo root" >&2; exit 1; }
@@ -103,15 +111,31 @@ echo "== b-roll push-in =="
 still_push "$B/b1.png" "$E/b2v.mp4" "$D2" 1.14
 still_push "$B/b2.png" "$E/b4v.mp4" "$D4" 1.14
 
-# --- 3. SCREEN SCROLL (beat 6) ----------------------------------------------
-# Ang totoong page, hindi generation. Humihinto muna sa ticket bago mag-scroll —
-# ang unang bersyon ay dumaan sa presyo nang napakabilis at nagtapos sa puting
-# espasyo.
-echo "== screen scroll =="
-SA=200; SB=4600; HOLD=1.4
-ffmpeg -y -v error -loop 1 -framerate 30 -t "$D6" -i .tmp/page-full.png \
-  -vf "scale=1080:-1,crop=1080:1920:0:'${SA}+min(max(0\,(t-${HOLD}))/(${D6}-${HOLD})\,1)*(${SB}-${SA})',fps=30,setsar=1" \
-  -an $V "$E/b6v.mp4"
+# --- 3. BEAT 6: PAGE PROOF + TICKET ------------------------------------------
+# Ang v2 ay 5.6s na tuloy-tuloy na scroll — 5.6 segundo ng tekstong walang
+# makakabasa sa 375px (Neil, 2026-08-03). Ang ayos: 1.5s ng totoong page bilang
+# PATUNAY (hindi babasahin, titingnan lang na totoo), tapos putol sa approved na
+# price-addons-ticket — HTML ang pinagmulan nya (templates/price-addons-ticket
+# .html) kaya letter-perfect. Sa 1080x1350 na naka-center sa y=285 ay eksakto
+# syang pumupuno sa feed-safe band: buo sya sa 4:5 feed AT sa 9:16. Banayad na
+# push-in para may galaw ang beat (pagkakaiba #6 ng v2).
+echo "== beat 6: page proof + ticket =="
+PROOF=1.5
+TICKET="clients/oceanides/out/price-addons-ticket.png"
+[ -f "$TICKET" ] || { echo "ERROR: walang $TICKET" >&2; exit 1; }
+[ -f .tmp/page-full.png ] || { echo "ERROR: walang .tmp/page-full.png — kunan ulit ang oceanidesph.com (1080 wide, full page)" >&2; exit 1; }
+D6T=$(awk -v d="$D6" -v p="$PROOF" 'BEGIN{printf "%.3f", d-p}')
+# (a) mabilis na scroll ng totoong page — patunay na nakasulat, hindi pagbabasa
+ffmpeg -y -v error -loop 1 -framerate 30 -t "$PROOF" -i .tmp/page-full.png \
+  -vf "scale=1080:-1,crop=1080:1920:0:'200+min(t/${PROOF}\,1)*2000',fps=30,setsar=1" \
+  -an $V "$E/b6p.mp4"
+# (b) ang ticket, nababasa, may banayad na push-in
+TFRAMES=$(awk -v d="$D6T" 'BEGIN{printf "%d", d*30}')
+ffmpeg -y -v error -loop 1 -framerate 30 -t "$D6T" -i "$TICKET" \
+  -vf "scale=1080:1350,pad=1080:1920:0:285:color=0xF4F6FA,zoompan=z='1+0.05*on/${TFRAMES}':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1080x1920:fps=30,setsar=1" \
+  -an $V "$E/b6t.mp4"
+ffmpeg -y -v error -i "$E/b6p.mp4" -i "$E/b6t.mp4" \
+  -filter_complex "[0:v][1:v]concat=n=2:v=1:a=0[v]" -map "[v]" -an $V "$E/b6v.mp4"
 
 # --- 4. PAGDIKIT NG BOSES SA LARAWAN ----------------------------------------
 mux() { ffmpeg -y -v error -i "$1" -i "$2" -map 0:v -map 1:a -shortest $V $AAC "$3"; }
@@ -140,7 +164,10 @@ capbeat "$E/b2.mp4" "$E/b2c.mp4" "Kahit anong plunger, balik nang balik ang prob
 capbeat "$E/b3v.mp4" "$E/b3c.mp4" "Pero ang mas nakakatakot, yung singil pagdating ng truck."
 capbeat "$E/b4.mp4" "$E/b4c.mp4" "Isa ang presyo sa phone, iba na sa receipt."
 cp "$E/b5.mp4" "$E/b5c.mp4"   # quote card — ang card mismo ang teksto
-capbeat "$E/b6.mp4" "$E/b6c.mp4" "Kaya nasa page na ang buong presyo, nakasulat. Pati ang mga dagdag na itinatago ng iba."
+# Beat 6: caption LANG sa 1.5s na page proof; kapag nasa ticket na, ang ticket
+# mismo ang teksto (same na rason ng beat 5) at ang karaoke sa ibabaw nya ay
+# tatakip sa mismong binabasa.
+ffmpeg -y -v error -i "$E/b6.mp4" -vf "$(CAP 'Kaya nasa page na' "$PROOF")" $V $AAC "$E/b6c.mp4"
 capbeat "$E/b7v.mp4" "$E/b7c.mp4" "Basahin mo muna bago ka mag-book ng schedule."
 
 # --- 7. CONCAT --------------------------------------------------------------

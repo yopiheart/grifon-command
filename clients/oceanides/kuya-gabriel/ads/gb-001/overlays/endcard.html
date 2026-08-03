@@ -17,9 +17,21 @@
   .mid {
     position: absolute;
     left: 80px; right: 80px;
-    top: 620px;
+    top: 470px;
     text-align: center;
   }
+  /* Oceanides seal (Neil, 2026-08-03). Puting bilog para buhay sya sa navy —
+     ganito rin sya nakaupo sa ticket at sa page. Nasa loob ng feed-safe. */
+  .logo {
+    width: 170px; height: 170px;
+    margin: 0 auto 44px;
+    border-radius: 50%;
+    background: #fff;
+    padding: 10px;
+    box-shadow: 0 12px 40px rgba(7, 22, 48, .5);
+    opacity: 0;
+  }
+  .logo img { width: 100%; height: 100%; object-fit: contain; border-radius: 50%; }
   .kicker {
     font-family: 'InterBlack', Arial, sans-serif;
     font-size: 32px; letter-spacing: .3em;
@@ -48,11 +60,13 @@
 <body>
   <div class="stage"></div>
   <div class="mid">
+    <div class="logo" id="lg"><img src="../../../../assets/logo.jpg" alt=""></div>
     <div class="kicker" id="k">NAKASULAT ANG BUONG PRESYO</div>
     <div class="big" id="b">BASAHIN<br>MO MUNA</div>
     <div class="url" id="u">OCEANIDESPH.COM</div>
   </div>
 <script>
+  const lg = document.getElementById('lg');
   const k = document.getElementById('k');
   const b = document.getElementById('b');
   const u = document.getElementById('u');
@@ -61,7 +75,9 @@
       const p = Math.max(0, Math.min(1, (t - at) / dur));
       return 1 - Math.pow(1 - p, 3);
     };
-    const e1 = step(0.05, 0.25), e2 = step(0.24, 0.26), e3 = step(0.62, 0.24);
+    const e0 = step(0.02, 0.22), e1 = step(0.05, 0.25), e2 = step(0.24, 0.26), e3 = step(0.62, 0.24);
+    lg.style.opacity = e0;
+    lg.style.transform = 'scale(' + (0.92 + 0.08 * e0) + ')';
     k.style.opacity = e1;
     b.style.opacity = e2;
     b.style.transform = 'translateY(' + (22 - 22 * e2) + 'px)';

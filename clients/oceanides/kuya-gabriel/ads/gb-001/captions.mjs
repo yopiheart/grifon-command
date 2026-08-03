@@ -33,27 +33,39 @@ if (!text || !dur) { console.error('kailangan ang --text at --dur'); process.exi
 // rule ng taglish-voice.md). Ang kuwit at percent ay kailangang i-escape.
 const esc = (s) => s.replace(/\\/g, '\\\\').replace(/:/g, '\\:').replace(/'/g, '').replace(/,/g, '\\,').replace(/%/g, '\\%');
 
-const words = text.replace(/[.,]/g, '').split(/\s+/).filter(Boolean);
+// Ang kuwit at tuldok ay hangganan ng parirala (Neil, 2026-08-03): ang chunk na
+// tumatawid sa kuwit ay pinagdidikit ang dalawang hininga sa isang pitik, at
+// nababasa yun bilang mali kahit hindi mo kayang sabihin kung bakit.
+const phrases = text.split(/[.,]/).map((p) => p.trim()).filter(Boolean);
 
-// 1-2 salita kada chunk. Ang mahabang salita ay nag-iisa para hindi sya lumagpas
-// sa gilid sa 82px na Anton.
+// 1-2 salita kada chunk, sa LOOB lang ng parirala. Ang mahabang salita ay
+// nag-iisa para hindi sya lumagpas sa gilid sa 82px na Anton.
 const chunks = [];
-for (let i = 0; i < words.length;) {
-  const a = words[i], b = words[i + 1];
-  if (b && (a.length + b.length) <= 13) { chunks.push(`${a} ${b}`); i += 2; }
-  else { chunks.push(a); i += 1; }
-}
+const phraseOf = []; // saang parirala nakatali ang bawat chunk — bantay ng merge
+phrases.forEach((ph, pi) => {
+  const words = ph.split(/\s+/).filter(Boolean);
+  for (let i = 0; i < words.length;) {
+    const a = words[i], b = words[i + 1];
+    if (b && (a.length + b.length) <= 13) { chunks.push(`${a} ${b}`); phraseOf.push(pi); i += 2; }
+    else { chunks.push(a); phraseOf.push(pi); i += 1; }
+  }
+});
 
 // Pantay na hati sa buong beat. Kapag mas maikli sa 0.40s ang bawat isa, hindi na
-// sya nababasa — pinagsasama ang mga chunk hanggang umabot sa sahig.
+// sya nababasa — pinagsasama ang mga chunk hanggang umabot sa sahig, pero HINDI
+// kailanman tatawid sa kuwit.
 let per = dur / chunks.length;
 while (per < 0.40 && chunks.length > 1) {
+  let merged = false;
   for (let i = 0; i < chunks.length - 1; i++) {
-    if ((chunks[i] + chunks[i + 1]).length <= 20) { chunks.splice(i, 2, `${chunks[i]} ${chunks[i + 1]}`); break; }
+    if (phraseOf[i] === phraseOf[i + 1] && (chunks[i] + chunks[i + 1]).length <= 20) {
+      chunks.splice(i, 2, `${chunks[i]} ${chunks[i + 1]}`);
+      phraseOf.splice(i + 1, 1);
+      merged = true; break;
+    }
   }
-  const next = dur / chunks.length;
-  if (next === per) break;
-  per = next;
+  if (!merged) break;
+  per = dur / chunks.length;
 }
 
 const filters = chunks.map((c, i) => {
