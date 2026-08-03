@@ -9,6 +9,28 @@ import type { FunnelConfig } from './config.types';
 // dahilan na mas malakas kaysa sa panlasa, at dapat alam ni Neil.
 // Offer doc (Gate 1): workflows/oceanides_offer_price_page.md
 //
+// 🆕 APAT NA PAGBABAGO 2026-08-03, aprubado ni Neil bago pa maglaunch ang unang
+// campaign (kaya walang baseline na nasira — libre pa ang pagbabago hanggang
+// may gumagastos):
+//   1. `form.reassurance` — dagdag na 8AM-5PM at ang anti-promise.
+//   2. Bagong dalawang-hanay na ₱2,500 vs ₱5,000, kasunod ng objectionReversal.
+//   3. Bagong pangalawang guarantee — ang "uuwi kami", may ₱0 na selyo.
+//   4. Tinanggal ang FAQ #3, dahil #2 na ang bahay nya.
+// Ang tinanggihan sa parehong usapan: ang Hormozi na priced value stack
+// (may halaga bawat linya, susumahin sa inflated total). Tatlong dahilan,
+// nakasulat para hindi na muling imungkahi: (a) mangangailangan sya ng
+// imbentong halaga sa page na ang buong benta ay totoo lahat ng numero dito,
+// (b) sa market na sunog sa "sobrang ganda para totohanin", ang inflated total
+// ay tunog ng ₱2,500 na scammer at hindi ng alok, (c) ang leak ay ang CLOSE
+// (100 message, isang order), at ang value stack ay gamot sa DESIRE. Wala
+// tayong desire problem. Ang ginamit sa halip ay ang bahagi ng Value Equation
+// na totoo at bakante: Time Delay (#1) at risk reversal (#3).
+//
+// 🔴 ANG BILIS NG TRUCK AY HINDI PWEDENG IPANGAKO. Nakadepende sa available na
+// truck (Neil, 2026-08-03), kaya walang kahit isang linya sa page na nagsasabi
+// kung kailan darating. Ang ipinapangako lang ay ang TAWAG. Huwag itong
+// bawiin nang walang bagong sagot mula kay Boss Jay.
+//
 // PRICING is Boss Jay's, confirmed 2026-07-30: ₱5,000 per TRUCKLOAD (full or
 // not, it counts as one), a second truckload is ₱5,000 again, the 30-day
 // warranty covers BARA only (not refilling — a canteen or apartment fills
@@ -130,8 +152,23 @@ export const funnelConfig: FunnelConfig = {
     fields: ['name', 'phone', 'email'],
     headline: 'Mag-book ng schedule',
     ctaLabel: 'Kunin ang schedule ko',
+    // ANG ORAS AT ANG ANTI-PROMISE (Neil, 2026-08-03). Dalawang bagay ang
+    // idinagdag dito at pareho silang tumutugon sa `Time Delay` ng Value
+    // Equation — ang tanging lever na walang laman ang page na to.
+    //
+    // 🔴 WALANG IPINAPANGAKO TUNGKOL SA TRUCK, sinadya. Nakadepende sa
+    // available na truck kung kailan makakapunta (Neil, 2026-08-03: "malabo
+    // kasi... ayoko mangako sa part na to"), kaya ang ipinapangako lang dito ay
+    // ang TAWAG — nasa kontrol ni Zam yun, at nasa thank-you page na ang 8AM-5PM
+    // simula pa noong 2026-08-01. Wala lang sya sa landing, kung saan sya
+    // kailangan: nagfo-form sila nang hindi alam kung may sasagot ba.
+    //
+    // Ang pangalawang pangungusap ay ang lever mismo. Ang kalaban ay nagsasabi
+    // ng "same day, 24/7" tapos hindi dumarating. Ang pag-amin na hindi natin
+    // alam ay parehong galaw ng "uuwi kami" sa ibaba: nananalo tayo sa
+    // inaamin, hindi sa ipinapangako.
     reassurance:
-      'Tatawagan ka namin para i-confirm ang oras. Walang bayad kung hindi pa kayo nagkakasundo sa presyo.',
+      'Tatawagan ka namin para sa schedule at sa buong presyo, 8AM hanggang 5PM. Hindi kami mangangako ng bukas kung hindi namin kaya. Walang bayad kung hindi pa kayo nagkakasundo sa presyo.',
     consent: {
       required: false,
       text: 'Oo, pwede nyo akong tawagan o i-text tungkol sa booking na to. Protektado ang info ko sa ilalim ng Data Privacy Act of 2012 at ng Privacy Policy nyo. Matatawagan pa rin ako para sa schedule kahit hindi ko to i-check.',
@@ -389,6 +426,56 @@ export const funnelConfig: FunnelConfig = {
       },
     },
 
+    // ANG ₱2,500, INAHON PALABAS NG ACCORDION (Neil, 2026-08-03).
+    //
+    // Ito ang pinakamalakas na close-argument sa buong page at nakatago sya
+    // noon sa ikatlong fold ng FaqAccordion, sa ika-siyam na section. Hindi
+    // binubuksan ng skimmer ang accordion, at ang skimmer ang pinakamalaking
+    // grupo. Tinanggal na ang FAQ item sa ibaba — dito na sya buo.
+    //
+    // 🔴 WALANG BAGONG CLAIM DITO. Bawat linya ay galing sa aprubadong sagot ng
+    // FAQ #3, hinati lang sa dalawang hanay. Ang `objectionReversal` sa itaas
+    // ay sumasagot sa mga DAGDAG na singil; ito ay sumasagot sa ibang laban
+    // — "ang mura ay mas mahal pala." Magkaibang objection, magkaibang section.
+    //
+    // ⚠️ GINAGAMIT ANG `costOfDelay` BILANG GENERIC NA DALAWANG-HANAY. Wala
+    // syang salitang "delay" sa loob — config lahat ang eyebrow, heading, body,
+    // compare at close (tingnan ang CostOfDelay.tsx), at ang `attention` amber
+    // ay nasa PANGALAWANG hanay, kaya doon dapat ang sa atin. Ang pangalan ng
+    // prop (`nowLabel`/`laterLabel`) ang tanging hindi bagay, at ang pagpapalit
+    // nun ay paggalaw sa shared template ng lahat ng funnel para sa isang
+    // pangalan. Ligtas ang paulit-ulit na section type: naka-key sa
+    // `${type}-${index}` ang Landing.tsx.
+    {
+      type: 'costOfDelay',
+      ground: 'paper',
+      props: {
+        eyebrow: 'Bago ka maghambing',
+        heading: 'Bakit ₱5,000 eh may nag-aalok ng **₱2,500**?',
+        body: [
+          'Kasi ibang bagay yun. Magkaiba sila ng kasama, at madalas magkaiba rin sila ng presyo pagdating ng truck.',
+        ],
+        compare: {
+          nowLabel: 'Ang ₱2,500',
+          nowItems: [
+            'Walang BIR official receipt. Walang mahahabol kapag may nangyari.',
+            'Walang warranty. Kapag bumalik ang bara sa isang linggo, bagong bayad ulit.',
+            'Hindi mo alam kung saan itinapon ang laman.',
+            'Karaniwang nagiging ₱4,000 o ₱5,500 pagdating ng truck. May comment sa ad namin na ganoon mismo ang nangyari sa kanya.',
+          ],
+          laterLabel: 'Ang ₱5,000 namin',
+          laterItems: [
+            'May BIR official receipt.',
+            '30-day warranty sa bara.',
+            'DENR-partner na tapunan, may papel.',
+            '₱5,000 sa page, ₱5,000 pa rin sa dulo.',
+          ],
+        },
+        close:
+          'Hindi mura ang ₱2,500 kapag ₱5,500 ang binayaran mo. ==Ang mura ay yung presyong hindi na nagbago.==',
+      },
+    },
+
     // Ang tanging outcome proof na hawak natin. Walang testimonial, walang
     // review count, walang taon-sa-serbisyo, at bawal mag-imbento. Dalawang
     // TUGMANG pares lang — parehong fixture, parehong ilaw. Ang hindi tugmang
@@ -469,6 +556,41 @@ export const funnelConfig: FunnelConfig = {
       },
     },
 
+    // ANG PANGALAWANG RISK REVERSAL (Neil, 2026-08-03: "mukang goods nga to").
+    //
+    // Magkatabi sila nang sinadya. Ang una ay tungkol sa PRESYO (kung tumaas,
+    // kami ang sasagot); ito ay tungkol sa PANGANGAILANGAN (kung wala ka
+    // palang kailangan, wala kang babayaran). Magkaibang takot, kaya magkahiwalay
+    // na pangako.
+    //
+    // 🔴 HINDI TO KAYANG KOPYAHIN NG KALABAN, at yun ang buong halaga nya.
+    // Kada truckload ang kita ng siphoner, kaya walang ibang magsasabi sayo na
+    // hindi mo pa sila kailangan. Ang huling pangungusap ang nagsasabi mismo
+    // nito — Cialdini: ang aminin ang sarili mong interes ang nagpapaniwala sa
+    // linyang susunod.
+    //
+    // 🟢 TOTOO ANG ₱0 (Neil, 2026-08-03). Walang sinisingil sa customer kapag
+    // hindi pa puno. Pero ⚠️ ₱200-300 ang nagagastos ng Oceanides sa biyahe,
+    // kaya SINADYANG hindi to isinulat bilang "libreng tingin" — ang unang
+    // pangungusap ay nagsasabing may TAWAG muna bago umalis ang truck. Doon
+    // nasasala ang biyaheng walang trabaho. Kapag ginawa itong alok ng libreng
+    // inspection, ang gate na yun ang mawawala at ang ₱200-300 ay magiging
+    // kada-tumatawag na gastos, hindi kada-pumalpak-ang-tawag.
+    //
+    // Ang linyang to ay nasa `originStory` din sa itaas, sinadya. Doon sya
+    // katapusan ng kwento, dito sya kasulatan — parehong ginagawa ng 30-day
+    // warranty, na tatlong beses lumalabas sa page na to.
+    {
+      type: 'guarantee',
+      ground: 'navy',
+      props: {
+        eyebrow: 'Ang pangalawang pangako',
+        heading: 'Kung hindi pa puno ang tangke mo, **uuwi kami**.',
+        seal: { value: '₱0', unit: 'BAYAD', label: 'Kapag hindi pa puno' },
+        body: 'Tumatawag muna kami bago umalis ang truck, para masabi mo ang lagay ng tangke. Pero kung mali pala ang hula at hindi pa naman puno pagdating namin, sasabihin namin sayo at uuwi kami. ==Wala kang babayaran, at hindi ka namin pipilitin.== Kada truckload ang kita namin, kaya alam mo kung gaano kabigat sa amin ang linyang to. Nakasulat pa rin sya dito.',
+      },
+    },
+
     // Ang huling tanong bago mag-book: sino ang papasok sa bakuran ko. Dito sya
     // sinasagot, pagkatapos ng garantiya at bago ang FAQ, kasi kapag tapos na
     // ang usapang presyo, tao na ang natitirang alalahanin.
@@ -521,10 +643,12 @@ export const funnelConfig: FunnelConfig = {
             q: 'Tenant lang ako. Pwede pa rin ba?',
             a: 'Pwede, pero ang may-ari ang kailangang mag-desisyon kasi sa kanya ang tangke. I-copy mo to at ipadala sa kanya: "Boss, puno na po yung septic tank dito. May nakita akong Oceanides, ₱5,000 lahat-lahat, may resibo at 30-day warranty, at nakasulat ang presyo bago sila magsimula. Pwede po ba nating ipa-schedule?" Kapag sumagot sya, sya na ang mag-book dito.',
           },
-          {
-            q: 'Bakit ₱5,000 eh may nag-aalok sa akin ng ₱2,500?',
-            a: 'Kasi ibang bagay yun. Sa ₱2,500 walang resibo, walang warranty, at hindi mo alam kung saan itinapon ang laman. Karaniwan din na yun ang nagiging ₱4,000 o ₱5,500 pagdating ng truck. May comment nga sa ad namin na ganoon mismo ang nangyari sa kanya. ==Ang sa amin, ₱5,000 sa page at ₱5,000 pa rin sa dulo.==',
-          },
+          // ⬆️ WALA NA DITO ANG "Bakit ₱5,000 eh may ₱2,500?" (2026-08-03).
+          // Sarili nyang section na sya ngayon, sa itaas ng page, kasunod ng
+          // objectionReversal. Masyado syang malakas para nakatago sa accordion.
+          // Huwag ibalik dito nang hindi tinatanggal doon: kapag dalawang beses
+          // lumabas ang parehong argumento sa magkaibang anyo, ang pangalawa ay
+          // nagmumukhang paulit-ulit at hindi na diin.
           {
             q: 'Paano kung hindi kasya sa isang truckload ang tangke namin?',
             a: 'Kada truckload ang bayad, kaya ₱5,000 ulit ang pangalawa. Ganoon din kahit hindi mapuno ang truck, isang truckload pa rin ang bilang. Pero hindi ka namin gugulatin: bago namin simulan ang pangalawa, sasabihin muna namin sa iyo. Ikaw pa rin ang bahala.',
