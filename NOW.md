@@ -15,8 +15,7 @@ Ang agent ang gumawa at nag-ON, hindi si Neil. Buong tala:
    ad set `120248564354250056`. **Hinarang ng Meta ang upload tool sa API**, kaya
    ito lang ang hindi ko nagawa. Piliin ang unang frame bilang thumbnail o
    i-upload ang `clients/oceanides/kuya-marvin/ads/km-004/KM-004-thumb-frame0.png`.
-3. **Ikabit ang Instagram account** sa ad account — gated din ang lookup tool,
-   kaya **Facebook lang ang delivery ngayon.**
+3. **Ikabit ang Instagram** sa ad account — gated ang lookup, kaya FB lang muna.
 
 ### B · Kapag kumpirmado nang maayos ang delivery (agent)
 4. Linisin ang pansamantalang hosting: `funnels/oceanides-price-page/public/ad/`
