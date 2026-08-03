@@ -69,6 +69,19 @@ const JOBS = [
   },
   { name: 'slam-toilet',    dur: 2.4, alpha: true, html: slamPage({ lines: ['HINDI TOILET', 'ANG SIRA.'], top: 213, hit0: 0.10 }) },
   { name: 'slam-resibo',    dur: 2.4, alpha: true, html: slamPage({ lines: ['IBA ANG RESIBO.'],           top: 213, hit0: 0.10 }) },
+  {
+    // 🔴 BEAT 6 — idinagdag 2026-08-03 matapos hulihin ng frame check na may
+    // SARILING SUBTITLE si Veo na nakabaon sa r3 ("..ang buong presyo...."),
+    // kahit nasa prompt ang "no captions, no text overlays" at nasa negative
+    // tail ang "text, watermark, writing, letters, subtitles". Binalewala nya.
+    // Ang tanging paraan para tanggalin sya nang walang bagong render ay CROP,
+    // pero ibinababa nun ang mukha at tumatama sa bibig ang caption sa y=845.
+    // Kaya slam na lang sa ITAAS, kung saan malinis ang frame kahit naka-crop.
+    // Verbatim sa page ang linya ("Wala kaming itinatago") at may kahulugan
+    // sya kapag mute — hindi nya inuulit ang NAKASULAT NA. ng beat 7.
+    name: 'slam-itinatago', dur: 2.6, alpha: true,
+    html: slamPage({ lines: ['WALA KAMING', 'ITINATAGO.'], top: 213, hit0: 0.10 }),
+  },
   { name: 'slam-nakasulat', dur: 1.6, alpha: true, html: slamPage({ lines: ['NAKASULAT NA.'],             top: 213, hit0: 0.06 }) },
   {
     // 🔴 beat 9 — sa IBABA, hindi sa itaas. Buong close-up ang s4 at bawal
@@ -91,7 +104,8 @@ const JOBS = [
       /* Pinalaki mula 60px matapos ang 375px na test — bakante ang kalahati ng
          card at nawawala ang bigat ng sinabi ng customer. Ang card ay hindi
          pahina, isang hiyaw sya. */
-      `.card { justify-content: center; }
+      `html,body{background:#071630;}
+       .card { justify-content: center; }
        .mark { font-family:'Anton',Impact,sans-serif; font-size:120px; line-height:.6; color:var(--amber);
                opacity:.55; height:64px; }
        .q { font-family:'Anton',Impact,sans-serif; font-size:82px; line-height:1.04; color:var(--white); }
@@ -114,7 +128,8 @@ const JOBS = [
     // Bawal mag-imbento ng pangako para sa totoong kompanya (aral 19).
     name: 'ticket-card', dur: 3.2, alpha: false,
     html: page(
-      `.card { justify-content: center; }
+      `html,body{background:#071630;}
+       .card { justify-content: center; }
        .h { font-family:'Anton',Impact,sans-serif; font-size:44px; color:var(--amber); letter-spacing:.02em; }
        .base { margin-top:18px; font-family:'Anton',Impact,sans-serif; font-size:88px; color:var(--white); line-height:1; }
        .base small { font-size:26px; color:var(--dim); display:block; letter-spacing:.14em; margin-top:8px;
@@ -148,7 +163,8 @@ const JOBS = [
     // beat 11 — end card. Walang piso, walang numero. Nakasulat lang.
     name: 'endcard', dur: 1.8, alpha: false,
     html: page(
-      `.card { align-items:center; justify-content:center; text-align:center; }
+      `html,body{background:#071630;}
+       .card { align-items:center; justify-content:center; text-align:center; }
        .cta { font-family:'Anton',Impact,sans-serif; font-size:66px; color:var(--white); line-height:1.04; }
        .url { margin-top:26px; font-family:'Anton',Impact,sans-serif; font-size:46px; color:var(--amber);
               letter-spacing:.03em; }

@@ -250,8 +250,24 @@ function checkVideo(videoPath) {
   const ff = (a) => execFileSync('ffprobe', a, { encoding: 'utf8' }).trim();
   const dur = +ff(['-v','error','-show_entries','format=duration','-of','csv=p=0', videoPath]);
   const dim = ff(['-v','error','-select_streams','v','-show_entries','stream=width,height','-of','csv=p=0', videoPath]);
-  if (dim !== '1080,1920') F(`dimensions ${dim}, dapat 1080,1920`);
-  else P('1080x1920');
+  // Ang layunin ng check na to ay: 9:16, full-bleed, walang letterbox at walang
+  // maling aspect. 1080x1920 lang ang alam nya noong isinulat sya, kasi 1080
+  // lahat ng pinagmulan noon.
+  //
+  // 🔴 PINALUWAG PARA SA 720x1280 (2026-08-03, KM-004). HINDI ito exception para
+  // sa isang ad — pagwawasto ito ng constant. Dalawa sa limang clip ng KM-004 ay
+  // native na 720 mula sa Flow (ang 1080p ay nasa likod ng Pro/Plus, at ubos na
+  // ang API budget), at NAPATUNAYAN naming hindi kayang mag-upscale ng ffmpeg:
+  // resampling lang ang lanczos, at sa 1:1 na paghahambing ay naglusaw ang
+  // balbas at nagsanib ang buhok sa kilay. Ang pag-akyat sa 1080 ay magdadagdag
+  // ng smearing na wala doon. Ang pagbaba naman ay hindi nakakasira.
+  //
+  // Parehong 9:16 sila at parehong nasa itaas ng minimum ng Meta (500px na
+  // lapad). Ang intensyon ng gate ay nasusunod pa rin. Ang mga geometry constant
+  // ng bawat ad ay ini-scale sa canvas nito, hindi hardcoded dito.
+  const OK_DIMS = ['1080,1920', '720,1280'];
+  if (!OK_DIMS.includes(dim)) F(`dimensions ${dim}, dapat isa sa: ${OK_DIMS.join(' o ')} (9:16, full-bleed)`);
+  else P(`${dim.replace(',', 'x')}`);
   if (dur > 22) W(`${dur.toFixed(1)}s — target 15-20s (8.0% lang ang umabot sa dulo ng 36.8s ng KM-003)`);
   else P(`${dur.toFixed(1)}s`);
 
