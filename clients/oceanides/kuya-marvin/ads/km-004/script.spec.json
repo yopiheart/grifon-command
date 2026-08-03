@@ -7,11 +7,8 @@
   "adAccount": "4165212657057538",
   "page": "1184710811397498",
   "voice": "ElevenLabs clone jL41fXY8JXGEarmJ5g3f (Marvin). ITO ANG BUONG DAHILAN KUNG BAKIT MAS MURA ANG AD NA TO KAYSA SA GB-001: may clone si Marvin, kaya ang VO-over-visual ay TTS na ($0.00x), hindi na kailangang bumili ng Veo roll para lang sa boses. Si Gabriel ang walang clone, kaya ang roll 4 ng GB-001 ay binayarang Veo na ang tanging silbi ay audio.",
-
   "spine": "Parehong spine ng GB-001 — mechanism-diagnosis hook, alok na hindi nangangailangan ng isa pang usapan, website ang dulo. ANG PAGKAKAIBA: dito ibinabalik ang script sa taong pinagmulan ng data. Ang hook ay linya NI MARVIN mula sa KM-003 (98.5% sa 0:03, 7,047 tao). Si Gabriel ang nanghiram nun, hindi si Marvin.",
-
   "hook": "Puno na ang septic tank mo, hindi barado.",
-
   "lines": [
     "Kahit anong plunger, balik nang balik ang problema.",
     "Pero ang mas nakakatakot, yung singil pagdating ng truck.",
@@ -22,79 +19,214 @@
     "Kapag hindi pa naman puno, uuwi kami. Hindi ka namin pipilitin.",
     "Basahin mo muna bago ka mag-book ng schedule."
   ],
-
   "maxPaidRolls": 5,
-
   "plates": [
-    { "id": "s1", "location": "jobsite-a", "framing": "close head-and-shoulders, eye-level", "headroom": "MAY HEADROOM — nasa ibabang 2/3 ng frame si Marvin, malinis ang y=288-600 para sa hook stack", "usedIn": "beat 1 (hook) at beat 10 (CTA) — sinadyang bookend" },
-    { "id": "s2", "location": "jobsite-a", "framing": "medium chest-up, slight-low", "headroom": "normal — walang big text sa beat 3" },
-    { "id": "s3", "location": "jobsite-a", "framing": "tight face, eye-level", "headroom": "normal — walang big text sa beat 6" },
-    { "id": "s4", "location": "jobsite-a", "framing": "medium chest-up, eye-level", "headroom": "🔴 MAY HEADROOM — dito nakaupo ang `UUWI KAMI.` slam. Nasa ibabang 2/3 si Marvin, malinis ang y=288-600." }
+    {
+      "id": "s1",
+      "location": "jobsite-b",
+      "framing": "close head-and-shoulders, eye-level",
+      "headroom": "MAY HEADROOM — nasa ibabang 2/3 ng frame si Marvin, malinis ang y=288-600 para sa hook stack",
+      "usedIn": "beat 1 (hook) at beat 10 (CTA) — sinadyang bookend"
+    },
+    {
+      "id": "s2",
+      "location": "jobsite-b",
+      "framing": "medium chest-up, slight-low",
+      "headroom": "normal — walang big text sa beat 3"
+    },
+    {
+      "id": "s3",
+      "location": "jobsite-b",
+      "framing": "tight face, eye-level",
+      "headroom": "normal — walang big text sa beat 6"
+    },
+    {
+      "id": "s4",
+      "location": "jobsite-b",
+      "framing": "close-up, eye-level",
+      "headroom": "WALANG headroom, sinadya — nasa IBABANG bahagi ng frame ang `UUWI KAMI.` slam (y≈1150), hindi sa itaas. Tingnan ang plateHeadroomNote."
+    }
   ],
-
-  "plateHeadroomNote": "🔴 ITO ANG DOKTRINA NG SKILL.MD, AT LIBRE SYA NGAYON KASI WALA PA ANG PLATE. Sa masikip na close-up ay nasa y≈340-380 ang ulo, kaya 52px lang ang malinaw sa pagitan ng feed-safe top (285) at ng buhok — kulang para sa 2-linyang stack. 'Ang totoong ayos ay nasa PLATE, hindi sa text: i-frame ang plate na mas MABABA si Marvin para may tunay na headroom ang text.' Dalawang plate lang ang kailangan nito (s1, s4) dahil dalawang talking beat lang ang may big text. Kapag naka-render na ang plate, ang natitirang lunas ay ibaba ang stack hanggang sa buhok na lang ang sinasagi — mas mahina yun. Kaya ngayon ito dinidisenyo.",
-
+  "plateHeadroomNote": "🔴 MAY SALUNGATAN DITO AT ITO ANG NAGING AYOS (naitama 2026-08-03, bago pa gawa ang plate). Ang pagbibigay ng headroom para sa big text ay nangangahulugang MAS MALAYO ang mukha nya sa frame — at ang camera-distance rule ni Neil (2026-07-19, kasama sina Marvin at Zam) ay malinaw: *'Ang AI slop ay nahahalata lang kapag malayo ang camera.'* Sa close-up nawawala ang tell; sa mid/far lumalabas sya sa motion. Kaya ang paghingi ko ng headroom sa DALAWANG plate ay bibili sana ng puwang para sa teksto gamit ang mismong bagay na nagpapaniwala sa ad. MALI YUN. Ang tamang sagot ay nasa skill din mismo: *'Kapag close-up na halos puno ang frame ang mukha, ILIPAT ang text kung saan readable — ang readability ng viewer ang panalo, hindi ang template position.'* KAYA: (a) ang **s1** ay may katamtamang headroom lang, sapat para sa hook stack sa y=288 — pinatunayan na ng GB-001 v3 sa y=300; (b) ang **s4** ay **buong close-up** at ang `UUWI KAMI.` ay nasa **IBABA** (y≈1150), loob ng feed-safe at malayo sa mukha. Bakit walang bangga: sa ilalim mismo ng batas na isang-text-layer-lang, humihinto ang caption sa window na yun, kaya walang laman ang caption band at atin sya.",
   "overlayText": [
-    { "beat": 1,  "text": "PUNO NA.\nHINDI BARADO.",   "over": "s1 talking",        "y": 288, "bakitMayKahuluganKapagMute": "Ang diagnosis mismo. Frame 0, walang fade — sya ang kinukuha ni Meta bilang thumbnail." },
-    { "beat": 2,  "text": "HINDI TOILET ANG SIRA.",     "over": "b1 plunger b-roll", "y": 320, "bakitMayKahuluganKapagMute": "Ang mekanismo. Hindi pag-uulit ng linya 1 — dinadala nya ang INSIGHT na hindi binibigkas. Malapit sa verbatim ng page: 'ang tinitingnan namin ay ang tangke, hindi ang toilet.'" },
-    { "beat": 4,  "text": "IBA ANG RESIBO.",            "over": "b2 phone b-roll",   "y": 320, "bakitMayKahuluganKapagMute": "Ang buong takot sa tatlong salita. Compression ng linya 3, hindi kopya." },
-    { "beat": 7,  "text": "NAKASULAT NA.",              "over": "screen recording",  "y": 320, "bakitMayKahuluganKapagMute": "Ang patunay, kasabay ng totoong page sa likod. Walang salita ang beat na to kaya ang teksto lang ang nagsasalita." },
-    { "beat": 9,  "text": "UUWI KAMI.",                 "over": "s4 talking",        "y": 320, "bakitMayKahuluganKapagMute": "Ang disarm. Ang septic company na nagsasabing uuwi kami nang walang bayad ay humihinto ng scroll nang mag-isa. Ito ang pinakamalakas na slam sa buong ad." },
-    { "beat": 11, "text": "OCEANIDESPH.COM",            "over": "end card",          "y": 320, "bakitMayKahuluganKapagMute": "Meron na sa GB-001 end card." }
+    {
+      "beat": 1,
+      "text": "PUNO NA.\nHINDI BARADO.",
+      "over": "s1 talking",
+      "y": 288,
+      "bakitMayKahuluganKapagMute": "Ang diagnosis mismo. Frame 0, walang fade — sya ang kinukuha ni Meta bilang thumbnail.",
+      "placement": "ITAAS, y=288 — katamtamang headroom sa s1, pinatunayan ng GB-001 v3 sa y=300."
+    },
+    {
+      "beat": 2,
+      "text": "HINDI TOILET ANG SIRA.",
+      "over": "b1 plunger b-roll",
+      "y": 320,
+      "bakitMayKahuluganKapagMute": "Ang mekanismo. Hindi pag-uulit ng linya 1 — dinadala nya ang INSIGHT na hindi binibigkas. Malapit sa verbatim ng page: 'ang tinitingnan namin ay ang tangke, hindi ang toilet.'",
+      "placement": "ITAAS — walang mukha sa beat na to, kaya libre ang buong frame."
+    },
+    {
+      "beat": 4,
+      "text": "IBA ANG RESIBO.",
+      "over": "b2 phone b-roll",
+      "y": 320,
+      "bakitMayKahuluganKapagMute": "Ang buong takot sa tatlong salita. Compression ng linya 3, hindi kopya.",
+      "placement": "ITAAS — walang mukha sa beat na to, kaya libre ang buong frame."
+    },
+    {
+      "beat": 7,
+      "text": "NAKASULAT NA.",
+      "over": "screen recording",
+      "y": 320,
+      "bakitMayKahuluganKapagMute": "Ang patunay, kasabay ng totoong page sa likod. Walang salita ang beat na to kaya ang teksto lang ang nagsasalita.",
+      "placement": "ITAAS — walang mukha sa beat na to, kaya libre ang buong frame."
+    },
+    {
+      "beat": 9,
+      "text": "UUWI KAMI.",
+      "over": "s4 talking",
+      "y": 1150,
+      "bakitMayKahuluganKapagMute": "Ang disarm. Ang septic company na nagsasabing uuwi kami nang walang bayad ay humihinto ng scroll nang mag-isa. Ito ang pinakamalakas na slam sa buong ad.",
+      "placement": "IBABA ng frame, hindi itaas — buong close-up ang s4 (camera-distance rule). Walang bangga sa caption: humihinto sya sa window na to."
+    },
+    {
+      "beat": 11,
+      "text": "OCEANIDESPH.COM",
+      "over": "end card",
+      "y": 320,
+      "bakitMayKahuluganKapagMute": "Meron na sa GB-001 end card.",
+      "placement": "ITAAS — walang mukha sa beat na to, kaya libre ang buong frame."
+    }
   ],
-
   "overlayRules": "🔴 ISANG TEXT LAYER LANG SA ISANG PAGKAKATAON. Kapag nasa itaas ang big text, HUMIHINTO ang caption sa buong window nun. Ang dalawang text layer na magkasabay ay ingay, hindi diin — dyan mismo nasisira ang ideyang to kapag hindi dinisiplina. Iba pang tuntunin: (1) max 4 na salita, Anton caps, OUTLINE hindi box — P2, 8 corroborations, at kontra sa `bars`/`classic`; (2) hindi kailanman tumatakip sa mukha, kahit sa push-in — i-frame-strip muna ang BUONG clip bago ilagay; (3) loob ng y=285-1635; (4) hindi pag-uulit ng binibigkas na linya, may sarili syang dalang kahulugan (lesson 15); (5) apat lang ang BAGO (beat 2, 4, 7, 9) — kapag lahat ng beat ay may slam, wala nang slam.",
-
   "overlayCost": "$0. Hyperframes HTML o drawtext, walang dagdag na Veo. Ang tanging bayad na epekto ay ZERO — headroom lang ang binabago sa dalawang plate, at hindi pa naman sila gawa.",
-
-  "jobsiteA": "Likod-bahay: bukas na concrete septic access cover sa lupa, mainit na semento, luntiang halaman at saging sa paligid, pader ng bahay sa likod, malalim na asul na langit na may puting cumulus sa itaas. NAPILI NI NEIL 2026-08-03 para sa GB-001, at pareho ang dahilan dito: tumutugma sa hook (puno na ang septic tank) at zero na panganib ng imbentong asul na tanker — hard ban sa clients/oceanides/DESIGN.md. WALANG SASAKYAN sa frame ng lahat ng apat na plate.",
-
+  "jobsiteA": "🔴 ROTATION — IBANG BAKURAN, hindi ang jobsite A ng KM-003 at hindi rin ang eksaktong jobsite ng GB-001. Likod-bahay na may bukas na concrete septic access cover sa lupa, mainit na semento, hollow-block na pader na may kupasing pintura sa likod, luntiang halaman at saging sa gilid, malalim na asul na langit na may puting cumulus. Maliwanag na tropikal na tanghali, si Marvin nakatayo sa open shade. WALANG SASAKYAN sa frame ng lahat ng apat na plate — tinatanggal nito ang panganib ng imbentong asul na tanker (hard ban, clients/oceanides/DESIGN.md).",
   "lightingRegister": "🔴 DAYLIGHT MASTER — `clients/oceanides/kuya-marvin/daylight-register/marvin-daylight-master.png` (APPROVED ni Neil 2026-07-28). ITO ANG NAITAMA NOONG 2026-08-03: kinopya ko sana ang lighting rule ni GABRIEL ('isang maulap na araw, isang ilaw') papunta sa spec ni Marvin, at yun mismo ang gray-on-gray na tinanggihan ni Neil — *'parang gray pa rin, sakit sa mata.'* MAGKAIBA SILA AT HINDI PWEDENG PAGPALITIN. Ang batas ay KULAY ≠ ILAW: (a) ang ILAW SA MUKHA NYA ay malambot at pantay, open shade — walang matigas na anino, walang sun patch sa balat, walang rim light, walang golden-hour orange; (b) ang ESKENA sa paligid nya ay maliwanag at makulay. Ang labas ng Pilipinas ay HINDI gray: malalim na asul na langit, puting cumulus, saging at niyog, mainit na semento. Totoong kulay yun, hindi stylization.",
-
   "lightingPromptRule": "🔴 POSITIBONG TARGET MUNA, SAKA ANG BAWAL. Ang stack na purong bawal ('walang golden hour, walang sun patch, walang hard side light, walang rim light') na walang kasamang target ay sinasagot ng model sa pamamagitan ng PAGBAWAS NG LIWANAG — underexposed at malamig ang labas, at yun mismo ang hitsurang ayaw ni Neil. Ang tamang pagkakasunod: 'maliwanag na tropikal na araw, bukas na langit, well exposed, neutral white balance, si Marvin nakatayo sa open shade' MUNA, tapos ang mga bawal sa ilalim nun.",
-
-  "wardrobe": "Navy activewear tee na may maliit na light-blue `#38B6FF` na accent sa balikat. 🔴 HUWAG hihingin ang 'plain navy' — tahimik nitong binubura ang kulay na bahagi ng approved look (marvin-avatar taste profile).",
-
+  "wardrobe": "🔴 ROTATION — DESISYON NI NEIL 2026-08-03. Plain na RUST/TERRACOTTA na crew-neck field tee, relaxed fit, tumutugma sa drape ng shirt sa body master. WALANG nababasang teksto, walang logo. BAKIT HINDI NAVY: batas ni Neil 2026-07-25 — KM-003 = navy tee + jobsite A, kaya ang susunod na ad ay ibang outfit at ibang lugar, kung hindi magmumukhang iisang shooting day at AI/studio ang dating. Sinasadyang binitawan nito ang #38B6FF na accent ng daylight master; ang RUST ay pinili dahil (a) mainit at makulay sa ilalim ng asul na langit kaya buhay pa rin ang register, (b) malayo sa navy kaya kita agad ang rotation, (c) amber-adjacent sya sa navy+amber na mundo ng Oceanides, (d) HINDI SYA GRAY — ang gray-on-gray ang mismong tinanggihan noong 2026-07-28. SA LOOB ng ad na to: pareho ang damit sa lahat ng apat na plate (continuity, iisang shooting day).",
   "beatMap": [
-    { "beat": 1,  "plate": "s1",               "roll": 1,           "says": "hook",                        "visual": "talking" },
-    { "beat": 2,  "plate": "broll b1",         "roll": "TTS clone", "says": "line 1",                      "visual": "b-roll" },
-    { "beat": 3,  "plate": "s2",               "roll": 2,           "says": "line 2",                      "visual": "talking" },
-    { "beat": 4,  "plate": "broll b2",         "roll": "TTS clone", "says": "line 3 (APPROVED verbatim)",  "visual": "b-roll" },
-    { "beat": 5,  "plate": "quote-card",       "roll": "TTS clone", "says": "line 4",                      "visual": "HTML card" },
-    { "beat": 6,  "plate": "s3",               "roll": 3,           "says": "line 5",                      "visual": "talking" },
-    { "beat": 7,  "plate": "screen-recording", "roll": "wala",      "says": "walang salita",               "visual": "totoong page, 1.2s glance" },
-    { "beat": 8,  "plate": "ticket-card",      "roll": "TTS clone", "says": "line 6",                      "visual": "HTML card" },
-    { "beat": 9,  "plate": "s4",               "roll": 4,           "says": "line 7",                      "visual": "talking" },
-    { "beat": 10, "plate": "s1",               "roll": 5,           "says": "line 8 (CTA)",                "visual": "talking" },
-    { "beat": 11, "plate": "end-card",         "roll": "wala",      "says": "walang salita",               "visual": "HTML end card" }
+    {
+      "beat": 1,
+      "plate": "s1",
+      "roll": 1,
+      "says": "hook",
+      "visual": "talking"
+    },
+    {
+      "beat": 2,
+      "plate": "broll b1",
+      "roll": "TTS clone",
+      "says": "line 1",
+      "visual": "b-roll"
+    },
+    {
+      "beat": 3,
+      "plate": "s2",
+      "roll": 2,
+      "says": "line 2",
+      "visual": "talking"
+    },
+    {
+      "beat": 4,
+      "plate": "broll b2",
+      "roll": "TTS clone",
+      "says": "line 3 (APPROVED verbatim)",
+      "visual": "b-roll"
+    },
+    {
+      "beat": 5,
+      "plate": "quote-card",
+      "roll": "TTS clone",
+      "says": "line 4",
+      "visual": "HTML card"
+    },
+    {
+      "beat": 6,
+      "plate": "s3",
+      "roll": 3,
+      "says": "line 5",
+      "visual": "talking"
+    },
+    {
+      "beat": 7,
+      "plate": "screen-recording",
+      "roll": "wala",
+      "says": "walang salita",
+      "visual": "totoong page, 1.2s glance"
+    },
+    {
+      "beat": 8,
+      "plate": "ticket-card",
+      "roll": "TTS clone",
+      "says": "line 6",
+      "visual": "HTML card"
+    },
+    {
+      "beat": 9,
+      "plate": "s4",
+      "roll": 4,
+      "says": "line 7",
+      "visual": "talking"
+    },
+    {
+      "beat": 10,
+      "plate": "s1",
+      "roll": 5,
+      "says": "line 8 (CTA)",
+      "visual": "talking"
+    },
+    {
+      "beat": 11,
+      "plate": "end-card",
+      "roll": "wala",
+      "says": "walang salita",
+      "visual": "HTML end card"
+    }
   ],
-
   "rollBudget": "LIMANG bayad na Veo roll ≈ $5, ~$5-7 kasama ang retries. MAS MURA kaysa sa $6-8 na inaprubahan ni Neil para sa GB-001 — at may LABING-ISANG beat imbes na pito. Hindi trick yun: ang anim na hindi-mukha na beat (2 b-roll, 2 card, screen recording, end card) ay pinapasalita ng clone TTS, at ang clone ay hindi bayad kada roll. Isang linya kada Veo roll, walang exception.",
-
   "broll": [
-    { "id": "b1", "beat": 2, "shot": "anonymous na kamay na nagpaplunger, LUBOG ang goma sa tubig, may tabo at timba sa gilid", "motion": "Kling" },
-    { "id": "b2", "beat": 4, "shot": "over-shoulder, ISANG kamay na may hawak na phone sa tenga (patay ang screen), nakapatong na tupi ng papel sa ledge, sa bakuran", "motion": "Kling" }
+    {
+      "id": "b1",
+      "beat": 2,
+      "shot": "anonymous na kamay na nagpaplunger, LUBOG ang goma sa tubig, may tabo at timba sa gilid",
+      "motion": "Kling"
+    },
+    {
+      "id": "b2",
+      "beat": 4,
+      "shot": "over-shoulder, ISANG kamay na may hawak na phone sa tenga (patay ang screen), nakapatong na tupi ng papel sa ledge, sa bakuran",
+      "motion": "Kling"
+    }
   ],
-
   "brollNotes": "ANONYMOUS na kamay sa dalawa — kuwento ng customer ito, hindi ni Marvin. Walang relo, walang tattoo, walang anumang anchor nya. WALANG NABABASANG TEKSTO sa dalawa: dyan nag-iimbento ang model at dyan bumabagsak ang render_audit. ⚠️ GATED ang Kling. Kung hindi aprubahan ni Neil ang dagdag na ~$2-3, still + FFmpeg push-in muna ang build, kapareho ng ginawa sa GB-001 v3.",
-
   "cards": [
-    { "id": "quote-card",  "beat": 5, "content": "Customer verbatim: \"Talaga grabe ang singilan.\" — HTML, hindi mukha ni Marvin. Social proof sya at $0.", "geometry": "1080x1350 naka-center sa y=285 ng 1080x1920 — eksaktong pumupuno sa feed-safe band (GB-001 lesson 17)." },
-    { "id": "ticket-card", "beat": 8, "content": "price-addons-ticket: ₱5,000 base + ang apat na dagdag, VERBATIM sa page. Kasama ang footnote na 'Wala nang iba. Sasabihin namin bago magsimula.'", "geometry": "1080x1350 naka-center sa y=285. NABABASA sa 375px o hindi sya pumapasa." },
-    { "id": "end-card",    "beat": 11, "content": "Logo ng Oceanides + OCEANIDESPH.COM. Walang piso, walang numero.", "geometry": "loob ng y=285-1635" }
+    {
+      "id": "quote-card",
+      "beat": 5,
+      "content": "Customer verbatim: \"Talaga grabe ang singilan.\" — HTML, hindi mukha ni Marvin. Social proof sya at $0.",
+      "geometry": "1080x1350 naka-center sa y=285 ng 1080x1920 — eksaktong pumupuno sa feed-safe band (GB-001 lesson 17)."
+    },
+    {
+      "id": "ticket-card",
+      "beat": 8,
+      "content": "price-addons-ticket: ₱5,000 base + ang apat na dagdag, VERBATIM sa page. Kasama ang footnote na 'Wala nang iba. Sasabihin namin bago magsimula.'",
+      "geometry": "1080x1350 naka-center sa y=285. NABABASA sa 375px o hindi sya pumapasa."
+    },
+    {
+      "id": "end-card",
+      "beat": 11,
+      "content": "Logo ng Oceanides + OCEANIDESPH.COM. Walang piso, walang numero.",
+      "geometry": "loob ng y=285-1635"
+    }
   ],
-
   "motionRouting": "Talking = Veo, STATIC ang camera sa generation (MOTION DOCTRINE, SKILL.md 2026-07-27). Ang punch-in ay ginagawa sa edit kung saan tayo ang may hawak ng lakas. ITO ANG PAGKAKAIBA SA GB-001: pinanatili nun ang push-in ni Veo, na sinukat na ~7% lang matapos ang speech-cut — nasa ilalim ng makikita, kaya walang galaw ang mga talking beat. B-roll = Kling (gated). Screen recording = FFmpeg scroll.",
-
   "accentNote": "English ratio ~10% — WARNING sa preflight, hindi FAIL, at SINADYA. Tinanong ko ang eksaktong tanong ng gate: may NOUN ba akong tinagalog na sinasabi naman sa English? Wala. Ang `singil`, `presyo`, `dagdag`, `problema` ay yun mismo ang sinasabi ng tao, at protektado pa ang `presyo` sa lexicon ng gate. Ang ACCENT LOCK ay panganib sa ISANG direksyon lang (sobrang TAAS = American accent); ang mababa ay mas Filipino. Ang pinakamalakas na linyang pag-aari natin ay purong Tagalog. HUWAG itong 'ayusin' sa susunod na session sa pamamagitan ng pagsingit ng English.",
-
   "neilNotes": {
     "hook": "LOCKED. Linya ni Marvin mula sa KM-003, 98.5% retention sa 0:03, sinukat sa 7,047 tao. Ito ang pinaka-mapanganib na bagay na pwedeng galawin sa buong ad. Ang mas murang paraan ng pag-test ng bagong hook ay hook2 variant: isang roll na lang ang ire-render ulit (SKILL.md lesson 8).",
     "line3": "APPROVED ni Neil 2026-08-03, sya mismo ang nagpalit ng `quote` -> `presyo`. Wag nang galawin.",
     "line7": "BAGO SA KM-004, at ito ang tanging tunay na bagong linya. Verbatim mula sa live na page (funnel.config.ts:430) — pinaikli lang mula sa 'Kapag hindi pa naman puno, sasabihin namin. Uuwi kami. Hindi ka namin pipilitin.' para pumasok sa 12-salitang kisame. HINDI ito ginagamit ng GB-001 kahit saan, at ito ang pinaka-nakakadisarmang bagay na sinasabi ng kompanya. Kailangan ng go ni Neil dahil pangako sya ng totoong kompanya.",
     "preset": "spotlight — sinundan ang GB-001 at ang default ng SKILL.md para sa KM-004 pataas. ⚠️ Ang per-word invert ng spotlight ay PARKED (chunk-pop lang ang gawa, NOW.md) — chunk-pop ang makukuha natin, gaya ng GB-001 v3."
   },
-
   "gb001MistakesNotRepeated": [
     "Isang linya kada Veo roll (bumagsak ang GB-001 dito nang 3 beses sa preflight).",
     "May `maxPaidRolls` = 5 (wala nun sa GB-001, at 10 tawag ang nangyari noong 2 lang ang aprubado).",
@@ -109,10 +241,10 @@
     "Isang jobsite lang sa apat na plate.",
     "Dense-sample muna bago mag-re-roll ng bayad na clip (lesson 14 — false alarm ang sparse strips)."
   ],
-
   "customerVerbatim": [
     "Talaga grabe ang singilan.",
     "At dapat may resibo kayo.",
     "From 4500 tapos since maikli yung hose nila, nagdagdag ng 100 per tubo, so umabot sa 5500 ang binayaran."
-  ]
+  ],
+  "rotationNote": "Batas ni Neil 2026-07-25: sa LOOB ng isang ad ay pareho ang damit at lugar (continuity); ACROSS ads ay nagro-rotate. Hindi kailanman nagbabago ang identity anchors: mukha, katawan, fade na buhok, tattoo sa braso, relo."
 }
