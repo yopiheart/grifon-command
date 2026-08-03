@@ -82,6 +82,14 @@
             "command": "bash .claude/hooks/session-start.sh"
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node tools/ad_asset_sweep.mjs --quiet"
+          }
+        ]
       }
     ],
     "PostToolUse": [
