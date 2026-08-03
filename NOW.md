@@ -1,6 +1,6 @@
 # NOW
 
-**Stamped: 2026-08-03** · Anchor: `c2855b4` (main) · **Oceanides: script pasado, hindi pa nagre-render**
+**Stamped: 2026-08-03** · Anchor: `cf3a022` (main) · **GB-001 v2 buo na, hinihintay ang mata ni Neil**
 
 > The single resume doc. One screen, one next action. Read this first.
 > **Freshness contract:** if the stamp is >5 days behind `git log -1`, treat as UNVERIFIED —
@@ -9,74 +9,74 @@
 
 ---
 
-## ▶ NEXT ACTION — OCEANIDES GB-001: i-render ULIT ang video sa pasadong script
+## ▶ NEXT ACTION — PANOORIN NI NEIL ANG `GB-001-AD-v2.mp4`
 
-🔴 **BASAHIN MUNA ANG SKILL BAGO GUMALAW.** `/kuya-marvin-ads`. Ito mismo ang
-nilaktawan noong 2026-08-03 at nagkahalaga ng ~$4 na maling render. Sabi ni Neil:
-*"nasa kuya marvin skill lahat yan diba... sana man lang tumingin ka muna dun."*
+🔴 **BASAHIN MUNA ANG `/kuya-marvin-ads` BAGO GUMALAW.** Pangalawang beses na to.
 
-**Ang GB-001-AD-v1 ay BAGSAK, huwag i-upload.** Mas malakas ang strategy, mas
-mahina ang craft. Anim na bagay: hook 15 salita (max 8), body 20-21 (max 12),
-3 magkaibang lugar (dapat isang jobsite), hook sa `y=150` (feed-safe 285-1635),
-walang caption, walang SFX, music sa 0.10.
+`clients/oceanides/kuya-gabriel/ads/gb-001/GB-001-AD-v2.mp4` — **22.1s**, 1080×1920.
+Pasado ang dalawang gate: `ad_preflight --build/--video` at `render_audit` (grade **B**,
+`vo_accent_ok`, walang dead air, `covers_face:false` sa lahat).
 
-✅ **May gate na ngayon, hindi na uulit** — `tools/ad_preflight.mjs` +
-`.claude/hooks/veo-render-gate.sh` (PreToolUse, fail-closed: walang pasadong
-`script.spec.json` = walang bayad na Veo render).
+**Walong beat:** hook (mukha) · plunger b-roll · takot (mukha) · phone b-roll ·
+**HTML quote card** · screen scroll ng totoong page · CTA (mukha) · end card.
 
-✅ **PASADO na ang bagong script:** `kuya-gabriel/ads/gb-001/script.spec.json`.
-Hook 8 salita 1 pangungusap, 7 body line na 8-9 salita, isang jobsite, preset
-**`spotlight`** (approved). Ang line 3 ay **APPROVED verbatim ni Neil** —
-*"Isa ang presyo sa phone, iba na sa receipt."* → **SCENE 3.** Wag galawin.
+### ⛔ Tatlong bagay na hinihintay ang sagot mo
+1. **Kling para sa 2 b-roll** — still + FFmpeg zoom pa lang sila. **BAYAD**, gated,
+   at hindi ko pa nagagamit ang lane kaya wala akong masabing presyo nang hindi humuhula.
+2. **`maxPaidRolls`** — wala pa sa `script.spec.json`, kaya **naka-harang ang lahat ng
+   bayad na render.** Ikaw ang magsasabi ng bilang. Sinadya.
+3. Ulitin ba ang r2/r3 nang **isang linya kada roll** (PACING Fix 2, ~$6-8), o tanggapin
+   ang kasalukuyang hugis? Sagutin lang matapos mong panoorin.
 
-### ⛔ Tatlong sagot ni Neil ang kailangan bago ang unang piso
-1. **Basahin ang 7 linya sa `script.spec.json`** — pinakamura ngayon, walang plate pa.
-2. **Alin ang isang jobsite?** Kalye + puting truck, o likod-bahay + tangke.
-3. **~$4 ang bagong rolls.** Gated. `$0` naman ang caption/SFX/music/hook position.
+### 🔴 Ang aral ng 2026-08-03, at ang gate na ipinalit
+Sampung tawag sa Veo noong **dalawa** lang ang inaprubahan. Ang script ay pumasa sa gate
+pero **dalawang linya ang nakasaksak sa bawat 8s roll** — ang eksaktong bagay na binawi
+mo noong 2026-07-27. Binibilang ng lumang gate ang salita kada LINYA, hindi ang linya
+kada CLIP. Ngayon may bantay na (`797bdf0`):
 
-**Pipeline:** `/kuya-marvin-ads` → plates (`marvin-avatar` + `kuya-gabriel/IDENTITY.md`,
-🔴 laging isama ang no-smile line, hindi sya nahuhuli ng EXPRESSION LOCK) →
-`veo-produce.mjs --formula optionb` → `build-cut.sh` → **`ad_preflight --build/--video`**
-→ **`render_audit.mjs`** (sya lang ang NAKIKINIG) → Neil.
+- isang linya kada roll (basa sa `beatMap`) · `maxPaidRolls` na binibilang ng hook,
+  pati ang hinarang ng RAI · b-roll ay dapat may Kling motion lane · kailangan ng HTML
+  overlay + end card + zoom sa build
+
+⚠️ **Butas pa rin:** kapag HTML overlay ang gamit, nilalaktawan ng gate ang feed-safe
+check (naghahanap sya ng `band()`). Manwal na na-verify ang hook sa y=300-560.
+At mali ang binabasa nyang `volume=` (nakukuha ang SFX 0.45, hindi ang music 0.20).
 
 ### ✅ Tapos at aprubado
-**Static ad** `clients/oceanides/out/price-addons-ticket.png` — APPROVED, handa nang i-upload.
-**Infra** buo: domain verified, pixel + AEM live, card OK, `Lead` = 1 kada submit (`3da6997`).
-**Ledger** may laman na: KM-003 (₱1,284.92 · ~100 message · **1 order**), pattern A1-A4.
-⏳ Kailangan pa: **redeploy ng funnel**, **test submit sa apex**, at **3-5 organic post**
-(`kuya-gabriel/organic/PAGE-POSTS-PRE-AD.md`) bago ang unang campaign.
-Run sheet: `kuya-gabriel/ads/CAMPAIGN-RUN-SHEET.md` (paste-ready, may UTM).
-
-🔴 **TANONG NA HINDI KO MASAGOT:** may laman na ba ang Page `291924520660232`?
-Kung oo, laktawan ang organic at dumiretso sa run sheet.
+**Static ad** `clients/oceanides/out/price-addons-ticket.png` — handa nang i-upload.
+**3 plate + 2 b-roll** ni Gabriel — **inokay ni Neil**. Recipe: `make-plates.mjs`,
+`make-broll.mjs`. **Infra** buo: domain, pixel, AEM, card, `Lead` = 1 kada submit.
+**Ledger:** KM-003 (₱1,284.92 · ~100 message · 1 order).
+⏳ Kailangan pa bago ang unang campaign: **redeploy ng funnel**, **test submit sa apex**,
+at **3-5 organic post** — **BLANGKO pa ang Page `291924520660232`** (kumpirmado ni Neil).
+Run sheet: `kuya-gabriel/ads/CAMPAIGN-RUN-SHEET.md`.
 
 ⚠️ **Client world:** navy + amber print, no glass, no `#FFCC00` — `clients/oceanides/DESIGN.md`
-ang batas, hindi ang Grifon `DESIGN.md`. 📱 `claude.ai/code/artifact/9c0c6df5-46eb-4f75-8ea1-2631ef650d40`
+ang batas, hindi ang Grifon `DESIGN.md`.
 
 ## 🅿 PARKED
 
-**Oceanides:** SEC Reg. No. · FB About: buong SEC name · logo-marquee ·
-real-bookings feed · **reviews sa FB Page** (bubuksan ang rating chip) ·
-**page #2 = DENR Compliance B2B** · 2 FB page, alin ang totoo · voice clone ni
-Gabriel (Veo audio muna ngayon, hindi STS).
+**Oceanides:** SEC Reg. No. · FB About: buong SEC name · logo-marquee · real-bookings feed ·
+reviews sa FB Page · page #2 = DENR Compliance B2B · **voice clone ni Gabriel** (Veo audio
+muna — kaya galing sa Veo roll ang VO ng beat 6) · **per-word invert ng `spotlight`**
+(chunk-pop lang ang gawa, kulang ng per-word timing).
 
-**Suby 27-min brief** (walang doc): FB-group VOC mining · creative-reps counter ·
-print-ad seeding ng `static_ad_swipe_file.md`.
+**Suby 27-min brief:** FB-group VOC mining · creative-reps counter · print-ad seeding.
 
-**Grifon punch list** (trigger: Neil says so): ✅ #91+#94.1 · #94.3 next · #94.2
-NOT-REPRO · #96 ✅ · #92+#89/#90 ride Slice B · #93 ⛔ TUNED.
+**Grifon punch list:** ✅ #91+#94.1 · #94.3 next · #94.2 NOT-REPRO · #96 ✅ ·
+#92+#89/#90 ride Slice B · #93 ⛔ TUNED.
 
-### Voice + HOUSE MODEL (`assets/house-model/`, 2026-08-02)
+### Voice + HOUSE MODEL (`assets/house-model/`)
 LANGUAGE LOCK sa `_shared/taglish-voice.md`, 3 gate, naka-auto-fire (CLAUDE.md).
-Naka-lock na Filipina model, 63 larawan — basahin ang README doon bago gumawa.
 
 ## ⛔ Gated — not without Neil · 🔧 Arm before starting
-Any paid render · P5 engine-default flip · Hyperframes swap · **anumang ad spend**.
+Any paid render · Kling b-roll · P5 engine-default flip · **anumang ad spend**.
 
 ```powershell
 .\scripts\restore-git-identity.ps1
 .\scripts\restore-gh.ps1
-.\scripts\restore-hyperframes.ps1   # ffmpeg -> .tools\ffmpeg\...\bin (idagdag sa PATH)
+.\scripts\restore-hyperframes.ps1   # ffmpeg -> .tools\ffmpeg\...\bin
+.\scripts\restore-codex.ps1
 ```
 
 ---
