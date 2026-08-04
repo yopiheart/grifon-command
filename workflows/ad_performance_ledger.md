@@ -216,6 +216,50 @@ hangga't hindi umaabot ng **50-100 LPV** (mga ₱400-700 pa sa rate na to).
    policy). Browser-only ang signal, kaya ang bilang ng pixel ay **floor** —
    laging mas mababa kaysa totoo dahil sa ad blocker at iOS.
 
+#### Pangalawang data pull — 2026-08-05 (dalawang araw ng delivery, 08-04 → 08-05)
+
+| Ad | Impr | Clicks | Outbound | **LPV** | ₱/LPV | Lead | CPM | Gastos |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| **km004-video** | 788 | 71 (9.0%) | 53 | **37** | **₱4.76** | 0 | ₱223 | ₱176.11 |
+| addons-ticket | 446 | 45 (10.1%) | 14 | 9 | ₱12.56 | 0 | ₱253 | ₱113.03 |
+| **hooktest-chalk** | 324 | 48 (14.8%) | 13 | 11 | **₱3.68** | 0 | **₱125** | ₱40.44 |
+| advertorial | 95 | 15 (15.8%) | 3 | 2 | ₱7.65 | 0 | ₱161 | ₱15.30 |
+| warranty-proof | 26 | 1 (3.9%) | 0 | 0 | — | 0 | 🔴 **₱846** | ₱21.99 |
+| **Total** | **1,679** | 180 | 83 | **59** | ₱6.22 | **0** | — | **₱366.87** |
+
+**Ano ang nangyari:**
+- **Pinili na ng CBO ang kabayo nya: km004-video.** Sa unang 12 oras ₱10 lang
+  ang napunta sa video; ngayon 48% ng buong spend. Video funnel: 626 plays →
+  44% umabot sa p25 → **21% natapos ang buong video**, avg 15s na panonood.
+  Malakas ang katawan ng creative — ang 37 LPV nya ay 63% ng lahat.
+- **hooktest-chalk (S34/S35, walang logo) ang pinaka-episyente kada piso:**
+  ₱3.68/LPV at ₱125 CPM, pinakamura sa magkabilang sukat sa mga static.
+  Ang mekanismo-sa-tisa ay binabasa ng Andromeda bilang fresh — hindi pa
+  panalo (walang lead), pero ito ang tamang static na palakasin.
+- 🔴 **warranty-proof ay patay na sa auction:** ₱846 CPM (7× ng chalk), 26
+  impressions sa 2 araw, 0 LPV. Hindi na kailangan patayin — **sinakal na sya
+  ng CBO mismo** (1.5% ng impressions). Opsyonal ang pause, kosmetiko lang.
+- Frequency 1.16-1.23 sa lahat — walang fatigue, malayo pa.
+- **59 LPV, 0 form submit** — pumasok na tayo sa 50-100 LPV na hatol-zone na
+  itinakda ng unang pull. 🔴 **PERO bago husgahan ang page: ang page ay may
+  Call button at Messenger** — ang taong nakabasa na ng presyo ay walang
+  dahilan mag-form, tatawag o magme-message na lang. **Ang form ang sinusukat
+  ng pixel, hindi ang tawag.** Kailangan ng bilang ni Zam (tawag + chat mula
+  08-04) bago sabihing sira ang page — ito mismo ang aral ng **A3** sa
+  kabaligtarang direksyon: wag ibase ang hatol sa nasusukat lang.
+
+**So-What:** walang galaw sa budget o structure ngayon — ang ₱500/day ay
+naghahanap pa ng unang lead/booked job at ang break-even ay nasa booked job
+(₱900), hindi sa LPV. Ang tanging kailangang datos na wala sa Ads Manager:
+**ilan ang tumawag o nag-Messenger kay Zam mula 08-04.** Kapag zero din yun
+sa susunod na ~40 LPV, saka ang page ang suspek (unang tingin: ang form ay
+nasa dulo ng mahabang page; ang presyo ay nasa taas — nakukuha na nila ang
+sagot bago pa ang form).
+
+**Patterns:** ang chalk na pangunguna sa mga static (CPM + ₱/LPV) ay pangalawang
+brand signal para sa **S34** — hindi pa corroboration (walang lead/booked job na
+katibayan), i-log ulit kapag may conversion. Walang kontra sa A1-A4.
+
 ---
 
 ### 2026-07-28 → 08-03 — OCEANIDES-KM003-hook2 (Meta, PH septic tank siphoning / local service)
