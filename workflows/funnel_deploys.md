@@ -4,7 +4,20 @@ Vercel settings live outside git; the defreezer wipes local CLI links. Every fun
 gets recorded here (funnel-forge skill, step 8). Re-link after a wipe: `npx vercel link`
 inside the instance dir (CLI login: Neil's Vercel account `neilmaglayabusiness22-2085`).
 
-## oceanides-price-page (oceanides-price-page-v1) — deployed 2026-08-02 · redeployed 2026-08-03
+## oceanides-price-page (oceanides-price-page-v1) — deployed 2026-08-02 · redeployed 2026-08-04
+
+- ✅ **Redeploy 2026-08-04** (`dpl_6nru2wqWYxLatSoPYTcwrj4oTi6p`): **Tawag Cockpit v0**
+  (`79495d9`, plano: `clients/oceanides/tawag-cockpit-plan.md`) — briefing card kada lead,
+  3 objection cards, objection + follow-up log, 60s poll + tab badge + tunog. **SQL muna
+  bago ang deploy na to** (UPGRADES section ng `supabase/funnel_leads.sql`, ni-run ni Neil
+  sa SQL editor, Success) — kapag may susunod na fresh Supabase, parehong pagkakasunod.
+  Verified live sa apex: `/ops` nagsi-serve ng `ops-Nam7GHNu.js`, kumpleto ang cockpit
+  markers. ⚠️ Lesson: ang unang "deploy" ni Neil ay hindi tumalab (malamang dashboard
+  Redeploy = inulit ang LUMANG build) — **CLI `npx vercel deploy --prod --yes` mula sa
+  instance dir ang tamang daan, at i-verify ang live chunk pagkatapos, wag basta
+  maniwala sa "ready".** ⏳ Kay Neil: eyeball ng naka-login na cockpit sa PC + phone
+  (walang passphrase ang agent, sya ang huling gate) + ang usapan kay Zam (log = para
+  sa cards, hindi panukat).
 
 - ✅ **Redeploy 2026-08-03** (`dpl_CiKsvZNKjRJtFZ9PDaVwANWDfq2u`): dala na ng prod ang
   `3da6997` (Lead fires once per submission, not per page load). **Live e2e ulit, green:**

@@ -2,23 +2,20 @@
 
 **Stamped: 2026-08-04** (session 7, gabi)
 
-## ▶ NEXT ACTION — 🟠 TAWAG COCKPIT NAKA-BUILD, DALAWANG PINDOT BAGO LIVE
+## ▶ NEXT ACTION — 🟢 TAWAG COCKPIT LIVE NA SA /ops
 
-**Tawag Cockpit v0 TAPOS at naka-push (`79495d9`)** — briefing card kada lead,
-3 objection cards (deck approved ni Neil), objection log + follow-up, buhay na
-`/ops` (60s poll, tab badge, tunog). Plano: [`clients/oceanides/tawag-cockpit-plan.md`](clients/oceanides/tawag-cockpit-plan.md).
+**Tawag Cockpit v0 LIVE** (`79495d9`, deploy `dpl_6nru2wq...`, verified ang
+live chunk) — briefing card kada lead, 3 objection cards, objection + follow-up
+log, buhay na `/ops`. SQL applied ni Neil (Success). Plano:
+[`clients/oceanides/tawag-cockpit-plan.md`](clients/oceanides/tawag-cockpit-plan.md).
 
-### A · Kay Neil — pagkakasunod-sunod na BAWAL baligtarin
-1. **I-apply MUNA ang SQL** sa Supabase SQL editor: yung UPGRADES section sa
-   dulo ng [`supabase/funnel_leads.sql`](supabase/funnel_leads.sql) (idempotent,
-   safe i-paste buo). ⚠️ Kapag na-deploy nang wala to, **500 ang buong /ops**.
-2. **Tapos deploy:** sabihin lang kay agent na "deploy na" — armado ang Vercel
-   CLI (`whoami` = neilmaglayabusiness22-2085, session 7) at nakahanda ang
-   build. Manual: `cd funnels/oceanides-price-page` → `npx vercel deploy --prod --yes`.
-3. **Eyeball sa live:** buksan ang `/ops` sa PC at phone — lead card → presyo →
-   cards → objection pindot → follow-up date. Tapos ang usapan kay Zam:
-   **para sa cards ang log, hindi panukat sa kanya.**
-4. Dating listahan (session 6, buhay pa rin): FB page refresh ni Marvin ·
+### A · Kay Neil
+1. **Eyeball ng naka-login na `/ops`** sa PC at phone (walang passphrase ang
+   agent, ikaw ang huling gate): lead card → presyo → bukas na linya → 3 cards →
+   objection pindot → follow-up date → tunog toggle.
+2. **Ang usapan kay Zam:** live na ang cockpit nya; **para sa pagpapabuti ng
+   cards ang log, hindi panukat sa kanya** (premortem bitag #1).
+3. Dating listahan (session 6, buhay pa rin): FB page refresh ni Marvin ·
    ipasa ang `/pack/km-week-01.html` sa admin · sabihan sina Zam/Ejay ng bagong
    password + `/presyo` · Instagram.
 
