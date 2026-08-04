@@ -104,6 +104,17 @@ Half-baked ideas don't go here — they go in conversation and either die or get
 
 **Source:** Same NotebookLM brief as item #1. Neil endorsed the consumer-side application of agent loops as the headline Autopilot feature.
 
+> **Positioning language parked (2026-08-05, Boris Cherny / Claude Code brief eval):** the
+> brief's enterprise thesis — "place AI at the center of company operations, un-bottleneck
+> one constraint at a time" — is the exact pitch frame for THIS tier, SMB-sized. Oceanides /
+> Kuya Marvin is the living case study (ads → landing page → Tawag Cockpit → ledger = AI sa
+> gitna ng operations ng maliit na negosyo). When Autopilot selling resumes, hand this frame
+> to `grifon-cmo` as swipe material. Workflow-layer verdict of the same eval: **zero edits**
+> — auto-permission-mode, loop registry, evals-vs-vibes split, and model-as-orchestrator
+> (WAT) were already house doctrine; Cherny's "deterministic engines are obsolete" targets
+> rigid DAG pipelines, NOT WAT's agent-at-center shape. No loop to arm from this brief
+> (nightly regression stays quota-parked).
+
 ---
 
 ### 3. MarketMind / Offer Optimizer "Reuse Previous Research" UX

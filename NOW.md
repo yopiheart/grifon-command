@@ -57,6 +57,8 @@ digital tayo sa lahat ng 4 gaps, wag gayahin ang nines-maximalism; isang tunay
 na apply lang: **closed-loop simulated-user eval harness bilang HARD GATE bago
 buuin ang AUTO Director brain** — 5 personas + transcript-level critic, nakasulat
 sa `workflows/concierge_director_plan.md` §2 (katabi ng skills-as-workforce note).
+**Cherny/Claude Code brief eval** — hatol: ZERO edits, doctrine na natin lahat;
+ang Autopilot positioning frame lang ang na-park sa `post_beta_roadmap.md` #2.
 
 ## 🅿 PARKED
 
