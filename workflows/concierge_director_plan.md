@@ -117,6 +117,47 @@ TUNED — skills *reference* `api/_lib/prompts.ts`, never fork it. Source: Garry
 "New Physics of Business" brief eval (2026-07-28) — the one product-layer apply;
 everything else in that brief was already WAT doctrine.
 
+### Closed-loop eval harness — build it BEFORE the brain (noted 2026-08-05)
+Deferred along with the AUTO Director brain — recorded here so the gate exists the
+day Option A resurfaces. Source: Waymo/Dolgov "the demo is 1%" brief eval
+(2026-08-05); the one genuinely new apply for this repo — everything else in that
+brief was either already doctrine (evidence gates, adopt-only-on-simplification)
+or explicitly digital-side-of-the-gap and correctly NOT adopted (nines-maximalism,
+eval-infra-before-features).
+
+**The gap:** the whole eval stack today is open-loop — ~100 unit tests, the opt-in
+live regression suite, and `gemini-eval` all grade a single output against a
+ruleset. That is the right shape for the shipped Concierge (the user is the brain;
+every generation is one-shot in/out). It is structurally insufficient for the AUTO
+Director brain, which is a multi-turn agent: each reply changes what the user says
+next, so a session can derail while every individual turn grades fine. **Failure
+lives in the sequence, not the turn.**
+
+**The rule (hard gate):** `api/director/run.ts` does not get built until this
+harness exists and its pass bar is written down. Eval before technology. This line
+is part of Option A's resume trigger, same standing as the demand gate.
+
+**Harness shape (workflow-layer, all non-tuned, cost-capped):**
+- **Driver:** a cheap model (Haiku/Sonnet) plays a scripted user persona for a
+  FULL session against the brain. Personas seeded from real archetypes
+  (Bryan/Olivia + the Oceanides ops experience):
+  1. **"Ikaw na bahala"** — vague brand info, no assets, expects magic. Does the
+     brain extract a minimum viable brief instead of hallucinating one?
+  2. **The mind-changer** — approves the script, then reverses at storyboard
+     ("gawin nating testimonial"). State consistency + graceful re-plan.
+  3. **The contradictor** — quotes one price in turn 2, a different one in turn 8.
+     Does the brain notice, ask, and never ship the wrong number?
+  4. **The budget-anxious** — objects to cost mid-flow. Scope-down path (1-scene
+     cap) instead of silent full-spend.
+  5. **The register-switcher** — flips Taglish↔English mid-session. LANGUAGE LOCK
+     holds in output copy while the brain follows the user's register in chat.
+- **Critic:** a session-level rubric graded over the full TRANSCRIPT — goal
+  reached, turns wasted, contradictions caught, cost respected — plus the existing
+  `gemini-eval` grade on the final artifact. Transcript grading is the new piece;
+  artifact grading already exists. Reuse, don't fork.
+- **Cost cap:** persona sessions run against a stubbed or 1-scene pipeline. The
+  harness tests DIRECTION quality, not render quality. Never full renders.
+
 ### Higgsfield MCP — not a competitor, a possible backend
 Higgsfield MCP (launched 2026-04-28) exposes 30+ raw generation models (Soul,
 Kling, Veo, Sora, Seedance...) as MCP tools: generate image/video, train
