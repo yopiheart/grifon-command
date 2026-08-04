@@ -10,7 +10,8 @@ import { funnelConfig } from '../src/funnel.config.js';
 //   POST   ?action=login    passphrase -> cookie
 //   POST   ?action=logout   burahin ang cookie
 //   GET                     listahan ng lead ng client na to
-//   PATCH                   baguhin ang status / amount / address / notes
+//   PATCH                   baguhin ang status / amount / address / notes,
+//                           at ang call log ng cockpit (objection, follow_up_at)
 //
 // 🔴 BAKIT MAY PASSWORD ITO AT HINDI PWEDENG WALA.
 // Ang laman ay pangalan, phone, at email ng totoong tao. Ang parehong form na
@@ -61,6 +62,13 @@ const isAuthed = (req: VercelRequest, passphrase: string): boolean => {
  *  para hindi makapasok sa talaan ang typo na hindi na mabibilang pagkatapos. */
 const STATUSES = ['new', 'tinawagan', 'booked', 'tapos', 'hindi_natuloy'] as const;
 
+/** Ang objection na narinig sa tawag. Sarado rin ang listahan, at parehong
+ *  dahilan ng STATUSES: ito ay bibilangin. Ang buong halaga ng log na to ay
+ *  ang masabi kung ilan sa sampung tawag ang namamatay sa presyo, at ang
+ *  bukas na text box ay nagiging limang baybay ng iisang bagay pagkaraan ng
+ *  isang buwan. Kapag may bagong card sa deck, dito muna sya papasok. */
+const OBJECTIONS = ['mahal', 'schedule', 'legit', 'iba', 'walang_sagot'] as const;
+
 const Patch = z.object({
   id: z.string().uuid(),
   status: z.enum(STATUSES).optional(),
@@ -68,6 +76,10 @@ const Patch = z.object({
   amount: z.number().nonnegative().max(10_000_000).nullable().optional(),
   address: z.string().trim().max(500).nullable().optional(),
   notes: z.string().trim().max(4000).nullable().optional(),
+  objection: z.enum(OBJECTIONS).nullable().optional(),
+  // ISO datetime, gawa ng browser (`toISOString`). Naka-store as-is: timestamptz
+  // ang column, kaya ang Postgres na ang bahala sa oras at sa timezone.
+  follow_up_at: z.iso.datetime().nullable().optional(),
 });
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -131,7 +143,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method === 'GET') {
     const { data, error } = await admin
       .from('funnel_leads')
-      .select('id,created_at,name,email,phone,utm,status,amount,address,notes,consent')
+      .select('id,created_at,name,email,phone,utm,status,amount,address,notes,consent,objection,follow_up_at')
       .eq('client_id', funnelConfig.meta.clientId)
       .order('created_at', { ascending: false })
       .limit(500);
@@ -164,7 +176,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       // Ang pangalawang sala ang pumipigil sa pag-edit ng row ng ibang kliyente
       // kahit tama ang uuid na ipinasa.
       .eq('client_id', funnelConfig.meta.clientId)
-      .select('id,status,amount,address,notes')
+      .select('id,status,amount,address,notes,objection,follow_up_at')
       .maybeSingle();
 
     if (error) {

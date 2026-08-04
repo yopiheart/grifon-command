@@ -1,7 +1,8 @@
 # Tawag Cockpit — plano ng sales copilot para kay Zam
 
-**Status:** PLANNED — galing sa `/grill-me` session 2026-08-04, aprubado ni Neil ang
-bawat desisyon sa baba. **Hindi pa nag-uumpisa ang build.**
+**Status:** BUILDING — galing sa `/grill-me` session 2026-08-04, aprubado ni Neil ang
+bawat desisyon sa baba. **§5 deck APPROVED ni Neil 2026-08-04 ("Okay na to. Approved")
+— verbatim na ang copy, wag nang i-rewrite.**
 **Saan itatayo:** dagdag sa `/ops` ng [`funnels/oceanides-price-page/`](../../funnels/oceanides-price-page/) —
 HINDI bagong page, HINDI bagong deploy.
 **Ang malaking litrato:** unang hakbang ng "AI sales copilot para sa newbie agents" na
@@ -94,7 +95,7 @@ ng cockpit ay mas bagay sa `code-executor` o main loop dahil may disenyo.
   pag-usapan ang presyo o ang offer. Kasama sa trabaho ng tool ang ituro kung
   nasaan talaga ang problema.
 
-## 5. DRAFT — unang deck ng cards (⚠️ HINDI PA APRUBADO NI NEIL)
+## 5. Unang deck ng cards (✅ APPROVED ni Neil 2026-08-04 — kopyahin VERBATIM sa `cards.ts`)
 
 Boses: kalmadong eksperto, hindi masiglang salesman. Taglish per
 [`taglish-voice.md`](../../.claude/skills/_shared/taglish-voice.md). Walang em dash,

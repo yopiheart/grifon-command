@@ -55,3 +55,28 @@ create index if not exists funnel_leads_client_created
 -- policies at all → default deny for both read and write: a public funnel page
 -- must never be able to read the lead roster or forge/backdate consent.
 alter table public.funnel_leads enable row level security;
+
+-- ---------------------------------------------------------------------------
+-- UPGRADES — append-only, `if not exists` everywhere. Same doctrine as the rest
+-- of this file: safe to re-run against a live table, in any order.
+-- ---------------------------------------------------------------------------
+
+-- The ops-tracker columns (/ops, funnels/oceanides-price-page). These THREE
+-- ALREADY EXIST in the live database — they were added by hand when the tracker
+-- shipped and never backfilled into this file, so a fresh project built from
+-- this .sql alone would have been missing them. Written down now: the live
+-- schema is not the record, this file is. `if not exists` makes it a no-op
+-- where they are already present.
+alter table public.funnel_leads add column if not exists amount numeric;   -- how much the job actually billed
+alter table public.funnel_leads add column if not exists address text;     -- filled in on the call, not by the form
+alter table public.funnel_leads add column if not exists notes text;
+
+-- Tawag Cockpit call log (2026-08-04, clients/oceanides/tawag-cockpit-plan.md).
+-- Pagkatapos ng tawag, dalawang pindot lang ni Zam: anong objection ang narinig,
+-- at kailan ang follow-up. Ang laman ng `objection` ay sarado sa api/ops.ts
+-- (mahal | schedule | legit | iba | walang_sagot) at hindi dito, para maging
+-- label change at hindi migration ang pagdagdag ng bagong card sa deck.
+--
+-- Ang log na to ay para sa pagpapabuti ng cards, HINDI para sukatin si Zam.
+alter table public.funnel_leads add column if not exists objection text;
+alter table public.funnel_leads add column if not exists follow_up_at timestamptz;
