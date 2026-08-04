@@ -71,7 +71,8 @@ at sa `.claude/skills/kuya-marvin-ads/`.
 ## HARD GATE 2 — Booking attribution (Day 1, hindi Day 30)
 
 - **Dispatcher script dagdag:** "Saan n'yo po kami nakita?" (kasama ng existing "May nag-refer po ba?"). I-log sa referrer tracking sheet — dagdag na Source column: `Referrer / Kuya Marvin / Branch page / Iba`.
-- **Iisang CTA sa bawat video:** libreng inspection + numbers (Globe 0917-671-6383 / Smart 0939-245-6217) + **"sabihin n'yo, kay Kuya Marvin kayo."** Ang mention line ang attribution key.
+- **Iisang CTA sa bawat video:** libreng inspection + number + **"sabihin nyo, kay Kuya Marvin kayo."** Ang mention line ang attribution key.
+  - 🔴 **NUMBER CHANGE (Neil, 2026-08-04): ang number ng page ay Globe `0935-258-9927` na (hawak ni Zam).** Tanggal na ang dalawang number ni Boss Jay (0917-671-6383 / 0939-245-6217) sa LAHAT ng bagong creative, caption, at page surface. Ang mga lumang template sa `clients/oceanides/templates/` ay may lumang numbers pa — palitan bago i-render ulit ang alinman.
 - **Scoreboard = attributed calls at booked jobs. HINDI views.**
 - **30-day checkpoint (pre-committed pivot):** kung may views pero zero attributed calls → i-shift ang mix pa-FB Reels + groups + offer-led content. Ang FB ang serviceable-geo lane (MM + Cavite-Laguna + Bulacan-Pampanga); ang TikTok ay nationwide reach na secondary sa booking goal.
 
