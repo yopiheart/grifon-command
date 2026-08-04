@@ -4,27 +4,26 @@
 
 ## ▶ NEXT ACTION — 🟢 BUHAY NA ANG UNANG CAMPAIGN
 
-**`OCEANIDES-PRICE-01` ay ACTIVE mula 2026-08-04.** ₱500/araw, 4 static, NCR.
-Ang agent ang gumawa at nag-ON, hindi si Neil. Buong tala:
+**`OCEANIDES-PRICE-01` ay ACTIVE mula 2026-08-04.** ₱500/araw, NCR, at **LIMA
+na ang ad** — pasok na ang `km004-video` at sya pa ang pinakamalakas ang
+delivery sa unang oras. Buong tala:
 [`workflows/ad_performance_ledger.md`](workflows/ad_performance_ledger.md).
 
-### A · Sa umaga, tatlong bagay (Neil)
-1. **Tingnan kung Active nga ang apat na ad**, hindi `In review` na natigil o
-   `Rejected`. Bagong account, kaya doon lalabas kung may policy flag.
-2. **I-upload nang manwal ang `KM-004-AD-v1.mp4`** sa Ads Manager at idagdag sa
-   ad set `120248564354250056`. **Hinarang ng Meta ang upload tool sa API**, kaya
-   ito lang ang hindi ko nagawa. Piliin ang unang frame bilang thumbnail o
-   i-upload ang `clients/oceanides/kuya-marvin/ads/km-004/KM-004-thumb-frame0.png`.
-3. **Ikabit ang Instagram** sa ad account — gated ang lookup, kaya FB lang muna.
+### A · Natitira (Neil)
+1. **Gumawa ng Instagram** para sa page (wala pa), tapos ikabit sa ad account —
+   FB placements lang ang tumatakbo hanggat wala.
 
-### B · Kapag kumpirmado nang maayos ang delivery (agent)
-4. Linisin ang pansamantalang hosting: `funnels/oceanides-price-page/public/ad/`
-   at ang `*.mp4` sa `public/`, tapos i-redeploy. Hinayaan silang naka-host
-   para hindi masira ang buhay na ads sa gitna ng gabi. May sariling hash na si
-   Meta sa apat na larawan, kaya ligtas na sila burahin.
+### B · ✅ Tapos (session 6, umaga 2026-08-04)
+- Kumpirmado sa API: **lahat ng LIMANG ad ay ACTIVE**, walang In review o
+  Rejected sa bagong account.
+- Nalinis ang temp hosting (`public/ad/` + mp4), na-redeploy, verified: 404 na
+  ang temp files, 200 pa rin ang `/` at `/thank-you`.
 
 ### C · Organic habang tumatakbo
-6. `clients/oceanides/kuya-gabriel/organic/PAGE-POSTS-PRE-AD.md` — isa kada araw.
+- **Kay KUYA MARVIN ang organic, hindi kay Gabriel** (Neil, 2026-08-04):
+  `clients/oceanides/kuya-marvin/organic/PAGE-LAUNCH-POSTS.md` — isa kada araw.
+- Nag-propose si Neil ng value-driven organic, Fibo Lim ang modelo — susunod na
+  pag-uusapan; may dala syang inspiration posts.
 
 ### 🆕 Talaan ng booking — buhay na
 **`https://oceanidesph.com/ops`** — dito nakikita at pinupunan ni Zam ang bawat lead:
