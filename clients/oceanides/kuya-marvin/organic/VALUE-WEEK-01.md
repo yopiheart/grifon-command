@@ -175,7 +175,7 @@ mismong tumutunaw ng dumi. Sila ang libreng trabahador nyo, araw-gabi,
 walang bayad.
 
 Kapag nagbuhos kayo ng matapang na chemical, tulad ng muriatic, namamatay
-sila. Kaya yung tank na dapat tumutunaw ng laman nya, nagiging imbakan na
+sila. Kaya yung tank na dapat tumutunaw ng laman nya, nagiging storage na
 lang. Mas mabilis mapuno, mas mabilis umamoy.
 
 Kaya bago kayo bumili ng pampatunaw, alamin nyo muna kung ano talaga ang

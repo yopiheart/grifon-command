@@ -83,7 +83,7 @@ await browser.close();
 const scheduleRows = POSTS.map((p, i) =>
   `<tr><td>${DAYS[i]}</td><td>6:00 PM</td><td>Post ${p.n} &middot; ${esc(captions[p.n].title)}</td></tr>`).join('\n');
 
-const html = `<title>Kuya Marvin — Linggo 1 Posting Pack</title>
+const html = `<title>Kuya Marvin &middot; Linggo 1 Posting Pack</title>
 <style>
   :root {
     --amber: #F5B301; --navy: #0E2C5E; --navy2: #0A1F45; --void: #071630;
@@ -219,3 +219,12 @@ ${cardsHtml}
 
 writeFileSync(OUT, html);
 console.log('wrote ' + OUT + ' (' + (html.length / 1024 / 1024).toFixed(2) + ' MB)');
+
+// Pangalawang kopya: public hosting sa price-page Vercel project (ang link na
+// binubuksan ng admin). May noindex para hindi mapulot ng search engines.
+const PUB = path.join(ROOT, 'funnels', 'oceanides-price-page', 'public', 'pack', 'km-week-01.html');
+import('node:fs').then(({ mkdirSync }) => {
+  mkdirSync(path.dirname(PUB), { recursive: true });
+  writeFileSync(PUB, '<!doctype html>\n<meta charset="utf-8" />\n<meta name="robots" content="noindex, nofollow" />\n<meta name="viewport" content="width=device-width, initial-scale=1" />\n' + html);
+  console.log('wrote ' + PUB);
+});

@@ -247,6 +247,10 @@ dahilan ang dalawa: **hindi umaasa sa pagtanda, gate ang gamit.**
   at mga bawal. **Ang HTML twin ang ipinapasa sa admin** (labas ng org ang admin, kaya
   hindi gagana sa kanya ang claude.ai link).
   `https://claude.ai/code/artifact/b07b1da9-eb0b-4787-b2ce-12a571e5f8de`
+  🔗 **ANG LINK PARA SA ADMIN: `https://oceanidesph.com/pack/km-week-01.html`** — pangatlong
+  kopya, naka-host sa price-page Vercel project (`public/pack/`, may noindex), kasi hindi
+  kayang buksan ng labas-ng-org ang claude.ai link. Ang build script ang nagsusulat ng
+  LAHAT ng kopya; pagkatapos ng rebuild, i-redeploy din ang funnel.
   Twin: [`artifacts/km-value-week-01.html`](../../artifacts/km-value-week-01.html) ·
   Build: `node tools/artifacts/build-km-week01-runsheet.mjs` (source of truth ng captions:
   `kuya-marvin/organic/VALUE-WEEK-01.md`; images: `organic/cards/` + `organic/stills-week01/`).
