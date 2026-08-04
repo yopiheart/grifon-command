@@ -14,9 +14,11 @@ import React, { useMemo, useState } from 'react';
 //
 // 🔴 ANG PAGE NA TO ANG SOURCE OF TRUTH NG PRESYO para kina Zam. Kapag may
 // binago si Neil sa rates, DITO muna bago sa kahit anong chat o poster.
-// Pinagmulan: Oceanides nationwide pricing brief ni Neil, 2026-08-04. WALANG
-// internal na puhunan o tubo dito, sinadya: customer-facing na presyo lang ang
-// laman, kahit nasa likod pa ng password.
+// Pinagmulan: nationwide pricing brief ni Neil 2026-08-04 + provincial na city
+// list ni Neil (parehong araw). 🔴 ANG LAHAT NG PROVINCIAL RATE DITO AY MAY
+// DAGDAG NANG ₱1,500 sa raw na listahan ni Neil — huwag nang dagdagan ulit.
+// WALANG internal na puhunan o tubo dito, sinadya: customer-facing na presyo
+// lang ang laman, kahit nasa likod pa ng password.
 // ===========================================================================
 
 // --- lugar ------------------------------------------------------------------
@@ -42,6 +44,122 @@ const NCR: Record<string, string> = {
   valenzuela: 'Valenzuela',
 };
 
+/** Kada city sa labas ng NCR na may sariling rate (galing kay Neil, +₱1,500 na). */
+interface CityRate {
+  city: string;
+  rate: string;
+  note?: string;
+  aliases?: string[];
+}
+interface Province {
+  name: string;
+  region: string;
+  cities: CityRate[];
+}
+
+const PROVINCES: Province[] = [
+  {
+    name: 'Aurora', region: 'Central Luzon',
+    cities: [
+      { city: 'Baler', rate: '₱13,500', note: 'Minimum 3 truckloads dahil sa layo.' },
+      { city: 'Ibang bayan ng Aurora', rate: '₱13,500', note: 'Minimum 3 truckloads dahil sa layo.', aliases: ['aurora'] },
+    ],
+  },
+  {
+    name: 'Bataan', region: 'Central Luzon',
+    cities: [
+      { city: 'Balanga', rate: '₱6,000 hanggang ₱6,500' },
+      { city: 'Dinalupihan', rate: '₱6,000 hanggang ₱6,500' },
+      { city: 'Mariveles', rate: '₱7,500 hanggang ₱8,500' },
+    ],
+  },
+  {
+    name: 'Bulacan', region: 'Central Luzon',
+    cities: [
+      { city: 'Malolos', rate: '₱4,500 hanggang ₱5,500' },
+      { city: 'Meycauayan', rate: '₱4,500 hanggang ₱5,500' },
+      { city: 'San Jose del Monte', rate: '₱5,000 hanggang ₱6,000', aliases: ['sjdm'] },
+    ],
+  },
+  {
+    name: 'Nueva Ecija', region: 'Central Luzon',
+    cities: [
+      { city: 'Cabanatuan', rate: '₱6,500 hanggang ₱7,500' },
+      { city: 'Gapan', rate: '₱6,500 hanggang ₱7,500' },
+      { city: 'Muñoz', rate: '₱8,500 hanggang ₱9,000', aliases: ['munoz'] },
+      { city: 'Palayan', rate: '₱9,000 hanggang ₱9,500' },
+      { city: 'San Jose City', rate: '₱9,000 hanggang ₱9,500' },
+    ],
+  },
+  {
+    name: 'Pampanga', region: 'Central Luzon',
+    cities: [
+      { city: 'Angeles City', rate: '₱6,500', aliases: ['angeles'] },
+      { city: 'Mabalacat', rate: '₱5,500 hanggang ₱6,000' },
+      { city: 'San Fernando', rate: '₱5,500' },
+    ],
+  },
+  {
+    name: 'Tarlac', region: 'Central Luzon',
+    cities: [{ city: 'Tarlac City', rate: '₱6,500 hanggang ₱7,500', aliases: ['tarlac'] }],
+  },
+  {
+    name: 'Zambales', region: 'Central Luzon',
+    cities: [{ city: 'Olongapo City', rate: '₱8,000 hanggang ₱8,500', aliases: ['olongapo'] }],
+  },
+  {
+    name: 'Cavite', region: 'CALABARZON',
+    cities: [
+      { city: 'Bacoor', rate: '₱5,000 hanggang ₱5,500' },
+      { city: 'Cavite City', rate: '₱5,000 hanggang ₱5,500' },
+      { city: 'Dasmariñas', rate: '₱5,000 hanggang ₱5,500', aliases: ['dasma', 'dasmarinas'] },
+      { city: 'General Trias', rate: '₱5,000 hanggang ₱5,500', aliases: ['gentri'] },
+      { city: 'Imus', rate: '₱5,000 hanggang ₱5,500' },
+      { city: 'Noveleta', rate: '₱5,000 hanggang ₱5,500' },
+      { city: 'Tagaytay', rate: '₱6,500 hanggang ₱7,500' },
+      { city: 'Trece Martires', rate: '₱6,500 hanggang ₱7,500', aliases: ['trece'] },
+    ],
+  },
+  {
+    name: 'Laguna', region: 'CALABARZON',
+    cities: [
+      { city: 'Biñan', rate: '₱5,000 hanggang ₱5,500', aliases: ['binan'] },
+      { city: 'Cabuyao', rate: '₱5,500' },
+      { city: 'Calamba', rate: '₱5,500 hanggang ₱6,000' },
+      { city: 'San Pablo', rate: '₱6,500 hanggang ₱7,500' },
+      { city: 'Santa Rosa', rate: '₱5,000 hanggang ₱5,500', aliases: ['sta rosa'] },
+      { city: 'San Pedro', rate: '₱5,000 hanggang ₱5,500' },
+    ],
+  },
+  {
+    name: 'Batangas', region: 'CALABARZON',
+    cities: [
+      { city: 'Batangas City', rate: '₱7,000 hanggang ₱7,500' },
+      { city: 'Lipa', rate: '₱6,000 hanggang ₱7,000' },
+      { city: 'Tanauan', rate: '₱6,000 hanggang ₱7,000' },
+    ],
+  },
+  {
+    name: 'Rizal', region: 'CALABARZON',
+    cities: [
+      { city: 'Antipolo', rate: '₱5,500 hanggang ₱6,000' },
+      { city: 'Taytay', rate: '₱5,500 hanggang ₱6,000' },
+      { city: 'Cainta', rate: '₱5,500 hanggang ₱6,000' },
+      { city: 'Montalban / Rodriguez', rate: '₱5,500 hanggang ₱6,000', aliases: ['montalban', 'rodriguez'] },
+      { city: 'San Mateo', rate: '₱5,500 hanggang ₱6,000' },
+      { city: 'Binangonan', rate: '₱5,000 hanggang ₱5,500' },
+      { city: 'Ibang bayan ng Rizal', rate: '₱5,000 hanggang ₱5,500', aliases: ['rizal'] },
+    ],
+  },
+  {
+    name: 'Quezon Province', region: 'CALABARZON',
+    cities: [
+      { city: 'Lucena', rate: '₱7,500 hanggang ₱8,500' },
+      { city: 'Tayabas', rate: '₱7,500 hanggang ₱8,500' },
+    ],
+  },
+];
+
 const normalize = (s: string): string =>
   s
     .toLowerCase()
@@ -50,8 +168,26 @@ const normalize = (s: string): string =>
     .replace(/\s+/g, ' ')
     .trim();
 
+/** alias (normalized) -> tinuturo. Mahaba muna ang susi para hindi unahan ng
+ *  maikli ("san jose city" bago ang "san jose del monte" lookup order ay ayos
+ *  dahil buong susi ang tinutugma, hindi prefix). */
+const CITY_INDEX: Array<{ key: string; province: Province; entry: CityRate }> = [];
+for (const p of PROVINCES) {
+  for (const c of p.cities) {
+    const keys = [normalize(c.city), ...(c.aliases ?? []).map(normalize)];
+    for (const key of keys) CITY_INDEX.push({ key, province: p, entry: c });
+  }
+}
+CITY_INDEX.sort((a, b) => b.key.length - a.key.length);
+
+const PROVINCE_INDEX: Record<string, Province> = {};
+for (const p of PROVINCES) PROVINCE_INDEX[normalize(p.name)] = p;
+PROVINCE_INDEX['quezon province'] = PROVINCE_INDEX['quezon province'] ?? PROVINCES[PROVINCES.length - 1];
+
 type LocVerdict =
   | { kind: 'mm'; city: string }
+  | { kind: 'city'; province: Province; entry: CityRate }
+  | { kind: 'province'; province: Province }
   | { kind: 'outside'; typed: string }
   | { kind: 'ambiguous' }
   | null;
@@ -65,13 +201,28 @@ const checkLocation = (raw: string): LocVerdict => {
   }
   if (n === 'quezon') return { kind: 'ambiguous' };
   const stripped = n.replace(/\bcity\b/g, '').replace(/\s+/g, ' ').trim();
+
+  // 1 · NCR
   for (const key of [n, stripped]) {
     if (NCR[key]) return { kind: 'mm', city: NCR[key] };
   }
-  // Baka nasa loob ng mas mahabang address ang city ("brgy 5 pasig").
   for (const [key, city] of Object.entries(NCR)) {
     if (key.length >= 5 && (` ${n} `).includes(` ${key} `)) return { kind: 'mm', city };
   }
+
+  // 2 · city na may sariling rate (exact muna, tapos nasa loob ng address)
+  for (const { key, province, entry } of CITY_INDEX) {
+    if (n === key || stripped === key) return { kind: 'city', province, entry };
+  }
+  for (const { key, province, entry } of CITY_INDEX) {
+    if (key.length >= 5 && (` ${n} `).includes(` ${key} `)) return { kind: 'city', province, entry };
+  }
+
+  // 3 · province lang ang na-type
+  for (const [key, province] of Object.entries(PROVINCE_INDEX)) {
+    if (n === key || (` ${n} `).includes(` ${key} `)) return { kind: 'province', province };
+  }
+
   return { kind: 'outside', typed: raw.trim() };
 };
 
@@ -89,6 +240,8 @@ const RATE = {
 const SPIEL = {
   mmSiphon:
     'Hello po. Para sa septic tank siphoning sa Metro Manila, ang rate po ay ₱5,000 kada truckload, kasya hanggang 4,000 liters. Kasama na po ang tamang pagtatapon ng waste at may 30-day service warranty. Libre po ang pagtingin sa tank, at sasabihin namin ang buong presyo bago magsimula. Anong araw po ang okay sa inyo?',
+  city: (city: string, rate: string, note?: string) =>
+    `Hello po. Para sa septic tank siphoning sa ${city}, nasa ${rate} po kada truckload, kasya hanggang 4,000 liters. ${note ? note + ' ' : ''}Ico-confirm po namin ang final na presyo bago magsimula, pagkatapos makita ang lugar at ang daanan ng truck. May 30-day service warranty po. Anong araw po ang okay sa inyo?`,
   outside: (loc: string) =>
     `Hello po. Sakop po namin ang ${loc || 'lugar nyo'}, may team po kaming pumupunta dyan. Para maibigay ang tamang presyo, ike-check lang po namin ang lugar, kung anong service ang kailangan, at ang daanan ng truck. Pwede po makuha ang buong address at number nyo? Tatawagan po kayo sa loob ng 1 hanggang 2 oras para sa presyo.`,
   barado:
@@ -111,12 +264,16 @@ const SPIEL = {
     'Kasama po ang paghigop hanggang 4,000 liters kada truckload, ang tamang pagtatapon ng waste, at ang 30-day service warranty. Sa Metro Manila, ₱5,000 po kada load. Gusto nyo po bang mag-reserve ng schedule?',
 };
 
+// 80/20 (Neil, 2026-08-04): pito lang ang talagang kailangan para makapag-book.
+// Ang tank size, access, at DENR ay tanong ni Zam sa usapan, hindi na form.
 const BOOKING_FORM = [
-  'Name:', 'Contact Number:', 'Complete Address:', 'Barangay:',
-  'City/Municipality:', 'Province:', 'Landmark:',
-  'Bahay o Company:', 'Ano ang problema:', 'Anong service:',
-  'Kailangan ba ng DENR papers:', 'Gaano kalaki ang tank:',
-  'Madadaanan ba ng truck at hose:', 'Preferred Date:', 'Preferred Time:', 'Notes:',
+  'Name:',
+  'Number:',
+  'Buong address (kasama ang barangay at city):',
+  'Landmark:',
+  'Bahay o company:',
+  'Ano ang problema:',
+  'Kailan nyo gusto:',
 ].join('\n');
 
 // --- maliliit na piyesa -----------------------------------------------------
@@ -141,9 +298,7 @@ const CopyBtn: React.FC<{ text: string }> = ({ text }) => {
       type="button"
       onClick={() => void copy()}
       className={`shrink-0 rounded-brand px-3 py-2 text-[11px] font-black uppercase leading-none tracking-[1px] ${
-        done
-          ? 'bg-brand-good text-white'
-          : 'bg-brand-primary text-[#0b1b33]'
+        done ? 'bg-brand-good text-white' : 'bg-brand-primary text-[#0b1b33]'
       }`}
     >
       {done ? 'Nakopya' : 'Kopyahin'}
@@ -151,21 +306,25 @@ const CopyBtn: React.FC<{ text: string }> = ({ text }) => {
   );
 };
 
-/** Isang ipapadalang sagot: label + buong spiel + copy button. */
+/** Ang ipapadalang sagot: amber na label sa taas, PUTING chat bubble ang laman.
+ *  Sinadya ang dalawang kulay (Neil, 2026-08-04): sa isang tingin, kita agad
+ *  ni Zam kung alin ang tanong/label at alin ang mismong ikokopya nya. */
 const Spiel: React.FC<{ label: string; text: string }> = ({ label, text }) => (
-  <div className="mt-3 rounded-brand border-2 border-brand-card-border bg-brand-surface p-3">
+  <div className="mt-4">
     <div className="flex items-center justify-between gap-3">
-      <p className="text-[10px] font-black uppercase leading-none tracking-[1.2px] text-brand-on-surface-dim">
+      <p className="text-[11px] font-black uppercase leading-none tracking-[1.2px] text-brand-primary">
         {label}
       </p>
       <CopyBtn text={text} />
     </div>
-    <p className="mt-2 text-[15px] leading-relaxed text-brand-on-surface-muted">{text}</p>
+    <p className="mt-2 rounded-brand rounded-tl-none bg-white px-4 py-3 text-[15px] leading-relaxed text-[#0b1b33] shadow-[0_3px_0_rgba(0,0,0,.3)]">
+      {text}
+    </p>
   </div>
 );
 
 const Tanong: React.FC<{ items: string[] }> = ({ items }) => (
-  <div className="mt-3">
+  <div className="mt-4">
     <p className="text-[10px] font-black uppercase leading-none tracking-[1.2px] text-brand-on-surface-dim">
       Itanong mo bago mag-book
     </p>
@@ -213,6 +372,14 @@ const Kard: React.FC<{ title: string; sub: string; children: React.ReactNode }> 
     </article>
   );
 };
+
+const TeamNote: React.FC = () => (
+  <Babala>
+    Sabihin: <b>"may team po kami dyan."</b> Wag sabihing si Kuya Marvin mismo
+    ang pupunta sa labas ng Metro Manila, at wag mangako ng libreng punta o
+    libreng check sa labas ng NCR.
+  </Babala>
+);
 
 // --- login (kapareho ng /ops, iisang cookie) --------------------------------
 
@@ -326,19 +493,19 @@ export const Presyo: React.FC = () => {
           1 · Saan ang client?
         </h2>
         <p className="mt-1 text-[13px] text-brand-on-surface-dim">
-          I-type ang city o province, lalabas ang sagot.
+          I-type ang city o province, lalabas ang presyo at ang sagot.
         </p>
         <input
           value={loc}
           onChange={(e) => setLoc(e.target.value)}
-          placeholder="Hal. Pasig, QC, Bacoor, Bulacan"
+          placeholder="Hal. Pasig, QC, Bacoor, Lipa, Bulacan"
           className="mt-3 w-full rounded-brand border-2 border-brand-card-border bg-brand-surface px-4 py-3 text-[16px] text-brand-on-surface placeholder:text-brand-on-surface-dim focus:border-brand-primary focus:outline-none"
         />
 
         {verdict?.kind === 'mm' && (
           <div className="mt-3 rounded-brand border-2 border-brand-good bg-brand-surface p-3">
             <p className="font-display text-[1.1rem] uppercase leading-none text-brand-good">
-              {verdict.city} · Sakop, Metro Manila rate
+              {verdict.city} · Metro Manila rate
             </p>
             <p className="mt-2 text-[15px] text-brand-on-surface-muted">
               Siphoning: <b className="text-brand-on-surface">{RATE.mmSiphon}</b>, {RATE.load}.
@@ -348,23 +515,63 @@ export const Presyo: React.FC = () => {
           </div>
         )}
 
+        {verdict?.kind === 'city' && (
+          <div className="mt-3 rounded-brand border-2 border-brand-good bg-brand-surface p-3">
+            <p className="font-display text-[1.1rem] uppercase leading-none text-brand-good">
+              {verdict.entry.city}, {verdict.province.name} · May rate
+            </p>
+            <p className="mt-2 text-[15px] text-brand-on-surface-muted">
+              Siphoning: <b className="text-brand-on-surface">{verdict.entry.rate} kada truckload</b>.
+              {verdict.entry.note ? ` ${verdict.entry.note}` : ''} Kapag range, sabihin ang range,
+              tapos final na presyo bago magsimula.
+            </p>
+            <Spiel
+              label="Ipadala o basahin sa client"
+              text={SPIEL.city(verdict.entry.city, verdict.entry.rate, verdict.entry.note)}
+            />
+            <TeamNote />
+          </div>
+        )}
+
+        {verdict?.kind === 'province' && (
+          <div className="mt-3 rounded-brand border-2 border-brand-primary bg-brand-surface p-3">
+            <p className="font-display text-[1.1rem] uppercase leading-none text-brand-primary">
+              {verdict.province.name} · {verdict.province.region}
+            </p>
+            <div className="mt-2 overflow-hidden rounded-brand border border-brand-hairline">
+              {verdict.province.cities.map((c) => (
+                <div
+                  key={c.city}
+                  className="flex items-baseline justify-between gap-3 border-b border-dashed border-brand-hairline px-3 py-2 last:border-b-0"
+                >
+                  <span className="text-[13px] font-bold text-brand-on-surface-dim">{c.city}</span>
+                  <span className="text-right text-[14px] font-bold text-brand-on-surface">{c.rate}</span>
+                </div>
+              ))}
+            </div>
+            <Babala>
+              Kapag wala sa listahan ang city ng client pero <b>kalapit lang ng
+              mga nandito</b>, gamitin ang rate ng pinakamalapit na city sa
+              listahan. Kapag malayo sa lahat, kunin ang info at quote sa loob
+              ng 1 hanggang 2 oras.
+            </Babala>
+            <TeamNote />
+          </div>
+        )}
+
         {verdict?.kind === 'outside' && (
           <div className="mt-3 rounded-brand border-2 border-brand-primary bg-brand-surface p-3">
             <p className="font-display text-[1.1rem] uppercase leading-none text-brand-primary">
-              Labas ng Metro Manila · Sakop pa rin, ibang proseso
+              Wala sa listahan · Sakop pa rin, quote muna
             </p>
             <p className="mt-2 text-[15px] leading-relaxed text-brand-on-surface-muted">
-              Nationwide tayo, pero <b className="text-brand-on-surface">walang fixed
-              na rate sa labas ng Metro Manila at bawal manghula.</b> Kunin ang
-              buong info, tapos sabihing tatawagan sya sa loob ng 1 hanggang 2
-              oras para sa presyo.
+              Nationwide tayo. <b className="text-brand-on-surface">Kapag kalapit
+              lang sya ng isang city na may rate sa listahan, gamitin ang rate ng
+              pinakamalapit.</b> Kapag hindi, wag manghula: kunin ang buong info,
+              tapos sabihing tatawagan sya sa loob ng 1 hanggang 2 oras.
             </p>
             <Spiel label="Ipadala o basahin sa client" text={SPIEL.outside(verdict.typed)} />
-            <Babala>
-              Sabihin: <b>"may team po kami dyan."</b> Wag sabihing si Kuya
-              Marvin mismo ang pupunta sa labas ng Metro Manila, at wag mangako
-              ng libreng punta o libreng check sa labas ng NCR.
-            </Babala>
+            <TeamNote />
             <Tanong
               items={[
                 'Buong address: barangay, city, province, landmark',
@@ -382,8 +589,8 @@ export const Presyo: React.FC = () => {
             <p className="text-[15px] leading-relaxed text-brand-on-surface-muted">
               <b className="text-brand-on-surface">Quezon City ba o Quezon
               province?</b> Kapag Quezon City, Metro Manila rate. Kapag Quezon
-              province, labas ng Metro Manila ang proseso. Itanong muna sa
-              client.
+              province, i-type ang "Lucena" o "Tayabas" para sa rate. Itanong
+              muna sa client.
             </p>
           </div>
         )}
@@ -397,7 +604,8 @@ export const Presyo: React.FC = () => {
         <Kard title="Puno o umaapaw ang septic tank" sub="Siphoning ang kailangan">
           <p className="text-[15px] text-brand-on-surface-muted">
             Metro Manila: <b className="text-brand-on-surface">{RATE.mmSiphon}</b>,{' '}
-            {RATE.load}. Ang totoong laman lang ng tank ang hihigupin.
+            {RATE.load}. Sa labas ng NCR, gamitin ang location check sa taas para
+            sa kada-city na rate.
           </p>
           <Spiel label="Metro Manila" text={SPIEL.mmSiphon} />
           <Spiel label="Kapag sinabing maliit lang ang tank" text={SPIEL.maliitTank} />
@@ -483,7 +691,8 @@ export const Presyo: React.FC = () => {
       <div className="mt-4 overflow-hidden rounded-brand border-2 border-brand-card-border">
         {[
           ['Siphoning, Metro Manila', `${RATE.mmSiphon} · ${RATE.load}`],
-          ['Siphoning, labas ng MM', 'Walang fixed rate. Kunin ang info, quote sa loob ng 1 hanggang 2 oras'],
+          ['Siphoning, mga province na nakalista', 'Kada city ang rate. I-type ang city sa location check sa taas'],
+          ['Siphoning, wala sa listahan', 'Kalapit ng nakalista: rate ng pinakamalapit. Kung hindi: quote sa 1 hanggang 2 oras'],
           ['May DENR papers, bahay', RATE.denrRes],
           ['May DENR papers, company', RATE.denrComm],
           ['Lusong, bahay', RATE.lusongRes],
@@ -508,11 +717,12 @@ export const Presyo: React.FC = () => {
       <div className="mt-4 rounded-brand border-2 border-brand-card-border bg-brand-card p-4">
         <div className="flex items-center justify-between gap-3">
           <p className="text-[13px] text-brand-on-surface-dim">
-            I-paste sa chat tapos punan kasama ng client.
+            I-paste sa chat tapos punan kasama ng client. Pito lang, sadya:
+            ang tank size, access, at DENR ay itatanong mo na lang sa usapan.
           </p>
           <CopyBtn text={BOOKING_FORM} />
         </div>
-        <pre className="mt-3 whitespace-pre-wrap text-[13px] leading-relaxed text-brand-on-surface-muted">
+        <pre className="mt-3 whitespace-pre-wrap rounded-brand bg-white px-4 py-3 text-[14px] leading-relaxed text-[#0b1b33]">
           {BOOKING_FORM}
         </pre>
       </div>
@@ -524,7 +734,7 @@ export const Presyo: React.FC = () => {
       <ul className="mt-4 grid gap-1.5 rounded-brand border-2 border-brand-card-border bg-brand-card p-4">
         {[
           'Labas ng Metro Manila at may DENR papers na hinihingi',
-          'Mukhang lagpas sa isang truckload',
+          'Mukhang lagpas sa isang truckload (maliban sa Aurora na talagang minimum 3)',
           'Mahirap ang daanan ng truck o hose',
           'Sobrang laki ng tank o factory ang usapan',
           'May hinihinging ibang dokumento o special na tapunan',
@@ -544,7 +754,7 @@ export const Presyo: React.FC = () => {
       <ul className="mt-4 grid gap-1.5 rounded-brand border-2 border-brand-card-border bg-brand-card p-4">
         {[
           'Wag gamitin ang lumang presyo. ₱5,000 na ang buong Metro Manila.',
-          'Wag manghula ng presyo sa labas ng Metro Manila.',
+          'Wag manghula ng presyo sa lugar na wala sa listahan at malayo sa lahat ng nakalista.',
           'Wag mangako ng pinakamurang lusong bago ang assessment.',
           'Wag sabihing sigurado nang maaayos ng siphoning ang barado na tubo.',
           'Wag mangako ng eksaktong araw nang hindi che-check ang schedule.',
@@ -561,7 +771,8 @@ export const Presyo: React.FC = () => {
 
       <p className="mt-10 border-t border-dashed border-brand-hairline pt-4 text-[13px] leading-relaxed text-brand-on-surface-dim">
         Ito ang source of truth ng presyo. Kapag may bago si Neil na rate, dito
-        muna sya papasok bago sa kahit anong chat. Huling bago: 2026-08-04.
+        muna sya papasok bago sa kahit anong chat. Huling bago: 2026-08-04
+        (provincial city rates, dagdag ₱1,500 na lahat).
       </p>
     </div>
   );
