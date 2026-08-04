@@ -45,9 +45,6 @@ objection cards, objection + follow-up log. Plano:
 3. **Coordinate radius ang geo** — lat `14.54` lng `121.02`, 20km, `home`.
 4. **Number change:** ~26 lumang templates may number pa ni Boss Jay — palitan
    bago i-render ulit (`workflows/oceanides_kuya_marvin_brand.md`).
-5. **Root `npx vitest` sirang-sira (100/100 fail, import-time)** — PRE-EXISTING
-   (na-verify via stash). Kasama ang `package-lock.json` na M sa gitStatus.
-   Ayusin sa sariling session, wag ihalo sa ibang commit.
 
 ## ✅ Tapos ngayong 2026-08-05 (session 8)
 
@@ -59,6 +56,10 @@ buuin ang AUTO Director brain** — 5 personas + transcript-level critic, nakasu
 sa `workflows/concierge_director_plan.md` §2 (katabi ng skills-as-workforce note).
 **Cherny/Claude Code brief eval** — hatol: ZERO edits, doctrine na natin lahat;
 ang Autopilot positioning frame lang ang na-park sa `post_beta_roadmap.md` #2.
+**Repo tune-up** — LUMA NA ang "vitest sirang-sira": buong suite GREEN (1106
+passed, 26 skipped) + build pasado; lockfile na-sync sa npm 11 (`323da07`).
+NOIR artifact spec lumipat sa `workflows/artifact_noir_style.md` — mas payat
+na ang CLAUDE.md boot, pointer na lang ang naiwan.
 
 ## 🅿 PARKED
 
