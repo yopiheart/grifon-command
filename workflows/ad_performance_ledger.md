@@ -172,6 +172,50 @@ nanalo ang chalk, ito ang pangalawang brand ng S34 at lalapit ang **GP-6** sa
 `proposed`. Bagong subok din: **branded laban sa anonymous** (dalawang branded
 static laban sa isang walang logo) — i-log kung alin ang nanalo.
 
+#### Unang data pull — 2026-08-04, 2:55 PM PH (mga 12 oras ng delivery)
+
+Hinila dahil sa tanong ni Neil: *"di kaya may leak ung pixel kasi parang walang
+traffic na napasok sa website."* **Walang leak.** Nakalista ang sagot dito para
+hindi na ulit imbestigahan mula sa simula.
+
+| Ad | Impr | Clicks | Outbound | **LPV** | Lead | Gastos |
+| --- | --- | --- | --- | --- | --- | --- |
+| addons-ticket | 312 | 29 | 10 | 6 | 0 | ₱83.77 |
+| hooktest-chalk | 249 | 27 | 9 | 7 | 0 | ₱25.88 |
+| km004-video | 143 | 7 | 7 | 5 | 0 | ₱10.09 |
+| advertorial | 68 | 12 | 2 | 1 | 0 | ₱10.65 |
+| warranty-proof | 20 | 1 | 0 | 0 | 0 | ₱18.80 |
+| **Total** | **792** | **76** | **28** | **19** | **0** | **₱149.19** |
+
+**Patunay na buhay ang pixel** (dataset `1050997330667084`): `is_active: true`,
+huling putok 2026-08-04 1:53 PM PH. Ang `landing_page_view` ay galing mismo sa
+pixel — kung sira ang tracking o mali ang domain, zero yan; **19** ang nakuha.
+
+**Sagot sa custom link kada ad:** ang naka-register sa dataset at sa domain
+verification ay **host** lang (`oceanidesph.com`), hindi buong URL. Kaya walang
+epekto ang `?utm_source=fb&utm_medium=paid&utm_campaign=oceanides-price-01&utm_content=<ad>`.
+Masisira lang kung ibang host na ang ituturo ng ad (bit.ly, linktree, kahit anong
+redirect na nagtatapon ng `fbclid`). Wala tayong ganon at wag ding gagawin.
+
+**Walang ibang site na gumagamit ng pixel natin.** Sa 7 araw, ito lang ang
+nagpaputok: `oceanidesph.com`, `www.oceanidesph.com`, `oceanides-price-page.vercel.app`
+(testing 08-02), `localhost` (dev machine). Wala nang iba.
+
+**Kaya nasa page ang butas, hindi sa tracking.** 19 pumasok, 0 nag-submit —
+kinumpirma sa Supabase, walang kahit isang row sa `funnel_leads` para sa
+oceanides. **Pero masyado pang maaga para husgahan.** Wag munang galawin ang page
+hangga't hindi umaabot ng **50-100 LPV** (mga ₱400-700 pa sa rate na to).
+
+🔴 **Dalawang bagay na hindi pa tapos, at pareho silang nagbabawas sa bilang:**
+1. **AEM Configure Web Events — HINDI PA NA-VERIFY.** Nakasulat sa
+   `workflows/funnel_deploys.md` na ito ang huling hakbang bago ang ads, pero
+   walang MCP tool na makakatingin nito. Kung hindi **#1 priority ang `Lead`** sa
+   `oceanidesph.com`, **ang iPhone traffic ang unang mawawala sa attribution.**
+   Kay Neil ang pag-check sa Events Manager (browser, desktop mode — wala sa app).
+2. **Sarado ang Advanced Matching, walang CAPI** (sinadya, para sa privacy
+   policy). Browser-only ang signal, kaya ang bilang ng pixel ay **floor** —
+   laging mas mababa kaysa totoo dahil sa ad blocker at iOS.
+
 ---
 
 ### 2026-07-28 → 08-03 — OCEANIDES-KM003-hook2 (Meta, PH septic tank siphoning / local service)
