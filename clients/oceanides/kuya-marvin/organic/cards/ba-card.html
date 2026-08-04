@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="tl">
+<head>
+<meta charset="utf-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@700;800;900&display=swap" rel="stylesheet" />
+<style>
+  /* Post 2 (Lane B) — RAW before/after para sa persona page.
+     Walang logo, walang number, walang CTA: hindi mukhang ad.
+     Faint na OCEANIDES watermark lang bilang anti-theft. */
+  :root {
+    --amber: #F5B301;
+    --navy2: #0A1F45;
+    --red:   #D7263D;
+    --green: #1B8A3C;
+    --head: 'Anton', 'Arial Narrow', 'Impact', sans-serif;
+    --body: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: #333; }
+  #canvas {
+    width: 1080px; height: 1350px;
+    position: relative; overflow: hidden;
+    background: var(--navy2); font-family: var(--body);
+    display: flex;
+  }
+  .panel { position: relative; width: 50%; height: 100%; overflow: hidden; }
+  .panel img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    filter: contrast(1.05) saturate(1.03) brightness(1.02);
+  }
+  .panel.before img { object-position: center 50%; transform: scale(1.16); transform-origin: center 66%; }
+  .panel.after  img { object-position: center 50%; }
+  .divider {
+    position: absolute; left: 50%; top: 0; transform: translateX(-50%);
+    width: 6px; height: 100%; background: var(--amber); z-index: 6;
+    box-shadow: 0 0 16px rgba(0,0,0,0.5);
+  }
+  .tag {
+    position: absolute; top: 26px; z-index: 7;
+    font-family: var(--head); font-size: 34px; color: #fff;
+    padding: 8px 22px 6px; border-radius: 8px; letter-spacing: 2px;
+    text-transform: uppercase; box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  }
+  .tag.before { background: var(--red); left: 24px; }
+  .tag.after  { background: var(--green); right: 24px; }
+  .panel::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 3;
+    box-shadow: inset 0 0 90px rgba(0,0,0,0.28);
+  }
+  .wm {
+    position: absolute; inset: 0; z-index: 5; pointer-events: none;
+  }
+</style>
+</head>
+<body>
+  <div id="canvas">
+    <div class="panel before">
+      <img src="../../../assets/before-1.jpg" alt="before" />
+      <span class="tag before">Before</span>
+    </div>
+    <div class="panel after">
+      <img src="../../../assets/after-1.jpg" alt="after" />
+      <span class="tag after">After</span>
+    </div>
+    <div class="divider"></div>
+    <svg class="wm" viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="stamp" width="420" height="170" patternUnits="userSpaceOnUse" patternTransform="rotate(-27)">
+          <text x="0" y="50" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="800"
+                fill="#ffffff" fill-opacity="0.10" letter-spacing="2">OCEANIDES</text>
+        </pattern>
+      </defs>
+      <rect x="-60" y="-60" width="1200" height="1470" fill="url(#stamp)"/>
+    </svg>
+  </div>
+</body>
+</html>

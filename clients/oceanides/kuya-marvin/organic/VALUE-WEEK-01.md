@@ -103,26 +103,31 @@ May ganyan ba kayo tuwing umuulan? Comment lang, sasagutin ko.
 
 ---
 
-## POST 2 — Before/after: ubos talaga (Lane B)
-**Image:** totoong ba-1 before/after, magkatabi (masters sa
-`funnels/oceanides-price-page/public/img/ba-1-*.webp` sources / clients assets)
-**Lever:** proof-of-work + edukasyon vs half-siphon scam. Authority + Reciprocity
+## POST 2 — Before/after: pakita ang trabaho (Lane B)
+**Image:** totoong ba-1 before/after, magkatabi (`assets/before-1.jpg` +
+`assets/after-1.jpg`), rendered: `cards/post2-beforeafter.png`
+**Lever:** proof-of-work + transparency. Authority + Reciprocity.
+⚠️ **Evidence-bound fix (2026-08-04):** ang ba-1 ay DECLOG job (grasa/basura →
+dumadaloy na), hindi "ubos na tank" — kaya ang caption ay tungkol sa "pakita
+ang trabaho", hindi half-siphon. Ang half-siphon education ay naka-park
+hanggang may totoong litrato ng ubos-na-tank na trabaho.
 
 ```
-Ganito ang itsura ng trabahong ubos talaga.
+Ganito ang itsura ng tapos na trabaho.
 
-Yung kaliwa, bago kami magsimula. Yung kanan, pagkatapos.
+Yung kaliwa, bago kami magsimula. Puno ng grasa at basura na nagbabara,
+kaya bumabalik ang tubig sa lababo at sa banyo.
 
-Bakit ko to pinapakita? Kasi may klase ng siphoning na yung tubig lang sa
-ibabaw ang sinisipsip. Mabilis, mura, tapos aalis na. Mukhang okay sa una.
-Pero yung makapal na latak sa ilalim, yun ang totoong laman ng tank, at
-naiwan lahat yun.
+Yung kanan, pagkatapos. Malinis na, at dumadaloy na ulit.
 
-Kaya isang buwan lang, puno ulit. Tapos magtataka kayo bakit ang bilis.
+Bakit ko to pinapakita? Kasi may mga crew na basta na lang aalis pagkatapos
+ng trabaho, hindi man lang ipapakita kung ano ang ginawa. Sa amin, bago
+kami umalis, pinapakita namin ang loob. Para kita nyo mismo kung ano ang
+binayaran nyo.
 
-Kapag nagpa-siphon kayo, kahit hindi sa amin, tingnan nyo ang loob ng tank
-bago sila umalis. Dapat kita nyo na ang ilalim. Kung tubig lang ang
-nabawas, hindi pa tapos yun.
+Kaya kapag nagpalinis kayo, kahit hindi sa amin, hilingin nyo to: pakita
+nyo ang bago at ang pagkatapos. Yung tapat na trabaho, hindi natatakot
+magpakita.
 ```
 
 ---
