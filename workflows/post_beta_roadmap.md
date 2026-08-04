@@ -1232,6 +1232,58 @@ it actually earns money. Sequencing (launch first, brain second) is Neil's call,
 
 ---
 
+### 26. Client-Artifact Promotion Rule — "built twice for clients → product candidate"
+
+> **Brief evaluation record (2026-08-04):** *How Forward Deployed Engineering is Done at
+> Cognition* (Jia Wu) evaluated against the codebase — verdict: **~80% already absorbed.**
+> The FDE core loop (embed with customer → high-fidelity field evidence → gated product
+> feedback) is structurally the swipe-file system (`viral/static/funnel-autopsy` →
+> ≥3-corroboration gated proposals → Neil-approved TUNED edits); "token maxing is dead" =
+> the context-hygiene + quality-first budget doctrine; "coding is 20%, SDLC is 80%"
+> translates to "generation is 20%, the marketing lifecycle is 80%" and validates the
+> existing `growth_loop.md` / `ad_performance_ledger.md` / Odyssey-as-Cron prioritization;
+> "automate out of the loop" = `loops.md` Tiers 0–5. **Rejected as conflicts:** T-shaped FDE
+> hiring (solo founder), enterprise embedding economics at PH SMB price points, any
+> loosening of TUNED-file / builder≠reviewer discipline, and re-inflation of the AUTO-mode
+> Director brain (`concierge_director_plan.md` §10 rescope stands — the brief changes **no
+> resume trigger** in this file). Net-new output: this item + the Option C reframe note in
+> `concierge_director_plan.md` §2. **Do not re-evaluate this brief.**
+
+**What:** A standing promotion rule for the *ops tooling* half of client work. Creative
+patterns already have a pipe into the product (swipe files → Pattern Index → gated
+proposals). The artifacts hand-built for a client's *operations* — price cheat sheet
+(`/presyo`), weekly posting pack, Messenger reply scripts, ops-passphrase pages, funnel
+pages — had no such pipe. The rule: **the second time an artifact of the same shape gets
+built for a second client, it triggers a product-candidate evaluation** — does this become
+a Grifon feature (product layer), a reusable skill (workflow layer, the `funnel-forge`
+precedent), or does it stay bespoke?
+
+**Why it matters:** Reframes the client lane as the product's R&D department instead of
+side income. Cognition's entire model is that manual embedding IS the discovery engine —
+the workarounds an embedded engineer builds by hand become the roadmap. `funnel-forge` is
+the existing proof this works here (one client rep → productized repeatable skill). This
+item just makes the trigger explicit so the next occurrence doesn't slip past unnoticed.
+
+**Why parked:** Only one client exists (Oceanides). The rule fires on the *second* build
+for a *second* client, which hasn't happened. Nothing to build now — this item IS the
+rule; parking it here is the implementation.
+
+**When to resume:** The moment any Oceanides-shaped artifact gets requested or rebuilt for
+a second client. That session: compare the two builds, and if the shape corroborates, draft
+the candidate through the normal gates (`grill-me` if product-layer, skill-creator if
+workflow-layer).
+
+**Where to start:** List what Oceanides got (`clients/oceanides/` + `funnels/`), diff the
+second client's ask against it, promote the overlap.
+
+**Scope estimate:** Zero now; per-candidate later.
+
+**Source:** Jia Wu (Cognition) FDE knowledge-transfer brief, evaluated 2026-08-04, Neil
+endorsed same session ("Okay bro G" — stamp the record + park the rule, then back to the
+live campaign).
+
+---
+
 ## How to add new items
 
 When Neil endorses an idea but says "not now":

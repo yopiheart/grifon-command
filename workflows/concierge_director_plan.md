@@ -83,6 +83,15 @@ everything for you" in production = one of three things:
 cheaper reasoning bits). C is a valid manual MVP / white-glove fallback to
 validate demand before building A.
 
+> **Option C reframe (2026-08-04, Cognition FDE brief eval):** C is not merely a
+> fallback — it is the product-discovery engine. The ops artifacts Neil hand-builds
+> inside a client engagement (price sheets, posting packs, reply scripts, funnel
+> pages) are product candidates for the SMB market, promoted via the "built twice
+> for a second client" rule in `post_beta_roadmap.md` #26. Running C deliberately
+> *is* forward deployment; it de-risks A's roadmap the same way the swipe files
+> de-risk creative. This changes C's framing only — the §10 rescope and A's
+> demand gate are untouched.
+
 ### MCP-ready flow layer (do this once, reuse everywhere)
 Build Grifon's flows as a **clean callable tool layer** over `api/*`
 (`grifon_generate_script`, `grifon_storyboard`, `grifon_render_ad`,
