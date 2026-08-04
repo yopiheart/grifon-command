@@ -1,68 +1,70 @@
 # NOW — the resume doc
 
-**Stamped: 2026-08-04** (session 6, umaga)
+**Stamped: 2026-08-04** (session 7, gabi)
 
-## ▶ NEXT ACTION — 🟢 CAMPAIGN LIVE + KUMPLETO NA ANG ZAM TOOLKIT
+## ▶ NEXT ACTION — 🟠 TAWAG COCKPIT NAKA-BUILD, DALAWANG PINDOT BAGO LIVE
 
-**`OCEANIDES-PRICE-01` ACTIVE, LIMA ang ad** (kasama ang km004-video, sya pa ang
-pinakamalakas). Kumpirmado 2:35 AM: lahat delivering, walang rejected, ~₱8 pa
-lang gastos. Ledger: [`workflows/ad_performance_ledger.md`](workflows/ad_performance_ledger.md).
+**Tawag Cockpit v0 TAPOS at naka-push (`79495d9`)** — briefing card kada lead,
+3 objection cards (deck approved ni Neil), objection log + follow-up, buhay na
+`/ops` (60s poll, tab badge, tunog). Plano: [`clients/oceanides/tawag-cockpit-plan.md`](clients/oceanides/tawag-cockpit-plan.md).
 
-### A · Kay Neil (mga pipindutin lang, ready na lahat ng file)
-1. **FB page refresh ni Marvin:** profile = `profile-5-frontal-van-2026-08-sq.png`,
-   cover = `cover-4-zam-number.png` (nasa `clients/oceanides/kuya-marvin/profile-assets/`),
-   bagong bio (nasa chat 2026-08-04), **Call button → 0935 258 9927 (Zam)**,
-   i-check ang Messenger instant reply kung may lumang number.
-   Profile pic description: pinili na ba sa 3 options? (Option A ang recommend.)
-2. **Ipasa sa admin:** `https://oceanidesph.com/pack/km-week-01.html` (Linggo 1
-   posting pack, isang post kada araw 6PM, may copy buttons).
-3. **Sabihan sina Zam/Ejay:** bagong password (rotated 2026-08-04, kay Neil ang
-   value) + ang bagong `https://oceanidesph.com/presyo`.
-4. **Gumawa ng Instagram** tapos ikabit sa ad account (FB lang muna ngayon).
+### A · Kay Neil — pagkakasunod-sunod na BAWAL baligtarin
+1. **I-apply MUNA ang SQL** sa Supabase SQL editor: yung UPGRADES section sa
+   dulo ng [`supabase/funnel_leads.sql`](supabase/funnel_leads.sql) (idempotent,
+   safe i-paste buo). ⚠️ Kapag na-deploy nang wala to, **500 ang buong /ops**.
+2. **Tapos deploy:** sabihin lang kay agent na "deploy na" — armado ang Vercel
+   CLI (`whoami` = neilmaglayabusiness22-2085, session 7) at nakahanda ang
+   build. Manual: `cd funnels/oceanides-price-page` → `npx vercel deploy --prod --yes`.
+3. **Eyeball sa live:** buksan ang `/ops` sa PC at phone — lead card → presyo →
+   cards → objection pindot → follow-up date. Tapos ang usapan kay Zam:
+   **para sa cards ang log, hindi panukat sa kanya.**
+4. Dating listahan (session 6, buhay pa rin): FB page refresh ni Marvin ·
+   ipasa ang `/pack/km-week-01.html` sa admin · sabihan sina Zam/Ejay ng bagong
+   password + `/presyo` · Instagram.
 
 ### B · Bantayan habang tumatakbo
-- **Si Zam: punan ang How much sa `/ops` kada tapos na trabaho.** Yun lang ang
-  sasagot kung aling ad ang may BOOKED JOB. Break-even **₱900 kada booked job**,
-  ~4 trabaho kada linggo. Yan ang bitag na pumatay sa KM-003 (A3).
-- Agent, susunod na session: basahin ang unang araw ng delivery data.
+- **`OCEANIDES-PRICE-01` ACTIVE, lima ang ad** (km004-video ang pinakamalakas).
+  Ledger: [`workflows/ad_performance_ledger.md`](workflows/ad_performance_ledger.md).
+  Break-even **₱900 kada booked job**. Si Zam: punan ang How much kada trabaho.
+- **Cockpit metrics pagkatapos ng unang 20 leads:** bilis ng unang tawag
+  (target sub-15 min gising) + booking rate. Nasa plan doc §4 ang pagbasa.
+- Agent, susunod na session: basahin ang delivery data ng campaign.
 
-### C · Zam toolkit — buhay na lahat (2026-08-04)
-- **`/ops`** = booking list. **`/presyo`** = presyo cheat sheet: location check
-  (NCR + provincial city rates NA MAY +₱1,500 NA, wag nang dagdagan), kalapit-
-  lugar fallback, spiels na puting chat bubble na may copy, 7-field form, bawal
-  list. Source of truth ng rates: `src/pages/Presyo.tsx` mismo.
-- Registry + rotation runbook (⚠️ bash printf LANG, may PowerShell `\r` trap):
-  `workflows/funnel_deploys.md`.
+### C · Zam toolkit
+- **`/ops`** = booking list + Tawag Cockpit. **`/presyo`** = presyo cheat sheet.
+- ⚠️ **Lumipat ang rates source of truth:** `src/lib/rates.ts` na, HINDI na
+  `Presyo.tsx` (parehong page kumukuha dun). Rotation runbook + registry:
+  `workflows/funnel_deploys.md` (bash printf LANG, may PowerShell `\r` trap).
 
 ---
 
 ## 🔴 Huwag kalimutan
 
-1. **MAGBILANG NG BOOKED JOB, hindi lang lead** (tingnan ang B sa taas).
-2. **Coordinate radius ang geo, hindi region key** — lat `14.54` lng `121.02`,
-   20km, `home`. Walang region-lookup ang connector.
-3. **`has_payment_method: false` ay HINDI sira** (portfolio card) at **Test
-   Events ang mali, hindi ang pixel** — Network tab ang tamang tingin.
-4. **Number change:** tanggal na ang dalawang number ni Boss Jay sa lahat ng
-   BAGONG creative; ~26 lumang templates may luma pa — palitan bago i-render
-   ulit (nakatala sa `workflows/oceanides_kuya_marvin_brand.md`).
+1. **SQL bago deploy** (A1→A2 sa taas) — nakasulat din sa commit `79495d9`.
+2. **MAGBILANG NG BOOKED JOB, hindi lang lead.**
+3. **Coordinate radius ang geo** — lat `14.54` lng `121.02`, 20km, `home`.
+4. **Number change:** ~26 lumang templates may number pa ni Boss Jay — palitan
+   bago i-render ulit (`workflows/oceanides_kuya_marvin_brand.md`).
+5. **Root `npx vitest` sirang-sira (100/100 fail, import-time)** — PRE-EXISTING,
+   hindi galing sa cockpit (na-verify via stash). Kasama ang `package-lock.json`
+   na M sa gitStatus. Ayusin sa sariling session, wag ihalo sa ibang commit.
 
-## ✅ Tapos ngayong 2026-08-04 (session 6)
+## ✅ Tapos ngayong 2026-08-04 (session 7, gabi)
 
-**Value Week 01** — 7 organic posts (Fibo model, decoded mula sa 7 totoong post
-nya), 6 bagong Marvin stills (iba-iba ang suot/angle/register), 4 hook cards +
-BA composite, posting pack sa `/pack/km-week-01.html` + artifact twin.
-**Page refresh assets** — bagong frontal profile still, cover na kay Zam na ang
-number, bio copy. **`/presyo` cheat sheet** shipped + provincial rates + form
-80/20 + chat-bubble spiels. **OPS_PASSPHRASE rotated.** Temp ad hosting nalinis.
+**Tawag Cockpit v0** — grill-me buong desisyon-tree (hindi Zoom teleprompter:
+outbound calls sa form leads ni Zam), plan doc + approved 3-card deck, build
+via code-executor (rates.ts extraction 0-mismatch sa 124 inputs, cards verbatim,
+closed objection enum, idempotent SQL), review pasado, push `79495d9`.
+**Cognition FDE brief eval** — #26 sa roadmap (built-twice-for-clients →
+product candidate) + Option C reframe sa concierge plan (`0308d0e`).
 
 ## 🅿 PARKED
 
-**Oceanides:** Week 02 pack (hihintayin ang Week 01 engagement; may 3 CD tweaks
-sa card template sa chat 2026-08-04) · GB-001 video · hook2 ng KM-004 · Kling
-b-roll · watermark ni Gabriel · SEC Reg. No. · FB About · reviews · page #2
-DENR B2B · s3 still may bahagyang extra tattoo (kung regen o hayaan).
-**Grifon:** #94.3 next · #94.2 NOT-REPRO · #92+#89/#90 ride Slice B · #93 ⛔ TUNED.
+**Oceanides:** Week 02 pack · GB-001 video · hook2 ng KM-004 · Kling b-roll ·
+watermark ni Gabriel · SEC Reg. No. · FB About · reviews · page #2 DENR B2B.
+**Cockpit phases:** v1 autopsy (gate: may laman ang objection log + consent line
+kay Zam) · v2 chat copilot · Phase 2 Grifon high-ticket lane (English).
+**Grifon:** #94.3 next · #92+#89/#90 ride Slice B · #93 ⛔ TUNED.
 ⚠️ **Client world:** navy + amber print, no glass, no `#FFCC00`.
 
 ## ⛔ Gated · 🔧 Arm before starting
@@ -71,12 +73,10 @@ DENR B2B · s3 still may bahagyang extra tattoo (kung regen o hayaan).
 ```powershell
 .\scripts\restore-git-identity.ps1
 .\scripts\restore-gh.ps1
-.\scripts\restore-hyperframes.ps1
 .\scripts\restore-codex.ps1
 ```
 ⚠️ May sariling `node_modules` ang `funnels/oceanides-price-page` — `npm ci` doon
-bago mag-build. **Huwag i-pipe ang build/deploy output** (`tail`, `Select-Object
--First`) — pinapatay nito ang exit code; nadale ulit 2026-08-04.
+bago mag-build. **Huwag i-pipe ang build/deploy output** — pinapatay ang exit code.
 
 ---
 
