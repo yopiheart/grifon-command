@@ -84,7 +84,5 @@ bago mag-build. **Huwag i-pipe sa `tail`**, galing sa `tail` ang exit code.
 ---
 
 ### How to maintain this file
-
-**Overwrite it — never append.** History is `git log`'s job. Rewriting it is the **last**
-action of every session that changed the state of the work. Keep it one screen — the
-verifier fails past 90 lines.
+**Overwrite, never append** — history is `git log`'s job. Rewriting it is the last
+action of every session that changed the work. Verifier fails past 90 lines.
