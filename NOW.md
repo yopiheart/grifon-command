@@ -1,78 +1,72 @@
 # NOW — the resume doc
 
-**Stamped: 2026-08-04** (session 5, madaling-araw)
+**Stamped: 2026-08-04** (session 6, umaga)
 
-## ▶ NEXT ACTION — 🟢 BUHAY NA ANG UNANG CAMPAIGN
+## ▶ NEXT ACTION — 🟢 CAMPAIGN LIVE + KUMPLETO NA ANG ZAM TOOLKIT
 
-**`OCEANIDES-PRICE-01` ay ACTIVE mula 2026-08-04.** ₱500/araw, NCR, at **LIMA
-na ang ad** — pasok na ang `km004-video` at sya pa ang pinakamalakas ang
-delivery sa unang oras. Buong tala:
-[`workflows/ad_performance_ledger.md`](workflows/ad_performance_ledger.md).
+**`OCEANIDES-PRICE-01` ACTIVE, LIMA ang ad** (kasama ang km004-video, sya pa ang
+pinakamalakas). Kumpirmado 2:35 AM: lahat delivering, walang rejected, ~₱8 pa
+lang gastos. Ledger: [`workflows/ad_performance_ledger.md`](workflows/ad_performance_ledger.md).
 
-### A · Natitira (Neil)
-1. **Gumawa ng Instagram** para sa page (wala pa), tapos ikabit sa ad account —
-   FB placements lang ang tumatakbo hanggat wala.
+### A · Kay Neil (mga pipindutin lang, ready na lahat ng file)
+1. **FB page refresh ni Marvin:** profile = `profile-5-frontal-van-2026-08-sq.png`,
+   cover = `cover-4-zam-number.png` (nasa `clients/oceanides/kuya-marvin/profile-assets/`),
+   bagong bio (nasa chat 2026-08-04), **Call button → 0935 258 9927 (Zam)**,
+   i-check ang Messenger instant reply kung may lumang number.
+   Profile pic description: pinili na ba sa 3 options? (Option A ang recommend.)
+2. **Ipasa sa admin:** `https://oceanidesph.com/pack/km-week-01.html` (Linggo 1
+   posting pack, isang post kada araw 6PM, may copy buttons).
+3. **Sabihan sina Zam/Ejay:** bagong password (rotated 2026-08-04, kay Neil ang
+   value) + ang bagong `https://oceanidesph.com/presyo`.
+4. **Gumawa ng Instagram** tapos ikabit sa ad account (FB lang muna ngayon).
 
-### B · ✅ Tapos (session 6, umaga 2026-08-04)
-- Kumpirmado sa API: **lahat ng LIMANG ad ay ACTIVE**, walang In review o
-  Rejected sa bagong account.
-- Nalinis ang temp hosting (`public/ad/` + mp4), na-redeploy, verified: 404 na
-  ang temp files, 200 pa rin ang `/` at `/thank-you`.
+### B · Bantayan habang tumatakbo
+- **Si Zam: punan ang How much sa `/ops` kada tapos na trabaho.** Yun lang ang
+  sasagot kung aling ad ang may BOOKED JOB. Break-even **₱900 kada booked job**,
+  ~4 trabaho kada linggo. Yan ang bitag na pumatay sa KM-003 (A3).
+- Agent, susunod na session: basahin ang unang araw ng delivery data.
 
-### C · Organic: WEEKLY PACK na, hindi na daily kay Neil
-- **Kay KUYA MARVIN ang organic, hindi kay Gabriel.** Tapos na ang Value Week 01
-  (Fibo model, 7 posts + images): `kuya-marvin/organic/VALUE-WEEK-01.md`.
-- **Ang admin ni Neil ang magpo-post weekly** gamit ang posting pack twin
-  `artifacts/km-value-week-01.html` (ipinasa ni Neil; registry sa
-  `clients/oceanides/DESIGN.md`). Week 02 = pagkatapos basahin ang Week 01
-  engagement + tatlong CD tweaks sa card template (nasa chat 2026-08-04).
-
-### 🆕 Talaan ng booking + presyo cheat sheet — buhay na
-**`https://oceanidesph.com/ops`** — talaan ni Zam kada lead: status, **magkano**, address.
-**`https://oceanidesph.com/presyo`** — presyo cheat sheet nina Zam/Ejay (2026-08-04):
-location check, spiels na may copy button, rates, bawal. Parehong password ang dalawa
-(`OPS_PASSPHRASE`, wala sa repo; rotation nasa `workflows/funnel_deploys.md`).
-🔴 **Punan ang How much kada tapos na trabaho.** Kasama nun ang `utm_content`, at yun ang
-tanging paraan para masagot kung **aling ad ang may booked job**, hindi lang kung alin ang
-may murang lead. Yun mismo ang A3 na bitag ng KM-003.
-
-**Apat na kulang, sinunod ang bigat** (sinabi kay Neil 2026-08-04, hindi pa ginagawa):
-**(1) abiso** — kapag hindi bubuksan ni Zam, hindi nya alam na may pumasok; ang lead na
-umupo ng tatlong oras ay tumawag na sa iba. Hook point: `api/lead.ts`. **(2) buod kada ad**
-— nandyan ang datos pero manwal pa ang pagbibilang kung aling ad ang may pinakamaraming
-booked job. **(3)** kusang refresh. **(4)** search + export. Ginhawa lang ang huling dalawa.
+### C · Zam toolkit — buhay na lahat (2026-08-04)
+- **`/ops`** = booking list. **`/presyo`** = presyo cheat sheet: location check
+  (NCR + provincial city rates NA MAY +₱1,500 NA, wag nang dagdagan), kalapit-
+  lugar fallback, spiels na puting chat bubble na may copy, 7-field form, bawal
+  list. Source of truth ng rates: `src/pages/Presyo.tsx` mismo.
+- Registry + rotation runbook (⚠️ bash printf LANG, may PowerShell `\r` trap):
+  `workflows/funnel_deploys.md`.
 
 ---
 
-## 🔴 Tatlong bagay na huwag kalimutan
+## 🔴 Huwag kalimutan
 
-1. **MAGBILANG NG BOOKED JOB, hindi lang lead.** Nakasulat sa lead ang kill gates,
-   nasa **₱900 kada booked job** ang break-even. Apat na trabaho kada linggo para
-   patas lang. Yun ang bitag na pumatay sa KM-003 (A3): pasado sa lahat ng gate,
-   isang order.
+1. **MAGBILANG NG BOOKED JOB, hindi lang lead** (tingnan ang B sa taas).
 2. **Coordinate radius ang geo, hindi region key** — lat `14.54` lng `121.02`,
-   20km mula Makati, `home`. Kinopya sa KM-003. Walang region-lookup tool ang
-   connector, kaya ito lang ang eksaktong paraan.
-3. **`has_payment_method: false` ay HINDI sira** — nasa portfolio nakakabit ang
-   card. **Test Events ang mali, hindi ang pixel** — third-party cookie blocking.
-   Ang tamang tingin ay Network tab (`ev=Lead` + `200`).
+   20km, `home`. Walang region-lookup ang connector.
+3. **`has_payment_method: false` ay HINDI sira** (portfolio card) at **Test
+   Events ang mali, hindi ang pixel** — Network tab ang tamang tingin.
+4. **Number change:** tanggal na ang dalawang number ni Boss Jay sa lahat ng
+   BAGONG creative; ~26 lumang templates may luma pa — palitan bago i-render
+   ulit (nakatala sa `workflows/oceanides_kuya_marvin_brand.md`).
 
-## ✅ Tapos ngayong 2026-08-03/04
+## ✅ Tapos ngayong 2026-08-04 (session 6)
 
-**Buhay ang price page** — apat na pagbabago sa offer na dumaan sa CMO, swipe
-carousel, naipasa ang `Lead` sa apex. ⛔ Tinanggihan ang Hormozi na value stack.
-**Dalawang bagong static:** `hooktest-chalk-tankcover` (S34/S35 ni Brunson,
-**walang logo** bilang sadyang A/B) at `advertorial-price` (Suby, **hindi**
-pekeng balita). **Sinuspinde at naibalik ang `ad-spend-gate.sh`** — may
-sentinel-file na switch sya ngayon. Unang beses na gumastos ang agent.
+**Value Week 01** — 7 organic posts (Fibo model, decoded mula sa 7 totoong post
+nya), 6 bagong Marvin stills (iba-iba ang suot/angle/register), 4 hook cards +
+BA composite, posting pack sa `/pack/km-week-01.html` + artifact twin.
+**Page refresh assets** — bagong frontal profile still, cover na kay Zam na ang
+number, bio copy. **`/presyo` cheat sheet** shipped + provincial rates + form
+80/20 + chat-bubble spiels. **OPS_PASSPHRASE rotated.** Temp ad hosting nalinis.
 
 ## 🅿 PARKED
-**Oceanides:** GB-001 video · hook2 variant ng KM-004 · Kling b-roll · watermark
-ni Gabriel · SEC Reg. No. · FB About · reviews sa Page · page #2 = DENR B2B.
+
+**Oceanides:** Week 02 pack (hihintayin ang Week 01 engagement; may 3 CD tweaks
+sa card template sa chat 2026-08-04) · GB-001 video · hook2 ng KM-004 · Kling
+b-roll · watermark ni Gabriel · SEC Reg. No. · FB About · reviews · page #2
+DENR B2B · s3 still may bahagyang extra tattoo (kung regen o hayaan).
 **Grifon:** #94.3 next · #94.2 NOT-REPRO · #92+#89/#90 ride Slice B · #93 ⛔ TUNED.
 ⚠️ **Client world:** navy + amber print, no glass, no `#FFCC00`.
 
 ## ⛔ Gated · 🔧 Arm before starting
+
 🔴 **UBOS ANG GEMINI API BUDGET.** Manwal sa Flow ang bagong clip. Gated: Kling.
 ```powershell
 .\scripts\restore-git-identity.ps1
@@ -81,10 +75,11 @@ ni Gabriel · SEC Reg. No. · FB About · reviews sa Page · page #2 = DENR B2B.
 .\scripts\restore-codex.ps1
 ```
 ⚠️ May sariling `node_modules` ang `funnels/oceanides-price-page` — `npm ci` doon
-bago mag-build. **Huwag i-pipe sa `tail`**, galing sa `tail` ang exit code.
+bago mag-build. **Huwag i-pipe ang build/deploy output** (`tail`, `Select-Object
+-First`) — pinapatay nito ang exit code; nadale ulit 2026-08-04.
 
 ---
 
 ### How to maintain this file
 **Overwrite, never append** — history is `git log`'s job. Rewriting it is the last
-action of every session that changed the work. Verifier fails past 90 lines.
+action of any session that changed the work. Verifier fails past 90 lines.
