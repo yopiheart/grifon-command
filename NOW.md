@@ -27,10 +27,11 @@ delivery sa unang oras. Buong tala:
   `clients/oceanides/DESIGN.md`). Week 02 = pagkatapos basahin ang Week 01
   engagement + tatlong CD tweaks sa card template (nasa chat 2026-08-04).
 
-### 🆕 Talaan ng booking — buhay na
-**`https://oceanidesph.com/ops`** — dito nakikita at pinupunan ni Zam ang bawat lead:
-status, **magkano**, address, notes. May password, nasa `OPS_PASSPHRASE` (hindi nakasulat
-sa repo; tingnan ang `workflows/funnel_deploys.md` kung paano palitan).
+### 🆕 Talaan ng booking + presyo cheat sheet — buhay na
+**`https://oceanidesph.com/ops`** — talaan ni Zam kada lead: status, **magkano**, address.
+**`https://oceanidesph.com/presyo`** — presyo cheat sheet nina Zam/Ejay (2026-08-04):
+location check, spiels na may copy button, rates, bawal. Parehong password ang dalawa
+(`OPS_PASSPHRASE`, wala sa repo; rotation nasa `workflows/funnel_deploys.md`).
 🔴 **Punan ang How much kada tapos na trabaho.** Kasama nun ang `utm_content`, at yun ang
 tanging paraan para masagot kung **aling ad ang may booked job**, hindi lang kung alin ang
 may murang lead. Yun mismo ang A3 na bitag ng KM-003.

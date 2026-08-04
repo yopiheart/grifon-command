@@ -28,6 +28,17 @@ inside the instance dir (CLI login: Neil's Vercel account `neilmaglayabusiness22
   vercel env add NAME production`) — tinatanggal nito ang mismong failure mode na sumira
   ng key noon. Redeploy pagkatapos ng anumang env change; sa deploy lang kumukuha ang
   functions.
+- 🆕 **`/presyo` (2026-08-04)** — ang presyo cheat sheet nina Zam at Ejay: location check
+  (NCR ba o hindi), diagnosis buttons (siphoning / declog / lusong / DENR), copy-paste na
+  spiels, presyo table, booking form, at mga bawal. **Parehong password ng `/ops`** (iisang
+  cookie, may `?action=ping` na ang `api/ops.ts` para sa auth check nang walang PII).
+  Source of truth ng laman: `src/pages/Presyo.tsx` mismo — kapag may bagong rate si Neil,
+  i-edit doon tapos redeploy. Pinagmulan: nationwide pricing brief ni Neil 2026-08-04
+  (₱5,000 lahat ng NCR; labas ng NCR = team lane, walang fixed rate, quote sa 1-2 oras;
+  DENR docs ₱12k/₱15k; lusong ₱15-20k/₱20-50k). WALANG internal na puhunan/tubo sa page.
+  ⚠️ Security note (smoke 2026-08-04): may naka-SAVE na password sa Chrome profile ng cafe
+  PC para sa oceanidesph.com — nabubura sa defreezer pero buhay sa loob ng session. Wag
+  magse-save ng password sa browser ng cafe PC; pag-rotate ng passphrase, nasa runbook sa baba.
 - 🔐 **`OPS_PASSPHRASE`** ✅ Set 2026-08-04 — ang password ng `/ops` (talaan ng booking).
   **Hindi sya nakasulat kahit saan sa repo, sinadya.** Kay Neil at kay Zam lang sya
   nabubuhay. Fail-closed ang `api/ops.ts`: kapag wala ang var na to, 500 ang buong page —

@@ -210,6 +210,7 @@ export default defineConfig(({ mode }) => {
           main: entry('./index.html'),
           thankYou: entry('./thank-you.html'),
           ops: entry('./ops.html'),
+          presyo: entry('./presyo.html'),
         },
       },
     },

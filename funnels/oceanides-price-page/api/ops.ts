@@ -117,6 +117,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(401).json({ error: 'unauthorized' });
   }
 
+  // Ping: ginagamit ng /presyo para malaman kung buhay ang cookie nang hindi
+  // hinihila ang buong roster. Walang laman ang sagot, kaya walang PII dito.
+  if (req.method === 'GET' && action === 'ping') {
+    return res.status(200).json({ ok: true });
+  }
+
   const admin = createClient(supabaseUrl, serviceRoleKey, {
     auth: { persistSession: false, autoRefreshToken: false },
   });
