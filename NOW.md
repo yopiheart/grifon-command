@@ -19,11 +19,13 @@ delivery sa unang oras. Buong tala:
 - Nalinis ang temp hosting (`public/ad/` + mp4), na-redeploy, verified: 404 na
   ang temp files, 200 pa rin ang `/` at `/thank-you`.
 
-### C · Organic habang tumatakbo
-- **Kay KUYA MARVIN ang organic, hindi kay Gabriel** (Neil, 2026-08-04):
-  `clients/oceanides/kuya-marvin/organic/PAGE-LAUNCH-POSTS.md` — isa kada araw.
-- Nag-propose si Neil ng value-driven organic, Fibo Lim ang modelo — susunod na
-  pag-uusapan; may dala syang inspiration posts.
+### C · Organic: WEEKLY PACK na, hindi na daily kay Neil
+- **Kay KUYA MARVIN ang organic, hindi kay Gabriel.** Tapos na ang Value Week 01
+  (Fibo model, 7 posts + images): `kuya-marvin/organic/VALUE-WEEK-01.md`.
+- **Ang admin ni Neil ang magpo-post weekly** gamit ang posting pack twin
+  `artifacts/km-value-week-01.html` (ipinasa ni Neil; registry sa
+  `clients/oceanides/DESIGN.md`). Week 02 = pagkatapos basahin ang Week 01
+  engagement + tatlong CD tweaks sa card template (nasa chat 2026-08-04).
 
 ### 🆕 Talaan ng booking — buhay na
 **`https://oceanidesph.com/ops`** — dito nakikita at pinupunan ni Zam ang bawat lead:

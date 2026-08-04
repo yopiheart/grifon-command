@@ -241,6 +241,18 @@ dahilan ang dalawa: **hindi umaasa sa pagtanda, gate ang gamit.**
 
 ## Registered artifacts (i-redeploy sa SAME URLs)
 
+- **KM Value Week 01 — Posting Pack (2026-08-04):** ang weekly run sheet para sa admin
+  ni Neil: 7 organic posts (Fibo-model value week), bawat isa may embedded na litrato
+  (JPEG data URI, save-able), buong caption na may copy button, schedule (6PM kada araw),
+  at mga bawal. **Ang HTML twin ang ipinapasa sa admin** (labas ng org ang admin, kaya
+  hindi gagana sa kanya ang claude.ai link).
+  `https://claude.ai/code/artifact/b07b1da9-eb0b-4787-b2ce-12a571e5f8de`
+  Twin: [`artifacts/km-value-week-01.html`](../../artifacts/km-value-week-01.html) ·
+  Build: `node tools/artifacts/build-km-week01-runsheet.mjs` (source of truth ng captions:
+  `kuya-marvin/organic/VALUE-WEEK-01.md`; images: `organic/cards/` + `organic/stills-week01/`).
+  Pumasa sa 390×844 gate 2026-08-04. ⚠️ Playwright MCP sa machine na to ay hinaharangan ang
+  `file://` — ang smoke ng local HTML ay kailangan ng throwaway local HTTP server.
+
 - **GB-001 Work Brief (2026-08-03):** ang unang campaign ng price page — approved na
   static ad, 18s storyboard ni Gabriel, ang retention table na nagtakda ng hugis nito,
   3 organic post, at ang run sheet. Ginawa habang natutulog si Neil, para may
