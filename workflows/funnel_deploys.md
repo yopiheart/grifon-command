@@ -45,10 +45,16 @@ inside the instance dir (CLI login: Neil's Vercel account `neilmaglayabusiness22
   hindi sya "bumubukas na lang." Para magpalit:
   ```bash
   cd funnels/oceanides-price-page
-  npx vercel env rm OPS_PASSPHRASE production
+  npx vercel env rm OPS_PASSPHRASE production -y
   printf '%s' 'BAGONG-PASSWORD' | npx vercel env add OPS_PASSPHRASE production
   npx vercel deploy --prod --yes
   ```
+  ⚠️ **Bash `printf` LANG, hindi PowerShell pipe.** Ang `"pass" | npx vercel env add`
+  sa PowerShell ay nagpapadala ng `\r\n` sa dulo; tinatanggal ni Vercel ang `\n` pero
+  **naiiwan ang `\r`**, kaya laging 401 ang tamang password at walang error na
+  magsasabi kung bakit. Nangyari 2026-08-04 sa unang rotation, isang buong
+  redeploy ang nasayang bago nahuli. Na-rotate ang passphrase 2026-08-04 (kay
+  Neil at Zam ang bagong value, wala pa ring kopya sa repo).
   ⚠️ Ang pagpapalit ay **nagpapalayas sa lahat**: HMAC ng passphrase ang cookie, kaya
   mag-lo-login ulit si Zam. Yun mismo ang gusto mong mangyari kapag may nakaalam nun.
 - ✅ **Live e2e green 2026-08-02:** POST sa prod `/api/lead` → `{ok:true}` → row sa
