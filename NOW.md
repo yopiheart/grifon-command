@@ -51,30 +51,23 @@ checkout · unit economics · premortem). Sunod na hakbang nasa ledger.
 
 ## 🔴 Huwag kalimutan
 
-1. **Ang ₱1,100 (inspector ₱500 + transport ₱600) ang SAHIG ng kahit anong bayad
-   na check** — pattern **A4** sa ledger. Pero **hango sa ₱5,000 core** ang lumang
-   "₱999" na rekomendasyon; iba na ang math kapag ₱48k ang core ni Paolo.
-2. **Bawal ang CASH refund** sa tripwire — credit, hindi cash. Ang "ibabalik namin
-   kung hindi puno" ang pinakamahal na kaso (₱1,100 gastos + ₱499 balik).
-3. **A2 sa ledger:** sa KM-003, 41% ang nawala eksakto sa "libre ang tingin."
-   Sariling babala natin laban sa diagnostic offer.
-4. **MAGBILANG NG BOOKED JOB, hindi lead.** Break-even ₱900 kada booked job (A3).
+1. **Route density ang lever, hindi presyo** (**A4**): ₱1,100 kada bisita kapag
+   iisa sa maghapon, ~₱400 kapag apat. **Higpitan ang geo, isang siyudad muna.**
+2. **Bawal ang CASH refund** sa tripwire — credit, hindi cash.
+3. **A2:** sa KM-003, 41% ang nawala eksakto sa "libre ang tingin."
+4. **Patay na ang ₱900 break-even.** Kay Paolo: **₱4,900 kada 1-load na trabaho**,
+   ₱30,900 sa lima. Kaya nang gumastos ng hanggang ₱4,900 kada booked job.
 5. **Coordinate radius ang geo, hindi region key** — lat `14.54` lng `121.02`.
 
 ## ✅ Tapos ngayong 2026-08-05 (session 7)
 
-**Pixel-leak imbestigasyon: walang leak** — buhay ang dataset, host lang ang
-naka-register kaya walang epekto ang `utm` link kada ad, at apat na host lang
-natin ang nagpaputok sa 7 araw. **`FormViewed` custom pixel event** (`src/lib/pixel.ts`
-+ `LeadForm.tsx`) — nasa pang-14 sa 17 section ang form at wala tayong scroll
-data, kaya hindi mapaghiwalay ang "nakita at umatras" sa "hindi nakarating."
-`trackCustom` para hindi magalaw ang AEM ranking. **Ledger:** buong post-mortem
-+ bagong pattern **A4** (visit-cost floor ng tripwire).
+**Pixel-leak imbestigasyon: walang leak.** **`FormViewed` custom pixel event**
+(`src/lib/pixel.ts` + `LeadForm.tsx`) — nasa pang-14 sa 17 section ang form at
+walang scroll data, kaya hindi mapaghiwalay ang "nakita at umatras" sa "hindi
+nakarating." **Ledger:** post-mortem, bagong **A4**, buong grill, HARD GATE.
 
 ⏳ **HINDI PA LIVE ang `FormViewed`.** Hindi git-connected ang funnel:
-```bash
-cd funnels/oceanides-price-page && npx vercel deploy --prod --yes
-```
+`cd funnels/oceanides-price-page && npx vercel deploy --prod --yes`
 
 ## 🅿 PARKED
 
