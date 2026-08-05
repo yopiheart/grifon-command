@@ -8,32 +8,24 @@
 views, 0 lead). Lumilipat kay **"Compliance-Pressured Paolo"** (B2B) — bagong page,
 bagong creative, bagong targeting. Post-mortem: [`workflows/ad_performance_ledger.md`](workflows/ad_performance_ledger.md).
 
-**Kausap na ni Neil si Boss Jay (2026-08-06) — apat sa apat, kumpirmado:** dumadaan
-sa facility ang bawat load at babayaran ang nararapat (sinabihan sya nang diretso
-ni Neil na hindi papayag na dodoctorin ang certificate), **100% sang-ayon** sa
-mekanismong ₱6,000/load diretso sa facility bago ang ibang payout, **normal na 15
-araw** ang certificate, at **buhay pa ang ₱1,600 na payout system** (inspector ₱500
-+ transport ₱600 + Zam ₱250 + Neil ₱250).
+**Kausap na ni Neil si Boss Jay (2026-08-06), apat sa apat, kumpirmado:** dumadaan
+sa facility ang bawat load, **100% sang-ayon** sa ₱6,000/load diretso sa facility
+bago ang ibang payout, **normal na 15 araw** ang certificate, at **buhay pa ang
+₱1,600 na payout** (inspector ₱500 + transport ₱600 + Zam ₱250 + Neil ₱250).
 
 🔴 **PANGAKO PA LANG ITO. Wala pang load na dumaan, walang certificate na hawak.**
 Sabi mismo ng gate: *totoo ang papel dahil binayaran sya, hindi dahil may
 nagpaalam.* **Sarado sya sa araw na may isang load na diretsong binayaran ni Neil
 sa facility + may certificate na hawak.** Bago iyon: itayo ang lahat, **wag lang
-buksan.**
+buksan.** Sariling sistema ni Neil (logistics + financial): phased, at diretso na
+sya ang makikipag-transact sa supervisor para sa pera, walang middleman.
 
-✅ **Sariling sistema ni Neil, hindi na dependent kay Boss Jay — pareho** (logistics
-AT financial), phased: mga contact ni Boss Jay muna sa hauler at dispatch habang
-naghahanap ng sarili, at diretso na si Neil ang nakikipag-transact sa supervisor
-ng facility para sa pera (walang middleman).
-
-➡️ **BUONG BUILD SPEC:** [`clients/oceanides/paolo-funnel-brief.md`](clients/oceanides/paolo-funnel-brief.md).
-➡️ **BUONG COPY NG PAGE:** [`clients/oceanides/paolo-page-copy.md`](clients/oceanides/paolo-page-copy.md).
-Buksan yun, hindi ang chat.
+➡️ **BUILD SPEC:** [`clients/oceanides/paolo-funnel-brief.md`](clients/oceanides/paolo-funnel-brief.md) ·
+**COPY:** [`clients/oceanides/paolo-page-copy.md`](clients/oceanides/paolo-page-copy.md). Buksan yun, hindi ang chat.
 
 ✅ **NAKATAYO NA ANG PAGE:** `funnels/oceanides-paolo/` (2026-08-06). 17 section,
-build green, pasado sa smoke sa 390 at 1440. **Hindi pa naka-deploy at patay ang
-pixel.** May dalawang literal na `⟦PENDING⟧` sa loob na hindi pwedeng punan
-kung wala pang sagot ang facility.
+build green, pasado sa smoke sa 390 at 1440. **Hindi pa naka-deploy, patay ang
+pixel**, at may dalawang literal na `⟦PENDING⟧` sa loob.
 
 **Sunod:**
 1. 🔴 **TAWAGAN ANG SUPERVISOR NG FACILITY — ito ang humaharang sa lahat.**
