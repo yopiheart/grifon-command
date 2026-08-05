@@ -72,26 +72,21 @@ cd funnels/oceanides-price-page && npx vercel deploy --prod --yes
 ## 🅿 PARKED
 
 **Oceanides:** Week 02 pack · GB-001 video · hook2 ng KM-004 · Kling b-roll ·
-watermark ni Gabriel · SEC Reg. No. · FB About · reviews · page #2 DENR B2B.
+watermark ni Gabriel · SEC Reg. No. · FB About · reviews · page #2 DENR B2B ·
 **AEM Configure Web Events hindi pa na-verify** (`Lead` dapat #1 sa
-`oceanidesph.com`) — browser + desktop mode, wala sa app.
+`oceanidesph.com`; browser + desktop mode, wala sa app).
 **Grifon:** #94.3 next · #94.2 NOT-REPRO · #92+#89/#90 ride Slice B · #93 ⛔ TUNED.
 ⚠️ **Client world:** navy + amber print, no glass, no `#FFCC00`.
 
 ## ⛔ Gated · 🔧 Arm before starting
 
 🔴 **UBOS ANG GEMINI API BUDGET.** Manwal sa Flow ang bagong clip. Gated: Kling.
-```powershell
-.\scripts\restore-git-identity.ps1
-.\scripts\restore-gh.ps1
-.\scripts\restore-codex.ps1
-```
+`.\scripts\restore-git-identity.ps1` · `restore-gh.ps1` · `restore-codex.ps1`
 ⚠️ May sariling `node_modules` ang `funnels/oceanides-price-page` — `npm ci` doon
-bago mag-build. **Huwag i-pipe ang build/deploy output** (`tail`, `Select-Object
--First`) — pinapatay nito ang exit code.
+bago mag-build. **Huwag i-pipe ang build/deploy output** — pinapatay ang exit code.
 
 ---
 
 ### How to maintain this file
-**Overwrite, never append** — history is `git log`'s job. Rewriting it is the last
-action of any session that changed the work. Verifier fails past 90 lines.
+**Overwrite, never append.** Rewriting it is the last action of any session that
+changed the work. Verifier fails past 90 lines.
