@@ -12,10 +12,11 @@ araw** ang promised delivery date ng certificate, at **buhay pa ang ₱1,600 na
 payout system** (inspector ₱500 + transport ₱600 + Zam ₱250 + Neil ₱250). Buong
 detalye ng proseso: [`workflows/ad_performance_ledger.md`](workflows/ad_performance_ledger.md) §HARD GATE.
 
-⚠️ **Bagong thread, hindi pa nakasulat ang hugis:** ayaw nang maging dependent ni
-Neil kay Boss Jay para sa scaling — gagawa sya ng sarili nyang sistema, **under pa
-rin ng Oceanides**, at sya mismo ang maghahandle ng profit/financial side.
-**Linawin muna ito** bago isulat sa build spec (§4 Ang operasyon).
+⚠️ **Bagong thread:** ayaw nang maging dependent ni Neil kay Boss Jay para sa
+scaling — gagawa sya ng sarili nyang sistema, **under pa rin ng Oceanides**, at
+sya mismo ang maghahandle ng profit/financial side. **Kumpirmado: pareho** —
+logistics AT financial control layer. Konkretong disenyo pa lang ang kulang
+bago isulat sa build spec (§4 Ang operasyon).
 
 ➡️ **BUONG BUILD SPEC:** [`clients/oceanides/paolo-funnel-brief.md`](clients/oceanides/paolo-funnel-brief.md)
 — GATE sarado, dalawang blocker sarado (PayMongo ni Oceanides mismo, OR kasabay
@@ -50,7 +51,8 @@ event nasa `src/lib/pixel.ts` + `LeadForm.tsx`).
 
 Sinara ang **HARD GATE** kasama si Boss Jay — apat na kondisyon kumpirmado, buong
 proseso nakasulat sa ledger. Na-update ang ledger + brief. Bagong open thread:
-"sariling sistema" ni Neil, hindi pa linaw ang hugis.
+"sariling sistema" ni Neil — **pareho** (logistics + financial), konkretong
+disenyo pa ang kulang.
 
 ## 🅿 PARKED
 

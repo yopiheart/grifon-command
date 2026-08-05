@@ -19,10 +19,11 @@ o gagamitin sa maling paraan ang certificate), **100% sang-ayon sa mekanismong**
 ang promised delivery date ng certificate — hindi artificial na lead time.
 Buong detalye ng proseso: ledger §HARD GATE.
 
-⚠️ **Bagong thread, hindi pa nakasulat ang hugis:** ayaw nang maging dependent
-ni Neil kay Boss Jay para sa scaling — gagawa sya ng sarili nyang sistema, under
-pa rin ng Oceanides, at sya mismo ang maghahandle ng profit/financial side.
-Linawin bago isulat sa build spec sa ibaba.
+⚠️ **Bagong thread, konkretong disenyo pa hindi nakasulat:** ayaw nang maging
+dependent ni Neil kay Boss Jay para sa scaling — gagawa sya ng sarili nyang
+sistema, under pa rin ng Oceanides, at sya mismo ang maghahandle ng
+profit/financial side. **Kumpirmado: pareho** — logistics AT financial control
+layer. Linawin ang konkretong proseso bago isulat sa build spec sa ibaba.
 
 ## ✅ Sarado na ang dalawang blocker (2026-08-05)
 

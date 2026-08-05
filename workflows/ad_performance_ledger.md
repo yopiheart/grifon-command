@@ -535,9 +535,11 @@ irerelease sa loob ng 15 araw, at **babayaran agad pagdating** (hindi terms).
 **Bagong desisyon ni Neil (2026-08-06):** hindi na sya magiging dependent kay
 Boss Jay para sa scaling — gagawa sya ng sarili nyang sistema, **under pa rin
 ng Oceanides**, at si Neil mismo ang maghahandle ng profit/financial side para
-masiguro ang tamang paglaki. ⚠️ **Hindi pa nakasulat ang hugis ng sistemang ito**
-(logistics ba, o financial control layer, o pareho) — linawin sa susunod na
-session bago isulat sa brief.
+masiguro ang tamang paglaki. **Kumpirmado: pareho** — logistics AT financial
+control layer, hindi isa lang. ⚠️ Hindi pa nakasulat ang konkretong disenyo
+(anong proseso ang papalit sa "tawagan si Boss Jay" — sariling hauler? sariling
+booking/dispatch? paano hahawakan ang pera bago ito dumaan sa facility?) —
+linawin sa susunod na session bago isulat sa brief.
 
 ---
 
