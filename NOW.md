@@ -84,8 +84,6 @@ ng IM8, parehong 3 dahilan ng 2026-08-03.
 `.\scripts\restore-git-identity.ps1` · `restore-gh.ps1` · `restore-codex.ps1`
 ⚠️ Sariling `node_modules` ang bawat funnel (`npm ci` doon bago mag-build) · **huwag i-pipe ang build/deploy output**, pinapatay nito ang exit code.
 
----
-
 ### How to maintain this file
 **Overwrite, never append.** Rewriting it is the last action of any session that
 changed the work. Verifier fails past 90 lines.
