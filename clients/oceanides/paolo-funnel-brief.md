@@ -174,8 +174,12 @@ humarang sa unang test — kayang gawin ang unang mga report nang manwal.
 3. ✅ Kumpirmado ang "sariling sistema" ni Neil — pareho, phased (itaas).
 4. **Unang tawag sa supervisor ng facility** — tatlong tanong sa ledger §HARD
    GATE (saan kinukuha ang waste, kailan ang bayad, magkano talaga).
-5. Copy ng page (`grifon-cmo` + `grifon-creative-director`) sa **sariwang session** —
-   masyadong malalim ang session 7/8 para sa magandang copy.
+5. ✅ **TAPOS ang copy ng page** (`grifon-cmo` + `grifon-creative-director`,
+   2026-08-06): [`paolo-page-copy.md`](paolo-page-copy.md). Buo ang 17 section,
+   ang form ay **pang-6 na** (hindi pang-14), at nandun na ang bagong qualifier na
+   `renewal_window`. 🔴 May dalawang literal na `⟦PENDING⟧` placeholder sa loob
+   (core price + ang pangalan sa certificate) na hindi puwedeng punan hangga't
+   walang tawag sa facility.
 6. Checkout (`code-executor` o `codex-executor`, may buong brief).
 7. Bagong creative at bagong targeting — **`home` ang luma, mali na sya.**
 8. 🔴 **Buksan lang kapag may isang bayad na load + hawak na certificate.**

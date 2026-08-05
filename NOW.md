@@ -27,6 +27,7 @@ naghahanap ng sarili, at diretso na si Neil ang nakikipag-transact sa supervisor
 ng facility para sa pera (walang middleman).
 
 ➡️ **BUONG BUILD SPEC:** [`clients/oceanides/paolo-funnel-brief.md`](clients/oceanides/paolo-funnel-brief.md).
+➡️ **BUONG COPY NG PAGE:** [`clients/oceanides/paolo-page-copy.md`](clients/oceanides/paolo-page-copy.md).
 Buksan yun, hindi ang chat.
 
 **Sunod:**
@@ -34,15 +35,14 @@ Buksan yun, hindi ang chat.
    Buong script + apat na tanong: [`clients/oceanides/facility-call-script.md`](clients/oceanides/facility-call-script.md).
    Tapos ituro ang **susunod na DENR job** na papasok sa bagong proseso — hindi
    kailangang galing sa funnel ang proof load.
-2. Copy ng page (`grifon-cmo` + `grifon-creative-director`) sa **sariwang session**
-   — masyadong malalim ang session 7/8 para sa magandang copy.
-3. Checkout (`code-executor` o `codex-executor`, may buong brief).
-4. Bagong creative at bagong targeting — **`home` ang luma, mali na sya.**
+2. Checkout (`code-executor` o `codex-executor`, may buong brief).
+3. Bagong creative at bagong targeting — **`home` ang luma, mali na sya.**
 
 **Nagawa na, huwag nang ulitin:** avatar ni Paolo (`Oceanides market-research.md`
 §2), value stack (`offer-optimizer-denr-2026-07-20.md`, ⚠️ RAW may 3 flag), buong
 grill ng offer (session 7), pixel-leak imbestigasyon (walang leak — `FormViewed`
-event nasa `src/lib/pixel.ts` + `LeadForm.tsx`).
+event nasa `src/lib/pixel.ts` + `LeadForm.tsx`), **buong copy ng page ni Paolo**
+(2026-08-06, 17 section, form pang-6).
 
 ## 🔴 Huwag kalimutan
 
@@ -62,6 +62,11 @@ Napagkasunduan ang **HARD GATE** kasama si Boss Jay — apat na kondisyon, pero
 **pangako pa lang, hindi pa sarado.** Sinara ang **"sariling sistema"** thread —
 pareho (logistics + financial), phased. Nalabas ang tatlong tanong sa facility
 na hindi kayang hulaan. Na-update ang ledger + brief.
+
+**Buong copy ni Paolo** — `paolo-page-copy.md`: config-ready ang 17 section, 3
+headline option, thank-you na naka-route sa `renewal_window`, pasado sa
+`lint-voice.mjs`. 🔴 May dalawang literal na `⟦PENDING⟧` sa loob (core price +
+kanino nakapangalan ang certificate) — sinadya, para hindi maka-ship nang tahimik.
 
 ## 🅿 PARKED
 
