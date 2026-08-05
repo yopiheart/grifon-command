@@ -412,9 +412,73 @@ nagiging proof library na sagot sa *"wala silang reviews."*
 
 ⚠️ **Ubos ang Gemini budget** (`NOW.md`). Hindi sya maitatayo ngayong linggo.
 
-**Bukas pang desisyon:** **COGS ng dokumentadong load** (dito nakasalalay ang
-margin ng core, at dun ang buong tripwire math) · kailan maniningil at paano ·
-no-show · capacity kada linggo kapag umubra.
+#### ✅ UNIT ECONOMICS NI PAOLO 2026-08-05 — ibang negosyo ito, hindi mas malaking Helen
+
+Sagot ni Neil sa Tanong 5. **Ito ang numerong nagbabago ng lahat.**
+
+| Kada dokumentadong load | ₱12,000 | ₱15,000 |
+| --- | --- | --- |
+| Treatment facility | ₱6,000 | ₱6,000 |
+| Truck + crew (kasama na ang crew) | ₱2,500 | ₱2,500 |
+| **Gross kada load** | **₱3,500** | **₱6,500** |
+
+Isang beses lang kada TRABAHO ang payout (inspector ₱500 + transport ₱600 + Zam
+₱250 + Neil ₱250 = ₱1,600), hindi kada load. Kaya:
+
+| Trabaho (₱15k/load) | Net | Beses ang ₱900 ni Helen |
+| --- | --- | --- |
+| 1 load | **₱4,900** | 5.4× |
+| 2 loads | **₱11,400** | 12.7× |
+| 5 loads | **₱30,900** | 34× |
+
+🔴 **Ibig sabihin: patay na ang lumang break-even na ₱900 at ang MER 5.6×.** Kaya
+nang gumastos ng **hanggang ₱4,900 para sa ISANG booked na single-load na trabaho**
+— **5.4× na mas maluwag** kaysa sa dating ₱900. Dito nakatago ang buong headroom.
+
+**Ang tripwire ay malapit nang libre sa sarili nya.** Sa ₱999 at ~₱470 na gastos
+kada bisita (3 stop kada araw), **~₱529 ang natitira kada check bago pa ang ads.**
+Ang bawat core sale ay dagdag na, hindi kailangan para pumatas.
+
+⚠️ **Dalawang bagay na hindi pa kumpirmado at kailangang tanungin bago mag-code:**
+1. **₱500 kada load na hindi tugma.** Ang halimbawa ni Neil (5 load, ₱10,000 sa
+   malabanan) ay ₱2,000 kada load, hindi ₱2,500. Ang ₱2,500 ang ginamit dito
+   dahil sya ang konserbatibo. Alin ang tama?
+2. **Buhay pa ba ang ₱1,600 na payout sa DENR na trabaho?** Hindi sya binanggit
+   ni Neil sa breakdown ng dokumentadong load. Ipinagpalagay na buhay pa sya.
+
+⚠️ **Mas mahal ang traffic ni Paolo.** Ang ₱6.27 kada bisita ay galing sa MALAWAK
+na homeowner targeting. Mas makitid ang B2B, kaya asahan ang ₱15-40. Sa ₱30 at
+3% checkout conversion, ~₱1,000 ang isang bayad na check — **katabi mismo ng
+₱999.** Kaya ang totoong margin of safety ay **nasa core sale, wala sa tripwire.**
+Hindi kailangang kumita ang tripwire. Kailangan lang nyang maging libre, at libre sya.
+
+#### ✅ DESISYON 2026-08-05 — ₱999, online checkout sa PayMongo
+
+- **₱999, hindi ₱499.** Hindi dahil "pang-break even" kundi dahil **sya lang ang
+  presyong buhay sa unang dalawang linggo** habang kalat pa ang booking (1-2 stop
+  kada araw). Sa siksik na ruta, pareho na silang kumikita.
+- **Kasamang kondisyon: higpitan ang geo.** Isang siyudad muna, hindi buong 20km
+  radius. **Ginagawa ang density, hindi hinihintay** (A4).
+- **Online checkout, hindi pangungulit ni Zam.** Napagkasunduan matapos ituro ni
+  Neil na (a) may PayMongo na ang Oceanides at kasama na ang GCash at bank
+  transfer dun, kaya walang laman ang "ganon magbayad ang SME"; (b) ang oras ni
+  Zam ang unang nasisira habang lumalaki; at (c) **bawat karagdagang tao sa daan
+  ng pera ay lugar kung saan namamatay ang benta.** ⚠️ Itinama rin ang tantsa ng
+  agent na "3 araw" — **isang upuan lang** sya: 65 linya ang `api/checkout.ts` at
+  may `createCheckoutSession` na sa `api/_lib/paymongo.ts` (kailangan ng sariling
+  kopya, bawal mag-import ang funnel mula sa repo root).
+
+🔴 **Apat na bagay bago mag-code, at wala sa kanila ang tungkol sa checkout mismo:**
+1. **Kaninong PayMongo?** Kay **Grifon** ang `VITE_PAYMONGO_PUBLIC_KEY` sa root
+   `.env`. Kung nagamit yun, **ang kita ng Oceanides ay dadapo sa account ng
+   Grifon** — gulo sa libro at sa BIR na mahirap ayusin pabalik.
+2. **Sino ang maglalabas ng official receipt?** Negosyo ang bumibili at hihingi
+   sya ng OR para sa libro nya. Ang PayMongo ay payment confirmation, **hindi BIR
+   OR.** At **papeles mismo ang ibinebenta natin** — ito ang unang mapapansin nya.
+3. **I-save ang lead BAGO ang checkout.** Kapag nakabitin ang lead sa likod ng
+   bayad, nawawala ang bawat hindi natuloy at hindi natin sila mabibilang.
+4. **Subaybayan ang credit.** May hawak kang pera at may utang kang serbisyo kapag
+   hindi pala puno. Kailangan ng field at ng tanaw ni Zam.
 
 ---
 
