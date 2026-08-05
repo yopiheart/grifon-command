@@ -75,16 +75,14 @@ ng IM8, parehong 3 dahilan ng 2026-08-03.
 
 ## 🅿 PARKED
 
-**Oceanides:** Week 02 pack · GB-001 video · hook2 ng KM-004 · Kling b-roll ·
-watermark ni Gabriel · SEC Reg. No. · FB About · reviews · **AEM Configure Web
-Events hindi pa na-verify** (`Lead` dapat #1 sa `oceanidesph.com`; browser + desktop).
+**Oceanides:** Week 02 pack · GB-001 video · hook2 ng KM-004 · Kling b-roll · watermark ni Gabriel · SEC Reg. No. · FB About · reviews · **AEM Configure Web Events hindi pa na-verify** (`Lead` dapat #1 sa `oceanidesph.com`; browser + desktop).
 **Grifon:** #94.3 next · #94.2 NOT-REPRO · #92+#89/#90 ride Slice B · #93 ⛔ TUNED. ⚠️ **Client world:** navy + amber print, no glass, no `#FFCC00`.
 
 ## ⛔ Gated · 🔧 Arm before starting
 
 🔴 **UBOS ANG GEMINI API BUDGET.** Manwal sa Flow ang bagong clip. Gated: Kling.
 `.\scripts\restore-git-identity.ps1` · `restore-gh.ps1` · `restore-codex.ps1`
-⚠️ Sariling `node_modules` ang `funnels/oceanides-price-page` (`npm ci` doon bago mag-build) · **huwag i-pipe ang build/deploy output**, pinapatay nito ang exit code.
+⚠️ Sariling `node_modules` ang bawat funnel (`npm ci` doon bago mag-build) · **huwag i-pipe ang build/deploy output**, pinapatay nito ang exit code.
 
 ---
 
