@@ -82,8 +82,7 @@ watermark ni Gabriel · SEC Reg. No. · FB About · reviews · page #2 DENR B2B 
 
 🔴 **UBOS ANG GEMINI API BUDGET.** Manwal sa Flow ang bagong clip. Gated: Kling.
 `.\scripts\restore-git-identity.ps1` · `restore-gh.ps1` · `restore-codex.ps1`
-⚠️ May sariling `node_modules` ang `funnels/oceanides-price-page` — `npm ci` doon
-bago mag-build. **Huwag i-pipe ang build/deploy output** — pinapatay ang exit code.
+⚠️ Sariling `node_modules` ang `funnels/oceanides-price-page` (`npm ci` doon bago mag-build) · **huwag i-pipe ang build/deploy output**, pinapatay nito ang exit code.
 
 ---
 
