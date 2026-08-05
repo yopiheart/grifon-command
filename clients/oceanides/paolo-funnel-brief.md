@@ -1,7 +1,9 @@
 # Paolo Funnel — Build Brief
 
 **Ginawa: 2026-08-05** (session 7, matapos ang buong grill)
-**Estado: BUKAS NA ANG GATE (2026-08-06) — kulang pa ang copy at checkout**
+**Estado: ITAYO NA, WAG PA BUKSAN** — napagkasunduan ang gate (2026-08-06) pero
+sarado lang sya sa unang bayad na load na may certificate. Kulang pa ang copy
+at checkout.
 
 Ito ang buong spec ng bagong funnel para kay **"Compliance-Pressured Paolo"** (B2B).
 Kinuha mula sa grill noong 2026-08-05. **Basahin ang buong post-mortem at ang mga
@@ -10,14 +12,20 @@ numero sa [`workflows/ad_performance_ledger.md`](../../workflows/ad_performance_
 
 ---
 
-## ✅ GATE SARADO — 2026-08-06, kausap na si Boss Jay
+## 🟡 NAPAGKASUNDUAN ANG GATE — 2026-08-06, kausap na si Boss Jay
 
 Kumpirmado nya kay Neil: **dumadaan sa facility ang bawat load, babayaran ang
 nararapat** (sinabihan sya nang diretso ni Neil na hindi papayag na dodoctorin
 o gagamitin sa maling paraan ang certificate), **100% sang-ayon sa mekanismong**
 ₱6,000/load diretso sa facility bago ang ibang payout, at **normal na 15 araw**
 ang promised delivery date ng certificate — hindi artificial na lead time.
-Buong detalye ng proseso: ledger §HARD GATE.
+
+🔴 **PERO HINDI PA SYA SARADO. Pangako pa lang ito, wala pang load na dumaan.**
+Sarado sya sa araw na may isang load na diretsong binayaran ni Neil sa facility
+**at** may certificate galing doon na hawak na natin. Bago iyon: itayo ang
+lahat, **wag lang buksan.** Kasama ang tatlong tanong na dapat sagutin sa unang
+tawag sa supervisor (saan kinukuha ang waste, kailan ang bayad, magkano talaga):
+ledger §HARD GATE.
 
 ✅ **Sariling sistema ni Neil, hindi na dependent kay Boss Jay — pareho** (logistics
 AT financial), phased:
@@ -156,10 +164,13 @@ humarang sa unang test — kayang gawin ang unang mga report nang manwal.
 
 ## Sunod na hakbang
 
-1. ✅ Sarado ang **GATE** (meeting kay Boss Jay, 2026-08-06).
+1. 🟡 Napagkasunduan ang **GATE** (Boss Jay, 2026-08-06) — **hindi pa sarado.**
 2. ✅ Sarado ang **dalawang blocker** sa itaas.
 3. ✅ Kumpirmado ang "sariling sistema" ni Neil — pareho, phased (itaas).
-4. Copy ng page (`grifon-cmo` + `grifon-creative-director`) sa **sariwang session** —
+4. **Unang tawag sa supervisor ng facility** — tatlong tanong sa ledger §HARD
+   GATE (saan kinukuha ang waste, kailan ang bayad, magkano talaga).
+5. Copy ng page (`grifon-cmo` + `grifon-creative-director`) sa **sariwang session** —
    masyadong malalim ang session 7/8 para sa magandang copy.
-5. Checkout (`code-executor` o `codex-executor`, may buong brief).
-6. Bagong creative at bagong targeting — **`home` ang luma, mali na sya.**
+6. Checkout (`code-executor` o `codex-executor`, may buong brief).
+7. Bagong creative at bagong targeting — **`home` ang luma, mali na sya.**
+8. 🔴 **Buksan lang kapag may isang bayad na load + hawak na certificate.**

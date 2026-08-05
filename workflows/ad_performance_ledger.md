@@ -513,7 +513,17 @@ sa saklaw ng dokumentong ito at hindi sya masasagot ng marketing plan.
 4. **Subaybayan ang credit.** May hawak kang pera at may utang kang serbisyo kapag
    hindi pala puno. Kailangan ng field at ng tanaw ni Zam.
 
-#### ✅ SARADO ANG GATE — 2026-08-06, kausap na si Boss Jay
+#### 🟡 NAPAGKASUNDUAN ANG GATE — 2026-08-06, kausap na si Boss Jay
+
+🔴 **HINDI PA SYA SARADO, at sinadya ang pagkakaiba.** Sabi mismo ng gate sa
+itaas: *"totoo ang papel dahil BINAYARAN sya, hindi dahil may NAGPAALAM."*
+Nagpaalam si Boss Jay. Wala pang isang load ang dumaan sa bagong mekanismo, at
+walang certificate na nahawakan na. **Pangako muna ito, hindi pa patunay.**
+
+**Sarado ang gate sa araw na:** may isang load na (a) diretsong binayaran ni
+Neil sa facility bago ang ibang payout, at (b) may certificate galing sa
+facility na hawak na natin. **Bago iyon, walang ads.** Pwedeng itayo ang lahat
+— page, copy, checkout — pero bawal buksan.
 
 Apat sa apat, kumpirmado ni Boss Jay kay Neil:
 
@@ -527,10 +537,32 @@ Apat sa apat, kumpirmado ni Boss Jay kay Neil:
 4. **Buhay pa ang ₱1,600 na payout** (inspector ₱500 + transport ₱600 + Zam
    ₱250 + Neil ₱250) kada DENR job. Sistema pa rin nila ito.
 
-**Proseso, sabi ni Boss Jay:** kokontakin nya ang supervisor ng treatment plant
-para magpagawa ng certificate. Magpapadala sila ng truck na kukuha ng waste
-mula sa site papunta sa treatment plant nila — doon ise-issue ang certificate,
-irerelease sa loob ng 15 araw, at **babayaran agad pagdating** (hindi terms).
+**Proseso, sabi ni Boss Jay (sariling salita ni Neil):** kokontakin lang ang
+tao/supervisor ng treatment plant dun sa facility para magpagawa ng certificate,
+at magpapadala ito ng truck *"na kung saan isasalin ung waste na galing sa
+facility papunta sakanilang treatment plant."* Doon ise-issue ang certificate,
+irerelease sa loob ng 15 araw, **at babayaran agad dapat.**
+
+🔴 **DALAWANG BAGAY DITO ANG HINDI PA MALINAW, at dapat sagutin sa unang tawag
+sa supervisor** — hindi sila kayang hulaan, at ang una ay tumutusok mismo sa
+puso ng gate:
+
+1. **Saan kinukuha ang waste?** Sabi ni Neil *"galing sa facility papunta
+   sakanilang treatment plant"* — ibig sabihin may **pagitan**: may hinihintuan
+   ang waste bago ito dalhin sa treatment plant ng partner. Kung ganon,
+   **anong pumipigil sa paghahalo ng load ng magkaibang kliyente doon?** Ang
+   buong binibili ni Paolo ay ang certificate na nakapangalan sa KANYA. Kapag
+   naghalo ang tatlong load bago sila dumaan sa plant, hindi na masasabing
+   dumaan ang KANYANG waste — at iyon mismo ang ipinagbabawal ng gate.
+   (Kung ang totoo pala ay diretso sa site kinukuha ang waste, wala itong isyu
+   — pero hindi pa natin alam kung alin.)
+2. **Kailan ang bayad?** *"Babayaran agad dapat"* — sa pagkuha ba ng truck, o
+   sa paglabas ng certificate makalipas ang 15 araw? Iba ang cash-flow ng
+   dalawa: kapag day-15 ang bayad, may ₱6,000 kang hawak nang dalawang linggo
+   na **bawal galawin** ng ibang payout.
+3. **Magkano ba talaga?** Tantsa pa rin ang ₱6,000/load, hindi presyong galing
+   sa facility mismo. Sa unang tawag pa lang kunin na ang totoong numero —
+   nakasandal dito ang buong unit economics.
 
 **Bagong desisyon ni Neil (2026-08-06):** hindi na sya magiging dependent kay
 Boss Jay para sa scaling — gagawa sya ng sarili nyang sistema, **under pa rin
