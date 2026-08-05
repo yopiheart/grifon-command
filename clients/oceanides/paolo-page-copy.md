@@ -1,4 +1,4 @@
-# Paolo Landing Page — Buong Copy
+# Paolo Landing Page · Buong Copy
 
 **Ginawa: 2026-08-06** · `grifon-cmo` (copy at strategy) + `grifon-creative-director` (structure at print devices)
 **Para sa:** `funnels/oceanides-paolo/` (bagong standalone funnel, hindi ito ang `oceanides-price-page`)
@@ -10,19 +10,19 @@
 
 Napagkasunduan ang gate (Boss Jay, 2026-08-06) pero **hindi pa sya sarado.** Pangako
 pa lang ito: wala pang load na dumaan sa bagong mekanismo at walang certificate na
-nahawakan. **Buo ang copy dito, pero may dalawang butas na sinadya** — hindi sya
-puwedeng i-deploy nang buo hangga't walang tawag sa treatment facility
+nahawakan. **Buo ang copy dito, pero may dalawang butas na sinadya**, hindi sya
+pwedeng i-deploy nang buo kung wala pang tawag sa treatment facility
 ([`facility-call-script.md`](facility-call-script.md)).
 
 ### Ang dalawang PENDING
 
-| Tatak | Ano | Bakit hindi pa puwede | Sinasagot ng |
+| Tatak | Ano | Bakit hindi pa pwede | Sinasagot ng |
 | --- | --- | --- | --- |
 | `⟦PENDING · A⟧` | **Ang eksaktong core price kada dokumentadong load.** | Tantsa pa lang ang ₱6,000 na bayad sa facility. Kapag mas mataas pala, tumataas ang ₱12,000-15,000. | Tanong 2 ng call script |
 | `⟦PENDING · B⟧` | **Ang claim na nakapangalan sa kliyente ang certificate.** | Ipinangako ni Boss Jay, pero hindi pa kumpirmado ng facility mismo kung sa kliyente ba o sa Oceanides nakasulat ang pangalan. | Tanong 4 ng call script |
 
 🔴 **Panuntunan: walang numero at walang claim na papalit sa dalawang tatak na yan
-hangga't hindi natatapos ang tawag.** Nakasulat sila bilang literal na placeholder
+kung hindi pa tapos ang tawag.** Nakasulat sila bilang literal na placeholder
 para hindi sila maka-ship nang hindi napapansin. Kapag na-deploy na may `⟦PENDING`
 pa sa page, ang page mismo ang magsasabi sa yo.
 
@@ -34,25 +34,25 @@ gamitin ang fallback at wag munang buksan ang ads.
 
 - **Ang eksaktong pangalan ng LLDA na hawak.** Sabi ni Neil "may LLDA na" pero hindi
   pa natin alam kung *permit*, *clearance* o *accreditation* ang nakasulat sa papel.
-  **Kopyahin ang salitang nasa papel mismo** — ito ang unang bagay na susuriin ng
+  **Kopyahin ang salitang nasa papel mismo**, ito ang unang bagay na susuriin ng
   taong may inspection. Nakasulat muna dito bilang `LLDA permit`.
-- **Ang SEC Reg. No.** — `TO FOLLOW` pa rin mula pa noong 2026-08-01.
+- **Ang SEC Reg. No.** ay `TO FOLLOW` pa rin mula pa noong 2026-08-01.
 
 ---
 
-## STEP 0 — Anong register?
+## STEP 0 · Anong register?
 
 **Taglish.** Hindi English, kahit B2B.
 
 Sinusuri ang carve-out sa [`taglish-voice.md`](../../.claude/skills/_shared/taglish-voice.md)
-§STEP 0a: English ang B2B deck, kontrata at proposal. **Hindi deck ito.** Ito ay
-Facebook-traffic landing page para sa may-ari ng karinderya, apartment, at maliit na
-building sa Metro Manila. Ang tao na yun ay hindi corporate-English reader — sya ang
+§STEP 0a: English ang B2B deck, kontrata at proposal. **Hindi deck ito.** Facebook-traffic
+landing page sya para sa may-ari ng karinderya, apartment, at maliit na
+building sa Metro Manila. Ang tao na yun ay hindi corporate-English reader, sya ang
 kaparehong tao ng avatar ni Helen, may negosyo lang.
 
 **Pero ibang tono kaysa sa page ni Helen.** Si Helen ay may umaapaw na CR at natatakot
 malokohin. Si Paolo ay may inspection na paparating at natatakot managot. Kaya:
-**kalmado, tuyot, parang katabi mong nagpapaliwanag ng papeles** — hindi ang
+**kalmado, tuyot, parang katabi mong nagpapaliwanag ng papeles**, hindi ang
 tono ng emergency service. Mas mabigat ang English carve-out dito dahil totoong
 English ang pangalan ng mga papel: DENR, LLDA, RA 9275, manifest, Certificate of
 Treatment, discharge permit, official receipt, invoice.
@@ -61,7 +61,7 @@ Treatment, discharge permit, official receipt, invoice.
 
 ## Ang strategic read (`grifon-cmo`)
 
-**Avatar:** "Compliance-Pressured Paolo" — `Oceanides market-research.md` §2. Walang
+**Avatar:** "Compliance-Pressured Paolo", nasa `Oceanides market-research.md` §2. Walang
 bagong research, walang bagong avatar.
 
 **Awareness stage (Schwartz): Problem Aware ang page.** Ang ad ang bumubuhat ng
@@ -74,11 +74,11 @@ litrato at pirma. Kapag kailangan mo ng papel para sa buong load, kami ang kukuh
 galing sa DENR-accredited na facility ang certificate.*
 
 **Ang kalaban (S24 format-enemy, 15 ads / 5 brands):** hindi ang mas murang siphoner
-na may pangalan. Ang kalaban ay ang **gawi** — ang pasipsip na walang resibo, walang
+na may pangalan. Ang kalaban ay ang **gawi**, ang pasipsip na walang resibo, walang
 manifest, walang tapunang alam mo. Bawal ang pangalan ng kalaban sa page.
 
 **Ang wedge:** ang **LLDA** at ang **DENR-accredited na tapunan**. Hindi sya "kaya rin
-namin" — sya ang dahilan kung bakit tayo ang tatawagan at hindi ang suki. Hindi
+namin", sya ang dahilan kung bakit tayo ang tatawagan at hindi ang suki. Hindi
 makakapag-issue ng manifest ang crew na walang papel, kahit gaano pa sila kamura.
 
 **Ang totoong urgency (walang fake countdown):** ang **15 araw** ng certificate laban
@@ -89,19 +89,19 @@ rin sya ang bagong qualifier sa form.
 Commitment (bayad na check → pasukan sa kontrata) · Reciprocity (report na
 maipa-file nya agad) · Social Proof (totoong listahan ng na-service, walang
 testimonial dahil wala pa tayong totoo) · **Admit-against-interest** (ang FAQ #4 sa
-ibaba — tinatanggihan natin ang pinakamadaling benta, at yun ang nagpapaniwala sa
+ibaba, tinatanggihan natin ang pinakamadaling benta, at yun ang nagpapaniwala sa
 lahat ng iba).
 
 **Pattern na hinihiram, may pinagmulan:**
 
-- **S8 hyper-specific audience callout** (19 ads / 8 brands, `proposed` — pinakamalakas
+- **S8 hyper-specific audience callout** (19 ads / 8 brands, `proposed`, pinakamalakas
   sa Swipe File) → ang `audience` line sa hero.
 - **S24 format-enemy positioning** (15 / 5 brands) → ang villain ay gawi, hindi brand.
 - **L9 specific-number authority** (4 funnels / 3 operators) → ang totoong DENR at BIR
   na numero ang credibility device, hindi selyo. Sa page na ang buong benta ay
   papel, ang numerong kayang i-verify ng kahit sino ay mas malakas kaysa artwork.
 - **S16 borrowed authority** (18 / 6 brands) → ang listahan ng na-service (Avida,
-  Toyota, Jollibee…), pangalan lang, walang logo — wala tayong karapatan sa artwork.
+  Toyota, Jollibee…), pangalan lang, walang logo, wala tayong karapatan sa artwork.
 - **L8 single-anchor CTA** (3 / 3 operators) → maraming button, **isang** form.
 - **F01 P.S. ladder** → ang huling pinto para sa headline-then-P.S. na reader.
 
@@ -111,7 +111,7 @@ lahat ng iba).
    Imbento yun sa `offer-optimizer-denr-2026-07-20.md`, totoong pera ni Neil, at
    walang tanggap sya. Wala sya sa page na to.
 2. ⛔ **Ang partial documentation** (*"dalawa lang sa 20 loads ang ipasok"*). Sya ang
-   villain, hindi ang produkto. Sinasagot sya nang diretso sa FAQ #4 — bilang
+   villain, hindi ang produkto. Sinasagot sya nang diretso sa FAQ #4, bilang
    pagtanggi, hindi bilang alok.
 3. ⛔ **Pangakong mas mabilis sa 15 araw.** Ang 48 oras ay para sa **report natin**,
    hindi sa certificate. Magkaibang papel, at bawal silang paghaluin sa isang linya.
@@ -127,7 +127,7 @@ section 4-5.** Kung dun ulit bumagsak, ang frame ang mali, hindi ang presyo.
 
 ---
 
-## Ang form — mas mataas, at bagong qualifier
+## Ang form · mas mataas, at bagong qualifier
 
 ### Saan sya nakaupo: **pang-6 sa 17**, hindi pang-14
 
@@ -135,14 +135,14 @@ Sa lumang page ay pang-14 sa 17 sya. Ngayon: **kaagad pagkatapos ng value stack*
 bago ang buong kabanata ng objection, kwento, garantiya at FAQ.
 
 **Bakit eksaktong dyan, at hindi sa hero:** ang naunang limang section ay isang buong
-argumento na — pinangalanan ang pain (1), pinatunayan ang papel (2), pinatunayan na
-may ibang nagtiwala (3), sinukat ang panganib (4), at inilista kung ano ang bibilhin
+argumento na, pinangalanan ang pain (1), pinatunayan ang papel (2), pinatunayan na
+may ibang nagtiwala (3), sinukat ang risk (4), at inilista kung ano ang bibilhin
 (5). Ang taong may inspection sa susunod na buwan ay handa nang mag-form dun. Ang
 hindi pa handa ay tuloy lang sa pagbabasa, at ang bawat CTA sa ibaba ay **bumabalik
-sa parehong form** (L8 — isang anchor, maraming button).
+sa parehong form** (L8, isang anchor, maraming button).
 
-⛔ **Hindi puwede ang dalawang form.** May dev warning sa `Landing.tsx` na eksaktong
-isang form section lang ang inaasahan — dalawa ay malabong anchor. Kaya ang mga
+⛔ **Hindi pwede ang dalawang form.** May dev warning sa `Landing.tsx` na eksaktong
+isang form section lang ang inaasahan, dalawa ay malabong anchor. Kaya ang mga
 section sa ibaba ay `ctaBlock`, hindi pangalawang form.
 
 ⚠️ **Wala pa ang `FormViewed` data** na sinasabi ng brief. Hindi pa naka-deploy ang
@@ -161,7 +161,7 @@ form: {
     'Tatawagan ka namin para sa schedule at para sa pangalan ng negosyo mo sa OR, 8AM hanggang 5PM. Hindi kami mangangako ng bukas kung hindi namin kaya.',
   consent: {
     required: false,
-    text: 'Oo, puwede nyo akong tawagan o i-text tungkol sa booking na to. Protektado ang info ko sa ilalim ng Data Privacy Act of 2012 at ng Privacy Policy nyo. Matatawagan pa rin ako para sa schedule kahit hindi ko to i-check.',
+    text: 'Oo, pwede nyo akong tawagan o i-text tungkol sa booking na to. Protektado ang info ko sa ilalim ng Data Privacy Act of 2012 at ng Privacy Policy nyo. Matatawagan pa rin ako para sa schedule kahit hindi ko to i-check.',
     policyVersion: 'funnel-dpa-v1-2026-07',
   },
   qualifiers: [
@@ -214,9 +214,9 @@ form: {
 }
 ```
 
-**Bakit `renewal_window` ang una:** sya ang tanging totoong urgency lever ng buong
+**Bakit `renewal_window` ang una:** sya lang ang totoong urgency lever ng buong
 alok, at sya ang nag-uuri ng pila. Ang sumagot ng *"sa loob ng 30 araw"* ay tinatawagan
-sa mismong araw. Sya rin ang router ng thank-you page (tingnan sa ibaba) — at doon
+sa mismong araw. Sya rin ang router ng thank-you page (tingnan sa ibaba), at doon
 lumalabas ang pinaka-mahirap na katotohanan nang maaga: **kung wala pang 15 araw ang
 renewal mo, hindi aabot ang certificate.** Mas mabuting marinig nya yun sa thank-you
 page kaysa sa ikatlong linggo.
@@ -226,19 +226,19 @@ Ang *"wala, walang naibigay sa amin"* ay ang eksaktong avatar. Sya rin ang unang
 tanong ni Zam sa tawag, kaya nasagot na bago pa sya tumawag.
 
 **Limang select, hindi apat.** Alam kong dagdag na friction sya. Kapag bumagsak ang
-completion rate sa unang 100, ang unang tatanggalin ay `role` — sya ang tanging hindi
+completion rate sa unang 100, ang unang tatanggalin ay `role`, sya lang ang hindi
 nagbabago ng gagawin natin.
 
 ### 🔧 Build note: kulang ang field
 
 Walang **pangalan ng negosyo** sa `fields` union (`'name' | 'email' | 'phone'` lang).
-Sa B2B lead, ang row na walang pangalan ng negosyo ay mahina — at ito mismo ang
+Sa B2B lead, ang row na walang pangalan ng negosyo ay mahina, at ito mismo ang
 kailangan sa OR. **Dalawang daan:**
 
 1. **Idagdag ang `'company'` sa shared template** (`funnels/_template`, `config.types.ts`,
    `LeadForm.tsx`, `api/lead.ts`). Malinis, pero gumagalaw sya sa lahat ng funnel.
 2. **Itanong sa tawag.** Zero code, pero ang lead row ay mananatiling walang pangalan
-   ng negosyo hangga't hindi nakakausap.
+   ng negosyo kung hindi pa nakakausap.
 
 **Rekomendasyon: #1.** Ang OR ang unang mapapansin ni Paolo (nakasulat sa ledger), at
 ang OR ay nangangailangan ng pangalan ng negosyo. Isang field sa shared template ay
@@ -247,7 +247,7 @@ lunas habang wala pa sya.
 
 ---
 
-## Ang page — 17 section
+## Ang page · 17 section
 
 Ang ground ladder ay sumusunod sa lumang page: **arrival** (navy-gradient) → **papel**
 (navy-deep) → **quotation** (paper) → **ang desk na pipirmahan** (navy-deep) →
@@ -257,7 +257,7 @@ ng kwento.
 
 ---
 
-### 1 · `hero` — `navy-gradient`
+### 1 · `hero` · `navy-gradient`
 
 **Headline, tatlong option. Rekomendasyon: A.**
 
@@ -265,7 +265,7 @@ ng kwento.
 | --- | --- | --- |
 | **A ✅ 72%** | `Ang huling pasipsip mo, **walang papel**. Yun ang unang hahanapin sa inspection.` | Tugma sa Problem Aware. Pinangalanan ang gap nang hindi nanggugulat sa multa, at ang villain ay gawi, hindi brand (S24). |
 | B 58% | `May inspection ka na paparating. **Labinlimang araw** bago lumabas ang papel.` | Mekanismo at orasan agad. Mas malakas sa taong may petsa na, mas mahina sa hindi pa nakaka-schedule. Gamitin bilang variant kapag naka-target sa renewal season. |
-| C 41% | `**₱200,000 kada araw** ang multa sa RA 9275. Ang papel na pang-iwas dun, ₱999 para masimulan.` | Pinakamalakas na scroll-stop, pinakamataas na panganib. Fear-first sa unang segundo at malapit sa fear-mongering, at ang presyo sa headline ay pumapasok bago pa ang halaga. Test lang, hindi default. |
+| C 41% | `**₱200,000 kada araw** ang multa sa RA 9275. Ang papel na pang-iwas dun, ₱999 para masimulan.` | Pinakamalakas na scroll-stop, pinakamataas na risk. Fear-first sa unang segundo at malapit sa fear-mongering, at ang presyo sa headline ay pumapasok bago pa ang halaga. Test lang, hindi default. |
 
 ```ts
 {
@@ -304,16 +304,16 @@ ng kwento.
 }
 ```
 
-🎨 **CD:** Pareho ang ticket device ng lumang page — dashed border, amber tab na
+🎨 **CD:** Pareho ang ticket device ng lumang page, dashed border, amber tab na
 nakapatong sa itaas na gilid. Isang pagbabago: **dalawang linya lang ang `addOns`
 dito**, hindi apat, kaya mas mataas ang puti sa loob ng ticket. Wag punan. Ang
 puwang mismo ang nagsasabing maikli ang listahan.
 
-⚠️ Habang `⟦PENDING · A⟧` pa ang laman, **halatang basag ang ticket** — sinadya yun.
+⚠️ Habang `⟦PENDING · A⟧` pa ang laman, **halatang basag ang ticket**, sinadya yun.
 
 ---
 
-### 2 · `socialProofBar` — `navy-deep`
+### 2 · `socialProofBar` · `navy-deep`
 
 ```ts
 {
@@ -332,7 +332,7 @@ puwang mismo ang nagsasabing maikli ang listahan.
 
 **Bakit numero at hindi selyo (L9):** sa page na ang buong benta ay papel, ang
 numerong kayang tingnan ng kahit sino ay mas malakas kaysa artwork. At may sariling
-peklat tayo dito — maling DENR region ang badge artwork noon, at ang maling selyo sa
+peklat tayo dito, maling DENR region ang badge artwork noon, at ang maling selyo sa
 trust page ay mas masama kaysa walang selyo.
 
 🔴 Ang *"mahigit 1,000"* ay may pinagmulan (Boss Jay, sa pamamagitan ni Neil,
@@ -340,7 +340,7 @@ trust page ay mas masama kaysa walang selyo.
 
 ---
 
-### 3 · `clientsMarquee` — `navy-deep`
+### 3 · `clientsMarquee` · `navy-deep`
 
 ```ts
 {
@@ -358,16 +358,16 @@ trust page ay mas masama kaysa walang selyo.
 }
 ```
 
-**Mas mabigat ito kay Paolo kaysa kay Helen.** Kay Helen, ito ay *"may ibang
-nagtiwala."* Kay Paolo, ito ay *"pumasa na kami sa procurement at sa admin ng mga
-kompanyang mas mahigpit kaysa sa yo."* Pangalan lang, walang logo — wala tayong
+**Mas mabigat ito kay Paolo kaysa kay Helen.** Kay Helen, ang ibig sabihin nito ay
+*"may ibang nagtiwala."* Kay Paolo: *"pumasa na kami sa procurement at sa admin ng mga
+kompanyang mas mahigpit kaysa sa yo."* Pangalan lang, walang logo, wala tayong
 karapatan sa artwork nila, at print world ito.
 
 ---
 
-### 4 · `objectionReversal` — `paper`
+### 4 · `objectionReversal` · `paper`
 
-Dito nakaupo ang buong panganib. Isang section lang, tuyot, walang drama.
+Dito nakaupo ang buong risk. Isang section lang, tuyot, walang drama.
 
 ```ts
 {
@@ -386,18 +386,18 @@ Dito nakaupo ang buong panganib. Isang section lang, tuyot, walang drama.
 }
 ```
 
-⚠️ **Ang `₱200,000 kada araw` lang ang numerong ligtas** — nasa batas mismo sya
+⚠️ **Ang `₱200,000 kada araw` lang ang numerong ligtas**, nasa batas mismo sya
 (Sec. 28 ceiling). Ang mga tiyak na schedule ng multa sa EMB practice (halimbawa ang
-~₱23.5k initial assessment) ay **wag ilagay sa page** hangga't hindi na-verify sa
+~₱23.5k initial assessment) ay **wag ilagay sa page** kung hindi pa na-verify sa
 DENR-EMB o PAB. Nakasulat na ang babalang ito sa market research §2.
 
 🎨 **CD:** `paper` ground, walang icon, walang hazard band. Ang section na to ay
-mukhang **memo**, hindi ad. Ang isang `==highlight==` sa unang linya lang ang tanging
+mukhang **memo**, hindi ad. Ang isang `==highlight==` sa unang linya lang ang
 kulay sa buong section.
 
 ---
 
-### 5 · `valueStack` — `paper`
+### 5 · `valueStack` · `paper`
 
 ```ts
 {
@@ -425,30 +425,30 @@ unang sisira ng buong page. Ang 48 oras ay may lubag, at sya pa rin ay mabilis.
 
 🔴 **Ang report ay hati:** pahina 1-2 = tuyot na assessment (yun ang ipa-file nya),
 pahina 3 = ang alok. Kapag hinaluan ng urgency ang assessment, brochure na sya, at
-yun mismo ang credibility na binabayaran nya. Ito ay build rule, hindi copy line —
+yun mismo ang credibility na binabayaran nya. Build rule ito, hindi copy line,
 pero dito sya nakasulat kasi dito sya naipapangako.
 
 ---
 
-### 6 · `leadFormSection` — `navy-deep` ← **ANG FORM**
+### 6 · `leadFormSection` · `navy-deep` ← **ANG FORM**
 
 ```ts
 { type: 'leadFormSection', ground: 'navy-deep', props: { heading: 'Mag-book ng septic check' } }
 ```
 
-Isang heading lang ang lumalabas — pinapatay ng `LeadFormSection` ang headline sa
+Isang heading lang ang lumalabas, pinapatay ng `LeadFormSection` ang headline sa
 loob ng card kapag may section-level `heading`. (Dobleng heading yun noong 2026-08-01.)
 
 🎨 **CD:** Ito ang unang `navy-deep` na kabanata pagkatapos ng dalawang `paper` na
 section. **Ang paglipat mismo ng stock ang nagsasabing dumating ka na sa desk.** Wag
-maglagay ng divider, wag maglagay ng "STEP 1 OF 2" — ang ground ang gumagawa nun.
+maglagay ng divider, wag maglagay ng "STEP 1 OF 2", ang ground ang gumagawa nun.
 
 ---
 
-### 7 · `costOfDelay` (bilang dalawang-hanay) — `navy`
+### 7 · `costOfDelay` (bilang dalawang-hanay) · `navy`
 
 Ito ang benchmark laban sa suki. Ginagamit ang `costOfDelay` bilang generic na
-komparison — config lahat ang teksto, at ang amber ay nasa pangalawang hanay, kaya
+komparison, config lahat ang teksto, at ang amber ay nasa pangalawang hanay, kaya
 doon dapat ang sa atin.
 
 ```ts
@@ -484,13 +484,13 @@ doon dapat ang sa atin.
 }
 ```
 
-⚠️ Ang `₱6,000` dito ay **hindi** ang core price — sya ang gastos sa facility, at
+⚠️ Ang `₱6,000` dito ay **hindi** ang core price, sya ang gastos sa facility, at
 ang paglalantad nya ang buong argumento. Kung magbago sya sa tawag, **magbabago rin
 ang linyang ito**, hindi lang ang `⟦PENDING · A⟧`.
 
 ---
 
-### 8 · `originStory` — `navy`
+### 8 · `originStory` · `navy`
 
 Ang mekanismo. Dito nabubuhay ang 15 araw, bilang paliwanag at hindi bilang palusot.
 
@@ -516,11 +516,11 @@ kahinaan ng alok at sya rin ang pinakamalakas na patunay na totoo ang daan. Ang
 siphoner na kayang maglabas ng certificate bukas ay hindi dumaan sa facility.
 **Aminin ang mabagal, at nagiging patunay sya.**
 
-⛔ Bawal ang puting truck na asul — walang ganong truck ang Oceanides.
+⛔ Bawal ang puting truck na asul, walang ganong truck ang Oceanides.
 
 ---
 
-### 9 · `guarantee` #1 — `navy`
+### 9 · `guarantee` #1 · `navy`
 
 ```ts
 {
@@ -549,7 +549,7 @@ nasisira kasama nya.
 
 ---
 
-### 10 · `guarantee` #2 — `navy`
+### 10 · `guarantee` #2 · `navy`
 
 Ang credit rule. Ito ang pumapatay sa pinakamahal na kaso at sa pinakamadaling
 pagmulan ng chargeback.
@@ -577,7 +577,7 @@ sarili nating interes, at yun ang nagpapaniwala sa linyang katabi nya.
 
 ---
 
-### 11 · `fieldInspector` — `navy`
+### 11 · `fieldInspector` · `navy`
 
 ```ts
 {
@@ -615,7 +615,7 @@ dito sya nababagay.
 
 ---
 
-### 12 · `faqAccordion` — `paper`
+### 12 · `faqAccordion` · `paper`
 
 ```ts
 {
@@ -637,7 +637,7 @@ dito sya nababagay.
         a: 'Wag mo silang tanggalin. Tanungin mo lang sila ng dalawang bagay: saan itinatapon, at may maibibigay ba silang manifest at certificate. Kung meron, mabuti, mas mura sila at wala kang problema. Kung wala, ang tinipid mo ay nasa yo pa rin, kasi ikaw pa rin ang generator at ikaw pa rin ang mananagot sa RA 9275. Ang isang inspection lang ang layo nyan.',
       },
       {
-        q: 'Puwede bang yung ilan lang sa loads namin ang idokumento? Para makatipid.',
+        q: 'Pwede bang yung ilan lang sa loads namin ang idokumento? Para makatipid.',
         a: 'Hindi kami papayag. At sasabihin ko sa yo nang diretso kung bakit, kahit alam kong may ibang papayag: ang papel na hindi sumasakop sa lahat ng load ay hindi proteksyon. Ikaw pa rin ang generator ng lahat ng yun. At may hawak ka pang papel na nagsasabing ayos ka, kaya hindi ka na maghahanap ng totoong solusyon. Yun ang mas malala kaysa sa walang papel. Kapag ganon ang hanap mo, mas mabuting sa iba ka na lang kumuha.',
       },
       {
@@ -653,9 +653,9 @@ dito sya nababagay.
 }
 ```
 
-🔴 **Ang FAQ #4 ang pinakamahalagang linya sa buong page.** Sya ang tanging lugar kung
+🔴 **Ang FAQ #4 ang pinakamahalagang linya sa buong page.** Sya lang ang lugar kung
 saan tayo tumatanggi sa pera. Ang huling pangungusap (*"mas mabuting sa iba ka na
-lang kumuha"*) ay hindi bravado — sya ang nagpapaniwala sa bawat claim sa itaas nya.
+lang kumuha"*) ay hindi bravado, sya ang nagpapaniwala sa bawat claim sa itaas nya.
 **Wag syang palambutin.**
 
 ⚠️ **May kulang na FAQ dito**, at sinadya: *"kanino nakapangalan ang certificate?"*
@@ -663,7 +663,7 @@ Sya ang `⟦PENDING · B⟧` sa ibaba.
 
 ---
 
-### 13 · `objectionReversal` #2 — `paper` · ⟦PENDING · B⟧
+### 13 · `objectionReversal` #2 · `paper` · ⟦PENDING · B⟧
 
 🔴 **HINDI PA PUWEDENG I-SHIP ANG SECTION NA TO.** Nakasalalay sya sa Tanong 4 ng
 [`facility-call-script.md`](facility-call-script.md).
@@ -683,19 +683,19 @@ Sya ang `⟦PENDING · B⟧` sa ibaba.
 }
 ```
 
-**FALLBACK habang wala pa ang sagot** — ito ang ligtas ngayon, at ito lang ang
-puwedeng mabuhay sa page bago ang tawag:
+**FALLBACK habang wala pa ang sagot**, ito ang ligtas ngayon, at ito lang ang
+pwedeng mabuhay sa page bago ang tawag:
 
 > `Ang manifest ay may pangalan ng negosyo mo, at sya ang katunayan na sa DENR-accredited na facility napunta ang waste mo. Sabihin mo lang sa amin kung ano ang eksaktong hinihingi sa yo, at titingnan natin kung ano ang kaya naming ilabas.`
 
-**Bakit hindi puwedeng manghula:** ang buong bagay na binibili ni Paolo ay **papel
+**Bakit hindi pwedeng manghula:** ang buong bagay na binibili ni Paolo ay **papel
 na may pangalan nya.** Kung sa Oceanides pala nakapangalan ang certificate, hindi sya
-walang halaga — pero **ibang produkto na sya**, at ibang copy, at posibleng ibang
-presyo. Ito ang isang claim sa page na hindi puwedeng mali kahit isang beses.
+walang halaga, pero **ibang produkto na sya**, at ibang copy, at posibleng ibang
+presyo. Ito ang isang claim sa page na hindi pwedeng mali kahit isang beses.
 
 ---
 
-### 14 · `costOfDelay` #2 — `navy-deep`
+### 14 · `costOfDelay` #2 · `navy-deep`
 
 Ang huling argumento bago ang CTA. **Ang scarcity dito ay totoo:** hindi tumataas
 ang presyo, ang kalendaryo lang ang gumagalaw.
@@ -733,17 +733,17 @@ ang presyo, ang kalendaryo lang ang gumagalaw.
 
 ---
 
-### 15 · `ctaBlock` — `navy-deep`
+### 15 · `ctaBlock` · `navy-deep`
 
 ```ts
 { type: 'ctaBlock', props: { label: 'Kunin ang septic check ko', urgency: 'Bumabalik ka sa form sa itaas. Isang minuto lang sya.' } }
 ```
 
-L8 — isang anchor. Lahat ng button sa page ay `#lead-form`, walang pangalawang alok.
+L8, isang anchor. Lahat ng button sa page ay `#lead-form`, walang pangalawang alok.
 
 ---
 
-### 16 · `psBlock` — `navy-deep`
+### 16 · `psBlock` · `navy-deep`
 
 ```ts
 {
@@ -766,7 +766,7 @@ itaas.**
 
 ---
 
-### 17 · `complianceFooter` — `void`
+### 17 · `complianceFooter` · `void`
 
 ```ts
 {
@@ -791,7 +791,7 @@ itaas.**
 
 ## Thank-you page
 
-Naka-route sa `renewal_window` — ang bagong qualifier ang nagdedesisyon kung anong
+Naka-route sa `renewal_window`, ang bagong qualifier ang nagdedesisyon kung anong
 handout ang lalabas. **Dito unang sinasabi ang pinakamahirap na katotohanan**, at
 sinadya yun.
 
@@ -853,7 +853,7 @@ thankYou: {
             heading: 'Ihanda mo na',
             body: [
               'Ang eksaktong pangalan ng negosyo mo at ang TIN, para tama agad ang OR at ang manifest.',
-              'Linisin ang daanan papunta sa takip ng tangke, at tingnan kung saan puwedeng pumarada ang truck.',
+              'Linisin ang daanan papunta sa takip ng tangke, at tingnan kung saan pwedeng pumarada ang truck.',
               'Kung may papel ang huling pasipsip nyo, ihanda mo. Kung wala, sabihin mo lang.',
             ],
           },
@@ -884,7 +884,7 @@ thankYou: {
           {
             heading: 'Ang unang hakbang',
             body: [
-              'Marami palang establisyimento ang may hinihinging papel na hindi nila alam hangga\'t may humingi na. Kaya ang unang gagawin natin ay tingnan ang lagay ng tangke mo at isulat sya.',
+              'Marami palang establisyimento ang may hinihinging papel na hindi nila alam kung hindi pa sila tinatanungan. Kaya ang unang gagawin natin ay tingnan ang lagay ng tangke mo at isulat sya.',
               'Sa report na yun, makikita mo kung ano ang meron ka at ano ang kulang, bago pa may tumanong.',
             ],
           },
@@ -908,18 +908,18 @@ thankYou: {
 ## Ano ang KAILANGAN pa bago mag-ship (hindi copy)
 
 1. 🔴 **Ang tawag sa treatment facility.** Sya ang nagbubukas ng `⟦PENDING · A⟧` at
-   `⟦PENDING · B⟧`. Hangga't wala sya, hindi kumpleto ang page.
+   `⟦PENDING · B⟧`. Kung wala pa sya, hindi kumpleto ang page.
 2. 🔴 **Ang gate.** Isang load na diretsong binayaran ni Neil sa facility, at isang
-   certificate na hawak na natin. **Puwedeng maka-deploy ang page bago yun. Bawal
+   certificate na hawak na natin. **Pwedeng maka-deploy ang page bago yun. Bawal
    lang buksan ang ads.**
 3. **Checkout** (`api/checkout.ts`, sariling kopya sa `funnels/oceanides-paolo/api/`).
    I-save ang lead **bago** ang checkout. Field para sa credit balance.
-4. **`FormViewed` event** mula araw uno — sya ang magsasabi kung tama ang pang-6.
+4. **`FormViewed` event** mula araw uno, sya ang magsasabi kung tama ang pang-6.
 5. **`Purchase` pixel event** + bagong AEM config + relearning ng Meta.
 6. **`company` field** sa shared template (tingnan sa itaas).
 7. **Bagong creative at bagong targeting.** `location_types: ["home"]` ang luma. Bahay
    yun. Mali na sya.
-8. **Higpitan ang geo** — isang siyudad muna, hindi buong 20km radius.
+8. **Higpitan ang geo**, isang siyudad muna, hindi buong 20km radius.
 
 ## Ano ang WALA dito, at bakit
 
@@ -928,7 +928,7 @@ thankYou: {
 | Testimonial, bituin, review count | Zero pa ang totoong review ng brand. Hard ban sa `DESIGN.md`. |
 | Before/after na litrato | Sa tangke ni Helen sya nagsasalita. Ang binibili ni Paolo ay papel, hindi linis. |
 | Penalty-payment guarantee | Imbento. Totoong pera ni Neil, walang tanggap sya. |
-| Countdown, "limited slots", "tataas ang presyo" | Hindi totoo. Ang tanging urgency ay ang kalendaryo nya, at nasa section 14 na sya. |
+| Countdown, "limited slots", "tataas ang presyo" | Hindi totoo. Ang urgency lang ay ang kalendaryo nya, at nasa section 14 na sya. |
 | Tiyak na numero ng multa sa EMB practice | Hindi pa na-verify sa DENR-EMB o PAB. Ang `₱200,000 kada araw` lang ang nasa batas mismo. |
-| Pangalan ng kalaban | S24 — gawi ang villain, hindi brand. |
+| Pangalan ng kalaban | S24, gawi ang villain, hindi brand. |
 | Cash refund | Credit, isang taon. |
