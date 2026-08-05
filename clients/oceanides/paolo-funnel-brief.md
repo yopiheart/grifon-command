@@ -1,0 +1,150 @@
+# Paolo Funnel — Build Brief
+
+**Ginawa: 2026-08-05** (session 7, matapos ang buong grill)
+**Estado: HANDA NANG ITAYO, NAKA-OFF PAGKATAPOS**
+
+Ito ang buong spec ng bagong funnel para kay **"Compliance-Pressured Paolo"** (B2B).
+Kinuha mula sa grill noong 2026-08-05. **Basahin ang buong post-mortem at ang mga
+numero sa [`workflows/ad_performance_ledger.md`](../../workflows/ad_performance_ledger.md)
+§OCEANIDES-PRICE-01 bago simulan** — dito nakasulat ang gagawin, doon ang bakit.
+
+---
+
+## 🔴 GATE BAGO MAG-ON
+
+**Walang ads, walang traffic, hangga't hindi kumpirmadong DUMADAAN at
+NABABAYARAN sa treatment facility ang bawat dokumentadong load, at galing sa
+facility ang certificate.** Buong dahilan: ledger §HARD GATE.
+
+Pwedeng itayo ang lahat habang hindi pa sya sarado. **Bawal lang buksan.**
+
+## ⛔ Dalawang blocker bago mag-code
+
+1. **Kaninong PayMongo?** Kay **Grifon** ang `VITE_PAYMONGO_PUBLIC_KEY` sa root
+   `.env`. Kailangan ng sariling key ng Oceanides. Kung nagamit ang kay Grifon,
+   **ang kita ng Oceanides ay dadapo sa account ng Grifon** — gulo sa libro at sa
+   BIR na mahirap ayusin pabalik.
+2. **Sino ang maglalabas ng official receipt?** Negosyo ang bumibili at hihingi
+   sya ng OR para sa libro nya. Ang PayMongo ay payment confirmation, **hindi BIR
+   OR.** Papeles mismo ang ibinebenta natin — ito ang unang mapapansin nya.
+
+⚠️ Hindi pa rin nasasagot: **buhay pa ba ang ₱1,600 na payout** (inspector ₱500 +
+transport ₱600 + Zam ₱250 + Neil ₱250) sa DENR na trabaho? Hindi sya humaharang
+sa build, humaharang sya sa eksaktong margin.
+
+---
+
+## 1 · Ang alok
+
+| | |
+| --- | --- |
+| **Tripwire** | **₱999** — septic health check + report |
+| **Core** | **₱12,000-15,000 kada dokumentadong load** (DENR manifest + certificate) |
+| **Bayad** | Online checkout, PayMongo (GCash + bank transfer + card) |
+| **Kailan** | Bayad bago ang bisita. Hindi cash pagdating, hindi pangungulit ni Zam. |
+
+**Bakit ₱999 at hindi ₱499:** sa umpisa, 1-2 stop lang kada araw ang booking kaya
+~₱600-1,100 ang gastos kada bisita. **₱999 lang ang buhay dun.** Sa siksik na ruta
+(3-4 stop) pareho na silang kumikita. Tingnan ang **A4** sa ledger.
+
+🔴 **Bawal ang CASH refund.** Kapag hindi pa puno ang tangke: **credit**, hindi
+cash. *"Hindi ka magbabayad ng sipsip. Ang ₱999 mo ay credit sa sipsip pagdating
+ng panahon, isang taon ang bisa."* Panalo pa rin sya, nasa yo pa rin ang pera, at
+nawawala ang pinakamahinang linya (*"walang refund kung critical pero ayaw magpasipsip"*)
+na sya ring pinakamadaling pagmulan ng reklamo at chargeback.
+
+## 2 · Ang page
+
+**Bagong page, hindi ito ang kasalukuyang landing.** Si Helen ang page ngayon
+(*"₱5,000. Walang sorpresang dagdag pagdating ng truck."*). Iba ang bibili.
+
+- **Avatar:** `Oceanides market-research.md` §2. **Hindi na kailangan ng bagong
+  market research.**
+- **Value stack:** nakasulat na sa `offer-optimizer-denr-2026-07-20.md` (RUN B
+  tripwire). ⚠️ **RAW at hindi approved yun.** Tatlong bagay dun ang bawal
+  dalhin nang buo: ang `₱9,500` core (lumalabag sa ₱12k/load floor), ang
+  **imbentong penalty-payment guarantee** (*"babayaran namin ang unang ₱5,000 ng
+  multa"* — totoong pera ni Neil, bawal sa copy hangga't walang tanggap nya), at
+  ang pagiging libre ng tripwire (napalitan na ng desisyong ₱999).
+- **Ang binibili ni Paolo ay ang PAPEL, hindi ang sipsip.** Nakasulat sa research.
+  Ang RA 9275 at ang **₱200,000 kada araw** na ceiling ang bleeding neck, hindi
+  ang baradong lababo.
+- **Ang LLDA ang wedge.** Bago sya, at sya ang madalas hanapin ng malalaking
+  kompanya. Hindi sya *"kaya rin namin"* — sya ang dahilan kung bakit tayo ang
+  tatawagan at hindi ang suki nila.
+- ⚠️ **A2 sa ledger:** sa KM-003, **41% ang nawala eksakto sa "libre ang tingin."**
+  Sariling babala natin laban sa diagnostic offer. Ang bayad at tiyak na alok ang
+  sagot dun, pero i-check ang retention kapag may video na.
+
+**Bagong required na qualifier sa form:** **kailan ang permit renewal o inspection
+nyo.** Labinlimang araw ang certificate mula sa facility, kaya ito ang nag-uuri
+kung sino ang tatawagan muna ni Zam — at sya rin ang urgency lever: *"kung
+Setyembre ang renewal nyo, ngayong Agosto dapat magsimula."*
+
+🔴 **Ilagay ang form nang MAS MATAAS.** Pang-14 sa 17 section sya sa lumang page.
+Tingnan muna ang `FormViewed` data bago magpasya kung gaano kataas.
+
+## 3 · Ang teknikal
+
+**Checkout.** Isang upuan lang, hindi tatlong araw. `api/checkout.ts` sa root ay
+**65 linya** at may `createCheckoutSession` na sa `api/_lib/paymongo.ts`.
+⚠️ **Bawal mag-import ang funnel mula sa repo root** — standalone Vercel project
+sya. Kailangan ng sariling pinaliit na kopya sa `funnels/<slug>/api/`.
+
+**Apat na panuntunan:**
+
+1. 🔴 **I-save ang lead BAGO ang checkout.** Form → row sa `funnel_leads` →
+   *tapos* checkout. Kapag nakabitin ang lead sa likod ng bayad, **nawawala ang
+   bawat hindi natuloy** at hindi natin sila mabibilang o masusundan.
+2. **Subaybayan ang credit.** May hawak kang pera at may utang kang serbisyo kapag
+   hindi pala puno. Kailangan ng field sa row at ng tanaw ni Zam sa `/ops`.
+3. **`Purchase` pixel event** + bagong AEM config + relearning ng Meta. Hindi sya
+   libre — isama sa timeline.
+4. **Down payment bago umalis ang truck sa core**, hindi terms. Nasunog na si Neil
+   sa cheque at sa kliyenteng nagsara. May leverage tayo: hindi lalabas ang
+   certificate hangga't hindi bayad.
+
+## 4 · Ang operasyon (nakasalalay dito ang buong plano)
+
+- **Walang truck ang check.** Sukat ng tangke, ilan ang tangke, at ang status —
+  umaapaw, puno, barado, kapal ng burak, likido o purong solid.
+- **2 oras kada kliyente** kasama ang byahe → **3-4 kada tao kada araw.**
+- **HIGPITAN ANG GEO. Isang siyudad muna, hindi buong 20km radius.** Ang gastos
+  kada bisita ay ₱1,100 kapag iisa sa maghapon at ~₱400 kapag apat. **Ginagawa
+  ang density, hindi hinihintay.** Ito ang pinakamalaking lever sa buong funnel.
+- **Isama ang pamasahe sa dispatch.** Hindi utang, hindi abono. Isang ₱300 na
+  problema ang pumapatay sa buong serbisyo.
+- **Kunin ang number ng truck driver kada trabaho.** Libre, simulan agad.
+- **Kontratahin ang mga malabanan nang direkta.** Ito ang nagpapalit sa Oceanides
+  mula phonebook papuntang kompanya, at sya ang pinakamalaking galaw sa plano.
+
+## 5 · AI septic health report (endorsed, may 3 kondisyon)
+
+Video at sukat mula sa field inspector → AI → report na may logo, sa loob ng minuto.
+Panalo sya dahil **nagsasara habang nakatayo pa dun ang tao**, at dahil **pantay
+ang lahat ng inspector** kasama ang bago pa lang.
+
+1. 🔴 **Hindi ang AI ang magdedesisyon kung puno na.** Sukat ang ilalagay ng tao,
+   at ang rekomendasyon ay susunod sa **nakasulat na panuntunan**. Kapag AI ang
+   nagsabing critical at mali sya, may naibentang ₱12-15k na trabaho ang isang
+   hallucination — at ang nagdesisyon ay pag-aari ng nagbebenta.
+2. **Hatiin ang dokumento.** Pahina 1-2 = tuyot na assessment (sukat, litrato,
+   RA 9275 gap, pirma) — yan ang ipa-file nya. Pahina 3 = alok. Kapag hinaluan ng
+   urgency ang assessment, brochure na sya, at yun mismo ang credibility na
+   binabayaran nya.
+3. **May offline na daan.** Basement at likod-bahay ay walang signal.
+
+⚠️ **Ubos ang Gemini budget.** Hindi maitatayo agad. Huwag hayaang sya ang
+humarang sa unang test — kayang gawin ang unang mga report nang manwal.
+
+---
+
+## Sunod na hakbang
+
+1. Sarahin ang **GATE** (meeting kay Boss Jay + facility).
+2. Sagutin ang **dalawang blocker** sa itaas.
+3. Copy ng page (`grifon-cmo` + `grifon-creative-director`) sa **sariwang session** —
+   masyadong malalim ang session 7 para sa magandang copy.
+4. Checkout (`code-executor` o `codex-executor`, may buong brief).
+5. Bagong creative at bagong targeting — **`home` ang luma, mali na sya.**
+6. Buksan lang kapag sarado ang gate.

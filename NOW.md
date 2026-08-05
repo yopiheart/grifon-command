@@ -39,8 +39,11 @@ ibinebenta natin. **Hindi naman sya kailangan** — ₱6,500 na ang gross kada l
 kahit bayad ang ₱6,000 na facility. Lunas: **unang labas ang ₱6,000 mula sa perang
 hawak ni Neil sa PayMongo**, bago ang kahit ano. Buong dahilan: ledger §HARD GATE.
 
-**Tapos na ang grill** (buyer · deliverability · bisita · AI report · ₱999 +
-checkout · unit economics · premortem). Sunod na hakbang nasa ledger.
+**Tapos na ang grill.** ➡️ **BUONG BUILD SPEC:
+[`clients/oceanides/paolo-funnel-brief.md`](clients/oceanides/paolo-funnel-brief.md)**
+— alok, page, teknikal, operasyon, AI report, at ang dalawang blocker. Buksan yun,
+hindi ang chat. Sunod: sarahin ang gate (meeting kay Boss Jay), sagutin ang dalawang
+blocker, tapos **copy sa SARIWANG session** (masyadong malalim ang session 7).
 
 ### Nabuong sanggunian (huwag nang ulitin — nagawa na)
 - **Hagdan ni Paolo + value stack:** `clients/oceanides/offer-optimizer-denr-2026-07-20.md`
