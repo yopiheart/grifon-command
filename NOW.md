@@ -50,10 +50,9 @@ kung wala pang sagot ang facility.
    ⏳ Kailangan ng desisyon: **aling siyudad ang una** (isa lang, hindi 20km).
 
 **Nagawa na, huwag nang ulitin:** avatar ni Paolo (`Oceanides market-research.md`
-§2), value stack (`offer-optimizer-denr-2026-07-20.md`, ⚠️ RAW may 3 flag), buong
-grill ng offer (session 7), pixel-leak imbestigasyon (walang leak — `FormViewed`
-event nasa `src/lib/pixel.ts` + `LeadForm.tsx`), **buong copy ng page ni Paolo**
-(2026-08-06, 17 section, form pang-6).
+§2 — **wag nang mag-bagong market research**), value stack
+(`offer-optimizer-denr-2026-07-20.md`, ⚠️ RAW may 3 flag), grill ng offer
+(session 7), pixel-leak (walang leak), copy + page ni Paolo.
 
 ## 🔴 Huwag kalimutan
 
@@ -69,15 +68,11 @@ event nasa `src/lib/pixel.ts` + `LeadForm.tsx`), **buong copy ng page ni Paolo**
 
 ## ✅ Tapos ngayong 2026-08-06 (session 8)
 
-Napagkasunduan ang **HARD GATE** kasama si Boss Jay — apat na kondisyon, pero
-**pangako pa lang, hindi pa sarado.** Sinara ang **"sariling sistema"** thread —
-pareho (logistics + financial), phased. Nalabas ang tatlong tanong sa facility
-na hindi kayang hulaan. Na-update ang ledger + brief.
-
-**Buong copy ni Paolo** (`paolo-page-copy.md`) at **itinayo na ang page**
-(`funnels/oceanides-paolo/`): 17 section, form pang-6, bagong qualifier na
-`renewal_window`, build green, pasado sa smoke sa 390 at 1440. 🔴 Dalawang
-literal na `⟦PENDING⟧` sa loob — sinadya, para hindi maka-ship nang tahimik.
+Napagkasunduan ang **HARD GATE** kasama si Boss Jay (pangako pa lang, hindi pa
+sarado). Sinara ang **"sariling sistema"** thread. Buong copy ni Paolo
+(`paolo-page-copy.md`) at **itinayo ang page** (`funnels/oceanides-paolo/`):
+17 section, form pang-6, bagong qualifier `renewal_window`, build green,
+pasado sa smoke sa 390 at 1440.
 
 ## 🅿 PARKED
 
