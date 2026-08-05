@@ -75,8 +75,7 @@ cd funnels/oceanides-price-page && npx vercel deploy --prod --yes
 watermark ni Gabriel · SEC Reg. No. · FB About · reviews · page #2 DENR B2B ·
 **AEM Configure Web Events hindi pa na-verify** (`Lead` dapat #1 sa
 `oceanidesph.com`; browser + desktop mode, wala sa app).
-**Grifon:** #94.3 next · #94.2 NOT-REPRO · #92+#89/#90 ride Slice B · #93 ⛔ TUNED.
-⚠️ **Client world:** navy + amber print, no glass, no `#FFCC00`.
+**Grifon:** #94.3 next · #94.2 NOT-REPRO · #92+#89/#90 ride Slice B · #93 ⛔ TUNED. ⚠️ **Client world:** navy + amber print, no glass, no `#FFCC00`.
 
 ## ⛔ Gated · 🔧 Arm before starting
 
