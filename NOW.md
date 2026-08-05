@@ -30,13 +30,24 @@ ng facility para sa pera (walang middleman).
 ➡️ **BUONG COPY NG PAGE:** [`clients/oceanides/paolo-page-copy.md`](clients/oceanides/paolo-page-copy.md).
 Buksan yun, hindi ang chat.
 
+✅ **NAKATAYO NA ANG PAGE:** `funnels/oceanides-paolo/` (2026-08-06). 17 section,
+build green, pasado sa smoke sa 390 at 1440. **Hindi pa naka-deploy at patay ang
+pixel.** May dalawang literal na `⟦PENDING⟧` sa loob na hindi pwedeng punan
+kung wala pang sagot ang facility.
+
 **Sunod:**
 1. 🔴 **TAWAGAN ANG SUPERVISOR NG FACILITY — ito ang humaharang sa lahat.**
    Buong script + apat na tanong: [`clients/oceanides/facility-call-script.md`](clients/oceanides/facility-call-script.md).
    Tapos ituro ang **susunod na DENR job** na papasok sa bagong proseso — hindi
    kailangang galing sa funnel ang proof load.
-2. Checkout (`code-executor` o `codex-executor`, may buong brief).
-3. Bagong creative at bagong targeting — **`home` ang luma, mali na sya.**
+2. Punan ang dalawang `⟦PENDING⟧` pagkatapos ng tawag (dalawang string lang).
+3. Deploy: `cd funnels/oceanides-paolo && npx vercel deploy --prod --yes`, tapos
+   ang env var (kamay ni Neil ang service key), tapos **redeploy** — walang epekto
+   ang env hangga't walang bagong deploy.
+4. Checkout (`code-executor` o `codex-executor`, may buong brief). ⏳ Hinihintay
+   pa ang **PayMongo keys ng Oceanides**. ⛔ Hindi ang key ng Grifon sa root `.env`.
+5. Bagong creative at bagong targeting — **`home` ang luma, mali na sya.**
+   ⏳ Kailangan ng desisyon: **aling siyudad ang una** (isa lang, hindi 20km).
 
 **Nagawa na, huwag nang ulitin:** avatar ni Paolo (`Oceanides market-research.md`
 §2), value stack (`offer-optimizer-denr-2026-07-20.md`, ⚠️ RAW may 3 flag), buong
@@ -63,10 +74,10 @@ Napagkasunduan ang **HARD GATE** kasama si Boss Jay — apat na kondisyon, pero
 pareho (logistics + financial), phased. Nalabas ang tatlong tanong sa facility
 na hindi kayang hulaan. Na-update ang ledger + brief.
 
-**Buong copy ni Paolo** — `paolo-page-copy.md`: config-ready ang 17 section, 3
-headline option, thank-you na naka-route sa `renewal_window`, pasado sa
-`lint-voice.mjs`. 🔴 May dalawang literal na `⟦PENDING⟧` sa loob (core price +
-kanino nakapangalan ang certificate) — sinadya, para hindi maka-ship nang tahimik.
+**Buong copy ni Paolo** (`paolo-page-copy.md`) at **itinayo na ang page**
+(`funnels/oceanides-paolo/`): 17 section, form pang-6, bagong qualifier na
+`renewal_window`, build green, pasado sa smoke sa 390 at 1440. 🔴 Dalawang
+literal na `⟦PENDING⟧` sa loob — sinadya, para hindi maka-ship nang tahimik.
 
 ## 🅿 PARKED
 
