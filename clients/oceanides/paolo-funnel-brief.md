@@ -1,7 +1,7 @@
 # Paolo Funnel — Build Brief
 
 **Ginawa: 2026-08-05** (session 7, matapos ang buong grill)
-**Estado: HANDA NANG ITAYO, NAKA-OFF PAGKATAPOS**
+**Estado: BUKAS NA ANG GATE (2026-08-06) — kulang pa ang copy at checkout**
 
 Ito ang buong spec ng bagong funnel para kay **"Compliance-Pressured Paolo"** (B2B).
 Kinuha mula sa grill noong 2026-08-05. **Basahin ang buong post-mortem at ang mga
@@ -10,13 +10,19 @@ numero sa [`workflows/ad_performance_ledger.md`](../../workflows/ad_performance_
 
 ---
 
-## 🔴 GATE BAGO MAG-ON
+## ✅ GATE SARADO — 2026-08-06, kausap na si Boss Jay
 
-**Walang ads, walang traffic, hangga't hindi kumpirmadong DUMADAAN at
-NABABAYARAN sa treatment facility ang bawat dokumentadong load, at galing sa
-facility ang certificate.** Buong dahilan: ledger §HARD GATE.
+Kumpirmado nya kay Neil: **dumadaan sa facility ang bawat load, babayaran ang
+nararapat** (sinabihan sya nang diretso ni Neil na hindi papayag na dodoctorin
+o gagamitin sa maling paraan ang certificate), **100% sang-ayon sa mekanismong**
+₱6,000/load diretso sa facility bago ang ibang payout, at **normal na 15 araw**
+ang promised delivery date ng certificate — hindi artificial na lead time.
+Buong detalye ng proseso: ledger §HARD GATE.
 
-Pwedeng itayo ang lahat habang hindi pa sya sarado. **Bawal lang buksan.**
+⚠️ **Bagong thread, hindi pa nakasulat ang hugis:** ayaw nang maging dependent
+ni Neil kay Boss Jay para sa scaling — gagawa sya ng sarili nyang sistema, under
+pa rin ng Oceanides, at sya mismo ang maghahandle ng profit/financial side.
+Linawin bago isulat sa build spec sa ibaba.
 
 ## ✅ Sarado na ang dalawang blocker (2026-08-05)
 
@@ -31,9 +37,8 @@ Pwedeng itayo ang lahat habang hindi pa sya sarado. **Bawal lang buksan.**
    dala nang papel ang tao pagdating. Tignan ang serye kung nakapangalan sa
    Oceanides — dapat pareho ng entity na tinatanggapan ng PayMongo.
 
-⚠️ Hindi pa rin nasasagot: **buhay pa ba ang ₱1,600 na payout** (inspector ₱500 +
-transport ₱600 + Zam ₱250 + Neil ₱250) sa DENR na trabaho? Hindi sya humaharang
-sa build, humaharang sya sa eksaktong margin.
+✅ Kumpirmado ni Boss Jay: **buhay pa ang ₱1,600 na payout** (inspector ₱500 +
+transport ₱600 + Zam ₱250 + Neil ₱250) sa DENR na trabaho — sistema pa rin nila.
 
 ---
 
@@ -144,10 +149,11 @@ humarang sa unang test — kayang gawin ang unang mga report nang manwal.
 
 ## Sunod na hakbang
 
-1. Sarahin ang **GATE** (meeting kay Boss Jay + facility).
-2. Sagutin ang **dalawang blocker** sa itaas.
-3. Copy ng page (`grifon-cmo` + `grifon-creative-director`) sa **sariwang session** —
+1. ✅ Sarado ang **GATE** (meeting kay Boss Jay, 2026-08-06).
+2. ✅ Sarado ang **dalawang blocker** sa itaas.
+3. ⚠️ Linawin muna ang "sariling sistema" thread ni Neil (2026-08-06) bago
+   itype ang §4 Ang operasyon — baka may ibang hugis ang logistics/profit layer.
+4. Copy ng page (`grifon-cmo` + `grifon-creative-director`) sa **sariwang session** —
    masyadong malalim ang session 7 para sa magandang copy.
-4. Checkout (`code-executor` o `codex-executor`, may buong brief).
-5. Bagong creative at bagong targeting — **`home` ang luma, mali na sya.**
-6. Buksan lang kapag sarado ang gate.
+5. Checkout (`code-executor` o `codex-executor`, may buong brief).
+6. Bagong creative at bagong targeting — **`home` ang luma, mali na sya.**

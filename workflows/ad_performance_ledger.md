@@ -513,6 +513,32 @@ sa saklaw ng dokumentong ito at hindi sya masasagot ng marketing plan.
 4. **Subaybayan ang credit.** May hawak kang pera at may utang kang serbisyo kapag
    hindi pala puno. Kailangan ng field at ng tanaw ni Zam.
 
+#### ✅ SARADO ANG GATE — 2026-08-06, kausap na si Boss Jay
+
+Apat sa apat, kumpirmado ni Boss Jay kay Neil:
+
+1. **Dumadaan sa facility ang bawat load, babayaran ang nararapat.** Sinabihan
+   ni Neil nang diretso na hindi sya papayag na dodoctorin o gagamitin sa maling
+   paraan ang certificate.
+2. **100% sumang-ayon sa mekanismo** — ₱6,000 kada load diretso sa facility mula
+   sa perang hawak ni Neil sa PayMongo, bago ang kahit anong ibang payout.
+3. **Normal na 15 araw ang promised delivery date ng certificate** mula sa
+   facility — hindi sya artificial na lead time, standard term nila talaga.
+4. **Buhay pa ang ₱1,600 na payout** (inspector ₱500 + transport ₱600 + Zam
+   ₱250 + Neil ₱250) kada DENR job. Sistema pa rin nila ito.
+
+**Proseso, sabi ni Boss Jay:** kokontakin nya ang supervisor ng treatment plant
+para magpagawa ng certificate. Magpapadala sila ng truck na kukuha ng waste
+mula sa site papunta sa treatment plant nila — doon ise-issue ang certificate,
+irerelease sa loob ng 15 araw, at **babayaran agad pagdating** (hindi terms).
+
+**Bagong desisyon ni Neil (2026-08-06):** hindi na sya magiging dependent kay
+Boss Jay para sa scaling — gagawa sya ng sarili nyang sistema, **under pa rin
+ng Oceanides**, at si Neil mismo ang maghahandle ng profit/financial side para
+masiguro ang tamang paglaki. ⚠️ **Hindi pa nakasulat ang hugis ng sistemang ito**
+(logistics ba, o financial control layer, o pareho) — linawin sa susunod na
+session bago isulat sa brief.
+
 ---
 
 ### 2026-07-28 → 08-03 — OCEANIDES-KM003-hook2 (Meta, PH septic tank siphoning / local service)

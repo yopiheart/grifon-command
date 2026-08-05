@@ -1,53 +1,38 @@
 # NOW — the resume doc
 
-**Stamped: 2026-08-05** (session 7, tanghali)
+**Stamped: 2026-08-06** (session 8)
 
-## ▶ NEXT ACTION — 🔴 PATAY ANG ADS. NASA GITNA TAYO NG PAGPALIT NG OFFER.
+## ▶ NEXT ACTION — ✅ GATE SARADO. LINAWIN ANG "SARILING SISTEMA" BAGO MAG-COPY.
 
-**Pinatay ni Neil ang `OCEANIDES-PRICE-01` noong 2026-08-05, 1:47 PM.**
-₱482.79, 1,996 impressions, **77 landing page views, 0 lead.** Buong post-mortem
-+ per-ad table: [`workflows/ad_performance_ledger.md`](workflows/ad_performance_ledger.md).
+**Kausap na ni Neil si Boss Jay (2026-08-06) — apat sa apat, kumpirmado:** dumadaan
+sa facility ang bawat load at babayaran ang nararapat (sinabihan sya nang diretso
+ni Neil na hindi papayag na dodoctorin ang certificate), **100% sang-ayon** sa
+mekanismong ₱6,000/load diretso sa facility bago ang ibang payout, **normal na 15
+araw** ang promised delivery date ng certificate, at **buhay pa ang ₱1,600 na
+payout system** (inspector ₱500 + transport ₱600 + Zam ₱250 + Neil ₱250). Buong
+detalye ng proseso: [`workflows/ad_performance_ledger.md`](workflows/ad_performance_ledger.md) §HARD GATE.
 
-**Gumana ang ads** (₱6.27 kada bisita, panalo si km004-video). **Ang offer o ang
-page ang bumagsak** — isa-isang pinatay ang bawat ibang suspek: hindi pixel, hindi
-ang `utm` link, hindi ang form (sinubok ni Neil, dumating ang row), at walang
-tumawag at walang nag-message (kumpirmado ni Zam).
+⚠️ **Bagong thread, hindi pa nakasulat ang hugis:** ayaw nang maging dependent ni
+Neil kay Boss Jay para sa scaling — gagawa sya ng sarili nyang sistema, **under pa
+rin ng Oceanides**, at sya mismo ang maghahandle ng profit/financial side.
+**Linawin muna ito** bago isulat sa build spec (§4 Ang operasyon).
 
-### 🔴 DESISYON NA GINAGAWA NGAYON — grill in flight
+➡️ **BUONG BUILD SPEC:** [`clients/oceanides/paolo-funnel-brief.md`](clients/oceanides/paolo-funnel-brief.md)
+— GATE sarado, dalawang blocker sarado (PayMongo ni Oceanides mismo, OR kasabay
+ng field inspector). Buksan yun, hindi ang chat.
 
-Lumilipat sa **tripwire + core** na hagdan. **NAPAGDESISYUNAN NA (2026-08-05):**
-
-> **Si "Compliance-Pressured Paolo" (B2B) ang bibili, hindi si Helen (bahay).**
-> Sya lang ang may pinagfa-filan ng reseta, sya ang bumabalik taon-taon, at ang
-> tanong sa kanya ay *"tanggap ba to ng DENR"* — kayang sagutin ng papeles, hindi
-> ng reviews na wala pa tayo.
-
-⚠️ **Ibig sabihin nun: `home` ang tinarget ng patay na campaign. Mali na sya.**
-Bagong targeting, bagong creative, bagong page ang kailangan ni Paolo.
-
-✅ **KUMPIRMADO: kaya ng Oceanides ang papeles** (Neil, 2026-08-05) — kumpleto sa
-DENR, **may LLDA na** (hinahanap ng malalaking kompanya), hauler na may MOA sa
-treatment facility, nakakapag-issue ng manifest na nakapangalan sa kliyente, at
-marami nang naibigay si Boss Jay. **₱12k-15k kada dokumentadong load, at 15 ARAW
-bago dumating ang certificate mula sa partner** — kaya hindi sya pang-emergency.
-
-🔴 **HARD GATE bago ang kahit anong ads, page, o creative: dapat DUMAAN at
-MABAYARAN sa treatment facility ang bawat dokumentadong load, at galing sa
-facility ang certificate.** Ang kabuuan ng ibinabayad ni Paolo ay ang hindi
-mananagot sa RA 9275; kapag hindi totoo ang papel, ang panganib mismo ang
-ibinebenta natin. **Hindi naman sya kailangan** — ₱6,500 na ang gross kada load
-kahit bayad ang ₱6,000 na facility. Lunas: **unang labas ang ₱6,000 mula sa perang
-hawak ni Neil sa PayMongo**, bago ang kahit ano. Buong dahilan: ledger §HARD GATE.
-
-**Tapos na ang grill.** ➡️ **BUONG BUILD SPEC:
-[`clients/oceanides/paolo-funnel-brief.md`](clients/oceanides/paolo-funnel-brief.md)**
-— alok, page, teknikal, operasyon, AI report, at ang dalawang blocker. Buksan yun,
-hindi ang chat. Sunod: sarahin ang gate (meeting kay Boss Jay), sagutin ang dalawang
-blocker, tapos **copy sa SARIWANG session** (masyadong malalim ang session 7).
+**Sunod:**
+1. Linawin ang "sariling sistema" ni Neil (itaas) — logistics ba, financial layer,
+   o pareho.
+2. Copy ng page (`grifon-cmo` + `grifon-creative-director`) sa **sariwang session**
+   — masyadong malalim ang session 7/8 para sa magandang copy.
+3. Checkout (`code-executor` o `codex-executor`, may buong brief).
+4. Bagong creative at bagong targeting — **`home` ang luma, mali na sya.**
 
 **Nagawa na, huwag nang ulitin:** avatar ni Paolo (`Oceanides market-research.md`
-§2) at ang buong hagdan na may value stack (`offer-optimizer-denr-2026-07-20.md`,
-⚠️ RAW at may 3 flag). Nakalista sa brief kung alin ang bawal dalhin nang buo.
+§2), value stack (`offer-optimizer-denr-2026-07-20.md`, ⚠️ RAW may 3 flag), buong
+grill ng offer (session 7), pixel-leak imbestigasyon (walang leak — `FormViewed`
+event nasa `src/lib/pixel.ts` + `LeadForm.tsx`).
 
 ## 🔴 Huwag kalimutan
 
@@ -58,16 +43,14 @@ blocker, tapos **copy sa SARIWANG session** (masyadong malalim ang session 7).
 4. **Patay na ang ₱900 break-even.** Kay Paolo: **₱4,900 kada 1-load na trabaho**,
    ₱30,900 sa lima. Kaya nang gumastos ng hanggang ₱4,900 kada booked job.
 5. **Coordinate radius ang geo, hindi region key** — lat `14.54` lng `121.02`.
+6. ⏳ **HINDI PA LIVE ang `FormViewed`.** Hindi git-connected ang funnel:
+   `cd funnels/oceanides-price-page && npx vercel deploy --prod --yes`
 
-## ✅ Tapos ngayong 2026-08-05 (session 7)
+## ✅ Tapos ngayong 2026-08-06 (session 8)
 
-**Pixel-leak imbestigasyon: walang leak.** **`FormViewed` custom pixel event**
-(`src/lib/pixel.ts` + `LeadForm.tsx`) — nasa pang-14 sa 17 section ang form at
-walang scroll data, kaya hindi mapaghiwalay ang "nakita at umatras" sa "hindi
-nakarating." **Ledger:** post-mortem, bagong **A4**, buong grill, HARD GATE.
-
-⏳ **HINDI PA LIVE ang `FormViewed`.** Hindi git-connected ang funnel:
-`cd funnels/oceanides-price-page && npx vercel deploy --prod --yes`
+Sinara ang **HARD GATE** kasama si Boss Jay — apat na kondisyon kumpirmado, buong
+proseso nakasulat sa ledger. Na-update ang ledger + brief. Bagong open thread:
+"sariling sistema" ni Neil, hindi pa linaw ang hugis.
 
 ## 🅿 PARKED
 
@@ -80,7 +63,7 @@ watermark ni Gabriel · SEC Reg. No. · FB About · reviews · page #2 DENR B2B 
 ## ⛔ Gated · 🔧 Arm before starting
 
 🔴 **UBOS ANG GEMINI API BUDGET.** Manwal sa Flow ang bagong clip. Gated: Kling.
-`.\scripts\restore-git-identity.ps1` · `restore-gh.ps1` · `restore-codex.ps1`
+✅ Git identity restored session 8. `restore-gh.ps1` · `restore-codex.ps1`
 ⚠️ Sariling `node_modules` ang `funnels/oceanides-price-page` (`npm ci` doon bago mag-build) · **huwag i-pipe ang build/deploy output**, pinapatay nito ang exit code.
 
 ---
