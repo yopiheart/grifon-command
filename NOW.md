@@ -45,12 +45,9 @@ hawak ni Neil sa PayMongo**, bago ang kahit ano. Buong dahilan: ledger §HARD GA
 hindi ang chat. Sunod: sarahin ang gate (meeting kay Boss Jay), sagutin ang dalawang
 blocker, tapos **copy sa SARIWANG session** (masyadong malalim ang session 7).
 
-### Nabuong sanggunian (huwag nang ulitin — nagawa na)
-- **Hagdan ni Paolo + value stack:** `clients/oceanides/offer-optimizer-denr-2026-07-20.md`
-  ⚠️ **RAW, hindi approved.** Tatlong flag: `₱9,500` core **lumalabag sa ₱12k/load
-  floor** · **imbentong penalty guarantee** (bawal sa copy) · **pinark ang paid
-  tripwire** hangga't walang hiwalay na desisyon — **ITO mismo yun.**
-- **Avatar ni Paolo:** `Oceanides market-research.md` §2. Ayos na ang research.
+**Nagawa na, huwag nang ulitin:** avatar ni Paolo (`Oceanides market-research.md`
+§2) at ang buong hagdan na may value stack (`offer-optimizer-denr-2026-07-20.md`,
+⚠️ RAW at may 3 flag). Nakalista sa brief kung alin ang bawal dalhin nang buo.
 
 ## 🔴 Huwag kalimutan
 
