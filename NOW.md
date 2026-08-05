@@ -30,10 +30,10 @@ ng facility para sa pera (walang middleman).
 Buksan yun, hindi ang chat.
 
 **Sunod:**
-1. 🔴 **Unang tawag sa supervisor ng facility** — tatlong tanong na hindi kayang
-   hulaan (ledger §HARD GATE): **saan kinukuha ang waste** (may pagitan ba na
-   pinaghahaluan ng load ng ibang kliyente?), **kailan ang bayad** (sa pickup o
-   sa day-15?), **magkano talaga** (tantsa pa rin ang ₱6,000).
+1. 🔴 **TAWAGAN ANG SUPERVISOR NG FACILITY — ito ang humaharang sa lahat.**
+   Buong script + apat na tanong: [`clients/oceanides/facility-call-script.md`](clients/oceanides/facility-call-script.md).
+   Tapos ituro ang **susunod na DENR job** na papasok sa bagong proseso — hindi
+   kailangang galing sa funnel ang proof load.
 2. Copy ng page (`grifon-cmo` + `grifon-creative-director`) sa **sariwang session**
    — masyadong malalim ang session 7/8 para sa magandang copy.
 3. Checkout (`code-executor` o `codex-executor`, may buong brief).

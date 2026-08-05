@@ -23,9 +23,14 @@ ang promised delivery date ng certificate — hindi artificial na lead time.
 🔴 **PERO HINDI PA SYA SARADO. Pangako pa lang ito, wala pang load na dumaan.**
 Sarado sya sa araw na may isang load na diretsong binayaran ni Neil sa facility
 **at** may certificate galing doon na hawak na natin. Bago iyon: itayo ang
-lahat, **wag lang buksan.** Kasama ang tatlong tanong na dapat sagutin sa unang
-tawag sa supervisor (saan kinukuha ang waste, kailan ang bayad, magkano talaga):
-ledger §HARD GATE.
+lahat, **wag lang buksan.**
+
+➡️ **Unang hakbang: [`facility-call-script.md`](facility-call-script.md)** — apat
+na tanong sa supervisor (saan kinukuha ang waste, magkano talaga, kailan ang
+bayad, kanino nakapangalan ang certificate). Ito ang humaharang sa lahat: 15
+araw ang orasan at hindi sya umaandar hangga't walang tawag. Ang proof load ay
+**hindi kailangang galing sa funnel** — ang susunod na DENR job na dadaan kay
+Boss Jay ay pwede na.
 
 ✅ **Sariling sistema ni Neil, hindi na dependent kay Boss Jay — pareho** (logistics
 AT financial), phased:
