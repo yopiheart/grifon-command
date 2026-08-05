@@ -335,11 +335,41 @@ ang margin, kaya **bumabagsak nang husto ang kailangang conversion at hindi na
 mahalaga ang eksaktong presyo ng tripwire.** I-recompute kapag napagdesisyunan na
 ang core.
 
-**Bukas pang desisyon:** 🔴 **kaya ba talagang maglabas ng Oceanides ng DENR
-manifest / Certificate of Proper Disposal / Annual Compliance Certificate?**
-(papeles ang binebenta ng buong hagdan — wala ang sagot sa repo) · pisikal na
-hugis at gastos ng check (kailangan ba ng truck?) · no-show at hindi-nagbayad ·
-online checkout laban sa cash-on-arrival · capacity kada linggo.
+#### ✅ KUMPIRMADO 2026-08-05 — kaya ng Oceanides ang papeles
+
+Sagot ni Neil sa Tanong 2 ng grill. **Ito ang pinaka-load-bearing na fact ng buong
+hagdan ni Paolo**, kaya nakasulat sya dito at hindi sa chat lang:
+
+- **Kumpleto sa DENR compliance papers**, at **may LLDA na** (bago) — sya ang
+  madalas hanapin ng malalaking kompanya.
+- **Hauler na may MOA** sa isang treatment facility. May legal na tapunan.
+- **Nakakapag-issue ng manifest na nakapangalan sa kliyente**, patunay na sa
+  DENR-accredited na facility napunta ang waste nila.
+- **Hindi teorya:** marami nang na-issuehan ng DENR certificate si Boss Jay.
+- **Presyo: ₱12,000-₱15,000 kada dokumentadong load.**
+- ⏳ **15 ARAW ang delivery ng certificate mula sa treatment-facility partner.**
+  🔴 **Hindi sya pang-emergency, at hindi dapat ipangakong mas mabilis.** Ang
+  48-oras na pangako sa tripwire ay para sa ATING sariling health-check report,
+  **hindi** sa certificate — dalawang magkaibang papel sila at hindi sila dapat
+  paghaluin sa copy. Ang 15 araw ay urgency lever din: kung [buwan] ang renewal,
+  ngayon dapat magsimula.
+
+🔴 **Ang partial-documentation na gawi ay KALABAN, hindi produkto.** Sabi ni Neil,
+kadalasan sa 20 loads ay dalawa lang ang ipinapasok sa DENR certificate para
+makatipid o manalo sa bidding, at wala pang naging issue sa naserbisyuhan ni Boss
+Jay. **Wag na wag itong papasukin sa offer o sa copy.** Tatlong dahilan: (1) ang
+generator pa rin ang mananagot sa RA 9275 kaya papel na hindi sumasakop sa lahat
+ng load ay hindi proteksyon, (2) *"walang naging issue"* ay ibig sabihin **wala
+pang nag-inspect**, hindi ibig sabihin ligtas, at (3) ito mismo ang villain na
+nakasulat sa avatar ni Paolo — *"may suki na kaming pasipsip, mas mura, pero
+walang resibo, walang manifest."* Kapag ginawa natin, tayo na ang suki.
+**Buong dokumentasyon ang wedge natin laban sa kakumpitensya, at yun ang dahilan
+kung bakit may premyo ang ₱12-15k kada load.**
+
+**Bukas pang desisyon:** pisikal na hugis at gastos ng check (kailangan ba ng
+truck?) · **COGS ng dokumentadong load** (dito nakasalalay ang margin ng core, at
+dun nakasalalay ang buong tripwire math) · no-show at hindi-nagbayad · online
+checkout laban sa cash-on-arrival · capacity kada linggo.
 
 ---
 

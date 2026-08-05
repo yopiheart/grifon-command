@@ -25,22 +25,21 @@ Lumilipat sa **tripwire + core** na hagdan. **NAPAGDESISYUNAN NA (2026-08-05):**
 ⚠️ **Ibig sabihin nun: `home` ang tinarget ng patay na campaign. Mali na sya.**
 Bagong targeting, bagong creative, bagong page ang kailangan ni Paolo.
 
-**Nakabinbin: Tanong 2 — kaya ba talagang gumawa ng Oceanides ng DENR manifest,
-Certificate of Proper Disposal, at Annual Compliance Certificate?** Buong hagdan
-ni Paolo ay PAPELES ang binebenta. Kung hindi natin sya kayang ilabas, patay ang
-buong plano. Wala ang sagot sa repo.
+✅ **KUMPIRMADO: kaya ng Oceanides ang papeles** (Neil, 2026-08-05) — kumpleto sa
+DENR, **may LLDA na** (hinahanap ng malalaking kompanya), hauler na may MOA sa
+treatment facility, nakakapag-issue ng manifest na nakapangalan sa kliyente, at
+marami nang naibigay si Boss Jay. **₱12k-15k kada dokumentadong load, at 15 ARAW
+bago dumating ang certificate mula sa partner** — kaya hindi sya pang-emergency.
 
-**Sunod na nakapila:** pisikal na hugis at gastos ng check (kailangan ba ng
-truck?) · no-show risk · online checkout laban sa cash-on-arrival · capacity.
+**Nakabinbin: Tanong 3 — pisikal na hugis at gastos ng check** (kailangan ba ng
+truck?). Sunod: COGS ng dokumentadong load · no-show · checkout · capacity.
 
 ### Nabuong sanggunian (huwag nang ulitin — nagawa na)
-- **Buong hagdan ni Paolo, may value stack:** `clients/oceanides/offer-optimizer-denr-2026-07-20.md`
-  ⚠️ **RAW, hindi approved.** Tatlong flag sa loob: `₱9,500` core ay **lumalabag
-  sa ₱12k/load floor** · **imbentong penalty-payment guarantee** (bawal sa copy
-  hangga't walang tanggap ni Neil) · **pinark ang paid tripwire, "libre muna"**
-  hangga't walang hiwalay na desisyon. **Yung hiwalay na desisyon ay ITO mismo.**
-- **Avatar ni Paolo:** `clients/oceanides/Oceanides market-research.md` §2.
-  Hindi na kailangan ng bagong market research.
+- **Hagdan ni Paolo + value stack:** `clients/oceanides/offer-optimizer-denr-2026-07-20.md`
+  ⚠️ **RAW, hindi approved.** Tatlong flag: `₱9,500` core **lumalabag sa ₱12k/load
+  floor** · **imbentong penalty guarantee** (bawal sa copy) · **pinark ang paid
+  tripwire** hangga't walang hiwalay na desisyon — **ITO mismo yun.**
+- **Avatar ni Paolo:** `Oceanides market-research.md` §2. Ayos na ang research.
 
 ## 🔴 Huwag kalimutan
 
