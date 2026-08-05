@@ -179,6 +179,10 @@ form: {
       ],
       required: true,
     },
+    // 🔴 TATLO, HINDI LIMA (binago 2026-08-06). Ang panuntunan sa pagpili: ang
+    // field ay dapat nagbabago ng GINAGAWA natin, o ng SINASABI natin. Kapag
+    // wala sa dalawa, buwis sya sa conversion.
+    { id: 'city', label: 'Saan kayo sa Metro Manila?', options: NCR_CITIES, required: true },
     {
       id: 'papers',
       label: 'May papel ba ang huling pasipsip nyo?',
@@ -190,26 +194,6 @@ form: {
       ],
       required: true,
     },
-    {
-      id: 'establishment',
-      label: 'Anong klaseng establisyimento?',
-      options: [
-        'Restaurant o food business',
-        'Apartment o boarding house',
-        'Office o condo building',
-        'School o clinic',
-        'Warehouse o factory',
-        'Iba pa',
-      ],
-      required: true,
-    },
-    {
-      id: 'role',
-      label: 'Ano ang hawak mo dun?',
-      options: ['Ako ang may-ari', 'Admin o property manager', 'Ako ang nag-aasikaso ng permit'],
-      required: true,
-    },
-    { id: 'city', label: 'Saan kayo sa Metro Manila?', options: NCR_CITIES, required: true },
   ],
 }
 ```
@@ -294,10 +278,10 @@ ng kwento.
       },
       addOnsLabel: 'Kapag kailangan mo ng dokumentadong load:',
       addOns: [
-        { label: 'Isang dokumentadong load, may manifest at DENR certificate', amount: '⟦PENDING · A⟧' },
-        { label: 'Pangalawang load, kapag hindi kasya sa isa', amount: '⟦PENDING · A⟧' },
+        { label: 'Presyo kada load, depende sa laki at bilang ng tangke', amount: 'Nasa quotation' },
+        { label: 'Ang quotation mismo, kasama na sa check', amount: 'Kasama na' },
       ],
-      footnote: 'Wala nang iba. Nakasulat lahat bago ka pumirma.',
+      footnote: 'Isang numero lang ang babayaran mo ngayon. ₱999.',
     },
     trustChips: ['SEC Registered', 'DENR-registered hauler', 'LLDA permit', 'BIR official receipt'],
   },
@@ -414,7 +398,7 @@ kulay sa buong section.
       { label: 'Quotation para sa dokumentadong load, kung kailangan mo sya' },
       { label: 'BIR official receipt para sa ₱999' },
     ],
-    totalLine: '₱999 kada visit. Isang presyo, hindi range.',
+    totalLine: '₱999 kada visit. Dito nagsisimula ang papeles mo.',
   },
 }
 ```
@@ -627,6 +611,10 @@ dito sya nababagay.
       {
         q: 'Anong papel ba talaga ang matatanggap ko?',
         a: 'Dalawa, at magkaiba sila. Una, ang report namin sa septic check: sukat, litrato, assessment, pirma, petsa. Nasa yo yun sa loob ng 48 oras. Pangalawa, kapag nagpakuha ka ng dokumentadong load: ang manifest at ang Certificate of Treatment galing sa treatment facility. Ang manifest ay lumalabas kasabay ng trabaho. Ang certificate ay 15 araw.',
+      },
+      {
+        q: 'Magkano ang dokumentadong load?',
+        a: '⟦PENDING · A⟧ kada load, at nagbabago sya sa laki at bilang ng tangke mo. Kaya nga may check muna: pagkatapos naming sukatin, may nakasulat kang quotation na nagsasabi kung ilang load talaga ang kailangan mo at kung magkano lahat. Kasama na yun sa ₱999. Hindi ka namin bibigyan ng numero ngayon na babaguhin namin pagdating ng truck.',
       },
       {
         q: 'Bakit 15 araw ang certificate? May mas mabilis ba?',

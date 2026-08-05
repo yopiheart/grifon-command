@@ -158,9 +158,24 @@ export const funnelConfig: FunnelConfig = {
         ],
         required: true,
       },
-      // Pinakamalakas na lead score sa buong form. Ang "wala, walang naibigay sa
-      // amin" ay ang eksaktong avatar. Sya rin ang unang tanong ni Zam sa tawag,
-      // kaya nasagot na bago pa sya tumawag.
+      // 🔴 TATLO, HINDI LIMA (2026-08-06, tanong ni Neil: "hindi ba sila
+      // tamarin fill up yan?"). Ang panuntunan sa pagpili: ang field ay dapat
+      // nagbabago ng GINAGAWA natin, o ng SINASABI natin. Kapag wala sa dalawa,
+      // buwis sya sa conversion at nakukuha naman sa tawag sa loob ng sampung
+      // segundo.
+      //   renewal_window → nagbabago ng ginagawa (pila ni Zam) AT ng sinasabi
+      //                    (variant ng thank-you page). Sya ang urgency lever.
+      //   city           → nagbabago ng ginagawa nang husto. Isang siyudad muna
+      //                    ang ruta (A4), kaya dito nagaganap ang sala.
+      //   papers         → nagbabago ng sinasabi sa tawag, at may PANGALAWANG
+      //                    trabaho: pinapaharap nya sa tao ang butas nya sa
+      //                    mismong sandali ng pag-commit (Cialdini). Huli sya
+      //                    kasi dalawang tap na ang nailagak nya bago sya
+      //                    dumating dun.
+      // TINANGGAL: `establishment` (hula lang sa laki ng tangke) at `role`
+      // (sampung segundo sa tawag). Wala sa dalawa ang nagpapabago ng kahit ano
+      // bago ang unang tawag.
+      { id: 'city', label: 'Saan kayo sa Metro Manila?', options: NCR_CITIES, required: true },
       {
         id: 'papers',
         label: 'May papel ba ang huling pasipsip nyo?',
@@ -172,26 +187,6 @@ export const funnelConfig: FunnelConfig = {
         ],
         required: true,
       },
-      {
-        id: 'establishment',
-        label: 'Anong klaseng establisyimento?',
-        options: [
-          'Restaurant o food business',
-          'Apartment o boarding house',
-          'Office o condo building',
-          'School o clinic',
-          'Warehouse o factory',
-          'Iba pa',
-        ],
-        required: true,
-      },
-      {
-        id: 'role',
-        label: 'Ano ang hawak mo dun?',
-        options: ['Ako ang may-ari', 'Admin o property manager', 'Ako ang nag-aasikaso ng permit'],
-        required: true,
-      },
-      { id: 'city', label: 'Saan kayo sa Metro Manila?', options: NCR_CITIES, required: true },
     ],
   },
 
@@ -274,12 +269,21 @@ export const funnelConfig: FunnelConfig = {
             sub: 'May sukat, may litrato, may petsa. Ipa-file mo agad.',
             amount: '₱999',
           },
+          // 🔴 ISANG NUMERO LANG ANG TICKET (Neil, 2026-08-01, at inulit nya
+          // 2026-08-06 sa page na to). Nasa ticket dati ang ₱12-15k kada load,
+          // DALAWANG BESES pa. Ibig sabihin, ang unang nakikita ng bagong
+          // bisita ay mga ₱25,000 bago pa nya malaman kung ano ang binibili
+          // nya at bago pa natin masabi ang ₱200,000 kada araw na multa.
+          // Nag-anchor tayo sa PRESYO NATIN bago sa PANGANIB NIYA. Ang core
+          // price ay nasa FAQ na ngayon (parehong F05 na pattern ng DENR cert
+          // sa page ni Helen), at ang tunay na sagot ay nasa quotation kasi
+          // depende sya sa laki at bilang ng tangke.
           addOnsLabel: 'Kapag kailangan mo ng dokumentadong load:',
           addOns: [
-            { label: 'Isang dokumentadong load, may manifest at DENR certificate', amount: '⟦PENDING · A⟧' },
-            { label: 'Pangalawang load, kapag hindi kasya sa isa', amount: '⟦PENDING · A⟧' },
+            { label: 'Presyo kada load, depende sa laki at bilang ng tangke', amount: 'Nasa quotation' },
+            { label: 'Ang quotation mismo, kasama na sa check', amount: 'Kasama na' },
           ],
-          footnote: 'Wala nang iba. Nakasulat lahat bago ka pumirma.',
+          footnote: 'Isang numero lang ang babayaran mo ngayon. ₱999.',
         },
         trustChips: ['SEC Registered', 'DENR-registered hauler', 'LLDA permit', 'BIR official receipt'],
       },
@@ -402,7 +406,13 @@ export const funnelConfig: FunnelConfig = {
           { label: 'Quotation para sa dokumentadong load, kung kailangan mo sya' },
           { label: 'BIR official receipt para sa ₱999' },
         ],
-        totalLine: '₱999 kada visit. Isang presyo, hindi range.',
+        // Ang lumang linya dito ay "Isang presyo, hindi range." ⛔ Kay HELEN yun.
+        // Sya ang sagot sa siphoner na nagko-quote ng range tapos nanggugulat
+        // pagdating. Hindi ganon ang laban ni Paolo, at mas masama pa: ang core
+        // NIYA ay totoong range (depende sa laki at bilang ng tangke), kaya
+        // kokontrahin nya ang FAQ sa ibaba ng parehong page. Ang trabaho ng
+        // linyang to ay gawing SIMULA ang ₱999, hindi bilihin.
+        totalLine: '₱999 kada visit. Dito nagsisimula ang papeles mo.',
       },
     },
 
@@ -615,6 +625,15 @@ export const funnelConfig: FunnelConfig = {
           {
             q: 'Anong papel ba talaga ang matatanggap ko?',
             a: 'Dalawa, at magkaiba sila. Una, ang report namin sa septic check: sukat, litrato, assessment, pirma, petsa. Nasa yo yun sa loob ng 48 oras. Pangalawa, kapag nagpakuha ka ng dokumentadong load: ang manifest at ang Certificate of Treatment galing sa treatment facility. Ang manifest ay lumalabas kasabay ng trabaho. Ang certificate ay 15 araw.',
+          },
+          // 🆕 ANG PRESYO NG CORE, INILIPAT DITO MULA SA HERO TICKET
+          // (2026-08-06). Parehong F05 na pattern ng DENR cert sa page ni
+          // Helen: presyo sa loob ng FAQ, pagkatapos ng value stack. Ang taong
+          // naghahanap ng numero ay hahanapin nya sya. Ang taong hindi pa alam
+          // kung ano ang binibili nya ay hindi dapat sya ang unang nakikita.
+          {
+            q: 'Magkano ang dokumentadong load?',
+            a: '⟦PENDING · A⟧ kada load, at nagbabago sya sa laki at bilang ng tangke mo. Kaya nga may check muna: pagkatapos naming sukatin, may nakasulat kang quotation na nagsasabi kung ilang load talaga ang kailangan mo at kung magkano lahat. Kasama na yun sa ₱999. Hindi ka namin bibigyan ng numero ngayon na babaguhin namin pagdating ng truck.',
           },
           {
             q: 'Bakit 15 araw ang certificate? May mas mabilis ba?',
