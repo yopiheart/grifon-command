@@ -468,6 +468,39 @@ Hindi kailangang kumita ang tripwire. Kailangan lang nyang maging libre, at libr
   may `createCheckoutSession` na sa `api/_lib/paymongo.ts` (kailangan ng sariling
   kopya, bawal mag-import ang funnel mula sa repo root).
 
+#### 🔴 HARD GATE 2026-08-05 — walang ads hangga't hindi totoo ang certificate
+
+Lumabas sa premortem na may mga certificate na naibibigay para sa waste na **hindi
+dumadaan sa treatment facility.** Hangga't ganon, **hindi maaaring i-ads ang alok
+ni Paolo.** Nauuna ang gate na ito sa page, sa creative, at sa checkout.
+
+**Bakit hindi sya operational na isyu lang:** ang KABUUAN ng ibinabayad ni Paolo ay
+ang katiyakang hindi sya mananagot sa RA 9275. **Sya pa rin ang generator at sya pa
+rin ang mananagot.** Kapag hindi totoo ang papel, ang ibinebenta natin ay ang
+mismong panganib na akala nyang inaalis nya — at mas malala pa, may hawak na syang
+papel na nagsasabing ligtas sya, kaya hindi na sya maghahanap ng tunay na solusyon.
+Nasa pangalan ni Neil ang ads, ang pera, at ang partnership.
+
+**At hindi naman sya kailangan.** ₱6,000 kada load ang natitipid — sa trabahong may
+**₱6,500 na gross kahit binayaran ang facility.** 43% margin na kahit tama ang
+ginawa. Hindi sulit ipagpalit ang negosyo, ang partnership, at ang pangalan para
+doblehin ang margin na malusog na.
+
+**Ang lunas ay nasa hawak na ni Neil.** Sya ang may access sa PayMongo at sya ang
+naglilipat ng pera, kaya kaya nyang ipatupad ito nang walang pahintulot ninuman:
+
+1. **Ang ₱6,000 kada load ay diretsong ibabayad sa facility mula sa perang hawak ni
+   Neil, bago ilabas ang kahit anong iba.** Unang labas ang facility, hindi huli.
+2. **Ang certificate ay galing sa facility.** Ang 15-araw na lead time ay mismong
+   patunay na buhay at gamit ang tamang daan.
+3. **Walang sinasabi ang ads na hindi naihahatid.**
+
+Kapag ganon, **totoo ang papel dahil binayaran sya**, hindi dahil may nagpaalam.
+Ang parehong kontrol sa pera na proteksyon ni Neil ay sya ring makina ng compliance.
+
+⚠️ Sa mga naunang naibigay na certificate: **abogado ang dapat sundin**, wala yun
+sa saklaw ng dokumentong ito at hindi sya masasagot ng marketing plan.
+
 🔴 **Apat na bagay bago mag-code, at wala sa kanila ang tungkol sa checkout mismo:**
 1. **Kaninong PayMongo?** Kay **Grifon** ang `VITE_PAYMONGO_PUBLIC_KEY` sa root
    `.env`. Kung nagamit yun, **ang kita ng Oceanides ay dadapo sa account ng

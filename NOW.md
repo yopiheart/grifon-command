@@ -31,8 +31,16 @@ treatment facility, nakakapag-issue ng manifest na nakapangalan sa kliyente, at
 marami nang naibigay si Boss Jay. **₱12k-15k kada dokumentadong load, at 15 ARAW
 bago dumating ang certificate mula sa partner** — kaya hindi sya pang-emergency.
 
-**Nakabinbin: Tanong 3 — pisikal na hugis at gastos ng check** (kailangan ba ng
-truck?). Sunod: COGS ng dokumentadong load · no-show · checkout · capacity.
+🔴 **HARD GATE bago ang kahit anong ads, page, o creative: dapat DUMAAN at
+MABAYARAN sa treatment facility ang bawat dokumentadong load, at galing sa
+facility ang certificate.** Ang kabuuan ng ibinabayad ni Paolo ay ang hindi
+mananagot sa RA 9275; kapag hindi totoo ang papel, ang panganib mismo ang
+ibinebenta natin. **Hindi naman sya kailangan** — ₱6,500 na ang gross kada load
+kahit bayad ang ₱6,000 na facility. Lunas: **unang labas ang ₱6,000 mula sa perang
+hawak ni Neil sa PayMongo**, bago ang kahit ano. Buong dahilan: ledger §HARD GATE.
+
+**Tapos na ang grill** (buyer · deliverability · bisita · AI report · ₱999 +
+checkout · unit economics · premortem). Sunod na hakbang nasa ledger.
 
 ### Nabuong sanggunian (huwag nang ulitin — nagawa na)
 - **Hagdan ni Paolo + value stack:** `clients/oceanides/offer-optimizer-denr-2026-07-20.md`
