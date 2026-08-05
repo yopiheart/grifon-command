@@ -107,6 +107,7 @@ Proposals) → `applied` (now standard practice / wired into a CMO or CD brief).
 | --- | --- | --- | --- |
 | **A1** | **Mechanism-diagnosis hook** ("hindi X, Y pala") sa Solution Aware na kategorya → elite retention sa 0:03 at pinakamababang CPM sa account. KM-003: ₱79.29 CPM laban sa ₱119-₱340 ng bawat ibang video sa parehong account. | 1 | observed |
 | **A2** | **Ang alok na nangangailangan ng ISA PANG USAPAN ay kumakain ng mid-video retention.** KM-003: 41% ang nawala sa 9.2s-18.4s, eksaktong kinaroroonan ng "libre ang tingin". Matatag ang retention bago at pagkatapos nun (58.8% → 70.6% → 73.2% → 88.4%). | 1 | observed |
+| **A4** | 🔴 **Ang tripwire na nangangailangan ng PISIKAL na bisita ay may sahig na katumbas ng cost ng bisitang yun.** Oceanides: ₱1,100 (inspector + transport) bago pa ang truck, kaya ang ₱499 ay subsidy na ₱601 kada usapan at ang libre ay ₱1,100 na lugi kada beses. Ang presyo ng tripwire ay **hindi psychological choice** dito — ang visit cost ang nagtatakda, at ang ₱499→₱999 ay nagpapababa ng kailangang conversion mula 40% papuntang 10%. | 1 | observed |
 | **A3** | 🔴 **Ang murang cost-per-conversation ay FALSE POSITIVE kapag masama ang close.** KM-003: ₱12.85/message (3× mas mura sa ₱40-80 target band) pero 100 message → **1 order = 1%**. Ang kill gates na naka-base sa gastos-kada-usapan ay pumasa habang bumabagsak ang negosyo. | 1 | observed |
 | **A4** | **Ang haba ay dapat sukatin sa kung saan bumabagsak ang retention, hindi sa kung ano ang kasya sa script.** 36.8s ang KM-003; 10s ang average na panonood; 8.0% lang ang umabot sa dulo. Ang CTA sa 36s ay nakikita ng 8 sa bawat 100. | 1 | observed |
 
@@ -215,6 +216,95 @@ hangga't hindi umaabot ng **50-100 LPV** (mga ₱400-700 pa sa rate na to).
 2. **Sarado ang Advanced Matching, walang CAPI** (sinadya, para sa privacy
    policy). Browser-only ang signal, kaya ang bilang ng pixel ay **floor** —
    laging mas mababa kaysa totoo dahil sa ad blocker at iOS.
+
+#### 🔴 PINATAY 2026-08-05, 1:47 PM — 0 conversion sa 77 bisita
+
+**Si Neil ang pumatay**, lahat ng lima sa loob ng 11 segundo. Dahilan, sarili
+nyang salita: *"ayoko na mag sunog dahil para sakin sapat na yang 72 visitors na
+hindi nag convert."*
+
+**Panghuling bilang (mga 36 oras ng delivery):**
+
+| Ad | Impr | CTR | Outbound | LPV | ₱/link click | CPM | Gastos |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| **km004-video** | 1,074 | 9.40% | **72** | **55** | ₱3.97 | ₱266 | ₱285.93 |
+| **hooktest-chalk** | 338 | 14.50% | 13 | 11 | **₱3.21** | **₱123** | ₱41.70 |
+| addons-ticket | 459 | 10.02% | 14 | 9 | ₱8.35 | ₱255 | ₱116.89 |
+| advertorial | 97 | 15.46% | 3 | 2 | ₱5.19 | ₱160 | ₱15.56 |
+| ⛔ warranty-proof | 28 | 3.57% | 0 | 0 | — | ₱811 | ₱22.71 |
+| **Kabuuan** | **1,996** | 10.62% | **102** | **77** | ₱4.73 | — | **₱482.79** |
+
+**₱6.27 kada bisita sa page. Gumana ang ads.** Panalo si km004-video: kalahati ng
+impressions pero **71% ng lahat ng pumasok**, at 71% ng clicks nya ay totoong
+lumabas papunta sa site (30% lang ang ibang ads). Pinakamura si chalk sa CPM
+(₱123 laban sa ₱255 at ₱811) — **anim na beses na mas mura ang parehong tao
+kapag chalk ang ipinakita.** Unang totoong panalo ng **S34** sa labas ng Brunson.
+Patay si warranty-proof: ₱22.71 para sa 28 impressions, zero outbound.
+
+**Paano naipit ang dahilan, isa-isang pinatay ang suspek:**
+
+1. **Hindi ang pixel.** Buhay ang dataset, at ang `landing_page_view` mismo ay
+   galing sa pixel — kung sira yun, zero sana ang 77. Walang ibang host na
+   nagpaputok ng pixel natin sa 7 araw.
+2. **Hindi ang custom na `?utm_...` na link kada ad.** Host lang ang naka-register
+   sa dataset at sa domain verification, hindi buong URL.
+3. **Hindi ang form.** Sinubukan mismo ni Neil sa phone 2026-08-05 4:48 PM —
+   dumating ang row (`Las Piñas` / `Tenant ako` / `Apartment o boarding house` /
+   `Oo, alam ko`), kumpleto ang qualifiers. ⚠️ Nagkamali ang agent dito noong una:
+   pinaghinalaan ang `104e68a` na sya raw ang sumira ng form, pero **`Presyo.tsx`
+   lang ang ginalaw nun** — ang internal ops page, hindi ang public form.
+4. **Hindi rin sila tumawag o nag-message.** Kumpirmado ni Zam: **zero** sa
+   parehong pinto. Namatay ang teoryang "may customer tayo, bulag lang tayo."
+5. **Ang 8:00 AM na paghinto ng PageView ay hindi bug.** Nag-error ang payment
+   method ni Neil (*"unverified daw"*) kaya tumigil ang delivery. Naayos na.
+
+**Kaya nasa OFFER o sa PAGE ang natitira.** At hindi pa natin sila mapaghiwalay
+— **nasa pang-14 sa 17 section ang form** at walang scroll data, kaya hindi
+alam kung *"nakita nila ang ₱5,000 at umatras"* o *"hindi man lang sila nakarating
+dun."* ✅ Naayos na to: may `FormViewed` na custom pixel event ngayon
+(`src/lib/pixel.ts` + `LeadForm.tsx`, 2026-08-05) na pumuputok kapag umabot sa
+form. **`trackCustom`, hindi standard event** — para hindi magalaw ang AEM
+ranking at ang relearning ng `Lead`. ⏳ Kailangan pa ng redeploy (CLI, hindi
+git-connected).
+
+⚠️ **Manipis pa ang sample.** Ang 0 sa 72, kung 3% ang inaasahan, ay nangyayari
+nang nagkataon **isang beses sa siyam**. Tama ang pagpatay para hindi masunog ang
+pera; **hindi patunay** ang 72 na mali ang offer.
+
+#### Ang ₱1,100 na sahig — bakit hindi pwedeng ₱499 ang tripwire
+
+Napag-usapan ang paglipat sa **tripwire / doctor strategy**: bayad na septic
+health check bago ang ₱5,000 sipsip, may reseta (septic health report). Ang
+unit economics sa §Unit Economics ang dumidikta ng presyo:
+
+> **Field inspector ₱500 + transportation ₱600 = ₱1,100** para lang makapagpadala
+> ng tao sa bahay nila, bago pa ang truck.
+
+Kaya ang **₱499 ay hindi tripwire — sya ay ₱601 na binabayaran mo kada usapan.**
+Ang ₱1,100 na yun ay **nasa loob na ng ₱4,100**, kaya walang bagong gastos ang
+check na nauuwi sa sipsip; ang **hindi** nag-convert lang ang bagong lugi. Break-even,
+kada 100 check:
+
+| Presyo ng check | Kailangang mag-convert sa sipsip |
+| --- | --- |
+| Libre | imposible (₱1,100 lugi kada check) |
+| ₱499 | **40%** |
+| **₱999** | **10%** |
+| ₱1,499 | 0% (kumikita kahit walang mag-sipsip) |
+
+🔴 **Bawal ang cash refund.** Ang *"ibabalik namin kung hindi pa puno"* ang
+pinakamahal na kaso: ₱1,100 nagastos **tapos** ₱499 pa ang isasauli. Ang lunas ay
+**credit, hindi cash** — panalo pa rin ang tao, nasa yo pa rin ang pera, at
+nawawala ang pinakamahinang linya (*"walang refund kung critical pero ayaw magpasipsip"*),
+na sya ring pinakamadaling pagmulan ng reklamo at chargeback.
+
+⚠️ **Sarili nating data ang unang babala laban sa diagnostic offer:** tingnan ang
+**A2** sa ibaba. Sa KM-003, **41% ang nawala sa 9.2s-18.4s, eksaktong kinaroroonan
+ng "libre ang tingin."** Nasubukan na ang frame na to minsan at dun mismo bumagsak.
+
+**Bukas pang desisyon:** ang laman ng value stack sa ₱999, ang no-show risk,
+online checkout laban sa cash-on-arrival, at kung kailangan ng bagong market
+research (bago ang offer, pero ang audience ba ay bago rin?).
 
 ---
 

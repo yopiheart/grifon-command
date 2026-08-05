@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { LEAD_FORM_ANCHOR } from '../config.types';
 import { funnelConfig } from '../funnel.config';
+import { trackFormViewed } from '../lib/pixel';
 import { submitLead } from '../lib/submitLead';
 import { normalizePhMobile } from '../lib/phPhone';
 import { CtaButton } from '../primitives/CtaButton';
@@ -90,6 +91,26 @@ export const LeadForm: React.FC<LeadFormProps> = ({ showHeadline = true }) => {
   const [error, setError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
+  // "Did anyone even get here?" is a real question, not a rhetorical one: this
+  // form is section 14 of 17. Threshold 0.15 is the same number StickyCta uses
+  // for its own form observer, so both agree on what "at the form" means and the
+  // event cannot fire while the sticky bar still thinks it is off-screen.
+  const formRef = useRef<HTMLFormElement>(null);
+  useEffect(() => {
+    const node = formRef.current;
+    if (!node) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        trackFormViewed(funnelConfig.tracking.metaPixelId);
+        observer.disconnect(); // one shot; scrolling past twice is still one visit
+      },
+      { threshold: 0.15 },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
   const setField = (field: string, value: string) => {
     setValues((prev) => ({ ...prev, [field]: value }));
     // Clear this field's complaint the moment they start fixing it. Leaving a
@@ -178,7 +199,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ showHeadline = true }) => {
   };
 
   return (
-    <form id={LEAD_FORM_ANCHOR} onSubmit={handleSubmit} noValidate className="scroll-mt-24">
+    <form ref={formRef} id={LEAD_FORM_ANCHOR} onSubmit={handleSubmit} noValidate className="scroll-mt-24">
       {showHeadline && <h2 className="mb-6 text-2xl leading-tight md:text-3xl">{form.headline}</h2>}
 
       <div className="space-y-4">
