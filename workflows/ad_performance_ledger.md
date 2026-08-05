@@ -107,7 +107,7 @@ Proposals) → `applied` (now standard practice / wired into a CMO or CD brief).
 | --- | --- | --- | --- |
 | **A1** | **Mechanism-diagnosis hook** ("hindi X, Y pala") sa Solution Aware na kategorya → elite retention sa 0:03 at pinakamababang CPM sa account. KM-003: ₱79.29 CPM laban sa ₱119-₱340 ng bawat ibang video sa parehong account. | 1 | observed |
 | **A2** | **Ang alok na nangangailangan ng ISA PANG USAPAN ay kumakain ng mid-video retention.** KM-003: 41% ang nawala sa 9.2s-18.4s, eksaktong kinaroroonan ng "libre ang tingin". Matatag ang retention bago at pagkatapos nun (58.8% → 70.6% → 73.2% → 88.4%). | 1 | observed |
-| **A4** | 🔴 **Ang tripwire na nangangailangan ng PISIKAL na bisita ay may sahig na katumbas ng cost ng bisitang yun.** Oceanides: ₱1,100 (inspector + transport) bago pa ang truck, kaya ang ₱499 ay subsidy na ₱601 kada usapan at ang libre ay ₱1,100 na lugi kada beses. Ang presyo ng tripwire ay **hindi psychological choice** dito — ang visit cost ang nagtatakda, at ang ₱499→₱999 ay nagpapababa ng kailangang conversion mula 40% papuntang 10%. | 1 | observed |
+| **A4** | 🔴 **Ang sahig ng bayad na tripwire ay ang cost ng bisita, at ang cost na yun ay ROUTE DENSITY, hindi isang numero.** Oceanides: ₱1,100 kapag iisa ang bisita sa maghapon (inspector ₱500 buong araw + pamasahe ₱200-300 kada direksyon), pero **~₱400 na lang kapag tatlo hanggang apat ang stop sa isang araw** — hati na ang ₱500 at magkalapit na ang sakayan. **Ibig sabihin: hindi presyo ang lever, GEO CLUSTERING ang lever.** Ang parehong ₱499 ay lugi sa kalat na booking at kumikita sa siksik na ruta. I-target ang lugar, huwag ang bayad. | 1 | observed |
 | **A3** | 🔴 **Ang murang cost-per-conversation ay FALSE POSITIVE kapag masama ang close.** KM-003: ₱12.85/message (3× mas mura sa ₱40-80 target band) pero 100 message → **1 order = 1%**. Ang kill gates na naka-base sa gastos-kada-usapan ay pumasa habang bumabagsak ang negosyo. | 1 | observed |
 | **A4** | **Ang haba ay dapat sukatin sa kung saan bumabagsak ang retention, hindi sa kung ano ang kasya sa script.** 36.8s ang KM-003; 10s ang average na panonood; 8.0% lang ang umabot sa dulo. Ang CTA sa 36s ay nakikita ng 8 sa bawat 100. | 1 | observed |
 
@@ -366,10 +366,55 @@ walang resibo, walang manifest."* Kapag ginawa natin, tayo na ang suki.
 **Buong dokumentasyon ang wedge natin laban sa kakumpitensya, at yun ang dahilan
 kung bakit may premyo ang ₱12-15k kada load.**
 
-**Bukas pang desisyon:** pisikal na hugis at gastos ng check (kailangan ba ng
-truck?) · **COGS ng dokumentadong load** (dito nakasalalay ang margin ng core, at
-dun nakasalalay ang buong tripwire math) · no-show at hindi-nagbayad · online
-checkout laban sa cash-on-arrival · capacity kada linggo.
+#### ✅ KUMPIRMADO 2026-08-05 — ang bisita mismo (Tanong 3 ng grill)
+
+- **WALANG TRUCK.** Marunong nang tumingin ng tangke sina Marvin, Neil at Boss Jay.
+- **Ano ang ginagawa:** sukat ng tangke, ilan ang tangke, at ang status — umaapaw
+  ba, puno na ba, barado ba, makapal ba ang burak, likido lang ba o **purong
+  solid**. Iyan ang buong technical na laman ng report.
+- **Sino:** si Marvin ang mukha. Kapag dami ng booking: Neil, Boss Jay, Gabriel,
+  at isang bagong field inspector na hindi pa napapangalanan.
+- **Gastos:** field inspector ₱500 **kada buong araw** (hindi kada bisita) +
+  pamasahe ₱200-300 kada direksyon. Nag-iiba ayon sa layo — Bacoor si Gabriel,
+  Manila sina Neil, Boss Jay at Marvin.
+- **Bilis:** **2 oras kada kliyente** kasama ang byahe at ang pag-usap ng report.
+  Kaya **3-4 na bisita kada tao kada araw** ang totoong takda.
+- ⚠️ **Naghihintay sila ng susunod na booking bago umuwi**, kaya ang huling stop
+  ang nagtatakda ng pamasahe. **Ito mismo ang dahilan kung bakit route density
+  ang lever** — tingnan ang **A4**.
+
+#### 🟡 IMBENTO NI NEIL 2026-08-05 — AI septic health report (endorsed, may 3 kondisyon)
+
+Kukunan ng video at susukat ang field inspector, ipapakain sa AI agent (Gemini
+eyes), at **sa loob ng minuto** ay lalabas ang report na may logo ng Oceanides:
+status, dapat gawin, kailangang serbisyo, guarantee, urgency (Cialdini).
+
+**Endorsed.** Tatlong dahilan: (1) **nagsasara habang nakatayo pa dun ang tao** —
+bawat oras sa pagitan ng diagnosis at desisyon ay bumabawas ng close rate, at
+tinatapos nito ang 48 oras; (2) **pareho ang kalidad ng lahat ng inspector**,
+kasama ang bago pa lang — yun ang paraan para lumampas ka sa isang magaling na
+tao; (3) **may naiiwang artifact** ang binayarang ₱499, at ang mga video ay
+nagiging proof library na sagot sa *"wala silang reviews."*
+
+🔴 **Tatlong kondisyon bago sya itayo:**
+1. **HINDI ang AI ang magdedesisyon kung puno na.** Sukat ang ilalagay ng tao
+   (lalim ng burak, sukat ng tangke, porsyento), at ang rekomendasyon ay susunod
+   sa **nakasulat na panuntunan**, hindi sa pakiramdam ng modelo. Kapag AI ang
+   nagsabing critical at mali sya, may naibentang ₱12-15k na trabaho ang isang
+   hallucination — at ang nagdesisyon ay pag-aari ng nagbebenta.
+2. **HATIIN ang dokumento.** Pahina 1-2 = tuyot na assessment (sukat, litrato,
+   RA 9275 gap, pirmado) — yan ang ipa-file at ipapakita ni Paolo sa boss nya.
+   Pahina 3 = rekomendasyon at alok. Kapag hinaluan ng urgency ang assessment,
+   nagiging brochure sya at yun mismo ang credibility na binabayaran nya.
+3. **Kailangan ng offline na daan.** Basement at likod-bahay ay walang signal.
+   I-save ang video, gawin ang report paglabas — pero may template na kayang
+   punan ng inspector kung mawalan.
+
+⚠️ **Ubos ang Gemini budget** (`NOW.md`). Hindi sya maitatayo ngayong linggo.
+
+**Bukas pang desisyon:** **COGS ng dokumentadong load** (dito nakasalalay ang
+margin ng core, at dun ang buong tripwire math) · kailan maniningil at paano ·
+no-show · capacity kada linggo kapag umubra.
 
 ---
 
