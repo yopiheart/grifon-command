@@ -18,15 +18,18 @@ facility ang certificate.** Buong dahilan: ledger §HARD GATE.
 
 Pwedeng itayo ang lahat habang hindi pa sya sarado. **Bawal lang buksan.**
 
-## ⛔ Dalawang blocker bago mag-code
+## ✅ Sarado na ang dalawang blocker (2026-08-05)
 
-1. **Kaninong PayMongo?** Kay **Grifon** ang `VITE_PAYMONGO_PUBLIC_KEY` sa root
-   `.env`. Kailangan ng sariling key ng Oceanides. Kung nagamit ang kay Grifon,
-   **ang kita ng Oceanides ay dadapo sa account ng Grifon** — gulo sa libro at sa
-   BIR na mahirap ayusin pabalik.
-2. **Sino ang maglalabas ng official receipt?** Negosyo ang bumibili at hihingi
-   sya ng OR para sa libro nya. Ang PayMongo ay payment confirmation, **hindi BIR
-   OR.** Papeles mismo ang ibinebenta natin — ito ang unang mapapansin nya.
+1. **PayMongo ng Oceanides**, may access si Neil. ⏳ Ibibigay nya ang keys.
+   ⛔ **HINDI ang `VITE_PAYMONGO_PUBLIC_KEY` sa root `.env`** — kay Grifon yun, at
+   kapag nagamit, **ang kita ng Oceanides ay dadapo sa account ng Grifon.**
+2. **Oceanides ang maglalabas ng OR**, hiwalay sa resibo ng online checkout. Tamang
+   setup: ang PayMongo ay katunayan ng bayad, **hindi BIR OR.**
+   ⚠️ **Ang OR ay hindi awtomatiko** — may taong gagawa nun kada ₱999, at yun mismo
+   ang manual na trabahong inalis natin sa pagsingil. **Ipadala sya kasama ng field
+   inspector at ibigay kasabay ng report.** Isang hakbang, hindi dalawa, at may
+   dala nang papel ang tao pagdating. Tignan ang serye kung nakapangalan sa
+   Oceanides — dapat pareho ng entity na tinatanggapan ng PayMongo.
 
 ⚠️ Hindi pa rin nasasagot: **buhay pa ba ang ₱1,600 na payout** (inspector ₱500 +
 transport ₱600 + Zam ₱250 + Neil ₱250) sa DENR na trabaho? Hindi sya humaharang

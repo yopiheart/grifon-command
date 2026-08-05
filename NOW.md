@@ -8,10 +8,10 @@
 ₱482.79, 1,996 impressions, **77 landing page views, 0 lead.** Buong post-mortem
 + per-ad table: [`workflows/ad_performance_ledger.md`](workflows/ad_performance_ledger.md).
 
-**Gumana ang ads** (₱6.27 kada bisita, panalo si km004-video, pinakamura si chalk
-sa CPM). **Ang offer o ang page ang bumagsak.** Isa-isang pinatay ang bawat ibang
-suspek: hindi pixel, hindi ang `utm` link, hindi ang form (sinubok mismo ni Neil,
-dumating ang row), at **walang tumawag at walang nag-message** (kumpirmado ni Zam).
+**Gumana ang ads** (₱6.27 kada bisita, panalo si km004-video). **Ang offer o ang
+page ang bumagsak** — isa-isang pinatay ang bawat ibang suspek: hindi pixel, hindi
+ang `utm` link, hindi ang form (sinubok ni Neil, dumating ang row), at walang
+tumawag at walang nag-message (kumpirmado ni Zam).
 
 ### 🔴 DESISYON NA GINAGAWA NGAYON — grill in flight
 
