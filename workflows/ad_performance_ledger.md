@@ -302,9 +302,44 @@ na sya ring pinakamadaling pagmulan ng reklamo at chargeback.
 **A2** sa ibaba. Sa KM-003, **41% ang nawala sa 9.2s-18.4s, eksaktong kinaroroonan
 ng "libre ang tingin."** Nasubukan na ang frame na to minsan at dun mismo bumagsak.
 
-**Bukas pang desisyon:** ang laman ng value stack sa ₱999, ang no-show risk,
-online checkout laban sa cash-on-arrival, at kung kailangan ng bagong market
-research (bago ang offer, pero ang audience ba ay bago rin?).
+#### ✅ DESISYON 2026-08-05 — si Paolo ang bibili, hindi si Helen
+
+Pagkatapos ng grill: **"Compliance-Pressured Paolo" (B2B) ang avatar ng tripwire,
+hindi si "Homeowner Helen."** Tatlong dahilan, sang-ayon si Neil:
+
+1. **May silbi sa kanya ang reseta.** May pinagfa-filan sya (permit renewal, DENR
+   inspection). Kay Helen, papel lang na nagsasabing wala syang problema.
+2. **Bumabalik sya taon-taon.** Ang tripwire ay pasukan sa kontrata, hindi sa
+   iisang sipsip.
+3. **Nasasagot nya ang butas na sinabi ni Zam** (*"sino ba si Marvin, wala silang
+   reviews"*). Bumibili si Paolo ng papeles para sa gobyerno — ang tanong dun ay
+   *"tanggap ba to ng DENR"*, at kayang sagutin yun ng permit at manifest.
+
+🔴 **Kasunod nito: mali na ang targeting ng patay na campaign.** `location_types:
+["home"]` sya. Bahay. Bagong targeting, bagong creative, bagong page kay Paolo.
+
+⚠️ **Hindi na kailangan ng bagong market research at hindi na kailangang mag-imbento
+ng value stack** — nagawa na pareho noong 2026-07-20. Avatar: `Oceanides
+market-research.md` §2. Buong hagdan (tripwire → core → high-ticket, may value
+stack): `clients/oceanides/offer-optimizer-denr-2026-07-20.md`. **RAW at hindi
+approved yun**, at tatlo ang sariling flag nito: ang `₱9,500` core ay lumalabag sa
+₱12k/load floor; imbento ang penalty-payment guarantee at bawal sa copy hangga't
+walang tanggap ni Neil; at **pinark mismo nito ang paid tripwire** (*"manatiling
+LIBRE... pwedeng maging future B2B test, pero hindi nang walang hiwalay na
+desisyon"*). **Ang desisyon 2026-08-05 na ito ang hiwalay na desisyong yun.**
+
+⚠️ **Bawiin ang lumang "₱999" na rekomendasyon.** Hango sya sa **₱5,000** na core
+ni Helen (₱900 margin), kaya 40% ang kailangang conversion sa ₱499. Ang core ni
+Paolo ay `₱12k/load` pataas hanggang ₱48k na package — ilang beses na mas malaki
+ang margin, kaya **bumabagsak nang husto ang kailangang conversion at hindi na
+mahalaga ang eksaktong presyo ng tripwire.** I-recompute kapag napagdesisyunan na
+ang core.
+
+**Bukas pang desisyon:** 🔴 **kaya ba talagang maglabas ng Oceanides ng DENR
+manifest / Certificate of Proper Disposal / Annual Compliance Certificate?**
+(papeles ang binebenta ng buong hagdan — wala ang sagot sa repo) · pisikal na
+hugis at gastos ng check (kailangan ba ng truck?) · no-show at hindi-nagbayad ·
+online checkout laban sa cash-on-arrival · capacity kada linggo.
 
 ---
 
