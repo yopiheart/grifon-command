@@ -2,7 +2,7 @@
 
 **Stamped: 2026-08-06** (session 8)
 
-## ▶ NEXT ACTION — ✅ GATE SARADO. LINAWIN ANG "SARILING SISTEMA" BAGO MAG-COPY.
+## ▶ NEXT ACTION — ✅ GATE + SARILING SISTEMA SARADO. SUNOD: COPY SA SARIWANG SESSION.
 
 **Kausap na ni Neil si Boss Jay (2026-08-06) — apat sa apat, kumpirmado:** dumadaan
 sa facility ang bawat load at babayaran ang nararapat (sinabihan sya nang diretso
@@ -12,23 +12,20 @@ araw** ang promised delivery date ng certificate, at **buhay pa ang ₱1,600 na
 payout system** (inspector ₱500 + transport ₱600 + Zam ₱250 + Neil ₱250). Buong
 detalye ng proseso: [`workflows/ad_performance_ledger.md`](workflows/ad_performance_ledger.md) §HARD GATE.
 
-⚠️ **Bagong thread:** ayaw nang maging dependent ni Neil kay Boss Jay para sa
-scaling — gagawa sya ng sarili nyang sistema, **under pa rin ng Oceanides**, at
-sya mismo ang maghahandle ng profit/financial side. **Kumpirmado: pareho** —
-logistics AT financial control layer. Konkretong disenyo pa lang ang kulang
-bago isulat sa build spec (§4 Ang operasyon).
+✅ **Sariling sistema ni Neil, hindi na dependent kay Boss Jay — pareho** (logistics
+AT financial), phased: mga contact ni Boss Jay muna ang gamit sa hauler at
+dispatch habang naghahanap ng sarili, at diretso na si Neil ang nakikipag-transact
+sa supervisor ng facility para sa pera (walang middleman). Full detalye: brief.
 
 ➡️ **BUONG BUILD SPEC:** [`clients/oceanides/paolo-funnel-brief.md`](clients/oceanides/paolo-funnel-brief.md)
-— GATE sarado, dalawang blocker sarado (PayMongo ni Oceanides mismo, OR kasabay
-ng field inspector). Buksan yun, hindi ang chat.
+— GATE sarado, dalawang blocker sarado, sariling sistema sarado. Buksan yun,
+hindi ang chat.
 
 **Sunod:**
-1. Linawin ang "sariling sistema" ni Neil (itaas) — logistics ba, financial layer,
-   o pareho.
-2. Copy ng page (`grifon-cmo` + `grifon-creative-director`) sa **sariwang session**
+1. Copy ng page (`grifon-cmo` + `grifon-creative-director`) sa **sariwang session**
    — masyadong malalim ang session 7/8 para sa magandang copy.
-3. Checkout (`code-executor` o `codex-executor`, may buong brief).
-4. Bagong creative at bagong targeting — **`home` ang luma, mali na sya.**
+2. Checkout (`code-executor` o `codex-executor`, may buong brief).
+3. Bagong creative at bagong targeting — **`home` ang luma, mali na sya.**
 
 **Nagawa na, huwag nang ulitin:** avatar ni Paolo (`Oceanides market-research.md`
 §2), value stack (`offer-optimizer-denr-2026-07-20.md`, ⚠️ RAW may 3 flag), buong
@@ -49,10 +46,10 @@ event nasa `src/lib/pixel.ts` + `LeadForm.tsx`).
 
 ## ✅ Tapos ngayong 2026-08-06 (session 8)
 
-Sinara ang **HARD GATE** kasama si Boss Jay — apat na kondisyon kumpirmado, buong
-proseso nakasulat sa ledger. Na-update ang ledger + brief. Bagong open thread:
-"sariling sistema" ni Neil — **pareho** (logistics + financial), konkretong
-disenyo pa ang kulang.
+Sinara ang **HARD GATE** kasama si Boss Jay — apat na kondisyon kumpirmado. Sinara
+rin ang **"sariling sistema"** thread — pareho (logistics + financial), phased,
+alam at okay na si Boss Jay. Na-update ang ledger + brief. Wala nang blocker sa
+gate; copy na lang ang susunod.
 
 ## 🅿 PARKED
 

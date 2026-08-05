@@ -19,11 +19,17 @@ o gagamitin sa maling paraan ang certificate), **100% sang-ayon sa mekanismong**
 ang promised delivery date ng certificate — hindi artificial na lead time.
 Buong detalye ng proseso: ledger §HARD GATE.
 
-⚠️ **Bagong thread, konkretong disenyo pa hindi nakasulat:** ayaw nang maging
-dependent ni Neil kay Boss Jay para sa scaling — gagawa sya ng sarili nyang
-sistema, under pa rin ng Oceanides, at sya mismo ang maghahandle ng
-profit/financial side. **Kumpirmado: pareho** — logistics AT financial control
-layer. Linawin ang konkretong proseso bago isulat sa build spec sa ibaba.
+✅ **Sariling sistema ni Neil, hindi na dependent kay Boss Jay — pareho** (logistics
+AT financial), phased:
+
+1. **Hauler:** naghahanap ng sariling partner online, mga contact ni Boss Jay
+   muna ang gamit sa ngayon. Si Neil at ang team ang magbabantay ng byahe.
+2. **Dispatch:** dadaan pa kay Boss Jay sa umpisa, iipunin ni Neil ang lahat ng
+   contact (inspector, hauler, facility) once matatag na. Alam at okay na si
+   Boss Jay — *"ako ang bahala, since Oceanides parin naman ito."*
+3. **Pera:** diretsong makikipag-transact si Neil sa supervisor ng facility
+   (contact na ibibigay ni Boss Jay). Walang middleman — sya mismo ang
+   maglalabas ng ₱6,000/load bago ang ibang payout.
 
 ## ✅ Sarado na ang dalawang blocker (2026-08-05)
 
@@ -152,9 +158,8 @@ humarang sa unang test — kayang gawin ang unang mga report nang manwal.
 
 1. ✅ Sarado ang **GATE** (meeting kay Boss Jay, 2026-08-06).
 2. ✅ Sarado ang **dalawang blocker** sa itaas.
-3. ⚠️ Linawin muna ang "sariling sistema" thread ni Neil (2026-08-06) bago
-   itype ang §4 Ang operasyon — baka may ibang hugis ang logistics/profit layer.
+3. ✅ Kumpirmado ang "sariling sistema" ni Neil — pareho, phased (itaas).
 4. Copy ng page (`grifon-cmo` + `grifon-creative-director`) sa **sariwang session** —
-   masyadong malalim ang session 7 para sa magandang copy.
+   masyadong malalim ang session 7/8 para sa magandang copy.
 5. Checkout (`code-executor` o `codex-executor`, may buong brief).
 6. Bagong creative at bagong targeting — **`home` ang luma, mali na sya.**

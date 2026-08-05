@@ -536,10 +536,22 @@ irerelease sa loob ng 15 araw, at **babayaran agad pagdating** (hindi terms).
 Boss Jay para sa scaling — gagawa sya ng sarili nyang sistema, **under pa rin
 ng Oceanides**, at si Neil mismo ang maghahandle ng profit/financial side para
 masiguro ang tamang paglaki. **Kumpirmado: pareho** — logistics AT financial
-control layer, hindi isa lang. ⚠️ Hindi pa nakasulat ang konkretong disenyo
-(anong proseso ang papalit sa "tawagan si Boss Jay" — sariling hauler? sariling
-booking/dispatch? paano hahawakan ang pera bago ito dumaan sa facility?) —
-linawin sa susunod na session bago isulat sa brief.
+control layer, hindi isa lang.
+
+**Konkretong disenyo, phased (kumpirmado ni Neil):**
+
+1. **Hauler.** Naghahanap ng sariling partner hauler online. Sa ngayon, mga
+   contact ni Boss Jay muna ang gagamitin — sya at ang team ang magbabantay ng
+   byahe at makikipag-coordinate, hindi hihintayin si Boss Jay para dun.
+2. **Booking/dispatch.** Sa umpisa, dadaan pa kay Boss Jay ang scheduling.
+   Once matatag na, iipunin ni Neil ang lahat ng contact (inspector, hauler,
+   facility) para hindi na kailangan dumaan sa kanya. **Alam na ni Boss Jay
+   ito** — sinabi nya kay Neil, *"ako ang bahala, since Oceanides parin naman
+   ito."*
+3. **Pera.** Diretsong makikipag-transact si Neil sa facility — bibigyan sya
+   ni Boss Jay ng contact number ng supervisor doon. Walang middleman sa pera:
+   si Neil mismo ang mag-uutos ng ₱6,000/load bago ang ibang payout, gaya ng
+   nasa §HARD GATE mechanism sa itaas.
 
 ---
 
