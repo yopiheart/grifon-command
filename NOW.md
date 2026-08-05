@@ -30,11 +30,10 @@ dalawang `⟦PENDING⟧` sa loob.
    Buong script + apat na tanong: [`clients/oceanides/facility-call-script.md`](clients/oceanides/facility-call-script.md).
    Tapos ituro ang **susunod na DENR job** na papasok sa bagong proseso — hindi
    kailangang galing sa funnel ang proof load.
-1b. 🔴 **SA PAREHONG MESSAGE KAY BOSS JAY: sino ang mga na-issuehan nya ng DENR
-   certificate?** Klase ng negosyo, siyudad, sino ang nagpa-follow-up. **Hindi pa
-   sarado ang target-market validation** (nakalista syang OPEN sa
-   `market-research.md` §5 mula pa 2026-07-20). Yan ang tanging totoong listahan
-   ng bumibiling Paolo na hawak natin, at libre sya.
+1b. 🔴 **SA PAREHONG MESSAGE: sino ang mga na-issuehan na ni Boss Jay ng DENR
+   certificate?** Klase ng negosyo, siyudad, sino ang nag-follow-up. **Bukas pa
+   ang target-market validation** (OPEN sa `market-research.md` §5 mula pa
+   2026-07-20). Yan ang tanging totoong listahan ng bumibiling Paolo, at libre sya.
 2. Punan ang dalawang `⟦PENDING⟧` (dalawang string lang), tapos deploy:
    `cd funnels/oceanides-paolo && npx vercel deploy --prod --yes` → env var
    (kamay ni Neil ang service key) → **redeploy**, kundi walang epekto ang env.
@@ -47,9 +46,8 @@ dalawang `⟦PENDING⟧` sa loob.
    siyudad ang una (isa lang, hindi 20km).
 
 **Nagawa na, huwag ulitin:** avatar ni Paolo (`market-research.md` §2, **wag nang
-mag-bagong research**, pero **bukas pa ang target-market validation** sa §5),
-value stack (`offer-optimizer-denr-2026-07-20.md`, ⚠️ RAW), grill (session 7),
-pixel-leak (walang leak), copy + page ni Paolo.
+mag-bagong research**), value stack (`offer-optimizer-denr-2026-07-20.md`, ⚠️ RAW),
+grill (session 7), pixel-leak (walang leak), copy + page ni Paolo.
 
 ## 🔴 Huwag kalimutan
 
@@ -65,10 +63,9 @@ pixel-leak (walang leak), copy + page ni Paolo.
 
 ## ✅ Tapos ngayong 2026-08-06 (session 8)
 
-Napagkasunduan ang **HARD GATE** kasama si Boss Jay (pangako pa lang, hindi pa
-sarado). Sinara ang **"sariling sistema"** thread. Buong copy ni Paolo
-(`paolo-page-copy.md`) at **itinayo ang page** (`funnels/oceanides-paolo/`):
-17 section, form pang-6, build green, pasado sa smoke sa 390 at 1440.
+Napagkasunduan ang **HARD GATE** (pangako pa lang). Sinara ang **"sariling
+sistema"** thread. Buong copy ni Paolo at **itinayo ang page**: 17 section, form
+pang-6, build green, pasado sa smoke.
 
 **Apat na pag-ayos gabi ng 08-06 (review ni Neil):** inalis ang ₱12-15k sa hero
 ticket at nasa FAQ na sya (nag-anchor tayo sa presyo natin bago sa risk niya) ·
@@ -79,9 +76,8 @@ ng IM8, parehong 3 dahilan ng 2026-08-03.
 ## 🅿 PARKED
 
 **Oceanides:** Week 02 pack · GB-001 video · hook2 ng KM-004 · Kling b-roll ·
-watermark ni Gabriel · SEC Reg. No. · FB About · reviews · page #2 DENR B2B ·
-**AEM Configure Web Events hindi pa na-verify** (`Lead` dapat #1 sa
-`oceanidesph.com`; browser + desktop mode, wala sa app).
+watermark ni Gabriel · SEC Reg. No. · FB About · reviews · **AEM Configure Web
+Events hindi pa na-verify** (`Lead` dapat #1 sa `oceanidesph.com`; browser + desktop).
 **Grifon:** #94.3 next · #94.2 NOT-REPRO · #92+#89/#90 ride Slice B · #93 ⛔ TUNED. ⚠️ **Client world:** navy + amber print, no glass, no `#FFCC00`.
 
 ## ⛔ Gated · 🔧 Arm before starting
