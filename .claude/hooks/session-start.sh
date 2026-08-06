@@ -61,20 +61,29 @@ fi
 # a branch pushed from this clone already has its origin/* ref locally.
 echo ""
 echo "UNMERGED WORK IN FLIGHT (remote branches ahead of main, newest first — a feature can be fully BUILT on one of these even when main + its planning doc say 'not started'; CHECK HERE before concluding any feature is unbuilt):"
-flight=0; shown=0
+BRANCH_CAP=12
+total=0; shown=0
 while IFS='|' read -r ref cdate; do
   [ -z "$ref" ] && continue
   case "$ref" in origin/HEAD|origin/main) continue ;; esac
   ahead=$(git rev-list --count "origin/main..$ref" 2>/dev/null || echo 0)
   [ "${ahead:-0}" -gt 0 ] || continue
-  flight=1
-  if [ "$shown" -lt 12 ]; then
+  total=$((total + 1))
+  if [ "$shown" -lt "$BRANCH_CAP" ]; then
     subj=$(git log -1 --format='%s' "$ref" 2>/dev/null)
     echo "  - ${ref}  (+${ahead}, ${cdate}) — ${subj}"
     shown=$((shown + 1))
   fi
 done < <(git for-each-ref --sort=-committerdate --format='%(refname:short)|%(committerdate:short)' refs/remotes/origin 2>/dev/null)
-if [ "$flight" -eq 0 ]; then echo "  - (none — every remote branch is merged into main)"; fi
+if [ "$total" -eq 0 ]; then echo "  - (none — every remote branch is merged into main)"; fi
+# The list is capped, so it MUST say when it is hiding something. Without this the
+# output reads as complete at exactly $BRANCH_CAP and a session concludes "not built"
+# from a truncated list — the failure this whole block exists to prevent. Found
+# 2026-08-06 by the Grifon session dashboard: 29 ahead of main, 12 printed, no signal.
+if [ "$total" -gt "$shown" ]; then
+  echo "  - …and $((total - shown)) MORE ahead of main, NOT listed (cap = ${BRANCH_CAP}). The list above is INCOMPLETE."
+  echo "    Full list:  git branch -r --no-merged origin/main"
+fi
 
 # --- WAYFINDER FRONTIER (added 2026-07-31, grill of #79) -----------------------
 # The Concierge initiative is tracked as a GitHub-Issues map (issue #87 — see
