@@ -338,6 +338,41 @@ have meant fabricating operational reality — the exact thing the `NOW.md` hard
 gate forbids. When a critic starts asking for things that are not true, it has
 left the axis.
 
+### Correction 2 — the corpus carries an axis, and it beat me a third time
+
+A `sell` axis was added to the scorer to test Neil's read that the Marvin organic
+cards *"puro value content na hindi nag bebenta."* It measured cleanly: Hormozi
+E63 **82**, Stripe E71 **78**, our new Paolo trust card **68**, the organic cards
+**58 / 38 / 35**. The obvious next move looked like bolting a CTA onto the organic
+cards. Neil stopped it:
+
+> *"Ginawa mo kasi kumuha ka ng inspiration sa ads swipe file na perfect for
+> advertising/sales. Tapos inapply mo sa organic cards na value content, kaya ang
+> nangyayari para kang nagbebenta sa pag popost ng organic."*
+
+He is right, and it is the **same failure a third time in one session**:
+
+| # | Wrong bar | Cost |
+| --- | --- | --- |
+| 1 | organic cards judged on ATTENTION when conversion was the bottleneck | would have made the ads more jarring, less converting |
+| 2 | "we are at the ceiling" from a 5-ad sample with no credibility advertiser | hid a real 14-point gap |
+| 3 | organic value content judged against a corpus of **paid ads** | would have turned organic posts into ads |
+
+The new rule is sharper than "pick the right axis": **the corpus itself carries an
+axis.** All 78 ads in `assets/ad-swipe/` are paid ads, so any bar drawn from them
+is an ad's bar no matter which axis you name over the top of it. The `sell`
+question — *"pure education scores LOW no matter how useful"* — is correct **for
+an ad** and wrong **for an organic post**, where free value with no ask is the
+format working as designed.
+
+So the 35–58 scores are not a defect finding. They are the instrument being
+pointed at the wrong class of artifact. Fibo Lim, Brunson and Hormozi sell
+*inside* value content; a CTA stapled to a tip does not reproduce that.
+
+⛔ **Do not add CTAs to the organic cards on the strength of this run.** Measuring
+organic needs an **organic corpus**, which this repo does not have. Building one
+is a prerequisite, not a detail.
+
 ### Artifacts
 
 - [`clients/oceanides/kuya-marvin/organic/cards/trust-card-template.html`](../clients/oceanides/kuya-marvin/organic/cards/trust-card-template.html)

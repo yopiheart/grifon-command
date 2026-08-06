@@ -46,6 +46,16 @@ if it was never inspected. Grifon owns 78 decoded ads in
 ⚠️ A swipe-file "winner" won on *some* axis. Confirm it is *your* axis before
 copying it, or you will import the wrong strengths.
 
+🔴 **MAY DALANG AXIS ANG CORPUS MISMO. Itugma ang corpus sa KLASE ng artifact.**
+Puro **bayad na ad** ang 78 na nasa [`assets/ad-swipe/`](../../../assets/ad-swipe/).
+Kahit anong bar na kunin doon ay bar ng ad, kahit anong axis pa ang pangalanan mo.
+Ipinatong yun sa **organic** na value cards noong 2026-08-06 at ito ang sagot ni
+Neil: *"kaya ang nangyayari para kang nagbebenta sa pag popost ng organic."*
+Nagbebenta si Fibo Lim / Brunson / Hormozi **sa loob ng** value content; hindi mo
+sila magagaya sa pagdikit ng CTA sa isang turo. Bago sukatin ang organic, kailangan
+muna ng **organic corpus** — wala pa tayo nun, at ang `sell` na axis sa scorer ay
+tanong ng ad, hindi ng post.
+
 ⚠️ **Score a spread of the corpus on your axis before naming the bar.** The first
 trust run sampled 5 of 78 ads, none of them a credibility advertiser, topped out
 at 68, and concluded our cards were at the ceiling. Scoring Stripe, Wise and Meta
