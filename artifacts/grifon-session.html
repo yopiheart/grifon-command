@@ -1,0 +1,462 @@
+<!-- Title stays UNSTAMPED on purpose: it names the artifact in the tab + gallery and
+     must not change across redeploys. The session date lives in the eyebrow + meta line. -->
+<title>Grifon Session Dashboard</title>
+
+<style>
+:root{
+  --ground-0:#070708;
+  --ground-1:#131316;
+  --ground-2:#09090B;
+  --gold:#FFCC00;
+  --gold-soft:rgba(255,204,0,.06);
+  /* Contrast-audited NOIR floors (.claude/skills/artifact-noir, 2026-07-29):
+     ratios are measured against the charcoal ground, not estimated. */
+  --silver-a:#FAFAFA;   /* 15.9:1 -- emphasis */
+  --body:#A1A1AA;       /* 7.3:1 -- AAA body */
+  --meta:#9A9AA3;       /* 6.7:1 -- small mono captions (never #71717A: 3.89:1 fails AA) */
+  --flag:#FF8563;       /* 7.9:1 -- warning hue at small sizes */
+  --line:rgba(255,255,255,.10);
+  --display:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+  --serif:'Instrument Serif',Georgia,'Times New Roman',serif;
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --wrap:min(72ch,100%);
+}
+
+/* NOIR commits to one dark world by design. Both theme signals pin the same palette. */
+:root[data-theme="light"],:root[data-theme="dark"]{color-scheme:dark;}
+
+*{box-sizing:border-box;}
+html,body{background:var(--ground-0);}
+body{
+  margin:0;
+  font-family:var(--display);
+  color:var(--body);
+  font-size:16px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* Fixed ground + grain as their own fixed DIVs -- the Android WebView detaches
+   background-attachment:fixed and mispaints naked fixed <svg> filters. */
+.ground,.grain{position:fixed;inset:0;pointer-events:none;}
+.ground{
+  z-index:0;
+  background:
+    radial-gradient(120% 80% at 50% 0%, var(--gold-soft) 0%, transparent 55%),
+    radial-gradient(140% 100% at 50% 8%, var(--ground-1) 0%, var(--ground-2) 45%, var(--ground-0) 100%);
+}
+.grain{
+  z-index:1;
+  opacity:.15;
+  mix-blend-mode:screen;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat:repeat;
+  background-size:240px 240px;
+}
+
+.page{position:relative;z-index:2;padding:0 20px 96px;}
+.col{width:var(--wrap);margin:0 auto;}
+
+.eyebrow{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.32em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin:0 0 20px;
+}
+.eyebrow.flagged{color:var(--flag);}
+
+h1,h2,h3{
+  font-family:var(--display);
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:-.02em;
+  line-height:.94;
+  text-wrap:balance;
+  margin:0;
+  /* SOLID display type -- clipped-gradient text is BANNED in artifacts: the Android
+     WebView the Claude app uses mispaints it (caught on Neil's phone 2026-07-29).
+     Solid #F5F5F7 = 17.3:1 on every line. The build script greps for the banned
+     property, so do not name it literally here. */
+  color:#F5F5F7;
+  text-shadow:0 0 18px rgba(255,204,0,.18);
+}
+h1{font-size:clamp(2.5rem,9.5vw,4.6rem);}
+h2{font-size:clamp(1.55rem,5.2vw,2.3rem);}
+h3{font-size:clamp(1.02rem,3.2vw,1.24rem);letter-spacing:0;text-shadow:none;}
+.serif{
+  font-family:var(--serif);
+  font-style:italic;
+  font-weight:400;
+  text-transform:none;
+  letter-spacing:0;
+  color:var(--gold);
+  /* Tight bloom (9px) -- a wide halo softens thin serif strokes. */
+  filter:drop-shadow(0 0 9px rgba(255,204,0,.30));
+  -webkit-text-stroke:.012em currentColor;
+}
+p{margin:0 0 18px;}
+strong{color:var(--silver-a);font-weight:600;}
+em{color:var(--gold);font-style:normal;}
+code{font-family:var(--mono);font-size:.86em;color:var(--meta);}
+.lede{font-size:clamp(1.02rem,2.6vw,1.16rem);color:#D4D4D8;}
+.meta{font-family:var(--mono);font-size:11.5px;color:var(--meta);letter-spacing:.06em;}
+
+section{padding:64px 0 0;}
+.rule{height:1px;background:linear-gradient(90deg,transparent,var(--line) 18%,var(--line) 82%,transparent);margin:72px 0 0;}
+
+/* Liquid glass built to survive WITHOUT backdrop-filter; blur is enhancement. */
+.glass{
+  position:relative;
+  border-radius:18px;
+  padding:26px 24px;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.075) 0%,rgba(255,255,255,.022) 38%,rgba(255,255,255,0) 100%),
+    linear-gradient(180deg,rgba(24,24,27,.92) 0%,rgba(14,14,16,.94) 100%);
+  border:1px solid var(--line);
+  box-shadow:0 1px 0 rgba(255,255,255,.09) inset,0 22px 48px -26px rgba(0,0,0,.95);
+}
+@supports (backdrop-filter:blur(1px)){
+  .glass{backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);}
+}
+.glass.gold{border-color:rgba(255,204,0,.34);box-shadow:0 1px 0 rgba(255,255,255,.09) inset,0 0 26px rgba(255,204,0,.13),0 22px 48px -26px rgba(0,0,0,.95);}
+.glass.flag{border-color:rgba(255,133,99,.38);}
+.glass + .glass{margin-top:16px;}
+
+/* Scoreboard */
+.score{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:30px;}
+.score .glass{padding:18px 12px;text-align:center;}
+.score .n{
+  font-family:var(--display);font-weight:900;font-size:clamp(1.8rem,7vw,2.8rem);
+  line-height:1;color:var(--gold);filter:drop-shadow(0 0 10px rgba(255,204,0,.28));
+  font-variant-numeric:tabular-nums;
+}
+.score .n.flagged{color:var(--flag);filter:drop-shadow(0 0 10px rgba(255,133,99,.25));}
+.score .lbl{margin-top:8px;font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--meta);line-height:1.5;}
+
+/* Status tags */
+.tag{
+  display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;
+  text-transform:uppercase;padding:4px 9px;border-radius:99px;
+  border:1px solid var(--line);color:var(--meta);white-space:nowrap;
+}
+.tag.ok{border-color:rgba(255,204,0,.45);color:var(--gold);}
+.tag.no{border-color:rgba(255,133,99,.45);color:var(--flag);}
+.pid{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--gold);}
+.pid.no{color:var(--flag);}
+
+.cardhead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px;}
+.cardhead h3{flex:1 1 auto;min-width:0;}
+
+table{width:100%;border-collapse:collapse;font-size:13.5px;}
+.scroller{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--meta);font-weight:400;white-space:nowrap;}
+td b{color:var(--silver-a);font-weight:600;}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--meta);}
+tr.bucket td{
+  font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--gold);padding-top:20px;border-bottom-color:rgba(255,204,0,.28);
+}
+tr.bucket.no td{color:var(--flag);border-bottom-color:rgba(255,133,99,.28);}
+tr.dim td{color:#8B8B93;}
+tr.dim td b{color:var(--body);}
+
+ul{margin:0 0 18px;padding-left:0;list-style:none;}
+li{position:relative;padding-left:20px;margin-bottom:9px;}
+li::before{content:"";position:absolute;left:2px;top:.72em;width:6px;height:1px;background:var(--gold);}
+li.no::before{background:var(--flag);}
+
+/* Run sheet -- a true sequence, so the numbering carries information */
+.run{counter-reset:step;margin-top:6px;}
+.run .glass{display:flex;gap:18px;align-items:flex-start;}
+.run .glass::before{
+  counter-increment:step;
+  content:counter(step,decimal-leading-zero);
+  font-family:var(--serif);font-style:italic;font-size:2rem;line-height:1;
+  color:rgba(255,204,0,.5);flex:0 0 auto;margin-top:2px;
+}
+.run .body{flex:1 1 auto;min-width:0;}
+.owner{
+  display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:.2em;
+  text-transform:uppercase;padding:3px 8px;border-radius:99px;margin-left:8px;
+  border:1px solid rgba(255,204,0,.35);color:var(--gold);vertical-align:middle;white-space:nowrap;
+}
+.owner.agent{border-color:var(--line);color:var(--meta);}
+
+blockquote{
+  margin:26px 0;padding:4px 0 4px 20px;border-left:2px solid var(--gold);
+  font-family:var(--serif);font-style:italic;font-size:1.22rem;color:var(--silver-a);
+}
+blockquote .meta{display:block;margin-top:8px;font-style:normal;}
+
+.sig{
+  margin-top:88px;text-align:center;
+  font-family:var(--mono);font-size:11px;letter-spacing:.42em;
+  color:#5B5B63;text-transform:uppercase;
+}
+
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none;}
+  *{scroll-behavior:auto !important;}
+}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px;}
+</style>
+
+<div class="ground"></div>
+<div class="grain"></div>
+
+<div class="page">
+
+  <!-- ============ HERO ============ -->
+  <header class="col" style="padding-top:84px;">
+    <p class="eyebrow">// GRIFON REPO &middot; SESSION 8 &middot; 2026-08-06</p>
+    <h1>Parked ang Grifon.<br>Ito ang <span class="serif">naiwan.</span></h1>
+    <p class="lede" style="margin-top:26px;">
+      Nasa Oceanides ang lahat ng buhay na trabaho. Ito naman ang totoong kalagayan ng
+      <strong>Grifon repo mismo</strong> &mdash; ang bukas na issue, ang branch na nakalutang,
+      at ang executor lane na wala pa ring kahit isang sukat.
+    </p>
+    <p class="meta">2026-08-06 &middot; galing sa: <code>git</code> &middot; <code>gh issue list</code> &middot; <code>tools/executor_ledger.mjs</code> &middot; <code>NOW.md</code></p>
+
+    <div class="score">
+      <div class="glass"><div class="n">16</div><div class="lbl">Bukas na issue</div></div>
+      <div class="glass"><div class="n flagged">29</div><div class="lbl">Branch,<br>di pa merged</div></div>
+      <div class="glass"><div class="n flagged">0</div><div class="lbl">Commit ng<br>codex-sol</div></div>
+    </div>
+
+    <blockquote class="reveal">
+      Hindi bumagsak ang mga lane na wala sa listahan. <em>Hindi pa sila nasusukat.</em>
+      <span class="meta">ANG PINAKAMALAKING PATTERN NG PAHINANG ITO</span>
+    </blockquote>
+  </header>
+
+  <div class="rule"></div>
+
+  <!-- ============ ACT I: THE HOOK UNDER-REPORTS ============ -->
+  <section class="col reveal">
+    <p class="eyebrow flagged">// UNANG NAHULI &middot; KULANG ANG BILANG NG HOOK</p>
+    <h2>29 ang branch. <span class="serif">12 lang ang sinasabi sa yo.</span></h2>
+    <p style="margin-top:18px;">
+      May <strong>29 branch</strong> na nauuna kay <code>main</code>. Ang SessionStart hook
+      ay <strong>12 lang ang ipinapakita</strong> &mdash; hard cap sa
+      <code>.claude/hooks/session-start.sh:71</code> &mdash; at <strong>walang linyang
+      &ldquo;&hellip;at 17 pa&rdquo;</strong>. Kaya walang senyas na may natira.
+    </p>
+
+    <div class="glass flag">
+      <div class="cardhead"><h3>Bakit ito mahalaga</h3><span class="tag no">17 NAKATAGO</span></div>
+      <p>Yan mismo ang hook na ginawa <em>para</em> hindi ka magsabing &ldquo;hindi pa nagagawa.&rdquo;
+      Tatlong beses tayong nadapa dyan sa Expert Mode / Director&rsquo;s Cut
+      (<code>agent_lessons.md</code>, 2026-06-27). Sabi mismo ng komento sa taas ng code:
+      <em>&ldquo;Surface every origin/* branch ahead of main.&rdquo;</em> Hindi every &mdash; 12.</p>
+      <p style="margin-bottom:0;">Ang pinakamatandang branch na hindi mo nakikita ay mula pa
+      <strong>2026-05-15</strong>. Isang linya lang ang ayos: i-print ang natitirang bilang kapag
+      <code>flight &gt; shown</code>.</p>
+    </div>
+
+    <h3 style="margin-top:38px;">Lahat ng 29, buo</h3>
+    <p class="meta" style="margin:6px 0 14px;">Naka-dim ang 17 na hindi ipinapakita ng hook.</p>
+    <div class="scroller glass" style="padding:8px 6px;">
+      <table>
+        <tr><th>Petsa</th><th>Branch</th><th>Commit</th><th>File</th></tr>
+        <tr class=""><td class="num">2026-08-06</td><td><b>claude/pixel-leak-investigation-uw34vq</b></td><td class="num">+32</td><td class="num">78</td></tr>
+        <tr class=""><td class="num">2026-07-13</td><td><b>feat/sfx-v2-diegetic-layer</b></td><td class="num">+2</td><td class="num">30</td></tr>
+        <tr class=""><td class="num">2026-07-11</td><td><b>docs/believability-refstack</b></td><td class="num">+39</td><td class="num">57</td></tr>
+        <tr class=""><td class="num">2026-07-07</td><td><b>docs/omni-resume-state-post-launch</b></td><td class="num">+1</td><td class="num">1</td></tr>
+        <tr class=""><td class="num">2026-07-04</td><td><b>docs/believability-content-look</b></td><td class="num">+24</td><td class="num">41</td></tr>
+        <tr class=""><td class="num">2026-07-03</td><td><b>wip/seedance-merge-backup</b></td><td class="num">+19</td><td class="num">35</td></tr>
+        <tr class=""><td class="num">2026-07-01</td><td><b>claude/spotify-agent-strategy-kturz0</b></td><td class="num">+1</td><td class="num">1</td></tr>
+        <tr class=""><td class="num">2026-06-30</td><td><b>claude/anthropic-pdf-loop-eval-zidz7n</b></td><td class="num">+1</td><td class="num">1</td></tr>
+        <tr class=""><td class="num">2026-06-29</td><td><b>claude/seedance-4k-ads-skill-wnwn57</b></td><td class="num">+5</td><td class="num">14</td></tr>
+        <tr class=""><td class="num">2026-06-28</td><td><b>claude/video-ads-workflow-fgg2sy</b></td><td class="num">+1</td><td class="num">2</td></tr>
+        <tr class=""><td class="num">2026-06-27</td><td><b>claude/privacy-dashboard-bugs-mfk10d</b></td><td class="num">+3</td><td class="num">2</td></tr>
+        <tr class=""><td class="num">2026-06-27</td><td><b>docs/roadmap-parking</b></td><td class="num">+2</td><td class="num">1</td></tr>
+        <tr class="dim"><td class="num">2026-06-27</td><td><b>docs/agent-lesson-branch-triage</b> <span class="pid no">HIDDEN</span></td><td class="num">+1</td><td class="num">1</td></tr>
+        <tr class="dim"><td class="num">2026-06-19</td><td><b>feat/business-cinematic-copy</b> <span class="pid no">HIDDEN</span></td><td class="num">+1</td><td class="num">2</td></tr>
+        <tr class="dim"><td class="num">2026-06-19</td><td><b>claude/post-delivery-tip-feedback-8uxqvd</b> <span class="pid no">HIDDEN</span></td><td class="num">+4</td><td class="num">8</td></tr>
+        <tr class="dim"><td class="num">2026-06-18</td><td><b>claude/grifon-workflow-loops-bqdw3h</b> <span class="pid no">HIDDEN</span></td><td class="num">+1</td><td class="num">13</td></tr>
+        <tr class="dim"><td class="num">2026-06-17</td><td><b>claude/scene-clay-storyboard</b> <span class="pid no">HIDDEN</span></td><td class="num">+2</td><td class="num">4</td></tr>
+        <tr class="dim"><td class="num">2026-06-15</td><td><b>claude/grifon-essay-evaluation-ikn499</b> <span class="pid no">HIDDEN</span></td><td class="num">+1</td><td class="num">1</td></tr>
+        <tr class="dim"><td class="num">2026-06-12</td><td><b>claude/viral-autopsy-editor-8jpnrp</b> <span class="pid no">HIDDEN</span></td><td class="num">+5</td><td class="num">7</td></tr>
+        <tr class="dim"><td class="num">2026-06-12</td><td><b>claude/hermes-grifon-eval-uxt71z</b> <span class="pid no">HIDDEN</span></td><td class="num">+1</td><td class="num">3</td></tr>
+        <tr class="dim"><td class="num">2026-06-11</td><td><b>claude/autoresearch-grifon-eval-whwnet</b> <span class="pid no">HIDDEN</span></td><td class="num">+1</td><td class="num">3</td></tr>
+        <tr class="dim"><td class="num">2026-06-11</td><td><b>claude/grifon-brief-eval-zhot0t</b> <span class="pid no">HIDDEN</span></td><td class="num">+1</td><td class="num">1</td></tr>
+        <tr class="dim"><td class="num">2026-06-11</td><td><b>claude/grifon-fable5-enhancement-go90ga</b> <span class="pid no">HIDDEN</span></td><td class="num">+8</td><td class="num">21</td></tr>
+        <tr class="dim"><td class="num">2026-06-11</td><td><b>claude/sandcastles-skills-review-0lg9z5</b> <span class="pid no">HIDDEN</span></td><td class="num">+1</td><td class="num">2</td></tr>
+        <tr class="dim"><td class="num">2026-06-09</td><td><b>claude/grifon-image-evaluation-mkfoit</b> <span class="pid no">HIDDEN</span></td><td class="num">+1</td><td class="num">1</td></tr>
+        <tr class="dim"><td class="num">2026-05-29</td><td><b>fix/hook-refs-hardening</b> <span class="pid no">HIDDEN</span></td><td class="num">+4</td><td class="num">8</td></tr>
+        <tr class="dim"><td class="num">2026-05-17</td><td><b>claude/research-premortem-gary-klein-QogW7</b> <span class="pid no">HIDDEN</span></td><td class="num">+1</td><td class="num">1</td></tr>
+        <tr class="dim"><td class="num">2026-05-16</td><td><b>claude/docs-plan-goal-pipeline</b> <span class="pid no">HIDDEN</span></td><td class="num">+2</td><td class="num">3</td></tr>
+        <tr class="dim"><td class="num">2026-05-15</td><td><b>claude/evaluate-goal-feature-77SG7</b> <span class="pid no">HIDDEN</span></td><td class="num">+2</td><td class="num">3</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- ============ ACT II: OPEN ISSUES ============ -->
+  <section class="col reveal">
+    <p class="eyebrow">// ANG BUKAS NA TRABAHO</p>
+    <h2>16 issue, <span class="serif">apat na kumpol.</span></h2>
+    <p style="margin-top:18px;">
+      Walang bagong bug ngayong session &mdash; galing lahat ito sa triage ng huling linggo ng
+      Hulyo. Ang mahalagang hati: <strong>anim na Producer bug</strong> na kayang ayusin,
+      <strong>dalawang TUNED</strong> na hindi pwedeng galawin nang walang go mo, at
+      <strong>apat na regression issue</strong> na malamang ingay lang.
+    </p>
+    <div class="scroller glass" style="padding:8px 6px;">
+      <table>
+        <tr><th>#</th><th>Issue</th><th>Petsa</th></tr>
+        <tr class="bucket"><td colspan="3">Producer / render &middot; 6</td></tr>
+        <tr><td class="num"><span class="pid">#96</span></td><td><b>Forced alignment can be silently disabled by ElevenLabs key scope &#8212; captions fall back to estimates with no surfaced signal</b><br><span class="meta">Humaharang sa smoke ng #91.</span></td><td class="num">2026-08-01</td></tr>
+        <tr><td class="num"><span class="pid">#94</span></td><td><b>Captions: overlay fires before VO onset, numerals dropped from karaoke alignment, scene 2 double-renders overlay+captions</b><br><span class="meta">#94.3 ang sunod. #94.2 = NOT-REPRO.</span></td><td class="num">2026-08-01</td></tr>
+        <tr><td class="num"><span class="pid">#92</span></td><td><b>Hook morph interpolates through AI goo (endpoints pass the anchor rule; the middle is unconstrained)</b><br><span class="meta">Sasakay sa Slice B.</span></td><td class="num">2026-08-01</td></tr>
+        <tr><td class="num"><span class="pid">#91</span></td><td><b>Render: last-scene dead-air trim keys on clip audio, not VO end &#8212; breathy ~2.5s tail on the final cut</b><br><span class="meta">Naka-block sa #96.</span></td><td class="num">2026-08-01</td></tr>
+        <tr><td class="num"><span class="pid">#90</span></td><td><b>Producer: final-cut phase presents as failing (504 retry storm + spinner) while the render succeeds underneath</b><br><span class="meta">Sasakay sa Slice B.</span></td><td class="num">2026-07-31</td></tr>
+        <tr><td class="num"><span class="pid">#89</span></td><td><b>Producer: mid-render reload flashes Dashboard home for ~30s before resuming (invites a second run)</b><br><span class="meta">Sasakay sa Slice B.</span></td><td class="num">2026-07-31</td></tr>
+        <tr class="bucket no"><td colspan="3">TUNED &#8212; escalate, wag i-auto-apply &middot; 2</td></tr>
+        <tr><td class="num"><span class="pid no">#95</span></td><td><b>Proposal: ElevenLabs v3 audio tags as the Taglish pronunciation fix &#8212; validation battery then flag-gated adoption</b><br><span class="meta">1 sample pa lang ang A/B ni Neil. Kulang sa &#8805;3.</span></td><td class="num">2026-07-31</td></tr>
+        <tr><td class="num"><span class="pid no">#93</span></td><td><b>Talking-avatar scenes: no framing/facing rules &#8212; wide 3/4 start + turn-to-camera melts the invented half-face</b><br><span class="meta">Sapat na ang ebidensya, pero TUNED. Kay Neil ang go.</span></td><td class="num">2026-07-31</td></tr>
+        <tr class="bucket"><td colspan="3">Concierge frontier &middot; 4</td></tr>
+        <tr><td class="num"><span class="pid">#88</span></td><td><b>[concierge:slice] Verify: Concierge end-to-end smoke (piggyback on the Producer smoke session)</b><br><span class="meta">Sumasakay sa susunod na Producer run.</span></td><td class="num">2026-07-31</td></tr>
+        <tr><td class="num"><span class="pid">#87</span></td><td><b>[concierge:map] Concierge initiative map &#8212; you direct, the engine executes</b><br><span class="meta">Ang mapa mismo. Wag isara.</span></td><td class="num">2026-07-31</td></tr>
+        <tr><td class="num"><span class="pid">#81</span></td><td><b>[concierge:decision] Decision: Business-tier pricing line for Concierge</b><br><span class="meta">Hinihintay si Neil.</span></td><td class="num">2026-07-31</td></tr>
+        <tr><td class="num"><span class="pid">#80</span></td><td><b>[concierge:decision] Decision: uploaded-presenter image model &#8212; ratify auto-cast default + raw-multi-ref upload lane</b><br><span class="meta">Hinihintay si Neil.</span></td><td class="num">2026-07-31</td></tr>
+        <tr class="bucket no"><td colspan="3">Nightly regression &middot; 4</td></tr>
+        <tr><td class="num"><span class="pid no">#99</span></td><td><b>Nightly regression FAILED &#8212; 2026-08-05</b><br><span class="meta">Hindi ma-parse ang test names.</span></td><td class="num">2026-08-05</td></tr>
+        <tr><td class="num"><span class="pid no">#98</span></td><td><b>Nightly regression FAILED &#8212; 2026-08-04</b></td><td class="num">2026-08-04</td></tr>
+        <tr><td class="num"><span class="pid no">#97</span></td><td><b>Nightly regression FAILED &#8212; 2026-08-02</b></td><td class="num">2026-08-02</td></tr>
+        <tr><td class="num"><span class="pid no">#59</span></td><td><b>Nightly regression FAILED &#8212; 2026-07-15</b><br><span class="meta">Bukas pa mula pa noong Hulyo.</span></td><td class="num">2026-07-16</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- ============ ACT III: NIGHTLY REGRESSION ============ -->
+  <section class="col reveal">
+    <p class="eyebrow flagged">// ANG INGAY SA GABI</p>
+    <h2>Tatlong gabi, <span class="serif">bagsak lahat.</span></h2>
+    <p style="margin-top:18px;">
+      Nag-file ng issue ang nightly regression noong <strong>08-02, 08-04, at 08-05</strong>
+      (#97, #98, #99). May bukas pa ring <strong>#59</strong> mula pa 2026-07-15.
+    </p>
+
+    <div class="glass flag">
+      <div class="cardhead"><h3>Walang laman ang tatlong ulat</h3><span class="tag no">DI PA NA-TRIAGE</span></div>
+      <p>Ganito ang buong nilalaman ng bawat isa:</p>
+      <p class="meta" style="border-left:2px solid rgba(255,133,99,.5);padding-left:14px;margin:0 0 16px;">
+        Could not parse failed test names &mdash; see the run log / artifact.</p>
+      <p style="margin-bottom:0;">Kasabay nyan: <strong>ubos ang Gemini API budget</strong> (<code>NOW.md</code>).
+      Buhay na Gemini call ang regression na to. Tugma ang timing &mdash; pero
+      <strong>hindi pa napapatunayan</strong>, walang binubuksang run log. Kung budget nga ang
+      dahilan, gabi-gabi tayong nagfa-file ng issue na hindi naman bug, at sa susunod na
+      totoong bagsak ay hindi na natin ito mapapansin.</p>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- ============ ACT IV: EXECUTOR LEDGER ============ -->
+  <section class="col reveal">
+    <p class="eyebrow">// EXECUTOR LEDGER</p>
+    <h2>Isang lane ang <span class="serif">wala pa ring datos.</span></h2>
+    <p style="margin-top:18px;">
+      Mula nang mag-umpisa ang <code>Executor:</code> trailer noong <strong>2026-08-02</strong>:
+      <strong>142 commit</strong> ang na-scan, <strong>124</strong> ang may trailer (87% coverage).
+    </p>
+    <div class="scroller glass" style="padding:8px 6px;">
+      <table>
+        <tr><th>Lane</th><th>Commit</th><th>File</th><th>Follow-up fix</th></tr>
+        <tr class=""><td><b>main-loop</b></td><td class="num">123</td><td class="num">543</td><td class="num">20/123 (16%)</td></tr>
+        <tr class=""><td><b>(untagged)</b></td><td class="num">18</td><td class="num">51</td><td class="num">1/18 (6%)</td></tr>
+        <tr class=""><td><b>code-executor</b></td><td class="num">1</td><td class="num">69</td><td class="num">1/1 (100%)</td></tr>
+        <tr class="dim"><td><b>codex-sol</b> <span class="pid no">WALANG DATOS</span></td><td class="num">0</td><td class="num">&#8212;</td><td class="num">&#8212;</td></tr>
+      </table>
+    </div>
+
+    <div class="glass gold" style="margin-top:20px;">
+      <div class="cardhead"><h3>Ang basa</h3><span class="tag ok">BASELINE 25%</span></div>
+      <ul style="margin-bottom:0;">
+        <li><b>main-loop &mdash; malinis.</b> 16% follow-up laban sa 25% baseline (mula 2026-07-24).
+        Tatlo sa apat na follow-up ay <em>sariling pag-ayos ng docs</em>, hindi bug.</li>
+        <li class="no"><b>codex-sol &mdash; wala, zero.</b> Ang buong punto ng trailer ay masukat ang
+        Sol laban kay Opus 5. Hindi pa sya nagagamit kahit minsan mula nang mabuo ang ledger,
+        kaya <strong>hindi pa masusukat ang gate</strong> &mdash; hindi dahil bumagsak, kundi dahil
+        walang datos.</li>
+        <li class="no"><b>code-executor &mdash; isa lang.</b> 100% follow-up sa n=1: itinayo nya ang
+        Paolo page, tapos may fix agad. <em>Anekdota pa lang yan.</em> &#8805;3 ang bar ng repo, kaya
+        walang dapat ikonklusyon dyan.</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- ============ ACT V: GATED ============ -->
+  <section class="col reveal">
+    <p class="eyebrow">// NAKA-GATE &middot; HINDI KASALANAN NG CODE</p>
+    <h2>Ang totoong <span class="serif">humaharang.</span></h2>
+    <div style="margin-top:26px;">
+      <div class="glass flag">
+        <div class="cardhead"><h3>Ubos ang Gemini API budget</h3><span class="tag no">HARANG #1</span></div>
+        <p style="margin-bottom:0;">Manwal sa Flow ang bagong clip. Gated din ang Kling. Ito rin ang
+        malamang na dahilan ng tatlong bagsak sa itaas, at ito ang humaharang sa Slice B.</p>
+      </div>
+      <div class="glass">
+        <div class="cardhead"><h3>Slice B &mdash; ang sample render batch</h3><span class="tag">HINIHINTAY ANG QUOTA + NEIL</span></div>
+        <p style="margin-bottom:0;">Handa na ang test spec at lahat ng asset
+        (<code>sample_batch_test_spec.md</code>, Hiraya Glow, zero Gemini spend sa paggawa).
+        <strong>Bawal i-ship ang Slice A sa users bago ito lumapag</strong> &mdash; pader ng
+        <code>Film</code> ang gallery ngayon. Dito rin sasakay ang #92, #89 at #90.</p>
+      </div>
+      <div class="glass">
+        <div class="cardhead"><h3>#93 at #95 &mdash; TUNED</h3><span class="tag no">ESCALATE, WAG I-APPLY</span></div>
+        <p style="margin-bottom:0;">Sapat na ang ebidensya ng #93, isang sample pa lang ang #95.
+        Pareho silang dumadaan sa <code>services/geminiService.ts</code> /
+        <code>api/_lib/prompts.ts</code> &mdash; kailangan ang go mo, hindi pwedeng basta i-apply.</p>
+      </div>
+      <div class="glass gold">
+        <div class="cardhead"><h3>artifact-noir Step 0 &mdash; pasado ang test</h3><span class="tag ok">TAPOS NGAYON</span></div>
+        <p style="margin-bottom:0;">Humingi ka ng &ldquo;dashboard artifact&rdquo; nang hindi binabanggit ang
+        skill. <strong>Kusang nag-load</strong> mula sa description palang &mdash; hindi kinailangan ng hook.
+        Ibig sabihin tuloy ang Steps 1&ndash;4 ng CLAUDE.md refactor: workflows index &rarr; skills
+        section &rarr; context hygiene &rarr; artifact reporting, isa-isang commit.
+        <em>Ang pahinang ito mismo ang ebidensya.</em></p>
+      </div>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- ============ RUN SHEET ============ -->
+  <section class="col reveal">
+    <p class="eyebrow">// SUSUNOD &middot; SA AYOS</p>
+    <h2>Ang run <span class="serif">sheet.</span></h2>
+    <div class="run" style="margin-top:26px;">
+      <div class="glass"><div class="body"><strong>Ayusin ang 12-branch cap sa hook</strong><span class="owner agent">ISANG LINYA</span><p class="meta" style="margin:6px 0 0;">Kapag <code>flight &gt; shown</code>, i-print ang natitira. Ang hook na to ang tanging depensa laban sa &ldquo;hindi pa nagagawa&rdquo; &mdash; at tahimik syang kulang ngayon.</p></div></div>
+      <div class="glass"><div class="body"><strong>I-triage ang 17 na nakatagong branch</strong><span class="owner">NEIL + AGENT</span><p class="meta" style="margin:6px 0 0;">Karamihan docs mula Hunyo, malamang dapat nang isara. Pero <code>fix/hook-refs-hardening</code> (+4, 8 file) at <code>feat/sfx-v2-diegetic-layer</code> (+2, 30 file) ay code. Basahin ang <code>agent-lesson-branch-triage</code>: ang tanong ay kung <em>solb na ba ang isyu</em>, hindi kung luma ang branch.</p></div></div>
+      <div class="glass"><div class="body"><strong>Patayin o kumpirmahin ang nightly regression</strong><span class="owner">NEIL</span><p class="meta" style="margin:6px 0 0;">Habang ubos ang budget, ingay lang ang inilalabas nito. Kung budget nga, patayin muna &mdash; kundi hindi na natin makikita ang susunod na totoong bagsak.</p></div></div>
+      <div class="glass"><div class="body"><strong>artifact-noir Steps 1&ndash;4</strong><span class="owner agent">TULOY NA</span><p class="meta" style="margin:6px 0 0;">Pasado ang Step 0 gate. Isa-isang commit; walang buburahin sa CLAUDE.md hangga&rsquo;t hindi napapatunayan ang bawat hakbang.</p></div></div>
+      <div class="glass"><div class="body"><strong>Slice B pagbalik ng quota</strong><span class="owner">NEIL</span><p class="meta" style="margin:6px 0 0;">12 producer run. Sya ang nagbubukas ng #92 / #89 / #90 at ng Slice A ship.</p></div></div>
+    </div>
+  </section>
+
+  <p class="sig">GRIFON</p>
+</div>
+
+<script>
+(function(){
+  var els=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in');});return;}
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});
+  },{threshold:.12});
+  els.forEach(function(e){io.observe(e);});
+})();
+</script>
