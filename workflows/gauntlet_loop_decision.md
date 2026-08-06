@@ -262,6 +262,94 @@ The `STOP` line is the one addition to Shumer's structure. Its absence is why
 that run took two hours and ten dollars, and the calibration above is why the
 critic can never supply it.
 
+## First build run — Paolo trust cards (2026-08-06)
+
+The axis experiment above measured. This run **built**, on the TRUST axis, and
+produced two corrections to the record plus one new failure mode.
+
+### Correction 1 — the bar was never measured. 68 was not the ceiling, 82 was.
+
+The line *"our creative is not the problem — we beat every swipe ad except
+Cursor"* came from a five-ad sample that contained **no trust-heavy advertiser**.
+The corpus holds 78 ads. Scoring the ones that actually sell on credibility:
+
+| Ad | TRUST | Band |
+| --- | ---: | --- |
+| E71 stripe · *"Carousell cuts false positives by 75% with Stripe"* | **82** | strong |
+| E72 stripe | **82** | strong |
+| E75 wise | **81** | strong |
+| E76 wise | **80** | strong |
+| E55 meta-for-business | **78** | strong |
+| E51 openai · E56 meta | 68 | competent |
+| E63 alex-hormozi | 50 | generic |
+| *post2-beforeafter (ours)* | *68* | *competent* |
+| *post3-senyales (ours)* | *63* | *competent* |
+
+Nothing in the original run reached `strong`, so 68 looked like the top of the
+world. It was the top of a bad sample. **Rule: sample the corpus for the axis
+before declaring a bar.** A bar drawn from ads that never competed on your axis
+is not a bar, and it flatters you.
+
+### What closed the 14-point gap: one thing, and it was not the hook
+
+Round 1 put a **receipts strip** on the card — the real DENR Certificate of
+Treatment No. and DENR ID No., in mono, as *numbers* — plus the authority line
+and an honest 15-day disclaimer. That is the Stripe move (a specific checkable
+claim) and the Wise move (*"Fees may apply…"*, admitting a limitation on the
+creative itself). **63/68 → 82.** Straight into `strong`, tied with Stripe.
+
+Two hooks were rendered, identical in every other respect: an urgency hook and
+an admit-against-interest hook. They scored **82 and 82**. On this axis the hook
+is not a lever; the verifiable numbers did all of the work. This also
+independently re-derives the repo's own L9 note in
+[`paolo-page-copy.md`](../clients/oceanides/paolo-page-copy.md): *numbers, not
+badge artwork* — written after the scar of shipping the wrong DENR region in a
+badge graphic.
+
+### Failure mode: `biggest_gap` stops being causal at the ceiling
+
+All six round-1 runs named the same gap — *"casual portrait rather than showing
+official equipment, team uniforms, or real field operations."* So the plate was
+swapped for exactly that: real truck, work clothes, boots, equipment in the bed,
+operator facing camera, on-site. **One variable changed.**
+
+| Round | Change | A | B |
+| --- | --- | ---: | ---: |
+| 1 | receipts strip added, clipboard plate | 82 | 82 |
+| 2 | plate → truck + workwear + equipment | 82 | 81 |
+| 3 | top scrim for eyebrow legibility | 82 | 83 |
+
+**Fixing precisely what it named moved nothing.** It simply issued a new
+complaint at the same score — *"unbranded truck… not proper workplace safety
+gear"*, then *"slightly dark and informal"*, then *"slightly casual and raw."*
+The field always returns a fluent, specific-sounding sentence, and near the
+ceiling that sentence is not a cause. It is the confabulation already documented
+in the narrow-gap pairwise result, wearing a different shape: **the rubric
+scorer fixed position bias, not confabulation.**
+
+Add to the rules: **treat `biggest_gap` as a hypothesis, and test it by acting
+on it.** One round that follows the gap and does not move the score means the
+instrument has stopped measuring, not that you executed the fix badly. That is a
+STOP, not a reason for round four.
+
+Note the second guard that fired here: the remaining "gaps" (branded livery,
+PPE) describe equipment Oceanides **does not own**. Satisfying the critic would
+have meant fabricating operational reality — the exact thing the `NOW.md` hard
+gate forbids. When a critic starts asking for things that are not true, it has
+left the axis.
+
+### Artifacts
+
+- [`clients/oceanides/kuya-marvin/organic/cards/trust-card-template.html`](../clients/oceanides/kuya-marvin/organic/cards/trust-card-template.html)
+  — the trust card, each element annotated with the measurement that earned it.
+- [`build-trust-cards.mjs`](../clients/oceanides/kuya-marvin/organic/cards/build-trust-cards.mjs)
+  — renders `paolo-trust-a-urgency.png` and `paolo-trust-b-admit.png`. Copy is
+  lifted from the approved `paolo-page-copy.md`; no new claims, no invented
+  numbers, no seals.
+- ⚠️ **Unpublished.** 82 is a critic's number. Per the standing rule, no visual
+  verdict is a business result — these are gated behind the same closed loop as
+  the rest of Paolo (`NOW.md`: build everything, open nothing).
+
 ## Status
 
 - ✅ Harness built + calibration run (2026-08-06), 25 trials, three gap widths.

@@ -46,6 +46,12 @@ if it was never inspected. Grifon owns 78 decoded ads in
 ⚠️ A swipe-file "winner" won on *some* axis. Confirm it is *your* axis before
 copying it, or you will import the wrong strengths.
 
+⚠️ **Score a spread of the corpus on your axis before naming the bar.** The first
+trust run sampled 5 of 78 ads, none of them a credibility advertiser, topped out
+at 68, and concluded our cards were at the ceiling. Scoring Stripe, Wise and Meta
+put the real bar at **82** — 14 points higher. A bar drawn from ads that never
+competed on your axis is not a bar, and it flatters you.
+
 ## STEP 2 — Grade with calibrated bands, not forced choice
 
 Default to **single-image rubric scoring**, not pairwise:
@@ -83,6 +89,17 @@ Every run states its stop condition up front. Whichever comes first:
 - a **turn / generation / spend cap** (e.g. 6 images), **or**
 - Neil approves, **or**
 - gains go immaterial.
+
+⛔ **A gap you fixed that did not move the score is a STOP.** `biggest_gap` is a
+hypothesis, not a cause. Measured 2026-08-06: six runs named the same gap, it was
+fixed exactly, the score held at 82 and the critic simply issued a new complaint
+at the same number. The rubric scorer fixes position bias, **not confabulation**.
+One round that follows the gap and gains nothing means the instrument stopped
+measuring — never spend round four buying the same sentence again.
+
+⛔ **When the critic asks for something that is not true, it has left the axis.**
+It wanted branded livery and PPE Oceanides does not own. Satisfying that means
+fabricating operational reality. Stop; do not build the lie.
 
 ⛔ **Never stop on "the critic says we beat it."** That is the one judgement the
 critic cannot make: as you approach the bar the gap narrows, and narrow gaps are
