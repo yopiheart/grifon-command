@@ -153,6 +153,67 @@ a composed man, blue sky, clean typography. **Tasteful is what loses here.**
    advertiser's house style, not the world's best. The ≥3-corroboration bar
    wants distinct brands before this becomes a template implication.
 
+## Porting the prompt style (the part that actually went viral)
+
+**First, "one-shot" is not what happened.** One prompt, yes. But per Karpathy's
+own account of the equivalent run: ~2 hours, ~1M tokens, ~$10, 5,500 lines, and
+his words for the result were *"kind of janky"* and *"it messed up a few times."*
+The prompt set a direction; the harness and the budget did the work. Anyone
+adopting this because it looked like a single cheap shot is adopting a
+misreading.
+
+Decomposed, the viral prompt is seven moves. Only two of them carry weight here.
+
+| # | Move | Verdict for Grifon |
+| --- | --- | --- |
+| 1 | Names a real external benchmark ("at the level of the most recent Call of Duty") | **steal** |
+| 2 | States the goal, never the implementation | **steal (narrow)** |
+| 3 | Decompose and fan out | already have (`code-executor`) |
+| 4 | Separate harsh critic | already have (`pr_review_loop`, builder ≠ reviewer) |
+| 5 | Blind side-by-side vs the benchmark | already measured above — good wide, coin-flip narrow |
+| 6 | "Don't stop until utterly perfect", no turn cap | **reject** |
+| 7 | Intensity words ("utterly", "wowed", "ultracode") | noise |
+
+On (6): this is the budget furnace CLAUDE.md's context-hygiene section exists to
+prevent, and the calibration above shows the critic cannot signal completion
+anyway. On (7): "ultracode" is not a documented harness feature (the real one is
+`ultrathink`, which buys thinking length); treat these as spend multipliers.
+
+On (1), the steal is concrete. Grifon briefs currently say *"follow DESIGN.md"* —
+an internal rule. The Gauntlet form points at a real artifact instead, and this
+repo owns 78 of them in [`assets/ad-swipe/`](../assets/ad-swipe/). *"As strong as
+E19"* is inspectable; *"make it good"* is not.
+
+On (2), the caveat matters: heavy specs are correct for code near TUNED files
+(that is what `surgical-edit` protects). But for **new design and creative** work,
+over-specifying caps the output at the brief-writer's imagination. Loosen there
+only.
+
+### Do not build a skill for this
+
+There are ~20 skills already; another one adds passive context load and
+mis-fire risk for something that is not a skill at all — it is a way of writing
+a brief. Two small wirings instead:
+
+- Add a `BENCHMARK:` line to briefs sent to `code-executor` / `codex-executor`.
+- Add "compare against the named real artifact, not only the rule" to
+  `brand-check` and `gemini-eval`.
+
+### Brief template (Grifon-safe port)
+
+```
+BENCHMARK: <a real, inspectable artifact — file path, URL, or swipe-file ID>
+GOAL:      <the end state, not the implementation>
+DECOMPOSE: <pieces that can each be improved independently>
+CRITIC:    fresh context, compare against BENCHMARK, run both slot orders
+STOP:      <turn cap> OR the build-gate pass message, whichever comes first
+OUT OF SCOPE: TUNED files (services/geminiService.ts, api/_lib/prompts.ts)
+```
+
+The `STOP` line is the one addition to Shumer's structure. Its absence is why
+that run took two hours and ten dollars, and the calibration above is why the
+critic can never supply it.
+
 ## Status
 
 - ✅ Harness built + calibration run (2026-08-06), 25 trials, three gap widths.
