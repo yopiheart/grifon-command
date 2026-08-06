@@ -76,7 +76,7 @@ ng IM8, parehong 3 dahilan ng 2026-08-03.
 ## 🅿 PARKED
 
 **Oceanides:** Week 02 pack · GB-001 video · hook2 ng KM-004 · Kling b-roll · watermark ni Gabriel · SEC Reg. No. · FB About · reviews · **AEM Configure Web Events hindi pa na-verify** (`Lead` dapat #1 sa `oceanidesph.com`; browser + desktop).
-**Grifon:** #94.3 next · #94.2 NOT-REPRO · #92+#89/#90 ride Slice B · #93 ⛔ TUNED. ⚠️ **Client world:** navy + amber print, no glass, no `#FFCC00`. · 🆕 **`artifact-noir` = Step 0 ng CLAUDE.md refactor (094e719), HINDI PA NA-TEST:** sa bagong session humingi ng dashboard artifact nang di binabanggit ang skill — kung kusang mag-load, tuloy ang Steps 1–4 (workflows index → skills section → context hygiene → artifact reporting, isa-isang commit); kung hindi, hook ang sagot, hindi description. Walang binura sa CLAUDE.md, kaya walang masisira.
+**Grifon:** #94.3 next · #94.2 NOT-REPRO · #92+#89/#90 ride Slice B · #93 ⛔ TUNED. ⚠️ **Client world:** navy + amber print, no glass, no `#FFCC00`. · ✅ **PASADO ang `artifact-noir` Step 0** (2026-08-06): kusang nag-load sa "dashboard artifact" lang, description ang sagot hindi hook — kaya **tuloy ang Steps 1–4** (workflows index → skills section → context hygiene → artifact reporting, isa-isang commit). · 📊 **[Session dashboard](artifacts/grifon-session.html)** (`node tools/artifacts/build-grifon-session.mjs`), at may dalawang bagong hanap dito: 🔴 **kulang ang bilang ng SessionStart hook** — 29 ang branch na nauuna kay `main`, 12 lang ang pinapakita (cap sa `session-start.sh:71`, walang "at N pa" na linya), **isang linyang ayos**; at **0 pa rin ang codex-sol lane** — hindi bumagsak, hindi pa nagagamit, kaya di pa masusukat ang gate.
 
 ## ⛔ Gated · 🔧 Arm before starting
 
