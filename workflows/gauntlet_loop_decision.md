@@ -8,10 +8,16 @@ adjacent thread (Opus 5, 1M tokens, ThreeJS render of the LotR opening) named
 the weak link explicitly: LLMs *"can't easily audit their work because they
 aren't able to efficiently and natively perceive videos or play games."*
 
-**Verdict: adopt the reference-bar idea, reject the critic as specified.**
-Grifon already runs builder≠critic loops in two places; what it lacks is a
-real-world bar. But before any critic is allowed to gate work, it must be
-calibrated — and ours failed calibration outright.
+**Verdict: adopt it, with one hard limit. The critic is reliable when the
+quality gap is wide and is pure noise when the gap is narrow.** Use the loop as
+an engine to climb toward the bar. Never use it to decide you have arrived.
+
+> **Correction (Neil, 2026-08-06).** The first version of this doc said the
+> critic failed outright. That conclusion came from a mis-specified test: it
+> compared two of *our own* plates against each other, which is peer-vs-peer,
+> not the work-vs-reference setup the Gauntlet Loop actually specifies. Neil
+> caught it. Re-run against a real reference, the critic scored perfectly. The
+> gradient below is the corrected result.
 
 ## What Grifon already has
 
@@ -36,33 +42,51 @@ pairwise judging with two controls the viral version omits: a **null test**
 (same image in both slots — any deviation from 50/50 is pure slot preference)
 and an **order flip** (every real pair judged A/B and B/A).
 
-| Run | Model | Trials | Slot-1 picks | Result |
-| --- | --- | --- | --- | --- |
-| Null (identical images) | gemini-3.5-flash | 4 valid | **4/4 (100%)** | 50 pts off 50/50 |
-| Real pair (2 different plates) | gemini-3.5-flash | 7 valid | **7/7 (100%)** | self-consistency 4/7 (57%, ≈ coin flip) |
-| Null (identical images) | gemini-3.6-flash | 6 valid | **6/6 (100%)** | 50 pts off 50/50 |
+| Quality gap | Pair | Model | n | Slot-1 picks | Self-consistency |
+| --- | --- | --- | --- | --- | --- |
+| **None** (identical) | s2 vs s2 | 3.5-flash | 4 | **4/4 (100%)** | n/a |
+| **None** (identical) | s2 vs s2 | 3.6-flash | 6 | **6/6 (100%)** | n/a |
+| **Narrow** (two of our plates) | s2 vs s2a | 3.5-flash | 7 | **7/7 (100%)** | 4/7 (57%, ≈ coin flip) |
+| **Wide** (our plate vs real ad) | s2 vs E19-gruns | 3.6-flash | 8 | **4/8 (50%)** | **8/8 (100%)** |
 
-**21 trials, 100% slot-1, across two model generations.** Content moved the
-verdict not at all. The critic is reading *position*, not quality.
+Read the table as a gradient, not a pass/fail.
 
-The damning detail is the reasoning. Same pair, same axis, opposite verdicts,
-both fluent:
+**Narrow gap = the critic reads position, not quality.** At 100% slot-1 it is
+answering a question about layout order. Worse, it *confabulates*: same pair,
+same axis, opposite verdicts, both fluent.
 
 > slot 1 = tank cover → *"The mystery of what is hidden beneath the heavy concrete lid creates stronger curiosity than a common household chore."*
 > slot 1 = toilet → *"The dynamic action of pouring water into a toilet creates instant visual recognition and curiosity."*
 
-It is confabulating a justification for a decision it already made on position.
-A Gauntlet Loop that puts the reference in a fixed slot therefore returns a
-**deterministic** answer uncorrelated with quality, dressed in specific prose.
-This is the same failure class as the 2026-07-29 artifact incident, where a
-headless-Chromium screenshot gate passed a page Neil's phone rendered wrong:
-critic approval is not reality.
+**Wide gap = the critic is a real instrument.** Against E19 (a finished IG-story
+ad: face, product, Q&A sticker, "61% off" offer) versus a bare copy-less b-roll
+plate, position bias fell to exactly zero (4/8 slot-1) and agreement hit 8/8 on
+the same image, naming the same cause every time (the native Q&A sticker
+creating a curiosity gap). Content completely overwhelmed the slot effect.
 
-**The critic was honest when allowed to be.** On the null test it self-reported
+**The critic is honest when allowed to be.** On the null tests it self-reported
 `distinguishable: false` and `confidence: coin-flip` in **10/10** valid trials.
-The bias is manufactured by the *forced choice* — which is exactly what
-"only pass if it is better" instructs. The instrument is not broken; the
-protocol breaks it.
+It knew. The forced choice made it guess anyway, and "only pass if it is better"
+is a forced choice.
+
+## The implication that matters
+
+The loop's own stopping condition sits in its blind spot.
+
+You start far from the bar, so the gap is wide, so the critic is accurate and
+correctly says *worse, keep going*. Every iteration narrows the gap. By the time
+you approach the reference, the gap is narrow, which is exactly where the
+measurements above collapse into a coin flip. **The one judgement the loop
+exists to make, "we have arrived", is the one it cannot make.**
+
+The source article confirms this without noticing it: the game was *"still
+improving when I stopped it"*, and termination is described as continuing
+*"until the result reaches the bar (or, more likely, you decide it is ready)."*
+The human closed the loop. The critic never did.
+
+Same failure class as the 2026-07-29 artifact incident, where a headless-Chromium
+screenshot gate passed a page Neil's phone rendered wrong: critic approval is
+not reality, and it is least like reality precisely when the call is close.
 
 ## Rules for any Gauntlet-style gate here
 
@@ -82,11 +106,17 @@ protocol breaks it.
    ≥3-corroboration gate in [`ad_performance_ledger.md`](ad_performance_ledger.md)
    still governs.
 
+8. **Use it to climb, never to stop.** Trust *"still worse than the reference"*.
+   Do not trust *"now as good as the reference"* — that verdict is a coin flip
+   by construction. A human eyeball closes the loop, or a market does.
+
 ## Status
 
-- ✅ Harness built + calibration run (2026-08-06). Findings above.
-- ⛔ **Not wired into any gate.** Do not use this critic to pass/fail work until
-  a configuration clears the null test.
-- ▶ Next, if resumed: re-run the null with abstention allowed and randomized
-  slots; if bias drops under ~10 points, pilot Move 1 (generated plate vs
-  swipe-file winner, same persuasion-lever family) as an *advisory* signal only.
+- ✅ Harness built + calibration run (2026-08-06), 25 trials, three gap widths.
+- ✅ **Directionally usable now, for wide-gap calls only.** Generated plate vs a
+  swipe-file winner is a valid question to ask it today.
+- ⛔ **Not wired into any gate**, and not to be used for fine distinctions
+  (choosing between two of our own plates) until a config clears the null test.
+- ▶ Next, if resumed: re-run the null with abstention allowed and slots
+  randomized per trial, and measure where on the gap gradient reliability
+  actually breaks. Then pilot as an *advisory* signal inside `gemini-eval`.
