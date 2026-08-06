@@ -110,6 +110,49 @@ not reality, and it is least like reality precisely when the call is close.
    Do not trust *"now as good as the reference"* — that verdict is a coin flip
    by construction. A human eyeball closes the loop, or a market does.
 
+## First real run — Kuya Marvin static cards vs the swipe file (2026-08-06)
+
+Subject: `clients/oceanides/kuya-marvin/organic/cards/post3-senyales-card.png`
+(Marvin crouching, blue sky, white headline card *"Apat na senyales na malapit
+nang mapuno ang septic tank nyo"*, yellow CTA button). Axis: *stop a distracted
+person mid-scroll*. All runs gemini-3.6-flash, 8 trials, order-flipped.
+
+| Opponent | What it is | Result | Slot bias | Agreement |
+| --- | --- | --- | --- | --- |
+| E18 cursor | minimalist grey SaaS, no face, no offer | **we win 8–0** | none (4/8) | 100% |
+| E31 im8-health | polished DTC body-transformation ad | **tie** | 100% slot-1 | 50% |
+| E19 gruns | IG-story Q&A sticker screenshot | **lose 0–8** | none (4/8) | 100% |
+| E29 gruns | doll + poop-emoji belly meme | **lose 0–8** | none (4/8) | 100% |
+| E25 gruns | bare feet under bed sheets, "perimenopause" | **lose 0–8** | none (4/8) | 100% |
+
+(`post2-beforeafter.png` also lost 0–8 to E19 on the same settings.)
+
+**The tie is a real reading, not a failure.** Against E31 the critic collapsed to
+100% slot-1 with 50% agreement, which is the exact signature the null test
+produced on *identical* images. Read inversely, the coin-flip signature is the
+instrument saying "I cannot separate these" — i.e. our card is at that ad's level.
+
+**A stated prediction failed, which is the useful part.** Before running the last
+two, the call was: lose to E29 (native meme format), tie E25 (polished designed
+ad), on a native-vs-designed theory. E29 was right. **E25 was wrong — we lost
+0–8.** So the axis is not native-vs-designed and not production craft.
+
+Reading the winners' stated reasons together, the actual axis is **pattern
+interrupt**: "absurd graphic", "high visual contrast", "provocative visual
+pattern interrupt", "curiosity gap". Every ad that beat us jars the eye. The two
+we did not lose to (Cursor, IM8) are calm. Our card is calm, tidy and tasteful —
+a composed man, blue sky, clean typography. **Tasteful is what loses here.**
+
+⚠️ **Do not act on this yet, for two reasons.**
+1. **Wrong axis for the actual bottleneck.** This measured scroll-stopping.
+   KM-003 delivered ~100 messages at ₱12.85 and **1 order**
+   ([`ad_performance_ledger.md`](ad_performance_ledger.md)). Attention was not
+   the constraint; conversion was. A more jarring creative buys more of what
+   Neil already had enough of.
+2. **One brand of reference.** Four of five opponents are Gruns. That is one
+   advertiser's house style, not the world's best. The ≥3-corroboration bar
+   wants distinct brands before this becomes a template implication.
+
 ## Status
 
 - ✅ Harness built + calibration run (2026-08-06), 25 trials, three gap widths.
