@@ -130,6 +130,46 @@ that regenerates it **from committed sources only** — never a `.tmp/` cache, w
 Because the page inlines every asset, that one file *is* the share mechanism: Neil sends it over
 Viber/email/Drive and it opens offline in any browser — no sign-in, no link permissions.
 
+### The twin needs an encoding, and nothing gives it one
+
+The published page gets a `<head>` from the platform. **The twin gets nothing** — it is opened
+straight off disk, so with no `<meta charset>` the browser guesses windows-1252 and every
+non-ASCII character mojibakes: `·` → `Â·`, `—` → `â€"`, `₱` → `â‚±`.
+
+This bug shipped **twice**, and the second time the fix already existed:
+
+- **2026-07-30** — `gabriel-review`: every `·` in the Oceanides copy broke. Fixed *in that one
+  builder* by emitting a full document for the twin and a fragment for publishing.
+- **2026-08-06** — `grifon-session`: every literal em-dash broke. Same root cause, caught by the
+  390×844 gate. An audit then found `gb-001-brief` — a **client-facing brief** — shipping 45 raw
+  non-ASCII characters including every `₱`.
+
+The fix existed and did not travel. So it lives in code now:
+**[`tools/artifacts/_gates.mjs`](../../../tools/artifacts/_gates.mjs), which every builder imports.**
+
+```js
+import { finalize } from './_gates.mjs';
+const html = finalize(rawHtml, {
+  label: 'my-artifact',
+  required: ['<title>', 'class="ground"'],   // truncation guard
+  leftover: [/\{\{[A-Z_]+\}\}/g],            // unsubstituted tokens
+});
+```
+
+`finalize()` entity-escapes every non-ASCII character, then asserts. Pure-ASCII bytes decode
+identically under **every** encoding guess, so one single file is correct in both roles at once:
+safe as a bare file *and* still a bare fragment that publishes without violating the Artifact
+tool's no-document-tags contract. One file, one path, nothing to remember.
+
+Two things to know when you hit it:
+
+- **Keep `<style>` ASCII yourself.** Entities are not decoded inside CSS, so the gate excludes the
+  stylesheet and asserts it instead. Write `--` in CSS comments, not an em-dash. The error tells
+  you which character.
+- **Banned-pattern checks run on comment-stripped source**, so a template may name the banned
+  property in a comment explaining *why* it is banned. A checker that punishes good comments
+  teaches people to delete the comments.
+
 **The twin is HTML — do not offer a PDF.** One was built and Neil rejected it on sight: *"di rin
 katulad ng feel kapag totoong na-navigate mo ung artifacts."* Flattening a scrolling, hover-and-swipe
 page into paged print throws away the thing that made it worth building. The page IS the deliverable.

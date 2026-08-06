@@ -76,10 +76,10 @@ h1,h2,h3{
   line-height:.94;
   text-wrap:balance;
   margin:0;
-  /* SOLID display type -- clipped-gradient text is BANNED in artifacts: the Android
-     WebView the Claude app uses mispaints it (caught on Neil's phone 2026-07-29).
-     Solid #F5F5F7 = 17.3:1 on every line. The build script greps for the banned
-     property, so do not name it literally here. */
+  /* SOLID display type -- `background-clip:text` + `color:transparent` is BANNED in
+     artifacts: the Android WebView the Claude app uses mispaints it, and headings
+     came out inverted and darker than either gradient stop on Neil's phone
+     (2026-07-29). Solid #F5F5F7 = 17.3:1 on every line. */
   color:#F5F5F7;
   text-shadow:0 0 18px rgba(255,204,0,.18);
 }

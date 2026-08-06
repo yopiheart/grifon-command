@@ -17,6 +17,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { resolve, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { finalize } from './_gates.mjs';
 
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const TPL = join(REPO_ROOT, 'tools', 'artifacts', 'grifon-session.tpl.html');
@@ -141,30 +142,7 @@ const ledgerMeta = led.scanned
 
 const sol = led.lanes.find((l) => l.lane === 'codex-sol');
 
-// The published artifact is wrapped in a <head> by the platform, so this file
-// carries no <meta charset> of its own — but the committed twin's whole job is to
-// be opened as a BARE FILE (Viber/email/Drive), where nothing declares an encoding
-// and a literal UTF-8 em-dash decodes as Windows-1252 mojibake ("â€™"). Caught by the
-// 390x844 mobile gate 2026-08-06. Fix: keep the shipped bytes pure ASCII by
-// converting every non-ASCII char to a numeric entity.
-//
-// Entities are NOT decoded inside <style>, so the stylesheet is excluded from the
-// pass and asserted ASCII-only instead.
-function asciify(input) {
-  const styleRe = /<style>[\s\S]*?<\/style>/;
-  const style = input.match(styleRe);
-  if (!style) throw new Error('BUILD_FAILED: no <style> block found in template');
-  // eslint-disable-next-line no-control-regex
-  const nonAscii = /[^\x00-\x7F]/;
-  if (nonAscii.test(style[0])) {
-    throw new Error('BUILD_FAILED: <style> block contains non-ASCII (entities do not decode in CSS)');
-  }
-  const [before, after] = input.split(style[0]);
-  const enc = (s) => s.replace(/[^\x00-\x7F]/g, (c) => `&#${c.codePointAt(0)};`);
-  return enc(before) + style[0] + enc(after);
-}
-
-const html = asciify(tpl
+const html = finalize(tpl
   .replaceAll('{{STAMP}}', issueData.captured)
   .replaceAll('{{ISSUE_COUNT}}', String(issueData.issues.length))
   .replaceAll('{{BRANCH_COUNT}}', String(br.length))
@@ -173,31 +151,12 @@ const html = asciify(tpl
   .replaceAll('{{BRANCH_TABLE}}', branchTable)
   .replaceAll('{{ISSUE_TABLE}}', issueTable)
   .replaceAll('{{LEDGER_TABLE}}', ledgerTable)
-  .replaceAll('{{LEDGER_META}}', ledgerMeta));
-
-// Sanity gates: a truncated template or an unfilled slot must never ship silently.
-const required = ['<title>', 'class="ground"', 'class="grain"', 'class="sig"', '</script>'];
-const missing = required.filter((t) => !html.includes(t));
-if (missing.length) {
-  console.error(`BUILD_FAILED: template missing ${missing.join(', ')}`);
-  process.exit(1);
-}
-const leftover = html.match(/\{\{[A-Z_]+\}\}/g);
-if (leftover) {
-  console.error(`BUILD_FAILED: unfilled placeholders ${[...new Set(leftover)].join(', ')}`);
-  process.exit(1);
-}
-if (/background-clip:\s*text/i.test(html)) {
-  console.error('BUILD_FAILED: background-clip:text is banned in artifacts (Android WebView mispaints it)');
-  process.exit(1);
-}
-// The twin ships without a <meta charset>; pure-ASCII bytes are what make it
-// render correctly as a bare file anywhere. asciify() should guarantee this.
-// eslint-disable-next-line no-control-regex
-if (/[^\x00-\x7F]/.test(html)) {
-  console.error('BUILD_FAILED: non-ASCII bytes survived — the bare-file twin will mojibake');
-  process.exit(1);
-}
+  .replaceAll('{{LEDGER_META}}', ledgerMeta), {
+    label: 'grifon-session',
+    // Truncation guard: a half-written template must never ship silently.
+    required: ['<title>', 'class="ground"', 'class="grain"', 'class="sig"', '</script>'],
+    leftover: [/\{\{[A-Z_]+\}\}/g],
+  });
 
 writeFileSync(OUT, html, 'utf8');
 console.log(`wrote ${OUT} (${Math.round(html.length / 1024)}KB)`);

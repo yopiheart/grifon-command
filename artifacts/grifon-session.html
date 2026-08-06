@@ -76,10 +76,10 @@ h1,h2,h3{
   line-height:.94;
   text-wrap:balance;
   margin:0;
-  /* SOLID display type -- clipped-gradient text is BANNED in artifacts: the Android
-     WebView the Claude app uses mispaints it (caught on Neil's phone 2026-07-29).
-     Solid #F5F5F7 = 17.3:1 on every line. The build script greps for the banned
-     property, so do not name it literally here. */
+  /* SOLID display type -- `background-clip:text` + `color:transparent` is BANNED in
+     artifacts: the Android WebView the Claude app uses mispaints it, and headings
+     came out inverted and darker than either gradient stop on Neil's phone
+     (2026-07-29). Solid #F5F5F7 = 17.3:1 on every line. */
   color:#F5F5F7;
   text-shadow:0 0 18px rgba(255,204,0,.18);
 }
@@ -273,7 +273,7 @@ blockquote .meta{display:block;margin-top:8px;font-style:normal;}
     <div class="scroller glass" style="padding:8px 6px;">
       <table>
         <tr><th>Petsa</th><th>Branch</th><th>Commit</th><th>File</th></tr>
-        <tr class=""><td class="num">2026-08-06</td><td><b>claude/pixel-leak-investigation-uw34vq</b></td><td class="num">+35</td><td class="num">84</td></tr>
+        <tr class=""><td class="num">2026-08-06</td><td><b>claude/pixel-leak-investigation-uw34vq</b></td><td class="num">+36</td><td class="num">84</td></tr>
         <tr class=""><td class="num">2026-07-13</td><td><b>feat/sfx-v2-diegetic-layer</b></td><td class="num">+2</td><td class="num">30</td></tr>
         <tr class=""><td class="num">2026-07-11</td><td><b>docs/believability-refstack</b></td><td class="num">+39</td><td class="num">57</td></tr>
         <tr class=""><td class="num">2026-07-07</td><td><b>docs/omni-resume-state-post-launch</b></td><td class="num">+1</td><td class="num">1</td></tr>
@@ -377,12 +377,12 @@ blockquote .meta{display:block;margin-top:8px;font-style:normal;}
     <h2>Isang lane ang <span class="serif">wala pa ring datos.</span></h2>
     <p style="margin-top:18px;">
       Mula nang mag-umpisa ang <code>Executor:</code> trailer noong <strong>2026-08-02</strong>:
-      <strong>145 commit</strong> ang na-scan, <strong>127</strong> ang may trailer (88% coverage).
+      <strong>146 commit</strong> ang na-scan, <strong>128</strong> ang may trailer (88% coverage).
     </p>
     <div class="scroller glass" style="padding:8px 6px;">
       <table>
         <tr><th>Lane</th><th>Commit</th><th>File</th><th>Follow-up fix</th></tr>
-        <tr class=""><td><b>main-loop</b></td><td class="num">126</td><td class="num">550</td><td class="num">20/126 (16%)</td></tr>
+        <tr class=""><td><b>main-loop</b></td><td class="num">127</td><td class="num">552</td><td class="num">20/127 (16%)</td></tr>
         <tr class=""><td><b>(untagged)</b></td><td class="num">18</td><td class="num">51</td><td class="num">1/18 (6%)</td></tr>
         <tr class=""><td><b>code-executor</b></td><td class="num">1</td><td class="num">69</td><td class="num">1/1 (100%)</td></tr>
         <tr class="dim"><td><b>codex-sol</b> <span class="pid no">WALANG DATOS</span></td><td class="num">0</td><td class="num">&#8212;</td><td class="num">&#8212;</td></tr>
