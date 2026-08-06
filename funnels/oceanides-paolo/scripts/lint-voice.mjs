@@ -115,6 +115,53 @@ const RULES = [
   [/\biminumungkahi\b/i, 'deep Tagalog', 'mas okay kung'],
   [/\bsa kabilang banda\b/i, 'deep Tagalog', 'pero'],
 
+  // --- 2026-08-06: KLASE, HINDI SALITA. Ito ang pinakamahalagang block dito. ---
+  // Nahuli ni Neil ang `Labinlimang araw` at ang `dokumentasyon` sa card at sa
+  // page: "Bilang Filipino di kame gumagamit ng ganyang tagalog word sa
+  // pakikipag usap o pag susulat sobrang dalang... Bakit ganun di parin
+  // nawawala ang mga slop words."
+  //
+  // Ang sagot ay nasa hugis mismo ng file na ito. Blacklist sya, at bawat entry
+  // sa itaas ay idinagdag PAGKATAPOS mahuli sa live copy. Pero bago ang slop
+  // kada beses — ibang malalim na salita ang lumalabas, kaya sa disenyo pa lang,
+  // laging huli ng isang insidente ang blacklist. Kaya klase ang tatlo sa ibaba,
+  // hindi salita: humuhuli sila ng mga salitang hindi pa naisusulat kahit kanino.
+  //
+  // Pansinin: MAY RULE NA PALA para sa `Labinlimang`. Carve-out (b) ng LANGUAGE
+  // LOCK: "presyo at numero" ay English. Walang naghuhuli, kaya nakalusot.
+
+  // (0) 🔴 BUONG PARIRALA ANG ENGLISH, HINDI LANG ANG NUMERO. Unang pass ko:
+  //     `Labinlimang araw` -> `15 araw`. Sagot ni Neil: "15 araw? wtf ayan
+  //     nanaman. SLOP nanamn ai words yan. 15 days!!!!!!!" Tama sya. Kalahati
+  //     lang pala ang inayos ko — baybay ang pinalitan, iniwan ang unit.
+  //     Sa timeline, English ang buong sukat: 15 days, 48 hours, 3 months.
+  //     74 hit ang naabot nito sa page, sa copy doc at sa cards.
+  //     ⚠️ Wala pang hatol sa `taon` — hindi pa sya tinawag ni Neil, kaya
+  //     nakasama sya dito sa parehong hugis. Sabihin nya kung mali.
+  [/\b\d+\s+araw\b/i, 'sa timeline, English ang buong sukat', '15 days'],
+  [/\b\d+\s+oras\b/i, 'sa timeline, English ang buong sukat', '48 hours'],
+  [/\b\d+\s+linggo\b/i, 'sa timeline, English ang buong sukat', '2 weeks'],
+  [/\b\d+\s+buwan\b/i, 'sa timeline, English ang buong sukat', '3 months'],
+  [/\b\d+\s+taon\b/i, 'sa timeline, English ang buong sukat', '1 year'],
+
+  // (1) Baybay na numero mula 11 pataas. Sinasabi ng Pinoy ang isa hanggang
+  //     sampu, pero walang taong nagsasabing "labinlimang araw" — 15 days yun.
+  //     Sinasadyang hindi kasama ang isa-sampu, natural sila.
+  [/\blabin[dgt]?\w*\b/i, 'baybay na numero, bawal sa carve-out (b): numero = English', '15, 12, 18'],
+  [/\b(dalawampu|tatlumpu|apatnapu|limampu|animnapu|pitumpu|walumpu|siyamnapu)\w*/i,
+    'baybay na numero, bawal sa carve-out (b)', '20, 30, 45'],
+  [/\b(sandaan|isandaan|sanlibo|isanlibo)\b/i, 'baybay na numero', '100, 1,000'],
+
+  // (2) Abstract na `-syon` noun. Hindi lahat ng -syon ay mali (sitwasyon,
+  //     operasyon, sinasabi yun) — ang mali ay ang mahaba at corporate.
+  [/\b\w*(dokumenta|rekomenda|kalibra|aplika|administra|verifika|notifika|konfigura|awtoriza|implementa|integra|dokumenta)syon\w*\b/i,
+    'corporate na -syon noun, halatang AI', 'papel, mungkahi, testing, form'],
+
+  // (3) Hiwalay na `sa yo`. Kapamilya sya ng nyo/yun/yan/wag sa ibaba —
+  //     nakasulat na ang rule, ang anyo lang na ito ang wala sa listahan.
+  [/\bsa yo\b/i, 'dapat magkadikit', 'sayo'],
+  [/\bsa iyo\b/i, 'formal na anyo', 'sayo'],
+
   // --- typography rules (Neil, 2026-07-20) ---
   [/—/, 'bawal ang em dash, halatang AI-written', 'period o comma'],
   [/\bn'yo\b/i, 'bawal ang apostrophe sa contraction', 'nyo'],

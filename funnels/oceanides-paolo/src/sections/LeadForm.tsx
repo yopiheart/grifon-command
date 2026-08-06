@@ -37,7 +37,7 @@ const ERROR_COPY: Record<string, string> = {
 };
 
 const friendlyError = (code: string): string =>
-  ERROR_COPY[code] ?? 'May problema sa amin, hindi sa iyo. Pakiulit lang.';
+  ERROR_COPY[code] ?? 'May problema sa amin, hindi sayo. Pakiulit lang.';
 
 // Per-field messages. They sit UNDER the field they are about, not in the one
 // banner at the foot of the form: a single "may mali" line at the bottom makes

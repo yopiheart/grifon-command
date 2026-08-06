@@ -26,7 +26,7 @@ const SHARED = {
   // equipment, team uniforms, or real field operations". Ito ang sagot doon:
   // truck, work clothes, boots, kagamitan sa loob, nakatingin sa camera, nasa site.
   bg: '../stills-week01/vw1-s5-van-rear.png',
-  eyebrow: 'DENR at LLDA na dokumentasyon · Metro Manila',
+  eyebrow: 'DENR at LLDA na papel · Metro Manila',
   // paolo-page-copy.md §2 socialProofBar, pinaikli. "Mahigit 1,000" ay may
   // pinagmulan (Boss Jay kay Neil, 2026-08-01) — wag palitan ng eksaktong numero.
   authority:
@@ -34,15 +34,15 @@ const SHARED = {
   // paolo-page-copy.md §11. Ito ang Wise E75 (81) na move: inaamin ang limitasyon
   // sa mismong creative.
   foot:
-    'Labinlimang araw ang normal na hintay sa Certificate of Treatment. Hindi namin sya kayang bilisan, at hindi rin namin sya bibilisan para lang may maisagot sa yo.',
+    '15 days ang normal na hintay sa Certificate of Treatment. Hindi namin sya kayang bilisan, at hindi rin namin sya bibilisan para lang may maisagot sayo.',
 };
 
 const CARDS = [
   {
-    // A · urgency — ang 15 araw laban sa petsa ng renewal (paolo-page-copy.md, ang
+    // A · urgency — ang 15 days laban sa petsa ng renewal (paolo-page-copy.md, ang
     // tanging totoong scarcity sa buong page).
     out: 'paolo-trust-a-urgency.png',
-    hook: 'Paparating na ang renewal nyo. <em>Labinlimang araw</em> ang certificate.',
+    hook: 'Paparating na ang renewal nyo. <em>15 days</em> ang certificate.',
   },
   {
     // B · admit-against-interest — tinatanggihan ang pinakamadaling benta.

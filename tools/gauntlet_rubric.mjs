@@ -64,6 +64,17 @@ const AXES = {
     label: 'TRUST — credibility of the business behind it',
     question: `How much would this image make a cautious buyer trust the business behind it enough to hand over money and let its people do work on their property? Judge credibility only: does it look like a real, competent, accountable operator, or like something that would make a careful person hesitate. Loud attention-grabbing is NOT trust, and may cost trust.`,
   },
+  // Idinagdag 2026-08-06 (Neil): "ang organic cards kay kuya marvin ay puro value
+  // content na hindi nag bebenta tulad ng kay Fibo lim, russel brunson, at alex
+  // hormozi style." Hindi ito nasusukat ng attention o ng trust — pwedeng
+  // makapigil ng scroll at mapagkatiwalaan ang isang card at wala pa ring
+  // hinihingi. Ang bar dito ay ang Brunson (E82-E93) at Hormozi (E63-E66) sa
+  // swipe file, na tumatakbo naman ng MABABA sa trust. Sinasadya yun: magkaiba
+  // ang trabaho ng dalawa, at yun ang punto ng paghihiwalay ng axis.
+  sell: {
+    label: 'SELL — paggalaw ng tao papunta sa isang alok',
+    question: `Does this image do sales work, or does it only hand out free value? Judge whether it names a specific offer, gives a reason to act, makes clear what the business actually sells, and gives the viewer a next step. Pure education — tips, "4 signs that...", explainer content — scores LOW no matter how genuinely useful or well made it is, because it asks for nothing. A specific offer with a clear next step scores HIGH. Beauty, polish and trustworthiness are NOT selling.`,
+  },
 };
 
 function loadEnvKey(name) {

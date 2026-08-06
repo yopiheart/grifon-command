@@ -24,7 +24,7 @@ pwedeng i-deploy nang buo kung wala pang tawag sa treatment facility
 🔴 **Panuntunan: walang numero at walang claim na papalit sa dalawang tatak na yan
 kung hindi pa tapos ang tawag.** Nakasulat sila bilang literal na placeholder
 para hindi sila maka-ship nang hindi napapansin. Kapag na-deploy na may `⟦PENDING`
-pa sa page, ang page mismo ang magsasabi sa yo.
+pa sa page, ang page mismo ang magsasabi sayo.
 
 Bawat linyang may `⟦PENDING · B⟧` ay may **fallback** na ligtas ngayon, nakasulat
 sa tabi. Kung gusto mong makapag-ship bago ang tawag para sa internal review,
@@ -69,7 +69,7 @@ Unaware → Problem Aware (RA 9275 education). Ang page ay nagsisimula sa pain n
 kilala na nya: *may papeles syang hinahanapan at wala syang maipapakita.* Kapag
 inulit pa ng page ang buong education, nawawala ang bilis at tumataas ang bounce.
 
-**Ang isang pangako:** *Sa loob ng 48 oras, may hawak kang report na may sukat,
+**Ang isang pangako:** *Sa loob ng 48 hours, may hawak kang report na may sukat,
 litrato at pirma. Kapag kailangan mo ng papel para sa buong load, kami ang kukuha at
 galing sa DENR-accredited na facility ang certificate.*
 
@@ -81,7 +81,7 @@ manifest, walang tapunang alam mo. Bawal ang pangalan ng kalaban sa page.
 namin", sya ang dahilan kung bakit tayo ang tatawagan at hindi ang suki. Hindi
 makakapag-issue ng manifest ang crew na walang papel, kahit gaano pa sila kamura.
 
-**Ang totoong urgency (walang fake countdown):** ang **15 araw** ng certificate laban
+**Ang totoong urgency (walang fake countdown):** ang **15 days** ng certificate laban
 sa **petsa ng renewal nya**. Yun lang ang scarcity sa buong page, at totoo sya. Kaya
 rin sya ang bagong qualifier sa form.
 
@@ -113,7 +113,7 @@ lahat ng iba).
 2. ⛔ **Ang partial documentation** (*"dalawa lang sa 20 loads ang ipasok"*). Sya ang
    villain, hindi ang produkto. Sinasagot sya nang diretso sa FAQ #4, bilang
    pagtanggi, hindi bilang alok.
-3. ⛔ **Pangakong mas mabilis sa 15 araw.** Ang 48 oras ay para sa **report natin**,
+3. ⛔ **Pangakong mas mabilis sa 15 days.** Ang 48 hours ay para sa **report natin**,
    hindi sa certificate. Magkaibang papel, at bawal silang paghaluin sa isang linya.
 4. ⛔ **Cash refund.** Credit, isang taon ang bisa.
 5. ⛔ **Fake proof.** Walang testimonial, walang bituin, walang review count, walang
@@ -122,7 +122,7 @@ lahat ng iba).
 ⚠️ **Ang sariling babala natin (A2 sa ledger):** sa KM-003, **41% ang nawala eksakto
 sa "libre ang tingin."** Diagnostic offer yun, at dun mismo bumagsak. Ang lunas dito
 ay **bayad at tiyak**: hindi "libreng tingin" kundi ₱999 na may pinangalanang
-output (report na may pirma, sa loob ng 48 oras). Pero **bantayan ang scroll data sa
+output (report na may pirma, sa loob ng 48 hours). Pero **bantayan ang scroll data sa
 section 4-5.** Kung dun ulit bumagsak, ang frame ang mali, hindi ang presyo.
 
 ---
@@ -166,15 +166,15 @@ form: {
   },
   qualifiers: [
     // 🆕 ANG BAGONG QUALIFIER. Una sya kasi sya ang router ng thank-you page AT
-    // ang pila ni Zam. 15 araw ang certificate — ang petsa ng renewal ang
+    // ang pila ni Zam. 15 days ang certificate — ang petsa ng renewal ang
     // nagsasabi kung sino ang tatawagan ngayong hapon at sino sa Lunes.
     {
       id: 'renewal_window',
       label: 'Kailan ang permit renewal o inspection nyo?',
       options: [
-        'Sa loob ng 30 araw',
-        'Sa loob ng 1 hanggang 3 buwan',
-        'Mahigit 3 buwan pa',
+        'Sa loob ng 30 days',
+        'Sa loob ng 1 hanggang 3 months',
+        'Mahigit 3 months pa',
         'Wala pang schedule, o hindi ko alam',
       ],
       required: true,
@@ -199,9 +199,9 @@ form: {
 ```
 
 **Bakit `renewal_window` ang una:** sya lang ang totoong urgency lever ng buong
-alok, at sya ang nag-uuri ng pila. Ang sumagot ng *"sa loob ng 30 araw"* ay tinatawagan
+alok, at sya ang nag-uuri ng pila. Ang sumagot ng *"sa loob ng 30 days"* ay tinatawagan
 sa mismong araw. Sya rin ang router ng thank-you page (tingnan sa ibaba), at doon
-lumalabas ang pinaka-mahirap na katotohanan nang maaga: **kung wala pang 15 araw ang
+lumalabas ang pinaka-mahirap na katotohanan nang maaga: **kung wala pang 15 days ang
 renewal mo, hindi aabot ang certificate.** Mas mabuting marinig nya yun sa thank-you
 page kaysa sa ikatlong linggo.
 
@@ -248,7 +248,7 @@ ng kwento.
 | | Headline | Bakit |
 | --- | --- | --- |
 | **A ✅ 72%** | `Ang huling pasipsip mo, **walang papel**. Yun ang unang hahanapin sa inspection.` | Tugma sa Problem Aware. Pinangalanan ang gap nang hindi nanggugulat sa multa, at ang villain ay gawi, hindi brand (S24). |
-| B 58% | `May inspection ka na paparating. **Labinlimang araw** bago lumabas ang papel.` | Mekanismo at orasan agad. Mas malakas sa taong may petsa na, mas mahina sa hindi pa nakaka-schedule. Gamitin bilang variant kapag naka-target sa renewal season. |
+| B 58% | `May inspection ka na paparating. **15 days** bago lumabas ang papel.` | Mekanismo at orasan agad. Mas malakas sa taong may petsa na, mas mahina sa hindi pa nakaka-schedule. Gamitin bilang variant kapag naka-target sa renewal season. |
 | C 41% | `**₱200,000 kada araw** ang multa sa RA 9275. Ang papel na pang-iwas dun, ₱999 para masimulan.` | Pinakamalakas na scroll-stop, pinakamataas na risk. Fear-first sa unang segundo at malapit sa fear-mongering, at ang presyo sa headline ay pumapasok bago pa ang halaga. Test lang, hindi default. |
 
 ```ts
@@ -256,13 +256,13 @@ ng kwento.
   type: 'hero',
   ground: 'navy-gradient',
   props: {
-    eyebrow: 'DENR at LLDA na dokumentasyon · Metro Manila',
+    eyebrow: 'DENR at LLDA na papel · Metro Manila',
     headline: 'Ang huling pasipsip mo, **walang papel**. Yun ang unang hahanapin sa inspection.',
     // S8 audience callout — pangalanan ang eksaktong bumibili.
     audience:
       'Para sa restaurant, apartment, building, school at warehouse sa Metro Manila na may permit renewal o DENR inspection na paparating.',
     subhead:
-      'Magsisimula sa bayad na septic check, ₱999. Sinusukat namin ang tangke, kinukunan ng litrato, at sa loob ng 48 oras ay nasa yo na ang report na may pirma. Ipa-file mo agad. Kapag kailangan mo ng papel para sa buong load, kami ang kukuha, at sa DENR-accredited na treatment facility galing ang certificate.',
+      'Magsisimula sa bayad na septic check, ₱999. Sinusukat namin ang tangke, kinukunan ng litrato, at sa loob ng 48 hours ay nasa yo na ang report na may pirma. Ipa-file mo agad. Kapag kailangan mo ng papel para sa buong load, kami ang kukuha, at sa DENR-accredited na treatment facility galing ang certificate.',
     ctaLabel: 'Kunin ang septic check ko',
     logo: '/img/logo.webp',
     logoAlt: 'Oceanides',
@@ -344,7 +344,7 @@ trust page ay mas masama kaysa walang selyo.
 
 **Mas mabigat ito kay Paolo kaysa kay Helen.** Kay Helen, ang ibig sabihin nito ay
 *"may ibang nagtiwala."* Kay Paolo: *"pumasa na kami sa procurement at sa admin ng mga
-kompanyang mas mahigpit kaysa sa yo."* Pangalan lang, walang logo, wala tayong
+kompanyang mas mahigpit kaysa sayo."* Pangalan lang, walang logo, wala tayong
 karapatan sa artwork nila, at print world ito.
 
 ---
@@ -360,10 +360,10 @@ Dito nakaupo ang buong risk. Isang section lang, tuyot, walang drama.
   props: {
     heading: 'Sino ang mananagot kapag na-trace ang tapunan',
     body: [
-      'Ikaw. ==Ikaw ang generator ng waste, kaya ikaw ang mananagot, kahit iba ang kumuha nun sa yo.== Ganon nakasulat sa RA 9275, ang Clean Water Act.',
+      'Ikaw. ==Ikaw ang generator ng waste, kaya ikaw ang mananagot, kahit iba ang kumuha nun sayo.== Ganon nakasulat sa RA 9275, ang Clean Water Act.',
       'Kaya ang tanong sa inspection ay hindi kung may nagsipsip ba. Ang tanong ay saan napunta, at ano ang maipapakita mong papel.',
       'Kapag walang manifest, walang certificate, at hindi mo alam kung saan itinapon, ang natitirang sagot mo ay ang pangalan ng taong tumawag ka. Hindi yun papel.',
-      'Ang multa sa ilalim ng RA 9275 ay umaabot ng ₱200,000 kada araw ng violation. Nakasulat yan sa batas mismo, Section 28. Hindi ito banta. Sya ang dahilan kung bakit may hinihinging papel sa yo.',
+      'Ang multa sa ilalim ng RA 9275 ay umaabot ng ₱200,000 kada araw ng violation. Nakasulat yan sa batas mismo, Section 28. Hindi ito banta. Sya ang dahilan kung bakit may hinihinging papel sayo.',
       'Ang totoong risk ay hindi ang multa. Sya ay ang hindi mo malaman na wala ka palang papel hanggang sa may humingi na.',
     ],
   },
@@ -394,7 +394,7 @@ kulay sa buong section.
       { label: 'Litrato ng tangke, ng takip, at ng paligid' },
       { label: 'Nakasulat na assessment kung ano ang lagay nya ngayon' },
       { label: 'Ang gap mo sa RA 9275, nakalista' },
-      { label: 'Pirmado at may petsang report, sa loob ng 48 oras' },
+      { label: 'Pirmado at may petsang report, sa loob ng 48 hours' },
       { label: 'Quotation para sa dokumentadong load, kung kailangan mo sya' },
       { label: 'BIR official receipt para sa ₱999' },
     ],
@@ -403,9 +403,9 @@ kulay sa buong section.
 }
 ```
 
-**Bakit "48 oras" at hindi "sa mismong araw":** manwal muna ang unang mga report
+**Bakit "48 hours" at hindi "sa mismong araw":** manwal muna ang unang mga report
 (ubos ang Gemini budget), at ang pangakong hindi natin kayang panindigan ay sya ring
-unang sisira ng buong page. Ang 48 oras ay may lubag, at sya pa rin ay mabilis.
+unang sisira ng buong page. Ang 48 hours ay may lubag, at sya pa rin ay mabilis.
 
 🔴 **Ang report ay hati:** pahina 1-2 = tuyot na assessment (yun ang ipa-file nya),
 pahina 3 = ang alok. Kapag hinaluan ng urgency ang assessment, brochure na sya, at
@@ -476,7 +476,7 @@ ang linyang ito**, hindi lang ang `⟦PENDING · A⟧`.
 
 ### 8 · `originStory` · `navy`
 
-Ang mekanismo. Dito nabubuhay ang 15 araw, bilang paliwanag at hindi bilang palusot.
+Ang mekanismo. Dito nabubuhay ang 15 days, bilang paliwanag at hindi bilang palusot.
 
 ```ts
 {
@@ -486,7 +486,7 @@ Ang mekanismo. Dito nabubuhay ang 15 araw, bilang paliwanag at hindi bilang palu
     heading: 'Paano nagiging papel ang laman ng tangke mo',
     paragraphs: [
       'Kinukuha ng truck ang laman ng tangke mo at diretsong dinadala sa treatment facility na tinatanggap ng DENR. Doon sya tinitimbang at ginagamot. Hindi sya itinatapon sa ilog, sa bakanteng lote, o sa kanal sa kabilang bayan.',
-      'Kapag naproseso na, doon lumalabas ang certificate. ==Labinlimang araw ang normal na hintay, at yun ang totoo.== Hindi namin sya kayang bilisan, at hindi rin namin sya bibilisan para lang may maisagot sa yo.',
+      'Kapag naproseso na, doon lumalabas ang certificate. ==15 days ang normal na hintay, at yun ang totoo.== Hindi namin sya kayang bilisan, at hindi rin namin sya bibilisan para lang may maisagot sayo.',
       'Kaya kung Setyembre ang renewal mo, ngayong Agosto dapat magsimula. Hindi kasi ang truck ang mabagal. Ang papel ang may sariling orasan.',
     ],
     image: '/img/hero-truck.webp',
@@ -495,7 +495,7 @@ Ang mekanismo. Dito nabubuhay ang 15 araw, bilang paliwanag at hindi bilang palu
 }
 ```
 
-🔴 **Ang 15 araw ay naka-print sa page nang sinadya.** Sya ang pinakamalaking
+🔴 **Ang 15 days ay naka-print sa page nang sinadya.** Sya ang pinakamalaking
 kahinaan ng alok at sya rin ang pinakamalakas na patunay na totoo ang daan. Ang
 siphoner na kayang maglabas ng certificate bukas ay hindi dumaan sa facility.
 **Aminin ang mabagal, at nagiging patunay sya.**
@@ -514,7 +514,7 @@ siphoner na kayang maglabas ng certificate bukas ay hindi dumaan sa facility.
     eyebrow: 'Ang unang pangako',
     heading: 'Ang presyo sa quotation ay ang presyo sa invoice',
     seal: { value: '₱0', unit: 'DAGDAG', label: 'Kung hindi namin nasabi' },
-    body: 'Bago pumasok ang truck, may nakasulat kang quotation: ilang load, magkano kada load, ano ang kasama. ==Kung may nakita kaming dagdag na hindi namin nasabi sa yo, kami ang sasagot doon, hindi ikaw.== Ang hindi lang sakop nito ay kung mali ang sinabi mo sa amin, halimbawa isang tangke ang sinabi mo pero dalawa pala.',
+    body: 'Bago pumasok ang truck, may nakasulat kang quotation: ilang load, magkano kada load, ano ang kasama. ==Kung may nakita kaming dagdag na hindi namin nasabi sayo, kami ang sasagot doon, hindi ikaw.== Ang hindi lang sakop nito ay kung mali ang sinabi mo sa amin, halimbawa isang tangke ang sinabi mo pero dalawa pala.',
     chips: [
       'Nakasulat na quotation bago magsimula',
       'BIR official receipt',
@@ -546,7 +546,7 @@ pagmulan ng chargeback.
     eyebrow: 'Ang pangalawang pangako',
     heading: 'Kung hindi pa kailangan ng sipsip, **sasabihin namin**.',
     seal: { value: '1', unit: 'TAON', label: 'Bisa ng credit mo' },
-    body: 'Minsan hindi pa naman puno ang tangke, at hindi mo pa talaga kailangan ng load. Sasabihin namin yun sa yo, nakasulat pa rin sa report. ==Hindi masusunog ang ₱999 mo. Nagiging credit sya sa sipsip pagdating ng panahon, isang taon ang bisa.== Kada load kami kumikita, kaya alam mo kung gaano kabigat sa amin ang linyang to. Nakasulat pa rin sya dito.',
+    body: 'Minsan hindi pa naman puno ang tangke, at hindi mo pa talaga kailangan ng load. Sasabihin namin yun sayo, nakasulat pa rin sa report. ==Hindi masusunog ang ₱999 mo. Nagiging credit sya sa sipsip pagdating ng panahon, isang taon ang bisa.== Kada load kami kumikita, kaya alam mo kung gaano kabigat sa amin ang linyang to. Nakasulat pa rin sya dito.',
   },
 }
 ```
@@ -610,15 +610,15 @@ dito sya nababagay.
     items: [
       {
         q: 'Anong papel ba talaga ang matatanggap ko?',
-        a: 'Dalawa, at magkaiba sila. Una, ang report namin sa septic check: sukat, litrato, assessment, pirma, petsa. Nasa yo yun sa loob ng 48 oras. Pangalawa, kapag nagpakuha ka ng dokumentadong load: ang manifest at ang Certificate of Treatment galing sa treatment facility. Ang manifest ay lumalabas kasabay ng trabaho. Ang certificate ay 15 araw.',
+        a: 'Dalawa, at magkaiba sila. Una, ang report namin sa septic check: sukat, litrato, assessment, pirma, petsa. Nasa yo yun sa loob ng 48 hours. Pangalawa, kapag nagpakuha ka ng dokumentadong load: ang manifest at ang Certificate of Treatment galing sa treatment facility. Ang manifest ay lumalabas kasabay ng trabaho. Ang certificate ay 15 days.',
       },
       {
         q: 'Magkano ang dokumentadong load?',
         a: '⟦PENDING · A⟧ kada load, at nagbabago sya sa laki at bilang ng tangke mo. Kaya nga may check muna: pagkatapos naming sukatin, may nakasulat kang quotation na nagsasabi kung ilang load talaga ang kailangan mo at kung magkano lahat. Kasama na yun sa ₱999. Hindi ka namin bibigyan ng numero ngayon na babaguhin namin pagdating ng truck.',
       },
       {
-        q: 'Bakit 15 araw ang certificate? May mas mabilis ba?',
-        a: 'Wala, at hindi rin namin sya ipapangako. Ang certificate ay galing sa treatment facility, hindi sa amin. Pagkatapos nilang tanggapin at gamutin ang laman, doon lang sya lumalabas. Yung 15 araw na yun mismo ang patunay na dumaan nga sa tamang daan. Kung may nag-aalok sa yo ng certificate bukas, tanungin mo kung saan dumaan.',
+        q: 'Bakit 15 days ang certificate? May mas mabilis ba?',
+        a: 'Wala, at hindi rin namin sya ipapangako. Ang certificate ay galing sa treatment facility, hindi sa amin. Pagkatapos nilang tanggapin at gamutin ang laman, doon lang sya lumalabas. Yung 15 days na yun mismo ang patunay na dumaan nga sa tamang daan. Kung may nag-aalok sayo ng certificate bukas, tanungin mo kung saan dumaan.',
       },
       {
         q: 'May suki na kaming pasipsip. Mas mura sila. Bakit kami lilipat?',
@@ -626,7 +626,7 @@ dito sya nababagay.
       },
       {
         q: 'Pwede bang yung ilan lang sa loads namin ang idokumento? Para makatipid.',
-        a: 'Hindi kami papayag. At sasabihin ko sa yo nang diretso kung bakit, kahit alam kong may ibang papayag: ang papel na hindi sumasakop sa lahat ng load ay hindi proteksyon. Ikaw pa rin ang generator ng lahat ng yun. At may hawak ka pang papel na nagsasabing ayos ka, kaya hindi ka na maghahanap ng totoong solusyon. Yun ang mas malala kaysa sa walang papel. Kapag ganon ang hanap mo, mas mabuting sa iba ka na lang kumuha.',
+        a: 'Hindi kami papayag. At sasabihin ko sayo nang diretso kung bakit, kahit alam kong may ibang papayag: ang papel na hindi sumasakop sa lahat ng load ay hindi proteksyon. Ikaw pa rin ang generator ng lahat ng yun. At may hawak ka pang papel na nagsasabing ayos ka, kaya hindi ka na maghahanap ng totoong solusyon. Yun ang mas malala kaysa sa walang papel. Kapag ganon ang hanap mo, mas mabuting sa iba ka na lang kumuha.',
       },
       {
         q: 'May official receipt ba? Kailangan namin sya sa libro.',
@@ -664,7 +664,7 @@ Sya ang `⟦PENDING · B⟧` sa ibaba.
     heading: 'Kanino nakapangalan ang papel',
     body: [
       '⟦PENDING · B⟧ Ang manifest at ang Certificate of Treatment ay nakapangalan sa negosyo mo, hindi sa amin. Ikaw ang generator, kaya ang papel ay dapat nagsasabi ng pangalan mo.',
-      '⟦PENDING · B⟧ Ibig sabihin nun, kapag may humingi sa yo ng patunay, hindi mo kailangang tumawag muna sa amin. Nasa yo na sya.',
+      '⟦PENDING · B⟧ Ibig sabihin nun, kapag may humingi sayo ng patunay, hindi mo kailangang tumawag muna sa amin. Nasa yo na sya.',
       'Ang hinahanap sa inspection ay hindi kung sino ang kumuha. Ang hinahanap ay kung saan napunta ang waste mo, at ano ang katunayan nun.',
     ],
   },
@@ -674,7 +674,7 @@ Sya ang `⟦PENDING · B⟧` sa ibaba.
 **FALLBACK habang wala pa ang sagot**, ito ang ligtas ngayon, at ito lang ang
 pwedeng mabuhay sa page bago ang tawag:
 
-> `Ang manifest ay may pangalan ng negosyo mo, at sya ang katunayan na sa DENR-accredited na facility napunta ang waste mo. Sabihin mo lang sa amin kung ano ang eksaktong hinihingi sa yo, at titingnan natin kung ano ang kaya naming ilabas.`
+> `Ang manifest ay may pangalan ng negosyo mo, at sya ang katunayan na sa DENR-accredited na facility napunta ang waste mo. Sabihin mo lang sa amin kung ano ang eksaktong hinihingi sayo, at titingnan natin kung ano ang kaya naming ilabas.`
 
 **Bakit hindi pwedeng manghula:** ang buong bagay na binibili ni Paolo ay **papel
 na may pangalan nya.** Kung sa Oceanides pala nakapangalan ang certificate, hindi sya
@@ -697,24 +697,24 @@ ang presyo, ang kalendaryo lang ang gumagalaw.
     heading: 'Hindi tumataas ang presyo. **Ang petsa ang gumagalaw.**',
     body: [
       'Wala kaming countdown dito at walang diskwentong mawawala mamaya. Pareho pa ring presyo sa susunod na buwan.',
-      'Ang nagbabago lang ay kung ilang araw na lang ang natitira bago ang renewal mo. Labinlimang araw ang certificate, at hindi sya nagmamadali kahit ikaw ay nagmamadali na.',
+      'Ang nagbabago lang ay kung ilang araw na lang ang natitira bago ang renewal mo. 15 days ang certificate, at hindi sya nagmamadali kahit ikaw ay nagmamadali na.',
     ],
     compare: {
       nowLabel: 'Kapag ngayon ka nag-book',
       nowItems: [
-        'May report ka sa loob ng 48 oras. Kahit hindi ka pa magpasipsip, may naipa-file ka na.',
-        'Kasya pa ang 15 araw bago ang renewal mo.',
+        'May report ka sa loob ng 48 hours. Kahit hindi ka pa magpasipsip, may naipa-file ka na.',
+        'Kasya pa ang 15 days bago ang renewal mo.',
         'Ikaw ang pumipili ng araw kung kailan papasok ang truck.',
       ],
       laterLabel: 'Kapag may humingi na',
       laterItems: [
-        'Kulang na ang 15 araw, at walang mabibilis dun.',
+        'Kulang na ang 15 days, at walang mabibilis dun.',
         'Kung ano ang makuha mo, yun na. Wala ka nang oras mamili.',
         'Dyan mismo nagsisimula ang pag-iisip ng papel na hindi totoo. Doon nagsisimula ang mas malaking problema.',
       ],
     },
     close:
-      'Walang mawawala sa yo kapag naghintay ka, maliban sa araw. ==At ang araw lang naman ang hindi kayang bilisan ng kahit sinong siphoner.==',
+      'Walang mawawala sayo kapag naghintay ka, maliban sa araw. ==At ang araw lang naman ang hindi kayang bilisan ng kahit sinong siphoner.==',
   },
 }
 ```
@@ -740,8 +740,8 @@ L8, isang anchor. Lahat ng button sa page ay `#lead-form`, walang pangalawang al
   props: {
     items: [
       'Yung pangako namin sa presyo, totoo: kung may dagdag na hindi namin nasabi sa quotation, kami ang sasagot, hindi ikaw. Nakasulat yan sa taas, hindi lang salita sa telepono.',
-      'Kung hindi mo pa kailangan ngayon, i-save mo na lang tong page. Kapag may nagkuwento sa yo ng mas murang pasipsip, dalawang tanong lang: saan itatapon, at may manifest ba. Yun ang pinakamabilis na paraan para malaman kung papel ba talaga ang binabayaran mo.',
-      'Kung wala pang 15 araw ang renewal o inspection mo, mag-message ka pa rin, pero sasabihin ko na agad: hindi aabot ang certificate. Ang kaya naming ibigay ay ang septic check at ang report, at ang simula ng tamang daan para sa susunod. Mas mabuting marinig mo yan ngayon kaysa sa ikatlong linggo.',
+      'Kung hindi mo pa kailangan ngayon, i-save mo na lang tong page. Kapag may nagkuwento sayo ng mas murang pasipsip, dalawang tanong lang: saan itatapon, at may manifest ba. Yun ang pinakamabilis na paraan para malaman kung papel ba talaga ang binabayaran mo.',
+      'Kung wala pang 15 days ang renewal o inspection mo, mag-message ka pa rin, pero sasabihin ko na agad: hindi aabot ang certificate. Ang kaya naming ibigay ay ang septic check at ang report, at ang simula ng tamang daan para sa susunod. Mas mabuting marinig mo yan ngayon kaysa sa ikatlong linggo.',
     ],
   },
 }
@@ -770,7 +770,7 @@ itaas.**
     brandLine:
       'Oceanides Plumbing Siphoning & Pest Management Services OPC. Registered sa SEC, BIR, at DENR.',
     disclaimer:
-      'Ang ₱999 ay para sa septic check at report sa loob ng Metro Manila. Ang presyo ng dokumentadong load ay depende sa laki at sa bilang ng load, at nakasulat sya sa quotation bago magsimula. Ang Certificate of Treatment ay galing sa treatment facility at 15 araw ang karaniwang hintay.',
+      'Ang ₱999 ay para sa septic check at report sa loob ng Metro Manila. Ang presyo ng dokumentadong load ay depende sa laki at sa bilang ng load, at nakasulat sya sa quotation bago magsimula. Ang Certificate of Treatment ay galing sa treatment facility at 15 days ang karaniwang hintay.',
   },
 }
 ```
@@ -793,12 +793,12 @@ thankYou: {
   steps: [
     'Tatawagan ka namin para sa schedule. 8AM hanggang 5PM kami tumatawag, kaya kung gabi ka nag-book, bukas ng umaga ang tawag.',
     'Susukatin at kukunan ng litrato ni Marvin o ni Gabriel ang tangke mo. Mga isang oras lang sya.',
-    'Sa loob ng 48 oras, nasa email mo na ang report na may pirma. Kasama na ang quotation kung kailangan mo ng dokumentadong load.',
+    'Sa loob ng 48 hours, nasa email mo na ang report na may pirma. Kasama na ang quotation kung kailangan mo ng dokumentadong load.',
   ],
   nextStep: {
     label: 'I-save ang number namin',
     href: 'tel:+639352589927',
-    blurb: 'I-save mo ito para hindi ka na maghanap kapag may humingi na ng papel sa yo.',
+    blurb: 'I-save mo ito para hindi ka na maghanap kapag may humingi na ng papel sayo.',
   },
   phone: PHONE,
   phoneLabel: PHONE_LABEL,
@@ -806,13 +806,13 @@ thankYou: {
     qualifierId: 'renewal_window',
     fallback: 'Wala pang schedule, o hindi ko alam',
     variants: {
-      'Sa loob ng 30 araw': {
+      'Sa loob ng 30 days': {
         title: 'Mahigpit ang oras mo. Ito ang totoo.',
         blocks: [
           {
             heading: 'Basahin mo to bago pa tayo mag-usap',
             body: [
-              'Labinlimang araw ang certificate mula sa treatment facility, at hindi namin sya kayang bilisan. Kung wala pang 15 araw ang inspection mo, hindi sya aabot. Sinasabi ko na sa yo ngayon para hindi ka umasa.',
+              '15 days ang certificate mula sa treatment facility, at hindi namin sya kayang bilisan. Kung wala pang 15 days ang inspection mo, hindi sya aabot. Sinasabi ko na sayo ngayon para hindi ka umasa.',
               'Ang kaya naming ibigay bago yun: ang septic check at ang pirmadong report, at ang manifest kapag napasipsip agad. Sa maraming inspection, malaking pagkakaiba na yun kumpara sa walang maipapakita.',
               'Kapag inuna ka namin sa pila, doon galing yun sa sagot mong to.',
             ],
@@ -821,19 +821,19 @@ thankYou: {
             heading: 'Ihanda mo na habang naghihintay',
             body: [
               'Ang eksaktong pangalan ng negosyo mo at ang TIN, para tama agad ang OR at ang manifest.',
-              'Kung ano ang eksaktong hinihingi sa yo. Kunan mo ng litrato ang notice o ang checklist kung meron, at ipadala mo sa amin.',
+              'Kung ano ang eksaktong hinihingi sayo. Kunan mo ng litrato ang notice o ang checklist kung meron, at ipadala mo sa amin.',
               'Kung may papel ang huling pasipsip nyo, ihanda mo. Kung wala, sabihin mo lang, mas madalas yun kaysa sa akala mo.',
             ],
           },
         ],
       },
-      'Sa loob ng 1 hanggang 3 buwan': {
+      'Sa loob ng 1 hanggang 3 months': {
         title: 'Tama ang timing mo.',
         blocks: [
           {
             heading: 'Bakit tama',
             body: [
-              'Labinlimang araw ang certificate mula sa treatment facility. Sa loob ng 1 hanggang 3 buwan, sobra-sobra pa yun, kaya walang magmamadali, at ikaw pa ang pipili ng araw.',
+              '15 days ang certificate mula sa treatment facility. Sa loob ng 1 hanggang 3 months, sobra-sobra pa yun, kaya walang magmamadali, at ikaw pa ang pipili ng araw.',
               'Ito rin ang pagkakataong makita kung ilang load talaga ang kailangan bago pa dumating ang deadline. Mas mura yun kaysa sa mahulaan sa huling linggo.',
             ],
           },
@@ -847,7 +847,7 @@ thankYou: {
           },
         ],
       },
-      'Mahigit 3 buwan pa': {
+      'Mahigit 3 months pa': {
         title: 'Maaga ka, at mabuti yun.',
         blocks: [
           {
@@ -881,7 +881,7 @@ thankYou: {
             body: [
               'Ang eksaktong pangalan ng negosyo mo at ang TIN, para tama agad ang OR.',
               'Kung may natatandaan kang huling pasipsip at may naibigay silang papel, ihanda mo. Kung wala, sabihin mo lang.',
-              'Kung may notice o checklist na naibigay sa yo kahit kailan, kunan mo ng litrato at ipadala.',
+              'Kung may notice o checklist na naibigay sayo kahit kailan, kunan mo ng litrato at ipadala.',
             ],
           },
         ],
