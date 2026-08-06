@@ -255,8 +255,17 @@ blockquote .meta{display:block;margin-top:8px;font-style:normal;}
       (<code>agent_lessons.md</code>, 2026-06-27). Sabi mismo ng komento sa taas ng code:
       <em>&ldquo;Surface every origin/* branch ahead of main.&rdquo;</em> Hindi every &mdash; 12.</p>
       <p style="margin-bottom:0;">Ang pinakamatandang branch na hindi mo nakikita ay mula pa
-      <strong>2026-05-15</strong>. Isang linya lang ang ayos: i-print ang natitirang bilang kapag
-      <code>flight &gt; shown</code>.</p>
+      <strong>2026-05-15</strong>. Ang cap mismo ang nagpapatuloy sa pagkakamali &mdash; hindi sya
+      nag-aayos, nagtatago lang.</p>
+    </div>
+
+    <div class="glass gold">
+      <div class="cardhead"><h3>Ayos na &mdash; kasabay ng session na to</h3><span class="tag ok">NAKA-PUSH</span></div>
+      <p style="margin-bottom:0;">Isang variable na ngayon ang cap (<code>BRANCH_CAP</code>), at may
+      sumusunod na linya kapag <code>total &gt; shown</code>: bilang ng natira, sabing
+      <strong>INCOMPLETE ang listahan</strong>, at ang eksaktong utos para makita lahat &mdash;
+      <code>git branch -r --no-merged origin/main</code> (pareho ang {{BRANCH_COUNT}}, na-verify).
+      Hindi tinanggal ang cap; ang kulang ay ang <em>senyas</em>, hindi ang haba.</p>
     </div>
 
     <h3 style="margin-top:38px;">Lahat ng {{BRANCH_COUNT}}, buo</h3>
@@ -389,7 +398,7 @@ blockquote .meta{display:block;margin-top:8px;font-style:normal;}
     <p class="eyebrow">// SUSUNOD &middot; SA AYOS</p>
     <h2>Ang run <span class="serif">sheet.</span></h2>
     <div class="run" style="margin-top:26px;">
-      <div class="glass"><div class="body"><strong>Ayusin ang 12-branch cap sa hook</strong><span class="owner agent">ISANG LINYA</span><p class="meta" style="margin:6px 0 0;">Kapag <code>flight &gt; shown</code>, i-print ang natitira. Ang hook na to ang tanging depensa laban sa &ldquo;hindi pa nagagawa&rdquo; &mdash; at tahimik syang kulang ngayon.</p></div></div>
+      <div class="glass"><div class="body"><strong>Ayusin ang 12-branch cap sa hook</strong><span class="owner agent">TAPOS &middot; 08-06</span><p class="meta" style="margin:6px 0 0;">Sinasabi na nya ngayon kapag may itinatago, at itinuturo ang <code>git branch -r --no-merged origin/main</code>. Ang hook na to ang tanging depensa laban sa &ldquo;hindi pa nagagawa.&rdquo;</p></div></div>
       <div class="glass"><div class="body"><strong>I-triage ang {{BRANCH_HIDDEN}} na nakatagong branch</strong><span class="owner">NEIL + AGENT</span><p class="meta" style="margin:6px 0 0;">Karamihan docs mula Hunyo, malamang dapat nang isara. Pero <code>fix/hook-refs-hardening</code> (+4, 8 file) at <code>feat/sfx-v2-diegetic-layer</code> (+2, 30 file) ay code. Basahin ang <code>agent-lesson-branch-triage</code>: ang tanong ay kung <em>solb na ba ang isyu</em>, hindi kung luma ang branch.</p></div></div>
       <div class="glass"><div class="body"><strong>Patayin o kumpirmahin ang nightly regression</strong><span class="owner">NEIL</span><p class="meta" style="margin:6px 0 0;">Habang ubos ang budget, ingay lang ang inilalabas nito. Kung budget nga, patayin muna &mdash; kundi hindi na natin makikita ang susunod na totoong bagsak.</p></div></div>
       <div class="glass"><div class="body"><strong>artifact-noir Steps 1&ndash;4</strong><span class="owner agent">TULOY NA</span><p class="meta" style="margin:6px 0 0;">Pasado ang Step 0 gate. Isa-isang commit; walang buburahin sa CLAUDE.md hangga&rsquo;t hindi napapatunayan ang bawat hakbang.</p></div></div>
