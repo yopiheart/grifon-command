@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- The bridge page (L1). Not indexed: it is only ever reached by a real
+         conversion, and an indexed thank-you page pollutes conversion counts. -->
+    <meta name="robots" content="noindex" />
+    <!-- Static title, parehong dahilan ng index.html: hindi nagpapatakbo ng JS
+         ang scraper. Walang OG tags dito, sinadya — `noindex` sya at hindi
+         dapat may magandang link preview ang isang page na naaabot lang ng
+         totoong conversion. -->
+    <title>Booking confirmed · Oceanides</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/thankyou-main.tsx"></script>
+  </body>
+</html>

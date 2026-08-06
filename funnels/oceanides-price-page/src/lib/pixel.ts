@@ -64,6 +64,26 @@ export const markLeadPending = (): void => {
   }
 };
 
+// Scroll evidence. `Lead` tells us who SUBMITTED. Nothing ever told us who
+// REACHED the form, and on a 17-section page those are two different failures
+// with opposite fixes. The 2026-08-04 campaign put 77 landing page views on this
+// page and got 0 submissions, which could mean "they read the offer and refused"
+// or "they bounced before the form ever painted" — and we could not tell which,
+// so we could not know whether to rewrite the offer or move the form.
+//
+// trackCustom, deliberately, NOT a standard event: `Lead` is the AEM #1 priority
+// and the campaign's optimisation target, and dropping a second standard event
+// into the same dataset changes what Meta ranks and relearns. A custom name is
+// inert to delivery and still shows up in Events Manager.
+let formViewedSent = false;
+
+/** Fires ONCE per page load, the first time the lead form enters the viewport. */
+export const trackFormViewed = (pixelId?: string): void => {
+  if (!pixelId || !window.fbq || formViewedSent) return;
+  formViewedSent = true;
+  window.fbq('trackCustom', 'FormViewed');
+};
+
 /** Standard `Lead` event — fires once per real submission, never on a reload. */
 export const trackLead = (pixelId?: string): void => {
   if (!pixelId || !window.fbq) return;

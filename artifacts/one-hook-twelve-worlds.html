@@ -9,20 +9,20 @@
   --gold-soft:rgba(255,204,0,.06);
   /* Contrast-audited against the charcoal ground (#131316), 2026-07-29.
      Ratios in comments are measured, not estimated. AA=4.5:1, AAA=7:1. */
-  --silver-a:#FAFAFA;   /* 15.9:1 — emphasis text (strong, .hookline, td b) */
+  --silver-a:#FAFAFA;   /* 15.9:1 -- emphasis text (strong, .hookline, td b) */
   /* --silver-b removed: it only existed as the dark stop of the clipped-gradient
      heading ramp, and that whole mechanism is gone. Headings are solid #F5F5F7. */
-  --body:#A1A1AA;       /* 7.3:1 — AAA, fine for body */
-  --meta:#9A9AA3;       /* 6.7:1 — was #71717A (3.89:1), which FAILED AA at the 10-11px it was used at */
+  --body:#A1A1AA;       /* 7.3:1 -- AAA, fine for body */
+  --meta:#9A9AA3;       /* 6.7:1 -- was #71717A (3.89:1), which FAILED AA at the 10-11px it was used at */
   --line:rgba(255,255,255,.10);
-  --flag:#FF8563;       /* 7.9:1 — was #E0563A (4.98:1), used at 9.5-11px where AAA matters most */
+  --flag:#FF8563;       /* 7.9:1 -- was #E0563A (4.98:1), used at 9.5-11px where AAA matters most */
   --display:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
   --serif:'Instrument Serif',Georgia,'Times New Roman',serif;
   --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
   --wrap:min(68ch,100%);
 }
 
-/* NOIR commits to a single dark world by design — the subject is a charcoal
+/* NOIR commits to a single dark world by design -- the subject is a charcoal
    swipe file, and a light inversion would break the ground/grain/glass system.
    Both theme signals are pinned to the same palette rather than left undefined. */
 :root[data-theme="light"],:root[data-theme="dark"]{color-scheme:dark;}
@@ -86,17 +86,17 @@ h1,h2,h3{
      inverted and far darker than either gradient stop, while every SOLID-colour
      element on the same screen (gold eyebrow, gold italic serif, body, mono
      captions) rendered perfectly. The clip was the only differing feature.
-     A headless-Chromium viewport check CANNOT catch this — Chromium supports the
+     A headless-Chromium viewport check CANNOT catch this -- Chromium supports the
      property; the WebView mispaints it. So the fragile feature is removed rather
      than patched. 17.3:1 on every line, identical top to bottom. */
   color:#F5F5F7;
-  /* text-shadow is unreliable on clipped text but rock-solid on solid text —
+  /* text-shadow is unreliable on clipped text but rock-solid on solid text --
      which is exactly what this is now. Gold bloom, maximum compatibility. */
   text-shadow:0 0 18px rgba(255,204,0,.18);
 }
 h1{font-size:clamp(2.7rem,10.5vw,5.4rem);}
 h2{font-size:clamp(1.7rem,5.4vw,2.6rem);}
-/* h3 is small — an 18px bloom would haze it. Solid, no glow. */
+/* h3 is small -- an 18px bloom would haze it. Solid, no glow. */
 h3{font-size:clamp(1.05rem,3.2vw,1.3rem);letter-spacing:0;text-shadow:none;}
 .serif{
   font-family:var(--serif);

@@ -15,6 +15,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { resolve, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { finalize } from './_gates.mjs';
 
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const TPL = join(REPO_ROOT, 'tools', 'artifacts', 'grifon-funnel-review.tpl.html');
@@ -24,19 +25,12 @@ const OUT = outFlag !== -1 && process.argv[outFlag + 1]
   ? resolve(process.argv[outFlag + 1])
   : join(REPO_ROOT, 'artifacts', 'grifon-funnel-review.html');
 
-const html = readFileSync(TPL, 'utf8');
-
-// Sanity gates: a truncated template must never ship silently.
-const required = ['<title>', 'class="ground"', 'class="grain"', 'class="sig"', '</script>'];
-const missing = required.filter((token) => !html.includes(token));
-if (missing.length) {
-  console.error(`BUILD_FAILED: template missing ${missing.join(', ')}`);
-  process.exit(1);
-}
-if (/background-clip:\s*text/i.test(html)) {
-  console.error('BUILD_FAILED: background-clip:text is banned in artifacts (Android WebView mispaints it)');
-  process.exit(1);
-}
+// Shared gates: truncation guard, the banned clipped-text property, and the
+// pure-ASCII rule that keeps the bare-file twin from mojibaking. See _gates.mjs.
+const html = finalize(readFileSync(TPL, 'utf8'), {
+  label: 'grifon-funnel-review',
+  required: ['<title>', 'class="ground"', 'class="grain"', 'class="sig"', '</script>'],
+});
 
 writeFileSync(OUT, html, 'utf8');
 console.log(`wrote ${OUT} (${Math.round(html.length / 1024)}KB)`);

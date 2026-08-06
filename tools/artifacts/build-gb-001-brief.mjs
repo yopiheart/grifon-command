@@ -22,6 +22,7 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
+import { finalize } from './_gates.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, '..', '..');
@@ -66,11 +67,15 @@ for (const [token, value] of Object.entries(tokens)) {
   html = html.split(token).join(value);
 }
 
-const leftover = html.match(/__[A-Z0-9_]+__/g);
-if (leftover) {
-  console.error(`\n✗ hindi na-substitute na token: ${[...new Set(leftover)].join(', ')}`);
-  process.exit(1);
-}
+// Shared gates: unsubstituted-token guard, banned clipped-text property, at ang
+// pure-ASCII rule. Ang huli ang mahalaga dito -- ang twin na to ang binubuksan
+// diretso sa disk, at 45 non-ASCII ang laman ng body nya (kasama ang bawat `₱`),
+// kaya windows-1252 mojibake ang lahat ng presyo bago ito na-gate. Tingnan
+// ang _gates.mjs.
+html = finalize(html, {
+  label: 'gb-001-brief',
+  leftover: [/__[A-Z0-9_]+__/g],
+});
 
 await mkdir(dirname(OUT), { recursive: true });
 await writeFile(OUT, html, 'utf8');

@@ -217,6 +217,11 @@ ${cardsHtml}
 </script>
 `;
 
+// NOT wired to _gates.mjs, on purpose (2026-08-06): this builder already emits a
+// charset-declaring copy below, its committed twin is already pure ASCII, and it
+// needs Playwright to run — so wiring it here could not be verified in the same
+// session. If you edit this file, run the gate by hand or wire it and rebuild:
+//   node -e "import('./tools/artifacts/_gates.mjs').then(g=>g.assertArtifact(require('fs').readFileSync('artifacts/km-value-week-01.html','utf8'),{label:'km-week-01'}))"
 writeFileSync(OUT, html);
 console.log('wrote ' + OUT + ' (' + (html.length / 1024 / 1024).toFixed(2) + ' MB)');
 

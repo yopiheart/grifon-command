@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="tl">
+<head>
+<meta charset="utf-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+<style>
+  /* Paolo trust card (B2B compliance) — Oceanides world: navy + amber print.
+     Kaiba sya sa hook card: hindi sya humahabol ng pansin, humahabol sya ng
+     tiwala. Bawat elemento dito ay may sinusukat na dahilan:
+
+       receipts strip  -> Stripe E71 (82): totoong numerong ma-ve-verify, hindi selyo.
+                          Kasama rin ito sa sariling peklat namin (maling DENR region
+                          sa badge artwork) at sa L9 sa paolo-page-copy.md.
+       authority line  -> Wise/Meta (78-81): opisyal na lockup + saklaw.
+       honest footnote -> Wise E75 (81): "Fees may apply..." — inaamin ang limitasyon
+                          sa mismong creative. Dito: 15 days ang certificate.
+       clipboard plate -> tinutugunan ang pangalang gap sa post3-senyales (63):
+                          "casual residential backyard... raw concrete block wall". */
+  :root {
+    --amber: #F5B301;
+    --navy2: #0A1F45;
+    --ink:   #0B1B33;
+    --meta:  #5B6B85;
+    --ocean: #1C63AD;
+    --rule:  #D8DEE8;
+    --body: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+    --mono: ui-monospace, 'Cascadia Mono', Consolas, 'SF Mono', Menlo, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: #333; }
+  #canvas {
+    width: 1080px; height: 1350px;
+    position: relative; overflow: hidden;
+    font-family: var(--body);
+    background: var(--navy2);
+    -webkit-font-smoothing: antialiased;
+  }
+  .bg {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%; object-fit: cover; object-position: center 28%;
+    filter: contrast(1.06) saturate(.96) brightness(.92);
+  }
+  /* mas malalim na scrim kaysa hook card — dapat basahin ang papel, hindi ang bakuran */
+  .seat {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 72%;
+    background: linear-gradient(to top, rgba(10,31,69,.92) 30%, rgba(10,31,69,0));
+  }
+  /* Ang eyebrow ay dumadaan sa maliwanag na truck at langit — kailangan nya ng
+     sariling lupa, kundi nawawala ang amber sa pilak. Hindi ito hango sa critic,
+     nakita sya ng mata. */
+  .cap {
+    position: absolute; left: 0; right: 0; top: 0; height: 190px;
+    background: linear-gradient(to bottom, rgba(10,31,69,.78), rgba(10,31,69,0));
+  }
+  .eyebrow {
+    position: absolute; top: 54px; left: 56px; right: 56px;
+    font-weight: 800; font-size: 22px; letter-spacing: 2.4px;
+    text-transform: uppercase; color: var(--amber);
+  }
+  .card {
+    position: absolute; left: 48px; right: 48px; bottom: 48px;
+    background: #FFFFFF;
+    border-top: 10px solid var(--amber);
+    border-radius: 20px;
+    padding: 38px 44px 32px;
+    box-shadow: 0 20px 52px rgba(0,0,0,.42);
+  }
+  .who { display: flex; align-items: center; gap: 18px; }
+  .who img {
+    width: 84px; height: 84px; border-radius: 50%;
+    object-fit: cover; object-position: center 30%;
+    border: 3px solid var(--navy2);
+  }
+  .who .name { font-weight: 900; font-size: 28px; color: var(--ink); line-height: 1.1; }
+  .who .sub  { margin-top: 4px; font-weight: 700; font-size: 18px; color: var(--meta); }
+  .hook {
+    margin-top: 24px;
+    font-weight: 800; font-size: 52px; line-height: 1.14;
+    color: var(--ink); letter-spacing: -0.6px;
+  }
+  .hook em { font-style: normal; color: var(--ocean); }
+
+  /* Ang receipts strip — ito ang buong punto ng card na ito. */
+  .receipts {
+    margin-top: 28px; padding-top: 22px;
+    border-top: 2px solid var(--rule);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 18px 28px;
+  }
+  .receipts .r .k {
+    font-weight: 700; font-size: 15px; letter-spacing: .6px;
+    text-transform: uppercase; color: var(--meta);
+  }
+  .receipts .r .v {
+    margin-top: 5px;
+    font-family: var(--mono); font-size: 23px; font-weight: 600;
+    color: var(--ink); letter-spacing: -.2px;
+  }
+  .authority {
+    margin-top: 24px;
+    font-weight: 700; font-size: 21px; line-height: 1.42; color: var(--ink);
+  }
+  .foot {
+    margin-top: 18px; padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    font-weight: 600; font-size: 17px; line-height: 1.45; color: var(--meta);
+  }
+</style>
+</head>
+<body>
+  <div id="canvas">
+    <img class="bg" src="%%BG%%" alt="" />
+    <div class="seat"></div>
+    <div class="cap"></div>
+    <div class="eyebrow">%%EYEBROW%%</div>
+    <div class="card">
+      <div class="who">
+        <img src="../../profile-assets/profile-4-fullteeth-van.png" alt="Kuya Marvin" />
+        <div>
+          <div class="name">Oceanides</div>
+          <div class="sub">DENR-registered hauler &middot; Metro Manila</div>
+        </div>
+      </div>
+      <div class="hook">%%HOOK%%</div>
+      <div class="receipts">
+        <div class="r">
+          <div class="k">DENR Certificate of Treatment No.</div>
+          <div class="v">BEHMC(1)WHN0095001WW260318</div>
+        </div>
+        <div class="r">
+          <div class="k">DENR ID No.</div>
+          <div class="v">OL-TR-R3-14-000080</div>
+        </div>
+      </div>
+      <div class="authority">%%AUTHORITY%%</div>
+      <div class="foot">%%FOOT%%</div>
+    </div>
+  </div>
+</body>
+</html>

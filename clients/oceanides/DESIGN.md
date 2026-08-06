@@ -170,9 +170,16 @@ Dalawang rule na lumabas dito:
   → `'Helvetica Neue',Arial`. **Sa artifacts** (CSP blocks font CDNs): walang
   Google Fonts `<link>` — condensed system stack o inline `@font-face` data
   URI lang. Sa `templates/` (nire-render lokal): Google Fonts OK.
-- **Copy voice:** Taglish 50/50 kalmadong-eksperto —
+- **Copy voice:** Taglish, kalmadong-eksperto —
   [`taglish-voice.md`](../../.claude/skills/_shared/taglish-voice.md). Mahabang
   copy ay kay `grifon-cmo`; ang design ay bumabalot.
+  ⛔ **Hindi ratio ang rule, PAGHAHATI** (naitama 2026-08-06; ang lumang "50/50"
+  dito ay superseded ng CLAUDE.md at ng `taglish-voice.md` §Mixing Ratio: *"Ang
+  panuntunan ay hindi porsyento"*). English ang bagay at logistics (septic tank,
+  price, truck, schedule, receipt); Tagalog ang pantao — ang awa, ang diagnosis,
+  ang close. Kapag hinabol mo ang numero, napapalitan mo ang magandang Tagalog
+  ng English na walang dahilan. Ang KM-003 hook ay purong Tagalog at **98.5% ang
+  retention** sa 7,047 na tao; babagsak sya sa 50/50 na test.
 
 ## Materials & elevation — print, hindi glass
 

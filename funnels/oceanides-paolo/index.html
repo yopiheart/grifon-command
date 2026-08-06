@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- 🔴 META DOMAIN VERIFICATION — HUWAG BURAHIN (2026-08-02).
+         Ito ang pruweba sa Meta na atin ang oceanidesph.com. Kapag nawala,
+         nawawala ang verification, at kasama nun ang kontrol natin sa web events
+         (Aggregated Event Measurement) at ang attribution ng ads. TAHIMIK sya
+         mawawala: gagana pa rin ang page, ang ads na lang ang sisira.
+
+         Nakalagay sya DITO, sa static <head>, at hindi sa documentMeta.ts —
+         sabi mismo ng Meta: "Verification will fail if the meta-tag code is
+         outside the <head> section or in a section loaded dynamically by
+         JavaScript." Ang JS-injected na tag ay HINDI nya nakikita.
+
+         Portfolio: "Neil Maglaya" 771158756811875. -->
+    <meta name="facebook-domain-verification" content="454ce2ho33u16gctyipxowtnh2eley" />
+    <!-- 🔴 STATIC META, SINADYA (2026-08-02, bago ang unang ad).
+         Ini-set pa rin ng src/lib/documentMeta.ts ang mga ito mula sa funnel.config
+         pagka-boot, at yun pa rin ang source of truth para sa BROWSER. Pero
+         **HINDI NAGPAPATAKBO NG JAVASCRIPT ANG SCRAPER NG FACEBOOK.** Ang dating
+         placeholder na title (ang salitang "Loading", may ellipsis) ang literal
+         na nakikita ng bawat link preview, share, at Messenger card. Sa page na
+         ang buong benta ay TIWALA, mukha yung sira.
+
+         Kaya nawala ang "funnel-agnostic" na kaayusan dito, at tama lang: isang
+         totoong instance to na may sariling domain, hindi na template. Kapag may
+         binago sa `meta` sa funnel.config.ts, PALITAN DIN ANG APAT NA LINYA DITO.
+         Walang gate na humuhuli nito.
+
+         Walang stylesheet o font <link> dito, sinadya rin: zero external request
+         ang page. Patay pa ang Meta Pixel sa page na to, kaya sa ngayon ay zero
+         talaga. -->
+    <title>Oceanides · DENR at LLDA na papel, Metro Manila</title>
+    <meta
+      name="description"
+      content="Magsisimula sa bayad na septic check, ₱999. Sa loob ng 48 hours, may hawak ka nang report na may sukat, litrato at pirma. Sa DENR-accredited na facility galing ang certificate."
+    />
+    <meta property="og:type" content="website" />
+    <!-- ⚠️ WALA PANG DOMAIN ANG PAGE NA TO. Ang `og:url` at ang `og:image` sa
+         ibaba ay nakaturo pa rin sa oceanidesph.com, ang domain ng price page.
+         PALITAN SILA BAGO MAG-DEPLOY. Kung ibang domain o ibang path ang
+         mapagkakasunduan, ang link preview ang unang masisira, at hindi sya
+         magsasabi sa yo: gagana pa rin ang page. -->
+    <meta property="og:url" content="https://oceanidesph.com/" />
+    <meta property="og:site_name" content="Oceanides" />
+    <meta
+      property="og:title"
+      content="Ang huling pasipsip mo, walang papel. Yun ang unang hahanapin sa inspection."
+    />
+    <meta
+      property="og:description"
+      content="DENR at LLDA na papel para sa restaurant, apartment, building, school at warehouse sa Metro Manila. Bayad na septic check, ₱999, may pirmadong report sa loob ng 48 hours."
+    />
+    <meta property="og:image" content="https://oceanidesph.com/img/hero-truck.webp" />
+    <meta property="og:image:alt" content="Puting truck ng Oceanides sa kalye sa Metro Manila" />
+    <meta property="og:locale" content="tl_PH" />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
