@@ -153,6 +153,54 @@ a composed man, blue sky, clean typography. **Tasteful is what loses here.**
    advertiser's house style, not the world's best. The ≥3-corroboration bar
    wants distinct brands before this becomes a template implication.
 
+## The axis experiment — the finding that reframes everything above (2026-08-06)
+
+A YouTube breakdown of the method supplied the missing rule: *"If you don't start
+with a really good minimum viable design or product, the gauntlet loop will just
+optimize towards probably the wrong thing."* That is testable, so it was tested.
+
+[`tools/gauntlet_rubric.mjs`](../tools/gauntlet_rubric.mjs) grades **one image at
+a time** against calibrated bands (the Kart Royale fix — no slots, so position
+bias cannot occur), with an explicit anti-generosity clause. Same 7 images, same
+model, same critic, 3 runs each. **Only the axis changed.**
+
+| Rank | ATTENTION (stop a scroll) | | TRUST (would you let them do work on your property) | |
+| --- | --- | ---: | --- | ---: |
+| 1 | E29 gruns (poop-emoji meme) | 65 | **post2-beforeafter (ours)** | **68** |
+| 2 | E18 cursor | 62 | E18 cursor | 68 |
+| 3 | E31 im8-health | 60 | **post3-senyales (ours)** | **63** |
+| 4 | **post3-senyales (ours)** | 58 | E25 gruns | 45 |
+| 5 | **post2-beforeafter (ours)** | 58 | E31 im8-health | 45 |
+| 6 | E19 gruns | 58 | E19 gruns | 35 |
+| 7 | E25 gruns | 55 | E29 gruns (poop-emoji meme) | **18** |
+
+**The ranking nearly inverts.** E29 goes from first to last, dropping 47 points.
+Our before/after card goes from fifth to first. Nothing about the images changed.
+
+**Spread is the second finding.** ATTENTION separates the field by 10 points
+(55–65); TRUST separates it by 50 (18–68). The attention axis barely
+discriminates at all.
+
+**That retroactively explains the pairwise result.** The 100%-slot-1 collapse
+recorded earlier was not the critic malfunctioning. On the attention axis these
+images are genuinely within a few points of each other, so there was nothing to
+separate and the critic fell back on position. **The gap was narrow because the
+axis was wrong.** Pick an axis that discriminates and the same critic produces a
+50-point spread with specific, routable evidence.
+
+**The business implication is the sharp one.** Marvin's cards score 63 and 68 on
+trust, beating every ad in the swipe file except Cursor (tied). The swipe-file
+winners score 18–45, and the critic names why: *"juvenile meme humour destroys
+any sense of professional credibility"* (E29), *"makes it look like a deceptive
+weight-loss gimmick"* (E31), *"makes the business behind it look like a"*
+low-credibility operator (E19). KM-003's bottleneck was conversion, not
+attention. **Copying the swipe file would have optimised the wrong axis and made
+the ads worse at the job they actually need to do.**
+
+The corrected rule for this repo: **the bar is not the hard part — the axis is.**
+A Gauntlet pointed at a wrong-but-plausible axis returns confident, precise,
+well-evidenced answers that lead somewhere you did not want to go.
+
 ## Porting the prompt style (the part that actually went viral)
 
 **First, "one-shot" is not what happened.** One prompt, yes. But per Karpathy's
