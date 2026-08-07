@@ -2,42 +2,43 @@
 
 **Stamped: 2026-08-07** (session 11)
 
-## ▶ NEXT ACTION — GAWING LINT ANG MODEL (class rules, warning muna)
+## ▶ NEXT ACTION — BASAHIN NI NEIL ANG 34 BABALA, TAPOS SAKA I-PROMOTE
 
-✅ **Tapos na ang Taglish research** (utos ni Neil, session 9) →
-[`taglish_2026_model.md`](workflows/taglish_2026_model.md), may sources.
+✅ Tapos ang research → [`taglish_2026_model.md`](workflows/taglish_2026_model.md) ·
+✅ Tapos ang lint (3 class rule, WARNING tier) · ✅ Tapos ang drift gate.
 
-Ang natitira ay gawing **gate** ang model. Blacklist pa rin ang
-[`lint-voice.mjs`](funnels/oceanides-paolo/scripts/lint-voice.mjs) at laging huli
-ng isang insidente. Tatlong **class** rule ang nakaspec na sa §8 ng model:
+Tenga mo na ang natira. Babala lang ang tatlong class rule, at ganun ang panuntunan:
+walang nagiging ERROR hangga't di mo nababasa ang totoong hits. Tingnan sa alinmang
+funnel dir: `node scripts/lint-voice.mjs`.
 
-1. **Konyo detector** — `ang \w+ (is|are|was)`, `(the|my|your) \w+ ay`, `mas better`,
-   `make` + Tagalog root. Ito ang pinaka-malinis, mekanikal talaga.
-2. **Kulang sa particle** — mahabang Tagalog na linya na walang `naman/lang/na/kasi`.
-3. **Malalim na verb** — 4+ pantig na `-in`/`-han`/`-an` na may katumbas sa affix machine.
+- **KONYO: 0 hit** sa dalawa. Malinis ang na-review mong copy, at di nag-iingay.
+- **PARTICLE: 24** · **MAHABA: 10.** Husgahan mo kung alin ang tama, ako na ang
+  mag-a-adjust o magpo-promote sa ERROR.
+- 🔴 **Isang desisyon:** `24 oras` → `24 hours` ang ginawa ng timeline rule mo. Pero
+  **idyoma yun** (`24 Oras` sa GMA), hindi tagal. Carve-out ba para sa `24 oras`?
 
-⚠️ **Warning muna, hindi failure.** Pwedeng mag-false-positive ang tatlo, at ang
-maingay na gate ay hindi na binabasa — parehong sakit ng Tier 0b. Kapag tama na
-sila sa totoong copy, saka gawing failure. Tenga pa rin ni Neil ang huling gate.
+## 🔴 14 na ERROR sa LIVE na price-page, ayos na
+53 rule lang ang kopya nya, 64 kay Paolo: **wala doon ang buong `KLASE, HINDI SALITA`
+block** kasama ang `15 days` rule na sinigawan mo. Nahuli: `24 oras`, `30 araw`,
+`sa iyo` ×7, `2 oras` ×5. Ayos na sa source; **di gagalaw ang live site** hangga't di
+ka nagde-deploy (CLI, di git-connected). Bagong gate sa CI: `npm run check:voice-sync`.
 
 ## 🧠 Ang pinakamalaking natuklasan sa research
-**May pangalan na ang kalaban: Konyo.** English ang balangkas, Tagalog ang isinasabog
-— eksaktong hugis ng lahat ng "Bad" na halimbawa sa voice spec. At may **test** na
-imbes na listahan: *alisin ang lahat ng English. May natitira bang Tagalog na
-balangkas?* Wala = Konyo, ayusin ang frame, wag magpalit ng salita. Humuhuli ito ng
-pangungusap na hindi pa naisusulat ninuman. **Kumpirmado rin ng linguistics ang rule
-#1 ni Neil** (Tagalog ang frame) at ang STEP 0a table nya (surface ang magdidikta).
+**May pangalan ang kalaban: Konyo.** English ang balangkas, Tagalog ang isinasabog,
+hugis ng lahat ng "Bad" sa voice spec. May **test** imbes na listahan: *alisin ang
+English, may Tagalog bang balangkas na natira?* Wala = Konyo. **Hindi lang panlasa**
+(Neil): English ang dominante doon, kaya pwedeng mag-American accent ang Filipino
+avatar sa Veo/TTS dahil sa ACCENT LOCK. Render bug, hindi lang register.
 
 ## 🔔 TAPOS DIN SESSION 11 — di na mapapalampas ang pulang CI
-Hindi detection failure ang 3 araw na pula (08-04 → 08-07) — agad naging pula ang
-CI. **Reader** ang sira: ~20 magkaparehong email sa channel na natutong laktawan.
-Bagong `main-status` job sa [`ci.yml`](.github/workflows/ci.yml): **isang** bukas na
-`ci-red` issue lang habang pula ang main, kusang nagsasara pag green. Binabasa ito
-ng **Health Watch v2** tuwing 08:00 PHT, CRITICAL, **kasama kung ilang araw nang
-bukas**. Napatunayan sa live run ang green at auto-close path.
-**Kumpirmado rin ang CI read** (4:22 PM run): gumana, pero **walang `gh` sa cloud
-env** — GitHub MCP tools pala ang daan, nakasulat na sa prompt. 📱 **Walang Routines
-sa phone app**, kaya ang push mismo ang buong deliverable. [`loops.md`](workflows/loops.md) Tier 0b + 6.
+Reader ang sira ng 3-araw na pula, hindi detection: ~20 magkaparehong email sa
+channel na natutong laktawan. Bagong `main-status` job sa
+[`ci.yml`](.github/workflows/ci.yml): isang bukas na `ci-red` issue lang habang pula
+ang main, kusang nagsasara pag green. Binabasa ito ng **Health Watch v2** tuwing
+08:00 PHT, CRITICAL, kasama kung ilang araw nang bukas. Napatunayan sa live run ang
+green at auto-close. **Kumpirmado rin ang CI read**, pero **walang `gh` sa cloud env**
+— GitHub MCP tools pala ang daan. 📱 **Walang Routines sa phone**, kaya ang push mismo
+ang buong deliverable. [`loops.md`](workflows/loops.md) Tier 0b + 6.
 
 ## 🅿 PAOLO — itayo, wag buksan
 Buhay pa ang gate: **pangako pa lang, walang load na dumaan, walang certificate na
@@ -68,12 +69,11 @@ trust card (`paolo-trust-a/b`, di pa nai-publish, 82 ang numero ng critic).
    `assets/ad-swipe/`, kaya may dalang axis ang corpus. Kailangan ng organic corpus.
 
 ## 🅿 PARKED
-**Oceanides:** Week 02 pack · GB-001 video · hook2 ng KM-004 · Kling b-roll ·
-watermark ni Gabriel · SEC Reg. No. · FB About · reviews · **AEM di pa verified**.
-⏸ Naka-pause ang daily; pambalik = alisin ang comment sa `schedule:`.
+**Oceanides:** Week 02 pack · GB-001 · hook2 ng KM-004 · Kling b-roll · watermark ni
+Gabriel · SEC Reg. No. · FB About · reviews · **AEM di pa verified**. ⏸ Pause ang daily.
 **Grifon:** #94.3 next · #94.2 NOT-REPRO · #92+#89/#90 ride Slice B · #93 ⛔ TUNED ·
 `artifact-noir` Steps 1-4 · 0 pa ang codex-sol lane · bump `@v5` ang
-`checkout`/`setup-node`. **Sarado na ang Rauch brief** (roadmap #27, wag i-re-evaluate).
+`checkout`/`setup-node`. **Sarado ang Rauch brief** (roadmap #27, wag i-re-evaluate).
 
 ## ⛔ Gated · 🔧 Arm before starting
 🔴 **UBOS ANG GEMINI API BUDGET** para sa video. Manwal sa Flow. Gated: Kling.

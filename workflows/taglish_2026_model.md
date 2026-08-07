@@ -255,18 +255,78 @@ Writing order — frame first, words last. This inverts how the agent kept faili
 6. **Run the Konyo test** (§1). Strip the English — is there a Tagalog skeleton left?
 7. **Final ear test** (unchanged): *"Sound like a real Filipino vlog, not a manual."*
 
-### Proposed follow-up — class-based lint rules (NOT yet built)
+### ✅ SHIPPED 2026-08-07 — class-based lint rules (WARNING tier)
 
-`lint-voice.mjs` is a word blacklist by design ("deliberately DUMB"). This model enables
-**class** rules, which is the shape its own 2026-08-06 comment already asked for. Candidates:
+`lint-voice.mjs` now has **two tiers**: the existing word blacklist stays an ERROR (fails
+the build), and three **class** rules ship as WARNINGS (print, never fail). Warning-first
+is deliberate — a noisy gate stops being read, which is the same reader failure as
+`loops.md` Tier 0b.
 
-- **Konyo detector:** `ang \w+ (is|are|was|will)`, `(the|my|your) \w+ ay\b`, `mas better`, `make + Tagalog root`.
-- **Missing-particle warning:** customer-facing Tagalog sentence over ~8 words containing zero particles from the §3 inventory — a *warning*, not a failure, since it is heuristic.
-- **Deep-verb heuristic:** ≥4-syllable Tagalog verb with `-in`/`-han`/`-an` where an affix-machine form exists.
+| Rule | What it catches | Live result |
+|---|---|---|
+| **(A) KONYO** | English frame + Tagalog inserts, incl. `mas better`, `make + Tagalog root`, `the X ay`, `ang X is` | **0 hits** on both funnels — the reviewed copy is clean, and the rule is not spamming |
+| **(B) PARTICLE** | Tagalog sentence ≥14 words, ≥30% Tagalog markers, **zero** particles | 16 (paolo) + 8 (price-page) |
+| **(C) MAHABA** | ≥6-syllable word carrying Tagalog affixes | 5 + 5 |
 
-⚠️ Each of these can false-positive, and a noisy gate gets ignored — the same reader
-failure as `loops.md` Tier 0b. **Ship them as warnings first, promote to failures only
-after they have fired correctly on real copy.** Neil's ear stays the gate.
+**🔴 (A) is not just taste — it is a render bug (Neil, 2026-08-07).** Veo/TTS reads the
+accent off the **dominant language of the line** (ACCENT LOCK, `taglish-voice.md` rule #7).
+Konyo's frame is English, so an English-dominant line can make a **Filipino avatar speak
+with an American accent**. On spoken surfaces the Konyo detector is protecting the render,
+not the register.
+
+**The calibration is the story worth keeping.** First run: **113 warnings, nearly all
+junk** — camelCase English identifiers from `config.types.ts` (`surfaceElevated` →
+`surfaceelevated`, 7 vowels). Three fixes took it to a usable 21:
+
+1. **A line is not prose.** Prose lives in *quoted strings* (`.ts`/`.tsx`) and *text
+   outside tags* (`.html`). Attribute values (`className`, `href`) are stripped.
+2. **camelCase is an identifier, not a word** — detected before lowercasing, since
+   lowercasing destroys the evidence.
+3. **(C) requires Tagalog affixes.** Without that filter every long English compound fires.
+
+Then two more, from reading the output instead of trusting it: **(B) measures a sentence,
+not a line** (three short sentences on one HTML line were being summed and flagged, which
+punished *good* punchy copy), and **legal/compliance sentences are exempt** (`RA 9275`,
+`Data Privacy Act`) — they are formal for a reason and Neil has never objected to them.
+
+**Two real bugs surfaced while calibrating, both older than these rules:**
+- **Wrong line numbers, affecting all 64 existing rules.** `strip()` deleted multi-line
+  comments *including their newlines*, shifting every line below. One warning pointed at
+  line 147 for text that was really on line 170. Fixed by blanking comments while keeping
+  the newlines.
+- **The gate crashed on any funnel without `public/`** — including `_template` itself.
+
+**Promotion rule unchanged:** a class rule graduates to ERROR only after it has fired
+correctly on real copy and Neil has read the hits. Neil's ear stays the gate.
+
+### The drift problem — and why the file is copied, not imported
+
+`lint-voice.mjs` is **copied** into every funnel because funnels deploy via
+`npx vercel deploy` **from inside their own directory** — nothing above the funnel root is
+uploaded, so a shared module one level up would break the build. That is a real constraint,
+and its cost is drift, which came due on 2026-08-07:
+
+- `oceanides-paolo` had 64 rules; `_template` and `oceanides-price-page` had **53**.
+- The missing 11 were the whole `KLASE, HINDI SALITA` block — the one the file's own
+  comment calls its most important, including the `15 araw → 15 days` rule.
+- `_template` being behind meant **every future funnel would start without them.**
+- `price-page` being behind hid **14 real violations in LIVE copy**: `24 oras`, `30 araw`,
+  and `sa iyo` ×7. All fixed; the live site is untouched until Neil redeploys (that funnel
+  is CLI-deployed, not git-connected).
+- Two em dashes sat in `_template` itself — already fixed downstream in both live funnels,
+  never sent back upstream. **Fixes flowed down, never up.**
+
+Gate: [`tools/check-voice-lint-sync.mjs`](../tools/check-voice-lint-sync.mjs), wired into
+root CI (`npm run check:voice-sync`), byte-compares every funnel against `_template`.
+**A rule that exists in one funnel and not the others is not a rule, it is a note.**
+
+### One flagged for Neil's ruling
+
+`24 oras` → the timeline rule rewrites it to `24 hours`, and it has been applied. But
+**`24 oras` is idiomatic Filipino** — GMA's flagship newscast is literally called *24 Oras*.
+The rule was written about `15 araw` (a duration), and `24 oras` in "Tawag o text, 24 oras"
+is a *set phrase*, not a duration. This may be the rule over-firing. Neil decides; if he
+agrees, add a carve-out for `24 oras` / `24/7` rather than weakening the rule.
 
 ---
 

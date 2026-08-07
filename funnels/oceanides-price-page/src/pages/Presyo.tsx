@@ -29,7 +29,7 @@ const SPIEL = {
   city: (city: string, rate: string, note?: string) =>
     `Hello po. Para sa septic tank siphoning sa ${city}, nasa ${rate} po kada truckload, kasya hanggang 4,000 liters. ${note ? note + ' ' : ''}Ico-confirm po namin ang final na presyo bago magsimula, pagkatapos makita ang lugar at ang daanan ng truck. May 30-day service warranty po. Anong araw po ang okay sa inyo?`,
   outside: (loc: string) =>
-    `Hello po. Sakop po namin ang ${loc || 'lugar nyo'}, may team po kaming pumupunta dyan. Para maibigay ang tamang presyo, ike-check lang po namin ang lugar, kung anong service ang kailangan, at ang daanan ng truck. Pwede po makuha ang buong address at number nyo? Tatawagan po kayo sa loob ng 1 hanggang 2 oras para sa presyo.`,
+    `Hello po. Sakop po namin ang ${loc || 'lugar nyo'}, may team po kaming pumupunta dyan. Para maibigay ang tamang presyo, ike-check lang po namin ang lugar, kung anong service ang kailangan, at ang daanan ng truck. Pwede po makuha ang buong address at number nyo? Tatawagan po kayo sa loob ng 1 hanggang 2 hours para sa presyo.`,
   barado:
     'Hello po. Kapag barado ang CR o lababo, minsan po declogging ang kailangan, hindi agad siphoning. Ike-check muna po natin kung sa tubo ang bara o puno na ang septic tank, para hindi po sayang ang bayad nyo. Umaapaw po ba ang septic tank, o ang CR lang po ang barado?',
   balikBalik:
@@ -339,7 +339,7 @@ export const Presyo: React.FC = () => {
               Kapag wala sa listahan ang city ng client pero <b>kalapit lang ng
               mga nandito</b>, gamitin ang rate ng pinakamalapit na city sa
               listahan. Kapag malayo sa lahat, kunin ang info at quote sa loob
-              ng 1 hanggang 2 oras.
+              ng 1 hanggang 2 hours.
             </Babala>
             <TeamNote />
           </div>
@@ -354,7 +354,7 @@ export const Presyo: React.FC = () => {
               Nationwide tayo. <b className="text-brand-on-surface">Kapag kalapit
               lang sya ng isang city na may rate sa listahan, gamitin ang rate ng
               pinakamalapit.</b> Kapag hindi, wag manghula: kunin ang buong info,
-              tapos sabihing tatawagan sya sa loob ng 1 hanggang 2 oras.
+              tapos sabihing tatawagan sya sa loob ng 1 hanggang 2 hours.
             </p>
             <Spiel label="Ipadala o basahin sa client" text={SPIEL.outside(verdict.typed)} />
             <TeamNote />
@@ -364,7 +364,7 @@ export const Presyo: React.FC = () => {
                 'Bahay ba o company',
                 'Ano ang problema at anong service ang hinihingi',
                 'Gaano kalaki ang tank at madadaanan ba ng truck',
-                'Number na matatawagan sa loob ng 1 hanggang 2 oras',
+                'Number na matatawagan sa loob ng 1 hanggang 2 hours',
               ]}
             />
           </div>
@@ -478,7 +478,7 @@ export const Presyo: React.FC = () => {
         {[
           ['Siphoning, Metro Manila', `${RATE.mmSiphon} · ${RATE.load}`],
           ['Siphoning, mga province na nakalista', 'Kada city ang rate. I-type ang city sa location check sa taas'],
-          ['Siphoning, wala sa listahan', 'Kalapit ng nakalista: rate ng pinakamalapit. Kung hindi: quote sa 1 hanggang 2 oras'],
+          ['Siphoning, wala sa listahan', 'Kalapit ng nakalista: rate ng pinakamalapit. Kung hindi: quote sa 1 hanggang 2 hours'],
           ['May DENR papers, bahay', RATE.denrRes],
           ['May DENR papers, company', RATE.denrComm],
           ['Lusong, bahay', RATE.lusongRes],

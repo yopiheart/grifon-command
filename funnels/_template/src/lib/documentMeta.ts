@@ -14,7 +14,10 @@ const setMeta = (attr: 'name' | 'property', key: string, content: string): void 
 };
 
 export const applyDocumentMeta = (meta: FunnelConfig['meta'], titleSuffix?: string): void => {
-  const title = titleSuffix ? `${titleSuffix} — ${meta.title}` : meta.title;
+  // `·` hindi em dash: lumalabas ang title sa browser tab, kaya user-facing sya
+  // at sakop ng typography rule (taglish-voice.md). Naayos na to sa paolo at sa
+  // price-page noon pa, hindi lang nakabalik dito sa template.
+  const title = titleSuffix ? `${titleSuffix} · ${meta.title}` : meta.title;
   document.title = title;
   setMeta('name', 'description', meta.description);
   setMeta('property', 'og:title', title);

@@ -18,8 +18,19 @@
  * .claude/skills/_shared/taglish-voice.md. Wired as `prebuild`, so bad copy cannot
  * reach a deploy.
  *
- * It is deliberately DUMB — a word list, not a judge. It catches the recurring
- * offenders, and it will never catch everything. Neil's ear is still the gate.
+ * TWO TIERS (2026-08-07)
+ *   ERRORS   — the word blacklist below. Exact, proven, fails the build.
+ *   WARNINGS — CLASS rules derived from workflows/taglish_2026_model.md. They
+ *              catch shapes rather than words, so they can catch a line nobody
+ *              has written yet. They PRINT but do not fail, because a noisy gate
+ *              stops being read (same reader failure as loops.md Tier 0b).
+ *              Promote one to ERROR only after it has fired correctly on real copy.
+ *
+ * ⚠ CANONICAL FILE — this must stay byte-identical across every funnel.
+ * Enforced by tools/check-voice-lint-sync.mjs in root CI. It is COPIED, not
+ * imported, because funnels deploy via `npx vercel deploy` from inside their own
+ * directory: nothing above the funnel root is uploaded, so a shared module one
+ * level up would break the build. Edit here, then run the sync tool.
  *
  * Run: node scripts/lint-voice.mjs   (auto-runs on `npm run build`)
  */
@@ -171,6 +182,83 @@ const RULES = [
   [/hangga't/i, 'apostrophe contraction, iwasan', 'kung hindi pa'],
 ];
 
+/* ══════════════════════════════════════════════════════════════════════════
+ * CLASS WARNINGS — hugis, hindi salita.
+ * Source: workflows/taglish_2026_model.md (researched 2026-08-07, may sources).
+ *
+ * Bakit hiwalay sa RULES: blacklist ang RULES, at bawat entry doon ay dinagdag
+ * PAGKATAPOS mahuli sa live copy — kaya laging huli ng isang insidente. Klase
+ * ang tatlo dito, kaya humuhuli sila ng linyang hindi pa naisusulat ninuman.
+ * Warning muna silang lahat. Tenga ni Neil pa rin ang huling gate.
+ * ══════════════════════════════════════════════════════════════════════════ */
+
+/**
+ * (A) KONYO DETECTOR — ang pinaka-importante sa tatlo.
+ *
+ * Konyo = baligtad na Taglish: ENGLISH ang balangkas ng pangungusap, Tagalog ang
+ * isinasabog sa loob. Lahat ng "Bad" na halimbawa sa taglish-voice.md ay ganito
+ * ang hugis; wala lang silang pangalan noon kaya isa-isa lang nahuhuli.
+ *
+ * 🔴 HINDI LANG PANLASA ITO — RENDER BUG (Neil, 2026-08-07):
+ * Binabasa ng Veo/TTS ang accent sa DOMINANTENG wika ng linya (ACCENT LOCK,
+ * taglish-voice.md rule #7). Dahil English ang balangkas ng Konyo, English ang
+ * lumalabas na dominante kahit may Tagalog na nakasabog — kaya pwedeng
+ * mag-AMERICAN ACCENT ang Filipino avatar. Kaya sa spoken surface, ang Konyo ay
+ * hindi lang maarte, sira sya.
+ */
+const KONYO = [
+  [/\bmas (better|nicer|faster|bigger|smaller|cheaper|stronger|clearer|easier|worse|safer|more)\b/i,
+    'dobleng comparative, klasikong Konyo ("mas okay" ay TAMA, "mas better" ay mali)',
+    'mas maganda, mas mabilis, mas mura'],
+  [/\bmake (kain|kulit|tusok|ligo|aral|tulog|inom|lakad|punta|bili)\b/i,
+    'make + Tagalog root, ang pirma mismo ng Konyo',
+    'gamitin ang Tagalog na verb: kumain, mag-aral'],
+  [/\b(the|my|your|our|his|her|their|this|that) \w+ ay\b/i,
+    'English na frame na may Tagalog na "ay" — English ang balangkas',
+    'ibalik sa Tagalog ang frame'],
+  [/\bang \w+ (is|are|was|were|will|has|have)\b/i,
+    'nagbukas sa Tagalog, English ang kumuha ng frame',
+    'ibalik sa Tagalog ang frame'],
+  [/\b(is|are|was|were) (maganda|mabuti|okay|mali|tama|masaya|mabilis|mura|mahal)\b/i,
+    'English copula + Tagalog adjective — walang ganito sa dalawang wika',
+    'ibalik sa Tagalog ang frame'],
+  [/\blike so\b/i, 'Konyo marker', 'tanggalin'],
+  [/\b(kasi|pero|tapos|yung) [a-z]+ (is|are|will) [a-z]+\b/i,
+    'Tagalog connector na idinikit sa buong English na clause',
+    'buuin sa Tagalog ang pangungusap'],
+];
+
+/**
+ * (B) KULANG SA PARTICLE.
+ * Ang manual-Tagalog ay madalas HINDI maling salita — kulang sya sa particle.
+ * Nawawala ang naman/lang/na/kasi kapag machine-written kasi wala silang
+ * katumbas sa English, kaya tama ang grammar pero patay ang tunog.
+ *   "Hindi barado ang inyong tangke."       -> patay
+ *   "Hindi NAMAN barado yung tank nyo."     -> may nagsabi nyan
+ * Mataas ang threshold sinadya: mahaba at malinaw na Tagalog lang ang hinuhuli.
+ */
+const PARTICLES = new Set(['na','pa','lang','naman','nga','pala','ba','daw','raw','po','ho',
+  'muna','sana','kaya','din','rin','yata','tuloy','kasi','talaga','man','pala','eh']);
+
+const TAGALOG_MARKERS = new Set(['ang','ng','sa','mga','yung','yun','yan','ito','ako','ka',
+  'ikaw','sya','siya','kami','tayo','kayo','sila','hindi','di','wala','meron','may','at',
+  'kung','para','pag','kapag','tapos','habang','kahit','basta','gusto','kailangan','pwede',
+  'ko','mo','niya','nya','namin','natin','nyo','nila','ni','kay','ay','o','pero','dito','doon']);
+
+/**
+ * (C) LONG-WORD SCAN — kung paano mismo nahuli ang PANGATLONG PASS noong 08-02.
+ * Bilang ng patinig ang syllable proxy; gumagana sya sa Tagalog dahil hiwalay
+ * na pantig ang magkatabing patinig (na-pag-ka-ka-sun-du-an = 7).
+ * Exempt ang pinaka-/nakaka-/pagka-/magka- — produktibo sila at sinasabi ng tao
+ * (pinakamaganda, nakakatawa), kaya hindi sila slop.
+ */
+const LONG_WORD_MIN_SYLLABLES = 6;
+const NATURAL_LONG_PREFIX = /^(pinaka|nakaka|nagka|magka|pagka|nakiki|makiki)/i;
+// Kailangang mukhang Tagalog: may affix sa unahan o sa hulihan. Kung wala, malamang
+// English compound sya (surfaceElevated, objectionReversal) at hindi natin problema.
+const TAGALOG_AFFIX = /^(na|ma|pa|ka|ni|mag|nag|pag|pinag|ipina|maka|sina|ipa|ma[gk])|([aeiou](han|hin|an|in|ng))$/i;
+const syllables = (w) => (w.match(/[aeiou]/gi) || []).length;
+
 /**
  * Only user-visible strings matter. Four things are deliberately exempt:
  *  - JS/TS comments, which explain the code to developers and stay English
@@ -181,18 +269,34 @@ const RULES = [
  * `<style>` blocks are left in: CSS carries no prose, so stripping them would
  * only add a way for the stripper itself to be wrong.
  */
+// 🐛 AYOS NA ANG MALING LINE NUMBER (2026-08-07). Dating basta binubura ang
+// multi-line comment, kasama ang mga newline sa loob — kaya UMUUSOD PATAAS ang
+// lahat ng linya sa ibaba, at mali ang line number na ini-report ng gate. Umiral
+// ang bug na to sa lahat ng 64 na rule, hindi lang sa mga bago. Ngayon, blangko
+// ang ipinapalit pero **buhay ang newline**, kaya eksakto na ang numero.
+const blank = (m) => m.replace(/[^\n]/g, ' ');
+
 const strip = (src) =>
   src
-    .replace(/<!--[\s\S]*?-->/g, '')
-    .replace(/\/\*[\s\S]*?\*\//g, '')
-    .replace(/^[ \t]*\/\/.*$/gm, '')
-    .replace(/console\.\w+\([\s\S]*?\);/g, '');
+    .replace(/<!--[\s\S]*?-->/g, blank)
+    .replace(/\/\*[\s\S]*?\*\//g, blank)
+    .replace(/^[ \t]*\/\/.*$/gm, blank)
+    .replace(/console\.\w+\([\s\S]*?\);/g, blank);
 
 const SCANNABLE = /\.(tsx?|html)$/;
 
+// Tolerant sa nawawalang folder: may funnel na walang `public/` (gaya ng
+// `_template` mismo), at hindi yun error — nag-c-crash lang dati ang gate doon.
 const walk = async (dir) => {
   const out = [];
-  for (const entry of await readdir(dir, { withFileTypes: true })) {
+  let entries;
+  try {
+    entries = await readdir(dir, { withFileTypes: true });
+  } catch (e) {
+    if (e.code === 'ENOENT') return out;
+    throw e;
+  }
+  for (const entry of entries) {
     const full = join(dir, entry.name);
     if (entry.isDirectory()) {
       if (entry.name === 'demo') continue;
@@ -215,26 +319,116 @@ const walk = async (dir) => {
 // na tinitirhan ng customer-facing na copy, DITO SYA IDAGDAG sa parehong commit.
 const ROOT = resolve(HERE, '..');
 const PUBLIC = join(ROOT, 'public');
-const ROOT_HTML = ['index.html', 'thank-you.html'].map((f) => join(ROOT, f));
 
-const files = [...(await walk(SRC)), ...(await walk(PUBLIC)), ...ROOT_HTML];
+// 🔴 2026-08-07 — HINDI NA HARDCODED ANG ROOT HTML.
+// `['index.html', 'thank-you.html']` lang ang nakalista dati. Sa price-page,
+// may `presyo.html` (cheat sheet nina Zam at Ejay) at `ops.html` na HINDI
+// nasa-scan. Eksaktong parehong bitag ng privacy.html noong 08-02: hindi ang
+// word list ang butas, ANG SAKOP. Ang pangako noon ("idagdag mo dito kapag may
+// bagong lugar") ay pangako lang, at nakalimutan. Mekanismo na sya ngayon:
+// awtomatikong hinahanap lahat ng .html sa root, kaya walang malilimutan.
+const rootHtml = (await readdir(ROOT, { withFileTypes: true }))
+  .filter((e) => e.isFile() && e.name.endsWith('.html'))
+  .map((e) => join(ROOT, e.name));
+
+const files = [...(await walk(SRC)), ...(await walk(PUBLIC)), ...rootHtml];
 const hits = [];
+const warns = [];
 
 for (const file of files) {
   const raw = await readFile(file, 'utf8');
   const code = strip(raw);
   code.split('\n').forEach((line, i) => {
+    // Relative sa ROOT, hindi sa SRC: mula nang ma-scan ang public/ at ang root
+    // HTML, ang SRC-relative na path ay lumalabas na `src/..\public\privacy.html`.
+    const where = { file: relative(ROOT, file), line: i + 1 };
+
     for (const [re, why, better] of RULES) {
       const m = line.match(re);
-      // Relative sa ROOT, hindi sa SRC: mula nang ma-scan ang public/ at ang root
-      // HTML, ang SRC-relative na path ay lumalabas na `src/..\public\privacy.html`.
-      if (m) hits.push({ file: relative(ROOT, file), line: i + 1, word: m[0], why, better });
+      if (m) hits.push({ ...where, word: m[0], why, better });
+    }
+
+    // (A) Konyo
+    for (const [re, why, better] of KONYO) {
+      const m = line.match(re);
+      if (m) warns.push({ ...where, word: m[0], why, better, klase: 'KONYO' });
+    }
+
+    // 🔧 CALIBRATION 2026-08-07 — unang takbo = 113 babala, halos lahat basura:
+    // camelCase na English identifier sa `config.types.ts` (surfaceElevated ->
+    // "surfaceelevated", 7 patinig). Aral: ang linya ay hindi prose. Ang prose ay
+    // nasa QUOTED STRING (.ts/.tsx) at sa TEXT SA LABAS NG TAG (.html) lang.
+    // Tinatanggal muna ang attribute value (className, href) — path at token yun,
+    // hindi copy.
+    const noAttrs = line.replace(
+      /\b(className|class|id|href|src|key|type|name|to|rel|alt|role|aria-[\w-]+|data-[\w-]+)\s*=\s*("[^"]*"|'[^']*'|\{[^}]*\})/g, ' ');
+    const quoted = [...noAttrs.matchAll(/'([^']{3,})'|"([^"]{3,})"|`([^`]{3,})`/g)]
+      .map((m) => m[1] || m[2] || m[3]).join(' ');
+    const tagText = file.endsWith('.html') ? noAttrs.replace(/<[^>]+>/g, ' ') : '';
+    const prose = `${quoted} ${tagText}`.trim();
+
+    // camelCase/PascalCase = identifier, hindi salita ng tao. Hinuhuli sila sa
+    // ORIHINAL na anyo bago mag-lowercase, kasi mawawala ang senyas pagka-lowercase.
+    const rawWords = prose.match(/[A-Za-zñÑ][A-Za-zñÑ-]*/g) || [];
+    const words = rawWords.filter((w) => !/[A-Z]/.test(w.slice(1))).map((w) => w.toLowerCase());
+
+    // (B) PANGUNGUSAP ang sinusukat, hindi linya. Unang takbo: napagalitan nito
+    // ang maiikling punchy na copy dahil tatlong pangungusap ang nasa iisang
+    // linya ng HTML, kaya lumagpas sa 12 salita ang PINAGSAMA. Mali yun — walang
+    // kailangang particle ang maikling linya, at yun mismo ang magandang copy.
+    for (const s of prose.split(/(?<=[.!?])\s+|\s*[|·•]\s*/)) {
+      // Exempt ang legal at compliance na pangungusap. Pormal talaga sila nang
+      // may dahilan (RA number, Data Privacy Act, DENR, BIR), at hindi pa
+      // kailanman nireklamo ni Neil na "walang particle" ang ganitong linya.
+      // Kung isasama sila, 33 ang babala at walang aaksyunan — mamamatay ang gate.
+      if (/\b(RA|R\.A\.|Act of|DENR|BIR|DPA|Section|Presidential Decree)\b|\bPrivacy\b/.test(s)) continue;
+      const sw = (s.match(/[A-Za-zñÑ][A-Za-zñÑ-]*/g) || [])
+        .filter((w) => !/[A-Z]/.test(w.slice(1))).map((w) => w.toLowerCase());
+      if (sw.length < 14) continue;
+      const tagalogCount = sw.filter((w) => TAGALOG_MARKERS.has(w)).length;
+      const particleCount = sw.filter((w) => PARTICLES.has(w)).length;
+      // Density, hindi bilang: kailangang MALINAW na Tagalog ang pangungusap bago
+      // sya husgahan sa particle. Ang halos-English na linya ay ibang usapan.
+      if (tagalogCount / sw.length >= 0.3 && particleCount === 0) {
+        warns.push({
+          ...where, word: s.trim().slice(0, 60) + (s.trim().length > 60 ? '…' : ''),
+          why: `${sw.length}-salitang Tagalog na pangungusap na walang particle — tama ang grammar, patay ang tunog`,
+          better: 'subukan ang naman / lang / na / kasi / pala', klase: 'PARTICLE',
+        });
+      }
+    }
+
+    // (C) long-word scan — Tagalog LANG. Kailangang may Tagalog na affix ang
+    // salita, kundi lahat ng mahabang English compound ay mahuhuli (yun ang
+    // 113-babala na sablay). Ang target ay ang mahabang Tagalog na verb/noun,
+    // at may affix silang lahat, kaya tumpak ang pilter na to.
+    for (const w of new Set(words)) {
+      if (w.length < 9 || NATURAL_LONG_PREFIX.test(w)) continue;
+      if (syllables(w) < LONG_WORD_MIN_SYLLABLES) continue;
+      if (!TAGALOG_AFFIX.test(w)) continue;
+      warns.push({
+        ...where, word: w,
+        why: `${syllables(w)} pantig — bibigkasin ba to ng tao nang malakas?`,
+        better: 'i-check sa affix machine (i- / mag- / na- + English root)', klase: 'MAHABA',
+      });
     }
   });
 }
 
+// WARNINGS muna: babala lang sila, kaya lumalabas kahit pasado ang build.
+if (warns.length) {
+  console.warn(`\n⚠ ${warns.length} BABALA (klase, hindi salita — hindi to nagpapabagsak)\n`);
+  for (const w of warns) {
+    console.warn(`  [${w.klase}] ${w.file}:${w.line}`);
+    console.warn(`    "${w.word}"`);
+    console.warn(`    ${w.why}`);
+    console.warn(`    ${w.better}\n`);
+  }
+  console.warn('Modelo: workflows/taglish_2026_model.md\n');
+}
+
 if (hits.length === 0) {
-  console.log(`voice ok — ${files.length} file, walang nahuli`);
+  console.log(`voice ok — ${files.length} file, ${warns.length} babala, walang nahuli`);
   process.exit(0);
 }
 

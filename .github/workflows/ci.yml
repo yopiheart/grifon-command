@@ -39,6 +39,13 @@ jobs:
       - name: Crown-jewel bundle-leak guard
         run: npm run check:bundle-leak
 
+      # Drift gate for the per-funnel voice lint. It is copied into each funnel
+      # (they deploy from their own directory, so a shared import would break the
+      # build), and on 2026-08-07 the copies had silently diverged by 11 rules —
+      # hiding 14 real violations in LIVE price-page copy. Cheap check, no deps.
+      - name: Funnel voice-lint sync
+        run: npm run check:voice-sync
+
       - name: Test (vitest)
         run: npm run test
 

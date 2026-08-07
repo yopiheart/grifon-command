@@ -82,7 +82,7 @@ import type { FunnelConfig } from './config.types';
 // palit. Zam Grifon ang sumasagot (Neil, 2026-07-30).
 // ---------------------------------------------------------------------------
 const PHONE = '0935 258 9927';
-const PHONE_LABEL = 'Tawag o text, 24 oras';
+const PHONE_LABEL = 'Tawag o text, 24 hours';
 
 // Ang totoong Page (Neil, 2026-08-01): facebook.com/OceanidesMalabanan
 // Ang `m.me/<username>` ay ang Messenger form ng vanity URL na yun.
@@ -500,7 +500,7 @@ export const funnelConfig: FunnelConfig = {
             caption: 'Parehong tank, parehong pulang tubo. Ang laman lang ang nagbago.',
           },
         ],
-        note: 'May before at after na litrato ang bawat trabaho, at ibinibigay namin sa iyo. Hindi to pang-porma. Ito ang tinitingnan kapag may tanong sa warranty, para hindi salita laban sa salita.',
+        note: 'May before at after na litrato ang bawat trabaho, at ibinibigay namin sayo. Hindi to pang-porma. Ito ang tinitingnan kapag may tanong sa warranty, para hindi salita laban sa salita.',
       },
     },
 
@@ -544,7 +544,7 @@ export const funnelConfig: FunnelConfig = {
         // numero sa page na kayang basahin sa bilis ng scroll, kaya inuulit sya
         // dito bilang selyo, hindi bilang bagong pangako.
         seal: { value: '30', unit: 'ARAW', label: 'Warranty sa bara' },
-        body: 'Yung presyong sinabi namin sa telepono ay yun din ang babayaran mo. Kung may nakita kaming dagdag na hindi namin nasabi sa iyo, ==kami ang sasagot doon, hindi ikaw.== Ang hindi lang sakop nito ay kung mali ang sinabi mo sa amin, halimbawa isang tangke ang sinabi mo pero dalawa pala.',
+        body: 'Yung presyong sinabi namin sa telepono ay yun din ang babayaran mo. Kung may nakita kaming dagdag na hindi namin nasabi sayo, ==kami ang sasagot doon, hindi ikaw.== Ang hindi lang sakop nito ay kung mali ang sinabi mo sa amin, halimbawa isang tangke ang sinabi mo pero dalawa pala.',
         chips: [
           'Nakasulat na presyo bago magsimula',
           'BIR official receipt',
@@ -603,7 +603,7 @@ export const funnelConfig: FunnelConfig = {
       ground: 'navy',
       props: {
         eyebrow: 'Sino ang darating',
-        heading: 'Si **Marvin** o si **Gabriel** ang haharap sa iyo',
+        heading: 'Si **Marvin** o si **Gabriel** ang haharap sayo',
         body: [
           'Sila ang field inspector namin. Sila ang titingin sa tangke mo pagdating, sila ang magsasabi ng buong presyo bago magsimula ang trabaho, at sila ang bahala na maayos ang lahat bago umalis ang team.',
           'Kapag may tanong ka habang nandyan ang truck, sila ang kausapin mo. Hindi ka namin ipapasa sa iba.',
@@ -619,7 +619,7 @@ export const funnelConfig: FunnelConfig = {
         // isang order). Si Marvin ang nauuna dahil sya ang tumatakbong ad.
         //
         // Para bumalik sa isang tao: tanggalin ang `second`, ibalik ang `image`
-        // at `name` sa isa, at ibalik ang heading sa "Si X ang haharap sa iyo".
+        // at `name` sa isa, at ibalik ang heading sa "Si X ang haharap sayo".
         second: {
           image: '/img/gabriel.webp',
           imageAlt: 'Si Gabriel, field inspector ng Oceanides',
@@ -651,11 +651,11 @@ export const funnelConfig: FunnelConfig = {
           // nagmumukhang paulit-ulit at hindi na diin.
           {
             q: 'Paano kung hindi kasya sa isang truckload ang tangke namin?',
-            a: 'Kada truckload ang bayad, kaya ₱5,000 ulit ang pangalawa. Ganoon din kahit hindi mapuno ang truck, isang truckload pa rin ang bilang. Pero hindi ka namin gugulatin: bago namin simulan ang pangalawa, sasabihin muna namin sa iyo. Ikaw pa rin ang bahala.',
+            a: 'Kada truckload ang bayad, kaya ₱5,000 ulit ang pangalawa. Ganoon din kahit hindi mapuno ang truck, isang truckload pa rin ang bilang. Pero hindi ka namin gugulatin: bago namin simulan ang pangalawa, sasabihin muna namin sayo. Ikaw pa rin ang bahala.',
           },
           {
             q: 'Ano ang sakop ng 30-day warranty?',
-            a: 'Ang bara. Kapag bumalik ang bara sa loob ng 30 araw, babalikan namin. Ang hindi sakop ay kung mapuno ulit ang tangke, kasi nakadepende yun sa dami ng gumagamit. Ang kainan, hotel, o apartment na maraming tao ay mas mabilis talagang mapuno kaysa sa bahay, at hindi yun depekto ng trabaho. Kaya kinukunan namin ng before at after na litrato ang tank mo, para may makita ka at hindi basta salita lang.',
+            a: 'Ang bara. Kapag bumalik ang bara sa loob ng 30 days, babalikan namin. Ang hindi sakop ay kung mapuno ulit ang tangke, kasi nakadepende yun sa dami ng gumagamit. Ang kainan, hotel, o apartment na maraming tao ay mas mabilis talagang mapuno kaysa sa bahay, at hindi yun depekto ng trabaho. Kaya kinukunan namin ng before at after na litrato ang tank mo, para may makita ka at hindi basta salita lang.',
           },
           // DENR Certificate of Treatment = HIWALAY na serbisyo, hindi kasama
           // sa ₱5,000 (Neil, 2026-08-01): ₱12,000 residential / ₱15,000
@@ -700,7 +700,7 @@ export const funnelConfig: FunnelConfig = {
         body: [
           'Alam namin na kaya mo pang tiisin. Isang buwan pa, baka dalawa. Ganyan naman ang karamihan, at hindi ka namin sisisihin doon.',
           'Pero wala kang matitipid sa paghihintay. Pareho pa ring ₱5,000 sa susunod na buwan. Ang nagbabago lang ay kung sino ang pumipili.',
-          'Kung negosyo o apartment ang property mo, mas mabigat pa: bawat araw na hindi magamit ang CR ay araw na may nawawala sa iyo.',
+          'Kung negosyo o apartment ang property mo, mas mabigat pa: bawat araw na hindi magamit ang CR ay araw na may nawawala sayo.',
         ],
         compare: {
           nowLabel: 'Kapag ngayon ka nag-book',
@@ -742,7 +742,7 @@ export const funnelConfig: FunnelConfig = {
         // sa gitna ng page. F01 P.S. ladder. (5-carrier review, 2026-08-02)
         items: [
           'Yung guarantee namin, totoo: kapag may dagdag pagdating ng truck na hindi namin sinabi bago magsimula, kami ang sasagot, hindi ikaw. Nakasulat yan sa taas, hindi lang salita sa telepono.',
-          'Kung hindi ka pa handang mag-book, i-save mo na lang tong page. Kapag may nag-quote sa iyo, ihambing mo kung ano ang kasama at kung ano ang dagdag. Yun ang pinakamabilis na paraan para malaman kung tapat sila.',
+          'Kung hindi ka pa handang mag-book, i-save mo na lang tong page. Kapag may nag-quote sayo, ihambing mo kung ano ang kasama at kung ano ang dagdag. Yun ang pinakamabilis na paraan para malaman kung tapat sila.',
           'Kung emergency at umaapaw na ngayon, wag ka nang mag-fill ng form. Tumawag ka na diretso sa number sa itaas.',
         ],
       },

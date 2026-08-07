@@ -26,7 +26,7 @@ const FIELD_META: Record<'name' | 'email' | 'phone', { label: string; type: stri
 const ERROR_COPY: Record<string, string> = {
   invalid_email: 'That email address doesn’t look right.',
   missing_consent: 'Please tick the consent box to continue.',
-  invalid_body: 'Some details are missing — please check the form.',
+  invalid_body: 'Some details are missing. Please check the form.',
   rate_limited: 'Too many attempts. Give it a minute and try again.',
   network_error: 'Connection problem. Check your signal and try again.',
 };
