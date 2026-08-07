@@ -63,6 +63,20 @@ edits). Redundant on purpose. Status feeds the Tier 5 PR-babysit loop.
     rule below.
   - Self-heals the `ci-red` label if absent. Kill switch: delete the `main-status` job
     (the `verify`/`e2e` gate is untouched by it — it can never turn a red build green).
+  - **Verified 2026-08-07 on live runs, both paths:** green (`main is green, no open
+    alarm — nothing to do`) and auto-close (hand-planted `ci-red` #101 → commented +
+    closed by the next green push). The close path is the one worth testing — an alarm
+    that never clears is worse than no alarm.
+  - ⚠ **Cost-of-admission lesson: the Actions runner scans the ENTIRE workflow file for
+    `${{ … }}`, including inside a JS comment inside a YAML block scalar.** An *empty*
+    one is a parse error that kills the whole workflow — no job runs, no annotation is
+    exposed via the API, and `gh run view` says only "likely failed because of a workflow
+    file issue." It was introduced by a comment *explaining* interpolation, and it passed
+    both a local YAML parse and `node --check`, because **Actions is stricter than YAML
+    and stricter than JS**. Guard before pushing any workflow edit:
+    ```bash
+    node -e "const fs=require('fs');for(const f of fs.readdirSync('.github/workflows')){fs.readFileSync('.github/workflows/'+f,'utf8').split('\n').forEach((l,i)=>{let m,re=/\\\$\{\{(.*?)\}\}/g;while((m=re.exec(l)))if(!m[1].trim())console.log('EMPTY EXPR',f+':'+(i+1));});}"
+    ```
 - **⚠ 2026-08-07 — the three-day red-CI outage, and the rule that came out of it.**
   Every workflow in the repo (CI, Nightly Regression, Oceanides daily) failed
   from 2026-08-04 to 2026-08-07, all at the **same** step — `npm ci` — before

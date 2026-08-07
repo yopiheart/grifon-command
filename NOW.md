@@ -1,6 +1,6 @@
 # NOW — the resume doc
 
-**Stamped: 2026-08-07** (session 10)
+**Stamped: 2026-08-07** (session 11)
 
 ## ▶ NEXT ACTION — MATUTO NG TOTOONG TAGLISH, GALING SA SOURCES
 
@@ -14,37 +14,34 @@ entry doon ay dinagdag pagkatapos mahuli ni Neil, kaya laging huli ng isang
 insidente. Kailangan ng **positibong modelo** galing sa totoong Taglish ng 2026,
 hindi mas mahabang listahan ng bawal. Tono na lang ang iaayos kada brand.
 
-## 🔴 TATLONG ARAW NA PULA ANG CI — ayos na (2026-08-07)
-**Hindi utang sa Gemini.** Node 24 / npm 11 ang cafe PC, Node 20 / npm 10 ang CI,
-magkaiba ang isinusulat nilang lockfile — kaya namatay ang lahat ng workflow sa
-`npm ci` bago pa umabot sa API call. Node 24 na rin ang CI + naka-pin ang
-`engines`. ✅ Green sa `0a7c7a7`. Kwento + panuntunan:
-[`loops.md`](workflows/loops.md) Tier 0b.
-⏸ **Naka-pause ang Oceanides daily** (hiling ni Neil, kumpirmado sa Routines UI).
-⚠️ Pero **huminto na pala ito noong Aug 4** dahil sa lockfile, bago pa ang pause —
-**tingnan ang mirror** bago akalaing sinadya ang gap. Pambalik: alisin ang comment
-sa `schedule:`. (Tier 3b)
+## 🔔 TAPOS SESSION 11 — di na mapapalampas ang pulang CI
 
-## ✅ Tapos din ngayong 2026-08-07 (session 10) — Ramp brief, ~70% nandyan na
-[`post_beta_roadmap.md`](workflows/post_beta_roadmap.md) **#27** = record + parked
-na **AI SRE** (⛔ wag i-re-evaluate) · **rule 9** sa
-[`gauntlet_loop_decision.md`](workflows/gauntlet_loop_decision.md) = di gumalaw ang
-score sa dalawang round → basahin ang trace · **36 handoff docs → [`archive/`](workflows/archive/README.md)**, link 29 → 5.
+Hindi detection failure ang 3 araw na pula (08-04 → 08-07) — agad naging pula ang
+CI. **Reader** ang sira: ~20 magkaparehong email sa channel na natutong laktawan.
+Bagong `main-status` job sa [`ci.yml`](.github/workflows/ci.yml): **isang** bukas
+na `ci-red` issue lang habang pula ang main, kusang nagsasara pag green (push-to-
+main lang, hindi PR). Binabasa ito ng **Health Watch v2** tuwing 08:00 PHT,
+CRITICAL, **kasama kung ilang araw nang bukas** — yun ang di kayang laktawan.
+Napatunayan sa totoong run ang green at **auto-close** path; ang aral na nagastos
+ng isang pulang run ay nasa [`loops.md`](workflows/loops.md) Tier 0b.
 
-✅ **Health Watch: KUMPIRMADO** — umaabot ang push, at may nahuli agad. **Sarado
-na ang leak:** SECURITY DEFINER views (`run_cogs`, `run_attribution_anomalies`)
-na lumalampas sa RLS, may SELECT ang `anon` — ang key na nasa browser bundle.
-Napatunayan bago ayusin: 5 row nakita ng anon (may `user_id`), 0 sa `events`.
-Migration `harden_telemetry_views_security_invoker` + `supabase/events.sql`. Anon
-= denied, service_role = ok, wala nang ERROR advisor.
-🔧 Bukas: dobleng index sa `funnel_leads` · burahin sa **Routines UI** ang Health
-Watch v1 + ~11 patay na `send_later` (walang delete action ang tool dito).
+### ⏳ ISA LANG ANG HINDI KO MAPAPATUNAYAN MAG-ISA
+Pinaandar ko ang manual run ng Health Watch v2 (`cse_01HF89mF4kX1ZxLqL9Do3tR9`).
+**Pakitingnan sa Routines UI o sa phone:** nabasa ba nya ang CI status, o sinabi
+nyang *"CI status unavailable"*? Di ko makita ang transcript mula dito. Kung
+unavailable, walang `gh` ang cloud env at ang palit ay ipasa ang CI state sa
+committed file. **Di sya mag-a-assume ng green** kahit alin doon, kaya safe muna.
 
-## 🔴 Ang mali na tatlong beses naulit noong session 9
+**Galing sa Rauch / Vercel "Eve" brief — SARADO na, wag nang i-re-evaluate.** ~90%
+nandito na (CLAUDE.md = `instructions.md`, 28 skills, `tools/`, WAT); ang channel
+insight sa itaas lang ang totoong bago. Verdict + rejections:
+[`post_beta_roadmap.md`](workflows/post_beta_roadmap.md) #27. Pang-7 na brief na
+to at pare-pareho ang tinatanggihan (alisin daw ang human gate) — skim na lang.
+
+## 🔴 Ang mali na 3x naulit (session 9)
 **Maling bar, hindi maling gawa** ([`gauntlet_loop_decision.md`](workflows/gauntlet_loop_decision.md)).
-**May dalang axis ang corpus mismo:** puro **bayad na ad** ang 78 sa
-`assets/ad-swipe/`. ⛔ **Wag lagyan ng CTA ang organic cards** — kailangan muna
-ng hiwalay na organic corpus. Wala pa tayo nun.
+Puro **bayad na ad** ang 78 sa `assets/ad-swipe/`, kaya may dalang axis ang corpus.
+⛔ **Wag lagyan ng CTA ang organic cards** — kailangan muna ng organic corpus.
 
 ## 🅿 PAOLO — itayo, wag buksan
 Buhay pa ang gate: **pangako pa lang, walang load na dumaan, walang certificate
@@ -62,8 +59,7 @@ na hawak.** Nakatayo ang page (`funnels/oceanides-paolo/`), green ang build,
 5. Bagong creative at targeting. ⏳ Aling siyudad ang una, isa lang.
 
 **Nagawa na, wag ulitin:** avatar, value stack, grill, pixel-leak, copy, page,
-trust card (`paolo-trust-a/b`, **di pa nai-publish** — numero ng critic ang 82).
-
+trust card (`paolo-trust-a/b`, di pa nai-publish, 82 ang numero ng critic).
 ## 🔴 Huwag kalimutan
 1. **Route density ang lever, hindi presyo.** Isang siyudad muna.
 2. **Bawal ang CASH refund** sa tripwire. Credit, at isang taon ang bisa.
@@ -72,16 +68,20 @@ trust card (`paolo-trust-a/b`, **di pa nai-publish** — numero ng critic ang 82
 5. ⚠️ **Enterprise ang malalaking pangalan sa client list** — procurement at
    referral, **hindi FB ad.** Pinakamalaking hula pa rin ng plano.
 
-## 🅿 PARKED
+## 🅿 PARKED at 🔧 bukas na maliliit
 **Oceanides:** Week 02 pack · GB-001 video · hook2 ng KM-004 · Kling b-roll ·
-watermark ni Gabriel · SEC Reg. No. · FB About · reviews · **AEM hindi pa verified**.
+watermark ni Gabriel · SEC Reg. No. · FB About · reviews · **AEM di pa verified**.
+⏸ Naka-pause ang daily; pambalik = alisin ang comment sa `schedule:`.
 **Grifon:** #94.3 next · #94.2 NOT-REPRO · #92+#89/#90 ride Slice B · #93 ⛔ TUNED
 · `artifact-noir` Steps 1-4 · 0 pa ang codex-sol lane, di pa masusukat ang gate.
+**Maliliit:** dobleng index sa `funnel_leads` · burahin sa **Routines UI** ang HW
+v1 + ~11 patay na `send_later` · bump `@v5` ang `checkout`/`setup-node` (Node 20).
 
 ## ⛔ Gated · 🔧 Arm before starting
 🔴 **UBOS ANG GEMINI API BUDGET** para sa video. Manwal sa Flow. Gated: Kling.
 `.\scripts\restore-git-identity.ps1` · `restore-gh.ps1` · `restore-codex.ps1`
-⚠️ `npx playwright install chromium` — kinakain sya ng defreezer kada session.
+⚠️ Di napupunta sa PATH ang `gh` — buong path: `…\Programs\GitHubCLI\bin\gh.exe`.
+⚠️ `npx playwright install chromium` — kinakain ng defreezer kada session.
 ⚠️ Sariling `node_modules` ang bawat funnel · **wag i-pipe ang build output**.
 
 ### How to maintain this file
