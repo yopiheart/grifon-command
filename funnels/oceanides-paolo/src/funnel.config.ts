@@ -506,7 +506,7 @@ export const funnelConfig: FunnelConfig = {
       props: {
         heading: 'Paano nagiging papel ang laman ng tangke mo',
         paragraphs: [
-          'Kinukuha ng truck ang laman ng tangke mo at diretsong dinadala sa treatment facility na tinatanggap ng DENR. Doon sya tinitimbang at ginagamot. Hindi sya itinatapon sa ilog, sa bakanteng lote, o sa kanal sa kabilang bayan.',
+          'Kinukuha ng truck ang laman ng tangke mo at diretsong dinadala sa treatment facility na tinatanggap ng DENR. Doon sya tinitimbang at ginagamot. Hindi sya itinatapon sa ilog, sa bakanteng lote, o sa kanal sa kabilang bayan.',  // voice-ok: sadyang ritmo ng tatlo (ilog / lote / kanal) — sisirain sya ng particle
           'Kapag naproseso na, doon lumalabas ang certificate. ==15 days ang normal na hintay, at yun ang totoo.== Hindi namin sya kayang bilisan, at hindi rin namin sya bibilisan para lang may maisagot sayo.',
           'Kaya kung Setyembre ang renewal mo, ngayong Agosto dapat magsimula. Hindi kasi ang truck ang mabagal. Ang papel ang may sariling orasan.',
         ],
@@ -624,7 +624,7 @@ export const funnelConfig: FunnelConfig = {
         items: [
           {
             q: 'Anong papel ba talaga ang matatanggap ko?',
-            a: 'Dalawa, at magkaiba sila. Una, ang report namin sa septic check: sukat, litrato, assessment, pirma, petsa. Nasa yo yun sa loob ng 48 hours. Pangalawa, kapag nagpakuha ka ng dokumentadong load: ang manifest at ang Certificate of Treatment galing sa treatment facility. Ang manifest ay lumalabas kasabay ng trabaho. Ang certificate ay 15 days.',
+            a: 'Dalawa, at magkaiba sila. Una, ang report namin sa septic check: sukat, litrato, assessment, pirma, petsa. Nasa yo yun sa loob ng 48 hours. Pangalawa, kapag nagpakuha ka ng dokumentadong load: ang manifest at ang Certificate of Treatment galing sa treatment facility. Ang manifest ay lumalabas kasabay ng trabaho. Ang certificate ay 15 days.',  // voice-ok: FAQ na sagot tungkol sa papel — listahan sya, hindi kwento
           },
           // 🆕 ANG PRESYO NG CORE, INILIPAT DITO MULA SA HERO TICKET
           // (2026-08-06). Parehong F05 na pattern ng DENR cert sa page ni
@@ -814,7 +814,7 @@ export const funnelConfig: FunnelConfig = {
   thankYou: {
     eyebrow: 'BOOKING CONFIRMED',
     headline: 'Nakuha na namin. Tatawagan ka namin.',
-    body: 'Nakalista na ang septic check mo. Tatawagan ka namin para sa schedule at para sa pangalan ng negosyo mo sa OR.',
+    body: 'Nakalista na ang septic check mo. Tatawagan ka namin para sa schedule at para sa pangalan ng negosyo mo sa OR.',  // voice-ok: kapareho ng reassurance sa :139, transactional confirmation
     magnetDelivery: 'Habang naghihintay ka, ito ang ihanda mo.',
     stepsHeading: 'Ito ang susunod na mangyayari',
     steps: [
@@ -847,7 +847,7 @@ export const funnelConfig: FunnelConfig = {
             {
               heading: 'Ihanda mo na habang naghihintay',
               body: [
-                'Ang eksaktong pangalan ng negosyo mo at ang TIN, para tama agad ang OR at ang manifest.',
+                'Ang eksaktong pangalan ng negosyo mo at ang TIN, para tama agad ang OR at ang manifest.',  // voice-ok: noun-phrase na list item sa ihanda-mo checklist, hindi pangungusap
                 'Kung ano ang eksaktong hinihingi sayo. Kunan mo ng litrato ang notice o ang checklist kung meron, at ipadala mo sa amin.',
                 'Kung may papel ang huling pasipsip nyo, ihanda mo. Kung wala, sabihin mo lang, mas madalas yun kaysa sa akala mo.',
               ],
@@ -867,7 +867,7 @@ export const funnelConfig: FunnelConfig = {
             {
               heading: 'Ihanda mo na',
               body: [
-                'Ang eksaktong pangalan ng negosyo mo at ang TIN, para tama agad ang OR at ang manifest.',
+                'Ang eksaktong pangalan ng negosyo mo at ang TIN, para tama agad ang OR at ang manifest.',  // voice-ok: noun-phrase na list item sa ihanda-mo checklist, hindi pangungusap
                 'Linisin ang daanan papunta sa takip ng tangke, at tingnan kung saan pwedeng pumarada ang truck.',
                 'Kung may papel ang huling pasipsip nyo, ihanda mo. Kung wala, sabihin mo lang.',
               ],

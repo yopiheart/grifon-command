@@ -240,6 +240,29 @@ const KONYO = [
 const PARTICLES = new Set(['na','pa','lang','naman','nga','pala','ba','daw','raw','po','ho',
   'muna','sana','kaya','din','rin','yata','tuloy','kasi','talaga','man','pala','eh']);
 
+/**
+ * 🔧 CALIBRATION 2026-08-08 (B-1) — HINDI TUMATANGGAP NG PARTICLE ANG UTOS.
+ * Gramatika to, hindi panlasa: ang naman/lang/kasi ay panlambot ng PAHAYAG. Ang
+ * utos ay diretso — "Linisin mo na lang naman ang daanan" ay hindi mas mabuti,
+ * mas malambot lang at mas mahina. Kaya ang checklist at ang how-to step ay
+ * tama na kahit walang particle, at pagkakamali ng gate ang paghuli sa kanila.
+ *
+ * Beripikado sa 17 na totoong hit: na-exempt lahat ng apat na utos (Kunan mo,
+ * Linisin, ihambing mo, ipadala mo) at NANATILING flagged ang lahat ng apat na
+ * prose na pangungusap na talagang patay ang tunog. Zero false exempt.
+ */
+const IMPERATIVE =
+  /\b(?:[a-zñ]+(?:in|an)|i-?[a-zñ]+|mag-?[a-zñ]+)\s+(?:mo|nyo|ninyo)\b|^\s*(?:[A-ZÑ][a-zñ]+(?:in|an))\s+(?:ang|ng|sa|mo|nyo)\b/;
+
+/**
+ * 🔧 CALIBRATION 2026-08-08 (B-2) — TERMS MICRO-COPY, KAPATID NG LEGAL SURFACE.
+ * Ang `disclaimer`, `reassurance`, `consent` at `brandLine` ay parehong klase ng
+ * `privacy.html`: transactional at pormal sila nang may dahilan. Ang presyong
+ * disclaimer ("Ang ₱999 ay para sa septic check...") ay hindi vlog line at hindi
+ * sya dapat maging vlog line. Field name ang senyas, hindi hula sa prose.
+ */
+const TERMS_KEY = /^(disclaimer|reassurance|consent|brandLine|legal|terms|finePrint)$/i;
+
 const TAGALOG_MARKERS = new Set(['ang','ng','sa','mga','yung','yun','yan','ito','ako','ka',
   'ikaw','sya','siya','kami','tayo','kayo','sila','hindi','di','wala','meron','may','at',
   'kung','para','pag','kapag','tapos','habang','kahit','basta','gusto','kailangan','pwede',
@@ -374,9 +397,18 @@ const warns = [];
 for (const file of files) {
   const raw = await readFile(file, 'utf8');
   const code = strip(raw);
+  // Ang `voice-ok:` ay nasa COMMENT, at binubura ng strip() ang comment — kaya
+  // ang HILAW na linya ang binabasa para dito, hindi ang na-strip.
+  const rawLines = raw.split(/\r?\n/);
   // Isang beses kada file, hindi kada linya — pareho ang sagot sa buong file.
   const isFormalSurface = FORMAL_SURFACE.test(relative(ROOT, file));
+  // Sinusundan ang huling `key:` na nakita para malaman kung anong field ang
+  // kinalalagyan ng string. Sapat ang line-based dito: isang key kada linya ang
+  // config, at ang string ay nasa mismong linya o sa kasunod.
+  let currentKey = '';
   code.split('\n').forEach((line, i) => {
+    const keyOnLine = line.match(/^\s*([A-Za-z_$][\w$]*)\s*:/);
+    if (keyOnLine) currentKey = keyOnLine[1];
     // Relative sa ROOT, hindi sa SRC: mula nang ma-scan ang public/ at ang root
     // HTML, ang SRC-relative na path ay lumalabas na `src/..\public\privacy.html`.
     const where = { file: relative(ROOT, file), line: i + 1 };
@@ -385,6 +417,21 @@ for (const file of files) {
       const m = line.match(re);
       if (m) hits.push({ ...where, word: m[0], why, better });
     }
+
+    // 🔧 2026-08-08 — ESCAPE HATCH PARA SA PANLASA, HINDI PARA SA HARD RULE.
+    // May pasyang hindi kayang makita ng regex: ang sadyang ritmo ng tatlo ("sa
+    // ilog, sa bakanteng lote, o sa kanal"), ang noun-phrase na list item, ang
+    // naka-quote na script na ipapadala sa Messenger. Dati, dalawa lang ang
+    // pagpipilian doon — sirain ang magandang kopya, o pabayaang maingay ang gate
+    // hanggang di na sya binabasa. Pangatlo to: itala ang pasya sa tabi mismo ng
+    // linya, kasama ang dahilan, para nababasa sya ng susunod na tao.
+    //
+    // ⚠️ WARNING LANG ang napapatahimik nito. Tumatakbo na ang RULES sa itaas
+    // bago pa marating ang linyang to, kaya HINDI kayang patahimikin ang hard
+    // rule ni Neil. Sinadya yun: panlasa ang warning, batas ang RULES.
+    //
+    // Gamit:  'kopya dito',  // voice-ok: bakit tama ang linyang to
+    if (/voice-ok:/.test(rawLines[i] ?? '')) return;
 
     // (A) Konyo
     for (const [re, why, better] of KONYO) {
@@ -417,7 +464,9 @@ for (const file of files) {
     // Surface-level muna ang exemption (tingnan ang FORMAL_SURFACE sa itaas), tapos
     // ang lumang sentence-level na keyword check sa loob — para mahuli pa rin ang
     // legal na pangungusap na naka-embed sa isang sales page.
-    for (const s of isFormalSurface ? [] : prose.split(/(?<=[.!?])\s+|\s*[|·•]\s*/)) {
+    const skipParticle = isFormalSurface || TERMS_KEY.test(currentKey);
+    for (const s of skipParticle ? [] : prose.split(/(?<=[.!?])\s+|\s*[|·•]\s*/)) {
+      if (IMPERATIVE.test(s)) continue;
       // Exempt ang legal at compliance na pangungusap. Pormal talaga sila nang
       // may dahilan (RA number, Data Privacy Act, DENR, BIR), at hindi pa
       // kailanman nireklamo ni Neil na "walang particle" ang ganitong linya.
