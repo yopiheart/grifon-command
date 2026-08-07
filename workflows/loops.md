@@ -207,6 +207,7 @@ same day via the in-session `RemoteTrigger` tool):
 | **GRIFON Daily Prod Health Watch** (v1, `trig_019v1jD9L7MMTdrHPXYAc9tE`) | daily ~08:00 PHT | ⏸ disabled 2026-07-18 — superseded by v2; ⚠ **DELETION PENDING** (needs a remote session: `delete_trigger` — the in-session `RemoteTrigger` tool has no delete action) | none (the original reader problem) | already off; `delete_trigger` to purge |
 | **oceanides-daily-posts** (`trig_01GtbZRGJMmfwmTmrY7vqB98`) | daily 06:00 PHT | ⏸ disabled — superseded 2026-07-14 by the Tier 3b GitHub Action | n/a (Action publishes to the public mirror) | already off; `delete_trigger` to purge |
 | **Supabase Pro→free downgrade reminder** (`trig_014SAzGWHPRYhxcHo7Vt7HE8`) | one-shot | ✔ fired 2026-06-24, self-ended | Neil (Gmail draft) | none needed |
+| **Neil Meal Reminder** (`trig_01B5soYW2eZfr7EGDvt7Ucy7`) | `30 2,7,12,16,21 * * *` (5×/day PHT) | ✅ enabled — created 2026-08-05, **registered here 2026-08-07** after an audit found it unlisted | Neil, via push. Personal, not engineering — Haiku 4.5, `allowed_tools: ["PushNotification"]` only, one warm Taglish nudge to eat | `RemoteTrigger update enabled:false` |
 
 - **Reader problem — Neil chose (a) push-alerting rewire, 2026-07-18 — ✅ v2
   LIVE same day.** The earlier "connector limit" turned out to be a limit of
@@ -260,11 +261,27 @@ same day via the in-session `RemoteTrigger` tool):
   drift accrue without a single user.** The AI-SRE *diagnosis* layer stays parked;
   the *detection* layer already pays for itself today.
 
-- **⚠ Unregistered Routine spotted 2026-08-07 — `Neil Meal Reminder`** (02:30,
-  07:30, 12:30, 16:30, 21:30 daily). Not in this table, which the Tier 6 ground
-  rule requires. Reader is obviously Neil and it is harmless, but register or
-  retire it so the audit stays trustworthy. Also still listed and still pending
-  deletion: **Health Watch v1** (row above) — visible as `Paused` in the UI.
+- **2026-08-07 registry audit (full `RemoteTrigger list`) — three housekeeping
+  findings:**
+  1. **`Neil Meal Reminder` was unregistered** — now added to the table above.
+     Harmless, but the Tier 6 ground rule exists so the registry can be trusted;
+     an audit with a known gap is not an audit. ⚠ Minor least-privilege note: it
+     carries **nine MCP connectors** (Gmail, Calendar, Motion, Meta Ads, Drive,
+     Vercel, Supabase, Claude_Code_Remote, Jockey) while needing exactly one
+     tool. `allowed_tools: ["PushNotification"]` does constrain it in practice,
+     so this is tidiness, not an exposure — strip the connectors next time it is
+     edited.
+  2. **Health Watch v1 (`trig_019v1jD9L7MMTdrHPXYAc9tE`) still exists.** Neil
+     asked for deletion 2026-08-07; **it could not be done from a cafe-PC
+     session** — the in-session `RemoteTrigger` tool exposes only
+     list/get/create/update/run, with **no delete action**. Confirmed inert
+     (`enabled: false`, last fired 2026-07-18), so the only cost is clutter.
+     **Two ways to finish it:** the Routines UI (open the row → Details →
+     delete), or a remote session with the `delete_trigger` MCP.
+  3. **~11 dead `send_later …` triggers** from the Jul 25–28 PR-babysit re-arms
+     (#72, #75, #76), all `enabled: false` / `ended_reason: run_once_fired`.
+     They are inert but they are why a registry audit is now slow to read. Purge
+     them in the same UI pass as v1.
 
 - **⚠ 2026-08-07 — why this question stayed open for three weeks (kept as the
   lesson, now that the answer is in).** The trigger record was pulled directly

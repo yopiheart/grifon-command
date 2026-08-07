@@ -102,3 +102,34 @@ create or replace view public.run_attribution_anomalies as
 -- guaranteed straw-man-audit finding. RLS on + no policies = default deny for
 -- anon/authenticated. Admin/analytics reads happen via the service role.
 alter table public.events enable row level security;
+
+-- ⚠ 2026-08-07 — MANDATORY, AND THE REASON IS A REAL LEAK, NOT A LINT NIT.
+--
+-- RLS above protects the TABLE. It does NOT protect a view over the table. A Postgres
+-- view defaults to SECURITY DEFINER semantics: it executes with the VIEW OWNER's rights
+-- (postgres), so the deny-all RLS on public.events is bypassed for anyone allowed to
+-- select from the view. `create ... view` also grants to anon + authenticated by default
+-- here, and VITE_SUPABASE_ANON_KEY ships inside the browser bundle.
+--
+-- Net effect before this block existed: any visitor to the site could read every user's
+-- per-run COGS together with their user_id. Confirmed live on 2026-08-07 —
+-- `set role anon; select count(*) from run_cogs` returned rows while the same role got 0
+-- from public.events. Found by the Tier 6 Health Watch routine (Supabase lint 0010), on
+-- the first day its notification channel was verified.
+--
+-- Two independent guards, on purpose. security_invoker makes the view honour the CALLER's
+-- RLS; the revoke means no browser role can reach it even if the option is ever lost (a
+-- `drop view` would silently discard BOTH, which is the other reason this file never
+-- drops a view — see the column-order notes above).
+--
+-- service_role bypasses RLS, so the one legitimate reader (api/producer/run.ts, on
+-- getSupabaseAdmin()) is unaffected. Keep these four statements together with the view
+-- definitions; splitting them is how the hole comes back.
+alter view public.run_cogs                  set (security_invoker = on);
+alter view public.run_attribution_anomalies set (security_invoker = on);
+
+revoke all on public.run_cogs                  from anon, authenticated;
+revoke all on public.run_attribution_anomalies from anon, authenticated;
+
+grant select on public.run_cogs                  to service_role;
+grant select on public.run_attribution_anomalies to service_role;

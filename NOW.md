@@ -26,19 +26,19 @@ magkaiba ang isinusulat nilang lockfile — kaya namatay ang lahat ng workflow s
 sa `schedule:`. (Tier 3b)
 
 ## ✅ Tapos din ngayong 2026-08-07 (session 10) — Ramp brief, ~70% nandyan na
-[`post_beta_roadmap.md`](workflows/post_beta_roadmap.md) **#27** = record + bagong
-parked item na **AI SRE** (trigger: unang bayad na cohort ⛔ wag i-re-evaluate) ·
-[`gauntlet_loop_decision.md`](workflows/gauntlet_loop_decision.md) **rule 9** =
-di gumalaw ang score sa dalawang round → basahin ang trace, wag mag-round tatlo ·
-**36 handoff docs → [`archive/`](workflows/archive/README.md)** + panuntunan,
-mga link 29 → 5.
+[`post_beta_roadmap.md`](workflows/post_beta_roadmap.md) **#27** = record + parked
+na **AI SRE** (⛔ wag i-re-evaluate) · **rule 9** sa
+[`gauntlet_loop_decision.md`](workflows/gauntlet_loop_decision.md) = di gumalaw ang
+score sa dalawang round → basahin ang trace · **36 handoff docs → [`archive/`](workflows/archive/README.md)**, link 29 → 5.
 
-✅ **Health Watch: KUMPIRMADO NA** (Neil, 2026-08-07) — umaabot ang push sa phone.
-🔴 **Pero may nahuli ito, bukas pa:** dalawang **SECURITY DEFINER view**
-(`run_cogs`, `run_attribution_anomalies`) na lumalampas sa RLS — pwedeng
-makakita ng data ng ibang user. Sadya ba? Kung oo, ibaseline; kung hindi,
-gawing `SECURITY INVOKER`. + dobleng index sa `funnel_leads` (mababa lang).
-Detalye: [`loops.md`](workflows/loops.md) Tier 6.
+✅ **Health Watch: KUMPIRMADO** — umaabot ang push, at may nahuli agad. **Sarado
+na ang leak:** SECURITY DEFINER views (`run_cogs`, `run_attribution_anomalies`)
+na lumalampas sa RLS, may SELECT ang `anon` — ang key na nasa browser bundle.
+Napatunayan bago ayusin: 5 row nakita ng anon (may `user_id`), 0 sa `events`.
+Migration `harden_telemetry_views_security_invoker` + `supabase/events.sql`. Anon
+= denied, service_role = ok, wala nang ERROR advisor.
+🔧 Bukas: dobleng index sa `funnel_leads` · burahin sa **Routines UI** ang Health
+Watch v1 + ~11 patay na `send_later` (walang delete action ang tool dito).
 
 ## 🔴 Ang mali na tatlong beses naulit noong session 9
 **Maling bar, hindi maling gawa** ([`gauntlet_loop_decision.md`](workflows/gauntlet_loop_decision.md)).
