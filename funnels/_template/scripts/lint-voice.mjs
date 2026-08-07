@@ -251,9 +251,26 @@ const TAGALOG_MARKERS = new Set(['ang','ng','sa','mga','yung','yun','yan','ito',
  * na pantig ang magkatabing patinig (na-pag-ka-ka-sun-du-an = 7).
  * Exempt ang pinaka-/nakaka-/pagka-/magka- — produktibo sila at sinasabi ng tao
  * (pinakamaganda, nakakatawa), kaya hindi sila slop.
+ *
+ * 🔧 CALIBRATION 2026-08-08 — 10 sa 27 na babala ay dito, at LAHAT sila mali.
+ * Nahuli: maipapakita, mapapatunayan, ipinapadala, ipapaliwanag, makakapagbigay,
+ * makapagsimula. Karaniwang salita silang lahat — `kita`, `patunay`, `padala`,
+ * `paliwanag`, `bigay`, `simula` ang ugat. Lumagpas lang sila sa 6 pantig dahil sa
+ * ASPECT REDUPLICATION (pa-pa, ka-ka) — gramatika yun, hindi mabigat na bokabularyo.
+ * Ang senyas: "May maipapakita ka kapag may humingi." ay magandang kopya.
+ *
+ * Ang totoong target ay ang mabigat na UGAT (napagkakasunduan, naisasakatuparan),
+ * hindi ang mahabang affix sa magaan na ugat. Ang mismong hint na ini-print nito
+ * ("i-check sa affix machine") ay nagsasabing gamitin ang affix machine sa mga
+ * salitang SILA MISMO ang affix machine — kaya alam nating mali ang rule, hindi ang copy.
+ *
+ * Parehong prinsipyo ng pinaka-/nakaka- sa itaas, kaya isang listahan lang sila.
+ * Beripikado: exempt na ang anim sa itaas, at nahuhuli pa rin ang napagkakasunduan,
+ * nakapagpapahiwatig, naisasakatuparan, pinagtitibay, naipagkakaloob.
  */
 const LONG_WORD_MIN_SYLLABLES = 6;
-const NATURAL_LONG_PREFIX = /^(pinaka|nakaka|nagka|magka|pagka|nakiki|makiki)/i;
+const NATURAL_LONG_PREFIX =
+  /^(pinaka|nakaka|nagka|magka|pagka|nakiki|makiki|maipapa|ipinapa|ipapa|mapapa|makaka|makapag)/i;
 // Kailangang mukhang Tagalog: may affix sa unahan o sa hulihan. Kung wala, malamang
 // English compound sya (surfaceElevated, objectionReversal) at hindi natin problema.
 const TAGALOG_AFFIX = /^(na|ma|pa|ka|ni|mag|nag|pag|pinag|ipina|maka|sina|ipa|ma[gk])|([aeiou](han|hin|an|in|ng))$/i;
