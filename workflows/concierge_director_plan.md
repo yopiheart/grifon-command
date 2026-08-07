@@ -117,6 +117,26 @@ TUNED — skills *reference* `api/_lib/prompts.ts`, never fork it. Source: Garry
 "New Physics of Business" brief eval (2026-07-28) — the one product-layer apply;
 everything else in that brief was already WAT doctrine.
 
+> **Corroboration #2 (2026-08-07, Guillermo Rauch / Vercel "Eve" brief).** Eve is
+> this exact shape shipped as a framework: an agent folder of `instructions.md` +
+> `skills/*.md` (brand voice, business logic) + `tools/*.ts`, with a router
+> delegating to sub-agents. Two things it firms up for `api/director/run.ts` when
+> Option A resurfaces: (1) **the router should feel like one entity to the user
+> while being pure delegation underneath** — Rauch's "one god agent vs team of
+> agents is a false dichotomy"; that matches the Concierge UX promise (Neil's user
+> talks to *one* thing) without giving up the skill-per-capability split. (2) Skill
+> files carry **embedded output formulas**, not just procedure — Vercel bakes a
+> 3-part product-marketing frame (benefit / cost / action) into its content agent
+> the way Grifon's script formulas already work. Reinforces "load orchestration
+> from versioned markdown," now at 2 of the 3 corroborations the repo requires.
+>
+> **Does NOT move either gate.** Rauch's "build the agent before you build the
+> website" argues for skipping straight to the brain; the §10 rescope (Concierge =
+> productized Expert, no new brain) and the §120 closed-loop eval harness both
+> stand. His org has budget and staff to absorb a bad agent; this one has a capped
+> plan, an exhausted Gemini video budget, and zero paying users. Full rejection
+> record: `post_beta_roadmap.md` #27.
+
 ### Closed-loop eval harness — build it BEFORE the brain (noted 2026-08-05)
 Deferred along with the AUTO Director brain — recorded here so the gate exists the
 day Option A resurfaces. Source: Waymo/Dolgov "the demo is 1%" brief eval

@@ -1329,6 +1329,44 @@ live campaign).
 > the archiving rule written down so the pile does not rebuild); and this item. **Do not
 > re-evaluate this brief.**
 
+> **Corroboration #2 — Guillermo Rauch / Vercel "Eve" brief, evaluated 2026-08-07 (same
+> day).** Verdict: **~90% already absorbed**, the highest of any brief evaluated here.
+> `instructions.md`/`soul.md` = CLAUDE.md + agent_lessons.md; `skills/` = the 28 skills in
+> `.claude/skills/`; `tools/` = `tools/`; and the thesis binding them is
+> [`wat-framework.md`](wat-framework.md), written before the brief. Router + sub-agents =
+> the main loop + `.claude/agents/`; "D0" data agent = `growth_debrief_pull.py` /
+> `segment_pull.py` / `meta_insights_pull.py` / `executor_ledger.mjs`; dynamic model
+> routing = the per-role allocation in CLAUDE.md. **Genuinely absent: only two things —**
+> an ambient multi-channel interface, and event-driven (non-cron) triggers. The second IS
+> this item, so Rauch is corroboration, not a new item.
+>
+> **The one thing acted on:** the brief's channel insight — *put the agent where the human
+> already reads*. Applied as the Tier 0b `main-status` alarm + the CI read added to Health
+> Watch v2 ([`loops.md`](loops.md)); that is step 1 (now ✅ confirmed) and a scoped step 2
+> below. Nothing else built.
+>
+> **Rejected as conflicts:** (a) *"interactive prompting is an obsolete paradigm"* — the
+> **fourth** arrival of the eliminate-the-human-gate claim (Kun Chen, OpenAI Dev Day, Ramp,
+> now Rauch), and the note above already said a fourth review is not needed. Sharper danger
+> here though, worth one line: in Grifon the prompts **are** the guardrails
+> (`ad-spend-gate`, `veo-render-gate`, TUNED-file approval, flag-don't-apply, "never spends
+> autonomously") — removing the prompt removes the gate. (b) *route models on latency vs
+> reasoning* — Grifon routes on quota + quality + executor attribution, and CLAUDE.md bans
+> downgrading the main loop to save tokens. Same mechanism, wrong criterion; don't import
+> it. (c) *Vercel Connect / 100+ integrations* — the 2026-08-07 audit found the Meal
+> Reminder carrying **nine** connectors to use one tool; this repo is already
+> over-connected relative to readers. (d) *serverless hibernation, 1000-employee adoption,
+> cross-team tool rollout* — all coordination-cost problems; the org here is one person,
+> whose actual constraints are the defreezer and unread channels. (e) *"build the agent
+> before the website"* — must not reopen the §10 Concierge rescope or its two gates
+> (demand + the closed-loop eval harness). **Do not re-evaluate this brief.**
+>
+> **Meta-observation worth keeping:** this is the *seventh* agent-architecture brief
+> evaluated against this repo since May (Cherny, Kun Chen, OpenAI, Garry Tan, Cognition,
+> Waymo, Ramp, Rauch). Each has produced ~one small apply plus a re-rejection of the same
+> cost/autonomy claim. **Marginal return has flattened — treat the next one as a 30-minute
+> skim against this table, not a session.**
+
 **What:** An agent that triggers on a production incident — a failed Vercel deployment, a
 runtime error spike, a Supabase advisor crossing baseline, a support complaint — pulls the
 relevant telemetry, does root-cause analysis, and opens a GitHub Issue with a diagnosis and
@@ -1352,13 +1390,18 @@ as needed.
 production failure Neil learned about from the user rather than from a monitor.
 
 **Where to start:**
-1. **Do this part now, not later:** the Health Watch v2 push notification has been
-   *unconfirmed* since 2026-07-19 ([`loops.md`](loops.md) Tier 6). A monitor whose reader
-   was never verified is the same quota burn in a quieter form. Confirm delivery, or fire
-   the documented fallback (Gmail connector, email on CRITICAL). Also still pending: delete
-   the v1 trigger from a remote session.
+1. ✅ **DONE 2026-08-07.** The Health Watch v2 push was confirmed end-to-end (Routines UI:
+   `Sent notification` + *"Pushed the details to your phone."*). The channel is live —
+   the Gmail fallback is moot and should not be built. ⚠ Still pending: delete the v1
+   trigger + ~11 dead `send_later` triggers (Routines UI; the in-session `RemoteTrigger`
+   tool has no delete action).
 2. Widen v2's read set from advisors-only to `get_runtime_errors` + Supabase `get_logs` +
    the `events` / `producer_runs` failure rows. Same read-only posture.
+   - ✅ **Partially done 2026-08-07 (CI slice only):** v2 now reads the Tier 0b `ci-red`
+     issue and reports a red `main` — with its age in days — as CRITICAL. Taken early
+     because it cost one prompt edit and closed a failure that had already happened
+     (the 3-day outage). `get_runtime_errors` / `get_logs` / failure-row widening is
+     still parked — those need traffic to be worth reading.
 3. Add the diagnosis step: on CRITICAL, open a GitHub Issue (label `incident`) with the
    trace, the suspected cause, and a proposed fix — **never a commit, never a merge**, and
    flag-don't-apply on anything touching the TUNED files.

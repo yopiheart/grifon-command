@@ -43,6 +43,26 @@ edits). Redundant on purpose. Status feeds the Tier 5 PR-babysit loop.
 
 - Arm: nothing — wired in the workflow file; runs on PR/push to main.
 - Verifier: the `verify` + `e2e` job exit codes.
+- **🔔 `main-status` alarm job — the reader fix, added 2026-08-07.** A third job,
+  `main-status` (`needs: [verify, e2e]`, `if: always() && push`), keeps **exactly one**
+  open issue labelled `ci-red` alive while `main` is failing, appends a dated line per
+  red push, and **closes it automatically** on the first green push. That issue — not
+  the GitHub email — is the alert. **Read by** the Tier 6 Health Watch v2 Routine at
+  08:00 PHT, which reports an open `ci-red` (with its age in days) as CRITICAL to the
+  one channel whose delivery to Neil's phone is CONFIRMED.
+  - **Why this shape.** The 3-day outage was never a *detection* failure — CI went red
+    instantly and stayed red. It was a **reader** failure: ~20 identical emails in a
+    channel Neil had learned to scroll past. The rule below demanded a named reader and
+    a signal that stands out; this discharges it. One issue whose *age* is the severity
+    metric stands out; twenty identical emails do not.
+  - **push-to-main only, deliberately.** A red PR is normal and Neil is in-session for
+    it. Paging on PRs would rebuild the noise this job exists to delete.
+  - Trade: detection latency goes from instant-but-unread to ≤24h-and-read. That is a
+    strict win against a 3-day miss — but it means **the issue is the durable record and
+    the push is the nudge**; don't add a second alerting channel without re-reading the
+    rule below.
+  - Self-heals the `ci-red` label if absent. Kill switch: delete the `main-status` job
+    (the `verify`/`e2e` gate is untouched by it — it can never turn a red build green).
 - **⚠ 2026-08-07 — the three-day red-CI outage, and the rule that came out of it.**
   Every workflow in the repo (CI, Nightly Regression, Oceanides daily) failed
   from 2026-08-04 to 2026-08-07, all at the **same** step — `npm ci` — before
@@ -306,7 +326,20 @@ same day via the in-session `RemoteTrigger` tool):
     one fixed weekday it reports out loud even when clear, so silence becomes
     evidence on a known day. Park it; do not build it now.
 
-  <details><summary>Paste-ready v2 prompt (Health Watch, baseline-aware, quiet-when-clear)</summary>
+- **📡 2026-08-07 — v2 widened to read CI (the Rauch/Vercel brief's one real apply).**
+  v2 now runs a **three-check** sweep: CI/`main` first, then Vercel, then Supabase. A
+  `main` left red is CRITICAL, reported **with its age in days** — the number that
+  would have made the 3-day outage impossible to scroll past. Mechanism: it reads the
+  Tier 0b `ci-red` issue via `gh` (repo is PRIVATE, so an unauthenticated API fallback
+  does not exist — hence the explicit "if `gh` is unavailable, say *CI status
+  unavailable* in the headline, never assume green" clause). Everything else — cron,
+  both connectors, model, quiet-when-clear posture, headline format — unchanged.
+  - This is **step 2 of `post_beta_roadmap.md` #27** ("widen v2's read set"), taken
+    early because it costs one prompt edit and closes a failure that already happened.
+    The rest of #27 (diagnosis, proposed diffs, richer-than-cron triggers) stays parked;
+    detection widened, application untouched.
+
+  <details><summary>Paste-ready v2 prompt (Health Watch, CI + Vercel + Supabase, baseline-aware, quiet-when-clear) — verbatim = deployed, updated 2026-08-07</summary>
 
   ```
   You are the production health monitor for GRIFON COMMAND (React/Vite/TS on
@@ -315,28 +348,37 @@ same day via the in-session `RemoteTrigger` tool):
   push notification reaches Neil's phone when it contains something noteworthy
   — so make issues loud and all-clear runs quiet.
 
-  1. Vercel (teamId team_3t7oOfo3QPnPMHaCqEKtrCQS, projectId
+  1. CI / `main` health. The repo is PRIVATE — use the authenticated `gh` CLI
+     against the checkout you are given:
+       gh issue list --label ci-red --state open --json number,title,createdAt
+       gh run list --branch main --workflow CI --limit 5 --json conclusion,displayTitle,createdAt
+     An OPEN `ci-red` issue means `main` is failing CI right now: report it as
+     CRITICAL and state how many days it has been open (from createdAt). A
+     `failure` conclusion on the newest `main` CI run is the same signal. If
+     `gh` is unavailable or unauthenticated, put "CI status unavailable" in the
+     headline — never assume green.
+  2. Vercel (teamId team_3t7oOfo3QPnPMHaCqEKtrCQS, projectId
      prj_TaZpp0I0x0nyOmWE4XvzGmglXtsd): list recent deployments. Flag any
      deployment in the last 24h with state ERROR or CANCELED, and confirm the
      latest PRODUCTION deployment is READY. Production not READY = CRITICAL.
-  2. Supabase (project_id varoqxjccqmskzeejagn): run get_advisors for BOTH
+  3. Supabase (project_id varoqxjccqmskzeejagn): run get_advisors for BOTH
      security and performance.
-  3. Compare against the ACCEPTED BASELINE (workflows/loops.md Tier 6, as of
+  4. Compare against the ACCEPTED BASELINE (workflows/loops.md Tier 6, as of
      2026-07-18): 3 security WARNs (handle_new_user SECURITY DEFINER
      executable by anon + authenticated; leaked-password protection disabled),
      5 auth_rls_initplan perf WARNs, RLS-enabled-no-policy INFOs on the
      service-role telemetry tables, unused-index INFOs. These are KNOWN — never
      report them as new ("baseline unchanged" is enough).
-  4. Triage the rest: CRITICAL = prod down / failed production deployment /
-     security exposure beyond baseline. NEW WARNING = anything not in baseline.
-     HEALTHY = baseline only.
-  5. Final message — START with exactly: [GRIFON Health] <N critical / M new
+  5. Triage the rest: CRITICAL = `main` red / prod down / failed production
+     deployment / security exposure beyond baseline. NEW WARNING = anything not
+     in baseline. HEALTHY = baseline only.
+  6. Final message — START with exactly: [GRIFON Health] <N critical / M new
      warnings / all clear — baseline only>. Criticals/new warnings lead, each
-     with what, where (deployment ID / advisor name / table), and a one-line
-     recommended action. If healthy: headline + one short line confirming both
-     checks ran. If a tool is unavailable, say so in the headline (e.g.
-     "Vercel unreachable — partial check") — never report a clean bill you
-     didn't verify.
+     with what, where (deployment ID / advisor name / table / issue number), and
+     a one-line recommended action. If healthy: headline + one short line
+     confirming all three checks ran. If a tool is unavailable, say so in the
+     headline (e.g. "Vercel unreachable — partial check") — never report a clean
+     bill you didn't verify.
 
   Hard rules: read-only. No code changes, deployments, schema changes, emails,
   or PRs.

@@ -10,6 +10,10 @@ on:
   push:
     branches: [main]
 
+permissions:
+  contents: read
+  issues: write
+
 jobs:
   verify:
     runs-on: ubuntu-latest
@@ -72,3 +76,106 @@ jobs:
           path: test-results/
           if-no-files-found: ignore
           retention-days: 7
+
+  # ── main-status ────────────────────────────────────────────────────────────
+  # The 2026-08-04→08-07 outage was not a detection failure — CI went red
+  # immediately and stayed red for three days. It was a READER failure: the
+  # signal arrived as ~20 identical GitHub emails, a channel Neil had learned to
+  # scroll past. Tier 0b's own rule came out of that ("any new alerting added
+  # here must state who reads it and how a real signal stands out"); this job is
+  # that rule discharged.
+  #
+  # It collapses the email firehose into ONE issue that is open exactly while
+  # main is red, and closes itself when main goes green. That issue is a durable,
+  # queryable red/green bit — which is what the Health Watch v2 Routine reads
+  # each morning (workflows/loops.md Tier 6), putting CI status into the ONE
+  # channel whose delivery to Neil's phone is CONFIRMED.
+  #
+  # push-to-main only, on purpose: a red PR is normal and Neil is in-session for
+  # it. Paging on PRs would rebuild the noise this job exists to remove.
+  main-status:
+    if: always() && github.event_name == 'push'
+    needs: [verify, e2e]
+    runs-on: ubuntu-latest
+    # Serialize so two quick pushes cannot race into two duplicate issues.
+    concurrency:
+      group: main-status
+      cancel-in-progress: false
+    steps:
+      - name: Sync the main-red alarm issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // `needs` is an Actions expression context, not a JS binding — these
+            // MUST be interpolated with ${{ }} before the script runs.
+            const verifyResult = '${{ needs.verify.result }}';
+            const e2eResult = '${{ needs.e2e.result }}';
+            const red = verifyResult !== 'success' || e2eResult !== 'success';
+            const LABEL = 'ci-red';
+            const TITLE = 'main is RED — CI failing';
+            const { owner, repo } = context.repo;
+            const runUrl = `${context.serverUrl}/${owner}/${repo}/actions/runs/${context.runId}`;
+            const sha = context.sha.slice(0, 7);
+
+            // Self-healing: the label may not exist on a fresh clone of this setup.
+            try {
+              await github.rest.issues.getLabel({ owner, repo, name: LABEL });
+            } catch {
+              await github.rest.issues.createLabel({
+                owner, repo, name: LABEL, color: 'B60205',
+                description: 'main is red — auto-opened and auto-closed by the CI main-status job',
+              });
+            }
+
+            const { data: open } = await github.rest.issues.listForRepo({
+              owner, repo, state: 'open', labels: LABEL,
+            });
+            const existing = open.find(i => !i.pull_request);
+
+            const failed = [
+              verifyResult !== 'success' ? `\`verify\` (${verifyResult})` : null,
+              e2eResult !== 'success' ? `\`e2e\` (${e2eResult})` : null,
+            ].filter(Boolean).join(' + ');
+
+            if (red) {
+              const line = `❌ **${sha}** — ${failed} — [run](${runUrl})`;
+              if (existing) {
+                // Already red. Append to the timeline instead of opening a second
+                // issue — how LONG main has been red is the number that matters.
+                await github.rest.issues.createComment({
+                  owner, repo, issue_number: existing.number, body: line,
+                });
+                core.notice(`main still RED — appended to #${existing.number}`);
+              } else {
+                const { data: created } = await github.rest.issues.create({
+                  owner, repo, title: TITLE, labels: [LABEL],
+                  body: [
+                    `\`main\` is failing CI. This issue stays open until a push to main goes green,`,
+                    `then closes itself.`,
+                    ``,
+                    line,
+                    ``,
+                    `---`,
+                    `**Read by:** the *GRIFON Daily Prod Health Watch v2* Routine (08:00 PHT),`,
+                    `which reports a red main as CRITICAL to Neil's phone — the one delivery`,
+                    `channel confirmed working (workflows/loops.md Tier 6). The GitHub email for`,
+                    `this run is NOT the alert; this issue is.`,
+                    ``,
+                    `**First triage step:** compare npm major versions before rewriting the`,
+                    `lockfile — that was the 3-day outage of 2026-08-04→08-07 (Tier 0b).`,
+                  ].join('\n'),
+                });
+                core.notice(`main went RED — opened #${created.number}`);
+              }
+            } else if (existing) {
+              await github.rest.issues.createComment({
+                owner, repo, issue_number: existing.number,
+                body: `✅ **${sha}** — green again — [run](${runUrl})`,
+              });
+              await github.rest.issues.update({
+                owner, repo, issue_number: existing.number, state: 'closed',
+              });
+              core.notice(`main is GREEN again — closed #${existing.number}`);
+            } else {
+              core.info('main is green, no open alarm — nothing to do.');
+            }
