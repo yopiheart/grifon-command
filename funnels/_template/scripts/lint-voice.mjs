@@ -505,22 +505,38 @@ for (const file of files) {
   });
 }
 
-// WARNINGS muna: babala lang sila, kaya lumalabas kahit pasado ang build.
+// 🔴 ERROR TIER NA ANG TATLONG KLASE (2026-08-08). Babala lang sila noon, at may
+// dahilan yun: 34 ang hit at wala pang paraan para itala ang sadyang exception,
+// kaya ang ERROR tier noon ay dalawang pagpipilian lang — sirain ang magandang
+// kopya, o pabayaang maingay ang gate hanggang di na sya binabasa ng tao.
+//
+// Nagbago ang dalawa. Nakalibre ang KONYO, at na-calibrate ang PARTICLE (utos +
+// terms micro-copy + legal surface) at ang MAHABA (mabigat na ugat, hindi mahabang
+// affix) — 34 -> 0 nang hindi humihina, patunay ang limang manual na salita na
+// nahuhuli pa rin. At may `// voice-ok: <dahilan>` na para sa panlasang hindi
+// kayang makita ng regex.
+//
+// Yun ang bumubuhay sa ERROR tier: may kinalalagyan na ang sadyang exception,
+// kasama ang dahilan nya. Kung babalik sa babala, ISANG LINYA lang: ibalik ang
+// `&& warns.length === 0` sa pagpasa sa ibaba.
 if (warns.length) {
-  console.warn(`\n⚠ ${warns.length} BABALA (klase, hindi salita — hindi to nagpapabagsak)\n`);
+  console.error(`\n✗ ${warns.length} SALA SA KLASE (nagpapabagsak na to)\n`);
   for (const w of warns) {
-    console.warn(`  [${w.klase}] ${w.file}:${w.line}`);
-    console.warn(`    "${w.word}"`);
-    console.warn(`    ${w.why}`);
-    console.warn(`    ${w.better}\n`);
+    console.error(`  [${w.klase}] ${w.file}:${w.line}`);
+    console.error(`    "${w.word}"`);
+    console.error(`    ${w.why}`);
+    console.error(`    ${w.better}\n`);
   }
-  console.warn('Modelo: workflows/taglish_2026_model.md\n');
+  console.error('Modelo: workflows/taglish_2026_model.md');
+  console.error('Kung TAMA ang linya, itala ang dahilan: // voice-ok: <bakit sya tama>\n');
 }
 
-if (hits.length === 0) {
-  console.log(`voice ok — ${files.length} file, ${warns.length} babala, walang nahuli`);
+if (hits.length === 0 && warns.length === 0) {
+  console.log(`voice ok — ${files.length} file, walang nahuli`);
   process.exit(0);
 }
+
+if (hits.length === 0) process.exit(1);
 
 console.error(`\n✗ VOICE LINT — ${hits.length} nahuli\n`);
 for (const h of hits) {
