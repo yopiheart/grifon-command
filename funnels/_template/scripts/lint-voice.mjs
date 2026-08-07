@@ -331,6 +331,25 @@ const rootHtml = (await readdir(ROOT, { withFileTypes: true }))
   .filter((e) => e.isFile() && e.name.endsWith('.html'))
   .map((e) => join(ROOT, e.name));
 
+// 🔴 2026-08-08 — SAKOP NG EXEMPTION, HINDI SAKOP NG WALKER.
+// May legal exemption na sa loob ng PARTICLE loop sa ibaba, pero PANGUNGUSAP ang
+// tinitingnan nya: kailangang nasa mismong linya ang RA / DENR / Privacy bago sya
+// mag-exempt. Kaya tumatagas — ang `privacy.html:103` ("may karapatan kang malaman
+// kung ano ang kinuha namin") ay purong legal, pero walang keyword, kaya nahuhuli.
+// Ganun din ang numbered na how-to step sa `pack/` ("2. Sa Meta Business Suite,
+// gumawa ng schedule").
+//
+// Ang particle test ay tanong na "parang sinasabi ba to ng tao nang malakas?" — at
+// may dalawang surface na sadyang HINDI sinasalita: ang legal page at ang
+// instructional pack. Ang pagdagdag ng naman/lang/kasi doon ay SIRA, hindi ayos.
+//
+// ⚠️ ANG PARTICLE LANG ANG NAKA-OFF DITO — hindi ito pagpapaliit ng sakop ng walker,
+// at yun ang mahalagang pagkakaiba. Buhay pa rin ang RULES, ang KONYO at ang MAHABA
+// sa mga page na to. Sila ang nakakahuli ng deep-Tagalog na privacy.html gaya noong
+// 08-02, kaya hindi sila hinahawakan. Ang bumabasa nito bukas: wag mong idagdag ang
+// MAHABA sa listahan — sya ang huling nakabantay sa manual-Tagalog sa legal page.
+const FORMAL_SURFACE = /(^|[\\/])(privacy|terms)\.html$|(^|[\\/])pack[\\/]/i;
+
 const files = [...(await walk(SRC)), ...(await walk(PUBLIC)), ...rootHtml];
 const hits = [];
 const warns = [];
@@ -338,6 +357,8 @@ const warns = [];
 for (const file of files) {
   const raw = await readFile(file, 'utf8');
   const code = strip(raw);
+  // Isang beses kada file, hindi kada linya — pareho ang sagot sa buong file.
+  const isFormalSurface = FORMAL_SURFACE.test(relative(ROOT, file));
   code.split('\n').forEach((line, i) => {
     // Relative sa ROOT, hindi sa SRC: mula nang ma-scan ang public/ at ang root
     // HTML, ang SRC-relative na path ay lumalabas na `src/..\public\privacy.html`.
@@ -376,7 +397,10 @@ for (const file of files) {
     // ang maiikling punchy na copy dahil tatlong pangungusap ang nasa iisang
     // linya ng HTML, kaya lumagpas sa 12 salita ang PINAGSAMA. Mali yun — walang
     // kailangang particle ang maikling linya, at yun mismo ang magandang copy.
-    for (const s of prose.split(/(?<=[.!?])\s+|\s*[|·•]\s*/)) {
+    // Surface-level muna ang exemption (tingnan ang FORMAL_SURFACE sa itaas), tapos
+    // ang lumang sentence-level na keyword check sa loob — para mahuli pa rin ang
+    // legal na pangungusap na naka-embed sa isang sales page.
+    for (const s of isFormalSurface ? [] : prose.split(/(?<=[.!?])\s+|\s*[|·•]\s*/)) {
       // Exempt ang legal at compliance na pangungusap. Pormal talaga sila nang
       // may dahilan (RA number, Data Privacy Act, DENR, BIR), at hindi pa
       // kailanman nireklamo ni Neil na "walang particle" ang ganitong linya.
