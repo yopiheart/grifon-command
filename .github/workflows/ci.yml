@@ -107,7 +107,12 @@ jobs:
         with:
           script: |
             // `needs` is an Actions expression context, not a JS binding — these
-            // MUST be interpolated with ${{ }} before the script runs.
+            // two MUST be interpolated by the runner before the script executes.
+            // NB: never write an empty Actions expression in a comment here. The
+            // runner scans the whole file for them and does not care that it is
+            // inside a JS comment inside a YAML block scalar — an empty one is a
+            // parse error that kills the entire workflow (cost one red run,
+            // 2026-08-07).
             const verifyResult = '${{ needs.verify.result }}';
             const e2eResult = '${{ needs.e2e.result }}';
             const red = verifyResult !== 'success' || e2eResult !== 'success';
