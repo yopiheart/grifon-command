@@ -44,7 +44,7 @@ Entries reflect what was true when written — several are superseded by later e
 
 ### 2026-05-13 — Veo 429 after N scenes in RENDER ALL is by-design, not a code bug
 **Context:** Decision Gate run on Glossier face-mist (MrBeast style). 4 scenes rendered successfully; scenes 5–7 hit 429 with the UI banner "RATE LIMITED · 3 queued · 55m to resume."
-**What went wrong:** Nothing went wrong in code. Veo 3.1 enforces an hourly per-key cap. The queue at [components/GenerateVideo/RenderAllRunner.ts:32](components/GenerateVideo/RenderAllRunner.ts#L32) (`RATE_LIMIT_WINDOW_SEC = 3600`) catches the 429 gracefully, surfaces the cooldown via the `QueueEvent` `rate-limited` message, and auto-resumes after the wait. The user-facing "55m to resume" badge IS the documented retry-after countdown. A 502 on single-scene generate fired the same session — that one is likely an upstream Gemini timeout, distinct from the 429 hourly cap.
+**What went wrong:** Nothing went wrong in code. Veo 3.1 enforces an hourly per-key cap. The queue at [components/GenerateVideo/RenderAllRunner.ts:32](../components/GenerateVideo/RenderAllRunner.ts#L32) (`RATE_LIMIT_WINDOW_SEC = 3600`) catches the 429 gracefully, surfaces the cooldown via the `QueueEvent` `rate-limited` message, and auto-resumes after the wait. The user-facing "55m to resume" badge IS the documented retry-after countdown. A 502 on single-scene generate fired the same session — that one is likely an upstream Gemini timeout, distinct from the 429 hourly cap.
 **Lesson:** When 429 hits during RENDER ALL, do NOT treat it as a recoverable code bug — it's by design and the queue handles it. Tell the user to leave the tab open; the queue resumes automatically when the cooldown lifts. Code-side audit only fires if (a) the queue stops resuming (likely an `AbortController` or `signal` issue), or (b) 502 recurs systematically on single-scene generate (audit `api/gemini/video.ts` timeout config in that case). Don't ship a "retry" button — the queue already handles it; a manual retry just stacks more queued scenes.
 
 ### 2026-05-18 — Verify canonical docs before wiring a new "variant" of an existing API surface
@@ -53,7 +53,7 @@ Entries reflect what was true when written — several are superseded by later e
 
 **What went wrong:** Neil pointed me at https://kling.ai/document-api/apiReference/model/OmniVideo. Three discoveries — every one of which alone would have broken the wiring: (1) the actual Omni model name is `kling-video-o1` or `kling-v3-omni`, not `kling-v1-6` — that string doesn't exist anywhere in Kling's enums. (2) Omni lives at `POST /v1/videos/omni-video`, NOT the `/v1/videos/image2video` endpoint our existing proxy hardcodes — routing Omni model names through that proxy 4xx's every call. (3) Omni's body shape is fundamentally different: `image_list: [{image_url, type: 'first_frame'|'end_frame'}]` array of tagged objects, not the flat `image` + `image_tail` strings image2video uses. Recovery cost was a `git revert` (clean, no data lost) but the routing change has to be re-done from scratch as a new proxy with the proper body shape.
 
-**Lesson:** When adding a new model/variant to an existing API surface, "fetch the canonical docs" is a load-bearing prerequisite step, not a nice-to-have. Treat the assumption "Variant X is just like Variant Y with a different name" as false until proven true by the docs. For bot-protected docs sites (Kling's docs returned HTTP 446 to WebFetch), use Playwright in a real browser to bypass — that takes 60 seconds and is much cheaper than building the wrong proxy. Concrete rule for this repo: any new entry in `VIDEO_MODEL_ROUTING` that targets a `provider: 'kling'` model name we haven't directly tested via smoke must include a doc-fetch verification step BEFORE writing the dispatcher branch. Same rule generalizes — any new Veo model variant, ElevenLabs voice mode, Gemini SDK surface, PayMongo product type: read the actual docs page before assuming surface-level similarity. Captured in [workflows/archive/2026-05-18-session-c-reverted-omni-discovery.md](workflows/archive/2026-05-18-session-c-reverted-omni-discovery.md) for the Session D follow-up.
+**Lesson:** When adding a new model/variant to an existing API surface, "fetch the canonical docs" is a load-bearing prerequisite step, not a nice-to-have. Treat the assumption "Variant X is just like Variant Y with a different name" as false until proven true by the docs. For bot-protected docs sites (Kling's docs returned HTTP 446 to WebFetch), use Playwright in a real browser to bypass — that takes 60 seconds and is much cheaper than building the wrong proxy. Concrete rule for this repo: any new entry in `VIDEO_MODEL_ROUTING` that targets a `provider: 'kling'` model name we haven't directly tested via smoke must include a doc-fetch verification step BEFORE writing the dispatcher branch. Same rule generalizes — any new Veo model variant, ElevenLabs voice mode, Gemini SDK surface, PayMongo product type: read the actual docs page before assuming surface-level similarity. Captured in [workflows/archive/2026-05-18-session-c-reverted-omni-discovery.md](archive/2026-05-18-session-c-reverted-omni-discovery.md) for the Session D follow-up.
 
 ### 2026-05-18 — HTTP 429 can mean TWO different things from one upstream; inspect the envelope, not just the status code
 
@@ -88,7 +88,7 @@ On V3 image2video, all three coexisted fine because V3's `image + image_tail` bo
 
 **Context:** Session E set out to redesign `generateVideoPrompts` Option A for the Kling Omni hook scene, planning a Nikolai-anchor-bridge classifier inside a new "Option A-Hook" block. The plan assumed Flash needed brand-new instructions to pick a transition type per scene.
 
-**What went wrong (mostly caught in Phase 2 prereq, before any code shipped):** the storyboard generator at [api/_lib/prompts.ts:773-823](api/_lib/prompts.ts) already classifies — it picks one of 6 VIRAL VFX MENU effects per Scene 1 (Character Morph, Object Materialization, Teleport/Snap Cut, Explosion Reveal, Invisible Effect, Chaos Burst) and stores the choice in `scene.transitionEffect` (defined in [types.ts:50](types.ts)). The signal was being **dropped** by `generateVideoPrompts` at services/geminiService.ts:1617-1619 before reaching the Flash meta-prompt that builds video prompts. So Flash had to re-invent a transition every call, ignoring the storyboard's actual choice. The original Phase 2 plan would have shipped a *second* classifier on top of an existing one without realizing it. Gate 1 text-diff against 3 TransitionEffect values confirmed: just plumbing the existing signal through (Commit 2a — pure code, 5-line change) produced *automatic* per-effect prose diversity from Flash with zero new instructions. The Option A-Hook split (Commit 2b — TUNED) added discipline on top, but the load-bearing improvement was the plumbing.
+**What went wrong (mostly caught in Phase 2 prereq, before any code shipped):** the storyboard generator at [api/_lib/prompts.ts:773-823](../api/_lib/prompts.ts) already classifies — it picks one of 6 VIRAL VFX MENU effects per Scene 1 (Character Morph, Object Materialization, Teleport/Snap Cut, Explosion Reveal, Invisible Effect, Chaos Burst) and stores the choice in `scene.transitionEffect` (defined in [types.ts:50](../types.ts)). The signal was being **dropped** by `generateVideoPrompts` at services/geminiService.ts:1617-1619 before reaching the Flash meta-prompt that builds video prompts. So Flash had to re-invent a transition every call, ignoring the storyboard's actual choice. The original Phase 2 plan would have shipped a *second* classifier on top of an existing one without realizing it. Gate 1 text-diff against 3 TransitionEffect values confirmed: just plumbing the existing signal through (Commit 2a — pure code, 5-line change) produced *automatic* per-effect prose diversity from Flash with zero new instructions. The Option A-Hook split (Commit 2b — TUNED) added discipline on top, but the load-bearing improvement was the plumbing.
 
 **Lesson:** Before designing new downstream logic (classifier, picker, generator), trace whether an upstream stage already produces the signal you're about to invent. The cheapest audit move is **read the upstream's response schema/prompt and grep its output fields against downstream consumers** — if the field exists upstream but doesn't appear in any downstream usage, it's being dropped on the floor. Surfacing that signal is almost always a smaller, lower-risk change than building a parallel mechanism. Concrete rule for this repo: when touching the wizard pipeline (Step 1 → Step 7), grep every `Scene`/`AllData`/storyboard field name against the consuming code paths before designing new field flows. The 2026-05-09 crown-jewel migration moved some prompts server-side but did not retrofit all downstream consumers — assume some fields still aren't reaching where they should. Generalizes to: any time a "redesign" plan emerges, the first audit question is *"what does upstream already give us that downstream isn't using yet?"*
 
@@ -96,7 +96,7 @@ On V3 image2video, all three coexisted fine because V3's `image + image_tail` bo
 
 **Context:** Building the on-domain `/checkout` page. Founder initially settled on no-auto-renew positioning, then pivoted mid-session to "I want monthly auto-charge like Claude/OpenAI." I almost reached for an `Edit` to flip the trust-badge copy to "Auto-renews monthly · Cancel anytime."
 **What went wrong (caught before shipping):** The current backend creates a one-time PayMongo Payment Intent. There is no card-on-file storage, no billing cron, no recurring charge handler. Flipping copy to promise auto-renewal would have meant: customer pays, expects to be charged again in 30 days, isn't charged, either keeps free access or loses access without warning. Either outcome is a worse trust break than the original "no auto-renew" positioning. Caught it before writing the Edit, but only because I paused to think about technical scope before keystrokes.
-**Lesson:** When the founder makes a strategic call about subscription/billing/recurring/trial behavior, the next question is **always** "does the backend support this?" — *before* drafting copy that asserts the new behavior. Subscription-model copy is a load-bearing claim, not just marketing language. If backend support is missing, surface it as a separate engineering workstream (see [workflows/auto_renew.md](workflows/auto_renew.md)) and ship neutral copy that doesn't promise either direction in the meantime. Same rule applies to: trial-period claims, refund-window claims, "cancel anytime" claims, "pause subscription" claims — every one of these is a backend feature gate masquerading as a copy choice.
+**Lesson:** When the founder makes a strategic call about subscription/billing/recurring/trial behavior, the next question is **always** "does the backend support this?" — *before* drafting copy that asserts the new behavior. Subscription-model copy is a load-bearing claim, not just marketing language. If backend support is missing, surface it as a separate engineering workstream (see [workflows/auto_renew.md](auto_renew.md)) and ship neutral copy that doesn't promise either direction in the meantime. Same rule applies to: trial-period claims, refund-window claims, "cancel anytime" claims, "pause subscription" claims — every one of these is a backend feature gate masquerading as a copy choice.
 
 ### 2026-05-22 — A frame-sampling grid tuned for a slow transition silently misses a fast one
 
@@ -315,7 +315,7 @@ Rule given verbatim by Neil on 2026-05-26:
 
 **Context:** Session M's smoke landed in GenerateVideo with 7 new Curology
 seedPrompts. The rehydration useEffect at
-[components/GenerateVideo/index.tsx:295-327](components/GenerateVideo/index.tsx#L295-L327)
+[components/GenerateVideo/index.tsx:295-327](../components/GenerateVideo/index.tsx#L295-L327)
 matched library entries by `l.sceneIdx === i` alone. The user's Supabase
 account already held 50+ MP4s from prior brand wizards (Battlecreek,
 PeakBoost, Glossier...) at every `sceneIdx` value 0-6. Result: all 7 fresh
@@ -329,7 +329,7 @@ visuals.
 match (`l.sceneIdx === i && l.prompt === seed.prompt`). The prompt-text
 fallback below already required exact match, so the change is internally
 consistent. Patch is 1 line at
-[components/GenerateVideo/index.tsx:302](components/GenerateVideo/index.tsx#L302).
+[components/GenerateVideo/index.tsx:302](../components/GenerateVideo/index.tsx#L302).
 
 **Lesson — generalizable beyond GenerateVideo.** Any state matcher that
 fans out a shared, multi-tenant resource (Supabase user library, ElevenLabs
@@ -345,7 +345,7 @@ expression to a useEffect that hydrates transient React state, ask:
 filter falsely match an entry from a different wizard at the same index?"*
 If yes, add an identity guard (prompt text, batchId, wizardSessionId, or
 fingerprint of the seed itself). Captured in
-[workflows/archive/2026-05-26-session-m-bug-catalog-halt.md](workflows/archive/2026-05-26-session-m-bug-catalog-halt.md)
+[workflows/archive/2026-05-26-session-m-bug-catalog-halt.md](archive/2026-05-26-session-m-bug-catalog-halt.md)
 as the headline Session M finding.
 
 **Pattern generalization for future work:** Same caution will apply to (a)
@@ -406,7 +406,7 @@ watch-each-video pre-flight rule):
    for ensemble recall; halt if ≥2/3 passes flag CRITICAL.
 5. Paste findings to Claude. Claude proposes any required TUNED edits using
    current code state — not Gem's confabulated file paths.
-6. Line-by-line sign-off via AskUserQuestion per [services/CLAUDE.md](services/CLAUDE.md).
+6. Line-by-line sign-off via AskUserQuestion per [services/CLAUDE.md](../services/CLAUDE.md).
 
 **Calibration anchor:** `Gemini 3.5 flash video audit.md` (repo root) is
 the canonical style example. Already uploaded to the Gem's Knowledge.
@@ -419,7 +419,7 @@ text and flag any discrepancy from the prompt-named brand without auto-
 correcting. Pass 2 caught "Currology" with a double-r on the same Curology
 clip Pass 1 missed — a real text-hallucination finding.
 
-Captured in [workflows/archive/2026-05-26-session-n-tuned-edits-shipped.md](workflows/archive/2026-05-26-session-n-tuned-edits-shipped.md)
+Captured in [workflows/archive/2026-05-26-session-n-tuned-edits-shipped.md](archive/2026-05-26-session-n-tuned-edits-shipped.md)
 under "NEW: Grifon Director AI Video Auditor Gem".
 
 ### 2026-05-26 — Hand-transcribed inline SVGs and icon-text rhythm must be eyeballed, not build-verified
@@ -472,7 +472,7 @@ by build or my own desktop-scale screenshot inspection:
 the `brand-check` skill (`.claude/skills/brand-check/SKILL.md`) so any UI
 diff with buttons, icons, or `flex items-center` containers gets
 adversarially eyeballed before being declared done. Captured in
-[workflows/handoff_2026-05-26-session-p-...](workflows/) (forthcoming) and
+[workflows/handoff_2026-05-26-session-p-...](archive/) (forthcoming) and
 in the ephemeral memory layer at
 `~/.claude/projects/.../memory/feedback_verify_design_alignment.md`.
 
@@ -627,7 +627,7 @@ gates) AND add a hard tiebreak: **a model auditing another model's audio can als
 hallucinate — for any launch-blocking gate, if the passes disagree, Neil's ear is
 ground truth, not Gemini's.** Bake "audit every render before it propagates" into
 the testing flow. Canonical protocol + copy-paste audit prompt + structured
-output schema live in [workflows/video_audit_protocol.md](workflows/video_audit_protocol.md)
+output schema live in [workflows/video_audit_protocol.md](video_audit_protocol.md)
 (repo, not the defreezer-wiped ~/.claude memory). This SUPERSEDES the 2026-05-26
 "Grifon Director AI Video Auditor Gem" workflow.
 
@@ -1111,8 +1111,8 @@ handoff had simply assumed it existed.
 costs 10 minutes and the fifth costs the session. Two rules:
 1. **Write the runbook the FIRST time you walk one, and put it where the next session will look for
    it — not only in the client-specific handoff.** This one now lives in
-   [workflows/infra_setup.md](workflows/infra_setup.md) §7 (client-agnostic) with the live IDs in
-   [clients/oceanides/kuya-marvin/ads/NEXT-SESSION.md](clients/oceanides/kuya-marvin/ads/NEXT-SESSION.md).
+   [workflows/infra_setup.md](infra_setup.md) §7 (client-agnostic) with the live IDs in
+   [clients/oceanides/kuya-marvin/ads/NEXT-SESSION.md](../clients/oceanides/kuya-marvin/ads/NEXT-SESSION.md).
    The `~/.claude/` memory directory does NOT survive the defreezer — "save this for later" always
    means commit to the repo.
 2. **When a handoff doc asserts an external asset exists (a Page, an account, a token), it is an

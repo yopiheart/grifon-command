@@ -75,7 +75,7 @@ Open these in 3 tabs, paste `https://app.grifon.ai/` into each, click the refres
 
 **Modules to audit (in priority order):**
 
-1. [components/GenerateVideo.tsx](../components/GenerateVideo.tsx) — video output reveal is the most ambitious moment in the app. Currently has audio-level meter using `bg-[#10B981]` (Tailwind green-500) — verify if that's a brand violation or a deliberate signal-strength cue.
+1. [components/GenerateVideo.tsx](../components/GenerateVideo/index.tsx) — video output reveal is the most ambitious moment in the app. Currently has audio-level meter using `bg-[#10B981]` (Tailwind green-500) — verify if that's a brand violation or a deliberate signal-strength cue.
 2. [components/EditVideo.tsx](../components/EditVideo.tsx) — video result panel + thumbnail grid. Check if generated-result panels have ambient gold glow.
 3. [components/CinematicSpecStudio.tsx](../components/CinematicSpecStudio.tsx) — name implies cinematic, must deliver. Has a `bg-red-500` recording-state pulse — likely intentional but worth confirming.
 4. [components/ImageAdsGen.tsx](../components/ImageAdsGen.tsx) — image generation output zone.

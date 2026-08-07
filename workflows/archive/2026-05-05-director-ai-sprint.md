@@ -12,7 +12,7 @@
 - Click-to-zoom on Avatar/Thumbnail tabs via existing `ImageModal`. Switched from `object-cover` (cropping bug) to `object-contain` with `aspect-[9/16]` / `aspect-video` containers.
 - `// Clear Session & Restart` visibility-bumped from `text-zinc-600` → `text-zinc-500` + `RotateCcw` icon + `border border-white/5 rounded-full` pill. Discoverable on scan, still secondary to gold CTAs.
 
-**Wizard ↔ GenerateVideo handoff** ([App.tsx:421, 505](../../App.tsx); [components/GenerateVideo.tsx:14-17, 53-63, ~377](../../components/GenerateVideo.tsx)):
+**Wizard ↔ GenerateVideo handoff** ([App.tsx:421, 505](../../App.tsx); [components/GenerateVideo.tsx:14-17, 53-63, ~377](../../components/GenerateVideo/index.tsx)):
 - `seedPrompts?: VideoPrompt[]` prop on GenerateVideo. When present, `config.prompt` initializes from `seedPrompts[0]` and a scene-picker chip row renders above the KINETIC_DIRECTIVE textarea (`SCENE_01 ... SCENE_NN`). Click a chip → swaps prompt content and highlights gold. Hygiene: when GenerateVideo is launched from the Dashboard (no wizard), `seedPrompts` is undefined and the chip row doesn't render.
 - App.tsx mirrors the existing `<SignalModulator globalScript={finalScript}>` precedent at [App.tsx:425](../../App.tsx#L425).
 

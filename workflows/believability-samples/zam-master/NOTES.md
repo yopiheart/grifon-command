@@ -234,7 +234,7 @@ eyeball; bank or delete next session (defreezer wipes `.tmp/`).
    awaiting Neil's eyeball.**
 3. The real make-or-break is still **ONE Veo 3.1 motion + lip-sync test on the Option C
    master, rendered RAW/ungraded** (see [`../ZAM-AVATAR-NOTES.md`](../ZAM-AVATAR-NOTES.md)
-   next-steps §3 and the Surface-A raw-first rule in [`../believability_dna.md`](../believability_dna.md)).
+   next-steps §3 and the Surface-A raw-first rule in [`../believability_dna.md`](../../believability_dna.md)).
    Stills are not an avatar until identity holds in motion.
 
 ## Cost note

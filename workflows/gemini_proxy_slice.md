@@ -2,7 +2,7 @@
 
 **Status:** Phase 3 complete (2026-04-25). Phases 4–5 outstanding.
 **Owner:** Claude Code + neilmaglaya
-**Audit reference:** [.tmp/app_audit.md](../.tmp/app_audit.md) P0 §1
+**Audit reference:** [app_audit.md](app_audit.md) P0 §1
 
 ## Objective
 
@@ -38,7 +38,7 @@ A logged-in free user could fire 30 text gens/min × 60 min = 1,800/hour against
 3. **Edit:** [vercel.json](../vercel.json) — add `maxDuration: 30` for `api/gemini/text.ts`.
 4. **Edit:** [.env.example](../.env.example) — add `GEMINI_API_KEY=` (server-side, no `VITE_` prefix). Keep `VITE_GEMINI_API_KEY` (still used by 25 unmigrated functions).
 5. **Edit:** [CLAUDE.md](../CLAUDE.md) line 58 — narrow the "do not alter" rule.
-6. **Edit:** [.tmp/app_audit.md](../.tmp/app_audit.md) — mark P0 §1 as "Phase 1/5 in progress."
+6. **Edit:** [app_audit.md](app_audit.md) — mark P0 §1 as "Phase 1/5 in progress."
 7. **No edit:** any non-OfferOptimizer component, any other geminiService function, prompt strings, response schemas, model IDs.
 
 ## Server contract — `POST /api/gemini/text`
@@ -114,7 +114,7 @@ The `{...}` object is identical. Prompt string untouched. Schema untouched. Pars
 |---|---|
 | **Phase 2** | ✅ Complete (2026-04-25). Migrated 18 text-class call sites in `services/geminiService.ts` from `getAi().models.generateContent` → `proxyGenerateContent`. The original "~16" estimate undercounted — actual was 18 (the prior grep was truncated at the default head limit). Sites migrated by model: `textModel` ×9, `fastTextModel` ×4, `researchTextModel` ×5. Total proxy call sites in the file is now 19 (Phase 1 + Phase 2). 5 image-class call sites remain on `getAi()` (all `avatarModel`/`sceneImageModel`) — deferred to Phase 3. Verification: `tsc --noEmit` to be run by user. |
 | **Phase 3** | ✅ Complete (2026-04-25, end-to-end verified 2026-04-26). Built [api/gemini/image.ts](../api/gemini/image.ts) (15/60s rate limit, `maxDuration: 60`). Added `proxyGenerateImage()` helper sharing transport with `proxyGenerateContent()` via internal `proxyCall(endpoint, params)`. Migrated 5 image-class call sites: 2× `avatarModel` (now lines ~894, ~1000) + 3× `sceneImageModel` (now lines ~1433, ~1502, ~1705). Payload-size strategy locked via grill-me: client-side compression (canvas resize → max 1280px long edge → JPEG @ 0.85) at every upload entry point. Built [utils/imageCompression.ts](../utils/imageCompression.ts) and integrated into 11 image-only upload sites + 1 mixed (CaptionHeadline). This retroactively fixes the latent 4.5MB risk on the Phase 2 text proxy as well (`describeImage`, `describeBusinessAsset` accept user uploads). Verified: `tsc --noEmit` clean. **Dev-environment bridge added 2026-04-26:** [vite.config.ts](../vite.config.ts) gained a `vercelApiDevPlugin` middleware that loads `api/*.ts` via Vite's SSR loader and merges all `.env` keys into `process.env` so server handlers see `GEMINI_API_KEY` and `SUPABASE_SERVICE_ROLE_KEY` (unprefixed) in dev. Without this, `npm run dev` returns 404 for `/api/*` and the proxy can never be exercised locally. Production on Vercel is unaffected — the same `api/*.ts` files run natively there. |
-| **Phase 4** | 📋 Spec locked 2026-04-26 (see "Phase 4 spec" section below). Build `api/gemini/video.ts` (initiate) + `api/gemini/video/poll.ts` (poll + on-done Veo-download/Supabase-upload) + `api/cron/cleanup-gemini-videos.ts` (hourly 48h sweep). Migrate `generateVideo` body. Single real caller: [components/GenerateVideo.tsx](../components/GenerateVideo.tsx) — handoff over-counted. |
+| **Phase 4** | 📋 Spec locked 2026-04-26 (see "Phase 4 spec" section below). Build `api/gemini/video.ts` (initiate) + `api/gemini/video/poll.ts` (poll + on-done Veo-download/Supabase-upload) + `api/cron/cleanup-gemini-videos.ts` (hourly 48h sweep). Migrate `generateVideo` body. Single real caller: [components/GenerateVideo.tsx](../components/GenerateVideo/index.tsx) — handoff over-counted. |
 | **Phase 5** | Delete `getAi()`, remove `VITE_GEMINI_API_KEY` from `.env.example`, verify `dist/` clean of the key, **then** mark audit P0 §1 closed. |
 
 Each phase is its own PR. Phases 1 and 4 require architectural decisions; phases 2, 3, and 5 are mechanical migrations of the same pattern.
@@ -133,9 +133,9 @@ Each phase is its own PR. Phases 1 and 4 require architectural decisions; phases
 
 ### Scope reality check
 
-Only **one** caller of `generateVideo` exists in the codebase: [components/GenerateVideo.tsx:174](../components/GenerateVideo.tsx#L174). The 2026-04-25 handoff listed three (GenerateVideo, InfluencerForge, EditVideo) but a Grep proved this wrong — InfluencerForge only uses image proxies, and EditVideo only uses `generateVideoEditPlan` (text). Phase 4 blast radius is one component file.
+Only **one** caller of `generateVideo` exists in the codebase: [components/GenerateVideo.tsx:174](../components/GenerateVideo/index.tsx#L174). The 2026-04-25 handoff listed three (GenerateVideo, InfluencerForge, EditVideo) but a Grep proved this wrong — InfluencerForge only uses image proxies, and EditVideo only uses `generateVideoEditPlan` (text). Phase 4 blast radius is one component file.
 
-[components/GenerateVideo.tsx:118](../components/GenerateVideo.tsx#L118) already wraps both `startFrame` and `endFrame` uploads with `compressImageForUpload` from Phase 3, so input payload size is not a Phase 4 concern.
+[components/GenerateVideo.tsx:118](../components/GenerateVideo/index.tsx#L118) already wraps both `startFrame` and `endFrame` uploads with `compressImageForUpload` from Phase 3, so input payload size is not a Phase 4 concern.
 
 ### Decisions
 
@@ -176,7 +176,7 @@ Only **one** caller of `generateVideo` exists in the codebase: [components/Gener
 3. **New:** `api/cron/cleanup-gemini-videos.ts` — verify `x-vercel-cron` header (or 401) → list objects in `gemini-videos` via `supabaseAdmin` filtered by `created_at < now - 48h` → batch-delete via `supabase.storage.from('gemini-videos').remove(paths)` → return `{ deleted, errors }`.
 4. **New:** Supabase migration creating the `gemini-videos` bucket as private. RLS posture: bucket-level "no public read" (default for private). No custom policies — all access flows through the proxy via service-role admin client.
 5. **Edit:** [services/geminiService.ts](../services/geminiService.ts) — add `proxyGenerateVideo()` and `proxyPollVideoOperation()` helpers (sharing `proxyCall` transport from Phase 3). Rewrite `generateVideo` body to use them. Update `GeneratedVideoResult` interface to add `downloadUrl: string`.
-6. **Edit:** [components/GenerateVideo.tsx](../components/GenerateVideo.tsx) — replace `result.url` with `result.downloadUrl` at line 370 (download `<a>`). Delete `lastResultUrlRef` ref and all `URL.revokeObjectURL` calls (lines 78, 161, 379).
+6. **Edit:** [components/GenerateVideo.tsx](../components/GenerateVideo/index.tsx) — replace `result.url` with `result.downloadUrl` at line 370 (download `<a>`). Delete `lastResultUrlRef` ref and all `URL.revokeObjectURL` calls (lines 78, 161, 379).
 7. **Edit:** [api/_lib/rateLimit.ts](../api/_lib/rateLimit.ts) — add `'video'` and `'video-poll'` scopes.
 8. **Edit:** [vercel.json](../vercel.json) — add `maxDuration: 30` for `api/gemini/video.ts`, `60` for `api/gemini/video/poll.ts`, `60` for `api/cron/cleanup-gemini-videos.ts`. Add `crons: [{ path: '/api/cron/cleanup-gemini-videos', schedule: '0 * * * *' }]`.
 9. **Edit:** [.env.example](../.env.example) — no new env vars (re-uses `GEMINI_API_KEY` and `SUPABASE_SERVICE_ROLE_KEY` from Phases 1-3).

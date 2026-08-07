@@ -85,7 +85,7 @@ CREATE INDEX idx_subscriptions_next_renewal ON subscriptions (next_renewal_at)
 
 ### 3. Renewal cron
 
-**File:** new — [api/cron/renew-subscriptions.ts](../api/cron/renew-subscriptions.ts)
+**File:** new — `api/cron/renew-subscriptions.ts` (not built)
 
 **Cron schedule:** every hour at :15 (offset from existing `cleanup-gemini-videos` cron at 03:00). Add to [vercel.json](../vercel.json) `crons` array:
 ```json

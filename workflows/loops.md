@@ -165,7 +165,7 @@ same day via the in-session `RemoteTrigger` tool):
 
 | Routine | Schedule | Status | Reader | Kill switch |
 |---|---|---|---|---|
-| **GRIFON Daily Prod Health Watch v2** (`trig_01EwWDbLuXyegg39L61XwVbS`) | daily 08:00 PHT (`0 0 * * *` UTC) | ✅ enabled — created 2026-07-18; Vercel + Supabase connectors CONFIRMED attached in the trigger record | Neil via completion push notification (quiet-when-clear prompt); run log on claude.ai Routines | `RemoteTrigger update enabled:false` (any session with the tool) or `delete_trigger` (remote session) |
+| **GRIFON Daily Prod Health Watch v2** (`trig_01EwWDbLuXyegg39L61XwVbS`) | daily 08:00 PHT (`0 0 * * *` UTC) | ✅ enabled — created 2026-07-18; Vercel + Supabase connectors CONFIRMED attached; **firing confirmed 2026-08-07** (`last_fired_at` 00:15:25Z that morning, `next_run_at` 2026-08-08) | Neil via completion push notification (quiet-when-clear prompt); run log on claude.ai Routines | `RemoteTrigger update enabled:false` (any session with the tool) or `delete_trigger` (remote session) |
 | **GRIFON Daily Prod Health Watch** (v1, `trig_019v1jD9L7MMTdrHPXYAc9tE`) | daily ~08:00 PHT | ⏸ disabled 2026-07-18 — superseded by v2; ⚠ **DELETION PENDING** (needs a remote session: `delete_trigger` — the in-session `RemoteTrigger` tool has no delete action) | none (the original reader problem) | already off; `delete_trigger` to purge |
 | **oceanides-daily-posts** (`trig_01GtbZRGJMmfwmTmrY7vqB98`) | daily 06:00 PHT | ⏸ disabled — superseded 2026-07-14 by the Tier 3b GitHub Action | n/a (Action publishes to the public mirror) | already off; `delete_trigger` to purge |
 | **Supabase Pro→free downgrade reminder** (`trig_014SAzGWHPRYhxcHo7Vt7HE8`) | one-shot | ✔ fired 2026-06-24, self-ended | Neil (Gmail draft) | none needed |
@@ -191,6 +191,28 @@ same day via the in-session `RemoteTrigger` tool):
   v1 from a remote session (row above). On-demand fallback anytime: ask a
   session to run the check
   (~4 tool calls — Vercel deployments + Supabase security/performance advisors).
+
+- **⚠ 2026-08-07 — why this question stayed open for three weeks, and the real
+  bug.** The trigger record was pulled directly (`RemoteTrigger get`): **the
+  monitor is healthy and firing** — enabled, both connectors attached,
+  `last_fired_at` 2026-08-07T00:15:25Z, `next_run_at` 2026-08-08T00:06Z. So the
+  *loop* was never in question. What could not be settled is the **reader**, and
+  the reason is structural: the prompt is deliberately **quiet-when-clear**, and
+  production has been clear. That makes silence ambiguous — *"working, nothing to
+  say"* and *"notification channel dead"* produce **the identical observation**,
+  so no amount of waiting can distinguish them. Three weeks of "unconfirmed" was
+  not neglect; it was an unfalsifiable check. **This is the Tier 6 ground rule one
+  level up:** a Routine needs a named reader, and a monitor needs a signal proving
+  the *channel* is alive independently of whether the *subject* is healthy.
+  - Manual test run fired 2026-08-07 ~07:04 UTC (15:04 PHT), session
+    `cse_01B2mWu7qnsFQcpbebJ8nHYp` — the direct way to settle it while Neil is at
+    the desk to watch the phone.
+  - **Proposed structural fix (needs Neil's go — it edits a live Routine):** add a
+    weekly heartbeat to the prompt — on one fixed weekday, report out loud even
+    when clear. Silence then becomes real evidence of failure on a known day
+    instead of the default state. Cheaper and more honest than the
+    Gmail-on-CRITICAL fallback, which carries the same blind spot (no critical =
+    no email = no proof). Do both if the test push does not land.
 
   <details><summary>Paste-ready v2 prompt (Health Watch, baseline-aware, quiet-when-clear)</summary>
 
