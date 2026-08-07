@@ -43,6 +43,31 @@ edits). Redundant on purpose. Status feeds the Tier 5 PR-babysit loop.
 
 - Arm: nothing — wired in the workflow file; runs on PR/push to main.
 - Verifier: the `verify` + `e2e` job exit codes.
+- **⚠ 2026-08-07 — the three-day red-CI outage, and the rule that came out of it.**
+  Every workflow in the repo (CI, Nightly Regression, Oceanides daily) failed
+  from 2026-08-04 to 2026-08-07, all at the **same** step — `npm ci` — before
+  reaching a single API call: `Missing: @types/react@19.2.18 from lock file`.
+  Root cause was an **environment split, not a bad commit**: the cafe PC runs
+  Node 24 / npm 11, CI ran Node 20 / npm 10, and npm 11 deterministically drops
+  the nested optional-peer `@types/react` record under `@google/design.md` that
+  npm 10 requires. Whichever machine wrote the lockfile broke the other.
+  `323da07` wrote it the npm 11 way to stop local churn and CI's npm 10 rejected
+  it — **neither side could be right while the two npm versions disagreed.**
+  Fixed by bumping CI to **Node 24** in all four places (`ci.yml` ×2,
+  `nightly-regression.yml`, `oceanides-daily.yml`) and pinning `engines`
+  (`node >=24`, `npm >=11`) in `package.json`. Green again at `0a7c7a7`.
+  - **The rule:** a lockfile is only reproducible against a pinned toolchain.
+    When `npm ci` starts disagreeing with local `npm install`, compare **npm
+    major versions first** — do not rewrite the lockfile to match whichever
+    machine you happen to be sitting at.
+  - **Why it ran three days:** the failure notice reached Neil as ~20 identical
+    GitHub emails, which is a channel he had learned to scroll past. Same shape
+    as the Health Watch reader problem in Tier 6, inverted — that one is silent
+    when healthy so silence means nothing; this one is loud on every failure so
+    noise means nothing. **Both are unread-channel failures.** Any new alerting
+    added here must state who reads it and how a real signal stands out.
+  - Leftover, cosmetic: `actions/checkout@v4` / `setup-node@v4` still target
+    Node 20 and are force-run on 24. Bump to `@v5` when convenient.
 - No secrets: regression (`RUN_REGRESSION`) and integration (`RUN_BURNIN`)
   suites stay off by default so CI never burns Gemini quota; the `e2e` smoke
   uses dummy env and never reaches a real API.

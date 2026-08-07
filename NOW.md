@@ -14,69 +14,69 @@ entry doon ay dinagdag pagkatapos mahuli ni Neil, kaya laging huli ng isang
 insidente. Kailangan ng **positibong modelo** galing sa totoong Taglish ng 2026,
 hindi mas mahabang listahan ng bawal. Tono na lang ang iaayos kada brand.
 
-## ✅ Tapos ngayong 2026-08-07 (session 10) — docs lang, walang app code
-Ramp agent-engineering brief, sinukat sa codebase. ~70% nandyan na.
+## 🔴 TATLONG ARAW NA PULA ANG CI — ayos na (2026-08-07)
 
-1. **Record sa [`post_beta_roadmap.md`](workflows/post_beta_roadmap.md) #27** —
-   bagong parked item: **AI SRE** (agent na nagbabasa ng production incident,
-   nag-diagnose, nagbubukas ng issue). Handa na ang lahat ng kailangan nya, wala
-   lang users. Trigger: unang bayad na cohort. ⛔ Wag i-re-evaluate ang brief na to.
-2. **Rule 9 sa [`gauntlet_loop_decision.md`](workflows/gauntlet_loop_decision.md)** —
-   dalawang round na sinunod ang sabi ng critic at hindi gumalaw ang score = STOP.
-   Basahin ang trace, wag mag-round tatlo. Yan mismo ang 82 · 82 · 82/83 ng session 9.
-3. **36 handoff docs → [`workflows/archive/`](workflows/archive/README.md)**, may
-   nakasulat nang panuntunan para di na muling magtambak. 262 link na-check, 4
-   lang ang sira at binurang code naman ang tinuturo.
+**Hindi utang sa Gemini.** Node 24 / npm 11 ang cafe PC, Node 20 / npm 10 ang
+CI, at magkaiba sila ng isinusulat na lockfile — kaya lahat ng workflow ay
+namatay sa `npm ci` bago pa umabot sa kahit anong API call. Node 24 na rin ang
+CI + naka-pin na ang `engines`. ✅ Green sa `0a7c7a7`. Buong kwento at ang
+panuntunan: [`loops.md`](workflows/loops.md) Tier 0b.
 
-⚠️ Pangatlong beses nang dumating ang *"wag mong bilangin ang token"* (Kun Chen,
-OpenAI Dev Day, Ramp). Nasa #27 na kung bakit di sya bagay dito. Tapos na.
-🔴 **Health Watch push: di pa kumpirmado mula 2026-07-19** — araw-araw tumatakbo,
-walang nakumpirmang nagbabasa. Step 1 ng #27, minuto lang.
+⚠️ **Huminto na pala ang Oceanides daily noong Aug 4** dahil dito, bago pa ang
+pause — **tingnan ang mirror** bago akalaing sinadya ang gap.
+⏸ **Naka-pause na ito** (hiling ni Neil): naka-comment ang `schedule:`, buhay
+ang `workflow_dispatch`. Pambalik: alisin ang comment. (Tier 3b)
+
+## ✅ Tapos din ngayong 2026-08-07 (session 10) — Ramp brief, ~70% nandyan na
+[`post_beta_roadmap.md`](workflows/post_beta_roadmap.md) **#27** = record + bagong
+parked item na **AI SRE** (trigger: unang bayad na cohort ⛔ wag i-re-evaluate) ·
+[`gauntlet_loop_decision.md`](workflows/gauntlet_loop_decision.md) **rule 9** =
+di gumalaw ang score sa dalawang round → basahin ang trace, wag mag-round tatlo ·
+**36 handoff docs → [`archive/`](workflows/archive/README.md)** + panuntunan,
+mga link 29 → 5.
+
+🔴 **Health Watch push: HINDI PA RIN kumpirmado.** May test run na pinaputok
+(`cse_01B2mWu7qnsFQcpbebJ8nHYp`, 15:04 PHT). Tanong: may `[GRIFON Health]` push
+ba sa Claude app? Wala → Gmail fallback + **weekly heartbeat** (loops.md Tier 6).
 
 ## 🔴 Ang mali na tatlong beses naulit noong session 9
-
 **Maling bar, hindi maling gawa.** Buong kwento nasa
 [`gauntlet_loop_decision.md`](workflows/gauntlet_loop_decision.md).
 **May dalang axis ang corpus mismo:** puro **bayad na ad** ang 78 sa
-`assets/ad-swipe/`, kaya bar ng ad ang kahit anong kunin doon.
-⛔ **Wag lagyan ng CTA ang organic cards.** Kailangan muna ng hiwalay na organic
-corpus. Wala pa tayo nun.
+`assets/ad-swipe/`. ⛔ **Wag lagyan ng CTA ang organic cards** — kailangan muna
+ng hiwalay na organic corpus. Wala pa tayo nun.
 
 ## 🅿 PAOLO — itayo, wag buksan
-
 Buhay pa ang gate: **pangako pa lang, walang load na dumaan, walang certificate
 na hawak.** Nakatayo ang page (`funnels/oceanides-paolo/`), green ang build,
 **hindi naka-deploy, patay ang pixel**, may dalawang `⟦PENDING⟧`.
 
-1. 🔴 **TAWAGAN ANG SUPERVISOR NG FACILITY** — sya ang bara sa lahat.
-   [`facility-call-script.md`](clients/oceanides/facility-call-script.md).
-1b. 🔴 **Sa parehong message:** sino ang mga na-issuehan na ni Boss Jay ng DENR
-   certificate? Yun ang tanging totoong listahan ng bumibiling Paolo, at libre sya.
+1. 🔴 **TAWAGAN ANG SUPERVISOR NG FACILITY** — sya ang bara sa lahat
+   ([`facility-call-script.md`](clients/oceanides/facility-call-script.md)). **Sa
+   parehong message:** sino ang na-issuehan na ni Boss Jay ng DENR certificate?
+   Yun ang tanging totoong listahan ng bumibiling Paolo, at libre sya.
 2. Punan ang dalawang `⟦PENDING⟧`, tapos deploy → env var (kamay ni Neil) →
    **redeploy**, kundi walang epekto ang env.
 3. Dalawang alok, naka-preselect ang mas mahal. Presyo muna sa facility.
 4. Checkout. ⏳ PayMongo keys ng Oceanides. ⛔ Hindi ang key ng Grifon.
 5. Bagong creative at targeting. ⏳ Aling siyudad ang una, isa lang.
 
-**Nagawa na, wag ulitin:** avatar ni Paolo, value stack, grill, pixel-leak, copy,
-page, trust card (`paolo-trust-a/b`, **hindi pa nai-publish** — numero ng critic
-ang 82, hindi resulta sa merkado).
+**Nagawa na, wag ulitin:** avatar, value stack, grill, pixel-leak, copy, page,
+trust card (`paolo-trust-a/b`, **di pa nai-publish** — numero ng critic ang 82).
 
 ## 🔴 Huwag kalimutan
-
 1. **Route density ang lever, hindi presyo.** Isang siyudad muna.
 2. **Bawal ang CASH refund** sa tripwire. Credit, at isang taon ang bisa.
 3. **Patay na ang ₱900 break-even.** Kay Paolo: **₱4,900 kada 1-load na trabaho**.
 4. **Coordinate radius ang geo**, lat `14.54` lng `121.02`.
-5. ⚠️ **Enterprise ang malalaking pangalan sa client list** — galing sa procurement
-   at referral, **hindi sa FB ad.** Pinakamalaking hula pa rin ng plano.
+5. ⚠️ **Enterprise ang malalaking pangalan sa client list** — procurement at
+   referral, **hindi FB ad.** Pinakamalaking hula pa rin ng plano.
 
 ## 🅿 PARKED
 **Oceanides:** Week 02 pack · GB-001 video · hook2 ng KM-004 · Kling b-roll ·
-watermark ni Gabriel · SEC Reg. No. · FB About · reviews · **AEM Configure Web
-Events hindi pa na-verify**.
+watermark ni Gabriel · SEC Reg. No. · FB About · reviews · **AEM hindi pa verified**.
 **Grifon:** #94.3 next · #94.2 NOT-REPRO · #92+#89/#90 ride Slice B · #93 ⛔ TUNED
-· `artifact-noir` Steps 1-4 · 0 pa rin ang codex-sol lane, di pa masusukat ang gate.
+· `artifact-noir` Steps 1-4 · 0 pa ang codex-sol lane, di pa masusukat ang gate.
 
 ## ⛔ Gated · 🔧 Arm before starting
 🔴 **UBOS ANG GEMINI API BUDGET** para sa video. Manwal sa Flow. Gated: Kling.
