@@ -13,6 +13,9 @@ import { FieldLabel } from './ui/FieldLabel';
 import { TextArea } from './ui/TextField';
 import { SegButton } from './ui/SegButton';
 import { MAT_PLATE, MAT_PLATE_INSET } from './ui/materialTokens';
+// Deterministic, advisory-only check of the GENERATED script against the same word/sentence caps
+// the tuned prompt sets (utils/scriptGuardrails). Pure function — never blocks, never regenerates.
+import { auditScript } from '../utils/scriptAudit';
 
 interface Step3Props {
   businessInfo: BusinessInfo;
@@ -56,6 +59,9 @@ const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, setBusinessInfo, sc
   const [selectedThemeId, setSelectedThemeId] = useState<string | null>(businessInfo.selectedTheme?.id || null);
 
   const isCinematic = businessInfo.scriptType === 'Cinematic';
+
+  // Re-audits on every edit, so the panel covers both the model's output and the user's rewrites.
+  const scriptAudit = useMemo(() => auditScript(generatedScript), [generatedScript]);
 
   // Parse MarketMind report from localStorage for the "Pick Your Angle" picker.
   // Pattern matches InfluencerForge.tsx:212-216 — try/catch JSON.parse + shape check on .subject.
@@ -498,6 +504,41 @@ const Step3AdScript: React.FC<Step3Props> = ({ businessInfo, setBusinessInfo, sc
                 <p className="text-sm font-mono text-zinc-300 leading-relaxed mt-6 italic relative z-10">
                     "{strategicAudit}"
                 </p>
+            </div>
+          )}
+
+          {/* SCRIPT AUDIT — deterministic word/sentence caps, advisory only. Never blocks Confirm:
+              the tuned prompt stays the authority, this just surfaces where the output disagrees. */}
+          {!scriptAudit.clean && (
+            <div className={`p-5 ${MAT_PLATE} border border-amber-500/25 rounded-2xl`}>
+              <div className="flex items-center gap-2 border-b border-white/10 pb-2.5">
+                <AlertTriangle className="h-3.5 w-3.5 shrink-0 text-amber-500" />
+                <h3 className="text-amber-500 font-bold font-mono text-[10px] tracking-widest uppercase">
+                  // SCRIPT_AUDIT
+                </h3>
+                <span className="ml-auto text-[10px] font-mono uppercase tracking-widest text-on-surface-sublabel">
+                  {scriptAudit.violations} over cap
+                  {scriptAudit.advisories > 0 && ` · ${scriptAudit.advisories} advisory`}
+                </span>
+              </div>
+              <ul className="mt-3 flex flex-col gap-1.5">
+                {scriptAudit.findings.map((f, i) => (
+                  <li key={i} className="flex items-start gap-2 text-[11px] leading-relaxed">
+                    <span
+                      className={`mt-px shrink-0 font-mono text-[10px] uppercase tracking-widest ${
+                        f.severity === 'violation' ? 'text-amber-500' : 'text-on-surface-sublabel'
+                      }`}
+                    >
+                      {f.block === 'body' ? 'BODY' : `HOOK ${f.block === 'hook1' ? '1' : '2'}`}·L
+                      {f.lineIdx + 1}
+                    </span>
+                    <span className="text-zinc-400">{f.message}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-3 text-[10px] leading-relaxed text-on-surface-sublabel">
+                Caps are a guide, not a wall — edit below or proceed as-is.
+              </p>
             </div>
           )}
 
