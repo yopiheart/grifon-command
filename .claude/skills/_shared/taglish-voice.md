@@ -6,6 +6,27 @@
 > `services/geminiService.ts` / `api/_lib/prompts.ts` ay HINDI sakop — dumadaan pa
 > rin sa gated proposal ang anumang voice change doon.
 
+> ## 📐 May kapatid na ang file na ito: [`workflows/taglish_2026_model.md`](../../../workflows/taglish_2026_model.md)
+>
+> **Ito ang VOICE SPEC** — tono ni Neil, register, typography, at ang listahan ng
+> nahuling slop. Ang kapatid nya ay ang **MODEL**: kung paano gumagana ang wika, may
+> sources (2026-08-07). Kunin doon ang mga bagay na hindi kayang ibigay ng listahan:
+>
+> - **Matrix Language Frame** — Tagalog ang balangkas, English ang ipinapasok. Ito ang
+>   §LANGUAGE LOCK rule #1, kumpirmado ng linguistics. Ang kabaligtaran (English ang
+>   balangkas) ay may pangalan: **Konyo** — at yun mismo ang lahat ng "Bad" na
+>   halimbawa sa ibaba.
+> - **Ang affix machine** — `i-` / `mag-` / `na-` + English root. Kaya `i-confirm`
+>   ang tama at hindi `kumpirmahin`: hindi panlasa, istruktura. **Dahil dito, hindi mo
+>   na kailangan ng malalim na Tagalog na verb kahit kailan.**
+> - **Ang particles** (`naman`, `lang`, `na`, `kasi`, `pala`, `nga`) — ito ang
+>   pinakamalaking butas ng blacklist. Madalas, ang manual-Tagalog ay **kulang sa
+>   particle**, hindi maling salita.
+> - **⚠️ Bakit BAWAL ang Gen Z slang** (`petmalu`, `lodi`, `sana all`) sa copy natin,
+>   kahit "moderno" sya.
+>
+> Kapag nagkabanggaan, **ang file na ito ang panalo** — voice ni Neil ang huling salita.
+
 ## STEP 0 — Pick the register BEFORE you write (Neil, 2026-08-01)
 
 Everything below tells you *how* to write Taglish. It does not decide *whether* this

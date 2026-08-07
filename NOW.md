@@ -2,57 +2,52 @@
 
 **Stamped: 2026-08-07** (session 11)
 
-## ▶ NEXT ACTION — MATUTO NG TOTOONG TAGLISH, GALING SA SOURCES
+## ▶ NEXT ACTION — GAWING LINT ANG MODEL (class rules, warning muna)
 
-Utos ni Neil, session 9: *"its time for you to learn taglish na ginagamit ngayon
-2026 na uso at popular na madaling intindihin… mag research at maghanap ng
-sources. Ung tone nalang ung iaadjust mo depende sa brand voice / target market."*
+✅ **Tapos na ang Taglish research** (utos ni Neil, session 9) →
+[`taglish_2026_model.md`](workflows/taglish_2026_model.md), may sources.
 
-Hindi pa nasisimulan. Blacklist lang ang meron
-([`lint-voice.mjs`](funnels/oceanides-paolo/scripts/lint-voice.mjs)), at bawat
-entry doon ay dinagdag pagkatapos mahuli ni Neil, kaya laging huli ng isang
-insidente. Kailangan ng **positibong modelo** galing sa totoong Taglish ng 2026,
-hindi mas mahabang listahan ng bawal. Tono na lang ang iaayos kada brand.
+Ang natitira ay gawing **gate** ang model. Blacklist pa rin ang
+[`lint-voice.mjs`](funnels/oceanides-paolo/scripts/lint-voice.mjs) at laging huli
+ng isang insidente. Tatlong **class** rule ang nakaspec na sa §8 ng model:
 
-## 🔔 TAPOS SESSION 11 — di na mapapalampas ang pulang CI
+1. **Konyo detector** — `ang \w+ (is|are|was)`, `(the|my|your) \w+ ay`, `mas better`,
+   `make` + Tagalog root. Ito ang pinaka-malinis, mekanikal talaga.
+2. **Kulang sa particle** — mahabang Tagalog na linya na walang `naman/lang/na/kasi`.
+3. **Malalim na verb** — 4+ pantig na `-in`/`-han`/`-an` na may katumbas sa affix machine.
 
+⚠️ **Warning muna, hindi failure.** Pwedeng mag-false-positive ang tatlo, at ang
+maingay na gate ay hindi na binabasa — parehong sakit ng Tier 0b. Kapag tama na
+sila sa totoong copy, saka gawing failure. Tenga pa rin ni Neil ang huling gate.
+
+## 🧠 Ang pinakamalaking natuklasan sa research
+**May pangalan na ang kalaban: Konyo.** English ang balangkas, Tagalog ang isinasabog
+— eksaktong hugis ng lahat ng "Bad" na halimbawa sa voice spec. At may **test** na
+imbes na listahan: *alisin ang lahat ng English. May natitira bang Tagalog na
+balangkas?* Wala = Konyo, ayusin ang frame, wag magpalit ng salita. Humuhuli ito ng
+pangungusap na hindi pa naisusulat ninuman. **Kumpirmado rin ng linguistics ang rule
+#1 ni Neil** (Tagalog ang frame) at ang STEP 0a table nya (surface ang magdidikta).
+
+## 🔔 TAPOS DIN SESSION 11 — di na mapapalampas ang pulang CI
 Hindi detection failure ang 3 araw na pula (08-04 → 08-07) — agad naging pula ang
 CI. **Reader** ang sira: ~20 magkaparehong email sa channel na natutong laktawan.
-Bagong `main-status` job sa [`ci.yml`](.github/workflows/ci.yml): **isang** bukas
-na `ci-red` issue lang habang pula ang main, kusang nagsasara pag green (push-to-
-main lang, hindi PR). Binabasa ito ng **Health Watch v2** tuwing 08:00 PHT,
-CRITICAL, **kasama kung ilang araw nang bukas** — yun ang di kayang laktawan.
-Napatunayan sa totoong run ang green at **auto-close** path; ang aral na nagastos
-ng isang pulang run ay nasa [`loops.md`](workflows/loops.md) Tier 0b.
-
-### ✅ KUMPIRMADO NA ANG CI READ (4:22 PM manual run)
-`CI / main: Green … No open ci-red issue` — gumana. Pero **walang `gh` sa cloud
-env**; sinabi muna nyang *"CI status unavailable"* (tama ang fail-safe, di sya
-nag-assume ng green), tapos sya na mismo nakahanap ng **GitHub MCP tools**. Swerte
-yun, hindi disenyo — kaya nakasulat na sa prompt na wala ang `gh` at MCP tools ang
-gamitin. 📱 **Walang Routines sa phone app** — ang push mismo ang buong deliverable
-doon, kaya bawal ang *"check the run for details"*. Detalye: [`loops.md`](workflows/loops.md) Tier 6.
-
-**Galing sa Rauch / Vercel "Eve" brief — SARADO na, wag nang i-re-evaluate.** ~90%
-nandito na (CLAUDE.md = `instructions.md`, 28 skills, `tools/`, WAT); ang channel
-insight sa itaas lang ang totoong bago. Verdict + rejections:
-[`post_beta_roadmap.md`](workflows/post_beta_roadmap.md) #27. Pang-7 na brief na
-to at pare-pareho ang tinatanggihan (alisin daw ang human gate) — skim na lang.
-
-## 🔴 Ang mali na 3x naulit (session 9)
-**Maling bar, hindi maling gawa** ([`gauntlet_loop_decision.md`](workflows/gauntlet_loop_decision.md)).
-Puro **bayad na ad** ang 78 sa `assets/ad-swipe/`, kaya may dalang axis ang corpus.
-⛔ **Wag lagyan ng CTA ang organic cards** — kailangan muna ng organic corpus.
+Bagong `main-status` job sa [`ci.yml`](.github/workflows/ci.yml): **isang** bukas na
+`ci-red` issue lang habang pula ang main, kusang nagsasara pag green. Binabasa ito
+ng **Health Watch v2** tuwing 08:00 PHT, CRITICAL, **kasama kung ilang araw nang
+bukas**. Napatunayan sa live run ang green at auto-close path.
+**Kumpirmado rin ang CI read** (4:22 PM run): gumana, pero **walang `gh` sa cloud
+env** — GitHub MCP tools pala ang daan, nakasulat na sa prompt. 📱 **Walang Routines
+sa phone app**, kaya ang push mismo ang buong deliverable. [`loops.md`](workflows/loops.md) Tier 0b + 6.
 
 ## 🅿 PAOLO — itayo, wag buksan
-Buhay pa ang gate: **pangako pa lang, walang load na dumaan, walang certificate
-na hawak.** Nakatayo ang page (`funnels/oceanides-paolo/`), green ang build,
-**hindi naka-deploy, patay ang pixel**, may dalawang `⟦PENDING⟧`.
+Buhay pa ang gate: **pangako pa lang, walang load na dumaan, walang certificate na
+hawak.** Nakatayo ang page (`funnels/oceanides-paolo/`), green ang build, **hindi
+naka-deploy, patay ang pixel**, may dalawang `⟦PENDING⟧`.
 
 1. 🔴 **TAWAGAN ANG SUPERVISOR NG FACILITY** — sya ang bara sa lahat
    ([`facility-call-script.md`](clients/oceanides/facility-call-script.md)). **Sa
-   parehong message:** sino ang na-issuehan na ni Boss Jay ng DENR certificate?
-   Yun ang tanging totoong listahan ng bumibiling Paolo, at libre sya.
+   parehong message:** sino ang na-issuehan na ni Boss Jay ng DENR certificate? Yun
+   ang tanging totoong listahan ng bumibiling Paolo, at libre sya.
 2. Punan ang dalawang `⟦PENDING⟧`, tapos deploy → env var (kamay ni Neil) →
    **redeploy**, kundi walang epekto ang env.
 3. Dalawang alok, naka-preselect ang mas mahal. Presyo muna sa facility.
@@ -61,6 +56,7 @@ na hawak.** Nakatayo ang page (`funnels/oceanides-paolo/`), green ang build,
 
 **Nagawa na, wag ulitin:** avatar, value stack, grill, pixel-leak, copy, page,
 trust card (`paolo-trust-a/b`, di pa nai-publish, 82 ang numero ng critic).
+
 ## 🔴 Huwag kalimutan
 1. **Route density ang lever, hindi presyo.** Isang siyudad muna.
 2. **Bawal ang CASH refund** sa tripwire. Credit, at isang taon ang bisa.
@@ -68,14 +64,16 @@ trust card (`paolo-trust-a/b`, di pa nai-publish, 82 ang numero ng critic).
 4. **Coordinate radius ang geo**, lat `14.54` lng `121.02`.
 5. ⚠️ **Enterprise ang malalaking pangalan sa client list** — procurement at
    referral, **hindi FB ad.** Pinakamalaking hula pa rin ng plano.
+6. ⛔ **Bawal ang CTA sa organic cards** — puro bayad na ad ang 78 sa
+   `assets/ad-swipe/`, kaya may dalang axis ang corpus. Kailangan ng organic corpus.
 
-## 🅿 PARKED at 🔧 bukas na maliliit
+## 🅿 PARKED
 **Oceanides:** Week 02 pack · GB-001 video · hook2 ng KM-004 · Kling b-roll ·
 watermark ni Gabriel · SEC Reg. No. · FB About · reviews · **AEM di pa verified**.
 ⏸ Naka-pause ang daily; pambalik = alisin ang comment sa `schedule:`.
-**Grifon:** #94.3 next · #94.2 NOT-REPRO · #92+#89/#90 ride Slice B · #93 ⛔ TUNED
-· `artifact-noir` Steps 1-4 · 0 pa ang codex-sol lane, di pa masusukat ang gate.
-**Maliliit:** bump `@v5` ang `checkout`/`setup-node` (naka-Node 20 pa sila).
+**Grifon:** #94.3 next · #94.2 NOT-REPRO · #92+#89/#90 ride Slice B · #93 ⛔ TUNED ·
+`artifact-noir` Steps 1-4 · 0 pa ang codex-sol lane · bump `@v5` ang
+`checkout`/`setup-node`. **Sarado na ang Rauch brief** (roadmap #27, wag i-re-evaluate).
 
 ## ⛔ Gated · 🔧 Arm before starting
 🔴 **UBOS ANG GEMINI API BUDGET** para sa video. Manwal sa Flow. Gated: Kling.
