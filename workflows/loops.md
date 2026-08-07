@@ -230,9 +230,46 @@ same day via the in-session `RemoteTrigger` tool):
   session to run the check
   (~4 tool calls — Vercel deployments + Supabase security/performance advisors).
 
-- **⚠ 2026-08-07 — why this question stayed open for three weeks, and the real
-  bug.** The trigger record was pulled directly (`RemoteTrigger get`): **the
-  monitor is healthy and firing** — enabled, both connectors attached,
+- **✅ 2026-08-07 — READER CONFIRMED. The three-week question is CLOSED.** Neil
+  verified the manual test run end-to-end on the Routines UI: run completed,
+  `Sent notification` step present, final line *"Pushed the details to your
+  phone."* The push channel works. Run history shows daily `Completed` from
+  2026-07-25 through 2026-08-07 with a single `Failed` on **2026-08-05** (same
+  window as the lockfile outage — worth a glance if it recurs, otherwise noise).
+  **v2 is fully verified: fires, reads, and reaches Neil.** No fallback needed —
+  the Gmail rewire and the weekly-heartbeat proposal below are both **moot for
+  the delivery question** and should not be built for that reason.
+- **🔴 2026-08-07 — and it immediately earned its keep. Two ERROR-level findings
+  beyond baseline, OPEN:**
+  1. **`public.run_cogs` and `public.run_attribution_anomalies` are SECURITY
+     DEFINER views.** They execute with the *creator's* permissions, bypassing
+     the querying user's RLS on the underlying tables. If they read
+     `producer_runs` / `ad_performance`, they can expose **cross-user** data
+     regardless of RLS. **Action: confirm intent.** If deliberate (admin-only
+     cost aggregation) document them into the accepted baseline; if not,
+     recreate as `SECURITY INVOKER`.
+     [Supabase lint 0010](https://supabase.com/docs/guides/database/database-linter?lint=0010_security_definer_view)
+  2. **Duplicate index on `public.funnel_leads`** — `funnel_leads_client_created`
+     and `funnel_leads_client_created_idx` are identical. Low urgency; drop one.
+     [Supabase lint 0009](https://supabase.com/docs/guides/database/database-linter?lint=0009_duplicate_index)
+
+  Vercel was clean (prod `dpl_7EFtgd2mWfMNGJfKWsYmE4pSSeXp` READY, no
+  ERROR/CANCELED in the 20 most recent). **Note what this costs the "wait for
+  paying users" argument in [`post_beta_roadmap.md`](post_beta_roadmap.md) #27:**
+  it was too strong. Zero traffic ≠ nothing to watch — **schema and security
+  drift accrue without a single user.** The AI-SRE *diagnosis* layer stays parked;
+  the *detection* layer already pays for itself today.
+
+- **⚠ Unregistered Routine spotted 2026-08-07 — `Neil Meal Reminder`** (02:30,
+  07:30, 12:30, 16:30, 21:30 daily). Not in this table, which the Tier 6 ground
+  rule requires. Reader is obviously Neil and it is harmless, but register or
+  retire it so the audit stays trustworthy. Also still listed and still pending
+  deletion: **Health Watch v1** (row above) — visible as `Paused` in the UI.
+
+- **⚠ 2026-08-07 — why this question stayed open for three weeks (kept as the
+  lesson, now that the answer is in).** The trigger record was pulled directly
+  (`RemoteTrigger get`): **the monitor was healthy and firing all along** —
+  enabled, both connectors attached,
   `last_fired_at` 2026-08-07T00:15:25Z, `next_run_at` 2026-08-08T00:06Z. So the
   *loop* was never in question. What could not be settled is the **reader**, and
   the reason is structural: the prompt is deliberately **quiet-when-clear**, and
@@ -242,15 +279,15 @@ same day via the in-session `RemoteTrigger` tool):
   not neglect; it was an unfalsifiable check. **This is the Tier 6 ground rule one
   level up:** a Routine needs a named reader, and a monitor needs a signal proving
   the *channel* is alive independently of whether the *subject* is healthy.
-  - Manual test run fired 2026-08-07 ~07:04 UTC (15:04 PHT), session
-    `cse_01B2mWu7qnsFQcpbebJ8nHYp` — the direct way to settle it while Neil is at
-    the desk to watch the phone.
-  - **Proposed structural fix (needs Neil's go — it edits a live Routine):** add a
-    weekly heartbeat to the prompt — on one fixed weekday, report out loud even
-    when clear. Silence then becomes real evidence of failure on a known day
-    instead of the default state. Cheaper and more honest than the
-    Gmail-on-CRITICAL fallback, which carries the same blind spot (no critical =
-    no email = no proof). Do both if the test push does not land.
+  - Settled by firing a manual run (session `cse_01B2mWu7qnsFQcpbebJ8nHYp`,
+    2026-08-07 15:04 PHT) and reading the Routines UI directly — **the lesson is
+    that this took ten minutes and could have been done on day one.** An
+    unfalsifiable check should be converted into a falsifiable one immediately,
+    not left to accumulate calendar time.
+  - **Weekly heartbeat — NOT needed for delivery** (that question is answered
+    above) but still the right shape if this monitor is ever suspected again:
+    one fixed weekday it reports out loud even when clear, so silence becomes
+    evidence on a known day. Park it; do not build it now.
 
   <details><summary>Paste-ready v2 prompt (Health Watch, baseline-aware, quiet-when-clear)</summary>
 

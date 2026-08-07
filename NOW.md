@@ -15,17 +15,15 @@ insidente. Kailangan ng **positibong modelo** galing sa totoong Taglish ng 2026,
 hindi mas mahabang listahan ng bawal. Tono na lang ang iaayos kada brand.
 
 ## 🔴 TATLONG ARAW NA PULA ANG CI — ayos na (2026-08-07)
-
-**Hindi utang sa Gemini.** Node 24 / npm 11 ang cafe PC, Node 20 / npm 10 ang
-CI, at magkaiba sila ng isinusulat na lockfile — kaya lahat ng workflow ay
-namatay sa `npm ci` bago pa umabot sa kahit anong API call. Node 24 na rin ang
-CI + naka-pin na ang `engines`. ✅ Green sa `0a7c7a7`. Buong kwento at ang
-panuntunan: [`loops.md`](workflows/loops.md) Tier 0b.
-
-⚠️ **Huminto na pala ang Oceanides daily noong Aug 4** dahil dito, bago pa ang
-pause — **tingnan ang mirror** bago akalaing sinadya ang gap.
-⏸ **Naka-pause na ito** (hiling ni Neil): naka-comment ang `schedule:`, buhay
-ang `workflow_dispatch`. Pambalik: alisin ang comment. (Tier 3b)
+**Hindi utang sa Gemini.** Node 24 / npm 11 ang cafe PC, Node 20 / npm 10 ang CI,
+magkaiba ang isinusulat nilang lockfile — kaya namatay ang lahat ng workflow sa
+`npm ci` bago pa umabot sa API call. Node 24 na rin ang CI + naka-pin ang
+`engines`. ✅ Green sa `0a7c7a7`. Kwento + panuntunan:
+[`loops.md`](workflows/loops.md) Tier 0b.
+⏸ **Naka-pause ang Oceanides daily** (hiling ni Neil, kumpirmado sa Routines UI).
+⚠️ Pero **huminto na pala ito noong Aug 4** dahil sa lockfile, bago pa ang pause —
+**tingnan ang mirror** bago akalaing sinadya ang gap. Pambalik: alisin ang comment
+sa `schedule:`. (Tier 3b)
 
 ## ✅ Tapos din ngayong 2026-08-07 (session 10) — Ramp brief, ~70% nandyan na
 [`post_beta_roadmap.md`](workflows/post_beta_roadmap.md) **#27** = record + bagong
@@ -35,13 +33,15 @@ di gumalaw ang score sa dalawang round → basahin ang trace, wag mag-round tatl
 **36 handoff docs → [`archive/`](workflows/archive/README.md)** + panuntunan,
 mga link 29 → 5.
 
-🔴 **Health Watch push: HINDI PA RIN kumpirmado.** May test run na pinaputok
-(`cse_01B2mWu7qnsFQcpbebJ8nHYp`, 15:04 PHT). Tanong: may `[GRIFON Health]` push
-ba sa Claude app? Wala → Gmail fallback + **weekly heartbeat** (loops.md Tier 6).
+✅ **Health Watch: KUMPIRMADO NA** (Neil, 2026-08-07) — umaabot ang push sa phone.
+🔴 **Pero may nahuli ito, bukas pa:** dalawang **SECURITY DEFINER view**
+(`run_cogs`, `run_attribution_anomalies`) na lumalampas sa RLS — pwedeng
+makakita ng data ng ibang user. Sadya ba? Kung oo, ibaseline; kung hindi,
+gawing `SECURITY INVOKER`. + dobleng index sa `funnel_leads` (mababa lang).
+Detalye: [`loops.md`](workflows/loops.md) Tier 6.
 
 ## 🔴 Ang mali na tatlong beses naulit noong session 9
-**Maling bar, hindi maling gawa.** Buong kwento nasa
-[`gauntlet_loop_decision.md`](workflows/gauntlet_loop_decision.md).
+**Maling bar, hindi maling gawa** ([`gauntlet_loop_decision.md`](workflows/gauntlet_loop_decision.md)).
 **May dalang axis ang corpus mismo:** puro **bayad na ad** ang 78 sa
 `assets/ad-swipe/`. ⛔ **Wag lagyan ng CTA ang organic cards** — kailangan muna
 ng hiwalay na organic corpus. Wala pa tayo nun.
