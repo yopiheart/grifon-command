@@ -26,11 +26,12 @@ Napatunayan sa totoong run ang green at **auto-close** path; ang aral na nagasto
 ng isang pulang run ay nasa [`loops.md`](workflows/loops.md) Tier 0b.
 
 ### ⏳ ISA LANG ANG HINDI KO MAPAPATUNAYAN MAG-ISA
-Pinaandar ko ang manual run ng Health Watch v2 (`cse_01HF89mF4kX1ZxLqL9Do3tR9`).
-**Pakitingnan sa Routines UI o sa phone:** nabasa ba nya ang CI status, o sinabi
-nyang *"CI status unavailable"*? Di ko makita ang transcript mula dito. Kung
-unavailable, walang `gh` ang cloud env at ang palit ay ipasa ang CI state sa
+Pinaandar ko ang manual run ng Health Watch v2, **4:22 PM** (`last_fired_at`
+08:22:34Z). **Desktop Routines UI, buksan ang 4:22 PM MANUAL** — di ang 3:04 PM
+(luma yun, bago pa ang edit ko). May CI section ba, o *"CI status unavailable"*?
+Kung unavailable, walang `gh` ang cloud env; ang palit ay ipasa ang CI state sa
 committed file. **Di sya mag-a-assume ng green** kahit alin doon, kaya safe muna.
+📱 **Walang Routines sa phone app** — ang push mismo ang buong deliverable doon.
 
 **Galing sa Rauch / Vercel "Eve" brief — SARADO na, wag nang i-re-evaluate.** ~90%
 nandito na (CLAUDE.md = `instructions.md`, 28 skills, `tools/`, WAT); ang channel
@@ -74,8 +75,7 @@ watermark ni Gabriel · SEC Reg. No. · FB About · reviews · **AEM di pa verif
 ⏸ Naka-pause ang daily; pambalik = alisin ang comment sa `schedule:`.
 **Grifon:** #94.3 next · #94.2 NOT-REPRO · #92+#89/#90 ride Slice B · #93 ⛔ TUNED
 · `artifact-noir` Steps 1-4 · 0 pa ang codex-sol lane, di pa masusukat ang gate.
-**Maliliit:** dobleng index sa `funnel_leads` · burahin sa **Routines UI** ang HW
-v1 + ~11 patay na `send_later` · bump `@v5` ang `checkout`/`setup-node` (Node 20).
+**Maliliit:** bump `@v5` ang `checkout`/`setup-node` (naka-Node 20 pa sila).
 
 ## ⛔ Gated · 🔧 Arm before starting
 🔴 **UBOS ANG GEMINI API BUDGET** para sa video. Manwal sa Flow. Gated: Kling.

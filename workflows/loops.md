@@ -238,7 +238,7 @@ same day via the in-session `RemoteTrigger` tool):
 | Routine | Schedule | Status | Reader | Kill switch |
 |---|---|---|---|---|
 | **GRIFON Daily Prod Health Watch v2** (`trig_01EwWDbLuXyegg39L61XwVbS`) | daily 08:00 PHT (`0 0 * * *` UTC) | ✅ enabled — created 2026-07-18; Vercel + Supabase connectors CONFIRMED attached; **firing confirmed 2026-08-07** (`last_fired_at` 00:15:25Z that morning, `next_run_at` 2026-08-08) | Neil via completion push notification (quiet-when-clear prompt); run log on claude.ai Routines | `RemoteTrigger update enabled:false` (any session with the tool) or `delete_trigger` (remote session) |
-| **GRIFON Daily Prod Health Watch** (v1, `trig_019v1jD9L7MMTdrHPXYAc9tE`) | daily ~08:00 PHT | ⏸ disabled 2026-07-18 — superseded by v2; ⚠ **DELETION PENDING** (needs a remote session: `delete_trigger` — the in-session `RemoteTrigger` tool has no delete action) | none (the original reader problem) | already off; `delete_trigger` to purge |
+| ~~**GRIFON Daily Prod Health Watch** (v1, `trig_019v1jD9L7MMTdrHPXYAc9tE`)~~ | — | ✅ **DELETED 2026-08-07 by Neil in the Routines UI**, together with the ~11 dead `send_later` triggers. The registry is clean again. | — | — |
 | **oceanides-daily-posts** (`trig_01GtbZRGJMmfwmTmrY7vqB98`) | daily 06:00 PHT | ⏸ disabled — superseded 2026-07-14 by the Tier 3b GitHub Action | n/a (Action publishes to the public mirror) | already off; `delete_trigger` to purge |
 | **Supabase Pro→free downgrade reminder** (`trig_014SAzGWHPRYhxcHo7Vt7HE8`) | one-shot | ✔ fired 2026-06-24, self-ended | Neil (Gmail draft) | none needed |
 | **Neil Meal Reminder** (`trig_01B5soYW2eZfr7EGDvt7Ucy7`) | `30 2,7,12,16,21 * * *` (5×/day PHT) | ✅ enabled — created 2026-08-05, **registered here 2026-08-07** after an audit found it unlisted | Neil, via push. Personal, not engineering — Haiku 4.5, `allowed_tools: ["PushNotification"]` only, one warm Taglish nudge to eat | `RemoteTrigger update enabled:false` |
@@ -274,19 +274,43 @@ same day via the in-session `RemoteTrigger` tool):
   **v2 is fully verified: fires, reads, and reaches Neil.** No fallback needed —
   the Gmail rewire and the weekly-heartbeat proposal below are both **moot for
   the delivery question** and should not be built for that reason.
+- **📱 2026-08-07 — the mobile app has NO Routines UI. This is a design constraint,
+  not trivia.** Neil's phone nav is: New chat · Chats · Projects · Artifacts · Code ·
+  Dispatch — **no Routines entry**. Run history and run transcripts are desktop-only.
+  Consequence for every Routine registered here: **on the phone, the push notification
+  IS the entire deliverable.** There is no "tap to see details" — a notification that
+  says *"check the run for details"* is a dead end on the surface Neil actually reads.
+  - **Rule:** a Routine's final message must be self-sufficient — the finding, where it
+    is, and the one-line action, all in the notification body. Never defer detail to a
+    run log the reader cannot open.
+  - This also retires a wrong assumption baked into the earlier reader debate: silence
+    was treated as *possibly* "he'll see it in the UI later." He will not, on mobile.
+    Push delivery is not a convenience path here; it is the only path.
+
 - **🔴 2026-08-07 — and it immediately earned its keep. Two ERROR-level findings
-  beyond baseline, OPEN:**
+  beyond baseline, both now CLOSED same-day:**
   1. **`public.run_cogs` and `public.run_attribution_anomalies` are SECURITY
      DEFINER views.** They execute with the *creator's* permissions, bypassing
      the querying user's RLS on the underlying tables. If they read
      `producer_runs` / `ad_performance`, they can expose **cross-user** data
-     regardless of RLS. **Action: confirm intent.** If deliberate (admin-only
-     cost aggregation) document them into the accepted baseline; if not,
-     recreate as `SECURITY INVOKER`.
+     regardless of RLS. ✅ **FIXED same day** (`9a13838`) — it was NOT deliberate:
+     `anon` (the key that ships in the browser bundle) held SELECT, and 5 rows
+     carrying `user_id` were provably readable by `anon` before the fix. Migration
+     `harden_telemetry_views_security_invoker` + `supabase/events.sql`; anon now
+     denied, service_role unaffected, ERROR advisor gone.
      [Supabase lint 0010](https://supabase.com/docs/guides/database/database-linter?lint=0010_security_definer_view)
-  2. **Duplicate index on `public.funnel_leads`** — `funnel_leads_client_created`
-     and `funnel_leads_client_created_idx` are identical. Low urgency; drop one.
+  2. **Duplicate index on `public.funnel_leads`** — ✅ **FIXED 2026-08-07.**
+     `funnel_leads_client_created` and `funnel_leads_client_created_idx` were
+     byte-identical btrees on `(client_id, created_at DESC)`, neither backing a
+     constraint. Dropped the **`_idx`** one — it was created out-of-band and is
+     **not** in [`supabase/funnel_leads.sql`](../supabase/funnel_leads.sql), so
+     keeping the repo-declared name leaves that file the source of truth
+     (migration `drop_duplicate_funnel_leads_client_created_idx`). Re-ran the
+     performance advisors: **baseline only, `duplicate_index` gone.**
      [Supabase lint 0009](https://supabase.com/docs/guides/database/database-linter?lint=0009_duplicate_index)
+     - **Tie-breaker rule worth reusing:** when two objects are truly identical,
+       drop the one the repo does NOT declare. That converts an arbitrary
+       coin-flip into a rule that keeps committed SQL and live schema converging.
 
   Vercel was clean (prod `dpl_7EFtgd2mWfMNGJfKWsYmE4pSSeXp` READY, no
   ERROR/CANCELED in the 20 most recent). **Note what this costs the "wait for
