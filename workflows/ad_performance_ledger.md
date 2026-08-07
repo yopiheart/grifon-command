@@ -53,7 +53,7 @@ explain *why* MER moves; we scale on MER/ROAS, never on a diagnostic alone.
   concepts (different opening visual/format, not a new hook on the same body).
 - [x] **Log the first real campaign** — ✅ **DONE 2026-08-03.** KM-003 (Meta,
   Oceanides): ₱1,284.92, ~100 messages, ₱12.85 each, **1 order.** Four patterns
-  opened (A1-A4), all `observed` at 1/3. The skill now runs on canon **plus one
+  opened (A1-A5), all `observed` at 1/3. The skill now runs on canon **plus one
   data point** — still not enough to change a spend rule (≥3 gate).
 - [ ] When ≥10 campaigns are logged, revisit whether the parked Python tools
   (`tools/run_meta_campaign.py`, `tools/sync_ad_insights.py`) are worth building
@@ -107,9 +107,10 @@ Proposals) → `applied` (now standard practice / wired into a CMO or CD brief).
 | --- | --- | --- | --- |
 | **A1** | **Mechanism-diagnosis hook** ("hindi X, Y pala") sa Solution Aware na kategorya → elite retention sa 0:03 at pinakamababang CPM sa account. KM-003: ₱79.29 CPM laban sa ₱119-₱340 ng bawat ibang video sa parehong account. | 1 | observed |
 | **A2** | **Ang alok na nangangailangan ng ISA PANG USAPAN ay kumakain ng mid-video retention.** KM-003: 41% ang nawala sa 9.2s-18.4s, eksaktong kinaroroonan ng "libre ang tingin". Matatag ang retention bago at pagkatapos nun (58.8% → 70.6% → 73.2% → 88.4%). | 1 | observed |
-| **A4** | 🔴 **Ang sahig ng bayad na tripwire ay ang cost ng bisita, at ang cost na yun ay ROUTE DENSITY, hindi isang numero.** Oceanides: ₱1,100 kapag iisa ang bisita sa maghapon (inspector ₱500 buong araw + pamasahe ₱200-300 kada direksyon), pero **~₱400 na lang kapag tatlo hanggang apat ang stop sa isang araw** — hati na ang ₱500 at magkalapit na ang sakayan. **Ibig sabihin: hindi presyo ang lever, GEO CLUSTERING ang lever.** Ang parehong ₱499 ay lugi sa kalat na booking at kumikita sa siksik na ruta. I-target ang lugar, huwag ang bayad. | 1 | observed |
+| **A5** | 🔴 **Ang sahig ng bayad na tripwire ay ang cost ng bisita, at ang cost na yun ay ROUTE DENSITY, hindi isang numero.** Oceanides: ₱1,100 kapag iisa ang bisita sa maghapon (inspector ₱500 buong araw + pamasahe ₱200-300 kada direksyon), pero **~₱400 na lang kapag tatlo hanggang apat ang stop sa isang araw** — hati na ang ₱500 at magkalapit na ang sakayan. **Ibig sabihin: hindi presyo ang lever, GEO CLUSTERING ang lever.** Ang parehong ₱499 ay lugi sa kalat na booking at kumikita sa siksik na ruta. I-target ang lugar, huwag ang bayad. | 1 | observed |
 | **A3** | 🔴 **Ang murang cost-per-conversation ay FALSE POSITIVE kapag masama ang close.** KM-003: ₱12.85/message (3× mas mura sa ₱40-80 target band) pero 100 message → **1 order = 1%**. Ang kill gates na naka-base sa gastos-kada-usapan ay pumasa habang bumabagsak ang negosyo. | 1 | observed |
 | **A4** | **Ang haba ay dapat sukatin sa kung saan bumabagsak ang retention, hindi sa kung ano ang kasya sa script.** 36.8s ang KM-003; 10s ang average na panonood; 8.0% lang ang umabot sa dulo. Ang CTA sa 36s ay nakikita ng 8 sa bawat 100. | 1 | observed |
+| **A6** | 🔴 **WALANG FORMULANG NAGLO-LOCK. Rotation, at nakadepende sa target market.** (Neil, 2026-08-07, nang aprubahan ang A1-shaped na script para sa Oceanides: *"di ako kontra dyan. So dapat di mag lolock dito, dapat rotation yan at dipende yan sa target market."*) Ang panganib ay hindi na mali ang A1 — ang panganib ay **maging default sya**. Dalawang dahilan: (1) **iba ang market, iba ang hugis** — nanalo ang A1 sa MAY-BAHAY na Solution Aware; si **Paolo ay negosyo** (liability, DENR, papel sa audit) at wala pang ebidensya na kayang dalhin doon ang parehong hugis; (2) **ang paulit-ulit na hugis ay nag-i-invite ng ad fatigue at pinapakain ang Andromeda ng iisang klaseng manonood.** Panuntunan: **kada batch, hindi lahat ng script ay iisang awareness stage at iisang hook shape** (kasundo ng batch-mix rule ng Schwartz ladder sa `grifon-cmo`). Kapag ang isang hugis ang nag-iisang tumatakbo ng dalawang batch nang sunod-sunod, yun ay lock na, hindi na rotation. | 1 | Neil-directed |
 
 ## Gated Proposals
 
@@ -259,7 +260,7 @@ sagot bago pa ang form).
 
 **Patterns:** ang chalk na pangunguna sa mga static (CPM + ₱/LPV) ay pangalawang
 brand signal para sa **S34** — hindi pa corroboration (walang lead/booked job na
-katibayan), i-log ulit kapag may conversion. Walang kontra sa A1-A4.
+katibayan), i-log ulit kapag may conversion. Walang kontra sa A1-A5.
 #### 🔴 PINATAY 2026-08-05, 1:47 PM — 0 conversion sa 77 bisita
 
 **Si Neil ang pumatay**, lahat ng lima sa loob ng 11 segundo. Dahilan, sarili
@@ -424,7 +425,7 @@ kung bakit may premyo ang ₱12-15k kada load.**
   Kaya **3-4 na bisita kada tao kada araw** ang totoong takda.
 - ⚠️ **Naghihintay sila ng susunod na booking bago umuwi**, kaya ang huling stop
   ang nagtatakda ng pamasahe. **Ito mismo ang dahilan kung bakit route density
-  ang lever** — tingnan ang **A4**.
+  ang lever** — tingnan ang **A5**.
 
 #### 🟡 IMBENTO NI NEIL 2026-08-05 — AI septic health report (endorsed, may 3 kondisyon)
 
@@ -501,7 +502,7 @@ Hindi kailangang kumita ang tripwire. Kailangan lang nyang maging libre, at libr
   presyong buhay sa unang dalawang linggo** habang kalat pa ang booking (1-2 stop
   kada araw). Sa siksik na ruta, pareho na silang kumikita.
 - **Kasamang kondisyon: higpitan ang geo.** Isang siyudad muna, hindi buong 20km
-  radius. **Ginagawa ang density, hindi hinihintay** (A4).
+  radius. **Ginagawa ang density, hindi hinihintay** (A5).
 - **Online checkout, hindi pangungulit ni Zam.** Napagkasunduan matapos ituro ni
   Neil na (a) may PayMongo na ang Oceanides at kasama na ang GCash at bank
   transfer dun, kaya walang laman ang "ganon magbayad ang SME"; (b) ang oras ni

@@ -7,38 +7,40 @@
 ✅ Tapos ang research → [`taglish_2026_model.md`](workflows/taglish_2026_model.md) ·
 ✅ Tapos ang lint (3 class rule, WARNING tier) · ✅ Tapos ang drift gate.
 
-Tenga mo na ang natira. Babala lang ang tatlong class rule, at ganun ang panuntunan:
-walang nagiging ERROR hangga't di mo nababasa ang totoong hits. Tingnan sa alinmang
-funnel dir: `node scripts/lint-voice.mjs`.
+Tenga mo na ang natira. Babala lang ang 3 class rule at walang nagiging ERROR hangga't
+di mo nababasa ang hits. Tingnan sa alinmang funnel dir: `node scripts/lint-voice.mjs`.
 
 - **KONYO: 0 hit** sa dalawa. Malinis ang na-review mong copy, at di nag-iingay.
 - **PARTICLE: 24** · **MAHABA: 10.** Husgahan mo kung alin ang tama, ako na ang
-  mag-a-adjust o magpo-promote sa ERROR.
-- 🔴 **Isang desisyon:** `24 oras` → `24 hours` ang ginawa ng timeline rule mo. Pero
-  **idyoma yun** (`24 Oras` sa GMA), hindi tagal. Carve-out ba para sa `24 oras`?
+  mag-a-adjust o magpo-promote sa ERROR. (`24 hours` = sagot na ni Neil, tama nga.)
+
+## 🔴 IBANG REGISTER ANG CHAT KAY NEIL (08-07, tingnan ang STEP 0b)
+Sa **customer copy**, iwasan ang English jargon. Sa **chat kay Neil, English ang
+technical terms** — hook, retention, frame, syllable, build, lint. Mas mataas ang
+English, malapit sa 50/50, magaan ang Tagalog (pandikit lang: yung, kaso, pero,
+kasi). Register ng **Gemini / Director AI at GPT** ang target, yun ang nakasanayan
+nya. Sablay ko: ginawa kong `pantig`/`patinig`/`balangkas` ang syllable/vowel/frame.
+**Walang formulang naglo-lock** sa ads — rotation, depende sa market (ledger **A6**).
 
 ## 🔴 14 na ERROR sa LIVE na price-page, ayos na
-53 rule lang ang kopya nya, 64 kay Paolo: **wala doon ang buong `KLASE, HINDI SALITA`
-block** kasama ang `15 days` rule na sinigawan mo. Nahuli: `24 oras`, `30 araw`,
-`sa iyo` ×7, `2 oras` ×5. Ayos na sa source; **di gagalaw ang live site** hangga't di
-ka nagde-deploy (CLI, di git-connected). Bagong gate sa CI: `npm run check:voice-sync`.
+53 rule lang ang kopya nya, 64 kay Paolo: **wala ang buong `KLASE, HINDI SALITA` block**
+kasama ang `15 days` rule. Nahuli: `24 oras`, `30 araw`, `sa iyo` ×7, `2 oras` ×5. Ayos
+na sa source; **di gagalaw ang live site** hangga't di ka nagde-deploy (CLI, di
+git-connected). Bagong gate sa CI: `npm run check:voice-sync`.
 
-## 🧠 Ang pinakamalaking natuklasan sa research
-**May pangalan ang kalaban: Konyo.** English ang balangkas, Tagalog ang isinasabog,
-hugis ng lahat ng "Bad" sa voice spec. May **test** imbes na listahan: *alisin ang
-English, may Tagalog bang balangkas na natira?* Wala = Konyo. **Hindi lang panlasa**
-(Neil): English ang dominante doon, kaya pwedeng mag-American accent ang Filipino
-avatar sa Veo/TTS dahil sa ACCENT LOCK. Render bug, hindi lang register.
+## 🧠 Pinakamalaking natuklasan sa research
+**May pangalan ang kalaban: Konyo.** English ang frame, Tagalog ang isinasabog, hugis
+ng lahat ng "Bad" sa voice spec. May **test** imbes na listahan: *alisin ang English,
+may Tagalog bang frame na natira?* Wala = Konyo. **Hindi lang panlasa** (Neil): English
+ang dominante doon, kaya pwedeng mag-American accent ang avatar sa ACCENT LOCK.
 
 ## 🔔 TAPOS DIN SESSION 11 — di na mapapalampas ang pulang CI
-Reader ang sira ng 3-araw na pula, hindi detection: ~20 magkaparehong email sa
-channel na natutong laktawan. Bagong `main-status` job sa
+Reader ang sira ng 3-araw na pula, hindi detection. Bagong `main-status` job sa
 [`ci.yml`](.github/workflows/ci.yml): isang bukas na `ci-red` issue lang habang pula
-ang main, kusang nagsasara pag green. Binabasa ito ng **Health Watch v2** tuwing
-08:00 PHT, CRITICAL, kasama kung ilang araw nang bukas. Napatunayan sa live run ang
-green at auto-close. **Kumpirmado rin ang CI read**, pero **walang `gh` sa cloud env**
-— GitHub MCP tools pala ang daan. 📱 **Walang Routines sa phone**, kaya ang push mismo
-ang buong deliverable. [`loops.md`](workflows/loops.md) Tier 0b + 6.
+ang main, kusang nagsasara pag green. Binabasa ng **Health Watch v2** tuwing 08:00 PHT,
+CRITICAL, kasama kung ilang araw nang bukas. Napatunayan sa live run. **Walang `gh` sa
+cloud env**, GitHub MCP tools pala ang daan. 📱 **Walang Routines sa phone**, kaya ang
+push mismo ang buong deliverable. [`loops.md`](workflows/loops.md) Tier 0b + 6.
 
 ## 🅿 PAOLO — itayo, wag buksan
 Buhay pa ang gate: **pangako pa lang, walang load na dumaan, walang certificate na
