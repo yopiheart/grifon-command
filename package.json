@@ -3,6 +3,11 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "//engines": "Pinned 2026-08-07. The cafe PC runs Node 24 / npm 11, CI ran Node 20 / npm 10, and npm 11 deterministically DROPS the nested optional-peer @types/react record that npm 10 requires. That divergence — not any API balance — is what broke every workflow from 2026-08-04 (commit 323da07 synced the lock to npm 11 and CI's npm 10 rejected it). CI is now on 24 too; keep both sides here so it cannot drift back silently.",
+  "engines": {
+    "node": ">=24",
+    "npm": ">=11"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

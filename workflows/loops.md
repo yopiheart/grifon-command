@@ -110,7 +110,20 @@ SOP: [nightly_regression.md](nightly_regression.md); spec:
   `ANTHROPIC_API_KEY` + a security review) → Bake-and-Leap inverse verdict (still
   parked). Manual harness anytime: `RUN_REGRESSION=1 npx vitest run tests/regression/...`.
 
-## Tier 3b — Oceanides daily-content loop · ✅ live, automatic (GitHub Action, full-auto)
+## Tier 3b — Oceanides daily-content loop · ⏸ PAUSED 2026-08-07 (was live, full-auto)
+
+> **⏸ PAUSED 2026-08-07 at Neil's request** — *"i would like to request to stop
+> temporarily the oceanides daily posting."* The `schedule:` block in
+> [`.github/workflows/oceanides-daily.yml`](../.github/workflows/oceanides-daily.yml)
+> is **commented out, not deleted**; `workflow_dispatch` stays live, so a single
+> day can still be rendered by hand from the Actions tab. **To resume:** uncomment
+> the two `schedule:` lines. Nothing else changed — pools, templates and the
+> mirror token are untouched.
+>
+> Note the loop was already **not publishing** before the pause: every run since
+> 2026-08-04 died at `npm ci` on the repo-wide lockfile desync (see Tier 0b), so
+> the last successful publish predates that. Fixing the lockfile does **not**
+> un-pause this loop; the commented schedule is the pause.
 
 Armed 2026-07-14 as a cloud routine; **converted to a full-auto GitHub Action same day**
 (Neil chose no-review — deterministic pre-approved content). `.github/workflows/oceanides-daily.yml`

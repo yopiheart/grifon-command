@@ -8,9 +8,14 @@ name: Oceanides daily posts
 # routine. Source of truth (templates/script/variants) stays in this private repo;
 # only images + captions reach the public mirror.
 
+# ⏸ PAUSED 2026-08-07 (Neil: "i would like to request to stop temporarily the
+# oceanides daily posting"). TEMPORARY — the schedule below is commented out, not
+# deleted, and `workflow_dispatch` stays live so a single day can still be rendered
+# by hand from the Actions tab. To resume: uncomment the two `schedule:` lines.
+# Registered in workflows/loops.md Tier 3b.
 on:
-  schedule:
-    - cron: '0 22 * * *'   # 22:00 UTC = 06:00 Asia/Manila (UTC+8, no DST)
+  # schedule:
+  #   - cron: '0 22 * * *'   # 22:00 UTC = 06:00 Asia/Manila (UTC+8, no DST)
   workflow_dispatch:
     inputs:
       date:
@@ -35,7 +40,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
           cache: 'npm'
 
       - name: Install dependencies
