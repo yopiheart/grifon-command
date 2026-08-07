@@ -118,18 +118,29 @@ const instruction =
     ? `Edit/compose using the ${args.edit.length > 1 ? `${args.edit.length} provided input images` : 'provided input image'} per: ${args.prompt}`
     : `Image: ${args.prompt}`);
 
-// --full-auto runs Codex in its workspace-write sandbox (writes confined to the
-// repo, network restricted) without interactive prompts — appropriate for a
-// single headless image-gen that saves one file in-repo. We never bypass the
-// sandbox. Exact flags can vary by Codex version — check `codex exec --help`.
+// Run Codex in its workspace-write sandbox (writes confined to the repo, network
+// restricted) without interactive prompts — appropriate for a single headless
+// image-gen that saves one file in-repo. We never bypass the sandbox.
+//
+// The flag for that MOVED: `--full-auto` was accepted by `codex exec` up to
+// ~0.14x and is REJECTED by 0.147.0 ("unexpected argument '--full-auto'"), which
+// killed every batch here on 2026-08-08. `-s workspace-write` is the current
+// spelling and `exec` is already non-interactive, so no approval flag is needed.
+// Rather than swap one hard-coded flag for another, ask the installed binary
+// which one it takes — this wrapper then survives the next rename too.
+const sandboxFlag = (spawnSync(codex.file, [...codex.pre, 'exec', '--help'], { encoding: 'utf8' }).stdout || '')
+  .includes('--full-auto')
+  ? ['--full-auto']
+  : ['-s', 'workspace-write'];
+
 // IMPORTANT: the PROMPT positional must come BEFORE -i. `codex exec`'s
 // `-i/--image <FILE>...` is VARIADIC, so if -i precedes the prompt it swallows
 // the instruction as another image → Codex finds no prompt and reads stdin
 // ("No prompt provided via stdin"). Prompt first, then the image flag.
-const codexArgs = [...codex.pre, 'exec', '--full-auto', instruction];
+const codexArgs = [...codex.pre, 'exec', ...sandboxFlag, instruction];
 if (args.edit) codexArgs.push('-i', ...args.edit.map((e) => path.resolve(e)));
 
-console.error(`[codex-image] ${path.basename(codex.file)} exec --full-auto "<instruction>"${args.edit ? ` -i ${args.edit.map((e) => path.resolve(e)).join(' ')}` : ''}`);
+console.error(`[codex-image] ${path.basename(codex.file)} exec ${sandboxFlag.join(' ')} "<instruction>"${args.edit ? ` -i ${args.edit.map((e) => path.resolve(e)).join(' ')}` : ''}`);
 const startMs = Date.now();
 const run = spawnSync(codex.file, codexArgs, { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
 const log = (run.stdout || '') + (run.stderr || '');

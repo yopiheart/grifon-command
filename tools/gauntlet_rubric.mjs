@@ -75,6 +75,34 @@ const AXES = {
     label: 'SELL — paggalaw ng tao papunta sa isang alok',
     question: `Does this image do sales work, or does it only hand out free value? Judge whether it names a specific offer, gives a reason to act, makes clear what the business actually sells, and gives the viewer a next step. Pure education — tips, "4 signs that...", explainer content — scores LOW no matter how genuinely useful or well made it is, because it asks for nothing. A specific offer with a clear next step scores HIGH. Beauty, polish and trustworthiness are NOT selling.`,
   },
+  // Idinagdag 2026-08-08 (Neil: profile picture ni Marvin para sa PERSONAL niyang
+  // FB/IG/Viber). Wala sa tatlong axis sa taas ang tanong dito. Ang `trust` ay
+  // tanong tungkol sa NEGOSYONG nasa likod ng imahe — tama yun para sa ad o card,
+  // pero mali ang KLASE para sa isang personal na profile photo, at ang mali na
+  // klase ang tatlong beses nang tumama sa atin (tingnan ang Correction 2 sa
+  // gauntlet_loop_decision.md). Ang trabaho ng isang PFP ay iisa: paniwalaan kang
+  // totoong tao, at gustuhin kang kausapin. Ang bar dito ay HINDI ang ad swipe
+  // file — mga TOTOONG litrato ni Marvin (refs/) at ang 8 Neil-approved frames.
+  pfp: {
+    label: 'PFP — totoong tao sa personal na profile photo',
+    question: `Is this believably a real person's own profile photo on a personal Facebook / Instagram / Viber account, and does the person read as someone decent you would be glad to hear from? Judge two things only. (1) REALNESS: does it look like an actual photo an actual phone took of an actual person — or does it betray itself as AI-generated, stock, or studio-produced? Look for the tells: waxy or airbrushed skin, a face sharper or brighter than the body, a head that does not sit on its neck, background blur that no phone would produce, impossible lighting, invented text or logos. (2) THE PERSON: warmth, decency, competence — would you accept a friend request or trust a message from him. Advertising polish, dramatic lighting, and professional production LOWER the score, no matter how attractive the result: a profile photo that looks produced looks fake, and a fake profile photo has failed at its only job. A plain, slightly imperfect, genuinely photographed picture of a warm person outranks a beautiful one.`,
+  },
+  // Idinagdag 2026-08-08, ilang minuto matapos ang `pfp` sa taas (Neil: "wala bang
+  // parang polished at ibat ibang camera lens? Kasi UGC style to eh"). HINDI ito
+  // pareho ng `pfp`. Aktibong PINAPARUSAHAN ng `pfp` ang polish — tama yun doon,
+  // kasi ang trabaho ng isang UGC profile photo ay magmukhang hindi ginawa. Dito
+  // baligtad: hinihingi ang craft. Magkaibang tanong, kaya magkahiwalay na axis —
+  // huwag pagsamahin, at huwag ding gamitin ang isa para husgahan ang kabila.
+  //
+  // ⚠️ WALANG BAR ANG AXIS NA ITO. Puro raw-UGC ang 8 Neil-approved frames at puro
+  // bayad na ad ang 78 sa assets/ad-swipe/. Walang koleksyon ng magagandang
+  // portrait sa repo na kayang buksan ng critic, kaya RANGGO lang ang maibibigay
+  // nito, hindi "natalo natin ang X." Per STEP 1 ng gauntlet-loop: kung hindi
+  // mabubuksan, hindi yun bar. Mata ni Neil ang bar dito hangga't wala pang corpus.
+  portrait: {
+    label: 'PORTRAIT — polished na portrait ng totoong tao',
+    question: `How good is this as a POLISHED portrait of a real man, used as his personal profile picture? Judge photographic craft: is the light deliberately shaped (direction, softness, falloff, catchlights) or merely available; does the lens do real work (perspective, compression, genuine background separation); is the composition, colour and skin rendering considered; and does the subject have presence — does he read as confident, warm, and worth knowing. Craft is REWARDED here: a flat snapshot with no shaped light scores LOW no matter how authentic it feels. But it must still be a believable photograph of a real man — AI tells are disqualifying and cap the score in the generic band no matter how pretty the result: waxy or beauty-filtered skin with no pores, a face sharper or brighter than the body, a head that does not sit on its neck, background blur with no optical logic, warped hands or ears, invented text or logos. Retouched into a different, smoother man is a FAILURE, not polish.`,
+  },
 };
 
 function loadEnvKey(name) {
@@ -150,7 +178,7 @@ async function main() {
   const images = process.argv.slice(2).filter((a) => !a.startsWith('--') && /\.(png|jpe?g|webp)$/i.test(a));
 
   if (!axis || !AXES[axis] || images.length === 0) {
-    console.error('Usage: --axis <attention|trust> [--runs N] <img> [<img> ...]');
+    console.error('Usage: --axis <attention|trust|sell|pfp> [--runs N] <img> [<img> ...]');
     console.error('       --list-axes');
     process.exit(1);
   }

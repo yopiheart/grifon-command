@@ -9,7 +9,8 @@
 //   node tools/codex-image-batch.mjs --manifest <path.json> [--concurrency 8] [--force]
 //   node tools/codex-image-batch.mjs --json '[{"prompt":"...","out":"public/x.png"}]'
 //
-// Manifest item: { "prompt": string, "out": string (path inside repo), "size"?: "1024x1024" }
+// Manifest item: { "prompt": string, "out": string (path inside repo), "size"?: "1024x1024",
+//                  "edit"?: string | string[] (reference images for edit/identity-preserve runs) }
 import { spawn } from 'node:child_process';
 import { existsSync, statSync, readFileSync } from 'node:fs';
 
@@ -43,11 +44,16 @@ const skipped = items.length - todo.length;
 const t0 = Date.now();
 console.log(`▶ ${todo.length} image(s) in PARALLEL via Codex (concurrency ${concurrency}, ${skipped} already present)…\n`);
 
-function gen({ out, prompt, size }) {
+function gen({ out, prompt, size, edit }) {
   const start = Date.now();
   const name = out.split(/[\\/]/).pop();
+  // `edit` = one path or an array of them, passed through as repeated --edit flags
+  // (codex -i is variadic). Identity-locked subjects like Marvin are ALWAYS edit
+  // runs — body master + face ref — so a batch runner without this could not run
+  // the identity-lock manifests at all.
+  const refs = (Array.isArray(edit) ? edit : edit ? [edit] : []).flatMap((p) => ['--edit', p]);
   return new Promise((resolve) => {
-    const child = spawn('node', [GEN, '--prompt', prompt, '--out', out, '--size', size || DEFAULT_SIZE], { stdio: ['ignore', 'pipe', 'pipe'] });
+    const child = spawn('node', [GEN, '--prompt', prompt, '--out', out, '--size', size || DEFAULT_SIZE, ...refs], { stdio: ['ignore', 'pipe', 'pipe'] });
     let err = '';
     child.stderr.on('data', (d) => { err += d.toString(); });
     child.stdout.on('data', () => {});
